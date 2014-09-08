@@ -10,7 +10,6 @@ my $line;
 
 # Any
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Any.exists("a");
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Any.exists("a")';
@@ -57,7 +56,6 @@ TEXT
 
 # Array
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; [].delete(1);
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Array.delete(1)';
@@ -72,7 +70,6 @@ TEXT
 
 # Bag
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; try Bag.new.delete("a"); # try because cannot mutate Bag
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Bag.new.delete("a")';
@@ -87,7 +84,6 @@ TEXT
 
 # BagHash
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; BagHash.new.delete("a");
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'depr. BagHash.new.delete("a")';
@@ -102,7 +98,6 @@ TEXT
 
 # Baggy
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Bag.new.exists("a");
     Bag.new.exists("a");
@@ -129,7 +124,6 @@ TEXT
 
 # Capture
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Capture.new.exists("a");
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'depr. Capture.new.exists("a")';
@@ -144,7 +138,6 @@ TEXT
 
 # Cool
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; "a".ucfirst;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation "a".ucfirst';
@@ -159,7 +152,6 @@ TEXT
 
 # Decrease
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Decrease;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Decrease';
@@ -174,7 +166,6 @@ TEXT
 
 # EnumMap
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; EnumMap.exists;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation EnumMap.exists';
@@ -200,7 +191,6 @@ TEXT
 
 # GLOBAL
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
 
     $line = $?LINE; ucfirst("a");
@@ -216,7 +206,6 @@ TEXT
 
 # Hash
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Hash.delete;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Hash.delete';
@@ -242,7 +231,6 @@ TEXT
 
 # Increase
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Increase;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Increase';
@@ -257,7 +245,6 @@ TEXT
 
 # List
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; List.new.exists(1);
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation List.new.exists(1)';
@@ -272,7 +259,6 @@ TEXT
 
 # Mix
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; try Mix.new.delete("a"); # try because cannot mutate Mix
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Mix.new.delete("a")';
@@ -287,7 +273,6 @@ TEXT
 
 # MixHash
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; MixHash.new.delete("a");
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'depr. MixHash.new.delete("a")';
@@ -302,7 +287,6 @@ TEXT
 
 # Set
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; try Set.new.delete("a"); # try because cannot mutate Set
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Set.new.delete("a")';
@@ -317,7 +301,6 @@ TEXT
 
 # SetHash
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; SetHash.new.delete("a");
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'depr. SetHash.new.delete("a")';
@@ -332,7 +315,6 @@ TEXT
 
 # Setty
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Set.new.exists("a");
     Set.new.exists("a");
@@ -359,7 +341,6 @@ TEXT
 
 # $*OS
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*OS;
     say $*OS;
@@ -375,7 +356,6 @@ TEXT
 
 # $*OSVER
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*OSVER;
     say $*OSVER;
@@ -391,7 +371,6 @@ TEXT
 
 # $*VM<name>
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*VM<name>;
     say $*VM<name>;
@@ -407,7 +386,6 @@ TEXT
 
 # $*VM<config>
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*VM<config>;
     say $*VM<config>;
@@ -423,7 +401,6 @@ TEXT
 
 # $*PERL<name>
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*PERL<name>;
     say $*PERL<name>;
@@ -439,7 +416,6 @@ TEXT
 
 # $*PERL<compiler><name>
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*PERL<compiler><name>;
     say $*PERL<compiler><name>;
@@ -455,7 +431,6 @@ TEXT
 
 # $*PERL<compiler><ver>
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*PERL<compiler><ver>;
     say $*PERL<compiler><ver>;
@@ -471,7 +446,6 @@ TEXT
 
 # $*PERL<compiler><release-number>
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*PERL<compiler><release-number>;
     say $*PERL<compiler><release-number>;
@@ -487,7 +461,6 @@ TEXT
 
 # $*PERL<compiler><build-date>
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*PERL<compiler><build-date>;
     say $*PERL<compiler><build-date>;
@@ -503,7 +476,6 @@ TEXT
 
 # $*PERL<compiler><codename>
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; say $*PERL<compiler><codename>;
     say $*PERL<compiler><codename>;
@@ -519,7 +491,6 @@ TEXT
 
 # %foo = {...}
 #?niecza skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     my %h; $line = $?LINE; %h = { a => 1 };
     %h = { b => 2 };
