@@ -212,7 +212,7 @@ sub showkv($x) {
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa_ok $b.list.elems, 3, ".list returns 3 things";
-    is $b.list.grep(Str).elems, 3, "... all of which are Str";
+    is $b.list.grep(Enum).elems, 3, "... all of which are Enums";
 
     isa_ok $b.pairs.elems, 3, ".pairs returns 3 things";
     is $b.pairs.grep(Enum).elems, 3, "... all of which are Enums";
@@ -390,7 +390,7 @@ sub showkv($x) {
     is +$b1, 8, "Three elements";
     is $b1<c>, 3, "One of them is 'c'";
     is $b1<d>, 4, "One of them is 'd'";
-    my $inner-bag = $b1.list.first(Bag);
+    my $inner-bag = $b1.keys.first(Bag);
     #?niecza 2 todo 'Bag in Bag does not work correctly yet'
     isa_ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
@@ -400,7 +400,7 @@ sub showkv($x) {
     is +$b1, 3, "Three elements";
     is $b1<c>, 1, "One of them is 'c'";
     is $b1<d>, 1, "One of them is 'd'";
-    $inner-bag = $b1.list.first(Bag);
+    $inner-bag = $b1.keys.first(Bag);
     #?niecza 2 todo 'Bag in Bag does not work correctly yet'
     isa_ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";

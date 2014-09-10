@@ -213,7 +213,7 @@ sub showkv($x) {
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa_ok $m.list.elems, 3, ".list returns 3 things";
-    is $m.list.grep(Str).elems, 3, "... all of which are Str";
+    is $m.list.grep(Enum).elems, 3, "... all of which are Enums";
 
     isa_ok $m.pairs.elems, 3, ".pairs returns 3 things";
     is $m.pairs.grep(Enum).elems, 3, "... all of which are Enums";
@@ -345,7 +345,7 @@ sub showkv($x) {
     is +$m1, 8, "Three elements";
     is $m1<c>, 3, "One of them is 'c'";
     is $m1<d>, 4, "One of them is 'd'";
-    my $inner-mix = $m1.list.first(Mix);
+    my $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa_ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
@@ -355,7 +355,7 @@ sub showkv($x) {
     is +$m1, 3, "Three elements";
     is $m1<c>, 1, "One of them is 'c'";
     is $m1<d>, 1, "One of them is 'd'";
-    $inner-mix = $m1.list.first(Mix);
+    $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa_ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
