@@ -72,7 +72,7 @@ do {
     my $words2 = set $slurp2.comb(/\w+/).map(*.lc);
     my $unique = ($words1 (-) $words2);
     isa_ok $unique, Bag, 'set difference (-)';
-    is_deeply $unique.list.sort, qw<aa bb cc zz>, 'set difference (-)';
+    is_deeply $unique.keys.sort, qw<aa bb cc zz>, 'set difference (-)';
 }
 
 my $s1 = set <A B>;
