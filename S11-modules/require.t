@@ -1,10 +1,15 @@
 use v6;
 
-# RT #113956 - this construct should not leak non-P6 objects
-BEGIN {require Test}
-import Test;
+my $istrue = (require Test <&plan &is &lives_ok &skip &todo>);
 
-plan 13;
+plan 15;
+
+is $istrue, True, "successful require returns True";
+
+my $staticname;
+BEGIN try EVAL '$staticname = Test';
+#?rakudo todo 'creation of stub package symbol NYI'
+is $staticname.gist, '(Test)', "require Test installs stub Test package at compile time";
 
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
