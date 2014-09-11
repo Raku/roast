@@ -2,11 +2,11 @@ use v6;
 
 our %timing;
 
-my class ProfiledGrammarHOW is Metamodel::GrammarHOW is Mu {
+my class ProfiledGrammarHOW is Metamodel::GrammarHOW {
 
     method find_method($obj, $name) {
         my $meth := callsame;
-        substr($name, 0, 1) eq '!' || $name eq any(<parse CREATE Bool defined MATCH perl>) ??
+        substr($name, 0, 1) eq '!' || $name eq any(<parse CREATE Bool defined MATCH perl BUILD DESTROY>) ??
             $meth !!
             -> $c, |args {
                 my $grammar = $obj.WHAT.perl;
