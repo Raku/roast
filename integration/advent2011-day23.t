@@ -12,8 +12,8 @@ our $array-indices = [ 0 .. 24 ];
 our $z;
 
 sub picker-seems-random(&picker ) {
-    my $sample = (1 .. 15).map({ &picker() }).Bag;
-    +$sample.keys > 2 && $sample (<=) @array; 
+    my $sample = set (1 .. 15).map({ &picker() })
+    +$sample.keys > 2 && $sample (<=) set @array;
 }
 
 ok picker-seems-random( { $z = @array[ rand*@array ]; } ), '$z = @array[ rand*@array ];';
