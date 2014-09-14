@@ -7,6 +7,7 @@ plan 40;
 my $cwd := $*CWD;
 my $nanoonanoo := '
 use v6;
+use Test;
 class NanooNanoo { }
 ';
 my $module := 'NanooNanoo';
