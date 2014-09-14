@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 39;
 
 # $?KERNEL.name is the kernel we were compiled in.
 #?rakudo skip 'unimpl $?KERNEL'
@@ -64,9 +64,11 @@ else {
       "do we have Signals only?  and Any's of course";
 
     my $hup = $*KERNEL.signal(SIGHUP);
+    isa_ok $hup, Int, 'did we get an Int back';
     isnt $hup, 0, "no signal should come out as 0";
     is $*KERNEL.signal("SIGHUP"), $hup, "also ok as string?";
     is $*KERNEL.signal("HUP"),    $hup, "also ok as partial string?";
+    is $*KERNEL.signal($hup),     $hup, "also ok as Int?";
 }
 
 # vim: ft=perl6
