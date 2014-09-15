@@ -55,10 +55,9 @@ isa_ok $*KERNEL.version, Version;
 isa_ok $*KERNEL.signature, Blob;
 isa_ok $*KERNEL.bits, Int;
 
-if $*VM.name ne 'moar' {
-    skip_rest("Not supported on {$*VM.name}")
-}
-else {
+#?rakudo.jvm    skip "jvm doesn't know about signals"
+#?rakudo.parrot skip "parrot doesn't know about signals"
+{
     ok $*KERNEL.signals ~~ Positional, 'did Kernel.signals return a list';
     is $*KERNEL.signals.elems, $*KERNEL.signals.grep(Signal|Any).elems,
       "do we have Signals only?  and Any's of course";
