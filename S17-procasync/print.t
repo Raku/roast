@@ -17,7 +17,7 @@ say "Done";
 ok $program.IO.spurt($source),   'could we write the tester';
 is $program.IO.s, $source.chars, 'did the tester arrive ok';
 
-my $pc = Proc::Async.new( :path($*EXECUTABLE), :args($program) );
+my $pc = Proc::Async.new( :path($*EXECUTABLE), :args($program), :w );
 isa_ok $pc, Proc::Async;
 
 my $so = $pc.stdout_chars;
@@ -36,18 +36,21 @@ is $stderr, "", 'STDERR should be empty';
 my $pm = $pc.start;
 isa_ok $pm, Promise;
 
-isa_ok $pc.print( "Hello World" ), Promise;
-isa_ok $pc.say( "2Oops!" ),        Promise;
+my $ppr = $pc.print( "Hello World\n" );
+isa_ok $ppr, Promise;
+await $ppr;
+my $psa = $pc.say( "2Oops!" );
+isa_ok $psa, Promise;
+await $psa;
 
 # done processing
 ok $pc.close_stdin, 'did the close of STDIN work';
+my $ps = await $pm;
 
-#my $ps = await $pm;  # alas, hangs, so we have to make do with this:
-my $ps = await Promise.anyof( $pm, Promise.in(5) );
-
-#?rakudo 3 todo "apparently .print/.say don't work yet"
+#?rakudo todo "not getting a Proc::Status back, but Any"
 isa_ok $ps, Proc::Status;
-is $stdout, "Started\nHello World\nDone\n", 'did we get STDOUT';
+
+is $stdout, "Started\nHello World\nDone\n", 'did we get STDOUT'; # seems to flap
 is $stderr, "Oops!\n",                      'did we get STDERR';
 
 END {
