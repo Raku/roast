@@ -9,7 +9,7 @@ my $program = 'async-kill-tester';
 
 for @signals -> $signal {
     my $source = "
-signal($signal).act: \{ .note; exit +\$_ \};
+signal($signal).act: \{ .note; sleep 1; exit +\$_ \};
 
 say 'Started';
 sleep 5;
@@ -37,12 +37,18 @@ say 'Done';
     my $pm = $pc.start;
     isa_ok $pm, Promise;
 
+    # give it a little time
+    sleep 2;
+
+    # stop what you're doing
+    $pc.kill($signal);
+
     # done processing, either by sleep or exit from signal
     my $ps = await $pm;
 
     #?rakudo 2 todo "not getting a Proc::Status back, but Any"
     isa_ok $ps, Proc::Status;
-    is $ps.?signal, +$signal, 'was it killed with the right signal';
+    is $ps.?exit, +$signal, 'did it exit with the right value';
 
     #?rakudo 2 todo "signal tap not working inside process"
     is $stdout, "Started\n", 'did we get STDOUT';
