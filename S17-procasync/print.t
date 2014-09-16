@@ -17,7 +17,7 @@ say "Done";
 ok $program.IO.spurt($source),   'could we write the tester';
 is $program.IO.s, $source.chars, 'did the tester arrive ok';
 
-my $pc = Proc::Async.new( :path($*EXECUTABLE), :args($program), :w );
+my $pc = Proc::Async.new( $*EXECUTABLE, $program, :w );
 isa_ok $pc, Proc::Async;
 
 my $so = $pc.stdout;
@@ -44,7 +44,7 @@ isa_ok $psa, Promise;
 await $psa;
 
 # done processing
-ok $pc.close_stdin, 'did the close of STDIN work';
+ok $pc.close-stdin, 'did the close of STDIN work';
 my $ps = await $pm;
 
 #?rakudo todo "not getting a Proc::Status back, but Any"

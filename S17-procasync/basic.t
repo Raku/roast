@@ -4,7 +4,7 @@ use Test;
 
 plan 8;
 
-my $pc = Proc::Async.new( :path<echo>, :args<Hello World> );
+my $pc = Proc::Async.new( 'echo', <Hello World> );
 isa_ok $pc, Proc::Async;
 
 my $so = $pc.stdout;

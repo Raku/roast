@@ -18,7 +18,7 @@ say 'Done';
     ok $program.IO.spurt($source),   'could we write the tester';
     is $program.IO.s, $source.chars, 'did the tester arrive ok';
 
-    my $pc = Proc::Async.new( :path($*EXECUTABLE), :args($program), :w );
+    my $pc = Proc::Async.new( $*EXECUTABLE, $program, :w );
     isa_ok $pc, Proc::Async;
 
     my $so = $pc.stdout;
@@ -50,8 +50,8 @@ say 'Done';
     isa_ok $ps, Proc::Status;
     is $ps.?exit, +$signal, 'did it exit with the right value';
 
-    #?rakudo 2 todo "signal tap not working inside process"
     is $stdout, "Started\n", 'did we get STDOUT';
+    #?rakudo todo "signal tap not working inside process"
     is $stderr, "$signal\n", 'did we get STDERR';
 }
 
