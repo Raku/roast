@@ -7,9 +7,9 @@ plan 8;
 my $pc = Proc::Async.new( :path<echo>, :args<Hello World> );
 isa_ok $pc, Proc::Async;
 
-my $so = $pc.stdout_chars;
+my $so = $pc.stdout;
 cmp_ok $so, '~~', Supply;
-my $se = $pc.stderr_chars;
+my $se = $pc.stderr;
 cmp_ok $se, '~~', Supply;
 
 my $stdout;
