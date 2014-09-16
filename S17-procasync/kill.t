@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 my @signals = $*KERNEL.signals.grep(Signal);
-plan @signals * 13;
+plan @signals * 12;
 
 my $program = 'async-kill-tester';
 
@@ -12,7 +12,7 @@ for @signals -> $signal {
 signal($signal).act: \{ .note; exit +\$_ \};
 
 say 'Started';
-1 while \$*IN.get;
+sleep 5;
 say 'Done';
 ";
     ok $program.IO.spurt($source),   'could we write the tester';
@@ -37,8 +37,7 @@ say 'Done';
     my $pm = $pc.start;
     isa_ok $pm, Promise;
 
-    # done processing
-    ok $pc.close_stdin, "did the close of STDIN for $signal work";
+    # done processing, either by sleep or exit from signal
     my $ps = await $pm;
 
     #?rakudo 2 todo "not getting a Proc::Status back, but Any"
