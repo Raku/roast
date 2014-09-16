@@ -3,7 +3,7 @@ use Test;
 
 # Nil may be a type now.  Required?
 
-plan 48;
+plan 51;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -23,6 +23,10 @@ nok Nil.defined, 'Nil is not defined';
 ok  ().defined,  '() is defined';
 nok (my $x = Nil).defined, 'assigning Nil to scalar leaves it undefined'; #OK
 ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel'; #OK
+
+nok Nil.so,                  'Nil.so is False';
+ok Nil.ACCEPTS(Any)  == Nil, 'Nil.ACCEPTS always returns Nil';
+ok Nil.JustAnyMethod == Nil, 'Any method on Nil should return Nil';
 
 # RT #63894
 {
@@ -124,7 +128,5 @@ ok !Nil.new.defined, 'Nil.new is not defined';
 
     ok niltest.foo.bar.<bar>.[12].[99].<foo> === Nil, ".<> and .[] works properly, too";
 }
-
-done;
 
 # vim: ft=perl6
