@@ -280,7 +280,6 @@ my @concurrent = <
   CurrentThreadScheduler
   IO::Notification
   IO::Socket::Async
-  Proc::Async
   Promise
   Semaphore
   SupplyOperations
@@ -299,6 +298,7 @@ my @concurrent = <
 >;
 
 my @moar = <
+  Proc::Async
   X::Proc::Async::AlreadyStarted
   X::Proc::Async::CharsOrBytes
   X::Proc::Async::MustBeStarted
