@@ -79,6 +79,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               $s.more("B"); # same as "b"
               sleep 1;
               $s.more("c");
+              sleep 1;
               $s.more("B");
               $s.more("b"); # same as "B"
           } );
