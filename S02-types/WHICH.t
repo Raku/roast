@@ -280,7 +280,6 @@ my @concurrent = <
   CurrentThreadScheduler
   IO::Notification
   IO::Socket::Async
-  Proc::Async
   Promise
   Semaphore
   SupplyOperations
@@ -290,9 +289,6 @@ my @concurrent = <
   X::Channel::ReceiveOnClosed
   X::Channel::SendOnClosed
   X::Lock::ConditionVariable::New
-  X::Proc::Async::AlreadyStarted
-  X::Proc::Async::CharsOrBytes
-  X::Proc::Async::TapBeforeSpawn
   X::Promise::CauseOnlyValidOnBroken
   X::Promise::Combinator
   X::Promise::Vowed
@@ -301,7 +297,16 @@ my @concurrent = <
   X::Supply::On::NoMore
 >;
 
-plan 2 * ( @normal + @concurrent );
+my @moar = <
+  Proc::Async
+  X::Proc::Async::AlreadyStarted
+  X::Proc::Async::CharsOrBytes
+  X::Proc::Async::MustBeStarted
+  X::Proc::Async::OpenForWriting
+  X::Proc::Async::TapBeforeSpawn
+>;
+
+plan 2 * ( @normal + @concurrent + @moar );
 
 for @normal -> $class {
     is ::($class).WHICH, $class, "checking $class.WHICH";
@@ -309,6 +314,13 @@ for @normal -> $class {
 }
 
 for @concurrent -> $class {
+    #?rakudo.parrot 2 skip 'NYI on parrot'
+    is ::($class).WHICH, $class, "checking $class.WHICH";
+    is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
+}
+
+for @moar -> $class {
+    #?rakudo.jvm 2    skip 'NYI on jvm'
     #?rakudo.parrot 2 skip 'NYI on parrot'
     is ::($class).WHICH, $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";

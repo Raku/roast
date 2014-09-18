@@ -47,7 +47,7 @@ my @scores = (
 my $output;
 {
 
-    temp $*OUT = class {
+    my $*OUT = class {
 	method print(*@args) {
 	    $output ~= @args.join;
 	}

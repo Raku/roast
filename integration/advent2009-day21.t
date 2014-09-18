@@ -99,7 +99,7 @@ my @input = '0 1 2', '1';
         }
     }
 
-    temp $*OUT = class {
+    my $*OUT = class {
         method print(*@args) {
             $output ~= @args.join;
         }

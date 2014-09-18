@@ -37,7 +37,7 @@ sub MAIN-ish(:$year = Date.today.year, :$month = Date.today.month) {
 
 my $cal;
 {
-    temp $*OUT = class {
+    my $*OUT = class {
 	method print(*@args) {
 	    $cal ~= @args.join;
 	}

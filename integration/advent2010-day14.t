@@ -26,7 +26,7 @@ class C is B {
 
 sub capture-said($code) {
     my $output;
-    temp $*OUT = class {
+    my $*OUT = class {
 	method print(*@args) {
 	    $output ~= @args.join;
 	}

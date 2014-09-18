@@ -6,7 +6,7 @@ plan 2;
 
 sub capture-out($code) {
     my $output;
-    temp $*OUT = class {
+    my $*OUT = class {
 	method print(*@args) {
 	    $output ~= @args.join;
 	}

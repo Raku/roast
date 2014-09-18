@@ -24,9 +24,9 @@ my $name = $*SCHEDULER.^name;
     $*SCHEDULER.cue({ cas $a, {.succ}; die }, :every(0.1), :catch({ cas $b, {.succ} }));
     sleep 1;
     diag "seen $a runs" if !
-      ok 5 < $a < 15, "Cue with :every/:catch schedules repeatedly (1)";
+      ok 3 < $a < 15, "Cue with :every/:catch schedules repeatedly (1)";
     diag "seen $b deaths" if !
-      ok 5 < $b < 15, "Cue with :every/:catch schedules repeatedly (2)";
+      ok 3 < $b < 15, "Cue with :every/:catch schedules repeatedly (2)";
 }
 
 {

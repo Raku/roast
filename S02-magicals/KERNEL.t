@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 39;
 
 # $?KERNEL.name is the kernel we were compiled in.
 #?rakudo skip 'unimpl $?KERNEL'
@@ -54,5 +54,20 @@ isa_ok $*KERNEL.version, Version;
 #?rakudo todo 'no Kernel.signature yet'
 isa_ok $*KERNEL.signature, Blob;
 isa_ok $*KERNEL.bits, Int;
+
+#?rakudo.jvm    skip "jvm doesn't know about signals"
+#?rakudo.parrot skip "parrot doesn't know about signals"
+{
+    ok $*KERNEL.signals ~~ Positional, 'did Kernel.signals return a list';
+    is $*KERNEL.signals.elems, $*KERNEL.signals.grep(Signal|Any).elems,
+      "do we have Signals only?  and Any's of course";
+
+    my $hup = $*KERNEL.signal(SIGHUP);
+    isa_ok $hup, Int, 'did we get an Int back';
+    isnt $hup, 0, "no signal should come out as 0";
+    is $*KERNEL.signal("SIGHUP"), $hup, "also ok as string?";
+    is $*KERNEL.signal("HUP"),    $hup, "also ok as partial string?";
+    is $*KERNEL.signal($hup),     $hup, "also ok as Int?";
+}
 
 # vim: ft=perl6
