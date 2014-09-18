@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 16;
 
 my $program = 'async-print-tester';
 my $source = '
@@ -47,8 +47,10 @@ await $psa;
 ok $pc.close-stdin, 'did the close of STDIN work';
 my $ps = await $pm;
 
-#?rakudo todo "not getting a Proc::Status back, but Any"
+#?rakudo 3 todo "not getting a Proc::Status back, but Any"
 isa_ok $ps, Proc::Status;
+ok $ps, 'was execution successful';
+is $ps.?exit, 0, 'is the status ok';
 
 is $stdout, "Started\nHello World\nDone\n", 'did we get STDOUT'; # seems to flap
 is $stderr, "Oops!\n",                      'did we get STDERR';
