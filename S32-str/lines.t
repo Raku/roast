@@ -4,7 +4,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 43;
+plan 47;
 
 for False, True -> $eager {
     is "a\nb\n\nc".lines(:$eager).join('|'),
@@ -50,10 +50,14 @@ for False, True -> $eager {
       'a|b||c', 'mixed .lines with *';
     is "a\nb\r\rc\r".lines(2,:$eager).join('|'),
       'a|b',    'mixed .lines with limit';
+
+    is lines("a\nb\nc\n",:$eager).join('|'), 'a|b|c', '&lines';
+    is lines("a\nb\nc\n",2,:$eager).join('|'), 'a|b', '&lines(2)';
 }
 
-is lines("a\nb\nc\n").join('|'), 'a|b|c', '&lines';
-is lines("a\nb\nc\n",2).join('|'), 'a|b', '&lines(2)';
+is lines("a\nb\nc\n",:count), 3, 'lines(Str, :count)';
+is "a\nb\nc\n".lines(:count), 3, 'Str.lines(:count)';
+
 
 # RT #115136
 is_run( 'print lines[0]',
