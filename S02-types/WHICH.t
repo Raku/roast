@@ -100,7 +100,6 @@ my @normal = <
   Regex
   Routine
   Scalar
-  Seq
   Set
   SetHash
   Signature
