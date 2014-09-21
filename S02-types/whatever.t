@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 86;
+plan 87;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -177,9 +177,10 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 # RT #122708
 {
     isa_ok * + 2,      Code, "'* + 2' curries";
-    #?rakudo 2 todo 'RT #122708 - currying of min/max'
+    #?rakudo 3 todo 'RT #122708 - currying of min/max'
     isa_ok * min 2,    Code, "'* min 2' curries";
     isa_ok * max 2,    Code, "'* max 2' curries";
+    isa_ok * max *,    Code, "'* max *' curries";
 }
 
 # Ensure that in *.foo(blah()), blah() is not called until we invoke the closure.
