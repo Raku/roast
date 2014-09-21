@@ -43,9 +43,9 @@ plan 38;
     is($($a),     $a, '$($a) is just $a');
 
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
-    isa_ok((item $a, $b).WHAT, Array, '(item $a, $b) makes an Array');
+    isa_ok((item $a, $b).WHAT, Parcel, '(item $a, $b) makes a Parcel');
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
-    isa_ok(item($a, $b).WHAT,  Array, 'item $a, $b makes an Array');
+    isa_ok(item($a, $b).WHAT,  Parcel, 'item $a, $b makes a Parcel');
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
     isa_ok($($a, $b).WHAT,     Parcel, '$ $a, $b makes a Parcel');
     my @array = ($a, $b);
