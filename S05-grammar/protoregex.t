@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 30;
+plan 31;
 
 grammar Alts {
     token TOP { ^ <alt> $ };
@@ -128,18 +128,24 @@ is ~LTM.subparse('aaa', :rule('block')),   'aa',     'However, code blocks do te
         token nmstrt   {<[_ a..z ]>}
         token nmreg    {<[_ \- a..z 0..9]>+}
         token ident    {'-'?<nmstrt><nmreg>*}
-        token num      {[\+|\-]?\d+}
+        token id2      {'-'?<nmstrt><nmreg>*}
+        token num      {< + - >?\d+}
 
         proto token term {*}
-        token term:sym<ident>   {<ident>}
-        token term:sym<num>  {<num>}
+        token term:sym<ident> {<ident>}
+        token term:sym<num>   {<num>}
+
+        proto token term2 {*}
+        token term2:sym<ident> {<ident=.id2>}
+        token term2:sym<num>   {<num>}
     }
 
     is ~G.subparse("-42", :rule<num>), '-42', 'num parse';
     is ~G.subparse("-my_id", :rule<ident>), '-my_id', 'id parse';
     is ~G.subparse("my_id", :rule<term>), 'my_id', 'term parse';
-    #?rakudo todo 'RT #120146'
-    is ~G.subparse("-my_id", :rule<term>), '-my_id', 'term parse, leading "-"';
+    #?rakudo 2 todo 'RT #120146'
+    is ~G.subparse("-my_id", :rule<term>), '-my_id', '<ident> override';
+    is ~G.subparse("-my_id", :rule<term>), '-my_id', '<ident> alias';
 }
 
 # vim: ft=perl6
