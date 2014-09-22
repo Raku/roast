@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 21;
+plan 24;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT.gist, Match.gist,    'got right type';
@@ -25,6 +25,14 @@ is $/.kv.elems,       0,        '.kv (empty)';
 nok 'abde' ~~ /\d/,             'no match';
 nok $/.Bool,                    'failed match is False';
 is  $/.Str,          '',        'false match stringifies to empty string';
+
+# RT #76998, cmp. http://perl6advent.wordpress.com/2013/12/17/
+{
+    my $res = do { 'abc' ~~ /a $<foo>=[\w+]/; :$<foo> };
+    ok $res ~~ Pair, ':$<foo> returns a pair';
+    ok $res.key eq 'foo', 'its key is "foo"';
+    ok $res.value ~~ Match:D, 'the pairs value is a defined match object';
+}
 
 my $c;
 #?rakudo skip 'Unsupported use of $¢ variable'
