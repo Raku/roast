@@ -56,14 +56,13 @@ is (1/4, 1/2, 1 ... 8, 9 ... *)[^10].join(' '),
     '0.25 0.5 1 2 4 8 9 10 11 12',
     'chained infinite numeric sequence';
 #?niecza skip 'Slicel lists are NYI'
-#?rakudo todo 'Slicel lists are NYI'
-is infix:<...>(1/4, 1/2, 1;   8, 9;   *).join(' '),
-    '1/4 1/2 1 2 4 8 9 10 11 12',
+is infix:<...>(1/4, 1/2, 1;   8, 9;   *)[^10].join(' '),
+    '0.25 0.5 1 2 4 8 9 10 11 12',
     "chained infinite numeric sequence (with 'infix:<...>')";
 is (1, 4, 7 ... 16, 16 ... *)[^8].join(' '),
     '1 4 7 10 13 16 16 16',
     'chained eventually constant numeric sequence';
-    
+
 # The following is now an infinite sequence...
 # is (0, 2 ... 7, 9 ... 14).join(' '),
 #     '0 2 4 6 7 9 11 13',
