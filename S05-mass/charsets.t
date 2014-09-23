@@ -33,7 +33,6 @@ plan 17;
     #?rakudo.parrot todo 'punct characters'
     #?rakudo.jvm todo 'Unicode 6.3 -- punct characters'
     is $latin-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, 'punct chars';
-    #?rakudo.parrot todo 'unicode 6.0 punct characters'
     #?rakudo.jvm todo 'Unicode 6.3 -- punct characters'
     is $latin-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, ':Punctuation chars';
 

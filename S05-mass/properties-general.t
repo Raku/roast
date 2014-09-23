@@ -755,7 +755,6 @@ ok(!( "\x[200C]" ~~ m/^<-:Other>$/ ), q{Don't match inverted <Other>} );
 ok(!( "\x[AC00]"  ~~ m/^<:Other>$/ ), q{Don't match unrelated <Other>} );
 ok("\x[AC00]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
 ok("\x[AC00]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
-#?rakudo.parrot 3 todo "Unicode spec change in v6.1"
 ok(!( "\x[A679]"  ~~ m/^<:Other>$/ ), q{Don't match unrelated <Other>} );
 ok("\x[A679]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
 ok("\x[A679]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
@@ -817,7 +816,6 @@ ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Forma
     ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
 }
 #?rakudo.jvm 3 todo "Unicode spec change in v6.1"
-#?rakudo.parrot 3 todo "Unicode spec change in v6.1"
 ok(!( "\c[KHMER VOWEL INHERENT AQ]"   ~~ m/^<:Format>$/ ),  q{Don't match unrelated <Format>} );
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
