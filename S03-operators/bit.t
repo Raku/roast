@@ -33,7 +33,7 @@ plan 37;
      'numeric bitwise negation';
 
   # Negative numbers.  These really need more tests for bigint vs sized natives
-  #?rakudo.parrot 3 todo "RT #122310"
+  # RT #122310
   is (-5 +& -2),(-6), "logical AND of two negative Int is twos complement";
   is (-7 +| -6),(-5), "logical OR of two negative Int is twos complement";
   is (-7 +^ -6),( 3), "logical XOR of two negative Int is twos complement";
