@@ -134,10 +134,11 @@ is (1, 2 ... 0).[^3], (1,2,3), 'No more: limit value is on the wrong side';
 ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
 # RT #75316
-#?rakudo todo 'mysterious'
-#?niecza skip 'Failure NYI'
-isa_ok (1...()), Failure,
-    'empty list on right side of sequence operator does not cause infinite loop';
+#?niecza skip 'Typed exceptions NYI'
+throws_like { 1 ... () },
+     X::AdHoc,
+     'RT# 75698: empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
+     message => 'Element shifted from empty list';
 
 # RT #73508
 is (1,2,4...*)[10], 1024,
