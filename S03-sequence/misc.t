@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan 23;
 
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
@@ -93,6 +93,15 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 < 2000 }, 'a', *~'z' ... { $_.char
     my @rt80574 := -> { 'zero', 'one' } ... *;
     #?rakudo todo 'RT #80574'
     is @rt80574[0], 'zero', 'Generator output is flattened';
+}
+
+# RT #116348
+{
+    is (10, 8 ... 2|3).join(' '), '10 8 6 4 2', 'sequence with RHS junction I';
+    is (11, 9 ... 2|3).join(' '), '11 9 7 5 3', 'sequence with RHS junction II';
+    sub postfix:<!!>($x) { [*] $x, $x - 2 ... 2|3 };
+    is 4!!, 8, 'sequence with RHS junction III';
+    is 5!!, 15, 'sequence with RHS junction IV';
 }
 
 # vim: ft=perl6
