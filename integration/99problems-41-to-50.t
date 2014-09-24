@@ -81,11 +81,10 @@ plan 13;
     
     grammar LogicalExpr {
 
-        token TOP {
-            'table(' ~ ')' [
-                <id>  +%% ','
-                <term>
-                ]
+        rule TOP {
+            'table(' ~ ').' [
+                [ <id> ',' ]* <expr>
+             ]
         }
 
         token id {<[ A .. Z ]>}
@@ -99,9 +98,37 @@ plan 13;
         token op:sym<impl> {<sym>}
         token op:sym<equ>  {<sym>}
 
+        proto token expr {*}
+        token expr:sym<term> {<term>}
+
         proto token term {*}
         token term:sym<var>  {<id>}
         token term:sym<func> {<op>'(' ~ ')' <term> **2% ','}
+
+        method truth-table($expr,$actions) {
+
+            $.parse($expr, :actions($actions) );
+            my @vars = @( $/.ast<vars> );
+            my $truth-func = $/.ast<func>;
+
+            sub the-truth(@vals) {
+                # setup symbol table and compute result
+                our %*VAR = @vars Z=> @vals;
+                @vals.push: $truth-func();
+                @vals.map: {$_ ?? 'true' !! 'fail'};
+            }
+
+            my @table;
+
+            # generate the truth table, as per spec
+            for (0 .. 2 ** @vars-1).reverse -> $mask {
+                my $n = @vars-1;
+                my @vals = @vars.map: {($mask +& (2**$n--))};
+                @table.push: ~the-truth(@vals);
+            }
+
+            make @table;
+        }
     }
 
     class LogicalExpr::Actions {
@@ -109,11 +136,12 @@ plan 13;
         method TOP($/) {
             make {
                 vars => @<id>>>.ast,
-                func => $<term>.ast,
+                func => $<expr>.ast,
             };
         }
 
         method id($/) {make ~$/}
+        method expr:sym<term>($/) { make $<term>.ast }
 
         # generate closures. defer processing
         method op:sym<and>($/)  {make sub ($a, $b){ $a and $b     }}
@@ -121,7 +149,7 @@ plan 13;
         method op:sym<nand>($/) {make sub ($a, $b){ !($a and !$b) }}
         method op:sym<nor>($/)  {make sub ($a, $b){ !($a or $b)   }}
         method op:sym<xor>($/)  {make sub ($a, $b){ $a != $b      }}
-        method op:sym<impl>($/) {make sub ($a, $b){ !($a and !$b) }}
+        method op:sym<impl>($/) {make sub ($a, $b){ !(!$a and $b) }}
         method op:sym<equ>($/)  {make sub ($a, $b){ $a == $b      }}
 
         method term:sym<var>($/)   {
@@ -138,35 +166,13 @@ plan 13;
                 $func( |@args.map: {.()} )
             }
         }
+
     }
+ 
+    my $parser = LogicalExpr.new;
+    my $actions = LogicalExpr::Actions.new;
 
-    sub truth-table($expr) {
-        my $actions = LogicalExpr::Actions.new;
-
-        LogicalExpr.parse($expr, :actions($actions) );
-        my @vars = @( $/.ast<vars> );
-        my $truth-func = $/.ast<func>;
-
-        sub the-truth(@vals) {
-            # setup symbol table and compute result
-            our %*VAR = @vars Z=> @vals;
-            @vals.push: $truth-func();
-            @vals.map: {$_ ?? 'true' !! 'fail'};
-        }
-
-        my @table;
-
-        # generate the truth table, as per spec
-        for (0 .. 2 ** @vars-1).reverse -> $mask {
-            my $n = @vars-1;
-            my @vals = @vars.map: {($mask +& (2**$n--))};
-            @table.push: ~the-truth(@vals);
-        }
-
-        make @table;
-    }
-   
-    is_deeply truth-table('table(A,B,and(A,or(A,B)))'),
+    is_deeply $parser.truth-table('table(A,B,and(A,or(A,B))).',$actions),
     ['true true true',
      'true fail true',
      'fail true fail',
@@ -189,7 +195,29 @@ plan 13;
     # fail true fail
     # fail fail fail
 
-    skip "Test(s) not yet written: (*) Truth tables for logical expressions (2).", 1;
+    grammar LogicalExpr::P47 is LogicalExpr {
+        rule expr:sym<term>  { <term> <!before <op>> }
+        rule expr:sym<infix> { <term> <op> <term> }
+        rule term:sym<not>   { <sym> <term=.expr> }
+        rule term:sym<paren> { '(' ~ ')' [ <term=.expr> ] }
+    }
+
+    class LogicalExpr::P47::Actions is LogicalExpr::Actions {
+        method term:sym<not>($/)   { make sub {not $<term>.ast()} }
+        method term:sym<paren>($/) { make $<term>.ast }
+        method expr:sym<infix>($/) { make $.term:sym<func>($/) }
+    }
+
+    my $parser = LogicalExpr::P47.new;
+    my $actions = LogicalExpr::P47::Actions.new;
+
+    is_deeply $parser.truth-table('table(A,B, A and (A or not B)).',$actions),
+    ['true true true',
+     'true fail true',
+     'fail true fail',
+     'fail fail fail',],
+    'P47 (**) Truth tables for logical expressions (2).';
+
 }
 
 {
