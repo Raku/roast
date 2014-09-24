@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 108;
+plan 110;
 
 # L<S02/Names and Variables/appropriate adverb to the subscript>
 
@@ -351,5 +351,15 @@ plan 108;
     is_deeply %hash<0 1 2>:!v, (42,Any,23),
         "non-existing entries should not be weeded out (4:!v)";
 } #16
+
+# RT #120739
+{
+    my @array;
+    lives_ok { for @array[*]:kv -> $k, $v { } },
+        'RT #120739 :kv on an whatever slice of an empty array used in for loop';
+    my %hash;
+    lives_ok { for %hash{*}:kv -> $k, $v { } },
+        'RT #120739 :kv on an whatever slice of an empty hash used in for loop';
+}
 
 # vim: ft=perl6

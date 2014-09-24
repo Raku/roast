@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan 22;
 
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
@@ -56,14 +56,13 @@ is (1/4, 1/2, 1 ... 8, 9 ... *)[^10].join(' '),
     '0.25 0.5 1 2 4 8 9 10 11 12',
     'chained infinite numeric sequence';
 #?niecza skip 'Slicel lists are NYI'
-#?rakudo todo 'Slicel lists are NYI'
-is infix:<...>(1/4, 1/2, 1;   8, 9;   *).join(' '),
-    '1/4 1/2 1 2 4 8 9 10 11 12',
+is infix:<...>(1/4, 1/2, 1;   8, 9;   *)[^10].join(' '),
+    '0.25 0.5 1 2 4 8 9 10 11 12',
     "chained infinite numeric sequence (with 'infix:<...>')";
 is (1, 4, 7 ... 16, 16 ... *)[^8].join(' '),
     '1 4 7 10 13 16 16 16',
     'chained eventually constant numeric sequence';
-    
+
 # The following is now an infinite sequence...
 # is (0, 2 ... 7, 9 ... 14).join(' '),
 #     '0 2 4 6 7 9 11 13',
@@ -94,6 +93,14 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 < 2000 }, 'a', *~'z' ... { $_.char
     my @rt80574 := -> { 'zero', 'one' } ... *;
     #?rakudo todo 'RT #80574'
     is @rt80574[0], 'zero', 'Generator output is flattened';
+}
+
+# RT #116348
+{
+    is (10, 8 ... 2|3).join(' '), '10 8 6 4 2', 'sequence with RHS junction I';
+    is (11, 9 ... 2|3).join(' '), '11 9 7 5 3', 'sequence with RHS junction II';
+    sub postfix:<!!>($x) { [*] $x, $x - 2 ... 2|3 };
+    is (4!!, 5!!).join(' '), "8 15", 'sequence with RHS junction III';
 }
 
 # vim: ft=perl6
