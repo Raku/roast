@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 23;
+plan 22;
 
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
@@ -100,8 +100,7 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 < 2000 }, 'a', *~'z' ... { $_.char
     is (10, 8 ... 2|3).join(' '), '10 8 6 4 2', 'sequence with RHS junction I';
     is (11, 9 ... 2|3).join(' '), '11 9 7 5 3', 'sequence with RHS junction II';
     sub postfix:<!!>($x) { [*] $x, $x - 2 ... 2|3 };
-    is 4!!, 8, 'sequence with RHS junction III';
-    is 5!!, 15, 'sequence with RHS junction IV';
+    is (4!!, 5!!).join(' '), "8 15", 'sequence with RHS junction III';
 }
 
 # vim: ft=perl6
