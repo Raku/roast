@@ -43,6 +43,7 @@ is((&foo.assuming:x(1):y(2))(), foo(1, 2), "same thing, but more pre colon");
 #?niecza todo
 ok(!(try { &foo.assuming(f => 3) }), "can't curry nonexistent named param");
 
+use lib '.';
 # L<S06/Currying/The result of a use statement>
 #?niecza todo
 eval_lives_ok q'

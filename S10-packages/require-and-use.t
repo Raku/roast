@@ -6,6 +6,8 @@ use Test;
 
 plan 18;
 
+use lib '.';
+
 my @tests = (
   "t::spec::packages::RequireAndUse1", { $^a == 42 },
   "t::spec::packages::RequireAndUse2", { $^a != 23 },
