@@ -31,8 +31,8 @@ Some edge and error cases for open()
 # opening directories
 {
     #?rakudo.parrot todo "?"
-    lives_ok { open('t') }, 'opening a directory works';
-    dies_ok { open('t', :w) }, 'opening a directory as writable fails';
+    dies_ok { open('t').close },     'opening a directory fails';
+    dies_ok { open('t', :w).close }, 'opening a directory as writable fails';
 }
 
 

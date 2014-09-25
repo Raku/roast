@@ -24,7 +24,7 @@ is $path.is-relative, False,   'is-relative';
 
 isa_ok $path.path, IO::Path, 'IO::Path.path returns IO::Path';
 #?niecza skip 'IO::Handle still called IO'
-isa_ok $path.IO,   IO::Handle, 'IO::Path.IO returns IO::Handle';
+isa_ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 
 # Try to guess from context that the correct backend is loaded:
 #?niecza skip 'is-absolute NYI'

@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 86;
+plan 87;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -246,10 +246,10 @@ $out.close;
 #?niecza skip 'IO.close'
 {
     my $line;
-    my $io = $filename.IO;
-    lives_ok { $line = $io.get; }, "can read lines without explicitly opening IO";
-    is $line, 'Hello World', 'got the right line from .IO.get';
-    $io.close;
+    my $handle = $filename.IO.open;
+    lives_ok { $line = $handle.get; }, "can read lines";
+    is $line, 'Hello World', 'got the right line';
+    ok $handle.close, 'close was successful';
 }
 unlink($filename);
 
