@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 8;
 
 sub f($x) returns Int { return $x };
 
@@ -15,5 +15,13 @@ sub g($x) returns  Int { $x };
 
 lives_ok { g(3)   },    'type check allows good implicit return';
 dies_ok  { g('m') },    'type check forbids bad  implicitreturn';
+
+#RT #77158
+{
+    ok :(Int).perl eq ':(Int)',
+        "RT #77158 Doing .perl on an :(Int)";
+    ok :(Array of Int).perl eq ':(Array[Int])',
+        "RT #77158 Doing .perl on an :(Array of Int)";
+}
 
 # vim: ft=perl6
