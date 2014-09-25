@@ -95,7 +95,7 @@ ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
 }
 
 # L<S03/Traversing arrays in parallel/"but a short list may always be extended arbitrarily">
-#?rakudo todo "nom regression"
+#?rakudo todo RT #122849
 #?niecza todo
 {
     is (1, 2, * Z <a b c d>).join('|'),
