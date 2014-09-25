@@ -1,7 +1,7 @@
 use v6;
 use Test;
- 
-plan 37;
+
+plan 39;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
@@ -56,9 +56,17 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 #?niecza skip 'munch NYI'
 {
     ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
-    #?rakudo 2 skip 'Decrement out of range'
-    ok ('ZZ' ... 'A').munch(1000).elems < 1000, "'ZZ' ... 'A' does not go on forever";
-    ok ('Z' ... 'AA').munch(1000).elems < 1000, "'Z' ... 'AA' does not go on forever";
+
+    is ('ZZ' ... 'AA')[*-1], 'AA', "last element of 'ZZ' ... 'AA' is 'AA'";
+    throws_like { 'ZZ' ... 'A' },
+        X::AdHoc,
+        "Str decrement fails after 'AA': leftmost characters are never removed",
+        message => 'Decrement out of range';
+    is ('Y', 'Z' ... 'AA').join(' '), 'Y Z AA', "'Y', 'Z' ... 'AA' works";
+    throws_like { 'Z' ... 'AA' },
+        X::AdHoc,
+        "'Z' ... 'AA' fails: only 1 RHS value and ('Z' before 'AA') is False",
+        message => 'Decrement out of range';
 }
 
 is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
@@ -78,7 +86,7 @@ is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
     multi infix:<eqv> (Periodic $x, Periodic $y) { $x.val eqv $y.val }
     multi infix:<eqv> (Periodic $x, Int $n)      { $x.val eqv $n }
     my $f = { Periodic.new(val => $^v) };
-    
+
     is ($f(0) ... 5)[^7].join(' '), 'P0 P1 P2 P0 P1 P2 P0', 'increasing periodic sequence';
     is ($f(0) ... -1)[^7].join(' '), 'P0 P2 P1 P0 P2 P1 P0', 'decreasing periodic sequence';
 
