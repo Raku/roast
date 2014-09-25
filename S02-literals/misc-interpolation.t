@@ -10,7 +10,7 @@ These tests derived from comments in L<http://use.perl.org/~autrijus/journal/233
 
 =end pod
 
-plan 48;
+plan 50;
 
 my $world = "World";
 my $number = 1;
@@ -122,5 +122,12 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
 #?rakudo.jvm todo 'RT #122583'
 is "$($_ * $_ if $_ % 2 for 0..10)", '1 9 25 49 81', '$(...) list comprehension';
 is "{($_ * $_ if $_ % 2 for 0..10)}", '1 9 25 49 81', '{(...)} list comprehension';
+
+# RT #76608
+{
+    my $y = "foo$(my $x = 42)bar";
+    ok $x eq 42, "RT #76608 simple assignment";
+    ok $y eq "foo42bar", "RT #76608 variable interpolation inside string";
+}
 
 # vim: ft=perl6
