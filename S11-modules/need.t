@@ -3,6 +3,8 @@ use v6;
 use Test;
 plan 2;
 
+use lib '.';
+
 {
     need t::spec::packages::Export_PackA;
 

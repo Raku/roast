@@ -9,6 +9,7 @@ plan 9;
 
 # test that 'use' imports class names defined in importet packages
 
+use lib '.';
 use t::spec::packages::UseTest;
 
 ok Stupid::Class.new(), 'can instantiate object of "imported" class';

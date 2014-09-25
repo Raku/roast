@@ -7,6 +7,7 @@ plan 2;
 # imports.
 
 {
+    use lib '.';
     use t::spec::packages::S11-modules::Foo;
     is foo(), 'Foo::foo', 'could import foo()';
 }

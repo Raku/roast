@@ -5,6 +5,8 @@ plan 16;
 
 # L<S11/"Compile-time Importation"/>
 
+use lib '.';
+
 {
     use t::spec::packages::S11-modules::Foo;
 
