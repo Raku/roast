@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 100;
+plan 101;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -115,6 +115,9 @@ is showkv($ks (+) $b), "blood:3 love:2 rhetoric:2", "Bag addition (SetHash / Bag
 isa_ok ($ks (+) $b), Bag, "... and it's actually a Bag (texas)";
 is showkv($kb (+) $b), "blood:3 love:4 rhetoric:1", "Bag addition (BagHash / Bag) works (texas)";
 isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
+
+# for https://rt.perl.org/Ticket/Display.html?id=122810
+ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - I mean bag - with 50k elems and lives";
 
 # msubset
 {
