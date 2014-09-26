@@ -94,15 +94,6 @@ ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
     is(~@rv, "2 4 6 8", 'hyper-add');
 }
 
-# L<S03/Traversing arrays in parallel/"but a short list may always be extended arbitrarily">
-#?rakudo todo 'RT #122849'
-#?niecza todo
-{
-    is (1, 2, * Z <a b c d>).join('|'),
-       '1|a|2|b|2|c|2|d',
-       'A * as the last value extends lists for infix:<Z> (zip)';
-}
-
 # L<S03/List infix precedence/"the zip operator">
 #for RT #73836
 my @z=2,3;
