@@ -272,7 +272,7 @@ plan 13;
     my $parser = LogicalExpr::Infix.new;
     my $actions = LogicalExpr::Infix::Actions.new;
 
-    is_deeply $parser.truth-table('table(A,B,C, (A and (B or C)) equ (A and B or A and C)).',$actions),
+    is_deeply $parser.truth-table('table(A,B,C, A and (B or C) equ A and B or A and C).',$actions),
     ['true true true true',
      'true true fail true',
      'true fail true true',
