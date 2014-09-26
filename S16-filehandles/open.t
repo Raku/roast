@@ -30,7 +30,6 @@ Some edge and error cases for open()
 
 # opening directories
 {
-    #?rakudo.parrot todo "?"
     dies_ok { open('t').close },     'opening a directory fails';
     dies_ok { open('t', :w).close }, 'opening a directory as writable fails';
 }
