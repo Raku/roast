@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 33;
+plan 32;
 
 my $str1 = "foo";
 my $str2 = "bar";
