@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 78;
+plan 79;
 
 #L<S03/Autoincrement precedence>
 
@@ -177,7 +177,7 @@ is(%z{0},           $base, '%z{0}');
 
 {
     # L<S03/Autoincrement precedence/Increment of a>
-   
+
     my $x = "b";
     is $x.succ, 'c', '.succ for Str';
     is $x.pred, 'a', '.pred for Str';
@@ -193,6 +193,13 @@ is(%z{0},           $base, '%z{0}');
 
 # RT #63644
 eval_dies_ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
+
+# RT #99731
+{
+    $_ = 4;
+    .++;
+    is $_, 5, 'increment of $_ via .++';
+}
 
 # RT #113816 - autoincrement of bools
 {
@@ -246,7 +253,7 @@ eval_dies_ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
     $y = ++$x;
     is $y, True, "True preincrement returns True";
     is $x, True, "True postincrement sets True";
-    
+
     #predecrement tests
     $x = Bool;
     $y = --$x;
