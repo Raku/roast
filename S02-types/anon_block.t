@@ -82,7 +82,7 @@ my $foo2;
 is($foo2, "blah", "lone block w/out a semicolon actually executes it's content");
 
 my $foo4;
-({$foo4 = "blah"},);
+({$foo4 = "blah"});
 ok(!defined($foo4), "block enclosed by parentheses should not auto-execute (2)");
 
 my $one;

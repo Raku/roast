@@ -153,7 +153,7 @@ plan 28;
 {
     my $rt66304 = (1, 2, 4);
     isa_ok $rt66304, Parcel, 'List assigned to scalar is-a Parcel';
-    is( $rt66304.WHAT, (1, 2, 4).WHAT,
+    is( $rt66304.WHAT.perl, (1, 2, 4).WHAT.perl,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
     throws_like { $rt66304[1] = 'ro' },
       X::Assignment::RO,

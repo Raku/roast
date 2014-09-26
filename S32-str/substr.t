@@ -133,16 +133,16 @@ sub p (Int $a) {  my $p = $a; return $p }
 #?niecza todo
 eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
-# RT 76682
+# RT #76682
 #?niecza skip "'Failure' used at line 244"
 {
-    is "foo".substr(4), Failure, 'substr with start beyond end of string is Failure'
+    isa_ok "foo".substr(4), Failure, 'substr with start beyond end of string is Failure';
 }
 
-# RT 115086
+# RT #115086
 #?niecza todo
 {
-    is "abcd".substr(2, Inf), 'cd', 'substr to Inf'
+    is "abcd".substr(2, Inf), 'cd', 'substr to Inf';
 }
 
 {
