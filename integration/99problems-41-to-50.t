@@ -83,7 +83,7 @@ plan 13;
 
         rule TOP {
             'table(' ~ ').' [
-                [ <id> ',' ]* <expr>
+                [ <id> ',' ]* <expr=.term>
              ]
         }
 
@@ -98,12 +98,9 @@ plan 13;
         token op:sym<impl> {<sym>}
         token op:sym<equ>  {<sym>}
 
-        proto token expr {*}
-        token expr:sym<term> {<term>}
-
         proto token term {*}
         token term:sym<var>  {<id>}
-        token term:sym<func> {<op>'(' ~ ')' <term> **2% ','}
+        token term:sym<func> {<op>'(' ~ ')' <expr=.term> **2% ','}
 
         method truth-table($expr,$actions) {
 
@@ -141,7 +138,6 @@ plan 13;
         }
 
         method id($/) {make ~$/}
-        method expr:sym<term>($/) { make $<term>.ast }
 
         # generate closures. defer processing
         method op:sym<and>($/)  {make sub ($a, $b){ $a and $b     }}
@@ -161,7 +157,7 @@ plan 13;
 
         method term:sym<func>($/)  {
             my $func = $<op>.ast;
-            my @args = @<term>>>.ast;
+            my @args = @<expr>>>.ast;
             make sub () {
                 $func( |@args.map: {.()} )
             }
@@ -195,21 +191,54 @@ plan 13;
     # fail true fail
     # fail fail fail
 
-    grammar LogicalExpr::P47 is LogicalExpr {
-        rule expr:sym<term>  { <term> <!before <op>> }
-        rule expr:sym<infix> { <term> <op> <term> }
-        rule term:sym<not>   { <sym> <term=.expr> }
-        rule term:sym<paren> { '(' ~ ')' [ <term=.expr> ] }
+    grammar LogicalExpr::Infix is LogicalExpr {
+        rule TOP {
+            'table(' ~ ').' [
+                [ <id> ',' ]* <expr(3)>
+             ]
+        }
+
+        # handle precedence via multi-dispatch and recursion
+        multi rule expr(0)   { <term> }
+        multi rule expr($p)  { <expr($p-1)> *%[ <?before <pred($p)>> <op> ] }
+
+        # precedence loosest to tightest - Supposedly Javaish.
+        multi token pred(3) {equ|impl}
+        multi token pred(2) {or|nor|xor}
+        multi token pred(1) {and|nand}
+
+        # assume tight binding for 'not'
+        rule term:sym<not>   { <sym> <term=.expr(3)> }
+        rule term:sym<paren> { '(' ~ ')' [ <term=.expr(3)> ] }
     }
 
-    class LogicalExpr::P47::Actions is LogicalExpr::Actions {
-        method term:sym<not>($/)   { make sub {not $<term>.ast()} }
+    class LogicalExpr::Infix::Actions is LogicalExpr::Actions {
+        method expr($/) {
+            if $<term> {
+                # simple term
+                make $<term>.ast;
+            }
+            else {
+                my @args = @<expr>>>.ast;
+                my @ops = @<op>>>.ast;
+
+                make sub {
+                    # left associative chain expressions + infix operations
+                    my $result = @args[0].();
+
+                    for @ops.keys -> $i {
+                        $result = @ops[$i]( $result, @args[$i+1].() );
+                    }
+                    return $result;
+                }
+            }
+        }
+        method term:sym<not>($/)   {make sub {not $<term>.ast()} }
         method term:sym<paren>($/) { make $<term>.ast }
-        method expr:sym<infix>($/) { make $.term:sym<func>($/) }
     }
 
-    my $parser = LogicalExpr::P47.new;
-    my $actions = LogicalExpr::P47::Actions.new;
+    my $parser = LogicalExpr::Infix.new;
+    my $actions = LogicalExpr::Infix::Actions.new;
 
     is_deeply $parser.truth-table('table(A,B, A and (A or not B)).',$actions),
     ['true true true',
@@ -238,8 +267,21 @@ plan 13;
     # fail true fail true
     # fail fail true true
     # fail fail fail true
-    
-    skip "Test(s) not yet written: (**) Truth tables for logical expressions (3).", 1;
+
+    # w'eve already done the heavy lifting
+    my $parser = LogicalExpr::Infix.new;
+    my $actions = LogicalExpr::Infix::Actions.new;
+
+    is_deeply $parser.truth-table('table(A,B,C, (A and (B or C)) equ (A and B or A and C)).',$actions),
+    ['true true true true',
+     'true true fail true',
+     'true fail true true',
+     'true fail fail true',
+     'fail true true true',
+     'fail true fail true',
+     'fail fail true true',
+     'fail fail fail true',],
+    'P48 (**) Truth tables for logical expressions (3).';
 
 }
 
