@@ -19,7 +19,7 @@ my @rakudo-expected = <Makefile VERSION CREDITS LICENSE>;
 ok @rakudo-expected (<=) @rakudo-files, "dir"
    or diag "missing: {@rakudo-expected (-) @rakudo-files}";
 
-my @test-files = map {~$_}, dir 't';
+my @test-files = map *.subst('\\', '/'), dir 't';
 my @test-expected = <t/spectest.data>;
 ok @test-expected (<=) @test-files, 'dir'
    or diag "got: {@test-files} missing: {@test-expected (-) @test-files}";
