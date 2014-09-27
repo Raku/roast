@@ -26,7 +26,7 @@ my $checkpoint-output = capture-said( {
     checkpoint;
 });
 
-is $checkpoint-output, q:to"END", 'checkpoint example';
+is $checkpoint-output, q:to"END".subst("\r", "", :g), 'checkpoint example';
 CHECKPOINT 1
 CHECKPOINT 2
 CHECKPOINT 2
