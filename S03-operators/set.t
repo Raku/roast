@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 296;
+plan 288;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ') }
@@ -126,19 +126,7 @@ isa_ok ($s (^) $ks), Set, "... and it's actually a Set";
 is showset($ks (^) $s), showset(set <is isn't your day>), "Set symmetric difference with SetHash is correct";
 isa_ok ($ks (^) $s), Set, "... and it's actually a Set";
 
-is showset($s (^) $b), showset($s (|) $b), "Bag symmetric difference with Set is correct";
-isa_ok ($s (^) $b), Set, "... and it's actually a Set";
-is showset($b (^) $s), showset($s (|) $b), "Set symmetric difference with Bag is correct";
-isa_ok ($b (^) $s), Set, "... and it's actually a Set";
-
-#?niecza todo "Test is wrong, implementation is wrong"
-#?rakudo todo 'huh?'
-is showset($s (^) $kb), showset(($s (|) $kb) (-) set <your>), "BagHash subtracted from Set is correct";
-isa_ok ($s (^) $kb), Set, "... and it's actually a Set";
-#?niecza todo "Test is wrong, implementation is wrong"
-#?rakudo todo 'huh?'
-is showset($kb (^) $s), showset(($s (|) $kb) (-) set <your>), "Set subtracted from BagHash is correct";
-isa_ok ($kb (^) $s), Set, "... and it's actually a Set";
+# symmetric difference with Bag moved to bag.t
 
 # is subset of
 

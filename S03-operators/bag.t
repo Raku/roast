@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 109;
+plan 117;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -57,6 +57,21 @@ isa_ok ($s (&) $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong?'
 is showkv($kb (&) <glad green blood>), "blood:1", "BagHash intersection with array of strings works (texas)";
 isa_ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
+
+# symmetric difference
+
+#?rakudo 8 todo 'Rakudo is getting this wrong at the moment, fix coming soon'
+is showkv($s (^) $b), showkv($s (|) $b), "Bag symmetric difference with Set is correct";
+isa_ok ($s (^) $b), Bag, "... and it's actually a Bag";
+is showkv($b (^) $s), showkv($s (|) $b), "Set symmetric difference with Bag is correct";
+isa_ok ($b (^) $s), Bag, "... and it's actually a Bag";
+
+#?niecza todo "Test is wrong, implementation is wrong"
+is showkv($s (^) $kb), showkv(($s (|) $kb) (-) ($s (&) $kb)), "BagHash subtracted from Set is correct";
+isa_ok ($s (^) $kb), Bag, "... and it's actually a Bag";
+#?niecza todo "Test is wrong, implementation is wrong"
+is showkv($kb (^) $s), showkv(($s (|) $kb) (-) ($s (&) $kb)), "Set subtracted from BagHash is correct";
+isa_ok ($kb (^) $s), Bag, "... and it's actually a Bag";
 
 # Bag multiplication
 
