@@ -3,7 +3,9 @@ use Test;
 
 plan 7;
 
-is q:to"FIN", "Hello again.\n", 'basic heredoc with :to';
+sub un-r($str) { $str.subst("\r", "", :g) }
+
+is un-r(q:to"FIN"), "Hello again.\n", 'basic heredoc with :to';
 Hello again.
 FIN
 
@@ -13,7 +15,7 @@ HELLO WORLD noend
 
 throws_like { $str.EVAL }, X::AdHoc, 'Runaway multiline is an error, no exception object yet';
 
-is q:to[finished], "  Hello there\n    everybody\n", "indention of heredocs
+is un-r(q:to[finished]), "  Hello there\n    everybody\n", "indention of heredocs
 (1)";
   Hello there
     everybody
@@ -34,7 +36,7 @@ is $first, $second, "Indention stripped to end delimiter indention";
 my $dlrs = 21;
 my $cnts = 18;
 
-is q:to/EOF/.chop, '$dlrs dollars and {$cnts} cents.', 'no interpolation by
+is un-r(q:to/EOF/).chop, '$dlrs dollars and {$cnts} cents.', 'no interpolation by
 default';
 $dlrs dollars and {$cnts} cents.
 EOF
@@ -44,6 +46,6 @@ is q:to:c/EOF/.chop, '$dlrs dollars and 18 cents.', ':c enables closure compilat
 $dlrs dollars and {$cnts} cents.
 EOF
 
-is qq:to/EOF/.chop, '21 dollars and 18 cents.', 'heredocs with qq interpolate';
+is un-r(qq:to/EOF/).chop, '21 dollars and 18 cents.', 'heredocs with qq interpolate';
 $dlrs dollars and {$cnts} cents.
 EOF
