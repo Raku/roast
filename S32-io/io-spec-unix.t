@@ -115,7 +115,7 @@ my %split = (
 	'/././d1/'        => ('', '/./.',         'd1'),
 );
 for %split.kv -> $get, $want {
-	is $Unix.split( $get ).hash.<volume directory basename>, $want, "split: '$get' -> '$want'";
+	is $Unix.split( $get ).hash.<volume dirname basename>, $want, "split: '$get' -> '$want'";
 }
 
 my @join = (

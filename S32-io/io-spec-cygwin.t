@@ -63,7 +63,7 @@ my @split =
 	'c:/d1\\d2\\',    'c:,/d1,d2',
         '//unc/share',     '//unc/share,/,/';
 for @split -> $in, $out {
-	is $cygwin.split(|$in).hash.<volume directory basename>.join(','),
+	is $cygwin.split(|$in).hash.<volume dirname basename>.join(','),
             $out, "split: {$in.perl} -> '$out'"
 }
 

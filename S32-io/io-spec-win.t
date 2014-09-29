@@ -175,7 +175,7 @@ my @split =
 	'\\\\node\\share\\d1/d2\\file',    '\\\\node\\share,\\d1/d2,file',
 ;
 for @split -> $in, $out {
-	is $win32.split(|$in).hash.<volume directory basename>.join(','),
+	is $win32.split(|$in).hash.<volume dirname basename>.join(','),
           $out, "split: {$in.perl} -> '$out'"
 }
 
