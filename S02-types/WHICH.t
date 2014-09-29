@@ -44,6 +44,10 @@ my @normal = <
   IO::ArgFiles
   IO::Handle
   IO::Path
+  IO::Path::Cygwin
+  IO::Path::QNX   
+  IO::Path::Unix  
+  IO::Path::Win32 
   IO::Socket::INET
   IO::Spec
   IO::Spec::Cygwin
