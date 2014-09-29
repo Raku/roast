@@ -1,7 +1,9 @@
 use v6;
 use Test;
 
-plan 117;
+plan 128;
+
+sub showset($s) { $s.keys.sort.join(' ') }
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -60,17 +62,22 @@ isa_ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
 # symmetric difference
 
-#?rakudo 8 todo 'Rakudo is getting this wrong at the moment, fix coming soon'
-is showkv($s (^) $b), showkv($s (|) $b), "Bag symmetric difference with Set is correct";
+sub symmetric-difference($a, $b) {
+    ($a (|) $b) (-) ($b (&) $a)
+}
+
+#?rakudo 8 todo "Rakudo update in progress, but not done yet"
+
+is showkv($s (^) $b), showkv(symmetric-difference($s, $b)), "Bag symmetric difference with Set is correct";
 isa_ok ($s (^) $b), Bag, "... and it's actually a Bag";
-is showkv($b (^) $s), showkv($s (|) $b), "Set symmetric difference with Bag is correct";
+is showkv($b (^) $s), showkv(symmetric-difference($s, $b)), "Set symmetric difference with Bag is correct";
 isa_ok ($b (^) $s), Bag, "... and it's actually a Bag";
 
 #?niecza todo "Test is wrong, implementation is wrong"
-is showkv($s (^) $kb), showkv(($s (|) $kb) (-) ($s (&) $kb)), "BagHash subtracted from Set is correct";
+is showkv($s (^) $kb), showkv(symmetric-difference($s, $kb)), "BagHash symmetric difference with Set is correct";
 isa_ok ($s (^) $kb), Bag, "... and it's actually a Bag";
 #?niecza todo "Test is wrong, implementation is wrong"
-is showkv($kb (^) $s), showkv(($s (|) $kb) (-) ($s (&) $kb)), "Set subtracted from BagHash is correct";
+is showkv($kb (^) $s), showkv(symmetric-difference($s, $kb)), "Set symmetric difference with BagHash is correct";
 isa_ok ($kb (^) $s), Bag, "... and it's actually a Bag";
 
 # Bag multiplication
@@ -186,6 +193,21 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     is showkv([(.)] $s), showkv($s.Bag), "Bag multiply reduce works on one set";
     is showkv([(.)] $s, $b), showkv({ blood => 2, love => 2 }), "Bag multiply reduce works on two sets";
     is showkv([(.)] $s, $b, $kb), showkv({ blood => 2, love => 4 }), "Bag multiply reduce works on three sets";
+
+    #?rakudo 5 skip "Crashing"
+    is showkv([(^)] @d), showset(∅), "Bag symmetric difference reduce works on nothing";
+    is showkv([(^)] $s), showset($s), "Set symmetric difference reduce works on one set";
+    isa_ok showkv([(^)] $s), Set, "Set symmetric difference reduce works on one set, yields set";
+    is showkv([(^)] $b), showkv($b), "Bag symmetric difference reduce works on one bag";
+    isa_ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one bag, yields bag";
+    #?rakudo 4 todo "Wrong answer at the moment"
+    is showkv([(^)] $s, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on a bag and a set";
+    isa_ok showkv([(^)] $s, $b), Bag, "... and produces a Bag";
+    is showkv([(^)] $b, $s), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
+    isa_ok showkv([(^)] $b, $s), Bag, "... and still produces a Bag that way too";
+    #?rakudo 2 skip "Crashing"
+    is showkv([(^)] $s, $b, $kb), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on three bags";
+    isa_ok showkv([(^)] $s, $b, $kb), Bag, "Bag symmetric difference reduce works on three bags";
 }
 
 # vim: ft=perl6
