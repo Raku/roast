@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 34;
+plan 35;
 
 # Very basic enum tests
 
@@ -79,7 +79,7 @@ enum Color <white gray black>;
 my Color $c1 = Color::white;
 ok($c1 == 0, 'can assign enum value to typed variable with long name');
 my Color $c2 = white;
-ok($c1 == 0, 'can assign enum value to typed variable with short name');
+ok($c2 == 0, 'can assign enum value to typed variable with short name');
 dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
 # conflict between subs and enums
@@ -111,6 +111,13 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     enum T2 <d e f>;
     is T1.enums.keys.sort.join('|'), 'a|b|c', 'enum keys (1)';
     is T2.enums.keys.sort.join('|'), 'd|e|f', 'enum keys (2)';
+}
+
+# RT #75370
+{
+    enum somenum <a b c d e>;
+    my somenum $temp = d;
+    ok $temp eq 'd', "RT #75370 enum name";
 }
 
 # vim: ft=perl6
