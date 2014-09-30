@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 266;
+plan 267;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -531,6 +531,12 @@ throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
     my $*foo = 0;
     throws_like { EVAL '$*foo = 1; say' }, X::Obsolete;
     is $*foo, 0, 'should be a compile time error';
+}
+
+# RT #113680
+{
+    throws_like { EVAL("use ThisDoesNotExistAtAll ") }, X::AdHoc,
+        message => "Could not find ThisDoesNotExistAtAll in any of: " ~ @*INC.join(", ");
 }
 
 # vim: ft=perl6
