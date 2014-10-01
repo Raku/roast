@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Types as Constraints"/"A variable's type is a constraint indicating what sorts">
 
-plan 50;
+plan 51;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -51,6 +51,8 @@ my Str $bar;
     # RT #121518
     eval_lives_ok('my num $alpha = Nil', 'native num type can be undefined');
     lives_ok({my Num $beta = Nil},      'object Num type can be undefined');
+    # RT #93982
+    lives_ok({my Str ($a) = ()}, 'object Str type can be undefined, list context');
 }
 
 # L<S02/Parameter types/Parameters may be given types, just like any other variable>
