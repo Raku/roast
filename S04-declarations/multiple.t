@@ -5,6 +5,7 @@ plan 6;
 # L<S04/The Relationship of Blocks and Declarations/"If you declare a lexical 
 #  twice in the same scope">
 
+# RT #83430
 eval_lives_ok 'my $x; my $x', 
               'it is legal to declare my $x twice in the same scope.';
 
