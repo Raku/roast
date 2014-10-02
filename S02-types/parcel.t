@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 48;
+plan 52;
 
 isa_ok (5, 7, 8), Parcel, '(5, 7, 8) is Parcel';
 is +(5, 7, 8), 3, 'prefix:<+> on a Parcel';
@@ -85,6 +85,16 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     ok (my $x1=42,1) !=== (42,1), '$x1 = 42,1 !==== 42,1'; # !=== not an op
     ok (my $x2=42,1) !=== (my $y=42,1), '$x2 = 42,1 !==== $y = 42,1';
     cmp_ok (my $x3=42,1), '===', (my $y2:=$x3,1), '$x3=42,1 ==== $y2 := $x3,1';
+} #4
+
+{
+    my $p = Parcel.new( <a b c> );
+    is $p.elems, 1, 'did we get the list';
+    is $p, <a b c>, 'did we get what we put in';
+
+    $p = Parcel.new( 'a','b','c' );
+    is $p.elems, 3, 'did we get the parameters';
+    is $p, <a b c>, 'did we get what we put in';
 } #4
 
 # vim: ft=perl6
