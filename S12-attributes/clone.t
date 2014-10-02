@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 35;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
@@ -137,5 +137,7 @@ is($val2, 42, '... cloned object has proper attr value');
     is_deeply $cont_clone_same.obj.arr, ['j', 'k', 'l'], 'cloned object has new value';
     is_deeply $cont.obj.arr, ['j', 'k', 'l'], 'original object has new value';
 }
+
+lives_ok { Int.clone }, 'cloning a type object does not explode';
 
 # vim: ft=perl6
