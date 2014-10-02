@@ -22,7 +22,7 @@ is $path.parent.parent, '/',   'parent of parent';
 is $path.is-absolute, True,    'is-absolute';
 is $path.is-relative, False,   'is-relative';
 
-isa_ok $path.path, IO::Path, 'IO::Path.path returns IO::Path';
+isa_ok $path.path, Str,      'IO::Path.path returns Str';
 #?niecza skip 'IO::Handle still called IO'
 isa_ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 
