@@ -20,12 +20,8 @@ plan 78;
  isa_ok($namcu,Num);
 }
 
-# Type mismatch in assignment; expected something matching type Complex but got something of type Num()
-
-#?rakudo skip 'Complex not type converted properly during assignment from Rat: RT #122347'
-#?niecza skip 'Complex not type converted properly during assignment from Rat'
 {
- my Complex $namcu =1.3;
+ my Complex $namcu = 1.3 + 0i;
  isa_ok($namcu,Complex);
 }
 
