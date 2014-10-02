@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 288;
+plan 290;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ') }
