@@ -203,8 +203,8 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
 
     is(
         '"foo  &   bar"'.trans(
-            /(' '+)/ => {' ' ~ ('&nbsp' x ($0.chars - 1))},
-            /\W/ => sub {"&#{ord($0)};"}
+            /(' '+)/ => {' ' ~ ('&nbsp;' x ($0.chars - 1))},
+            /(\W)/ => {"&#{ord($0)};"}
         ),
         '&#34;foo &nbsp;&#38; &nbsp;&nbsp;bar&#34;',
         'pairs of regexes and closures',
