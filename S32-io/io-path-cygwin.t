@@ -6,7 +6,7 @@ plan 50;
 
 # Make sure we have a controlled environment
 my $*SPEC = IO::Spec::Cygwin;
-my $*CWD  = '\\zip\\loc';
+my $*CWD  = '\\zip\\loc'.IO;
 
 my $relpath = IO::Path::Cygwin.new('foo/bar' );
 my $abspath = IO::Path::Cygwin.new('/foo/bar');
