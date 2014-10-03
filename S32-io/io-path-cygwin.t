@@ -2,7 +2,11 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 52;
+plan 50;
+
+# Make sure we have a controlled environment
+my $*SPEC = IO::Spec::Cygwin;
+my $*CWD  = '/zip/loc/';
 
 my $relpath = IO::Path::Cygwin.new('foo/bar' );
 my $abspath = IO::Path::Cygwin.new('/foo/bar');
@@ -18,12 +22,8 @@ is $path.volume,    "C:",  'volume "C:foo\\\\bar\\" -> "C:"';
 is $path.directory, "foo", 'directory "C:foo\\\\bar\\" -> "foo"';
 is $path.basename,  "bar", 'basename "C:foo\\\\bar\\" -> "bar"';
 isa_ok $path.path, Str, ".path returns Str of path";
-{
-    my $*SPEC = IO::Spec::Cygwin;  # perl does an .IO
-say $path.path;
-say $path.perl;
-    is $path.perl.EVAL, $path, ".perl loopback";
-}
+
+is $path.perl.EVAL, $path, ".perl loopback";
 
 my $uncpath = IO::Path::Cygwin.new("\\\\server\\share\\");
 is $uncpath.volume, "//server/share", 'volume "//server/share/" -> ""/server/share"';
@@ -58,13 +58,11 @@ ok IO::Path::Cygwin.new("A:b").is-relative,    '"A:b" is relative';
 is $relpath.absolute,    IO::Spec::Cygwin.canonpath("$*CWD/foo/bar"),    "absolute path from \$*CWD";
 is $relpath.absolute("/usr"), "/usr/foo/bar", "absolute path specified";
 is IO::Path::Cygwin.new("/usr/bin").relative("/usr"), "bin", "relative path specified";
-{
-    my $*SPEC = IO::Spec::Cygwin;  # .IO needs Cygwin by default
-    is $relpath.absolute.IO.relative,  "foo/bar", "relative inverts absolute";
-    is $relpath.absolute("/foo").IO.relative("\\foo"), "foo/bar", "absolute inverts relative";
-    #?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
-    is $abspath.relative.IO.absolute.IO.resolve, "\\foo\\bar", "absolute inverts relative with resolve";
-}
+
+is $relpath.absolute.IO.relative,  "foo/bar", "relative inverts absolute";
+is $relpath.absolute("/foo").IO.relative("\\foo"), "foo/bar", "absolute inverts relative";
+#?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
+is $abspath.relative.IO.absolute.IO.resolve, "\\foo\\bar", "absolute inverts relative with resolve";
 
 is IO::Path::Cygwin.new("foo/bar").parent,        "foo",            "parent of 'foo/bar' is 'foo'";
 is IO::Path::Cygwin.new("foo").parent,            ".",            "parent of 'foo' is '.'";
@@ -83,11 +81,3 @@ is $numfile.succ.succ,    "foo/file03.txt", "succ x 2";
 is $numfile.pred,    "foo/file00.txt", "pred basic";
 is IO::Path::Unix.new("foo/()").succ, "foo/()", "succ only effects basename";
 is IO::Path::Unix.new("foo/()").succ, "foo/()", "pred only effects basename";
-
-if IO::Spec.FSTYPE eq 'Win32' {
-    ok IO::Path::Cygwin.new(~$*CWD).e,        "cwd exists, filetest inheritance ok";
-    ok IO::Path::Cygwin.new(~$*CWD).d,        "cwd is a directory";
-}
-else {
-    skip "On-system tests for filetest inheritance", 2;
-}

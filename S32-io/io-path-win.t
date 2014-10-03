@@ -2,7 +2,10 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 51;
+plan 49;
+
+my $*SPEC = IO::Spec::Win32;  # .IO needs to have IO::Spec::Win32
+my $*CWD  = 'C:\\zip\\loc'.IO;
 
 my $relpath = IO::Path::Win32.new('foo\\bar' );
 my $abspath = IO::Path::Win32.new('\\foo\\bar');
@@ -55,13 +58,11 @@ ok IO::Path::Win32.new("A:b").is-relative,  '"A:b" is relative';
 is $relpath.absolute,        IO::Spec::Win32.canonpath("$*CWD\\foo\\bar"),    "absolute path from \$*CWD";
 is $relpath.absolute("\\usr"),    "\\usr\\foo\\bar",        "absolute path specified";
 is IO::Path::Win32.new("\\usr\\bin").relative("/usr"),    "bin",            "relative path specified";
-{
-    my $*SPEC = IO::Spec::Win32;  # .IO needs to have IO::Spec::Win32
-    is $relpath.absolute.IO.relative,  "foo\\bar", "relative inverts absolute";
-    is $relpath.absolute("/foo").IO.relative("\\foo"), "foo\\bar","absolute inverts relative";
-    #?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
-    is $abspath.relative.IO.absolute.IO.resolve, "\\foo\\bar",    "absolute inverts relative with resolve";
-}
+
+is $relpath.absolute.IO.relative,  "foo\\bar", "relative inverts absolute";
+is $relpath.absolute("/foo").IO.relative("\\foo"), "foo\\bar","absolute inverts relative";
+#?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
+is $abspath.relative.IO.absolute.IO.resolve, "\\foo\\bar",    "absolute inverts relative with resolve";
 
 is IO::Path::Win32.new("foo/bar").parent, "foo",    "parent of 'foo/bar' is 'foo'";
 is IO::Path::Win32.new("foo").parent,     ".",      "parent of 'foo' is '.'";
@@ -79,11 +80,3 @@ is $numfile.succ.succ,    "foo\\file03.txt", "succ x 2";
 is $numfile.pred,    "foo\\file00.txt", "pred basic";
 is IO::Path::Win32.new("foo\\()").succ, "foo\\()", "succ only effects basename";
 is IO::Path::Win32.new("foo\\()").succ, "foo\\()", "pred only effects basename";
-
-if IO::Spec.FSTYPE eq 'Win32' {
-    ok IO::Path::Win32.new(~$*CWD).e,        "cwd exists, filetest inheritance ok";
-    ok IO::Path::Win32.new(~$*CWD).d,        "cwd is a directory";
-}
-else {
-    skip "On-system tests for filetest inheritance", 2;
-}
