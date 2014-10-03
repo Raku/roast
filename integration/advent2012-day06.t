@@ -32,9 +32,10 @@ my $main = q:to"END-MAIN";
     }
     END-MAIN
 
-is_run $main, {out => "Duplicate hrmov\n", err => ''}, :args['Duplicate character removal'], 'normal main call';
+is_run $main, {out => "Duplicate hrmov\n", err => ''}, :args['Duplicate character removal'], :compiler-args['-Ilib'],
+    'normal main call';
 
-is_run $main, {out => q:to"END-TEST-OUT", err => ''}, :args['--test'], 'test main call';
+is_run $main, {out => q:to"END-TEST-OUT".subst("\r", "", :g), err => ''}, :args['--test'], :compiler-args['-Ilib'], 'test main call';
     1..2
     ok 1 - basic deduplication
     ok 2 - case insensitivity
