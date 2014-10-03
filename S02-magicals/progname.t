@@ -15,7 +15,7 @@ ok(PROCESS::<$PROGRAM> ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']pro
 #?niecza todo
 lives_ok { $*PROGRAM_NAME = "coldfusion" }, '$*PROGRAM_NAME is assignable';
 
-# RT #116164
+# RT #113078
 {
     use lib 't/spec/packages';
     use Test::Util;
