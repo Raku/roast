@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 =begin pod
 
@@ -108,6 +108,14 @@ eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
     my role R[::T] { multi method foo(T $t) { T.gist } };
     my class A does R[Str] does R[Int] { };
     is A.new.foo(5), 5.WHAT.gist, 'correct multi selected from multiple parametric roles';
+}
+
+# RT #112970
+{
+    throws_like 'sub f(Int @x) {}; f( [] )',
+        X::TypeCheck::Binding,
+        message => /Positional\[Int\]/,
+        'error message mentions expected type when a typed array in a signature fails to bind';
 }
 
 # vim: ft=perl6
