@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 5;
+plan 8;
 
 use lib '.';
 
@@ -24,3 +24,13 @@ throws_like { EVAL 'use t::spec::S12-meta::Supersede1;
                     use t::spec::S12-meta::Supersede2;' },
     X::EXPORTHOW::Conflict, directive => 'SUPERSEDE', declarator => 'class';
 
+{
+    use t::spec::S12-meta::Declare;
+    controller Home { }
+    ok Home ~~ Controller, 'Type declared with new controller declarator got Controller role added';
+}
+
+dies_ok { EVAL 'controller Fat { }' }, 'Imported declarators do not leak out of lexical scope';
+
+throws_like { EVAL 'use t::spec::S12-meta::DeclareBad;' },
+    X::EXPORTHOW::Conflict, directive => 'DECLARE', declarator => 'class';
