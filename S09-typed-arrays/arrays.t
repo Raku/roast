@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 61;
+plan 62;
 
 # L<S09/Typed arrays/>
 
@@ -33,7 +33,7 @@ plan 61;
     is @x.unshift(1), [1, 2, 3], 'can unshift from typed array (Int @x)';
 } #8
 
-# initialization 
+# initialization
 {
     lives_ok { my Int @x = 1, 2, 3 }, 'initialization of typed array';
     lives_ok { my Int @x = 1 .. 3 }, 'initialization of typed array from range';
@@ -49,7 +49,7 @@ plan 61;
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
-    
+
     ok @x.unshift, 'can unshift from typed array (@x of Int)';
 } #8
 
@@ -145,7 +145,7 @@ plan 61;
         'Can assign to untyped package array in presence of typed array';
 } #1
 
-# RT 71958
+# RT #71958
 {
     class RT71958 {
         has @.rt71958 is rw;
@@ -154,6 +154,12 @@ plan 61;
     lives_ok { RT71958.new().rt71958[0] = RT71958.new() },
              'can assign to untyped array in presence of typed array';
 } #1
+
+# RT #114968
+{
+    throws_like 'my Int @a = "ab", "cd"', X::TypeCheck::Assignment,
+        'typed arrays do check type during list assignment';
+}
 
 done;
 
