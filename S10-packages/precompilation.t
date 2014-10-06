@@ -2,7 +2,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 8;
+plan 9;
 
 my @precomp-paths;
 
@@ -26,7 +26,11 @@ my @keys = Test::Util::run( q:to"--END--").lines;
 
 #?rakudo.jvm todo 'RT #122773'
 #?rakudo.moar todo 'RT #122773'
-is_deeply @keys, [<A B C>], 'Diamond Relationship';
+is_deeply @keys, [<A B C>], 'Diamond relationship';
+
+#?rakudo.jvm todo 'RT #122896'
+#?rakudo.moar todo 'RT #122896'
+is_run 'use Example::C; f();', { err => '', out => '', status => 0 }, 'exported cached sub';
 
 unlink $_ for @precomp-paths;
 
