@@ -1,6 +1,6 @@
 use Test;
 
-plan 739;
+plan 738;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -2377,12 +2377,6 @@ eval_dies_ok '//', '';
 eval_dies_ok '/  /', 'ws null pattern';
 
 eval_dies_ok '"b" ~~ /b| /', 'null pattern after alternation';
-
-# RT #70007
-# undefined captures should fail to match
-# note the use of $1 (and not $0)
-#?niecza todo 'undefined capture'
-nok 'aa' ~~ /(.)$1/, 'undefined captures do not match';
 
 # RT #71702
 #?niecza todo 'allows them'

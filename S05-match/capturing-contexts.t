@@ -82,18 +82,26 @@ plan 44;
        'Match coerced to Hash says match exists';
 }
 
-# This is similar to a test in S05-interpolation/regex-in-variable.t
-#?niecza todo 'match with non-existent capture does not match'
-nok 'aa' ~~ /(.)$1/, 'match with non-existent capture does not match';
-#?rakudo todo 'RT #70007'
-#?niecza todo 'eek'
-is_run( q{'aa' ~~ /(.)$1/},
+# RT #70007
+{
+    # undefined captures should fail to match
+    # note the use of $1 (and not $0)
+    # This is similar to a test in S05-interpolation/regex-in-variable.t
+    #?niecza todo 'undefined capture does not match'
+    nok 'aa' ~~ /(.)$1/, 'undefined capture does not match';
+
+    # This looks superfluous as there is a test for warning when interpolating
+    # undefined into a regex in S05-interpolation/regex-in-variable.t
+    #?rakudo todo 'RT #70007'
+    #?niecza todo 'eek'
+    is_run( q{'aa' ~~ /(.)$1/},
         {
             status => 0,
             out    => '',
             err    => rx/undef/,
         },
-        'match with non-existent capture emits a warning' );
+        'match with undefined capture emits a warning' );
+}
 
 # RT #66252
 {
