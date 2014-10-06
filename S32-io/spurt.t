@@ -1,7 +1,7 @@
 use v6;
 use Test;
-#plan 22;
-#plan *;
+
+plan 35;
 
 # L<S32::IO/Functions/spurt>
 
@@ -111,8 +111,8 @@ sub all-basic(Callable $handle) {
     ok $path.IO.e, "IO::Handle :createonly created a file";
     
     # Append
+    #?niecza skip "Excess arguments to IO.spurt, unused named append"
     {
-        #?niecza 4 skip "Excess arguments to IO.spurt, unused named append"
         my $io = $path.IO;
         $io.spurt("hello ");
         $io.spurt("world", :append);
@@ -128,16 +128,14 @@ sub all-basic(Callable $handle) {
     }
 
     # encoding
+    #?niecza skip "Excess arguments to IO.spurt, unused named enc"
     {
-        #?niecza 3 skip "Excess arguments to IO.spurt, unused named enc"
         my $t = "Bli itj nå fin uten mokkasin";
         $path.IO.spurt($t, :enc("utf8"));
         is slurp($path), $t, "IO::Handle :enc";
     }
     unlink $path;
 }
-
-done;
 
 CATCH {
     unlink $path;
