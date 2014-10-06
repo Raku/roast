@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 267;
+plan 268;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -140,9 +140,11 @@ throws_like q[/ /], X::Syntax::Regex::NullRegex;
 throws_like q[/ a | /], X::Syntax::Regex::NullRegex;
 throws_like q[/ a || /], X::Syntax::Regex::NullRegex;
 throws_like q[/ a & /], X::Syntax::Regex::NullRegex;
-# RT 67554
+# RT #67554
 throws_like q{/ [] /}, X::Syntax::Regex::NullRegex;
 throws_like q{/ | /}, X::Syntax::Regex::NullRegex;
+# RT #71800
+throws_like q{/ () /}, X::Syntax::Regex::NullRegex;
 # RT #82142
 throws_like q{s//b/}, X::Syntax::Regex::NullRegex;
 
