@@ -42,7 +42,7 @@ throws_like { EVAL 'my $fo:o::b:ar = "bla"' },
             "foo$x";
         }
     }
-    $/ := MyMatch.new;
+    my $/ := MyMatch.new;
     #?rakudo 2 todo "cannot easily override [] at the moment"
     is $0, 'foo0', 'Aliasing of $0 into $/ (1)';
     is $4, 'foo4', 'Aliasing of $0 into $/ (2)';

@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;
-plan 43;
+plan 44;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -111,18 +111,21 @@ is_run( q{'aa' ~~ /(.)$1/},
     is ($/.orig).rindex('a', 2), 0, 'rindex() works on $/.orig';
 }
 
-# RT #71362
-#?rakudo skip 'binding to $/'
+# RT #114726
 {
-    $/ := 'foobar';
+    lives_ok { my $/ := 42 }, 'can bind $/';
+}
+
+# RT #71362
+{
+    my $/ := 'foobar';
     is $0, 'foobar', '$0 works like $/[0], even for non-Match objects';
     nok $1.defined, '$1 is not defined';
 }
 
 # RT #72956
-#?rakudo skip 'binding to $/'
 {
-    $/ := Any;
+    my $/ := Any;
     lives_ok { $0 },
         '$0 accessible when $/ is undefined';
     ok $0 === Any,
