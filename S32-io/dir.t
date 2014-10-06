@@ -27,5 +27,3 @@ is +dir(:test).grep(*.basename eq '.'|'..'), 2, "... unless you override :test";
 nok dir( test=> none('.', '..', 't') ).grep(*.basename eq 't'), "can exclude t/ dir";
 
 is dir('t').[0].directory, 't', 'dir("t") returns paths with .directory of "t"';
-
-
