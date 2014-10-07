@@ -1,6 +1,6 @@
 use Test;
 
-plan 738;
+plan 739;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -2088,6 +2088,13 @@ ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
 
     ok 'foobar' ~~ / . ** {$rt116415} /, 'Simple match (RT #116415)';
     is $/.Str, '', '** quantifier with braces (RT #116415)';
+}
+
+# RT #115294
+{
+    $_ = 'foo bar';
+    is m/ "{ $_ }" /, 'foo bar',
+        'using variable in interpolated block in double-quoted string';
 }
 
 # RT #115298
