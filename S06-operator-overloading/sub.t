@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 71;
+plan 73;
 
 =begin pod
 
@@ -430,6 +430,13 @@ Testing operator overloading subroutines
 {
     my &infix:<c> = { $^a + $^b };
     is 1 c 2, 3, 'assignment to code variable works.';
+}
+
+# RT #116643
+{
+    #?rakudo.parrot 2 skip 'RT #116643'
+    lives_ok { sub prefix:<\o/>($) {} }, 'can declare operator with a backslash (1)';
+    lives_ok { sub postfix:<\\>($) {} }, 'can declare operator with a backslash (2)';
 }
 
 done;
