@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 49;
+plan 52;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -290,6 +290,16 @@ plan 49;
 {
     constant fib := 0, 1, *+* ... *;
     is fib[100], 354224848179261915075, 'can have a constant using a sequence and index it';
+}
+
+# RT #115132
+{
+    lives_ok {constant x1 = "foo" ~~ /bar/},
+        'can assign result of smart matching to constant';
+    constant x2 = "foo" ~~ "foo";
+    is x2, True, 'can assign True to constant';
+    constant x3 = "foo" ~~ "bar";
+    is x3, False, 'can assign False to constant';
 }
 
 # RT #112116
