@@ -2,7 +2,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 11;
+plan 13;
 
 my @precomp-paths;
 
@@ -51,6 +51,18 @@ unlink $_ for @precomp-paths;
     unlink $output-path if $output-path.IO.e;
     is_run 'sub foo($bar) { Proxy.new( FETCH => sub (|) { }, STORE => sub (|) { } ) }', { err => '', out => '', status => 0 }, :compiler-args['--target', $*VM.precomp-target, '--output', $output-path ], 'precompile sub with params returning a proxy';
 
-    is_run '0', { err => '', out => '', status => 0 }, :compiler-args['-I', 't/spec/packages', '-M', $module-name], 'precomile load - from the command line';
+    is_run '0', { err => '', out => '', status => 0 }, :compiler-args['-I', 't/spec/packages', '-M', $module-name], 'precompile load - from the command line';
     unlink $output-path if $output-path.IO.e;
 }
+
+#RT #115240
+{
+    my $module-name = 'RT11520';
+    my $output-path = "t/spec/packages/" ~ $module-name ~ '.pm.' ~ $*VM.precomp-ext;
+    unlink $output-path if $output-path.IO.e;
+    is_run 'role Foo [ ] { }; role Bar does Foo[] { }', { err => '', out => '', status => 0 }, :compiler-args['--target', $*VM.precomp-target, '--output', $output-path ], "precomp curried role compose";
+
+    is_run "use $module-name; class C does Bar { };", { err => '', out => '', status => 0 }, :compiler-args['-I', 't/spec/packages', '-M', $module-name], 'precomile load - from the command line';
+    unlink $output-path if $output-path.IO.e;
+}
+
