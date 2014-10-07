@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 268;
+plan 269;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -198,6 +198,9 @@ throws_like 'my class B0Rk { $.a }',  X::Syntax::NoSelf, variable => '$.a';
 
 throws_like 'has $.x', X::Attribute::NoPackage;
 throws_like 'my module A { has $.x }', X::Attribute::Package, package-kind => 'module';
+
+# RT #115362
+throws_like 'package Y { has $.foo }', X::Attribute::Package, package-kind => 'package';
 
 throws_like 'has sub a() { }', X::Declaration::Scope, scope => 'has', declaration => 'sub';
 throws_like 'has package a { }', X::Declaration::Scope, scope => 'has', declaration => 'package';
