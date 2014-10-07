@@ -57,7 +57,7 @@ unlink $_ for @precomp-paths;
 
 #RT #115240
 {
-    my $module-name = 'RT11520';
+    my $module-name = 'RT115240';
     my $output-path = "t/spec/packages/" ~ $module-name ~ '.pm.' ~ $*VM.precomp-ext;
     unlink $output-path if $output-path.IO.e;
     is_run 'role Foo [ ] { }; role Bar does Foo[] { }', { err => '', out => '', status => 0 }, :compiler-args['--target', $*VM.precomp-target, '--output', $output-path ], "precomp curried role compose";
