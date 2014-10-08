@@ -15,7 +15,7 @@ last <label> in nested loops
 
 =end description
 
-plan 8;
+plan 9;
 
 # test for loops with last
 
@@ -95,6 +95,12 @@ plan 8;
         $var++;
     };
     is($var, 0, "var is 0 because last before increment in nested loop");
+}
+
+# RT #116204
+{
+    lives_ok { repeat while False { "foo" ~~ / 'f' { 1 } 'o' { last } / } },
+        'can use last in code block in regex in loop';
 }
 
 # vim: ft=perl6
