@@ -1,10 +1,10 @@
 use v6;
 
 use Test;
-plan 5;
+plan 6;
 
 # editorial note:
-# macros in this file have been named after 20th-century physicists.
+# most macros in this file have been named after 20th-century physicists.
 
 { # simplest possible unquote splicing
     my $unquote_splicings;
@@ -71,6 +71,20 @@ plan 5;
                 expected => AST,
                 action   => 'unquote evaluation',
                 line     => 1;
+}
+
+# RT 122746
+{
+    throws_like ' macro postfix:<!!>($o) {
+            quasi {
+                die "Null check failed for ", $o.Str unless defined {{{$o}}};
+                {{{$o}}}
+            }
+        }
+        my $cookies;
+        $cookies!!;',
+        X::AdHoc,
+        payload => 'Null check failed for $cookies';
 }
 
 done;
