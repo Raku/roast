@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 169;
+plan 173;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -375,6 +375,15 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 {
     isnt 'a Str|b Str|c'.Set.WHICH, <a b c>.Set.WHICH,
       'Faulty .WHICH creation';
+}
+
+# RT #116096
+{
+    my $s = Set.new([1,2],[3,4]);
+    is $s.elems, 2, 'arrays not flattened out by Set.new (1)';
+    ok $s.keys[0] eqv any([1,2], [3,4]), 'arrays not flattened out by Set.new (2)';
+    ok $s.keys[1] eqv any([1,2], [3,4]), 'arrays not flattened out by Set.new (3)';
+    nok $s.keys[0] eqv $s.keys[1], 'arrays not flattened out by Set.new (4)';
 }
 
 # vim: ft=perl6
