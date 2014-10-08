@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 22;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -201,6 +201,16 @@ plan 21;
     my $x = 0;
     for 1..10 { LEAVE { $x++ }; next }
     is $x, 10, "next triggers LEAVE";
+}
+
+# RT #116314
+{
+    my $str='';
+    for 1..2 {
+        ENTER { $str ~= $_ for <foo bar> };
+        $str ~= $_;
+    }
+    is $str, 'foobar1foobar2', 'can run for loop in phaser in for loop';
 }
 
 # vim: ft=perl6
