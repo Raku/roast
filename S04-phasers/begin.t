@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 # the boundary between run time and compile time is hard to implement right.
 # Some of those tests might look trivial, but nearly all of them are based
@@ -62,4 +62,9 @@ plan 9;
     is $tracker, 'begin',
         'BEGIN block was executed before a parse error happened later in the file';
 
+}
+
+# RT #115502
+{
+    is (BEGIN { try 42; } ), 42, 'Can use try at BEGIN time';
 }
