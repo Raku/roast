@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan 81;
+plan 85;
 
 =begin description
 
@@ -543,10 +543,10 @@ lives_ok {
     my @rt113026 = 1 .. 10;
     my $iter = 0;
     for @rt113026 -> $n {
-	$iter++;
-	if $iter % 2 {
-	    @rt113026.push: $n;
-	}
+        $iter++;
+        if $iter % 2 {
+            @rt113026.push: $n;
+        }
     }
     is $iter, 20, 'iterating over an expanding list';
     is @rt113026, <1 2 3 4 5 6 7 8 9 10 1 3 5 7 9 1 5 9 5 5>,
@@ -586,6 +586,22 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 {
     sub f() { for 1..2 { } };
     is f(), Nil, 'for-loop as last statement returns Nil';
+}
+
+# RT #77738
+{
+    sub incr1 (*@v is rw) { @v[0]++; @v[1]++; };
+    sub incr2 (*@v is rw) { for @v { $_++} };
+    sub incr3 (*@v is rw) { for @v -> $x is rw { $x++ } };
+    sub incr4 (*@v is rw) { for @v -> $x { $x++ } };
+    my ($a, $b) = (0, 0);
+    incr1($a, $b);
+    is [$a, $b], [1, 1], 'is rw on slurpy parameters works (1)';
+    incr2($a, $b);
+    is [$a, $b], [2, 2], 'is rw on slurpy parameters works (2)';
+    incr3($a, $b);
+    is [$a, $b], [3, 3], 'is rw on slurpy parameters works (3)';
+    throws_like { incr4($a, $b) }, X::AdHoc, message => /readonly/;
 }
 
 # vim: ft=perl6
