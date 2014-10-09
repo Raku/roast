@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 269;
+plan 270;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -510,9 +510,9 @@ throws_like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused,
     reason => { m/'Missing semicolon.'/ }, pre => { m/'1 if 2 '/ }, post => { m/'if 3 { say 3 }'/ }, highexpect => @('postfix');
 
 # RT #77522
-throws_like '/\ X/', X::Syntax::Regex::Unspace, 
+throws_like '/\ X/', X::Syntax::Regex::Unspace,
     message => { m/'No unspace allowed in regex' .+ '(\' \')' .+ '\x20'/ }, char => { m/' '/ };
-    
+
 # RT #77380
 throws_like '/m ** 1..-1/', X::Comp::Group, 
     panic => { .payload ~~ m!'Unable to parse regex; couldn\'t find final \'/\''! },
@@ -542,6 +542,12 @@ throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
 {
     throws_like { EVAL("use ThisDoesNotExistAtAll ") }, X::AdHoc,
         message => "Could not find ThisDoesNotExistAtAll in any of: " ~ @*INC.join(", ");
+}
+
+# RT #116607
+{
+    throws_like { EVAL q[my \foo], }, X::AdHoc, # XXX adapt when typed exception is available
+       message => 'Term definition requires an initializer';
 }
 
 # vim: ft=perl6
