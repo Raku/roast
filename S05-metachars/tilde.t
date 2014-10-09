@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan 27;
 
 # L<S05/New metacharacters/"The ~ operator is a helper for matching
 # nested subrules with a specific terminator">
@@ -72,6 +72,12 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     my regex even_b { 'a' ~ 'a' <&even_b>? };
     ok 'aaaa' ~~ m/^ <&even_b> /, 'tilde regex backtracks to find its goal';
     ok 'aaa' !~~ m/^ <&even_b> /, '...and fails for odd numbers';
-}  
+}
+
+#?rakudo todo 'RT #77616'
+{
+    "abc" ~~ /a ~ (c) (b)/;
+    is ($0,$1), ("c","b"), "~ operator in regexp does not revert capture order";
+}
 
 # vim: ft=perl6
