@@ -2,7 +2,10 @@ use v6;
 
 use Test;
 
-plan 22;
+use lib 't/spec/packages';
+use Test::Util;
+
+plan 23;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -211,6 +214,17 @@ plan 22;
         $str ~= $_;
     }
     is $str, 'foobar1foobar2', 'can run for loop in phaser in for loop';
+}
+
+# RT #118387
+#?rakudo.parrot skip "RT #118387"
+{
+    is_run( q[sub foo { LEAVE { say 'OK' }; die 'foobar' }; foo()],
+        {
+            out    => "OK\n",
+            err    => /foobar/,
+        },
+        'LEAVE fires after die in sub' );
 }
 
 # vim: ft=perl6
