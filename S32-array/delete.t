@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 30;
 
 =begin description
 
@@ -75,7 +75,6 @@ sub make-string(@a) {
     @array[8] = 'eight';
     @array[8]:delete;
     is +@array, 0, 'deletion of trailing items purge empty positions';
-
 }
 
 # W/ one range of positive indices
@@ -109,6 +108,16 @@ sub make-string(@a) {
     @array[0]:delete;
     lives_ok { @array.perl }, '@array.perl lives after delete';
     lives_ok { map { 1 }, @array }, 'map @array lives after delete';
+}
+
+# RT #116695
+{
+    my @array;
+    @array[0] = Any;
+    @array[2] = 'two';
+    @array[2]:delete;
+    is @array.elems, 1,
+        'deletion of trailing item does not purge elements we assigned to';
 }
 
 # TODO More exclusive bounds checks
