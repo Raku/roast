@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 15;
 
 # currently deprecated core features
 
@@ -33,20 +33,6 @@ Please use 'BagHash' instead.
 TEXT
 } #4
 
-# Cool
-#?niecza skip 'is DEPRECATED NYI'
-{
-    $line = $?LINE; "a".ucfirst;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation "a".ucfirst';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Method ucfirst (from Cool) called at:
-  $*PROGRAM, line $line
-Please use 'tc' instead.
---------------------------------------------------------------------------------
-TEXT
-} #1
-
 # Decrease
 #?niecza skip 'is DEPRECATED NYI'
 {
@@ -57,21 +43,6 @@ Saw 1 call to deprecated code during execution.
 Sub Decrease (from GLOBAL) called at:
   $*PROGRAM, line $line
 Please use More instead.
---------------------------------------------------------------------------------
-TEXT
-} #1
-
-# GLOBAL
-#?niecza skip 'is DEPRECATED NYI'
-{
-
-    $line = $?LINE; ucfirst("a");
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation ucfirst("a")';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Sub ucfirst (from GLOBAL) called at:
-  $*PROGRAM, line $line
-Please use 'tc' instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
