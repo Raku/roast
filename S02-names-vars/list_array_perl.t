@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan 22;
 
 # L<S02/Names and Variables/so that Perl can evaluate the result
 # back to the same object>
@@ -94,6 +94,17 @@ my @tests = (
 {
     my $rt65988 = (\(1,2), \(3,4));
     is_deeply EVAL( $rt65988.perl ), $rt65988, $rt65988.perl ~ '.perl';
+}
+
+# probably there is a better place for this test
+# RT #117481
+{
+    my %count;
+    for ('/foo/bar/baz/' ~~ m/^ $<dirname>=(.* '/'+)? $<basename>=(<-[\/]>+) '/'* $ /).gist.lines {
+        %count{$0}++ if / ^ \s+ (\w+) \s+ '=>' /;   ## extract key
+    };
+    is (%count<basename>, %count<dirname>), (1, 1),
+        'no duplicate keys in .gist of Match of regex which backtracked';
 }
 
 done;
