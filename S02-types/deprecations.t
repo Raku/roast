@@ -2,36 +2,11 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 13;
 
 # currently deprecated core features
 
 my $line;
-
-# Any
-#?niecza skip 'is DEPRECATED NYI'
-{
-    $line = $?LINE; Any.KeySet;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Any.KeySet';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Method KeySet (from Any) called at:
-  $*PROGRAM, line $line
-Please use 'SetHash' instead.
---------------------------------------------------------------------------------
-TEXT
-
-    $line = $?LINE; Any.KeyBag;
-    Any.KeyBag;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation for Any.KeyBag';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Method KeyBag (from Any) called at:
-  $*PROGRAM, lines $line,{$line + 1}
-Please use 'BagHash' instead.
---------------------------------------------------------------------------------
-TEXT
-} #4
 
 # Decrease
 #?niecza skip 'is DEPRECATED NYI'
