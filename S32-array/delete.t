@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 30;
+plan 31;
 
 =begin description
 
@@ -113,11 +113,14 @@ sub make-string(@a) {
 # RT #116695
 {
     my @array;
-    @array[0] = Any;
-    @array[2] = 'two';
+    @array[0,2] = (Any, 'two');
     @array[2]:delete;
     is @array.elems, 1,
-        'deletion of trailing item does not purge elements we assigned to';
+        'deletion of trailing item does not purge elements we assigned to (1)';
+    @array[1,2] = (Any, 'two');
+    @array[2]:delete;
+    is @array.elems, 2,
+        'deletion of trailing item does not purge elements we assigned to (2)';
 }
 
 # TODO More exclusive bounds checks
