@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 60;
+plan 62;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -259,6 +259,9 @@ is('ababab'.trans([/ab/, 'aba', 'bab', /baba/] =>
                    ['1',  '2',   '3',   '4'   ]),
    '23',
    'longest token still holds, even between constant strings and regexes');
+
+is 'aa'.trans(/^a/ => 'b'), 'ba', 'trans with anchored regex';
+is 'aa'.trans(/ <after a> ./ => 'b'), 'ab', 'trans with look-around regex';
 
 # RT #83674
 #?niecza todo 'Not sure what is supposed to be going on here'
