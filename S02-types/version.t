@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 35;
+plan 36;
 
 my sub vtest($cmp, *@v) {
     my $x = shift @v;
@@ -49,6 +49,9 @@ my @sorted = <
 
 vtest Order::Less, @sorted;
 vtest Order::More, @sorted.reverse;
+
+# RT #116016
+is v12.3.4 cmp Version.new("12.3.4"), Order::Same, 'can parse literal versions where major version is more than one digit';
 
 done;
 
