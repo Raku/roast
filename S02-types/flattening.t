@@ -10,9 +10,6 @@ plan 41;
     is(@array.elems,     5, 'array has 5 elements');
     is(@array[0],       11, 'first value is 11');
     is(@array[*-1],     15, 'last value is 15');
-    # 3[0] etc. should *not* work, but (3,)[0] should.
-    # That's similar as with the .kv issue we've had: 3.kv should fail, but
-    # (3,).kv should work.
 }
 
 {
