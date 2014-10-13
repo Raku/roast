@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 25;
+plan 26;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -105,6 +105,12 @@ eval_dies_ok 'sub opt($a = 1, $b) { }',
         %h;
     }
     ok opt-hash2() eqv ().hash, 'an optional-but-not-filled hash is just an empty Hash';
+}
+
+# RT #77338
+{
+    lives_ok { sub foo(::T $?) {} },
+        'question mark for optional parameter is parsed correctly';
 }
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 35;
 
 =begin pod
 
@@ -153,6 +153,14 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
        'MD with generics at class composition time (class method) (2)';
     eval_dies_ok 'class WrongFu does MD_generics[3] { }',
        'MD with generics at class composition times fails (wrong arity)';
+}
+
+# RT #77338
+{
+    lives_ok { role A[::T $?] {}; class B does A[] {} },
+        'question mark for optional parameter is parsed correctly';
+    eval_dies_ok 'role A[::T?] {}; class B does A[] {}',
+        'cannot put question mark on a type constraint';
 }
 
 # vim: ft=perl6
