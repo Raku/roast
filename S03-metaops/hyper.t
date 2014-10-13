@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 259;
+plan 260;
 
 =begin pod
 
@@ -752,6 +752,16 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
     is ( { 1 + 1 }, { 2 + 2 } ).>>.(),
        ( { 1 + 1 }, { 2 + 2 } )>>.(),
        '.>>.() means the same as >>.()';
+}
+
+# RT #77668
+{
+    sub infix:<+-*/>($a, $b) {
+        ( { $a + $b }, { $a - $b }, { $a * $b }, { $a / $b } )>>.()
+    };
+
+    is 5+-*/2, (7, 3, 10, 2.5),
+        'can call Callable objects in a list in parallel using >>.()';
 }
 
 done;
