@@ -10,7 +10,7 @@ This test tests the various filetest operators.
 
 =end pod
 
-plan 41;
+plan 43;
 
 # L<S32::IO/IO::FSNode/=item IO ~~ :X>
 # L<S03/Changes to Perl 5 operators/The filetest operators are gone.>
@@ -113,5 +113,17 @@ unlink "empty_file";
     is(- f($*PROGRAM), -8, "- f(...) does not call the ~~:f filetest");
 }
 
+# RT #114000
+{
+    my $file = 'ThisDoesNotExistAtAll.link';
+    if $file.IO.e {
+        skip "could not run 2 tests since file $file exists", 2;
+    }
+    else {
+        lives_ok { $file.IO ~~ :l },
+            'can :l-test against non-existing file and live';
+        nok $file.IO ~~ :l, '~~:l returns false on non-existent files';
+    }
+}
 
 # vim: ft=perl6
