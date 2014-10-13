@@ -76,7 +76,7 @@ class Sheep {
 }
 
 my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
-my $roar-method = Sheep.^find_method('roar');
+my $roar-method = Sheep.^lookup('roar');
 
 test-leading(Sheep,'a sheep');
 test-leading($wool-attr, 'usually white');
@@ -171,7 +171,7 @@ class DoesntMatter {
 }
 
 {
-    my @params = DoesntMatter.^find_method('m').signature.params;
+    my @params = DoesntMatter.^lookup('m').signature.params;
     test-leading(@params[0], 'invocant comment');
 }
 
@@ -182,7 +182,7 @@ role Boxer {
 }
 
 {
-    my $method = Boxer.^find_method('actor');
+    my $method = Boxer.^lookup('actor');
     ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
     test-leading(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?');
     test-leading($method, 'Robert De Niro');
@@ -203,10 +203,10 @@ class C {
 }
 
 {
-    my $submethod = C.^find_method("BUILD");
+    my $submethod = C.^lookup("BUILD");
     test-leading($submethod, 'Bob');
 
-    my $meth = C.^find_method('meth');
+    my $meth = C.^lookup('meth');
 
     test-leading($meth, 'Takes a single argument');
     test-leading($meth.candidates[0], 'Single Int argument');
@@ -224,9 +224,9 @@ grammar G {
 }
 
 {
-    my $rule = G.^find_method("R");
-    my $token = G.^find_method("T");
-    my $regex = G.^find_method("X");
+    my $rule = G.^lookup("R");
+    my $token = G.^lookup("T");
+    my $regex = G.^lookup("X");
     test-leading(G, 'grammar');
     test-leading($rule, 'rule');
     test-leading($token, 'token');

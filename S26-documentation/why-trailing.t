@@ -70,7 +70,7 @@ class Sheep {
 
 {
     my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
-    my $roar-method = Sheep.^find_method('roar');
+    my $roar-method = Sheep.^lookup('roar');
     test-trailing(Sheep, 'a sheep');
     test-trailing($wool-attr, 'usually white');
     test-trailing($roar-method, 'not too scary');
@@ -161,7 +161,7 @@ class DoesntMatter {
 }
 
 {
-    my @params = DoesntMatter.^find_method('m').signature.params;
+    my @params = DoesntMatter.^lookup('m').signature.params;
     test-trailing(@params[0], 'invocant comment');
 }
 
@@ -172,7 +172,7 @@ role Boxer {
 }
 
 {
-    my $method = Boxer.^find_method('actor');
+    my $method = Boxer.^lookup('actor');
     ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
     test-trailing(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?');
     test-trailing($method, 'Robert De Niro');
@@ -193,10 +193,10 @@ class C {
 }
 
 {
-    my $submethod = C.^find_method("BUILD");
+    my $submethod = C.^lookup("BUILD");
     test-trailing($submethod, 'Bob');
 
-    my $meth = C.^find_method('meth');
+    my $meth = C.^lookup('meth');
 
     test-trailing($meth, 'Takes a single argument');
     test-trailing($meth.candidates[0], 'Single Int argument');
@@ -214,9 +214,9 @@ grammar G {
 }
 
 {
-    my $rule = G.^find_method("R");
-    my $token = G.^find_method("T");
-    my $regex = G.^find_method("X");
+    my $rule = G.^lookup("R");
+    my $token = G.^lookup("T");
+    my $regex = G.^lookup("X");
     test-trailing(G, 'grammar');
     test-trailing($rule, 'rule');
     test-trailing($token, 'token');

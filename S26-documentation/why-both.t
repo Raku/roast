@@ -69,7 +69,7 @@ my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
 
 test-both($wool-attr, 'usually white', 'not very dirty');
 
-my $roar-method = Sheep.^find_method('roar');
+my $roar-method = Sheep.^lookup('roar');
 
 test-both($roar-method, 'not too scary', '...unless you fear sheep!');
 
@@ -129,7 +129,7 @@ class DoesntMatter {
     ) {}
 }
 
-$param = DoesntMatter.^find_method('m').signature.params[0];
+$param = DoesntMatter.^lookup('m').signature.params[0];
 test-both($param, 'invocant comment', 'another invocant comment');
 
 #| Are you talking to me?
@@ -141,7 +141,7 @@ role Boxer {
 }
 
 {
-    my $method = Boxer.^find_method('actor');
+    my $method = Boxer.^lookup('actor');
     ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
     test-both(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?', 'I said, are you talking to me?');
     test-both($method, 'Robert De Niro', q{he's an actor});
@@ -166,10 +166,10 @@ class C {
 }
 
 {
-    my $submethod = C.^find_method("BUILD");
+    my $submethod = C.^lookup("BUILD");
     test-both($submethod, 'Bob', 'Frank');
 
-    my $meth = C.^find_method('meth');
+    my $meth = C.^lookup('meth');
 
     test-both($meth, 'Takes a', 'single argument');
     test-both($meth.candidates[0], 'Single Int', 'argument');
@@ -193,9 +193,9 @@ grammar G {
 }
 
 {
-    my $rule = G.^find_method("R");
-    my $token = G.^find_method("T");
-    my $regex = G.^find_method("X");
+    my $rule = G.^lookup("R");
+    my $token = G.^lookup("T");
+    my $regex = G.^lookup("X");
     test-both(G, 'grammar', 'more grammar');
     test-both($rule, 'rule', 'reading');
     test-both($token, 'token', 'writing');
