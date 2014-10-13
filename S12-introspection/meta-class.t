@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 =begin pod
 
@@ -43,6 +43,11 @@ eval_lives_ok "True.HOW.say", "can output the .gist of a .HOW";
 # RT #114130
 {
     throws_like 'Any.HOW(Foo)', X::Syntax::Argument::MOPMacro;
+}
+
+# RT #121885
+class IntrospectAtBEGINTime {
+    is BEGIN { IntrospectAtBEGINTime.^name }, 'IntrospectAtBEGINTime', '.^foo works at BEGIN time';
 }
 
 done;
