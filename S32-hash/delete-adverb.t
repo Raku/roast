@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 130;
+plan 131;
 
 # L<S02/Names and Variables/:delete>
 
@@ -270,5 +270,12 @@ sub gen_hash {
     is %h{*}:delete:!exists:!p, %ni, "d:!exists:!p whatever";
     is +%h, 0,                      "* should be deleted now";
 } #8
+
+# RT #74946
+{
+    my %h = a => "b";
+    %h{"a"} = %h{"a"} :delete;
+    is %h, {a => "b"}, "can use :delete'd value to re-create key";
+}
 
 # vim: ft=perl6
