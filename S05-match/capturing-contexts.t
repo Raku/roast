@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;
-plan 44;
+plan 46;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -170,6 +170,13 @@ plan 44;
     ok $/.can('lines'), "Match has a .lines method";
     is +$/.lines, 3, "Correct number of lines";
     isa_ok $/, Cool, "Match is Cool";
+}
+
+# RT #83508
+{
+    'x' ~~ /(y)? (z)*/;
+    is $0.defined, False, 'quantifier ? matching 0 values returns Nil';
+    is $1.defined, True, 'quantifier * matching 0 values returns empty list';
 }
 
 done;
