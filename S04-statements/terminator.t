@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 20;
 
 # L<S04/"Statement-ending blocks"/"will terminate a statement">
 
@@ -52,5 +52,15 @@ eval_dies_ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
 
 # RT #79964
 eval_lives_ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';
+
+# not sure this belong here, suggestions for better places are welcome
+# RT #115842
+{
+    eval_lives_ok 'my @ := 0,', 'trailing comma allowed (1)';
+    eval_lives_ok 'my @ := 0, ;', 'trailing comma allowed (2)';
+    eval_lives_ok 'my @array = 1, 2, 3, ;', 'trailing comma allowed (3)';
+    eval_lives_ok '1, 2, 3,', 'trailing comma allowed (4)';
+    eval_lives_ok '0,', 'trailing comma allowed (5)';
+}
 
 # vim: ft=perl6
