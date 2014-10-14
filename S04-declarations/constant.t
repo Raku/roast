@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 52;
+plan 54;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -318,6 +318,15 @@ plan 52;
 {
     constant lots = 0..*;
     lives_ok {lots[100_000]}, "can index an infinite constant list at 100K";
+}
+
+# RT #111734
+{
+    constant True = 42;
+    is True, 42, 'can locally redefine True';
+    constant True = "Yeah, well, you know, that's just, like, your opinion, man.";
+    is True, "Yeah, well, you know, that's just, like, your opinion, man.",
+        'can even locally redefine True to something a bit vague';
 }
 
 # vim: ft=perl6
