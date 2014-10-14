@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 270;
+plan 271;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -548,6 +548,14 @@ throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
 {
     throws_like { EVAL q[my \foo], }, X::AdHoc, # XXX adapt when typed exception is available
        message => 'Term definition requires an initializer';
+}
+
+#RT #88748
+{
+    throws_like { EVAL q[given 42 { when SomeUndeclaredType { 1 }; default { 0 } }] },
+        X::Comp::Group,
+        'adequate error message when undeclared type is used in "when" clause',
+        message => { m/'Function SomeUndeclaredType needs parens to avoid gobbling block'/ };
 }
 
 # vim: ft=perl6
