@@ -12,13 +12,20 @@ use Test;
 #   module{...}
 #   class{...}
 
-plan 9;
+plan 11;
 
 ok(sub { 42 }(), 'sub {...}() works'); # TODO: clarify
 
 ok(sub{ 42 }(),  'sub{...}() works'); # TODO: clarify
 
-#RT #76432
+# RT #114456
+{
+    is sub { 42 }(), 42, 'can invoke sub with "()" directly after declaration';
+    is sub ($t) { $t }('arf'), 'arf',
+        'can pass argument within "()" directly after sub declaration';
+}
+
+# RT #76432
 throws_like { EVAL q[
     sub x { die }
     x();
@@ -40,7 +47,7 @@ throws_like { EVAL q[
       'RT #85844';
 }
 
-# RT #76896: 
+# RT #76896:
 # perl6 - sub/hash syntax
 {
     sub to_check_before {
