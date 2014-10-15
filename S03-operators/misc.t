@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 32;
+plan 33;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -98,5 +98,13 @@ ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
 #for RT #73836
 my @z=2,3;
 is (2 Z 3), @z, 'joining of single items';
+
+# RT #117045
+{
+    throws_like { EVAL q[.say for (1 , 2, 3)«~» "!"] },
+        X::Syntax::Confused,
+        'Guillemet form of subscript does not parse as infix hyperop',
+        message => { 'Two terms in a row' };
+}
 
 # vim: ft=perl6
