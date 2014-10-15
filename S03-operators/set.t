@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 290;
+plan 292;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ') }
@@ -408,7 +408,7 @@ ok $kb !R(>) $s, "BagHash is not a reversed proper superset of Set (texas)";
     my $b = set <Jupiter Juno Neptune Minerva Mars Venus Apollo Diana Vulcan Vesta Mercury Ceres>;
     my $c = [<Apollo Arclight Astor>];
     my @d;
-    
+
     is showset([∪] @d), showset(∅), "Union reduce works on nothing";
     is showset([∪] $a), showset($a), "Union reduce works on one set";
     is showset([∪] $a, $b), showset(set($a.keys, $b.keys)), "Union reduce works on two sets";
@@ -428,6 +428,16 @@ ok $kb !R(>) $s, "BagHash is not a reversed proper superset of Set (texas)";
     is showset([(&)] $a), showset($a), "Intersection reduce works on one set (texas)";
     is showset([(&)] $a, $b), showset(set("Apollo")), "Intersection reduce works on two sets (texas)";
     is showset([(&)] $a, $b, $c), showset(set("Apollo")), "Intersection reduce works on three sets (texas)";
+}
+
+# RT #117997
+{
+    throws_like 'set;', X::AdHoc,
+        'set listop called without arguments dies (1)',
+        message => { m/"The 'set' listop may not be called without arguments"/ };
+    throws_like 'set<a b c>;', X::Comp::Group,
+        'set listop called without arguments dies (2)',
+        message => { m/"The 'set' listop may not be called without arguments"/ };
 }
 
 # vim: ft=perl6
