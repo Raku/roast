@@ -10,7 +10,7 @@ Tests assigning default values to variables of type code in sub definitions.
 
 # L<S06/Optional parameters/Default values can be calculated at run-time>
 
-plan 5;
+plan 7;
 
 sub doubler($x) { return 2 * $x }
 
@@ -45,6 +45,16 @@ ok((MyPack::val_v), "default sub called in package namespace");
 {
     sub rt69200(Bool :$x) { $x };
     is rt69200(:x), True, '":x" is the same as "x => True" in sub call';
+}
+
+# RT #118063
+{
+    sub a ( $a=1 --> Hash ) {  my %h = ($a => "foo") };
+    ok a(2)<2> :exists,
+        'no comma required between parameter with default value and returns-arrow ("-->")';
+    sub b ( $b=1, --> Hash ) {  my %h = ($b => "foo") };
+    ok b(2)<2> :exists,
+        'comma allowed between parameter with default value and returns-arrow ("-->")';
 }
 
 # vim: ft=perl6
