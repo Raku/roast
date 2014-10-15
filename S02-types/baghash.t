@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 249;
+plan 250;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -31,7 +31,7 @@ sub showkv($x) {
     is ([+] $b.values), 8, "Values returns the correct sum";
     ok ?$b, "Bool returns True if there is something in the BagHash";
     nok ?BagHash.new(), "Bool returns False if there is nothing in the BagHash";
-    
+
     my $hash;
     lives_ok { $hash = $b.hash }, ".hash doesn't die";
     isa_ok $hash, Hash, "...and it returned a Hash";
@@ -59,7 +59,7 @@ sub showkv($x) {
     nok $b<spiderman>:exists, "... and that didn't create the element";
     lives_ok { $b<brady> = 0 }, "Can assign zero to a existing element";
     nok $b<brady>:exists, "... and it goes away";
-    
+
     lives_ok { $b<a>++ }, "Can ++ an existing element";
     is $b<a>, 43, "... and the increment happens";
     lives_ok { $b<carter>++ }, "Can ++ a new element";
@@ -550,4 +550,10 @@ sub showkv($x) {
     is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
     is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
+}
+
+# RT #117773
+{
+    my $b = BagHash.new( (a=>"b") );
+    ok $b.keys[0] ~~ ("a" => "b"), 'first key of BagHash is a Pair ("a" => "b")';
 }
