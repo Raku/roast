@@ -104,7 +104,7 @@ is (2 Z 3), @z, 'joining of single items';
     throws_like { EVAL q[.say for (1 , 2, 3)«~» "!"] },
         X::Syntax::Confused,
         'Guillemet form of subscript does not parse as infix hyperop',
-        message => { 'Two terms in a row' };
+        message => { m/"Two terms in a row"/ };
 }
 
 # vim: ft=perl6

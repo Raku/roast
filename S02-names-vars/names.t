@@ -110,11 +110,11 @@ is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
     sub s () { given 9 { return 0 when $_ %% 3; 1 } };
     throws_like { EVAL q[say s;] }, X::Comp::Group,
         '"s;" is not parsed as subroutine call',
-        message => { "Regex not terminated" };
+        message => { m/"Regex not terminated"/ };
     sub m { return 42 };
     throws_like { EVAL q[m;] }, X::Comp::Group,
         '"m;" is not parsed as subroutine call',
-        message => { "Regex not terminated" };
+        message => { m/"Regex not terminated"/ };
 }
 
 # RT #77006
