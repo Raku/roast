@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 78;
+plan 79;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -90,6 +90,11 @@ plan 78;
 {
  my Routine $gunka;
  isa_ok($gunka, Routine);
+}
+
+{
+ my Stash $igeda;
+ isa_ok($igeda, Stash);
 }
 
 #?rakudo skip 'Module NYI'
