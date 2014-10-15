@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 296;
+plan 292;
 
 
 # tests various assignment styles
@@ -47,7 +47,7 @@ plan 296;
 
 {
     # swap two elements as slice, dwim slice from @b subscript
-    
+
     my @a = 1 .. 2;
     my @b = 0 .. 2;
     @a[@b] = @a[1, 0], 3;
@@ -65,22 +65,6 @@ plan 296;
     is($two, 2, 'list assignment my ($, $, $) = @ works');
     is($three, 3, 'list assignment my ($, $, $) = @ works');
 
-}
-
-
-{
-    # testing list assignments with skipped values
-     my ($one, $, $three) = 1..3;
-     is("$one $three", "1 3", 'list assignment my ($a, $, $b) = @ works');
-
-     my ($, $two) = 1..2;
-     is($two, 2, 'list assignment my ($, $a) = @ works');
-     my ($, $, $, $four) = 1..4;
-     is($four, 4, 'list assignment my ($, $, $, $a) = @ works');
-
-     my ($, @b, $c) = 1..4;
-     is(~@b, "2 3 4", 'list assignment my ($, @) = @ works');
-     ok(!defined($c), 'list assignment my ($, @, $c) = @ works');
 }
 
 {
@@ -113,6 +97,13 @@ plan 296;
      (*, @b, $c) = 1..4;
      is(~@b, "2 3 4", 'list assignment (*, @) = @ works');
      ok(!defined($c), 'list assignment (*, @, $c) = @ works');
+}
+
+# RT #118075
+{
+    my ($one, $two, $three);
+    ($one, $, $three) = 1..3;
+    is("$one $three", "1 3", 'list assignment ($a, $, $b) = @ works');
 }
 
 {
@@ -596,10 +587,10 @@ sub l () { 1, 2 };
 
 {
     package Foo {
-	our $b;
-	my @z = ($::('Foo::b') = l(), l());
-	is($b.elems, 2,    q/lhs treats $::('Foo::b') as scalar (1)/);
-	is(@z.elems, 3,    q/lhs treats $::('Foo::b') as scalar (2)/);
+        our $b;
+        my @z = ($::('Foo::b') = l(), l());
+        is($b.elems, 2,    q/lhs treats $::('Foo::b') as scalar (1)/);
+        is(@z.elems, 3,    q/lhs treats $::('Foo::b') as scalar (2)/);
     }
 }
 
@@ -940,7 +931,7 @@ sub l () { 1, 2 };
 }
 
 # RT #76444
-{ 
+{
     (my $a) = 1,2,3;
     is $a, (1,2,3), "Assignment into parentheses'd my works.";
     sub foo($x) { $x };
