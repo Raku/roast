@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 31;
+plan 32;
 
 {
     class A { method Str() { 'foo' } };
@@ -23,7 +23,7 @@ plan 31;
 } #2
 
 # combinations of typed and objecthash
-{ 
+{
     my Int %h{Rat};
     %h{0.5} = 1;
     %h{0.3} = 2;
@@ -67,3 +67,10 @@ plan 31;
     #?rakudo todo 'oh noes, it dies'
     is %h{*}.join(","), "2,3", 'check whatever access with Mu as key';
 } #6
+
+# RT #118037
+{
+    my %h{Any};
+    %h{Any}=1;
+    ok %h{Any}:exists, '.exists returns True on a %h{Any} in a TypedHash';
+}
