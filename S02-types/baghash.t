@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 250;
+plan 252;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -554,6 +554,11 @@ sub showkv($x) {
 
 # RT #117773
 {
-    my $b = BagHash.new( (a=>"b") );
-    ok $b.keys[0] ~~ ("a" => "b"), 'first key of BagHash is a Pair ("a" => "b")';
+    my $b1 = BagHash.new( (a=>"b") );
+    ok $b1.keys[0] ~~ ("a" => "b"), 'first key of BagHash is a Pair ("a" => "b")';
+    my $b2 = BagHash.new( "a"=>"b" );
+    ok $b2.keys[0] ~~ ("a" => "b"), 'again first key of BagHash is a Pair ("a" => "b")';
+    my $b3 = BagHash.new( a=>"b" );
+    ok $b3.elems == 0,
+        'named argument is happily eaten by .new method';
 }
