@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 197;
+plan 198;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -478,6 +478,17 @@ sub showkv($x) {
 {
         isnt 'a(1) Str|b(1) Str|c'.Bag.WHICH, <a b c>.Bag.WHICH,
           'Faulty .WHICH creation';
+}
+
+# RT #117915
+{
+    my $string;
+    my Bag $bag .= new: <foo foo bar>;
+    for $bag.keys X $bag.keys -> $a, $b {
+        $string ~= $a ~ $b;
+    }
+    is $string, 'foofoofoobarbarfoobarbar',
+        'can use cross operator X with bag keys';
 }
 
 # vim: ft=perl6
