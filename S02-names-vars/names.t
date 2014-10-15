@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 141;
+plan 143;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -103,6 +103,18 @@ is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
         eval_lives_ok "sub {$kw}'rest \{}; {$kw}'rest;",
             "sub whose name starts with \"$kw'\"";
     }
+}
+
+# RT #116182
+{
+    sub s () { given 9 { return 0 when $_ %% 3; 1 } };
+    throws_like { EVAL q[say s;] }, X::Comp::Group,
+        '"s;" is not parsed as subroutine call',
+        message => { "Regex not terminated" };
+    sub m { return 42 };
+    throws_like { EVAL q[m;] }, X::Comp::Group,
+        '"m;" is not parsed as subroutine call',
+        message => { "Regex not terminated" };
 }
 
 # RT #77006
