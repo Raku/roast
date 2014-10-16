@@ -45,6 +45,7 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     # XXX: Not 100% sure on this one
     eval_dies_ok('do {return 5}', 'cannot return out of a do block');
 
+    #?rakudo todo 'lexotic return'
     is (try EVAL 'my $double = -> $x { return 2 * $x }; sub foo($x) { $double($x) }; foo 42').defined, False, 'return is lexotic only; must not attempt dynamic return';
 }
 
