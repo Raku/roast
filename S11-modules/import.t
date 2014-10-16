@@ -85,8 +85,8 @@ plan 17;
 
 # RT #118231
 {
-    lives_ok { EVAL 'use Test; use Test' },
-        'can import the same thing twice';
+    lives_ok { EVAL 'use Test' },
+        'can import the same thing twice';   ## the first import at line 2 ;)
 }
 
 #?niecza skip 'is export not available for variables'
