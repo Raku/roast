@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 89;
+plan 90;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -279,7 +279,11 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     is %hash<bar><baz>, 'zoom', 'binding on auto-vivified hash value works';
     %hash<foo><baz> := my $b;
     #?rakudo todo 'auto-vivified binding does not work yet: RT #118947'
-    ok $b =:= %hash<foo><baz>, 'binding variable worked';
+    ok $b =:= %hash<foo><baz>,
+        'identity test "=:=" ok after binding variable to autovivified hash value';
+    %hash<bar> := my $c;
+    ok $c =:= %hash<bar>,
+        'identity test "=:=" ok after binding variable to non autovivified hash value';
 } #1
 
 # RT #75694
