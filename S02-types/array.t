@@ -152,7 +152,7 @@ my @array2 = ("test", 1, Mu);
 {
 # declare a multidimension array
     throws_like { EVAL 'my @multidim[0..3; 0..1]' },
-      X::AdHoc, # XXX fix when block no longer skipped
+      Exception, # XXX fix when block no longer skipped
       "multidimension array";
     my @array11 is shape(2,4);
 

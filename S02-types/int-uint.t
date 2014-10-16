@@ -35,19 +35,19 @@ for @inttypes -> $type {
     is(EVAL("my $type \$var = $minval"), $minval, "$type can be $minval");
 
     throws_like { EVAL "my $type \$var = {$maxval+1}" },
-      X::AdHoc,
+      Exception,
       "$type cannot be {$maxval+1}";
     throws_like { EVAL "my $type \$var = {$minval-1}" },
-      X::AdHoc,
+      Exception,
       "$type cannot be {$minval-1}";
     throws_like { EVAL "my $type \$var = 'foo'" },
-      X::AdHoc,
+      Exception,
       "$type cannot be a string";
     throws_like { EVAL "my $type \$var = 42.1" },
-      X::AdHoc,
+      Exception,
       "$type cannot be non-integer";
     throws_like { EVAL "my $type \$var = NaN" },
-      X::AdHoc,
+      Exception,
       "$type cannot be NaN";
 
     #?rakudo 2 skip "Cannot modify an immutable value"

@@ -72,38 +72,38 @@ sub f2 (:$a!) { WHAT($a) }
     isa_ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";
 
     throws_like { f2("a"   => 42) },
-      X::AdHoc,
+      Exception,
       "'\"a\" => 42' is a pair";
     throws_like { f2(("a") => 42) },
-      X::AdHoc,
+      Exception,
       "'(\"a\") => 42' is a pair";
     throws_like { f2((a   => 42)) },
-      X::AdHoc,
+      Exception,
       "'(a => 42)' is a pair";
     throws_like { f2(("a" => 42)) },
-      X::AdHoc,
+      Exception,
       "'(\"a\" => 42)' is a pair";
     throws_like { f2((:a(42))) },
-      X::AdHoc,
+      Exception,
       "'(:a(42))' is a pair";
     throws_like { f2((:a)) },
-      X::AdHoc,
+      Exception,
       "'(:a)' is a pair";
     throws_like { &f2.((:a)) },
-      X::AdHoc,
+      Exception,
       'in \'&f2.((:a))\', \'(:a)\' is a pair';
 
     throws_like { $f2((:a)) },
-      X::AdHoc,
+      Exception,
       "in '\$f2((:a))', '(:a)' is a pair";
     throws_like { $f2.((:a)) },
-      X::AdHoc,
+      Exception,
       "in '\$f2.((:a))', '(:a)' is a pair";
     throws_like { $f2(((:a))) },
-      X::AdHoc,
+      Exception,
       "in '\$f2(((:a)))', '(:a)' is a pair";
     throws_like { $f2.(((:a))) },
-      X::AdHoc,
+      Exception,
       "in '\$f2.(((:a)))', '(:a)' is a pair";
 }
 
@@ -152,7 +152,7 @@ sub f7 (:$bar!) { WHAT($bar) }
     my $bar = 'bar';
 
     throws_like { f7($bar => 42) },
-      X::AdHoc,
+      Exception,
       "variables cannot be keys of syntactical pairs (1)";
 }
 
@@ -161,7 +161,7 @@ sub f8 (:$bar!) { WHAT($bar) }
     my @array = <bar>;
 
     throws_like { f8(@array => 42) },
-      X::AdHoc,
+      Exception,
       "variables cannot be keys of syntactical pairs (2)";
 }
 
@@ -170,7 +170,7 @@ sub f9 (:$bar!) { WHAT($bar) }
     my $arrayref = <bar>;
 
     throws_like { f9($arrayref => 42) },
-      X::AdHoc,
+      Exception,
       "variables cannot be keys of syntactical pairs (3)";
 }
 

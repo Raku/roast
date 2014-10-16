@@ -188,7 +188,7 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
 {
     throws_like { EVAL ' @%(a => <b>)<a>' },
-      X::AdHoc,
+      Exception,
       "doesn't really make sense, but shouldn't segfault, either ($!)";
 }
 

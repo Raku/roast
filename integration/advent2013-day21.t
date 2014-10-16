@@ -128,7 +128,7 @@ is_deeply guess("World",37), True, 'optional';
 {
     my $a = 35;
     sub tst-ro($p is readonly) {$p = 42;}
-    throws_like {EVAL 'tst-ro($a)'}, X::AdHoc, 'readonly trait, does not have a type object yet';
+    throws_like {EVAL 'tst-ro($a)'}, Exception, 'readonly trait, does not have a type object yet';
 }
 {    
     my $a = 35;

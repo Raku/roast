@@ -273,8 +273,8 @@ throws_like '1.List::join', X::Method::InvalidQualifier,
             qualifier-type => List;
 
 # RT #58558
-throws_like '!!! 42', X::AdHoc, payload => 42;
-throws_like 'use fatal; ... 42', X::AdHoc, payload => 42;
+throws_like '!!! 42', Exception, payload => 42;
+throws_like 'use fatal; ... 42', Exception, payload => 42;
 {
     my $c = 0;
     try {
@@ -284,7 +284,7 @@ throws_like 'use fatal; ... 42', X::AdHoc, payload => 42;
     is $c, 1, '??? with argument warns';
 }
 
-throws_like 'die "foo"', X::AdHoc, backtrace => Backtrace;
+throws_like 'die "foo"', Exception, backtrace => Backtrace;
 throws_like 'use fatal; ~(1, 2, 6 ... 10)', X::Sequence::Deduction;
 
 throws_like 'my class B does Int { }', X::Composition::NotComposable, target-name => 'B', composer => Int;
@@ -540,7 +540,7 @@ throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
 
 # RT #113680
 {
-    throws_like { EVAL("use ThisDoesNotExistAtAll ") }, X::AdHoc,
+    throws_like { EVAL("use ThisDoesNotExistAtAll ") }, Exception,
         message => "Could not find ThisDoesNotExistAtAll in any of: " ~ @*INC.join(", ");
 }
 

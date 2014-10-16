@@ -38,7 +38,7 @@ sub showkv($x) {
       X::Assignment::RO,
       "Can't assign to an element (Mixs are immutable)";
     throws_like { $m<a>++ },
-      X::AdHoc,
+      Exception,
       "Can't increment an element (Mixs are immutable)";
     throws_like { $m.keys = <c d> },
       X::Assignment::RO,
@@ -316,7 +316,7 @@ sub showkv($x) {
 {
     my $m = Mix.new("a", "b", "b");
     throws_like { $m.pick },
-      X::AdHoc,
+      Exception,
       '.pick does not work on Mix';
 }
 
@@ -424,7 +424,7 @@ sub showkv($x) {
       X::Assignment::RO,
       'Cannot change key of Mix.pairs';
     throws_like { $m.pairs[0].value++ },
-      X::AdHoc,
+      Exception,
       'Cannot change value of Mix.pairs';
 }
 

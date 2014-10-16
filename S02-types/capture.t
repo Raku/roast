@@ -19,7 +19,7 @@ plan 21;
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo2 ($a, $b, $c) { "$a!$b!$c" }
     throws_like { foo2(|$capture) },
-      X::AdHoc,
+      Exception,
       'simply capture creation with \\( works (2)';
 }
 
@@ -60,10 +60,10 @@ plan 21;
     is foo6(1,2,3), "1!2!3",
         'capture creation with \\$ works (1)';
     throws_like { foo6(1,2,3,4) },
-      X::AdHoc,  # too many args
+      Exception,  # too many args
       'capture creation with \\$ works (2)';
     throws_like { foo6(1,2) },
-      X::AdHoc,  # too few args
+      Exception,  # too few args
       'capture creation with \\$ works (3)';
     #?rakudo todo 'nom regression'
     is try { foo6(a => 1, b => 2, c => 3) }, "1!2!3",
@@ -104,7 +104,7 @@ plan 21;
     sub foo9 ($a,$b, :$foo, :$baz) { "$a!$b!$foo!$baz" }
 
     throws_like { foo9(|$capture) },
-      X::AdHoc,  # too few args
+      Exception,  # too few args
       "mixing ordinary args with captures (1)";
     is foo9(1, 2, |$capture), "1!2!bar!grtz",
         "mixing ordinary args with captures (2)";

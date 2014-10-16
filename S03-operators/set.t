@@ -432,7 +432,7 @@ ok $kb !R(>) $s, "BagHash is not a reversed proper superset of Set (texas)";
 
 # RT #117997
 {
-    throws_like 'set;', X::AdHoc,
+    throws_like 'set;', Exception,
         'set listop called without arguments dies (1)',
         message => { m/"The 'set' listop may not be called without arguments"/ };
     throws_like 'set<a b c>;', X::Comp::Group,

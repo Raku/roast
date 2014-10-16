@@ -65,13 +65,13 @@ plan 142;
         $MY::z ::= $y;
         is $z, $y, '::= binding through $MY::z works';
         throws_like { $z = 5 },
-          X::AdHoc,
+          Exception,
           '... and makes readonly';
 
         MY::.{'$z'} ::= $x;
         is $z, $x, '::= binding through MY::.{} works';
         throws_like { $z = 5 },
-          X::AdHoc,
+          Exception,
           '... and makes readonly';
     }
 
@@ -93,10 +93,10 @@ plan 142;
     }
 
     throws_like { EVAL 'MY::A2' },
-      X::AdHoc,
+      Exception,
       'Cannot use MY::A2 directly from outer scope';
     throws_like { MY::.{'A2'}.spies },
-      X::AdHoc,
+      Exception,
       'Cannot use MY::.{"A2"} from outer scope';
 
     sub callee { MY::.{'$*k'} }

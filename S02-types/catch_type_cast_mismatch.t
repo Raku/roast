@@ -21,7 +21,7 @@ cmp_ok $ref, '===', $ref[0], 'So [0] returns itself';
     $ref = [ 42 ];
     isa_ok($ref, Array);
     #?niecza skip "Failure NYI"
-    throws_like { EVAL '$ref<0>' }, X::AdHoc, 'Accessing array as hash fails';
+    throws_like { EVAL '$ref<0>' }, Exception, 'Accessing array as hash fails';
 }
 
 # Also test that scalars give up their container types - this time a

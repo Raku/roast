@@ -14,7 +14,7 @@ plan 13;
     my ($a) := \3;
     is $a, 3, 'can bind to one-element signature';
     throws_like { $a++ },
-      X::AdHoc,  # no exception type yet
+      Exception,  # no exception type yet
       'cannot increment an Int';
 
     my $b = :();

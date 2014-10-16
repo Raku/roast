@@ -25,7 +25,7 @@ plan 20;
 }
 
 throws_like { for "a b c".split(/\s/) -> $foo { $foo = $foo; } },
-  X::AdHoc,  # no exception type yet
+  Exception,  # no exception type yet
   'variables returned from split and passed to pointy block are still ro';
 
 # used to be RT #55962

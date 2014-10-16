@@ -59,12 +59,12 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 
     is ('ZZ' ... 'AA')[*-1], 'AA', "last element of 'ZZ' ... 'AA' is 'AA'";
     throws_like { 'ZZ' ... 'A' },
-        X::AdHoc,
+        Exception,
         "Str decrement fails after 'AA': leftmost characters are never removed",
         message => 'Decrement out of range';
     is ('Y', 'Z' ... 'AA').join(' '), 'Y Z AA', "'Y', 'Z' ... 'AA' works";
     throws_like { 'Z' ... 'AA' },
-        X::AdHoc,
+        Exception,
         "'Z' ... 'AA' fails: only 1 RHS value and ('Z' before 'AA') is False",
         message => 'Decrement out of range';
 }

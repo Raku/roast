@@ -63,16 +63,16 @@ is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
 # RT #63646
 {
     throws_like { OscarMikeGolf::whiskey_tango_foxtrot() },
-      X::AdHoc,
+      Exception,
       'dies when calling non-existent sub in non-existent package';
     throws_like { Test::bravo_bravo_quebec() },
-      X::AdHoc,
+      Exception,
       'dies when calling non-existent sub in existing package';
     # RT #74520
     class TestA { };
     #?niecza todo
     throws_like { TestA::frobnosticate(3, :foo) },
-      X::AdHoc,
+      Exception,
       'calling non-existing function in foreign class dies';;
 }
 

@@ -14,7 +14,7 @@ plan 38;
       X::PseudoPackage::InDeclaration,
       'OUR is an out of scope name';
     throws_like { EVAL 'module GLOBAL;' },
-      X::AdHoc,
+      Exception,
       'GLOBAL is an out of scope name';
     throws_like { EVAL 'module PROCESS;' },
       X::PseudoPackage::InDeclaration,

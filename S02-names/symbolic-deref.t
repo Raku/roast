@@ -170,7 +170,7 @@ my $outer = 'outside';
 #?rakudo.parrot todo "?"
 #?rakudo.jvm    todo "?"
 throws_like { EVAL ' ::().Str ' },
-  X::AdHoc,
+  Exception,
   'Cannot look up empty name';
 
 # vim: ft=perl6

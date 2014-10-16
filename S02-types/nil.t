@@ -73,7 +73,7 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     sub f1($x) { } #OK
     #?rakudo todo 'triage'
     throws_like { f1(Nil) },
-      X::AdHoc, # XXX fix when this starts to fail
+      Exception, # XXX fix when this starts to fail
       'param: dies for mandatory';
 
     sub f2(Int $x?) { $x }

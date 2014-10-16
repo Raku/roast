@@ -83,7 +83,7 @@ plan 6;
         }
         my $cookies;
         $cookies!!;',
-        X::AdHoc,
+        Exception,
         payload => 'Null check failed for $cookies';
 }
 

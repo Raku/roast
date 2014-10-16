@@ -23,7 +23,7 @@ lives_ok { EVAL 'my proto $/' },
   'as can $/';
 
 throws_like { EVAL 'my $f!ao = "beh";' },
-  X::AdHoc,
+  Exception,
   "normal varnames can't have ! in their name";
 throws_like { EVAL 'my $fo:o::b:ar = "bla"' },
   X::Syntax::Confused,

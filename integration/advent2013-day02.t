@@ -23,7 +23,7 @@ ok $dog, 'instance is True';
 ok defined($dog), 'instance is defined';
 is $dog.name, 'Fido', 'Attribute access on instance';
 throws_like { Dog.name },
-  X::AdHoc,  # does not have an Exception object yet
+  Exception,  # does not have an Exception object yet
   'Cannot access attribute on type object';
 
 multi sniff(Dog:U $dog) {

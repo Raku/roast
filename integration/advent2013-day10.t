@@ -162,7 +162,7 @@ sub root4($num, :$adv1 = 42, :$adv2, :$adv3!) {
     is $adv3, 'hi', 'adverb passed value';
 }
 
-throws_like {root4(10)}, X::AdHoc, 'missing required adverb - dies';
+throws_like {root4(10)}, Exception, 'missing required adverb - dies';
 root4(10, :adv3<hi>);
 
 sub root3($num, *%advs) {

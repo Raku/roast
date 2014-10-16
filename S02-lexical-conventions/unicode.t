@@ -134,7 +134,7 @@ lives_ok { EVAL "q\x298d test \x298e" },
 lives_ok { EVAL "q\x301d test \x301e" },
   "Unicode open-301d maps to close-301e";
 throws_like { EVAL "q\x301d test \x301f" },
-  X::AdHoc,
+  Exception,
   "Unicode open-301d does not map to close-301f";
 lives_ok { EVAL "q\x2018 test \x2019" },
   "Unicode open-2018 maps to to close-2019";

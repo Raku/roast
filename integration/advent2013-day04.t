@@ -13,7 +13,7 @@ my $str = q[q:to"noend";
 HELLO WORLD noend
 ];
 
-throws_like { $str.EVAL }, X::AdHoc, 'Runaway multiline is an error, no exception object yet';
+throws_like { $str.EVAL }, Exception, 'Runaway multiline is an error, no exception object yet';
 
 is un-r(q:to[finished]), "  Hello there\n    everybody\n", "indention of heredocs
 (1)";

@@ -225,10 +225,10 @@ throws_like { 2.foo  },
 is  +'00123', 123, "Leading zeroes stringify correctly";
 
 throws_like { EVAL ':2<2>' },
-  X::AdHoc,
+  Exception,
   ':2<2> is illegal';
 throws_like { EVAL ':10<3a>' },
-  X::AdHoc,
+  Exception,
   ':10<3a> is illegal';
 throws_like { EVAL ':0<0>' },
   X::Syntax::Number::RadixOutOfRange,

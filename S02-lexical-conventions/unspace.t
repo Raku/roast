@@ -78,7 +78,7 @@ is((foo\    .lc), 'a', 'longer dot');
 is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');
 #?rakudo todo 'NYI'
 throws_like { EVAL 'foo\#\ ( comment ).lc' },
-  X::AdHoc,
+  Exception,
   'unspace can\'t hide space between # and opening bracket';
 is((foo\ # comment
     .lc), 'a', 'unspace with end-of-line comment');

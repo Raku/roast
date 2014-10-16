@@ -39,7 +39,7 @@ sub showkv($x) {
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
     throws_like { $b<a>++ },
-      X::AdHoc, # no exception type yet
+      Exception, # no exception type yet
       "Can't increment an element (Bags are immutable)";
     throws_like { $b.keys = <c d> },
       X::Assignment::RO,
@@ -470,7 +470,7 @@ sub showkv($x) {
       X::Assignment::RO,
       'Cannot change key of Bag.pairs';
     throws_like { $b.pairs[0].value++ },
-      X::AdHoc,  # no exception type yet
+      Exception,  # no exception type yet
       'Cannot change value of Bag.pairs';
 }
 

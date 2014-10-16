@@ -601,7 +601,7 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     is [$a, $b], [2, 2], 'is rw on slurpy parameters works (2)';
     incr3($a, $b);
     is [$a, $b], [3, 3], 'is rw on slurpy parameters works (3)';
-    throws_like { incr4($a, $b) }, X::AdHoc, message => /readonly/;
+    throws_like { incr4($a, $b) }, Exception, message => /readonly/;
 }
 
 # vim: ft=perl6

@@ -307,7 +307,7 @@ sub showkv($x) {
 {
     my $m = MixHash.new("a", "b", "b");
     throws_like { $m.pick },
-      X::AdHoc,
+      Exception,
       '.pick does not work on MixHash';
 }
 
@@ -317,7 +317,7 @@ sub showkv($x) {
 {
     my $m = <a b b c c c>.MixHash;
     throws_like { $m.grab },
-      X::AdHoc,
+      Exception,
       'cannot call .grab on a MixHash';
 }
 

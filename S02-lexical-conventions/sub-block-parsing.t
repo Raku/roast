@@ -30,14 +30,14 @@ throws_like { EVAL q[
     sub x { die }
     x();
 ] },
-  X::AdHoc, # no exception object yet
+  Exception, # no exception object yet
   'block parsing works with newline';
 
 throws_like { EVAL q[
     sub x { die };
     x();
 ] },
-  X::AdHoc, # no exception object yet
+  Exception, # no exception object yet
   'block parsing works with semicolon';
 
 # RT #85844

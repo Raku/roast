@@ -17,10 +17,10 @@ plan 25;
     my @arr[7] = <a b c d e f g>;
     is(@arr, [<a b c d e f g>], 'my @arr[num] can hold num things');
     throws_like {push @arr, 'h'},
-      X::AdHoc,  # XXX fix when this block is no longer skipped
+      Exception,  # XXX fix when this block is no longer skipped
       'adding past num items in my @arr[num] dies';
     throws_like {@arr[7]},
-      X::AdHoc,  # XXX fix when this block is no longer skipped
+      Exception,  # XXX fix when this block is no longer skipped
       'accessing past num items in my @arr[num] dies';
 }
 
@@ -30,10 +30,10 @@ plan 25;
     lives_ok { my @arr\    [7]},
       'array with fixed size with unspace');
     throws_like { EVAL 'my @arr.[8]' },
-      X::AdHoc,  # XXX fix when this block is no longer skipped
+      Exception,  # XXX fix when this block is no longer skipped
       'array with dot form dies';
     throws_like { EVAL 'my @arr\    .[8]' },
-      X::AdHoc,  # XXX fix when this block is no longer skipped
+      Exception,  # XXX fix when this block is no longer skipped
       'array with dot form and unspace dies';
 }
 
@@ -65,14 +65,14 @@ plan 25;
     is(@arr, <1 2 3 4 5>, 'my @arr[num] of Type works');
 
     throws_like {push @arr, 123},
-      X::AdHoc,
+      Exception,
       'boundary constraints on my @arr[num] of Type works';
     pop @arr; # remove the last item to ensure the next ones are type constraints
     throws_like {push @arr, 's'},
-      X::AdHoc,
+      Exception,
       'type constraints on my @arr[num] of Type works (1)';
     throws_like {push @arr, 4.2},
-      X::AdHoc,
+      Exception,
       'type constraints on my @arr[num] of Type works (2)';
 }
 
@@ -95,13 +95,13 @@ plan 25;
     is(@arr, <1 2 3 4 5>, 'my Type @arr[num] works');
 
     throws_like {push @arr, 123},
-      X::AdHoc,
+      Exception,
       'boundary constraints on my Type @arr[num] works';
     pop @arr; # remove the last item to ensure the next ones are type constraints
     throws_like {push @arr, 's'},
-      X::AdHoc,  # XXX fix when this block is no longer skipped
+      Exception,  # XXX fix when this block is no longer skipped
       'type constraints on my Type @arr[num] works (1)';
     throws_like {push @arr, 4.2},
-      X::AdHoc,  # XXX fix when this block is no longer skipped
+      Exception,  # XXX fix when this block is no longer skipped
       'type constraints on my Type @arr[num]  works (2)';
 }
