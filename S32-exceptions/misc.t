@@ -546,7 +546,7 @@ throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
 
 # RT #116607
 {
-    throws_like { EVAL q[my \foo], }, X::AdHoc, # XXX adapt when typed exception is available
+    throws_like { EVAL q[my \foo], }, X::Syntax::Term::MissingInitializer,
        message => 'Term definition requires an initializer';
 }
 
