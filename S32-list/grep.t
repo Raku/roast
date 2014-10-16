@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 42;
+plan 43;
 
 my @list = (1 .. 10);
 
@@ -135,6 +135,14 @@ my @list = (1 .. 10);
     throws_like { (1,2,3).grep: $_== 1 }, X::Match::Bool;
     is grep( Bool,True,False,Int ), (True,False), 'can we match on Bool as type';
     is (True,False,Int).grep(Bool), (True,False), 'can we match on Bool as type';
+}
+
+# RT #118755
+{
+    my @a = 1..10;
+    @a.grep(* %% 2).>>++;
+    is @a, <1 3 3 5 5 7 7 9 9 11>,
+        'grep is rw-like, can chain it to modify elements of grepped list/array';
 }
 
 # vim: ft=perl6

@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 27;
+plan 28;
 
 my @list = (1 ... 10);
 
@@ -85,6 +85,14 @@ my @list = (1 ... 10);
     throws_like { (1,2,3).first: $_== 1 }, X::Match::Bool;
     is first( Bool,True,False,Int ), True, 'can we match on Bool as type';
     is (True,False,Int).first(Bool), True, 'can we match on Bool as type';
+}
+
+# RT #118755
+{
+    my @a = 1..10;
+    @a.first(* %% 2).++;
+    is @a, <1 3 3 4 5 6 7 8 9 10>,
+        'first is rw-like, can chain it to modify one element of grepped list/array';
 }
 
 #vim: ft=perl6
