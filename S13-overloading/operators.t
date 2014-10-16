@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 4;
+plan 5;
 
 #L<S06/Operator overloading>
 
@@ -18,6 +18,8 @@ plan 4;
         else { ($arg-1)! * $arg;}
     };
     is 5!, 120, 'Can define recursive postfix operator';
+    # RT #119473
+    is 5.!, 120, 'Can use newly defined postfix operator with leading dot';
 }
 
 {
