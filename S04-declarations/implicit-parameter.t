@@ -1,9 +1,9 @@
 use v6;
 use Test;
-plan 18;
+plan 19;
 
-# L<S04/The Relationship of Blocks and Declarations/A bare closure 
-# (except the block associated with a conditional statement)> 
+# L<S04/The Relationship of Blocks and Declarations/A bare closure
+# (except the block associated with a conditional statement)>
 
 {
     # test with explicit $_
@@ -19,7 +19,7 @@ plan 18;
 
 {
     # { } has implicit signature ($_ is rw = $OUTER::_)
-    
+
     $_ = 'Hello';
     is(try { { $_ }.() }, 'Hello',              '$_ in bare block defaults to outer');
     is({ $_ }.('Goodbye'), 'Goodbye',   'but it is only a default');
@@ -33,15 +33,14 @@ plan 18;
 }
 
 {
-    $_ = 'Ack';
+    $_ = 'Ack!';
     dies_ok({ (-> { "Boo!" }).(42) },     '-> {} is arity 0');
     dies_ok({ (-> { $_ }).(42) },         'Even when we use $_>');
-    
-    #?rakudo 2 todo 'pointy blocks and $_'
+
     #?niecza todo
     is((-> { $_ }).(),      'Ack!',       '$_ is lexical here');
     #?niecza todo
-    is(-> $a { $_ }.(42),   'Ack!',       'Even with parameters (?)');
+    is(-> $a { $_ }.(42),   'Ack!',       'Even with parameters');
     is(-> $_ { $_ }.(42),   42,           'But not when the parameter is $_');
 
     eval_dies_ok( 'sub () { -> { $^a }.() }',  'Placeholders not allowed in ->');
@@ -51,6 +50,17 @@ plan 18;
 
 {
     eval_dies_ok('sub () { $^foo }.(42)',  'Placeholders not allowed in sub()');
+}
+
+# RT #114696
+{
+    my $string;
+    $_ = 'Moo';
+    for .chars ... 1 -> $len {
+        $string ~= $_;
+        { $string ~= $_; }
+    }
+    is $string, 'MooMooMooMooMooMoo', 'outer $_ is seen within nested blocks';
 }
 
 # vim: ft=perl6
