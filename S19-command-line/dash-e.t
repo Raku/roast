@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 3;
+plan 4;
 
 use lib 't/spec/packages';
 use Test::Util;
@@ -30,3 +30,12 @@ is_run $x,  :args['-e', 'print <1 2> »+« <1 1>'],
         status  => 0,
     },
     '-e works with non-ASCII program texts';
+
+#?rakudo skip -e as stopper doesn't work quite yet.
+is_run $x, :args['-e', 'say @*ARGS', '-e=foo'],
+    {
+        out     => "-e=foo",
+        err     => '',
+        status  => 0,
+    },
+    '-e works correctly as a stopper';
