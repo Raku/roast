@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 17;
 
 # L<S11/Importing without loading>
 
@@ -81,7 +81,12 @@ plan 16;
     }
     import F :here, :there;
     is f1(), 42, 'can import the same symbol through multiple tags';
+}
 
+# RT #118231
+{
+    lives_ok { EVAL 'use Test; use Test' },
+        'can import the same thing twice';
 }
 
 #?niecza skip 'is export not available for variables'
