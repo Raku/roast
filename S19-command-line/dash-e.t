@@ -31,7 +31,7 @@ is_run $x,  :args['-e', 'print <1 2> »+« <1 1>'],
     },
     '-e works with non-ASCII program texts';
 
-#?rakudo skip -e as stopper doesn't work quite yet.
+#?rakudo skip "-e as stopper doesn't work quite yet."
 is_run $x, :args['-e', 'say @*ARGS', '-e=foo'],
     {
         out     => "-e=foo",
