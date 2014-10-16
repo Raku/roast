@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 17;
+plan 18;
 
 # Is there a better reference for the spec for how return return works? 
 # There is "return function" but that's a more advanced feature.
@@ -44,6 +44,8 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     eval_dies_ok('loop (my $i = 0; $i < 1; $i++) {return 5}', 'cannot return out of a bare loop');
     # XXX: Not 100% sure on this one
     eval_dies_ok('do {return 5}', 'cannot return out of a do block');
+
+    is (try EVAL 'my $double = -> $x { return 2 * $x }; sub foo($x) { $double($x) }; foo 42').defined, False, 'return is lexotic only; must not attempt dynamic return';
 }
 
 {
