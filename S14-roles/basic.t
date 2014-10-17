@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 44;
 
 =begin description
 
@@ -159,6 +159,19 @@ eval_lives_ok q[my role R { our $.r }; my class C does R {}],
     }
     is WithAttr.new.meth, 42, '$obj.Role::method() passes correct invocant';
 }
+
+# RT #120919
+#?rakudo.parrot skip 'RT #120919'
+#?rakudo.jvm skip 'RT #120919'
+{
+    my role A {
+        method pub { self!priv };
+        method !priv () { 42 };
+    };
+    my class C does A { };
+    is C.new.pub, 42, 'private methods in roles bind "self" correctly';
+}
+
 done;
 
 # vim: ft=perl6
