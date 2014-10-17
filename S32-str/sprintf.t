@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 155;
+plan 156;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -264,6 +264,13 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf("%.1f", 1.969), "2.0",   '%.1f of 1.969 should be 2.0';
     is sprintf("%.2f", 1.969), "1.97",  '%.2f of 1.969 should be 1.97';
     is sprintf("%.3f", 1.969), "1.969", '%.3f of 1.969 should be 1.969';
+}
+
+# RT #120232
+{
+    is sprintf('%.50f', 1.115),
+        '1.11500000000000000000000000000000000000000000000000',
+        '%.50f of 1.115 is correct';
 }
 
 # vim: ft=perl6
