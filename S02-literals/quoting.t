@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 159;
+plan 160;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -508,6 +508,13 @@ Hello, World
     is qqx/echo $var/.chomp,  "world", 'qqx';
     # RT #78874
     is qx/echo world/.trans('wd' => 'WD').chomp, "WorlD", "qx doesn't return a Parrot string";
+}
+
+# RT #120529
+#?rakudo.parrot todo 'RT #120529'
+{
+    %*ENV<ENV_P6_SPECTEST_120529>='foo';
+    ok qx/env/ ~~ /ENV_P6_SPECTEST_120529/, 'qx passes environmental variables';
 }
 
 # RT #75320
