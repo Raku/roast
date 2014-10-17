@@ -12,10 +12,10 @@ sub is-prime-beta($n) { $n %% none @primes ...^  * > sqrt $n }
 sub expmod(Int $a is copy, Int $b is copy, $n) {
     my $c = 1;
     repeat while $b div= 2 {
-    	   ($c *= $a) %= $n if $b % 2;
-	       ($a *= $a) %= $n;
-	       }
-	       $c;
+        ($c *= $a) %= $n if $b % 2;
+        ($a *= $a) %= $n;
+    }
+    $c;
 }
 
 subset PrimeCandidate of Int where { $_ > 2 and $_ % 2 };
@@ -38,9 +38,9 @@ my Bool multi sub is-prime-rm(PrimeCandidate $n, Int $k) {
        next if $x == 1 or $x == $n - 1;
 
        for 1 ..^ $s {
-	   $x = $x ** 2 mod $n;
-	   return False if $x == 1;
-	   last if $x == $n - 1;
+           $x = $x ** 2 mod $n;
+           return False if $x == 1;
+           last if $x == $n - 1;
        }
        return False if $x !== $n - 1;
    }
@@ -58,7 +58,6 @@ is_deeply [(2 .. 20).grep({is-prime-rm($_, $_)})], @primes_lt_20, 'prime (rabin-
 
 my @primes_lt_200 = (@primes_lt_20, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199);
 
-#?rakudo.jvm skip 'RT #121802 failing on JVM'
 {
     my @primes-beta = (2 .. 200).grep({is-prime-beta($_)});
 
@@ -74,6 +73,6 @@ my @primes_lt_200 = (@primes_lt_20, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 
 
     my $false-positives = (@primes-rm (-) @primes_lt_200);
     ok $false-positives <= 4, 'accuracy (rabin-miller)'
-	or diag $false-positives;
+        or diag $false-positives;
 }
 
