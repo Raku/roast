@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 272;
+plan 273;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -563,6 +563,13 @@ throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
     my class A is Any { proto method new($) {*} };
     throws_like { A.new(now) }, X::Multi::NoMatch,
         'no NullPMC access error but exception X::Multi::NoMatch';
+}
+
+# RT #120831
+{
+    throws_like 'my Int a;', X::Syntax::Malformed,
+        'adequate error message when declaring "my Int a"',
+        message => { m/"Malformed my (did you mean to declare a sigilless"/ };
 }
 
 # vim: ft=perl6
