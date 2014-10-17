@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 45;
 
 =begin description
 
@@ -90,7 +90,7 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 
 {
     dies_ok { EVAL 'class Animal does NonExistentRole { }; 1' },
-	    'a class dies when it does a non-existent role';
+        'a class dies when it does a non-existent role';
 
     try { EVAL 'class AnotherAnimal does NonExistentRole { }; 1' };
     my $err = "$!";
@@ -170,6 +170,12 @@ eval_lives_ok q[my role R { our $.r }; my class C does R {}],
     };
     my class C does A { };
     is C.new.pub, 42, 'private methods in roles bind "self" correctly';
+}
+
+# RT 120931
+{
+    lives_ok { role RT120931 { method foo {}; RT120931.foo } },
+        'can call a role method from within the role block';
 }
 
 done;
