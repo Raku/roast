@@ -36,15 +36,15 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [1,2,3,1,2],
           'uniq with expiry works',
           :after-tap( {
-              $s.more(1);
+              $s.emit(1);
               sleep 1;
-              $s.more(2);
+              $s.emit(2);
               sleep 1;
-              $s.more(3);
+              $s.emit(3);
               sleep 1;
-              $s.more(1);
-              $s.more(2);
-              $s.more(3); # twice within expiration time
+              $s.emit(1);
+              $s.emit(2);
+              $s.emit(3); # twice within expiration time
           } );
     }
 
@@ -54,15 +54,15 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [1,2,1,2],
           'uniq with as and expiry works',
           :after-tap( {
-              $s.more(1);
+              $s.emit(1);
               sleep 1;
-              $s.more(2);
+              $s.emit(2);
               sleep 1;
-              $s.more(3); # same as 2
+              $s.emit(3); # same as 2
               sleep 1;
-              $s.more(1);
-              $s.more(2);
-              $s.more(3); # twice within expiration time
+              $s.emit(1);
+              $s.emit(2);
+              $s.emit(3); # twice within expiration time
           } );
     }
 
@@ -72,16 +72,16 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [<a b c B>],
           'uniq with as and expiry works',
           :after-tap( {
-              $s.more("a");
+              $s.emit("a");
               sleep 1;
-              $s.more("b");
+              $s.emit("b");
               sleep 1;
-              $s.more("B"); # same as "b"
+              $s.emit("B"); # same as "b"
               sleep 1;
-              $s.more("c");
+              $s.emit("c");
               sleep 1;
-              $s.more("B");
-              $s.more("b"); # same as "B"
+              $s.emit("B");
+              $s.emit("b"); # same as "B"
           } );
     }
 
@@ -92,15 +92,15 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [<a bb c B>],
           'uniq with as and expiry works',
           :after-tap( {
-              $s.more("a");
+              $s.emit("a");
               sleep 1;
-              $s.more("bb");
+              $s.emit("bb");
               sleep 1;
-              $s.more("B"); # same as "bb"
+              $s.emit("B"); # same as "bb"
               sleep 1;
-              $s.more("c");
-              $s.more("B");
-              $s.more("bb"); # same as "B"
+              $s.emit("c");
+              $s.emit("B");
+              $s.emit("bb"); # same as "B"
           } );
     }
 }

@@ -20,7 +20,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         tap_ok $now.Supply.delay($delay),
           [$now],
           ".delay with on-demand Supply worked",
-          :more( { $seen = now } ),
+          :emit( { $seen = now } ),
         ;
         ok $seen && $seen >= $now + $delay, "on-demand sufficiently delayed";
 }
@@ -35,9 +35,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [$now],
           ".delay with live Supply worked",
           :live,
-          :more( { $seen = now } ),
+          :emit( { $seen = now } ),
           :after-tap( {
-              $s.more($now);
+              $s.emit($now);
               sleep 2;  # makes this pass, should go!
               $s.done;
           } ),

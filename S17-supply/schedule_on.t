@@ -24,9 +24,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           'did we get the original values',
           :live,
           :after-tap( {
-            $master.more(1);
-            $master.more(2);
-            $master.more(3);
+            $master.emit(1);
+            $master.emit(2);
+            $master.emit(3);
             $master.done;
           } );
     }

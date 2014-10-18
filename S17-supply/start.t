@@ -22,13 +22,13 @@ dies_ok { Supply.start({...}) }, 'can not be called as a class method';
     } );
     isa_ok $tap, Tap, 'Did we get a Tap';
 
-    $master.more(1);
+    $master.emit(1);
     sleep 1;
     is +@supplies.grep( { $_ ~~ Supply } ), 1, 'did we get a supply?';
     is +@taps.grep(Tap),                    1, 'did we get a tap?';
 
-    $master.more(2);  # shall not be seen
-    $master.more(1);
+    $master.emit(2);  # shall not be seen
+    $master.emit(1);
     sleep 1;
     is +@supplies.grep( { $_ ~~ Supply } ), 3, 'did we get two extra supplies?';
     is +@taps.grep(Tap),                    3, 'did we get two extra taps?';

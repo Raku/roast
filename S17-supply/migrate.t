@@ -21,34 +21,32 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
         my $s1 = Supply.new;
         ok $s1 ~~ Supply, 'Did we get a Supply 1?';
-        $master.more($s1);  # first get it from here
+        $master.emit($s1);  # first get it from here
 
-        $s1.more(42);
-        $s1.more(43);
+        $s1.emit(42);
+        $s1.emit(43);
         is_deeply @seen, [42,43], 'did we get these?';
 
         my $s2 = Supply.new;
         ok $s2 ~~ Supply, 'Did we get a Supply 2?';
-        $master.more($s2);  # now get it from here
+        $master.emit($s2);  # now get it from here
 
-        $s1.more(44);   # should not see this one
-        $s2.more(666);
-        $s2.more(667);
-        $s2.more(668);
+        $s1.emit(44);   # should not see this one
+        $s2.emit(666);
+        $s2.emit(667);
+        $s2.emit(668);
         is_deeply @seen, [42,43,666,667,668], 'did we get the rest?';
 
         $s2.done;
         my $s3 = Supply.new;
         ok $s3 ~~ Supply, 'Did we get a Supply 3?';
-        $master.more($s3);  # now get it from here
+        $master.emit($s3);  # now get it from here
 
-        $s3.more(7);
+        $s3.emit(7);
         is_deeply @seen, [42,43,666,667,668,7], 'did we survive done?';
 
-        throws_like { $master.more(23)}, X::Supply::Migrate::Needs;
+        throws_like { $master.emit(23)}, X::Supply::Migrate::Needs;
     }
 }
-
-done;
 
 # vim: syn=perl6

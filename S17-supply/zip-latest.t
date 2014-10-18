@@ -17,14 +17,14 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [(<2 a>), (<2 b>), (<2 c>), (<3 c>), (<4 c>)],
           'zipping 2 supplies works with "zip-latest"',
           :after-tap( {
-              $s1.more('1');
-              $s1.more('2');
-              $s2.more('a');
-              $s2.more('b');
-              $s2.more('c');
-              $s1.more('3');
+              $s1.emit('1');
+              $s1.emit('2');
+              $s2.emit('a');
+              $s2.emit('b');
+              $s2.emit('c');
+              $s1.emit('3');
               $s1.done();
-              $s1.more('4');
+              $s1.emit('4');
               $s2.done();
           } );
     }
@@ -38,21 +38,21 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [<aaa aab abb bbb bcb bcc bcd>],
           'zipping three supplies with ~ works with "zip-latest"',
           :after-tap( {
-              $s1.more("ignored");
-              $s1.more("ignored");
-              $s2.more("ignored");
-              $s1.more("ignored");
-              $s2.more("a");
-              $s1.more("a");
-              $s3.more("a");
-              $s3.more("b");
-              $s2.more("b");
-              $s1.more("b");
+              $s1.emit("ignored");
+              $s1.emit("ignored");
+              $s2.emit("ignored");
+              $s1.emit("ignored");
+              $s2.emit("a");
+              $s1.emit("a");
+              $s3.emit("a");
+              $s3.emit("b");
+              $s2.emit("b");
+              $s1.emit("b");
               $s1.done();
-              $s2.more("c");
-              $s3.more("c");
+              $s2.emit("c");
+              $s3.emit("c");
               $s2.done();
-              $s3.more("d");
+              $s3.emit("d");
               $s3.done();
           } );
     }
@@ -66,17 +66,17 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [<xaz aaz aaa aab abb bbb bcb bcc bcd>],
           'zipping three supplies works with "zip-latest"',
           :after-tap( {
-              $s2.more("a");
-              $s1.more("a");
-              $s3.more("a");
-              $s3.more("b");
-              $s2.more("b");
-              $s1.more("b");
+              $s2.emit("a");
+              $s1.emit("a");
+              $s3.emit("a");
+              $s3.emit("b");
+              $s2.emit("b");
+              $s1.emit("b");
               $s1.done();
-              $s2.more("c");
-              $s3.more("c");
+              $s2.emit("c");
+              $s3.emit("c");
               $s2.done();
-              $s3.more("d");
+              $s3.emit("d");
               $s3.done();
           } );
     }

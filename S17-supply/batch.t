@@ -26,9 +26,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           "we can batch by time",
           :timeout(3 * $seconds),
           :after-tap( {
-              $s.more( time div $seconds ) for ^10;
+              $s.emit( time div $seconds ) for ^10;
               sleep $seconds;            # wait until in the next period
-              $s.more( time div $seconds ) for ^10;
+              $s.emit( time div $seconds ) for ^10;
               $s.done;
           } );
     }
@@ -48,9 +48,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           "we can batch by time and elems",
           :timeout(3 * $seconds),
           :after-tap( {
-              $s.more( time div $seconds ) for ^$spurt;
+              $s.emit( time div $seconds ) for ^$spurt;
               sleep $seconds;            # wait until in the next period
-              $s.more( time div $seconds ) for ^$spurt;
+              $s.emit( time div $seconds ) for ^$spurt;
               $s.done;
           } );
     }

@@ -19,14 +19,14 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [1,4],
           ".stable worked",
           :after-tap( {
-               $s.more(1);
+               $s.emit(1);
                sleep 1;
-               $s.more(1);
+               $s.emit(1);
                sleep 1;
-               $s.more(2);
-               $s.more(3);
+               $s.emit(2);
+               $s.emit(3);
                sleep 1;
-               $s.more(4);
+               $s.emit(4);
                $s.done;
           } ),
           :live;

@@ -12,7 +12,7 @@ dies_ok { Supply.wait }, 'can not be called as a class method';
         sleep 1;
         pass "we're running";
         sleep 1;
-        $s.more($_) for 1..10;
+        $s.emit($_) for 1..10;
         $s.done;
     } ), Promise, 'did we start ok';
     my $waiting = now;

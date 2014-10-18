@@ -20,22 +20,22 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     my $seen1 = [];
     my $t1 = $f.tap( { $seen1.push: $_ } );
-    $s.more([1,2]);
-    is $seen1, [1,2], 'did we get the first more (1)';
+    $s.emit([1,2]);
+    is $seen1, [1,2], 'did we get the first emit (1)';
 
     my $seen2 = [];
     my $t2 = $f.tap( { $seen2.push: $_ } );
-    $s.more([3,4]);
-    is $seen1, [1,2,3,4], 'did we get the second more (1)';
-    is $seen2, [3,4],     'did we get the second more (2)';
+    $s.emit([3,4]);
+    is $seen1, [1,2,3,4], 'did we get the second emit (1)';
+    is $seen2, [3,4],     'did we get the second emit (2)';
 
     $t1.close;
-    $s.more([5,6]);
-    is $seen1, [1,2,3,4], 'did we get the third more (1)';
-    is $seen2, [3,4,5,6], 'did we get the third more (2)';
+    $s.emit([5,6]);
+    is $seen1, [1,2,3,4], 'did we get the third emit (1)';
+    is $seen2, [3,4,5,6], 'did we get the third emit (2)';
 
     $t2.close;
-    $s.more([7,8]);
-    is $seen1, [1,2,3,4], 'did we not get the fourth more (1)';
-    is $seen2, [3,4,5,6], 'did we not get the fourth more (2)';
+    $s.emit([7,8]);
+    is $seen1, [1,2,3,4], 'did we not get the fourth emit (1)';
+    is $seen2, [3,4,5,6], 'did we not get the fourth emit (2)';
 }

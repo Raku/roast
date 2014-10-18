@@ -16,12 +16,12 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [1,2,'a',3,'b'],
           "merging supplies works",
           :after-tap( {
-              $s1.more(1);
-              $s1.more(2);
-              $s2.more('a');
-              $s1.more(3);
+              $s1.emit(1);
+              $s1.emit(2);
+              $s2.emit('a');
+              $s1.emit(3);
               $s1.done();
-              $s2.more('b');
+              $s2.emit('b');
               $s2.done();
           } );
     }

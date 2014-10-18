@@ -13,7 +13,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s1 = Supply.for(1..10);
         my $on = on -> $res {
             $s1 => sub ($val) {
-                $res.more($val);
+                $res.emit($val);
             }
         }
         tap_ok $on, [1..10], "minimal 'on' works";
@@ -28,13 +28,13 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             $s1 => sub ($val) {
                 @a1.push($val);
                 if @a1 && @a2 {
-                    $res.more( (@a1.shift => @a2.shift) );
+                    $res.emit( (@a1.shift => @a2.shift) );
                 }
             },
             $s2 => -> \val {
                 @a2.push(val);
                 if @a1 && @a2 {
-                    $res.more( @a1.shift => @a2.shift );
+                    $res.emit( @a1.shift => @a2.shift );
                 }
             }
         }
@@ -51,7 +51,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             ($a,$b) => sub ($val,$index) {
                 @values[$index].push($val);
                 if all(@values) {
-                    $res.more( (@values>>.shift) );
+                    $res.emit( (@values>>.shift) );
                 }
             }
         }
@@ -68,7 +68,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             @s => -> \val, \index {
                 @values[index].push(val);
                 if all(@values) {
-                    $res.more( [op] @values>>.shift );
+                    $res.emit( [op] @values>>.shift );
                 }
             }
         }
@@ -83,7 +83,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $on = on -> $res {
             my $done = 0;
             @s => {
-              more => sub ($val) { @seen.push($val); $res.more($val) },
+              emit => sub ($val) { @seen.push($val); $res.emit($val) },
               done => { $res.done if ++$done == +@s }
             }
         }

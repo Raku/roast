@@ -21,12 +21,12 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [<a b cc d eeee fff>],
           "handle chunked lines",
           :after-tap( {
-              $s.more( "   a b c" );
-              $s.more( "c d " );
-              $s.more( " e" );
-              $s.more( "eee" );
-              $s.more( "   " );
-              $s.more( " fff  " );
+              $s.emit( "   a b c" );
+              $s.emit( "c d " );
+              $s.emit( " e" );
+              $s.emit( "eee" );
+              $s.emit( "   " );
+              $s.emit( " fff  " );
               $s.done;
           } );
     }

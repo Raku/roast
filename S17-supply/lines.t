@@ -49,10 +49,10 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [<a b c d>, '', 'eeee'],
           "handle chunked lines",
           :after-tap( {
-              $s.more( "a\nb\r" );
-              $s.more( "\nc\rd\n" );
-              $s.more( "\ne" );
-              $s.more( "eee" );
+              $s.emit( "a\nb\r" );
+              $s.emit( "\nc\rd\n" );
+              $s.emit( "\ne" );
+              $s.emit( "eee" );
               $s.done;
           } );
     }
@@ -63,10 +63,10 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           ["a\n","b\r\n","c\r","d\n","\n","eeee"],
           "handle chunked lines",
           :after-tap( {
-              $s.more( "a\nb\r" );
-              $s.more( "\nc\rd\n" );
-              $s.more( "\ne" );
-              $s.more( "eee" );
+              $s.emit( "a\nb\r" );
+              $s.emit( "\nc\rd\n" );
+              $s.emit( "\ne" );
+              $s.emit( "eee" );
               $s.done;
           } );
     }

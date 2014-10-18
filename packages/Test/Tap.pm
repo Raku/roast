@@ -9,7 +9,7 @@ multi sub tap_ok (
   $expected,
   $desc,
   :$live = False,
-  :&more,
+  :&emit,
   :&done,
   :&after-tap,
   :$timeout is copy = 10,
@@ -23,7 +23,7 @@ multi sub tap_ok (
         my @res;
         my $done;
         isa_ok $s.tap(
-                 { more() if &more; @res.push($_) },
+                 { emit() if &emit; @res.push($_) },
           :done( { done() if &done; $done = True } ),
         ), Tap, "$desc got a tap";
         after-tap() if &after-tap;
@@ -54,7 +54,7 @@ Test::Tap - Extra utility code for testing Supply
     [<a b c>],
     "text",
     :live,
-    :more( { ... } ),
+    :emit( { ... } ),
     :done( { ... } ),
     :after-tap( { ... } ),
     :timeout(50),
@@ -91,9 +91,9 @@ Takes optional named parameters:
 Optional indication of the value C<Supply.live> is supposed to return.  By
 default, the C<Supply> is expected to be C<on demand> (as in B<not> live).
 
-=item :more( {...} )
+=item :emit( {...} )
 
-Optional code to be executed whenever a value is received ("more"d) on the tap.
+Optional code to be executed whenever a value is received (emitted) on the tap.
 By default, does B<not> execute any code.
 
 =item :done( {...} )

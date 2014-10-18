@@ -17,11 +17,11 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [<1a 2b>],
           'zipping taps works',
           :after-tap( {
-              $s1.more(1);
-              $s1.more(2);
-              $s2.more('a');
-              $s2.more('b');
-              $s2.more('c');
+              $s1.emit(1);
+              $s1.emit(2);
+              $s2.emit('a');
+              $s2.emit('b');
+              $s2.emit('c');
               $s1.done();
               $s2.done();
           } );

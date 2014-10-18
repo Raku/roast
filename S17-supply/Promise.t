@@ -14,14 +14,14 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $p1 = $s.Promise;
         isa_ok $p1, Promise, 'we got a Promise';
         is $p1.status, Planned, 'Promise still waiting';
-        $s.more(42);
+        $s.emit(42);
         is $p1.status, Kept, 'Promise is kept';
-        is $p1.result, 42, 'got first mored value';
+        is $p1.result, 42, 'got first emitted value';
 
         my $p2 = $s.Promise;
-        $s.more(43);
-        $s.more(44);
-        is $p2.result, 43, 'got second mored value';
+        $s.emit(43);
+        $s.emit(44);
+        is $p2.result, 43, 'got second emitted value';
 
         my $p3 = $s.Promise;
         $s.done;

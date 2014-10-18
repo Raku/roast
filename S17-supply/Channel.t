@@ -13,12 +13,12 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s = Supply.new;
         my $c = $s.Channel;
         isa_ok $c, Channel, 'we got a Channel';
-        $s.more(42);
-        is $c.receive, 42, 'got first mored value';
-        $s.more(43);
-        $s.more(44);
-        is $c.receive, 43, 'got second mored value';
-        is $c.receive, 44, 'got third mored value';
+        $s.emit(42);
+        is $c.receive, 42, 'got first emitted value';
+        $s.emit(43);
+        $s.emit(44);
+        is $c.receive, 43, 'got second emitted value';
+        is $c.receive, 44, 'got third emitted value';
         $s.done;
         ok $c.closed, 'doneing closes the Channel';
     }
@@ -30,6 +30,6 @@ my $done  = 0;
 my $times = 10;
 
 my $promise = start { while $done < $times { $c.receive; $done++ } };
-$s.more($_) for ^$times;
+$s.emit($_) for ^$times;
 await $promise;
 is $done, $times, 'did we receive all?';

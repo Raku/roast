@@ -32,9 +32,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         "reducing bag union works",
 #        :live,
         :after-tap( {
-            $s.more( { a =>  1, b => 2 } );
-            $s.more( { c => 42, b => 2 } );
-            $s.more( { a => 12, e => 10 } );
+            $s.emit( { a =>  1, b => 2 } );
+            $s.emit( { c => 42, b => 2 } );
+            $s.emit( { a => 12, e => 10 } );
         } );
     }
 }

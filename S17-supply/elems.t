@@ -22,13 +22,13 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 #          :live,
           :after-tap( {
               sleep now.Int + 1 - now;  # start of next second
-              $s.more(42); # fires
+              $s.emit(42); # fires
               sleep 1;
-              $s.more(43); # fires
-              $s.more(44);
-              $s.more(45);
+              $s.emit(43); # fires
+              $s.emit(44);
+              $s.emit(45);
               sleep 1;
-              $s.more(46); # fires
+              $s.emit(46); # fires
               $s.done;
           } );
     }
