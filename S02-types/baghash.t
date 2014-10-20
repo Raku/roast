@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 252;
+plan 250;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -336,10 +336,8 @@ sub showkv($x) {
 
     my $a = $b.pickpairs;
     say :$a.perl;
-    isa_ok $a, List, 'Did we get a List';
-    is $a.elems, 1, 'Did we get one element';
-    isa_ok $a[0], Pair, 'Did we get a Pair in the List';
-    ok ($a[0] eq "a\t1" or $a[0] eq "b\t2"), "We got one of the two choices";
+    isa_ok $a, Pair, 'Did we get a Pair';
+    ok ($a eq "a\t1" or $a eq "b\t2"), "We got one of the two choices";
 
     my @a = $b.pickpairs(2);
     is +@a, 2, '.pickpairs(2) returns the right number of items';
@@ -368,7 +366,6 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2 - @a.grep(* eq 'a').elems, '.grab(2) and the rest are "b"';
     is $b.total, 0, '.grab *should* change BagHash';
     #?rakudo.jvm todo "RT #120407"
-    #?rakudo.moar todo "RT #120407"
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 
@@ -381,7 +378,6 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.grab(*) (2)';
     is $b.total, 0, '.grab *should* change BagHash';
     #?rakudo.jvm todo "RT #120407"
-    #?rakudo.moar todo "RT #120407"
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 

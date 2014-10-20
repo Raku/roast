@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 198;
+plan 196;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -348,10 +348,8 @@ sub showkv($x) {
     my $b = Bag.new("a", "b", "b");
 
     my $a = $b.pickpairs;
-    isa_ok $a, List, 'Did we get a List';
-    is $a.elems, 1, 'Did we get one element';
-    isa_ok $a[0], Pair, 'Did we get a Pair in the List';
-    ok ($a[0] eq "a\t1" or $a[0] eq "b\t2"), "We got one of the two choices";
+    isa_ok $a, Pair, 'Did we get a Pair';
+    ok ($a eq "a\t1" or $a eq "b\t2"), "We got one of the two choices";
 
     my @a = $b.pickpairs(2);
     is +@a, 2, '.pickpairs(2) returns the right number of items';
