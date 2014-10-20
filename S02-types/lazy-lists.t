@@ -134,17 +134,18 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 } };
     ok $was-lazy, "first argument of X~ is lazy";
 }
 
-# RT121994
+# RT #121994
 {
     my @a;
     @a.push: $("one,two,three".split(","));
+    #?rakudo.jvm todo 'RT #121994'
     is_deeply @a, [(<one two three>).list.item], "push: did we not lose the split?";
     my @b;
     @b.unshift: $("one,two,three".split(","));
     is_deeply @b, [(<one two three>).list.item], "unshift: did we not lose the split?";
 }
 
-# RT120035
+# RT #120035
 {
     my $i;
     for gather { $i++, .take for 1..5 } {
