@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 33;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -163,4 +163,19 @@ eval_dies_ok q[
     $y.aa;
 
 }
+
+# RT #75858
+{
+    lives_ok { my class RT75858 { has $.x where 1 } },
+        'can use where clause on an attribute';
+}
+
+# RT #122109
+#?rakudo skip 'where clauses on attributes NYI, RT #122109'
+{
+    my class RT122109 { has $.x where * > 0 };
+    dies_ok { RT122109.new(:x(-42)) },
+        'where clause on attributes is taken into account';
+}
+
 # vim: ft=perl6
