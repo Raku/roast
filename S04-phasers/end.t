@@ -1,13 +1,28 @@
 use v6;
 use Test;
 
-plan 5;
+use lib 't/spec/packages';
+use Test::Util;
+
+plan 6;
+
+# RT #122355
+{
+    is_run( 'END exit(5)',
+        {
+            status => 5 +< 8, ## exit status 5 shifted right by 8 bits
+            out    => '',
+            err    => '',
+        },
+        'can use &exit from END block' );
+}
 
 eval_lives_ok 'my $x = 3; END { $x * $x }',
-              'outer lexicals are visible in END { ... } blocks';
+    'outer lexicals are visible in END { ... } blocks';
 
+# RT #112408
 eval_lives_ok 'my %rt112408 = END => "parsing clash with block-less END"',
-	      'Can use END as a bareword hash key (RT 112408)';
+    'Can use END as a bareword hash key (RT 112408)';
 
 my $a = 0;
 #?rakudo 2 todo 'lexicals and EVAL()'
