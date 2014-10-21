@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 37;
+plan 38;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -32,13 +32,17 @@ plan 37;
   is +^ 0xdeaddead0000deaddead0000dead, -0xdeaddead0000deaddead0000deae,
      'numeric bitwise negation';
 
+  # RT #121810
+  is 0x0123456789abcdef, 81985529216486895,
+      'correct bit result with big enough hexadecimal (0x) literal';
+
   # Negative numbers.  These really need more tests for bigint vs sized natives
   # RT #122310
   is (-5 +& -2),(-6), "logical AND of two negative Int is twos complement";
   is (-7 +| -6),(-5), "logical OR of two negative Int is twos complement";
   is (-7 +^ -6),( 3), "logical XOR of two negative Int is twos complement";
 
-  # string                           
+  # string
   #?niecza 6 skip 'string bitops'
   is( 'a' ~& 'A',         'A',       'string bitwise ~& of "a" and "A"' );
   is( 'a' ~| 'b',         'c',       'string bitwise ~| of "a" and "b"' );
@@ -46,12 +50,12 @@ plan 37;
   is( 'AAAAA' ~& 'zzzzz', '@@@@@',   'short string bitwise ~&' );
   is( 'AAAAA' ~| 'zzzzz', '{{{{{',   'short string bitwise ~|' );
   is( 'AAAAA' ~^ 'zzzzz', ';;;;;',   'short string bitwise ~^' );
-  
+
   # long strings
   my $foo = "A" x 150;
   my $bar = "z" x 75;
   my $zap = "A" x 75;
-  
+
   #?niecza 3 skip 'string bitops'
   is( $foo ~& $bar, '@' x 75,        'long string bitwise ~&, truncates' );
   is( $foo ~| $bar, '{' x 75 ~ $zap, 'long string bitwise ~|, no truncation' );
