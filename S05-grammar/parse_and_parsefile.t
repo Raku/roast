@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 # tests .parse and .parsefile methods on a grammar
 
@@ -58,6 +58,17 @@ eval_dies_ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
 
     my $match = grr.parse('foo bar asd');
     is $match[0].perl, "Any", 'empty match is Any, not Null PMC access';
+}
+
+# RT #116597
+#?rakudo.parrot todo 'RT #116597'
+{
+    grammar RT116597 {
+        token TOP() { <lit 'a'> };
+        token lit($s) { $s };
+    }
+    lives_ok { RT116597.parse('a') },
+        'can use <rule "param"> form of rule invocation in grammar';
 }
 
 done;
