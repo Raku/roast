@@ -10,7 +10,7 @@ is do {flip "hello"}, "olleh", 'string reversal';
 is do {join ", ", reverse <ab cd ef>}, "ef, cd, ab", 'list reversal';
 
 my %capitals = France => "Paris", UK => "London";
-is_deeply %capitals.invert, ("Paris" => "France", "London" => "UK").list.item, 'hash inversion';
+is_deeply %capitals.invert.sort, $("London" => "UK", "Paris" => "France"), 'hash inversion';
 
 my %original := %capitals;
 my %inverse;
