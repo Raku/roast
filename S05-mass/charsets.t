@@ -20,6 +20,7 @@ plan 17;
 
     is $latin-chars.comb(/<alnum>/).join, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'alnum chars';
 
+    #?rakudo.parrot todo 'blank characters'
     is $latin-chars.comb(/<blank>/)>>.ord.join(","), '9,32,160', 'blank chars';
 
     is $latin-chars.comb(/<cntrl>/)>>.ord.join(","), ((0..31, 127..159).join(",")), 'cntrl chars';
@@ -28,15 +29,27 @@ plan 17;
     #?rakudo.jvm todo 'Unicode 6.3 -- lower characters'
     is $latin-chars.comb(/<lower>/).join, "abcdefghijklmnopqrstuvwxyzµßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'lower chars';
 
-    #++ FLAPPERS on jvm/parrot
-    # unicode 6.1 reclassifies § and ¶ as punctuation characters, so actual results may vary depending
+    # unicode 6.1 reclassifies punctuation characters, so actual results may vary depending
     # on unicode version bundled with jdk, icu etc.
-    #?rakudo.parrot todo 'punct characters'
-    #?rakudo.jvm todo 'Unicode 6.1 -- punct characters'
-    is $latin-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, 'punct chars';
-    #?rakudo.jvm todo 'Unicode 6.1 -- :Punctuation characters'
-    is $latin-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, ':Punctuation chars';
-    #-- FLAPPERS
+
+    my $punct-chars := q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>;
+    my $punct-chars-pre61 := q<!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~> ~ chr(160) ~ q<¡¢£¤¥¦§¨©«¬­®¯°±²³´¶·¸¹»¼½¾¿×÷>;
+    my $punct := $latin-chars.comb(/<punct>/).join;
+
+    ok ($punct eq $punct-chars || $punct eq $punct-chars-pre61), 'punct chars'
+        or diag "punct: $punct";
+    my @punct = $punct.comb;
+    my @punct-chars-pre61 = $punct-chars-pre61.comb;
+    for @punct.keys {
+        say "@punct[$_]:  {ord(@punct[$_])} {ord(@punct-chars-pre61[$_])}";
+    }
+
+    $punct-chars := q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>;
+    $punct-chars-pre61 := q<!"#%&'()*,-./:;?@[\]_{}¡«·»¿>;
+    $punct := $latin-chars.comb(/<:Punctuation>/).join;
+
+    ok $punct eq $punct-chars || $punct eq $punct-chars-pre61, ':Punctuation chars'
+        or diag ":Punctuation: $punct";
 
     is $latin-chars.comb(/<upper>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ", 'upper chars';
 
