@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 # the boundary between run time and compile time is hard to implement right.
 # Some of those tests might look trivial, but nearly all of them are based
@@ -67,4 +67,11 @@ plan 10;
 # RT #115502
 {
     is (BEGIN { try 42; } ), 42, 'Can use try at BEGIN time';
+}
+
+# RT #119749
+#?rakudo.parrot skip 'RT #119749'
+{
+    lives_ok { enum A (a=>3); BEGIN for A.enums { } },
+        'no Null PMC access when looping over SomeEnum.enums in blockless BEGIN';
 }
