@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 23;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -112,5 +112,16 @@ eval_dies_ok '1 for <a b> for <c d>;', 'double statement-modifying for is not al
 
 # RT #89208
 is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for works.';
+
+# RT #118769
+{
+    my @x = <x x x>;
+    $_ = 'foo' for @x;
+    is @x, <foo foo foo>, 'can assign to $_ in a statement_mod "for" loop (1)';
+
+    my @y = <& a& &b>;
+    s:g/\&/\\\&/ for @y;
+    is @y, ('\&', 'a\&', '\&b'), 'can assign to $_ in a statement_mod "for" loop (2)';
+}
 
 # vim: ft=perl6
