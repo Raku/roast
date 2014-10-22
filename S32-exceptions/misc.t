@@ -416,7 +416,7 @@ if $emits_suggestions {
         try EVAL('my cool $a');
         ok $! ~~ X::Comp::Group, 'my cool $a throws an X::Comp::Group.';
         ok $!.sorrows[0] ~~ X::Undeclared, "the first sorrow is X::Undeclared.";
-        is $!.sorrows[0].suggestions, <Cool Bool>, "the suggestions are Cool and Bool";
+        is $!.sorrows[0].suggestions.sort, <Bool Cool>, "the suggestions are Cool and Bool";
     }
 
     {
