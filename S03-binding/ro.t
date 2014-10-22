@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 11;
 
 # L<S03/Item assignment precedence/bind and make readonly>
 
@@ -38,6 +38,14 @@ plan 9;
     lives_ok { @x[2] = 'k' }, 'can still assign to items of RO array';
     #?niecza todo
     is @x.join(''), 'd|e|k', 'assignment relly worked';
+}
+
+# RT #65900
+{
+    throws_like q[my $a is readonly = 5;], X::Comp::Trait::Unknown,
+        'variable trait "is readonly" is no longer valid (1)';
+    throws_like q[(my $a is readonly) = 5;], X::Comp::Trait::Unknown,
+        'variable trait "is readonly" is no longer valid (2)';
 }
 
 # vim: ft=perl6
