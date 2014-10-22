@@ -2,56 +2,58 @@ use v6;
 
 use Test;
 
+use lib 't/spec/packages';
+use Test::Util;
+
+plan 3;
+
 =begin pod
 
-Test -n implementation
+Test C<-n> implementation
 
-The -n command line switch mimics the Perl5 -n command line
+The C<-n> command line switch mimics the Perl5 C<-n> command line
 switch, and wraps the whole script in
 
   for (lines) {
-    ...
+    ...         # your script
   };
 
 =end pod
 
 # L<S19/Reference/"Act like awk.">
 
-my @examples = (
-  '-n -e .say',
-  '-ne .say',
-  '-e "" -ne .say',
-);
-
-plan +@examples;
-
-diag "Running under $*OS";
-
-my ($redir_in, $redir_out) = ("<", ">");
-
-my $str = "
-foo
+my $str = "foo
 bar
 ";
 
-sub nonce () { return (".{$*PID}." ~ (1..1000).pick) }
-my ($in_fn, $out_fn) = <temp-ex-input temp-ext-output> >>~>> nonce;
-my $h = open("$in_fn", :w);
-$h.print($str);
-$h.close();
+is_run(
+    $str,          # input
+    {
+        out => $str,
+    },
+    '-n -e .say works like cat',
+    :compiler-args['-n -e .say'],
+);
 
-for @examples -> $ex {
-  my $command = "$*EXECUTABLE_NAME $ex $redir_in $in_fn $redir_out $out_fn";
-  diag $command;
-  run $command;
+is_run(
+    $str,          # input
+    {
+        out => $str,
+    },
+    '-ne .say works like cat',
+    :compiler-args['-ne .say'],
+);
 
-  my $expected = $str;
-  my $got      = slurp $out_fn;
-  unlink $out_fn;
-
-  is $got, $expected, "-n -e print works like cat";
-}
-
-unlink $in_fn;
+# RT #107992
+is_run(
+    $str,          # input
+    {
+        status => 0,
+        out    => '',
+        err    => '',
+    },
+    '-n -e "" works like awk ""',
+    :compiler-args['-n -e ""'],
+);
 
 # vim: ft=perl6
