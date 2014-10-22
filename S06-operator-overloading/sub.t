@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 73;
+plan 74;
 
 =begin pod
 
@@ -21,8 +21,6 @@ Testing operator overloading subroutines
     is(X "fish", "ROUGHLYfish",
        'prefix operator overloading for new operator');
 }
-
-
 
 {
     sub prefix:<±> ($thing) { return "AROUND$thing"; };
@@ -65,7 +63,7 @@ Testing operator overloading subroutines
 {
     my sub prefix:<->($thing) { return "CROSS$thing"; };
     is(-"fish", "CROSSfish",
-	 'prefix operator overloading for existing operator (but only lexically so we don\'t mess up runtime internals (needed at least for PIL2JS, probably for PIL-Run, too)');
+        'prefix operator overloading for existing operator (but only lexically so we don\'t mess up runtime internals (needed at least for PIL2JS, probably for PIL-Run, too)');
 }
 
 {
@@ -76,19 +74,19 @@ Testing operator overloading subroutines
 {
     sub infix:<C> ($text, $owner) { return "$text copyright $owner"; };
     is "romeo & juliet" C "Shakespeare", "romeo & juliet copyright Shakespeare",
-	'infix operator overloading for new operator';
+        'infix operator overloading for new operator';
 }
 
 {
     sub infix:<©> ($text, $owner) { return "$text Copyright $owner"; };
     is "romeo & juliet" © "Shakespeare", "romeo & juliet Copyright Shakespeare",
-	'infix operator overloading for new operator (unicode)';
+        'infix operator overloading for new operator (unicode)';
 }
 
 {
     sub infix:<(C)> ($text, $owner) { return "$text CopyRight $owner"; };
     is EVAL(q[ "romeo & juliet" (C) "Shakespeare" ]), "romeo & juliet CopyRight Shakespeare",
-	'infix operator overloading for new operator (nasty)';
+        'infix operator overloading for new operator (nasty)';
 }
 
 {
@@ -437,6 +435,13 @@ Testing operator overloading subroutines
     #?rakudo.parrot 2 skip 'RT #116643'
     lives_ok { sub prefix:<\o/>($) {} }, 'can declare operator with a backslash (1)';
     lives_ok { sub postfix:<\\>($) {} }, 'can declare operator with a backslash (2)';
+}
+
+# RT #115724
+#?rakudo.parrot skip 'RT #115724'
+{
+    lives_ok { sub circumfix:<w "> ($a) { }; },
+        'can define circumfix operator with a double quote (")';
 }
 
 done;
