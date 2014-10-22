@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 61;
+plan 62;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -267,6 +267,13 @@ eval_dies_ok q[
 # RT #79464
 {
     lives_ok {Foo1::bar(); module Foo1 { our $x = 42; our sub bar() { $x.defined } }}, 'accessing module variable from within sub called from outside the module';
+}
+
+# RT #76606
+{
+    use lib 't/spec/packages';
+    lives_ok { use RT76606 },
+        'autovivification works with nested "use" directives (import from two nested files)';
 }
 
 # vim: ft=perl6
