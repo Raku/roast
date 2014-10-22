@@ -40,9 +40,6 @@ plan 17;
         or diag "punct: $punct";
     my @punct = $punct.comb;
     my @punct-chars-pre61 = $punct-chars-pre61.comb;
-    for @punct.keys {
-        say "@punct[$_]:  {ord(@punct[$_])} {ord(@punct-chars-pre61[$_])}";
-    }
 
     $punct-chars := q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>;
     $punct-chars-pre61 := q<!"#%&'()*,-./:;?@[\]_{}¡«·»¿>;
