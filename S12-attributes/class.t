@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Class attributes/"Class attributes are declared">
 #L<S12/Class methods/Such a metaclass method is always delegated>
 
-plan 26;
+plan 27;
 
 class Foo {
     our $.bar = 23;
@@ -103,28 +103,42 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     $bad_code ='$!a';
     try EVAL $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
-    
+
     $bad_code = 'class B0rk { has $.a; say $.a; }';
     try EVAL $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
-    
+
     $bad_code = 'class Chef { my $.a; say $.a; }';
     try EVAL $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
 }
 
+# RT #114230
+{
+    class RT114230 {
+        has &!x;
+        method f {
+            &!x //= { 'ook!' };
+            my $res = defined &!x;
+            &!x();
+        }
+    }
+    lives_ok { RT114230.new.f },
+        'no Null PMC access when doing //= on an undefined attribute and then calling it';
+}
+
 #?niecza skip "Two definitions of method b"
 {
-    class A { 
-        has $.b = 1; 
-        method b() { 2; } 
+    class A {
+        has $.b = 1;
+        method b() { 2; }
     };
     is A.new.b, 2, "don't create accessor if the class declares an explicit method of that name";
 
 
-    role B { 
-        has $.b = 1; 
-        method b() { 2; } 
+    role B {
+        has $.b = 1;
+        method b() { 2; }
     };
     is B.new.b, 2;
 }
