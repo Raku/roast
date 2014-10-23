@@ -73,17 +73,16 @@ plan 6;
                 line     => 1;
 }
 
-# RT 122746
+# RT #122746
 {
-    throws_like ' macro postfix:<!!>($o) {
-            quasi {
-                die "Null check failed for ", $o.Str unless defined {{{$o}}};
-                {{{$o}}}
-            }
+    macro postfix:<!!>($o) {
+        quasi {
+            die "Null check failed for ", $o.Str unless defined {{{$o}}};
+            {{{$o}}};
         }
-        my $cookies;
-        $cookies!!;',
-        Exception,
+    };
+    my $cookies;
+    throws_like { $cookies!!; }, Exception,
         payload => 'Null check failed for $cookies';
 }
 
