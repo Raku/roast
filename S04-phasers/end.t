@@ -4,7 +4,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 6;
+plan 8;
 
 # RT #122355
 {
@@ -15,6 +15,20 @@ plan 6;
             err    => '',
         },
         'can use &exit from END block' );
+}
+
+# RT #111766
+{
+    {
+        my $a = 42;
+        END { is $a, 42, 'lexical lookup from END block works' };
+    }
+    {
+        BEGIN {
+            my $a = 43;
+            END { is $a, 43, 'lexical lookup from END block to surrounding BEGIN block works' };
+        }
+    }
 }
 
 eval_lives_ok 'my $x = 3; END { $x * $x }',
