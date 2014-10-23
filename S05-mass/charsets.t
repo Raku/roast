@@ -36,6 +36,7 @@ plan 17;
     my $punct-chars-pre61 := q<!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~> ~ chr(160) ~ q<¡¢£¤¥¦§¨©«¬­®¯°±²³´¶·¸¹»¼½¾¿×÷>;
     my $punct := $latin-chars.comb(/<punct>/).join;
 
+    #?rakudo.jvm todo "?"
     ok ($punct eq $punct-chars || $punct eq $punct-chars-pre61), 'punct chars'
         or diag "punct: $punct";
     my @punct = $punct.comb;
