@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 62;
+plan 63;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -274,6 +274,13 @@ eval_dies_ok q[
     use lib 't/spec/packages';
     lives_ok { use RT76606 },
         'autovivification works with nested "use" directives (import from two nested files)';
+}
+
+# RT #120561
+#?rakudo.parrot skip 'RT #120561'
+{
+    lives_ok { use lib "{$?FILE.path.directory}/t/spec/packages" },
+        'no Null PMC access with "use lib $double_quoted_string"';
 }
 
 # vim: ft=perl6
