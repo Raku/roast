@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 29;
 
 {
     my int $x;
@@ -100,6 +100,14 @@ plan 27;
     ($x) = (5);
     is $x, 5, 'did we assign $x';
     is $x.WHAT, int, 'is it really a native';
+}
+
+# RT #121349
+{
+    my @j;
+    my int $j = 42;
+    lives_ok { @j.push($j) }, 'can push native int to an array (1)';
+    is @j[0], 42, 'can push native int to an array (2)';
 }
 
 # vim: ft=perl6
