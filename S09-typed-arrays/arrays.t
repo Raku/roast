@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 65;
+plan 67;
 
 # L<S09/Typed arrays/>
 
@@ -170,6 +170,11 @@ plan 65;
         'assignment checks for types';
 }
 
-done;
+{
+    my Int @a; @a[2] = 42;
+    my @b := @a.perl.EVAL;
+    is @b.of, Int, 'does the roundtrip preserve typedness';
+    is @a, @b, 'do typed arrays with empty elements roundtrip';
+}
 
 # vim: ft=perl6
