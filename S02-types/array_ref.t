@@ -7,7 +7,7 @@ plan 45;
 # array_ref of strings
 
 my $array_ref1 = ("foo", "bar", "baz");
-isa_ok($array_ref1, Parcel);
+isa_ok($array_ref1, List);
 
 is(+$array_ref1, 3, 'the array_ref1 has 3 elements');
 is($array_ref1[0], 'foo', 'got the right value at array_ref1 index 0');

@@ -140,23 +140,23 @@ plan 32;
 }
 
 {
-    sub Parcel::rt62836 { 62836 }
+    sub List::rt62836 { 62836 }
 
     throws_like { <1 2 3>.rt62836 },
       X::Method::NotFound,
-      'call to user-declared sub in Parcel:: class dies';
+      'call to user-declared sub in List:: class dies';
     try { EVAL '<1 2 3>.rt62836' };
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
-    ok "$!" ~~ /Parcel/,    'error message contains name of class';
+    ok "$!" ~~ /List/,    'error message contains name of class';
 
-    augment class Parcel { method rt62836_x { 62836 } };
-    is <1 2 3>.rt62836_x, 62836, 'call user-declared method in Parcel:: class';
+    augment class List { method rt62836_x { 62836 } };
+    is <1 2 3>.rt62836_x, 62836, 'call user-declared method in List:: class';
 }
 
 # RT #66304
 {
     my $rt66304 = (1, 2, 4);
-    isa_ok $rt66304, Parcel, 'List assigned to scalar is-a Parcel';
+    isa_ok $rt66304, List, 'List assigned to scalar is-a List';
     is( $rt66304.WHAT.perl, (1, 2, 4).WHAT.perl,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
     throws_like { $rt66304[1] = 'ro' },

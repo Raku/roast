@@ -74,10 +74,9 @@ throws_like { EVAL '<STDIN>' },
 # L<S02/Quoting forms/"is autopromoted into">
 {
     my $c = <a b c>;
-    isa_ok($c, Parcel, 'List in scalar context becomes a Capture');
-    throws_like {$c.push: 'd'},
-      X::Multi::NoMatch,
-      '... which is immutable';
+    isa_ok($c, List, 'List literal in scalar context');
+    lives_ok { $c.push: 'd' }; '.. is mutable';
+    is @($c).join(','), 'a,b,c,d', 'push worked';
 }
 
 {

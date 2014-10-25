@@ -372,9 +372,9 @@ sub showkv($x) {
     my %x = "a" => 1, "b" => 2;
     isa_ok %x.Mix, Mix, "Method .Mix works on Hash-1";
     is showkv(%x.Mix), "a:1 b:2", "Method .Mix works on Hash-2";
-    isa_ok (@a, %x).Mix, Mix, "Method .Mix works on Parcel-1";
+    isa_ok (@a, %x).Mix, Mix, "Method .Mix works on List-1";
     is showkv((@a, %x).Mix), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
-       "Method .Mix works on Parcel-2";
+       "Method .Mix works on List-2";
 }
 
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
