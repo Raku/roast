@@ -126,6 +126,7 @@ my @tests = (
 
     # RT #62002 -- validity of default .perl
     my $t2_init = EVAL($t1_init).perl;
+    #?rakudo.jvm skip 'RT #123048 -- sporadical failure'
     is $t1_init, $t2_init, '.perl on user-defined type roundtrips okay';
 }
 
