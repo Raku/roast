@@ -11,10 +11,10 @@ my Str $x;
 
 #L<S19/Backward (In)compatibility/Execute a line of code, with all features>
 
-#?rakudo skip deprecation message NYI
-is_run $x, :args['-E', 'say "hi"'],
+#?rakudo todo "deprecation message NYI"
+is_run $x, :args['-E', 'say q[hi]'],
     {
-        out     => '',
-        err     => { m/'SORRY' .+ 'use -e'/ },
+        out     => rx/'SORRY' .+ 'use -e'/,
+        err     => '',
     },
     'deprecation message works';

@@ -11,10 +11,10 @@ my Str $x;
 
 #L<S19/Options and Values/These options are made available>
 
-#?rakudo skip delimited options NYI
+#?rakudo todo "delimited options NYI"
 is_run $x, :args['++FOO', '--bar', '++/FOO', '-e', 'say %*OPTS<FOO>'],
     {
-        out     => '--bar',
+        out     => '--bar\n',
         err     => '',
         status  => 0,
     },

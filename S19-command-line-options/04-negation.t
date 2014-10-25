@@ -11,11 +11,10 @@ my Str $x;
 
 #L<S19/Options and Values/Options may be negated with>
 
-#?rakudo skip negation NYI
 {
-    is_run $x, :args['--/stagestats', '-e', 'say "hi"'],
+    is_run $x, :args['-/h', '-e', 'say q[hi]'],
         {
-            out     => "hi",
+            out     => "hi\n",
             err     => "",
             status  => 0,
         },
@@ -23,15 +22,15 @@ my Str $x;
 
     is_run $x, :args['-/hv'],
         {
-            out     => '',
-            err     => { m/"SORRY" .+ "cannot be negated"/ }
+            out     => rx/"SORRY" .+ "cannot be negated"/,
+            err     => '',
         },
         "negation of multiple short options fails";
 
     is_run $x, :args['--/target', 'foo'],
         {
-            out     => '',
-            err     => { m/"SORRY" .+ "cannot be negated"/ }
+            out     => rx/"SORRY" .+ "cannot be negated"/,
+            err     => '',
         },
-        "negation of multiple short options fails";
+        "negation of short option that needs a value fails";
 }
