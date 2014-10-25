@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 # L<S03/Changes to Perl 5 operators/flipflop operator is now done with>
 
@@ -136,6 +136,17 @@ plan 39;
     
     is_deeply ff_eval({@_[0]() fff @_[1]()}, /B/, /B/, <A B A B A>),
         [3, 2], "count lhs & rhs evals for fff";
+}
+
+{
+    #?rakudo todo 'NYM flip-flop with "True but $seqnum"'
+    my $result;
+    for <A B C B A> -> $a {
+        if $a ~~ ("B" fff "B") {
+            $result ~= $a
+        }
+    }
+    is $result, 'BCB', 'smart-matching against a flip-flop works';
 }
 
 done;
