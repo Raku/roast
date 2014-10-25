@@ -2,7 +2,10 @@ use v6;
 
 use Test;
 
-plan 12;
+use lib 't/spec/packages';
+use Test::Util;
+
+plan 16;
 
 # L<S04/Phasers/KEEP "at every successful block exit">
 # L<S04/Phasers/UNDO "at every unsuccessful block exit">
@@ -82,5 +85,36 @@ plan 12;
     nok $kept,   'fail() does not trigger KEEP';
     ok  $undone, 'fail() triggers UNDO';
 }
+
+# RT #111866
+{
+    #?rakudo.parrot skip "RT #111866"
+    is_run( q[UNDO { say 'undone' }; die 'foobar'],
+        {
+            out    => "undone\n",
+            err    => /foobar/,
+        },
+        'UNDO fires after die' );
+
+    #?rakudo.parrot skip "RT #111866"
+    #?rakudo.jvm skip "RT #111866"
+    is_run( q[do { UNDO { say 'undone' }; die 'foobar' }],
+        {
+            out    => "undone\n",
+            err    => /foobar/,
+        },
+        'UNDO fires after die' );
+
+    my $undone = 0;
+    try { UNDO $undone = 1; die 'foobar' };
+    #?rakudo.jvm todo "RT #111866"
+    ok $undone, 'UNDO fires after die if block is a "try" block';
+
+    my $undone_sub = 0;
+    sub foo { UNDO $undone_sub = 1; fail };
+    foo();
+    ok $undone_sub, 'UNDO in sub fires after "fail"';
+}
+
 
 # vim: ft=perl6
