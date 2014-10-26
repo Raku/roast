@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan 10;
+plan 11;
 
 
 dies_ok { class A { method set_a { $.a = 1 }}; A.new.set_a; },
@@ -38,5 +38,12 @@ eval_dies_ok ' role R { method r { $!r := 1 }};class S does R { }; S.new.r; ',
     "Test Undeclared private attribute binding from a role";
 eval_dies_ok ' class T { method t { $!t := 1 }}; ::T.new.t; ',
     "Test Undeclared private attribute binding from a class";
+
+# RT #102478
+{
+    throws_like { EVAL q[has $.x] },
+        X::Attribute::NoPackage,
+        message => q[You cannot declare attribute '$.x' here; maybe you'd like a class or a role?];
+}
 
 # vim: ft=perl6

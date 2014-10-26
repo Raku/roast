@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S05/Simplified lexical parsing of patterns/not all non-identifier glyphs are currently meaningful as metasyntax>
 
@@ -34,6 +34,12 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 #?DOES 3
 {
     throws_like '$_ = "0"; s/-/1/', X::Syntax::Regex::UnrecognizedMetachar, metachar => '-';
+}
+
+# RT #77562
+# not sure this is the right place for this test
+{
+    lives_ok { /$'x'/ }, 'can parse /$\'x\'/';
 }
 
 done;

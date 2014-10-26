@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Class attributes/"Class attributes are declared">
 #L<S12/Class methods/Such a metaclass method is always delegated>
 
-plan 27;
+plan 29;
 
 class Foo {
     our $.bar = 23;
@@ -141,6 +141,18 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
         method b() { 2; }
     };
     is B.new.b, 2;
+}
+
+# RT #102478
+{
+    class RT102478_1 { BEGIN EVAL q[has $.x] };
+    is RT102478_1.new(x => 3).x, 3,
+        'can declare attribute inside of a BEGIN EVAL in class';
+
+    class RT102478_2 { EVAL q[has $.x] };
+    throws_like { RT102478_2.new(x => 3).x },
+        X::Method::NotFound,
+        'cannot declare attribute inside of an EVAL in class';
 }
 
 # vim: ft=perl6

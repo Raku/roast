@@ -240,11 +240,10 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 
 # RT #116280
 #?rakudo.jvm skip "java.lang.NumberFormatException: RT#116280"
-#?rakudo.moar todo 'RT #116280'
+#?rakudo.moar todo 'RT #116280 -- sprintf prints numbers instead of NaN/inf/-inf'
+#?rakudo.parrot todo 'RT #116280 -- sprintf prints numbers instead of NaN/inf/-inf'
 {
-    #?rakudo.parrot todo 'sprintf prints numbers before NaN'
     is sprintf('%12.5f',  NaN), '         NaN', 'RT #116280';
-    #?rakudo.parrot 2 skip "sprintf hangs when printing Inf/-Inf"
     #?niecza 2 todo "https://github.com/sorear/niecza/issues/181"
     is sprintf('%12.5f',  Inf), '         inf', 'RT #116280';
     is sprintf('%12.5f', -Inf), '        -inf', 'RT #116280';
