@@ -20,6 +20,8 @@ plan 17;
 
     is $latin-chars.comb(/<alnum>/).join, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'alnum chars';
 
+    # omitting 160 on parrot 6.8.0/icu 4.4.1/unicode 5.2
+    #?rakudo.parrot todo 'Unicode 6.1 "blank characters'
     is $latin-chars.comb(/<blank>/)>>.ord.join(","), '9,32,160', 'blank chars';
 
     is $latin-chars.comb(/<cntrl>/)>>.ord.join(","), ((0..31, 127..159).join(",")), 'cntrl chars';
@@ -31,9 +33,14 @@ plan 17;
     #++ FLAPPERS on jvm/parrot
     # unicode 6.1 reclassifies § and ¶ as punctuation characters, so actual results may vary depending
     # on unicode version bundled with jdk, icu etc.
+
+    # failing on parrot 6.8.0/icu 4.4.1/unicode 5.2
     #?rakudo.parrot todo 'punct characters'
     #?rakudo.jvm todo 'Unicode 6.1 -- punct characters'
     is $latin-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, 'punct chars';
+
+    # problematic on on parrot 6.8.0/icu 4.4.1/unicode 5.2
+    #?rakudo.parrot todo 'Unicode 6.1 :Punctuation characters'
     #?rakudo.jvm todo 'Unicode 6.1 -- :Punctuation characters'
     is $latin-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, ':Punctuation chars';
     #-- FLAPPERS
