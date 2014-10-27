@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 41;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -194,9 +194,9 @@ plan 40;
 {
     my $seensize;
     my sub fib (Int $n) {
-	    state @seen = 0,1,1;
-	    $seensize = +@seen;
-	    @seen[$n] //= fib($n-1) + fib($n-2);
+        state @seen = 0,1,1;
+        $seensize = +@seen;
+        @seen[$n] //= fib($n-1) + fib($n-2);
     }
     is fib(10), 55, "fib 10 works";
     is $seensize, 10, "list assignment state in fib memoizes";
@@ -207,9 +207,9 @@ plan 40;
 {
     my $seensize;
     my sub fib (Int $n) {
-	    state $seen = [0,1,1];
-	    $seensize = +@$seen;
-	    $seen[$n] //= fib($n-1) + fib($n-2);
+        state $seen = [0,1,1];
+        $seensize = +@$seen;
+        $seen[$n] //= fib($n-1) + fib($n-2);
     }
     is fib(10), 55, "fib 2 works";
     is $seensize, 10, "[list] assignment state in fib memoizes";
@@ -221,7 +221,7 @@ plan 40;
     # now we're just being plain evil:
     subset A of Int where { $_ < state $x++ };
     my A $y = -4;
-    # the compiler could have done some checks somehwere, so 
+    # the compiler could have done some checks somehwere, so
     # pick a reasonably high number
     dies_ok { $y = 900000 }, 'growing subset types rejects too high values';
     lives_ok { $y = 1 }, 'the state variable in subset types works (1)';
@@ -235,6 +235,12 @@ sub bughunt1 { (state $svar) }    #OK not used
     sub bughunt2 { state $x //= 17; ++$x }
     is bughunt2(), 18,
        'a state variable in parens works with a state variable with //= init';
+}
+
+# RT #115614
+#?rakudo skip 'RT #115614'
+{
+    lives_ok { state $i++ }, 'can parse "state $i++"';
 }
 
 #?rakudo skip 'parse error'
