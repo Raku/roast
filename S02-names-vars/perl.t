@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 98;
+plan 99;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
 my @tests = (
@@ -109,8 +109,8 @@ my @tests = (
         has $.string = 'krach';
 
         method init {
-            $.inst = [ rand, rand ];
-            $!priv = [ rand, rand ].perl;
+            $.inst = [ 0.451619069541592e0, 0.248524740881188e0 ];
+            $!priv = [ 0.016026552444413e0, 0.929197054085006e0 ].perl;
         }
     }
 
@@ -126,8 +126,15 @@ my @tests = (
 
     # RT #62002 -- validity of default .perl
     my $t2_init = EVAL($t1_init).perl;
-    #?rakudo.jvm skip 'RT #123048 -- sporadical failure'
     is $t1_init, $t2_init, '.perl on user-defined type roundtrips okay';
+}
+
+# RT #123048
+#?rakudo.jvm todo 'RT #123048'
+{
+    my $a = 0.219947518065601987e0;
+    is $a.perl, EVAL($a.perl).perl,
+        '.perl on float with many digits roundtrips okay';
 }
 
 # RT #64080
