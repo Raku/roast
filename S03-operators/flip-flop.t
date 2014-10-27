@@ -138,8 +138,8 @@ plan 40;
         [3, 2], "count lhs & rhs evals for fff";
 }
 
+#?rakudo skip 'NYM flip-flop with "True but $seqnum"'
 {
-    #?rakudo todo 'NYM flip-flop with "True but $seqnum"'
     my $result;
     for <A B C B A> -> $a {
         if $a ~~ ("B" fff "B") {
