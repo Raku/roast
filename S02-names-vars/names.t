@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 143;
+plan 144;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -132,7 +132,7 @@ isa_ok (rule => 1), Pair, 'rule => something creates a Pair';
 lives_ok { EVAL 'class Quox { }; Quox.new' },
   'class names can start with Q';
 
-# RT #58488 
+# RT #58488
 throws_like {
     EVAL 'class A { has $.a};  my $a = A.new();';
     EVAL 'class A { has $.a};  my $a = A.new();';
@@ -145,6 +145,13 @@ throws_like {
 {
     class Class { };
     ok Class.new ~~ Class, 'can call a class Class';
+}
+
+# RT #75646
+{
+    throws_like { my ::foo $x, say $x }, Exception,
+        message => 'Cannot type check against type variable foo',
+        'no Null PMC access when printing a variable typed as ::foo ';
 }
 
 # vim: ft=perl6
