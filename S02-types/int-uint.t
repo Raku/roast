@@ -50,7 +50,6 @@ for @inttypes -> $type {
       Exception,
       "$type cannot be NaN";
 
-    #?rakudo 2 skip "Cannot modify an immutable value"
     is(EVAL("my $type \$var = 0; \$var++; \$var"), 1, "$type \$var++ works");
     is(EVAL("my $type \$var = 1; \$var--; \$var"), 0, "$type \$var-- works");
 }
