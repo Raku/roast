@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 18;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
@@ -16,6 +16,23 @@ my $name = $*SCHEDULER.^name;
     diag "seen $a runs" if !
       ok 5 < $a < 15, "Cue with :every schedules repeatedly";
     LEAVE $c.cancel;
+}
+
+{
+    # Also at risk of being a little fragile, but again hopefully OK on all
+    # but the most ridiculously loaded systems.
+    my $a = 0;
+    my $stop;
+    my $c = $*SCHEDULER.cue({ cas $a, {.succ} }, :every(0.1), :stop({$stop}));
+    isa_ok $c, Cancellation;
+    sleep 1;
+    $stop = True;
+
+    diag "seen $a runs" if !
+      ok 5 < $a < 15, "Cue with :every :stop schedules repeatedly";
+    my $seen = $a;
+    diag "seen {$a - $seen} runs after stop" if !
+      ok $seen <= $a <= $seen + 1, "Cue with :every :stop stops scheduling";
 }
 
 {
