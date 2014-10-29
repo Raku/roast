@@ -16,7 +16,7 @@ use Test;
 
 =end description
 
-plan 57;
+plan 59;
 
 # Implicit referentiation of arrays in assignment
 {
@@ -286,6 +286,16 @@ plan 57;
     my $pair  = ({ a => 1, b => 2 } => "value");
 
     is +$pair.key, 2, '({...} => "value") works';
+}
+
+# RT #76462
+{
+    lives_ok { my $a = (\my %h)<a> },
+        'no Null PMC access when hash indexing a hash ref';
+    my %h = ( 'a' => 1, 'b' => 2 );
+    my $h_ref = \%h;
+    lives_ok { my $b = $h_ref.{"a"} },
+        'no Null PMC access when trying to hash index a Capture';
 }
 
 # vim: ft=perl6
