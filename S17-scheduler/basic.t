@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 40;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
@@ -16,48 +16,56 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 #?rakudo skip "waiting for new '.loads' semantics"
 {
     my $x = False;
-    $*SCHEDULER.cue({
+    my $c = $*SCHEDULER.cue({
         pass "Cued code on $name ran";
         $x = True;
     });
+    isa_ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     ok $x, "Code was cued to $name by default";
+    LEAVE $c.cancel;
 }
 
 #?rakudo skip "waiting for new '.loads' semantics"
 {
     my $message;
-    $*SCHEDULER.uncaught_handler = sub ($exception) {
+    my $c = $*SCHEDULER.uncaught_handler = sub ($exception) {
         $message = $exception.message;
     };
     $*SCHEDULER.cue({ die "oh noes" });
+    isa_ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     is $message, "oh noes", "$name setting uncaught_handler works";
+    LEAVE $c.cancel;
 }
 
 #?rakudo skip "waiting for new '.loads' semantics"
 {
     my $tracker;
-    $*SCHEDULER.cue(
+    my $c = $*SCHEDULER.cue(
       { $tracker = 'cued,'; die "oops" },
       :catch( -> $ex {
           is $ex.message, "oops", "$name passed correct exception to handler";
           $tracker ~= 'caught';
       })
     );
+    isa_ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,caught", "Code run on $name, then handler";
+    LEAVE $c.cancel;
 }
 
 #?rakudo skip "waiting for new '.loads' semantics"
 {
     my $tracker;
-    $*SCHEDULER.cue(
+    my $c = $*SCHEDULER.cue(
         { $tracker = 'cued,' },
         :catch( -> $ex { $tracker ~= 'caught' })
     );
+    isa_ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,", "Catch handler on $name not run if no error";
+    LEAVE $c.cancel;
 }
 
 {
@@ -86,12 +94,14 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
 
 {
     my $x = False;
-    $*SCHEDULER.cue({
+    my $c = $*SCHEDULER.cue({
         pass "Cued code on $name ran";
         $x = True;
     });
+    ok $c.can("cancel"), 'can we cancel (1)';
     1 while $*SCHEDULER.loads;
     ok $x, "Code was cued to $name by default";
+    LEAVE $c.cancel;
 }
 
 {
@@ -99,32 +109,40 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     $*SCHEDULER.uncaught_handler = sub ($exception) {
         $message = $exception.message;
     };
-    $*SCHEDULER.cue({ die "oh noes" });
+    my $c = $*SCHEDULER.cue({ die "oh noes" });
+    #?rakudo todo "huh?"
+    ok $c.can("cancel"), 'can we cancel (2)';
     1 while $*SCHEDULER.loads;
     is $message, "oh noes", "$name setting uncaught_handler works";
+    LEAVE $c.?cancel;
 }
 
 {
     my $tracker;
-    $*SCHEDULER.cue(
+    my $c = $*SCHEDULER.cue(
       { $tracker = 'cued,'; die "oops" },
       :catch( -> $ex {
           is $ex.message, "oops", "$name passed correct exception to handler";
           $tracker ~= 'caught';
       })
     );
+    #?rakudo todo "huh?"
+    ok $c.can("cancel"), 'can we cancel (3)';
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,caught", "Code run on $name, then handler";
+    LEAVE $c.?cancel;
 }
 
 {
     my $tracker;
-    $*SCHEDULER.cue(
+    my $c = $*SCHEDULER.cue(
         { $tracker = 'cued,' },
         :catch( -> $ex { $tracker ~= 'caught' })
     );
+    ok $c.can("cancel"), 'can we cancel (4)';
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,", "Catch handler on $name not run if no error";
+    LEAVE $c.cancel;
 }
 
 {
