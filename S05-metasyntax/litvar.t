@@ -18,7 +18,7 @@ plan 24;
 
 my $var = "a*b";
 my @var = <a b ab c>;
-my $aref = \@var;
+my $aref = @var;
 
 
 # SCALARS
