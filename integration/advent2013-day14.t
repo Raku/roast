@@ -180,7 +180,7 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
 
 	start {
 	    loop {
-		winner $source {
+		earliest $source {
 		    more $source {
 			if INIFile.parse($_, :actions(INIFileActions)) -> $parsed {
 			    $dest.send($parsed.ast);
@@ -204,7 +204,7 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
 	start {
 	    my %result;
 	    loop {
-		winner $source {
+		earliest $source {
 		    more $source {
 			for %^content.kv -> $sec, %kvs {
 			    for %kvs.kv -> $k, $v {
