@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 38;
 
 =begin pod
 
@@ -141,5 +141,7 @@ eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
     eval_lives_ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',
           'add_method returns a Method object';
 }
+
+is class :: { method foo { 42 }}.foo, 42, "Can call method on class definition without parens";
 
 # vim: ft=perl6
