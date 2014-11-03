@@ -14,12 +14,12 @@ sub temp_name(Str $fnbase is copy) {
 
 # Directories
 
-my @rakudo-files = map {~$_}, dir;
+my @rakudo-files = map {$_.relative}, dir;
 my @rakudo-expected = <Makefile VERSION CREDITS LICENSE>;
 ok @rakudo-expected (<=) @rakudo-files, "dir"
    or diag "missing: {@rakudo-expected (-) @rakudo-files}";
 
-my @test-files = map *.subst('\\', '/'), dir 't';
+my @test-files = map *.relative.subst('\\', '/'), dir 't';
 my @test-expected = <t/spectest.data>;
 ok @test-expected (<=) @test-files, 'dir'
    or diag "got: {@test-files} missing: {@test-expected (-) @test-files}";
