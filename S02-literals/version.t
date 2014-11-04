@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 30;
 
 is v1.2.3, '1.2.3', 'version literal stringification';
 is v1.2.3+, '1.2.3+', 'version literal stringification';
@@ -31,3 +31,6 @@ is  v1.2   cmp  v1.10,  Less, "cmp isn't Stringy-based";
 ok  v1.2   eqv  v1.2.0, 'trailing zeroes are equivalent';
 ok  v1.2.0 eqv  v1.2,   'trailing zeroes are equivalent';
 ok  v1.2.0 eqv  v1.2.0.0.0.0.0,   'trailing zeroes are equivalent';
+
+is Version.new(""), '', "can we handle empty string versions";
+is Version.new("").gist, 'v', "can we handle empty string versions";
