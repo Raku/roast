@@ -25,7 +25,6 @@ my @keys = Test::Util::run( q:to"--END--").lines;
     --END--
 
 #?rakudo.jvm todo 'RT #122773'
-#?rakudo.moar todo 'RT #122773'
 is_deeply @keys, [<A B C>], 'Diamond relationship';
 
 #?rakudo.jvm todo 'RT #122896'
