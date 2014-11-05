@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 24;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -122,6 +122,12 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
     my @y = <& a& &b>;
     s:g/\&/\\\&/ for @y;
     is @y, ('\&', 'a\&', '\&b'), 'can assign to $_ in a statement_mod "for" loop (2)';
+}
+
+{
+    $_ = 'bogus';
+    my @r = gather { take "{$_}" for <cool but dry> }
+    is @r[0], 'cool', 'for modifies the $_ that is visible to the {} interpolator';
 }
 
 # vim: ft=perl6
