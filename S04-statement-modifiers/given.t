@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -40,6 +40,14 @@ plan 6;
     $i += $_ given $_+3;
     is $_, 10, 'outer $_ did not get updated in lhs of given';
     is $i, 13, 'postfix given worked';
+}
+
+# RT #100746
+#?rakudo todo "RT #100746"
+{
+    $_ = 'bogus';
+    my @r = gather { take "{$_}" given 'cool' }
+    is @r[0], 'cool', 'given modifies the $_ that is visible to the {} interpolator';
 }
 
 # vim: ft=perl6
