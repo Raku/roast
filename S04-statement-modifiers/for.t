@@ -124,6 +124,8 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
     is @y, ('\&', 'a\&', '\&b'), 'can assign to $_ in a statement_mod "for" loop (2)';
 }
 
+# RT #100746
+#?rakudo todo "RT #100746"
 {
     $_ = 'bogus';
     my @r = gather { take "{$_}" for <cool but dry> }
