@@ -115,6 +115,8 @@ plan 51;
 
 # I am not sure if this is speced somewhere:
 # comments can be nested
+# NB: Not really--brackets can be nested, but the outer comment has No Clue whether the
+# inner brackets belong to comments or not; it's just counting them regardless of their position.
 #?niecza skip 'Possible runaway string'
 {
     is 3, #`(
@@ -135,10 +137,11 @@ plan 51;
     # TODO:
     # ok EVAL(" #`{ comment }") fails with an error as it tries to execute
     # comment() before seeing that I meant #`{ comment within this string.
+    # NB: This is as it should be.  The inside is not parsed till EVAL time.
+    # Interpolation happens before that.  --law
 
-#?rakudo todo 'NYI'
-    eval_lives_ok " #`<<\n comment\n # >>\n >> 3",
-        'single line comment cannot correctly nested within multiline';
+    eval_dies_ok " #`<<\n comment\n # >>\n >> 3",
+        'single line comment in multiline does not hide delims';
 }
 
 # L<S02/"User-selected Brackets"/"Counting of nested brackets"
@@ -174,7 +177,7 @@ plan 51;
 {
     my $a = Nil;
     throws_like { EVAL '$a = q# 32 #;' }, X::Comp::AdHoc, 'misuse of # as quote delimiters';
-    ok !$a.defined, "``#'' can't be used as quote delimiters";
+    ok !$a.defined, "The # character can't be used as quote delimiters";
 }
 
 # L<S02/Single-line Comments/"single-line comments">
