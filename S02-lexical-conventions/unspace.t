@@ -207,9 +207,8 @@ throws_like { EVAL 'sub f { 3 } sub g { 3 }' },
 }
 
 #?niecza skip "Invocant handling is NYI"
-#?rakudo skip 'indirect method calls parsefail: RT #122344'
 {
-    augment class Code{
+    augment class Block {
         method xyzzy(Code $x: *@y) { $x.(@y) }
     }
 

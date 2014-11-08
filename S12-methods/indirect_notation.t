@@ -4,47 +4,47 @@ use Test;
 
 # L<S12/Method calls/"Indirect object notation now requires a colon after the invocant, even if there are no arguments">
 
-plan 33;
+plan 34;
 
 
 ##### Without arguments
-class T1
-{
-    method a
-    {
+class T1 {
+    method a {
         'test';
     }
 }
 
 {
     my T1 $o .= new;
-    ok( "Still alive after new" );
+    ok( $o, "Still alive after new" );
 
-    is( $o.a(), 'test', "The indirect object notation call without argument 1" );
-    #?rakudo skip 'TTIAR near $o:'
+    is( $o.a(), 'test', "The direct object notation call without arguments" );
     #?niecza skip 'Invocant handling is NYI'
-    is( (a $o:), 'test', "The indirect object notation call without arguments 2" );
+    is( (a $o:), 'test', "The indirect object notation call without arguments" );
 }
 
 ##### With arguments
-class T2
-{
-    method a( $x )
-    {
+class T2 {
+    method a( $x ) {
         $x;
+    }
+    method b( $x,$y ) {
+        $x + $y;
     }
 }
 
 {
     my T2 $o .= new;
-    ok( "Still alive after new" );
+    ok( $o, "Still alive after new" );
     my $seed = 1000.rand;
-    is( $o.a( $seed ), $seed, "The indirect object notation call with argument 1" );
-    #?rakudo skip 'TTIAR near $o:'
+    is( $o.a( $seed ), $seed, "The direct object notation call with argument" );
     #?niecza skip 'Invocant handling is NYI'
-    is( (a $o: $seed), $seed, "The indirect object notation call with arguments 2" );
+    is( (a $o: $seed), $seed, "The indirect object notation call with argument" );
+
     my $name = 'a';
     eval_dies_ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
+
+    is  (b $o: 21, 21), 42, "The indirect object notation call with multiple arguments";
 }
 
 
