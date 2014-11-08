@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 34;
+plan 38;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -73,5 +73,23 @@ ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
     Buf.new().subbuf(0, -1);
     ok 0, "throw on negative len";
     CATCH { when X::OutOfRange { ok 1, "throw on negative len" } }
+}
+
+# RT #122827
+{
+    my Blob $x;
+    throws_like { $x ~= pack "V",1 }, X::Buf::AsStr, :method<Stringy>;
+}
+
+# RT #122600
+{
+    my $a = buf8.new([]);
+    throws_like { "Foo: $a" }, X::Buf::AsStr, :method<Stringy>;
+}
+
+# Tests that used to gobble all memory in rakudo:
+{
+    is utf8.new(0x66, 0x6f, 0x6f) ~ 'bar', 'foobar', 'can concat a utf8 buffer to a string';
+    is Any ~ 'bar'.encode, 'bar', 'can concat a buffer to something undefined'; #OK
 }
 
