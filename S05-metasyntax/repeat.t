@@ -14,7 +14,7 @@ be valid perl6.
 
 # Note: single-quotes.t tests repetition on single quoted items in regexes.
 
-plan 24;
+plan 26;
 
 # L<S05/Bracket rationalization/The general repetition specifier is now>
 
@@ -57,6 +57,17 @@ ok ('a b,c,d' ~~ token { \w \s \w+ % \, }), 'can combine % with backslash charac
 {
     ok ("a" x 1_0 ~~ /a ** 1_0/, 'underscore in quantifier numeral (1)' );
     ok ( "a_0" !~~ /a ** 1_0/, 'underscore in quantifier numeral (2)' );
+}
+
+# RT #111956
+#?rakudo todo 'RT #111956'
+{
+    throws_like q[/ * /], X::Syntax::Regex::SolitaryQuantifier,
+        message => "Quantifier quantifies nothing",
+        'adequate error message when quantifier follows nothing (1)';
+    throws_like q[/ a+ + /], X::Syntax::Regex::SolitaryQuantifier,
+        message => "Quantifier quantifies nothing",
+        'adequate error message when quantifier follows nothing (2)';
 }
 
 # vim: ft=perl6
