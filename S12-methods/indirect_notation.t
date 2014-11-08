@@ -4,7 +4,7 @@ use Test;
 
 # L<S12/Method calls/"Indirect object notation now requires a colon after the invocant, even if there are no arguments">
 
-plan 34;
+plan 37;
 
 
 ##### Without arguments
@@ -19,8 +19,9 @@ class T1 {
     ok( $o, "Still alive after new" );
 
     is( $o.a(), 'test', "The direct object notation call without arguments" );
-    #?niecza skip 'Invocant handling is NYI'
-    is( (a $o:), 'test', "The indirect object notation call without arguments" );
+    #?niecza 2 skip 'Invocant handling is NYI'
+    is( (a $o:), 'test', "The indirect object notation call without arguments without ()" );
+    is( a($o:), 'test', "The indirect object notation call without arguments with ()" );
 }
 
 ##### With arguments
@@ -38,13 +39,16 @@ class T2 {
     ok( $o, "Still alive after new" );
     my $seed = 1000.rand;
     is( $o.a( $seed ), $seed, "The direct object notation call with argument" );
-    #?niecza skip 'Invocant handling is NYI'
-    is( (a $o: $seed), $seed, "The indirect object notation call with argument" );
+    #?niecza 2 skip 'Invocant handling is NYI'
+    is( (a $o: $seed), $seed, "The indirect object notation call with argument without ()" );
+    is( a($o: $seed), $seed, "The indirect object notation call with argument with ()" );
 
     my $name = 'a';
     eval_dies_ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
 
-    is  (b $o: 21, 21), 42, "The indirect object notation call with multiple arguments";
+    #?niecza 2 skip 'Invocant handling is NYI'
+    is  (b $o: 21, 21), 42, "The indirect object notation call with multiple arguments without ()";
+    is  b($o: 21, 21), 42, "The indirect object notation call with multiple arguments with ()";
 }
 
 
