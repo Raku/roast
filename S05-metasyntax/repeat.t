@@ -60,7 +60,6 @@ ok ('a b,c,d' ~~ token { \w \s \w+ % \, }), 'can combine % with backslash charac
 }
 
 # RT #111956
-#?rakudo todo 'RT #111956'
 {
     throws_like q[/ * /], X::Syntax::Regex::SolitaryQuantifier,
         message => "Quantifier quantifies nothing",
