@@ -19,7 +19,6 @@ ok("\o12" ~~ m/\n/, 'LF');
 ok("a\o12" ~~ m/\n/, 'aLF');
 ok("\o15" ~~ m/\n/, 'CR');
 ok("\x85" ~~ m/\n/, 'NEL');
-#?rakudo.parrot todo 'Unicode'
 ok("\x2028" ~~ m/\n/, 'LINE SEP');
 
 ok(!( "abc" ~~ m/\n/ ), 'not abc');
@@ -30,7 +29,6 @@ ok(!( "\o12" ~~ m/\N/ ), 'not LF');
 ok(!( "\o15\o12" ~~ m/\N/ ), 'not CR/LF');
 ok(!( "\o15" ~~ m/\N/ ), 'not CR');
 ok(!( "\x85" ~~ m/\N/ ), 'not NEL');
-#?rakudo.parrot todo 'Unicode'
 ok(!( "\x2028" ~~ m/\N/ ), 'not LINE SEP');
 
 ok("abc" ~~ m/\N/, 'abc');
