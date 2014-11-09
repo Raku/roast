@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 35;
+plan 37;
 
 # Very basic enum tests
 
@@ -118,6 +118,14 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     enum somenum <a b c d e>;
     my somenum $temp = d;
     ok $temp eq 'd', "RT #75370 enum name";
+}
+
+# RT #72696
+{
+    enum S1 <a b c>;
+    enum S2 <b c d>;
+    throws_like { say b }, X::PoisonedAlias, :alias<b>, :package-type<enum>, :package-name<S2>;
+    ok S1::b == 1 && S2::b == 0, 'still can access redeclared enum values via package';
 }
 
 # vim: ft=perl6
