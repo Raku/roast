@@ -107,25 +107,22 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # L<S02/Unicode Semantics/Perl can count Unicode line and paragraph separators>
+# see also RT #122341
 
 lives_ok { EVAL "\{ 1 \} \x0a \{ 1 \}" },
   "Unicode 000A (LINE FEED (LF)) can terminate lines";
+lives_ok { EVAL "\{ 1 \} \x0b \{ 1 \}" },
+  "Unicode 000B (LINE TABULATION) can terminate lines";
 lives_ok { EVAL "\{ 1 \} \x0c \{ 1 \}" },
   "Unicode 000C (FORM FEED (FF)) can terminate lines";
 lives_ok { EVAL "\{ 1 \} \x0d \{ 1 \}" },
   "Unicode 000D (CARRIAGE RETURN (CR)) can terminate lines";
 lives_ok { EVAL "\{ 1 \} \x85 \{ 1 \}" },
   "Unicode 0085 (NEXT LINE (NEL)) can terminate lines";
-
-#?rakudo.parrot skip 'RT #122341 all codepoints that match \v should work as line separator'
-{
-    lives_ok { EVAL "\{ 1 \} \x0b \{ 1 \}" },
-      "Unicode 000B (LINE TABULATION) can terminate lines";
-    lives_ok { EVAL "\{ 1 \} \x2028 \{ 1 \}" },
-      "Unicode 2028 (LINE SEPARATOR) can terminate lines";
-    lives_ok { EVAL "\{ 1 \} \x2029 \{ 1 \}" },
-      "Unicode 2029 (PARAGRAPH SEPARATOR) can terminate lines";
-}
+lives_ok { EVAL "\{ 1 \} \x2028 \{ 1 \}" },
+  "Unicode 2028 (LINE SEPARATOR) can terminate lines";
+lives_ok { EVAL "\{ 1 \} \x2029 \{ 1 \}" },
+  "Unicode 2029 (PARAGRAPH SEPARATOR) can terminate lines";
 
 # L<S02/Bracketing Characters/If a character is already used>
 
