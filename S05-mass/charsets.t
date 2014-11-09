@@ -20,8 +20,6 @@ plan 17;
 
     is $latin-chars.comb(/<alnum>/).join, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'alnum chars';
 
-    # omitting 160 on parrot 6.8.0/icu 4.4.1/unicode 5.2
-    #?rakudo.parrot todo 'Unicode 6.1 "blank characters'
     is $latin-chars.comb(/<blank>/)>>.ord.join(","), '9,32,160', 'blank chars';
 
     is $latin-chars.comb(/<cntrl>/)>>.ord.join(","), ((0..31, 127..159).join(",")), 'cntrl chars';
