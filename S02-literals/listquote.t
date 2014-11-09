@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 24;
 
 # L<S02/Quoting forms>
 
@@ -82,14 +82,15 @@ throws_like { EVAL '<STDIN>' },
 
 {
     # L<S02/Forcing item context/For any item in the list that appears to be numeric>
-    my @a = <foo 3 4.5 5.60 1.2e1>;
-    is ~@a, 'foo 3 4.5 5.60 1.2e1',
+    my @a = <foo 3 4.5 5.60 1.2e1 -2+3i>;
+    is ~@a, 'foo 3 4.5 5.60 1.2e1 -2+3i',
        '<...> numeric literals stringify correctly';
     isa_ok @a[0], Str, '<foo ...> is a Str';
-    #?rakudo 3 todo 'IntStr/RatStr/NumStr types NYI'
+    #?rakudo 4 todo 'IntStr/RatStr/NumStr types NYI'
     isa_ok @a[1], Int, '< ... 3 ...> is an Int';
     isa_ok @a[2], Rat, '< ... 4.5 ...> is a Rat';
     isa_ok @a[4], Num, '< ... 1.2e1 ...> is a Num';
+    isa_ok @a[5], Complex, '< ... -2+3i ...> is a Num';
 }
 
 # probably doesn't really belong here, but I don't know where else to put it
