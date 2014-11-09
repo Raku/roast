@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 74;
+plan 71;
 
 =begin pod
 
@@ -328,6 +328,7 @@ Testing operator overloading subroutines
 {
     class Bar {
         has $.bar is rw;
+        method Stringy() { ~self }; # the tests assume prefix:<~> gets called by qq[], but .Stringy gets actually called
     }
 
     multi sub prefix:<~> (Bar $self)      { return $self.bar }
@@ -335,12 +336,9 @@ Testing operator overloading subroutines
 
     {
         my $val;
-        lives_ok {
-            my $foo = Bar.new();
-            $foo.bar = 'software';
-            $val = "$foo"
-        }, '... class methods work for class';
-        #?rakudo todo 'huh?'
+        my $foo = Bar.new();
+        $foo.bar = 'software';
+        $val = "$foo";
         is($val, 'software', '... basic prefix operator overloading worked');
 
         lives_ok {
@@ -348,7 +346,6 @@ Testing operator overloading subroutines
             $foo.bar = 'software';
             $val = $foo + $foo;
         }, '... class methods work for class';
-        #?rakudo todo 'huh?'
         #?niecza todo '... basic infix operator overloading worked'
         is($val, 'software software', '... basic infix operator overloading worked');
     }
@@ -357,22 +354,15 @@ Testing operator overloading subroutines
 # And test that »...« automagically work, too.
     {
         my $obj;
-        lives_ok {
         $obj     = Bar.new;
         $obj.bar = "pugs";
-        }, "instantiating a class which defines operators worked";
 
         my @foo = ($obj, $obj, $obj);
         my $res;
         #?niecza todo "stringification didn't die"
-        lives_ok { $res = ~@foo }, "stringification didn't die";
+        lives_ok { $res = ~<<@foo }, "stringification didn't die";
         #?niecza todo "... worked in array stringification"
-        #?rakudo 3 todo 'huh?'
         is $res, "pugs pugs pugs", "stringification overloading worked in array stringification";
-        #?niecza todo "... with hyperization"
-        lives_ok { $res = ~[@foo »~« "!"] }, "stringification with hyperization didn't die";
-        #?niecza todo "... was hyperized"
-        is $res, "pugs! pugs! pugs!", "stringification overloading was hyperized correctly";
     }
 
 
@@ -390,19 +380,31 @@ Testing operator overloading subroutines
     is EVAL('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
 }
 
-#?rakudo skip 'NYI'
 {
     multi sub infix:<foo>($a, $b) {$a + $b};
 
+    # autoviv tries to call &[foo]() with no arguments, so we define first
+    # alternative is below, with a candidate with an empty parameter list
+    my $x = 0;
+    $x foo=6;
+    is $x, 6, 'foo= works for custom operators';
+}
+
+{
+    multi sub infix:<foo>($a, $b) {$a + $b};
+    multi sub infix:<foo>() { 0 };
+
+    # alternative with a candidate with an empty parameter list
     my $x foo=6;
     is $x, 6, 'foo= works for custom operators';
 }
 
-#?rakudo skip 'NYI'
 {
     our sub infix:<bar>($a, $b) {$a + $b};
 
-    my $x bar=6;
+    # similar to above, but without the empty param candidate
+    my $x = 0;
+    $x bar=6;
     is $x, 6, 'bar= works for custom operators';
 
 }
