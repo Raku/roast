@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 32;
+plan 33;
 
 # L<S14/Run-time Mixins/>
 
@@ -152,6 +152,16 @@ lives_ok {(True but role {}).gist}, 'can mix into True';
     sub f() { role { method answer { 42 } } };
     is (1 but f).answer, 42, '<literal> but <zero-arg call> works';
 
+}
+
+# RT #119371
+# TODO: better test: typed exception instead of string matching for error
+{
+    #?rakudo.jvm skip 'NullPointerException with throws_like, correct otherwise'
+    throws_like q[role popo { macro marco { $^a but popo }; marco popo; }],
+        Exception,
+        message => "None of the parametric role variants for 'popo' matched the arguments supplied.\nCannot call ''; none of these signatures match:",
+        'no Null PMC access error when parameter mixin in role in macro';
 }
 
 # vim: syn=perl6
