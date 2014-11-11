@@ -10,7 +10,7 @@ Tests assigning default values to variables of type code in sub definitions.
 
 # L<S06/Optional parameters/Default values can be calculated at run-time>
 
-plan 7;
+plan 8;
 
 sub doubler($x) { return 2 * $x }
 
@@ -55,6 +55,11 @@ ok((MyPack::val_v), "default sub called in package namespace");
     sub b ( $b=1, --> Hash ) {  my %h = ($b => "foo") };
     ok b(2)<2> :exists,
         'comma allowed between parameter with default value and returns-arrow ("-->")';
+}
+
+# RT #123176
+{
+    is -> $a = 0 { $a }(42), 42, "default lambda parameters don't choke on block";
 }
 
 # vim: ft=perl6
