@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 141;
+plan 142;
 
 # L<S05/Substitution/>
 
@@ -436,6 +436,13 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 # RT #122349
 {
     eval_lives_ok '$_ = "a";s/a$/b/;s|b$|c|;s!c$!d!;', '$ anchor directly at the end of the search pattern works';
+}
+
+# RT #123168
+{
+    my $foo = "bar";
+    $foo ~~ s:g [ r ] = 'z' if $foo.defined;
+    is $foo, 'baz', 's{}="" plus statement mod if is not parsed as /i';
 }
 
 done;

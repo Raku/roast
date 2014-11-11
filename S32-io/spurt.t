@@ -63,24 +63,27 @@ sub all-basic(Callable $handle) {
     {
         my $io = $path.IO.open(:w);
         spurt $io, "42";
+        close $io;
         #?rakudo.parrot todo 'spurt io'
         is slurp($path), "42", 'can spurt into an open handle';
     }
 
     # Buf into an open non binary handle
     #?rakudo.parrot skip "is() gets into infinite recursion"
-{
+    {
         my $io = $path.IO.open(:w);
         my Buf $buf = Buf.new(0xC0, 0x01, 0xF0, 0x0D);
         spurt $io, $buf;
+        close $io;
         is slurp($path, :bin), $buf, 'can spurt a Buf into an open handle';
-}
+    }
 
     # Text into a open binary handle
     {
         my $io = $path.IO.open(:bin, :w);
         my Str $txt = "Bli itj nå trønder-rock uten tennis-sokk";
         spurt $io, $txt;
+        close $io;
         #?rakudo.parrot todo 'spurt io'
         is slurp($path), $txt, 'can spurt text into a binary handle';
     }

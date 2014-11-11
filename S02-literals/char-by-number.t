@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 38;
 
 # L<S02/Radix interpolation>
 
@@ -78,23 +78,6 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
 {
     is "\08", chr(0) ~ '8', 'next char of \0 is 8 (> 7)';
     is "\0fff", chr(0) ~ 'fff', 'next char of \0 is `f`';
-}
-
-#?rakudo todo 'Detecting malformed escape sequences NYI'
-#?niecza todo 'Detecting malformed escape sequences NYI'
-{
-    throws_like { EVAL q{"\00"} },
-      X::Comp::AdHoc,
-      'next char of \0 is 0';
-    throws_like { EVAL q{"\01"} },
-      X::Comp::AdHoc,
-      'next char of \0 is 1';
-    throws_like { EVAL q{"\05"} },
-      X::Comp::AdHoc,
-      'next char of \0 is 5';
-    throws_like { EVAL q{"\07"} },
-      X::Comp::AdHoc,
-      'next char of \0 is 7';
 }
 
 # vim: ft=perl6

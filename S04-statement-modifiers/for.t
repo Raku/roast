@@ -125,7 +125,8 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
 }
 
 # RT #100746
-#?rakudo todo "RT #100746"
+#?rakudo.moar todo "RT #100746"
+#?rakudo.jvm todo "RT #100746"
 {
     $_ = 'bogus';
     my @r = gather { take "{$_}" for <cool but dry> }

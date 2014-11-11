@@ -26,11 +26,11 @@ plan 7;
     is($a, 'a', "post given");
 }
 
+# RT #121049
 {
-	# RT #121049
-	my $a = '';
-	for ^2 { my $b = $_ given 'a'; $a ~= $b; }
-	is($a, 'aa', 'post given in a loop');
+    my $a = '';
+    for ^2 { my $b = $_ given 'a'; $a ~= $b; }
+    is($a, 'aa', 'post given in a loop');
 }
 
 # L<S04/The C<for> statement/for and given privately temporize>
@@ -43,7 +43,8 @@ plan 7;
 }
 
 # RT #100746
-#?rakudo todo "RT #100746"
+#?rakudo.moar todo "RT #100746"
+#?rakudo.jvm todo "RT #100746"
 {
     $_ = 'bogus';
     my @r = gather { take "{$_}" given 'cool' }
