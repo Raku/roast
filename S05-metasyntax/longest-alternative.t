@@ -77,7 +77,9 @@ my $str = 'a' x 7;
     ok ('abb' ~~ /<&ab> | <&a_word> /) && $/ eq 'abb',
        'LTM - longer quantified atom wins against shorter literal (subrules)';
 
-    ok ('abb' ~~ / <abb=&abb> | <&word> /) && $<abb>,
+    #?niecza todo 'LTM - literal wins tie against \w*'
+    #?rakudo todo 'LTM - literal wins tie against \w*'
+    ok ('abb' ~~ / <&word> | <abb=&abb> /) && $<abb>,
        'LTM - literal wins tie against \w*';
 }
 
