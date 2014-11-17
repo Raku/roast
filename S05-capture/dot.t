@@ -20,7 +20,7 @@ plan 61;
 
 my regex dotdot { (.)(.) };
 
-ok("zzzabcdefzzz" ~~ m/(a.)<.dotdot>(..)/, 'Match');
+ok("zzzabcdefzzz" ~~ m/(a.)<.&dotdot>(..)/, 'Match');
 ok($/, 'Matched');
 is(~$/, "abcdef", 'Captured');
 is(~$/[0], 'ab', '$/[0]');
@@ -70,12 +70,11 @@ is(~$/<single>, 'o', 'Named capture');
 is(~$0, 'o', 'Backref capture');
 
 #?rakudo 3 todo 'dubious test'
-ok("bookkeeper" ~~ m/(<.single>) ($0)/, 'Positional backref');
+ok("bookkeeper" ~~ m/(<.&single>) ($0)/, 'Positional backref');
 is(~$0, 'o', 'Named capture');
 is(~$1, 'o', 'Backref capture');
 
-ok(!( "bokeper" ~~ m/(<.single>) ($0)/ ), 'Failed positional backref');
-# XXX wtf?
+ok(!( "bokeper" ~~ m/(<.&single>) ($0)/ ), 'Failed positional backref');
 ok !( "bokeper" ~~ m/<single> ($<single>)/ ) , 'Failed named backref';
 
 is("\$0", '$'~'0', 'Non-translation of non-interpolated "\\$0"');

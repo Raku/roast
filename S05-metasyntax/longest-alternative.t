@@ -60,51 +60,46 @@ my $str = 'a' x 7;
     my token indirect_abb { <ab> 'b' }
 
     #?niecza todo 'LTM - literals in tokens'
-    #?rakudo todo 'LTM - literals in tokens'
-    ok ('abb' ~~ /<&ab> | <&abb> /) && ~$/ eq 'abb',
+    ok ('abb' ~~ /<ab> | <abb> /) && ~$/ eq 'abb',
        'LTM - literals in tokens';
 
     #?niecza todo 'LTM - literals in nested tokens'
-    #?rakudo todo 'LTM - literals in tokens'
-    ok ('abb' ~~ /<&ab> | <&indirect_abb> /) && $/ eq 'abb',
+    ok ('abb' ~~ /<ab> | <indirect_abb> /) && $/ eq 'abb',
        'LTM - literals in nested torkens';
 
     ok ('abb' ~~ /'ab' | \w+ / && $/) eq 'abb',
        'LTM - longer quantified charclass wins against shorter literal';
 
     #?niecza todo 'LTM - longer quantified atom wins against shorter literal (subrules)'
-    #?rakudo todo 'LTM - longer quantified atom wins against shorter literal (subrules)'
-    ok ('abb' ~~ /<&ab> | <&a_word> /) && $/ eq 'abb',
+    ok ('abb' ~~ /<ab> | <a_word> /) && $/ eq 'abb',
        'LTM - longer quantified atom wins against shorter literal (subrules)';
 
     #?niecza todo 'LTM - literal wins tie against \w*'
-    #?rakudo todo 'LTM - literal wins tie against \w*'
-    ok ('abb' ~~ / <&word> | <abb=&abb> /) && $<abb>,
+    ok ('abb' ~~ / <word> | <abb> /) && $<abb>,
        'LTM - literal wins tie against \w*';
 }
 
-#?rakudo skip ':::'
+#?rakudo skip '::'
 {
     # with LTM stoppers
     my token foo1 { 
         a+
-        ::: # a LTM stopper
+        :: # a LTM stopper
         .+
     }
     my token foo2 { \w+ }
 
-    #?niecza todo 'LTM only participated up to the LTM stopper :::'
-    ok ('aaab---' ~~ /<&foo1> | <foo2=&foo2> /) && $<foo2>,
-       'LTM only participated up to the LTM stopper :::';
+    #?niecza todo 'LTM only participated up to the LTM stopper ::'
+    ok ('aaab---' ~~ /<foo1> | <foo2> /) && $<foo2>,
+       'LTM only participated up to the LTM stopper ::';
 }
 
 # LTM stopper by implicit <.ws>
 #?niecza todo 'implicit <.ws> stops LTM'
-#?rakudo todo 'implicit <.ws> stops LTM'
 {
     my rule  ltm_ws1 {\w+ '-'+}
     my token ltm_ws2 {\w+ '-'}
-    ok ('abc---' ~~ /<&ltm_ws1> | <ltm_ws2=&ltm_ws2>/) && $<ltm_ws2>,
+    ok ('abc---' ~~ /<ltm_ws1> | <ltm_ws2>/) && $<ltm_ws2>,
        'implicit <.ws> stops LTM';
 }
 
