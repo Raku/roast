@@ -77,6 +77,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     ok $c ~~ Int::Even, "our var is a Int::Even";
     try { $c = 7 }
     is $c, 6, "setting a Int::Even to an odd value dies";
+    #?rakudo.parrot skip 'RT #123234'
     ok EVAL('!try { my Int::Even $d }'),
         "lexically declared subtype went out of scope";
 }
