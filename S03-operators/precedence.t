@@ -74,7 +74,6 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
 # junctive or
 
-#?rakudo todo 'non-associativeness of infix:<^> and |'
 { # test that | and ^ are on the same level but parsefail
     eval_dies_ok 'my Mu $a = (1 | 2 ^ 3)', '| and ^ may not associate';
     eval_dies_ok 'my Mu $a = (1 ^ 2 | 3)', '^ and | may not associate';
@@ -147,7 +146,6 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
     is(@b, [1 .. 4], "parens work around this");
 };
 
-#?rakudo todo 'RT #77848'
 eval_dies_ok('4 X+> 1...2', 'X+> must not associate with ...');
 
 # list prefix
@@ -199,7 +197,6 @@ ok ((1 => 2 => 3).value ~~ Pair), '=> is right-assoc (2)';
 
 # L<S03/Operator precedence/only works between identical operators>
 
-#?rakudo todo 'list associativity bug'
 eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
     'list associativity only works between identical operators';
 
