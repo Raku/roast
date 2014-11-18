@@ -251,17 +251,17 @@ my @array2 = ("test", 1, Mu);
   my $minus_one = -1;
 
   throws_like { EVAL '@arr[-1]' },
-    X::Subscript::FromEnd,
+    X::Subscript::Negative,
     "readonly accessing [-1] of normal array is compile-time error";
   #?niecza todo '@arr[-1] returns undef'
   throws_like { @arr[ $minus_one ] },
-    X::Subscript::FromEnd,
+    X::Subscript::Negative,
     "indirectly accessing [-1] through a variable is run-time error";
   throws_like { @arr[$minus_one] = 42 },
-    X::Subscript::FromEnd,
+    X::Subscript::Negative,
     "assigning to [-1] of a normal array is fatal";
   throws_like { @arr[$minus_one] := 42 },
-    X::Subscript::FromEnd,
+    X::Subscript::Negative,
     "binding [-1] of a normal array is fatal";
 }
 
