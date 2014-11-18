@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 55;
+plan 56;
 
 
 # terms
@@ -233,10 +233,16 @@ throws_like '1, 2 Z 3, 4 X 5, 6',
 }
 
 # RT #116100
-
 {
     my $s = set(); my $e = 5; $s = $s (|) $e;
     is $s, Set.new(5), '(|) has correct precedence.';
+}
+
+# RT #114210
+#?rakudo todo 'RT #114210'
+{
+    is not(0) + 1, 2,
+        '"not(0) + 1" is parsed as "(not 0) + 1"';
 }
 
 # vim: ft=perl6
