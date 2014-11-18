@@ -16,13 +16,17 @@ This test min/max functions in their operator form. To see them tested in their 
 =end description
 
 #General min/max tests
-{    
+{
     is 1 min 2, 1, 'can ye handle that?';
     is 1 max 2, 2, 'how about this?';
     is 1 min 2 min 3, 1, 'ooh! 3 numbers! More difficult';
     is 1 max 2 max 3, 3, 'again! 3 numbers!';
-    eval_dies_ok q{1 min 2 max 3}, 'No! No left-associativeness!';
-    eval_dies_ok q{1 max 2 min 3}, 'This is also not OK';
+    throws_like q{1 min 2 max 3},
+        X::Syntax::NonAssociative,
+        'No! No left-associativeness!';
+    throws_like q{1 max 2 min 3},
+        X::Syntax::NonAssociative,
+        'This is also not OK';
     is "alpha" min "beta", "alpha", 'min works for strings, too';
     is "alpha" max "beta", "beta", 'max works for strings, too';
 }

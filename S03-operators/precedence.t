@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 54;
+plan 55;
 
 
 # terms
@@ -75,8 +75,12 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 # junctive or
 
 { # test that | and ^ are on the same level but parsefail
-    eval_dies_ok 'my Mu $a = (1 | 2 ^ 3)', '| and ^ may not associate';
-    eval_dies_ok 'my Mu $a = (1 ^ 2 | 3)', '^ and | may not associate';
+    throws_like 'my Mu $a = (1 | 2 ^ 3)',
+        X::Syntax::NonAssociative,
+        '| and ^ may not associate';
+    throws_like 'my Mu $a = (1 ^ 2 | 3)',
+        X::Syntax::NonAssociative,
+        '^ and | may not associate';
 };
 
 
@@ -146,7 +150,15 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
     is(@b, [1 .. 4], "parens work around this");
 };
 
-eval_dies_ok('4 X+> 1...2', 'X+> must not associate with ...');
+# RT #77848
+{
+    throws_like '4 X+> 1...2',
+         X::Syntax::NonAssociative,
+        'X+> must not associate with ...';
+    throws_like q['08:12:23'.split(':') Z* 60 X** reverse ^3],
+        X::Syntax::NonAssociative,
+        'Z* and X** are non associative';
+}
 
 # list prefix
 
@@ -197,7 +209,8 @@ ok ((1 => 2 => 3).value ~~ Pair), '=> is right-assoc (2)';
 
 # L<S03/Operator precedence/only works between identical operators>
 
-eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
+throws_like '1, 2 Z 3, 4 X 5, 6',
+    X::Syntax::NonAssociative,
     'list associativity only works between identical operators';
 
 #?rakudo skip 'nom regression'
@@ -213,7 +226,7 @@ eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
     is($r, False, 'ensure 3 !=3 gives same result as 3 != 3');
 }
 
-# RT 73266
+# RT #73266
 {
     try { EVAL 'say and die 73266' };
     ok ~$! !~~ '73266', 'and after say is not interpreted as infix:<and>';
@@ -221,7 +234,7 @@ eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
 
 # RT #116100
 
-{ 
+{
     my $s = set(); my $e = 5; $s = $s (|) $e;
     is $s, Set.new(5), '(|) has correct precedence.';
 }
