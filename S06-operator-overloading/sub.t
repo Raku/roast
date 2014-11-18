@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 71;
+plan 73;
 
 =begin pod
 
@@ -434,16 +434,19 @@ Testing operator overloading subroutines
 
 # RT #116643
 {
-    #?rakudo.parrot 2 skip 'RT #116643'
     lives_ok { sub prefix:<\o/>($) {} }, 'can declare operator with a backslash (1)';
     lives_ok { sub postfix:<\\>($) {} }, 'can declare operator with a backslash (2)';
+
+    my $RT116643 = EVAL 'sub infix:<\\o/>($a, $b) { $a * $b }; 21 \\o/ 2';
+    is $RT116643, 42, 'can declare and use operator with a backslash';
 }
 
 # RT #115724
-#?rakudo.parrot skip 'RT #115724'
 {
     lives_ok { sub circumfix:<w "> ($a) { }; },
         'can define circumfix operator with a double quote (")';
+    my $RT115724 = EVAL 'sub circumfix:<w "> ($a) { $a }; w 111 "';
+    is $RT115724 , 111, 'can define and use circumfix operator with a double quote (")';
 }
 
 done;
