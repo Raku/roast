@@ -86,7 +86,6 @@ ok $C.build-date, "Build-date is '{$C.build-date}'";
 #?rakudo.parrot skip 'no Perl.compiler.codename yet'
 ok $C.codename,   "Codename is '{$C.codename}'";
 
-#?rakudo.parrot 2 skip 'RT #122324 - this makes the tests abort'
 ok $C.perl, 'We can do a $?PERL.compiler.perl';
 ok $C.gist, 'We can do a $?PERL.compiler.gist';
 
