@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 366;
+plan 367;
 
 =begin pod
 
@@ -380,4 +380,13 @@ ok ([+]) == 0, 'argumentless [+] parses';
 {
     is(([X~] <a b>, <a b>, <a b>), <aaa aab aba abb baa bab bba bbb>, 'reduce with X');
 }
+
+# RT #79116
+# TODO: better test using throws_like -- probably once this test passes
+#?rakudo todo 'RT #79116'
+{
+    dies_ok { my $rt79116 = [leg] <a b c> },
+        'non-associative operator "[leg]" can not be used as reduction operator';
+}
+
 # vim: ft=perl6
