@@ -72,7 +72,7 @@ plan 21;
 #?niecza skip 'Unable to resolve method exists in class Array'
 {
     my @array  = <a b c d>;
-    my $exists = @array[-5]:exists;
+    my $exists = @array[*-5]:exists;
 
     ok !$exists,
         '@array[$negative_index_out_of_bounds]:exists should be false';

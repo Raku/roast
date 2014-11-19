@@ -226,7 +226,7 @@ my @array2 = ("test", 1, Mu);
   ok @arr[*-1] ~~ Failure, "readonly accessing [*-1] of an empty array gives Failure";
   ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array does not die";
   throws_like { @arr[*-1] = 42 },
-    X::Subscript::FromEnd,
+    X::Subscript::Negative,
     "assigning to [*-1] of an empty array is fatal";
   throws_like { @arr[*-1] := 42 },
     X::Bind::Slice,
@@ -239,7 +239,7 @@ my @array2 = ("test", 1, Mu);
   ok @arr[*-2] ~~ Failure, "readonly accessing [*-2] of an one-elem array gives Failure";
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array does not die";
   throws_like { @arr[*-2] = 42 },
-    X::Subscript::FromEnd,
+    X::Subscript::Negative,
     "assigning to [*-2] of an one-elem array is fatal";
   throws_like { @arr[*-2] := 42 },
     X::Bind::Slice,
@@ -251,7 +251,7 @@ my @array2 = ("test", 1, Mu);
   my $minus_one = -1;
 
   throws_like { EVAL '@arr[-1]' },
-    X::Subscript::Negative,
+    X::Obsolete,
     "readonly accessing [-1] of normal array is compile-time error";
   #?niecza todo '@arr[-1] returns undef'
   throws_like { @arr[ $minus_one ] },

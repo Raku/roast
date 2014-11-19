@@ -216,7 +216,7 @@ my @normal = <
   X::Str::Numeric
   X::Str::Trans::IllegalKey
   X::Str::Trans::InvalidArg
-  X::Subscript::FromEnd
+  X::Subscript::Negative
   X::Syntax::Argument::MOPMacro
   X::Syntax::Augment::Illegal
   X::Syntax::Augment::WithoutMonkeyTyping
