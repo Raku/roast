@@ -64,7 +64,6 @@ sub all-basic(Callable $handle) {
         my $io = $path.IO.open(:w);
         spurt $io, "42";
         close $io;
-        #?rakudo.parrot todo 'spurt io'
         is slurp($path), "42", 'can spurt into an open handle';
     }
 
@@ -79,14 +78,14 @@ sub all-basic(Callable $handle) {
 }
 
     # Text into a open binary handle
-    {
+    #?rakudo.parrot skip 'Malformed UTF-8 string'
+{
         my $io = $path.IO.open(:bin, :w);
         my Str $txt = "Bli itj nå trønder-rock uten tennis-sokk";
         spurt $io, $txt;
         close $io;
-        #?rakudo.parrot todo 'spurt io'
         is slurp($path), $txt, 'can spurt text into a binary handle';
-    }
+}
 
     # spurting to a directory
     {
