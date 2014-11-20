@@ -20,58 +20,76 @@ is( exp_no_parens(), 'r_exp_no_parens',
 is( EXPORT::ALL::exp_no_parens(), 'r_exp_no_parens',
     'EXPORT::ALL::exp_no_parens() is defined' );
 
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_no_parens === &EXPORT::ALL::exp_no_parens,
     'exp_no_parens -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_no_parens =:= &EXPORT::ALL::exp_no_parens,
     'exp_no_parens -- containers agree' );
 
 
 ##  exp_empty_parens
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_empty_parens === &EXPORT::ALL::exp_empty_parens,
     'exp_empty_parens -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_empty_parens =:= &EXPORT::ALL::exp_empty_parens,
     'exp_empty_parens -- containers agree' );
 
 
 ##  exp_ALL
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_ALL === &EXPORT::ALL::exp_ALL,
     'exp_ALL -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_ALL =:= &EXPORT::ALL::exp_ALL,
     'exp_ALL -- containers agree' );
 
 
 ##  exp_DEFAULT
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_DEFAULT === &EXPORT::ALL::exp_DEFAULT,
     'exp_DEFAULT -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_DEFAULT =:= &EXPORT::ALL::exp_DEFAULT,
     'exp_DEFAULT -- containers agree' );
 
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_DEFAULT === &EXPORT::DEFAULT::exp_DEFAULT,
     'exp_DEFAULT -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_DEFAULT =:= &EXPORT::DEFAULT::exp_DEFAULT,
     'exp_DEFAULT -- containers agree' );
 
 
 ##  exp_ALL_DEFAULT
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_ALL_DEFAULT === &EXPORT::ALL::exp_ALL_DEFAULT,
     'exp_ALL_DEFAULT -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_ALL_DEFAULT =:= &EXPORT::ALL::exp_ALL_DEFAULT,
     'exp_ALL_DEFAULT -- containers agree' );
 
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_ALL_DEFAULT === &EXPORT::DEFAULT::exp_ALL_DEFAULT,
     'exp_ALL_DEFAULT -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_ALL_DEFAULT =:= &EXPORT::DEFAULT::exp_ALL_DEFAULT,
     'exp_ALL_DEFAULT -- containers agree' );
 
 
 ##  exp_MANDATORY
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_MANDATORY === &EXPORT::ALL::exp_MANDATORY,
     'exp_MANDATORY -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_MANDATORY =:= &EXPORT::ALL::exp_MANDATORY,
     'exp_MANDATORY -- containers agree' );
 
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_MANDATORY === &EXPORT::MANDATORY::exp_MANDATORY,
     'exp_MANDATORY -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_MANDATORY =:= &EXPORT::MANDATORY::exp_MANDATORY,
     'exp_MANDATORY -- containers agree' );
 
@@ -80,13 +98,17 @@ ok( ! &EXPORT::DEFAULT::exp_MANDATORY,
 
 
 ##  exp_my_tag
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_my_tag === &EXPORT::ALL::exp_my_tag,
     'exp_my_tag -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_my_tag =:= &EXPORT::ALL::exp_my_tag,
     'exp_my_tag -- containers agree' );
 
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_my_tag === &EXPORT::my_tag::exp_my_tag,
     'exp_my_tag -- values agree' );
+#?rakudo.jvm todo 'different .WHICH for aliased sub in EXPORT::ALL'
 ok( &exp_my_tag =:= &EXPORT::my_tag::exp_my_tag,
     'exp_my_tag -- containers agree' );
 
