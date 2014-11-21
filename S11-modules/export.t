@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 38;
 
 # L<S11/"Exportation"/>
 
@@ -152,6 +152,12 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     is(Bar::bar($a), "default", 'Bar::bar($a) gets default value');
     #?rakudo skip "export issue"
     is(Bar::bar($a, "moonlight"), "moonlight", 'Bar::bar($a, ) gets default value');
+}
+
+# RT #118501
+{
+    ok EXPORT::ALL ~~ EXPORT::<ALL>, 'EXPORT::ALL is identical to EXPORT::<ALL>';
+    ok EXPORT::ALL:: ~~ Stash,       'EXPORT::ALL:: is a Stash that keeps exported symbols';
 }
 
 # vim: ft=perl6
