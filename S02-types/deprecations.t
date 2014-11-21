@@ -2,41 +2,11 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 11;
 
 # currently deprecated core features
 
 my $line;
-
-# Decrease
-#?niecza skip 'is DEPRECATED NYI'
-{
-    $line = $?LINE; Decrease;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Decrease';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Sub Decrease (from GLOBAL) called at:
-  $*PROGRAM, line $line
-Deprecated since v2013.11, will be removed with release v2014.11!
-Please use More instead.
---------------------------------------------------------------------------------
-TEXT
-} #1
-
-# Increase
-#?niecza skip 'is DEPRECATED NYI'
-{
-    $line = $?LINE; Increase;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Increase';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Sub Increase (from GLOBAL) called at:
-  $*PROGRAM, line $line
-Deprecated since v2013.11, will be removed with release v2014.11!
-Please use Less instead.
---------------------------------------------------------------------------------
-TEXT
-} #1
 
 # $*OS
 #?niecza skip 'is DEPRECATED NYI'
