@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 292;
+plan 293;
 
 
 # tests various assignment styles
@@ -939,6 +939,15 @@ sub l () { 1, 2 };
     sub low-prec(\i) { True };
     is (low-prec (my $x = (3,2,1))), True, "Routine call taking a parenthesised my as argument works. #2";
     is $x, (3,2,1), "Routine call taking a parenthesised my as argument works. #3";
+}
+
+# RT #76414
+#?rakudo todo 'RT #76414'
+{
+    my @rt76414 = (1, 2);
+    @rt76414 ,= 3, 4;         # same as push(@rt76414,3,4) according to S03
+    is @rt76414, (1, 2, 3, 4),
+        'infix:<,=> has list precedence in the cases where infix:<=> does';
 }
 
 # vim: ft=perl6
