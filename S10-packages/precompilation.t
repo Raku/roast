@@ -2,7 +2,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 13;
+plan 17;
 
 my @precomp-paths;
 
@@ -61,7 +61,34 @@ unlink $_ for @precomp-paths;
     unlink $output-path if $output-path.IO.e;
     is_run 'role Foo [ ] { }; role Bar does Foo[] { }', { err => '', out => '', status => 0 }, :compiler-args['--target', $*VM.precomp-target, '--output', $output-path ], "precomp curried role compose";
 
-    is_run "use $module-name; class C does Bar { };", { err => '', out => '', status => 0 }, :compiler-args['-I', 't/spec/packages', '-M', $module-name], 'precomile load - from the command line';
+    is_run "use $module-name; class C does Bar { };", { err => '', out => '', status => 0 }, :compiler-args['-I', 't/spec/packages', '-M', $module-name], 'precompile load - from the command line';
     unlink $output-path if $output-path.IO.e;
+}
+
+#RT #123276
+{
+    my $name = 'RT123276';
+
+    for "{$name}", "{$name}::B::C1", "{$name}::B::C2" -> $module-name {
+        my $module-dir = join '/', split('::', $module-name);
+        my $path = "t/spec/packages/{$module-dir}.pm";
+        my $precomp-path = $path ~ '.' ~ $*VM.precomp-ext;
+        unlink $precomp-path if $precomp-path.IO.e;
+        ok CompUnit.new($path).precomp(), "precomp Example::$_";
+        @precomp-paths.push: $precomp-path;
+    }
+
+    my @keys = Test::Util::run( q:to"--END--").lines;
+        use RT123276::B::C1;
+        use RT123276::B::C2;
+        say RT123276::B::C1.^methods
+    --END--
+
+    #?rakudo.jvm todo 'RT #123276'
+    #?rakudo.moar todo 'RT #123276'
+    #?rakudo.parrot todo 'RT #123276'
+    is_deeply @keys, [<foo>], 'RT123276';
+
+    unlink $_ for @precomp-paths;
 }
 
