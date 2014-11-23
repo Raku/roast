@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 118;
+plan 119;
 
 # L<S05/Modifiers/If the number is followed by an>
 
@@ -199,6 +199,11 @@ is($/, 'foo', 'Matched value for 3th <ident>');
 
 ok($data ~~ m:3rd/ « <ident> /, 'Match 3rd « <ident>');
 is($/, 'foo', 'Matched value for 3th « <ident>');
+
+# :nth and *-N
+
+#?rakudo skip 'NYI'
+is("ABCDE" ~~ m:nth(*-1)/\w/, "E", "Can match with *-1 index");
 
 
 $data = "f fo foo fooo foooo fooooo foooooo";
