@@ -5,7 +5,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 23;
+plan 25;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -179,9 +179,10 @@ plan 23;
     is $str, '1', 'die aborts ENTER queue';
 }
 
+# RT #121530
 #?niecza todo '@!'
-#?rakudo.jvm skip 'unwind, RT #121530'
-#?rakudo.moar skip 'unwind, RT #121530'
+#?rakudo.jvm todo 'unwind, RT #121530'
+#?rakudo.moar todo 'unwind, RT #121530'
 {
     my $str;
     try {
@@ -225,6 +226,26 @@ plan 23;
             err    => /foobar/,
         },
         'LEAVE fires after die in sub' );
+}
+
+# RT #113950
+{
+    my $rt113950_last = "hello!";
+    loop {
+        last;
+        LEAVE $rt113950_last ~= " bye!";
+    }
+    #?rakudo todo 'RT #113950'
+    is $rt113950_last, "hello! bye!",
+        '"last" triggers LEAVE phaser in loop';
+
+    my $rt113950_next = "hello!";
+    for ^3 {
+        next;
+        LEAVE $rt113950_next ~= " yay!";
+    }
+    is $rt113950_next, "hello! yay! yay! yay!",
+        '"next" triggers LEAVE phaser in "for" loop';
 }
 
 # vim: ft=perl6
