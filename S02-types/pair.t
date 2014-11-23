@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 99;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -320,6 +320,14 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     is (a => 3).invert.key, 3, 'Pair.invert.key';
     isa_ok (a => 3).invert.key, Int, 'Pair.invert.key type';
     is (a => 3).invert.value, 'a', 'Pair.invert.value';
+}
+
+# RT #123215
+{
+    cmp_ok (:a(2) :b(3) :c(4)), "eqv", ( a => 2, b => 3, c => 4 ),
+        "chained colonpairs in parens build a list of pairs";
+    cmp_ok {:a(2) :b(3) :c(4)}<a b c>, "eqv", ( 2, 3, 4 ),
+        "chained colonpairs in curlies construct hashes with more than one element";
 }
 
 # vim: ft=perl6
