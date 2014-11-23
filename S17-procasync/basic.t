@@ -4,7 +4,9 @@ use Test;
 
 plan 9;
 
-my $pc = Proc::Async.new( 'echo', <Hello World> );
+my $pc = $*DISTRO.is-win
+    ?? Proc::Async.new( 'cmd', </c echo Hello World> )
+    !! Proc::Async.new( 'echo', <Hello World> );
 isa_ok $pc, Proc::Async;
 
 my $so = $pc.stdout;
@@ -12,10 +14,10 @@ cmp_ok $so, '~~', Supply;
 my $se = $pc.stderr;
 cmp_ok $se, '~~', Supply;
 
-my $stdout;
-my $stderr;
-$so.act: { $stdout ~= $_ };
-$se.act: { $stderr ~= $_ };
+my $stdout = "";
+my $stderr = "";
+$so.act: { $stdout ~= $_.subst("\r", "", :g) };
+$se.act: { $stderr ~= $_.subst("\r", "", :g) };
 
 my $pm = $pc.start;
 isa_ok $pm, Promise;
