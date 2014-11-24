@@ -323,6 +323,8 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 }
 
 # RT #123215
+#?rakudo.parrot skip 'RT #123215'
+#?rakudo.jvm todo 'RT #123215'
 {
     cmp_ok (:a(2) :b(3) :c(4)), "eqv", ( a => 2, b => 3, c => 4 ),
         "chained colonpairs in parens build a list of pairs";
