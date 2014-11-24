@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 152;
+plan 154;
 
 my $five = abs(-5);
 
@@ -369,6 +369,11 @@ All uses of a zero modulus or divisor should 'die', and the
     is ($a - 3).Str, '4',
         'infix:<-> produces a proper Int, even if some of the types invovled have mixins';
 }
+
+# RT #122053
+isa_ok 4.8 / 1, Rat, 'infix:</> returns Rat when it can';
+#?rakudo todo 'RT #122053'
+isa_ok 4.8 % 1, Rat, 'infix:<%> returns Rat when it can';
 
 done;
 
