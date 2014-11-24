@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 145;
+plan 152;
 
 my $five = abs(-5);
 
@@ -279,28 +279,64 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 
 =head2 BEHAVIOUR OF DIVISION AND MODULUS WITH ZERO
 
-This test tests the behaviour of '%' and '/' when used with
-a zero modulus resp. divisor.
+This tests the behaviour of infix:<mod >, infix:<%>, infix:<div>
+and infix:</> when used with a zero modulus resp. divisor.
 
 All uses of a zero modulus or divisor should 'die', and the
 'die' should be non-fatal.
 
 =end pod
 
-my $x;
+# RT #77592
+{
+    throws_like { 3 mod 0 }, X::Numeric::DivideByZero,
+        message => 'Divide by zero',
+        'Modulo zero with infix:<mod> dies and is catchable';
+    throws_like { my $x = 0; 3 mod $x }, X::Numeric::DivideByZero,
+        message => 'Divide by zero',
+        'Modulo zero with infix:<mod> dies and is catchable with VInt variables';
+    throws_like { my $x := 0; 3 mod $x }, X::Numeric::DivideByZero,
+        message => 'Divide by zero',
+        'Modulo zero with infix:<mod> dies and is catchable with VRef variables';
 
-eval_dies_ok('say 3 % 0', 'Modulo zero dies and is catchable');
-dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/VRat variables');
-dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
+    throws_like { say 3 % 0 }, X::TypeCheck::Return,
+        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+        'Modulo zero with infix:<%> dies and is catchable';
+    throws_like { my $x = 0; say 3 % $x }, X::TypeCheck::Return,
+        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+        'Modulo zero with infix:<%> dies and is catchable with VInt variables';
+    throws_like { my $x := 0; say 3 % $x }, X::TypeCheck::Return,
+        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+        'Modulo zero with infix:<%> dies and is catchable with VRef variables';
 
-eval_dies_ok('say 3 div 0', 'Division by zero dies and is catchable');
-dies_ok( { $x = 0; say 3 div $x; }, 'Division by zero dies and is catchable with VInt div VRat variables');
-dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable with VRef variables');
+    throws_like { 3 div 0 }, X::Numeric::DivideByZero,
+        message => 'Divide by zero',
+        'Division by zero with infix:<div> dies and is catchable';
+    throws_like { my $x = 0; 3 div $x }, X::Numeric::DivideByZero,
+        message => 'Divide by zero',
+        'Division by zero with infix:<div> dies and is catchable with VInt variables';
+    throws_like { my $x := 0; 3 div $x }, X::Numeric::DivideByZero,
+        message => 'Divide by zero',
+        'Division by zero with infix:<div> dies and is catchable with VRef variables';
+
+    throws_like { say 0 / 0 }, X::TypeCheck::Assignment,
+        message => q[Type check failed in assignment to '$numerator'; expected 'Int' but got 'Failure'],
+        'Division by zero with infix:</> dies and is catchable (1)';
+    throws_like { say 3 / 0 }, X::TypeCheck::Return,
+        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+        'Division by zero with infix:</> dies and is catchable (2)';
+    throws_like { my $x = 0; say 3.5 / $x }, X::TypeCheck::Return,
+        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+        'Division by zero with infix:</> dies and is catchable with VInt/VRat variables';
+    throws_like { my $x = 0; say 4 / $x }, X::TypeCheck::Return,
+        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+        'Division by zero with infix:</> dies and is catchable with VRef variables';
+}
 
 # This is a rakudo regression wrt bignum:
 {
     my $f = 1; $f *= $_ for 2..25;
-    ok $f == 15511210043330985984000000, 
+    ok $f == 15511210043330985984000000,
        'Can calculate 25! without loss of precision';
     ok 2**65 == 36893488147419103232,
        'Can calculate 2**65 without loss of precision';
@@ -313,10 +349,18 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
 }
 
 # RT #73386
-eval_dies_ok '3 !+ 4',  'infix:<+> is not iffy enough';
+{
+    # TODO: implement typed exception and adapt test
+    throws_like { EVAL q[ 3 !+ 4 ] }, Exception,
+        message => 'Cannot negate + because it is not iffy enough',
+        'infix<!+> is not iffy enough; RT #73386';
+}
 
 # RT #100768
-eval_lives_ok '-Int', '-Int warns (and yields 0) but does not give an error';
+{
+    my $x = -Int;
+    is $x, 0, '-Int warns (and yields 0) but does not give an error';
+}
 
 # RT #108052
 {

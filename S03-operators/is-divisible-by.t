@@ -27,11 +27,18 @@ plan 15;
 
 # RT #76170
 {
-    eval_dies_ok "say 9 !% 3", 'RT #76170'
+    # TODO: implement typed exception and adapt test
+    throws_like { EVAL q[ 9 !% 0 ] }, Exception,
+        message => 'Cannot negate % because it is not iffy enough',
+        'infix<!%> is not iffy enough; RT #76170';
 } #1
 
 {
-    dies_ok {EVAL "9  %% 0"}, 'cannot divide by zero using infix:<%%>';
+    throws_like { 9 %% 0 }, X::Numeric::DivideByZero,
+        message => 'Divide by zero using infix:<%%>',
+        'cannot divide by zero using infix:<%%>';
     #?rakudo todo "not sure why this doesn't fire"
-    dies_ok {EVAL "9 !%% 0"}, 'cannot divide by zero using infix:<%%>';
+    throws_like { EVAL "9 !%% 0" }, X::Numeric::DivideByZero,
+        message => 'Divide by zero using infix:<%%>',
+        'cannot divide by zero using infix:<%%>';
 } #2
