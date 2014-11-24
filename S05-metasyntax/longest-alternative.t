@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 31;
+plan 41;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -130,4 +130,185 @@ my $str = 'a' x 7;
        'was in the appropriate action methods';
 }
 
-# vim: ft=perl6
+# various discovered longlit failure modes
+
+{
+    my $m = 'abc' ~~ / abc | 'def' 'ine' /;
+    ok $m, "longer non-matcher parses";
+    is $m.Str, "abc", "longer non-matching literal doesn't falsify shorter";
+}
+
+{
+    grammar Galt {
+        token TOP { <foo> | <bar> }
+        token foo { \w\w }
+        token bar { aa | <foo> }
+    }
+    my $m = Galt.subparse('bb');
+    ok $m, "Galt parses";
+    is $m<foo>.Str, 'bb', "literal from non-matching alternating subrule doesn't interfere";
+}
+
+{
+    grammar Gproto {
+        proto token TOP {*}
+        multi token TOP:sym<foo> { <foo> }
+        multi token TOP:sym<bar> { <bar> }
+
+        token foo { \w\w }
+
+        proto token bar {*}
+        multi token bar:sym<foo> { <foo> }
+        multi token bar:sym<aa>  { aa }
+    }
+
+    my $m = Gproto.subparse('bb');
+    ok $m, "Gproto parses";
+    is $m<foo>.Str, 'bb', "literal from non-matching proto subrule doesn't interfere";
+}
+
+{
+    my $m = 'abcbarxyz' ~~ / abcbarx | abc [ foo | bar ] xyz /;
+    ok $m, "subrule alternation with recombo matches";
+    is $m.Str, 'abcbarxyz', "subrule alternation recombination doesn't confuse fates";
+}
+
+{
+    grammar IETF::RFC_Grammar::IPv6 {
+        token IPv6address       {
+                                                    [ <.h16> ':' ] ** 6 <.ls32> |
+                                               '::' [ <.h16> ':' ] ** 5 <.ls32> |
+            [                        <.h16> ]? '::' [ <.h16> ':' ] ** 4 <.ls32> |
+            [ [ <.sep_h16> ]?        <.h16> ]? '::' [ <.h16> ':' ] ** 3 <.ls32> |
+            [ [ <.sep_h16> ] ** 0..2 <.h16> ]? '::' [ <.h16> ':' ] ** 2 <.ls32> |        
+            [ [ <.sep_h16> ] ** 0..3 <.h16> ]? '::' <.h16> ':'          <.ls32> |
+            [ [ <.sep_h16> ] ** 0..4 <.h16> ]? '::'                     <.ls32> |
+            [ [ <.sep_h16> ] ** 0..5 <.h16> ]? '::'                     <.h16>  |
+            [ [ <.sep_h16> ] ** 0..6 <.h16> ]? '::'                                      
+        };
+
+        # token avoiding backtracking happiness    
+        token sep_h16           { [ <.h16> ':' <!before ':'>] }
+
+        token ls32              { [<.h16> ':' <.h16>] | <.IPv4address> };
+        token h16               { <.xdigit> ** 1..4 };
+        
+        token IPv4address       {
+            <.dec_octet> '.' <.dec_octet> '.' <.dec_octet> '.' <.dec_octet>
+        };
+        
+        token dec_octet         {
+            '25' <[0..5]>           |   # 250 - 255
+            '2' <[0..4]> <.digit>   |   # 200 - 249
+            '1' <.digit> ** 2       |   # 100 - 199
+            <[1..9]> <.digit>       |   # 10 - 99
+            <.digit>                    # 0 - 9
+        }
+    }
+
+    grammar IETF::RFC_Grammar::URI is IETF::RFC_Grammar::IPv6 {
+        token TOP               { <URI_reference> };
+        token TOP_non_empty     { <URI> | <relative_ref_non_empty> };
+        token TOP_validating    { ^ <URI_reference> $ };
+        token URI_reference     { <URI> | <relative_ref> };
+
+        token absolute_URI      { <scheme> ':' <.hier_part> [ '?' query ]? };
+
+        token relative_ref      {
+            <relative_part> [ '?' <query> ]? [ '#' <fragment> ]?
+        };
+        token relative_part     {
+            '//' <authority> <path_abempty>     |
+            <path_absolute>                     |
+            <path_noscheme>                     |
+            <path_empty>
+        };
+
+        token relative_ref_non_empty      {
+            <relative_part_non_empty> [ '?' <query> ]? [ '#' <fragment> ]?
+        };
+        token relative_part_non_empty     {
+            '//' <authority> <path_abempty>     |
+            <path_absolute>                     |
+            <path_noscheme>                     
+        };
+
+        token URI               {
+            <scheme> ':' <hier_part> ['?' <query> ]?  [ '#' <fragment> ]?
+        };
+
+        token hier_part     {
+            '//' <authority> <path_abempty>     |
+            <path_absolute>                     |
+            <path_rootless>                     |
+            <path_empty>
+        };
+
+        token scheme            { <.uri_alpha> <[\-+.] +uri_alpha +digit>* };
+        
+        token authority         { [ <userinfo> '@' ]? <host> [ ':' <port> ]? };
+        token userinfo          {
+            [ ':' | <likely_userinfo_component> ]*
+        };
+        # the rfc refers to username:password as deprecated
+        token likely_userinfo_component {
+            <+unreserved +sub_delims>+ | <.pct_encoded>+
+        };
+        token host              { <IPv4address> | <IP_literal> | <reg_name> };
+        token port              { <.digit>* };
+
+        token IP_literal        { '[' [ <IPv6address> | <IPvFuture> ] ']' };
+        token IPvFuture         {
+            'v' <.xdigit>+ '.' <[:] +unreserved +sub_delims>+
+        };
+        token reg_name          { [ <+unreserved +sub_delims> | <.pct_encoded> ]* };
+
+        token path_abempty      { [ '/' <segment> ]* };
+        token path_absolute     { '/' [ <segment_nz> [ '/' <segment> ]* ]? };
+        token path_noscheme     { <segment_nz_nc> [ '/' <segment> ]* };
+        token path_rootless     { <segment_nz> [ '/' <segment> ]* };
+        token path_empty        { <.pchar> ** 0 }; # yes - zero characters
+
+        token   segment         { <.pchar>* };
+        token   segment_nz      { <.pchar>+ };
+        token   segment_nz_nc   { [ <+unenc_pchar - [:]> | <.pct_encoded> ] + };
+
+        token query             { <.fragment> };
+        token fragment          { [ <[/?] +unenc_pchar> | <.pct_encoded> ]* };
+
+        token pchar             { <.unenc_pchar> | <.pct_encoded> };
+        token unenc_pchar       { <[:@] +unreserved +sub_delims> };
+
+        token pct_encoded       { '%' <.xdigit> <.xdigit> };
+
+        token unreserved        { <[\-._~] +uri_alphanum> };
+
+        token reserved          { <+gen_delims +sub_delims> };
+
+        token gen_delims        { <[:/?\#\[\]@]> };
+        token sub_delims        { <[;!$&'()*+,=]> };
+
+        token uri_alphanum      { <+uri_alpha +digit> };   
+        token uri_alpha         { <[A..Za..z]> };
+    }
+
+    my $m = IETF::RFC_Grammar::URI.subparse('http://example.com:80/about/us?foo#bar');
+    ok $m, "IETF::RFC_Grammar::URI matches";
+    is $m.gist, q:to/END/, "IETF::RFC_Grammar::URI gets ltm and longlit right";
+        ｢http://example.com:80/about/us?foo#bar｣
+         URI_reference => ｢http://example.com:80/about/us?foo#bar｣
+          URI => ｢http://example.com:80/about/us?foo#bar｣
+           scheme => ｢http｣
+           hier_part => ｢//example.com:80/about/us｣
+            authority => ｢example.com:80｣
+             host => ｢example.com｣
+              reg_name => ｢example.com｣
+             port => ｢80｣
+            path_abempty => ｢/about/us｣
+             segment => ｢about｣
+             segment => ｢us｣
+           query => ｢foo｣
+           fragment => ｢bar｣
+        END
+    }
+# vim: ft=perl6 et
