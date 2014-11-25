@@ -226,15 +226,13 @@ my @array2 = ("test", 1, Mu);
   # RT #111924
   throws_like { @arr[*-1] },
     X::Subscript::Negative,
-    message => 'Calculated index (-1) is negative, but Array allows only 0-based indexing',
-    "readonly accessing [*-1] of an empty array is run-time error";
+    "readonly accessing [*-1] of an empty array throws X::Subscript::Negative";
   throws_like { @arr[*-1] = 42 },
     X::Subscript::Negative,
-    message => 'Calculated index (-1) is negative, but Array allows only 0-based indexing',
-    "assigning to [*-1] of an empty array is run-time error";
+    "assigning to [*-1] of an empty array throws X::Subscript::Negative";
   throws_like { @arr[*-1] := 42 },
     X::Bind::Slice,
-    "binding [*-1] of an empty array is run-time error";
+    "binding [*-1] of an empty array throws X::Bind::Slice";
 }
 
 {
@@ -242,15 +240,13 @@ my @array2 = ("test", 1, Mu);
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array is not fatal";
   throws_like { @arr[*-2] },
     X::Subscript::Negative,
-    message => 'Calculated index (-1) is negative, but Array allows only 0-based indexing',
-    "readonly accessing [*-2] of an one-elem array is run-time error";
+    "readonly accessing [*-2] of an one-elem array throws X::Subscript::Negative";
   throws_like { @arr[*-2] = 42 },
     X::Subscript::Negative,
-    message => 'Calculated index (-1) is negative, but Array allows only 0-based indexing',
-    "assigning to [*-2] of an one-elem array is run-time error";
+    "assigning to [*-2] of an one-elem array throws X::Subscript::Negative";
   throws_like { @arr[*-2] := 42 },
     X::Bind::Slice,
-    "binding [*-2] of an one-elem array is run-time error";
+    "binding [*-2] of an one-elem array throws X::Bind::Slice";
 }
 
 {
@@ -260,20 +256,17 @@ my @array2 = ("test", 1, Mu);
   throws_like '@arr[-2]',
     X::Obsolete,
     message => 'Unsupported use of a negative -2 subscript to index from the end; in Perl 6 please use a function such as *-2',
-    "readonly accessing [-2] of normal array is compile-time error";
+    "readonly accessing [-2] of normal array throws X::Obsolete and is fatal";
   #?niecza todo '@arr[-1] returns undef'
   throws_like { @arr[ $minus_one ] },
     X::Subscript::Negative,
-    message => 'Calculated index (-1) is negative, but Array allows only 0-based indexing',
-    "indirectly accessing [-1] through a variable is run-time error";
+    "indirectly accessing [-1] through a variable throws X::Subscript::Negative";
   throws_like { @arr[$minus_one] = 42 },
     X::Subscript::Negative,
-    message => 'Calculated index (-1) is negative, but Array allows only 0-based indexing',
-    "assigning to [-1] of a normal array is run-time error";
+    "assigning to [-1] of a normal array throws X::Subscript::Negative";
   throws_like { @arr[$minus_one] := 42 },
     X::Subscript::Negative,
-    message => 'Calculated index (-1) is negative, but Array allows only 0-based indexing',
-    "binding [-1] of a normal array is run-time error";
+    "binding [-1] of a normal array throws X::Subscript::Negative";
 }
 
 # RT #73308
