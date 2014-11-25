@@ -319,8 +319,8 @@ All uses of a zero modulus or divisor should 'die', and the
         message => 'Divide by zero',
         'Division by zero with infix:<div> dies and is catchable with VRef variables';
 
-    throws_like { say 0 / 0 }, X::TypeCheck::Assignment,
-        message => q[Type check failed in assignment to '$numerator'; expected 'Int' but got 'Failure'],
+    throws_like { say 0 / 0 }, X::TypeCheck::Binding,
+        message => q[Type check failed in binding; expected 'Int' but got 'Failure'],
         'Division by zero with infix:</> dies and is catchable (1)';
     throws_like { say 3 / 0 }, X::TypeCheck::Return,
         message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
