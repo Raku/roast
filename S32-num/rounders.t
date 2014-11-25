@@ -46,24 +46,24 @@ is( (-Inf).truncate, -Inf, '(-Inf).truncate is -Inf');
 my %tests =
     ( ceiling => [ [ 1.5, 2 ], [ 2, 2 ], [ 1.4999, 2 ],
          [ -0.1, 0 ], [ -1, -1 ], [ -5.9, -5 ],
-         [ -0.5, 0 ], [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ], 
+         [ -0.5, 0 ], [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ],
          [ "2.Num", 2 ] ],
       floor => [ [ 1.5, 1 ], [ 2, 2 ], [ 1.4999, 1 ],
          [ -0.1, -1 ], [ -1, -1 ], [ -5.9, -6 ],
-         [ -0.5, -1 ], [ "-0.499.Num", -1 ], [ "-5.499.Num", -6 ], 
+         [ -0.5, -1 ], [ "-0.499.Num", -1 ], [ "-5.499.Num", -6 ],
          [ "2.Num", 2 ]  ],
       round => [ [ 1.5, 2 ], [ 2, 2 ], [ 1.4999, 1 ],
          [ -0.1, 0 ], [ -1, -1 ], [ -5.9, -6 ],
-         [ -0.5, 0 ], [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ], 
-         [ "2.Num", 2 ], [ 5e+33, 4999999999999999727876154935214080 ] ],
+         [ -0.5, 0 ], [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ],
+         [ "2.Num", 2 ]  ],
       truncate => [ [ 1.5, 1 ], [ 2, 2 ], [ 1.4999, 1 ],
          [ -0.1, 0 ], [ -1, -1 ], [ -5.9, -5 ],
-         [ -0.5, 0 ], [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ], 
+         [ -0.5, 0 ], [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ],
          [ "2.Num", 2 ]  ],
     );
 
 for %tests.keys.sort -> $type {
-    my @subtests = @(%tests{$type});	# XXX .[] doesn't work yet!
+    my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
     for @subtests -> $test {
         my $code = "{$type}({$test[0]})";
         my $res = EVAL($code);
@@ -76,7 +76,6 @@ for %tests.keys.sort -> $type {
     }
 }
 
- 
 for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
     for @subtests -> $test {
@@ -93,11 +92,24 @@ for %tests.keys.sort -> $type {
 
 for %tests.keys.sort -> $t {
     isa_ok EVAL("{$t}(1.1)"), Int, "rounder $t returns an Int";
+}
 
+# MoarVM Issue #157
+# separate test since rakudo.jvm rounds this very large number
+# more precise than rakudo.moar and rakudo.parrot
+{
+    my $number   = 5e+33;
+    my $result_1 = 4999999999999999727876154935214080;   # result on Moar and Parrot
+    my $result_2 = 5000000000000000000000000000000000;   # result on JVM
+
+    ok round($number) ~~ any($result_1,$result_2),
+        'large positive numbers rounded do not give negative numbers (1)';
+    ok $number.round ~~ any($result_1,$result_2),
+        'large positive numbers rounded do not give negative numbers (2)';
 }
 
 # RT #118545  Round with arguments
-{   
+{
     my $integer = 987654321;
     is $integer.round(1),   987654321, "round integer with argument";
     is $integer.round(5),   987654320, "($integer).round(5) == 987654320";
