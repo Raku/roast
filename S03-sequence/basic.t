@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 129;
+plan 130;
 
 # single-term sequence
 
@@ -228,14 +228,17 @@ is ~(1...10)[2...4], '3 4 5', 'can index sequence with sequence';
 is (1, 2 , {last if $_>=5; $_+1} ... *), (1,2,3,4,5), "sequence that lasts in the last item of lhs";
 
 {
-	is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';
-	my @fib := (0, 1, *+* ... * );
-        # RT #98790
-	is (@fib ... 8), (0 , 1, 1, 2 , 3, 5, 8), '@fib ... 8';
+    is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';
+    my @fib := (0, 1, *+* ... * );
+    # RT #98790
+    is (@fib ... 8), (0 , 1, 1, 2 , 3, 5, 8), '@fib ... 8';
 }
 
 # RT #78324
-is (32,16,8 ...^ Rat), (32,16,8) , 'stop on a matching type';
+{
+    is (32,16,8 ...^ Rat), (32,16,8) , 'stop on a matching type (1)';
+    is (32,{($_/2).narrow} ...^ Rat), (32,16,8,4,2,1) , 'stop on a matching type (2)';
+}
 
 # RT #75828
 eval_dies_ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
