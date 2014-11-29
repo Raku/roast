@@ -12,7 +12,7 @@ my $relpath = IO::Path::Unix.new('foo/bar' );
 my $abspath = IO::Path::Unix.new('/foo/bar');
 isa_ok $abspath, IO::Path, "Can create IO::Path::Unix";
 is $abspath.volume,    "",     "volume is empty on POSIX";
-is $abspath.directory, "/foo", 'directory "/foo/bar" -> "/foo"';
+is $abspath.dirname, "/foo", 'dirname "/foo/bar" -> "/foo"';
 is $abspath.basename,  "bar",  'basename "/foo/bar" -> "bar"';
 
 my $path = IO::Path::Unix.new('foo//bar//');
