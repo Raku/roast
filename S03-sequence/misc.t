@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 22;
+plan 26;
 
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
@@ -74,15 +74,37 @@ is (1, 4, 7 ... 16, 16 ... *)[^8].join(' '),
 #     'chained arithmetic sequence with exclusion';
 
 #?niecza skip 'Cannot use value like Block as a number'
-#?rakudo todo 'gives True instead'
-is (1, *+1  ... { $_ < 5 }, 5, *+10  ... { $_ < 35 }, 35, *+100 ... { $_ < 400 }).join(' '),
-    '1 2 3 4 5 15 25 35 135 235 335',
-    'simple chained sequence with closures';
+#?rakudo skip 'RT #123329'
+is (1, *+1  ... { $_ >= 4 }, 5, *+10  ... { $_ >= 24 }, 35, *+100 ... { $_ > 400 }).join(' '),
+    '1 2 3 4 5 15 25 35 135 235 335 435',
+    'chained sequence with closures (1)';
 #?niecza skip 'Unable to resolve method chars in class Block'
-#?rakudo skip 'Not enough positional parameters passed; got 0 but expected 1'
-is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 < 2000 }, 'a', *~'z' ... { $_.chars < 6 }).join(' '), 
-    '1 3 7 15 31 36 41 a az azz azzz azzzz',
-    'chained sequence with closures';
+#?rakudo skip 'RT #123329'
+is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.chars >= 5 }).join(' '),
+    '1 3 7 15 31 36 41 46 a az azz azzz azzzz',
+    'chained sequence with closures (2)';
+
+#RT #123329
+#?rakudo skip 'RT #123329'
+{
+    is (1, 2 ... { $_ > 3 }, 6 ... 10).join(' '),
+        '1 2 3 4 6 8 10',
+        'chained sequence with closure (3)';
+    is (1, *+1 ... { $_ == 9 }, 10, *+10 ... { $_ == 90 }, 100, *+100 ... { $_ == 900 }).join(' '),
+        '1 2 3 4 5 6 7 8 9 10 20 30 40 50 60 70 80 90 100 200 300 400 500 600 700 800 900',
+        'cained sequence with limit function';
+    is (1, 2 ... 4, 6 ... 10, 12).join(' '),
+        '1 2 3 4 6 8 10 12',
+        'chained sequence with more than one value after last infix:<...>';
+}
+
+#RT #123329
+#?rakudo skip 'RT #123329'
+{
+    is (1, 2 ... * > 3, 6 ... 10).join(' '),
+        '1 2 3 4 6 8 10',
+        'chained sequence with whatever expression';
+}
 
 # The following is now an infinite sequence...
 # is (1, 2 ... 0, 1 ... 3).join(' '),
