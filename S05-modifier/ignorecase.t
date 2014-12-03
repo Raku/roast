@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 24;
+plan 25;
 
 =begin description
 
@@ -61,6 +61,8 @@ ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 
 ok 'a' ~~ /:i A|B /, ':i and LTM sanity';
 ok 'a' ~~ /:i < A B > /, ':i and quote words';
+
+ok 'A4' ~~ /:i a[3|4|5] | b[3|4] /, 'alternation sanity';
 
 #RT #114362
 {
