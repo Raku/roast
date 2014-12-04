@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan 85;
+plan 87;
 
 =begin description
 
@@ -602,6 +602,22 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     incr3($a, $b);
     is [$a, $b], [3, 3], 'is rw on slurpy parameters works (3)';
     throws_like { incr4($a, $b) }, Exception, message => /readonly/;
+}
+
+# RT #123005
+#?rakudo todo 'RT #123005'
+{
+    my $str = 'ACCB';
+    my $rt123323;
+    for $str {
+        s/A (<-[B]>*) B/$0/;
+        $rt123323 ~= $_;
+    }
+    is $rt123323, 'CC', '$0 works in substitution in for loop (1)';
+
+    my $a = 'a';
+    s/(.)/$0/ for $a;
+    is $a, 'a', '$0 works in substition in for loop (2)';
 }
 
 # vim: ft=perl6
