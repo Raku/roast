@@ -18,6 +18,7 @@ plan 7;
       'did we get the right string';
 }
 
+#?rakudo skip 'sometimes hangs, sometimes segfaults'
 {
     my $times = 100000;
     my $a;
@@ -31,7 +32,7 @@ plan 7;
     my @seen;
     $s.act: { @seen.push: "Fizz" if $_ %% 3 }
     $s.act: { @seen.push: "Buzz" if $_ %% 5 }
-    $s.act: { @seen.push: $_ unless $_ %% 3 || $_ %% 5 }
+    $s.act: { @seen.push: $_ unless $_%%3 || $_%%5 }
     await do for 1..20 { start { rand.sleep; $s.emit($_) } }
     is +@seen, 21, 'do we have right number of elements';
     is @seen.sort,
