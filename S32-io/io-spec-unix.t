@@ -68,10 +68,10 @@ is $Unix.rootdir, '/',         'rootdir is "/"';
 
 is $Unix.updir,   '..',        'updir is ".."';
 
-isnt '.',    $Unix.no-parent-or-current-test,   "no-parent-or-current-test: '.'";
-isnt '..',   $Unix.no-parent-or-current-test,   "no-parent-or-current-test: '..'";
-is   '.git', $Unix.no-parent-or-current-test,   "no-parent-or-current-test: '.git'";
-is   'file', $Unix.no-parent-or-current-test,   "no-parent-or-current-test: 'file'";
+isnt '.',    $Unix.curupdir,   "curupdir: '.'";
+isnt '..',   $Unix.curupdir,   "curupdir: '..'";
+is   '.git', $Unix.curupdir,   "curupdir: '.git'";
+is   'file', $Unix.curupdir,   "curupdir: 'file'";
 
 ok  $Unix.is-absolute( '/abcd/ef' ), 'is-absolute: ok "/abcd/ef"';
 ok  $Unix.is-absolute( '/'    ),  'is-absolute: ok "/"';
@@ -192,9 +192,7 @@ if $*DISTRO.name ~~ any(<mswin32 os2 netware symbian dos cygwin>) {
 	skip_rest 'Unix on-platform tests'
 }
 else {
-	isa_ok IO::Spec.MODULE, IO::Spec::Unix, "unix: loads correct module";
-	is IO::Spec.rel2abs( IO::Spec.curdir ), $*CWD, "rel2abs: \$*CWD test";
-	ok {.IO.d && .IO.w}.( IO::Spec.tmpdir ), "tmpdir: {IO::Spec.tmpdir} is a writable directory";
+	isa_ok $*SPEC, IO::Spec::Unix, "unix: loads correct module";
+	is $*SPEC.rel2abs( $*SPEC.curdir ), $*CWD, "rel2abs: \$*CWD test";
+	ok {.IO.d && .IO.w}.( $*SPEC.tmpdir ), "tmpdir: {$*SPEC.tmpdir} is a writable directory";
 }
-
-done;
