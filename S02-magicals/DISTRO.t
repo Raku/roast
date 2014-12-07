@@ -56,9 +56,7 @@ ok $*DISTRO.perl ~~ m/\w/, 'We can do a $*DISTRO.perl';
 ok $*DISTRO.gist ~~ m/\w/, 'We can do a $*DISTRO.gist';
 ok $*DISTRO.Str  ~~ m/\w/, 'We can do a $*DISTRO.Str';
 
-diag "'{$*DISTRO.name}' is an unknown DISTRO, please report" if !
-  ok $*DISTRO.name eq any($*PERL.DISTROnames),
-  "We know of the DISTRO we are running under";
+ok $*DISTRO.name, 'Non-empty $*DISTRO.name';
 
 isa_ok $*DISTRO.version, Version;
 #?rakudo.jvm    todo 'no Distro.signature yet'
