@@ -18,7 +18,6 @@ plan 15;
 }
 
 # with a signature for the closure
-#?rakudo skip 'type syntax parse failure'
 {
     my sub testit (&testcode:(Int)) {testcode(12)}
     my sub testint(Int $foo) {return 1}   #OK not used
@@ -28,7 +27,6 @@ plan 15;
     eval_dies_ok('testit(&teststr)', 'code dies with invalid signature (1)');
 }
 
-#?rakudo skip 'type syntax parse failure'
 {
     my sub testit (&testcode:(Int --> Bool)) {testcode(3)}
     my Bool sub testintbool(Int $foo) {return Bool::True}   #OK not used
@@ -42,7 +40,7 @@ plan 15;
     eval_dies_ok('testit(&teststrint)',  'code dies with invalid signature (4)');
 }
 
-#?rakudo skip 'type syntax parse failure'
+#?rakudo skip 'subsignatures dont factor into multi candidates yet'
 {
     multi sub t1 (&code:(Int)) { 'Int' };   #OK not used
     multi sub t1 (&code:(Str)) { 'Str' };   #OK not used
