@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 17;
 
 # L<S06/Closure parameters>
 
@@ -23,8 +23,13 @@ plan 15;
     my sub testint(Int $foo) {return 1}   #OK not used
     my sub teststr(Str $foo) {return 'foo'}   #OK not used
 
+    my sub test-but-dont-call(&testcode:(Int)) { True }
+
     ok(testit(&testint), 'code runs with proper signature (1)');
     eval_dies_ok('testit(&teststr)', 'code dies with invalid signature (1)');
+
+    ok(test-but-dont-call(&testint), 'code runs with proper signature (1)');
+    eval_dies_ok('test-but-dont-call(&teststr)', 'code dies with invalid signature (1)');
 }
 
 {
