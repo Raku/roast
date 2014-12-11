@@ -59,9 +59,7 @@ is($vals, 2, 'returned two values in the match');
 my @vals = "hello world" ~~ m:P5:g/(\w+)/;
 #?rakudo todo 'NYI'
 is(+@vals, 2, 'returned two values in the match');
-#?rakudo todo 'NYI'
 is(@vals[0], 'hello', 'returned correct first value in the match');
-#?rakudo todo 'NYI'
 is(@vals[1], 'world', 'returned correct second value in the match');
 
 {

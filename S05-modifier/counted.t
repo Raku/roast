@@ -54,7 +54,6 @@ for (1..6) -> $N {
 
 # more interesting variations of :nth(...)
 #?niecza skip 'm:g'
-#?rakudo todo 'unknown'
 {
     ok($data ~~ m:nth(2,3):global/(fo+)/, 'nth(list) is ok');
     is(@(), <foo fooo>, 'nth(list) matched correctly');
