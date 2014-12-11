@@ -57,7 +57,6 @@ is($vals, 2, 'returned two values in the match');
 
 # return all the strings we matched
 my @vals = "hello world" ~~ m:P5:g/(\w+)/;
-#?rakudo todo 'NYI'
 is(+@vals, 2, 'returned two values in the match');
 is(@vals[0], 'hello', 'returned correct first value in the match');
 is(@vals[1], 'world', 'returned correct second value in the match');
