@@ -171,8 +171,8 @@ given $test {
             my $sock = IO::Socket::INET.new(:$host, :$port);
             # .read will give us 16kB of data even it recvs several chunks of smaller size
             my $collected = $sock.read( 4096 * 4 );
-            say $collected.at_pos( 0 ).chr;
-            say $collected.at_pos( 4096 * 4 - 1 ).chr;
+            say $collected[0].chr;
+            say $collected[ 4096 * 4 - 1 ].chr;
             say $collected.bytes;
             $sock.close();
         }
@@ -248,8 +248,8 @@ given $test {
             $collected ~= $sock.read( 1 );
             $collected ~= $sock.read( 1 );
             $collected ~= $sock.read( 1 );
-            say $collected.at_pos( 0 ).chr;
-            say $collected.at_pos( 3 ).chr;
+            say $collected[0].chr;
+            say $collected[3].chr;
             say $collected.bytes;
             $sock.close();
         }
