@@ -26,7 +26,7 @@ given $*DISTRO.name {
         $netstat_cmd = "netstat --tcp --all --numeric";
         $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ };
     }
-    when any 'darwin', 'Mac OS X' {
+    when any 'darwin', 'macosx' {
         $netstat_cmd = "netstat -f inet -p tcp -a -n";
         $netstat_pat = rx{ [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ };
     }
