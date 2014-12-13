@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 142;
+plan 146;
 
 # L<S05/Substitution/>
 
@@ -21,8 +21,9 @@ is $str,                      'heilo', '.. it changes the receiver';
 
 # not sure about this. Maybe '$1$0' should work.
 
-is 'a'.subst(/(.)/,"$1$0"), '',       '.. and it can not access captures from strings';
-is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure';
+$/ = ['nope'];
+is 'a'.subst(/(.)/,"$0"), 'nope',     '.. bare strings cannot see $/ because they are evaluated first';
+is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure to delay evaluation';
 is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #116224
@@ -39,11 +40,11 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     nok $/,                     '$/ is a falsey';
 
     $_ = 'a';
-    is s/a/b/,             'b', '$_ = "a"; s/a/b/ is "b"';
+    is s/a/b/,             'a', '$_ = "a"; s/a/b/ is "a"';
     is $/,                 'a', '$/ matched "a"';
 
     $_ = 'a';
-    is s/x/y/,             'a', '$_ = "a"; s/x/y/ is "a"';
+    nok s/x/y/,                 '$_ = "a"; s/x/y/ is a falsey';
     nok $/,                     '$/ is a falsey';
 }
 
@@ -193,16 +194,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
     $_ = q{Now I know my abc's};
 
-    s:global/Now/Wow/;
-    is($_, q{Wow I know my abc's}, 'Constant substitution');
+    is +s:g/Now/Wow/, 1, 'Constant substitution succeeds and returns correct count';
+    is($_, q{Wow I know my abc's}, 'Constant substitution produces correct result');
 
-    s:global/abc/$s/;
-    is($_, q{Wow I know my ZBC's}, 'Scalar substitution');
+    isa_ok s:global:i/ABC/$s/.WHAT, List, 'Global scalar substitution succeeds and returns a List';
+    is($_, q{Wow I know my ZBC's}, 'Scalar substitution produces correct result');
 
-{
-    s:g/BC/@a[]/;
-    is($_, q{Wow I know my ZA ZBC's}, 'List substitution');
-}
+    isa_ok s/BC/@a[]/.WHAT, Match, 'Single list replacement succeeds and returns a Match';
+    is($_, q{Wow I know my ZA ZBC's}, 'List replacement produces correct result');
 
     dies_ok { 'abc' ~~ s/b/g/ },
             "can't modify string literal (only variables)";
@@ -212,11 +211,11 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 #?niecza skip "Action method quote:ss not yet implemented"
 {
     $_ = "a\nb\tc d";
-    ok ss/a b c d/w x y z/, 'successful substitution returns True';
+    ok ss/a b c d/w x y z/, 'successful substitution returns truthy';
     # RT #120526
     is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
 
-    dies_ok {"abc" ~~ ss/a b c/ x y z/}, 'Cannot ss/// string literal';
+    dies_ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
 }
 
 #L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
@@ -250,7 +249,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 {
     my $x = 'foobar';
-    ok ($x ~~ s:g[o] = 'u'), 's:g[..] = returns True';
+    is +($x ~~ s:g[o] = 'u'), 2, 's:global[..] = returns correct count';
     is $x, 'fuubar', 'and the substition worked';
 }
 
@@ -264,7 +263,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $_, 'A b c', 'can use $0 on the RHS';
 
     $_ = 'a b c';
-    s:g[ (\w) ] = $0 x 2;
+    is +(s:g[ (\w) ] = $0 x 2), 3, 's:g[] returns proper count of matches';
     is $_, 'aa bb cc', 's:g[...] and captures work together well';
 }
 
