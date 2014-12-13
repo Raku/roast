@@ -10,7 +10,7 @@ It probably needs a few syntax updates to remove p5isms
 
 =end pod
 
-plan 20;
+plan 22;
 
 # should be: L<S05/Modifiers/With the new C<:ov> (C<:overlap>) modifier,>
 # L<S05/Modifiers/match at all possible character positions>
@@ -25,14 +25,15 @@ my @expected = (
 );
 
 {
-    for (1..2) -> $rep {
-         ok($str ~~ m:i:overlap/ a .+ a /, "Repeatable overlapping match ($rep)" );
+    for 1..2 -> $rep {
+        ok($str ~~ m:i:overlap/ a (.+) a /, "Repeatable overlapping match ($rep)" );
 
         ok(@$/ == @expected, "Correct number of matches ($rep)" );
         my @expected_pos = @expected.map: { $_[0] };
         my @expected_str = @expected.map: { $_[1] };
         is $/.list.join('|'), @expected_str.join('|'), 'Got right submatches';
         is $/.list.map(*.from), @expected_pos, 'Got right position of submatches';
+        is $/.list»[0].join('|'), @expected_str.map(*.substr(1,*-1)).join('|'), 'Got captures';
     }
 }
 
