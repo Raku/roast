@@ -10,7 +10,7 @@ Nested array tests; various interactions of arrayrefs, arrays, flattening and ne
 
 =end description
 
-plan 8;
+plan 9;
 
 {   # UNSPECCED
     my @a = (1,2,[3,4]);
@@ -31,6 +31,14 @@ plan 8;
     is(+$c, 3, 'Array object length, nested ()');
     is(+@d, 1, 'Array length, nested (), outer []s');
     is(+$d, 4, 'Array object length, nested (), outer []s');
+}
+
+# RT #98954
+{
+    my @a = [1], [2], [3];
+    is (map { @a[1 - $_][0] }, 0 .. 3).perl,
+        q[(2, 1, Failure.new(exception => X::Subscript::Negative.new(index => -1, type => Array)), Failure.new(exception => X::Subscript::Negative.new(index => -2, type => Array))).list],
+        'correct Failures for negative subscript of nested array';
 }
 
 # vim: ft=perl6
