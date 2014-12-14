@@ -4,15 +4,16 @@ use Test;
 
 plan 17;
 
+#?rakudo.parrot skip 'Metamodel::Primitives NYI'
 {
     my $union-type-checks = 0;
     my $union-find-method-calls = 0;
-    
+
     class UnionTypeHOW {
         has @!types;
-    
+
         submethod BUILD(:@!types) { }
-    
+
         method new_type(*@types) {
             my $how = self.new(:@types);
             my $type = Metamodel::Primitives.create_type($how, 'Uninstantiable');
@@ -35,10 +36,10 @@ plan 17;
                 %cache{.key} //= .value;
             }
             Metamodel::Primitives.install_method_cache($type, %cache);
-            
+
             $type
         }
-    
+
         method type_check(Mu $, Mu \check) {
             $union-type-checks++;
             for @!types, Any, Mu {
@@ -78,16 +79,15 @@ plan 17;
     $int-or-rat.^compose;
     $union-type-checks = 0;
     $union-find-method-calls = 0;
+    #?rakudo.jvm 4 todo 'RT #123426'
     ok Int ~~ $int-or-rat, 'Union type works with cache (1)';
     ok Rat ~~ $int-or-rat, 'Union type works with cache (2)';
     ok 420 ~~ $int-or-rat, 'Union type works with cache (3)';
     ok 4.2 ~~ $int-or-rat, 'Union type works with cache (4)';
     nok Str ~~ $int-or-rat, 'Union type works with cache (5)';
     nok 'w' ~~ $int-or-rat, 'Union type works with cache (6)';
-    
+
+    #?rakudo.jvm 2 todo 'RT #123426'
     is $union-type-checks, 0, 'Really did use type cache';
     is $union-find-method-calls, 0, 'Really did use method cache';
 }
-
-
-
