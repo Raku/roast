@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 13;
 
 # L<S12/"FALLBACK methods"/"special name FALLBACK">
 
@@ -54,5 +54,13 @@ is F.something(''), 'Str', 'Can multi-dispatch on regular arguments (2)';
 is F.new.something(''), 'Str', 'Can multi-dispatch on regular arguments (also on an instance)';
 
 dies_ok { F.something() }, 'Error when none of the candidates match';
+
+class I {
+    method postcircumfix:<( )>(|) { 'invaught' }
+    method FALLBACK($name, |c) { 'yes, I work' }
+}
+my $i = I.new;
+is $i.spy, 'yes, I work', 'FALLBACK is effective with a postcircumfix:<( )>';
+is $i(), 'invaught', 'postcircumfix:<( )> beats FALLBACK';
 
 # vim: ft=perl6
