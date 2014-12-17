@@ -3,9 +3,9 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 19;
+plan 20;
 
-# some tests without regard to ending 
+# some tests without regard to ending
 
 is (1, 1, { $^a + $^b } ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci';
 is (1, 1, &infix:<+> ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, using "&infix:<+>"';
@@ -38,12 +38,27 @@ is (1, 1, 2, 3, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'a
 # sequence with slurpy functions
 {
     sub nextprime( *@prev_primes ) {
-	my $current = @prev_primes[*-1];
+        my $current = @prev_primes[*-1];
         1 while ++$current % any(@prev_primes) == 0;
         return $current;
     }
     is (2, &nextprime ... 13).join(' '), '2 3 5 7 11 13', 'slurpy prime generator';
 }
 is (1, 2, sub {[*] @_[*-1], @_ + 1} ... 720).join(' '), '1 2 6 24 120 720', 'slurpy factorial generator';
+
+# RT #117825
+# TODO: better test (e.g. typed exception instead of testing for backend specific error messages
+#?rakudo.parrot skip 'RT #117825'
+{
+    throws_like { ( ^1, *+* ... * )[^20] }, Exception,
+        message => {
+            m/
+                'Too few positionals passed; expected 2 arguments but got 1'
+                |
+                'Not enough positional parameters passed; got 1 but expected 2'
+            /
+        },
+        'no internals leaking out with series operator used wrongly (arity 2)';
+}
 
 done;
