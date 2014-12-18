@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 260;
+plan 259;
 
 =begin pod
 
@@ -201,13 +201,6 @@ my @e;
     @r = (1, 4, 9)>>.sqrt;
     @e = (1, 2, 3);
     is(~@r, ~@e, "method call on integer list elements (ASCII)");
-}
-
-{
-    my (@r, @e);
-    (@r = (1, 4, 9))»++;
-    @e = (2, 5, 10);
-    is(~@r, ~@e, "operator call on integer list elements");
 }
 
 {
