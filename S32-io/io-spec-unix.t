@@ -193,6 +193,7 @@ if $*DISTRO.name ~~ any(<mswin32 os2 netware symbian dos cygwin>) {
 }
 else {
 	isa_ok $*SPEC, IO::Spec::Unix, "unix: loads correct module";
-	is $*SPEC.rel2abs( $*SPEC.curdir ), $*CWD, "rel2abs: \$*CWD test";
+    #?rakudo todo "awaiting newio merge"
+	is $*SPEC.rel2abs( $*SPEC.curdir ), $*CWD.chop, "rel2abs: \$*CWD test";
 	ok {.IO.d && .IO.w}.( $*SPEC.tmpdir ), "tmpdir: {$*SPEC.tmpdir} is a writable directory";
 }

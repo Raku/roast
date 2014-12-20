@@ -5,6 +5,7 @@ use Test;
 
 plan 3;
 
-isa_ok $*CWD, IO::Path;
+#?rakudo todo 'still in newio branch'
+isa_ok $*CWD, IO::Dir;
 lives_ok { $*CWD.perl }, '$*CWD.perl works';
 lives_ok { $*CWD.gist }, '$*CWD.gist works';

@@ -5,7 +5,7 @@ use Test;
 plan 49;
 
 my $*SPEC = IO::Spec::Win32;  # .IO needs to have IO::Spec::Win32
-my $*CWD  = 'C:\\zip\\loc'.IO;
+my $*CWD  = 'C:\\zip\\loc\\'; # for the sake of testing here, it's just a string
 
 my $relpath = IO::Path::Win32.new('foo\\bar' );
 my $abspath = IO::Path::Win32.new('\\foo\\bar');
@@ -61,7 +61,7 @@ is IO::Path::Win32.new("\\usr\\bin").relative("/usr"),    "bin",            "rel
 
 is $relpath.absolute.IO.relative,  "foo\\bar", "relative inverts absolute";
 is $relpath.absolute("/foo").IO.relative("\\foo"), "foo\\bar","absolute inverts relative";
-#?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
+#?rakudo 1 skip 'resolve NYI, needs nqp::readlink'
 is $abspath.relative.IO.absolute.IO.resolve, "\\foo\\bar",    "absolute inverts relative with resolve";
 
 is IO::Path::Win32.new("foo/bar").parent, "foo",    "parent of 'foo/bar' is 'foo'";
