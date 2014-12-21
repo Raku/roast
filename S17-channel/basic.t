@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 {
     my Channel $c .= new;
@@ -31,6 +31,13 @@ plan 14;
     dies_ok { $c.receive }, "error thrown on receive";
     throws_like { $c.send(18) }, X::Channel::SendOnClosed;
     is $c.closed.cause.message, "oh noes", "failure reason conveyed";
+}
+
+{
+    my class X::Roast::Channel is Exception { };
+    my $c = Channel.new;
+    $c.fail(X::Roast::Channel.new);
+    throws_like { $c.receive }, X::Roast::Channel;
 }
 
 {
