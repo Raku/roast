@@ -59,9 +59,10 @@ eval_dies_ok ' {my $foo; $^foo;}(1) ', 'my $foo; $^foo; is an illegal redeclarat
 throws_like 'my $a; sub weird{ $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
     :variable_name<$a>,
     :placeholder<$^a>,
+    :decl<sub>,
     ;
 
-#?rakudo todo 'RT 123470'
+# RT #123470
 throws_like 'my $a; my $block = { $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
     :variable_name<$a>,
     :placeholder<$^a>,
