@@ -32,5 +32,4 @@ plan 10;
     is $pany.status, Broken, "Other promise keeping doesn't affect status";
 }
 
-#?rakudo todo 'proper type checking of arguments'
 throws_like { Promise.anyof(42) }, X::Promise::Combinator;
