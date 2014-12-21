@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 14;
 
 {
     my Channel $c .= new;
@@ -19,7 +19,8 @@ plan 12;
     nok $c.closed, "Channel not closed before value received";
     is $c.receive, 42, "Received value";
     ok $c.closed, "Channel closed after all values received";
-    dies_ok { $c.receive }, "Receiving from closed channel throws";
+    throws_like { $c.receive }, X::Channel::ReceiveOnClosed;
+    throws_like { $c.send(18) }, X::Channel::SendOnClosed;
 }
 
 {
@@ -28,6 +29,7 @@ plan 12;
     $c.fail("oh noes");
     is $c.receive, 1, "received first value";
     dies_ok { $c.receive }, "error thrown on receive";
+    throws_like { $c.send(18) }, X::Channel::SendOnClosed;
     is $c.closed.cause.message, "oh noes", "failure reason conveyed";
 }
 
