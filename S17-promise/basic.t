@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 21;
 
 {
     my $p = Promise.new;
@@ -17,7 +17,10 @@ plan 19;
     is $p.result, "kittens", "Correct result";
     
     dies_ok { $p.cause }, "Cannot call cause on a Kept Promise";
+    throws_like { $p.cause }, X::Promise::CauseOnlyValidOnBroken,
+        status => 'Kept';
     dies_ok { $p.keep("eating") }, "Cannot re-keep a Kept Promise";
+    throws_like { $p.keep('eating') }, X::Promise::Vowed;
     dies_ok { $p.break("bad") }, "Cannot break a Kept Promise";
 }
 

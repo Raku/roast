@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 8;
+plan 10;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -39,6 +39,10 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s = Supply.for(1..10);
         my $z = Supply.zip($s);
         ok $s === $z, "zipping one supply is a noop";
-        tap_ok $z, [1..10], "noop rotor";
+        tap_ok $z, [1..10], "noop zip";
     }
+
+    throws_like( { Supply.zip(42) },
+      X::Supply::Combinator, combinator => 'zip' );
+
 }

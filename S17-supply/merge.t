@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 8;
+plan 10;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -35,6 +35,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s = Supply.for(1..10);
         my $m = Supply.merge($s);
         ok $s === $m, "merging one supply is a noop";
-        tap_ok $m, [1..10], "noop rotor";
+        tap_ok $m, [1..10], "noop merge";
     }
+
+    throws_like( { Supply.merge(42) },
+      X::Supply::Combinator, combinator => 'merge' );
 }

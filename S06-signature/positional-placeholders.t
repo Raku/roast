@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 12;
 
 #L<S06/Placeholder variables/>
 
@@ -54,5 +54,20 @@ eval_dies_ok ' {my $foo; $^foo;}(1) ', 'my $foo; $^foo; is an illegal redeclarat
     is outer('x', 'y', &inner), 'x, y',
         'can have invocable placeholder with arguments';
 }
+
+# RT #123470
+throws_like 'my $a; sub weird{ $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
+    :variable_name<$a>,
+    :placeholder<$^a>,
+    :decl<sub>,
+    ;
+
+# RT #123470
+#?rakudo.jvm    todo 'throws Adhoc'
+#?rakudo.parrot todo 'throws Adhoc'
+throws_like 'my $a; my $block = { $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
+    :variable_name<$a>,
+    :placeholder<$^a>,
+    ;
 
 # vim: syn=perl6

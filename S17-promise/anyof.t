@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 {
     my $p1 = Promise.new;
@@ -31,3 +31,5 @@ plan 9;
     $p1.keep(1);
     is $pany.status, Broken, "Other promise keeping doesn't affect status";
 }
+
+throws_like { Promise.anyof(42) }, X::Promise::Combinator;
