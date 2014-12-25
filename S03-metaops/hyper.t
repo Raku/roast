@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 259;
+plan 260;
 
 =begin pod
 
@@ -755,6 +755,12 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 
     is 5+-*/2, (7, 3, 10, 2.5),
         'can call Callable objects in a list in parallel using >>.()';
+}
+
+# RT #77114
+{
+    #?rakudo todo "can_meta check for meta operators NYI"
+    eval_dies_ok 'my @a >>[=]>> (1,2,3)', "hypering assignment dies correctly";
 }
 
 done;

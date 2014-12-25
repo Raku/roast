@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 30;
+plan 31;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -120,6 +120,12 @@ is (1,2 X ( <a b> X "x")).join, '1a1x1b1x2a2x2b2x',
 # RT #112602
 {
     is (1..* X* 1..*)[^3], (1, 2, 3), 'cross handles lazy lists';
+}
+
+# RT #77114
+{
+    #?rakudo todo 'can_meta not yet checked for all metaops'
+    eval_dies_ok 'my %foo XX= 1', "cross doesn't handle assignment";
 }
 
 # vim: ft=perl6
