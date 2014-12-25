@@ -20,6 +20,7 @@ sub tester(:$a, :$b, :$c) {
     is $w(a => 'x', c => 'd'), 'ax bb cd', '... and the old one still works';
 }
 
+#?rakudo.moar todo 'RT 123498'
 dies_ok { sub {}.assuming(named => True)() },
     'cannot assume unknown named params';
 
