@@ -30,7 +30,7 @@ sub say(*@a) { $said = @a>>.gist.join }   # don't care about the new line
 {
     my %h = a => 42, b => 666;
     say "value = %h{}";
-    ok $said eq q/value = a	42 b	666/|q/value = b	666 a42/;
+    ok $said eq q/value = a	42 b	666/|q/value = b	666 a	42/;
 }
 
 {
