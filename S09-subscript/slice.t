@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 26;
+plan 30;
 
 {   my @array = (3,7,9,11);
 
@@ -28,6 +28,10 @@ plan 26;
     is(@array[0..1], (3,7),	   "range from array");
     is(@array[0,1..2], (3,7,9),	   "slice plus range from array");
     is(@array[0..1,2,3], (3,7,9,11), "range plus slice from array");    
+    is(@array[0...3], (3,7,9,11),  "finite sequence slice");    
+    is(@array[0...*], (3,7,9,11),  "infinite sequence slice");    
+    is(@array[0,2...*], (3,9),     "infinite even sequence slice");    
+    is(@array[1,3...*], (7,11),    "infinite even sequence slice");    
 }
 
 # Behaviour assumed to be the same as Perl 5
