@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 260;
+plan 279;
 
 =begin pod
 
@@ -213,42 +213,95 @@ my @e;
     is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 }
 
-#?rakudo skip '.++ does not work: RT #122342'
+# RT #122342
 {
     my (@r, @e);
-    (@r = (1, 4, 9))».++;
     @e = (2, 5, 10);
-    is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 
     (@r = (1, 4, 9)).».++;
-    is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
+    is(~@r, ~@e, "postfix operator (dotted form) on integer list elements after unary postfix hyper operator");
+
+    (@r = (1, 4, 9)).>>.++;
+    is(~@r, ~@e, "postfix operator (dotted form) on integer list elements after unary postfix hyper operator (ASCII)");
 
     (@r = (1, 4, 9))\  .»\  .++;
     @e = (2, 5, 10);
-    is(~@r, ~@e, "operator call on integer list elements (Same thing, upspace form)");
+    is(~@r, ~@e, "postfix operator (dotted form) on integer list elements after unary postfix hyper operator (unspace form)");
+
+    { # non-wordy postfix operator
+        sub postfix:<???>($) {
+            return 42;
+        }
+        my @a = 1 .. 3;
+        is @a»???, (42, 42, 42), 'non-wordy postfix operator';
+        is @a>>???, (42, 42, 42), 'non-wordy postfix operator, ASCII';
+        is @a».???, (42, 42, 42), 'non-wordy postfix operator, dotted form';
+        is @a>>.???, (42, 42, 42), 'non-wordy postfix operator, ASCII, dotted form';
+    }
+
+    { # wordy postfix operator
+         sub postfix:<foo>($) {
+             return 42;
+         }
+         my @a = 1 .. 3;
+         is @a»foo, (42, 42, 42), 'wordy postfix operator';
+         is @a>>foo, (42, 42, 42), 'wordy postfix operator, ASCII';
+         throws_like { @a».foo }, X::Method::NotFound,
+             message => "No such method 'foo' for invocant of type 'Int'",
+             'wordy postfix operator: dotted form not allowed';
+         throws_like { @a>>.foo }, X::Method::NotFound,
+             message => "No such method 'foo' for invocant of type 'Int'",
+             'wordy postfix operator, ASCII: dotted form not allowed';
+    }
+
+    { # no confusion with postfix:<i> (see S32-Numeric)
+        my class D { method i { 42 } };
+        is D.i, 42, 'manually defined method i is not confused with postfix:<i>';
+        is D.i(), 42, 'manually defined method i is not confused with postfix:<i>';
+
+        is 4i, Complex.new(0, 4), 'postfix:<i> still works';
+        is 4\i, Complex.new(0, 4), 'postfix:<i> still works (2)';
+        throws_like { 4.i }, X::Method::NotFound,
+            message => "No such method 'i' for invocant of type 'Int'",
+            'dotted form of postfix:<i> fails';
+        is (2,3)»i, (Complex.new(0, 2), Complex.new(0, 3)),
+            'postfix:<i> works on list elements';
+        is (2,3)>>i, (Complex.new(0, 2), Complex.new(0, 3)),
+            'postfix:<i> works on list elements (ASCII form)';
+    }
+
+    {
+        my @a = ( { 42 }, { 43 } );
+        is @a».(), (42, 43), 'calling .() on list elements works';
+        is @a>>.(), (42, 43), 'calling .() on list elements works, ASCII';
+    }
 };
 
 # postfix forms
 { # unary postfix again, but with a twist
     my @r;
-    @r = ("f", "oo", "bar")».chars;
     my @e = (1, 2, 3);
+
+    @r = ("f", "oo", "bar")».chars;
     is(~@r, ~@e, "method call on list elements");
 
     @r = ("f", "oo", "bar").».chars;
-    @e = (1, 2, 3);
     is(~@r, ~@e, "method call on list elements (Same thing, dot form)");
 
 
     @r = ("f", "oo", "bar")>>.chars;
-    @e = (1, 2, 3);
     is(~@r, ~@e, "method call on list elements (ASCII)");
 
     # RT #74890 analogue
     @r = ("f", "oo", "bar").>>.chars;
-    @e = (1, 2, 3);
     is(~@r, ~@e, "method call on list elements (ASCII, Same thing, dot form)");
 
+    # RT 122342
+    @r = ("f", "oo", "bar")»."chars"();
+    is(~@r, ~@e, "method call on list elements (quoted method name)");
+
+    @r = ("f", "oo", "bar")>>."chars"();
+    is(~@r, ~@e, "method call on list elements (ASCII, quoted method name)");
 };
 
 { # unary postfix on a user-defined object
