@@ -75,7 +75,7 @@ is_deeply %h<a b c>:delete:k, ('a', 'b'), ':delete:k adverbs';
 # Arrays are not Hashes
 # ---------------------
 
-#?rakudo.jvm skip 'RT #121622 aborting on jvm'
+#RT #121622
 {
     my @a;
     @a[3] = 1;
