@@ -79,7 +79,6 @@ my @normal = <
   Obsolete
   Pair
   Parameter
-  Parcel
   Perl
   Pod::Block
   Pod::Block::Code

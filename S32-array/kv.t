@@ -62,7 +62,7 @@ is( 42.kv, [0, 42], "(42).kv works");
 # RT #71086
 {
     use MONKEY_TYPING;
-    augment class Parcel {
+    augment class List {
         method test_kv() {
             my @a;
             for <a b c>.kv -> $x {
