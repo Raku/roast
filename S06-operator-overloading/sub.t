@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 73;
+plan 74;
 
 =begin pod
 
@@ -293,6 +293,14 @@ Testing operator overloading subroutines
     sub circumfix:<⌊ ⌋>($e) { $e.floor }
     is ⌊pi⌋, 3, 'circumfix with non-Latin1 bracketing characters';
     is ⌊ pi ⌋, 3, 'circumfix with non-Latin1 bracketing characters, allows spaces';
+}
+
+# RT #86906
+{
+    throws_like { EVAL q[ multi sub circumfix:<⌊⌋>($a) { return $a.floor; } ] },
+        X::Syntax::AddCategorial::MissingSeparator,
+        message => "Unable to identify both starter and stopper from ⌊⌋\nPerhaps you forgot to separate them with whitespace?",
+        'circumfix definition without whitespace between starter and stopper fails with X::Syntax::AddCategorial::MissingSeparator';
 }
 
 {
