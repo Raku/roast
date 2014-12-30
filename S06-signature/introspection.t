@@ -103,7 +103,7 @@ sub j(*@i) {
 }
 
 {
-    sub i(%h($a, $b)) { };   #OK not used
+    sub i(%h ($a, $b)) { };   #OK not used
     my $s = &i.signature.perl;
     #?niecza 2 todo
     ok $s ~~ /'$a' >> /, '.perl on a nested signature contains variables of the subsignature (1)';
