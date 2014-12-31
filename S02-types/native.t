@@ -20,7 +20,7 @@ plan 29;
     my str $str;
     is $str, '', 'str default value';
     my str $s2 = 'foo';
-    is $s2 ~ $s2, 'foofoo', 'string concatentation with native strings';
+    is $s2 ~ $s2, 'foofoo', 'string concatenation with native strings';
 }
 
 {

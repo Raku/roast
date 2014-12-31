@@ -204,7 +204,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 }
 
 # L<S03/Nonchaining binary precedence/it is illegal to use a Range as
-# implicity numeric>
+# implicitly numeric>
 
 #?niecza todo 'forbid Ranges as Range endpoints'
 {

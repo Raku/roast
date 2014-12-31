@@ -22,5 +22,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       "ascending alpha works";
     tap_ok Supply.for("E"..."A","e".."a").minmax(*.lc),
       [("E".."E"),("D".."E"),("C".."E"),("B".."E"),("A".."E")],
-      "decending alpha works";
+      "descending alpha works";
 }

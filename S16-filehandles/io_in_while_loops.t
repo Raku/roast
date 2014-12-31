@@ -27,7 +27,7 @@ my $filename = 'tempfile_io_in_while_loop';
     $fh.close();
 }
 
-{ # now read it in with the $fh controling the loop
+{ # now read it in with the $fh controlling the loop
     my $fh = open($filename);
     my $num = 1;
     my $line;

@@ -112,7 +112,7 @@ is +(2..100 X=> 2..100).classify({ .key ** .value }), 9183, 'distinct term count
 
     my (%powers, %count);
 
-    # find bases which are powers of a preceeding root base
+    # find bases which are powers of a preceding root base
     # store decomposition into base and exponent relative to root
     for 2..Int(sqrt A) -> \a {
         next if a ~~ %powers;
