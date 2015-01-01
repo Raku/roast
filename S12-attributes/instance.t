@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 140;
+plan 141;
 
 =begin pod
 
@@ -654,6 +654,16 @@ eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
     }
     is Shadowing.new.ignores_attr(), 42, 'can shadow an attribute with a lexical';
 
+}
+
+# RT #122543
+#?rakudo skip 'RT #122542'
+{
+    my class RT122543 {
+        has ($.x, $.y) is rw;
+    }
+    is RT122543.new( y => 42 ).y, 42,
+        "can 'is rw' multiple declared has attributes";
 }
 
 done();
