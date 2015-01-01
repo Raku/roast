@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 273;
+plan 274;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -571,6 +571,13 @@ throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
     throws_like 'my Int a;', X::Syntax::Malformed,
         'adequate error message when declaring "my Int a"',
         message => { m/"Malformed my (did you mean to declare a sigilless"/ };
+}
+
+# RT #114014
+{
+    throws_like { EVAL q[ ord.Cool ] }, X::Obsolete,
+        message => q[Unsupported use of bare 'ord'; in Perl 6 please use .ord if you meant $_, or use an explicit invocant or argument],
+        'adequate error message when calling bare "ord"';
 }
 
 # vim: ft=perl6
