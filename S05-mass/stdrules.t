@@ -14,7 +14,7 @@ be valid perl6.
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include">
 
-plan 186;
+plan 188;
 
 
 ok("abc1_2" ~~ m/^ <ident> $/, '<ident>');
@@ -311,6 +311,12 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 ok 'abc' !~~ /a <!>/, '<!> fails';
 ok '' !~~ /<!>/, '<!> fails (empty string)';
+
+#RT #109674
+{
+    ok 'abc' !~~ /a <[]>/, '<[]> fails like <!>';
+    ok '' !~~ /<[]>/, '<[]> fails like <!> (empty string)';
+}
 
 #?niecza 3 skip '<at>'
  ok 'abc' ~~ /^<at(0)>/, 'basic <at>';
