@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 90;
+plan 93;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -320,6 +320,21 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 {
     my %hash = a => 1;
     is item(%hash).perl, ({ a => 1 }).perl, 'item(%hash) is equivalent to {%hash}';
+}
+
+# RT #77504
+{
+    throws_like { ~[]<c> }, Exception,
+        message => 'postcircumfix:<{ }> not defined for type Array',
+        'adequate Failure error message when hash-indexing a non-hash using .<> (1)';
+
+    throws_like { ~5<c> }, Exception,
+        message => 'postcircumfix:<{ }> not defined for type Int',
+        'adequate Failure error message when hash-indexing a non-hash using .<> (2)';
+
+    throws_like { ~5{'c'} }, Exception,
+        message => 'postcircumfix:<{ }> not defined for type Int',
+        'adequate Failure error message when hash-indexing a non-hash using .{}';
 }
 
 done;
