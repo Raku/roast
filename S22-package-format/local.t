@@ -34,8 +34,8 @@ ok signal(SIGINT).tap( {die} ), 'install Ctrl-C handler for cleanup in END';
 # basic CURLF sanity
 my $curlf1 = CompUnitRepo::Local::File.new($cwd);
 isa_ok $curlf1, CompUnitRepo::Local::File;
-isa_ok $curlf1.path, IO::Path;
-is $curlf1.path, $cwd, 'is . looking at the right directory';
+isa_ok $curlf1.IO, IO::Path;
+is $curlf1.IO, $cwd, 'is . looking at the right directory';
 is $curlf1.short-id, 'file', 'is the short-id right';
 dies_ok { $curlf1.install( "foo" ) }, 'Cannot install on CUR::File';
 
@@ -46,8 +46,8 @@ ok $curlf1 === $curlf2, 'are they the same';
 my $curlf = CompUnitRepo::Local::File.new($srcdir);
 isa_ok $curlf, CompUnitRepo::Local::File;
 ok $curlf2 !=== $curlf, 'are they different';
-isa_ok $curlf.path, IO::Path;
-is $curlf.path, IO::Path.new($srcdir), "is '$srcdir' looking at the right dir";
+isa_ok $curlf.IO, IO::Path;
+is $curlf.IO, IO::Path.new($srcdir), "is '$srcdir' looking at the right dir";
 
 # all candidates
 my $candidates = $curlf.candidates('NanooNanoo');
