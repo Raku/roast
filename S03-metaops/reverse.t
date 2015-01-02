@@ -61,7 +61,6 @@ is (9 R... 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
 eval_dies_ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
 
 # RT #77114
-#?rakudo todo "related to RT #77114"
 {
     eval_dies_ok '1 R= my $x', "R doesn't handle assignment";
 }

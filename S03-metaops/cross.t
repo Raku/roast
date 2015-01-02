@@ -124,7 +124,6 @@ is (1,2 X ( <a b> X "x")).join, '1a1x1b1x2a2x2b2x',
 
 # RT #77114
 {
-    #?rakudo todo 'can_meta not yet checked for all metaops'
     eval_dies_ok 'my %foo XX= 1', "cross doesn't handle assignment";
 }
 
