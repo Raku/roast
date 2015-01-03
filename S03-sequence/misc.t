@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 27;
+plan 29;
 
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
@@ -120,6 +120,14 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 # RT #1233303
 {
     throws_like { 1, 2, 5 ... 10 }, X::Sequence::Deduction, from => '1,2,5'
+}
+
+# RT #112288
+{
+    throws_like { (1, 2, 6 ... *)[5] }, X::Sequence::Deduction, from => '1,2,6',
+        'non-deducible sequence ending in * throws X::Sequence::Deduction (1)';
+    throws_like { ~(1, 2, 6 ... *)[5] }, X::Sequence::Deduction, from => '1,2,6',
+        'non-deducible sequence ending in * throws X::Sequence::Deduction (2)';
 }
 
 # vim: ft=perl6

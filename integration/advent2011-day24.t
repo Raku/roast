@@ -18,24 +18,24 @@ is steve(35), "You are person number 35 to use this sub!", 'multi';
 # This just tests two user defined subs that have been declared
 # at the same level.
 
-my $unambigous = q:to'--END--';
+my $unambiguous = q:to'--END--';
 proto sub Slurp(|) { * }
 multi sub Slurp($filename) {
     pass "Yum! $filename was tasty. Got another one?";
 }
 --END--
 
-my $ambigous = $unambigous ~ q:to'--END--';
+my $ambiguous = $unambiguous ~ q:to'--END--';
 multi sub Slurp($filename) {
     fail "Yuck! $filename is no good!";
 }
 --END--
 
-lives_ok { EVAL $unambigous ~ 'Slurp("README.md")' },
-  'unambigous multi - lives';
-throws_like { EVAL $ambigous   ~ 'Slurp("README.md")' },
+lives_ok { EVAL $unambiguous ~ 'Slurp("README.md")' },
+  'unambiguous multi - lives';
+throws_like { EVAL $ambiguous   ~ 'Slurp("README.md")' },
   X::Multi::Ambiguous,
-  'ambigous multi - dies';
+  'ambiguous multi - dies';
 
 class Present {
     has $.item;

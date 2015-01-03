@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 124;
+plan 125;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
 
@@ -204,7 +204,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 }
 
 # L<S03/Nonchaining binary precedence/it is illegal to use a Range as
-# implicity numeric>
+# implicitly numeric>
 
 #?niecza todo 'forbid Ranges as Range endpoints'
 {
@@ -256,5 +256,13 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 
 # RT #77572
 eval_dies_ok '1..2..3', '.. is not associative';
+
+{
+    ## once this block died at compile time
+    ## with q[P6opaque: no such attribute '$!phasers']
+    ## cmp. https://github.com/rakudo/rakudo/commit/c5e7a7783d
+    isa_ok { *.perl for ^2 }, Block,
+        'range optimizer is protected from cases with no block';
+}
 
 # vim: ft=perl6

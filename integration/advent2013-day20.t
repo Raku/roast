@@ -4,7 +4,7 @@ plan 22;
 
 {
     my $a = 42;
-    is_deeply $a, 42, 'scalar assigment sanity';
+    is_deeply $a, 42, 'scalar assignment sanity';
     $a = Nil;
     is_deeply $a, Any, 'scalar reset sanity';
 }

@@ -24,10 +24,10 @@ my @a = (2, 4, 6);
 my @b = (5, 10, 15);
 my @c = (3, 5, 7);
 
-my @Z-ab = gather for @a Z @b -> $a, $b { take [$a, $b] };
+my @Z-ab = gather for @a Z @b -> $a, $b { take [$a, $b] }
 is_deeply @Z-ab, [[2, 5], [4, 10], [6, 15]], '@a Z @b';
 
-my @Z-abc = gather for @a Z @b Z @c -> $a, $b, $c{ take [$a, $b, $c] };
+my @Z-abc = gather for @a Z @b Z @c -> $a, $b, $c { take [$a, $b, $c] }
 is_deeply @Z-abc, [[2, 5, 3], [4, 10, 5], [6, 15, 7]], '@a Z @b Z @c';
 
 # just do a three sided dice

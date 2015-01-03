@@ -27,7 +27,7 @@ my $filename = 'tempfile_io_in_for_loop';
 }
 
 #?DOES 6
-{ # now read it in with the $fh controling the loop
+{ # now read it in with the $fh controlling the loop
     my $fh = open($filename);
     my $num = 1;
     for ($fh.lines) -> $line {
@@ -38,7 +38,7 @@ my $filename = 'tempfile_io_in_for_loop';
 }
 
 #?DOES 6
-{ # now read it in with the $fh controling the loop w/out parens
+{ # now read it in with the $fh controlling the loop w/out parens
     my $fh = open($filename);
     my $num = 1;
     for $fh.lines -> $line {
@@ -65,7 +65,7 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-{ # now read it in with the $fh controling the loop but call 
+{ # now read it in with the $fh controlling the loop but call 
   # the $fh.get inside the loop inside parens (is this list context??)
     my $fh = open($filename);
     my $num = 1;
@@ -79,7 +79,7 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-{ # now read it in with the $fh controling the loop but call 
+{ # now read it in with the $fh controlling the loop but call 
   # the get $fh inside the loop w/out parens (is this scalar context??)
     my $fh = open($filename);
     my $num = 1;

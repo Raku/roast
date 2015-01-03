@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 34;
+plan 35;
 
 =begin pod
 
@@ -59,5 +59,10 @@ is (9 R... 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
 
 # RT #93350
 eval_dies_ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
+
+# RT #77114
+{
+    eval_dies_ok '1 R= my $x', "R doesn't handle assignment";
+}
 
 # vim: ft=perl6

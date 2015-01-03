@@ -6,8 +6,6 @@ plan 17;
 
 my @precomp-paths;
 
-%*ENV<PERL6LIB> = 't/spec/packages';
-
 for <C A B> {
     my $path = "t/spec/packages/Example/{$_}.pm";
     my $precomp-path = $path ~ '.' ~ $*VM.precomp-ext;

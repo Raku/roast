@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 31;
 
 # cmp on scalar values
 {
@@ -50,6 +50,19 @@ plan 22;
     is (:a<5> cmp -Inf), Order::More, "cmp on Pair/-Inf";
     is ( Inf cmp :a<5>), Order::More, "cmp on Inf/Pair";
     is (-Inf cmp :a<5>), Order::Less, "cmp on -Inf/Pair";
+}
+
+# cmp on numeric lists
+{
+    is [1,10] cmp [1,10], Same, "cmp Same on identical lists";
+    is [1,10] cmp [1,10,0], Less, "cmp Less on shorter list";
+    is [1,10,0] cmp [1,10], More, "cmp More on longer list";
+    is [-1,10] cmp [1,10], Less, "cmp Less on lists differing at pos 0";
+    is [102,10] cmp [21,10], More, "cmp More on lists differing at pos 0";
+    is [1,9] cmp [1,10], Less, "cmp Less on lists differing at pos 1";
+    is [1,10] cmp [1,9], More, "cmp More on lists differing at pos 1";
+    is [1,9] cmp [1,10,19], Less, "cmp Less on lists differing at pos 1 ignoring lengths";
+    is [1,10] cmp [1,9,19], More, "cmp More on lists differing at pos 1 ignoring lengths";
 }
 
 # vim: ft=perl6

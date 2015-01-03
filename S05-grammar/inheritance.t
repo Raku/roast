@@ -33,7 +33,7 @@ is(~('foo' ~~ /^<Grammar::Bar::foo>$/), 'foo', 'got right match (foo)');
 is(~('foo' ~~ /^<Grammar::Bar::any>$/), 'foo', 'got right match (any)');
 is(~('bar' ~~ /^<Grammar::Bar::any>$/), 'bar', 'got right match (any)');
 
-ok Grammar::Bar.parse('foo'), 'can parse foo through .parsed and inhertied subrule';
+ok Grammar::Bar.parse('foo'), 'can parse foo through .parsed and inherited subrule';
 ok Grammar::Bar.parse('bar', :rule<bar>), 'got right match (bar)';
 ok Grammar::Bar.parse('foo', :rule<foo>), 'got right match (foo)';
 ok Grammar::Bar.parse('bar', :rule<any>), 'got right match (any)';

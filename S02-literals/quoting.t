@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 160;
+plan 162;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -557,12 +557,10 @@ is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
     is "$x >> ", "42 >> ", '>> in interpolation is not shift operator';
 }
 
-# RT #83952
-{
-    try { EVAL 'my $ya="\cIa"' };
-    my $error = ~$!;
-    ok $error ~~ / '\'I\' is not a valid number' /, "\\c followed by non-number";
-}
+# (RT #83952 is wrong about \cI being an error)
+is "\cIa", "\ta", '\cI is a TAB';
+is "\c?a", "\x[7f]a", '\c? is a DEL';
+is "\c@a", "\0a", '\c@ is a NUL';
 
 {
     throws_like { EVAL 'q< < >' },
