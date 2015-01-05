@@ -84,7 +84,6 @@ is $compunit-src.has-precomp, False, "is the module pre-compiled";
 
 # does it find the precomped version (without a source being present)
 $candidates = $curlf.candidates('NanooNanoo');
-#?rakudo todo 'we have some kind of precomp issue'
 subtest {
     is $candidates.elems, 1, "did we get 1 candidate";
     my $compunit-cmp = $candidates[0];
