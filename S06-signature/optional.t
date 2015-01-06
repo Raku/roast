@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 26;
+plan 28;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -111,6 +111,18 @@ eval_dies_ok 'sub opt($a = 1, $b) { }',
 {
     lives_ok { sub foo(::T $?) {} },
         'question mark for optional parameter is parsed correctly';
+}
+
+# RT #79288
+## TODO: implement typed exception and check for that one instead of Exception
+{
+    throws_like { EVAL q[ sub foo($x? is rw) {} ] }, Exception,
+        message => "Cannot use 'is rw' on an optional parameter",
+        'making an "is rw" parameter optional dies with adequate error message';
+
+    throws_like { EVAL q[ sub foo($x is rw = 42) {} ] }, Exception,
+        message => "Cannot use 'is rw' on an optional parameter",
+        'making an "is rw" parameter optional dies with adequate error message';
 }
 
 # vim: ft=perl6

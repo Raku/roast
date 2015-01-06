@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 35;
+plan 36;
 
 =begin pod
 
@@ -63,6 +63,13 @@ eval_dies_ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
 # RT #77114
 {
     eval_dies_ok '1 R= my $x', "R doesn't handle assignment";
+}
+
+# RT #118793
+{
+    throws_like { EVAL q[my $x; 5 R:= $x] }, Exception,
+        message => 'Cannot reverse the args of := because list assignment operators are too fiddly',
+        'adequate error message on trying to metaop-reverse binding (:=)';
 }
 
 # vim: ft=perl6

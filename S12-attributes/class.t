@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Class attributes/"Class attributes are declared">
 #L<S12/Class methods/Such a metaclass method is always delegated>
 
-plan 29;
+plan 21;
 
 class Foo {
     our $.bar = 23;
@@ -40,33 +40,6 @@ lives_ok { $test4 = Quux.new() },
 is $test4.bar, 17, 'Instance call gets instance attribute, not class attribute';
 my $test5 = 0;
 dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in subclass; we do not magically ignore it';
-
-# L<S12/Class methods/"you can associate a method with the current
-# metaclass instance">
-
-#?niecza skip 'method ^foo'
-{
-    class T1 {
-        our $c = 0;
-        method ^count($obj) {   #OK not used
-            return $c;
-        }
-        method mi { ++$c };
-        method md { --$c };
-    }
-
-    my ($a, $b, $c) = map { T1.new() }, 1..3;
-    is $c.mi,       1, 'can increment class variable in instance method';
-    is $b.mi,       2, '.. and the class variable is really shared';
-    #?rakudo 6 skip 'nom regression - method ^foo'
-    is $a.count,    2, 'can call the class method on an object';
-    is T1.count,    2, '... and on the proto object';
-    is T1.^count,   2, '... and on the proto object with Class.^method';
-    is $a.^count,   2, '... and $obj.^method';
-    is T1.HOW.count(T1), 2, '... and by explicitly using .HOW with proto object';
-    is $a.HOW.count($a), 2, '... and by explicitly using .HOW with instance';
-
-}
 
 {
     class Oof {

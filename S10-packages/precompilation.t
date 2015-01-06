@@ -16,6 +16,7 @@ for <C A B> {
 }
 
 my @keys = Test::Util::run( q:to"--END--").lines;
+    use lib 't/spec/packages';
     use Example::A;
     use Example::B;
 

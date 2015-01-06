@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 25;
 
 =begin description
 
@@ -78,6 +78,16 @@ Basic C<pairs> tests, see S32::Containers.
     } }, 'aliases returned by $pair.value should be rw (1)';
 
     is $pair.value, 142, 'aliases returned by $pair.kv should be rw (2)';
+}
+
+# RT #117935
+{
+    my %rt117935;
+    %rt117935<a> = 1;
+    is %rt117935<a>:p, (a => 1), ':p with existing key returns pair';
+    is %rt117935<a>:p(0), (a => 1), ':p(0) with existing key returns pair';
+    is %rt117935<b>:p, (), ':p with non-existing key returns empty list';
+    is %rt117935<b>:p(0), (b => Any), ':p(0) with non-existing key returns pair';
 }
 
 # vim: ft=perl6
