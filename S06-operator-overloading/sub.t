@@ -285,7 +285,6 @@ Testing operator overloading subroutines
     ok !(A.new(v => 2) == A.new(v => 3)), 'infix:<==> on A objects works (-)';
 }
 
-#?rakudo skip "buggy parser expects <<` `>> not to return a list of 2 strings"
 {
     sub circumfix:<<` `>>(*@args) { @args.join('-') }
     is `3, 4, "f"`, '3-4-f', 'slurpy circumfix:<<...>> works';
