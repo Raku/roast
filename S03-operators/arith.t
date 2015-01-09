@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 154;
+plan 156;
 
 my $five = abs(-5);
 
@@ -372,8 +372,10 @@ All uses of a zero modulus or divisor should 'die', and the
 
 # RT #122053
 isa_ok 4.8 / 1, Rat, 'infix:</> returns Rat when it can';
-#?rakudo todo 'RT #122053'
+#?rakudo 3 todo 'RT #122053'
 isa_ok 4.8 % 1, Rat, 'infix:<%> returns Rat when it can';
+isa_ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
+isa_ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 
 done;
 
