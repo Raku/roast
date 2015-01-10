@@ -193,23 +193,23 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     
     is showkv([⊎] @d), showkv(∅), "Mix sum reduce works on nothing";
     is showkv([⊎] $b), showkv($b.Mix), "Mix sum reduce works on one set";
-    is showkv([⊎] $b, $m), showkv({ blood => 3, rhetoric => 1, love => 3 }), "Mix sum reduce works on two sets";
-    is showkv([⊎] $b, $m, $mh), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Mix sum reduce works on three sets";
+    is showkv([⊎] $b, $m), showkv({ blood => 2.1, love => 2.2, rhetoric => 1 }), "Mix sum reduce works on two sets";
+    is showkv([⊎] $b, $m, $mh), showkv({ blood => 3.2, love => 3.5, rhetoric => 1 }), "Mix sum reduce works on three sets";
 
-    is showkv([(+)] @d), showkv(∅), "Mix sum reduce works on nothing";
-    is showkv([(+)] $m), showkv($m), "Mix sum reduce works on one set";
-    is showkv([(+)] $b, $m), showkv({ blood => 2.1, love => 2.2, rhetoric => 1 }), "Mix sum reduce works on two sets";
-    is showkv([(+)] $b, $m, $mh), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Mix sum reduce works on three sets";
+    is showkv([(+)] @d), showkv(∅), "Mix sum reduce works on nothing (Texas)";
+    is showkv([(+)] $m), showkv($m), "Mix sum reduce works on one set (Texas)";
+    is showkv([(+)] $b, $m), showkv({ blood => 2.1, love => 2.2, rhetoric => 1 }), "Mix sum reduce works on two sets (Texas)";
+    is showkv([(+)] $b, $m, $mh), showkv({ blood => 3.2, love => 3.5, rhetoric => 1 }), "Mix sum reduce works on three sets (Texas)";
 
     is showkv([⊍] @d), showkv(∅), "Mix multiply reduce works on nothing";
     is showkv([⊍] $b), showkv($b.Mix), "Mix multiply reduce works on one set";
-    is showkv([⊍] $b, $m), showkv({ blood => 2, love => 2 }), "Mix multiply reduce works on two sets";
-    is showkv([⊍] $b, $m, $mh), showkv({ blood => 2, love => 4 }), "Mix multiply reduce works on three sets";
+    is showkv([⊍] $b, $m), showkv({ blood => 1.1, love => 1.2 }), "Mix multiply reduce works on two sets";
+    is showkv([⊍] $b, $m, $mh), showkv({ blood => 1.21, love => 1.56 }), "Mix multiply reduce works on three sets";
 
-    is showkv([(.)] @d), showkv(∅), "Mix multiply reduce works on nothing";
-    is showkv([(.)] $b), showkv($b.Mix), "Mix multiply reduce works on one set";
-    is showkv([(.)] $b, $m), showkv({ blood => 2, love => 2 }), "Mix multiply reduce works on two sets";
-    is showkv([(.)] $b, $m, $mh), showkv({ blood => 2, love => 4 }), "Mix multiply reduce works on three sets";
+    is showkv([(.)] @d), showkv(∅), "Mix multiply reduce works on nothing (Texas)";
+    is showkv([(.)] $b), showkv($b.Mix), "Mix multiply reduce works on one set (Texas)";
+    is showkv([(.)] $b, $m), showkv({ blood => 1.1, love => 1.2 }), "Mix multiply reduce works on two sets (Texas)";
+    is showkv([(.)] $b, $m, $mh), showkv({ blood => 1.21, love => 1.56 }), "Mix multiply reduce works on three sets (Texas)";
 
     #?rakudo 5 skip "Crashing"
     is showkv([(^)] @d), showset(∅), "Mix symmetric difference reduce works on nothing";
@@ -217,7 +217,7 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     isa_ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one set, yields set";
     is showkv([(^)] $m), showkv($m), "Mix symmetric difference reduce works on one mix";
     isa_ok showkv([(^)] $m), Mix, "Mix symmetric difference reduce works on one mix, yields mix";
-    #?rakudo 4 todo "Wrong answer at the moment"
+    #?rakudo 4 skip "Wrong answer at the moment"
     is showkv([(^)] $b, $m), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on a mix and a set";
     isa_ok showkv([(^)] $b, $m), Mix, "... and produces a Mix";
     is showkv([(^)] $m, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
