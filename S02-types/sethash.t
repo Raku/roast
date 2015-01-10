@@ -152,8 +152,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa_ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
     is +$b, 3, '... with three elements';
     #?niecza todo "Non-string keys NYI"
-    #?rakudo todo "Not up to current spec"
-    is +$b.grep(Pair), 3, '... which are all Pairs';
+    is +$b.keys.grep(Pair), 3, '... which are all Pairs';
 }
 
 {
