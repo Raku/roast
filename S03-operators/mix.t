@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 140;
+plan 136;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 
@@ -27,14 +27,14 @@ isa_ok ($m ∪ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ∪ $mh), showkv($mh), "MixHash union with itself yields (as Mix)";
 isa_ok ($mh ∪ $mh), Mix, "... and it's actually a Mix";
 
-is showkv($b ∪ $m), "blood:2 love:2 rhetoric:1", "Bag union with Mix works";
+is showkv($b ∪ $m), "blood:1.1 love:1.2 rhetoric:1", "Bag union with Mix works";
 isa_ok ($b ∪ $m), Mix, "... and it's actually a Mix";
-is showkv($b ∪ $mh), "blood:1 love:2", "Bag union with MixHash works";
+is showkv($b ∪ $mh), "blood:1.1 love:1.3", "Bag union with MixHash works";
 isa_ok ($b ∪ $mh), Mix, "... and it's actually a Mix";
 
-is showkv($b (|) $m), "blood:2 love:2 rhetoric:1", "Bag union with Mix works (texas)";
+is showkv($b (|) $m), "blood:1.1 love:1.2 rhetoric:1", "Bag union with Mix works (texas)";
 isa_ok ($b (|) $m), Mix, "... and it's actually a Mix";
-is showkv($b (|) $mh), "blood:1 love:2", "Bag union with MixHash works (texas)";
+is showkv($b (|) $mh), "blood:1.1 love:1.3", "Bag union with MixHash works (texas)";
 isa_ok ($b (|) $mh), Mix, "... and it's actually a Mix";
 
 # Mix Intersection
@@ -82,8 +82,8 @@ isa_ok ($mh (^) $b), Mix, "... and it's actually a Mix";
 
 # Mix multiplication
 
-is showkv($b ⊍ $b), "blood:1 love:1", "Mix multiplication with itself yields self squared";
-isa_ok ($b ⊍ $b), Mix, "... and it's actually a Mix";
+is showkv($m ⊍ $m), "blood:1 love:1", "Mix multiplication with itself yields self squared";
+isa_ok ($m ⊍ $m), Mix, "... and it's actually a Mix";
 is showkv($bh ⊍ $bh), "blood:1 rhetoric:1", "Mix multiplication with itself yields self squared";
 isa_ok ($bh ⊍ $bh), Mix, "... and it's actually a Mix";
 is showkv($m ⊍ $m), "blood:4 love:4 rhetoric:1", "Mix multiplication with itself yields self squared";
@@ -91,8 +91,6 @@ isa_ok ($m ⊍ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ⊍ $mh), "blood:1 love:4", "Mix multiplication with itself yields self squared";
 isa_ok ($mh ⊍ $mh), Mix, "... and it's actually a Mix";
 
-is showkv($b ⊍ $bh), "blood:1", "Mix multiplication (Bag / BagHash) works";
-isa_ok ($b ⊍ $bh), Mix, "... and it's actually a Mix";
 is showkv($b ⊍ $m), "blood:2 love:2", "Mix multiplication (Bag / Mix) works";
 isa_ok ($b ⊍ $m), Mix, "... and it's actually a Mix";
 is showkv($bh ⊍ $m), "blood:2 rhetoric:1", "Mix multiplication (BagHash / Mix) works";
@@ -100,8 +98,6 @@ isa_ok ($bh ⊍ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ⊍ $m), "blood:2 love:4", "Mix multiplication (MixHash / Mix) works";
 isa_ok ($mh ⊍ $m), Mix, "... and it's actually a Mix";
 
-is showkv($b (.) $bh), "blood:1", "Mix multiplication (Bag / BagHash) works (texas)";
-isa_ok ($b (.) $bh), Mix, "... and it's actually a Mix (texas)";
 is showkv($b (.) $m), "blood:2 love:2", "Mix multiplication (Bag / Mix) works (texas)";
 isa_ok ($b (.) $m), Mix, "... and it's actually a Mix (texas)";
 is showkv($bh (.) $m), "blood:2 rhetoric:1", "Mix multiplication (BagHash / Mix) works (texas)";
@@ -201,8 +197,8 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     is showkv([⊎] $b, $m, $mh), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Mix sum reduce works on three sets";
 
     is showkv([(+)] @d), showkv(∅), "Mix sum reduce works on nothing";
-    is showkv([(+)] $b), showkv($b.Mix), "Mix sum reduce works on one set";
-    is showkv([(+)] $b, $m), showkv({ blood => 3, rhetoric => 1, love => 3 }), "Mix sum reduce works on two sets";
+    is showkv([(+)] $m), showkv($m), "Mix sum reduce works on one set";
+    is showkv([(+)] $b, $m), showkv({ blood => 2.1, love => 2.2, rhetoric => 1 }), "Mix sum reduce works on two sets";
     is showkv([(+)] $b, $m, $mh), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Mix sum reduce works on three sets";
 
     is showkv([⊍] @d), showkv(∅), "Mix multiply reduce works on nothing";
