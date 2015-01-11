@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 136;
+plan 128;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 
@@ -82,52 +82,44 @@ isa_ok ($mh (^) $b), Mix, "... and it's actually a Mix";
 
 # Mix multiplication
 
-is showkv($m ⊍ $m), "blood:1 love:1", "Mix multiplication with itself yields self squared";
+is showkv($m ⊍ $m), "blood:1.21 love:1.44 rhetoric:1", "Mix multiplication with itself yields self squared";
 isa_ok ($m ⊍ $m), Mix, "... and it's actually a Mix";
-is showkv($bh ⊍ $bh), "blood:1 rhetoric:1", "Mix multiplication with itself yields self squared";
-isa_ok ($bh ⊍ $bh), Mix, "... and it's actually a Mix";
-is showkv($m ⊍ $m), "blood:4 love:4 rhetoric:1", "Mix multiplication with itself yields self squared";
-isa_ok ($m ⊍ $m), Mix, "... and it's actually a Mix";
-is showkv($mh ⊍ $mh), "blood:1 love:4", "Mix multiplication with itself yields self squared";
+is showkv($mh ⊍ $mh), "blood:1.21 love:1.69", "MixHash multiplication with itself yields self squared";
 isa_ok ($mh ⊍ $mh), Mix, "... and it's actually a Mix";
 
-is showkv($b ⊍ $m), "blood:2 love:2", "Mix multiplication (Bag / Mix) works";
+is showkv($b ⊍ $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works";
 isa_ok ($b ⊍ $m), Mix, "... and it's actually a Mix";
-is showkv($bh ⊍ $m), "blood:2 rhetoric:1", "Mix multiplication (BagHash / Mix) works";
+is showkv($bh ⊍ $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works";
 isa_ok ($bh ⊍ $m), Mix, "... and it's actually a Mix";
-is showkv($mh ⊍ $m), "blood:2 love:4", "Mix multiplication (MixHash / Mix) works";
+is showkv($mh ⊍ $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works";
 isa_ok ($mh ⊍ $m), Mix, "... and it's actually a Mix";
 
-is showkv($b (.) $m), "blood:2 love:2", "Mix multiplication (Bag / Mix) works (texas)";
+is showkv($b (.) $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works (texas)";
 isa_ok ($b (.) $m), Mix, "... and it's actually a Mix (texas)";
-is showkv($bh (.) $m), "blood:2 rhetoric:1", "Mix multiplication (BagHash / Mix) works (texas)";
+is showkv($bh (.) $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works (texas)";
 isa_ok ($bh (.) $m), Mix, "... and it's actually a Mix (texas)";
-is showkv($mh (.) $m), "blood:2 love:4", "Mix multiplication (MixHash / Mix) works (texas)";
+is showkv($mh (.) $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works (texas)";
 isa_ok ($mh (.) $m), Mix, "... and it's actually a Mix";
 
 # Mix addition
 
-is showkv($m ⊎ $m), "blood:2.2 love:2 rhetoric:2.4", "Mix addition with itself yields twice self";
+is showkv($m ⊎ $m), "blood:2.2 love:2.4 rhetoric:2", "Mix addition with itself yields twice self";
 isa_ok ($m ⊎ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ⊎ $mh), "blood:2.2 love:2.6", "Mix addition with itself yields twice self";
 isa_ok ($mh ⊎ $mh), Mix, "... and it's actually a Mix";
 
-is showkv($b ⊎ $bh), "blood:2 love:1 rhetoric:1", "Mix addition (Bag / BagHash) works";
-isa_ok ($b ⊎ $bh), Mix, "... and it's actually a Mix";
-is showkv($b ⊎ $m), "blood:3 love:3 rhetoric:1", "Mix addition (Bag / Mix) works";
+is showkv($b ⊎ $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works";
 isa_ok ($b ⊎ $m), Mix, "... and it's actually a Mix";
-is showkv($bh ⊎ $m), "blood:3 love:2 rhetoric:2", "Mix addition (BagHash / Mix) works";
+is showkv($bh ⊎ $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works";
 isa_ok ($bh ⊎ $m), Mix, "... and it's actually a Mix";
-is showkv($mh ⊎ $m), "blood:3 love:4 rhetoric:1", "Mix addition (MixHash / Mix) works";
+is showkv($mh ⊎ $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works";
 isa_ok ($mh ⊎ $m), Mix, "... and it's actually a Mix";
 
-is showkv($b (+) $bh), "blood:2 love:1 rhetoric:1", "Mix addition (Bag / BagHash) works (texas)";
-isa_ok ($b (+) $bh), Mix, "... and it's actually a Mix (texas)";
-is showkv($b (+) $m), "blood:3 love:3 rhetoric:1", "Mix addition (Bag / Mix) works (texas)";
+is showkv($b (+) $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works (texas)";
 isa_ok ($b (+) $m), Mix, "... and it's actually a Mix (texas)";
-is showkv($bh (+) $m), "blood:3 love:2 rhetoric:2", "Mix addition (BagHash / Mix) works (texas)";
+is showkv($bh (+) $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works (texas)";
 isa_ok ($bh (+) $m), Mix, "... and it's actually a Mix (texas)";
-is showkv($mh (+) $m), "blood:3 love:4 rhetoric:1", "Mix addition (MixHash / Mix) works (texas)";
+is showkv($mh (+) $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works (texas)";
 isa_ok ($mh (+) $m), Mix, "... and it's actually a Mix";
 
 # for https://rt.perl.org/Ticket/Display.html?id=122810
@@ -135,28 +127,34 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
 
 # msubset
 {
-    ok $mh ≼ $m, "Our keymix is a msubset of our mix";
-    nok $m ≼ $mh, "Our mix is not a msubset of our keymix";
-    ok $m ≼ $m, "Our mix is a msubset of itself";
-    ok $mh ≼ $mh, "Our keymix is a msubset of itself";
+    # adding a local MixHash here to avoid redoing all of the multiplication/addition return values
+    my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3, "rhetoric" => 2.2);
+
+    nok $mh ≼ $m, "Our MixHash is not a msubset of our Mix";
+    ok $m ≼ $mh, "Our Mix is a msubset of our MixHash";
+    ok $m ≼ $m, "Our Mix is a msubset of itself";
+    ok $mh ≼ $mh, "Our MixHash is a msubset of itself";
     #?niecza 4 skip '(<+) NYI - https://github.com/sorear/niecza/issues/178'
-    ok $mh (<+) $m, "Our keymix is a msubset of our mix (texas)";
-    nok $m (<+) $mh, "Our mix is not a msubset of our keymix (texas)";
-    ok $m (<+) $m, "Our mix is a msubset of itself (texas)";
-    ok $mh (<+) $mh, "Our keymix is a msubset of itself (texas)";
+    nok $mh (<+) $m, "Our MixHash is not a msubset of our Mix (texas)";
+    ok $m (<+) $mh, "Our Mix is a msubset of our MixHash (texas)";
+    ok $m (<+) $m, "Our Mix is a msubset of itself (texas)";
+    ok $mh (<+) $mh, "Our MixHash is a msubset of itself (texas)";
 }
 
 # msuperset
 {
-    nok $mh ≽ $m, "Our keymix is not a msuperset of our mix";
-    ok $m ≽ $mh, "Our keymix is not a msuperset of our mix";
+    # adding a local MixHash here to avoid redoing all of the multiplication/addition return values
+    my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3, "rhetoric" => 2.2);
+
+    ok $mh ≽ $m, "Our MixHash is a msuperset of our Mix";
+    nok $m ≽ $mh, "Our Mix is not a msuperset of our MixHash";
     ok $m ≽ $m, "Our mix is a msuperset of itself";
     ok $mh ≽ $mh, "Our keymix is a msuperset of itself";
     #?niecza 4 skip '(>+) NYI - https://github.com/sorear/niecza/issues/178'
-    nok $mh (>+) $m, "Our keymix is not a msuperset of our mix";
-    ok $m (>+) $mh, "Our mix is a msuperset of our keymix";
-    ok $m (>+) $m, "Our mix is a msuperset of itself";
-    ok $mh (>+) $mh, "Our keymix is a msuperset of itself";
+    ok $mh (>+) $m, "Our MixHash is a msuperset of our Mix (Texas)";
+    nok $m (>+) $mh, "Our Mix is not a msuperset of our MixHash (Texas)";
+    ok $m (>+) $m, "Our Mix is a msuperset of itself (Texas)";
+    ok $mh (>+) $mh, "Our MixHash is a msuperset of itself (Texas)";
 }
 
 {
