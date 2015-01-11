@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 16;
 
 # RT #63826
 {
@@ -58,6 +58,15 @@ plan 15;
     enum :: <un>;
     is +un, 0, 'is un the right value';
     is ~un, 'un', 'is un the right string';
+}
+
+#RT # 123114
+{
+    module RT123114 {
+        enum A is export <B C>;
+    }
+    import RT123114;
+    is C.value, 1, 'Enum members are exported with enumeration itself';
 }
 
 # vim: ft=perl6
