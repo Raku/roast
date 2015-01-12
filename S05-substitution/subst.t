@@ -320,27 +320,25 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 #L<S05/Substitution/Any scalar assignment operator may be used>
-#?rakudo skip 's[...] op= RHS'
 #?niecza skip 's[...] op= RHS'
 {
-    given 'a 2 3' {
+    given 'a 2 3' -> $_ is copy {
         ok (s[\d] += 5), 's[...] += 5 returns True';
         is $_, 'a 7 3', 's[...] += 5 gave right result';
     }
-    given 'a b c' {
+    given 'a b c' -> $_ is copy {
         s:g[\w] x= 2;
         is $_, 'aa bb cc', 's:g[..] x= 2 worked';
     }
 }
 
-#?rakudo skip 's:g[...] ='
 #?niecza skip 's:g[...] ='
 {
     multi sub infix:<fromplus>(Match $a, Int $b) {
         $a.from + $b
     }
 
-    given 'a b c' {
+    given 'a b c' -> $_ is copy {
         ok (s:g[\w] fromplus= 3), 's:g[...] customop= returned True';
         is $_, '3 5 7', '... and got right result';
     }
