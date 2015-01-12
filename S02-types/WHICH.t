@@ -42,7 +42,11 @@ my @normal = <
   HashIter
   HyperWhatever
   IO::ArgFiles
+  IO::Dir
+  IO::Dup
+  IO::File
   IO::Handle
+  IO::Local
   IO::Path
   IO::Path::Cygwin
   IO::Path::QNX   
@@ -54,6 +58,7 @@ my @normal = <
   IO::Spec::QNX
   IO::Spec::Unix
   IO::Spec::Win32
+  IOU
   Instant
   Int
   Iterable
