@@ -343,6 +343,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?niecza skip "throws_like"
+#?rakudo skip "regression to AdHoc exception"
 {
     throws_like { EVAL 'my @a = 1..*; @a[Inf] = "dog"' },
       X::Item,

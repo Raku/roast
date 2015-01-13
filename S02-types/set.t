@@ -229,6 +229,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 #?niecza skip "Hypers not yet Set compatible"
+#?rakudo todo "Hypers not yet Set compatible"
 dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # L<S32::Containers/Set/roll>
