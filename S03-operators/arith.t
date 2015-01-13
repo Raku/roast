@@ -322,14 +322,14 @@ All uses of a zero modulus or divisor should 'die', and the
     throws_like { say 0 / 0 }, X::TypeCheck::Binding,
         message => q[Type check failed in binding; expected 'Int' but got 'Failure'],
         'Division by zero with infix:</> dies and is catchable (1)';
-    throws_like { say 3 / 0 }, X::TypeCheck::Return,
-        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+    throws_like { say 3 / 0 }, X::Numeric::DivideByZero,
+        message => q[Divide by zero],
         'Division by zero with infix:</> dies and is catchable (2)';
-    throws_like { my $x = 0; say 3.5 / $x }, X::TypeCheck::Return,
-        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+    throws_like { my $x = 0; say 3.5 / $x }, X::Numeric::DivideByZero,
+        message => q[Divide by zero],
         'Division by zero with infix:</> dies and is catchable with VInt/VRat variables';
-    throws_like { my $x = 0; say 4 / $x }, X::TypeCheck::Return,
-        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+    throws_like { my $x = 0; say 4 / $x }, X::Numeric::DivideByZero,
+        message => q[Divide by zero],
         'Division by zero with infix:</> dies and is catchable with VRef variables';
 }
 
