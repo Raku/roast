@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 # L<S04/"Loop statements"/"next, last, and redo">
-plan 4;
+plan 5;
 
 {
     my $x = 0;
@@ -67,3 +67,5 @@ plan 4;
     }
     is($t, 'A1BCDBCDA2BCD', 'redoing outer for loop');
 }
+
+throws_like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclaration;
