@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 30;
+plan 31;
 
 {   my @array = (3,7,9,11);
 
@@ -95,6 +95,14 @@ plan 30;
     my @a = 42..50;
     is @a .= [1,2], (43,44), 'did we return right slice';;
     is @a, (43,44), 'did we assign slice ok';
+}
+
+# RT #123594
+#?rakudo skip 'RT #123594'
+{
+    my $b = Buf.new(0, 0);
+    $b[0, 1] = 2, 3;
+    is_deeply $b, Buf.new(2, 3), 'can assign to a Buf slice';
 }
 
 # vim: ft=perl6
