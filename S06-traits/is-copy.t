@@ -4,7 +4,7 @@ use Test;
 # L<S06/"Parameter traits"/"=item is copy">
 # should be moved with other subroutine tests?
 
-plan 24;
+plan 25;
 
 {
   sub foo($a is copy) {
@@ -116,5 +116,10 @@ plan 24;
 # the redeclaration thingy is only a warning
 eval_lives_ok 'sub f ($x is copy) { my $x }';
 
+# RT #118183
+{
+    sub a ($a is copy) { $a = 5 }
+    is a(1), 5, 'Simple, easily inlinable, sub with copy trait not broken';
+}
 
 # vim: ft=perl6
