@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 274;
+plan 275;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -424,6 +424,8 @@ if $emits_suggestions {
         ok $! ~~ X::Undeclared::Symbols, "Ecxeption.new throws X::Undeclared::Symbols";
         is $!.type_suggestion<Ecxeption>, ["Exception"], 'Exception is a suggestion';
     }
+
+    throws_like 'sub greet($name) { say "hello, $nam" }', X::Undeclared, suggestions => '$name';
 }
 
 # RT 77270
