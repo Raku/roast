@@ -225,11 +225,11 @@ my @array2 = ("test", 1, Mu);
   ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array is not fatal";
   # RT #111924
   throws_like { @arr[*-1] },
-    X::Subscript::Negative,
-    "readonly accessing [*-1] of an empty array throws X::Subscript::Negative";
+    X::OutOfRange,
+    "readonly accessing [*-1] of an empty array throws X::OutOfRange";
   throws_like { @arr[*-1] = 42 },
-    X::Subscript::Negative,
-    "assigning to [*-1] of an empty array throws X::Subscript::Negative";
+    X::OutOfRange,
+    "assigning to [*-1] of an empty array throws X::OutOfRange";
   throws_like { @arr[*-1] := 42 },
     X::Bind::Slice,
     "binding [*-1] of an empty array throws X::Bind::Slice";
@@ -239,11 +239,11 @@ my @array2 = ("test", 1, Mu);
   my @arr = (23);
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array is not fatal";
   throws_like { @arr[*-2] },
-    X::Subscript::Negative,
-    "readonly accessing [*-2] of an one-elem array throws X::Subscript::Negative";
+    X::OutOfRange,
+    "readonly accessing [*-2] of an one-elem array throws X::OutOfRange";
   throws_like { @arr[*-2] = 42 },
-    X::Subscript::Negative,
-    "assigning to [*-2] of an one-elem array throws X::Subscript::Negative";
+    X::OutOfRange,
+    "assigning to [*-2] of an one-elem array throws X::OutOfRange";
   throws_like { @arr[*-2] := 42 },
     X::Bind::Slice,
     "binding [*-2] of an one-elem array throws X::Bind::Slice";
@@ -259,11 +259,12 @@ my @array2 = ("test", 1, Mu);
     "readonly accessing [-2] of normal array throws X::Obsolete and is fatal";
   #?niecza todo '@arr[-1] returns undef'
   throws_like { @arr[ $minus_one ] },
-    X::Subscript::Negative,
-    "indirectly accessing [-1] through a variable throws X::Subscript::Negative";
+    X::OutOfRange,
+    "indirectly accessing [-1] through a variable throws X::OutOfRange";
   throws_like { @arr[$minus_one] = 42 },
-    X::Subscript::Negative,
-    "assigning to [-1] of a normal array throws X::Subscript::Negative";
+    X::OutOfRange,
+    "assigning to [-1] of a normal array throws X::OutOfRange";
+  #?rakudo todo 'bind_pos NYI'
   throws_like { @arr[$minus_one] := 42 },
     X::Subscript::Negative,
     "binding [-1] of a normal array throws X::Subscript::Negative";
