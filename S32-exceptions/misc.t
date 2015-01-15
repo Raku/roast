@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 275;
+plan 276;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -426,6 +426,8 @@ if $emits_suggestions {
     }
 
     throws_like 'sub greet($name) { say "hello, $nam" }', X::Undeclared, suggestions => '$name';
+
+    throws_like 'class Greeter { has $.name; method greet { say "hi, $name" } }', X::Undeclared, suggestions => '$!name';
 }
 
 # RT 77270
