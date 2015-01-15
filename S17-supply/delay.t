@@ -6,7 +6,6 @@ use Test::Tap;
 
 plan 13;
 
-#?rakudo.jvm todo "D: doesn't work in signatures RT #122229"
 dies_ok { Supply.delay(1) }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {

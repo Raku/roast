@@ -10,7 +10,6 @@ my @endings = "\n", "\r", "\r\n";
 
 plan 21;
 
-#?rakudo.jvm todo "?"
 dies_ok { Supply.lines }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {

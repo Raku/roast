@@ -4,7 +4,6 @@ use Test;
 
 plan 9;
 
-#?rakudo.jvm todo "D: doesn't work in signatures RT #122229"
 dies_ok { Supply.start({...}) }, 'can not be called as a class method';
 
 {
