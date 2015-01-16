@@ -12,9 +12,9 @@ is IO::Path.new('/foo/bar.txt'), $path,
 
 # This assumes slash-separated paths, so it will break on, say, VMS
 
-is $path.volume,    '',        'volume';
-is $path.directory, '/foo',    'directory';
-is $path.basename,  'bar.txt', 'basename';
+is $path.volume,          '', 'volume';
+is $path.dirname,     '/foo', 'dirname';
+is $path.basename, 'bar.txt', 'basename';
 #?niecza 2 skip '.parent NYI'
 is $path.parent,    '/foo',    'parent';
 is $path.parent.parent, '/',   'parent of parent';
