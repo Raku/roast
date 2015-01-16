@@ -12,14 +12,14 @@ my $relpath = IO::Path::Cygwin.new('foo/bar' );
 my $abspath = IO::Path::Cygwin.new('/foo/bar');
 
 isa_ok $abspath, IO::Path, "Can create IO::Path::Cygwin";
-is $abspath.volume,    "",     'volume "/foo/bar" -> ""';
-is $abspath.directory, "/foo", 'directory "/foo/bar" -> "/foo"';
-is $abspath.basename,  "bar",  'basename "/foo/bar" -> "bar"';
+is $abspath.volume,       "", 'volume "/foo/bar" -> ""';
+is $abspath.dirname,  "/foo", 'dirname "/foo/bar" -> "/foo"';
+is $abspath.basename,  "bar", 'basename "/foo/bar" -> "bar"';
 
 
 my $path = IO::Path::Cygwin.new('C:foo\\\\bar\\');
-is $path.volume,    "C:",  'volume "C:foo\\\\bar\\" -> "C:"';
-is $path.directory, "foo", 'directory "C:foo\\\\bar\\" -> "foo"';
+is $path.volume,     "C:", 'volume "C:foo\\\\bar\\" -> "C:"';
+is $path.dirname,   "foo", 'dirname "C:foo\\\\bar\\" -> "foo"';
 is $path.basename,  "bar", 'basename "C:foo\\\\bar\\" -> "bar"';
 isa_ok $path.path, Str, ".path returns Str of path";
 
@@ -27,14 +27,14 @@ is $path.perl.EVAL, $path, ".perl loopback";
 
 my $uncpath = IO::Path::Cygwin.new("\\\\server\\share\\");
 is $uncpath.volume, "//server/share", 'volume "//server/share/" -> ""/server/share"';
-is $uncpath.directory, "/", 'directory "\\\\server\\share\\" -> "\\"';
+is $uncpath.dirname,   "/", 'dirname "\\\\server\\share\\" -> "\\"';
 is $uncpath.basename,  "/", 'basename "\\\\server\\share\\" -> "\\"';
 is $uncpath.Str, "\\\\server\\share\\", '"\\\\server\\share" restringifies to itself';
 
 my $uncpath2 = IO::Path::Cygwin.new("//server/share/a");
 is $uncpath2.volume, "//server/share", 'volume "//server/share/a" -> ""//server/share"';
-is $uncpath2.directory, "/", 'directory "//server/share/a" -> "/"';
-is $uncpath2.basename,  "a", 'basename "//server/share/a" -> "a"';
+is $uncpath2.dirname,  "/", 'dirname "//server/share/a" -> "/"';
+is $uncpath2.basename, "a", 'basename "//server/share/a" -> "a"';
 is $uncpath2.Str, "//server/share/a", '"//server/share/a" restringifies to itself';
 
 is IO::Path::Cygwin.new(".").Str,        ".",        "current directory";
