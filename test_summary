@@ -375,7 +375,7 @@ sub log_script_times {
     for ( my $test_number=0; $test_number<$testcount; $test_number++) {
         unless ( defined($times[$test_number]) ) { $times[$test_number] = 0; }
         my ( @times_in_file );
-        if ( defined @{$logged_results[$test_number]} ) {
+        if ( @{$logged_results[$test_number]} ) {
             @times_in_file = ( @{$logged_results[$test_number]} );
         }
         push @times_in_file, $times[$test_number];
