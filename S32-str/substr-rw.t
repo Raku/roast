@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 sub l (Int $a) {  my $l = $a; return $l }
 
@@ -115,6 +115,12 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($str, "foo ding", "lvalue ref size varies but still works (substr-rw(Int, StrLen)).");
     #?rakudo todo 'NYI'
     is($o, " d", "other lvalue wiggled around (substr-rw(Int, StrLen)).");
+};
+
+{
+    my $str = 'foo';
+    $str.substr-rw(2,1) = 'x';
+    is($str, 'fox', 'method form of substr-rw works');
 };
 
 # vim: ft=perl6 
