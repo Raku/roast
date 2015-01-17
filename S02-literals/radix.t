@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 135;
+plan 136;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -190,7 +190,7 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 }
 
 # Tests for the :x[ <list> ] notations
-# L<S02/General radices/"Alternately you can use a list of digits in decimal">
+# L<S02/General radices/"Alternately you can use a list of values">
 #?niecza skip ":radix[] NYI"
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
@@ -198,6 +198,9 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 
     is :100[10,10],      1010, "Adverbial form of base 100 integer works";
     is :100[10,'.',10], 10.10, "Adverbial form of base 100 fraction works";
+
+    my $a = '2'; my $b = '.';
+    is :10[1, +$a, $b, ++$a * 2, 0], 12.6, "List of expressions works";
 
     # Representation-stressing large radix.  Do two tests in one here
     # so both 32-bit and 64-bit machines are likely to fail uniformly.
