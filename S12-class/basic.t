@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 39;
 
 =begin pod
 
@@ -140,6 +140,18 @@ eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
     #?niecza todo 'Exception: Unable to resolve method add_method in type ClassHOW'
     eval_lives_ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',
           'add_method returns a Method object';
+}
+
+# RT #72338
+{
+    my $rt72338;
+    class x {
+        multi method y { self.y("void") }
+        multi method y (Str $arg) { $rt72338 = $arg }
+    }
+    x.new.y;
+    is $rt72338, 'void',
+        'no need to add a semicolon after closing brace of class definition followed by newline';
 }
 
 is class :: { method foo { 42 }}.foo, 42, "Can call method on class definition without parens";
