@@ -67,7 +67,7 @@ class NastyChild is Parent { };
 # methods exist, too
 {
     class Co {
-        class SuCo is Co { }
+        class SubCo is Co { }
         method SubCo() { SubCo.new }
         method erce(Array(Any) $x) {
             $x.^name;
