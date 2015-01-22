@@ -8,7 +8,7 @@ Tests for can.
 
 =end pod
 
-plan 25;
+plan 29;
 
 # L<S12/"Introspection"/Unlike in Perl 5 where .can returns a single Code object>
 
@@ -110,6 +110,20 @@ ok Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
     sub callit($invocant, $method) { $method($invocant) };
     is callit(A.new, A.^can('b')[0]), 'butterfly',
         'can call method reference outside the class';
+}
+
+{
+    # RT #123621
+    my class A {
+        submethod x() { 42 }
+    }
+    ok A.^can("x"), 'submethods found by .^can';
+    ok A.can("x"), 'submethods found by .can';
+
+    class B is A {
+    }
+    nok B.^can("x"), 'submethods from base classes not bogusly found by .^can';
+    nok B.can("x"), 'submethods from base classes not bogusly found by .can';
 }
 
 # vim: ft=perl6
