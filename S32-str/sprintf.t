@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 156;
+plan 157;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -254,6 +254,14 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 {
     try sprintf("%d-%s", 42);
     is $!, 'Too many directives: found 2, but only 1 arguments after the format string', 'RT #106594, #62316, #74610';
+}
+
+# RT #122907
+# TODO: write a better test once there is a typed exception
+{
+    throws_like { sprintf "%d" }, Exception,
+        message => 'Too many directives: found 1, but no arguments after the format string',
+        "adequate error when sprintf %d directive doesn't find a corresponding argument";
 }
 
 # found by japhb
