@@ -222,9 +222,12 @@ my @array2 = ("test", 1, Mu);
 
 {
   my @arr;
-  ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array is not fatal";
+  # test that @arr[+-1] produces a Failure, which is thrown when a method
+  # other than .defined is called on it.
+  lives_ok { @arr[*-1].defined }, "readonly accessing [*-1] of an empty array is not fatal";
+
   # RT #111924
-  throws_like { @arr[*-1] },
+  throws_like { @arr[*-1].flurb },
     X::OutOfRange,
     "readonly accessing [*-1] of an empty array throws X::OutOfRange";
   throws_like { @arr[*-1] = 42 },
