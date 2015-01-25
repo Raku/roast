@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 30;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -19,8 +19,13 @@ my $stderr = "";
 $so.act: { $stdout ~= $_.subst("\r", "", :g) };
 $se.act: { $stderr ~= $_.subst("\r", "", :g) };
 
+nok $pc.started, 'program not yet started';
+nok $pc.w, 'Not opened for writing';
+
 my $pm = $pc.start;
 isa_ok $pm, Promise;
+
+ok $pc.started, 'program has been started';
 
 throws_like { $pc.start }, X::Proc::Async::AlreadyStarted;
 
@@ -43,6 +48,8 @@ is $stderr, "",              'did we get STDERR';
 $pc = $*DISTRO.is-win
     ?? Proc::Async.new( :w, 'cmd', </c type con> )
     !! Proc::Async.new( :w, 'cat', );
+
+ok $pc.w, 'opened for writing';
 
 throws_like { $pc.close-stdin }, X::Proc::Async::MustBeStarted, :method<close-stdin>;
 throws_like { $pc.kill },        X::Proc::Async::MustBeStarted, :method<kill>;
