@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 26;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -53,7 +53,7 @@ throws_like { $pc.write(Buf.new(0)) }, X::Proc::Async::MustBeStarted, :method<wr
 $stdout = '';
 $stderr = '';
 $pc.stdout.act: { $stdout ~= $_.subst("\r", "", :g) };
-$pc.stdout.act: { $stderr ~= $_.subst("\r", "", :g) };
+$pc.stderr.act: { $stderr ~= $_.subst("\r", "", :g) };
 
 throws_like { $pc.stdout(:bin) }, X::Proc::Async::CharsOrBytes, :handle<stdout>;
 
@@ -71,3 +71,6 @@ is $start-promise.status, Planned, 'external program still running (stdin still 
 $pc.close-stdin;
 
 isa_ok $start-promise.result, Proc::Status, 'Can finish, return Proc::Statu';
+
+is $stdout, 'Perl 6', 'got correct STDOUT';
+is $stderr, '',       'got correct STDERR';
