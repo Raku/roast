@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 14;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -22,9 +22,13 @@ $se.act: { $stderr ~= $_.subst("\r", "", :g) };
 my $pm = $pc.start;
 isa_ok $pm, Promise;
 
+throws_like { $pc.start }, X::Proc::Async::AlreadyStarted;
+
 throws_like { $pc.print("foo") }, X::Proc::Async::OpenForWriting, :method<print>;
 throws_like { $pc.say("foo") }, X::Proc::Async::OpenForWriting, :method<say>;
 throws_like { $pc.write(Buf.new(0)) }, X::Proc::Async::OpenForWriting, :method<write>;
+
+throws_like { $pc.stdout.tap(&say) }, X::Proc::Async::TapBeforeSpawn, :handle<stdout>;
 
 my $ps = await $pm;
 isa_ok $ps, Proc::Status;
