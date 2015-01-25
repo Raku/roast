@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 39;
 
 # L<S11/"Exportation"/>
 
@@ -158,6 +158,15 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
 {
     ok EXPORT::ALL ~~ EXPORT::<ALL>, 'EXPORT::ALL is identical to EXPORT::<ALL>';
     ok EXPORT::ALL:: ~~ Stash,       'EXPORT::ALL:: is a Stash that keeps exported symbols';
+}
+
+# RT #84280
+{
+    use lib 't/spec/packages';
+    use RT84280;
+    throws_like { bar { 1 } }, X::Multi::NoMatch,
+        message => /'none of these signatures match'/,
+        'adequate error message when multi sub exported out of a module fails to bind to an argument that happens to be a block';
 }
 
 # vim: ft=perl6
