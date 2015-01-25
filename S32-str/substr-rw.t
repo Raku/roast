@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 33;
 
 sub l (Int $a) {  my $l = $a; return $l }
 
@@ -123,4 +123,13 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($str, 'fox', 'method form of substr-rw works');
 };
 
-# vim: ft=perl6 
+# RT #114526
+#?rakudo.parrot skip 'RT #114526'
+{
+    my $str = 'ab';
+    substr-rw($str, 0, 3) = '/';
+    is "--$str--", '--/--',
+        'substr-rw handles end positions that are out of range';
+}
+
+# vim: ft=perl6
