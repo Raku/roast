@@ -251,7 +251,6 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 
 # RT #106594, #62316, #74610
 #?niecza skip 'dubious test - should be testing exception type, not string. Niecza does respond with an appropriate, but differently worded string'
-#?rakudo todo 'NQP PR 219'
 {
     try sprintf("%d-%s", 42);
     is $!, 'Directives specify 2 arguments, but 1 argument was supplied', 'RT #106594, #62316, #74610';
