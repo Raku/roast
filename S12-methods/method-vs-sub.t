@@ -10,7 +10,6 @@ class test {
 sub foo($a) { 'sub' };   #OK not used
 my $obj = test.new;
 
-#?rakudo skip 'confused near "($obj:),  "'
 #?niecza skip 'Invocant handling is NYI'
 is foo($obj:),  'method', 'method with colon notation';
 is $obj.foo,    'method', 'method with dot notation';
