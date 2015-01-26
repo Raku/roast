@@ -253,15 +253,14 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 #?niecza skip 'dubious test - should be testing exception type, not string. Niecza does respond with an appropriate, but differently worded string'
 {
     try sprintf("%d-%s", 42);
-    is $!, 'Directives specify 2 arguments, but 1 argument was supplied', 'RT #106594, #62316, #74610';
+    is $!, 'Too many directives: found 2, but only 1 arguments after the format string', 'RT #106594, #62316, #74610';
 }
 
 # RT #122907
 # TODO: write a better test once there is a typed exception
-#?rakudo todo 'NQP PR 219'
 {
     throws_like { sprintf "%d" }, Exception,
-        message => 'Directives specify 1 argument, but no argument was supplied',
+        message => 'Too many directives: found 1, but no arguments after the format string',
         "adequate error when sprintf %d directive doesn't find a corresponding argument";
 }
 
