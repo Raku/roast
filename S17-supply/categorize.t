@@ -61,7 +61,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             tap_ok @supplies[0], [11,12,13], "got the 0 supply ($what)", :live;
 
             my $done = False;
-            @supplies[1].tap({;}, done => sub { $done = True });
+            @supplies[1].tap(done => sub { $done = True });
             $s.done;
             ok $done, 'Sub-supply got .done (RT 123674)';
         }
