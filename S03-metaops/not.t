@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 39;
 
 =begin pod
 
@@ -53,6 +53,14 @@ isa_ok 4 !=:= 5, Bool, "4 !=:= 5 is Bool";
 eval_dies_ok '"a" !!eq "a"', 'Doubled prefix:<!> is illegal';
 ok "a" ![!eq] "a", '![!eq] is legal and works (1)';
 nok "a" ![!eq] "b", '![!eq] is legal and works (2)';
+
+# RT #120371
+ok True !&& False, '!&& is legal and works (1)';
+nok True !&& True, '!&& is legal and works (2)';
+ok False !|| False, '!|| is legal and works (1)';
+nok False !|| True, '!|| is legal and works (2)';
+ok True !^^ True, '!^^ is legal and works (1)';
+nok False !^^ True, '!^^ is legal and works (2)';
 
 done;
 
