@@ -88,7 +88,7 @@ is $m, 20, 'loop {...}';
 
 my @a = 10, 20, 'dog', 30, 'cat', 'dog', 20, '40';
 is_deeply [do {my %s;  grep { !%s{$_}++ }, @a}], [10, 20, 'dog', 30, 'cat', '40'], 'my %s;  return grep { !%s{$_}++ }, @a';
-is_deeply [@a.uniq], [10, 20, 'dog', 30, 'cat', '40'], '@a.unique';
+is_deeply [@a.unique], [10, 20, 'dog', 30, 'cat', '40'], '@a.unique';
 
 # Some idioms remain the same
 
