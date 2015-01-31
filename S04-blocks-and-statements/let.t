@@ -14,7 +14,7 @@ plan 12;
     is($(let $a = 23; $a), 23, "let() changed the variable (1)");
     1;
   }
-  is $a, 23, "let() should not restore the variable, as our block exited succesfully (1)";
+  is $a, 23, "let() should not restore the variable, as our block exited successfully (1)";
 }
 
 # let() should restore the variable if the block failed (returned a false
@@ -38,7 +38,7 @@ plan 12;
     is $get_a(), 23, "let() changed the variable (2-2)";
     1;
   }
-  is $a, 23, "let() should not restore the variable, as our block exited succesfully (2)";
+  is $a, 23, "let() should not restore the variable, as our block exited successfully (2)";
 }
 
 # Test that let() restores variable even when not exited regularly (using a
