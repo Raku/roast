@@ -43,7 +43,7 @@ ok Buf.new(1, 2, 3, 4).subbuf(2) eqv Buf.new(3, 4), '.subbuf(start)';
 ok Buf.new(1, 2, 3, 4).subbuf(1, 2) eqv Buf.new(2, 3), '.subbuf(start, len)';
 
 # Length out of bounds. Behave like substr, return elements available.
-ok Buf.new(1, 2).subbuf(0, 3) eqv Buf.new(1,2), '.substr length out of bounds';
+ok Buf.new(1, 2).subbuf(0, 3) eqv Buf.new(1,2), '.subbuf length out of bounds';
 ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
 
 { # Throw on negative range
