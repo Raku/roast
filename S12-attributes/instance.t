@@ -371,7 +371,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     lives_ok { $x.set_hash2 },  'can assign to %!hash attribute';
 }
 
-# test that whitespaces after 'has (' are allowed.
+# test that whitespace characters after 'has (' are allowed.
 # This used to be a Rakudo bug (RT #61914)
 #?niecza skip 'Unhandled parameter twigil .'
 {

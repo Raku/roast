@@ -80,7 +80,7 @@ is(qa"$world @list[] %hash{}", Q"$world 1 2 %hash{}", "only interpolate array");
 is(qb"$world \\\"\n\t", "\$world \\\"\n\t", "only interpolate backslash");
 is('$world \qq[@list[]] %hash{}', '$world 1 2 %hash{}', "interpolate quoting constructs in ''");
 
-is(" \c[111] \c[107] ", ' o k ', "\\c[] respects whitespaces around it");
+is(" \c[111] \c[107] ", ' o k ', "\\c[] respects whitespace around it");
 
 # L<S02/Radix interpolation/separating the numbers with comma:>
 is("x  \x[41,42,43]  x",     "x  ABC  x",  "\\x[] allows multiple chars (1)");
@@ -108,7 +108,7 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
        'interpolation of indirect method calls (same quotes)';
     throws_like { EVAL q["|$x."f "()"] },
       X::Syntax::Confused,
-      '... but whitespaces are not allowed';
+      '... but whitespace is not allowed';
 }
 
 # RT # 104594

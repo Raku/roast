@@ -60,10 +60,10 @@ for @nonseparators -> $sep {
 };
 
 is < foo  
-	    >, 'foo', 'various combinations of whitespaces are stripped';
+	    >, 'foo', 'various combinations of whitespace are stripped';
 
 # RT #73772
-isa_ok < >, Parcel, '< > (only whitespaces) is empty Parcel';
+isa_ok < >, Parcel, '< > (only whitespace) is empty Parcel';
 is < >.elems, 0, ".. and it's really empty";
 
 # vim: ft=perl6
