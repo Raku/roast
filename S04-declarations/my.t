@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 75;
+plan 85;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -215,6 +215,30 @@ my $z = 42; #OK not used
     # XXX As I write this, this does not die right.  more testing needed.
     dies_ok { my Int $x = "abc" }, 'type error'; #OK
     dies_ok { EVAL '$x = "abc"'; my Int $x; }, 'also a type error';
+}
+
+# RT #102414
+{
+    # If there is a regression this may die not just fail to make ints
+#?rakudo.jvm todo 'RT #102414 still unresolved'
+    eval_lives_ok 'my (int $a);','native in declarator sig';
+#?rakudo.jvm todo 'RT #102414 still unresolved'
+    eval_lives_ok 'my (int $a, int $b);','natives in declarator sig';
+
+#?rakudo todo 'RT #102414 still unresolved'
+    throws_like { my (Int $a); $a = "str" }, X::TypeCheck, 'Type in declarator sig 1/1 constrains';
+#?rakudo todo 'RT #102414 still unresolved'
+    throws_like { my (Int $a, Int $b); $b = "str" }, X::TypeCheck, 'Types in declarator sig 1/2 constrain';
+#?rakudo todo 'RT #102414 still unresolved'
+    throws_like { my (Int $a, Int $b); $b = "str" }, X::TypeCheck, 'Types in declarator sig 2/2 constrain';
+
+
+    # These still need spec clarification but test them, since they pass
+    eval_lives_ok 'my int ($a);', 'native outside declarator sig 1';
+    eval_lives_ok 'my int ($a, $b)', 'native outside declarator sig 2';
+    throws_like { my Int ($a); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/1 constrains';
+    throws_like { my Int ($a, $b); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/2 constrains';
+    throws_like { my Int ($a, $b); $b = "str"}, X::TypeCheck, 'Type outside declarator sig 2/2 constrains';
 }
 
 {
