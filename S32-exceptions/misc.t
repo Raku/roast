@@ -239,7 +239,7 @@ throws_like 'sub f() { }; &f.unwrap("foo")', X::Routine::Unwrap;
 throws_like 'my %h = 1', X::Hash::Store::OddNumber;
 
 # TOOD: might be X::Syntax::Malformed too...
-throws_like 'sub foo;', X::Syntax::Missing, what => 'block';
+throws_like 'sub foo;', X::SemicolonForm::Invalid, what => 'sub';
 # RT #75776
 throws_like 'my $d; my class A {method x { $d }}; for () { sub }', X::Syntax::Missing, what => 'block';
 throws_like 'constant foo;', X::Syntax::Missing, what => /initializer/;
