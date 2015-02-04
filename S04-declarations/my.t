@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 85;
+plan 87;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -322,6 +322,17 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     is my @, Array.new, q{anonymous @ doesn't overshare};
     is my %, ().hash, q{anonymous % doesn't overshare};
     ok (my &) eqv Callable, q{anonymous sub doesn't overshare};
+}
+
+# RT 117043
+#?rakudo todo 'RT #117043'
+{
+    my (\x1) = 1;
+    is \x1, 1,
+        'can declare sigilless within parenthesis';
+    my ($x2, \x3) = (2, 3);
+    is ($x2, \x3).join(" "), '2 3',
+        'declarator with multiple variables can contain sigilless';
 }
 
 # vim: ft=perl6
