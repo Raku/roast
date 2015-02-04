@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan 87;
+plan 88;
 
 =begin description
 
@@ -618,6 +618,20 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     my $a = 'a';
     s/(.)/$0/ for $a;
     is $a, 'a', '$0 works in substition in for loop (2)';
+}
+
+# RT #122095
+{
+    my class RT122095 {};
+    my $a = RT122095.new();
+    my $w = $a.WHICH;
+    my $good = True;
+    for 0 .. 20000 {
+        if $a.WHICH ne $w {
+            $good = False;
+        }
+    };
+    is $good, True, '.WHICH value did not change in for loop';
 }
 
 # vim: ft=perl6
