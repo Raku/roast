@@ -72,7 +72,6 @@ eval_dies_ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
         'adequate error message on trying to metaop-reverse binding (:=)';
 }
 
-#?rakudo skip 'fails with "Unknown QAST node type NQPMu"'
 {
     my $foo = "foo";
     $foo [R~]= "bar";
