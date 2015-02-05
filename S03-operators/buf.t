@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 42;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -93,3 +93,17 @@ ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
     is Any ~ 'bar'.encode, 'bar', 'can concat a buffer to something undefined'; #OK
 }
 
+# .bytes tests
+{
+    my $a = buf8.new(1, 2, 3, 4, 5);
+    is $a.bytes, 5, "buf8 .bytes correct";
+    
+    my $b = buf16.new(1, 2, 3, 4, 5);
+    is $b.bytes, 10, "buf16 .bytes correct";
+    
+    my $c = buf32.new(1, 2, 3, 4, 5);
+    is $c.bytes, 20, "buf32 .bytes correct";
+    
+    my $d = buf64.new(1, 2, 3, 4, 5);
+    is $d.bytes, 40, "buf64 .bytes correct";
+}
