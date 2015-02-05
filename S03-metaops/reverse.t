@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 37;
 
 =begin pod
 
