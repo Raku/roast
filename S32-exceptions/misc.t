@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 276;
+plan 277;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -536,6 +536,9 @@ throws_like 'sub infix:<> (){}', X::Comp::Group,
 # RT #122646
 throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
   'unknown operator should complain better';
+
+# RT #72816
+throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 
 {
     my $*foo = 0;
