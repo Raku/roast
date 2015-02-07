@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 37;
+plan 39;
 
 =begin pod
 
@@ -70,6 +70,17 @@ eval_dies_ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
     throws_like { EVAL q[my $x; 5 R:= $x] }, Exception,
         message => 'Cannot reverse the args of := because list assignment operators are too fiddly',
         'adequate error message on trying to metaop-reverse binding (:=)';
+}
+
+# RT #116649
+{
+    my $y = 5;
+    is $y [R/]= 1, 1/5, '[R/]= works correctly (1)';
+    sub r2cf(Rat $x is copy) {
+        gather $x [R/]= 1 while ($x -= take $x.floor) > 0
+    }
+    is r2cf(1.4142136).join(" "), '1 2 2 2 2 2 2 2 2 2 6 1 2 4 1 1 2',
+        '[R/]= works correctly (2)';
 }
 
 {
