@@ -1,7 +1,9 @@
 use v6;
 use Test;
+use lib "t/spec/packages";
+use Test::Util;
 
-plan 277;
+plan 278;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -585,6 +587,11 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
     throws_like { EVAL q[ ord.Cool ] }, X::Obsolete,
         message => q[Unsupported use of bare 'ord'; in Perl 6 please use .ord if you meant $_, or use an explicit invocant or argument],
         'adequate error message when calling bare "ord"';
+}
+
+# RT #123584
+{
+    is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS:\nUseless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
 }
 
 # vim: ft=perl6
