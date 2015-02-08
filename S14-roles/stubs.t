@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 role WithStub { method a() { ... } };
 role ProvidesStub1 { method a() { 1 } };
@@ -30,3 +30,7 @@ lives_ok { EVAL 'class RT115212 does WithStub { has $.a }' }, 'stubbed method ca
 
 class HasA { has $.a }
 lives_ok { EVAL 'class RT115212Child is HasA does WithStub { }' }, 'stubbed method can come from accessor in parent class';
+
+# RT #119643
+throws_like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
+    X::Role::Parametric::NoSuchCandidate;
