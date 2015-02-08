@@ -351,8 +351,7 @@ All uses of a zero modulus or divisor should 'die', and the
 # RT #73386
 {
     # TODO: implement typed exception and adapt test
-    throws_like { EVAL q[ 3 !+ 4 ] }, Exception,
-        message => 'Cannot negate + because it is not iffy enough',
+    throws_like { EVAL q[ 3 !+ 4 ] }, X::Syntax::Can'tMeta,
         'infix<!+> is not iffy enough; RT #73386';
 }
 

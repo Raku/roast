@@ -28,8 +28,7 @@ plan 15;
 # RT #76170
 {
     # TODO: implement typed exception and adapt test
-    throws_like { EVAL q[ 9 !% 0 ] }, Exception,
-        message => 'Cannot negate % because it is not iffy enough',
+    throws_like { EVAL q[ 9 !% 0 ] }, X::Syntax::Can'tMeta,
         'infix<!%> is not iffy enough; RT #76170';
 } #1
 

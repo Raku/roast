@@ -383,7 +383,7 @@ ok ([+]) == 0, 'argumentless [+] parses';
 
 # RT #79116
 {
-    throws_like '[leg] <a b c>', X::Syntax::DiffyReduce,
+    throws_like '[leg] <a b c>', X::Syntax::Can'tMeta,
         'non-associative operator "[leg]" can not be used as reduction operator';
 }
 
