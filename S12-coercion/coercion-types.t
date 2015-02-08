@@ -56,6 +56,7 @@ class NastyChild is Parent { };
 }
 
 # coercion types on variables
+#?rakudo skip 'NYI'
 {
     my Int(Any) $x;
     isa_ok $x, Int, 'Coercion type on variable';
@@ -65,6 +66,7 @@ class NastyChild is Parent { };
 }
 
 # methods exist, too
+#?rakudo skip 'NYI'
 {
     class Co {
         class SubCo is Co { }
