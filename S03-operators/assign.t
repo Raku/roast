@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 293;
+plan 295;
 
 
 # tests various assignment styles
@@ -946,6 +946,17 @@ sub l () { 1, 2 };
     @rt76414 ,= 3, 4;         # same as push(@rt76414,3,4) according to S03
     is @rt76414, (1, 2, 3, 4),
         'infix:<,=> has list precedence in the cases where infix:<=> does';
+}
+
+# RT #72874
+{
+    throws_like { EVAL "6 >== 2" }, X::Syntax::Can'tMeta,
+        "Can't use diffy >= with the = metaop ";
+}
+
+{
+    throws_like { EVAL "6 ~~= 2" }, X::Syntax::Can'tMeta,
+        "Can't use fiddly ~~ with the = metaop ";
 }
 
 # vim: ft=perl6
