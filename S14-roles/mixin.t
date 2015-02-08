@@ -155,7 +155,6 @@ lives_ok {(True but role {}).gist}, 'can mix into True';
 }
 
 # RT #119371
-# TODO: better test: typed exception instead of string matching for error
 {
     #?rakudo.jvm skip 'NullPointerException with throws_like, correct otherwise'
     throws_like q[role popo { macro marco { $^a but popo }; marco popo; }],
