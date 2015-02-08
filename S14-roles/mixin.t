@@ -159,9 +159,9 @@ lives_ok {(True but role {}).gist}, 'can mix into True';
 {
     #?rakudo.jvm skip 'NullPointerException with throws_like, correct otherwise'
     throws_like q[role popo { macro marco { $^a but popo }; marco popo; }],
-        Exception,
-        message => "None of the parametric role variants for 'popo' matched the arguments supplied.\nCannot call ''; none of these signatures match:",
-        'no Null PMC access error when parameter mixin in role in macro';
+        X::Role::Parametric::NoSuchCandidate,
+        role    => { .^name eq 'popo' }
+        ;
 }
 
 # vim: syn=perl6
