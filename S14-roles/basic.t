@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 46;
 
 =begin description
 
@@ -177,6 +177,13 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 {
     lives_ok { role RT120931 { method foo {}; RT120931.foo } },
         'can call a role method from within the role block';
+}
+
+# RT #117041
+{
+    throws_like { EVAL q[role A::B { method foo(A::C $a) { } }] },
+        X::Parameter::InvalidType,
+        'undeclared type in signature in role results in X::Parameter::InvalidType';
 }
 
 done;
