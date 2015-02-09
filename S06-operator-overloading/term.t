@@ -1,28 +1,35 @@
 use v6;
 use Test;
-plan 7;
+plan 9;
 
 {
     package Foo {
         constant \term:<∞> = Inf;
         is ∞, Inf, "Can define \\term:<∞> as a constant";
     }
-    dies_ok { EVAL "∞" }, "my \\term:<∞> really is lexical";
+    dies_ok { EVAL "∞" }, "constant \\term:<∞> really is scoped to package";
     is Foo::term:<∞>, Inf, "Constant available from package";
 }
 
 {
     {
         my \term:<∞> = Inf;
-        is ∞, Inf, "Can define \\term:<∞> as lexical";
+        is ∞, Inf, "Can define \\term:<∞> as lexical variable";
     }
     dies_ok { EVAL "∞" }, "my \\term:<∞> really is lexical";
 }
 
 {
     my $a = 0;
+    sub term:<•> { $a++ };
+    is •, 0, "Can define &term:<•> as sub";
+    is •, 1, "&term:<•> evaluated each time";
+}
+
+{
+    my $a = 0;
     my &term:<•> = { $a++ };
-    is •, 0, "Can define &term:<•> as lexical";
+    is •, 0, "Can define &term:<•> as lexical variable";
     is •, 1, "&term:<•> evaluated each time";
 }
 
