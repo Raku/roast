@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 24;
+plan 25;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT.gist, Match.gist,    'got right type';
@@ -41,3 +41,11 @@ ok 'abc' ~~ /.{ $c = $¢ }/,     'current match state';
 is $c.WHAT.gist, Cursor.gist,   'got right type';
 #?rakudo skip "No such method pos for invocant of type Any"
 ok defined($c.pos),             '.pos';
+
+# RT 77146
+{
+    my token RT77146_rx { 77146 };
+
+    "RT77146" ~~ /(RT)<RT77146_rx>/;
+    is $/.keys, (0, "RT77146_rx"), "\$/.keys returns both positional and associative captures";
+}
