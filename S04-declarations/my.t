@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 87;
+plan 88;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -333,6 +333,10 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     my ($x2, \x3) = (2, 3);
     is ($x2, \x3).join(" "), '2 3',
         'declarator with multiple variables can contain sigilless';
+}
+
+{
+    is my sub {42}(), 42, 'can call postcircumfix () on subs inside my'
 }
 
 # vim: ft=perl6
