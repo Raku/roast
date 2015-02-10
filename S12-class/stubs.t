@@ -3,7 +3,7 @@ use Test;
 
 # L<S12/Classes/You can predeclare a stub class>
 
-plan 8;
+plan 10;
 
 eval_lives_ok q[ class StubA { ... }; class StubA { method foo { } }; ],
               'Can stub a class, and later on declare it';
@@ -25,5 +25,15 @@ dies_ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
 dies_ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 
 eval_dies_ok q[my class StubbedButNotDeclared { ... }], 'stubbing a class but not providing a definition dies';
+
+# RT #81060
+{
+    throws_like { EVAL 'class A { ... }; say A.WHAT' },
+        X::Package::Stubbed,
+        message => "The following packages were stubbed but not defined:\n    A";
+    throws_like { EVAL 'class A { ... }; class B is A {}' },
+        X::Inheritance::NotComposed,
+        message => "'B' cannot inherit from 'A' because 'A' isn't compose yet (maybe it is stubbed)";
+}
 
 # vim: ft=perl6
