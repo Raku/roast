@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 54;
+plan 56;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -327,6 +327,16 @@ plan 54;
     constant True = "Yeah, well, you know, that's just, like, your opinion, man.";
     is True, "Yeah, well, you know, that's just, like, your opinion, man.",
         'can even locally redefine True to something a bit vague';
+}
+
+# RT #114506
+{
+    class RT114506 {
+        has $.val;
+    }
+    my RT114506 constant Ticket .= new(:val("dot-equals assignment"));
+    is Ticket.WHAT, RT114506, "Constant is of the right type";
+    is Ticket.val, "dot-equals assignment", ".= new initialization on constants works";
 }
 
 # vim: ft=perl6
