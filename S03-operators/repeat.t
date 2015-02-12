@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 32;
+plan 33;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -96,5 +96,8 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     is @a[1][0], 'a', 'xx thunks the LHS';
 }
 
+{
+    is 'ABC'.ords xx 2, (65,66,67,65,66,67), "xx works on a lazy list";
+}
 
 # vim: ft=perl6
