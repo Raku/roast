@@ -97,6 +97,7 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 }
 
 {
+    #?rakudo todo 'RT 123830'
     is 'ABC'.ords xx 2, (65,66,67,65,66,67), "xx works on a lazy list";
 }
 
