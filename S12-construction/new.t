@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 26;
 
 class Parent {
     has $.x;
@@ -139,6 +139,13 @@ is $o.x, 5, '... worked for the class Parent (other order)';
         multi method new($) {}
     }
     is RT74300.new(:foo<bar>).foo, 'bar', 'multi method($) does not break attribute initialization';
+}
+
+# RT #77200
+{
+    my class RT77200 { }
+    lives_ok { my RT77200 $lex .= new },
+        "Can call .=new on a variable of a lexical type";
 }
 
 done;

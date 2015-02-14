@@ -30,8 +30,8 @@ plan 32;
   eval_dies_ok q/sub foo { @_[ -42 ] }/, "indexing lists by explicit negative index is parsefail (spaced)";
   eval_dies_ok q/sub foo { @_[0..-1] }/, "indexing lists by range ending with negative index is parsefail (compact)";
   eval_dies_ok q/sub foo { @_[ 0 .. -42 ] }/, "indexing lists by range ending with negative index is parsefail (spaced)";
-  throws_like { EVAL q/my @a = <one two>; @a[*-3] = 'zero'; @a.perl/ },
-    X::Subscript::Negative,
+  throws_like { EVAL q/my @a = <one two>; @a[*-3] = 'zero'/ },
+    X::OutOfRange,
  	"indexing lists by an effective negative index with * dies";
 }
 

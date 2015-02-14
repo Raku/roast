@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 30;
 
 
 # L<S04/The C<gather> statement prefix/>
@@ -235,5 +235,11 @@ plan 28;
     is $c.item, ($(1,10),$(2,20)).list.item, "a list of Parcels, as an item.";
 }
 
+#?rakudo skip 'RT#66820'
+{
+    my $cat;
+    lives_ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a };  +@a }, 'can access bound gather result while gathering';
+    is $cat, "11 21 2 3", 'bound gather result has up-to-date value while gathering';
+}
 
 # vim: ft=perl6

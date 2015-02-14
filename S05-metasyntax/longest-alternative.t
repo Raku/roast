@@ -294,7 +294,7 @@ my $str = 'a' x 7;
 
     my $m = IETF::RFC_Grammar::URI.subparse('http://example.com:80/about/us?foo#bar');
     ok $m, "IETF::RFC_Grammar::URI matches";
-    is $m.gist, q:to/END/.subst("\r", "", :g), "IETF::RFC_Grammar::URI gets ltm and longlit right";
+    is $m.gist, q:to/END/.subst("\r", "", :g).chop, "IETF::RFC_Grammar::URI gets ltm and longlit right";
         ｢http://example.com:80/about/us?foo#bar｣
          URI_reference => ｢http://example.com:80/about/us?foo#bar｣
           URI => ｢http://example.com:80/about/us?foo#bar｣

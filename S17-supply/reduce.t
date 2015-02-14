@@ -6,7 +6,6 @@ use Test::Tap;
 
 plan 10;
 
-#?rakudo.jvm todo "D: doesn't work in signatures RT #122229"
 dies_ok { Supply.reduce( {...} ) }, 'can not be called as a class method';
 dies_ok { Supply.new.reduce(23) }, 'must be code if specified';
 

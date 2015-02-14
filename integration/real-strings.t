@@ -65,7 +65,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 # RT #75456 hilarity
 {
     ok ('1 ' ~~ /.+/) && $/ eq '1 ', 'matching sanity';
-    ok +$/ == 1, 'numification of match objects with trailing whitespaces';
+    ok +$/ == 1, 'numification of match objects with trailing whitespace';
 
 }
 

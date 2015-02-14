@@ -8,19 +8,19 @@ use lib 't/spec/packages';
 use Test::Util;
 
 our $basic = q:to"END";
-sub collatz-sequence(Int $start) { 
+sub collatz-sequence(Int $start) {
     $start, { when * %% 2 { $_ / 2 }; when * !%% 2 { 3 * $_ + 1 }; } ... 1;
 }
- 
+
 sub MAIN(Int $min, Int $max) {
-    say [max] ($min..$max).map({ +collatz-sequence($_) });        
+    say [max] ($min..$max).map({ +collatz-sequence($_) });
 }
 END
 
 is_run $basic, {out => '', err => /^'Usage:' .*? '<min> <max>'/}, 'main usage';
 
 our $bench1 = q:to"END";
-sub collatz-length(Int $start) { 
+sub collatz-length(Int $start) {
     +($start, { when * %% 2 { $_ / 2 }; when * !%% 2 { 3 * $_ + 1 }; } ... 1);
 }
 END
@@ -29,14 +29,14 @@ our $bench2 = q:to"END";
 sub collatz-length($start) {
     given $start {
         when 1       { 1 }
-        when * !%% 2 { 1 + collatz-length(3 * $_ + 1) } 
-        when * %% 2  { 1 + collatz-length($_ / 2) } 
+        when * !%% 2 { 1 + collatz-length(3 * $_ + 1) }
+        when * %% 2  { 1 + collatz-length($_ / 2) }
     }
 }
 END
 
 our $bench3 = q:to"END";
-sub collatz-length(Int $start) { 
+sub collatz-length(Int $start) {
     +($start, { $_ %% 2 ?? $_ div 2 !! 3 * $_ + 1 } ... 1);
 }
 END
@@ -94,7 +94,7 @@ END
 
 my @numbers = 1..200, 10000..10200;
 
-sub collatz-length(Int $start) { 
+sub collatz-length(Int $start) {
     +($start, { when * %% 2 { $_ / 2 }; when * !%% 2 { 3 * $_ + 1 }; } ... 1);
 }
 my $expected-output = @numbers.map( -> $n {"$n: " ~ collatz-length($n)}).join("\n") ~ "\n";
@@ -114,8 +114,6 @@ is run-harness($bench2, 'recursive-ternary-hand-cached'), $expected-output, 'rec
 is run-harness($bench3, 'sequence-ternary'), $expected-output, 'sequence-ternary';
 is run-harness($bench4, 'loop'), $expected-output, 'loop';
 is run-harness($bench5, 'recursive-ternary'), $expected-output, 'recursive-ternary';
-#?rakudo.jvm skip 'RT #122497'
-#?rakudo.parrot skip 'RT #122497'
 is run-harness($bench6, 'hand-memoization'), $expected-output, 'hand-memoization';
 is run-harness($bench7, 'gerdr'), $expected-output, 'gerdr';
 is run-harness($bench8, 'kaz'), $expected-output, 'kaz';

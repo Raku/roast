@@ -18,7 +18,7 @@ plan 16;
         return 3;
     }
     class TypeCastSub {
-        method postcircumfix:<( )> ($capture) {return 'pretending to be a sub ' ~ testsub(|$capture) }
+        method postcircumfix:<( )> (|c) {return 'pretending to be a sub ' ~ testsub(|c) }
     }
 
     my $thing = TypeCastSub.new;

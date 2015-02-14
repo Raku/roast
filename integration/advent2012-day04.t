@@ -7,10 +7,10 @@ is do { [+] grep * %% 2, (1, 2, *+* ...^ * > 4_000_000) }, 4613732, 'fibonacci';
 
 sub largest-prime-factor($n is copy) {
     for 2, 3, *+2 ... * {
-	while $n %% $_ {
-	    $n div= $_;
-	    return $_ if $_ > $n;
-	}
+        while $n %% $_ {
+            $n div= $_;
+            return $_ if $_ > $n;
+        }
     }
 }
 
@@ -20,26 +20,26 @@ is largest-prime-factor(600_851_475_143), 6857, 'largest prime factor';
 # Problem 53
 is_deeply do {
     [1], -> @p { [0, @p Z+ @p, 0] } ... * #    generate Pascal's triangle
-	==> (*[0..100])()                     # get rows up to n = 100
-	==> map *.list                        # flatten rows into a single list
-	==> grep * > 1_000_000                # filter elements exceeding 1e6
-	==> elems()
+        ==> (*[0..100])()                     # get rows up to n = 100
+        ==> map *.list                        # flatten rows into a single list
+        ==> grep * > 1_000_000                # filter elements exceeding 1e6
+        ==> elems()
 }, 4075, "Pascal's triangle";
 
 # Problem 9
 my @triplet-prods = gather {
     sub triplets(\N) {
-	for 1..Int((1 - sqrt(0.5)) * N) -> \a {
-	    my \u = N * (N - 2 * a);
-	    my \v = 2 * (N - a);
+        for 1..Int((1 - sqrt(0.5)) * N) -> \a {
+            my \u = N * (N - 2 * a);
+            my \v = 2 * (N - a);
 
             # check if b = u/v is an integer
             # if so, we've found a triplet
-	    if u %% v {
-		my \b = u div v;
-		my \c = N - a - b;
-		take $(a, b, c);
-	    }
+            if u %% v {
+                my \b = u div v;
+                my \c = N - a - b;
+                take $(a, b, c);
+            }
         }
     }
 
@@ -70,11 +70,11 @@ BEGIN my %cache = 1 => 0;
 multi factors($n where %cache{$n}:exists) { %cache{$n} }
 multi factors($n) {
     for 2, 3, *+2 ...^ * > sqrt($n) {
-	if $n %% $_ {
-	    my $r = $n;
-	    $r div= $_ while $r %% $_;
-	    return %cache{$n} = 1 + factors($r);
-	}
+        if $n %% $_ {
+            my $r = $n;
+            $r div= $_ while $r %% $_;
+            return %cache{$n} = 1 + factors($r);
+        }
     }
     return %cache{$n} = 1;
 }
@@ -84,8 +84,6 @@ constant $N = 3; # 4 in advent post - very expensive
 my $i = 0;
 my $result;
 
-#?rakudo.jvm skip 'RT #122497'
-#?rakudo.parrot skip 'RT #122497'
 {
     for 2..* {
         $i = factors($_) == $N ?? $i + 1 !! 0;
@@ -104,8 +102,6 @@ my $result;
 
 is +(2..100 X=> 2..100).classify({ .key ** .value }), 9183, 'distinct term count';
 
-#?rakudo.jvm skip 'RT #122497'
-#?rakudo.parrot skip 'RT #122497'
 {
     constant A = 100;
     constant B = 100;

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 274;
+plan 282;
 
 # Basic test functions specific to FatRats.
 
@@ -227,5 +227,15 @@ is (2/3R) ** 3, 8/27, "FatRat raised to a positive Int power gets correct answer
     is 1 - $epsilon <=> 1,            Order::Less, '<=> Less';
 
 }
+
+is  13.0R %  4.0, 1, "infix:<%> with FatRat and Rat";
+is -13.0R %  4.0, 3, "infix:<%> with FatRat and Rat";
+is  13.0R % -4.0, -3, "infix:<%> with FatRat and Rat";
+is -13.0R % -4.0, -1, "infix:<%> with FatRat and Rat";
+
+isa_ok 4.8R % 1, FatRat, 'infix:<%> returns FatRat when it can';
+isa_ok 4 % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
+isa_ok 4.8R % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
+isa_ok 4.8R % 1.1, FatRat, 'infix:<%> returns FatRat when it can';
 
 # vim: ft=perl6

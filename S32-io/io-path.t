@@ -12,9 +12,9 @@ is IO::Path.new('/foo/bar.txt'), $path,
 
 # This assumes slash-separated paths, so it will break on, say, VMS
 
-is $path.volume,    '',        'volume';
-is $path.directory, '/foo',    'directory';
-is $path.basename,  'bar.txt', 'basename';
+is $path.volume,          '', 'volume';
+is $path.dirname,     '/foo', 'dirname';
+is $path.basename, 'bar.txt', 'basename';
 #?niecza 2 skip '.parent NYI'
 is $path.parent,    '/foo',    'parent';
 is $path.parent.parent, '/',   'parent of parent';
@@ -31,15 +31,15 @@ isa_ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 #?DOES 2
 {
   if $*DISTRO.name eq any <win32 mswin32 os2 dos symbian netware> {
-      ok "c:\\".path.is-absolute, "Win32ish OS loaded (volume)";
+      ok "c:\\".IO.is-absolute, "Win32ish OS loaded (volume)";
       is "/".path.cleanup, "\\", "Win32ish OS loaded (back slash)"
   }
   elsif $*DISTRO.name eq 'cygwin' {
-      ok "c:\\".path.is-absolute, "Cygwin OS loaded (volume)";
+      ok "c:\\".IO.is-absolute, "Cygwin OS loaded (volume)";
       is "/".path.cleanup, "/", "Cygwin OS loaded (forward slash)"
   }
   else { # assume POSIX
-      nok "c:\\".path.is-absolute, "POSIX OS loaded (no volume)";
+      nok "c:\\".IO.is-absolute, "POSIX OS loaded (no volume)";
       is "/".path.cleanup, "/", "POSIX OS loaded (forward slash)"
   }
 }

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 162;
+plan 170;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -269,9 +269,24 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
     @q2 = «$foo "$gorch" '$bar'»;
     #?niecza 3 todo
-    is(+@q2, 3, "3 elementes in sub quoted «» list");
+    is(+@q2, 3, "3 elements in sub quoted «» list");
     is(@q2[1], $gorch, 'second element is both parts of $gorch, interpolated');
     is(@q2[2], '$bar', 'single quoted $bar was not interpolated');
+};
+
+# non-flattening context still counts adjacent non-quoted words separately
+#?niecza todo
+{
+    my $gorch = "foo bar";
+    my @q := «a b c "$foo" f g $gorch m n '$bar' x y z»;
+    is(+@q, 13, "13 elements in mixed quoted/unquoted «» list, non-flattened");
+    is(@q[0], 'a', 'unquoted words are split correctly in the presence of quotes');
+    is(@q[3], $foo, 'first interpolation is $foo');
+    is(@q[4], 'f', 'unquoted between quotes is split correctly');
+    is(@q[6], $gorch, 'second quote is both parts of $gorch interpolated as sublist in non-flat context');
+    is(@q[8], 'n', 'unquoted between quotes is split correctly');
+    is(@q[9], '$bar', 'single quoted $bar was not interpolated');
+    is(@q[12], 'z', 'trailing unquoted words are split correctly in the presence of quotes');
 };
 
 { # Q L<S02/Literals/No escapes at all>

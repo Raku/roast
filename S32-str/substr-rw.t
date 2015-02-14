@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 33;
 
 sub l (Int $a) {  my $l = $a; return $l }
 
@@ -117,4 +117,19 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($o, " d", "other lvalue wiggled around (substr-rw(Int, StrLen)).");
 };
 
-# vim: ft=perl6 
+{
+    my $str = 'foo';
+    $str.substr-rw(2,1) = 'x';
+    is($str, 'fox', 'method form of substr-rw works');
+};
+
+# RT #114526
+#?rakudo.parrot skip 'RT #114526'
+{
+    my $str = 'ab';
+    substr-rw($str, 0, 3) = '/';
+    is "--$str--", '--/--',
+        'substr-rw handles end positions that are out of range';
+}
+
+# vim: ft=perl6

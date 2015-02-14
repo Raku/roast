@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 12;
+plan 13;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -33,6 +33,20 @@ is_run(
      "\n" ~ '} }',
     { status => 0, out => '', err => ''},
     'presence of postcircumfix does not lead to redeclaration warnings',
+);
+
+my $code = q:to'--END--';
+    my $x;
+    multi sub foo($n where True) { temp $x; }
+    foo($_) for 1 ... 1000;
+    print 'alive';
+    --END--
+
+# RT #123686
+is_run(
+       $code,
+       { status => 0, out => "alive"},
+       'multi sub with where clause + temp stress',
 );
 
 throws_like { EVAL 'time(1, 2, 3)' },

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 47;
 
 # L<S02/Names and Variables/:exists>
 
@@ -97,5 +97,13 @@ sub gen_hash {
 
     is %h.elems, 26, "should not have changed hash";
 } #46
+
+# RT #122497
+{
+    BEGIN my %cache = 1 => 0;
+    sub foo($n) {%cache{$n}:exists}
+    is foo(42), False,
+        'no internal error with :exists adverb on non existing key of hash initialized at BEGIN time';
+}
 
 # vim: ft=perl6

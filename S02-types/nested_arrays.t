@@ -34,6 +34,7 @@ plan 9;
 }
 
 # RT #98954
+#?rakudo skip 'Should we fail, or should we throw'
 {
     my @a = [1], [2], [3];
     is (map { @a[1 - $_][0] }, 0 .. 3).perl,

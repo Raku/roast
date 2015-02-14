@@ -1,4 +1,4 @@
-6; # same as 'no strict'
+no strict;
 use Test;
 plan 5;
 

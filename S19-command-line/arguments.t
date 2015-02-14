@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 1;
+plan 2;
 
 use lib 't/spec/packages';
 use Test::Util;
@@ -22,4 +22,13 @@ use Test::Util;
         },
         'concise error message when called script not found' );
     }
+}
+
+# RT #77894
+{
+    my $cmd = $*DISTRO.is-win 
+        ?? 'echo exit(42) | \qq[$*EXECUTABLE] -'
+        !! 'echo "exit(42)" | \qq[$*EXECUTABLE] -';
+
+    is shell($cmd).exit, 42, "'-' as argument means STDIN";
 }

@@ -109,10 +109,10 @@ isa_ok ($ks (-) $s), Set, "... and it's actually a Set";
 is showkv($b (-) $s), showkv($b), "Set subtracted from Bag is correct";
 isa_ok ($b (-) $s), Bag, "... and it's actually a Bag";
 is showset($s (-) $b), showset($s), "Bag subtracted from Set is correct";
-isa_ok ($s (-) $b), Set, "... and it's actually a Set";
+isa_ok ($s (-) $b), Bag, "... and it's actually a Bag";
 
 is showset($s (-) $kb), showset(set <I'm afraid it isn't day>), "BagHash subtracted from Set is correct";
-isa_ok ($s (-) $kb), Set, "... and it's actually a Set";
+isa_ok ($s (-) $kb), Bag, "... and it's actually a Bag";
 is showkv($kb (-) $s), showkv(<Come, take your bread with joy, and wine with a glad heart>.Bag), "Set subtracted from BagHash is correct";
 isa_ok ($kb (-) $s), Bag, "... and it's actually a Bag";
 

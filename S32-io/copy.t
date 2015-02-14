@@ -19,28 +19,28 @@ my $zero-length-file  = "tempfile-zero-length-copy";
 }
 
 # sanity check
-ok $existing-file.path.e, 'It exists';
-ok $zero-length-file.path.e, 'It exists';
-nok $non-existent-file.path.e, "It doesn't";
+ok $existing-file.IO.e, 'It exists';
+ok $zero-length-file.IO.e, 'It exists';
+nok $non-existent-file.IO.e, "It doesn't";
 
-# method .path.copy
+# method .IO.copy
 #?niecza skip 'Unable to resolve method s in class IO'
 {
     my $existing-file-mtgt     = "tempfile-copy-mtgt";
     my $non-existent-file-mtgt = "non-existent-copy-mtgt";
     my $zero-length-file-mtgt  = "tempfile-zero-length-copy-mtgt";
     
-    ok $existing-file.path.copy( $existing-file-mtgt ), '.path.copy normal file';
-    ok $existing-file-mtgt.path.e, 'It exists';
-    ok $existing-file-mtgt.path.s, 'It has a size';
-    is $existing-file-mtgt.path.s, $existing-file.path.s, 'The size is equal to source file';
+    ok $existing-file.IO.copy( $existing-file-mtgt ), '.IO.copy normal file';
+    ok $existing-file-mtgt.IO.e, 'It exists';
+    ok $existing-file-mtgt.IO.s, 'It has a size';
+    is $existing-file-mtgt.IO.s, $existing-file.IO.s, 'The size is equal to source file';
 
-    dies_ok { $non-existent-file.path.copy( $non-existent-file-mtgt ) }, '.path.copy missing file';
-    nok $non-existent-file-mtgt.path.e, "It doesn't"; 
-    ok $zero-length-file.path.copy( $zero-length-file-mtgt ), '.path.copy empty file';
-    ok $zero-length-file-mtgt.path.e, 'It exists';
-    nok $zero-length-file-mtgt.path.s, 'It has no size';
-    is $zero-length-file-mtgt.path.s, $zero-length-file.path.s, 'The size is equal to source file';
+    dies_ok { $non-existent-file.IO.copy( $non-existent-file-mtgt ) }, '.IO.copy missing file';
+    nok $non-existent-file-mtgt.IO.e, "It doesn't"; 
+    ok $zero-length-file.IO.copy( $zero-length-file-mtgt ), '.IO.copy empty file';
+    ok $zero-length-file-mtgt.IO.e, 'It exists';
+    nok $zero-length-file-mtgt.IO.s, 'It has no size';
+    is $zero-length-file-mtgt.IO.s, $zero-length-file.IO.s, 'The size is equal to source file';
 
     ok unlink($existing-file-mtgt), 'file has been removed';
     ok unlink($zero-length-file-mtgt), 'file has been removed';
@@ -54,17 +54,17 @@ nok $non-existent-file.path.e, "It doesn't";
     my $zero-length-file-stgt  = "tempfile-zero-length-copy-stgt";
     
     ok copy( $existing-file, $existing-file-stgt ), 'copy() normal file';
-    ok $existing-file-stgt.path.e, 'It exists';
-    ok $existing-file-stgt.path.s, 'It has a size';
-    is $existing-file-stgt.path.s, $existing-file.path.s, 'The size is equal to source file';
+    ok $existing-file-stgt.IO.e, 'It exists';
+    ok $existing-file-stgt.IO.s, 'It has a size';
+    is $existing-file-stgt.IO.s, $existing-file.IO.s, 'The size is equal to source file';
 
     dies_ok { copy( $non-existent-file, $non-existent-file-stgt ) }, 'copy() missing file';
-    nok $non-existent-file-stgt.path.e, "It doesn't";
+    nok $non-existent-file-stgt.IO.e, "It doesn't";
 
     ok copy( $zero-length-file, $zero-length-file-stgt ), 'copy() empty file';
-    ok $zero-length-file-stgt.path.e, 'It exists';
-    nok $zero-length-file-stgt.path.s, 'It has no size';
-    is $zero-length-file-stgt.path.s, $zero-length-file.path.s, 'The size is equal to source file';
+    ok $zero-length-file-stgt.IO.e, 'It exists';
+    nok $zero-length-file-stgt.IO.s, 'It has no size';
+    is $zero-length-file-stgt.IO.s, $zero-length-file.IO.s, 'The size is equal to source file';
 
     ok unlink($existing-file-stgt), 'file has been removed';
     ok unlink($zero-length-file-stgt), 'file has been removed';

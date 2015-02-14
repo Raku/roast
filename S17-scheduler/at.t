@@ -49,9 +49,9 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     my $tracker = '';
     my @c;
     push @c, $*SCHEDULER.cue({ $tracker ~= '2s'; }, :at(now + 2));
-    ok @c[*-1].can("cancel"), 'can we cancel (1)';
+    ok @c && @c[*-1].can("cancel"), 'can we cancel (1)';
     push @c, $*SCHEDULER.cue({ $tracker ~= '1s'; }, :at(now + 1));
-    ok @c[*-1].can("cancel"), 'can we cancel (2)';
+    ok @c && @c[*-1].can("cancel"), 'can we cancel (2)';
     is $tracker, '2s1s', "Cue on $name with :at *DOES* schedule immediately";
     LEAVE @c>>.cancel;
 }
@@ -65,13 +65,13 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
       :catch({ $tracker ~= '2scatch'})
     );
     #?rakudo todo "huh?"
-    ok @c[*-1].can("cancel"), 'can we cancel (3)';
+    ok @c && @c[*-1].can("cancel"), 'can we cancel (3)';
     push @c, $*SCHEDULER.cue(
       { $tracker ~= '1s'; },
       :at(now + 1),
       :catch({ $tracker ~= '1scatch'})
     );
-    ok @c[*-1].can("cancel"), 'can we cancel (4)';
+    ok @c && @c[*-1].can("cancel"), 'can we cancel (4)';
     is $tracker, '2s2scatch1s', "Cue on $name with :at/:catch *DOES* schedule immediately";
     LEAVE @c>>.cancel;
 }

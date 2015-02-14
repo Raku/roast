@@ -131,6 +131,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 }
 
 #?niecza todo
+#?rakudo todo "This seems unneccessarily restrictive"
 eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
 # RT #76682

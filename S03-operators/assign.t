@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 293;
+plan 295;
 
 
 # tests various assignment styles
@@ -233,13 +233,13 @@ my @p;
 {
     my $a;
     @p = $a or= 3, 4;
-    is($a,3, "or= operator");
-    is(@p[0],3, "or= operator parses as item assignment 1");
-    is(@p[1],4, "or= operator parses as item assignment 2");
+    is($a,(3,4), "or= operator");
+    is(@p[0][0],3, "or= operator parses as list assignment 1");
+    is(@p[0][1],4, "or= operator parses as list assignment 2");
     @p = $a or= 10, 11;
-    is($a,3, "... and second");
-    is(@p[0],3, "or= operator parses as item assignment 3");
-    is(@p[1],11, "or= operator parses as item assignment 4");
+    is($a,(3,4), "... and second");
+    is(@p[0][0],3, "or= operator parses as list assignment 3");
+    is(@p[0][1],4, "or= operator parses as list assignment 4");
 }
 
 {
@@ -266,15 +266,15 @@ my @p;
     my $a;
     @p = $a orelse= 3, 4;
     #?niecza 3 todo
-    is($a, 3, "orelse= operator");
-    is(@p[0],3, "orelse= operator parses as item assignment 1");
-    is(@p[1],4, "orelse= operator parses as item assignment 2");
+    is($a, (3,4), "orelse= operator");
+    is(@p[0][0],3, "orelse= operator parses as list assignment 1");
+    is(@p[0][1],4, "orelse= operator parses as list assignment 2");
 
     @p = $a orelse= 10, 11;
     #?niecza 3 todo
-    is($a, 3, "... and second");
-    is(@p[0],3, "orelse= operator parses as item assignment 3");
-    is(@p[1],11, "orelse= operator parses as item assignment 4");
+    is($a, (3,4), "... and second");
+    is(@p[0][0],3, "orelse= operator parses as list assignment 3");
+    is(@p[0][1],4, "orelse= operator parses as list assignment 4");
 
     my %hash;
     %hash<foo> orelse= hash();
@@ -306,15 +306,15 @@ my @p;
     my $a = 3;
     @p = $a and= 42, 43;
     #?niecza 3 todo
-    is($a, 42, "and= operator");
-    is(@p[0],42, "and= operator parses as item assignment 1");
-    is(@p[1],43, "and= operator parses as item assignment 2");
+    is($a, (42,43), "and= operator");
+    is(@p[0][0],42, "and= operator parses as list assignment 1");
+    is(@p[0][1],43, "and= operator parses as list assignment 2");
     $a = 0;
     @p = $a and= 10, 11;
     is($a, 0, "... and second");
-    is(@p[0],0, "and= operator parses as item assignment 3");
+    is(@p[0][0],0, "and= operator parses as list assignment 3");
     #?niecza todo
-    is(@p[1],11, "and= operator parses as item assignment 4");
+    ok(@p[0][1]:!exists, "and= operator parses as list assignment 4");
     my $x = True; $x and= False;
     is($x, False, "and= operator with True and False");
 }
@@ -481,9 +481,9 @@ my @p;
 {
     my $x;
     @p = $x xor= 42, 43;
-    is($x, 42, 'xor= operator');
-    is(@p[0],42, "xor= operator parses as item assignment 1");
-    is(@p[1],43, "xor= operator parses as item assignment 2");
+    is($x, (42,43), 'xor= operator');
+    is(@p[0][0],42, "xor= operator parses as list assignment 1");
+    is(@p[0][1],43, "xor= operator parses as list assignment 2");
     $x xor= 15;
     #?rakudo todo 'unknown'
     is $x, False, 'xor= with two true arguments yields False';
@@ -791,7 +791,6 @@ sub l () { 1, 2 };
 {
     my @a = 1, 2;
     is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)';
-    #?rakudo todo 'huh?'
     is  @a.join('|'), '1|2|3|4', ',= on lists works the same as push (effect on array)';
 }
 
@@ -942,12 +941,22 @@ sub l () { 1, 2 };
 }
 
 # RT #76414
-#?rakudo todo 'RT #76414'
 {
     my @rt76414 = (1, 2);
     @rt76414 ,= 3, 4;         # same as push(@rt76414,3,4) according to S03
     is @rt76414, (1, 2, 3, 4),
         'infix:<,=> has list precedence in the cases where infix:<=> does';
+}
+
+# RT #72874
+{
+    throws_like { EVAL "6 >== 2" }, X::Syntax::Can'tMeta,
+        "Can't use diffy >= with the = metaop ";
+}
+
+{
+    throws_like { EVAL "6 ~~= 2" }, X::Syntax::Can'tMeta,
+        "Can't use fiddly ~~ with the = metaop ";
 }
 
 # vim: ft=perl6

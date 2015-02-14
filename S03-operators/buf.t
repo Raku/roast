@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 42;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -42,8 +42,8 @@ ok  Buf.new(1), 'non-empty Buf is true';
 ok Buf.new(1, 2, 3, 4).subbuf(2) eqv Buf.new(3, 4), '.subbuf(start)';
 ok Buf.new(1, 2, 3, 4).subbuf(1, 2) eqv Buf.new(2, 3), '.subbuf(start, len)';
 
-# Length out of bounds. Behave like substr, return elemens available.
-ok Buf.new(1, 2).subbuf(0, 3) eqv Buf.new(1,2), '.substr length out of bounds';
+# Length out of bounds. Behave like substr, return elements available.
+ok Buf.new(1, 2).subbuf(0, 3) eqv Buf.new(1,2), '.subbuf length out of bounds';
 ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
 
 { # Throw on negative range
@@ -93,3 +93,17 @@ ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
     is Any ~ 'bar'.encode, 'bar', 'can concat a buffer to something undefined'; #OK
 }
 
+# .bytes tests
+{
+    my $a = buf8.new(1, 2, 3, 4, 5);
+    is $a.bytes, 5, "buf8 .bytes correct";
+    
+    my $b = buf16.new(1, 2, 3, 4, 5);
+    is $b.bytes, 10, "buf16 .bytes correct";
+    
+    my $c = buf32.new(1, 2, 3, 4, 5);
+    is $c.bytes, 20, "buf32 .bytes correct";
+    
+    my $d = buf64.new(1, 2, 3, 4, 5);
+    is $d.bytes, 40, "buf64 .bytes correct";
+}

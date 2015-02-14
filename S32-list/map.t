@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 59;
+plan 61;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -253,4 +253,13 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     my @a = map &sprintf.assuming("%x"), 9..12;
     is(@a, <9 a b c>, "map over a callable with a slurpy");
 }
+
+# RT #120620
+{
+    is [foo => (1,2,3).map: {$_}].[0].value.join(":"), '1:2:3',
+        'map on list in array does not lose content';
+    is {foo => (1,2,3).map: {$_}}<foo>.join(":"), '1:2:3',
+        'map on list in hash does not lose content';
+}
+
 # vim: ft=perl6

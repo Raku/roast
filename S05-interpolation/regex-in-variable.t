@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 34;
+plan 35;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -44,6 +44,9 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
     my $a = 'a';
     ok 'a' ~~ / $a /, 'match with string as rx works';
 }
+
+# RT #100232
+eval_dies_ok Q[my $x = '1}; say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbage-in recognized as being garbage (see RT)";
 
 # Arrays
 

@@ -39,7 +39,6 @@ ok dsi('2005-12-31T23:59:60') < dsi('2006-01-01T00:00:00'), 'DateTime.Instant co
 
 is diff(second => 5), 5, 'Instant subtraction (seconds)';
 is diff(second => 2/7), 2/7, 'Instant subtraction (non-integral seconds)';
-#?rakudo todo 'high-precision Instants NYI (need FatRats)'
 is diff(second => 3.14159), 3.14159, 'Instant subtraction (needing high precision)';
 is diff(minute => 15), 15 * 60, 'Instant subtraction (minutes)';
 is diff(:hour(3), :minute(15), :second(33)),
@@ -95,7 +94,6 @@ is DateTime.new(dtpi 2005, 12, 31,   23, 59, 59.5).second, 59.5, 'Round-tripping
 is DateTime.new(dtpi 2005, 12, 31,   23, 59, 60.5).second, 60.5, 'Round-tripping DateTime.Instant (2005-12-31T23:59:60.5Z)';
 is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.5).second,  0.5, 'Round-tripping DateTime.Instant (2006-01-01T00:00:00.5Z)';
 
-#?rakudo 3 todo 'high-precision Instants NYI (need FatRats)'
 is DateTime.new(dtpi 2005, 12, 31,   23, 59, 59.2).second, 59.2, 'Round-tripping DateTime.Instant (2005-12-31T23:59:59.2Z)';
 is DateTime.new(dtpi 2005, 12, 31,   23, 59, 60.2).second, 60.2, 'Round-tripping DateTime.Instant (2005-12-31T23:59:60.2Z)';
 is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping DateTime.Instant (2006-01-01T00:00:00.2Z)';

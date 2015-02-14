@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 {
     my Channel $c .= new;
@@ -48,4 +48,11 @@ plan 15;
 {
     my $p = Supply.for(1..5);
     is ~@($p.Channel), "1 2 3 4 5", "Supply.for and @(.Channel) work";
+}
+
+{
+    my $c = Channel.new;
+    $c.close;
+    is $c.closed.status, Kept, 'Closing a channel immediately keeps its .closed promise';
+
 }

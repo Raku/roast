@@ -6,8 +6,7 @@ use Test::Tap;
 
 plan 13;
 
-#?rakudo.jvm todo "D: doesn't work in signatures RT #122229"
-dies_ok { Supply.delay(1) }, 'can not be called as a class method';
+dies_ok { Supply.delayed(1) }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -17,7 +16,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $delay = 2;
         my $now   = now;
         my $seen;
-        tap_ok $now.Supply.delay($delay),
+        tap_ok $now.Supply.delayed($delay),
           [$now],
           ".delay with on-demand Supply worked",
           :emit( { $seen = now } ),
@@ -31,7 +30,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s     = Supply.new;
         my $now   = now;
         my $seen;
-        tap_ok $s.delay($delay),
+        tap_ok $s.delayed($delay),
           [$now],
           ".delay with live Supply worked",
           :live,
@@ -47,7 +46,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $for   = Supply.for(1..10);
-        my $delay = $for.delay(0);
+        my $delay = $for.delayed(0);
         ok $for === $delay, "delaying by 0 is a noop";
         tap_ok $delay, [1..10], "noop delay";
     }

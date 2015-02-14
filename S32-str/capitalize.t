@@ -6,7 +6,6 @@ plan 17;
 
 # L<S32::Str/Str/wordcase>
 
-#?rakudo.parrot skip 'related to RT #117889'
 is wordcase(""),             "",               "wordcase('') works";
 is wordcase("puGS Is cOOl!"), "Pugs Is Cool!", "wordcase('...') works";
 is "puGS Is cOOl!".wordcase,  "Pugs Is Cool!", "'...'.wordcase works";
@@ -15,7 +14,6 @@ is "don't sit under the apple tree".wordcase, "Don't Sit Under The Apple Tree", 
 is "tir-na nog'th".wordcase, "Tir-na Nog'th", "wordcase works properly with apostrophes and dashes";
 
 my $a = "";
-#?rakudo.parrot skip 'related to RT #117889'
 is wordcase($a),             "",               "wordcase empty string";
 $a = "puGS Is cOOl!";
 is wordcase($a),             "Pugs Is Cool!",  "wordcase string works";
@@ -39,7 +37,7 @@ is wordcase("a\c[COMBINING DIAERESIS]üö abcä"), "Äöü Abcä", 'wordcase on 
 is wordcase("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",
     "wordcase on string with grapheme without precomposed";
-    
+
 # rest of the tests are moved from uc.t
 is ~(0.wordcase), ~0, '.wordcase on Int';
 

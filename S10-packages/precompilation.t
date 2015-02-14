@@ -28,7 +28,7 @@ is_deeply @keys, [<A B C>], 'Diamond relationship';
 
 #?rakudo.jvm todo 'RT #122896'
 #?rakudo.moar todo 'RT #122896'
-is_run 'use Example::C; f();', { err => '', out => '', status => 0 }, 'precompile exported cached sub';
+is_run 'use lib "t/spec/packages"; use Example::C; f();', { err => '', out => '', status => 0 }, 'precompile exported cached sub';
 
 unlink $_ for @precomp-paths;
 
@@ -78,6 +78,7 @@ unlink $_ for @precomp-paths;
     }
 
     my @keys = Test::Util::run( q:to"--END--").lines;
+        use lib 't/spec/packages';
         use RT123276::B::C1;
         use RT123276::B::C2;
         say RT123276::B::C1.^methods

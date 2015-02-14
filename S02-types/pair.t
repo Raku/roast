@@ -12,7 +12,6 @@ isa_ok($pair, Pair);
 
 # get key and value from the pair as many ways as possible
 
-#?rakudo 2 skip 'method($invocant:) syntax missing'
 #?niecza 2 skip 'Invocant handling is NYI'
 is(key($pair:), 'foo', 'got the right key($pair:)');
 is(value($pair:), 'bar', 'got the right value($pair:)');

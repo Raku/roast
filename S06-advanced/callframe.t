@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 #?niecza emit plan 8; #
-plan 9;
+plan 11;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -41,6 +41,11 @@ f();
 #?niecza todo 'needs .my'
 is $x,  23, '$x successfully modified';
 is $y, 353, '$y not modified';
+
+# RT #77752
+is index(callframe.perl,"CallFrame.new("), 0, 'CallFrame.perl works';
+# (Could probably be more readable, currently same as .perl)
+is index(callframe.gist,"CallFrame.new("), 0, 'CallFrame.gist works';
 
 done();
 

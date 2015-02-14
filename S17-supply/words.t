@@ -6,7 +6,6 @@ use Test::Tap;
 
 plan 5;
 
-#?rakudo.jvm todo "?"
 dies_ok { Supply.words }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {

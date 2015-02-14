@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 39;
 
 =begin pod
 
@@ -72,4 +72,20 @@ eval_dies_ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
         'adequate error message on trying to metaop-reverse binding (:=)';
 }
 
+# RT #116649
+{
+    my $y = 5;
+    is $y [R/]= 1, 1/5, '[R/]= works correctly (1)';
+    sub r2cf(Rat $x is copy) {
+        gather $x [R/]= 1 while ($x -= take $x.floor) > 0
+    }
+    is r2cf(1.4142136).join(" "), '1 2 2 2 2 2 2 2 2 2 6 1 2 4 1 1 2',
+        '[R/]= works correctly (2)';
+}
+
+{
+    my $foo = "foo";
+    $foo [R~]= "bar";
+    is $foo, "barfoo", '[Rop]= works correctly.';
+}
 # vim: ft=perl6

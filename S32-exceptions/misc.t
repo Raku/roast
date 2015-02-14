@@ -1,7 +1,9 @@
 use v6;
 use Test;
+use lib "t/spec/packages";
+use Test::Util;
 
-plan 274;
+plan 278;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -225,7 +227,7 @@ throws_like 'Date.new("2012-02-30")', X::OutOfRange,
     range => Range, message => rx/<<1\.\.29>>/;
 throws_like 'DateTime.new(year => 2012, month => 5, day => 22, hour => 18, minute => 3, second => 60)',
             X::OutOfRange, comment => /'leap second'/;
-throws_like 'use fatal; "foo"[2]', X::OutOfRange, what => rx:i/index/, range => 0..0, got => 2;
+throws_like 'use fatal; "foo"[2]', X::OutOfRange, what => rx:i/index/, range => '0..0', got => 2;
 
 throws_like 'sub f() { }; &f.unwrap("foo")', X::Routine::Unwrap;
 
@@ -239,7 +241,7 @@ throws_like 'sub f() { }; &f.unwrap("foo")', X::Routine::Unwrap;
 throws_like 'my %h = 1', X::Hash::Store::OddNumber;
 
 # TOOD: might be X::Syntax::Malformed too...
-throws_like 'sub foo;', X::Syntax::Missing, what => 'block';
+throws_like 'sub foo;', X::SemicolonForm::Invalid, what => 'sub';
 # RT #75776
 throws_like 'my $d; my class A {method x { $d }}; for () { sub }', X::Syntax::Missing, what => 'block';
 throws_like 'constant foo;', X::Syntax::Missing, what => /initializer/;
@@ -424,6 +426,10 @@ if $emits_suggestions {
         ok $! ~~ X::Undeclared::Symbols, "Ecxeption.new throws X::Undeclared::Symbols";
         is $!.type_suggestion<Ecxeption>, ["Exception"], 'Exception is a suggestion';
     }
+
+    throws_like 'sub greet($name) { say "hello, $nam" }', X::Undeclared, suggestions => '$name';
+
+    throws_like 'class Greeter { has $.name; method greet { say "hi, $name" } }', X::Undeclared, suggestions => '$!name';
 }
 
 # RT 77270
@@ -533,6 +539,9 @@ throws_like 'sub infix:<> (){}', X::Comp::Group,
 throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
   'unknown operator should complain better';
 
+# RT #72816
+throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
+
 {
     my $*foo = 0;
     throws_like { EVAL '$*foo = 1; say' }, X::Obsolete;
@@ -578,6 +587,11 @@ throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
     throws_like { EVAL q[ ord.Cool ] }, X::Obsolete,
         message => q[Unsupported use of bare 'ord'; in Perl 6 please use .ord if you meant $_, or use an explicit invocant or argument],
         'adequate error message when calling bare "ord"';
+}
+
+# RT #123584
+{
+    is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS:\nUseless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
 }
 
 # vim: ft=perl6

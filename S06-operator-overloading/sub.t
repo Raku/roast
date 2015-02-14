@@ -289,7 +289,9 @@ Testing operator overloading subroutines
     sub circumfix:<<` `>>(*@args) { @args.join('-') }
     is `3, 4, "f"`, '3-4-f', 'slurpy circumfix:<<...>> works';
     is ` 3, 4, "f" `, '3-4-f', 'slurpy circumfix:<<...>> works, allows spaces';
+}
 
+{
     sub circumfix:<⌊ ⌋>($e) { $e.floor }
     is ⌊pi⌋, 3, 'circumfix with non-Latin1 bracketing characters';
     is ⌊ pi ⌋, 3, 'circumfix with non-Latin1 bracketing characters, allows spaces';

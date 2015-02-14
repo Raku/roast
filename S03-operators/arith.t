@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 154;
+plan 156;
 
 my $five = abs(-5);
 
@@ -322,14 +322,14 @@ All uses of a zero modulus or divisor should 'die', and the
     throws_like { say 0 / 0 }, X::TypeCheck::Binding,
         message => q[Type check failed in binding; expected 'Int' but got 'Failure'],
         'Division by zero with infix:</> dies and is catchable (1)';
-    throws_like { say 3 / 0 }, X::TypeCheck::Return,
-        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+    throws_like { say 3 / 0 }, X::Numeric::DivideByZero,
+        message => q[Divide by zero],
         'Division by zero with infix:</> dies and is catchable (2)';
-    throws_like { my $x = 0; say 3.5 / $x }, X::TypeCheck::Return,
-        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+    throws_like { my $x = 0; say 3.5 / $x }, X::Numeric::DivideByZero,
+        message => q[Divide by zero],
         'Division by zero with infix:</> dies and is catchable with VInt/VRat variables';
-    throws_like { my $x = 0; say 4 / $x }, X::TypeCheck::Return,
-        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+    throws_like { my $x = 0; say 4 / $x }, X::Numeric::DivideByZero,
+        message => q[Divide by zero],
         'Division by zero with infix:</> dies and is catchable with VRef variables';
 }
 
@@ -351,8 +351,7 @@ All uses of a zero modulus or divisor should 'die', and the
 # RT #73386
 {
     # TODO: implement typed exception and adapt test
-    throws_like { EVAL q[ 3 !+ 4 ] }, Exception,
-        message => 'Cannot negate + because it is not iffy enough',
+    throws_like { EVAL q[ 3 !+ 4 ] }, X::Syntax::Can'tMeta,
         'infix<!+> is not iffy enough; RT #73386';
 }
 
@@ -372,8 +371,9 @@ All uses of a zero modulus or divisor should 'die', and the
 
 # RT #122053
 isa_ok 4.8 / 1, Rat, 'infix:</> returns Rat when it can';
-#?rakudo todo 'RT #122053'
 isa_ok 4.8 % 1, Rat, 'infix:<%> returns Rat when it can';
+isa_ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
+isa_ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 
 done;
 

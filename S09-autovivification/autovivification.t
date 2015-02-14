@@ -3,7 +3,7 @@ use Test;
 
 # L<S09/"Autovivification">
 
-plan 42;
+plan 44;
 
 #?niecza todo
 {
@@ -183,5 +183,19 @@ lives_ok {
 dies_ok {
   &New::Package::foo();
 }, "...but invoking undeclared globally qualifed code variable should die";
+
+{
+    my @array;
+
+    @array[42;23] = 17;
+    is @array[42][23], 17, "autovivificaion of arrays works via multidim syntax";
+}
+
+{
+  my %hash;
+
+  %hash{'key';'innerkey'} = 17;
+  is %hash<key><innerkey>, 17, "autovivification of hashes works via multidim syntax";
+}
 
 # vim: ft=perl6

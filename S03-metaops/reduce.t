@@ -382,10 +382,8 @@ ok ([+]) == 0, 'argumentless [+] parses';
 }
 
 # RT #79116
-# TODO: better test using throws_like -- probably once this test passes
-#?rakudo todo 'RT #79116'
 {
-    dies_ok { my $rt79116 = [leg] <a b c> },
+    throws_like '[leg] <a b c>', X::Syntax::Can'tMeta,
         'non-associative operator "[leg]" can not be used as reduction operator';
 }
 

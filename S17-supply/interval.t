@@ -6,7 +6,6 @@ use Test::Tap;
 
 plan 3;
 
-#?rakudo.jvm todo 'QAST::ParamTypeCheck needs to be implemented on jvm'
 dies_ok { Supply.new.interval(1) }, 'can not be called as an instance method';
 
 {
