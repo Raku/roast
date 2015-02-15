@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 278;
+plan 280;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -45,6 +45,11 @@ throws_like 'sub f($?x) { }',  X::Parameter::Twigil,
         parameter => '$?x',
         twigil    => '?';
 throws_like 'sub (Int Str $x) { }', X::Parameter::MultipleTypeConstraints;
+
+
+# RE #123834
+throws_like 'sub f($x = 60 is rw) { }', X::Parameter::AfterDefault, type => 'trait';
+throws_like 'sub f($x = 60 where Int) { }', X::Parameter::AfterDefault, type => 'post constraint';
 
 
 
