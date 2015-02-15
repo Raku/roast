@@ -42,7 +42,7 @@ my $code = q:to'--END--';
     print 'alive';
     --END--
 
-# RT #123686
+#?rakudo.moar todo "RT #123686"
 is_run(
        $code,
        { status => 0, out => "alive"},
