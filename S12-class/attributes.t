@@ -117,7 +117,6 @@ eval_dies_ok q[
 
 # RT 74850
 #?niecza skip "Unhandled exception: Unable to resolve method ctxzyg in type Method"
-#?rakudo skip "Cannot use .= to initialize an attribute"
 {
     class A { };
     class B { has A $.foo .= new };
