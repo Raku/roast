@@ -47,7 +47,7 @@ throws_like 'sub f($?x) { }',  X::Parameter::Twigil,
 throws_like 'sub (Int Str $x) { }', X::Parameter::MultipleTypeConstraints;
 
 
-# RE #123834
+# RT #123834
 throws_like 'sub f($x = 60 is rw) { }', X::Parameter::AfterDefault, type => 'trait';
 throws_like 'sub f($x = 60 where Int) { }', X::Parameter::AfterDefault, type => 'post constraint';
 
