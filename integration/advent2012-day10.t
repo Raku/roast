@@ -47,14 +47,7 @@ is q{{Unmatched } and { are { OK } in { here}}, q:to"END".chomp;
 Unmatched } and { are { OK } in { here
 END
 
-sub like($str, $m) {
-    my $ok = $str ~~ $m;
-    diag "$str does not match"
-	unless $ok;
-    $ok
-}
-
-ok like(qq!Lottery results: {(1..49).roll(6).sort}!, /^'Lottery results:'[' '\d+]**6$/), 'lottery results';
+like(qq!Lottery results: {(1..49).roll(6).sort}!, /^'Lottery results:'[' '\d+]**6$/), 'lottery results';
 
 my $pub-with-no-beer = q<Once upon a time, there was a pub. The pub had
 lots of awesome beer. One day, a Perl workshop
@@ -104,14 +97,14 @@ Found vacation
 Didn't find whisky
 END RESULTS
 
-ok like(qq:!s"It costs $10 to {<eat nom>.pick} here.", /^'It costs $10 to '[eat|nom]' here.'$/), 'quoting features';
+like(qq:!s"It costs $10 to {<eat nom>.pick} here.", /^'It costs $10 to '[eat|nom]' here.'$/), 'quoting features';
 
 is Q{$*OS\n&sin(3)}, q:to"END".chomp;
 $*OS\n&sin(3)
 END
 
-ok like(Q:s{$*OS\n&sin(3)}, /\w+ .*? '\n&sin(3)'/), 'Q:s(...)';
+like(Q:s{$*OS\n&sin(3)}, /\w+ .*? '\n&sin(3)'/), 'Q:s(...)';
 
-ok like(Q:s:b{$*OS\n&sin(3)}, /\w+ .*? \n '&sin(3)'/), 'Q:s:b(...)';
+like(Q:s:b{$*OS\n&sin(3)}, /\w+ .*? \n '&sin(3)'/), 'Q:s:b(...)';
 
-ok like(Q:s:b:f{$*OS\n&sin(3)}, /\w+ .*? \n '0.14112'\d+$/), 'Q:s:b:f(...)';
+like(Q:s:b:f{$*OS\n&sin(3)}, /\w+ .*? \n '0.14112'\d+$/), 'Q:s:b:f(...)';
