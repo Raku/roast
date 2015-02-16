@@ -97,7 +97,6 @@ is("I\xcaJ".trans('I..J' => 'i..j'), "i\xcaj");
 is("\x12c\x190".trans("\x12c" => "\x190"), "\x190\x190");
 
 # should these be combined?
-#?rakudo todo 'disambiguate ranges'
 #?niecza todo
 is($b.trans('A..H..Z' => 'a..h..z'), $a,
     'ambiguous ranges combined');
