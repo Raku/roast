@@ -3,7 +3,7 @@ use v6;
 use Test;
 plan 2;
 
-# RT122423
+# RT #122423
 is (42)[*/2], 42, 'Indexing half way into one element list';
 
 # http://irclog.perlgeek.de/perl6/2015-01-23#i_9994456

@@ -52,7 +52,7 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     is($y.x, 42, "class attributes shared by all instances");
 }
 
-# RT#122087
+# RT #122087
 {
     class Woof {
         my $.x = 'yap';

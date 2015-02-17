@@ -46,7 +46,7 @@ plan 32;
     is_deeply ({ :$:f }(:f(3))), (f => 3), 'Adverb with $: twigil works';
     is_deeply ({ :@:f }(:f(3,3))), (f => (3,3)), 'Adverb with @: twigil works';
     is_deeply ({ :%:f }(:f(:a<3>))), (f => :a<3>), 'Adverb with %: twigil works';
-    # Not using sigils in rx due to RT#121061 but we do not need to for this
+    # Not using sigils in rx due to RT #121061 but we do not need to for this
     "aaaa" ~~ m/$<fee>=a $<fie>=((a)(a)) $<foe>=($<fum>=(a))/;
     is_deeply (:$<fee>), (fee => $<fee>), 'Adverb with $< twigil works';
     #?rakudo 2 skip ":@<...> and :%<...> broken needs RT"

@@ -140,7 +140,7 @@ is(+Range, 0, 'type numification');
     ok(-.2 ~~ $inf, 'negative non-int matches *..*');
 }
 
-# ranges constructed from parameters, from RT#63002.
+# ranges constructed from parameters, from RT #63002
 {
     sub foo($a) { ~($a .. 5) };
     is(foo(5), '5', 'range constructed from parameter OK');

@@ -369,7 +369,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
     is rt63686(), 'happiness', 'for loop over junction in sub';
 }
 
-# RT#67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
+# RT #67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
 #?rakudo skip 'lower case junction'
 #?niecza skip 'Impossible test: === takes Any'
 {
