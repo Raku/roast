@@ -137,7 +137,7 @@ ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 #?niecza skip 'Typed exceptions NYI'
 throws_like { 1 ... () },
      Exception,
-     'RT# 75698: empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
+     'RT #75698 - empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
      message => 'Element shifted from empty list';
 
 # RT #73508

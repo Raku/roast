@@ -14,4 +14,4 @@ ok ($rat-methods ~~ /<wb>'Str'<wb>/ && $rat-methods ~~ /<wb>'round'<wb>/), 'Rat 
 ok Rat.^methods(:local).grep({.name eq 'log'}).[0].signature.perl, 'log signature';
 
 # sub log-calls($obj, Role $r) { ... } 
-# wrapper example omitted - see RT121967
+# wrapper example omitted - see RT #121967
