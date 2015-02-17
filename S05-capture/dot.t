@@ -16,7 +16,7 @@ Broken:
 ## L<S05/Extensible metasyntax (C<< <...> >>)/A leading C<.> causes>
 =end pod
 
-plan 61;
+plan 62;
 
 my regex dotdot { (.)(.) };
 
@@ -115,5 +115,9 @@ is(~$/, "john", 'Metaname match is john');
 ok(~$/ ne "jean", "Metaname match isn't jean");
 is(~$/<name>, "john", 'Metaname is john');
 
+# RT #77570
+{
+    eval_lives_ok('$' ~ 1 x 1000000, 'Can refer to very high numbered capture variable without exploding');
+}
 
 # vim: ft=perl6
