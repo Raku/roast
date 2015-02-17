@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 33;
+plan 34;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -105,6 +105,14 @@ is (2 Z 3), @z, 'joining of single items';
         X::Syntax::Confused,
         'Guillemet form of subscript does not parse as infix hyperop',
         message => { m/"Two terms in a row"/ };
+}
+
+# RT #122654
+{
+    multi infix:«≃» { $^l lt $^r };
+    multi infix:«!≃» { not($^l ≃ $^r) };
+    ok "foo" !≃ "bar",
+        'operator can start with a bang (!) and have Unicode character in it';
 }
 
 # vim: ft=perl6
