@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 280;
+plan 281;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -174,7 +174,7 @@ throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filen
 for <
   $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
   $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
-  $* $" $$ $& $` $' $| $?
+  $* $" $$ $& $` $' $| $? $]
   $: $= $^ $~ @- @+ %- %+ %!
 > {
     throws_like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
