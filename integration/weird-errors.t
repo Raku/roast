@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 13;
+plan 14;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -108,4 +108,11 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
         Blorg.new.do_stuff
     ';
     ok ~$! ~~ / 'Calling proto' .* 'will never work' /, "fails correctly";
+}
+
+# RT #123570
+{
+    is ((((6103515625/5) * 4 + 123327057) ** 2) % 6103515625),
+        (((1220703125 * 4 + 123327057) ** 2) % 6103515625),
+        "at one point rakudo evaluated the first expression to 0, RT #123570"
 }
