@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 31;
 
 # Int
 {
@@ -32,6 +32,8 @@ plan 27;
     is (2/3).base(10,40), '0.6666666666666666666666666666666666666667', 'repeating fraction can round at 40 digits';
     is (1/2).base(3,40), '0.1111111111111111111111111111111111111112', 'repeating base 3 fraction can round at 40 digits';
     is :8<773320.123>.base(8,0), '773320',   'Rat with 0 digits fraction leaves off radix point';
+    is 16.0.base(16,3), '10.000', 'explicit digits are produced even if 0';
+    is 16.5.base(16,3), '10.800', 'explicit digits are produced even if some are 0';
 }
 
 # base-repeating
@@ -49,4 +51,6 @@ plan 27;
     is 16.999e0.base(16,9), '10.FFBE76C8B', 'rounding works on 16.999e0.base(16,9)';
     is pi.base(10,4), '3.1416', 'pi rounds to 4 place';
     is (6.02214129e23 / 10 ** 23).base(3,0), '20', 'Num with 0 digits fraction leaves off radix point';
+    is 16e0.base(16,3), '10.000', 'explicit digits are produced even if 0';
+    is 16.5e0.base(16,3), '10.800', 'explicit digits are produced even if some are 0';
 }
