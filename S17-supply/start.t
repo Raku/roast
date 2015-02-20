@@ -9,7 +9,7 @@ dies_ok { Supply.start({...}) }, 'can not be called as a class method';
 {
     my $master = Supply.new;
     ok $master ~~ Supply, 'Did we get a master Supply?';
-    my $starter = $master.start( { .sleep; $_ } );
+    my $starter = $master.start( { sleep $_; $_ } );
     ok $starter ~~ Supply, 'Did we get a starter Supply?';
 
     my @supplies;
