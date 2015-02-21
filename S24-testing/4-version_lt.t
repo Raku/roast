@@ -10,3 +10,5 @@ ok Test::version_lt('6.2.13', '6.28');
 ok Test::version_lt('0.42', '0.50');
 ok Test::version_lt('0.001', '0.002');
 ok Test::version_lt('-10.001', '0.000');
+
+# vim: expandtab shiftwidth=4 ft=perl6

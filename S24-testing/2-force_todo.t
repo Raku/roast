@@ -16,3 +16,5 @@ flunk("This will fail, and will be forced-TODO by force_todo()");
 flunk("This will fail, and will be forced-TODO by force_todo()");
 pass("This will pass normally");
 flunk("This will fail, and will be forced-TODO by force_todo()");
+
+# vim: expandtab shiftwidth=4 ft=perl6

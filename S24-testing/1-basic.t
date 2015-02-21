@@ -161,3 +161,4 @@ skip_rest('skipping the rest');
 
 1;
 
+# vim: expandtab shiftwidth=4 ft=perl6

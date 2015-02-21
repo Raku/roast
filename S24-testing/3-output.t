@@ -38,3 +38,4 @@ ok 1 - TODO that passes # TODO
 # Looks like 1 tests of 1 passed unexpectedly
 ", "got correct output");
 
+# vim: expandtab shiftwidth=4 ft=perl6
