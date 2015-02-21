@@ -5,7 +5,7 @@ plan 60;
 
 =begin kwid
 
-This file /exhaustivily/ tests the Test module. 
+This file /exhaustively/ tests the Test module. 
 
 I try every variant of each Test function here
 because we are using this module to test Perl 6 itself, 
