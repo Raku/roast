@@ -7,18 +7,16 @@ plan 60;
 
 This file /exhaustively/ tests the Test module.
 
-I try every variant of each Test function here
-because we are using this module to test Perl 6 itself,
-so I want to be sure that the error is not coming from
-within this module.
+I try every variant of each Test function here because we are using this
+module to test Perl 6 itself, so I want to be sure that the error is not
+coming from within this module.
 
-We need to test that these functions produce 'not ok' at the
-right times, too.  Here, we do that by abusing :todo to mean
-"supposed to fail."  Thus, no ":todo" failure indicates
-a missing feature.
+We need to test that these functions produce 'not ok' at the right times,
+too.  Here, we do that by abusing :todo to mean "supposed to fail."  Thus,
+no ":todo" failure indicates a missing feature.
 
-If there is a bug in the implementation, you will see
-a (non-TODO) failure or an unexpected success.
+If there is a bug in the implementation, you will see a (non-TODO) failure
+or an unexpected success.
 
 =end kwid
 
