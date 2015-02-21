@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  22;
+plan  26;
 
 use lib 't/spec/packages';
 
@@ -186,3 +186,40 @@ is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     },
     :args['--bool', '--', '-option'],
     'Boolean argument with --';
+
+#?rakudo todo 'NYI'
+#?niecza todo
+is_run 'sub MAIN(:@foo) { print @foo }',
+    {
+        out => "bar"
+    },
+    :args['--foo=bar'],
+    'single occurence for named array param';
+
+#?rakudo todo 'NYI'
+#?niecza todo
+is_run 'sub MAIN(:@foo) { print @foo }',
+    {
+        out => "barbaz"
+    },
+    :args['--foo=bar', '--foo=baz'],
+    'multiple occurence for named array param';
+
+#?rakudo todo 'NYI'
+#?niecza todo
+is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" }',
+    {
+        out => "Scalar"
+    },
+    :args['--foo=bar'],
+    'correctly select Scalar candidate from Scalar and Array candidates.';
+
+#?rakudo todo 'NYI'
+#?niecza todo
+is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" }',
+    {
+        out => "Array"
+    },
+    :args['--foo=bar', '--foo=baz'],
+    'correct select Array candidate from Scalar and Array candidates.';
+
