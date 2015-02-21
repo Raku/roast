@@ -5,7 +5,7 @@ plan 11;
 
 force_todo(1, 3, 5, 7 .. 9, 11);
 
-flunk("This will fail, but will be forced-TODO by force_todo()"); 
+flunk("This will fail, but will be forced-TODO by force_todo()");
 pass("This will pass normally");
 flunk("This will fail, but will be forced-TODO by force_todo()");
 pass("This will pass normally");
