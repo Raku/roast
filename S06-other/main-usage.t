@@ -196,7 +196,6 @@ is_run 'sub MAIN(:@foo) { print @foo }',
     :args['--foo=bar'],
     'single occurence for named array param';
 
-#?rakudo todo 'NYI'
 #?niecza todo
 is_run 'sub MAIN(:@foo) { print @foo }',
     {
@@ -205,7 +204,6 @@ is_run 'sub MAIN(:@foo) { print @foo }',
     :args['--foo=bar', '--foo=baz'],
     'multiple occurence for named array param';
 
-#?rakudo todo 'NYI'
 #?niecza todo
 is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" }',
     {
