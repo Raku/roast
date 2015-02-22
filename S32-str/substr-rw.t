@@ -51,14 +51,12 @@ sub l (Int $a) {  my $l = $a; return $l }
 
     $r = "boing";
     is($str, "boing ding", "assignment to bound var modifies original");
-    #?rakudo todo 'NYI'
     is($r, "boing", 'bound $r is consistent');
 
     my $o := substr-rw($str, 3, 2);
     is($o, "ng", "other bound var to other lvalue");
     $r = "foo";
     is($str, "foo ding", "lvalue ref size varies but still works");
-    #?rakudo todo 'NYI'
     is($o, " d", "other lvalue wiggled around");
 };
 
@@ -106,14 +104,12 @@ sub l (Int $a) {  my $l = $a; return $l }
 
     $r = "boing";
     is($str, "boing ding", "assignment to bound var modifies original (substr-rw(Int, StrLen)).");
-    #?rakudo todo 'NYI'
     is($r, "boing", 'bound $r is consistent (substr-rw(Int, StrLen)).');
 
     my $o := substr-rw($str, 3, l(2));
     is($o, "ng", "other bound var to other lvalue (substr-rw(Int, StrLen)).");
     $r = "foo";
     is($str, "foo ding", "lvalue ref size varies but still works (substr-rw(Int, StrLen)).");
-    #?rakudo todo 'NYI'
     is($o, " d", "other lvalue wiggled around (substr-rw(Int, StrLen)).");
 };
 
