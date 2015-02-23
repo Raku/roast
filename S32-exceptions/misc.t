@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 281;
+plan 282;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -183,6 +183,9 @@ for <
 throws_like '$#', X::Syntax::Perl5Var;
 # RT #122645
 lives_ok { EVAL '$@' }, '$@ is no longer a problem';
+
+# RT #123884
+throws_like '$\\ = 1;', X::Syntax::Perl5Var, message => /\.nl/, "Error message for \$\\ mentions .nl";
 
 throws_like { EVAL '"$"' }, X::Backslash::NonVariableDollar, 'non-variable $ in double quotes requires backslash';
 lives_ok { EVAL 'class frob { has @!bar; method test { return $@!bar } }' },
