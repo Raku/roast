@@ -8,6 +8,8 @@ plan 11;
 
 my $line;
 
+my $PROGRAM = $*PROGRAM.relpath;
+
 # $*OS
 #?niecza skip 'is DEPRECATED NYI'
 {
@@ -17,7 +19,7 @@ my $line;
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*OS called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.9, will be removed with release v2015.9!
 Please use \$*DISTRO.name instead.
 --------------------------------------------------------------------------------
@@ -33,7 +35,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*OSVER called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.9, will be removed with release v2015.9!
 Please use \$*DISTRO.version instead.
 --------------------------------------------------------------------------------
@@ -49,7 +51,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*VM<name> called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.5, will be removed with release v2015.5!
 Please use \$*VM.name instead.
 --------------------------------------------------------------------------------
@@ -65,7 +67,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*VM<config> called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.5, will be removed with release v2015.5!
 Please use \$*VM.config instead.
 --------------------------------------------------------------------------------
@@ -81,7 +83,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<name> called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.name instead.
 --------------------------------------------------------------------------------
@@ -97,7 +99,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><name> called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.name instead.
 --------------------------------------------------------------------------------
@@ -113,7 +115,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><ver> called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.version instead.
 --------------------------------------------------------------------------------
@@ -129,7 +131,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><release-number> called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.release instead.
 --------------------------------------------------------------------------------
@@ -145,7 +147,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><build-date> called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.build-date instead.
 --------------------------------------------------------------------------------
@@ -161,7 +163,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><codename> called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.codename instead.
 --------------------------------------------------------------------------------
@@ -177,7 +179,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 %h = itemized hash called at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.7, will be removed with release v2015.7!
 Please use %h = \%(itemized hash) instead.
 --------------------------------------------------------------------------------
