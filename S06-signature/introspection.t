@@ -1,6 +1,7 @@
 use v6;
 use Test;
-plan 52;
+use Test::Util;
+plan 54;
 
 # L<S06/Signature Introspection>
 
@@ -136,6 +137,12 @@ sub j(*@i) {
     is &xyz.signature.params[0].positional, False, '.positional on Capture param is False';
     is &xyz.signature.params[0].capture,    True , '.capture on Capture param is True';
     is &xyz.signature.params[0].named,      False, '.named on Capture param is True';
+}
+
+# RT #123895
+{
+    is_run q[sub wtvr(|) {}; &wtvr.perl], { err => "", out => "" }, ".perl on unnamed | parameters doesn't err";
+    is_run q[sub prcl(\\) {}; &prcl.perl], { err => "", out => "" }, ".perl on unnamed \\ parameters doesn't err";
 }
 
 done;
