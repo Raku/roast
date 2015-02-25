@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 43;
 
 class C {
     has int $.int-ro = 1;
@@ -74,3 +74,42 @@ class C {
 
     is $c.all-the-things, '42 4.2 karniyarik', 'Attributes really updated';
 }
+
+class NoTwigilNatives {
+    has int $int-rw = 1;
+    has num $num-rw = 1.2e0;
+    has str $str-rw = 'vareniki';
+
+    method set-int(int $value) {
+        $int-rw = $value;
+    }
+
+    method set-num(num $value) {
+        $num-rw = $value;
+    }
+
+    method set-str(str $value) {
+        $str-rw = $value;
+    }
+
+    method all-the-things() {
+        "$int-rw $num-rw $str-rw"
+    }
+}
+
+{
+    my $ntn = NoTwigilNatives.new;
+
+    is $ntn.all-the-things, '1 1.2 vareniki', 'Non-twigil native attr defaults work';
+
+    lives_ok { $ntn.set-int(42) }, 'Can set non-twigil native int attr';
+    is $ntn.all-the-things, '42 1.2 vareniki', 'The update took effect';
+
+    lives_ok { $ntn.set-num(4.2e0) }, 'Can set non-twigil native num attr';
+    is $ntn.all-the-things, '42 4.2 vareniki', 'The update took effect';
+
+    lives_ok { $ntn.set-str('draniki') }, 'Can set non-twigil native str attr';
+    is $ntn.all-the-things, '42 4.2 draniki', 'The update took effect';
+}
+
+throws_like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
