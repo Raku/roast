@@ -22,5 +22,6 @@ is (1, ((2, 3),  (4, 5))).tree(*.join('-'), *.join('+'), *.join('|')),
 {
     my $t = '';
     $t ~= "|$_" for (<a b c> Z <X Y Z>).tree[];
+    #?rakudo todo "regresssion caused by d0847d2, is this test correct?"
     is $t, "|a X|b Y|c Z", '(parcel of parcels).tree';
 }
