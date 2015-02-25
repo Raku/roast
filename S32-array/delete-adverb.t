@@ -9,7 +9,7 @@ plan 216;
 #-------------------------------------------------------------------------------
 # initialisations
 
-my $default = Any;
+my $default = Int;
 my $dont    = False;
 sub gen_array { (1..10).list }
 
