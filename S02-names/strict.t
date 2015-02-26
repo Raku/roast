@@ -1,6 +1,6 @@
 no strict;
 use Test;
-plan 5;
+plan 6;
 
 # L<S02/"Names"/"When \"strict\" is in effect (which is the default except for one-liners)">
 
@@ -22,4 +22,10 @@ is $Foo::foo, 42, 'lax declared variable is package scoped';
 #?rakudo 1 skip 'lax mode does not propagate into EVAL yet'
 {
     is EVAL('$bar'), Any, 'lax mode propagates into EVAL blocks'
+}
+
+# RT #123696
+{
+    lives_ok { EVAL '(6;)' },
+        '"6;" no longer means "no strict;" and "(6;)" no langer results in a compile time error';
 }
