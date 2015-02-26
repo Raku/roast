@@ -324,9 +324,6 @@ plan 56;
 {
     constant True = 42;
     is True, 42, 'can locally redefine True';
-    constant True = "Yeah, well, you know, that's just, like, your opinion, man.";
-    is True, "Yeah, well, you know, that's just, like, your opinion, man.",
-        'can even locally redefine True to something a bit vague';
 }
 
 # RT #114506
@@ -338,5 +335,8 @@ plan 56;
     is Ticket.WHAT, RT114506, "Constant is of the right type";
     is Ticket.val, "dot-equals assignment", ".= new initialization on constants works";
 }
+
+throws_like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
+    symbol  => 'Mouse';
 
 # vim: ft=perl6
