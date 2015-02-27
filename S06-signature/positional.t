@@ -43,7 +43,6 @@ eval_dies_ok 'sub foo( @a, @a ) { }', 'two sub params with the same array name';
 eval_dies_ok 'sub foo( %a, %a ) { }', 'two sub params with the same hash name';
 eval_dies_ok 'sub foo( &a, &a ) { }', 'two sub params with the same callable name';
 eval_dies_ok 'sub foo( \a, \a ) { }', 'two sub params with the same sigilles name';
-#?rakudo todo 'Redeclaration of type captures'
 eval_dies_ok 'sub foo( ::T, ::T) { }', 'two sub params with the same type capture name';
 
 # vim: ft=perl6
