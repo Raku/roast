@@ -336,7 +336,6 @@ plan 56;
     is Ticket.val, "dot-equals assignment", ".= new initialization on constants works";
 }
 
-#?rakudo todo 'constant redeclaration is not yet detected'
 throws_like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     symbol  => 'Mouse';
 
