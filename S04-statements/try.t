@@ -116,8 +116,6 @@ plan 27;
     is $resumed, 1, 'CATCH allows to resume to right after the exception';
 }
 
-# RT #68728
-#?rakudo.jvm skip "Method 'substr' not found"
 {
     my $str = '';
     try {
