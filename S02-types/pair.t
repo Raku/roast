@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 99;
+plan 106;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -315,10 +315,25 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     lives_ok     { (a => []) }, 'can execute "(a => [])"';
 }
 
+#?rakudo skip 'Pair.exchange NYI'
 {
-    is (a => 3).invert.key, 3, 'Pair.invert.key';
-    isa_ok (a => 3).invert.key, Int, 'Pair.invert.key type';
-    is (a => 3).invert.value, 'a', 'Pair.invert.value';
+    is (a => 3).exchange.key, 3, 'Pair.exchange.key';
+    isa_ok (a => 3).exchange.key, Int, 'Pair.exchange.key type';
+    is (a => 3).exchange.value, 'a', 'Pair.exchange.value';
+}
+
+{
+    is (a => 3).invert[0].key, 3, 'Pair.invert.key';
+    isa_ok (a => 3).invert[0].key, Int, 'Pair.invert.key type';
+    is (a => 3).invert[0].value, 'a', 'Pair.invert.value';
+}
+
+#?rakudo skip 'Pair.invert value splitting NYI'
+{
+    is (a => [3,4]).invert.elems, 2, 'Pair.invert splits positional values';
+    is (a => [3,4]).invert».key, '3 4', 'Pair.invert splits positional values and preserves order';
+    isa_ok (a => [3,4]).invert[0].key, Int, 'Pair.invert.key type';
+    is (a => [3,4]).invert».key, 'a a', 'Pair.invert splits positional values and dups keys';
 }
 
 # RT #123215
