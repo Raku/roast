@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 146;
+plan 147;
 
 # L<S05/Substitution/>
 
@@ -348,10 +348,11 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     sub s { 'sub s' }
     $_ = "foo";
-    ok s,foo,bar, , 'bare s is always substititution';
+    ok s:s,foo,bar, , 's with colon is always substitution';
     is s(), 'sub s', 'can call sub s as "s()"';
+    is s, 'sub s', 'can call sub s as "s"';
     $_ = "foo";
-    ok s (foo) = 'bar', 'bare s is substitution before whitespace then parens';
+    ok ss (foo) = 'bar', 'bare ss is substitution before whitespace then parens';
 }
 
 # Test for :samecase

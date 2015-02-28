@@ -105,16 +105,11 @@ is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
     }
 }
 
-# RT #116182
 {
-    sub s () { given 9 { return 0 when $_ %% 3; 1 } };
-    throws_like { EVAL q[say s;] }, X::Comp::Group,
-        '"s;" is not parsed as subroutine call',
-        message => { m/"Regex not terminated"/ };
+    my \s = 42;
+    is s, 42, 'local terms override quoters';
     sub m { return 42 };
-    throws_like { EVAL q[m;] }, X::Comp::Group,
-        '"m;" is not parsed as subroutine call',
-        message => { m/"Regex not terminated"/ };
+    is m, 42, 'local subs override quoters';
 }
 
 # RT #77006
