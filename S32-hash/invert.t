@@ -16,7 +16,6 @@ plan 5;
 {
     # with lists
     my %h = a => <b c>, d => 'e';
-    #?rakudo todo 'nom regression'
     #?niecza todo 'Cannot use value like Pair as a number'
     is_deeply %h.invert.sort, (b => 'a', c => 'a', e => 'd'),
               'Hash.invert flattens list values';

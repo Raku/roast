@@ -316,9 +316,9 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 }
 
 {
-    is (a => 3).exchange.key, 3, 'Pair.exchange.key';
-    isa_ok (a => 3).exchange.key, Int, 'Pair.exchange.key type';
-    is (a => 3).exchange.value, 'a', 'Pair.exchange.value';
+    is (a => 3).antipair.key, 3, 'Pair.antipair.key';
+    isa_ok (a => 3).antipair.key, Int, 'Pair.antipair.key type';
+    is (a => 3).antipair.value, 'a', 'Pair.antipair.value';
 }
 
 {
@@ -327,12 +327,11 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     is (a => 3).invert[0].value, 'a', 'Pair.invert.value';
 }
 
-#?rakudo skip 'Pair.invert value splitting NYI'
 {
     is (a => [3,4]).invert.elems, 2, 'Pair.invert splits positional values';
     is (a => [3,4]).invert».key, '3 4', 'Pair.invert splits positional values and preserves order';
     isa_ok (a => [3,4]).invert[0].key, Int, 'Pair.invert.key type';
-    is (a => [3,4]).invert».key, 'a a', 'Pair.invert splits positional values and dups keys';
+    is (a => [3,4]).invert».value, 'a a', 'Pair.invert splits positional values and dups keys';
 }
 
 # RT #123215
