@@ -256,7 +256,9 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     is %h{}.join('|'),  %h.join('|'),        '{} zen slice';
 
     my $h := { a => 1, b => 2, c => 3 }; say $h{}[0].WHAT.gist;
-    is $h{}[0].WHAT.gist, '(Pair)',        '{} zen slice decontainerizes';
+    my @result;
+    @result.push($_) for $h{};
+    is @result.elems, 3,        '{} zen slice decontainerizes';
 } #2
 
 # RT #75868
