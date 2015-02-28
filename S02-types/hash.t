@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 93;
+plan 94;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -254,6 +254,9 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     my %h = a => 1, b => 2, c => 3;
     is %h{*}.join('|'), %h.values.join('|'), '{*} whatever slice';
     is %h{}.join('|'),  %h.join('|'),        '{} zen slice';
+
+    my $h := { a => 1, b => 2, c => 3 }; say $h{}[0].WHAT.gist;
+    is $h{}[0].WHAT.gist, '(Pair)',        '{} zen slice decontainerizes';
 } #2
 
 # RT #75868
