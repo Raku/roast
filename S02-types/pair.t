@@ -315,7 +315,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     lives_ok     { (a => []) }, 'can execute "(a => [])"';
 }
 
-#?rakudo skip 'Pair.exchange NYI'
 {
     is (a => 3).exchange.key, 3, 'Pair.exchange.key';
     isa_ok (a => 3).exchange.key, Int, 'Pair.exchange.key type';
