@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 37;
 
 {
     my int $x;
@@ -108,6 +108,54 @@ plan 29;
     my int $j = 42;
     lives_ok { @j.push($j) }, 'can push native int to an array (1)';
     is @j[0], 42, 'can push native int to an array (2)';
+}
+
+{
+    my int   $i   = 1;
+    my int64 $i64 = 2;
+    my int32 $i32 = 3;
+    my int16 $i16 = 4;
+    my int8  $i8  = 5;
+    my $alias;
+
+    $alias := $i;
+    $alias++;
+    is $i, 2, 'Bound alias to int native works';
+
+    $alias := $i64;
+    $alias++;
+    is $i64, 3, 'Bound alias to int64 native works';
+
+    $alias := $i32;
+    $alias++;
+    is $i32, 4, 'Bound alias to int32 native works';
+
+    $alias := $i16;
+    $alias++;
+    is $i16, 5, 'Bound alias to int16 native works';
+
+    $alias := $i8;
+    $alias++;
+    is $i8, 6, 'Bound alias to int8 native works';
+}
+
+{
+    my num   $n   = 1e0;
+    my num64 $n64 = 2e0;
+    my num32 $n32 = 3e0;
+    my $alias;
+
+    $alias := $n;
+    $alias = 2e0;
+    is $n, 2e0, 'Bound alias to num native works';
+
+    $alias := $n64;
+    $alias = 3e0;
+    is $n64, 3e0, 'Bound alias to num64 native works';
+
+    $alias := $n32;
+    $alias = 4e0;
+    is $n32, 4e0, 'Bound alias to num32 native works';
 }
 
 # vim: ft=perl6
