@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 # L<S02/Deprecations>
 
@@ -199,5 +199,13 @@ Please use 'bar' instead.
 --------------------------------------------------------------------------------
 TEXT
 } #4
+
+# RT #120908
+{
+    sub rt120908 is DEPRECATED((sub { "a" })()) { };
+    rt120908();
+    ok Deprecation.report ~~ m/'Sub rt120908 (from GLOBAL) called at:'/,
+        'right deprecation for rt120908()';
+}
 
 # vim:set ft=perl6
