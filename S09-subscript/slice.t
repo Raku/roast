@@ -98,7 +98,6 @@ plan 31;
 }
 
 # RT #123594
-#?rakudo skip 'RT #123594'
 {
     my $b = Buf.new(0, 0);
     $b[0, 1] = 2, 3;
