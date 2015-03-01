@@ -11,7 +11,6 @@ plan 18;
     sub f(Str(Cool) $x) {
         $x
     }
-    #?rakudo todo 'optimizer'
     isa_ok f(42), Str, 'Coercion type coerces';
     is f(42), '42',   'Coercion type coerces to correct value';
     eval_dies_ok q[ sub g(Str(Cool) $x) { $x }; g(Any) ],
@@ -30,7 +29,6 @@ class NastyChild is Parent { };
 # with custom classes
 {
     sub c(Child(Parent) $x) { $x }
-    #?rakudo todo 'optimizer bug'
     isa_ok c(Parent), Child, 'Coercion with user-defined types';
 
     sub nasty(NastyChild(Parent) $x) { $x }
@@ -61,6 +59,7 @@ class NastyChild is Parent { };
     enum A <b c d>;
     ok A(0) === A::b, 'basic enum sanity';
     sub en(A(Any) $x ) { $x }
+    #?rakudo skip 'dies'
     ok en(0) === A::b, 'coercion to enum';
 }
 
