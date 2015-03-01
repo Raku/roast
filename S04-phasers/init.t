@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 13;
 
 # L<S04/"Phasers"/INIT "at run time" ASAP>
 # INIT {...} blocks in "void" context
@@ -71,11 +71,26 @@ is $str, 'io', 'INIT {} always runs before the mainline code runs';
 # L<S04/Phasers/INIT "runs once for all copies of" "cloned closure">
 #?rakudo.parrot todo "RT #122311"
 {
-	my $var;
-	for <first second> {
-		my $sub = { INIT { $var++ } };
-		is $var, 1, "INIT has run exactly once ($_ time)";
-	}
+    my $var;
+    for <first second> {
+        my $sub = { INIT { $var++ } };
+        is $var, 1, "INIT has run exactly once ($_ time)";
+    }
+}
+
+# RT #122765
+{
+    module RT122765m {
+        my $foo;
+        INIT $foo = 42;
+        is $foo, 42, 'lexical initialized in INIT block in module is not reset';
+    }
+
+    class RT122765c {
+        my $foo;
+        INIT $foo = 42;
+        is $foo, 42, 'lexical initialized in INIT block in class is not reset';
+    }
 }
 
 # vim: ft=perl6
