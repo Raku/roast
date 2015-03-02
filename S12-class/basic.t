@@ -112,7 +112,6 @@ eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {
 # RT #67784
 {
     class class {}
-    #?rakudo skip 'RT #67784'
     #?niecza todo
     isa_ok( class.new, 'class' );
 }
