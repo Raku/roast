@@ -522,7 +522,7 @@ throws_like 'CATCH { when X::Y {} }', X::Comp::Group,
 
 # RT #75230
 throws_like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
-    reason => { m/'Missing semicolon.'/ }, pre => { m/'1 if 2 '/ }, post => { m/'if 3 { say 3 }'/ }, highexpect => @('postfix');
+    reason => { m/'Missing semicolon.'/ }, pre => { m/'1 if 2 '/ }, post => { m/'3 { say 3 }'/ }, highexpect => @('postfix');
 
 # RT #77522
 throws_like '/\ X/', X::Syntax::Regex::Unspace,
