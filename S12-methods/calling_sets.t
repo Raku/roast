@@ -36,7 +36,7 @@ class C is B {
     try { $c.+bar(); $lived = 1; }
     is $lived, 0, '.+ on undefined method is an error';
 
-    is $c.*bar(), Nil, '.* on undefined method gives Nil';
+    is_deeply $c.*bar(), (), '.* on undefined method gives Nil';
 
     my $foo = "foo";
 

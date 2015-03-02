@@ -63,7 +63,6 @@ throws_like 'my $a; sub weird{ $a = 42; $^a * 2 }', X::Placeholder::NonPlacehold
     ;
 
 # RT #123470
-#?rakudo.jvm    todo 'throws Adhoc'
 #?rakudo.parrot todo 'throws Adhoc'
 throws_like 'my $a; my $block = { $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
     :variable_name<$a>,

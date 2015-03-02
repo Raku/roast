@@ -13,7 +13,7 @@ plan 138;
 #-------------------------------------------------------------------------------
 # initialisations
 
-my $default = Any;
+my $default = Int;  # int hopefully in the near future
 my $dont    = False;
 sub gen_array { (1..10).list }
 

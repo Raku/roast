@@ -14,7 +14,7 @@ plan 49;
     is @a.elems, 2, 'Pushing Nil in list context is empty list';
     ok (@a.unshift: Nil) =:= @a, "Unshifting Nil returns same array";
     is @a.elems, 2, 'Unshifting Nil in list context is empty list';
-    is (@a = Nil), Nil, "Setting to Nil returns Nil";
+    is (@a = Nil), '', "Setting array to Nil returns empty string";
     is @a.elems, 0, 'Setting to Nil restores original state';
 } #7
 
@@ -22,7 +22,7 @@ plan 49;
 #?niecza skip "doesn't know typed stuff"
 {
     my Int $a = 1;
-    is ($a = Nil), Nil, "assigning Nil to Int should work";
+    is ($a = Nil), Int, "assigning Nil to Int should work";
     ok !$a.defined,  "Nil makes undefined here";
 } #2
 
@@ -39,7 +39,7 @@ plan 49;
     is @a.elems, 2, 'Unshifting Nil in Int list context is empty list';
     ok !defined(@a[1] = Nil), "assigning Nil to Int should work";
     ok !@a[1].defined,  "Nil makes undefined here";
-    is ( @a = Nil ), Nil, "setting to Nil returns Nil";
+    is (@a = Nil), '', "setting array to Nil returns empty string";
     #?rakudo todo ".clone doesn't copy typedness"
     is @a.of, '(Int)', "Check that we still have an 'Int' array";
     is @a.elems, 0, 'Setting to Nil restores original state';
@@ -52,9 +52,9 @@ plan 49;
     #?rakudo todo ".clone doesn't copy typedness"
     is %a.of, '(Int)', "Check that we have an 'Int' hash";
     is %a.elems, 2,  'Nil as part of Int list, is empty pair';
-    is ( %a<b> = Nil ), Nil, "assigning Nil to hash element should work";
+    is (%a<b> = Nil), Int, "assigning Nil to hash element should work";
     ok !%a<b>.defined,  "Nil makes undefined here";
-    is ( %a = Nil ), Nil, "setting to Nil returns Nil";
+    is ( %a = Nil ), '', "setting hash to Nil returns empty string";
     #?rakudo todo ".clone doesn't copy typedness"
     is %a.of, '(Int)', "Check that we still have an 'Int' hash";
     is %a.elems, 0, 'Setting to Nil restores original state';

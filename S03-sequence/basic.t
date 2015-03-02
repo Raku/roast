@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 130;
+plan 132;
 
 # single-term sequence
 
@@ -260,6 +260,9 @@ is ((1,1,2,4,8)[^4], *+*+*+* ... *)[4], 8, 'WhateverCode with arity > 3 gets eno
     is (4 ... 0,1,2,3,4), <4 3 2 1 0 1 2 3 4>, "RT #75674";
     is (-5 ... ^5), <-5 -4 -3 -2 -1 0 1 2 3 4>, "RT #75674";
 }
+
+is (1 … 10), 1..10, 'Unicode ellipsis works';
+is (1 …^ 10), 1..^10, 'Unicode ellipsis works excluding final value';
 
 done;
 

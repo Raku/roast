@@ -522,7 +522,7 @@ throws_like 'CATCH { when X::Y {} }', X::Comp::Group,
 
 # RT #75230
 throws_like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
-    reason => { m/'Missing semicolon.'/ }, pre => { m/'1 if 2 '/ }, post => { m/'if 3 { say 3 }'/ }, highexpect => @('postfix');
+    reason => { m/'Missing semicolon.'/ }, pre => { m/'1 if 2 '/ }, post => { m/'3 { say 3 }'/ }, highexpect => @('postfix');
 
 # RT #77522
 throws_like '/\ X/', X::Syntax::Regex::Unspace,
@@ -552,7 +552,7 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 
 {
     my $*foo = 0;
-    throws_like { EVAL '$*foo = 1; say' }, X::Obsolete;
+    throws_like { EVAL '$*foo = 1; say' }, X::Comp::Group;
     is $*foo, 0, 'should be a compile time error';
 }
 
@@ -592,8 +592,7 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 
 # RT #114014
 {
-    throws_like { EVAL q[ ord.Cool ] }, X::Obsolete,
-        message => q[Unsupported use of bare 'ord'; in Perl 6 please use .ord if you meant $_, or use an explicit invocant or argument],
+    throws_like { EVAL q[ ord.Cool ] }, X::Comp::Group,
         'adequate error message when calling bare "ord"';
 }
 

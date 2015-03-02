@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 95;
+plan 97;
 
 #L<S02/Mutable types/Array>
 
@@ -298,6 +298,10 @@ my @array2 = ("test", 1, Mu);
 {
     my @a = <1 2 3>;
     is @a[*], <1 2 3> , 'using * to access all array elements works';
+    is @a[], <1 2 3>, 'using [] to listify all array elements works';
+
+    my $a = (1,2,3);
+    is ($a[] X~ 'a'), '1a 2a 3a', 'using [] decontainerizes';
 }
 
 #RT #73402

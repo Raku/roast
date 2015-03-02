@@ -220,9 +220,7 @@ my $z = 42; #OK not used
 # RT #102414
 {
     # If there is a regression this may die not just fail to make ints
-#?rakudo.jvm todo 'RT #102414 still unresolved'
     eval_lives_ok 'my (int $a);','native in declarator sig';
-#?rakudo.jvm todo 'RT #102414 still unresolved'
     eval_lives_ok 'my (int $a, int $b);','natives in declarator sig';
 
 #?rakudo todo 'RT #102414 still unresolved'

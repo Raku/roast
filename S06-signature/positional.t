@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 7;
+plan 13;
 
 sub my_first  ($x, $,  $ ) { $x };
 sub my_second ($,  $x, $ ) { $x };
@@ -37,5 +37,12 @@ is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
     sub dollar-slash($x, $/, $y) { "$x $<b> $y" }
     is dollar-slash(1, { b => 2 }, 3), '1 2 3', '$/ works as parameter name';
 }
+
+eval_dies_ok 'sub foo( $a, $a ) { }', 'two sub params with the same scalar name';
+eval_dies_ok 'sub foo( @a, @a ) { }', 'two sub params with the same array name';
+eval_dies_ok 'sub foo( %a, %a ) { }', 'two sub params with the same hash name';
+eval_dies_ok 'sub foo( &a, &a ) { }', 'two sub params with the same callable name';
+eval_dies_ok 'sub foo( \a, \a ) { }', 'two sub params with the same sigilles name';
+eval_dies_ok 'sub foo( ::T, ::T) { }', 'two sub params with the same type capture name';
 
 # vim: ft=perl6

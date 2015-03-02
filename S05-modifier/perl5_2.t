@@ -31,7 +31,7 @@ is(("def" ~~ rx:P5/()ef/ && $/.from), 1, 're_tests 193/0 (225)');
 is(("def" ~~ rx:P5/()ef/ && $/[0].from), 1, 're_tests 195/1 (227)');
 ok((not ("b" ~~ rx:P5/$b/)), 're_tests 197  (229)');
 is(("a(b" ~~ rx:P5/a\(b/ && $/), "a(b", 're_tests 199/0 (231)');
-is(("a(b" ~~ rx:P5/a\(b/ && $0), "", 're_tests 199/1 (232)');
+is(("a(b" ~~ rx:P5/a\(b/ && $0), Nil, 're_tests 199/1 (232)');
 is(("ab" ~~ rx:P5/a\(*b/ && $/), "ab", 're_tests 201/0 (235)');
 is(("a((b" ~~ rx:P5/a\(*b/ && $/), "a((b", 're_tests 203/0 (237)');
 is(("a\b" ~~ rx:P5/a$backspace/ && $/), "a\b", 're_tests 205/0 (239)');
@@ -113,7 +113,7 @@ is(("abcd" ~~ rx:P5/((a)(b)c)(d)/ && $/[2].from), 1, 're_tests 303/3 (387)');
 is(("abcd" ~~ rx:P5/((a)(b)c)(d)/ && $/[3].from), 3, 're_tests 305/4 (389)');
 is(("alpha" ~~ rx:P5/[a-zA-Z_][a-zA-Z0-9_]*/ && $/), "alpha", 're_tests 307/0 (391)');
 is(("abh" ~~ rx:P5/^a(bc+|b[eh])g|.h$/ && $/), "bh", 're_tests 309/0 (393)');
-is(("abh" ~~ rx:P5/^a(bc+|b[eh])g|.h$/ && $0), "", 're_tests 309/1 (394)');
+is(("abh" ~~ rx:P5/^a(bc+|b[eh])g|.h$/ && $0), Nil, 're_tests 309/1 (394)');
 is(("effgz" ~~ rx:P5/(bc+d$|ef*g.|h?i(j|k))/ && $/), "effgz", 're_tests 311/0 (397)');
 
 # vim: ft=perl6

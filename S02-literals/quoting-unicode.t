@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 73;
+plan 75;
 
 #L<S02/Literals>
 # TODO:
@@ -92,4 +92,11 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
       "Can't quote a regex with a snowman and comet (U+2603 and U+2604)";
 }
 
+# smart quotes
+{
+    is ‘"Beth's Cafe"’, “"Beth's Cafe"”, "smart quotes are accepted and not confused with ASCII quotes";
+    throws_like { EVAL '“phooey"' },
+	X::Comp::AdHoc,
+	"Can't mix smart quote with ASCII quote";
+}
 # vim: ft=perl6
