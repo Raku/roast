@@ -78,6 +78,7 @@ my @normal = <
   ObjAt
   Obsolete
   Pair
+  PairMap
   Parameter
   Parcel
   Perl
@@ -192,6 +193,8 @@ my @normal = <
   X::Obsolete
   X::OutOfRange
   X::Package::Stubbed
+  X::PairMap::DoesNotExist
+  X::PairMap::NotAllowed
   X::Parameter::Default
   X::Parameter::InvalidType
   X::Parameter::MultipleTypeConstraints
