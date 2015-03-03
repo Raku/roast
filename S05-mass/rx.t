@@ -85,7 +85,7 @@ ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 ok 'xyzabcde' !~~ /( ab || abc ): de/, 'no backtrack into subpattern';
 
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
-#?rakudo skip '<commit> NYI'
+#?rakudo todo '<commit> NYI'
 #?niecza todo ''
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
@@ -1502,7 +1502,7 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 0: <dog @ 0
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 7>/), 'sigspace and capture together';
 
 #### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
-#?rakudo skip 'parse error'
+#?rakudo todo 'parse error'
 #?niecza skip 'Autoloading NYI'
 ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 

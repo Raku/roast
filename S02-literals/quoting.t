@@ -340,7 +340,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is("\x41", "A", 'hex interpolation - \x41 is "A"');
     is("\o101", "A", 'octal interpolation - \o101 is also "A"' );
     
-    #?rakudo 3 skip '\c@ etc'
     is("\c@", "\0", 'Unicode code point "@" converts correctly to "\0"');
     is("\cA", chr(1), 'Unicode "A" is #1!');
     is("\cZ", chr(26), 'Unicode "Z" is chr 26 (or \c26)');

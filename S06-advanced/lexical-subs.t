@@ -23,7 +23,6 @@ plan 11;
     is(callit({ $^x + 2 }), 3, "lexical subs get precedence over package subs");
 }
 
-#?rakudo skip 'cannot parse operator names yet'
 {
     sub infix:<@@> ($x, $y) { $x + $y }
 

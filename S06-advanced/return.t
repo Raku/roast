@@ -298,7 +298,6 @@ is Foo::official(), 44,
     "return correctly from official sub only";
 
 # RT #75118
-#?rakudo skip 'RT #75118'
 #?niecza skip "Excess arguments to return, unused named c"
 {
     sub named() {
@@ -306,7 +305,7 @@ is Foo::official(), 44,
     }
     is named().elems, 3,       'return with named arguments';
     is named().[2].key, 'c',   ' ... correct key';
-    #?rakudo todo 'named argument to return()'
+    #?rakudo todo "RT #75118"
     is named().[2].value, '3', ' ... correct value';
 }
 

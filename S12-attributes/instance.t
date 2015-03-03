@@ -657,7 +657,6 @@ eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
 }
 
 # RT #122543
-#?rakudo skip 'RT #122542'
 {
     my class RT122543 {
         has ($.x, $.y) is rw;
