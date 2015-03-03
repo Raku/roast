@@ -47,7 +47,6 @@ await $psa;
 ok $pc.close-stdin, 'did the close of STDIN work';
 my $ps = await $pm;
 
-#?rakudo 3 todo "not getting a Proc::Status back, but Any"
 isa_ok $ps, Proc::Status;
 ok $ps, 'was execution successful';
 is $ps.?exit, 0, 'is the status ok';

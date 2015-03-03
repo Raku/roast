@@ -11,6 +11,7 @@ eval_dies_ok 'my $var; (key => $var) = "value"';
     my ($a, $b);
     $b = 'b';
     :(:$a) := $b;
+    #?rakudo 2 todo "NYI"
     is $a, 'b', 'can bind to single pair';
     ok $a =:= $b, 'variables are bound together (?)';
 }
