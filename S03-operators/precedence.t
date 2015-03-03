@@ -239,7 +239,6 @@ throws_like '1, 2 Z 3, 4 X 5, 6',
 }
 
 # RT #114210
-#?rakudo todo 'RT #114210'
 {
     is not(0) + 1, 2,
         '"not(0) + 1" is parsed as "(not 0) + 1"';
