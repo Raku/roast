@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 74;
+plan 77;
 
 =begin pod
 
@@ -300,9 +300,24 @@ Testing operator overloading subroutines
 # RT #86906
 {
     throws_like { EVAL q[ multi sub circumfix:<⌊⌋>($a) { return $a.floor; } ] },
-        X::Syntax::AddCategorial::MissingSeparator,
-        message => "Unable to identify both starter and stopper from ⌊⌋\nPerhaps you forgot to separate them with whitespace?",
-        'circumfix definition without whitespace between starter and stopper fails with X::Syntax::AddCategorial::MissingSeparator';
+        X::Syntax::AddCategorical::TooFewParts,
+        message => "Not enough symbols provided for categorical of type circumfix; needs 2",
+        'circumfix definition without whitespace between starter and stopper fails with X::Syntax::AddCategorical::TooFewParts';
+
+    throws_like { EVAL q[ multi sub circumfix:< ⌊ | ⌋ >($a) { return $a.floor; } ] },
+        X::Syntax::AddCategorical::TooManyParts,
+        message => "Too many symbols provided for categorical of type circumfix; needs only 2",
+        'circumfix definition with three parts fails with X::Syntax::AddCategorical::TooManyParts';
+
+    throws_like { EVAL q[ multi sub infix:< ⌊ ⌋ >($a) { return $a.floor; } ] },
+        X::Syntax::AddCategorical::TooManyParts,
+        message => "Too many symbols provided for categorical of type infix; needs only 1",
+        'infix definition with two parts fails with X::Syntax::AddCategorical::TooManyParts';
+
+    throws_like { EVAL q[ multi sub term:< foo bar >() { return pi; } ] },
+        X::Syntax::AddCategorical::TooManyParts,
+        message => "Too many symbols provided for categorical of type term; needs only 1",
+        'term definition with two parts fails with X::Syntax::AddCategorical::TooManyParts';
 }
 
 {
