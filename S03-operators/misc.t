@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 34;
+plan 36;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -113,6 +113,16 @@ is (2 Z 3), @z, 'joining of single items';
     multi infix:«!≃» { not($^l ≃ $^r) };
     ok "foo" !≃ "bar",
         'operator can start with a bang (!) and have Unicode character in it';
+}
+
+# Duplicate prefixes
+{
+    # RT #73198
+    throws_like "1%^^1", X::Syntax::DuplicatedPrefix, prefixes => "^^",
+        "%^^ fails to parse (RT #73198)";
+    # RT #76436
+    throws_like "555 ~~!~~ 666", X::Syntax::DuplicatedPrefix, prefixes => "~~",
+        "~~!~~ fails to parse (RT #76436)";
 }
 
 # vim: ft=perl6
