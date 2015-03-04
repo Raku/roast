@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 94;
+plan 95;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -340,6 +340,12 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
     throws_like { ~5{'c'} }, Exception,
         message => 'postcircumfix:<{ }> not defined for type Int',
         'adequate Failure error message when hash-indexing a non-hash using .{}';
+}
+
+# RT #123084
+{
+    my %hash = not => 42;
+    is %hash<not>, 42, "can use bare 'not' as hash key";
 }
 
 done;

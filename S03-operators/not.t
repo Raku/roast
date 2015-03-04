@@ -13,7 +13,6 @@ nok(not "x",   'not "x" is false');
 my $a = 1; nok(not $a,    'not $not_var is false');
 my $b = 0; nok(!(not $b), 'not $false_var is not false');
 
-#?rakudo todo 'RT #65556'
 is (not($b) + 1), ((not $b) + 1), 'not($b) is (not $b)';
 
 ok( not(not 42), "not(not 42) is true");

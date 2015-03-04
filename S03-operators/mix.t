@@ -66,7 +66,7 @@ sub symmetric-difference($a, $m) {
     ($a (|) $m) (-) ($m (&) $a)
 }
 
-#?rakudo 8 skip "Rakudo update in progress, but not done yet"
+#?rakudo 8 todo "Rakudo update in progress, but not done yet"
 
 is showkv($b (^) $m), showkv(symmetric-difference($b, $m)), "Mix symmetric difference with Bag is correct";
 isa_ok ($b (^) $m), Mix, "... and it's actually a Mix";
@@ -209,18 +209,18 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     is showkv([(.)] $b, $m), showkv({ blood => 1.1, love => 1.2 }), "Mix multiply reduce works on two sets (Texas)";
     is showkv([(.)] $b, $m, $mh), showkv({ blood => 1.21, love => 1.56 }), "Mix multiply reduce works on three sets (Texas)";
 
-    #?rakudo 5 skip "Crashing"
     is showkv([(^)] @d), showset(∅), "Mix symmetric difference reduce works on nothing";
+    #?rakudo 4 todo "NYI"
     is showkv([(^)] $b), showset($b), "Bag symmetric difference reduce works on one set";
     isa_ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one set, yields set";
     is showkv([(^)] $m), showkv($m), "Mix symmetric difference reduce works on one mix";
     isa_ok showkv([(^)] $m), Mix, "Mix symmetric difference reduce works on one mix, yields mix";
-    #?rakudo 4 skip "Wrong answer at the moment"
+    #?rakudo 4 todo "Wrong answer at the moment"
     is showkv([(^)] $b, $m), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on a mix and a set";
     isa_ok showkv([(^)] $b, $m), Mix, "... and produces a Mix";
     is showkv([(^)] $m, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
     isa_ok showkv([(^)] $m, $b), Mix, "... and still produces a Mix that way too";
-    #?rakudo 2 skip "Crashing"
+    #?rakudo 2 todo "Crashing"
     is showkv([(^)] $b, $m, $mh), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on three mixs";
     isa_ok showkv([(^)] $b, $m, $mh), Mix, "Mix symmetric difference reduce works on three mixs";
 }

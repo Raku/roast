@@ -173,7 +173,8 @@ plan 51;
     is $a, ' 32 ', 'sanity check';
 }
 
-#?rakudo skip 'NYI, and hangs on JVM'
+#?rakudo.moar todo 'NYI'
+#?rakudo.jvm  skip 'hangs'
 {
     my $a = Nil;
     throws_like { EVAL '$a = q# 32 #;' }, X::Comp::AdHoc, 'misuse of # as quote delimiters';

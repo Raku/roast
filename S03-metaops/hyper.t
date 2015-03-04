@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 279;
+plan 280;
 
 =begin pod
 
@@ -814,6 +814,11 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 {
     #?rakudo todo "can_meta check for meta operators NYI"
     eval_dies_ok 'my @a >>[=]>> (1,2,3)', "hypering assignment dies correctly";
+}
+
+# RT #123178
+{
+    is 42 «~~« (Array, List, Parcel), (False, False, False), "hyper against an undefined Iterable doesn't hang";
 }
 
 done;

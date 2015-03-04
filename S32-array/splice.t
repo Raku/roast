@@ -9,7 +9,7 @@ This test tests the C<splice> builtin
 
 =end description
 
-plan 38;
+plan 39;
 
 my (@a,@b,@res);
 
@@ -130,6 +130,14 @@ dies_ok({use fatal; splice(@a,2,-20)}, "negative size dies");
 {
     my @empty;
     nok @empty.splice(0, 3), 'splicing an empty array should return the empty list';
+}
+
+# RT #116897
+{
+    my @empty = ();
+    my $i = 0;
+    while splice(@empty, 0, 3) { $i++ }
+    is $i, 0, "'while (…splice…)' should neither hang nor even run";
 }
 
 # vim: ft=perl6

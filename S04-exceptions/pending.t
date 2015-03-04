@@ -55,7 +55,6 @@ sub fail_it { fail $^a }
 
 # L<S04/Exceptions/"At scope exit,">
 
-#?rakudo skip '$object.handled'
 {
     my $fails_thrown = 0;
     {
@@ -67,6 +66,7 @@ sub fail_it { fail $^a }
             }
         }
     }
+    #?rakudo todo '$object.handled'
     is $fails_thrown, 2, 'unhandled Failures in $! at block exit are thrown';
 
     undefine $!;

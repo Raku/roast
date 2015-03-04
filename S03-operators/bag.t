@@ -66,7 +66,7 @@ sub symmetric-difference($a, $b) {
     ($a (|) $b) (-) ($b (&) $a)
 }
 
-#?rakudo 8 skip "Rakudo update in progress, but not done yet"
+#?rakudo 8 todo "Rakudo update in progress, but not done yet"
 
 is showkv($s (^) $b), showkv(symmetric-difference($s, $b)), "Bag symmetric difference with Set is correct";
 isa_ok ($s (^) $b), Bag, "... and it's actually a Bag";
@@ -194,18 +194,21 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     is showkv([(.)] $s, $b), showkv({ blood => 2, love => 2 }), "Bag multiply reduce works on two sets";
     is showkv([(.)] $s, $b, $kb), showkv({ blood => 2, love => 4 }), "Bag multiply reduce works on three sets";
 
-    #?rakudo 5 skip "Crashing"
     is showkv([(^)] @d), showset(∅), "Bag symmetric difference reduce works on nothing";
+    #?rakudo todo "NYI"
     is showkv([(^)] $s), showset($s), "Set symmetric difference reduce works on one set";
+    #?rakudo todo "NYI"
     isa_ok showkv([(^)] $s), Set, "Set symmetric difference reduce works on one set, yields set";
+    #?rakudo todo "NYI"
     is showkv([(^)] $b), showkv($b), "Bag symmetric difference reduce works on one bag";
+    #?rakudo todo "NYI"
     isa_ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one bag, yields bag";
-    #?rakudo 4 skip "Wrong answer at the moment"
+    #?rakudo 4 todo "Wrong answer at the moment"
     is showkv([(^)] $s, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on a bag and a set";
     isa_ok showkv([(^)] $s, $b), Bag, "... and produces a Bag";
     is showkv([(^)] $b, $s), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
     isa_ok showkv([(^)] $b, $s), Bag, "... and still produces a Bag that way too";
-    #?rakudo 2 skip "Crashing"
+    #?rakudo 2 todo "Crashing"
     is showkv([(^)] $s, $b, $kb), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on three bags";
     isa_ok showkv([(^)] $s, $b, $kb), Bag, "Bag symmetric difference reduce works on three bags";
 }

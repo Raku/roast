@@ -201,7 +201,6 @@ is($/, 'foo', 'Matched value for 3th « <ident>');
 
 # :nth and *-N
 
-#?rakudo skip 'NYI'
 is("ABCDE" ~~ m:nth(*-1)/\w/, "E", "Can match with *-1 index");
 
 

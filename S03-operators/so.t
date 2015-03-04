@@ -21,7 +21,6 @@ ok(so Bool::True, "'Bool::True' is true");
 ok Bool.so === False, 'Bool.so returns false';
 ok(so True, "'True' is true");
 
-#?rakudo todo 'check test and rakudo'
 is (so($b) + 1), ((so $b) + 1), 'so($b) is (so $b)';
 
 ok (so my $x = 5), 'so + declaration';
