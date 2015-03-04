@@ -46,6 +46,7 @@ my @normal = <
   IO::Dup
   IO::File
   IO::Handle
+  IO::Huh
   IO::Local
   IO::Path
   IO::Path::Cygwin
@@ -58,7 +59,6 @@ my @normal = <
   IO::Spec::QNX
   IO::Spec::Unix
   IO::Spec::Win32
-  IOU
   Instant
   Int
   Iterable
