@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 67;
+plan 70;
 
 # L<S09/Typed arrays/>
 
@@ -174,6 +174,18 @@ plan 67;
     my @b := @a.perl.EVAL;
     is @b.of, Int, 'does the roundtrip preserve typedness';
     is @a, @b, 'do typed arrays with empty elements roundtrip';
+}
+
+# RT #66892
+{
+    sub foo(--> Array of Str) {
+        my Str @a = <foo bar baz>;
+        @a
+    };
+    lives_ok { foo() }, 'Array of Str works as return constraint';
+    ok foo().of === Str, 'Get back the typed array correctly (1)';
+    is foo(), Array[Str].new('foo', 'bar', 'baz'),
+        'Get back the typed array correctly (2)';
 }
 
 # vim: ft=perl6
