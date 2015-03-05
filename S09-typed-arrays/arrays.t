@@ -115,8 +115,8 @@ plan 67;
     sub ret_pos_4 returns Positional of Int { my @a = 1,2,3; @a }
     sub ret_pos_5 returns Positional of Int { my Num @a = 1,2,3; return @a; }
     sub ret_pos_6 returns Positional of Int { my Num @a = 1,2,3; @a }
-    sub ret_pos_7 returns Positional of Num { my Int @a = 1,2,3; return @a; }
-    sub ret_pos_8 returns Positional of Num { my Int @a = 1,2,3; @a }
+    sub ret_pos_7 returns Positional of Numeric { my Int @a = 1,2,3; return @a; }
+    sub ret_pos_8 returns Positional of Numeric { my Int @a = 1,2,3; @a }
     lives_ok { ret_pos_1() },
         'type check Positional of Int allows correctly typed array to be returned explicitly';
     lives_ok { ret_pos_2() },
@@ -129,7 +129,6 @@ plan 67;
         'type check Positional of Int prevents incorrectly typed array to be returned explicitly';
     dies_ok { ret_pos_6() },
         'type check Positional of Int prevents incorrectly typed array to be returned implicitly';
-    #?rakudo 2 todo "no parametrization"
     lives_ok { ret_pos_7() },
         'type check Positional of Num allows subtyped Int array to be returned explicitly';
     lives_ok { ret_pos_8() },
