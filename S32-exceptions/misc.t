@@ -522,7 +522,7 @@ throws_like 'CATCH { when X::Y {} }', X::Comp::Group,
 
 # RT #75230
 throws_like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
-    reason => { m/'Missing semicolon.'/ }, pre => { m/'1 if 2 '/ }, post => { m/'3 { say 3 }'/ }, highexpect => @('postfix');
+    reason => { m/'Missing semicolon'/ }, pre => { m/'1 if 2 '/ }, post => { m/'3 { say 3 }'/ }, highexpect => @('postfix');
 
 # RT #77522
 throws_like '/\ X/', X::Syntax::Regex::Unspace,
@@ -540,8 +540,9 @@ throws_like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
 
 # RT #115726
 throws_like 'sub infix:<> (){}', X::Comp::Group,
-    panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<> '/ and .post ~~ m/'()'/ },
-    worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string; use :(\'\') to represent the null string,' \n '  or :() to represent the empty list more accurately'/ };
+    panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<>'/ and .post ~~ m/'()'/ },
+    message => /'Null operator is not allowed'/,
+    worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string'/ };
 
 # RT #122646
 throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
