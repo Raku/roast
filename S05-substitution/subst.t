@@ -29,7 +29,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 # RT #116224
 #?niecza skip "Cannot assign to \$/"
 {
-    $/ = '-';
+    $/ = ('-');   #  parens to avoid looking like a P5 irs directive
     is 'a'.subst("a","b"), 'b', '"a".subst("a", "b") is "b"';
     is $/,                 '-', '$/ is left untouched';
 
