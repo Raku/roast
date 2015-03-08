@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 196;
+plan 193;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -50,9 +50,6 @@ sub showkv($x) {
     throws_like { $b<a>:delete },
       X::Immutable,
       "Can't :delete from Bag";
-    throws_like { $b.delete_key("a") },
-      X::Immutable,
-      "Can't .delete_key from Bag";
 
     is ~$b<a b>, "5 1", 'Multiple-element access';
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
@@ -97,9 +94,6 @@ sub showkv($x) {
     throws_like { $b<a>:delete },
       X::Immutable,
       ':delete does not work on bag';
-    throws_like { $b.delete_key("a") },
-      X::Immutable,
-      '.delete_key does not work on bag';
 }
 
 {
@@ -201,9 +195,6 @@ sub showkv($x) {
     throws_like { %b<a>:delete },
       X::Immutable,
       "Can't :delete from a Bag";
-    throws_like { %b.delete_key("a") },
-      X::Immutable,
-      "Can't .delete_key from a Bag";
 }
 
 {

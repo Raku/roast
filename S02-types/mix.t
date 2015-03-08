@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 179;
+plan 176;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -49,9 +49,6 @@ sub showkv($x) {
     throws_like { $m<a>:delete },
       X::Immutable,
       "Can't :delete from Mix";
-    throws_like { $m.delete_key("a") },
-      X::Immutable,
-      "Can't .delete_key from Mix";
 
     is ~$m<a b>, "5 1", 'Multiple-element access';
     is ~$m<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
@@ -100,9 +97,6 @@ sub showkv($x) {
     throws_like { $m<a>:delete },
       X::Immutable,
       ':delete does not work on mix';
-    throws_like { $m.delete_key("a") },
-      X::Immutable,
-      '.delete_key does not work on mix';
 }
 
 {
@@ -201,9 +195,6 @@ sub showkv($x) {
     throws_like { %m<a>:delete },
       X::Immutable,
       "Can't :delete from a Mix";
-    throws_like { %m.delete_key("a") },
-      X::Immutable,
-      "Can't .delete_key from a Mix";
 }
 
 {

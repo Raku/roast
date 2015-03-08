@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 173;
+plan 170;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -33,7 +33,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     dies_ok { $s.keys = <c d> }, "Can't assign to .keys";
     dies_ok { $s.values = <True False> }, "Can't assign to .values";
     dies_ok { $s<a>:delete }, "Can't :delete from Set";
-    dies_ok { $s.delete_key("a") }, "Can't .delete_key from Set";
 
     is ($s<a b>).grep(?*).elems, 2, 'Multiple-element access';
     is ($s<a santa b easterbunny>).grep(?*).elems, 2, 'Multiple-element access (with nonexistent elements)';
@@ -78,7 +77,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
     dies_ok { $s<a>:delete }, ':delete does not work on set';
-    dies_ok { $s.delete_key(<a>) }, '.delete_key does not work on set';
 }
 
 {
@@ -209,7 +207,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     dies_ok { %s<a> = True }, "Can't assign to an element (Sets are immutable)";
     dies_ok { %s = a => True, b => True }, "Can't assign to a %var implemented by Set";
     dies_ok { %s<a>:delete }, "Can't :delete a key from a Set";
-    dies_ok { %s.delete_key("a") }, "Can't .delete_key a key from a Set";
 }
 
 # L<S03/Hyper operators/'unordered type'>
