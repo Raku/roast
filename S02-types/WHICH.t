@@ -110,6 +110,7 @@ my @normal = <
   StrDistance
   Sub
   Submethod
+  UInt
   VM
   Variable
   Version
