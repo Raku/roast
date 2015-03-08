@@ -11,7 +11,7 @@ plan 6;
       'can we serialize a simple array';
     my $ra = EVAL(@a.perl);
     is_deeply $ra, @a, 'can we roundtrip simple array';
-    ok $ra.of =:= Mu, 'make sure any value can be stored';
+    ok $ra.of =:= Any, 'make sure any value can be stored';
 } #3
 
 #?niecza skip "cannot roundtrip arrays with constrained values"
