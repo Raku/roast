@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 2;
+plan 3;
 
 my $path = "io-handle-testfile";
 
@@ -22,6 +22,16 @@ my $path = "io-handle-testfile";
 {
     $path.IO.open(:w).print("24");
     is slurp($path), "24", "buffer is flushed when IO goes out of scope";
+}
+
+# RT #123888
+{
+    {
+        $path.IO.open(:w).print("A+B+C+D+");
+    }
+    my $RT123888 = $path.IO.open(:r);
+    $RT123888.input-line-separator = "+";
+    is $RT123888.lines, <A+ B+ C+ D+>, "Changing input-line-separator works for .lines";
 }
 
 try { unlink $path }
