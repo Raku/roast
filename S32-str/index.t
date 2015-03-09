@@ -40,7 +40,7 @@ is(index("", ""), 0, "Both strings are empty");
 ok(!defined(index("", "Hello")), "Only main-string is empty");
 is(index("Hello", "", 3), 3, "Substr is empty, pos within str");
 is(index("Hello", "", 5), 5, "Substr is empty, pos at end of str");
-is(index("Hello", "", 999), 5, "Substr is empty, pos > length of str");
+nok(index("Hello", "", 999).defined, "Substr is empty, pos > length of str");
 
 # More difficult strings
 
