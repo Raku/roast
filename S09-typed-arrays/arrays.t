@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 74;
+plan 75;
 
 # L<S09/Typed arrays/>
 
@@ -199,6 +199,18 @@ plan 74;
     is_deeply @RT120506-assign[0, 1]».Parcel, ((True, False, True), (True,)),
         "Can feed Arrays of Type to .new of Array[Array[Type]] (assignment)";
     is @RT120506-assign[0].WHAT, Array[Bool], "Type is maintained (assignment)";
+}
+
+# RT #121804
+{
+    sub RT121804 returns Array of Hash {
+        my %a1 = :x<y>, :y<z>, :w<c>;
+        my %a2 =:x<y>, :y<t>, :w<c>;
+        my %a3 = :x<y>, :y<z>, :w<h>;
+        my Hash @array1 = $%a1, $%a2, $%a3;
+    }
+    is_deeply RT121804, Array[Hash].new({:x<y>, :y<z>, :w<c>}, {:x<y>, :y<t>, :w<c>}, {:x<y>, :y<z>, :w<h>}),
+        "Can assign to and return Array[Hash] from type-constrained sub";
 }
 
 # vim: ft=perl6
