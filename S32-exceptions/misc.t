@@ -132,7 +132,6 @@ throws_like 'sub f(:in(:$in)) { }', X::Signature::NameClash, name => 'in';
 throws_like '(my $foo) does Int', X::Does::TypeObject;
 throws_like '(my $foo) does Int, Bool', X::Does::TypeObject;
 # RT #76742
-#?rakudo.jvm 5 todo "?"
 throws_like 'Bool does role { method Str() { $.perl } };', X::Does::TypeObject;
 throws_like 'my role R { }; 99 but R("wrong");', X::Role::Initialization;
 throws_like 'my role R { has $.x; has $.y }; 99 but R("wrong");', X::Role::Initialization;
@@ -461,7 +460,6 @@ throws_like 'my class Foobar is Foobar', X::Inheritance::SelfInherit, name => "F
     throws_like q{1/2.''()}, X::Method::NotFound, method => '', typename => 'Int';
 }
 
-#?rakudo.jvm todo "?"
 {
     # RT #78314
     throws_like q{role Bottle[::T] { method Str { "a bottle of {T}" } }; class Wine { ... }; say Bottle[Wine].new;}, X::Package::Stubbed;
