@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 70;
+plan 74;
 
 # L<S09/Typed arrays/>
 
@@ -186,6 +186,19 @@ plan 70;
     ok foo().of === Str, 'Get back the typed array correctly (1)';
     is foo(), Array[Str].new('foo', 'bar', 'baz'),
         'Get back the typed array correctly (2)';
+}
+
+# RT #120506
+{
+    my @RT120506-bind := Array[Array[Bool]].new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
+    is_deeply @RT120506-bind[0, 1]».Parcel, ((True, False, True), (True,)),
+        "Can feed Arrays of Type to .new of Array[Array[Type]] (binding)";
+    is @RT120506-bind[0].WHAT, Array[Bool], "Type is maintained (binding)";
+
+    my Array of Bool @RT120506-assign .= new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
+    is_deeply @RT120506-assign[0, 1]».Parcel, ((True, False, True), (True,)),
+        "Can feed Arrays of Type to .new of Array[Array[Type]] (assignment)";
+    is @RT120506-assign[0].WHAT, Array[Bool], "Type is maintained (assignment)";
 }
 
 # vim: ft=perl6
