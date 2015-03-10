@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 136;
+plan 138;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -97,6 +97,14 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 {
     is_approx(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
         'Powers outside same as powers inside');
+
+    is_approx(:16<dead_beef> * 16**0, :16<dead_beef*16**0>,
+        'Zero powers inside');
+
+    #?rakudo.moar skip "RT #123862 - negative radix"
+    #?rakudo.jvm skip "RT #123862 - negative radix"
+    is_approx(:16<dead_beef> * 16**-1, :16<dead_beef*16**-1>,
+        'Negative powers inside');    
 }
 
 # L<S02/General radices/"Any radix may include a fractional part">
