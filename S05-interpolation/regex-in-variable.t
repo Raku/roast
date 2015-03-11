@@ -91,20 +91,18 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
           );
 }
 
+# RT #122253
 #?niecza skip "Representation P6cursor does not support attributes"
 {
-    my class InterpolationTest {
-        has $!pattern = 'a+b';
-
-        method run {
-            #?rakudo 2 todo 'instance member interpolation'
-            ok('aaab' ~~ / $!pattern /, 'Interpolation of instance member');
-            ok('aaab' ~~ / <$!pattern> /, 'Interpolation of instance member');
-            ok('aaab' ~~ / "$!pattern" /, 'Interpolation of instance member');
-        }
-    }
-
-    InterpolationTest.new.run;
+    throws_like { EVAL 'my class InterpolationTest { has $!a; method m() { /$!a/ } }' },
+        X::Attribute::Regex, :symbol<$!a>,
+        'Cannot interpolate attribute in a regex';
+    throws_like { EVAL 'my class InterpolationTest { has $!b; method m() { /<$!b>/ } }' },
+        X::Attribute::Regex, :symbol<$!b>,
+        'Cannot interpolate attribute in a regex in angle construct';
+    throws_like { EVAL 'my class InterpolationTest { has $!c; method m() { /<?> { $!c }/ } }' },
+        X::Attribute::Regex, :symbol<$!c>,
+        'Cannot interpolate attribute in a closure in a regex';
 }
 
 # vim: ft=perl6
