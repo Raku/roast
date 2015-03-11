@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 295;
+plan 296;
 
 
 # tests various assignment styles
@@ -957,6 +957,14 @@ sub l () { 1, 2 };
 {
     throws_like { EVAL "6 ~~= 2" }, X::Syntax::Can'tMeta,
         "Can't use fiddly ~~ with the = metaop ";
+}
+
+# RT #116178
+#?rakudo todo 'RT #116178'
+{
+    my $x //= .uc for 'a';
+    is $x, 'A',
+        'default-assignment (//-) does mix with implicit-variable method call';
 }
 
 # vim: ft=perl6
