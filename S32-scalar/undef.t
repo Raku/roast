@@ -23,7 +23,7 @@ perl6-specific tests.
 #   
 #   Larry
 
-plan 86;
+plan 93;
 
 our $GLOBAL;
 
@@ -338,6 +338,25 @@ lives_ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
 {
     sub foo { my $a = "baz"; undefine $a; undefine $a; $a; }
     ok !defined(foo()), 'can undefine $a twice without any troubles';
+}
+
+# RT #117777
+{
+    my $a = "foo";
+    undefine($a) = "bar";
+    is $a, "bar", "undefine is rw";
+    my $b = my $c = my $d is default(42) = "foo";
+    {
+        undefine temp $b;
+        temp undefine($c);
+        temp undefine($d) = "baz";
+        is $b, Any, "Can undefine temp \$var";
+        is $c, Any, "Can temp undefine \$var";
+        is $d, "baz", "Can temp undefine \$var + assignment";
+    }
+    is $b, "foo", "temp restores value before undefine";
+    is $c, Any, "temp restores value after undefine";
+    is $d, 42, "temp restore default value after undefine";
 }
 
 done;
