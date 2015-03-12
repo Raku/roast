@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 37;
+plan 39;
 
 {
     my int $x;
@@ -156,6 +156,16 @@ plan 37;
     $alias := $n32;
     $alias = 4e0;
     is $n32, 4e0, 'Bound alias to num32 native works';
+}
+
+# RT #121071
+{
+    my int $low  = 10**15;
+    my int $high = 2**60 - 1;
+    is $low, 1_000_000_000_000_000,
+        'int does not get confused with goldilocks number (low)';
+    is $high, 1_152_921_504_606_846_975,
+        'int does not get confused with goldilocks number (high)';
 }
 
 # vim: ft=perl6
