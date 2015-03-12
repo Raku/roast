@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 29;
 
 # L<S03/Tight or precedence/Minimum and maximum>
 # L<S03/Tight or precedence/"any value of any type may be compared with +Inf
@@ -56,6 +56,13 @@ This test min/max functions in their operator form. To see them tested in their 
     my @a = <Inspiring bold John Barleycorn!>;
     my @b = <What dangers thou canst make us scorn!>;
     is (@a minmax @b).perl, ("Barleycorn!".."us").perl, 'minmax works for strings, too';
+}
+
+{
+    is((1..2 minmax 8..9), 1..9, "minmax works on two disjoint ranges");
+    is((1..6 minmax 4..9), 1..9, "minmax works on two overlapping ranges");
+    is((1..8 minmax 4..5), 1..8, 'minmax works when both are on left list');
+    is((4..5 minmax 1..8), 1..8, 'minmax works when both are on right list');
 }
 
 #array vs. scalar
