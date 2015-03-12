@@ -6,7 +6,7 @@ use Test::Tap;
 
 plan 7;
 
-dies_ok { Supply.schedule_on($*SCHEDULER) },
+dies_ok { Supply.schedule-on($*SCHEDULER) },
   'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
@@ -18,7 +18,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $master = Supply.new;
         ok $master ~~ Supply, 'Did we get a master Supply?';
 
-        tap_ok $master.schedule_on($other_scheduler),
+        tap_ok $master.schedule-on($other_scheduler),
           [1,2,3],
           'did we get the original values',
           :live,
