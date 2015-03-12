@@ -10,7 +10,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
-        my $s1 = Supply.for(1..10);
+        my $s1 = Supply.from-list(1..10);
         my $on = on -> $res {
             $s1 => sub ($val) {
                 $res.emit($val);
@@ -20,8 +20,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $s1 = Supply.for("a".."j");
-        my $s2 = Supply.for(1..10);
+        my $s1 = Supply.from-list("a".."j");
+        my $s2 = Supply.from-list(1..10);
         my $on = on -> $res {
             my @a1;
             my @a2;
@@ -44,8 +44,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $a = Supply.for("a".."e");
-        my $b = Supply.for("f".."k");
+        my $a = Supply.from-list("a".."e");
+        my $b = Supply.from-list("f".."k");
         my $on = on -> $res {
             my @values = ([],[]);
             ($a,$b) => sub ($val,$index) {
@@ -61,7 +61,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my @s=(Supply.for("a".."e"),Supply.for("f".."k"),Supply.for("l".."p"));
+        my @s=(Supply.from-list("a".."e"),Supply.from-list("f".."k"),Supply.from-list("l".."p"));
         my $on = on -> $res {
             my @values = ([] xx +@s);
             my &infix:<op> = &[,];
@@ -78,7 +78,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my @s = ( Supply.for("a".."e"), Supply.for("f".."k") );
+        my @s = ( Supply.from-list("a".."e"), Supply.from-list("f".."k") );
         my @seen;
         my $on = on -> $res {
             my $done = 0;

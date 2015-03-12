@@ -11,7 +11,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my @seen;
-        my $tap = Supply.for(1..10).act( { @seen.push($_) } );
+        my $tap = Supply.from-list(1..10).act( { @seen.push($_) } );
         isa_ok $tap, Tap, 'we got a Tap';
         sleep .1 until @seen == 10;
         is_deeply @seen, [1..10], 'we got all of the values';

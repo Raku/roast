@@ -11,7 +11,7 @@ dies_ok { Supply.words }, 'can not be called as a class method';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap_ok Supply.for(<a bb ccc dddd eeeee>).words,
+    tap_ok Supply.from-list(<a bb ccc dddd eeeee>).words,
       ['abbcccddddeeeee'],
       "handle a simple list of words";
 

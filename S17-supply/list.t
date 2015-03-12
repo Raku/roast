@@ -12,9 +12,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 #?rakudo.jvm skip "hangs"
 {
         my @a;
-        for Supply.for(2..6).list { @a.push($_) };
+        for Supply.from-list(2..6).list { @a.push($_) };
         is_deeply @a, [2..6], "Supply.list works in for";
-        my @b = Supply.for(42..50).list;
+        my @b = Supply.from-list(42..50).list;
         is_deeply @b, [42..50], "Supply.list can be stored in array";
 }
 }

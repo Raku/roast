@@ -82,7 +82,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $s = Supply.for(1..10);
+        my $s = Supply.from-list(1..10);
         my $z = Supply.zip-latest($s);
         ok $s === $z, 'zipping one supply is a noop with "zip-latest"';
         tap_ok $z, [1..10], "noop zip-latest";

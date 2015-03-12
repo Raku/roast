@@ -45,7 +45,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 }
 
     {
-        my $for   = Supply.for(1..10);
+        my $for   = Supply.from-list(1..10);
         my $delay = $for.delayed(0);
         ok $for === $delay, "delaying by 0 is a noop";
         tap_ok $delay, [1..10], "noop delay";

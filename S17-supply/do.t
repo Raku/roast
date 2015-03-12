@@ -13,7 +13,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $seen;
-        tap_ok Supply.for(1..10).do( {$seen++} ),
+        tap_ok Supply.from-list(1..10).do( {$seen++} ),
           [1..10], ".do worked";
         is $seen, 10, "did the side effect work";
     }
