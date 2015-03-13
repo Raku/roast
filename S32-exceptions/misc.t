@@ -120,8 +120,8 @@ throws_like '@a', X::Undeclared, symbol => '@a';
 # RT #115396
 throws_like '"@a[]"', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
-throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Illegal;
-throws_like 'use MONKEY_TYPING; enum Weekday <Mon Tue>; augment class Weekday { }', X::Syntax::Augment::Illegal;
+throws_like 'use MONKEY-TYPING; augment role Positional { }', X::Syntax::Augment::Illegal;
+throws_like 'use MONKEY-TYPING; enum Weekday <Mon Tue>; augment class Weekday { }', X::Syntax::Augment::Illegal;
 throws_like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
 # RT #73938
 throws_like 'sub twigil:<@>() { }', X::Syntax::Extension::Category, category => 'twigil';
@@ -220,11 +220,11 @@ throws_like 'our multi a() { }', X::Declaration::Scope::Multi, scope => 'our';
 throws_like 'multi sub () { }', X::Anon::Multi, multiness => 'multi';
 throws_like 'proto sub () { }', X::Anon::Multi, multiness => 'proto';
 throws_like 'class { multi method () { }}', X::Anon::Multi, routine-type => 'method';
-throws_like 'use MONKEY_TYPING; augment class { }', X::Anon::Augment, package-kind => 'class';
-throws_like 'use MONKEY_TYPING; augment class NoSuchClass { }', X::Augment::NoSuchType,
+throws_like 'use MONKEY-TYPING; augment class { }', X::Anon::Augment, package-kind => 'class';
+throws_like 'use MONKEY-TYPING; augment class NoSuchClass { }', X::Augment::NoSuchType,
     package-kind => 'class',
     package => 'NoSuchClass';
-throws_like 'use MONKEY_TYPING; augment class No::Such::Class { }', X::Augment::NoSuchType,
+throws_like 'use MONKEY-TYPING; augment class No::Such::Class { }', X::Augment::NoSuchType,
     package => 'No::Such::Class';
 
 throws_like ':45<abcd>', X::Syntax::Number::RadixOutOfRange, radix => 45;

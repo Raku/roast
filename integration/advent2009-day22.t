@@ -35,7 +35,7 @@ my $d = PieceOfString.new(:length(6));
 ok $b == $d, "override equality";
 
 # XXX This pragma was NOT used in the advent calendar.
-use MONKEY_TYPING;
+use MONKEY-TYPING;
 
 augment class PieceOfString {
     method Str {

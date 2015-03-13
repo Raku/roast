@@ -7,7 +7,7 @@ plan 13;
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
 
-use MONKEY_TYPING;
+use MONKEY-TYPING;
 {
     class Foo {
         method a {'called Foo.a'}
@@ -48,7 +48,7 @@ eval_dies_ok q[
 # RT #76600
 #?rakudo.jvm todo "?"
 eval_lives_ok q[
-    use MONKEY_TYPING;
+    use MONKEY-TYPING;
     role Bar { has $.counter; }
     class Pub does Bar { has $.saloon; }
     augment class Pub { method snug() { } }
@@ -57,7 +57,7 @@ eval_lives_ok q[
 
 #?rakudo skip 'redeclaration of symbol Bar'
 {
-    use MONKEY_TYPING;
+    use MONKEY-TYPING;
     class Bar {
         method c {'called Bar.c'}
     }

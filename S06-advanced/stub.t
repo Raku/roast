@@ -30,7 +30,7 @@ eval_dies_ok('sub foo;', 'old Perl 5 "sub foo;" syntax is dead');
 }
 
 {
-    use MONKEY_TYPING;
+    use MONKEY-TYPING;
     sub hail {26}
     # Maybe should be warns_ok
     eval_dies_ok('sub hail {10}', 'redefining existing subroutine dies');
