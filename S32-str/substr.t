@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 69;
+plan 70;
 
 # L<S32::Str/Str/=item substr>
 
@@ -149,6 +149,13 @@ eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 {
     is 123456789.substr(*-3), '789', 'substr with Int and WhateverCode arg';
 
+}
+
+# RT #123602
+#?rakudo.moar todo 'RT #123602'
+{
+    is ("0" x 3 ~ "1").substr(2), '01',
+        'substr on a string built with infix:<x> works';
 }
 
 # vim: ft=perl6
