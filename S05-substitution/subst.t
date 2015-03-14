@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 147;
+plan 148;
 
 # L<S05/Substitution/>
 
@@ -18,6 +18,8 @@ my $i=0;
 is $str.subst(/l/,{$i++}),    'he0lo', 'We can have a closure as replacement';
 is $str.=subst(/l/,'i'),      'heilo', '.. and with the .= modifier';
 is $str,                      'heilo', '.. it changes the receiver';
+
+is 'hello'.subst('e', 3),     'h3llo', 'non-Str replacement works for string form too';
 
 # not sure about this. Maybe '$1$0' should work.
 
