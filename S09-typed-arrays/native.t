@@ -1,6 +1,6 @@
 ﻿use Test;
 
-plan 215;
+plan 217;
 
 # Basic native int array tests.
 {
@@ -145,6 +145,12 @@ plan 215;
     is @arr.Str, '1 2 3 4 5', '.Str space-separates';
     is @arr.gist, '1 2 3 4 5', '.gist space-separates';
     is @arr.perl, 'array[int].new(1, 2, 3, 4, 5)', '.perl includes type and int values';
+
+    sub ftest(int $a, $b) {
+        $a + $b
+    }
+    @arr = 39, 3;
+    is ftest(|@arr), 42, 'Flattening native int array in call works';
 }
 
 # Interaction of native int arrays and untyped arrays.
@@ -314,6 +320,12 @@ plan 215;
     is @arr.Str, '1 2 3 4 5', '.Str space-separates';
     is @arr.gist, '1 2 3 4 5', '.gist space-separates';
     is @arr.perl, 'array[num].new(1e0, 2e0, 3e0, 4e0, 5e0)', '.perl includes type and num values';
+
+    sub ftest(num $a, $b) {
+        $a + $b
+    }
+    @arr = 3.9e0, 0.3e0;
+    is_approx ftest(|@arr), 4.2e0, 'Flattening native num array in call works';
 }
 
 # Interaction of native num arrays and untyped arrays.
