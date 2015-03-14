@@ -1,9 +1,13 @@
 ﻿use Test;
 
-plan 206;
+plan 215;
 
 # Basic native int array tests.
 {
+    dies_ok { array.new }, 'Must use native array with type parameter (1)';
+    dies_ok { array.new(1) }, 'Must use native array with type parameter (2)';
+    dies_ok { array.new(1, 2) }, 'Must use native array with type parameter (3)';
+
     ok array[int] ~~ Positional, 'Native int array type is Positional';
     ok array[int] ~~ Positional[int], 'Native int array type is Positional[int]';
     ok array[int].of === int, 'Native int array type .of is int';
@@ -136,6 +140,11 @@ plan 206;
     is @replaced.elems, 2, 'Correct number of returned spliced values';
     is @replaced[0], 4, 'Correct value in splice returned array (1)';
     is @replaced[1], 5, 'Correct value in splice returned array (2)';
+
+    @arr = 1..5;
+    is @arr.Str, '1 2 3 4 5', '.Str space-separates';
+    is @arr.gist, '1 2 3 4 5', '.gist space-separates';
+    is @arr.perl, 'array[int].new(1, 2, 3, 4, 5)', '.perl includes type and int values';
 }
 
 # Interaction of native int arrays and untyped arrays.
@@ -300,6 +309,11 @@ plan 206;
     is @replaced.elems, 2, 'Correct number of returned spliced values';
     is @replaced[0], 4e0, 'Correct value in splice returned array (1)';
     is @replaced[1], 5e0, 'Correct value in splice returned array (2)';
+
+    @arr = 1e0..5e0;
+    is @arr.Str, '1 2 3 4 5', '.Str space-separates';
+    is @arr.gist, '1 2 3 4 5', '.gist space-separates';
+    is @arr.perl, 'array[num].new(1e0, 2e0, 3e0, 4e0, 5e0)', '.perl includes type and num values';
 }
 
 # Interaction of native num arrays and untyped arrays.
