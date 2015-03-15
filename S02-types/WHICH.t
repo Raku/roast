@@ -134,6 +134,8 @@ my @normal = <
   X::Buf::Pack
   X::Buf::Pack::NonASCII
   X::Caller::NotDynamic
+  X::Cannot::Empty
+  X::Cannot::Infinite
   X::Comp::AdHoc
   X::Comp::Group
   X::Comp::NYI
