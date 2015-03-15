@@ -136,9 +136,10 @@ ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 # RT #75316
 #?niecza skip 'Typed exceptions NYI'
 throws_like { 1 ... () },
-     Exception,
+     X::Cannot::Empty,
      'RT #75698 - empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
-     message => 'Element shifted from empty list';
+     action => '.shift',
+     what   => 'List';
 
 # RT #73508
 is (1,2,4...*)[10], 1024,
