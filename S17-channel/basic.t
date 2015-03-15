@@ -41,13 +41,13 @@ plan 17;
 }
 
 {
-    my $p = Supply.for(1..5);
-    is ~$p.Channel.list, "1 2 3 4 5", "Supply.for and .Channel work";
+    my $p = Supply.from-list(1..5);
+    is ~$p.Channel.list, "1 2 3 4 5", "Supply.from-list and .Channel work";
 }
 
 {
-    my $p = Supply.for(1..5);
-    is ~@($p.Channel), "1 2 3 4 5", "Supply.for and @(.Channel) work";
+    my $p = Supply.from-list(1..5);
+    is ~@($p.Channel), "1 2 3 4 5", "Supply.from-list and @(.Channel) work";
 }
 
 {

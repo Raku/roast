@@ -4,7 +4,7 @@ use Test;
 plan 3;
 
 {
-    my $c = Supply.for(1..5).Channel;
+    my $c = Supply.from-list(1..5).Channel;
     my @a;
     loop {
         earliest $c {
@@ -12,11 +12,11 @@ plan 3;
             done * -> { @a.push("done"); last }
         }
     }
-    is ~@a, "1 2 3 4 5 done", "Supply.for.Channel and earliest channel work";
+    is ~@a, "1 2 3 4 5 done", "Supply.from-list.Channel, earliest channel work";
 }
 
 {
-    my $c = Supply.for(1..5).Channel;
+    my $c = Supply.from-list(1..5).Channel;
     my @a;
     loop {
         earliest * {
@@ -24,11 +24,11 @@ plan 3;
             done $c -> { @a.push("done"); last }
         }
     }
-    is ~@a, "1 2 3 4 5 done", "Supply.for.Channel and earliest * work";
+    is ~@a, "1 2 3 4 5 done", "Supply.from-list.Channel and earliest * work";
 }
 
 {
-    my @c = Supply.for(11..15).Channel, Supply.for(16..20).Channel;
+    my @c = Supply.from-list(11..15).Channel, Supply.from-list(16..20).Channel;
     my %done; # cannot use a simple counter  :-(
     my @a;
     loop {
@@ -40,5 +40,6 @@ plan 3;
             done @c { %done{$:k}++; last if +%done == 2 }
         }
     }
-    is ~@a.sort, "11 12 13 14 15 16 17 18 19 20", "Supply.for.Channel and earliest * work";
+    is ~@a.sort, "11 12 13 14 15 16 17 18 19 20",
+      "Supply.from-list.Channel and earliest * work";
 }
