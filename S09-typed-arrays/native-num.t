@@ -5,7 +5,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 115;
+plan @num * 116;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -51,6 +51,9 @@ for @num -> $T {
     is @arr.Int,   3,  "Int-ifies to grown number of elems on $t array";
     is +@arr,      3,  "Numifies to grown number of elems on $t array";
     nok @arr.infinite, "$t array with values is not infinite";
+
+    is (@arr[^3] = NaN,-Inf,Inf), (NaN,-Inf,Inf),
+      "are special IEEE values supported on $t array";
 
     is_approx (@arr[10] = 10.0e0), 10.0e0,
       "Can assign non-contiguously to $t array";
