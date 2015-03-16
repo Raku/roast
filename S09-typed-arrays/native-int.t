@@ -70,8 +70,8 @@ for @int,@uint -> $T {
     is @arr[0], 1,     "Got correct element from range assign on $t array (1)";
     is @arr[49], 50,   "Got correct element from range assign on $t array (2)";
 
-    ok @arr[0]:exists,   ":exists works on $t array (1)";
-    ok @arr[49]:exists,  ":exists works on $t array (2)";
+    ok  @arr[ 0]:exists, ":exists works on $t array (1)";
+    ok  @arr[49]:exists, ":exists works on $t array (2)";
     nok @arr[50]:exists, ":exists works on $t array (3)";
 
     is (@arr := array[$T].new(42)),42,
@@ -86,15 +86,13 @@ for @int,@uint -> $T {
     is @arr[1], 15,   "Correct elem value set by constructor of $t array (2)";
     is @arr[2], 12,   "Correct elem value set by constructor of $t array (3)";
 
-    ok @arr.flat === @arr,  "$t array .flat returns identity";
-    ok @arr.list === @arr,  "$t array .list returns identity";
+    ok @arr.flat  === @arr, "$t array .flat returns identity";
+    ok @arr.list  === @arr, "$t array .list returns identity";
     ok @arr.eager === @arr, "$t array .eager returns identity";
 
-    my int $total;
-    for @arr {
-        $total += $_;
-    }
-    is $total, 37, "Can iterate over $t array";
+    diag qq:!a:!c/my $t \$s; for @arr { \$s += \$_ }; \$s/ if !
+      is EVAL( qq:!a:!c/my $t \$s; for @arr { \$s += \$_ }; \$s/ ), 37,
+        "Can iterate over $t array";
 
     $_++ for @arr;
     is @arr[0], 11, "Mutating for loop on $t array works (1)";
@@ -176,7 +174,7 @@ for @int,@uint -> $T {
     is @arr.perl, "array[$t].new(1, 2, 3, 4, 5)",
       ".perl includes type and int values on $t array";
 
-    sub ftest(int $a, $b) { $a + $b }
+    my &ftest := EVAL qq:!c/sub ftest($t \$a, $t \$b) { \$a + \$b }/;
     @arr = 39, 3;
     is ftest(|@arr), 42, "Flattening $t array in call works";
 
@@ -190,8 +188,8 @@ for @int,@uint -> $T {
 
     @untyped = 0, @native, 11;
     is @untyped.elems, 12, "List-assign $t array surrounded by literals (1)";
-    is @untyped[0],   0, "List-assign $t array surrounded by literals (2)";
-    is @untyped[5],   5, "List-assign $t array surrounded by literals (3)";
+    is @untyped[ 0],  0, "List-assign $t array surrounded by literals (2)";
+    is @untyped[ 5],  5, "List-assign $t array surrounded by literals (3)";
     is @untyped[10], 10, "List-assign $t array surrounded by literals (4)";
     is @untyped[11], 11, "List-assign $t array surrounded by literals (5)";
 
