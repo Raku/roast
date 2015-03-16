@@ -7,7 +7,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 122;
+plan (@int + @uint) * 126;
 
 # Basic native int array tests.
 for @int,@uint -> $T {
@@ -55,8 +55,9 @@ for @int,@uint -> $T {
     nok @arr.infinite, "$t array with values is not infinite";
 
     is (@arr[10] = 100), 100, "Can assign non-contiguously to $t array";
-    is @arr[9], 0,    "Elems behind non-contiguous assign are 0 on $t array";
-    is @arr[10], 100, "Non-contiguous assignment works on $t array";
+    is @arr[  9],   0, "Elems behind non-contiguous assign are 0 on $t array";
+    is @arr[ 10], 100, "Non-contiguous assignment works on $t array";
+    is @arr[*-1], 100, "Can also get last element on $t array";
 
     is (@arr = ()), (), "Can clear $t array by assigning empty list";
     is @arr.elems, 0, "Cleared $t array has no elems";
@@ -85,6 +86,7 @@ for @int,@uint -> $T {
     is @arr[0], 10,   "Correct elem value set by constructor of $t array (1)";
     is @arr[1], 15,   "Correct elem value set by constructor of $t array (2)";
     is @arr[2], 12,   "Correct elem value set by constructor of $t array (3)";
+    is @arr[*-1,*-2], (12,15), "Can also get last 2 elements on $t array";
 
     ok @arr.flat  === @arr, "$t array .flat returns identity";
     ok @arr.list  === @arr, "$t array .list returns identity";
@@ -122,6 +124,12 @@ for @int,@uint -> $T {
     is @arr[0], 42,   "push to $t array works (2)";
     throws_like { @arr.push('it real good') }, X::AdHoc,
       message => 'This type cannot unbox to a native integer',
+      "Cannot push non-int/Int to $t array";
+    throws_like { @arr[0] := my $a }, X::AdHoc,
+      message => 'Cannot bind to a natively typed array',
+      "Cannot push non-int/Int to $t array";
+    throws_like { @arr[0]:delete }, X::AdHoc,
+      message => 'Cannot delete from a natively typed array',
       "Cannot push non-int/Int to $t array";
 
     is (@arr.push(101, 105)), (42,101,105), "can push multiple to $t array";

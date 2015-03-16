@@ -5,7 +5,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 112;
+plan @num * 115;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -54,8 +54,9 @@ for @num -> $T {
 
     is_approx (@arr[10] = 10.0e0), 10.0e0,
       "Can assign non-contiguously to $t array";
-    is @arr[9],     0e0, "Elems behind non-contiguous assign are 0 on $t array";
-    is @arr[10], 10.0e0, "Non-contiguous assignment works on $t array";
+    is_approx @arr[  9],    0e0, "Elems non-contiguous assign 0 on $t array";
+    is_approx @arr[ 10], 10.0e0, "Non-contiguous assignment works on $t array";
+    is_approx @arr[*-1], 10.0e0, "Can also get last element on $t array";
 
     is (@arr = ()), (), "Can clear $t array by assigning empty list";
     is @arr.elems, 0, "Cleared $t array has no elems";
@@ -82,6 +83,7 @@ for @num -> $T {
     is_approx @arr[0], 1.0e0, "Correct elem set by constructor of $t array (1)";
     is_approx @arr[1], 1.5e0, "Correct elem set by constructor of $t array (2)";
     is_approx @arr[2], 1.2e0, "Correct elem set by constructor of $t array (3)";
+    @arr[*-1,*-2];                                # cannot approx test Parcels
 
     ok @arr.flat  === @arr, "$t array .flat returns identity";
     ok @arr.list  === @arr, "$t array .list returns identity";
@@ -116,6 +118,12 @@ for @num -> $T {
       action => '.shift',
       what   => "array[$t]",
       "Trying to shift an empty $t array dies";
+    throws_like { @arr[0] := my $a }, X::AdHoc,
+      message => 'Cannot bind to a natively typed array',
+      "Cannot push non-int/Int to $t array";
+    throws_like { @arr[0]:delete }, X::AdHoc,
+      message => 'Cannot delete from a natively typed array',
+      "Cannot push non-int/Int to $t array";
 
     @arr.push(4.2e0);                             # cannot approx test Parcels
     is @arr.elems, 1,  "push to $t array works (1)";
