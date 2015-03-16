@@ -7,7 +7,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 126;
+plan (@int + @uint) * 126 + @uint * 2;
 
 # Basic native int array tests.
 for @int,@uint -> $T {
@@ -212,4 +212,15 @@ for @int,@uint -> $T {
     throws_like { @native2 = @untyped2 }, X::AdHoc,
       message => 'This type cannot unbox to a native integer',
       "List-assigning incompatible untyped array to $t array dies";
+}
+
+# some unsigned native int tests
+for @uint -> $T {
+    my $t = $T.^name;
+    diag "Testing $t array for unsigned features";
+
+    my @arr := array[$T].new;
+    is (@arr[0] = -1), -1, "assigning -1 on $t array passes value on through?";
+    #?rakudo skip 'highest bit length stays negative, RT #124088'
+    ok @arr[0] > 0,        "negative value on $t array becomes positive";
 }
