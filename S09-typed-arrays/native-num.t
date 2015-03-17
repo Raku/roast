@@ -5,7 +5,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 116;
+plan @num * 118;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -127,6 +127,14 @@ for @num -> $T {
     throws_like { @arr[0]:delete }, X::AdHoc,
       message => 'Cannot delete from a natively typed array',
       "Cannot push non-int/Int to $t array";
+    throws_like { @arr = 0e0..Inf }, X::Cannot::Infinite,
+      action => 'initialize',
+      what   => "array[$t]",
+      "Trying to initialize a $t array with a right infinite list";
+    throws_like { @arr = -Inf..0e0 }, X::Cannot::Infinite,
+      action => 'initialize',
+      what   => "array[$t]",
+      "Trying to initialize a $t array with a left infinite list";
 
     @arr.push(4.2e0);                             # cannot approx test Parcels
     is @arr.elems, 1,  "push to $t array works (1)";
