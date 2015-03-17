@@ -46,7 +46,6 @@ eval_dies_ok q[
 ], 'cannot override a method by monkey-typing';
 
 # RT #76600
-#?rakudo.jvm todo "?"
 eval_lives_ok q[
     use MONKEY-TYPING;
     role Bar { has $.counter; }

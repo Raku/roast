@@ -12,9 +12,7 @@ Tests for lexical roles delcared with 'my role'
 # L<S12/Classes>
 
 # A few basic tests.
-#?rakudo.jvm todo "?"
 eval_lives_ok 'my role R1 {}', 'my role parses OK';
-#?rakudo.jvm todo "?"
 eval_lives_ok '{ my role R2 {} }; { my role R2 {} }',
               'declare roles with the same name in two scopes.';
 eval_dies_ok  '{ my class R3 {}; R3; }; R3',
