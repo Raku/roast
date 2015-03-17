@@ -5,7 +5,7 @@ plan 29;
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
 #?niecza skip 'Nominal type check failed in binding Int $n in f; got Str, needed Int'
-#?rakudo skip "Type check failed in binding $n; expected 'Int' but got 'Str'"
+#?rakudo skip 'Type check failed in binding $n; expected "Int" but got "Str"'
 {
     sub f (Int $n) { $n > 3 ?? 'liftoff!' !! $n + 1 }
     is (1, &f ... *)[^8].join(' '), '1 2 3 4 liftoff!', 'sequence terminated by signature mismatch';
