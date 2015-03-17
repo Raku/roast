@@ -5,7 +5,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 118;
+plan @num * 129;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -81,11 +81,12 @@ for @num -> $T {
     is @arr.elems,  1, "Correct number of elems set in constructor of $t array";
     is_approx @arr[0], 4.2e0, "Correct elem set by constructor of $t array";
 
-    @arr := array[$T].new(1.0e0, 1.5e0, 1.2e0);   # cannot approx test Parcels
-    is @arr.elems,  3, "Correct number of elems set in constructor of $t array";
+    @arr := array[$T].new(1.0e0,1.5e0,1.2e0,1.6e0); # cannot approx test Parcels
+    is @arr.elems,  4, "Correct number of elems set in constructor of $t array";
     is_approx @arr[0], 1.0e0, "Correct elem set by constructor of $t array (1)";
     is_approx @arr[1], 1.5e0, "Correct elem set by constructor of $t array (2)";
     is_approx @arr[2], 1.2e0, "Correct elem set by constructor of $t array (3)";
+    is_approx @arr[3], 1.6e0, "Correct elem set by constructor of $t array (4)";
     @arr[*-1,*-2];                                # cannot approx test Parcels
 
     ok @arr.flat  === @arr, "$t array .flat returns identity";
@@ -95,7 +96,7 @@ for @num -> $T {
 #?rakudo skip "borkedness with num and iteration"
 {
     diag qq:!a:!c/my $t \$s = 0e0; for @arr { \$s += \$_ }; \$s/ if !
-      is EVAL( qq:!a:!c/my $t \$s = 0e0; for @arr { \$s += \$_ }; \$s/ ), 3.7e0,
+      is EVAL( qq:!a:!c/my $t \$s = 0e0; for @arr { \$s += \$_ }; \$s/ ), 5.3e0,
         "Can iterate over $t array";
 }
 
@@ -103,14 +104,27 @@ for @num -> $T {
     is_approx @arr[0], 2.0e0, "Mutating for loop on $t array works (1)";
     is_approx @arr[1], 2.5e0, "Mutating for loop on $t array works (2)";
     is_approx @arr[2], 2.2e0, "Mutating for loop on $t array works (3)";
+    is_approx @arr[3], 2.6e0, "Mutating for loop on $t array works (4)";
 
     @arr.map(* *= 2);                             # cannot approx test Parcels
     is_approx @arr[0], 4.0e0, "Mutating map on $t array works (1)";
     is_approx @arr[1], 5.0e0, "Mutating map on $t array works (2)";
     is_approx @arr[2], 4.4e0, "Mutating map on $t array works (3)";
+    is_approx @arr[3], 5.2e0, "Mutating map on $t array works (4)";
 
     is @arr.grep(* < 4.5e0).elems, 2, "Can grep a $t array";
-    is_approx ([+] @arr), 13.4e0, "Can use reduce meta-op on a $t array";
+    is_approx ([+] @arr), 18.6e0, "Can use reduce meta-op on a $t array";
+
+    #?rakudo 2 skip 'cannot approx test Parcels'
+    is @arr.values,    (4.0e0,5.0e0,4.4e0,5.2e0), ".values from a $t array";
+    is @arr.pairup,  (4.0e0=>5.0e0,4.4e0=>5.2e0), ".pairup from a $t array";
+    #?rakudo 6 skip 'nativeint.list loops on itself'
+    is @arr.keys,                  ( 0, 1, 2, 3), ".keys from a $t array";
+    is @arr.pairs,     (0=>4.0e0,1=>5.0e0,2=>4.4e0,3=>5.2e0), "[$t].pairs";
+    is @arr.antipairs, (4.0e0=>0,5.0e0=>1,4.4e0=>2,5.2e0=>3), "[$t].antipairs";
+    is @arr.kv, (0,4.0e0,1,5.0e0,2,4.4e0,3,5.2e0), ".kv from a $t array";
+    is @arr.pick,         4.0e0|5.0e0|4.4e0|5.2e0, ".pick from a $t array";
+    is @arr.roll,         4.0e0|5.0e0|4.4e0|5.2e0, ".roll from a $t array";
 
     @arr = ();
     throws_like { @arr.pop }, X::Cannot::Empty,

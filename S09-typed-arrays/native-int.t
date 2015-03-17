@@ -7,7 +7,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 126 + @uint * 2;
+plan (@int + @uint) * 137 + @uint * 2;
 
 # Basic native int array tests.
 for @int,@uint -> $T {
@@ -80,34 +80,47 @@ for @int,@uint -> $T {
     is @arr.elems, 1, "Correct number of elems set in constructor of $t array";
     is @arr[0], 42,   "Correct element value set by constructor of $t array";
 
-    is (@arr := array[$T].new(10, 15, 12)), (10,15,12),
+    is (@arr := array[$T].new(10, 15, 12,16)), (10,15,12,16),
       "Can call $t array constructor with values";
-    is @arr.elems, 3, "Correct number of elems set in constructor of $t array";
+    is @arr.elems, 4, "Correct number of elems set in constructor of $t array";
     is @arr[0], 10,   "Correct elem value set by constructor of $t array (1)";
     is @arr[1], 15,   "Correct elem value set by constructor of $t array (2)";
     is @arr[2], 12,   "Correct elem value set by constructor of $t array (3)";
-    is @arr[*-1,*-2], (12,15), "Can also get last 2 elements on $t array";
+    is @arr[3], 16,   "Correct elem value set by constructor of $t array (4)";
+    is @arr[*-1,*-2], (16,12), "Can also get last 2 elements on $t array";
 
     ok @arr.flat  === @arr, "$t array .flat returns identity";
     ok @arr.list  === @arr, "$t array .list returns identity";
     ok @arr.eager === @arr, "$t array .eager returns identity";
 
     diag qq:!a:!c/my $t \$s; for @arr { \$s += \$_ }; \$s/ if !
-      is EVAL( qq:!a:!c/my $t \$s; for @arr { \$s += \$_ }; \$s/ ), 37,
+      is EVAL( qq:!a:!c/my $t \$s; for @arr { \$s += \$_ }; \$s/ ), 53,
         "Can iterate over $t array";
 
     $_++ for @arr;
     is @arr[0], 11, "Mutating for loop on $t array works (1)";
     is @arr[1], 16, "Mutating for loop on $t array works (2)";
     is @arr[2], 13, "Mutating for loop on $t array works (3)";
+    is @arr[3], 17, "Mutating for loop on $t array works (4)";
 
-    is (@arr.map(* *= 2)), (22,32,26), "Can map over $t array";
+    is (@arr.map(* *= 2)), (22,32,26,34), "Can map over $t array";
     is @arr[0], 22, "Mutating map on $t array works (1)";
     is @arr[1], 32, "Mutating map on $t array works (2)";
     is @arr[2], 26, "Mutating map on $t array works (3)";
+    is @arr[3], 34, "Mutating map on $t array works (4)";
 
     is @arr.grep(* < 30).elems, 2, "Can grep a $t array";
-    is ([+] @arr), 80, "Can use reduce meta-op on a $t array";
+    is ([+] @arr), 114, "Can use reduce meta-op on a $t array";
+
+    is @arr.values,                (22,32,26,34), ".values from a $t array";
+    is @arr.pairup,              (22=>32,26=>34), ".pairup from a $t array";
+    #?rakudo 6 skip 'nativeint.list loops on itself'
+    is @arr.keys,                  ( 0, 1, 2, 3), ".keys from a $t array";
+    is @arr.pairs,     (0=>22,1=>32,2=>26,3=>34), ".pairs from a $t array";
+    is @arr.antipairs, (22=>0,32=>1,26=>2,34=>3), ".antipairs from a $t array";
+    is @arr.kv,            (0,22,1,32,2,26,3,34), ".kv from a $t array";
+    is @arr.pick,                    22|32|26|34, ".pick from a $t array";
+    is @arr.roll,                    22|32|26|34, ".roll from a $t array";
 
     @arr = ();
     throws_like { @arr.pop }, X::Cannot::Empty,
