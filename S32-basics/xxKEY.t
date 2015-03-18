@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 126;
+plan 129;
 
 my %h            = a => 42, b => 666;
 my Int %hi       = a => 42, b => 666;
@@ -66,10 +66,10 @@ for $%h, Any, $%hi, Int, $%hia, Int -> \h, \T {
     is ($a.BIND-KEY("a",$b)), 42, "\$a.BIND-KEY (undefined)";
     is $a.AT-KEY("a"),        42, "\$a.AT-KEY (defined)";
     $b = 65;
-# todo, no fudging in sanity
-#    is $a.AT-KEY("a"),        65, "\$a.AT-KEY (defined)";
-#    is $a.DELETE-KEY("a"),    65, "\$a.DELETE-KEY (defined)";
-#    ok !$a.EXISTS-KEY("a"),       "\$a.EXISTS-KEY (after delete)";
+    #?rakudo 2 todo "binding to a key in an undefine doesn't work?"
+    is $a.AT-KEY("a"),        65, "\$a.AT-KEY (defined)";
+    is $a.DELETE-KEY("a"),    65, "\$a.DELETE-KEY (defined)";
+    ok !$a.EXISTS-KEY("a"),       "\$a.EXISTS-KEY (after delete)";
 }
 
 {
