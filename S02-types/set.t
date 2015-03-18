@@ -218,11 +218,11 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset(-« set(3, 9, -4)), '-9 -3 4', '-« Set';
     is showset(set(<b e g k z>)».pred), 'a d f j y', 'Set».pred';
 
-    dies_ok { set(1, 2) »+« set(3, 4) }, 'Set »+« Set is illegal';
-    dies_ok { set(1, 2) »+« [3, 4] }, 'Set »+« Array is illegal';
-    dies_ok { set(1, 2) «+» [3, 4] }, 'Set «+» Array is illegal';
-    dies_ok { [1, 2] »+« set(3, 4) }, 'Set »+« Array is illegal';
-    dies_ok { [1, 2] «+» set(3, 4) }, 'Set «+» Array is illegal';
+    throws_like { set(1, 2) »+« set(3, 4) }, X::AdHoc,'Set »+« Set is illegal';
+    throws_like { set(1, 2) »+« [3, 4] }, X::AdHoc, 'Set »+« Array is illegal';
+    throws_like { set(1, 2) «+» [3, 4] }, X::AdHoc, 'Set «+» Array is illegal';
+    throws_like { [1, 2] »+« set(3, 4) }, X::AdHoc, 'Set »+« Array is illegal';
+    throws_like { [1, 2] «+» set(3, 4) }, X::AdHoc, 'Set «+» Array is illegal';
 }
 
 #?niecza skip "Hypers not yet Set compatible"
