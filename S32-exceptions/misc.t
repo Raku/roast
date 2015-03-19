@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 283;
+plan 284;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -599,6 +599,12 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 # RT #123584
 {
     is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS:\nUseless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
+}
+
+# RT #114430
+{
+    throws_like { ::('') }, X::NoSuchSymbol,
+        'fail sensibly for empty lookup.';
 }
 
 # vim: ft=perl6
