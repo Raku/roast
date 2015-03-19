@@ -32,8 +32,6 @@ sub showkv($x) {
     isa_ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    #?rakudo.parrot todo "?"
-    #?rakudo.jvm    todo "?"
     throws_like { $m<a> = 5 },
       X::Assignment::RO,
       "Can't assign to an element (Mixs are immutable)";
@@ -182,8 +180,6 @@ sub showkv($x) {
     is %m<b>, 2, 'Single-key subscript (existing element)';
     is %m<santa>, 0, 'Single-key subscript (nonexistent element)';
 
-    #?rakudo.parrot todo "?"
-    #?rakudo.jvm    todo "?"
     throws_like { %m<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Mixs are immutable)";
