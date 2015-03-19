@@ -77,7 +77,7 @@ is $start-promise.status, Planned, 'external program still running (stdin still 
 
 $pc.close-stdin;
 
-#?rakudo todo 'returns Nil'
+#?rakudo skip 'returns Nil (flapping tests)'
 isa_ok $start-promise.result, Proc::Status, 'Can finish, return Proc::Status';
 
 is $stdout, 'Perl 6', 'got correct STDOUT';
