@@ -52,7 +52,8 @@ plan 32;
     #?rakudo 2 todo ":@<...> and :%<...> broken needs RT"
     is_deeply (:@<fie>), (fie => @<fie>), 'Adverb with @< twigil works';
     is_deeply (:%<foe>), (foe => %<foe>), 'Adverb with %< twigil works';
-    #?rakudo 3 todo "Moar makes new slang object each time, other backend NYI?"
+    #?rakudo.moar 3 todo "Moar makes new slang object each time, other backend NYI?"
+    #?rakudo.jvm 3 skip "Type check failed; expected 'Any' but got 'Mu'"
     is_deeply (:$~MAIN), (MAIN => $~MAIN), 'Adverb with $~ twigil works';
     is_deeply (:@~MAIN), (MAIN => @~MAIN), 'Adverb with @~ twigil works';
     is_deeply (:%~MAIN), (MAIN => %~MAIN), 'Adverb with %~ twigil works';
