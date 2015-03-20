@@ -108,7 +108,7 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
         }
         Blorg.new.do_stuff
     ';
-    ok ~$! ~~ / 'Calling proto' .* 'will never work' /, "fails correctly";
+    ok ~$! ~~ / 'Calling bar(' .*? 'will never work' .*? 'proto' /, "fails correctly";
 }
 
 # RT #123570

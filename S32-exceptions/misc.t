@@ -482,13 +482,13 @@ throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
 
     {
         my $code = q[ sub foo($x) { }; foo; ];
-        throws_like $code, X::TypeCheck::Argument, message => { m/"requires argument"/ }, objname => { m/foo/ };
+        throws_like $code, X::TypeCheck::Argument, message => { m/"() will never work" .*? 'Any'/ }, objname => { m/foo/ };
     }
 
     {
         my $code = q[ sub foo(Str) { }; foo 42; ];
         throws_like $code, X::TypeCheck::Argument, 
-            signature => rx/ 'Expected' .+ 'Str' /, 
+            signature => rx/ '(Str)' /, 
             arguments => { .[0] eq "int" };
     }
 
@@ -496,7 +496,7 @@ throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
         my $code = q[ sub foo(Int $x, Str $y) { }; foo "not", 42; ];
         throws_like $code, X::TypeCheck::Argument, 
             arguments => { .[0] ~ .[1] eq "StrInt" },
-            signature => rx/ 'Expected' .+ 'Int $x, Str $y' /;
+            signature => rx/ '(Int $x, Str $y)' /;
     }
 }
 
