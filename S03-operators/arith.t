@@ -243,8 +243,14 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 {
     is 0.9**Inf, 0,   "0.9**Inf converges towards 0";
     is 1.1**Inf, Inf, "1.1**Inf diverges towards Inf";
-    #?niecza todo "No agreement over correct behavior here -- above web page not helpful!"
-    is 1**Inf, 1;
+
+    if $*DISTRO.name eq 'netbsd' {
+        skip "NetBSD PR lib/49240";
+    }
+    else {  
+        is 1**Inf, 1, "1**Inf diverges towards Inf";
+    }
+
 }
 
 {
