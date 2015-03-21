@@ -166,10 +166,12 @@ ok $neg-pi == -3.14, "-3.14 == -3.14";
 
 # bonus round!
 isa_ok $zero.Complex, Complex, "0.Complex is a Complex";
+#?rakudo 3 skip 'hangs'
 ok $zero == $zero.Complex, "0 == 0.Complex";
 ok $neg-pi == $neg-pi.Complex, "-3.14 == -3.14.Complex";
 ok $neg-pi == -3.14.Complex, "-3.14 == -3.14.Complex";
 ok -3.14 == $neg-pi.Complex, "-3.14 == -3.14.Complex";
+#?rakudo skip 'hangs'
 nok $zero == $neg-pi.Complex, "not 0 == -3.14.Complex";
 
 nok $zero != 0, "not 0 != 0";
@@ -179,9 +181,11 @@ ok $neg-pi != -3, "-3.14 != -3";
 ok -1 != $zero, "-1 != 0";
 nok 1.Rat != $one, "not 1 != 1";
 ok 1.001 != $one-and-one-hundredth, "1.001 != 1.01";
+#?rakudo skip 'hangs'
 nok $neg-pi != -3.14, "not -3.14 != -3.14";
 
 # bonus round!
+#?rakudo 5 skip 'hangs'
 nok $zero != $zero.Complex, "not 0 != 0.Complex";
 nok $neg-pi != $neg-pi.Complex, "not -3.14 != -3.14.Complex";
 nok $neg-pi != -3.14.Complex, "not -3.14 != -3.14.Complex";
@@ -252,8 +256,10 @@ is_approx 10 % $one-and-ninety-nine-hundredths, 0.05, "10 % 1.99 = 0.05";
 is_approx $one-and-one-hundredth % 0.2, 0.01, "1.01 % 0.2 = 0.01";
 
 is_approx $one-and-one-hundredth.log, 1.01.log, "1.01.log is correct";
+#?rakudo skip 'hangs'
 is_approx log($one-and-one-hundredth), 1.01.log, "log(1.01) is correct";
 is_approx $one-and-one-hundredth.log($ten), 1.01.log10, "1.01.log(10) is correct";
+#?rakudo 3 skip 'hangs'
 is_approx log($one-and-one-hundredth, $ten), 1.01.log10, "log(1.01, 10) is correct";
 is_approx $one-and-one-hundredth.log($ten * 1i), 1.01.log / log(10i), "1.01.log(10i) is correct";
 is_approx ($one-and-one-hundredth * 1i).log($ten), log(1.01i) / log(10), "1.01i.log(10) is correct";
@@ -280,6 +286,7 @@ is $one-and-one-hundredth.exp, 1.01.exp, "1.01.exp is correct";
 is $neg-pi.exp, (-3.14).exp, "-3.14.exp is correct";
 is $one-and-one-hundredth.exp(10.Rat), 1.01.exp(10), "1.01.exp(10) is correct";
 is 2.exp($neg-pi), 2.exp(-3.14), "2.exp(-3.14) is correct";
+#?rakudo skip 'hangs'
 is_approx $one-and-one-hundredth.exp(10i), 1.01.exp(10i), "1.01.exp(10i) is correct";
 
 {
