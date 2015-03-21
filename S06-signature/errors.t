@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 27;
 
 =begin pod
 
@@ -68,6 +68,16 @@ eval_dies_ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
     ok $error ~~ /multi/, "mentions multi";
     ok $error ~~ /signatures/, "mentions signatures";
     ok $error ~~ /^^ \h* '(Str'/, "Error mentions Str";
+    ok $error ~~ /^^ \h* '(Int'/, "Error mentions Int";
+    ok $error ~~ / :i call /, '... error message mentions "call"';
+}
+
+# RT #78670
+{
+    try { EVAL 'multi rt78670(Int) {}; my $str = "foo"; rt78670 $str' }
+    my $error = ~$!;
+    ok $error ~~ /:i 'rt78670(Str)' /, "fails multi sigs reports call profile";
+    ok $error ~~ /signature/, "mentions signature";
     ok $error ~~ /^^ \h* '(Int'/, "Error mentions Int";
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }
