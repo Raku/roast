@@ -248,7 +248,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
         skip "NetBSD PR lib/49240";
     }
     else {  
-        is 1**Inf, 1, "1.1**Inf diverges towards Inf";
+        is 1**Inf, 1, "1**Inf diverges towards Inf";
     }
 
 }
