@@ -247,7 +247,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
     is 1.1**Inf, Inf, "1.1**Inf diverges towards Inf";
 
     if $*DISTRO.name eq 'netbsd' {
-#?rakudo todo 'RT #85750'
+#?rakudo todo 'RT #124147'
         ## NetBSD PR lib/49240
         ## cmp. http://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=49240
         is 1**Inf, 1, "1**Inf returns 1";
