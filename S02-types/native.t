@@ -110,7 +110,6 @@ plan 39;
     is @j[0], 42, 'can push native int to an array (2)';
 }
 
-#?rakudo.jvm skip 'RT #124051'
 {
     my int   $i   = 1;
     my int64 $i64 = 2;
