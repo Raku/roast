@@ -10,8 +10,10 @@ my @normal = <
   Backtrace::Frame
   Bag
   BagHash
+  Blob
   Block
   Bool
+  Buf
   CallFrame
   Capture
   Code
@@ -278,24 +280,24 @@ my @normal = <
   byte
   int
   int1
-  int2
-  int4
-  int8
   int16
   int32
+  int2
+  int4
   int64
+  int8
   num
   num32
   num64
   str
   uint
   uint1
-  uint2
-  uint4
-  uint8
   uint16
+  uint2
   uint32
+  uint4
   uint64
+  uint8
   utf16
   utf32
   utf8
