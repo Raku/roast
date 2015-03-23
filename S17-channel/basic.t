@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 {
     my Channel $c .= new;
@@ -41,13 +41,13 @@ plan 16;
 }
 
 {
-    my $p = Supply.for(1..5);
-    is ~$p.Channel.list, "1 2 3 4 5", "Supply.for and .Channel work";
+    my $p = Supply.from-list(1..5);
+    is ~$p.Channel.list, "1 2 3 4 5", "Supply.from-list and .Channel work";
 }
 
 {
-    my $p = Supply.for(1..5);
-    is ~@($p.Channel), "1 2 3 4 5", "Supply.for and @(.Channel) work";
+    my $p = Supply.from-list(1..5);
+    is ~@($p.Channel), "1 2 3 4 5", "Supply.from-list and @(.Channel) work";
 }
 
 {
@@ -55,4 +55,24 @@ plan 16;
     $c.close;
     is $c.closed.status, Kept, 'Closing a channel immediately keeps its .closed promise';
 
+}
+
+{
+    my $c = Channel.new;
+    my $timer = Supply.interval(5).tap: {
+        if $_ > 0 {
+            flunk("Timeout while receiving from a closed shared channel");
+            exit(1);
+        }
+    };
+
+    my $worker-a = start { for @$c {} };
+    my $worker-b = start { for @$c {} };
+
+    $c.close;
+
+    await $worker-a, $worker-b;
+
+    pass("Both workers detected end-of-channel after a shared channel close");
+    $timer.close;
 }

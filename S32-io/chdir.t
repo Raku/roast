@@ -7,8 +7,7 @@ plan 10;
 
 eval_dies_ok ' chdir() ', 'Cannot call chdir without an argument';
 
-### Although you can use Unix style folder separator / to set folders, what's returned
-### is in the native style, such as \ for windows
+### You can use Unix style folder separator / to set folders on windows too.
 my $sep = '/';
 
 # change to t subfolder and see if cwd is updated
@@ -25,7 +24,7 @@ else {
 
     # relative change back up.
     ok chdir( ".." ), 'chdir gave a true value';
-    is $*CWD, $cwd, 'Change back up to .. worked';
+    is $*CWD.cleanup, $cwd.cleanup, 'Change back up to .. worked';
 
     # relative change to t
     ok chdir( $subdir ), 'chdir gave a true value';

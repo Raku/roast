@@ -46,8 +46,6 @@ ok $*VM.version,        "Version is '{$*VM.version}'";
 #?rakudo.moar   todo 'no VM.signature yet'
 #?rakudo.parrot skip 'no VM.signature yet'
 ok $*VM.signature,      "Signature is '{$*VM.signature}'";
-#?rakudo.jvm    todo 'no VM.desc yet'
-#?rakudo.moar   todo 'no VM.desc yet'
 #?rakudo.parrot skip 'no VM.desc yet'
 ok $*VM.desc,           "Description is '{$*VM.desc}'";
 ok $*VM.config,         "We have config";

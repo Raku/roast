@@ -27,12 +27,12 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     tap_ok Supply.merge(
-      Supply.for(1..5), Supply.for(6..10), Supply.for(11..15)
+      Supply.from-list(1..5), Supply.from-list(6..10), Supply.from-list(11..15)
      ),
       [1..15], "merging 3 supplies works", :sort;
 
     {
-        my $s = Supply.for(1..10);
+        my $s = Supply.from-list(1..10);
         my $m = Supply.merge($s);
         ok $s === $m, "merging one supply is a noop";
         tap_ok $m, [1..10], "noop merge";

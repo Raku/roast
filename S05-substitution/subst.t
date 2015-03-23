@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 147;
+plan 148;
 
 # L<S05/Substitution/>
 
@@ -19,6 +19,8 @@ is $str.subst(/l/,{$i++}),    'he0lo', 'We can have a closure as replacement';
 is $str.=subst(/l/,'i'),      'heilo', '.. and with the .= modifier';
 is $str,                      'heilo', '.. it changes the receiver';
 
+is 'hello'.subst('e', 3),     'h3llo', 'non-Str replacement works for string form too';
+
 # not sure about this. Maybe '$1$0' should work.
 
 $/ = ['nope'];
@@ -29,7 +31,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 # RT #116224
 #?niecza skip "Cannot assign to \$/"
 {
-    $/ = '-';
+    $/ = ('-');   #  parens to avoid looking like a P5 irs directive
     is 'a'.subst("a","b"), 'b', '"a".subst("a", "b") is "b"';
     is $/,                 '-', '$/ is left untouched';
 

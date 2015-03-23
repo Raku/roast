@@ -17,12 +17,12 @@ diag('Test for class attribute initialization');
 	class T1 { }
 	class T2 { }
         #?niecza todo
-	eval_lives_ok 'use MONKEY_TYPING; augment class T1 { has $.t = 1 }; 1',
+	eval_lives_ok 'use MONKEY-TYPING; augment class T1 { has $.t = 1 }; 1',
 		"Try to initialize public attribute";
 
         #?niecza todo
         eval_lives_ok q'
-		use MONKEY_TYPING;
+		use MONKEY-TYPING;
 		augment class T2 {
 		    has $!t = 2;
 		    method get { $!t };

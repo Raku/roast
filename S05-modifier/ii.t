@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 21;
 
 #?kp6 emit skip_rest("unimpl");
 
@@ -60,6 +60,16 @@ for @todo -> $t {
     $_ = 'Abc';
     s:ii/ab/xy/;
     is $_, 'Xyc', ':ii implies :i';
+}
+
+# RT #77406
+{
+    ok "a" ~~ m:i/:i A/,
+        'duplicated before-regexp modifier ":i" allowed (1)';
+    ok "a" ~~ m:i:i/A/,
+        'duplicated before-regexp modifier ":i" allowed (2)';
+    ok "a" ~~ m/:i:i A/,
+        'duplicated before-regexp modifier ":i" allowed (3)';
 }
 
 done;

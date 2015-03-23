@@ -7,7 +7,6 @@ plan 10;
 
 eval_lives_ok q[ class StubA { ... }; class StubA { method foo { } }; ],
               'Can stub a class, and later on declare it';
-#?rakudo.jvm todo "?"
 eval_lives_ok q[ role StubB { ... }; role StubB { method foo { } }; ],
               'Can stub a role, and later on declare it';
 eval_lives_ok q[ module StubC { ... }; module StubC { sub foo { } }; ],

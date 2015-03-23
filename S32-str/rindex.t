@@ -33,7 +33,7 @@ is(rindex("", ""), 0, "Both strings are empty");
 ok(!defined(rindex("", "Hello")), "Only main-string is empty");
 is(rindex("Hello", "", 3), 3, "Substr is empty, pos within str");
 is(rindex("Hello", "", 5), 5, "Substr is empty, pos at end of str");
-is(rindex("Hello", "", 999), 5, "Substr is empty, pos > length of str");
+nok(rindex("Hello", "", 999).defined, "rindex where pos > length of str return undefined");
 
 # More difficult strings
 

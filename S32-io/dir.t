@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -29,3 +29,12 @@ is +dir(:test).grep(*.basename eq '.'|'..'), 2, "... unless you override :test";
 nok dir( test=> none('.', '..', 't') ).grep(*.basename eq 't'), "can exclude t/ dir";
 
 is dir('t').[0].dirname, $*CWD ~ 't', 'dir("t") returns paths with .dirname of "t"';
+
+# RT #123308
+{
+    my $res = dir "/";
+    ok $res !~~ m/ "/" ** 2 /,
+        'results for \'dir "/"\' do not begin with 2 slashes';
+}
+
+# vim: ft=perl6

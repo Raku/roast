@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 88;
+plan 89;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -335,6 +335,28 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 
 {
     is my sub {42}(), 42, 'can call postcircumfix () on subs inside my'
+}
+
+# RT #120397
+## this is only meant as a test for a NullPointerException
+## (or a segfault which would abort the test)
+## TODO: replace with a more specific test when the syntax
+##       is either implemented or forbidden
+{
+    my $exception = 'unset';
+    {
+        EVAL q[my $a ($b, $c); $b = 42];
+        CATCH {
+            when /NullPointerException/ {
+                $exception = 'NullPointerException';
+            }
+            default {
+                $exception = $_.WHAT;
+            }
+        }
+    }
+    isnt $exception, 'NullPointerException',
+        'no NullPointerException (and no segfault either)';
 }
 
 # vim: ft=perl6

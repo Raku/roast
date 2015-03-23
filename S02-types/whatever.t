@@ -116,7 +116,7 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 }
 
 #?niecza skip 'hangs'
-is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
+is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
 
 {
     is (1, Mu, 2, 3).grep(*.defined), <1 2 3>, '*.defined works in grep';

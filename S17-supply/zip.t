@@ -28,15 +28,15 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     tap_ok Supply.zip(
-        Supply.for("a".."e"),
-        Supply.for("f".."k"),
-        Supply.for("l".."p")
+        Supply.from-list("a".."e"),
+        Supply.from-list("f".."k"),
+        Supply.from-list("l".."p")
       ),
       [<a f l>,<b g m>,<c h n>,<d i o>,<e j p>],
       "zipping with 3 supplies works";
 
     {
-        my $s = Supply.for(1..10);
+        my $s = Supply.from-list(1..10);
         my $z = Supply.zip($s);
         ok $s === $z, "zipping one supply is a noop";
         tap_ok $z, [1..10], "noop zip";

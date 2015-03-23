@@ -5,10 +5,10 @@ plan 29;
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
 #?niecza skip 'Nominal type check failed in binding Int $n in f; got Str, needed Int'
-#?rakudo todo 'bogus test?'
+#?rakudo skip 'Type check failed in binding $n; expected "Int" but got "Str"'
 {
     sub f (Int $n) { $n > 3 ?? 'liftoff!' !! $n + 1 }
-    is (1, &f ... *).join(' '), '1 2 3 liftoff!', 'sequence terminated by signature mismatch';
+    is (1, &f ... *)[^8].join(' '), '1 2 3 4 liftoff!', 'sequence terminated by signature mismatch';
 }
 
 # L<S03/List infix precedence/'the list on the left is C<Nil>'>
@@ -24,8 +24,9 @@ is (() ... *)[^3].perl, '((), (), ())', 'Nil sequence';
 is (1, 1, { $^a + 1, $^b * 2 } ... *).flat.[^12].join(' '), '1 1 2 2 3 4 4 8 5 16 6 32', 'sequence of two interleaved sequences';
 is (1, 1, 1, { $^a + 1, $^b * 2, $^c - 1 } ... *).flat.[^18].join(' '), '1 1 1 2 2 0 3 4 -1 4 8 -2 5 16 -3 6 32 -4', 'sequence of three interleaved sequences';
 is (1, { $^n + 1 xx $^n + 1 } ... *)[^10].join(' '), '1 2 2 3 3 3 4 4 4 4', 'sequence with list-returning block';
-#?rakudo 2 todo 'NYI'
+#RT #80574
 is ('a', 'b', { $^a ~ 'x', $^a ~ $^b, $^b ~ 'y' } ... *)[^11].join(' '), 'a b ax ab by abx abby byy abbyx abbybyy byyy', 'sequence with arity < number of return values';
+#RT #80574
 is ('a', 'b', 'c', { $^x ~ 'x', $^y ~ 'y' ~ $^z ~ 'z' } ... *)[^9].join(' '), 'a b c ax bycz cx axybyczz byczx cxyaxybyczzz', 'sequence with arity > number of return values';
 
 # L<S03/List infix precedence/it will be taken as a yada>
@@ -102,10 +103,9 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 # is (1, 2 ... 0, 1 ... 3).join(' '),
 #     '0 1 2 3',
 #     'chained sequence with an empty subsequence';
-
+#RT #80574'
 {
     my @rt80574 := -> { 'zero', 'one' } ... *;
-    #?rakudo todo 'RT #80574'
     is @rt80574[0], 'zero', 'Generator output is flattened';
 }
 

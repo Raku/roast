@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 47;
 
 =begin description
 
@@ -184,6 +184,12 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
     throws_like { EVAL q[role A::B { method foo(A::C $a) { } }] },
         X::Parameter::InvalidType,
         'undeclared type in signature in role results in X::Parameter::InvalidType';
+}
+
+# RT #123002
+{
+    lives_ok { sub rt123002 { EVAL 'role RT123002 { }' }; rt123002 },
+        'can call a sub which runs EVAL on minimal role declaration';
 }
 
 done;

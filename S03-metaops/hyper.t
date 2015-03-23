@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 280;
+plan 301;
 
 =begin pod
 
@@ -712,7 +712,7 @@ my @e;
 }
 
 # L<S03/"Hyper operators"/is assumed to be infinitely extensible>
-#?rakudo todo 'nom regression - whatever extension RT #122230'
+# RT #122230'
 {
     @r = <A B C D E> »~» (1, 2, 3, *);
     @e = <A1 B2 C3 D3 E3>;
@@ -819,6 +819,45 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 # RT #123178
 {
     is 42 «~~« (Array, List, Parcel), (False, False, False), "hyper against an undefined Iterable doesn't hang";
+    is 42 «~~« (Hash, Bag, Enum), (False, False, False), "hyper against an undefined Associative doesn't hang";
+}
+
+# RT #120662
+{
+    # <empty list> <hyper> <empty list>
+    is () »+« (), (), "no-dwim hyper between empty lists doesn't hang";
+    is () «+« (), (), "left-dwim hyper between empty lists doesn't hang";
+    is () »+» (), (), "right-dwim hyper between empty lists doesn't hang";
+    is () «+» (), (), "both-dwim hyper between empty lists doesn't hang";
+    # <item> <hyper> <empty list>
+    is True «+« (), (), "left-dwim hyper against empty RHS doesn't hang";
+    is True »+» (), (), "right-dwim hyper against empty RHS doesn't hang";
+    is True «+» (), (), "both-dwim hyper against empty RHS doesn't hang";
+    throws_like {True »+« ()}, X::HyperOp::NonDWIM,
+        left-elems => 1, right-elems => 0,
+        "non-dwim hyper against empty RHS dies";
+    # <empty list> <hyper> <item>
+    is () «+« True, (), "left-dwim hyper against empty LHS doesn't hang";
+    is () «+» True, (), "right-dwim hyper against empty LHS doesn't hang";
+    is () «+» True, (), "both-dwim hyper against empty LHS doesn't hang";
+    throws_like {() »+« True}, X::HyperOp::NonDWIM,
+        left-elems => 0, right-elems => 1,
+        "non-dwim hyper against empty RHS dies";
+    my @a = «"Furthermore, Subhuti," "the basic nature" "of the five" "aggregates" "is emptiness."»;
+    # <list> <hyper> <empty list>
+    is @a «+« (), (), "left-dwim hyper against empty RHS doesn't hang";
+    is @a »+» (), (), "right-dwim hyper against empty RHS doesn't hang";
+    is @a «+» (), (), "both-dwim hyper against empty RHS doesn't hang";
+    throws_like {@a »+« ()}, X::HyperOp::NonDWIM,
+        left-elems => 5, right-elems => 0,
+        "non-dwim hyper against empty RHS dies";
+    # <empty list> <hyper> <list>
+    is () «+« @a, (), "left-dwim hyper against empty LHS doesn't hang";
+    is () »+» @a, (), "right-dwim hyper against empty LHS doesn't hang";
+    is () «+» @a, (), "both-dwim hyper against empty LHS doesn't hang";
+    throws_like {() »+« @a}, X::HyperOp::NonDWIM,
+        left-elems => 0, right-elems => 5,
+        "non-dwim hyper against empty RHS dies";
 }
 
 done;

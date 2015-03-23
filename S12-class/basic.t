@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 =begin pod
 
@@ -14,6 +14,7 @@ Very basic class tests from L<S12/Classes>
 class Foo {}
 
 is Foo.perl, 'Foo', 'Classname.perl produces the class name';
+is Foo.new.perl, 'Foo.new', 'Classname.new.perl just adds .new';
 
 my $foo = Foo.new();
 ok($foo ~~ Foo, '... smartmatch our $foo to the Foo class');
@@ -98,7 +99,6 @@ class One::Two::Three { }  # auto-vivifies package One::Two
 class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
 dies_ok { EVAL 'class One::Two { }' }, 'cannot redeclare an existing class';
-#?rakudo.jvm todo "?"
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT #62898';
 
 #?niecza skip "Methods must be used in some kind of package"

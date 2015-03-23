@@ -159,13 +159,13 @@ for my $tfile (@tfiles) {
         $f =~ s/\.$implementation$/.t/;
         $plan_per_file{$f} = $plan;
     }
-    for (keys %skip) {
+    for (sort keys %skip) {
         printf "   %3d skipped: %s\n", $skip{$_}, $_;
     }
-    for (keys %todofail) {
+    for (sort keys %todofail) {
         printf "   %3d todo   : %s\n", $todofail{$_}, $_;
     }
-    for (keys %todopass) {
+    for (sort keys %todopass) {
         printf "   %3d todo PASSED: %s\n", $todopass{$_}, $_;
     }
     if ($abort) {

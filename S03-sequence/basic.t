@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 132;
+plan 133;
 
 # single-term sequence
 
@@ -136,9 +136,10 @@ ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 # RT #75316
 #?niecza skip 'Typed exceptions NYI'
 throws_like { 1 ... () },
-     Exception,
+     X::Cannot::Empty,
      'RT #75698 - empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
-     message => 'Element shifted from empty list';
+     action => '.shift',
+     what   => 'List';
 
 # RT #73508
 is (1,2,4...*)[10], 1024,
@@ -224,8 +225,9 @@ is ~(1...10)[2...4], '3 4 5', 'can index sequence with sequence';
     is (1, 2 ...^ *>5), (1,2,3,4,5), "exclusive sequence with code on the rhs";
 }
 
-#?rakudo todo 'sequence + last'
-is (1, 2 , {last if $_>=5; $_+1} ... *), (1,2,3,4,5), "sequence that lasts in the last item of lhs";
+#?rakudo 2 todo 'sequence + last'
+is (1, 2 , {last if $_>=5; $_+1} ... *)[^10].join(', '), '1, 2, 3, 4, 5', "sequence that lasts in the last item of lhs";
+is (5,4,3, { $_ - 1 || last } ... *)[^10].join(', '), '5, 4, 3, 2, 1', "sequence may be terminated by calling last from the generator function";
 
 {
     is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';

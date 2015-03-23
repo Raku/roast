@@ -111,7 +111,6 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     is $str, '(', 'failing PRE runs nothing else';
 }
 
-#?rakudo.jvm todo "nigh"
 {
     my $str;
     try {

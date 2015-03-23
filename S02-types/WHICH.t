@@ -10,8 +10,10 @@ my @normal = <
   Backtrace::Frame
   Bag
   BagHash
+  Blob
   Block
   Bool
+  Buf
   CallFrame
   Capture
   Code
@@ -115,6 +117,7 @@ my @normal = <
   StrDistance
   Sub
   Submethod
+  UInt
   VM
   Variable
   Version
@@ -138,6 +141,8 @@ my @normal = <
   X::Buf::Pack
   X::Buf::Pack::NonASCII
   X::Caller::NotDynamic
+  X::Cannot::Empty
+  X::Cannot::Infinite
   X::Comp::AdHoc
   X::Comp::Group
   X::Comp::NYI
@@ -276,6 +281,28 @@ my @normal = <
   X::Undeclared
   X::Undeclared::Symbols
   X::Value::Dynamic
+  bit
+  byte
+  int
+  int1
+  int16
+  int32
+  int2
+  int4
+  int64
+  int8
+  num
+  num32
+  num64
+  str
+  uint
+  uint1
+  uint16
+  uint2
+  uint32
+  uint4
+  uint64
+  uint8
   utf16
   utf32
   utf8

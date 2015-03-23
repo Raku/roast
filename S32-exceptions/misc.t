@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 282;
+plan 284;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -120,8 +120,8 @@ throws_like '@a', X::Undeclared, symbol => '@a';
 # RT #115396
 throws_like '"@a[]"', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
-throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Illegal;
-throws_like 'use MONKEY_TYPING; enum Weekday <Mon Tue>; augment class Weekday { }', X::Syntax::Augment::Illegal;
+throws_like 'use MONKEY-TYPING; augment role Positional { }', X::Syntax::Augment::Illegal;
+throws_like 'use MONKEY-TYPING; enum Weekday <Mon Tue>; augment class Weekday { }', X::Syntax::Augment::Illegal;
 throws_like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
 # RT #73938
 throws_like 'sub twigil:<@>() { }', X::Syntax::Extension::Category, category => 'twigil';
@@ -132,7 +132,6 @@ throws_like 'sub f(:in(:$in)) { }', X::Signature::NameClash, name => 'in';
 throws_like '(my $foo) does Int', X::Does::TypeObject;
 throws_like '(my $foo) does Int, Bool', X::Does::TypeObject;
 # RT #76742
-#?rakudo.jvm 5 todo "?"
 throws_like 'Bool does role { method Str() { $.perl } };', X::Does::TypeObject;
 throws_like 'my role R { }; 99 but R("wrong");', X::Role::Initialization;
 throws_like 'my role R { has $.x; has $.y }; 99 but R("wrong");', X::Role::Initialization;
@@ -187,6 +186,8 @@ lives_ok { EVAL '$@' }, '$@ is no longer a problem';
 # RT #123884
 throws_like '$\\ = 1;', X::Syntax::Perl5Var, message => /\.nl/, "Error message for \$\\ mentions .nl";
 
+throws_like '$/ = "\n\n";', X::Syntax::Perl5Var, message => /\.nl/, "Error message for \$/ mentions .nl";
+
 throws_like { EVAL '"$"' }, X::Backslash::NonVariableDollar, 'non-variable $ in double quotes requires backslash';
 lives_ok { EVAL 'class frob { has @!bar; method test { return $@!bar } }' },
   'uses of $@!bar not wrongfully accused of using old $@ variable';
@@ -219,11 +220,11 @@ throws_like 'our multi a() { }', X::Declaration::Scope::Multi, scope => 'our';
 throws_like 'multi sub () { }', X::Anon::Multi, multiness => 'multi';
 throws_like 'proto sub () { }', X::Anon::Multi, multiness => 'proto';
 throws_like 'class { multi method () { }}', X::Anon::Multi, routine-type => 'method';
-throws_like 'use MONKEY_TYPING; augment class { }', X::Anon::Augment, package-kind => 'class';
-throws_like 'use MONKEY_TYPING; augment class NoSuchClass { }', X::Augment::NoSuchType,
+throws_like 'use MONKEY-TYPING; augment class { }', X::Anon::Augment, package-kind => 'class';
+throws_like 'use MONKEY-TYPING; augment class NoSuchClass { }', X::Augment::NoSuchType,
     package-kind => 'class',
     package => 'NoSuchClass';
-throws_like 'use MONKEY_TYPING; augment class No::Such::Class { }', X::Augment::NoSuchType,
+throws_like 'use MONKEY-TYPING; augment class No::Such::Class { }', X::Augment::NoSuchType,
     package => 'No::Such::Class';
 
 throws_like ':45<abcd>', X::Syntax::Number::RadixOutOfRange, radix => 45;
@@ -259,7 +260,6 @@ throws_like '1 <=> 2 <=> 3', X::Syntax::NonAssociative, left => '<=>', right => 
 throws_like 'my class A {...}; my grammar B { ... }', X::Package::Stubbed, packages => <A B>;
 
 throws_like 'my sub a { PRE 0  }; a()', X::Phaser::PrePost, phaser => 'PRE', condition => /0/;
-#?rakudo.jvm todo 'RT #121935'
 throws_like 'my sub a { POST 0 }; a()', X::Phaser::PrePost, phaser => 'POST', condition => /0/;
 
 throws_like 'use fatal; my $x = "5 foo" + 8;', X::Str::Numeric, source => '5 foo', pos => 1,
@@ -460,7 +460,6 @@ throws_like 'my class Foobar is Foobar', X::Inheritance::SelfInherit, name => "F
     throws_like q{1/2.''()}, X::Method::NotFound, method => '', typename => 'Int';
 }
 
-#?rakudo.jvm todo "?"
 {
     # RT #78314
     throws_like q{role Bottle[::T] { method Str { "a bottle of {T}" } }; class Wine { ... }; say Bottle[Wine].new;}, X::Package::Stubbed;
@@ -483,13 +482,13 @@ throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
 
     {
         my $code = q[ sub foo($x) { }; foo; ];
-        throws_like $code, X::TypeCheck::Argument, message => { m/"requires argument"/ }, objname => { m/foo/ };
+        throws_like $code, X::TypeCheck::Argument, message => { m/"() will never work" .*? 'Any'/ }, objname => { m/foo/ };
     }
 
     {
         my $code = q[ sub foo(Str) { }; foo 42; ];
         throws_like $code, X::TypeCheck::Argument, 
-            signature => rx/ 'Expected' .+ 'Str' /, 
+            signature => rx/ '(Str)' /, 
             arguments => { .[0] eq "int" };
     }
 
@@ -497,7 +496,7 @@ throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
         my $code = q[ sub foo(Int $x, Str $y) { }; foo "not", 42; ];
         throws_like $code, X::TypeCheck::Argument, 
             arguments => { .[0] ~ .[1] eq "StrInt" },
-            signature => rx/ 'Expected' .+ 'Int $x, Str $y' /;
+            signature => rx/ '(Int $x, Str $y)' /;
     }
 }
 
@@ -522,7 +521,7 @@ throws_like 'CATCH { when X::Y {} }', X::Comp::Group,
 
 # RT #75230
 throws_like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
-    reason => { m/'Missing semicolon.'/ }, pre => { m/'1 if 2 '/ }, post => { m/'3 { say 3 }'/ }, highexpect => @('postfix');
+    reason => { m/'Missing semicolon'/ }, pre => { m/'1 if 2 '/ }, post => { m/'3 { say 3 }'/ }, highexpect => @('postfix');
 
 # RT #77522
 throws_like '/\ X/', X::Syntax::Regex::Unspace,
@@ -540,8 +539,9 @@ throws_like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
 
 # RT #115726
 throws_like 'sub infix:<> (){}', X::Comp::Group,
-    panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<> '/ and .post ~~ m/'()'/ },
-    worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string; use :(\'\') to represent the null string,' \n '  or :() to represent the empty list more accurately'/ };
+    panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<>'/ and .post ~~ m/'()'/ },
+    message => /'Null operator is not allowed'/,
+    worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string'/ };
 
 # RT #122646
 throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
@@ -599,6 +599,12 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 # RT #123584
 {
     is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS:\nUseless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
+}
+
+# RT #114430
+{
+    throws_like { ::('') }, X::NoSuchSymbol,
+        'fail sensibly for empty lookup.';
 }
 
 # vim: ft=perl6

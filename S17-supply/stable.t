@@ -32,7 +32,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 }
 
     {
-        my $for   = Supply.for(1..10);
+        my $for   = Supply.from-list(1..10);
         my $stable = $for.stable(0);
         ok $for === $stable, "stable by 0 is a noop";
         tap_ok $stable, [1..10], "noop stable";

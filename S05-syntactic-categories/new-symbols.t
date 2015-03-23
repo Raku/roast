@@ -1,5 +1,5 @@
 use v6;
-use MONKEY_TYPING;
+use MONKEY-TYPING;
 
 use Test;
 plan 8;

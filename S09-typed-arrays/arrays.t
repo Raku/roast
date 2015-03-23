@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 67;
+plan 75;
 
 # L<S09/Typed arrays/>
 
@@ -115,8 +115,8 @@ plan 67;
     sub ret_pos_4 returns Positional of Int { my @a = 1,2,3; @a }
     sub ret_pos_5 returns Positional of Int { my Num @a = 1,2,3; return @a; }
     sub ret_pos_6 returns Positional of Int { my Num @a = 1,2,3; @a }
-    sub ret_pos_7 returns Positional of Num { my Int @a = 1,2,3; return @a; }
-    sub ret_pos_8 returns Positional of Num { my Int @a = 1,2,3; @a }
+    sub ret_pos_7 returns Positional of Numeric { my Int @a = 1,2,3; return @a; }
+    sub ret_pos_8 returns Positional of Numeric { my Int @a = 1,2,3; @a }
     lives_ok { ret_pos_1() },
         'type check Positional of Int allows correctly typed array to be returned explicitly';
     lives_ok { ret_pos_2() },
@@ -129,7 +129,6 @@ plan 67;
         'type check Positional of Int prevents incorrectly typed array to be returned explicitly';
     dies_ok { ret_pos_6() },
         'type check Positional of Int prevents incorrectly typed array to be returned implicitly';
-    #?rakudo 2 todo "no parametrization"
     lives_ok { ret_pos_7() },
         'type check Positional of Num allows subtyped Int array to be returned explicitly';
     lives_ok { ret_pos_8() },
@@ -175,6 +174,43 @@ plan 67;
     my @b := @a.perl.EVAL;
     is @b.of, Int, 'does the roundtrip preserve typedness';
     is @a, @b, 'do typed arrays with empty elements roundtrip';
+}
+
+# RT #66892
+{
+    sub foo(--> Array of Str) {
+        my Str @a = <foo bar baz>;
+        @a
+    };
+    lives_ok { foo() }, 'Array of Str works as return constraint';
+    ok foo().of === Str, 'Get back the typed array correctly (1)';
+    is foo(), Array[Str].new('foo', 'bar', 'baz'),
+        'Get back the typed array correctly (2)';
+}
+
+# RT #120506
+{
+    my @RT120506-bind := Array[Array[Bool]].new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
+    is_deeply @RT120506-bind[0, 1]».Parcel, ((True, False, True), (True,)),
+        "Can feed Arrays of Type to .new of Array[Array[Type]] (binding)";
+    is @RT120506-bind[0].WHAT, Array[Bool], "Type is maintained (binding)";
+
+    my Array of Bool @RT120506-assign .= new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
+    is_deeply @RT120506-assign[0, 1]».Parcel, ((True, False, True), (True,)),
+        "Can feed Arrays of Type to .new of Array[Array[Type]] (assignment)";
+    is @RT120506-assign[0].WHAT, Array[Bool], "Type is maintained (assignment)";
+}
+
+# RT #121804
+{
+    sub RT121804 returns Array of Hash {
+        my %a1 = :x<y>, :y<z>, :w<c>;
+        my %a2 =:x<y>, :y<t>, :w<c>;
+        my %a3 = :x<y>, :y<z>, :w<h>;
+        my Hash @array1 = $%a1, $%a2, $%a3;
+    }
+    is_deeply RT121804, Array[Hash].new({:x<y>, :y<z>, :w<c>}, {:x<y>, :y<t>, :w<c>}, {:x<y>, :y<z>, :w<h>}),
+        "Can assign to and return Array[Hash] from type-constrained sub";
 }
 
 # vim: ft=perl6

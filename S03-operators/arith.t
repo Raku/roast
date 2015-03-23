@@ -239,12 +239,23 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 }
 
 # See L<"http://mathworld.wolfram.com/Indeterminate.html">
+# but also http://pubs.opengroup.org/onlinepubs/9699919799/
+# and the 2008 version of the IEEE 754 standard
 # for why these three values are defined like they are.
 {
     is 0.9**Inf, 0,   "0.9**Inf converges towards 0";
     is 1.1**Inf, Inf, "1.1**Inf diverges towards Inf";
-    #?niecza todo "No agreement over correct behavior here -- above web page not helpful!"
-    is 1**Inf, 1;
+
+    if $*DISTRO.name eq 'netbsd' {
+#?rakudo todo 'RT #124147'
+        ## NetBSD PR lib/49240
+        ## cmp. http://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=49240
+        is 1**Inf, 1, "1**Inf returns 1";
+    }
+    else {  
+        is 1**Inf, 1, "1**Inf returns 1";
+    }
+
 }
 
 {

@@ -12,12 +12,12 @@ dies_ok { Supply.new.min(23) }, 'must be code if specified';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap_ok Supply.for(1..10).min, [1],
+    tap_ok Supply.from-list(1..10).min, [1],
       "ascending min works";
-    tap_ok Supply.for(10...1).min, [10...1],
+    tap_ok Supply.from-list(10...1).min, [10...1],
       "descending min works";
-    tap_ok Supply.for("a".."e","A".."E").min(*.uc), ["a"],
+    tap_ok Supply.from-list("a".."e","A".."E").min(*.uc), ["a"],
       "ascending alpha works";
-    tap_ok Supply.for("E"..."A","e".."a").min(*.lc), [<E D C B A>],
+    tap_ok Supply.from-list("E"..."A","e".."a").min(*.lc), [<E D C B A>],
       "descending alpha works";
 }

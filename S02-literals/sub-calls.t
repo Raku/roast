@@ -22,7 +22,7 @@ plan 20;
     ok EVAL(q/foo(1);   /), 'call with one arg, has parens';
     ok EVAL(q/&foo.(1);  /), 'call with one arg, has dot and parens';
     ok EVAL(q/&foo\ .(1);/), 'call with one arg, has long dot and parens';
-    throws_like { EVAL q/foo'bar'; / },
+    throws_like { EVAL q/foo'...'; / },
       X::Syntax::Confused,
       'call with one arg, has no space and no parens';
 

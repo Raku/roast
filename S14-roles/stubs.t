@@ -9,7 +9,6 @@ role ProvidesStub2 { method a() { 2 } };
 
 dies_ok  { EVAL 'class A does WithStub { }' },
         'need to implement stubbed methods at role-into-class composition time';
-#?rakudo.jvm todo "?"
 lives_ok { EVAL 'role B does WithStub { }' },
         'but roles are fine';
 lives_ok { EVAL 'class C does WithStub { method a() { 3 } }' },

@@ -11,7 +11,7 @@ dies_ok { Supply.batch(1000) }, 'can not be called as a class method';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap_ok Supply.for(1..14).batch(:elems(5)),
+    tap_ok Supply.from-list(1..14).batch(:elems(5)),
       [[1..5],[6..10],[11..14]],
       "we can batch by number of elements";
 
@@ -56,7 +56,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $f = Supply.for(1..10);
+        my $f = Supply.from-list(1..10);
         my $b = $f.batch(:elems(1)),
         ok $f === $b, "batch by 1 is a noop";
         tap_ok $b, [1..10], "noop batch";

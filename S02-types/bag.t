@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 196;
+plan 193;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -33,8 +33,6 @@ sub showkv($x) {
     isa_ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    #?rakudo.parrot todo "?"
-    #?rakudo.jvm    todo "?"
     throws_like { $b<a> = 5 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
@@ -50,9 +48,6 @@ sub showkv($x) {
     throws_like { $b<a>:delete },
       X::Immutable,
       "Can't :delete from Bag";
-    throws_like { $b.delete_key("a") },
-      X::Immutable,
-      "Can't .delete_key from Bag";
 
     is ~$b<a b>, "5 1", 'Multiple-element access';
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
@@ -97,9 +92,6 @@ sub showkv($x) {
     throws_like { $b<a>:delete },
       X::Immutable,
       ':delete does not work on bag';
-    throws_like { $b.delete_key("a") },
-      X::Immutable,
-      '.delete_key does not work on bag';
 }
 
 {
@@ -188,8 +180,6 @@ sub showkv($x) {
     is %b<b>, 2, 'Single-key subscript (existing element)';
     is %b<santa>, 0, 'Single-key subscript (nonexistent element)';
 
-    #?rakudo.parrot todo "?"
-    #?rakudo.jvm    todo "?"
     throws_like { %b<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
@@ -201,9 +191,6 @@ sub showkv($x) {
     throws_like { %b<a>:delete },
       X::Immutable,
       "Can't :delete from a Bag";
-    throws_like { %b.delete_key("a") },
-      X::Immutable,
-      "Can't .delete_key from a Bag";
 }
 
 {

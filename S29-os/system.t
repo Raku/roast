@@ -4,7 +4,7 @@ use Test;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there. 
 
-plan 5;
+plan 6;
 
 my $res;
 
@@ -16,6 +16,19 @@ ok(!$res, "run() to a nonexisting program does not die (and returns something fa
 
 $res = run("program_that_does_not_exist_ignore_errors_please.exe","a","b");
 ok(!$res, "run() to a nonexisting program with an argument list does not die (and returns something false)");
+
+# RT #104794
+{
+    use lib 't/spec/packages';
+    use Test::Util;
+
+    is_run 'my $a = qx{echo woot>&2}; say "___ $a ___"',
+        {
+            out => "___  ___\n",
+            err => / ^ "woot" [\r]? \n $ /,
+        },
+        'qx{} does not capture stderr';
+}
 
 # all these tests feel like bogus, what are we testing here???
 chdir "t";

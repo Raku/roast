@@ -45,8 +45,6 @@ ok $*DISTRO.version,   "Version is '{$*DISTRO.version}'";
 #?rakudo.moar   todo 'no Distro.signature yet'
 #?rakudo.parrot skip 'no Distro.signature yet'
 ok $*DISTRO.signature, "Signature is '{$*DISTRO.signature}'";
-#?rakudo.jvm    todo 'no Distro.desc yet'
-#?rakudo.moar   todo 'no Distro.desc yet'
 #?rakudo.parrot skip 'no Distro.desc yet'
 ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
 ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";

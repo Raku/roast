@@ -16,7 +16,6 @@ use lib 't/spec/packages';
 }
 
 {
-    #?rakudo.jvm todo "?"
     eval_lives_ok 'use Fancy::Utilities :greet, :lolcat;', 'Can import symbols by name';
 
     use Fancy::Utilities :greet, :lolcat;
@@ -25,7 +24,6 @@ use lib 't/spec/packages';
 }
 
 {
-    #?rakudo.jvm todo "?"
     eval_lives_ok 'use Fancy::Utilities :ALL;', 'Can import everything marked for export using :ALL';
 
     use Fancy::Utilities :ALL;

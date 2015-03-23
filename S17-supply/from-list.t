@@ -6,13 +6,13 @@ use Test::Tap;
 
 plan 13;
 
-dies_ok { Supply.new.for(1..10) }, 'can not be called as an instance method';
+dies_ok { Supply.new.from-list(1..10) }, 'can not be called as an instance method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
-        my $s = Supply.for(1..10);
+        my $s = Supply.from-list(1..10);
         tap_ok $s, [1..10], "On demand publish worked";
         tap_ok $s, [1..10], "Second tap gets all the values";
 

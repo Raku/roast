@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 {
     sub f(:a(:$b)) { $b }
@@ -26,4 +26,11 @@ plan 10;
     is typed(i => { a => 1 }), 'a', 'typed renames -- sanity';
     dies_ok { EVAL 'typed(:j)' }, 'type constraint on var';
     dies_ok { EVAL 'typed(:i)' }, 'type constraint on var propagates to alias';
+}
+
+# RT #123956
+{
+    sub rt123956 (:t( :$th )) { $th }
+    is rt123956( th => 5 ), 5,
+        'whitespaces allowed between named parameter and parentheses in signature';
 }

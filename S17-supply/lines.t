@@ -15,31 +15,31 @@ dies_ok { Supply.lines }, 'can not be called as a class method';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap_ok Supply.for( @simple.map: * ~ "\n" ).lines,
+    tap_ok Supply.from-list( @simple.map: * ~ "\n" ).lines,
       @simple,
       "handle a simple list of lines with LF";
-    tap_ok Supply.for( @original = @simple.map: * ~ "\n" ).lines(:!chomp),
+    tap_ok Supply.from-list( @original = @simple.map: * ~ "\n" ).lines(:!chomp),
       @original,
       "handle a simple list of lines with LF without chomping";
 
-    tap_ok Supply.for( @simple.map: * ~ "\r" ).lines,
+    tap_ok Supply.from-list( @simple.map: * ~ "\r" ).lines,
       @simple,
       "handle a simple list of lines with CR";
-    tap_ok Supply.for( @original = @simple.map: * ~ "\r" ).lines(:!chomp),
+    tap_ok Supply.from-list( @original = @simple.map: * ~ "\r" ).lines(:!chomp),
       @original,
       "handle a simple list of lines with CR without chomping";
 
-    tap_ok Supply.for( @simple.map: * ~ "\r\n" ).lines,
+    tap_ok Supply.from-list( @simple.map: * ~ "\r\n" ).lines,
       @simple,
       "handle a simple list of lines with CRLF";
-    tap_ok Supply.for( @original = @simple.map: * ~ "\r\n" ).lines(:!chomp),
+    tap_ok Supply.from-list( @original = @simple.map: * ~ "\r\n" ).lines(:!chomp),
       @original,
       "handle a simple list of lines with CRLF without chomping";
 
-    tap_ok Supply.for( @simple.map: * ~ @endings.pick ).lines,
+    tap_ok Supply.from-list( @simple.map: * ~ @endings.pick ).lines,
       @simple,
       "handle a simple list of lines with mixed line ending";
-    tap_ok Supply.for(@original= @simple.map: * ~ @endings.pick).lines(:!chomp),
+    tap_ok Supply.from-list(@original= @simple.map: * ~ @endings.pick).lines(:!chomp),
       @original,
       "handle a simple list of lines with mixed line ending w/o chomping";
 

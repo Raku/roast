@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 # tests .parse and .parsefile methods on a grammar
 
@@ -69,6 +69,17 @@ eval_dies_ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
     }
     lives_ok { RT116597.parse('a') },
         'can use <rule "param"> form of rule invocation in grammar';
+}
+
+# RT #111768
+{
+    grammar RT111768 {
+        token e {
+            | 'a' <e> { make ';' ~ $<e>.ast }
+            | ';'     { make 'a' }
+        }
+    }
+    is RT111768.parse("aaaa;", :rule<e>).ast, ';;;;a', "Recursive .ast calls work";
 }
 
 done;
