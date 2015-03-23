@@ -274,6 +274,28 @@ my @normal = <
   X::Undeclared
   X::Undeclared::Symbols
   X::Value::Dynamic
+  bit
+  byte
+  int
+  int1
+  int2
+  int4
+  int8
+  int16
+  int32
+  int64
+  num
+  num32
+  num64
+  str
+  uint
+  uint1
+  uint2
+  uint4
+  uint8
+  uint16
+  uint32
+  uint64
   utf16
   utf32
   utf8
