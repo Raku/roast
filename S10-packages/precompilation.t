@@ -2,7 +2,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 17;
+plan 19;
 
 my @precomp-paths;
 
@@ -92,3 +92,20 @@ unlink $_ for @precomp-paths;
     unlink $_ for @precomp-paths;
 }
 
+#RT #124162
+{
+    my $module-name = 'RT124162';
+    my $output-path = "t/spec/packages/" ~ $module-name ~ '.pm.' ~ $*VM.precomp-ext;
+    unlink $output-path if $output-path.IO.e;
+    is_run 'my @f = $(array[uint32].new(0,1)), $(array[uint32].new(3,4));',
+        { err => '', out => '', status => 0 }, :compiler-args['--target', $*VM.precomp-target, '--output', $output-path ],
+        "precomp of native array parameterization";
+
+    #?rakudo.jvm todo 'RT #124162'
+    #?rakudo.moar todo 'RT #124162'
+    #?rakudo.parrot todo 'RT #124162'
+    is_run "use $module-name;",
+        { err => '', out => '', status => 0 }, :compiler-args['-I', 't/spec/packages', '-M', $module-name],
+        'precompile load - from the command line';
+    unlink $output-path if $output-path.IO.e;
+}
