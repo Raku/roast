@@ -179,7 +179,7 @@ for <
     throws_like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
-throws_like '$#', X::Syntax::Perl5Var;
+throws_like '$#foo', X::Obsolete;
 # RT #122645
 lives_ok { EVAL '$@' }, '$@ is no longer a problem';
 
