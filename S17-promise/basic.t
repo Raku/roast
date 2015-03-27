@@ -38,7 +38,7 @@ plan 22;
     dies_ok { $p.break("bad") }, "Cannot re-break a Broken Promise";
 }
 
-{
+{ # RT #124190
     my $p = Promise.new;
     my $vowname = $p.vow.^name;
 
