@@ -2,7 +2,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 19;
+plan 22;
 
 my @precomp-paths;
 
@@ -108,4 +108,28 @@ unlink $_ for @precomp-paths;
         { err => '', out => '', status => 0 }, :compiler-args['-I', 't/spec/packages', '-M', $module-name],
         'precompile load - from the command line';
     unlink $output-path if $output-path.IO.e;
+}
+
+{
+    my $module-name-a = 'InternArrayA';
+    my $output-path-a = "t/spec/packages/" ~ $module-name-a ~ '.pm.' ~ $*VM.precomp-ext;
+    unlink $output-path-a if $output-path-a.IO.e;
+    is_run 'my constant VALUE = array[uint32].new; sub a() is export { VALUE }',
+        { err => '', out => '', status => 0 }, :compiler-args['--target', $*VM.precomp-target, '--output', $output-path-a ],
+        "precomp of native array parameterization intern test (a)";
+
+    my $module-name-b = 'InternArrayB';
+    my $output-path-b = "t/spec/packages/" ~ $module-name-b ~ '.pm.' ~ $*VM.precomp-ext;
+    unlink $output-path-b if $output-path-b.IO.e;
+    is_run 'my constant VALUE = array[uint32].new; sub b() is export { VALUE }',
+        { err => '', out => '', status => 0 }, :compiler-args['--target', $*VM.precomp-target, '--output', $output-path-b ],
+        "precomp of native array parameterization intern test (b)";
+
+    #?rakudo.jvm todo 'no 6model parametrics interning yet'
+    #?rakudo.moar todo 'no 6model parametrics interning yet'
+    #?rakudo.parrot todo 'no 6model parametrics interning yet'
+    is_run "use $module-name-a; use $module-name-b; print a().WHAT =:= b().WHAT",
+        { err => '', out => "True", status => 0 }, :compiler-args['-I', 't/spec/packages'],
+        'precompile load of both and identity check passed';
+    unlink $_ if $_.IO.e for $output-path-a, $output-path-b;
 }
