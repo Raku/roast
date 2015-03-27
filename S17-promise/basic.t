@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 22;
 
 {
     my $p = Promise.new;
@@ -36,4 +36,11 @@ plan 21;
     
     dies_ok { $p.keep("eating") }, "Cannot keep a Broken Promise";
     dies_ok { $p.break("bad") }, "Cannot re-break a Broken Promise";
+}
+
+{
+    my $p = Promise.new;
+    my $vowname = $p.vow.^name;
+
+    ok Promise.WHO{$vowname} :!exists, "the nested Vow class is lexically scoped";
 }
