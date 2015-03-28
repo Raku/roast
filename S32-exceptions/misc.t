@@ -3,7 +3,9 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 284;
+plan 285;
+
+throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
