@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 34;
 
 =begin description
 
@@ -81,6 +81,17 @@ This test tests the C<squish> builtin and .squish method on Any/List.
     is_deeply @rt124204.squish(:with({$^b === $^a})), ('', Any).list.item,
       "method form of squish with :with does not needlessly stringify";
 } #4
+
+#?niecza skip 'NYI'
+#?rakudo todo 'RT #124205'
+{
+    my @rt124205 = <a a>;
+
+    is_deeply @rt124205.squish(:as(-> $x {1}), :with(-> $a, $b {1})), <a>.list.item,
+      "method form of squish with :as and :with always returns at least the first element";
+    is_deeply @rt124205.squish(:with(-> $a, $b {1})), <a>.list.item,
+      "method form of squish with :with always returns at least the first element";
+} #2
 
 #?niecza skip 'NYI'
 {
