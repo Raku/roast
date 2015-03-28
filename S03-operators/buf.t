@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 43;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -106,4 +106,10 @@ ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
     
     my $d = buf64.new(1, 2, 3, 4, 5);
     is $d.bytes, 40, "buf64 .bytes correct";
+}
+
+# RT #123928
+{
+    my Buf $raw-bin .= new(0x55 xx 3);
+    is $raw-bin.elems, 3, 'Can create Buf with .= new';
 }
