@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 285;
+plan 286;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -608,5 +608,8 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
     throws_like { ::('') }, X::NoSuchSymbol,
         'fail sensibly for empty lookup.';
 }
+
+# RT #117859
+throws_like 'class Foo { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 'Type';
 
 # vim: ft=perl6
