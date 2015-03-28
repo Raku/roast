@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 286;
+plan 287;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -107,6 +107,7 @@ throws_like 'my ($a, $b); $a . $b', X::Obsolete;
 
 throws_like 'my $a::::b', X::Syntax::Name::Null;
 throws_like 'unless 1 { } else { }', X::Syntax::UnlessElse;
+throws_like 'unless 1 { } elsif 42 { }', X::Syntax::UnlessElse;
 throws_like 'for my $x (1, 2, 3) { }', X::Syntax::P5;
 throws_like ':!foo(3)', X::Syntax::NegatedPair, key => 'foo';
 throws_like 'my $0', X::Syntax::Variable::Numeric;
