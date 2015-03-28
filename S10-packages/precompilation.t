@@ -102,7 +102,6 @@ unlink $_ for @precomp-paths;
         "precomp of native array parameterization";
 
     #?rakudo.jvm todo 'RT #124162'
-    #?rakudo.moar todo 'RT #124162'
     #?rakudo.parrot todo 'RT #124162'
     is_run "use $module-name;",
         { err => '', out => '', status => 0 }, :compiler-args['-I', 't/spec/packages', '-M', $module-name],
