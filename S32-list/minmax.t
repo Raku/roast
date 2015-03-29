@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 83;
+plan 97;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -164,8 +164,8 @@ is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
 }
 
 {
-    # check that .min and .max return values can be combined further
-    # using various forms of min/max such that the final result is
+    # check that .min, .max, and .minmax return values can be combined further
+    # using various forms of min/max/minmax such that the final result is
     # independent from the grouping of data in intermediate steps
 
     my @ints = (3, -1, 7, -2, 5, 10);
@@ -190,6 +190,25 @@ is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
     is (@ints[0..1].max, @ints[2..3].max, @ints[4..*].max).max, 10, '.max combine .max of non-empty sublist of Ints';
     is (@ints[ () ].max, @ints[0..5].max, @ints[6..*].max).max, 10, '.max combine .max of empty, non-empty, empty sublist of Ints';
 
+    # combination of minmax results for Ints:
+
+    is (@ints[0..1].minmax minmax @ints[2..*].minmax), -2..10,
+        'infix:<minmax> combine .minmax of non-empty sublists of Ints';
+    is (@ints[ () ].minmax minmax @ints[0..*].minmax), -2..10,
+        'infix:<minmax> combine .minmax of empty and non-empty sublist of Ints';
+    is (@ints[0..5].minmax minmax @ints[6..*].minmax), -2..10,
+        'infix:<minmax> combine .minmax of non-empty and empty sublist of Ints';
+
+    is ([minmax] @ints[0..1].minmax, @ints[2..3].minmax, @ints[4..*].minmax), -2..10,
+        '[minmax] combine .minmax of non-empty sublist of Ints';
+    is ([minmax] @ints[ () ].minmax, @ints[0..5].minmax, @ints[6..*].minmax), -2..10,
+        '[minmax] combine .minmax of empty, non-empty, empty sublist of Ints';
+
+    is (@ints[0..1].minmax.item, @ints[2..3].minmax.item, @ints[4..*].minmax.item).minmax, -2..10,
+        '.minmax combine .minmax of non-empty sublist of Ints';
+    is (@ints[ () ].minmax.item, @ints[0..5].minmax.item, @ints[6..*].minmax.item).minmax, -2..10,
+        '.minmax combine .minmax of empty, non-empty, empty sublist of Ints';
+
     # Play it again with strings:
 
     my @words = <one two three four five six>;
@@ -213,6 +232,25 @@ is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
 
     is (@words[0..1].max, @words[2..3].max, @words[4..*].max).max, 'two', '.max combine .max of non-empty sublist of Strs';
     is (@words[ () ].max, @words[0..5].max, @words[6..*].max).max, 'two', '.max combine .max of empty, non-empty, empty sublist of Strs';
+
+    # combination of minmax results for strings:
+
+    is (@words[0..1].minmax minmax @words[2..*].minmax).perl, ('five'..'two').perl,
+        'infix:<minmax> combine .minmax of non-empty sublists of Strs';
+    is (@words[ () ].minmax minmax @words[0..*].minmax).perl, ('five'..'two').perl,
+        'infix:<minmax> combine .minmax of empty and non-empty sublist of Strs';
+    is (@words[0..5].minmax minmax @words[6..*].minmax).perl, ('five'..'two').perl,
+        'infix:<minmax> combine .minmax of non-empty and empty sublist of Strs';
+
+    is ([minmax] @words[0..1].minmax, @words[2..3].minmax, @words[4..*].minmax).perl, ('five'..'two').perl,
+        '[minmax] combine .minmax of non-empty sublist of Strs';
+    is ([minmax] @words[ () ].minmax, @words[0..5].minmax, @words[6..*].minmax).perl, ('five'..'two').perl,
+        '[minmax] combine .minmax of empty, non-empty, empty sublist of Strs';
+
+    is (@words[0..1].minmax.item, @words[2..3].minmax.item, @words[4..*].minmax.item).minmax.perl, ('five'..'two').perl,
+        '.minmax combine .minmax of non-empty sublist of Strs';
+    is (@words[ () ].minmax.item, @words[0..5].minmax.item, @words[6..*].minmax.item).minmax.perl, ('five'..'two').perl,
+        '.minmax combine .minmax of empty, non-empty, empty sublist of Strs';
 }
 
 done;
