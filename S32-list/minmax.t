@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 55;
+plan 83;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -161,6 +161,58 @@ is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
     is (A.new(d => 5), A.new(d => 1), A.new(d => 10)).min(*.d).d,
         1, 'can use non-numbers with .min and unary closures';
 
+}
+
+{
+    # check that .min and .max return values can be combined further
+    # using various forms of min/max such that the final result is
+    # independent from the grouping of data in intermediate steps
+
+    my @ints = (3, -1, 7, -2, 5, 10);
+
+    is @ints[0..1].min min @ints[2..*].min, -2, 'min combine .min of non-empty sublists of Ints';
+    is @ints[ () ].min min @ints[0..*].min, -2, 'min combine .min of empty and non-empty sublist of Ints';
+    is @ints[0..5].min min @ints[6..*].min, -2, 'min combine .min of non-empty and empty sublist of Ints';
+
+    is ([min] @ints[0..1].min, @ints[2..3].min, @ints[4..*].min), -2, '[min] combine .min of non-empty sublist of Ints';
+    is ([min] @ints[ () ].min, @ints[0..5].min, @ints[6..*].min), -2, '[min] combine .min of empty, non-empty, empty sublist of Ints';
+
+    is (@ints[0..1].min, @ints[2..3].min, @ints[4..*].min).min, -2, '.min combine .min of non-empty sublist of Ints';
+    is (@ints[ () ].min, @ints[0..5].min, @ints[6..*].min).min, -2, '.min combine .min of empty, non-empty, empty sublist of Ints';
+
+    is @ints[0..1].max max @ints[2..*].max, 10, 'max combine .max of non-empty sublists of Ints';
+    is @ints[ () ].max max @ints[0..*].max, 10, 'max combine .max of empty and non-empty sublist of Ints';
+    is @ints[0..5].max max @ints[6..*].max, 10, 'max combine .max of non-empty and empty sublist of Ints';
+
+    is ([max] @ints[0..1].max, @ints[2..3].max, @ints[4..*].max), 10, '[max] combine .max of non-empty sublist of Ints';
+    is ([max] @ints[ () ].max, @ints[0..5].max, @ints[6..*].max), 10, '[max] combine .max of empty, non-empty, empty sublist of Ints';
+
+    is (@ints[0..1].max, @ints[2..3].max, @ints[4..*].max).max, 10, '.max combine .max of non-empty sublist of Ints';
+    is (@ints[ () ].max, @ints[0..5].max, @ints[6..*].max).max, 10, '.max combine .max of empty, non-empty, empty sublist of Ints';
+
+    # Play it again with strings:
+
+    my @words = <one two three four five six>;
+
+    is @words[0..1].min min @words[2..*].min, 'five', 'min combine .min of non-empty sublists of Strs';
+    is @words[ () ].min min @words[0..*].min, 'five', 'min combine .min of empty and non-empty sublist of Strs';
+    is @words[0..5].min min @words[6..*].min, 'five', 'min combine .min of non-empty and empty sublist of Strs';
+
+    is ([min] @words[0..1].min, @words[2..3].min, @words[4..*].min), 'five', '[min] combine .min of non-empty sublist of Strs';
+    is ([min] @words[ () ].min, @words[0..5].min, @words[6..*].min), 'five', '[min] combine .min of empty, non-empty, empty sublist of Strs';
+
+    is (@words[0..1].min, @words[2..3].min, @words[4..*].min).min, 'five', '.min combine .min of non-empty sublist of Strs';
+    is (@words[ () ].min, @words[0..5].min, @words[6..*].min).min, 'five', '.min combine .min of empty, non-empty, empty sublist of Strs';
+
+    is @words[0..1].max max @words[2..*].max, 'two', 'max combine .max of non-empty sublists of Strs';
+    is @words[ () ].max max @words[0..*].max, 'two', 'max combine .max of empty and non-empty sublist of Strs';
+    is @words[0..5].max max @words[6..*].max, 'two', 'max combine .max of non-empty and empty sublist of Strs';
+
+    is ([max] @words[0..1].max, @words[2..3].max, @words[4..*].max), 'two', '[max] combine .max of non-empty sublist of Strs';
+    is ([max] @words[ () ].max, @words[0..5].max, @words[6..*].max), 'two', '[max] combine .max of empty, non-empty, empty sublist of Strs';
+
+    is (@words[0..1].max, @words[2..3].max, @words[4..*].max).max, 'two', '.max combine .max of non-empty sublist of Strs';
+    is (@words[ () ].max, @words[0..5].max, @words[6..*].max).max, 'two', '.max combine .max of empty, non-empty, empty sublist of Strs';
 }
 
 done;
