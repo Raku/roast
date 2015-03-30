@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 19;
 
 {
     my $capture = \(1,2,3);
@@ -64,12 +64,6 @@ plan 21;
     throws_like { foo6(1,2) },
       Exception,  # too few args
       'capture creation with \\$ works (3)';
-    #?rakudo todo 'nom regression'
-    is try { foo6(a => 1, b => 2, c => 3) }, "1!2!3",
-        'capture creation with \\$ works (4)';
-    #?rakudo todo 'nom regression'
-    is try { foo6(1, b => 2, c => 3) }, "1!2!3",
-        'capture creation with \\$ works (5)';
 }
 
 # Arglists are first-class objects
