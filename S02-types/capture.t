@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 21;
 
 {
     my $capture = \(1,2,3);
@@ -101,6 +101,23 @@ plan 19;
       "mixing ordinary args with captures (1)";
     is foo9(1, 2, |$capture), "1!2!bar!grtz",
         "mixing ordinary args with captures (2)";
+}
+
+{
+    my @a = 1, 2;
+    my $capture = \(|@a,3);
+    sub foo10 ($a, $b, $c) { "$a!$b!$c" }
+    is foo10(|$capture), "1!2!3",
+        '|@a interpolation into \(...) works';
+}
+
+{
+    my %h = named => 'arg';
+    my $capture = \(1, |%h);
+
+    sub foo11 ($a, :$named) { "$a!$named" }
+    is foo11(|$capture), "1!arg",
+        '|%h interpolation into \(...) works';
 }
 
 {
