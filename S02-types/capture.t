@@ -37,7 +37,6 @@ plan 21;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo4 ($a, $pair) { "$a!$pair" }
-    #?rakudo skip '#122555'
     is foo4(|$capture), "1!positional\tpair",
         'simply capture creation with \\( works (4)';
 }
