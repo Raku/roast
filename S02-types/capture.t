@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 24;
 
 {
     my $capture = \(1,2,3);
@@ -129,5 +129,20 @@ plan 21;
 
 # RT #89766
 nok (defined  \()[0]), '\()[0] is not defined';
+
+# RT #116002
+{
+    class RT116002 {
+        method foo (Int) {}
+    }
+    my @a = 42;
+
+    ok \(RT116002, 42) ~~ RT116002.^find_method("foo").signature,
+        'capture with scalar matches signature';
+    nok \(RT116002, @a) ~~ RT116002.^find_method("foo").signature,
+        'capture with one element array does not match signature';
+    ok \(RT116002, |@a) ~~ RT116002.^find_method("foo").signature,
+        'capture with infix:<|> on one element array matches signature';
+}
 
 # vim: ft=perl6
