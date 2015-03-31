@@ -87,7 +87,7 @@ throws_like { EVAL '1 ?? 2' },
 # RT #123115
 {
     sub rt123115 { 2 };
-    throws_like { EVAL '1 ?? foo !! 3' },
+    throws_like { EVAL '1 ?? rt123115 !! 3' },
         X::Syntax::ConditionalOperator::SecondPartGobbled,
         'typed exception when listop gobbles the !! of conditional operator';
 }
