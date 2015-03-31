@@ -4,7 +4,7 @@ use Test;
 
 #Ternary operator ?? !!
 
-plan 17;
+plan 21;
 #L<S03/Changes to Perl 5 operators/"The ? : conditional operator becomes ?? !!">
 
 my $str1 = "aaa";
@@ -63,9 +63,34 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
     is($foo, "yay", "defining a postfix<!> doesn't screw up ternary op");
 }
 
-eval_dies_ok q[ 1 ?? 2,3 !! 4,5 ], 'Ternary error (RT 66840)';
+# RT #66840
+{
+    throws_like { EVAL '1 ?? 2,3 !! 4,5' },
+        X::Syntax::ConditionalOperator::PrecedenceTooLoose,
+        'Ternary error (RT 66840)';
+}
 
 eval_dies_ok q[ 71704 !! 'bust' ], 'Ternary error (RT 71704)';
+
+throws_like { EVAL '1 ?? 3 :: 2' },
+    X::Syntax::ConditionalOperator::SecondPartInvalid,
+    'conditional operator written as ?? :: throws typed exception';
+
+throws_like { EVAL '1 ?? b\n !! 2' },
+    X::Syntax::Confused,
+    'bogus code before !! of conditional operator is compile time error';
+
+throws_like { EVAL '1 ?? 2' },
+    X::Syntax::Confused,
+    'missing !! of conditional operator is compile time error';
+
+# RT #123115
+{
+    sub rt123115 { 2 };
+    throws_like { EVAL '1 ?? foo !! 3' },
+        X::Syntax::ConditionalOperator::SecondPartGobbled,
+        'typed exception when listop gobbles the !! of conditional operator';
+}
 
 done;
 
