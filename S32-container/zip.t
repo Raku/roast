@@ -11,7 +11,7 @@ The zip() builtin and operator tests
 # L<S03/"Traversing arrays in parallel">
 # L<S32::Containers/Container/"=item zip">
 
-plan 10;
+plan 14;
 
 {
     my @a = (0, 2, 4);
@@ -66,5 +66,10 @@ is ('a'..'c' Z 1, 2, 3).join(','), 'a,1,b,2,c,3',
 
 is ("a".."c" Z "?", "a".."b").join('|'), 'a|?|b|a|c|b',
     'can mix arrays and ranges for infix:<Z>';
+
+is zip(1,2; 3,4; 5,6):with(&infix:<~>), '135 246', 'zip:with works on list associative';
+is zip(1,2; 1,3; 1,4):with(&infix:</>), '1 ' ~ 1/6, 'zip:with works on left associative';
+is zip(1,2; 1,3; 1,4):with(&infix:<**>), '1 2417851639229258349412352', 'zip:with works on right associative';
+is zip(1,2; 1,2; 1,2):with(&infix:<eqv>), 'True True', 'zip:with works on chain associative';
 
 # vim: ft=perl6
