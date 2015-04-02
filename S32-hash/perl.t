@@ -7,7 +7,7 @@ plan 12;
 # simple hash
 {
     my %h = a => 1, b => 2;
-    is %h.perl,'{:a(1), :b(2)}{}', 
+    is %h.perl,'{:a(1), :b(2)}<>', 
       'can we serialize a simple hash';
     my $rh = EVAL(%h.perl);
     is_deeply $rh, $%h, 'can we roundtrip simple hash';

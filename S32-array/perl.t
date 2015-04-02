@@ -7,7 +7,7 @@ plan 6;
 # simple array
 {
     my @a = 1,2;
-    is @a.perl, '[1, 2][]',
+    is @a.perl, '[1, 2]<>',
       'can we serialize a simple array';
     my $ra = EVAL(@a.perl);
     is_deeply $ra, @a, 'can we roundtrip simple array';
