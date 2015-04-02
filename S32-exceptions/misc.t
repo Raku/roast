@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 287;
+plan 289;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -612,5 +612,9 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 
 # RT #117859
 throws_like 'class Foo { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 'Type';
+
+throws_like 'my $a = |(1, 2, 3)', X::Syntax::ArgFlattener;
+throws_like 'sub foo($x) { }; foo({ |(1, 2, 3) })', X::Syntax::ArgFlattener;
+
 
 # vim: ft=perl6
