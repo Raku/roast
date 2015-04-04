@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 53;
+plan 56;
 
 # type based dispatching
 #
@@ -208,6 +208,19 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi rt107638(int $a) { 'ok' }      #OK not used
     multi rt107638(Str $a where 1) { }   #OK not used
     ok rt107638(1), 'native types and where clauses do not cause spurious circularities';
+}
+
+# Coercion types introduce two candidates
+{
+    proto foo($) {*}
+    multi foo(Int() $) { 1 }
+    multi foo(Cool $) { 2 }
+
+    my class NotCool { method Int() { 42 } }
+
+    is foo(42),      1, 'Int hits Int() candidate as if it were an Int candidate';
+    is foo("omg"),   2, 'Str hits Cool candidate';
+    is foo(NotCool), 1, 'Set hits Int() candidate due to it accepting Any and coercing';
 }
 
 done;
