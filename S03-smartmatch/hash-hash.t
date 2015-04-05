@@ -11,20 +11,23 @@ my %hash3 = ( "foo"  => "zzz",  "blah" => "frbz");  # same keys different values
 my %hash4 = ( "oink" => "da",   "zork" => "zork");  # different keys and values
 
 {
-    #?rakudo 16 todo 'NYI'
+    #?rakudo 2 todo "NYI"
     ok  (%hash1 ~~ %hash1),  'Hash ~~ Hash ($_ eqv X) 1';
     ok  (%hash1 ~~ %hash2),  'Hash ~~ Hash ($_ eqv X) 2';
     nok (%hash1 ~~ %hash3),  'Hash ~~ Hash ($_ eqv X) 3';
     nok (%hash1 ~~ %hash4),  'Hash ~~ Hash ($_ eqv X) 4';
+    #?rakudo 2 todo "NYI"
     nok (%hash1 !~~ %hash1), 'Hash !~~ Hash ($_ eqv X) 1';
     nok (%hash1 !~~ %hash2), 'Hash !~~ Hash ($_ eqv X) 2';
     ok  (%hash1 !~~ %hash3), 'Hash !~~ Hash ($_ eqv X) 3';
     ok  (%hash1 !~~ %hash4), 'Hash !~~ Hash ($_ eqv X) 4';
 
+    #?rakudo 2 todo "NYI"
     ok  eval_elsewhere('(%hash1 ~~ %hash1)'),  'Hash ~~ Hash, eval_elsewhere 1';
     ok  eval_elsewhere('(%hash1 ~~ %hash2)'),  'Hash ~~ Hash, eval_elsewhere 2';
     nok eval_elsewhere('(%hash1 ~~ %hash3)'),  'Hash ~~ Hash, eval_elsewhere 3';
     nok eval_elsewhere('(%hash1 ~~ %hash4)'),  'Hash ~~ Hash, eval_elsewhere 4';
+    #?rakudo 2 todo "NYI"
     nok eval_elsewhere('(%hash1 !~~ %hash1)'), 'Hash !~~ Hash, eval_elsewhere 1';
     nok eval_elsewhere('(%hash1 !~~ %hash2)'), 'Hash !~~ Hash, eval_elsewhere 2';
     ok  eval_elsewhere('(%hash1 !~~ %hash3)'), 'Hash !~~ Hash, eval_elsewhere 3';

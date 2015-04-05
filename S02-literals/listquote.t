@@ -22,7 +22,7 @@ ok( [1,2,3].join<abc> ~~ Failure , '.join<abc> parses and fails');
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
 ok(@y eqv ["1",2,Any], '{...}<a b c> is hash subscript');
 
-throws_like { EVAL '({:a<1>, :b(2)} <a b c>)' },
+throws_like { EVAL '({:a<1>, :b(2)} <1 2 3>)' },
   X::Syntax::Confused,
   '{...} <...> parsefail';
 

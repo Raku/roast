@@ -7,10 +7,10 @@ plan 12;
 # simple hash
 {
     my %h = a => 1, b => 2;
-    is %h.perl,'("a" => 1, "b" => 2).hash'|'("b" => 2, "a" => 1).hash', 
+    is %h.perl,'{:a(1), :b(2)}<>', 
       'can we serialize a simple hash';
     my $rh = EVAL(%h.perl);
-    is_deeply $rh, %h, 'can we roundtrip simple hash';
+    is_deeply $rh, $%h, 'can we roundtrip simple hash';
     ok $rh.of    =:= Mu,  'make sure any value can be stored';
     ok $rh.keyof =:= Any, 'make sure keys are Any';
 } #4

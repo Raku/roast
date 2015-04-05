@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 37;
 
 #L<S03/Autoincrement precedence>
 
@@ -120,5 +120,13 @@ is($moo, 0, "var was not touched");
 #?niecza todo 'Works fine in niecza...'
 eval_dies_ok 'my $x = 0; ++++$x',
     'can not double-increment, because the return value is not a container';
+
+{
+    is state $i++, 0, '++ is allowed on declarator';
+    is $i, 1, '...and actually increments variable';
+    is my $j.++, 0, '.++ is allowed on declarator';
+    is $j, 1, '...and actually increments variable';
+    is my $k.defined, False, 'method is allowed on declarator';
+}
 
 # vim: ft=perl6

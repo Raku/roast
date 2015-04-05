@@ -215,8 +215,6 @@ plan 41;
     is $seensize, 10, "[list] assignment state in fib memoizes";
 }
 
-#?rakudo skip 'parse error'
-#?DOES 4
 {
     # now we're just being plain evil:
     subset A of Int where { $_ < state $x++ };
@@ -238,12 +236,10 @@ sub bughunt1 { (state $svar) }    #OK not used
 }
 
 # RT #115614
-#?rakudo skip 'RT #115614'
 {
     lives_ok { state $i++ }, 'can parse "state $i++"';
 }
 
-#?rakudo skip 'parse error'
 #?DOES 1
 {
     # http://irclog.perlgeek.de/perl6/2010-04-27#i_2269848

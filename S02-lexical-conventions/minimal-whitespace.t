@@ -8,7 +8,7 @@ plan 9;
 
 my @arr = <1 2 3 4 5>;
 throws_like { EVAL '@arr [0]' },
-  X::Syntax::Confused,
+  X::Syntax::Missing,
   'array with space before opening brackets does not work';
 
 my %hash = a => 1, b => 2;

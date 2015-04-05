@@ -3,11 +3,16 @@ use Test;
 
 # L<S32::Str/Str/"=item pack">
 
-plan 6;
+plan 7;
 
 {
     my $buf = pack('H*', "414243");
     is_deeply $buf.contents, [:16<41>, :16<42>, :16<43>], 'H* works';
+}
+
+{
+    my $buf = pack('H', 'a');
+    is_deeply $buf.contents, [ 0xA0 ], 'H works on odd-length strings';
 }
 
 {

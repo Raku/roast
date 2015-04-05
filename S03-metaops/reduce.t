@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 367;
+plan 366;
 
 =begin pod
 
@@ -214,9 +214,6 @@ is( ~([\<] 42), ~True, "[\<] 42 returns '1'");
 ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
 is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 
-    'triangle reduce is lazy');
-#?niecza skip 'Str cmp Inf'
-is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, hgfedcba',
     'triangle reduce is lazy');
 
 is( ([max]()), -Inf, '[max]() returns -Inf');

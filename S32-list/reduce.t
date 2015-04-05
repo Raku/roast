@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 14;
+plan 15;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -25,12 +25,21 @@ plan 14;
 
 # Reduce with n-ary functions
 {
-  my @array  = <1 2 3 4 5 6 7 8>, Any;
-  my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * Any;
+  my @array  = <1 2 3 4 5 6 7 8 9>;
+  my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * 9;
 
-  #?rakudo todo 'n-ary reduce'
   #?niecza skip 'n-ary reduce'
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
+}
+
+# Reduce with right associative n-ary functions
+{
+  my @array  = <1 2 3 4 5 6 7 8 9>;
+  my $result = 1 + 2 * (3 + 4 * (5 + 6 * (7 + 8 * 9)));
+  sub rightly is assoc<right> { $^a + $^b * $^c }
+
+  #?niecza skip 'n-ary reduce'
+  is (@array.reduce: &rightly), $result, "right assoc n-ary reduce() works";
 }
 
 

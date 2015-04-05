@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 36;
 
 =begin description
 
@@ -66,6 +66,43 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "inplace form of squish with :as works";
     is_deeply @array, [<a b c d e f a>],
       "final result with :as in place";
+} #4
+
+#?niecza skip 'NYI'
+{
+    my @rt124204 = ('', '', Any, Any);
+    #?rakudo todo 'RT #124204'
+    is_deeply @rt124204.squish(:as(-> $x {$x})), ('', Any).list.item,
+      "method form of squish with :as does not needlessly stringify";
+    is_deeply @rt124204.squish, ('', Any).list.item,
+      "method form of squish without :as does not needlessly stringify";
+    #?rakudo todo 'RT #124204'
+    is_deeply @rt124204.squish(:as(-> $x {$x}), :with({$^b === $^a})), ('', Any).list.item,
+      "method form of squish with :as and :with does not needlessly stringify";
+    is_deeply @rt124204.squish(:with({$^b === $^a})), ('', Any).list.item,
+      "method form of squish with :with does not needlessly stringify";
+} #4
+
+#?niecza skip 'NYI'
+#?rakudo todo 'RT #124205'
+{
+    my @rt124205 = <a a>;
+
+    is_deeply @rt124205.squish(:as(-> $x {1}), :with(-> $a, $b {1})), <a>.list.item,
+      "method form of squish with :as and :with always returns at least the first element";
+    is_deeply @rt124205.squish(:with(-> $a, $b {1})), <a>.list.item,
+      "method form of squish with :with always returns at least the first element";
+
+    # somewhat more real-world examples:
+
+    my @rt124205_b = '', '', <b b B B>;
+
+    is_deeply @rt124205_b.squish(:with(*.Str eq *.Str)), ('', 'b', 'B').list.item,
+      "method form of squish with :with preserves the first element even if it stringifies to ''";
+
+    is_deeply @rt124205_b.squish(:as(*.Str), :with(&infix:<eq>)), ('', 'b', 'B').list.item,
+      "method form of squish with :as and :with preserves the first element even if it stringifies to ''";
+
 } #4
 
 #?niecza skip 'NYI'

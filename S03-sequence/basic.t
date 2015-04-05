@@ -225,7 +225,6 @@ is ~(1...10)[2...4], '3 4 5', 'can index sequence with sequence';
     is (1, 2 ...^ *>5), (1,2,3,4,5), "exclusive sequence with code on the rhs";
 }
 
-#?rakudo 2 todo 'sequence + last'
 is (1, 2 , {last if $_>=5; $_+1} ... *)[^10].join(', '), '1, 2, 3, 4, 5', "sequence that lasts in the last item of lhs";
 is (5,4,3, { $_ - 1 || last } ... *)[^10].join(', '), '5, 4, 3, 2, 1', "sequence may be terminated by calling last from the generator function";
 

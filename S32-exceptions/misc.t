@@ -3,7 +3,9 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 284;
+plan 289;
+
+throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -105,6 +107,7 @@ throws_like 'my ($a, $b); $a . $b', X::Obsolete;
 
 throws_like 'my $a::::b', X::Syntax::Name::Null;
 throws_like 'unless 1 { } else { }', X::Syntax::UnlessElse;
+throws_like 'unless 1 { } elsif 42 { }', X::Syntax::UnlessElse;
 throws_like 'for my $x (1, 2, 3) { }', X::Syntax::P5;
 throws_like ':!foo(3)', X::Syntax::NegatedPair, key => 'foo';
 throws_like 'my $0', X::Syntax::Variable::Numeric;
@@ -179,7 +182,7 @@ for <
     throws_like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
-throws_like '$#', X::Syntax::Perl5Var;
+throws_like '$#foo', X::Obsolete;
 # RT #122645
 lives_ok { EVAL '$@' }, '$@ is no longer a problem';
 
@@ -606,5 +609,12 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
     throws_like { ::('') }, X::NoSuchSymbol,
         'fail sensibly for empty lookup.';
 }
+
+# RT #117859
+throws_like 'class Foo { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 'Type';
+
+throws_like 'my $a = |(1, 2, 3)', X::Syntax::ArgFlattener;
+throws_like 'sub foo($x) { }; foo({ |(1, 2, 3) })', X::Syntax::ArgFlattener;
+
 
 # vim: ft=perl6

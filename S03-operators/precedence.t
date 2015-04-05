@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 56;
+plan 58;
 
 
 # terms
@@ -111,6 +111,12 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 {
     my $a = 0 ?? "yes" !! "no";
     is($a, "no", "??!! binds tighter than =");
+    throws_like { EVAL '$a ?? $a = 42 !! $a = 43' },
+        X::Syntax::ConditionalOperator::PrecedenceTooLoose,
+        "Can't use assignop inside ??!!";
+    throws_like { EVAL '$a ?? $a += 42 !! $a = 43' },
+        X::Syntax::ConditionalOperator::PrecedenceTooLoose,
+        "Can't use meta-assignop inside ??!!";
 #    (my $b = 1) ?? "true" !! "false";
 #    is($b, 1, "?? !! just thrown away with = in parens");
 };

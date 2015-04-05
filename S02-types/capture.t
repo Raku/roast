@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 24;
 
 {
     my $capture = \(1,2,3);
@@ -37,7 +37,6 @@ plan 21;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo4 ($a, $pair) { "$a!$pair" }
-    #?rakudo skip '#122555'
     is foo4(|$capture), "1!positional\tpair",
         'simply capture creation with \\( works (4)';
 }
@@ -65,12 +64,6 @@ plan 21;
     throws_like { foo6(1,2) },
       Exception,  # too few args
       'capture creation with \\$ works (3)';
-    #?rakudo todo 'nom regression'
-    is try { foo6(a => 1, b => 2, c => 3) }, "1!2!3",
-        'capture creation with \\$ works (4)';
-    #?rakudo todo 'nom regression'
-    is try { foo6(1, b => 2, c => 3) }, "1!2!3",
-        'capture creation with \\$ works (5)';
 }
 
 # Arglists are first-class objects
@@ -111,6 +104,23 @@ plan 21;
 }
 
 {
+    my @a = 1, 2;
+    my $capture = \(|@a,3);
+    sub foo10 ($a, $b, $c) { "$a!$b!$c" }
+    is foo10(|$capture), "1!2!3",
+        '|@a interpolation into \(...) works';
+}
+
+{
+    my %h = named => 'arg';
+    my $capture = \(1, |%h);
+
+    sub foo11 ($a, :$named) { "$a!$named" }
+    is foo11(|$capture), "1!arg",
+        '|%h interpolation into \(...) works';
+}
+
+{
     # RT #78496
     my $c = ('OH' => 'HAI').Capture;
     is $c<key>,   'OH',  '.<key> of Pair.Capture';
@@ -119,5 +129,20 @@ plan 21;
 
 # RT #89766
 nok (defined  \()[0]), '\()[0] is not defined';
+
+# RT #116002
+{
+    class RT116002 {
+        method foo (Int) {}
+    }
+    my @a = 42;
+
+    ok \(RT116002, 42) ~~ RT116002.^find_method("foo").signature,
+        'capture with scalar matches signature';
+    nok \(RT116002, @a) ~~ RT116002.^find_method("foo").signature,
+        'capture with one element array does not match signature';
+    ok \(RT116002, |@a) ~~ RT116002.^find_method("foo").signature,
+        'capture with infix:<|> on one element array matches signature';
+}
 
 # vim: ft=perl6
