@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 41;
+plan 42;
 
 =begin pod
 
@@ -138,8 +138,9 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
     nok RT72048_class.new !~~ RT72048_role, 'class instance !!matches role';
 }
 
-ok "foo" ~~ *, 'thing ~~ * is true';
-ok ("foo" ~~ *) ~~ Bool, 'thing ~~ * is a boolean';
+ok ("foo" ~~ *) ~~ WhateverCode, 'thing ~~ * autoprimes';
+ok ("foo" ~~ *.chars == 3) ~~ Bool, 'thing ~~ WhateverCode is a boolean';
+ok ?(* ~~ "foo")('foo'), '* ~~ "foo" is WhateverCode';
 
 done();
 
