@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 289;
+plan 290;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -616,5 +616,7 @@ throws_like 'class Foo { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 
 throws_like 'my $a = |(1, 2, 3)', X::Syntax::ArgFlattener;
 throws_like 'sub foo($x) { }; foo({ |(1, 2, 3) })', X::Syntax::ArgFlattener;
 
+# RT #71034
+throws_like 'my $a = (1, 2, 3); my @a = |$a;', X::Syntax::ArgFlattener;
 
 # vim: ft=perl6
