@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 149;
+plan 150;
 
 # L<S05/Substitution/>
 
@@ -448,6 +448,12 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     my $_ = 42; s/\d+/xxx/;
     is $_, 'xxx', 's/// can modify a container that contains a non-string';
+}
+
+# RT #123597
+{
+    my $_ = 0; s{^(\d+)$} = sprintf "%3d -", $_;
+    is $_, "  0 -", 's{}="" can modify a container that contains a non-string';
 }
 
 done;
