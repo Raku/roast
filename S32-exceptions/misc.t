@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 290;
+plan 291;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -35,7 +35,8 @@ throws_like '$^x',           X::Placeholder::Mainline, placeholder => '$^x';
 throws_like '@_',            X::Placeholder::Mainline, placeholder => '@_';
 # RT #85942
 throws_like '"foo".{ say $^a }', X::Placeholder::Mainline;
-
+# RT #78112
+throws_like 'class A { has $.a = $^b + 1; }', X::Placeholder::Attribute, placeholder => '$^b';
 
 throws_like 'sub f(*@ = 2) { }', X::Parameter::Default, how => 'slurpy', parameter => *.not;
 throws_like 'sub f($x! = 3) { }', X::Parameter::Default, how => 'required', parameter => '$x';
