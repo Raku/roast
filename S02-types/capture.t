@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 26;
 
 {
     my $capture = \(1,2,3);
@@ -143,6 +143,12 @@ nok (defined  \()[0]), '\()[0] is not defined';
         'capture with one element array does not match signature';
     ok \(RT116002, |@a) ~~ RT116002.^find_method("foo").signature,
         'capture with infix:<|> on one element array matches signature';
+}
+
+# RT #75850
+{
+    is @(\( (:a(2)) )).elems, 1, 'Parens around a colonpair in \(...) make a positional (1)';
+    is %(\( (:a(2)) )).elems, 0, 'Parens around a colonpair in \(...) make a positional (2)';
 }
 
 # vim: ft=perl6
