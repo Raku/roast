@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 291;
+plan 292;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -619,5 +619,8 @@ throws_like 'sub foo($x) { }; foo({ |(1, 2, 3) })', X::Syntax::ArgFlattener;
 
 # RT #71034
 throws_like 'my $a = (1, 2, 3); my @a = |$a;', X::Syntax::ArgFlattener;
+
+# RT #93988
+throws_like '5.', X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::Number::IllegalDecimal };
 
 # vim: ft=perl6
