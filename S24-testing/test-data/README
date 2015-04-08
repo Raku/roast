@@ -1,0 +1,6 @@
+t/spec/S24-testing/test-data/README
+
+This directory exists to hold files which are used
+by tests in S24-testing.
+The files in this directorey are not supposed to
+be run directly.
