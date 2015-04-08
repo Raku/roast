@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 27;
+plan 30;
 
 {
     # simple try
@@ -160,6 +160,15 @@ plan 27;
     try { $x = $_ } given '42';
     is $x, '42', 'try block in statement-modifying contextualizer';
 }
+
+# RT #123053
+#?rakudo skip 'RT #123053'
+lives_ok { try +'foo' }, 'Failure does not escape try (statement form)';
+#?rakudo skip 'RT #123053'
+lives_ok { try { +'foo' } }, 'Failure does not escape try (block form)';
+#?rakudo skip 'RT #123053'
+lives_ok { try { +'foo'; CATCH { default { } } } }, 'Failure does not escape try (block form with CATCH)';
+
 done;
 
 # vim: ft=perl6
