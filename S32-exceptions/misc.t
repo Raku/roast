@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 293;
+plan 294;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -625,5 +625,6 @@ throws_like '5.', X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::Numb
 
 # RT #81502
 throws_like 'BEGIN { ohnoes() }; sub ohnoes() { }', X::Undeclared::Symbols;
+throws_like 'BEGIN { die "oh noes!" }', X::Comp::BeginTime, exception => sub ($e) { $e.message eq 'oh noes!' };
 
 # vim: ft=perl6
