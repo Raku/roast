@@ -1,0 +1,8 @@
+use v6;
+use Test;
+
+plan 1;
+
+## this file is executed from S24-testing/3-output.t
+## here is a TODO test that passes
+todo("testing output for passing todo test"); ok 1, "test passes";
