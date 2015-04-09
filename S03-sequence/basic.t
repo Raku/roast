@@ -107,7 +107,7 @@ is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 0.5, <1/3
 
 # L<S03/List infix precedence/'limit value is on the "wrong"'>
 {
-is (1, 2 ... 0).[^3], (1,2), 'No more: limit value is on the wrong side';
+is (1, 2 ... 0).[^3], (), 'No more: limit value is on the wrong side';
 }
 
 # L<S03/List infix precedence/excludes the limit if it happens to match exactly>
@@ -123,8 +123,8 @@ is (1, 2 ... 0).[^3], (1,2), 'No more: limit value is on the wrong side';
     is (1, { $_ + 2 } ...^ 9).join(', '), '1, 3, 5, 7', 'exclusive sequence with closure';
     is (1 ...^ 1), (), 'empty exclusive sequence';
     is (1, 1 ...^ 1), (), 'empty exclusive constant sequence';
-    is (1, 2 ...^ 0).[^3], (1, 2), 'empty exclusive arithmetic sequence';
-    is (1, 2 ...^ 0, 'xyzzy', 'plugh').[^5].join(', '), '1, 2, xyzzy, plugh', 'exclusive sequence empty but for extra items';
+    is (1, 2 ...^ 0).[^3], (), 'empty exclusive arithmetic sequence';
+    is (1, 2 ...^ 0, 'xyzzy', 'plugh').[^5].join(', '), 'xyzzy, plugh', 'exclusive sequence empty but for extra items';
     is ~(1 ...^ 0), '1', 'singleton exclusive sequence';
     is (4...^5).join(', '), '4', '4...^5 should parse as 4 ...^ 5 and not 4 ... ^5';
 }
@@ -157,20 +157,20 @@ is EVAL((1 ... 5).perl).join(','), '1,2,3,4,5',
 is ~((1 ... *) Z~ ('a' ... 'z')).[^5], "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";
 
 {
-    is (1, 2, 4 ... 3).[^4], (1, 2, 4), "sequence that does not hit the limit";
+    is (1, 2, 4 ... 3).[^4], (1, 2), "sequence that does not hit the limit";
     is (1, 2, 4 ... 2), (1, 2), "sequence that aborts during LHS";
 
-    is (1, 2, 4 ... 1.5).[^4], (1,2,4), "sequence that does not hit the limit";
+    is (1, 2, 4 ... 1.5).[^4], (1), "sequence that does not hit the limit";
     is (1, 2, 4 ... 1), (1), "sequence that aborts during LHS";
 
     is ~(1, -2, 4 ... 1), '1', 'geometric sequence with smaller RHS and sign change';
     is ~(1, -2, 4 ... 2).[^4], '1 -2 4 -8', 'geometric sequence with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 3).[^4], '1 -2 4 -8', 'geometric sequence with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 3).[^4], '1 -2', 'geometric sequence with smaller RHS and sign change';
     is ~(1, -2, 4 ... 25).[^10], '1 -2 4 -8 16', 'geometric sequence with sign-change and non-matching end point';
 
     is (1, 2, 4, 5, 6 ... 2), (1, 2), "sequence that aborts during LHS, before actual calculations kick in";
 
-    is (1, 2, 4, 5, 6 ... 3).[^6], (1,2,4,5,6), "sequence that aborts during LHS, before actual calculations kick in";
+    is (1, 2, 4, 5, 6 ... 3).[^6], (1,2), "sequence that aborts during LHS, before actual calculations kick in";
 }
 
 # tests for the types returned
@@ -237,7 +237,7 @@ is (5,4,3, { $_ - 1 || last } ... *)[^10].join(', '), '5, 4, 3, 2, 1', "sequence
 
 # RT #78324
 {
-    is (32,16,8 ...^ Rat), (32,16,8) , 'stop on a matching type (1)';
+    is (32,16,8 ...^ Rat), (32) , 'stop on a matching type (1)';
     is (32,{($_/2).narrow} ...^ Rat), (32,16,8,4,2,1) , 'stop on a matching type (2)';
 }
 
