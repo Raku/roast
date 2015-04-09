@@ -63,10 +63,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
         "Str decrement fails after 'AA': leftmost characters are never removed",
         message => 'Decrement out of range';
     is ('Y', 'Z' ... 'AA').join(' '), 'Y Z AA', "'Y', 'Z' ... 'AA' works";
-    throws_like { 'Z' ... 'AA' },
-        Exception,
-        "'Z' ... 'AA' fails: only 1 RHS value and ('Z' before 'AA') is False",
-        message => 'Decrement out of range';
+    is ('Z' ... 'AA')[*-1], 'B', "A is before AA";
 }
 
 is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
