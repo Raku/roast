@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 44;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
@@ -109,6 +109,13 @@ is ('1a', '1b' ... '1e').Str, '1a 1b 1c 1d 1e', 'sequence with strings that star
 	method gist { $.y }
     }
     is (H.new ... *.y > 10).gist, '5 6 7 8 9 10 11', "intuition does not try to cmp a WhateverCode";
+}
+
+{
+    is ('000' ... '077'), (0..0o77).fmt("%03o"), "can generate octals";
+    is ('077' ... '000'), (0..0o77).reverse.fmt("%03o"), "can generate reverse octals";
+    is ('❶❶' ... '➓➓'), (('❶' ... '➓') X~ ('❶' ... '➓')), 'can juggle unicode balls';
+    is ('➓➓' ... '❶❶'), (('➓' ... '❶') X~ ('➓' ... '❶')), 'can juggle unicode balls upside down';
 }
 
 done;
