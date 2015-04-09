@@ -62,7 +62,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
         Exception,
         "Str decrement fails after 'AA': leftmost characters are never removed",
         message => 'Decrement out of range';
-    is ('Y', 'Z' ... 'AA').join(' '), 'Y Z AA', "'Y', 'Z' ... 'AA' works";
+    is ('Y', 'Z' ... 'A').join(' '), 'Y Z Y X W V U T S R Q P O N M L K J I H G F E D C B A', "'Y', 'Z' ... 'A' works";
     is ('Z' ... 'AA')[*-1], 'B', "A is before AA";
 }
 
