@@ -2,7 +2,7 @@ use v6;
 
 my $istrue = (require Test <&plan &is &lives_ok &skip &todo>);
 
-plan 15;
+plan 16;
 
 is $istrue, True, "successful require returns True";
 
@@ -69,5 +69,9 @@ is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 # tests the combination of chdir+require
 lives_ok { chdir "t/spec/packages"; require "Foo.pm"; },
          'can change directory and require a module';
+
+# RT #115626
+lives_ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm"; },
+         'requiring something non-existent does not make it segfault';
 
 # vim: ft=perl6

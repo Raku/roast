@@ -33,15 +33,15 @@ is (1 ... 5, 6, 7).join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple sequence with two 
 is (1 ... 5, 4, 3).join(', '), '1, 2, 3, 4, 5, 4, 3', 'simple sequence with two extra terms on the RHS';
 is (1 ... 5, 'xyzzy', 'plugh').join(', '), '1, 2, 3, 4, 5, xyzzy, plugh', 'simple sequence with two weird items on the RHS';
 
-# infinite sequence that go past their limit
+# sequences that might go past their limit
 {
-is (1 ... 5.5).[^6].join(', '), '1, 2, 3, 4, 5, 6', 'simple sequence with one item on the LHS';
-is (1 ... -3.5).[^6].join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing sequence with one item on the LHS';
-is (1, 3 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple additive sequence with two items on the LHS';
-is (1, 0 ... -3.5).[^6].join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing additive sequence with two items on the LHS';
-is (1, 3, 5 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple additive sequence with three items on the LHS';
-is (1, 3, 9 ... 100).[^6].join(', '), '1, 3, 9, 27, 81, 243', 'simple multiplicative sequence with three items on the LHS';
-is (81, 27, 9 ... 8/9).[^6], (81, 27, 9, 3, 1, 1/3), 'decreasing multiplicative sequence with three items on the LHS';
+is (1 ... 5.5).[^10].join(', '), '1, 2, 3, 4, 5', 'simple sequence with one item on the LHS';
+is (1 ... -3.5).[^10].join(', '), '1, 0, -1, -2, -3', 'simple decreasing sequence with one item on the LHS';
+is (1, 3 ... 10).[^10].join(', '), '1, 3, 5, 7, 9', 'simple additive sequence with two items on the LHS';
+is (1, 0 ... -3.5).[^10].join(', '), '1, 0, -1, -2, -3', 'simple decreasing additive sequence with two items on the LHS';
+is (1, 3, 5 ... 10).[^10].join(', '), '1, 3, 5, 7, 9', 'simple additive sequence with three items on the LHS';
+is (1, 3, 9 ... 100).[^10].join(', '), '1, 3, 9, 27, 81', 'simple multiplicative sequence with three items on the LHS';
+is (81, 27, 9 ... 8/9).[^10], (81, 27, 9, 3, 1), 'decreasing multiplicative sequence with three items on the LHS';
 is (1, { $_ + 2 } ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with one item and block closure on the LHS';
 is (1, *+2 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with one item and * closure on the LHS';
 is (1, { $_ - 2 } ... -8).[^6].join(', '), '1, -1, -3, -5, -7, -9', 'simple sequence with one item and closure on the LHS';
@@ -49,9 +49,9 @@ is (1, 3, 5, { $_ + 2 } ... 14).[^8].join(', '), '1, 3, 5, 7, 9, 11, 13, 15', 's
 is (1, { 1 / ((1 / $_) + 1) } ... 11/60).[^6].map({.perl}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2, <1/6>', 'tricky sequence with one item and closure on the LHS';
 is (1, { -$_ } ... 0).[^4].join(', '), '1, -1, 1, -1', 'simple alternating sequence with one item and closure on the LHS';
 
-is (1 ... 5.5, 6, 7).[^8].join(', '), '1, 2, 3, 4, 5, 6, 7, 8', 'simple sequence with two further terms on the RHS';
-is (1 ... 5.5, 4, 3).[^8].join(', '), '1, 2, 3, 4, 5, 6, 7, 8', 'simple sequence with two extra terms on the RHS';
-is (1 ... 5.5, 'xyzzy', 'plugh').[^8].join(', '), '1, 2, 3, 4, 5, 6, 7, 8', 'simple sequence with two weird items on the RHS';
+is (1 ... 5.5, 6, 7).[^8].join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple sequence with two further terms on the RHS';
+is (1 ... 5.5, 4, 3).[^8].join(', '), '1, 2, 3, 4, 5, 4, 3', 'simple sequence with two extra terms on the RHS';
+is (1 ... 5.5, 'xyzzy', 'plugh').[^8].join(', '), '1, 2, 3, 4, 5, xyzzy, plugh', 'simple sequence with two weird items on the RHS';
 }
 # infinite sequence without limits
 
@@ -107,7 +107,7 @@ is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 0.5, <1/3
 
 # L<S03/List infix precedence/'limit value is on the "wrong"'>
 {
-is (1, 2 ... 0).[^3], (1,2,3), 'No more: limit value is on the wrong side';
+is (1, 2 ... 0).[^3], (), 'No more: limit value is on the wrong side';
 }
 
 # L<S03/List infix precedence/excludes the limit if it happens to match exactly>
@@ -115,16 +115,16 @@ is (1, 2 ... 0).[^3], (1,2,3), 'No more: limit value is on the wrong side';
 {
     is (1 ...^ 5).join(', '), '1, 2, 3, 4', 'exclusive sequence';
     is (1 ...^ -3).join(', '), '1, 0, -1, -2', 'exclusive decreasing sequence';
-    is (1 ...^ 5.5).[^6].join(', '), '1, 2, 3, 4, 5, 6', "exclusive sequence that couldn't hit its limit anyway";
+    is (1 ...^ 5.5).[^6].join(', '), '1, 2, 3, 4, 5', "exclusive sequence that couldn't hit its limit anyway";
     is (1, 3, 9 ...^ 81).join(', '), '1, 3, 9, 27', 'exclusive geometric sequence';
-    is (81, 27, 9 ...^ 2).[^5].join(', '), '81, 27, 9, 3, 1', "exclusive decreasing geometric sequence that couldn't hit its limit anyway";
+    is (81, 27, 9 ...^ 2).[^5].join(', '), '81, 27, 9, 3', "exclusive decreasing geometric sequence that couldn't hit its limit anyway";
     is (2, -4, 8 ...^ 32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric sequence';
     is (2, -4, 8 ...^ -32).[^6].join(', '), '2, -4, 8, -16, 32, -64', 'exclusive alternating geometric sequence (not an exact match)';
     is (1, { $_ + 2 } ...^ 9).join(', '), '1, 3, 5, 7', 'exclusive sequence with closure';
     is (1 ...^ 1), (), 'empty exclusive sequence';
     is (1, 1 ...^ 1), (), 'empty exclusive constant sequence';
-    is (1, 2 ...^ 0).[^3], (1, 2, 3), 'empty exclusive arithmetic sequence';
-    is (1, 2 ...^ 0, 'xyzzy', 'plugh').[^3].join(', '), '1, 2, 3', 'exclusive sequence empty but for extra items';
+    is (1, 2 ...^ 0).[^3], (), 'empty exclusive arithmetic sequence';
+    is (1, 2 ...^ 0, 'xyzzy', 'plugh').[^5].join(', '), 'xyzzy, plugh', 'exclusive sequence empty but for extra items';
     is ~(1 ...^ 0), '1', 'singleton exclusive sequence';
     is (4...^5).join(', '), '4', '4...^5 should parse as 4 ...^ 5 and not 4 ... ^5';
 }
@@ -157,20 +157,20 @@ is EVAL((1 ... 5).perl).join(','), '1,2,3,4,5',
 is ~((1 ... *) Z~ ('a' ... 'z')).[^5], "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";
 
 {
-    is (1, 2, 4 ... 3).[^4], (1, 2, 4, 8), "sequence that does not hit the limit";
+    is (1, 2, 4 ... 3).[^4], (1, 2), "sequence that does not hit the limit";
     is (1, 2, 4 ... 2), (1, 2), "sequence that aborts during LHS";
 
-    is (1, 2, 4 ... 1.5).[^4], (1,2,4,8), "sequence that does not hit the limit";
+    is (1, 2, 4 ... 1.5).[^4], (1), "sequence that does not hit the limit";
     is (1, 2, 4 ... 1), (1), "sequence that aborts during LHS";
 
     is ~(1, -2, 4 ... 1), '1', 'geometric sequence with smaller RHS and sign change';
     is ~(1, -2, 4 ... 2).[^4], '1 -2 4 -8', 'geometric sequence with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 3).[^4], '1 -2 4 -8', 'geometric sequence with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 25).[^10], '1 -2 4 -8 16 -32 64 -128 256 -512', 'geometric sequence with sign-change and non-matching end point';
+    is ~(1, -2, 4 ... 3).[^4], '1 -2', 'geometric sequence with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 25).[^10], '1 -2 4 -8 16', 'geometric sequence with sign-change and non-matching end point';
 
     is (1, 2, 4, 5, 6 ... 2), (1, 2), "sequence that aborts during LHS, before actual calculations kick in";
 
-    is (1, 2, 4, 5, 6 ... 3).[^6], (1,2,4,5,6,7), "sequence that aborts during LHS, before actual calculations kick in";
+    is (1, 2, 4, 5, 6 ... 3).[^6], (1,2), "sequence that aborts during LHS, before actual calculations kick in";
 }
 
 # tests for the types returned
@@ -232,12 +232,12 @@ is (5,4,3, { $_ - 1 || last } ... *)[^10].join(', '), '5, 4, 3, 2, 1', "sequence
     is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';
     my @fib := (0, 1, *+* ... * );
     # RT #98790
-    is (@fib ... 8), (0 , 1, 1, 2 , 3, 5, 8), '@fib ... 8';
+    is (@fib ... 8), (0, 1, 1, 2 , 3, 5, 8), '@fib ... 8';
 }
 
 # RT #78324
 {
-    is (32,16,8 ...^ Rat), (32,16,8) , 'stop on a matching type (1)';
+    is (32,16,8 ...^ Rat), (32) , 'stop on a matching type (1)';
     is (32,{($_/2).narrow} ...^ Rat), (32,16,8,4,2,1) , 'stop on a matching type (2)';
 }
 

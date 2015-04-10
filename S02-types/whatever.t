@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 87;
+plan 89;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -217,7 +217,9 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
 }
 
 # RT #73162
-eval_lives_ok '{*.{}}()', '{*.{}}() lives';
+# WAS:  eval_lives_ok '{*.{}}()', '{*.{}}() lives';
+# This is now supposed tobe a double-closure error:
+eval_dies_ok '{*.{}}()', '{*.{}}() dies';
 
 # RT #80256
 {
@@ -274,6 +276,11 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
     isa_ok (*.[1]), Code, '*.[1] is some kind of code';
     isa_ok (*.<a>), Code, '*.<a> is some kind of code';
     isa_ok (*.{1}), Code, '*.{1} is some kind of code';
+}
+
+{
+    isa_ok Whatever eqv 42, Bool, "Whatever type object does not autoprime";
+    isa_ok WhateverCode eqv 42, Bool, "WhateverCode type object does not autoprime";
 }
 
 # vim: ft=perl6

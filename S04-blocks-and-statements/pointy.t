@@ -106,9 +106,8 @@ lives_ok {my $x = -> {}; my $y = $x(); },
 }
 
 # RT #115372
-#?rakudo.moar todo 'RT #115372'
 {
-    throws_like q[say -> {YOU_ARE_HERE}], X::Method::NotFound,
+    throws_like q[say -> {YOU_ARE_HERE}], X::Undeclared::Symbols,
         'no Segfault when putting YOU_ARE_HERE marker in a pointy block';
 }
 

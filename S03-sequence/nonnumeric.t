@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 44;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
@@ -62,11 +62,8 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
         Exception,
         "Str decrement fails after 'AA': leftmost characters are never removed",
         message => 'Decrement out of range';
-    is ('Y', 'Z' ... 'AA').join(' '), 'Y Z AA', "'Y', 'Z' ... 'AA' works";
-    throws_like { 'Z' ... 'AA' },
-        Exception,
-        "'Z' ... 'AA' fails: only 1 RHS value and ('Z' before 'AA') is False",
-        message => 'Decrement out of range';
+    is ('Y', 'Z' ... 'A').join(' '), 'Y Z Y X W V U T S R Q P O N M L K J I H G F E D C B A', "'Y', 'Z' ... 'A' works";
+    is ('Z' ... 'AA')[*-1], 'B', "A is before AA";
 }
 
 is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
@@ -102,6 +99,23 @@ is ('1a', '1b' ... '1e').Str, '1a 1b 1c 1d 1e', 'sequence with strings that star
 {
     is ('▁' ... '█').Str, "▁ ▂ ▃ ▄ ▅ ▆ ▇ █", "unicode blocks";
     is ('.' ... '0').Str, ". / 0",             "mixture";
+}
+
+{
+    my class H {
+	has $.y = 5;
+	method succ { H.new(y => $.y + 1) }
+	method pred { H.new(y => $.y - 1) }
+	method gist { $.y }
+    }
+    is (H.new ... *.y > 10).gist, '5 6 7 8 9 10 11', "intuition does not try to cmp a WhateverCode";
+}
+
+{
+    is ('000' ... '077'), (0..0o77).fmt("%03o"), "can generate octals";
+    is ('077' ... '000'), (0..0o77).reverse.fmt("%03o"), "can generate reverse octals";
+    is ('❶❶' ... '➓➓'), (('❶' ... '➓') X~ ('❶' ... '➓')), 'can juggle unicode balls';
+    is ('➓➓' ... '❶❶'), (('➓' ... '❶') X~ ('➓' ... '❶')), 'can juggle unicode balls upside down';
 }
 
 done;

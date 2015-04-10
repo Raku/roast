@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 148;
+plan 153;
 
 # L<S05/Substitution/>
 
@@ -443,6 +443,32 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     my $foo = "bar";
     $foo ~~ s:g [ r ] = 'z' if $foo.defined;
     is $foo, 'baz', 's{}="" plus statement mod if is not parsed as /i';
+}
+
+{
+    my $_ = 42; s/\d+/xxx/;
+    is $_, 'xxx', 's/// can modify a container that contains a non-string';
+}
+
+# RT #123597
+{
+    my $_ = 0; s{^(\d+)$} = sprintf "%3d -", $_;
+    is $_, "  0 -", 's{}="" can modify a container that contains a non-string';
+}
+
+# RT #114388
+{
+    $_ = Nil;
+    s[ea] = "rea";
+    is $_, "", 'can use s[]="" when $_ is not set';
+
+    $_ = "real";
+    s[ea] = "rea";
+    is $_, "rreal", 's[]="" works when $_ is set';
+
+    $_ = "";
+    throws_like { EVAL 's[] = "rea"' },
+        X::Syntax::Regex::NullRegex;
 }
 
 done;

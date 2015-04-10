@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 289;
+plan 296;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -35,7 +35,8 @@ throws_like '$^x',           X::Placeholder::Mainline, placeholder => '$^x';
 throws_like '@_',            X::Placeholder::Mainline, placeholder => '@_';
 # RT #85942
 throws_like '"foo".{ say $^a }', X::Placeholder::Mainline;
-
+# RT #78112
+throws_like 'class A { has $.a = $^b + 1; }', X::Placeholder::Attribute, placeholder => '$^b';
 
 throws_like 'sub f(*@ = 2) { }', X::Parameter::Default, how => 'slurpy', parameter => *.not;
 throws_like 'sub f($x! = 3) { }', X::Parameter::Default, how => 'required', parameter => '$x';
@@ -616,5 +617,25 @@ throws_like 'class Foo { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 
 throws_like 'my $a = |(1, 2, 3)', X::Syntax::ArgFlattener;
 throws_like 'sub foo($x) { }; foo({ |(1, 2, 3) })', X::Syntax::ArgFlattener;
 
+# RT #71034
+throws_like 'my $a = (1, 2, 3); my @a = |$a;', X::Syntax::ArgFlattener;
+
+# RT #115276
+throws_like 'say(|(|([4])))', X::Syntax::ArgFlattener;
+
+# RT #93988
+throws_like '5.', X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::Number::IllegalDecimal };
+
+# RT #81502
+throws_like 'BEGIN { ohnoes() }; sub ohnoes() { }', X::Undeclared::Symbols;
+throws_like 'BEGIN { die "oh noes!" }', X::Comp::BeginTime, exception => sub ($e) { $e.message eq 'oh noes!' };
+
+throws_like q:to/CODE/, X::Comp::BeginTime, exception => X::Multi::NoMatch;
+    class Polar {
+         proto method new(|) { * }
+         multi method new(Real \mag, Real \theta) { }
+    }
+    constant j = Polar.new( 0e0 );
+CODE
 
 # vim: ft=perl6
