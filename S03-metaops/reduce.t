@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 366;
+plan 347;
 
 =begin pod
 
@@ -246,7 +246,7 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     # test False / undefined things
     my $msg1 = 'reduce [^^] false variable test';
     my $msg2 = 'infix ^^ false variable test';
-    for (0, '0', '', Bool::False, Any, Mu, Nil) -> $undef {
+    for (0, '', Bool::False, Any, Mu, Nil) -> $undef {
         ok ( [^^]  $undef, $undef, $undef, 5 ), "|{$undef.perl}| $msg1 \#1";
         nok ( [^^]  1, 2, $undef, 3, $undef ), "|{$undef.perl}| $msg1 \#2";
         nok ( [^^]  $undef, $undef, 1, 5 ), "|{$undef.perl}| $msg1 \#3";
