@@ -205,10 +205,8 @@ my $z = 42; #OK not used
 
     {
         my $a;
-        #?rakudo todo 'fails'
         #?niecza 2 todo 'still fails?'
-        eval_lives_ok 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }';
-        #?rakudo todo 'previous test skipped'
+        lives_ok { EVAL 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }' };
         ok $a, 'unreached declaration in effect at block start';
     }
 
