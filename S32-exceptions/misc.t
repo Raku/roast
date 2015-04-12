@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 300;
+plan 301;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -307,6 +307,7 @@ throws_like 'my Str $x := 3', X::TypeCheck::Binding, got => Int, expected => Str
 throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, expected => Str;
 throws_like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
             expected => Int, symbol => '$x';
+throws_like 'subset Fu of Mu where * eq "foo"; my Fu $x = "bar";', X::TypeCheck::Assignment;
 
 throws_like 'sub f() { 42 }; f() = 3', X::Assignment::RO;
 throws_like '1.0 = 3', X::Assignment::RO;
