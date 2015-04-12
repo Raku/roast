@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 50;
 
 isa_ok 1, Int, '1 produces a Int';
 ok 1 ~~ Numeric, '1 is Numeric';
@@ -13,19 +13,54 @@ ok 1.Num ~~ Real, '1.Num is Real';
 
 # L<S02/Rational literals/Rational literals are indicated>
 
-is_approx 1/2, 0.5, '1/2 Rat literal';
-isa_ok 1/2, Rat, '1/2 produces a Rat';
-ok 1/2 ~~ Numeric, '1/2 is Numeric';
-ok 1/2 ~~ Real, '1/2 is Real';
-isa_ok 0x01/0x02, Rat, 'same with hexadecimal numbers';
+is_approx <1/2>, 0.5, '<1/2> Rat literal';
+isa_ok <1/2>, Rat, '<1/2> produces a Rat';
+ok <1/2> ~~ Numeric, '<1/2> is Numeric';
+ok <1/2> ~~ Real, '<1/2> is Real';
+isa_ok <0x01/0x02>, Rat, 'same with hexadecimal numbers';
 
-ok 0x01/0x02 / (0x01/0x02) == 1, 'same with hexadecimal numbers';
+ok <1/-3>.WHAT === Str, 'negative allowed only on numerator';
+ok <-1/-3>.WHAT === Str, 'negative allowed only on numerator';
+
+isa_ok <-1/3>, Rat, 'negative Rat literal';
+ok <-1/3> * -3 == 1, 'negative Rat literal';
+
+ok <0x01/0x03> / (0x01/0x03) == 1, 'Rat works with hexadecimal numbers';
+ok <:13<01>/:13<07>> / (1/7) == 1, 'Rat works with colon radix numbers';
+ok <:12<1a>/:12<7b>> / (:12<1a> / :12<7b>) == 1, 'Rat works with colon radix numbers';
 
 # L<S02/Complex literals/Complex literals are similarly indicated>
 
-isa_ok 1+1i, Complex, '1+1i is a Complex literal';
-ok 1+1i ~~ Numeric, '1+1i is Numeric';
-nok 1+1i ~~ Real, '1+1i is not Real';
+isa_ok  <1+1i>, Complex,  '<1+1i> is a Complex literal';
+isa_ok <+2+2i>, Complex, '<+2+2i> is a Complex literal';
+isa_ok <-3+3i>, Complex, '<-3+3i> is a Complex literal';
+isa_ok <+4-4i>, Complex, '<+4-4i> is a Complex literal';
+isa_ok <-5-5i>, Complex, '<-5-5i> is a Complex literal';
+
+ok <1+1i> ~~ Numeric, '1+1i is Numeric';
+nok <1+1i> ~~ Real, '1+1i is not Real';
+ok  <1*1i> ~~ Str, '1*1i is a Str';
+
+is  <3+2i>,  3 + 2i,  '<3+2i> produces correct value';
+is <+3+2i>, +3 + 2i, '<+3+2i> produces correct value';
+is <-3+2i>, -3 + 2i, '<-3+2i> produces correct value';
+is <+3-2i>, +3 - 2i, '<+3-2i> produces correct value';
+is <-3-2i>, -3 - 2i, '<-3-2i> produces correct value';
+
+is  <3.1+2.9i>,  3.1 + 2.9i,  '<3.1+2.9i> produces correct value';
+is <+3.2+2.8i>, +3.2 + 2.8i, '+<3.2+2.8i> produces correct value';
+is <-3.3+2.7i>, -3.3 + 2.7i, '-<3.3+2.7i> produces correct value';
+is <+3.4-2.6i>, +3.4 - 2.6i, '+<3.4-2.6i> produces correct value';
+is <-3.5-2.5i>, -3.5 - 2.5i, '-<3.5-2.5i> produces correct value';
+
+is  <+3.1e10+2.9e10i>,    3.1e10  +  2.9e10i,  '<3.1e10+2.9e10i> produces correct value';
+is  <+3.1e+11+2.9e+11i>,  3.1e11  +  2.9e11i,  '<+3.1e+11+2.9e+11i> produces correct value';
+is  <-3.1e+12-2.9e+12i>, -3.1e+12 + -2.9e+12i, '<-3.1e+12-2.9e+12i> produces correct value';
+is  <-3.1e-23-2.9e-23i>, -3.1e-23 + -2.9e-23i, '<-3.1e-23-2.9e-23i> produces correct value';
+is   <3.1e-99+2.9e-99i>,  3.1e-99 +  2.9e-99i,  '<3.1e-99+2.9e-99i> produces correct value';
+
+is  <NaN+Inf\i>,   NaN + Inf\i, 'NaN+Inf\i> produces correct value';
+is  <NaN-Inf\i>,   NaN - Inf\i, 'NaN-Inf\i> produces correct value';
 
 # RT #74640
 is_approx 3.14159265358979323846264338327950288419716939937510e0,
