@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 50;
+plan 52;
 
 isa_ok 1, Int, '1 produces a Int';
 ok 1 ~~ Numeric, '1 is Numeric';
@@ -17,6 +17,7 @@ is_approx <1/2>, 0.5, '<1/2> Rat literal';
 isa_ok <1/2>, Rat, '<1/2> produces a Rat';
 ok <1/2> ~~ Numeric, '<1/2> is Numeric';
 ok <1/2> ~~ Real, '<1/2> is Real';
+#?rakudo.jvm skip 'aborts nqp-j'
 isa_ok <0x01/0x02>, Rat, 'same with hexadecimal numbers';
 
 ok <1/-3>.WHAT === Str, 'negative allowed only on numerator';
@@ -25,6 +26,7 @@ ok <-1/-3>.WHAT === Str, 'negative allowed only on numerator';
 isa_ok <-1/3>, Rat, 'negative Rat literal';
 ok <-1/3> * -3 == 1, 'negative Rat literal';
 
+#?rakudo.jvm 3 skip 'aborts nqp-j'
 ok <0x01/0x03> / (0x01/0x03) == 1, 'Rat works with hexadecimal numbers';
 ok <:13<01>/:13<07>> / (1/7) == 1, 'Rat works with colon radix numbers';
 ok <:12<1a>/:12<7b>> / (:12<1a> / :12<7b>) == 1, 'Rat works with colon radix numbers';
@@ -56,8 +58,10 @@ is <-3.5-2.5i>, -3.5 - 2.5i, '-<3.5-2.5i> produces correct value';
 is  <+3.1e10+2.9e10i>,    3.1e10  +  2.9e10i,  '<3.1e10+2.9e10i> produces correct value';
 is  <+3.1e+11+2.9e+11i>,  3.1e11  +  2.9e11i,  '<+3.1e+11+2.9e+11i> produces correct value';
 is  <-3.1e+12-2.9e+12i>, -3.1e+12 + -2.9e+12i, '<-3.1e+12-2.9e+12i> produces correct value';
-is  <-3.1e-23-2.9e-23i>, -3.1e-23 + -2.9e-23i, '<-3.1e-23-2.9e-23i> produces correct value';
-is   <3.1e-99+2.9e-99i>,  3.1e-99 +  2.9e-99i,  '<3.1e-99+2.9e-99i> produces correct value';
+is_approx  <-3.1e-23-2.9e-23i>.re, -3.1e-23, '<-3.1e-23-2.9e-23i> produces correct real value';
+is_approx  <-3.1e-23-2.9e-23i>.im, -2.9e-23, '<-3.1e-23-2.9e-23i> produces correct imaginary value';
+is_approx   <3.1e-99+2.9e-99i>.re,  3.1e-99, '<3.1e-99+2.9e-99i> produces correct real value';
+is_approx   <3.1e-99+2.9e-99i>.im,  2.9e-99, '<3.1e-99+2.9e-99i> produces correct imaginary value';
 
 is  <NaN+Inf\i>,   NaN + Inf\i, 'NaN+Inf\i> produces correct value';
 is  <NaN-Inf\i>,   NaN - Inf\i, 'NaN-Inf\i> produces correct value';
