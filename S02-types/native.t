@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 42;
 
 {
     my int $x;
@@ -167,5 +167,10 @@ plan 39;
     is $high, 1_152_921_504_606_846_975,
         'int does not get confused with goldilocks number (high)';
 }
+
+# RT #123789 (ensure we die, not SEGV)
+dies_ok { EVAL 'my int $x = Int;' }, '"my int $x = Int" dies';
+dies_ok { EVAL 'my num $x = Num;' }, '"my num $x = Num" dies';
+dies_ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
 
 # vim: ft=perl6
