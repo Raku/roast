@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 301;
+plan 302;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -646,5 +646,8 @@ throws_like 'my package A {}; sub foo(A $a) { }', X::Parameter::BadType;
 # RT #123627
 throws_like 'use DoesNotMatter Undeclared;', X::Undeclared::Symbols;
 throws_like 'no DoesNotMatter Undeclared;', X::Undeclared::Symbols;
+
+# RT #73102
+throws_like 'my Int (Str $x);', X::Syntax::Variable::ConflictingTypes, outer => Int, inner => Str;
 
 # vim: ft=perl6
