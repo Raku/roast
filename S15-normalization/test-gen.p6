@@ -1,4 +1,6 @@
-constant MAX_TESTS_PER_FILE = 2000;
+constant MAX_TESTS_PER_FILE    = 2000;
+constant NUM_SANITY_TESTS      = 500;
+constant SANITY_IDENTITY_RATIO = 3;
 
 sub MAIN(Str $unidata-normalization-tests) {
     # Parse the normalization test data.
@@ -23,6 +25,7 @@ sub write-test-files($template, $method, @source, @expected) {
         my @file-expected = @expected[$n * MAX_TESTS_PER_FILE ..^ ($n + 1) * MAX_TESTS_PER_FILE];
         write-test-file($template ~ "-$n.t", $method, @file-source, @file-expected);
     }
+    write-sanity-test-file($template ~ "-sanity.t", $method, @source, @expected);
 }
 
 sub write-test-file($target, $method, @source, @expected) {
@@ -38,6 +41,38 @@ HEADER
 
         for @source Z @expected -> $s, $e {
             .say: "ok Uni.new(&hexy($s)).$method.list ~~ (&hexy($e),), '$s -> $e';";
+        }
+
+        .close;
+    }
+
+    say "Wrote $target";
+}
+
+sub write-sanity-test-file($target, $method, @source, @expected) {
+    my $generated                  = 0;
+    my $generated-since-last-ident = 0;
+
+    given open($target, :w) {
+        .say: qq:to/HEADER/;
+# Unicode normalization tests, generated from NormalizationTests.txt in the
+# Unicode database by S15-normalization/test-gen.p6.
+
+use Test;
+
+plan {NUM_SANITY_TESTS};
+HEADER
+
+        for @source Z @expected -> $s, $e {
+            if $s eq $e {
+                next if $generated-since-last-ident < SANITY_IDENTITY_RATIO;
+                $generated-since-last-ident -= SANITY_IDENTITY_RATIO;
+            }
+            else {
+                $generated-since-last-ident++;
+            }
+            .say: "ok Uni.new(&hexy($s)).$method.list ~~ (&hexy($e),), '$s -> $e';";
+            last if ++$generated == NUM_SANITY_TESTS;
         }
 
         .close;
