@@ -13,7 +13,7 @@ sub MAIN(Str $unidata-normalization-tests) {
     # Write test files.
     write-test-files('t/spec/S15-normalization/nfc', 'NFC', $source, $nfc);
     write-test-files('t/spec/S15-normalization/nfd', 'NFD', $source, $nfd);
-    #write-test-files('t/spec/S15-normalization/nfkc', 'NFKC', $source, $nfkc);
+    write-test-files('t/spec/S15-normalization/nfkc', 'NFKC', $source, $nfkc);
     write-test-files('t/spec/S15-normalization/nfkd', 'NFKD', $source, $nfkd);
 }
 
