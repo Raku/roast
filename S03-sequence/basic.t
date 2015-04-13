@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 133;
+plan 134;
 
 # single-term sequence
 
@@ -138,8 +138,8 @@ ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 throws_like { 1 ... () },
      X::Cannot::Empty,
      'RT #75698 - empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
-     action => '.shift',
-     what   => 'List';
+     action => /endpoint/,
+     what   => /list/;
 
 # RT #73508
 is (1,2,4...*)[10], 1024,
@@ -264,6 +264,8 @@ is ((1,1,2,4,8)[^4], *+*+*+* ... *)[4], 8, 'WhateverCode with arity > 3 gets eno
 
 is (1 … 10), 1..10, 'Unicode ellipsis works';
 is (1 …^ 10), 1..^10, 'Unicode ellipsis works excluding final value';
+
+isa_ok ([] ... [])[0], Array, '[] ... [] returns []';
 
 done;
 
