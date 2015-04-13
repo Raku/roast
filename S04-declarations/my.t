@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 95;
+plan 96;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -237,6 +237,11 @@ my $z = 42; #OK not used
     throws_like { my Int ($a, $b); $b = "str"}, X::TypeCheck, 'Type outside declarator sig 2/2 constrains';
     dies_ok { my int ($a, $b); $a = "str" }, 'Native type outside declarator sig 1/2 constrains';
     dies_ok { my int ($a, $b); $b = "str" }, 'Native type outside declarator sig 2/2 constrains';
+}
+
+# RT #115916
+{
+    throws_like { my (Str $rt115916) = 3 }, X::TypeCheck, 'another Type in declarator sig';
 }
 
 {
