@@ -140,6 +140,7 @@ $multiline = "Hello\n    World";
     is no-r(@q3[0]), "line one\nline two\n", "mixing tabs and spaces even more evil-ly";
 }
 
+# RT #117853
 {
     constant TEXT = q :to 'END';
     Hello world
