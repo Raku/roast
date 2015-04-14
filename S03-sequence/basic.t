@@ -265,6 +265,7 @@ is ((1,1,2,4,8)[^4], *+*+*+* ... *)[4], 8, 'WhateverCode with arity > 3 gets eno
 is (1 … 10), 1..10, 'Unicode ellipsis works';
 is (1 …^ 10), 1..^10, 'Unicode ellipsis works excluding final value';
 
+#RT #114326
 isa_ok ([] ... [])[0], Array, '[] ... [] returns []';
 
 done;
