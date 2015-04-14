@@ -311,13 +311,13 @@ All uses of a zero modulus or divisor should 'die', and the
         'Modulo zero with infix:<mod> dies and is catchable with VRef variables';
 
     throws_like { say 3 % 0 }, X::TypeCheck::Return,
-        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+        message => /:s Type check failed for return value\; expected \'Int\' but got \'Failure\'/,
         'Modulo zero with infix:<%> dies and is catchable';
     throws_like { my $x = 0; say 3 % $x }, X::TypeCheck::Return,
-        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+        message => /:s Type check failed for return value\; expected \'Int\' but got \'Failure\'/,
         'Modulo zero with infix:<%> dies and is catchable with VInt variables';
     throws_like { my $x := 0; say 3 % $x }, X::TypeCheck::Return,
-        message => q[Type check failed for return value; expected 'Int' but got 'Failure'],
+        message => /:s Type check failed for return value\; expected \'Int\' but got \'Failure\'/,
         'Modulo zero with infix:<%> dies and is catchable with VRef variables';
 
     throws_like { 3 div 0 }, X::Numeric::DivideByZero,
@@ -331,7 +331,7 @@ All uses of a zero modulus or divisor should 'die', and the
         'Division by zero with infix:<div> dies and is catchable with VRef variables';
 
     throws_like { say 0 / 0 }, X::TypeCheck::Binding,
-        message => q[Type check failed in binding; expected 'Int' but got 'Failure'],
+        message => /:s Type check failed in binding\; expected \'Int\' but got \'Failure\'/,
         'Division by zero with infix:</> dies and is catchable (1)';
     throws_like { say 3 / 0 }, X::Numeric::DivideByZero,
         message => q[Divide by zero],
