@@ -16,7 +16,7 @@ class Foo {
 
 {
     my Foo $foo .= new;
-    is $foo.no_topic, 'Nil', '$_ is not set in methods...';
+    is $foo.no_topic, 'Any', '$_ is not set in methods...';
 }
 
 {

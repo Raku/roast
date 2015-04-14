@@ -102,11 +102,11 @@ ok !Nil.new.defined, 'Nil.new is not defined';
 {
     ok $/ === Nil, '$/ is by default Nil';
     ok $! === Nil, '$! is by default Nil';
-    ok $_ === Nil, '$_ is by default Nil';
+    ok $_ === Any, '$_ is by default Any';
 
     ok $/.VAR.default === Nil, '$/ has Nil as default';
     ok $!.VAR.default === Nil, '$! has Nil as default';
-    ok $_.VAR.default === Nil, '$_ has Nil as default';
+    ok $_.VAR.default === Any, '$_ has Any as default';
 }
 
 # calling methods and similar things on Nil should return Nil again
