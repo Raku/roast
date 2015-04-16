@@ -32,7 +32,7 @@ sub echo {
 sub callcode {
     my ($self, $code) = @_;
 #print "==> callcode got $code\n";
-    return EVAL { $code->($self) };
+    return eval { $code->($self) };
 }
 
 sub asub {
