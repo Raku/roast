@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 # L<S04/Exceptions/The fail function>
 
@@ -82,6 +82,7 @@ plan 24;
     lives_ok { use fatal; my $x = so it-will-fail(); 1 }, 'use fatal respects so';
     lives_ok { use fatal; my $x = !it-will-fail(); 1 }, 'use fatal respects !';
     lives_ok { use fatal; my $x = not it-will-fail(); 1 }, 'use fatal respects not';
+    lives_ok { use fatal; my $x = defined it-will-fail(); 1 }, 'use fatal respects defined';
 }
 
 done;
