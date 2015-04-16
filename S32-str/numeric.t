@@ -16,8 +16,7 @@ sub check($str, $expected_type, $expected_number, $desc?) {
 
 #?DOES 1
 sub f($str) {
-    my $num = 0; # defined
-    so try { $num = +$str }
+    my $num = +$str;
     #?niecza todo 'Failure'
     ok !$num.defined, "+$str fails";
 }
