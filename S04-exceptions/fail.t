@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 24;
 
 # L<S04/Exceptions/The fail function>
 
@@ -67,6 +67,21 @@ plan 13;
     class AnEx is Exception { };
     my $f = (sub f { fail AnEx.new }).();  #OK not used
     isa_ok $f.exception, AnEx, 'can fail() typed exceptions';
+}
+
+{
+    sub it-will-fail() { fail 'whale' }
+    dies_ok { use fatal; my $x = it-will-fail(); 1 }, 'use fatal causes call to die';
+    lives_ok { use fatal; my $x = it-will-fail() // 0; 1 }, 'use fatal respects //';
+    lives_ok { use fatal; my $x = it-will-fail() || 0; 1 }, 'use fatal respects ||';
+    lives_ok { use fatal; my $x = it-will-fail() && 0; 1 }, 'use fatal respects &&';
+    lives_ok { use fatal; if it-will-fail() { 1 } else { 0 } }, 'use fatal respects if';
+    lives_ok { use fatal; unless it-will-fail() { 1 }; 0 }, 'use fatal respects unless';
+    lives_ok { use fatal; it-will-fail() ?? 1 !! 0 }, 'use fatal respects ?? !!';
+    lives_ok { use fatal; my $x = ?it-will-fail(); 1 }, 'use fatal respects ?';
+    lives_ok { use fatal; my $x = so it-will-fail(); 1 }, 'use fatal respects so';
+    lives_ok { use fatal; my $x = !it-will-fail(); 1 }, 'use fatal respects !';
+    lives_ok { use fatal; my $x = not it-will-fail(); 1 }, 'use fatal respects not';
 }
 
 done;
