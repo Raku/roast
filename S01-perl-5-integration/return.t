@@ -11,7 +11,7 @@ unless (try { EVAL("1", :lang<perl5>) }) {
 
 EVAL q<<<
 
-use Digest::MD5:from<perl5> <md5_hex>;
+use Digest::MD5:from<Perl5> <md5_hex>;
 
 sub get_dmd5 {
     my $ctx = Digest::MD5.new;

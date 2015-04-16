@@ -32,7 +32,7 @@ sub echo {
 sub callcode {
     my ($self, $code) = @_;
 #print "==> callcode got $code\n";
-    return EVAL { $code->($self) };
+    return eval { $code->($self) };
 }
 
 sub asub {
@@ -85,7 +85,7 @@ my $obj;
 {
     my $r = $obj.asub;
 
-    isa_ok($r, 'CODE', "returning a coderef");
+    ok($r does Callable, "returning a coderef");
 
     is($r.(), 'asub', 'invoking p5 coderef');
     my $rr = $obj.callcode($r);

@@ -12,12 +12,14 @@ unless (try { EVAL("1", :lang<perl5>) }) {
 {
     lives_ok {
         EVAL q|
-            use CGI:from<perl5>;
-            my $q = CGI.new;
-            is $q.isa(CGI), 1, "Correct isa";
+            use Digest::MD5:from<Perl5>;
+            my $d = Digest::MD5.new;
+            is $d.isa(Digest::MD5), 1, "Correct isa";
+            $d.add('foo'.encode('UTF-8'));
+            is $d.hexdigest, 'acbd18db4cc2f85cedef654fccc4a4d8';
         |
         or die $!;
-    }, "CLASS:from<perl5>.new";
+    }, "CLASS:from<Perl5>.new";
 }
 
 # vim: ft=perl6

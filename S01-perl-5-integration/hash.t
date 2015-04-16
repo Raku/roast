@@ -53,7 +53,7 @@ sub push {
 
 my $p5ha = EVAL('sub { My::Hash->new($_[0]) }', :lang<perl5>);
 my %hash = (5 => 'a', 6 => 'b', 7 => 'c', 8 => 'd');
-my $p5hash = $p5ha(\%hash);
+my $p5hash = $p5ha($%hash);
 
 my $rethash = $p5hash.hash;
 my @keys = %hash.keys.sort;
@@ -69,7 +69,7 @@ ok($p5hash.store(9, 'e'), 'can store');
 is(%hash{9}, 'e', 'store result');
 
 is($p5hash.fetch(5), 'a', 'fetch result');
-is($p5hash.my_exists(5), %hash<5>:exists, 'exists');
-is($p5hash.my_exists(12), %hash<12>:exists, 'nonexists fail');
+is($p5hash.my_exists(5), +(%hash<5>:exists), 'exists');
+is($p5hash.my_exists(12), +(%hash<12>:exists), 'nonexists fail');
 
 # vim: ft=perl6

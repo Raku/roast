@@ -25,8 +25,8 @@ my $japh    = { "Just another $_ hacker" };
 my $japh2   = -> $name { "Just another $name hacker" };
 my $id      = EVAL('sub { Id->new($_[0]) }', :lang<perl5>);
 
-is($id($japh).identity('Pugs'), 'Just another Pugs hacker', "Closure roundtrips");
-is($id($japh2).identity('Pugs'), 'Just another Pugs hacker', "Closure roundtrips");
+is($id($japh).identity()('Pugs'), 'Just another Pugs hacker', "Closure roundtrips");
+is($id($japh2).identity()('Pugs'), 'Just another Pugs hacker', "Closure roundtrips");
 
 my $keys_p5 = EVAL('sub {keys %{$_[0]}}', :lang<perl5>);
 my $tohash_p5 = EVAL('sub { return {map {$_ => 1} @_ } }', :lang<perl5>);
@@ -39,7 +39,7 @@ my %hash = (foo => 'bar', hate => 'software');
 
 #?niecza skip 'VAR undeclared'
 {
-    is_deeply([%hash.keys].sort, [$keys_p5(VAR %hash)].sort);
+    is_deeply([%hash.keys].sort, [$keys_p5($%hash)].sort);
 }
 
 # vim: ft=perl6
