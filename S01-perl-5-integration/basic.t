@@ -44,7 +44,7 @@ my %h = ( a => 1 );
 
 {
     my $test = q{ (VAR %h)received as hashref };
-    my %o := $p5_dumper(VAR %h);
+    my %o := $p5_dumper($%h);
     is(%o<a>, 1, $test);
 }
 
@@ -65,7 +65,7 @@ my @a = <b c d>;
 
 {
     my $test = q{ (VAR @a) received as arrayref };
-    my $o = $p5_dumper(VAR @a);
+    my $o = $p5_dumper($@a);
     is($o[0], "b", $test);
     is($o[2], "d", $test);
 }

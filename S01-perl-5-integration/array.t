@@ -54,7 +54,7 @@ sub push {
 
 my $p5ar = EVAL('sub { My::Array->new($_[0]) }', :lang<perl5>);
 my @array = (5,6,7,8);
-my $p5array = $p5ar(VAR @array);
+my $p5array = $p5ar($@array);
 
 my $retarray = $p5array.array;
 

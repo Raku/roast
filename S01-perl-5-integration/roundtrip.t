@@ -39,7 +39,7 @@ my %hash = (foo => 'bar', hate => 'software');
 
 #?niecza skip 'VAR undeclared'
 {
-    is_deeply([%hash.keys].sort, [$keys_p5(VAR %hash)].sort);
+    is_deeply([%hash.keys].sort, [$keys_p5($%hash)].sort);
 }
 
 # vim: ft=perl6
