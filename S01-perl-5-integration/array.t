@@ -59,8 +59,8 @@ my $p5array = $p5ar($@array);
 my $retarray = $p5array.array;
 
 is($p5array.my_elems, @array.elems, 'elems');
-is($p5array.my_exists(1), @array[1]:exists, 'exists');
-is($p5array.my_exists(10), @array[10]:exists, 'nonexists fail');
+is($p5array.my_exists(1), +(@array[1]:exists), 'exists');
+is($p5array.my_exists(10), +(@array[10]:exists), 'nonexists fail');
 is($p5array.fetch(3)+0, @array[3], 'fetch');
 
 my $match = 0;
