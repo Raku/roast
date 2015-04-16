@@ -1,0 +1,21 @@
+plan 6;
+
+is 2**2, 4;
+#?impl-1 todo 'NYI'
+todo('NYI'); is 2+2, 4;
+#?impl-2 skip 'NYI'
+{
+    is "Life, the Universe, and Everything".WHY, 42;
+    is 42.WHAT, Int, 'some reason';
+}
+#?impl-1 2 todo 'NYI'
+#?impl-2 2 todo 'NYI'
+todo('NYI'); is 2-2, 0;
+todo('NYI'); is 3*4, 12;
+#?impl-1 2 todo 'NYI'
+#?impl-2 1 todo 'NYI'
+todo('NYI'); is 2-2, 0;
+todo('NYI'); is 3*4, 12;
+
+say "# FUDGED!";
+exit(1);
