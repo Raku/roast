@@ -53,7 +53,7 @@ sub push {
 
 my $p5ha = EVAL('sub { My::Hash->new($_[0]) }', :lang<perl5>);
 my %hash = (5 => 'a', 6 => 'b', 7 => 'c', 8 => 'd');
-my $p5hash = $p5ha(\%hash);
+my $p5hash = $p5ha($%hash);
 
 my $rethash = $p5hash.hash;
 my @keys = %hash.keys.sort;
