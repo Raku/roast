@@ -136,7 +136,7 @@ dies_ok({use fatal; splice(@a,2,-20)}, "negative size dies");
 {
     my @empty = ();
     my $i = 0;
-    while splice(@empty, 0, 3) { $i++ }
+    while splice(@empty, 0, 3) { $i++; last }
     is $i, 0, "'while (…splice…)' should neither hang nor even run";
 }
 
