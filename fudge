@@ -298,6 +298,7 @@ sub fudgeblock {
                 }
             }
         }
+        $DOES = 0;
     }
     continue {
         $OUTPUT .= $_;
