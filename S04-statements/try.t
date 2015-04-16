@@ -162,11 +162,8 @@ plan 30;
 }
 
 # RT #123053
-#?rakudo skip 'RT #123053'
 lives_ok { try +'foo' }, 'Failure does not escape try (statement form)';
-#?rakudo skip 'RT #123053'
 lives_ok { try { +'foo' } }, 'Failure does not escape try (block form)';
-#?rakudo skip 'RT #123053'
 lives_ok { try { +'foo'; CATCH { default { } } } }, 'Failure does not escape try (block form with CATCH)';
 
 done;
