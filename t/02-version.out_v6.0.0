@@ -1,4 +1,4 @@
-plan 6;
+plan 8;
 
 is 2**2, 4;
 #?v6.0.0
@@ -12,7 +12,8 @@ skip('GH issue #xyz');# {
 is 2-2, 0;
 is 3*4, 12;
 #?v6.0.1..*
-todo(); is 2-2, 0;
+skip(, 1); # { is 2-2, 0;
+#  }
 is 3*4, 12;
 
 say "# FUDGED!";
