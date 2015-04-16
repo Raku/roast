@@ -6,8 +6,10 @@ use warnings;
 my %OPTS;
 while( $_ = $ARGV[0], /^-/ ) {
     shift;
-    last if /^--$/;
-    $OPTS{$_} = $_;
+    last if $_ eq '--';
+    if (/^--([^=]+)(=(.*))?$/) {
+        $OPTS{$1} = $3 // 1;
+    }
 }
 
 my $ME;  # implementation
@@ -77,6 +79,12 @@ Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
     #?implname emit your_ad_here();
         just pass through your_ad_here();
 
+    #?v6+            [num|*] ['reason']
+    #?v6.0+          [num|*] ['reason']
+    #?v6.0.0..*      [num|*] ['reason']
+    #?v6.0.0..v6.0.5 [num|*] ['reason']
+        run num/all tests for the given Perl 6 language version.
+
     #?DOES count
         for all implementations, the following thing does count tests
         (disables any attempt to autocount tests within the construct)
@@ -106,7 +114,8 @@ my $ARGS = '';
 my $IS = '\\b(?:is|ok|nok|is_deeply|is_approx|isnt|like|unlike|eval_dies_ok|cmp_ok|isa_ok|use_ok|throws_ok|dies_ok|lives_ok|eval_lives_ok|pass|flunk|throws_like|tap_ok)(?:\\b|_)';
 my %DOES;
 my $DOES = 0;
-my $EXIT = $OPTS{'--keep-exit-code'} ? '' : 'exit(1);';
+my $EXIT = $OPTS{'keep-exit-code'} ? '' : 'exit(1);';
+my $VERSION = $OPTS{'version'} || 'v6.0.0';
 
 @ARGV = ($IN);
 fudgeblock();
@@ -132,22 +141,40 @@ sub fudgeblock {
             $DOES = $1;
             next;
         }
-        if (/^\s*\#([?!]) (\S+?)[:\s] \s* ((\S*).*)/x) {
-	    my $sense = $1;
-	    my $name = $2;
-	    my $args = $3;
-	    my $cmd = $4;
-	    my $applies = 0;
-	    if ($name gt 'a') {  # lowercase is compiler name
-		$applies = 1 if substr("$ME.",0,length($name)+1) eq "$name.";
-	    }
-	    else {  # uppercase is env var
-		$applies = $ENV{$name};
-	    }
-	    $applies = !$applies if $sense eq '!';
-	    if ($applies) {
+        if (!$PENDING && /^\s*\#([?!]) (\S+?)[:\s] \s* ((\S*).*)/x) {
+            my $sense = $1;
+            my $name = $2;
+            my $args = $3;
+            my $cmd = $4;
+            my $applies = 0;
+            if ($name =~ /^v\d/) {  # Perl 6 language version
+                unless (version_matches($VERSION, $name)) {
+                    $applies = 1;
+                    $cmd     = $cmd  =~ /(\d+)/ ? $1 : 'skip';
+                    if ($args =~ /\*\s*(.*)/) {
+                        $args = "999999 skip " . ($2 || "'Version $name required'")
+                    }
+                    elsif ($args =~ /(\d+)\s*(.*)/) {
+                        $args = "$1 skip " . ($2 || "'Version $name required'")
+                    }
+                    elsif ($args) {
+                        $args = "skip $args";
+                    }
+                    else {
+                        $args = "skip 'Version $name required'";
+                    }
+                }
+            }
+            elsif ($name gt 'a') {  # lowercase is compiler name
+                $applies = 1 if substr("$ME.",0,length($name)+1) eq "$name.";
+            }
+            else {  # uppercase is env var
+                $applies = $ENV{$name};
+            }
+            $applies = !$applies if $sense eq '!';
+            if ($applies) {
                 $REALLY_FUDGED = 1;
-		$ARGS = $args;
+                $ARGS = $args;
                 if ($ARGS =~ s/^emit\s*//) {
                     $_ = $ARGS;
                     next;
@@ -275,5 +302,39 @@ sub fudgeblock {
     continue {
         $OUTPUT .= $_;
         return if /^\}/ and $PENDING > 0;
+    }
+}
+
+sub version_matches {
+    my ($lhs, $rhs) = @_;
+    my $plus        = $rhs =~ s/\+$// ? 1 : 0;
+    my $cmp         = version_cmp($lhs, $rhs);
+    return if $cmp == -42; # out of range
+    return $cmp == 0 || $plus && $cmp > 0
+}
+sub version_cmp {
+    my ($lhs, $rhs) = @_;
+
+    # v1 ~~ v2..v3
+    if ($rhs =~ /(.+?)\.\.(.+)/) {
+        return version_cmp($lhs, $1) >= 0 && version_cmp($lhs, $2) <= 0 ? 0 : -42
+
+    }
+    # v1 ~~ *
+    elsif ($rhs eq '*') {
+        return 0
+    }
+    # v1 ~~ v2
+    else {
+        my @lhs = split /[\.\b]/, $lhs;
+        my @rhs = split /[\.\b]/, $rhs;
+        while (@lhs || @rhs) {
+            my $v = shift @rhs // 0;
+            my $o = shift @lhs // 0;
+            next if $v eq '*';
+            next if $o eq '*';
+            return $o cmp $v if $o cmp $v;
+        }
+        return 0;
     }
 }
