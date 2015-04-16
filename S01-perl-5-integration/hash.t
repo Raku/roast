@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan(5);
+plan(6);
 
 unless EVAL 'EVAL("1", :lang<perl5>)' {
     skip_rest;
@@ -66,7 +66,10 @@ try {
 is("{ @keys }", "{ @p5keys }");
 
 ok($p5hash.store(9, 'e'), 'can store');
-is(%hash{9}, 'e', 'store result');
+#?rakudo todo "doesn't work yet due to copying of hashes"
+{
+    is(%hash{9}, 'e', 'store result');
+}
 
 is($p5hash.fetch(5), 'a', 'fetch result');
 is($p5hash.my_exists(5), +(%hash<5>:exists), 'exists');

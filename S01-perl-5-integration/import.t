@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 1;
+plan 3;
 
 =begin pod
 
@@ -16,7 +16,11 @@ unless (try { EVAL("1", :lang<perl5>) }) {
 
 eval_lives_ok(q[
 use Text::Wrap:from<Perl5> 'wrap';
+is(Text::Wrap::wrap('foo', 'bar', 'baz'), 'foobaz', "import p5 module");
+#?rakudo skip "importing of functions NYI"
+{
 is(wrap('foo', 'bar', 'baz'), 'foobaz', "import p5 module");
-],"parse :from<perl5> syntax");
+}
+],"parse :from<Perl5> syntax");
 
 # vim: ft=perl6

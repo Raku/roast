@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 17;
 
 unless (try { EVAL("1", :lang<perl5>) }) {
     skip_rest;
@@ -76,17 +76,25 @@ is($retarray[10]:exists, @array[10]:exists, 'retro nonexists' );
 ok(($p5array.push(9)), 'can push');
 
 is(0+$p5array.fetch(4), 9, 'push result via obj');
-is(@array[4], 9, 'push result via array');
+#?rakudo todo "doesn't work yet due to copying of arrays"
+{
+    is(@array[4], 9, 'push result via array');
+}
 
-flunk("push(9) non-terminates");
 #$retarray.push(9);  # this will loop
 
-is(0+$p5array.fetch(5), 9, 'retro push result');
-is(@array[5], 9, 'retro push result');
+#?rakudo todo "doesn't work yet due to copying of arrays"
+{
+    is(0+$p5array.fetch(5), 9, 'retro push result');
+    is(@array[5], 9, 'retro push result');
+}
 
 ok($p5array.store(0,3), 'can store');
 
-is(@array[0], 3, 'store result');
+#?rakudo todo "doesn't work yet due to copying of arrays"
+{
+    is(@array[0], 3, 'store result');
+}
 is(0+$p5array.fetch(0), 3, 'store result');
 
 # TODO: pop, shift, unshift, splice, delete

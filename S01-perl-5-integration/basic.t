@@ -77,6 +77,7 @@ my $s = 'str';
     is($result,4,$test);
 }
 
+#?rakudo skip "would need v5"
 {
     sub add_in_perl5 ($x, $y) {
         use v5;
