@@ -35,7 +35,7 @@ my $foo = EVAL("Foo->new",:lang<perl5>);
 try { $foo.error };
 lives_ok( {
     my $err = $!;
-    $err.test;
+    $err.payload.test;
 }, "Accessing Perl5 method doesn't die");
 
 # vim: ft=perl6
