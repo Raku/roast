@@ -14,7 +14,7 @@ use Carp:from<perl5>;
 
 my $err;
 lives_ok({ try { Carp.croak() }; $err = $! }, "Perl 5 exception (die) caught");
-like($err, rx:P5/Carp/, "Exception is propagated to Perl 6 land");
+like($err.Str, rx:P5/Carp/, "Exception is propagated to Perl 6 land");
 
 EVAL(q[
 package Foo;
