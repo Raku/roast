@@ -10,7 +10,7 @@ unless (try { EVAL("1", :lang<perl5>) }) {
 }
 }
 
-use Carp:from<perl5>;
+use Carp:from<Perl5>;
 
 my $err;
 lives_ok({ try { Carp.croak() }; $err = $! }, "Perl 5 exception (die) caught");

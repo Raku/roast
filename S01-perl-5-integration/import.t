@@ -15,7 +15,7 @@ unless (try { EVAL("1", :lang<perl5>) }) {
 }
 
 eval_lives_ok(q[
-use Text::Wrap:from<perl5> 'wrap';
+use Text::Wrap:from<Perl5> 'wrap';
 is(wrap('foo', 'bar', 'baz'), 'foobaz', "import p5 module");
 ],"parse :from<perl5> syntax");
 
