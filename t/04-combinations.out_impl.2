@@ -1,0 +1,28 @@
+use Test;
+plan 6;
+
+sub same-type ($x, $y) {
+    is $x.WHAT, $y.WHAT;
+    ok $x.WHAT ~~ $y.WHAT;
+}
+
+#?v6.0.5+ 4
+#?impl 2 skip 'NYI'
+skip('NYI', 1); # { is "Life, the Universe, and Everything".WHY, 42;
+#  }
+skip('NYI', 1); # { is 42.WHAT, Int, 'some reason';
+#  }
+#?impl todo 'NYI'
+#?DOES 2
+{
+    todo('NYI'); same-type(42, 4);
+} 
+#?impl skip 'NYI'
+skip('NYI', 1); # { is 2+2, 4;
+#  }
+#?impl skip 'NYI'
+skip('NYI', 1); # { is 2-2, 0;
+#  }
+
+say "# FUDGED!";
+exit(1);
