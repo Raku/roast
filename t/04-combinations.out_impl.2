@@ -1,5 +1,5 @@
 use Test;
-plan 6;
+plan 10;
 
 sub same-type ($x, $y) {
     is $x.WHAT, $y.WHAT;
@@ -23,6 +23,18 @@ skip('NYI', 1); # { is 2+2, 4;
 #?impl skip 'NYI'
 skip('NYI', 1); # { is 2-2, 0;
 #  }
+
+#?DOES 2
+{
+    same-type(42, 4);
+}
+
+{
+    is 1, 1;
+    #?impl skip 'NYI'
+skip('NYI', 1); # {     is 2, 2;
+#  }
+}
 
 say "# FUDGED!";
 exit(1);
