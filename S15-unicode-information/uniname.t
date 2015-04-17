@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 # Unicode version pragma not needed here, as names cannot change.
 
