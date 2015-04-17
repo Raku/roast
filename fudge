@@ -302,6 +302,7 @@ sub fudgeblock {
     }
     continue {
         $OUTPUT .= $_;
+        $DOES = 0 if /^\}/;
         return if /^\}/ and $PENDING > 0;
     }
 }
