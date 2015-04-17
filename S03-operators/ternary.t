@@ -4,7 +4,7 @@ use Test;
 
 #Ternary operator ?? !!
 
-plan 21;
+plan 22;
 #L<S03/Changes to Perl 5 operators/"The ? : conditional operator becomes ?? !!">
 
 my $str1 = "aaa";
@@ -74,7 +74,13 @@ eval_dies_ok q[ 71704 !! 'bust' ], 'Ternary error (RT 71704)';
 
 throws_like { EVAL '1 ?? 3 :: 2' },
     X::Syntax::ConditionalOperator::SecondPartInvalid,
+    second-part => "::",
     'conditional operator written as ?? :: throws typed exception';
+
+throws_like { EVAL '1 ?? 3 : 2' },
+    X::Syntax::ConditionalOperator::SecondPartInvalid,
+    second-part => ":",
+    'conditional operator written as ?? : throws typed exception';
 
 throws_like { EVAL '1 ?? b\n !! 2' },
     X::Syntax::Confused,
