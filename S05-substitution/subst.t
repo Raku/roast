@@ -459,12 +459,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #114388
-#?rakudo skip "No such method 'subst-mutate' for invocant of type 'Any'"
 {
-    $_ = Nil;
-    s[ea] = "rea";
-    is $_, "", 'can use s[]="" when $_ is not set';
-
     $_ = "real";
     s[ea] = "rea";
     is $_, "rreal", 's[]="" works when $_ is set';
@@ -472,6 +467,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     $_ = "";
     throws_like { EVAL 's[] = "rea"' },
         X::Syntax::Regex::NullRegex;
+}
+
+# RT #114388 -- part two
+#?rakudo skip "RT #114388 -- No such method 'subst-mutate' for invocant of type 'Any'"
+{
+    $_ = Any;
+    s[ea] = "rea";
+    is $_, "", 'can use s[]="" when $_ is not set';
 }
 
 done;
