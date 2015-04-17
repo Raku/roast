@@ -4,7 +4,7 @@ use Test;
 
 #Ternary operator ?? !!
 
-plan 25;
+plan 27;
 #L<S03/Changes to Perl 5 operators/"The ? : conditional operator becomes ?? !!">
 
 my $str1 = "aaa";
@@ -81,6 +81,18 @@ throws_like { EVAL '1 ?? 3:foo :: 2' },
     X::Syntax::ConditionalOperator::PrecedenceTooLoose,
     operator => ":foo",
     'adverbed literal in second part of ternary';
+
+# RT #124323
+{
+    my @x = ^10;
+    my @y = 2..3;
+    throws_like { EVAL 'my @z = @y ?? @x[@y] :v !! @x' },
+        X::Syntax::ConditionalOperator::PrecedenceTooLoose,
+        operator => ':v',
+        'precedence of adverb in second part of ternary is too loose';
+    is @y ?? (@x[@y] :v) !! @x, "2 3",
+        'adverb in second part of ternary used with parenthesis works';
+}
 
 throws_like { EVAL '1 ?? (3:foo) !! 2' },
     X::Syntax::Adverb,
