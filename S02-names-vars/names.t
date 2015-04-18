@@ -145,7 +145,6 @@ throws_like {
 # RT #75646
 {
     throws_like { my ::foo $x, say $x }, Exception,
-        message => 'Cannot type check against type variable foo',
         'no Null PMC access when printing a variable typed as ::foo ';
 }
 

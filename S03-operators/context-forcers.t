@@ -28,9 +28,9 @@ sub iis(Mu $a, Mu $b, $descr) {
   iis ?(?""),   False, "? context forcer works (10)";
 
   iis ?"3",     True,  "? context forcer works (11)";
-  iis ?"0",     False, "? context forcer works (12)";
+  iis ?"0",     True,  "? context forcer works (12)";
   iis ?(?"3"),  True,  "? context forcer works (13)";
-  iis ?(?"0"),  False, "? context forcer works (14)";
+  iis ?(?"0"),  True,  "? context forcer works (14)";
 
   iis ?Mu,      False, "? context forcer works (15)";
 }

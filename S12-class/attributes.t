@@ -164,14 +164,12 @@ eval_dies_ok q[
 }
 
 # RT #75858
-#?rakudo todo 'where clauses on attributes NYI, RT #122109'
 {
     lives_ok { EVAL 'my class RT75858 { has $.x where 1 }' },
         'can use where clause on an attribute';
 }
 
 # RT #122109
-#?rakudo skip 'where clauses on attributes NYI, RT #122109'
 {
     my class RT122109 { has $.x where * > 0 };
     dies_ok { RT122109.new(:x(-42)) },

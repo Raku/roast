@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 110;
 
 #L<S02/Mutable types/Array>
 
@@ -35,6 +35,30 @@ plan 97;
 {
     my @a;
     is EVAL(@a.perl).elems, 0, '@a.perl on uninitialized variable';
+}
+
+{
+    my Int @a = ^10;
+    is @a.elems,      10, "do we have 10 elements";
+    is (@a.elems = 5), 5, "do we have  5 elements now";
+    is @a.elems,       5, "do we have  5 elements still";
+    is_deeply @a, Array[Int].new(0,1,2,3,4),
+      "and have the right elements been kept (1)";
+
+    is (@a.elems = *-3), 2, "does whatever code work as well?";
+    is @a.elems,         2, "do we have 2 elements still";
+    is_deeply @a, Array[Int].new(0,1),
+      "and have the right elements been kept (2)";
+
+    is (@a.elems = 0), 0, "do we have 0 elements now";
+    is @a.elems,       0, "do we have 0 elements still";
+    is_deeply @a, Array[Int].new,
+      "and have the right elements been kept (3)";
+
+    is (@a.elems = 3), 3, "do we have 3 elements now";
+    is @a.elems,       3, "do we have 3 elements still";
+    is_deeply @a, Array[Int].new(Int,Int,Int),
+      "and are the elements not initialized";
 }
 
 # array of strings

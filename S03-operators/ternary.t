@@ -4,7 +4,7 @@ use Test;
 
 #Ternary operator ?? !!
 
-plan 21;
+plan 27;
 #L<S03/Changes to Perl 5 operators/"The ? : conditional operator becomes ?? !!">
 
 my $str1 = "aaa";
@@ -74,7 +74,40 @@ eval_dies_ok q[ 71704 !! 'bust' ], 'Ternary error (RT 71704)';
 
 throws_like { EVAL '1 ?? 3 :: 2' },
     X::Syntax::ConditionalOperator::SecondPartInvalid,
+    second-part => "::",
     'conditional operator written as ?? :: throws typed exception';
+
+throws_like { EVAL '1 ?? 3:foo :: 2' },
+    X::Syntax::ConditionalOperator::PrecedenceTooLoose,
+    operator => ":foo",
+    'adverbed literal in second part of ternary';
+
+# RT #124323
+{
+    my @x = ^10;
+    my @y = 2..3;
+    throws_like { EVAL 'my @z = @y ?? @x[@y] :v !! @x' },
+        X::Syntax::ConditionalOperator::PrecedenceTooLoose,
+        operator => ':v',
+        'precedence of adverb in second part of ternary is too loose';
+    is @y ?? (@x[@y] :v) !! @x, "2 3",
+        'adverb in second part of ternary used with parenthesis works';
+}
+
+throws_like { EVAL '1 ?? (3:foo) !! 2' },
+    X::Syntax::Adverb,
+    'parenthesized adverbed literal in second part of ternary';
+
+{
+    my $three = 3;
+    my $thing = 1 ?? $three:foo !! 2;
+    is $three, 3, 'variable and adverb in second part of ternary';
+}
+
+throws_like { EVAL '1 ?? 3 : 2' },
+    X::Syntax::ConditionalOperator::SecondPartInvalid,
+    second-part => ":",
+    'conditional operator written as ?? : throws typed exception';
 
 throws_like { EVAL '1 ?? b\n !! 2' },
     X::Syntax::Confused,

@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 296;
+plan 303;
 
 throws_like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -124,6 +124,8 @@ throws_like '@a', X::Undeclared, symbol => '@a';
 # RT #115396
 throws_like '"@a[]"', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
+throws_like '{ use MONKEY-TYPING; }; augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping,
+    'MONKEY-TYPING applies lexically';
 throws_like 'use MONKEY-TYPING; augment role Positional { }', X::Syntax::Augment::Illegal;
 throws_like 'use MONKEY-TYPING; enum Weekday <Mon Tue>; augment class Weekday { }', X::Syntax::Augment::Illegal;
 throws_like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
@@ -307,6 +309,7 @@ throws_like 'my Str $x := 3', X::TypeCheck::Binding, got => Int, expected => Str
 throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, expected => Str;
 throws_like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
             expected => Int, symbol => '$x';
+throws_like 'subset Fu of Mu where * eq "foo"; my Fu $x = "bar";', X::TypeCheck::Assignment;
 
 throws_like 'sub f() { 42 }; f() = 3', X::Assignment::RO;
 throws_like '1.0 = 3', X::Assignment::RO;
@@ -637,5 +640,16 @@ throws_like q:to/CODE/, X::Comp::BeginTime, exception => X::Multi::NoMatch;
     }
     constant j = Polar.new( 0e0 );
 CODE
+
+# RT #123397
+throws_like 'my package A {}; my A $a;', X::Syntax::Variable::BadType;
+throws_like 'my package A {}; sub foo(A $a) { }', X::Parameter::BadType;
+
+# RT #123627
+throws_like 'use DoesNotMatter Undeclared;', X::Undeclared::Symbols;
+throws_like 'no DoesNotMatter Undeclared;', X::Undeclared::Symbols;
+
+# RT #73102
+throws_like 'my Int (Str $x);', X::Syntax::Variable::ConflictingTypes, outer => Int, inner => Str;
 
 # vim: ft=perl6

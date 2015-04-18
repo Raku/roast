@@ -70,8 +70,10 @@ is @all-nodes, ["c", "b", "d", "a", "e"], 'In order tree traversal with gather/t
     my @powers-of-two = 1, 2, 4 ... *; # geometric seq
     is @powers-of-two[7], 128, 'powers of two';
 
-    #?rakudo skip "lists aren't properly lazy in Rakudo yet"
+    #?rakudo emit #
     my @squares-of-odd-numbers = map { $_ * $_ }, @odd-numbers;
+    #?rakudo skip "lists aren't properly lazy in Rakudo yet"
+    is @squares-of-odd-numbers[4], 81, 'square of odd numbers';
 
     sub enumerate-positive-rationals() { # with duplicates, but still
       take 1;

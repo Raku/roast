@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 20;
+plan 15;
 
 unless (try { EVAL("1", :lang<perl5>) }) {
     skip_rest;
@@ -34,17 +34,8 @@ my %h = ( a => 1 );
 }
 
 {
-    my $test = '\%h received as hashref';
-    my %o := $p5_dumper(\%h);
-    is(%o<a>, 1, $test);
-
-    my $ref = $p5_dumper(\%h);
-    is($ref<a>, 1, $test);
-}
-
-{
     my $test = q{ (VAR %h)received as hashref };
-    my %o := $p5_dumper(VAR %h);
+    my %o := $p5_dumper($%h);
     is(%o<a>, 1, $test);
 }
 
@@ -57,15 +48,8 @@ my @a = <b c d>;
 }
 
 {
-    my $test = q{ (\@a) received as arrayref };
-    my $o = $p5_dumper(\@a);
-    is($o[0], "b", $test);
-    is($o[2], "d", $test);
-}
-
-{
     my $test = q{ (VAR @a) received as arrayref };
-    my $o = $p5_dumper(VAR @a);
+    my $o = $p5_dumper($@a);
     is($o[0], "b", $test);
     is($o[2], "d", $test);
 }
@@ -76,12 +60,6 @@ my $s = 'str';
    my $test = q{ ($s) received as scalar };
    my $o = $p5_dumper($s);
    is($o, $s, $test);
-}
-
-{
-   my $test = q{ (\$s) received as scalarref };
-   my $o = $p5_dumper(\$s);
-   is($$o, $s, $test);
 }
 
 {
@@ -99,6 +77,7 @@ my $s = 'str';
     is($result,4,$test);
 }
 
+#?rakudo skip "would need v5"
 {
     sub add_in_perl5 ($x, $y) {
         use v5;

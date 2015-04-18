@@ -1,0 +1,14 @@
+use Test;
+plan 3;
+
+sub same-type ($x, $y) {
+    is $x.WHAT, $y.WHAT;
+    ok $x.WHAT ~~ $y.WHAT;
+}
+
+#?v6.0.5 2
+#?DOES 2
+{
+    same-type(42, 4);
+}
+is 3*4, 12;

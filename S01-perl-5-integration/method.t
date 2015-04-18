@@ -32,7 +32,7 @@ sub echo {
 sub callcode {
     my ($self, $code) = @_;
 #print "==> callcode got $code\n";
-    return EVAL { $code->($self) };
+    return eval { $code->($self) };
 }
 
 sub asub {
@@ -69,8 +69,14 @@ my $obj;
 
 {
     $obj = EVAL("FooBar->new", :lang<perl5>);
-    isa_ok($obj, 'FooBar', "blessed");
-    like($obj, rx:Perl5/FooBar/, "blessed");
+    #?rakudo todo "P5 classes not yet shadowed in P6"
+    {
+        isa_ok($obj, 'FooBar', "blessed");
+    }
+    {
+        #?rakudo skip "Probably bogus test. Tests if the P5 object stringifies to something containing the class name, like FooBar=HASH(0x12345678)"
+        like($obj, rx:Perl5/FooBar/, "blessed");
+    }
 }
 
 {
@@ -85,7 +91,7 @@ my $obj;
 {
     my $r = $obj.asub;
 
-    isa_ok($r, 'CODE', "returning a coderef");
+    ok($r does Callable, "returning a coderef");
 
     is($r.(), 'asub', 'invoking p5 coderef');
     my $rr = $obj.callcode($r);
@@ -121,7 +127,10 @@ my $obj;
 {
     my @rw = (1, 2, 3);
     $obj.modify_array(VAR @rw);
-    is(@rw[0], 99, 'modify a scalar ref');
+    #?rakudo todo "doesn't work yet due to copying of arrays"
+    {
+        is(@rw[0], 99, 'modify a scalar ref');
+    }
 }
 
 # vim: ft=perl6

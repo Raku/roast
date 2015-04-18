@@ -1,5 +1,5 @@
 use Test;
-plan 16;
+plan 17;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -138,4 +138,14 @@ $multiline = "Hello\n    World";
 		END
 
     is no-r(@q3[0]), "line one\nline two\n", "mixing tabs and spaces even more evil-ly";
+}
+
+# RT #117853
+{
+    constant TEXT = q :to 'END';
+    Hello world
+    :)
+    END
+
+    is no-r(TEXT), "Hello world\n:)\n", "Constant heredocs work";
 }

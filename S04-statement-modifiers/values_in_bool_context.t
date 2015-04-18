@@ -28,7 +28,7 @@ plan 24;
     ok  $c, 'literal in bool context - string true value';
     ok !$d, 'literal in bool context - string false value';
     ok  $e, 'literal in bool context - stringified true value';
-    ok !$f, 'literal in bool context - stringified false value';
+    ok  $f, 'literal in bool context - stringified true value';
     ok !$g, 'literal in bool context - undefined value';
     ok  $h, 'literal in bool context - scalar variable';
 }
@@ -54,7 +54,7 @@ plan 24;
     ok  $c, 'array in bool context - string true value';
     ok !$d, 'array in bool context - string false value';
     ok  $e, 'array in bool context - stringified true value';
-    ok !$f, 'array in bool context - stringified false value';
+    ok  $f, 'array in bool context - stringified true value';
     ok !$g, 'array in bool context - undefined value';
     ok  $h, 'array in bool context  array as a whole';
 }
@@ -83,7 +83,7 @@ plan 24;
     ok  $c, 'hash in bool context - string true value';
     ok !$d, 'hash in bool context - string false value';
     ok  $e, 'hash in bool context - stringified true value';
-    ok !$f, 'hash in bool context - stringified false value';
+    ok  $f, 'hash in bool context - stringified true value';
     ok !$g, 'hash in bool context - undefined value';
     ok  $h, 'hash in bool context - hash as a whole';
 }

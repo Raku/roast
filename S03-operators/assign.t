@@ -960,11 +960,11 @@ sub l () { 1, 2 };
 }
 
 # RT #116178
-#?rakudo todo 'RT #116178'
+#?rakudo skip 'RT #116178'
 {
     my $x //= .uc for 'a';
     is $x, 'A',
-        'default-assignment (//-) does mix with implicit-variable method call';
+        'default-assignment (//=) does mix with implicit-variable method call';
 }
 
 # vim: ft=perl6

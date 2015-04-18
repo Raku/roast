@@ -1,0 +1,13 @@
+plan 4;
+
+#?impl-1 2 skip 'NYI'
+is 2+2, 4;
+my $bar = 5;
+is 2+3, $bar;
+
+{
+    #?impl-1 2 skip 'NYI'
+    is 2*2, 4;
+    my $bar = 6;
+    is 2*3, $bar;
+}

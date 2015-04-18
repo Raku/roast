@@ -9,17 +9,14 @@ plan 30;
     sub f (Int $n) { $n > 3 ?? 'liftoff!' !! $n + 1 }
     is (1, &f ... Str)[^8].join(' '), '1 2 3 4 liftoff!',
         'sequence stops when type of endpoint matches';
-    throws_like { (1, &f ... *)[^8].join(' ') },
+    throws_like { sink (1, &f ... *)[^8].join(' ') },
         X::TypeCheck::Binding,
         'sequence terminated by signature mismatch';
 }
 
 # L<S03/List infix precedence/'the list on the left is C<Nil>'>
 
-# XXX This is surely the wrong way to test this, but I don't know
-#     the right way.
-#?niecza skip 'Need something on the LHS'
-is (() ... *)[^3].perl, '((), (), ())', 'Nil sequence';
+throws_like {(() ... *)[0]}, X::Cannot::Empty, 'Nil sequence';
 
 # L<S03/List infix precedence/interleave unrelated sequences>
 # multiple return values

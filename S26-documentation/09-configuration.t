@@ -1,5 +1,5 @@
 use Test;
-plan 15;
+plan 17;
 my $r;
 
 =begin pod
@@ -22,13 +22,18 @@ is $r.config<like>, 'head1';
 is $r.config<formatted>, 'I';
 
 =begin pod
-    =for pod :number(42) :zebras :!sheep
+    =for pod :number(42) :zebras :!sheep :feist<1 2 3 4>
 =end pod
 
 $r = $=pod[2].contents[0];
 is $r.config<number>, 42;
-is $r.config<zebras>.Bool, True;
-is $r.config<sheep>.Bool, False;
+#?rakudo skip 'non-string colonpair pod options'
+{
+  is $r.config<zebras>, True;
+  is $r.config<sheep>, False;
+  isa_ok $r.config<sheep>, Bool;
+  isa_ok $r.config<feist>, List;
+}
 
 =begin pod
 =for DESCRIPTION :title<presentation template>

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 58;
+plan 57;
 
 =begin pod
 
@@ -124,13 +124,13 @@ is @methods[1].name, 'foo',    'methods call found public method in superclass (
 ok @methods[2].name ne '!pm1', 'methods call did not find private method in superclass';
 
 #?rakudo skip 'nom regression'
-@methods = PT2.^methods(:private);
-#?rakudo todo 'nom regression'
-ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
-                            'methods call with :private found private method in subclass';
-#?rakudo todo 'nom regression'
-ok @methods[2].name eq '!pm1' || @methods[3].name eq '!pm1', 
-                            'methods call with :private found private method in superclass';
+{
+    @methods = PT2.^methods(:private);
+    ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
+                                'methods call with :private found private method in subclass';
+    ok @methods[2].name eq '!pm1' || @methods[3].name eq '!pm1', 
+                                'methods call with :private found private method in superclass';
+}
 
 @methods = PT2.^methods(:local);
 is +@methods, 1,            'methods call without :private omits private methods (with :local)';

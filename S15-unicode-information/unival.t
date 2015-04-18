@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 32;
 
 #use unicode :v(6.3);
 
@@ -18,6 +18,15 @@ is unival('9'), 9, "'9' has numeric value 9";
 
 is unival('⅓').WHAT.gist, '(Rat)', "'⅓' is a Rat";
 is unival('⅓'), 1/3, "'⅓' has the value 1/3";
+
+is 0x30.unival.WHAT.gist, '(Int)', "0x30 is Int";
+is 0x30.unival, 0, "0x30 has numeric value 0";
+is '0'.unival, 0, "'0' has numeric value 0";
+is 0x39.unival, 9, "0x39 has numeric value 9";
+is '9'.unival, 9, "'9' has numeric value 9";
+
+is '⅓'.unival.WHAT.gist, '(Rat)', "'⅓' is a Rat";
+is '⅓'.unival, 1/3, "'⅓' has the value 1/3";
 
 is unival("\c[VULGAR FRACTION ONE TENTH]").WHAT.gist, '(Rat)', "'⅒' is a Rat";
 is unival('⅒'), 1/10, "'⅒' has the value 1/10";

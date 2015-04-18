@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 209;
+plan 217;
 
 #use unicode :v(6.3)
 
@@ -19,6 +19,16 @@ nok unimatch(0x3a, 'Nd'), "0x3a is not Nd";
 
 ok unimatch('⅓', 'No'), "'⅓' is No";
 nok unimatch('⅓', 'Nd'), "'⅓' is not Nd";
+
+nok 0x29.unimatch('Nd'), "0x29 is not Nd";
+ok 0x30.unimatch('Nd'), "0x30 is Nd";
+ok '0'.unimatch('Nd'), "'0' is Nd";
+ok 0x39.unimatch('Nd'), "0x39 is Nd";
+ok '9'.unimatch('Nd'), "'9' is Nd";
+nok 0x3a.unimatch('Nd'), "0x3a is not Nd";
+
+ok '⅓'.unimatch('No'), "'⅓' is No";
+nok '⅓'.unimatch('Nd'), "'⅓' is not Nd";
 
 ok unimatch("\c[AEGEAN NUMBER NINETY THOUSAND]", 'No'), "AEGEAN NUMBER NINETY THOUSAND is No";
 ok unimatch("\c[MATHEMATICAL MONOSPACE DIGIT ZERO]", 'Nd'), "MATHEMATICAL MONOSPACE DIGIT ZERO is Nd";

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 153;
+plan 154;
 
 # L<S05/Substitution/>
 
@@ -446,7 +446,9 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 {
-    my $_ = 42; s/\d+/xxx/;
+    my $_ = 42; 
+    my $match = s/\d+/xxx/;
+    isa_ok $match, Match, 's/// returns a Match object on non-strings';
     is $_, 'xxx', 's/// can modify a container that contains a non-string';
 }
 
@@ -458,10 +460,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #114388
 {
-    $_ = Nil;
-    s[ea] = "rea";
-    is $_, "", 'can use s[]="" when $_ is not set';
-
     $_ = "real";
     s[ea] = "rea";
     is $_, "rreal", 's[]="" works when $_ is set';
@@ -469,6 +467,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     $_ = "";
     throws_like { EVAL 's[] = "rea"' },
         X::Syntax::Regex::NullRegex;
+}
+
+# RT #114388 -- part two
+#?rakudo skip "RT #114388 -- No such method 'subst-mutate' for invocant of type 'Any'"
+{
+    $_ = Any;
+    s[ea] = "rea";
+    is $_, "", 'can use s[]="" when $_ is not set';
 }
 
 done;
