@@ -16,7 +16,7 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 plan 46;
 
-eval_dies_ok('"moose".length', 'Str.length properly unimplemented');
+throws_like({"moose".length}, X::Method::NotFound, 'Str.length properly unimplemented');
 
 # string literals, for sanity
 
@@ -24,6 +24,7 @@ eval_dies_ok('"moose".length', 'Str.length properly unimplemented');
 
 # Precedence tests
 #?niecza 2 skip '"abcdef" > 4 makes niecza unhappy'
+#?rakudo 2 skip '"abcdef" > 4 makes rakudo unhappy'
 ok (chars "abcdef" > 4),     "chars() has the right precedence (1)";
 is (chars("abcdef" > 4)), 0, "chars() has the right precedence (2)";
 
@@ -59,6 +60,7 @@ for @data -> $string, $bytes, $codes, $graphs, $chars {
     is($string.chars, $chars, "'{$string}'.chars");
     is($string.codes, $codes, "'{$string}'.codes");
     #?niecza skip ".graphs NYI"
+    #?rakudo skip ".graphs NYI"
     is($string.graphs, $graphs, "'{$string}'.graphs");
 }
 
@@ -67,6 +69,7 @@ for @data -> $string, $bytes, $codes, $graphs, $chars {
 
 is "\x[E0100]".codes,  1, '.codes on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
 #?niecza skip ".graphs NYI"
+#?rakudo skip ".graphs NYI"
 is "\x[E0100]".graphs, 1, '.graphs on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
 
 # test graphemes without a precomposed character in Unicode 5
