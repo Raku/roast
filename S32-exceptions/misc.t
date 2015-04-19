@@ -489,7 +489,9 @@ throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
 
     {
         my $code = q[ sub foo($x) { }; foo; ];
-        throws_like $code, X::TypeCheck::Argument, message => { m/"() will never work" .*? 'Any'/ }, objname => { m/foo/ };
+        throws_like $code, X::TypeCheck::Argument,
+            signature => rx/ '(Any $x)' /, 
+            objname   => { m/foo/ };
     }
 
     {
