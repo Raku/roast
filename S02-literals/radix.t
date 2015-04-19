@@ -25,7 +25,7 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
     is(:10('0d37'),   0d37, ":10('0d37') overrides default decimal");
 
     # RT #107756
-    throws_like { :10(42) },
+    throws_like ':10(42)',
       X::Numeric::Confused,
       :what(42),
       ':10() really wants a string, not a number';
