@@ -156,7 +156,6 @@ lives_ok {(True but role {}).gist}, 'can mix into True';
 
 # RT #119371
 {
-    #?rakudo.jvm skip 'NullPointerException with throws_like, correct otherwise'
     throws_like q[role popo { macro marco { $^a but popo }; marco popo; }],
         X::Role::Parametric::NoSuchCandidate,
         role    => { .^name eq 'popo' }
