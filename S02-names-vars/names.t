@@ -144,7 +144,7 @@ throws_like {
 
 # RT #75646
 {
-    throws_like 'my ::foo $x, say $x', X::Method::NotFound,
+    throws_like 'my ::foo $x, say $x', Exception,
         'no Null PMC access when printing a variable typed as ::foo ';
 }
 
