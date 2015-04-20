@@ -362,7 +362,7 @@ All uses of a zero modulus or divisor should 'die', and the
 # RT #73386
 {
     # TODO: implement typed exception and adapt test
-    throws_like { EVAL q[ 3 !+ 4 ] }, X::Syntax::Can'tMeta,
+    throws_like { EVAL q[ 3 !+ 4 ] }, X::Syntax::CannotMeta,
         'infix<!+> is not iffy enough; RT #73386';
 }
 
