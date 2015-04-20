@@ -1,6 +1,7 @@
 constant CHARS_TEST_CASES = 500;
 constant NFC_ROUNDTRIP_TEST_CASES = 500;
 constant OTHER_ROUNDTRIP_TEST_CASES = 100;
+constant EQUALITY_TEST_CASES = 500;
 
 sub MAIN(Str $unidata-normalization-tests) {
     # Parse the normalization test data, and gather those cases where the NFC
@@ -26,6 +27,7 @@ sub MAIN(Str $unidata-normalization-tests) {
     write-roundtrip-test-file('t/spec/S15-nfg/mass-roundtrip-nfd.t', $source, $nfd, 'NFD', OTHER_ROUNDTRIP_TEST_CASES);
     write-roundtrip-test-file('t/spec/S15-nfg/mass-roundtrip-nfkc.t', $source, $nfkc, 'NFKC', OTHER_ROUNDTRIP_TEST_CASES);
     write-roundtrip-test-file('t/spec/S15-nfg/mass-roundtrip-nfkd.t', $source, $nfkd, 'NFKD', OTHER_ROUNDTRIP_TEST_CASES);
+    write-equality-test-file('t/spec/S15-nfg/mass-equality.t', $nfd, EQUALITY_TEST_CASES);
 }
 
 sub write-chars-test-file($target, @source, @nfc, $limit) {
@@ -76,6 +78,48 @@ HEADER
         for @source Z @expected -> $source, $expected {
             next if $source eq $expected;
             .say: "ok Uni.new(&hexy($source)).Str.$form.list ~~ (&hexy($expected),), '$source -> Str -> $expected';";
+            last if ++$ == $limit;
+        }
+
+        .close;
+    }
+
+    say "Wrote $target";
+}
+
+sub write-equality-test-file($target, @nfd, $limit) {
+    given open($target, :w) {
+        .say: qq:to/HEADER/;
+# Normal Form Grapheme equanity tests, generated from NormalizationTests.txt in
+# the Unicode database by S15-nfg/test-gen.p6. Check strings that should come
+# out equal under NFG do, and strings that are "tempting" to make equal but
+# should not be don't. The "should not be" falls out of the definition of NFD,
+# of note the notion of blocked swaps in canonical sorting.
+
+use Test;
+
+plan $limit;
+HEADER
+
+        for @nfd -> $nfd {
+            # Look for cases where we have two distinct non-starters in a row.
+            my @codes = $nfd.split(' ').map({ :16($_) });
+            my @swap  = @codes;
+            my $test = 'is';
+            loop (my $i = 0; $i < @codes - 1; $i++) {
+                my $ccc1 = ccc(@codes[$i]);
+                my $ccc2 = ccc(@codes[$i + 1]);
+                if $ccc1 & $ccc2 > 0 && @codes[$i] != @codes[$i + 1] {
+                    # Swap the two non-starters. If they have an equal ccc
+                    # then they should test unequal.
+                    @swap[$i, $i + 1] = @swap[$i + 1, $i];
+                    $test = 'isnt' if $ccc1 == $ccc2;
+                    $i++; # don't swap with next thing also
+                }
+            }
+            my $hexy-swapped = @swap.map('0x' ~ *.base(16)).join(', ');
+            my $hexy-nfd     = hexy($nfd);
+            .say: "$test Uni.new($hexy-nfd).Str, Uni.new($hexy-swapped).Str, '$hexy-nfd vs. $hexy-swapped';";
             last if ++$ == $limit;
         }
 
