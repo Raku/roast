@@ -268,7 +268,7 @@ sub fudgeblock {
             if ($FUDGE eq 'todo') {
                 $DOES = 0;  # XXX ignore?
                 my $does = join '|', keys %DOES;
-                $PENDING -= s/^(\s*)/${1}todo($ARGS); / if /^\s*(?:$IS|$does)\b/;
+                $PENDING -= s/^(\s*)/${1}todo($ARGS); / if $does ? /^\s*(?:$IS|$does)\b/ : /^\s*(?:$IS)\b/;
             }
             else {
                 while ($_ !~ /;[ \t]*(#.*)?$/) {
