@@ -111,7 +111,16 @@ my $OUTPUT = "";
 my $FUDGE = "";
 our $PENDING = 0;
 my $ARGS = '';
-my $IS = '\\b(?:is|ok|nok|is_deeply|is_approx|isnt|like|unlike|eval_dies_ok|cmp_ok|isa_ok|use_ok|throws_ok|dies_ok|lives_ok|eval_lives_ok|pass|flunk|throws_like|tap_ok)(?:\\b|_)';
+my $IS = _register_functions(  # regex with test functions used in roast
+    # from Test
+    qw(is ok nok is_deeply is_approx isnt like unlike eval_dies_ok cmp_ok isa_ok use_ok throws_ok dies_ok lives_ok eval_lives_ok pass flunk throws_like),
+    # from Test::Util
+    qw(is_run),
+    # from Test::Tap
+    qw(tap_ok),
+    # from Test::Compile
+    qw(loads_ok precomp_loads_ok loads_is precomp_loads_is),
+);
 my %DOES;
 my $DOES = 0;
 my $EXIT = $OPTS{'keep-exit-code'} ? '' : 'exit(1);';
@@ -339,4 +348,9 @@ sub version_cmp {
         }
         return 0;
     }
+}
+
+sub _register_functions {
+    my $functions = join '|', @_;
+    return '\\b(?:' . $functions . ')(?:\\b|_)';
 }
