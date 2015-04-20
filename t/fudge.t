@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 9;
+use Test::More tests => 11;
 
 sub is_fudged_ok($$$$);
 
@@ -21,7 +21,9 @@ is_fudged_ok '03-count',    'v6.0.0', 'v6.0.0', 'Simple test for fudging for imp
 is_fudged_ok '04-combinations', 'impl.1', 'v6.0.0', 'combinations of fudging for implementation and version';
 is_fudged_ok '04-combinations', 'impl.2', 'v6.0.6', 'combinations of fudging for implementation and version';
 
-is_fudged_ok '05-skip', 'impl-1', 'v6.0.0', 'test for skip only works on actual tests';
+is_fudged_ok '05-skip', 'impl-1', 'v6.0.0', 'test for skip only working on actual tests';
+is_fudged_ok '06-todo', 'impl-1', 'v6.0.0', 'test for todo only working on actual tests';
+is_fudged_ok '07-register_function', 'impl-1', 'v6.0.0', 'test for registration of custom test function';
 
 sub is_fudged_ok($$$$) {
     my ($file, $impl, $ver, $desc) = @_;
