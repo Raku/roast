@@ -14,21 +14,13 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 =end pod
 
-plan 46;
+plan 44;
 
 throws_like({"moose".length}, X::Method::NotFound, 'Str.length properly unimplemented');
 
 # string literals, for sanity
 
 # L<S32::Str/Str/=item chars>
-
-# Precedence tests
-#?niecza 2 skip '"abcdef" > 4 makes niecza unhappy'
-#?rakudo 2 skip '"abcdef" > 4 makes rakudo unhappy'
-ok (chars "abcdef" > 4),     "chars() has the right precedence (1)";
-is (chars("abcdef" > 4)), 0, "chars() has the right precedence (2)";
-
-# and the real tests.
 
 # Please add test strings in your favorite script, especially if
 # it is boustrophedonic or otherwise interesting.
