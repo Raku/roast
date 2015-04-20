@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan 23;
 
 # L<S29/Context/"=item EVAL">
 
@@ -98,5 +98,11 @@ is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
     ok(1, "presence of low level types doesn't cause EVAL error")
 }
 
+# RT #124304
+{
+    my \a = rand;
+    lives_ok { EVAL 'a' }, 'Can EVAL with a sigilless var';
+    is EVAL('a'), a, 'EVAL with sigilless var gives correct result';
+}
 
 # vim: ft=perl6
