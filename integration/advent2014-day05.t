@@ -18,7 +18,6 @@ plan 7;
       'did we get the right string';
 }
 
-#?rakudo skip 'sometimes hangs, sometimes segfaults'
 {
     my $times = 100000;
     my $a;

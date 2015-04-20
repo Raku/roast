@@ -27,7 +27,6 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
 			  CurrencyExchange.new( :id<slow>, :delay(7) ), # wont finish in 5 sec
                          );
 
-#?rakudo.moar skip 'Promise.in'
 {
     my $val = 42;
     my @getting = @currency_exchanges.map(-> $ex { start { $ex.get_quote($val) } });
@@ -78,7 +77,6 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
 
 # Channels
 
-#?rakudo.moar skip 'combined config example'
 {
     {
 	my @files = qw<config1.ini config2.ini>;

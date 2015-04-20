@@ -127,7 +127,6 @@ my $outer = 'outside';
 
   ok &::("say") === &say,
     "symbolic dereferentiation of CORE subs works (1)";
-  #?rakudo skip 'no such symbol'
   ok &::("so")(42),
     "symbolic dereferentiation of CORE subs works (2)";
   is &::("truncate")(3.1), 3,
