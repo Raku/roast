@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 39;
 
 =begin kwid
 
@@ -160,6 +160,21 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     is $called,3,"all conditions are checked";
 }
 
+
+# L<S04/"Conditional statements"/The result of a conditional statement is the result of the block chosen to execute.>
+
+is (if 1 { 42 }), (42), "if evaluates to executed block";
+is (if 0 { 42 } else { 43 }), (43), "if+else else evaluates to executed block";
+is (if 0 { 42 } else { 43 }), (43), "if+else if evaluates to executed block";
+is (if 0 { 42 } elsif 0 { 43 } else { 44 }), (44), "if+elsif+else else evaluates to executed block";
+is (if 0 { 42 } elsif 1 { 43 } else { 44 }), (43), "if+elsif+else elsif evaluates to executed block";
+is (if 1 { 42 } elsif 0 { 43 } else { 44 }), (42), "if+elsif+else if evaluates to executed block";
+is (if 0 { 42 } elsif 1 { 43 }), (43), "if+elsif elsif evaluates to executed block";
+is (if 1 { 42 } elsif 0 { 43 }), (42), "if+elsif if evaluates to executed block";
+#?rakudo todo 'rakudo still uses Nil here'
+is (if 0 { 42 } elsif 0 { 43 }), (), "if+elsif evaluates to () when no block chosen";
+#?rakudo todo 'rakudo still uses Nil here'
+is (if 0 { 42 }), (), "if evaluates to () when no block chosen";
 
 # L<S04/Statement parsing/keywords require whitespace>
 eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
