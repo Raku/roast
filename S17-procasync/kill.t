@@ -42,7 +42,7 @@ say 'Done';
     await $pm;
 
     isa_ok $pm.result, Proc::Status;
-    is $pm.result.?exit, 0, 'did it exit with the right value';
+    is $pm.result.?exitcode, 0, 'did it exit with the right value';
 
     #?rakudo todo 'we cannot actually send signals yet'
     is $stdout, "Started\n$signal\n", 'did we get STDOUT';

@@ -30,5 +30,5 @@ use Test::Util;
         ?? 'echo exit(42) | \qq[$*EXECUTABLE] -'
         !! 'echo "exit(42)" | \qq[$*EXECUTABLE] -';
 
-    is shell($cmd).exit, 42, "'-' as argument means STDIN";
+    is shell($cmd).exitcode, 42, "'-' as argument means STDIN";
 }
