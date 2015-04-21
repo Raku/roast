@@ -44,6 +44,9 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 {
 	my $x = do if 0 { 1 } elsif 0 { 2 };
 	ok !$x.defined, 'when if does not execute any branch, return undefined';
+	$x = (42, do if 0 { 1 } elsif 0 { 2 }, 42);
+#?rakudo todo 'Rakudo still uses Nil here'
+	is $x, (42,(),42), 'when if does not execute any branch, returns ()';
 }
 
 {
@@ -83,12 +86,13 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 #?rakudo skip 'next without loop construct'
 {
     my $i;
-    do {
+    my $ret = do {
         $i++;
         next;
         $i--;
     };
     is $i, 1, "'next' works in 'do' block";
+    is $ret, (), "'next' in 'do' block drives return value";
 }
 
 #?rakudo 3 skip "Undeclared name A"
@@ -103,13 +107,14 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 {
     is EVAL('
         my $i;
-        do {
+        (
+         do {
             $i++;
             last;
             $i--;
-        };
+        }),
         $i;
-    '), 1, "'last' works in 'do' block";
+    '), ((),1), "'last' works in 'do' block and drives return value";
 }
 
 # IRC notes:
