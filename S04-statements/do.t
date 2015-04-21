@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 29;
 
 # L<S04/The do-once loop/"can't" put "statement modifier">
 # Note in accordance with STD, conditionals are OK, loops are not.
