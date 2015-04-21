@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 88;
+plan 93;
 
 =begin description
 
@@ -459,6 +459,25 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     is @odd-squares.join(' '), '1 9 25 49 81', 'list comprehension';
 }
 
+#L<S04/Loop statements/"The value of a loop statement">
+
+{
+    is (for ^2 { 41; 42 }), (42,42), "for loop value is list of iter values";
+    is (for ^5 { 41; next if $_ == 2; $_; }).flat, (0,1,3,4),
+                "for loop with value-less next flattens out nexted iterations";
+
+#?rakudo todo 'Rakudo still uses Nil here'
+    my $l = (for ^5 { 41; next if $_ == 2; $_; });
+    is $l[2].perl, "()", "for loop iteration with value-less 'next' gives ()";
+
+    is (for ^5 { 41; last if $_ == 2; $_; }).flat, (0,1),
+                "for loop with value-less last flattens out last iteration";
+
+#?rakudo todo 'Rakudo still uses Nil here'
+    $l = (for ^5 { 41; last if $_ == 2; $_; });
+    is $l[2].perl, "()", "for loop iteration with value-less 'last' gives ()";
+}
+
 # RT #62478
 {
     try { EVAL('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }') };
@@ -478,6 +497,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 {
     sub rt71268 { for ^1 {} }
     lives_ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
+    # This test is actually wrong design-wise, should return ()
     is rt71268(), Nil, 'result of "for ^1 {}" is Nil';
 }
 
