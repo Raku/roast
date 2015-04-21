@@ -955,7 +955,7 @@ sub l () { 1, 2 };
 }
 
 {
-    throws_like { EVAL "6 ~~= 2" }, X::Syntax::Can'tMeta,
+    throws_like { EVAL "6 ~~= 2" }, X::Syntax::CannotMeta,
         "Can't use fiddly ~~ with the = metaop ";
 }
 
