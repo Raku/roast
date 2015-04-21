@@ -46,7 +46,7 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 	ok !$x.defined, 'when if does not execute any branch, return undefined';
 	$x = (42, do if 0 { 1 } elsif 0 { 2 }, 42);
 #?rakudo todo 'Rakudo still uses Nil here'
-	is $x, (42,(),42), 'when if does not execute any branch, returns ()';
+	is $x[1], (), 'when if does not execute any branch, returns ()';
 }
 
 {
