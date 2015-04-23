@@ -950,12 +950,12 @@ sub l () { 1, 2 };
 
 # RT #72874
 {
-    throws_like { EVAL "6 >== 2" }, X::Syntax::Can'tMeta,
+    throws_like { EVAL "6 >== 2" }, X::Syntax::CannotMeta,
         "Can't use diffy >= with the = metaop ";
 }
 
 {
-    throws_like { EVAL "6 ~~= 2" }, X::Syntax::Can'tMeta,
+    throws_like { EVAL "6 ~~= 2" }, X::Syntax::CannotMeta,
         "Can't use fiddly ~~ with the = metaop ";
 }
 

@@ -1,0 +1,15 @@
+plan 3;
+
+#?DOES 1
+sub registered_function ($x) { $x };
+
+#?impl-1 todo 'NYI'
+todo('NYI'); registered_function 2;
+ok 4;
+
+#?impl-1 todo 'NYI'
+not_registered_function 2;
+todo('NYI'); ok 4; 
+
+say "# FUDGED!";
+exit(1);

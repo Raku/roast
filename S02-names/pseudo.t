@@ -396,7 +396,6 @@ my $x110 = 110; #OK
 }
 
 # SETTING
-#?rakudo skip 'SETTING NYI'
 {
     sub not($x) { $x } #OK
     my $setting = 'SETTING';

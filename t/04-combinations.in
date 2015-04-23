@@ -1,6 +1,7 @@
 use Test;
 plan 10;
 
+#?DOES 2
 sub same-type ($x, $y) {
     is $x.WHAT, $y.WHAT;
     ok $x.WHAT ~~ $y.WHAT;
@@ -11,7 +12,6 @@ sub same-type ($x, $y) {
 is "Life, the Universe, and Everything".WHY, 42;
 is 42.WHAT, Int, 'some reason';
 #?impl todo 'NYI'
-#?DOES 2
 {
     same-type(42, 4);
 } 
@@ -20,7 +20,6 @@ is 2+2, 4;
 #?impl skip 'NYI'
 is 2-2, 0;
 
-#?DOES 2
 {
     same-type(42, 4);
 }

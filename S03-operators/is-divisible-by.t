@@ -28,7 +28,7 @@ plan 15;
 # RT #76170
 {
     # TODO: implement typed exception and adapt test
-    throws_like { EVAL q[ 9 !% 0 ] }, X::Syntax::Can'tMeta,
+    throws_like { EVAL q[ 9 !% 0 ] }, X::Syntax::CannotMeta,
         'infix<!%> is not iffy enough; RT #76170';
 } #1
 

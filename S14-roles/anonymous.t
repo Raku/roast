@@ -38,7 +38,6 @@ plan 13;
   lives_ok {$a does role_generator("hi")}, "role generating function mixin";
   is $a, {:x}, "still basic sanity";
   #?niecza skip 'roles are run once and only capture the protopad'
-  #?rakudo skip 'anonymous roles only created once'
   is $a.cool, "hi", "role generating function gave us an attribute";
 }
 

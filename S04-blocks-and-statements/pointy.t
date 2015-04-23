@@ -107,8 +107,8 @@ lives_ok {my $x = -> {}; my $y = $x(); },
 
 # RT #115372
 {
-    throws_like q[say -> {YOU_ARE_HERE}], X::Undeclared::Symbols,
-        'no Segfault when putting YOU_ARE_HERE marker in a pointy block';
+    throws_like q[say -> {YOU_ARE_HERE}], X::Syntax::Reserved,
+        '{YOU_ARE_HERE} disallowed outside of a setting';
 }
 
 # vim: ft=perl6

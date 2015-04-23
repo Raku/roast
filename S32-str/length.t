@@ -14,20 +14,13 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 =end pod
 
-plan 46;
+plan 44;
 
-eval_dies_ok('"moose".length', 'Str.length properly unimplemented');
+throws_like({"moose".length}, X::Method::NotFound, 'Str.length properly unimplemented');
 
 # string literals, for sanity
 
 # L<S32::Str/Str/=item chars>
-
-# Precedence tests
-#?niecza 2 skip '"abcdef" > 4 makes niecza unhappy'
-ok (chars "abcdef" > 4),     "chars() has the right precedence (1)";
-is (chars("abcdef" > 4)), 0, "chars() has the right precedence (2)";
-
-# and the real tests.
 
 # Please add test strings in your favorite script, especially if
 # it is boustrophedonic or otherwise interesting.
@@ -59,18 +52,20 @@ for @data -> $string, $bytes, $codes, $graphs, $chars {
     is($string.chars, $chars, "'{$string}'.chars");
     is($string.codes, $codes, "'{$string}'.codes");
     #?niecza skip ".graphs NYI"
+    #?rakudo skip ".graphs NYI"
     is($string.graphs, $graphs, "'{$string}'.graphs");
 }
 
 # test something with a codepoint above 0xFFFF to catch errors that an
 # UTF-16 based implementation might make
 
+#?rakudo.jvm todo '.codes weirdness on JVM, possibly NYI?'
 is "\x[E0100]".codes,  1, '.codes on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
 #?niecza skip ".graphs NYI"
+#?rakudo skip ".graphs NYI"
 is "\x[E0100]".graphs, 1, '.graphs on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
 
 # test graphemes without a precomposed character in Unicode 5
-#?rakudo 1 skip '.codes NYI'
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".codes, 2, '.codes on grapheme without precomposite';
 #?rakudo 1 skip '.graphs NYI'
 #?niecza skip ".graphs NYI"

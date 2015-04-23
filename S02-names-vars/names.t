@@ -62,16 +62,16 @@ is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
 
 # RT #63646
 {
-    throws_like { OscarMikeGolf::whiskey_tango_foxtrot() },
+    throws_like 'OscarMikeGolf::whiskey_tango_foxtrot()',
       Exception,
       'dies when calling non-existent sub in non-existent package';
-    throws_like { Test::bravo_bravo_quebec() },
+    throws_like 'Test::bravo_bravo_quebec()',
       Exception,
       'dies when calling non-existent sub in existing package';
     # RT #74520
     class TestA { };
     #?niecza todo
-    throws_like { TestA::frobnosticate(3, :foo) },
+    throws_like 'TestA::frobnosticate(3, :foo)',
       Exception,
       'calling non-existing function in foreign class dies';;
 }
@@ -144,7 +144,7 @@ throws_like {
 
 # RT #75646
 {
-    throws_like { my ::foo $x, say $x }, Exception,
+    throws_like 'my ::foo $x, say $x', Exception,
         'no Null PMC access when printing a variable typed as ::foo ';
 }
 

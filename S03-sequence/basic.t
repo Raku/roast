@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 134;
+plan 136;
 
 # single-term sequence
 
@@ -267,6 +267,12 @@ is (1 …^ 10), 1..^10, 'Unicode ellipsis works excluding final value';
 
 #RT #114326
 isa_ok ([] ... [])[0], Array, '[] ... [] returns []';
+
+{
+    my @a := [1,2],{ [.[0]+2,.[1]+2] } ... *;
+    isa_ok @a[1], Array, 'containers returned from seq iterator are respected (1)';
+    is @a[1].join('_'), '3_4', 'containers returned from seq iterator are respected (2)';
+}
 
 done;
 

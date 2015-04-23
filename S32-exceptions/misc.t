@@ -36,7 +36,7 @@ throws_like '@_',            X::Placeholder::Mainline, placeholder => '@_';
 # RT #85942
 throws_like '"foo".{ say $^a }', X::Placeholder::Mainline;
 # RT #78112
-throws_like 'class A { has $.a = $^b + 1; }', X::Placeholder::Attribute, placeholder => '$^b';
+throws_like 'class RT78112 { has $.a = $^b + 1; }', X::Placeholder::Attribute, placeholder => '$^b';
 
 throws_like 'sub f(*@ = 2) { }', X::Parameter::Default, how => 'slurpy', parameter => *.not;
 throws_like 'sub f($x! = 3) { }', X::Parameter::Default, how => 'required', parameter => '$x';
@@ -489,7 +489,9 @@ throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
 
     {
         my $code = q[ sub foo($x) { }; foo; ];
-        throws_like $code, X::TypeCheck::Argument, message => { m/"() will never work" .*? 'Any'/ }, objname => { m/foo/ };
+        throws_like $code, X::TypeCheck::Argument,
+            signature => rx/ '(Any $x)' /, 
+            objname   => { m/foo/ };
     }
 
     {
@@ -615,7 +617,7 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 }
 
 # RT #117859
-throws_like 'class Foo { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 'Type';
+throws_like 'class RT117859 { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 'Type';
 
 throws_like 'my $a = |(1, 2, 3)', X::Syntax::ArgFlattener;
 throws_like 'sub foo($x) { }; foo({ |(1, 2, 3) })', X::Syntax::ArgFlattener;
