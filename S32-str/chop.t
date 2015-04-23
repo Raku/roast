@@ -43,19 +43,11 @@ is "bar".chop, "ba", ".chop on string literal";
 is chop(""), "", "chop on empty string literal";
 is chop("bar","2"), "b", "check coercion of number of characters";
 
-throws_like 'chop(Str)',
-  X::AdHoc,  # temporary, until we have a typed exception
-  message => "Invocant requires a 'Str' instance, but a type object was passed.  Did you forget a .new?";
-throws_like 'chop(Str,10)',
-  X::AdHoc,  # temporary, until we have a typed exception
-  message => "Invocant requires a 'Str' instance, but a type object was passed.  Did you forget a .new?";
-throws_like 'Str.chop',
-  X::AdHoc,  # temporary, until we have a typed exception
-  message => "Invocant requires a 'Str' instance, but a type object was passed.  Did you forget a .new?";
-throws_like 'Str.chop(10)',
-  X::AdHoc,  # temporary, until we have a typed exception
-  message => "Invocant requires a 'Str' instance, but a type object was passed.  Did you forget a .new?";
-
+# temporary, until we have a typed exception
+throws_like 'chop(Str)',    X::AdHoc;
+throws_like 'chop(Str,10)', X::AdHoc;
+throws_like 'Str.chop',     X::AdHoc;
+throws_like 'Str.chop(10)', X::AdHoc;
 
 # See L<"http://use.perl.org/~autrijus/journal/25351">:
 #   &chomp and &wrap are now nondestructive; chomp returns the chomped part,
