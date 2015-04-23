@@ -1,4 +1,5 @@
 module Test::Compile;
+use nqp;
 use Test;
 
 =begin pod
