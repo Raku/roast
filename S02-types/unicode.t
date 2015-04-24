@@ -5,9 +5,9 @@ plan 16;
 
 #L<S02/"Methods on Arrays"/".bytes, .codes or .graphs">
 
-# LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT
-my Str $u = "\x[0041,0300]";
-is $u.codes, 2, 'combining À is two codes';
+# LATIN CAPITAL LETTER C, COMBINING DOT BELOW
+my Str $u = "\x[0043,0323]";
+is $u.codes, 2, 'combining \x[0042,0323] is two codes';
 #?rakudo skip 'graphs NYI'
 is $u.graphs, 1, 'combining À is one graph';
 is "foo\r\nbar".codes, 8, 'CRLF is 2 codes';
