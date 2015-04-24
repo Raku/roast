@@ -44,7 +44,7 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 }
 
 {
-    my %ps_pe = (
+    my @ps_pe = (
             '(' => ')', '[' => ']', '{' => '}', '༺' => '༻', '༼' => '༽',
             '᚛' => '᚜', '⁅' => '⁆', '⁽' => '⁾', '₍' => '₎', '〈' => '〉',
             '❨' => '❩', '❪' => '❫', '❬' => '❭', '❮' => '❯', '❰' => '❱',
@@ -60,10 +60,10 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
             '﹙' => '﹚', '﹛' => '﹜', '﹝' => '﹞', '（' => '）',
             '［' => '］', '｛' => '｝', '｟' => '｠', '｢' => '｣',
             );
-    for keys %ps_pe {
-        next if $_ eq '('; # skip '(' => ')' because q() is a sub call
-        my $string = 'q' ~ $_ ~ 'abc' ~ %ps_pe{$_};
-        is EVAL($string), 'abc', $string ~ sprintf(' (U+%X/U+%X)',$_.ord,%ps_pe{$_}.ord);
+    for @ps_pe {
+        next if .key eq '('; # skip '(' => ')' because q() is a sub call
+        my $string = 'q' ~ .key ~ 'abc' ~ .value;
+        is EVAL($string), 'abc', $string ~ sprintf(' (U+%X/U+%X)',.key.ord,.value.ord);
     }
 }
 
