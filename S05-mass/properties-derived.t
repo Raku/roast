@@ -16,7 +16,7 @@ Some notes regarding specific unicode codepoints chosen below
 
 =end pod
 
-plan 256;
+plan 254;
 
 # ASCIIHexDigit
 
@@ -71,7 +71,6 @@ ok(!( "\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<-:GraphemeLink>$/ ), q{Don't match inve
 ok(!( "\x[4989]"  ~~ m/^<:GraphemeLink>$/ ), q{Don't match unrelated <GraphemeLink>} );
 ok("\x[4989]"  ~~ m/^<:!GraphemeLink>$/, q{Match unrelated negated <GraphemeLink>} );
 ok("\x[4989]"  ~~ m/^<-:GraphemeLink>$/, q{Match unrelated inverted <GraphemeLink>} );
-ok("\x[4989]\c[HANUNOO SIGN PAMUDPOD]" ~~ m/<:GraphemeLink>/, q{Match unanchored <GraphemeLink>} );
 
 # HexDigit
 
@@ -173,7 +172,6 @@ ok(!( "\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<-:OtherAlphabetic>$/ ), q{Don't
 ok(!( "\x[413C]"  ~~ m/^<:OtherAlphabetic>$/ ), q{Don't match unrelated <OtherAlphabetic>} );
 ok("\x[413C]"  ~~ m/^<:!OtherAlphabetic>$/, q{Match unrelated negated <OtherAlphabetic>} );
 ok("\x[413C]"  ~~ m/^<-:OtherAlphabetic>$/, q{Match unrelated inverted <OtherAlphabetic>} );
-ok("\x[413C]\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/<:OtherAlphabetic>/, q{Match unanchored <OtherAlphabetic>} );
 
 # OtherDefaultIgnorableCodePoint
 

@@ -15,7 +15,7 @@ Unicode 5.2.
 
 =end pod
 
-plan 602;
+plan 599;
 
 # L           Letter
 
@@ -183,7 +183,6 @@ ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<-:M>$/ ), q{Don't match inverted <M> (
 ok(!( "\x[D0AA]"  ~~ m/^<:M>$/ ), q{Don't match unrelated <M> (Mark)} );
 ok("\x[D0AA]"  ~~ m/^<:!M>$/, q{Match unrelated negated <M> (Mark)} );
 ok("\x[D0AA]"  ~~ m/^<-:M>$/, q{Match unrelated inverted <M> (Mark)} );
-ok("\x[D0AA]\c[COMBINING GRAVE ACCENT]" ~~ m/<:M>/, q{Match unanchored <M> (Mark)} );
 
 ok("\c[COMBINING GRAVE ACCENT]" ~~ m/^<:Mark>$/, q{Match <:Mark>} );
 ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<:!Mark>$/ ), q{Don't match negated <Mark>} );
@@ -191,7 +190,6 @@ ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<-:Mark>$/ ), q{Don't match inverted <M
 ok(!( "\x[BE64]"  ~~ m/^<:Mark>$/ ), q{Don't match unrelated <Mark>} );
 ok("\x[BE64]"  ~~ m/^<:!Mark>$/, q{Match unrelated negated <Mark>} );
 ok("\x[BE64]"  ~~ m/^<-:Mark>$/, q{Match unrelated inverted <Mark>} );
-ok("\x[BE64]\c[COMBINING GRAVE ACCENT]" ~~ m/<:Mark>/, q{Match unanchored <Mark>} );
 
 # Mn          NonspacingMark
 
@@ -205,7 +203,6 @@ ok("\x[47A5]"  ~~ m/^<-:Mn>$/, q{Match unrelated inverted <Mn> (NonspacingMark)}
 ok(!( "\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/^<:Mn>$/ ), q{Don't match related <Mn> (NonspacingMark)} );
 ok("\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/^<:!Mn>$/, q{Match related negated <Mn> (NonspacingMark)} );
 ok("\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/^<-:Mn>$/, q{Match related inverted <Mn> (NonspacingMark)} );
-ok("\x[47A5]\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]\c[COMBINING GRAVE ACCENT]" ~~ m/<:Mn>/, q{Match unanchored <Mn> (NonspacingMark)} );
 
 ok("\c[TAGALOG VOWEL SIGN I]" ~~ m/^<:NonspacingMark>$/, q{Match <:NonspacingMark>} );
 ok(!( "\c[TAGALOG VOWEL SIGN I]" ~~ m/^<:!NonspacingMark>$/ ), q{Don't match negated <NonspacingMark>} );
