@@ -26,6 +26,7 @@ my $tmpfile = "temp-test" ~ nonce();
     is $s.chars, 3, 'Reading UTF-8 file as NFG (a few graphemes)';
 }
 
+#?rakudo skip 'writing utf16 NYI'
 {
     # UTF-16 of codepoints 0044 0307 0323
     spurt-bin $tmpfile, buf16.new(68, 775, 803);
@@ -33,6 +34,7 @@ my $tmpfile = "temp-test" ~ nonce();
     is $s.chars, 1, 'Reading UTF-16 file as NFG (one grapheme)';
 }
 
+#?rakudo skip 'writing utf16 NYI'
 {
     # UTF-16 of codepoints 0044 0307 0323 0044 0307 0044 0323
     spurt-bin $tmpfile, buf16.new(68, 775, 803, 68, 775, 68, 803);
