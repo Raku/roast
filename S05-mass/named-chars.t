@@ -153,11 +153,11 @@ ok("\c[NEL]" ~~ m/^ <[\C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>
 
 ok(!( "\x[fd55]" ~~ m/^ \X[FD55]/ ), 'Negative hex \X[FD55] nomatch');
 ok(!( "\x[fd55]" ~~ m/^ <[\X[FD55]]>/ ), 'Negative charclass hex \X[FD55] nomatch');
-ok("abc\x[5b4]def" ~~ m/\c[HEBREW POINT HIRIQ]/, 'Unanchored named HEBREW POINT HIRIQ');
-ok("abc\c[HEBREW POINT HIRIQ]def" ~~ m/\x[5B4]/, 'Unanchored \x[5B4]');
-ok("abc\c[HEBREW POINT HIRIQ]def" ~~ m/\o[2664]/, 'Unanchored \o[2664]');
+ok("\x[5b4]def" ~~ m/\c[HEBREW POINT HIRIQ]/, 'Solitary named HEBREW POINT HIRIQ');
+ok("\c[HEBREW POINT HIRIQ]def" ~~ m/\x[5B4]/, 'Solitary \x[5B4]');
+ok("\c[HEBREW POINT HIRIQ]def" ~~ m/\o[2664]/, 'Solitary \o[2664]');
 ok("abc\x[5b4]def" ~~ m/^ abc \c[HEBREW POINT HIRIQ] def $/, 'Anchored HEBREW POINT HIRIQ');
-ok("abc\x[5b4]\x[fd55]def" ~~ m/\c[HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/, 'Multiple HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
+ok("\x[5b4]\x[fd55]def" ~~ m/\c[HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/, 'Solitary multiple HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
 ok("\x[5b4]\x[fd55]" ~~ m/<[\c[HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/, 'Charclass multiple HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
 ok(!( "\x[5b4]\x[fd55]" ~~ m/^ <-[\c[HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/ ), 'Negative charclass HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
 ok(!( "\x[5b4]" ~~ m/^ \C[HEBREW POINT HIRIQ]/ ), 'Negative named HEBREW POINT HIRIQ nomatch');
@@ -172,7 +172,8 @@ ok("abc\x[1ea2]def" ~~ m/\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE]/, 'Unanchore
 ok("abc\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE]def" ~~ m/\x[1EA2]/, 'Unanchored \x[1EA2]');
 ok("abc\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE]def" ~~ m/\o[17242]/, 'Unanchored \o[17242]');
 ok("abc\x[1ea2]def" ~~ m/^ abc \c[LATIN CAPITAL LETTER A WITH HOOK ABOVE] def $/, 'Anchored LATIN CAPITAL LETTER A WITH HOOK ABOVE');
-ok("abc\x[1ea2]\x[5b4]def" ~~ m/\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]/, 'Multiple LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
+#?rakudo.moar 3 todo 'Need review after NFG work'
+ok("\x[1ea2]\x[5b4]def" ~~ m/\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]/, 'Solitary multiple LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
 ok("\x[1ea2]\x[5b4]" ~~ m/<[\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]]>/, 'Charclass multiple LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
 ok(!( "\x[1ea2]\x[5b4]" ~~ m/^ <-[\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]]>/ ), 'Negative charclass LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
 ok(!( "\x[1ea2]" ~~ m/^ \C[LATIN CAPITAL LETTER A WITH HOOK ABOVE]/ ), 'Negative named LATIN CAPITAL LETTER A WITH HOOK ABOVE nomatch');
