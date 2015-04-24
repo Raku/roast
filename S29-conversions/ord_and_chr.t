@@ -170,12 +170,10 @@ is "\c[DROMEDARY CAMEL]".ord, 0x1F42A, "ord of named high character";
 is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
 
 {
-    is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]".ord, 550, '.ord defaults to graphemes (2)';
-
-    #?rakudo todo 'RT #65172 - combining graphemes'
+    #?rakudo.jvm todo 'NFG on JVM'
     #?niecza todo
-    is "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord, 550, '.ord defaults to graphemes (1)';
-
+    is "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord, 550, '.ord gives first NFC codepoint (1)';
+    is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]".ord, 550, '.ord gives first NFC codepoint (2)';
 }
 
 #vim: ft=perl6
