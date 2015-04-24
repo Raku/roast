@@ -14,11 +14,11 @@ is "foo\r\nbar".codes, 8, 'CRLF is 2 codes';
 #?rakudo skip 'graphs NYI'
 is "foo\r\nbar".graphs, 7, 'CRLF is 1 graph';
 
-#?rakudo todo "RT #65170"
+#?rakudo.jvm todo "NFG on JVM"
 is $u.chars, 1, '.chars defaults to .graphs';
 
 # RT #65170
-#?rakudo todo "RT #65170"
+#?rakudo.jvm todo "NFG on JVM"
 {
     my $rt65170;
 
