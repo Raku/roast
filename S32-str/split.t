@@ -103,9 +103,9 @@ plan 53;
 
 #?niecza skip 'rx:Perl5'
 {
-    is split(rx:Perl5 {(\s+)}, "Hello test", :all)._join(','), 'Hello, ,test',
+    is split(rx:Perl5 {(\s+)}, "Hello test", :all).flat.join(','), 'Hello, ,test',
       q/split rx:Perl5 {(\s+)}, Str/;
-    is "Hello test".split(rx:Perl5 {(\s+)}, :all)._join(','), 'Hello, ,test',
+    is "Hello test".split(rx:Perl5 {(\s+)}, :all).flat.join(','), 'Hello, ,test',
       q/Str.split rx:Perl5 {(\s+)}/;
 }
 

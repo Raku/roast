@@ -61,7 +61,7 @@ plan 14;
 }
 
 # mix arrays and ranges
-is ('a'..'c' Z 1, 2, 3)._join(','), 'a,1,b,2,c,3',
+is ('a'..'c' Z 1, 2, 3).flat.join(','), 'a,1,b,2,c,3',
     'can mix arrays and ranges for infix:<Z>';
 
 is ("a".."c" Z "?", "a".."b")._join('|'), 'a|?|b|a|c|b',

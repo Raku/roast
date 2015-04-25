@@ -71,7 +71,7 @@ eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
     $tree[1] = TreeNode[Int].new;
     $tree[0].data = 1;
     $tree[1].data = 4;
-    is ($tree.data, $tree[0,1]>>.data)._join(','), '3,1,4',
+    is ($tree.data, $tree[0,1]>>.data).flat.join(','), '3,1,4',
         'parameterized role doing non-parameterized role';
 }
 
