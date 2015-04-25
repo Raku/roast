@@ -179,7 +179,7 @@ plan 30;
         }
     };
     is foo().join, '12345', 'decontainerization happens (1)';
-    is (<a b c d e> Zxx 0,1,0,1,0).Str, 'b d',
+    is (<a b c d e> Zxx 0,1,0,1,0).flat.Str, 'b d',
         'decontainerization happens (2)';
 }
 

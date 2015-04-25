@@ -70,7 +70,7 @@ isa_ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
 }
 
 # RT #73948
-is (1, 2 Z, 3, 4).join('|'), '1|3|2|4', 'Z, flattens in list context';
+is (1, 2 Z, 3, 4)._join('|'), '1|3|2|4', 'Z, flattens in list context';
 
 {
     my @a = 1,2,3;

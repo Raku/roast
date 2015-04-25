@@ -11,7 +11,7 @@ is (1, (2, (3, 4))).tree(1).[1].flat.elems, 3,
 
 is (1, (2, (3, 4))).tree(2).[1].elems, 2,
     '.tree(2) goes two levels deep';
-is ((1, 2), (3, 4)).tree(*.join('|')), '1|2|3|4',
+is ((1, 2), (3, 4)).tree(*._join('|')), '1|2|3|4',
     'WhateverCode form, depth 1';
 is ((1, 2), (3, 4)).tree(*.join(' '), *.join('|')), '1|2 3|4',
     'WhateverCode form, depth 2';

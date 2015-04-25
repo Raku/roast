@@ -61,10 +61,10 @@ plan 14;
 }
 
 # mix arrays and ranges
-is ('a'..'c' Z 1, 2, 3).join(','), 'a,1,b,2,c,3',
+is ('a'..'c' Z 1, 2, 3)._join(','), 'a,1,b,2,c,3',
     'can mix arrays and ranges for infix:<Z>';
 
-is ("a".."c" Z "?", "a".."b").join('|'), 'a|?|b|a|c|b',
+is ("a".."c" Z "?", "a".."b")._join('|'), 'a|?|b|a|c|b',
     'can mix arrays and ranges for infix:<Z>';
 
 is zip(1,2; 3,4; 5,6):with(&infix:<~>), '135 246', 'zip:with works on list associative';

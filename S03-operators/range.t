@@ -81,12 +81,12 @@ is (1..*).[^5].join('|'), '1|2|3|4|5', '1..*';
 is ('a'..*).[^5].join('|'), 'a|b|c|d|e', '"a"..*';
 
 # test that the zip operator works with ranges
-is (1..5 Z <a b c>).join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';
-is (1..2 Z <a b c>).join('|'), '1|a|2|b',     'Ranges and infix:<Z>';
-is (<c b a> Z 1..5).join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
+is (1..5 Z <a b c>)._join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';
+is (1..2 Z <a b c>)._join('|'), '1|a|2|b',     'Ranges and infix:<Z>';
+is (<c b a> Z 1..5)._join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
 
 # two ranges
-is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
+is (1..6 Z 'a' .. 'c')._join, '1a2b3c',   'Ranges and infix:<Z>';
 
 {
     # Test with floats
