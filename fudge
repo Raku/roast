@@ -83,7 +83,12 @@ Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
     #?v6.0+          [num|*] ['reason']
     #?v6.0.0..*      [num|*] ['reason']
     #?v6.0.0..v6.0.5 [num|*] ['reason']
-        run num/all tests for the given Perl 6 language version.
+        run num/all tests for the given Perl 6 language version. Skipped
+        on non-matching Perl 6 language versions.
+
+    #?v6+            [num|*] skip|emit|todo|eval|try ['reason']
+        skip or todo (etc) tests for the matching Perl 6 language version.
+        Non-matching Perl 6 language versions are left untouched.
 
     #?DOES count
         for all implementations, the following thing does count tests
@@ -157,21 +162,15 @@ sub fudgeblock {
             my $cmd = $4;
             my $applies = 0;
             if ($name =~ /^v\d/) {  # Perl 6 language version
-                unless (version_matches($VERSION, $name)) {
+                my $num = $args =~ s/(\d+)\s*// ? $1 : 1;
+                $cmd    = 'skip';
+                $applies = !version_matches($VERSION, $name);
+                if ($args =~ s/^(skip|emit|todo|eval|try)\b\s*//) {
                     $applies = 1;
-                    $cmd     = $cmd  =~ /(\d+)/ ? $1 : 'skip';
-                    if ($args =~ /\*\s*(.*)/) {
-                        $args = "999999 skip " . ($2 || "'Version $name required'")
-                    }
-                    elsif ($args =~ /(\d+)\s*(.*)/) {
-                        $args = "$1 skip " . ($2 || "'Version $name required'")
-                    }
-                    elsif ($args) {
-                        $args = "skip $args";
-                    }
-                    else {
-                        $args = "skip 'Version $name required'";
-                    }
+                    $cmd     = $1;
+                }
+                if ($applies) {
+                    $args = "$num $cmd " . ($args || "'Version $name required'")
                 }
             }
             elsif ($name gt 'a') {  # lowercase is compiler name
