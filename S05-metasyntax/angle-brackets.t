@@ -166,10 +166,9 @@ character classes), and those are referenced at the correct spot.
 }
 
 # A leading :: indicates a symbolic indirect subrule
-#?rakudo skip 'indirect subrule call NYI'
 {
     my $name = 'alpha';
-    ok('abcdef' ~~ /<::($name)>/, '<::($name)> symbolic indirect subrule');
+    is('..abcdef--' ~~ /<::($name)>+/, 'abcdef', '<::($name)> symbolic indirect subrule');
 }
 
 # A leading @ matches like a bare array except that each element is
