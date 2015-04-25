@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 87;
+plan 104;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -233,6 +233,48 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     is $buf.elems, 3, "three bytes were read";
     is $buf.decode("ISO-8859-1"), "föö", "the bytes decode into the right Str";
     $binary_in_fh.close;
+}
+
+#?niecza skip 'encoding probably NYI'
+{
+    my $fh = open($filename, :w);
+    lives_ok { $fh.encoding('windows-1252') }, "Set output fh encoding";
+    lives_ok { $fh.print("a¢€‚ƒ„…†‡ˆ‰Š‹ŒŽ") }, "windows-1252 chars to fh";
+#?rakudo.jvm todo 'java.nio.charset.UnmappableCharacterException'
+    lives_ok { $fh.print("") },"windows-1252 unmapped chars to fh";
+    lives_ok { $fh.encoding('ISO-8859-1') }, "reset output fh encoding";
+    lives_ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
+#?rakudo.jvm todo 'java.nio.charset.UnmappableCharacterException'
+    lives_ok { $fh.print("") }, "iso-8859-1 unmapped char to fh";
+    $fh.close;
+    $fh = open($filename, :bin);
+    my $b = $fh.read(32);
+    $fh.close;
+#?rakudo.jvm todo 'will fail due to above failures'
+    is $b.values,
+       (0x61,0xa2,0x80,0x82..0x8c,0x8e,0x81,0x8d,0x8f,0x61,0xa2,0xff,0x80),
+       "file with encoding wrote correct content";
+    $fh = open($filename);
+    lives_ok { $fh.encoding('windows-1252') }, "Set input fh encoding";
+    my $s = '';
+    lives_ok { $s ~= $fh.getc for 1..15; }, "windows-1252 chars from fh";
+    is $s, 'a¢€‚ƒ„…†‡ˆ‰Š‹ŒŽ', "correct windows-1252 chars from fh";
+    $s = '';
+    lives_ok { $s ~= $fh.getc for 1..3; },
+      "windows-1252 unmapped chars from fh";
+#?rakudo.jvm todo 'builtin JVM charset folds these'
+    is $s, '', "correct windows-1252 unmapped chars from fh";
+#?rakudo todo 'Too late to change filehandle encoding'
+    lives_ok { $fh.encoding('ISO-8859-1') }, "reset input fh encoding";
+    $s = '';
+#?rakudo.jvm todo 'will fail due to above failures'
+    lives_ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
+#?rakudo.jvm todo 'will fail due to above failures'
+    is $s, 'a¢ÿ', "correct iso-8859-1 chars from fh";
+    lives_ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
+#?rakudo todo 'Will fail due to above failure'
+    is $s, '', "correct iso-8859-1 unmapped char from fh";
+    $fh.close;
 }
 
 unlink($filename);
