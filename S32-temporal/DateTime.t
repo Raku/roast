@@ -598,8 +598,8 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
 
 # check that timezones are preserved
 {
-    is +DateTime.new(0, :timezone(1)).later(seconds => 1).timezone,
-       1,
+    is +DateTime.new(0, :timezone(23)).later(seconds => 0).timezone,
+       23,
        '.later preserves timezone';
 }
 
