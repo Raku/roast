@@ -13,8 +13,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $s = Supply.on-demand( -> \s { s.emit($_) for 1..10; s.done } );
-        tap_ok $s, [1..10], :!live, "On demand publish worked";
-        tap_ok $s, [1..10], :!live, "Second tap gets all the values";
+        tap-ok $s, [1..10], :!live, "On demand publish worked";
+        tap-ok $s, [1..10], :!live, "Second tap gets all the values";
 
         ok $s.Supply === $s, '.Supply on a Supply is a noop';
     }

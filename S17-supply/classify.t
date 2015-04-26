@@ -32,7 +32,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
         $s.emit($_) for 1,2,3,11,12,13;
         is_deeply @keys, [0,1], "did we get the right keys ($what)";
-        tap_ok @supplies[0], [1,2,3],   "got the 0 supply ($what)", :live;
-        tap_ok @supplies[1], [11,12,13], "got the 1 supply ($what)", :live;
+        tap-ok @supplies[0], [1,2,3],   "got the 0 supply ($what)", :live;
+        tap-ok @supplies[1], [11,12,13], "got the 1 supply ($what)", :live;
     }
 }

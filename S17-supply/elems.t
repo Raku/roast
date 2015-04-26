@@ -11,11 +11,11 @@ dies_ok { Supply.elems }, 'can not be called as a class method';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap_ok Supply.from-list(42..51).elems, [1..10], "just tracing elems works";
+    tap-ok Supply.from-list(42..51).elems, [1..10], "just tracing elems works";
 
     {
         my $s = Supply.new;
-        tap_ok $s.elems(1),
+        tap-ok $s.elems(1),
           [1,2,5],
           'works in 1 second increments',
 #          :live,

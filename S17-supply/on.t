@@ -16,7 +16,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
                 $res.emit($val);
             }
         }
-        tap_ok $on, [1..10], "minimal 'on' works";
+        tap-ok $on, [1..10], "minimal 'on' works";
     }
 
     {
@@ -38,7 +38,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
                 }
             }
         }
-        tap_ok $on,
+        tap-ok $on,
           [:a(1),:b(2),:c(3),:d(4),:e(5),:f(6),:g(7),:h(8),:i(9),:j(10)],
           "basic 2 supply 'on' works";
     }
@@ -55,7 +55,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
                 }
             }
         }
-        tap_ok $on,
+        tap-ok $on,
           [<a f>,<b g>,<c h>,<d i>,<e j>],
           "basic 2 supply with (a,b) 'on' works";
     }
@@ -72,7 +72,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
                 }
             }
         }
-        tap_ok $on,
+        tap-ok $on,
           [<a f l>,<b g m>,<c h n>,<d i o>,<e j p>],
           "basic 3 supply with array 'on' works";
     }
@@ -87,6 +87,6 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               done => { $res.done if ++$done == +@s }
             }
         }
-        tap_ok $on, @seen, "basic 2 supply with array without index 'on' works";
+        tap-ok $on, @seen, "basic 2 supply with array without index 'on' works";
     }
 }

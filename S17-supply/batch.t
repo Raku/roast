@@ -11,7 +11,7 @@ dies_ok { Supply.batch(1000) }, 'can not be called as a class method';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap_ok Supply.from-list(1..14).batch(:elems(5)),
+    tap-ok Supply.from-list(1..14).batch(:elems(5)),
       [[1..5],[6..10],[11..14]],
       "we can batch by number of elements";
 
@@ -21,7 +21,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $b = $s.batch( :$seconds );
         sleep $seconds - now % $seconds; # wait until next $sleep second period
         my $base = time div $seconds;
-        tap_ok $b,
+        tap-ok $b,
           [[$base xx 10],[$base+1 xx 10]],
           "we can batch by time",
           :timeout(3 * $seconds),
@@ -42,7 +42,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $b = $s.batch( :$elems, :$seconds );
         sleep $seconds - now % $seconds; # wait until next $sleep second period
         my $base = time div $seconds;
-        tap_ok $b,
+        tap-ok $b,
           [[$base   xx $elems],[$base   xx $rest],
            [$base+1 xx $elems],[$base+1 xx $rest]],
           "we can batch by time and elems",
@@ -59,6 +59,6 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $f = Supply.from-list(1..10);
         my $b = $f.batch(:elems(1)),
         ok $f === $b, "batch by 1 is a noop";
-        tap_ok $b, [1..10], "noop batch";
+        tap-ok $b, [1..10], "noop batch";
     }
 }
