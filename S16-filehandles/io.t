@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 112;
+plan 113;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -330,6 +330,18 @@ unlink($filename);
 {
     dies_ok { open('t').read(42) }, '.read on a directory fails';
     dies_ok { open('t').get(1) }, '.get on a directory fails';
+}
+
+# RT #124394
+#?rakudo.moar todo 'single char files wind up doubled'
+{
+    $out = open($filename, :w);
+    $out.print('x');
+    $out.close;
+    my $in = open($filename);
+    is $in.get, 'x', "should not double only char";
+    $in.close;
+    unlink $filename;
 }
 
 done;
