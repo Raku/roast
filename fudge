@@ -118,13 +118,41 @@ our $PENDING = 0;
 my $ARGS = '';
 my $IS = _register_functions(  # regex with test functions used in roast
     # from Test
-    qw(is ok nok is_deeply is_approx isnt like unlike eval_dies_ok cmp_ok isa_ok use_ok throws_ok dies_ok lives_ok eval_lives_ok pass flunk throws_like),
+    qw(
+      cmp_ok            cmp-ok
+      dies_ok           dies-ok
+      eval_dies_ok      eval-dies-ok
+      eval_lives_ok     eval-lives-ok
+      flunk
+      is
+      is_approx         is-approx
+      is_deeply         is-deeply
+      isa_ok            isa-ok
+      isnt
+      like
+      lives_ok          lives-ok
+      nok
+      ok
+      pass
+      throws_like       throws-like
+      unlike
+      use_ok            use-ok
+    ),
     # from Test::Util
-    qw(is_run),
+    qw(
+      is_run            is-run
+    ),
     # from Test::Tap
-    qw(tap-ok),
+    qw(
+      tap-ok
+    ),
     # from Test::Compile
-    qw(loads_ok precomp_loads_ok loads_is precomp_loads_is),
+    qw(
+      loads_ok          loads-ok
+      precomp_loads_ok  precomp-loads-ok
+      loads_is          loads-is
+      precomp_loads_is  precomp-loads-is
+    ),
 );
 my %DOES;
 my $DOES = 0;
