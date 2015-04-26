@@ -18,9 +18,9 @@ plan 50;
     ok $?PERL.gist ~~ m/\w/, 'We can do a $?PERL.gist';
     ok $?PERL.Str  ~~ m/\w/, 'We can do a $?PERL.Str';
 
-    isa_ok $?PERL.version, Version;
-    isa_ok $?PERL.signature, Blob;
-    isa_ok $?PERL.compiler, Compiler;
+    isa-ok $?PERL.version, Version;
+    isa-ok $?PERL.signature, Blob;
+    isa-ok $?PERL.compiler, Compiler;
 
     my $C = $?PERL.compiler;
     ok $C.name,       "We were compiled in '{$C.name}'";
@@ -35,9 +35,9 @@ plan 50;
     ok $C.perl, 'We can do a $?PERL.compiler.perl';
     ok $C.gist, 'We can do a $?PERL.compiler.gist';
 
-    isa_ok $C.version, Version;
-    isa_ok $C.signature, Blob;
-    isa_ok $C.build-date, DateTime;
+    isa-ok $C.version, Version;
+    isa-ok $C.signature, Blob;
+    isa-ok $C.build-date, DateTime;
 }
 
 ok $*PERL.name,      "We are running under '{$*PERL.name}'";
@@ -57,12 +57,12 @@ ok $*PERL.perl ~~ m/\w/, 'We can do a $*PERL.perl';
 ok $*PERL.gist ~~ m/\w/, 'We can do a $*PERL.gist';
 ok $*PERL.Str  ~~ m/\w/, 'We can do a $*PERL.Str';
 
-isa_ok $*PERL.version, Version;
+isa-ok $*PERL.version, Version;
 #?rakudo.jvm    todo 'no Perl.signature yet'
 #?rakudo.moar   todo 'no Perl.signature yet'
 #?rakudo.parrot skip 'no Perl.signature yet'
-isa_ok $*PERL.signature, Blob;
-isa_ok $*PERL.compiler, Compiler;
+isa-ok $*PERL.signature, Blob;
+isa-ok $*PERL.compiler, Compiler;
 
 my $C = $*PERL.compiler;
 ok $C.name,       "We were compiled in '{$C.name}'";
@@ -89,11 +89,11 @@ ok $C.codename,   "Codename is '{$C.codename}'";
 ok $C.perl, 'We can do a $?PERL.compiler.perl';
 ok $C.gist, 'We can do a $?PERL.compiler.gist';
 
-isa_ok $C.version, Version;
+isa-ok $C.version, Version;
 #?rakudo.jvm    todo 'no Perl.compiler.signature yet'
 #?rakudo.moar   todo 'no Perl.compiler.signature yet'
 #?rakudo.parrot skip 'no Perl.compiler.signature yet'
-isa_ok $C.signature, Blob;
-isa_ok $C.build-date, DateTime;
+isa-ok $C.signature, Blob;
+isa-ok $C.build-date, DateTime;
 
 # vim: ft=perl6

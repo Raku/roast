@@ -9,7 +9,7 @@ plan 15;
         42
     });
     sleep 1;
-    isa_ok $p, Promise, '.start gives a Promise';
+    isa-ok $p, Promise, '.start gives a Promise';
     is $p.result, 42, "Correct result";
     is $p.status, Kept, "Promise was kept";
 }
@@ -20,7 +20,7 @@ plan 15;
         42
     };
     sleep 1;
-    isa_ok $p, Promise, 'start {} gives a Promise';
+    isa-ok $p, Promise, 'start {} gives a Promise';
     is $p.result, 42, "Correct result";
     is $p.status, Kept, "Promise was kept";
 }

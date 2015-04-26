@@ -3,7 +3,7 @@ use Test;
 
 plan 6;
 
-isa_ok @*ARGS, Array, '@*ARGS is an Array';
+isa-ok @*ARGS, Array, '@*ARGS is an Array';
 is_deeply @*ARGS, [], 'by default @*ARGS is empty array';
 
 lives_ok { @*ARGS = 1, 2 }, '@*ARGS is writable';

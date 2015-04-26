@@ -8,8 +8,8 @@ plan 38;
 # Type of return value
 #?rakudo 2 skip 'StrPos NYI'
 #?niecza 2 skip 'StrPos'
-isa_ok('abc'.index('b'), StrPos);
-isa_ok('abc'.index('d'), StrPos);
+isa-ok('abc'.index('b'), StrPos);
+isa-ok('abc'.index('d'), StrPos);
 ok(!'abc'.index('d'), 'failure object from index() evaluates to false');
 
 # Simple - with just a single char

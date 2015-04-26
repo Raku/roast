@@ -12,9 +12,9 @@ my $name = $*SCHEDULER.^name;
     my $tracker = '';
     my @c;
     push @c, $*SCHEDULER.cue({ cas $tracker, {$_ ~ '2s'} }, :in(2));
-    isa_ok @c[*-1], Cancellation;
+    isa-ok @c[*-1], Cancellation;
     push @c, $*SCHEDULER.cue({ cas $tracker, {$_ ~ '1s'} }, :in(1));
-    isa_ok @c[*-1], Cancellation;
+    isa-ok @c[*-1], Cancellation;
     is $tracker, '', "Cue on $name with :in doesn't schedule immediately";
     sleep 3;
     is $tracker, "1s2s", "Timer tasks on $name with :in ran in right order";
@@ -29,13 +29,13 @@ my $name = $*SCHEDULER.^name;
       :in(2),
       :catch({ cas $tracker, { $_ ~ '2scatch'} })
     );
-    isa_ok @c[*-1], Cancellation;
+    isa-ok @c[*-1], Cancellation;
     push @c, $*SCHEDULER.cue(
       { cas $tracker, {$_ ~ '1s'}; die },
       :in(1),
       :catch({ cas $tracker, {$_ ~ '1scatch'} })
     );
-    isa_ok @c[*-1], Cancellation;
+    isa-ok @c[*-1], Cancellation;
     is $tracker, '', "Cue on $name with :in/:catch doesn't schedule immediately";
     sleep 3;
     is $tracker, "1s1scatch2s", "Timer tasks on $name:in/:catch ran in right order";

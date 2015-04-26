@@ -26,7 +26,7 @@ plan 44;
 
   %hash<key><innerkey> = 17;
   is %hash<key><innerkey>, 17, "autovivification of a hash element to a hashref worked";
-  isa_ok %hash<key>, Hash, 'Inner hash item is really a Hash';
+  isa-ok %hash<key>, Hash, 'Inner hash item is really a Hash';
 }
 
 # Autovification by push, unshift, etc.
@@ -38,7 +38,7 @@ plan 44;
 
   push $arrayref, 1,2,3;
   is ~$arrayref, "1 2 3", "autovivification to an array by &push";
-  isa_ok $arrayref, Array, 'autovivified to Array';
+  isa-ok $arrayref, Array, 'autovivified to Array';
 }
 
 #?niecza skip 'Unable to resolve method unshift in class Any'

@@ -7,7 +7,7 @@ plan 45;
 # array_ref of strings
 
 my $array_ref1 = ("foo", "bar", "baz");
-isa_ok($array_ref1, Parcel);
+isa-ok($array_ref1, Parcel);
 
 is(+$array_ref1, 3, 'the array_ref1 has 3 elements');
 is($array_ref1[0], 'foo', 'got the right value at array_ref1 index 0');
@@ -19,7 +19,7 @@ is($array_ref1.[0], 'foo', 'got the right value at array_ref1 index 0 using the 
 # array_ref with strings, numbers and undef
 
 my $array_ref2 = [ "test", 1, Mu ];
-isa_ok($array_ref2, Array);
+isa-ok($array_ref2, Array);
 is(+$array_ref2, 3, 'the array_ref2 has 3 elements');
 is($array_ref2[0], 'test', 'got the right value at array_ref2 index 0');
 is($array_ref2[1], 1,      'got the right value at array_ref2 index 1');
@@ -32,7 +32,7 @@ ok(!$array_ref2[2].defined,'got the right value at array_ref2 index 2');
 # not seen as array_ref context, because it's not
 
 my $array_ref4 = [ $array_ref2[2, 1, 0] ];
-isa_ok($array_ref4, Array);
+isa-ok($array_ref4, Array);
 
 {
     is(+$array_ref4, 3, 'the array_ref4 has 3 elements');
@@ -44,7 +44,7 @@ isa_ok($array_ref4, Array);
 # create new array_ref with 2 array_ref slices
 
 my $array_ref5 = [ $array_ref2[2, 1, 0], $array_ref1[2, 1, 0] ];
-isa_ok($array_ref5, Array);
+isa-ok($array_ref5, Array);
 
 {
     is(+$array_ref5, 6, 'the array_ref5 has 6 elements');
@@ -61,7 +61,7 @@ isa_ok($array_ref5, Array);
 {
     my $slice = [ 2, 0, 1 ];
     my $array_ref6 = [ $array_ref1[@($slice)] ];
-    isa_ok($array_ref6, Array);
+    isa-ok($array_ref6, Array);
 
     is(+$array_ref6, 3, 'the array_ref6 has 3 elements');
     is($array_ref6[0], 'baz', 'got the right value at array_ref6 index 0');
@@ -72,7 +72,7 @@ isa_ok($array_ref5, Array);
 # create an array_ref slice with an array_ref constructed with []
 
 my $array_ref7 = [ $array_ref1[(2, 1, 0)] ];
-isa_ok($array_ref7, Array);
+isa-ok($array_ref7, Array);
 
 {
     is(+$array_ref7, 3, 'the array_ref7 has 3 elements');
@@ -87,8 +87,8 @@ is(+$array_ref8, 3, "trailing commas make correct array");
 # recursive array
 my $array9 = [42, "nothing"];
 $array9[1] = $array9;
-isa_ok $array9,             Array;
-isa_ok $array9[1],          Array;
+isa-ok $array9,             Array;
+isa-ok $array9[1],          Array;
 is     $array9[0],          42, "recursive array access (0)";
 is     $array9[1][0],       42, "recursive array access (1)";
 is     $array9[1][1][0],    42, "recursive array access (2)";

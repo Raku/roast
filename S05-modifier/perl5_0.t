@@ -105,7 +105,7 @@ is(@vals[1], 'world', 'returned correct second value in the match');
 }
 
 my $rule = rx:P5/\s+/;
-isa_ok($rule, 'Regex');
+isa-ok($rule, 'Regex');
 
 ok("hello world" ~~ $rule, '... applying rule object returns true');
 ok(!("helloworld" ~~ $rule), '... applying rule object returns false (correctly)');

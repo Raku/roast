@@ -40,7 +40,7 @@ for @inputs Z @results Z @expected -> $input, $result, $expected {
 
 try EVAL q[ class A; method { $!x } ];
 is $!, 'Attribute $!x not declared in class A', 'compiler error message';
-isa_ok $!, X::Attribute::Undeclared, 'compiler error class';
+isa-ok $!, X::Attribute::Undeclared, 'compiler error class';
 ok $! ~~ X::Comp, 'compile error does X::Comp';
 
 try EVAL q[ die 42 ];

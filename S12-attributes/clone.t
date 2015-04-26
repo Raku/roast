@@ -12,11 +12,11 @@ class Foo {
 }
 
 my $a = Foo.new(:attr(13));
-isa_ok($a, Foo);
+isa-ok($a, Foo);
 is($a.get_attr(), 13, '... got the right attr value');
 
 my $c = $a.clone();
-isa_ok($c, Foo);
+isa-ok($c, Foo);
 is($c.get_attr(), 13, '... cloned object retained attr value');
 
 my $val;

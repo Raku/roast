@@ -13,7 +13,7 @@ plan 14;
         is $res.result, 42, "Got correct result";
         101
     });
-    isa_ok $p2, Promise, "then returns a Promise";
+    isa-ok $p2, Promise, "then returns a Promise";
     is $run_then, 0, "Not run then yet";
     
     $p1.keep(42);

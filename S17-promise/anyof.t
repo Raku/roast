@@ -7,7 +7,7 @@ plan 10;
     my $p1 = Promise.new;
     my $p2 = Promise.new;
     my $pany = Promise.anyof($p1, $p2);
-    isa_ok $pany, Promise, "anyof returns a Promise";
+    isa-ok $pany, Promise, "anyof returns a Promise";
     nok $pany.Bool, "No result yet";
     
     $p1.keep(1);

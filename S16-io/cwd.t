@@ -5,6 +5,6 @@ use Test;
 
 plan 3;
 
-isa_ok $*CWD, IO::Path;
+isa-ok $*CWD, IO::Path;
 lives_ok { $*CWD.perl }, '$*CWD.perl works';
 lives_ok { $*CWD.gist }, '$*CWD.gist works';

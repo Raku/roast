@@ -25,25 +25,25 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
 {
     my $foo = sub () { 42 };
-    isa_ok($foo, Code);
-    isa_ok($foo, Routine);
-    isa_ok($foo, Sub);
+    isa-ok($foo, Code);
+    isa-ok($foo, Routine);
+    isa-ok($foo, Sub);
     is $foo.(), 42,                 "basic invocation of an anonymous sub";
     dies_ok { $foo.(23) }, "invocation of a parameterless anonymous sub with a parameter dies";
 }
 
 {
     my $foo = -> { 42 };
-    isa_ok($foo, Code);
-    isa_ok($foo, Block);
+    isa-ok($foo, Code);
+    isa-ok($foo, Block);
     is $foo.(), 42,                 "basic invocation of a pointy block";
     dies_ok { $foo.(23) },  "invocation of a parameterless pointy block with a parameter dies";
 }
 
 {
     my $foo = { 100 + $^x };
-    isa_ok($foo, Code);
-    isa_ok($foo, Block);
+    isa-ok($foo, Code);
+    isa-ok($foo, Block);
     is $foo.(42), 142,              "basic invocation of a pointy block with a param";
     dies_ok { $foo.() }, "invocation of a parameterized block expecting a param without a param dies";
 }
@@ -64,18 +64,18 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
 {
     my $foo = sub { 100 + (@_[0] // -1) };
-    isa_ok($foo, Code);
-    isa_ok($foo, Routine);
-    isa_ok($foo, Sub);
+    isa-ok($foo, Code);
+    isa-ok($foo, Routine);
+    isa-ok($foo, Sub);
     is $foo.(42), 142,              "basic invocation of a perl5-like anonymous sub (1)";
     is $foo.(),    99,              "basic invocation of a perl5-like anonymous sub (2)";
 }
 
 {
     my $foo = sub ($x) { 100 + $x };
-    isa_ok($foo, Code);
-    isa_ok($foo, Routine);
-    isa_ok($foo, Sub);
+    isa-ok($foo, Code);
+    isa-ok($foo, Routine);
+    isa-ok($foo, Sub);
     is $foo.(42),      142,    "calling an anonymous sub with a positional param";
     dies_ok { $foo.() }, 
         "calling an anonymous sub expecting a param without a param dies";
@@ -96,9 +96,9 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     # (The macros are subject to MMD thing still needs to be fleshed out, I
     # think.)
     our &foo_macro ::= macro ($x) { "1000 + $x" };
-    isa_ok(&foo_macro, Code);
-    isa_ok(&foo_macro, Routine);
-    isa_ok(&foo_macro, Macro);
+    isa-ok(&foo_macro, Code);
+    isa-ok(&foo_macro, Routine);
+    isa-ok(&foo_macro, Macro);
 
     is foo_macro(3), 1003, "anonymous macro worked";
 }

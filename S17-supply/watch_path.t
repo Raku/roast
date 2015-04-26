@@ -30,10 +30,10 @@ sub macosx {
 
     my @seen;
     my $tap = $s.tap( -> \event { @seen.push(event) } );
-    isa_ok $tap, Tap, 'did we get a tap?';
+    isa-ok $tap, Tap, 'did we get a tap?';
 
     my $handle = open( $filename, :w );
-    isa_ok $handle, IO::Handle, 'did we get a handle?';
+    isa-ok $handle, IO::Handle, 'did we get a handle?';
 
     sleep $forawhile;
     is +@seen, 1, 'did we get an event for creating the file';
@@ -49,7 +49,7 @@ sub macosx {
     is +@seen, 2, 'did we NOT get an event for closing the file';
 
     $handle = open( $filename, :a );
-    isa_ok $handle, IO::Handle, 'did we get a handle again?';
+    isa-ok $handle, IO::Handle, 'did we get a handle again?';
 
     sleep $forawhile;
     is +@seen, 2, 'did we NOT get an event for opening the file again';

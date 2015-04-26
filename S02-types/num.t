@@ -6,83 +6,83 @@ use Test;
 
 plan 66;
 
-isa_ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
+isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
-isa_ok( EVAL(0.Num.perl), Num, 'EVAL 0.Num.perl is Num' );
+isa-ok( EVAL(0.Num.perl), Num, 'EVAL 0.Num.perl is Num' );
 is_approx( EVAL(0.Num.perl), 0, 'EVAL 0.Num.perl is 0' );
-isa_ok( EVAL((-1).Num.perl), Num, 'EVAL -1.Num.perl is Num' );
+isa-ok( EVAL((-1).Num.perl), Num, 'EVAL -1.Num.perl is Num' );
 is_approx( EVAL((-1).Num.perl), -1, 'EVAL -1.Num.perl is -1' );
-isa_ok( EVAL(1.1.Num.perl), Num, 'EVAL 1.1.Num.perl is Num' );
+isa-ok( EVAL(1.1.Num.perl), Num, 'EVAL 1.1.Num.perl is Num' );
 is_approx( EVAL(1.1.perl), 1.1, 'EVAL 1.1.Num.perl is 1.1' );
-isa_ok( EVAL((-1.1).Num.perl), Num, 'EVAL -1.1.Num.perl is Num' );
+isa-ok( EVAL((-1.1).Num.perl), Num, 'EVAL -1.1.Num.perl is Num' );
 is_approx( EVAL((-1.1).perl), -1.1, 'EVAL -1.1.Num.perl is -1.1' );
-isa_ok( EVAL(1e100.Num.perl), Num, 'EVAL 1e100.Num.perl is Num' );
+isa-ok( EVAL(1e100.Num.perl), Num, 'EVAL 1e100.Num.perl is Num' );
 is_approx( EVAL(1e100.Num.perl), 1e100, 'EVAL 1e100.Num.perl is 1' );
 
 {
     my $a = 1; "$a";
-    isa_ok($a, Int);
+    isa-ok($a, Int);
     is($a, "1", '1 stringification works');
 }
 
 {
     my $a = -1; "$a";
-    isa_ok($a, Int);
+    isa-ok($a, Int);
     is($a, "-1", '-1 stringification works');
 }
 
 #L<S02/The C<Num> and C<Rat> Types/Rat supports extended precision rational arithmetic>
 {
     my $a = 1 / 1;
-    isa_ok($a, Rat);
+    isa-ok($a, Rat);
     is(~$a, "1", '1/1 stringification works');
 }
 
 {
     my $a = -1.0;
-    isa_ok($a, Rat);
+    isa-ok($a, Rat);
     is($a, "-1", '-1 stringification works');
 }
 
 {
     my $a = 0.1;
-    isa_ok($a, Rat);
+    isa-ok($a, Rat);
     is($a, "0.1", '0.1 stringification works');
 }
 
 {
     my $a = -0.1; "$a";
-    isa_ok($a, Rat);
+    isa-ok($a, Rat);
     is($a, "-0.1", '-0.1 stringification works');
 }
 
 {
     my $a = 10.01; "$a";
-    isa_ok($a, Rat);
+    isa-ok($a, Rat);
     is($a, "10.01", '10.01 stringification works');
 }
 
 {
     my $a = -1.0e0;
-    isa_ok($a, Num);
+    isa-ok($a, Num);
     is($a, "-1", '-1 stringification works');
 }
 
 {
     my $a = 0.1e0;
-    isa_ok($a, Num);
+    isa-ok($a, Num);
     is($a, "0.1", '0.1 stringification works');
 }
 
 {
     my $a = -0.1e0; "$a";
-    isa_ok($a, Num);
+    isa-ok($a, Num);
     is($a, "-0.1", '-0.1 stringification works');
 }
 
 {
     my $a = 10.01e0; "$a";
-    isa_ok($a, Num);
+    isa-ok($a, Num);
     is($a, "10.01", '10.01 stringification works');
 }
 
@@ -94,7 +94,7 @@ is_approx( EVAL(1e100.Num.perl), 1e100, 'EVAL 1e100.Num.perl is 1' );
 
 {
     my $a = 10.01e3; "$a";
-    isa_ok($a, Num);
+    isa-ok($a, Num);
     is($a, "10010", '10.01e3 stringification works');
 }
 
@@ -102,19 +102,19 @@ is_approx( EVAL(1e100.Num.perl), 1e100, 'EVAL 1e100.Num.perl is 1' );
 
 {
     my $a = 0b100; "$a";
-    isa_ok($a, Int);
+    isa-ok($a, Int);
     is($a, "4", '0b100 (binary) stringification works');
 }
 
 {
     my $a = 0x100; "$a";
-    isa_ok($a, Int);
+    isa-ok($a, Int);
     is($a, "256", '0x100 (hex) stringification works');
 }
 
 {
     my $a = 0o100; "$a";
-    isa_ok($a, Int);
+    isa-ok($a, Int);
     is($a, "64", '0o100 (octal) stringification works');
 }
 
@@ -129,31 +129,31 @@ is_approx( EVAL(1e100.Num.perl), 1e100, 'EVAL 1e100.Num.perl is 1' );
 }
 #L<S02/The C<Num> and C<Rat> Types/Rat supports extended precision rational arithmetic>
 
-isa_ok(1 / 1, Rat);
+isa-ok(1 / 1, Rat);
 
 {
     my $a = 80000.0000000000000000000000000;
-    isa_ok($a, Rat);
+    isa-ok($a, Rat);
     ok($a == 80000.0, 'trailing zeros compare correctly');
 }
 
 {
     my $a = 1.0000000000000000000000000000000000000000000000000000000000000000000e1;
-    isa_ok($a, Num);
+    isa-ok($a, Num);
     ok($a == 10.0, 'trailing zeros compare correctly');
 }
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 {
     my $a = "1.01";
-    isa_ok($a.Int, Int);
+    isa-ok($a.Int, Int);
     is($a.Int, 1, "1.01 intifies to 1");
 }
 
 #L<S02/The C<Num> and C<Rat> Types/may be bound to an arbitrary>
 {
     my $a = "0d0101";
-    isa_ok(+$a, Int);
+    isa-ok(+$a, Int);
     is(+$a, 101, "0d0101 numifies to 101");
 }
 

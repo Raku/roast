@@ -113,7 +113,7 @@ eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {
 {
     class class {}
     #?niecza todo
-    isa_ok( class.new, 'class' );
+    isa-ok( class.new, 'class' );
 }
 
 # RT #64686
@@ -131,7 +131,7 @@ eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
 # RT #76270
 {
     my $x = class Named { };
-    isa_ok $x, Named, 'named class declaration returns the class object';
+    isa-ok $x, Named, 'named class declaration returns the class object';
 }
 
 # RT #72916

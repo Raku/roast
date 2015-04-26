@@ -7,7 +7,7 @@ plan 11;
     my $p1 = Promise.new;
     my $p2 = Promise.new;
     my $pall = Promise.allof($p1, $p2);
-    isa_ok $pall, Promise, "allof returns a Promise";
+    isa-ok $pall, Promise, "allof returns a Promise";
     nok $pall.Bool, "No result yet";
     
     $p1.keep(1);
@@ -38,9 +38,9 @@ plan 11;
         }
     };
     my $all = Promise.allof(@p);
-    isa_ok $all, Promise, 'allof gives a Promise';
+    isa-ok $all, Promise, 'allof gives a Promise';
     my $b = $all.result;  # block
-    isa_ok $b, Bool, 'get a bool of the result';
+    isa-ok $b, Bool, 'get a bool of the result';
     is ~@a, "0 1 2 3 4 5 6 7 8 9", 'got the right order';
 }
 

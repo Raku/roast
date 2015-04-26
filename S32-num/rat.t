@@ -7,18 +7,18 @@ plan 824;
 # Basic test functions specific to rational numbers.
 
 # Test ways of making Rats
-isa_ok(Rat.new(1,4), Rat, "Rat.new makes a Rat");
-isa_ok(1 / 4, Rat, "/ makes a Rat");
-isa_ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
-isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
+isa-ok(Rat.new(1,4), Rat, "Rat.new makes a Rat");
+isa-ok(1 / 4, Rat, "/ makes a Rat");
+isa-ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
+isa-ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
 #?niecza skip 'No value for parameter $n in CORE Rat.new'
-isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
+isa-ok( Rat.new, Rat, 'Rat.new is Rat' );
 #?niecza skip 'No value for parameter $n in CORE Rat.new'
-isa_ok( EVAL(Rat.new.perl), Rat, 'EVAL Rat.new.perl is Rat' );
-isa_ok( EVAL(Rat.new(1, 3).perl), Rat, 'EVAL Rat.new(1, 3).perl is Rat' );
+isa-ok( EVAL(Rat.new.perl), Rat, 'EVAL Rat.new.perl is Rat' );
+isa-ok( EVAL(Rat.new(1, 3).perl), Rat, 'EVAL Rat.new(1, 3).perl is Rat' );
 is( (EVAL Rat.new(1, 3).perl), 1/3, 'EVAL Rat.new(1, 3).perl is 1/3' );
-isa_ok( EVAL((1/3).perl), Rat, 'EVAL (1/3).perl is Rat' );
+isa-ok( EVAL((1/3).perl), Rat, 'EVAL (1/3).perl is Rat' );
 is( (EVAL (1/3).perl), 1/3, 'EVAL (1/3).perl is 1/3' );
 is( (1/10).perl, "0.1", '(1/10).perl is 0.1' );
 is( (1/5).perl, "0.2", '(1/5).perl is .2' );
@@ -46,39 +46,39 @@ dies_ok( { Rat.new(0, 0) }, "Zero over zero is not a legal Rat");
 
 # Test basic math
 is(1 / 4 + 1 / 4, 1/2, "1/4 + 1/4 = 1/2");
-isa_ok(1 / 4 + 1 / 4, Rat, "1/4 + 1/4 is a Rat");
+isa-ok(1 / 4 + 1 / 4, Rat, "1/4 + 1/4 is a Rat");
 is(1 / 4 + 2 / 7, 15/28, "1/4 + 2/7 = 15/28");
 is(1 / 4 + 1, 5/4, "1/4 + 1 = 5/4");
-isa_ok(1 / 4 + 1, Rat, "1/4 + 1 is a Rat");
+isa-ok(1 / 4 + 1, Rat, "1/4 + 1 is a Rat");
 is(1 + 1 / 4, 5/4, "1 + 1/4 = 5/4");
-isa_ok(1 + 1 / 4, Rat, "1 + 1/4 is a Rat");
+isa-ok(1 + 1 / 4, Rat, "1 + 1/4 is a Rat");
 
 is(1 / 4 - 1 / 4, 0/1, "1/4 - 1/4 = 0/1");
 is(1 / 4 - 3 / 4, -1/2, "1/4 - 3/4 = -1/2");
 is((1 / 4 - 3 / 4).nude, (-1, 2), "1/4 - 3/4 = -1/2 is simplified internally");
-isa_ok((1 / 4 - 3 / 4), Rat, "1/4 - 3/4 is a Rat");
+isa-ok((1 / 4 - 3 / 4), Rat, "1/4 - 3/4 is a Rat");
 is(1 / 4 - 1, -3/4, "1/4 - 1 = -3/4");
-isa_ok(1 / 4 - 1, Rat, "1/4 - 1 is a Rat");
+isa-ok(1 / 4 - 1, Rat, "1/4 - 1 is a Rat");
 is(1 - 1 / 4, 3/4, "1 - 1/4 = 3/4");
-isa_ok(1 - 1 / 4, Rat, "1 - 1/4 is a Rat");
+isa-ok(1 - 1 / 4, Rat, "1 - 1/4 is a Rat");
 
 is((2 / 3) * (5 / 4), 5/6, "2/3 * 5/4 = 5/6");
 is(((2 / 3) * (5 / 4)).nude, (5, 6), "2/3 * 5/4 = 5/6 is simplified internally");
-isa_ok((2 / 3) * (5 / 4), Rat, "2/3 * 5/4 is a Rat");
+isa-ok((2 / 3) * (5 / 4), Rat, "2/3 * 5/4 is a Rat");
 is((2 / 3) * 2, 4/3, "2/3 * 2 = 4/3");
-isa_ok((2 / 3) * 2, Rat, "2/3 * 2 is a Rat");
+isa-ok((2 / 3) * 2, Rat, "2/3 * 2 is a Rat");
 is(((2 / 3) * 3).nude, (2, 1), "2/3 * 3 = 2 is simplified internally");
 is(2 * (2 / 3), 4/3, "2 * 2/3 = 4/3");
-isa_ok(2 * (2 / 3), Rat, "2 * 2/3 is a Rat");
+isa-ok(2 * (2 / 3), Rat, "2 * 2/3 is a Rat");
 is((3 * (2 / 3)).nude, (2, 1), "3 * 2/3 = 2 is simplified internally");
 
 is((2 / 3) / (5 / 4), 8/15, "2/3 / 5/4 = 8/15");
-isa_ok((2 / 3) / (5 / 4), Rat, "2/3 / 5/4 is a Rat");
+isa-ok((2 / 3) / (5 / 4), Rat, "2/3 / 5/4 is a Rat");
 is((2 / 3) / 2, 1/3, "2/3 / 2 = 1/3");
 is(((2 / 3) / 2).nude, (1, 3), "2/3 / 2 = 1/3 is simplified internally");
-isa_ok((2 / 3) / 2, Rat, "2/3 / 2 is a Rat");
+isa-ok((2 / 3) / 2, Rat, "2/3 / 2 is a Rat");
 is(2 / (1 / 3), 6, "2 / 1/3 = 6");
-isa_ok(2 / (1 / 3), Rat, "2 / 1/3 is a Rat");
+isa-ok(2 / (1 / 3), Rat, "2 / 1/3 is a Rat");
 is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
 {
@@ -127,7 +127,7 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
         }
 
         my $neg = -$a;
-        isa_ok($neg, Rat, "prefix<-> generates a Rat on $a");
+        isa-ok($neg, Rat, "prefix<-> generates a Rat on $a");
         is_approx($neg, -($a.Num), "prefix<-> generates the correct number for $a");
     }
 }
@@ -156,7 +156,7 @@ is NaN.Rat, NaN, "NaN.Rat == NaN";
     # RT #74648
     #?rakudo skip 'RT #74648'
     #?niecza todo
-    isa_ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
+    isa-ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
 }
 
 # Quick test of some basic mixed type math
@@ -193,10 +193,10 @@ is_approx 424/61731 - 832/61731, 424.Num / 61731.Num - 832.Num / 61731.Num, "424
 is_approx 424/61731 + 833/123462, 424.Num / 61731.Num + 833.Num / 123462.Num, "424/61731 + 833/123462 works";
 is_approx 424/61731 - 833/123462, 424.Num / 61731.Num - 833.Num / 123462.Num, "424/61731 - 833/123462 works";
 
-isa_ok 424/61731 + 832/61731, Rat, "424/61731 + 832/61731 is a Rat";
-isa_ok 424/61731 - 832/61731, Rat, "424/61731 - 832/61731 is a Rat";
-isa_ok 424/61731 + 833/123462, Rat, "424/61731 + 833/123462 is a Rat";
-isa_ok 424/61731 - 833/123462, Rat, "424/61731 - 833/123462 is a Rat";
+isa-ok 424/61731 + 832/61731, Rat, "424/61731 + 832/61731 is a Rat";
+isa-ok 424/61731 - 832/61731, Rat, "424/61731 - 832/61731 is a Rat";
+isa-ok 424/61731 + 833/123462, Rat, "424/61731 + 833/123462 is a Rat";
+isa-ok 424/61731 - 833/123462, Rat, "424/61731 - 833/123462 is a Rat";
 
 is_approx 61731 + 832/61731, 61731.Num + 832.Num / 61731.Num, "61731 + 832/61731 works";
 is_approx 832/61731 + 61731, 61731.Num + 832.Num / 61731.Num, "832/61731 + 61731 works";
@@ -215,12 +215,12 @@ is_approx (832/61731) / 61731, (832.Num / 61731.Num) / 61731.Num, "832/61731 / 6
 is_approx 61731 / (832/61731), 61731.Num / (832.Num / 61731.Num), "61731 / 832/61731 works";
 
 is_approx (424/61731) * (61731/61733), (424.Num / 61731.Num) * (61731.Num / 61733.Num), "424/61731 * 61731/61733 works";
-isa_ok (424/61731) * (61731/61733), Rat, "424/61731 * 61731/61733 is a Rat";
+isa-ok (424/61731) * (61731/61733), Rat, "424/61731 * 61731/61733 is a Rat";
 is_approx (424/61731) / (61733/61731), (424.Num / 61731.Num) / (61733.Num / 61731.Num), "424/61731 / 61733/61731 works";
-isa_ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
+isa-ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
 
 ok (1/2) == (1/2).Rat, 'Rat.Rat works';
-isa_ok (1/2).Rat, Rat, '... and actually returns a Rat';
+isa-ok (1/2).Rat, Rat, '... and actually returns a Rat';
 
 ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
 ok 1/2 !=== 1/3, '=== with false outcome';
@@ -246,10 +246,10 @@ is .88888888888.WHAT.gist, Rat.gist, 'WHAT works on Rat created from 11 digit de
 # RT #74624
 {
     my $a += 0.1;
-    isa_ok $a, Rat, 'Any() + 0.1 is a Rat';
+    isa-ok $a, Rat, 'Any() + 0.1 is a Rat';
 }
 
-isa_ok (2/3) ** 3, Rat, "Rat raised to a positive Int power is a Rat";
+isa-ok (2/3) ** 3, Rat, "Rat raised to a positive Int power is a Rat";
 is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
 
 # the spec says that Rat denominators can't grow larger than a uint64,
@@ -261,27 +261,27 @@ is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
         $s += 1/$_**2
     };
     is_approx $s, 1.64393456668156, 'can sum up 1/$_**2 in a loop';
-    isa_ok $s, Num, 'and we had an overflow to Num';
+    isa-ok $s, Num, 'and we had an overflow to Num';
     my $bigish = 2 ** 34;
     my $bigish_n = $bigish.Num;
     # TODO: not just check the type of the results, but also the numeric value
-    isa_ok (1/$bigish) * (1/$bigish),       Num, 'multiplication overflows to Num';
+    isa-ok (1/$bigish) * (1/$bigish),       Num, 'multiplication overflows to Num';
     is_approx (1/$bigish) * (1/$bigish), (1/$bigish_n) * (1/$bigish_n), '... right result';
-    isa_ok (1/$bigish) ** 2,                Num, 'exponentation overflows to Num';
+    isa-ok (1/$bigish) ** 2,                Num, 'exponentation overflows to Num';
     is_approx (1/$bigish) ** 2, (1/$bigish_n) ** 2, '... right result';
     is_approx (1/$bigish) * (1/$bigish), (1/$bigish_n) * (1/$bigish_n), '... right result';
-    isa_ok (1/$bigish) + (1 / ($bigish+1)), Num, 'addition overflows to Num';
+    isa-ok (1/$bigish) + (1 / ($bigish+1)), Num, 'addition overflows to Num';
     is_approx (1/$bigish) + (1/($bigish+1)), (1/$bigish_n) + (1/($bigish_n+1)), '... right result';
-    isa_ok (1/$bigish) - (1 / ($bigish+1)), Num, 'subtraction overflows to Num';
+    isa-ok (1/$bigish) - (1 / ($bigish+1)), Num, 'subtraction overflows to Num';
     is_approx (1/$bigish) - (1/($bigish+1)), (1/$bigish_n) - (1/($bigish_n+1)), '... right result';
-    isa_ok (1/$bigish) / (($bigish+1)/3),   Num, 'division overflows to Num';
+    isa-ok (1/$bigish) / (($bigish+1)/3),   Num, 'division overflows to Num';
     is_approx (1/$bigish) / (($bigish+1)/3), (1/$bigish_n) / (($bigish_n+1)/3), '... right result';
 
 }
 
 is Rat.new(9,33).norm.nude, (3, 11), ".norm exists and doesn't hurt matters";
 
-isa_ok 241025348275725.3352, Rat, "241025348275725.3352 is a Rat";
+isa-ok 241025348275725.3352, Rat, "241025348275725.3352 is a Rat";
 is 241025348275725.3352.Rat.norm.nude, (301281685344656669, 1250), "Rat.Rat yields correct Rat";
 
 #RT #112822

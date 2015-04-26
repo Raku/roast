@@ -8,7 +8,7 @@ plan 135;
 # L<S02/Immutable types/A pair of Ordered endpoints>
 
 my $r = 1..5;
-isa_ok $r, Range, 'Type';
+isa-ok $r, Range, 'Type';
 is $r.WHAT.gist, Range.gist, 'Type';
 is $r.perl, '1..5', 'canonical representation';
 
@@ -24,7 +24,7 @@ is @r, [1, 2, 3, 4, 5], 'got the right array';
 # Range of Str
 
 $r = 'a'..'c';
-isa_ok $r, Range;
+isa-ok $r, Range;
 # XXX unspecced: exact value of Range.perl
 is $r.perl, '"a".."c"', 'canonical representation';
 @r = $r;
@@ -170,15 +170,15 @@ is(+Range, 0, 'type numification');
     is ~@b.sort, ~(1..100), "pick(*, 1..100) returns the correct elements";
     is ~@b.grep(Int).elems, 100, "pick(*, 1..100) returns Ints";
 
-    isa_ok (1..100).pick, Int, "picking a single element from an range of Ints produces an Int";
+    isa-ok (1..100).pick, Int, "picking a single element from an range of Ints produces an Int";
     ok (1..100).pick ~~ 1..100, "picking a single element from an range of Ints produces one of them";
 
-    isa_ok (1..100).pick(1), Int, "picking 1 from an range of Ints produces an Int";
+    isa-ok (1..100).pick(1), Int, "picking 1 from an range of Ints produces an Int";
     ok (1..100).pick(1) ~~ 1..100, "picking 1 from an range of Ints produces one of them";
 
     my @c = (1..100).pick(2);
-    isa_ok @c[0], Int, "picking 2 from an range of Ints produces an Int...";
-    isa_ok @c[1], Int, "... and an Int";
+    isa-ok @c[0], Int, "picking 2 from an range of Ints produces an Int...";
+    isa-ok @c[1], Int, "... and an Int";
     ok (@c[0] ~~ 1..100) && (@c[1] ~~ 1..100), "picking 2 from an range of Ints produces two of them";
     ok @c[0] != @c[1], "picking 2 from an range of Ints produces two distinct results";
 
@@ -197,15 +197,15 @@ is(+Range, 0, 'type numification');
     is ~@b.sort, ~('b' .. 'y'), "pick(*, 'b' .. 'y') returns the correct elements";
     is ~@b.grep(Str).elems, 24, "pick(*, 'b' .. 'y') returns Strs";
 
-    isa_ok ('b' .. 'y').pick, Str, "picking a single element from an range of Strs produces an Str";
+    isa-ok ('b' .. 'y').pick, Str, "picking a single element from an range of Strs produces an Str";
     ok ('b' .. 'y').pick ~~ 'b' .. 'y', "picking a single element from an range of Strs produces one of them";
 
-    isa_ok ('b' .. 'y').pick(1), Str, "picking 1 from an range of Strs produces an Str";
+    isa-ok ('b' .. 'y').pick(1), Str, "picking 1 from an range of Strs produces an Str";
     ok ('b' .. 'y').pick(1) ~~ 'b' .. 'y', "picking 1 from an range of Strs produces one of them";
 
     my @c = ('b' .. 'y').pick(2);
-    isa_ok @c[0], Str, "picking 2 from an range of Strs produces an Str...";
-    isa_ok @c[1], Str, "... and an Str";
+    isa-ok @c[0], Str, "picking 2 from an range of Strs produces an Str...";
+    isa-ok @c[1], Str, "... and an Str";
     ok (@c[0] ~~ 'b' .. 'y') && (@c[1] ~~ 'b' .. 'y'), "picking 2 from an range of Strs produces two of them";
     ok @c[0] ne @c[1], "picking 2 from an range of Strs produces two distinct results";
 
@@ -224,15 +224,15 @@ is(+Range, 0, 'type numification');
     is ~@b.grep(1..100).elems, 100, "roll(100, 1..100) returns elements from 1..100";
     is ~@b.grep(Int).elems, 100, "roll(100, 1..100) returns Ints";
 
-    isa_ok (1..100).roll, Int, "rolling a single element from an range of Ints produces an Int";
+    isa-ok (1..100).roll, Int, "rolling a single element from an range of Ints produces an Int";
     ok (1..100).roll ~~ 1..100, "rolling a single element from an range of Ints produces one of them";
 
-    isa_ok (1..100).roll(1), Int, "rolling 1 from an range of Ints produces an Int";
+    isa-ok (1..100).roll(1), Int, "rolling 1 from an range of Ints produces an Int";
     ok (1..100).roll(1) ~~ 1..100, "rolling 1 from an range of Ints produces one of them";
 
     my @c = (1..100).roll(2);
-    isa_ok @c[0], Int, "rolling 2 from an range of Ints produces an Int...";
-    isa_ok @c[1], Int, "... and an Int";
+    isa-ok @c[0], Int, "rolling 2 from an range of Ints produces an Int...";
+    isa-ok @c[1], Int, "... and an Int";
     ok (@c[0] ~~ 1..100) && (@c[1] ~~ 1..100), "rolling 2 from an range of Ints produces two of them";
 
     is (1..100).roll("25").elems, 25, ".roll works Str arguments";
@@ -250,15 +250,15 @@ is(+Range, 0, 'type numification');
     is ~@b.grep('b' .. 'y').elems, 100, "roll(100, 'b' .. 'y') returns elements from b..y";
     is ~@b.grep(Str).elems, 100, "roll(100, 'b' .. 'y') returns Strs";
 
-    isa_ok ('b' .. 'y').roll, Str, "rolling a single element from an range of Strs produces an Str";
+    isa-ok ('b' .. 'y').roll, Str, "rolling a single element from an range of Strs produces an Str";
     ok ('b' .. 'y').roll ~~ 'b' .. 'y', "rolling a single element from an range of Strs produces one of them";
 
-    isa_ok ('b' .. 'y').roll(1), Str, "rolling 1 from an range of Strs produces an Str";
+    isa-ok ('b' .. 'y').roll(1), Str, "rolling 1 from an range of Strs produces an Str";
     ok ('b' .. 'y').roll(1) ~~ 'b' .. 'y', "rolling 1 from an range of Strs produces one of them";
 
     my @c = ('b' .. 'y').roll(2);
-    isa_ok @c[0], Str, "rolling 2 from an range of Strs produces an Str...";
-    isa_ok @c[1], Str, "... and an Str";
+    isa-ok @c[0], Str, "rolling 2 from an range of Strs produces an Str...";
+    isa-ok @c[1], Str, "... and an Str";
     ok (@c[0] ~~ 'b' .. 'y') && (@c[1] ~~ 'b' .. 'y'), "rolling 2 from an range of Strs produces two of them";
 
     is ('b' .. 'y').roll("10").elems, 10, ".roll works Str arguments";

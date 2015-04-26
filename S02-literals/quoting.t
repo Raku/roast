@@ -510,12 +510,12 @@ Hello, World
 }
 
 {
-    isa_ok rx/foo/, Regex, 'rx/.../';
-    isa_ok rx{foo}, Regex, 'rx{...}';
-    isa_ok rx:i{foo}, Regex, 'rx:i{...}';
-    isa_ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
-    isa_ok rx:s{foo}, Regex, 'rx:i{...}';
-    isa_ok rx:sigspace{foo}, Regex, 'rx:i{...}';
+    isa-ok rx/foo/, Regex, 'rx/.../';
+    isa-ok rx{foo}, Regex, 'rx{...}';
+    isa-ok rx:i{foo}, Regex, 'rx:i{...}';
+    isa-ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
+    isa-ok rx:s{foo}, Regex, 'rx:i{...}';
+    isa-ok rx:sigspace{foo}, Regex, 'rx:i{...}';
     throws_like { EVAL 'rx:unknown{foo}' },
       X::Syntax::Regex::Adverb,
       'rx:unknown dies';

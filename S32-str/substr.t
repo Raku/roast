@@ -137,7 +137,7 @@ eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 # RT #76682
 #?niecza skip "'Failure' used at line 244"
 {
-    isa_ok "foo".substr(4), Failure, 'substr with start beyond end of string is Failure';
+    isa-ok "foo".substr(4), Failure, 'substr with start beyond end of string is Failure';
 }
 
 # RT #115086

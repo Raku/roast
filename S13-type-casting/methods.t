@@ -46,10 +46,10 @@ is "hello".Str, "hello", ".Str can be called on Str";
     class DerivedFromStr is Str {
         has $.a;
     }
-    isa_ok DerivedFromStr.new, DerivedFromStr, 'DerivedFromStr.new isa DerivedFromStr';
-    isa_ok DerivedFromStr.new, Str, 'DerivedFromStr.new isa DerivedFromStr';
-    isa_ok DerivedFromStr.new.Str, DerivedFromStr, 'DerivedFromStr.new.Str isa DerivedFromStr';
-    isa_ok DerivedFromStr.new.Str, Str, 'DerivedFromStr.new.Str isa Str';
+    isa-ok DerivedFromStr.new, DerivedFromStr, 'DerivedFromStr.new isa DerivedFromStr';
+    isa-ok DerivedFromStr.new, Str, 'DerivedFromStr.new isa DerivedFromStr';
+    isa-ok DerivedFromStr.new.Str, DerivedFromStr, 'DerivedFromStr.new.Str isa DerivedFromStr';
+    isa-ok DerivedFromStr.new.Str, Str, 'DerivedFromStr.new.Str isa Str';
 }
 
 # vim: ft=perl6

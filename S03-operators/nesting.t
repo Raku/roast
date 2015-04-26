@@ -19,16 +19,16 @@ is 1 [+] 2, 3, '[+] as an infix';   #OK Useless
 # test nesting with Rop -- tests stolen from reverse.t and nested in various ways
 
 is 4 R[+] 5, 5 + 4, "4 R[+] 5";
-isa_ok 4 R[+] 5, (5 + 4).WHAT, "4 R[+] 5 is the same type as 5 + 4";
+isa-ok 4 R[+] 5, (5 + 4).WHAT, "4 R[+] 5 is the same type as 5 + 4";
 is 4 [R-] 5, 5 - 4, "4 [R-] 5";
-isa_ok 4 [R-] 5, (5 - 4).WHAT, "4 [R-] 5 is the same type as 5 - 4";
+isa-ok 4 [R-] 5, (5 - 4).WHAT, "4 [R-] 5 is the same type as 5 - 4";
 is 4 [R*] 5, 5 * 4, "4 [R*] 5";
-isa_ok 4 [R*] 5, (5 * 4).WHAT, "4 [R*] 5 is the same type as 5 * 4";
+isa-ok 4 [R*] 5, (5 * 4).WHAT, "4 [R*] 5 is the same type as 5 * 4";
 is 4 R[/] 5, 5 / 4, "4 R[/] 5";
-isa_ok 4 R[/] 5, (5 / 4).WHAT, "4 R[/] 5 is the same type as 5 / 4";
+isa-ok 4 R[/] 5, (5 / 4).WHAT, "4 R[/] 5 is the same type as 5 / 4";
 
 is 4 R[cmp] 5, 5 cmp 4, "4 R[cmp] 5";
-isa_ok 4 R[cmp] 5, (5 cmp 4).WHAT, "4 R[cmp] 5 is the same type as 5 cmp 4";
+isa-ok 4 R[cmp] 5, (5 cmp 4).WHAT, "4 R[cmp] 5 is the same type as 5 cmp 4";
 
 is 3 R[/] 9 + 5, 8, 'R[/] gets precedence of /';
 is 4 R[-] 5 [R/] 10, -2, "Rop gets the precedence of op";

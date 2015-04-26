@@ -23,42 +23,42 @@ my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3);
 # Mix Union
 
 is showkv($m ∪ $m), showkv($m), "Mix union with itself yields self";
-isa_ok ($m ∪ $m), Mix, "... and it's actually a Mix";
+isa-ok ($m ∪ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ∪ $mh), showkv($mh), "MixHash union with itself yields (as Mix)";
-isa_ok ($mh ∪ $mh), Mix, "... and it's actually a Mix";
+isa-ok ($mh ∪ $mh), Mix, "... and it's actually a Mix";
 
 is showkv($b ∪ $m), "blood:1.1 love:1.2 rhetoric:1", "Bag union with Mix works";
-isa_ok ($b ∪ $m), Mix, "... and it's actually a Mix";
+isa-ok ($b ∪ $m), Mix, "... and it's actually a Mix";
 is showkv($b ∪ $mh), "blood:1.1 love:1.3", "Bag union with MixHash works";
-isa_ok ($b ∪ $mh), Mix, "... and it's actually a Mix";
+isa-ok ($b ∪ $mh), Mix, "... and it's actually a Mix";
 
 is showkv($b (|) $m), "blood:1.1 love:1.2 rhetoric:1", "Bag union with Mix works (texas)";
-isa_ok ($b (|) $m), Mix, "... and it's actually a Mix";
+isa-ok ($b (|) $m), Mix, "... and it's actually a Mix";
 is showkv($b (|) $mh), "blood:1.1 love:1.3", "Bag union with MixHash works (texas)";
-isa_ok ($b (|) $mh), Mix, "... and it's actually a Mix";
+isa-ok ($b (|) $mh), Mix, "... and it's actually a Mix";
 
 # Mix Intersection
 
 is showkv($m ∩ $m), showkv($m), "Mix intersection with itself yields self (as Mix)";
-isa_ok ($m ∩ $m), Mix, "... and it's actually a Mix";
+isa-ok ($m ∩ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ∩ $mh), showkv($mh), "MixHash intersection with itself yields self (as Mix)";
-isa_ok ($mh ∩ $mh), Mix, "... and it's actually a Mix";
+isa-ok ($mh ∩ $mh), Mix, "... and it's actually a Mix";
 
 is showkv($b ∩ $m), "blood:1 love:1", "Bag intersection with Mix works";
-isa_ok ($b ∩ $m), Mix, "... and it's actually a Mix";
+isa-ok ($b ∩ $m), Mix, "... and it's actually a Mix";
 is showkv($b ∩ $mh), "blood:1 love:1", "Bag intersection with MixHash works";
-isa_ok ($b ∩ $mh), Mix, "... and it's actually a Mix";
+isa-ok ($b ∩ $mh), Mix, "... and it's actually a Mix";
 #?niecza todo 'Right now this works as $mh ∩ glag ∩ green ∩ blood.  Test may be wrong'
 is showkv($mh ∩ <glad green blood>), "blood:1", "MixHash intersection with array of strings works";
-isa_ok ($mh ∩ <glad green blood>), Mix, "... and it's actually a Mix";
+isa-ok ($mh ∩ <glad green blood>), Mix, "... and it's actually a Mix";
 
 is showkv($b (&) $m), "blood:1 love:1", "Bag intersection with Mix works (texas)";
-isa_ok ($b (&) $m), Mix, "... and it's actually a Mix";
+isa-ok ($b (&) $m), Mix, "... and it's actually a Mix";
 is showkv($b (&) $mh), "blood:1 love:1", "Bag intersection with MixHash works (texas)";
-isa_ok ($b (&) $mh), Mix, "... and it's actually a Mix";
+isa-ok ($b (&) $mh), Mix, "... and it's actually a Mix";
 #?niecza todo 'Right now this works as $mh ∩ glag ∩ green ∩ blood.  Test may be wrong?'
 is showkv($mh (&) <glad green blood>), "blood:1", "MixHash intersection with array of strings works (texas)";
-isa_ok ($mh (&) <glad green blood>), Mix, "... and it's actually a Mix";
+isa-ok ($mh (&) <glad green blood>), Mix, "... and it's actually a Mix";
 
 # symmetric difference
 
@@ -69,58 +69,58 @@ sub symmetric-difference($a, $m) {
 #?rakudo 8 todo "Rakudo update in progress, but not done yet"
 
 is showkv($b (^) $m), showkv(symmetric-difference($b, $m)), "Mix symmetric difference with Bag is correct";
-isa_ok ($b (^) $m), Mix, "... and it's actually a Mix";
+isa-ok ($b (^) $m), Mix, "... and it's actually a Mix";
 is showkv($m (^) $b), showkv(symmetric-difference($b, $m)), "Bag symmetric difference with Mix is correct";
-isa_ok ($m (^) $b), Mix, "... and it's actually a Mix";
+isa-ok ($m (^) $b), Mix, "... and it's actually a Mix";
 
 #?niecza todo "Test is wrong, implementation is wrong"
 is showkv($b (^) $mh), showkv(symmetric-difference($b, $mh)), "MixHash symmetric difference with Bag is correct";
-isa_ok ($b (^) $mh), Mix, "... and it's actually a Mix";
+isa-ok ($b (^) $mh), Mix, "... and it's actually a Mix";
 #?niecza todo "Test is wrong, implementation is wrong"
 is showkv($mh (^) $b), showkv(symmetric-difference($b, $mh)), "Bag symmetric difference with MixHash is correct";
-isa_ok ($mh (^) $b), Mix, "... and it's actually a Mix";
+isa-ok ($mh (^) $b), Mix, "... and it's actually a Mix";
 
 # Mix multiplication
 
 is showkv($m ⊍ $m), "blood:1.21 love:1.44 rhetoric:1", "Mix multiplication with itself yields self squared";
-isa_ok ($m ⊍ $m), Mix, "... and it's actually a Mix";
+isa-ok ($m ⊍ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ⊍ $mh), "blood:1.21 love:1.69", "MixHash multiplication with itself yields self squared";
-isa_ok ($mh ⊍ $mh), Mix, "... and it's actually a Mix";
+isa-ok ($mh ⊍ $mh), Mix, "... and it's actually a Mix";
 
 is showkv($b ⊍ $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works";
-isa_ok ($b ⊍ $m), Mix, "... and it's actually a Mix";
+isa-ok ($b ⊍ $m), Mix, "... and it's actually a Mix";
 is showkv($bh ⊍ $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works";
-isa_ok ($bh ⊍ $m), Mix, "... and it's actually a Mix";
+isa-ok ($bh ⊍ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ⊍ $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works";
-isa_ok ($mh ⊍ $m), Mix, "... and it's actually a Mix";
+isa-ok ($mh ⊍ $m), Mix, "... and it's actually a Mix";
 
 is showkv($b (.) $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works (texas)";
-isa_ok ($b (.) $m), Mix, "... and it's actually a Mix (texas)";
+isa-ok ($b (.) $m), Mix, "... and it's actually a Mix (texas)";
 is showkv($bh (.) $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works (texas)";
-isa_ok ($bh (.) $m), Mix, "... and it's actually a Mix (texas)";
+isa-ok ($bh (.) $m), Mix, "... and it's actually a Mix (texas)";
 is showkv($mh (.) $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works (texas)";
-isa_ok ($mh (.) $m), Mix, "... and it's actually a Mix";
+isa-ok ($mh (.) $m), Mix, "... and it's actually a Mix";
 
 # Mix addition
 
 is showkv($m ⊎ $m), "blood:2.2 love:2.4 rhetoric:2", "Mix addition with itself yields twice self";
-isa_ok ($m ⊎ $m), Mix, "... and it's actually a Mix";
+isa-ok ($m ⊎ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ⊎ $mh), "blood:2.2 love:2.6", "Mix addition with itself yields twice self";
-isa_ok ($mh ⊎ $mh), Mix, "... and it's actually a Mix";
+isa-ok ($mh ⊎ $mh), Mix, "... and it's actually a Mix";
 
 is showkv($b ⊎ $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works";
-isa_ok ($b ⊎ $m), Mix, "... and it's actually a Mix";
+isa-ok ($b ⊎ $m), Mix, "... and it's actually a Mix";
 is showkv($bh ⊎ $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works";
-isa_ok ($bh ⊎ $m), Mix, "... and it's actually a Mix";
+isa-ok ($bh ⊎ $m), Mix, "... and it's actually a Mix";
 is showkv($mh ⊎ $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works";
-isa_ok ($mh ⊎ $m), Mix, "... and it's actually a Mix";
+isa-ok ($mh ⊎ $m), Mix, "... and it's actually a Mix";
 
 is showkv($b (+) $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works (texas)";
-isa_ok ($b (+) $m), Mix, "... and it's actually a Mix (texas)";
+isa-ok ($b (+) $m), Mix, "... and it's actually a Mix (texas)";
 is showkv($bh (+) $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works (texas)";
-isa_ok ($bh (+) $m), Mix, "... and it's actually a Mix (texas)";
+isa-ok ($bh (+) $m), Mix, "... and it's actually a Mix (texas)";
 is showkv($mh (+) $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works (texas)";
-isa_ok ($mh (+) $m), Mix, "... and it's actually a Mix";
+isa-ok ($mh (+) $m), Mix, "... and it's actually a Mix";
 
 # for https://rt.perl.org/Ticket/Display.html?id=122810
 ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - I mean mix - with 50k elems and lives";
@@ -212,17 +212,17 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     is showkv([(^)] @d), showset(∅), "Mix symmetric difference reduce works on nothing";
     #?rakudo 4 todo "NYI"
     is showkv([(^)] $b), showset($b), "Bag symmetric difference reduce works on one set";
-    isa_ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one set, yields set";
+    isa-ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one set, yields set";
     is showkv([(^)] $m), showkv($m), "Mix symmetric difference reduce works on one mix";
-    isa_ok showkv([(^)] $m), Mix, "Mix symmetric difference reduce works on one mix, yields mix";
+    isa-ok showkv([(^)] $m), Mix, "Mix symmetric difference reduce works on one mix, yields mix";
     #?rakudo 4 todo "Wrong answer at the moment"
     is showkv([(^)] $b, $m), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on a mix and a set";
-    isa_ok showkv([(^)] $b, $m), Mix, "... and produces a Mix";
+    isa-ok showkv([(^)] $b, $m), Mix, "... and produces a Mix";
     is showkv([(^)] $m, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
-    isa_ok showkv([(^)] $m, $b), Mix, "... and still produces a Mix that way too";
+    isa-ok showkv([(^)] $m, $b), Mix, "... and still produces a Mix that way too";
     #?rakudo 2 todo "Crashing"
     is showkv([(^)] $b, $m, $mh), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on three mixs";
-    isa_ok showkv([(^)] $b, $m, $mh), Mix, "Mix symmetric difference reduce works on three mixs";
+    isa-ok showkv([(^)] $b, $m, $mh), Mix, "Mix symmetric difference reduce works on three mixs";
 }
 
 # vim: ft=perl6

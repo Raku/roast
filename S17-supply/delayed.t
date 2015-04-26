@@ -16,7 +16,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $delay = 2;
         my $now   = now;
         my $seen;
-        tap_ok $now.Supply.delayed($delay),
+        tap-ok $now.Supply.delayed($delay),
           [$now],
           ".delay with on-demand Supply worked",
           :emit( { $seen = now } ),
@@ -30,7 +30,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s     = Supply.new;
         my $now   = now;
         my $seen;
-        tap_ok $s.delayed($delay),
+        tap-ok $s.delayed($delay),
           [$now],
           ".delay with live Supply worked",
           :live,
@@ -48,6 +48,6 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $for   = Supply.from-list(1..10);
         my $delay = $for.delayed(0);
         ok $for === $delay, "delaying by 0 is a noop";
-        tap_ok $delay, [1..10], "noop delay";
+        tap-ok $delay, [1..10], "noop delay";
     }
 }

@@ -35,7 +35,7 @@ is(--$i ** 2, 4, "-- does too");
 # exponentiation
 
 is(-2**2, -4, "** bind tighter than unary -");
-isa_ok(~2**4, Str, "~4**4 is a string");
+isa-ok(~2**4, Str, "~4**4 is a string");
 
 # symbolic unary
 

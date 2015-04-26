@@ -33,10 +33,10 @@ sub gen_array { (1..10).list }
     is @a.elems, 10, "basic sanity";
 
     #?niecza 4 skip "no adverbials"
-    isa_ok @a[ 3]:exists, Bool,  "Bool test for exists single element";
-    isa_ok @a[ 3]:!exists, Bool, "!Bool test for exists single element";
-    isa_ok @a[10]:exists, Bool,  "Bool test for non-exists single element";
-    isa_ok @a[10]:!exists, Bool, "!Bool test for non-exists single element";
+    isa-ok @a[ 3]:exists, Bool,  "Bool test for exists single element";
+    isa-ok @a[ 3]:!exists, Bool, "!Bool test for exists single element";
+    isa-ok @a[10]:exists, Bool,  "Bool test for non-exists single element";
+    isa-ok @a[10]:!exists, Bool, "!Bool test for non-exists single element";
     ok     @a[ 3]:exists,        "Test for exists single element";
     ok   !(@a[10]:exists),       "Test for non-exists single element";
 

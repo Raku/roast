@@ -18,7 +18,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $master = Supply.new;
         ok $master ~~ Supply, 'Did we get a master Supply?';
 
-        tap_ok $master.schedule-on($other_scheduler),
+        tap-ok $master.schedule-on($other_scheduler),
           [1,2,3],
           'did we get the original values',
           :live,

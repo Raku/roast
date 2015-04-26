@@ -26,15 +26,15 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
             my @keys;
             my @supplies;
-            isa_ok $c.tap( -> $p {
+            isa-ok $c.tap( -> $p {
                 @keys.push: $p.key;
                 @supplies.push: $p.value;
             } ), Tap, "we got a tap ($what)";
 
             $s.emit($_) for 1,2,3,11,12,13;
             is_deeply @keys, [0,1], "did we get the right keys ($what)";
-            tap_ok @supplies[0], [1,2,3],   "got the 0 supply ($what)", :live;
-            tap_ok @supplies[1], [11,12,13], "got the 1 supply ($what)", :live;
+            tap-ok @supplies[0], [1,2,3],   "got the 0 supply ($what)", :live;
+            tap-ok @supplies[1], [11,12,13], "got the 1 supply ($what)", :live;
         }
     }
 
@@ -51,14 +51,14 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
             my @keys;
             my @supplies;
-            isa_ok $c.tap( -> $p {
+            isa-ok $c.tap( -> $p {
                 @keys.push: $p.key;
                 @supplies.push: $p.value;
             } ), Tap, "we got a tap ($what)";
 
             $s.emit($_) for 1,2,3,11,12,13;
             is_deeply @keys, [0,1], "did we get the right keys ($what)";
-            tap_ok @supplies[0], [11,12,13], "got the 0 supply ($what)", :live;
+            tap-ok @supplies[0], [11,12,13], "got the 0 supply ($what)", :live;
 
             my $done = False;
             @supplies[1].tap(done => sub { $done = True });

@@ -35,8 +35,8 @@ plan 32;
       ok $?VM.name eq any($?PERL.VMnames),
       "We know of the VM we were compiled in";
 
-    isa_ok $?VM.version, Version;
-    isa_ok $?VM.signature, Blob;
+    isa-ok $?VM.version, Version;
+    isa-ok $?VM.signature, Blob;
 }
 
 ok $*VM.name,           "We are running under '{$*VM.name}'";
@@ -61,10 +61,10 @@ diag "'{$*VM.name}' is an unknown VM, please report" if !
   ok $*VM.name eq any($*PERL.VMnames),
   "We know of the VM we are running under";
 
-isa_ok $*VM.version, Version;
+isa-ok $*VM.version, Version;
 #?rakudo.jvm    todo 'no VM.signature yet'
 #?rakudo.moar   todo 'no VM.signature yet'
 #?rakudo.parrot skip 'no VM.signature yet'
-isa_ok $*VM.signature, Blob;
+isa-ok $*VM.signature, Blob;
 
 # vim: ft=perl6

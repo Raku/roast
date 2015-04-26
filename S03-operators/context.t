@@ -13,14 +13,14 @@ plan 38;
 
     # I'm not sure that smart matching is the best operation for comparison here
     # There might be a more specific way to check that prevents false matching
-    isa_ok(list($a).WHAT,  List, 'list(values) returns nothing more than a List');
-    isa_ok(@($a).WHAT,     List, '@(values) returns nothing more than a List');
-    isa_ok((list $a).WHAT, List, '(list values) returns nothing more than a List');
+    isa-ok(list($a).WHAT,  List, 'list(values) returns nothing more than a List');
+    isa-ok(@($a).WHAT,     List, '@(values) returns nothing more than a List');
+    isa-ok((list $a).WHAT, List, '(list values) returns nothing more than a List');
 
     # These are all no-ops but still need to work correctly
-    isa_ok(list($a, $b, $c).WHAT,   List, 'list(values) returns nothing more than a List');
-    isa_ok(@($a, $b, $c).WHAT,      List, '@(values) returns nothing more than a List');
-    isa_ok((list $a, $b, $c).WHAT,  List, '(list values) returns nothing more than a List');
+    isa-ok(list($a, $b, $c).WHAT,   List, 'list(values) returns nothing more than a List');
+    isa-ok(@($a, $b, $c).WHAT,      List, '@(values) returns nothing more than a List');
+    isa-ok((list $a, $b, $c).WHAT,  List, '(list values) returns nothing more than a List');
     is((list $a, $b, $c), ($a, $b, $c), 'list($a, $b, $c) is ($a, $b, $c)');
     is(@($a, $b, $c),     ($a, $b, $c), '@($a, $b, $c) is ($a, $b, $c)');
 
@@ -43,11 +43,11 @@ plan 38;
     is($($a),     $a, '$($a) is just $a');
 
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
-    isa_ok((item $a, $b).WHAT, Parcel, '(item $a, $b) makes a Parcel');
+    isa-ok((item $a, $b).WHAT, Parcel, '(item $a, $b) makes a Parcel');
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
-    isa_ok(item($a, $b).WHAT,  Parcel, 'item $a, $b makes a Parcel');
+    isa-ok(item($a, $b).WHAT,  Parcel, 'item $a, $b makes a Parcel');
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
-    isa_ok($($a, $b).WHAT,     Parcel, '$ $a, $b makes a Parcel');
+    isa-ok($($a, $b).WHAT,     Parcel, '$ $a, $b makes a Parcel');
     my @array = ($a, $b);
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');

@@ -39,7 +39,7 @@ plan 11;
     class SomeClass { };
     my $var;
     BEGIN { $var = SomeClass };
-    isa_ok $var, SomeClass, 'use a class at BEGIN time';
+    isa-ok $var, SomeClass, 'use a class at BEGIN time';
 }
 
 {

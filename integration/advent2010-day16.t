@@ -3,14 +3,14 @@ use v6;
 use Test;
 plan 13;
 
-isa_ok time, Int, 'time';
-isa_ok now, Instant, 'now';
+isa-ok time, Int, 'time';
+isa-ok now, Instant, 'now';
 
 my $moment = DateTime.new(now);
-isa_ok $moment, DateTime, 'DateTime from now';
+isa-ok $moment, DateTime, 'DateTime from now';
 
 my $moment2 = DateTime.new(time);
-isa_ok $moment2, DateTime, 'DateTime from time';
+isa-ok $moment2, DateTime, 'DateTime from time';
 
 my $date-str = '1963-11-23T17:15:00Z';
 

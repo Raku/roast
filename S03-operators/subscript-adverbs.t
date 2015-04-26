@@ -11,7 +11,7 @@ plan 110;
 {
     my @array = <A B>;
 
-    isa_ok @array[0]:p, Pair,
+    isa-ok @array[0]:p, Pair,
         ":p on an array returned a Pair";
     is ~(@array[0]:p), "0\tA",
         ":p on an array returned the correct pair";
@@ -110,7 +110,7 @@ plan 110;
 {
     my %hash = (0 => "A", 1 => "B");
 
-    isa_ok %hash<0>:p, Pair,
+    isa-ok %hash<0>:p, Pair,
         ":p on a hash returned a Pair";
     is ~(%hash<0>:p), "0\tA",
         ":p on a hash returned the correct pair";

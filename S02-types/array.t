@@ -40,7 +40,7 @@ plan 97;
 # array of strings
 
 my @array1 = ("foo", "bar", "baz");
-isa_ok(@array1, Array);
+isa-ok(@array1, Array);
 
 is(+@array1, 3, 'the array1 has 3 elements');
 is(@array1[0], 'foo', 'got the right value at array1 index 0');
@@ -55,7 +55,7 @@ is(@array1.[0], 'foo', 'got the right value at array1 index 0 using the . notati
 my @array2 = ("test", 1, Mu);
 
 {
-    isa_ok(@array2, Array);
+    isa-ok(@array2, Array);
 
     is(+@array2, 3, 'the array2 has 3 elements');
     is(@array2[0], 'test', 'got the right value at array2 index 0');
@@ -66,7 +66,7 @@ my @array2 = ("test", 1, Mu);
 # combine 2 arrays
 {
     my @array3 = (@array1, @array2);
-    isa_ok(@array3, Array);
+    isa-ok(@array3, Array);
 
     is(+@array3, 6, 'the array3 has 6 elements');
     is(@array3[0], 'foo', 'got the right value at array3 index 0');
@@ -80,7 +80,7 @@ my @array2 = ("test", 1, Mu);
 {
     # array slice
     my @array4 = @array2[2, 1, 0];
-    isa_ok(@array4, Array);
+    isa-ok(@array4, Array);
 
     is(+@array4, 3, 'the array4 has 3 elements');
     ok(!defined(@array4[0]), 'got the right value at array4 index 0');
@@ -91,7 +91,7 @@ my @array2 = ("test", 1, Mu);
 {
     # create new array with 2 array slices
     my @array5 = ( @array2[2, 1, 0], @array1[2, 1, 0] );
-    isa_ok(@array5, Array);
+    isa-ok(@array5, Array);
 
     is(+@array5, 6, 'the array5 has 6 elements');
     ok(!defined(@array5[0]),  'got the right value at array5 index 0');
@@ -107,7 +107,7 @@ my @array2 = ("test", 1, Mu);
 
     my @slice = (2, 0, 1);
     my @array6 = @array1[@slice];
-    isa_ok(@array6, Array);
+    isa-ok(@array6, Array);
 
     is(+@array6, 3, 'the array6 has 3 elements');
     is(@array6[0], 'baz', 'got the right value at array6 index 0');
@@ -118,7 +118,7 @@ my @array2 = ("test", 1, Mu);
 {
     # create an array slice with an array constructed with ()
     my @array7 = @array1[(2, 1, 0)];
-    isa_ok(@array7, Array);
+    isa-ok(@array7, Array);
 
     is(+@array7, 3, 'the array7 has 3 elements');
     is(@array7[0], 'baz', 'got the right value at array7 index 0');
@@ -140,7 +140,7 @@ my @array2 = ("test", 1, Mu);
 # empty arrays
 {
     my @array9;
-    isa_ok(@array9, Array);
+    isa-ok(@array9, Array);
     is(+@array9, 0, "new arrays are empty");
 
     my @array10 = (1, 2, 3,);
@@ -287,7 +287,7 @@ my @array2 = ("test", 1, Mu);
     is 'abc'[0], 'abc', '.[0] is identity operation for scalars (Str)';
     nok 'abc'[1].defined, '.[1] on a scalar is not defined';
     #?niecza skip "Failure NYI"
-    isa_ok 1[1],  Failure, 'indexing a scalar with other than 0 returns a Failure';
+    isa-ok 1[1],  Failure, 'indexing a scalar with other than 0 returns a Failure';
     throws_like { Mu.[0] },
       X::Multi::NoMatch,
       'but Mu has no .[]';
@@ -307,7 +307,7 @@ my @array2 = ("test", 1, Mu);
 #RT #73402
 {
     my @a = <1 2 3>;
-    isa_ok +@a, Int, "Numifying an Array yields an Int";
+    isa-ok +@a, Int, "Numifying an Array yields an Int";
 }
 
 #RT #75342

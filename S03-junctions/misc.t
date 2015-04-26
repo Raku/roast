@@ -12,7 +12,7 @@ Misc. Junction tests
 
 # RT #64184
 {
-    isa_ok any(6,7), Junction;
+    isa-ok any(6,7), Junction;
     is any(6,7).WHAT.gist, Junction.gist, 'junction.WHAT works';
 }
 
@@ -324,35 +324,35 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 {
   is substr("abcd", 1, 2), "bc", "simple substr";
   my Mu $res = substr(any("abcd", "efgh"), 1, 2);
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res eq "bc", "substr on junctions: bc";
   ok $res eq "fg", "substr on junctions: fg";
 }
 
 {
   my Mu $res = substr("abcd", 1|2, 2);
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res eq "bc", "substr on junctions: bc"; 
   ok $res eq "cd", "substr on junctions: cd";
 }
 
 {
   my Mu $res = substr("abcd", 1, 1|2);
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res eq "bc", "substr on junctions: bc"; 
   ok $res eq "b", "substr on junctions: b"; 
 }
 
 {
   my Mu $res = index(any("abcd", "qwebdd"), "b");
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res == 1, "index on junctions: 1";
   ok $res == 3, "index on junctions: 3";
 }
 
 {
   my Mu $res = index("qwebdd", "b"|"w");
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res == 1, "index on junctions: 1";
   ok $res == 3, "index on junctions: 3";
 }

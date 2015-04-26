@@ -23,9 +23,9 @@ grammar Grammar::Bar is Grammar::Foo {
     token any { <foo> | <bar> };
 };
 
-isa_ok Grammar::Foo, Grammar, 'grammar isa Grammar';
-isa_ok Grammar::Bar, Grammar, 'inherited grammar still isa Grammar';
-isa_ok Grammar::Bar, Grammar::Foo, 'child isa parent';
+isa-ok Grammar::Foo, Grammar, 'grammar isa Grammar';
+isa-ok Grammar::Bar, Grammar, 'inherited grammar still isa Grammar';
+isa-ok Grammar::Bar, Grammar::Foo, 'child isa parent';
 
 #?niecza 4 skip 'Cannot dispatch to a method on Bar because it is not inherited or done by Cursor'
 is(~('bar' ~~ /^<Grammar::Bar::bar>$/), 'bar', 'got right match (bar)');
@@ -66,7 +66,7 @@ nok Grammar::Baz.parse('boo', :rule<any>), 'No match for bad input (any)';
     grammar B is A { };
     #?rakudo todo 'automatic Grammar superclass'
     #?niecza todo 'automatic Grammar superclass'
-    isa_ok B, Grammar, 'A grammar isa Grammar, even if inherting from a class';
+    isa-ok B, Grammar, 'A grammar isa Grammar, even if inherting from a class';
 
 }
 

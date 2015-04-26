@@ -7,7 +7,7 @@ plan 30;
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
     !! Proc::Async.new( 'echo', <Hello World> );
-isa_ok $pc, Proc::Async;
+isa-ok $pc, Proc::Async;
 
 my $so = $pc.stdout;
 cmp_ok $so, '~~', Supply;
@@ -23,7 +23,7 @@ nok $pc.started, 'program not yet started';
 nok $pc.w, 'Not opened for writing';
 
 my $pm = $pc.start;
-isa_ok $pm, Promise;
+isa-ok $pm, Promise;
 
 ok $pc.started, 'program has been started';
 
@@ -36,7 +36,7 @@ throws_like { $pc.write(Buf.new(0)) }, X::Proc::Async::OpenForWriting, :method<w
 throws_like { $pc.stdout.tap(&say)  }, X::Proc::Async::TapBeforeSpawn, :handle<stdout>;
 
 my $ps = await $pm;
-isa_ok $ps, Proc::Status;
+isa-ok $ps, Proc::Status;
 ok $ps, 'was execution successful';
 is $ps.?exitcode, 0, 'is the status ok';
 
@@ -68,17 +68,17 @@ my $start-promise := $pc.start;
 
 # "Perl" as hex:
 my $write-promise = $pc.write(Buf.new(0x50, 0x65, 0x72, 0x6c));
-isa_ok $write-promise, Promise, '.write returned a promise';
+isa-ok $write-promise, Promise, '.write returned a promise';
 await $write-promise;
 my $print-promise = $pc.print(' 6');
-isa_ok $print-promise, Promise, '.print returned a promise';
+isa-ok $print-promise, Promise, '.print returned a promise';
 
 is $start-promise.status, Planned, 'external program still running (stdin still open)';
 
 $pc.close-stdin;
 
 #?rakudo 3 skip 'returns Nil (flapping tests)'
-isa_ok $start-promise.result, Proc::Status, 'Can finish, return Proc::Status';
+isa-ok $start-promise.result, Proc::Status, 'Can finish, return Proc::Status';
 
 is $stdout, 'Perl 6', 'got correct STDOUT';
 is $stderr, '',       'got correct STDERR';

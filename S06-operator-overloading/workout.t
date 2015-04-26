@@ -57,9 +57,9 @@ sub ia($got, $expected, $descr =  "$got is approximately $expected") {
 # and (2) uses the method form of abs(), or lifts abs() too.
 # Needs more discussion and spec coverage.
 {
-    isa_ok(Vector.new(1, 2, 3), Vector, "Vector.new produces a Vector object");
+    isa-ok(Vector.new(1, 2, 3), Vector, "Vector.new produces a Vector object");
     my @a1 = (3, -3/2, 5.4);
-    isa_ok(Vector.new(@a1), Vector, "Vector.new produces a Vector object");
+    isa-ok(Vector.new(@a1), Vector, "Vector.new produces a Vector object");
     dies_ok({ Vector.new(1, 2, 3, 4) }, "Vector.new requires 3 parameters");
     my @a2 = (-3/2, 5.4);
     dies_ok({ Vector.new(@a2) }, "Vector.new requires an array with 3 members");

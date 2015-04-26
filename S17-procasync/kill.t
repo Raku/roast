@@ -19,7 +19,7 @@ say 'Done';
     is $program.IO.s, $source.chars, 'did the tester arrive ok';
 
     my $pc = Proc::Async.new( $*EXECUTABLE, $program, :w );
-    isa_ok $pc, Proc::Async;
+    isa-ok $pc, Proc::Async;
 
     my $so = $pc.stdout;
     cmp_ok $so, '~~', Supply;
@@ -30,7 +30,7 @@ say 'Done';
     is $stdout, "", "STDOUT for $signal should be empty";
 
     my $pm = $pc.start;
-    isa_ok $pm, Promise;
+    isa-ok $pm, Promise;
 
     # give it a little time
 #    sleep 2;
@@ -41,7 +41,7 @@ say 'Done';
     # done processing, from sleep
     await $pm;
 
-    isa_ok $pm.result, Proc::Status;
+    isa-ok $pm.result, Proc::Status;
     is $pm.result.?exitcode, 0, 'did it exit with the right value';
 
     #?rakudo todo 'we cannot actually send signals yet'

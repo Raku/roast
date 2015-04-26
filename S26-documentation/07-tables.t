@@ -10,7 +10,7 @@ my $r;
 =end table
 
 $r = $=pod[0];
-isa_ok $r, Pod::Block::Table;
+isa-ok $r, Pod::Block::Table;
 is $r.contents.elems, 4;
 is $r.contents[0].join('|'),
    "The Shoveller|Eddie Stevens|King Arthur's singing shovel";

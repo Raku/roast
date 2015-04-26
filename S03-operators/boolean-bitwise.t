@@ -27,11 +27,11 @@ plan 45;
   #?niecza skip 'No value for parameter $a in CORE infix:<?|>'
   ok( ?(infix:<?|>() == False), '?| works with no arguments');
 
-  isa_ok (42 ?| 41), Bool, '?| yields a Bool';
+  isa-ok (42 ?| 41), Bool, '?| yields a Bool';
   #?niecza skip 'No value for parameter $b in CORE infix:<?|>'
-  isa_ok infix:<?|>(True), Bool, '?| with one argument yields a Bool';
+  isa-ok infix:<?|>(True), Bool, '?| with one argument yields a Bool';
   #?niecza skip 'No value for parameter $a in CORE infix:<?|>'
-  isa_ok infix:<?|>(), Bool, '?| with no arguments yields a Bool';
+  isa-ok infix:<?|>(), Bool, '?| with no arguments yields a Bool';
 
 }
 
@@ -54,11 +54,11 @@ plan 45;
   #?niecza skip 'No value for parameter $a in CORE infix:<?&>'
   ok( ?(infix:<?&>() == True), '?& works with no arguments');
 
-  isa_ok (42 ?& 41), Bool, '?& yields a Bool';
+  isa-ok (42 ?& 41), Bool, '?& yields a Bool';
   #?niecza skip 'No value for parameter $b in CORE infix:<?&>'
-  isa_ok infix:<?&>(True), Bool, '?& with one argument yields a Bool';
+  isa-ok infix:<?&>(True), Bool, '?& with one argument yields a Bool';
   #?niecza skip 'No value for parameter $a in CORE infix:<?&>'
-  isa_ok infix:<?&>(), Bool, '?& with no arguments yields a Bool';
+  isa-ok infix:<?&>(), Bool, '?& with no arguments yields a Bool';
 }
 
 { ## L<S03/Changes to Perl 5 operators/ "?^ is a logical XOR">
@@ -80,11 +80,11 @@ plan 45;
   #?niecza skip 'No value for parameter $a in CORE infix:<?^>'
   ok( ?(infix:<?^>() == False), '?^ works with no arguments');
 
-  isa_ok (42 ?^ 41), Bool, '?^ yields a Bool';
+  isa-ok (42 ?^ 41), Bool, '?^ yields a Bool';
   #?niecza skip 'No value for parameter $b in CORE infix:<?^>'
-  isa_ok infix:<?^>(True), Bool, '?^ with one argument yields a Bool';
+  isa-ok infix:<?^>(True), Bool, '?^ with one argument yields a Bool';
   #?niecza skip 'No value for parameter $a in CORE infix:<?^>'
-  isa_ok infix:<?^>(), Bool, '?^ with no arguments yields a Bool';
+  isa-ok infix:<?^>(), Bool, '?^ with no arguments yields a Bool';
 }
 
 ok (?^5) === False, 'prefix ?^ (+)';

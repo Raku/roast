@@ -266,11 +266,11 @@ is (1 … 10), 1..10, 'Unicode ellipsis works';
 is (1 …^ 10), 1..^10, 'Unicode ellipsis works excluding final value';
 
 #RT #114326
-isa_ok ([] ... [])[0], Array, '[] ... [] returns []';
+isa-ok ([] ... [])[0], Array, '[] ... [] returns []';
 
 {
     my @a := [1,2],{ [.[0]+2,.[1]+2] } ... *;
-    isa_ok @a[1], Array, 'containers returned from seq iterator are respected (1)';
+    isa-ok @a[1], Array, 'containers returned from seq iterator are respected (1)';
     is @a[1].join('_'), '3_4', 'containers returned from seq iterator are respected (2)';
 }
 

@@ -30,7 +30,7 @@ sub days($n) { $n * 24 * 60 * 60 }
 
 # L<S32::Temporal/Accessors/'the method Instant'>
 
-isa_ok dti, Instant, 'DateTime.Instant returns an Instant';
+isa-ok dti, Instant, 'DateTime.Instant returns an Instant';
 is dti, dti, 'Equal DateTimes yield equal Instants';
 is diff, 0, 'The difference of equal Instants is 0';
 

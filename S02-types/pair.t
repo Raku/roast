@@ -8,7 +8,7 @@ plan 108;
 # basic Pair
 
 my $pair = 'foo' => 'bar';
-isa_ok($pair, Pair);
+isa-ok($pair, Pair);
 
 # get key and value from the pair as many ways as possible
 
@@ -47,17 +47,17 @@ is(@pair1d[1], 'bar', 'got the right value');
 # Pair with a numeric value
 
 my $pair2 = 'foo' => 2;
-isa_ok($pair2, Pair);
+isa-ok($pair2, Pair);
 
 is($pair2.value, 2, 'got the right value');
 
 # Pair with a Pair value
 
 my $pair3 = "foo" => ("bar" => "baz");
-isa_ok($pair3, Pair);
+isa-ok($pair3, Pair);
 
 my $pair3a = $pair3.value;
-isa_ok($pair3a, Pair);
+isa-ok($pair3a, Pair);
 is($pair3a.key, 'bar', 'got right nested pair key');
 is($pair3a.value, 'baz', 'got right nested pair key');
 
@@ -67,11 +67,11 @@ is($pair3.value.value, 'baz', 'got right nested pair key (method chaining)');
 # Pair with a Pair key
 
 my $pair4 = ("foo" => "bar") => "baz";
-isa_ok($pair4, Pair);
+isa-ok($pair4, Pair);
 
 is($pair4.value, 'baz', 'got the right value');
 
-isa_ok($pair4.key, Pair);
+isa-ok($pair4.key, Pair);
 is($pair4.key.key, 'foo', 'got right nested key');
 is($pair4.key.value, 'bar', 'got right nested value');
 
@@ -90,11 +90,11 @@ is($quux.key, 'quux', "lhs quotes" );
 # colonpair syntax
 {
     is(:foo.key, 'foo', 'got the right key :foo.key');
-    isa_ok(:foo.value, Bool, ':foo.value isa Bool');
+    isa-ok(:foo.value, Bool, ':foo.value isa Bool');
     ok( (:foo), ':foo is True');
     ok( :foo.value, ':foo.value is True');
     is(:!foo.key, 'foo', 'got the right key :!foo.key');
-    isa_ok(:!foo.value, Bool, ':!foo.value isa Bool');
+    isa-ok(:!foo.value, Bool, ':!foo.value isa Bool');
     nok( :!foo.value, ':!foo.value is False');
 }
 
@@ -103,11 +103,11 @@ is($quux.key, 'quux', "lhs quotes" );
 {
     my $var   = 'foo' => 'bar';
     sub test1 (Pair $pair) {
-        isa_ok($pair,Pair);
+        isa-ok($pair,Pair);
         my $testpair = $pair;
-        isa_ok($testpair,Pair); # new lvalue variable is also a Pair
+        isa-ok($testpair,Pair); # new lvalue variable is also a Pair
         my $boundpair := $pair;
-        isa_ok($boundpair,Pair); # bound variable is also a Pair
+        isa-ok($boundpair,Pair); # bound variable is also a Pair
         is($pair.key, 'foo', 'in sub test1 got the right $pair.key');
         is($pair.value, 'bar', 'in sub test1 got the right $pair.value');
 
@@ -119,11 +119,11 @@ my %hash  = ('foo' => 'bar');
 
 {
     for  %hash.pairs -> $pair {
-        isa_ok($pair,Pair) ;
+        isa-ok($pair,Pair) ;
         my $testpair = $pair;
-        isa_ok($testpair, Pair); # new lvalue variable is also a Pair
+        isa-ok($testpair, Pair); # new lvalue variable is also a Pair
         my $boundpair := $pair;
-        isa_ok($boundpair,Pair); # bound variable is also a Pair
+        isa-ok($boundpair,Pair); # bound variable is also a Pair
         is($pair.key, 'foo', 'in for loop got the right $pair.key');
         is($pair.value, 'bar', 'in for loop got the right $pair.value');
     }
@@ -131,7 +131,7 @@ my %hash  = ('foo' => 'bar');
 
 sub test2 (%h){
     for %h.pairs -> $pair {
-        isa_ok($pair,Pair) ;
+        isa-ok($pair,Pair) ;
         is($pair.key, 'foo', 'in sub test2 got the right $pair.key');
         is($pair.value, 'bar', 'in sub test2 got the right $pair.value');
     }
@@ -143,8 +143,8 @@ test2 %hash;
 
 sub test3 (%h){
     for %h.pairs -> $pair {
-        isa_ok($pair,Pair);
-        isa_ok($pair[0], Pair, 'sub test3: $pair[0] is $pair');
+        isa-ok($pair,Pair);
+        isa-ok($pair[0], Pair, 'sub test3: $pair[0] is $pair');
         #?niecza skip "Failure NYI"
         ok $pair[1] ~~ Failure, 'sub test3: $pair[1] is failure';
     }
@@ -157,7 +157,7 @@ Hm, Hash::pair? Never heard of that.  --iblech
 
 sub test4 (%h){
     for %h.pair -> $pair {
-        isa_ok($pair,Pair);
+        isa-ok($pair,Pair);
         is($pair.key, 'foo', 'sub test4: access by unspecced "pair" got the right $pair.key');
         is($pair.value, 'bar', 'sub test4: access by unspecced "pair" got the right $pair.value');
 
@@ -168,7 +168,7 @@ test4 %hash;
 =end p6l
 
 my $should_be_a_pair = (a => 25/1);
-isa_ok $should_be_a_pair, Pair, "=> has correct precedence";
+isa-ok $should_be_a_pair, Pair, "=> has correct precedence";
 
 =begin discussion
 
@@ -317,20 +317,20 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
 {
     is (a => 3).antipair.key, 3, 'Pair.antipair.key';
-    isa_ok (a => 3).antipair.key, Int, 'Pair.antipair.key type';
+    isa-ok (a => 3).antipair.key, Int, 'Pair.antipair.key type';
     is (a => 3).antipair.value, 'a', 'Pair.antipair.value';
 }
 
 {
     is (a => 3).invert[0].key, 3, 'Pair.invert.key';
-    isa_ok (a => 3).invert[0].key, Int, 'Pair.invert.key type';
+    isa-ok (a => 3).invert[0].key, Int, 'Pair.invert.key type';
     is (a => 3).invert[0].value, 'a', 'Pair.invert.value';
 }
 
 {
     is (a => [3,4]).invert.elems, 2, 'Pair.invert splits positional values';
     is (a => [3,4]).invert».key, '3 4', 'Pair.invert splits positional values and preserves order';
-    isa_ok (a => [3,4]).invert[0].key, Int, 'Pair.invert.key type';
+    isa-ok (a => [3,4]).invert[0].key, Int, 'Pair.invert.key type';
     is (a => [3,4]).invert».value, 'a a', 'Pair.invert splits positional values and dups keys';
 
     is <a b c>.pairs.invert.perl, '(:a(0), :b(1), :c(2))', 'list of array pairs can be inverted';

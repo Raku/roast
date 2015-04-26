@@ -6,7 +6,7 @@ plan 13;
 # L<S32::IO/IO::Path>
 
 my $path = '/foo/bar.txt'.path;
-isa_ok $path, IO::Path, "Str.path returns an IO::Path";
+isa-ok $path, IO::Path, "Str.path returns an IO::Path";
 is IO::Path.new('/foo/bar.txt'), $path,
    "Constructor works without named arguments";
 
@@ -22,9 +22,9 @@ is $path.parent.parent, '/',   'parent of parent';
 is $path.is-absolute, True,    'is-absolute';
 is $path.is-relative, False,   'is-relative';
 
-isa_ok $path.path, Str,      'IO::Path.path returns Str';
+isa-ok $path.path, Str,      'IO::Path.path returns Str';
 #?niecza skip 'IO::Handle still called IO'
-isa_ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
+isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 
 # Try to guess from context that the correct backend is loaded:
 #?niecza skip 'is-absolute NYI'

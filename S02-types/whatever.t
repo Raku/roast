@@ -8,7 +8,7 @@ plan 89;
 
 {
     my $x = *;
-    isa_ok $x, Whatever, 'can assign * to a variable and isa works';
+    isa-ok $x, Whatever, 'can assign * to a variable and isa works';
 
     my Whatever $y;
     ok $y.WHAT === Whatever, 'can type variables with Whatever';
@@ -21,17 +21,17 @@ plan 89;
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';
 ok $x ~~ Code, '*-1 is some form of Code';
-isa_ok $x, WhateverCode, '*-1 is a WhateverCode object';
+isa-ok $x, WhateverCode, '*-1 is a WhateverCode object';
 is $x.(5), 4, 'and we can execute that Code';
 
 ok *.abs ~~ Code, '*.abs is of type Code';
-isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
+isa-ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
-isa_ok 1..*, Range, '1..* is a Range, not a Code';
+isa-ok 1..*, Range, '1..* is a Range, not a Code';
 #?niecza skip 'Cannot use value like WhateverCode as a number'
-isa_ok 1..*-1, WhateverCode, '1..*-1 is a WhateverCode';
+isa-ok 1..*-1, WhateverCode, '1..*-1 is a WhateverCode';
 #?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Range'
-isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
+isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
 {
     my @a = map *.abs, 1, -2, 3, -4;
@@ -42,7 +42,7 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     # check that it also works with Enums - used to be a Rakudo bug
     # RT #63880
     enum A <b c>;
-    isa_ok (b < *), Code, 'Enums and Whatever star interact OK';
+    isa-ok (b < *), Code, 'Enums and Whatever star interact OK';
 }
 
 # check that more complex expressions work:
@@ -73,7 +73,7 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
 {
     my $x = +*;
-    isa_ok $x, Code, '+* is of type Code';
+    isa-ok $x, Code, '+* is of type Code';
 
     # following is what we expect +* to do
     my @list = <1 10 2 3>;
@@ -156,11 +156,11 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
 # Whatever-aware.>
 {
     multi sub infix:<quack>($x, $y) { "$x|$y" };
-    isa_ok * quack 5, Code,
+    isa-ok * quack 5, Code,
         '* works on LHS of user-defined operator (type)';
-    isa_ok 5 quack *, Code,
+    isa-ok 5 quack *, Code,
         '* works on RHS of user-defined operator (type)';
-    isa_ok * quack *, Code,
+    isa-ok * quack *, Code,
         '* works on both sides of user-defined operator (type)';
     is (* quack 5).(3), '3|5',
         '* works on LHS of user-defined operator (result)';
@@ -176,11 +176,11 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
 
 # RT #122708
 {
-    isa_ok * + 2,      Code, "'* + 2' curries";
+    isa-ok * + 2,      Code, "'* + 2' curries";
     #?rakudo 3 todo 'RT #122708 - currying of min/max'
-    isa_ok * min 2,    Code, "'* min 2' curries";
-    isa_ok * max 2,    Code, "'* max 2' curries";
-    isa_ok * max *,    Code, "'* max *' curries";
+    isa-ok * min 2,    Code, "'* min 2' curries";
+    isa-ok * max 2,    Code, "'* max 2' curries";
+    isa-ok * max *,    Code, "'* max *' curries";
 }
 
 # Ensure that in *.foo(blah()), blah() is not called until we invoke the closure.
@@ -224,7 +224,7 @@ eval_dies_ok '{*.{}}()', '{*.{}}() dies';
 # RT #80256
 {
     my $f = * !< 3;
-    isa_ok $f, Code, 'Whatever-currying !< (1)';
+    isa-ok $f, Code, 'Whatever-currying !< (1)';
     nok $f(2), 'Whatever-currying !< (2)';
     ok $f(3), 'Whatever-currying !< (3)';
     ok $f(4), 'Whatever-currying !< (4)';
@@ -233,7 +233,7 @@ eval_dies_ok '{*.{}}()', '{*.{}}() dies';
 #?rakudo skip 'currying plus meta ops'
 {
     my $f = 5 R- *;
-    isa_ok $f, Code, 'Whatever-currying with R- (1)';
+    isa-ok $f, Code, 'Whatever-currying with R- (1)';
     is $f(7), 2, 'Whatever-currying with R- (2)';
     is $f(0), -5, 'Whatever-currying with R- (3)';
 
@@ -245,7 +245,7 @@ eval_dies_ok '{*.{}}()', '{*.{}}() dies';
 # RT 79166
 {
     my $rt79166 = *;
-    isa_ok $rt79166, Whatever, 'assignment of whatever still works';
+    isa-ok $rt79166, Whatever, 'assignment of whatever still works';
     $rt79166 = 'RT 79166';
     is $rt79166, 'RT 79166', 'assignment to variable with whatever in it';
 }
@@ -258,7 +258,7 @@ eval_dies_ok '{*.{}}()', '{*.{}}() dies';
 
 # RT #77000
 {
-    isa_ok *[0], WhateverCode, '*[0] curries';
+    isa-ok *[0], WhateverCode, '*[0] curries';
     is *[0]([1, 2, 3]), 1, '... it works';
 }
 
@@ -273,14 +273,14 @@ eval_dies_ok '{*.{}}()', '{*.{}}() dies';
 
 # RT #120385
 {
-    isa_ok (*.[1]), Code, '*.[1] is some kind of code';
-    isa_ok (*.<a>), Code, '*.<a> is some kind of code';
-    isa_ok (*.{1}), Code, '*.{1} is some kind of code';
+    isa-ok (*.[1]), Code, '*.[1] is some kind of code';
+    isa-ok (*.<a>), Code, '*.<a> is some kind of code';
+    isa-ok (*.{1}), Code, '*.{1} is some kind of code';
 }
 
 {
-    isa_ok Whatever eqv 42, Bool, "Whatever type object does not autoprime";
-    isa_ok WhateverCode eqv 42, Bool, "WhateverCode type object does not autoprime";
+    isa-ok Whatever eqv 42, Bool, "Whatever type object does not autoprime";
+    isa-ok WhateverCode eqv 42, Bool, "WhateverCode type object does not autoprime";
 }
 
 # vim: ft=perl6

@@ -17,7 +17,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 {
     # check that the values can be used for ordinary tasks, like
     # constructing ranges
-    isa_ok (Mon..Wed), Range, 'Can construct ranges from Enum values';
+    isa-ok (Mon..Wed), Range, 'Can construct ranges from Enum values';
     ok Mon + Tue == Wed, 'Can do arithmetics with Enum values';
 }
 
@@ -93,7 +93,7 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 # L<S12/The C<.pick> Method/"define a .pick method">
 {
     lives_ok { my Color $k = Color.pick }, 'Color.pick assigns to Color var';
-    isa_ok Color.pick, Color.pick.WHAT, 'Color.pick.isa';
+    isa-ok Color.pick, Color.pick.WHAT, 'Color.pick.isa';
 
     ok ?(Color.pick == any(Color::white, Color::gray, Color::black)),
             '.pick on enums';

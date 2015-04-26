@@ -29,7 +29,7 @@ ok($b2 ~~ Hash, 'it is a Hash type');
 # WHAT() on subroutines
 
 my $s1 = sub {};
-isa_ok($s1, Sub, 'it is a Sub type');
+isa-ok($s1, Sub, 'it is a Sub type');
 
 # See L<S02/"Built-in Data Types">
 # Quoting A06:
@@ -47,37 +47,37 @@ ok($s2 ~~ Hash, 'it is a Hash type (bare block)');
 
 # L<S06/"Placeholder variables">
 my $s2a = { $^aaa };
-isa_ok($s2a, Block, 'it is a Parametric type (bare block with placeholder parameters)');
+isa-ok($s2a, Block, 'it is a Parametric type (bare block with placeholder parameters)');
 
 {
     my $s3 = -> {};
-    isa_ok($s3, Block, 'it is a Block type (pointy block)');
+    isa-ok($s3, Block, 'it is a Block type (pointy block)');
 }
 
 # WHAT() on different types of scalars
 
 my $int = 0;
-isa_ok($int, Int, 'it is an Int type');
+isa-ok($int, Int, 'it is an Int type');
 
 my $num = '';
 ok(+$num ~~ Real, 'it is an Real type');
 
 my $float = 0.5e0;
-isa_ok($float, Num, 'it is an Num type');
-isa_ok(1 / 4, Rat, 'infix:</> of integers produces a Rat');
+isa-ok($float, Num, 'it is an Num type');
+isa-ok(1 / 4, Rat, 'infix:</> of integers produces a Rat');
 
 my $string = "Hello World";
-isa_ok($string, Str, 'it is a Str type');
+isa-ok($string, Str, 'it is a Str type');
 
 my $bool = (0 == 0);
-isa_ok($bool, Bool, 'it is a Bool type');
+isa-ok($bool, Bool, 'it is a Bool type');
 
 my $pair = ("foo" => "bar");
-isa_ok($pair, Pair, 'it is a Pair type');
+isa-ok($pair, Pair, 'it is a Pair type');
 
 {
     my $rule = rx/^hello\sworld$/;
-    isa_ok($rule, Regex, 'it is a Regex type');
+    isa-ok($rule, Regex, 'it is a Regex type');
 }
 
 # vim: ft=perl6

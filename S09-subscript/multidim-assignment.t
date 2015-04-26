@@ -4,6 +4,7 @@ plan 10;
 {
     my @fifties-novels;
     @fifties-novels[2 ; 2,3] = "Charlotte's Web", "The Voyage of the Dawn Treader";
+    say @fifties-novels.perl;
     is_deeply @fifties-novels,
         Array.new(Any, Any, [Any, Any, "Charlotte's Web", "The Voyage of the Dawn Treader"]),
         "Autovivifying LoL assignment on Array with multiple final indices";

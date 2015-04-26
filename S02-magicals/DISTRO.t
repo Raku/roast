@@ -33,9 +33,9 @@ get a list of osnames that have actually passed tests.
       ok $?DISTRO.name eq any($?PERL.DISTROnames),
       "We know of the DISTRO we were compiled in";
 
-    isa_ok $?DISTRO.version, Version;
-    isa_ok $?DISTRO.signature, Blob;
-    isa_ok $?DISTRO.is-win, Bool;
+    isa-ok $?DISTRO.version, Version;
+    isa-ok $?DISTRO.signature, Blob;
+    isa-ok $?DISTRO.is-win, Bool;
 }
 
 ok $*DISTRO.name,      "We are running under '{$*DISTRO.name}'";
@@ -56,11 +56,11 @@ ok $*DISTRO.Str  ~~ m/\w/, 'We can do a $*DISTRO.Str';
 
 ok $*DISTRO.name, 'Non-empty $*DISTRO.name';
 
-isa_ok $*DISTRO.version, Version;
+isa-ok $*DISTRO.version, Version;
 #?rakudo.jvm    todo 'no Distro.signature yet'
 #?rakudo.moar   todo 'no Distro.signature yet'
 #?rakudo.parrot skip 'no Distro.signature yet'
-isa_ok $*DISTRO.signature, Blob;
-isa_ok $*DISTRO.is-win, Bool;
+isa-ok $*DISTRO.signature, Blob;
+isa-ok $*DISTRO.is-win, Bool;
 
 # vim: ft=perl6

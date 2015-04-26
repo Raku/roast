@@ -25,7 +25,7 @@ plan 72;
     dies_ok { Date.new('1900-02-29') }, 'dies on 29 February 1900';
     lives_ok { Date.new('2000-02-29') }, '...but not 29 February 2000';
 
-    isa_ok Date.new(2010, 01, 01), Date, 'Date.new() returns a Date';  #OK octal
+    isa-ok Date.new(2010, 01, 01), Date, 'Date.new() returns a Date';  #OK octal
 
     my $date = Date.new('1999-01-29');
     dies_ok { $date.clone(month => 2) }, 'dies on 29 February 1999 (Date.clone)';

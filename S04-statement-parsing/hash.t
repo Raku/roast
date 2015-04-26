@@ -5,7 +5,7 @@ use Test;
 
 plan 8;
 
-isa_ok hash('a', 1), Hash, 'hash() returns a Hash';
+isa-ok hash('a', 1), Hash, 'hash() returns a Hash';
 is hash('a', 1).keys, 'a', 'hash() with keys/values (key)';
 is hash('a', 1).values, 1, 'hash() with keys/values (values)';
 

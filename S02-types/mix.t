@@ -11,14 +11,14 @@ sub showkv($x) {
 
 {
     my $m = mix <a foo a a a a b foo>;
-    isa_ok $m, Mix, '&mix produces a Mix';
+    isa-ok $m, Mix, '&mix produces a Mix';
     is showkv($m), 'a:5 b:1 foo:2', '...with the right elements';
 
     is $m.default, 0, "Defaults to 0";
     is $m<a>, 5, 'Single-key subscript (existing element)';
-    isa_ok $m<a>, Int, 'Single-key subscript yields an Int';
+    isa-ok $m<a>, Int, 'Single-key subscript yields an Int';
     is $m<santa>, 0, 'Single-key subscript (nonexistent element)';
-    isa_ok $m<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
+    isa-ok $m<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
     ok $m<a>:exists, 'exists with existing element';
     nok $m<santa>:exists, 'exists with nonexistent element';
 
@@ -29,7 +29,7 @@ sub showkv($x) {
 
     my $hash;
     lives_ok { $hash = $m.hash }, ".hash doesn't die";
-    isa_ok $hash, Hash, "...and it returned a Hash";
+    isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
     throws_like { $m<a> = 5 },
@@ -72,19 +72,19 @@ sub showkv($x) {
 }
 
 {
-    isa_ok "a".Mix, Mix, "Str.Mix makes a Mix";
+    isa-ok "a".Mix, Mix, "Str.Mix makes a Mix";
     is showkv("a".Mix), 'a:1', "'a'.Mix is mix a";
 
-    isa_ok (a => 100000).Mix, Mix, "Pair.Mix makes a Mix";
+    isa-ok (a => 100000).Mix, Mix, "Pair.Mix makes a Mix";
     is showkv((a => 100000).Mix), 'a:100000', "(a => 100000).Mix is mix a:100000";
     is showkv((a => 0).Mix), '', "(a => 0).Mix is the empty mix";
 
-    isa_ok <a b c>.Mix, Mix, "<a b c>.Mix makes a Mix";
+    isa-ok <a b c>.Mix, Mix, "<a b c>.Mix makes a Mix";
     is showkv(<a b c a>.Mix), 'a:2 b:1 c:1', "<a b c a>.Mix makes the mix a:2 b:1 c:1";
     is showkv(["a", "b", "c", "a"].Mix), 'a:2 b:1 c:1', "[a b c a].Mix makes the mix a:2 b:1 c:1";
     is showkv([a => 3, b => 0, 'c', 'a'].Mix), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].Mix makes the mix a:4 c:1";
 
-    isa_ok {a => 2, b => 4, c => 0}.Mix, Mix, "{a => 2, b => 4, c => 0}.Mix makes a Mix";
+    isa-ok {a => 2, b => 4, c => 0}.Mix, Mix, "{a => 2, b => 4, c => 0}.Mix makes a Mix";
     is showkv({a => 2, b => 4, c => 0}.Mix), 'a:2 b:4', "{a => 2, b => 4, c => 0}.Mix makes the mix a:2 b:4";
 }
 
@@ -119,20 +119,20 @@ sub showkv($x) {
 
 {
     my $m = mix <a b o p a p o o>;
-    isa_ok $m, Mix, '&Mix.new given an array of strings produces a Mix';
+    isa-ok $m, Mix, '&Mix.new given an array of strings produces a Mix';
     is showkv($m), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
 {
     my $m = mix [ foo => 10, bar => 17, baz => 42, santa => 0 ];
-    isa_ok $m, Mix, '&Mix.new given an array of pairs produces a Mix';
+    isa-ok $m, Mix, '&Mix.new given an array of pairs produces a Mix';
     is +$m, 1, "... with one element";
 }
 
 {
     # {}.hash interpolates in list context
     my $m = mix { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
-    isa_ok $m, Mix, '&Mix.new given a Hash produces a Mix';
+    isa-ok $m, Mix, '&Mix.new given a Hash produces a Mix';
     is +$m, 4, "... with four elements";
     #?niecza todo "Non-string mix elements NYI"
     #?rakudo todo "Not properly interpolating"
@@ -142,31 +142,31 @@ sub showkv($x) {
 {
     # plain {} does not interpolate in list context
     my $m = mix { foo => 10, bar => 17, baz => 42, santa => 0 };
-    isa_ok $m, Mix, '&Mix.new given a Hash produces a Mix';
+    isa-ok $m, Mix, '&Mix.new given a Hash produces a Mix';
     is +$m, 1, "... with one element";
 }
 
 {
     my $m = mix set <foo bar foo bar baz foo>;
-    isa_ok $m, Mix, '&Mix.new given a Set produces a Mix';
+    isa-ok $m, Mix, '&Mix.new given a Set produces a Mix';
     is +$m, 1, "... with one element";
 }
 
 {
     my $m = mix SetHash.new(<foo bar foo bar baz foo>);
-    isa_ok $m, Mix, '&Mix.new given a SetHash produces a Mix';
+    isa-ok $m, Mix, '&Mix.new given a SetHash produces a Mix';
     is +$m, 1, "... with one element";
 }
 
 {
     my $m = mix MixHash.new(<foo bar foo bar baz foo>);
-    isa_ok $m, Mix, '&Mix.new given a MixHash produces a Mix';
+    isa-ok $m, Mix, '&Mix.new given a MixHash produces a Mix';
     is +$m, 1, "... with one element";
 }
 
 {
     my $m = mix set <foo bar foo bar baz foo>;
-    isa_ok $m, Mix, '&mix given a Set produces a Mix';
+    isa-ok $m, Mix, '&mix given a Set produces a Mix';
     is +$m, 1, "... with one element";
 }
 
@@ -174,7 +174,7 @@ sub showkv($x) {
 
 {
     my %m := mix <a b c b>;
-    isa_ok %m, Mix, 'A Mix bound to a %var is a Mix';
+    isa-ok %m, Mix, 'A Mix bound to a %var is a Mix';
     is showkv(%m), 'a:1 b:2 c:1', '...with the right elements';
 
     is %m<b>, 2, 'Single-key subscript (existing element)';
@@ -199,10 +199,10 @@ sub showkv($x) {
 
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
-    isa_ok $m.list.elems, 3, ".list returns 3 things";
+    isa-ok $m.list.elems, 3, ".list returns 3 things";
     is $m.list.grep(Enum).elems, 3, "... all of which are Enums";
 
-    isa_ok $m.pairs.elems, 3, ".pairs returns 3 things";
+    isa-ok $m.pairs.elems, 3, ".pairs returns 3 things";
     is $m.pairs.grep(Enum).elems, 3, "... all of which are Enums";
     is $m.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $m.pairs.grep({ .value ~~ Real }).elems, 3, "... and the values of which are Reals";
@@ -219,10 +219,10 @@ sub showkv($x) {
     my $s;
     my $c;
     lives_ok { $s = $m.perl }, ".perl lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     lives_ok { $c = EVAL $s }, ".perl.EVAL lives";
-    isa_ok $c, Mix, "... and produces a Mix";
+    isa-ok $c, Mix, "... and produces a Mix";
     is showkv($c), showkv($m), "... and it has the correct values";
 }
 
@@ -231,7 +231,7 @@ sub showkv($x) {
     is $m.total, 1.9, 'is the total calculated correctly';
     my $s;
     lives_ok { $s = $m.Str }, ".Str lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar(-2.2) baz foo(3.1)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
@@ -239,7 +239,7 @@ sub showkv($x) {
     my $m = { foo => 10000000000, bar => 17, baz => 42 }.Mix;
     my $s;
     lives_ok { $s = $m.gist }, ".gist lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";
@@ -250,7 +250,7 @@ sub showkv($x) {
 
 {
     my %b := mix "a", "b", "c", "b";
-    isa_ok %b, Mix, 'A Mix bound to a %var is a Mix';
+    isa-ok %b, Mix, 'A Mix bound to a %var is a Mix';
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -334,7 +334,7 @@ sub showkv($x) {
     is $m1<d>, 4, "One of them is 'd'";
     my $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
-    isa_ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
+    isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
 
     my $m = mix <a b c>;
@@ -344,22 +344,22 @@ sub showkv($x) {
     is $m1<d>, 1, "One of them is 'd'";
     $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
-    isa_ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
+    isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
 }
 
 {
-    isa_ok 42.Mix, Mix, "Method .Mix works on Int-1";
+    isa-ok 42.Mix, Mix, "Method .Mix works on Int-1";
     is showkv(42.Mix), "42:1", "Method .Mix works on Int-2";
-    isa_ok "blue".Mix, Mix, "Method .Mix works on Str-1";
+    isa-ok "blue".Mix, Mix, "Method .Mix works on Str-1";
     is showkv("blue".Mix), "blue:1", "Method .Mix works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
-    isa_ok @a.Mix, Mix, "Method .Mix works on Array-1";
+    isa-ok @a.Mix, Mix, "Method .Mix works on Array-1";
     is showkv(@a.Mix), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .Mix works on Array-2";
     my %x = "a" => 1, "b" => 2;
-    isa_ok %x.Mix, Mix, "Method .Mix works on Hash-1";
+    isa-ok %x.Mix, Mix, "Method .Mix works on Hash-1";
     is showkv(%x.Mix), "a:1 b:2", "Method .Mix works on Hash-2";
-    isa_ok (@a, %x).Mix, Mix, "Method .Mix works on Parcel-1";
+    isa-ok (@a, %x).Mix, Mix, "Method .Mix works on Parcel-1";
     is showkv((@a, %x).Mix), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .Mix works on Parcel-2";
 }

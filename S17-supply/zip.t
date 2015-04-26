@@ -13,7 +13,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s1 = Supply.new;
         my $s2 = Supply.new;
 
-        tap_ok $s1.zip($s2, :with( &infix:<~> )),
+        tap-ok $s1.zip($s2, :with( &infix:<~> )),
           [<1a 2b>],
           'zipping taps works',
           :after-tap( {
@@ -27,7 +27,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           } );
     }
 
-    tap_ok Supply.zip(
+    tap-ok Supply.zip(
         Supply.from-list("a".."e"),
         Supply.from-list("f".."k"),
         Supply.from-list("l".."p")
@@ -39,7 +39,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s = Supply.from-list(1..10);
         my $z = Supply.zip($s);
         ok $s === $z, "zipping one supply is a noop";
-        tap_ok $z, [1..10], "noop zip";
+        tap-ok $z, [1..10], "noop zip";
     }
 
     throws_like( { Supply.zip(42) },

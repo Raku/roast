@@ -166,10 +166,9 @@ character classes), and those are referenced at the correct spot.
 }
 
 # A leading :: indicates a symbolic indirect subrule
-#?rakudo skip 'indirect subrule call NYI'
 {
     my $name = 'alpha';
-    ok('abcdef' ~~ /<::($name)>/, '<::($name)> symbolic indirect subrule');
+    is('..abcdef--' ~~ /<::($name)>+/, 'abcdef', '<::($name)> symbolic indirect subrule');
 }
 
 # A leading @ matches like a bare array except that each element is
@@ -182,10 +181,7 @@ character classes), and those are referenced at the correct spot.
     ok('abc.**2def' ~~ /<@second>/, 'Regexes are left alone in <@foo> subrule');
 }
 
-# A leading % matches like a bare hash except that
-# a string value is always treated as a subrule
-#?rakudo todo '<%hash> NYI'
-#?niecza skip 'Sigil % is not allowed for regex assertions'
+#?v6.0.0+ skip 'The use of a hash as an assertion is reserved.'
 {
     my %first = '<alpha>' => '', 'b' => '', 'c' => '';
     ok('aeiou' ~~ /<%first>/, 'strings are treated as a subrule in <%foo>');

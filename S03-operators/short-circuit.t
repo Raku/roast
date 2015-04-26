@@ -188,13 +188,13 @@ sub accumtest($expect, $op) {
     is (15 xor 0 xor 'quux'), Nil, 'xor given two true values returns False (1)';
     is ('a' xor 'b' xor 0), Nil, 'xor given two true values returns False (2)';
 
-    isa_ok 7 ^^ 7, Nil, '^^ can return a Bool';
-    isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
-    isa_ok 0 ^^ ^7, Range, '^^ can return a Range';
-    isa_ok ^7 ^^ 0, Range, '^^ can return a Range';
-    isa_ok 7.5i ^^ Mu, Complex, '^^ can return a Complex';
-    isa_ok Inf ^^ Mu, Num, '^^ can return a Num';
-    isa_ok 'Inf' ^^ Mu, Str, '^^ can return a Str';
+    isa-ok 7 ^^ 7, Nil, '^^ can return a Bool';
+    isa-ok 7 ^^ Mu, Int, '^^ can return an Int';
+    isa-ok 0 ^^ ^7, Range, '^^ can return a Range';
+    isa-ok ^7 ^^ 0, Range, '^^ can return a Range';
+    isa-ok 7.5i ^^ Mu, Complex, '^^ can return a Complex';
+    isa-ok Inf ^^ Mu, Num, '^^ can return a Num';
+    isa-ok 'Inf' ^^ Mu, Str, '^^ can return a Str';
 
     my @a = (1,2,3);
     my @b = (4,5,6);

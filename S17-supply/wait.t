@@ -8,7 +8,7 @@ dies_ok { Supply.wait }, 'can not be called as a class method';
 
 {
     my $s = Supply.new;
-    isa_ok start( {
+    isa-ok start( {
         sleep 1;
         pass "we're running";
         sleep 1;

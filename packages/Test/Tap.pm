@@ -2,9 +2,9 @@ module Test::Tap;
 
 use Test;
 
-proto sub tap_ok(|) is export { * }
+proto sub tap-ok(|) is export { * }
 
-multi sub tap_ok (
+multi sub tap-ok (
   $s,
   $expected,
   $desc,
@@ -22,7 +22,7 @@ multi sub tap_ok (
 
         my @res;
         my $done;
-        isa_ok $s.tap(
+        isa-ok $s.tap(
                  { emit() if &emit; @res.push($_) },
           :done( { done() if &done; $done = True } ),
         ), Tap, "$desc got a tap";
@@ -47,9 +47,9 @@ Test::Tap - Extra utility code for testing Supply
   use Test;
   use Test::Tap;
 
-  tap_ok( $supply, [<a b c>], "comment" );
+  tap-ok( $supply, [<a b c>], "comment" );
 
-  tap_ok(
+  tap-ok(
     $supply,
     [<a b c>],
     "text",
@@ -67,7 +67,7 @@ This module is for Supply test code.
 
 =head1 FUNCTIONS
 
-=head2 tap_ok( $s, [$result], "comment" )
+=head2 tap-ok( $s, [$result], "comment" )
 
 Takes 3 positional parameters: the C<Supply> to be tested, an array with the
 expected values, and a comment to describe the test.

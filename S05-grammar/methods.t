@@ -26,7 +26,7 @@ grammar WithAttrib {
 }
 # RT #73680
 is WithAttrib.new(sep => ',').sep, ',', 'attributes work in grammars too';
-isa_ok WithAttrib.new.sep, Str, 'empty attribute intilized to Str';
+isa-ok WithAttrib.new.sep, Str, 'empty attribute intilized to Str';
 
 # RT #113552
 {

@@ -33,7 +33,7 @@ lives_ok { $/.perl }, 'lives on quantified named captures';
     my $code_str = 'say <OH HAI>';
     $code_str ~~ /<Perl6::Grammar::TOP>/;
 
-    isa_ok $/, Match;
+    isa-ok $/, Match;
     is $/.ast, $code_str, 'Match.ast is the code matched';
     is $/.Str, $code_str, 'Match.Str is the code matched';
     is_deeply EVAL($/.perl), $/, 'EVAL of Match.perl recreates Match';

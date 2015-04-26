@@ -52,7 +52,7 @@ eval_dies_ok Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbag
 # because it broke these:
 {
     ok "foo" ~~ /<{' o ** 2 '}>/, 'returns true';
-    isa_ok "foo" ~~ /<{' o ** 2 '}>/, Match, 'returns a valid Match';
+    isa-ok "foo" ~~ /<{' o ** 2 '}>/, Match, 'returns a valid Match';
     is ~("foo" ~~ /<{' o ** 2 '}>/), "oo", 'returns correct Match';
 }
 

@@ -80,7 +80,7 @@ my @list = (1 .. 5);
             'heuristic for block - looks like a closure';
 
     my %result = map {; $_ => ($_*2) }, @list;
-    isa_ok(%result, Hash);
+    isa-ok(%result, Hash);
     is %result<1 2 3 4 5>.join(', '), '2, 4, 6, 8, 10',
         ' got the hash we expect';
 }
