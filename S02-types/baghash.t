@@ -16,14 +16,14 @@ sub showkv($x) {
 {
     say "We do get here, right?";
     my $b = BagHash.new("a", "foo", "a", "a", "a", "a", "b", "foo");
-    isa_ok $b, BagHash, 'we got a BagHash';
+    isa-ok $b, BagHash, 'we got a BagHash';
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
 
     is $b.default, 0, "Defaults to 0";
     is $b<a>, 5, 'Single-key subscript (existing element)';
-    isa_ok $b<a>, Int, 'Single-key subscript yields an Int';
+    isa-ok $b<a>, Int, 'Single-key subscript yields an Int';
     is $b<santa>, 0, 'Single-key subscript (nonexistent element)';
-    isa_ok $b<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
+    isa-ok $b<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
     ok $b<a>:exists, 'exists with existing element';
     nok $b<santa>:exists, 'exists with nonexistent element';
 
@@ -34,7 +34,7 @@ sub showkv($x) {
 
     my $hash;
     lives_ok { $hash = $b.hash }, ".hash doesn't die";
-    isa_ok $hash, Hash, "...and it returned a Hash";
+    isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
     throws_like { $b.keys = <c d> },
@@ -89,19 +89,19 @@ sub showkv($x) {
 }
 
 {
-    isa_ok "a".BagHash, BagHash, "Str.BagHash makes a BagHash";
+    isa-ok "a".BagHash, BagHash, "Str.BagHash makes a BagHash";
     is showkv("a".BagHash), 'a:1', "'a'.BagHash is bag a";
 
-    isa_ok (a => 100000).BagHash, BagHash, "Pair.BagHash makes a BagHash";
+    isa-ok (a => 100000).BagHash, BagHash, "Pair.BagHash makes a BagHash";
     is showkv((a => 100000).BagHash), 'a:100000', "(a => 100000).BagHash is bag a:100000";
     is showkv((a => 0).BagHash), '', "(a => 0).BagHash is the empty bag";
 
-    isa_ok <a b c>.BagHash, BagHash, "<a b c>.BagHash makes a BagHash";
+    isa-ok <a b c>.BagHash, BagHash, "<a b c>.BagHash makes a BagHash";
     is showkv(<a b c a>.BagHash), 'a:2 b:1 c:1', "<a b c a>.BagHash makes the bag a:2 b:1 c:1";
     is showkv(["a", "b", "c", "a"].BagHash), 'a:2 b:1 c:1', "[a b c a].BagHash makes the bag a:2 b:1 c:1";
     is showkv([a => 3, b => 0, 'c', 'a'].BagHash), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].BagHash makes the bag a:4 c:1";
 
-    isa_ok {a => 2, b => 4, c => 0}.BagHash, BagHash, "{a => 2, b => 4, c => 0}.BagHash makes a BagHash";
+    isa-ok {a => 2, b => 4, c => 0}.BagHash, BagHash, "{a => 2, b => 4, c => 0}.BagHash makes a BagHash";
     is showkv({a => 2, b => 4, c => 0}.BagHash), 'a:2 b:4', "{a => 2, b => 4, c => 0}.BagHash makes the bag a:2 b:4";
 }
 
@@ -136,19 +136,19 @@ sub showkv($x) {
 
 {
     my $b = BagHash.new(<a b o p a p o o>);
-    isa_ok $b, BagHash, '&BagHash.new given an array of strings produces a BagHash';
+    isa-ok $b, BagHash, '&BagHash.new given an array of strings produces a BagHash';
     is showkv($b), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
 {
     my $b = BagHash.new([ foo => 10, bar => 17, baz => 42, santa => 0 ]);
-    isa_ok $b, BagHash, '&BagHash.new given an array of pairs produces a BagHash';
+    isa-ok $b, BagHash, '&BagHash.new given an array of pairs produces a BagHash';
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = BagHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 }.hash);
-    isa_ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
+    isa-ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
     is +$b, 4, "... with four elements";
     #?niecza todo "Non-string bag elements NYI"
     #?rakudo todo "Needs to catch up with spec"
@@ -157,25 +157,25 @@ sub showkv($x) {
 
 {
     my $b = BagHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 });
-    isa_ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
+    isa-ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = BagHash.new(set <foo bar foo bar baz foo>);
-    isa_ok $b, BagHash, '&BagHash.new given a Set produces a BagHash';
+    isa-ok $b, BagHash, '&BagHash.new given a Set produces a BagHash';
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = BagHash.new(SetHash.new(<foo bar foo bar baz foo>));
-    isa_ok $b, BagHash, '&BagHash.new given a SetHash produces a BagHash';
+    isa-ok $b, BagHash, '&BagHash.new given a SetHash produces a BagHash';
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = BagHash.new(bag <foo bar foo bar baz foo>);
-    isa_ok $b, BagHash, '&BagHash.new given a Bag produces a BagHash';
+    isa-ok $b, BagHash, '&BagHash.new given a Bag produces a BagHash';
     is +$b, 1, "... with one element";
 }
 
@@ -184,7 +184,7 @@ sub showkv($x) {
 #     my $b = BagHash.new(set <foo bar foo bar baz foo>);
 #     $b<bar> += 2;
 #     my $c = BagHash.new($b);
-#     isa_ok $c, BagHash, '&BagHash.new given a BagHash produces a BagHash';
+#     isa-ok $c, BagHash, '&BagHash.new given a BagHash produces a BagHash';
 #     is showkv($c), 'bar:3 baz:1 foo:1', '... with the right elements';
 #     $c<manning> = 10;
 #     is showkv($c), 'bar:3 baz:1 foo:1 manning:10', 'Creating a new element works';
@@ -196,10 +196,10 @@ sub showkv($x) {
 
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
-    isa_ok $b.list.elems, 3, ".list returns 3 things";
+    isa-ok $b.list.elems, 3, ".list returns 3 things";
     is $b.list.grep(Pair).elems, 3, "... all of which are Pairs";
 
-    isa_ok $b.pairs.elems, 3, ".pairs returns 3 things";
+    isa-ok $b.pairs.elems, 3, ".pairs returns 3 things";
     is $b.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
     is $b.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.pairs.grep({ .value ~~ Int }).elems, 3, "... and the values of which are Ints";
@@ -215,10 +215,10 @@ sub showkv($x) {
     my $s;
     my $c;
     lives_ok { $s = $b.perl }, ".perl lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     lives_ok { $c = EVAL $s }, ".perl.EVAL lives";
-    isa_ok $c, BagHash, "... and produces a BagHash";
+    isa-ok $c, BagHash, "... and produces a BagHash";
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
@@ -226,14 +226,14 @@ sub showkv($x) {
     my $b = { foo => 2, bar => 3, baz => 1 }.BagHash;
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.BagHash;
     my $s;
-    lives_ok { $s = $b.gist }, ".gist lives"; isa_ok $s, Str, "... and produces a string";
+    lives_ok { $s = $b.gist }, ".gist lives"; isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";
@@ -244,7 +244,7 @@ sub showkv($x) {
 
 {
     my %b := BagHash.new("a", "b", "c", "b");
-    isa_ok %b, BagHash, 'A BagHash bound to a %var is a BagHash';
+    isa-ok %b, BagHash, 'A BagHash bound to a %var is a BagHash';
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -336,7 +336,7 @@ sub showkv($x) {
 
     my $a = $b.pickpairs;
     say :$a.perl;
-    isa_ok $a, Pair, 'Did we get a Pair';
+    isa-ok $a, Pair, 'Did we get a Pair';
     ok ($a eq "a\t1" or $a eq "b\t2"), "We got one of the two choices";
 
     my @a = $b.pickpairs(2);
@@ -401,7 +401,7 @@ sub showkv($x) {
     my $b = BagHash.new("a", "b", "b");
 
     my $a = $b.grabpairs[0];
-    isa_ok $a, Pair, 'did we get a Pair';
+    isa-ok $a, Pair, 'did we get a Pair';
     ok $a.key eq "a" || $a.key eq "b", "We got one of the two choices";
 
     my @a = $b.grabpairs(2);
@@ -435,7 +435,7 @@ sub showkv($x) {
     is +%h.keys, 2, 'Inititalization worked';
     is %h.elems, 3, '.elems works';
     #?rakudo todo 'todo'
-    isa_ok %h<nonexisting>, Int, '%h<nonexisting> is an Int';
+    isa-ok %h<nonexisting>, Int, '%h<nonexisting> is an Int';
     #?rakudo todo 'todo'
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
@@ -492,17 +492,17 @@ sub showkv($x) {
 }
 
 {
-    isa_ok 42.BagHash, BagHash, "Method .BagHash works on Int-1";
+    isa-ok 42.BagHash, BagHash, "Method .BagHash works on Int-1";
     is showkv(42.BagHash), "42:1", "Method .BagHash works on Int-2";
-    isa_ok "blue".BagHash, BagHash, "Method .BagHash works on Str-1";
+    isa-ok "blue".BagHash, BagHash, "Method .BagHash works on Str-1";
     is showkv("blue".BagHash), "blue:1", "Method .BagHash works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
-    isa_ok @a.BagHash, BagHash, "Method .BagHash works on Array-1";
+    isa-ok @a.BagHash, BagHash, "Method .BagHash works on Array-1";
     is showkv(@a.BagHash), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .BagHash works on Array-2";
     my %x = "a" => 1, "b" => 2;
-    isa_ok %x.BagHash, BagHash, "Method .BagHash works on Hash-1";
+    isa-ok %x.BagHash, BagHash, "Method .BagHash works on Hash-1";
     is showkv(%x.BagHash), "a:1 b:2", "Method .BagHash works on Hash-2";
-    isa_ok (@a, %x).BagHash, BagHash, "Method .BagHash works on Parcel-1";
+    isa-ok (@a, %x).BagHash, BagHash, "Method .BagHash works on Parcel-1";
     is showkv((@a, %x).BagHash), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .BagHash works on Parcel-2";
 }

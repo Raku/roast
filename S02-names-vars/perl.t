@@ -168,7 +168,7 @@ my @tests = (
     ([0, 0], [1, 1]).grep({@a.push: .perl; 1}).eager;
     for @a {
         my $n = EVAL($_);
-        isa_ok $n, Array, '.perl in .grep works - type';
+        isa-ok $n, Array, '.perl in .grep works - type';
         is $n.elems, 2, '.perl in .grep works - number of elems';
         is $n[0], $n[1], '.perl in .grep works - element equality';
     }

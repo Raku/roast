@@ -26,10 +26,10 @@ sub gen_hash {
     my %h = gen_hash;
     is %h.elems, 26, "basic sanity";
 
-    isa_ok %h<b>:exists, Bool,  "Bool test for exists single key";
-    isa_ok %h<b>:!exists, Bool, "!Bool test for exists single key";
-    isa_ok %h<X>:exists, Bool,  "Bool test for non-exists single key";
-    isa_ok %h<X>:!exists, Bool, "!Bool test for non-exists single key";
+    isa-ok %h<b>:exists, Bool,  "Bool test for exists single key";
+    isa-ok %h<b>:!exists, Bool, "!Bool test for exists single key";
+    isa-ok %h<X>:exists, Bool,  "Bool test for non-exists single key";
+    isa-ok %h<X>:!exists, Bool, "!Bool test for non-exists single key";
     ok     %h<b>:exists,       "Test for exists single key";
     ok   !(%h<X>:exists),      "Test for non-exists single key";
 

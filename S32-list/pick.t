@@ -61,15 +61,15 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 {
     my @a = 1..100;
 
-    isa_ok @a.pick, Int, "picking a single element from an array of Ints produces an Int";
+    isa-ok @a.pick, Int, "picking a single element from an array of Ints produces an Int";
     ok @a.pick ~~ 1..100, "picking a single element from an array of Ints produces one of them";
 
-    isa_ok @a.pick(1), Int, "picking 1 from an array of Ints produces an Int";
+    isa-ok @a.pick(1), Int, "picking 1 from an array of Ints produces an Int";
     ok @a.pick(1) ~~ 1..100, "picking 1 from an array of Ints produces one of them";
 
     my @c = @a.pick(2);
-    isa_ok @c[0], Int, "picking 2 from an array of Ints produces an Int...";
-    isa_ok @c[1], Int, "... and an Int";
+    isa-ok @c[0], Int, "picking 2 from an array of Ints produces an Int...";
+    isa-ok @c[1], Int, "... and an Int";
     ok (@c[0] ~~ 1..100) && (@c[1] ~~ 1..100), "picking 2 from an array of Ints produces two of them";
     ok @c[0] != @c[1], "picking 2 from an array of Ints produces two distinct results";
 

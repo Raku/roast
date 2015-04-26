@@ -26,7 +26,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
             my @keys;
             my @supplies;
-            isa_ok $c.tap( -> $p {
+            isa-ok $c.tap( -> $p {
                 @keys.push: $p.key;
                 @supplies.push: $p.value;
             } ), Tap, "we got a tap ($what)";
@@ -51,7 +51,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
             my @keys;
             my @supplies;
-            isa_ok $c.tap( -> $p {
+            isa-ok $c.tap( -> $p {
                 @keys.push: $p.key;
                 @supplies.push: $p.value;
             } ), Tap, "we got a tap ($what)";

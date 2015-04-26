@@ -146,9 +146,9 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 {
     my @a = "hello world".split(/<[aeiou]>/, :all);
     is +@a, 7, "split:all resulted in seven pieces";
-    isa_ok @a[1], Match, "second is a Match object";
-    isa_ok @a[3], Match, "fourth is a Match object";
-    isa_ok @a[5], Match, "sixth is a Match object";
+    isa-ok @a[1], Match, "second is a Match object";
+    isa-ok @a[3], Match, "fourth is a Match object";
+    isa-ok @a[5], Match, "sixth is a Match object";
     is ~@a, ~("h", "e", "ll", "o", " w", "o", "rld"), "The pieces are correct";
 }
 

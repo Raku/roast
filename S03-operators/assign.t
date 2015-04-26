@@ -254,9 +254,9 @@ my @p;
     is(@p[1],11, "//= operator parses as item assignment 4");
     my %hash;
     %hash<foo> //= hash();
-    isa_ok(%hash<foo>, Hash, "Verify //= autovivifies correctly");
+    isa-ok(%hash<foo>, Hash, "Verify //= autovivifies correctly");
     %hash<bar> //= [];
-    isa_ok(%hash<bar>, Array, "Verify //= autovivifies correctly");
+    isa-ok(%hash<bar>, Array, "Verify //= autovivifies correctly");
 
     my $f //= 5;
     is $f, 5, '//= also works in declaration';
@@ -278,9 +278,9 @@ my @p;
 
     my %hash;
     %hash<foo> orelse= hash();
-    isa_ok(%hash<foo>, Hash, "Verify orelse= autovivifies correctly");
+    isa-ok(%hash<foo>, Hash, "Verify orelse= autovivifies correctly");
     %hash<bar> orelse= [];
-    isa_ok(%hash<bar>, Array, "Verify orelse= autovivifies correctly");
+    isa-ok(%hash<bar>, Array, "Verify orelse= autovivifies correctly");
 
     my $f orelse= 5;
     is $f, 5, 'orelse= also works in declaration';

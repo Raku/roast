@@ -50,7 +50,7 @@ sub test-gmtime( Int $t is copy ) {
 # L<S32::Temporal/C<time>>
 # --------------------------------------------------------------------
 
-isa_ok time, Int, 'time returns an Int';
+isa-ok time, Int, 'time returns an Int';
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/C<DateTime>/immutable>
@@ -319,7 +319,7 @@ is ds('1997-06-30T23:59:60Z').whole-second, 60, 'DateTime.whole-second (60)';
     my $dt = ymd 2010, 6, 4;
     my $date;
     lives_ok { $date = $dt.Date(); }, 'DateTime.Date';
-    isa_ok $date, Date, 'Date object is correct class';
+    isa-ok $date, Date, 'Date object is correct class';
     is $date.year, 2010, 'Date year';
     is $date.month, 6, 'Date month';
     is $date.day, 4, 'Date day';
@@ -404,24 +404,24 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
 # Ensure that any method of producing a DateTime keeps attributes
 # that should be Ints Ints.
 {
-    isa_ok dt(second => 1/3).year, Int, 'DateTime.new(...).year isa Int';
-    isa_ok dt(second => 1/3).hour, Int, 'DateTime.new(...).hour isa Int';
-    isa_ok dt(hour => 13, second => 1/3).hour, Int, 'DateTime.new(..., hour => 13).hour isa Int';
-    isa_ok dtc(second => 1/3).year, Int, '$dt.clone(...).year isa Int';
-    isa_ok dtc(second => 1/3).hour, Int, '$dt.clone(...).hour isa Int';
-    isa_ok dtc(hour => 13, second => 1/3).hour, Int, '$dt.clone(..., hour => 13).hour isa Int';
-    isa_ok DateTime.new(5).year, Int, 'DateTime.new(Int).year isa Int';
-    isa_ok DateTime.new(5).hour, Int, 'DateTime.new(Int).hour isa Int';
-    isa_ok DateTime.new(now).year, Int, 'DateTime.new(Instant).year isa Int';
-    isa_ok DateTime.new(now).hour, Int, 'DateTime.new(Instant).hour isa Int';
-    isa_ok ds('2005-02-04T15:25:00Z').year, Int, 'ds(Str).year isa Int';
-    isa_ok ds('2005-02-04T15:25:00Z').hour, Int, 'ds(Str).hour isa Int';
-    isa_ok dt.in-timezone(60*60).year, Int, 'dt.in-timezone(Int).year isa Int';
-    isa_ok dt.in-timezone(60*60).hour, Int, 'dt.in-timezone(Int).hour isa Int';
-    isa_ok dt.truncated-to('week').year, Int, 'dt.truncated-to(week).year isa Int';
-    isa_ok dt.truncated-to('week').hour, Int, 'dt.truncated-to(week).hour isa Int';
-    isa_ok DateTime.now.year, Int, 'DateTime.now.year isa Int';
-    isa_ok DateTime.now.hour, Int, 'DateTime.now.hour isa Int';
+    isa-ok dt(second => 1/3).year, Int, 'DateTime.new(...).year isa Int';
+    isa-ok dt(second => 1/3).hour, Int, 'DateTime.new(...).hour isa Int';
+    isa-ok dt(hour => 13, second => 1/3).hour, Int, 'DateTime.new(..., hour => 13).hour isa Int';
+    isa-ok dtc(second => 1/3).year, Int, '$dt.clone(...).year isa Int';
+    isa-ok dtc(second => 1/3).hour, Int, '$dt.clone(...).hour isa Int';
+    isa-ok dtc(hour => 13, second => 1/3).hour, Int, '$dt.clone(..., hour => 13).hour isa Int';
+    isa-ok DateTime.new(5).year, Int, 'DateTime.new(Int).year isa Int';
+    isa-ok DateTime.new(5).hour, Int, 'DateTime.new(Int).hour isa Int';
+    isa-ok DateTime.new(now).year, Int, 'DateTime.new(Instant).year isa Int';
+    isa-ok DateTime.new(now).hour, Int, 'DateTime.new(Instant).hour isa Int';
+    isa-ok ds('2005-02-04T15:25:00Z').year, Int, 'ds(Str).year isa Int';
+    isa-ok ds('2005-02-04T15:25:00Z').hour, Int, 'ds(Str).hour isa Int';
+    isa-ok dt.in-timezone(60*60).year, Int, 'dt.in-timezone(Int).year isa Int';
+    isa-ok dt.in-timezone(60*60).hour, Int, 'dt.in-timezone(Int).hour isa Int';
+    isa-ok dt.truncated-to('week').year, Int, 'dt.truncated-to(week).year isa Int';
+    isa-ok dt.truncated-to('week').hour, Int, 'dt.truncated-to(week).hour isa Int';
+    isa-ok DateTime.now.year, Int, 'DateTime.now.year isa Int';
+    isa-ok DateTime.now.hour, Int, 'DateTime.now.hour isa Int';
 }
 
 is DateTime.now.Date, Date.today, 'coercion to Date';

@@ -70,7 +70,7 @@ plan 42;
 # methods on native type objects
 # RT #102256
 {
-    isa_ok int, Mu, 'int ~~ Mu';
+    isa-ok int, Mu, 'int ~~ Mu';
     is num.gist, '(num)', 'num.gist';
     nok str.defined, 'str.defined';
 }

@@ -52,21 +52,21 @@ plan 25;
 {
     sub rt77946 { return fail() }
     my $rt77946 = rt77946();
-    isa_ok ?$rt77946, Bool, '?Failure returns a Bool';
-    isa_ok $rt77946.defined, Bool, 'Failure.defined returns a Bool';
+    isa-ok ?$rt77946, Bool, '?Failure returns a Bool';
+    isa-ok $rt77946.defined, Bool, 'Failure.defined returns a Bool';
 }
 
 # RT #106832
 {
     my $f = (sub { fail('foo') }).();
     is $f.exception, 'foo', 'can extract exception from Failure';
-    isa_ok $f.exception, Exception, '... and it is an Exception';
+    isa-ok $f.exception, Exception, '... and it is an Exception';
 }
 
 {
     class AnEx is Exception { };
     my $f = (sub f { fail AnEx.new }).();  #OK not used
-    isa_ok $f.exception, AnEx, 'can fail() typed exceptions';
+    isa-ok $f.exception, AnEx, 'can fail() typed exceptions';
 }
 
 {

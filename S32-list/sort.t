@@ -169,7 +169,7 @@ plan 32;
             'can sort with automated Schwartzian Transform';
 
     my @s = %map.sort: { .value };
-    isa_ok(@s[0], Pair, '%hash.sort returns a List of Pairs');
+    isa-ok(@s[0], Pair, '%hash.sort returns a List of Pairs');
     is (@s.map: { .key }).join, 'perl', 'sort with unary sub'
 }
 

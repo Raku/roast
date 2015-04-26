@@ -32,10 +32,10 @@ my $three = Fixed2.new(3);
 my $ten = Fixed2.new(10);
 my $neg-pi = Fixed2.new(-3.14);
 
-isa_ok $zero, Fixed2, "Fixed2 sanity test";
-isa_ok $one, Fixed2, "Fixed2 sanity test";
-isa_ok $one-and-one-hundredth, Fixed2, "Fixed2 sanity test";
-isa_ok $neg-pi, Fixed2, "Fixed2 sanity test";
+isa-ok $zero, Fixed2, "Fixed2 sanity test";
+isa-ok $one, Fixed2, "Fixed2 sanity test";
+isa-ok $one-and-one-hundredth, Fixed2, "Fixed2 sanity test";
+isa-ok $neg-pi, Fixed2, "Fixed2 sanity test";
 ok $zero ~~ Real, "Fixed2 sanity test";
 ok $one ~~ Real, "Fixed2 sanity test";
 ok $one-and-one-hundredth ~~ Real, "Fixed2 sanity test";
@@ -48,51 +48,51 @@ is_approx $neg-pi.pred, -4.14, "(-3.14).pred works";
 
 {
     my $i = $zero.Bool;
-    isa_ok $i, Bool, "0.Bool is an Bool";
+    isa-ok $i, Bool, "0.Bool is an Bool";
     is $i, Bool::False, "0.Bool is False";
     
     $i = $one-and-ninety-nine-hundredths.Bool;
-    isa_ok $i, Bool, "1.99.Bool is an Bool";
+    isa-ok $i, Bool, "1.99.Bool is an Bool";
     is $i, Bool::True, "1.99.Bool is True";
 }
 
 {
     my $i = $neg-pi.Int;
-    isa_ok $i, Int, "-3.14.Int is an Int";
+    isa-ok $i, Int, "-3.14.Int is an Int";
     is $i, -3, "-3.14.Int is -3";
     
     $i = $one-and-ninety-nine-hundredths.Int;
-    isa_ok $i, Int, "1.99.Int is an Int";
+    isa-ok $i, Int, "1.99.Int is an Int";
     is $i, 1, "1.99.Int is 1";
 }
 
 {
     my $i = $neg-pi.Rat;
-    isa_ok $i, Rat, "-3.14.Rat is an Rat";
+    isa-ok $i, Rat, "-3.14.Rat is an Rat";
     is_approx $i, -3.14, "-3.14.Rat is -3.14";
     
     $i = $one-and-ninety-nine-hundredths.Rat;
-    isa_ok $i, Rat, "1.99.Rat is an Rat";
+    isa-ok $i, Rat, "1.99.Rat is an Rat";
     is_approx $i, 1.99, "1.99.Rat is 1.99";
 }
 
 {
     my $i = $neg-pi.Num;
-    isa_ok $i, Num, "-3.14.Num is an Num";
+    isa-ok $i, Num, "-3.14.Num is an Num";
     is_approx $i, -3.14, "-3.14.Num is -3.14";
     
     $i = $one-and-ninety-nine-hundredths.Num;
-    isa_ok $i, Num, "1.99.Num is an Num";
+    isa-ok $i, Num, "1.99.Num is an Num";
     is_approx $i, 1.99, "1.99.Num is 1.99";
 }
 
 {
     my $s = $one-and-ninety-nine-hundredths.Str;
-    isa_ok $s, Str, "1.99.Str is a Str";
+    isa-ok $s, Str, "1.99.Str is a Str";
     is $s, "1.99", '1.99.Str is "1.99"';
 
     $s = $neg-pi.Str;
-    isa_ok $s, Str, "-3.14.Str is a Str";
+    isa-ok $s, Str, "-3.14.Str is a Str";
     is $s, "-3.14", '-3.14.Str is "-3.14"';
 }
 
@@ -165,7 +165,7 @@ nok 1.001 == $one-and-one-hundredth, "not 1.001 == 1.01";
 ok $neg-pi == -3.14, "-3.14 == -3.14";
 
 # bonus round!
-isa_ok $zero.Complex, Complex, "0.Complex is a Complex";
+isa-ok $zero.Complex, Complex, "0.Complex is a Complex";
 ok $zero == $zero.Complex, "0 == 0.Complex";
 ok $neg-pi == $neg-pi.Complex, "-3.14 == -3.14.Complex";
 ok $neg-pi == -3.14.Complex, "-3.14 == -3.14.Complex";

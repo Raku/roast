@@ -5,10 +5,10 @@ plan 29;
 
 eval_dies_ok('qr/foo/', 'qr// is gone');
 
-isa_ok(rx/oo/, Regex);
-isa_ok(rx (o), Regex);
+isa-ok(rx/oo/, Regex);
+isa-ok(rx (o), Regex);
 eval_dies_ok('rx(o)', 'rx () whitespace if the delims are parens');
-isa_ok(regex {oo}, Regex);
+isa-ok(regex {oo}, Regex);
 
 eval_dies_ok('rx :foo:', 'colons are not allowed as rx delimiters');
 
@@ -16,7 +16,7 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 
 {
     my $var = /foo/;
-    isa_ok($var, Regex, '$var = /foo/ returns a Regex object');
+    isa-ok($var, Regex, '$var = /foo/ returns a Regex object');
 }
 
 # fairly directly from RT #61662
@@ -74,7 +74,7 @@ eval_dies_ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
 
 eval_dies_ok 'rx/;/',       'bare ";" in rx is not allowed';
 eval_dies_ok q{';' ~~ /;/}, 'bare ";" in match is not allowed';
-isa_ok rx/\;/, Regex,       'escaped ";" in rx// works';
+isa-ok rx/\;/, Regex,       'escaped ";" in rx// works';
 ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
 # RT #64668

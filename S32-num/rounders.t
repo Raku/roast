@@ -91,7 +91,7 @@ for %tests.keys.sort -> $type {
 }
 
 for %tests.keys.sort -> $t {
-    isa_ok EVAL("{$t}(1.1)"), Int, "rounder $t returns an Int";
+    isa-ok EVAL("{$t}(1.1)"), Int, "rounder $t returns an Int";
 }
 
 # MoarVM Issue #157

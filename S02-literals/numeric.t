@@ -3,27 +3,27 @@ use Test;
 
 plan 52;
 
-isa_ok 1, Int, '1 produces a Int';
+isa-ok 1, Int, '1 produces a Int';
 ok 1 ~~ Numeric, '1 is Numeric';
 ok 1 ~~ Real, '1 is Real';
 
-isa_ok 1.Num, Num, '1.Num produces a Int';
+isa-ok 1.Num, Num, '1.Num produces a Int';
 ok 1.Num ~~ Numeric, '1.Num is Numeric';
 ok 1.Num ~~ Real, '1.Num is Real';
 
 # L<S02/Rational literals/Rational literals are indicated>
 
 is_approx <1/2>, 0.5, '<1/2> Rat literal';
-isa_ok <1/2>, Rat, '<1/2> produces a Rat';
+isa-ok <1/2>, Rat, '<1/2> produces a Rat';
 ok <1/2> ~~ Numeric, '<1/2> is Numeric';
 ok <1/2> ~~ Real, '<1/2> is Real';
 #?rakudo.jvm skip 'aborts nqp-j'
-isa_ok <0x01/0x02>, Rat, 'same with hexadecimal numbers';
+isa-ok <0x01/0x02>, Rat, 'same with hexadecimal numbers';
 
 ok <1/-3>.WHAT === Str, 'negative allowed only on numerator';
 ok <-1/-3>.WHAT === Str, 'negative allowed only on numerator';
 
-isa_ok <-1/3>, Rat, 'negative Rat literal';
+isa-ok <-1/3>, Rat, 'negative Rat literal';
 ok <-1/3> * -3 == 1, 'negative Rat literal';
 
 #?rakudo.jvm 3 skip 'aborts nqp-j'
@@ -33,11 +33,11 @@ ok <:12<1a>/:12<7b>> / (:12<1a> / :12<7b>) == 1, 'Rat works with colon radix num
 
 # L<S02/Complex literals/Complex literals are similarly indicated>
 
-isa_ok  <1+1i>, Complex,  '<1+1i> is a Complex literal';
-isa_ok <+2+2i>, Complex, '<+2+2i> is a Complex literal';
-isa_ok <-3+3i>, Complex, '<-3+3i> is a Complex literal';
-isa_ok <+4-4i>, Complex, '<+4-4i> is a Complex literal';
-isa_ok <-5-5i>, Complex, '<-5-5i> is a Complex literal';
+isa-ok  <1+1i>, Complex,  '<1+1i> is a Complex literal';
+isa-ok <+2+2i>, Complex, '<+2+2i> is a Complex literal';
+isa-ok <-3+3i>, Complex, '<-3+3i> is a Complex literal';
+isa-ok <+4-4i>, Complex, '<+4-4i> is a Complex literal';
+isa-ok <-5-5i>, Complex, '<-5-5i> is a Complex literal';
 
 ok <1+1i> ~~ Numeric, '1+1i is Numeric';
 nok <1+1i> ~~ Real, '1+1i is not Real';

@@ -26,7 +26,7 @@ class Child is Parent
 }
 
 my $foo = Foo.new();
-isa_ok($foo, Foo, 'basic instantiation of declared class' );
+isa-ok($foo, Foo, 'basic instantiation of declared class' );
 ok( ! $in_destructor,    'destructor should not fire while object is active' );
 
 my $child = Child.new();

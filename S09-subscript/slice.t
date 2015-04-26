@@ -72,7 +72,7 @@ plan 31;
 # RT #63014
 {
     my @array = <1 2 3>;
-    isa_ok @array, Array;
+    isa-ok @array, Array;
     ok @array[0..1] ~~ Positional;
 
     ok @array[0..0] ~~ Positional, 'slice with one element is a list';

@@ -34,15 +34,15 @@ my $b;
     my $left = sleep-timer $seconds;
     my $now  = now;
 
-    isa_ok $left, Duration, 'did we get a Duration back (1)';
+    isa-ok $left, Duration, 'did we get a Duration back (1)';
     ok $now - $then + $seconds >= $left, 'does Duration returned make sense';
 
     $left = sleep-timer -1;
-    isa_ok $left, Duration, 'did we get a Duration back (2)';
+    isa-ok $left, Duration, 'did we get a Duration back (2)';
     is $left, 0, 'no time left to wait';
 
     $left = sleep-timer 0;
-    isa_ok $left, Duration, 'did we get a Duration back (3)';
+    isa-ok $left, Duration, 'did we get a Duration back (3)';
     is $left, 0, 'no time left to wait either';
 } #6
 
@@ -53,7 +53,7 @@ my $b;
     my $slept = sleep-till $then + $seconds;
     my $now   = now;
 
-    isa_ok $slept, Bool, 'did we get a Bool back';
+    isa-ok $slept, Bool, 'did we get a Bool back';
     ok $slept, 'did we actually wait';
     ok $now - $then + $seconds >= 0, 'does elapsed time make sense';
 
@@ -63,8 +63,8 @@ my $b;
 #?niecza todo "NYI"
 {
     diag "checking infinite waiting times";
-    isa_ok EVAL('$b={sleep(Inf)}'),       Block, 'sleep(Inf) compiles';
-    isa_ok EVAL('$b={sleep(*)}'),         Block, 'sleep(*) compiles';
+    isa-ok EVAL('$b={sleep(Inf)}'),       Block, 'sleep(Inf) compiles';
+    isa-ok EVAL('$b={sleep(*)}'),         Block, 'sleep(*) compiles';
 } #2
 
 # vim: ft=perl6

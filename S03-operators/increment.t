@@ -23,7 +23,7 @@ Verify that autoincrement/autodecrement work properly.
 
     $a = 'z';
     is($a++, 'z', 'magical ++ should not be numified');
-    isa_ok($a, "Str", "it isa Str");
+    isa-ok($a, "Str", "it isa Str");
     is $a, 'aa', 'magical ++ is carrying properly';
 }
 

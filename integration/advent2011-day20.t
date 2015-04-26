@@ -13,7 +13,7 @@ is %song{'Panacea'},%song<Panacea>, 'hash lookup syntax';
 is_deeply %song{'Panacea', 'Photek'}, %song<Panacea Photek>, 'hash slice syntax';
 
 my $song = paniq => 'Godshatter';
-isa_ok $song, Pair;
+isa-ok $song, Pair;
 is $song.key, 'paniq', 'Pair .key';
 is $song.value, 'Godshatter', 'Pair .value';
 
@@ -21,13 +21,13 @@ is_deeply $song, (:paniq('Godshatter')), 'Pair alternate syntax';
 {
     my @songs = %song; # same as @(%songs);
     is +@songs, 2, 'Hash to Array flattening';
-    isa_ok @songs[0], Pair, 'Array flattening (gives pairs)'
+    isa-ok @songs[0], Pair, 'Array flattening (gives pairs)'
 }
 
 {
     my @songs = %song.kv;
     is +@songs, 4, "Hash .kv flattening (flattens pairs)";
-    isa_ok @songs[0], Str, "Hash .kv flattening (flattens pairs)";
+    isa-ok @songs[0], Str, "Hash .kv flattening (flattens pairs)";
 }
 
 %song.push( 'Panacea' => "state of extacy" );

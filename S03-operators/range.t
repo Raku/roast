@@ -176,7 +176,7 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
 # RT #67882
 {
     ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
-    isa_ok $0..$1, Range, '$0..$1 constructs a Range';
+    isa-ok $0..$1, Range, '$0..$1 constructs a Range';
     #?niecza skip 'cannot increment a value of type Match'
     is ($0..$1).join('|'), '1|2|3', 'range from $0..$1';
 }
@@ -218,7 +218,7 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 {
     $_ = Any; # unsetting $_ to reproduce bug literally
     lives_ok {(1..$_)}, '(1..$_) lives';
-    isa_ok (1..$_), Range, '(..) works on Int .. Any';
+    isa-ok (1..$_), Range, '(..) works on Int .. Any';
 }
 
 {
@@ -250,7 +250,7 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 # RT #110350
 {
     for 1e0 .. 1e0 {
-        isa_ok $_, Num, 'Range of nums produces a Num';
+        isa-ok $_, Num, 'Range of nums produces a Num';
     }
 }
 
@@ -261,7 +261,7 @@ eval_dies_ok '1..2..3', '.. is not associative';
     ## once this block died at compile time
     ## with q[P6opaque: no such attribute '$!phasers']
     ## cmp. https://github.com/rakudo/rakudo/commit/c5e7a7783d
-    isa_ok { *.perl for ^2 }, Block,
+    isa-ok { *.perl for ^2 }, Block,
         'range optimizer is protected from cases with no block';
 }
 

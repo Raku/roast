@@ -8,7 +8,7 @@ my $r;
 =end pod
 
 $r = $=pod[0].contents[0];
-isa_ok $r, Pod::Block::Code;
+isa-ok $r, Pod::Block::Code;
 is $r.config<allow>, 'B';
 
 =begin pod
@@ -16,7 +16,7 @@ is $r.config<allow>, 'B';
 =end pod
 
 $r = $=pod[1].contents[0];
-isa_ok $r, Pod::Config;
+isa-ok $r, Pod::Config;
 is $r.type, 'head2';
 is $r.config<like>, 'head1';
 is $r.config<formatted>, 'I';
@@ -31,8 +31,8 @@ is $r.config<number>, 42;
 {
   is $r.config<zebras>, True;
   is $r.config<sheep>, False;
-  isa_ok $r.config<sheep>, Bool;
-  isa_ok $r.config<feist>, List;
+  isa-ok $r.config<sheep>, Bool;
+  isa-ok $r.config<feist>, List;
 }
 
 =begin pod
@@ -51,7 +51,7 @@ is $r.config<pubdate>, 2011;
 =end pod
 
 $r = $=pod[4].contents[0];
-isa_ok $r, Pod::Block::Table;
+isa-ok $r, Pod::Block::Table;
 is $r.config<caption>, 'Table of contents';
 
 =begin pod
@@ -61,4 +61,4 @@ is $r.config<caption>, 'Table of contents';
 =end pod
 
 $r = $=pod[5].contents[0].contents[1];
-isa_ok $r, Pod::FormattingCode;
+isa-ok $r, Pod::FormattingCode;

@@ -12,7 +12,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     {
         my $s = Supply.new;
         my $c = $s.Channel;
-        isa_ok $c, Channel, 'we got a Channel';
+        isa-ok $c, Channel, 'we got a Channel';
         $s.emit(42);
         is $c.receive, 42, 'got first emitted value';
         $s.emit(43);

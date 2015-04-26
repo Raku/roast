@@ -63,7 +63,7 @@ is < foo
 	    >, 'foo', 'various combinations of whitespace are stripped';
 
 # RT #73772
-isa_ok < >, Parcel, '< > (only whitespace) is empty Parcel';
+isa-ok < >, Parcel, '< > (only whitespace) is empty Parcel';
 is < >.elems, 0, ".. and it's really empty";
 
 # vim: ft=perl6

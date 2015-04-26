@@ -30,7 +30,7 @@ my $empty-path = "tempfile-slurp-empty";
 }
 
 ok (my $contents = slurp($test-path)), "test file slurp with path call ok";
-isa_ok $contents, Str, "slurp returns a string";
+isa-ok $contents, Str, "slurp returns a string";
 is $contents, $test-contents, "slurp with path loads entire file";
 is slurp($empty-path), '', "empty files yield empty string";
 

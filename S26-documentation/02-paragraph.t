@@ -5,8 +5,8 @@ my $r;
 =for foo
 
 $r = $=pod[0];
-isa_ok $r, Pod::Block, 'returns a Pod6 Block';
-isa_ok $r, Pod::Block::Named, 'returns a named Block';
+isa-ok $r, Pod::Block, 'returns a Pod6 Block';
+isa-ok $r, Pod::Block::Named, 'returns a named Block';
 is $r.name, 'foo', 'name is ok';
 is $r.contents, [], 'no contents, all right';
 
@@ -14,7 +14,7 @@ is $r.contents, [], 'no contents, all right';
 some text
 
 $r = $=pod[1];
-isa_ok $r.contents[0], Pod::Block::Para;
+isa-ok $r.contents[0], Pod::Block::Para;
 is $r.contents[0].contents, "some text", 'the contents are all right';
 
 =for foo
@@ -36,13 +36,13 @@ Outside blocks
 =end pod
 
 $r = $=pod[3];
-isa_ok $r.contents[0], Pod::Block;
+isa-ok $r.contents[0], Pod::Block;
 is $r.contents[0].contents[0].contents, "Inside got",
    'paragraph block contents ok, 1/2';
-isa_ok $r.contents[1], Pod::Block;
+isa-ok $r.contents[1], Pod::Block;
 is $r.contents[1].contents[0].contents, "Inside bidden",
    'paragraph block contents ok, 1/2';
-isa_ok $r.contents[2], Pod::Block::Para;
+isa-ok $r.contents[2], Pod::Block::Para;
 is $r.contents[2].contents, "Outside blocks",
    'contents outside blocks is all right';
 
@@ -92,7 +92,7 @@ Which, as we all know...
 =end foo
 
 $r = $=pod[5];
-isa_ok $r, Pod::Block;
+isa-ok $r, Pod::Block;
 is $r.contents.elems, 5, '5 sub-nodes in foo';
 is $r.name, 'foo';
 is $r.contents[0].contents,

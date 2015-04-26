@@ -30,7 +30,7 @@ plan 22;
     is $p.status, Broken, "Broken Promise has Broken status";
     ok $p.Bool, "Broken Promise has a result";
     ok ?$p, "Broken Promise is true";
-    isa_ok $p.cause, Exception, "cause returns an exception";
+    isa-ok $p.cause, Exception, "cause returns an exception";
     is $p.cause.message, "glass", "Correct message";
     dies_ok { $p.result }, "result throws exception";
     

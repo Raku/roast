@@ -22,10 +22,10 @@ class Foo {
 }
 
 my $bar = Bar.new();
-isa_ok($bar, Bar);
+isa-ok($bar, Bar);
 
 my $foo = Foo.new(:bar($bar));
-isa_ok($foo, Foo);
+isa-ok($foo, Foo);
 
 # sanity test
 is($bar.baz(), 'Baz', '... sanity test, this works as we expect');

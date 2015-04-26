@@ -10,7 +10,7 @@ my $*CWD  = 'C:\\zip\\loc'.IO;
 my $relpath = IO::Path::Win32.new('foo\\bar' );
 my $abspath = IO::Path::Win32.new('\\foo\\bar');
 
-isa_ok $abspath, IO::Path, "Can create IO::Path::Win32";
+isa-ok $abspath, IO::Path, "Can create IO::Path::Win32";
 is $abspath.volume,   "",      'volume "\\foo\\bar" -> ""';
 is $abspath.dirname,  "\\foo", 'dirname "\\foo\\bar" -> "\\foo"';
 is $abspath.basename, "bar",   'basename "\\foo\\bar" -> "bar"';
@@ -19,7 +19,7 @@ my $path = IO::Path::Win32.new('C:foo//bar//');
 is $path.volume,   "C:",  'volume "C:foo//bar//" -> "C:"';
 is $path.dirname,  "foo", 'dirname "C:foo//bar//" -> "foo"';
 is $path.basename, "bar", 'basename "C:foo//bar//" -> "bar"';
-isa_ok $path.path, Str, ".path returns Str";
+isa-ok $path.path, Str, ".path returns Str";
 is $path.perl.EVAL, $path, ".perl loopback";
 
 my $uncpath = IO::Path::Win32.new("\\\\server\\share\\");

@@ -22,9 +22,9 @@ lives_ok { my R1 of Int $x = R1[Int].new }, 'using of as type constraint on vari
 dies_ok  { my R1 of Int $x = R1[Str].new }, 'using of as type constraint on variable works (role instantiation)';
 
 sub param_test(R1 of Int $x) { $x.x }
-isa_ok param_test(C1.new),      Int,          'using of as type constraint on parameter works (class does role)';
+isa-ok param_test(C1.new),      Int,          'using of as type constraint on parameter works (class does role)';
 dies_ok { param_test(C2.new) },             'using of as type constraint on parameter works (class does role)';
-isa_ok param_test(R1[Int].new), Int,          'using of as type constraint on parameter works (role instantiation)';
+isa-ok param_test(R1[Int].new), Int,          'using of as type constraint on parameter works (role instantiation)';
 dies_ok { param_test(R1[Str].new) },        'using of as type constraint on parameter works (role instantiation)';
 
 role R2[::T] {

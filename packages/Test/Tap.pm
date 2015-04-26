@@ -22,7 +22,7 @@ multi sub tap-ok (
 
         my @res;
         my $done;
-        isa_ok $s.tap(
+        isa-ok $s.tap(
                  { emit() if &emit; @res.push($_) },
           :done( { done() if &done; $done = True } ),
         ), Tap, "$desc got a tap";

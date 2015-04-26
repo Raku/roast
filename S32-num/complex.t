@@ -6,13 +6,13 @@ plan 488;
 
 # Basic tests functions specific to complex numbers.
 
-isa_ok(1 + 2i, Complex, 'postfix:<i> creates a Complex number');
-isa_ok(i, Complex, 'i creates a Complex number');
+isa-ok(1 + 2i, Complex, 'postfix:<i> creates a Complex number');
+isa-ok(i, Complex, 'i creates a Complex number');
 ok i == 1i, 'i == 1i';
 ok 1 != 1i, '!= and complex numbers';
 
-isa_ok((3)i, Complex, '($n)i form creates a Complex number');
-isa_ok(3\i, Complex, '$n\i form creates a Complex number');
+isa-ok((3)i, Complex, '($n)i form creates a Complex number');
+isa-ok(3\i, Complex, '$n\i form creates a Complex number');
 
 is_approx((2i)i, -2, 'postfix:<i> works on an imaginary number');
 is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
@@ -36,24 +36,24 @@ is_approx 2/(3+1i),      3/5 -(1/5)i,   'dividing a Real by a Complex';
 is_approx 2 * (3+7i),    6+14i,         'Real * Complex';
 is_approx (3+7i) * 2,    6+14i,         'Complex * Real';
 
-isa_ok( EVAL((1+3i).perl), Complex, 'EVAL (1+3i).perl is Complex' );
+isa-ok( EVAL((1+3i).perl), Complex, 'EVAL (1+3i).perl is Complex' );
 is_approx( (EVAL (1+3i).perl), 1+3i, 'EVAL (1+3i).perl is 1+3i' );
-isa_ok( EVAL((1+0i).perl), Complex, 'EVAL (1+0i).perl is Complex' );
+isa-ok( EVAL((1+0i).perl), Complex, 'EVAL (1+0i).perl is Complex' );
 is_approx( (EVAL (1+0i).perl), 1, 'EVAL (1+0i).perl is 1' );
-isa_ok( EVAL((3i).perl), Complex, 'EVAL (3i).perl is Complex' );
+isa-ok( EVAL((3i).perl), Complex, 'EVAL (3i).perl is Complex' );
 is_approx( (EVAL (3i).perl), 3i, 'EVAL (3i).perl is 3i' );
 
 #?niecza skip "NYI"
 {
     ok (1+0i).Real ~~ Real, "(1+0i).Real is a Real";
     is (1+0i).Real, 1, "(1+0i).Real is 1";
-    isa_ok (1.2+0i).Int, Int, "(1.2+0i).Int is an Int";
+    isa-ok (1.2+0i).Int, Int, "(1.2+0i).Int is an Int";
     is (1.2+0i).Int, 1, "(1.2+0i).Int is 1";
-    isa_ok (1.2.sin+0i).Rat, Rat, "(1.2.sin+0i).Rat is an Rat";
+    isa-ok (1.2.sin+0i).Rat, Rat, "(1.2.sin+0i).Rat is an Rat";
     is_approx (1.2.sin+0i).Rat, 1.2.sin, "(1.2.sin+0i).Rat is 1.2.sin";
-    isa_ok (1.2+0i).Num, Num, "(1.2+0i).Num is an Num";
+    isa-ok (1.2+0i).Num, Num, "(1.2+0i).Num is an Num";
     is_approx (1.2+0i).Num, 1.2, "(1.2+0i).Num is 1.2";
-    isa_ok (1.2+1i).Complex, Complex, "(1.2+1i).Complex is an Complex";
+    isa-ok (1.2+1i).Complex, Complex, "(1.2+1i).Complex is an Complex";
     is_approx (1.2+1i).Complex, 1.2+1i, "(1.2+1i).Complex is 1.2+1i";
 }
 

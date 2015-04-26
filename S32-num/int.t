@@ -15,13 +15,13 @@ Basic tests for the int() builtin
 # basic sanity:
 is(-0, 0, '-0 is the same as 0 - hey, they are integers ;-)');
 
-isa_ok( EVAL(1.perl), Int, 'EVAL 1.perl is Int' );
+isa-ok( EVAL(1.perl), Int, 'EVAL 1.perl is Int' );
 is( EVAL(1.perl), 1, 'EVAL 1.perl is 1' );
-isa_ok( EVAL((-12).perl), Int, 'EVAL -12.perl is Int' );
+isa-ok( EVAL((-12).perl), Int, 'EVAL -12.perl is Int' );
 is( EVAL((-12).perl), -12, 'EVAL -12.perl is -12' );
-isa_ok( EVAL(0.perl), Int, 'EVAL 0.perl is Int' );
+isa-ok( EVAL(0.perl), Int, 'EVAL 0.perl is Int' );
 is( EVAL(0.perl), 0, 'EVAL 0.perl is 0' );
-isa_ok( EVAL((-0).perl), Int, 'EVAL -0.perl is Int' );
+isa-ok( EVAL((-0).perl), Int, 'EVAL -0.perl is Int' );
 is( EVAL((-0).perl), -0, 'EVAL -0.perl is 0' );
 
 is((-1).Int, -1, "(-1).Int is -1");
@@ -35,14 +35,14 @@ is(0.51.Int,    0, "0.51.Int is 0");
 is(0.5.Int,     0, "0.5.Int is 0");
 is(0.49.Int,    0, "0.49.Int is 0");
 is(0.1.Int,     0, "0.1.Int is 0");
-isa_ok(0.1.Int, Int, '0.1.Int returns an Int');
+isa-ok(0.1.Int, Int, '0.1.Int returns an Int');
 
 is((-0.999).Int, 0, "(-0.999).Int is 0");
 is((-0.51).Int,  0, "(-0.51).Int is 0");
 is((-0.5).Int,   0, "(-0.5).Int is 0");
 is((-0.49).Int,  0, "(-0.49).Int is 0");
 is((-0.1).Int,   0, "(-0.1).Int is 0");
-isa_ok((-0.1).Int, Int, 'int(-0.1) returns an Int');
+isa-ok((-0.1).Int, Int, 'int(-0.1) returns an Int');
 
 is(1.999.Int, 1, "int(1.999) is 1");
 is(1.51.Int,  1, "int(1.51) is 1");
@@ -63,18 +63,18 @@ is((-1.999).Num.Int, -1, "int(-1.999.Num) is -1");
 is((-1.1).Num.Int, -1, "int(-1.1.Num) is -1");
 
 nok ?0, "?0 is false";
-isa_ok ?0, Bool, "?0 is Bool";
+isa-ok ?0, Bool, "?0 is Bool";
 ok ?1, "?1 is true";
-isa_ok ?1, Bool, "?1 is Bool";
+isa-ok ?1, Bool, "?1 is Bool";
 ok ?42, "?42 is true";
-isa_ok ?42, Bool, "?42 is Bool";
+isa-ok ?42, Bool, "?42 is Bool";
 
 nok 0.Bool, "0.Bool is false";
-isa_ok 0.Bool, Bool, "0.Bool is Bool";
+isa-ok 0.Bool, Bool, "0.Bool is Bool";
 ok 1.Bool, "1.Bool is true";
-isa_ok 1.Bool, Bool, "1.Bool is Bool";
+isa-ok 1.Bool, Bool, "1.Bool is Bool";
 ok 42.Bool, "42.Bool is true";
-isa_ok 42.Bool, Bool, "42.Bool is Bool";
+isa-ok 42.Bool, Bool, "42.Bool is Bool";
 
 is('-1.999'.Int, -1, "int('-1.999') is -1");
 #?niecza 3 skip "0x, 0d, and 0o NYI"
@@ -98,7 +98,7 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
     for 0, 0.0, 1, 50, 60.0, 99.99, 0.4, 0.6, -1, -50, -60.0, -99.99 {
         my $int = __int($_.Num);
         is(.Int, $int, "integral value for $_ is $int");
-        isa_ok(.Int, Int);
+        isa-ok(.Int, Int);
     }
 }
 

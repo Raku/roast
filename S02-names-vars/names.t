@@ -113,7 +113,7 @@ is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
 }
 
 # RT #77006
-isa_ok (rule => 1), Pair, 'rule => something creates a Pair';
+isa-ok (rule => 1), Pair, 'rule => something creates a Pair';
 
 # RT #69752
 {

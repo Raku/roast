@@ -9,7 +9,7 @@ plan 11;
 
 my $baseline = 10;
 
-isa_ok callframe(), CallFrame, 'callframe() returns a CallFrame';
+isa-ok callframe(), CallFrame, 'callframe() returns a CallFrame';
 
 sub f() {
     is callframe().line, $baseline + 4, 'callframe().line';

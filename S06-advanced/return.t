@@ -94,7 +94,7 @@ sub foo_array {
     return @foo;
 }
 my @foo_array_return = foo_array();
-isa_ok(@foo_array_return, Array);
+isa-ok(@foo_array_return, Array);
 is(+@foo_array_return, 3, 'got the right number of return value');
 is(@foo_array_return[0], 'foo', 'got the right return value');
 is(@foo_array_return[1], 'bar', 'got the right return value');
@@ -107,7 +107,7 @@ sub foo_array2 {
     @foo;
 }
 my @foo_array_return2 = foo_array2();
-isa_ok(@foo_array_return2, Array);
+isa-ok(@foo_array_return2, Array);
 is(+@foo_array_return2, 3, 'got the right number of return value');
 is(@foo_array_return2[0], 'foo', 'got the right return value');
 is(@foo_array_return2[1], 'bar', 'got the right return value');
@@ -119,7 +119,7 @@ sub foo_array3 {
     return ('foo', 'bar', 'baz');
 }
 my @foo_array_return3 = foo_array3();
-isa_ok(@foo_array_return3, Array);
+isa-ok(@foo_array_return3, Array);
 is(+@foo_array_return3, 3, 'got the right number of return value');
 is(@foo_array_return3[0], 'foo', 'got the right return value');
 is(@foo_array_return3[1], 'bar', 'got the right return value');
@@ -131,7 +131,7 @@ sub foo_array4 {
     ('foo', 'bar', 'baz');
 }
 my @foo_array_return4 = foo_array4();
-isa_ok(@foo_array_return4, Array);
+isa-ok(@foo_array_return4, Array);
 is(+@foo_array_return4, 3, 'got the right number of return value');
 is(@foo_array_return4[0], 'foo', 'got the right return value');
 is(@foo_array_return4[1], 'bar', 'got the right return value');
@@ -144,7 +144,7 @@ sub foo_array_ref {
    return $foo;
 }
 my $foo_array_ref_return = foo_array_ref();
-isa_ok($foo_array_ref_return, Array);
+isa-ok($foo_array_ref_return, Array);
 is(+$foo_array_ref_return, 3, 'got the right number of return value');
 is($foo_array_ref_return[0], 'foo', 'got the right return value');
 is($foo_array_ref_return[1], 'bar', 'got the right return value');
@@ -157,7 +157,7 @@ sub foo_array_ref2 {
    $foo;
 }
 my $foo_array_ref_return2 = foo_array_ref2();
-isa_ok($foo_array_ref_return2, Array);
+isa-ok($foo_array_ref_return2, Array);
 is(+$foo_array_ref_return2, 3, 'got the right number of return value');
 is($foo_array_ref_return2[0], 'foo', 'got the right return value');
 is($foo_array_ref_return2[1], 'bar', 'got the right return value');
@@ -169,7 +169,7 @@ sub foo_array_ref3 {
    return ['foo', 'bar', 'baz'];
 }
 my $foo_array_ref_return3 = foo_array_ref3();
-isa_ok($foo_array_ref_return3, Array);
+isa-ok($foo_array_ref_return3, Array);
 is(+$foo_array_ref_return3, 3, 'got the right number of return value');
 is($foo_array_ref_return3[0], 'foo', 'got the right return value');
 is($foo_array_ref_return3[1], 'bar', 'got the right return value');
@@ -181,7 +181,7 @@ sub foo_array_ref4 {
    ['foo', 'bar', 'baz'];
 }
 my $foo_array_ref_return4 = foo_array_ref4();
-isa_ok($foo_array_ref_return4, Array);
+isa-ok($foo_array_ref_return4, Array);
 is(+$foo_array_ref_return4, 3, 'got the right number of return value');
 is($foo_array_ref_return4[0], 'foo', 'got the right return value');
 is($foo_array_ref_return4[1], 'bar', 'got the right return value');

@@ -283,7 +283,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 #?niecza skip "Exceptions not supported"
 {
     try { EVAL 'sub foo($x where { $x == $y }, $y) { }' };
-    isa_ok $!, X::Undeclared, 'subset in signature cannot use non-predeclared variable';
+    isa-ok $!, X::Undeclared, 'subset in signature cannot use non-predeclared variable';
 }
 
 # vim: ft=perl6

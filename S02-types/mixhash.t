@@ -16,14 +16,14 @@ sub showkv($x) {
 {
     say "We do get here, right?";
     my $m = MixHash.new("a", "foo", "a", "a", "a", "a", "b", "foo");
-    isa_ok $m, MixHash, 'we got a MixHash';
+    isa-ok $m, MixHash, 'we got a MixHash';
     is showkv($m), 'a:5 b:1 foo:2', '...with the right elements';
 
     is $m.default, 0, "Defaults to 0";
     is $m<a>, 5, 'Single-key subscript (existing element)';
-    isa_ok $m<a>, Int, 'Single-key subscript yields an Int';
+    isa-ok $m<a>, Int, 'Single-key subscript yields an Int';
     is $m<santa>, 0, 'Single-key subscript (nonexistent element)';
-    isa_ok $m<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
+    isa-ok $m<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
     ok $m<a>:exists, 'exists with existing element';
     nok $m<santa>:exists, 'exists with nonexistent element';
 
@@ -34,7 +34,7 @@ sub showkv($x) {
     
     my $hash;
     lives_ok { $hash = $m.hash }, ".hash doesn't die";
-    isa_ok $hash, Hash, "...and it returned a Hash";
+    isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
     throws_like { $m.keys = <c d> },
@@ -90,19 +90,19 @@ sub showkv($x) {
 }
 
 {
-    isa_ok "a".MixHash, MixHash, "Str.MixHash makes a MixHash";
+    isa-ok "a".MixHash, MixHash, "Str.MixHash makes a MixHash";
     is showkv("a".MixHash), 'a:1', "'a'.MixHash is mix a";
 
-    isa_ok (a => 100000).MixHash, MixHash, "Pair.MixHash makes a MixHash";
+    isa-ok (a => 100000).MixHash, MixHash, "Pair.MixHash makes a MixHash";
     is showkv((a => 100000).MixHash), 'a:100000', "(a => 100000).MixHash is mix a:100000";
     is showkv((a => 0).MixHash), '', "(a => 0).MixHash is the empty mix";
 
-    isa_ok <a b c>.MixHash, MixHash, "<a b c>.MixHash makes a MixHash";
+    isa-ok <a b c>.MixHash, MixHash, "<a b c>.MixHash makes a MixHash";
     is showkv(<a b c a>.MixHash), 'a:2 b:1 c:1', "<a b c a>.MixHash makes the mix a:2 b:1 c:1";
     is showkv(["a", "b", "c", "a"].MixHash), 'a:2 b:1 c:1', "[a b c a].MixHash makes the mix a:2 b:1 c:1";
     is showkv([a => 3, b => 0, 'c', 'a'].MixHash), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].MixHash makes the mix a:4 c:1";
 
-    isa_ok {a => 2, b => 4, c => 0}.MixHash, MixHash, "{a => 2, b => 4, c => 0}.MixHash makes a MixHash";
+    isa-ok {a => 2, b => 4, c => 0}.MixHash, MixHash, "{a => 2, b => 4, c => 0}.MixHash makes a MixHash";
     is showkv({a => 2, b => 4, c => 0}.MixHash), 'a:2 b:4', "{a => 2, b => 4, c => 0}.MixHash makes the mix a:2 b:4";
 }
 
@@ -136,7 +136,7 @@ sub showkv($x) {
 
 {
     my $m = MixHash.new(<a b o p a p o o>);
-    isa_ok $m, MixHash, '&MixHash.new given an array of strings produces a MixHash';
+    isa-ok $m, MixHash, '&MixHash.new given an array of strings produces a MixHash';
     is showkv($m), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
@@ -144,13 +144,13 @@ sub showkv($x) {
     my $m = MixHash.new([ foo => 10.1, bar => 17.2, baz => 42.3, santa => 0 ]);
     is $m.total, 1, 'make sure .total is ok';
     is $m.elems, 1, 'make sure .elems is ok';
-    isa_ok $m, MixHash, '&MixHash.new given an array of pairs produces a MixHash';
+    isa-ok $m, MixHash, '&MixHash.new given an array of pairs produces a MixHash';
     is +$m, 1, "... with one element";
 }
 
 {
     my $m = MixHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 }.hash);
-    isa_ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
+    isa-ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
     is +$m, 4, "... with four elements";
     #?niecza todo "Non-string mix elements NYI"
     #?rakudo todo "Needs to catch up with spec"
@@ -159,25 +159,25 @@ sub showkv($x) {
 
 {
     my $m = MixHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 });
-    isa_ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
+    isa-ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
     is +$m, 1, "... with one element";
 }
 
 {
     my $m = MixHash.new(set <foo bar foo bar baz foo>);
-    isa_ok $m, MixHash, '&MixHash.new given a Set produces a MixHash';
+    isa-ok $m, MixHash, '&MixHash.new given a Set produces a MixHash';
     is +$m, 1, "... with one element";
 }
 
 {
     my $m = MixHash.new(MixHash.new(<foo bar foo bar baz foo>));
-    isa_ok $m, MixHash, '&MixHash.new given a MixHash produces a MixHash';
+    isa-ok $m, MixHash, '&MixHash.new given a MixHash produces a MixHash';
     is +$m, 1, "... with one element";
 }
 
 {
     my $m = MixHash.new(mix <foo bar foo bar baz foo>);
-    isa_ok $m, MixHash, '&MixHash.new given a Mix produces a MixHash';
+    isa-ok $m, MixHash, '&MixHash.new given a Mix produces a MixHash';
     is +$m, 1, "... with one element";
 }
 
@@ -186,7 +186,7 @@ sub showkv($x) {
 #     my $m = MixHash.new(set <foo bar foo bar baz foo>);
 #     $m<bar> += 2;
 #     my $c = MixHash.new($m);
-#     isa_ok $c, MixHash, '&MixHash.new given a MixHash produces a MixHash';
+#     isa-ok $c, MixHash, '&MixHash.new given a MixHash produces a MixHash';
 #     is showkv($c), 'bar:3 baz:1 foo:1', '... with the right elements';
 #     $c<manning> = 10;
 #     is showkv($c), 'bar:3 baz:1 foo:1 manning:10', 'Creating a new element works';
@@ -200,10 +200,10 @@ sub showkv($x) {
 
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
-    isa_ok $m.list.elems, 3, ".list returns 3 things";
+    isa-ok $m.list.elems, 3, ".list returns 3 things";
     is $m.list.grep(Pair).elems, 3, "... all of which are Pairs";
 
-    isa_ok $m.pairs.elems, 3, ".pairs returns 3 things";
+    isa-ok $m.pairs.elems, 3, ".pairs returns 3 things";
     is $m.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
     is $m.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $m.pairs.grep({ .value ~~ Real }).elems, 3, "... and the values of which are Ints";
@@ -219,10 +219,10 @@ sub showkv($x) {
     my $s;
     my $c;
     lives_ok { $s = $m.perl }, ".perl lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     lives_ok { $c = EVAL $s }, ".perl.EVAL lives";
-    isa_ok $c, MixHash, "... and produces a MixHash";
+    isa-ok $c, MixHash, "... and produces a MixHash";
     is showkv($c), showkv($m), "... and it has the correct values";
 }
 
@@ -230,7 +230,7 @@ sub showkv($x) {
     my $m = { foo => 2, bar => 3, baz => 1 }.MixHash;
     my $s;
     lives_ok { $s = $m.Str }, ".Str lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
@@ -238,7 +238,7 @@ sub showkv($x) {
     my $m = { foo => 10000000000, bar => 17, baz => 42 }.MixHash;
     my $s;
     lives_ok { $s = $m.gist }, ".gist lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";
@@ -249,7 +249,7 @@ sub showkv($x) {
 
 {
     my %b := MixHash.new("a", "b", "c", "b");
-    isa_ok %b, MixHash, 'A MixHash bound to a %var is a MixHash';
+    isa-ok %b, MixHash, 'A MixHash bound to a %var is a MixHash';
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -329,7 +329,7 @@ sub showkv($x) {
     my $m = MixHash.new("a", "b", "b");
 
     my $a = $m.grabpairs[0];
-    isa_ok $a, Pair, 'did we get a Pair';
+    isa-ok $a, Pair, 'did we get a Pair';
     ok $a.key eq "a" || $a.key eq "b", "We got one of the two choices";
 
     my @a = $m.grabpairs(2);
@@ -363,7 +363,7 @@ sub showkv($x) {
     is +%h.keys, 2, 'Inititalization worked';
     is %h.elems, 3, '.elems works';
     #?rakudo todo 'todo'
-    isa_ok %h<nonexisting>, Int, '%h<nonexisting> is an Int';
+    isa-ok %h<nonexisting>, Int, '%h<nonexisting> is an Int';
     #?rakudo todo 'todo'
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
@@ -420,17 +420,17 @@ sub showkv($x) {
 }
 
 {
-    isa_ok 42.MixHash, MixHash, "Method .MixHash works on Int-1";
+    isa-ok 42.MixHash, MixHash, "Method .MixHash works on Int-1";
     is showkv(42.MixHash), "42:1", "Method .MixHash works on Int-2";
-    isa_ok "blue".MixHash, MixHash, "Method .MixHash works on Str-1";
+    isa-ok "blue".MixHash, MixHash, "Method .MixHash works on Str-1";
     is showkv("blue".MixHash), "blue:1", "Method .MixHash works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
-    isa_ok @a.MixHash, MixHash, "Method .MixHash works on Array-1";
+    isa-ok @a.MixHash, MixHash, "Method .MixHash works on Array-1";
     is showkv(@a.MixHash), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .MixHash works on Array-2";
     my %x = "a" => 1, "b" => 2;
-    isa_ok %x.MixHash, MixHash, "Method .MixHash works on Hash-1";
+    isa-ok %x.MixHash, MixHash, "Method .MixHash works on Hash-1";
     is showkv(%x.MixHash), "a:1 b:2", "Method .MixHash works on Hash-2";
-    isa_ok (@a, %x).MixHash, MixHash, "Method .MixHash works on Parcel-1";
+    isa-ok (@a, %x).MixHash, MixHash, "Method .MixHash works on Parcel-1";
     is showkv((@a, %x).MixHash), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .MixHash works on Parcel-2";
 }

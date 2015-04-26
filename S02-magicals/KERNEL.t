@@ -25,9 +25,9 @@ plan 39;
       ok $?KERNEL.name eq any($?PERL.KERNELnames),
       "We know of the KERNEL we were compiled in";
 
-    isa_ok $?KERNEL.version, Version;
-    isa_ok $?KERNEL.signature, Blob;
-    isa_ok $?KERNEL.bits, Int;
+    isa-ok $?KERNEL.version, Version;
+    isa-ok $?KERNEL.signature, Blob;
+    isa-ok $?KERNEL.bits, Int;
 }
 
 ok $*KERNEL.name,      "We are running under '{$*KERNEL.name}'";
@@ -50,10 +50,10 @@ diag "'{$*KERNEL.name}' is an unknown KERNEL, please report" if !
   ok $*KERNEL.name eq any($*PERL.KERNELnames),
   "We know of the KERNEL we are running under";
 
-isa_ok $*KERNEL.version, Version;
+isa-ok $*KERNEL.version, Version;
 #?rakudo todo 'no Kernel.signature yet'
-isa_ok $*KERNEL.signature, Blob;
-isa_ok $*KERNEL.bits, Int;
+isa-ok $*KERNEL.signature, Blob;
+isa-ok $*KERNEL.bits, Int;
 
 #?rakudo.jvm    skip "jvm doesn't know about signals"
 #?rakudo.parrot skip "parrot doesn't know about signals"
@@ -63,7 +63,7 @@ isa_ok $*KERNEL.bits, Int;
       "do we have Signals only?  and Any's of course";
 
     my $hup = $*KERNEL.signal(SIGHUP);
-    isa_ok $hup, Int, 'did we get an Int back';
+    isa-ok $hup, Int, 'did we get an Int back';
     isnt $hup, 0, "no signal should come out as 0";
     is $*KERNEL.signal("SIGHUP"), $hup, "also ok as string?";
     is $*KERNEL.signal("HUP"),    $hup, "also ok as partial string?";

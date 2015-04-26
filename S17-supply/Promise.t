@@ -12,7 +12,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     {
         my $s  = Supply.new;
         my $p1 = $s.Promise;
-        isa_ok $p1, Promise, 'we got a Promise';
+        isa-ok $p1, Promise, 'we got a Promise';
         is $p1.status, Planned, 'Promise still waiting';
         $s.emit(42);
         is $p1.status, Kept, 'Promise is kept';

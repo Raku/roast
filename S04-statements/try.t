@@ -140,7 +140,7 @@ plan 32;
     };
     my $p = MyPayload.new;
     try die $p;
-    isa_ok $!, X::AdHoc, 'die($non-exception) creates an X::AdHoc';
+    isa-ok $!, X::AdHoc, 'die($non-exception) creates an X::AdHoc';
     ok $!.payload === $p, '$!.payload is the argument to &die';
     is $!.Str, 'something exceptional', '$!.Str uses the payload';
 
@@ -148,7 +148,7 @@ plan 32;
         has $.s;
     }
     try MyEx.new(s => 'bar').throw;
-    isa_ok $!, MyEx, 'Can throw subtypes of Exception and get them back';
+    isa-ok $!, MyEx, 'Can throw subtypes of Exception and get them back';
     is $!.s, 'bar', '... and got the right object back';
 }
 

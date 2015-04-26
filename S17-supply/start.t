@@ -19,7 +19,7 @@ dies_ok { Supply.start({...}) }, 'can not be called as a class method';
         @supplies.push: $_;
         @taps.push: .tap( { @seen.push: $_ } );
     } );
-    isa_ok $tap, Tap, 'Did we get a Tap';
+    isa-ok $tap, Tap, 'Did we get a Tap';
 
     $master.emit(1);
     sleep 1;

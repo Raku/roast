@@ -5,13 +5,13 @@ plan 18;
 # coercion types in parameter lists
 {
     sub inside(Str(Cool) $x) {
-        isa_ok $x, Str, 'coercion type on the inside';
+        isa-ok $x, Str, 'coercion type on the inside';
     }
     inside(23);
     sub f(Str(Cool) $x) {
         $x
     }
-    isa_ok f(42), Str, 'Coercion type coerces';
+    isa-ok f(42), Str, 'Coercion type coerces';
     is f(42), '42',   'Coercion type coerces to correct value';
     eval_dies_ok q[ sub g(Str(Cool) $x) { $x }; g(Any) ],
         'coercion type still type-checks';
@@ -29,7 +29,7 @@ class NastyChild is Parent { };
 # with custom classes
 {
     sub c(Child(Parent) $x) { $x }
-    isa_ok c(Parent), Child, 'Coercion with user-defined types';
+    isa-ok c(Parent), Child, 'Coercion with user-defined types';
 
     sub nasty(NastyChild(Parent) $x) { $x }
     #?rakudo todo 'missing checks'
@@ -46,8 +46,8 @@ class NastyChild is Parent { };
     dies_ok { EVAL 'f1(Cool)' }, 'Definedness check in constraint type rejects type object (1)';
     #?rakudo todo 'definedness checks'
     dies_ok { EVAL 'f2(Cool)' }, 'Definedness check in constraint type rejects type object (2)';
-    isa_ok f1(23), Str, 'Definedness check + coercion (1)';
-    isa_ok f2(23), Str, 'Definedness check + coercion (2)';
+    isa-ok f1(23), Str, 'Definedness check + coercion (1)';
+    isa-ok f2(23), Str, 'Definedness check + coercion (2)';
 
     sub f3(Child:D(Parent) $x) { $x }
     dies_ok { EVAL 'f3(Parent)' },
@@ -68,9 +68,9 @@ class NastyChild is Parent { };
 #?DOES 3
 {
     my Int(Any) $x;
-    isa_ok $x, Int, 'Coercion type on variable';
+    isa-ok $x, Int, 'Coercion type on variable';
     $x = '24';
-    isa_ok $x, Int, 'Coercion type on variable after assignment (type)';
+    isa-ok $x, Int, 'Coercion type on variable after assignment (type)';
     is $x, 24, 'Coercion type on variable after assignment (value)';
 }
 
@@ -89,7 +89,7 @@ class NastyChild is Parent { };
         }
     }
     is Co.erce((1, 2)), 'Array', 'coercion on method param';
-    isa_ok Co.invocant, SubCo, 'Can coerce invocant to subclass';
+    isa-ok Co.invocant, SubCo, 'Can coerce invocant to subclass';
 }
 
 # vim: ft=perl6

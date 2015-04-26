@@ -71,7 +71,7 @@ my $obj;
     $obj = EVAL("FooBar->new", :lang<perl5>);
     #?rakudo todo "P5 classes not yet shadowed in P6"
     {
-        isa_ok($obj, 'FooBar', "blessed");
+        isa-ok($obj, 'FooBar', "blessed");
     }
     {
         #?rakudo skip "Probably bogus test. Tests if the P5 object stringifies to something containing the class name, like FooBar=HASH(0x12345678)"

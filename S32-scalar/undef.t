@@ -166,7 +166,7 @@ Perl6-specific tests
 
     my @ary = (<a b c d e>);
     my $ary_r = @ary; # ref
-    isa_ok($ary_r, Array);
+    isa-ok($ary_r, Array);
     ok(defined($ary_r), "array reference");
 
     undefine @ary;
@@ -176,7 +176,7 @@ Perl6-specific tests
 
     my %hash = (1, 2, 3, 4);
     my $hash_r = %hash;
-    isa_ok($hash_r, "Hash");
+    isa-ok($hash_r, "Hash");
     ok(defined($hash_r), "hash reference");
     undefine %hash;
     ok(defined($hash_r), "undefine hash referent:");

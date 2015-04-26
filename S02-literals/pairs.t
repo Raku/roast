@@ -62,14 +62,14 @@ sub f2 (:$a!) { WHAT($a) }
 {
     my $f2 = &f2;
 
-    isa_ok f2(a     => 42), Int, "'a => 42' is a named";
-    isa_ok f2(:a(42)),      Int, "':a(42)' is a named";
-    isa_ok f2(:a),          Bool,"':a' is a named";
+    isa-ok f2(a     => 42), Int, "'a => 42' is a named";
+    isa-ok f2(:a(42)),      Int, "':a(42)' is a named";
+    isa-ok f2(:a),          Bool,"':a' is a named";
 
     #?niecza skip "Action method escape:sym<&> not yet implemented"
-    isa_ok(&f2.(:a),        Bool, "in '\&f2.(:a)', ':a' is a named");
-    isa_ok $f2(:a),         Bool, "in '\$f2(:a)', ':a' is a named";
-    isa_ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";
+    isa-ok(&f2.(:a),        Bool, "in '\&f2.(:a)', ':a' is a named");
+    isa-ok $f2(:a),         Bool, "in '\$f2(:a)', ':a' is a named";
+    isa-ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";
 
     throws_like 'f2("a"   => 42)',
       Exception,
@@ -111,7 +111,7 @@ sub f3 ($a) { WHAT($a) }
 {
     my $pair = (a => 42);
 
-    isa_ok f3($pair),  Pair, 'a $pair is not treated magically...';
+    isa-ok f3($pair),  Pair, 'a $pair is not treated magically...';
     dies_ok { EVAL 'f3(|$pair)' }, '|$pair becomes a name, which fails to dispatch';
 }
 
@@ -119,16 +119,16 @@ sub f4 ($a)    { WHAT($a) }
 sub get_pair () { (a => 42) }
 {
 
-    isa_ok f4(get_pair()),  Pair, 'get_pair() is not treated magically...';
+    isa-ok f4(get_pair()),  Pair, 'get_pair() is not treated magically...';
 }
 
 sub f5 ($a) { WHAT($a) }
 {
     my @array_of_pairs = (a => 42);
 
-    isa_ok f5(@array_of_pairs), Array,
+    isa-ok f5(@array_of_pairs), Array,
         'an array of pairs is not treated magically...';
-    isa_ok f5(|@array_of_pairs), Pair, '...and |@array isn\'t either';
+    isa-ok f5(|@array_of_pairs), Pair, '...and |@array isn\'t either';
 }
 
 sub f7 (:$bar!) { WHAT($bar) }

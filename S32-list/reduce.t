@@ -57,9 +57,9 @@ plan 15;
     $hash.{$key};
   }
   is((reduce(&foo, $hash, <a b c>)), 42, 'reduce(&foo) (foo ~~ .{}) works three levels deep');
-  isa_ok(@reftypes[0], Hash, "first application of reduced hash subscript passed in a Hash");
-  isa_ok(@reftypes[1], Hash, "second application of reduced hash subscript passed in a Hash");
-  isa_ok(@reftypes[2], Hash, "third application of reduced hash subscript passed in a Hash");
+  isa-ok(@reftypes[0], Hash, "first application of reduced hash subscript passed in a Hash");
+  isa-ok(@reftypes[1], Hash, "second application of reduced hash subscript passed in a Hash");
+  isa-ok(@reftypes[2], Hash, "third application of reduced hash subscript passed in a Hash");
 }
 
 is( (1).list.reduce({$^a * $^b}), 1, "Reduce of one element list produces correct result");

@@ -11,7 +11,7 @@ plan 25;
 
 {
     my $t = Thread.start({ 1 });
-    isa_ok $t, Thread;
+    isa-ok $t, Thread;
     $t.finish;
 }
 
@@ -93,7 +93,7 @@ plan 25;
 }
 
 {
-    isa_ok $*THREAD, Thread, '$*THREAD available in initial thread';
+    isa-ok $*THREAD, Thread, '$*THREAD available in initial thread';
     isnt $*THREAD.id, 0, 'Initial thread has an ID';
 }
 

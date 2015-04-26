@@ -12,7 +12,7 @@ class A {
     method lexical() { $x }
 }
 
-isa_ok A::, Stash, 'Typename:: is a Stash';
+isa-ok A::, Stash, 'Typename:: is a Stash';
 ok A::<&foo>, 'can access a subroutine in the stash';
 ok A:: === A.WHO, 'A::  returns the same as A.WHO';
 

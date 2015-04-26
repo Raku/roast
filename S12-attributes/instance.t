@@ -283,11 +283,11 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
         has WHAT_test $.b is rw;
     }
     my $o = WHAT_test.new(a => WHAT_ref.new(), b => WHAT_test.new());
-    isa_ok $o.a.WHAT, WHAT_ref, '.WHAT on attributes';
-    isa_ok $o.b.WHAT, WHAT_test, '.WHAT on attributes of same type as class';
+    isa-ok $o.a.WHAT, WHAT_ref, '.WHAT on attributes';
+    isa-ok $o.b.WHAT, WHAT_test, '.WHAT on attributes of same type as class';
     my $r = WHAT_test.new();
     lives_ok {$r.b = $r}, 'type check on recursive data structure';
-    isa_ok $r.b.WHAT, WHAT_test, '.WHAT on recursive data structure';
+    isa-ok $r.b.WHAT, WHAT_test, '.WHAT on recursive data structure';
 
 }
 
@@ -599,7 +599,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     my $x = AttribListAssign.new;
     $x.doit;
     is $x.a, 'post', 'list assignment to attributes (1)';
-    isa_ok $x.a, Str, 'list assignment to attributes (type)';
+    isa-ok $x.a, Str, 'list assignment to attributes (type)';
     is $x.b, 'office', 'list assignment to attributes (2)';
 
 }

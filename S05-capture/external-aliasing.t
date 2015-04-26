@@ -10,9 +10,9 @@ our $y;
 
 ok 'ab cd ef' ~~ m/:s <ident> $x=<ident> $y=<ident>/, 
    'regex matched';
-isa_ok $x, Match, 'stored a match object in outer lexical var';
-isa_ok $y, Match, 'stored a match object in outer package var';
-isa_ok $<ident>, Match, '... the normal capture also is a Match object';
+isa-ok $x, Match, 'stored a match object in outer lexical var';
+isa-ok $y, Match, 'stored a match object in outer package var';
+isa-ok $<ident>, Match, '... the normal capture also is a Match object';
 is ~$<ident>, 'ab', 'normal match object still works';
 is ~$x, 'cd', 'outer lexical var got the right value';
 is ~$y, 'ef', 'outer package var got the right value';

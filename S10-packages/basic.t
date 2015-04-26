@@ -221,7 +221,7 @@ eval_dies_ok 'module RT80856 is not_RT80856 {}',
              'die if module "is" a nonexistent';
 
 {
-    isa_ok Int.WHO, Stash, 'SomeType.WHO is a Stash';
+    isa-ok Int.WHO, Stash, 'SomeType.WHO is a Stash';
     is Int.WHO.WHAT.gist, '(Stash)', 'and Stash correctly .gist-ifies';
 }
 

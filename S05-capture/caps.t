@@ -15,10 +15,10 @@ sub ca(@x) {
 ok 'a b c d' ~~ /(.*)/, 'basic sanity';
 ok $/.caps ~~ Positional, '$/.caps returns something Positional';
 ok $/.chunks ~~ Positional, '$/.chunks returns something Positional';
-isa_ok $/.caps.[0],   Pair, '.. and the items are Pairs (caps);';
-isa_ok $/.chunks.[0], Pair, '.. and the items are Pairs (chunks);';
-isa_ok $/.caps.[0].value,   Match, '.. and the values are Matches (caps);';
-isa_ok $/.chunks.[0].value, Match, '.. and the values are Matches (chunks);';
+isa-ok $/.caps.[0],   Pair, '.. and the items are Pairs (caps);';
+isa-ok $/.chunks.[0], Pair, '.. and the items are Pairs (chunks);';
+isa-ok $/.caps.[0].value,   Match, '.. and the values are Matches (caps);';
+isa-ok $/.chunks.[0].value, Match, '.. and the values are Matches (chunks);';
 
 is ca($/.caps),     '0:a b c d', '$/.caps is one item for (.*)';
 is ca($/.chunks),   '0:a b c d', '$/.chunks is one item for (.*)';

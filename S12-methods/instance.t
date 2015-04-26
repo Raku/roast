@@ -226,7 +226,7 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
     class HasMethod {
         $tracker = method foo() { };
     }
-    isa_ok $tracker, Method,
+    isa-ok $tracker, Method,
         'a named method definition inside a class returns a Method';
     is $tracker.name, 'foo', '... and that method knows its name';
 }

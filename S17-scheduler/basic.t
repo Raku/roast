@@ -20,7 +20,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
         pass "Cued code on $name ran";
         $x = True;
     });
-    isa_ok $c, Cancellation;
+    isa-ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     ok $x, "Code was cued to $name by default";
     LEAVE $c.cancel;
@@ -33,7 +33,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
         $message = $exception.message;
     };
     $*SCHEDULER.cue({ die "oh noes" });
-    isa_ok $c, Cancellation;
+    isa-ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     is $message, "oh noes", "$name setting uncaught_handler works";
     LEAVE $c.cancel;
@@ -49,7 +49,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
           $tracker ~= 'caught';
       })
     );
-    isa_ok $c, Cancellation;
+    isa-ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,caught", "Code run on $name, then handler";
     LEAVE $c.cancel;
@@ -62,7 +62,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
         { $tracker = 'cued,' },
         :catch( -> $ex { $tracker ~= 'caught' })
     );
-    isa_ok $c, Cancellation;
+    isa-ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,", "Catch handler on $name not run if no error";
     LEAVE $c.cancel;

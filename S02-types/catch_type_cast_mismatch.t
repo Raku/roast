@@ -13,13 +13,13 @@ be trapped.
 plan 11;
 
 my $ref = { val => 42 };
-isa_ok($ref, Hash);
+isa-ok($ref, Hash);
 nok $ref ~~ Positional, "It's not a positional";
 cmp_ok $ref, '===', $ref[0], 'So [0] returns itself';
 
 {
     $ref = [ 42 ];
-    isa_ok($ref, Array);
+    isa-ok($ref, Array);
     #?niecza skip "Failure NYI"
     throws_like { EVAL '$ref<0>' }, Exception, 'Accessing array as hash fails';
 }

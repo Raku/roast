@@ -199,10 +199,10 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is +s:g/Now/Wow/, 1, 'Constant substitution succeeds and returns correct count';
     is($_, q{Wow I know my abc's}, 'Constant substitution produces correct result');
 
-    isa_ok s:global:i/ABC/$s/.WHAT, List, 'Global scalar substitution succeeds and returns a List';
+    isa-ok s:global:i/ABC/$s/.WHAT, List, 'Global scalar substitution succeeds and returns a List';
     is($_, q{Wow I know my ZBC's}, 'Scalar substitution produces correct result');
 
-    isa_ok s/BC/@a[]/.WHAT, Match, 'Single list replacement succeeds and returns a Match';
+    isa-ok s/BC/@a[]/.WHAT, Match, 'Single list replacement succeeds and returns a Match';
     is($_, q{Wow I know my ZA ZBC's}, 'List replacement produces correct result');
 
     dies_ok { 'abc' ~~ s/b/g/ },
@@ -448,7 +448,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     my $_ = 42; 
     my $match = s/\d+/xxx/;
-    isa_ok $match, Match, 's/// returns a Match object on non-strings';
+    isa-ok $match, Match, 's/// returns a Match object on non-strings';
     is $_, 'xxx', 's/// can modify a container that contains a non-string';
 }
 

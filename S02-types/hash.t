@@ -311,7 +311,7 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 # RT 77598
 #?niecza skip "Unsupported use of [-1] subscript to access from end of array"
 {
-    isa_ok {}[*-1], Failure, 'array-indexing a hash with a negative index is Failure';
+    isa-ok {}[*-1], Failure, 'array-indexing a hash with a negative index is Failure';
 }
 
 # RT #73230
