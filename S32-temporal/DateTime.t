@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 219;
+plan 220;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -594,6 +594,13 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     is ds('2015-01-20T12:56:34Z').earlier(weeks => 3),
        ds('2014-12-30T12:56:34Z'),
        'subtracting 3 weeks, overflowing to years';
+}
+
+# check that timezones are preserved
+{
+    is +DateTime.new(0, :timezone(1)).later(seconds => 1).timezone,
+       1,
+       '.later preserves timezone';
 }
 
 # RT #121990 Smartmatch against a Date 
