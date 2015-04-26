@@ -4,16 +4,14 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 17;
+plan 14;
 
 dies_ok { Supply.rotor }, 'can not be called as a class method';
+#?rakudo todo 'only deprecated so far'
+dies_ok { Supply.from-list(1..5).rotor }, 'no param version illegal';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
-
-    tap_ok Supply.from-list(1..5).rotor,
-      [[1,2],[2,3],[3,4],[4,5]],
-      "we can rotor";
 
     tap_ok Supply.from-list(1..5).rotor(3 => -2),
       [[1,2,3],[2,3,4],[3,4,5]],
@@ -26,10 +24,6 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap_ok Supply.from-list(1..5).rotor(3 => -2,:!partial),
       [[1,2,3],[2,3,4],[3,4,5]],
       "we can rotor by number of elements and overlap without partial";
-
-    tap_ok Supply.from-list(1..5).rotor(:partial),
-      [[1,2],[2,3],[3,4],[4,5],[5]],
-      "we can rotor with partial";
 
     tap_ok Supply.from-list(1..5).rotor(3 => -2,:partial),
       [[1,2,3],[2,3,4],[3,4,5],[4,5]],
