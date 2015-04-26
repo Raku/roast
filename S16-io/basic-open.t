@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 sub test_lines(@lines) {
     #!rakudo todo 'line counts'
@@ -44,5 +44,9 @@ sub test_lines(@lines) {
     my @lines = $fh.lines;
     test_lines(@lines);
 }
+
+# RT #124391
+throws_like { open("this-surely-won't-exist", :r) }, Exception,
+    message => { m/"this-surely-won't-exist"/ };
 
 # vim: ft=perl6
