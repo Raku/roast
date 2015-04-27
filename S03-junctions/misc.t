@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 105;
+plan 117;
 
 =begin pod
 
@@ -427,6 +427,22 @@ ok (1|2).Str ~~ Str, 'Junction.Str returns a Str, not a Junction';
 # RT #101124
 ok (0|1 == 0&1), 'test junction evaluation order';
 ok (0&1 == 0|1), 'test junction evaluation order';
+
+nok (<a b c>,(4,5,6)).any == 4, '.any is not flattening 1';
+ok (<a b c>,(4,5,6)).any == 3, '.any is not flattening 2';
+is ((<a b c>,(4,5,6)).any == 3).gist, 'any(True, True)', '.any is not flattening 3';
+
+nok ((4,5,6),(4,5,6)).all > 3, '.all is not flattening 1';
+ok (<a b c>,(4,5,6)).all == 3, '.all is not flattening 2';
+is ((<a b c>,(4,5,6)).all == 3).gist, 'all(True, True)', '.any is not flattening 3';
+
+nok ((4,5,6),(4,5,6,7)).one == 7, '.one is not flattening 1';
+ok (<a b c>,(4,5,6)).one eq 'a b c' , '.one is not flattening 2';
+is ((<a b c>,(4,5,6)).one eq 'a b c').gist, 'one(True, False)', '.one is not flattening 3';
+
+nok ((4,5,6),(4,5,6,7)).none == 3, '.none is not flattening 1';
+ok (<a b c>,(4,5,6)).none eq 'a' , '.none is not flattening 2';
+is ((<a b c>,(4,5,6)).none eq 'a b c').gist, 'none(True, False)', '.none is not flattening 3';
 
 done();
 
