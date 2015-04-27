@@ -1,7 +1,8 @@
 use v6;
 use Test;
-plan 30;
+plan 31;
 
+is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it being confused for closure";
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
 #?niecza skip 'Nominal type check failed in binding Int $n in f; got Str, needed Int'
