@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 117;
+plan 129;
 
 =begin pod
 
@@ -427,6 +427,26 @@ ok (1|2).Str ~~ Str, 'Junction.Str returns a Str, not a Junction';
 # RT #101124
 ok (0|1 == 0&1), 'test junction evaluation order';
 ok (0&1 == 0|1), 'test junction evaluation order';
+
+# test flattening of listop forms
+
+ok any((1,2,3),(4,5,6)) == 4, 'any is flattening 1';
+nok any((1,2,4),(4,5,6)) == 3, 'any is flattening 2';
+is (any((1,2,3),(4,5,6)) == 3).gist, 'any(False, False, True, False, False, False)', 'any is flattening 3';
+
+ok all((4,5,6),(4,5,6)) > 3, 'all is flattening 1';
+nok all((1,2,3),(4,5,6)) == 3, 'all is flattening 2';
+is (all((1,2,3),(4,5,6)) == 3).gist, 'all(False, False, True, False, False, False)', 'all is flattening 3';
+
+ok one((4,5,6),(4,5,6,7)) == 7, 'one is flattening 1';
+nok one((1,2,3),(4,5,6)) eq '1 2 3' , 'one is flattening 2';
+is (one((1,2,3),(4,5,6)) == 3).gist, 'one(False, False, True, False, False, False)', 'one is flattening 3';
+
+ok none((4,5,6),(4,5,6,7)) == 3, 'none is flattening 1';
+nok none((1,2,3,4),(4,5,6,7)) == '3' , 'none is flattening 2';
+is (none((1,2,3),(4,5,6)) == 3).gist, 'none(False, False, True, False, False, False)', 'none is flattening 3';
+
+# test non-flattening of method forms
 
 nok (<a b c>,(4,5,6)).any == 4, '.any is not flattening 1';
 ok (<a b c>,(4,5,6)).any == 3, '.any is not flattening 2';
