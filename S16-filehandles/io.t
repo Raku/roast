@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 113;
+plan 112;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
