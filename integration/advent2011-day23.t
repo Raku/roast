@@ -206,8 +206,6 @@ is_deeply @z, [7,7,7, 9,9,9], '@y.map: { $_ xx 3 if $_ > 5 };';
 
 @z = ($_ xx 3 if $_ > 5 for @y);
 
-#?rakudo.jvm todo "RT #122306"
-#?rakudo.moar todo "RT #122306"
 is_deeply @z, [7,7,7, 9,9,9], '@z = ($_ xx 3 if $_ > 5 for @y);';
 
 # Random integer between 3 and 7 inclusive
