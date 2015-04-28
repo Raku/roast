@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 10;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -54,6 +54,18 @@ plan 8;
     my $a = 'many ';
     try { $a ~= $_ } given 'pelmeni';
     is $a, 'many pelmeni', 'Correct $_ in try block in statement-modifying given';
+}
+
+{
+    my $a;
+    { $a = $^x } given 69;
+    is $a, 69, 'given modifier with $_-using block runs block with correct arg';
+}
+
+{
+    my $a;
+    { $a = $^x } given 42;
+    is $a, 42, 'given modifier with placeholder block runs block with correct arg';
 }
 
 # vim: ft=perl6
