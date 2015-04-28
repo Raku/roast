@@ -153,8 +153,6 @@ plan 32;
 }
 
 # RT #111704
-#?rakudo.moar todo 'RT #111704'
-#?rakudo.jvm todo 'RT #111704'
 {
     my $x = 0;
     try { $x = $_ } given '42';
