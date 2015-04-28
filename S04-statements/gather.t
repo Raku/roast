@@ -2,8 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
-
+plan 32;
 
 # L<S04/The C<gather> statement prefix/>
 
@@ -240,6 +239,21 @@ plan 30;
     my $cat;
     lives_ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a };  +@a }, 'can access bound gather result while gathering';
     is $cat, "11 21 2 3", 'bound gather result has up-to-date value while gathering';
+}
+
+# RT #111962
+{
+    my @grid = [ Bool.pick xx 5 ] xx 5;
+    my @neigh = [ ] xx 5;
+    for ^5 X ^5 -> $i, $j {
+        @neigh[$i][$j] = gather take-rw @grid[$i + .[0]][$j + .[1]]
+                if 0 <= $i + .[0] < 5 and 0 <= $j + .[1] < 5
+                    for [-1,-1],[+0,-1],[+1,-1],
+                        [-1,+0],        [+1,+0],
+                        [-1,+1],[+0,+1],[+1,+1];
+    }
+    ok @grid[1][1] =:= @neigh[2][2][0], "Neighbor is same object as in grid";
+    ok @neigh[1][1].elems == 8, "There are eight neighbors";
 }
 
 # vim: ft=perl6
