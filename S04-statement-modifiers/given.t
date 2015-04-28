@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 8;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -49,6 +49,13 @@ plan 7;
     $_ = 'bogus';
     my @r = gather { take "{$_}" given 'cool' }
     is @r[0], 'cool', 'given modifies the $_ that is visible to the {} interpolator';
+}
+
+# RT #111704
+{
+    my $a = 'many ';
+    try { $a ~= $_ } given 'pelmeni';
+    is $a, 'many pelmeni', 'Correct $_ in try block in statement-modifying given';
 }
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -131,6 +131,13 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
     $_ = 'bogus';
     my @r = gather { take "{$_}" for <cool but dry> }
     is @r[0], 'cool', 'for modifies the $_ that is visible to the {} interpolator';
+}
+
+# RT #111704
+{
+    my $a = '';
+    try { $a ~= $_ } for <1 2>;
+    is $a, '12', 'Correct $_ in try block in statement-modifying for';
 }
 
 # vim: ft=perl6
