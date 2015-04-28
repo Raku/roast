@@ -43,8 +43,6 @@ plan 8;
 }
 
 # RT #100746
-#?rakudo.moar todo "RT #100746"
-#?rakudo.jvm todo "RT #100746"
 {
     $_ = 'bogus';
     my @r = gather { take "{$_}" given 'cool' }
