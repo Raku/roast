@@ -32,7 +32,7 @@ plan 17;
 
             # Steal methods of Any/Mu for our method cache.
             my %cache;
-            for Any.^method_table.pairs, Mu.^method_table.pairs {
+            for flat Any.^method_table.pairs, Mu.^method_table.pairs {
                 %cache{.key} //= .value;
             }
             Metamodel::Primitives.install_method_cache($type, %cache);
@@ -42,7 +42,7 @@ plan 17;
 
         method type_check(Mu $, Mu \check) {
             $union-type-checks++;
-            for @!types, Any, Mu {
+            for flat @!types, Any, Mu {
                 return True if Metamodel::Primitives.is_type(check, $_);
             }
             return False;

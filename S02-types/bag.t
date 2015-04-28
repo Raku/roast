@@ -469,7 +469,7 @@ sub showkv($x) {
 {
     my $string;
     my Bag $bag .= new: <foo foo bar>;
-    for $bag.keys X $bag.keys -> $a, $b {
+    for flat $bag.keys X $bag.keys -> $a, $b {
         $string ~= $a ~ $b;
     }
     is $string, 'foofoofoobarbarfoobarbar',

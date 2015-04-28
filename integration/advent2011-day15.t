@@ -33,7 +33,7 @@ for @inputs -> $n {
     }
 }
 
-for @inputs Z @results Z @expected -> $input, $result, $expected {
+for @inputs Z @results Z @expected -> ($input, $result, $expected) {
     ok $result ~~ $expected, "handing of $input"
         or diag "got: $result";
 }

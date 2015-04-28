@@ -51,15 +51,15 @@ my @array1 = <11 12 13>;
 my @array2 = <21 22 23>;
 
 $a = '';
-for @array1 Z @array2 -> $one, $two { $a ~= "$one $two " };
+for flat @array1 Z @array2 -> $one, $two { $a ~= "$one $two " };
 is $a, '11 21 12 22 13 23 ', 'zip with multiple topics';
 
 $a = '';
-for ^Inf Z @array -> $index, $item { $a ~= "$index $item " };
+for flat ^Inf Z @array -> $index, $item { $a ~= "$index $item " };
 is $a, '0 a 1 b 2 c 3 d ', 'infinite upto, zip with multiple topics';
 
 $a = '';
-for ^@array.elems Z @array -> $index, $item { $a ~= "$index $item " };
+for flat ^@array.elems Z @array -> $index, $item { $a ~= "$index $item " };
 is $a, '0 a 1 b 2 c 3 d ', 'elems upto, zip with multiple topics';
 
 $a = '';
@@ -73,7 +73,7 @@ is $a, '0 a 1 b 2 c 3 d ', '.kv, multiple topics';
     my @four  = <41 42 43>;
 
     $a = '';
-    for @one Z @two Z @three Z @four -> $one, $two, $three, $four {
+    for flat @one Z @two Z @three Z @four -> $one, $two, $three, $four {
         $a ~= "$one $two $three $four "
     };
     is $a, '11 21 31 41 12 22 32 42 13 23 33 43 ', 'multiple iteration';

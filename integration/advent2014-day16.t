@@ -82,7 +82,7 @@ sub say(*@a) { $said = @a>>.gist.join }   # don't care about the new line
 
 {
     my @a = 'foo','bar',q/'first/,q/second'/;
-    for qw/ foo bar 'first second' / Z @a -> $string, $result {
+    for flat qw/ foo bar 'first second' / Z @a -> $string, $result {
         say $string;
         is $said, $result;
     }
@@ -90,7 +90,7 @@ sub say(*@a) { $said = @a>>.gist.join }   # don't care about the new line
 
 {
     my @a = 'foo','bar',q/first second/;
-    for qww/ foo bar 'first second' / Z @a -> $string, $result {
+    for flat qww/ foo bar 'first second' / Z @a -> $string, $result {
         say $string;
         is $said, $result;
     }
