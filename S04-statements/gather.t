@@ -140,7 +140,7 @@ plan 32;
         'take with multiple arguments .flat tens out';
 }
 
-#?rakudo.moar todo 'RT #117635 (infinite loop)'
+# RT #117635
 {
     my sub grep-div(@a, $n) {
         gather for @a {
