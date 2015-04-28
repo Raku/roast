@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -66,6 +66,13 @@ plan 10;
     my $a;
     { $a = $^x } given 42;
     is $a, 42, 'given modifier with placeholder block runs block with correct arg';
+}
+
+{
+    # Covers a bug where the block to first got compiled in the 'given' thunk
+    my @a;
+    for ^2 -> \c { 1 given first { @a.push(c); 0 }, ^2; };
+    is @a, (0, 0, 1, 1), 'given thunk does not mess up statement modifier closures';
 }
 
 # vim: ft=perl6
