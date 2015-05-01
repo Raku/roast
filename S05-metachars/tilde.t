@@ -74,7 +74,6 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok 'aaa' !~~ m/^ <&even_b> /, '...and fails for odd numbers';
 }
 
-#?rakudo todo 'RT #77616'
 {
     "abc" ~~ /a ~ (c) (b)/;
     is ($0,$1), ("c","b"), "~ operator in regexp does not revert capture order";
