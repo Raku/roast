@@ -172,7 +172,6 @@ ok("abc\x[1ea2]def" ~~ m/\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE]/, 'Unanchore
 ok("abc\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE]def" ~~ m/\x[1EA2]/, 'Unanchored \x[1EA2]');
 ok("abc\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE]def" ~~ m/\o[17242]/, 'Unanchored \o[17242]');
 ok("abc\x[1ea2]def" ~~ m/^ abc \c[LATIN CAPITAL LETTER A WITH HOOK ABOVE] def $/, 'Anchored LATIN CAPITAL LETTER A WITH HOOK ABOVE');
-#?rakudo.moar 3 todo 'Need review after NFG work'
 ok("\x[1ea2]\x[5b4]def" ~~ m/\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]/, 'Solitary multiple LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
 ok("\x[1ea2]\x[5b4]" ~~ m/<[\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]]>/, 'Charclass multiple LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
 ok(!( "\x[1ea2]\x[5b4]" ~~ m/^ <-[\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]]>/ ), 'Negative charclass LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
