@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 221;
+plan 223;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -596,7 +596,7 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
        'subtracting 3 weeks, overflowing to years';
 }
 
-# check that timezones are preserved
+# check that timezones & formatters are preserved
 {
     is +DateTime.new(0, :timezone(23)).later(seconds => 0).timezone,
        23,
@@ -605,6 +605,15 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     is +DateTime.new(0, :timezone(23)).later(minutes => 1).timezone,
        23,
        '.later(not seconds) preserves timezone';
+
+    my $f = { "eek"; }
+    is ~DateTime.new(0, formatter => $f).later(seconds => 23),
+       $f(),
+       '.later(seconds) preserves formatter';
+
+    is ~DateTime.new(0, formatter => $f).later(hours => 23),
+       $f(),
+       '.later(not seconds) preserves formatter';
 }
 
 # RT #121990 Smartmatch against a Date 
