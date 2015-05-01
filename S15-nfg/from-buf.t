@@ -1,6 +1,6 @@
 use Test;
 
-plan 4;
+plan 6;
 
 {
     # UTF-8 of codepoints 0044 0307 0323
@@ -29,3 +29,9 @@ plan 4;
     my $s = $utf16.decode('utf-16');
     is $s.chars, 3, 'Decoding a UTF-16 Buf gets us NFG (a few graphemes)';
 }
+
+# Buf round-trip of synthetics.
+is "D\c[COMBINING DOT ABOVE]\c[COMBINING DOT BELOW]D".encode('utf-8').decode.chars, 2,
+    'UTF-8 encoding with synthetic followed by non-synthetic works OK';
+is "D\c[COMBINING DOT ABOVE]\c[COMBINING DOT BELOW]D".encode('utf-16').decode.chars, 2,
+    'UTF-16 encoding with synthetic followed by non-synthetic works OK';
