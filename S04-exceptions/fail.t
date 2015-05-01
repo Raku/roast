@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 26;
 
 # L<S04/Exceptions/The fail function>
 
@@ -83,6 +83,24 @@ plan 25;
     lives_ok { use fatal; my $x = !it-will-fail(); 1 }, 'use fatal respects !';
     lives_ok { use fatal; my $x = not it-will-fail(); 1 }, 'use fatal respects not';
     lives_ok { use fatal; my $x = defined it-will-fail(); 1 }, 'use fatal respects defined';
+}
+
+# RT #118785
+{
+    sub fatal-scope(&todo) {
+        use fatal;
+        todo;
+    }
+
+    sub thing-that-fails() {
+        fail 'oh noes';
+    }
+
+    sub non-fatal-scope {
+        thing-that-fails() or 42
+    }
+
+    is fatal-scope(&non-fatal-scope), 42, "Fatal scopes are lexical rather than dynamic";
 }
 
 done;
