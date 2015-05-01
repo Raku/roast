@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 33;
+plan 36;
 
 # L<S14/Run-time Mixins/>
 
@@ -160,6 +160,19 @@ lives_ok {(True but role {}).gist}, 'can mix into True';
         X::Role::Parametric::NoSuchCandidate,
         role    => { .^name eq 'popo' }
         ;
+}
+
+# RT #114668
+{
+    my role B { method Str() { 'bar' } }
+    ok ({ a => 42 } but B) ~~ B, 'Mix-in to item hash works (1)';
+    is ({ a => 42 } but B).Str, 'bar', 'Mix-in to item hash works (2)'
+}
+
+# RT #122756
+{
+    my role B { }
+    ok ([] but B) ~~ B, 'Mix-in to item array works';
 }
 
 # vim: syn=perl6
