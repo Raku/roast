@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 48;
+plan 49;
 
 use lib 't/spec/packages';
 use Test::Util;
@@ -30,6 +30,7 @@ is roll(2, @arr), <z z>, 'sub roll with $num < +@values, implicit no-replace';
 is roll(4, @arr), <z z z z>, 'sub roll with $num > +@values';
 
 is <a b c d>.roll(*)[^10].elems, 10, 'roll(*) generates at least ten elements';
+ok <a b c d>.roll(*).infinite, 'roll(*) knows itself to be infinite';
 
 {
   my @items = <1 2 3 4>;
