@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 301;
+plan 304;
 
 =begin pod
 
@@ -317,7 +317,7 @@ my @e;
 
 { # distribution for unary prefix
     my @r;
-    @r = ([1, 2], [3, [4, 5]]).deepmap: -*;
+    @r = -«([1, 2], [3, [4, 5]]);
     my @e = ([-1, -2], [-3, [-4, -5]]);
     is(~@r, ~@e, "distribution for unary prefix");
     is_deeply(@r, @e, "distribution for unary prefix, deep comparison");
@@ -325,11 +325,16 @@ my @e;
 
 { # distribution for unary postfix autoincrement
     my @r;
-    @r = ([1, 2], [3, [4, 5]]);
-    @r.deepmap: *++;
-    my @e = ([2, 3], [4, [5, 6]]);
+    @r = [1, 2], [3, [4, 5]];
+    @r»++;
+    my @e = [2, 3], [4, [5, 6]];
     is(~@r, ~@e, "distribution for unary postfix autoincr");
     is_deeply(@r, @e, "distribution for unary postfix autoincr, deep comparison");
+
+    is @e»[1], '3 5 6', "nodal postcircumfixes do not distribute";
+    is @e».elems, '2 2', "nodal methods do not distribute (elems)";
+    is @e».reverse, '3 2 5 6 4', "nodal methods do not distribute (reverse)";
+    # XXX need to test all the things
 };
 
 #?DOES 3
