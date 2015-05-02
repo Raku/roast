@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 36;
 
 # See L<http://www.nntp.perl.org/group/perl.perl6.language/22858> --
 # previously, "my $a; say $::("a")" died (you had to s/my/our/). Now, it was
@@ -169,5 +169,12 @@ my $outer = 'outside';
 throws_like { EVAL ' ::().Str ' },
   Exception,
   'Cannot look up empty name';
+
+# RT #76400
+{
+    throws_like { EVAL 'my $foo::; say $foo;' },
+    X::Undeclared,
+    'name with trailing :: not same as sans',
+}
 
 # vim: ft=perl6
