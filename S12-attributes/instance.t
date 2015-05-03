@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 141;
+plan 153;
 
 =begin pod
 
@@ -665,6 +665,39 @@ eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
         "can 'is rw' multiple declared has attributes";
 }
 
-done();
+{
+    my $seen = 0;
+    my class Lazy {
+        has $.foo will lazy { ++$seen; 42 };
+    }
+    my $l1 = Lazy.new;
+    is $seen,    0, 'Initializing object did not run lazy code';
+    is $l1.foo, 42, 'get right attribute value (1)';
+    is $seen,    1, 'Accessor ran code';
+    is $l1.foo, 42, 'get right attribute value (2)';
+    is $seen,    1, 'Accessor did not run code';
+
+    my $l2 = Lazy.new;
+    is $seen,    1, 'Initializing another object did not run lazy code';
+    is $l2.foo, 42, 'get right attribute value (3)';
+    is $seen,    2, 'Another accessor ran code';
+    is $l2.foo, 42, 'get right attribute value (4)';
+    is $seen,    2, 'Another accessor did not run code';
+}
+
+{
+    throws_like 'class Zapis { has $.a is bar; }',
+      X::Comp::Trait::Unknown,
+      type      => 'is',
+      subtype   => 'bar',
+      declaring => 'n attribute',
+    ;
+    throws_like 'class Zapwill { has $.a will bar { ... } }',
+      X::Comp::Trait::Unknown,
+      type      => 'will',
+      subtype   => 'bar',
+      declaring => 'n attribute',
+    ;
+}
 
 # vim: ft=perl6
