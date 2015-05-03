@@ -272,7 +272,6 @@ eval_dies_ok q[
 }
 
 # RT #120561
-#?rakudo.parrot skip 'RT #120561'
 {
     lives_ok { use lib "$?FILE.IO.dirname()/t/spec/packages" },
         'no Null PMC access with "use lib $double_quoted_string"';

@@ -68,7 +68,6 @@ sub all-basic(Callable $handle) {
     }
 
     # Buf into an open non binary handle
-    #?rakudo.parrot skip "is() gets into infinite recursion"
 {
         my $io = $path.IO.open(:w);
         my Buf $buf = Buf.new(0xC0, 0x01, 0xF0, 0x0D);
@@ -78,7 +77,6 @@ sub all-basic(Callable $handle) {
 }
 
     # Text into a open binary handle
-    #?rakudo.parrot skip 'Malformed UTF-8 string'
 {
         my $io = $path.IO.open(:bin, :w);
         my Str $txt = "Bli itj nå trønder-rock uten tennis-sokk";

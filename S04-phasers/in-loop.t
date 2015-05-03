@@ -18,7 +18,6 @@ plan 3;
 
 # L<S04/"Phasers">
 
-#?rakudo.parrot todo "unknown phasers issue"
 #?rakudo.moar todo "unknown phasers issue"
 #?rakudo.jvm skip "RT #122134 - last+ENTER in loop"
 {
@@ -43,7 +42,6 @@ plan 3;
        'trait blocks work properly in for loop';
 }
 
-#?rakudo.parrot todo "unknown phasers issue"
 #?rakudo.moar todo "unknown phasers issue"
 #?rakudo.jvm skip "RT #122134 - last+ENTER in loop"
 {

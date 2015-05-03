@@ -43,9 +43,7 @@ ok $*DISTRO.auth,      "Authority is '{$*DISTRO.auth}'";
 ok $*DISTRO.version,   "Version is '{$*DISTRO.version}'";
 #?rakudo.jvm    todo 'no Distro.signature yet'
 #?rakudo.moar   todo 'no Distro.signature yet'
-#?rakudo.parrot skip 'no Distro.signature yet'
 ok $*DISTRO.signature, "Signature is '{$*DISTRO.signature}'";
-#?rakudo.parrot skip 'no Distro.desc yet'
 ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
 ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";
 ok $*DISTRO.path-sep,  "Path separator is '{$*DISTRO.path-sep}'";
@@ -59,7 +57,6 @@ ok $*DISTRO.name, 'Non-empty $*DISTRO.name';
 isa-ok $*DISTRO.version, Version;
 #?rakudo.jvm    todo 'no Distro.signature yet'
 #?rakudo.moar   todo 'no Distro.signature yet'
-#?rakudo.parrot skip 'no Distro.signature yet'
 isa-ok $*DISTRO.signature, Blob;
 isa-ok $*DISTRO.is-win, Bool;
 

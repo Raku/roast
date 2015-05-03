@@ -24,7 +24,6 @@ plan 17;
 
     is $latin-chars.comb(/<cntrl>/)>>.ord.join(","), ((0..31, 127..159).join(",")), 'cntrl chars';
 
-    #?rakudo.parrot todo 'Unicode 6.3 -- lower characters'
     #?rakudo.jvm todo 'Unicode 6.3 -- lower characters'
     is $latin-chars.comb(/<lower>/).join, "abcdefghijklmnopqrstuvwxyzµßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'lower chars';
 
@@ -33,12 +32,10 @@ plan 17;
     # on unicode version bundled with jdk, icu etc.
 
     # failing on parrot 6.8.0/icu 4.4.1/unicode 5.2
-    #?rakudo.parrot todo 'punct characters'
     #?rakudo.jvm todo 'Unicode 6.1 -- punct characters'
     is $latin-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, 'punct chars';
 
     # problematic on on parrot 6.8.0/icu 4.4.1/unicode 5.2
-    #?rakudo.parrot todo 'Unicode 6.1 :Punctuation characters'
     #?rakudo.jvm todo 'Unicode 6.1 -- :Punctuation characters'
     is $latin-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, ':Punctuation chars';
     #-- FLAPPERS

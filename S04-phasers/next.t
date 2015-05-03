@@ -45,7 +45,6 @@ plan 13;
         NEXT { $str ~= 'n'; }
         LAST { $str ~= 'l'; }
     }
-    #?rakudo.parrot todo 'NEXT is evaluated even at the last iteration'
     is $str, 'nnl', 'NEXT are LAST blocks may not be exclusive';
 }
 

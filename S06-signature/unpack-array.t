@@ -52,7 +52,6 @@ is blat( 2, [2,3,4] ), "2-3-4", 'unpack named array with named pieces';
    is fsort-multi(@my-array).join(' '), '2 3 4 4', 'array unpacking and only-multi';
 }
 
-#?rakudo.parrot 2 todo "..."
 for [1,2],[3,4] -> $a [$x, $y] {
     isa-ok $a.VAR, Scalar, "[...] doesn't lose containerization";
 }

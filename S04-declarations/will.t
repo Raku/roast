@@ -86,7 +86,6 @@ my $for;
     }
 }
 #?niezca skip "will variable trait NYI"
-#?rakudo.parrot todo 'will variable not all blocks yet'
 is $for, "aebebebc", 'all for blocks set variable';
 
 my $same3;

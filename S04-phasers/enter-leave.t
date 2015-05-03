@@ -218,7 +218,6 @@ plan 25;
 }
 
 # RT #118387
-#?rakudo.parrot skip "RT #118387"
 {
     is_run( q[sub foo { LEAVE { say 'OK' }; die 'foobar' }; foo()],
         {

@@ -533,7 +533,6 @@ Hello, World
 }
 
 # RT #120529
-#?rakudo.parrot todo 'RT #120529'
 {
     %*ENV<ENV_P6_SPECTEST_120529>='foo';
     ok qx/env/ ~~ /ENV_P6_SPECTEST_120529/, 'qx passes environmental variables';

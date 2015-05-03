@@ -119,7 +119,6 @@ plan 14;
 }
 
 # RT #115500
-#?rakudo.parrot 2 skip 'RT #115500'
 {
     macro rt115500v1() {
         my $q1 = quasi { 6 };

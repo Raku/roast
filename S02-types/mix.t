@@ -183,7 +183,6 @@ sub showkv($x) {
     throws_like { %m<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Mixs are immutable)";
-    #?rakudo.parrot todo "?"
     #?rakudo.jvm    todo "?"
     throws_like { %m = mix <a b> },
       X::Assignment::RO,
@@ -405,7 +404,6 @@ sub showkv($x) {
 
 {
     my $m = <a b c>.Mix;
-    #?rakudo.parrot todo "?"
     #?rakudo.jvm    todo "?"
     throws_like { $m.pairs[0].key++ },
       X::Assignment::RO,

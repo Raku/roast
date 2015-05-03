@@ -343,14 +343,12 @@ for @normal -> $class {
 }
 
 for @concurrent -> $class {
-    #?rakudo.parrot 2 skip 'NYI on parrot'
     is ::($class).WHICH, $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
 }
 
 for @moar -> $class {
     #?rakudo.jvm 2    skip 'NYI on jvm'
-    #?rakudo.parrot 2 skip 'NYI on parrot'
     is ::($class).WHICH, $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
 }

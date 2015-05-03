@@ -4,7 +4,6 @@ use Test;
 
 plan 17;
 
-#?rakudo.parrot skip 'Metamodel::Primitives NYI'
 {
     my $union-type-checks = 0;
     my $union-find-method-calls = 0;

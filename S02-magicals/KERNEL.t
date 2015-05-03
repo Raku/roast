@@ -56,7 +56,6 @@ isa-ok $*KERNEL.signature, Blob;
 isa-ok $*KERNEL.bits, Int;
 
 #?rakudo.jvm    skip "jvm doesn't know about signals"
-#?rakudo.parrot skip "parrot doesn't know about signals"
 {
     ok $*KERNEL.signals ~~ Positional, 'did Kernel.signals return a list';
     is $*KERNEL.signals.elems, $*KERNEL.signals.grep(Signal|Any).elems,

@@ -183,7 +183,6 @@ sub showkv($x) {
     throws_like { %b<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
-    #?rakudo.parrot todo "?"
     #?rakudo.jvm    todo "?"
     throws_like { %b = bag <a b> },
       X::Assignment::RO,
@@ -449,7 +448,6 @@ sub showkv($x) {
 
 {
     my $b = <a b c>.Bag;
-    #?rakudo.parrot todo "?"
     #?rakudo.jvm    todo "?"
     throws_like { $b.pairs[0].key++ },
       X::Assignment::RO,

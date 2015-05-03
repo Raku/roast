@@ -96,7 +96,7 @@ for %tests.keys.sort -> $t {
 
 # MoarVM Issue #157
 # separate test since rakudo.jvm rounds this very large number
-# more precise than rakudo.moar and rakudo.parrot
+# more precise than rakudo.moar
 {
     my $number   = 5e+33;
     my $result_1 = 4999999999999999727876154935214080;   # result on Moar and Parrot

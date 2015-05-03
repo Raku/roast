@@ -165,7 +165,6 @@ ok("\c[ARABIC-INDIC DIGIT ZERO]" ~~ m/^<-:NoncharacterCodePoint>$/, q{Match rela
 # OtherAlphabetic
 
 #?rakudo.jvm 35 skip "isOther* NYI"
-#?rakudo.parrot 42 skip "isOther* NYI"
 ok("\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<:OtherAlphabetic>$/, q{Match <:OtherAlphabetic>} );
 ok(!( "\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<:!OtherAlphabetic>$/ ), q{Don't match negated <OtherAlphabetic>} );
 ok(!( "\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<-:OtherAlphabetic>$/ ), q{Don't match inverted <OtherAlphabetic>} );
@@ -284,7 +283,6 @@ ok("\x[7896]" ~~ m/^<:UnifiedIdeograph>$/, q{Match <:UnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<:!UnifiedIdeograph>$/ ), q{Don't match negated <UnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<-:UnifiedIdeograph>$/ ), q{Don't match inverted <UnifiedIdeograph>} );
 #?rakudo.jvm 3 skip 'icu'
-#?rakudo.parrot 3 skip 'icu'
 #?niecza 3 todo
 ok(!( "\x[4DFF]"  ~~ m/^<:UnifiedIdeograph>$/ ), q{Don't match unrelated <UnifiedIdeograph>} );
 ok("\x[4DFF]"  ~~ m/^<:!UnifiedIdeograph>$/, q{Match unrelated negated <UnifiedIdeograph>} );
@@ -377,7 +375,6 @@ ok("\x[0BD1]\x[949B]" ~~ m/<:ID_Continue>/, q{Match unanchored (ID_Start + Mn + 
 # Any             # Any character
 
 #?rakudo.jvm 4 skip 'isAny NYI'
-#?rakudo.parrot 4 skip 'isAny NYI'
 ok("\x[C709]" ~~ m/^<:Any>$/, q{Match (Any character)} );
 ok(!( "\x[C709]" ~~ m/^<:!Any>$/ ), q{Don't match negated (Any character)} );
 ok(!( "\x[C709]" ~~ m/^<-:Any>$/ ), q{Don't match inverted (Any character)} );
@@ -387,7 +384,6 @@ ok("\x[C709]" ~~ m/<:Any>/, q{Match unanchored (Any character)} );
 
 
 #?rakudo.jvm 7 skip 'isAssigned NYI'
-#?rakudo.parrot 7 skip 'isAssigned NYI'
 ok("\x[C99D]" ~~ m/^<:Assigned>$/, q<Match (Any non-Cn character (i.e. synonym for \P{Cn}))> );
 ok(!( "\x[C99D]" ~~ m/^<:!Assigned>$/ ), q<Don't match negated (Any non-Cn character (i.e. synonym for \P{Cn}))> );
 ok(!( "\x[C99D]" ~~ m/^<-:Assigned>$/ ), q<Don't match inverted (Any non-Cn character (i.e. synonym for \P{Cn}))> );
@@ -414,7 +410,6 @@ ok("\c[RIGHT OUTER JOIN]\x[110E9]" ~~ m/<:Unassigned>/, q<Match unanchored (Syno
 
 
 #?rakudo.jvm 10 skip 'isCommon NYI'
-#?rakudo.parrot 10 skip 'isCommon NYI'
 #?niecza 3 todo
 ok("\c[ELECTRIC LIGHT BULB]" ~~ m/^<:Common>$/, q{Match (Codepoint not explicitly assigned to a script)} );
 ok(!( "\c[ELECTRIC LIGHT BULB]" ~~ m/^<:!Common>$/ ), q{Don't match negated (Codepoint not explicitly assigned to a script)} );

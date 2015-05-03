@@ -25,7 +25,6 @@ nok '' ~~ /<:L>/, 'empty string has no letter';
 ok("\x[846D]" ~~ m/^<:L>$/, q{Match <:L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<:!L>$/ ), q{Don't match negated <L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<-:L>$/ ), q{Don't match inverted <L> (Letter)} );
-#?rakudo.parrot 4 skip 'Invalid codepoint \\x[FFFE]'
 #?rakudo.jvm 4 skip 'Invalid codepoint \\x[FFFE]'
 ok(!( "\x[FFFE]"  ~~ m/^<:L>$/ ), q{Don't match unrelated <L> (Letter)} );
 ok("\x[FFFE]"  ~~ m/^<:!L>$/, q{Match unrelated negated <L> (Letter)} );
@@ -35,7 +34,6 @@ ok("\x[FFFE]\x[846D]" ~~ m/<:L>/, q{Match unanchored <:L> (Letter)} );
 ok("\x[6DF7]" ~~ m/^<:Letter>$/, q{Match <:Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<:!Letter>$/ ), q{Don't match negated <Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<-:Letter>$/ ), q{Don't match inverted <Letter>} );
-#?rakudo.parrot 4 skip 'Invalid codepoint \\x[FFFE]'
 #?rakudo.jvm 4 skip 'Invalid codepoint \\x[FFFE]'
 ok(!( "\x[FFFE]"  ~~ m/^<:Letter>$/ ), q{Don't match unrelated <Letter>} );
 ok("\x[FFFE]"  ~~ m/^<:!Letter>$/, q{Match unrelated negated <Letter>} );
@@ -150,7 +148,6 @@ ok("\c[LATIN SMALL LETTER TURNED DELTA]\c[LATIN SMALL LETTER TURNED DELTA]\c[LAT
 ok("\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:OtherLetter>$/, q{Match <:OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:!OtherLetter>$/ ), q{Don't match negated <OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<-:OtherLetter>$/ ), q{Don't match inverted <OtherLetter>} );
-#?rakudo.parrot 4 skip 'Invalid codepoint \\x[FFFF]'
 #?rakudo.jvm 4 skip 'Invalid codepoint \\x[FFFF]'
 ok(!( "\x[FFFF]"  ~~ m/^<:OtherLetter>$/ ), q{Don't match unrelated <OtherLetter>} );
 ok("\x[FFFF]"  ~~ m/^<:!OtherLetter>$/, q{Match unrelated negated <OtherLetter>} );
@@ -730,7 +727,6 @@ ok("\x[345B]\c[EXCLAMATION MARK]\c[PARAGRAPH SEPARATOR]" ~~ m/<:ParagraphSeparat
 # C           Other
 
 
-#?rakudo.parrot 3 skip "Invalid codepoint \\x[FFFE]"
 #?rakudo.jvm 3 skip "Invalid codepoint \\x[FFFE]"
 #?rakudo.moar 3 todo "Unions of properties of non-existent codepoints"
 ok("\x[FFFE]" ~~ m/^<:C>$/, q{Match <C> (Other)} );
@@ -739,7 +735,6 @@ ok(!( "\x[FFFE]" ~~ m/^<-:C>$/ ), q{Don't match inverted <C> (Other)} );
 ok(!( "\x[6A3F]"  ~~ m/^<:C>$/ ), q{Don't match unrelated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<:!C>$/, q{Match unrelated negated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
-#?rakudo.parrot skip "Invalid codepoint \\x[FFFE]"
 #?rakudo.jvm skip "Invalid codepoint \\x[FFFE]"
 #?rakudo.moar todo "Unions of properties of non-existent codepoints"
 ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
@@ -752,7 +747,6 @@ ok(!( "\x[200C]" ~~ m/^<-:Other>$/ ), q{Don't match inverted <Other>} );
 ok(!( "\x[AC00]"  ~~ m/^<:Other>$/ ), q{Don't match unrelated <Other>} );
 ok("\x[AC00]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
 ok("\x[AC00]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
-#?rakudo.parrot 3 todo "Unicode spec change in v6.1"
 ok(!( "\x[A679]"  ~~ m/^<:Other>$/ ), q{Don't match unrelated <Other>} );
 ok("\x[A679]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
 ok("\x[A679]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
@@ -792,12 +786,10 @@ ok(!( "\c[SOFT HYPHEN]" ~~ m/^<-:Cf>$/ ), q{Don't match inverted <Cf> (Format)} 
 ok(!( "\x[77B8]"  ~~ m/^<:Cf>$/ ), q{Don't match unrelated <Cf> (Format)} );
 ok("\x[77B8]"  ~~ m/^<:!Cf>$/, q{Match unrelated negated <Cf> (Format)} );
 ok("\x[77B8]"  ~~ m/^<-:Cf>$/, q{Match unrelated inverted <Cf> (Format)} );
-#?rakudo.parrot 3 skip "Invalid codepoint \\x[FFFE]"
 #?rakudo.jvm 3 skip "Invalid codepoint \\x[FFFE]"
 ok(!( "\x[FFFE]" ~~ m/^<:Cf>$/ ), q{Don't match related <Cf> (Format)} );
 ok("\x[FFFE]" ~~ m/^<:!Cf>$/, q{Match related negated <Cf> (Format)} );
 ok("\x[FFFE]" ~~ m/^<-:Cf>$/, q{Match related inverted <Cf> (Format)} );
-#?rakudo.parrot skip "Invalid codepoint \\x[FFFE]"
 #?rakudo.jvm skip "Invalid codepoint \\x[FFFE]"
 ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Format)} );
 
@@ -814,7 +806,6 @@ ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Forma
     ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
 }
 #?rakudo.jvm 3 todo "Unicode spec change in v6.1"
-#?rakudo.parrot 3 todo "Unicode spec change in v6.1"
 ok(!( "\c[KHMER VOWEL INHERENT AQ]"   ~~ m/^<:Format>$/ ),  q{Don't match unrelated <Format>} );
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );

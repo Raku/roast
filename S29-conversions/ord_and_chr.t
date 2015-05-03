@@ -156,7 +156,6 @@ is chrs(104, 101, 108, 108, 111), 'hello', 'chrs works with a list of ints';
 #?rakudo.moar todo 'chr surrogate'
 #?rakudo.jvm todo 'chr surrogate'
 dies_ok {chr(0xD800)}, "chr of surrogate";
-#?rakudo.parrot 2 todo 'chr of noncharacter'
 lives_ok {chr(0x2FFFE)}, "chr of noncharacter";
 lives_ok {chr(0x2FFFF)}, "chr of noncharacter";
 #?rakudo.moar todo 'chr max'
