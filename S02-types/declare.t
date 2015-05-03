@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 79;
+plan 80;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -121,14 +121,13 @@ plan 79;
 
 {
  my int $namcu; $namcu = 2**100;
+ isa-ok $namcu, Int, "int reports as Int";
  ok $namcu==0, "Can tell it's an int because it overflowed";
 }
 
-#?rakudo todo 'num NYI'
-#?niecza skip 'num NYI'
 {
  my num $namcu =1.1e0;
- isa-ok($namcu,num);
+ isa-ok $namcu, Num, "num reports as Num";
 }
 
 # Type mismatch in assignment; expected something matching type Complex but got something of type Num()
