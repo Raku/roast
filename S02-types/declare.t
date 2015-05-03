@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 79;
+plan 80;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -127,7 +127,12 @@ plan 79;
 
 {
  my num $namcu =1.1e0;
+
+ multi sub nummy(num $a) { return "num" }
+ multi sub nummy(Num $a) { return "Num" }
+
  isa-ok $namcu, Num, "num reports as Num";
+ is nummy($namcu), "num", "num dispatches properly";
 }
 
 # Type mismatch in assignment; expected something matching type Complex but got something of type Num()
