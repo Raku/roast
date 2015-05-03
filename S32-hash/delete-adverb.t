@@ -215,9 +215,9 @@ sub gen_hash {
     my %i = %h.clone;
 
     #?niecza 4 todo "cannot combine adverbial pairs"
-    is %h{*}:p:!delete, %i, "return all pairs";
+    is (%h{*}:p:!delete).sort, %i.sort, "return all pairs";
     is +%h, 26,             "* should not be deleted";
-    is %h{*}:p:delete,  %i, "slice out all pairs";
+    is (%h{*}:p:delete).sort,  %i.sort, "slice out all pairs";
     is +%h, 0,             "* should be deleted now";
 } #4
 
@@ -258,16 +258,16 @@ sub gen_hash {
     my %ni = map { $_ => False }, %h.keys;
 
     #?niecza 4 todo "cannot combine adverbial pairs"
-    is %h{*}:!delete:exists:p, %i,  ":!d:exists:p whatever";
+    is (%h{*}:!delete:exists:p).sort, %i.sort,  ":!d:exists:p whatever";
     is +%h, 26,                     "* should not be deleted";
-    is %h{*}:delete:!exists:p, %ni, "d:!exists:p whatever";
+    is (%h{*}:delete:!exists:p).sort, %ni.sort, "d:!exists:p whatever";
     is +%h, 0,                      "* should be deleted now";
 
     %h = gen_hash;
     #?niecza 4 todo "cannot combine adverbial pairs"
-    is %h{*}:!delete:exists:!p, %i,  ":!d:exists:!p whatever";
+    is (%h{*}:!delete:exists:!p).sort, %i.sort,  ":!d:exists:!p whatever";
     is +%h, 26,                     "* should not be deleted";
-    is %h{*}:delete:!exists:!p, %ni, "d:!exists:!p whatever";
+    is (%h{*}:delete:!exists:!p).sort, %ni.sort, "d:!exists:!p whatever";
     is +%h, 0,                      "* should be deleted now";
 } #8
 
