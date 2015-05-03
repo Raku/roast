@@ -19,7 +19,7 @@ plan 3;
 # L<S04/"Phasers">
 
 #?rakudo.moar todo "unknown phasers issue"
-#?rakudo.jvm skip "RT 122134 - last+ENTER in loop"
+#?rakudo.jvm skip "RT #122134 - last+ENTER in loop"
 {
     my $str;
 
@@ -43,7 +43,7 @@ plan 3;
 }
 
 #?rakudo.moar todo "unknown phasers issue"
-#?rakudo.jvm skip "RT 122134 - last+ENTER in loop"
+#?rakudo.jvm skip "RT #122134 - last+ENTER in loop"
 {
     my $str;
 

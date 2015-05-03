@@ -86,7 +86,7 @@ my @list = (1 .. 5);
 }
 
 # map with n-ary functions
-#?rakudo skip "adverbial block; RT 53804"
+#?rakudo skip "adverbial block; RT #53804"
 {
   is ~(1,2,3,4).map({ $^a + $^b             }), "3 7", "map() works with 2-ary functions";
   #?niecza skip 'No value for parameter $b in ANON'

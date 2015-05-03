@@ -9,7 +9,7 @@ my $port = 5000;
 try {
     my $sync = Promise.new;
     IO::Socket::Async.listen('veryunlikelyhostname.bogus', $port).tap(quit => {
-        #?rakudo emit if $*DISTRO.name eq "macosx" { skip("RT 122468", 1); #
+        #?rakudo emit if $*DISTRO.name eq "macosx" { skip("RT #122468", 1); #
         is $_.payload, 'Failed to resolve host name', 'Async listen on bogus hostname';
         #?rakudo emit } ; "RT #122468"; 
         $sync.keep(1);
@@ -71,7 +71,7 @@ multi sub client(Str $message) {
 my $message = [~] '0'..'z';
 my $echoResult = await client($message);
 $echoTap.close;
-#?rakudo skip "Flapping RT 122318"
+#?rakudo skip "Flapping RT #122318"
 ok $echoResult eq $message, 'Echo server';
 
 my $discardTap = $server.tap(-> $c {
@@ -102,5 +102,5 @@ multi sub client(Buf $message) {
 
 my $received = await client($binary);
 $binaryTap.close;
-#?rakudo.moar skip "RT 122318 - test is flapping"
+#?rakudo.moar skip "RT #122318 - test is flapping"
 ok $binary eqv $received, 'bytes_supply';

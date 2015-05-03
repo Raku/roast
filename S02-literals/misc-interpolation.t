@@ -119,7 +119,7 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
 }
 
 # L<S04/Loop statements/'Loops at the statementlist level vs the statement level'>
-#?rakudo.jvm todo 'RT 122583'
+#?rakudo.jvm todo 'RT #122583'
 is "$($_ * $_ if $_ % 2 for 0..10)", '1 9 25 49 81', '$(...) list comprehension';
 is "{($_ * $_ if $_ % 2 for 0..10)}", '1 9 25 49 81', '{(...)} list comprehension';
 

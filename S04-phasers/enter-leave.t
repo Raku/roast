@@ -181,8 +181,8 @@ plan 25;
 
 # RT #121530
 #?niecza todo '@!'
-#?rakudo.jvm todo 'unwind, RT 121530'
-#?rakudo.moar todo 'unwind, RT 121530'
+#?rakudo.jvm todo 'unwind, RT #121530'
+#?rakudo.moar todo 'unwind, RT #121530'
 {
     my $str;
     try {
@@ -234,7 +234,7 @@ plan 25;
         last;
         LEAVE $rt113950_last ~= " bye!";
     }
-    #?rakudo todo 'RT 113950'
+    #?rakudo todo 'RT #113950'
     is $rt113950_last, "hello! bye!",
         '"last" triggers LEAVE phaser in loop';
 

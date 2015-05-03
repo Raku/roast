@@ -234,7 +234,7 @@ plan 32;
     is $c.item, ($(1,10),$(2,20)).list.item, "a list of Parcels, as an item.";
 }
 
-#?rakudo skip 'RT 66820'
+#?rakudo skip 'RT #66820'
 {
     my $cat;
     lives_ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a };  +@a }, 'can access bound gather result while gathering';

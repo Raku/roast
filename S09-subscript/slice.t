@@ -62,7 +62,7 @@ plan 31;
     is +@other, 0, '@array[2..1] is an empty slice';
 }
 
-#?rakudo skip 'RT 61844'
+#?rakudo skip 'RT #61844'
 #?niecza skip 'hangs'
 {
     eval_lives_ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
@@ -90,7 +90,7 @@ plan 31;
 }
 
 # RT #120383
-#?rakudo skip 'RT 120383'
+#?rakudo skip 'RT #120383'
 {
     my @a = 42..50;
     is @a .= [1,2], (43,44), 'did we return right slice';;

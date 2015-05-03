@@ -14,7 +14,7 @@ is "\c[FULLWIDTH RIGHT PARENTHESIS]", "）", '\c[FULLWIDTH RIGHT PARENTHESIS]';
 is "\c[LEFT DOUBLE ANGLE BRACKET]", "《", '\c[LEFT DOUBLE ANGLE BRACKET]';
 
 is("\c[LINE FEED (LF)]", "\c10", '\c[LINE FEED (LF)] works');
-#?rakudo skip '\c[LINE FEED] not valid: RT 117683'
+#?rakudo skip '\c[LINE FEED] not valid: RT #117683'
 #?niecza skip 'Unrecognized character name LINE FEED'
 is("\c[LINE FEED]", "\c10", '\c[LINE FEED] works');
 is("\c[LF]", "\c10", '\c[LF] works');

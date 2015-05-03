@@ -107,7 +107,7 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 {
     my $rt112868 = 'splitting on empty';
     ok $rt112868.split('').elems > 0, q<.split('') does something>;
-    #?rakudo todo 'RT 112868'
+    #?rakudo todo 'RT #112868'
     is $rt112868.split(''), $rt112868.split(/''/),
        q<.split('') does the same thing as .split(/''/) (RT #112868)>;
 }

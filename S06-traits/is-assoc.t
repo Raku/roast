@@ -33,7 +33,7 @@ plan 6;
     dies_ok { EVAL '1 na 2 na 3' }, 'assoc<non>';
 }
 
-#?rakudo skip 'RT 116244'
+#?rakudo skip 'RT #116244'
 {
     sub postfix:<_post_l_>($a) is assoc<left> is equiv(&prefix:<+>) {
         "<$a>"
@@ -44,7 +44,7 @@ plan 6;
     is (_pre_l_ 'a' _post_l_), '<(a)>', 'assoc<left> on prefix/postfix ops';
 }
 
-#?rakudo skip 'RT 116244'
+#?rakudo skip 'RT #116244'
 {
     sub postfix:<_post_r_>($a) is assoc<left> is equiv(&prefix:<+>) {
         "<$a>"

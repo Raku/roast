@@ -78,7 +78,7 @@ plan 17;
     $int-or-rat.^compose;
     $union-type-checks = 0;
     $union-find-method-calls = 0;
-    #?rakudo.jvm 4 todo 'RT 123426'
+    #?rakudo.jvm 4 todo 'RT #123426'
     ok Int ~~ $int-or-rat, 'Union type works with cache (1)';
     ok Rat ~~ $int-or-rat, 'Union type works with cache (2)';
     ok 420 ~~ $int-or-rat, 'Union type works with cache (3)';
@@ -86,7 +86,7 @@ plan 17;
     nok Str ~~ $int-or-rat, 'Union type works with cache (5)';
     nok 'w' ~~ $int-or-rat, 'Union type works with cache (6)';
 
-    #?rakudo.jvm 2 todo 'RT 123426'
+    #?rakudo.jvm 2 todo 'RT #123426'
     is $union-type-checks, 0, 'Really did use type cache';
     is $union-find-method-calls, 0, 'Really did use method cache';
 }

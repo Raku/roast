@@ -37,7 +37,7 @@ ok NaN + 1i ~~ (NaN)i, "NaN + 1i ~~ (NaN)i";
 
 ok truncate(NaN) ~~ NaN, 'truncate(NaN) ~~ NaN';
 
-#?rakudo skip 'RT 83446'
+#?rakudo skip 'RT #83446'
 #?niecza skip 'Nominal type check failed for scalar store; got Num, needed Int or subtype'
 ok (my Int $rt83446 = NaN) ~~ NaN, 'NaN fits in Int';
 

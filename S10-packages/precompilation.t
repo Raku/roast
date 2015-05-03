@@ -23,11 +23,11 @@ my @keys = Test::Util::run( q:to"--END--").lines;
     .say for Example::.keys.sort;
     --END--
 
-#?rakudo.jvm todo 'RT 122773'
+#?rakudo.jvm todo 'RT #122773'
 is_deeply @keys, [<A B C>], 'Diamond relationship';
 
-#?rakudo.jvm todo 'RT 122896'
-#?rakudo.moar todo 'RT 122896'
+#?rakudo.jvm todo 'RT #122896'
+#?rakudo.moar todo 'RT #122896'
 is_run 'use lib "t/spec/packages"; use Example::C; f();', { err => '', out => '', status => 0 }, 'precompile exported cached sub';
 
 unlink $_ for @precomp-paths;
@@ -84,8 +84,8 @@ unlink $_ for @precomp-paths;
         say RT123276::B::C1.^methods
     --END--
 
-    #?rakudo.jvm todo 'RT 123276'
-    #?rakudo.moar todo 'RT 123276'
+    #?rakudo.jvm todo 'RT #123276'
+    #?rakudo.moar todo 'RT #123276'
     is_deeply @keys, [<foo>], 'RT123276';
 
     unlink $_ for @precomp-paths;

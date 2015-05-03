@@ -143,7 +143,7 @@ is ~LTM.subparse('aaa', :rule('block')),   'aa',     'However, code blocks do te
     is ~G.subparse("-42", :rule<num>), '-42', 'num parse';
     is ~G.subparse("-my_id", :rule<ident>), '-my_id', 'id parse';
     is ~G.subparse("my_id", :rule<term>), 'my_id', 'term parse';
-    #?rakudo 2 todo 'RT 120146'
+    #?rakudo 2 todo 'RT #120146'
     is ~G.subparse("-my_id", :rule<term>), '-my_id', '<ident> override';
     is ~G.subparse("-my_id", :rule<term2>), '-my_id', '<ident> alias';
 }

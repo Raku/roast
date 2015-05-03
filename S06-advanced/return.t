@@ -305,7 +305,7 @@ is Foo::official(), 44,
     }
     is named().elems, 3,       'return with named arguments';
     is named().[2].key, 'c',   ' ... correct key';
-    #?rakudo todo "RT 75118"
+    #?rakudo todo "RT #75118"
     is named().[2].value, '3', ' ... correct value';
 }
 
@@ -313,7 +313,7 @@ is Foo::official(), 44,
 #?niecza todo
 {
     sub rt61732_c { 1; CATCH {} }
-    #?rakudo todo 'RT 61732'
+    #?rakudo todo 'RT #61732'
     is rt61732_c(), 1, 'sub with empty catch block returns value before block';
 }
 

@@ -328,7 +328,7 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 }
 
 # RT 117043
-#?rakudo todo 'RT 117043'
+#?rakudo todo 'RT #117043'
 {
     my (\x1) = 1;
     is \x1, 1,

@@ -177,7 +177,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
 # RT #122708
 {
     isa-ok * + 2,      Code, "'* + 2' curries";
-    #?rakudo 3 todo 'RT 122708 - currying of min/max'
+    #?rakudo 3 todo 'RT #122708 - currying of min/max'
     isa-ok * min 2,    Code, "'* min 2' curries";
     isa-ok * max 2,    Code, "'* max 2' curries";
     isa-ok * max *,    Code, "'* max *' curries";

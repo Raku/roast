@@ -234,6 +234,6 @@ for @uint -> $T {
 
     my @arr := array[$T].new;
     is (@arr[0] = -1), -1, "assigning -1 on $t array passes value on through?";
-    #?rakudo skip 'highest bit length stays negative, RT 124088'
+    #?rakudo skip 'highest bit length stays negative, RT #124088'
     ok @arr[0] > 0,        "negative value on $t array becomes positive";
 }

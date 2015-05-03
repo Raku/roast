@@ -3,7 +3,7 @@ use Test;
 plan 6;
 
 #L<S03/"Smart matching"/Array Hash hash slice existence>
-#?rakudo skip 'RT 124444'
+#?rakudo skip 'RT #124444'
 {
     my %h = (a => 'b', c => Mu);
 

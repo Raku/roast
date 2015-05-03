@@ -51,7 +51,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 }
 
 # more sophisticated variants of test exist elsewhere - but seems basic ...
-#?rakudo skip 'RT 59484'
+#?rakudo skip 'RT #59484'
 #?niecza skip 'Unable to find lexical $?PACKAGE in pkg'
 {
     is  EVAL('package Simp2 {sub pkg { $?PACKAGE }}; Simp2::pkg'),
@@ -60,7 +60,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 {
     lives_ok {Simple::Bar.new.WHO}, 'some WHO implementation';
-    #?rakudo todo 'ticket based only on class... RT 60446'
+    #?rakudo todo 'ticket based only on class... RT #60446'
     #?niecza todo
     is ~(Simple::Bar.new.WHO), 'Simple::Bar',
         'WHO implementation with longname';
@@ -114,7 +114,7 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
         'call of method defined in package';
 }
 
-#?rakudo todo 'RT 64606'
+#?rakudo todo 'RT #64606'
 #?niecza todo
 {
     eval_lives_ok 'package DoMap {my @a = map { $_ }, (1, 2, 3)}}',

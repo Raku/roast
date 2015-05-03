@@ -863,12 +863,12 @@ sub l () { 1, 2 };
    my $rt80614 = @b[0] = @a[1];
 
    is $rt80614, 2, 'assignment to scalar via array item from array item';
-   #?rakudo todo 'RT 80614'
+   #?rakudo todo 'RT #80614'
    is @b[0], 2, 'assignment to array item from array item to scalar';
 }
 
 # RT #76734
-#?rakudo skip 'RT 76734'
+#?rakudo skip 'RT #76734'
 #?niecza skip "Overloading infix:<=> fails"
 {
     class A {};
@@ -960,7 +960,7 @@ sub l () { 1, 2 };
 }
 
 # RT #116178
-#?rakudo skip 'RT 116178'
+#?rakudo skip 'RT #116178'
 {
     my $x //= .uc for 'a';
     is $x, 'A',

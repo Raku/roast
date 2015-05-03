@@ -16,7 +16,7 @@ plan 16;
     is +EnumPackage::P::c, 2, 'enum element in package has the right value';
 
     role EnumRole       { enum R <a b c> }
-    #?rakudo skip 'RT 63826'
+    #?rakudo skip 'RT #63826'
     is +EnumRole::R::a, 0, 'enum element in role has the right value';
 
     grammar EnumGrammar { enum G <a b c> }

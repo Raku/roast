@@ -13,7 +13,7 @@ is sprintf("%10b",   -9),    "     -1001", '%b; size; negative int';
 is sprintf("%2b",    -9),         "-1001", '%b; size; size not needed; negative int';
 is sprintf("%010b",   9),    "0000001001", '%b; size; flag zero; positive int';
 is sprintf("%02b",    9),          "1001", '%b; size; flag zero; size not needed; positive int';
-#?rakudo todo 'RT 123979'
+#?rakudo todo 'RT #123979'
 is sprintf("%010b",  -9),    "-000001001", '%b; size; flag zero; negative int';
 is sprintf("%02b",   -9),         "-1001", '%b; size; flag zero; size not needed; negative int';
 is sprintf("%-10b",   9),    "1001      ", '%b; size; flag minus; positive int';

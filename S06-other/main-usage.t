@@ -169,7 +169,7 @@ is_run 'sub MAIN() { print 42 }',
     'superfluous options trigger usage message';
 
 # RT #115744
-#?rakudo todo 'RT 115744'
+#?rakudo todo 'RT #115744'
 #?niecza todo
 is_run 'sub MAIN($arg) { print $arg }',
     {
@@ -178,7 +178,7 @@ is_run 'sub MAIN($arg) { print $arg }',
     :args['--', '--23'],
     'Stopping option processing';
 
-#?rakudo todo 'RT 115744'
+#?rakudo todo 'RT #115744'
 #?niecza todo
 is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     {
