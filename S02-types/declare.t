@@ -119,11 +119,9 @@ plan 79;
 
 # Non-object (native) types are lowercase: int, num, complex, rat, buf, bit.
 
-#?rakudo todo 'int NYI'
-#?niecza skip 'int NYI'
 {
- my int $namcu =2;
- isa-ok($namcu,int);
+ my int $namcu; $namcu = 2**100;
+ ok $namcu==0, "Can tell it's an int because it overflowed";
 }
 
 #?rakudo todo 'num NYI'
