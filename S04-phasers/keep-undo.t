@@ -95,7 +95,7 @@ plan 16;
         },
         'UNDO fires after die' );
 
-    #?rakudo.jvm skip "RT #111866"
+    #?rakudo.jvm skip "RT 111866"
     is_run( q[do { UNDO { say 'undone' }; die 'foobar' }],
         {
             out    => "undone\n",
@@ -105,7 +105,7 @@ plan 16;
 
     my $undone = 0;
     try { UNDO $undone = 1; die 'foobar' };
-    #?rakudo.jvm todo "RT #111866"
+    #?rakudo.jvm todo "RT 111866"
     ok $undone, 'UNDO fires after die if block is a "try" block';
 
     my $undone_sub = 0;

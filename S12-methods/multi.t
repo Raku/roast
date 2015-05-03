@@ -38,7 +38,7 @@ is($foo.bar("Hello"), 'Foo.bar() called with Str : Hello', '... multi-method dis
 is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on Int');
 is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispatched on Numeric');
 
-#?rakudo todo 'RT #66006'
+#?rakudo todo 'RT 66006'
 try { EVAL '$foo.baz()' };
 #?niecza todo 'This test is pretty dubious IMO'
 ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';

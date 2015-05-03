@@ -75,7 +75,7 @@ my @tests = (
     is $foo<b><b><b><a>, 42, "basic recursive hashref";
 
     #?niecza skip 'hanging test'
-    #?rakudo skip 'recursive data structure RT #122286'
+    #?rakudo skip 'recursive data structure RT 122286'
     is ~$foo.perl.EVAL, ~$foo,
         ".perl worked correctly on a recursive hashref";
 }
@@ -89,7 +89,7 @@ my @tests = (
     is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashref recursive structure";
 
     #?niecza skip 'hanging test'
-    #?rakudo skip 'recursive data structure RT #122286'
+    #?rakudo skip 'recursive data structure RT 122286'
     is ~$foo.perl.EVAL, ~$foo,
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
 }
@@ -130,7 +130,7 @@ my @tests = (
 }
 
 # RT #123048
-#?rakudo.jvm todo 'RT #123048'
+#?rakudo.jvm todo 'RT 123048'
 {
     my $a = 0.219947518065601987e0;
     is $a.perl, EVAL($a.perl).perl,
@@ -150,7 +150,7 @@ my @tests = (
 {
     class RT67790 {}
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
-    #?rakudo skip 'RT #67790'
+    #?rakudo skip 'RT 67790'
     #?niecza skip '>>>Stub code executed'
     ok EVAL(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
 }

@@ -54,7 +54,7 @@ for @nonseparators -> $sep {
 
   my $vis = sprintf "%02x", ord $sep;
   #?niecza emit if $sep eq "\xa0" {
-  #?niecza emit      todo('\xa0 should not be a separator for list quotes: RT #122285');
+  #?niecza emit      todo('\xa0 should not be a separator for list quotes: RT 122285');
   #?niecza emit };
   is( @res, [@list.join($sep)], "'\\x$vis' does not split in a whitespace quoted list")
 };

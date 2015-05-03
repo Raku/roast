@@ -383,7 +383,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   #diag ">$str<";
 }
 
-#?rakudo skip 'optional variable in for loop (RT #63994)'
+#?rakudo skip 'optional variable in for loop (RT 63994)'
 #?niecza 2 todo 'NYI'
 {
   my $str = '';
@@ -557,7 +557,7 @@ lives_ok {
 }
 
 # RT #113026
-#?rakudo todo 'RT #113026 array iterator does not track a growing array'
+#?rakudo todo 'RT 113026 array iterator does not track a growing array'
 #?niecza todo 'array iterator does not track a growing array'
 {
     my @rt113026 = 1 .. 10;
@@ -625,7 +625,7 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 }
 
 # RT #123005
-#?rakudo todo 'RT #123005'
+#?rakudo todo 'RT 123005'
 {
     my $str = 'ACCB';
     my $rt123323;

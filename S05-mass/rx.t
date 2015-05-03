@@ -77,7 +77,7 @@ ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 
 #### [ ab | abc ]: de	xyzabcde	n	no backtrack into group
-#?rakudo todo 'RT #121307'
+#?rakudo todo 'RT 121307'
 #?niecza todo ''
 ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 

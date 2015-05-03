@@ -61,7 +61,7 @@ throws_like { EVAL "%ENV" },
   X::Undeclared,
   '%ENV not visible by default';
 
-#?rakudo skip 'import fails, ENV not available: RT #122339'
+#?rakudo skip 'import fails, ENV not available: RT 122339'
 #?niecza skip 'Action method statement_control:import not yet implemented'
 {
     # It must be importable

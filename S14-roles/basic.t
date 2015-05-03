@@ -94,7 +94,7 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 
     try { EVAL 'class AnotherAnimal does NonExistentRole { }; 1' };
     my $err = "$!";
-    #?rakudo todo 'RT #121308'
+    #?rakudo todo 'RT 121308'
     ok $err ~~ /NonExistentRole/,
        '... and the error message mentions the role';
 }
@@ -128,7 +128,7 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 lives_ok {0 but True}, '0 but True has applicable candidate';
 
 # RT #67768
-#?rakudo skip 'RT #67768'
+#?rakudo skip 'RT 67768'
 {
     eval_lives_ok 'role List { method foo { 67768 } }',
         'can declare a role with a name already assigned to a class';
@@ -162,7 +162,7 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 }
 
 # RT #120919
-#?rakudo.jvm skip 'RT #120919'
+#?rakudo.jvm skip 'RT 120919'
 {
     my role A {
         method pub { self!priv };

@@ -164,7 +164,7 @@ sub functionB {
 #?rakudo todo 'temp and wrap'
 is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 
-#?rakudo todo 'RT #70267: call to nextsame with nowhere to go'
+#?rakudo todo 'RT 70267: call to nextsame with nowhere to go'
 dies_ok { {nextsame}() }, '{nextsame}() dies properly';
 
 # RT #66658
@@ -258,8 +258,8 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     ok $didfoo, "Did foo, capture return";
     my $foo = foo.new;  # x = 16;
     my $bar = foo.new(x => 32);
-    #?rakudo.moar   2 todo 'RT #122259'
-    #?rakudo.jvm    3 skip 'RT #122259'
+    #?rakudo.moar   2 todo 'RT 122259'
+    #?rakudo.jvm    3 skip 'RT 122259'
     is $foo.x, 16, "default works with wrapped accessor, capture return";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, capture return";
     try $bar.x = 64;
@@ -298,7 +298,7 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     is $foo.x, 16, "default works with wrapped accessor, return callsame";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, return callsame";
     try $bar.x = 64;
-    #?rakudo todo 'RT #122259'
+    #?rakudo todo 'RT 122259'
     is $bar.x, 64, "assignment works with wrapped accessor, return callsame";
 }
 
@@ -369,7 +369,7 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     is $foo.x, 16, "default works with wrapped accessor, nextsame";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, nextsame";
     try $bar.x = 64;
-    #?rakudo todo 'RT #122259'
+    #?rakudo todo 'RT 122259'
     is $bar.x, 64, "assignment works with wrapped accessor, nextsame";
 }
 

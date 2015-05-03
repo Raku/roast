@@ -103,7 +103,7 @@ my @list = (1 .. 10);
 # It just kind of clarifies the test that follows.
 #    is (map { $^a == $^b }, @in), (?1, ?0, ?1), 'map takes two at a time';
 
-    #?rakudo skip 'RT #71544: grep arity sensitivity different from map'
+    #?rakudo skip 'RT 71544: grep arity sensitivity different from map'
     is (grep { $^a == $^b }, @in), (1, 1, 4, 4), 'grep takes two at a time';
 }
 

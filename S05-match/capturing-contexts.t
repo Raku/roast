@@ -92,7 +92,7 @@ plan 46;
 
     # This looks superfluous as there is a test for warning when interpolating
     # undefined into a regex in S05-interpolation/regex-in-variable.t
-    #?rakudo todo 'RT #70007'
+    #?rakudo todo 'RT 70007'
     #?niecza todo 'eek'
     is_run( q{'aa' ~~ /(.)$1/},
         {

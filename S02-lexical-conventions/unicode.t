@@ -56,7 +56,7 @@ is
     2,
     "evaluation";
 
-#?rakudo 2 skip 'VOWEL SIGNs in identifiers; RT #122340'
+#?rakudo 2 skip 'VOWEL SIGNs in identifiers; RT 122340'
 lives_ok { my $पहला = 1; }, "hindi declaration";
 is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल($दूसरा) }), 4, "evaluation");
 
