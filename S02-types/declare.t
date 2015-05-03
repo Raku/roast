@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 80;
+plan 79;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -161,17 +161,10 @@ plan 80;
  isa-ok($nacpoi, buf);
 }
 
-# junction StrPos StrLen uint Nil Whatever Mu Failure
+# StrPos StrLen uint Nil Whatever Mu Failure
 # Exception Range Bag Signature Capture Blob Instant Duration
 # Keyhash SetHash BagHash Pair Mapping IO Routine Sub Method
 # Submethod Macro Match Package Module Class Role Grammar Any
-
-#?rakudo skip 'junction NYI'
-#?niecza skip 'junction NYI'
-{
- my junction $sor;
- isa-ok($sor, junction);
-}
 
 #?rakudo skip 'StrPos NYI'
 #?niecza skip 'StrPos NYI'
