@@ -71,11 +71,11 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
 
     ok 'a' ~~ m/<alpha> & <ident>/,  'Regex matches';
 #?rakudo.jvm todo '& caps on jvm'
-    is ca($/.caps),     'alpha:a|ident:a',  '.caps & - multiple terms';
+    is ca($/.caps.sort(*.key)),     'alpha:a|ident:a',  '.caps & - multiple terms';
 
     ok 'a' ~~ m/<alpha> && <ident>/,  'Regex matches';
 #?rakudo.jvm todo '&& caps on jvm'
-    is ca($/.caps),     'alpha:a|ident:a',  '.caps && - multiple terms';
+    is ca($/.caps.sort(*.key)),     'alpha:a|ident:a',  '.caps && - multiple terms';
 
     ok 'ab' ~~ m/([a|b] && <alpha>)**1..2/,  'Regex matches';
     is ca($/.caps),     '0:a|0:b',    '.caps on quantified &&';
