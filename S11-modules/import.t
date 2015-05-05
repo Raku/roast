@@ -22,7 +22,7 @@ plan 17;
     dies_ok { EVAL 'priv' }, 'cannot access non-exported constants';
 }
 
-#?rakudo skip 'import plus inline module'
+#?rakudo skip 'import plus inline module RT #125087'
 {
     import (module B {
         sub Bfoo() is export { 'sub B::Bfoo' };
@@ -46,7 +46,7 @@ plan 17;
        'import imports more things implicitly from named module';
 }
 
-#?rakudo skip 'import plus inline module'
+#?rakudo skip 'import plus inline module RT #125088'
 {
     import (module D {
         sub Dfoo() is export { 'sub D::Dfoo' };

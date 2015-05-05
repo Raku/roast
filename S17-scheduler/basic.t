@@ -13,7 +13,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 }
 
 
-#?rakudo skip "waiting for new '.loads' semantics"
+#?rakudo skip "waiting for new '.loads' semantics RT #124774"
 {
     my $x = False;
     my $c = $*SCHEDULER.cue({
@@ -26,7 +26,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     LEAVE $c.cancel;
 }
 
-#?rakudo skip "waiting for new '.loads' semantics"
+#?rakudo skip "waiting for new '.loads' semantics RT #124775"
 {
     my $message;
     my $c = $*SCHEDULER.uncaught_handler = sub ($exception) {
@@ -39,7 +39,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     LEAVE $c.cancel;
 }
 
-#?rakudo skip "waiting for new '.loads' semantics"
+#?rakudo skip "waiting for new '.loads' semantics RT #124776"
 {
     my $tracker;
     my $c = $*SCHEDULER.cue(
@@ -55,7 +55,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     LEAVE $c.cancel;
 }
 
-#?rakudo skip "waiting for new '.loads' semantics"
+#?rakudo skip "waiting for new '.loads' semantics RT #124777"
 {
     my $tracker;
     my $c = $*SCHEDULER.cue(

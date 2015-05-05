@@ -30,7 +30,7 @@ my $init;
 
 my $same1;
 #?niezca skip "will variable trait NYI"
-#?rakudo skip 'declared variable not visible in block yet'
+#?rakudo skip 'declared variable not visible in block yet RT #125061'
 {
     my $x  will begin { $same1 ~= "a" if $_ === $x }
     my $xx will check { $same1 ~= "b" if $_ === $xx }
@@ -51,12 +51,12 @@ my $block;
     1; # successful exit
 }
 #?niezca skip "will variable trait NYI"
-#?rakudo todo "will post NYI"
+#?rakudo todo "will post NYI RT #125062"
 is $block, "abecd", 'all block blocks set variable';
 
 my $same2;
 #?niezca skip "will variable trait NYI"
-#?rakudo skip 'declared variable not visible in block yet'
+#?rakudo skip 'declared variable not visible in block yet RT #125063'
 {
     my $d  will pre    { $same2 ~= "a" if $_ === $d; 1 };
     my $dd will enter  { $same2 ~= "b" if $_ === $dd };
@@ -68,7 +68,7 @@ my $same2;
     1; # successful exit
 }
 #?niezca skip "will variable trait NYI"
-#?rakudo todo 'declared variable not visible in block yet'
+#?rakudo todo 'declared variable not visible in block yet RT #125064'
 is $same2, "abecd", 'all block blocks get $_';
 
 my $for;
@@ -90,7 +90,7 @@ is $for, "aebebebc", 'all for blocks set variable';
 
 my $same3;
 #?niezca skip "will variable trait NYI"
-#?rakudo skip 'declared variable not visible in block yet'
+#?rakudo skip 'declared variable not visible in block yet RT #125066'
 {
     my @is = <a aeb aebeb>;
     for ^3 {
@@ -104,7 +104,7 @@ my $same3;
     }
 }
 #?niezca skip "will variable trait NYI"
-#?rakudo todo 'declared variable not visible in block yet'
+#?rakudo todo 'declared variable not visible in block yet RT #125067'
 is $same3, "aebebebc", 'all for blocks get $_';
 
 #?niezca skip "will variable trait NYI"

@@ -76,14 +76,14 @@ is($retarray[10]:exists, @array[10]:exists, 'retro nonexists' );
 ok(($p5array.push(9)), 'can push');
 
 is(0+$p5array.fetch(4), 9, 'push result via obj');
-#?rakudo todo "doesn't work yet due to copying of arrays"
+#?rakudo todo "doesn't work yet due to copying of arrays RT #124650"
 {
     is(@array[4], 9, 'push result via array');
 }
 
 #$retarray.push(9);  # this will loop
 
-#?rakudo todo "doesn't work yet due to copying of arrays"
+#?rakudo todo "doesn't work yet due to copying of arrays RT #124651"
 {
     is(0+$p5array.fetch(5), 9, 'retro push result');
     is(@array[5], 9, 'retro push result');
@@ -91,7 +91,7 @@ is(0+$p5array.fetch(4), 9, 'push result via obj');
 
 ok($p5array.store(0,3), 'can store');
 
-#?rakudo todo "doesn't work yet due to copying of arrays"
+#?rakudo todo "doesn't work yet due to copying of arrays RT #124652"
 {
     is(@array[0], 3, 'store result');
 }

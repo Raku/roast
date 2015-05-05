@@ -72,7 +72,7 @@ class T2 {
 }
 
 # L<S12/Fancy method calls/"$obj.@candidates(1,2,3)">
-#?rakudo skip '.@foo not yet working'
+#?rakudo skip '.@foo not yet working RT #124844'
 #?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Array'
 {
     class T3 {
@@ -104,7 +104,7 @@ class T2 {
 
 dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use of quotes
 
-#?rakudo skip '.*, .+ and .? with @foo'
+#?rakudo skip '.*, .+ and .? with @foo RT #124845'
 #?niecza skip 'Two definitions found for symbol ::GLOBAL::T4::&m, etc'
 {
     class T4 {

@@ -7,8 +7,8 @@ plan 5;
 
 eval_dies_ok 'my $var; (key => $var) = "value"';
 
-#?rakudo.moar todo "NYI"
-#?rakudo.jvm skip "Flattening named argument must have VMHash REPR"
+#?rakudo.moar todo "NYI RT #124660"
+#?rakudo.jvm skip "Flattening named argument must have VMHash REPR RT #124661"
 {
     my ($a, $b);
     $b = 'b';

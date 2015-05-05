@@ -5,7 +5,7 @@ plan 11;
 # L<S16::IO/IO/=head2 Special Quoting Syntax>
 
 # basic
-#?rakudo skip "two terms in a row / unrecognized adverb"
+#?rakudo skip "two terms in a row / unrecognized adverb RT #124672"
 {
 	#?niecza 2 skip "Unhandled exception"
 	isa-ok qp{/path/to/file}, IO::Path;
@@ -15,7 +15,7 @@ plan 11;
 }
 
 #with interpolation
-#?rakudo skip "undeclared routine / urecognized adverb"
+#?rakudo skip "undeclared routine / urecognized adverb RT #124673"
 {
 	my $dir = "/tmp";
 	my $file = "42";
@@ -29,7 +29,7 @@ plan 11;
 }
 
 # :win constraints
-#?rakudo skip "two terms in a row"
+#?rakudo skip "two terms in a row RT #124674"
 #?niecza skip "confused"
 {
 	isa-ok p:win{C:\Program Files\MS Access\file.file}, IO::Path;
@@ -39,7 +39,7 @@ plan 11;
 }
 
 # :unix constraints
-#?rakudo skip "Unsupported use of /s"
+#?rakudo skip "Unsupported use of /s RT #124675"
 #?niecza skip "Unsupported use of suffix regex modifiers"
 {
 	isa-ok p:unix{/usr/src/bla/myfile?:%.file}, IO::Path;

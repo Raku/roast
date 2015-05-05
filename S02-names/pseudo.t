@@ -10,7 +10,7 @@ plan 142;
 # L<S02/Names>
 
 # (root)
-#?rakudo skip 'the binding in here is NYI'
+#?rakudo skip 'the binding in here is NYI RT #124914'
 {
     my $x = 1; #OK
     my $y = 2; #OK
@@ -33,7 +33,7 @@ plan 142;
 }
 
 # MY
-#?rakudo skip 'various issues, skipping all for now'
+#?rakudo skip 'various issues, skipping all for now RT #124915'
 {
     my $x = 10; #OK
     my $y = 11; #OK
@@ -192,7 +192,7 @@ plan 142;
 }
 
 # CORE
-#?rakudo skip 'CORE NYI'
+#?rakudo skip 'CORE NYI RT #124916'
 {
     my $real = &not;
     my $core = "CORE";
@@ -260,7 +260,7 @@ plan 142;
 # COMPILING - not testable without BEGIN
 
 # DYNAMIC
-#?rakudo skip 'various issues to resolve'
+#?rakudo skip 'various issues to resolve RT #124917'
 {
     my $dyn = "DYNAMIC";
 

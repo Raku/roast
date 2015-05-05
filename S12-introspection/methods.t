@@ -78,7 +78,7 @@ ok @methods[3].name eq 'foo' && @methods[4].name eq 'bar' ||
    @methods[3].name eq 'bar' && @methods[4].name eq 'foo',
    'two methods from class A itself';
 
-#?rakudo skip 'nom regression'
+#?rakudo skip 'nom regression RT #125011'
 {
     @methods = D.^methods(:tree);
     is +@methods, 4, ':tree gives us right number of elements';
@@ -123,7 +123,7 @@ is @methods[0].name, 'bar',    'methods call found public method in subclass';
 is @methods[1].name, 'foo',    'methods call found public method in superclass (so no privates)';
 ok @methods[2].name ne '!pm1', 'methods call did not find private method in superclass';
 
-#?rakudo skip 'nom regression'
+#?rakudo skip 'nom regression RT #125012'
 {
     @methods = PT2.^methods(:private);
     ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
@@ -136,7 +136,7 @@ ok @methods[2].name ne '!pm1', 'methods call did not find private method in supe
 is +@methods, 1,            'methods call without :private omits private methods (with :local)';
 is @methods[0].name, 'bar', 'methods call found public method in subclass (with :local)';
 
-#?rakudo skip 'nom regression'
+#?rakudo skip 'nom regression RT #125013'
 {
     @methods = PT2.^methods(:local, :private);
     is +@methods, 2,            'methods call with :private includes private methods (with :local)';

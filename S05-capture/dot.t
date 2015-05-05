@@ -57,19 +57,19 @@ is(~$0[1], "d", 'Nested $3');
 
 ok("bookkeeper" ~~ m/(((\w)$0)+)/, 'Backreference');
 is(~$0, 'ookkee', 'Captured');
-#?rakudo todo 'really? :-)'
+#?rakudo todo 'really? :-) RT #125003'
 is(~$0[0], 'ee', 'Captured');
 
 # L<S05/Accessing captured subrules/The hash entries>
 
 my regex single { o | k | e };
 
-#?rakudo 3 todo 'dubious test'
+#?rakudo 3 todo 'dubious test RT #125004'
 ok("bookkeeper" ~~ m/<single> ($<single>)/, 'Named backref');
 is(~$/<single>, 'o', 'Named capture');
 is(~$0, 'o', 'Backref capture');
 
-#?rakudo 3 todo 'dubious test'
+#?rakudo 3 todo 'dubious test RT #125005'
 ok("bookkeeper" ~~ m/(<.&single>) ($0)/, 'Positional backref');
 is(~$0, 'o', 'Named capture');
 is(~$1, 'o', 'Backref capture');
@@ -95,17 +95,17 @@ grammar Russian { regex name { ivan } }
 ok("john" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'English name');
 is(~$/, "john", 'Match is john');
 ok($/ ne "jean", "Match isn't jean");
-#?rakudo todo 'needs review'
+#?rakudo todo 'needs review RT #125006'
 is(~$/<name>, "john", 'Name is john');
 
 ok("jean" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'French name');
 is(~$/, "jean", 'Match is jean');
-#?rakudo todo 'needs review'
+#?rakudo todo 'needs review RT #125007'
 is(~$/<name>, "jean", 'Name is jean');
 
 ok("ivan" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'Russian name');
 is(~$/, "ivan", 'Match is ivan');
-#?rakudo todo 'needs review'
+#?rakudo todo 'needs review RT #125008'
 is(~$/<name>, "ivan", 'Name is ivan');
 
 my regex name { <.English::name> | <.French::name> | <.Russian::name> }

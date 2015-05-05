@@ -425,7 +425,7 @@ sub showkv($x) {
     is $b.elems, 0, '.grabpairs *should* change BagHash';
 }
 
-#?rakudo skip "'is ObjectType' NYI"
+#?rakudo skip "'is ObjectType' NYI RT #124510"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
@@ -440,7 +440,7 @@ sub showkv($x) {
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
-#?rakudo skip "'is ObjectType' NYI"
+#?rakudo skip "'is ObjectType' NYI RT #124511"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
@@ -458,7 +458,7 @@ sub showkv($x) {
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
-#?rakudo skip "'is ObjectType' NYI"
+#?rakudo skip "'is ObjectType' NYI RT #124512"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, c => 1;

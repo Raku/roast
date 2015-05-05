@@ -54,7 +54,7 @@ class C does R1 does R2 {
     proto method foo(|) { * }
 }
 my $obj = C.new;
-#?rakudo 2 skip 'proto does not promote to multi'
+#?rakudo 2 skip 'proto does not promote to multi RT #124847'
 #?niecza skip 'No candidates for dispatch to C.foo'
 is($obj.foo('a'),     1, 'method composed into multi from role called');
 #?niecza skip 'No candidates for dispatch to C.foo'
@@ -84,7 +84,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 }
 
 # RT #69192
-#?rakudo skip 'unknown bug'
+#?rakudo skip 'unknown bug RT #124848'
 #?niecza skip 'NYI dottyop form .*'
 {
     role R5 {

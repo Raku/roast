@@ -54,7 +54,7 @@ eval_lives_ok q[
 ], 'augmenting a class which has a role composed works';
 
 
-#?rakudo skip 'redeclaration of symbol Bar'
+#?rakudo skip 'redeclaration of symbol Bar RT #125046'
 {
     use MONKEY-TYPING;
     class Bar {

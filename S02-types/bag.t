@@ -457,7 +457,7 @@ sub showkv($x) {
       'Cannot change value of Bag.pairs';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet'
+#?rakudo todo 'we have not secured .WHICH creation yet RT #124454'
 {
         isnt 'a(1) Str|b(1) Str|c'.Bag.WHICH, <a b c>.Bag.WHICH,
           'Faulty .WHICH creation';

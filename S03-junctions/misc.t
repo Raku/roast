@@ -370,7 +370,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
-#?rakudo skip 'lower case junction'
+#?rakudo skip 'lower case junction RT #124842'
 #?niecza skip 'Impossible test: === takes Any'
 {
     ok((WHAT any()) === Junction, "test WHAT on empty any junction");
@@ -391,7 +391,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #63126
-#?rakudo todo 'nom regression'
+#?rakudo todo 'nom regression RT #124843'
 #?DOES 2
 {
     my @a = "foo", "foot";

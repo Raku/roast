@@ -98,7 +98,7 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
 }
 
 # L<S06/Named arguments/Pairs intended as positional arguments>
-#?rakudo skip 'multiple same-named arguments NYI'
+#?rakudo skip 'multiple same-named arguments NYI RT #124921'
 #?niecza skip 'multiple same-named arguments NYI'
 {
     sub named_array2(@x, :y) { (+«@x, 42, +«@y) }
@@ -253,7 +253,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # L<S06/Named parameters/Bindings happen in declaration order>
-#?rakudo skip 'where constraints'
+#?rakudo skip 'where constraints RT #124922'
 {
     my $t = '';
     sub order_test($a where { $t ~= 'a' },   #OK not used

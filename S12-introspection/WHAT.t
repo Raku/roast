@@ -77,7 +77,7 @@ my class H is Hash  {};
 } #2
 
 #?niecza skip "no typed support"
-#?rakudo todo '%h{Str} of Int fails'
+#?rakudo todo '%h{Str} of Int fails RT #125010'
 {
     my %a{Str} of Int;
     ok %a.WHAT    === Hash[Int,Str], '%a{Str} of Int default is Hash[Int,Str]';

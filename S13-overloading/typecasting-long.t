@@ -28,7 +28,7 @@ plan 16;
     is($thing.(1,2), 'pretending to be a sub 1', 'overloaded .() call works');
 }
 
-#?rakudo skip 'cannot easily override [] at the moment'
+#?rakudo skip 'cannot easily override [] at the moment RT #124971'
 {
     class TypeCastArray {
         method postcircumfix:<[ ]> (*@slice) {  # METHOD TO SUB CASUALTY
@@ -43,7 +43,7 @@ plan 16;
     is($thing.[5,6], 'pretending to be an array', 'overloaded .[] call works (slice)');
 }
 
-#?rakudo skip 'cannot easily override {} at the moment'
+#?rakudo skip 'cannot easily override {} at the moment RT #124972'
 {
     class TypeCastHash {
         method postcircumfix:<{ }> (*@slice) {   # METHOD TO SUB CASUALTY

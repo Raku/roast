@@ -112,7 +112,7 @@ our $c = 42; #OK not used
 {
     role PiRole   { our $pi = 3 };
     class PiClass { our $pi = 3 };
-#?rakudo todo 'our-scoped var in role'
+#?rakudo todo 'our-scoped var in role RT #125060'
 #?niecza todo 'our-scoped var in role'
     is $PiRole::pi,  3, 'declaring/initializing our-scoped var in role';
     is $PiClass::pi, 3, 'declaring/initializing our-scoped var in class';

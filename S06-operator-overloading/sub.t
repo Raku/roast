@@ -34,7 +34,7 @@ Testing operator overloading subroutines
     is ∔ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, U+2214 DOT PLUS)';
 }
 
-#?rakudo skip 'prefix:[] form NYI'
+#?rakudo skip 'prefix:[] form NYI RT #124974'
 {
     sub prefix:['Z'] ($thing) { return "ROUGHLY$thing"; };
 
@@ -42,19 +42,19 @@ Testing operator overloading subroutines
        'prefix operator overloading for new operator Z');
 }
 
-#?rakudo skip 'prefix:[] form NYI'
+#?rakudo skip 'prefix:[] form NYI RT #124975'
 {
     sub prefix:["∓"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, U+2213 MINUS-OR-PLUS SIGN)';
 }
 
-#?rakudo skip 'prefix:[] form NYI'
+#?rakudo skip 'prefix:[] form NYI RT #124976'
 {
     sub prefix:["\x[2213]"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \x[2213] MINUS-OR-PLUS SIGN)';
 }
 
-#?rakudo skip 'prefix:[] form NYI'
+#?rakudo skip 'prefix:[] form NYI RT #124977'
 {
     sub prefix:["\c[MINUS-OR-PLUS SIGN]"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \c[MINUS-OR-PLUS SIGN])';
@@ -109,7 +109,7 @@ Testing operator overloading subroutines
        "postfix operator overloading for new operator (weird)");
 }
 
-#?rakudo skip 'macros'
+#?rakudo skip 'macros RT #124978'
 #?niecza skip 'Unhandled exception: Malformed block at (eval) line 1'
 {
     my $var = 0;
@@ -134,7 +134,7 @@ Testing operator overloading subroutines
 }
 
 # Overloading by setting the appropriate code variable
-#?rakudo skip "cannot bind with this LHS"
+#?rakudo skip "cannot bind with this LHS RT #124979"
 {
   my &infix:<plus>;
   BEGIN {
@@ -146,7 +146,7 @@ Testing operator overloading subroutines
 
 # Overloading by setting the appropriate code variable using symbolic
 # dereferentiation
-#?rakudo skip '&::'
+#?rakudo skip '&:: RT #124980'
 #?niecza skip 'Cannot use hash access on an object of type Array'
 {
   my &infix:<times>;
@@ -170,7 +170,7 @@ Testing operator overloading subroutines
 }
 
 # Overriding infix:<;>
-#?rakudo todo 'infix:<;>'
+#?rakudo todo 'infix:<;> RT #124981'
 #?niecza todo
 {
     my proto infix:<;> ($a, $b) { $a + $b }
@@ -185,7 +185,7 @@ Testing operator overloading subroutines
 
 # Overriding prefix:<if>
 # L<S04/"Statement parsing" /"since prefix:<if> would hide statement_modifier:<if>">
-#?rakudo skip 'missing block, apparently "if" not an op'
+#?rakudo skip 'missing block, apparently "if" not an op RT #124982'
 {
     my proto prefix:<if> ($a) { $a*2 }
     is (if+5), 10;
@@ -228,7 +228,7 @@ Testing operator overloading subroutines
   is EVAL('($obj as OtherClass).x'), 23, "our object was coerced correctly";
 }
 
-#?rakudo skip 'infix Z will never work; no lexical Z'
+#?rakudo skip 'infix Z will never work; no lexical Z RT #124983'
 {
   my sub infix:<Z> ($a, $b) {
       $a ** $b;
@@ -236,7 +236,7 @@ Testing operator overloading subroutines
   is (2 Z 1 Z 2), 4, "default Left-associative works.";
 }
 
-#?rakudo skip 'missing block, no lexical Z'
+#?rakudo skip 'missing block, no lexical Z RT #124984'
 {
   my sub infix:<Z> is assoc('left') ($a, $b) {
       $a ** $b;
@@ -245,7 +245,7 @@ Testing operator overloading subroutines
   is (2 Z 1 Z 2), 4, "Left-associative works.";
 }
 
-#?rakudo skip 'missing block, no lexical Z'
+#?rakudo skip 'missing block, no lexical Z RT #124985'
 {
   my sub infix:<Z> is assoc('right') ($a, $b) {
       $a ** $b;
@@ -254,7 +254,7 @@ Testing operator overloading subroutines
   is (2 Z 1 Z 2), 2, "Right-associative works.";
 }
 
-#?rakudo skip 'missing block, no lexical Z'
+#?rakudo skip 'missing block, no lexical Z RT #124986'
 {
   my sub infix:<Z> is assoc('chain') ($a, $b) {
       $a eq $b;
@@ -265,7 +265,7 @@ Testing operator overloading subroutines
   is (1 Z 1 Z 2), Bool::False, "Chain-associative works.";
 }
 
-#?rakudo skip 'assoc("non")'
+#?rakudo skip 'assoc("non") RT #124987'
 {
   sub infix:<our_non_assoc_infix> is assoc('non') ($a, $b) {
       $a ** $b;

@@ -45,7 +45,7 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     ok { $^a => 'b' } ~~ Block, '... as a key';
     ok { a => $^x }   ~~ Block, '... as a value';
     ok { b => 3, a => $^x, 4 => 5 }   ~~ Block, '... somewhere deep inside';
-#?rakudo.jvm skip 'jvm chokes on compiling {;} for some reason'
+#?rakudo.jvm skip 'jvm chokes on compiling {;} for some reason RT #124663'
     ok {;} ~~ Block, '{;} is a Block';
 }
 

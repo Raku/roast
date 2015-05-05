@@ -44,7 +44,7 @@ plan 14;
     is (@a Z @b), @e, "zip uses length of shortest";
 }
 
-#?rakudo skip 'lvalue zip'
+#?rakudo skip 'lvalue zip RT #124907'
 #?niecza skip 'Unable to resolve method LISTSTORE in class List'
 {
     my @a;

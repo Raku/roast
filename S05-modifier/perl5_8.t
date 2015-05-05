@@ -64,11 +64,11 @@ ok((not ("b\nca" ~~ rx:P5/(?m)abb\z/)), 're_tests 1104  (1308)');
 ok((not ("b\nca" ~~ rx:P5/(?m)abb$/)), 're_tests 1105  (1309)');
 is(("ca" ~~ rx:P5/(^|x)(c)/ && $1), "c", 're_tests 1106/2 (1310)');
 ok((not ("x" ~~ rx:P5/a*abc?xyz+pqr{3}ab{2,}xy{4,5}pq{0,6}AB{0,}zz/)), 're_tests 1108  (1312)');
-#?rakudo todo '(?>...) NYI'
+#?rakudo todo '(?>...) NYI RT #125032'
 is(("_I(round(xs * sz),1)" ~~ rx:P5/round\(((?>[^()]+))\)/ && $0), "xs * sz", 're_tests 1110/1 (1314)');
 ok(("foo.bart" ~~ rx:P5/foo.bart/), 're_tests 1112  (1316)');
 ok(("abcd\ndxxx" ~~ rx:P5/(?m)^d[x][x][x]/), 're_tests 1114  (1318)');
-#?rakudo 18 skip 'expensive quantifier'
+#?rakudo 18 skip 'expensive quantifier RT #125033'
 ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+X/), 're_tests 1115  (1319)');
 ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+XX/), 're_tests 1117  (1321)');
 ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+X/), 're_tests 1119  (1323)');
@@ -88,14 +88,14 @@ ok((not ("bbbbXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X]/)), 're_
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X][X]/)), 're_tests 1147  (1351)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X][X](.+)+[X]/)), 're_tests 1149  (1353)');
 ok(("xxxtt" ~~ rx:P5/tt+$/), 're_tests 1151  (1355)');
-#?rakudo 6 skip 'character classes in enumerated range'
+#?rakudo 6 skip 'character classes in enumerated range RT #125034'
 is(("za-9z" ~~ rx:P5/([a-\d]+)/ && $0), "a-9", 're_tests 1153/1 (1357)');
 is(("a0-za" ~~ rx:P5/([\d-z]+)/ && $0), "0-z", 're_tests 1155/1 (1359)');
 is(("a0- z" ~~ rx:P5/([\d-\s]+)/ && $0), "0- ", 're_tests 1157/1 (1361)');
 is(("za-9z" ~~ rx:P5/([a-[:digit:]]+)/ && $0), "a-9", 're_tests 1159/1 (1363)');
 is(("=0-z=" ~~ rx:P5/([[:digit:]-z]+)/ && $0), "0-z", 're_tests 1160/1 (1364)');
 is(("=0-z=" ~~ rx:P5/([[:digit:]-[:alpha:]]+)/ && $0), "0-z", 're_tests 1161/1 (1365)');
-#?rakudo skip '\G'
+#?rakudo skip '\G RT #125035'
 ok((not ("aaaXbX" ~~ rx:P5/\GX.*X/)), 're_tests 1162  (1366)');
 is(("3.1415926" ~~ rx:P5/(\d+\.\d+)/ && $0), "3.1415926", 're_tests 1163/1 (1367)');
 is(("have a web browser" ~~ rx:P5/(\ba.{0,10}br)/ && $0), "a web br", 're_tests 1165/1 (1369)');

@@ -7,7 +7,7 @@ use Test::Tap;
 plan 32;
 
 dies_ok { Supply.rotor }, 'can not be called as a class method';
-#?rakudo todo 'only deprecated so far'
+#?rakudo todo 'only deprecated so far RT #124823'
 dies_ok { Supply.from-list(1..5).rotor }, 'no param version illegal';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {

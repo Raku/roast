@@ -72,7 +72,7 @@ class E is D {
     multi method foo($x) { $.cnt++ }   #OK not used
 }
 
-#?rakudo skip 'ambiguous dispatch'
+#?rakudo skip 'ambiguous dispatch RT #124846'
 {
     my $e = E.new();
 

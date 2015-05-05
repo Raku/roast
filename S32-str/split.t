@@ -136,7 +136,7 @@ is  "".split(':').elems, 1, q/"".split(':')/;
 is "a.b".split(/\./).join(','), <a b>.join(','),
    q{"a.b".split(/\./)};
 
-#?rakudo skip 'No such method null for invocant of type Cursor'
+#?rakudo skip 'No such method null for invocant of type Cursor RT #124685'
 #?niecza skip 'Unable to resolve method null in class Cursor'
 {
     is "abcd".split(/<null>/).join(','), <a b c d>.join(','),

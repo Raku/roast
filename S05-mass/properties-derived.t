@@ -64,7 +64,7 @@ ok("\x[3A18]\c[MIDDLE DOT]" ~~ m/<:Extender>/, q{Match unanchored <Extender>} );
 # GraphemeLink
 
 
-#?rakudo.jvm    7 skip "isGraphemeLink"
+#?rakudo.jvm    7 skip "isGraphemeLink RT #124874"
 ok("\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<:GraphemeLink>$/, q{Match <:GraphemeLink>} );
 ok(!( "\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<:!GraphemeLink>$/ ), q{Don't match negated <GraphemeLink>} );
 ok(!( "\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<-:GraphemeLink>$/ ), q{Don't match inverted <GraphemeLink>} );
@@ -164,7 +164,7 @@ ok("\c[ARABIC-INDIC DIGIT ZERO]" ~~ m/^<-:NoncharacterCodePoint>$/, q{Match rela
 
 # OtherAlphabetic
 
-#?rakudo.jvm 35 skip "isOther* NYI"
+#?rakudo.jvm 35 skip "isOther* NYI RT #124875"
 ok("\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<:OtherAlphabetic>$/, q{Match <:OtherAlphabetic>} );
 ok(!( "\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<:!OtherAlphabetic>$/ ), q{Don't match negated <OtherAlphabetic>} );
 ok(!( "\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<-:OtherAlphabetic>$/ ), q{Don't match inverted <OtherAlphabetic>} );
@@ -282,7 +282,7 @@ ok("\x[3C9D]\c[EXCLAMATION MARK]" ~~ m/<:TerminalPunctuation>/, q{Match unanchor
 ok("\x[7896]" ~~ m/^<:UnifiedIdeograph>$/, q{Match <:UnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<:!UnifiedIdeograph>$/ ), q{Don't match negated <UnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<-:UnifiedIdeograph>$/ ), q{Don't match inverted <UnifiedIdeograph>} );
-#?rakudo.jvm 3 skip 'icu'
+#?rakudo.jvm 3 skip 'icu RT #124877'
 #?niecza 3 todo
 ok(!( "\x[4DFF]"  ~~ m/^<:UnifiedIdeograph>$/ ), q{Don't match unrelated <UnifiedIdeograph>} );
 ok("\x[4DFF]"  ~~ m/^<:!UnifiedIdeograph>$/, q{Match unrelated negated <UnifiedIdeograph>} );
@@ -374,7 +374,7 @@ ok("\x[0BD1]\x[949B]" ~~ m/<:ID_Continue>/, q{Match unanchored (ID_Start + Mn + 
 
 # Any             # Any character
 
-#?rakudo.jvm 4 skip 'isAny NYI'
+#?rakudo.jvm 4 skip 'isAny NYI RT #124879'
 ok("\x[C709]" ~~ m/^<:Any>$/, q{Match (Any character)} );
 ok(!( "\x[C709]" ~~ m/^<:!Any>$/ ), q{Don't match negated (Any character)} );
 ok(!( "\x[C709]" ~~ m/^<-:Any>$/ ), q{Don't match inverted (Any character)} );
@@ -383,7 +383,7 @@ ok("\x[C709]" ~~ m/<:Any>/, q{Match unanchored (Any character)} );
 # Assigned        # Any non-Cn character (i.e. synonym for \P{Cn})
 
 
-#?rakudo.jvm 7 skip 'isAssigned NYI'
+#?rakudo.jvm 7 skip 'isAssigned NYI RT #124881'
 ok("\x[C99D]" ~~ m/^<:Assigned>$/, q<Match (Any non-Cn character (i.e. synonym for \P{Cn}))> );
 ok(!( "\x[C99D]" ~~ m/^<:!Assigned>$/ ), q<Don't match negated (Any non-Cn character (i.e. synonym for \P{Cn}))> );
 ok(!( "\x[C99D]" ~~ m/^<-:Assigned>$/ ), q<Don't match inverted (Any non-Cn character (i.e. synonym for \P{Cn}))> );
@@ -395,7 +395,7 @@ ok("\x[D7A4]\x[C99D]" ~~ m/<:Assigned>/, q<Match unanchored (Any non-Cn characte
 # Unassigned      # Synonym for \p{Cn}
 
 
-#?rakudo.jvm todo 'isUnassigned NYI'
+#?rakudo.jvm todo 'isUnassigned NYI RT #124883'
 #?niecza 3 todo
 ok("\x[110E9]" ~~ m/^<:Unassigned>$/, q<Match (Synonym for \p{Cn})> );
 ok(!( "\x[110E9]" ~~ m/^<:!Unassigned>$/ ), q<Don't match negated (Synonym for \p{Cn})> );
@@ -409,7 +409,7 @@ ok("\c[RIGHT OUTER JOIN]\x[110E9]" ~~ m/<:Unassigned>/, q<Match unanchored (Syno
 # Common          # Codepoint not explicitly assigned to a script
 
 
-#?rakudo.jvm 10 skip 'isCommon NYI'
+#?rakudo.jvm 10 skip 'isCommon NYI RT #124884'
 #?niecza 3 todo
 ok("\c[ELECTRIC LIGHT BULB]" ~~ m/^<:Common>$/, q{Match (Codepoint not explicitly assigned to a script)} );
 ok(!( "\c[ELECTRIC LIGHT BULB]" ~~ m/^<:!Common>$/ ), q{Don't match negated (Codepoint not explicitly assigned to a script)} );

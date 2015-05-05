@@ -93,7 +93,7 @@ sub eval_elsewhere($code){ EVAL($code) }
 }
 
 # L<S03/Symbolic unary precedence/"prefix:<->">
-#?rakudo skip 'failure modes of Str.Numeric'
+#?rakudo skip 'failure modes of Str.Numeric RT #124540'
 #?niecza skip "Failure NYI"
 {
     my $a = '2 is my favorite number';

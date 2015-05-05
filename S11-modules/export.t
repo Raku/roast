@@ -116,7 +116,7 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     'exp_my_tag -- EXPORT::DEFAULT::exp_my_tag does not exist' );
 
 
-#?rakudo skip "export issue"
+#?rakudo skip "export issue RT #125086"
 {
     package Foo {
         sub Foo_exp_parens is export()  { 'r_Foo_exp_parens' }

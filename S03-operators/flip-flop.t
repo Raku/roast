@@ -116,7 +116,7 @@ plan 40;
 }
 
 # make sure {lhs,rhs} isn't evaluated when state is {true,false}
-#?rakudo skip 'dubious scoping?'
+#?rakudo skip 'dubious scoping? RT #124548'
 {
 
     # keep track of # of times lhs and rhs are EVAL'd by adding
@@ -138,7 +138,7 @@ plan 40;
         [3, 2], "count lhs & rhs evals for fff";
 }
 
-#?rakudo skip 'NYM flip-flop with "True but $seqnum"'
+#?rakudo skip 'NYM flip-flop with "True but $seqnum" RT #124549'
 {
     my $result;
     for <A B C B A> -> $a {

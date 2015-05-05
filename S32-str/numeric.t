@@ -82,7 +82,7 @@ check '+1_2_3.0_0', Rat,    123;
 check '3/2',        Rat,    1.5;
 check '+3/2',       Rat,    1.5;
 check '-3/2',       Rat,    -1.5;
-#?rakudo 5 todo 'Failure'
+#?rakudo 5 todo 'Failure RT #124690'
 f     '-3/-2';
 f     '3/-2';
 f     '+3/-2';
@@ -148,7 +148,7 @@ is +"NaN",  'NaN',  'NaN';
     f      '3+3+4i';
 }
 
-#?rakudo todo "complex Str.Numeric"
+#?rakudo todo "complex Str.Numeric RT #124691"
 f      '3+Infi';
 
 # TODO: Complex with radix

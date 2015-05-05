@@ -21,7 +21,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     ok Mon + Tue == Wed, 'Can do arithmetics with Enum values';
 }
 
-#?rakudo skip 'Cannot convert string to number'
+#?rakudo skip 'Cannot convert string to number RT #124832'
 #?niecza skip 'enummish but'
 {
     my $x = 'Today' but Day::Mon;

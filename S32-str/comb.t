@@ -16,7 +16,7 @@ is "a\nb".comb, ('a', "\n", 'b'), 'comb on string with \n';
 
 is "äbcd".comb, <ä b c d>, 'comb on string with non-ASCII letter';
 
-#?rakudo.jvm 2 todo 'NFG on JVM'
+#?rakudo.jvm 2 todo 'NFG on JVM RT #124737'
 #?niecza 2 todo 'charspec'
 is "a\c[COMBINING DIAERESIS]b".comb, ("ä", "b",), 'comb on string with grapheme precomposed';
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
@@ -56,7 +56,7 @@ ok("forty-two".comb() ~~ Positional, '.comb() returns something Positional' );
 
 # comb a list
 
-#?rakudo skip 'cannot call match, no signature matches'
+#?rakudo skip 'cannot call match, no signature matches RT #124738'
 #?niecza skip ':Perl5'
 is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
      'comb a list';

@@ -184,7 +184,7 @@ plan 296;
     is($s, $t, 'chained $ = % = list assignment');
 }
 
-#?rakudo skip 'Odd number of elements found where hash expected'
+#?rakudo skip 'Odd number of elements found where hash expected RT #124530'
 {
     # chained $scalar = %hash = list assignment 
     my ($s, $t, %h);
@@ -532,7 +532,7 @@ my @p;
 }
 
 # XXX: The following tests assume autoconvertion between "a" and buf8 type
-#?rakudo skip "Two terms in a row"
+#?rakudo skip "Two terms in a row RT #124531"
 #?niecza skip "Buffer bitops NYI"
 {
     my $x = "a";
@@ -542,7 +542,7 @@ my @p;
     is(@p[1],9, "~<= operator parses as item assignment 2");
 }
 
-#?rakudo skip "expects a term, found infix >= instead"
+#?rakudo skip "expects a term, found infix >= instead RT #124532"
 #?niecza skip "Buffer bitops NYI"
 {
     my $x = "aa";
@@ -627,7 +627,7 @@ sub l () { 1, 2 };
     is(@z.elems, 6, 'lhs treats ($a, *) as list (2)');
 }
 
-#?rakudo skip 'cannot modifiy an immutable value'
+#?rakudo skip 'cannot modifiy an immutable value RT #124533'
 #?niecza skip 'Unable to resolve method LISTSTORE in class List'
 {
     my $a;
@@ -636,7 +636,7 @@ sub l () { 1, 2 };
     is @z.elems, 6, 'lhs treats @$a as list (2)';
 }
 
-#?rakudo skip 'cannot modifiy an immutable value'
+#?rakudo skip 'cannot modifiy an immutable value RT #124534'
 #?niecza skip '$a[] autovivification (unspecced?)'
 {
     my $a;
