@@ -19,7 +19,6 @@ my @normal = <
   Code
   CompUnit
   CompUnitRepo
-  CompUnitRepo::Distribution
   CompUnitRepo::Local::File
   CompUnitRepo::Local::Installation
   Compiler
