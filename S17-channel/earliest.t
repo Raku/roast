@@ -72,7 +72,6 @@ plan 7;
     is ~@b, "6 7 8 9 10 done_b", "Supply.from-list.Channel and earliest <list> work with channel specific more and done";
 }
 
-#?rakudo todo 'Pending PR 421 to implement'
 {
     my $c_a = Supply.from-list(1..5).Channel;
     my $c_b = Supply.from-list(6..10).Channel;
