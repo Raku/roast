@@ -89,7 +89,8 @@ plan 7;
     my $last = @c.elems;
     # need to limit the number of times we loop as it won't finish if
     # this doesn't work
-    for ^16 {
+    my $i = 0;
+    loop {
         earliest @c {
             more $c_a -> $val { @a.push($val) }
             more * -> $val { @b.push($val) }
@@ -97,6 +98,9 @@ plan 7;
             done * -> { if !$done_b { @b.push("done_b"); $done_b = True } }
         }
         last if $done_a && $done_b;
+        if $i++ > 15 {
+           last unless +@b;
+        }
     }
     is ~@a, "1 2 3 4 5 done_a", "Supply.from-list.Channel and earliest <list> work with channel specific and wild card more and done";
     is ~@b, "6 7 8 9 10 done_b", "Supply.from-list.Channel and earliest <list> work with channel specific and wild card more and done";
