@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 7;
 
 {
     my $c = Supply.from-list(1..5).Channel;
@@ -70,4 +70,35 @@ plan 5;
     }
     is ~@a, "1 2 3 4 5 done_a", "Supply.from-list.Channel and earliest <list> work with channel specific more and done";
     is ~@b, "6 7 8 9 10 done_b", "Supply.from-list.Channel and earliest <list> work with channel specific more and done";
+}
+
+#?rakudo todo 'Pending PR 421 to implement'
+{
+    my $c_a = Supply.from-list(1..5).Channel;
+    my $c_b = Supply.from-list(6..10).Channel;
+
+    my @c = $c_a, $c_b;
+
+    my @a;
+    my @b;
+
+    # without some specific logic it will call a matching done block
+    # until the loop is exited.
+    my $done_a = False;
+    my $done_b = False;
+
+    my $last = @c.elems;
+    # need to limit the number of times we loop as it won't finish if
+    # this doesn't work
+    for ^16 {
+        earliest @c {
+            more $c_a -> $val { @a.push($val) }
+            more * -> $val { @b.push($val) }
+            done $c_a -> { if !$done_a { @a.push("done_a"); $done_a = True } }
+            done * -> { if !$done_b { @b.push("done_b"); $done_b = True } }
+        }
+        last if $done_a && $done_b;
+    }
+    is ~@a, "1 2 3 4 5 done_a", "Supply.from-list.Channel and earliest <list> work with channel specific and wild card more and done";
+    is ~@b, "6 7 8 9 10 done_b", "Supply.from-list.Channel and earliest <list> work with channel specific and wild card more and done";
 }
