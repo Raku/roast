@@ -554,7 +554,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $a.x, 42, 'binding to an attribute works';
 }
 
-#?rakudo skip 'dubious test - the initializer becomes a submethod here, implying a scope'
+#?rakudo skip 'dubious test - the initializer becomes a submethod here, implying a scope RT #124908'
 {
     class InitializationThunk {
         has $.foo = my $x = 5;

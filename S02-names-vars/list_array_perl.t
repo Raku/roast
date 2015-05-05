@@ -34,7 +34,7 @@ my @tests = (
 }
 
 # Recursive data structures
-#?rakudo skip 'recursive data structure'
+#?rakudo skip 'recursive data structure RT #124639'
 {
     my $foo = [ 42 ]; $foo[1] = $foo;
     is $foo[1][1][1][0], 42, "basic recursive arrayref";

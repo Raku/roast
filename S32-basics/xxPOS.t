@@ -61,7 +61,7 @@ for $@a, Any, $@ai, Int -> \a, \T {
     ok !$a.EXISTS-POS(0),         "\$a.EXISTS-POS (after delete)";
 }
 
-#?rakudo skip "No such method 'BIND-POS' for invocant of type 'Any'"
+#?rakudo skip "No such method 'BIND-POS' for invocant of type 'Any' RT #124766"
 {
     my $a;
     my $b = 42;

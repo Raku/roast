@@ -93,7 +93,7 @@ for @num -> $T {
     ok @arr.list  === @arr, "$t array .list returns identity";
     ok @arr.eager === @arr, "$t array .eager returns identity";
 
-#?rakudo skip "borkedness with num and iteration"
+#?rakudo skip "borkedness with num and iteration RT #124678"
 {
     diag qq:!a:!c/my $t \$s = 0e0; for @arr { \$s += \$_ }; \$s/ if !
       is EVAL( qq:!a:!c/my $t \$s = 0e0; for @arr { \$s += \$_ }; \$s/ ), 5.3e0,

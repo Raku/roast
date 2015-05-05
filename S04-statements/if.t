@@ -171,9 +171,9 @@ is (if 0 { 42 } elsif 1 { 43 } else { 44 }), (43), "if+elsif+else elsif evaluate
 is (if 1 { 42 } elsif 0 { 43 } else { 44 }), (42), "if+elsif+else if evaluates to executed block";
 is (if 0 { 42 } elsif 1 { 43 }), (43), "if+elsif elsif evaluates to executed block";
 is (if 1 { 42 } elsif 0 { 43 }), (42), "if+elsif if evaluates to executed block";
-#?rakudo todo 'rakudo still uses Nil here'
+#?rakudo todo 'rakudo still uses Nil here RT #124577'
 is (if 0 { 42 } elsif 0 { 43 }), (), "if+elsif evaluates to () when no block chosen";
-#?rakudo todo 'rakudo still uses Nil here'
+#?rakudo todo 'rakudo still uses Nil here RT #124578'
 is (if 0 { 42 }), (), "if evaluates to () when no block chosen";
 
 # L<S04/Statement parsing/keywords require whitespace>

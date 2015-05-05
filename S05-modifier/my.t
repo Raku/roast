@@ -24,7 +24,7 @@ plan 24;
     nok 'b yack shaving' ~~ &hasmy, 'does not work with wrong text';
 }
 
-#?rakudo skip "Can't parse :state \$z++"
+#?rakudo skip "Can't parse :state \$z++ RT #state \$z++ RT#:125040"
 {
     my token hasstate {
         :state $z++;

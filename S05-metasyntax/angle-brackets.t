@@ -44,7 +44,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 # so if the first character is a left parenthesis, it really is a call
-#?rakudo skip '<test()> NYI'
+#?rakudo skip '<test()> NYI RT #124519'
 #?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $pass = 0;
@@ -53,7 +53,7 @@ character classes), and those are referenced at the correct spot.
     ok($pass, 'function call (no arguments)');
 }
 
-#?rakudo skip '<test()> NYI'
+#?rakudo skip '<test()> NYI RT #124520'
 #?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $pass = 0;
@@ -103,7 +103,7 @@ character classes), and those are referenced at the correct spot.
 
 # If the first character after the identifier is whitespace, the subsequent
 # text (following any whitespace) is passed as a regex
-#?rakudo skip 'angle quotes in regexes'
+#?rakudo skip 'angle quotes in regexes RT #124521'
 #?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $is_regex = 0;
@@ -119,7 +119,7 @@ character classes), and those are referenced at the correct spot.
 
 # If the first character is a colon followed by whitespace the
 # rest of the text is taken as a list of arguments to the method
-#?rakudo skip 'colon arguments NYI'
+#?rakudo skip 'colon arguments NYI RT #124522'
 #?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $called_ok = 0;
@@ -197,7 +197,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 # A leading & interpolates the return value of a subroutine call as a regex.
-#?rakudo skip '<&foo()> NYI'
+#?rakudo skip '<&foo()> NYI RT #124523'
 #?niecza skip 'Anonymous submatch returned a Str instead of a Cursor, violating the submatch protocol'
 {
     my sub foo {return '<alpha>'}
@@ -206,7 +206,7 @@ character classes), and those are referenced at the correct spot.
 
 # If it is a string, the compiled form is cached with the string so that
 # it is not recompiled next time you use it unless the string changes.
-#?rakudo skip '<$subrule> NYI'
+#?rakudo skip '<$subrule> NYI RT #124524'
 {
     my $counter = 0;
     my $subrule = '{$counter++; \'<alpha>\'}';
@@ -266,7 +266,7 @@ character classes), and those are referenced at the correct spot.
 
 # A leading * indicates that the following pattern allows a partial match.
 # It always succeeds after matching as many characters as possible.
-#?rakudo skip '<*literal>'
+#?rakudo skip '<*literal> RT #124525'
 #?niecza skip 'Action method assertion:sym<*> not yet implemented'
 {
     is(''    ~~ /^ <*xyz> $ /, '',    'partial match (0)');

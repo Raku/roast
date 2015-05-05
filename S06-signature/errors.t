@@ -61,7 +61,7 @@ eval_dies_ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }
 
-#?rakudo.jvm todo "unival NYI"
+#?rakudo.jvm todo "unival NYI RT #124920"
 {
     try { EVAL 'unival(42.2)' }
     my $error = ~$!;

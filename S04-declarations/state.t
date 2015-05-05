@@ -130,7 +130,7 @@ plan 41;
 }
 
 # state() inside regular expressions
-#?rakudo todo 'embedded closures in regexen'
+#?rakudo todo 'embedded closures in regexen RT #125051'
 #?niecza skip ':Perl5'
 #?DOES 1
 {
@@ -255,7 +255,7 @@ sub bughunt1 { (state $svar) }    #OK not used
 # niecza regression: state not working at top level
 eval_lives_ok 'state $x; $x', 'state outside control structure';
 
-#?rakudo todo 'initialization happens only on first call(?)'
+#?rakudo todo 'initialization happens only on first call(?) RT #125052'
 {
     sub f($x) {
         return if $x;

@@ -134,7 +134,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 }
 
 #?niecza skip 'unspecced'
-#?rakudo todo 'POST and exceptions'
+#?rakudo todo 'POST and exceptions RT #124961'
 {
     my $str;
     try {
@@ -146,7 +146,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 }
 
 #?niecza skip 'unspecced'
-#?rakudo skip "POST and exceptions"
+#?rakudo skip "POST and exceptions RT #124962"
 {
     try {
         POST { 0 }

@@ -75,7 +75,7 @@ throws_like { EVAL 'fo\ o.lc' },
   'unspace not allowed in identifier';
 is((foo\    .lc), 'a', 'longer dot');
 is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');
-#?rakudo todo 'NYI'
+#?rakudo todo 'NYI RT #125072'
 throws_like { EVAL 'foo\#\ ( comment ).lc' },
   Exception,
   'unspace can\'t hide space between # and opening bracket';

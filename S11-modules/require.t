@@ -8,7 +8,7 @@ is $istrue, True, "successful require returns True";
 
 my $staticname;
 BEGIN try EVAL '$staticname = Test';
-#?rakudo todo 'creation of stub package symbol NYI'
+#?rakudo todo 'creation of stub package symbol NYI RT #125083'
 is $staticname.gist, '(Test)', "require Test installs stub Test package at compile time";
 
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
@@ -19,7 +19,7 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
 
-#?rakudo todo 'variable form plus imports NYI'
+#?rakudo todo 'variable form plus imports NYI RT #125084'
 lives_ok { require $name '&bar'; },
          'can load InnerModule from a variable at run time';
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
@@ -31,7 +31,7 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 }
 
 #RT #118407
-#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux"
+#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux RT # quux RT#:125085"
 { 
     require InnerModule:file($name) <quux>;
     is quux(), 'Inner::quux', "can import quux without ampersand (&quux)";

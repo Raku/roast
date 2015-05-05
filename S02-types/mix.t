@@ -415,7 +415,7 @@ sub showkv($x) {
       'Cannot change value of Mix.pairs';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet'
+#?rakudo todo 'we have not secured .WHICH creation yet RT #124496'
 {
     isnt 'a(1) Str|b(1) Str|c'.Mix.WHICH, <a b c>.Mix.WHICH, 
       'Faulty .WHICH creation';

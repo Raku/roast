@@ -10,12 +10,12 @@ ok (@files = dir()), "dir() runs in cwd()";
 
 # see roast's README as for why there is always a t/ available
 #?niecza skip "Grepping Str against a list of IO::Local does not work"
-#?rakudo todo 'directories are not marked with trailing / yet'
+#?rakudo todo 'directories are not marked with trailing / yet RT #124784'
 ok @files>>.relative.grep('t/'), 'current directory contains a t/ dir';
 ok @files.grep(*.basename eq 't'), 'current directory contains a t/ dir';
-#?rakudo todo 'entries are still IO::Path'
+#?rakudo todo 'entries are still IO::Path RT #:Path' RT#:124785'
 ok @files[0] ~~ IO::Local, 'dir() returns IO::Local';
-#?rakudo todo 'dirname is not yet absolute'
+#?rakudo todo 'dirname is not yet absolute RT #124786'
 is @files[0].dirname, $*CWD, 'dir() returns IO::Path object in the current directory';
 
 #?niecza 3 skip "Grepping Str against a list of IO::Local does not work"
@@ -29,7 +29,7 @@ nok @files.grep(*.basename eq '.'|'..'), '"." and ".." are not returned';
 is +dir(:test).grep(*.basename eq '.'|'..'), 2, "... unless you override :test";
 nok dir( test=> none('.', '..', 't') ).grep(*.basename eq 't'), "can exclude t/ dir";
 
-#?rakudo todo '$*CWD misses slash at end still'
+#?rakudo todo '$*CWD misses slash at end still RT #124787'
 is dir('t').[0].dirname, $*CWD ~ 't', 'dir("t") returns paths with .dirname of "t"';
 
 # RT #123308

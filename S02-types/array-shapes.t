@@ -4,14 +4,14 @@ plan 25;
 
 # L<S09/Fixed-size arrays>
 
-#?rakudo skip 'array shapes NYI'
+#?rakudo skip 'array shapes NYI RT #124502'
 {
     my @arr[*];
     @arr[42] = "foo";
     is(+@arr, 43, 'my @arr[*] autoextends like my @arr');
 }
 
-#?rakudo skip 'array shapes NYI'
+#?rakudo skip 'array shapes NYI RT #124503'
 {
 {
     my @arr[7] = <a b c d e f g>;
@@ -24,7 +24,7 @@ plan 25;
       'accessing past num items in my @arr[num] dies';
 }
 
-#?rakudo skip 'array shapes NYI'
+#?rakudo skip 'array shapes NYI RT #124504'
 {
 {
     lives_ok { my @arr\    [7]},
@@ -59,7 +59,7 @@ plan 25;
       'type constraints on my Type @arr works (2)';
 }
 
-#?rakudo skip 'array shapes NYI'
+#?rakudo skip 'array shapes NYI RT #124505'
 {
     my @arr[5] of Int = <1 2 3 4 5>;
     is(@arr, <1 2 3 4 5>, 'my @arr[num] of Type works');
@@ -76,7 +76,7 @@ plan 25;
       'type constraints on my @arr[num] of Type works (2)';
 }
 
-#?rakudo skip 'native arrays NYI'
+#?rakudo skip 'native arrays NYI RT #124506'
 {
     my int @arr = 1, 2, 3, 4, 5;
     is(@arr, <1 2 3 4 5>, 'my type @arr works');
@@ -89,7 +89,7 @@ plan 25;
       'type constraints on my type @arr works (2)';
 }
 
-#?rakudo skip 'array shapes NYI'
+#?rakudo skip 'array shapes NYI RT #124507'
 {
     my int @arr[5] = <1 2 3 4 5>;
     is(@arr, <1 2 3 4 5>, 'my Type @arr[num] works');

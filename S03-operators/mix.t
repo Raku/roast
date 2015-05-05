@@ -66,7 +66,7 @@ sub symmetric-difference($a, $m) {
     ($a (|) $m) (-) ($m (&) $a)
 }
 
-#?rakudo 8 todo "Rakudo update in progress, but not done yet"
+#?rakudo 8 todo "Rakudo update in progress, but not done yet RT #124541"
 
 is showkv($b (^) $m), showkv(symmetric-difference($b, $m)), "Mix symmetric difference with Bag is correct";
 isa-ok ($b (^) $m), Mix, "... and it's actually a Mix";

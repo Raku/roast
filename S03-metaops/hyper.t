@@ -407,7 +407,7 @@ my @e;
 =end todo_unspecced
 
 #?niecza skip 'does not work; recurses into hash'
-#?rakudo skip 'nom regression: possible spec change/improvement'
+#?rakudo skip 'nom regression: possible spec change/improvement RT # possible spec change/improvement' RT#:124513'
 #?DOES 2
 { # hyper dereferencing
     my @array = (
@@ -701,7 +701,7 @@ my @e;
 
 # test non-UTF-8 input
 #?niecza skip 'nonsensical test'
-#?rakudo skip 'EVAL(Buf)'
+#?rakudo skip 'EVAL(Buf) RT #124514'
 #?DOES 1
 {
     my $t = '(1, 2, 3) »+« (4, 3, 2)';

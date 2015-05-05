@@ -19,7 +19,7 @@ is $Foo::foo, 42, 'lax declared variable is package scoped';
     throws_like '$foo = 10;', X::Undeclared, suggestions => '';
 }
 
-#?rakudo 1 skip 'lax mode does not propagate into EVAL yet'
+#?rakudo 1 skip 'lax mode does not propagate into EVAL yet RT #124912'
 {
     is EVAL('$bar'), Any, 'lax mode propagates into EVAL blocks'
 }

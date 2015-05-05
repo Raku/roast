@@ -11,7 +11,7 @@ plan 6;
 eval_dies_ok 'my enum B (a => 1, b => "bar")',
              'mixed type enums are forbidden';
 
-#?rakudo todo 'NYI'
+#?rakudo todo 'NYI RT #124833'
 #?niecza todo
 eval_lives_ok 'my Cool enum C (a => 1, b => "bar")',
              '... unless that type covers both enum value types';

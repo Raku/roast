@@ -86,7 +86,7 @@ plan 17;
     is Ffoo( 'a' ), 'sub F::Ffoo Str', 'F) our multi is still there';
 }
 
-#?rakudo skip 'A symbol "&Gfoo" has already been exported'
+#?rakudo skip 'A symbol "&Gfoo" has already been exported RT #125089'
 {
     module G1 {
         multi sub Gfoo( Int $a ) is export { 'sub G1::Gfoo Int' };

@@ -15,7 +15,7 @@ get a list of osnames that have actually passed tests.
 =end kwid
 
 # $?DISTRO.name is the OS we were compiled in.
-#?rakudo skip 'unimpl $?DISTRO'
+#?rakudo skip 'unimpl $?DISTRO RT #124616'
 {
     ok $?DISTRO.name,      "We were compiled in '{$?DISTRO.name}'";
     ok $?DISTRO.auth,      "Authority is '{$?DISTRO.auth}'";
@@ -41,11 +41,11 @@ get a list of osnames that have actually passed tests.
 ok $*DISTRO.name,      "We are running under '{$*DISTRO.name}'";
 ok $*DISTRO.auth,      "Authority is '{$*DISTRO.auth}'";
 ok $*DISTRO.version,   "Version is '{$*DISTRO.version}'";
-#?rakudo.jvm    todo 'no Distro.signature yet'
-#?rakudo.moar   todo 'no Distro.signature yet'
-#?rakudo.parrot skip 'no Distro.signature yet'
+#?rakudo.jvm    todo 'no Distro.signature yet RT #124617'
+#?rakudo.moar   todo 'no Distro.signature yet RT #124618'
+#?rakudo.parrot skip 'no Distro.signature yet RT #124619'
 ok $*DISTRO.signature, "Signature is '{$*DISTRO.signature}'";
-#?rakudo.parrot skip 'no Distro.desc yet'
+#?rakudo.parrot skip 'no Distro.desc yet RT #124620'
 ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
 ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";
 ok $*DISTRO.path-sep,  "Path separator is '{$*DISTRO.path-sep}'";
@@ -57,9 +57,9 @@ ok $*DISTRO.Str  ~~ m/\w/, 'We can do a $*DISTRO.Str';
 ok $*DISTRO.name, 'Non-empty $*DISTRO.name';
 
 isa-ok $*DISTRO.version, Version;
-#?rakudo.jvm    todo 'no Distro.signature yet'
-#?rakudo.moar   todo 'no Distro.signature yet'
-#?rakudo.parrot skip 'no Distro.signature yet'
+#?rakudo.jvm    todo 'no Distro.signature yet RT #124621'
+#?rakudo.moar   todo 'no Distro.signature yet RT #124622'
+#?rakudo.parrot skip 'no Distro.signature yet RT #124623'
 isa-ok $*DISTRO.signature, Blob;
 isa-ok $*DISTRO.is-win, Bool;
 

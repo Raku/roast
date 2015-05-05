@@ -22,7 +22,7 @@ plan 15;
     }
 } #4*2
 
-#?rakudo skip 'Cannot use bind operator with this LHS'
+#?rakudo skip 'Cannot use bind operator with this LHS RT #124751'
 #?niecza skip 'Cannot use bind operator with this LHS'
 { 
     my @list = (1, 2, 3, 4);

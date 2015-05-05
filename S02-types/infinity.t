@@ -17,14 +17,14 @@ plan 13;
     ok( $x eq '-Inf', 'negative string equal' );
 }
 
-#?rakudo skip 'integer Inf'
+#?rakudo skip 'integer Inf RT #124451'
 {
     my $x = Inf.Int;
     ok( $x == Inf,   'int numeric equal' );
     ok( $x eq 'Inf', 'int string equal' );
 }
 
-#?rakudo skip 'integer Inf'
+#?rakudo skip 'integer Inf RT #124452'
 {
     my $x = ( -Inf ).Int;
     ok( $x == -Inf,   'int numeric equal' );
@@ -40,7 +40,7 @@ plan 13;
 #     ~Inf eq ~Inf   # true
 
 ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
-#?rakudo 3 todo 'Int conversion of NaN and Inf'
+#?rakudo 3 todo 'Int conversion of NaN and Inf RT #124453'
 ok NaN.Int === NaN,         'Inf.Int === Int';
 ok Inf.Int === Inf,         'Inf.Int === Int';
 ok (-Inf).Int === (-Inf),   'Inf.Int === Int';

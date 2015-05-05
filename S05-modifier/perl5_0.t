@@ -52,7 +52,7 @@ ok(($str ~~ m:Perl5/http:\/\//), "test the regular expression escape");
 
 # returns the count of matches in scalar
 my $vals = "hello world" ~~ m:P5:g/(\w+)/;
-#?rakudo todo 'NYI'
+#?rakudo todo 'NYI RT #125036'
 is($vals, 2, 'returned two values in the match');
 
 # return all the strings we matched

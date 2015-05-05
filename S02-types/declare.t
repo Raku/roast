@@ -35,7 +35,7 @@ plan 79;
  isa-ok($lerpoi,Str);
 }
 
-#?rakudo skip 'Bit NYI'
+#?rakudo skip 'Bit NYI RT #124458'
 #?niecza skip 'Bit NYI'
 {
  my Bit $namcu =1;
@@ -97,7 +97,7 @@ plan 79;
  isa-ok($igeda, Stash);
 }
 
-#?rakudo skip 'Module NYI'
+#?rakudo skip 'Module NYI RT #124459'
 #?niecza skip 'Module NYI'
 {
  my Module $brodu;
@@ -110,7 +110,7 @@ plan 79;
  ok($fancu ~~ Callable);
 }
 
-#?rakudo skip 'Integral NYI'
+#?rakudo skip 'Integral NYI RT #124460'
 {
  my Integral $foo;
  ok($foo ~~ Integral);
@@ -119,14 +119,14 @@ plan 79;
 
 # Non-object (native) types are lowercase: int, num, complex, rat, buf, bit.
 
-#?rakudo todo 'int NYI'
+#?rakudo todo 'int NYI RT #124461'
 #?niecza skip 'int NYI'
 {
  my int $namcu =2;
  isa-ok($namcu,int);
 }
 
-#?rakudo todo 'num NYI'
+#?rakudo todo 'num NYI RT #124462'
 #?niecza skip 'num NYI'
 {
  my num $namcu =1.1e0;
@@ -135,14 +135,14 @@ plan 79;
 
 # Type mismatch in assignment; expected something matching type Complex but got something of type Num()
 
-#?rakudo skip 'complex NYI'
+#?rakudo skip 'complex NYI RT #124463'
 #?niecza skip 'complex NYI'
 {
  my complex $namcu =1.3;
  isa-ok($namcu,complex);
 }
 
-#?rakudo skip 'rat NYI'
+#?rakudo skip 'rat NYI RT #124464'
 #?niecza skip 'rat NYI'
 
 {
@@ -150,14 +150,14 @@ plan 79;
  isa-ok($namcu,rat);
 }
 
-#?rakudo skip 'bit NYI'
+#?rakudo skip 'bit NYI RT #124465'
 #?niecza skip 'bit NYI'
 {
  my bit $namcu =1;
  isa-ok($namcu,bit);
 }
 
-#?rakudo skip 'buf NYI'
+#?rakudo skip 'buf NYI RT #124466'
 #?niecza skip 'buf NYI'
 {
  my buf $nacpoi;
@@ -169,14 +169,14 @@ plan 79;
 # Keyhash SetHash BagHash Pair Mapping IO Routine Sub Method
 # Submethod Macro Match Package Module Class Role Grammar Any
 
-#?rakudo skip 'junction NYI'
+#?rakudo skip 'junction NYI RT #124467'
 #?niecza skip 'junction NYI'
 {
  my junction $sor;
  isa-ok($sor, junction);
 }
 
-#?rakudo skip 'StrPos NYI'
+#?rakudo skip 'StrPos NYI RT #124468'
 #?niecza skip 'StrPos NYI'
 {
  my StrPos $pa;
@@ -184,7 +184,7 @@ plan 79;
 }
 
 
-#?rakudo skip 'StrLen NYI'
+#?rakudo skip 'StrLen NYI RT #124469'
 #?niecza skip 'StrLen NYI'
 {
  my StrLen $re;
@@ -356,7 +356,7 @@ plan 79;
  isa-ok($karbi, Order);
 }
 
-#?rakudo skip 'Matcher isa NYI'
+#?rakudo skip 'Matcher isa NYI RT #124470'
 #?niecza skip 'Matcher NYI'
 {
   my Matcher $mapti;
@@ -370,42 +370,42 @@ plan 79;
 
 # CharLingua Byte Char AnyChar 
 
-#?rakudo skip 'Char NYI'
+#?rakudo skip 'Char NYI RT #124471'
 #?niecza skip 'Char NYI'
 {
   my Char $pav;
   isa-ok($pav, Char);
 }
 
-#?rakudo skip 'Byte NYI'
+#?rakudo skip 'Byte NYI RT #124472'
 #?niecza skip 'Byte NYI'
 {
   my Byte $biv;
   isa-ok($biv, Byte);
 }
 
-#?rakudo skip 'AnyChar NYI'
+#?rakudo skip 'AnyChar NYI RT #124473'
 #?niecza skip 'AnyChar NYI'
 {
   my AnyChar $lerfu;
   isa-ok($lerfu, AnyChar);
 }
 
-#?rakudo skip 'CharLingua NYI'
+#?rakudo skip 'CharLingua NYI RT #124474'
 #?niecza skip 'CharLingua NYI'
 {
   my CharLingua  $lerfu;
   isa-ok($lerfu, CharLingua );
 }
 
-#?rakudo skip 'Codepoint NYI'
+#?rakudo skip 'Codepoint NYI RT #124475'
 #?niecza skip 'Codepoint NYI'
 {
   my Codepoint $cypy;
   isa-ok($cypy,Codepoint );
 }
 
-#?rakudo skip 'Grapheme NYI'
+#?rakudo skip 'Grapheme NYI RT #124476'
 #?niecza skip 'Grapheme NYI'
 {
   my Grapheme $gy;
@@ -425,14 +425,14 @@ plan 79;
   ok($kansa ~~ Associative,'Associative exists');
 }
 
-#?rakudo skip 'Ordering NYI'
+#?rakudo skip 'Ordering NYI RT #124477'
 #?niecza skip 'Ordering NYI'
 {
   my Ordering $foo;
   isa-ok($foo,Ordering);
 }
 
-#?rakudo skip 'KeyExtractor NYI'
+#?rakudo skip 'KeyExtractor NYI RT #124478'
 #?niecza skip 'KeyExtractor NYI'
 {
   my KeyExtractor $ckiku;
@@ -441,14 +441,14 @@ plan 79;
 
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
-#?rakudo skip 'Comparator NYI'
+#?rakudo skip 'Comparator NYI RT #124479'
 #?niecza skip 'Comparator NYI'
 {
   my Comparator $bar;
   isa-ok($bar,Comparator);
 }
 
-#?rakudo skip 'OrderingPair NYI'
+#?rakudo skip 'OrderingPair NYI RT #124480'
 #?niecza skip 'OrderingPair NYI'
 {
   my OrderingPair $foop;
@@ -491,7 +491,7 @@ plan 79;
 # complex16 complex32 complex64 complex128
 # buf8 buf16 buf32 buf64 
 
-#?rakudo skip 'num16  NYI'
+#?rakudo skip 'num16  NYI RT #124481'
 #?niecza skip 'num16 NYI'
 {
   my num16 $namcupaxa;

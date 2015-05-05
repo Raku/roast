@@ -23,7 +23,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
-#?rakudo skip "adverbial block"
+#?rakudo skip "adverbial block RT #124755"
 #?niecza skip 'No value for parameter Mu $sm in Any.grep'
 {
     my @result = @list.grep():{ ($_ % 2) };
@@ -35,7 +35,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
-#?rakudo skip "adverbial block"
+#?rakudo skip "adverbial block RT #124756"
 #?niecza skip 'No value for parameter Mu $sm in Any.grep'
 {
     my @result = @list.grep :{ ($_ % 2) };
@@ -47,7 +47,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
-#?rakudo skip "closure as non-final argument"
+#?rakudo skip "closure as non-final argument RT #124757"
 #?niecza skip 'Invocant handling is NYI'
 {
     my @result = grep { ($_ % 2) }: @list;

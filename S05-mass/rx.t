@@ -33,12 +33,12 @@ ok 'verify' ~~ /[ if    not | ify ]/, 'control';
 # L<S05/Backtracking control/"Evaluating a double colon">
 
 #### [ if :: not | ify ]	verify		n	inside a group
-#?rakudo skip ':: NYI'
+#?rakudo skip ':: NYI RT #124889'
 #?niecza todo ':: issues'
 ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
 
 ####   if :: not | ify	verify		n	the default all group
-#?rakudo skip ':: NYI'
+#?rakudo skip ':: NYI RT #124890'
 #?niecza todo ':: issues'
 ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
 
@@ -46,7 +46,7 @@ ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
 ok 'verify' ~~ /[ if :  not | ify ]/, 'simple backtrack still works';
 
 #### [ if :: not | ify ] | verify	verify	y	rule continues
-#?rakudo skip ':: NYI'
+#?rakudo skip ':: NYI RT #124891'
 ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 
 # L<S05/Backtracking control/"Evaluating a triple colon">
@@ -54,25 +54,25 @@ ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
 
 #### [ when ::: ever ] | whence	whence	n	full backtrack failure
-#?rakudo skip '::: NYI'
+#?rakudo skip '::: NYI RT #124892'
 #?niecza todo '::: issue'
 ok 'whence' !~~ /[ when ::: ever ] | whence/, 'full backtrack failure';
 
 #### ab::cd | gh::ij		xyabghij	y	group cut at top
-#?rakudo skip ':: NYI'
+#?rakudo skip ':: NYI RT #124893'
 ok 'xyabghij' ~~ /ab::cd | gh::ij/, 'group cut at top';
 
 #### ab:::cd | gh:::ij	xyabghij	n	rule cut at top
-#?rakudo skip ':: NYI'
+#?rakudo skip ':: NYI RT #124894'
 #?niecza todo '::: issue'
 ok 'xyabghij' !~~ /ab:::cd | gh:::ij/, 'rule cut at top';
 
 #### [ab::cd | gh::ij]	xyabghij	y	group cut in group
-#?rakudo skip ':: NYI'
+#?rakudo skip ':: NYI RT #124895'
 ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 
 #### [ab:::cd | gh:::ij]	xyabghij	n	rule cut in group
-#?rakudo skip '::: NYI'
+#?rakudo skip '::: NYI RT #124896'
 #?niecza todo '::: issue'
 ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 
@@ -85,7 +85,7 @@ ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 ok 'xyzabcde' !~~ /( ab || abc ): de/, 'no backtrack into subpattern';
 
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
-#?rakudo todo '<commit> NYI'
+#?rakudo todo '<commit> NYI RT #124897'
 #?niecza todo ''
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
@@ -500,7 +500,7 @@ ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
 ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 
 #### $ <after ^a>		a		y				lookbehind <after>
-#?rakudo todo 'anchors and after'
+#?rakudo todo 'anchors and after RT #124898'
 #?niecza skip "Unsuppored elements in after list"
 ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
 
@@ -1478,7 +1478,7 @@ ok 'foo-bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s*';
 ok 'foobar' !~~ /:s foo '-'? bar/, 'basic ws non-match';
 
 #### :s()foo '-'? bar		foo - bar	n	basic ws match
-#?rakudo skip ':s()'
+#?rakudo skip ':s() RT #124899'
 #?niecza skip "Action method mod_arg not yet implemented"
 ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
 
@@ -1490,19 +1490,19 @@ ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 ok 'foo - bar' ~~ /:s<?wb>foo '-'? bar/, 'basic ws match with boundary modifier separation';
 
 #### :s::foo '-'? bar			foo - bar	y	basic ws match with backtrack no-op modifier separation
-#?rakudo skip ':: NYI'
+#?rakudo skip ':: NYI RT #124900'
 ok 'foo - bar' ~~ /:s::foo '-'? bar/, 'basic ws match with backtrack no-op modifier separation';
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 0: <dog @ 0>/	sigspace and capture together
-#?rakudo skip ':: NYI'
+#?rakudo skip ':: NYI RT #124901'
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 0: <dog @ 0>/), 'sigspace and capture together';
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 1: <spot @ 7>/	sigspace and capture together
-#?rakudo skip ':: NYI'
+#?rakudo skip ':: NYI RT #124902'
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 7>/), 'sigspace and capture together';
 
 #### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
-#?rakudo todo 'parse error'
+#?rakudo todo 'parse error RT #124903'
 #?niecza skip 'Autoloading NYI'
 ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 
@@ -2105,7 +2105,7 @@ is $/, 'foobar', '... will match correctly';
 ok ('2+3 ab2' ~~ /<ident>/) && matchcheck($/, q/mob<ident>: <ab2 @ 4>/), 'capturing builtin <ident>';
 
 #### <name>			ab::cd::x3::42	/mob<name>: <ab::cd::x3 @ 0>/	capturing builtin <name>
-#?rakudo skip 'regex <name>'
+#?rakudo skip 'regex <name> RT #124904'
 #?niecza skip "Unable to resolve method name in class Cursor"
 ok ('ab::cd::x3::42' ~~ /<name>/) && matchcheck($/, q/mob<name>: <ab::cd::x3 @ 0>/), 'capturing builtin <name>';
 
@@ -2114,7 +2114,7 @@ ok ('ab::cd::x3::42' ~~ /<name>/) && matchcheck($/, q/mob<name>: <ab::cd::x3 @ 0
 ok '2+3 ab2' ~~ /<.ident>/, 'non-capturing builtin <.ident>';
 
 #### <.name>			ab::cd::x3::42	y	non-capturing builtin <.name>
-#?rakudo skip 'regex <name>'
+#?rakudo skip 'regex <name> RT #124905'
 #?niecza skip "Unable to resolve method name in class Cursor"
 ok 'ab::cd::x3::42' ~~ /<.name>/, 'non-capturing builtin <.name>';
 

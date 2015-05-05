@@ -17,7 +17,7 @@ is_approx <1/2>, 0.5, '<1/2> Rat literal';
 isa-ok <1/2>, Rat, '<1/2> produces a Rat';
 ok <1/2> ~~ Numeric, '<1/2> is Numeric';
 ok <1/2> ~~ Real, '<1/2> is Real';
-#?rakudo.jvm skip 'aborts nqp-j'
+#?rakudo.jvm skip 'aborts nqp-j RT #124559'
 isa-ok <0x01/0x02>, Rat, 'same with hexadecimal numbers';
 
 ok <1/-3>.WHAT === Str, 'negative allowed only on numerator';
@@ -26,7 +26,7 @@ ok <-1/-3>.WHAT === Str, 'negative allowed only on numerator';
 isa-ok <-1/3>, Rat, 'negative Rat literal';
 ok <-1/3> * -3 == 1, 'negative Rat literal';
 
-#?rakudo.jvm 3 skip 'aborts nqp-j'
+#?rakudo.jvm 3 skip 'aborts nqp-j RT #124560'
 ok <0x01/0x03> / (0x01/0x03) == 1, 'Rat works with hexadecimal numbers';
 ok <:13<01>/:13<07>> / (1/7) == 1, 'Rat works with colon radix numbers';
 ok <:12<1a>/:12<7b>> / (:12<1a> / :12<7b>) == 1, 'Rat works with colon radix numbers';

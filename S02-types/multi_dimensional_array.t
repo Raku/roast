@@ -13,7 +13,7 @@ plan 58;
 # L<S09/Multidimensional arrays/Perl 6 arrays are not restricted to being one-dimensional>
 
 # real multi-dimensional arrays
-#?rakudo skip 'multi-dim sized arrays NYI'
+#?rakudo skip 'multi-dim sized arrays NYI RT #124482'
 {
     my @md[2;2];
     @md[0;0] = 0;
@@ -31,7 +31,7 @@ plan 58;
     is(@md.elems, 4, '.elems works on multidimensional array');
 }
 
-#?rakudo skip 'multi-dim sized arrays NYI'
+#?rakudo skip 'multi-dim sized arrays NYI RT #124483'
 {
     my @md[*;*;2];
     @md[0;0;0] = 'foo';

@@ -35,11 +35,11 @@ is  $/.Str,          '',        'false match stringifies to empty string';
 }
 
 my $c;
-#?rakudo skip 'Unsupported use of $¢ variable'
+#?rakudo skip 'Unsupported use of $¢ variable RT #124997'
 ok 'abc' ~~ /.{ $c = $¢ }/,     'current match state';
-#?rakudo todo 'Unsupported use of $¢ variable'
+#?rakudo todo 'Unsupported use of $¢ variable RT #124998'
 is $c.WHAT.gist, Cursor.gist,   'got right type';
-#?rakudo skip "No such method pos for invocant of type Any"
+#?rakudo skip "No such method pos for invocant of type Any RT #124999"
 ok defined($c.pos),             '.pos';
 
 # RT 77146

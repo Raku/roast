@@ -32,7 +32,7 @@ plan 8;
 
 # L<S02/Lists/A variant of eager is the hyper list operator>
 # Hyper
-#?rakudo skip 'hyper prefix NYI'
+#?rakudo skip 'hyper prefix NYI RT #124517'
 {
     my $counter = 0;
     my @test := hyper gather { for 1 .. 5 { $counter++; take $_; } };

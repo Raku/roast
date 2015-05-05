@@ -27,8 +27,8 @@ ok mkdir($srcdir), "Could we create '$srcdir'";
 ok $srcsrc.IO.spurt($nanoonanoo), "Could we create '$srcsrc'";
 ok mkdir($cmpdir), "Could we create $cmpdir";
 
-#?rakudo.jvm    skip 'cannot do signals in JVM'
-#?rakudo.parrot skip 'cannot do signals in parrot'
+#?rakudo.jvm    skip 'cannot do signals in JVM RT #124769'
+#?rakudo.parrot skip 'cannot do signals in parrot RT #124770'
 ok signal(SIGINT).tap( {die} ), 'install Ctrl-C handler for cleanup in END';
 
 # basic CURLF sanity

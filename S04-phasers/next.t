@@ -64,7 +64,7 @@ plan 13;
     is $str, '123', "die didn't trigger NEXT \{}";
 }
 
-#?rakudo skip 'leave NYI'
+#?rakudo skip 'leave NYI RT #124951'
 {
     my $str = '';
     try {
@@ -102,7 +102,7 @@ plan 13;
 
 # L<S04/Phasers/NEXT "before any LEAVE">
 
-#?rakudo todo 'NEXT/LEAVE ordering'
+#?rakudo todo 'NEXT/LEAVE ordering RT #124952'
 {
     my $str = '';
     for 1..2 {
@@ -113,7 +113,7 @@ plan 13;
 }
 
 # reversed order
-#?rakudo todo 'NEXT/LEAVE ordering'
+#?rakudo todo 'NEXT/LEAVE ordering RT #124953'
 {
     my $str = '';
     for 1..2 {

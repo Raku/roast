@@ -116,7 +116,7 @@ class Bar is Foo {
 
 # test postcircumfix parallel dispatch
 #?niecza skip 'Cannot use hash access on an object of type Pair'
-#?rakudo skip 'No such method postcircumfix:<( )> for invocant of type Pair'
+#?rakudo skip 'No such method postcircumfix:<( )> for invocant of type Pair RT #<( )> for invocant of type Pair' RT#:124849'
 {
     is (a => 1, a => 2)>>.<a>, '1 2',   # METHOD TO SUB CASUALTY
         '>>.<a>';

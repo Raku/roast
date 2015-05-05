@@ -101,7 +101,7 @@ is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
 # Spacey options may be removed from core spec; for now, moving to end of tests
 # (discussion starts at http://irclog.perlgeek.de/perl6/2011-10-17#i_4578353 )
 
-#?rakudo todo 'nom regression'
+#?rakudo todo 'nom regression RT #124664'
 #?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:$x) { print $x }',
     {
@@ -110,7 +110,7 @@ is_run 'sub MAIN(:$x) { print $x }',
     :args['--x', '23'],
     'option with spacey value';
 
-#?rakudo todo 'nom regression'
+#?rakudo todo 'nom regression RT #124665'
 #?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }',
     {
@@ -119,7 +119,7 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     :args['--xen', '23'],
     'long option with spacey value';
 
-#?rakudo todo 'nom regression'
+#?rakudo todo 'nom regression RT #124666'
 #?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     {
@@ -128,7 +128,7 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     :args['--xin', '23'],
     'named alias (inner name) with spacey value';
 
-#?rakudo todo 'nom regression'
+#?rakudo todo 'nom regression RT #124667'
 #?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     {
@@ -137,7 +137,7 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     :args['--xen', '23'],
     'named alias (outer name) with spacey value';
 
-#?rakudo todo 'nom regression'
+#?rakudo todo 'nom regression RT #124668'
 #?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }',
     {
@@ -187,7 +187,7 @@ is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     :args['--bool', '--', '-option'],
     'Boolean argument with --';
 
-#?rakudo todo 'NYI'
+#?rakudo todo 'NYI RT #124669'
 #?niecza todo
 is_run 'sub MAIN(:@foo) { print @foo }',
     {
@@ -212,7 +212,7 @@ is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" 
     :args['--foo=bar'],
     'correctly select Scalar candidate from Scalar and Array candidates.';
 
-#?rakudo todo 'NYI'
+#?rakudo todo 'NYI RT #124670'
 #?niecza todo
 is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" }',
     {

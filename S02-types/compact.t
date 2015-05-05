@@ -5,7 +5,7 @@ plan 10;
 
 # L<S09/Compact arrays/A compact array is for most purposes interchangeable with the corresponding buffer type>
 
-#?rakudo skip "No such method STORE for Int"
+#?rakudo skip "No such method STORE for Int RT #124455"
 # compact array acting as a buffer
 {
     my uint8 @buffer = ('A' .. 'Z').map({ .ord });
@@ -20,7 +20,7 @@ plan 10;
     );
 }
 
-#?rakudo skip "cat NYI"
+#?rakudo skip "cat NYI RT #124456"
 # buffer acting as a compact array
 {
     my buf8 $buffer = ('A' .. 'Z').map({sprintf('%08d', .ord)}).cat;
@@ -33,7 +33,7 @@ plan 10;
     );
 }
 
-#?rakudo skip "cat NYI"
+#?rakudo skip "cat NYI RT #124457"
 # L<S09/Compact arrays/The size of any buffer type in bytes may be found with the .bytes method>
 {
     my buf8  $buf8  = ('A' .. 'Z').map({sprintf('%08d', .ord)}).cat;

@@ -153,19 +153,19 @@ is (65..75).chrs.ords, '65 66 67 68 69 70 71 72 73 74 75', "chrs > ords round-tr
 is chrs(104, 101, 108, 108, 111), 'hello', 'chrs works with a list of ints';
 
 #?niecza 5 skip "chr handling of invalid code-points"
-#?rakudo.moar todo 'chr surrogate'
-#?rakudo.jvm todo 'chr surrogate'
+#?rakudo.moar todo 'chr surrogate RT #124834'
+#?rakudo.jvm todo 'chr surrogate RT #124835'
 dies_ok {chr(0xD800)}, "chr of surrogate";
-#?rakudo.parrot 2 todo 'chr of noncharacter'
+#?rakudo.parrot 2 todo 'chr of noncharacter RT #124836'
 lives_ok {chr(0x2FFFE)}, "chr of noncharacter";
 lives_ok {chr(0x2FFFF)}, "chr of noncharacter";
-#?rakudo.moar todo 'chr max'
+#?rakudo.moar todo 'chr max RT #124837'
 dies_ok {chr(0x10FFFF+1)}, "chr out of range (max)";
 dies_ok {chr(-1)}, "chr out of range (negative)";
 
 ok !defined(ord("")), 'ord("") returns an undefined value';
 
-#?rakudo.jvm skip 'high character name lookup'
+#?rakudo.jvm skip 'high character name lookup RT #124838'
 is "\c[DROMEDARY CAMEL]".ord, 0x1F42A, "ord of named high character";
 is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
 

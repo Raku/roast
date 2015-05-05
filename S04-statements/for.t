@@ -466,14 +466,14 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     is (for ^5 { 41; next if $_ == 2; $_; }).flat, (0,1,3,4),
                 "for loop with value-less next flattens out nexted iterations";
 
-#?rakudo todo 'Rakudo still uses Nil here'
+#?rakudo todo 'Rakudo still uses Nil here RT #124568'
     my $l = (for ^5 { 41; next if $_ == 2; $_; });
     is $l[2].perl, "()", "for loop iteration with value-less 'next' gives ()";
 
     is (for ^5 { 41; last if $_ == 2; $_; }).flat, (0,1),
                 "for loop with value-less last flattens out last iteration";
 
-#?rakudo todo 'Rakudo still uses Nil here'
+#?rakudo todo 'Rakudo still uses Nil here RT #124569'
     $l = (for ^5 { 41; last if $_ == 2; $_; });
     is $l[2].perl, "()", "for loop iteration with value-less 'last' gives ()";
 }

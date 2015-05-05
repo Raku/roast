@@ -31,7 +31,7 @@ is "ab cD Ef".wordcase,      "Ab Cd Ef",       "works on ordinary string";
 # Non-ASCII chars:
 is wordcase("äöü abcä"), "Äöü Abcä", "wordcase() works on non-ASCII chars";#
 
-#?rakudo.jvm 2 todo 'NFG on JVM'
+#?rakudo.jvm 2 todo 'NFG on JVM RT #124741'
 #?niecza 2 todo 'charspec'
 is wordcase("a\c[COMBINING DIAERESIS]üö abcä"), "Äüö Abcä", 'wordcase on string with grapheme precomposed';
 is wordcase("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),

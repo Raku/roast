@@ -18,14 +18,14 @@ nok $tracker, 'orelse thunks';
         ok(~$! eq "oh noes!", 'orelse sets $! after an exception');
 }
 
-#?rakudo skip 'orelse passes $! as argument'
+#?rakudo skip 'orelse passes $! as argument RT #124535'
 {
     try { die "oh noes!" } orelse -> $foo {
         ok ~$foo eq "oh noes!", 'orelse passes $! to one argument after an exception';
     };
 }
 
-#?rakudo skip 'orelse passes $! as multiple arguments'
+#?rakudo skip 'orelse passes $! as multiple arguments RT #124536'
 {
     try { die "oh noes!" } orelse -> $foo, $bar {
         ok ~$foo eq "oh noes!" && ~$bar eq "oh noes!", 'orelse passes $! to two arguments after an exception';
