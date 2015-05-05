@@ -61,7 +61,7 @@ is IO::Path::Win32.new("\\usr\\bin").relative("/usr"),    "bin",            "rel
 
 is $relpath.absolute.IO.relative,  "foo\\bar", "relative inverts absolute";
 is $relpath.absolute("/foo").IO.relative("\\foo"), "foo\\bar","absolute inverts relative";
-#?rakudo 1 todo 'resolve NYI, needs nqp::readlink RT #:readlink' RT#:124783'
+#?rakudo 1 todo 'resolve NYI, needs nqp::readlink RT #124783'
 is $abspath.relative.IO.absolute.IO.resolve, "\\foo\\bar",    "absolute inverts relative with resolve";
 
 is IO::Path::Win32.new("foo/bar").parent, "foo",    "parent of 'foo/bar' is 'foo'";

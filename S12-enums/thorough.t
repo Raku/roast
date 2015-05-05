@@ -48,7 +48,7 @@ sub test_stuff($x) {
 }
 
 
-#?rakudo skip 'does day::Tue RT #:Tue' RT#:124830'
+#?rakudo skip 'does day::Tue RT #124830'
 {
   my $x = 3;
   is $x, 3, "basic sanity (3)";
@@ -57,7 +57,7 @@ sub test_stuff($x) {
 }
 
 #?DOES 16
-#?rakudo skip 'does &day::("Tue") RT #:(Tue)' RT#:124831'
+#?rakudo skip 'does &day::("Tue") RT #124831'
 {
   my $x = 4;
   is $x, 4, "basic sanity (4)";

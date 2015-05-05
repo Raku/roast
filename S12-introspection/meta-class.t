@@ -21,7 +21,7 @@ class Foo:ver<0.0.1> {
 ok(Foo.HOW.can(Foo, 'bar'), '... Foo can bar');
 #?rakudo skip 'precedence of HOW RT #125015'
 ok(HOW(Foo).can(Foo, 'bar'), '... Foo can bar (anthoer way)');
-#?rakudo skip 'precedence of prefix:<^> RT #<^>' RT#:125016'
+#?rakudo skip 'precedence of prefix:<^> RT #125016'
 ok(^Foo.can(Foo, 'bar'), '... Foo can bar (another way)');
 ok(Foo.^can('bar'), '... Foo can bar (as class method)');
 ok(Foo.HOW.isa(Foo, Foo), '... Foo is-a Foo (of course)');
