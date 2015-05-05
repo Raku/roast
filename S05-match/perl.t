@@ -27,7 +27,7 @@ ok "foo" ~~ /<f=&f> <o=&o>+ /, 'Regex matches (2)';
 lives_ok { $/.perl }, 'lives on quantified named captures';
 
 # RT #64874
-#?rakudo skip '<foo::bar>'
+#?rakudo skip '<foo::bar> RT #124745'
 #?niecza skip 'Cannot dispatch to a method on GLOBAL::Perl6::Grammar'
 {
     my $code_str = 'say <OH HAI>';

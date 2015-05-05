@@ -79,7 +79,7 @@ my $str = 'a' x 7;
        'LTM - literal wins tie against \w*';
 }
 
-#?rakudo skip '::'
+#?rakudo skip ':: RT #124526'
 {
     # with LTM stoppers
     my token foo1 { 

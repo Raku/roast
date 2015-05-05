@@ -103,7 +103,7 @@ plan 32;
 }
 
 # Lists as lvalues to swap, this time we use binding instead of assignment
-#?rakudo skip 'list binding'
+#?rakudo skip 'list binding RT #124494'
 #?niecza skip 'Cannot use bind operator with this LHS'
 {
   my $foo = 42;
@@ -118,7 +118,7 @@ plan 32;
     "the vars didn't lose the readwrite-ness";
 }
 
-#?rakudo skip 'list binding'
+#?rakudo skip 'list binding RT #124495'
 #?niecza skip 'Cannot use bind operator with this LHS'
 {
   my $foo = 1;

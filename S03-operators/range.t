@@ -19,11 +19,11 @@ is ~("a".."z"), "a b c d e f g h i j k l m n o p q r s t u v w x y z", "(..) wor
 is ~("A".."Z"), "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", "(..) works on char range ending in Z";
 is ~("Y".."AB"), "",     "(..) works on carried chars (3)";
 
-#?rakudo todo 'huh?'
+#?rakudo todo 'huh? RT #124542'
 #?niecza 4 skip 'Spec under design here'
 is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
-#?rakudo todo 'huh?'
+#?rakudo todo 'huh? RT #124543'
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
 is ~(' '..' '), ' ',    'all-whitespace range works';

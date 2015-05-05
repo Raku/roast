@@ -7,7 +7,7 @@ plan 9;
 # L<S06/Signatures>
 
 # Nil is treated as definite value in return specifications
-#?rakudo skip 'definite values as return specifications dont parse yet'
+#?rakudo skip 'definite values as return specifications dont parse yet RT #124927'
 {
     my sub return-nil(--> Nil) {
         1
@@ -16,7 +16,7 @@ plan 9;
     ok return-nil() =:= Nil, 'A function with a definite return value should ignore the result of its last statement';
 }
 
-#?rakudo skip 'definite values as return specifications dont parse yet'
+#?rakudo skip 'definite values as return specifications dont parse yet RT #124928'
 {
     my sub return-two(--> 2) {
         3
@@ -25,7 +25,7 @@ plan 9;
     is return-two(), 2, 'A function with a non-Nil definite return value should ignore the result of its last statement';
 }
 
-#?rakudo skip 'definite values as return specifications dont parse yet'
+#?rakudo skip 'definite values as return specifications dont parse yet RT #124929'
 {
     my $code = q:to/PERL/;
     my sub return-nil(--> Nil) {
@@ -35,7 +35,7 @@ PERL
     eval_dies_ok($code, 'A function with a definite return value may not use return with a value')
 }
 
-#?rakudo skip 'definite values as return specifications dont parse yet'
+#?rakudo skip 'definite values as return specifications dont parse yet RT #124930'
 {
     my $code = q:to/PERL/;
     my sub return-failure(--> Nil) {
@@ -45,7 +45,7 @@ PERL
     eval_dies_ok($code, 'A function with a definite return value may not use return with a value, even a Failure')
 }
 
-#?rakudo skip 'definite values as return specifications dont parse yet'
+#?rakudo skip 'definite values as return specifications dont parse yet RT #124931'
 {
     my sub fail-five(--> 5) {
         fail 5
@@ -56,7 +56,7 @@ PERL
     ok $failure === Failure, 'Failures bypass the return value of function with a definite return value in the signature';
 }
 
-#?rakudo skip 'definite values as return specifications dont parse yet'
+#?rakudo skip 'definite values as return specifications dont parse yet RT #124932'
 {
     my sub return-six(--> 6) {
         return
@@ -66,7 +66,7 @@ PERL
 }
 
 
-#?rakudo skip 'definite values as return specifications dont parse yet'
+#?rakudo skip 'definite values as return specifications dont parse yet RT #124933'
 {
     my sub return-seven(--> $result) {
         $result = 7;
@@ -77,7 +77,7 @@ PERL
 }
 
 
-#?rakudo skip 'definite values as return specifications dont parse yet'
+#?rakudo skip 'definite values as return specifications dont parse yet RT #124934'
 {
     my $result = 9;
 

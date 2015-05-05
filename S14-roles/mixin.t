@@ -62,7 +62,7 @@ is $y.test,     42,         'method from other role was OK too';
 }
 
 
-#?rakudo skip 'mixin at the point of declaration is compile time'
+#?rakudo skip 'mixin at the point of declaration is compile time RT #124747'
 #?niecza skip 'Trait does not available on variables'
 {
     my @array does R1;
@@ -113,7 +113,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 # RT #77184
 #?niecza skip 'Twigil ! is only valid on attribute definitions'
-#?rakudo skip 'Twigil ! is only valid on attribute definitions'
+#?rakudo skip 'Twigil ! is only valid on attribute definitions RT #124748'
 {
     lives_ok { role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }, 'RT #77184'
 }

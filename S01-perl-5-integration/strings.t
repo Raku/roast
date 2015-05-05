@@ -3,7 +3,7 @@ use Test;
 plan 6;
 
 is(EVAL("'Yet Another Perl Hacker'",:lang<perl5>),"Yet Another Perl Hacker");
-#?rakudo todo "NativeCall strings not yet Null safe"
+#?rakudo todo "NativeCall strings not yet Null safe RT #124649"
 {
     is(EVAL('"Yet Ano\0ther P\0erl Hacker"',:lang<perl5>),"Yet Ano\0ther P\0erl Hacker","Null Bytes in the middle of a converted string");
 }

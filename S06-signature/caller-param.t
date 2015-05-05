@@ -9,10 +9,10 @@ sub callerunderscore ($foo = $CALLER::_) {
 is(callerunderscore("foo"), "-foo-", 'CALLER:: string arg');
 is(callerunderscore(1), "-1-", 'CALLER:: number arg');
 $_ = "foo";
-#?rakudo todo "NYI"
+#?rakudo todo "NYI RT #124924"
 is(callerunderscore(), "-foo-", 'CALLER:: $_ set once');
 $_ = "bar";
-#?rakudo todo "NYI"
+#?rakudo todo "NYI RT #124925"
 is(callerunderscore(), "-bar-", 'CALLER:: $_ set twice');
 for ("quux") {
     #?rakudo todo "NYI"
@@ -22,7 +22,7 @@ given 'hirgel' {
     #?rakudo todo "NYI"
     is callerunderscore, '-hirgel-', '$CALLER::_ set by given';
 }
-#?rakudo todo "NYI"
+#?rakudo todo "NYI RT #124926"
 is(callerunderscore(), '-bar-', 'CALLER:: $_ reset after for');
 
 

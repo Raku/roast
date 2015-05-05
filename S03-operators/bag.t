@@ -66,7 +66,7 @@ sub symmetric-difference($a, $b) {
     ($a (|) $b) (-) ($b (&) $a)
 }
 
-#?rakudo 8 todo "Rakudo update in progress, but not done yet"
+#?rakudo 8 todo "Rakudo update in progress, but not done yet RT #124529"
 
 is showkv($s (^) $b), showkv(symmetric-difference($s, $b)), "Bag symmetric difference with Set is correct";
 isa-ok ($s (^) $b), Bag, "... and it's actually a Bag";

@@ -6,7 +6,7 @@ use Test;
 plan 38;
 
 # Type of return value
-#?rakudo 2 skip 'StrPos NYI'
+#?rakudo 2 skip 'StrPos NYI RT #124681'
 #?niecza 2 skip 'StrPos'
 isa-ok('abc'.index('b'), StrPos);
 isa-ok('abc'.index('d'), StrPos);

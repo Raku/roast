@@ -11,7 +11,7 @@ dies_ok { Supply.delayed(1) }, 'can not be called as a class method';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-#?rakudo skip "doesn't work or can't test"
+#?rakudo skip "doesn't work or can't test RT #124826"
 {
         my $delay = 2;
         my $now   = now;
@@ -24,7 +24,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         ok $seen && $seen >= $now + $delay, "on-demand sufficiently delayed";
 }
 
-#?rakudo skip "doesn't work or can't test"
+#?rakudo skip "doesn't work or can't test RT #124827"
 {
         my $delay = 2;
         my $s     = Supply.new;

@@ -114,7 +114,7 @@ sub levelwrap($n) {
 is( levelwrap( 1 ), 1, "Sanity test." );
 is( levelwrap( 2 ), 2, "Sanity test." );
 
-#?rakudo todo 'callwith'
+#?rakudo todo 'callwith RT #124653'
 lives_ok { &levelwrap.callwith( 1 )},
     "Check that functions have a 'callwith' that works. ";
 
@@ -161,7 +161,7 @@ sub functionB {
     #?rakudo todo 'temp and wrap'
     is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 }
-#?rakudo todo 'temp and wrap'
+#?rakudo todo 'temp and wrap RT #124654'
 is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 
 #?rakudo todo 'RT #70267: call to nextsame with nowhere to go'
@@ -200,7 +200,7 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
 }
 
 # RT #69312
-#?rakudo.jvm skip "control operator crossed continuation barrier"
+#?rakudo.jvm skip "control operator crossed continuation barrier RT #124655"
 {
     my @t = gather {
         sub triangle { take '=' x 3; }

@@ -84,7 +84,7 @@ plan 25;
 
 # normal closure:
 #?niecza skip 'leave'
-#?rakudo skip 'leave NYI'
+#?rakudo skip 'leave NYI RT #124960'
 {
     is EVAL(q{
         my $a;

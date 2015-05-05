@@ -211,7 +211,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # L<S03/Hyper operators/'unordered type'>
 #?niecza skip "Hypers not yet Set compatible"
-#?rakudo todo "Hypers not yet Set compatible"
+#?rakudo todo "Hypers not yet Set compatible RT #124487"
 {
     is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';
     is showset("a" «~« set(<pple bbot rmadillo>)), 'abbot apple armadillo', 'Str «~« Set';
@@ -226,7 +226,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 #?niecza skip "Hypers not yet Set compatible"
-#?rakudo todo "Hypers not yet Set compatible"
+#?rakudo todo "Hypers not yet Set compatible RT #124488"
 dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # L<S32::Containers/Set/roll>
@@ -369,7 +369,7 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is $s, set(5), 'can metaop set assign like: (|)=';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet'
+#?rakudo todo 'we have not secured .WHICH creation yet RT #124489'
 {
     isnt 'a Str|b Str|c'.Set.WHICH, <a b c>.Set.WHICH,
       'Faulty .WHICH creation';

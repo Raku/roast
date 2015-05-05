@@ -34,7 +34,7 @@ plan 9;
 }
 
 # RT #98954
-#?rakudo todo 'Should we fail, or should we throw'
+#?rakudo todo 'Should we fail, or should we throw RT #124449'
 {
     my @a = [1], [2], [3];
     is (map { @a[1 - $_][0] }, 0 .. 3).perl,

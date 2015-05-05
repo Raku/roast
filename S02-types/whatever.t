@@ -230,7 +230,7 @@ eval_dies_ok '{*.{}}()', '{*.{}}() dies';
     ok $f(4), 'Whatever-currying !< (4)';
 }
 
-#?rakudo skip 'currying plus meta ops'
+#?rakudo skip 'currying plus meta ops RT #124486'
 {
     my $f = 5 R- *;
     isa-ok $f, Code, 'Whatever-currying with R- (1)';

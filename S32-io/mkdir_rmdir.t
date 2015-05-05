@@ -9,7 +9,7 @@ plan 7;
 # L<S32::IO/IO::Path>
 
 #?niecza skip "mkdir rmdir NYI"
-#?rakudo skip "mkdir rmdir NYI"
+#?rakudo skip "mkdir rmdir NYI RT #124788"
 {
     my $d = testdir();
     $d.mkdir;
@@ -22,7 +22,7 @@ plan 7;
 
 # rmdir soft-fails when dir doesn't exist.
 #?niecza skip "rmdir NYI"
-#?rakudo skip "rmdir NYI"
+#?rakudo skip "rmdir NYI RT #124789"
 #?DOES 1
 {
     my $err = testdir().path.rmdir;
@@ -31,7 +31,7 @@ plan 7;
 
 # rmdir soft-fail when dir contains files.
 #?niecza skip "mkdir rmdir NYI"
-#?rakudo skip "mkdir rmdir NYI"
+#?rakudo skip "mkdir rmdir NYI RT #124790"
 {
     my $dir = testdir();
     $dir.mkdir;
@@ -45,7 +45,7 @@ plan 7;
 
 # mkdir in a dir that doesn't exist
 #?niecza skip "mkdir NYI"
-#?rakudo skip "mkdir NYI"
+#?rakudo skip "mkdir NYI RT #124791"
 {
     my $dir = testdir().child(testdir());
     my $err = $dir.mkdir;
@@ -54,7 +54,7 @@ plan 7;
 
 # mkdir a dir that already exists
 #?niecza skip "mkdir NYI"
-#?rakudo skip "mkdir NYI"
+#?rakudo skip "mkdir NYI RT #124792"
 {
     my $dir = testdir();
     $dir.mkdir;

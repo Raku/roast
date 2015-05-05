@@ -27,7 +27,7 @@ is $r.config<formatted>, 'I';
 
 $r = $=pod[2].contents[0];
 is $r.config<number>, 42;
-#?rakudo skip 'non-string colonpair pod options'
+#?rakudo skip 'non-string colonpair pod options RT #124970'
 {
   is $r.config<zebras>, True;
   is $r.config<sheep>, False;

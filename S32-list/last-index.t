@@ -26,7 +26,7 @@ my @list = (1 ... 10);
     is($result, 3, "method form of last-index returns the expected item");
 }
 
-#?rakudo skip "adverbial block"
+#?rakudo skip "adverbial block RT #124754"
 #?niecza skip 'No value for parameter Mu $filter in CORE Any.first'
 {
     my $result = @list.last-index():{ $^a == 4 };

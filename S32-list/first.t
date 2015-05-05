@@ -26,7 +26,7 @@ my @list = (1 ... 10);
     is($result, 4, "method form of first returns the expected item");
 }
 
-#?rakudo skip "adverbial block"
+#?rakudo skip "adverbial block RT #124765"
 #?niecza skip 'No value for parameter Mu $filter in CORE Any.first'
 {
     my $result = @list.first():{ ($^a == 4) };

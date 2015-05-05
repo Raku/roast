@@ -93,7 +93,7 @@ ok $d.HOW.does($d, InitialAttribBoth),
   ".HOW.does gives correct information (4-1)";
 ok $d.^does(InitialAttribBoth),
   ".^does gives correct information (4-1)";
-#?rakudo 4 todo '.does with parametric roles'
+#?rakudo 4 todo '.does with parametric roles RT #124746'
 # Are these really right? Trying to supply one parameter to a role that
 # needs two? Even if the second doesn't participate in the multi dispatch,
 # it still exists as a role parameter that needs supplying. Maybe we do

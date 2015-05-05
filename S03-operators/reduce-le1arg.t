@@ -17,9 +17,9 @@ is ([+&] ()), +^0, "[+&] () eq +^0";
 ok( !([+<] ()).defined, "[+<] () should fail");
 ok( !([+>] ()).defined, "[+>] () should fail");
 ok( !([~&] ()).defined, "[~&] () should fail");
-#?rakudo skip "~< NYI"
+#?rakudo skip "~< NYI RT #124550"
 ok( !([~<] ()).defined, "[~<] () should fail");
-#?rakudo skip "~> NYI"
+#?rakudo skip "~> NYI RT #124551"
 ok( !([~>] ()).defined, "[~>] () should fail");
 is ([+] ()), 0, "[+] () eq 0";
 is ([-] ()), 0, "[-] () eq 0";
@@ -40,7 +40,7 @@ is ([>=] ()), Bool::True, "[>=] () eq True";
 is ([before] ()), Bool::True, "[before] () eq True";
 is ([after] ()), Bool::True, "[after] () eq True";
 is ([~~] ()), Bool::True, "[~~] () eq True";
-#?rakudo skip 'expected Any but got Mu instead'
+#?rakudo skip 'expected Any but got Mu instead RT #124552'
 is ([!~~] ()), Bool::True, "[!~~] () eq True";
 is ([eq] ()), Bool::True, "[eq] () eq True)";
 is ([ne] ()), Bool::True, "[ne] () eq True)";

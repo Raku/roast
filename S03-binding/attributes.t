@@ -41,7 +41,7 @@ plan 12;
 }
 
 # Public class attributes
-#?rakudo skip 'class attributes'
+#?rakudo skip 'class attributes RT #124631'
 {
     my $var = 42;
     class Klass3 { our $.x; method bind { $!x := $var } }

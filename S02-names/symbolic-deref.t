@@ -108,7 +108,7 @@ my $outer = 'outside';
 # The &::*::foo tests were removed as a result of
 # http://irclog.perlgeek.de/perl6/2011-07-30#i_4189700
 
-#?rakudo skip 'NYI'
+#?rakudo skip 'NYI RT #124913'
 {
   sub GLOBAL::a_global_sub () { 42 }
   is ::("&*a_global_sub")(), 42,

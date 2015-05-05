@@ -66,7 +66,7 @@ This test min/max functions in their operator form. To see them tested in their 
 }
 
 #array vs. scalar
-#?rakudo skip "Annoying test that we haven't done the obvious yet unspecced, fails because we have indeed done the obvious"
+#?rakudo skip "Annoying test that we haven't done the obvious yet unspecced, fails because we have indeed done the obvious RT #124539"
 #?niecza todo
 {
     #NYS- Not Yet Specced. C<isnt>'d only so those sneaky programmers can't get away with coding

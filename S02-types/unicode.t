@@ -8,17 +8,17 @@ plan 7;
 # LATIN CAPITAL LETTER C, COMBINING DOT BELOW
 my Str $u = "\x[0043,0323]";
 is $u.codes, 2, 'combining \x[0042,0323] is two codes';
-#?rakudo skip 'graphs NYI'
+#?rakudo skip 'graphs NYI RT #124498'
 is $u.graphs, 1, 'combining À is one graph';
 is "foo\r\nbar".codes, 8, 'CRLF is 2 codes';
-#?rakudo skip 'graphs NYI'
+#?rakudo skip 'graphs NYI RT #124499'
 is "foo\r\nbar".graphs, 7, 'CRLF is 1 graph';
 
-#?rakudo.jvm todo "NFG on JVM"
+#?rakudo.jvm todo "NFG on JVM RT #124500"
 is $u.chars, 1, '.chars defaults to .graphs';
 
 # RT #65170
-#?rakudo.jvm todo "NFG on JVM"
+#?rakudo.jvm todo "NFG on JVM RT #124501"
 {
     my $rt65170;
 

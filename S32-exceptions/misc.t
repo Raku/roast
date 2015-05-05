@@ -171,7 +171,7 @@ throws_like 'sub f(*@a, $b?) { }', X::Parameter::WrongOrder,
     misplaced   => 'optional positional',
     after       => 'variadic';
 
-#?rakudo todo 'parsing regression'
+#?rakudo todo 'parsing regression RT #124679'
 throws_like '#`', X::Syntax::Comment::Embedded;
 # RT #71814
 throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/EVAL/;
@@ -514,7 +514,7 @@ throws_like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assu
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
 
 # RT #98854
-#?rakudo todo 'Cannot find method "returns"'
+#?rakudo todo 'Cannot find method "returns" RT #124680'
 throws_like 'sub f { f(|$) }', X::Obsolete,
     old => { m/'$) variable'/ }, replacement => { m/'$*EGID'/ }, when => { m/'in Perl 6'/ };
 

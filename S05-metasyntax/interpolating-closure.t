@@ -25,7 +25,7 @@ $var = rx/<&abc>/;
 ok("aaabccc" ~~ m/aa <{ $var ?? $var !! rx{<.null>} }> cc/, 'Rule block first');
 
 $var = rx/xyz/;
-#?rakudo todo 'dunno'
+#?rakudo todo 'dunno RT #124527'
 #?niecza todo 'dunno'
 ok("aaabccc" !~~ m/aa <{ $var ?? $var !! rx{abc} }> cc/, 'Rule block fail');
 

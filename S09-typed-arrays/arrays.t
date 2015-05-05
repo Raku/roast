@@ -101,7 +101,7 @@ plan 75;
     lives_ok { @b = @a.values }, '@a.values is typed (2)';
 } #3
 
-#?rakudo todo 'initialization'
+#?rakudo todo 'initialization RT #124676'
 {
     my Str @c = <foo bar baz>;
     ok @c.keys.VAR.of.WHICH eqv Str.WHICH, '@array.keys is typed with Str';
@@ -136,7 +136,7 @@ plan 75;
 } #8
 
 # RT #69482
-#?rakudo skip 'type on our-variables'
+#?rakudo skip 'type on our-variables RT #124677'
 {
     our Int @a1;
     our @a2;

@@ -11,7 +11,7 @@ my Str $x;
 
 #L<S19/Backward (In)compatibility/Execute a line of code, with all features>
 
-#?rakudo todo "deprecation message NYI"
+#?rakudo todo "deprecation message NYI RT #125019"
 is_run $x, :args['-E', 'say q[hi]'],
     {
         out     => rx/'SORRY' .+ 'use -e'/,

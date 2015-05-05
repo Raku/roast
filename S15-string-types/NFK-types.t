@@ -8,7 +8,7 @@ plan 10;
 
 ## NFKC
 
-#?rakudo 1 skip 'NFKC type NYI'
+#?rakudo 1 skip 'NFKC type NYI RT #124989'
 #?niecza 1 skip 'NFKC type NYI'
 {
     is q:nfkc"ẛ̣".WHAT, NFKC, ":nfkc adverb on quoteforms produces NFKC string type.";
@@ -27,7 +27,7 @@ plan 10;
 
 ## NFKD
 
-#?rakudo 1 skip 'NFKD type NYI'
+#?rakudo 1 skip 'NFKD type NYI RT #124990'
 #?niecza 1 skip 'NFKD type NYI'
 {
     is q:nfkd"ẛ̣".WHAT, NFKD, ":nfkd adverb on quoteforms produces NFKD string type.";

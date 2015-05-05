@@ -23,7 +23,7 @@ plan 12;
     is $y, 3, 'could access and update outer lexicals';
 }
 
-#?rakudo skip 'assignment to match variables (dubious)'
+#?rakudo skip 'assignment to match variables (dubious) RT #124946'
 #?niecza skip 'assigning to readonly value'
 {
     ok("abc" ~~ m/a(bc){$<caught> = $0}/, 'Inner match');
@@ -34,7 +34,7 @@ my $caught = "oops!";
 ok("abc" ~~ m/a(bc){$caught = $0}/, 'Outer match');
 is($caught, "bc", 'Outer caught');
 
-#?rakudo skip 'assignment to match variables (dubious)'
+#?rakudo skip 'assignment to match variables (dubious) RT #124947'
 #?niecza skip 'assigning to readonly value'
 {
     ok("abc" ~~ m/a(bc){$0 = uc $0}/, 'Numeric match');

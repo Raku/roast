@@ -145,7 +145,7 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
-#?rakudo todo "Some question of what this form should actually do"
+#?rakudo todo "Some question of what this form should actually do RT #124561"
 #?niecza todo ":radix() NYI"
 {
     is(:8('0b1110'),  0o14, ':8(0b1110) converts from decimal');

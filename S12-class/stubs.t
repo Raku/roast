@@ -13,7 +13,7 @@ eval_lives_ok q[ module StubC { ... }; module StubC { sub foo { } }; ],
               'Can stub a module, and later on declare it';
 
 #?niecza todo 'broken in nom-derived stub model'
-#?rakudo todo 'nom regression'
+#?rakudo todo 'nom regression RT #125044'
 eval_lives_ok q[ package StubD { ... }; class StubD { method foo { } }; ],
               'Can stub a package, and later on implement it as a method';
 

@@ -5,11 +5,11 @@ plan 12;
 
 #L<S05/Modifiers/"If followed by an x, it means repetition.">
 
-#?rakudo todo ':2x'
+#?rakudo todo ':2x RT #125038'
 ok('abab' ~~ m:2x/ab/,  ':2x (repetition) modifier (+)');
 nok('ab'  ~~ m:2x/ab/, ':2x (repetition) modifier (-)');
 
-#?rakudo todo ':x(2)'
+#?rakudo todo ':x(2) RT #125039'
 ok('abab' ~~ m:x(2)/ab/, ':2x (repetition) modifier (+)');
 nok('ab'  ~~ m:x(2)/ab/, ':2x (repetition) modifier (-)');
 

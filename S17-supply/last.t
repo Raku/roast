@@ -7,7 +7,7 @@ use Test::Tap;
 plan 9;
 
 dies_ok { Supply.last }, 'can not be called as a class method';
-#?rakudo todo "we don't have Natural numbers yet"
+#?rakudo todo "we don't have Natural numbers yet RT #124825"
 dies_ok { Supply.new.last(0) }, 'cannot have 0 last';
 dies_ok { Supply.new.last("foo") }, 'cannot have "foo" last';
 

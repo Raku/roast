@@ -39,7 +39,7 @@ class NastyChild is Parent { };
 
 # with definedness checks
 
-#?rakudo skip 'dies'
+#?rakudo skip 'dies RT #124839'
 {
     sub f1(Str:D(Cool:D) $x) { $x }
     sub f2(Str(Cool:D)   $x) { $x; }
@@ -64,7 +64,7 @@ class NastyChild is Parent { };
 }
 
 # coercion types on variables
-#?rakudo skip 'NYI'
+#?rakudo skip 'NYI RT #124840'
 #?DOES 3
 {
     my Int(Any) $x;
@@ -75,7 +75,7 @@ class NastyChild is Parent { };
 }
 
 # methods exist, too
-#?rakudo skip 'NYI'
+#?rakudo skip 'NYI RT #124841'
 #?DOES 2
 {
     class Co {

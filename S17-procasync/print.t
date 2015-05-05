@@ -47,7 +47,7 @@ await $psa;
 ok $pc.close-stdin, 'did the close of STDIN work';
 my $ps = await $pm;
 
-#?rakudo 5 skip "Flapping tests"
+#?rakudo 5 skip "Flapping tests RT #125048"
 isa-ok $ps, Proc::Status;
 ok $ps, 'was execution successful';
 is $ps.?exitcode, 0, 'is the status ok';
