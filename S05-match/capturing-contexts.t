@@ -10,15 +10,15 @@ plan 46;
 # L<S05/Match objects/"A match always returns a " >
 {
   my $match = 'abd' ~~ m/ (a) (b) c || (\w) b d /;
-  isa_ok $match, Match, 'Match object returned';
-  isa_ok $/, Match, 'Match object assigned to $/';
+  isa-ok $match, Match, 'Match object returned';
+  isa-ok $/, Match, 'Match object assigned to $/';
   ok( $/ === $match, 'Same match objects');
 }
 
 {
   my $match = 'xyz' ~~ / abc /;
-  #?niecza skip 'No value for parameter $obj in isa_ok'
-  isa_ok( $/, Nil, 'Failed match returns Nil' );
+  #?niecza skip 'No value for parameter $obj in isa-ok'
+  isa-ok( $/, Nil, 'Failed match returns Nil' );
 }
 
 # old: L<S05/Return values from matches/"The array elements of a C<Match> object are referred to" >
@@ -108,7 +108,7 @@ plan 46;
     $_ = 'RT #66252';
     m/(R.)/;
     #?niecza todo 'Match object in $/ after match in void context'
-    isa_ok $/, 'Match', 'Match object in $/ after match in void context';
+    isa-ok $/, 'Match', 'Match object in $/ after match in void context';
     is $/, 'RT', 'Matched as intended in void context';
 }
 
@@ -169,7 +169,7 @@ plan 46;
     ok "a \n \b \n c \n d" ~~ /a .* c/, "match multiple lines with '.'";
     ok $/.can('lines'), "Match has a .lines method";
     is +$/.lines, 3, "Correct number of lines";
-    isa_ok $/, Cool, "Match is Cool";
+    isa-ok $/, Cool, "Match is Cool";
 }
 
 # RT #83508

@@ -4,7 +4,7 @@ use Test;
 
 {
     my $r = RangeIter.new(1..5);
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, 1, '$r.get == 1';
     is $r.get, 2, '$r.get == 2';
     is $r.get, 3, '$r.get == 3';
@@ -16,7 +16,7 @@ use Test;
 
 {
     my $r = RangeIter.new(-1.5.Num..^3);
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, -1.5, '$r.get == -1.5';
     is $r.get, -.5, '$r.get == -0.5';
     is $r.get, .5, '$r.get == .5';
@@ -28,7 +28,7 @@ use Test;
 
 {
     my $r = RangeIter.new(-1.5..^3);
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, -1.5, '$r.get == -1.5';
     is $r.get, -.5, '$r.get == -0.5';
     is $r.get, .5, '$r.get == .5';
@@ -40,7 +40,7 @@ use Test;
 
 {
     my $r = RangeIter.new(-1.5.Num^..3);
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, -.5, '$r.get == -0.5';
     is $r.get, .5, '$r.get == .5';
     is $r.get, 1.5, '$r.get == 1.5';
@@ -51,7 +51,7 @@ use Test;
 
 {
     my $r = RangeIter.new(-1..*);
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, -1, '$r.get == -1';
     is $r.get, 0, '$r.get == 0';
     is $r.get, 1, '$r.get == 1';
@@ -67,7 +67,7 @@ use Test;
 
 {
     my $r = RangeIter.new(-1.5.Num..*);
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, -1.5, '$r.get == -1.5';
     is $r.get, -.5, '$r.get == -0.5';
     is $r.get, .5, '$r.get == .5';
@@ -79,7 +79,7 @@ use Test;
 
 {
     my $r = RangeIter.new(-1.5..*);
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, -1.5, '$r.get == -1.5';
     is $r.get, -.5, '$r.get == -0.5';
     is $r.get, .5, '$r.get == .5';
@@ -95,8 +95,8 @@ use Test;
     #  were implemented with gather/take, this test would fail.)
     my $r1 = RangeIter.new(-1..*);
     my $r2 = RangeIter.new(42..*);
-    isa_ok $r1, RangeIter, '$r1 is a RangeIter';
-    isa_ok $r2, RangeIter, '$r2 is a RangeIter';
+    isa-ok $r1, RangeIter, '$r1 is a RangeIter';
+    isa-ok $r2, RangeIter, '$r2 is a RangeIter';
     is $r1.get, -1, '$r1.get == -1';
     is $r2.get, 42, '$r2.get == 42';
     is $r1.get, 0, '$r1.get == 0';
@@ -115,7 +115,7 @@ use Test;
 
 {
     my $r = RangeIter.new('d'..'g');
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, 'd', '$r.get == d';
     is $r.get, 'e', '$r.get == e';
     is $r.get, 'f', '$r.get == f';
@@ -126,7 +126,7 @@ use Test;
 
 {
     my $r = RangeIter.new('d'..*);
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, 'd', '$r.get == d';
     is $r.get, 'e', '$r.get == e';
     is $r.get, 'f', '$r.get == f';
@@ -137,7 +137,7 @@ use Test;
 
 {
     my $r = RangeIter.new(0..'50');
-    isa_ok $r, RangeIter, '$r is a RangeIter';
+    isa-ok $r, RangeIter, '$r is a RangeIter';
     is $r.get, 0, '$r.get == 0';
     is $r.get, 1, '$r.get == 1';
     is $r.get, 2, '$r.get == 2';

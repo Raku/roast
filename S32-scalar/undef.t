@@ -86,13 +86,13 @@ ok(!defined(Mu), "Mu is not defined");
     ok(defined(%hash), "aggregate hash defined");
 
     undefine(@ary);
-#?rakudo todo 'definedness of array'
+#?rakudo todo 'definedness of array RT #124563'
 #?niecza todo 'definedness of array'
     ok(!defined(@ary), "undefine array");
 
     #?niecza emit #
     undefine(%hash);
-#?rakudo todo 'definedness of hash'
+#?rakudo todo 'definedness of hash RT #124564'
 #?niecza todo 'definedness of hash'
     ok(!defined(%hash), "undefine hash");
 
@@ -102,7 +102,7 @@ ok(!defined(Mu), "Mu is not defined");
     ok(defined(%hash), "define hash again");
 }
 
-#?rakudo skip 'access to &your_sub'
+#?rakudo skip 'access to &your_sub RT #124565'
 #?niecza skip 'huh?'
 {
     sub a_sub { "møøse" }
@@ -166,7 +166,7 @@ Perl6-specific tests
 
     my @ary = (<a b c d e>);
     my $ary_r = @ary; # ref
-    isa_ok($ary_r, Array);
+    isa-ok($ary_r, Array);
     ok(defined($ary_r), "array reference");
 
     undefine @ary;
@@ -176,7 +176,7 @@ Perl6-specific tests
 
     my %hash = (1, 2, 3, 4);
     my $hash_r = %hash;
-    isa_ok($hash_r, "Hash");
+    isa-ok($hash_r, "Hash");
     ok(defined($hash_r), "hash reference");
     undefine %hash;
     ok(defined($hash_r), "undefine hash referent:");
@@ -221,7 +221,7 @@ Perl6-specific tests
 #                                 "let keyword">
 
 # - unmatched alternative should bind to undef
-#?rakudo skip 'Cannot use bind operator with this left-hand side'
+#?rakudo skip 'Cannot use bind operator with this left-hand side RT #124566'
 #?niecza skip 'unspeclike use of %MY::'
 #?DOES 10
 {
@@ -308,7 +308,7 @@ is((Any) * (Any), 0, 'Any * Any');
 # L<http://colabti.de/irclogger/irclogger_log/perl6?date=2006-09-12,Tue&sel=145#l186>
 # See log above.  From IRC, TimToady says that both of these
 # should be false.  (At time of writing, @(Mu,) is true.)
-#?rakudo 2 todo 'todo: lists, defined, truthness'
+#?rakudo 2 todo 'todo: lists, defined, truthness RT #124567'
 #?niecza 2 todo 'huh?'
 is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
 is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';

@@ -17,7 +17,7 @@ my $obj = Foo.new( value => 'bar' );
 is( $obj.v, 'bar', 
     'BUILD arg declared as named and invoked with literal pair should'
     ~ ' contain only the pair value' );
-isa_ok($obj.v, Str, 'same arg should be of declared type' );
-isa_ok($obj, Foo, 'The object was constructed of the right type');
+isa-ok($obj.v, Str, 'same arg should be of declared type' );
+isa-ok($obj, Foo, 'The object was constructed of the right type');
 
 # vim: ft=perl6

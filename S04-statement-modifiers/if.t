@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 13;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -70,6 +70,19 @@ plan 11;
 # RT #66544
 {
     is (42 if 0), Nil, '"$something if 0" is Nil';
+}
+
+{
+    my $a = 'oops';
+    { $a = 'ok' } if 1;
+    is $a, 'ok', 'Statement-modifier if runs bare block';
+}
+
+# RT #78142
+{
+    my $a = 'oops';
+    { $a = $^x } if 100;
+    is $a, 100, 'Statement-modifier if runs block with placeholder';
 }
 
 # vim: ft=perl6

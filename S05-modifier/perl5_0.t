@@ -52,7 +52,7 @@ ok(($str ~~ m:Perl5/http:\/\//), "test the regular expression escape");
 
 # returns the count of matches in scalar
 my $vals = "hello world" ~~ m:P5:g/(\w+)/;
-#?rakudo todo 'NYI'
+#?rakudo todo 'NYI RT #125036'
 is($vals, 2, 'returned two values in the match');
 
 # return all the strings we matched
@@ -105,7 +105,7 @@ is(@vals[1], 'world', 'returned correct second value in the match');
 }
 
 my $rule = rx:P5/\s+/;
-isa_ok($rule, 'Regex');
+isa-ok($rule, 'Regex');
 
 ok("hello world" ~~ $rule, '... applying rule object returns true');
 ok(!("helloworld" ~~ $rule), '... applying rule object returns false (correctly)');

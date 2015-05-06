@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 {
     my $capture = \(1,2,3);
@@ -149,6 +149,13 @@ nok (defined  \()[0]), '\()[0] is not defined';
 {
     is @(\( (:a(2)) )).elems, 1, 'Parens around a colonpair in \(...) make a positional (1)';
     is %(\( (:a(2)) )).elems, 0, 'Parens around a colonpair in \(...) make a positional (2)';
+}
+
+# RT #114100
+{
+    sub f(|everything) { everything.perl };
+    my %h = :a, :b, :!c;
+    ok f(%h) ~~ /'\(' \s* '{'/, 'Hashes not flattened into capture list';
 }
 
 # vim: ft=perl6

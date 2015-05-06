@@ -30,7 +30,7 @@ ok EVAL('Range').does(Positional), "Range does Positional";
 ok EVAL('Parcel').does(Positional), "Parcel does Positional";
 #?niecza skip 'Undeclared name Buf'
 ok EVAL('Buf').does(Positional), "Buf does Positional";
-#?rakudo todo "Capture does Positional"
+#?rakudo todo "Capture does Positional RT #124484"
 ok EVAL('Capture').does(Positional), "Capture does Positional";
 
 my %hash;
@@ -44,7 +44,7 @@ ok EVAL('Set').does(Associative), "Set does Associative";
 ok EVAL('Bag').does(Associative), "Bag does Associative";
 #?niecza skip 'Undeclared name QuantHash'
 ok EVAL('QuantHash').does(Associative), "QuantHash does Associative";
-#?rakudo todo "Capture does Associative"
+#?rakudo todo "Capture does Associative RT #124485"
 ok EVAL('Capture').does(Associative), "Capture does Associative";
 
 

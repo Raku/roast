@@ -24,20 +24,20 @@ Some deeper tests were already added.
 #?niecza skip 'Cannot use hash access on an object of type Pair'
 { # Array of Pairs
     my @array;
-    isa_ok(@array, Array);
+    isa-ok(@array, Array);
 
     my $pair = ('key' => 'value');
-    isa_ok($pair, Pair);
+    isa-ok($pair, Pair);
 
     @array[0] = $pair; # assign a variable
     is(+@array, 1, 'the array has one value in it');
 
-    isa_ok(@array[0], Pair);
+    isa-ok(@array[0], Pair);
     is(@array[0]<key>, 'value', 'got the right pair value');
 
     @array[1] = ('key1' => 'value1'); # assign it inline
     is(+@array, 2, 'the array has two values in it');
-    isa_ok(@array[1], Pair);
+    isa-ok(@array[1], Pair);
 
     is(@array[1]<key1>, 'value1', 'got the right pair value');
 }
@@ -45,15 +45,15 @@ Some deeper tests were already added.
 # UNSPECCED
 { # Array of Hashes
     my @array;
-    isa_ok(@array, Array);
+    isa-ok(@array, Array);
 
     my %hash = ('key', 'value', 'key1', 'value1');
-    isa_ok(%hash, Hash);
+    isa-ok(%hash, Hash);
     is(+%hash.keys, 2, 'our hash has two keys');
 
     @array[0] = %hash;
     is(+@array, 1, 'the array has one value in it');
-    isa_ok(@array[0], Hash);
+    isa-ok(@array[0], Hash);
     is(@array[0]{"key"}, 'value', 'got the right value for key');
     is(@array[0]<key1>, 'value1', 'got the right value1 for key1');
 }
@@ -61,14 +61,14 @@ Some deeper tests were already added.
 { # Array of Arrays
     # L<S09/Multidimensional arrays>
     my @array = (1, [2, 3], [4, 5], 6);
-    isa_ok(@array, Array);
+    isa-ok(@array, Array);
 
     is(+@array, 4, 'got 4 elements in the Array of Arrays');
     is(@array[0], 1, 'got the right first element');
-    isa_ok(@array[1], Array);
+    isa-ok(@array[1], Array);
     is(@array[1][0], 2, 'got the right second/first element');
     is(@array[1][1], 3, 'got the right second/second element');
-    isa_ok(@array[2], Array);
+    isa-ok(@array[2], Array);
     is(@array[2][0], 4, 'got the right third/first element');
     is(@array[2][1], 5, 'got the right third/second element');
     is(@array[3], 6, 'got the right fourth element');
@@ -77,16 +77,16 @@ Some deeper tests were already added.
 # UNSPECCED
 { # Array of Subs
     my @array;
-    isa_ok(@array, Array);
+    isa-ok(@array, Array);
 
     @array[0] = sub { 1 };
     @array[1] = { 2 };
     @array[2] = -> { 3 };
 
     is(+@array, 3, 'got three elements in the Array');
-    isa_ok(@array[0], Sub);
-    isa_ok(@array[1], Block);
-    isa_ok(@array[2], Block);
+    isa-ok(@array[0], Sub);
+    isa-ok(@array[1], Block);
+    isa-ok(@array[2], Block);
 
     is(@array[0](), 1, 'the first element (when executed) is 1');
     is(@array[1](), 2, 'the second element (when executed) is 2');
@@ -96,10 +96,10 @@ Some deeper tests were already added.
 # UNSPECCED
 { # Hash of Arrays
     my %hash;
-    isa_ok(%hash, Hash);
+    isa-ok(%hash, Hash);
 
     %hash<key> = [ 1, 2, 3 ];
-    isa_ok(%hash<key>, Array);
+    isa-ok(%hash<key>, Array);
 
     is(+%hash<key>, 3, 'it should have 3 values in it');
     is(%hash<key>[0], 1, 'got the right value');
@@ -126,13 +126,13 @@ Some deeper tests were already added.
 { # Hash of Array-refs
   # UNSPECCED
     my %hash;
-    isa_ok(%hash, Hash);
+    isa-ok(%hash, Hash);
 
     my @array = ( 1, 2, 3 );
-    isa_ok(@array, Array);
+    isa-ok(@array, Array);
 
     %hash<key> = @array;
-    isa_ok(%hash<key>, Array);
+    isa-ok(%hash<key>, Array);
 
     is(+%hash<key>, 3, 'it should have 3 values in it');
     is(%hash<key>[0], 1, 'got the right value');
@@ -169,35 +169,35 @@ Some deeper tests were already added.
 
 { # nested, declared in one statement
     my $h = { a => [ 1,2,3 ] };
-    isa_ok($h<a>.WHAT, Array, "array nested in hashref in one declaration");
+    isa-ok($h<a>.WHAT, Array, "array nested in hashref in one declaration");
 }
 
 { # structures deeper than 2 levels
     my @array;
     @array[0][0][0][0][0] = 5;
-    isa_ok(@array, Array);
-    isa_ok(@array[0], Array);
-    isa_ok(@array[0][0], Array);
-    isa_ok(@array[0][0][0], Array);
-    isa_ok(@array[0][0][0][0], Array);
+    isa-ok(@array, Array);
+    isa-ok(@array[0], Array);
+    isa-ok(@array[0][0], Array);
+    isa-ok(@array[0][0][0], Array);
+    isa-ok(@array[0][0][0][0], Array);
     is(@array[0][0][0][0][0], 5, "5 level deep arrays only structure");
 
     @array[1]<two>[0]<four>[0]<six> = 6;
-    isa_ok(@array, Array);
-    isa_ok(@array[1], Hash);
-    isa_ok(@array[1]<two>, Array);
-    isa_ok(@array[1]<two>[0], Hash);
+    isa-ok(@array, Array);
+    isa-ok(@array[1], Hash);
+    isa-ok(@array[1]<two>, Array);
+    isa-ok(@array[1]<two>[0], Hash);
     is(+@array[1]<two>[0], 1, "one key at level 4");
-    isa_ok(@array[1]<two>[0]<four>, Array);
-    isa_ok(@array[1]<two>[0]<four>[0], Hash);
+    isa-ok(@array[1]<two>[0]<four>, Array);
+    isa-ok(@array[1]<two>[0]<four>[0], Hash);
     is(@array[1]<two>[0]<four>[0]<six>, 6, "6 level deep mixed structure");
 
 
     @array[2]<two>[0]<f><other> = 5;
-    isa_ok(@array[1]<two>[0], Hash);
+    isa-ok(@array[1]<two>[0], Hash);
     #?rakudo todo 'isa hash'
     #?niecza todo
-    isa_ok(@array[1]<two>[0]<f>, Hash);
+    isa-ok(@array[1]<two>[0]<f>, Hash);
     #?rakudo 2 todo 'unknown'
     #?niecza todo
     is(+@array[1]<two>[0], 2, "two keys at level 4");

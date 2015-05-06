@@ -10,7 +10,7 @@ my $*CWD = '/zip/loc'.IO;
 
 my $relpath = IO::Path::Unix.new('foo/bar' );
 my $abspath = IO::Path::Unix.new('/foo/bar');
-isa_ok $abspath, IO::Path, "Can create IO::Path::Unix";
+isa-ok $abspath, IO::Path, "Can create IO::Path::Unix";
 is $abspath.volume,    "",     "volume is empty on POSIX";
 is $abspath.dirname, "/foo", 'dirname "/foo/bar" -> "/foo"';
 is $abspath.basename,  "bar",  'basename "/foo/bar" -> "bar"';
@@ -18,7 +18,7 @@ is $abspath.basename,  "bar",  'basename "/foo/bar" -> "bar"';
 my $path = IO::Path::Unix.new('foo//bar//');
 is $path.dirname,  "foo", 'dirname "foo//bar//" -> "foo"';
 is $path.basename, "bar", 'basename "foo//bar//" -> "bar"';
-isa_ok $path.path, Str, ".path returns Str";
+isa-ok $path.path, Str, ".path returns Str";
 say $path.perl;
 is $path.perl.EVAL, $path, ".perl loopback";
 
@@ -46,7 +46,7 @@ is $relpath.absolute.IO.relative, "foo/bar",
   "relative inverts absolute";
 is $relpath.absolute("/foo").IO.relative("/foo"),
   "foo/bar","absolute inverts relative";
-#?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
+#?rakudo 1 todo 'resolve NYI, needs nqp::readlink RT #124782'
 is $abspath.relative.IO.absolute.IO.resolve, "/foo/bar", "absolute inverts relative with resolve";
 
 is IO::Path::Unix.new("foo/bar").parent, "foo",   "parent of 'foo/bar' is 'foo'";

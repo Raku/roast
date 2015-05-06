@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 33;
+plan 36;
 
 # L<S14/Run-time Mixins/>
 
@@ -62,7 +62,7 @@ is $y.test,     42,         'method from other role was OK too';
 }
 
 
-#?rakudo skip 'mixin at the point of declaration is compile time'
+#?rakudo skip 'mixin at the point of declaration is compile time RT #124747'
 #?niecza skip 'Trait does not available on variables'
 {
     my @array does R1;
@@ -113,7 +113,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 # RT #77184
 #?niecza skip 'Twigil ! is only valid on attribute definitions'
-#?rakudo skip 'Twigil ! is only valid on attribute definitions'
+#?rakudo skip 'Twigil ! is only valid on attribute definitions RT #124748'
 {
     lives_ok { role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }, 'RT #77184'
 }
@@ -160,6 +160,19 @@ lives_ok {(True but role {}).gist}, 'can mix into True';
         X::Role::Parametric::NoSuchCandidate,
         role    => { .^name eq 'popo' }
         ;
+}
+
+# RT #114668
+{
+    my role B { method Str() { 'bar' } }
+    ok ({ a => 42 } but B) ~~ B, 'Mix-in to item hash works (1)';
+    is ({ a => 42 } but B).Str, 'bar', 'Mix-in to item hash works (2)'
+}
+
+# RT #122756
+{
+    my role B { }
+    ok ([] but B) ~~ B, 'Mix-in to item array works';
 }
 
 # vim: syn=perl6

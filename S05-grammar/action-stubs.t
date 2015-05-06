@@ -69,7 +69,7 @@ is $action.calls, 'ab', '... and in the right order';
     # there's no reason why we can't use the actions as class methods
     my $match = Grammar::More::Test.parse('39 b', :actions(Grammar::More::Test::Actions));
     ok $match, 'grammar matches';
-    isa_ok $match.ast, Array, '$/.ast is an Array';
+    isa-ok $match.ast, Array, '$/.ast is an Array';
     ok $match.ast.[0] == 42,  'make 3 + $/ worked';
     is $match.ast.[1], 'bbb',  'make $/ x 3 worked';
 }
@@ -107,7 +107,7 @@ is $action.calls, 'ab', '... and in the right order';
     is ActionsTestGrammar.parse("ab\ncd", :actions(TestActions.new)).ast, 123,
         'Can call Str.subst in an action method without any trouble';
     # RT #78510
-    isa_ok ActionsTestGrammar.parse('a', :actions(
+    isa-ok ActionsTestGrammar.parse('a', :actions(
         class { method TOP($/) { make { a => 1 } } }
     )).ast, Hash, 'Can make() a Hash';
 }

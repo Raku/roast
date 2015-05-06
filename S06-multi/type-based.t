@@ -174,7 +174,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 # make sure that multi sub dispatch also works if the sub is defined
 # in a class (was a Rakudo regression, RT #65674)
 
-#?rakudo skip 'our sub in class'
+#?rakudo skip 'our sub in class RT #124771'
 #?niecza skip 'Two definitions found for symbol ::GLOBAL::A::&a'
 {
     class A {
@@ -223,7 +223,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is foo(NotCool), 1, 'Set hits Int() candidate due to it accepting Any and coercing';
 }
 
-#?rakudo todo "coercions need to fail like constraints"
+#?rakudo todo "coercions need to fail like constraints RT #124772"
 {
     proto main ($) {*}
     multi main ($x) { say $x.WHAT }

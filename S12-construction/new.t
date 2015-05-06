@@ -19,7 +19,7 @@ is $o.y, 3, '... worked for the child';
 is $o.x, 2, '... worked for the parent';
 
 # RT #76490
-#?rakudo 3 todo 'parent attributes in initialization'
+#?rakudo 3 todo 'parent attributes in initialization RT #124643'
 #?niecza 3 todo
 lives_ok { $o = Child.new( :y(4), Parent{ :x<5> }) }, 
          'can instantiate class with explicit specification of parent attrib';
@@ -30,7 +30,7 @@ is $o.x, 5, '... worked for the parent';
 class GrandChild is Child {
 }
 
-#?rakudo 6 todo 'parent attributes in initialization'
+#?rakudo 6 todo 'parent attributes in initialization RT #124644'
 #?niecza 6 todo
 lives_ok { $o = GrandChild.new( Child{ :y(4) }, Parent{ :x<5> }) },
          'can instantiate class with explicit specification of parent attrib (many parents)';

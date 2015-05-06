@@ -9,7 +9,7 @@ my $name = $*SCHEDULER.^name;
 {
     my $tracker = 0;
     my $c = $*SCHEDULER.cue({ cas $tracker, {.succ} }, :times(10));
-    isa_ok( $c, Cancellation );
+    isa-ok( $c, Cancellation );
     sleep 3;
     is $tracker, 10, "Cue on $name with :times(10)";
     LEAVE $c.cancel;

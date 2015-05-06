@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 11;
 
 sub test_lines(@lines) {
     #!rakudo todo 'line counts'
@@ -43,6 +43,22 @@ sub test_lines(@lines) {
     ok defined($fh), 'Could open test file (again)';
     my @lines = $fh.lines;
     test_lines(@lines);
+}
+
+# RT #124391
+throws_like { open("this-surely-won't-exist", :r) }, Exception,
+    message => { m/"this-surely-won't-exist"/ };
+
+# RT #124394
+{
+    my $fh = open('basic-open-tests', :w);
+    $fh.print('+');
+    $fh.close;
+
+    $fh = open('basic-open-tests', :r);
+    is $fh.get, '+', 'Reading a line form a one-byte file works';
+    $fh.close;
+    unlink 'basic-open-tests';
 }
 
 # vim: ft=perl6

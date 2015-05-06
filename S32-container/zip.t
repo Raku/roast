@@ -44,7 +44,7 @@ plan 14;
     is (@a Z @b), @e, "zip uses length of shortest";
 }
 
-#?rakudo skip 'lvalue zip'
+#?rakudo skip 'lvalue zip RT #124907'
 #?niecza skip 'Unable to resolve method LISTSTORE in class List'
 {
     my @a;
@@ -61,10 +61,10 @@ plan 14;
 }
 
 # mix arrays and ranges
-is ('a'..'c' Z 1, 2, 3).join(','), 'a,1,b,2,c,3',
+is ('a'..'c' Z 1, 2, 3).flat.join(','), 'a,1,b,2,c,3',
     'can mix arrays and ranges for infix:<Z>';
 
-is ("a".."c" Z "?", "a".."b").join('|'), 'a|?|b|a|c|b',
+is ("a".."c" Z "?", "a".."b").flat.join('|'), 'a|?|b|a|c|b',
     'can mix arrays and ranges for infix:<Z>';
 
 is zip(1,2; 3,4; 5,6):with(&infix:<~>), '135 246', 'zip:with works on list associative';

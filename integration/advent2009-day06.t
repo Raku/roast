@@ -22,7 +22,7 @@ is (@a >>+>> 2), [3, 4, 5, 6], 'Single scalars extend to the right';
 is (3 <<+<< @a), [4, 5, 6, 7], 'Single scalars extend to the left';
 is (~<<@a), ["1", "2", "3", "4"], 'Hyperoperator with prefix operator';
 is $(@a-copy = @a; @a-copy>>++; @a-copy), [2, 3, 4, 5], 'Hyperoperator with postfix operator';
-for @pi Z @pi-sin -> $elem, $elem-sin {
+for flat @pi Z @pi-sin -> $elem, $elem-sin {
     is_approx $elem.sin, $elem-sin, 'Hyperoperator used to call .sin on each list element';
 }
 is ((-1, 0, 3, 42)>>.Str), ["-1", "0", "3", "42"], 'Hyperoperator used to call .Str on each list element';

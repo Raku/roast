@@ -5,8 +5,8 @@ my $r;
 =foo
 
 $r = $=pod[0];
-isa_ok $r, Pod::Block, 'returns a Pod6 Block';
-isa_ok $r, Pod::Block::Named, 'returns a named Block';
+isa-ok $r, Pod::Block, 'returns a Pod6 Block';
+isa-ok $r, Pod::Block::Named, 'returns a named Block';
 is $r.contents, [], 'no contents, all right';
 
 =foo some text
@@ -32,13 +32,13 @@ Outside blocks
 =end pod
 
 $r = $=pod[3];
-isa_ok $r.contents[0], Pod::Block;
+isa-ok $r.contents[0], Pod::Block;
 is $r.contents[0].contents[0].contents, "Inside got",
    'paragraph block contents ok, 1/2';
-isa_ok $r.contents[1], Pod::Block;
+isa-ok $r.contents[1], Pod::Block;
 is $r.contents[1].contents[0].contents, "Inside bidden",
    'paragraph block contents ok, 1/2';
-isa_ok $r.contents[2], Pod::Block::Para;
+isa-ok $r.contents[2], Pod::Block::Para;
 is $r.contents[2].contents, "Outside blocks",
    'contents outside blocks is all right';
 
@@ -89,7 +89,7 @@ Which, as we all know...
 =end foo
 
 $r = $=pod[5];
-isa_ok $r, Pod::Block;
+isa-ok $r, Pod::Block;
 is $r.contents.elems, 5, '5 sub-nodes in foo';
 is $r.contents[0].contents,
    'and so, all of the villages chased Albi, The Racist Dragon, ' ~
@@ -113,7 +113,7 @@ is $r.contents[4].contents[0].contents, "Turn into Jelly Beans!",
     Everything else 57
 
 $r = $=pod[6];
-isa_ok $r, Pod::Block;
+isa-ok $r, Pod::Block;
 is $r.contents.elems, 1;
 is $r.contents[0].contents,
    'Constants 1 Variables 10 Subroutines 33 Everything else 57';
@@ -122,7 +122,7 @@ is $r.contents[0].contents,
 Heading level 3
 
 $r = $=pod[7];
-isa_ok $r, Pod::Block;
-isa_ok $r, Pod::Heading;
+isa-ok $r, Pod::Block;
+isa-ok $r, Pod::Heading;
 is $r.level, '3';
 is $r.contents[0].contents, 'Heading level 3';

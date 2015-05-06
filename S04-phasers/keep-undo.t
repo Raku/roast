@@ -88,7 +88,6 @@ plan 16;
 
 # RT #111866
 {
-    #?rakudo.parrot skip "RT #111866"
     is_run( q[UNDO { say 'undone' }; die 'foobar'],
         {
             out    => "undone\n",
@@ -96,7 +95,6 @@ plan 16;
         },
         'UNDO fires after die' );
 
-    #?rakudo.parrot skip "RT #111866"
     #?rakudo.jvm skip "RT #111866"
     is_run( q[do { UNDO { say 'undone' }; die 'foobar' }],
         {

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 37;
 
 =begin description
 
@@ -158,4 +158,5 @@ This test tests the C<squish> builtin and .squish method on Any/List.
     is_deeply( @a, [<a b c>], '.= squish in sink context works on @a' );
 } #2
 
+is ((3,3,1),(1,2),(1,2)).squish, '3 3 1 1 2', ".squish doesn't flatten";
 # vim: ft=perl6

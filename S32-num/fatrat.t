@@ -7,14 +7,14 @@ plan 282;
 # Basic test functions specific to FatRats.
 
 # Test ways of making Rats
-isa_ok(FatRat.new(1,4), FatRat, "FatRat.new makes a FatRat");
-isa_ok( (1/4).FatRat, FatRat, "cast of Rat makes a FatRat");
-isa_ok( 1.Int.FatRat, FatRat, "cast of Int makes a FatRat");
-isa_ok( 1.Num.FatRat, FatRat, "cast of Num makes a FatRat");
+isa-ok(FatRat.new(1,4), FatRat, "FatRat.new makes a FatRat");
+isa-ok( (1/4).FatRat, FatRat, "cast of Rat makes a FatRat");
+isa-ok( 1.Int.FatRat, FatRat, "cast of Int makes a FatRat");
+isa-ok( 1.Num.FatRat, FatRat, "cast of Num makes a FatRat");
 
-isa_ok(1 / 4, Rat, "/ makes a Rat");
+isa-ok(1 / 4, Rat, "/ makes a Rat");
 
-isa_ok( EVAL(FatRat.new(1, 3).perl), FatRat, 'EVAL FatRat.new(1, 3).perl is FatRat' );
+isa-ok( EVAL(FatRat.new(1, 3).perl), FatRat, 'EVAL FatRat.new(1, 3).perl is FatRat' );
 is_approx (EVAL FatRat.new(1, 3).perl), 1/3, 'EVAL FatRat.new(1, 3).perl is 1/3';
 
 # Test ~
@@ -33,56 +33,56 @@ is(FatRat.new(1451234131, 60).nude, (1451234131, 60), "Reduce huge number to sim
 
 sub postfix:<R>($x) { $x.FatRat }
 
-isa_ok 1R, FatRat, "1R is a FatRat";
+isa-ok 1R, FatRat, "1R is a FatRat";
 is 1R, 1, "1R == 1";
-isa_ok 1/4R, FatRat, "1/4R is a FatRat";
+isa-ok 1/4R, FatRat, "1/4R is a FatRat";
 is 1/4R, 1/4, "1/4R == 1/4";
  
 # Test basic math
 is(1 / 4R + 1 / 4R, 1/2, "1/4R + 1/4R = 1/2");
-isa_ok(1 / 4R + 1 / 4R, FatRat, "1/4R + 1/4R is a FatRat");
+isa-ok(1 / 4R + 1 / 4R, FatRat, "1/4R + 1/4R is a FatRat");
 is(1 / 4 + 1 / 4R, 1/2, "1/4 + 1/4R = 1/2");
-isa_ok(1 / 4 + 1 / 4R, FatRat, "1/4 + 1/4R is a FatRat");
+isa-ok(1 / 4 + 1 / 4R, FatRat, "1/4 + 1/4R is a FatRat");
 is(1 / 4R + 1 / 4, 1/2, "1/4R + 1/4 = 1/2");
-isa_ok(1 / 4R + 1 / 4, FatRat, "1/4R + 1/4 is a FatRat");
+isa-ok(1 / 4R + 1 / 4, FatRat, "1/4R + 1/4 is a FatRat");
 is(1 / 4R + 2 / 7R, 15/28, "1/4R + 2/7R = 15/28");
 is(1 / 4R + 1, 5/4, "1/4R + 1 = 5/4");
-isa_ok(1 / 4R + 1, FatRat, "1/4R + 1 is a FatRat");
+isa-ok(1 / 4R + 1, FatRat, "1/4R + 1 is a FatRat");
 is(1 + 1 / 4R, 5/4, "1 + 1/4R = 5/4");
-isa_ok(1 + 1 / 4R, FatRat, "1 + 1/4R is a FatRat");
+isa-ok(1 + 1 / 4R, FatRat, "1 + 1/4R is a FatRat");
 
 is(1 / 4R - 1 / 4R, 0/1, "1/4R - 1/4R = 0/1");
 is(1 / 4R - 3 / 4R, -1/2, "1/4R - 3/4R = -1/2");
 is((1 / 4R - 3 / 4R).nude, (-1, 2), "1/4R - 3/4R = -1/2 is simplified internally");
-isa_ok((1 / 4R - 3 / 4R), FatRat, "1/4R - 3/4R is a FatRat");
-isa_ok((1 / 4 - 3 / 4R), FatRat, "1/4 - 3/4R is a FatRat");
-isa_ok((1 / 4R - 3 / 4), FatRat, "1/4R - 3/4 is a FatRat");
+isa-ok((1 / 4R - 3 / 4R), FatRat, "1/4R - 3/4R is a FatRat");
+isa-ok((1 / 4 - 3 / 4R), FatRat, "1/4 - 3/4R is a FatRat");
+isa-ok((1 / 4R - 3 / 4), FatRat, "1/4R - 3/4 is a FatRat");
 is(1 / 4R - 1, -3/4, "1/4R - 1 = -3/4R");
-isa_ok(1 / 4R - 1, FatRat, "1/4R - 1 is a FatRat");
+isa-ok(1 / 4R - 1, FatRat, "1/4R - 1 is a FatRat");
 is(1 - 1 / 4R, 3/4, "1 - 1/4R = 3/4R");
-isa_ok(1 - 1 / 4R, FatRat, "1 - 1/4R is a FatRat");
+isa-ok(1 - 1 / 4R, FatRat, "1 - 1/4R is a FatRat");
 
 is((2 / 3R) * (5 / 4R), 5/6, "2/3R * 5/4R = 5/6");
 is(((2 / 3R) * (5 / 4R)).nude, (5, 6), "2/3R * 5/4R = 5/6 is simplified internally");
-isa_ok((2 / 3R) * (5 / 4R), FatRat, "2/3R * 5/4R is a FatRat");
-isa_ok((2 / 3) * (5 / 4R), FatRat, "2/3 * 5/4R is a FatRat");
-isa_ok((2 / 3R) * (5 / 4), FatRat, "2/3R * 5/4 is a FatRat");
+isa-ok((2 / 3R) * (5 / 4R), FatRat, "2/3R * 5/4R is a FatRat");
+isa-ok((2 / 3) * (5 / 4R), FatRat, "2/3 * 5/4R is a FatRat");
+isa-ok((2 / 3R) * (5 / 4), FatRat, "2/3R * 5/4 is a FatRat");
 is((2 / 3R) * 2, 4/3, "2/3R * 2 = 4/3");
-isa_ok((2 / 3R) * 2, FatRat, "2/3R * 2 is a FatRat");
+isa-ok((2 / 3R) * 2, FatRat, "2/3R * 2 is a FatRat");
 is(((2 / 3R) * 3).nude, (2, 1), "2R/3 * 3 = 2 is simplified internally");
 is(2 * (2 / 3R), 4/3, "2 * 2/3R = 4/3");
-isa_ok(2 * (2 / 3R), FatRat, "2 * 2/3R is a FatRat");
+isa-ok(2 * (2 / 3R), FatRat, "2 * 2/3R is a FatRat");
 is((3 * (2 / 3R)).nude, (2, 1), "3 * 2/3R = 2 is simplified internally");
 
 is((2 / 3R) / (5 / 4R), 8/15, "2/3R / 5/4R = 8/15");
-isa_ok((2 / 3R) / (5 / 4R), FatRat, "2/3R / 5/4R is a FatRat");
-isa_ok((2 / 3) / (5 / 4R), FatRat, "2/3 / 5/4R is a FatRat");
-isa_ok((2 / 3R) / (5 / 4), FatRat, "2/3R / 5/4 is a FatRat");
+isa-ok((2 / 3R) / (5 / 4R), FatRat, "2/3R / 5/4R is a FatRat");
+isa-ok((2 / 3) / (5 / 4R), FatRat, "2/3 / 5/4R is a FatRat");
+isa-ok((2 / 3R) / (5 / 4), FatRat, "2/3R / 5/4 is a FatRat");
 is((2 / 3R) / 2, 1/3, "2/3R / 2 = 1/3");
 is(((2 / 3R) / 2).nude, (1, 3), "2/3R / 2 = 1/3 is simplified internally");
-isa_ok((2 / 3R) / 2, FatRat, "2/3R / 2 is a FatRat");
+isa-ok((2 / 3R) / 2, FatRat, "2/3R / 2 is a FatRat");
 is(2 / (1 / 3R), 6, "2 / 1/3R = 6");
-isa_ok(2 / (1 / 3R), FatRat, "2 / 1/3R is a FatRat");
+isa-ok(2 / (1 / 3R), FatRat, "2 / 1/3R is a FatRat");
 is((2 / (2 / 3R)).nude, (3, 1), "2 / 2/3R = 3 is simplified internally");
 
 {
@@ -93,7 +93,7 @@ is((2 / (2 / 3R)).nude, (3, 1), "2 / 2/3R = 3 is simplified internally");
     is ++$a, 3/2, 'prefix:<++> on FatRats';
     is $a++, 3/2, 'postfix:<++> on FatRats (1)';
     is $a,   5/2, 'postfix:<++> on FatRats (2)';
-    isa_ok $a, FatRat, "and it's still a FatRat";
+    isa-ok $a, FatRat, "and it's still a FatRat";
     $a = -15/8R;
     is ++$a, -7/8, 'prefix:<++> on negative FatRat';
 
@@ -101,7 +101,7 @@ is((2 / (2 / 3R)).nude, (3, 1), "2 / 2/3R = 3 is simplified internally");
     is --$b, 3/2, 'prefix:<--> on FatRats';
     is $b--, 3/2, 'postfix:<--> on FatRats (1)';
     is $b,   1/2, 'postfix:<--> on FatRats (2)';
-    isa_ok $b, FatRat, "and it's still a FatRat";
+    isa-ok $b, FatRat, "and it's still a FatRat";
     $b = -15/8R;
     is --$b, -23/8, 'prefix:<--> on negative FatRat';
 }
@@ -132,7 +132,7 @@ for -1/4R, 2/7R, 65/8R / 10**100 -> $a {
     }
 
     my $neg = -$a;
-    isa_ok($neg, FatRat, "prefix<-> geneFatRates a FatRat on $a");
+    isa-ok($neg, FatRat, "prefix<-> geneFatRates a FatRat on $a");
     is_approx($neg, -($a.Num), "prefix<-> geneFatRates the correct number for $a");
 }
 
@@ -171,32 +171,32 @@ is (5/4R).Int,       1, 'FatRat.Int';
 is <a b c>.[4/3R],  'b', 'Indexing an array with a FatRat';
 
 ok (1/2R) == (1/2).FatRat, 'Rat.FatRat works';
-isa_ok (1/2).FatRat, FatRat, '... and actually returns a FatRat';
+isa-ok (1/2).FatRat, FatRat, '... and actually returns a FatRat';
 ok (1/2R) == (1/2R).FatRat, 'FatRat.FatRat works';
-isa_ok (1/2R).FatRat, FatRat, '... and actually returns a FatRat';
+isa-ok (1/2R).FatRat, FatRat, '... and actually returns a FatRat';
 
 ok 1/2R === 1/2R, 'FatRats are value types, so 1/2R === 1/2R';
 ok 1/2R !=== 1/3R, '=== with false outcome';
 
-#?rakudo skip 'FatRat arith + type objects'
+#?rakudo skip 'FatRat arith + type objects RT #124814'
 {
     my FatRat $a;
     $a += 0.1 for ^10;
     ok $a == 1, 'can do += on variable initialized by type object';
-    isa_ok $a, FatRat, "and it's the correct type";
+    isa-ok $a, FatRat, "and it's the correct type";
 }
 
 ok 16/5R eqv 16/5R, 'infix:<eqv> works with FatRats';
 
-#?rakudo todo 'unknown'
-isa_ok .88888888888R.WHAT.gist, '(FatRat)', 'WHAT works on FatRat created from 11 digit decimal fraction';
+#?rakudo todo 'unknown RT #124815'
+isa-ok .88888888888R.WHAT.gist, '(FatRat)', 'WHAT works on FatRat created from 11 digit decimal fraction';
 
 {
     my $a += 0.1R;
-    isa_ok $a, FatRat, 'Any() + 0.1R is a FatRat';
+    isa-ok $a, FatRat, 'Any() + 0.1R is a FatRat';
 }
 
-isa_ok (2/3R) ** 3, FatRat, "FatRat raised to a positive Int power is a FatRat";
+isa-ok (2/3R) ** 3, FatRat, "FatRat raised to a positive Int power is a FatRat";
 is (2/3R) ** 3, 8/27, "FatRat raised to a positive Int power gets correct answer";
 
 
@@ -233,9 +233,9 @@ is -13.0R %  4.0, 3, "infix:<%> with FatRat and Rat";
 is  13.0R % -4.0, -3, "infix:<%> with FatRat and Rat";
 is -13.0R % -4.0, -1, "infix:<%> with FatRat and Rat";
 
-isa_ok 4.8R % 1, FatRat, 'infix:<%> returns FatRat when it can';
-isa_ok 4 % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
-isa_ok 4.8R % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
-isa_ok 4.8R % 1.1, FatRat, 'infix:<%> returns FatRat when it can';
+isa-ok 4.8R % 1, FatRat, 'infix:<%> returns FatRat when it can';
+isa-ok 4 % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
+isa-ok 4.8R % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
+isa-ok 4.8R % 1.1, FatRat, 'infix:<%> returns FatRat when it can';
 
 # vim: ft=perl6

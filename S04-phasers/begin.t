@@ -39,7 +39,7 @@ plan 11;
     class SomeClass { };
     my $var;
     BEGIN { $var = SomeClass };
-    isa_ok $var, SomeClass, 'use a class at BEGIN time';
+    isa-ok $var, SomeClass, 'use a class at BEGIN time';
 }
 
 {
@@ -69,7 +69,6 @@ plan 11;
 }
 
 # RT #119749
-#?rakudo.parrot skip 'RT #119749'
 {
     lives_ok { enum A (a=>3); BEGIN for A.enums { } },
         'no Null PMC access when looping over SomeEnum.enums in blockless BEGIN';

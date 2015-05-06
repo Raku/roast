@@ -4,7 +4,7 @@ use Test;
 
 # L<S06/Anonymous hashes vs blocks>
 
-plan 22;
+plan 26;
 
 my $hash = {
    '1' => { '2' => 3, '4' => 5 },
@@ -45,7 +45,7 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     ok { $^a => 'b' } ~~ Block, '... as a key';
     ok { a => $^x }   ~~ Block, '... as a value';
     ok { b => 3, a => $^x, 4 => 5 }   ~~ Block, '... somewhere deep inside';
-#?rakudo.jvm skip 'jvm chokes on compiling {;} for some reason'
+#?rakudo.jvm skip 'jvm chokes on compiling {;} for some reason RT #124663'
     ok {;} ~~ Block, '{;} is a Block';
 }
 
@@ -82,6 +82,18 @@ is (map { $_ => $_ * $_ }, 1..3).hash<2>, 4, 'block with $_ is not a hash';
     is('FB', %fs{ $fname }(), "fb has been called");
     is('FB', %fs{ lc( 'B' ) }(), "fb has been called");
 }
+
+# RT #114966
+{
+    my %*dyn = x => 42;
+    ok { %*dyn } ~~ Hash, '{ %*foo } is a Hash';
+    is { %*dyn }<x>, 42,  '{ %*foo } constructs correct hash';
+}
+
+# RT #123641
+ok { 1 R=> "a" } ~~ Hash,  '{ 1 R=> "a" } is a Hash';
+is { 1 R=> "a" }<a>, 1,    '{ 1 R=> "a" } constructs correct hash';
+
 done;
 
 # vim: ft=perl6

@@ -381,10 +381,10 @@ All uses of a zero modulus or divisor should 'die', and the
 }
 
 # RT #122053
-isa_ok 4.8 / 1, Rat, 'infix:</> returns Rat when it can';
-isa_ok 4.8 % 1, Rat, 'infix:<%> returns Rat when it can';
-isa_ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
-isa_ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
+isa-ok 4.8 / 1, Rat, 'infix:</> returns Rat when it can';
+isa-ok 4.8 % 1, Rat, 'infix:<%> returns Rat when it can';
+isa-ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
+isa-ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 
 done;
 

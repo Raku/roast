@@ -85,8 +85,8 @@ plan 14;
     is $result, "I'm cupid!", "lexical lookup from quasi to macro works";
 }
 
-#?rakudo.jvm skip "Method 'succ' not found"
-#?rakudo.moar skip "No such method 'STORE' for invocant of type 'Mu'"
+#?rakudo.jvm skip "Method 'succ' not found RT #124967"
+#?rakudo.moar skip "No such method 'STORE' for invocant of type 'Mu' RT #124968"
 {
     my $counter = 0;
 
@@ -112,14 +112,13 @@ plan 14;
     is id('x'), 'x', 'macro can return its param';
 }
 
-#?rakudo.jvm skip "?"
+#?rakudo.jvm skip "? RT #124969"
 {
     macro funny_nil { quasi { {;}() } }
     is funny_nil(), Nil, 'Nil from an empty block turns into no code';
 }
 
 # RT #115500
-#?rakudo.parrot 2 skip 'RT #115500'
 {
     macro rt115500v1() {
         my $q1 = quasi { 6 };

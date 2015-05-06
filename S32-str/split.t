@@ -103,9 +103,9 @@ plan 53;
 
 #?niecza skip 'rx:Perl5'
 {
-    is split(rx:Perl5 {(\s+)}, "Hello test", :all).join(','), 'Hello, ,test',
+    is split(rx:Perl5 {(\s+)}, "Hello test", :all).flat.join(','), 'Hello, ,test',
       q/split rx:Perl5 {(\s+)}, Str/;
-    is "Hello test".split(rx:Perl5 {(\s+)}, :all).join(','), 'Hello, ,test',
+    is "Hello test".split(rx:Perl5 {(\s+)}, :all).flat.join(','), 'Hello, ,test',
       q/Str.split rx:Perl5 {(\s+)}/;
 }
 
@@ -136,7 +136,7 @@ is  "".split(':').elems, 1, q/"".split(':')/;
 is "a.b".split(/\./).join(','), <a b>.join(','),
    q{"a.b".split(/\./)};
 
-#?rakudo skip 'No such method null for invocant of type Cursor'
+#?rakudo skip 'No such method null for invocant of type Cursor RT #124685'
 #?niecza skip 'Unable to resolve method null in class Cursor'
 {
     is "abcd".split(/<null>/).join(','), <a b c d>.join(','),
@@ -146,9 +146,9 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 {
     my @a = "hello world".split(/<[aeiou]>/, :all);
     is +@a, 7, "split:all resulted in seven pieces";
-    isa_ok @a[1], Match, "second is a Match object";
-    isa_ok @a[3], Match, "fourth is a Match object";
-    isa_ok @a[5], Match, "sixth is a Match object";
+    isa-ok @a[1], Match, "second is a Match object";
+    isa-ok @a[3], Match, "fourth is a Match object";
+    isa-ok @a[5], Match, "sixth is a Match object";
     is ~@a, ~("h", "e", "ll", "o", " w", "o", "rld"), "The pieces are correct";
 }
 

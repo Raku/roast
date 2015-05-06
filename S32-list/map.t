@@ -32,7 +32,7 @@ my @list = (1 .. 5);
     is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
 }
 
-#?rakudo skip "adverbial block"
+#?rakudo skip "adverbial block RT #124752"
 #?niecza skip 'No value for parameter $func in Any.map'
 {
     my @result = @list.map():{ $_ * 2 };
@@ -46,7 +46,7 @@ my @list = (1 .. 5);
     is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
 }
 
-#?rakudo skip "closure as non-final argument"
+#?rakudo skip "closure as non-final argument RT #124753"
 #?niecza skip "Invocant handling is NYI"
 {
     my @result = map { $_ * 2 }: @list;
@@ -80,7 +80,7 @@ my @list = (1 .. 5);
             'heuristic for block - looks like a closure';
 
     my %result = map {; $_ => ($_*2) }, @list;
-    isa_ok(%result, Hash);
+    isa-ok(%result, Hash);
     is %result<1 2 3 4 5>.join(', '), '2, 4, 6, 8, 10',
         ' got the hash we expect';
 }

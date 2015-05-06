@@ -9,7 +9,7 @@ plan 24;
 my $s = join 'a', <x y z>;
 is($s, "xayaz", 'list context <list>');
 
-#?rakudo skip 'meta operators'
+#?rakudo skip 'meta operators RT #124558'
 #?niecza skip '|<<'
 {
 my $s = join |<< <a x y z>;
@@ -74,7 +74,7 @@ throws_like { EVAL '<STDIN>' },
 # L<S02/Quoting forms/"is autopromoted into">
 {
     my $c = <a b c>;
-    isa_ok($c, Parcel, 'List in scalar context becomes a Capture');
+    isa-ok($c, Parcel, 'List in scalar context becomes a Capture');
     throws_like {$c.push: 'd'},
       X::Multi::NoMatch,
       '... which is immutable';
@@ -85,12 +85,12 @@ throws_like { EVAL '<STDIN>' },
     my @a = <foo 3 4.5 5.60 1.2e1 -2+3i>;
     is ~@a, 'foo 3 4.5 5.60 1.2e1 -2+3i',
        '<...> numeric literals stringify correctly';
-    isa_ok @a[0], Str, '<foo ...> is a Str';
+    isa-ok @a[0], Str, '<foo ...> is a Str';
     #?rakudo 4 todo 'IntStr/RatStr/NumStr types NYI'
-    isa_ok @a[1], Int, '< ... 3 ...> is an Int';
-    isa_ok @a[2], Rat, '< ... 4.5 ...> is a Rat';
-    isa_ok @a[4], Num, '< ... 1.2e1 ...> is a Num';
-    isa_ok @a[5], Complex, '< ... -2+3i ...> is a Num';
+    isa-ok @a[1], Int, '< ... 3 ...> is an Int';
+    isa-ok @a[2], Rat, '< ... 4.5 ...> is a Rat';
+    isa-ok @a[4], Num, '< ... 1.2e1 ...> is a Num';
+    isa-ok @a[5], Complex, '< ... -2+3i ...> is a Num';
 }
 
 # probably doesn't really belong here, but I don't know where else to put it

@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 79;
+plan 80;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -12,54 +12,54 @@ plan 79;
 
 {
  my Int $namcu =2;
- isa_ok($namcu,Int);
+ isa-ok($namcu,Int);
 }
 
 {
  my Num $namcu =1.1e1;
- isa_ok($namcu,Num);
+ isa-ok($namcu,Num);
 }
 
 {
  my Complex $namcu = 1.3 + 0i;
- isa_ok($namcu,Complex);
+ isa-ok($namcu,Complex);
 }
 
 {
  my Rat $namcu = 7 / 4;
- isa_ok($namcu,Rat);
+ isa-ok($namcu,Rat);
 }
 
 {
  my Str $lerpoi = "broda";
- isa_ok($lerpoi,Str);
+ isa-ok($lerpoi,Str);
 }
 
-#?rakudo skip 'Bit NYI'
+#?rakudo skip 'Bit NYI RT #124458'
 #?niecza skip 'Bit NYI'
 {
  my Bit $namcu =1;
- isa_ok($namcu,Bit);
+ isa-ok($namcu,Bit);
 }
 
 {
  my Regex $morna;
- isa_ok($morna, Regex);
+ isa-ok($morna, Regex);
 }
 
 {
  my Set $selcmima;
- isa_ok($selcmima, Set);
+ isa-ok($selcmima, Set);
 }
 
 {
  my Block $broda;
- isa_ok($broda, Block);
+ isa-ok($broda, Block);
 }
 
 {
  my List $liste;
- isa_ok($liste, List);
+ isa-ok($liste, List);
 }
 
 
@@ -68,17 +68,17 @@ plan 79;
 
 {
  my Scalar $brode;
- isa_ok($brode, Scalar);
+ isa-ok($brode, Scalar);
 }
 
 {
  my Array $porsi;
- isa_ok($porsi, Array);
+ isa-ok($porsi, Array);
 }
 
 {
  my Hash $brodi;
- isa_ok($brodi, Hash);
+ isa-ok($brodi, Hash);
 }
 
 #?niecza skip "Buf NYI"
@@ -89,19 +89,19 @@ plan 79;
 
 {
  my Routine $gunka;
- isa_ok($gunka, Routine);
+ isa-ok($gunka, Routine);
 }
 
 {
  my Stash $igeda;
- isa_ok($igeda, Stash);
+ isa-ok($igeda, Stash);
 }
 
-#?rakudo skip 'Module NYI'
+#?rakudo skip 'Module NYI RT #124459'
 #?niecza skip 'Module NYI'
 {
  my Module $brodu;
- isa_ok($brodu, Module);
+ isa-ok($brodu, Module);
 }
 
 # non-instantiable Roles such as Callable, Failure, and Integral
@@ -110,7 +110,7 @@ plan 79;
  ok($fancu ~~ Callable);
 }
 
-#?rakudo skip 'Integral NYI'
+#?rakudo skip 'Integral NYI RT #124460'
 {
  my Integral $foo;
  ok($foo ~~ Integral);
@@ -119,76 +119,71 @@ plan 79;
 
 # Non-object (native) types are lowercase: int, num, complex, rat, buf, bit.
 
-#?rakudo todo 'int NYI'
-#?niecza skip 'int NYI'
 {
- my int $namcu =2;
- isa_ok($namcu,int);
+ my int $namcu; $namcu = 2**100;
+ isa-ok $namcu, Int, "int reports as Int";
+ ok $namcu==0, "Can tell it's an int because it overflowed";
 }
 
-#?rakudo todo 'num NYI'
-#?niecza skip 'num NYI'
 {
  my num $namcu =1.1e0;
- isa_ok($namcu,num);
+
+ multi sub nummy(num $a) { return "num" }
+ multi sub nummy(Num $a) { return "Num" }
+
+ isa-ok $namcu, Num, "num reports as Num";
+ is nummy($namcu), "num", "num dispatches properly";
 }
 
 # Type mismatch in assignment; expected something matching type Complex but got something of type Num()
 
-#?rakudo skip 'complex NYI'
+#?rakudo skip 'complex NYI RT #124463'
 #?niecza skip 'complex NYI'
 {
  my complex $namcu =1.3;
- isa_ok($namcu,complex);
+ isa-ok($namcu,complex);
 }
 
-#?rakudo skip 'rat NYI'
+#?rakudo skip 'rat NYI RT #124464'
 #?niecza skip 'rat NYI'
 
 {
  my rat $namcu = 7 / 4;
- isa_ok($namcu,rat);
+ isa-ok($namcu,rat);
 }
 
-#?rakudo skip 'bit NYI'
+#?rakudo skip 'bit NYI RT #124465'
 #?niecza skip 'bit NYI'
 {
  my bit $namcu =1;
- isa_ok($namcu,bit);
+ isa-ok($namcu,bit);
 }
 
-#?rakudo skip 'buf NYI'
+#?rakudo skip 'buf NYI RT #124466'
 #?niecza skip 'buf NYI'
 {
  my buf $nacpoi;
- isa_ok($nacpoi, buf);
+ isa-ok($nacpoi, buf);
 }
 
-# junction StrPos StrLen uint Nil Whatever Mu Failure
+# StrPos StrLen uint Nil Whatever Mu Failure
 # Exception Range Bag Signature Capture Blob Instant Duration
 # Keyhash SetHash BagHash Pair Mapping IO Routine Sub Method
 # Submethod Macro Match Package Module Class Role Grammar Any
 
-#?rakudo skip 'junction NYI'
-#?niecza skip 'junction NYI'
-{
- my junction $sor;
- isa_ok($sor, junction);
-}
-
-#?rakudo skip 'StrPos NYI'
+#?rakudo skip 'StrPos NYI RT #124468'
 #?niecza skip 'StrPos NYI'
 {
  my StrPos $pa;
- isa_ok($pa,StrPos  );
+ isa-ok($pa,StrPos  );
 }
 
 
-#?rakudo skip 'StrLen NYI'
+#?rakudo skip 'StrLen NYI RT #124469'
 #?niecza skip 'StrLen NYI'
 {
  my StrLen $re;
- isa_ok($re,StrLen  );
+ isa-ok($re,StrLen  );
 }
 
 #?niecza skip 'No value for parameter $l in infix:<===>'
@@ -199,7 +194,7 @@ plan 79;
 
 {
  my Whatever $vo;
- isa_ok($vo,Whatever  );
+ isa-ok($vo,Whatever  );
 }
 
 {
@@ -210,33 +205,33 @@ plan 79;
 #?niecza skip 'Failure NYI'
 {
  my Failure $xa;
- isa_ok($xa,Failure  );
+ isa-ok($xa,Failure  );
 }
 
 #?niecza skip 'Exception NYI'
 {
  my Exception $ze;
- isa_ok($ze,Exception  );
+ isa-ok($ze,Exception  );
 }
 
 {
  my Range $bi;
- isa_ok($bi,Range  );
+ isa-ok($bi,Range  );
 }
 
 {
  my Bag $so;
- isa_ok($so,Bag  );
+ isa-ok($so,Bag  );
 }
 
 {
  my Signature $pano;
- isa_ok($pano,Signature  );
+ isa-ok($pano,Signature  );
 }
 
 {
  my Capture $papa;
- isa_ok($papa,Capture  );
+ isa-ok($papa,Capture  );
 }
 
 #?niecza skip 'Blob NYI'
@@ -247,13 +242,13 @@ plan 79;
 
 {
  my Instant $paci;
- isa_ok($paci,Instant  );
+ isa-ok($paci,Instant  );
 }
 
 #?niecza skip 'Duration NYI'
 {
  my Duration $pavo;
- isa_ok($pavo,Duration  );
+ isa-ok($pavo,Duration  );
 }
 
 #?niecza skip 'QuantHash NYI'
@@ -265,39 +260,39 @@ plan 79;
 #?niecza skip 'SetHash'
 {
  my SetHash $paxa;
- isa_ok($paxa,SetHash  );
+ isa-ok($paxa,SetHash  );
 }
 
 #?niecza skip 'BagHash'
 {
  my BagHash $paze;
- isa_ok($paze,BagHash  );
+ isa-ok($paze,BagHash  );
 }
 
 {
  my Pair $pabi;
- isa_ok($pabi,Pair  );
+ isa-ok($pabi,Pair  );
 }
 
 {
  my EnumMap $paso;
- isa_ok($paso,EnumMap  );
+ isa-ok($paso,EnumMap  );
 }
 
 {
  my Routine $repa;
- isa_ok($repa,Routine  );
+ isa-ok($repa,Routine  );
 }
 
 {
  my Sub $rere;
- isa_ok($rere, Sub );
+ isa-ok($rere, Sub );
 }
 
 {
  my sub bar() { say 'blah' };
  my Sub $rr = &bar;
- isa_ok($rr, Sub );
+ isa-ok($rr, Sub );
 }
 
 {
@@ -317,99 +312,99 @@ plan 79;
 
 {
  my Method $reci;
- isa_ok($reci, Method );
+ isa-ok($reci, Method );
 }
 
 {
  my Submethod $revo;
- isa_ok($revo, Submethod );
+ isa-ok($revo, Submethod );
 }
 
 #?niecza skip 'Macro NYI'
 {
  my Macro $remu;
- isa_ok($remu,Macro  );
+ isa-ok($remu,Macro  );
 }
 
 {
  my Match $rexa;
- isa_ok($rexa,Match  );
+ isa-ok($rexa,Match  );
 }
 
 {
  my Grammar $cire;
- isa_ok($cire,Grammar  );
+ isa-ok($cire,Grammar  );
 }
 
 {
  my Any $civo;
- isa_ok($civo, Any );
+ isa-ok($civo, Any );
 }
 
 {
  my Bool $jetfu;
- isa_ok($jetfu, Bool);
+ isa-ok($jetfu, Bool);
 }
 
 {
  my Order $karbi;
- isa_ok($karbi, Order);
+ isa-ok($karbi, Order);
 }
 
-#?rakudo skip 'Matcher isa NYI'
+#?rakudo skip 'Matcher isa NYI RT #124470'
 #?niecza skip 'Matcher NYI'
 {
   my Matcher $mapti;
-  isa_ok($mapti, Matcher);
+  isa-ok($mapti, Matcher);
 }
 
 {
   my Proxy $krati;
-  isa_ok($krati, Proxy);
+  isa-ok($krati, Proxy);
 }
 
 # CharLingua Byte Char AnyChar 
 
-#?rakudo skip 'Char NYI'
+#?rakudo skip 'Char NYI RT #124471'
 #?niecza skip 'Char NYI'
 {
   my Char $pav;
-  isa_ok($pav, Char);
+  isa-ok($pav, Char);
 }
 
-#?rakudo skip 'Byte NYI'
+#?rakudo skip 'Byte NYI RT #124472'
 #?niecza skip 'Byte NYI'
 {
   my Byte $biv;
-  isa_ok($biv, Byte);
+  isa-ok($biv, Byte);
 }
 
-#?rakudo skip 'AnyChar NYI'
+#?rakudo skip 'AnyChar NYI RT #124473'
 #?niecza skip 'AnyChar NYI'
 {
   my AnyChar $lerfu;
-  isa_ok($lerfu, AnyChar);
+  isa-ok($lerfu, AnyChar);
 }
 
-#?rakudo skip 'CharLingua NYI'
+#?rakudo skip 'CharLingua NYI RT #124474'
 #?niecza skip 'CharLingua NYI'
 {
   my CharLingua  $lerfu;
-  isa_ok($lerfu, CharLingua );
+  isa-ok($lerfu, CharLingua );
 }
 
-#?rakudo skip 'Codepoint NYI'
+#?rakudo skip 'Codepoint NYI RT #124475'
 #?niecza skip 'Codepoint NYI'
 {
   my Codepoint $cypy;
-  isa_ok($cypy,Codepoint );
+  isa-ok($cypy,Codepoint );
 }
 
-#?rakudo skip 'Grapheme NYI'
+#?rakudo skip 'Grapheme NYI RT #124476'
 #?niecza skip 'Grapheme NYI'
 {
   my Grapheme $gy;
-  isa_ok($gy,Grapheme );
+  isa-ok($gy,Grapheme );
 }
 
 # Positional Associative Ordering Ordered
@@ -425,40 +420,40 @@ plan 79;
   ok($kansa ~~ Associative,'Associative exists');
 }
 
-#?rakudo skip 'Ordering NYI'
+#?rakudo skip 'Ordering NYI RT #124477'
 #?niecza skip 'Ordering NYI'
 {
   my Ordering $foo;
-  isa_ok($foo,Ordering);
+  isa-ok($foo,Ordering);
 }
 
-#?rakudo skip 'KeyExtractor NYI'
+#?rakudo skip 'KeyExtractor NYI RT #124478'
 #?niecza skip 'KeyExtractor NYI'
 {
   my KeyExtractor $ckiku;
-  isa_ok($ckiku, KeyExtractor);
+  isa-ok($ckiku, KeyExtractor);
 }
 
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
-#?rakudo skip 'Comparator NYI'
+#?rakudo skip 'Comparator NYI RT #124479'
 #?niecza skip 'Comparator NYI'
 {
   my Comparator $bar;
-  isa_ok($bar,Comparator);
+  isa-ok($bar,Comparator);
 }
 
-#?rakudo skip 'OrderingPair NYI'
+#?rakudo skip 'OrderingPair NYI RT #124480'
 #?niecza skip 'OrderingPair NYI'
 {
   my OrderingPair $foop;
-  isa_ok($foop,OrderingPair);
+  isa-ok($foop,OrderingPair);
 }
 
 #?niecza skip 'HyperWhatever NYI'
 {
   my HyperWhatever $baz;
-  isa_ok($baz,HyperWhatever);
+  isa-ok($baz,HyperWhatever);
 }
 
 # utf8 utf16 utf32
@@ -466,19 +461,19 @@ plan 79;
 #?niecza skip 'utf8 NYI'
 {
   my utf8 $ubi;
-  isa_ok($ubi,utf8);
+  isa-ok($ubi,utf8);
 }
 
 #?niecza skip 'utf16 NYI'
 {
   my utf16 $upaxa;
-  isa_ok($upaxa,utf16);
+  isa-ok($upaxa,utf16);
 }
 
 #?niecza skip 'utf32 NYI'
 {
   my utf32 $ucire;
-  isa_ok($ucire,utf32);
+  isa-ok($ucire,utf32);
 }
 
 # L<S09/Sized types/>
@@ -491,11 +486,11 @@ plan 79;
 # complex16 complex32 complex64 complex128
 # buf8 buf16 buf32 buf64 
 
-#?rakudo skip 'num16  NYI'
+#?rakudo skip 'num16  NYI RT #124481'
 #?niecza skip 'num16 NYI'
 {
   my num16 $namcupaxa;
-  isa_ok($namcupaxa,num16);
+  isa-ok($namcupaxa,num16);
 }
 
 # TODO FIXME rakudo does not have any of them anyway

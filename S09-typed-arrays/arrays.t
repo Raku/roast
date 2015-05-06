@@ -101,7 +101,7 @@ plan 75;
     lives_ok { @b = @a.values }, '@a.values is typed (2)';
 } #3
 
-#?rakudo todo 'initialization'
+#?rakudo todo 'initialization RT #124676'
 {
     my Str @c = <foo bar baz>;
     ok @c.keys.VAR.of.WHICH eqv Str.WHICH, '@array.keys is typed with Str';
@@ -136,7 +136,7 @@ plan 75;
 } #8
 
 # RT #69482
-#?rakudo skip 'type on our-variables'
+#?rakudo skip 'type on our-variables RT #124677'
 {
     our Int @a1;
     our @a2;
@@ -191,11 +191,13 @@ plan 75;
 # RT #120506
 {
     my @RT120506-bind := Array[Array[Bool]].new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
+    #?rakudo todo 'unexpectedly getting array Array[Bool].new'
     is_deeply @RT120506-bind[0, 1]».Parcel, ((True, False, True), (True,)),
         "Can feed Arrays of Type to .new of Array[Array[Type]] (binding)";
     is @RT120506-bind[0].WHAT, Array[Bool], "Type is maintained (binding)";
 
     my Array of Bool @RT120506-assign .= new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
+    #?rakudo todo 'unexpectedly getting array Array[Bool].new'
     is_deeply @RT120506-assign[0, 1]».Parcel, ((True, False, True), (True,)),
         "Can feed Arrays of Type to .new of Array[Array[Type]] (assignment)";
     is @RT120506-assign[0].WHAT, Array[Bool], "Type is maintained (assignment)";

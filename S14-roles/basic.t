@@ -162,7 +162,6 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 }
 
 # RT #120919
-#?rakudo.parrot skip 'RT #120919'
 #?rakudo.jvm skip 'RT #120919'
 {
     my role A {

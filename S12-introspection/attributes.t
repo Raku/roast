@@ -52,7 +52,7 @@ ok @attrs[2].readonly,              'third attribute is readonly';
 is +@attrs,        1,     'attribute introspection with :local gave just attribute in base class';
 is @attrs[0].name, '$!c', 'get correct attribute with introspection';
 
-#?rakudo skip ':tree NYI for .^attributes'
+#?rakudo skip ':tree NYI for .^attributes RT #125014'
 {
     @attrs = C.^attributes(:tree);
     is +@attrs, 2,                  'attribute introspection with :tree gives right number of elements';
@@ -65,7 +65,7 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
 {
     my $x = A.new(a => 'abc');
     my $attr = $x.^attributes(:local).[0];
-    isa_ok $attr, Attribute;
+    isa-ok $attr, Attribute;
     is $attr.get_value($x), 'abc', '.get_value works';
     lives_ok { $attr.set_value($x, 'new') }, 'can set_value';
     is $x.a, 'new', 'set_value worked';

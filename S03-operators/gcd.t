@@ -11,10 +11,10 @@ Basic tests for the gcd operator
 =end pod
 
 is 10 gcd 5, 5, "The gcd of 10 and 5 is 5";
-isa_ok 10 gcd 5, Int, "The gcd of 10 and 5 is an Int";
+isa-ok 10 gcd 5, Int, "The gcd of 10 and 5 is an Int";
 is -432 gcd 63, 9, "The gcd of -432 and 63 is 9";
 is 4342 gcd 65536, 2, "The gcd of 4342 and 65536 is 2";
-isa_ok 4342 gcd 65536, Int, "The gcd of 4342 and 65536 is an Int";
+isa-ok 4342 gcd 65536, Int, "The gcd of 4342 and 65536 is an Int";
 
 is ([gcd] 25..26), 1, '[gcd] Range works';
 {
@@ -24,9 +24,9 @@ is ([gcd] 25..26), 1, '[gcd] Range works';
 
 {
     is 10.1 gcd 5.3, 5, "gcd converts Rats to Ints correctly";
-    isa_ok 10.1 gcd 5.3, Int, "and the result is an Int";
+    isa-ok 10.1 gcd 5.3, Int, "and the result is an Int";
     is 10.1e0 gcd 5.3e0, 5, "gcd converts Nums to Ints correctly";
-    isa_ok 10.1e0 gcd 5.3e0, Int, "and the result is an Int";
+    isa-ok 10.1e0 gcd 5.3e0, Int, "and the result is an Int";
 }
 
 {

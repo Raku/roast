@@ -9,7 +9,7 @@ plan 144;
 # L<S02/Names/>
 # syn r14552
 
-#?rakudo skip 'package variable autovivification'
+#?rakudo skip 'package variable autovivification RT #124637'
 #?niecza skip 'Undeclared name: Terrain::'
 {
     my $mountain = 'Hill';
@@ -38,7 +38,7 @@ plan 144;
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');
 }
 
-#?rakudo skip '::{ } package lookup NYI'
+#?rakudo skip '::{ } package lookup NYI RT #124638'
 #?niecza skip 'Postconstraints, and shapes on variable declarators NYI'
 {
     my $::<!@#$> =  2.22;
@@ -113,7 +113,7 @@ is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
 }
 
 # RT #77006
-isa_ok (rule => 1), Pair, 'rule => something creates a Pair';
+isa-ok (rule => 1), Pair, 'rule => something creates a Pair';
 
 # RT #69752
 {

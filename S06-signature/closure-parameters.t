@@ -45,7 +45,7 @@ plan 17;
     eval_dies_ok('testit(&teststrint)',  'code dies with invalid signature (4)');
 }
 
-#?rakudo skip 'subsignatures dont factor into multi candidates yet'
+#?rakudo skip 'subsignatures dont factor into multi candidates yet RT #124935'
 {
     multi sub t1 (&code:(Int)) { 'Int' };   #OK not used
     multi sub t1 (&code:(Str)) { 'Str' };   #OK not used

@@ -103,7 +103,7 @@ plan 32;
 }
 
 # Lists as lvalues to swap, this time we use binding instead of assignment
-#?rakudo skip 'list binding'
+#?rakudo skip 'list binding RT #124494'
 #?niecza skip 'Cannot use bind operator with this LHS'
 {
   my $foo = 42;
@@ -118,7 +118,7 @@ plan 32;
     "the vars didn't lose the readwrite-ness";
 }
 
-#?rakudo skip 'list binding'
+#?rakudo skip 'list binding RT #124495'
 #?niecza skip 'Cannot use bind operator with this LHS'
 {
   my $foo = 1;
@@ -156,7 +156,7 @@ plan 32;
 # RT #66304
 {
     my $rt66304 = (1, 2, 4);
-    isa_ok $rt66304, Parcel, 'List assigned to scalar is-a Parcel';
+    isa-ok $rt66304, Parcel, 'List assigned to scalar is-a Parcel';
     is( $rt66304.WHAT.perl, (1, 2, 4).WHAT.perl,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
     throws_like { $rt66304[1] = 'ro' },

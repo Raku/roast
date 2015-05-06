@@ -28,9 +28,9 @@ grammar A {
 
 my regex b {\d+};
 
-isa_ok(A.WHAT, A, 'regex defined in separate namespace from grammar');
+isa-ok(A.WHAT, A, 'regex defined in separate namespace from grammar');
 
-isa_ok(&b.WHAT, Regex, 'regex defined in separate namespace from grammar');
+isa-ok(&b.WHAT, Regex, 'regex defined in separate namespace from grammar');
 
 is('1245' ~~ &b, '1245', 'Match against regex');
 

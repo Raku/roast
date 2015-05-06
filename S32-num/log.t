@@ -69,9 +69,9 @@ is_approx(log10(-1i), -0.5i * $pi / log(10), "got the log10 of -i (complex unit)
 # TODO: please add more testcases for log10 of complex numbers
 
 is_approx( (-1i).log10(), -0.5i*$pi / log(10), " (i).log10 = - i  * pi/(2 log(10))");
-isa_ok( log10(-1+0i), Complex, 'log10 of a complex returns a complex, not a list');
+isa-ok( log10(-1+0i), Complex, 'log10 of a complex returns a complex, not a list');
 
-#?rakudo todo 'HugeInt.log'
+#?rakudo todo 'HugeInt.log RT #124821'
 is_approx (10 ** 1000).log10, 1000, "Can take the log of very large Ints";
 
 # vim: ft=perl6

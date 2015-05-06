@@ -5,7 +5,7 @@ plan 44;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
-#?rakudo skip 'hangs'
+#?rakudo skip 'hangs RT #125049'
 #?niecza skip 'Two definitions found for symbol ::GLOBAL::&infix:<cmp> (etc)'
 {
     class Alternating {
@@ -69,7 +69,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
 
 # be sure the test works as specced even for user classes
-#?rakudo skip 'lifting comparison ops'
+#?rakudo skip 'lifting comparison ops RT #125050'
 #?niecza skip 'Two definitions found for symbol ::GLOBAL::&infix:<cmp> (etc)'
 {
     class Periodic {

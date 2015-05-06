@@ -13,7 +13,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s1 = Supply.new;
         my $s2 = Supply.new;
 
-        tap_ok $s1.zip-latest($s2),
+        tap-ok $s1.zip-latest($s2),
           [(<2 a>), (<2 b>), (<2 c>), (<3 c>), (<4 c>)],
           'zipping 2 supplies works with "zip-latest"',
           :after-tap( {
@@ -34,7 +34,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s2 = Supply.new;
         my $s3 = Supply.new;
 
-        tap_ok Supply.zip-latest($s1, $s2, $s3, :with( &infix:<~> )),
+        tap-ok Supply.zip-latest($s1, $s2, $s3, :with( &infix:<~> )),
           [<aaa aab abb bbb bcb bcc bcd>],
           'zipping three supplies with ~ works with "zip-latest"',
           :after-tap( {
@@ -62,7 +62,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s2 = Supply.new;
         my $s3 = Supply.new;
 
-        tap_ok Supply.zip-latest($s1, $s2, $s3, :with(&infix:<~>), :initial(<x y z>)),
+        tap-ok Supply.zip-latest($s1, $s2, $s3, :with(&infix:<~>), :initial(<x y z>)),
           [<xaz aaz aaa aab abb bbb bcb bcc bcd>],
           'zipping three supplies works with "zip-latest"',
           :after-tap( {
@@ -85,7 +85,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s = Supply.from-list(1..10);
         my $z = Supply.zip-latest($s);
         ok $s === $z, 'zipping one supply is a noop with "zip-latest"';
-        tap_ok $z, [1..10], "noop zip-latest";
+        tap-ok $z, [1..10], "noop zip-latest";
     }
 
 

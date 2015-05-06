@@ -11,7 +11,7 @@ is $e.keys.elems, 3, 'anonymous enum created correct sized hash';
 is $e<ook!>,      0, 'anonymous enum created correctly';
 is $e<ook.>,      1, 'anonymous enum created correctly';
 is $e<ook?>,      2, 'anonymous enum created correctly';
-isa_ok $e, EnumMap, 'anonymous enum returns an EnumMap';
+isa-ok $e, EnumMap, 'anonymous enum returns an EnumMap';
 
 my %e1 = enum <foo>;
 is %e1.keys.elems, 1, 'single-value anonymous enum created correct sized hash';

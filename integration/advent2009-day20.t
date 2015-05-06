@@ -18,7 +18,7 @@ my @sig-info = \(name => '$i',     type => 'Int'),
                \(name => '@stuff', type => 'Positional'),
                \(name => '$blah',  type => 'Any');
 
-for &foo.signature.params Z @sig-info -> $param, $param-info {
+for &foo.signature.params Z @sig-info -> ($param, $param-info) {
     is $param.name, $param-info<name>, 'Name matches ' ~ $param-info<name>;
     is $param.type.perl, $param-info<type>, 'Type matches ' ~ $param-info<type>;
 }

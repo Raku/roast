@@ -13,14 +13,14 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = SetHash.new(<a b foo>);
-    isa_ok $s, SetHash, 'SetHash.new produces a SetHash';
+    isa-ok $s, SetHash, 'SetHash.new produces a SetHash';
     is showset($s), 'a b foo', '...with the right elements';
 
     is $s.default, False, "Default value is false";
     is $s<a>, True, 'Single-key subscript (existing element)';
-    isa_ok $s<a>, Bool, 'Single-key subscript has correct type (existing element)';
+    isa-ok $s<a>, Bool, 'Single-key subscript has correct type (existing element)';
     is $s<santa>, False, 'Single-key subscript (nonexistent element)';
-    isa_ok $s<santa>, Bool, 'Single-key subscript has correct type (nonexistent element)';
+    isa-ok $s<santa>, Bool, 'Single-key subscript has correct type (nonexistent element)';
     is $s<a>:exists, True, 'exists with existing element';
     is $s<santa>:exists, False, 'exists with nonexistent element';
 
@@ -29,7 +29,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
     my $hash;
     lives_ok { $hash = $s.hash }, ".hash doesn't die";
-    isa_ok $hash, Hash, "...and it returned a Hash";
+    isa-ok $hash, Hash, "...and it returned a Hash";
     is showset($hash), 'a b foo', '...with the right elements';
     is $hash.values.grep({ ($_ ~~ Bool) && $_ }).elems, 3, "...and values";
 
@@ -90,19 +90,19 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    isa_ok "a".SetHash, SetHash, "Str.SetHash makes a SetHash";
+    isa-ok "a".SetHash, SetHash, "Str.SetHash makes a SetHash";
     is showset("a".SetHash), 'a', "'a'.SetHash is set a";
 
-    isa_ok (a => 1).SetHash, SetHash, "Pair.SetHash makes a SetHash";
+    isa-ok (a => 1).SetHash, SetHash, "Pair.SetHash makes a SetHash";
     is showset((a => 1).SetHash), 'a', "(a => 1).SetHash is set a";
     is showset((a => 0).SetHash), '', "(a => 0).SetHash is the empty set";
 
-    isa_ok <a b c>.SetHash, SetHash, "<a b c>.SetHash makes a SetHash";
+    isa-ok <a b c>.SetHash, SetHash, "<a b c>.SetHash makes a SetHash";
     is showset(<a b c a>.SetHash), 'a b c', "<a b c a>.SetHash makes the set a b c";
     is showset(["a", "b", "c", "a"].SetHash), 'a b c', "[a b c a].SetHash makes the set a b c";
     is showset([a => 3, b => 0, 'c', 'a'].SetHash), 'a c', "[a => 3, b => 0, 'c', 'a'].SetHash makes the set a c";
 
-    isa_ok {a => 2, b => 4, c => 0}.SetHash, SetHash, "{a => 2, b => 4, c => 0}.SetHash makes a SetHash";
+    isa-ok {a => 2, b => 4, c => 0}.SetHash, SetHash, "{a => 2, b => 4, c => 0}.SetHash makes a SetHash";
     is showset({a => 2, b => 4, c => 0}.SetHash), 'a b', "{a => 2, b => 4, c => 0}.SetHash makes the set a b";
 }
 
@@ -143,13 +143,13 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $b = SetHash.new([ foo => 10, bar => 17, baz => 42 ]);
-    isa_ok $b, SetHash, 'SetHash.new given an array of pairs produces a SetHash';
+    isa-ok $b, SetHash, 'SetHash.new given an array of pairs produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
     my $b = SetHash.new({ foo => 10, bar => 17, baz => 42 }.hash);
-    isa_ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
+    isa-ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
     is +$b, 3, '... with three elements';
     #?niecza todo "Non-string keys NYI"
     is +$b.keys.grep(Pair), 3, '... which are all Pairs';
@@ -157,37 +157,37 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $b = SetHash.new({ foo => 10, bar => 17, baz => 42 });
-    isa_ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
+    isa-ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
     my $b = SetHash.new(set <foo bar foo bar baz foo>);
-    isa_ok $b, SetHash, 'SetHash.new given a Set produces a SetHash';
+    isa-ok $b, SetHash, 'SetHash.new given a Set produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
     my $b = SetHash.new(SetHash.new(<foo bar foo bar baz foo>));
-    isa_ok $b, SetHash, 'SetHash.new given a SetHash produces a SetHash';
+    isa-ok $b, SetHash, 'SetHash.new given a SetHash produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
     my $b = SetHash.new(BagHash.new(<foo bar foo bar baz foo>));
-    isa_ok $b, SetHash, 'SetHash.new given a BagHash produces a SetHash';
+    isa-ok $b, SetHash, 'SetHash.new given a BagHash produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
     my $b = SetHash.new(bag <foo bar foo bar baz foo>);
-    isa_ok $b, SetHash, 'SetHash given a Bag produces a SetHash';
+    isa-ok $b, SetHash, 'SetHash given a Bag produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
     my $s = SetHash.new(<foo bar baz>);
-    isa_ok $s.list.elems, 3, ".list returns 3 things";
+    isa-ok $s.list.elems, 3, ".list returns 3 things";
     is $s.list.grep(Str).elems, 3, "... all of which are Str";
     #?rakudo skip 'no longer Iterable'
     is $s.iterator.grep(Str).elems, 3, ".iterator yields three Strs";
@@ -198,23 +198,23 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $str;
     my $c;
     lives_ok { $str = $s.perl }, ".perl lives";
-    isa_ok $str, Str, "... and produces a string";
+    isa-ok $str, Str, "... and produces a string";
     lives_ok { $c = EVAL $str }, ".perl.eval lives";
-    isa_ok $c, SetHash, "... and produces a SetHash";
+    isa-ok $c, SetHash, "... and produces a SetHash";
     is showset($c), showset($s), "... and it has the correct values";
 }
 
 {
     my $s = SetHash.new(<foo bar baz>);
     lives_ok { $s = $s.Str }, ".Str lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";
 }
 
 {
     my $s = SetHash.new(<foo bar baz>);
     lives_ok { $s = $s.gist }, ".gist lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";
     ok $s ~~ /baz/, "... which mentions baz";
@@ -224,7 +224,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my %s := SetHash.new(<a b c b>);
-    isa_ok %s, SetHash, 'A SetHash bound to a %var is a SetHash';
+    isa-ok %s, SetHash, 'A SetHash bound to a %var is a SetHash';
     is showset(%s), 'a b c', '...with the right elements';
 
     is %s<a>, True, 'Single-key subscript (existing element)';
@@ -335,7 +335,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = SetHash.new(<a b c>);
 
     my $a = $s.grabpairs[0];
-    isa_ok $a, Pair, 'and is it a Pair';
+    isa-ok $a, Pair, 'and is it a Pair';
     ok $a.key eq "a" || $a.key eq "b" || $a.key eq "c", "We got one of the three choices";
     is $s.total, 2, '.grabpairs *should* change the SetHash';
     is $s.elems, 2, '.grabpairs *should* change the SetHash';
@@ -351,7 +351,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.elems, 0, '.grabpairs *should* change the SetHash';
 }
 
-#?rakudo skip "'is ObjectType' NYI"
+#?rakudo skip "'is ObjectType' NYI RT #124497"
 #?niecza skip "is SetHash doesn't work yet"
 {
     my %h is SetHash = a => True, b => False, c => True;
@@ -376,17 +376,17 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    isa_ok 42.SetHash, SetHash, "Method .SetHash works on Int-1";
+    isa-ok 42.SetHash, SetHash, "Method .SetHash works on Int-1";
     is showset(42.SetHash), "42", "Method .SetHash works on Int-2";
-    isa_ok "blue".SetHash, SetHash, "Method .SetHash works on Str-1";
+    isa-ok "blue".SetHash, SetHash, "Method .SetHash works on Str-1";
     is showset("blue".SetHash), "blue", "Method .SetHash works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
-    isa_ok @a.SetHash, SetHash, "Method .SetHash works on Array-1";
+    isa-ok @a.SetHash, SetHash, "Method .SetHash works on Array-1";
     is showset(@a.SetHash), "Now Paradise cross-handed set the was way", "Method .SetHash works on Array-2";
     my %x = "a" => 1, "b" => 2;
-    isa_ok %x.SetHash, SetHash, "Method .SetHash works on Hash-1";
+    isa-ok %x.SetHash, SetHash, "Method .SetHash works on Hash-1";
     is showset(%x.SetHash), "a b", "Method .SetHash works on Hash-2";
-    isa_ok (@a, %x).SetHash, SetHash, "Method .SetHash works on Parcel-1";
+    isa-ok (@a, %x).SetHash, SetHash, "Method .SetHash works on Parcel-1";
     is showset((@a, %x).SetHash), "Now Paradise a b cross-handed set the was way", "Method .SetHash works on Parcel-2";
 }
 

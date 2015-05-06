@@ -22,6 +22,7 @@ plan 12;
     nok $x ~~ /<[Dd]>/, 'Do not have accidents involving enumerated char class and base char';
     nok $x ~~ /<[\x1E0C\x1E0D]>/, 'Do not have accidents involving enumerated char class and NFC';
     nok $x ~~ /<[D..d]>/, 'Do not have accidents involving range char class and base char';
+    #?rakudo todo 'charrange bugginess with synthetics'
     nok $x ~~ /<[\x1E0C..\x1E0D]>/, 'Do not have accidents involving range char class and NFC';
 
     # Character properties work on the base character.

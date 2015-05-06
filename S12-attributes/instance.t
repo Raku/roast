@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 141;
+plan 153;
 
 =begin pod
 
@@ -283,11 +283,11 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
         has WHAT_test $.b is rw;
     }
     my $o = WHAT_test.new(a => WHAT_ref.new(), b => WHAT_test.new());
-    isa_ok $o.a.WHAT, WHAT_ref, '.WHAT on attributes';
-    isa_ok $o.b.WHAT, WHAT_test, '.WHAT on attributes of same type as class';
+    isa-ok $o.a.WHAT, WHAT_ref, '.WHAT on attributes';
+    isa-ok $o.b.WHAT, WHAT_test, '.WHAT on attributes of same type as class';
     my $r = WHAT_test.new();
     lives_ok {$r.b = $r}, 'type check on recursive data structure';
-    isa_ok $r.b.WHAT, WHAT_test, '.WHAT on recursive data structure';
+    isa-ok $r.b.WHAT, WHAT_test, '.WHAT on recursive data structure';
 
 }
 
@@ -554,7 +554,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $a.x, 42, 'binding to an attribute works';
 }
 
-#?rakudo skip 'dubious test - the initializer becomes a submethod here, implying a scope'
+#?rakudo skip 'dubious test - the initializer becomes a submethod here, implying a scope RT #124908'
 {
     class InitializationThunk {
         has $.foo = my $x = 5;
@@ -599,7 +599,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     my $x = AttribListAssign.new;
     $x.doit;
     is $x.a, 'post', 'list assignment to attributes (1)';
-    isa_ok $x.a, Str, 'list assignment to attributes (type)';
+    isa-ok $x.a, Str, 'list assignment to attributes (type)';
     is $x.b, 'office', 'list assignment to attributes (2)';
 
 }
@@ -665,6 +665,39 @@ eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
         "can 'is rw' multiple declared has attributes";
 }
 
-done();
+{
+    my $seen = 0;
+    my class Lazy {
+        has $.foo will lazy { ++$seen; 42 };
+    }
+    my $l1 = Lazy.new;
+    is $seen,    0, 'Initializing object did not run lazy code';
+    is $l1.foo, 42, 'get right attribute value (1)';
+    is $seen,    1, 'Accessor ran code';
+    is $l1.foo, 42, 'get right attribute value (2)';
+    is $seen,    1, 'Accessor did not run code';
+
+    my $l2 = Lazy.new;
+    is $seen,    1, 'Initializing another object did not run lazy code';
+    is $l2.foo, 42, 'get right attribute value (3)';
+    is $seen,    2, 'Another accessor ran code';
+    is $l2.foo, 42, 'get right attribute value (4)';
+    is $seen,    2, 'Another accessor did not run code';
+}
+
+{
+    throws_like 'class Zapis { has $.a is bar; }',
+      X::Comp::Trait::Unknown,
+      type      => 'is',
+      subtype   => 'bar',
+      declaring => 'n attribute',
+    ;
+    throws_like 'class Zapwill { has $.a will bar { ... } }',
+      X::Comp::Trait::Unknown,
+      type      => 'will',
+      subtype   => 'bar',
+      declaring => 'n attribute',
+    ;
+}
 
 # vim: ft=perl6

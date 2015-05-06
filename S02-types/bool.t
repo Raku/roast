@@ -5,25 +5,25 @@ plan 51;
 #L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
 # tests True and False are Bool's
-isa_ok(Bool::True, Bool);
-isa_ok(Bool::False, Bool);
+isa-ok(Bool::True, Bool);
+isa-ok(Bool::False, Bool);
 
 # tests they keep their Bool'ness when stored
 my $a = Bool::True;
-isa_ok($a, Bool);
+isa-ok($a, Bool);
 
 $a = Bool::False;
-isa_ok($a, Bool);
+isa-ok($a, Bool);
 
 # tests that Bool.Bool works
-isa_ok (Bool::True).Bool, Bool, "Bool.Bool is a Bool";
-isa_ok (Bool::False).Bool, Bool, "Bool.Bool is a Bool";
+isa-ok (Bool::True).Bool, Bool, "Bool.Bool is a Bool";
+isa-ok (Bool::False).Bool, Bool, "Bool.Bool is a Bool";
 is (Bool::True).Bool, Bool::True, "Bool.Bool works for True";
 is (Bool::False).Bool, Bool::False, "Bool.Bool works for False";
 
 # tests that ?Bool works
-isa_ok ?(Bool::True), Bool, "?Bool is a Bool";
-isa_ok ?(Bool::False), Bool, "?Bool is a Bool";
+isa-ok ?(Bool::True), Bool, "?Bool is a Bool";
+isa-ok ?(Bool::False), Bool, "?Bool is a Bool";
 is ?(Bool::True), Bool::True, "?Bool works for True";
 is ?(Bool::False), Bool::False, "?Bool works for False";
 
@@ -42,8 +42,8 @@ ok(Bool::True, 'True works');
 ok(!Bool::False, 'False works');
 
 # tests Bool stringification - interaction with ~
-isa_ok(~Bool::True, Str);
-isa_ok(~Bool::False, Str);
+isa-ok(~Bool::True, Str);
+isa-ok(~Bool::False, Str);
 is(~Bool::True, 'True', 'Bool stringification (True)');
 is(~Bool::False, 'False', 'Bool stringification (False)');
 is Bool::True.Str, 'True', 'True.Str';
@@ -56,8 +56,8 @@ is Bool::False.perl, 'Bool::False', 'False.perl';
 # numification - interaction with +
 ok(+Bool::True ~~ Numeric);
 ok(+Bool::False ~~ Numeric);
-isa_ok(+Bool::True, Int, 'True numifies to an Int');
-isa_ok(+Bool::False, Int, 'False numifies to an Int');
+isa-ok(+Bool::True, Int, 'True numifies to an Int');
+isa-ok(+Bool::False, Int, 'False numifies to an Int');
 
 is(Bool::True.Int, '1', 'True Intifies to 1');
 is(Bool::False.Int, '0', 'False Intifies to 1');

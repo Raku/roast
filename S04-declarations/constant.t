@@ -83,7 +83,7 @@ plan 56;
     dies_ok { ConstantTest3::yak }, 'constant can be explicitly "my"-scoped';
 }
 
-#?rakudo todo 'COMPILING'
+#?rakudo todo 'COMPILING RT #125054'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
@@ -105,7 +105,7 @@ plan 56;
     ok $ok, "declaring a constant in terms of hash constant works";
 }
 
-#?rakudo todo 'COMPILING'
+#?rakudo todo 'COMPILING RT #125055'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
@@ -127,7 +127,7 @@ plan 56;
     ok $ok, "declaring a constant in terms of array constant works";
 }
 
-#?rakudo todo 'COMPILING'
+#?rakudo todo 'COMPILING RT #125056'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
@@ -148,7 +148,7 @@ plan 56;
     ok $ok, "declaring a sigilless constant with a type specification using 'constant' works";
 }
 
-#?rakudo skip 'unicode constant name'
+#?rakudo skip 'unicode constant name RT #125057'
 {
     my $ok;
 
@@ -172,7 +172,7 @@ plan 56;
     is $ok, 3, "a constant declared using 'constant' is actually constant (1)";
 }
 
-#?rakudo skip 'binding'
+#?rakudo skip 'binding RT #125058'
 {
     my $ok;
 
@@ -199,7 +199,7 @@ plan 56;
     is $ok, 3, "a constant declared using 'constant' is actually constant (3)";
 }
 
-#?rakudo skip 'binding'
+#?rakudo skip 'binding RT #125059'
 {
     my $ok;
 

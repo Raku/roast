@@ -19,11 +19,11 @@ is ~("a".."z"), "a b c d e f g h i j k l m n o p q r s t u v w x y z", "(..) wor
 is ~("A".."Z"), "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", "(..) works on char range ending in Z";
 is ~("Y".."AB"), "",     "(..) works on carried chars (3)";
 
-#?rakudo todo 'huh?'
+#?rakudo todo 'huh? RT #124542'
 #?niecza 4 skip 'Spec under design here'
 is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
-#?rakudo todo 'huh?'
+#?rakudo todo 'huh? RT #124543'
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
 is ~(' '..' '), ' ',    'all-whitespace range works';
@@ -81,12 +81,12 @@ is (1..*).[^5].join('|'), '1|2|3|4|5', '1..*';
 is ('a'..*).[^5].join('|'), 'a|b|c|d|e', '"a"..*';
 
 # test that the zip operator works with ranges
-is (1..5 Z <a b c>).join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';
-is (1..2 Z <a b c>).join('|'), '1|a|2|b',     'Ranges and infix:<Z>';
-is (<c b a> Z 1..5).join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
+is (1..5 Z <a b c>).flat.join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';
+is (1..2 Z <a b c>).flat.join('|'), '1|a|2|b',     'Ranges and infix:<Z>';
+is (<c b a> Z 1..5).flat.join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
 
 # two ranges
-is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
+is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
 
 {
     # Test with floats
@@ -176,7 +176,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 # RT #67882
 {
     ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
-    isa_ok $0..$1, Range, '$0..$1 constructs a Range';
+    isa-ok $0..$1, Range, '$0..$1 constructs a Range';
     #?niecza skip 'cannot increment a value of type Match'
     is ($0..$1).join('|'), '1|2|3', 'range from $0..$1';
 }
@@ -218,7 +218,7 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 {
     $_ = Any; # unsetting $_ to reproduce bug literally
     lives_ok {(1..$_)}, '(1..$_) lives';
-    isa_ok (1..$_), Range, '(..) works on Int .. Any';
+    isa-ok (1..$_), Range, '(..) works on Int .. Any';
 }
 
 {
@@ -250,7 +250,7 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 # RT #110350
 {
     for 1e0 .. 1e0 {
-        isa_ok $_, Num, 'Range of nums produces a Num';
+        isa-ok $_, Num, 'Range of nums produces a Num';
     }
 }
 
@@ -261,7 +261,7 @@ eval_dies_ok '1..2..3', '.. is not associative';
     ## once this block died at compile time
     ## with q[P6opaque: no such attribute '$!phasers']
     ## cmp. https://github.com/rakudo/rakudo/commit/c5e7a7783d
-    isa_ok { *.perl for ^2 }, Block,
+    isa-ok { *.perl for ^2 }, Block,
         'range optimizer is protected from cases with no block';
 }
 

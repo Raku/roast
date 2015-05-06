@@ -26,7 +26,7 @@ my @list = (1 ... 10);
     is($result, 4, "method form of first returns the expected item");
 }
 
-#?rakudo skip "adverbial block"
+#?rakudo skip "adverbial block RT #124765"
 #?niecza skip 'No value for parameter Mu $filter in CORE Any.first'
 {
     my $result = @list.first():{ ($^a == 4) };
@@ -75,8 +75,8 @@ my @list = (1 ... 10);
 # RT #118141
 #?niecza skip 'https://github.com/sorear/niecza/issues/183'
 {
-    isa_ok (first * > 20, @list), Nil, "first() returns Nil when no values match";
-    isa_ok @list.first(* < 0 ), Nil, ".first returns Nil when no values match"
+    isa-ok (first * > 20, @list), Nil, "first() returns Nil when no values match";
+    isa-ok @list.first(* < 0 ), Nil, ".first returns Nil when no values match"
 }
 
 # Bool handling

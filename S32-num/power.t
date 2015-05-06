@@ -15,14 +15,12 @@ is(4 ** 2,   16, "4 **  2 == 16");
 is 0 ** 4553535345364535345634543534, 0, "0 ** 4553535345364535345634543534 == 0";
 is 1 ** 4553535345364535345634543534, 1, "1 ** 4553535345364535345634543534 == 1";
 is 1e0 ** 4553535345364535345634543534, 1, "1e0 ** 4553535345364535345634543534 == 1";
-isa_ok 1e0 ** 4553535345364535345634543534, Num, "1e0 ** 4553535345364535345634543534 is a Num";
-#?rakudo.parrot 2 todo "Simple bigint optimizations NYI"
-#?rakudo.moar 5 todo 'big exponents'
+isa-ok 1e0 ** 4553535345364535345634543534, Num, "1e0 ** 4553535345364535345634543534 is a Num";
+#?rakudo.moar 5 todo 'big exponents RT #124798'
 is (-1) ** 4553535345364535345634543534, 1, "-1 ** 4553535345364535345634543534 == 1";
 is (-1) ** 4553535345364535345634543533, -1, "-1 ** 4553535345364535345634543534 == -1";
 #?niecza skip "Slow and wrong"
 is 2 ** 4553535345364535345634543534, Inf, "2 ** 4553535345364535345634543534 == Inf";
-#?rakudo.parrot todo "Simple bigint optimizations NYI"
 #?niecza 2 skip "Slow and wrong"
 is (-2) ** 4553535345364535345634543534, Inf, "-2 ** 4553535345364535345634543534 == Inf";
 is (-2) ** 4553535345364535345634543533, -Inf, "-2 ** 4553535345364535345634543534 == -Inf";
@@ -45,17 +43,14 @@ is(0 ** NaN, NaN, "0**NaN=NaN");
 # Not at all sure the next three cases are correct!
 
 #?niecza 2 todo 'complex NaN stringy'
-#?rakudo.jvm skip 'NaN**1i should be NaN'
-#?rakudo.parrot skip 'NaN**1i should be NaN'
-#?rakudo.moar todo 'NaN**1i should be NaN'
+#?rakudo.jvm skip 'NaN**1i should be NaN RT #124800'
+#?rakudo.moar todo 'NaN**1i should be NaN RT #124802'
 is(NaN ** 1i, NaN, "NaN**1i=NaN");
-#?rakudo.jvm skip '1i**NaN should be NaN'
-#?rakudo.parrot skip '1i**NaN should be NaN'
-#?rakudo.moar todo '1i**NaN should be NaN'
+#?rakudo.jvm skip '1i**NaN should be NaN RT #124803'
+#?rakudo.moar todo '1i**NaN should be NaN RT #124805'
 is(1i ** NaN, NaN, "1i**NaN=NaN");
-#?rakudo.jvm skip 'NaN**0 should be NaN'
-#?rakudo.parrot skip 'NaN**0 should be NaN'
-#?rakudo.moar todo 'NaN**0 should be NaN'
+#?rakudo.jvm skip 'NaN**0 should be NaN RT #124806'
+#?rakudo.moar todo 'NaN**0 should be NaN RT #124808'
 is(NaN ** 0, NaN, "NaN**0=NaN");
 
 is(NaN ** NaN, NaN, "NaN**NaN=NaN");
@@ -77,9 +72,8 @@ is_approx(5i ** 3, -125i, "5i ** 3 = -125i");
 is_approx(3i ** 3, -27i, "3i ** 3 = -27i");
 is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 
-#?rakudo.parrot skip 'i'
-#?rakudo.jvm skip 'i'
-#?rakudo.moar todo 'i'
+#?rakudo.jvm skip 'i RT #124810'
+#?rakudo.moar todo 'i RT #124811'
 is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 
 {

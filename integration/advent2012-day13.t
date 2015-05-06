@@ -71,19 +71,19 @@ do {
     my $words1 = bag $slurp1.comb(/\w+/).map(*.lc);
     my $words2 = set $slurp2.comb(/\w+/).map(*.lc);
     my $unique = ($words1 (-) $words2);
-    isa_ok $unique, Bag, 'set difference (-)';
+    isa-ok $unique, Bag, 'set difference (-)';
     is_deeply $unique.keys.sort, qw<aa bb cc zz>, 'set difference (-)';
 }
 
 my $s1 = set <A B>;
 my $s2 = set <B C>;
 
-isa_ok 'B' ∈ $s1, Bool, 'set ∈ result type';
-isa_ok 'B' (elem) $s1, Bool, 'set (elem) result type';
-isa_ok 'B' ∉ $s1, Bool, 'set ∉ result type';
-isa_ok 'B' ∋ $s1, Bool, 'set ∋ result type';
-isa_ok 'B' (cont) $s1, Bool, 'set (cont) result type';
-isa_ok 'B' ∌ $s1, Bool, 'set ∌ result type';
+isa-ok 'B' ∈ $s1, Bool, 'set ∈ result type';
+isa-ok 'B' (elem) $s1, Bool, 'set (elem) result type';
+isa-ok 'B' ∉ $s1, Bool, 'set ∉ result type';
+isa-ok 'B' ∋ $s1, Bool, 'set ∋ result type';
+isa-ok 'B' (cont) $s1, Bool, 'set (cont) result type';
+isa-ok 'B' ∌ $s1, Bool, 'set ∌ result type';
 
 my @set-and-bag-ops = 
     # Operation                 Unicode         Texas                   Type

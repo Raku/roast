@@ -192,7 +192,7 @@ if $*DISTRO.name ~~ any(<mswin32 os2 netware symbian dos cygwin>) {
 	skip_rest 'Unix on-platform tests'
 }
 else {
-	isa_ok $*SPEC, IO::Spec::Unix, "unix: loads correct module";
+	isa-ok $*SPEC, IO::Spec::Unix, "unix: loads correct module";
 	is $*SPEC.rel2abs( $*SPEC.curdir ), $*CWD.chop, "rel2abs: \$*CWD test";
 	ok {.IO.d && .IO.w}.( $*SPEC.tmpdir ), "tmpdir: {$*SPEC.tmpdir} is a writable directory";
 }

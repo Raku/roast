@@ -13,7 +13,7 @@ plan 58;
 # L<S09/Multidimensional arrays/Perl 6 arrays are not restricted to being one-dimensional>
 
 # real multi-dimensional arrays
-#?rakudo skip 'multi-dim sized arrays NYI'
+#?rakudo skip 'multi-dim sized arrays NYI RT #124482'
 {
     my @md[2;2];
     @md[0;0] = 0;
@@ -31,7 +31,7 @@ plan 58;
     is(@md.elems, 4, '.elems works on multidimensional array');
 }
 
-#?rakudo skip 'multi-dim sized arrays NYI'
+#?rakudo skip 'multi-dim sized arrays NYI RT #124483'
 {
     my @md[*;*;2];
     @md[0;0;0] = 'foo';
@@ -55,7 +55,7 @@ is($multi1[0], 1, 'got the right value at multi1 index 0');
     is(+$multi1[1], 3, '+$multi1[1] works')
 }
 
-isa_ok($multi1[1], List);
+isa-ok($multi1[1], List);
 
 # multi-dimensional array slices
 # L<S09/"Subscript and slice notation"/index value to each slice>
@@ -85,7 +85,7 @@ is(+$multi2, 2, 'the multi2 has 2 elements');
     is(+$array, 3, 'multi2[0] has 3 elements');
     is(+$multi2[0], 3, '+$multi2[0] works');
 }
-isa_ok($multi2[0], Parcel);
+isa-ok($multi2[0], Parcel);
 
 # slice
 
@@ -105,7 +105,7 @@ is($multi2[0][2], 3, 'got the right value at multi2 index 0,2');
     is(+$array, 3, 'multi2[1] has 3 elements');
     is(+$multi2[1], 3, '+$multi2[1] works');
 }
-isa_ok($multi2[1], List);
+isa-ok($multi2[1], List);
 
 # slice
 

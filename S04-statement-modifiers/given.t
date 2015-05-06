@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 11;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -43,12 +43,36 @@ plan 7;
 }
 
 # RT #100746
-#?rakudo.moar todo "RT #100746"
-#?rakudo.jvm todo "RT #100746"
 {
     $_ = 'bogus';
     my @r = gather { take "{$_}" given 'cool' }
     is @r[0], 'cool', 'given modifies the $_ that is visible to the {} interpolator';
+}
+
+# RT #111704
+{
+    my $a = 'many ';
+    try { $a ~= $_ } given 'pelmeni';
+    is $a, 'many pelmeni', 'Correct $_ in try block in statement-modifying given';
+}
+
+{
+    my $a;
+    { $a = $^x } given 69;
+    is $a, 69, 'given modifier with $_-using block runs block with correct arg';
+}
+
+{
+    my $a;
+    { $a = $^x } given 42;
+    is $a, 42, 'given modifier with placeholder block runs block with correct arg';
+}
+
+{
+    # Covers a bug where the block to first got compiled in the 'given' thunk
+    my @a;
+    for ^2 -> \c { 1 given first { @a.push(c); 0 }, ^2; };
+    is @a, (0, 0, 1, 1), 'given thunk does not mess up statement modifier closures';
 }
 
 # vim: ft=perl6

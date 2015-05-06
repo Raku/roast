@@ -13,33 +13,33 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 }
 
 
-#?rakudo skip "waiting for new '.loads' semantics"
+#?rakudo skip "waiting for new '.loads' semantics RT #124774"
 {
     my $x = False;
     my $c = $*SCHEDULER.cue({
         pass "Cued code on $name ran";
         $x = True;
     });
-    isa_ok $c, Cancellation;
+    isa-ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     ok $x, "Code was cued to $name by default";
     LEAVE $c.cancel;
 }
 
-#?rakudo skip "waiting for new '.loads' semantics"
+#?rakudo skip "waiting for new '.loads' semantics RT #124775"
 {
     my $message;
     my $c = $*SCHEDULER.uncaught_handler = sub ($exception) {
         $message = $exception.message;
     };
     $*SCHEDULER.cue({ die "oh noes" });
-    isa_ok $c, Cancellation;
+    isa-ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     is $message, "oh noes", "$name setting uncaught_handler works";
     LEAVE $c.cancel;
 }
 
-#?rakudo skip "waiting for new '.loads' semantics"
+#?rakudo skip "waiting for new '.loads' semantics RT #124776"
 {
     my $tracker;
     my $c = $*SCHEDULER.cue(
@@ -49,20 +49,20 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
           $tracker ~= 'caught';
       })
     );
-    isa_ok $c, Cancellation;
+    isa-ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,caught", "Code run on $name, then handler";
     LEAVE $c.cancel;
 }
 
-#?rakudo skip "waiting for new '.loads' semantics"
+#?rakudo skip "waiting for new '.loads' semantics RT #124777"
 {
     my $tracker;
     my $c = $*SCHEDULER.cue(
         { $tracker = 'cued,' },
         :catch( -> $ex { $tracker ~= 'caught' })
     );
-    isa_ok $c, Cancellation;
+    isa-ok $c, Cancellation;
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,", "Catch handler on $name not run if no error";
     LEAVE $c.cancel;

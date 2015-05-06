@@ -16,7 +16,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
         my @seen;
         my $tap = $migrate.tap( { @seen.push: $_ } );
-        isa_ok $tap, Tap, 'Did we get a Tap';
+        isa-ok $tap, Tap, 'Did we get a Tap';
 
         my $s1 = Supply.new;
         ok $s1 ~~ Supply, 'Did we get a Supply 1?';

@@ -46,7 +46,7 @@ plan 32;
     is(@s, @e, '... with explicit spaceship');
 }
 
-#?rakudo skip "closure as non-final argument"
+#?rakudo skip "closure as non-final argument RT #124762"
 #?niecza skip 'Invocant handling is NYI'
 {
     my @a = (2, 45, 6, 1, 3);
@@ -56,7 +56,7 @@ plan 32;
     is(@s, @e, '... with closure as indirect invocant');
 }
 
-#?rakudo todo "method fallback to sub unimpl"
+#?rakudo todo "method fallback to sub unimpl RT #124763"
 #?niecza skip 'err, what?'
 {
     my @a = (2, 45, 6, 1, 3);
@@ -169,7 +169,7 @@ plan 32;
             'can sort with automated Schwartzian Transform';
 
     my @s = %map.sort: { .value };
-    isa_ok(@s[0], Pair, '%hash.sort returns a List of Pairs');
+    isa-ok(@s[0], Pair, '%hash.sort returns a List of Pairs');
     is (@s.map: { .key }).join, 'perl', 'sort with unary sub'
 }
 
@@ -209,7 +209,7 @@ plan 32;
 }
 
 # RT #68112
-#?rakudo todo "determine behavior of 0-arity methods passed to sort"
+#?rakudo todo "determine behavior of 0-arity methods passed to sort RT #124764"
 #?niecza skip "determine behavior of 0-arity methods passed to sort"
 {
     sub foo () { 0 }   #OK not used

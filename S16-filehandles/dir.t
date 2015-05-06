@@ -19,7 +19,7 @@ opendir/readdir support
 =end pod
 
 my $dir = opendir($FindBin::Bin);
-isa_ok($dir, IO::Dir, "opendir worked on $FindBin::Bin");
+isa-ok($dir, IO::Dir, "opendir worked on $FindBin::Bin");
 
 my @files = readdir($dir);
 ok(@files, "seems readdir worked too");
@@ -78,7 +78,7 @@ ok(closedir($dir), "as does closedir");
 
 
 my $dh = opendir($FindBin::Bin);
-isa_ok($dh, IO::Dir, "opendir worked");
+isa-ok($dh, IO::Dir, "opendir worked");
 my @files_once_more = $dh.readdir;
 is_deeply(@files_once_more.sort, @files.sort, 'same list of files,after reopen');
 ok($dir.closedir, 'closedir using $dir.closedir format');
@@ -88,7 +88,7 @@ ok($dir.closedir, 'closedir using $dir.closedir format');
 # copied from above just shortent he methods. and append _s to every variable.
 diag "Start testing for short version.";
 my $dir_s = opendir($FindBin::Bin);
-isa_ok($dir_s, IO::Dir, "opendir worked on $FindBin::Bin");
+isa-ok($dir_s, IO::Dir, "opendir worked on $FindBin::Bin");
 
 my @files_s = read($dir_s);
 ok(@files_s, "seems read worked too");
@@ -146,7 +146,7 @@ ok(close($dir_s), "as does close");
 # closedir
 
 my $dh_s = opendir($FindBin::Bin);
-isa_ok($dh_s, IO::Dir, "opendir worked");
+isa-ok($dh_s, IO::Dir, "opendir worked");
 my @files_once_more_s = $dh_s.read;
 is_deeply(@files_once_more_s.sort, @files_s.sort, 'same list of files,after reopen');
 ok($dir_s.close, 'close using $dir.close format');

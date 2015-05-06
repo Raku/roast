@@ -15,7 +15,7 @@ ok 'ab)d'  !~~ m/<&t1>/, '~ and constant atoms (missing opening bracket)';
 ok '(a)d'  !~~ m/<&t1>/, '~ and constant atoms (wrong content)';
 # this shouldn't throw an exception. See here:
 # http://irclog.perlgeek.de/perl6/2009-01-08#i_816425
-#?rakudo skip 'should not throw exceptions'
+#?rakudo skip 'should not throw exceptions RT #124948'
 #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
 
@@ -58,7 +58,7 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok 'a()'   !~~ m/^ <&m1> $/, '"a()" is not matched';
 }
 
-#?rakudo skip 'backtracking into ~'
+#?rakudo skip 'backtracking into ~ RT #124949'
 #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 {
     my regex even_a { ['a' ~ 'a' <&even_a> ]? };
@@ -66,7 +66,7 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok 'aaa' !~~ m/^ <&even_a> $ /, 'backtracking into tilde rule (2)';
 }
 
-#?rakudo skip 'backtracking to find ~ goal'
+#?rakudo skip 'backtracking to find ~ goal RT #124950'
 #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 {
     my regex even_b { 'a' ~ 'a' <&even_b>? };
@@ -74,7 +74,6 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok 'aaa' !~~ m/^ <&even_b> /, '...and fails for odd numbers';
 }
 
-#?rakudo todo 'RT #77616'
 {
     "abc" ~~ /a ~ (c) (b)/;
     is ($0,$1), ("c","b"), "~ operator in regexp does not revert capture order";

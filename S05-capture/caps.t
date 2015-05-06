@@ -15,10 +15,10 @@ sub ca(@x) {
 ok 'a b c d' ~~ /(.*)/, 'basic sanity';
 ok $/.caps ~~ Positional, '$/.caps returns something Positional';
 ok $/.chunks ~~ Positional, '$/.chunks returns something Positional';
-isa_ok $/.caps.[0],   Pair, '.. and the items are Pairs (caps);';
-isa_ok $/.chunks.[0], Pair, '.. and the items are Pairs (chunks);';
-isa_ok $/.caps.[0].value,   Match, '.. and the values are Matches (caps);';
-isa_ok $/.chunks.[0].value, Match, '.. and the values are Matches (chunks);';
+isa-ok $/.caps.[0],   Pair, '.. and the items are Pairs (caps);';
+isa-ok $/.chunks.[0], Pair, '.. and the items are Pairs (chunks);';
+isa-ok $/.caps.[0].value,   Match, '.. and the values are Matches (caps);';
+isa-ok $/.chunks.[0].value, Match, '.. and the values are Matches (chunks);';
 
 is ca($/.caps),     '0:a b c d', '$/.caps is one item for (.*)';
 is ca($/.chunks),   '0:a b c d', '$/.chunks is one item for (.*)';
@@ -70,12 +70,12 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
     is ca($/.caps),     'alpha:a',  '.caps && - last term';
 
     ok 'a' ~~ m/<alpha> & <ident>/,  'Regex matches';
-#?rakudo.jvm todo '& caps on jvm'
-    is ca($/.caps),     'alpha:a|ident:a',  '.caps & - multiple terms';
+#?rakudo.jvm todo '& caps on jvm RT #125001'
+    is ca($/.caps.sort(*.key)),     'alpha:a|ident:a',  '.caps & - multiple terms';
 
     ok 'a' ~~ m/<alpha> && <ident>/,  'Regex matches';
-#?rakudo.jvm todo '&& caps on jvm'
-    is ca($/.caps),     'alpha:a|ident:a',  '.caps && - multiple terms';
+#?rakudo.jvm todo '&& caps on jvm RT #125002'
+    is ca($/.caps.sort(*.key)),     'alpha:a|ident:a',  '.caps && - multiple terms';
 
     ok 'ab' ~~ m/([a|b] && <alpha>)**1..2/,  'Regex matches';
     is ca($/.caps),     '0:a|0:b',    '.caps on quantified &&';

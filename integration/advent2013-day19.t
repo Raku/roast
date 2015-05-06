@@ -51,7 +51,7 @@ plan 4;
     my $samples = Supply.interval(.5).map({ rand });
     my $samples_labeled = $samples.map({ Sample =>  $_});
     my $merged = $belt_labeled.merge($samples_labeled);
-## todo: use Test::Tap tap_ok
+## todo: use Test::Tap tap-ok
 ##    $merged.tap(&say);
 
     $belt_raw.done;

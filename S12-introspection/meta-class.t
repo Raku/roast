@@ -19,9 +19,9 @@ class Foo:ver<0.0.1> {
 # L<S12/Introspection/should be called through the meta object>
 
 ok(Foo.HOW.can(Foo, 'bar'), '... Foo can bar');
-#?rakudo skip 'precedence of HOW'
+#?rakudo skip 'precedence of HOW RT #125015'
 ok(HOW(Foo).can(Foo, 'bar'), '... Foo can bar (anthoer way)');
-#?rakudo skip 'precedence of prefix:<^>'
+#?rakudo skip 'precedence of prefix:<^> RT #125016'
 ok(^Foo.can(Foo, 'bar'), '... Foo can bar (another way)');
 ok(Foo.^can('bar'), '... Foo can bar (as class method)');
 ok(Foo.HOW.isa(Foo, Foo), '... Foo is-a Foo (of course)');
@@ -32,9 +32,9 @@ lives_ok { 4.HOW.HOW }, 'Can access meta class of meta class';
 # L<S12/Introspection/Class traits may include:>
 
 is Foo.^name(), 'Foo', '... the name() property is Foo';
-#?rakudo skip '.version, version number parsing'
+#?rakudo skip '.version, version number parsing RT #125017'
 is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
-#?rakudo skip '.layout'
+#?rakudo skip '.layout RT #125018'
 is Foo.^layout, P6opaque, '^.layout';
 
 # RT #115208

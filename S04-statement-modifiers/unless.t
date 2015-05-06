@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 8;
 
 # test the unless statement modifier
 
@@ -38,5 +38,16 @@ plan 6;
         is @x, @y, "unless expr on false cond";
 }
 
+{
+    my $a = 'oops';
+    { $a = 'ok' } unless 0;
+    is $a, 'ok', 'Statement-modifier unless runs bare block';
+}
+
+{
+    my $a = 'oops';
+    { $a = $^x } unless 0;
+    is $a, 0, 'Statement-modifier unless runs block with placeholder';
+}
 
 # vim: ft=perl6

@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 87;
+plan 112;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -22,7 +22,7 @@ my $filename = 'tempfile_filehandles_io' ~ nonce();
 
 my $out = open($filename, :w);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($out, IO::Handle);
+isa-ok($out, IO::Handle);
 $out.say("Hello World");
 $out.say("Foo Bar Baz");
 $out.say("The End");
@@ -32,7 +32,7 @@ ok($out.close, 'file closed okay');
 
 my $in1 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($in1, IO::Handle);
+isa-ok($in1, IO::Handle);
 my $line1a = get($in1);
 is($line1a, "Hello World", 'get($in) worked (and autochomps)');
 #?niecza skip 'IO.ins NYI'
@@ -49,7 +49,7 @@ ok($in1.close, 'file closed okay (1)');
 
 my $in2 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($in2, IO::Handle);
+isa-ok($in2, IO::Handle);
 my $line2a = $in2.get();
 is($line2a, "Hello World", '$in.get() worked');
 my $line2b = $in2.get();
@@ -61,7 +61,7 @@ ok($in2.close, 'file closed okay (2)');
 # L<S02/Files/you now write>
 my $in3 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($in3, IO::Handle);
+isa-ok($in3, IO::Handle);
 {
     my $line3a = $in3.get;
     is($line3a, "Hello World", '$in.get worked(1)');
@@ -76,7 +76,7 @@ ok($in3.close, 'file closed okay (3)');
 
 my $append = open($filename, :a);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($append, IO::Handle);
+isa-ok($append, IO::Handle);
 $append.say("... Its not over yet!");
 ok($append.close, 'file closed okay (append)');
 
@@ -84,7 +84,7 @@ ok($append.close, 'file closed okay (append)');
 
 my $in4 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($in4, IO::Handle);
+isa-ok($in4, IO::Handle);
 my @lines4 = lines($in4);
 is(+@lines4, 4, 'we got four lines from the file');
 #?niecza skip 'IO.ins NYI'
@@ -99,7 +99,7 @@ ok($in4.close, 'file closed okay (4)');
 {
 my $in5 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($in5, IO::Handle);
+isa-ok($in5, IO::Handle);
 my @lines5 = lines($in5, 3);
 is(+@lines5, 3, 'we got two lines from the file');
 #?niecza skip 'IO.ins NYI'
@@ -112,7 +112,7 @@ ok($in5.close, 'file closed okay (5)');
 
 my $in6 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($in6, IO::Handle);
+isa-ok($in6, IO::Handle);
 my @lines6 = $in6.lines();
 is(+@lines6, 4, 'we got four lines from the file');
 is(@lines6[0], "Hello World", '$in.lines() worked in list context');
@@ -123,7 +123,7 @@ ok($in6.close, 'file closed okay (6)');
 
 my $in7 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($in7, IO::Handle);
+isa-ok($in7, IO::Handle);
 my @lines7 = $in7.lines;
 is(+@lines7, 4, 'we got four lines from the file');
 is(@lines7[0], "Hello World", '$in.lines worked in list context');
@@ -137,7 +137,7 @@ ok($in7.close, 'file closed okay (7)');
 # doing anything with the array (in other words, is perl too lazy)
 my $in8 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($in8, IO::Handle);
+isa-ok($in8, IO::Handle);
 my @lines8 = $in8.lines(3);
 push @lines8, "and finally" ~ $in8.get;
 ok($in8.close, 'file closed okay (8)');
@@ -156,13 +156,13 @@ ok(unlink($filename), 'file has been removed');
 
 my $out8 = open($filename, :w);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($out8, IO::Handle);
+isa-ok($out8, IO::Handle);
 $out8.say("Hello World");
 ok($out8.close, 'file closed okay (out8)');
 
 my $in8 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
-isa_ok($in8, IO::Handle);
+isa-ok($in8, IO::Handle);
 my $line8_1 = get($in8);
 is($line8_1, "Hello World", 'get($in) worked');
 ok($in8.close, 'file closed okay (in8)');
@@ -170,7 +170,7 @@ ok($in8.close, 'file closed okay (in8)');
 #?niecza skip 'Not yet able to open both :r and :w'
 {
     my $fh9 = open($filename, :r, :w);  # was "<+" ? 
-    isa_ok($fh9, IO::Handle);
+    isa-ok($fh9, IO::Handle);
     #my $line9_1 = get($fh9);
     #is($line9_1, "Hello World");
     #$fh9.say("Second line");
@@ -178,7 +178,7 @@ ok($in8.close, 'file closed okay (in8)');
 }
 
 #my $in9 = open($filename);
-#isa_ok($in9, IO::Handle);
+#isa-ok($in9, IO::Handle);
 #my $line9_1 = get($in9);
 #my $line9_2 = get($in9);
 #is($line9_1, "Hello World", 'get($in) worked');
@@ -187,7 +187,7 @@ ok($in8.close, 'file closed okay (in8)');
 #?niecza skip 'Not yet able to open both :r and :w'
 {
     my $fh10 = open($filename, :rw);  # was "<+" ? 
-    isa_ok($fh10, IO::Handle);
+    isa-ok($fh10, IO::Handle);
     $fh10.close;
     #ok($fh10.close, 'file closed okay (10)');
 }
@@ -196,7 +196,7 @@ ok($in8.close, 'file closed okay (in8)');
 {
     my $rt65348_out = open($filename, :w);
     #?niecza skip 'open does not yet produce an IO object'
-    isa_ok $rt65348_out, IO::Handle;
+    isa-ok $rt65348_out, IO::Handle;
     $rt65348_out.say( 'RT #65348' );
     $rt65348_out.say( '13.37' );
     $rt65348_out.say( '42.17' );
@@ -204,7 +204,7 @@ ok($in8.close, 'file closed okay (in8)');
 
     my $rt65348_in = open( $filename );
     #?niecza skip 'open does not yet produce an IO object'
-    isa_ok $rt65348_in, IO::Handle;
+    isa-ok $rt65348_in, IO::Handle;
     my @list_context = ($rt65348_in.get);
     is +@list_context, 1, '.get in list context reads only one line';
     ok $rt65348_in.get.Int ~~ Int, '.get.Int gets int';
@@ -219,7 +219,7 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 {
     my $binary_out_fh = open($filename, :w, :bin);
     #?niecza skip 'open does not yet produce an IO object'
-    isa_ok($binary_out_fh, IO::Handle);
+    isa-ok($binary_out_fh, IO::Handle);
     $binary_out_fh.write("föö".encode("ISO-8859-1"));
     ok($binary_out_fh.close(), "file closed OK");
 }
@@ -228,11 +228,74 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 {
     my $binary_in_fh = open($filename, :r, :bin);
     #?niecza skip 'open does not yet produce an IO object'
-    isa_ok($binary_in_fh, IO::Handle);
+    isa-ok($binary_in_fh, IO::Handle);
     my $buf = $binary_in_fh.read(4);
     is $buf.elems, 3, "three bytes were read";
     is $buf.decode("ISO-8859-1"), "föö", "the bytes decode into the right Str";
     $binary_in_fh.close;
+}
+
+#?niecza skip 'encoding probably NYI'
+{
+
+    # Tests for ISO-8859-1
+    my $fh = open($filename, :w);
+    lives_ok { $fh.encoding('iso-8859-1') }, "Set iso-8859-1 out encoding";
+    lives_ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
+#?rakudo.jvm todo 'java.nio.charset.UnmappableCharacterException RT #125073'
+    lives_ok { $fh.print("") }, "iso-8859-1 unmapped chars to fh";
+    $fh.close;
+    my $s = '';
+    $fh = open($filename);
+    lives_ok { $fh.encoding('iso-8859-1') }, "Set iso-8859-1 in encoding";
+    lives_ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
+    is $s, 'a¢ÿ', "correct iso-8859-1 chars from fh";
+    lives_ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
+#?rakudo.jvm todo 'will fail due to above failures RT #125074'
+    is $s, '', "correct iso-8859-1 unmapped char from fh";
+    $fh.close;
+
+    # Test windows-1252; piggyback tests for mixed encoding.
+    $fh = open($filename, :w);
+    lives_ok { $fh.encoding('windows-1252') }, "Set windows-1252 out encoding";
+    lives_ok { $fh.print("a¢€‚ƒ„…†‡ˆ‰Š‹ŒŽ") }, "windows-1252 chars to fh";
+#?rakudo.jvm todo 'java.nio.charset.UnmappableCharacterException RT #125075'
+    lives_ok { $fh.print("") },"windows-1252 unmapped chars to fh";
+    lives_ok { $fh.encoding('ISO-8859-1') }, "reset output fh encoding";
+    lives_ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
+#?rakudo.jvm todo 'java.nio.charset.UnmappableCharacterException RT #125076'
+    lives_ok { $fh.print("") }, "iso-8859-1 unmapped char to fh";
+    $fh.close;
+    $fh = open($filename, :bin);
+    my $b = $fh.read(32);
+    $fh.close;
+#?rakudo.jvm todo 'will fail due to above failures RT #125077'
+    is $b.values,
+       (0x61,0xa2,0x80,0x82..0x8c,0x8e,0x81,0x8d,0x8f,0x61,0xa2,0xff,0x80),
+       "file with encoding wrote correct content";
+    $fh = open($filename);
+    lives_ok { $fh.encoding('windows-1252') }, "Set windows-1252 in encoding";
+    $s = '';
+    lives_ok { $s ~= $fh.getc for 1..15; }, "windows-1252 chars from fh";
+    is $s, 'a¢€‚ƒ„…†‡ˆ‰Š‹ŒŽ', "correct windows-1252 chars from fh";
+    $s = '';
+    lives_ok { $s ~= $fh.getc for 1..3; },
+      "windows-1252 unmapped chars from fh";
+#?rakudo.jvm todo 'builtin JVM charset folds these RT #125078'
+    is $s, '', "correct windows-1252 unmapped chars from fh";
+# Switching encoding on read may or may not ever be supported
+#?rakudo skip 'Too late to change filehandle encoding RT #125079'
+    lives_ok { $fh.encoding('ISO-8859-1') }, "reset input fh encoding";
+    $s = '';
+#?rakudo.jvm todo 'will fail due to above failures RT #125080'
+    lives_ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
+#?rakudo.jvm todo 'will fail due to above failures RT #125081'
+    is $s, 'a¢ÿ', "correct iso-8859-1 chars from fh";
+    lives_ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
+# Switching encoding on read may or may not ever be supported
+#?rakudo skip 'Will fail due to above failure RT #125082'
+    is $s, '', "correct iso-8859-1 unmapped char from fh";
+    $fh.close;
 }
 
 unlink($filename);
@@ -268,7 +331,5 @@ unlink($filename);
     dies_ok { open('t').read(42) }, '.read on a directory fails';
     dies_ok { open('t').get(1) }, '.get on a directory fails';
 }
-
-done;
 
 # vim: ft=perl6

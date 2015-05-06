@@ -45,7 +45,7 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 	my $x = do if 0 { 1 } elsif 0 { 2 };
 	ok !$x.defined, 'when if does not execute any branch, return undefined';
 	$x = (42, do if 0 { 1 } elsif 0 { 2 }, 42);
-#?rakudo todo 'Rakudo still uses Nil here'
+#?rakudo todo 'Rakudo still uses Nil here RT #124572'
 	is $x[1], (), 'when if does not execute any branch, returns ()';
 }
 
@@ -83,7 +83,7 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 }
 
 # L<S04/The do-once loop/"can take" "loop control statements">
-#?rakudo skip 'next without loop construct'
+#?rakudo skip 'next without loop construct RT #124573'
 {
     my $i;
     my $ret = do {
@@ -95,7 +95,7 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
     is $ret, (), "'next' in 'do' block drives return value";
 }
 
-#?rakudo 3 skip "Undeclared name A"
+#?rakudo 3 skip "Undeclared name A RT #124574"
 is EVAL('my $i; A: do { $i++; last A; $i-- }; $i'), 1,
     "'last' works with label";
 is EVAL('my $i; A: do { $i++; next A; $i-- }; $i'), 1,
@@ -103,7 +103,7 @@ is EVAL('my $i; A: do { $i++; next A; $i-- }; $i'), 1,
 is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
     "'redo' works with label";
 
-#?rakudo skip 'last without loop construct'
+#?rakudo skip 'last without loop construct RT #124575'
 {
     is EVAL('
         my $i;
@@ -120,7 +120,7 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 # IRC notes:
 # <agentzh> audreyt: btw, can i use redo in the do-once loop?
 # <audreyt> it can, and it will redo it
-#?rakudo skip 'redo without loop construct'
+#?rakudo skip 'redo without loop construct RT #124576'
 {
     is EVAL('
         my $i;

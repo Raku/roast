@@ -6,7 +6,7 @@ plan 140;
 
 {
     my $range = 2..6;
-    isa_ok $range, Range, '2..6 is a Range';
+    isa-ok $range, Range, '2..6 is a Range';
     is $range.min, 2, "2..6.min is 2";
     is $range.max, 6, "2..6.max is 6";
     is $range.excludes-min, Bool::False, "2..6.excludes-min is false";
@@ -16,7 +16,7 @@ plan 140;
 
 {
     my $range = -1^..7;
-    isa_ok $range, Range, '-1^..7 is a Range';
+    isa-ok $range, Range, '-1^..7 is a Range';
     is $range.min, -1, "-1^..7.min is -1";
     is $range.max, 7, "-1^..7.max is 7";
     is $range.excludes-min, Bool::True, "-1^..7.excludes-min is true";
@@ -26,7 +26,7 @@ plan 140;
 
 {
     my $range = 3..^-1;
-    isa_ok $range, Range, '3..^-1 is a Range';
+    isa-ok $range, Range, '3..^-1 is a Range';
     is $range.min, 3, "3..^-1.min is 3";
     is $range.max, -1, "3..^-1.max is -1";
     is $range.excludes-min, Bool::False, "3..^-1.excludes-min is false";
@@ -36,7 +36,7 @@ plan 140;
 
 {
     my $range = 'a'^..^'g';
-    isa_ok $range, Range, "'a'^..^'g' is a Range";
+    isa-ok $range, Range, "'a'^..^'g' is a Range";
     is $range.min, 'a', "'a'^..^'g'.min is 'a'";
     is $range.max, 'g', "'a'^..^'g'.max is 'g'";
     is $range.excludes-min, Bool::True, "'a'^..^'g'.excludes-min is true";
@@ -46,7 +46,7 @@ plan 140;
 
 {
     my $range = ^5;
-    isa_ok $range, Range, '^5 is a Range';
+    isa-ok $range, Range, '^5 is a Range';
     is $range.min, 0, "^5.min is 0";
     is $range.max, 5, "^5.max is 5";
     is $range.excludes-min, Bool::False, "^5.excludes-min is false";
@@ -56,7 +56,7 @@ plan 140;
 
 {
     my $range = ^5.5;
-    isa_ok $range, Range, '^5.5 is a Range';
+    isa-ok $range, Range, '^5.5 is a Range';
     is $range.min, 0, "^5.5.min is 0";
     is $range.max, 5.5, "^5.5.max is 5.5";
     is $range.excludes-min, Bool::False, "^5.5.excludes-min is false";
@@ -65,7 +65,7 @@ plan 140;
 
 {
     my $range = ^5.5e0;
-    isa_ok $range, Range, '^5.5e0 is a Range';
+    isa-ok $range, Range, '^5.5e0 is a Range';
     is $range.min, 0, "^5.5e0.min is 0";
     is $range.max, 5.5e0, "^5.5e0.max is 5.5e0";
     is $range.excludes-min, Bool::False, "^5.5e0.excludes-min is false";
@@ -74,7 +74,7 @@ plan 140;
 
 {
     my $range = 1..*;
-    isa_ok $range, Range, '1..* is a Range';
+    isa-ok $range, Range, '1..* is a Range';
     is $range.min, 1, "1..*.min is 1";
     is $range.max, Inf, "1..*.max is Inf";
     is $range.excludes-min, Bool::False, "1..*.excludes-min is false";
@@ -87,7 +87,7 @@ plan 140;
 
 {
     my $range = 1^..*;
-    isa_ok $range, Range, '1^..* is a Range';
+    isa-ok $range, Range, '1^..* is a Range';
     is $range.min, 1, "1^..*.min is 1";
     is $range.max, Inf, "1^..*.max is Inf";
     is $range.excludes-min, Bool::True, "1^..*.excludes-min is true";
@@ -96,7 +96,7 @@ plan 140;
 
 {
     my $range = *..^1;
-    isa_ok $range, Range, '*..^1 is a Range';
+    isa-ok $range, Range, '*..^1 is a Range';
     is $range.min, -Inf, "*..^1.min is -Inf";
     is $range.max, 1, "*..^1.max is 1";
     is $range.excludes-min, Bool::False, "*..^1.excludes-min is false";
@@ -105,7 +105,7 @@ plan 140;
 
 {
     my $range = 1^..^*;
-    isa_ok $range, Range, '1^..^* is a Range';
+    isa-ok $range, Range, '1^..^* is a Range';
     is $range.min, 1, "1^..^*.min is 1";
     is $range.max, Inf, "1^..^*.max is Inf";
     is $range.excludes-min, Bool::True, "1^..^*.excludes-min is true";

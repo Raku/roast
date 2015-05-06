@@ -120,7 +120,6 @@ sub l (Int $a) {  my $l = $a; return $l }
 };
 
 # RT #114526
-#?rakudo.parrot skip 'RT #114526'
 {
     my $str = 'ab';
     substr-rw($str, 0, 3) = '/';

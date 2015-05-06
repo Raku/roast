@@ -10,7 +10,7 @@ plan 1;
 
 ok 1, "Before the =finish Block";
 
-=begin finish
+=finish
 
 flunk "After the end block";
 

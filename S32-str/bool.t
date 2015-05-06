@@ -3,17 +3,17 @@ use Test;
 plan 12;
 
 nok ?'', "?'' is false";
-isa_ok ?'', Bool, "?'' is Bool";
+isa-ok ?'', Bool, "?'' is Bool";
 ok ?'hello', "?'hello' is true";
-isa_ok ?'hello', Bool, "?'hello' is Bool";
+isa-ok ?'hello', Bool, "?'hello' is Bool";
 ok ?'0', "?'0' is true";
-isa_ok ?'0', Bool, "?'0' is Bool";
+isa-ok ?'0', Bool, "?'0' is Bool";
 
 nok ''.Bool, "''.Bool is false";
-isa_ok ''.Bool, Bool, "''.Bool is Bool";
+isa-ok ''.Bool, Bool, "''.Bool is Bool";
 ok 'hello'.Bool, "'hello'.Bool is true";
-isa_ok 'hello'.Bool, Bool, "'hello'.Bool is Bool";
+isa-ok 'hello'.Bool, Bool, "'hello'.Bool is Bool";
 ok '0'.Bool, "'0'.Bool is true";
-isa_ok '0'.Bool, Bool, "'0'.Bool is Bool";
+isa-ok '0'.Bool, Bool, "'0'.Bool is Bool";
 
 # vim: ft=perl6

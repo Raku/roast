@@ -37,7 +37,7 @@ sub test_stuff($x) {
   ok $x.Tue.perl,          '$obj.Tue.perl returns a true valuee';
 }
 
-#?rakudo skip 'NYI'
+#?rakudo skip 'NYI RT #124829'
 {
   my $x = 1;
   is $x, 1, "basic sanity (1)";
@@ -48,7 +48,7 @@ sub test_stuff($x) {
 }
 
 
-#?rakudo skip 'does day::Tue'
+#?rakudo skip 'does day::Tue RT #124830'
 {
   my $x = 3;
   is $x, 3, "basic sanity (3)";
@@ -57,7 +57,7 @@ sub test_stuff($x) {
 }
 
 #?DOES 16
-#?rakudo skip 'does &day::("Tue")'
+#?rakudo skip 'does &day::("Tue") RT #124831'
 {
   my $x = 4;
   is $x, 4, "basic sanity (4)";

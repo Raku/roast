@@ -86,7 +86,6 @@ unlink $_ for @precomp-paths;
 
     #?rakudo.jvm todo 'RT #123276'
     #?rakudo.moar todo 'RT #123276'
-    #?rakudo.parrot todo 'RT #123276'
     is_deeply @keys, [<foo>], 'RT123276';
 
     unlink $_ for @precomp-paths;
@@ -101,7 +100,6 @@ unlink $_ for @precomp-paths;
         { err => '', out => '', status => 0 }, :compiler-args['--target', $*VM.precomp-target, '--output', $output-path ],
         "precomp of native array parameterization";
 
-    #?rakudo.parrot todo 'RT #124162'
     is_run "use $module-name;",
         { err => '', out => '', status => 0 }, :compiler-args['-I', 't/spec/packages', '-M', $module-name],
         'precompile load - from the command line';
@@ -125,7 +123,6 @@ unlink $_ for @precomp-paths;
 
     #?rakudo.jvm todo 'no 6model parametrics interning yet'
     #?rakudo.moar todo 'no 6model parametrics interning yet'
-    #?rakudo.parrot todo 'no 6model parametrics interning yet'
     is_run "use $module-name-a; use $module-name-b; print a().WHAT =:= b().WHAT",
         { err => '', out => "True", status => 0 }, :compiler-args['-I', 't/spec/packages'],
         'precompile load of both and identity check passed';

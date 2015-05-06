@@ -41,7 +41,7 @@ ok "hello"  ~~ m:ignorecase/Hello/,        "match with :ignorecase (direct)";
 ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 
 # The German ß (&szlig;) maps to uppercase SS:
-#?rakudo 2 todo 'ignorecase and SS/&szlig;'
+#?rakudo 2 todo 'ignorecase and SS/&szlig; RT #125037'
 #?niecza todo
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
 #?niecza todo

@@ -6,8 +6,8 @@ my $r;
 =end foo
 
 $r = $=pod[0];
-isa_ok $r, Pod::Block, 'returns a Pod Block';
-isa_ok $r, Pod::Block::Named, 'returns a named Block';
+isa-ok $r, Pod::Block, 'returns a Pod Block';
+isa-ok $r, Pod::Block::Named, 'returns a named Block';
 is $r.name, 'foo', 'name is ok';
 is $r.contents, [], 'no contents, all right';
 
@@ -16,7 +16,7 @@ some text
 =end foo
 
 $r = $=pod[1];
-isa_ok $r.contents[0], Pod::Block::Para;
+isa-ok $r.contents[0], Pod::Block::Para;
 is $r.contents[0].contents, "some text", 'the contents are all right';
 is $r.name, 'foo', 'name is ok';
 
@@ -38,8 +38,8 @@ two
 =end foo
 $r = $=pod[3];
 is $r.name, 'foo', 'name is ok';
-isa_ok $r.contents[0], Pod::Block::Para;
-isa_ok $r.contents[1], Pod::Block::Para;
+isa-ok $r.contents[0], Pod::Block::Para;
+isa-ok $r.contents[1], Pod::Block::Para;
 is $r.contents[0].contents, "paragraph one", 'paragraphs ok, 1/2';
 is $r.contents[1].contents, "paragraph two", 'paragraphs ok, 2/2';
 
@@ -51,8 +51,8 @@ is $r.contents[1].contents, "paragraph two", 'paragraphs ok, 2/2';
 
 $r = $=pod[4];
 is $r.name, 'something', 'parent name ok';
-isa_ok $r.contents[0], Pod::Block, "nested blocks work";
-isa_ok $r.contents[0].contents[0], Pod::Block::Para, "nested blocks work";
+isa-ok $r.contents[0], Pod::Block, "nested blocks work";
+isa-ok $r.contents[0].contents[0], Pod::Block::Para, "nested blocks work";
 is $r.contents[0].contents[0].contents, "toot tooot!", "and their contents";
 is $r.contents[0].name, 'somethingelse', 'child name ok';
 
@@ -77,7 +77,7 @@ Which, as we all know...
 =end foo
 
 $r = $=pod[5];
-isa_ok $r, Pod::Block;
+isa-ok $r, Pod::Block;
 is $r.contents.elems, 5, '5 sub-nodes in foo';
 is $r.contents[0].contents,
    'and so, all of the villages chased Albi, The Racist Dragon, ' ~
@@ -102,7 +102,7 @@ between these two paragraphs
 =end pod
 
 $r = $=pod[6];
-isa_ok $r, Pod::Block;
+isa-ok $r, Pod::Block;
 is $r.contents[0].contents, 'someone accidentally left a space',
    'accidental space, 1/2';
 is $r.contents[1].contents, 'between these two paragraphs',
@@ -119,7 +119,7 @@ foo
 
 $r = $=pod[7];
 is $r.contents[0].contents, '= DESCRIPTION bla bla';
-isa_ok $r.contents[1], Pod::Block::Para;
+isa-ok $r.contents[1], Pod::Block::Para;
 is $r.contents[1].contents, 'foo';
 
 =begin more-discussion-needed
@@ -130,7 +130,7 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 =end more-discussion-needed
 
 $r = $=pod[8];
-isa_ok $r, Pod::Block;
+isa-ok $r, Pod::Block;
 
 =begin pod
     =head1 This is a heading block
@@ -152,11 +152,11 @@ isa_ok $r, Pod::Block;
 =end pod
 
 $r = $=pod[9];
-isa_ok $r.contents[0], Pod::Heading;
-isa_ok $r.contents[1], Pod::Block::Para;
-isa_ok $r.contents[2], Pod::Block::Para;
-isa_ok $r.contents[3], Pod::Heading;
-isa_ok $r.contents[4], Pod::Block::Para;
+isa-ok $r.contents[0], Pod::Heading;
+isa-ok $r.contents[1], Pod::Block::Para;
+isa-ok $r.contents[2], Pod::Block::Para;
+isa-ok $r.contents[3], Pod::Heading;
+isa-ok $r.contents[4], Pod::Block::Para;
 is $r.contents.elems, 5;
 
 eval_lives_ok "=begin pod\nSome documentation\n=end pod", "Pod files don't have to end in a newline";

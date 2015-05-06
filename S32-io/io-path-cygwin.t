@@ -11,7 +11,7 @@ my $*CWD  = '\\zip\\loc'.IO;
 my $relpath = IO::Path::Cygwin.new('foo/bar' );
 my $abspath = IO::Path::Cygwin.new('/foo/bar');
 
-isa_ok $abspath, IO::Path, "Can create IO::Path::Cygwin";
+isa-ok $abspath, IO::Path, "Can create IO::Path::Cygwin";
 is $abspath.volume,       "", 'volume "/foo/bar" -> ""';
 is $abspath.dirname,  "/foo", 'dirname "/foo/bar" -> "/foo"';
 is $abspath.basename,  "bar", 'basename "/foo/bar" -> "bar"';
@@ -21,7 +21,7 @@ my $path = IO::Path::Cygwin.new('C:foo\\\\bar\\');
 is $path.volume,     "C:", 'volume "C:foo\\\\bar\\" -> "C:"';
 is $path.dirname,   "foo", 'dirname "C:foo\\\\bar\\" -> "foo"';
 is $path.basename,  "bar", 'basename "C:foo\\\\bar\\" -> "bar"';
-isa_ok $path.path, Str, ".path returns Str of path";
+isa-ok $path.path, Str, ".path returns Str of path";
 
 is $path.perl.EVAL, $path, ".perl loopback";
 
@@ -61,7 +61,7 @@ is IO::Path::Cygwin.new("/usr/bin").relative("/usr"), "bin", "relative path spec
 
 is $relpath.absolute.IO.relative,  "foo/bar", "relative inverts absolute";
 is $relpath.absolute("/foo").IO.relative("\\foo"), "foo/bar", "absolute inverts relative";
-#?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
+#?rakudo 1 todo 'resolve NYI, needs nqp::readlink RT #124781'
 is $abspath.relative.IO.absolute.IO.resolve, "\\foo\\bar", "absolute inverts relative with resolve";
 
 is IO::Path::Cygwin.new("foo/bar").parent,        "foo",            "parent of 'foo/bar' is 'foo'";

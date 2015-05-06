@@ -12,9 +12,9 @@ ok (@files = dir()), "dir() runs in cwd()";
 #?niecza skip "Grepping Str against a list of IO::Local does not work"
 ok @files>>.relative.grep('t/'), 'current directory contains a t/ dir';
 ok @files.grep(*.basename eq 't'), 'current directory contains a t/ dir';
-#?rakudo todo 'entries are still IO::Path'
+#?rakudo todo 'entries are still IO::Path RT #124785'
 ok @files[0] ~~ IO::Local, 'dir() returns IO::Local';
-#?rakudo todo 'dirname is not yet absolute'
+#?rakudo todo 'dirname is not yet absolute RT #124786'
 is @files[0].dirname, $*CWD, 'dir() returns IO::Path object in the current directory';
 
 #?niecza 3 skip "Grepping Str against a list of IO::Local does not work"

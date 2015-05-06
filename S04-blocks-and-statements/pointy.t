@@ -33,7 +33,7 @@ my @a;
 lives_ok { @a = ("one", -> $x { $x**2 }, "three")} ,
         'pointy sub without preceding comma';
 is @a[0], 'one', 'pointy sub in list previous argument';
-isa_ok @a[1], Code, 'pointy sub in list';
+isa-ok @a[1], Code, 'pointy sub in list';
 is @a[2], 'three', 'pointy sub in list following argument';
 
 
@@ -45,7 +45,7 @@ my $s = -> {
     redo if $n < 10;
 };
 dies_ok $s, 'pointy with block control exceptions';
-#?rakudo todo 'pointy blocks and last/redo'
+#?rakudo todo 'pointy blocks and last/redo RT #124973'
 #?niecza todo
 is $n, 10, "pointy control exceptions ran";
 

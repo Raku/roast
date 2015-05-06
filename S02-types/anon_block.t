@@ -17,17 +17,17 @@ plan 42;
 # L<S06/"Anonymous subroutines">
 # anon blocks
 my $anon_sub = sub { 1 };
-isa_ok($anon_sub, Sub);
+isa-ok($anon_sub, Sub);
 is($anon_sub(), 1, 'sub { } works');
 
 my $anon_sub_w_arg = sub ($arg) { 1 + $arg };
-isa_ok($anon_sub_w_arg, Sub);
+isa-ok($anon_sub_w_arg, Sub);
 is($anon_sub_w_arg(3), 4, 'sub ($arg) {} works');
 
 # L<S06/"Blocks">
 # anon blocks
 my $anon_block = { 1 };
-isa_ok($anon_block, Block);
+isa-ok($anon_block, Block);
 is($anon_block(), 1, '{} <anon block> works');
 
 # RT #64844
@@ -53,20 +53,20 @@ is($anon_block(), 1, '{} <anon block> works');
 {
     # pointy subs
     my $pointy_block = -> { 1 };
-    isa_ok($pointy_block, Block);
+    isa-ok($pointy_block, Block);
     is($pointy_block(), 1, '-> {} <"pointy" block> works');
 
     my $pointy_block_w_arg = -> $arg { 1 + $arg };
-    isa_ok($pointy_block_w_arg, Block);
+    isa-ok($pointy_block_w_arg, Block);
     is($pointy_block_w_arg(3), 4, '-> $arg {} <"pointy" block w/args> works');
 
     my $pointy_block_w_multiple_args = -> $arg1, $arg2 { $arg1 + $arg2 };
-    isa_ok($pointy_block_w_multiple_args, Block);
+    isa-ok($pointy_block_w_multiple_args, Block);
     is($pointy_block_w_multiple_args(3, 4), 7, '-> $arg1, $arg2 {} <"pointy" block w/multiple args> works');
 
     my $pointy_block_nested = -> $a { -> $b { $a + $b }};
-    isa_ok($pointy_block_nested, Block);
-    isa_ok($pointy_block_nested(5), Block);
+    isa-ok($pointy_block_nested, Block);
+    isa-ok($pointy_block_nested(5), Block);
     is $pointy_block_nested(5)(6), 11, '-> $a { -> $b { $a+$b }} nested <"pointy" block> works';
 }
 
@@ -120,7 +120,7 @@ is($one_c, 1, '... two blocks ({}; {};) semicolon after both,.. first block does
 is($two_c, 2, '... and second block does too');
 
 sub f { { 3 } }
-#?rakudo.jvm 3 todo "?"
+#?rakudo.jvm 3 todo "? RT #124493"
 is(f(), 3, 'bare blocks immediately runs even as the last statement');
 is((sub { { 3 } }).(), 3, 'ditto for anonymous subs');
 is((sub { { { 3 } } }).(), 3, 'ditto, even if nested');

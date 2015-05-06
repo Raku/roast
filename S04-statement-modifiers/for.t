@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 26;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -125,12 +125,24 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
 }
 
 # RT #100746
-#?rakudo.moar todo "RT #100746"
-#?rakudo.jvm todo "RT #100746"
 {
     $_ = 'bogus';
     my @r = gather { take "{$_}" for <cool but dry> }
     is @r[0], 'cool', 'for modifies the $_ that is visible to the {} interpolator';
+}
+
+# RT #111704
+{
+    my $a = '';
+    try { $a ~= $_ } for <1 2>;
+    is $a, '12', 'Correct $_ in try block in statement-modifying for';
+}
+
+{
+    # Covers a bug where the block to first got compiled in the 'for' thunk
+    my @a;
+    for ^2 -> \c { 1 for first { @a.push(c); 0 }, ^2; };
+    is @a, (0, 0, 1, 1), 'for thunk does not mess up statement modifier closures';
 }
 
 # vim: ft=perl6

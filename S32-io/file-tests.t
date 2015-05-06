@@ -23,46 +23,46 @@ my $zero-length-file = "tempfile-zero-length-file-tests";
 #Str methods
 ##existence
 ok $existing-file.IO.e, 'It exists';
-isa_ok $existing-file.IO.e, Bool, '.e returns Bool';
+isa-ok $existing-file.IO.e, Bool, '.e returns Bool';
 ok $existing-file.IO ~~ :e, 'It exists';
-isa_ok $existing-file.IO ~~ :e, Bool, '~~ :e returns Bool';
+isa-ok $existing-file.IO ~~ :e, Bool, '~~ :e returns Bool';
 nok $non-existent-file.IO.e, "It doesn't";
-isa_ok $non-existent-file.IO.e, Bool, '.e returns Bool';
+isa-ok $non-existent-file.IO.e, Bool, '.e returns Bool';
 nok $non-existent-file.IO ~~ :e, "It doesn't";
-isa_ok $non-existent-file.IO ~~ :e, Bool, '~~ :e returns Bool';
+isa-ok $non-existent-file.IO ~~ :e, Bool, '~~ :e returns Bool';
 
 ##is normal file
 ok $existing-file.IO.f, 'Is normal file';
-isa_ok $existing-file.IO.f, Bool, '.f returns Bool';
+isa-ok $existing-file.IO.f, Bool, '.f returns Bool';
 ok $existing-file.IO ~~ :f, 'Is normal file';
-isa_ok $existing-file.IO ~~ :f, Bool, '~~ :f returns Bool';
+isa-ok $existing-file.IO ~~ :f, Bool, '~~ :f returns Bool';
 nok $non-existent-file.IO.f, 'Is not a normal file';
 throws_like { $non-existent-file.IO.f }, X::IO::DoesNotExist;
 nok $non-existent-file.IO ~~ :f, 'Is not a normal file';
-isa_ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
+isa-ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
 
 ##is empty
 #?niecza skip 'Unable to resolve method s in class IO'
 {
     nok $zero-length-file.IO.s, 'Is empty';
-    isa_ok $zero-length-file.IO.s, Int, '.s returns Int';
+    isa-ok $zero-length-file.IO.s, Int, '.s returns Int';
     ok $zero-length-file.IO ~~ :!s, 'Is empty';
-    isa_ok $zero-length-file.IO ~~ :!s, Bool, '~~ :!s returns Bool';
+    isa-ok $zero-length-file.IO ~~ :!s, Bool, '~~ :!s returns Bool';
     ok $existing-file.IO.s, 'Is not';
-    isa_ok $existing-file.IO.s, Int, '.s returns Int';
+    isa-ok $existing-file.IO.s, Int, '.s returns Int';
     ok $existing-file.IO ~~ :s, 'Is not';
-    isa_ok $existing-file.IO ~~ :s, Bool, '~~ :s returns Bool';
+    isa-ok $existing-file.IO ~~ :s, Bool, '~~ :s returns Bool';
 
     ##file size
     is $zero-length-file.IO.s, 0, 'No size';
-    isa_ok $zero-length-file.IO.s, Int, '.s returns Int';
+    isa-ok $zero-length-file.IO.s, Int, '.s returns Int';
     is $existing-file.IO.s, 11, 'size of file';
-    isa_ok $existing-file.IO.s, Int, '.s returns Int';
+    isa-ok $existing-file.IO.s, Int, '.s returns Int';
 
     nok $non-existent-file.IO.s, 'Size on non-existent file';
     throws_like { $non-existent-file.IO.s }, X::IO::DoesNotExist;
     nok $non-existent-file.IO ~~ :s, 'Is not a normal file';
-    isa_ok $non-existent-file.IO ~~ :s, Bool, '~~ :!s returns Bool';
+    isa-ok $non-existent-file.IO ~~ :s, Bool, '~~ :!s returns Bool';
 }
 
 # clean up

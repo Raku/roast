@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 105;
+plan 129;
 
 =begin pod
 
@@ -12,7 +12,7 @@ Misc. Junction tests
 
 # RT #64184
 {
-    isa_ok any(6,7), Junction;
+    isa-ok any(6,7), Junction;
     is any(6,7).WHAT.gist, Junction.gist, 'junction.WHAT works';
 }
 
@@ -324,35 +324,35 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 {
   is substr("abcd", 1, 2), "bc", "simple substr";
   my Mu $res = substr(any("abcd", "efgh"), 1, 2);
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res eq "bc", "substr on junctions: bc";
   ok $res eq "fg", "substr on junctions: fg";
 }
 
 {
   my Mu $res = substr("abcd", 1|2, 2);
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res eq "bc", "substr on junctions: bc"; 
   ok $res eq "cd", "substr on junctions: cd";
 }
 
 {
   my Mu $res = substr("abcd", 1, 1|2);
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res eq "bc", "substr on junctions: bc"; 
   ok $res eq "b", "substr on junctions: b"; 
 }
 
 {
   my Mu $res = index(any("abcd", "qwebdd"), "b");
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res == 1, "index on junctions: 1";
   ok $res == 3, "index on junctions: 3";
 }
 
 {
   my Mu $res = index("qwebdd", "b"|"w");
-  isa_ok $res, Junction;
+  isa-ok $res, Junction;
   ok $res == 1, "index on junctions: 1";
   ok $res == 3, "index on junctions: 3";
 }
@@ -370,7 +370,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
-#?rakudo skip 'lower case junction'
+#?rakudo skip 'lower case junction RT #124842'
 #?niecza skip 'Impossible test: === takes Any'
 {
     ok((WHAT any()) === Junction, "test WHAT on empty any junction");
@@ -391,7 +391,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #63126
-#?rakudo todo 'nom regression'
+#?rakudo todo 'nom regression RT #124843'
 #?DOES 2
 {
     my @a = "foo", "foot";
@@ -427,6 +427,42 @@ ok (1|2).Str ~~ Str, 'Junction.Str returns a Str, not a Junction';
 # RT #101124
 ok (0|1 == 0&1), 'test junction evaluation order';
 ok (0&1 == 0|1), 'test junction evaluation order';
+
+# test flattening of listop forms
+
+ok any((1,2,3),(4,5,6)) == 4, 'any is flattening 1';
+nok any((1,2,4),(4,5,6)) == 3, 'any is flattening 2';
+is (any((1,2,3),(4,5,6)) == 3).gist, 'any(False, False, True, False, False, False)', 'any is flattening 3';
+
+ok all((4,5,6),(4,5,6)) > 3, 'all is flattening 1';
+nok all((1,2,3),(4,5,6)) == 3, 'all is flattening 2';
+is (all((1,2,3),(4,5,6)) == 3).gist, 'all(False, False, True, False, False, False)', 'all is flattening 3';
+
+ok one((4,5,6),(4,5,6,7)) == 7, 'one is flattening 1';
+nok one((1,2,3),(4,5,6)) eq '1 2 3' , 'one is flattening 2';
+is (one((1,2,3),(4,5,6)) == 3).gist, 'one(False, False, True, False, False, False)', 'one is flattening 3';
+
+ok none((4,5,6),(4,5,6,7)) == 3, 'none is flattening 1';
+nok none((1,2,3,4),(4,5,6,7)) == '3' , 'none is flattening 2';
+is (none((1,2,3),(4,5,6)) == 3).gist, 'none(False, False, True, False, False, False)', 'none is flattening 3';
+
+# test non-flattening of method forms
+
+nok (<a b c>,(4,5,6)).any == 4, '.any is not flattening 1';
+ok (<a b c>,(4,5,6)).any == 3, '.any is not flattening 2';
+is ((<a b c>,(4,5,6)).any == 3).gist, 'any(True, True)', '.any is not flattening 3';
+
+nok ((4,5,6),(4,5,6)).all > 3, '.all is not flattening 1';
+ok (<a b c>,(4,5,6)).all == 3, '.all is not flattening 2';
+is ((<a b c>,(4,5,6)).all == 3).gist, 'all(True, True)', '.any is not flattening 3';
+
+nok ((4,5,6),(4,5,6,7)).one == 7, '.one is not flattening 1';
+ok (<a b c>,(4,5,6)).one eq 'a b c' , '.one is not flattening 2';
+is ((<a b c>,(4,5,6)).one eq 'a b c').gist, 'one(True, False)', '.one is not flattening 3';
+
+nok ((4,5,6),(4,5,6,7)).none == 3, '.none is not flattening 1';
+ok (<a b c>,(4,5,6)).none eq 'a' , '.none is not flattening 2';
+is ((<a b c>,(4,5,6)).none eq 'a b c').gist, 'none(True, False)', '.none is not flattening 3';
 
 done();
 

@@ -19,17 +19,17 @@ ok( not(not 42), "not(not 42) is true");
 ok(!not(not  0), "not(not  0) is false");
 
 is(not Bool::True, Bool::False, "'Bool::True' is not 'Bool::False'");
-isa_ok(not Bool::True, Bool,    "'not Bool::True' is a Bool");
+isa-ok(not Bool::True, Bool,    "'not Bool::True' is a Bool");
 is(not Bool::True, False,       "'Bool::True' is not 'False'");
 is(not True, False,             "'True' is not 'False'");
-isa_ok(not True, Bool,          "'not True' is a Bool");
+isa-ok(not True, Bool,          "'not True' is a Bool");
 is(not True, Bool::False,       "'True' is not 'Bool::False'");
 
 is(not Bool::False, Bool::True, "'Bool::False' is not 'Bool::True'");
-isa_ok(not Bool::False, Bool,   "'not Bool::False' is a Bool");
+isa-ok(not Bool::False, Bool,   "'not Bool::False' is a Bool");
 is(not Bool::False, True,       "'Bool::False' is not 'True'");
 is(not False, True,             "'False' is not 'True'");
-isa_ok(not False, Bool,         "'not False' is a Bool");
+isa-ok(not False, Bool,         "'not False' is a Bool");
 is(not False, Bool::True,       "'False' is not 'Bool::True'");
 
 done;

@@ -91,12 +91,12 @@ for %tests.keys.sort -> $type {
 }
 
 for %tests.keys.sort -> $t {
-    isa_ok EVAL("{$t}(1.1)"), Int, "rounder $t returns an Int";
+    isa-ok EVAL("{$t}(1.1)"), Int, "rounder $t returns an Int";
 }
 
 # MoarVM Issue #157
 # separate test since rakudo.jvm rounds this very large number
-# more precise than rakudo.moar and rakudo.parrot
+# more precise than rakudo.moar
 {
     my $number   = 5e+33;
     my $result_1 = 4999999999999999727876154935214080;   # result on Moar and Parrot

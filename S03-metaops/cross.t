@@ -28,7 +28,7 @@ is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
 }
 
 # L<S03/List infix precedence/and a list of arrays in>
-#?rakudo skip ".slice for iterators NYI"
+#?rakudo skip ".slice for iterators NYI RT #124518"
 #?niecza skip 'Unable to resolve method slice in class List'
 {
     my @result = gather for (1..3 X 'A'..'B').slice -> $na {
@@ -100,14 +100,14 @@ is (1 X* 3,4), (3, 4), 'cross-product works with scalar left side';
 is (1, 2 X* 3), (3, 6), 'cross-product works with scalar right side';
 is (1 X* 3), (3), 'cross-product works with scalar both sides';
 
-is (<a b> X <c d> X < e f>).join(','),
+is (<a b> X <c d> X < e f>).flat.join(','),
     'a,c,e,a,c,f,a,d,e,a,d,f,b,c,e,b,c,f,b,d,e,b,d,f',
     'cross works with three lists';
 
 #?niecza todo
 is ([1,2] X~ <a b>), '1 2a 1 2b', '[] does not flatten';
 
-is (1,2 X ( <a b> X "x")).join, '1a1x1b1x2a2x2b2x',
+is (1,2 X ( <a b> X "x")).flat.join, '1a1x1b1x2a2x2b2x',
     'Nested X works';
 
 # RT #77660

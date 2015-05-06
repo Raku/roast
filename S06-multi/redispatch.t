@@ -52,7 +52,7 @@ plan 10;
 # RT 76328
 {
     try { nextsame };
-    isa_ok $!, X::NoDispatcher, 'nextsame in main block dies due to lack of dispatcher';
+    isa-ok $!, X::NoDispatcher, 'nextsame in main block dies due to lack of dispatcher';
 }
 
 done;

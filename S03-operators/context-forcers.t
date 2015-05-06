@@ -86,18 +86,18 @@ sub eval_elsewhere($code){ EVAL($code) }
 #?niecza skip "Failure NYI"
 {
     my $a = '2 is my favorite number';
-    isa_ok(+$a, Failure, 'trailing chars cause failure');
+    isa-ok(+$a, Failure, 'trailing chars cause failure');
 
     my $b = 'Did you know that, 2 is my favorite number';
-    isa_ok(+$b, Failure, 'it is forced into a Num');
+    isa-ok(+$b, Failure, 'it is forced into a Num');
 }
 
 # L<S03/Symbolic unary precedence/"prefix:<->">
-#?rakudo skip 'failure modes of Str.Numeric'
+#?rakudo skip 'failure modes of Str.Numeric RT #124540'
 #?niecza skip "Failure NYI"
 {
     my $a = '2 is my favorite number';
-    isa_ok(-$a, Failure, 'trailing chars cause failure');
+    isa-ok(-$a, Failure, 'trailing chars cause failure');
 
     my $b = 'Did you know that, 2 is my favorite number';
     ok(-$b, Failure, 'it is forced into a Num');
@@ -128,19 +128,19 @@ sub eval_elsewhere($code){ EVAL($code) }
 # boolean context
 {
     my $a = '';
-    isa_ok(?$a, Bool, 'it is forced into a Bool');
+    isa-ok(?$a, Bool, 'it is forced into a Bool');
     ok(!(?$a), 'it is forced into boolean context');
 
     my $b = 'This will be true';
-    isa_ok(?$b, Bool, 'it is forced into a Bool');
+    isa-ok(?$b, Bool, 'it is forced into a Bool');
     ok(?$b, 'it is forced into boolean context');
 
     my $c = 0;
-    isa_ok(?$c, Bool, 'it is forced into a Bool');
+    isa-ok(?$c, Bool, 'it is forced into a Bool');
     ok(!(?$c), 'it is forced into boolean context');
 
     my $d = 1;
-    isa_ok(?$d, Bool, 'it is forced into a Bool');
+    isa-ok(?$d, Bool, 'it is forced into a Bool');
     ok(?$d, 'it is forced into boolean context');
 }
 
@@ -155,19 +155,19 @@ sub eval_elsewhere($code){ EVAL($code) }
 # L<S03/Symbolic unary precedence/"prefix:<!>">
 {
     my $a = '';
-    isa_ok(!$a, Bool, 'it is forced into a Bool');
+    isa-ok(!$a, Bool, 'it is forced into a Bool');
     ok(!$a, 'it is forced into boolean context');
 
     my $b = 'This will be true';
-    isa_ok(!$b, Bool, 'it is forced into a Bool');
+    isa-ok(!$b, Bool, 'it is forced into a Bool');
     ok(!(!$b), 'it is forced into boolean context');
 
     my $c = 0;
-    isa_ok(!$c, Bool, 'it is forced into a Bool');
+    isa-ok(!$c, Bool, 'it is forced into a Bool');
     ok(!$c, 'it is forced into boolean context');
 
     my $d = 1;
-    isa_ok(!$d, Bool, 'it is forced into a Bool');
+    isa-ok(!$d, Bool, 'it is forced into a Bool');
     ok(!(!$d), 'it is forced into boolean context');
 
 }
@@ -222,7 +222,7 @@ sub eval_elsewhere($code){ EVAL($code) }
     ok 9.9 ~~ ^10, '9.99 is in ^10';
     ok 10 !~~ ^10, '10 is not in ^10';
     is (^10).elems, 10, '^10 has 10 elems';
-    isa_ok ^10, Range;
+    isa-ok ^10, Range;
 
     # now the same for ^@array, in which case prefix:<^>
     # imposes numeric context
@@ -233,7 +233,7 @@ sub eval_elsewhere($code){ EVAL($code) }
     ok 9.9 ~~ ^@a, '9.99 is in ^10';
     ok  10 !~~ ^@a, '10 is not in ^10';
     is (^@a).elems, 10, '^10 has 10 elems';
-    isa_ok ^@a, Range;
+    isa-ok ^@a, Range;
 }
 
 # vim: ft=perl6

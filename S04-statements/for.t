@@ -46,7 +46,7 @@ for statement as possible
     my $str;
     my @a = 1..3;
     my @b = 4..6;
-    for zip(@a; @b) -> $x, $y {
+    for flat zip(@a; @b) -> $x, $y {
         $str ~= "($x $y)";
     }
     is $str, "(1 4)(2 5)(3 6)", 'for zip(@a; @b) -> $x, $y works';
@@ -284,7 +284,7 @@ class TestClass{ has $.key is rw  };
 {
     my $a = '';
     my $b = '';
-    for 1..3, 4..6 { $a ~= $_.WHAT.gist ; $b ~= Int.gist };
+    for flat 1..3, 4..6 { $a ~= $_.WHAT.gist ; $b ~= Int.gist };
     is($a, $b, 'List context');
 
     $a = '';
@@ -405,7 +405,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   my @a = <1 2 3>;
   my @b = <4 5 6>;
   my $res = '';
-  for @a Z @b -> $x, $y {
+  for flat @a Z @b -> $x, $y {
     $res ~= " " ~ $x * $y;
   }
   is $res, " 4 10 18", "Z -ed for loop";
@@ -415,7 +415,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   my @a = <1 2 3>;
   my $str = '';
 
-  for @a Z @a Z @a Z @a Z @a -> $q, $w, $e, $r, $t {
+  for flat @a Z @a Z @a Z @a Z @a -> $q, $w, $e, $r, $t {
     $str ~= " " ~ $q*$w*$e*$r*$t;
   }
   is $str, " 1 {2**5} {3**5}", "Z-ed for loop with 5 arrays";
@@ -466,14 +466,14 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     is (for ^5 { 41; next if $_ == 2; $_; }).flat, (0,1,3,4),
                 "for loop with value-less next flattens out nexted iterations";
 
-#?rakudo todo 'Rakudo still uses Nil here'
+#?rakudo todo 'Rakudo still uses Nil here RT #124568'
     my $l = (for ^5 { 41; next if $_ == 2; $_; });
     is $l[2].perl, "()", "for loop iteration with value-less 'next' gives ()";
 
     is (for ^5 { 41; last if $_ == 2; $_; }).flat, (0,1),
                 "for loop with value-less last flattens out last iteration";
 
-#?rakudo todo 'Rakudo still uses Nil here'
+#?rakudo todo 'Rakudo still uses Nil here RT #124569'
     $l = (for ^5 { 41; last if $_ == 2; $_; });
     is $l[2].perl, "()", "for loop iteration with value-less 'last' gives ()";
 }

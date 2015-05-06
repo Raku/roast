@@ -33,7 +33,7 @@ is +@roles,   3,  'with no args returned list with correct number of roles';
 is @roles[0], R3, 'first role in list was correct';
 ok (@roles[1] ~~ R1 && @roles[2] ~~ R2 || @roles[1] ~~ R2 && @roles[2] ~~ R1),
                   'second and third roles in list were correct';
-#?rakudo skip '.^roles(:tree)'
+#?rakudo skip '.^roles(:tree) RT #125009'
 {
 @roles = C2.^roles(:tree);
 is +@roles,   2,       ':tree returned list with correct number of elements';

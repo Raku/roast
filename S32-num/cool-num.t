@@ -68,7 +68,7 @@ is_approx "17"i, 17i, '"17"i == 17i';
 is_approx (NotComplex.new)i, $magic\i, '(NotComplex.new)i == $magic\i';
 }
 
-#?rakudo skip 'angle conversion'
+#?rakudo skip 'angle conversion RT #124816'
 #?niecza skip 'angle conversion'
 #?DOES 4
 {

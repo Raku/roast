@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 26;
 
 # L<S04/Exceptions/The fail function>
 
@@ -52,21 +52,21 @@ plan 25;
 {
     sub rt77946 { return fail() }
     my $rt77946 = rt77946();
-    isa_ok ?$rt77946, Bool, '?Failure returns a Bool';
-    isa_ok $rt77946.defined, Bool, 'Failure.defined returns a Bool';
+    isa-ok ?$rt77946, Bool, '?Failure returns a Bool';
+    isa-ok $rt77946.defined, Bool, 'Failure.defined returns a Bool';
 }
 
 # RT #106832
 {
     my $f = (sub { fail('foo') }).();
     is $f.exception, 'foo', 'can extract exception from Failure';
-    isa_ok $f.exception, Exception, '... and it is an Exception';
+    isa-ok $f.exception, Exception, '... and it is an Exception';
 }
 
 {
     class AnEx is Exception { };
     my $f = (sub f { fail AnEx.new }).();  #OK not used
-    isa_ok $f.exception, AnEx, 'can fail() typed exceptions';
+    isa-ok $f.exception, AnEx, 'can fail() typed exceptions';
 }
 
 {
@@ -83,6 +83,24 @@ plan 25;
     lives_ok { use fatal; my $x = !it-will-fail(); 1 }, 'use fatal respects !';
     lives_ok { use fatal; my $x = not it-will-fail(); 1 }, 'use fatal respects not';
     lives_ok { use fatal; my $x = defined it-will-fail(); 1 }, 'use fatal respects defined';
+}
+
+# RT #118785
+{
+    sub fatal-scope(&todo) {
+        use fatal;
+        todo;
+    }
+
+    sub thing-that-fails() {
+        fail 'oh noes';
+    }
+
+    sub non-fatal-scope {
+        thing-that-fails() or 42
+    }
+
+    is fatal-scope(&non-fatal-scope), 42, "Fatal scopes are lexical rather than dynamic";
 }
 
 done;

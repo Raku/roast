@@ -65,7 +65,7 @@ class Foo {
     }
 }
 my $foo = Foo.new;
-isa_ok($foo.bar, Hash,    'hash attribute initialized');
+isa-ok($foo.bar, Hash,    'hash attribute initialized');
 $foo.set_bar();
 is($foo.bar<a>, 'baz',    'hash attribute initialized/works');
 my %s = $foo.bar;
@@ -81,7 +81,7 @@ class Bar {
     }
 }
 my $bar = Bar.new;
-isa_ok($bar.bar.WHAT, Array, 'array attribute initialized');
+isa-ok($bar.bar.WHAT, Array, 'array attribute initialized');
 $bar.set_bar();
 is($bar.bar[0], 100,       'array attribute initialized/works');
 is($bar.bar[1], 200,       'array attribute initialized/works');
@@ -120,7 +120,7 @@ eval_dies_ok q[
 {
     class A { };
     class B { has A $.foo .= new };
-    isa_ok B.new.foo, A, 'class attribute can be initialized using .=';
+    isa-ok B.new.foo, A, 'class attribute can be initialized using .=';
 }
 
 #RT #115280

@@ -64,21 +64,21 @@ my %a = @a;
 my %b = @b;
 is_deeply(%a, %b, "is_deeply (test hash key ordering)");
 
-## isa_ok
+## isa-ok
 
 my @list = ( 1, 2, 3 );
 
-isa_ok(@list, 'List');
-isa_ok({ 'one' => 1 }, 'Hash');
+isa-ok(@list, 'List');
+isa-ok({ 'one' => 1 }, 'Hash');
 
-isa_ok(@list, 'Hash', 'this is a description', todo => 1);
-isa_ok(@list, 'Hash', desc => 'this is a description', :todo<bug>);
-isa_ok(@list, 'Array', :desc('this is a description'));
+isa-ok(@list, 'Hash', 'this is a description', todo => 1);
+isa-ok(@list, 'Hash', desc => 'this is a description', :todo<bug>);
+isa-ok(@list, 'Array', :desc('this is a description'));
 
 class Foo {};
 my $foo = Foo.new();
-isa_ok($foo, 'Foo');
-isa_ok(Foo.new(), 'Foo');
+isa-ok($foo, 'Foo');
+isa-ok(Foo.new(), 'Foo');
 
 ## like
 

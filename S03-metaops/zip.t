@@ -58,7 +58,7 @@ is (2, 10, * Z* 3, 4, 5, *).munch(5),
 }
 
 # RT #75818
-isa_ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
+isa-ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
 
 # RT #113800  - multiple Z operators work with list associative
 #?niecza skip "Unable to resolve method lol in type Parcel"
@@ -70,7 +70,7 @@ isa_ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
 }
 
 # RT #73948
-is (1, 2 Z, 3, 4).join('|'), '1|3|2|4', 'Z, flattens in list context';
+is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
 
 {
     my @a = 1,2,3;

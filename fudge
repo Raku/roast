@@ -83,7 +83,12 @@ Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
     #?v6.0+          [num|*] ['reason']
     #?v6.0.0..*      [num|*] ['reason']
     #?v6.0.0..v6.0.5 [num|*] ['reason']
-        run num/all tests for the given Perl 6 language version.
+        run num/all tests for the given Perl 6 language version. Skipped
+        on non-matching Perl 6 language versions.
+
+    #?v6+            [num|*] skip|emit|todo|eval|try ['reason']
+        skip or todo (etc) tests for the matching Perl 6 language version.
+        Non-matching Perl 6 language versions are left untouched.
 
     #?DOES count
         for all implementations, the following thing does count tests
@@ -113,13 +118,41 @@ our $PENDING = 0;
 my $ARGS = '';
 my $IS = _register_functions(  # regex with test functions used in roast
     # from Test
-    qw(is ok nok is_deeply is_approx isnt like unlike eval_dies_ok cmp_ok isa_ok use_ok throws_ok dies_ok lives_ok eval_lives_ok pass flunk throws_like),
+    qw(
+      cmp_ok            cmp-ok
+      dies_ok           dies-ok
+      eval_dies_ok      eval-dies-ok
+      eval_lives_ok     eval-lives-ok
+      flunk
+      is
+      is_approx         is-approx
+      is_deeply         is-deeply
+      isa_ok            isa-ok
+      isnt
+      like
+      lives_ok          lives-ok
+      nok
+      ok
+      pass
+      throws_like       throws-like
+      unlike
+      use_ok            use-ok
+    ),
     # from Test::Util
-    qw(is_run),
+    qw(
+      is_run            is-run
+    ),
     # from Test::Tap
-    qw(tap_ok),
+    qw(
+      tap-ok
+    ),
     # from Test::Compile
-    qw(loads_ok precomp_loads_ok loads_is precomp_loads_is),
+    qw(
+      loads_ok          loads-ok
+      precomp_loads_ok  precomp-loads-ok
+      loads_is          loads-is
+      precomp_loads_is  precomp-loads-is
+    ),
 );
 my %DOES;
 my $DOES = 0;
@@ -157,21 +190,15 @@ sub fudgeblock {
             my $cmd = $4;
             my $applies = 0;
             if ($name =~ /^v\d/) {  # Perl 6 language version
-                unless (version_matches($VERSION, $name)) {
+                my $num = $args =~ s/(\d+)\s*// ? $1 : 1;
+                $cmd    = 'skip';
+                $applies = !version_matches($VERSION, $name);
+                if ($args =~ s/^(skip|emit|todo|eval|try)\b\s*//) {
                     $applies = 1;
-                    $cmd     = $cmd  =~ /(\d+)/ ? $1 : 'skip';
-                    if ($args =~ /\*\s*(.*)/) {
-                        $args = "999999 skip " . ($2 || "'Version $name required'")
-                    }
-                    elsif ($args =~ /(\d+)\s*(.*)/) {
-                        $args = "$1 skip " . ($2 || "'Version $name required'")
-                    }
-                    elsif ($args) {
-                        $args = "skip $args";
-                    }
-                    else {
-                        $args = "skip 'Version $name required'";
-                    }
+                    $cmd     = $1;
+                }
+                if ($applies) {
+                    $args = "$num $cmd " . ($args || "'Version $name required'")
                 }
             }
             elsif ($name gt 'a') {  # lowercase is compiler name

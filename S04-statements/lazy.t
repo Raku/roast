@@ -37,7 +37,7 @@ plan 12;
   ok !$was_in_lazy,         "rebinding our var containing a lazy worked (3)";
 }
 
-#?rakudo todo 'why ever not?'
+#?rakudo todo 'why ever not? RT #124571'
 {
   dies_ok { (LAZY { 42 }) = 23 },
     "directly assigning to a lazy var does not work";

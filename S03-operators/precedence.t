@@ -35,7 +35,7 @@ is(--$i ** 2, 4, "-- does too");
 # exponentiation
 
 is(-2**2, -4, "** bind tighter than unary -");
-isa_ok(~2**4, Str, "~4**4 is a string");
+isa-ok(~2**4, Str, "~4**4 is a string");
 
 # symbolic unary
 
@@ -219,7 +219,7 @@ throws_like '1, 2 Z 3, 4 X 5, 6',
     X::Syntax::NonAssociative,
     'list associativity only works between identical operators';
 
-#?rakudo skip 'nom regression'
+#?rakudo skip 'nom regression RT #124538'
 #?niecza skip 'assigning to readonly value'
 {
     # Check a 3 != 3 vs 3 !=3 parsing issue that can cropped up in Rakudo.

@@ -29,16 +29,16 @@ plan 27;
     is($a, 3, "inplace int");
 }
 
-#?rakudo skip "Method '' not found for invocant of class 'Str'"
+#?rakudo skip "Method '' not found for invocant of class 'Str' RT #124528"
 {
     my $b = "a_string"; $b .= WHAT;
     my $c =         42; $c .= WHAT;
     my $d =      42.23; $d .= WHAT;
     my @e = <a b c d>;  @e .= WHAT;
-    isa_ok($b,    Str,   "inplace WHAT of a Str");
-    isa_ok($c,    Int,   "inplace WHAT of a Num");
-    isa_ok($d,    Rat,   "inplace WHAT of a Rat");
-    isa_ok(@e[0], Array, "inplace WHAT of an Array");
+    isa-ok($b,    Str,   "inplace WHAT of a Str");
+    isa-ok($c,    Int,   "inplace WHAT of a Num");
+    isa-ok($d,    Rat,   "inplace WHAT of a Rat");
+    isa-ok(@e[0], Array, "inplace WHAT of an Array");
 }
 
 my $f = "lowercase"; $f .= uc;
@@ -80,17 +80,17 @@ is ~@b, "a b d e z", "inplace sort";
 {
    my $x = 5.5;
    $x .= Int;
-   isa_ok $x, Int, '.= Int (type)';
+   isa-ok $x, Int, '.= Int (type)';
    is $x, 5, '.= Int (value)';
 
    $x = 3;
    $x .= Str;
-   isa_ok $x, Str, '.= Str (type)';
+   isa-ok $x, Str, '.= Str (type)';
    is $x, '3', '.= Str (value)';
 
    $x = 15;
    $x .= Bool;
-   isa_ok $x, Bool, '.= Bool (type)';
+   isa-ok $x, Bool, '.= Bool (type)';
    is $x, True, '.= Bool (value)';
 }
 

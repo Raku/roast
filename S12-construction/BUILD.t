@@ -92,7 +92,7 @@ plan 9;
     is %counter<BUILD>, 1, 'BUILD called once';
 }
 
-#?rakudo todo 'method BUILD should warn'
+#?rakudo todo 'method BUILD should warn RT #124642'
 #?niecza todo
 {
     use lib 't/spec/packages';

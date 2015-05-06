@@ -40,9 +40,9 @@ is (1e0/10 + 1/10 + 1/10 == 0.3).gist, 'False', '(awww!)';
 #?rakudo todo "list of numbers"
 {
     my @numbers = <1 2.0 3e0>;
-    isa_ok @numbers[0], Int;
-    isa_ok @numbers[1], Rat;
-    isa_ok @numbers[2], Num;
+    isa-ok @numbers[0], Int;
+    isa-ok @numbers[1], Rat;
+    isa-ok @numbers[2], Num;
 }
 
 is (i * i).gist, '-1+0i', 'complex number';

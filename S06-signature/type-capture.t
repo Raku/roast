@@ -8,12 +8,12 @@ plan 8;
 
 # Check it captures built-in types.
 sub basic_capture(::T $x) { T }   #OK not used
-isa_ok(basic_capture(42),  Int, 'captured built-in type');
-isa_ok(basic_capture(4.2), Rat, 'captured built-in type');
+isa-ok(basic_capture(42),  Int, 'captured built-in type');
+isa-ok(basic_capture(4.2), Rat, 'captured built-in type');
 
 # User defined ones too.
 class Foo { }
-isa_ok(basic_capture(Foo.new), Foo, 'captured user defined type');
+isa-ok(basic_capture(Foo.new), Foo, 'captured user defined type');
 
 # Check you can use captured type later in the signature.
 sub two_the_same(::T $x, T $y) { 1 }   #OK not used
@@ -30,7 +30,7 @@ sub declare_cap_type(::T $x) {   #OK not used
     my T $y = 4.2;   #OK not used
     1
 }
-#?rakudo skip 'nom regression'
+#?rakudo skip 'nom regression RT #124940'
 ok(declare_cap_type(3.3), 'can use captured type in declaration');
 $ok = 1;
 try {

@@ -61,7 +61,6 @@ eval_dies_ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
 }
 
 # RT #116597
-#?rakudo.parrot todo 'RT #116597'
 {
     grammar RT116597 {
         token TOP() { <lit 'a'> };

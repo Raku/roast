@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 34;
 
 =begin description
 
@@ -143,5 +143,7 @@ This test tests the C<unique> builtin.
     is_deeply %a<foo>, <a b c>.list.item,
       "\%a<foo> not clobbered by .=unique";
 } # 1
+
+is ((1,2,3),(1,2),(1,2)).unique, "1 2 3 1 2", ".unique doesn't flatten";
 
 # vim: ft=perl6

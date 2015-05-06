@@ -265,7 +265,7 @@ ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<-:InCombiningDiacriticalMarks>$/ ), q{
 ok(!( "\x[76DA]"  ~~ m/^<:InCombiningDiacriticalMarks>$/ ), q{Don't match unrelated <InCombiningDiacriticalMarks>} );
 ok("\x[76DA]"  ~~ m/^<:!InCombiningDiacriticalMarks>$/, q{Match unrelated negated <InCombiningDiacriticalMarks>} );
 ok("\x[76DA]"  ~~ m/^<-:InCombiningDiacriticalMarks>$/, q{Match unrelated inverted <InCombiningDiacriticalMarks>} );
-ok("\x[76DA]\c[COMBINING GRAVE ACCENT]" ~~ m/<:InCombiningDiacriticalMarks>/, q{Match unanchored <InCombiningDiacriticalMarks>} );
+ok("\c[COMBINING GRAVE ACCENT]" ~~ m/<:InCombiningDiacriticalMarks>/, q{Match solitary <InCombiningDiacriticalMarks>} );
 
 # InCombiningDiacriticalMarksforSymbols
 
@@ -276,7 +276,7 @@ ok(!( "\c[COMBINING LEFT HARPOON ABOVE]" ~~ m/^<-:InCombiningDiacriticalMarksfor
 ok(!( "\x[7345]"  ~~ m/^<:InCombiningDiacriticalMarksforSymbols>$/ ), q{Don't match unrelated <InCombiningDiacriticalMarksforSymbols>} );
 ok("\x[7345]"  ~~ m/^<:!InCombiningDiacriticalMarksforSymbols>$/, q{Match unrelated negated <InCombiningDiacriticalMarksforSymbols>} );
 ok("\x[7345]"  ~~ m/^<-:InCombiningDiacriticalMarksforSymbols>$/, q{Match unrelated inverted <InCombiningDiacriticalMarksforSymbols>} );
-ok("\x[7345]\c[COMBINING LEFT HARPOON ABOVE]" ~~ m/<:InCombiningDiacriticalMarksforSymbols>/, q{Match unanchored <InCombiningDiacriticalMarksforSymbols>} );
+ok("\c[COMBINING LEFT HARPOON ABOVE]" ~~ m/<:InCombiningDiacriticalMarksforSymbols>/, q{Match solitary <InCombiningDiacriticalMarksforSymbols>} );
 
 # InCombiningHalfMarks
 

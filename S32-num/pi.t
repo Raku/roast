@@ -24,7 +24,6 @@ is_approx(EVAL("3 + pi"), $PI+3, "3+pi, as a bareword");
 
 is_approx(EVAL("pi + 3"), $PI+3, "pi+3, as a bareword");
 
-#?rakudo.parrot skip "RT #122785"
 is_approx(π, $PI, "unicode π as a bareword");
 
 # vim: ft=perl6

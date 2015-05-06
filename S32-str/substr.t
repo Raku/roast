@@ -40,7 +40,7 @@ plan 70;
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text");
 }
 
-#?rakudo.jvm skip 'java.nio.charset.MalformedInputException'
+#?rakudo.jvm skip 'java.nio.charset.MalformedInputException RT #124692'
 { # codepoints greater than 0xFFFF
     my $str = join '', 0x10426.chr, 0x10427.chr;
     is $str.codes, 2, "Sanity check string";
@@ -84,7 +84,7 @@ sub l (Int $a) {  my $l = $a; return $l }
 sub p (Int $a) {  my $p = $a; return $p }
 
 #Substr with StrPos
-#?rakudo skip 'StrPos NYI'
+#?rakudo skip 'StrPos NYI RT #124693'
 #?niecza skip 'StrPos tests broken'
 { # read only
     my $str = "foobar";
@@ -101,7 +101,7 @@ sub p (Int $a) {  my $p = $a; return $p }
     is($str, "foobar", "original string still not changed (substr(Int, StrPos)).");
 };
 
-#?rakudo skip 'StrPos NYI'
+#?rakudo skip 'StrPos NYI RT #124694'
 #?niecza skip 'StrPos tests broken'
 { # replacement
     my $str = "foobar";
@@ -131,13 +131,13 @@ sub p (Int $a) {  my $p = $a; return $p }
 }
 
 #?niecza todo
-#?rakudo todo "This seems unneccessarily restrictive"
+#?rakudo todo "This seems unneccessarily restrictive RT #124695"
 eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
 # RT #76682
 #?niecza skip "'Failure' used at line 244"
 {
-    isa_ok "foo".substr(4), Failure, 'substr with start beyond end of string is Failure';
+    isa-ok "foo".substr(4), Failure, 'substr with start beyond end of string is Failure';
 }
 
 # RT #115086

@@ -2,8 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
-
+plan 32;
 
 # L<S04/The C<gather> statement prefix/>
 
@@ -141,7 +140,7 @@ plan 30;
         'take with multiple arguments .flat tens out';
 }
 
-#?rakudo.moar todo 'RT #117635 (infinite loop)'
+# RT #117635
 {
     my sub grep-div(@a, $n) {
         gather for @a {
@@ -179,7 +178,7 @@ plan 30;
         }
     };
     is foo().join, '12345', 'decontainerization happens (1)';
-    is (<a b c d e> Zxx 0,1,0,1,0).Str, 'b d',
+    is (<a b c d e> Zxx 0,1,0,1,0).flat.Str, 'b d',
         'decontainerization happens (2)';
 }
 
@@ -203,7 +202,7 @@ plan 30;
 }
 
 # tests for the S04-control.pod document
-#?rakudo.jvm skip "unwind"
+#?rakudo.jvm skip "unwind RT #124580"
 {
     my @list = 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 6, 6;
     my @uniq = gather for @list {
@@ -240,6 +239,21 @@ plan 30;
     my $cat;
     lives_ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a };  +@a }, 'can access bound gather result while gathering';
     is $cat, "11 21 2 3", 'bound gather result has up-to-date value while gathering';
+}
+
+# RT #111962
+{
+    my @grid = [ Bool.pick xx 5 ] xx 5;
+    my @neigh = [ ] xx 5;
+    for ^5 X ^5 -> $i, $j {
+        @neigh[$i][$j] = gather take-rw @grid[$i + .[0]][$j + .[1]]
+                if 0 <= $i + .[0] < 5 and 0 <= $j + .[1] < 5
+                    for [-1,-1],[+0,-1],[+1,-1],
+                        [-1,+0],        [+1,+0],
+                        [-1,+1],[+0,+1],[+1,+1];
+    }
+    ok @grid[1][1] =:= @neigh[2][2][0], "Neighbor is same object as in grid";
+    ok @neigh[1][1].elems == 8, "There are eight neighbors";
 }
 
 # vim: ft=perl6

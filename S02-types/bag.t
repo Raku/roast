@@ -11,14 +11,14 @@ sub showkv($x) {
 
 {
     my $b = bag <a foo a a a a b foo>;
-    isa_ok $b, Bag, '&bag produces a Bag';
+    isa-ok $b, Bag, '&bag produces a Bag';
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
 
     is $b.default, 0, "Defaults to 0";
     is $b<a>, 5, 'Single-key subscript (existing element)';
-    isa_ok $b<a>, Int, 'Single-key subscript yields an Int';
+    isa-ok $b<a>, Int, 'Single-key subscript yields an Int';
     is $b<santa>, 0, 'Single-key subscript (nonexistent element)';
-    isa_ok $b<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
+    isa-ok $b<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
     ok $b<a>:exists, 'exists with existing element';
     nok $b<santa>:exists, 'exists with nonexistent element';
 
@@ -30,7 +30,7 @@ sub showkv($x) {
     my $hash;
     lives_ok { $hash = $b.hash },
       ".hash doesn't die";
-    isa_ok $hash, Hash, "...and it returned a Hash";
+    isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
     throws_like { $b<a> = 5 },
@@ -69,19 +69,19 @@ sub showkv($x) {
 }
 
 {
-    isa_ok "a".Bag, Bag, "Str.Bag makes a Bag";
+    isa-ok "a".Bag, Bag, "Str.Bag makes a Bag";
     is showkv("a".Bag), 'a:1', "'a'.Bag is bag a";
 
-    isa_ok (a => 100000).Bag, Bag, "Pair.Bag makes a Bag";
+    isa-ok (a => 100000).Bag, Bag, "Pair.Bag makes a Bag";
     is showkv((a => 100000).Bag), 'a:100000', "(a => 100000).Bag is bag a:100000";
     is showkv((a => 0).Bag), '', "(a => 0).Bag is the empty bag";
 
-    isa_ok <a b c>.Bag, Bag, "<a b c>.Bag makes a Bag";
+    isa-ok <a b c>.Bag, Bag, "<a b c>.Bag makes a Bag";
     is showkv(<a b c a>.Bag), 'a:2 b:1 c:1', "<a b c a>.Bag makes the bag a:2 b:1 c:1";
     is showkv(["a", "b", "c", "a"].Bag), 'a:2 b:1 c:1', "[a b c a].Bag makes the bag a:2 b:1 c:1";
     is showkv([a => 3, b => 0, 'c', 'a'].Bag), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].Bag makes the bag a:4 c:1";
 
-    isa_ok {a => 2, b => 4, c => 0}.Bag, Bag, "{a => 2, b => 4, c => 0}.Bag makes a Bag";
+    isa-ok {a => 2, b => 4, c => 0}.Bag, Bag, "{a => 2, b => 4, c => 0}.Bag makes a Bag";
     is showkv({a => 2, b => 4, c => 0}.Bag), 'a:2 b:4', "{a => 2, b => 4, c => 0}.Bag makes the bag a:2 b:4";
 }
 
@@ -117,20 +117,20 @@ sub showkv($x) {
 
 {
     my $b = bag <a b o p a p o o>;
-    isa_ok $b, Bag, '&Bag.new given an array of strings produces a Bag';
+    isa-ok $b, Bag, '&Bag.new given an array of strings produces a Bag';
     is showkv($b), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
 {
     my $b = bag [ foo => 10, bar => 17, baz => 42, santa => 0 ];
-    isa_ok $b, Bag, '&Bag.new given an array of pairs produces a Bag';
+    isa-ok $b, Bag, '&Bag.new given an array of pairs produces a Bag';
     is +$b, 1, "... with one element";
 }
 
 {
     # {}.hash interpolates in list context
     my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
-    isa_ok $b, Bag, '&Bag.new given a Hash produces a Bag';
+    isa-ok $b, Bag, '&Bag.new given a Hash produces a Bag';
     is +$b, 4, "... with four elements";
     #?niecza todo "Non-string bag elements NYI"
     #?rakudo todo "Not properly interpolating"
@@ -140,33 +140,33 @@ sub showkv($x) {
 {
     # plain {} does not interpolate in list context
     my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 };
-    isa_ok $b, Bag, '&Bag.new given a Hash produces a Bag';
+    isa-ok $b, Bag, '&Bag.new given a Hash produces a Bag';
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = bag set <foo bar foo bar baz foo>;
-    isa_ok $b, Bag, '&Bag.new given a Set produces a Bag';
+    isa-ok $b, Bag, '&Bag.new given a Set produces a Bag';
     is +$b, 1, "... with one element";
 }
 
 #?niecza skip 'SetHash'
 {
     my $b = bag SetHash.new(<foo bar foo bar baz foo>);
-    isa_ok $b, Bag, '&Bag.new given a SetHash produces a Bag';
+    isa-ok $b, Bag, '&Bag.new given a SetHash produces a Bag';
     is +$b, 1, "... with one element";
 }
 
 #?niecza skip 'BagHash'
 {
     my $b = bag BagHash.new(<foo bar foo bar baz foo>);
-    isa_ok $b, Bag, '&Bag.new given a BagHash produces a Bag';
+    isa-ok $b, Bag, '&Bag.new given a BagHash produces a Bag';
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = bag set <foo bar foo bar baz foo>;
-    isa_ok $b, Bag, '&bag given a Set produces a Bag';
+    isa-ok $b, Bag, '&bag given a Set produces a Bag';
     is +$b, 1, "... with one element";
 }
 
@@ -174,7 +174,7 @@ sub showkv($x) {
 
 {
     my %b := bag <a b c b>;
-    isa_ok %b, Bag, 'A Bag bound to a %var is a Bag';
+    isa-ok %b, Bag, 'A Bag bound to a %var is a Bag';
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -183,7 +183,6 @@ sub showkv($x) {
     throws_like { %b<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
-    #?rakudo.parrot todo "?"
     #?rakudo.jvm    todo "?"
     throws_like { %b = bag <a b> },
       X::Assignment::RO,
@@ -198,10 +197,10 @@ sub showkv($x) {
 
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
-    isa_ok $b.list.elems, 3, ".list returns 3 things";
+    isa-ok $b.list.elems, 3, ".list returns 3 things";
     is $b.list.grep(Enum).elems, 3, "... all of which are Enums";
 
-    isa_ok $b.pairs.elems, 3, ".pairs returns 3 things";
+    isa-ok $b.pairs.elems, 3, ".pairs returns 3 things";
     is $b.pairs.grep(Enum).elems, 3, "... all of which are Enums";
     is $b.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.pairs.grep({ .value ~~ Int }).elems, 3, "... and the values of which are Ints";
@@ -218,11 +217,11 @@ sub showkv($x) {
     my $c;
     lives_ok { $s = $b.perl },
       ".perl lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     lives_ok { $c = EVAL $s },
       ".perl.EVAL lives";
-    isa_ok $c, Bag, "... and produces a Bag";
+    isa-ok $c, Bag, "... and produces a Bag";
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
@@ -231,7 +230,7 @@ sub showkv($x) {
     my $s;
     lives_ok { $s = $b.Str },
       ".Str lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
@@ -240,7 +239,7 @@ sub showkv($x) {
     my $s;
     lives_ok { $s = $b.gist },
       ".gist lives";
-    isa_ok $s, Str, "... and produces a string";
+    isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";
@@ -251,7 +250,7 @@ sub showkv($x) {
 
 {
     my %b := bag "a", "b", "c", "b";
-    isa_ok %b, Bag, 'A Bag bound to a %var is a Bag';
+    isa-ok %b, Bag, 'A Bag bound to a %var is a Bag';
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -335,7 +334,7 @@ sub showkv($x) {
     my $b = Bag.new("a", "b", "b");
 
     my $a = $b.pickpairs;
-    isa_ok $a, Pair, 'Did we get a Pair';
+    isa-ok $a, Pair, 'Did we get a Pair';
     ok ($a eq "a\t1" or $a eq "b\t2"), "We got one of the two choices";
 
     my @a = $b.pickpairs(2);
@@ -377,7 +376,7 @@ sub showkv($x) {
     is $b1<d>, 4, "One of them is 'd'";
     my $inner-bag = $b1.keys.first(Bag);
     #?niecza 2 todo 'Bag in Bag does not work correctly yet'
-    isa_ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
+    isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
 
     my $b = bag <a b c>;
@@ -387,22 +386,22 @@ sub showkv($x) {
     is $b1<d>, 1, "One of them is 'd'";
     $inner-bag = $b1.keys.first(Bag);
     #?niecza 2 todo 'Bag in Bag does not work correctly yet'
-    isa_ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
+    isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
 }
 
 {
-    isa_ok 42.Bag, Bag, "Method .Bag works on Int-1";
+    isa-ok 42.Bag, Bag, "Method .Bag works on Int-1";
     is showkv(42.Bag), "42:1", "Method .Bag works on Int-2";
-    isa_ok "blue".Bag, Bag, "Method .Bag works on Str-1";
+    isa-ok "blue".Bag, Bag, "Method .Bag works on Str-1";
     is showkv("blue".Bag), "blue:1", "Method .Bag works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
-    isa_ok @a.Bag, Bag, "Method .Bag works on Array-1";
+    isa-ok @a.Bag, Bag, "Method .Bag works on Array-1";
     is showkv(@a.Bag), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .Bag works on Array-2";
     my %x = "a" => 1, "b" => 2;
-    isa_ok %x.Bag, Bag, "Method .Bag works on Hash-1";
+    isa-ok %x.Bag, Bag, "Method .Bag works on Hash-1";
     is showkv(%x.Bag), "a:1 b:2", "Method .Bag works on Hash-2";
-    isa_ok (@a, %x).Bag, Bag, "Method .Bag works on Parcel-1";
+    isa-ok (@a, %x).Bag, Bag, "Method .Bag works on Parcel-1";
     is showkv((@a, %x).Bag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .Bag works on Parcel-2";
 }
@@ -449,7 +448,6 @@ sub showkv($x) {
 
 {
     my $b = <a b c>.Bag;
-    #?rakudo.parrot todo "?"
     #?rakudo.jvm    todo "?"
     throws_like { $b.pairs[0].key++ },
       X::Assignment::RO,
@@ -459,7 +457,7 @@ sub showkv($x) {
       'Cannot change value of Bag.pairs';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet'
+#?rakudo todo 'we have not secured .WHICH creation yet RT #124454'
 {
         isnt 'a(1) Str|b(1) Str|c'.Bag.WHICH, <a b c>.Bag.WHICH,
           'Faulty .WHICH creation';
@@ -469,7 +467,7 @@ sub showkv($x) {
 {
     my $string;
     my Bag $bag .= new: <foo foo bar>;
-    for $bag.keys X $bag.keys -> $a, $b {
+    for flat $bag.keys X $bag.keys -> $a, $b {
         $string ~= $a ~ $b;
     }
     is $string, 'foofoofoobarbarfoobarbar',

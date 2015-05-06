@@ -11,11 +11,11 @@ ie letter vs. Letter vs isLetter
 
 =end pod
 
-plan 361;
+plan 360;
 
 # BidiL       # Left-to-Right
 
-#?rakudo 35 skip 'Unicode properties with arguments'
+#?rakudo.jvm 35 skip 'Unicode properties with arguments RT #124886'
 ok("\c[YI SYLLABLE IT]" ~~ m/^<:bc<L>>$/, q{Match (Left-to-Right)} );
 ok(!( "\c[YI SYLLABLE IT]" ~~ m/^<!:bc<L>>.$/ ), q{Don't match negated (Left-to-Right)} );
 ok(!( "\c[YI SYLLABLE IT]" ~~ m/^<-:bc<L>>$/ ), q{Don't match inverted (Left-to-Right)} );
@@ -310,7 +310,6 @@ ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<-:Inherited>$/ ), q{Don't match invert
 ok(!( "\x[75FA]"  ~~ m/^<:Inherited>$/ ), q{Don't match unrelated <Inherited>} );
 ok("\x[75FA]"  ~~ m/^<!:Inherited>.$/, q{Match unrelated negated <Inherited>} );
 ok("\x[75FA]"  ~~ m/^<-:Inherited>$/, q{Match unrelated inverted <Inherited>} );
-ok("\x[75FA]\c[COMBINING GRAVE ACCENT]" ~~ m/<:Inherited>/, q{Match unanchored <Inherited>} );
 
 # Kannada
 

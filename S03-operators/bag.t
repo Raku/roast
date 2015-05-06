@@ -23,42 +23,42 @@ my $kb = BagHash.new(<blood love love>);
 # Bag Union
 
 is showkv($b ∪ $b), showkv($b), "Bag union with itself yields self";
-isa_ok ($b ∪ $b), Bag, "... and it's actually a Bag";
+isa-ok ($b ∪ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ∪ $kb), showkv($kb), "BagHash union with itself yields (as Bag)";
-isa_ok ($kb ∪ $kb), Bag, "... and it's actually a Bag";
+isa-ok ($kb ∪ $kb), Bag, "... and it's actually a Bag";
 
 is showkv($s ∪ $b), "blood:2 love:2 rhetoric:1", "Set union with Bag works";
-isa_ok ($s ∪ $b), Bag, "... and it's actually a Bag";
+isa-ok ($s ∪ $b), Bag, "... and it's actually a Bag";
 is showkv($s ∪ $kb), "blood:1 love:2", "Set union with BagHash works";
-isa_ok ($s ∪ $kb), Bag, "... and it's actually a Bag";
+isa-ok ($s ∪ $kb), Bag, "... and it's actually a Bag";
 
 is showkv($s (|) $b), "blood:2 love:2 rhetoric:1", "Set union with Bag works (texas)";
-isa_ok ($s (|) $b), Bag, "... and it's actually a Bag";
+isa-ok ($s (|) $b), Bag, "... and it's actually a Bag";
 is showkv($s (|) $kb), "blood:1 love:2", "Set union with BagHash works (texas)";
-isa_ok ($s (|) $kb), Bag, "... and it's actually a Bag";
+isa-ok ($s (|) $kb), Bag, "... and it's actually a Bag";
 
 # Bag Intersection
 
 is showkv($b ∩ $b), showkv($b), "Bag intersection with itself yields self (as Bag)";
-isa_ok ($b ∩ $b), Bag, "... and it's actually a Bag";
+isa-ok ($b ∩ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ∩ $kb), showkv($kb), "BagHash intersection with itself yields self (as Bag)";
-isa_ok ($kb ∩ $kb), Bag, "... and it's actually a Bag";
+isa-ok ($kb ∩ $kb), Bag, "... and it's actually a Bag";
 
 is showkv($s ∩ $b), "blood:1 love:1", "Set intersection with Bag works";
-isa_ok ($s ∩ $b), Bag, "... and it's actually a Bag";
+isa-ok ($s ∩ $b), Bag, "... and it's actually a Bag";
 is showkv($s ∩ $kb), "blood:1 love:1", "Set intersection with BagHash works";
-isa_ok ($s ∩ $kb), Bag, "... and it's actually a Bag";
+isa-ok ($s ∩ $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong'
 is showkv($kb ∩ <glad green blood>), "blood:1", "BagHash intersection with array of strings works";
-isa_ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
+isa-ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
 
 is showkv($s (&) $b), "blood:1 love:1", "Set intersection with Bag works (texas)";
-isa_ok ($s (&) $b), Bag, "... and it's actually a Bag";
+isa-ok ($s (&) $b), Bag, "... and it's actually a Bag";
 is showkv($s (&) $kb), "blood:1 love:1", "Set intersection with BagHash works (texas)";
-isa_ok ($s (&) $kb), Bag, "... and it's actually a Bag";
+isa-ok ($s (&) $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong?'
 is showkv($kb (&) <glad green blood>), "blood:1", "BagHash intersection with array of strings works (texas)";
-isa_ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
+isa-ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
 # symmetric difference
 
@@ -66,77 +66,77 @@ sub symmetric-difference($a, $b) {
     ($a (|) $b) (-) ($b (&) $a)
 }
 
-#?rakudo 8 todo "Rakudo update in progress, but not done yet"
+#?rakudo 8 todo "Rakudo update in progress, but not done yet RT #124529"
 
 is showkv($s (^) $b), showkv(symmetric-difference($s, $b)), "Bag symmetric difference with Set is correct";
-isa_ok ($s (^) $b), Bag, "... and it's actually a Bag";
+isa-ok ($s (^) $b), Bag, "... and it's actually a Bag";
 is showkv($b (^) $s), showkv(symmetric-difference($s, $b)), "Set symmetric difference with Bag is correct";
-isa_ok ($b (^) $s), Bag, "... and it's actually a Bag";
+isa-ok ($b (^) $s), Bag, "... and it's actually a Bag";
 
 #?niecza todo "Test is wrong, implementation is wrong"
 is showkv($s (^) $kb), showkv(symmetric-difference($s, $kb)), "BagHash symmetric difference with Set is correct";
-isa_ok ($s (^) $kb), Bag, "... and it's actually a Bag";
+isa-ok ($s (^) $kb), Bag, "... and it's actually a Bag";
 #?niecza todo "Test is wrong, implementation is wrong"
 is showkv($kb (^) $s), showkv(symmetric-difference($s, $kb)), "Set symmetric difference with BagHash is correct";
-isa_ok ($kb (^) $s), Bag, "... and it's actually a Bag";
+isa-ok ($kb (^) $s), Bag, "... and it's actually a Bag";
 
 # Bag multiplication
 
 is showkv($s ⊍ $s), "blood:1 love:1", "Bag multiplication with itself yields self squared";
-isa_ok ($s ⊍ $s), Bag, "... and it's actually a Bag";
+isa-ok ($s ⊍ $s), Bag, "... and it's actually a Bag";
 is showkv($ks ⊍ $ks), "blood:1 rhetoric:1", "Bag multiplication with itself yields self squared";
-isa_ok ($ks ⊍ $ks), Bag, "... and it's actually a Bag";
+isa-ok ($ks ⊍ $ks), Bag, "... and it's actually a Bag";
 is showkv($b ⊍ $b), "blood:4 love:4 rhetoric:1", "Bag multiplication with itself yields self squared";
-isa_ok ($b ⊍ $b), Bag, "... and it's actually a Bag";
+isa-ok ($b ⊍ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ⊍ $kb), "blood:1 love:4", "Bag multiplication with itself yields self squared";
-isa_ok ($kb ⊍ $kb), Bag, "... and it's actually a Bag";
+isa-ok ($kb ⊍ $kb), Bag, "... and it's actually a Bag";
 
 is showkv($s ⊍ $ks), "blood:1", "Bag multiplication (Set / SetHash) works";
-isa_ok ($s ⊍ $ks), Bag, "... and it's actually a Bag";
+isa-ok ($s ⊍ $ks), Bag, "... and it's actually a Bag";
 is showkv($s ⊍ $b), "blood:2 love:2", "Bag multiplication (Set / Bag) works";
-isa_ok ($s ⊍ $b), Bag, "... and it's actually a Bag";
+isa-ok ($s ⊍ $b), Bag, "... and it's actually a Bag";
 is showkv($ks ⊍ $b), "blood:2 rhetoric:1", "Bag multiplication (SetHash / Bag) works";
-isa_ok ($ks ⊍ $b), Bag, "... and it's actually a Bag";
+isa-ok ($ks ⊍ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ⊍ $b), "blood:2 love:4", "Bag multiplication (BagHash / Bag) works";
-isa_ok ($kb ⊍ $b), Bag, "... and it's actually a Bag";
+isa-ok ($kb ⊍ $b), Bag, "... and it's actually a Bag";
 
 is showkv($s (.) $ks), "blood:1", "Bag multiplication (Set / SetHash) works (texas)";
-isa_ok ($s (.) $ks), Bag, "... and it's actually a Bag (texas)";
+isa-ok ($s (.) $ks), Bag, "... and it's actually a Bag (texas)";
 is showkv($s (.) $b), "blood:2 love:2", "Bag multiplication (Set / Bag) works (texas)";
-isa_ok ($s (.) $b), Bag, "... and it's actually a Bag (texas)";
+isa-ok ($s (.) $b), Bag, "... and it's actually a Bag (texas)";
 is showkv($ks (.) $b), "blood:2 rhetoric:1", "Bag multiplication (SetHash / Bag) works (texas)";
-isa_ok ($ks (.) $b), Bag, "... and it's actually a Bag (texas)";
+isa-ok ($ks (.) $b), Bag, "... and it's actually a Bag (texas)";
 is showkv($kb (.) $b), "blood:2 love:4", "Bag multiplication (BagHash / Bag) works (texas)";
-isa_ok ($kb (.) $b), Bag, "... and it's actually a Bag";
+isa-ok ($kb (.) $b), Bag, "... and it's actually a Bag";
 
 # Bag addition
 
 is showkv($s ⊎ $s), "blood:2 love:2", "Bag addition with itself yields twice self";
-isa_ok ($s ⊎ $s), Bag, "... and it's actually a Bag";
+isa-ok ($s ⊎ $s), Bag, "... and it's actually a Bag";
 is showkv($ks ⊎ $ks), "blood:2 rhetoric:2", "Bag addition with itself yields twice self";
-isa_ok ($ks ⊎ $ks), Bag, "... and it's actually a Bag";
+isa-ok ($ks ⊎ $ks), Bag, "... and it's actually a Bag";
 is showkv($b ⊎ $b), "blood:4 love:4 rhetoric:2", "Bag addition with itself yields twice self";
-isa_ok ($b ⊎ $b), Bag, "... and it's actually a Bag";
+isa-ok ($b ⊎ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ⊎ $kb), "blood:2 love:4", "Bag addition with itself yields twice self";
-isa_ok ($kb ⊎ $kb), Bag, "... and it's actually a Bag";
+isa-ok ($kb ⊎ $kb), Bag, "... and it's actually a Bag";
 
 is showkv($s ⊎ $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / SetHash) works";
-isa_ok ($s ⊎ $ks), Bag, "... and it's actually a Bag";
+isa-ok ($s ⊎ $ks), Bag, "... and it's actually a Bag";
 is showkv($s ⊎ $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works";
-isa_ok ($s ⊎ $b), Bag, "... and it's actually a Bag";
+isa-ok ($s ⊎ $b), Bag, "... and it's actually a Bag";
 is showkv($ks ⊎ $b), "blood:3 love:2 rhetoric:2", "Bag addition (SetHash / Bag) works";
-isa_ok ($ks ⊎ $b), Bag, "... and it's actually a Bag";
+isa-ok ($ks ⊎ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ⊎ $b), "blood:3 love:4 rhetoric:1", "Bag addition (BagHash / Bag) works";
-isa_ok ($kb ⊎ $b), Bag, "... and it's actually a Bag";
+isa-ok ($kb ⊎ $b), Bag, "... and it's actually a Bag";
 
 is showkv($s (+) $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / SetHash) works (texas)";
-isa_ok ($s (+) $ks), Bag, "... and it's actually a Bag (texas)";
+isa-ok ($s (+) $ks), Bag, "... and it's actually a Bag (texas)";
 is showkv($s (+) $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works (texas)";
-isa_ok ($s (+) $b), Bag, "... and it's actually a Bag (texas)";
+isa-ok ($s (+) $b), Bag, "... and it's actually a Bag (texas)";
 is showkv($ks (+) $b), "blood:3 love:2 rhetoric:2", "Bag addition (SetHash / Bag) works (texas)";
-isa_ok ($ks (+) $b), Bag, "... and it's actually a Bag (texas)";
+isa-ok ($ks (+) $b), Bag, "... and it's actually a Bag (texas)";
 is showkv($kb (+) $b), "blood:3 love:4 rhetoric:1", "Bag addition (BagHash / Bag) works (texas)";
-isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
+isa-ok ($kb (+) $b), Bag, "... and it's actually a Bag";
 
 # for https://rt.perl.org/Ticket/Display.html?id=122810
 ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - I mean bag - with 50k elems and lives";
@@ -198,19 +198,19 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     #?rakudo todo "NYI"
     is showkv([(^)] $s), showset($s), "Set symmetric difference reduce works on one set";
     #?rakudo todo "NYI"
-    isa_ok showkv([(^)] $s), Set, "Set symmetric difference reduce works on one set, yields set";
+    isa-ok showkv([(^)] $s), Set, "Set symmetric difference reduce works on one set, yields set";
     #?rakudo todo "NYI"
     is showkv([(^)] $b), showkv($b), "Bag symmetric difference reduce works on one bag";
     #?rakudo todo "NYI"
-    isa_ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one bag, yields bag";
+    isa-ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one bag, yields bag";
     #?rakudo 4 todo "Wrong answer at the moment"
     is showkv([(^)] $s, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on a bag and a set";
-    isa_ok showkv([(^)] $s, $b), Bag, "... and produces a Bag";
+    isa-ok showkv([(^)] $s, $b), Bag, "... and produces a Bag";
     is showkv([(^)] $b, $s), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
-    isa_ok showkv([(^)] $b, $s), Bag, "... and still produces a Bag that way too";
+    isa-ok showkv([(^)] $b, $s), Bag, "... and still produces a Bag that way too";
     #?rakudo 2 todo "Crashing"
     is showkv([(^)] $s, $b, $kb), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on three bags";
-    isa_ok showkv([(^)] $s, $b, $kb), Bag, "Bag symmetric difference reduce works on three bags";
+    isa-ok showkv([(^)] $s, $b, $kb), Bag, "Bag symmetric difference reduce works on three bags";
 }
 
 # vim: ft=perl6

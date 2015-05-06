@@ -64,10 +64,10 @@ is(@a, @e, "list was reversed");
     my @a = "foo";
     my @b = @a.reverse;
     #?niecza skip "Iterable NYI"
-    isa_ok(@b, Iterable);
+    isa-ok(@b, Iterable);
     my $b = @a.reverse;
     #?niecza skip "Iterable NYI"
-    isa_ok($b, Iterable);
+    isa-ok($b, Iterable);
     is(@b[0], "foo", 'our list is reversed properly');
     is($b, "foo", 'in scalar context it is still a list');
     is(@a[0], "foo", "original array left untouched");
@@ -79,10 +79,10 @@ is(@a, @e, "list was reversed");
     my @a = ("foo", "bar");
     my @b = @a.reverse;
     #?niecza skip "Iterable NYI"
-    isa_ok(@b, Iterable);
+    isa-ok(@b, Iterable);
     my $b = @a.reverse;
     #?niecza skip "Iterable NYI"
-    isa_ok($b, Iterable);
+    isa-ok($b, Iterable);
     is(@b[0], "bar", 'our array is reversed');
     is(@b[1], "foo", 'our array is reversed');
 

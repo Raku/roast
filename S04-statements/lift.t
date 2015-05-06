@@ -75,7 +75,7 @@ plan 15;
     ok !('1' ceq 2),    'basic operation with coercion (-)';
 }
 
-#?rakudo skip "lift NYI"
+#?rakudo skip "lift NYI RT #124579"
 {
     # I hope I understood this part of specs correctly: 
     # L<S04/The C<lift> statement prefix/"Everything else within a lift">

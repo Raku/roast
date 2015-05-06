@@ -7,10 +7,10 @@ plan 31;
 # basic lvalue assignment
 {
     my $hash;
-    isa_ok $hash, Any;
+    isa-ok $hash, Any;
 
     $hash{"1st"} = 5;
-    isa_ok $hash, Hash;
+    isa-ok $hash, Hash;
 
     is $hash{"1st"}, 5, 'lvalue hash assignment works (w/ double quoted keys)';
 
@@ -24,14 +24,14 @@ plan 31;
 # basic hash creation w/ comma separated key/values
 {
     my $hash = hash("1st", 1);
-    isa_ok $hash, Hash;
+    isa-ok $hash, Hash;
     is $hash{"1st"}, 1, 'comma separated key/value hash creation works';
     is $hash<1st>,   1, 'unquoted <key> fetching works';
 }
 
 {
     my $hash = hash("1st", 1, "2nd", 2);
-    isa_ok $hash, Hash;
+    isa-ok $hash, Hash;
     is $hash{"1st"}, 1,
       'comma separated key/value hash creation works with more than 1st pair';
     is $hash{"2nd"}, 2,
@@ -41,7 +41,7 @@ plan 31;
 # hash slicing
 {
     my $hash = {'1st' => 1, '2nd' => 2, '3rd' => 3};
-    isa_ok $hash, Hash;
+    isa-ok $hash, Hash;
 
     my @slice1 = $hash{"1st", "3rd"};
     is +@slice1,   2, 'got the right amount of values from the %hash{} slice';
@@ -69,25 +69,25 @@ plan 31;
 {
     my $hash_a = { a => 1, b => 2 };
     #?niecza todo
-    isa_ok $hash_a, "Hash";
+    isa-ok $hash_a, "Hash";
     my $hash_b = { a => 1, "b", 2 };
     #?niecza todo
-    isa_ok $hash_b, "Hash";
+    isa-ok $hash_b, "Hash";
     my $hash_c = hash('a', 1, "b", 2);
     #?niecza todo
-    isa_ok $hash_c, "Hash";
+    isa-ok $hash_c, "Hash";
     my $hash_d = hash 'a', 1, "b", 2;
     #?niecza todo
-    isa_ok $hash_d, "Hash";
+    isa-ok $hash_d, "Hash";
 }
 
 # infinity HoHoHoH...
 {
     my %hash = (val => 42);
     %hash<ref> = %hash;
-    isa_ok %hash,           Hash;
-    isa_ok %hash<ref>,      Hash;
-    isa_ok %hash<ref><ref>, Hash;
+    isa-ok %hash,           Hash;
+    isa-ok %hash<ref>,      Hash;
+    isa-ok %hash<ref><ref>, Hash;
     is %hash<ref><val>,      42, "access to infinite HoHoHoH... (1)";
     is %hash<ref><ref><val>, 42, "access to infinite HoHoHoH... (2)";
 }

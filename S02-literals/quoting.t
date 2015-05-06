@@ -160,7 +160,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 # quote with \0 as delimiters, forbidden by STD
 # but see L<news:20050101220112.GF25432@plum.flirble.org>
-#?rakudo todo 'retriage'
+#?rakudo todo 'retriage RT #124554'
 {
     throws_like { EVAL "(q\0foo bar\0)" }, X::Comp::AdHoc;
 }
@@ -243,7 +243,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(~@q4, 'FOO gorch BAR', ", and long form");
 }
 
-#?rakudo todo "comments inside qq:ww NYI"
+#?rakudo todo "comments inside qq:ww NYI RT #ww NYI RT#:124555"
 {
     is (try EVAL "« one #'[[[comment]]] two »"), "one two", "«» handles embedded comments";
     is (try EVAL "« one #'«comment» two »"), "one two", "«» handles embedded comments containing french quotes";
@@ -408,14 +408,14 @@ Hello, World
     ok qq:x/echo hello $world/ ~~ /^'hello world'\n$/, 'Testing qq:x operator';
 }
 
-#?rakudo todo 'q:x assigned to array'
+#?rakudo todo 'q:x assigned to array RT #124556'
 #?niecza todo ':x'
 {
     my @two_lines = q:x/echo hello ; echo world/;
     is @two_lines, ("hello\n", "world\n"), 'testing q:x assigned to array';
 }
 
-#?rakudo todo 'q:x assigned to array'
+#?rakudo todo 'q:x assigned to array RT #124557'
 #?niecza todo ':x'
 {
     my $hello = 'howdy';
@@ -510,12 +510,12 @@ Hello, World
 }
 
 {
-    isa_ok rx/foo/, Regex, 'rx/.../';
-    isa_ok rx{foo}, Regex, 'rx{...}';
-    isa_ok rx:i{foo}, Regex, 'rx:i{...}';
-    isa_ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
-    isa_ok rx:s{foo}, Regex, 'rx:i{...}';
-    isa_ok rx:sigspace{foo}, Regex, 'rx:i{...}';
+    isa-ok rx/foo/, Regex, 'rx/.../';
+    isa-ok rx{foo}, Regex, 'rx{...}';
+    isa-ok rx:i{foo}, Regex, 'rx:i{...}';
+    isa-ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
+    isa-ok rx:s{foo}, Regex, 'rx:i{...}';
+    isa-ok rx:sigspace{foo}, Regex, 'rx:i{...}';
     throws_like { EVAL 'rx:unknown{foo}' },
       X::Syntax::Regex::Adverb,
       'rx:unknown dies';
@@ -533,7 +533,6 @@ Hello, World
 }
 
 # RT #120529
-#?rakudo.parrot todo 'RT #120529'
 {
     %*ENV<ENV_P6_SPECTEST_120529>='foo';
     ok qx/env/ ~~ /ENV_P6_SPECTEST_120529/, 'qx passes environmental variables';
