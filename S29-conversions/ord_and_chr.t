@@ -153,8 +153,7 @@ is (65..75).chrs.ords, '65 66 67 68 69 70 71 72 73 74 75', "chrs > ords round-tr
 is chrs(104, 101, 108, 108, 111), 'hello', 'chrs works with a list of ints';
 
 #?niecza 5 skip "chr handling of invalid code-points"
-#?rakudo.moar todo 'chr surrogate RT #124834'
-#?rakudo.jvm todo 'chr surrogate RT #124835'
+#?rakudo todo 'chr surrogate RT #124834'
 dies_ok {chr(0xD800)}, "chr of surrogate";
 lives_ok {chr(0x2FFFE)}, "chr of noncharacter";
 lives_ok {chr(0x2FFFF)}, "chr of noncharacter";

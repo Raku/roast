@@ -41,8 +41,7 @@ get a list of osnames that have actually passed tests.
 ok $*DISTRO.name,      "We are running under '{$*DISTRO.name}'";
 ok $*DISTRO.auth,      "Authority is '{$*DISTRO.auth}'";
 ok $*DISTRO.version,   "Version is '{$*DISTRO.version}'";
-#?rakudo.jvm    todo 'no Distro.signature yet RT #124617'
-#?rakudo.moar   todo 'no Distro.signature yet RT #124618'
+#?rakudo todo 'no Distro.signature yet RT #124617'
 ok $*DISTRO.signature, "Signature is '{$*DISTRO.signature}'";
 ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
 ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";
@@ -55,8 +54,7 @@ ok $*DISTRO.Str  ~~ m/\w/, 'We can do a $*DISTRO.Str';
 ok $*DISTRO.name, 'Non-empty $*DISTRO.name';
 
 isa-ok $*DISTRO.version, Version;
-#?rakudo.jvm    todo 'no Distro.signature yet RT #124621'
-#?rakudo.moar   todo 'no Distro.signature yet RT #124622'
+#?rakudo todo 'no Distro.signature yet RT #124621'
 isa-ok $*DISTRO.signature, Blob;
 isa-ok $*DISTRO.is-win, Bool;
 

@@ -43,11 +43,9 @@ plan 50;
 ok $*PERL.name,      "We are running under '{$*PERL.name}'";
 ok $*PERL.auth,      "Authority is '{$*PERL.auth}'";
 ok $*PERL.version,   "Version is '{$*PERL.version}'";
-#?rakudo.jvm    todo 'no Perl.signature yet RT #124582'
-#?rakudo.moar   todo 'no Perl.signature yet RT #124583'
+#?rakudo todo 'no Perl.signature yet RT #124582'
 ok $*PERL.signature, "Signature is '{$*PERL.signature}'";
-#?rakudo.jvm    todo 'no Perl.desc yet RT #124585'
-#?rakudo.moar   todo 'no Perl.desc yet RT #124586'
+#?rakudo todo 'no Perl.desc yet RT #124585'
 ok $*PERL.desc,      "Description is '{$*PERL.desc}'";
 ok $*PERL.compiler,  "Has compiler info";
 
@@ -56,8 +54,7 @@ ok $*PERL.gist ~~ m/\w/, 'We can do a $*PERL.gist';
 ok $*PERL.Str  ~~ m/\w/, 'We can do a $*PERL.Str';
 
 isa-ok $*PERL.version, Version;
-#?rakudo.jvm    todo 'no Perl.signature yet RT #124588'
-#?rakudo.moar   todo 'no Perl.signature yet RT #124589'
+#?rakudo todo 'no Perl.signature yet RT #124588'
 isa-ok $*PERL.signature, Blob;
 isa-ok $*PERL.compiler, Compiler;
 
@@ -65,26 +62,21 @@ my $C = $*PERL.compiler;
 ok $C.name,       "We were compiled in '{$C.name}'";
 ok $C.auth,       "Authority is '{$C.auth}'";
 ok $C.version,    "Version is '{$C.version}'";
-#?rakudo.jvm    todo 'no Perl.compiler.signature yet RT #124591'
-#?rakudo.moar   todo 'no Perl.compiler.signature yet RT #124592'
+#?rakudo todo 'no Perl.compiler.signature yet RT #124591'
 ok $C.signature,  "Signature is '{$C.signature}'";
-#?rakudo.jvm    todo 'no Perl.compiler.desc yet RT #124594'
-#?rakudo.moar   todo 'no Perl.compiler.desc yet RT #124595'
+#?rakudo todo 'no Perl.compiler.desc yet RT #124594'
 ok $C.desc,       "Description is '{$C.desc}'";
-#?rakudo.jvm    todo 'no Perl.compiler.release yet RT #124597'
-#?rakudo.moar   todo 'no Perl.compiler.release yet RT #124598'
+#?rakudo todo 'no Perl.compiler.release yet RT #124597'
 ok $C.release,    "Release is '{$C.release}'";
 ok $C.build-date, "Build-date is '{$C.build-date}'";
-#?rakudo.jvm    todo 'no Perl.compiler.codename yet RT #124600'
-#?rakudo.moar   todo 'no Perl.compiler.codename yet RT #124601'
+#?rakudo todo 'no Perl.compiler.codename yet RT #124600'
 ok $C.codename,   "Codename is '{$C.codename}'";
 
 ok $C.perl, 'We can do a $?PERL.compiler.perl';
 ok $C.gist, 'We can do a $?PERL.compiler.gist';
 
 isa-ok $C.version, Version;
-#?rakudo.jvm    todo 'no Perl.compiler.signature yet RT #124603'
-#?rakudo.moar   todo 'no Perl.compiler.signature yet RT #124604'
+#?rakudo todo 'no Perl.compiler.signature yet RT #124603'
 isa-ok $C.signature, Blob;
 isa-ok $C.build-date, DateTime;
 
