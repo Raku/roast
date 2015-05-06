@@ -13,7 +13,6 @@ plan 25;
 
 #?rakudo skip 'array shapes NYI RT #124502'
 {
-{
     my @arr[7] = <a b c d e f g>;
     is(@arr, [<a b c d e f g>], 'my @arr[num] can hold num things');
     throws_like {push @arr, 'h'},
@@ -25,7 +24,6 @@ plan 25;
 }
 
 #?rakudo skip 'array shapes NYI RT #124502'
-{
 {
     lives_ok { my @arr\    [7]},
       'array with fixed size with unspace');
