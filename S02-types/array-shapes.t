@@ -74,15 +74,15 @@ plan 25;
       'type constraints on my @arr[num] of Type works (2)';
 }
 
-#?rakudo skip 'native arrays NYI RT #124506'
 {
     my int @arr = 1, 2, 3, 4, 5;
     is(@arr, <1 2 3 4 5>, 'my type @arr works');
-    is_deeply push( @arr, 6), [1,2,3,4,5,6], 'push on native @arr works');
-    throws_like {push @arr, 's'},
+    is push(@arr, 6), [1,2,3,4,5,6], 'push on native @arr works';
+    #?rakudo 2 todo 'X::AdHoc "This type cannot unbox to a native integer" RT #125123'
+    throws_like { EVAL 'push @arr, "s"' },
       X::TypeCheck,
       'type constraints on my type @arr works (1)';
-    throws_like {push @arr, 4.2},
+    throws_like { EVAL 'push @arr, 4.2' },
       X::TypeCheck,
       'type constraints on my type @arr works (2)';
 }
