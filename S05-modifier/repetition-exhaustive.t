@@ -17,9 +17,10 @@ how the C<$/> looks like with the C<:x($count)> modifier.
 #L<S05/Modifiers/"With the new :ex">
 
 my $str = "abbb";
-regex rx { a b+ };
+my regex rx { a b+ };
 
 ok($str  ~~ m:ex:x(2)/<rx>/, "Simple combination of :x(2) and :exhaustive");
+#?rakudo todo 'exhaustive capture too greedy RT #125133'
 is(~$/[0],  "ab", 'First entry of prev. genenerated $/');
 is(~$/[1], "abb", 'Second entry of prev. genenerated $/');
 ok($str  ~~ m:ex:x(3)/<rx>/, "Simple combination of :x(3) and :exhaustive");
