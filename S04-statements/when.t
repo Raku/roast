@@ -2,6 +2,8 @@ use Test;
 
 plan 24;
 
+#?rakudo skip 'exception type X::Syntax::OutsideOfTopicalizer NYI RT #125132'
+{
 throws_like 'when 1 { }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
     'when block in mainline complains about missing topicalizer';
 throws_like 'default { }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
@@ -31,6 +33,7 @@ throws_like 'my class C { method foo() { when 1 { } } }', X::Syntax::OutsideOfTo
     'when block in method not declaring $_ complains about missing topicalizer';
 throws_like 'my class C { method foo() { default { } } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
     'default block in method not declaring $_ complains about missing topicalizer';
+}
 
 my $c = { when 1 { 'one' }; when 2 { 'two!' }; default { 'many' } };
 is $c(1), 'one', 'when works in a circumfix:<{ }> (1)';
