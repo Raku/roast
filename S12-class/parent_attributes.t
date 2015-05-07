@@ -28,9 +28,12 @@ class Bar is Foo {
 my Foo $u .= new(x => 5);
 is($u.boo, 5, 'set attribute');
 
-$u= Bar.new(Foo{ x => 12 });
-is($u.boo, 12, 'set parent attribute');
-$u.set(9);
-is($u.boo, 9,  'reset parent attribute');
+#?rakudo skip 'initialization of parent attributes RT #125129'
+{
+    $u= Bar.new(Foo{ x => 12 });
+    is($u.boo, 12, 'set parent attribute');
+    $u.set(9);
+    is($u.boo, 9,  'reset parent attribute');
+}
 
 # vim: ft=perl6
