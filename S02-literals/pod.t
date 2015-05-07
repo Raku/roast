@@ -7,6 +7,7 @@ plan 5;
 # See "=begin DATA" at the end of file.
 
 # L<S02/Double-underscore forms/filehandle, "named as" $=pod{'DATA'}>
+#?rakudo skip 'postcircumfix:<{ }> not defined for type Array RT #125130'
 {
     ok $=pod{'DATA'}, '=begin DATA works and $=pod<DATA> defined';
 
@@ -15,14 +16,14 @@ plan 5;
 }
 
 # L<S02/Double-underscore forms/Pod stream as a scalar>
+#?v6.0.0+ skip 'isn\'t the iterator exhausted already, since it\'s been used previously?'
 {
-    # XXX isn't the iterator exhausted already, since it's been used
-    # previously?
     my $line = get $=DATA;
     is($line, "hello, world!", q/$=DATA contains the right string/);
 }
 
 # L<S02/Double-underscore forms/"Pod stream" "as an array" via @=DATA>
+#?v6.0.0+ skip 'isn\'t the iterator exhausted already, since it\'s been used previously?'
 {
     is @=DATA.elems, 1, '@=DATA contains a single elem';
     is @=DATA[0], "hello, world!\n", '@=DATA[0] contains the right value';
