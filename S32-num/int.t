@@ -111,7 +111,8 @@ is((-Inf).Int,  -Inf, "int -Inf is -Inf");
 is((NaN).Int,    NaN, "int NaN is NaN");
 
 # RT #65132
-eval_dies_ok 'int 3.14', 'dies: int 3.14 (prefix:int is gone)';
+throws_like 'int 3.14', X::Syntax::Confused,
+    'dies: int 3.14 (prefix:int is gone)';
 
 is 0.lsb,        Nil, "0.lsb is Nil";
 is 1.lsb,        0,   "1.lsb is 0";
