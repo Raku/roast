@@ -886,7 +886,7 @@ sub l () { 1, 2 };
         $cc = 1;
     };
 
-    dies_ok { called pi = 4 },
+    throws_like { EVAL 'called pi = 4' }, X::Assignment::RO,
         'correct precedence between sub call and assignment (1)';
     is $cc, 0,
         'correct precedence between sub call and assignment (2)';
