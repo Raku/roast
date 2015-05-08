@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 =begin description
 
@@ -21,7 +21,7 @@ ok('à' ~~ m:m/a/, 'Ignoremark: a matches à');
 ok('á' ~~ m:m/a/, 'Ignoremark: a matches á');
 ok('â' ~~ m:m/a/, 'Ignoremark: a matches â');
 ok('å' ~~ m:m/a/, 'Ignoremark: a matches å');
-ok('ƌ' ~~ m:m/d/, 'Ignoremark: d matches ƌ');
+ok('ƌ' !~~ m:m/d/, 'Ignoremark: d does not match ƌ, TOPBAR is not a mark');
 ok('å' ~~ m:m/ä/, 'Both pattern and string may contain accents');
 ok('a' ~~ m:m/ä/, 'Pattern may contain accents');
 ok('ä' ~~ m:ignoremark/a/, 'Ignoremark: spelling out :ignoremark also works');
