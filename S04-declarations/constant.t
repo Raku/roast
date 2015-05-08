@@ -105,7 +105,7 @@ plan 56;
     ok $ok, "declaring a constant in terms of hash constant works";
 }
 
-#?rakudo todo 'COMPILING RT #125055'
+#?rakudo todo 'COMPILING RT #125054'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
@@ -127,7 +127,7 @@ plan 56;
     ok $ok, "declaring a constant in terms of array constant works";
 }
 
-#?rakudo todo 'COMPILING RT #125056'
+#?rakudo todo 'COMPILING RT #125054'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
