@@ -959,7 +959,6 @@ sub l () { 1, 2 };
 }
 
 # RT #116178
-#?rakudo skip 'RT #116178'
 {
     my $x //= .uc for 'a';
     is $x, 'A',
