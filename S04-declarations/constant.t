@@ -148,7 +148,6 @@ plan 56;
     ok $ok, "declaring a sigilless constant with a type specification using 'constant' works";
 }
 
-#?rakudo skip 'unicode constant name RT #125057'
 {
     my $ok;
 
