@@ -105,11 +105,9 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 #?DOES 1
 # Special values
 is((1.9e3).Int, 1900, "int 1.9e3 is 1900");
-#?rakudo 2 todo 'Inf and NaN NYI for Int RT #124818'
+#?rakudo 3 todo 'Inf and NaN NYI for Int RT #124818'
 is((Inf).Int,    Inf, "int Inf is Inf");
 is((-Inf).Int,  -Inf, "int -Inf is -Inf");
-#?rakudo todo 'Inf and NaN NYI for Int RT #124819'
-#?rakudo.jvm skip 'Inf and NaN NYI for Int RT #124820'
 is((NaN).Int,    NaN, "int NaN is NaN");
 
 # RT #65132
