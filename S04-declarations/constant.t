@@ -171,14 +171,13 @@ plan 56;
     is $ok, 3, "a constant declared using 'constant' is actually constant (1)";
 }
 
-#?rakudo skip 'binding RT #125058'
 {
     my $ok;
 
     constant baka = 42;
     $ok++ if baka == 42;
 
-    try { baka := 23 };
+    try { EVAL 'baka := 23' };
     $ok++ if $!;
     $ok++ if baka == 42;
 
@@ -198,14 +197,13 @@ plan 56;
     is $ok, 3, "a constant declared using 'constant' is actually constant (3)";
 }
 
-#?rakudo skip 'binding RT #125059'
 {
     my $ok;
 
     constant wibble = 42;
     $ok++ if wibble == 42;
 
-    try { wibble := { 23 } };
+    try { EVAL 'wibble := { 23 }' };
     $ok++ if $!;
     $ok++ if wibble == 42;
 
