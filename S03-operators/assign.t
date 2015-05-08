@@ -532,7 +532,7 @@ my @p;
 }
 
 # XXX: The following tests assume autoconvertion between "a" and buf8 type
-#?rakudo skip "Two terms in a row RT #124531"
+#?rakudo 2 skip "~< and ~> NYI RT #124531"
 #?niecza skip "Buffer bitops NYI"
 {
     my $x = "a";
@@ -542,7 +542,6 @@ my @p;
     is(@p[1],9, "~<= operator parses as item assignment 2");
 }
 
-#?rakudo skip "expects a term, found infix >= instead RT #124532"
 #?niecza skip "Buffer bitops NYI"
 {
     my $x = "aa";
