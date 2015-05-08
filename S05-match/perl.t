@@ -17,6 +17,7 @@ my $m = ExprT1.parse('2 + 4');
 ok $m, 'Regex matches (1)';
 lives_ok { $m.perl }, '$/.perl lives (with named captures';
 #?niecza skip 'No value for parameter $a in is_deeply'
+#?rakudo 2 skip 'Needs adoption after Nil=>Nil+Empty split RT #125138'
 is_deeply EVAL($m.perl), $m, '... and it reproduces the right thing (1)'; 
 #?niecza todo 'empty result'
 is ~EVAL($m.perl).<operator>, '+', ' right result (2)';
