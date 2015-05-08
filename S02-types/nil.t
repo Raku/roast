@@ -45,7 +45,7 @@ ok Nil.JustAnyMethod == Nil, 'Any method on Nil should return Nil';
 {
     my $x = 0;
     $x++ for Nil;
-    is $x, 0, '$Statement for Nil; does zero iterations';
+    is $x, 1, '$Statement for Nil; does one iteration';
 }
 
 # RT 93980

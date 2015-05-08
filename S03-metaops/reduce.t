@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 347;
+plan 366;
 
 =begin pod
 
@@ -321,10 +321,10 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 #?niecza skip '^^'
 {
     is (join ', ', [\^^] False, 0, 5, '', False, 16,    0,     Any,   "hello", False),
-       (join ', ',       False, 0, 5, 5,  5,     False, False, False, False,   False),
+       (join ', ',       False, 0, 5, 5,  5,     Nil, Nil, Nil, Nil,   Nil),
        '[\^^]';
     is (join ', ', [\xor] 'xyzzy', Int,     0.0,     '',      False,   'plugh', 4,     2,     'xyzzy'),
-       (join ', ',        'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', False,   False, False, False),
+       (join ', ',        'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', Nil,   Nil, Nil, Nil),
        '[\xor]';
 }
 
