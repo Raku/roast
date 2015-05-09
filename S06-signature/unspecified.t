@@ -6,12 +6,10 @@ plan 17;
 # L<S06/Perl5ish subroutine declarations/You can declare a sub without
 # parameter list>
 #
-# TODO: stop using is() to compare signatures, their stringification
-# isn't specced
+# TODO: if there is a better way to compare signatures: don't rely on .perl
 
 sub simple { 'simple' }
-#?rakudo todo 'siglist RT #124941'
-is &simple.signature, :(), 'signature is :() when none is specified';
+is &simple.signature.perl, ':()', 'signature is :() when none is specified';
 is simple(), 'simple', 'can call sub with no signature specified';
 dies_ok { EVAL('simple( :golf<hotel> )') },
         'sub with no signature dies when given a named argument';
@@ -19,8 +17,7 @@ dies_ok { EVAL("simple( 'india' )") },
         'sub with no signature dies when given positional argument';
 
 sub positional { @_[0] }
-#?rakudo todo 'siglist RT #124942'
-is &positional.signature, :(*@_),
+is &positional.signature.perl, ':(*@_)',
    'signature is :(Mu *@_) when none is specified and @_ is used';
 is positional( 'alpha' ), 'alpha', 'can call sub with positional param used';
 nok positional().defined, 'sub using positional param called with no params';
@@ -28,16 +25,14 @@ dies_ok { positional( :victor<whiskey> ) },
    'sub using positional param called with named param';
 
 sub named { %_<bravo> }
-#?rakudo todo 'siglist RT #124943'
-is &named.signature, :(*%_),
+is &named.signature.perl, ':(*%_)',
    'signature is :(Mu *%_) when none is specified and %_ is used';
 is named( :bravo<charlie> ), 'charlie', 'can call sub with named param used';
 nok named().defined, 'named param sub is callable with no params';
 dies_ok { named( 'zulu' ) }, 'named param sub dies with positional param';
 
 sub both { @_[1] ~ %_<delta> }
-#?rakudo todo 'siglist RT #124944'
-is &both.signature, :(*@_, *%_),
+is &both.signature.perl, ':(*@_, *%_)',
    'signature is :(Mu *@_, Mu *%_) when none is specified and @_ and %_ are used';
 is both( 'x', :delta<echo>, 'foxtrot' ), 'foxtrotecho',
    'can call sub with both named and positional params used';
