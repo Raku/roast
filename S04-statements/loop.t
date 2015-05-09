@@ -101,7 +101,6 @@ eval_dies_ok 'loop { say "# RT63760"; last } while 1',
              '"loop {} while" is a syntax error (RT 63760)';
 
 # RT #112654
-#?rakudo.jvm skip 'unwind RT #124570'
 {
     my @a = gather loop { take 1; take 2; last };
     is @a.join, '12', 'gather, take and loop work together';
