@@ -112,7 +112,6 @@ plan 14;
     is id('x'), 'x', 'macro can return its param';
 }
 
-#?rakudo.jvm skip "? RT #124969"
 {
     macro funny_nil { quasi { {;}() } }
     is funny_nil(), Nil, 'Nil from an empty block turns into no code';
