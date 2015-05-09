@@ -242,7 +242,6 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     my $fh = open($filename, :w);
     lives_ok { $fh.encoding('iso-8859-1') }, "Set iso-8859-1 out encoding";
     lives_ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
-#?rakudo.jvm todo 'java.nio.charset.UnmappableCharacterException RT #125073'
     lives_ok { $fh.print("") }, "iso-8859-1 unmapped chars to fh";
     $fh.close;
     my $s = '';
@@ -251,7 +250,6 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     lives_ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
     is $s, 'a¢ÿ', "correct iso-8859-1 chars from fh";
     lives_ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
-#?rakudo.jvm todo 'will fail due to above failures RT #125074'
     is $s, '', "correct iso-8859-1 unmapped char from fh";
     $fh.close;
 
@@ -263,7 +261,6 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     lives_ok { $fh.print("") },"windows-1252 unmapped chars to fh";
     lives_ok { $fh.encoding('ISO-8859-1') }, "reset output fh encoding";
     lives_ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
-#?rakudo.jvm todo 'java.nio.charset.UnmappableCharacterException RT #125076'
     lives_ok { $fh.print("") }, "iso-8859-1 unmapped char to fh";
     $fh.close;
     $fh = open($filename, :bin);
