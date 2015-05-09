@@ -43,11 +43,9 @@ is(0 ** NaN, NaN, "0**NaN=NaN");
 # Not at all sure the next three cases are correct!
 
 #?niecza 2 todo 'complex NaN stringy'
-#?rakudo skip 'NaN**1i should be NaN RT #124800'
+#?rakudo 3 todo 'wrong results for 'NaN' used with '**' RT #124800'
 is(NaN ** 1i, NaN, "NaN**1i=NaN");
-#?rakudo skip '1i**NaN should be NaN RT #124803'
 is(1i ** NaN, NaN, "1i**NaN=NaN");
-#?rakudo skip 'NaN**0 should be NaN RT #124806'
 is(NaN ** 0, NaN, "NaN**0=NaN");
 
 is(NaN ** NaN, NaN, "NaN**NaN=NaN");
