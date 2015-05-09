@@ -158,11 +158,9 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q4[0], '$foo $bar', "and interpolates correctly");
 }
 
-# quote with \0 as delimiters, forbidden by STD
-# but see L<news:20050101220112.GF25432@plum.flirble.org>
-#?rakudo todo 'retriage RT #124554'
+# quote with \0 as delimiters
 {
-    throws_like { EVAL "(q\0foo bar\0)" }, X::Comp::AdHoc;
+    is EVAL("(q\0foo bar\0)"), 'foo bar', 'OK';
 }
 
 { # traditional quote word
@@ -408,19 +406,17 @@ Hello, World
     ok qq:x/echo hello $world/ ~~ /^'hello world'\n$/, 'Testing qq:x operator';
 }
 
-#?rakudo todo 'q:x assigned to array RT #124556'
 #?niecza todo ':x'
 {
-    my @two_lines = q:x/echo hello ; echo world/;
-    is @two_lines, ("hello\n", "world\n"), 'testing q:x assigned to array';
+    my @two_lines = q:x/echo hello ; echo world/.trim-trailing.lines;
+    is @two_lines, ["hello", "world"], 'testing q:x assigned to array';
 }
 
-#?rakudo todo 'q:x assigned to array RT #124557'
 #?niecza todo ':x'
 {
     my $hello = 'howdy';
-    my @two_lines = qq:x/echo $hello ; echo world/;
-    is @two_lines, ("$hello\n", "world\n"), 'testing qq:x assigned to array';
+    my @two_lines = qq:x/echo $hello ; echo world/.trim-trailing.lines;
+    is @two_lines, ("$hello", "world"), 'testing qq:x assigned to array';
 }
 
 
