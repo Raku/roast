@@ -51,7 +51,7 @@ my @data = (
 for @data -> $string, $bytes, $codes, $graphs, $chars {
     is($string.chars, $chars, "'{$string}'.chars");
     is($string.codes, $codes, "'{$string}'.codes");
-    #?niecza skip ".graphs NYI"
+    #?niecza skip ".graphs NYI RT #124498"
     #?rakudo skip ".graphs NYI"
     is($string.graphs, $graphs, "'{$string}'.graphs");
 }
@@ -62,12 +62,12 @@ for @data -> $string, $bytes, $codes, $graphs, $chars {
 #?rakudo.jvm todo '.codes weirdness on JVM, possibly NYI? RT #124742'
 is "\x[E0100]".codes,  1, '.codes on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
 #?niecza skip ".graphs NYI"
-#?rakudo skip ".graphs NYI RT #124743"
+#?rakudo skip ".graphs NYI RT #124498"
 is "\x[E0100]".graphs, 1, '.graphs on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
 
 # test graphemes without a precomposed character in Unicode 5
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".codes, 2, '.codes on grapheme without precomposite';
-#?rakudo 1 skip '.graphs NYI RT #124744'
+#?rakudo 1 skip '.graphs NYI RT #124498'
 #?niecza skip ".graphs NYI"
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".graphs, 1, '.graphs on grapheme without precomposite';
 
