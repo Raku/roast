@@ -101,8 +101,7 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
     is_approx(:16<dead_beef> * 16**0, :16<dead_beef*16**0>,
         'Zero powers inside');
 
-    #?rakudo.moar skip "RT #123862 - negative radix"
-    #?rakudo.jvm skip "RT #123862 - negative radix"
+    #?rakudo skip "RT #123862 - negative radix"
     is_approx(:16<dead_beef> * 16**-1, :16<dead_beef*16**-1>,
         'Negative powers inside');    
 }
