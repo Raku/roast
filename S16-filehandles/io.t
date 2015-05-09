@@ -281,7 +281,7 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 #?rakudo.jvm todo 'builtin JVM charset folds these RT #125078'
     is $s, '', "correct windows-1252 unmapped chars from fh";
 # Switching encoding on read may or may not ever be supported
-#?rakudo skip 'Too late to change filehandle encoding RT #125079'
+#?rakudo.moar todo 'Too late to change filehandle encoding RT #125079'
     lives_ok { $fh.encoding('ISO-8859-1') }, "reset input fh encoding";
     $s = '';
 #?rakudo.jvm todo 'will fail due to above failures RT #125080'
@@ -290,7 +290,7 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     is $s, 'a¢ÿ', "correct iso-8859-1 chars from fh";
     lives_ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
 # Switching encoding on read may or may not ever be supported
-#?rakudo skip 'Will fail due to above failure RT #125082'
+#?rakudo todo 'Will fail due to above failure RT #125082'
     is $s, '', "correct iso-8859-1 unmapped char from fh";
     $fh.close;
 }
