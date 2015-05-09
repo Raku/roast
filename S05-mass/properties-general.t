@@ -25,7 +25,6 @@ nok '' ~~ /<:L>/, 'empty string has no letter';
 ok("\x[846D]" ~~ m/^<:L>$/, q{Match <:L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<:!L>$/ ), q{Don't match negated <L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<-:L>$/ ), q{Don't match inverted <L> (Letter)} );
-#?rakudo.jvm 4 skip 'Invalid codepoint \\x[FFFE] RT #124855'
 ok(!( "\x[FFFE]"  ~~ m/^<:L>$/ ), q{Don't match unrelated <L> (Letter)} );
 ok("\x[FFFE]"  ~~ m/^<:!L>$/, q{Match unrelated negated <L> (Letter)} );
 ok("\x[FFFE]"  ~~ m/^<-:L>$/, q{Match unrelated inverted <L> (Letter)} );
@@ -34,7 +33,6 @@ ok("\x[FFFE]\x[846D]" ~~ m/<:L>/, q{Match unanchored <:L> (Letter)} );
 ok("\x[6DF7]" ~~ m/^<:Letter>$/, q{Match <:Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<:!Letter>$/ ), q{Don't match negated <Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<-:Letter>$/ ), q{Don't match inverted <Letter>} );
-#?rakudo.jvm 4 skip 'Invalid codepoint \\x[FFFE] RT #124857'
 ok(!( "\x[FFFE]"  ~~ m/^<:Letter>$/ ), q{Don't match unrelated <Letter>} );
 ok("\x[FFFE]"  ~~ m/^<:!Letter>$/, q{Match unrelated negated <Letter>} );
 ok("\x[FFFE]"  ~~ m/^<-:Letter>$/, q{Match unrelated inverted <Letter>} );
@@ -148,7 +146,6 @@ ok("\c[LATIN SMALL LETTER TURNED DELTA]\c[LATIN SMALL LETTER TURNED DELTA]\c[LAT
 ok("\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:OtherLetter>$/, q{Match <:OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:!OtherLetter>$/ ), q{Don't match negated <OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<-:OtherLetter>$/ ), q{Don't match inverted <OtherLetter>} );
-#?rakudo.jvm 4 skip 'Invalid codepoint \\x[FFFF] RT #124859'
 ok(!( "\x[FFFF]"  ~~ m/^<:OtherLetter>$/ ), q{Don't match unrelated <OtherLetter>} );
 ok("\x[FFFF]"  ~~ m/^<:!OtherLetter>$/, q{Match unrelated negated <OtherLetter>} );
 ok("\x[FFFF]"  ~~ m/^<-:OtherLetter>$/, q{Match unrelated inverted <OtherLetter>} );
@@ -727,16 +724,14 @@ ok("\x[345B]\c[EXCLAMATION MARK]\c[PARAGRAPH SEPARATOR]" ~~ m/<:ParagraphSeparat
 # C           Other
 
 
-#?rakudo.jvm 3 skip "Invalid codepoint \\x[FFFE] RT #124862"
-#?rakudo.moar 3 todo "Unions of properties of non-existent codepoints RT #124863"
+#?rakudo 3 todo "Unions of properties of non-existent codepoints RT #124863"
 ok("\x[FFFE]" ~~ m/^<:C>$/, q{Match <C> (Other)} );
 ok(!( "\x[FFFE]" ~~ m/^<:!C>$/ ), q{Don't match negated <C> (Other)} );
 ok(!( "\x[FFFE]" ~~ m/^<-:C>$/ ), q{Don't match inverted <C> (Other)} );
 ok(!( "\x[6A3F]"  ~~ m/^<:C>$/ ), q{Don't match unrelated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<:!C>$/, q{Match unrelated negated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
-#?rakudo.jvm skip "Invalid codepoint \\x[FFFE] RT #124865"
-#?rakudo.moar todo "Unions of properties of non-existent codepoints RT #124866"
+#?rakudo todo "Unions of properties of non-existent codepoints RT #124866"
 ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
 
 # http://www.unicode.org/charts/PDF/Unicode-6.1/U61-A640.pdf
@@ -786,11 +781,9 @@ ok(!( "\c[SOFT HYPHEN]" ~~ m/^<-:Cf>$/ ), q{Don't match inverted <Cf> (Format)} 
 ok(!( "\x[77B8]"  ~~ m/^<:Cf>$/ ), q{Don't match unrelated <Cf> (Format)} );
 ok("\x[77B8]"  ~~ m/^<:!Cf>$/, q{Match unrelated negated <Cf> (Format)} );
 ok("\x[77B8]"  ~~ m/^<-:Cf>$/, q{Match unrelated inverted <Cf> (Format)} );
-#?rakudo.jvm 3 skip "Invalid codepoint \\x[FFFE] RT #124869"
 ok(!( "\x[FFFE]" ~~ m/^<:Cf>$/ ), q{Don't match related <Cf> (Format)} );
 ok("\x[FFFE]" ~~ m/^<:!Cf>$/, q{Match related negated <Cf> (Format)} );
 ok("\x[FFFE]" ~~ m/^<-:Cf>$/, q{Match related inverted <Cf> (Format)} );
-#?rakudo.jvm skip "Invalid codepoint \\x[FFFE] RT #124871"
 ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Format)} );
 
 # http://www.unicode.org/review/pr-176.html Public Review Issue #176: Properties of Two Khmer Characters
