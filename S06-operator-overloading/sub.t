@@ -236,27 +236,27 @@ Testing operator overloading subroutines
   is (2 Z 1 Z 2), 4, "default Left-associative works.";
 }
 
-#?rakudo skip 'missing block, no lexical Z RT #124984'
+#?rakudo skip 'no lexical Z RT #124983'
 {
-  my sub infix:<Z> is assoc('left') ($a, $b) {
+  my sub infix:<Z> ($a, $b) is assoc('left') {
       $a ** $b;
   }
 
   is (2 Z 1 Z 2), 4, "Left-associative works.";
 }
 
-#?rakudo skip 'missing block, no lexical Z RT #124985'
+#?rakudo skip 'no lexical Z RT #124983'
 {
-  my sub infix:<Z> is assoc('right') ($a, $b) {
+  my sub infix:<Z> ($a, $b) is assoc('right') {
       $a ** $b;
   }
 
   is (2 Z 1 Z 2), 2, "Right-associative works.";
 }
 
-#?rakudo skip 'missing block, no lexical Z RT #124986'
+#?rakudo skip 'no lexical Z RT #124983'
 {
-  my sub infix:<Z> is assoc('chain') ($a, $b) {
+  my sub infix:<Z> ($a, $b) is assoc('chain') {
       $a eq $b;
   }
 
@@ -267,7 +267,7 @@ Testing operator overloading subroutines
 
 #?rakudo skip 'assoc("non") RT #124987'
 {
-  sub infix:<our_non_assoc_infix> is assoc('non') ($a, $b) {
+  sub infix:<our_non_assoc_infix> ($a, $b) is assoc('non') {
       $a ** $b;
   }
   is (2 our_non_assoc_infix 3), (2 ** 3), "Non-associative works for just tow operands.";
