@@ -10,7 +10,7 @@ my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
 my regex likely_perl6_not_found_err {:i ^\N* <<'can'?not>> \N* <<[f[i|ou]nd|located?|access'ed'?]>> }
 
-package Empty {}
+package ThisEmpty {}
 package AlsoEmpty::Nested {}
 
 package Simple {
@@ -30,18 +30,18 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 # RT #65404
 #?niecza todo
 {
-    lives_ok {Empty.perl ne "tbd"}, 'test for working .perl method'
+    lives_ok {ThisEmpty.perl ne "tbd"}, 'test for working .perl method'
 }
 
 # change to match likely error (top of file) when passes
 {
-    eval_dies_ok 'Empty::no_such_sub()', 'Non-existent sub through package';
+    eval_dies_ok 'ThisEmpty::no_such_sub()', 'Non-existent sub through package';
 }
 
 # Not sure whether you should be able to access something in package this way
 # might change to match likely error (top of file) when passes
 {
-    eval_dies_ok 'Empty.no_such_sub_or_prop',
+    eval_dies_ok 'ThisEmpty.no_such_sub_or_prop',
                  'Non-existent method with package';
 }
 
