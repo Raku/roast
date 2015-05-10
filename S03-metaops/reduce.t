@@ -322,7 +322,6 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     is ([\^^] False, 0, 5, '', False, 16, 0, Any, "hello", False).gist,
        'False 0 5 5 5 Nil Nil Nil Nil Nil',
        '[\^^]';
-    #?rakudo todo 'xor is list associative under triangle RT #124515'
     is ([\xor] 'xyzzy', Int, 0.0, '', False, 'plugh', 4, 2, 'xyzzy').gist,
        'xyzzy xyzzy xyzzy xyzzy xyzzy Nil Nil Nil Nil',
        '[\xor]';
