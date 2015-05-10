@@ -46,7 +46,7 @@ is_deeply @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
     is(@result[4], 8, 'got the value we expected');
 }
 
-#?rakudo skip "closure as non-final argument RT #124761"
+#?rakudo todo "closure as non-final argument RT #124761"
 #?niecza skip 'Invocant handling is NYI'
 {
     my @result = grep-index { ($_ % 2) }: @list;

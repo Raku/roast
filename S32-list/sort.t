@@ -46,7 +46,7 @@ plan 32;
     is(@s, @e, '... with explicit spaceship');
 }
 
-#?rakudo skip "closure as non-final argument RT #124762"
+#?rakudo todo "closure as non-final argument RT #124762"
 #?niecza skip 'Invocant handling is NYI'
 {
     my @a = (2, 45, 6, 1, 3);

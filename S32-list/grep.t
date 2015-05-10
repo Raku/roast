@@ -47,7 +47,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
-#?rakudo skip "closure as non-final argument RT #124757"
+#?rakudo todo "closure as non-final argument RT #124757"
 #?niecza skip 'Invocant handling is NYI'
 {
     my @result = grep { ($_ % 2) }: @list;
