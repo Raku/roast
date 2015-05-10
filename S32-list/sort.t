@@ -209,15 +209,13 @@ plan 32;
 }
 
 # RT #68112
-#?rakudo todo "determine behavior of 0-arity methods passed to sort RT #124764"
 #?niecza skip "determine behavior of 0-arity methods passed to sort"
 {
     sub foo () { 0 }   #OK not used
-    lives_ok { (1..10).sort(&foo) },
-        'sort accepts 0-arity method';
-    # errr... is there even supposed to be a rand sub?
-    lives_ok { (1..10).sort(&rand) },
-        'sort accepts rand method';
+    throws_like { EVAL '(1..10).sort(&foo)' }, Exception,
+        'sort does not accept 0-arity sub';
+    throws_like '(1..10).sort(&rand)', Exception,
+        'sort does not accept &rand';
 }
 
 # RT #71258 (can sort a class without parrot internal error)
