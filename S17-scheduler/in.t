@@ -70,7 +70,7 @@ $name = $*SCHEDULER.^name;
       { $tracker ~= '1s'; die },
       :in(1),
       :catch({ $tracker ~= '1scatch'})
-    );
+    ) // ();
     ok @c[*-1].can("cancel"), 'can we cancel (4)';
     is $tracker, '2s1s1scatch', "Cue on $name with :in/:catch *DOES* schedule immediately";
     LEAVE @c>>.cancel;
