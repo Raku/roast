@@ -654,4 +654,7 @@ throws_like 'no DoesNotMatter Undeclared;', X::Undeclared::Symbols;
 # RT #73102
 throws_like 'my Int (Str $x);', X::Syntax::Variable::ConflictingTypes, outer => Int, inner => Str;
 
+throws_like '$k', X::Undeclared, post => '$k', highexpect => (),
+    "X::Undeclared precedes the name and doesn't expect anything else";
+
 # vim: ft=perl6
