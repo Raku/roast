@@ -46,7 +46,7 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 }
 
 # RT #100232
-#?rakudo skip 'escaping characters before EVAL is the wrong way to fix this RT #100232
+#?rakudo skip 'escaping characters before EVAL is the wrong way to fix this RT #100232'
 eval_dies_ok Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbage-in recognized as being garbage (see RT)";
 
 # because it broke these:
