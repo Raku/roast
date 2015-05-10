@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 15;
+plan 16;
 
 {
     my @list = 1, 2, 3, 4;
@@ -76,5 +76,9 @@ plan 15;
         }
       }).hash, 'multi-level classify' );
 }
+
+#?rakudo.jvm todo 'RT #125148'
+#?rakudo.moar todo 'RT #125148'
+lives-ok { my %h = classify { "foo" }, (); }, 'classify an empty list';
 
 # vim: ft=perl6
