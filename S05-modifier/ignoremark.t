@@ -1,14 +1,13 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 =begin description
 
 Testing the C<:m> or C<:ignoremark> regex modifier - more tests are always welcome
 
 TODO: need some tests for chars with multiple markings.
-TODO: need some tests for combined :ignoremark and :sigspace modifiers
 
 =end description
 
@@ -29,5 +28,7 @@ ok('ä' ~~ m:ignoremark/a/, 'Ignoremark: spelling out :ignoremark also works');
 is('fooäàaáâåbar' ~~ m:m/a+ b/,    'äàaáâåb',  'Ignoremark: a+ b');
 is('fooäàaáâåbar' ~~ m:m/<[ab]>+/, 'äàaáâåba', 'Ignoremark with character class');
 is('fooäàaáâåbar' ~~ m:m/<-[a]>+/, 'foo',      'Ignoremark with negated character class');
+
+is('fooäàaáâåbar' ~~ m:m/<[a..b]>+/, 'äàaáâåba', 'Ignoremark with range in character class');
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
