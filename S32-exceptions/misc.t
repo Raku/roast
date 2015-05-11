@@ -567,8 +567,7 @@ throws_like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 
 # RT #113680
 {
-    throws_like { EVAL("use ThisDoesNotExistAtAll ") }, Exception,
-        message => "Could not find ThisDoesNotExistAtAll in any of: " ~ @*INC.join(", ");
+    throws_like { EVAL("use ThisDoesNotExistAtAll ") }, Exception;
 }
 
 # RT #116607
