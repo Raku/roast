@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 31;
+plan 32;
 
 # L<S05/Grammars/"Like classes, grammars can inherit">
 
@@ -10,7 +10,12 @@ plan 31;
 grammar Grammar::Foo {
     token TOP { <foo> };
     token foo { 'foo' };
+    token so { 'so' };
 };
+
+#?rakudo todo 'RT #77350'
+is( try { Grammar::Foo.parse( 'so', :rule<so> ) }, 'so',
+  "don't let a Mu based action method fail the parse" );
 
 #?niecza skip 'Cannot dispatch to a method on Foo because it is not inherited or done by Cursor'
 is(~('foo' ~~ /^<Grammar::Foo::foo>$/), 'foo', 'got right match (foo)');
