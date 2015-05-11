@@ -27,6 +27,20 @@ plan 3;
         'expected output with passing test "is_deeply"';
 }
 
+# RT #77650
+{
+    use lib 't/spec/packages';
+    use Test::Util;
+    is_run
+        'use Test; eval_lives_ok q[foo<bar], "expected eval fail"',
+        {
+            out    => /'not ok ' \d+ ' - expected eval fail'/,
+            err    => /'# Error: Unable to parse'/,
+            status => { $_ != 0 },
+        },
+        'eval error via diag';
+}
+
 my $test-file = 't/spec/S24-testing/test-data/todo-passed.txt';
 my $cmd = "$*EXECUTABLE $test-file 2>&1";
 ok qqx[$cmd] ~~ /^"1..1" \n "ok 1 - test passes# TODO testing output for passing todo test" \n $ /,
