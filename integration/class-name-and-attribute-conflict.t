@@ -53,12 +53,9 @@ Problems with this test:
     { my $var; my sub update { $var = 42 } }
     # This outputs "42".]
 
-* The last subtest calls c.new(...).update, but there is no &c::update and c
-  doesn't inherit from a class providing an "update" method, either.
-
 =end pod
 
-plan 3;
+plan 2;
 
 
 {
@@ -98,28 +95,5 @@ plan 3;
     _b.new( _a => 20 );
     is $var, 80, "Testing suite 2.";
 }
-
-{
-    my $var = 100;
-    # XXX This definition *does* have an effect. This $var *is* captured.
-    # All calls to &a::update will update this $var, not the $var of subtest #1
-    # or #2.
-    class Aa {
-        has $.Aa;
-        method update { $var -= $.Aa; }
-    };
-    class Ab {
-        has $.Aa;
-        submethod BUILD { Aa.new( Aa => $!Aa ); }
-    };
-    class Ac {
-        has $.Ab;
-        submethod BUILD { Ab.new( Aa => $!Ab ); }
-    };
-
-    Ac.new( Ab => 30 ).update;
-    is $var, 70, "Testing suite 3.";
-}
-
 
 # vim: ft=perl6
