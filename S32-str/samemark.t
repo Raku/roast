@@ -5,6 +5,7 @@ use Test;
 
 plan 7;
 
+#?rakudo 7 skip 'samemark NYI - RT #125165'
 is(samemark('ABb', 'ƗƗƗ'), 'ȺɃƀ', 'samemark as a function works');
 
 # should this be an exception or a Failure instead?
