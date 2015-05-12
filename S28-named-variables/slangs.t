@@ -6,7 +6,6 @@ plan 6;
 
 # L<S02/Slangs/>
 
-#?rakudo: 6 skip "Non-declarative sigil is missing its name RT #124778"
 ok(defined($~MAIN),    '$~MAIN is defined');
 ok(defined($~Quote),   '$~Quote is defined');
 ok(defined($~Quasi),   '$~Quasi is defined');
