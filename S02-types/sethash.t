@@ -351,7 +351,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.elems, 0, '.grabpairs *should* change the SetHash';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124497"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "is SetHash doesn't work yet"
 {
     my %h is SetHash = a => True, b => False, c => True;

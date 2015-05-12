@@ -353,7 +353,7 @@ sub showkv($x) {
     is $m.elems, 0, '.grabpairs *should* change MixHash';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124490"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
@@ -368,7 +368,7 @@ sub showkv($x) {
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124491"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
@@ -386,7 +386,7 @@ sub showkv($x) {
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124492"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, c => 1;
