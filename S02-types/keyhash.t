@@ -10,6 +10,7 @@ sub showkh($h) {
 # L<S02/Mutable types/"The QuantHash role differs from a normal Associative hash">
 
 # untyped QuantHash
+#?rakudo skip "'is ObjectType' NYI RT #124490"
 {
     my %h is QuantHash = a => 1, b => 3, c => -1, d => 7;
     is showkh(%h), 'a:1 b:3 c:-1 d:7', 'Inititalization worked';
@@ -46,6 +47,7 @@ sub showkh($h) {
     is showkh(%h), 'bar:5', '(%keyhash<foo> = 15) = \'\'';
 }
 
+#?rakudo skip "'is ObjectType' NYI RT #124490"
 {
     my %h is QuantHash = a => 5, b => 0, c => 1, d => '', e => Any;
     is showkh(%h), 'a:5 c:1', 'Pairs with false values are ignored in assignment';
@@ -62,7 +64,7 @@ sub showkh($h) {
     is showkh(%h), 'bar:4 baz:unicorn', 'Assignment of a flat list';
 }
 
-#?rakudo skip 'Non-string QuantHash keys NYI'
+#?rakudo skip "'is ObjectType' NYI RT #124490"
 {
     my %h is QuantHash = 2 => 1, a => 2, (False) => 3;
 
@@ -74,9 +76,9 @@ sub showkh($h) {
 }
 
 # QuantHash of Ints
+#?rakudo skip "'is ObjectType' NYI RT #124490"
 {
-    #?rakudo emit   role R1284381704 does QuantHash[Int] {}; my %h is R1284381704; # 'my SomeType %h' NYI
-    my Int %h is QuantHash;
+    role R1284381704 does QuantHash[Int] {}; my %h is R1284381704;
     %h = a => 1, b => 3, c => -1, d => 7, e => 0;
     is +%h.keys, 4, 'Initializing QuantHash of Ints worked';
 
@@ -97,9 +99,9 @@ sub showkh($h) {
 }
 
 # QuantHash of Strs
+#?rakudo skip "'is ObjectType' NYI RT #124490"
 {
-    #?rakudo emit   role R1284382935 does QuantHash[Str] {}; my %h is R1284382935; # 'my SomeType %h' NYI
-    my Str %h is QuantHash;
+    role R1284382935 does QuantHash[Str] {}; my %h is R1284382935;
     %h = a => 'foo', b => 'bar', c => 'baz', d => 'boor', e => '';
     is +%h.keys, 4, 'Initializing QuantHash of Strs works';
 
@@ -116,9 +118,9 @@ sub showkh($h) {
 }
 
 # QuantHash with a custom default value
+#?rakudo skip "'is ObjectType' NYI RT #124490"
 {
-    #?rakudo emit   role R1284381677 does QuantHash[Any, 42] {}; my %h is R1284381677; # 'my %h is SomeType[WithParams]' NYI
-    my %h is QuantHash[Any, 42];
+    role R1284381677 does QuantHash[Any, 42] {}; my %h is R1284381677;
     %h = a => 1, b => 2, c => 0, x1 => 42;
     is showkh(%h), 'a:1 b:2 c:0', 'Initializing a QuantHash with a custom default';
 
@@ -134,6 +136,7 @@ sub showkh($h) {
 # L<S32::Containers/QuantHash/"=item grab">
 
 # Weighted .pick
+#?rakudo skip "'is ObjectType' NYI RT #124490"
 {
     my %h is QuantHash = a => 1, b => 1, c => 1, d => 20;
 
@@ -147,6 +150,7 @@ sub showkh($h) {
 }
 
 # Weighted .roll
+#?rakudo skip "'is ObjectType' NYI RT #124490"
 {
     my %h is QuantHash = a => 1, b => 2;
 
@@ -157,6 +161,7 @@ sub showkh($h) {
 }
 
 # .grab
+#?rakudo skip "'is ObjectType' NYI RT #124490"
 {
     my %h is QuantHash = a => 40, b => 80;
 
