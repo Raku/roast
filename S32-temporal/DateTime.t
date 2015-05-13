@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 223;
+plan 225;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -614,6 +614,13 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     is ~DateTime.new(0, formatter => $f).later(hours => 23),
        $f(),
        '.later(not seconds) preserves formatter';
+
+    #?rakudo 2 todo 'non-Int timezones NYI'
+    my class GMT { method Int() { 0 }; method Str() { "GMT" } };
+    my $dt = DateTime.now(:timezone(GMT.new));
+    isa-ok($dt.utc.timezone, GMT, '.utc() preserves timezone class');
+    isa-ok($dt.local.timezone, GMT, '.local() preserves timezone class');
+
 }
 
 # RT #121990 Smartmatch against a Date 
