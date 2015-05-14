@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 40;
 
 # L<S11/"Exportation"/>
 
@@ -158,6 +158,15 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
 {
     ok EXPORT::ALL ~~ EXPORT::<ALL>, 'EXPORT::ALL is identical to EXPORT::<ALL>';
     ok EXPORT::ALL:: ~~ Stash,       'EXPORT::ALL:: is a Stash that keeps exported symbols';
+}
+
+# RT #83354
+{
+    use lib 't/spec/packages';
+    use RT83354_B;
+    use RT83354_A;
+    my $a = RT83354_B.new( :b( 5 ) ) + RT83354_B.new( :b( 2 ) );
+    ok( $a ~~ RT83354_B && $a.b == 7, "multi imports don't conflict" );
 }
 
 # RT #84280
