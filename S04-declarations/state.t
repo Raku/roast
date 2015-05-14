@@ -130,24 +130,18 @@ plan 41;
 }
 
 # state() inside regular expressions
-#?rakudo todo 'embedded closures in regexen RT #125051'
 #?niecza skip ':Perl5'
 #?DOES 1
 {
     my $str = "abc";
 
     my $re  = {
-    # Perl 5 RE, as we don't want to force people to install Parrot ATM. (The
-    # test passes when using the Perl 6 RE, too.)
-    $str ~~ s:Perl5/^(.)/{
-      state $svar;
-      ++$svar;
-    }/;
+        $str ~~ s:Perl5/^(.)/{ state $++; }/;
     };
     $re();
     $re();
     $re();
-    is +$str, 3, "state() inside regular expressions works";
+    is $str, "2bc", "state() inside regular expressions works";
 }
 
 # state() inside subs, chained declaration
