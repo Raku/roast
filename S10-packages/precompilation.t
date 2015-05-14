@@ -2,7 +2,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 27;
+plan 33;
 
 my $precomp-ext    := $*VM.precomp-ext;
 my $precomp-target := $*VM.precomp-target;
@@ -238,4 +238,69 @@ unlink $_ for @precomp-paths; # don't care if worked
       'precompile load of both and identity check passed';
 
     unlink $_ for $output-path-a, $output-path-b; # don't care if failed
+}
+
+
+# RT #125090
+{
+    my $module-name = 'RT125090';
+    my $output-path = "t/spec/packages/" ~ $module-name ~ '.pm.' ~ $precomp-ext;
+    unlink $output-path; # don't care if failed
+
+    is_run
+      'BEGIN $*KERNEL;',
+      { err    => '',
+        out    => '',
+        status => 0,
+      },
+      :compiler-args[
+        '--target', $precomp-target,
+        '--output', $output-path,
+      ],
+      'precomp of BEGIN using $*KERNEL';
+    ok $output-path.IO.e, "did we create a $output-path";
+
+    is_run
+      "use $module-name; say 33;",
+      { err    => '',
+        out    => "33\n",
+        status => 0,
+      },
+      :compiler-args[
+        '-I', 't/spec/packages'
+      ],
+      'precompile load - from the command line';
+
+    unlink $output-path; # don't care if failed
+}
+{
+    my $module-name = 'RT125090';
+    my $output-path = "t/spec/packages/" ~ $module-name ~ '.pm.' ~ $precomp-ext;
+    unlink $output-path; # don't care if failed
+
+    is_run
+      'BEGIN $*DISTRO;',
+      { err    => '',
+        out    => '',
+        status => 0,
+      },
+      :compiler-args[
+        '--target', $precomp-target,
+        '--output', $output-path,
+      ],
+      'precomp of BEGIN using $*DISTRO';
+    ok $output-path.IO.e, "did we create a $output-path";
+
+    is_run
+      "use $module-name; say 42;",
+      { err    => '',
+        out    => "42\n",
+        status => 0,
+      },
+      :compiler-args[
+        '-I', 't/spec/packages'
+      ],
+      'precompile load - from the command line';
+
+    unlink $output-path; # don't care if failed
 }
