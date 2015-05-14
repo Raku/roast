@@ -408,7 +408,10 @@ Hello, World
 
 #?niecza todo ':x'
 {
-    my @two_lines = q:x/echo hello ; echo world/.trim-trailing.lines;
+    my $output = $*DISTRO.is-win
+        ?? q:x/echo hello& echo world/
+        !! q:x/echo hello ; echo world/;
+    my @two_lines = $output.trim-trailing.lines;
     is @two_lines, ["hello", "world"], 'testing q:x assigned to array';
 }
 
@@ -531,7 +534,8 @@ Hello, World
 # RT #120529
 {
     %*ENV<ENV_P6_SPECTEST_120529>='foo';
-    ok qx/env/ ~~ /ENV_P6_SPECTEST_120529/, 'qx passes environmental variables';
+    my $check = $*DISTRO.is-win ?? qx/set/ !! qx/env/;
+    ok $check ~~ /ENV_P6_SPECTEST_120529/, 'qx passes environmental variables';
 }
 
 # RT #75320
