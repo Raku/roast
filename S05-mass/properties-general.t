@@ -15,7 +15,7 @@ Unicode 5.2.
 
 =end pod
 
-plan 599;
+plan 606;
 
 # L           Letter
 
@@ -804,5 +804,22 @@ ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<:!Format>$/,   q{Match unrelated ne
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
 ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q{Match unanchored <Format>} );
 
+# RT #125190
+{
+    my $ascii-chars = [~] chr(0)..chr(0x7F);
+    my $latin-chars = [~] chr(0)..chr(0xFF);
+    is $ascii-chars.comb(/<:ascii>+/).join(""), $ascii-chars, 'ascii chars';
+
+    is 'abc' ~~ /<:alpha>+/, 'abc', 'alpha chars';
+
+    is '	 	' ~~ /<:space>+/, ' ', 'space chars';
+
+    is $latin-chars.comb(/<:cntrl>/)>>.ord.join(","), ((0..31, 127..159).join(",")), 'cntrl chars';
+
+    is 'abc' ~~ /<:lower>+/, 'abc', 'lower chars';
+    is 'ABC' ~~ /<:upper>+/, 'ABC', 'upper chars';
+
+    is '-./:' ~~ /<:punct>+/, '-./:', 'punct chars';
+}
 
 # vim: ft=perl6
