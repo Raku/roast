@@ -16,13 +16,11 @@ my @list = ('a');
 
 for @list -> $letter { is( $letter , 'a', 'can bind to variable in pointy') }
 
-#?rakudo skip 'for() with nullary block RT #124630'
-#?niecza skip 'infinite loop' 
+#?niecza skip 'infinite loop'
 {
-    # Do pointy subs send along an implicit param? No!
-    for @list -> {
-        isnt($_, 'a', '$_ does not get set implicitly if a pointy is given')
-    }
+    # -> { ... } introduces a sig of (), so this code dies with "Too many positionals passed"
+    throws_like { EVAL q[for @list -> { return 1 unless $_ eq 'a' }] }, Exception,
+        '$_ does not get set implicitly if a pointy is given';
 }
 
 # Hm. PIL2JS currently dies here (&statement_control:<for> passes one argument
