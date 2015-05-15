@@ -1,7 +1,7 @@
 use v6;
 
 
-class Foo;
+unit class Foo;
 
 method foo { "foo" }
 

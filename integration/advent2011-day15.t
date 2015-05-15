@@ -38,7 +38,7 @@ for @inputs Z @results Z @expected -> ($input, $result, $expected) {
         or diag "got: $result";
 }
 
-try EVAL q[ class A; method { $!x } ];
+try EVAL q[ unit class A; method { $!x } ];
 is $!, 'Attribute $!x not declared in class A', 'compiler error message';
 isa-ok $!, X::Attribute::Undeclared, 'compiler error class';
 ok $! ~~ X::Comp, 'compile error does X::Comp';

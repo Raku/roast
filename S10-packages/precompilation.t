@@ -111,7 +111,7 @@ unlink $_ for @precomp-paths; # don't care if worked
 
     is_run
       "use $module-name;
-       class C does Bar { };",
+       unit class C does Bar { };",
       { err    => '',
         out    => '',
         status => 0,

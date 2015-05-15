@@ -1,4 +1,4 @@
-module Test::Tap;
+unit module Test::Tap;
 
 use Test;
 

@@ -43,7 +43,7 @@ throws_like { EVAL q[
 # RT #85844
 {
     throws_like { EVAL 'sub foo;' },
-      X::SemicolonForm::Invalid,
+      X::UnitScope::Invalid,
       'RT #85844';
 }
 

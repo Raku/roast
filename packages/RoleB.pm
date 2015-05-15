@@ -1,3 +1,3 @@
-role RoleB;
+unit role RoleB;
 
 # vim: ft=perl6

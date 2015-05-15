@@ -1,4 +1,4 @@
-module Test::Compile;
+unit module Test::Compile;
 use nqp;
 use Test;
 

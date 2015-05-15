@@ -1,4 +1,4 @@
-module Exportops;
+unit module Exportops;
 
 sub postfix:<!>(Int $x)      is export(:DEFAULT) { [*] 1..$x }
 sub infix:<yadayada>($a, $b) is export(:DEFAULT) { $a ~ ".." ~ $b }

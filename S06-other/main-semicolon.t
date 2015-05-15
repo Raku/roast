@@ -24,17 +24,17 @@ is &?ROUTINE.name, "MAIN", "...and we're actually in MAIN now";
 
 {
     throws_like { EVAL "module AtBeginning \{\}\nsub MAIN;" },
-        X::SemicolonForm::TooLate, what => "sub"
+        X::UnitScope::TooLate, what => "sub"
 }
 
 {
     throws_like { EVAL '{ sub MAIN; }' },
-        X::SemicolonForm::Invalid, what => "sub"
+        X::UnitScope::Invalid, what => "sub"
 }
 
 {
     throws_like { EVAL 'multi sub MAIN;' },
-        X::SemicolonForm::Invalid, what => "sub"
+        X::UnitScope::Invalid, what => "sub"
 }
 
 # vim: ft=perl6

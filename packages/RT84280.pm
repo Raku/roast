@@ -1,4 +1,4 @@
-module RT84280;
+unit module RT84280;
 
 sub foo(Str $a) is export {
 }
