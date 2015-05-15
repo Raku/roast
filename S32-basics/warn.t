@@ -50,7 +50,7 @@ is_run 'use v6; warn("OH NOEZ"); say "alive"',
     {
         status => 0,
         out => rx/alive/,
-        err => rx/ 'OH NOEZ'/ & rx/:i 'line 1'>>/,
+        err => rx/ 'OH NOEZ'/ & rx/:i \W '1'>>/,
     },
     'warn() with arguments; line number';
 
