@@ -1,3 +1,3 @@
-unit grammar B::Grammar {
+grammar B::Grammar {
     token TOP { 'B' };
 }
