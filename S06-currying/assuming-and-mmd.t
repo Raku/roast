@@ -5,8 +5,7 @@ use Test;
 plan 7;
 
 
-#?rakudo todo 'RT #77520 & RT #125155 - Block.assuming'
-#
+# RT #77520 & RT #125155
 # Block does Callable and http://design.perl6.org/S06.html#Priming says
 # Callable things can assume.
 is( try { { $^a }.assuming(123)() }, 123, 'Assumptive Blocks' );
