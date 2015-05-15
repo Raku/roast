@@ -15,13 +15,7 @@ plan 1;
         $foo ~~ /"foo"/;
     },
     Exception,
-    message => {
-        m/
-            'Too few positionals passed; expected 2 arguments but got 1'
-            |
-            'Not enough positional parameters passed; got 1 but expected 2'
-        /
-        },
+    message => / 'Too few positionals passed; expected 2 arguments but got 1' /,
         'no segfault in ObjAt initalization when passing bogus named parameters';
 }
 
