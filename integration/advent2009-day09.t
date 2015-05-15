@@ -63,9 +63,9 @@ throws_like {drawline2(1,2,3,4)},
 ok (drawline2(:x1(3))), 'When you force naming, they are not all required.';
 #the required & must-be named (:$var!) test not here, its opposite is 1 up
 is (varsum(100,200,30,40,5)), 375, 'Parameters with a * in front can take as many items as you wish';
-#?niecza todo 'Capturing arbitrary named parameters'
-is detector(:foo(1), :bar(2), :camel(3)), ("'bar', 'camel'"|"'camel', 'bar'"), 'Capturing arbitrary named parameters';
-#?niecza todo 'Capturing arbitrary named parameters as hash'
+#?niecza todo 'Capturing arbitrary named arguments'
+is detector(:foo(1), :bar(2), :camel(3)), ("'bar', 'camel'"|"'camel', 'bar'"), 'Capturing arbitrary named arguments';
+#?niecza todo 'Capturing arbitrary named arguments as hash'
 is (detector(foo => 1, bar => 2, camel => 3)), ("'bar', 'camel'"|"'camel', 'bar'"), 'Same as above test, only passed as hash';
 my $t = 3;
 throws_like {up1($t)},
