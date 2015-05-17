@@ -67,11 +67,9 @@ ok($bar.isa(Foo), "new Bar .isa(Foo)");
     ok($bar_clone.isa(Foo), "... .isa(Foo)");
 }
 
-# Same, but with the "is Foo" declaration inlined
-#?rakudo skip 'Calling is will never work with argument types (Foo) RT #125043'
-#?niecza skip 'No value for parameter \$expected in Test is'
+# Same, but with the "also is Foo" declaration inline
 {
-    class Baz { is Foo }
+    class Baz { also is Foo }
     ok(Baz ~~ Foo, '... smartmatch our Baz to the Foo class');
     my $baz = Baz.new();
     ok($baz ~~ Baz, '... smartmatch our $baz to the Baz class');
