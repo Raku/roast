@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 8;
 
 grammar WithMethod {
     rule TOP { 'lorem' | <.panic> }
@@ -33,4 +33,11 @@ isa-ok WithAttrib.new.sep, Str, 'empty attribute intilized to Str';
     try { EVAL 'grammar A { token a { ... }; token a { ... } }' };
     my $error = ~$!;
     ok $error ~~ / 'already has a Regex \'a\'' /, "duplicate methods err sanely";
+}
+
+# RT #125169
+{
+    grammar D { our token doo { doo }; };
+    ok 'doo' ~~ &D::doo,        'our token as rhs of smartmatch';
+    ok 'doo' ~~ / <&D::doo> /, 'our token in regey assertion';
 }
