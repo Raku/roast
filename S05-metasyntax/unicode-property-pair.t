@@ -9,11 +9,11 @@ plan 5;
 is '.a-' ~~ /<:Letter>/, 'a', 'a letter';
 is '.a-' ~~ /<:!Letter>/, '.', 'a non-letter';
 
+#?rakudo.jvm 3 skip 'matching charnames in unicode property pair'
 # Properties with arguments are passed as the argument to the pair:
 is 'flubber¼½worms' ~~ /<:NumericValue(0 ^..^ 1)>+/, '¼½', 'the char has a proper fractional value';
 
 # As a particular case of smartmatching, TR18 section 2.6 is satisfied with a pattern as the argument:
-#?rakudo.jvm 2 todo 'matching charnames in unicode property pair'
 is 'FooBar' ~~ /<:name(/:s LATIN SMALL LETTER/)>+/,   'oo', 'match character names';
 is 'FooBar' ~~ /<:Name(/:s LATIN CAPITAL LETTER/)>+/, 'F',  'match character names';
 
