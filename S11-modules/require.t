@@ -31,7 +31,7 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 }
 
 #RT #118407
-#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux RT # quux RT#:125085"
+#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux RT #118407"
 { 
     require InnerModule:file($name) <quux>;
     is quux(), 'Inner::quux', "can import quux without ampersand (&quux)";
