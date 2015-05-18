@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 824;
+plan 828;
 
 # Basic test functions specific to rational numbers.
 
@@ -251,6 +251,10 @@ is .88888888888.WHAT.gist, Rat.gist, 'WHAT works on Rat created from 11 digit de
 
 isa-ok (2/3) ** 3, Rat, "Rat raised to a positive Int power is a Rat";
 is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
+isa-ok (2/3) ** -3, Rat, "Rat raised to a negative Int power is a Rat";
+is (2/3) ** -3, 27/8, "Rat raised to a negative Int power gets correct answer";
+isa-ok 3 ** -3, Rat, "Int raised to a negative Int power is a Rat";
+is 3 ** -3, 1/27, "Int raised to a negative Int power gets correct answer";
 
 # the spec says that Rat denominators can't grow larger than a uint64,
 # and arithmetic operations need to spill over to Num
