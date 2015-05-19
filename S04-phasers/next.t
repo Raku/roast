@@ -112,7 +112,7 @@ plan 13;
 }
 
 # reversed order
-#?rakudo todo 'NEXT/LEAVE ordering RT #124953'
+#?rakudo todo 'NEXT/LEAVE ordering RT #124952'
 {
     my $str = '';
     for 1..2 {
