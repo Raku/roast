@@ -45,7 +45,7 @@ plan 26;
     sub rt70229 { return fail() }
     my $rt70229 = rt70229();
     ok $rt70229 ~~ Failure, 'got a Failure';
-    dies_ok { ~$rt70229 }, 'attempt to stringify Failure dies';
+    dies-ok { ~$rt70229 }, 'attempt to stringify Failure dies';
 }
 
 # RT #77946
@@ -71,7 +71,7 @@ plan 26;
 
 {
     sub it-will-fail() { fail 'whale' }
-    dies_ok { use fatal; my $x = it-will-fail(); 1 }, 'use fatal causes call to die';
+    dies-ok { use fatal; my $x = it-will-fail(); 1 }, 'use fatal causes call to die';
     lives_ok { use fatal; my $x = it-will-fail() // 0; 1 }, 'use fatal respects //';
     lives_ok { use fatal; my $x = it-will-fail() || 0; 1 }, 'use fatal respects ||';
     lives_ok { use fatal; my $x = it-will-fail() && 0; 1 }, 'use fatal respects &&';

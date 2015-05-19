@@ -211,8 +211,8 @@ my $z = 42; #OK not used
     }
 
     # XXX As I write this, this does not die right.  more testing needed.
-    dies_ok { my Int $x = "abc" }, 'type error'; #OK
-    dies_ok { EVAL '$x = "abc"'; my Int $x; }, 'also a type error';
+    dies-ok { my Int $x = "abc" }, 'type error'; #OK
+    dies-ok { EVAL '$x = "abc"'; my Int $x; }, 'also a type error';
 }
 
 # RT #102414
@@ -220,8 +220,8 @@ my $z = 42; #OK not used
     # If there is a regression this may die not just fail to make ints
     eval_lives_ok 'my (int $a);','native in declarator sig';
     eval_lives_ok 'my (int $a, int $b);','natives in declarator sig';
-    dies_ok { my (int $a, num $b); $a = 'omg'; }, 'Native types in declarator sig 1/2 constrains';
-    dies_ok { my (int $a, num $b); $b = 'omg'; }, 'Native types in declarator sig 2/2 constrains';
+    dies-ok { my (int $a, num $b); $a = 'omg'; }, 'Native types in declarator sig 1/2 constrains';
+    dies-ok { my (int $a, num $b); $b = 'omg'; }, 'Native types in declarator sig 2/2 constrains';
     lives_ok { my (int $a, num $b); $a = 42; $b = 4e2; }, 'Native types in declarator sig allow correct assignments';
 
     throws-like { my (Int $a); $a = "str" }, X::TypeCheck, 'Type in declarator sig 1/1 constrains';
@@ -235,8 +235,8 @@ my $z = 42; #OK not used
     throws-like { my Int ($a); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/1 constrains';
     throws-like { my Int ($a, $b); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/2 constrains';
     throws-like { my Int ($a, $b); $b = "str"}, X::TypeCheck, 'Type outside declarator sig 2/2 constrains';
-    dies_ok { my int ($a, $b); $a = "str" }, 'Native type outside declarator sig 1/2 constrains';
-    dies_ok { my int ($a, $b); $b = "str" }, 'Native type outside declarator sig 2/2 constrains';
+    dies-ok { my int ($a, $b); $a = "str" }, 'Native type outside declarator sig 1/2 constrains';
+    dies-ok { my int ($a, $b); $b = "str" }, 'Native type outside declarator sig 2/2 constrains';
 }
 
 # RT #115916
@@ -298,7 +298,7 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 # check that the presence of routines is checked before run time 
 {
     my $bad = 0;
-    dies_ok { EVAL '$bad = 1; no_such_routine()' },
+    dies-ok { EVAL '$bad = 1; no_such_routine()' },
         'dies on undeclared routines';
     nok $bad, '... and it does so before run time';
 }

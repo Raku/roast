@@ -30,7 +30,7 @@ sub f() {
     #?niecza skip 'Unable to resolve method my in type CallFrame'
     is callframe(1).my.<$y>, 353, 'can access outer lexicals via .my';
     #?niecza emit #
-    dies_ok { callframe(1).my.<$y> = 768 }, 'cannot mutate without is dynamic';;
+    dies-ok { callframe(1).my.<$y> = 768 }, 'cannot mutate without is dynamic';;
 }
 
 my $x is dynamic = 42;

@@ -149,7 +149,7 @@ my $outer = 'outside';
 
 # Symbolic dereferentiation syntax should work with $?SPECIAL etc. too.
 # Note: I'm not 100% sure this is legal syntax. If it turns out it isn't, we'll
-# have to s/ok/dies_ok/.
+# have to s/ok/dies-ok/.
 {
   try { die 'to set $!' };
   ok $::("!"),    "symbolic dereferentiation works with special chars (1)";

@@ -83,7 +83,7 @@ plan 32;
         die 42;
     }
 
-    dies_ok { test2() },
+    dies-ok { test2() },
         'return() inside a try{}-block should cause following exceptions to really die';
 }
 

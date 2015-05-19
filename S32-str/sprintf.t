@@ -214,8 +214,8 @@ is sprintf('%g', -Inf), "-inf", '-Inf properly handled %g';
 is sprintf('%G', -Inf), "-INF", '-Inf properly handled %G';
 
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
-dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
-dies_ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');   #OK not used
+dies-ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
+dies-ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');   #OK not used
 
 is sprintf('%s', NaN),              NaN,    'sprintf %s handles NaN';
 is sprintf('%s', -NaN),             NaN,    'sprintf %s handles NaN';

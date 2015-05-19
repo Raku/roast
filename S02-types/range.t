@@ -90,10 +90,10 @@ is(+Range, 0, 'type numification');
 {
     my $r = 1..5;
 
-    dies_ok { $r.shift       }, 'range is immutable (shift)';
-    dies_ok { $r.pop         }, 'range is immutable (pop)';
-    dies_ok { $r.push(10)    }, 'range is immutable (push)';
-    dies_ok { $r.unshift(10) }, 'range is immutable (unshift)';
+    dies-ok { $r.shift       }, 'range is immutable (shift)';
+    dies-ok { $r.pop         }, 'range is immutable (pop)';
+    dies-ok { $r.push(10)    }, 'range is immutable (push)';
+    dies-ok { $r.unshift(10) }, 'range is immutable (unshift)';
 
     my $s = 1..5;
     is $r, $s, 'range has not changed';

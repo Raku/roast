@@ -140,7 +140,7 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     is $x.candidates.elems,
         1, 'multi sub declaration returns just the current candidate';
     is $x('moep'), '42moep', 'and that candidate works';
-    dies_ok { $x(23) }, '... and does not contain the full multiness';
+    dies-ok { $x(23) }, '... and does not contain the full multiness';
 }
 
 multi with_cap($a) { $a }

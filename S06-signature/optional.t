@@ -45,7 +45,7 @@ eval-dies-ok 'sub wrong1 ($a?, $b) {...}', 'optional params before required ones
 }
 
 sub foo_53814($w, $x?, :$y = 2) { $w~"|"~$x~"|"~$y };
-dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
+dies-ok {foo_53814(1,Mu,'something_extra',:y(3))},
       'die on too many parameters (was once bug RT 53814)';
 
 
@@ -89,7 +89,7 @@ eval-dies-ok 'sub opt($a = 1, $b) { }',
     ok opt-type1() === Int,
         'optional param with type constraints gets the right value';
     sub opt-type2(Int $x = 'str') { };  #OK not used
-    dies_ok { EVAL('opt-type2()') }, 'default values are type-checked';
+    dies-ok { EVAL('opt-type2()') }, 'default values are type-checked';
 }
 
 # RT # 76728

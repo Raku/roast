@@ -15,7 +15,7 @@ class A {
 }
 
 is A.new().public, 12, 'Can call private method from within the class';
-dies_ok {EVAL('A.new!private')}, 'Can not call private method from outside';
+dies-ok {EVAL('A.new!private')}, 'Can not call private method from outside';
 
 # indirect call syntax for public and private methods
 
@@ -40,7 +40,7 @@ is $o."a"(),    "aa", 'indirect call to public method (double quotes)';   #OK us
 is $o.'a'(),    "aa", 'indirect call to public method (single quotes)';   #OK use of quotes
 is $o.b_acc1, 'bb', 'indirect call to private method (double quotes)';
 is $o.b_acc2, 'bb', 'indirect call to private method (single quotes)';
-dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #OK use of quotes
+dies-ok {$o."b"() },  'can not call private method via quotes from outside';   #OK use of quotes
 
 # L<S14/Roles/"same, but &foo is aliased to &!foo">
 

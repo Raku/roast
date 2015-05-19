@@ -69,21 +69,21 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 }
 
 {
-    dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) },
       "$name cannot combine :in and :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)) },
       "$name cannot combine :every with :in and :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)), :catch({...}) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)), :catch({...}) },
       "$name cannot combine :catch with :in and :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
       "$name cannot combine :every/:catch with :in and :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10)) },
       "$name cannot combine :every and :times";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :at(now + 2)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :at(now + 2)) },
       "$name cannot combine :every and :times with :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :in(1)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :in(1)) },
       "$name cannot combine :every and :times with :in";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :catch({...})) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :catch({...})) },
       "$name cannot combine :every and :times with :catch";
 }
 
@@ -146,22 +146,22 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
 }
 
 {
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(1)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(1)) },
       "$name cannot specify :every in CurrentThreadScheduler";
-    dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) },
       "$name cannot combine :in and :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)) },
       "$name cannot combine :every with :in and :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)), :catch({...}) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)), :catch({...}) },
       "$name cannot combine :catch with :in and :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
       "$name cannot combine :every/:catch with :in and :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10)) },
       "$name cannot combine :every and :times";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :at(now + 2)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :at(now + 2)) },
       "$name cannot combine :every and :times with :at";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :in(1)) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :in(1)) },
       "$name cannot combine :every and :times with :in";
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :catch({...})) },
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :catch({...})) },
       "$name cannot combine :every and :times with :catch";
 }

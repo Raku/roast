@@ -113,7 +113,7 @@ ok(!defined(Mu), "Mu is not defined");
     ok(EVAL('!defined(&a_subwoofer)'), "undefined sub");
     ok(EVAL('!defined(%«$?PACKAGE\::»<&a_subwoofer>)'), "undefined sub (symbol table)");
     
-    dies_ok { undefine &a_sub }, 'die trying to undefine a sub';
+    dies-ok { undefine &a_sub }, 'die trying to undefine a sub';
     ok defined &a_sub, 'sub is still defined after attempt to undefine';
 }
 
@@ -319,7 +319,7 @@ lives_ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
 {
     sub lie { Bool::False }
     ok lie() ~~ Bool, 'sub returns a bool';
-    dies_ok { undefine lie }, 'attempt to undefine returned Bool type dies';
+    dies-ok { undefine lie }, 'attempt to undefine returned Bool type dies';
     ok lie() ~~ Bool, 'sub still returns a bool';
 }
 
@@ -329,7 +329,7 @@ lives_ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
     lives_ok { undefine def }, 'attempt to undefine returned array lives';
     ok def() ~~ Array, 'sub still returns array';
 
-    dies_ok { undefine &def }, 'attempt to undefine sub dies';
+    dies-ok { undefine &def }, 'attempt to undefine sub dies';
     ok defined(&def), 'attempt to undefine sub fails';
     ok def() ~~ Array, 'can still call sub after attempt to undefine it';
 }

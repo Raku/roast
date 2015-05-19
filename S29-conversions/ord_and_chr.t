@@ -154,12 +154,12 @@ is chrs(104, 101, 108, 108, 111), 'hello', 'chrs works with a list of ints';
 
 #?niecza 5 skip "chr handling of invalid code-points"
 #?rakudo todo 'chr surrogate RT #124834'
-dies_ok {chr(0xD800)}, "chr of surrogate";
+dies-ok {chr(0xD800)}, "chr of surrogate";
 lives_ok {chr(0x2FFFE)}, "chr of noncharacter";
 lives_ok {chr(0x2FFFF)}, "chr of noncharacter";
 #?rakudo.moar todo 'chr max RT #124837'
-dies_ok {chr(0x10FFFF+1)}, "chr out of range (max)";
-dies_ok {chr(-1)}, "chr out of range (negative)";
+dies-ok {chr(0x10FFFF+1)}, "chr out of range (max)";
+dies-ok {chr(-1)}, "chr out of range (negative)";
 
 ok !defined(ord("")), 'ord("") returns an undefined value';
 

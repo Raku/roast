@@ -8,12 +8,12 @@ plan 18;
 # L<S32::IO/Functions/slurp>
 
 {
-  dies_ok { slurp "does-not-exist" }, "slurp() on non-existent files fails";
+  dies-ok { slurp "does-not-exist" }, "slurp() on non-existent files fails";
 }
 
 {
-  dies_ok { slurp "t/" }, "slurp() on directories fails";
-  dies_ok { open('t').slurp }, 'slurp on open directory fails';
+  dies-ok { slurp "t/" }, "slurp() on directories fails";
+  dies-ok { open('t').slurp }, 'slurp on open directory fails';
 }
 
 my $test-path = "tempfile-slurp-test";
@@ -80,7 +80,7 @@ is +@slurped_lines, 3, "lines() - exactly 3 lines in this file";
 
 # slurp in list context on a directory
 {
-    dies_ok { open('t').lines }, '.lines on a directory fails';
+    dies-ok { open('t').lines }, '.lines on a directory fails';
 }
 
 unlink $test-path;

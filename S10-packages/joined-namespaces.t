@@ -12,5 +12,5 @@ eval_lives_ok 'my class A::B { ... }; A::B.new(); class A::B { };',
 
 # RT #71260
 class Outer::Inner { };
-dies_ok { EVAL 'Outer.foo' },
+dies-ok { EVAL 'Outer.foo' },
     'can sensibly die when calling method on package';

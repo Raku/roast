@@ -34,7 +34,7 @@ use lib 't/spec/packages';
     
     is 4 + 2, 6, "Normal infix:<+> still works";
 
-    dies_ok { EVAL('3 notthere 4') }, 'not-exported operator was not imported';
+    dies-ok { EVAL('3 notthere 4') }, 'not-exported operator was not imported';
 
     {
         my $fail = try EVAL q{3 notthere 4};

@@ -52,7 +52,7 @@ lives_ok { $fud = $foo_bar.getme.fud }, 'chained method dispatch on altered meth
 is($fud, "Foo::Bar::fud", "returned value is correct");
 
 is $foo_bar.Foo::baz, 'Foo::baz', '$obj.Class::method syntax works';
-dies_ok { $foo_bar.Unrelated::something() },
+dies-ok { $foo_bar.Unrelated::something() },
     'Cannot call unrelated method with $obj.Class::method syntax';
 
 # See thread "Quick OO .isa question" on p6l started by Ingo Blechschmidt:

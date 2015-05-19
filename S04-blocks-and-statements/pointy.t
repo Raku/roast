@@ -44,7 +44,7 @@ my $s = -> {
     $n++;
     redo if $n < 10;
 };
-dies_ok $s, 'pointy with block control exceptions';
+dies-ok $s, 'pointy with block control exceptions';
 #?rakudo todo 'pointy blocks and last/redo RT #124973'
 #?niecza todo
 is $n, 10, "pointy control exceptions ran";

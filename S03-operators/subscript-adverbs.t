@@ -87,7 +87,7 @@ plan 110;
         ":v on an array returned the correct value";
 
     #?niecza todo
-    dies_ok {@array[0]:v = "a"}, 'cannot assign to @array[0]:v';
+    dies-ok {@array[0]:v = "a"}, 'cannot assign to @array[0]:v';
     #?niecza todo
     is @array[0], "A",
         ":v on an array returns rvalues (unlike normal subscripts)";
@@ -188,7 +188,7 @@ plan 110;
         ":v on a hash returned the correct value";
 
     #?niecza todo
-    dies_ok {%hash<0>:v = "a"}, 'can assign to %hash<0>:v';
+    dies-ok {%hash<0>:v = "a"}, 'can assign to %hash<0>:v';
     #?niecza todo
     is %hash<0>, "A", ":v on a hash returns rvalues (unlike normal subscripts)";
 

@@ -58,7 +58,7 @@ is($foo.noargs(), 42, "... parentheses after method");
     class Zoo {
         method a () { my %s; %s.b }
     }
-    dies_ok( { Zoo.new.a }, "can't call current object methods on lexical data structures");
+    dies-ok( { Zoo.new.a }, "can't call current object methods on lexical data structures");
 }
 # doesn't match, but defines "b"
 sub b() { die "oops" }
@@ -205,7 +205,7 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
             42;
         }
     }
-    dies_ok { InvocantTypeCheck.new.x() }, 'Invocant type is checked';
+    dies-ok { InvocantTypeCheck.new.x() }, 'Invocant type is checked';
 }
 
 # RT #83902

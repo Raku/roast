@@ -21,11 +21,11 @@ plan 10;
   is $was_in_lazy,   1, 'lazy block was not executed again';
 }
 
-# dies_ok/lives_ok tests:
+# dies-ok/lives_ok tests:
 {
   my $was_in_lazy;
   my $lazy := lazy { $was_in_lazy++; 42 };
-  dies_ok { $lazy = 23 }, "reassigning var bound to a lazy dies";
+  dies-ok { $lazy = 23 }, "reassigning var bound to a lazy dies";
   #?rakudo todo 'lazy NYI, currently works like "do"; RT #124571'
   ok !$was_in_lazy,       "trying to reassign var bound to a lazy does not evaluate lazy block";
 }

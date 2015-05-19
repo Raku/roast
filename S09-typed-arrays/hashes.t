@@ -25,20 +25,20 @@ plan 33;
 
     lives_ok { my Int %s = :a(3) }, 'can initialize typed hash';
     my Str %s = :a<b>;
-    dies_ok { %h = %s }, "Can't assign Str hash to Int hash";
-    dies_ok { %h = :a<b> }, "Can't assign literal Str hash to Int hash";
-    dies_ok { %h<a> = 'foo' }, "Can't assign to hash item";
-    dies_ok { %h{'a', 'b'} = <c d> }, "prevent mismatched hash slice";
-    dies_ok { %h<z><t> = 3 }, 'Type constraint prevents autovivification';
+    dies-ok { %h = %s }, "Can't assign Str hash to Int hash";
+    dies-ok { %h = :a<b> }, "Can't assign literal Str hash to Int hash";
+    dies-ok { %h<a> = 'foo' }, "Can't assign to hash item";
+    dies-ok { %h{'a', 'b'} = <c d> }, "prevent mismatched hash slice";
+    dies-ok { %h<z><t> = 3 }, 'Type constraint prevents autovivification';
     ok %h<a>:!exists,  'Make sure autovivication did not happen';
 } #16
 
 {
     lives_ok { my %s of Int = :a(3) }, 'can initialize typed hash (of Int)';
-    dies_ok { my %s of Int = :a("3") }, 'initialization of typed hash type checked (of Int)';
+    dies-ok { my %s of Int = :a("3") }, 'initialization of typed hash type checked (of Int)';
     my %s of Str;
     lives_ok { %s<a> = 'b' }, "Can assign to typed hash element (of Str)";
-    dies_ok { %s<a> = 1 }, "Can't assign wrongly typed value to typed hash element (of Int)";
+    dies-ok { %s<a> = 1 }, "Can't assign wrongly typed value to typed hash element (of Int)";
 } #4
 
 #?niecza skip "doesn't know about key constraints"
@@ -46,8 +46,8 @@ plan 33;
     my %h{Int};
     is %h.of,    Any, "check the value constraint";
     is %h.keyof, Int, "check the key constraint";
-    dies_ok { %h<a>=1 }, "cannot use strings as keys";
-    dies_ok { %h<a b c>=(1,2,3) }, "cannot use string slices as keys";
+    dies-ok { %h<a>=1 }, "cannot use strings as keys";
+    dies-ok { %h<a b c>=(1,2,3) }, "cannot use string slices as keys";
     lives_ok { %h{1} = "a" }, "can use Ints as keys";
     is %h{1}, 'a', "a did the assignment work";
     lives_ok { %h{(2,3,4)} = <b c d> }, "can use Int slices as keys";

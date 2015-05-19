@@ -14,7 +14,7 @@ class Counter {
 }
 
 my $c = Counter.new();
-dies_ok { $c.x }, 'no public accessor for private attribute';
+dies-ok { $c.x }, 'no public accessor for private attribute';
 $c.init();
 is($c.get(), 41, 'can assign and get from within the class');
 $c.inc();
@@ -172,7 +172,7 @@ eval-dies-ok q[
 # RT #122109
 {
     my class RT122109 { has $.x where * > 0 };
-    dies_ok { RT122109.new(:x(-42)) },
+    dies-ok { RT122109.new(:x(-42)) },
         'where clause on attributes is taken into account';
 }
 

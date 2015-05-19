@@ -11,7 +11,7 @@ plan 11;
     $x ::= $y;
     is $x, 3, '::= on scalars took the value from the RHS';
     #?rakudo todo 'nom regression'
-    dies_ok { $x = 5 }; '... and made the LHS RO';
+    dies-ok { $x = 5 }; '... and made the LHS RO';
     #?rakudo todo 'nom regression'
     is $x, 3, 'variable is still 3';
 }
@@ -19,7 +19,7 @@ plan 11;
 {
     my Int $a = 4;
     my Str $b;
-    dies_ok { $b ::= $a },
+    dies-ok { $b ::= $a },
         'Cannot ro-bind variables with incompatible type constraints';
 }
 
@@ -31,7 +31,7 @@ plan 11;
     is @x.join('|'), 'd|e', '::= on arrays';
     #?rakudo 4 todo '::= on arrays'
     #?niecza todo
-    dies_ok { @x := <3 4 foo> }, '... make RO';
+    dies-ok { @x := <3 4 foo> }, '... make RO';
     #?niecza todo
     is @x.join('|'), 'd|e', 'value unchanged';
     #?niecza todo

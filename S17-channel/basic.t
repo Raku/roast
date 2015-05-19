@@ -28,7 +28,7 @@ plan 17;
     $c.send(1);
     $c.fail("oh noes");
     is $c.receive, 1, "received first value";
-    dies_ok { $c.receive }, "error thrown on receive";
+    dies-ok { $c.receive }, "error thrown on receive";
     throws-like { $c.send(18) }, X::Channel::SendOnClosed;
     is $c.closed.cause.message, "oh noes", "failure reason conveyed";
 }

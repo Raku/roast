@@ -237,9 +237,9 @@ eval-dies-ok '{*.{}}()', '{*.{}}() dies';
     is $f(7), 2, 'Whatever-currying with R- (2)';
     is $f(0), -5, 'Whatever-currying with R- (3)';
 
-    dies_ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+    dies-ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
     #?niecza skip 'Undeclared routine'
-    dies_ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+    dies-ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
 }
 
 # RT 79166

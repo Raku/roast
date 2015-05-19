@@ -20,13 +20,13 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 # RT #64344
 {
     sub empty_sig() { return };
-    dies_ok { EVAL('empty_sig("RT #64344")') },
+    dies-ok { EVAL('empty_sig("RT #64344")') },
             'argument passed to sub with empty signature';
 }
 
 # RT #71478
 {
-    dies_ok { EVAL 'sub foo(%h) { %h }; foo(1, 2); 1' },
+    dies-ok { EVAL 'sub foo(%h) { %h }; foo(1, 2); 1' },
         "Passing two arguments to a function expecting one hash is an error";
 
     try { EVAL 'sub foo(%h) { %h }; foo(1, 2); 1' };

@@ -325,8 +325,8 @@ unlink($filename);
 }
 
 {
-    dies_ok { open('t').read(42) }, '.read on a directory fails';
-    dies_ok { open('t').get(1) }, '.get on a directory fails';
+    dies-ok { open('t').read(42) }, '.read on a directory fails';
+    dies-ok { open('t').get(1) }, '.get on a directory fails';
 }
 
 # vim: ft=perl6

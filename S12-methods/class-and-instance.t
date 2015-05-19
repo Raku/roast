@@ -32,9 +32,9 @@ class Act {
     is(rules(Act), 'the world', 'my method is lexically installed');
 }
 #?niecza todo "https://github.com/sorear/niecza/issues/185"
-dies_ok({ Act.rules }, 'my method not installed in methods table');
+dies-ok({ Act.rules }, 'my method not installed in methods table');
 is(Act::rocks(Act), 'the house', 'our method is installed in package');
 #?niecza todo "https://github.com/sorear/niecza/issues/185"
-dies_ok({ Act.rocks }, 'our method not installed in methods table');
+dies-ok({ Act.rocks }, 'our method not installed in methods table');
 
 # vim: ft=perl6

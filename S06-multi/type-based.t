@@ -184,7 +184,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
     is A::a(3),     'Int 3',  'multis in classes (1)';
     is A::a('f'),   'Str f',  'multis in classes (2)';
-    dies_ok { A::a([4, 5]) }, 'multis in classes (3)';
+    dies-ok { A::a([4, 5]) }, 'multis in classes (3)';
 }
 
 {

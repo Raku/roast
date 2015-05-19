@@ -6,7 +6,7 @@ use Test::Tap;
 
 plan 13;
 
-dies_ok { Supply.new.from-list(1..10) }, 'can not be called as an instance method';
+dies-ok { Supply.new.from-list(1..10) }, 'can not be called as an instance method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";

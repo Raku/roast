@@ -28,7 +28,7 @@ is Backend2.new.hi, 23, "basic sanity (2)";
 {
   my $a;
   ok ($a = Frontend.new), "basic instantiation worked (1)";
-  dies_ok { $a.hi }, "calling a method on no object didn't succeed (1)";
+  dies-ok { $a.hi }, "calling a method on no object didn't succeed (1)";
   ok ($a.backend = Backend1.new()), "setting a handler object (1)";
   ok (!($a ~~ Backend1)), "object wasn't isa()ed (1)";
   is $a.hi, 42, "method was successfully handled by backend object (1)";
@@ -37,7 +37,7 @@ is Backend2.new.hi, 23, "basic sanity (2)";
 {
   my $a;
   ok ($a = Frontend.new), "basic instantiation worked (2)";
-  dies_ok { $a.hi }, "calling a method on no object didn't succeed (2)";
+  dies-ok { $a.hi }, "calling a method on no object didn't succeed (2)";
   ok ($a.backend = Backend2.new()), "setting a handler object (2)";
   ok (!($a ~~ Backend2)), "object wasn't isa()ed (2)";
   is $a.hi, 23, "method was successfully handled by backend object (2)";
@@ -54,8 +54,8 @@ ok MultiFrontend.new, "class definition using multiple method names worked";
 {
   my $a;
   ok ($a = MultiFrontend.new), "basic instantiation worked (5)";
-  dies_ok { $a.hi   }, "calling a method on no object didn't succeed (5-1)";
-  dies_ok { $a.cool }, "calling a method on no object didn't succeed (5-2)";
+  dies-ok { $a.hi   }, "calling a method on no object didn't succeed (5-1)";
+  dies-ok { $a.cool }, "calling a method on no object didn't succeed (5-2)";
   ok ($a.backend = Backend1.new()), "setting a handler object (5)";
   ok (!($a ~~ Backend1)),             "object wasn't isa()ed (5)";
   is ($a.hi),     42, "method was successfully handled by backend object (5-1)";
@@ -71,8 +71,8 @@ class PairTest {
     my $a = PairTest.new;
     $a.backend1 = Backend1.new();
     $a.backend2 = Backend2.new();
-    dies_ok { $a.hi   }, "calling method with original name fails";
-    dies_ok { $a.cool }, "calling method with original name fails";
+    dies-ok { $a.hi   }, "calling method with original name fails";
+    dies-ok { $a.cool }, "calling method with original name fails";
     is $a.hello, 42, "calling method with mapped name works";
     is $a.ahoj, 23, "calling method with mapped name works";
     is $a.w00t, 539, "calling method with mapped name works";
@@ -85,7 +85,7 @@ class PairTest {
   {
     my $a;
     ok ($a = ClassFrontend.new), "basic instantiation worked (4)";
-    dies_ok { $a.hi }, "calling a method on no object didn't succeed (4)";
+    dies-ok { $a.hi }, "calling a method on no object didn't succeed (4)";
     ok ($a.backend = Backend1.new()), "setting a handler object (4)";
     ok (!($a ~~ Backend1)),             "object wasn't isa()ed (4-1)";
     ok (!($a ~~ Backend2)),             "object wasn't isa()ed (4-2)";
@@ -98,10 +98,10 @@ class PairTest {
     class RoleFrontend { has $.backend is rw handles R1; }
     my $a = RoleFrontend.new();
     ok !$a.does(R1), "having a handles role doesn't make the class do the role";
-    dies_ok { $a.awesome }, "calling a method on no object didn't succeed";
+    dies-ok { $a.awesome }, "calling a method on no object didn't succeed";
     $a.backend = Backend3.new();
     is $a.awesome, "yeah!", "method in role was successfully handled by backend object";
-    dies_ok { $a.sucks }, "but method in backend class but not role not handled";
+    dies-ok { $a.sucks }, "but method in backend class but not role not handled";
 }
 
 # L<S12/Delegation/"Any other kind of argument" "smartmatch selector for method">
@@ -112,7 +112,7 @@ class PairTest {
   {
     my $a;
     ok ($a = ReFrontend.new), "basic instantiation worked (3)";
-    dies_ok { $a.hi }, "calling a method on no object didn't succeed (3)";
+    dies-ok { $a.hi }, "calling a method on no object didn't succeed (3)";
     ok ($a.backend = Backend1.new()), "setting a handler object (3)";
     ok (!($a ~~ Backend1)),             "object wasn't isa()ed (3)";
     is $a.hi, 42, "method was successfully handled by backend object (3)";
@@ -150,7 +150,7 @@ class PairTest {
     }
     my $t = FrontendRw.new();
     lives_ok { $t.a = 'foo' }, 'can assign to lvalue delegated attribute';
-    dies_ok  { $t.c = 'foo' }, '... but only to lvaues attributes';
+    dies-ok  { $t.c = 'foo' }, '... but only to lvaues attributes';
     is $t.a, 'foo', 'assignment worked';
     is $t.backend.a, 'foo', 'can also query that through the backend';
     nok $t.c.defined, 'died assignment had no effect';
@@ -199,7 +199,7 @@ class PairTest {
     is $a.a(), 1, 'got all methods via "handles $typeObject" (1)';
     is $a.b(), 2, 'got all methods via "handles $typeObject" (2)';
     is $a.c(), 3, 'got all methods via "handles $typeObject" (next role)';
-    dies_ok { $a.d() }, '... but non existing methods still die';
+    dies-ok { $a.d() }, '... but non existing methods still die';
 }
 
 # vim: syn=perl6

@@ -26,7 +26,7 @@ plan 296;
     is($x, 0, 'assignment operator called as function');
     my Int $y;
     lives_ok { &infix:<=>($y, 3) }, 'assignment as function with types (1)';
-    dies_ok  { &infix:<=>($y, 'foo') }, 'assignment as function with types (2)';
+    dies-ok  { &infix:<=>($y, 'foo') }, 'assignment as function with types (2)';
 
 }
 

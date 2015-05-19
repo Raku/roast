@@ -10,7 +10,7 @@ sub a () { my $a=4; }; #zero-arg sub to test the underlying problem   #OK not us
 
 eval-dies-ok 'e("wtz")', "e should not be defined to accept arguments";
 eval-dies-ok 'pi("wtz")',"pi should not be defined to accept arguments either :) ";
-dies_ok { EVAL('a(3)') }, "this should die, no arguments defined";
+dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
 
 # RT #76096
 {

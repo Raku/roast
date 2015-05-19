@@ -18,7 +18,7 @@ sub mixed($pos1, *@slurp) { "|$pos1|" ~ @slurp.join('!') }
 
 is mixed(1),           '|1|',    'Positional and slurp params';
 is mixed(1, 2, 3),     '|1|2!3', 'Positional and slurp params';
-dies_ok {EVAL(' mixed()')},      'at least one arg required';
+dies-ok {EVAL(' mixed()')},      'at least one arg required';
 
 #?rakudo skip 'types on slurpy params RT #124936'
 {
@@ -26,7 +26,7 @@ dies_ok {EVAL(' mixed()')},      'at least one arg required';
     is x_typed_join(1),           '1',      'Basic slurpy params with types 1';
     is x_typed_join(1, 2, 5),     '1|2|5',  'Basic slurpy params with types 2';
     #?niecza todo 'Types on slurpy params are checked'
-    dies_ok { x_typed_join(3, 'x') }, 'Types on slurpy params are checked';
+    dies-ok { x_typed_join(3, 'x') }, 'Types on slurpy params are checked';
 }
 
 sub first_arg      ( *@args         ) { ~@args[0]; }
@@ -82,7 +82,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 {
     my sub foo ($n, *%h) { };   #OK not used
     ## NOTE: *NOT* sub foo ($n, *%h, *@a)
-    dies_ok { foo 1, x => 20, y => 300, 4000 },
+    dies-ok { foo 1, x => 20, y => 300, 4000 },
         'Testing: `sub foo($n, *%h) { }; foo 1, x => 20, y => 300, 4000`';
 }
 
@@ -127,7 +127,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     diag('Testing with named arguments (named param is required) (++ version)');
     lives_ok { foo 1, n => 20, y => 300, 4000 },
     'Testing: `my sub foo(+:$n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
-    dies_ok { foo 1, x => 20, y => 300, 4000 };
+    dies-ok { foo 1, x => 20, y => 300, 4000 };
 }
 
 #### "trait" version
@@ -137,7 +137,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     diag('Testing with named arguments (named param is required) (trait version)');
     lives_ok { foo 1, n => 20, y => 300, 4000 },
     'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
-    dies_ok { foo 1, x => 20, y => 300, 4000 },
+    dies-ok { foo 1, x => 20, y => 300, 4000 },
     'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000 }`';
 }
 
@@ -188,11 +188,11 @@ These tests are the testing for "List parameters" section of Synopsis 06
     is slurp_any( 'foo' ), 'foo', 'call to sub with (Any *@a) works';
 
     sub slurp_int( Int *@a ) { @a[0] }
-    dies_ok { slurp_int( 'foo' ) }, 'dies: call (Int *@a) sub with string';
+    dies-ok { slurp_int( 'foo' ) }, 'dies: call (Int *@a) sub with string';
     is slurp_int( 27.Int ), 27, 'call to sub with (Int *@a) works';
 
     sub slurp_of_int( *@a of Int ) { @a[0] }
-    dies_ok { slurp_of_int( 'foo' ) }, 'dies: call (*@a of Int) with string';
+    dies-ok { slurp_of_int( 'foo' ) }, 'dies: call (*@a of Int) with string';
     is slurp_of_int( 99.Int ), 99, 'call to (*@a of Int) sub works';
 
     class X64814 {}
@@ -207,9 +207,9 @@ These tests are the testing for "List parameters" section of Synopsis 06
     is $y.x_array( $x ), 4, 'call to method with typed array sig works';
     is $y.of_x( $x ),    3, 'call to method with "slurp of" sig works';
     is $y.x_slurp( $x ), 2, 'call to method with typed slurpy sig works';
-    dies_ok { $y.x_array( 23 ) }, 'die calling method with typed array sig';
-    dies_ok { $y.of_x( 17 ) }, 'dies calling method with "slurp of" sig';
-    dies_ok { $y.x_slurp( 35 ) }, 'dies calling method with typed slurpy sig';
+    dies-ok { $y.x_array( 23 ) }, 'die calling method with typed array sig';
+    dies-ok { $y.of_x( 17 ) }, 'dies calling method with "slurp of" sig';
+    dies-ok { $y.x_slurp( 35 ) }, 'dies calling method with typed slurpy sig';
 }
 
 {

@@ -23,7 +23,7 @@ sub tester(:$a, :$b, :$c) {
 }
 
 #?rakudo.moar todo 'RT 123498'
-dies_ok { sub {}.assuming(named => True)() },
+dies-ok { sub {}.assuming(named => True)() },
     'cannot assume unknown named params';
 
 # vim: ft=perl6

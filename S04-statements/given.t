@@ -246,7 +246,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
 
 # given + n>1-arg closure (should fail)
 {
-    dies_ok {
+    dies-ok {
         given 41 {
             when -> $t, $r { $t == $r } { ... }
         }

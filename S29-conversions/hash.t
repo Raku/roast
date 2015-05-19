@@ -32,7 +32,7 @@ Basic tests for the hash() built-in
 }
 
 {
-    dies_ok {hash(<1 2 3>)}, "hash() won't create invalid hash";
+    dies-ok {hash(<1 2 3>)}, "hash() won't create invalid hash";
 }
 
 

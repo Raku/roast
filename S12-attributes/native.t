@@ -24,9 +24,9 @@ class C {
     is $c.num-ro, 1e0, 'Can read ro num attr default value';
     is $c.str-ro, 'vareniki', 'Can read ro str attr default value';
 
-    dies_ok { $c.int-ro = 42 }, 'Cannot write to native int ro attr';
-    dies_ok { $c.num-ro = 4.2e0 }, 'Cannot write to native num ro attr';
-    dies_ok { $c.str-ro = 'karniyarik' }, 'Cannot write to native str ro attr';
+    dies-ok { $c.int-ro = 42 }, 'Cannot write to native int ro attr';
+    dies-ok { $c.num-ro = 4.2e0 }, 'Cannot write to native num ro attr';
+    dies-ok { $c.str-ro = 'karniyarik' }, 'Cannot write to native str ro attr';
 
     is $c.int-rw, 1, 'Can read rw int attr default value';
     is $c.num-rw, 1e0, 'Can read rw num attr default value';
@@ -42,12 +42,12 @@ class C {
 
     is $c.all-the-things, '42 4.2 karniyarik', 'Attributes really updated';
 
-    dies_ok { $c.int-rw = 4.2e0 }, 'Cannot update int rw attr with non-int (1)';
-    dies_ok { $c.int-rw = 'karniyarik' }, 'Cannot update int rw attr with non-int (2)';
-    dies_ok { $c.num-rw = 42 }, 'Cannot update num rw attr with non-num (1)';
-    dies_ok { $c.num-rw = 'karniyarik' }, 'Cannot update num rw attr with non-num (2)';
-    dies_ok { $c.str-rw = 42 }, 'Cannot update str rw attr with non-str (1)';
-    dies_ok { $c.str-rw = 4.2e0 }, 'Cannot update str rw attr with non-str (2)';
+    dies-ok { $c.int-rw = 4.2e0 }, 'Cannot update int rw attr with non-int (1)';
+    dies-ok { $c.int-rw = 'karniyarik' }, 'Cannot update int rw attr with non-int (2)';
+    dies-ok { $c.num-rw = 42 }, 'Cannot update num rw attr with non-num (1)';
+    dies-ok { $c.num-rw = 'karniyarik' }, 'Cannot update num rw attr with non-num (2)';
+    dies-ok { $c.str-rw = 42 }, 'Cannot update str rw attr with non-str (1)';
+    dies-ok { $c.str-rw = 4.2e0 }, 'Cannot update str rw attr with non-str (2)';
 }
 
 {

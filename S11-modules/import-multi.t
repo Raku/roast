@@ -14,8 +14,8 @@ plan 17;
     import A;
 
     is Afoo( 7 ), 'sub A::Afoo Int', 'A) merge multis without protos';
-    dies_ok { EVAL 'Abar( 7 )' },    "A) doesn't import non-exported multis";
-    dies_ok { EVAL 'Afoo( "a" )' },  "A) doesn't dispatch to wrong signature";
+    dies-ok { EVAL 'Abar( 7 )' },    "A) doesn't import non-exported multis";
+    dies-ok { EVAL 'Afoo( "a" )' },  "A) doesn't dispatch to wrong signature";
 }
 
 # with proto in module

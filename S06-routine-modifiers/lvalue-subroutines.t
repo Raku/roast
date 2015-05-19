@@ -32,7 +32,7 @@ Testing lvalue-returning subroutines
   my $notlvalue = sub () { $var };
 
   #?niecza 2 todo 'rw checking'
-  dies_ok { $notlvalue() = 23 },
+  dies-ok { $notlvalue() = 23 },
     "assigning to non-rw subrefs should die";
   is $var, 42,
     "assigning to non-rw subrefs shouldn't modify the original variable";
@@ -57,7 +57,7 @@ Testing lvalue-returning subroutines
   sub notlvalue { $var; } # without rw
 
   #?niecza 2 todo 'rw checking'
-  dies_ok { notlvalue() = 5 },
+  dies-ok { notlvalue() = 5 },
     "assigning to non-rw subs should die";
   is $var, 42,
     "assigning to non-rw subs shouldn't modify the original variable";
@@ -77,7 +77,7 @@ sub checklastval ($passwd) is rw {
         );
 };
 
-dies_ok {checklastval("octopus") = 10 }, 'checklastval STORE can die';
+dies-ok {checklastval("octopus") = 10 }, 'checklastval STORE can die';
 
 # Above test may well die for the wrong reason, if the Proxy stuff didn't
 # parse OK, it will complain that it couldn't find the desired subroutine

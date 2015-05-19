@@ -364,11 +364,11 @@ throws-like 'use fatal; (1+2i).Real', X::Numeric::Real, target => Real;
 {
 throws-like 'my class A {}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")', X::TypeCheck::Binding;
 
-dies_ok {EVAL(class A{}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")) }, "Should fail type check with unbound variable";
+dies-ok {EVAL(class A{}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")) }, "Should fail type check with unbound variable";
 }
 
 # RT #75640
-# cannot use dies_ok, because it puts the call in the dynamic scope of a
+# cannot use dies-ok, because it puts the call in the dynamic scope of a
 # dispatcher
 try {
     proto a() { nextsame };

@@ -29,7 +29,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa-ok($foo, Routine);
     isa-ok($foo, Sub);
     is $foo.(), 42,                 "basic invocation of an anonymous sub";
-    dies_ok { $foo.(23) }, "invocation of a parameterless anonymous sub with a parameter dies";
+    dies-ok { $foo.(23) }, "invocation of a parameterless anonymous sub with a parameter dies";
 }
 
 {
@@ -37,7 +37,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa-ok($foo, Code);
     isa-ok($foo, Block);
     is $foo.(), 42,                 "basic invocation of a pointy block";
-    dies_ok { $foo.(23) },  "invocation of a parameterless pointy block with a parameter dies";
+    dies-ok { $foo.(23) },  "invocation of a parameterless pointy block with a parameter dies";
 }
 
 {
@@ -45,7 +45,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa-ok($foo, Code);
     isa-ok($foo, Block);
     is $foo.(42), 142,              "basic invocation of a pointy block with a param";
-    dies_ok { $foo.() }, "invocation of a parameterized block expecting a param without a param dies";
+    dies-ok { $foo.() }, "invocation of a parameterized block expecting a param without a param dies";
 }
 
 # RT #63974
@@ -77,9 +77,9 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa-ok($foo, Routine);
     isa-ok($foo, Sub);
     is $foo.(42),      142,    "calling an anonymous sub with a positional param";
-    dies_ok { $foo.() }, 
+    dies-ok { $foo.() }, 
         "calling an anonymous sub expecting a param without a param dies";
-    dies_ok { $foo.(42, 5) },
+    dies-ok { $foo.(42, 5) },
         "calling an anonymous sub expecting one param with two params dies";
 }
 

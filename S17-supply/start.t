@@ -4,7 +4,7 @@ use Test;
 
 plan 9;
 
-dies_ok { Supply.start({...}) }, 'can not be called as a class method';
+dies-ok { Supply.start({...}) }, 'can not be called as a class method';
 
 {
     my $master = Supply.new;

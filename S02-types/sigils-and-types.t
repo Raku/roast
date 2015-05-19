@@ -78,7 +78,7 @@ ok &pro.does(Callable), 'a proto does Callable';
 {
     sub a { return 'a' };
     sub b { return 'b' };
-    dies_ok { &a = &b }, 'cannot just assign &b to &a';
+    dies-ok { &a = &b }, 'cannot just assign &b to &a';
     is a(), 'a', 'and the correct function is still in place';
 
 }

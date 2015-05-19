@@ -53,7 +53,7 @@ is F.something(42), 'Int', 'Can multi-dispatch on regular arguments (1)';
 is F.something(''), 'Str', 'Can multi-dispatch on regular arguments (2)';
 is F.new.something(''), 'Str', 'Can multi-dispatch on regular arguments (also on an instance)';
 
-dies_ok { F.something() }, 'Error when none of the candidates match';
+dies-ok { F.something() }, 'Error when none of the candidates match';
 
 class I {
     method postcircumfix:<( )>(|) { 'invaught' }

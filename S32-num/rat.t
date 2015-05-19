@@ -42,7 +42,7 @@ is(Rat.new(1141234123, 0).nude, (1, 0), "Huge over zero becomes one over zero");
 #?niecza skip 'Unable to resolve method nude in class Num'
 is(Rat.new(-7, 0).nude, (-1, 0), "Negative over zero becomes negative one over zero");
 #?niecza todo
-dies_ok( { Rat.new(0, 0) }, "Zero over zero is not a legal Rat");
+dies-ok( { Rat.new(0, 0) }, "Zero over zero is not a legal Rat");
 
 # Test basic math
 is(1 / 4 + 1 / 4, 1/2, "1/4 + 1/4 = 1/2");

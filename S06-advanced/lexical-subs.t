@@ -59,7 +59,7 @@ plan 11;
     package TestScope {
         sub f { };
     }
-    dies_ok { TestScope::f }, 'subs without scoping modifiers are not entered in the namespace';
+    dies-ok { TestScope::f }, 'subs without scoping modifiers are not entered in the namespace';
 }
 
 # RT #57788

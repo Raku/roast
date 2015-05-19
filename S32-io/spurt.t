@@ -45,14 +45,14 @@ sub all-basic(Callable $handle) {
     lives_ok { spurt $handle(), $buf, :createonly }, "createonly creates file with Buf";
     #?niecza todo ""
     ok $path.IO.e, "file was created";
-    dies_ok { spurt $handle(), $buf, :createonly }, "createonly with Buf fails if file exists";
+    dies-ok { spurt $handle(), $buf, :createonly }, "createonly with Buf fails if file exists";
     unlink $path;
 
     #?niecza skip "Excess arguments to spurt, unused named createonly" 
     lives_ok { spurt $handle(), $txt, :createonly }, "createonly with text creates file";
     #?niecza todo ""
     ok $path.IO.e, "file was created";
-    dies_ok { spurt $handle(), $txt, :createonly }, "createonly with text fails if file exists";
+    dies-ok { spurt $handle(), $txt, :createonly }, "createonly with text fails if file exists";
     unlink $path;
 }
 
@@ -87,9 +87,9 @@ sub all-basic(Callable $handle) {
 
     # spurting to a directory
     {
-        dies_ok { open('t').spurt("'Twas brillig, and the slithy toves") },
+        dies-ok { open('t').spurt("'Twas brillig, and the slithy toves") },
             '.spurt()ing to a directory fails';
-        dies_ok { spurt('t', 'Did gyre and gimble in the wabe') },
+        dies-ok { spurt('t', 'Did gyre and gimble in the wabe') },
             '&spurt()ing to a directory fails';
     }
 
@@ -107,7 +107,7 @@ sub all-basic(Callable $handle) {
     #?niecza skip "Excess arguments to slurp, unused named bin"
     is slurp($path, :bin), $buf, "IO::Handle binary slurp";
     
-    dies_ok { $path.IO.spurt("nope", :createonly) }, "IO::Handle :createonly dies";
+    dies-ok { $path.IO.spurt("nope", :createonly) }, "IO::Handle :createonly dies";
     unlink $path;
     #?niecza 2 todo "Excess arguments to IO.spurt, unused named createonly"
     lives_ok { $path.IO.spurt("yes", :createonly) }, "IO::Handle :createonly lives";

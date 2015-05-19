@@ -42,7 +42,7 @@ plan 14;
     });
 
     $p1.keep(42);
-    dies_ok { $p2.result }, "result from then Promise dies";
+    dies-ok { $p2.result }, "result from then Promise dies";
     is $p2.status, Broken, "then Promise is broken";
     is $p2.cause.message, "then died", "then Promise has correct cause";
 }

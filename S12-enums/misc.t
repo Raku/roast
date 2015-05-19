@@ -26,7 +26,7 @@ plan 16;
 # RT #66648
 {
     enum RT66648 <a b c>;
-    dies_ok { RT66648.c }, 'die attempting to access enum item as method';
+    dies-ok { RT66648.c }, 'die attempting to access enum item as method';
 }
 
 # RT #70894

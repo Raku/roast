@@ -32,16 +32,16 @@ plan 48;
     with-rw-str($sv);
     is $sv, 'the answer', 'Native str is rw arg works in sub';
     
-    dies_ok { EVAL 'with-rw-int(1)' }, 'Cannot pass non-container to native int is rw in sub';
-    dies_ok { EVAL 'with-rw-num(1e0)' }, 'Cannot pass non-container to native num is rw in sub';
-    dies_ok { EVAL 'with-rw-str("draniki")' }, 'Cannot pass non-container to native str is rw in sub';
+    dies-ok { EVAL 'with-rw-int(1)' }, 'Cannot pass non-container to native int is rw in sub';
+    dies-ok { EVAL 'with-rw-num(1e0)' }, 'Cannot pass non-container to native num is rw in sub';
+    dies-ok { EVAL 'with-rw-str("draniki")' }, 'Cannot pass non-container to native str is rw in sub';
 
-    dies_ok { EVAL 'with-rw-int(my num $x)' }, 'Cannot pass wrong container to native int is rw in sub';
-    dies_ok { EVAL 'with-rw-int(my str $x)' }, 'Cannot pass wrong container to native int is rw in sub';
-    dies_ok { EVAL 'with-rw-num(my int $x)' }, 'Cannot pass wrong container to native num is rw in sub';
-    dies_ok { EVAL 'with-rw-num(my str $x)' }, 'Cannot pass wrong container to native num is rw in sub';
-    dies_ok { EVAL 'with-rw-str(my int $x)' }, 'Cannot pass wrong container to native str is rw in sub';
-    dies_ok { EVAL 'with-rw-str(my num $x)' }, 'Cannot pass wrong container to native str is rw in sub';
+    dies-ok { EVAL 'with-rw-int(my num $x)' }, 'Cannot pass wrong container to native int is rw in sub';
+    dies-ok { EVAL 'with-rw-int(my str $x)' }, 'Cannot pass wrong container to native int is rw in sub';
+    dies-ok { EVAL 'with-rw-num(my int $x)' }, 'Cannot pass wrong container to native num is rw in sub';
+    dies-ok { EVAL 'with-rw-num(my str $x)' }, 'Cannot pass wrong container to native num is rw in sub';
+    dies-ok { EVAL 'with-rw-str(my int $x)' }, 'Cannot pass wrong container to native str is rw in sub';
+    dies-ok { EVAL 'with-rw-str(my num $x)' }, 'Cannot pass wrong container to native str is rw in sub';
 }
 
 {
@@ -70,16 +70,16 @@ plan 48;
     $with-rw-str($sv);
     is $sv, 'the answer', 'Native str is rw arg works in pointy block';
     
-    dies_ok { EVAL '$with-rw-int(1)' }, 'Cannot pass non-container to native int is rw in pointy block';
-    dies_ok { EVAL '$with-rw-num(1e0)' }, 'Cannot pass non-container to native num is rw in pointy block';
-    dies_ok { EVAL '$with-rw-str("draniki")' }, 'Cannot pass non-container to native str is rw in pointy block';
+    dies-ok { EVAL '$with-rw-int(1)' }, 'Cannot pass non-container to native int is rw in pointy block';
+    dies-ok { EVAL '$with-rw-num(1e0)' }, 'Cannot pass non-container to native num is rw in pointy block';
+    dies-ok { EVAL '$with-rw-str("draniki")' }, 'Cannot pass non-container to native str is rw in pointy block';
 
-    dies_ok { EVAL '$with-rw-int(my num $x)' }, 'Cannot pass wrong container to native int is rw in pointy block';
-    dies_ok { EVAL '$with-rw-int(my str $x)' }, 'Cannot pass wrong container to native int is rw in pointy block';
-    dies_ok { EVAL '$with-rw-num(my int $x)' }, 'Cannot pass wrong container to native num is rw in pointy block';
-    dies_ok { EVAL '$with-rw-num(my str $x)' }, 'Cannot pass wrong container to native num is rw in pointy block';
-    dies_ok { EVAL '$with-rw-str(my int $x)' }, 'Cannot pass wrong container to native str is rw in pointy block';
-    dies_ok { EVAL '$with-rw-str(my num $x)' }, 'Cannot pass wrong container to native str is rw in pointy block';
+    dies-ok { EVAL '$with-rw-int(my num $x)' }, 'Cannot pass wrong container to native int is rw in pointy block';
+    dies-ok { EVAL '$with-rw-int(my str $x)' }, 'Cannot pass wrong container to native int is rw in pointy block';
+    dies-ok { EVAL '$with-rw-num(my int $x)' }, 'Cannot pass wrong container to native num is rw in pointy block';
+    dies-ok { EVAL '$with-rw-num(my str $x)' }, 'Cannot pass wrong container to native num is rw in pointy block';
+    dies-ok { EVAL '$with-rw-str(my int $x)' }, 'Cannot pass wrong container to native str is rw in pointy block';
+    dies-ok { EVAL '$with-rw-str(my num $x)' }, 'Cannot pass wrong container to native str is rw in pointy block';
 }
 
 {
@@ -110,16 +110,16 @@ plan 48;
     C.with-rw-str($sv);
     is $sv, 'the answer', 'Native str is rw arg works in method';
 
-    dies_ok { EVAL 'C.with-rw-int(1)' }, 'Cannot pass non-container to native int is rw in method';
-    dies_ok { EVAL 'C.with-rw-num(1e0)' }, 'Cannot pass non-container to native num is rw in method';
-    dies_ok { EVAL 'C.with-rw-str("draniki")' }, 'Cannot pass non-container to native str is rw in method';
+    dies-ok { EVAL 'C.with-rw-int(1)' }, 'Cannot pass non-container to native int is rw in method';
+    dies-ok { EVAL 'C.with-rw-num(1e0)' }, 'Cannot pass non-container to native num is rw in method';
+    dies-ok { EVAL 'C.with-rw-str("draniki")' }, 'Cannot pass non-container to native str is rw in method';
 
-    dies_ok { EVAL 'C.with-rw-int(my num $x)' }, 'Cannot pass wrong container to native int is rw in method';
-    dies_ok { EVAL 'C.with-rw-int(my str $x)' }, 'Cannot pass wrong container to native int is rw in method';
-    dies_ok { EVAL 'C.with-rw-num(my int $x)' }, 'Cannot pass wrong container to native num is rw in method';
-    dies_ok { EVAL 'C.with-rw-num(my str $x)' }, 'Cannot pass wrong container to native num is rw in method';
-    dies_ok { EVAL 'C.with-rw-str(my int $x)' }, 'Cannot pass wrong container to native str is rw in method';
-    dies_ok { EVAL 'C.with-rw-str(my num $x)' }, 'Cannot pass wrong container to native str is rw in method';
+    dies-ok { EVAL 'C.with-rw-int(my num $x)' }, 'Cannot pass wrong container to native int is rw in method';
+    dies-ok { EVAL 'C.with-rw-int(my str $x)' }, 'Cannot pass wrong container to native int is rw in method';
+    dies-ok { EVAL 'C.with-rw-num(my int $x)' }, 'Cannot pass wrong container to native num is rw in method';
+    dies-ok { EVAL 'C.with-rw-num(my str $x)' }, 'Cannot pass wrong container to native num is rw in method';
+    dies-ok { EVAL 'C.with-rw-str(my int $x)' }, 'Cannot pass wrong container to native str is rw in method';
+    dies-ok { EVAL 'C.with-rw-str(my num $x)' }, 'Cannot pass wrong container to native str is rw in method';
 }
 
 throws-like { EVAL('sub foo(int $x) { $x = 42 }') },

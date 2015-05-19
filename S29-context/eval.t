@@ -26,14 +26,14 @@ my $foo = 1234;
 is(EVAL('$foo'), $foo, 'simple EVAL using variable defined outside');
 
 # traps die?
-dies_ok {EVAL('die; 1')}, "EVAL does not trap die";
+dies-ok {EVAL('die; 1')}, "EVAL does not trap die";
 
-dies_ok {EVAL '1 1)'}, "EVAL throws on syntax error";
+dies-ok {EVAL '1 1)'}, "EVAL throws on syntax error";
 
-dies_ok {EVAL 'use Poison; 1'}, "EVAL dies on fatal use";
+dies-ok {EVAL 'use Poison; 1'}, "EVAL dies on fatal use";
 
 # L<S04/Exception handlers/Perl 6's EVAL function only evaluates strings, not blocks.>
-dies_ok({EVAL {; 42} }, 'block EVAL is gone');
+dies-ok({EVAL {; 42} }, 'block EVAL is gone');
 
 # RT #63978, EVAL didn't work in methods
 {

@@ -31,7 +31,7 @@ plan 16;
         die "trying";
     });
     sleep 1;
-    dies_ok { $p.result }, "result throws exception";
+    dies-ok { $p.result }, "result throws exception";
     is $p.status, Broken, "Promise was broken";
     is $p.cause.message, "trying", "Correct exception stored";
 }

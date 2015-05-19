@@ -8,7 +8,7 @@ grammar WithMethod {
     method panic { die "The sky is falling!"; }
 };
 
-dies_ok { WithMethod.parse('unrelated') },
+dies-ok { WithMethod.parse('unrelated') },
    'Can call die() from a method within a grammar';
 
 try { WithMethod.parse('unrelated') };

@@ -10,7 +10,7 @@ my @endings = "\n", "\r", "\r\n";
 
 plan 21;
 
-dies_ok { Supply.lines }, 'can not be called as a class method';
+dies-ok { Supply.lines }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";

@@ -91,16 +91,16 @@ sub gen_array { (1..10).list }
       (1=>False,2=>False,10=>True),               "Test !exists:!p FFT";
 
     #?niezca 6 todo "no combined adverbial pairs"
-    dies_ok { @a[1]:exists:k },    "Test exists:k,   invalid combo";
-    dies_ok { @a[1]:exists:!k },   "Test exists:!k,  invalid combo";
-    dies_ok { @a[1]:!exists:k },   "Test !exists:k,  invalid combo";
-    dies_ok { @a[1]:!exists:!k },  "Test !exists:!k, invalid combo";
+    dies-ok { @a[1]:exists:k },    "Test exists:k,   invalid combo";
+    dies-ok { @a[1]:exists:!k },   "Test exists:!k,  invalid combo";
+    dies-ok { @a[1]:!exists:k },   "Test !exists:k,  invalid combo";
+    dies-ok { @a[1]:!exists:!k },  "Test !exists:!k, invalid combo";
 
     #?niezca 6 todo "no combined adverbial pairs"
-    dies_ok { @a[1]:exists:v },    "Test exists:v,   invalid combo";
-    dies_ok { @a[1]:exists:!v },   "Test exists:!v,  invalid combo";
-    dies_ok { @a[1]:!exists:v },   "Test !exists:v,  invalid combo";
-    dies_ok { @a[1]:!exists:!v },  "Test !exists:!v, invalid combo";
+    dies-ok { @a[1]:exists:v },    "Test exists:v,   invalid combo";
+    dies-ok { @a[1]:exists:!v },   "Test exists:!v,  invalid combo";
+    dies-ok { @a[1]:!exists:v },   "Test !exists:v,  invalid combo";
+    dies-ok { @a[1]:!exists:!v },  "Test !exists:!v, invalid combo";
 
     is @a.elems, 10, "should be untouched";
 } #46

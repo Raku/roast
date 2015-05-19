@@ -11,9 +11,9 @@ use Test;
 plan 11;
 
 
-dies_ok { class A { method set_a { $.a = 1 }}; A.new.set_a; },
+dies-ok { class A { method set_a { $.a = 1 }}; A.new.set_a; },
     "Test Undeclared public attribute assignment from a class";
-dies_ok { role B { method set_b { $.b = 1 }};class C does B { }; C.new.set_b; },
+dies-ok { role B { method set_b { $.b = 1 }};class C does B { }; C.new.set_b; },
     "Test Undeclared public attribute assignment from a role";
 
 eval-dies-ok ' class D { method d { $!d = 1 }}; D.new.d; ',
@@ -22,9 +22,9 @@ eval-dies-ok ' role E { method e { $!e = 1 }};class F does E { }; F.new.e; ',
     "Test Undeclared private attribute assignment from a role";
 
 ##### access the undeclared attribute
-dies_ok { class H { method set_h { $.h }}; H.new.set_h; },
+dies-ok { class H { method set_h { $.h }}; H.new.set_h; },
     "Test Undeclared public attribute access from a class";
-dies_ok { role I { method set_i { $.i }};class J does I { }; J.new.set_i; },
+dies-ok { role I { method set_i { $.i }};class J does I { }; J.new.set_i; },
     "Test Undeclared public attribute access from a role";
 
 eval-dies-ok ' class K { method k { $!k }}; K.new.k; ',

@@ -20,8 +20,8 @@ eval_lives_ok q[ package StubD { ... }; class StubD { method foo { } }; ],
 # not quite class stubs, but I don't know where else to put the tests...
 
 lives_ok { sub {...} }, 'not execued stub code is fine';
-dies_ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
-dies_ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
+dies-ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
+dies-ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 
 eval-dies-ok q[my class StubbedButNotDeclared { ... }], 'stubbing a class but not providing a definition dies';
 

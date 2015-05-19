@@ -34,8 +34,8 @@ plan 19;
 
 {
     $_ = 'Ack!';
-    dies_ok({ (-> { "Boo!" }).(42) },     '-> {} is arity 0');
-    dies_ok({ (-> { $_ }).(42) },         'Even when we use $_>');
+    dies-ok({ (-> { "Boo!" }).(42) },     '-> {} is arity 0');
+    dies-ok({ (-> { $_ }).(42) },         'Even when we use $_>');
 
     #?niecza todo
     is((-> { $_ }).(),      'Ack!',       '$_ is lexical here');

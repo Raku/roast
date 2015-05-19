@@ -64,7 +64,7 @@ ok $c.^does(InitialAttribType[Code]),
   ".^does gives correct information (3-2)";
 is $c.hi(sub {}), 42,
   "type information was processed correctly (1)";
-dies_ok { $c.hi("not a code object") },
+dies-ok { $c.hi("not a code object") },
   "type information was processed correctly (2)";
 
 

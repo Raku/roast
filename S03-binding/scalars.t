@@ -101,7 +101,7 @@ eval-dies-ok '0 := 1', 'cannot bind to a literal';
   #?niecza todo "difference of interpretation on ro binding"
   is $a, 42, "bound readonly sub param was bound correctly (2) (no change)";
 
-  dies_ok { $a = 23 },
+  dies-ok { $a = 23 },
     "bound readonly sub param remains readonly (1)";
   #?niecza todo "difference of interpretation on ro binding"
   is $a, 42,

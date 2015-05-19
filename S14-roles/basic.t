@@ -72,8 +72,8 @@ eval-dies-ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
 role C { }
 class DoesC does C { }
 lives_ok { my C $x; },          'can use role as a type constraint on a variable';
-dies_ok { my C $x = 42 },       'type-check enforced';
-dies_ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
+dies-ok { my C $x = 42 },       'type-check enforced';
+dies-ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
 lives_ok {my C $x = DoesC.new },'type-check passes for class doing role';
 lives_ok { my C $x = 42 but C },'type-check passes when role mixed in';
 
@@ -83,13 +83,13 @@ class HasC {
 lives_ok { HasC.new },          'attributes typed as roles initialized OK';
 lives_ok { HasC.new.x = DoesC.new },
                                 'typed attribute accepts things it should';
-dies_ok { HasC.new.x = Mu },    'typed attribute rejects things it should';
-dies_ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
+dies-ok { HasC.new.x = Mu },    'typed attribute rejects things it should';
+dies-ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
 
 eval-dies-ok '0 but RT66178', '"but" with non-existent role dies';
 
 {
-    dies_ok { EVAL 'class Animal does NonExistentRole { }; 1' },
+    dies-ok { EVAL 'class Animal does NonExistentRole { }; 1' },
         'a class dies when it does a non-existent role';
 
     try { EVAL 'class AnotherAnimal does NonExistentRole { }; 1' };
@@ -102,7 +102,7 @@ eval-dies-ok '0 but RT66178', '"but" with non-existent role dies';
 # RT #67278
 {
     class AClass { };
-    dies_ok { EVAL 'class BClass does AClass { }; 1' },
+    dies-ok { EVAL 'class BClass does AClass { }; 1' },
 	    'class SomeClass does AnotherClass  dies';
     my $x = try EVAL 'class CClass does AClass { }; 1';
     ok "$!" ~~ /AClass/, 'Error message mentions the offending non-role';

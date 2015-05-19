@@ -35,7 +35,7 @@ foo();
 is(+@log, 1, "one event logged");
 is(@log[0], "foo", "it's foo");
 
-dies_ok { &foo.unwrap() }, 'cannot upwrap a never-wrapped sub.';
+dies-ok { &foo.unwrap() }, 'cannot upwrap a never-wrapped sub.';
 
 @log = ();
 
@@ -87,7 +87,7 @@ is(+@log, 2, "out of order unwrapping gave right number of results");
 is(@log[0], "wrapper2", "got execpted value from remaining wrapper");
 is(@log[1], "foo", "got execpted value from original sub");
 
-dies_ok { &foo.unwrap($wrapped) }, "can't re-unwrap an already unwrapped sub";
+dies-ok { &foo.unwrap($wrapped) }, "can't re-unwrap an already unwrapped sub";
 
 #First level wrapping
 sub hi { "Hi" };
@@ -165,7 +165,7 @@ sub functionB {
 is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 
 #?rakudo todo 'RT #70267: call to nextsame with nowhere to go'
-dies_ok { {nextsame}() }, '{nextsame}() dies properly';
+dies-ok { {nextsame}() }, '{nextsame}() dies properly';
 
 # RT #66658
 #?niecza skip "undefined undefined"

@@ -29,10 +29,10 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($hash), 'a b foo', '...with the right elements';
     is $hash.values.grep({ ($_ ~~ Bool) && $_ }).elems, 3, "...and values";
 
-    dies_ok { $s<a> = True }, "Can't assign to an element (Sets are immutable)";
-    dies_ok { $s.keys = <c d> }, "Can't assign to .keys";
-    dies_ok { $s.values = <True False> }, "Can't assign to .values";
-    dies_ok { $s<a>:delete }, "Can't :delete from Set";
+    dies-ok { $s<a> = True }, "Can't assign to an element (Sets are immutable)";
+    dies-ok { $s.keys = <c d> }, "Can't assign to .keys";
+    dies-ok { $s.values = <True False> }, "Can't assign to .values";
+    dies-ok { $s<a>:delete }, "Can't :delete from Set";
 
     is ($s<a b>).grep(?*).elems, 2, 'Multiple-element access';
     is ($s<a santa b easterbunny>).grep(?*).elems, 2, 'Multiple-element access (with nonexistent elements)';
@@ -76,7 +76,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set <a b foo>;
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
-    dies_ok { $s<a>:delete }, ':delete does not work on set';
+    dies-ok { $s<a>:delete }, ':delete does not work on set';
 }
 
 {
@@ -204,9 +204,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is %s<a>, True, 'Single-key subscript (existing element)';
     is %s<santa>, False, 'Single-key subscript (nonexistent element)';
 
-    dies_ok { %s<a> = True }, "Can't assign to an element (Sets are immutable)";
-    dies_ok { %s = a => True, b => True }, "Can't assign to a %var implemented by Set";
-    dies_ok { %s<a>:delete }, "Can't :delete a key from a Set";
+    dies-ok { %s<a> = True }, "Can't assign to an element (Sets are immutable)";
+    dies-ok { %s = a => True, b => True }, "Can't assign to a %var implemented by Set";
+    dies-ok { %s<a>:delete }, "Can't :delete a key from a Set";
 }
 
 # L<S03/Hyper operators/'unordered type'>
@@ -227,7 +227,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 #?niecza skip "Hypers not yet Set compatible"
 #?rakudo todo "Hypers not yet Set compatible RT #124488"
-dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
+dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # L<S32::Containers/Set/roll>
 
@@ -281,7 +281,7 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 #?niecza skip '.grab NYI'
 {
     my $s = set <a b c>;
-    dies_ok { $s.grab }, 'cannot call .grab on a Set';
+    dies-ok { $s.grab }, 'cannot call .grab on a Set';
 }
 
 # L<S32::Containers/Set/grabpairs>
@@ -289,7 +289,7 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 #?niecza skip '.grabpairs NYI'
 {
     my $s = set <a b c>;
-    dies_ok { $s.grabpairs }, 'cannot call .grabpairs on a Set';
+    dies-ok { $s.grabpairs }, 'cannot call .grabpairs on a Set';
 }
 
 # RT 107022
@@ -358,8 +358,8 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 {
     my $s = <a b c>.Set;
-    dies_ok { $s.pairs[0].key++ },     'Cannot change key of Set.pairs';
-    dies_ok { $s.pairs[0].value = 0 }, 'Cannot change value of Set.pairs';
+    dies-ok { $s.pairs[0].key++ },     'Cannot change key of Set.pairs';
+    dies-ok { $s.pairs[0].value = 0 }, 'Cannot change value of Set.pairs';
 }
 
 # RT #117103

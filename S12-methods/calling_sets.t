@@ -52,11 +52,11 @@ class C is B {
     $c.+"$foo"();
     is $c.cnt, 7, '.+ with dynamic method name';
 
-    dies_ok { $c."?foo"() }, '? at start of dynamic name does not imply .?';
+    dies-ok { $c."?foo"() }, '? at start of dynamic name does not imply .?';
 
-    dies_ok { $c."+foo"() }, '+ at start of dynamic name does not imply .+';
+    dies-ok { $c."+foo"() }, '+ at start of dynamic name does not imply .+';
 
-    dies_ok { $c."*foo"() }, '* at start of dynamic name does not imply .*';
+    dies-ok { $c."*foo"() }, '* at start of dynamic name does not imply .*';
 }
 
 

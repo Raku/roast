@@ -14,8 +14,8 @@ Tests C<CATCH> blocks.
 
 # L<S04/"Exception handlers"/If you define a CATCH block within the try, it replaces the default CATCH>
 
-dies_ok { die 'blah'; CATCH {} }, 'Empty CATCH rethrows exception';
-dies_ok { try {die 'blah'; CATCH {}} }, 'CATCH in try overrides default exception handling';
+dies-ok { die 'blah'; CATCH {} }, 'Empty CATCH rethrows exception';
+dies-ok { try {die 'blah'; CATCH {}} }, 'CATCH in try overrides default exception handling';
 
 # L<S04/"Exception handlers"/any block can function as a try block if you put a CATCH block within it>
 
@@ -36,7 +36,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
         }
     };
     lives_ok { $f(1) }, 'if block with CATCH {default {}} ignores exceptions...';
-    dies_ok { $f(0) }, "...but the CATCH doesn't affect exceptions thrown in an attached else";
+    dies-ok { $f(0) }, "...but the CATCH doesn't affect exceptions thrown in an attached else";
 }
 
 
@@ -212,7 +212,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 
 # RT #64262
 {
-    dies_ok {
+    dies-ok {
         try {
             die 1;
             CATCH {

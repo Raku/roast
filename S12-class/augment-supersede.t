@@ -20,7 +20,7 @@ use MONKEY-TYPING;
     is($o.a, 'called Foo.a', 'basic method call works');
     is($o.b, 'called Foo.b', 'added method call works');
 
-    dies_ok { EVAL('augment class NonExistent { }') },
+    dies-ok { EVAL('augment class NonExistent { }') },
         'augment on non-existent class dies';
 }
 

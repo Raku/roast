@@ -3,7 +3,7 @@ use v6;
 use Test;
 plan 21;
 
-dies_ok { Supply.migrate }, 'can not be called as a class method';
+dies-ok { Supply.migrate }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";

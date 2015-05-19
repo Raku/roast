@@ -6,4 +6,4 @@ plan 1;
 ## the following code should stay at line number 9
 ## if you move it to another line, please adjust 
 ## the line number in S24-testing/line-numbers.t
-dies_ok { 1 };
+dies-ok { 1 };

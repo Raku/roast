@@ -80,7 +80,7 @@ my Color $c1 = Color::white;
 ok($c1 == 0, 'can assign enum value to typed variable with long name');
 my Color $c2 = white;
 ok($c2 == 0, 'can assign enum value to typed variable with short name');
-dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
+dies-ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
 # conflict between subs and enums
 {

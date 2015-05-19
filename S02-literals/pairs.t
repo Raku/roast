@@ -112,7 +112,7 @@ sub f3 ($a) { WHAT($a) }
     my $pair = (a => 42);
 
     isa-ok f3($pair),  Pair, 'a $pair is not treated magically...';
-    dies_ok { EVAL 'f3(|$pair)' }, '|$pair becomes a name, which fails to dispatch';
+    dies-ok { EVAL 'f3(|$pair)' }, '|$pair becomes a name, which fails to dispatch';
 }
 
 sub f4 ($a)    { WHAT($a) }

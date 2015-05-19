@@ -30,10 +30,10 @@ plan 11;
     sub pa(@a) { @a.WHAT; }
     my @b = 2, 3;
     isa-ok pa(@b), Array, 'basic array type sanity';
-    dies_ok { EVAL('pa(3)') }, 'non-slurpy array does not take a single Int';
+    dies-ok { EVAL('pa(3)') }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }   #OK not used
-    dies_ok { EVAL('ph(3)') }, 'an Int is not a Hash';
+    dies-ok { EVAL('ph(3)') }, 'an Int is not a Hash';
 }
 
 # this used to be a rakudobug, RT #62172

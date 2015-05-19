@@ -84,16 +84,16 @@ sub gen_hash {
       (c=>False,d=>False,X=>True),                   "Test exists:p FFT";
 
     #?niezca 6 todo "no combined adverbial pairs"
-    dies_ok { %h<c>:exists:k },    "Test exists:k,   invalid combo";
-    dies_ok { %h<c>:exists:!k },   "Test exists:!k,  invalid combo";
-    dies_ok { %h<c>:!exists:k },   "Test !exists:k,  invalid combo";
-    dies_ok { %h<c>:!exists:!k },  "Test !exists:!k, invalid combo";
+    dies-ok { %h<c>:exists:k },    "Test exists:k,   invalid combo";
+    dies-ok { %h<c>:exists:!k },   "Test exists:!k,  invalid combo";
+    dies-ok { %h<c>:!exists:k },   "Test !exists:k,  invalid combo";
+    dies-ok { %h<c>:!exists:!k },  "Test !exists:!k, invalid combo";
 
     #?niezca 6 todo "no combined adverbial pairs"
-    dies_ok { %h<c>:exists:v },    "Test exists:v,   invalid combo";
-    dies_ok { %h<c>:exists:!v },   "Test exists:!v,  invalid combo";
-    dies_ok { %h<c>:!exists:v },   "Test !exists:v,  invalid combo";
-    dies_ok { %h<c>:!exists:!v },  "Test !exists:!v, invalid combo";
+    dies-ok { %h<c>:exists:v },    "Test exists:v,   invalid combo";
+    dies-ok { %h<c>:exists:!v },   "Test exists:!v,  invalid combo";
+    dies-ok { %h<c>:!exists:v },   "Test !exists:v,  invalid combo";
+    dies-ok { %h<c>:!exists:!v },  "Test !exists:!v, invalid combo";
 
     is %h.elems, 26, "should not have changed hash";
 } #46

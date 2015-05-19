@@ -166,7 +166,7 @@ plan 57;
 #?niecza todo "https://github.com/sorear/niecza/issues/184"
 {
     my Int @a;
-    dies_ok( { @a.unshift: "a" }, "cannot unshift strings onto in Int array" );
+    dies-ok( { @a.unshift: "a" }, "cannot unshift strings onto in Int array" );
 }
 
 # vim: ft=perl6

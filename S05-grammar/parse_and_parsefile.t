@@ -13,7 +13,7 @@ nok(~Foo.parse("abc123xyz"), ".parse method invokes TOP rule, no match");
 is(~Foo.parse("123"), "123",  ".parse method invokes TOP rule, match");
 nok(Foo.parse("123xyz"),  ".parse method requires match to end");
 is(~Foo.subparse("123xyz"), "123",  ".subparse method doesn't require match to end");
-dies_ok({ Bar.parse("abc123xyz") }, "dies if no TOP rule");
+dies-ok({ Bar.parse("abc123xyz") }, "dies if no TOP rule");
 
 my $fh = open("parse_and_parsefile_test", :w);
 $fh.say("abc\n123\nxyz");
@@ -27,8 +27,8 @@ $fh.say("123");
 $fh.close();
 #?niecza skip 'Unable to resolve method parsefile in class Foo'
 is(~Baz.parsefile("parse_and_parsefile_test"), "123\n",  ".parsefile method invokes TOP rule, match");
-dies_ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
-dies_ok({ Foo.parsefile("non_existent_file") },        "dies if file not found");
+dies-ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
+dies-ok({ Foo.parsefile("non_existent_file") },        "dies if file not found");
 
 unlink("parse_and_parsefile_test");
 

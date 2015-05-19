@@ -16,10 +16,10 @@ plan 17;
     import A;
 
     is Afoo(), 'sub A::Afoo', 'import imports things marked as "is export"';
-    dies_ok {EVAL(q{ Abar() })}, "doesn't import non-exported routines";
+    dies-ok {EVAL(q{ Abar() })}, "doesn't import non-exported routines";
     # RT #114246
     is pub, 42, 'can import constants';
-    dies_ok { EVAL 'priv' }, 'cannot access non-exported constants';
+    dies-ok { EVAL 'priv' }, 'cannot access non-exported constants';
 }
 
 #?rakudo skip 'import plus inline module RT #125087'
@@ -30,7 +30,7 @@ plan 17;
     });
 
     is Bfoo(), 'sub B::Bfoo', 'impporting from inline module';
-    dies_ok {EVAL(q{ Bbar() })}, "not importing not-exported routines";
+    dies-ok {EVAL(q{ Bbar() })}, "not importing not-exported routines";
 }
 
 {
@@ -65,7 +65,7 @@ plan 17;
         sub e2 is export(:B) { 'E::e2' }
     }
     import E :B;
-    dies_ok { EVAL 'e1' }, 'importing by tag is sufficiently selective';
+    dies-ok { EVAL 'e1' }, 'importing by tag is sufficiently selective';
     is e2(), 'E::e2',      'importing by tag';
     {
         import E :ALL;

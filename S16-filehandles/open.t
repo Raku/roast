@@ -30,8 +30,8 @@ Some edge and error cases for open()
 
 # opening directories
 {
-    dies_ok { open('t').close },     'opening a directory fails';
-    dies_ok { open('t', :w).close }, 'opening a directory as writable fails';
+    dies-ok { open('t').close },     'opening a directory fails';
+    dies-ok { open('t', :w).close }, 'opening a directory as writable fails';
 }
 
 

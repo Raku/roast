@@ -27,11 +27,11 @@ use lib '.';
     is( waz(), 'Foo::waz', 'Foo::waz is the sub we expect' );
     is( waz(1), 'Foo::wazhere', 'Foo::waz imported does not wipe out our other waz multis' );
 
-    dies_ok { EVAL 'qux()' }, 'qux() not imported';
-    dies_ok { EVAL 'gaz()' }, 'gaz() not imported';
+    dies-ok { EVAL 'qux()' }, 'qux() not imported';
+    dies-ok { EVAL 'gaz()' }, 'gaz() not imported';
 }
 
-dies_ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
+dies-ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
 
 {
     use lib 't/spec/packages';

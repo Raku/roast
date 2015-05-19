@@ -23,19 +23,19 @@ my Int $foo;
 my Str $bar;
 
 {
-    dies_ok({$foo = 'xyz'},      'Int restricts to integers');
-    dies_ok { $foo = Mu },       'Int does not accept Mu';
+    dies-ok({$foo = 'xyz'},      'Int restricts to integers');
+    dies-ok { $foo = Mu },       'Int does not accept Mu';
     is(($foo = 42),       42,    'Int is an integer');
 
-    dies_ok({$bar = 42},         'Str restricts to strings');
-    dies_ok { $bar = Mu },       'Str does not accept Mu';
+    dies-ok({$bar = 42},         'Str restricts to strings');
+    dies-ok { $bar = Mu },       'Str does not accept Mu';
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
 
 #?niecza skip 'Trait of not available on variables'
 {
     my $baz of Int;
-    dies_ok({$baz = 'xyz'},      'of Int restricts to integers');
+    dies-ok({$baz = 'xyz'},      'of Int restricts to integers');
     is(($baz = 42),       42,    'of Int is an integer');
 }
 
@@ -76,7 +76,7 @@ my Str $bar;
 }
 
 # Num does not accept Int (used to, then spec changed)
-dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
+dies-ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
 # L<S02/Return types/a return type can be specified before or after the name>
 {
@@ -88,18 +88,18 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype1(Bool::True), 'ok', 'good return value works (returns)');
     #?niecza todo 'retrun value type checking NYI'
-    dies_ok({ returntype1(Bool::False) }, 'bad return value dies (returns)');
+    dies-ok({ returntype1(Bool::False) }, 'bad return value dies (returns)');
     is(returntype2(Bool::True), 42, 'good return value works (of)');
     #?niecza todo 'retrun value type checking NYI'
-    dies_ok({ returntype2(Bool::False) }, 'bad return value dies (of)');
+    dies-ok({ returntype2(Bool::False) }, 'bad return value dies (of)');
 
     is(returntype3(Bool::True), True, 'good return value works (my Type sub)');
     #?niecza todo 'retrun value type checking NYI'
-    dies_ok({ returntype3(Bool::False) }, 'bad return value dies (my Type sub)');
+    dies-ok({ returntype3(Bool::False) }, 'bad return value dies (my Type sub)');
 
     is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
     #?niecza todo 'retrun value type checking NYI'
-    dies_ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
+    dies-ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
 }
 
 {
@@ -111,18 +111,18 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype1(Bool::True), 'ok', 'good implicit return value works (returns)');
     #?niecza todo 'retrun value type checking NYI'
-    dies_ok({ returntype1(Bool::False) }, 'bad implicit return value dies (returns)');
+    dies-ok({ returntype1(Bool::False) }, 'bad implicit return value dies (returns)');
     is(returntype2(Bool::True), 42, 'good implicit return value works (of)');
     #?niecza todo 'retrun value type checking NYI'
-    dies_ok({ returntype2(Bool::False) }, 'bad implicit return value dies (of)');
+    dies-ok({ returntype2(Bool::False) }, 'bad implicit return value dies (of)');
 
     is(returntype3(Bool::True), True, 'good implicit return value works (my Type sub)');
     #?niecza todo 'retrun value type checking NYI'
-    dies_ok({ returntype3(Bool::False) }, 'bad implicit return value dies (my Type sub)');
+    dies-ok({ returntype3(Bool::False) }, 'bad implicit return value dies (my Type sub)');
 
     is(returntype4(Bool::True), 'ok', 'good implicit return value works (-->)');
     #?niecza todo 'retrun value type checking NYI'
-    dies_ok({ returntype4(Bool::False) }, 'bad implicit return value dies (-->)');
+    dies-ok({ returntype4(Bool::False) }, 'bad implicit return value dies (-->)');
 }
 
 {

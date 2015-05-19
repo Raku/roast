@@ -12,11 +12,11 @@ lives_ok { EVAL 'regex { <[ } > ]> }; 1' },
 {
     lives_ok { EVAL 'sub if() { "#foo" }; say if();' },
       "Can call sub if()";
-    dies_ok { EVAL 'sub if() { "#foo" }; say if ;' },
+    dies-ok { EVAL 'sub if() { "#foo" }; say if ;' },
       "Calling sub if without parens parsefails due to no-arg say";
     lives_ok { EVAL 'sub if() { "#foo" }; say if;' },
       "Calling sub if okay parens as long as not followed by whitespace";
-    dies_ok { EVAL 'say "OK" if+1' },
+    dies-ok { EVAL 'say "OK" if+1' },
       "Using keyword if fails if not followed by whitespace";
 }
 

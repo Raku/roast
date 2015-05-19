@@ -53,15 +53,15 @@ plan 18;
     sub returns-native-num-ro-untyped() { $n }
     sub returns-native-str-ro-untyped() { $s }
 
-    dies_ok { EVAL 'returns-native-int-ro-untyped() = 2' },
+    dies-ok { EVAL 'returns-native-int-ro-untyped() = 2' },
         'Non-rw untyped returning native int not an l-value';
     is $i, 1, 'Really did not modify int';
     
-    dies_ok { EVAL 'returns-native-num-ro-untyped() = 0.2e0' },
+    dies-ok { EVAL 'returns-native-num-ro-untyped() = 0.2e0' },
         'Non-rw untyped returning native num not an l-value';
     is $n, 0.1e0, 'Really did not modify num';
     
-    dies_ok { EVAL 'returns-native-str-ro-untyped() = "jalfrezi"' },
+    dies-ok { EVAL 'returns-native-str-ro-untyped() = "jalfrezi"' },
         'Non-rw untyped returning native str not an l-value';
     is $s, 'korma', 'Really did not modify str';
 }
@@ -75,15 +75,15 @@ plan 18;
     sub returns-native-num-ro-typed() returns num { $n }
     sub returns-native-str-ro-typed() returns str { $s }
 
-    dies_ok { EVAL 'returns-native-int-ro-typed() = 2' },
+    dies-ok { EVAL 'returns-native-int-ro-typed() = 2' },
         'Non-rw typed returning native int not an l-value';
     is $i, 1, 'Really did not modify int';
     
-    dies_ok { EVAL 'returns-native-num-ro-typed() = 0.2e0' },
+    dies-ok { EVAL 'returns-native-num-ro-typed() = 0.2e0' },
         'Non-rw typed returning native num not an l-value';
     is $n, 0.1e0, 'Really did not modify num';
     
-    dies_ok { EVAL 'returns-native-str-ro-typed() = "jalfrezi"' },
+    dies-ok { EVAL 'returns-native-str-ro-typed() = "jalfrezi"' },
         'Non-rw typed returning native str not an l-value';
     is $s, 'korma', 'Really did not modify str';
 }

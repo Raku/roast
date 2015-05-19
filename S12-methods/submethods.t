@@ -19,7 +19,7 @@ Basic submethod tests. See L<S12/"Submethods">
   lives_ok {$a = Foo.new()},    "Foo.new() worked (1)";
   is $a.foo_build, 1,           "Foo's BUILD was called";
   # is instead of todo_is to avoid unexpected succeedings
-  dies_ok { $a.bar_build },     "Bar's BUILD counter not available";
+  dies-ok { $a.bar_build },     "Bar's BUILD counter not available";
 
   my $b;
   lives_ok {$b = Bar.new()},    "Bar.new() worked";

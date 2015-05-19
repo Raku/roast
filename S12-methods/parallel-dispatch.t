@@ -36,8 +36,8 @@ class Bar is Foo {
     is(@o.map({.count}), (5..10), 'object sanity test');
     lives_ok({@o».?not_here},  'parallel dispatch using @o».?not_here lives');
     lives_ok({@o>>.?not_here}, 'parallel dispatch using @o>>.?not_here lives');
-    dies_ok({@o».not_here},    'parallel dispatch using @o».not_here dies');
-    dies_ok({@o>>.not_here},   'parallel dispatch using @o>>.not_here dies');
+    dies-ok({@o».not_here},    'parallel dispatch using @o».not_here dies');
+    dies-ok({@o>>.not_here},   'parallel dispatch using @o>>.not_here dies');
 
     @o».?doit;
     is(@o.map({.count}), (6..11), 'parallel dispatch using @o».?doit works');
@@ -56,8 +56,8 @@ class Bar is Foo {
     is(@o.map({.count}), (5..10), 'object sanity test');
     lives_ok({@o».*not_here},  'parallel dispatch using @o».*not_here lives');
     lives_ok({@o>>.*not_here}, 'parallel dispatch using @o>>.*not_here lives');
-    dies_ok({@o».+not_here},   'parallel dispatch using @o».+not_here dies');
-    dies_ok({@o>>.+not_here},  'parallel dispatch using @o>>.+not_here dies');
+    dies-ok({@o».+not_here},   'parallel dispatch using @o».+not_here dies');
+    dies-ok({@o>>.+not_here},  'parallel dispatch using @o>>.+not_here dies');
 
     @o».*doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o».*doit works');

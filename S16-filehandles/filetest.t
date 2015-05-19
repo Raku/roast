@@ -17,7 +17,7 @@ plan 43;
 # old: L<S16/Filehandles, files, and directories/A file test, where X is one of the letters listed below.>
 
 #?niecza todo
-dies_ok { 't' ~~ :d }, 'file test from before spec revision 27503 is error';
+dies-ok { 't' ~~ :d }, 'file test from before spec revision 27503 is error';
 
 # Basic tests
 ok 't'.IO ~~ :d,             "~~:d returns true on directories";

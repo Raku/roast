@@ -11,7 +11,7 @@ plan 93;
         return $x;
     }
     is a(3), 3, 'Can pass positional arguments';
-    dies_ok { EVAL('a(g=>7)') }, 'Dies on passing superfluous arguments';
+    dies-ok { EVAL('a(g=>7)') }, 'Dies on passing superfluous arguments';
 }
 
 {
@@ -21,7 +21,7 @@ plan 93;
     is c(w => 3), 3, 'Named argument passes an integer, not a Pair';
     my $w = 5;
     is c(:$w), 5, 'can use :$x colonpair syntax to call named arg';
-    dies_ok {EVAL('my $y; c(:$y)')}, 'colonpair with wrong variable name dies';
+    dies-ok {EVAL('my $y; c(:$y)')}, 'colonpair with wrong variable name dies';
 }
 
 {
@@ -58,7 +58,7 @@ sub foo (:$x = 3) { $x }
 is(foo(), 3, "not specifying named params that aren't mandatory works");
 
 # part of RT 53814
-dies_ok({foo(4)}, "using a named as a positional fails");
+dies-ok({foo(4)}, "using a named as a positional fails");
 
 is(foo( x => 5), 5, "naming named param also works");
 is(foo( :x<5> ), 5, "naming named param adverb-style also works");
@@ -66,8 +66,8 @@ is(foo( :x<5> ), 5, "naming named param adverb-style also works");
 sub foo2 (:$x = 3, :$y = 5) { $x + $y }
 
 is(foo2(), 8, "not specifying named params that aren't mandatory works (foo2)");
-dies_ok({foo2(4)}, "using a named as a positional fails (foo2)");
-dies_ok({foo2(4, 10)}, "using a named as a positional fails (foo2)");
+dies-ok({foo2(4)}, "using a named as a positional fails (foo2)");
+dies-ok({foo2(4, 10)}, "using a named as a positional fails (foo2)");
 is(foo2( x => 5), 10, "naming named param x also works (foo2)");
 is(foo2( y => 3), 6, "naming named param y also works (foo2)");
 is(foo2( x => 10, y => 10), 20, "naming named param x & y also works (foo2)");
@@ -128,7 +128,7 @@ sub mandatory (:$param!) {
 }
 
 is(mandatory(param => 5) , 5, "named mandatory parameter is returned");
-dies_ok {EVAL 'mandatory()' },  "not specifying a mandatory parameter fails";
+dies-ok {EVAL 'mandatory()' },  "not specifying a mandatory parameter fails";
 
 #?niecza skip "Unhandled trait required"
 {
@@ -137,7 +137,7 @@ dies_ok {EVAL 'mandatory()' },  "not specifying a mandatory parameter fails";
     }
     
     is(mandatory_by_trait(param => 5) , 5, "named mandatory parameter is returned");
-    dies_ok( { mandatory_by_trait() }, "not specifying a mandatory parameter fails");
+    dies-ok( { mandatory_by_trait() }, "not specifying a mandatory parameter fails");
 }
 
 
@@ -210,14 +210,14 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
     sub typed_named(Int :$x) { 1 }
     is(typed_named(:x(42)), 1,      'typed named parameters work...');
     is(typed_named(),       1,      '...when value not supplied also...');
-    dies_ok({ typed_named("BBQ") }, 'and the type check is enforced');
+    dies-ok({ typed_named("BBQ") }, 'and the type check is enforced');
 }
 
 {
     sub renames(:y($x)) { $x }
     is(renames(:y(42)),  42, 'renaming of parameters works');
     is(renames(y => 42), 42, 'renaming of parameters works');
-    dies_ok { renames(:x(23)) }, 'old name is not available';
+    dies-ok { renames(:x(23)) }, 'old name is not available';
 }
 
 # L<S06/Parameters and arguments/"A signature containing a name collision">
@@ -292,7 +292,7 @@ eval-dies-ok 'sub svn28865( :$a, :@a ) {}',
 
 {
     sub quoted_named(:$x = 5) { $x };
-    dies_ok { quoted_named( "x" => 5 ) }, 'quoted pair key => positional parameter';
+    dies-ok { quoted_named( "x" => 5 ) }, 'quoted pair key => positional parameter';
 }
 
 #?niecza skip "Abbreviated named parameter must have a name"

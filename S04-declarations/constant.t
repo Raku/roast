@@ -10,7 +10,7 @@ plan 56;
     constant foo = 42;
 
     ok foo == 42, "declaring a sigilless constant using 'constant' works";
-    dies_ok { foo = 3 }, "can't reassign to a sigil-less constant";
+    dies-ok { foo = 3 }, "can't reassign to a sigil-less constant";
 }
 
 {
@@ -27,7 +27,7 @@ plan 56;
 
     constant $bar0 = 42;
     ok $bar0 == 42, "declaring a constant with a sigil using 'constant' works";
-    dies_ok { $bar0 = 2 }, "Can't reassign to a sigiled constant";
+    dies-ok { $bar0 = 2 }, "Can't reassign to a sigiled constant";
 }
 
 # RT #69740
@@ -48,8 +48,8 @@ plan 56;
     constant foo3 = 42;
     #?rakudo todo 'constants as type constraints'
     lives_ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
-    dies_ok { my foo3 $x = 43 },         'constant used as a type constraint enforces';
-    dies_ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';
+    dies-ok { my foo3 $x = 43 },         'constant used as a type constraint enforces';
+    dies-ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';
 }
 
 {
@@ -80,7 +80,7 @@ plan 56;
     package ConstantTest3 {
         my constant yak = 'shaving';
     }
-    dies_ok { ConstantTest3::yak }, 'constant can be explicitly "my"-scoped';
+    dies-ok { ConstantTest3::yak }, 'constant can be explicitly "my"-scoped';
 }
 
 #?rakudo todo 'COMPILING RT #125054'
@@ -227,11 +227,11 @@ plan 56;
 # RT #64522
 {
     constant $x = 64522;
-    dies_ok { $x += 2 }, 'dies: constant += n';
+    dies-ok { $x += 2 }, 'dies: constant += n';
     is $x, 64522, 'constant after += has not changed';
 
     sub con { 64522 }
-    dies_ok { ++con }, "constant-returning sub won't increment";
+    dies-ok { ++con }, "constant-returning sub won't increment";
     is con, 64522, 'constant-returning sub after ++ has not changed';
 }
 
@@ -239,22 +239,22 @@ plan 56;
 {
     constant $change = 'alteration';
 
-    dies_ok { $change ~= '' }, 'append nothing to a constant';
-    dies_ok { $change = 'alteration' }, 'assign constant its own value';
+    dies-ok { $change ~= '' }, 'append nothing to a constant';
+    dies-ok { $change = 'alteration' }, 'assign constant its own value';
     my $t = $change;
-    dies_ok { $change = $t }, 'assign constant its own value from var';
-    dies_ok { $change = 'alter' ~ 'ation' },
+    dies-ok { $change = $t }, 'assign constant its own value from var';
+    dies-ok { $change = 'alter' ~ 'ation' },
              'assign constant its own value from expression';
 
     constant $five = 5;
 
-    dies_ok { $five += 0 }, 'add zero to constant number';
-    dies_ok { $five *= 1 }, 'multiply constant number by 1';
-    dies_ok { $five = 5 }, 'assign constant its own value';
+    dies-ok { $five += 0 }, 'add zero to constant number';
+    dies-ok { $five *= 1 }, 'multiply constant number by 1';
+    dies-ok { $five = 5 }, 'assign constant its own value';
     my $faux_five = $five;
-    dies_ok { $five = $faux_five },
+    dies-ok { $five = $faux_five },
              'assign constant its own value from variable';
-    dies_ok { $five = 2 + 3 },
+    dies-ok { $five = 2 + 3 },
              'assign constant its own value from expression';
 }
 

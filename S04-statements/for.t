@@ -576,11 +576,11 @@ lives_ok {
 # RT #78406
 {
     my $c = 0;
-    dies_ok { for ^8 { .=fmt('%03b'); $c++ } }, '$_ is read-only here';
+    dies-ok { for ^8 { .=fmt('%03b'); $c++ } }, '$_ is read-only here';
     is $c, 0, '... and $_ is *always* read-only here';
 }
 
-dies_ok
+dies-ok
     {
         my class Foo {
             has @.items;

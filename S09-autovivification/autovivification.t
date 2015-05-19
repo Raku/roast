@@ -180,7 +180,7 @@ lives_ok {
   # this is ok, as you don't have to predeclare globally qualified variables
 }, "using an undeclared globaly qualified code variable in void context is ok";
 
-dies_ok {
+dies-ok {
   &New::Package::foo();
 }, "...but invoking undeclared globally qualifed code variable should die";
 

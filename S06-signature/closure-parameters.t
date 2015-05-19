@@ -63,7 +63,7 @@ plan 17;
     is t1(&takes-str-returns-bool), 'Str --> Bool',
        'Multi dispatch based on closure parameter syntax (4)';
 
-    dies_ok { t1( -> { 3 }) }, 
+    dies-ok { t1( -> { 3 }) }, 
        'Multi dispatch based on closure parameter syntax (5)';
 }
 

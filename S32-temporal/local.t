@@ -84,7 +84,7 @@ ok $dt eq '1989-10-29T05:55:00Z'|'1989-10-29T06:55:00Z', 'DateTime.utc (from loc
 
 $dt = nyc-dt(1997, 6, 30,   19, 59, 60).utc;
 ok $dt eq '1997-06-30T23:59:60Z', 'DateTime.utc (from local, with leap second)';
-dies_ok { nyc-dt 1997, 6, 30,   23, 59, 60 }, 'Local time zone rejects bogus leap second';
+dies-ok { nyc-dt 1997, 6, 30,   23, 59, 60 }, 'Local time zone rejects bogus leap second';
 $dt = ds('1998-12-31T23:59:60Z').local;
 #?rakudo todo "RT #122702"
 is ~$dt, '1998-12-31T18:59:60-0500', 'DateTime.local (from UTC, with leap second)';

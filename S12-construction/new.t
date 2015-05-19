@@ -45,7 +45,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 {
     class RT66204 {}
     ok ! RT66204.defined, 'NewClass is not .defined';
-    dies_ok { RT66204 .= new }, 'class asked to build itself refuses';
+    dies-ok { RT66204 .= new }, 'class asked to build itself refuses';
     ok ! RT66204.defined, 'NewClass is still not .defined';
 }
 
@@ -57,7 +57,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     # TODO: check the error message, not just the timing.
     #?rakudo todo "nested package handling does't quite get this one right"
     #?niecza todo
-    dies_ok { RT71706::Artie.new }, 'die trying to instantiate missing class';
+    dies-ok { RT71706::Artie.new }, 'die trying to instantiate missing class';
 }
 
 # RT #69676
@@ -128,7 +128,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 # RT #100780
 #?niecza skip 'dies more thoroughly than okay'
 {
-    dies_ok { X.new }, 'RT #100780'
+    dies-ok { X.new }, 'RT #100780'
 }
 
 # RT #74300

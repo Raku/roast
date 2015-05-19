@@ -33,8 +33,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($hash), 'a b foo', '...with the right elements';
     is $hash.values.grep({ ($_ ~~ Bool) && $_ }).elems, 3, "...and values";
 
-    dies_ok { $s.keys = <c d> }, "Can't assign to .keys";
-    dies_ok { $s.values = <True False> }, "Can't assign to .values";
+    dies-ok { $s.keys = <c d> }, "Can't assign to .keys";
+    dies-ok { $s.values = <True False> }, "Can't assign to .values";
 
     is ($s<a b>).grep(?*).elems, 2, 'Multiple-element access';
     is ($s<a santa b easterbunny>).grep(?*).elems, 2, 'Multiple-element access (with nonexistent elements)';

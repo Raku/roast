@@ -56,11 +56,11 @@ plan 75;
 {
     my Array @x;
     ok @x.VAR.of === Array, '@x.VAR.of of typed array (my Array @x)';
-    dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
-    dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
-    dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
-    dies_ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
-    dies_ok { @x[0, 2] = 2, 3}, 
+    dies-ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
+    dies-ok { @x = 1..3    }, 'can not assign range of the wrong type';
+    dies-ok { @x.push: 3, 4}, 'can not push values of the wrong type';
+    dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
+    dies-ok { @x[0, 2] = 2, 3}, 
             'can not assign values of wrong type to a slice';
     lives_ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
@@ -69,11 +69,11 @@ plan 75;
 {
     my @x of Array;
     ok @x.VAR.of === Array, '@x.VAR.of of typed array (my @x of Array)';
-    dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
-    dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
-    dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
-    dies_ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
-    dies_ok { @x[0, 2] = 2, 3}, 
+    dies-ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
+    dies-ok { @x = 1..3    }, 'can not assign range of the wrong type';
+    dies-ok { @x.push: 3, 4}, 'can not push values of the wrong type';
+    dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
+    dies-ok { @x[0, 2] = 2, 3}, 
             'can not assign values of wrong type to a slice';
     lives_ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
@@ -86,9 +86,9 @@ plan 75;
     lives_ok { @x = [2, 3], [5, 6] }, 'assignment works';
     #?rakudo todo "nested typechecks are borked"
     lives_ok { @x.push: [8, 9] }, 'pushing works';
-    dies_ok  { @x.push: 8 }, 'type constraint is enforced';
+    dies-ok  { @x.push: 8 }, 'type constraint is enforced';
     lives_ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
-    dies_ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
+    dies-ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
 } #6
 
 # test that lists/arrays returned from array methods are typed as well
@@ -121,13 +121,13 @@ plan 75;
         'type check Positional of Int allows correctly typed array to be returned explicitly';
     lives_ok { ret_pos_2() },
         'type check Positional of Int allows correctly typed array to be returned implicitly';
-    dies_ok { ret_pos_3() },
+    dies-ok { ret_pos_3() },
         'type check Positional of Int prevents untyped array to be returned explicitly';
-    dies_ok { ret_pos_4() },
+    dies-ok { ret_pos_4() },
         'type check Positional of Int prevents untyped array to be returned implicitly';
-    dies_ok { ret_pos_5() },
+    dies-ok { ret_pos_5() },
         'type check Positional of Int prevents incorrectly typed array to be returned explicitly';
-    dies_ok { ret_pos_6() },
+    dies-ok { ret_pos_6() },
         'type check Positional of Int prevents incorrectly typed array to be returned implicitly';
     lives_ok { ret_pos_7() },
         'type check Positional of Num allows subtyped Int array to be returned explicitly';

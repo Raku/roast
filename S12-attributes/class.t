@@ -39,7 +39,7 @@ lives_ok { $test4 = Quux.new() },
     'Can instantiate with overridden instance method';
 is $test4.bar, 17, 'Instance call gets instance attribute, not class attribute';
 my $test5 = 0;
-dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in subclass; we do not magically ignore it';
+dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in subclass; we do not magically ignore it';
 
 {
     class Oof {

@@ -47,7 +47,7 @@ is(m(@x), 2, 'multi dispatch relying on parametric subtype');
 sub modify(C1 @arr) {
     @arr[0] = C1.new;
 }
-dies_ok({ EVAL 'modify(@x)' }, 'type constraints enforced properly');
+dies-ok({ EVAL 'modify(@x)' }, 'type constraints enforced properly');
 
 # Use of parametric subtyping for assignment.
 my Numeric @a;

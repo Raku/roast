@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-dies_ok { quietly { die 'not quiet enough' } }, '"die" in "quietly" dies';
+dies-ok { quietly { die 'not quiet enough' } }, '"die" in "quietly" dies';
 
 is_run( 'quietly { warn "muted" }; say "detum"',
         { status => 0, err => '', out => "detum\n" },

@@ -116,14 +116,14 @@ use-ok('t::use_ok_test');
 # and see that the load fails. Gracefully. :)
 use-ok('Non::Existent::Package', :todo(1));
 
-## dies_ok
+## dies-ok
 
-dies_ok -> { die "Testing dies_ok" }, '... it dies_ok';
-dies_ok -> { die "Testing dies_ok" }, desc => '... it dies_ok';
-dies_ok -> { die "Testing dies_ok" }, :desc('... it dies_ok');
+dies-ok -> { die "Testing dies-ok" }, '... it dies-ok';
+dies-ok -> { die "Testing dies-ok" }, desc => '... it dies-ok';
+dies-ok -> { die "Testing dies-ok" }, :desc('... it dies-ok');
 
-dies_ok -> { "Testing dies_ok" }, desc => '... it dies_ok', todo => 1;
-dies_ok -> { "Testing dies_ok" }, :desc('... it dies_ok'), :todo(1);
+dies-ok -> { "Testing dies-ok" }, desc => '... it dies-ok', todo => 1;
+dies-ok -> { "Testing dies-ok" }, :desc('... it dies-ok'), :todo(1);
 
 ## lives_ok
 

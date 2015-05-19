@@ -11,7 +11,7 @@ lives_ok { EVAL 'my $!' },
 lives_ok { EVAL 'my $/' },
   'as can $/';
 
-dies_ok { EVAL '$/ = "foo"' },
+dies-ok { EVAL '$/ = "foo"' },
   'S05: Perl 6\'s $/ variable may not be assigned to directly.';
 
 #?niecza todo

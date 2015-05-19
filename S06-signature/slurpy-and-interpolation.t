@@ -24,7 +24,7 @@ sub invoke2 ($f, *@args) { $f(|@args) };
 is(invoke2(sub ($a, $b) { return "a: $a b: $b"}, 1, 2), 'a: 1 b: 2', 
     '... slurpy args flattening and matching parameters');
 
-dies_ok {
+dies-ok {
     invoke2(sub ($a, $b) { return "a: $a b: $b"}, 1, 2, 3);
 }, '... slurpy args flattening and not matching because of too many parameters';  
 

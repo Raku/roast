@@ -102,7 +102,7 @@ class T2 {
     is $o.called,       3,     'called total three methods during dispatch';
 }
 
-dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use of quotes
+dies-ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use of quotes
 
 #?rakudo skip '.*, .+ and .? with @foo RT #124845'
 #?niecza skip 'Two definitions found for symbol ::GLOBAL::T4::&m, etc'
@@ -128,8 +128,8 @@ dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use
     is ~$o.+@cand-num(3.4).sort, 'm-Num n-Num', '$o.+@cand(arg) (1)';
     is ~$o.+@cand-num(3).sort, 'm-Int m-Num n-Int n-Num', '$o.+@cand(arg) (2)';
     is $o.called, 6, 'right number of method calls';
-    dies_ok { $o.+@cand-num() }, "it's not ok with .+ if no candidate matched (arity)";
-    dies_ok { $o.+@cand-num([]) }, "it's not ok with .+ if no candidate matched (type)";
+    dies-ok { $o.+@cand-num() }, "it's not ok with .+ if no candidate matched (arity)";
+    dies-ok { $o.+@cand-num([]) }, "it's not ok with .+ if no candidate matched (type)";
 
     $o = T4.new();
     is ~$o.?@cand-num(3.4).sort, 'm-Num', '$o.?@cand(arg) (1)';

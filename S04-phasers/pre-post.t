@@ -185,8 +185,8 @@ throws-like '$pt.test(1)',
         return $x;
     }
     is blockless(4), 4, 'blockless PRE/POST (+)';
-    dies_ok  { blockless -4 }, 'blockless PRE/POST (-, 1)';
-    dies_ok  { blockless 14 }, 'blockless PRE/POST (-, 2)';
+    dies-ok  { blockless -4 }, 'blockless PRE/POST (-, 1)';
+    dies-ok  { blockless 14 }, 'blockless PRE/POST (-, 2)';
 }
 
 # vim: ft=perl6

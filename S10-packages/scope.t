@@ -38,7 +38,7 @@ is($?PACKAGE, "Main", 'The Main $?PACKAGE was not broken by any declarations');
 # block level
 is(Test1::ns, "Test1", "block-level package declarations");
 cmp-ok(Test1::pkg, &infix:<===>, ::Test1::, 'block-level $?PACKAGE var');
-dies_ok { EVAL 'test1_export' }, "export was not imported implicitly";
+dies-ok { EVAL 'test1_export' }, "export was not imported implicitly";
 
 # declared packages
 is(Test2::ns, "Test2", "declared package");
@@ -56,11 +56,11 @@ lives_ok { $x = test_export() }, "export was imported successfully";
 is($x, "party island", "exported OK");
 
 # exports
-dies_ok { ns() }, "no ns() leaked";
+dies-ok { ns() }, "no ns() leaked";
 
 # now the lexical / file level packages...
 my $pkg;
-dies_ok  { $pkg = Our::Package::pkg },
+dies-ok  { $pkg = Our::Package::pkg },
     "Can't see `our' packages out of scope";
 lives_ok { $pkg = t::spec::packages::PackageTest::get_our_pkg() },
     "Package in scope can see `our' package declarations";
@@ -71,7 +71,7 @@ ok(!($pkg === ::Our::Package),
 # oh no, how do we get to that object, then?
 # perhaps %t::spec::packages::PackageTest::<Our::Package> ?
 
-dies_ok { $pkg = t::spec::packages::PackageTest::cant_see_pkg() },
+dies-ok { $pkg = t::spec::packages::PackageTest::cant_see_pkg() },
     "can't see package declared out of scope";
 lives_ok { $pkg = t::spec::packages::PackageTest::my_pkg() },
     "can see package declared in same scope";

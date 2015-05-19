@@ -205,7 +205,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     isa-ok s/BC/@a[]/.WHAT, Match, 'Single list replacement succeeds and returns a Match';
     is($_, q{Wow I know my ZA ZBC's}, 'List replacement produces correct result');
 
-    dies_ok { 'abc' ~~ s/b/g/ },
+    dies-ok { 'abc' ~~ s/b/g/ },
             "can't modify string literal (only variables)";
 }
 
@@ -217,7 +217,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     # RT #120526
     is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
 
-    dies_ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
+    dies-ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
 }
 
 #L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
@@ -413,7 +413,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
         method ro($_ ) { s/c// }
     }
     
-    dies_ok { SubstInsideMethod.new.ro('ccc') }, '(sanely) dies when trying to s/// a read-only variable';
+    dies-ok { SubstInsideMethod.new.ro('ccc') }, '(sanely) dies when trying to s/// a read-only variable';
 }
 
 # RT #83552

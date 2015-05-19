@@ -11,6 +11,6 @@ plan 2;
     use t::spec::packages::S11-modules::Foo;
     is foo(), 'Foo::foo', 'could import foo()';
 }
-dies_ok {EVAL('foo()') }, 'sub is only imported into the inner lexical scope';
+dies-ok {EVAL('foo()') }, 'sub is only imported into the inner lexical scope';
 
 # vim: ft=perl6

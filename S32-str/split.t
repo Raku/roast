@@ -122,7 +122,7 @@ plan 53;
 }
 
 #L<S32::Str/Str/"no longer has a default delimiter">
-dies_ok {"  abc  def  ".split()}, q/Str.split() disallowed/;
+dies-ok {"  abc  def  ".split()}, q/Str.split() disallowed/;
 
 # This one returns an empty list
 #?niecza todo '2 element list'

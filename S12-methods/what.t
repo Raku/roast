@@ -88,7 +88,7 @@ ok 1.1 == 11/10, 'decimal == the equivalent rational';
 # RT #70237
 {
     is 1.WHAT.gist, '(Int)', '1.WHAT sanity';
-    dies_ok { Int.WHAT = Str }, '.WHAT is readonly';
+    dies-ok { Int.WHAT = Str }, '.WHAT is readonly';
     is 2.WHAT.gist, '(Int)', 'assignment to Int.WHAT does nothing';
 }
 

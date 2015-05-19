@@ -215,7 +215,7 @@ plan 41;
     my A $y = -4;
     # the compiler could have done some checks somehwere, so
     # pick a reasonably high number
-    dies_ok { $y = 900000 }, 'growing subset types rejects too high values';
+    dies-ok { $y = 900000 }, 'growing subset types rejects too high values';
     lives_ok { $y = 1 }, 'the state variable in subset types works (1)';
     lives_ok { $y = 2 }, 'the state variable in subset types works (2)';
     lives_ok { $y = 3 }, 'the state variable in subset types works (3)';
