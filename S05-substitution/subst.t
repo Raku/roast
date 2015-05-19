@@ -422,7 +422,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     $_ = "foo"; s[f] = 'bar';
     is $_, "baroo", 's[f] is parsed as a substitution op';
-    throws_like q{$_ = "foo"; s[] = "bar";}, X::Syntax::Regex::NullRegex;
+    throws-like q{$_ = "foo"; s[] = "bar";}, X::Syntax::Regex::NullRegex;
 }
 
 # RT #119201
@@ -465,7 +465,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $_, "rreal", 's[]="" works when $_ is set';
 
     $_ = "";
-    throws_like { EVAL 's[] = "rea"' },
+    throws-like { EVAL 's[] = "rea"' },
         X::Syntax::Regex::NullRegex;
 }
 

@@ -56,14 +56,14 @@ eval_dies_ok ' {my $foo; $^foo;}(1) ', 'my $foo; $^foo; is an illegal redeclarat
 }
 
 # RT #123470
-throws_like 'my $a; sub weird{ $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
+throws-like 'my $a; sub weird{ $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
     :variable_name<$a>,
     :placeholder<$^a>,
     :decl<sub>,
     ;
 
 # RT #123470
-throws_like 'my $a; my $block = { $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
+throws-like 'my $a; my $block = { $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
     :variable_name<$a>,
     :placeholder<$^a>,
     ;

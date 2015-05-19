@@ -187,7 +187,7 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 }
 
 {
-    throws_like { EVAL ' @%(a => <b>)<a>' },
+    throws-like { EVAL ' @%(a => <b>)<a>' },
       Exception,
       "doesn't really make sense, but shouldn't segfault, either ($!)";
 }
@@ -244,7 +244,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     my $x;
     lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
     nok $x{'a'}.defined, '... and the result is not defined';
-    throws_like { Mu.{'a'} },
+    throws-like { Mu.{'a'} },
       X::Multi::NoMatch,
       'no .{ } in Mu';
 }
@@ -329,15 +329,15 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 
 # RT #77504
 {
-    throws_like { ~[]<c> }, Exception,
+    throws-like { ~[]<c> }, Exception,
         message => 'postcircumfix:<{ }> not defined for type Array',
         'adequate Failure error message when hash-indexing a non-hash using .<> (1)';
 
-    throws_like { ~5<c> }, Exception,
+    throws-like { ~5<c> }, Exception,
         message => 'postcircumfix:<{ }> not defined for type Int',
         'adequate Failure error message when hash-indexing a non-hash using .<> (2)';
 
-    throws_like { ~5{'c'} }, Exception,
+    throws-like { ~5{'c'} }, Exception,
         message => 'postcircumfix:<{ }> not defined for type Int',
         'adequate Failure error message when hash-indexing a non-hash using .{}';
 }

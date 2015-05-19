@@ -16,7 +16,7 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 plan 29;
 
-throws_like({"moose".length}, X::Method::NotFound, 'Str.length properly unimplemented');
+throws-like({"moose".length}, X::Method::NotFound, 'Str.length properly unimplemented');
 
 # string literals, for sanity
 

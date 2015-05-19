@@ -64,16 +64,16 @@ plan 51;
 #?niecza skip 'Opening bracket is required for #` comment'
 {
 
-    throws_like { EVAL "3 * #` (invalid comment) 2" },
+    throws-like { EVAL "3 * #` (invalid comment) 2" },
       X::Comp::AdHoc,  # no exception type yet
       "no space allowed between '#`' and '('";
-    throws_like { EVAL "3 * #`\t[invalid comment] 2" },
+    throws-like { EVAL "3 * #`\t[invalid comment] 2" },
       X::Comp::AdHoc,  # no exception type yet
       "no tab allowed between '#`' and '['";
-    throws_like { EVAL "3 * #`  \{invalid comment\} 2" },
+    throws-like { EVAL "3 * #`  \{invalid comment\} 2" },
       X::Comp::AdHoc,  # no exception type yet
       "no spaces allowed between '#`' and '\{'";
-    throws_like { EVAL "3 * #`\n<invalid comment> 2" },
+    throws-like { EVAL "3 * #`\n<invalid comment> 2" },
       X::Syntax::Confused,
       "no spaces allowed between '#`' and '<'";
 
@@ -160,7 +160,7 @@ plan 51;
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
 #?niecza skip 'Excess arguments to CORE eval'
 {
-    throws_like { EVAL '$a = #`\  (comment) 32' },
+    throws-like { EVAL '$a = #`\  (comment) 32' },
       X::Undeclared,
       "comments can't contain unspace";
 }
@@ -175,7 +175,7 @@ plan 51;
 
 {
     my $a = Nil;
-    throws_like { EVAL '$a = q# 32 #;' }, X::Comp::AdHoc, 'misuse of # as quote delimiters';
+    throws-like { EVAL '$a = q# 32 #;' }, X::Comp::AdHoc, 'misuse of # as quote delimiters';
     ok !$a.defined, "The # character can't be used as quote delimiters";
 }
 

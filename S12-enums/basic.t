@@ -124,7 +124,7 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 {
     enum S1 <a b c>;
     enum S2 <b c d>;
-    throws_like { say b }, X::PoisonedAlias, :alias<b>, :package-type<enum>, :package-name<S2>;
+    throws-like { say b }, X::PoisonedAlias, :alias<b>, :package-type<enum>, :package-name<S2>;
     ok S1::b == 1 && S2::b == 0, 'still can access redeclared enum values via package';
 }
 

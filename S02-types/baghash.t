@@ -37,10 +37,10 @@ sub showkv($x) {
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    throws_like { $b.keys = <c d> },
+    throws-like { $b.keys = <c d> },
       X::Assignment::RO,
       "Can't assign to .keys";
-    throws_like { $b.values = 3, 4 },
+    throws-like { $b.values = 3, 4 },
       X::Assignment::RO,
       "Can't assign to .values";
 
@@ -130,7 +130,7 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like { EVAL 'my %h = BagHash.new(<a b o p a p o o>)' },
+    throws-like { EVAL 'my %h = BagHash.new(<a b o p a p o o>)' },
       X::Hash::Store::OddNumber;
 }
 

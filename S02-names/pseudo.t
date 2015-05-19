@@ -64,13 +64,13 @@ plan 142;
 
         $MY::z ::= $y;
         is $z, $y, '::= binding through $MY::z works';
-        throws_like { $z = 5 },
+        throws-like { $z = 5 },
           Exception,
           '... and makes readonly';
 
         MY::.{'$z'} ::= $x;
         is $z, $x, '::= binding through MY::.{} works';
-        throws_like { $z = 5 },
+        throws-like { $z = 5 },
           Exception,
           '... and makes readonly';
     }
@@ -92,10 +92,10 @@ plan 142;
         }
     }
 
-    throws_like { EVAL 'MY::A2' },
+    throws-like { EVAL 'MY::A2' },
       Exception,
       'Cannot use MY::A2 directly from outer scope';
-    throws_like { MY::.{'A2'}.spies },
+    throws-like { MY::.{'A2'}.spies },
       Exception,
       'Cannot use MY::.{"A2"} from outer scope';
 

@@ -4,34 +4,34 @@ plan 24;
 
 #?rakudo skip 'exception type X::Syntax::OutsideOfTopicalizer NYI RT #125132'
 {
-throws_like 'when 1 { }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
+throws-like 'when 1 { }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
     'when block in mainline complains about missing topicalizer';
-throws_like 'default { }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
+throws-like 'default { }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
     'default block in mainline complains about missing topicalizer';
 
-throws_like '-> { when 1 { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
+throws-like '-> { when 1 { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
     'when block in pointy not declaring $_ complains about missing topicalizer';
-throws_like '-> { default { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
+throws-like '-> { default { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
     'default block in pointy not declaring $_ complains about missing topicalizer';
 
-throws_like 'given 42 -> $a { when 1 { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
+throws-like 'given 42 -> $a { when 1 { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
     'when block in pointy on given not declaring $_ complains about missing topicalizer';
-throws_like 'given 42 -> $a { default { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
+throws-like 'given 42 -> $a { default { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
     'default block in pointy on given not declaring $_ complains about missing topicalizer';
 
-throws_like 'for 1, 2, 3 -> $a { when 1 { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
+throws-like 'for 1, 2, 3 -> $a { when 1 { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
     'when block in pointy on for loop not declaring $_ complains about missing topicalizer';
-throws_like 'for 1, 2, 3 -> $a { default { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
+throws-like 'for 1, 2, 3 -> $a { default { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
     'default block in pointy on for loop not declaring $_ complains about missing topicalizer';
 
-throws_like 'sub foo() { when 1 { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
+throws-like 'sub foo() { when 1 { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
     'when block in sub not declaring $_ complains about missing topicalizer';
-throws_like 'sub foo() { default { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
+throws-like 'sub foo() { default { } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
     'default block in sub not declaring $_ complains about missing topicalizer';
 
-throws_like 'my class C { method foo() { when 1 { } } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
+throws-like 'my class C { method foo() { when 1 { } } }', X::Syntax::OutsideOfTopicalizer, keyword => 'when',
     'when block in method not declaring $_ complains about missing topicalizer';
-throws_like 'my class C { method foo() { default { } } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
+throws-like 'my class C { method foo() { default { } } }', X::Syntax::OutsideOfTopicalizer, keyword => 'default',
     'default block in method not declaring $_ complains about missing topicalizer';
 }
 

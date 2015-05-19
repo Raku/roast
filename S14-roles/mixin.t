@@ -113,7 +113,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 # RT #77184
 {
-    throws_like { EVAL q[{ role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }] },
+    throws-like { EVAL q[{ role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }] },
        X::Syntax::Variable::Twigil, twigil => '!', scope => 'my',
        'RT #77184'
 }
@@ -156,7 +156,7 @@ lives_ok {(True but role {}).gist}, 'can mix into True';
 
 # RT #119371
 {
-    throws_like q[role popo { macro marco { $^a but popo }; marco popo; }],
+    throws-like q[role popo { macro marco { $^a but popo }; marco popo; }],
         X::Role::Parametric::NoSuchCandidate,
         role    => { .^name eq 'popo' }
         ;

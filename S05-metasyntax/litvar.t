@@ -71,7 +71,7 @@ is 'foobar' ~~ /@( <a b c o> )+/,   'ooba', '@( <a b c o> )+';
 # $i was picked here because it is an internal variable in rakudo that was
 # visible in regex interpolations in the past.
 $var = '$i';
-throws_like { EVAL '"foo" ~~ /<$var>/' }, X::Undeclared, symbol => '$i',
+throws-like { EVAL '"foo" ~~ /<$var>/' }, X::Undeclared, symbol => '$i',
     'undeclared var in assertion in interpolated string throws';
 {
     my $i = 'f+o';

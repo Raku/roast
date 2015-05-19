@@ -32,19 +32,19 @@ sub showkv($x) {
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    throws_like { $m<a> = 5 },
+    throws-like { $m<a> = 5 },
       X::Assignment::RO,
       "Can't assign to an element (Mixs are immutable)";
-    throws_like { $m<a>++ },
+    throws-like { $m<a>++ },
       Exception,
       "Can't increment an element (Mixs are immutable)";
-    throws_like { $m.keys = <c d> },
+    throws-like { $m.keys = <c d> },
       X::Assignment::RO,
       "Can't assign to .keys";
-    throws_like { $m.values = 3, 4 },
+    throws-like { $m.values = 3, 4 },
       X::Assignment::RO,
       "Can't assign to .values";
-    throws_like { $m<a>:delete },
+    throws-like { $m<a>:delete },
       X::Immutable,
       "Can't :delete from Mix";
 
@@ -92,7 +92,7 @@ sub showkv($x) {
     my $m = mix <a a b foo>;
     is $m<a>:exists, True, ':exists with existing element';
     is $m<santa>:exists, False, ':exists with nonexistent element';
-    throws_like { $m<a>:delete },
+    throws-like { $m<a>:delete },
       X::Immutable,
       ':delete does not work on mix';
 }
@@ -109,7 +109,7 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like 'my %h = mix <a b o p a p o o>', X::Hash::Store::OddNumber;
+    throws-like 'my %h = mix <a b o p a p o o>', X::Hash::Store::OddNumber;
 }
 {
     my %h := mix <a b o p a p o o>;
@@ -180,14 +180,14 @@ sub showkv($x) {
     is %m<b>, 2, 'Single-key subscript (existing element)';
     is %m<santa>, 0, 'Single-key subscript (nonexistent element)';
 
-    throws_like { %m<a> = 1 },
+    throws-like { %m<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Mixs are immutable)";
     #?rakudo.jvm    todo "?"
-    throws_like { %m = mix <a b> },
+    throws-like { %m = mix <a b> },
       X::Assignment::RO,
       "Can't assign to a %var implemented by Mix";
-    throws_like { %m<a>:delete },
+    throws-like { %m<a>:delete },
       X::Immutable,
       "Can't :delete from a Mix";
 }
@@ -301,7 +301,7 @@ sub showkv($x) {
 
 {
     my $m = Mix.new("a", "b", "b");
-    throws_like { $m.pick },
+    throws-like { $m.pick },
       Exception,
       '.pick does not work on Mix';
 }
@@ -311,7 +311,7 @@ sub showkv($x) {
 #?niecza skip '.grab NYI'
 {
     my $m = mix <a b b c c c>;
-    throws_like { $m.grab },
+    throws-like { $m.grab },
       X::Immutable,
       'cannot call .grab on a Mix';
 }
@@ -321,7 +321,7 @@ sub showkv($x) {
 #?niecza skip '.grabpairs NYI'
 {
     my $m = mix <a b b c c c>;
-    throws_like { $m.grabpairs },
+    throws-like { $m.grabpairs },
       X::Immutable,
       'cannot call .grabpairs on a Mix';
 }
@@ -405,10 +405,10 @@ sub showkv($x) {
 {
     my $m = <a b c>.Mix;
     #?rakudo.jvm    todo "?"
-    throws_like { $m.pairs[0].key++ },
+    throws-like { $m.pairs[0].key++ },
       X::Assignment::RO,
       'Cannot change key of Mix.pairs';
-    throws_like { $m.pairs[0].value++ },
+    throws-like { $m.pairs[0].value++ },
       Exception,
       'Cannot change value of Mix.pairs';
 }

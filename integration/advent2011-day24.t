@@ -33,7 +33,7 @@ multi sub Slurp($filename) {
 
 lives_ok { EVAL $unambiguous ~ 'Slurp("README.md")' },
   'unambiguous multi - lives';
-throws_like { EVAL $ambiguous   ~ 'Slurp("README.md")' },
+throws-like { EVAL $ambiguous   ~ 'Slurp("README.md")' },
   X::Multi::Ambiguous,
   'ambiguous multi - dies';
 

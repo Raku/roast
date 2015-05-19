@@ -24,7 +24,7 @@ plan 20;
     is $x.trans(['a'] => ['b']), 'b', 'same for split(Str)';
 }
 
-throws_like { for "a b c".split(/\s/) -> $foo { $foo = $foo; } },
+throws-like { for "a b c".split(/\s/) -> $foo { $foo = $foo; } },
   Exception,  # no exception type yet
   'variables returned from split and passed to pointy block are still ro';
 

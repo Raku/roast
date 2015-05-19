@@ -19,8 +19,8 @@ plan 17;
     nok $c.closed, "Channel not closed before value received";
     is $c.receive, 42, "Received value";
     ok $c.closed, "Channel closed after all values received";
-    throws_like { $c.receive }, X::Channel::ReceiveOnClosed;
-    throws_like { $c.send(18) }, X::Channel::SendOnClosed;
+    throws-like { $c.receive }, X::Channel::ReceiveOnClosed;
+    throws-like { $c.send(18) }, X::Channel::SendOnClosed;
 }
 
 {
@@ -29,7 +29,7 @@ plan 17;
     $c.fail("oh noes");
     is $c.receive, 1, "received first value";
     dies_ok { $c.receive }, "error thrown on receive";
-    throws_like { $c.send(18) }, X::Channel::SendOnClosed;
+    throws-like { $c.send(18) }, X::Channel::SendOnClosed;
     is $c.closed.cause.message, "oh noes", "failure reason conveyed";
 }
 
@@ -37,7 +37,7 @@ plan 17;
     my class X::Roast::Channel is Exception { };
     my $c = Channel.new;
     $c.fail(X::Roast::Channel.new);
-    throws_like { $c.receive }, X::Roast::Channel;
+    throws-like { $c.receive }, X::Roast::Channel;
 }
 
 {

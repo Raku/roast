@@ -40,7 +40,7 @@ plan 10;
 }
 
 {
-  throws_like '(lazy { 43 }) = 23 ', X::Assignment::RO,
+  throws-like '(lazy { 43 }) = 23 ', X::Assignment::RO,
     "assigning to a lazily computed value does not work";
 }
 

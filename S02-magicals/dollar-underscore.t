@@ -19,7 +19,7 @@ for @list -> $letter { is( $letter , 'a', 'can bind to variable in pointy') }
 #?niecza skip 'infinite loop'
 {
     # -> { ... } introduces a sig of (), so this code dies with "Too many positionals passed"
-    throws_like { EVAL q[for @list -> { return 1 unless $_ eq 'a' }] }, Exception,
+    throws-like { EVAL q[for @list -> { return 1 unless $_ eq 'a' }] }, Exception,
         '$_ does not get set implicitly if a pointy is given';
 }
 

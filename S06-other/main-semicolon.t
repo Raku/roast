@@ -23,17 +23,17 @@ is(~@c, 'c d e', 'slurpy param set correctly');
 is &?ROUTINE.name, "MAIN", "...and we're actually in MAIN now";
 
 {
-    throws_like { EVAL "module AtBeginning \{\}\nsub MAIN;" },
+    throws-like { EVAL "module AtBeginning \{\}\nsub MAIN;" },
         X::UnitScope::TooLate, what => "sub"
 }
 
 {
-    throws_like { EVAL '{ sub MAIN; }' },
+    throws-like { EVAL '{ sub MAIN; }' },
         X::UnitScope::Invalid, what => "sub"
 }
 
 {
-    throws_like { EVAL 'multi sub MAIN;' },
+    throws-like { EVAL 'multi sub MAIN;' },
         X::UnitScope::Invalid, what => "sub"
 }
 

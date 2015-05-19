@@ -97,7 +97,7 @@ plan 17;
     import G;
     is $gee, 42, 'can import an our-scoped variable';
 
-    throws_like 'module H { my $eidge is export = 42 }', X::Comp::Trait::Scope,
+    throws-like 'module H { my $eidge is export = 42 }', X::Comp::Trait::Scope,
         type      => 'is',
         subtype   => 'export',
         declaring => 'variable',

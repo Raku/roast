@@ -22,14 +22,14 @@ plan 20;
     ok EVAL(q/foo(1);   /), 'call with one arg, has parens';
     ok EVAL(q/&foo.(1);  /), 'call with one arg, has dot and parens';
     ok EVAL(q/&foo\ .(1);/), 'call with one arg, has long dot and parens';
-    throws_like { EVAL q/foo'...'; / },
+    throws-like { EVAL q/foo'...'; / },
       X::Syntax::Confused,
       'call with one arg, has no space and no parens';
 
     ok EVAL(q/foo 1, 2; /), 'call with two args, no parens';
     ok EVAL(q/foo(1, 2);/), 'call with two args, has parens';
 
-    throws_like { EVAL q/foo:bar;  / },
+    throws-like { EVAL q/foo:bar;  / },
       X::Undeclared::Symbols,
       'call with adverb after no space';
     ok EVAL(q/foo :bar; /), 'call with adverb after space';

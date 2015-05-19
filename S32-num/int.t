@@ -80,9 +80,9 @@ is('-1.999'.Int, -1, "int('-1.999') is -1");
 #?niecza 3 skip "0x, 0d, and 0o NYI"
 is('0x123'.Int, 0x123, "int('0x123') is 0x123");
 is('0d456'.Int, 0d456, "int('0d456') is 0d456");
-throws_like q['0o678'.Int], X::Str::Numeric,
+throws-like q['0o678'.Int], X::Str::Numeric,
     'conversion from string to number fails because of trailing characters (1)';
-throws_like q['3e4d5'.Int], X::Str::Numeric,
+throws-like q['3e4d5'.Int], X::Str::Numeric,
     'conversion from string to number fails because of trailing characters (2)';
 
 #?DOES 24
@@ -111,7 +111,7 @@ is((-Inf).Int,  -Inf, "int -Inf is -Inf");
 is((NaN).Int,    NaN, "int NaN is NaN");
 
 # RT #65132
-throws_like 'int 3.14', X::Syntax::Confused,
+throws-like 'int 3.14', X::Syntax::Confused,
     'dies: int 3.14 (prefix:int is gone)';
 
 is 0.lsb,        Nil, "0.lsb is Nil";

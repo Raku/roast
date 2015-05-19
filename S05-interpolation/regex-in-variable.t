@@ -105,13 +105,13 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
 # RT #122253
 #?niecza skip "Representation P6cursor does not support attributes"
 {
-    throws_like { EVAL 'my class InterpolationTest { has $!a; method m() { /$!a/ } }' },
+    throws-like { EVAL 'my class InterpolationTest { has $!a; method m() { /$!a/ } }' },
         X::Attribute::Regex, :symbol<$!a>,
         'Cannot interpolate attribute in a regex';
-    throws_like { EVAL 'my class InterpolationTest { has $!b; method m() { /<$!b>/ } }' },
+    throws-like { EVAL 'my class InterpolationTest { has $!b; method m() { /<$!b>/ } }' },
         X::Attribute::Regex, :symbol<$!b>,
         'Cannot interpolate attribute in a regex in angle construct';
-    throws_like { EVAL 'my class InterpolationTest { has $!c; method m() { /<?> { $!c }/ } }' },
+    throws-like { EVAL 'my class InterpolationTest { has $!c; method m() { /<?> { $!c }/ } }' },
         X::Attribute::Regex, :symbol<$!c>,
         'Cannot interpolate attribute in a closure in a regex';
 }

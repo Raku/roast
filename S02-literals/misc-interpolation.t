@@ -106,7 +106,7 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
        'interpolation of indirect method calls (different quotes)';
     is "|$x."f"()|", '|int|',    #OK use of quotes
        'interpolation of indirect method calls (same quotes)';
-    throws_like { EVAL q["|$x."f "()"] },
+    throws-like { EVAL q["|$x."f "()"] },
       X::Syntax::Confused,
       '... but whitespace is not allowed';
 }

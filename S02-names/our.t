@@ -8,7 +8,7 @@ plan 10;
 {
     lives_ok { EVAL 'our sub eval_born { 5 }'},
       'can define a sub in eval';
-    throws_like { EVAL 'eval_born()' },
+    throws-like { EVAL 'eval_born()' },
       X::Undeclared::Symbols,
       'call to eval-born sub outside eval dies';
     is &OUR::eval_born(), 5, 'call to eval-born our sub via OUR works';

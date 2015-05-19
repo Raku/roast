@@ -62,16 +62,16 @@ is-deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
 
 # RT #63646
 {
-    throws_like 'OscarMikeGolf::whiskey_tango_foxtrot()',
+    throws-like 'OscarMikeGolf::whiskey_tango_foxtrot()',
       Exception,
       'dies when calling non-existent sub in non-existent package';
-    throws_like 'Test::bravo_bravo_quebec()',
+    throws-like 'Test::bravo_bravo_quebec()',
       Exception,
       'dies when calling non-existent sub in existing package';
     # RT #74520
     class TestA { };
     #?niecza todo
-    throws_like 'TestA::frobnosticate(3, :foo)',
+    throws-like 'TestA::frobnosticate(3, :foo)',
       Exception,
       'calling non-existing function in foreign class dies';;
 }
@@ -117,7 +117,7 @@ isa-ok (rule => 1), Pair, 'rule => something creates a Pair';
 
 # RT #69752
 {
-    throws_like { EVAL 'Module.new' },
+    throws-like { EVAL 'Module.new' },
       X::Undeclared::Symbols,
       'error message mentions name not recognized, no maximum recursion depth exceeded';
 }
@@ -128,7 +128,7 @@ lives_ok { EVAL 'class Quox { }; Quox.new' },
   'class names can start with Q';
 
 # RT #58488
-throws_like {
+throws-like {
     EVAL 'class A { has $.a};  my $a = A.new();';
     EVAL 'class A { has $.a};  my $a = A.new();';
     EVAL 'class A { has $.a};  my $a = A.new();';
@@ -144,7 +144,7 @@ throws_like {
 
 # RT #75646
 {
-    throws_like 'my ::foo $x, say $x', Exception,
+    throws-like 'my ::foo $x, say $x', Exception,
         'no Null PMC access when printing a variable typed as ::foo ';
 }
 

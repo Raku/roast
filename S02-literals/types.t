@@ -5,18 +5,18 @@ use Test;
 
 plan 7;
 
-throws_like { EVAL 'class A { }; class A { }' },
+throws-like { EVAL 'class A { }; class A { }' },
   X::Redeclaration,
   "Can't redeclare a class";
 lives_ok { EVAL 'class G { ... }; class G { }' },
   'can redeclare stub classes';
-throws_like { EVAL 'class B is C { }' },
+throws-like { EVAL 'class B is C { }' },
   X::Inheritance::UnknownParent,
   "Can't inherit from a non-existing class";
-throws_like { EVAL 'class D does E { }' },
+throws-like { EVAL 'class D does E { }' },
   X::Comp::AdHoc,
   "Can't do a non-existing role";
-throws_like { EVAL 'my F $x;' },
+throws-like { EVAL 'my F $x;' },
   X::Comp::Group,
   'Unknown types in type constraints are an error';
 
@@ -29,7 +29,7 @@ lives_ok { EVAL 'class Task { has $.a }; Task.new(a => 3 );' },
 # L<S02/Bare identifiers/If a postdeclaration is not seen, the compile fails at CHECK
 # time>
 
-throws_like { EVAL q[caffeine(EVAL('sub caffeine($a){~$a}'))] },
+throws-like { EVAL q[caffeine(EVAL('sub caffeine($a){~$a}'))] },
   X::Undeclared::Symbols,
   'Post declaration necessary';
 

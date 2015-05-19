@@ -112,4 +112,4 @@ class NoTwigilNatives {
     is $ntn.all-the-things, '42 4.2 draniki', 'The update took effect';
 }
 
-throws_like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
+throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;

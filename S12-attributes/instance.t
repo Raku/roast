@@ -686,13 +686,13 @@ eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
 }
 
 {
-    throws_like 'class Zapis { has $.a is bar; }',
+    throws-like 'class Zapis { has $.a is bar; }',
       X::Comp::Trait::Unknown,
       type      => 'is',
       subtype   => 'bar',
       declaring => 'n attribute',
     ;
-    throws_like 'class Zapwill { has $.a will bar { ... } }',
+    throws-like 'class Zapwill { has $.a will bar { ... } }',
       X::Comp::Trait::Unknown,
       type      => 'will',
       subtype   => 'bar',

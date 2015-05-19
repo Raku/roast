@@ -135,7 +135,7 @@ ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
 # RT #75316
 #?niecza skip 'Typed exceptions NYI'
-throws_like { 1 ... () },
+throws-like { 1 ... () },
      X::Cannot::Empty,
      'RT #75698 - empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
      action => /endpoint/,

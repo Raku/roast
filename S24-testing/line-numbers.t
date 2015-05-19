@@ -54,4 +54,4 @@ execute-test(:function("nok"), :line(9));
 execute-test(:function("ok"), :line(9));
 
 #?DOES 1
-execute-test(:function("throws_like"), :line(9));
+execute-test(:function("throws-like"), :line(9));

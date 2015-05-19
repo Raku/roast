@@ -44,4 +44,4 @@ plan 11;
     is ~@a, "0 1 2 3 4 5 6 7 8 9", 'got the right order';
 }
 
-throws_like { Promise.allof(42) }, X::Promise::Combinator;
+throws-like { Promise.allof(42) }, X::Promise::Combinator;

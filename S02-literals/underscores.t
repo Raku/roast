@@ -17,39 +17,39 @@ plan 19;
 
 is 1_0, 10, "Single embedded underscore works";
 
-throws_like { EVAL '1__0' },
+throws-like { EVAL '1__0' },
   X::Comp::Group,
   "Multiple embedded underscores fail";
 
-throws_like { EVAL '_10' },
+throws-like { EVAL '_10' },
   X::Undeclared::Symbols,
   "Leading underscore fails";
 
-throws_like { EVAL '10_' },
+throws-like { EVAL '10_' },
   X::Syntax::Confused,
   "Trailing underscore fails";
 
-throws_like { EVAL '10_.0' },
+throws-like { EVAL '10_.0' },
   X::Syntax::Confused,
   "Underscore before . fails";
 
-throws_like { EVAL '10._0' },
+throws-like { EVAL '10._0' },
   X::Method::NotFound,
   "Underscore after . fails";
 
-throws_like { EVAL '10_e1' },
+throws-like { EVAL '10_e1' },
   X::Syntax::Confused,
   "Underscore before e fails";
 
-throws_like { EVAL '10e_1' },
+throws-like { EVAL '10e_1' },
   X::Syntax::Confused,
   "Underscore after e fails";
 
-throws_like { EVAL '10_E1' },
+throws-like { EVAL '10_E1' },
   X::Syntax::Confused,
   "Underscore before E fails";
 
-throws_like { EVAL '10E_1' },
+throws-like { EVAL '10E_1' },
   X::Syntax::Confused,
   "Underscore after E fails";
 
@@ -65,13 +65,13 @@ is 2e0_1, 20, "Underscores work in the argument for e";
 
 ok 2.1_23 == 2.123, "2.1_23 parses as number";
 
-throws_like { 2._foo },
+throws-like { 2._foo },
   X::Method::NotFound,
   "2._foo parses as method call";
-throws_like { 2._123 },
+throws-like { 2._123 },
   X::Method::NotFound,
   "2._123 parses as method call";
-throws_like { 2._e23 },
+throws-like { 2._e23 },
   X::Method::NotFound,
   "2._23  parses as method call";
 

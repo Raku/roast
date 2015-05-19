@@ -34,19 +34,19 @@ for @inttypes -> $type {
     is(EVAL("my $type \$var = $maxval"), $maxval, "$type can be $maxval");
     is(EVAL("my $type \$var = $minval"), $minval, "$type can be $minval");
 
-    throws_like { EVAL "my $type \$var = {$maxval+1}" },
+    throws-like { EVAL "my $type \$var = {$maxval+1}" },
       Exception,
       "$type cannot be {$maxval+1}";
-    throws_like { EVAL "my $type \$var = {$minval-1}" },
+    throws-like { EVAL "my $type \$var = {$minval-1}" },
       Exception,
       "$type cannot be {$minval-1}";
-    throws_like { EVAL "my $type \$var = 'foo'" },
+    throws-like { EVAL "my $type \$var = 'foo'" },
       Exception,
       "$type cannot be a string";
-    throws_like { EVAL "my $type \$var = 42.1" },
+    throws-like { EVAL "my $type \$var = 42.1" },
       Exception,
       "$type cannot be non-integer";
-    throws_like { EVAL "my $type \$var = NaN" },
+    throws-like { EVAL "my $type \$var = NaN" },
       Exception,
       "$type cannot be NaN";
 

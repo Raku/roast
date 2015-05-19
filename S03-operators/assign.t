@@ -886,7 +886,7 @@ sub l () { 1, 2 };
         $cc = 1;
     };
 
-    throws_like { EVAL 'called pi = 4' }, X::Assignment::RO,
+    throws-like { EVAL 'called pi = 4' }, X::Assignment::RO,
         'correct precedence between sub call and assignment (1)';
     is $cc, 0,
         'correct precedence between sub call and assignment (2)';
@@ -949,12 +949,12 @@ sub l () { 1, 2 };
 
 # RT #72874
 {
-    throws_like { EVAL "6 >== 2" }, X::Syntax::CannotMeta,
+    throws-like { EVAL "6 >== 2" }, X::Syntax::CannotMeta,
         "Can't use diffy >= with the = metaop ";
 }
 
 {
-    throws_like { EVAL "6 ~~= 2" }, X::Syntax::CannotMeta,
+    throws-like { EVAL "6 ~~= 2" }, X::Syntax::CannotMeta,
         "Can't use fiddly ~~ with the = metaop ";
 }
 

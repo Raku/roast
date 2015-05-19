@@ -253,7 +253,7 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 # RT #122907
 # TODO: write a better test once there is a typed exception
 {
-    throws_like { sprintf "%d" }, Exception,
+    throws-like { sprintf "%d" }, Exception,
         message => 'Directives specify 1 argument, but no argument was supplied',
         "adequate error when sprintf %d directive doesn't find a corresponding argument";
 }

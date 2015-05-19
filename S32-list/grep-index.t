@@ -103,8 +103,8 @@ is-deeply @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
 
 # Bool handling
 {
-    throws_like { grep-index $_ == 1, 1,2,3 }, X::Match::Bool;
-    throws_like { (1,2,3).grep-index: $_== 1 }, X::Match::Bool;
+    throws-like { grep-index $_ == 1, 1,2,3 }, X::Match::Bool;
+    throws-like { (1,2,3).grep-index: $_== 1 }, X::Match::Bool;
     is grep-index( Bool,True,False,Int ), (0,1), 'can we match on Bool as type';
     is (True,False,Int).grep-index(Bool), (0,1), 'can we match on Bool as type';
 }

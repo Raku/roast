@@ -167,7 +167,7 @@ is(42_127_000, 42127000, 'multiple underscores ok');
 is(42.0_1,     42.01,    'underscores in fraction ok');
 is(4_2.01,     42.01,    'underscores in whole part ok');
 
-throws_like { EVAL '4_2._0_1' },
+throws-like { EVAL '4_2._0_1' },
   X::Method::NotFound,
   'single underscores are not ok directly after the dot';
 is(4_2.0_1, 42.01,  'single underscores are ok');

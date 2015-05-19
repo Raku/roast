@@ -74,8 +74,8 @@ my @list = (1 ... 10);
 
 # Bool handling
 {
-    throws_like { first-index $_ == 1, 1,2,3 }, X::Match::Bool;
-    throws_like { (1,2,3).first-index: $_== 1 }, X::Match::Bool;
+    throws-like { first-index $_ == 1, 1,2,3 }, X::Match::Bool;
+    throws-like { (1,2,3).first-index: $_== 1 }, X::Match::Bool;
     is first-index( Bool,True,False,Int ), 0, 'can we match on Bool as type';
     is (True,False,Int).first-index(Bool), 0, 'can we match on Bool as type';
 }

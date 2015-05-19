@@ -24,7 +24,7 @@ isa-ok EVAL('now +300'), Instant, 'now is a term, not a function';
     my $d = $t1 - $t0;
 
     ok $t0 < $t1, 'later Instants are greater';
-    throws_like { $t0 + $t1 },
+    throws-like { $t0 + $t1 },
       X::Multi::Ambiguous,
       'Instant + Instant is illegal';
     isa-ok $d, Duration, 'Instant - Instant ~~ Duration';

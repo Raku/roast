@@ -61,17 +61,17 @@ ok ('a b,c,d' ~~ token { \w \s \w+ % \, }), 'can combine % with backslash charac
 
 # RT #111956
 {
-    throws_like q[/ * /], X::Syntax::Regex::SolitaryQuantifier,
+    throws-like q[/ * /], X::Syntax::Regex::SolitaryQuantifier,
         message => "Quantifier quantifies nothing",
         'adequate error message when quantifier follows nothing (1)';
-    throws_like q[/ a+ + /], X::Syntax::Regex::SolitaryQuantifier,
+    throws-like q[/ a+ + /], X::Syntax::Regex::SolitaryQuantifier,
         message => "Quantifier quantifies nothing",
         'adequate error message when quantifier follows nothing (2)';
 }
 
 # RT #77786
 {
-    throws_like q[/ : /], X::Syntax::Regex::SolitaryBacktrackControl,
+    throws-like q[/ : /], X::Syntax::Regex::SolitaryBacktrackControl,
         'adequate error message when backtrack control is out of control';
 }
 

@@ -10,7 +10,7 @@ plan 1;
 # RT #122094
 # TODO: better test (e.g. typed exception instead of testing for backend specific error messages
 {
-    throws_like {
+    throws-like {
         my $foo = ObjAt.new(:val("test"));
         $foo ~~ /"foo"/;
     },

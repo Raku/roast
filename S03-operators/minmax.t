@@ -21,10 +21,10 @@ This test min/max functions in their operator form. To see them tested in their 
     is 1 max 2, 2, 'how about this?';
     is 1 min 2 min 3, 1, 'ooh! 3 numbers! More difficult';
     is 1 max 2 max 3, 3, 'again! 3 numbers!';
-    throws_like q{1 min 2 max 3},
+    throws-like q{1 min 2 max 3},
         X::Syntax::NonAssociative,
         'No! No left-associativeness!';
-    throws_like q{1 max 2 min 3},
+    throws-like q{1 max 2 min 3},
         X::Syntax::NonAssociative,
         'This is also not OK';
     is "alpha" min "beta", "alpha", 'min works for strings, too';

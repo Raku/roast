@@ -67,7 +67,7 @@ eval_dies_ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
 
 # RT #118793
 {
-    throws_like { EVAL q[my $x; 5 R:= $x] }, Exception,
+    throws-like { EVAL q[my $x; 5 R:= $x] }, Exception,
         message => 'Cannot reverse the args of := because list assignment operators are too fiddly',
         'adequate error message on trying to metaop-reverse binding (:=)';
 }

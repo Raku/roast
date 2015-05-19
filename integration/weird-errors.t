@@ -49,7 +49,7 @@ is_run(
        'multi sub with where clause + temp stress',
 );
 
-throws_like { EVAL 'time(1, 2, 3)' },
+throws-like { EVAL 'time(1, 2, 3)' },
   X::Undeclared::Symbols,
   'time() with arguments dies';
 
@@ -73,7 +73,7 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
 
 # RT #77246
 {
-    throws_like { EVAL '_~*.A' },
+    throws-like { EVAL '_~*.A' },
       X::Undeclared::Symbols,
       'weird string that once parsed in rakudo';
 }

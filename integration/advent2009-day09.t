@@ -57,7 +57,7 @@ is grade_essay("How to eat a Fish", 0), 0, 'P6 auto unpacking/verification';
 ok (entreat()), 'Default values for parameters works';
 is (xml_tag("hi")), "hihi>", 'Default values using previously supplied arguments';
 nok deactivate("Rakudo Quality Fission"), 'optional parameters';
-throws_like {drawline2(1,2,3,4)},
+throws-like {drawline2(1,2,3,4)},
   Exception,
   'wrong number of parameters, no exception object';
 ok (drawline2(:x1(3))), 'When you force naming, they are not all required.';
@@ -68,7 +68,7 @@ is detector(:foo(1), :bar(2), :camel(3)), ("'bar', 'camel'"|"'camel', 'bar'"), '
 #?niecza todo 'Capturing arbitrary named arguments as hash'
 is (detector(foo => 1, bar => 2, camel => 3)), ("'bar', 'camel'"|"'camel', 'bar'"), 'Same as above test, only passed as hash';
 my $t = 3;
-throws_like {up1($t)},
+throws-like {up1($t)},
   Exception,
   "Can't modify parameters within by default, no exception object.";
 up1_2($t);
@@ -76,7 +76,7 @@ is $t, 4, 'Set a parameter to "is rw", and then you can modify';
 up1_3($t);
 is $t, 4, '"is copy" leaves original alone"';
 my @te = <a b c>;
-throws_like {EVAL 'namen(@te)' },
+throws-like {EVAL 'namen(@te)' },
   Exception,
   'Autoflattening doesnt exist, no exception object';
 is (namen(|@te)), ('a','b','c'), "Put a | in front of the variable, and you're ok!";

@@ -21,7 +21,7 @@ is(foo(), 'GLOBAL::foo', 'got the right routine name in the default package');
 my $bar = sub { &?ROUTINE.name };
 is($bar(), '', 'got an empty string for an anon block');
 
-throws_like { EVAL 'my $baz = try { &?ROUTINE.name };' },
+throws-like { EVAL 'my $baz = try { &?ROUTINE.name };' },
   X::Undeclared::Symbols,
   "&?ROUTINE not available outside of a routine";
 

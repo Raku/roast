@@ -29,7 +29,7 @@ plan 22;
     is-deeply @b[1000], False, 'array default';
 }
 
-throws_like { EVAL 'my Bool $a is default(42)' }, X::TypeCheck::Assignment;
+throws-like { EVAL 'my Bool $a is default(42)' }, X::TypeCheck::Assignment;
 lives_ok { EVAL 'my Bool $a is default(True)' }, 'eval type check';
 
 {
@@ -40,7 +40,7 @@ lives_ok { EVAL 'my Bool $a is default(True)' }, 'eval type check';
 }
 
 lives_ok { EVAL 'my $a is default(Int) = "foo"' }, "default doesn't set type";
-throws_like { EVAL 'my Int $a = "foo"' }, X::TypeCheck::Assignment;
+throws-like { EVAL 'my Int $a = "foo"' }, X::TypeCheck::Assignment;
 
 {
     my @a is default(42) = 69;

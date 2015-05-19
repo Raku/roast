@@ -49,7 +49,7 @@ is (1, 2, sub {[*] @_[*-1], @_ + 1} ... 720).join(' '), '1 2 6 24 120 720', 'slu
 # RT #117825
 # TODO: better test (e.g. typed exception instead of testing for backend specific error messages
 {
-    throws_like { ( ^1, *+* ... * )[^20] }, Exception,
+    throws-like { ( ^1, *+* ... * )[^20] }, Exception,
         message => {
             m/
                 'Too few positionals passed; expected 2 arguments but got 1'

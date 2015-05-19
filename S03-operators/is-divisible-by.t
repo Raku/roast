@@ -28,16 +28,16 @@ plan 15;
 # RT #76170
 {
     # TODO: implement typed exception and adapt test
-    throws_like { EVAL q[ 9 !% 0 ] }, X::Syntax::CannotMeta,
+    throws-like { EVAL q[ 9 !% 0 ] }, X::Syntax::CannotMeta,
         'infix<!%> is not iffy enough; RT #76170';
 } #1
 
 {
-    throws_like { 9 %% 0 }, X::Numeric::DivideByZero,
+    throws-like { 9 %% 0 }, X::Numeric::DivideByZero,
         message => 'Divide by zero using infix:<%%>',
         'cannot divide by zero using infix:<%%>';
     #?rakudo todo "not sure why this doesn't fire"
-    throws_like { EVAL "9 !%% 0" }, X::Numeric::DivideByZero,
+    throws-like { EVAL "9 !%% 0" }, X::Numeric::DivideByZero,
         message => 'Divide by zero using infix:<%%>',
         'cannot divide by zero using infix:<%%>';
 } #2

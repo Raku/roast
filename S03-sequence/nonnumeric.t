@@ -58,7 +58,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
     ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
 
     is ('ZZ' ... 'AA')[*-1], 'AA', "last element of 'ZZ' ... 'AA' is 'AA'";
-    throws_like { 'ZZ' ... 'A' },
+    throws-like { 'ZZ' ... 'A' },
         Exception,
         "Str decrement fails after 'AA': leftmost characters are never removed",
         message => 'Decrement out of range';

@@ -107,7 +107,7 @@ lives_ok {my $x = -> {}; my $y = $x(); },
 
 # RT #115372
 {
-    throws_like q[say -> {YOU_ARE_HERE}], X::Syntax::Reserved,
+    throws-like q[say -> {YOU_ARE_HERE}], X::Syntax::Reserved,
         '{YOU_ARE_HERE} disallowed outside of a setting';
 }
 

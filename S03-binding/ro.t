@@ -42,9 +42,9 @@ plan 11;
 
 # RT #65900
 {
-    throws_like q[my $a is readonly = 5;], X::Comp::Trait::Unknown,
+    throws-like q[my $a is readonly = 5;], X::Comp::Trait::Unknown,
         'variable trait "is readonly" is no longer valid (1)';
-    throws_like q[(my $a is readonly) = 5;], X::Comp::Trait::Unknown,
+    throws-like q[(my $a is readonly) = 5;], X::Comp::Trait::Unknown,
         'variable trait "is readonly" is no longer valid (2)';
 }
 

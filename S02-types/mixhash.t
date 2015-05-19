@@ -37,10 +37,10 @@ sub showkv($x) {
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    throws_like { $m.keys = <c d> },
+    throws-like { $m.keys = <c d> },
       X::Assignment::RO,
       "Can't assign to .keys";
-    throws_like { $m.values = 3, 4 },
+    throws-like { $m.values = 3, 4 },
       X::Assignment::RO,
       "Can't assign to .values";
 
@@ -131,7 +131,7 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like 'my %h = MixHash.new(<a b o p a p o o>)', X::Hash::Store::OddNumber;
+    throws-like 'my %h = MixHash.new(<a b o p a p o o>)', X::Hash::Store::OddNumber;
 }
 
 {
@@ -306,7 +306,7 @@ sub showkv($x) {
 
 {
     my $m = MixHash.new("a", "b", "b");
-    throws_like { $m.pick },
+    throws-like { $m.pick },
       Exception,
       '.pick does not work on MixHash';
 }
@@ -316,7 +316,7 @@ sub showkv($x) {
 #?niecza skip '.grab NYI'
 {
     my $m = <a b b c c c>.MixHash;
-    throws_like { $m.grab },
+    throws-like { $m.grab },
       Exception,
       'cannot call .grab on a MixHash';
 }

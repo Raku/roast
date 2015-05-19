@@ -21,18 +21,18 @@ lives_ok { EVAL 'my proto $!' },
 lives_ok { EVAL 'my proto $/' },
   'as can $/';
 
-throws_like { EVAL 'my $f!ao = "beh";' },
+throws-like { EVAL 'my $f!ao = "beh";' },
   Exception,
   "normal varnames can't have ! in their name";
-throws_like { EVAL 'my $fo:o::b:ar = "bla"' },
+throws-like { EVAL 'my $fo:o::b:ar = "bla"' },
   X::Syntax::Confused,
   "var names can't have colons in their names either";
 
 {
-    throws_like "my Int a = 10;", X::Syntax::Malformed, message => / sigilless /;
-    throws_like "my Int a;", X::Syntax::Malformed, message => / sigilless /;
-    throws_like "my a = 10;", X::Syntax::Malformed, message => / sigilless /;
-    throws_like "my a;", X::Syntax::Malformed, message => / sigilless /;
+    throws-like "my Int a = 10;", X::Syntax::Malformed, message => / sigilless /;
+    throws-like "my Int a;", X::Syntax::Malformed, message => / sigilless /;
+    throws-like "my a = 10;", X::Syntax::Malformed, message => / sigilless /;
+    throws-like "my a;", X::Syntax::Malformed, message => / sigilless /;
 }
 
 {

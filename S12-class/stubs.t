@@ -27,10 +27,10 @@ eval_dies_ok q[my class StubbedButNotDeclared { ... }], 'stubbing a class but no
 
 # RT #81060
 {
-    throws_like { EVAL 'class A { ... }; say A.WHAT' },
+    throws-like { EVAL 'class A { ... }; say A.WHAT' },
         X::Package::Stubbed,
         message => "The following packages were stubbed but not defined:\n    A";
-    throws_like { EVAL 'class A { ... }; class B is A {}' },
+    throws-like { EVAL 'class A { ... }; class B is A {}' },
         X::Inheritance::NotComposed,
         message => "'B' cannot inherit from 'A' because 'A' isn't compose yet (maybe it is stubbed)";
 }

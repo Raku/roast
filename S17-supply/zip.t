@@ -42,7 +42,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         tap-ok $z, [1..10], "noop zip";
     }
 
-    throws_like( { Supply.zip(42) },
+    throws-like( { Supply.zip(42) },
       X::Supply::Combinator, combinator => 'zip' );
 
 }

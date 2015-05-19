@@ -111,11 +111,11 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 # RT #113968
-#?niecza skip "throws_like"
+#?niecza skip "throws-like"
 #?DOES 4
 {
-    throws_like 'rand()', X::Obsolete;
-    throws_like 'rand(3)', X::Obsolete;
+    throws-like 'rand()', X::Obsolete;
+    throws-like 'rand(3)', X::Obsolete;
 }
 
 done;

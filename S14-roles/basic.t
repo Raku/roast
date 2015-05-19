@@ -180,7 +180,7 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 
 # RT #117041
 {
-    throws_like { EVAL q[role A::B { method foo(A::C $a) { } }] },
+    throws-like { EVAL q[role A::B { method foo(A::C $a) { } }] },
         X::Parameter::InvalidType,
         'undeclared type in signature in role results in X::Parameter::InvalidType';
 }

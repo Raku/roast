@@ -24,7 +24,7 @@ plan 58;
     is(@md[0;1], 2, 'accessing an array as [0;0] works (2)');
     is(@md[1;0], 4, 'accessing an array as [0;0] works (3)');
     is(@md[1;1], 6, 'accessing an array as [0;0] works (4)');
-    throws_like {@md[1;2] = 5},
+    throws-like {@md[1;2] = 5},
       Exception,  # XXX fix when we have multi-dimensional arrays
       'setting a multi-d array beyond boundaries fails';
 
@@ -38,7 +38,7 @@ plan 58;
     @md[9;9;1] = 'bar';
     is(@md[0;0;0], 'foo', 'accessing a partially bounded array works (1)');
     is(@md[9;9;1], 'bar', 'accessing a partially bounded array works (2)');
-    throws_like {@md[0;0;2] = 9},
+    throws-like {@md[0;0;2] = 9},
       Exception,  # XXX fix when we have multi-dimensional arrays
       'setting a partially bounded multi-d array beyond boundaries fails';
 

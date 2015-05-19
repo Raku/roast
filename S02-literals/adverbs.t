@@ -21,7 +21,7 @@ plan 32;
     is-deeply (:%a), (a => %a), ":%a works";
     is-deeply (:&a), (a => &a), ":&a works";
     is-deeply (:42nd), (nd => 42), "Basic numeric adverb works";
-    throws_like { EVAL ':69th($_)' },
+    throws-like { EVAL ':69th($_)' },
       X::Comp::AdHoc,
       "Numeric adverb can't have an extra value";
 

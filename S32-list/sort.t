@@ -212,9 +212,9 @@ plan 32;
 #?niecza skip "determine behavior of 0-arity methods passed to sort"
 {
     sub foo () { 0 }   #OK not used
-    throws_like { EVAL '(1..10).sort(&foo)' }, Exception,
+    throws-like { EVAL '(1..10).sort(&foo)' }, Exception,
         'sort does not accept 0-arity sub';
-    throws_like '(1..10).sort(&rand)', Exception,
+    throws-like '(1..10).sort(&rand)', Exception,
         'sort does not accept &rand';
 }
 

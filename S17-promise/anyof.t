@@ -32,4 +32,4 @@ plan 10;
     is $pany.status, Broken, "Other promise keeping doesn't affect status";
 }
 
-throws_like { Promise.anyof(42) }, X::Promise::Combinator;
+throws-like { Promise.anyof(42) }, X::Promise::Combinator;

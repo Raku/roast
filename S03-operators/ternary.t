@@ -65,19 +65,19 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
 
 # RT #66840
 {
-    throws_like { EVAL '1 ?? 2,3 !! 4,5' },
+    throws-like { EVAL '1 ?? 2,3 !! 4,5' },
         X::Syntax::ConditionalOperator::PrecedenceTooLoose,
         'Ternary error (RT 66840)';
 }
 
 eval_dies_ok q[ 71704 !! 'bust' ], 'Ternary error (RT 71704)';
 
-throws_like { EVAL '1 ?? 3 :: 2' },
+throws-like { EVAL '1 ?? 3 :: 2' },
     X::Syntax::ConditionalOperator::SecondPartInvalid,
     second-part => "::",
     'conditional operator written as ?? :: throws typed exception';
 
-throws_like { EVAL '1 ?? 3:foo :: 2' },
+throws-like { EVAL '1 ?? 3:foo :: 2' },
     X::Syntax::ConditionalOperator::PrecedenceTooLoose,
     operator => ":foo",
     'adverbed literal in second part of ternary';
@@ -86,7 +86,7 @@ throws_like { EVAL '1 ?? 3:foo :: 2' },
 {
     my @x = ^10;
     my @y = 2..3;
-    throws_like { EVAL 'my @z = @y ?? @x[@y] :v !! @x' },
+    throws-like { EVAL 'my @z = @y ?? @x[@y] :v !! @x' },
         X::Syntax::ConditionalOperator::PrecedenceTooLoose,
         operator => ':v',
         'precedence of adverb in second part of ternary is too loose';
@@ -94,7 +94,7 @@ throws_like { EVAL '1 ?? 3:foo :: 2' },
         'adverb in second part of ternary used with parenthesis works';
 }
 
-throws_like { EVAL '1 ?? (3:foo) !! 2' },
+throws-like { EVAL '1 ?? (3:foo) !! 2' },
     X::Syntax::Adverb,
     'parenthesized adverbed literal in second part of ternary';
 
@@ -104,23 +104,23 @@ throws_like { EVAL '1 ?? (3:foo) !! 2' },
     is $three, 3, 'variable and adverb in second part of ternary';
 }
 
-throws_like { EVAL '1 ?? 3 : 2' },
+throws-like { EVAL '1 ?? 3 : 2' },
     X::Syntax::ConditionalOperator::SecondPartInvalid,
     second-part => ":",
     'conditional operator written as ?? : throws typed exception';
 
-throws_like { EVAL '1 ?? b\n !! 2' },
+throws-like { EVAL '1 ?? b\n !! 2' },
     X::Syntax::Confused,
     'bogus code before !! of conditional operator is compile time error';
 
-throws_like { EVAL '1 ?? 2' },
+throws-like { EVAL '1 ?? 2' },
     X::Syntax::Confused,
     'missing !! of conditional operator is compile time error';
 
 # RT #123115
 {
     sub rt123115 { 2 };
-    throws_like { EVAL '1 ?? rt123115 !! 3' },
+    throws-like { EVAL '1 ?? rt123115 !! 3' },
         X::Syntax::ConditionalOperator::SecondPartGobbled,
         'typed exception when listop gobbles the !! of conditional operator';
 }

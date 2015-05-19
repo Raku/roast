@@ -123,7 +123,7 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
         'can declare attribute inside of a BEGIN EVAL in class';
 
     class RT102478_2 { EVAL q[has $.x] };
-    throws_like { RT102478_2.new(x => 3).x },
+    throws-like { RT102478_2.new(x => 3).x },
         X::Method::NotFound,
         'cannot declare attribute inside of an EVAL in class';
 }

@@ -111,7 +111,7 @@ eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
 
 # RT #112970
 {
-    throws_like 'sub f(Int @x) {}; f( [] )',
+    throws-like 'sub f(Int @x) {}; f( [] )',
         X::TypeCheck::Binding,
         message => /Positional\[Int\]/,
         'error message mentions expected type when a typed array in a signature fails to bind';

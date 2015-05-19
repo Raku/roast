@@ -135,9 +135,9 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 {
     subset AnotherEven of Int where { $_ % 2 == 0 };
     my AnotherEven $x = 2;
-    throws_like { $x++ }, X::TypeCheck::Assignment, 'Even $x can not be ++ed';
+    throws-like { $x++ }, X::TypeCheck::Assignment, 'Even $x can not be ++ed';
     is $x, 2,         '..and the value was preserved';
-    throws_like { $x-- }, X::TypeCheck::Assignment, 'Even $x can not be --ed';
+    throws-like { $x-- }, X::TypeCheck::Assignment, 'Even $x can not be --ed';
     is $x, 2,         'and the value was preserved';
 }
 

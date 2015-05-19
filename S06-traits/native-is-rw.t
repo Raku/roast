@@ -122,17 +122,17 @@ plan 48;
     dies_ok { EVAL 'C.with-rw-str(my num $x)' }, 'Cannot pass wrong container to native str is rw in method';
 }
 
-throws_like { EVAL('sub foo(int $x) { $x = 42 }') },
+throws-like { EVAL('sub foo(int $x) { $x = 42 }') },
     X::Assignment::RO::Comp,
     variable => '$x',
     'Assignment to sub native read-only arg caught at compile time';
 
-throws_like { EVAL('class C { method foo(int $x) { $x = 42 } }') },
+throws-like { EVAL('class C { method foo(int $x) { $x = 42 } }') },
     X::Assignment::RO::Comp,
     variable => '$x',
     'Assignment to method native read-only arg caught at compile time';
 
-throws_like { EVAL('-> int $x { $x = 42 }') },
+throws-like { EVAL('-> int $x { $x = 42 }') },
     X::Assignment::RO::Comp,
     variable => '$x',
     'Assignment to pointy block native read-only arg caught at compile time';

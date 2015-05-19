@@ -333,7 +333,7 @@ plan 56;
     is Ticket.val, "dot-equals assignment", ".= new initialization on constants works";
 }
 
-throws_like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
+throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     symbol  => 'Mouse';
 
 # vim: ft=perl6

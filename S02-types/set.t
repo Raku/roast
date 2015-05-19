@@ -91,7 +91,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like 'my %h = set <a b o p a p o o>', X::Hash::Store::OddNumber;
+    throws-like 'my %h = set <a b o p a p o o>', X::Hash::Store::OddNumber;
 }
 {
     my %h := set <a b o p a p o o>;
@@ -218,11 +218,11 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset(-« set(3, 9, -4)), '-9 -3 4', '-« Set';
     is showset(set(<b e g k z>)».pred), 'a d f j y', 'Set».pred';
 
-    throws_like { set(1, 2) »+« set(3, 4) }, X::AdHoc,'Set »+« Set is illegal';
-    throws_like { set(1, 2) »+« [3, 4] }, X::AdHoc, 'Set »+« Array is illegal';
-    throws_like { set(1, 2) «+» [3, 4] }, X::AdHoc, 'Set «+» Array is illegal';
-    throws_like { [1, 2] »+« set(3, 4) }, X::AdHoc, 'Set »+« Array is illegal';
-    throws_like { [1, 2] «+» set(3, 4) }, X::AdHoc, 'Set «+» Array is illegal';
+    throws-like { set(1, 2) »+« set(3, 4) }, X::AdHoc,'Set »+« Set is illegal';
+    throws-like { set(1, 2) »+« [3, 4] }, X::AdHoc, 'Set »+« Array is illegal';
+    throws-like { set(1, 2) «+» [3, 4] }, X::AdHoc, 'Set «+» Array is illegal';
+    throws-like { [1, 2] »+« set(3, 4) }, X::AdHoc, 'Set »+« Array is illegal';
+    throws-like { [1, 2] «+» set(3, 4) }, X::AdHoc, 'Set «+» Array is illegal';
 }
 
 #?niecza skip "Hypers not yet Set compatible"

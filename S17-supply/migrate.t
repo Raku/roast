@@ -44,7 +44,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         $s3.emit(7);
         is-deeply @seen, [42,43,666,667,668,7], 'did we survive done?';
 
-        throws_like { $master.emit(23)}, X::Supply::Migrate::Needs;
+        throws-like { $master.emit(23)}, X::Supply::Migrate::Needs;
     }
 }
 

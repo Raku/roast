@@ -64,7 +64,7 @@ plan 6;
 }
 
 { # unquotes must evaluate to ASTs
-    throws_like 'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
+    throws-like 'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
                 X::TypeCheck::Splice,
                 got      => Str,
                 expected => AST,
@@ -81,7 +81,7 @@ plan 6;
         }
     };
     my $cookies;
-    throws_like { $cookies!!; }, Exception,
+    throws-like { $cookies!!; }, Exception,
         payload => 'Null check failed for $cookies';
 }
 

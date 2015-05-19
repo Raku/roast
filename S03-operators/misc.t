@@ -101,7 +101,7 @@ is (2 Z 3), @z, 'joining of single items';
 
 # RT #117045
 {
-    throws_like { EVAL q[.say for (1 , 2, 3)«~» "!"] },
+    throws-like { EVAL q[.say for (1 , 2, 3)«~» "!"] },
         X::Syntax::Confused,
         'Guillemet form of subscript does not parse as infix hyperop',
         message => { m/"Two terms in a row"/ };
@@ -118,10 +118,10 @@ is (2 Z 3), @z, 'joining of single items';
 # Duplicate prefixes
 {
     # RT #73198
-    throws_like "1%^^1", X::Syntax::DuplicatedPrefix, prefixes => "^^",
+    throws-like "1%^^1", X::Syntax::DuplicatedPrefix, prefixes => "^^",
         "%^^ fails to parse (RT #73198)";
     # RT #76436
-    throws_like "555 ~~!~~ 666", X::Syntax::DuplicatedPrefix, prefixes => "~~",
+    throws-like "555 ~~!~~ 666", X::Syntax::DuplicatedPrefix, prefixes => "~~",
         "~~!~~ fails to parse (RT #76436)";
 }
 

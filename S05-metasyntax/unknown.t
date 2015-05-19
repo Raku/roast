@@ -30,10 +30,10 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 }
 
 # RT #77110, #77386
-#?niecza skip "throws_like"
+#?niecza skip "throws-like"
 #?DOES 3
 {
-    throws_like '$_ = "0"; s/-/1/', X::Syntax::Regex::UnrecognizedMetachar, metachar => '-';
+    throws-like '$_ = "0"; s/-/1/', X::Syntax::Regex::UnrecognizedMetachar, metachar => '-';
 }
 
 # RT #77562

@@ -156,16 +156,16 @@ plan 75;
 
 # RT #114968
 {
-    throws_like 'my Int @a = "ab", "cd"', X::TypeCheck::Assignment,
+    throws-like 'my Int @a = "ab", "cd"', X::TypeCheck::Assignment,
         'typed arrays do check type during list assignment';
 }
 
 # RT #119061
 {
     my Int @a;
-    throws_like { @a.push: "a"; }, X::TypeCheck, '.push checks for types';
-    throws_like { @a.unshift: "a"; }, X::TypeCheck, '.unshift checks for types';
-    throws_like { @a[@a.elems] = "a"; }, X::TypeCheck::Assignment,
+    throws-like { @a.push: "a"; }, X::TypeCheck, '.push checks for types';
+    throws-like { @a.unshift: "a"; }, X::TypeCheck, '.unshift checks for types';
+    throws-like { @a[@a.elems] = "a"; }, X::TypeCheck::Assignment,
         'assignment checks for types';
 }
 

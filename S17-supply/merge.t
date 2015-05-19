@@ -38,6 +38,6 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         tap-ok $m, [1..10], "noop merge";
     }
 
-    throws_like( { Supply.merge(42) },
+    throws-like( { Supply.merge(42) },
       X::Supply::Combinator, combinator => 'merge' );
 }

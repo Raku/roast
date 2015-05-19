@@ -89,6 +89,6 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
 
-    throws_like( { Supply.zip-latest(42) },
+    throws-like( { Supply.zip-latest(42) },
       X::Supply::Combinator, combinator => 'zip-latest' );
 }

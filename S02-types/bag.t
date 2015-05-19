@@ -33,19 +33,19 @@ sub showkv($x) {
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    throws_like { $b<a> = 5 },
+    throws-like { $b<a> = 5 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
-    throws_like { $b<a>++ },
+    throws-like { $b<a>++ },
       Exception, # no exception type yet
       "Can't increment an element (Bags are immutable)";
-    throws_like { $b.keys = <c d> },
+    throws-like { $b.keys = <c d> },
       X::Assignment::RO,
       "Can't assign to .keys";
-    throws_like { $b.values = 3, 4 },
+    throws-like { $b.values = 3, 4 },
       X::Assignment::RO,
       "Can't assign to .values";
-    throws_like { $b<a>:delete },
+    throws-like { $b<a>:delete },
       X::Immutable,
       "Can't :delete from Bag";
 
@@ -89,7 +89,7 @@ sub showkv($x) {
     my $b = bag <a a b foo>;
     is $b<a>:exists, True, ':exists with existing element';
     is $b<santa>:exists, False, ':exists with nonexistent element';
-    throws_like { $b<a>:delete },
+    throws-like { $b<a>:delete },
       X::Immutable,
       ':delete does not work on bag';
 }
@@ -106,7 +106,7 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like { EVAL 'my %h = bag <a b o p a p o o>' },
+    throws-like { EVAL 'my %h = bag <a b o p a p o o>' },
       X::Hash::Store::OddNumber;
 }
 {
@@ -180,14 +180,14 @@ sub showkv($x) {
     is %b<b>, 2, 'Single-key subscript (existing element)';
     is %b<santa>, 0, 'Single-key subscript (nonexistent element)';
 
-    throws_like { %b<a> = 1 },
+    throws-like { %b<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
     #?rakudo.jvm    todo "?"
-    throws_like { %b = bag <a b> },
+    throws-like { %b = bag <a b> },
       X::Assignment::RO,
       "Can't assign to a %var implemented by Bag";
-    throws_like { %b<a>:delete },
+    throws-like { %b<a>:delete },
       X::Immutable,
       "Can't :delete from a Bag";
 }
@@ -354,7 +354,7 @@ sub showkv($x) {
 #?niecza skip '.grab NYI'
 {
     my $b = bag <a b b c c c>;
-    throws_like { $b.grab },
+    throws-like { $b.grab },
       X::Immutable,
       'cannot call .grab on a Bag';
 }
@@ -364,7 +364,7 @@ sub showkv($x) {
 #?niecza skip '.grabpairs NYI'
 {
     my $b = bag <a b b c c c>;
-    throws_like { $b.grabpairs },
+    throws-like { $b.grabpairs },
       X::Immutable,
       'cannot call .grabpairs on a Bag';
 }
@@ -449,10 +449,10 @@ sub showkv($x) {
 {
     my $b = <a b c>.Bag;
     #?rakudo.jvm    todo "?"
-    throws_like { $b.pairs[0].key++ },
+    throws-like { $b.pairs[0].key++ },
       X::Assignment::RO,
       'Cannot change key of Bag.pairs';
-    throws_like { $b.pairs[0].value++ },
+    throws-like { $b.pairs[0].value++ },
       Exception,  # no exception type yet
       'Cannot change value of Bag.pairs';
 }

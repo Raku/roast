@@ -78,13 +78,13 @@ ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
 # RT #122827
 {
     my Blob $x;
-    throws_like { $x ~= pack "V",1 }, X::Buf::AsStr, :method<Stringy>;
+    throws-like { $x ~= pack "V",1 }, X::Buf::AsStr, :method<Stringy>;
 }
 
 # RT #122600
 {
     my $a = buf8.new([]);
-    throws_like { "Foo: $a" }, X::Buf::AsStr, :method<Stringy>;
+    throws-like { "Foo: $a" }, X::Buf::AsStr, :method<Stringy>;
 }
 
 # Tests that used to gobble all memory in rakudo:

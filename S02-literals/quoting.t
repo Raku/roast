@@ -515,10 +515,10 @@ Hello, World
     isa-ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
     isa-ok rx:s{foo}, Regex, 'rx:i{...}';
     isa-ok rx:sigspace{foo}, Regex, 'rx:i{...}';
-    throws_like { EVAL 'rx:unknown{foo}' },
+    throws-like { EVAL 'rx:unknown{foo}' },
       X::Syntax::Regex::Adverb,
       'rx:unknown dies';
-    throws_like { EVAL 'rx:g{foo}' },
+    throws-like { EVAL 'rx:g{foo}' },
       X::Syntax::Regex::Adverb,
       'g does not make sense on rx//';
 }
@@ -551,7 +551,7 @@ Hello, World
 }
 
 # RT #90124
-throws_like { EVAL q["@a<"] },
+throws-like { EVAL q["@a<"] },
   X::Comp::AdHoc,
   'unclosed quote after array variable is an error';
 
@@ -584,7 +584,7 @@ is "\c?a", "\x[7f]a", '\c? is a DEL';
 is "\c@a", "\0a", '\c@ is a NUL';
 
 {
-    throws_like { EVAL 'q< < >' },
+    throws-like { EVAL 'q< < >' },
       X::Comp::AdHoc,
       "Unmatched openers and closers fails to parse";
     is q< \> >, " > ", "Escaped closer produces the opener unescaped";

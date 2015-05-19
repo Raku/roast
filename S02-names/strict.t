@@ -16,7 +16,7 @@ is $Foo::foo, 42, 'lax declared variable is package scoped';
 
 {
     use strict;
-    throws_like '$foo = 10;', X::Undeclared, suggestions => '';
+    throws-like '$foo = 10;', X::Undeclared, suggestions => '';
 }
 
 #?rakudo 1 skip 'lax mode does not propagate into EVAL yet RT #124912'

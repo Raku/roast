@@ -41,7 +41,7 @@ eval_dies_ok ' class T { method t { $!t := 1 }}; ::T.new.t; ',
 
 # RT #102478
 {
-    throws_like { EVAL q[has $.x] },
+    throws-like { EVAL q[has $.x] },
         X::Attribute::NoPackage,
         message => q[You cannot declare attribute '$.x' here; maybe you'd like a class or a role?];
 }

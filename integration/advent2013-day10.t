@@ -151,7 +151,7 @@ ok $greeting2.match(/12/), 'closure interpolation';
 ok $greeting2.match(/\$name/), 'variabled non-interpolation';
 
 lives_ok {EVAL '$data ~~ m:nth(5)/fo+/'}, 'Round parens ok';
-throws_like {EVAL '$data ~~ m:nth[5]/fo+/'},
+throws-like {EVAL '$data ~~ m:nth[5]/fo+/'},
   X::Comp::Group,
   'Square parens not ok';
 
@@ -162,7 +162,7 @@ sub root4($num, :$adv1 = 42, :$adv2, :$adv3!) {
     is $adv3, 'hi', 'adverb passed value';
 }
 
-throws_like {root4(10)}, Exception, 'missing required adverb - dies';
+throws-like {root4(10)}, Exception, 'missing required adverb - dies';
 root4(10, :adv3<hi>);
 
 sub root3($num, *%advs) {

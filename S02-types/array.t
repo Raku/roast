@@ -151,7 +151,7 @@ my @array2 = ("test", 1, Mu);
 #?niecza skip "multi-dim arrays NYI"
 {
 # declare a multidimension array
-    throws_like { EVAL 'my @multidim[0..3; 0..1]' },
+    throws-like { EVAL 'my @multidim[0..3; 0..1]' },
       Exception, # XXX fix when block no longer skipped
       "multidimension array";
     my @array11 is shape(2,4);
@@ -166,7 +166,7 @@ my @array2 = ("test", 1, Mu);
     lives_ok { @array[0] = 23 },
       "stuffing Ints in an Int array works";
     #?niecza todo "type constraints"
-    throws_like { @array[1] = $*ERR },
+    throws-like { @array[1] = $*ERR },
       X::TypeCheck::Assignment,
       "stuffing IO in an Int array does not work";
 }
@@ -227,13 +227,13 @@ my @array2 = ("test", 1, Mu);
   lives_ok { @arr[*-1].defined }, "readonly accessing [*-1] of an empty array is not fatal";
 
   # RT #111924
-  throws_like { @arr[*-1].flurb },
+  throws-like { @arr[*-1].flurb },
     X::OutOfRange,
     "readonly accessing [*-1] of an empty array throws X::OutOfRange";
-  throws_like { @arr[*-1] = 42 },
+  throws-like { @arr[*-1] = 42 },
     X::OutOfRange,
     "assigning to [*-1] of an empty array throws X::OutOfRange";
-  throws_like { @arr[*-1] := 42 },
+  throws-like { @arr[*-1] := 42 },
     X::Bind::Slice,
     "binding [*-1] of an empty array throws X::Bind::Slice";
 }
@@ -241,13 +241,13 @@ my @array2 = ("test", 1, Mu);
 {
   my @arr = (23);
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array is not fatal";
-  throws_like { @arr[*-2] },
+  throws-like { @arr[*-2] },
     X::OutOfRange,
     "readonly accessing [*-2] of an one-elem array throws X::OutOfRange";
-  throws_like { @arr[*-2] = 42 },
+  throws-like { @arr[*-2] = 42 },
     X::OutOfRange,
     "assigning to [*-2] of an one-elem array throws X::OutOfRange";
-  throws_like { @arr[*-2] := 42 },
+  throws-like { @arr[*-2] := 42 },
     X::Bind::Slice,
     "binding [*-2] of an one-elem array throws X::Bind::Slice";
 }
@@ -256,19 +256,19 @@ my @array2 = ("test", 1, Mu);
   my @arr = <a normal array with nothing funny>;
   my $minus_one = -1;
 
-  throws_like '@arr[-2]',
+  throws-like '@arr[-2]',
     X::Obsolete,
     message => 'Unsupported use of a negative -2 subscript to index from the end; in Perl 6 please use a function such as *-2',
     "readonly accessing [-2] of normal array throws X::Obsolete and is fatal";
   #?niecza todo '@arr[-1] returns undef'
-  throws_like { @arr[ $minus_one ] },
+  throws-like { @arr[ $minus_one ] },
     X::OutOfRange,
     "indirectly accessing [-1] through a variable throws X::OutOfRange";
-  throws_like { @arr[$minus_one] = 42 },
+  throws-like { @arr[$minus_one] = 42 },
     X::OutOfRange,
     "assigning to [-1] of a normal array throws X::OutOfRange";
   #?rakudo todo 'bind_pos NYI'
-  throws_like { @arr[$minus_one] := 42 },
+  throws-like { @arr[$minus_one] := 42 },
     X::Subscript::Negative,
     "binding [-1] of a normal array throws X::Subscript::Negative";
 }
@@ -288,7 +288,7 @@ my @array2 = ("test", 1, Mu);
     nok 'abc'[1].defined, '.[1] on a scalar is not defined';
     #?niecza skip "Failure NYI"
     isa-ok 1[1],  Failure, 'indexing a scalar with other than 0 returns a Failure';
-    throws_like { Mu.[0] },
+    throws-like { Mu.[0] },
       X::Multi::NoMatch,
       'but Mu has no .[]';
 }
@@ -350,13 +350,13 @@ my @array2 = ("test", 1, Mu);
     ok Array(1,2,3) eqv [1,2,3],          'Array(1,2,3) makes correct array';
 }
 
-#?niecza skip "throws_like"
+#?niecza skip "throws-like"
 #?rakudo todo "regression to AdHoc exception RT #124509"
 {
-    throws_like { EVAL 'my @a = 1..*; @a[Inf] = "dog"' },
+    throws-like { EVAL 'my @a = 1..*; @a[Inf] = "dog"' },
       X::Item,
       index => Inf, aggregate => Array;
-    throws_like { EVAL 'my @a = 1..*; @a[NaN] = "cat"' },
+    throws-like { EVAL 'my @a = 1..*; @a[NaN] = "cat"' },
       X::Item,
       index => NaN, aggregate => Array;
 }

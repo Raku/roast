@@ -27,7 +27,7 @@ role SocketPower {
 }
 
 #~ class Notebook does BatteryPower does SocketPower {}
-throws_like { EVAL 'class Notebook does BatteryPower does SocketPower {}' },
+throws-like { EVAL 'class Notebook does BatteryPower does SocketPower {}' },
   Exception, # doesn't have its own exception yet
   "Method 'find-power-accessories' collides and a resolution must be provided by the class";
 
