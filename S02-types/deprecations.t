@@ -14,9 +14,9 @@ my $line;
     $line = $?LINE; say $*OS;
     say $*OS;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*OS';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*OS called at:
+\$*OS seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.9, will be removed with release v2015.9!
 Please use \$*DISTRO.name instead.
@@ -30,9 +30,9 @@ TEXT
     $line = $?LINE; say $*OSVER;
     say $*OSVER;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*OSVER';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*OSVER called at:
+\$*OSVER seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.9, will be removed with release v2015.9!
 Please use \$*DISTRO.version instead.
@@ -46,9 +46,9 @@ TEXT
     $line = $?LINE; say $*VM<name>;
     say $*VM<name>;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*VM<name>';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*VM<name> called at:
+\$*VM<name> seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.5, will be removed with release v2015.5!
 Please use \$*VM.name instead.
@@ -62,9 +62,9 @@ TEXT
     $line = $?LINE; say $*VM<config>;
     say $*VM<config>;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*VM<config>';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*VM<config> called at:
+\$*VM<config> seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.5, will be removed with release v2015.5!
 Please use \$*VM.config instead.
@@ -78,9 +78,9 @@ TEXT
     $line = $?LINE; say $*PERL<name>;
     say $*PERL<name>;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*PERL<name>';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*PERL<name> called at:
+\$*PERL<name> seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.name instead.
@@ -94,9 +94,9 @@ TEXT
     $line = $?LINE; say $*PERL<compiler><name>;
     say $*PERL<compiler><name>;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*PERL<compiler><name>';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*PERL<compiler><name> called at:
+\$*PERL<compiler><name> seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.name instead.
@@ -110,9 +110,9 @@ TEXT
     $line = $?LINE; say $*PERL<compiler><ver>;
     say $*PERL<compiler><ver>;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*PERL<compiler><ver>';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*PERL<compiler><ver> called at:
+\$*PERL<compiler><ver> seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.version instead.
@@ -126,9 +126,9 @@ TEXT
     $line = $?LINE; say $*PERL<compiler><release-number>;
     say $*PERL<compiler><release-number>;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*PERL<compiler><release-number>';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*PERL<compiler><release-number> called at:
+\$*PERL<compiler><release-number> seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.release instead.
@@ -142,9 +142,9 @@ TEXT
     $line = $?LINE; say $*PERL<compiler><build-date>;
     say $*PERL<compiler><build-date>;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*PERL<compiler><build-date>';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*PERL<compiler><build-date> called at:
+\$*PERL<compiler><build-date> seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.build-date instead.
@@ -158,9 +158,9 @@ TEXT
     $line = $?LINE; say $*PERL<compiler><codename>;
     say $*PERL<compiler><codename>;
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*PERL<compiler><codename>';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-\$*PERL<compiler><codename> called at:
+\$*PERL<compiler><codename> seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.6, will be removed with release v2015.6!
 Please use \$*PERL.compiler.codename instead.
@@ -174,9 +174,9 @@ TEXT
     my %h; $line = $?LINE; %h = { a => 1 };
     %h = { b => 2 };
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation %h = itemized hash';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-%h = itemized hash called at:
+%h = itemized hash seen at:
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.7, will be removed with release v2015.7!
 Please use %h = \%(itemized hash) instead.
