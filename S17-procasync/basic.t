@@ -10,9 +10,9 @@ my $pc = $*DISTRO.is-win
 isa-ok $pc, Proc::Async;
 
 my $so = $pc.stdout;
-cmp_ok $so, '~~', Supply;
+cmp-ok $so, '~~', Supply;
 my $se = $pc.stderr;
-cmp_ok $se, '~~', Supply;
+cmp-ok $se, '~~', Supply;
 
 my $stdout = "";
 my $stderr = "";

@@ -37,20 +37,20 @@ is($?PACKAGE, "Main", 'The Main $?PACKAGE was not broken by any declarations');
 
 # block level
 is(Test1::ns, "Test1", "block-level package declarations");
-cmp_ok(Test1::pkg, &infix:<===>, ::Test1::, 'block-level $?PACKAGE var');
+cmp-ok(Test1::pkg, &infix:<===>, ::Test1::, 'block-level $?PACKAGE var');
 dies_ok { EVAL 'test1_export' }, "export was not imported implicitly";
 
 # declared packages
 is(Test2::ns, "Test2", "declared package");
-cmp_ok(Test2::pkg, &infix:<===>, ::Test2::, 'declared package $?PACKAGE');
+cmp-ok(Test2::pkg, &infix:<===>, ::Test2::, 'declared package $?PACKAGE');
 
 # string EVAL'ed packages
 is(Test3::pkg, ::Test3::, 'EVAL\'ed package $?PACKAGE');
-cmp_ok(Test3::pkg, &infix:<===>, ::Test3::, 'EVAL\'ed package type object');
+cmp-ok(Test3::pkg, &infix:<===>, ::Test3::, 'EVAL\'ed package type object');
 
 # this one came from t/packages/Test.pm
 is(t::spec::packages::PackageTest::ns, "t::packages::PackageTest", "loaded package");
-cmp_ok(t::spec::packages::PackageTest::pkg, &infix:<===>, ::t::packages::PackageTest::, 'loaded package $?PACKAGE object');
+cmp-ok(t::spec::packages::PackageTest::pkg, &infix:<===>, ::t::packages::PackageTest::, 'loaded package $?PACKAGE object');
 my $x;
 lives_ok { $x = test_export() }, "export was imported successfully";
 is($x, "party island", "exported OK");

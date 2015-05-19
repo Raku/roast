@@ -339,9 +339,9 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 # RT #123215
 #?rakudo.jvm todo 'RT #123215'
 {
-    cmp_ok (:a(2) :b(3) :c(4)), "eqv", ( a => 2, b => 3, c => 4 ),
+    cmp-ok (:a(2) :b(3) :c(4)), "eqv", ( a => 2, b => 3, c => 4 ),
         "chained colonpairs in parens build a list of pairs";
-    cmp_ok {:a(2) :b(3) :c(4)}<a b c>, "eqv", ( 2, 3, 4 ),
+    cmp-ok {:a(2) :b(3) :c(4)}<a b c>, "eqv", ( 2, 3, 4 ),
         "chained colonpairs in curlies construct hashes with more than one element";
 }
 

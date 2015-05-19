@@ -18,7 +18,7 @@ sub execute-test ( :$function, :$line ) {
 }
 
 #?DOES 1
-execute-test(:function("cmp_ok"), :line(9));
+execute-test(:function("cmp-ok"), :line(9));
 
 #?DOES 1
 execute-test(:function("dies_ok"), :line(9));

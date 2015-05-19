@@ -15,7 +15,7 @@ plan 11;
 my $ref = { val => 42 };
 isa-ok($ref, Hash);
 nok $ref ~~ Positional, "It's not a positional";
-cmp_ok $ref, '===', $ref[0], 'So [0] returns itself';
+cmp-ok $ref, '===', $ref[0], 'So [0] returns itself';
 
 {
     $ref = [ 42 ];

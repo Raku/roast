@@ -98,14 +98,14 @@ unlike("HelloWorld", rx:P5/\s/, :desc('... testing unlike()'));
 unlike("Hello World", rx:P5/\s/, todo => 1, desc => '... testing unlike()');
 unlike("Hello World", rx:P5/\s/, :desc('... testing unlike()'), :todo(1));
 
-## cmp_ok
+## cmp-ok
 
-cmp_ok('test', sub ($a, $b) { ?($a gt $b) }, 'me', '... testing gt on two strings');
-cmp_ok('test', sub ($a, $b) { ?($a gt $b) }, 'me', desc => '... testing gt on two strings');
-cmp_ok('test', sub ($a, $b) { ?($a gt $b) }, 'me', :desc('... testing gt on two strings'));
+cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'me', '... testing gt on two strings');
+cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'me', desc => '... testing gt on two strings');
+cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'me', :desc('... testing gt on two strings'));
 
-cmp_ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', :todo(1), desc => '... testing gt on two strings');
-cmp_ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', :desc('... testing gt on two strings'), todo => 1);
+cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', :todo(1), desc => '... testing gt on two strings');
+cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', :desc('... testing gt on two strings'), todo => 1);
 
 ## use-ok
 

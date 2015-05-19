@@ -22,7 +22,7 @@ say 'Done';
     isa-ok $pc, Proc::Async;
 
     my $so = $pc.stdout;
-    cmp_ok $so, '~~', Supply;
+    cmp-ok $so, '~~', Supply;
 
     my $stdout = "";;
     $so.act: { $stdout ~= $_ };
