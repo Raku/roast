@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 9;
 
 # currently deprecated core features
 
@@ -36,38 +36,6 @@ Saw 1 occurrence of deprecated code.
   $*PROGRAM, lines $line,{$line + 1}
 Deprecated since v2014.9, will be removed with release v2015.9!
 Please use \$*DISTRO.version instead.
---------------------------------------------------------------------------------
-TEXT
-} #1
-
-# $*VM<name>
-#?niecza skip 'is DEPRECATED NYI'
-{
-    $line = $?LINE; say $*VM<name>;
-    say $*VM<name>;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*VM<name>';
-Saw 1 occurrence of deprecated code.
-================================================================================
-\$*VM<name> seen at:
-  $*PROGRAM, lines $line,{$line + 1}
-Deprecated since v2014.5, will be removed with release v2015.5!
-Please use \$*VM.name instead.
---------------------------------------------------------------------------------
-TEXT
-} #1
-
-# $*VM<config>
-#?niecza skip 'is DEPRECATED NYI'
-{
-    $line = $?LINE; say $*VM<config>;
-    say $*VM<config>;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*VM<config>';
-Saw 1 occurrence of deprecated code.
-================================================================================
-\$*VM<config> seen at:
-  $*PROGRAM, lines $line,{$line + 1}
-Deprecated since v2014.5, will be removed with release v2015.5!
-Please use \$*VM.config instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
