@@ -159,9 +159,9 @@ throws-like '$pt.test(1)',
 {
     my $str;
     try {
-        POST { $str ~= (defined $! ?? 'yes' !! 'no'); 1 }
+        POST { $str ~= (defined $!) ?? 'yes' !! 'no'; 1 }
         try { die 'foo' }
-        $str ~= (defined $! ?? 'aye' !! 'nay');
+        $str ~= (defined $!) ?? 'aye' !! 'nay';
     }
     is $str, 'ayeno', 'POST has undefined $! on no exception';
 }
