@@ -35,13 +35,13 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 # change to match likely error (top of file) when passes
 {
-    eval_dies_ok 'ThisEmpty::no_such_sub()', 'Non-existent sub through package';
+    eval-dies-ok 'ThisEmpty::no_such_sub()', 'Non-existent sub through package';
 }
 
 # Not sure whether you should be able to access something in package this way
 # might change to match likely error (top of file) when passes
 {
-    eval_dies_ok 'ThisEmpty.no_such_sub_or_prop',
+    eval-dies-ok 'ThisEmpty.no_such_sub_or_prop',
                  'Non-existent method with package';
 }
 
@@ -163,15 +163,15 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 
 # RT #68290
 {
-    eval_dies_ok q[class A { sub a { say "a" }; sub a { say "a" } }],
+    eval-dies-ok q[class A { sub a { say "a" }; sub a { say "a" } }],
                  'sub redefined in class dies';
-    eval_dies_ok q[package P { sub p { say "p" }; sub p { say "p" } }],
+    eval-dies-ok q[package P { sub p { say "p" }; sub p { say "p" } }],
                  'sub redefined in package dies';
-    eval_dies_ok q[module M { sub m { say "m" }; sub m { say "m" } }],
+    eval-dies-ok q[module M { sub m { say "m" }; sub m { say "m" } }],
                  'sub redefined in module dies';
-    eval_dies_ok q[grammar B { token b { 'b' }; token b { 'b' } };],
+    eval-dies-ok q[grammar B { token b { 'b' }; token b { 'b' } };],
                  'token redefined in grammar dies';
-    eval_dies_ok q[class C { method c { say "c" }; method c { say "c" } }],
+    eval-dies-ok q[class C { method c { say "c" }; method c { say "c" } }],
                  'method redefined in class dies';
 }
 
@@ -212,12 +212,12 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 # package Foo; is perl 5 code;
 # RT #75458
 {
-    eval_dies_ok "package Perl5Code;\n'this is Perl 5 code'",
+    eval-dies-ok "package Perl5Code;\n'this is Perl 5 code'",
         'package Foo; is indicator for Perl 5 code';
 }
 
 #RT 80856
-eval_dies_ok 'module RT80856 is not_RT80856 {}',
+eval-dies-ok 'module RT80856 is not_RT80856 {}',
              'die if module "is" a nonexistent';
 
 {
@@ -234,7 +234,7 @@ eval_lives_ok q[
 ], 'can re-declare a class over a package of the same name';
 
 # RT #73328
-eval_dies_ok q[
+eval-dies-ok q[
     my package A {
         package B;
         1+1;

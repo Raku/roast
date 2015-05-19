@@ -18,8 +18,8 @@ eval_lives_ok('{my $x =
 2;}', 'double terminator');
 eval_lives_ok(';my $x = 2;{my $x = 2;;};', 'extra terminators');
 
-eval_dies_ok('{my $x = 2;', 'open closure');
-eval_dies_ok('my $x = ', 'incomplete expression');
+eval-dies-ok('{my $x = 2;', 'open closure');
+eval-dies-ok('my $x = ', 'incomplete expression');
 
 {
     my $x = do {
@@ -44,11 +44,11 @@ eval_dies_ok('my $x = ', 'incomplete expression');
     is($z, 1, 'auto-curly applies inside array composer');
 }
 
-eval_dies_ok "42 if 23\nis 50; 1",
+eval-dies-ok "42 if 23\nis 50; 1",
     "if postfix modifier and is() is parsed correctly";
 
 # not sure this belong here, suggestions for better places are welcome
-eval_dies_ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
+eval-dies-ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
 
 # RT #79964
 eval_lives_ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';

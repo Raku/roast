@@ -124,8 +124,8 @@ plan 57;
 
 # testing some error cases
 {
-    eval_dies_ok('unshift()    ', 'unshift() requires arguments');
-    eval_dies_ok('42.unshift(3)', '.unshift should not work on scalars');
+    eval-dies-ok('unshift()    ', 'unshift() requires arguments');
+    eval-dies-ok('42.unshift(3)', '.unshift should not work on scalars');
 }
 
 # Push with Inf arrays (waiting on answers to perl6-compiler email)

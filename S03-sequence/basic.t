@@ -242,7 +242,7 @@ is (5,4,3, { $_ - 1 || last } ... *)[^10].join(', '), '5, 4, 3, 2, 1', "sequence
 }
 
 # RT #75828
-eval_dies_ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
+eval-dies-ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
 
 # RT #73268
 is ~(1...^*).[^10], '1 2 3 4 5 6 7 8 9 10', 'RT #73268';

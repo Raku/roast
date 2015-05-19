@@ -36,7 +36,7 @@ plan 33;
 }
 
 # RT #77594
-eval_dies_ok '0 := 1', 'cannot bind to a literal';
+eval-dies-ok '0 := 1', 'cannot bind to a literal';
 
 
 # Binding and $CALLER::

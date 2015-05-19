@@ -311,7 +311,7 @@ ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 
 #### <-[d..b]>		dies
 #?niecza todo ""
-eval_dies_ok '/<-[d..b]>/', 'illegal character range';
+eval-dies-ok '/<-[d..b]>/', 'illegal character range';
 
 ok '-' ~~ /<[-]>/, 'unescaped hyphen is fine on its own';
 
@@ -364,7 +364,7 @@ ok '\\' ~~ /<["\\]>/, 'escaped backslash';
 ok ']' ~~ /<[\]]>/, 'escaped close bracket';
 
 #### <[\]>			\\]]		/parse error/	unescaped backslash (or no closing brace)
-eval_dies_ok ' /<[\]>/ ', 'unescaped backslash (or no closing brace)';
+eval-dies-ok ' /<[\]>/ ', 'unescaped backslash (or no closing brace)';
 
 #### ^\><[<]>		><		y	lt character class
 ok '><' ~~ /^\><[<]>/, 'lt character class';
@@ -459,7 +459,7 @@ ok ('abacad' ~~ /<before .d> a./) && matchcheck($/, q/mob: <ad @ 4>/), 'lookahea
 ok 'abacad' !~~ /<before c> ..../, 'lookahead <before>';
 
 #### <before> .		abcd		n				null <before>
-eval_dies_ok "'abcd' !~~ /<before> ./", 'null <before>';
+eval-dies-ok "'abcd' !~~ /<before> ./", 'null <before>';
 
 #### <!before ..b> aa	aabaaa		/mob: <aa @ 3>/			negated lookahead
 ok ('aabaaa' ~~ /<!before ..b> aa/) && matchcheck($/, q/mob: <aa @ 3>/), 'negated lookahead';
@@ -521,7 +521,7 @@ ok 'az' ~~ /<+alpha>+/, 'metasyntax with leading + (<+...>)';
 
 
 #### a[b}		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/rule error/	mismatched close
-eval_dies_ok '/a[b}/', 'mismatched close';
+eval-dies-ok '/a[b}/', 'mismatched close';
 
 
 #### c <before .d>		abacad		/mob: <c @ 3>/				one character and lookahead <before>
@@ -681,22 +681,22 @@ ok "abc\r\ndef" !~~ /c \N d/, 'not logical newline (\N)';
 ok "abc\ndef" ~~ /b \N \n/, 'not logical newline (\N)';
 
 #### \Aabc			Aabc		/reserved/	retired metachars (\A)
-eval_dies_ok '/\Aabc/', 'retired metachars (\A)';
+eval-dies-ok '/\Aabc/', 'retired metachars (\A)';
 
 #### \Aabc			abc\ndef	/reserved/	retired metachars (\A)
-eval_dies_ok '/\Aabc/', 'retired metachars (\A)';
+eval-dies-ok '/\Aabc/', 'retired metachars (\A)';
 
 #### abc\Z			abcZ		/reserved/	retired metachars (\Z)
-eval_dies_ok '/abc\Z/', 'retired metachars (\Z)';
+eval-dies-ok '/abc\Z/', 'retired metachars (\Z)';
 
 #### abc\Z			abc\ndef	/reserved/	retired metachars (\Z)
-eval_dies_ok '/abc\Z/', 'retired metachars (\Z)';
+eval-dies-ok '/abc\Z/', 'retired metachars (\Z)';
 
 #### abc\z			abcz		/reserved/	retired metachars (\z)
-eval_dies_ok '/abc\z/', 'retired metachars (\z)';
+eval-dies-ok '/abc\z/', 'retired metachars (\z)';
 
 #### def\z			abc\ndef	/reserved|Obsolete|Unsupported/	retired metachars (\z)
-eval_dies_ok '/def\z/', 'retired metachars (\z)';
+eval-dies-ok '/def\z/', 'retired metachars (\z)';
 
 #### abc # def		abc#def		y	comments (#)
 ok 'abc#def' ~~ /abc # def
@@ -771,19 +771,19 @@ ok 'bcd' ~~ /^ [ <[a..c]>+ | <[b..e]>+ ] $/, 'alternation (|)';
 ok 'bcd' ~~ /^ [ <[a..d]>+ | <[c..e]>+ ] $/, 'alternation (|)';
 
 #### b|			bcd		/rule error/	alternation (|) - null right arg illegal
-eval_dies_ok '/b|/', 'alternation (|) - null right arg illegal';
+eval-dies-ok '/b|/', 'alternation (|) - null right arg illegal';
 
 #### |b			bcd		y	alternation (|) - null left arg ignored
 ok 'bcd' ~~ /|b/, 'alternation (|) - null left arg ignored';
 
 #### |			bcd		/rule error/	alternation (|) - null both args illegal
-eval_dies_ok '/|/', 'alternation (|) - null both args illegal';
+eval-dies-ok '/|/', 'alternation (|) - null both args illegal';
 
 #### \|			|		y	alternation (|) - literal must be escaped
 ok '|' ~~ /\|/, 'alternation (|) - literal must be escaped';
 
 #### |			|		/rule error/	alternation (|) - literal must be escaped
-eval_dies_ok '/|/', 'alternation (|) - literal must be escaped';
+eval-dies-ok '/|/', 'alternation (|) - literal must be escaped';
 
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
 #?niecza todo ''
@@ -811,24 +811,24 @@ ok 'bcd' ~~ /<[a..c]>+ & <[b..e]>+/, 'conjunction (&)';
 ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 
 #### b&			bcd		/rule error/	conjunction (&) - null right arg illegal
-eval_dies_ok '/b&/', 'conjunction (&) - null right arg illegal';
+eval-dies-ok '/b&/', 'conjunction (&) - null right arg illegal';
 
 #### &b			bcd		/rule error/	conjunction (&) - null left arg legal
 #?niecza todo ''
 eval_lives_ok '/&b/', 'conjunction (&) - null left arg legal';
 
 #### &			bcd		/rule error/	conjunction (&) - null both args illegal
-eval_dies_ok '/&/', 'conjunction (&) - null both args illegal';
+eval-dies-ok '/&/', 'conjunction (&) - null both args illegal';
 
 #### \&			&		y	conjunction (&) - literal must be escaped
 ok '&' ~~ /\&/, 'conjunction (&) - literal must be escaped';
 
 #### &			&		/rule error/	conjunction (&) - literal must be escaped
-eval_dies_ok '/&/', 'conjunction (&) - literal must be escaped';
+eval-dies-ok '/&/', 'conjunction (&) - literal must be escaped';
 
 # todo :pge<leading |>
 #### a &| b		a		/rule error/	trailing & not allowed inside |
-eval_dies_ok '/a &| b/', 'alternation and conjunction (&|) - parse error';
+eval-dies-ok '/a &| b/', 'alternation and conjunction (&|) - parse error';
 
 #### a |& b		a		y       leading & inside | is okay
 ok 'a' ~~ /a |& b/, 'alternation and conjunction (|&) - leading & inside | is okay';
@@ -846,43 +846,43 @@ ok 'abc' ~~ /|d |b/, 'leading alternation ignored';
 ok 'abc' ~~ / | d | b/, 'leading alternation ignored';
 
 ####  b |  | d		abc		n	null pattern invalid
-eval_dies_ok '/ b |  | d/', 'null pattern invalid';
+eval-dies-ok '/ b |  | d/', 'null pattern invalid';
 
 #### \pabc			pabc		/reserved/	retired metachars (\p)
-eval_dies_ok '/\pabc/', 'retired metachars (\p)';
+eval-dies-ok '/\pabc/', 'retired metachars (\p)';
 
 #### \p{InConsonant}		a		/reserved/	retired metachars (\p)
-eval_dies_ok '/\p{InConsonant}/', 'retired metachars (\p)';
+eval-dies-ok '/\p{InConsonant}/', 'retired metachars (\p)';
 
 #### \Pabc			Pabc		/reserved/	retired metachars (\P)
-eval_dies_ok '/\Pabc/', 'retired metachars (\P)';
+eval-dies-ok '/\Pabc/', 'retired metachars (\P)';
 
 #### \P{InConsonant}		a		/reserved/	retired metachars (\P)
-eval_dies_ok '/\P{InConsonant}/', 'retired metachars (\P)';
+eval-dies-ok '/\P{InConsonant}/', 'retired metachars (\P)';
 
 #### \Labc\E			LabcE		/reserved/	retired metachars (\L...\E)
-eval_dies_ok '/\Labc\E/', 'retired metachars (\L...\E)';
+eval-dies-ok '/\Labc\E/', 'retired metachars (\L...\E)';
 
 #### \LABC\E			abc		/reserved/	retired metachars (\L...\E)
-eval_dies_ok '/\LABC\E/', 'retired metachars (\L...\E)';
+eval-dies-ok '/\LABC\E/', 'retired metachars (\L...\E)';
 
 #### \Uabc\E			UabcE		/reserved/	retired metachars (\U...\E)
-eval_dies_ok '/\Uabc\E/', 'retired metachars (\U...\E)';
+eval-dies-ok '/\Uabc\E/', 'retired metachars (\U...\E)';
 
 #### \Uabc\E			ABC		/reserved/	retired metachars (\U...\E)
-eval_dies_ok '/\Uabc\E/', 'retired metachars (\U...\E)';
+eval-dies-ok '/\Uabc\E/', 'retired metachars (\U...\E)';
 
 #### \Qabc\E			QabcE		/reserved/	retired metachars (\Q...\E)
-eval_dies_ok '/\Qabc\E/', 'retired metachars (\Q...\E)';
+eval-dies-ok '/\Qabc\E/', 'retired metachars (\Q...\E)';
 
 #### \Qabc d?\E		abc d		/reserved/	retired metachars (\Q...\E)
-eval_dies_ok '/\Qabc d?\E/', 'retired metachars (\Q...\E)';
+eval-dies-ok '/\Qabc d?\E/', 'retired metachars (\Q...\E)';
 
 #### \Gabc			Gabc		/reserved/	retired metachars (\G)
-eval_dies_ok '/\Gabc/', 'retired metachars (\G)';
+eval-dies-ok '/\Gabc/', 'retired metachars (\G)';
 
 #### \1abc			1abc		/reserved/	retired metachars (\1)
-eval_dies_ok '/\1abc/', 'retired metachars (\1)';
+eval-dies-ok '/\1abc/', 'retired metachars (\1)';
 
 #### ^ \s+ $			\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085	y	0-255 whitespace (\s)
 ok "\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085" ~~ /^ \s+ $/, '0-255 whitespace (\s)';
@@ -2307,87 +2307,87 @@ ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
 ##  syntax errors
 
 #### {{		abcdef		/Missing closing braces/	unterminated closure
-eval_dies_ok '/{{/', 'unterminated closure';
+eval-dies-ok '/{{/', 'unterminated closure';
 
 #### \1		abcdef		/reserved/			back references
-eval_dies_ok '/\1/', 'back references';
+eval-dies-ok '/\1/', 'back references';
 
 #### \x[		abcdef		/Missing close bracket/		unterminated \x[..]
-eval_dies_ok '/\x[/', 'unterminated \x[..]';
+eval-dies-ok '/\x[/', 'unterminated \x[..]';
 
 #### \X[		abcdef		/Missing close bracket/		unterminated \X[..]
-eval_dies_ok '/\X[/', 'unterminated \X[..]';
+eval-dies-ok '/\X[/', 'unterminated \X[..]';
 
 
 #### * abc		abcdef		/Quantifier follows nothing/	bare * at start
-eval_dies_ok '/* abc/', 'bare * at start';
+eval-dies-ok '/* abc/', 'bare * at start';
 
 ####   * abc		abcdef		/Quantifier follows nothing/	bare * after ws
-eval_dies_ok '/  * abc/', 'bare * after ws';
+eval-dies-ok '/  * abc/', 'bare * after ws';
 
 #### [*|a]		abcdef		/Quantifier follows nothing/	bare * after [
-eval_dies_ok '/[*|a]/', 'bare * after [';
+eval-dies-ok '/[*|a]/', 'bare * after [';
 
 #### [ *|a]		abcdef		/Quantifier follows nothing/	bare * after [+sp
-eval_dies_ok '/[ *|a]/', 'bare * after [+sp';
+eval-dies-ok '/[ *|a]/', 'bare * after [+sp';
 
 #### [a|*]		abcdef		/Quantifier follows nothing/	bare * after |
-eval_dies_ok '/[a|*]/', 'bare * after |';
+eval-dies-ok '/[a|*]/', 'bare * after |';
 
 #### [a| *]		abcdef		/Quantifier follows nothing/	bare * after |+sp
-eval_dies_ok '/[a| *]/', 'bare * after |+sp';
+eval-dies-ok '/[a| *]/', 'bare * after |+sp';
 
 
 #### + abc		abcdef		/Quantifier follows nothing/	bare + at start
-eval_dies_ok '/+ abc/', 'bare + at start';
+eval-dies-ok '/+ abc/', 'bare + at start';
 
 ####   + abc		abcdef		/Quantifier follows nothing/	bare + after ws
-eval_dies_ok '/  + abc/', 'bare + after ws';
+eval-dies-ok '/  + abc/', 'bare + after ws';
 
 #### [+|a]		abcdef		/Quantifier follows nothing/	bare + after [
-eval_dies_ok '/[+|a]/', 'bare + after [';
+eval-dies-ok '/[+|a]/', 'bare + after [';
 
 #### [ +|a]		abcdef		/Quantifier follows nothing/	bare + after [+sp
-eval_dies_ok '/[ +|a]/', 'bare + after [+sp';
+eval-dies-ok '/[ +|a]/', 'bare + after [+sp';
 
 #### [a|+]		abcdef		/Quantifier follows nothing/	bare + after |
-eval_dies_ok '/[a|+]/', 'bare + after |';
+eval-dies-ok '/[a|+]/', 'bare + after |';
 
 #### [a| +]		abcdef		/Quantifier follows nothing/	bare + after |+sp
-eval_dies_ok '/[a| +]/', 'bare + after |+sp';
+eval-dies-ok '/[a| +]/', 'bare + after |+sp';
 
 
 #### ? abc		abcdef		/Quantifier follows nothing/	bare ? at start
-eval_dies_ok '/? abc/', 'bare ? at start';
+eval-dies-ok '/? abc/', 'bare ? at start';
 
 ####   ? abc		abcdef		/Quantifier follows nothing/	bare ? after ws
-eval_dies_ok '/  ? abc/', 'bare ? after ws';
+eval-dies-ok '/  ? abc/', 'bare ? after ws';
 
 #### [?|a]		abcdef		/Quantifier follows nothing/	bare ? after [
-eval_dies_ok '/[?|a]/', 'bare ? after [';
+eval-dies-ok '/[?|a]/', 'bare ? after [';
 
 #### [ ?|a]		abcdef		/Quantifier follows nothing/	bare ? after [+sp
-eval_dies_ok '/[ ?|a]/', 'bare ? after [+sp';
+eval-dies-ok '/[ ?|a]/', 'bare ? after [+sp';
 
 #### [a|?]		abcdef		/Quantifier follows nothing/	bare ? after |
-eval_dies_ok '/[a|?]/', 'bare ? after |';
+eval-dies-ok '/[a|?]/', 'bare ? after |';
 
 #### [a| ?]		abcdef		/Quantifier follows nothing/	bare ? after |+sp
-eval_dies_ok '/[a| ?]/', 'bare ? after |+sp';
+eval-dies-ok '/[a| ?]/', 'bare ? after |+sp';
 
 # L<S05/Nothing is illegal/"The empty pattern is now illegal">
 
 #### 		abcdef		/Null pattern illegal/		null pattern
-eval_dies_ok '//', '';
+eval-dies-ok '//', '';
 
 ####   		abcdef		/Null pattern illegal/		ws null pattern
-eval_dies_ok '/  /', 'ws null pattern';
+eval-dies-ok '/  /', 'ws null pattern';
 
-eval_dies_ok '"b" ~~ /b| /', 'null pattern after alternation';
+eval-dies-ok '"b" ~~ /b| /', 'null pattern after alternation';
 
 # RT #71702
 #?niecza todo 'allows them'
-eval_dies_ok '"foo" ~~ /<[d..b]>? foo/', 'no reversed char ranges';
+eval-dies-ok '"foo" ~~ /<[d..b]>? foo/', 'no reversed char ranges';
 
 done;
 # vim: ft=perl6 sw=4 expandtab

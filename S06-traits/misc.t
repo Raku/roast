@@ -15,19 +15,19 @@ Testing parameter traits for subroutines
 my $foo=1;
 
 # note: many of these errors can be detected at compile time, so need
-# eval_dies_ok instead of dies_ok
+# eval-dies-ok instead of dies_ok
 #
 # test twice, once with assignment and once with increment, rakudo
 # used to catch the first but not the latter.
 #
-eval_dies_ok '
+eval-dies-ok '
     my $tmp = 1;
     sub mods_param ($x) { $x++; }
     mods_param($tmp)
     ',
     'can\'t modify parameter, constant by default';
 
-eval_dies_ok '
+eval-dies-ok '
     my $tmp = 1;
     sub mods_param ($x) { $x = 1; }
     mods_param($tmp)
@@ -35,7 +35,7 @@ eval_dies_ok '
     'can\'t modify parameter, constant by default';
 
 # is readonly
-eval_dies_ok 'sub mods_param_constant ($x is readonly) { $x++; };
+eval-dies-ok 'sub mods_param_constant ($x is readonly) { $x++; };
               mods_param_constant($foo);' ,
               'can\'t modify constant parameter, constant by default';
 

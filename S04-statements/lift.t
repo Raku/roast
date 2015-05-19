@@ -39,7 +39,7 @@ plan 15;
         is lt4(), 'Int ``',
            "lifted operator picked up multi from caller's scope (Int)";
     }
-    eval_dies_ok '``"foo"', "Dies when no callable multi is in scope";
+    eval-dies-ok '``"foo"', "Dies when no callable multi is in scope";
 }
 
 # lift with user defined infix and prefix operators
@@ -87,7 +87,7 @@ plan 15;
         my $b is dynamic = 4;
         is f(), 7, 'Can pick up context variables from the caller';
     }
-    eval_dies_ok 'f()',
+    eval-dies-ok 'f()',
         'It is an error if the lifted variables are not declared in the caller';
 }
 

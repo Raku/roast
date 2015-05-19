@@ -110,7 +110,7 @@ plan 12;
 
 {
     # RT #72442
-    eval_dies_ok '{redo}', 'redo without loop construct dies';
+    eval-dies-ok '{redo}', 'redo without loop construct dies';
 }
 
 {

@@ -80,8 +80,8 @@ plan 31;
 # testing some error cases
 {
     my @shift = 1 .. 5;
-    eval_dies_ok('shift() ', 'shift() requires arguments');
-    eval_dies_ok('42.shift', '.shift should not work on scalars');
+    eval-dies-ok('shift() ', 'shift() requires arguments');
+    eval-dies-ok('42.shift', '.shift should not work on scalars');
     dies_ok { EVAL('shift(@shift, 10)') }, 'shift() should not allow extra arguments';
     dies_ok { EVAL(' @shift.shift(10)') }, 'shift() should not allow extra arguments';
 }

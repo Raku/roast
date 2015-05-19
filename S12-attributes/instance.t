@@ -10,7 +10,7 @@ Class attributes tests from L<S12/Attributes>
 
 =end pod
 
-eval_dies_ok 'has $.x;', "'has' only works inside of class|role definitions";
+eval-dies-ok 'has $.x;', "'has' only works inside of class|role definitions";
 
 # L<S12/Attributes/the automatic generation of an accessor method of the same name>
 
@@ -613,10 +613,10 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 }
 
 # RT #108670
-eval_dies_ok 'my class AccessorClash { has @.a; has &.a }',
+eval-dies-ok 'my class AccessorClash { has @.a; has &.a }',
     'cannot have two attributes with same accessor name';
 # RT #74274
-eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
+eval-dies-ok q[class A { has $!a }; my $a = A.new(a => 42);
     my $method = method { return $!a }; $a.$method()],
     'cannot sneak in access to private attribute through the backdoor';
 

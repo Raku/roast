@@ -65,7 +65,7 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 ok "\x[FFEF]" ~~ /<[\x0..\xFFEF]>/, 'large \\x char spec';
 
 #?niecza todo
-eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
+eval-dies-ok( "'RT 71702' ~~ /<[d..b]>? RT/",
     'reverse range in charset is lethal (RT 71702)' );
 
 # RT #64220

@@ -70,7 +70,7 @@ plan 9;
 #?mildew skip 1
 # L<S04/Statement parsing/keywords require whitespace>
 {
-    eval_dies_ok('my $i = 1; while($i < 5) { $i++; }',
+    eval-dies-ok('my $i = 1; while($i < 5) { $i++; }',
         'keyword needs at least one whitespace after it');
 }
 

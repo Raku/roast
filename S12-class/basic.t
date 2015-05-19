@@ -88,7 +88,7 @@ ok($bar.isa(Foo), "new Bar .isa(Foo)");
        'type distinguishing is not done by case of first letter';
 }
 
-eval_dies_ok 'my $x; $x ~~ NonExistingClassName',
+eval-dies-ok 'my $x; $x ~~ NonExistingClassName',
              'die on non-existing class names';
 
 # you can declare classes over vivified namespaces, but not over other classes
@@ -115,11 +115,11 @@ eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {
 }
 
 # RT #64686
-eval_dies_ok 'class Romeo::Tango {}; Romeo::Juliet.rt64686',
+eval-dies-ok 'class Romeo::Tango {}; Romeo::Juliet.rt64686',
              'call to missing method in A::B dies after class A::C defined';
 
 # RT 72286
-eval_dies_ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
+eval-dies-ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
             'self is not writable';
 
 # RT #65022

@@ -107,7 +107,7 @@ is($bar.bar[2], 300,       'array attribute initialized/works');
 }
 
 # RT 81718
-eval_dies_ok q[
+eval-dies-ok q[
     class RT81718 {
         has $.bughunt is rw;
         sub bomb { "life is a $.bughunt" }

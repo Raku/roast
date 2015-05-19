@@ -57,7 +57,7 @@ is R2[C3].new.call_test,     'ok', 'classes being used as type constraints insid
 dies_ok { R2[C3].new.call_fail },  'classes being used as type constraints inside roles work';
 
 # RT #72694
-eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies';
+eval-dies-ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies';
 
 # RT #68136
 {

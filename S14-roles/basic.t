@@ -37,7 +37,7 @@ my $baz = { };
 ok defined($baz does Foo),      'mixing in our Foo role into $baz worked';
 ok $baz.HOW.does($baz, Foo),    '.HOW.does said our $baz now does Foo';
 ok $baz.^does(Foo),             '.^does said our $baz now does Foo';
-eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies';
+eval-dies-ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies';
 
 # L<S14/Roles/but with a role keyword:>
 # Roles may have methods
@@ -86,7 +86,7 @@ lives_ok { HasC.new.x = DoesC.new },
 dies_ok { HasC.new.x = Mu },    'typed attribute rejects things it should';
 dies_ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
 
-eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
+eval-dies-ok '0 but RT66178', '"but" with non-existent role dies';
 
 {
     dies_ok { EVAL 'class Animal does NonExistentRole { }; 1' },

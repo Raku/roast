@@ -232,7 +232,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
 }
 
 # y/// is dead
-eval_dies_ok('$_ = "axbycz"; y/abc/def/', 'y/// does not exist any longer');
+eval-dies-ok('$_ = "axbycz"; y/abc/def/', 'y/// does not exist any longer');
 
 # RT #71088
 {

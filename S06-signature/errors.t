@@ -13,7 +13,7 @@ These are misc. sub argument errors.
 sub bar (*@x) { 1 }   #OK not used
 lives_ok { bar(reverse(1,2)) }, 'slurpy args are not bounded (2)';  
 
-eval_dies_ok 'sub quuux ($?VERSION) { ... }',
+eval-dies-ok 'sub quuux ($?VERSION) { ... }',
              'parser rejects magicals as args (1)';
 eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 
@@ -37,7 +37,7 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 }
 
 # RT #109064
-eval_dies_ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
+eval-dies-ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
     'named parameter of undeclared attribute dies';
 
 # RT #72082

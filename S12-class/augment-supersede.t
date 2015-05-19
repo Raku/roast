@@ -40,7 +40,7 @@ use MONKEY-TYPING;
 }
 
 # RT #66694
-eval_dies_ok q[
+eval-dies-ok q[
     class MethodClash { method foo() { 3 } };
     augment class MethodClash { method foo() { 3 } };
 ], 'cannot override a method by monkey-typing';
@@ -65,7 +65,7 @@ eval_lives_ok q[
     }
 
     my $o = Bar.new;
-    eval_dies_ok('$o.c', 'overridden method is gone completely');
+    eval-dies-ok('$o.c', 'overridden method is gone completely');
     is($o.d, 'called Bar.d', 'new method is present instead');
 }
 

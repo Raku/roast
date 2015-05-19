@@ -10,7 +10,7 @@ plan 15;
         my multi foo() { 42 }
         is(foo(), 42, 'can call lexically scoped multi');
     }
-    eval_dies_ok(q{ foo() }, 'lexical multi not callable outside of lexical scope');
+    eval-dies-ok(q{ foo() }, 'lexical multi not callable outside of lexical scope');
 }
 
 # test that lexical multis in inner scopes add to those in outer scopes

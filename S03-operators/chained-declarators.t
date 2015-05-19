@@ -19,7 +19,7 @@ is((try {  my $a5 = state $b5 = 42; $b5++; "$a5, $b5" }), '42, 43', "chained my,
 
 # scoping
 
-eval_dies_ok '
+eval-dies-ok '
     {
         our $sa2 = my $sb2 = 42;
     }

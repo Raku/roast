@@ -223,9 +223,9 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
 # L<S06/Parameters and arguments/"A signature containing a name collision">
 
 #?niecza 2 todo "sub params with the same name"
-eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
+eval-dies-ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
 
-eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
+eval-dies-ok 'sub svn28865( :$a, :@a ) {}',
              'sub params with the same name and different types';
 
 {
@@ -269,7 +269,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 # RT #67558
 {
     #?niecza todo "Renaming a parameter to an existing positional should fail"
-    eval_dies_ok q[sub a(:$x, :foo($x) = $x) { $x }],
+    eval-dies-ok q[sub a(:$x, :foo($x) = $x) { $x }],
         'Cannot rename a parameter to an already existing positional';
     sub a(:$x, :foo($y) = $x) { $y };
     is a(x => 2), 2, 'Can fill named parameter with default from other named';

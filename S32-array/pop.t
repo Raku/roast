@@ -83,18 +83,18 @@ plan 36;
 # testing some error cases
 {
     my @pop = 1 .. 5;
-    eval_dies_ok('pop',            'pop() requires arguments');
-    eval_dies_ok('42.pop',         '.pop should not work on scalars');
-    eval_dies_ok('pop(@pop,10)'),  'pop() should not allow extra arguments';
-    eval_dies_ok('@pop.pop(10)'),  '.pop() should not allow extra arguments';
-    eval_dies_ok('@pop.pop = 3'),  'Cannot assign to a readonly variable or a value';
-    eval_dies_ok('pop(@pop) = 3'), 'Cannot assign to a readonly variable or a value';
+    eval-dies-ok('pop',            'pop() requires arguments');
+    eval-dies-ok('42.pop',         '.pop should not work on scalars');
+    eval-dies-ok('pop(@pop,10)'),  'pop() should not allow extra arguments';
+    eval-dies-ok('@pop.pop(10)'),  '.pop() should not allow extra arguments';
+    eval-dies-ok('@pop.pop = 3'),  'Cannot assign to a readonly variable or a value';
+    eval-dies-ok('pop(@pop) = 3'), 'Cannot assign to a readonly variable or a value';
 } #6
 
 #?niecza     skip "may run forever"
 {
     my @push = 1 .. Inf;
-    eval_dies_ok( 'pop @push', 'cannot pop from an Inf array' );
+    eval-dies-ok( 'pop @push', 'cannot pop from an Inf array' );
 } #1
 
 # vim: ft=perl6

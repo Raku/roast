@@ -22,7 +22,7 @@ character classes), and those are referenced at the correct spot.
     is('aaaaa' ~~ /< a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (space)');
     is('aaaaa' ~~ /<	a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (tab)');
 
-    eval_dies_ok('"aaaa" ~~ /<a aa>/', '<...> without whitespace calls a function (not quote words)');
+    eval-dies-ok('"aaaa" ~~ /<a aa>/', '<...> without whitespace calls a function (not quote words)');
     
     is('hello' ~~ /< hello >/, 'hello', 'degenerate case of quote list');
 }
@@ -131,10 +131,10 @@ character classes), and those are referenced at the correct spot.
 
 # No other characters are allowed after the initial identifier.
 {
-    eval_dies_ok('"foo" ~~ /<test*>/', 'no other characters are allowed (*)');
-    eval_dies_ok('"foo" ~~ /<test|>/', 'no other characters are allowed (|)');
-    eval_dies_ok('"foo" ~~ /<test&>/', 'no other characters are allowed (&)');
-    eval_dies_ok('"foo" ~~ /<test:>/', 'no other characters are allowed (:)');
+    eval-dies-ok('"foo" ~~ /<test*>/', 'no other characters are allowed (*)');
+    eval-dies-ok('"foo" ~~ /<test|>/', 'no other characters are allowed (|)');
+    eval-dies-ok('"foo" ~~ /<test&>/', 'no other characters are allowed (&)');
+    eval-dies-ok('"foo" ~~ /<test:>/', 'no other characters are allowed (:)');
 }
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/explicitly calls a method as a subrule>
@@ -257,11 +257,11 @@ character classes), and those are referenced at the correct spot.
 # meanings within regexes that the bare elipses have in ordinary code
 #?niecza skip 'Action method assertion:sym<???> not yet implemented'
 {
-    eval_dies_ok('"foo" ~~ /<...>/', '<...> dies in regex match');
+    eval-dies-ok('"foo" ~~ /<...>/', '<...> dies in regex match');
     # XXX: Should be warns_ok, but we don't have that yet
     lives_ok({'foo' ~~ /<???>/}, '<???> lives in regex match');
     #?rakudo todo '!!! in regexes'
-    eval_dies_ok('"foo" ~~ /<!!!>/', '<!!!> dies in regex match');
+    eval-dies-ok('"foo" ~~ /<!!!>/', '<!!!> dies in regex match');
 }
 
 # A leading * indicates that the following pattern allows a partial match.

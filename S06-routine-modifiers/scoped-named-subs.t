@@ -10,13 +10,13 @@ plan 12;
     is myNamedStr(), 'string', 'lexical named sub() return Str';
 }
 
-eval_dies_ok 'myNamedStr()', 'Correct : lexical named sub myNamedStr() should NOT BE available outside its scope';
+eval-dies-ok 'myNamedStr()', 'Correct : lexical named sub myNamedStr() should NOT BE available outside its scope';
 
 {
     my Int sub myNamedInt() { return 55 };
     is myNamedInt(), 55, 'lexical named sub() return Int';
 }
-eval_dies_ok('myNamedInt()', 'Correct : lexical named sub myNamedInt() should NOT BE available outside its scope');
+eval-dies-ok('myNamedInt()', 'Correct : lexical named sub myNamedInt() should NOT BE available outside its scope');
 
 
 #packge-scoped named subs
@@ -41,7 +41,7 @@ eval_dies_ok('myNamedInt()', 'Correct : lexical named sub myNamedInt() should NO
     is ourNamedInt(), 55, 'Correct : package-scoped named sub ourNamedInt() should BE available in the whole package';
 }
 
-eval_dies_ok
+eval-dies-ok
     'my Num List sub f () { return ("A") }; f()',
     'Return of list with wrong type dies';
 
@@ -51,7 +51,7 @@ eval_lives_ok
 is EVAL('my Parcel sub f () { return () }; (f(), "a")'), ((),'a'),
     'return of empty Parcel should be empty Parcel';
 
-eval_dies_ok
+eval-dies-ok
     'my Num List sub f () { ("A") }; f()',
     'implicit return of list with wrong type dies';
 

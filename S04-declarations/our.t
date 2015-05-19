@@ -49,22 +49,22 @@ our $c = 42; #OK not used
                 our $d3 = 9;
             }
             {
-                eval_dies_ok('$d3', "variables aren't seen within other lexical child blocks");
+                eval-dies-ok('$d3', "variables aren't seen within other lexical child blocks");
                 is($D2::d3, 9, "variables are seen within other lexical child blocks via package");
                 
                 package D3 {
-                    eval_dies_ok('$d3', " ... and not from within child packages");
+                    eval-dies-ok('$d3', " ... and not from within child packages");
                     is($D2::d3, 9, " ... and from within child packages via package");
                 }
             }
-            eval_dies_ok('d3', "variables do not leak from lexical blocks");
+            eval-dies-ok('d3', "variables do not leak from lexical blocks");
             is($D2::d3, 9, "variables are seen from lexical blocks via pacakage");
         }
-        eval_dies_ok('$d2', 'our() variable not yet visible outside its package');
-        eval_dies_ok('$d3', 'our() variable not yet visible outside its package');
+        eval-dies-ok('$d2', 'our() variable not yet visible outside its package');
+        eval-dies-ok('$d3', 'our() variable not yet visible outside its package');
         
     }
-    eval_dies_ok('$d1', 'our() variable not yet visible outside its package');
+    eval-dies-ok('$d1', 'our() variable not yet visible outside its package');
 }
 
 # RT #100560, #102876

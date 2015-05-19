@@ -41,7 +41,7 @@ is      $was_in_sentry_shake,   1, "conflict resolution works (2-3)";
 is      $was_in_pet_shake,      1, "conflict resolution works (2-4)";
 
 # RT #111664
-eval_dies_ok q[
+eval-dies-ok q[
     role R1 { method !foo() { 1 }}
     role R2 { method !foo() { 2 } }
     class A does R1 does R2 { }

@@ -5,7 +5,7 @@ use Test;
 
 plan 10;
 
-eval_dies_ok ' chdir() ', 'Cannot call chdir without an argument';
+eval-dies-ok ' chdir() ', 'Cannot call chdir without an argument';
 
 ### You can use Unix style folder separator / to set folders on windows too.
 my $sep = '/';

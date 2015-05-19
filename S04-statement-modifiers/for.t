@@ -100,7 +100,7 @@ plan 27;
     is $rt66622, 66622, 'statement modifier "for" makes no implicit block';
 }
 
-eval_dies_ok '1 for <a b> for <c d>;', 'double statement-modifying for is not allowed';
+eval-dies-ok '1 for <a b> for <c d>;', 'double statement-modifying for is not allowed';
 
 # RT #66606
 {

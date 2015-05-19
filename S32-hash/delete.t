@@ -29,7 +29,7 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 
 {
     my $a = 1;
-    eval_dies_ok '$a:delete', "Can't :delete a scalar";
+    eval-dies-ok '$a:delete', "Can't :delete a scalar";
 }
 
 # RT #68482

@@ -43,7 +43,7 @@ my Str $bar;
 #?niecza skip 'native types (noauto)'
 {
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
-    eval_dies_ok('my int $alpha = Nil', 'native int type cannot be undefined');
+    eval-dies-ok('my int $alpha = Nil', 'native int type cannot be undefined');
     lives_ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval_lives_ok('my num $alpha = 1e0',    'Has native type num');
     #?rakudo.jvm todo "nigh"
@@ -59,7 +59,7 @@ my Str $bar;
 {
     sub paramtype (Int $i) {return $i+1}
     is(paramtype(5), 6, 'sub parameters with matching type');
-    eval_dies_ok('paramtype("foo")', 'sub parameters with non-matching type dies');
+    eval-dies-ok('paramtype("foo")', 'sub parameters with non-matching type dies');
 }
 
 {
@@ -126,10 +126,10 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 }
 
 {
-    eval_dies_ok('my Int Str $x', 'multiple prefix constraints not allowed');
-    eval_dies_ok('sub foo(Int Str $x) { }', 'multiple prefix constraints not allowed');
-    eval_dies_ok('sub foo(--> Int Str) { }', 'multiple prefix constraints not allowed');
-    eval_dies_ok('our Int Str sub foo() { }', 'multiple prefix constraints not allowed');
+    eval-dies-ok('my Int Str $x', 'multiple prefix constraints not allowed');
+    eval-dies-ok('sub foo(Int Str $x) { }', 'multiple prefix constraints not allowed');
+    eval-dies-ok('sub foo(--> Int Str) { }', 'multiple prefix constraints not allowed');
+    eval-dies-ok('our Int Str sub foo() { }', 'multiple prefix constraints not allowed');
 }
 
 {

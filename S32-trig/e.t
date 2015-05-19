@@ -12,7 +12,7 @@ Basic tests for trigonometric functions.
 my $e = e;
 
 is(e      , $e,    "e, as a value");
-eval_dies_ok('e()', "e(), dies as a sub");
+eval-dies-ok('e()', "e(), dies as a sub");
 is(1 + e,   $e+1, "1+e, as a value");
 is(e + 1,   $e+1, "e+1, as a value");
 is(1 + e +0, $e+1, "1 + e +0, as a value");

@@ -6,16 +6,16 @@ plan 29;
 
 # L<S04/The do-once loop/"can't" put "statement modifier">
 # Note in accordance with STD, conditionals are OK, loops are not.
-eval_dies_ok 'my $i = 1; do { $i++ } while $i < 5;',
+eval-dies-ok 'my $i = 1; do { $i++ } while $i < 5;',
     "'do' can't take the 'while' modifier";
 
-eval_dies_ok 'my $i = 1; do { $i++ } until $i > 4;',
+eval-dies-ok 'my $i = 1; do { $i++ } until $i > 4;',
     "'do' can't take the 'until' modifier";
 
-eval_dies_ok 'my $i; do { $i++ } for 1..3;',
+eval-dies-ok 'my $i; do { $i++ } for 1..3;',
     "'do' can't take the 'for' modifier";
 
-eval_dies_ok 'my $i; do { $i++ } given $i;',
+eval-dies-ok 'my $i; do { $i++ } given $i;',
     "'do' can't take the 'given' modifier";
 
 eval_lives_ok 'my $i; do { $i++ } unless $i;',
@@ -135,13 +135,13 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 
 # L<S04/The do-once loop/"bare block is not a do-once">
 {
-    eval_dies_ok 'my $i; { $i++; next; $i--; }',
+    eval-dies-ok 'my $i; { $i++; next; $i--; }',
         "bare block can't take 'next'";
 
-    eval_dies_ok 'my $i; { $i++; last; $i--; }',
+    eval-dies-ok 'my $i; { $i++; last; $i--; }',
         "bare block can't take 'last'";
     
-    eval_dies_ok 'my $i; { $i++; redo; $i--; }',
+    eval-dies-ok 'my $i; { $i++; redo; $i--; }',
         "bare block can't take 'last'";
 }
 

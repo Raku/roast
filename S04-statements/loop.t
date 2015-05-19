@@ -97,7 +97,7 @@ plan 15;
 eval_lives_ok('class A { has $!to; method x { loop { (:$!to); } } };', 'pair colon syntax in a loop refers to an attribute works');
 
 # RT #63760
-eval_dies_ok 'loop { say "# RT63760"; last } while 1',
+eval-dies-ok 'loop { say "# RT63760"; last } while 1',
              '"loop {} while" is a syntax error (RT 63760)';
 
 # RT #112654

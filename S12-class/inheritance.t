@@ -128,7 +128,7 @@ eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
     ok !( any(DirectMu.^parents).gist eq '(Any)'), 'and Any does not appear in the list of parents either';
 }
 
-eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
+eval-dies-ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
 
 # check that inheriting from Array works
 {

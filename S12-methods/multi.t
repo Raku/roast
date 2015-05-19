@@ -49,7 +49,7 @@ role R1 {
 role R2 {
     method foo($x, $y) { 2 }   #OK not used
 }
-eval_dies_ok 'class X does R1 does R2 { }', 'sanity: get composition conflict error';
+eval-dies-ok 'class X does R1 does R2 { }', 'sanity: get composition conflict error';
 class C does R1 does R2 {
     proto method foo(|) { * }
 }
@@ -196,7 +196,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 # RT #57788
 {
-    eval_dies_ok 'class RT57788 { method m() { }; method m() { } }';
+    eval-dies-ok 'class RT57788 { method m() { }; method m() { } }';
 }
 
 {

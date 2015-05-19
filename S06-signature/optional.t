@@ -37,11 +37,11 @@ is opt_typed() , 'undef',  'can leave out optional typed param';
 
 # L<S06/Parameters and arguments/"required positional parameters must come
 # before those bound to optional positional">
-eval_dies_ok 'sub wrong1 ($a?, $b) {...}', 'optional params before required ones are forbidden';
+eval-dies-ok 'sub wrong1 ($a?, $b) {...}', 'optional params before required ones are forbidden';
 # RT #76022
 {
-    eval_dies_ok 'sub wrong2 ($a = 1, $b) {...}', "...even if they're only optional by virtue of a default";
-    eval_dies_ok 'sub wrong3 ($a = 0, $b) {...}', '...and the default is 0';
+    eval-dies-ok 'sub wrong2 ($a = 1, $b) {...}', "...even if they're only optional by virtue of a default";
+    eval-dies-ok 'sub wrong3 ($a = 0, $b) {...}', '...and the default is 0';
 }
 
 sub foo_53814($w, $x?, :$y = 2) { $w~"|"~$x~"|"~$y };
@@ -54,7 +54,7 @@ dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
     # old test is bogus, nullterm only allowed at the end of a list
     # is rt54804( 1, , 3, ), '1|undef|3|undef',
     #    'two commas parse as if undef is between them';
-    eval_dies_ok q/sub rt54804( $v, $w?, $x?, $y? ) {
+    eval-dies-ok q/sub rt54804( $v, $w?, $x?, $y? ) {
         (defined( $v ) ?? $v !! 'undef')
         ~ '|' ~
         (defined( $w ) ?? $w !! 'undef')
@@ -66,7 +66,7 @@ dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
     rt54804( 1, , 3, )/, "two commas in a row doesn't parse";
 }
 
-eval_dies_ok( 'sub rt66822($opt?, $req) { "$opt, $req" }',
+eval-dies-ok( 'sub rt66822($opt?, $req) { "$opt, $req" }',
               "Can't put required parameter after optional parameters" );
 
 # Niecza bug#49
@@ -80,7 +80,7 @@ is opt_hash1(),  0, "optional hash not passed is empty";
 is opt_hash2(),  0, "optional hash not passed is empty (copy)";
 
 # RT #71110
-eval_dies_ok 'sub opt($a = 1, $b) { }',
+eval-dies-ok 'sub opt($a = 1, $b) { }',
     'Cannot put required parameter after optional parameters';
 
 # RT #74758

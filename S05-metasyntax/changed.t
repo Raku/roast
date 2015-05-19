@@ -18,7 +18,7 @@ plan 12;
     ok(!($str ~~ /bc$/), '$ does not match \n');
     
     # (The /m modifier is gone.)
-    eval_dies_ok('$str ~~ m:m/bc$/', '/m modifier (as :m) is gone');
+    eval-dies-ok('$str ~~ m:m/bc$/', '/m modifier (as :m) is gone');
 }
 
 # A $ no longer matches an optional preceding \n
@@ -30,9 +30,9 @@ plan 12;
 
 # The \A, \Z, and \z metacharacters are gone.
 {
-    eval_dies_ok('/\A/', '\\A is gone');
-    eval_dies_ok('/\Z/', '\\Z is gone');
-    eval_dies_ok('/\z/', '\\z is gone');
+    eval-dies-ok('/\A/', '\\A is gone');
+    eval-dies-ok('/\Z/', '\\Z is gone');
+    eval-dies-ok('/\z/', '\\z is gone');
 }
 
 # vim: ft=perl6

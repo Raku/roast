@@ -7,11 +7,11 @@ plan 12;
 
 # testing unknown metasyntax handling
 
-eval_dies_ok('"aa!" ~~ /!/', '"!" is not valid metasyntax');
+eval-dies-ok('"aa!" ~~ /!/', '"!" is not valid metasyntax');
 lives_ok({"aa!" ~~ /\!/}, 'escaped "!" is valid');
 lives_ok({"aa!" ~~ /'!'/}, 'quoted "!" is valid');
 
-eval_dies_ok('"aa!" ~~ /\a/', 'escaped "a" is not valid metasyntax');
+eval-dies-ok('"aa!" ~~ /\a/', 'escaped "a" is not valid metasyntax');
 lives_ok({"aa!" ~~ /a/}, '"a" is valid');
 lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 

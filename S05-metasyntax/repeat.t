@@ -38,8 +38,8 @@ ok("abcabcabcabcd" ~~ m/'abc'**{2..*}/, 'Open range repetition using closure');
 ok(!( "abcd"       ~~ m/'abc'**{2..*}/), 'Fail open range repetition using closure');
 
 # It is illegal to return a list, so this easy mistake fails:
-eval_dies_ok('"foo" ~~ m/o{1,3}/', 'P5-style {1,3} range mistake is caught');
-eval_dies_ok('"foo" ~~ m/o{1,}/',  'P5-style {1,} range mistake is caught');
+eval-dies-ok('"foo" ~~ m/o{1,3}/', 'P5-style {1,3} range mistake is caught');
+eval-dies-ok('"foo" ~~ m/o{1,}/',  'P5-style {1,} range mistake is caught');
 
 is(~('foo,bar,baz,' ~~ m/[<alpha>+]+ %  ','/), 'foo,bar,baz',  '% with a term worked');
 is(~('foo,bar,baz,' ~~ m/[<alpha>+]+ %% ','/), 'foo,bar,baz,', '%% with a term worked');

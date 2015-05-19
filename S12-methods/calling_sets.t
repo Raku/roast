@@ -171,6 +171,6 @@ is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find nex
     isa_ok MMT1.new.?nonexistent(), Nil, '.?nonexisent() returns Nil';
 }
 
-eval_dies_ok '1.*WHAT', '.WHAT is a macro and cannoted be .*ed';
+eval-dies-ok '1.*WHAT', '.WHAT is a macro and cannoted be .*ed';
 
 # vim: ft=perl6

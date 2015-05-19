@@ -78,7 +78,7 @@ is $str, 'inner', 'return in pointy returns from enclosing sub';
 
 # -> { $^a, $^b } is illegal; you can't mix real sigs with placeholders,
 # and the -> introduces a sig of ().  TimToady #perl6 2008-May-24
-eval_dies_ok(q{{ -> { $^a, $^b } }}, '-> { $^a, $^b } is illegal');
+eval-dies-ok(q{{ -> { $^a, $^b } }}, '-> { $^a, $^b } is illegal');
 
 # RT #61034
 lives_ok {my $x = -> {}; my $y = $x(); },

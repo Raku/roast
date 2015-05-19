@@ -128,7 +128,7 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
        'same with class methods (1)';
     is COdd.what,  'odd',
        'same with class methods (2)';
-    eval_dies_ok 'class MD_not_Int does MD_block["foo"] { }',
+    eval-dies-ok 'class MD_not_Int does MD_block["foo"] { }',
                  "Can't compose without matching role multi";
 }
 
@@ -151,7 +151,7 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
        'MD with generics at class composition time (class method) (1)';
     is CDiff.what, 'different type',
        'MD with generics at class composition time (class method) (2)';
-    eval_dies_ok 'class WrongFu does MD_generics[3] { }',
+    eval-dies-ok 'class WrongFu does MD_generics[3] { }',
        'MD with generics at class composition times fails (wrong arity)';
 }
 
@@ -159,7 +159,7 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
 {
     lives_ok { role A[::T $?] {}; class B does A[] {} },
         'question mark for optional parameter is parsed correctly';
-    eval_dies_ok 'role A[::T?] {}; class B does A[] {}',
+    eval-dies-ok 'role A[::T?] {}; class B does A[] {}',
         'cannot put question mark on a type constraint';
 }
 

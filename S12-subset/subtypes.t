@@ -106,7 +106,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 {
     subset HasA of Str where /a/;
     lives_ok { my HasA $x = 'bla' },   'where /regex/ works (positive)';
-    eval_dies_ok 'my HasA $x = "foo"', 'where /regex/ works (negative)';
+    eval-dies-ok 'my HasA $x = "foo"', 'where /regex/ works (negative)';
 }
 
 # You can write just an expression rather than a block after where in a sub

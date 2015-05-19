@@ -232,8 +232,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 {
-    eval_dies_ok '$_ = "a"; s:unkonwn/a/b/', 's/// dies on unknown adverb';
-    eval_dies_ok '$_ = "a"; s:overlap/a/b/', ':overlap does not make sense on s///';
+    eval-dies-ok '$_ = "a"; s:unkonwn/a/b/', 's/// dies on unknown adverb';
+    eval-dies-ok '$_ = "a"; s:overlap/a/b/', ':overlap does not make sense on s///';
 }
 
 # note that when a literal is passed to 'given', $_ is bound read-only
@@ -394,7 +394,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 {
     #?niecza todo "Niecza works when it shouldn't?"
-    eval_dies_ok q[ $_ = "abc"; my $i = 1; s:i($i)/a/b/ ],
+    eval-dies-ok q[ $_ = "abc"; my $i = 1; s:i($i)/a/b/ ],
         'Value of :i must be known at compile time';
     #?rakudo todo 'be smarter about constant detection'
     eval_lives_ok q[ $_ = "abc";s:i(1)/a/b/ ],

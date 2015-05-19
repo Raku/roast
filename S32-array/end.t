@@ -46,7 +46,7 @@ plan 12;
 }
 
 {
-  eval_dies_ok 'end(1,2,3,4)', "end(1,2,3,4) should not work";
+  eval-dies-ok 'end(1,2,3,4)', "end(1,2,3,4) should not work";
 }
 
 {

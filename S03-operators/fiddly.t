@@ -7,5 +7,5 @@ plan 1;
 
 my $fiddly_code = 'my ($a, $b) = (1,2); my @c = [=] $a, $b;';
 
-eval_dies_ok $fiddly_code , 'dies on fiddly code';
+eval-dies-ok $fiddly_code , 'dies on fiddly code';
 

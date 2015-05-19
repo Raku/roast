@@ -41,7 +41,7 @@ plan 10;
 
 {
     my @arr = <1 2 3 4>;
-    eval_dies_ok 'isa(@arr, Array)', 'no sub called isa()';
+    eval-dies-ok 'isa(@arr, Array)', 'no sub called isa()';
     dies_ok { @arr.isa() }, '... isa() with a single arg is a failing case (invocant notation)';  
       
     dies_ok { @arr.isa(Array, Hash)  }, '... isa() with a extra args is a failing case (invocant notation)';        

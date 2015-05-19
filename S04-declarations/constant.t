@@ -32,7 +32,7 @@ plan 56;
 
 # RT #69740
 {
-    eval_dies_ok 'constant ($a, $b) = (3, 4)', 'constant no longer takes list';
+    eval-dies-ok 'constant ($a, $b) = (3, 4)', 'constant no longer takes list';
 }
 
 {

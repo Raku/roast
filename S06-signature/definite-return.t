@@ -32,7 +32,7 @@ plan 9;
         return 1
     }
 PERL
-    eval_dies_ok($code, 'A function with a definite return value may not use return with a value')
+    eval-dies-ok($code, 'A function with a definite return value may not use return with a value')
 }
 
 #?rakudo skip 'definite values as return specifications dont parse yet RT #124927'
@@ -42,7 +42,7 @@ PERL
         return Failure.new(X::Adhoc.new(4))
     }
 PERL
-    eval_dies_ok($code, 'A function with a definite return value may not use return with a value, even a Failure')
+    eval-dies-ok($code, 'A function with a definite return value may not use return with a value, even a Failure')
 }
 
 #?rakudo skip 'definite values as return specifications dont parse yet RT #124927'

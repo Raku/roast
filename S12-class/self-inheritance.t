@@ -12,8 +12,8 @@ audreyt I suspect compile time is the correct answer
 
 =end pod
 
-eval_dies_ok 'role RA does RA { }; 1', "Testing `role A does A`";
-eval_dies_ok 'class CA is CA { }; 1', "Testing `class A is A`";
+eval-dies-ok 'role RA does RA { }; 1', "Testing `role A does A`";
+eval-dies-ok 'class CA is CA { }; 1', "Testing `class A is A`";
 
 
 # vim: ft=perl6

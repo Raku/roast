@@ -205,7 +205,7 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 is (uc "a" eq "A"), uc(False.Str), "uc has the correct precedence in comparison to eq";
 
 # L<S03/Named unary precedence/my $i = int $x;   # ILLEGAL>
-eval_dies_ok 'int 4.5', 'there is no more prefix:<int>';
+eval-dies-ok 'int 4.5', 'there is no more prefix:<int>';
 
 
 # http://irclog.perlgeek.de/perl6/2009-07-14#i_1315249

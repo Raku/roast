@@ -44,7 +44,7 @@ class T2 {
     is( a($o: $seed), $seed, "The indirect object notation call with argument with ()" );
 
     my $name = 'a';
-    eval_dies_ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
+    eval-dies-ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
 
     #?niecza 2 skip 'Invocant handling is NYI'
     is  (b $o: 21, 21), 42, "The indirect object notation call with multiple arguments without ()";

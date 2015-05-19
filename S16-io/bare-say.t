@@ -7,8 +7,8 @@ plan 7;
 
 # L<S32::IO/IO::Writeable::Encoded/"it is a compiler error">
 
-eval_dies_ok('say', 'bare say is a compiler error');
-eval_dies_ok('print', 'bare print is a compiler error');
+eval-dies-ok('say', 'bare say is a compiler error');
+eval-dies-ok('print', 'bare print is a compiler error');
 
 is_run( 'say ()',
         {
@@ -28,8 +28,8 @@ is_run( 'say("")',
 
 # RT #61494
 {
-    eval_dies_ok('say for 1', 'say for 1  is an error');
-    eval_dies_ok('say  for 1', 'say  for 1  is an error');
+    eval-dies-ok('say for 1', 'say for 1  is an error');
+    eval-dies-ok('say  for 1', 'say  for 1  is an error');
 }
 
 # RT #74822

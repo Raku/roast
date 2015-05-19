@@ -219,7 +219,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
 # RT #73162
 # WAS:  eval_lives_ok '{*.{}}()', '{*.{}}() lives';
 # This is now supposed tobe a double-closure error:
-eval_dies_ok '{*.{}}()', '{*.{}}() dies';
+eval-dies-ok '{*.{}}()', '{*.{}}() dies';
 
 # RT #80256
 {

@@ -19,8 +19,8 @@ for statement as possible
 # L<S04/The C<for> statement/"no foreach statement any more">
 {
     my $times_run = 0;
-    eval_dies_ok 'foreach 1..10 { $times_run++ }; 1', "foreach is gone";
-    eval_dies_ok 'foreach (1..10) { $times_run++}; 1',
+    eval-dies-ok 'foreach 1..10 { $times_run++ }; 1', "foreach is gone";
+    eval-dies-ok 'foreach (1..10) { $times_run++}; 1',
         "foreach is gone, even with parens";
     is $times_run, 0, "foreach doesn't work";
 }
@@ -164,7 +164,7 @@ my @elems = <a b c d e>;
 {
 
 
-    eval_dies_ok('for @a -> $elem {$elem = 5}', '-> $var is ro by default');
+    eval-dies-ok('for @a -> $elem {$elem = 5}', '-> $var is ro by default');
 
    {
         my @a = <1 2 3 4>;
@@ -364,7 +364,7 @@ class TestClass{ has $.key is rw  };
 }
 
 # L<S04/Statement parsing/keywords require whitespace>
-eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
+eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # looping with more than one loop variables
 {
@@ -378,7 +378,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 {
   #my $str = '';
-  eval_dies_ok('for 1..5 ->  $x, $y { $str ~= "$x$y" }', 'Should throw exception, no value for parameter $y');
+  eval-dies-ok('for 1..5 ->  $x, $y { $str ~= "$x$y" }', 'Should throw exception, no value for parameter $y');
   #is $str, "1234", "loop ran before throwing exception";
   #diag ">$str<";
 }
@@ -422,8 +422,8 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 {
-  eval_dies_ok 'for 1.. { };', "Please use ..* for indefinite range";
-  eval_dies_ok 'for 1... { };', "1... does not exist";
+  eval-dies-ok 'for 1.. { };', "Please use ..* for indefinite range";
+  eval-dies-ok 'for 1... { };', "1... does not exist";
 }
 
 {
@@ -503,7 +503,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # RT #62478
 {
-    eval_dies_ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
+    eval-dies-ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
 
 {

@@ -54,17 +54,17 @@ is(bar(S,S), 1, "not tied as only first type in the dispatch");
 
 # not allowed to declare anonymous routines with only, multi or proto.
 #?niecza todo
-eval_dies_ok 'only sub {}', 'anonymous only sub is an error';
-eval_dies_ok 'multi sub {}', 'anonymous multi sub is an error';
-eval_dies_ok 'proto sub {}', 'anonymous proto sub is an error';
+eval-dies-ok 'only sub {}', 'anonymous only sub is an error';
+eval-dies-ok 'multi sub {}', 'anonymous multi sub is an error';
+eval-dies-ok 'proto sub {}', 'anonymous proto sub is an error';
 #?niecza todo
-eval_dies_ok 'only {}', 'anonymous only is an error';
-eval_dies_ok 'multi {}', 'anonymous multi is an error';
-eval_dies_ok 'proto {}', 'anonymous proto is an error';
+eval-dies-ok 'only {}', 'anonymous only is an error';
+eval-dies-ok 'multi {}', 'anonymous multi is an error';
+eval-dies-ok 'proto {}', 'anonymous proto is an error';
 #?niecza todo
-eval_dies_ok 'class A { only method {} }', 'anonymous only method is an error';
-eval_dies_ok 'class B { multi method {} }', 'anonymous multi method is an error';
-eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error';
+eval-dies-ok 'class A { only method {} }', 'anonymous only method is an error';
+eval-dies-ok 'class B { multi method {} }', 'anonymous multi method is an error';
+eval-dies-ok 'class C { proto method {} }', 'anonymous proto method is an error';
 
 ok(&foo ~~ Callable, 'a multi does Callable');
 #?niecza todo
