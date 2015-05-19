@@ -9,7 +9,7 @@ plan 6;
     is $a.perl, '1',
       'can we serialize a simple scalar';
     my $ra = EVAL($a.perl);
-    is_deeply $ra, $a, 'can we roundtrip simple scalar';
+    is-deeply $ra, $a, 'can we roundtrip simple scalar';
     ok $ra.VAR.of =:= Mu, 'make sure any value can be stored';
 } #3
 
@@ -21,7 +21,7 @@ plan 6;
     is $a.perl, 'Int(1)',
       'can we serialize a scalar with constrained values';
     my $ra = EVAL($a.perl);
-    is_deeply $ra, $a, 'can we roundtrip scalar constrained values';
+    is-deeply $ra, $a, 'can we roundtrip scalar constrained values';
     #?rakudo todo "cannot roundtrip constrained scalars yet"
     ok $ra.VAR.of =:= Int, 'make sure roundtripped values are Int';
 } #3

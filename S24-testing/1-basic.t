@@ -48,21 +48,21 @@ isnt(2 + 2, 4, '2 and 2 does make 4', :todo(1));
 isnt(2 + 2, 4, desc => '2 and 2 does make 4', todo => 1);
 isnt(2 + 2, 4, :desc('2 and 2 does make 4'), todo => 1);
 
-## is_deeply
+## is-deeply
 
-is_deeply([ 1..4 ], [ 1..4 ],
-          "is_deeply (simple)");
+is-deeply([ 1..4 ], [ 1..4 ],
+          "is-deeply (simple)");
 
-is_deeply({ a => "b", c => "d", nums => [<1 2 3 4 5 6>] },
+is-deeply({ a => "b", c => "d", nums => [<1 2 3 4 5 6>] },
           { nums => ['1'..'6'], <a b c d> },
-          "is_deeply (more complex)");
+          "is-deeply (more complex)");
 
 my @a = "a" .. "z";
 my @b = @a.reverse;
 @b = @b.map(sub ($a, $b) { $b, $a });
 my %a = @a;
 my %b = @b;
-is_deeply(%a, %b, "is_deeply (test hash key ordering)");
+is-deeply(%a, %b, "is-deeply (test hash key ordering)");
 
 ## isa-ok
 

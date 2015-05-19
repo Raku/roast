@@ -24,7 +24,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
         $s1.emit(42);
         $s1.emit(43);
-        is_deeply @seen, [42,43], 'did we get these?';
+        is-deeply @seen, [42,43], 'did we get these?';
 
         my $s2 = Supply.new;
         ok $s2 ~~ Supply, 'Did we get a Supply 2?';
@@ -34,7 +34,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         $s2.emit(666);
         $s2.emit(667);
         $s2.emit(668);
-        is_deeply @seen, [42,43,666,667,668], 'did we get the rest?';
+        is-deeply @seen, [42,43,666,667,668], 'did we get the rest?';
 
         $s2.done;
         my $s3 = Supply.new;
@@ -42,7 +42,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         $master.emit($s3);  # now get it from here
 
         $s3.emit(7);
-        is_deeply @seen, [42,43,666,667,668,7], 'did we survive done?';
+        is-deeply @seen, [42,43,666,667,668,7], 'did we survive done?';
 
         throws_like { $master.emit(23)}, X::Supply::Migrate::Needs;
     }

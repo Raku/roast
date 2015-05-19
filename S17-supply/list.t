@@ -12,8 +12,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 {
         my @a;
         for Supply.from-list(2..6).list { @a.push($_) };
-        is_deeply @a, [2..6], "Supply.list works in for";
+        is-deeply @a, [2..6], "Supply.list works in for";
         my @b = Supply.from-list(42..50).list;
-        is_deeply @b, [42..50], "Supply.list can be stored in array";
+        is-deeply @b, [42..50], "Supply.list can be stored in array";
 }
 }

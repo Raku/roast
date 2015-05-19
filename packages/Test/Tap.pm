@@ -32,7 +32,7 @@ multi sub tap-ok (
         for ^$timeout { last if $done or $s.done; sleep .1 }
         ok $done, "$desc was really done";
         @res .= sort if $sort;
-        is_deeply @res, $expected, $desc;
+        is-deeply @res, $expected, $desc;
     }, $desc;
 }
 

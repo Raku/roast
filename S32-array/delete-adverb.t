@@ -46,23 +46,23 @@ sub gen_array { (1..10).list }
 
     my $d = @a[8]:p;
     #?niecza 3 todo "cannot combine adverbial pairs"
-    is_deeply @a[8]:p:!delete, $d,       "return a single pair out";
+    is-deeply @a[8]:p:!delete, $d,       "return a single pair out";
     ok @a[8]:exists,                     "8 should not have been deleted";
-    is_deeply @a[8]:p:delete,  $d,       "slice a single pair out";
+    is-deeply @a[8]:p:delete,  $d,       "slice a single pair out";
     ok !defined(@a[8]),                  "8 should be deleted now";
     #?niecza 3 todo "cannot combine adverbial pairs"
-    is_deeply @a[8]:p:delete,  (),       "slice unexisting single pair out";
-    is_deeply @a[8]:!p:delete, (8=>Int), "slice unexisting single pair out";
+    is-deeply @a[8]:p:delete,  (),       "slice unexisting single pair out";
+    is-deeply @a[8]:!p:delete, (8=>Int), "slice unexisting single pair out";
     is @a.elems, 8, "should have been shortened";
 
     my $e= (7, @a[7]);
     #?niecza 7 todo "cannot combine adverbial pairs"
-    is_deeply @a[7]:kv:!delete, $e,      "return a single elem/value out";
+    is-deeply @a[7]:kv:!delete, $e,      "return a single elem/value out";
     ok @a[7]:exists,                     "7 should not have been deleted";
-    is_deeply @a[7]:kv:delete,  $e,      "slice a single elem/value out";
+    is-deeply @a[7]:kv:delete,  $e,      "slice a single elem/value out";
     ok @a[7]:!exists,                    "7 should be deleted now";
-    is_deeply @a[7]:kv:delete,  (),      "slice unexisting single elem/value";
-    is_deeply @a[7]:!kv:delete, (7,Int), "slice unexisting single elem/value";
+    is-deeply @a[7]:kv:delete,  (),      "slice unexisting single elem/value";
+    is-deeply @a[7]:!kv:delete, (7,Int), "slice unexisting single elem/value";
     is @a.elems, 7, "should have been shortened";
 
     #?niecza 7 todo "cannot combine adverbial pairs"
@@ -70,7 +70,7 @@ sub gen_array { (1..10).list }
     ok @a[6]:exists,              "6 should not have been deleted";
     is @a[6]:k:delete,         6, "slice a single elem out";
     ok @a[6]:!exists,             "6 should be deleted now";
-    is_deeply @a[6]:k:delete, (), "slice unexisting single elem";
+    is-deeply @a[6]:k:delete, (), "slice unexisting single elem";
     is @a[6]:!k:delete,        6, "slice unexisting single elem";
     is @a.elems, 6, "should have been shortened";
 
@@ -80,7 +80,7 @@ sub gen_array { (1..10).list }
     ok @a[5]:exists,               "5 should not have been deleted";
     is @a[5]:v:delete,         $g, "slice a single value out";
     ok @a[5]:!exists,              "5 should be deleted now";
-    is_deeply @a[5]:v:delete,  (), "slice unexisting single elem";
+    is-deeply @a[5]:v:delete,  (), "slice unexisting single elem";
     is @a[5]:!v:delete,       Int, "slice unexisting single elem";
     is @a.elems, 5, "should have been shortened";
 } #42
@@ -96,21 +96,21 @@ sub gen_array { (1..10).list }
     is @a.elems, 9, "should have been shortened";
 
     #?niecza 7 todo "cannot combine adverbial pairs"
-    is_deeply @a[8]:delete:!exists:kv, (8,False), "8:exists:kv 1 eelem";
+    is-deeply @a[8]:delete:!exists:kv, (8,False), "8:exists:kv 1 eelem";
     ok @a[8]:!exists,                             "8 should be deleted now";
-    is_deeply @a[8]:delete:exists:!kv, (8,False), "1 neelem d:exists:!kv";
-    is_deeply @a[8]:delete:!exists:!kv, (8,True), "1 neelem d:!exists:!kv";
-    is_deeply @a[8]:delete:exists:kv, (),         "1 neelem d:exists:kv";
-    is_deeply @a[8]:delete:!exists:kv, (),        "1 neelem d:!exists:kv";
+    is-deeply @a[8]:delete:exists:!kv, (8,False), "1 neelem d:exists:!kv";
+    is-deeply @a[8]:delete:!exists:!kv, (8,True), "1 neelem d:!exists:!kv";
+    is-deeply @a[8]:delete:exists:kv, (),         "1 neelem d:exists:kv";
+    is-deeply @a[8]:delete:!exists:kv, (),        "1 neelem d:!exists:kv";
     is @a.elems, 8, "should have been shortened";
 
     #?niecza 7 todo "cannot combine adverbial pairs"
-    is_deeply @a[7]:delete:!exists:p, (7=>False), "7:exists:p 1 eelem";
+    is-deeply @a[7]:delete:!exists:p, (7=>False), "7:exists:p 1 eelem";
     ok @a[7]:!exists,                             "7 should be deleted now";
-    is_deeply @a[7]:delete:exists:!p, (7=>False), "1 neelem exists:!p";
-    is_deeply @a[7]:delete:!exists:!p, (7=>True), "1 neelem !exists:!p";
-    is_deeply @a[7]:delete:exists:p, (),          "1 neelem exists:p";
-    is_deeply @a[7]:delete:!exists:p, (),         "1 neelem !exists:p";
+    is-deeply @a[7]:delete:exists:!p, (7=>False), "1 neelem exists:!p";
+    is-deeply @a[7]:delete:!exists:!p, (7=>True), "1 neelem !exists:!p";
+    is-deeply @a[7]:delete:exists:p, (),          "1 neelem exists:p";
+    is-deeply @a[7]:delete:!exists:p, (),         "1 neelem !exists:p";
     is @a.elems, 7, "should have been shortened";
 } #19
 
@@ -119,29 +119,29 @@ sub gen_array { (1..10).list }
     my $b = @a[1,3];
 
     #?niecza 3 skip "no adverbials"
-    is_deeply @a[1,3]:delete, $b, "Test for delete multiple elements";
-    is_deeply @a[1,3], (Int,Int), "1 3 should be deleted now";
+    is-deeply @a[1,3]:delete, $b, "Test for delete multiple elements";
+    is-deeply @a[1,3], (Int,Int), "1 3 should be deleted now";
     is +@a, 10,                   "1 3 should be deleted now";
 
     #?niecza 11 skip "no adverbials"
     my $c = @a[2,4,9];
-    is_deeply @a[2,4,9]:!delete,       $c, "Test non-deletion with ! N";
-    is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
-    is_deeply @a[2,4,9]:delete(0),     $c, "Test non-deletion with (0) N";
-    is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
-    is_deeply @a[2,4,9]:delete(False), $c, "Test non-deletion with (False) N";
-    is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
-    is_deeply @a[2,4,9]:delete($dont), $c, "Test non-deletion with (\$dont) N";
-    is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
-    is_deeply @a[2,4,9]:delete(1),     $c, "Test deletion with (1) N";
-    is_deeply @a[2,4,9], (Int,Int,Int), "2 4 9 should be deleted now";
+    is-deeply @a[2,4,9]:!delete,       $c, "Test non-deletion with ! N";
+    is-deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
+    is-deeply @a[2,4,9]:delete(0),     $c, "Test non-deletion with (0) N";
+    is-deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
+    is-deeply @a[2,4,9]:delete(False), $c, "Test non-deletion with (False) N";
+    is-deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
+    is-deeply @a[2,4,9]:delete($dont), $c, "Test non-deletion with (\$dont) N";
+    is-deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
+    is-deeply @a[2,4,9]:delete(1),     $c, "Test deletion with (1) N";
+    is-deeply @a[2,4,9], (Int,Int,Int), "2 4 9 should be deleted now";
     is +@a, 9,                          "array should be shortened now";
 
     my $hi = @a[6,8]:p;
     #?niecza 3 todo "cannot combine adverbial pairs"
-    is_deeply @a[6,8]:p:!delete, $hi, "return pairs";
+    is-deeply @a[6,8]:p:!delete, $hi, "return pairs";
     is @a[6,8]:p, $hi,                "6 8 should not have been deleted";
-    is_deeply @a[6,8]:p:delete,  $hi, "slice pairs out";
+    is-deeply @a[6,8]:p:delete,  $hi, "slice pairs out";
     is +@a, 8,                        "8 should be deleted now by count";
 } #14
 
@@ -149,14 +149,14 @@ sub gen_array { (1..10).list }
     my @a = gen_array;
 
     #?niecza 9 todo "cannot combine adverbial pairs"
-    is_deeply @a[2,3]:!delete:exists, (True,True),  "!d:exists ekeys";
-    is_deeply @a[2,3]:delete:exists, (True,True),   "d:exists ekeys";
+    is-deeply @a[2,3]:!delete:exists, (True,True),  "!d:exists ekeys";
+    is-deeply @a[2,3]:delete:exists, (True,True),   "d:exists ekeys";
     ok @a[2]:!exists,                               "2 should be deleted now";
     ok @a[3]:!exists,                               "3 should be deleted now";
-    is_deeply @a[2,3]:delete:exists, (False,False), "d:exists nekeys";
-    is_deeply @a[2,3]:delete:!exists, (True,True),  "d:!exists nekeys";
-    is_deeply @a[1,2]:delete:exists, (True,False),  "d:exists nekeys";
-    is_deeply @a[3,9]:delete:!exists, (True,False), "d:!exists nekeys";
+    is-deeply @a[2,3]:delete:exists, (False,False), "d:exists nekeys";
+    is-deeply @a[2,3]:delete:!exists, (True,True),  "d:!exists nekeys";
+    is-deeply @a[1,2]:delete:exists, (True,False),  "d:exists nekeys";
+    is-deeply @a[3,9]:delete:!exists, (True,False), "d:!exists nekeys";
     is +@a, 9,                        "9 should be deleted now by count";
 } #9
 
@@ -164,19 +164,19 @@ sub gen_array { (1..10).list }
     my @a = gen_array;
 
     #?niecza 8 todo "cannot combine adverbial pairs"
-    is_deeply @a[4,5]:!delete:!exists:kv,
+    is-deeply @a[4,5]:!delete:!exists:kv,
     (4,False,5,False),              "!d:!exists:kv ekeys";
-    is_deeply @a[4,5]:delete:!exists:kv,
+    is-deeply @a[4,5]:delete:!exists:kv,
     (4,False,5,False),              "d:!exists:kv ekeys";
     ok @a[4]:!exists,               "4 should be deleted now";
     ok @a[5]:!exists,               "5 should be deleted now";
-    is_deeply @a[4,5]:delete:exists:!kv,
+    is-deeply @a[4,5]:delete:exists:!kv,
     (4,False,5,False),              "d:exists:!kv nekeys";
-    is_deeply @a[4,5]:delete:!exists:!kv,
+    is-deeply @a[4,5]:delete:!exists:!kv,
     (4,True,5,True),                "d:!exists:!kv nekeys";
-    is_deeply @a[4,6]:delete:exists:kv,
+    is-deeply @a[4,6]:delete:exists:kv,
     (6,True),                       "d:exists:kv nekey/ekey";
-    is_deeply @a[7,4]:delete:!exists:kv,
+    is-deeply @a[7,4]:delete:!exists:kv,
     (7,False),                      "d:!exists:kv ekey/nekey";
     is +@a, 10,                     "only deletions in middle";
 } #9
@@ -185,19 +185,19 @@ sub gen_array { (1..10).list }
     my @a = gen_array;
 
     #?niecza 8 todo "cannot combine adverbial pairs"
-    is_deeply @a[4,5]:!delete:!exists:p,
+    is-deeply @a[4,5]:!delete:!exists:p,
     (4=>False,5=>False),            "!d:!exists:p ekeys";
-    is_deeply @a[4,5]:delete:!exists:p,
+    is-deeply @a[4,5]:delete:!exists:p,
     (4=>False,5=>False),            "d:!exists:p ekeys";
     ok @a[4]:!exists,               "4 should be deleted now";
     ok @a[5]:!exists,               "5 should be deleted now";
-    is_deeply @a[4,5]:delete:exists:!p,
+    is-deeply @a[4,5]:delete:exists:!p,
     (4=>False,5=>False),            "d:exists:!p nekeys";
-    is_deeply @a[4,5]:delete:!exists:!p,
+    is-deeply @a[4,5]:delete:!exists:!p,
     (4=>True,5=>True),              "d:!exists:!p nekeys";
-    is_deeply @a[4,6]:delete:exists:p,
+    is-deeply @a[4,6]:delete:exists:p,
     (6=>True,),                   "d:exists:p nekey/ekey";
-    is_deeply @a[7,4]:delete:!exists:p,
+    is-deeply @a[7,4]:delete:!exists:p,
     (7=>False,),                  "d:!exists:p ekey/nekey";
     is +@a, 10,                     "only deletions in middle";
 } #9
@@ -208,7 +208,7 @@ sub gen_array { (1..10).list }
     my $all = @a[^@a.elems];
 
     #?niecza 2 skip "no adverbials"
-    is_deeply @a[*]:delete, $all, "Test deletion with whatever";
+    is-deeply @a[*]:delete, $all, "Test deletion with whatever";
     is +@a, 0,                    "* should be deleted now";
 } #2
 
@@ -217,13 +217,13 @@ sub gen_array { (1..10).list }
     my $all = @a[^@a.elems];
 
     #?niecza 10 skip "no adverbials"
-    is_deeply @a[*]:!delete,       $all, "Test non-deletion with ! *";
-    is_deeply @a[*]:delete(0),     $all, "Test non-deletion with (0) *";
-    is_deeply @a[*]:delete(False), $all, "Test non-deletion with (False) *";
-    is_deeply @a[*]:delete($dont), $all, "Test non-deletion with (\$dont) *";
+    is-deeply @a[*]:!delete,       $all, "Test non-deletion with ! *";
+    is-deeply @a[*]:delete(0),     $all, "Test non-deletion with (0) *";
+    is-deeply @a[*]:delete(False), $all, "Test non-deletion with (False) *";
+    is-deeply @a[*]:delete($dont), $all, "Test non-deletion with (\$dont) *";
 
     is +@a, 10,                      "* should not be deleted now";
-    is_deeply @a[*]:delete(1), $all, "Test deletion with (1) whatever";
+    is-deeply @a[*]:delete(1), $all, "Test deletion with (1) whatever";
     is +@a, 0,                       "* should be deleted now";
 } #7
 

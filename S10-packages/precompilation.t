@@ -27,7 +27,7 @@ my @keys = Test::Util::run( q:to"--END--").lines;
     --END--
 
 #?rakudo.jvm todo 'RT #122773'
-is_deeply @keys, [<A B C>], 'Diamond relationship';
+is-deeply @keys, [<A B C>], 'Diamond relationship';
 
 #?rakudo.jvm todo 'RT #122896'
 #?rakudo.moar todo 'RT #122896'
@@ -148,7 +148,7 @@ unlink $_ for @precomp-paths; # don't care if worked
 
     #?rakudo.jvm todo 'RT #123276'
     #?rakudo.moar todo 'RT #123276'
-    is_deeply @keys, [<foo>], 'RT123276';
+    is-deeply @keys, [<foo>], 'RT123276';
 
     unlink $_ for @precomp-paths;  # don't care if failed
 }

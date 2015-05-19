@@ -16,8 +16,8 @@ our sub guess($who, $what?) {
 }
 
 throws_like {EVAL 'guess()'}, X::TypeCheck::Argument;
-is_deeply guess("World"), False, 'optional';
-is_deeply guess("World",37), True, 'optional';
+is-deeply guess("World"), False, 'optional';
+is-deeply guess("World",37), True, 'optional';
 
 {
     sub dance($who, $dance = "Salsa") {
@@ -99,14 +99,14 @@ is_deeply guess("World",37), True, 'optional';
     sub Sprintf(Cool $format, *@args) {
        return $format => @args
     }
-    is_deeply Sprintf("%d plus %d is %d", 37, 5, 42), ("%d plus %d is %d" => [37, 5, 42]), 'sprintf example';
+    is-deeply Sprintf("%d plus %d is %d", 37, 5, 42), ("%d plus %d is %d" => [37, 5, 42]), 'sprintf example';
 }
 
 {
     my &callwith := -> *@pos, *%named {
 	@pos => %named
     };
-    is_deeply callwith(10, 20, :a(30), :b(40)),
+    is-deeply callwith(10, 20, :a(30), :b(40)),
     [10,20] => {a => 30, b => 40},
     'pointy block syntax';
 }
@@ -121,7 +121,7 @@ is_deeply guess("World",37), True, 'optional';
 
     my $obj = Foo.new;
     my $r = $obj.explode(42);
-    is_deeply $r, [$obj, 42], 'method invocant';
+    is-deeply $r, [$obj, 42], 'method invocant';
 }
 
 # Parameter Traits

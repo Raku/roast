@@ -80,7 +80,7 @@ my ($input, @searches) = q:to/INPUT/, q:to/SEARCHES/.lines;
     SEARCHES
 
 is $input, $pub-with-no-beer;
-is_deeply @searches, @expected-searches;
+is-deeply @searches, @expected-searches;
 
 my @results = gather {
    for @searches -> $s {
@@ -90,7 +90,7 @@ my @results = gather {
    }
 };
 
-is_deeply @results, [q:to"END RESULTS".lines], 'search results';
+is-deeply @results, [q:to"END RESULTS".lines], 'search results';
 Found beer
 Didn't find masak
 Found vacation

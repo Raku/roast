@@ -17,9 +17,9 @@ plan 12;
     my $arrayer = [ 0 xx 10, 10 xx 10, 20 xx 10 ];
 
     for &subber, $blocker, $hasher, $arrayer -> $mapper {
-        is_deeply categorize( $mapper, @list ), %expected1,
+        is-deeply categorize( $mapper, @list ), %expected1,
           "simple sub call with {$mapper.^name}";
-        is_deeply @list.categorize( $mapper ), %expected1,
+        is-deeply @list.categorize( $mapper ), %expected1,
           "method call on list with {$mapper.^name}";
     }
 } #4*2
@@ -42,7 +42,7 @@ plan 12;
       '8' => ['8♦'],
       '5' => ['5♠'],
     );
-    is_deeply(%got, %expected, 'sub with named sub mapper');
+    is-deeply(%got, %expected, 'sub with named sub mapper');
 } #1
 
 {
@@ -53,7 +53,7 @@ plan 12;
         @categories;
     };
     my %expected = ('odd'=>[1,3,5], 'even'=>[2,4,6], 'triple'=>[3,6]);
-    is_deeply(%got, %expected, 'method with code block mapper');
+    is-deeply(%got, %expected, 'method with code block mapper');
 } #1
 
 {
@@ -70,12 +70,12 @@ plan 12;
                      'vowel'     => ['a', 'e'],
                      'uppercase' => ['P'],
                      'lowercase' => ['a', 'd', 'r', 'e'] );
-    is_deeply(%got, %expected, 'method with named sub mapper');
+    is-deeply(%got, %expected, 'method with named sub mapper');
 }
 
 #?niecza todo 'feature'
 {
-    is_deeply( categorize( { map { [$_+0, $_+10] }, .comb }, 100,104,112,119 ),
+    is-deeply( categorize( { map { [$_+0, $_+10] }, .comb }, 100,104,112,119 ),
       :{1 => :{ 11 => [100, 104, 112, 112, 119, 119] },
         0 => :{ 10 => [100, 100, 104] },
         4 => :{ 14 => [104] },

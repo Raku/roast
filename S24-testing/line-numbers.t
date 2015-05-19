@@ -36,7 +36,7 @@ execute-test(:function("isa-ok"), :line(9));
 execute-test(:function("is_approx"), :line(9));
 
 #?DOES 1
-execute-test(:function("is_deeply"), :line(9));
+execute-test(:function("is-deeply"), :line(9));
 
 #?DOES 1
 execute-test(:function("isnt"), :line(9));

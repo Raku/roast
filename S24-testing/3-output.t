@@ -9,22 +9,22 @@ plan 4;
 {
     use lib 't/spec/packages';
     use Test::Util;
-    my $code = 'use Test; my Str $str; is_deeply {b=>2}, {a=>$str, b=>2}, "should not work"';
+    my $code = 'use Test; my Str $str; is-deeply {b=>2}, {a=>$str, b=>2}, "should not work"';
     is_run $code,
         {
             out    => /^"not ok " \d+ " - should not work"/,
             err    => /"Failed test 'should not work'"/,
             status => { $_ != 0 },
         },
-        'expected output with failing test "is_deeply"';
-    $code = 'use Test; my Str $str; is_deeply {a=>$str, b=>2}, {a=>$str, b=>2}, "should work"';
+        'expected output with failing test "is-deeply"';
+    $code = 'use Test; my Str $str; is-deeply {a=>$str, b=>2}, {a=>$str, b=>2}, "should work"';
     is_run $code,
         {
             out    => /^"ok " \d+ " - should work"/,
             err    => "",
             status => 0,
         },
-        'expected output with passing test "is_deeply"';
+        'expected output with passing test "is-deeply"';
 }
 
 # RT #77650

@@ -54,7 +54,7 @@ my $interface =
         Widget.new(name => 'status bar', size => 1)));
 
 my @drawing = gather { $interface.compute-layout; }; # Draw
-is_deeply @drawing, [q:to"END_LAYOUT_1".lines], 'initial layout';
+is-deeply @drawing, [q:to"END_LAYOUT_1".lines], 'initial layout';
 +-------------------------+
 | menu bar (1 lines)      |
 +-------------------------+
@@ -74,7 +74,7 @@ END_LAYOUT_1
 
 $interface.size += 3;       # Resize
 @drawing = gather { $interface.compute-layout }; # Redraw
-is_deeply @drawing, [q:to"END_LAYOUT_2".lines], 'resized layout';
+is-deeply @drawing, [q:to"END_LAYOUT_2".lines], 'resized layout';
 +-------------------------+
 | menu bar (1 lines)      |
 +-------------------------+

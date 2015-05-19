@@ -58,7 +58,7 @@ plan 144;
 }
 
 # RT #77750
-is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
+is-deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
 
 # RT #63646
 {

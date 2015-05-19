@@ -97,10 +97,10 @@ plan 41;
     my @a-h = @$h;
     my @h-h = %$h;
 
-    is_deeply +@a-a, 3, '@ sigil flattening of itemized array';
-    is_deeply +@h-a, 3, '% sigil flattening of itemized array';
-    is_deeply +@a-h, 3, '@ sigil flattening of itemized hash';
-    is_deeply +@h-h, 3, '% sigil flattening of itemized hash';
+    is-deeply +@a-a, 3, '@ sigil flattening of itemized array';
+    is-deeply +@h-a, 3, '% sigil flattening of itemized array';
+    is-deeply +@a-h, 3, '@ sigil flattening of itemized hash';
+    is-deeply +@h-h, 3, '% sigil flattening of itemized hash';
 }
 
 # vim: ft=perl6

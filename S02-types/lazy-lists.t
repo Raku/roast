@@ -139,10 +139,10 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 } };
     my @a;
     @a.push: $("one,two,three".split(","));
     #?rakudo.jvm todo 'RT #121994'
-    is_deeply @a, [(<one two three>).list.item], "push: did we not lose the split?";
+    is-deeply @a, [(<one two three>).list.item], "push: did we not lose the split?";
     my @b;
     @b.unshift: $("one,two,three".split(","));
-    is_deeply @b, [(<one two three>).list.item], "unshift: did we not lose the split?";
+    is-deeply @b, [(<one two three>).list.item], "unshift: did we not lose the split?";
 }
 
 # RT #120035

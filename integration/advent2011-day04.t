@@ -26,6 +26,6 @@ sub fib($x) is Cached {
 }
 # only one call for each value from 0 to 10
 is fib(10), 89, 'fibinacci output';
-is_deeply %cache, {1 => 1, 0 => 1, 2 => 2, 3 => 3,
+is-deeply %cache, {1 => 1, 0 => 1, 2 => 2, 3 => 3,
                    4 => 5, 5 => 8, 6 => 13, 7 => 21,
                    8 => 34, 9 => 55, 10 => 89}, 'caching';

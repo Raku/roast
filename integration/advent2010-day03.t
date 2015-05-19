@@ -35,17 +35,17 @@ $fh.close; $fh = open "$new", :w; # open for writing
 
 is $fh.gist.substr(0,2), 'IO', 'IO handle gist';
 
-is_deeply $fh.print('foo'), True, 'print';
+is-deeply $fh.print('foo'), True, 'print';
 
-is_deeply $fh.say('bar'), True, 'say';
+is-deeply $fh.say('bar'), True, 'say';
 
 $fh.close;
 
 is slurp($new).chomp, 'foobar', 'slurp';
 
-is_deeply 'LICENSE'.IO ~~ :e, True, 'IO :e';
-is_deeply 'LICENSE'.IO ~~ :d, False, 'IO :d';
-is_deeply 'LICENSE'.IO ~~ :f, True, 'IO :e';
+is-deeply 'LICENSE'.IO ~~ :e, True, 'IO :e';
+is-deeply 'LICENSE'.IO ~~ :d, False, 'IO :d';
+is-deeply 'LICENSE'.IO ~~ :f, True, 'IO :e';
 
 # tidy up
 try unlink $new;

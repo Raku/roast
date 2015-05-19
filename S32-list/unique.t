@@ -12,18 +12,18 @@ This test tests the C<unique> builtin.
 
 {
     my @array = <a b b c d e b b b b f b>;
-    is_deeply @array.unique,  <a b c d e f>.list.item,
+    is-deeply @array.unique,  <a b c d e f>.list.item,
       "method form of unique works";
-    is_deeply unique(@array), <a b c d e f>.list.item,
+    is-deeply unique(@array), <a b c d e f>.list.item,
       "subroutine form of unique works";
-    is_deeply @array .= unique, [<a b c d e f>],
+    is-deeply @array .= unique, [<a b c d e f>],
       "inplace form of unique works";
-    is_deeply @array, [<a b c d e f>],
+    is-deeply @array, [<a b c d e f>],
       "final result of in place";
 } #4
 
 {
-    is_deeply unique('a', 'b', 'b', 'c', 'd', 'e', 'b', 'b', 'b', 'b', 'f', 'b'),
+    is-deeply unique('a', 'b', 'b', 'c', 'd', 'e', 'b', 'b', 'b', 'b', 'f', 'b'),
       <a b c d e f>.list.item,
       'slurpy subroutine form of unique works';
 } #1
@@ -72,23 +72,23 @@ This test tests the C<unique> builtin.
 {
     my $a = <a b c b d>;
     $a .= unique;
-    is_deeply( $a, <a b c d>.list.item, '.= unique in sink context works on $a' );
+    is-deeply( $a, <a b c d>.list.item, '.= unique in sink context works on $a' );
     my @a = <a b c b d>;
     @a .= unique;
-    is_deeply( @a, [<a b c d>], '.= unique in sink context works on @a' );
+    is-deeply( @a, [<a b c d>], '.= unique in sink context works on @a' );
 } #2
 
 #?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
     my $as    = *.substr: 0,1;
-    is_deeply @array.unique(:$as),  <a b c d e f>.list.item,
+    is-deeply @array.unique(:$as),  <a b c d e f>.list.item,
       "method form of unique with :as works";
-    is_deeply unique(@array,:$as), <a b c d e f>.list.item,
+    is-deeply unique(@array,:$as), <a b c d e f>.list.item,
       "subroutine form of unique with :as works";
-    is_deeply @array .= unique(:$as), [<a b c d e f>],
+    is-deeply @array .= unique(:$as), [<a b c d e f>],
       "inplace form of unique with :as works";
-    is_deeply @array, [<a b c d e f>],
+    is-deeply @array, [<a b c d e f>],
       "final result with :as in place";
 } #4
 
@@ -96,13 +96,13 @@ This test tests the C<unique> builtin.
 {
     my @array = <a b bb c d e b bbbb b b f b>;
     my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
-    is_deeply @array.unique(:$with),  <a b c d e f>.list.item,
+    is-deeply @array.unique(:$with),  <a b c d e f>.list.item,
       "method form of unique with :with works";
-    is_deeply unique(@array,:$with), <a b c d e f>.list.item,
+    is-deeply unique(@array,:$with), <a b c d e f>.list.item,
       "subroutine form of unique with :with works";
-    is_deeply @array .= unique(:$with), [<a b c d e f>],
+    is-deeply @array .= unique(:$with), [<a b c d e f>],
       "inplace form of unique with :with works";
-    is_deeply @array, [<a b c d e f>],
+    is-deeply @array, [<a b c d e f>],
       "final result with :with in place";
 } #4
 
@@ -111,13 +111,13 @@ This test tests the C<unique> builtin.
     my @array = <a b bb c d e b bbbb b b f b>;
     my $as    = *.substr(0,1).ord;
     my $with  = &[==];
-    is_deeply @array.unique(:$as),  <a b c d e f>.list.item,
+    is-deeply @array.unique(:$as),  <a b c d e f>.list.item,
       "method form of unique with :as works";
-    is_deeply unique(@array,:$as), <a b c d e f>.list.item,
+    is-deeply unique(@array,:$as), <a b c d e f>.list.item,
       "subroutine form of unique with :as works";
-    is_deeply @array .= unique(:$as), [<a b c d e f>],
+    is-deeply @array .= unique(:$as), [<a b c d e f>],
       "inplace form of unique with :as works";
-    is_deeply @array, [<a b c d e f>],
+    is-deeply @array, [<a b c d e f>],
       "final result with :as in place";
 } #4
 
@@ -125,13 +125,13 @@ This test tests the C<unique> builtin.
 {
     my @array = ({:a<1>}, {:b<1>}, {:a<1>});
     my $with  = &[eqv];
-    is_deeply @array.unique(:$with),  ({:a<1>}, {:b<1>}).list.item,
+    is-deeply @array.unique(:$with),  ({:a<1>}, {:b<1>}).list.item,
       "method form of unique with [eqv] and objects works";
-    is_deeply unique(@array,:$with), ({:a<1>}, {:b<1>}).list.item,
+    is-deeply unique(@array,:$with), ({:a<1>}, {:b<1>}).list.item,
       "subroutine form of unique with [eqv] and objects works";
-    is_deeply @array .= unique(:$with), [{:a<1>}, {:b<1>}],
+    is-deeply @array .= unique(:$with), [{:a<1>}, {:b<1>}],
       "inplace form of unique with [eqv] and objects works";
-    is_deeply @array, [{:a<1>}, {:b<1>}],
+    is-deeply @array, [{:a<1>}, {:b<1>}],
       "final result with [eqv] and objects in place";
 } #4
 
@@ -140,7 +140,7 @@ This test tests the C<unique> builtin.
     my %a;
     %a<foo> = <a b c>;
     %a<foo>.=unique;
-    is_deeply %a<foo>, <a b c>.list.item,
+    is-deeply %a<foo>, <a b c>.list.item,
       "\%a<foo> not clobbered by .=unique";
 } # 1
 

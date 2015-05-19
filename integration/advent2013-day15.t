@@ -5,20 +5,20 @@ plan 30;
 my $number-of-dwarfs = 7;
 is $number-of-dwarfs.WHAT.gist, '(Int)', 'Int WHAT';
 
-is_deeply 0b1010, 10, 'binary';
-is_deeply 0b10, 2, 'binary' ;
+is-deeply 0b1010, 10, 'binary';
+is-deeply 0b10, 2, 'binary' ;
 
-is_deeply 0xA, 10, 'hex';
-is_deeply 0x10, 16, 'hex';
+is-deeply 0xA, 10, 'hex';
+is-deeply 0x10, 16, 'hex';
 
-is_deeply 0o644, 420, 'octal';
+is-deeply 0o644, 420, 'octal';
 
-is_deeply :3<120>, 15, 'radix';
-is_deeply :28<aaaargh>, 4997394433, 'radix';
+is-deeply :3<120>, 15, 'radix';
+is-deeply :28<aaaargh>, 4997394433, 'radix';
 my $n = '42';
-is_deeply :5($n), 22, 'radix';
+is-deeply :5($n), 22, 'radix';
 
-is_deeply 0xCAFEBABE, 3405691582;
+is-deeply 0xCAFEBABE, 3405691582;
 is 3405691582.base(16), 'CAFEBABE';
 
 my $tenth = 1/10;
@@ -57,4 +57,4 @@ is Inf.WHAT.gist, '(Num)';
 is (Inf > $googol).gist, 'True', 'Inf > $googol';
 my $max = -Inf;
 $max max= 5;          # (max= means "store only if greater")
-is_deeply $max, 5, 'max';             # 5
+is-deeply $max, 5, 'max';             # 5

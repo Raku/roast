@@ -100,16 +100,16 @@ class Bar is Foo {
     is (@a».?mul(3)).join(", "), (3, 6, 9).join(", "), 'return value of @a».?method(@args)';
     is (@a».?"$method"(3)).join(", "), (3, 6, 9).join(", "), '... indirect';
 
-    #?rakudo 4 todo 'is_deeply does not think map results are the same as list on LHS'
+    #?rakudo 4 todo 'is-deeply does not think map results are the same as list on LHS'
     #?niecza 4 skip 'NYI dottyop form'
-    is_deeply @a».+mul(2), ([2, 4], [4, 8], [6, 12]),
+    is-deeply @a».+mul(2), ([2, 4], [4, 8], [6, 12]),
               'return value of @a».+method is a list of lists';
-    is_deeply @a».+"$method"(2), ([2, 4], [4, 8], [6, 12]),
+    is-deeply @a».+"$method"(2), ([2, 4], [4, 8], [6, 12]),
               '... indirect';
 
-    is_deeply @a».*mul(2), ([2, 4], [4, 8], [6, 12]),
+    is-deeply @a».*mul(2), ([2, 4], [4, 8], [6, 12]),
               'return value of @a».*method is a list of lists';
-    is_deeply @a».*"$method"(2), ([2, 4], [4, 8], [6, 12]),
+    is-deeply @a».*"$method"(2), ([2, 4], [4, 8], [6, 12]),
               '... indirect';
 }
 

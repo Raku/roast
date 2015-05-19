@@ -168,7 +168,7 @@ plan 13;
     my $parser = LogicalExpr.new;
     my $actions = LogicalExpr::Actions.new;
 
-    is_deeply $parser.truth-table('table(A,B,and(A,or(A,B))).',$actions),
+    is-deeply $parser.truth-table('table(A,B,and(A,or(A,B))).',$actions),
     ['true true true',
      'true fail true',
      'fail true fail',
@@ -240,7 +240,7 @@ plan 13;
     my $parser = LogicalExpr::Infix.new;
     my $actions = LogicalExpr::Infix::Actions.new;
 
-    is_deeply $parser.truth-table('table(A,B, A and (A or not B)).',$actions),
+    is-deeply $parser.truth-table('table(A,B, A and (A or not B)).',$actions),
     ['true true true',
      'true fail true',
      'fail true fail',
@@ -272,7 +272,7 @@ plan 13;
     my $parser = LogicalExpr::Infix.new;
     my $actions = LogicalExpr::Infix::Actions.new;
 
-    is_deeply $parser.truth-table('table(A,B,C, A and (B or C) equ A and B or A and C).',$actions),
+    is-deeply $parser.truth-table('table(A,B,C, A and (B or C) equ A and B or A and C).',$actions),
     ['true true true true',
      'true true fail true',
      'true fail true true',
@@ -308,10 +308,10 @@ plan 13;
         ['0' xx 2**($n-1) >>~<< gray($n-1), 
          '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse];
     }
-    is_deeply gray(0), [''];
-    is_deeply gray(1), [<0 1>];
-    is_deeply gray(2), [<00 01 11 10>];
-    is_deeply gray(3), [<000 001 011 010 110 111 101 100>];
+    is-deeply gray(0), [''];
+    is-deeply gray(1), [<0 1>];
+    is-deeply gray(2), [<00 01 11 10>];
+    is-deeply gray(3), [<000 001 011 010 110 111 101 100>];
 }
 
 {    
@@ -320,10 +320,10 @@ plan 13;
         (state @g)[$n] //= ['0' xx 2**($n-1) >>~<< gray2($n-1),
                             '1' xx 2**($n-1) >>~<< gray2($n-1).reverse];
     }
-    is_deeply gray2(0), [''];
-    is_deeply gray2(1), [<0 1>];
-    is_deeply gray2(2), [<00 01 11 10>];
-    is_deeply gray2(3), [<000 001 011 010 110 111 101 100>];
+    is-deeply gray2(0), [''];
+    is-deeply gray2(1), [<0 1>];
+    is-deeply gray2(2), [<00 01 11 10>];
+    is-deeply gray2(3), [<000 001 011 010 110 111 101 100>];
 }
 
 {

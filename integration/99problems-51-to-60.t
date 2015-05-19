@@ -78,16 +78,16 @@ plan 37;
         }
     }
 
-    is_deeply [ cbal-tree(1) ],
+    is-deeply [ cbal-tree(1) ],
        [['x', Any, Any]],
        'built a balanced binary tree with 1 item';
 
-    is_deeply [ cbal-tree(2) ], 
+    is-deeply [ cbal-tree(2) ], 
        [['x', ['x', Any, Any], Any],
         ['x', Any,               ['x', Any, Any]]],
        'built a balanced binary tree with 2 items';
 
-    is_deeply [ cbal-tree(3) ],
+    is-deeply [ cbal-tree(3) ],
        [['x', ['x', Any, Any], ['x', Any, Any]],],
        'built a balanced binary tree with 3 items';
 
@@ -189,7 +189,7 @@ plan 37;
         return $tree;
     }
 
-    is_deeply construct(3, 2, 5, 7, 1), 
+    is-deeply construct(3, 2, 5, 7, 1), 
        [3, [2, [1, Any, Any], Any], [5, Any, [7, Any, Any]]],
        'Can construct a binary search tree';
 }

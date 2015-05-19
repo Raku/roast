@@ -57,10 +57,10 @@ plan 38;
     my @a = 1, 2;
     my %b = 'x' => 42;
  
-    is_deeply [@a], [1, 2], '@array flattening';
-    is_deeply [item @a], [[1, 2]], 'item @array non-flattening';
-    is_deeply [%b], ['x' => 42], '%hash flattening';
-    is_deeply [item %b], [{'x' => 42}], 'item %hash non-flattening';
+    is-deeply [@a], [1, 2], '@array flattening';
+    is-deeply [item @a], [[1, 2]], 'item @array non-flattening';
+    is-deeply [%b], ['x' => 42], '%hash flattening';
+    is-deeply [item %b], [{'x' => 42}], 'item %hash non-flattening';
 }
 
 {

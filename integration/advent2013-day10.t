@@ -115,7 +115,7 @@ sub foo2($z, :$bar, :$baz) {
     is $applies-to, '.bar()', 'applies to .bar()';
 
     my @a = 10, 20, 30, 40, 50;
-    is_deeply @a[0..2] :kv, (0, 10, 1, 20, 2, 30), 'applies to []';
+    is-deeply @a[0..2] :kv, (0, 10, 1, 20, 2, 30), 'applies to []';
 
     sub infix:<+>($a, $b, :$adv){
 	$applies-to = "...+{$b}"
@@ -166,7 +166,7 @@ throws_like {root4(10)}, Exception, 'missing required adverb - dies';
 root4(10, :adv3<hi>);
 
 sub root3($num, *%advs) {
-    is_deeply %advs, {"foo" => False, "bar" => True, "baz" => True, "qux" => "blah"}, 'adverb catch all';
+    is-deeply %advs, {"foo" => False, "bar" => True, "baz" => True, "qux" => "blah"}, 'adverb catch all';
 }
 
 root3(42, :!foo, :bar, :baz(True), :qux<blah>);

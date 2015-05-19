@@ -45,42 +45,42 @@ sub gen_hash {
     ok   %h<c>:exists(1),      "Test exists with (1) single key c";
     ok !(%h<X>:exists(1)),     "Test exists with (1) single key X";
 
-    is_deeply %h<c d e>:exists,  (True, True, True),   "Test exists TTT";
-    is_deeply %h<c d X>:exists,  (True, True, False),  "Test exists TTF";
-    is_deeply %h{}:exists,       (True  xx 26).Parcel, "Test exists T{}";
-    is_deeply %h{*}:exists,      (True  xx 26).Parcel, 'Test exists T{*}';
+    is-deeply %h<c d e>:exists,  (True, True, True),   "Test exists TTT";
+    is-deeply %h<c d X>:exists,  (True, True, False),  "Test exists TTF";
+    is-deeply %h{}:exists,       (True  xx 26).Parcel, "Test exists T{}";
+    is-deeply %h{*}:exists,      (True  xx 26).Parcel, 'Test exists T{*}';
     #?niezca 3 todo "adverbial pairs only used as True"
-    is_deeply %h<c d e>:!exists, (False,False,False),  "Test non-exists FFF";
-    is_deeply %h<c d X>:!exists, (False,False,True),   "Test non-exists FFT";
-    is_deeply %h{}:!exists,      (False xx 26).Parcel, "Test non-exists F{}";
-    is_deeply %h{*}:!exists,     (False xx 26).Parcel, 'Test non-exists F{*}';
+    is-deeply %h<c d e>:!exists, (False,False,False),  "Test non-exists FFF";
+    is-deeply %h<c d X>:!exists, (False,False,True),   "Test non-exists FFT";
+    is-deeply %h{}:!exists,      (False xx 26).Parcel, "Test non-exists F{}";
+    is-deeply %h{*}:!exists,     (False xx 26).Parcel, 'Test non-exists F{*}';
 
     #?niezca 6 todo "no combined adverbial pairs"
-    is_deeply %h<c d e>:exists:kv,
+    is-deeply %h<c d e>:exists:kv,
       ("c",True,"d",True,"e",True),                     "Test exists:kv TTT";
-    is_deeply %h<c d X>:exists:kv,
+    is-deeply %h<c d X>:exists:kv,
       ("c",True,"d",True),                              "Test exists:kv TT.";
-    is_deeply %h<c d X>:exists:!kv,
+    is-deeply %h<c d X>:exists:!kv,
       ("c",True,"d",True,"X",False),                    "Test exists:kv TTF";
-    is_deeply %h<c d e>:!exists:kv,
+    is-deeply %h<c d e>:!exists:kv,
       ("c",False,"d",False,"e",False),                  "Test exists:kv FFF";
-    is_deeply %h<c d X>:!exists:kv,
+    is-deeply %h<c d X>:!exists:kv,
       ("c",False,"d",False),                            "Test exists:kv FF.";
-    is_deeply %h<c d X>:!exists:!kv,
+    is-deeply %h<c d X>:!exists:!kv,
       ("c",False,"d",False,"X",True),                   "Test exists:kv FFT";
 
     #?niezca 6 todo "no combined adverbial pairs"
-    is_deeply %h<c d e>:exists:p,
+    is-deeply %h<c d e>:exists:p,
       (c=>True,d=>True,e=>True),                     "Test exists:p TTT";
-    is_deeply %h<c d X>:exists:p,
+    is-deeply %h<c d X>:exists:p,
       (c=>True,d=>True),                             "Test exists:p TT.";
-    is_deeply %h<c d X>:exists:!p,
+    is-deeply %h<c d X>:exists:!p,
       (c=>True,d=>True,X=>False),                    "Test exists:p TTF";
-    is_deeply %h<c d e>:!exists:p,
+    is-deeply %h<c d e>:!exists:p,
       (c=>False,d=>False,e=>False),                  "Test exists:p FFF";
-    is_deeply %h<c d X>:!exists:p,
+    is-deeply %h<c d X>:!exists:p,
       (c=>False,d=>False),                           "Test exists:p FF.";
-    is_deeply %h<c d X>:!exists:!p,
+    is-deeply %h<c d X>:!exists:!p,
       (c=>False,d=>False,X=>True),                   "Test exists:p FFT";
 
     #?niezca 6 todo "no combined adverbial pairs"

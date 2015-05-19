@@ -26,7 +26,7 @@ my $escaped = $html.trans(
     [ '&amp;', '&lt;', '&gt;' ]
 );
 
-is_deeply [$escaped.lines], [
+is-deeply [$escaped.lines], [
     '&lt;!DOCTYPE html&gt;',
     '&lt;html&gt;',
     '  &lt;body&gt;',

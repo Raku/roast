@@ -192,13 +192,13 @@ plan 75;
 {
     my @RT120506-bind := Array[Array[Bool]].new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
     #?rakudo todo 'unexpectedly getting array Array[Bool].new'
-    is_deeply @RT120506-bind[0, 1]».Parcel, ((True, False, True), (True,)),
+    is-deeply @RT120506-bind[0, 1]».Parcel, ((True, False, True), (True,)),
         "Can feed Arrays of Type to .new of Array[Array[Type]] (binding)";
     is @RT120506-bind[0].WHAT, Array[Bool], "Type is maintained (binding)";
 
     my Array of Bool @RT120506-assign .= new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
     #?rakudo todo 'unexpectedly getting array Array[Bool].new'
-    is_deeply @RT120506-assign[0, 1]».Parcel, ((True, False, True), (True,)),
+    is-deeply @RT120506-assign[0, 1]».Parcel, ((True, False, True), (True,)),
         "Can feed Arrays of Type to .new of Array[Array[Type]] (assignment)";
     is @RT120506-assign[0].WHAT, Array[Bool], "Type is maintained (assignment)";
 }
@@ -211,7 +211,7 @@ plan 75;
         my %a3 = :x<y>, :y<z>, :w<h>;
         my Hash @array1 = $%a1, $%a2, $%a3;
     }
-    is_deeply RT121804, Array[Hash].new({:x<y>, :y<z>, :w<c>}, {:x<y>, :y<t>, :w<c>}, {:x<y>, :y<z>, :w<h>}),
+    is-deeply RT121804, Array[Hash].new({:x<y>, :y<z>, :w<c>}, {:x<y>, :y<t>, :w<c>}, {:x<y>, :y<z>, :w<h>}),
         "Can assign to and return Array[Hash] from type-constrained sub";
 }
 

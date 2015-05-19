@@ -103,14 +103,14 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 
 
     my RT68756 $foo .= new(2, "geegaw");
-    is_deeply [ $foo.a1, $foo.a2 ],
+    is-deeply [ $foo.a1, $foo.a2 ],
         [2, "geegaw"],
         'multi-constructor class alternate (positional) constructor';
 
     #?niecza emit # fails 
     my RT68756 $bar .= new(:a1(3), :a2<yoohoo>);
     #?niecza skip 'Without previous line, this is a disaster'
-    is_deeply [ $bar.a1, $bar.a2 ],
+    is-deeply [ $bar.a1, $bar.a2 ],
         [3, "yoohoo"],
         'multi-constructor class alternate default named constructor';
 }

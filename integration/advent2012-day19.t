@@ -42,8 +42,8 @@ sub postfix:<Ω> (Real:D $a) is looser(&postfix:<k>) {
      Measure.new(value => $a, unit => ohm)
 }
 
-is_deeply 4kΩ ~~ 4.0kΩ, True, '~~ / ACCEPTS';
-is_deeply 4kΩ ~~ 4.0kV, False, '~~ / ACCEPTS';
+is-deeply 4kΩ ~~ 4.0kΩ, True, '~~ / ACCEPTS';
+is-deeply 4kΩ ~~ 4.0kV, False, '~~ / ACCEPTS';
 
 # Symbol ±: create a Range object
 

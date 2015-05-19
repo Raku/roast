@@ -34,12 +34,12 @@ my %hash = (foo => 'bar', hate => 'software');
 {
     my $foo = $tohash_p5.(keys %hash);
     cmp_ok($foo, &infix:<cmp>, %hash);
-    is_deeply([$foo.keys].sort, [%hash.keys].sort);
+    is-deeply([$foo.keys].sort, [%hash.keys].sort);
 }
 
 #?niecza skip 'VAR undeclared'
 {
-    is_deeply([%hash.keys].sort, [$keys_p5($%hash)].sort);
+    is-deeply([%hash.keys].sort, [$keys_p5($%hash)].sort);
 }
 
 # vim: ft=perl6

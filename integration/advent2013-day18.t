@@ -43,7 +43,7 @@ plan 10;
     is ~CardGame.parse("a♥ 7♥ 7♦ 8♣ j♥; 10♥ j♥ q♥ k♥ a♦",
 		       :actions($a)), "a♥ 7♥ 7♦ 8♣ j♥; 10♥ j♥ q♥ k♥ a♦", "card game + actions parse";
 
-    is_deeply $a.dups, ["a♥", "j♥"], 'duplicates detected in actions';
+    is-deeply $a.dups, ["a♥", "j♥"], 'duplicates detected in actions';
     
 }
 
@@ -94,5 +94,5 @@ plan 10;
     ok !defined(CardGame.parse("a♥ a♥ 7♦ 8♣ j♥")), 'duplicate detection - parse failure';
     ok !defined(CardGame.parse("a♥ 7♥ 7♦ 8♣ j♥; 10♥ j♥ q♥ k♥ a♦")), 'duplicate detection - parse failure';
 
-    is_deeply @dups, ["a♥", "j♥"], 'duplicates detected in grammar';
+    is-deeply @dups, ["a♥", "j♥"], 'duplicates detected in grammar';
 }

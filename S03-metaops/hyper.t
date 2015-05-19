@@ -320,7 +320,7 @@ my @e;
     @r = -«([1, 2], [3, [4, 5]]);
     my @e = ([-1, -2], [-3, [-4, -5]]);
     is(~@r, ~@e, "distribution for unary prefix");
-    is_deeply(@r, @e, "distribution for unary prefix, deep comparison");
+    is-deeply(@r, @e, "distribution for unary prefix, deep comparison");
 };
 
 { # distribution for unary postfix autoincrement
@@ -329,7 +329,7 @@ my @e;
     @r»++;
     my @e = [2, 3], [4, [5, 6]];
     is(~@r, ~@e, "distribution for unary postfix autoincr");
-    is_deeply(@r, @e, "distribution for unary postfix autoincr, deep comparison");
+    is-deeply(@r, @e, "distribution for unary postfix autoincr, deep comparison");
 
     is @e»[1], '3 5 6', "nodal postcircumfixes do not distribute";
     is @e».elems, '2 2', "nodal methods do not distribute (elems)";
@@ -343,17 +343,17 @@ my @e;
     @r = (1, 2, [3, 4]) >>+<< (4, 5, [6, 7]);
     my @e = (5, 7, [9, 11]);
     is(~@r, ~@e, "distribution for binary infix, same shape, ASCII");
-    is_deeply(@r, @e, "distribution for binary infix, same shape, ASCII, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, same shape, ASCII, deep comparison");
 
     @r = (1, 2, [3, 4]) >>+>> (5, 6, 7);
     @e = (6, 8, [10, 11]);
     is(~@r, ~@e, "distribution for binary infix, dimension upgrade, ASCII");
-    is_deeply(@r, @e, "distribution for binary infix, dimension upgrade, ASCII, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, dimension upgrade, ASCII, deep comparison");
 
     @r = ([1, 2], 3) <<+>> (4, [5, 6]);
     @e = ([5, 6], [8, 9]);
     is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade, ASCII");
-    is_deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, ASCII, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, ASCII, deep comparison");
 };
 
 #?DOES 3
@@ -362,17 +362,17 @@ my @e;
     @r = (1, 2, [3, 4]) »+« (4, 5, [6, 7]);
     my @e = (5, 7, [9, 11]);
     is(~@r, ~@e, "distribution for binary infix, same shape");
-    is_deeply(@r, @e, "distribution for binary infix, same shape, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, same shape, deep comparison");
 
     @r = (1, 2, [3, 4]) »+» (5, 6, 7);
     @e = (6, 8, [10, 11]);
     is(~@r, ~@e, "distribution for binary infix, dimension upgrade");
-    is_deeply(@r, @e, "distribution for binary infix, dimension upgrade, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, dimension upgrade, deep comparison");
 
     @r = ([1, 2], 3) «+» (4, [5, 6]);
     @e = ([5, 6], [8, 9]);
     is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade");
-    is_deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, deep comparison");
 };
 
 { # regression test, ensure that hyper works on arrays

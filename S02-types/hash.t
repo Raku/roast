@@ -227,7 +227,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     is %h.elems, 0, 'reading multi-level non-existing hash keys does not create it';
     %h<foo><bar> = "baz";
     is %h.elems, 1, 'multi-level auto-vivify number of elements';
-    is_deeply %h<foo>, (bar => "baz").hash, "multi-level auto-vivify";
+    is-deeply %h<foo>, (bar => "baz").hash, "multi-level auto-vivify";
 } #4
 
 #RT #76644

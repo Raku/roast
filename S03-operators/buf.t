@@ -35,7 +35,7 @@ is  $b cmp $a, Order::More, 'cmp (larger)';
 
 ok $a ~ $b eq Buf.new(1, 2, 3, 1, 2, 3, 4), '~ and eq work on bufs';
 
-is_deeply Buf.new(1, 2, 3) ~ Buf.new(4, 5), Buf.new(1, 2, 3, 4, 5), '~ concatenates';
+is-deeply Buf.new(1, 2, 3) ~ Buf.new(4, 5), Buf.new(1, 2, 3, 4, 5), '~ concatenates';
 nok Buf.new(), 'empty Buf is false';
 ok  Buf.new(1), 'non-empty Buf is true';
 
