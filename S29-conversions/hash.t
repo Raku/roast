@@ -28,7 +28,7 @@ Basic tests for the hash() built-in
 }
 
 {
-    lives_ok {(a => 1, b => 2).hash.perl}, 'hash() on list of pairs lives (RT #76826)';
+    lives-ok {(a => 1, b => 2).hash.perl}, 'hash() on list of pairs lives (RT #76826)';
 }
 
 {

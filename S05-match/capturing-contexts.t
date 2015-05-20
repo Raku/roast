@@ -121,7 +121,7 @@ plan 46;
 
 # RT #114726
 {
-    lives_ok { my $/ := 42 }, 'can bind $/';
+    lives-ok { my $/ := 42 }, 'can bind $/';
 }
 
 # RT #71362
@@ -134,7 +134,7 @@ plan 46;
 # RT #72956
 {
     my $/ := Any;
-    lives_ok { $0 },
+    lives-ok { $0 },
         '$0 accessible when $/ is undefined';
     ok $0 === Any,
         '$0 is Any when $/ is undefined';

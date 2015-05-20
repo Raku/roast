@@ -19,7 +19,7 @@ plan 89;
 # L<S02/Currying of Unary and Binary Operators/"Most of the built-in numeric operators">
 
 my $x = *-1;
-lives_ok { $x.WHAT }, '(*-1).WHAT lives';
+lives-ok { $x.WHAT }, '(*-1).WHAT lives';
 ok $x ~~ Code, '*-1 is some form of Code';
 isa-ok $x, WhateverCode, '*-1 is a WhateverCode object';
 is $x.(5), 4, 'and we can execute that Code';

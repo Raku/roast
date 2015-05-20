@@ -72,44 +72,44 @@ dies-ok { DateTime.new }, 'Must provide arguments to DateTime';
 
 # L<S32::Temporal/C<DateTime>/outside of the ranges specified>
 
-lives_ok { dt month => 1 }, 'DateTime accepts January';
+lives-ok { dt month => 1 }, 'DateTime accepts January';
 dies-ok  { dt month => 0 }, 'DateTime rejects month 0';
 dies-ok  { dt month => -1 }, 'DateTime rejects month -1';
-lives_ok { dt month => 12 }, 'DateTime accepts December';
+lives-ok { dt month => 12 }, 'DateTime accepts December';
 dies-ok  { dt month => 13 }, 'DateTime rejects month 13';
-lives_ok { dt month => 1, day => 31 }, 'DateTime accepts January 31';
+lives-ok { dt month => 1, day => 31 }, 'DateTime accepts January 31';
 dies-ok  { dt month => 1, day => 32 }, 'DateTime rejects January 32';
-lives_ok { dt month => 6, day => 30 }, 'DateTime accepts June 30';
+lives-ok { dt month => 6, day => 30 }, 'DateTime accepts June 30';
 dies-ok  { dt month => 6, day => 31 }, 'DateTime rejects June 31';
 dies-ok  { dt month => 2, day => 30 }, 'DateTime rejects February 30';
-lives_ok { ymd 1996, 2, 29 }, 'DateTime accepts 29 Feb 1996';
+lives-ok { ymd 1996, 2, 29 }, 'DateTime accepts 29 Feb 1996';
 dies-ok  { ymd 1995, 2, 29 }, 'DateTime rejects 29 Feb 1995';
-lives_ok { ymd 2000, 2, 29 }, 'DateTime accepts 29 Feb 2000';
-lives_ok { ymdc 2000, 2, 29 }, 'DateTime accepts 29 Feb 2000 (clone)';
-lives_ok { ds '2000-02-29T22:33:44' }, 'DateTime accepts 29 Feb 2000 (ISO)';
+lives-ok { ymd 2000, 2, 29 }, 'DateTime accepts 29 Feb 2000';
+lives-ok { ymdc 2000, 2, 29 }, 'DateTime accepts 29 Feb 2000 (clone)';
+lives-ok { ds '2000-02-29T22:33:44' }, 'DateTime accepts 29 Feb 2000 (ISO)';
 dies-ok  { ymd 1900, 2, 29 }, 'DateTime rejects 29 Feb 1900';
 dies-ok  { ymdc 1900, 2, 29 }, 'DateTime rejects 29 Feb 1900 (clone)';
 dies-ok  { ds '1900-02-29T22:33:44' }, 'DateTime rejects 29 Feb 1900 (ISO)';
-lives_ok { dt hour => 0 }, 'DateTime accepts hour 0';
+lives-ok { dt hour => 0 }, 'DateTime accepts hour 0';
 dies-ok  { dt hour => -1 }, 'DateTime rejects hour 0';
-lives_ok { dt hour => 23 }, 'DateTime accepts hour 23';
+lives-ok { dt hour => 23 }, 'DateTime accepts hour 23';
 dies-ok  { dt hour => 24 }, 'DateTime rejects hour 24';
-lives_ok { dt minute => 0 }, 'DateTime accepts minute 0';
+lives-ok { dt minute => 0 }, 'DateTime accepts minute 0';
 dies-ok  { dt minute => -1 }, 'DateTime rejects minute -1';
-lives_ok { dt minute => 59 }, 'DateTime accepts minute 59';
-lives_ok { dtc minute => 59 }, 'DateTime accepts minute 59 (clone)';
-lives_ok { ds '1999-01-01T00:59:22' }, 'DateTime accepts minute 59 (ISO)';
-lives_ok { DateTime.new: date => Date.new(1999, 1, 1), minute => 59 }, 'DateTime accepts minute 59 (with Date)';
+lives-ok { dt minute => 59 }, 'DateTime accepts minute 59';
+lives-ok { dtc minute => 59 }, 'DateTime accepts minute 59 (clone)';
+lives-ok { ds '1999-01-01T00:59:22' }, 'DateTime accepts minute 59 (ISO)';
+lives-ok { DateTime.new: date => Date.new(1999, 1, 1), minute => 59 }, 'DateTime accepts minute 59 (with Date)';
 dies-ok  { dt minute => 60 }, 'DateTime rejects minute 60';
 dies-ok  { dtc minute => 60 }, 'DateTime rejects minute 60 (clone)';
 dies-ok  { ds '1999-01-01T00:60:22' }, 'DateTime rejects minute 60 (ISO)';
 dies-ok  { dt date => Date.new(1999, 1, 1), minute => 60 }, 'DateTime rejects minute 60 (with Date)';
-lives_ok { dt second => 0 }, 'DateTime accepts second 0';
-lives_ok { dt second => 1/2 }, 'DateTime accepts second 1/2';
+lives-ok { dt second => 0 }, 'DateTime accepts second 0';
+lives-ok { dt second => 1/2 }, 'DateTime accepts second 1/2';
 dies-ok  { dt second => -1 }, 'DateTime rejects second -1';
 dies-ok  { dt second => -1/2 }, 'DateTime rejects second -1/2';
-lives_ok { dt second => 59.5 }, 'DateTime accepts second 59.5';
-lives_ok { dtc second => 59.5 }, 'DateTime accepts second 59.5 (clone)';
+lives-ok { dt second => 59.5 }, 'DateTime accepts second 59.5';
+lives-ok { dtc second => 59.5 }, 'DateTime accepts second 59.5 (clone)';
 dies-ok  { dt second => 62 }, 'DateTime rejects second 62';
 dies-ok  { dtc second => 62 }, 'DateTime rejects second 62 (clone)';
 dies-ok  { ds '1999-01-01T12:10:62' }, 'DateTime rejects second 62 (ISO)';
@@ -124,23 +124,23 @@ dies-ok  { ds '1999-12-31T23:59:60' }, 'Leap-second validation: Wrong year (2)';
 dies-ok  { ds '1998-06-30T23:59:60' }, 'Leap-second validation: Wrong; June 30 on a year with a leap second in December 31';
 dies-ok  { ds '1998-12-31T23:58:60' }, 'Leap-second validation: Wrong minute';
 dies-ok  { ds '1998-12-31T22:59:60' }, 'Leap-second validation: Wrong hour';
-lives_ok { ds '1998-12-31T23:59:60' }, 'Leap-second validation: Okay; December 31';
+lives-ok { ds '1998-12-31T23:59:60' }, 'Leap-second validation: Okay; December 31';
 dies-ok  { ds '1997-12-31T23:59:60' }, 'Leap-second validation: Wrong; December 31 on a year with a leap second in June 30';
 dies-ok  { dt year => 1997, month => 12, day => 31,
               hour => 23, minute => 59, second => 60.9 }, 'Leap-second validation: Wrong; December 31 on a year with a leap second in June 30 (second 60.9)';
-lives_ok { ds '1997-06-30T23:59:60' }, 'Leap-second validation: Okay; June 30';
-lives_ok { dt year => 1997, month => 6, day => 30,
+lives-ok { ds '1997-06-30T23:59:60' }, 'Leap-second validation: Okay; June 30';
+lives-ok { dt year => 1997, month => 6, day => 30,
               hour => 23, minute => 59, second => 60.9 }, 'Leap-second validation: Okay; June 30 (second 60.9)';
 dies-ok  { ds '1997-06-30T23:59:61' }, 'Leap-second validation: Wrong; there are no seconds 61 (in the 20th century, anyway).';
 
 dies-ok  { ds '1998-12-31T23:59:60+0200' }, 'Leap-second validation: Wrong because of TZ; December 31';
-lives_ok { ds '1999-01-01T01:59:60+0200' }, 'Leap-second validation: Okay because of TZ; January 1';
+lives-ok { ds '1999-01-01T01:59:60+0200' }, 'Leap-second validation: Okay because of TZ; January 1';
 dies-ok  { ds '1997-06-30T23:59:60-0200' }, 'Leap-second validation: Wrong because of TZ; June 30';
-lives_ok { ds '1997-06-30T21:59:60-0200' }, 'Leap-second validation: Okay because of TZ; June 30';
+lives-ok { ds '1997-06-30T21:59:60-0200' }, 'Leap-second validation: Okay because of TZ; June 30';
 dies-ok  { dt year => 1998, month => 12, day => 31,
               hour => 23, minute => 59, second => 60.9,
               timezone => 2*60*60 }, 'Leap-second validation: Wrong because of TZ; December 31 (second 60.9)';
-lives_ok { dt year => 1999, month => 1, day => 1,
+lives-ok { dt year => 1999, month => 1, day => 1,
               hour => 1, minute => 59, second => 60.9,
               timezone => 2*60*60 }, 'Leap-second validation: Okay because of TZ; January 1 (second 60.9)';
 
@@ -318,7 +318,7 @@ is ds('1997-06-30T23:59:60Z').whole-second, 60, 'DateTime.whole-second (60)';
 {
     my $dt = ymd 2010, 6, 4;
     my $date;
-    lives_ok { $date = $dt.Date(); }, 'DateTime.Date';
+    lives-ok { $date = $dt.Date(); }, 'DateTime.Date';
     isa-ok $date, Date, 'Date object is correct class';
     is $date.year, 2010, 'Date year';
     is $date.month, 6, 'Date month';

@@ -120,7 +120,7 @@ eval-dies-ok '0 := 1', 'cannot bind to a literal';
   $val++;
   is $a, 43, "bound rw sub param was bound correctly (2)";
 
-  lives_ok { $a = 23 }, "bound rw sub param remains rw (1)";
+  lives-ok { $a = 23 }, "bound rw sub param remains rw (1)";
   is $a, 23,            "bound rw sub param remains rw (2)";
   is $val, 23,          "bound rw sub param remains rw (3)";
 }

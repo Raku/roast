@@ -18,7 +18,7 @@ role InitialAttribVal[$val] {
 }
 
 my $a = 0;
-lives_ok {$a does InitialAttribVal[42]},
+lives-ok {$a does InitialAttribVal[42]},
   "imperative does to apply a parametrized role (1)";
 is $a.attr, 42,
   "attribute was initialized correctly (1)";
@@ -32,7 +32,7 @@ ok $a.^does(InitialAttribVal[42]),
   ".^does gives correct information (1-2)";
 
 my $b = 0;
-lives_ok { $b does InitialAttribVal[23] },
+lives-ok { $b does InitialAttribVal[23] },
   "imperative does to apply a parametrized role (2)";
 is $b.attr, 23,
   "attribute was initialized correctly (2)";
@@ -52,7 +52,7 @@ role InitialAttribType[::vartype] {
     method hi(vartype $foo) { 42 }   #OK not used
 }
 my $c = 0;
-lives_ok { $c does InitialAttribType[Code] },
+lives-ok { $c does InitialAttribType[Code] },
   "imperative does to apply a parametrized role (3)";
 ok $c.HOW.does($c, InitialAttribType),
   ".HOW.does gives correct information (3-1)";
@@ -87,7 +87,7 @@ dies-ok { $c.hi("not a code object") },
     has $.name = $name;
   }
 my $d = 0;
-lives_ok { $d does InitialAttribBoth["type1", "name1"] },
+lives-ok { $d does InitialAttribBoth["type1", "name1"] },
   "imperative does to apply a parametrized role (4)";
 ok $d.HOW.does($d, InitialAttribBoth),
   ".HOW.does gives correct information (4-1)";

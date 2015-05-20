@@ -16,7 +16,7 @@ plan 110;
     is ~(@array[0]:p), "0\tA",
         ":p on an array returned the correct pair";
 
-    lives_ok { (@array[0]:p).value = "a" }, 'can assign to (@array[0]:p).value';
+    lives-ok { (@array[0]:p).value = "a" }, 'can assign to (@array[0]:p).value';
     is @array[0], "a",
         ":p on an array returns lvalues (like normal subscripts do as well)";
 
@@ -40,7 +40,7 @@ plan 110;
     is ~(@array[0]:kv), "0 A",
         ":kv on an array returned the correct two-elem array";
 
-    lives_ok {(@array[0]:kv)[1] = "a"}, 'can assign to :kv subscripts';
+    lives-ok {(@array[0]:kv)[1] = "a"}, 'can assign to :kv subscripts';
     is @array[0], "a",
         ":kv on an array returns lvalues (like normal subscripts do as well)";
 
@@ -115,7 +115,7 @@ plan 110;
     is ~(%hash<0>:p), "0\tA",
         ":p on a hash returned the correct pair";
 
-    lives_ok { (%hash<0>:p).value = "a"}, 'can assign to %hash<0>:p.value';
+    lives-ok { (%hash<0>:p).value = "a"}, 'can assign to %hash<0>:p.value';
     is %hash<0>, "a",
         ":p on a hash returns lvalues (like normal subscripts do as well)";
 
@@ -139,7 +139,7 @@ plan 110;
     is ~(%hash<0>:kv), "0 A",
         ":kv on a hash returned the correct two-elem array";
 
-    lives_ok {(%hash<0>:kv)[1] = "a"}, 'can assign to %hash<0>:kv.[1]';
+    lives-ok {(%hash<0>:kv)[1] = "a"}, 'can assign to %hash<0>:kv.[1]';
     is %hash<0>, "a",
         ":kv on a hash returns lvalues (like normal subscripts do as well)";
 
@@ -355,10 +355,10 @@ plan 110;
 # RT #120739
 {
     my @array;
-    lives_ok { for @array[*]:kv -> $k, $v { } },
+    lives-ok { for @array[*]:kv -> $k, $v { } },
         'RT #120739 :kv on an whatever slice of an empty array used in for loop';
     my %hash;
-    lives_ok { for %hash{*}:kv -> $k, $v { } },
+    lives-ok { for %hash{*}:kv -> $k, $v { } },
         'RT #120739 :kv on an whatever slice of an empty hash used in for loop';
 }
 

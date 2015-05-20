@@ -37,13 +37,13 @@ plan 32;
     isa-ok %h.pairs[0].key,    Rat,       '.pairs.key type';
     isa-ok %h.pairs[0].value,  Int,       '.pairs.value type';
     is %h.elems,               2,         '.elems';
-    lives_ok { %h{0.2} := 3 }, 'binding to typed objecthash elements';
+    lives-ok { %h{0.2} := 3 }, 'binding to typed objecthash elements';
     is %h.elems,               3,         'updated .elems';
     dies-ok  { %h{ 3 } := 3 }, 'binding key type check failure';
     dies-ok  { %h{0.2} := 'a' }, 'binding value type check failure';
     dies-ok  { %h.push: 0.5 => 2 },
              'Hash.push fails when the resulting array conflicts with the type check';
-    lives_ok { %h.push: 0.9 => 3 }, 'Hash.push without array creation is OK';
+    lives-ok { %h.push: 0.9 => 3 }, 'Hash.push without array creation is OK';
     dies-ok  { %h.push: 1 => 3 },   'Hash.push key type check failure';
     dies-ok  { %h.push: 1.1 => 0.2 }, 'Hash.push value type check failure';
 } #18

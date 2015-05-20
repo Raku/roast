@@ -101,7 +101,7 @@ is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
 # RT #124304
 {
     my \a = rand;
-    lives_ok { EVAL 'a' }, 'Can EVAL with a sigilless var';
+    lives-ok { EVAL 'a' }, 'Can EVAL with a sigilless var';
     is EVAL('a'), a, 'EVAL with sigilless var gives correct result';
 }
 

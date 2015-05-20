@@ -11,11 +11,11 @@ my $fh = open $filename, :w;
 
 ok $fh, "temp file created successfully";
 
-lives_ok {
+lives-ok {
         $fh.say: "a" x (2**19);
     }, "2**19 char string prints";
 
-lives_ok {
+lives-ok {
         $fh.say: "a" x (2**20);
     }, "2**20 char string prints";
 

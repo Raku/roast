@@ -46,7 +46,7 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
     };
     #?niecza todo
     #?rakudo todo 'RT #67932'
-    lives_ok { foo },
+    lives-ok { foo },
         'can call a sub with a code object defaulting to something of its own name';
     ok !$tracker.defined, 'the inner &foo is undefined (scoping)';
 }

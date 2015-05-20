@@ -290,11 +290,11 @@ plan 59;
 
 # RT #76462
 {
-    lives_ok { my $a = (\my %h)<a> },
+    lives-ok { my $a = (\my %h)<a> },
         'no Null PMC access when hash indexing a hash ref';
     my %h = ( 'a' => 1, 'b' => 2 );
     my $h_ref = \%h;
-    lives_ok { my $b = $h_ref.{"a"} },
+    lives-ok { my $b = $h_ref.{"a"} },
         'no Null PMC access when trying to hash index a Capture';
 }
 

@@ -20,18 +20,18 @@ isa-ok($c, Foo);
 is($c.get_attr(), 13, '... cloned object retained attr value');
 
 my $val;
-lives_ok {
+lives-ok {
     $val = $c === $a;
 }, "... cloned object isn't identity equal to the original object";
 ok($val.defined && !$val, "... cloned object isn't identity equal to the original object");
 
 my $d;
-lives_ok {
+lives-ok {
     $d = $a.clone(attr => 42)
 }, '... cloning with supplying a new attribute value';
 
 my $val2;
-lives_ok {
+lives-ok {
    $val2 = $d.get_attr()
 }, '... getting attr from cloned value';
 is($val2, 42, '... cloned object has proper attr value');
@@ -58,7 +58,7 @@ is($val2, 42, '... cloned object has proper attr value');
     $p = 'a' ~~ /$<foo>='a'/;
     
     # previously it was timeout on Rakudo
-    lives_ok { $q = $p.clone }, 'Match object can be cloned';
+    lives-ok { $q = $p.clone }, 'Match object can be cloned';
     
     is ~$q{'foo'}, 'a', 'cloned Match object retained named capture value';
 }
@@ -138,6 +138,6 @@ is($val2, 42, '... cloned object has proper attr value');
     is-deeply $cont.obj.arr, ['j', 'k', 'l'], 'original object has new value';
 }
 
-lives_ok { Int.clone }, 'cloning a type object does not explode';
+lives-ok { Int.clone }, 'cloning a type object does not explode';
 
 # vim: ft=perl6

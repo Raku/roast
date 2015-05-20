@@ -28,7 +28,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     nok ?Set.new(), "Bool returns False if there is nothing in the SetHash";
 
     my $hash;
-    lives_ok { $hash = $s.hash }, ".hash doesn't die";
+    lives-ok { $hash = $s.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showset($hash), 'a b foo', '...with the right elements';
     is $hash.values.grep({ ($_ ~~ Bool) && $_ }).elems, 3, "...and values";
@@ -43,28 +43,28 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$s, 3, '+$set gives number of keys';
     
     $s<baz> = True;
-    lives_ok { $s<baz> = True }, 'can set an item to True';
+    lives-ok { $s<baz> = True }, 'can set an item to True';
     is showset($s), 'a b baz foo', '...and it adds it to the SetHash';
-    lives_ok { $s<baz> = True }, 'can set the same item to True';
+    lives-ok { $s<baz> = True }, 'can set the same item to True';
     is showset($s), 'a b baz foo', '...and it does nothing';
 
-    lives_ok { $s<baz> = False }, 'can set an item to False';
+    lives-ok { $s<baz> = False }, 'can set an item to False';
     is showset($s), 'a b foo', 'and it removes it';
-    lives_ok { $s<baz> = False }, 'can set an item which does not exist to False';
+    lives-ok { $s<baz> = False }, 'can set an item which does not exist to False';
     is showset($s), 'a b foo', '... and it is not added to the set';
     
-    lives_ok { $s<foo> = False }, 'can set an item to False';
+    lives-ok { $s<foo> = False }, 'can set an item to False';
     is $s.elems, 2, '... and an item is gone';
     is showset($s), 'a b', '... and the right one is gone';
     
-    lives_ok { $s<foo>++ }, 'can ++ an item';
+    lives-ok { $s<foo>++ }, 'can ++ an item';
     is showset($s), 'a b foo', '++ on an item reinstates it';
-    lives_ok { $s<foo>++ }, 'can ++ an item';
+    lives-ok { $s<foo>++ }, 'can ++ an item';
     is showset($s), 'a b foo', '++ on an existing item does nothing';
 
-    lives_ok { $s<b>-- }, 'can -- an item';
+    lives-ok { $s<b>-- }, 'can -- an item';
     is showset($s), 'a foo', '-- on an item removes it';
-    lives_ok { $s<bar>-- }, 'can -- an item';
+    lives-ok { $s<bar>-- }, 'can -- an item';
     is showset($s), 'a foo', '... but only if they were there to start with';
 }
 
@@ -118,7 +118,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my %h := SetHash.new(<a c>);
     is +%h.elems, 2, 'Inititalization worked';
 
-    lives_ok { %h<c> = False }, 'can set an item to False';
+    lives-ok { %h<c> = False }, 'can set an item to False';
     is %h.elems, 1, '... and an item is gone';
     is ~%h.keys, 'a', '... and the right one is gone';
 
@@ -132,7 +132,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     %h<b>--;
     is ~%h.keys, 'c', '... but only if they were there from the beginning';
 
-    # lives_ok { %h = set <Q P R> }, 'Assigning a Set to a SetHash';
+    # lives-ok { %h = set <Q P R> }, 'Assigning a Set to a SetHash';
     # is %h.keys.sort.join, 'PQR', '... works as expected';
 }
 
@@ -197,23 +197,23 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = SetHash.new(<foo bar baz>);
     my $str;
     my $c;
-    lives_ok { $str = $s.perl }, ".perl lives";
+    lives-ok { $str = $s.perl }, ".perl lives";
     isa-ok $str, Str, "... and produces a string";
-    lives_ok { $c = EVAL $str }, ".perl.eval lives";
+    lives-ok { $c = EVAL $str }, ".perl.eval lives";
     isa-ok $c, SetHash, "... and produces a SetHash";
     is showset($c), showset($s), "... and it has the correct values";
 }
 
 {
     my $s = SetHash.new(<foo bar baz>);
-    lives_ok { $s = $s.Str }, ".Str lives";
+    lives-ok { $s = $s.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";
 }
 
 {
     my $s = SetHash.new(<foo bar baz>);
-    lives_ok { $s = $s.gist }, ".gist lives";
+    lives-ok { $s = $s.gist }, ".gist lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";
@@ -230,7 +230,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is %s<a>, True, 'Single-key subscript (existing element)';
     is %s<santa>, False, 'Single-key subscript (nonexistent element)';
 
-    lives_ok { %s<a> = True }, "Can assign to an element (SetHash are immutable)";
+    lives-ok { %s<a> = True }, "Can assign to an element (SetHash are immutable)";
 }
 
 # L<S32::Containers/SetHash/roll>
@@ -357,7 +357,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my %h is SetHash = a => True, b => False, c => True;
     is +%h.elems, 2, 'Inititalization worked';
 
-    lives_ok { %h<c> = False }, 'can set an item to False';
+    lives-ok { %h<c> = False }, 'can set an item to False';
     is %h.elems, 1, '... and an item is gone';
     is ~%h.keys, 'a', '... and the right one is gone';
 
@@ -371,7 +371,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     %h<b>--;
     is ~%h.keys, 'c', '... but only if they were there from the beginning';
 
-    lives_ok { %h = set <Q P R> }, 'Assigning a Set to a SetHash';
+    lives-ok { %h = set <Q P R> }, 'Assigning a Set to a SetHash';
     is %h.keys.sort.join, 'PQR', '... works as expected';
 }
 

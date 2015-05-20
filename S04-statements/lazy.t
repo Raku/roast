@@ -21,7 +21,7 @@ plan 10;
   is $was_in_lazy,   1, 'lazy block was not executed again';
 }
 
-# dies-ok/lives_ok tests:
+# dies-ok/lives-ok tests:
 {
   my $was_in_lazy;
   my $lazy := lazy { $was_in_lazy++; 42 };

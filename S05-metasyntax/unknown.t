@@ -8,12 +8,12 @@ plan 12;
 # testing unknown metasyntax handling
 
 eval-dies-ok('"aa!" ~~ /!/', '"!" is not valid metasyntax');
-lives_ok({"aa!" ~~ /\!/}, 'escaped "!" is valid');
-lives_ok({"aa!" ~~ /'!'/}, 'quoted "!" is valid');
+lives-ok({"aa!" ~~ /\!/}, 'escaped "!" is valid');
+lives-ok({"aa!" ~~ /'!'/}, 'quoted "!" is valid');
 
 eval-dies-ok('"aa!" ~~ /\a/', 'escaped "a" is not valid metasyntax');
-lives_ok({"aa!" ~~ /a/}, '"a" is valid');
-lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
+lives-ok({"aa!" ~~ /a/}, '"a" is valid');
+lives-ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 
 {
     my rule foo { \{ };
@@ -39,7 +39,7 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 # RT #77562
 # not sure this is the right place for this test
 {
-    lives_ok { /$'x'/ }, 'can parse /$\'x\'/';
+    lives-ok { /$'x'/ }, 'can parse /$\'x\'/';
 }
 
 done;

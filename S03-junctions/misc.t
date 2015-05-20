@@ -359,7 +359,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 # RT #63686
 {
-    lives_ok { try { for any(1,2) -> $x {}; } },
+    lives-ok { try { for any(1,2) -> $x {}; } },
              'for loop over junction in try block';
 
     sub rt63686 {

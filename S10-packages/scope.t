@@ -52,7 +52,7 @@ cmp-ok(Test3::pkg, &infix:<===>, ::Test3::, 'EVAL\'ed package type object');
 is(t::spec::packages::PackageTest::ns, "t::packages::PackageTest", "loaded package");
 cmp-ok(t::spec::packages::PackageTest::pkg, &infix:<===>, ::t::packages::PackageTest::, 'loaded package $?PACKAGE object');
 my $x;
-lives_ok { $x = test_export() }, "export was imported successfully";
+lives-ok { $x = test_export() }, "export was imported successfully";
 is($x, "party island", "exported OK");
 
 # exports
@@ -62,7 +62,7 @@ dies-ok { ns() }, "no ns() leaked";
 my $pkg;
 dies-ok  { $pkg = Our::Package::pkg },
     "Can't see `our' packages out of scope";
-lives_ok { $pkg = t::spec::packages::PackageTest::get_our_pkg() },
+lives-ok { $pkg = t::spec::packages::PackageTest::get_our_pkg() },
     "Package in scope can see `our' package declarations";
 is($pkg, Our::Package, 'correct $?PACKAGE');
 ok(!($pkg === ::Our::Package),
@@ -73,7 +73,7 @@ ok(!($pkg === ::Our::Package),
 
 dies-ok { $pkg = t::spec::packages::PackageTest::cant_see_pkg() },
     "can't see package declared out of scope";
-lives_ok { $pkg = t::spec::packages::PackageTest::my_pkg() },
+lives-ok { $pkg = t::spec::packages::PackageTest::my_pkg() },
     "can see package declared in same scope";
 is($pkg, ::My::Package::, 'correct $?PACKAGE');
 ok($pkg !=== ::*My::Package::, 'not the same as global type object');

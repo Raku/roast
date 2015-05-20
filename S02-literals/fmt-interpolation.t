@@ -24,7 +24,7 @@ is(
    'ord of $x is 65',
    'normal scalar variable builtin call as a method'
 );
-lives_ok(sub { $y = "ord of \$x is $x.ord.fmt('%d')" },
+lives-ok(sub { $y = "ord of \$x is $x.ord.fmt('%d')" },
    'fmt and scalar interpolation live');
 is($y, 'ord of $x is 65', 'fmt and scalar interpolation behave well');
 
@@ -34,7 +34,7 @@ is(
    'ord of $x is 65',
    'normal scalar variable builtin call as a method'
 );
-lives_ok(sub { $y = "hex-formatted ord of \$x is {$x.ord().fmt('%x')}" },
+lives-ok(sub { $y = "hex-formatted ord of \$x is {$x.ord().fmt('%x')}" },
    'fmt and code interpolation live');
 is(
    $y,

@@ -5,5 +5,5 @@ use Test;
 plan 3;
 
 isa-ok $*TMPDIR, IO::Path;
-lives_ok { $*TMPDIR.perl }, '$*TMPDIR.perl works';
-lives_ok { $*TMPDIR.gist }, '$*TMPDIR.gist works';
+lives-ok { $*TMPDIR.perl }, '$*TMPDIR.perl works';
+lives-ok { $*TMPDIR.gist }, '$*TMPDIR.gist works';

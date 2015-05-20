@@ -38,7 +38,7 @@ if $no_subdir.IO ~~ :d {
 }
 else {
     #?rakudo 2 skip 'spec non-conformance due to missing sink context'
-    lives_ok { chdir("$no_subdir") },
+    lives-ok { chdir("$no_subdir") },
              'chdir to a non-existent does not by default throw an exception';
     ok !chdir("$no_subdir"),
        'change to non-existent directory gives a false value';

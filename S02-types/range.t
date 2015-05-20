@@ -267,7 +267,7 @@ is(+Range, 0, 'type numification');
 
 is join(':',grep 1..3, 0..5), '1:2:3', "ranges itemize or flatten lazily";
 
-lives_ok({'A'..'a'}, "A..a range completes");
-lives_ok({"\0".."~"}, "low ascii range completes");
+lives-ok({'A'..'a'}, "A..a range completes");
+lives-ok({"\0".."~"}, "low ascii range completes");
 
 # vim:set ft=perl6

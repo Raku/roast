@@ -70,7 +70,7 @@ enum JustOne <Thing>;
 }
 
 #?niecza skip "Enum must have at least one value"
-lives_ok { enum Empty < > }, "empty enum can be constructed";
+lives-ok { enum Empty < > }, "empty enum can be constructed";
 
 #?niecza todo "Enum must have at least one value"
 eval-lives-ok 'enum Empty2 ()', 'empty enum with () can be constructed';
@@ -92,7 +92,7 @@ dies-ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
 # L<S12/The C<.pick> Method/"define a .pick method">
 {
-    lives_ok { my Color $k = Color.pick }, 'Color.pick assigns to Color var';
+    lives-ok { my Color $k = Color.pick }, 'Color.pick assigns to Color var';
     isa-ok Color.pick, Color.pick.WHAT, 'Color.pick.isa';
 
     ok ?(Color.pick == any(Color::white, Color::gray, Color::black)),

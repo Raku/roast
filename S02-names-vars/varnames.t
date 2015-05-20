@@ -6,19 +6,19 @@ plan 13;
 
 # L<S02/Names and Variables/special variables of Perl 5 are going away>
 
-lives_ok { EVAL 'my $!' },
+lives-ok { EVAL 'my $!' },
   '$! can be declared again';
-lives_ok { EVAL 'my $/' },
+lives-ok { EVAL 'my $/' },
   'as can $/';
 
 dies-ok { EVAL '$/ = "foo"' },
   'S05: Perl 6\'s $/ variable may not be assigned to directly.';
 
 #?niecza todo
-lives_ok { EVAL 'my proto $!' },
+lives-ok { EVAL 'my proto $!' },
   '$! can be declared again if proto is used though';
 #?niecza todo
-lives_ok { EVAL 'my proto $/' },
+lives-ok { EVAL 'my proto $/' },
   'as can $/';
 
 throws-like { EVAL 'my $f!ao = "beh";' },

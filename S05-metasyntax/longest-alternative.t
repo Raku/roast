@@ -419,7 +419,7 @@ my $str = 'a' x 7;
         }
     }
 
-    lives_ok { WithHugeToken.parse('a' x 10000) },
+    lives-ok { WithHugeToken.parse('a' x 10000) },
         'token with huge number of alternations does not explode when used many times';
 }
 

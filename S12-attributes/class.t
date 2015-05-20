@@ -25,17 +25,17 @@ is $test, 23, 'class attributes really work';
 class Baz is Foo {};
 
 my $test2 = 0;
-lives_ok { $test2 = Baz.bar }, 'inherited class attribute accessors work';
+lives-ok { $test2 = Baz.bar }, 'inherited class attribute accessors work';
 is $test2, 23, 'inherited class attributes really work';
 
 my $test3 = 0;
-lives_ok { Baz.yada = 42; $test3 = Baz.yada }, 'inherited rw class attribute accessors work';
+lives-ok { Baz.yada = 42; $test3 = Baz.yada }, 'inherited rw class attribute accessors work';
 is $test3, 42, 'inherited rw class attributes really work';
 
 class Quux is Foo { has $.bar = 17; };
 
 my $test4 = 0;
-lives_ok { $test4 = Quux.new() },
+lives-ok { $test4 = Quux.new() },
     'Can instantiate with overridden instance method';
 is $test4.bar, 17, 'Instance call gets instance attribute, not class attribute';
 my $test5 = 0;
@@ -96,7 +96,7 @@ dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
             &!x();
         }
     }
-    lives_ok { RT114230.new.f },
+    lives-ok { RT114230.new.f },
         'no Null PMC access when doing //= on an undefined attribute and then calling it';
 }
 

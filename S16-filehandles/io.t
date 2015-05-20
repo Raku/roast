@@ -240,28 +240,28 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 
     # Tests for ISO-8859-1
     my $fh = open($filename, :w);
-    lives_ok { $fh.encoding('iso-8859-1') }, "Set iso-8859-1 out encoding";
-    lives_ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
-    lives_ok { $fh.print("") }, "iso-8859-1 unmapped chars to fh";
+    lives-ok { $fh.encoding('iso-8859-1') }, "Set iso-8859-1 out encoding";
+    lives-ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
+    lives-ok { $fh.print("") }, "iso-8859-1 unmapped chars to fh";
     $fh.close;
     my $s = '';
     $fh = open($filename);
-    lives_ok { $fh.encoding('iso-8859-1') }, "Set iso-8859-1 in encoding";
-    lives_ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
+    lives-ok { $fh.encoding('iso-8859-1') }, "Set iso-8859-1 in encoding";
+    lives-ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
     is $s, 'a¢ÿ', "correct iso-8859-1 chars from fh";
-    lives_ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
+    lives-ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
     is $s, '', "correct iso-8859-1 unmapped char from fh";
     $fh.close;
 
     # Test windows-1252; piggyback tests for mixed encoding.
     $fh = open($filename, :w);
-    lives_ok { $fh.encoding('windows-1252') }, "Set windows-1252 out encoding";
-    lives_ok { $fh.print("a¢€‚ƒ„…†‡ˆ‰Š‹ŒŽ") }, "windows-1252 chars to fh";
+    lives-ok { $fh.encoding('windows-1252') }, "Set windows-1252 out encoding";
+    lives-ok { $fh.print("a¢€‚ƒ„…†‡ˆ‰Š‹ŒŽ") }, "windows-1252 chars to fh";
 #?rakudo.jvm todo 'java.nio.charset.UnmappableCharacterException RT #125075'
-    lives_ok { $fh.print("") },"windows-1252 unmapped chars to fh";
-    lives_ok { $fh.encoding('ISO-8859-1') }, "reset output fh encoding";
-    lives_ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
-    lives_ok { $fh.print("") }, "iso-8859-1 unmapped char to fh";
+    lives-ok { $fh.print("") },"windows-1252 unmapped chars to fh";
+    lives-ok { $fh.encoding('ISO-8859-1') }, "reset output fh encoding";
+    lives-ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
+    lives-ok { $fh.print("") }, "iso-8859-1 unmapped char to fh";
     $fh.close;
     $fh = open($filename, :bin);
     my $b = $fh.read(32);
@@ -271,24 +271,24 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
        (0x61,0xa2,0x80,0x82..0x8c,0x8e,0x81,0x8d,0x8f,0x61,0xa2,0xff,0x80),
        "file with encoding wrote correct content";
     $fh = open($filename);
-    lives_ok { $fh.encoding('windows-1252') }, "Set windows-1252 in encoding";
+    lives-ok { $fh.encoding('windows-1252') }, "Set windows-1252 in encoding";
     $s = '';
-    lives_ok { $s ~= $fh.getc for 1..15; }, "windows-1252 chars from fh";
+    lives-ok { $s ~= $fh.getc for 1..15; }, "windows-1252 chars from fh";
     is $s, 'a¢€‚ƒ„…†‡ˆ‰Š‹ŒŽ', "correct windows-1252 chars from fh";
     $s = '';
-    lives_ok { $s ~= $fh.getc for 1..3; },
+    lives-ok { $s ~= $fh.getc for 1..3; },
       "windows-1252 unmapped chars from fh";
 #?rakudo.jvm todo 'builtin JVM charset folds these RT #125078'
     is $s, '', "correct windows-1252 unmapped chars from fh";
 # Switching encoding on read may or may not ever be supported
 #?rakudo.moar todo 'Too late to change filehandle encoding RT #125079'
-    lives_ok { $fh.encoding('ISO-8859-1') }, "reset input fh encoding";
+    lives-ok { $fh.encoding('ISO-8859-1') }, "reset input fh encoding";
     $s = '';
 #?rakudo.jvm todo 'will fail due to above failures RT #125080'
-    lives_ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
+    lives-ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
 #?rakudo.jvm todo 'will fail due to above failures RT #125081'
     is $s, 'a¢ÿ', "correct iso-8859-1 chars from fh";
-    lives_ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
+    lives-ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
 # Switching encoding on read may or may not ever be supported
 #?rakudo todo 'Will fail due to above failure RT #125082'
     is $s, '', "correct iso-8859-1 unmapped char from fh";
@@ -307,7 +307,7 @@ $out.close;
 {
     my $line;
     my $handle = $filename.IO.open;
-    lives_ok { $line = $handle.get; }, "can read lines";
+    lives-ok { $line = $handle.get; }, "can read lines";
     is $line, 'Hello World', 'got the right line';
     ok $handle.close, 'close was successful';
 }

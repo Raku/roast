@@ -39,7 +39,7 @@ for @list -> $letter {
 
 {
     my @mutable_array = 1..3;
-    lives_ok { for @mutable_array { $_++ } }, 'default topic is rw by default';
+    lives-ok { for @mutable_array { $_++ } }, 'default topic is rw by default';
 }
 
 # RT #113904
@@ -56,9 +56,9 @@ for @list -> $letter {
         'Two iterations of a loop share the same $_ if it is not a formal parameter';
 
     ## also from RT #113904
-    lives_ok { $_ = 42; for 1 -> $p { if 1 { "$_" } } },
+    lives-ok { $_ = 42; for 1 -> $p { if 1 { "$_" } } },
         'no Null PMC access error when outer $_ is used in block of for loop';
-    lives_ok { $_ = 1; for 12 -> $a { if 1 { $_.WHAT } } },
+    lives-ok { $_ = 1; for 12 -> $a { if 1 { $_.WHAT } } },
         '$_ in block of for loop is a SixModelObject';
 }
 

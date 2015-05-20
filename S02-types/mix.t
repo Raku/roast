@@ -28,7 +28,7 @@ sub showkv($x) {
     nok ?Mix.new(), "Bool returns False if there is nothing in the Mix";
 
     my $hash;
-    lives_ok { $hash = $m.hash }, ".hash doesn't die";
+    lives-ok { $hash = $m.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
@@ -217,10 +217,10 @@ sub showkv($x) {
     is $m.total, 10000000059.6, 'is the total calculated correctly';
     my $s;
     my $c;
-    lives_ok { $s = $m.perl }, ".perl lives";
+    lives-ok { $s = $m.perl }, ".perl lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
-    lives_ok { $c = EVAL $s }, ".perl.EVAL lives";
+    lives-ok { $c = EVAL $s }, ".perl.EVAL lives";
     isa-ok $c, Mix, "... and produces a Mix";
     is showkv($c), showkv($m), "... and it has the correct values";
 }
@@ -229,7 +229,7 @@ sub showkv($x) {
     my $m = { foo => 3.1, bar => -2.2, baz => 1 }.Mix;
     is $m.total, 1.9, 'is the total calculated correctly';
     my $s;
-    lives_ok { $s = $m.Str }, ".Str lives";
+    lives-ok { $s = $m.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar(-2.2) baz foo(3.1)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
@@ -237,7 +237,7 @@ sub showkv($x) {
 {
     my $m = { foo => 10000000000, bar => 17, baz => 42 }.Mix;
     my $s;
-    lives_ok { $s = $m.gist }, ".gist lives";
+    lives-ok { $s = $m.gist }, ".gist lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     ok $s ~~ /foo/, "... which mentions foo";

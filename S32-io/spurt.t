@@ -42,14 +42,14 @@ sub all-basic(Callable $handle) {
     unlink $path;
 
     #?niecza skip "Excess arguments to spurt, unused named createonly" 
-    lives_ok { spurt $handle(), $buf, :createonly }, "createonly creates file with Buf";
+    lives-ok { spurt $handle(), $buf, :createonly }, "createonly creates file with Buf";
     #?niecza todo ""
     ok $path.IO.e, "file was created";
     dies-ok { spurt $handle(), $buf, :createonly }, "createonly with Buf fails if file exists";
     unlink $path;
 
     #?niecza skip "Excess arguments to spurt, unused named createonly" 
-    lives_ok { spurt $handle(), $txt, :createonly }, "createonly with text creates file";
+    lives-ok { spurt $handle(), $txt, :createonly }, "createonly with text creates file";
     #?niecza todo ""
     ok $path.IO.e, "file was created";
     dies-ok { spurt $handle(), $txt, :createonly }, "createonly with text fails if file exists";
@@ -110,7 +110,7 @@ sub all-basic(Callable $handle) {
     dies-ok { $path.IO.spurt("nope", :createonly) }, "IO::Handle :createonly dies";
     unlink $path;
     #?niecza 2 todo "Excess arguments to IO.spurt, unused named createonly"
-    lives_ok { $path.IO.spurt("yes", :createonly) }, "IO::Handle :createonly lives";
+    lives-ok { $path.IO.spurt("yes", :createonly) }, "IO::Handle :createonly lives";
     ok $path.IO.e, "IO::Handle :createonly created a file";
     
     # Append

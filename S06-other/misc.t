@@ -14,15 +14,15 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
 
 # RT #76096
 {
-    lives_ok {  sub foo($ where 1 --> Int) { return 42 } },
+    lives-ok {  sub foo($ where 1 --> Int) { return 42 } },
         "where clause combined with --> works";
-    lives_ok {  sub foo($ where 1, $y  --> Int) { return 42 } },
+    lives-ok {  sub foo($ where 1, $y  --> Int) { return 42 } },
         "where clause combined with --> works";
 }
 
 # RT #118875
 {
-    lives_ok { sub ndr($r where ($r ||= 10) > 0 && 1) { } },
+    lives-ok { sub ndr($r where ($r ||= 10) > 0 && 1) { } },
         'where clause followed by (non-parenthesized) expression with "&&" in it does parse';
 }
 

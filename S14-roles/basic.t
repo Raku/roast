@@ -71,17 +71,17 @@ eval-dies-ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
 # Using roles as type constraints.
 role C { }
 class DoesC does C { }
-lives_ok { my C $x; },          'can use role as a type constraint on a variable';
+lives-ok { my C $x; },          'can use role as a type constraint on a variable';
 dies-ok { my C $x = 42 },       'type-check enforced';
 dies-ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
-lives_ok {my C $x = DoesC.new },'type-check passes for class doing role';
-lives_ok { my C $x = 42 but C },'type-check passes when role mixed in';
+lives-ok {my C $x = DoesC.new },'type-check passes for class doing role';
+lives-ok { my C $x = 42 but C },'type-check passes when role mixed in';
 
 class HasC {
     has C $.x is rw;
 }
-lives_ok { HasC.new },          'attributes typed as roles initialized OK';
-lives_ok { HasC.new.x = DoesC.new },
+lives-ok { HasC.new },          'attributes typed as roles initialized OK';
+lives-ok { HasC.new.x = DoesC.new },
                                 'typed attribute accepts things it should';
 dies-ok { HasC.new.x = Mu },    'typed attribute rejects things it should';
 dies-ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
@@ -125,7 +125,7 @@ eval-dies-ok '0 but RT66178', '"but" with non-existent role dies';
 }
 
 # RT #72848
-lives_ok {0 but True}, '0 but True has applicable candidate';
+lives-ok {0 but True}, '0 but True has applicable candidate';
 
 # RT #67768
 #?rakudo skip 'RT #67768'
@@ -140,7 +140,7 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 
 # RT #114380
 {
-    lives_ok { my role R { our $.r }; my class C does R {} },
+    lives-ok { my role R { our $.r }; my class C does R {} },
         'Can have "our $.r" in a role (RT #114380)';
 }
 
@@ -174,7 +174,7 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 
 # RT 120931
 {
-    lives_ok { role RT120931 { method foo {}; RT120931.foo } },
+    lives-ok { role RT120931 { method foo {}; RT120931.foo } },
         'can call a role method from within the role block';
 }
 
@@ -187,7 +187,7 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 
 # RT #123002
 {
-    lives_ok { sub rt123002 { EVAL 'role RT123002 { }' }; rt123002 },
+    lives-ok { sub rt123002 { EVAL 'role RT123002 { }' }; rt123002 },
         'can call a sub which runs EVAL on minimal role declaration';
 }
 

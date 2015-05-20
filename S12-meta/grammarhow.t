@@ -22,6 +22,6 @@ class Foo::Actions {
     }
 }
 
-lives_ok { Foo.new.parse('', :actions(Foo::Actions.new)) }
+lives-ok { Foo.new.parse('', :actions(Foo::Actions.new)) }
 
 done;

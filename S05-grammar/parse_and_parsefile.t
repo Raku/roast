@@ -44,7 +44,7 @@ eval-dies-ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
 # RT #71062
 {
     grammar Integer { rule TOP { x } };
-    lives_ok { Integer.parse('x') }, 'can .parse grammar named "Integer"';
+    lives-ok { Integer.parse('x') }, 'can .parse grammar named "Integer"';
 }
 
 # RT #76884
@@ -66,7 +66,7 @@ eval-dies-ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
         token TOP() { <lit 'a'> };
         token lit($s) { $s };
     }
-    lives_ok { RT116597.parse('a') },
+    lives-ok { RT116597.parse('a') },
         'can use <rule "param"> form of rule invocation in grammar';
 }
 

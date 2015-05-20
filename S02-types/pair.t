@@ -268,7 +268,7 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   #?niecza todo "setting .key changes original val!"
   is $key,              "key",   "attempt to set .key does not change the original var either";
 
-  lives_ok { $pair.value = "VAL" }, "setting .value does not die";
+  lives-ok { $pair.value = "VAL" }, "setting .value does not die";
   is $pair.value,          "VAL",   "setting .value actually changes the value";
   #?niecza todo "setting .key changes original val!"
   is $val,                 "val",   "setting .value does not change the original var";
@@ -302,16 +302,16 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 # RT #67218
 {
     eval-lives-ok ':a()',    'can parse ":a()"';
-    lives_ok     {; :a() }, 'can execute ":a()"';
+    lives-ok     {; :a() }, 'can execute ":a()"';
 
     eval-lives-ok ':a[]',    'can parse ":a[]"';
-    lives_ok     {; :a[] }, 'can execute ":a[]"';
+    lives-ok     {; :a[] }, 'can execute ":a[]"';
 
     eval-lives-ok '(a => ())',    'can parse "(a => ())"';
-    lives_ok     { (a => ()) }, 'can execute "(a => ())"';
+    lives-ok     { (a => ()) }, 'can execute "(a => ())"';
 
     eval-lives-ok '(a => [])',    'can parse "(a => [])"';
-    lives_ok     { (a => []) }, 'can execute "(a => [])"';
+    lives-ok     { (a => []) }, 'can execute "(a => [])"';
 }
 
 {

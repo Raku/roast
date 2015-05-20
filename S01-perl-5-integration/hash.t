@@ -59,7 +59,7 @@ my $rethash = $p5hash.hash;
 my @keys = %hash.keys.sort;
 my @p5keys;
 try {
-    @p5keys = $p5hash.my_keys; # this doesn't even pass lives_ok ??
+    @p5keys = $p5hash.my_keys; # this doesn't even pass lives-ok ??
     @p5keys .= sort;
 };
 

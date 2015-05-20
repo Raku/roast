@@ -21,7 +21,7 @@ dies-ok { exported_foo() },
 
 {
     use t::spec::packages::Export_PackC;
-    lives_ok { foo_packc() }, "lexical export works";
+    lives-ok { foo_packc() }, "lexical export works";
 }
 dies-ok { foo_packc() }, "lexical export is indeed lexical";
 

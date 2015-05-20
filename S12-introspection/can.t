@@ -12,7 +12,7 @@ plan 29;
 
 # L<S12/"Introspection"/Unlike in Perl 5 where .can returns a single Code object>
 
-lives_ok { Str.can("split") },   "method can on built-in Str works";
+lives-ok { Str.can("split") },   "method can on built-in Str works";
 ok "foo".can("split"),           "methd can on built-in Str gives correct result if method found";
 #?niecza todo '.can returns something Positional'
 ok "foo".can("split") ~~ Positional, '.can returns  something Positional';
@@ -29,7 +29,7 @@ class Dog {
 }
 
 my $dog = Dog.new;
-lives_ok { $dog.can("bark") }, "method can on custom class works";
+lives-ok { $dog.can("bark") }, "method can on custom class works";
 ok $dog.can("bark"),           "method can on custom class gives correct result if method found (on instance)";
 ok !$dog.can("w00f"),          "method can on custom class gives correct result if method not found (on instance)";
 ok Dog.can("bark"),            "method can on custom class gives correct result if method found (on proto)";

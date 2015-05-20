@@ -8,7 +8,7 @@ plan 13;
 {
   my $a = {:x};
   is $a, {:x}, "basic sanity";
-  lives_ok { $a does role { has $.cool = "yeah" }}, "anonymous role mixin";
+  lives-ok { $a does role { has $.cool = "yeah" }}, "anonymous role mixin";
   is $a, {:x}, "still basic sanity";
   is $a.cool, "yeah", "anonymous role gave us an attribute";
 }
@@ -18,8 +18,8 @@ plan 13;
   my $a = {:x};
   is $a, {:x}, "basic sanity";
   my $role;
-  lives_ok { $role = role { has $.cool = "yeah" } }, "anonymous role definition";
-  lives_ok { $a does $role }, "anonymous role variable mixin";
+  lives-ok { $role = role { has $.cool = "yeah" } }, "anonymous role definition";
+  lives-ok { $a does $role }, "anonymous role variable mixin";
   is $a, {:x}, "still basic sanity";
   is $a.cool, "yeah", "anonymous role variable gave us an attribute";
 }
@@ -35,7 +35,7 @@ plan 13;
   my $a = {:x};
   is $a, {:x}, "basic sanity";
   #?niecza todo 'This is being misinterpreted as an initial value'
-  lives_ok {$a does role_generator("hi")}, "role generating function mixin";
+  lives-ok {$a does role_generator("hi")}, "role generating function mixin";
   is $a, {:x}, "still basic sanity";
   #?niecza skip 'roles are run once and only capture the protopad'
   is $a.cool, "hi", "role generating function gave us an attribute";

@@ -15,7 +15,7 @@ class B is A {
 }
 
 my $o;
-lives_ok {$o = B.new(a => 'blubb') }, 'Can initialize inherited attribute';
+lives-ok {$o = B.new(a => 'blubb') }, 'Can initialize inherited attribute';
 is $o.accessor, 'blubb',              'accessor can use inherited attribute';
 
 class Artie61500 {

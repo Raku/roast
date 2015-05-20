@@ -496,7 +496,7 @@ eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
 # RT #71268
 {
     sub rt71268 { for ^1 {} }
-    lives_ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
+    lives-ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
     # This test is actually wrong design-wise, should return ()
     is rt71268(), Nil, 'result of "for ^1 {}" is Nil';
 }
@@ -522,7 +522,7 @@ eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #60780
-lives_ok {
+lives-ok {
     for 1 .. 5 -> $x, $y? { }
 }, 'Iteration variables do not need to add up if one is optional';
 

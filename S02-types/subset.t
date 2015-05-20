@@ -52,32 +52,32 @@ dies-ok { my Digit $x = 3.1 },
 # RT #67818
 {
     subset Subhash of Hash;
-    lives_ok { my Subhash $a = {} },
+    lives-ok { my Subhash $a = {} },
              'can create subset of hash';
 
     subset Person of Hash where { .keys.sort ~~ <firstname lastname> }
-    lives_ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
+    lives-ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
              'can create subset of hash with where';
     dies-ok { my Person $p = { :first<Charlie>, :last<Delta> } },
             'subset of hash with where enforces where clause';
 
     subset Austria of Array;
-    lives_ok { my Austria $a = [] },
+    lives-ok { my Austria $a = [] },
              'can create subset of array';
 
     subset NumArray of Array where { .elems == .grep: { $_ ~~ Num } }
-    lives_ok { my NumArray $n = [] },
+    lives-ok { my NumArray $n = [] },
              'can create subset of array with where';
     #?rakudo skip '(noauto) succeeds for the wrong reason (need to test the error)'
     dies-ok { my NumArray $n = <Echo 2> },
             'subset of array with where enforces where clause';
 
     subset Meercat of Pair;
-    lives_ok { my Meercat $p = :a<b> },
+    lives-ok { my Meercat $p = :a<b> },
              'can create subset of pair';
 
     subset Ordered of Pair where { .key < .value }
-    lives_ok { my Ordered $o = 23 => 42 },
+    lives-ok { my Ordered $o = 23 => 42 },
              'can create subset of Pair with where';
     dies-ok { my Ordered $o = 42 => 23 },
             'subset of pair with where enforces where clause';
@@ -117,7 +117,7 @@ dies-ok { my Digit $x = 3.1 },
     class Y {has $.z};
     subset sY of Y where {.z == 0};
 
-    lives_ok { 4 ~~ sY }, 'Nominal type is checked first';
+    lives-ok { 4 ~~ sY }, 'Nominal type is checked first';
     ok 4 !~~ sY, 'and if nominal type check fails, it is False';
 }
 
@@ -145,7 +145,7 @@ dies-ok { my Digit $x = 3.1 },
 }
 
 subset Bug::RT80930 of Int where { $_ %% 2 };
-lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
+lives-ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 # RT #95500
 {
@@ -173,7 +173,7 @@ my $a = 1;
         sub bar($x where $a ) { $x }  #OK not used
     }
     my &bar := producer();
-    lives_ok { bar(2) }, 'where-constraint picks up the right lexical (+)';
+    lives-ok { bar(2) }, 'where-constraint picks up the right lexical (+)';
     dies-ok  { bar(1) }, 'where-constraint picks up the right lexical (-)';
 }
 

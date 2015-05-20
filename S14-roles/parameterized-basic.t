@@ -157,7 +157,7 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
 
 # RT #77338
 {
-    lives_ok { role A[::T $?] {}; class B does A[] {} },
+    lives-ok { role A[::T $?] {}; class B does A[] {} },
         'question mark for optional parameter is parsed correctly';
     eval-dies-ok 'role A[::T?] {}; class B does A[] {}',
         'cannot put question mark on a type constraint';

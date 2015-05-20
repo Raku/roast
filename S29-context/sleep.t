@@ -23,7 +23,7 @@ my $b;
 
     #?niecza 2 skip "NYI"
     $nil = 1;
-    lives_ok { $nil = sleep(-1) }, "silently ignores negative times";
+    lives-ok { $nil = sleep(-1) }, "silently ignores negative times";
     ok $nil === Nil , 'sleep() always returns Nil';
 } #5
 

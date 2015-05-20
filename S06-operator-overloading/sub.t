@@ -222,8 +222,8 @@ Testing operator overloading subroutines
     import MyClass;  # should import that sub forms of the exports
 
   my $obj;
-  lives_ok { $obj = MyClass.new }, "instantiation of a prefix:<...> and infix:<as> overloading class worked";
-  lives_ok { ~$obj }, "our object can be stringified";
+  lives-ok { $obj = MyClass.new }, "instantiation of a prefix:<...> and infix:<as> overloading class worked";
+  lives-ok { ~$obj }, "our object can be stringified";
   is ~$obj, "hi", "our object was stringified correctly";
   is EVAL('($obj as OtherClass).x'), 23, "our object was coerced correctly";
 }
@@ -279,8 +279,8 @@ Testing operator overloading subroutines
 {
     role A { has $.v }
     multi sub infix:<==>(A $a, A $b) { $a.v == $b.v }
-    lives_ok { 3 == 3 or  die() }, 'old == still works on integers (+)';
-    lives_ok { 3 == 4 and die() }, 'old == still works on integers (-)';
+    lives-ok { 3 == 3 or  die() }, 'old == still works on integers (+)';
+    lives-ok { 3 == 4 and die() }, 'old == still works on integers (-)';
     ok  (A.new(v => 3) == A.new(v => 3)), 'infix:<==> on A objects works (+)';
     ok !(A.new(v => 2) == A.new(v => 3)), 'infix:<==> on A objects works (-)';
 }
@@ -366,7 +366,7 @@ Testing operator overloading subroutines
         $val = "$foo";
         is($val, 'software', '... basic prefix operator overloading worked');
 
-        lives_ok {
+        lives-ok {
             my $foo = Bar.new();
             $foo.bar = 'software';
             $val = $foo + $foo;
@@ -385,7 +385,7 @@ Testing operator overloading subroutines
         my @foo = ($obj, $obj, $obj);
         my $res;
         #?niecza todo "stringification didn't die"
-        lives_ok { $res = ~<<@foo }, "stringification didn't die";
+        lives-ok { $res = ~<<@foo }, "stringification didn't die";
         #?niecza todo "... worked in array stringification"
         is $res, "pugs pugs pugs", "stringification overloading worked in array stringification";
     }
@@ -459,8 +459,8 @@ Testing operator overloading subroutines
 
 # RT #116643
 {
-    lives_ok { sub prefix:<\o/>($) {} }, 'can declare operator with a backslash (1)';
-    lives_ok { sub postfix:<\\>($) {} }, 'can declare operator with a backslash (2)';
+    lives-ok { sub prefix:<\o/>($) {} }, 'can declare operator with a backslash (1)';
+    lives-ok { sub postfix:<\\>($) {} }, 'can declare operator with a backslash (2)';
 
     my $RT116643 = EVAL 'sub infix:<\\o/>($a, $b) { $a * $b }; 21 \\o/ 2';
     is $RT116643, 42, 'can declare and use operator with a backslash';
@@ -468,7 +468,7 @@ Testing operator overloading subroutines
 
 # RT #115724
 {
-    lives_ok { sub circumfix:<w "> ($a) { }; },
+    lives-ok { sub circumfix:<w "> ($a) { }; },
         'can define circumfix operator with a double quote (")';
     my $RT115724 = EVAL 'sub circumfix:<w "> ($a) { $a }; w 111 "';
     is $RT115724 , 111, 'can define and use circumfix operator with a double quote (")';

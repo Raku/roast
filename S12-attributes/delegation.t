@@ -149,7 +149,7 @@ class PairTest {
         }
     }
     my $t = FrontendRw.new();
-    lives_ok { $t.a = 'foo' }, 'can assign to lvalue delegated attribute';
+    lives-ok { $t.a = 'foo' }, 'can assign to lvalue delegated attribute';
     dies-ok  { $t.c = 'foo' }, '... but only to lvaues attributes';
     is $t.a, 'foo', 'assignment worked';
     is $t.backend.a, 'foo', 'can also query that through the backend';

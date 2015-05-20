@@ -163,7 +163,7 @@ my @array2 = ("test", 1, Mu);
 {
     # declare the array with data type
     my Int @array;
-    lives_ok { @array[0] = 23 },
+    lives-ok { @array[0] = 23 },
       "stuffing Ints in an Int array works";
     #?niecza todo "type constraints"
     throws-like { @array[1] = $*ERR },
@@ -224,7 +224,7 @@ my @array2 = ("test", 1, Mu);
   my @arr;
   # test that @arr[+-1] produces a Failure, which is thrown when a method
   # other than .defined is called on it.
-  lives_ok { @arr[*-1].defined }, "readonly accessing [*-1] of an empty array is not fatal";
+  lives-ok { @arr[*-1].defined }, "readonly accessing [*-1] of an empty array is not fatal";
 
   # RT #111924
   throws-like { @arr[*-1].flurb },
@@ -365,7 +365,7 @@ my @array2 = ("test", 1, Mu);
     my Str $foo;
     my @bar = $foo;
     my $res;
-    lives_ok { $res = ~@bar },
+    lives-ok { $res = ~@bar },
       '~@bar containing a Str type object lives';
     is $res, "", '~@bar containing a Str type object gives empty string';
 }

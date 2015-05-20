@@ -28,7 +28,7 @@ sub showkv($x) {
     nok ?Bag.new(), "Bool returns False if there is nothing in the Bag";
 
     my $hash;
-    lives_ok { $hash = $b.hash },
+    lives-ok { $hash = $b.hash },
       ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
@@ -215,11 +215,11 @@ sub showkv($x) {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.Bag;
     my $s;
     my $c;
-    lives_ok { $s = $b.perl },
+    lives-ok { $s = $b.perl },
       ".perl lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
-    lives_ok { $c = EVAL $s },
+    lives-ok { $c = EVAL $s },
       ".perl.EVAL lives";
     isa-ok $c, Bag, "... and produces a Bag";
     is showkv($c), showkv($b), "... and it has the correct values";
@@ -228,7 +228,7 @@ sub showkv($x) {
 {
     my $b = { foo => 2, bar => 3, baz => 1 }.Bag;
     my $s;
-    lives_ok { $s = $b.Str },
+    lives-ok { $s = $b.Str },
       ".Str lives";
     isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
@@ -237,7 +237,7 @@ sub showkv($x) {
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.Bag;
     my $s;
-    lives_ok { $s = $b.gist },
+    lives-ok { $s = $b.gist },
       ".gist lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";

@@ -121,7 +121,7 @@ plan 39;
   my %hash;
   my $var = "d";
 
-  lives_ok { %hash<b> := $var },
+  lives-ok { %hash<b> := $var },
                     "binding of not yet existing elements should autovivify (1)";
   is %hash<b>, "d", "binding of not yet existing elements should autovivify (2)";
 

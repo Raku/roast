@@ -30,7 +30,7 @@ test_rand_range(11);
 
 # L<S32::Numeric/Real/"=item srand">
 
-lives_ok { srand(1) }, 'srand(1) lives and parses';
+lives-ok { srand(1) }, 'srand(1) lives and parses';
 
 {
     my sub repeat_rand ($seed) {

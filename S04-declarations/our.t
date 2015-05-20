@@ -25,8 +25,8 @@ is($a, 3, '$a has changed'); # XXX is that right?
 # and initializes both arrays
 {
     our (@a, @b);
-    lives_ok { @a.push(2) }, 'Can use @a';
-    lives_ok { @b.push(3) }, 'Can use @b';
+    lives-ok { @a.push(2) }, 'Can use @a';
+    lives-ok { @b.push(3) }, 'Can use @b';
     is ~@a, '2', 'push actually worked on @a';
     is ~@b, '3', 'push actually worked on @b';
 }
@@ -69,8 +69,8 @@ our $c = 42; #OK not used
 
 # RT #100560, #102876
 {
-    lives_ok { our @e1 = 1..3 },   'we can declare and initialize an our-scoped array';
-    lives_ok { our %e2 = a => 1 }, 'we can declare and initialize an our-scoped hash';
+    lives-ok { our @e1 = 1..3 },   'we can declare and initialize an our-scoped array';
+    lives-ok { our %e2 = a => 1 }, 'we can declare and initialize an our-scoped hash';
     is(@OUR::e1[1], 2, 'our-scoped array has correct value' );
     is(%OUR::e2<a>, 1, 'our-scoped hash has correct value' );
 }

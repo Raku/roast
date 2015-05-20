@@ -2,7 +2,7 @@ use Test;
 
 plan 1;
 
-lives_ok( {
+lives-ok( {
     for "par 1", "par 2" -> $p {
         gather {
             my $c = $p;                 # make an rw copy

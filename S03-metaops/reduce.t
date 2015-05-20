@@ -170,10 +170,10 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 # Following two tests taken verbatim from former t/operators/reduce.t
-lives_ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
+lives-ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
 
 #?niecza todo 'These are hyperop tests!'
-lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
+lives-ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # Check that user defined infix ops work with [...], too.
 {

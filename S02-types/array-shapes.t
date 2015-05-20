@@ -25,7 +25,7 @@ plan 25;
 
 #?rakudo skip 'array shapes NYI RT #124502'
 {
-    lives_ok { my @arr\    [7]},
+    lives-ok { my @arr\    [7]},
       'array with fixed size with unspace');
     throws-like { EVAL 'my @arr.[8]' },
       Exception,  # XXX fix when this block is no longer skipped

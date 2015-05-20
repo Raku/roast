@@ -3,7 +3,7 @@ use Test;
 
 plan 3;
 
-lives_ok { 4.HOW.HOW }, 'Can access meta class of meta class';
+lives-ok { 4.HOW.HOW }, 'Can access meta class of meta class';
 
 eval-dies-ok 'my $x; ($x = "hi").HOW = Block;',
             'Cannot assign to .HOW';
@@ -11,7 +11,7 @@ eval-dies-ok 'my $x; ($x = "hi").HOW = Block;',
 # RT #76928
 {
     sub RT76928(%h?) { %h.HOW }
-    lives_ok { RT76928() }, 'Can call .HOW on an optional sub parameter';
+    lives-ok { RT76928() }, 'Can call .HOW on an optional sub parameter';
 }
 
 # vim: ft=perl6

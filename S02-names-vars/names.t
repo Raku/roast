@@ -124,7 +124,7 @@ isa-ok (rule => 1), Pair, 'rule => something creates a Pair';
 
 # RT #74276
 # Rakudo had troubles with names starting with Q
-lives_ok { EVAL 'class Quox { }; Quox.new' },
+lives-ok { EVAL 'class Quox { }; Quox.new' },
   'class names can start with Q';
 
 # RT #58488

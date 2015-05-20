@@ -42,21 +42,21 @@ eval-dies-ok 'sub mods_param_constant ($x is readonly) { $x++; };
 sub mods_param_rw ($x is rw) { $x++; }
 dies-ok  { mods_param_rw(1) }, 'can\'t modify constant even if we claim it\'s rw';
 sub mods_param_rw_does_nothing ($x is rw) { $x; }
-lives_ok { mods_param_rw_does_nothing(1) }, 'is rw with non-lvalue should autovivify';
+lives-ok { mods_param_rw_does_nothing(1) }, 'is rw with non-lvalue should autovivify';
 
-lives_ok  { mods_param_rw($foo) }, 'pass by "is rw" doesn\'t die';
+lives-ok  { mods_param_rw($foo) }, 'pass by "is rw" doesn\'t die';
 is($foo, 2, 'pass by reference works');
 
 #icopy
 $foo=1;
 sub mods_param_copy ($x is copy) {$x++;}
-lives_ok { mods_param_copy($foo) }, 'is copy';
+lives-ok { mods_param_copy($foo) }, 'is copy';
 is($foo, 1, 'pass by value works');
 
 # same test with default value
 sub boom ($arg is copy = 0) { $arg++ }
 
-lives_ok { boom(42) }, "can modify a copy";
+lives-ok { boom(42) }, "can modify a copy";
 
 
 # is parcel
@@ -64,7 +64,7 @@ lives_ok { boom(42) }, "can modify a copy";
     $foo=1;
     sub mods_param_parcel ($x is parcel) { $x++;  }
     dies-ok { mods_param_parcel(1); }, 'is parcel with non-lvalue';
-    lives_ok { mods_param_parcel($foo); }, 'is parcel with non-lvalue';
+    lives-ok { mods_param_parcel($foo); }, 'is parcel with non-lvalue';
     is($foo, 2, 'is parcel works');
 }
 

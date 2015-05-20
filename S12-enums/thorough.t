@@ -88,7 +88,7 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 {
     enum Negation << :isnt<isnt> :arent<arent> :amnot<amnot> :aint<aint> >>;
     my Negation $foo;
-    lives_ok { $foo = Negation::isnt }, 'simple assignment from enum';
+    lives-ok { $foo = Negation::isnt }, 'simple assignment from enum';
     is $foo, Negation::isnt, 'assignment from enum works';
 }
 

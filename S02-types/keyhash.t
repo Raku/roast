@@ -17,7 +17,7 @@ sub showkh($h) {
     is %h.elems, 10, '.elems';
     is +%h, 10, 'prefix:<+> calls .elems, not .keys';
 
-    lives_ok { %h<d> = 0 }, 'Can set an item to 0';
+    lives-ok { %h<d> = 0 }, 'Can set an item to 0';
     is +%h.keys, 3, '... and an item is gone';
     is showkh(%h), 'a:1 b:3 c:-1', '... and the right one is gone';
     nok %h<d>:exists, '... also according to exists';
@@ -85,7 +85,7 @@ sub showkh($h) {
     is %h<camelia>, 0, 'Correct default value';
     is %h.elems, 10, '.elems';
 
-    lives_ok { %h<d> = 0 }, 'Can set an item to 0';
+    lives-ok { %h<d> = 0 }, 'Can set an item to 0';
     is +%h.keys, 3, '... and an item is gone';
     is showkh(%h), 'a:1 b:3 c:-1', '... and the right one is gone';
 
@@ -107,7 +107,7 @@ sub showkh($h) {
 
     is %h<camelia>, '', 'Correct default value';
 
-    lives_ok { %h<d> = '' }, 'Can set an item to the null string';
+    lives-ok { %h<d> = '' }, 'Can set an item to the null string';
     is +%h.keys, 3, '... and an item is gone';
     is showkh(%h), 'a:foo b:bar c:baz', '... and the right one is gone';
 

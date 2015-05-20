@@ -204,7 +204,7 @@ plan 32;
 # RT #67010
 {
     my @list = 1, 2, Code;
-    lives_ok { @list.sort: { $^a cmp $^b } },
+    lives-ok { @list.sort: { $^a cmp $^b } },
         'sort by class name';
 }
 
@@ -225,7 +225,7 @@ plan 32;
     my @sorted;
 
     #?niecza todo 'Is this test actually testing for correct behavior?'
-    lives_ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
+    lives-ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
 }
 

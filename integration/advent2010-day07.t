@@ -7,7 +7,7 @@ use Test;
 plan 8;
 
 throws-like {EVAL '{ $var = 42 }'}, X::Undeclared;
-lives_ok {EVAL '{ my $var = 42 }'};
+lives-ok {EVAL '{ my $var = 42 }'};
 throws-like {EVAL '{ my $var = 42 }; say $var'}, X::Undeclared;
 
 sub counter($start_value) {

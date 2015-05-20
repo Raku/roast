@@ -12,7 +12,7 @@ class Child is Parent {
 }
 
 my $o;
-lives_ok { $o =  Child.new(:x(2), :y(3)) }, 
+lives-ok { $o =  Child.new(:x(2), :y(3)) }, 
          'can instantiate class with parent attributes';
 
 is $o.y, 3, '... worked for the child';
@@ -21,7 +21,7 @@ is $o.x, 2, '... worked for the parent';
 # RT #76490
 #?rakudo 3 todo 'parent attributes in initialization RT #76490'
 #?niecza 3 todo
-lives_ok { $o = Child.new( :y(4), Parent{ :x<5> }) }, 
+lives-ok { $o = Child.new( :y(4), Parent{ :x<5> }) }, 
          'can instantiate class with explicit specification of parent attrib';
 
 is $o.y, 4, '... worked for the child';
@@ -32,11 +32,11 @@ class GrandChild is Child {
 
 #?rakudo 6 todo 'parent attributes in initialization RT #76490'
 #?niecza 6 todo
-lives_ok { $o = GrandChild.new( Child{ :y(4) }, Parent{ :x<5> }) },
+lives-ok { $o = GrandChild.new( Child{ :y(4) }, Parent{ :x<5> }) },
          'can instantiate class with explicit specification of parent attrib (many parents)';
 is $o.y, 4, '... worked for the class Child';
 is $o.x, 5, '... worked for the class Parent';
-lives_ok { $o = GrandChild.new( Parent{ :x<5> }, Child{ :y(4) }) }, 
+lives-ok { $o = GrandChild.new( Parent{ :x<5> }, Child{ :y(4) }) }, 
          'can instantiate class with explicit specification of parent attrib (many parents, other order)';
 is $o.y, 4, '... worked for the class Child (other order)';
 is $o.x, 5, '... worked for the class Parent (other order)';
@@ -72,7 +72,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     }
 
     my $x;
-    lives_ok { $x = NewFromMu.new('j', 'k') }, 'can delegate to self.Mu::new';
+    lives-ok { $x = NewFromMu.new('j', 'k') }, 'can delegate to self.Mu::new';
     is $x.x, 'j', '... got the right attribute (1)';
     is $x.y, 'k', '... got the right attribute (2)';
 }
@@ -144,7 +144,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 # RT #77200
 {
     my class RT77200 { }
-    lives_ok { my RT77200 $lex .= new },
+    lives-ok { my RT77200 $lex .= new },
         "Can call .=new on a variable of a lexical type";
 }
 

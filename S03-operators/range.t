@@ -151,25 +151,25 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
     my $range;
     my $start = "100.B";
     my $end = "102.B";
-    lives_ok { $range = $start..$end },
+    lives-ok { $range = $start..$end },
              'can make range from numeric string vars';
     is $range.min, $start, 'range starts at start';
     is $range.min.WHAT.gist, Str.gist, 'range start is a string';
     is $range.max,   $end, 'range ends at end';
     is $range.max.WHAT.gist, Str.gist, 'range end is a string';
-    lives_ok { "$range" }, 'can stringify range';
+    lives-ok { "$range" }, 'can stringify range';
     is ~$range, "100.B 101.B 102.B", 'range is correct';
 }
  
 # RT #67882
 {
     my $range;
-    lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
+    lives-ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
              'can make range from match vars';
     is $range.min, 1, 'range starts at one';
     is $range.max, 3, 'range ends at three';
     #?niecza 2 skip 'cannot increment a value of type Match'
-    lives_ok { "$range" }, 'can stringify range';
+    lives-ok { "$range" }, 'can stringify range';
     is ~$range, "1 2 3", 'range is correct';
 }
 # and another set, just for the lulz
@@ -183,23 +183,23 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
 
 {
     my $range;
-    lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = +$0..+$1 },
+    lives-ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = +$0..+$1 },
              'can make range from match vars with numeric context forced';
     is $range.min, 1, 'range starts at one';
     is $range.max,   3, 'range ends at three';
-    lives_ok { "$range" }, 'can stringify range';
+    lives-ok { "$range" }, 'can stringify range';
     is ~$range, "1 2 3", 'range is correct';
 }
 
 {
     my $range;
-    lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = ~$0..~$1 },
+    lives-ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = ~$0..~$1 },
              'can make range from match vars with string context forced';
     is $range.min, 1, 'range starts at one';
     is $range.min.WHAT.gist, Str.gist, 'range start is a string';
     is $range.max,   3, 'range ends at three';
     is $range.max.WHAT.gist, Str.gist, 'range end is a string';
-    lives_ok { "$range" }, 'can stringify range';
+    lives-ok { "$range" }, 'can stringify range';
     is ~$range, "1 2 3", 'range is correct';
 }
 
@@ -217,7 +217,7 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 # RT #68788
 {
     $_ = Any; # unsetting $_ to reproduce bug literally
-    lives_ok {(1..$_)}, '(1..$_) lives';
+    lives-ok {(1..$_)}, '(1..$_) lives';
     isa-ok (1..$_), Range, '(..) works on Int .. Any';
 }
 
@@ -236,7 +236,7 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 
 # RT #82620
 {
-    lives_ok {("a".."b").map({.trans(""=>"")}).perl},
+    lives-ok {("a".."b").map({.trans(""=>"")}).perl},
         "range doesn't leak Parrot types";
 }
 

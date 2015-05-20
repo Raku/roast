@@ -165,7 +165,7 @@ eval-dies-ok q[
 
 # RT #75858
 {
-    lives_ok { EVAL 'my class RT75858 { has $.x where 1 }' },
+    lives-ok { EVAL 'my class RT75858 { has $.x where 1 }' },
         'can use where clause on an attribute';
 }
 

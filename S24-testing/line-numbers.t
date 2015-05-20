@@ -45,7 +45,7 @@ execute-test(:function("isnt"), :line(9));
 execute-test(:function("is"), :line(9));
 
 #?DOES 1
-execute-test(:function("lives_ok"), :line(9));
+execute-test(:function("lives-ok"), :line(9));
 
 #?DOES 1
 execute-test(:function("nok"), :line(9));

@@ -14,7 +14,7 @@ plan 36;
   my $b_var = "a_var";
 
   is $::($b_var), 42, 'basic symbolic scalar dereferentiation works';
-  lives_ok { $::($b_var) = 23 }, 'can use $::(...) as lvalue';
+  lives-ok { $::($b_var) = 23 }, 'can use $::(...) as lvalue';
   is $a_var, 23, 'and the assignment worked';
   $::($b_var) = 'a', 'b', 'c';
   is $a_var, 'a', '... and it is item assignment';
@@ -53,7 +53,7 @@ my $outer = 'outside';
     is ::('$inner'), $inner, 'can look up lexical from same block';
     is ::('$outer'), $outer, 'can look up lexical from outer block';
 
-    lives_ok { ::('$outer') = 'new' }, 'Can use ::() as lvalue';
+    lives-ok { ::('$outer') = 'new' }, 'Can use ::() as lvalue';
     is $outer, 'new', 'and the assignment worked';
     sub c { 'sub c' }; #OK not used
     is ::('&c').(), 'sub c', 'can look up lexical sub';

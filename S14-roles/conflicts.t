@@ -26,7 +26,7 @@ class General does Sentry does Pet {
         }
     }
 }
-lives_ok {Pet.new}, "role and class definition worked";
+lives-ok {Pet.new}, "role and class definition worked";
 
 my $a;
 ok(($a = General.new()),      "basic class instantiation works");

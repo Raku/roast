@@ -89,7 +89,7 @@ is $y.test,     42,         'method from other role was OK too';
 
     dies-ok { my $x = {}; $x does R4a(3) },
             '"does role(param)" does not work without attribute';
-    lives_ok { my $x = {}; $x does R4b(3) },
+    lives-ok { my $x = {}; $x does R4b(3) },
             '"does role(param)" does work with one attribute';
     dies-ok { my $x = {}; $x does R4c(3) },
             '"does role(param)" does not work with two attributes';
@@ -108,7 +108,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 # RT #99986
 {
-    lives_ok { 3/2 but role { } }, 'can mix into a Rat';
+    lives-ok { 3/2 but role { } }, 'can mix into a Rat';
 }
 
 # RT #77184
@@ -136,7 +136,7 @@ is (class { } but role { method answer() { 42 } }).answer, 42,
     'can mix a role into a type object';
 
 # RT #101022
-lives_ok {(True but role {}).gist}, 'can mix into True';
+lives-ok {(True but role {}).gist}, 'can mix into True';
 
 # RT #73990
 #?niecza skip "Can only provide exactly one initial value to a mixin"

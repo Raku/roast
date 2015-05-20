@@ -42,7 +42,7 @@ is-deeply guess("World",37), True, 'optional';
 # Types
 {
     sub greet(Str $name) {"hello $name"}
-    lives_ok {EVAL 'greet("joe")'},'type check';
+    lives-ok {EVAL 'greet("joe")'},'type check';
     throws-like {EVAL 'greet(3)'}, X::TypeCheck::Argument;
 }
 

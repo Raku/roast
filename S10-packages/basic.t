@@ -30,7 +30,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 # RT #65404
 #?niecza todo
 {
-    lives_ok {ThisEmpty.perl ne "tbd"}, 'test for working .perl method'
+    lives-ok {ThisEmpty.perl ne "tbd"}, 'test for working .perl method'
 }
 
 # change to match likely error (top of file) when passes
@@ -59,7 +59,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 }
 
 {
-    lives_ok {Simple::Bar.new.WHO}, 'some WHO implementation';
+    lives-ok {Simple::Bar.new.WHO}, 'some WHO implementation';
     #?rakudo todo 'ticket based only on class... RT #60446'
     #?niecza todo
     is ~(Simple::Bar.new.WHO), 'Simple::Bar',
@@ -261,19 +261,19 @@ eval-dies-ok q[
 
 # RT #79464
 {
-    lives_ok {Foo1::bar(); module Foo1 { our $x = 42; our sub bar() { $x.defined } }}, 'accessing module variable from within sub called from outside the module';
+    lives-ok {Foo1::bar(); module Foo1 { our $x = 42; our sub bar() { $x.defined } }}, 'accessing module variable from within sub called from outside the module';
 }
 
 # RT #76606
 {
     use lib 't/spec/packages';
-    lives_ok { use RT76606 },
+    lives-ok { use RT76606 },
         'autovivification works with nested "use" directives (import from two nested files)';
 }
 
 # RT #120561
 {
-    lives_ok { use lib "$?FILE.IO.dirname()/t/spec/packages" },
+    lives-ok { use lib "$?FILE.IO.dirname()/t/spec/packages" },
         'no Null PMC access with "use lib $double_quoted_string"';
 }
 

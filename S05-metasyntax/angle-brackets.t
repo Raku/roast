@@ -147,7 +147,7 @@ character classes), and those are referenced at the correct spot.
 #?niecza todo '<.$foo> syntax placeholder'
 {
     # placeholder test for <.$foo>
-    lives_ok({
+    lives-ok({
         my $method = 'WHAT';
         'foo bar baz' ~~ /foo <.$method>/;
     }, '<.$foo> syntax placeholder');
@@ -259,7 +259,7 @@ character classes), and those are referenced at the correct spot.
 {
     eval-dies-ok('"foo" ~~ /<...>/', '<...> dies in regex match');
     # XXX: Should be warns_ok, but we don't have that yet
-    lives_ok({'foo' ~~ /<???>/}, '<???> lives in regex match');
+    lives-ok({'foo' ~~ /<???>/}, '<???> lives in regex match');
     #?rakudo todo '!!! in regexes'
     eval-dies-ok('"foo" ~~ /<!!!>/', '<!!!> dies in regex match');
 }

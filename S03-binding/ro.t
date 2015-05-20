@@ -35,7 +35,7 @@ plan 11;
     #?niecza todo
     is @x.join('|'), 'd|e', 'value unchanged';
     #?niecza todo
-    lives_ok { @x[2] = 'k' }, 'can still assign to items of RO array';
+    lives-ok { @x[2] = 'k' }, 'can still assign to items of RO array';
     #?niecza todo
     is @x.join(''), 'd|e|k', 'assignment relly worked';
 }

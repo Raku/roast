@@ -24,7 +24,7 @@ class Bar is rw {
 {
     my Bar $bar .= new(but_not_this => 42);
     
-    lives_ok { $bar.readwrite_attr++ },
+    lives-ok { $bar.readwrite_attr++ },
         "'is rw' on the class declaration applies to all attributes (1)";
     is $bar.readwrite_attr, 1,
         "'is rw' on the class declaration applies to all attributes (2)";

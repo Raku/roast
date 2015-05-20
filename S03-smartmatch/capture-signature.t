@@ -33,7 +33,7 @@ is t2([1,2]), "om nom nom", "signature smart-match against array works (2)";
 
 # RT #118581
 {
-    lives_ok { \(1) ~~ :(int $x as Str) },
+    lives-ok { \(1) ~~ :(int $x as Str) },
         'can match integer capture against signature with native integer coercing to Str';
 }
 

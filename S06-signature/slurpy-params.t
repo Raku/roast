@@ -75,7 +75,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 {
     my sub foo ($n, *%h) { };   #OK not used
     ## NOTE: *NOT* sub foo ($n, *%h, *@a)
-    lives_ok { foo 1, n => 20, y => 300 },
+    lives-ok { foo 1, n => 20, y => 300 },
         'Testing: `sub foo($n, *%h) { }; foo 1, n => 20, y => 300`';
 }
 
@@ -96,7 +96,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     my sub foo3(:$n, *%h, *@a) { [+] @a };   #OK not used
     
     diag("Testing with named arguments (named param isn't required)");
-    lives_ok { foo 1, x => 20, y => 300, 4000 },
+    lives-ok { foo 1, x => 20, y => 300, 4000 },
       'Testing: `sub foo(:$n, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000`';
     nok (foo1 1, x => 20, y => 300, 4000).defined,
       'Testing value for named argument';
@@ -107,7 +107,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     
     ### named parameter pair will always have a higher "priority" while passing
     ### so %h<n> will always be undefined
-    lives_ok { foo1 1, n => 20, y => 300, 4000 },
+    lives-ok { foo1 1, n => 20, y => 300, 4000 },
       'Testing: `sub foo(:$n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000`';
     is (foo1 1, n => 20, y => 300, 4000), 20,
       'Testing the named argument';
@@ -125,7 +125,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 {
     my sub foo(:$n!, *%h, *@a) { };   #OK not used
     diag('Testing with named arguments (named param is required) (++ version)');
-    lives_ok { foo 1, n => 20, y => 300, 4000 },
+    lives-ok { foo 1, n => 20, y => 300, 4000 },
     'Testing: `my sub foo(+:$n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
     dies-ok { foo 1, x => 20, y => 300, 4000 };
 }
@@ -135,7 +135,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 {
     my sub foo(:$n is required, *%h, *@a) { };   #OK not used
     diag('Testing with named arguments (named param is required) (trait version)');
-    lives_ok { foo 1, n => 20, y => 300, 4000 },
+    lives-ok { foo 1, n => 20, y => 300, 4000 },
     'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
     dies-ok { foo 1, x => 20, y => 300, 4000 },
     'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000 }`';

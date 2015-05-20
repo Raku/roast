@@ -35,7 +35,7 @@ throws-like { EVAL '$o. whatever(5)' },
   X::Obsolete,
   'whitespace is not allowed after . before method';
 
-lives_ok { EVAL 'my @rt80330; [+] @rt80330' },
+lives-ok { EVAL 'my @rt80330; [+] @rt80330' },
   'a [+] with whitespace works';
 throws-like  { EVAL 'my @rt80330; [+]@rt80330' },
   X::Syntax::Confused,

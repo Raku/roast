@@ -314,7 +314,7 @@ is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
 is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';
 
 #?niecza todo 'dubious'
-lives_ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
+lives-ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
 
 {
     sub lie { Bool::False }
@@ -326,7 +326,7 @@ lives_ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
 {
     sub def is rw { my $x = [] }   #OK not used
     ok def() ~~ Array, 'sub returns array';
-    lives_ok { undefine def }, 'attempt to undefine returned array lives';
+    lives-ok { undefine def }, 'attempt to undefine returned array lives';
     ok def() ~~ Array, 'sub still returns array';
 
     dies-ok { undefine &def }, 'attempt to undefine sub dies';

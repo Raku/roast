@@ -64,7 +64,7 @@ is($p5array.my_exists(10), +(@array[10]:exists), 'nonexists fail');
 is($p5array.fetch(3)+0, @array[3], 'fetch');
 
 my $match = 0;
-lives_ok {
+lives-ok {
     $match = ?($retarray.[3] ~~ @array[3]);
 }, 'can retro fetch';
 ok $match, 'retro fetch';

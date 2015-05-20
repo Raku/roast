@@ -62,10 +62,10 @@ is("a\0" cmp "a",   Order::More, 'a\0 cmp a is more');
     ok $a != 4, '$a != 4';
     nok $a != 3, 'not true that $a != 3';
 
-    lives_ok { $a < 5 }, '$a < 5 lives okay';
-    lives_ok { $a <= 5 }, '$a <= 5 lives okay';
-    lives_ok { $a > 5 }, '$a > 5 lives okay';
-    lives_ok { $a >= 5 }, '$a => 5 lives okay';
+    lives-ok { $a < 5 }, '$a < 5 lives okay';
+    lives-ok { $a <= 5 }, '$a <= 5 lives okay';
+    lives-ok { $a > 5 }, '$a > 5 lives okay';
+    lives-ok { $a >= 5 }, '$a => 5 lives okay';
 }
 
 # vim: ft=perl6

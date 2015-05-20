@@ -8,7 +8,7 @@ plan 7;
 throws-like { EVAL 'class A { }; class A { }' },
   X::Redeclaration,
   "Can't redeclare a class";
-lives_ok { EVAL 'class G { ... }; class G { }' },
+lives-ok { EVAL 'class G { ... }; class G { }' },
   'can redeclare stub classes';
 throws-like { EVAL 'class B is C { }' },
   X::Inheritance::UnknownParent,
@@ -23,7 +23,7 @@ throws-like { EVAL 'my F $x;' },
 # integration tests - in Rakudo some class names from Parrot leaked through,
 # so you couldn't name a class 'Task' - RT #61128
 
-lives_ok { EVAL 'class Task { has $.a }; Task.new(a => 3 );' },
+lives-ok { EVAL 'class Task { has $.a }; Task.new(a => 3 );' },
   'can call a class "Task" - RT 61128';
 
 # L<S02/Bare identifiers/If a postdeclaration is not seen, the compile fails at CHECK

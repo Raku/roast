@@ -74,7 +74,7 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 {
     multi sub max($a, $b, $c) {return 9}    #OK not used
 
-    lives_ok { max(1, 2, 3) }, 'use multi method to override builtin lives';
+    lives-ok { max(1, 2, 3) }, 'use multi method to override builtin lives';
     is EVAL('max(1, 2, 3)'), 9, 'use multi method to override builtin';
 }
 

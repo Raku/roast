@@ -20,7 +20,7 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
     is $o.getter, 'a', 'can access method';
     $o.setter('b');
     is $o.attrib, 'b', 'can set through setter';
-    lives_ok { $o.attrib = 'c' }, 'can set trough assignment';
+    lives-ok { $o.attrib = 'c' }, 'can set trough assignment';
     is $o.attrib, 'c', 'setting actually worked';
 }
 
@@ -50,7 +50,7 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 # RT #73910
 {
     use Foo;
-    lives_ok { class Bar { } }, 'declaring a class after use-ing a module (RT #73910)'
+    lives-ok { class Bar { } }, 'declaring a class after use-ing a module (RT #73910)'
 }
 
 # vim: ft=perl6

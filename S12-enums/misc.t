@@ -33,7 +33,7 @@ plan 16;
 
 {
     enum SomeEnum <a b c>;
-    lives_ok {SomeEnum::.keys}, 'keys on enum stash works';
+    lives-ok {SomeEnum::.keys}, 'keys on enum stash works';
 
 }
 
@@ -50,7 +50,7 @@ plan 16;
     is +FAIL, 1,        'non-conflicting enum key (numeric)';
     # RT #112202
     #?niecza todo
-    lives_ok { OK.^methods }, 'can call .^methods on an enum';
+    lives-ok { OK.^methods }, 'can call .^methods on an enum';
 }
 
 # anonymous Enum in our context, # RT #122514

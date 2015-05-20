@@ -10,11 +10,11 @@ plan 75;
     ok @x.VAR.of === Int, '@x.VAR.of of typed array (my Int @x)';
     # RT #77748
     ok @x.WHAT.gist ~~ /Array/, '.WHAT.gist of the type object makes sense';
-    lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type';
-    lives_ok { @x = 1..3    }, 'can assign range of the right type';
-    lives_ok { @x.push: 3, 4}, 'can push values of the right type';
-    lives_ok { @x.unshift: 3}, 'can unshift values of the right type';
-    lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice';
+    lives-ok { @x = 1, 2, 3 }, 'can assign values of the right type';
+    lives-ok { @x = 1..3    }, 'can assign range of the right type';
+    lives-ok { @x.push: 3, 4}, 'can push values of the right type';
+    lives-ok { @x.unshift: 3}, 'can unshift values of the right type';
+    lives-ok { @x[0, 2] = 2, 3}, 'can assign values to a slice';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array';
     is @x.unshift(2), [2, 2, 3], 'can unshift from typed array';
@@ -23,11 +23,11 @@ plan 75;
 {
     my Int @x;
     ok @x.VAR.of === Int, '@x.VAR.of of typed array (my Int @x)';
-    lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type (Int @x)';
-    lives_ok { @x = 1..3    }, 'can assign range of the right type (Int @x)';
-    lives_ok { @x.push: 3, 4}, 'can push values of the right type (Int @x)';
-    lives_ok { @x.unshift: 3}, 'can unshift values of the right type (Int @x)';
-    lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (Int @x)';
+    lives-ok { @x = 1, 2, 3 }, 'can assign values of the right type (Int @x)';
+    lives-ok { @x = 1..3    }, 'can assign range of the right type (Int @x)';
+    lives-ok { @x.push: 3, 4}, 'can push values of the right type (Int @x)';
+    lives-ok { @x.unshift: 3}, 'can unshift values of the right type (Int @x)';
+    lives-ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (Int @x)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (Int @x)';
     is @x.unshift(1), [1, 2, 3], 'can unshift from typed array (Int @x)';
@@ -35,18 +35,18 @@ plan 75;
 
 # initialization
 {
-    lives_ok { my Int @x = 1, 2, 3 }, 'initialization of typed array';
-    lives_ok { my Int @x = 1 .. 3 }, 'initialization of typed array from range';
+    lives-ok { my Int @x = 1, 2, 3 }, 'initialization of typed array';
+    lives-ok { my Int @x = 1 .. 3 }, 'initialization of typed array from range';
 } #2
 
 {
     my @x of Int;
     ok @x.VAR.of === Int, '@x.VAR.of of typed array (my @x of Int)';
-    lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type (@x of Int)';
-    lives_ok { @x = 1..3    }, 'can assign range of the right type (@x of Int)';
-    lives_ok { @x.push: 3, 4}, 'can push values of the right type (@x of Int)';
-    lives_ok { @x.unshift: 3}, 'can unshift values of the right type (@x of Int)';
-    lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
+    lives-ok { @x = 1, 2, 3 }, 'can assign values of the right type (@x of Int)';
+    lives-ok { @x = 1..3    }, 'can assign range of the right type (@x of Int)';
+    lives-ok { @x.push: 3, 4}, 'can push values of the right type (@x of Int)';
+    lives-ok { @x.unshift: 3}, 'can unshift values of the right type (@x of Int)';
+    lives-ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
 
@@ -62,7 +62,7 @@ plan 75;
     dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
     dies-ok { @x[0, 2] = 2, 3}, 
             'can not assign values of wrong type to a slice';
-    lives_ok { @x = [1, 2], [3, 4] },
+    lives-ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
 } #7
 
@@ -75,7 +75,7 @@ plan 75;
     dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
     dies-ok { @x[0, 2] = 2, 3}, 
             'can not assign values of wrong type to a slice';
-    lives_ok { @x = [1, 2], [3, 4] },
+    lives-ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
 } #7
 
@@ -83,11 +83,11 @@ plan 75;
     my Array of Int @x;
     ok @x.VAR.of === Array[Int], 'my Array of Int @x declares a nested array';
     #?rakudo skip "nested typechecks are borked"
-    lives_ok { @x = [2, 3], [5, 6] }, 'assignment works';
+    lives-ok { @x = [2, 3], [5, 6] }, 'assignment works';
     #?rakudo todo "nested typechecks are borked"
-    lives_ok { @x.push: [8, 9] }, 'pushing works';
+    lives-ok { @x.push: [8, 9] }, 'pushing works';
     dies-ok  { @x.push: 8 }, 'type constraint is enforced';
-    lives_ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
+    lives-ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
     dies-ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
 } #6
 
@@ -95,10 +95,10 @@ plan 75;
 {
     my Int @a = 1, 2, 3;
     my Int @b;
-    lives_ok { @b = @a }, 'can assign typed array to typed array';
+    lives-ok { @b = @a }, 'can assign typed array to typed array';
     #?rakudo todo 'need parameterized Lists'
     ok @a.values.VAR.of.WHICH eqv Int.WHICH, '@a.values is typed (1)';
-    lives_ok { @b = @a.values }, '@a.values is typed (2)';
+    lives-ok { @b = @a.values }, '@a.values is typed (2)';
 } #3
 
 #?rakudo todo 'initialization RT #124676'
@@ -117,9 +117,9 @@ plan 75;
     sub ret_pos_6 returns Positional of Int { my Num @a = 1,2,3; @a }
     sub ret_pos_7 returns Positional of Numeric { my Int @a = 1,2,3; return @a; }
     sub ret_pos_8 returns Positional of Numeric { my Int @a = 1,2,3; @a }
-    lives_ok { ret_pos_1() },
+    lives-ok { ret_pos_1() },
         'type check Positional of Int allows correctly typed array to be returned explicitly';
-    lives_ok { ret_pos_2() },
+    lives-ok { ret_pos_2() },
         'type check Positional of Int allows correctly typed array to be returned implicitly';
     dies-ok { ret_pos_3() },
         'type check Positional of Int prevents untyped array to be returned explicitly';
@@ -129,9 +129,9 @@ plan 75;
         'type check Positional of Int prevents incorrectly typed array to be returned explicitly';
     dies-ok { ret_pos_6() },
         'type check Positional of Int prevents incorrectly typed array to be returned implicitly';
-    lives_ok { ret_pos_7() },
+    lives-ok { ret_pos_7() },
         'type check Positional of Num allows subtyped Int array to be returned explicitly';
-    lives_ok { ret_pos_8() },
+    lives-ok { ret_pos_8() },
         'type check Positional of Num allows subtyped Int array to be returned implicitly';
 } #8
 
@@ -140,7 +140,7 @@ plan 75;
 {
     our Int @a1;
     our @a2;
-    lives_ok { @a2[0] = 'string' },
+    lives-ok { @a2[0] = 'string' },
         'Can assign to untyped package array in presence of typed array';
 } #1
 
@@ -150,7 +150,7 @@ plan 75;
         has @.rt71958 is rw;
     }
     my Int @typed_array;
-    lives_ok { RT71958.new().rt71958[0] = RT71958.new() },
+    lives-ok { RT71958.new().rt71958[0] = RT71958.new() },
              'can assign to untyped array in presence of typed array';
 } #1
 
@@ -182,7 +182,7 @@ plan 75;
         my Str @a = <foo bar baz>;
         @a
     };
-    lives_ok { foo() }, 'Array of Str works as return constraint';
+    lives-ok { foo() }, 'Array of Str works as return constraint';
     ok foo().of === Str, 'Get back the typed array correctly (1)';
     is foo(), Array[Str].new('foo', 'bar', 'baz'),
         'Get back the typed array correctly (2)';

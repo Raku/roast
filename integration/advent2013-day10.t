@@ -150,7 +150,7 @@ my $greeting2 = qq:!s 'Hello, $name. You have { +@msgs } messages.';
 ok $greeting2.match(/12/), 'closure interpolation';
 ok $greeting2.match(/\$name/), 'variabled non-interpolation';
 
-lives_ok {EVAL '$data ~~ m:nth(5)/fo+/'}, 'Round parens ok';
+lives-ok {EVAL '$data ~~ m:nth(5)/fo+/'}, 'Round parens ok';
 throws-like {EVAL '$data ~~ m:nth[5]/fo+/'},
   X::Comp::Group,
   'Square parens not ok';

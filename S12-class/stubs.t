@@ -19,7 +19,7 @@ eval-lives-ok q[ package StubD { ... }; class StubD { method foo { } }; ],
 
 # not quite class stubs, but I don't know where else to put the tests...
 
-lives_ok { sub {...} }, 'not execued stub code is fine';
+lives-ok { sub {...} }, 'not execued stub code is fine';
 dies-ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
 dies-ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 

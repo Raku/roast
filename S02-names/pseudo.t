@@ -57,7 +57,7 @@ plan 142;
         $MY::z := $x;
         ok $z =:= $x, 'Can bind through $MY::z';
         is +[$z], 1, '... it is a scalar binding';
-        lives_ok { $z = 15 }, '... it is mutable';
+        lives-ok { $z = 15 }, '... it is mutable';
 
         MY::.{'$z'} := $y;
         ok $z =:= $y, 'Can bind through MY::.{}';
@@ -212,18 +212,18 @@ plan 142;
     }
 
     sub f1() { }; sub f2() { }; sub f3() { }
-    lives_ok { &CORE::none := &f1 }, '&CORE:: binding lives';
+    lives-ok { &CORE::none := &f1 }, '&CORE:: binding lives';
     ok &none =:= &f1, '... and works';
-    lives_ok { CORE::.<&none> := &f2 }, 'CORE::.{} binding lives';
+    lives-ok { CORE::.<&none> := &f2 }, 'CORE::.{} binding lives';
     ok &none =:= &f2, '... and works';
-    lives_ok { &::($core)::none := &f3 }, '::("CORE") binding lives';
+    lives-ok { &::($core)::none := &f3 }, '::("CORE") binding lives';
     ok &none =:= &f3, '... and works';
 
     # in niecza v8, dynamic variables go through a separate code path.
     # make sure accessing it in CORE works
-    lives_ok { $CORE::_ := 50 }, 'Binding to $CORE::_ lives';
+    lives-ok { $CORE::_ := 50 }, 'Binding to $CORE::_ lives';
     is $CORE::_, 50, 'Accessing $CORE::_ works';
-    lives_ok { $::($core)::_ := 51 }, 'Binding to $::("CORE")::_ lives';
+    lives-ok { $::($core)::_ := 51 }, 'Binding to $::("CORE")::_ lives';
     is $::($core)::_, 51, 'Accessing $::("CORE")::_ works';
 }
 

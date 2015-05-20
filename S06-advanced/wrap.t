@@ -93,14 +93,14 @@ dies-ok { &foo.unwrap($wrapped) }, "can't re-unwrap an already unwrapped sub";
 sub hi { "Hi" };
 is( hi, "Hi", "Basic sub." );
 my $handle;
-lives_ok( { $handle = &hi.wrap({ callsame() ~ " there" }) }, 
+lives-ok( { $handle = &hi.wrap({ callsame() ~ " there" }) }, 
         "Basic wrapping works ");
 
 ok( $handle, "Recieved handle for unwrapping." );
 is( hi, "Hi there", "Function produces expected output after wrapping" );
 
 #unwrap the handle
-lives_ok { $handle = &hi.unwrap( $handle )}, "unwrap the function";
+lives-ok { $handle = &hi.unwrap( $handle )}, "unwrap the function";
 
 is( hi, "Hi", "Function is no longer wrapped." );
 
@@ -115,13 +115,13 @@ is( levelwrap( 1 ), 1, "Sanity test." );
 is( levelwrap( 2 ), 2, "Sanity test." );
 
 #?rakudo todo 'callwith RT #124653'
-lives_ok { &levelwrap.callwith( 1 )},
+lives-ok { &levelwrap.callwith( 1 )},
     "Check that functions have a 'callwith' that works. ";
 
 #?DOES 20
 {
     for (1..10) -> $num {
-        lives_ok {
+        lives-ok {
             &levelwrap.wrap({ 
                 callwith( $^t + 1 );
             }),
@@ -137,13 +137,13 @@ sub functionA {
 }
 is( functionA(), 'z', "Sanity." );
 my $middle;
-lives_ok { $middle = &functionA.wrap(sub { return 'y' ~ callsame })}, 
+lives-ok { $middle = &functionA.wrap(sub { return 'y' ~ callsame })}, 
         "First wrapping lived";
 is( functionA(), "yz", "Middle wrapper sanity." );
-lives_ok { &functionA.wrap(sub { return 'x' ~ callsame })}, 
+lives-ok { &functionA.wrap(sub { return 'x' ~ callsame })}, 
          'Second wraping lived';
 is( functionA(), "xyz", "three wrappers sanity." );
-lives_ok { &functionA.unwrap( $middle )}, 'unwrap the middle wrapper.';
+lives-ok { &functionA.unwrap( $middle )}, 'unwrap the middle wrapper.';
 is( functionA(), "xz", "First wrapper and final function only, middle removed." );
 
 #temporization (end scope removal of wrapping)

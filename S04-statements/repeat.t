@@ -116,7 +116,7 @@ plan 19;
 
 # RT #114836
 {
-    lives_ok {
+    lives-ok {
         my $condition;
         repeat {
             $condition = False;

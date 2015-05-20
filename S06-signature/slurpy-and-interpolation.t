@@ -12,7 +12,7 @@ sub baz ($a, $b) { return "a: $a b: $b"}
 sub invoke (*@args) { baz(|@args) }
 
 my $val;
-lives_ok {
+lives-ok {
     $val = invoke(1, 2);
 }, '... slurpy args flattening and matching parameters';
 
@@ -33,7 +33,7 @@ dies-ok {
 {
     sub f1(*%h) { %h.perl }; 
     sub f2(*%h) { f1(|%h) };
-    lives_ok { f2( :a(1) ) },
+    lives-ok { f2( :a(1) ) },
             'Can interpolate hashes into slurpy named parameters';
     is EVAL(f2(:a(4))).<a>, 4,  '... with a sane return value';
 }

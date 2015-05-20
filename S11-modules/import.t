@@ -85,7 +85,7 @@ plan 17;
 
 # RT #118231
 {
-    lives_ok { EVAL 'use Test' },
+    lives-ok { EVAL 'use Test' },
         'can import the same thing twice';   ## the first import at line 2 ;)
 }
 

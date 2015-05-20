@@ -40,8 +40,8 @@ is($pair.values.elems,  1,  'we have one value');
 
 {
     my $x;
-    lives_ok { $x.values }, 'Can call Any.values';
-    lives_ok { $x.keys },   'Can call Any.keys';
+    lives-ok { $x.values }, 'Can call Any.values';
+    lives-ok { $x.keys },   'Can call Any.keys';
 
 }
 #vim: ft=perl6

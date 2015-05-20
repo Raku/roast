@@ -125,14 +125,14 @@ dies-ok -> { die "Testing dies-ok" }, :desc('... it dies-ok');
 dies-ok -> { "Testing dies-ok" }, desc => '... it dies-ok', todo => 1;
 dies-ok -> { "Testing dies-ok" }, :desc('... it dies-ok'), :todo(1);
 
-## lives_ok
+## lives-ok
 
-lives_ok -> { "test" }, '... it lives_ok';
-lives_ok -> { "test" }, desc => '... it lives_ok';
-lives_ok -> { "test" }, :desc('... it lives_ok');
+lives-ok -> { "test" }, '... it lives-ok';
+lives-ok -> { "test" }, desc => '... it lives-ok';
+lives-ok -> { "test" }, :desc('... it lives-ok');
 
-lives_ok -> { die "test" }, desc => '... it lives_ok', todo => 1;
-lives_ok -> { die "test" }, :desc('... it lives_ok'), :todo(1);
+lives-ok -> { die "test" }, desc => '... it lives-ok', todo => 1;
+lives-ok -> { die "test" }, :desc('... it lives-ok'), :todo(1);
 
 
 ## throws_ok

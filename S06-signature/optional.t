@@ -109,7 +109,7 @@ eval-dies-ok 'sub opt($a = 1, $b) { }',
 
 # RT #77338
 {
-    lives_ok { sub foo(::T $?) {} },
+    lives-ok { sub foo(::T $?) {} },
         'question mark for optional parameter is parsed correctly';
 }
 

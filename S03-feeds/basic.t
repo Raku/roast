@@ -117,7 +117,7 @@ plan 24;
 # feed and Inf
 #?nieza skip "unhandled exception
 {
-  lives_ok { my @a <== 0..Inf }
+  lives-ok { my @a <== 0..Inf }
 }
 
 #?nieza skip "Unhandled exception"

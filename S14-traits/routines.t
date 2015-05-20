@@ -47,7 +47,7 @@ plan 13;
         }
     }
     sub foo is woowoo { };
-    lives_ok &foo, 'Can call subroutine that was wrapped by a trait';
+    lives-ok &foo, 'Can call subroutine that was wrapped by a trait';
     #?rakudo todo 'trait mod / .wrap interaction'
     is $recorder, 'wrap', 'and the wrapper has been called once';
 }
@@ -60,7 +60,7 @@ plan 13;
     }
     sub rt112664 is a {}
 
-    lives_ok { rt112664 },
+    lives-ok { rt112664 },
     '[BUG] multi without proto gets wrong lexical lookup chain (RT 112664)';
 }
 

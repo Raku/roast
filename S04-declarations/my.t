@@ -20,7 +20,7 @@ plan 96;
 
 {
     my $ret = 42;
-    lives_ok { $ret = (my $x) ~ $x }, 'my() variable is visible (1)';
+    lives-ok { $ret = (my $x) ~ $x }, 'my() variable is visible (1)';
     is $ret, "",                      'my() variable is visible (2)';
 }
 
@@ -124,8 +124,8 @@ is(EVAL('my $x = 1, my $y = 2; $y #OK'), 2, 'precedence of my wrt = and ,');
 # and initializes both arrays
 {
     my (@a, @b);
-    lives_ok { @a.push(2) }, 'Can use @a';
-    lives_ok { @b.push(3) }, 'Can use @b';
+    lives-ok { @a.push(2) }, 'Can use @a';
+    lives-ok { @b.push(3) }, 'Can use @b';
     is ~@a, '2', 'push actually worked on @a';
     is ~@b, '3', 'push actually worked on @b';
 }
@@ -206,7 +206,7 @@ my $z = 42; #OK not used
     {
         my $a;
         #?niecza 2 todo 'still fails?'
-        lives_ok { EVAL 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }' };
+        lives-ok { EVAL 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }' };
         ok $a, 'unreached declaration in effect at block start';
     }
 
@@ -222,12 +222,12 @@ my $z = 42; #OK not used
     eval-lives-ok 'my (int $a, int $b);','natives in declarator sig';
     dies-ok { my (int $a, num $b); $a = 'omg'; }, 'Native types in declarator sig 1/2 constrains';
     dies-ok { my (int $a, num $b); $b = 'omg'; }, 'Native types in declarator sig 2/2 constrains';
-    lives_ok { my (int $a, num $b); $a = 42; $b = 4e2; }, 'Native types in declarator sig allow correct assignments';
+    lives-ok { my (int $a, num $b); $a = 42; $b = 4e2; }, 'Native types in declarator sig allow correct assignments';
 
     throws-like { my (Int $a); $a = "str" }, X::TypeCheck, 'Type in declarator sig 1/1 constrains';
     throws-like { my (Int $a, Num $b); $a = "str" }, X::TypeCheck, 'Types in declarator sig 1/2 constrain';
     throws-like { my (Int $a, Num $b); $b = "str" }, X::TypeCheck, 'Types in declarator sig 2/2 constrain';
-    lives_ok { my (Int $a, Num $b); $a = 1; $b = 1e0; }, 'Types in declarator sig allow correct assignments';
+    lives-ok { my (Int $a, Num $b); $a = 1; $b = 1e0; }, 'Types in declarator sig allow correct assignments';
 
     # These still need spec clarification but test them, since they pass
     eval-lives-ok 'my int ($a);', 'native outside declarator sig 1';
@@ -277,7 +277,7 @@ eval-lives-ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
 #RT #72814
 {
     #?niecza skip 'a not predeclared'
-    lives_ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
+    lives-ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
 }
 
 # RT #72946

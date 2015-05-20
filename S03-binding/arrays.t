@@ -143,7 +143,7 @@ plan 47;
   my @array;
   my $var    = "d";
 
-  lives_ok { @array[1] := $var },
+  lives-ok { @array[1] := $var },
                      "binding of not yet existing elements should autovivify (1)";
   is @array[1], "d", "binding of not yet existing elements should autovivify (2)";
 

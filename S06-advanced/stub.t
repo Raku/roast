@@ -5,7 +5,7 @@ plan 10;
 
 # L<S06/Stub declarations>
 
-lives_ok({sub thunder {...}}, 'sub foo {...} works');
+lives-ok({sub thunder {...}}, 'sub foo {...} works');
 
 eval-dies-ok('sub foo;', 'old Perl 5 "sub foo;" syntax is dead');
 
@@ -18,7 +18,7 @@ eval-dies-ok('sub foo;', 'old Perl 5 "sub foo;" syntax is dead');
 
     sub hail {???}
     # Should be warns_ok
-    lives_ok({hail()}, 'executing stub subroutine lives (should warn here)');
+    lives-ok({hail()}, 'executing stub subroutine lives (should warn here)');
     sub hail {47}
     is(hail(), 47, 'redefining stub subroutine works without extra syntax');
 

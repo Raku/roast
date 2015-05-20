@@ -69,7 +69,7 @@ plan 9;
     }
 
     my $x;
-    lives_ok { $x = A_GrandChild.new() }, 
+    lives-ok { $x = A_GrandChild.new() }, 
         "can call child's methods in parent's BUILD";
     ok ?($initlist eq 'A_Parent1A_Parent2A_ChildA_GrandChild' 
                     | 'A_Parent2A_Parent1A_ChildA_GrandChild'),
@@ -106,7 +106,7 @@ plan 9;
 # RT #95340
 {
     class C { has %!p; submethod BUILD(:%!p) {} };
-    lives_ok { C.new }, 'can call BUILD without providing a value for a !-twigiled named parameter';
+    lives-ok { C.new }, 'can call BUILD without providing a value for a !-twigiled named parameter';
 }
 
 # vim: ft=perl6

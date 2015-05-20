@@ -160,13 +160,13 @@ plan 32;
 }
 
 # RT #123053
-lives_ok { try +'foo' }, 'Failure does not escape try (statement form)';
-lives_ok { try { +'foo' } }, 'Failure does not escape try (block form)';
-lives_ok { try { +'foo'; CATCH { default { } } } }, 'Failure does not escape try (block form with CATCH)';
+lives-ok { try +'foo' }, 'Failure does not escape try (statement form)';
+lives-ok { try { +'foo' } }, 'Failure does not escape try (block form)';
+lives-ok { try { +'foo'; CATCH { default { } } } }, 'Failure does not escape try (block form with CATCH)';
 
 # RT #117217
-lives_ok { try ... }, '... failure does not escape try (statement form)';
-lives_ok { try { ... } }, '... failure does not escape try (block form)';
+lives-ok { try ... }, '... failure does not escape try (statement form)';
+lives-ok { try { ... } }, '... failure does not escape try (block form)';
 
 done;
 

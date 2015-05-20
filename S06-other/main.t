@@ -25,6 +25,6 @@ ok( @*ARGS == 5, '@*ARGS has correct elements');
 # RT #114354
 @*INC.push: 't/spec/packages/';
 #?niecza todo
-lives_ok { require HasMain }, 'MAIN in a module did not get executed';
+lives-ok { require HasMain }, 'MAIN in a module did not get executed';
 
 # vim: ft=perl6

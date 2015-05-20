@@ -44,15 +44,15 @@ my Str $bar;
 {
     eval-lives-ok('my int $alpha = 1',    'Has native type int');
     eval-dies-ok('my int $alpha = Nil', 'native int type cannot be undefined');
-    lives_ok({my Int $beta = Nil},      'object Int type can be undefined');
+    lives-ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval-lives-ok('my num $alpha = 1e0',    'Has native type num');
     #?rakudo.jvm todo "nigh"
     #?rakudo.moar todo "nigh"
     # RT #121518
     eval-lives-ok('my num $alpha = Nil', 'native num type can be undefined');
-    lives_ok({my Num $beta = Nil},      'object Num type can be undefined');
+    lives-ok({my Num $beta = Nil},      'object Num type can be undefined');
     # RT #93982
-    lives_ok({my Str ($a) = ()}, 'object Str type can be undefined, list context');
+    lives-ok({my Str ($a) = ()}, 'object Str type can be undefined, list context');
 }
 
 # L<S02/Parameter types/Parameters may be given types, just like any other variable>

@@ -26,7 +26,7 @@ plan 10;
 
     my $a = 5;
     my $b = 3;
-    lives_ok { EVAL 'swap($a, $b)' }, 'backslash does not make read-only';
+    lives-ok { EVAL 'swap($a, $b)' }, 'backslash does not make read-only';
     is "$a|$b", '3|5', 'swapping worked';
     dies-ok { EVAL 'swap(42, $a)' }, 'no additional writable containers involved';
 }

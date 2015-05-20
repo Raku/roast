@@ -102,7 +102,7 @@ for %hash.kv -> $key, $value {
 {
     my %hash = (:a(1), :b(2), :c(3));
 
-    lives_ok { for %hash.kv -> $key, $value is rw {
+    lives-ok { for %hash.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by %hash.kv should be rw (1)';
 
@@ -112,7 +112,7 @@ for %hash.kv -> $key, $value {
 {
     my @array = (17, 23, 42);
 
-    lives_ok { for @array.kv -> $key, $value is rw {
+    lives-ok { for @array.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by @array.kv should be rw (1)';
 
@@ -123,7 +123,7 @@ for %hash.kv -> $key, $value {
     my $pair = (a => 42);
 
     #?niecza todo 'aliases should be rw'
-    lives_ok { for $pair.kv -> $key, $value is rw {
+    lives-ok { for $pair.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by $pair.kv should be rw (1)';
 

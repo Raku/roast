@@ -22,8 +22,8 @@ plan 6;
     my $true_pair  = 1 => 1;
     my $false_pair = 1 => 0;
 
-    lives_ok { ?$true_pair  }, 'Taking the boolean of a true pair should live';
-    lives_ok { ?$false_pair }, 'Taking the boolean of a false pair should live';
+    lives-ok { ?$true_pair  }, 'Taking the boolean of a true pair should live';
+    lives-ok { ?$false_pair }, 'Taking the boolean of a false pair should live';
     ok  (try { ?$true_pair  }), 'A pair with a true value is true';
     ok  (try { ?$false_pair }), 'A pair with a false value is also true';
 

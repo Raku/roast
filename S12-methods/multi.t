@@ -205,7 +205,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         multi method bar() { }
     }
 
-    lives_ok { B.new.foo() },
+    lives-ok { B.new.foo() },
         'multis with different names but same signatures are not ambiguous';
 }
 

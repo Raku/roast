@@ -140,16 +140,16 @@ my @tests = (
 # RT #64080
 {
     my %h;
-    lives_ok { %h<a> = [%h<a>] },
+    lives-ok { %h<a> = [%h<a>] },
              'can assign list with new hash element to itself';
-    lives_ok { %h<a>.perl }, 'can take .perl from hash element';
+    lives-ok { %h<a>.perl }, 'can take .perl from hash element';
     ok %h<a> !=== %h<a>[0], 'hoa does not refer to hash element';
 }
 
 # RT #67790
 {
     class RT67790 {}
-    lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
+    lives-ok { RT67790.HOW.perl }, 'can .perl on .HOW';
     #?rakudo skip 'RT #67790'
     #?niecza skip '>>>Stub code executed'
     ok EVAL(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';

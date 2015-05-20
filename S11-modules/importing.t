@@ -41,7 +41,7 @@ dies-ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
             A::B::D.new();
         }
     }
-    lives_ok { TestImportInClass.doit() },
+    lives-ok { TestImportInClass.doit() },
              "can instantiate class that's loaded from inside another class";
 
 }

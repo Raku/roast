@@ -26,7 +26,7 @@ plan 22;
     throws-like { EVAL q[sub foob-4($x) { ... }] },
       X::Syntax::Missing,
       "foob-4 is not a valid identifier (not alphabetic after hyphen)";
-    lives_ok { EVAL q[sub foo4'b($x) { ... }] },
+    lives-ok { EVAL q[sub foo4'b($x) { ... }] },
       "foo4'b is a valid identifier";
 }
 

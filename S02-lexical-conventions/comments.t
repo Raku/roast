@@ -169,7 +169,7 @@ plan 51;
 #   delimiter quoting>
 {
     my $a;
-    lives_ok { EVAL '$a = q{ 32 }' }, 'sanity check';
+    lives-ok { EVAL '$a = q{ 32 }' }, 'sanity check';
     is $a, ' 32 ', 'sanity check';
 }
 
@@ -183,12 +183,12 @@ plan 51;
 #?niecza todo
 {
     # RT #70752
-    lives_ok { EVAL "#=======\n#=======\nuse v6;" }, 
+    lives-ok { EVAL "#=======\n#=======\nuse v6;" }, 
       "pragma use after single line comments";
 }
 
 # L<S02/Multiline Comments/POD sections may be>
-lives_ok { EVAL q{{
+lives-ok { EVAL q{{
 
 my $outerVal = EVAL(
     q{my $var = 1;
@@ -208,7 +208,7 @@ is $outerVal, "bar", '=begin comment without =cut parses to whitespace in code';
 
 
 # L<S02/Multiline Comments/"single paragraph comments">
-lives_ok { EVAL q{{
+lives-ok { EVAL q{{
 
 my $outerVal = EVAL(
     q{10 +
@@ -222,7 +222,7 @@ is $outerVal, 11, 'Single paragraph Pod parses to whitespace in code';
 }} }, 'Single paragraph Pod eval throws no error';
 
 #?niecza todo
-lives_ok { EVAL q{{
+lives-ok { EVAL q{{
 
 my $outerVal = EVAL(
     q{20 +

@@ -236,7 +236,7 @@ eval-dies-ok('$_ = "axbycz"; y/abc/def/', 'y/// does not exist any longer');
 
 # RT #71088
 {
-    lives_ok { "".subst(/x/, "").trans() },
+    lives-ok { "".subst(/x/, "").trans() },
         'trans on subst output lives';
 }
 
@@ -260,7 +260,7 @@ is 'aa'.trans(/ <after a> ./ => 'b'), 'ab', 'trans with look-around regex';
 
 # RT #83674
 #?niecza todo 'Not sure what is supposed to be going on here'
-lives_ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); }, 'trans works with Cool signature';
+lives-ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); }, 'trans works with Cool signature';
 
 # RT #83766
 #?niecza 2 skip "Nominal type check failed for scalar store; got Int, needed Str or subtype"

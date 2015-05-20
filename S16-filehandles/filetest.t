@@ -21,7 +21,7 @@ dies-ok { 't' ~~ :d }, 'file test from before spec revision 27503 is error';
 
 # Basic tests
 ok 't'.IO ~~ :d,             "~~:d returns true on directories";
-lives_ok { 'non_existing_dir'.IO ~~ :d },
+lives-ok { 'non_existing_dir'.IO ~~ :d },
          'can :d-test against non-existing dir and live';
 ok !('non_existing_dir'.IO ~~ :d ),
          'can :d-test against non-existing dir and return false';
@@ -120,7 +120,7 @@ unlink "empty_file";
         skip "could not run 2 tests since file $file exists", 2;
     }
     else {
-        lives_ok { $file.IO ~~ :l },
+        lives-ok { $file.IO ~~ :l },
             'can :l-test against non-existing file and live';
         nok $file.IO ~~ :l, '~~:l returns false on non-existent files';
     }

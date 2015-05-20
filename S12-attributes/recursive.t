@@ -18,13 +18,13 @@ Test attributes with recursively typed attributes
 
     my A $a;
     my A $b;
-    lives_ok {
+    lives-ok {
         $a .= new();
         $b .= new(:attr($a));
     }, 'Can instantiate class with recursively-typed attribute';
     isa-ok $a, A, 'Sanity check, $a is of type A';
     ok $b.attr === $a, "Recursively-typed attribute stores correctly";
-    lives_ok { $a.attr = $b; }, "Cycles are fine";
+    lives-ok { $a.attr = $b; }, "Cycles are fine";
     ok $b.attr.attr === $b, "Cycles resolve correctly";
 }
 
@@ -35,7 +35,7 @@ Test attributes with recursively typed attributes
     };
     
     my B $a;
-    lives_ok {
+    lives-ok {
         $a .= new();
         B.attr = $a;
     }, "Can instantiate class with recursively-typed class lexical";
@@ -52,20 +52,20 @@ Test attributes with recursively typed attributes
 
     my C $a;
     my C $b;
-    lives_ok {
+    lives-ok {
         $a .= new();
         $b .= new(:attr($a));
     }, 'Can instantiate class with ::?CLASS attribute';
     is $b.attr, $a, '::?CLASS attribute stores correctly';
-    lives_ok { $a.attr = $b; }, '::?CLASS cycles are fine';
+    lives-ok { $a.attr = $b; }, '::?CLASS cycles are fine';
     ok $b.attr.attr === $b, '::?CLASS cycles resolve correctly';
-    lives_ok { $a.attr .= new(); }, 'Can instantiate attribute of type ::?CLASS';
+    lives-ok { $a.attr .= new(); }, 'Can instantiate attribute of type ::?CLASS';
     isa-ok $a.attr, C, '::?CLASS instantiates to correct class';
 
 
     class D is C { };
     my D $d;
-    lives_ok {
+    lives-ok {
         $d .= new();
         $d.attr .= new();
     }, 'Can instantiate derived class with ::?CLASS attribute';
@@ -82,15 +82,15 @@ Test attributes with recursively typed attributes
     my $z1 = Z.new;
     #?niecza todo "https://github.com/sorear/niecza/issues/183"
     isa-ok $z1.a[0], Z, "check type-object";
-    lives_ok { $z1.a[0] = Z.new }, 'can assign';
+    lives-ok { $z1.a[0] = Z.new }, 'can assign';
     isa-ok $z1.a[0], Z;
     #?niecza todo "https://github.com/sorear/niecza/issues/183"
     isa-ok $z1.h<k>, Z, "check type-object";
-    lives_ok { $z1.h<k> = Z.new }, 'can assign';
+    lives-ok { $z1.h<k> = Z.new }, 'can assign';
     isa-ok $z1.h<k>, Z;
 
     my $z2 = Z.new;
-    lives_ok { $z2.a.push( Z.new ) }, 'can push';
+    lives-ok { $z2.a.push( Z.new ) }, 'can push';
     isa-ok $z2.a[0], Z;
 }
 

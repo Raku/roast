@@ -25,7 +25,7 @@ plan 296;
     &infix:<=>.($x, 0);
     is($x, 0, 'assignment operator called as function');
     my Int $y;
-    lives_ok { &infix:<=>($y, 3) }, 'assignment as function with types (1)';
+    lives-ok { &infix:<=>($y, 3) }, 'assignment as function with types (1)';
     dies-ok  { &infix:<=>($y, 'foo') }, 'assignment as function with types (2)';
 
 }
@@ -850,7 +850,7 @@ sub l () { 1, 2 };
 # RT #75950
 {
     my $x;
-    lives_ok { ($x,) = grep 5, 1..1_000_000 },
+    lives-ok { ($x,) = grep 5, 1..1_000_000 },
             'Can grep lazily through a very long range';
     is $x, 5, '... with correct result';
 }

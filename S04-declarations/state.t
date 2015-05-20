@@ -216,9 +216,9 @@ plan 41;
     # the compiler could have done some checks somehwere, so
     # pick a reasonably high number
     dies-ok { $y = 900000 }, 'growing subset types rejects too high values';
-    lives_ok { $y = 1 }, 'the state variable in subset types works (1)';
-    lives_ok { $y = 2 }, 'the state variable in subset types works (2)';
-    lives_ok { $y = 3 }, 'the state variable in subset types works (3)';
+    lives-ok { $y = 1 }, 'the state variable in subset types works (1)';
+    lives-ok { $y = 2 }, 'the state variable in subset types works (2)';
+    lives-ok { $y = 3 }, 'the state variable in subset types works (3)';
 }
 
 # Test for RT #67058
@@ -231,7 +231,7 @@ sub bughunt1 { (state $svar) }    #OK not used
 
 # RT #115614
 {
-    lives_ok { state $i++ }, 'can parse "state $i++"';
+    lives-ok { state $i++ }, 'can parse "state $i++"';
 }
 
 #?DOES 1

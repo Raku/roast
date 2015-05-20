@@ -39,7 +39,7 @@ plan 15;
     {
         my multi baz() { 2 }   #OK not used
         #?rakudo todo 'lexical scope as tie breaker'
-        lives_ok({ baz() }, 'inner multi conflicts with outer one');
+        lives-ok({ baz() }, 'inner multi conflicts with outer one');
     }
     is(baz(), 1, 'in outer scope, no inner multi, so no conflict');
 }

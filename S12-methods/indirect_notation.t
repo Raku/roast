@@ -121,8 +121,8 @@ dies-ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use
     is ~$o.*@cand-num(3.4).sort, 'm-Num n-Num', '$o.*@cand(arg) (1)';
     is ~$o.*@cand-num(3).sort, 'm-Int m-Num n-Int n-Num', '$o.*@cand(arg) (2)';
     is $o.called, 6, 'right number of method calls';
-    lives_ok { $o.*@cand-num() }, "it's ok with .* if no candidate matched (arity)";
-    lives_ok { $o.*@cand-num([]) }, "it's ok with .* if no candidate matched (type)";
+    lives-ok { $o.*@cand-num() }, "it's ok with .* if no candidate matched (arity)";
+    lives-ok { $o.*@cand-num([]) }, "it's ok with .* if no candidate matched (type)";
 
     $o = T4.new();
     is ~$o.+@cand-num(3.4).sort, 'm-Num n-Num', '$o.+@cand(arg) (1)';
@@ -135,8 +135,8 @@ dies-ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use
     is ~$o.?@cand-num(3.4).sort, 'm-Num', '$o.?@cand(arg) (1)';
     is ~$o.?@cand-num(3).sort, 'm-Int', '$o.?@cand(arg) (2)';
     is $o.called, 2, 'right number of method calls';
-    lives_ok { $o.?@cand-num() }, "it's ok with .? if no candidate matched (arity)";
-    lives_ok { $o.?@cand-num([]) }, "it's ok with .? if no candidate matched (type)";
+    lives-ok { $o.?@cand-num() }, "it's ok with .? if no candidate matched (arity)";
+    lives-ok { $o.?@cand-num([]) }, "it's ok with .? if no candidate matched (type)";
 }
 
 # vim: ft=perl6

@@ -47,7 +47,7 @@ plan 56;
 {
     constant foo3 = 42;
     #?rakudo todo 'constants as type constraints'
-    lives_ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
+    lives-ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
     dies-ok { my foo3 $x = 43 },         'constant used as a type constraint enforces';
     dies-ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';
 }
@@ -291,7 +291,7 @@ plan 56;
 
 # RT #115132
 {
-    lives_ok {constant x1 = "foo" ~~ /bar/},
+    lives-ok {constant x1 = "foo" ~~ /bar/},
         'can assign result of smart matching to constant';
     constant x2 = "foo" ~~ "foo";
     is x2, True, 'can assign True to constant';
@@ -314,7 +314,7 @@ plan 56;
 # RT #122604
 {
     constant lots = 0..*;
-    lives_ok {lots[100_000]}, "can index an infinite constant list at 100K";
+    lives-ok {lots[100_000]}, "can index an infinite constant list at 100K";
 }
 
 # RT #111734

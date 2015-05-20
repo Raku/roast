@@ -27,7 +27,7 @@ ok(Foo.^can('bar'), '... Foo can bar (as class method)');
 ok(Foo.HOW.isa(Foo, Foo), '... Foo is-a Foo (of course)');
 ok(Foo.^isa(Foo), '... Foo is-a Foo (of course) (as class method)');
 
-lives_ok { 4.HOW.HOW }, 'Can access meta class of meta class';
+lives-ok { 4.HOW.HOW }, 'Can access meta class of meta class';
 
 # L<S12/Introspection/Class traits may include:>
 

@@ -43,7 +43,7 @@ is($foo.num(), 40, '... got the right num value');
 # now lets try it with chained methods ...
 
 my $_foo3;
-lives_ok {
+lives-ok {
     $_foo3 = $foo.bar(10).baz(5);
 }, '... method chaining works';
 

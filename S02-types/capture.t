@@ -71,11 +71,11 @@ plan 27;
     my $capture;
     sub foo7 (|args) { $capture = args }
 
-    lives_ok { foo7(1,2,3,4) }, "captures are first-class objects (1)";
+    lives-ok { foo7(1,2,3,4) }, "captures are first-class objects (1)";
     ok $capture,               "captures are first-class objects (2)";
 
     my $old_capture = $capture;
-    lives_ok { foo7(5,6,7,8) }, "captures are first-class objects (3)";
+    lives-ok { foo7(5,6,7,8) }, "captures are first-class objects (3)";
     ok $capture,               "captures are first-class objects (4)";
     ok !($capture === $old_capture), "captures are first-class objects (5)";
 }

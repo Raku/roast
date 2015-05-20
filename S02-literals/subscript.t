@@ -8,7 +8,7 @@ plan 2;
     my @oldval  = (5, 8, 12);
     my @newval1 = (17, 15, 14); # all greater
     my @newval2 = (15, 7,  20); # some less some greater
-    lives_ok({ all(@newval2) < any(@oldval); all(@newval1) > all(@oldval) }, "parses correctly, second statement is true");
+    lives-ok({ all(@newval2) < any(@oldval); all(@newval1) > all(@oldval) }, "parses correctly, second statement is true");
 
     my %hash = ("foo", "bar");
     throws-like { EVAL '%hash <foo>; 1'},

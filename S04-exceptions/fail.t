@@ -72,17 +72,17 @@ plan 26;
 {
     sub it-will-fail() { fail 'whale' }
     dies-ok { use fatal; my $x = it-will-fail(); 1 }, 'use fatal causes call to die';
-    lives_ok { use fatal; my $x = it-will-fail() // 0; 1 }, 'use fatal respects //';
-    lives_ok { use fatal; my $x = it-will-fail() || 0; 1 }, 'use fatal respects ||';
-    lives_ok { use fatal; my $x = it-will-fail() && 0; 1 }, 'use fatal respects &&';
-    lives_ok { use fatal; if it-will-fail() { 1 } else { 0 } }, 'use fatal respects if';
-    lives_ok { use fatal; unless it-will-fail() { 1 }; 0 }, 'use fatal respects unless';
-    lives_ok { use fatal; it-will-fail() ?? 1 !! 0 }, 'use fatal respects ?? !!';
-    lives_ok { use fatal; my $x = ?it-will-fail(); 1 }, 'use fatal respects ?';
-    lives_ok { use fatal; my $x = so it-will-fail(); 1 }, 'use fatal respects so';
-    lives_ok { use fatal; my $x = !it-will-fail(); 1 }, 'use fatal respects !';
-    lives_ok { use fatal; my $x = not it-will-fail(); 1 }, 'use fatal respects not';
-    lives_ok { use fatal; my $x = defined it-will-fail(); 1 }, 'use fatal respects defined';
+    lives-ok { use fatal; my $x = it-will-fail() // 0; 1 }, 'use fatal respects //';
+    lives-ok { use fatal; my $x = it-will-fail() || 0; 1 }, 'use fatal respects ||';
+    lives-ok { use fatal; my $x = it-will-fail() && 0; 1 }, 'use fatal respects &&';
+    lives-ok { use fatal; if it-will-fail() { 1 } else { 0 } }, 'use fatal respects if';
+    lives-ok { use fatal; unless it-will-fail() { 1 }; 0 }, 'use fatal respects unless';
+    lives-ok { use fatal; it-will-fail() ?? 1 !! 0 }, 'use fatal respects ?? !!';
+    lives-ok { use fatal; my $x = ?it-will-fail(); 1 }, 'use fatal respects ?';
+    lives-ok { use fatal; my $x = so it-will-fail(); 1 }, 'use fatal respects so';
+    lives-ok { use fatal; my $x = !it-will-fail(); 1 }, 'use fatal respects !';
+    lives-ok { use fatal; my $x = not it-will-fail(); 1 }, 'use fatal respects not';
+    lives-ok { use fatal; my $x = defined it-will-fail(); 1 }, 'use fatal respects defined';
 }
 
 # RT #118785

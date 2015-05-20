@@ -26,6 +26,6 @@ is $Foo::foo, 42, 'lax declared variable is package scoped';
 
 # RT #123696
 {
-    lives_ok { EVAL '(6;)' },
+    lives-ok { EVAL '(6;)' },
         '"6;" no longer means "no strict;" and "(6;)" no langer results in a compile time error';
 }

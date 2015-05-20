@@ -26,7 +26,7 @@ my %words1 := hashy($slurp1);
 my %words2 := baggy($slurp1);
 is-deeply %words1.keys.sort, %words1.keys.sort, 'standard vs baggy word-count';
 is-deeply %words1.values.sort, %words1.values.sort, 'standard vs baggy word-count';
-lives_ok {EVAL q<%words1{"the"} = "green">}, 'hash assign (lives)';
+lives-ok {EVAL q<%words1{"the"} = "green">}, 'hash assign (lives)';
 throws-like {EVAL q<%words2{"the"} = "green">},
   X::Multi::NoMatch,
   'baggy assign (dies)';

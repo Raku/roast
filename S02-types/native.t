@@ -106,7 +106,7 @@ plan 42;
 {
     my @j;
     my int $j = 42;
-    lives_ok { @j.push($j) }, 'can push native int to an array (1)';
+    lives-ok { @j.push($j) }, 'can push native int to an array (1)';
     is @j[0], 42, 'can push native int to an array (2)';
 }
 

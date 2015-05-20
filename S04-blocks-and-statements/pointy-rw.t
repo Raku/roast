@@ -14,7 +14,7 @@ plan 10;
 
 {
     my %h = 1..4;
-    lives_ok {
+    lives-ok {
         for %h.values -> $v is rw { $v += 1 }
     }, 'aliases returned by %hash.values should be rw (1)';
 
@@ -23,7 +23,7 @@ plan 10;
 
 {
     my %h = 1..4;
-    lives_ok {
+    lives-ok {
         for %h.values <-> $v { $v += 1 }
     }, 'aliases returned by %hash.values should be rw (<->) (1)';
 
@@ -32,7 +32,7 @@ plan 10;
 
 {
     my @a = 1..4;
-    lives_ok {
+    lives-ok {
         for @a.values -> $v is rw { $v += 1 }
     }, 'aliases returned by @array.values should be rw (1)';
 
@@ -42,7 +42,7 @@ plan 10;
 {
     my $pair = (a => 42);
     #?niecza todo
-    lives_ok {
+    lives-ok {
         for $pair.value -> $v is rw { $v += 1 }
     }, 'aliases returned by $pair.values should be rw (1)';
 
@@ -53,7 +53,7 @@ plan 10;
 {
     my $var  = 42;
     my $pair = (a => $var);
-    lives_ok {
+    lives-ok {
         for $pair.value -> $v is rw { $v += 1 }
     }, 'aliases returned by $pair.values should be rw (1)';
 

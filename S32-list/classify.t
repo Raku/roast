@@ -27,7 +27,7 @@ plan 16;
 { 
     my @list = (1, 2, 3, 4);
     my (@even,@odd);
-    lives_ok { (:@even, :@odd) := classify { $_ % 2 ?? 'odd' !! 'even' }, 1,2,3,4}, 'Can bind result list of classify';
+    lives-ok { (:@even, :@odd) := classify { $_ % 2 ?? 'odd' !! 'even' }, 1,2,3,4}, 'Can bind result list of classify';
     is-deeply(@even, [2,4], "got expected evens");
     is-deeply(@odd,  [1,3], "got expected odds");
 } #3

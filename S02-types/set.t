@@ -24,7 +24,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     nok ?Set.new(), "Bool returns False if there is nothing in the Set";
 
     my $hash;
-    lives_ok { $hash = $s.hash }, ".hash doesn't die";
+    lives-ok { $hash = $s.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showset($hash), 'a b foo', '...with the right elements';
     is $hash.values.grep({ ($_ ~~ Bool) && $_ }).elems, 3, "...and values";
@@ -171,23 +171,23 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set <foo bar baz>;
     my $str;
     my $c;
-    lives_ok { $str = $s.perl }, ".perl lives";
+    lives-ok { $str = $s.perl }, ".perl lives";
     isa-ok $str, Str, "... and produces a string";
-    lives_ok { $c = EVAL $str }, ".perl.EVAL lives";
+    lives-ok { $c = EVAL $str }, ".perl.EVAL lives";
     isa-ok $c, Set, "... and produces a Set";
     is showset($c), showset($s), "... and it has the correct values";
 }
 
 {
     my $s = set <foo bar baz>;
-    lives_ok { $s = $s.Str }, ".Str lives";
+    lives-ok { $s = $s.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";
 }
 
 {
     my $s = set <foo bar baz>;
-    lives_ok { $s = $s.gist }, ".gist lives";
+    lives-ok { $s = $s.gist }, ".gist lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";

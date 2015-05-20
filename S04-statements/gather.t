@@ -237,7 +237,7 @@ plan 32;
 #?rakudo skip 'RT #66820'
 {
     my $cat;
-    lives_ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a };  +@a }, 'can access bound gather result while gathering';
+    lives-ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a };  +@a }, 'can access bound gather result while gathering';
     is $cat, "11 21 2 3", 'bound gather result has up-to-date value while gathering';
 }
 

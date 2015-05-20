@@ -30,7 +30,7 @@ is $got, 'x 123', 'called pointy immediately: -> $x { ... }(...)';
 
 # L<S04/Statement-ending blocks/End-of-statement cannot occur within a bracketed expression>
 my @a;
-lives_ok { @a = ("one", -> $x { $x**2 }, "three")} ,
+lives-ok { @a = ("one", -> $x { $x**2 }, "three")} ,
         'pointy sub without preceding comma';
 is @a[0], 'one', 'pointy sub in list previous argument';
 isa-ok @a[1], Code, 'pointy sub in list';
@@ -81,7 +81,7 @@ is $str, 'inner', 'return in pointy returns from enclosing sub';
 eval-dies-ok(q{{ -> { $^a, $^b } }}, '-> { $^a, $^b } is illegal');
 
 # RT #61034
-lives_ok {my $x = -> {}; my $y = $x(); },
+lives-ok {my $x = -> {}; my $y = $x(); },
          'can define and execute empty pointy block';
 
 # The default type of pointy blocks is Mu, not Any. See

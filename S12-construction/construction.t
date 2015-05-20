@@ -60,7 +60,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
 {
   class Baz { has @.x is rw }
   my Baz $foo .= new(:x(1,2,3));
-  lives_ok -> { $foo.x[0] = 3 }, "Array initialized in auto-constructor is not unwritable...";
+  lives-ok -> { $foo.x[0] = 3 }, "Array initialized in auto-constructor is not unwritable...";
   is $foo.x[0], 3, "... and keeps its value properly."
 }	
 
@@ -71,7 +71,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
 
     my $a = RT64116.CREATE;
 
-    lives_ok { $a.env = foo => "bar" }, 'assign to attr of .CREATEd class';
+    lives-ok { $a.env = foo => "bar" }, 'assign to attr of .CREATEd class';
     is $a.env<foo>, 'bar', 'assignment works';
 }
 
@@ -92,15 +92,15 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
     class NativeInt {
         has int $.attr;
     }
-    lives_ok -> { NativeInt.new(:attr(123)) }, ".new with a native int attribute";
+    lives-ok -> { NativeInt.new(:attr(123)) }, ".new with a native int attribute";
     class NativeNum {
         has num $.attr;
     }
-    lives_ok -> { NativeNum.new(:attr(0e0)) }, ".new with a native num attribute";
+    lives-ok -> { NativeNum.new(:attr(0e0)) }, ".new with a native num attribute";
     class NativeStr {
         has str $.attr;
     }
-    lives_ok -> { NativeStr.new(:attr<foo>) }, ".new with a native str attribute";
+    lives-ok -> { NativeStr.new(:attr<foo>) }, ".new with a native str attribute";
 }
 
 # vim: ft=perl6

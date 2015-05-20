@@ -105,7 +105,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 #?DOES 2
 {
     subset HasA of Str where /a/;
-    lives_ok { my HasA $x = 'bla' },   'where /regex/ works (positive)';
+    lives-ok { my HasA $x = 'bla' },   'where /regex/ works (positive)';
     eval-dies-ok 'my HasA $x = "foo"', 'where /regex/ works (negative)';
 }
 
@@ -148,7 +148,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 
     my NotTooLarge $x;
 
-    lives_ok { $x = 5 }, 'can satisfy both conditions on chained subset types';
+    lives-ok { $x = 5 }, 'can satisfy both conditions on chained subset types';
     dies-ok { $x = -2 }, 'violating first condition barfs';
     dies-ok { $x = 22 }, 'violating second condition barfs';
 }
@@ -186,13 +186,13 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     }
     #?niecza todo
     dies-ok { RT65700.new( small => 20 ) }, 'subset type is enforced as attribute in new() (1)';
-    lives_ok { RT65700.new( small => 2 ) }, 'subset type enforced as attribute in new() (2)';
+    lives-ok { RT65700.new( small => 2 ) }, 'subset type enforced as attribute in new() (2)';
 
     my subset Teeny of Int where { $^n < 10 }
     class T { has Teeny $.teeny }
     #?niecza todo
     dies-ok { T.new( teeny => 20 ) }, 'my subset type is enforced as attribute in new() (1)';
-    lives_ok { T.new( teeny => 2 ) }, 'my subset type enforced as attribute in new() (2)';
+    lives-ok { T.new( teeny => 2 ) }, 'my subset type enforced as attribute in new() (2)';
 }
 
 # RT #78318

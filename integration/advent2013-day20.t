@@ -30,7 +30,7 @@ plan 22;
 }
 
 throws-like { EVAL 'my Bool $a is default(42)' }, X::TypeCheck::Assignment;
-lives_ok { EVAL 'my Bool $a is default(True)' }, 'eval type check';
+lives-ok { EVAL 'my Bool $a is default(True)' }, 'eval type check';
 
 {
     my @a is default(42);
@@ -39,7 +39,7 @@ lives_ok { EVAL 'my Bool $a is default(True)' }, 'eval type check';
     is-deeply @a[0]:exists, False, '...but does not exist';  
 }
 
-lives_ok { EVAL 'my $a is default(Int) = "foo"' }, "default doesn't set type";
+lives-ok { EVAL 'my $a is default(Int) = "foo"' }, "default doesn't set type";
 throws-like { EVAL 'my Int $a = "foo"' }, X::TypeCheck::Assignment;
 
 {

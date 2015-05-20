@@ -154,6 +154,6 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
     is $a, 3, "final `}' on a line reverted to `;'";
 }
 
-lives_ok { my $a = do given 5 {} }, 'empty do block lives (RT 61034)';
+lives-ok { my $a = do given 5 {} }, 'empty do block lives (RT 61034)';
 
 # vim: ft=perl6

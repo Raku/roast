@@ -13,7 +13,7 @@ class Foo {
 
 {
   my $foo = Foo.new;
-  lives_ok { $foo.bar_ref }, "returning a method reference works";
+  lives-ok { $foo.bar_ref }, "returning a method reference works";
 }
 
 class Baz {
@@ -23,7 +23,7 @@ class Baz {
 
 {
   my $ret;
-  lives_ok {
+  lives-ok {
     my $baz = Baz.new;
     $ret    = $baz.baz();
   }, "calling an aliased method worked";

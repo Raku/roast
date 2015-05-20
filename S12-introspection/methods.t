@@ -145,14 +145,14 @@ is @methods[0].name, 'bar', 'methods call found public method in subclass (with 
 }
 
 {
-    lives_ok { Sub.^methods.gist }, 'Can .gist methods of a subroutine';
-    lives_ok { Sub.^methods.perl }, 'Can .perl methods of a subroutine';
-    lives_ok { Method.^methods.gist }, 'Can .gist methods of a method';
-    lives_ok { Method.^methods.perl }, 'Can .perl methods of a method';
-    lives_ok { { $^a }.^methods.gist }, 'Can .gist methods of a block';
-    lives_ok { { $^a }.^methods.perl }, 'Can .perl methods of a block';
+    lives-ok { Sub.^methods.gist }, 'Can .gist methods of a subroutine';
+    lives-ok { Sub.^methods.perl }, 'Can .perl methods of a subroutine';
+    lives-ok { Method.^methods.gist }, 'Can .gist methods of a method';
+    lives-ok { Method.^methods.perl }, 'Can .perl methods of a method';
+    lives-ok { { $^a }.^methods.gist }, 'Can .gist methods of a block';
+    lives-ok { { $^a }.^methods.perl }, 'Can .perl methods of a block';
     # RT #108968
-    lives_ok { :(Int).^methods>>.gist }, 'Can >>.gist methods of a Signature';
+    lives-ok { :(Int).^methods>>.gist }, 'Can >>.gist methods of a Signature';
 }
 
 # RT #76648

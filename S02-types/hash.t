@@ -194,7 +194,7 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
 # test for RT #62730
 #?niecza todo
-lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
+lives-ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #71022
 {
@@ -242,7 +242,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 # Any
 {
     my $x;
-    lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
+    lives-ok { $x{'a'} }, 'can index a variable that defaults to Any';
     nok $x{'a'}.defined, '... and the result is not defined';
     throws-like { Mu.{'a'} },
       X::Multi::NoMatch,

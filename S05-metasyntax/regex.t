@@ -12,7 +12,7 @@ isa-ok(regex {oo}, Regex);
 
 eval-dies-ok('rx :foo:', 'colons are not allowed as rx delimiters');
 
-lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
+lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 
 {
     my $var = /foo/;

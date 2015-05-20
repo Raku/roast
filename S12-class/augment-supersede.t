@@ -71,7 +71,7 @@ eval-lives-ok q[
 
 # RT #75432
 {
-    lives_ok {
+    lives-ok {
         class A { multi method a() { }};
         augment class A { multi method a() { } }
     }, 'RT #75432'
@@ -86,7 +86,7 @@ eval-lives-ok q[
         method prime { True };
     }
     my $primes = 0;
-    lives_ok {
+    lives-ok {
         for 1..5 {
             $primes++ if .prime;
         }

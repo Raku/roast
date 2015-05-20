@@ -7,11 +7,11 @@ plan 72;
 
 # construction
 {
-    lives_ok { Date.new('2010-01-01') }, 'Date.new("2010-01-01")';
-    lives_ok { Date.new(2010, 1, 1) }, 'List constructor';
-    lives_ok { Date.new(:year(2010), :month(1), :day(1)) }, 'named arguments';
-    lives_ok { Date.today }, 'Date.today';
-    lives_ok { 
+    lives-ok { Date.new('2010-01-01') }, 'Date.new("2010-01-01")';
+    lives-ok { Date.new(2010, 1, 1) }, 'List constructor';
+    lives-ok { Date.new(:year(2010), :month(1), :day(1)) }, 'named arguments';
+    lives-ok { Date.today }, 'Date.today';
+    lives-ok { 
         my $dt = DateTime.new(:year(2010),:month(06), :day(04));   #OK octal
         Date.new($dt); 
     }, 'Date.new from DateTime';
@@ -23,13 +23,13 @@ plan 72;
     dies-ok { Date.new('2010-01-32') }, 'dies on day of month 32';
     dies-ok { Date.new('1999-02-29') }, 'dies on 29 February 1999';
     dies-ok { Date.new('1900-02-29') }, 'dies on 29 February 1900';
-    lives_ok { Date.new('2000-02-29') }, '...but not 29 February 2000';
+    lives-ok { Date.new('2000-02-29') }, '...but not 29 February 2000';
 
     isa-ok Date.new(2010, 01, 01), Date, 'Date.new() returns a Date';  #OK octal
 
     my $date = Date.new('1999-01-29');
     dies-ok { $date.clone(month => 2) }, 'dies on 29 February 1999 (Date.clone)';
-    lives_ok { $date.clone(:month(2), :year(2000)) }, '..but not 29 February 2000 (Date.clone)';
+    lives-ok { $date.clone(:month(2), :year(2000)) }, '..but not 29 February 2000 (Date.clone)';
 }
 
 # RT 112376, stringification
