@@ -13,7 +13,7 @@ eval-dies-ok 'my enum B (a => 1, b => "bar")',
 
 #?rakudo todo 'NYI RT #124833'
 #?niecza todo
-eval_lives_ok 'my Cool enum C (a => 1, b => "bar")',
+eval-lives-ok 'my Cool enum C (a => 1, b => "bar")',
              '... unless that type covers both enum value types';
 
 #?niecza todo

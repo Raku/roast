@@ -45,7 +45,7 @@ eval-dies-ok
     'my Num List sub f () { return ("A") }; f()',
     'Return of list with wrong type dies';
 
-eval_lives_ok
+eval-lives-ok
     'my Parcel sub f () { return () }; f()',
     'return of empty Parcel should live';
 is EVAL('my Parcel sub f () { return () }; (f(), "a")'), ((),'a'),

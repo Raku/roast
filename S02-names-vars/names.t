@@ -96,11 +96,11 @@ is-deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
         macro multi proto only regex token rule constant enum
         subset if unless while repeat for foreach loop given
         when default > -> $kw {
-        eval_lives_ok "sub $kw \{}; {$kw}();",
+        eval-lives-ok "sub $kw \{}; {$kw}();",
             "sub named \"$kw\" called with parentheses";
-        eval_lives_ok "sub {$kw}-rest \{}; {$kw}-rest;",
+        eval-lives-ok "sub {$kw}-rest \{}; {$kw}-rest;",
             "sub whose name starts with \"$kw-\"";
-        eval_lives_ok "sub {$kw}'rest \{}; {$kw}'rest;",
+        eval-lives-ok "sub {$kw}'rest \{}; {$kw}'rest;",
             "sub whose name starts with \"$kw'\"";
     }
 }

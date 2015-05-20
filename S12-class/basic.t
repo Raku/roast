@@ -97,7 +97,7 @@ class One::Two::Three { }  # auto-vivifies package One::Two
 class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
 dies-ok { EVAL 'class One::Two { }' }, 'cannot redeclare an existing class';
-eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT #62898';
+eval-lives-ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT #62898';
 
 #?niecza skip "Methods must be used in some kind of package"
 {
@@ -123,7 +123,7 @@ eval-dies-ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
             'self is not writable';
 
 # RT #65022
-eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
+eval-lives-ok 'class Test1 { class A {};}; class Test2 {class A {};};',
                 'RT65022 - Nested classes in different classes can have the same name';
 
 # RT #76270
@@ -135,7 +135,7 @@ eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
 # RT #72916
 {
     #?niecza todo 'Exception: Unable to resolve method add_method in type ClassHOW'
-    eval_lives_ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',
+    eval-lives-ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',
           'add_method returns a Method object';
 }
 

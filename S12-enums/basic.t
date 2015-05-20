@@ -73,7 +73,7 @@ enum JustOne <Thing>;
 lives_ok { enum Empty < > }, "empty enum can be constructed";
 
 #?niecza todo "Enum must have at least one value"
-eval_lives_ok 'enum Empty2 ()', 'empty enum with () can be constructed';
+eval-lives-ok 'enum Empty2 ()', 'empty enum with () can be constructed';
 
 enum Color <white gray black>;
 my Color $c1 = Color::white;

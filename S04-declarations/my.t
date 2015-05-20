@@ -45,7 +45,7 @@ eval-dies-ok 'foo(42)', 'my &foo is lexically scoped';
   is(do {1; my $a = 3; $a}, 3, 'do{1; my $a = 3; $a} works');
 }
 
-eval_lives_ok 'my $x = my $y = 0; #OK', '"my $x = my $y = 0" parses';
+eval-lives-ok 'my $x = my $y = 0; #OK', '"my $x = my $y = 0" parses';
 
 {
     my $test = "value should still be set for arg, even if there's a later my";
@@ -187,15 +187,15 @@ my $z = 42; #OK not used
 # &variables don't need to be pre-declared
 # (but they need to exist by CHECK)
 {
-    eval_lives_ok '&x; 1; sub x {}', '&x does not need to be pre-declared';
+    eval-lives-ok '&x; 1; sub x {}', '&x does not need to be pre-declared';
     eval-dies-ok '&x()', '&x() dies when empty';
 }
 
 # RT #62766
 {
-    eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
+    eval-lives-ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
-    eval_lives_ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
+    eval-lives-ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
 
     {
         ok EVAL('not OUTER::<$x>.defined'), 'OUTER::<$x>';
@@ -218,8 +218,8 @@ my $z = 42; #OK not used
 # RT #102414
 {
     # If there is a regression this may die not just fail to make ints
-    eval_lives_ok 'my (int $a);','native in declarator sig';
-    eval_lives_ok 'my (int $a, int $b);','natives in declarator sig';
+    eval-lives-ok 'my (int $a);','native in declarator sig';
+    eval-lives-ok 'my (int $a, int $b);','natives in declarator sig';
     dies-ok { my (int $a, num $b); $a = 'omg'; }, 'Native types in declarator sig 1/2 constrains';
     dies-ok { my (int $a, num $b); $b = 'omg'; }, 'Native types in declarator sig 2/2 constrains';
     lives_ok { my (int $a, num $b); $a = 42; $b = 4e2; }, 'Native types in declarator sig allow correct assignments';
@@ -230,8 +230,8 @@ my $z = 42; #OK not used
     lives_ok { my (Int $a, Num $b); $a = 1; $b = 1e0; }, 'Types in declarator sig allow correct assignments';
 
     # These still need spec clarification but test them, since they pass
-    eval_lives_ok 'my int ($a);', 'native outside declarator sig 1';
-    eval_lives_ok 'my int ($a, $b)', 'native outside declarator sig 2';
+    eval-lives-ok 'my int ($a);', 'native outside declarator sig 1';
+    eval-lives-ok 'my int ($a, $b)', 'native outside declarator sig 2';
     throws-like { my Int ($a); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/1 constrains';
     throws-like { my Int ($a, $b); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/2 constrains';
     throws-like { my Int ($a, $b); $b = "str"}, X::TypeCheck, 'Type outside declarator sig 2/2 constrains';
@@ -268,10 +268,10 @@ my $z = 42; #OK not used
 
 }
 
-eval_lives_ok 'my (%h?) #OK', 'my (%h?) lives';
+eval-lives-ok 'my (%h?) #OK', 'my (%h?) lives';
 
 #RT 63588
-eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
+eval-lives-ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
         'global scoped variables are visible inside class definitions';
 
 #RT #72814
@@ -291,7 +291,7 @@ eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
 }
 
 # RT #76452
-eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
+eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
               'can declare a variable inside a sub call';
 
 # RT #77112

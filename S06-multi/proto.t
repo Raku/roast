@@ -134,10 +134,10 @@ eval-dies-ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 
 #RT #76298
 {
-    eval_lives_ok q{
+    eval-lives-ok q{
         class TestA { has $.b; proto method b {} };
     }, 'proto method after same-named attribute';
-    eval_lives_ok q{
+    eval-lives-ok q{
         class TestB { proto method b {}; has $.b };
     }, 'proto method before same-named attribute';
 }

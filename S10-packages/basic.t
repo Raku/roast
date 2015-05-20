@@ -66,11 +66,11 @@ is Simple::Bar.new.baz, 'hi', 'class test';
         'WHO implementation with longname';
 }
 
-eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
+eval-lives-ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     'can refer to role using package';
 
 {
-    eval_lives_ok '{package A2 { role B2 {}; class C2 does B2 {} }}',
+    eval-lives-ok '{package A2 { role B2 {}; class C2 does B2 {} }}',
         'since role is in package should not need package name';
 }
 
@@ -101,23 +101,23 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
 
 #RT #65022
 {
-    eval_lives_ok '{ package C1Home { class Baz {} }; package C2Home { class Baz {} } }',
+    eval-lives-ok '{ package C1Home { class Baz {} }; package C2Home { class Baz {} } }',
         'two different packages should be two different Baz';
 
-    eval_lives_ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
+    eval-lives-ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
         'two different packages should be two different EHomeE';        
 }
 
 # making test below todo causes trouble right now ...
 {
-    eval_lives_ok 'package InternalCall { sub foo() { return 42 }; foo() }',
+    eval-lives-ok 'package InternalCall { sub foo() { return 42 }; foo() }',
         'call of method defined in package';
 }
 
 #?rakudo todo 'RT #64606'
 #?niecza todo
 {
-    eval_lives_ok 'package DoMap {my @a = map { $_ }, (1, 2, 3)}}',
+    eval-lives-ok 'package DoMap {my @a = map { $_ }, (1, 2, 3)}}',
         'map in package';
 }
 
@@ -133,7 +133,7 @@ our $outer_package = 19;
     is  EVAL('RetOuterPack::outer_pack_val()'), $outer_package,
         'use outer package var';
 
-    eval_lives_ok
+    eval-lives-ok
         'my $outer; package ModOuterPack { $outer= 3 }; $outer',
         'Should be able to update outer package var';
 }
@@ -150,7 +150,7 @@ our $outer_package = 19;
         'another simple package case that should not blow platform';
 }
 
-eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
+eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
               'map works in a module (RT #64606)';
 
 {
@@ -176,23 +176,23 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 }
 
 {
-    eval_lives_ok 'class RT64688_c1;use Test', 'use after class line';
-    eval_lives_ok 'class RT64688_d1 { use Test }', 'use in class block';
-    eval_lives_ok 'module RT64688_m1;use Test', 'use after module line';
-    eval_lives_ok 'module RT64688_m2 { use Test }', 'use in module block';
-    eval_lives_ok 'package RT64688_p2 { use Test }', 'use in package block';
-    eval_lives_ok 'grammar RT64688_g1;use Test', 'use after grammar line';
-    eval_lives_ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
-    eval_lives_ok 'role RT64688_r1;use Test', 'use after role line';
-    eval_lives_ok 'role RT64688_r2 { use Test }', 'use in role block';
+    eval-lives-ok 'class RT64688_c1;use Test', 'use after class line';
+    eval-lives-ok 'class RT64688_d1 { use Test }', 'use in class block';
+    eval-lives-ok 'module RT64688_m1;use Test', 'use after module line';
+    eval-lives-ok 'module RT64688_m2 { use Test }', 'use in module block';
+    eval-lives-ok 'package RT64688_p2 { use Test }', 'use in package block';
+    eval-lives-ok 'grammar RT64688_g1;use Test', 'use after grammar line';
+    eval-lives-ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
+    eval-lives-ok 'role RT64688_r1;use Test', 'use after role line';
+    eval-lives-ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
 #?niecza skip 'Export tags NYI'
 {
     @*INC.unshift: 't/spec/packages';
-    eval_lives_ok 'use LoadFromInsideAModule',
+    eval-lives-ok 'use LoadFromInsideAModule',
         'can "use" a class inside a module';
-    eval_lives_ok 'use LoadFromInsideAClass',
+    eval-lives-ok 'use LoadFromInsideAClass',
         'can "use" a class inside a class';
 
     # RT #65738
@@ -205,7 +205,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 # also checks RT #73740
 #?niecza skip 'Unable to locate module PM6 in @path'
 {
-    eval_lives_ok 'use PM6', 'can load a module ending in .pm6';
+    eval-lives-ok 'use PM6', 'can load a module ending in .pm6';
     is EVAL('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
 }
 
@@ -228,7 +228,7 @@ eval-dies-ok 'module RT80856 is not_RT80856 {}',
 
 # RT #98856
 #?niecza todo
-eval_lives_ok q[
+eval-lives-ok q[
     package NewFoo { }
     class   NewFoo { }
 ], 'can re-declare a class over a package of the same name';

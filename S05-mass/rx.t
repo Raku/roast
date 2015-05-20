@@ -815,7 +815,7 @@ eval-dies-ok '/b&/', 'conjunction (&) - null right arg illegal';
 
 #### &b			bcd		/rule error/	conjunction (&) - null left arg legal
 #?niecza todo ''
-eval_lives_ok '/&b/', 'conjunction (&) - null left arg legal';
+eval-lives-ok '/&b/', 'conjunction (&) - null left arg legal';
 
 #### &			bcd		/rule error/	conjunction (&) - null both args illegal
 eval-dies-ok '/&/', 'conjunction (&) - null both args illegal';

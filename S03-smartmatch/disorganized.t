@@ -88,7 +88,7 @@ caught that case.
 
 # need to test in EVAL() since class definitions happen at compile time,
 # ie before the plan is set up.
-eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
+eval-lives-ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
               'smartmatch in a class lives (RT 62196)';
 
 # RT #69762

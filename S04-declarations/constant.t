@@ -40,7 +40,7 @@ plan 56;
         constant foo2 = 42;
     }
     #?niecza todo
-    eval_lives_ok 'foo2 == 42', 'constants are our scoped';
+    eval-lives-ok 'foo2 == 42', 'constants are our scoped';
 }
 
 #?niecza skip 'Lexical foo3 is not a package (?)'

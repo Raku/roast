@@ -40,5 +40,5 @@ try {
 ok($ok, 'can use captured type in declaration');
 
 #RT #114216
-eval_lives_ok q':(::T $x)', "No error on type capture";
+eval-lives-ok q':(::T $x)', "No error on type capture";
 # vim: ft=perl6

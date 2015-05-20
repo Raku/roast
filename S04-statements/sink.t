@@ -13,5 +13,5 @@ plan 2;
 
 # RT #117923
 {
-    eval_lives_ok "List.sink", "can sink a List";
+    eval-lives-ok "List.sink", "can sink a List";
 }

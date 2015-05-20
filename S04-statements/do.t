@@ -18,10 +18,10 @@ eval-dies-ok 'my $i; do { $i++ } for 1..3;',
 eval-dies-ok 'my $i; do { $i++ } given $i;',
     "'do' can't take the 'given' modifier";
 
-eval_lives_ok 'my $i; do { $i++ } unless $i;',
+eval-lives-ok 'my $i; do { $i++ } unless $i;',
     "'do' can take the 'unless' modifier";
 
-eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
+eval-lives-ok 'my $i = 1; do { $i++ } if $i;',
     "'do' can take the 'if' modifier";
 
 # L<S04/The do-once loop/statement "prefixing with" do>

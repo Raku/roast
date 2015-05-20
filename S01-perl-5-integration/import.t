@@ -14,7 +14,7 @@ unless (try { EVAL("1", :lang<perl5>) }) {
     exit;
 }
 
-eval_lives_ok(q[
+eval-lives-ok(q[
 use Text::Wrap:from<Perl5> 'wrap';
 is(Text::Wrap::wrap('foo', 'bar', 'baz'), 'foobaz', "import p5 module");
 #?rakudo skip "importing of functions NYI RT #124646"

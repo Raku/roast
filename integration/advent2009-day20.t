@@ -26,8 +26,8 @@ for &foo.signature.params Z @sig-info -> ($param, $param-info) {
 is &foo.count, 3, 'Introspecting number of arguments';
 is &foo.arity, 2, 'Introspecting arity, i.e. number of required arguments';
 
-eval_lives_ok 'map -> $x, $y { ... }, 1..6', 'mapping two at a time';
-eval_lives_ok 'map -> $x, $y, $z { ... }, 1..6', 'mapping three at a time';
+eval-lives-ok 'map -> $x, $y { ... }, 1..6', 'mapping two at a time';
+eval-lives-ok 'map -> $x, $y, $z { ... }, 1..6', 'mapping three at a time';
 
 class Person {
     has $.name;

@@ -34,7 +34,7 @@ plan 4;
 }
 
 # RT #77274
-eval_lives_ok q[
+eval-lives-ok q[
     class GrandParent { };
     class Parent is GrandParent { };
     class Me is Parent is GrandParent { };

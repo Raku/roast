@@ -748,7 +748,7 @@ my @e;
 
 {
     # niecza doesn't propagate slangs into &EVAL yet
-    eval_lives_ok 'sub infix:<+++>($a, $b) { ($a + $b) div 2 }; 10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
+    eval-lives-ok 'sub infix:<+++>($a, $b) { ($a + $b) div 2 }; 10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
 }
 
 # RT #74530

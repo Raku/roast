@@ -225,7 +225,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 }
 
 # RT #80864
-eval_lives_ok 'my %a; %a{ CATCH { } }', 'can define CATCH bock in .{}';
+eval-lives-ok 'my %a; %a{ CATCH { } }', 'can define CATCH bock in .{}';
 # RT #73988
 eval-dies-ok 'do { CATCH {}; CATCH { } }', 'only one CATCH per block allowed';
 # RT #115184

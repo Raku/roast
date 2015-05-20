@@ -46,7 +46,7 @@ eval-dies-ok q[
 ], 'cannot override a method by monkey-typing';
 
 # RT #76600
-eval_lives_ok q[
+eval-lives-ok q[
     use MONKEY-TYPING;
     role Bar { has $.counter; }
     class Pub does Bar { has $.saloon; }

@@ -132,7 +132,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
     # TODO: find out if this allowed for item assignment, or for list
     # assignment only
     #?rakudo todo '* as dummy'
-    eval_lives_ok ' * = 5 ', 'can dummy-asign to *';
+    eval-lives-ok ' * = 5 ', 'can dummy-asign to *';
 
     my $x;
     (*, *, $x) = 1, 2, 3, 4, 5;
@@ -217,7 +217,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
 }
 
 # RT #73162
-# WAS:  eval_lives_ok '{*.{}}()', '{*.{}}() lives';
+# WAS:  eval-lives-ok '{*.{}}()', '{*.{}}() lives';
 # This is now supposed tobe a double-closure error:
 eval-dies-ok '{*.{}}()', '{*.{}}() dies';
 

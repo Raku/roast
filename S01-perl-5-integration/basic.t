@@ -84,7 +84,7 @@ my $s = 'str';
         $x + $y;
     }
 
-    eval_lives_ok("{use v5;}", "RT #77596 - use v5 in a block lives");
+    eval-lives-ok("{use v5;}", "RT #77596 - use v5 in a block lives");
 
     is(add_in_perl5(42, 42), 84, 'Defining subroutines with "use v5" blocks');
 }

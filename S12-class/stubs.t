@@ -5,16 +5,16 @@ use Test;
 
 plan 10;
 
-eval_lives_ok q[ class StubA { ... }; class StubA { method foo { } }; ],
+eval-lives-ok q[ class StubA { ... }; class StubA { method foo { } }; ],
               'Can stub a class, and later on declare it';
-eval_lives_ok q[ role StubB { ... }; role StubB { method foo { } }; ],
+eval-lives-ok q[ role StubB { ... }; role StubB { method foo { } }; ],
               'Can stub a role, and later on declare it';
-eval_lives_ok q[ module StubC { ... }; module StubC { sub foo { } }; ],
+eval-lives-ok q[ module StubC { ... }; module StubC { sub foo { } }; ],
               'Can stub a module, and later on declare it';
 
 #?niecza todo 'broken in nom-derived stub model'
 #?rakudo todo 'nom regression RT #125044'
-eval_lives_ok q[ package StubD { ... }; class StubD { method foo { } }; ],
+eval-lives-ok q[ package StubD { ... }; class StubD { method foo { } }; ],
               'Can stub a package, and later on implement it as a method';
 
 # not quite class stubs, but I don't know where else to put the tests...

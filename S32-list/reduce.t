@@ -64,7 +64,7 @@ plan 15;
 
 is( (1).list.reduce({$^a * $^b}), 1, "Reduce of one element list produces correct result");
 
-eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
+eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
 
 {
     is( ((1..10).list.reduce: &infix:<+>), 55, '.reduce: &infix:<+> works' );

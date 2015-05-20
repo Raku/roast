@@ -114,7 +114,7 @@ plan 25;
 
 # RT #117583
 # the redeclaration thingy is only a warning
-eval_lives_ok 'sub f ($x is copy) { my $x }';
+eval-lives-ok 'sub f ($x is copy) { my $x }';
 
 # RT #118183
 {

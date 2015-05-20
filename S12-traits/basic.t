@@ -29,7 +29,7 @@ role cool {
 }
 ok(::cool.HOW, "role definition worked");
 
-eval_lives_ok 'my $a is cool; 1', 'mixing in our role into a scalar via "is" worked';
+eval-lives-ok 'my $a is cool; 1', 'mixing in our role into a scalar via "is" worked';
 is $was_in_any_sub, 1, 'trait_auxiliary:is was called on container';
 is EVAL('my $a is cool; $a.is_cool'), 42,  'our var "inherited" an attribute';
 

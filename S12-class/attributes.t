@@ -125,16 +125,16 @@ eval-dies-ok q[
 
 #RT #115280
 {
-    eval_lives_ok '(class A { has $.x }).new.x.HOW',
+    eval-lives-ok '(class A { has $.x }).new.x.HOW',
         "HOW on attributes lives, custom class";
-    eval_lives_ok '(1/2).numerator.HOW',
+    eval-lives-ok '(1/2).numerator.HOW',
         "HOW on attributes lives, builtin";
 }
 
 #RT #114234
 #?niecza skip '$b declared but not used. FIXME later.'
 {
-    eval_lives_ok q{
+    eval-lives-ok q{
         my class A { state $b; }
     }, "No segfault on state variables";
 }

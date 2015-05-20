@@ -130,9 +130,9 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 # RT #67768
 #?rakudo skip 'RT #67768'
 {
-    eval_lives_ok 'role List { method foo { 67768 } }',
+    eval-lives-ok 'role List { method foo { 67768 } }',
         'can declare a role with a name already assigned to a class';
-    eval_lives_ok 'class C67768 does OUR::List { }',
+    eval-lives-ok 'class C67768 does OUR::List { }',
         'can use a role with a name already assigned to a class';
     is ::OUR::C67768.new.foo, 67768,
         'can call method from a role with a name already assigned to a class';

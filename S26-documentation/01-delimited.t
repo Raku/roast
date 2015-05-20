@@ -159,4 +159,4 @@ isa-ok $r.contents[3], Pod::Heading;
 isa-ok $r.contents[4], Pod::Block::Para;
 is $r.contents.elems, 5;
 
-eval_lives_ok "=begin pod\nSome documentation\n=end pod", "Pod files don't have to end in a newline";
+eval-lives-ok "=begin pod\nSome documentation\n=end pod", "Pod files don't have to end in a newline";

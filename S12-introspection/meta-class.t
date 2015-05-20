@@ -38,7 +38,7 @@ is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
 is Foo.^layout, P6opaque, '^.layout';
 
 # RT #115208
-eval_lives_ok "True.HOW.say", "can output the .gist of a .HOW";
+eval-lives-ok "True.HOW.say", "can output the .gist of a .HOW";
 
 # RT #114130
 {

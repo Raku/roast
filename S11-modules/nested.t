@@ -9,15 +9,15 @@ plan 6;
 
 use lib 't/spec/packages';
 
-eval_lives_ok 'use A::A', 'Can load classes from nested modules';
-eval_lives_ok 'use A::A; A::B::D ~~ A::B::B or die()', 
+eval-lives-ok 'use A::A', 'Can load classes from nested modules';
+eval-lives-ok 'use A::A; A::B::D ~~ A::B::B or die()', 
               '... and the composition worked';
-eval_lives_ok 'use A::A; A::B::D.new()',
+eval-lives-ok 'use A::A; A::B::D.new()',
               '... and instantiation works';
 
-eval_lives_ok 'use A; A.new()', 'RT 62162';
+eval-lives-ok 'use A; A.new()', 'RT 62162';
 
-eval_lives_ok 'use RoleA',
+eval-lives-ok 'use RoleA',
               'can use multiple "Role $name" statements (in multiple files) RT 67976';
 
 {

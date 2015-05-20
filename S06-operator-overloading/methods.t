@@ -24,7 +24,7 @@ my $a }; if 0 { if 0 { my $a } }',
    'custom postcircumfix{ } does not lead to warnings';
 
 # RT #69438
-eval_lives_ok q[
+eval-lives-ok q[
 class B {
 method postcircumfix:<{ }>($table) {
 }

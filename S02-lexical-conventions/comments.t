@@ -20,9 +20,9 @@ plan 51;
     ) 1, 'multiline embedded comment with #`()';
 
     # RT #115762
-    eval_lives_ok "#`( foo )", "comment as first and only statement";
+    eval-lives-ok "#`( foo )", "comment as first and only statement";
 
-    eval_lives_ok "2 * 3\n #`<<<\n comment>>>", "multiline comment with <<<";
+    eval-lives-ok "2 * 3\n #`<<<\n comment>>>", "multiline comment with <<<";
 
     my $var = #`{ foo bar } 32;
     is $var, 32, 'embedded comment with #`{}';
@@ -90,7 +90,7 @@ plan 51;
 
 # RT #121305
 {
-    eval_lives_ok( q{{
+    eval-lives-ok( q{{
         my $var = \#`((( comment ))) 12;
         is $var, 12, '#`(((...)))';
     }}, 'Unspaced bracketed comment throws no error' );

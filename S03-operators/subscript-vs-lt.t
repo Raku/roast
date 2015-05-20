@@ -14,8 +14,8 @@ plan 4;
 # infix less-than requires whitespace; otherwise it's interpreted as
 # a <...> hash subscript
 
-eval_lives_ok "1 <2", "infix less-than (<) requires whitespace before.";
-eval_lives_ok  "1 < 2" , "infix less-than (<) requires whitespace before.";
+eval-lives-ok "1 <2", "infix less-than (<) requires whitespace before.";
+eval-lives-ok  "1 < 2" , "infix less-than (<) requires whitespace before.";
 eval-dies-ok("1< 2", "infix less-than (<) requires whitespace before, so this is a parse error.");
 eval-dies-ok("1<2", "infix less-than (<) requires whitespace before, so this is a parse error.");
 

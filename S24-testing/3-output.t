@@ -32,7 +32,7 @@ plan 4;
     use lib 't/spec/packages';
     use Test::Util;
     is_run
-        'use Test; eval_lives_ok q[foo<bar], "expected eval fail"',
+        'use Test; eval-lives-ok q[foo<bar], "expected eval fail"',
         {
             out    => /'not ok ' \d+ ' - expected eval fail'/,
             err    => /'# Error: Unable to parse'/,

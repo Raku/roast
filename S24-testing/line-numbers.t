@@ -27,7 +27,7 @@ execute-test(:function("dies-ok"), :line(9));
 execute-test(:function("eval-dies-ok"), :line(9));
 
 #?DOES 1
-execute-test(:function("eval_lives_ok"), :line(9));
+execute-test(:function("eval-lives-ok"), :line(9));
 
 #?DOES 1
 execute-test(:function("isa-ok"), :line(9));

@@ -292,11 +292,11 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 } #1
 
 # RT #75694
-eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting with 'has-' in a hash");
+eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting with 'has-' in a hash");
 
 # RT #99854
 {
-    eval_lives_ok 'my $rt = { grammar => 5 }',
+    eval-lives-ok 'my $rt = { grammar => 5 }',
                   "can have a bareword 'grammar' as a hash key";
 }
 

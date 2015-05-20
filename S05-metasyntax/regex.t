@@ -51,8 +51,8 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 # we'll just check that this syntax is valid for now
 #?niecza todo 'invalid syntax'
 {
-    eval_lives_ok('token foo {bar}', 'token foo {...} is valid');
-    eval_lives_ok('regex baz {qux}', 'regex foo {...} is valid');
+    eval-lives-ok('token foo {bar}', 'token foo {...} is valid');
+    eval-lives-ok('regex baz {qux}', 'regex foo {...} is valid');
 }
 
 {
@@ -86,7 +86,7 @@ ok ';' ~~ /\;/,             'escaped ";" in m// works';
 }
 
 #?niecza todo 'invalid syntax'
-eval_lives_ok '/<[..b]>/', '/<[..b]>/ lives';
+eval-lives-ok '/<[..b]>/', '/<[..b]>/ lives';
 
 # RT #118985
 {

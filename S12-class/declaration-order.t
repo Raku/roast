@@ -13,8 +13,8 @@ A class can only derive already declared classes.
 
 # L<S12/Classes/"bare class names must be predeclared">
 
-# need eval_lives_ok here because class declarations happen at compile time
-eval_lives_ok ' class A {}; class B is A {}; ', "base before derived: lives";
+# need eval-lives-ok here because class declarations happen at compile time
+eval-lives-ok ' class A {}; class B is A {}; ', "base before derived: lives";
 eval-dies-ok ' class D is C {}; class C {}; ', "derived before base: dies";
 
 # vim: ft=perl6

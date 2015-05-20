@@ -12,8 +12,8 @@ Tests for lexical roles delcared with 'my role'
 # L<S12/Classes>
 
 # A few basic tests.
-eval_lives_ok 'my role R1 {}', 'my role parses OK';
-eval_lives_ok '{ my role R2 {} }; { my role R2 {} }',
+eval-lives-ok 'my role R1 {}', 'my role parses OK';
+eval-lives-ok '{ my role R2 {} }; { my role R2 {} }',
               'declare roles with the same name in two scopes.';
 eval-dies-ok  '{ my class R3 {}; R3; }; R3',
               'scope is correctly restricted';

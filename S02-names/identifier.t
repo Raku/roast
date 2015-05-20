@@ -112,7 +112,7 @@ plan 22;
         'can call subroutines whos name begin with an alphabetic infix (and)';
 
     # RT #75710
-    eval_lives_ok q{our sub xyz($abc) { $abc }; xyz(1);},
+    eval-lives-ok q{our sub xyz($abc) { $abc }; xyz(1);},
         'can call subroutine which starts with infix x';
 }
 

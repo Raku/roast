@@ -397,7 +397,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     eval-dies-ok q[ $_ = "abc"; my $i = 1; s:i($i)/a/b/ ],
         'Value of :i must be known at compile time';
     #?rakudo todo 'be smarter about constant detection'
-    eval_lives_ok q[ $_ = "abc";s:i(1)/a/b/ ],
+    eval-lives-ok q[ $_ = "abc";s:i(1)/a/b/ ],
         ':i(1) is OK';
 }
 
@@ -435,7 +435,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #122349
 {
-    eval_lives_ok '$_ = "a";s/a$/b/;s|b$|c|;s!c$!d!;', '$ anchor directly at the end of the search pattern works';
+    eval-lives-ok '$_ = "a";s/a$/b/;s|b$|c|;s!c$!d!;', '$ anchor directly at the end of the search pattern works';
 }
 
 # RT #123168

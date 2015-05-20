@@ -12,7 +12,7 @@ plan 8;
     }
     eval-dies-ok  '/foo \y/', 
         'can not compile regex with unknown backslash rule';
-    eval_lives_ok '/fuu \Y/', 'can compile a regex with new backslash rule';
+    eval-lives-ok '/fuu \Y/', 'can compile a regex with new backslash rule';
     ok 'YY'  ~~ /^\Y$/, 'can use that rule (positive)';
     ok 'yX' !~~ /^\Y$/, 'can use that rule (negative)';
 }
@@ -25,7 +25,7 @@ eval-dies-ok '/\Y/', 'backslash rules are lexically scoped';
     augment slang Regex {
         token backslash:<moep> { 'Hax' };
     }
-    eval_lives_ok '/\moep/', 'can compile regex with multi char backslash rule';
+    eval-lives-ok '/\moep/', 'can compile regex with multi char backslash rule';
     ok 'Haxe' ~~ m/^\moep/, '... it matches';
     ok 'Haxe' ~~ m/^\moepe$/, '... with correct end of escape sequence';
 }
