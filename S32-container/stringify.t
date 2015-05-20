@@ -32,4 +32,3 @@ is BagHash.Str, "", "BagHash.Str is empty string";
 is ~BagHash, "", "~BagHash is empty string";
 
 # vim: ft=perl6
-done;

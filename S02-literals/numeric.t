@@ -92,6 +92,4 @@ is_approx 3.14159265358979323846264338327950288419716939937510e0,
 #?niecza todo 'exactly rounded Str->Num without FatRat'
 ok 0e999999999999999 == 0, '0e999999999999 equals zero';
 
-done;
-
 # vim: ft=perl6 sw=4 ts=4 expandtab

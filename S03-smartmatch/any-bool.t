@@ -20,6 +20,4 @@ plan 8;
     nok  'a' ~~ .not,          'boolean truth';
 }
 
-done;
-
 # vim: ft=perl6

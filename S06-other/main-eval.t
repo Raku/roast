@@ -21,6 +21,4 @@ ok $eval_worked, 'EVAL code executed';
 #?rakudo todo 'MAIN in EVAL RT #124662'
 is $main_invoked, 0, 'sub MAIN is not called in EVAL()';
 
-done;
-
 # vim: ft=perl6

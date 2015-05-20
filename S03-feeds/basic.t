@@ -144,7 +144,4 @@ plan 24;
     @data ==> grep {/<[aeiouy]>/} ==> is(@(*).slice, @(@out).slice, 'basic test for @(*).slice');
 }
 
-
-done;
-
 # vim: ft=perl6

@@ -3,6 +3,8 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
+plan 4;
+
 dies-ok { quietly { die 'not quiet enough' } }, '"die" in "quietly" dies';
 
 is_run( 'quietly { warn "muted" }; say "detum"',
@@ -16,7 +18,5 @@ is_run( 'quietly { say "loud" }',
 is_run( 'quietly { note "eton" }; say "life"',
         { status => 0, err => "eton\n", out => "life\n" },
         '"note" in "quietly" works' );
-
-done;
 
 # vim: ft=perl6

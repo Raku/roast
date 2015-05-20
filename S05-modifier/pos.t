@@ -108,6 +108,4 @@ for ("abcdef") {
    nok $str.match(/abc/, :pos(10)).Bool, "No match anchored to 10";
 }
 
-done;
-
 # vim: ft=perl6

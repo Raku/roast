@@ -2389,5 +2389,4 @@ eval-dies-ok '"b" ~~ /b| /', 'null pattern after alternation';
 #?niecza todo 'allows them'
 eval-dies-ok '"foo" ~~ /<[d..b]>? foo/', 'no reversed char ranges';
 
-done;
 # vim: ft=perl6 sw=4 expandtab

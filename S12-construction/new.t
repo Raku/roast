@@ -148,6 +148,4 @@ is $o.x, 5, '... worked for the class Parent (other order)';
         "Can call .=new on a variable of a lexical type";
 }
 
-done;
-
 # vim: ft=perl6

@@ -209,6 +209,4 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         'multis with different names but same signatures are not ambiguous';
 }
 
-done;
-
 # vim: ft=perl6

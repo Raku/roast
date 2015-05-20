@@ -37,6 +37,4 @@ plan 15;
     ok not $/, '42 is not a module';
 }
 
-done;
-
 # vim: ft=perl6

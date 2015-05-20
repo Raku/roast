@@ -179,6 +179,4 @@ plan 46;
     is $1.defined, True, 'quantifier * matching 0 values returns empty list';
 }
 
-done;
-
 # vim: ft=perl6

@@ -61,5 +61,3 @@ ok ([<=] @b>>.karma), 'proper numeric sorting';
     is (@people.min: { +.karma }), (@people.min: +*.karma), 'Explicit numeric comparison is equivalent to numeric comparison with a Whatever';
     is (@people.max: { ~.name }), (@people.max: ~*.name), 'Explicit string comparison is equivalent to a string comparison with a Whatever';
 }
-
-done;

@@ -43,5 +43,3 @@ if $path.IO.e {
     say "Warn: '$path shouldn't exist";
     unlink $path;
 }
-
-done;

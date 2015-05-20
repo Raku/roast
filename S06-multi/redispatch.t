@@ -54,5 +54,3 @@ plan 10;
     try { nextsame };
     isa-ok $!, X::NoDispatcher, 'nextsame in main block dies due to lack of dispatcher';
 }
-
-done;

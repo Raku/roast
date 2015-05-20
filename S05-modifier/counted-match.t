@@ -88,6 +88,4 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     dies-ok { "a" ~~ m:nth(Mu)/a/ }, ':nth does not accept Mu param';
 }
 
-done;
-
 # vim: ft=perl6

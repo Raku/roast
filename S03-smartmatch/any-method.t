@@ -12,6 +12,4 @@ plan 4;
      ok 'ab' ~~ .substr(0), 'method call with args 2';
 }
 
-done;
-
 # vim: ft=perl6

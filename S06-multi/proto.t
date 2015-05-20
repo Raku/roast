@@ -149,6 +149,5 @@ eval-dies-ok 'proto rt68242($a){};proto rt68242($c,$d){};',
         proto f(Int $x) {*}; multi f($) { 'default' }; f 'foo'
     ], 'proto signature is checked, not just that of the candidates';
 }
-done;
 
 # vim: ft=perl6

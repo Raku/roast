@@ -605,5 +605,3 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     ok $now ~~ $today, "positive smartmatch against a Date";
     ok $not-now !~~ $today, "negative smartmatch against a Date";
 }
-
-done;

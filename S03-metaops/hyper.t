@@ -865,6 +865,4 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
         "non-dwim hyper against empty RHS dies";
 }
 
-done;
-
 # vim: ft=perl6

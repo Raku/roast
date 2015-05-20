@@ -59,5 +59,3 @@ is (1, 2, sub {[*] @_[*-1], @_ + 1} ... 720).join(' '), '1 2 6 24 120 720', 'slu
         },
         'no internals leaking out with series operator used wrongly (arity 2)';
 }
-
-done;

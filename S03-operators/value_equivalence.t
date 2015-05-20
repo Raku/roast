@@ -190,6 +190,4 @@ isa-ok  1|2 === 1, Junction,  '=== does autothread (2)';
     nok $a === $b, 'two lexical roles come out as different when compared with ===';
 }
 
-done;
-
 # vim: ft=perl6

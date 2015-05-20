@@ -35,5 +35,3 @@ is $bob.dog_name, 'Fido', 'dog name can be accessed by delegation';
 # RT 75180
 is Dog.^methods(:local).map({.name}).sort.join('|'),
     'bark|name', 'can introspect Dog';
-
-done;

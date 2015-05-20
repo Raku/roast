@@ -133,5 +133,3 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
     is d('2014-03-14').earlier(weeks => 2), d('2014-02-28'), 'subtracting 2 weeks, overflowing from March';
     is d('2015-01-20').earlier(weeks => 3), d('2014-12-30'), 'subtracting 3 weeks, overflowing to years';
 }
-
-done;

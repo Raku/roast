@@ -1,5 +1,7 @@
 use Test;
 
+plan 1;
+
 grammar Foo {
     token TOP    { <bottom> }
     token bottom {   <?>    }
@@ -23,5 +25,3 @@ class Foo::Actions {
 }
 
 lives-ok { Foo.new.parse('', :actions(Foo::Actions.new)) }
-
-done;

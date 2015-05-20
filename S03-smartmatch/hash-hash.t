@@ -34,6 +34,4 @@ my %hash4 = ( "oink" => "da",   "zork" => "zork");  # different keys and values
     ok  eval_elsewhere('(%hash1 !~~ %hash4)'), 'Hash !~~ Hash, eval_elsewhere 4';
 }
 
-done;
-
 # vim: ft=perl6

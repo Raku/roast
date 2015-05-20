@@ -191,6 +191,4 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
         'can call a sub which runs EVAL on minimal role declaration';
 }
 
-done;
-
 # vim: ft=perl6

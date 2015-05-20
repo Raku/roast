@@ -44,5 +44,3 @@ augment class PieceOfString {
 }
 
 is ~$d, '------', 'Str override';
-
-done;

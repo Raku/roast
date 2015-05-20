@@ -117,6 +117,4 @@ plan 17;
     is Hfoo(), 'sub H::Hfoo',   'H) standard traits like "is export" still work';
 }
 
-done;
-
 # vim: ft=perl6

@@ -93,6 +93,4 @@ is (map { $_ => $_ * $_ }, 1..3).hash<2>, 4, 'block with $_ is not a hash';
 ok { 1 R=> "a" } ~~ Hash,  '{ 1 R=> "a" } is a Hash';
 is { 1 R=> "a" }<a>, 1,    '{ 1 R=> "a" } constructs correct hash';
 
-done;
-
 # vim: ft=perl6

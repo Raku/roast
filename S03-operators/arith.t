@@ -386,6 +386,4 @@ isa-ok 4.8 % 1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 
-done;
-
 # vim: ft=perl6

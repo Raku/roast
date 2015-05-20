@@ -146,6 +146,4 @@ sub j(*@i) {
     is_run q[sub prcl(\\) {}; &prcl.perl], { err => "", out => "" }, ".perl on unnamed \\ parameters doesn't err";
 }
 
-done;
-
 # vim: ft=perl6

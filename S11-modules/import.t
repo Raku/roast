@@ -105,6 +105,4 @@ plan 17;
         supported => ['our'];
 }
 
-done;
-
 # vim: ft=perl6

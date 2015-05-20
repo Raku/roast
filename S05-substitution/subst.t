@@ -477,6 +477,4 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $_, "", 'can use s[]="" when $_ is not set';
 }
 
-done;
-
 # vim: ft=perl6

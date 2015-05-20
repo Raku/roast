@@ -125,6 +125,4 @@ throws-like { EVAL '1 ?? 2' },
         'typed exception when listop gobbles the !! of conditional operator';
 }
 
-done;
-
 # vim: ft=perl6

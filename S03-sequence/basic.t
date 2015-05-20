@@ -274,6 +274,4 @@ isa-ok ([] ... [])[0], Array, '[] ... [] returns []';
     is @a[1].join('_'), '3_4', 'containers returned from seq iterator are respected (2)';
 }
 
-done;
-
 # vim: ft=perl6

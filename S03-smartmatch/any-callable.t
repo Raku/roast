@@ -21,6 +21,4 @@ plan 6;
     ok(!(Mu ~~ &nuhuh), "negated scalar sub false");
 }
 
-done;
-
 # vim: ft=perl6

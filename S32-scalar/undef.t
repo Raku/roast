@@ -359,6 +359,4 @@ lives-ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
     is $d, 42, "temp restore default value after undefine";
 }
 
-done;
-
 # vim: ft=perl6

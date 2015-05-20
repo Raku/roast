@@ -40,7 +40,4 @@ Basic tests for the hash() built-in
     is ?hash(), Bool::False, "hash() is false";
 }
 
-
-done;
-
 # vim: ft=perl6

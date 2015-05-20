@@ -83,6 +83,4 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
     is ca($/.caps),     'alpha:a|alpha:b',    '.caps on quantified &&';
 }
 
-done;
-
 # vim: ft=perl6

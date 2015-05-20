@@ -167,6 +167,4 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
     is(rt68528(:a, :b), "first", "RT #68528 - first defined wins the tie");
 }
 
-done;
-
 # vim: ft=perl6

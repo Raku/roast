@@ -42,6 +42,4 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
     is $rt68482.WHAT.gist, 3.WHAT.gist, '.WHAT of stored delete is the element';
 }
 
-done;
-
 # vim: ft=perl6

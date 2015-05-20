@@ -348,6 +348,4 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
     is %hash<not>, 42, "can use bare 'not' as hash key";
 }
 
-done;
-
 # vim: ft=perl6

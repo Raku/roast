@@ -81,6 +81,4 @@ eval-dies-ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
     is RT111768.parse("aaaa;", :rule<e>).ast, ';;;;a', "Recursive .ast calls work";
 }
 
-done;
-
 # vim: ft=perl6 expandtab sw=4

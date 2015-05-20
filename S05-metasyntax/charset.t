@@ -93,6 +93,4 @@ nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
      ok 'z' ~~ / <[a..z]-[x]> /, '... but others are fine';
 }
 
-done;
-
 # vim: ft=perl6

@@ -47,6 +47,4 @@ is index(callframe.perl,"CallFrame.new("), 0, 'CallFrame.perl works';
 # (Could probably be more readable, currently same as .perl)
 is index(callframe.gist,"CallFrame.new("), 0, 'CallFrame.gist works';
 
-done();
-
 # vim: ft=perl6

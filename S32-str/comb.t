@@ -104,6 +104,4 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng" , 2), <3 3>, 'Subroutine form with limit';
 }
 
-done;
-
 # vim: ft=perl6

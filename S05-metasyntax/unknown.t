@@ -42,6 +42,4 @@ lives-ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
     lives-ok { /$'x'/ }, 'can parse /$\'x\'/';
 }
 
-done;
-
 # vim: ft=perl6

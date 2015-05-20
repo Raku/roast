@@ -240,6 +240,4 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     ok try { main '2+1i'  } eqv 2+1i,  "can distinguish Complex-like string in main";
 }
 
-done;
-
 # vim: ft=perl6

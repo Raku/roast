@@ -80,6 +80,4 @@ plan 13;
     is wrappee(1, 2), 84, 'wrapping a routine at compile time makes it soft';
 }
 
-done();
-
 # vim: ft=perl6

@@ -48,6 +48,4 @@ is both(), '',
     is $tender, 'sanity', 'The variable passed is unchanged.';
 }
 
-done;
-
 # vim: ft=perl6

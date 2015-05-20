@@ -294,6 +294,4 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
     ok $x.defined, '//= can cope with role type objects';
 }
 
-done;
-
 # vim: ft=perl6

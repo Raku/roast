@@ -32,5 +32,3 @@ is_run 'my @a = @*ARGS; for @a[ 1 ..^ +@*ARGS ] { .say };', :args[1, 'two', 'thr
         err => '',
         status => 0,
     }, 'can copy @*ARGS to array.';
-
-done;

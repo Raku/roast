@@ -131,5 +131,4 @@ plan 19;
     throws-like 'repeat { "but I myself" }', X::Syntax::Missing, what => '"while" or "until"';
 }
 
-done;
 # vim: ft=perl6

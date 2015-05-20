@@ -38,5 +38,3 @@ is pi.Rat(1e-10).perl, "<312689/99532>";
 is-deeply 1.75.WHAT, Rat;
 is 1.75.perl, "1.75";
 is 1.752.perl, "1.752";
-
-done;

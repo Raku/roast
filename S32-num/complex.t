@@ -142,6 +142,4 @@ is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
 
 eval-dies-ok "(1 + 2i) < (2 + 4i)", 'Cannot arithmetically compare Complex numbers';
 
-done;
-
 # vim: ft=perl6

@@ -85,6 +85,4 @@ plan 6;
         payload => 'Null check failed for $cookies';
 }
 
-done;
-
 # vim: ft=perl6

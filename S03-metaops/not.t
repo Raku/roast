@@ -62,6 +62,4 @@ nok False !|| True, '!|| is legal and works (2)';
 ok True !^^ True, '!^^ is legal and works (1)';
 nok False !^^ True, '!^^ is legal and works (2)';
 
-done;
-
 # vim: ft=perl6

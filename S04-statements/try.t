@@ -168,6 +168,4 @@ lives-ok { try { +'foo'; CATCH { default { } } } }, 'Failure does not escape try
 lives-ok { try ... }, '... failure does not escape try (statement form)';
 lives-ok { try { ... } }, '... failure does not escape try (block form)';
 
-done;
-
 # vim: ft=perl6

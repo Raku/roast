@@ -19,6 +19,4 @@ plan 1;
         'no segfault in ObjAt initalization when passing bogus named parameters';
 }
 
-done;
-
 # vim: ft=perl6

@@ -118,6 +118,4 @@ lives-ok { srand(1) }, 'srand(1) lives and parses';
     throws-like 'rand(3)', X::Obsolete;
 }
 
-done;
-
 # vim: ft=perl6

@@ -464,6 +464,4 @@ nok ((4,5,6),(4,5,6,7)).none == 3, '.none is not flattening 1';
 ok (<a b c>,(4,5,6)).none eq 'a' , '.none is not flattening 2';
 is ((<a b c>,(4,5,6)).none eq 'a b c').gist, 'none(True, False)', '.none is not flattening 3';
 
-done();
-
 # vim: ft=perl6

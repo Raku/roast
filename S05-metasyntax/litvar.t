@@ -99,6 +99,4 @@ is "foo" ~~ /:i:m <$var>/, 'foo', 'string with metachars in assertion matches (:
 
 is "fo+" ~~ /:i:m $var/, 'fo+', 'string with metachars matches literally (:i:m)';
 
-done;
-
 # vim: ft=perl6

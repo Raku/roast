@@ -34,5 +34,4 @@ is ([lcm] 1..3), 6, '[lcm] Range works';
        123246369492615738861985108107984861738615492369246123, "lcm handles big Int and big Int";
 }
 
-done;
 # vim: ft=perl6

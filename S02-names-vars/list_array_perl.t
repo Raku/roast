@@ -107,7 +107,5 @@ my @tests = (
         'no duplicate keys in .gist of Match of regex which backtracked';
 }
 
-done;
-
 # vim: ft=perl6
 

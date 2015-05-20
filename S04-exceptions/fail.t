@@ -103,6 +103,4 @@ plan 26;
     is fatal-scope(&non-fatal-scope), 42, "Fatal scopes are lexical rather than dynamic";
 }
 
-done;
-
 # vim: ft=perl6

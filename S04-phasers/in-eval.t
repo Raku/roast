@@ -95,6 +95,4 @@ plan 35;
     is $h, '12', 'END {} does not run at run time either';
 }
 
-done;
-
 # vim: ft=perl6

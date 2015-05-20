@@ -78,6 +78,4 @@ eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
     is ("1", "2", "+").reduce(&a), 3, 'reduce and multi subs';
 }
 
-done;
-
 # vim: ft=perl6

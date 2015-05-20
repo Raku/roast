@@ -279,6 +279,4 @@ eval-dies-ok 'sub rt65324(*@x, $oops) { say $oops }',
         'slurpy array can be indexed if index contains prefix:<+>';
 }
 
-done;
-
 # vim: ft=perl6

@@ -50,6 +50,4 @@ class IntrospectAtBEGINTime {
     is BEGIN { IntrospectAtBEGINTime.^name }, 'IntrospectAtBEGINTime', '.^foo works at BEGIN time';
 }
 
-done;
-
 # vim: ft=perl6

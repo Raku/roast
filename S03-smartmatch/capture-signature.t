@@ -37,6 +37,4 @@ is t2([1,2]), "om nom nom", "signature smart-match against array works (2)";
         'can match integer capture against signature with native integer coercing to Str';
 }
 
-done;
-
 # vim: ft=perl6

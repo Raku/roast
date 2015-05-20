@@ -474,6 +474,4 @@ Testing operator overloading subroutines
     is $RT115724 , 111, 'can define and use circumfix operator with a double quote (")';
 }
 
-done;
-
 # vim: ft=perl6
