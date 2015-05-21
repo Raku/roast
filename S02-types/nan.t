@@ -11,11 +11,8 @@ plan 21;
 is 0 * Inf  , NaN, "0 * Inf";
 is Inf / Inf, NaN, "Inf / Inf";
 is Inf - Inf, NaN, "Inf - Inf";
-# if we say that 0**0 and Inf**0 both give 1 (sse below), then for which
-# number or limit whould $number ** 0 be different from 1? so maybe just say
-# that NaN ** 0 == 1?
-#?rakudo skip 'unspecced and inconsistent RT #124450'
-is NaN ** 0,  NaN, "NaN ** 0";
+# RT #124450
+is NaN ** 0,  1, "NaN ** 0";
 
 is 0**0     , 1, "0**0 is 1, _not_ NaN";
 is Inf**0   , 1, "Inf**0 is 1, _not_ NaN";

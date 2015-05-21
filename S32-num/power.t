@@ -40,13 +40,14 @@ is(NaN ** 2, NaN, "NaN propagates with integer powers");
 is(NaN ** 3.14, NaN, "NaN propagates with numeric powers");
 is(0 ** NaN, NaN, "0**NaN=NaN");
 
-# Not at all sure the next three cases are correct!
+# Not at all sure the next two cases are correct!
 
 #?niecza 2 todo 'complex NaN stringy'
-#?rakudo 3 todo 'wrong results for "NaN" used with "**" RT #124800'
+#?rakudo 2 todo 'wrong results for "NaN" used with "**" RT #124800'
 is(NaN ** 1i, NaN, "NaN**1i=NaN");
 is(1i ** NaN, NaN, "1i**NaN=NaN");
-is(NaN ** 0, NaN, "NaN**0=NaN");
+# RT #124450
+is(NaN ** 0, 1, "NaN**0=1");
 
 is(NaN ** NaN, NaN, "NaN**NaN=NaN");
 is(Inf ** NaN, NaN, "Inf**NaN=NaN");
