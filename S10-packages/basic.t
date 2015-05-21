@@ -176,14 +176,14 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 }
 
 {
-    eval-lives-ok 'class RT64688_c1;use Test', 'use after class line';
+    eval-lives-ok 'unit class RT64688_c1;use Test', 'use after class line';
     eval-lives-ok 'class RT64688_d1 { use Test }', 'use in class block';
-    eval-lives-ok 'module RT64688_m1;use Test', 'use after module line';
+    eval-lives-ok 'unit module RT64688_m1;use Test', 'use after module line';
     eval-lives-ok 'module RT64688_m2 { use Test }', 'use in module block';
     eval-lives-ok 'package RT64688_p2 { use Test }', 'use in package block';
-    eval-lives-ok 'grammar RT64688_g1;use Test', 'use after grammar line';
+    eval-lives-ok 'unit grammar RT64688_g1;use Test', 'use after grammar line';
     eval-lives-ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
-    eval-lives-ok 'role RT64688_r1;use Test', 'use after role line';
+    eval-lives-ok 'unit role RT64688_r1;use Test', 'use after role line';
     eval-lives-ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
