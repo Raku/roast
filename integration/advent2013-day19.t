@@ -14,9 +14,9 @@ plan 4;
 	measure "Measured", $value;
     });
 
-    $measurements.more(1.5);
-    $measurements.more(2.3);
-    $measurements.more(4.6);
+    $measurements.emit(1.5);
+    $measurements.emit(2.3);
+    $measurements.emit(4.6);
     is-deeply %measured, {"Measured" => [1.5, 2.3, 4.6]}, 'supply - singular tap';
 
     %measured = ();
@@ -24,7 +24,7 @@ plan 4;
 	measure "Also measured", $value;
     });
 
-    $measurements.more(2.8);
+    $measurements.emit(2.8);
 
     is-deeply %measured, {"Measured" => [2.8], "Also measured" => [2.8]}, 'supply dual tap';
 
@@ -33,11 +33,11 @@ plan 4;
     });
 
     %measured = ();
-    $measurements.more(1.6);
+    $measurements.emit(1.6);
     is-deeply %measured, {"Measured" => [1.6], "Also measured" => [1.6]}, 'supply grep and tap';
 
     %measured = ();
-    $measurements.more(4.5);
+    $measurements.emit(4.5);
     is-deeply %measured, {"Measured" => [4.5], "Also measured" => [4.5], "HIGH" => [4.5]}, 'supply grep and tap';
 }
 
