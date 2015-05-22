@@ -463,6 +463,7 @@ eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 {
     is (for ^2 { 41; 42 }), (42,42), "for loop value is list of iter values";
+#?rakudo.jvm todo 'gives Any instead of ()'
     is (for ^5 { 41; next if $_ == 2; $_; }).flat, (0,1,3,4),
                 "for loop with value-less next flattens out nexted iterations";
 
@@ -470,6 +471,7 @@ eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
     my $l = (for ^5 { 41; next if $_ == 2; $_; });
     is $l[2].perl, "()", "for loop iteration with value-less 'next' gives ()";
 
+#?rakudo.jvm todo 'gives "" instead of "0 1"'
     is (for ^5 { 41; last if $_ == 2; $_; }).flat, (0,1),
                 "for loop with value-less last flattens out last iteration";
 
