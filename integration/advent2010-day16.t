@@ -33,11 +33,11 @@ is $dw.gist, '1963-01-01T00:00:00Z', 'DateTime defaults';
 
 $dw = DateTime.new('1963-11-23T17:15:00+0130');
 is $dw.offset-in-minutes, 90, 'date offset';
-is $dw.gist,'1963-11-23T17:15:00+0130', 'date offset';
+is $dw.gist,'1963-11-23T17:15:00+01:30', 'date offset';
 
 $dw = DateTime.new('1963-11-23T17:15:00-0145');
 is $dw.offset-in-minutes, -105, 'date negative offset';
-is $dw.gist,'1963-11-23T17:15:00-0145', 'date negative offset';
+is $dw.gist,'1963-11-23T17:15:00-01:45', 'date negative offset';
 
 my $jfk = Date.new("1963-11-22");
 $jfk++;
