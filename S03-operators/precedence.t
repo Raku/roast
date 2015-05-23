@@ -228,7 +228,7 @@ throws-like '1, 2 Z 3, 4 X 5, 6',
     foo 3 != 3;
     is($r, False, 'sanity 3 != 3');
     $r = True;
-    #?rakudo 2 todo 'Inequality (!=) misparsed as assignment RT #124538'
+    #?rakudo 2 todo 'Inequality (!=) misparsed as assignment RT #121108'
     lives-ok { foo 3 !=3 }, '3 !=3 does not die';
     is($r, False, 'ensure 3 !=3 gives same result as 3 != 3');
 }
