@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 58;
+plan 59;
 
 
 # terms
@@ -219,7 +219,6 @@ throws-like '1, 2 Z 3, 4 X 5, 6',
     X::Syntax::NonAssociative,
     'list associativity only works between identical operators';
 
-#?rakudo skip 'nom regression RT #124538'
 #?niecza skip 'assigning to readonly value'
 {
     # Check a 3 != 3 vs 3 !=3 parsing issue that can cropped up in Rakudo.
@@ -228,7 +227,9 @@ throws-like '1, 2 Z 3, 4 X 5, 6',
     sub foo($x) { $r = $x }
     foo 3 != 3;
     is($r, False, 'sanity 3 != 3');
-    foo 3 !=3;
+    $r = True;
+    #?rakudo 2 todo 'Inequality (!=) misparsed as assignment RT #124538'
+    lives-ok { foo 3 !=3 }, '3 !=3 does not die';
     is($r, False, 'ensure 3 !=3 gives same result as 3 != 3');
 }
 
