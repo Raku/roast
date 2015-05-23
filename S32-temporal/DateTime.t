@@ -201,22 +201,22 @@ is show-dt(DateTime.new(425865600)), '0 0 0 1 7 1983 5', 'from POSIX at 1983-07-
 
 is ds('2009-12-31T22:33:44Z'), '2009-12-31T22:33:44Z', 'round-tripping ISO 8601 (Z)';
 is ds('2009-12-31T22:33:44+0000'), '2009-12-31T22:33:44Z', 'round-tripping ISO 8601 (+0000 to Z)';
-is ds('2009-12-31T22:33:44+1100'), '2009-12-31T22:33:44+1100', 'round-tripping ISO 8601 (+1100)';
+is ds('2009-12-31T22:33:44+1100'), '2009-12-31T22:33:44+11:00', 'round-tripping ISO 8601 (+1100)';
 is ds('2009-12-31T22:33:44'), '2009-12-31T22:33:44Z', 'DateTime.new(Str) defaults to UTC';
 is DateTime.new('2009-12-31T22:33:44',
         timezone => 12*60*60 + 34*60),
-    '2009-12-31T22:33:44+1234', 'DateTime.new(Str) with :timezone';
+    '2009-12-31T22:33:44+12:34', 'DateTime.new(Str) with :timezone';
 is DateTime.new('2009-12-31T22:33:44',
         formatter => { ($^dt.hour % 12) ~ 'ish' } ),
     '10ish', 'DateTime.new(Str) with formatter';
 
 # additional timezone offset formats that are acceptable per ISO 8601
-is ds('2012-12-22T07:02:00+12'), '2012-12-22T07:02:00+1200', 'offset with no minutes specified';
-is ds('2012-12-22T07:02:00-12'), '2012-12-22T07:02:00-1200', 'negative offset with no minutes specified';
-is ds('2012-12-22T07:02:00+12:00'), '2012-12-22T07:02:00+1200', 'colonated offset';
-is ds('2012-12-22T07:02:00-12:00'), '2012-12-22T07:02:00-1200', 'negative colonated offset';
-is ds('2012-12-22T07:02:00+12:45'), '2012-12-22T07:02:00+1245', 'colonated non-zero offset';
-is ds('2012-12-22T07:02:00-12:45'), '2012-12-22T07:02:00-1245', 'colonated negative non-zero offset';
+is ds('2012-12-22T07:02:00+12'), '2012-12-22T07:02:00+12:00', 'offset with no minutes specified';
+is ds('2012-12-22T07:02:00-12'), '2012-12-22T07:02:00-12:00', 'negative offset with no minutes specified';
+is ds('2012-12-22T07:02:00+12:00'), '2012-12-22T07:02:00+12:00', 'colonated offset';
+is ds('2012-12-22T07:02:00-12:00'), '2012-12-22T07:02:00-12:00', 'negative colonated offset';
+is ds('2012-12-22T07:02:00+12:45'), '2012-12-22T07:02:00+12:45', 'colonated non-zero offset';
+is ds('2012-12-22T07:02:00-12:45'), '2012-12-22T07:02:00-12:45', 'colonated negative non-zero offset';
 
 is ds('2012-12-22T07:02:00+00'), '2012-12-22T07:02:00Z', '+00 with no minutes';
 is ds('2012-12-22T07:02:00-00'), '2012-12-22T07:02:00Z', '-00 with no minutes';
@@ -284,7 +284,7 @@ dies-ok { ds('2012-12-22T07:02:00+7:') }, 'single digit hour, trailing colon';
         year => 1970, month  => 1, day => 1,
         hour =>    1, minute => 1, second => 1,
         timezone => -1*60*60 -1*60;
-    is $dt.posix, 7321, 'DateTime.posix (1970-01-01T01:01:01-0101)';
+    is $dt.posix, 7321, 'DateTime.posix (1970-01-01T01:01:01-01:01)';
     # round-trip test for the current time
     my $t = time;
     my @t = test-gmtime $t;
@@ -353,35 +353,35 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     }
 
     my $dt = with-tz(tz('+0200'), 4);
-    is ~$dt, '2005-02-04T17:25:00+0400', 'DateTime.in-timezone (adding hours)';
+    is ~$dt, '2005-02-04T17:25:00+04:00', 'DateTime.in-timezone (adding hours)';
     $dt = with-tz(tz('+0000'), -1);
-    is ~$dt, '2005-02-04T14:25:00-0100', 'DateTime.in-timezone (subtracting hours)';
+    is ~$dt, '2005-02-04T14:25:00-01:00', 'DateTime.in-timezone (subtracting hours)';
     $dt = with-tz(tz('-0100'), 0);
     is ~$dt, '2005-02-04T16:25:00Z', 'DateTime.in-timezone (-0100 to UTC)';
     $dt = tz('-0100').utc;
     is ~$dt, '2005-02-04T16:25:00Z', 'DateTime.utc (from -0100)';
     $dt = with-tz(tz('+0100'), -1);
-    is ~$dt, '2005-02-04T13:25:00-0100', 'DateTime.in-timezone (+ hours to - hours)';
+    is ~$dt, '2005-02-04T13:25:00-01:00', 'DateTime.in-timezone (+ hours to - hours)';
     $dt = with-tz(tz('-0200'), -5);
-    is ~$dt, '2005-02-04T12:25:00-0500', 'DateTime.in-timezone (decreasing negative hours)';
+    is ~$dt, '2005-02-04T12:25:00-05:00', 'DateTime.in-timezone (decreasing negative hours)';
     $dt = with-tz(tz('+0000'), 0, -13);
-    is ~$dt, '2005-02-04T15:12:00-0013', 'DateTime.in-timezone (negative minutes)';
+    is ~$dt, '2005-02-04T15:12:00-00:13', 'DateTime.in-timezone (negative minutes)';
     $dt = with-tz(tz('+0000'), 0, 0, -5);
     is hms($dt), '15,24,55', 'DateTime.in-timezone (negative seconds)';
     $dt = with-tz(tz('+0000'), 0, -27);
-    is ~$dt, '2005-02-04T14:58:00-0027', 'DateTime.in-timezone (hour rollover 1)';
+    is ~$dt, '2005-02-04T14:58:00-00:27', 'DateTime.in-timezone (hour rollover 1)';
     $dt = with-tz(tz('+0000'), 0, 44);
-    is ~$dt, '2005-02-04T16:09:00+0044', 'DateTime.in-timezone (hour rollover 2)';
+    is ~$dt, '2005-02-04T16:09:00+00:44', 'DateTime.in-timezone (hour rollover 2)';
     $dt = with-tz(tz('+0311'), -2, -27);
-    is ~$dt, '2005-02-04T09:47:00-0227', 'DateTime.in-timezone (hours and minutes)';
+    is ~$dt, '2005-02-04T09:47:00-02:27', 'DateTime.in-timezone (hours and minutes)';
     $dt = with-tz(tz('+0311'), -2, -27, -19);
     is hms($dt), '9,46,41', 'DateTime.in-timezone (hours, minutes, and seconds)';
     $dt = with-tz(tz('+0000'), -18, -55);
-    is ~$dt, '2005-02-03T20:30:00-1855', 'DateTime.in-timezone (one-day rollover)';
+    is ~$dt, '2005-02-03T20:30:00-18:55', 'DateTime.in-timezone (one-day rollover)';
     $dt = with-tz(tz('-1611'), 16, 55);
-    is ~$dt, '2005-02-06T00:31:00+1655', 'DateTime.in-timezone (two-day rollover)';
+    is ~$dt, '2005-02-06T00:31:00+16:55', 'DateTime.in-timezone (two-day rollover)';
     $dt = with-tz(ds('2005-01-01T02:22:00+0300'), 0, 35);
-    is ~$dt, '2004-12-31T23:57:00+0035', 'DateTime.in-timezone (year rollover)';
+    is ~$dt, '2004-12-31T23:57:00+00:35', 'DateTime.in-timezone (year rollover)';
 
     $dt = with-tz(dt(second => 15.5), 0, 0, 5);
     #?rakudo todo 'nom regression'
@@ -392,7 +392,7 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
              timezone => 13).in-timezone(-529402);
       # A difference from UTC of 6 days, 3 hours, 3 minutes, and
       # 22 seconds.
-    is show-dt($dt), '29 18 23 27 12 2004 1', 'DateTime.in-timezone (big rollover)';    
+    is show-dt($dt), '29 18 23 27 12 2004 1', 'DateTime.in-timezone (big rollover)';
 
 }
 
