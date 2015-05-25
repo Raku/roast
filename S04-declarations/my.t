@@ -7,20 +7,20 @@ plan 96;
 # lexically scoped declarations are visible"> 
 {
 
-    eval_dies_ok('$x; my $x = 42', 'my() variable not yet visible prior to declaration');
+    eval-dies-ok('$x; my $x = 42', 'my() variable not yet visible prior to declaration');
     is(EVAL('my $x = 42; $x'), 42, 'my() variable is visible now (2)');
 }
 
 
 {
     my $ret = 42;
-    eval_dies_ok '$ret = $x ~ my $x;', 'my() variable not yet visible (1)';
+    eval-dies-ok '$ret = $x ~ my $x;', 'my() variable not yet visible (1)';
     is $ret, 42,                       'my() variable not yet visible (2)';
 }
 
 {
     my $ret = 42;
-    lives_ok { $ret = (my $x) ~ $x }, 'my() variable is visible (1)';
+    lives-ok { $ret = (my $x) ~ $x }, 'my() variable is visible (1)';
     is $ret, "",                      'my() variable is visible (2)';
 }
 
@@ -38,14 +38,14 @@ plan 96;
   is $was_in_sub, 42, 'calling a lexically defined my()-code var worked';
 }
 
-eval_dies_ok 'foo(42)', 'my &foo is lexically scoped';
+eval-dies-ok 'foo(42)', 'my &foo is lexically scoped';
 
 {
   is(do {my $a = 3; $a}, 3, 'do{my $a = 3; $a} works');
   is(do {1; my $a = 3; $a}, 3, 'do{1; my $a = 3; $a} works');
 }
 
-eval_lives_ok 'my $x = my $y = 0; #OK', '"my $x = my $y = 0" parses';
+eval-lives-ok 'my $x = my $y = 0; #OK', '"my $x = my $y = 0" parses';
 
 {
     my $test = "value should still be set for arg, even if there's a later my";
@@ -64,7 +64,7 @@ if (1) { # create a new lexical scope
     my $b = 1;
     ok($b, '$b is available in this scope');
 }
-eval_dies_ok '$b', '$b is not available in this scope';
+eval-dies-ok '$b', '$b is not available in this scope';
 
 # changing a lexical within a block retains the changed value
 my $c = 1;
@@ -105,7 +105,7 @@ $d;
         $func2 = sub { $e };  # one to access it
     }
 
-    eval_dies_ok '$e', '$e is not available in this scope';
+    eval-dies-ok '$e', '$e is not available in this scope';
     is($func2(), 0, '$func2() just returns the $e lexical which is held by the closure');
     $func();
     is($func2(), 1, '$func() increments the $e lexical which is held by the closure');
@@ -124,8 +124,8 @@ is(EVAL('my $x = 1, my $y = 2; $y #OK'), 2, 'precedence of my wrt = and ,');
 # and initializes both arrays
 {
     my (@a, @b);
-    lives_ok { @a.push(2) }, 'Can use @a';
-    lives_ok { @b.push(3) }, 'Can use @b';
+    lives-ok { @a.push(2) }, 'Can use @a';
+    lives-ok { @b.push(3) }, 'Can use @b';
     is ~@a, '2', 'push actually worked on @a';
     is ~@b, '3', 'push actually worked on @b';
 }
@@ -187,15 +187,15 @@ my $z = 42; #OK not used
 # &variables don't need to be pre-declared
 # (but they need to exist by CHECK)
 {
-    eval_lives_ok '&x; 1; sub x {}', '&x does not need to be pre-declared';
-    eval_dies_ok '&x()', '&x() dies when empty';
+    eval-lives-ok '&x; 1; sub x {}', '&x does not need to be pre-declared';
+    eval-dies-ok '&x()', '&x() dies when empty';
 }
 
 # RT #62766
 {
-    eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
+    eval-lives-ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
-    eval_lives_ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
+    eval-lives-ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
 
     {
         ok EVAL('not OUTER::<$x>.defined'), 'OUTER::<$x>';
@@ -206,42 +206,42 @@ my $z = 42; #OK not used
     {
         my $a;
         #?niecza 2 todo 'still fails?'
-        lives_ok { EVAL 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }' };
+        lives-ok { EVAL 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }' };
         ok $a, 'unreached declaration in effect at block start';
     }
 
     # XXX As I write this, this does not die right.  more testing needed.
-    dies_ok { my Int $x = "abc" }, 'type error'; #OK
-    dies_ok { EVAL '$x = "abc"'; my Int $x; }, 'also a type error';
+    dies-ok { my Int $x = "abc" }, 'type error'; #OK
+    dies-ok { EVAL '$x = "abc"'; my Int $x; }, 'also a type error';
 }
 
 # RT #102414
 {
     # If there is a regression this may die not just fail to make ints
-    eval_lives_ok 'my (int $a);','native in declarator sig';
-    eval_lives_ok 'my (int $a, int $b);','natives in declarator sig';
-    dies_ok { my (int $a, num $b); $a = 'omg'; }, 'Native types in declarator sig 1/2 constrains';
-    dies_ok { my (int $a, num $b); $b = 'omg'; }, 'Native types in declarator sig 2/2 constrains';
-    lives_ok { my (int $a, num $b); $a = 42; $b = 4e2; }, 'Native types in declarator sig allow correct assignments';
+    eval-lives-ok 'my (int $a);','native in declarator sig';
+    eval-lives-ok 'my (int $a, int $b);','natives in declarator sig';
+    dies-ok { my (int $a, num $b); $a = 'omg'; }, 'Native types in declarator sig 1/2 constrains';
+    dies-ok { my (int $a, num $b); $b = 'omg'; }, 'Native types in declarator sig 2/2 constrains';
+    lives-ok { my (int $a, num $b); $a = 42; $b = 4e2; }, 'Native types in declarator sig allow correct assignments';
 
-    throws_like { my (Int $a); $a = "str" }, X::TypeCheck, 'Type in declarator sig 1/1 constrains';
-    throws_like { my (Int $a, Num $b); $a = "str" }, X::TypeCheck, 'Types in declarator sig 1/2 constrain';
-    throws_like { my (Int $a, Num $b); $b = "str" }, X::TypeCheck, 'Types in declarator sig 2/2 constrain';
-    lives_ok { my (Int $a, Num $b); $a = 1; $b = 1e0; }, 'Types in declarator sig allow correct assignments';
+    throws-like { my (Int $a); $a = "str" }, X::TypeCheck, 'Type in declarator sig 1/1 constrains';
+    throws-like { my (Int $a, Num $b); $a = "str" }, X::TypeCheck, 'Types in declarator sig 1/2 constrain';
+    throws-like { my (Int $a, Num $b); $b = "str" }, X::TypeCheck, 'Types in declarator sig 2/2 constrain';
+    lives-ok { my (Int $a, Num $b); $a = 1; $b = 1e0; }, 'Types in declarator sig allow correct assignments';
 
     # These still need spec clarification but test them, since they pass
-    eval_lives_ok 'my int ($a);', 'native outside declarator sig 1';
-    eval_lives_ok 'my int ($a, $b)', 'native outside declarator sig 2';
-    throws_like { my Int ($a); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/1 constrains';
-    throws_like { my Int ($a, $b); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/2 constrains';
-    throws_like { my Int ($a, $b); $b = "str"}, X::TypeCheck, 'Type outside declarator sig 2/2 constrains';
-    dies_ok { my int ($a, $b); $a = "str" }, 'Native type outside declarator sig 1/2 constrains';
-    dies_ok { my int ($a, $b); $b = "str" }, 'Native type outside declarator sig 2/2 constrains';
+    eval-lives-ok 'my int ($a);', 'native outside declarator sig 1';
+    eval-lives-ok 'my int ($a, $b)', 'native outside declarator sig 2';
+    throws-like { my Int ($a); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/1 constrains';
+    throws-like { my Int ($a, $b); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/2 constrains';
+    throws-like { my Int ($a, $b); $b = "str"}, X::TypeCheck, 'Type outside declarator sig 2/2 constrains';
+    dies-ok { my int ($a, $b); $a = "str" }, 'Native type outside declarator sig 1/2 constrains';
+    dies-ok { my int ($a, $b); $b = "str" }, 'Native type outside declarator sig 2/2 constrains';
 }
 
 # RT #115916
 {
-    throws_like { my (Str $rt115916) = 3 }, X::TypeCheck, 'another Type in declarator sig';
+    throws-like { my (Str $rt115916) = 3 }, X::TypeCheck, 'another Type in declarator sig';
 }
 
 {
@@ -268,16 +268,16 @@ my $z = 42; #OK not used
 
 }
 
-eval_lives_ok 'my (%h?) #OK', 'my (%h?) lives';
+eval-lives-ok 'my (%h?) #OK', 'my (%h?) lives';
 
 #RT 63588
-eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
+eval-lives-ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
         'global scoped variables are visible inside class definitions';
 
 #RT #72814
 {
     #?niecza skip 'a not predeclared'
-    lives_ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
+    lives-ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
 }
 
 # RT #72946
@@ -291,14 +291,14 @@ eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
 }
 
 # RT #76452
-eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
+eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
               'can declare a variable inside a sub call';
 
 # RT #77112
 # check that the presence of routines is checked before run time 
 {
     my $bad = 0;
-    dies_ok { EVAL '$bad = 1; no_such_routine()' },
+    dies-ok { EVAL '$bad = 1; no_such_routine()' },
         'dies on undeclared routines';
     nok $bad, '... and it does so before run time';
 }

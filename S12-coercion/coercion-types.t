@@ -13,7 +13,7 @@ plan 18;
     }
     isa-ok f(42), Str, 'Coercion type coerces';
     is f(42), '42',   'Coercion type coerces to correct value';
-    eval_dies_ok q[ sub g(Str(Cool) $x) { $x }; g(Any) ],
+    eval-dies-ok q[ sub g(Str(Cool) $x) { $x }; g(Any) ],
         'coercion type still type-checks';
 }
 
@@ -33,7 +33,7 @@ class NastyChild is Parent { };
 
     sub nasty(NastyChild(Parent) $x) { $x }
     #?rakudo todo 'missing checks'
-    dies_ok { EVAL 'nasty(Parent)' },
+    dies-ok { EVAL 'nasty(Parent)' },
         'coercion that does not produce the target type dies';
 }
 
@@ -43,14 +43,14 @@ class NastyChild is Parent { };
 {
     sub f1(Str:D(Cool:D) $x) { $x }
     sub f2(Str(Cool:D)   $x) { $x; }
-    dies_ok { EVAL 'f1(Cool)' }, 'Definedness check in constraint type rejects type object (1)';
+    dies-ok { EVAL 'f1(Cool)' }, 'Definedness check in constraint type rejects type object (1)';
     #?rakudo todo 'definedness checks'
-    dies_ok { EVAL 'f2(Cool)' }, 'Definedness check in constraint type rejects type object (2)';
+    dies-ok { EVAL 'f2(Cool)' }, 'Definedness check in constraint type rejects type object (2)';
     isa-ok f1(23), Str, 'Definedness check + coercion (1)';
     isa-ok f2(23), Str, 'Definedness check + coercion (2)';
 
     sub f3(Child:D(Parent) $x) { $x }
-    dies_ok { EVAL 'f3(Parent)' },
+    dies-ok { EVAL 'f3(Parent)' },
         'Coercion dies if it doees not satisfy definedness constraint of target';
 }
 

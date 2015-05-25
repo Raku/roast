@@ -42,7 +42,7 @@ package TokenTest {
     is $var, 42,
         "binding a var to the return value of a sub (a constant) works (1)";
 
-    dies_ok { $var = 23 },
+    dies-ok { $var = 23 },
         "binding a var to the return value of a sub (a constant) works (2)";
 }
 
@@ -51,7 +51,7 @@ package TokenTest {
 {
     my sub foo { 42 }
 
-    dies_ok { foo() := 23 },
+    dies-ok { foo() := 23 },
         "using the constant return value of a sub as the LHS in a binding operation dies";
 }
 
@@ -73,7 +73,7 @@ There're two ways one can argue:
     is $var, 42,
         "binding a var to the return value of a sub (a variable) works (1)";
 
-    dies_ok { $var = 23 },
+    dies-ok { $var = 23 },
         "binding a var to the return value of a sub (a variable) works (2)";
 }
 
@@ -84,7 +84,7 @@ There're two ways one can argue:
     is $var, 42,
         "binding a var to the return value of an 'is parcel' sub (a variable) works (1)";
 
-    lives_ok { $var = 23 },
+    lives-ok { $var = 23 },
         "binding a var to the return value of an 'is parcel' sub (a variable) works (2)";
     is $var, 23,
         "binding a var to the return value of an 'is parcel' sub (a variable) works (3)";
@@ -93,7 +93,7 @@ There're two ways one can argue:
 {
     my sub foo is parcel { my $var = 42; $var }
 
-    lives_ok { foo() := 23 },
+    lives-ok { foo() := 23 },
         "using the variable return value of an 'is parcel' sub as the LHS in a binding operation works";
 }
 
@@ -105,7 +105,7 @@ constant?
 {
     my sub foo is parcel { 42 }
 
-    dies_ok/lives_ok { foo() := 23 },
+    dies-ok/lives-ok { foo() := 23 },
         "using the constant return value of an 'is parcel' sub as the LHS in a binding operation behaves correctly";
 }
 

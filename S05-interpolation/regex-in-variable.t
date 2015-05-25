@@ -46,8 +46,8 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 }
 
 # RT #100232
-#?rakudo skip 'escaping characters before EVAL is the wrong way to fix this RT #124632'
-eval_dies_ok Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbage-in recognized as being garbage (see RT)";
+#?rakudo skip 'escaping characters before EVAL is the wrong way to fix this RT #100232'
+eval-dies-ok Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbage-in recognized as being garbage (see RT)";
 
 # because it broke these:
 {
@@ -57,7 +57,7 @@ eval_dies_ok Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbag
 }
 
 #?rakudo skip 'and no need to go all Bobby Tables either RT #124633'
-eval_dies_ok Q['a' ~~ /<{'$(say "trivially pwned")'}>/], "should handle this too";
+eval-dies-ok Q['a' ~~ /<{'$(say "trivially pwned")'}>/], "should handle this too";
 
 # Arrays
 
@@ -80,7 +80,7 @@ ok(!("aaaabbbbbcaaab" ~~ /^@foo+$/), 'Multiple array non-compiling');
 ok("aaaabbbbbcaaab" ~~ /^<@foo>+$/, 'Multiple array compiling');
 
 # L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
-eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
+eval-dies-ok 'm/%var/', 'cannot interpolate hashes into regexes';
 
 # L<S05/Variable (non-)interpolation/If $var is undefined>
 # This is similar to a test in S05-match/capturing-contexts.t
@@ -105,13 +105,13 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
 # RT #122253
 #?niecza skip "Representation P6cursor does not support attributes"
 {
-    throws_like { EVAL 'my class InterpolationTest { has $!a; method m() { /$!a/ } }' },
+    throws-like { EVAL 'my class InterpolationTest { has $!a; method m() { /$!a/ } }' },
         X::Attribute::Regex, :symbol<$!a>,
         'Cannot interpolate attribute in a regex';
-    throws_like { EVAL 'my class InterpolationTest { has $!b; method m() { /<$!b>/ } }' },
+    throws-like { EVAL 'my class InterpolationTest { has $!b; method m() { /<$!b>/ } }' },
         X::Attribute::Regex, :symbol<$!b>,
         'Cannot interpolate attribute in a regex in angle construct';
-    throws_like { EVAL 'my class InterpolationTest { has $!c; method m() { /<?> { $!c }/ } }' },
+    throws-like { EVAL 'my class InterpolationTest { has $!c; method m() { /<?> { $!c }/ } }' },
         X::Attribute::Regex, :symbol<$!c>,
         'Cannot interpolate attribute in a closure in a regex';
 }

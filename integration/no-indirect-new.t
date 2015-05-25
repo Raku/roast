@@ -10,11 +10,11 @@ plan 2;
 {
     class A { has $.b }
    
-    throws_like { EVAL "new A" },
+    throws-like { EVAL "new A" },
       X::Undeclared::Symbols,
       'parameterless prefixed new is allowed';
 
-    throws_like { EVAL "new A( :b('bulbous bouffant') )" },
+    throws-like { EVAL "new A( :b('bulbous bouffant') )" },
       X::Obsolete,
       'what looks like a constructor call is really a coersion to A, and should therefore be disallowed';
 }

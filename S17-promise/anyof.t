@@ -24,7 +24,7 @@ plan 10;
     my $pany = Promise.anyof($p1, $p2);
     
     $p2.break("oh noes");
-    dies_ok { $pany.result }, "Getting result of broken anyof dies";
+    dies-ok { $pany.result }, "Getting result of broken anyof dies";
     is $pany.status, Broken, "Promise was broken";
     is $pany.cause.message, "oh noes", "breakage reason conveyed";
     
@@ -32,4 +32,4 @@ plan 10;
     is $pany.status, Broken, "Other promise keeping doesn't affect status";
 }
 
-throws_like { Promise.anyof(42) }, X::Promise::Combinator;
+throws-like { Promise.anyof(42) }, X::Promise::Combinator;

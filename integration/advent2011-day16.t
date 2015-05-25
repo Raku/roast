@@ -23,7 +23,7 @@ my @b = (3, 4);
 {
     temp @a;
     push @a, @b;
-    is_deeply @a, [1, 2, 3, 4], 'automatic list flattening';
+    is-deeply @a, [1, 2, 3, 4], 'automatic list flattening';
 }
 
 {
@@ -32,19 +32,19 @@ my @b = (3, 4);
     push @a, $temp;  # does not flatten the two items in $temp,
                      # because $temp is a scalar
 
-    is_deeply @a, [1, 2, [3, 4]], 'item non-flattening';
+    is-deeply @a, [1, 2, [3, 4]], 'item non-flattening';
 }
 
 {
     temp @a;
     push @a, $(@b);
-    is_deeply @a, [1, 2, [3, 4]], 'item non-flattening';
+    is-deeply @a, [1, 2, [3, 4]], 'item non-flattening';
 }
 
 {
     temp @a;
     push @a, item @b;
-    is_deeply @a, [1, 2, [3, 4]], 'item non-flattening';
+    is-deeply @a, [1, 2, [3, 4]], 'item non-flattening';
 }
 
 {
@@ -71,7 +71,7 @@ my @b = (3, 4);
     my @a = 1, 2, 3, 4, 5;
     my @b = 10, 20, 30;
     @a[3] = @b;
-    is_deeply @a, [1, 2, 3, [10, 20, 30], 5], 'item context';
+    is-deeply @a, [1, 2, 3, [10, 20, 30], 5], 'item context';
 }
 
 sub set_five($x is rw) {

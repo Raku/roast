@@ -25,7 +25,7 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
     is(:10('0d37'),   0d37, ":10('0d37') overrides default decimal");
 
     # RT #107756
-    throws_like ':10(42)',
+    throws-like ':10(42)',
       X::Numeric::Confused,
       :what(42),
       ':10() really wants a string, not a number';
@@ -101,8 +101,7 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
     is_approx(:16<dead_beef> * 16**0, :16<dead_beef*16**0>,
         'Zero powers inside');
 
-    #?rakudo.moar skip "RT #123862 - negative radix"
-    #?rakudo.jvm skip "RT #123862 - negative radix"
+    #?rakudo skip "RT #123862 - negative radix"
     is_approx(:16<dead_beef> * 16**-1, :16<dead_beef*16**-1>,
         'Negative powers inside');    
 }
@@ -179,7 +178,7 @@ is(
 }
 
 # L<S02/Exponentials/"not clear whether the exponentiator should be 10 or the radix">
-throws_like { EVAL '0b1.1e10' },
+throws-like { EVAL '0b1.1e10' },
   X::Syntax::Confused,
   'Ambiguous, illegal syntax doesn\'t work';
 
@@ -226,22 +225,22 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 #   I think we should go with the method call semantics in all of the ambiguous
 #   forms, mostly because "no such method: Int::e5" is clearer than silently
 #   succeeding and the error coming up somewhere else.
-throws_like { 2.e123 },
+throws-like { 2.e123 },
   X::Method::NotFound,
   "2.e123 parses as method call";
-throws_like { 2.foo  },
+throws-like { 2.foo  },
   X::Method::NotFound,
   "2.foo  parses as method call";
 
 is  +'00123', 123, "Leading zeroes stringify correctly";
 
-throws_like { EVAL ':2<2>' },
+throws-like { EVAL ':2<2>' },
   Exception,
   ':2<2> is illegal';
-throws_like { EVAL ':10<3a>' },
+throws-like { EVAL ':10<3a>' },
   Exception,
   ':10<3a> is illegal';
-throws_like { EVAL ':0<0>' },
+throws-like { EVAL ':0<0>' },
   X::Syntax::Number::RadixOutOfRange,
   ':0<...> is illegal';
 

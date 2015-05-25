@@ -12,7 +12,7 @@ plan 3;
         push @called, 'Int';
         callsame;
     }
-    lives_ok { rt71754( 71754 ) }, 'Can call multi that uses "callsame"';
+    lives-ok { rt71754( 71754 ) }, 'Can call multi that uses "callsame"';
     is @called, <Int Numeric>, 'multi with "callsame" worked';
 }
 
@@ -25,7 +25,7 @@ plan 3;
         }
     }; 
     
-    lives_ok {rt69314(1)}, 'Calling callsame directly from a sub works';
+    lives-ok {rt69314(1)}, 'Calling callsame directly from a sub works';
 
 }
 

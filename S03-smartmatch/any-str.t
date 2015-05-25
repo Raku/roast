@@ -13,6 +13,4 @@ plan 5;
     ok  (Mu ~~ ''),         'Mu ~~ ""';
 }
 
-done;
-
 # vim: ft=perl6

@@ -4,7 +4,7 @@ use Test;
 
 plan(5);
 
-unless EVAL 'EVAL("1", :lang<perl5>)' {
+unless (try { EVAL("1", :lang<perl5>) }) {
     skip_rest;
     exit;
 }
@@ -33,13 +33,13 @@ my $tohash_p5 = EVAL('sub { return {map {$_ => 1} @_ } }', :lang<perl5>);
 my %hash = (foo => 'bar', hate => 'software');
 {
     my $foo = $tohash_p5.(keys %hash);
-    cmp_ok($foo, &infix:<cmp>, %hash);
-    is_deeply([$foo.keys].sort, [%hash.keys].sort);
+    cmp-ok($foo, &infix:<cmp>, %hash);
+    is-deeply([$foo.keys].sort, [%hash.keys].sort);
 }
 
 #?niecza skip 'VAR undeclared'
 {
-    is_deeply([%hash.keys].sort, [$keys_p5($%hash)].sort);
+    is-deeply([%hash.keys].sort, [$keys_p5($%hash)].sort);
 }
 
 # vim: ft=perl6

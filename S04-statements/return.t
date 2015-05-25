@@ -37,13 +37,13 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
 
 # S04: "A return always exits from the lexically surrounding sub or method definition"
 {
-    eval_dies_ok('return 1', 'bare return fails');
-    eval_dies_ok('for 1 {return 2}', 'cannot return out of a bare for block');
-    eval_dies_ok('my $i = 1; while $i-- {return 3}', 'cannot return out of a bare while');
-    eval_dies_ok('my $i = 0; until $i++ {return 4}', 'cannot return out of a bare until');
-    eval_dies_ok('loop (my $i = 0; $i < 1; $i++) {return 5}', 'cannot return out of a bare loop');
+    eval-dies-ok('return 1', 'bare return fails');
+    eval-dies-ok('for 1 {return 2}', 'cannot return out of a bare for block');
+    eval-dies-ok('my $i = 1; while $i-- {return 3}', 'cannot return out of a bare while');
+    eval-dies-ok('my $i = 0; until $i++ {return 4}', 'cannot return out of a bare until');
+    eval-dies-ok('loop (my $i = 0; $i < 1; $i++) {return 5}', 'cannot return out of a bare loop');
     # XXX: Not 100% sure on this one
-    eval_dies_ok('do {return 5}', 'cannot return out of a do block');
+    eval-dies-ok('do {return 5}', 'cannot return out of a do block');
 
     #?rakudo todo 'lexotic return'
     is (try EVAL 'my $double = -> $x { return 2 * $x }; sub foo($x) { $double($x) }; foo 42').defined, False, 'return is lexotic only; must not attempt dynamic return';

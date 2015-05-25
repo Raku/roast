@@ -80,10 +80,10 @@ plan 31;
 # testing some error cases
 {
     my @shift = 1 .. 5;
-    eval_dies_ok('shift() ', 'shift() requires arguments');
-    eval_dies_ok('42.shift', '.shift should not work on scalars');
-    dies_ok { EVAL('shift(@shift, 10)') }, 'shift() should not allow extra arguments';
-    dies_ok { EVAL(' @shift.shift(10)') }, 'shift() should not allow extra arguments';
+    eval-dies-ok('shift() ', 'shift() requires arguments');
+    eval-dies-ok('42.shift', '.shift should not work on scalars');
+    dies-ok { EVAL('shift(@shift, 10)') }, 'shift() should not allow extra arguments';
+    dies-ok { EVAL(' @shift.shift(10)') }, 'shift() should not allow extra arguments';
 }
 
 # Push with Inf arrays (waiting on answers to perl6-compiler email)
@@ -92,7 +92,5 @@ plan 31;
 #     # best not to uncomment this it just go on forever
 #     todo_throws_ok { 'shift(@shift)' }, '?? what should this error message be ??', 'cannot shift off of a Inf array';
 # }
-
-done;
 
 # vim: syn=perl6

@@ -1,6 +1,6 @@
 use lib 't/spec/packages';
 use RoleB;
 
-role RoleA;
+unit role RoleA;
 
 # vim: ft=perl6

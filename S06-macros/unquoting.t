@@ -63,9 +63,8 @@ plan 6;
     is rosen(sub { $paradox }), "EPR", "unquotes retain their lexical context";
 }
 
-#?rakudo.jvm skip "? RT #124966"
 { # unquotes must evaluate to ASTs
-    throws_like 'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
+    throws-like 'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
                 X::TypeCheck::Splice,
                 got      => Str,
                 expected => AST,
@@ -82,10 +81,8 @@ plan 6;
         }
     };
     my $cookies;
-    throws_like { $cookies!!; }, Exception,
+    throws-like { $cookies!!; }, Exception,
         payload => 'Null check failed for $cookies';
 }
-
-done;
 
 # vim: ft=perl6

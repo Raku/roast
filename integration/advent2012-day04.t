@@ -18,7 +18,7 @@ sub largest-prime-factor($n is copy) {
 is largest-prime-factor(600_851_475_143), 6857, 'largest prime factor';
 
 # Problem 53
-is_deeply do {
+is-deeply do {
     [1], -> @p { [0, @p Z+ @p, 0] } ... * #    generate Pascal's triangle
         ==> (*[0..100])()                     # get rows up to n = 100
         ==> map *.list                        # flatten rows into a single list
@@ -46,7 +46,7 @@ my @triplet-prods = gather {
     take [*] .list for gather triplets(1000);
 }
 
-is_deeply @triplet-prods, [31875000], 'Pythagorean triplet products (gathered)';
+is-deeply @triplet-prods, [31875000], 'Pythagorean triplet products (gathered)';
 
 @triplet-prods = do {
     constant N = 1000;
@@ -61,7 +61,7 @@ is_deeply @triplet-prods, [31875000], 'Pythagorean triplet products (gathered)';
     }
 }
 
-is_deeply @triplet-prods, [31875000], 'Pythagorean triplet products (dataflow)';
+is-deeply @triplet-prods, [31875000], 'Pythagorean triplet products (dataflow)';
 
 # Problem 47
 

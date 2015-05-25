@@ -1,4 +1,4 @@
-module ArrayInit;
+unit module ArrayInit;
 
 # used by t/spec/S10-packages/basic.t
 

@@ -68,4 +68,4 @@ plan 5;
     is($t, 'A1BCDBCDA2BCD', 'redoing outer for loop');
 }
 
-throws_like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclaration;
+throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclaration;

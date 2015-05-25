@@ -7,7 +7,7 @@ use Test;
 plan 2;
 
 #RT #115506
-eval_lives_ok
+eval-lives-ok
     'macro pathological { AST.new }; pathological();',
     "macro returning AST.new doesn't blow up";
 

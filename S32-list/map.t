@@ -86,13 +86,14 @@ my @list = (1 .. 5);
 }
 
 # map with n-ary functions
-#?rakudo skip "adverbial block; RT #53804"
 {
   is ~(1,2,3,4).map({ $^a + $^b             }), "3 7", "map() works with 2-ary functions";
   #?niecza skip 'No value for parameter $b in ANON'
+  #?rakudo skip "Too few positionals passed; expected 3 arguments but got 1; RT #125146"
   is ~(1,2,3,4).map({ $^a + $^b + $^c       }), "6 4", "map() works with 3-ary functions";
   is ~(1,2,3,4).map({ $^a + $^b + $^c + $^d }), "10",  "map() works with 4-ary functions";
   #?niecza skip 'No value for parameter $e in ANON'
+  #?rakudo skip "Too few positionals passed; expected 5 arguments but got 4; RT #125146"
   is ~(1,2,3,4).map({ $^a+$^b+$^c+$^d+$^e   }), "10",  "map() works with 5-ary functions";
 }
 
@@ -249,6 +250,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 # RT #112596
 #?niecza todo "https://github.com/sorear/niecza/issues/182"
+#?rakudo.jvm skip 'probably optimizer bug RT #125207'
 {
     my @a = map &sprintf.assuming("%x"), 9..12;
     is(@a, <9 a b c>, "map over a callable with a slurpy");

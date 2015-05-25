@@ -87,11 +87,11 @@ is $y.test,     42,         'method from other role was OK too';
         has $.y;
     }
 
-    dies_ok { my $x = {}; $x does R4a(3) },
+    dies-ok { my $x = {}; $x does R4a(3) },
             '"does role(param)" does not work without attribute';
-    lives_ok { my $x = {}; $x does R4b(3) },
+    lives-ok { my $x = {}; $x does R4b(3) },
             '"does role(param)" does work with one attribute';
-    dies_ok { my $x = {}; $x does R4c(3) },
+    dies-ok { my $x = {}; $x does R4c(3) },
             '"does role(param)" does not work with two attributes';
     is ([] does R4b("foo")).x, 'foo',
        'can mix R4b into an Array, and access the attribute';
@@ -108,14 +108,14 @@ is $y.test,     42,         'method from other role was OK too';
 
 # RT #99986
 {
-    lives_ok { 3/2 but role { } }, 'can mix into a Rat';
+    lives-ok { 3/2 but role { } }, 'can mix into a Rat';
 }
 
 # RT #77184
-#?niecza skip 'Twigil ! is only valid on attribute definitions'
-#?rakudo skip 'Twigil ! is only valid on attribute definitions RT #124748'
 {
-    lives_ok { role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }, 'RT #77184'
+    throws-like { EVAL q[{ role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }] },
+       X::Syntax::Variable::Twigil, twigil => '!', scope => 'my',
+       'RT #77184'
 }
 
 # RT #100782
@@ -136,7 +136,7 @@ is (class { } but role { method answer() { 42 } }).answer, 42,
     'can mix a role into a type object';
 
 # RT #101022
-lives_ok {(True but role {}).gist}, 'can mix into True';
+lives-ok {(True but role {}).gist}, 'can mix into True';
 
 # RT #73990
 #?niecza skip "Can only provide exactly one initial value to a mixin"
@@ -156,7 +156,7 @@ lives_ok {(True but role {}).gist}, 'can mix into True';
 
 # RT #119371
 {
-    throws_like q[role popo { macro marco { $^a but popo }; marco popo; }],
+    throws-like q[role popo { macro marco { $^a but popo }; marco popo; }],
         X::Role::Parametric::NoSuchCandidate,
         role    => { .^name eq 'popo' }
         ;

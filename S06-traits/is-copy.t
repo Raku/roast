@@ -87,7 +87,7 @@ plan 25;
 # RT #74454
 {
     sub g(%hash? is copy) { };  #OK not used
-    lives_ok { g() }, 'can call a sub with an optional "is copy" hash param';
+    lives-ok { g() }, 'can call a sub with an optional "is copy" hash param';
 }
 
 # RT #75302
@@ -114,7 +114,7 @@ plan 25;
 
 # RT #117583
 # the redeclaration thingy is only a warning
-eval_lives_ok 'sub f ($x is copy) { my $x }';
+eval-lives-ok 'sub f ($x is copy) { my $x }';
 
 # RT #118183
 {

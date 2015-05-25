@@ -17,10 +17,8 @@ is(+$array_obj, 3, 'Finding the length functions properly.');
 
 {
     ok +Array[Int].new(1, 2, 3, 4), "typed array";
-    throws_like(q{ Array[Int].new(1, 2, "Foo") }, X::TypeCheck);
-    throws_like(q{ Array[Str].new(1, 2, "Foo") }, X::TypeCheck);
+    throws-like(q{ Array[Int].new(1, 2, "Foo") }, X::TypeCheck);
+    throws-like(q{ Array[Str].new(1, 2, "Foo") }, X::TypeCheck);
 }
-
-done;
 
 # vim: ft=perl6

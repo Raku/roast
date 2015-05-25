@@ -214,8 +214,8 @@ is sprintf('%g', -Inf), "-inf", '-Inf properly handled %g';
 is sprintf('%G', -Inf), "-INF", '-Inf properly handled %G';
 
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
-dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
-dies_ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');   #OK not used
+dies-ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
+dies-ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');   #OK not used
 
 is sprintf('%s', NaN),              NaN,    'sprintf %s handles NaN';
 is sprintf('%s', -NaN),             NaN,    'sprintf %s handles NaN';
@@ -253,7 +253,7 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 # RT #122907
 # TODO: write a better test once there is a typed exception
 {
-    throws_like { sprintf "%d" }, Exception,
+    throws-like { sprintf "%d" }, Exception,
         message => 'Directives specify 1 argument, but no argument was supplied',
         "adequate error when sprintf %d directive doesn't find a corresponding argument";
 }

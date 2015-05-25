@@ -10,7 +10,7 @@ plan 56;
     constant foo = 42;
 
     ok foo == 42, "declaring a sigilless constant using 'constant' works";
-    dies_ok { foo = 3 }, "can't reassign to a sigil-less constant";
+    dies-ok { foo = 3 }, "can't reassign to a sigil-less constant";
 }
 
 {
@@ -27,12 +27,12 @@ plan 56;
 
     constant $bar0 = 42;
     ok $bar0 == 42, "declaring a constant with a sigil using 'constant' works";
-    dies_ok { $bar0 = 2 }, "Can't reassign to a sigiled constant";
+    dies-ok { $bar0 = 2 }, "Can't reassign to a sigiled constant";
 }
 
 # RT #69740
 {
-    eval_dies_ok 'constant ($a, $b) = (3, 4)', 'constant no longer takes list';
+    eval-dies-ok 'constant ($a, $b) = (3, 4)', 'constant no longer takes list';
 }
 
 {
@@ -40,16 +40,16 @@ plan 56;
         constant foo2 = 42;
     }
     #?niecza todo
-    eval_lives_ok 'foo2 == 42', 'constants are our scoped';
+    eval-lives-ok 'foo2 == 42', 'constants are our scoped';
 }
 
 #?niecza skip 'Lexical foo3 is not a package (?)'
 {
     constant foo3 = 42;
     #?rakudo todo 'constants as type constraints'
-    lives_ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
-    dies_ok { my foo3 $x = 43 },         'constant used as a type constraint enforces';
-    dies_ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';
+    lives-ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
+    dies-ok { my foo3 $x = 43 },         'constant used as a type constraint enforces';
+    dies-ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';
 }
 
 {
@@ -80,7 +80,7 @@ plan 56;
     package ConstantTest3 {
         my constant yak = 'shaving';
     }
-    dies_ok { ConstantTest3::yak }, 'constant can be explicitly "my"-scoped';
+    dies-ok { ConstantTest3::yak }, 'constant can be explicitly "my"-scoped';
 }
 
 #?rakudo todo 'COMPILING RT #125054'
@@ -105,7 +105,7 @@ plan 56;
     ok $ok, "declaring a constant in terms of hash constant works";
 }
 
-#?rakudo todo 'COMPILING RT #125055'
+#?rakudo todo 'COMPILING RT #125054'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
@@ -127,7 +127,7 @@ plan 56;
     ok $ok, "declaring a constant in terms of array constant works";
 }
 
-#?rakudo todo 'COMPILING RT #125056'
+#?rakudo todo 'COMPILING RT #125054'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
@@ -148,7 +148,6 @@ plan 56;
     ok $ok, "declaring a sigilless constant with a type specification using 'constant' works";
 }
 
-#?rakudo skip 'unicode constant name RT #125057'
 {
     my $ok;
 
@@ -172,14 +171,13 @@ plan 56;
     is $ok, 3, "a constant declared using 'constant' is actually constant (1)";
 }
 
-#?rakudo skip 'binding RT #125058'
 {
     my $ok;
 
     constant baka = 42;
     $ok++ if baka == 42;
 
-    try { baka := 23 };
+    try { EVAL 'baka := 23' };
     $ok++ if $!;
     $ok++ if baka == 42;
 
@@ -199,14 +197,13 @@ plan 56;
     is $ok, 3, "a constant declared using 'constant' is actually constant (3)";
 }
 
-#?rakudo skip 'binding RT #125059'
 {
     my $ok;
 
     constant wibble = 42;
     $ok++ if wibble == 42;
 
-    try { wibble := { 23 } };
+    try { EVAL 'wibble := { 23 }' };
     $ok++ if $!;
     $ok++ if wibble == 42;
 
@@ -230,11 +227,11 @@ plan 56;
 # RT #64522
 {
     constant $x = 64522;
-    dies_ok { $x += 2 }, 'dies: constant += n';
+    dies-ok { $x += 2 }, 'dies: constant += n';
     is $x, 64522, 'constant after += has not changed';
 
     sub con { 64522 }
-    dies_ok { ++con }, "constant-returning sub won't increment";
+    dies-ok { ++con }, "constant-returning sub won't increment";
     is con, 64522, 'constant-returning sub after ++ has not changed';
 }
 
@@ -242,22 +239,22 @@ plan 56;
 {
     constant $change = 'alteration';
 
-    dies_ok { $change ~= '' }, 'append nothing to a constant';
-    dies_ok { $change = 'alteration' }, 'assign constant its own value';
+    dies-ok { $change ~= '' }, 'append nothing to a constant';
+    dies-ok { $change = 'alteration' }, 'assign constant its own value';
     my $t = $change;
-    dies_ok { $change = $t }, 'assign constant its own value from var';
-    dies_ok { $change = 'alter' ~ 'ation' },
+    dies-ok { $change = $t }, 'assign constant its own value from var';
+    dies-ok { $change = 'alter' ~ 'ation' },
              'assign constant its own value from expression';
 
     constant $five = 5;
 
-    dies_ok { $five += 0 }, 'add zero to constant number';
-    dies_ok { $five *= 1 }, 'multiply constant number by 1';
-    dies_ok { $five = 5 }, 'assign constant its own value';
+    dies-ok { $five += 0 }, 'add zero to constant number';
+    dies-ok { $five *= 1 }, 'multiply constant number by 1';
+    dies-ok { $five = 5 }, 'assign constant its own value';
     my $faux_five = $five;
-    dies_ok { $five = $faux_five },
+    dies-ok { $five = $faux_five },
              'assign constant its own value from variable';
-    dies_ok { $five = 2 + 3 },
+    dies-ok { $five = 2 + 3 },
              'assign constant its own value from expression';
 }
 
@@ -294,7 +291,7 @@ plan 56;
 
 # RT #115132
 {
-    lives_ok {constant x1 = "foo" ~~ /bar/},
+    lives-ok {constant x1 = "foo" ~~ /bar/},
         'can assign result of smart matching to constant';
     constant x2 = "foo" ~~ "foo";
     is x2, True, 'can assign True to constant';
@@ -317,7 +314,7 @@ plan 56;
 # RT #122604
 {
     constant lots = 0..*;
-    lives_ok {lots[100_000]}, "can index an infinite constant list at 100K";
+    lives-ok {lots[100_000]}, "can index an infinite constant list at 100K";
 }
 
 # RT #111734
@@ -336,7 +333,7 @@ plan 56;
     is Ticket.val, "dot-equals assignment", ".= new initialization on constants works";
 }
 
-throws_like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
+throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     symbol  => 'Mouse';
 
 # vim: ft=perl6

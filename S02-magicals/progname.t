@@ -13,7 +13,7 @@ ok(PROCESS::<$PROGRAM> ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']pro
 # changed junction hack in test 2 to regex for Rakudo fudged filename - mberends
 
 #?niecza todo
-lives_ok { $*PROGRAM_NAME = "coldfusion" }, '$*PROGRAM_NAME is assignable';
+lives-ok { $*PROGRAM_NAME = "coldfusion" }, '$*PROGRAM_NAME is assignable';
 
 # RT #113078
 {

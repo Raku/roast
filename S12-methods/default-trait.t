@@ -12,13 +12,13 @@ class Something {
 }
 
 my $obj = Something.new();
-lives_ok { $obj.doit(3) }, "'is default' trait makes otherwise ambiguous method dispatch live";
+lives-ok { $obj.doit(3) }, "'is default' trait makes otherwise ambiguous method dispatch live";
 is $obj.doit(3), 9, "'is default' trait tie-breaks on method dispatch";
 
 multi sub doit_sub(Int $x)            { 2 * $x };
 multi sub doit_sub(Int $x) is default { 3 * $x };
 
-lives_ok { doit_sub(3) }, "'is default' trait makes otherwise ambiguous method dispatch live";
+lives-ok { doit_sub(3) }, "'is default' trait makes otherwise ambiguous method dispatch live";
 is doit_sub(3), 9, "'is default' trait on subs";
 
 multi sub slurpy() is default { return 'a' };

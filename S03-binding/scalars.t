@@ -36,7 +36,7 @@ plan 33;
 }
 
 # RT #77594
-eval_dies_ok '0 := 1', 'cannot bind to a literal';
+eval-dies-ok '0 := 1', 'cannot bind to a literal';
 
 
 # Binding and $CALLER::
@@ -101,7 +101,7 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
   #?niecza todo "difference of interpretation on ro binding"
   is $a, 42, "bound readonly sub param was bound correctly (2) (no change)";
 
-  dies_ok { $a = 23 },
+  dies-ok { $a = 23 },
     "bound readonly sub param remains readonly (1)";
   #?niecza todo "difference of interpretation on ro binding"
   is $a, 42,
@@ -120,7 +120,7 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
   $val++;
   is $a, 43, "bound rw sub param was bound correctly (2)";
 
-  lives_ok { $a = 23 }, "bound rw sub param remains rw (1)";
+  lives-ok { $a = 23 }, "bound rw sub param remains rw (1)";
   is $a, 23,            "bound rw sub param remains rw (2)";
   is $val, 23,          "bound rw sub param remains rw (3)";
 }

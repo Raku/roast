@@ -49,17 +49,17 @@ is_run(
        'multi sub with where clause + temp stress',
 );
 
-throws_like { EVAL 'time(1, 2, 3)' },
+throws-like { EVAL 'time(1, 2, 3)' },
   X::Undeclared::Symbols,
   'time() with arguments dies';
 
 # RT #76996
 #?niecza todo
-lives_ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
+lives-ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
 
 # RT #76946
 #?niecza skip 'todo'
-lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-internal exception';
+lives-ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-internal exception';
 
 # RT #90522
 {
@@ -68,24 +68,24 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
         return if ++$i == 50;
         EVAL 'foo';
     }
-    lives_ok { foo }, 'can recurse many times into &EVAL';
+    lives-ok { foo }, 'can recurse many times into &EVAL';
 }
 
 # RT #77246
 {
-    throws_like { EVAL '_~*.A' },
+    throws-like { EVAL '_~*.A' },
       X::Undeclared::Symbols,
       'weird string that once parsed in rakudo';
 }
 
 # RT #115284
 {
-    lives_ok { EVAL 'say(;:[])' }, 'weird code that used to parsefail rakudo';
+    lives-ok { EVAL 'say(;:[])' }, 'weird code that used to parsefail rakudo';
 }
 
 # RT #76432
 {
-    lives_ok { EVAL 'class A {
+    lives-ok { EVAL 'class A {
         has %!x;
     
         method m {

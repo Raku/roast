@@ -4,9 +4,9 @@ use Test;
 plan 6;
 
 isa-ok @*ARGS, Array, '@*ARGS is an Array';
-is_deeply @*ARGS, [], 'by default @*ARGS is empty array';
+is-deeply @*ARGS, [], 'by default @*ARGS is empty array';
 
-lives_ok { @*ARGS = 1, 2 }, '@*ARGS is writable';
+lives-ok { @*ARGS = 1, 2 }, '@*ARGS is writable';
 
 use lib 't/spec/packages';
 
@@ -32,5 +32,3 @@ is_run 'my @a = @*ARGS; for @a[ 1 ..^ +@*ARGS ] { .say };', :args[1, 'two', 'thr
         err => '',
         status => 0,
     }, 'can copy @*ARGS to array.';
-
-done;

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-
+plan 22;
 
 # L<S06/The C<callframe> and C<caller> functions>
 
@@ -59,7 +59,5 @@ sub chain { B.try_it_caller_B(@_) }
 }
 
 # WRITEME: label tests
-
-done;
 
 # vim: ft=perl6

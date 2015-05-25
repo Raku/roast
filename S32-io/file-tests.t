@@ -37,7 +37,7 @@ isa-ok $existing-file.IO.f, Bool, '.f returns Bool';
 ok $existing-file.IO ~~ :f, 'Is normal file';
 isa-ok $existing-file.IO ~~ :f, Bool, '~~ :f returns Bool';
 nok $non-existent-file.IO.f, 'Is not a normal file';
-throws_like { $non-existent-file.IO.f }, X::IO::DoesNotExist;
+throws-like { $non-existent-file.IO.f }, X::IO::DoesNotExist;
 nok $non-existent-file.IO ~~ :f, 'Is not a normal file';
 isa-ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
 
@@ -60,7 +60,7 @@ isa-ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
     isa-ok $existing-file.IO.s, Int, '.s returns Int';
 
     nok $non-existent-file.IO.s, 'Size on non-existent file';
-    throws_like { $non-existent-file.IO.s }, X::IO::DoesNotExist;
+    throws-like { $non-existent-file.IO.s }, X::IO::DoesNotExist;
     nok $non-existent-file.IO ~~ :s, 'Is not a normal file';
     isa-ok $non-existent-file.IO ~~ :s, Bool, '~~ :!s returns Bool';
 }

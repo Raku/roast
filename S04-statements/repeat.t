@@ -116,7 +116,7 @@ plan 19;
 
 # RT #114836
 {
-    lives_ok {
+    lives-ok {
         my $condition;
         repeat {
             $condition = False;
@@ -125,11 +125,10 @@ plan 19;
 }
 
 # RT #114432
-#?niecza skip "throws_like"
+#?niecza skip "throws-like"
 #?DOES 3
 {
-    throws_like 'repeat { "but I myself" }', X::Syntax::Missing, what => '"while" or "until"';
+    throws-like 'repeat { "but I myself" }', X::Syntax::Missing, what => '"while" or "until"';
 }
 
-done;
 # vim: ft=perl6

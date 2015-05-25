@@ -19,7 +19,7 @@ plan 89;
 # L<S02/Currying of Unary and Binary Operators/"Most of the built-in numeric operators">
 
 my $x = *-1;
-lives_ok { $x.WHAT }, '(*-1).WHAT lives';
+lives-ok { $x.WHAT }, '(*-1).WHAT lives';
 ok $x ~~ Code, '*-1 is some form of Code';
 isa-ok $x, WhateverCode, '*-1 is a WhateverCode object';
 is $x.(5), 4, 'and we can execute that Code';
@@ -132,7 +132,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
     # TODO: find out if this allowed for item assignment, or for list
     # assignment only
     #?rakudo todo '* as dummy'
-    eval_lives_ok ' * = 5 ', 'can dummy-asign to *';
+    eval-lives-ok ' * = 5 ', 'can dummy-asign to *';
 
     my $x;
     (*, *, $x) = 1, 2, 3, 4, 5;
@@ -217,9 +217,9 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
 }
 
 # RT #73162
-# WAS:  eval_lives_ok '{*.{}}()', '{*.{}}() lives';
+# WAS:  eval-lives-ok '{*.{}}()', '{*.{}}() lives';
 # This is now supposed tobe a double-closure error:
-eval_dies_ok '{*.{}}()', '{*.{}}() dies';
+eval-dies-ok '{*.{}}()', '{*.{}}() dies';
 
 # RT #80256
 {
@@ -237,9 +237,9 @@ eval_dies_ok '{*.{}}()', '{*.{}}() dies';
     is $f(7), 2, 'Whatever-currying with R- (2)';
     is $f(0), -5, 'Whatever-currying with R- (3)';
 
-    dies_ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+    dies-ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
     #?niecza skip 'Undeclared routine'
-    dies_ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+    dies-ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
 }
 
 # RT 79166

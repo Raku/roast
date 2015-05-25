@@ -17,12 +17,12 @@ subset Even of Int where { $_ % 2 == 0 };
     is $x, 2, 'Can assign value to a type variable with subset';
 };
 
-dies_ok { EVAL('my Even $x = 3') },
+dies-ok { EVAL('my Even $x = 3') },
               "Can't assign value that violates type constraint via subset";
 
 # RT # 69518'
 #?niecza todo
-dies_ok { EVAL('Even.new') }, 'Cannot instantiate a subtype';
+dies-ok { EVAL('Even.new') }, 'Cannot instantiate a subtype';
 
 {
     ok 2 ~~ Even,  'Can smartmatch against subsets 1';
@@ -42,44 +42,44 @@ subset Digit of Int where ^10;
     is  $x,     9,  "other end of range";
 }
 
-dies_ok { my Digit $x = 10 },
+dies-ok { my Digit $x = 10 },
              'type constraints prevents assignment 1';
-dies_ok { my Digit $x = -1 },
+dies-ok { my Digit $x = -1 },
         'type constraints prevents assignment 2';
-dies_ok { my Digit $x = 3.1 },
+dies-ok { my Digit $x = 3.1 },
              'original type prevents assignment';
 
 # RT #67818
 {
     subset Subhash of Hash;
-    lives_ok { my Subhash $a = {} },
+    lives-ok { my Subhash $a = {} },
              'can create subset of hash';
 
     subset Person of Hash where { .keys.sort ~~ <firstname lastname> }
-    lives_ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
+    lives-ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
              'can create subset of hash with where';
-    dies_ok { my Person $p = { :first<Charlie>, :last<Delta> } },
+    dies-ok { my Person $p = { :first<Charlie>, :last<Delta> } },
             'subset of hash with where enforces where clause';
 
     subset Austria of Array;
-    lives_ok { my Austria $a = [] },
+    lives-ok { my Austria $a = [] },
              'can create subset of array';
 
     subset NumArray of Array where { .elems == .grep: { $_ ~~ Num } }
-    lives_ok { my NumArray $n = [] },
+    lives-ok { my NumArray $n = [] },
              'can create subset of array with where';
     #?rakudo skip '(noauto) succeeds for the wrong reason (need to test the error)'
-    dies_ok { my NumArray $n = <Echo 2> },
+    dies-ok { my NumArray $n = <Echo 2> },
             'subset of array with where enforces where clause';
 
     subset Meercat of Pair;
-    lives_ok { my Meercat $p = :a<b> },
+    lives-ok { my Meercat $p = :a<b> },
              'can create subset of pair';
 
     subset Ordered of Pair where { .key < .value }
-    lives_ok { my Ordered $o = 23 => 42 },
+    lives-ok { my Ordered $o = 23 => 42 },
              'can create subset of Pair with where';
-    dies_ok { my Ordered $o = 42 => 23 },
+    dies-ok { my Ordered $o = 42 => 23 },
             'subset of pair with where enforces where clause';
 }
 
@@ -88,7 +88,7 @@ dies_ok { my Digit $x = 3.1 },
     my Str_not2b $text;
     $text = 'amnot';
     is $text, 'amnot', 'assignment to my subset of Str where pattern worked';
-    dies_ok { $text = 'oops' },
+    dies-ok { $text = 'oops' },
             'my subset of Str where pattern enforces pattern';
 }
 
@@ -97,7 +97,7 @@ dies_ok { my Digit $x = 3.1 },
     my Negation $text;
     $text = 'amnot';
     is $text, 'amnot', 'assignment to subset of Str where pattern worked';
-    dies_ok { $text = 'oops' }, 'subset of Str where pattern enforces pattern';
+    dies-ok { $text = 'oops' }, 'subset of Str where pattern enforces pattern';
 }
 
 # RT #67256
@@ -117,14 +117,14 @@ dies_ok { my Digit $x = 3.1 },
     class Y {has $.z};
     subset sY of Y where {.z == 0};
 
-    lives_ok { 4 ~~ sY }, 'Nominal type is checked first';
+    lives-ok { 4 ~~ sY }, 'Nominal type is checked first';
     ok 4 !~~ sY, 'and if nominal type check fails, it is False';
 }
 
 # RT #74234
 #?niecza todo
 {
-    eval_lives_ok 'subset A of Mu; my A $x = 23;',
+    eval-lives-ok 'subset A of Mu; my A $x = 23;',
         'subset A of Mu + type check and assignment works';
 }
 
@@ -145,7 +145,7 @@ dies_ok { my Digit $x = 3.1 },
 }
 
 subset Bug::RT80930 of Int where { $_ %% 2 };
-lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
+lives-ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 # RT #95500
 {
@@ -173,8 +173,8 @@ my $a = 1;
         sub bar($x where $a ) { $x }  #OK not used
     }
     my &bar := producer();
-    lives_ok { bar(2) }, 'where-constraint picks up the right lexical (+)';
-    dies_ok  { bar(1) }, 'where-constraint picks up the right lexical (-)';
+    lives-ok { bar(2) }, 'where-constraint picks up the right lexical (+)';
+    dies-ok  { bar(1) }, 'where-constraint picks up the right lexical (-)';
 }
 
 {

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 347;
+plan 366;
 
 =begin pod
 
@@ -170,10 +170,10 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 # Following two tests taken verbatim from former t/operators/reduce.t
-lives_ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
+lives-ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
 
 #?niecza todo 'These are hyperop tests!'
-lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
+lives-ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # Check that user defined infix ops work with [...], too.
 {
@@ -317,14 +317,13 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     }
 }
 
-#?rakudo todo 'triangle [\^^] and [\xor] RT #124515'
 #?niecza skip '^^'
 {
-    is (join ', ', [\^^] False, 0, 5, '', False, 16,    0,     Any,   "hello", False),
-       (join ', ',       False, 0, 5, 5,  5,     False, False, False, False,   False),
+    is ([\^^] False, 0, 5, '', False, 16, 0, Any, "hello", False).gist,
+       'False 0 5 5 5 Nil Nil Nil Nil Nil',
        '[\^^]';
-    is (join ', ', [\xor] 'xyzzy', Int,     0.0,     '',      False,   'plugh', 4,     2,     'xyzzy'),
-       (join ', ',        'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', False,   False, False, False),
+    is ([\xor] 'xyzzy', Int, 0.0, '', False, 'plugh', 4, 2, 'xyzzy').gist,
+       'xyzzy xyzzy xyzzy xyzzy xyzzy Nil Nil Nil Nil',
        '[\xor]';
 }
 
@@ -380,7 +379,7 @@ ok ([+]) == 0, 'argumentless [+] parses';
 
 # RT #79116
 {
-    throws_like '[leg] <a b c>', X::Syntax::CannotMeta,
+    throws-like '[leg] <a b c>', X::Syntax::CannotMeta,
         'non-associative operator "[leg]" can not be used as reduction operator';
 }
 

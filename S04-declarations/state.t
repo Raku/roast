@@ -130,24 +130,18 @@ plan 41;
 }
 
 # state() inside regular expressions
-#?rakudo todo 'embedded closures in regexen RT #125051'
 #?niecza skip ':Perl5'
 #?DOES 1
 {
     my $str = "abc";
 
     my $re  = {
-    # Perl 5 RE, as we don't want to force people to install Parrot ATM. (The
-    # test passes when using the Perl 6 RE, too.)
-    $str ~~ s:Perl5/^(.)/{
-      state $svar;
-      ++$svar;
-    }/;
+        $str ~~ s:Perl5/^(.)/{ state $++; }/;
     };
     $re();
     $re();
     $re();
-    is +$str, 3, "state() inside regular expressions works";
+    is $str, "2bc", "state() inside regular expressions works";
 }
 
 # state() inside subs, chained declaration
@@ -221,10 +215,10 @@ plan 41;
     my A $y = -4;
     # the compiler could have done some checks somehwere, so
     # pick a reasonably high number
-    dies_ok { $y = 900000 }, 'growing subset types rejects too high values';
-    lives_ok { $y = 1 }, 'the state variable in subset types works (1)';
-    lives_ok { $y = 2 }, 'the state variable in subset types works (2)';
-    lives_ok { $y = 3 }, 'the state variable in subset types works (3)';
+    dies-ok { $y = 900000 }, 'growing subset types rejects too high values';
+    lives-ok { $y = 1 }, 'the state variable in subset types works (1)';
+    lives-ok { $y = 2 }, 'the state variable in subset types works (2)';
+    lives-ok { $y = 3 }, 'the state variable in subset types works (3)';
 }
 
 # Test for RT #67058
@@ -237,7 +231,7 @@ sub bughunt1 { (state $svar) }    #OK not used
 
 # RT #115614
 {
-    lives_ok { state $i++ }, 'can parse "state $i++"';
+    lives-ok { state $i++ }, 'can parse "state $i++"';
 }
 
 #?DOES 1
@@ -253,9 +247,10 @@ sub bughunt1 { (state $svar) }    #OK not used
 }
 
 # niecza regression: state not working at top level
-eval_lives_ok 'state $x; $x', 'state outside control structure';
+eval-lives-ok 'state $x; $x', 'state outside control structure';
 
-#?rakudo todo 'initialization happens only on first call(?) RT #125052'
+# RT #102994
+#?rakudo todo 'initialization happens only on first call(?) RT #102994'
 {
     sub f($x) {
         return if $x;

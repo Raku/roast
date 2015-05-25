@@ -45,7 +45,7 @@ ok Nil.JustAnyMethod == Nil, 'Any method on Nil should return Nil';
 {
     my $x = 0;
     $x++ for Nil;
-    is $x, 0, '$Statement for Nil; does zero iterations';
+    is $x, 1, '$Statement for Nil; does one iteration';
 }
 
 # RT 93980
@@ -60,7 +60,7 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     subset MyInt of Int where True;
     my MyInt $x = 5;
 
-    lives_ok { $x = Nil }, 'can assign Nil to subsets';
+    lives-ok { $x = Nil }, 'can assign Nil to subsets';
     ok $x === MyInt, 'assigns to subset type object';
 }
 
@@ -72,24 +72,24 @@ ok !Nil.new.defined, 'Nil.new is not defined';
 {
     sub f1($x) { } #OK
     #?rakudo todo 'triage'
-    throws_like { f1(Nil) },
+    throws-like { f1(Nil) },
       Exception, # XXX fix when this starts to fail
       'param: dies for mandatory';
 
     sub f2(Int $x?) { $x }
     my $z;
     #?rakudo skip 'triage'
-    lives_ok { $z = f2(Nil) }, 'param: lives for optional';
+    lives-ok { $z = f2(Nil) }, 'param: lives for optional';
     #?rakudo todo 'triage'
     ok $z === Int, '... set to type object';
     my $z2 is default(Nil);
     #?rakudo todo 'triage'
-    lives_ok { $z = f2($z2) }, 'param: lives for optional from var';
+    lives-ok { $z = f2($z2) }, 'param: lives for optional from var';
     #?rakudo todo 'triage'
     ok $z === Int, '... set to type object';
 
     sub f3($x = 123) { $x }
-    lives_ok { $z = f3(Nil) }, 'param: lives for with-default';
+    lives-ok { $z = f3(Nil) }, 'param: lives for with-default';
     #?rakudo todo 'triage'
     is $z, 123, '... set to default';
 

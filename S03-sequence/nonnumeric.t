@@ -58,7 +58,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
     ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
 
     is ('ZZ' ... 'AA')[*-1], 'AA', "last element of 'ZZ' ... 'AA' is 'AA'";
-    throws_like { 'ZZ' ... 'A' },
+    throws-like { 'ZZ' ... 'A' },
         Exception,
         "Str decrement fails after 'AA': leftmost characters are never removed",
         message => 'Decrement out of range';
@@ -117,7 +117,5 @@ is ('1a', '1b' ... '1e').Str, '1a 1b 1c 1d 1e', 'sequence with strings that star
     is ('❶❶' ... '➓➓'), (('❶' ... '➓') X~ ('❶' ... '➓')), 'can juggle unicode balls';
     is ('➓➓' ... '❶❶'), (('➓' ... '❶') X~ ('➓' ... '❶')), 'can juggle unicode balls upside down';
 }
-
-done;
 
 # vim: ft=perl6

@@ -99,7 +99,7 @@ plan 9;
 
 # RT #116204
 {
-    lives_ok { repeat while False { "foo" ~~ / 'f' { 1 } 'o' { last } / } },
+    lives-ok { repeat while False { "foo" ~~ / 'f' { 1 } 'o' { last } / } },
         'can use last in code block in regex in loop';
 }
 

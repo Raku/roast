@@ -29,5 +29,3 @@ is $<other>, 'abc', 'correctly captured to $<other>';
     ok 'c' ~~ / <&foo: 'c'> /, '<&foo: ...> parses and passes args correctly (1)';
     nok 'c' ~~ / <&foo: 'd'> /, '<&foo: ...> parses and passes args correctly (2)';
 }
-
-done;

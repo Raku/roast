@@ -44,7 +44,7 @@ class T2 {
     is( a($o: $seed), $seed, "The indirect object notation call with argument with ()" );
 
     my $name = 'a';
-    eval_dies_ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
+    eval-dies-ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
 
     #?niecza 2 skip 'Invocant handling is NYI'
     is  (b $o: 21, 21), 42, "The indirect object notation call with multiple arguments without ()";
@@ -102,7 +102,7 @@ class T2 {
     is $o.called,       3,     'called total three methods during dispatch';
 }
 
-dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use of quotes
+dies-ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use of quotes
 
 #?rakudo skip '.*, .+ and .? with @foo RT #124845'
 #?niecza skip 'Two definitions found for symbol ::GLOBAL::T4::&m, etc'
@@ -121,22 +121,22 @@ dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use
     is ~$o.*@cand-num(3.4).sort, 'm-Num n-Num', '$o.*@cand(arg) (1)';
     is ~$o.*@cand-num(3).sort, 'm-Int m-Num n-Int n-Num', '$o.*@cand(arg) (2)';
     is $o.called, 6, 'right number of method calls';
-    lives_ok { $o.*@cand-num() }, "it's ok with .* if no candidate matched (arity)";
-    lives_ok { $o.*@cand-num([]) }, "it's ok with .* if no candidate matched (type)";
+    lives-ok { $o.*@cand-num() }, "it's ok with .* if no candidate matched (arity)";
+    lives-ok { $o.*@cand-num([]) }, "it's ok with .* if no candidate matched (type)";
 
     $o = T4.new();
     is ~$o.+@cand-num(3.4).sort, 'm-Num n-Num', '$o.+@cand(arg) (1)';
     is ~$o.+@cand-num(3).sort, 'm-Int m-Num n-Int n-Num', '$o.+@cand(arg) (2)';
     is $o.called, 6, 'right number of method calls';
-    dies_ok { $o.+@cand-num() }, "it's not ok with .+ if no candidate matched (arity)";
-    dies_ok { $o.+@cand-num([]) }, "it's not ok with .+ if no candidate matched (type)";
+    dies-ok { $o.+@cand-num() }, "it's not ok with .+ if no candidate matched (arity)";
+    dies-ok { $o.+@cand-num([]) }, "it's not ok with .+ if no candidate matched (type)";
 
     $o = T4.new();
     is ~$o.?@cand-num(3.4).sort, 'm-Num', '$o.?@cand(arg) (1)';
     is ~$o.?@cand-num(3).sort, 'm-Int', '$o.?@cand(arg) (2)';
     is $o.called, 2, 'right number of method calls';
-    lives_ok { $o.?@cand-num() }, "it's ok with .? if no candidate matched (arity)";
-    lives_ok { $o.?@cand-num([]) }, "it's ok with .? if no candidate matched (type)";
+    lives-ok { $o.?@cand-num() }, "it's ok with .? if no candidate matched (arity)";
+    lives-ok { $o.?@cand-num([]) }, "it's ok with .? if no candidate matched (type)";
 }
 
 # vim: ft=perl6

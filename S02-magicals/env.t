@@ -57,7 +57,7 @@ ok(%*ENV<PUGS_ROCKS>:!exists, 'We can remove keys from %*ENV');
 ok %*ENV<does_not_exist>:!exists, "exists() returns false on a not defined env var";
 
 # %ENV must not be imported by default
-throws_like { EVAL "%ENV" },
+throws-like { EVAL "%ENV" },
   X::Undeclared,
   '%ENV not visible by default';
 

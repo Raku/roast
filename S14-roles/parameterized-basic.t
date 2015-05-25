@@ -103,8 +103,8 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
     class TTP_2 does TypeParams[Str] { }
     is(TTP_1.new.x(42),       'got a (Int) it was 42',     'type variable in scope and accepts right value');
     is(TTP_2.new.x("OH HAI"), 'got a (Str) it was OH HAI', 'type variable in scope and accepts right value');
-    dies_ok({ TTP_1.new.x("OH HAI") },                   'type constraint with parameterized type enforced');
-    dies_ok({ TTP_2.new.x(42) },                         'type constraint with parameterized type enforced');
+    dies-ok({ TTP_1.new.x("OH HAI") },                   'type constraint with parameterized type enforced');
+    dies-ok({ TTP_2.new.x(42) },                         'type constraint with parameterized type enforced');
 }
 
 # test multi dispatch on parameterized roles
@@ -128,7 +128,7 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
        'same with class methods (1)';
     is COdd.what,  'odd',
        'same with class methods (2)';
-    eval_dies_ok 'class MD_not_Int does MD_block["foo"] { }',
+    eval-dies-ok 'class MD_not_Int does MD_block["foo"] { }',
                  "Can't compose without matching role multi";
 }
 
@@ -151,15 +151,15 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
        'MD with generics at class composition time (class method) (1)';
     is CDiff.what, 'different type',
        'MD with generics at class composition time (class method) (2)';
-    eval_dies_ok 'class WrongFu does MD_generics[3] { }',
+    eval-dies-ok 'class WrongFu does MD_generics[3] { }',
        'MD with generics at class composition times fails (wrong arity)';
 }
 
 # RT #77338
 {
-    lives_ok { role A[::T $?] {}; class B does A[] {} },
+    lives-ok { role A[::T $?] {}; class B does A[] {} },
         'question mark for optional parameter is parsed correctly';
-    eval_dies_ok 'role A[::T?] {}; class B does A[] {}',
+    eval-dies-ok 'role A[::T?] {}; class B does A[] {}',
         'cannot put question mark on a type constraint';
 }
 

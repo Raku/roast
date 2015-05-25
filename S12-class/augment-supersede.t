@@ -20,7 +20,7 @@ use MONKEY-TYPING;
     is($o.a, 'called Foo.a', 'basic method call works');
     is($o.b, 'called Foo.b', 'added method call works');
 
-    dies_ok { EVAL('augment class NonExistent { }') },
+    dies-ok { EVAL('augment class NonExistent { }') },
         'augment on non-existent class dies';
 }
 
@@ -40,13 +40,13 @@ use MONKEY-TYPING;
 }
 
 # RT #66694
-eval_dies_ok q[
+eval-dies-ok q[
     class MethodClash { method foo() { 3 } };
     augment class MethodClash { method foo() { 3 } };
 ], 'cannot override a method by monkey-typing';
 
 # RT #76600
-eval_lives_ok q[
+eval-lives-ok q[
     use MONKEY-TYPING;
     role Bar { has $.counter; }
     class Pub does Bar { has $.saloon; }
@@ -65,13 +65,13 @@ eval_lives_ok q[
     }
 
     my $o = Bar.new;
-    eval_dies_ok('$o.c', 'overridden method is gone completely');
+    eval-dies-ok('$o.c', 'overridden method is gone completely');
     is($o.d, 'called Bar.d', 'new method is present instead');
 }
 
 # RT #75432
 {
-    lives_ok {
+    lives-ok {
         class A { multi method a() { }};
         augment class A { multi method a() { } }
     }, 'RT #75432'
@@ -86,7 +86,7 @@ eval_lives_ok q[
         method prime { True };
     }
     my $primes = 0;
-    lives_ok {
+    lives-ok {
         for 1..5 {
             $primes++ if .prime;
         }

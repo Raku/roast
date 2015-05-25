@@ -88,14 +88,14 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 {
     enum Negation << :isnt<isnt> :arent<arent> :amnot<amnot> :aint<aint> >>;
     my Negation $foo;
-    lives_ok { $foo = Negation::isnt }, 'simple assignment from enum';
+    lives-ok { $foo = Negation::isnt }, 'simple assignment from enum';
     is $foo, Negation::isnt, 'assignment from enum works';
 }
 
 # RT #66886
 {
     enum RT66886 <b>;
-    eval_dies_ok 'RT66886::c', 'accessing non-value of enum dies proper-like';
+    eval-dies-ok 'RT66886::c', 'accessing non-value of enum dies proper-like';
 }
 
 # RT #65658
@@ -108,12 +108,12 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 # RT #71196
 {
     #?niecza skip 'Two terms in a row'
-    eval_lives_ok 'enum X is export <A B C>', 'marking enum export does not die';
+    eval-lives-ok 'enum X is export <A B C>', 'marking enum export does not die';
 }
 
 # RT #101900
 {
-    eval_dies_ok "enum rt_101900 < a b >; class A { }; say A but rt_101900::a",
+    eval-dies-ok "enum rt_101900 < a b >; class A { }; say A but rt_101900::a",
         "Cannot mixin an enum into a class";
 }
 

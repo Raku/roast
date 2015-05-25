@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 58;
+plan 59;
 
 
 # terms
@@ -75,10 +75,10 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 # junctive or
 
 { # test that | and ^ are on the same level but parsefail
-    throws_like 'my Mu $a = (1 | 2 ^ 3)',
+    throws-like 'my Mu $a = (1 | 2 ^ 3)',
         X::Syntax::NonAssociative,
         '| and ^ may not associate';
-    throws_like 'my Mu $a = (1 ^ 2 | 3)',
+    throws-like 'my Mu $a = (1 ^ 2 | 3)',
         X::Syntax::NonAssociative,
         '^ and | may not associate';
 };
@@ -111,10 +111,10 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 {
     my $a = 0 ?? "yes" !! "no";
     is($a, "no", "??!! binds tighter than =");
-    throws_like { EVAL '$a ?? $a = 42 !! $a = 43' },
+    throws-like { EVAL '$a ?? $a = 42 !! $a = 43' },
         X::Syntax::ConditionalOperator::PrecedenceTooLoose,
         "Can't use assignop inside ??!!";
-    throws_like { EVAL '$a ?? $a += 42 !! $a = 43' },
+    throws-like { EVAL '$a ?? $a += 42 !! $a = 43' },
         X::Syntax::ConditionalOperator::PrecedenceTooLoose,
         "Can't use meta-assignop inside ??!!";
 #    (my $b = 1) ?? "true" !! "false";
@@ -158,10 +158,10 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 
 # RT #77848
 {
-    throws_like '4 X+> 1...2',
+    throws-like '4 X+> 1...2',
          X::Syntax::NonAssociative,
         'X+> must not associate with ...';
-    throws_like q['08:12:23'.split(':') Z* 60 X** reverse ^3],
+    throws-like q['08:12:23'.split(':') Z* 60 X** reverse ^3],
         X::Syntax::NonAssociative,
         'Z* and X** are non associative';
 }
@@ -205,7 +205,7 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 is (uc "a" eq "A"), uc(False.Str), "uc has the correct precedence in comparison to eq";
 
 # L<S03/Named unary precedence/my $i = int $x;   # ILLEGAL>
-eval_dies_ok 'int 4.5', 'there is no more prefix:<int>';
+eval-dies-ok 'int 4.5', 'there is no more prefix:<int>';
 
 
 # http://irclog.perlgeek.de/perl6/2009-07-14#i_1315249
@@ -215,11 +215,10 @@ ok ((1 => 2 => 3).value ~~ Pair), '=> is right-assoc (2)';
 
 # L<S03/Operator precedence/only works between identical operators>
 
-throws_like '1, 2 Z 3, 4 X 5, 6',
+throws-like '1, 2 Z 3, 4 X 5, 6',
     X::Syntax::NonAssociative,
     'list associativity only works between identical operators';
 
-#?rakudo skip 'nom regression RT #124538'
 #?niecza skip 'assigning to readonly value'
 {
     # Check a 3 != 3 vs 3 !=3 parsing issue that can cropped up in Rakudo.
@@ -228,7 +227,9 @@ throws_like '1, 2 Z 3, 4 X 5, 6',
     sub foo($x) { $r = $x }
     foo 3 != 3;
     is($r, False, 'sanity 3 != 3');
-    foo 3 !=3;
+    $r = True;
+    #?rakudo 2 todo 'Inequality (!=) misparsed as assignment RT #121108'
+    lives-ok { foo 3 !=3 }, '3 !=3 does not die';
     is($r, False, 'ensure 3 !=3 gives same result as 3 != 3');
 }
 

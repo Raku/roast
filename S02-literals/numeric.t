@@ -72,26 +72,24 @@ is_approx 3.14159265358979323846264338327950288419716939937510e0,
 
 # RT #73236
 {
-    eval_lives_ok '0.' ~ '0' x 19,
+    eval-lives-ok '0.' ~ '0' x 19,
         'parsing 0.000... with 19 decimal places lives';
 
-    eval_lives_ok '0.' ~ '0' x 20,
+    eval-lives-ok '0.' ~ '0' x 20,
         'parsing 0.000... with 20 decimal places lives';
 
-    eval_lives_ok '0.' ~ '0' x 63,
+    eval-lives-ok '0.' ~ '0' x 63,
         'parsing 0.000... with 63 decimal places lives';
 
-    eval_lives_ok '0.' ~ '0' x 66,
+    eval-lives-ok '0.' ~ '0' x 66,
         'parsing 0.000... with 66 decimal places lives';
 
-    eval_lives_ok '0.' ~ '0' x 1024,
+    eval-lives-ok '0.' ~ '0' x 1024,
         'parsing 0.000... with 1024 decimal places lives';
 }
 
 # RT #70600
 #?niecza todo 'exactly rounded Str->Num without FatRat'
 ok 0e999999999999999 == 0, '0e999999999999 equals zero';
-
-done;
 
 # vim: ft=perl6 sw=4 ts=4 expandtab

@@ -55,6 +55,4 @@ is_run( 'try { note "with try" }',
         },
         'try { } block does not prevent note() from outputting something' );
 
-done;
-
 # vim: ft=perl6

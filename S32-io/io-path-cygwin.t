@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 50;
+plan 51;
 
 # Make sure we have a controlled environment
 my $*SPEC = IO::Spec::Cygwin;
@@ -39,7 +39,8 @@ is $uncpath2.Str, "//server/share/a", '"//server/share/a" restringifies to itsel
 
 is IO::Path::Cygwin.new(".").Str,        ".",        "current directory";
 is IO::Path::Cygwin.new("..").Str,        "..",        "parent directory";
-is IO::Path::Cygwin.new('').Str,        "",        "empty is empty";
+throws_like { IO::Path::Cygwin.new },     X::AdHoc, "no path not allowed";
+throws_like { IO::Path::Cygwin.new('') }, X::AdHoc, "empty not allowed";
 
 is IO::Path::Cygwin.new("/usr/////local/./bin/.\\./perl/").cleanup, "/usr/local/bin/perl",
     "cleanup '/usr/////local/./bin/.\\./perl/' -> '/usr/local/bin/perl'";

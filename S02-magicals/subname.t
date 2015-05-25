@@ -7,21 +7,22 @@ plan 4;
 
 # L<S06/The C<&?ROUTINE> object/current routine name>
 # L<S02/Names/Which routine am I in>
-sub foo { return &?ROUTINE.name }
-is(foo(), '&Main::foo', 'got the right routine name in the default package');
+sub foo { return &?ROUTINE.package.^name ~ '::' ~ &?ROUTINE.name }
+is(foo(), 'GLOBAL::foo', 'got the right routine name in the default package');
 
 {
     # This testcase might be really redundant
     package Bar {
-	sub bar { return &?ROUTINE.name }
-	is(bar(), '&Bar::bar', 'got the right routine name outside the default package');
+        sub bar { return &?ROUTINE.package.^name ~ '::' ~ &?ROUTINE.name }
+        is(bar(), 'Bar::bar', 'got the right routine name outside the default package');
     }
 }
 
-my $bar = sub { return &?ROUTINE.name };
-is($bar(), '<anon>', 'got the right routine name (anon-block)');
+my $bar = sub { &?ROUTINE.name };
+is($bar(), '', 'got an empty string for an anon block');
 
-my $baz = try { &?ROUTINE.name };
-ok(not(defined $baz), '&?ROUTINE.name not defined outside of a routine');
+throws-like { EVAL 'my $baz = try { &?ROUTINE.name };' },
+  X::Undeclared::Symbols,
+  "&?ROUTINE not available outside of a routine";
 
 # vim: ft=perl6

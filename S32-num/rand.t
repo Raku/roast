@@ -30,7 +30,7 @@ test_rand_range(11);
 
 # L<S32::Numeric/Real/"=item srand">
 
-lives_ok { srand(1) }, 'srand(1) lives and parses';
+lives-ok { srand(1) }, 'srand(1) lives and parses';
 
 {
     my sub repeat_rand ($seed) {
@@ -111,13 +111,11 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 # RT #113968
-#?niecza skip "throws_like"
+#?niecza skip "throws-like"
 #?DOES 4
 {
-    throws_like 'rand()', X::Obsolete;
-    throws_like 'rand(3)', X::Obsolete;
+    throws-like 'rand()', X::Obsolete;
+    throws-like 'rand(3)', X::Obsolete;
 }
-
-done;
 
 # vim: ft=perl6

@@ -67,11 +67,9 @@ ok($bar.isa(Foo), "new Bar .isa(Foo)");
     ok($bar_clone.isa(Foo), "... .isa(Foo)");
 }
 
-# Same, but with the "is Foo" declaration inlined
-#?rakudo skip 'Calling is will never work with argument types (Foo) RT #125043'
-#?niecza skip 'No value for parameter \$expected in Test is'
+# Same, but with the "also is Foo" declaration inline
 {
-    class Baz { is Foo }
+    class Baz { also is Foo }
     ok(Baz ~~ Foo, '... smartmatch our Baz to the Foo class');
     my $baz = Baz.new();
     ok($baz ~~ Baz, '... smartmatch our $baz to the Baz class');
@@ -90,7 +88,7 @@ ok($bar.isa(Foo), "new Bar .isa(Foo)");
        'type distinguishing is not done by case of first letter';
 }
 
-eval_dies_ok 'my $x; $x ~~ NonExistingClassName',
+eval-dies-ok 'my $x; $x ~~ NonExistingClassName',
              'die on non-existing class names';
 
 # you can declare classes over vivified namespaces, but not over other classes
@@ -98,8 +96,8 @@ eval_dies_ok 'my $x; $x ~~ NonExistingClassName',
 class One::Two::Three { }  # auto-vivifies package One::Two
 class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
-dies_ok { EVAL 'class One::Two { }' }, 'cannot redeclare an existing class';
-eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT #62898';
+dies-ok { EVAL 'class One::Two { }' }, 'cannot redeclare an existing class';
+eval-lives-ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT #62898';
 
 #?niecza skip "Methods must be used in some kind of package"
 {
@@ -117,15 +115,15 @@ eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {
 }
 
 # RT #64686
-eval_dies_ok 'class Romeo::Tango {}; Romeo::Juliet.rt64686',
+eval-dies-ok 'class Romeo::Tango {}; Romeo::Juliet.rt64686',
              'call to missing method in A::B dies after class A::C defined';
 
 # RT 72286
-eval_dies_ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
+eval-dies-ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
             'self is not writable';
 
 # RT #65022
-eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
+eval-lives-ok 'class Test1 { class A {};}; class Test2 {class A {};};',
                 'RT65022 - Nested classes in different classes can have the same name';
 
 # RT #76270
@@ -137,7 +135,7 @@ eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
 # RT #72916
 {
     #?niecza todo 'Exception: Unable to resolve method add_method in type ClassHOW'
-    eval_lives_ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',
+    eval-lives-ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',
           'add_method returns a Method object';
 }
 

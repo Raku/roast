@@ -14,17 +14,17 @@ Tests C<CATCH> blocks.
 
 # L<S04/"Exception handlers"/If you define a CATCH block within the try, it replaces the default CATCH>
 
-dies_ok { die 'blah'; CATCH {} }, 'Empty CATCH rethrows exception';
-dies_ok { try {die 'blah'; CATCH {}} }, 'CATCH in try overrides default exception handling';
+dies-ok { die 'blah'; CATCH {} }, 'Empty CATCH rethrows exception';
+dies-ok { try {die 'blah'; CATCH {}} }, 'CATCH in try overrides default exception handling';
 
 # L<S04/"Exception handlers"/any block can function as a try block if you put a CATCH block within it>
 
-lives_ok { die 'blah'; CATCH {default {}} }, 'Closure with CATCH {default {}} ignores exceptions';
-lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default {}} ignores exceptions';
+lives-ok { die 'blah'; CATCH {default {}} }, 'Closure with CATCH {default {}} ignores exceptions';
+lives-ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default {}} ignores exceptions';
 
 {
     my $f = sub { die 'blah'; CATCH {default {}} };
-    lives_ok $f, 'Subroutine with CATCH {default {}} ignores exceptions';
+    lives-ok $f, 'Subroutine with CATCH {default {}} ignores exceptions';
 
     $f = sub ($x) {
         if $x {
@@ -35,8 +35,8 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
             die 'blah';
         }
     };
-    lives_ok { $f(1) }, 'if block with CATCH {default {}} ignores exceptions...';
-    dies_ok { $f(0) }, "...but the CATCH doesn't affect exceptions thrown in an attached else";
+    lives-ok { $f(1) }, 'if block with CATCH {default {}} ignores exceptions...';
+    dies-ok { $f(0) }, "...but the CATCH doesn't affect exceptions thrown in an attached else";
 }
 
 
@@ -212,7 +212,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 
 # RT #64262
 {
-    dies_ok {
+    dies-ok {
         try {
             die 1;
             CATCH {
@@ -225,11 +225,11 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 }
 
 # RT #80864
-eval_lives_ok 'my %a; %a{ CATCH { } }', 'can define CATCH bock in .{}';
+eval-lives-ok 'my %a; %a{ CATCH { } }', 'can define CATCH bock in .{}';
 # RT #73988
-eval_dies_ok 'do { CATCH {}; CATCH { } }', 'only one CATCH per block allowed';
+eval-dies-ok 'do { CATCH {}; CATCH { } }', 'only one CATCH per block allowed';
 # RT #115184
-eval_dies_ok 'try { CATCH { ~$! }; die }', "doesn't segfault";
+eval-dies-ok 'try { CATCH { ~$! }; die }', "doesn't segfault";
 
 # RT #121213
 {
@@ -245,7 +245,7 @@ eval_dies_ok 'try { CATCH { ~$! }; die }', "doesn't segfault";
         }
     }
 
-    lives_ok {
+    lives-ok {
         failing-routine;
         failing-routine;
     }, 'Two invocations of a die()ing routine should still hit the CATCH handler';

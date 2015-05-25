@@ -24,7 +24,6 @@ plan 24;
     nok 'b yack shaving' ~~ &hasmy, 'does not work with wrong text';
 }
 
-#?rakudo skip "Can't parse :state \$z++ RT #state \$z++ RT#:125040"
 {
     my token hasstate {
         :state $z++;
@@ -35,7 +34,7 @@ plan 24;
 
     ok 'c2' ~~ &hasstate, ':state in regex (match) (2)';
     is ~$/, 'c2', ':state in regex ($/) (2)';
-    nok 'c3' ~~ &hasstate, ':state in regex (no match)';
+    nok 'c4' ~~ &hasstate, ':state in regex (no match)';
 }
 
 {

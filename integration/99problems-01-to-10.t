@@ -103,13 +103,13 @@ plan 22;
     
     my $flatten = { $_ ~~ List ?? ( map $flatten, @($_) ) !! $_ }; 
     my @flattened = map $flatten, ('a', ['b', ['c', 'd', 'e']]);
-    is_deeply @flattened, [<a b c d e>], 'We should be able to flatten lists';
+    is-deeply @flattened, [<a b c d e>], 'We should be able to flatten lists';
     
     sub my_flatten (*@xs) {
         return map { $_ ~~ List ?? my_flatten( |@$_ ) !! $_ }, @xs;
     }
     my @flattened2 = map {my_flatten($_)}, ('a', ['b', ['c', 'd', 'e']]);
-    is_deeply @flattened2, [<a b c d e>], 'We should be able to flatten lists';
+    is-deeply @flattened2, [<a b c d e>], 'We should be able to flatten lists';
     
 }
 
@@ -131,7 +131,7 @@ plan 22;
     }
     my @compressed = map $compress, <a a a a b c c a a d e e e e>;
     #?niecza todo
-    is_deeply @compressed, [<a b c a d e>], 'We should be able to compress lists';
+    is-deeply @compressed, [<a b c a d e>], 'We should be able to compress lists';
 }
 
 {
@@ -140,7 +140,7 @@ plan 22;
     multi compress2 ($x, $y, *@xs) { @( $x xx ($x !=== $y), @( compress2($y, |@xs) )) }
     
     my @x = <a a a a b c c a a d e e e e>;
-    is_deeply [compress2(|@x)], [<a b c a d e>], '... even with multi subs';
+    is-deeply [compress2(|@x)], [<a b c a d e>], '... even with multi subs';
 }
 
 {
@@ -202,7 +202,7 @@ plan 22;
             ];
         }
     }
-    is_deeply [group2(<a a a a b c c a a d e e e e>)],
+    is-deeply [group2(<a a a a b c c a a d e e e e>)],
         [[<a a a a>], [<b>],  [<c c>], [<a a>], [<d>], [<e e e e>]],
         '... even using blockless gather/take';
     
@@ -240,7 +240,7 @@ plan 22;
         return @encoded;
     }
     
-    is_deeply encode(<a a a a b c c a a d e e e e>),
+    is-deeply encode(<a a a a b c c a a d e e e e>),
         [[4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]],
         'We should be able to run-length encode lists';
 }

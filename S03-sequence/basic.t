@@ -135,7 +135,7 @@ ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
 # RT #75316
 #?niecza skip 'Typed exceptions NYI'
-throws_like { 1 ... () },
+throws-like { 1 ... () },
      X::Cannot::Empty,
      'RT #75698 - empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
      action => /endpoint/,
@@ -149,7 +149,7 @@ is (1,2,4...*)[10], 1024,
 is (4 ... ^5).join(', '), '4, 3, 2, 1, 0, 1, 2, 3, 4',
     'geometric sequence started in one direction and continues in the other with exclusion';
 
-lives_ok { (1 ... 5).perl }, 'Can take .perl of sequence';
+lives-ok { (1 ... 5).perl }, 'Can take .perl of sequence';
 is EVAL((1 ... 5).perl).join(','), '1,2,3,4,5',
     'EVAL($sequence.perl) reproduces result list';
 
@@ -242,7 +242,7 @@ is (5,4,3, { $_ - 1 || last } ... *)[^10].join(', '), '5, 4, 3, 2, 1', "sequence
 }
 
 # RT #75828
-eval_dies_ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
+eval-dies-ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
 
 # RT #73268
 is ~(1...^*).[^10], '1 2 3 4 5 6 7 8 9 10', 'RT #73268';
@@ -273,7 +273,5 @@ isa-ok ([] ... [])[0], Array, '[] ... [] returns []';
     isa-ok @a[1], Array, 'containers returned from seq iterator are respected (1)';
     is @a[1].join('_'), '3_4', 'containers returned from seq iterator are respected (2)';
 }
-
-done;
 
 # vim: ft=perl6

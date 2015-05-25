@@ -10,7 +10,7 @@ use lib '.';
 
     is t::spec::packages::Export_PackA::exported_foo(),
        42, 'Can "need" a module';
-    eval_dies_ok 'exported_foo()',
+    eval-dies-ok 'exported_foo()',
                  '"need" did not import the default export list';
 }
 

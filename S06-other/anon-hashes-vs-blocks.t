@@ -45,7 +45,6 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     ok { $^a => 'b' } ~~ Block, '... as a key';
     ok { a => $^x }   ~~ Block, '... as a value';
     ok { b => 3, a => $^x, 4 => 5 }   ~~ Block, '... somewhere deep inside';
-#?rakudo.jvm skip 'jvm chokes on compiling {;} for some reason RT #124663'
     ok {;} ~~ Block, '{;} is a Block';
 }
 
@@ -93,7 +92,5 @@ is (map { $_ => $_ * $_ }, 1..3).hash<2>, 4, 'block with $_ is not a hash';
 # RT #123641
 ok { 1 R=> "a" } ~~ Hash,  '{ 1 R=> "a" } is a Hash';
 is { 1 R=> "a" }<a>, 1,    '{ 1 R=> "a" } constructs correct hash';
-
-done;
 
 # vim: ft=perl6

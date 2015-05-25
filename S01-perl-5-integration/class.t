@@ -10,7 +10,7 @@ unless (try { EVAL("1", :lang<perl5>) }) {
 }
 
 {
-    lives_ok {
+    lives-ok {
         EVAL q|
             use Digest::MD5:from<Perl5>;
             my $d = Digest::MD5.new;

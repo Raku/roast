@@ -121,7 +121,7 @@ plan 39;
   my %hash;
   my $var = "d";
 
-  lives_ok { %hash<b> := $var },
+  lives-ok { %hash<b> := $var },
                     "binding of not yet existing elements should autovivify (1)";
   is %hash<b>, "d", "binding of not yet existing elements should autovivify (2)";
 
@@ -180,7 +180,7 @@ plan 39;
   is ~%hash\  .values.sort, "a c", 'binding %hash := $hashref works (3)';
 }
 
-eval_dies_ok 'my %h = a => 1, b => 2; %h<a b> := (4, 5)',
+eval-dies-ok 'my %h = a => 1, b => 2; %h<a b> := (4, 5)',
     'Cannot bind to hash slices';
 is 1,1, 'dummy';
 

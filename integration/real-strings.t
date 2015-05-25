@@ -16,7 +16,7 @@ plan 20;
 
 {
     my $x = 'abc'.split(/b/).[0];
-    lives_ok {$x.trans(['a'] => ['b']) }, 
+    lives-ok {$x.trans(['a'] => ['b']) }, 
        'Still works with strings returned from split() (lives)';
     is $x.trans(['a'] => ['b']), 'b',
        'Still works with strings returned from split() (result)';
@@ -24,7 +24,7 @@ plan 20;
     is $x.trans(['a'] => ['b']), 'b', 'same for split(Str)';
 }
 
-throws_like { for "a b c".split(/\s/) -> $foo { $foo = $foo; } },
+throws-like { for "a b c".split(/\s/) -> $foo { $foo = $foo; } },
   Exception,  # no exception type yet
   'variables returned from split and passed to pointy block are still ro';
 
@@ -57,9 +57,9 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 
 # RT #67852
 {
-    lives_ok { 'normal'.trans() }, 'can .trans() on normal string';
+    lives-ok { 'normal'.trans() }, 'can .trans() on normal string';
     #?niecza todo 'Buffer bitops NYI' 
-    lives_ok { ('bit' ~& 'wise').trans() }, 'can .trans() on bitwise result';
+    lives-ok { ('bit' ~& 'wise').trans() }, 'can .trans() on bitwise result';
 }
 
 # RT #75456 hilarity
@@ -71,7 +71,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 
 {
     my $x = 'this is a test'.chomp;
-    lives_ok {$x.trans(['t'] => ['T']) }, 
+    lives-ok {$x.trans(['t'] => ['T']) }, 
        'Still works with strings returned from chomp() (lives)';
     is $x.trans(['t'] => ['T']), 'This is a TesT',
        'Still works with strings returned from chomp() (result)';
@@ -79,7 +79,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 
 {
     my $contents = slurp 't/spec/integration/real-strings.t';
-    lives_ok {$contents.trans(['t'] => ['T']) }, 
+    lives-ok {$contents.trans(['t'] => ['T']) }, 
        'Still works with strings returned from slurp() (lives)';
 }
 

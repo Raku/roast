@@ -106,6 +106,4 @@ my $discarded = do {
     }
 }
 
-done;
-
 # vim: ft=perl6

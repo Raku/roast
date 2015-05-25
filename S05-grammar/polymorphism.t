@@ -77,11 +77,11 @@ is(~$/, "DeF", '.Yet::Another.def $/');
 
 # Non-existent rules...
 
-eval_dies_ok q{ 'abc' ~~ m/ (<Another.sea>) /  }, '<Another.sea>';
+eval-dies-ok q{ 'abc' ~~ m/ (<Another.sea>) /  }, '<Another.sea>';
 
 # RT #63466
 {
-    eval_dies_ok q{ 'x' ~~ / <No::Such::Rule> / },
+    eval-dies-ok q{ 'x' ~~ / <No::Such::Rule> / },
             'match against No::Such::Rule dies';
 }
 

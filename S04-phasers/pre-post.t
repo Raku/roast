@@ -12,52 +12,70 @@ sub foo(Int $i) {
     PRE {
         $i < 5
     }
-    return 1;
+    return 4;
 }
 
 sub bar(Int $i) {
-    return 1;
+    return 4;
     POST {
         $i < 5;
     }
 }
 
-lives_ok { foo(2) }, 'sub with PRE  compiles and runs';
-lives_ok { bar(3) }, 'sub with POST compiles and runs';
+is foo(2), 4, 'sub with PRE  compiles and runs';
+is bar(3), 4, 'sub with POST compiles and runs';
 
-dies_ok { foo(10) }, 'Violated PRE  throws (catchable) exception';
-dies_ok { bar(10) }, 'Violated POST throws (catchable) exception';
+throws-like 'foo(10)',
+    X::Phaser::PrePost,
+    phaser => 'PRE',
+    'Violated PRE  throws (catchable) exception';
+throws-like 'bar(10)',
+    X::Phaser::PrePost,
+    phaser => 'POST',
+    'Violated POST throws (catchable) exception';
 
 # multiple PREs und POSTs
 
 sub baz (Int $i) {
-	PRE {
-		$i > 0
-	}
-	PRE {
-		$i < 23
-	}
-	return 1;
+    PRE {
+        $i > 0
+    }
+    PRE {
+        $i < 23
+    }
+    return 5;
 }
-lives_ok { baz(2) }, 'sub with two PREs compiles and runs';
+is baz(2), 5, 'sub with two PREs compiles and runs';
 
-dies_ok  { baz(-1)}, 'sub with two PREs fails when first is violated';
-dies_ok  { baz(42)}, 'sub with two PREs fails when second is violated';
+throws-like 'baz(-1)',
+    X::Phaser::PrePost,
+    phaser => 'PRE',
+    'sub with two PREs fails when first is violated';
+throws-like 'baz(42)',
+    X::Phaser::PrePost,
+    phaser => 'PRE',
+    'sub with two PREs fails when second is violated';
 
 
 sub qox (Int $i) {
-	return 1;
-	POST {
-		$i > 0
-	}
-	POST {
-		$i < 42
-	}
+    return 6;
+    POST {
+        $i > 0
+    }
+    POST {
+        $i < 42
+    }
 }
 
-lives_ok({ qox(23) }, "sub with two POSTs compiles and runs");
-dies_ok( { qox(-1) }, "sub with two POSTs fails if first POST is violated");
-dies_ok( { qox(123)}, "sub with two POSTs fails if second POST is violated");
+is qox(23), 6, "sub with two POSTs compiles and runs";
+throws-like 'qox(-1)',
+    X::Phaser::PrePost,
+    phaser => 'POST',
+    "sub with two POSTs fails if first POST is violated";
+throws-like 'qox(123)',
+    X::Phaser::PrePost,
+    phaser => 'POST',
+    "sub with two POSTs fails if second POST is violated";
 
 
 class Another {
@@ -70,8 +88,11 @@ class Another {
 }
 
 my $pt = Another.new;
-lives_ok { $pt.test(2) }, 'POST receives return value as $_ (succeess)';
-dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
+is $pt.test(2), 6, 'POST receives return value as $_ (succeess)';
+throws-like '$pt.test(1)',
+    X::Phaser::PrePost,
+    phaser => 'POST',
+    'POST receives return value as $_ (failure)';
 
 {
     my $str;
@@ -138,9 +159,9 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 {
     my $str;
     try {
-        POST { $str ~= (defined $! ?? 'yes' !! 'no'); 1 }
+        POST { $str ~= (defined $!) ?? 'yes' !! 'no'; 1 }
         try { die 'foo' }
-        $str ~= (defined $! ?? 'aye' !! 'nay');
+        $str ~= (defined $!) ?? 'aye' !! 'nay';
     }
     is $str, 'ayeno', 'POST has undefined $! on no exception';
 }
@@ -163,9 +184,9 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         POST $_ == 4;
         return $x;
     }
-    lives_ok { blockless(4) }, 'blockless PRE/POST (+)';
-    dies_ok  { blockless -4 }, 'blockless PRE/POST (-, 1)';
-    dies_ok  { blockless 14 }, 'blockless PRE/POST (-, 2)';
+    is blockless(4), 4, 'blockless PRE/POST (+)';
+    dies-ok  { blockless -4 }, 'blockless PRE/POST (-, 1)';
+    dies-ok  { blockless 14 }, 'blockless PRE/POST (-, 2)';
 }
 
 # vim: ft=perl6

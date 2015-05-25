@@ -10,9 +10,9 @@ my $pc = $*DISTRO.is-win
 isa-ok $pc, Proc::Async;
 
 my $so = $pc.stdout;
-cmp_ok $so, '~~', Supply;
+cmp-ok $so, '~~', Supply;
 my $se = $pc.stderr;
-cmp_ok $se, '~~', Supply;
+cmp-ok $se, '~~', Supply;
 
 my $stdout = "";
 my $stderr = "";
@@ -27,13 +27,13 @@ isa-ok $pm, Promise;
 
 ok $pc.started, 'program has been started';
 
-throws_like { $pc.start }, X::Proc::Async::AlreadyStarted;
+throws-like { $pc.start }, X::Proc::Async::AlreadyStarted;
 
-throws_like { $pc.print("foo")      }, X::Proc::Async::OpenForWriting, :method<print>;
-throws_like { $pc.say("foo")        }, X::Proc::Async::OpenForWriting, :method<say>;
-throws_like { $pc.write(Buf.new(0)) }, X::Proc::Async::OpenForWriting, :method<write>;
+throws-like { $pc.print("foo")      }, X::Proc::Async::OpenForWriting, :method<print>;
+throws-like { $pc.say("foo")        }, X::Proc::Async::OpenForWriting, :method<say>;
+throws-like { $pc.write(Buf.new(0)) }, X::Proc::Async::OpenForWriting, :method<write>;
 
-throws_like { $pc.stdout.tap(&say)  }, X::Proc::Async::TapBeforeSpawn, :handle<stdout>;
+throws-like { $pc.stdout.tap(&say)  }, X::Proc::Async::TapBeforeSpawn, :handle<stdout>;
 
 my $ps = await $pm;
 isa-ok $ps, Proc::Status;
@@ -51,18 +51,18 @@ $pc = $*DISTRO.is-win
 
 ok $pc.w, 'opened for writing';
 
-throws_like { $pc.close-stdin }, X::Proc::Async::MustBeStarted, :method<close-stdin>;
-throws_like { $pc.kill },        X::Proc::Async::MustBeStarted, :method<kill>;
-throws_like { $pc.say(42) },     X::Proc::Async::MustBeStarted, :method<say>;
-throws_like { $pc.print(42) },   X::Proc::Async::MustBeStarted, :method<print>;
-throws_like { $pc.write(Buf.new(0)) }, X::Proc::Async::MustBeStarted, :method<write>;
+throws-like { $pc.close-stdin }, X::Proc::Async::MustBeStarted, :method<close-stdin>;
+throws-like { $pc.kill },        X::Proc::Async::MustBeStarted, :method<kill>;
+throws-like { $pc.say(42) },     X::Proc::Async::MustBeStarted, :method<say>;
+throws-like { $pc.print(42) },   X::Proc::Async::MustBeStarted, :method<print>;
+throws-like { $pc.write(Buf.new(0)) }, X::Proc::Async::MustBeStarted, :method<write>;
 
 $stdout = '';
 $stderr = '';
 $pc.stdout.act: { $stdout ~= $_.subst("\r", "", :g) };
 $pc.stderr.act: { $stderr ~= $_.subst("\r", "", :g) };
 
-throws_like { $pc.stdout(:bin) }, X::Proc::Async::CharsOrBytes, :handle<stdout>;
+throws-like { $pc.stdout(:bin) }, X::Proc::Async::CharsOrBytes, :handle<stdout>;
 
 my $start-promise := $pc.start;
 

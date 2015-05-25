@@ -15,13 +15,13 @@ class B is A {
 }
 
 my $o;
-lives_ok {$o = B.new(a => 'blubb') }, 'Can initialize inherited attribute';
+lives-ok {$o = B.new(a => 'blubb') }, 'Can initialize inherited attribute';
 is $o.accessor, 'blubb',              'accessor can use inherited attribute';
 
 class Artie61500 {
     has $!p = 61500;
 }
-eval_dies_ok 'class Artay61500 is Artie61500 { method bomb { return $!p } }',
+eval-dies-ok 'class Artay61500 is Artie61500 { method bomb { return $!p } }',
     'Compile error for subclass to access private attribute of parent';
 
 class Parent {
@@ -49,7 +49,7 @@ nok $child.report.defined,
 
 # RT #61500
 {
-    eval_dies_ok 'class A { has $!foo = 7 }; class B is A { method x { say $!foo } }; B.new.x', 'rt 61500';
+    eval-dies-ok 'class A { has $!foo = 7 }; class B is A { method x { say $!foo } }; B.new.x', 'rt 61500';
 }
 
 # vim: ft=perl6

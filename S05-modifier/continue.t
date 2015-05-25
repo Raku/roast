@@ -47,6 +47,4 @@ my $string = "1a2a3a";
     is(~$m, '3a', "match third 'a'");
 }
 
-done;
-
 # vim: syn=perl6 sw=4 ts=4 expandtab

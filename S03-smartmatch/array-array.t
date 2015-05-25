@@ -67,6 +67,4 @@ plan 36;
     ok (1..10 ~~ *,5,*), 'smartmatch with Array RHS co-erces LHS to list';
 }
 
-done;
-
 # vim: ft=perl6

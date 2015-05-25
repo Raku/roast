@@ -29,7 +29,7 @@ my $mv = MagicVal.new(:constant(6), :varies(6));
 
 is($mv.constant, 6, "normal attribute");
 is($mv.constant, 6, "normal attribute");
-dies_ok { $mv.constant = 7 }, "can't change a non-rw attribute";
+dies-ok { $mv.constant = 7 }, "can't change a non-rw attribute";
 is($mv.constant, 6, "attribute didn't change value");
 
 is($count, 0, "mutator not called yet");

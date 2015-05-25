@@ -14,6 +14,8 @@ Tests of
 
 =end pod
 
+#?rakudo 6 skip 'cat NYI RT #124456'
+
 ok(cat() eqv (), 'cat null identity');
 
 ok(cat(1) eqv (1,), 'cat scalar identity');

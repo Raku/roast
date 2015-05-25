@@ -2,7 +2,7 @@ use Test;
 
 plan 12;
 
-# Tests with 6 codepoints (4 in NFC), which are 2 graphs.
+# Tests with 6 codepoints (4 in NFC), which are 2 NFG characters.
 # LATIN CAPITAL LETTER D, COMBINING DOT BELOW, COMBINING DOT ABOVE,
 # LATIN SMALL LETTER D, COMBINING DOT BELOW, COMBINING DOT ABOVE
 {

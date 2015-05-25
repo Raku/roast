@@ -8,16 +8,16 @@ plan 6;
     is b.Str, 'bar', 'stringy enum first value';
 }
 
-eval_dies_ok 'my enum B (a => 1, b => "bar")',
+eval-dies-ok 'my enum B (a => 1, b => "bar")',
              'mixed type enums are forbidden';
 
 #?rakudo todo 'NYI RT #124833'
 #?niecza todo
-eval_lives_ok 'my Cool enum C (a => 1, b => "bar")',
+eval-lives-ok 'my Cool enum C (a => 1, b => "bar")',
              '... unless that type covers both enum value types';
 
 #?niecza todo
-eval_dies_ok 'my Str enum D (a => 1)',
+eval-dies-ok 'my Str enum D (a => 1)',
              'violating an explicit type constraint dies';
 
 {

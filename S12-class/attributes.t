@@ -14,7 +14,7 @@ class Counter {
 }
 
 my $c = Counter.new();
-dies_ok { $c.x }, 'no public accessor for private attribute';
+dies-ok { $c.x }, 'no public accessor for private attribute';
 $c.init();
 is($c.get(), 41, 'can assign and get from within the class');
 $c.inc();
@@ -107,7 +107,7 @@ is($bar.bar[2], 300,       'array attribute initialized/works');
 }
 
 # RT 81718
-eval_dies_ok q[
+eval-dies-ok q[
     class RT81718 {
         has $.bughunt is rw;
         sub bomb { "life is a $.bughunt" }
@@ -125,16 +125,16 @@ eval_dies_ok q[
 
 #RT #115280
 {
-    eval_lives_ok '(class A { has $.x }).new.x.HOW',
+    eval-lives-ok '(class A { has $.x }).new.x.HOW',
         "HOW on attributes lives, custom class";
-    eval_lives_ok '(1/2).numerator.HOW',
+    eval-lives-ok '(1/2).numerator.HOW',
         "HOW on attributes lives, builtin";
 }
 
 #RT #114234
 #?niecza skip '$b declared but not used. FIXME later.'
 {
-    eval_lives_ok q{
+    eval-lives-ok q{
         my class A { state $b; }
     }, "No segfault on state variables";
 }
@@ -144,17 +144,17 @@ eval_dies_ok q[
 {
 
     my @y=1,2,3;
-    is_deeply( [@y], [ 1, 2, 3 ], 'Plain array' );
-    is_deeply( [@y[1 .. +@y]], [ 2, 3 ], 'Array from 2-nd element to end+1' );
-    is_deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Array from 2-nd element to end' );
+    is-deeply( [@y], [ 1, 2, 3 ], 'Plain array' );
+    is-deeply( [@y[1 .. +@y]], [ 2, 3 ], 'Array from 2-nd element to end+1' );
+    is-deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Array from 2-nd element to end' );
 
     class AB {
         has @.x; 
         method aa { 
             my @y=1,2,3; 
-            is_deeply( [@y[1 .. +@y]], [ 2, 3 ], 'Plain array in the method' );
-            is_deeply( [@.x], [ 1, 2, 3 ], 'Array from 2-nd element to end+1 in the method' );
-            is_deeply( [@.x[1 ..^ +@.x]], [ 2, 3 ], 'Array from 2-nd element to end in the method' );
+            is-deeply( [@y[1 .. +@y]], [ 2, 3 ], 'Plain array in the method' );
+            is-deeply( [@.x], [ 1, 2, 3 ], 'Array from 2-nd element to end+1 in the method' );
+            is-deeply( [@.x[1 ..^ +@.x]], [ 2, 3 ], 'Array from 2-nd element to end in the method' );
         }
     };
 
@@ -165,14 +165,14 @@ eval_dies_ok q[
 
 # RT #75858
 {
-    lives_ok { EVAL 'my class RT75858 { has $.x where 1 }' },
+    lives-ok { EVAL 'my class RT75858 { has $.x where 1 }' },
         'can use where clause on an attribute';
 }
 
 # RT #122109
 {
     my class RT122109 { has $.x where * > 0 };
-    dies_ok { RT122109.new(:x(-42)) },
+    dies-ok { RT122109.new(:x(-42)) },
         'where clause on attributes is taken into account';
 }
 

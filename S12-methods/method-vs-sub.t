@@ -36,6 +36,4 @@ is foo($obj),   'sub', 'adding trailing comma should call the "sub"';
     is $n, 5, 'RT #92192';
 }
 
-done;
-
 # vim: ft=perl6

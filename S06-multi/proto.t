@@ -55,7 +55,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     is (elk 3), 4, "multi definition of prefix:<elk> works";
 }
 
-eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
+eval-dies-ok 'proto rt68242($a){};proto rt68242($c,$d){};',
     'attempt to define two proto subs with the same name dies';
 
 # RT #65322
@@ -64,16 +64,16 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
         multi sub rt65322( Int $n where 1 ) { 1 }
               sub rt65322( Int $n ) { 2 }
     ];
-    eval_dies_ok $rt65322, "Can't define sub and multi sub without proto";
+    eval-dies-ok $rt65322, "Can't define sub and multi sub without proto";
 }
 
 {
-    eval_dies_ok q[
+    eval-dies-ok q[
         multi sub i1(Int $x) {}
         sub i1(Int $x, Str $y) {} 
     ], 'declaring a multi and a single routine dies';
 
-    eval_dies_ok q[
+    eval-dies-ok q[
         sub i2(Int $x, Str $y) {1}
         sub i2(Int $x, Str $y) {2}
     ], 'declaring two only-subs with same name dies';
@@ -84,7 +84,7 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 
 # RT #68242
 {
-    eval_dies_ok 'proto foo($bar) {}; proto foo($baz, $quux) {}';
+    eval-dies-ok 'proto foo($bar) {}; proto foo($baz, $quux) {}';
 }
 
 # RT #111454
@@ -134,10 +134,10 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 
 #RT #76298
 {
-    eval_lives_ok q{
+    eval-lives-ok q{
         class TestA { has $.b; proto method b {} };
     }, 'proto method after same-named attribute';
-    eval_lives_ok q{
+    eval-lives-ok q{
         class TestB { proto method b {}; has $.b };
     }, 'proto method before same-named attribute';
 }
@@ -145,10 +145,9 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 # RT #116164
 #?niecza todo
 {
-    eval_dies_ok q[
+    eval-dies-ok q[
         proto f(Int $x) {*}; multi f($) { 'default' }; f 'foo'
     ], 'proto signature is checked, not just that of the candidates';
 }
-done;
 
 # vim: ft=perl6

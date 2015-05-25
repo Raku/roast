@@ -17,11 +17,11 @@ diag('Test for class attribute initialization');
 	class T1 { }
 	class T2 { }
         #?niecza todo
-	eval_lives_ok 'use MONKEY-TYPING; augment class T1 { has $.t = 1 }; 1',
+	eval-lives-ok 'use MONKEY-TYPING; augment class T1 { has $.t = 1 }; 1',
 		"Try to initialize public attribute";
 
         #?niecza todo
-        eval_lives_ok q'
+        eval-lives-ok q'
 		use MONKEY-TYPING;
 		augment class T2 {
 		    has $!t = 2;
@@ -38,7 +38,7 @@ diag('Test for class attribute initialization');
         #?niecza skip 'Unable to resolve method t in class T1'
 	is $o1.t, 1,
 		"Testing value for initialized public attribute.";
-	dies_ok { $o2.t },
+	dies-ok { $o2.t },
 		"Try to access the initialized private attribute.";
         #?niecza todo
 	is try { $o2.get }, 2,
@@ -49,7 +49,7 @@ diag('Test for class attribute initialization');
         #?niecza skip 'Unable to resolve method t in class T1'
 	is $o1.t, 3,
 		"Testing value for attributes which is initialized by constructor.";
-	dies_ok { $o2.t },
+	dies-ok { $o2.t },
 		"Try to access the private attribute which is initialized by constructor.";
         #?niecza todo
 	is try { $o2.get }, 4,

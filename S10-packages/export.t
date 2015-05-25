@@ -16,14 +16,14 @@ ok t::spec::packages::Export_PackB::does_export_work(),
 
 # t::spec::packages::Export_PackA::exported_foo should not have been exported into
 # our namespace.
-dies_ok { exported_foo() },
+dies-ok { exported_foo() },
   "'is export' works correctly even when not exporting to Main (2)";
 
 {
     use t::spec::packages::Export_PackC;
-    lives_ok { foo_packc() }, "lexical export works";
+    lives-ok { foo_packc() }, "lexical export works";
 }
-dies_ok { foo_packc() }, "lexical export is indeed lexical";
+dies-ok { foo_packc() }, "lexical export is indeed lexical";
 
 
 sub moose {

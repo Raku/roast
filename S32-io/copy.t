@@ -35,7 +35,7 @@ nok $non-existent-file.IO.e, "It doesn't";
     ok $existing-file-mtgt.IO.s, 'It has a size';
     is $existing-file-mtgt.IO.s, $existing-file.IO.s, 'The size is equal to source file';
 
-    dies_ok { $non-existent-file.IO.copy( $non-existent-file-mtgt ) }, '.IO.copy missing file';
+    dies-ok { $non-existent-file.IO.copy( $non-existent-file-mtgt ) }, '.IO.copy missing file';
     nok $non-existent-file-mtgt.IO.e, "It doesn't"; 
     ok $zero-length-file.IO.copy( $zero-length-file-mtgt ), '.IO.copy empty file';
     ok $zero-length-file-mtgt.IO.e, 'It exists';
@@ -58,7 +58,7 @@ nok $non-existent-file.IO.e, "It doesn't";
     ok $existing-file-stgt.IO.s, 'It has a size';
     is $existing-file-stgt.IO.s, $existing-file.IO.s, 'The size is equal to source file';
 
-    dies_ok { copy( $non-existent-file, $non-existent-file-stgt ) }, 'copy() missing file';
+    dies-ok { copy( $non-existent-file, $non-existent-file-stgt ) }, 'copy() missing file';
     nok $non-existent-file-stgt.IO.e, "It doesn't";
 
     ok copy( $zero-length-file, $zero-length-file-stgt ), 'copy() empty file';

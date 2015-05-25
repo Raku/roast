@@ -18,7 +18,7 @@ plan 27;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo2 ($a, $b, $c) { "$a!$b!$c" }
-    throws_like { foo2(|$capture) },
+    throws-like { foo2(|$capture) },
       Exception,
       'simply capture creation with \\( works (2)';
 }
@@ -58,10 +58,10 @@ plan 27;
 
     is foo6(1,2,3), "1!2!3",
         'capture creation with \\$ works (1)';
-    throws_like { foo6(1,2,3,4) },
+    throws-like { foo6(1,2,3,4) },
       Exception,  # too many args
       'capture creation with \\$ works (2)';
-    throws_like { foo6(1,2) },
+    throws-like { foo6(1,2) },
       Exception,  # too few args
       'capture creation with \\$ works (3)';
 }
@@ -71,11 +71,11 @@ plan 27;
     my $capture;
     sub foo7 (|args) { $capture = args }
 
-    lives_ok { foo7(1,2,3,4) }, "captures are first-class objects (1)";
+    lives-ok { foo7(1,2,3,4) }, "captures are first-class objects (1)";
     ok $capture,               "captures are first-class objects (2)";
 
     my $old_capture = $capture;
-    lives_ok { foo7(5,6,7,8) }, "captures are first-class objects (3)";
+    lives-ok { foo7(5,6,7,8) }, "captures are first-class objects (3)";
     ok $capture,               "captures are first-class objects (4)";
     ok !($capture === $old_capture), "captures are first-class objects (5)";
 }
@@ -96,7 +96,7 @@ plan 27;
     my $capture = \(:foo<bar>, :baz<grtz>);
     sub foo9 ($a,$b, :$foo, :$baz) { "$a!$b!$foo!$baz" }
 
-    throws_like { foo9(|$capture) },
+    throws-like { foo9(|$capture) },
       Exception,  # too few args
       "mixing ordinary args with captures (1)";
     is foo9(1, 2, |$capture), "1!2!bar!grtz",

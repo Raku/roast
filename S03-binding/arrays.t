@@ -143,7 +143,7 @@ plan 47;
   my @array;
   my $var    = "d";
 
-  lives_ok { @array[1] := $var },
+  lives-ok { @array[1] := $var },
                      "binding of not yet existing elements should autovivify (1)";
   is @array[1], "d", "binding of not yet existing elements should autovivify (2)";
 
@@ -227,7 +227,7 @@ plan 47;
 # RT #61566
 #?niecza todo
 {
-    eval_dies_ok 'my @rt61566 := 1', 'can only bind Positional stuff to @a';
+    eval-dies-ok 'my @rt61566 := 1', 'can only bind Positional stuff to @a';
     # TODO: check that the error is the right one
     # <pmichaud> you should get a "Int does not do Positional role"
     #            exception or something like that.

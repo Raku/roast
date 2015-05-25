@@ -75,7 +75,7 @@ plan 10;
     role AAAA {
         has Int $!aaaa;
     }
-    throws_like { EVAL q:to/CODE/ }, X::Attribute::Undeclared, 'unknown attribute dies at compile time';
+    throws-like { EVAL q:to/CODE/ }, X::Attribute::Undeclared, 'unknown attribute dies at compile time';
     class Zop does AAAA {
         method zippo { $!zzzz++ }  # first time
         method zappo { $!zzzz++ }  # second time, without $/ internally

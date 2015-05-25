@@ -37,7 +37,7 @@ my $baz = { };
 ok defined($baz does Foo),      'mixing in our Foo role into $baz worked';
 ok $baz.HOW.does($baz, Foo),    '.HOW.does said our $baz now does Foo';
 ok $baz.^does(Foo),             '.^does said our $baz now does Foo';
-eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies';
+eval-dies-ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies';
 
 # L<S14/Roles/but with a role keyword:>
 # Roles may have methods
@@ -71,25 +71,25 @@ eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
 # Using roles as type constraints.
 role C { }
 class DoesC does C { }
-lives_ok { my C $x; },          'can use role as a type constraint on a variable';
-dies_ok { my C $x = 42 },       'type-check enforced';
-dies_ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
-lives_ok {my C $x = DoesC.new },'type-check passes for class doing role';
-lives_ok { my C $x = 42 but C },'type-check passes when role mixed in';
+lives-ok { my C $x; },          'can use role as a type constraint on a variable';
+dies-ok { my C $x = 42 },       'type-check enforced';
+dies-ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
+lives-ok {my C $x = DoesC.new },'type-check passes for class doing role';
+lives-ok { my C $x = 42 but C },'type-check passes when role mixed in';
 
 class HasC {
     has C $.x is rw;
 }
-lives_ok { HasC.new },          'attributes typed as roles initialized OK';
-lives_ok { HasC.new.x = DoesC.new },
+lives-ok { HasC.new },          'attributes typed as roles initialized OK';
+lives-ok { HasC.new.x = DoesC.new },
                                 'typed attribute accepts things it should';
-dies_ok { HasC.new.x = Mu },    'typed attribute rejects things it should';
-dies_ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
+dies-ok { HasC.new.x = Mu },    'typed attribute rejects things it should';
+dies-ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
 
-eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
+eval-dies-ok '0 but RT66178', '"but" with non-existent role dies';
 
 {
-    dies_ok { EVAL 'class Animal does NonExistentRole { }; 1' },
+    dies-ok { EVAL 'class Animal does NonExistentRole { }; 1' },
         'a class dies when it does a non-existent role';
 
     try { EVAL 'class AnotherAnimal does NonExistentRole { }; 1' };
@@ -102,7 +102,7 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 # RT #67278
 {
     class AClass { };
-    dies_ok { EVAL 'class BClass does AClass { }; 1' },
+    dies-ok { EVAL 'class BClass does AClass { }; 1' },
 	    'class SomeClass does AnotherClass  dies';
     my $x = try EVAL 'class CClass does AClass { }; 1';
     ok "$!" ~~ /AClass/, 'Error message mentions the offending non-role';
@@ -125,14 +125,14 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 }
 
 # RT #72848
-lives_ok {0 but True}, '0 but True has applicable candidate';
+lives-ok {0 but True}, '0 but True has applicable candidate';
 
 # RT #67768
 #?rakudo skip 'RT #67768'
 {
-    eval_lives_ok 'role List { method foo { 67768 } }',
+    eval-lives-ok 'role List { method foo { 67768 } }',
         'can declare a role with a name already assigned to a class';
-    eval_lives_ok 'class C67768 does OUR::List { }',
+    eval-lives-ok 'class C67768 does OUR::List { }',
         'can use a role with a name already assigned to a class';
     is ::OUR::C67768.new.foo, 67768,
         'can call method from a role with a name already assigned to a class';
@@ -140,7 +140,7 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 
 # RT #114380
 {
-    lives_ok { my role R { our $.r }; my class C does R {} },
+    lives-ok { my role R { our $.r }; my class C does R {} },
         'Can have "our $.r" in a role (RT #114380)';
 }
 
@@ -174,23 +174,21 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 
 # RT 120931
 {
-    lives_ok { role RT120931 { method foo {}; RT120931.foo } },
+    lives-ok { role RT120931 { method foo {}; RT120931.foo } },
         'can call a role method from within the role block';
 }
 
 # RT #117041
 {
-    throws_like { EVAL q[role A::B { method foo(A::C $a) { } }] },
+    throws-like { EVAL q[role A::B { method foo(A::C $a) { } }] },
         X::Parameter::InvalidType,
         'undeclared type in signature in role results in X::Parameter::InvalidType';
 }
 
 # RT #123002
 {
-    lives_ok { sub rt123002 { EVAL 'role RT123002 { }' }; rt123002 },
+    lives-ok { sub rt123002 { EVAL 'role RT123002 { }' }; rt123002 },
         'can call a sub which runs EVAL on minimal role declaration';
 }
-
-done;
 
 # vim: ft=perl6

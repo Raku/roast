@@ -171,5 +171,3 @@ else {
 	is IO::Spec.rootdir, '\\',  'IO::Spec loads Cygwin';
 	ok {.IO.d && .IO.w}.(IO::Spec.tmpdir), "tmpdir: {IO::Spec.tmpdir} is a writable directory";
 }
-
-done;

@@ -35,7 +35,7 @@ is  $b cmp $a, Order::More, 'cmp (larger)';
 
 ok $a ~ $b eq Buf.new(1, 2, 3, 1, 2, 3, 4), '~ and eq work on bufs';
 
-is_deeply Buf.new(1, 2, 3) ~ Buf.new(4, 5), Buf.new(1, 2, 3, 4, 5), '~ concatenates';
+is-deeply Buf.new(1, 2, 3) ~ Buf.new(4, 5), Buf.new(1, 2, 3, 4, 5), '~ concatenates';
 nok Buf.new(), 'empty Buf is false';
 ok  Buf.new(1), 'non-empty Buf is true';
 
@@ -78,13 +78,13 @@ ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
 # RT #122827
 {
     my Blob $x;
-    throws_like { $x ~= pack "V",1 }, X::Buf::AsStr, :method<Stringy>;
+    throws-like { $x ~= pack "V",1 }, X::Buf::AsStr, :method<Stringy>;
 }
 
 # RT #122600
 {
     my $a = buf8.new([]);
-    throws_like { "Foo: $a" }, X::Buf::AsStr, :method<Stringy>;
+    throws-like { "Foo: $a" }, X::Buf::AsStr, :method<Stringy>;
 }
 
 # Tests that used to gobble all memory in rakudo:

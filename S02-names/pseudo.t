@@ -57,20 +57,20 @@ plan 142;
         $MY::z := $x;
         ok $z =:= $x, 'Can bind through $MY::z';
         is +[$z], 1, '... it is a scalar binding';
-        lives_ok { $z = 15 }, '... it is mutable';
+        lives-ok { $z = 15 }, '... it is mutable';
 
         MY::.{'$z'} := $y;
         ok $z =:= $y, 'Can bind through MY::.{}';
 
         $MY::z ::= $y;
         is $z, $y, '::= binding through $MY::z works';
-        throws_like { $z = 5 },
+        throws-like { $z = 5 },
           Exception,
           '... and makes readonly';
 
         MY::.{'$z'} ::= $x;
         is $z, $x, '::= binding through MY::.{} works';
-        throws_like { $z = 5 },
+        throws-like { $z = 5 },
           Exception,
           '... and makes readonly';
     }
@@ -92,10 +92,10 @@ plan 142;
         }
     }
 
-    throws_like { EVAL 'MY::A2' },
+    throws-like { EVAL 'MY::A2' },
       Exception,
       'Cannot use MY::A2 directly from outer scope';
-    throws_like { MY::.{'A2'}.spies },
+    throws-like { MY::.{'A2'}.spies },
       Exception,
       'Cannot use MY::.{"A2"} from outer scope';
 
@@ -212,18 +212,18 @@ plan 142;
     }
 
     sub f1() { }; sub f2() { }; sub f3() { }
-    lives_ok { &CORE::none := &f1 }, '&CORE:: binding lives';
+    lives-ok { &CORE::none := &f1 }, '&CORE:: binding lives';
     ok &none =:= &f1, '... and works';
-    lives_ok { CORE::.<&none> := &f2 }, 'CORE::.{} binding lives';
+    lives-ok { CORE::.<&none> := &f2 }, 'CORE::.{} binding lives';
     ok &none =:= &f2, '... and works';
-    lives_ok { &::($core)::none := &f3 }, '::("CORE") binding lives';
+    lives-ok { &::($core)::none := &f3 }, '::("CORE") binding lives';
     ok &none =:= &f3, '... and works';
 
     # in niecza v8, dynamic variables go through a separate code path.
     # make sure accessing it in CORE works
-    lives_ok { $CORE::_ := 50 }, 'Binding to $CORE::_ lives';
+    lives-ok { $CORE::_ := 50 }, 'Binding to $CORE::_ lives';
     is $CORE::_, 50, 'Accessing $CORE::_ works';
-    lives_ok { $::($core)::_ := 51 }, 'Binding to $::("CORE")::_ lives';
+    lives-ok { $::($core)::_ := 51 }, 'Binding to $::("CORE")::_ lives';
     is $::($core)::_, 51, 'Accessing $::("CORE")::_ works';
 }
 

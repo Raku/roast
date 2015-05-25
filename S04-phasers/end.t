@@ -31,17 +31,17 @@ plan 8;
     }
 }
 
-eval_lives_ok 'my $x = 3; END { $x * $x }',
+eval-lives-ok 'my $x = 3; END { $x * $x }',
     'outer lexicals are visible in END { ... } blocks';
 
 # RT #112408
-eval_lives_ok 'my %rt112408 = END => "parsing clash with block-less END"',
+eval-lives-ok 'my %rt112408 = END => "parsing clash with block-less END"',
     'Can use END as a bareword hash key (RT 112408)';
 
 my $a = 0;
 #?rakudo 2 todo 'lexicals and EVAL() RT #124963'
 #?niecza todo
-eval_lives_ok 'my $x = 3; END { $a = $x * $x };',
+eval-lives-ok 'my $x = 3; END { $a = $x * $x };',
               'and those from eval as well';
 
 #?niecza todo

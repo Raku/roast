@@ -81,8 +81,8 @@ my @list = (1 ... 10);
 
 # Bool handling
 {
-    throws_like { first $_ == 1, 1,2,3 }, X::Match::Bool;
-    throws_like { (1,2,3).first: $_== 1 }, X::Match::Bool;
+    throws-like { first $_ == 1, 1,2,3 }, X::Match::Bool;
+    throws-like { (1,2,3).first: $_== 1 }, X::Match::Bool;
     is first( Bool,True,False,Int ), True, 'can we match on Bool as type';
     is (True,False,Int).first(Bool), True, 'can we match on Bool as type';
 }

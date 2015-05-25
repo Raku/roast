@@ -38,7 +38,7 @@ sub capture-said($code) {
 
 my @out = capture-said { C.new.sing };
 
-is_deeply @out, [
+is-deeply @out, [
     'row, row, row your boat,',
     'gently down the stream.',
     'merrily, merrily, merrily, merrily,',
@@ -58,7 +58,7 @@ sub bray {
     bray();
 };
 
-is_deeply @out, [
+is-deeply @out, [
     "Old MacDonald had a farm,",
     "EE-I-EE-I-OO."], 'nextsame wrapping';
 
@@ -66,7 +66,7 @@ multi foo(    $x) { say "Any argument" }
 multi foo(Int $x) { say "Int argument" }
 
 @out = capture-said({foo(42)});
-is_deeply @out, ['Int argument'], 'multisub sanity';
+is-deeply @out, ['Int argument'], 'multisub sanity';
 
 class A1 {
     method foo { "OH HAI" }
@@ -84,4 +84,4 @@ my $logged_A = A1.new but LogFoo;
 my $result;
 @out = capture-said {$result = $logged_A.foo};
 is $result, 'OH HAI';
-is_deeply @out, ['.foo was called'], 'nextsame mixin';
+is-deeply @out, ['.foo was called'], 'nextsame mixin';

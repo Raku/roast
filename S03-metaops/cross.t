@@ -71,7 +71,7 @@ is (1,2 X* 3,4), (3,4,6,8), 'cross-product works';
 is (1,2 Xcmp 3,2,0), (Order::Less, Order::Less, Order::More, Order::Less, Order::Same, Order::More), 'Xcmp works';
 
 # L<S03/Cross operators/underlying operator non-associating>
-eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
+eval-dies-ok '@result Xcmp @expected Xcmp <1 2>',
     'non-associating ops cannot be cross-ops';
 
 # let's have some fun with X..., comparison ops and junctions:
@@ -124,7 +124,7 @@ is (1,2 X ( <a b> X "x")).flat.join, '1a1x1b1x2a2x2b2x',
 
 # RT #77114
 {
-    eval_dies_ok 'my %foo XX= 1', "cross doesn't handle assignment";
+    eval-dies-ok 'my %foo XX= 1', "cross doesn't handle assignment";
 }
 
 # RT #120973

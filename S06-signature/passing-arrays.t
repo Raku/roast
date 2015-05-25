@@ -30,10 +30,10 @@ plan 11;
     sub pa(@a) { @a.WHAT; }
     my @b = 2, 3;
     isa-ok pa(@b), Array, 'basic array type sanity';
-    dies_ok { EVAL('pa(3)') }, 'non-slurpy array does not take a single Int';
+    dies-ok { EVAL('pa(3)') }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }   #OK not used
-    dies_ok { EVAL('ph(3)') }, 'an Int is not a Hash';
+    dies-ok { EVAL('ph(3)') }, 'an Int is not a Hash';
 }
 
 # this used to be a rakudobug, RT #62172
@@ -60,8 +60,8 @@ plan 11;
     sub ro_a(@a) { };   #OK not used
     sub ro_b(@a) { ro_a(@a) };
     my @x = 1, 2, 4;
-    lives_ok { ro_b(@x) },   'can pass parameter Array on to next function';
-    lives_ok { @x = 5, 6 }, '... and that did not make the caller Array ro';
+    lives-ok { ro_b(@x) },   'can pass parameter Array on to next function';
+    lives-ok { @x = 5, 6 }, '... and that did not make the caller Array ro';
 }
 
 # vim: ft=perl6

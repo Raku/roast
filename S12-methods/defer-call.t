@@ -90,7 +90,7 @@ class BarCallWithInt is Foo {
     multi sub f($n) {
         callwith($n - 1);
     }
-    lives_ok { f(3) }, 'can recurse several levels with callwith()';
+    lives-ok { f(3) }, 'can recurse several levels with callwith()';
 }
 
 # vim: ft=perl6

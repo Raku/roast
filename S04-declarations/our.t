@@ -25,8 +25,8 @@ is($a, 3, '$a has changed'); # XXX is that right?
 # and initializes both arrays
 {
     our (@a, @b);
-    lives_ok { @a.push(2) }, 'Can use @a';
-    lives_ok { @b.push(3) }, 'Can use @b';
+    lives-ok { @a.push(2) }, 'Can use @a';
+    lives-ok { @b.push(3) }, 'Can use @b';
     is ~@a, '2', 'push actually worked on @a';
     is ~@b, '3', 'push actually worked on @b';
 }
@@ -49,28 +49,28 @@ our $c = 42; #OK not used
                 our $d3 = 9;
             }
             {
-                eval_dies_ok('$d3', "variables aren't seen within other lexical child blocks");
+                eval-dies-ok('$d3', "variables aren't seen within other lexical child blocks");
                 is($D2::d3, 9, "variables are seen within other lexical child blocks via package");
                 
                 package D3 {
-                    eval_dies_ok('$d3', " ... and not from within child packages");
+                    eval-dies-ok('$d3', " ... and not from within child packages");
                     is($D2::d3, 9, " ... and from within child packages via package");
                 }
             }
-            eval_dies_ok('d3', "variables do not leak from lexical blocks");
+            eval-dies-ok('d3', "variables do not leak from lexical blocks");
             is($D2::d3, 9, "variables are seen from lexical blocks via pacakage");
         }
-        eval_dies_ok('$d2', 'our() variable not yet visible outside its package');
-        eval_dies_ok('$d3', 'our() variable not yet visible outside its package');
+        eval-dies-ok('$d2', 'our() variable not yet visible outside its package');
+        eval-dies-ok('$d3', 'our() variable not yet visible outside its package');
         
     }
-    eval_dies_ok('$d1', 'our() variable not yet visible outside its package');
+    eval-dies-ok('$d1', 'our() variable not yet visible outside its package');
 }
 
 # RT #100560, #102876
 {
-    lives_ok { our @e1 = 1..3 },   'we can declare and initialize an our-scoped array';
-    lives_ok { our %e2 = a => 1 }, 'we can declare and initialize an our-scoped hash';
+    lives-ok { our @e1 = 1..3 },   'we can declare and initialize an our-scoped array';
+    lives-ok { our %e2 = a => 1 }, 'we can declare and initialize an our-scoped hash';
     is(@OUR::e1[1], 2, 'our-scoped array has correct value' );
     is(%OUR::e2<a>, 1, 'our-scoped hash has correct value' );
 }
@@ -112,7 +112,7 @@ our $c = 42; #OK not used
 {
     role PiRole   { our $pi = 3 };
     class PiClass { our $pi = 3 };
-#?rakudo todo 'our-scoped var in role RT #125060'
+#?rakudo todo 'our-scoped var in role RT #76450'
 #?niecza todo 'our-scoped var in role'
     is $PiRole::pi,  3, 'declaring/initializing our-scoped var in role';
     is $PiClass::pi, 3, 'declaring/initializing our-scoped var in class';

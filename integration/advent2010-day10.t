@@ -12,7 +12,7 @@ my @result;
 #?rakudo todo "RT #121843"
 {
     # Original verison of advent post.
-    lives_ok {@result = EVAL q[my @odds-squares <== sort <== map { $_ ** 2 } <== grep { $_ % 2 } <== @random-nums]};
+    lives-ok {@result = EVAL q[my @odds-squares <== sort <== map { $_ ** 2 } <== grep { $_ % 2 } <== @random-nums]};
     is ~@result, $odds-squared-expected, 'left feed';
 }
 

@@ -6,11 +6,11 @@ is sub { "lol, I'm so anonymous!" }(), "lol, I'm so anonymous!", 'anon sub';
 
 my @words = ('d', 'b', 'c', 'a', 2, 10);
 my @sorted_words = @words.sort({ ~$_ });
-is_deeply @sorted_words, [10, 2, 'a', 'b', 'c', 'd'], 'sorted words';
+is-deeply @sorted_words, [10, 2, 'a', 'b', 'c', 'd'], 'sorted words';
 
 my @numbers = (5, 2, 10, 3);
 my @sorted_numbers = @numbers.sort({ +$_ });
-is_deeply @sorted_numbers, [2, 3, 5, 10], 'sorted numbers';
+is-deeply @sorted_numbers, [2, 3, 5, 10], 'sorted numbers';
 
 sub make_surprise_for($name) {
     return sub { "Sur-priiise, $name!" };

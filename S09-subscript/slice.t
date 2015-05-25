@@ -65,7 +65,7 @@ plan 31;
 #?rakudo skip 'RT #61844'
 #?niecza skip 'hangs'
 {
-    eval_lives_ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
+    eval-lives-ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
     is EVAL('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';
 }
 
@@ -101,7 +101,7 @@ plan 31;
 {
     my $b = Buf.new(0, 0);
     $b[0, 1] = 2, 3;
-    is_deeply $b, Buf.new(2, 3), 'can assign to a Buf slice';
+    is-deeply $b, Buf.new(2, 3), 'can assign to a Buf slice';
 }
 
 # vim: ft=perl6

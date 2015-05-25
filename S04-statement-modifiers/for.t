@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -100,7 +100,7 @@ plan 26;
     is $rt66622, 66622, 'statement modifier "for" makes no implicit block';
 }
 
-eval_dies_ok '1 for <a b> for <c d>;', 'double statement-modifying for is not allowed';
+eval-dies-ok '1 for <a b> for <c d>;', 'double statement-modifying for is not allowed';
 
 # RT #66606
 {
@@ -143,6 +143,14 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
     my @a;
     for ^2 -> \c { 1 for first { @a.push(c); 0 }, ^2; };
     is @a, (0, 0, 1, 1), 'for thunk does not mess up statement modifier closures';
+}
+
+# RT #116178
+{
+    my @a = <a b c>;
+    my %h;
+    %h{.value} //= .key for @a.pairs;
+    is %h, {:a(0), :b(1), :c(2)}, "default-assignment (//-) doesn't mix with implicit-variable method call";
 }
 
 # vim: ft=perl6

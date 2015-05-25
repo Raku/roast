@@ -52,8 +52,6 @@ is(sign(NaN),NaN, 'sign of NaN is NaN');
 
 #?niecza todo
 nok sign(Int).defined, 'sign(Int) is undefined';
-throws_like { sign(3+4i) }, X::Numeric::Real;
-
-done;
+throws-like { sign(3+4i) }, X::Numeric::Real;
 
 # vim: ft=perl6

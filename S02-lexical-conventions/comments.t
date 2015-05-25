@@ -20,9 +20,9 @@ plan 51;
     ) 1, 'multiline embedded comment with #`()';
 
     # RT #115762
-    eval_lives_ok "#`( foo )", "comment as first and only statement";
+    eval-lives-ok "#`( foo )", "comment as first and only statement";
 
-    eval_lives_ok "2 * 3\n #`<<<\n comment>>>", "multiline comment with <<<";
+    eval-lives-ok "2 * 3\n #`<<<\n comment>>>", "multiline comment with <<<";
 
     my $var = #`{ foo bar } 32;
     is $var, 32, 'embedded comment with #`{}';
@@ -64,16 +64,16 @@ plan 51;
 #?niecza skip 'Opening bracket is required for #` comment'
 {
 
-    throws_like { EVAL "3 * #` (invalid comment) 2" },
+    throws-like { EVAL "3 * #` (invalid comment) 2" },
       X::Comp::AdHoc,  # no exception type yet
       "no space allowed between '#`' and '('";
-    throws_like { EVAL "3 * #`\t[invalid comment] 2" },
+    throws-like { EVAL "3 * #`\t[invalid comment] 2" },
       X::Comp::AdHoc,  # no exception type yet
       "no tab allowed between '#`' and '['";
-    throws_like { EVAL "3 * #`  \{invalid comment\} 2" },
+    throws-like { EVAL "3 * #`  \{invalid comment\} 2" },
       X::Comp::AdHoc,  # no exception type yet
       "no spaces allowed between '#`' and '\{'";
-    throws_like { EVAL "3 * #`\n<invalid comment> 2" },
+    throws-like { EVAL "3 * #`\n<invalid comment> 2" },
       X::Syntax::Confused,
       "no spaces allowed between '#`' and '<'";
 
@@ -90,7 +90,7 @@ plan 51;
 
 # RT #121305
 {
-    eval_lives_ok( q{{
+    eval-lives-ok( q{{
         my $var = \#`((( comment ))) 12;
         is $var, 12, '#`(((...)))';
     }}, 'Unspaced bracketed comment throws no error' );
@@ -140,7 +140,7 @@ plan 51;
     # NB: This is as it should be.  The inside is not parsed till EVAL time.
     # Interpolation happens before that.  --law
 
-    eval_dies_ok " #`<<\n comment\n # >>\n >> 3",
+    eval-dies-ok " #`<<\n comment\n # >>\n >> 3",
         'single line comment in multiline does not hide delims';
 }
 
@@ -160,7 +160,7 @@ plan 51;
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
 #?niecza skip 'Excess arguments to CORE eval'
 {
-    throws_like { EVAL '$a = #`\  (comment) 32' },
+    throws-like { EVAL '$a = #`\  (comment) 32' },
       X::Undeclared,
       "comments can't contain unspace";
 }
@@ -169,13 +169,13 @@ plan 51;
 #   delimiter quoting>
 {
     my $a;
-    lives_ok { EVAL '$a = q{ 32 }' }, 'sanity check';
+    lives-ok { EVAL '$a = q{ 32 }' }, 'sanity check';
     is $a, ' 32 ', 'sanity check';
 }
 
 {
     my $a = Nil;
-    throws_like { EVAL '$a = q# 32 #;' }, X::Comp::AdHoc, 'misuse of # as quote delimiters';
+    throws-like { EVAL '$a = q# 32 #;' }, X::Comp::AdHoc, 'misuse of # as quote delimiters';
     ok !$a.defined, "The # character can't be used as quote delimiters";
 }
 
@@ -183,12 +183,12 @@ plan 51;
 #?niecza todo
 {
     # RT #70752
-    lives_ok { EVAL "#=======\n#=======\nuse v6;" }, 
+    lives-ok { EVAL "#=======\n#=======\nuse v6;" }, 
       "pragma use after single line comments";
 }
 
 # L<S02/Multiline Comments/POD sections may be>
-lives_ok { EVAL q{{
+lives-ok { EVAL q{{
 
 my $outerVal = EVAL(
     q{my $var = 1;
@@ -208,7 +208,7 @@ is $outerVal, "bar", '=begin comment without =cut parses to whitespace in code';
 
 
 # L<S02/Multiline Comments/"single paragraph comments">
-lives_ok { EVAL q{{
+lives-ok { EVAL q{{
 
 my $outerVal = EVAL(
     q{10 +
@@ -222,7 +222,7 @@ is $outerVal, 11, 'Single paragraph Pod parses to whitespace in code';
 }} }, 'Single paragraph Pod eval throws no error';
 
 #?niecza todo
-lives_ok { EVAL q{{
+lives-ok { EVAL q{{
 
 my $outerVal = EVAL(
     q{20 +

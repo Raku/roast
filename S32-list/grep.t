@@ -47,7 +47,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
-#?rakudo skip "closure as non-final argument RT #124757"
+#?rakudo todo "closure as non-final argument RT #124757"
 #?niecza skip 'Invocant handling is NYI'
 {
     my @result = grep { ($_ % 2) }: @list;
@@ -131,8 +131,8 @@ my @list = (1 .. 10);
 
 # Bool handling
 {
-    throws_like { grep $_ == 1, 1,2,3 }, X::Match::Bool;
-    throws_like { (1,2,3).grep: $_== 1 }, X::Match::Bool;
+    throws-like { grep $_ == 1, 1,2,3 }, X::Match::Bool;
+    throws-like { (1,2,3).grep: $_== 1 }, X::Match::Bool;
     is grep( Bool,True,False,Int ), (True,False), 'can we match on Bool as type';
     is (True,False,Int).grep(Bool), (True,False), 'can we match on Bool as type';
 }

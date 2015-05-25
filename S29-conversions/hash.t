@@ -28,19 +28,16 @@ Basic tests for the hash() built-in
 }
 
 {
-    lives_ok {(a => 1, b => 2).hash.perl}, 'hash() on list of pairs lives (RT #76826)';
+    lives-ok {(a => 1, b => 2).hash.perl}, 'hash() on list of pairs lives (RT #76826)';
 }
 
 {
-    dies_ok {hash(<1 2 3>)}, "hash() won't create invalid hash";
+    dies-ok {hash(<1 2 3>)}, "hash() won't create invalid hash";
 }
 
 
 {
     is ?hash(), Bool::False, "hash() is false";
 }
-
-
-done;
 
 # vim: ft=perl6

@@ -175,6 +175,4 @@ is(2.4 >  7, False, 'Rat >  Int');
 is(2.4 >= 7, False, 'Rat >= Int');
 is(2.4 <=> 7, Order::Less, 'Rat <=> Int');
 
-done;
-
 # vim: ft=perl6

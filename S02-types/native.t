@@ -106,7 +106,7 @@ plan 42;
 {
     my @j;
     my int $j = 42;
-    lives_ok { @j.push($j) }, 'can push native int to an array (1)';
+    lives-ok { @j.push($j) }, 'can push native int to an array (1)';
     is @j[0], 42, 'can push native int to an array (2)';
 }
 
@@ -169,8 +169,8 @@ plan 42;
 }
 
 # RT #123789 (ensure we die, not SEGV)
-dies_ok { EVAL 'my int $x = Int;' }, '"my int $x = Int" dies';
-dies_ok { EVAL 'my num $x = Num;' }, '"my num $x = Num" dies';
-dies_ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
+dies-ok { EVAL 'my int $x = Int;' }, '"my int $x = Int" dies';
+dies-ok { EVAL 'my num $x = Num;' }, '"my num $x = Num" dies';
+dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
 
 # vim: ft=perl6

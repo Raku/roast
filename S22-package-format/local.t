@@ -36,7 +36,7 @@ isa-ok $curlf1, CompUnitRepo::Local::File;
 isa-ok $curlf1.IO, IO::Path;
 is $curlf1.IO, $cwd, 'is . looking at the right directory';
 is $curlf1.short-id, 'file', 'is the short-id right';
-dies_ok { $curlf1.install( "foo" ) }, 'Cannot install on CUR::File';
+dies-ok { $curlf1.install( "foo" ) }, 'Cannot install on CUR::File';
 
 my $curlf2 = CompUnitRepo::Local::File.new($cwd);
 isa-ok $curlf2, CompUnitRepo::Local::File;

@@ -10,7 +10,7 @@ my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
 my regex likely_perl6_not_found_err {:i ^\N* <<'can'?not>> \N* <<[f[i|ou]nd|located?|access'ed'?]>> }
 
-package Empty {}
+package ThisEmpty {}
 package AlsoEmpty::Nested {}
 
 package Simple {
@@ -30,18 +30,18 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 # RT #65404
 #?niecza todo
 {
-    lives_ok {Empty.perl ne "tbd"}, 'test for working .perl method'
+    lives-ok {ThisEmpty.perl ne "tbd"}, 'test for working .perl method'
 }
 
 # change to match likely error (top of file) when passes
 {
-    eval_dies_ok 'Empty::no_such_sub()', 'Non-existent sub through package';
+    eval-dies-ok 'ThisEmpty::no_such_sub()', 'Non-existent sub through package';
 }
 
 # Not sure whether you should be able to access something in package this way
 # might change to match likely error (top of file) when passes
 {
-    eval_dies_ok 'Empty.no_such_sub_or_prop',
+    eval-dies-ok 'ThisEmpty.no_such_sub_or_prop',
                  'Non-existent method with package';
 }
 
@@ -59,18 +59,18 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 }
 
 {
-    lives_ok {Simple::Bar.new.WHO}, 'some WHO implementation';
+    lives-ok {Simple::Bar.new.WHO}, 'some WHO implementation';
     #?rakudo todo 'ticket based only on class... RT #60446'
     #?niecza todo
     is ~(Simple::Bar.new.WHO), 'Simple::Bar',
         'WHO implementation with longname';
 }
 
-eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
+eval-lives-ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     'can refer to role using package';
 
 {
-    eval_lives_ok '{package A2 { role B2 {}; class C2 does B2 {} }}',
+    eval-lives-ok '{package A2 { role B2 {}; class C2 does B2 {} }}',
         'since role is in package should not need package name';
 }
 
@@ -101,23 +101,23 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
 
 #RT #65022
 {
-    eval_lives_ok '{ package C1Home { class Baz {} }; package C2Home { class Baz {} } }',
+    eval-lives-ok '{ package C1Home { class Baz {} }; package C2Home { class Baz {} } }',
         'two different packages should be two different Baz';
 
-    eval_lives_ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
+    eval-lives-ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
         'two different packages should be two different EHomeE';        
 }
 
 # making test below todo causes trouble right now ...
 {
-    eval_lives_ok 'package InternalCall { sub foo() { return 42 }; foo() }',
+    eval-lives-ok 'package InternalCall { sub foo() { return 42 }; foo() }',
         'call of method defined in package';
 }
 
 #?rakudo todo 'RT #64606'
 #?niecza todo
 {
-    eval_lives_ok 'package DoMap {my @a = map { $_ }, (1, 2, 3)}}',
+    eval-lives-ok 'package DoMap {my @a = map { $_ }, (1, 2, 3)}}',
         'map in package';
 }
 
@@ -133,7 +133,7 @@ our $outer_package = 19;
     is  EVAL('RetOuterPack::outer_pack_val()'), $outer_package,
         'use outer package var';
 
-    eval_lives_ok
+    eval-lives-ok
         'my $outer; package ModOuterPack { $outer= 3 }; $outer',
         'Should be able to update outer package var';
 }
@@ -150,7 +150,7 @@ our $outer_package = 19;
         'another simple package case that should not blow platform';
 }
 
-eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
+eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
               'map works in a module (RT #64606)';
 
 {
@@ -163,36 +163,36 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 
 # RT #68290
 {
-    eval_dies_ok q[class A { sub a { say "a" }; sub a { say "a" } }],
+    eval-dies-ok q[class A { sub a { say "a" }; sub a { say "a" } }],
                  'sub redefined in class dies';
-    eval_dies_ok q[package P { sub p { say "p" }; sub p { say "p" } }],
+    eval-dies-ok q[package P { sub p { say "p" }; sub p { say "p" } }],
                  'sub redefined in package dies';
-    eval_dies_ok q[module M { sub m { say "m" }; sub m { say "m" } }],
+    eval-dies-ok q[module M { sub m { say "m" }; sub m { say "m" } }],
                  'sub redefined in module dies';
-    eval_dies_ok q[grammar B { token b { 'b' }; token b { 'b' } };],
+    eval-dies-ok q[grammar B { token b { 'b' }; token b { 'b' } };],
                  'token redefined in grammar dies';
-    eval_dies_ok q[class C { method c { say "c" }; method c { say "c" } }],
+    eval-dies-ok q[class C { method c { say "c" }; method c { say "c" } }],
                  'method redefined in class dies';
 }
 
 {
-    eval_lives_ok 'class RT64688_c1;use Test', 'use after class line';
-    eval_lives_ok 'class RT64688_d1 { use Test }', 'use in class block';
-    eval_lives_ok 'module RT64688_m1;use Test', 'use after module line';
-    eval_lives_ok 'module RT64688_m2 { use Test }', 'use in module block';
-    eval_lives_ok 'package RT64688_p2 { use Test }', 'use in package block';
-    eval_lives_ok 'grammar RT64688_g1;use Test', 'use after grammar line';
-    eval_lives_ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
-    eval_lives_ok 'role RT64688_r1;use Test', 'use after role line';
-    eval_lives_ok 'role RT64688_r2 { use Test }', 'use in role block';
+    eval-lives-ok 'unit class RT64688_c1;use Test', 'use after class line';
+    eval-lives-ok 'class RT64688_d1 { use Test }', 'use in class block';
+    eval-lives-ok 'unit module RT64688_m1;use Test', 'use after module line';
+    eval-lives-ok 'module RT64688_m2 { use Test }', 'use in module block';
+    eval-lives-ok 'package RT64688_p2 { use Test }', 'use in package block';
+    eval-lives-ok 'unit grammar RT64688_g1;use Test', 'use after grammar line';
+    eval-lives-ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
+    eval-lives-ok 'unit role RT64688_r1;use Test', 'use after role line';
+    eval-lives-ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
 #?niecza skip 'Export tags NYI'
 {
     @*INC.unshift: 't/spec/packages';
-    eval_lives_ok 'use LoadFromInsideAModule',
+    eval-lives-ok 'use LoadFromInsideAModule',
         'can "use" a class inside a module';
-    eval_lives_ok 'use LoadFromInsideAClass',
+    eval-lives-ok 'use LoadFromInsideAClass',
         'can "use" a class inside a class';
 
     # RT #65738
@@ -205,19 +205,19 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 # also checks RT #73740
 #?niecza skip 'Unable to locate module PM6 in @path'
 {
-    eval_lives_ok 'use PM6', 'can load a module ending in .pm6';
+    eval-lives-ok 'use PM6', 'can load a module ending in .pm6';
     is EVAL('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
 }
 
 # package Foo; is perl 5 code;
 # RT #75458
 {
-    eval_dies_ok "package Perl5Code;\n'this is Perl 5 code'",
+    eval-dies-ok "package Perl5Code;\n'this is Perl 5 code'",
         'package Foo; is indicator for Perl 5 code';
 }
 
 #RT 80856
-eval_dies_ok 'module RT80856 is not_RT80856 {}',
+eval-dies-ok 'module RT80856 is not_RT80856 {}',
              'die if module "is" a nonexistent';
 
 {
@@ -228,13 +228,13 @@ eval_dies_ok 'module RT80856 is not_RT80856 {}',
 
 # RT #98856
 #?niecza todo
-eval_lives_ok q[
+eval-lives-ok q[
     package NewFoo { }
     class   NewFoo { }
 ], 'can re-declare a class over a package of the same name';
 
 # RT #73328
-eval_dies_ok q[
+eval-dies-ok q[
     my package A {
         package B;
         1+1;
@@ -261,19 +261,19 @@ eval_dies_ok q[
 
 # RT #79464
 {
-    lives_ok {Foo1::bar(); module Foo1 { our $x = 42; our sub bar() { $x.defined } }}, 'accessing module variable from within sub called from outside the module';
+    lives-ok {Foo1::bar(); module Foo1 { our $x = 42; our sub bar() { $x.defined } }}, 'accessing module variable from within sub called from outside the module';
 }
 
 # RT #76606
 {
     use lib 't/spec/packages';
-    lives_ok { use RT76606 },
+    lives-ok { use RT76606 },
         'autovivification works with nested "use" directives (import from two nested files)';
 }
 
 # RT #120561
 {
-    lives_ok { use lib "$?FILE.IO.dirname()/t/spec/packages" },
+    lives-ok { use lib "$?FILE.IO.dirname()/t/spec/packages" },
         'no Null PMC access with "use lib $double_quoted_string"';
 }
 

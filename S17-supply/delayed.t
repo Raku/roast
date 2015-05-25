@@ -6,7 +6,7 @@ use Test::Tap;
 
 plan 13;
 
-dies_ok { Supply.delayed(1) }, 'can not be called as a class method';
+dies-ok { Supply.delayed(1) }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";

@@ -17,7 +17,7 @@ is '€‚ƒ„…†‡ˆ‰Š‹ŒŽ'.encode('windows-1252').values, (0x80,0x8
 is ''.encode('windows-1252').values, (0x81,0x8d,0x8f), 'cp1252 encode tolerates unassigned C1 characters';
 
 is 'abc'.encode()[0], 97, 'can index one element in a Buf';
-is_deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
+is-deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
 
 # verified with Perl 5:
 # perl -CS -Mutf8 -MUnicode::Normalize -e 'print NFD("ä")' | hexdump -C

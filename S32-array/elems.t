@@ -42,7 +42,7 @@ plan 11;
 }
 
 {
-  eval_dies_ok 'elems(1,2,3,4', "elems(1,2,3,4) should not work";
+  eval-dies-ok 'elems(1,2,3,4', "elems(1,2,3,4) should not work";
 }
 
 {

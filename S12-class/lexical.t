@@ -12,12 +12,12 @@ Tests for lexical classes delcared with 'my class'
 # L<S12/Classes>
 
 # A few basic tests.
-eval_lives_ok 'my class A {}', 'my class parses OK';
-eval_lives_ok '{ my class B {} }; { my class B {} }',
+eval-lives-ok 'my class A {}', 'my class parses OK';
+eval-lives-ok '{ my class B {} }; { my class B {} }',
               'declare classes with the same name in two scopes.';
-eval_lives_ok '{ my class B {}; B.new; }',
+eval-lives-ok '{ my class B {}; B.new; }',
               'can instantiate lexical class';
-eval_dies_ok  '{ my class B {}; B.new; }; B.new',
+eval-dies-ok  '{ my class B {}; B.new; }; B.new',
               'scope is correctly restricted';
 
 {

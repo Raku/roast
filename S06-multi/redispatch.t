@@ -12,7 +12,7 @@ plan 10;
     multi a($)     { $tracker ~= 'Any' };
     multi a(Int $) { $tracker ~= 'Int'; nextsame; $tracker ~= 'Int' };
 
-    lives_ok { a(3) },      'can call nextsame inside a multi sub';
+    lives-ok { a(3) },      'can call nextsame inside a multi sub';
     is $tracker, 'IntAny', 'called in the right order';
 }
 
@@ -21,7 +21,7 @@ plan 10;
     multi b($)     { $tracker ~= 'Any' };
     multi b(Int $) { $tracker ~= 'Int'; callsame; $tracker ~= 'Int' };
 
-    lives_ok { b(3) },        'can call callsame inside a multi sub';
+    lives-ok { b(3) },        'can call callsame inside a multi sub';
     is $tracker, 'IntAnyInt', 'called in the right order';
 }
 
@@ -30,7 +30,7 @@ plan 10;
     multi c($x)     { $tracker ~= 'Any' ~ $x };
     multi c(Int $x) { $tracker ~= 'Int'; nextwith($x+1); $tracker ~= 'Int' };
 
-    lives_ok { c(3) },      'can call nextwith inside a multi sub';
+    lives-ok { c(3) },      'can call nextwith inside a multi sub';
     is $tracker, 'IntAny4', 'called in the right order';
 }
 
@@ -39,14 +39,14 @@ plan 10;
     multi d($x)     { $tracker ~= 'Any' ~ $x };
     multi d(Int $x) { $tracker ~= 'Int'; callwith($x+1); $tracker ~= 'Int' };
 
-    lives_ok { d(3) },         'can call callwith inside a multi sub';
+    lives-ok { d(3) },         'can call callwith inside a multi sub';
     is $tracker, 'IntAny4Int', 'called in the right order';
 }
 
 # RT #75008
 {
     multi e() { nextsame };
-    lives_ok &e, "It's ok to call nextsame in the last/only candidate";
+    lives-ok &e, "It's ok to call nextsame in the last/only candidate";
 }
 
 # RT 76328
@@ -54,5 +54,3 @@ plan 10;
     try { nextsame };
     isa-ok $!, X::NoDispatcher, 'nextsame in main block dies due to lack of dispatcher';
 }
-
-done;

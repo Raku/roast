@@ -7,7 +7,7 @@ plan 9;
         constant \term:<∞> = Inf;
         is ∞, Inf, "Can define \\term:<∞> as a constant";
     }
-    dies_ok { EVAL "∞" }, "constant \\term:<∞> really is scoped to package";
+    dies-ok { EVAL "∞" }, "constant \\term:<∞> really is scoped to package";
     is Foo::term:<∞>, Inf, "Constant available from package";
 }
 
@@ -16,7 +16,7 @@ plan 9;
         my \term:<∞> = Inf;
         is ∞, Inf, "Can define \\term:<∞> as lexical variable";
     }
-    dies_ok { EVAL "∞" }, "my \\term:<∞> really is lexical";
+    dies-ok { EVAL "∞" }, "my \\term:<∞> really is lexical";
 }
 
 {

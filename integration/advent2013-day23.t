@@ -5,15 +5,15 @@ plan 9;
 my @values = (5, 2, 10, 3);
 {
     my @sorted = sort { $^a <=> $^b }, @values;
-    is_deeply @sorted, [2, 3, 5, 10];
+    is-deeply @sorted, [2, 3, 5, 10];
 }
 {
     my @sorted = sort * <=> *, @values;
-    is_deeply @sorted, [2, 3, 5, 10];
+    is-deeply @sorted, [2, 3, 5, 10];
 }
 {
     my @sorted = sort &infix:«<=>», @values;
-    is_deeply @sorted, [2, 3, 5, 10];
+    is-deeply @sorted, [2, 3, 5, 10];
 }
 
 my %rank = a => 5, b => 2, c => 10, d => 3;

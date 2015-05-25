@@ -64,6 +64,4 @@ ok(!( "abcdefgh" ~~ m:overlap/ a .+ a / ), 'Failed overlapping match');
     is ~@match[3], "abcd", "Last is abcd";
 }
 
-done;
-
 # vim: ft=perl6

@@ -6,10 +6,10 @@ plan 6;
 #  twice in the same scope">
 
 # RT #83430
-eval_lives_ok 'my $x; my $x', 
+eval-lives-ok 'my $x; my $x', 
               'it is legal to declare my $x twice in the same scope.';
 
-eval_lives_ok 'state $x; state $x', 
+eval-lives-ok 'state $x; state $x', 
               'it is legal to declare state $x twice in the same scope.';
 
 {
@@ -20,15 +20,15 @@ eval_lives_ok 'state $x; state $x',
 }
 
 # this is not exactly S04 material
-eval_dies_ok 'sub foo {1; }; sub foo($x) {1; };',
+eval-dies-ok 'sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 
-eval_dies_ok 'only sub foo {1; }; sub foo($x) {1; };',
+eval-dies-ok 'only sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 
 #?niecza todo "MMD"
 #?rakudo todo 'nom regression RT #125053'
-eval_lives_ok 'proto foo {1; }; sub foo {1; }; sub foo($x) {1; };',
+eval-lives-ok 'proto foo {1; }; sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 
 # vim: ft=perl6

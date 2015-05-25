@@ -78,5 +78,3 @@ is $a, '0 a 1 b 2 c 3 d ', '.kv, multiple topics';
     };
     is $a, '11 21 31 41 12 22 32 42 13 23 33 43 ', 'multiple iteration';
 }
-
-done;

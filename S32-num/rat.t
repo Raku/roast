@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 824;
+plan 828;
 
 # Basic test functions specific to rational numbers.
 
@@ -42,7 +42,7 @@ is(Rat.new(1141234123, 0).nude, (1, 0), "Huge over zero becomes one over zero");
 #?niecza skip 'Unable to resolve method nude in class Num'
 is(Rat.new(-7, 0).nude, (-1, 0), "Negative over zero becomes negative one over zero");
 #?niecza todo
-dies_ok( { Rat.new(0, 0) }, "Zero over zero is not a legal Rat");
+dies-ok( { Rat.new(0, 0) }, "Zero over zero is not a legal Rat");
 
 # Test basic math
 is(1 / 4 + 1 / 4, 1/2, "1/4 + 1/4 = 1/2");
@@ -251,6 +251,10 @@ is .88888888888.WHAT.gist, Rat.gist, 'WHAT works on Rat created from 11 digit de
 
 isa-ok (2/3) ** 3, Rat, "Rat raised to a positive Int power is a Rat";
 is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
+isa-ok (2/3) ** -3, Rat, "Rat raised to a negative Int power is a Rat";
+is (2/3) ** -3, 27/8, "Rat raised to a negative Int power gets correct answer";
+isa-ok 3 ** -3, Rat, "Int raised to a negative Int power is a Rat";
+is 3 ** -3, 1/27, "Int raised to a negative Int power gets correct answer";
 
 # the spec says that Rat denominators can't grow larger than a uint64,
 # and arithmetic operations need to spill over to Num
@@ -286,7 +290,5 @@ is 241025348275725.3352.Rat.norm.nude, (301281685344656669, 1250), "Rat.Rat yiel
 
 #RT #112822
 is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish Rats';
-
-done;
 
 # vim: ft=perl6

@@ -48,7 +48,7 @@ plan 13;
 
 {
 	sub foo() {
-	 return if 1;
+	 return () if 1;
 	 123;
 	}
 	
@@ -66,10 +66,10 @@ plan 13;
     ok !$y, 'my $y = (3 if 0) leaves $y false';
 }
 
-# return value of false 'if' should be Nil
+# return value of false 'if' should be Empty
 # RT #66544
 {
-    is (42 if 0), Nil, '"$something if 0" is Nil';
+    is (42 if 0), Empty, '"$something if 0" is Empty';
 }
 
 {

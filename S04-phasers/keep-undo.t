@@ -95,7 +95,7 @@ plan 16;
         },
         'UNDO fires after die' );
 
-    #?rakudo.jvm skip "RT #111866"
+    #?rakudo.jvm todo "RT #111866"
     is_run( q[do { UNDO { say 'undone' }; die 'foobar' }],
         {
             out    => "undone\n",

@@ -158,11 +158,9 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q4[0], '$foo $bar', "and interpolates correctly");
 }
 
-# quote with \0 as delimiters, forbidden by STD
-# but see L<news:20050101220112.GF25432@plum.flirble.org>
-#?rakudo todo 'retriage RT #124554'
+# quote with \0 as delimiters
 {
-    throws_like { EVAL "(q\0foo bar\0)" }, X::Comp::AdHoc;
+    is EVAL("(q\0foo bar\0)"), 'foo bar', 'OK';
 }
 
 { # traditional quote word
@@ -408,19 +406,20 @@ Hello, World
     ok qq:x/echo hello $world/ ~~ /^'hello world'\n$/, 'Testing qq:x operator';
 }
 
-#?rakudo todo 'q:x assigned to array RT #124556'
 #?niecza todo ':x'
 {
-    my @two_lines = q:x/echo hello ; echo world/;
-    is @two_lines, ("hello\n", "world\n"), 'testing q:x assigned to array';
+    my $output = $*DISTRO.is-win
+        ?? q:x/echo hello& echo world/
+        !! q:x/echo hello ; echo world/;
+    my @two_lines = $output.trim-trailing.lines;
+    is @two_lines, ["hello", "world"], 'testing q:x assigned to array';
 }
 
-#?rakudo todo 'q:x assigned to array RT #124557'
 #?niecza todo ':x'
 {
     my $hello = 'howdy';
-    my @two_lines = qq:x/echo $hello ; echo world/;
-    is @two_lines, ("$hello\n", "world\n"), 'testing qq:x assigned to array';
+    my @two_lines = qq:x/echo $hello ; echo world/.trim-trailing.lines;
+    is @two_lines, ("$hello", "world"), 'testing qq:x assigned to array';
 }
 
 
@@ -516,10 +515,10 @@ Hello, World
     isa-ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
     isa-ok rx:s{foo}, Regex, 'rx:i{...}';
     isa-ok rx:sigspace{foo}, Regex, 'rx:i{...}';
-    throws_like { EVAL 'rx:unknown{foo}' },
+    throws-like { EVAL 'rx:unknown{foo}' },
       X::Syntax::Regex::Adverb,
       'rx:unknown dies';
-    throws_like { EVAL 'rx:g{foo}' },
+    throws-like { EVAL 'rx:g{foo}' },
       X::Syntax::Regex::Adverb,
       'g does not make sense on rx//';
 }
@@ -535,7 +534,8 @@ Hello, World
 # RT #120529
 {
     %*ENV<ENV_P6_SPECTEST_120529>='foo';
-    ok qx/env/ ~~ /ENV_P6_SPECTEST_120529/, 'qx passes environmental variables';
+    my $check = $*DISTRO.is-win ?? qx/set/ !! qx/env/;
+    ok $check ~~ /ENV_P6_SPECTEST_120529/, 'qx passes environmental variables';
 }
 
 # RT #75320
@@ -551,7 +551,7 @@ Hello, World
 }
 
 # RT #90124
-throws_like { EVAL q["@a<"] },
+throws-like { EVAL q["@a<"] },
   X::Comp::AdHoc,
   'unclosed quote after array variable is an error';
 
@@ -584,7 +584,7 @@ is "\c?a", "\x[7f]a", '\c? is a DEL';
 is "\c@a", "\0a", '\c@ is a NUL';
 
 {
-    throws_like { EVAL 'q< < >' },
+    throws-like { EVAL 'q< < >' },
       X::Comp::AdHoc,
       "Unmatched openers and closers fails to parse";
     is q< \> >, " > ", "Escaped closer produces the opener unescaped";

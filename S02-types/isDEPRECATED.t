@@ -21,9 +21,9 @@ my $PROGRAM = $*PROGRAM.relpath;
     $line = $?LINE; a();
     is $a, 1, 'was "a" really called';
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for a()';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Sub a (from GLOBAL) called at:
+Sub a (from GLOBAL) seen at:
   $PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
@@ -33,9 +33,9 @@ TEXT
     awith();
     is $awith, 2, 'was "awith" really called';
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for awith()';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Sub awith (from GLOBAL) called at:
+Sub awith (from GLOBAL) seen at:
   $PROGRAM, lines $line,{$line + 1}
 Please use 'fnorkle' instead.
 --------------------------------------------------------------------------------
@@ -51,9 +51,9 @@ TEXT
     $line = $?LINE; A.new;
     #?rakudo todo 'NYI'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for A.new';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method new (from A) called at:
+Method new (from A) seen at:
   $PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
@@ -63,9 +63,9 @@ TEXT
     Awith.new;
     #?rakudo todo 'NYI'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for Awith.new';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method new (from Awith) called at:
+Method new (from Awith) seen at:
   $PROGRAM, lines $line,{$line + 1}
 Please use 'Fnorkle.new' instead.
 --------------------------------------------------------------------------------
@@ -84,9 +84,9 @@ TEXT
     is $B, 1, 'was "B.new" really called';
     #?rakudo todo 'NYI'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for B.new';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method new (from B) called at:
+Method new (from B) seen at:
   $PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
@@ -97,9 +97,9 @@ TEXT
     is $Bwith, 2, 'was "Bwith.new" really called';
     #?rakudo todo 'NYI'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for Bwith.new';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method new (from Bwith) called at:
+Method new (from Bwith) seen at:
   $PROGRAM, lines $line,{$line + 1}
 Please use 'Borkle.new' instead.
 --------------------------------------------------------------------------------
@@ -117,9 +117,9 @@ TEXT
     $line = $?LINE; C.new.foo;
     is $C, 1, 'was "C.new.foo" really called';
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for C.new.foo';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method foo (from C) called at:
+Method foo (from C) seen at:
   $PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
@@ -129,9 +129,9 @@ TEXT
     Cwith.new.foo;
     is $Cwith, 2, 'was "Cwith.new.foo" really called';
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation Cwith.new.foo';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method foo (from Cwith) called at:
+Method foo (from Cwith) seen at:
   $PROGRAM, lines $line,{$line + 1}
 Please use 'bar' instead.
 --------------------------------------------------------------------------------
@@ -147,9 +147,9 @@ TEXT
     $line = $?LINE; D.new.foo;
     #?rakudo todo 'NYI'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for D.new.foo';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method foo (from D) called at:
+Method foo (from D) seen at:
   $PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
@@ -159,9 +159,9 @@ TEXT
     Dwith.new;
     #?rakudo todo 'NYI'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation Dwith.new.foo';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method foo (from Dwith) called at:
+Method foo (from Dwith) seen at:
   $PROGRAM, lines $line,{$line + 1}
 Please use 'bar' instead.
 --------------------------------------------------------------------------------
@@ -180,9 +180,9 @@ TEXT
     is $E, 1, 'was "E.new.foo" really called';
     #?rakudo todo 'NYI'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for E.new.foo';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method foo (from E) called at:
+Method foo (from E) seen at:
   $PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
@@ -193,9 +193,9 @@ TEXT
     is $Ewith, 2, 'was "Ewith.new.foo" really called';
     #?rakudo todo 'NYI'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation Ewith.new.foo';
-Saw 1 call to deprecated code during execution.
+Saw 1 occurrence of deprecated code.
 ================================================================================
-Method foo (from Ewith) called at:
+Method foo (from Ewith) seen at:
   $PROGRAM, lines $line,{$line + 1}
 Please use 'bar' instead.
 --------------------------------------------------------------------------------
@@ -206,7 +206,7 @@ TEXT
 {
     sub rt120908 is DEPRECATED((sub { "a" })()) { };
     rt120908();
-    ok Deprecation.report ~~ m/'Sub rt120908 (from GLOBAL) called at:'/,
+    ok Deprecation.report ~~ m/'Sub rt120908 (from GLOBAL) seen at:'/,
         'right deprecation for rt120908()';
 }
 

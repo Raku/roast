@@ -34,6 +34,4 @@ sub jv(Mu $j) {
 
 }
 
-done();
-
 # vim: ft=perl6

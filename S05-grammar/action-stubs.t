@@ -28,7 +28,7 @@ class An::Action1 {
 
 ok A::Test::Grammar.parse('alpha beta'), 'basic sanity: .parse works';
 my $action = An::Action1.new();
-lives_ok { A::Test::Grammar.parse('alpha beta', :actions($action)) },
+lives-ok { A::Test::Grammar.parse('alpha beta', :actions($action)) },
         'parse with :action (and no make) lives';
 is $action.in-a, 1, 'first action has been called';
 is $action.in-b, 1, 'second action has been called';

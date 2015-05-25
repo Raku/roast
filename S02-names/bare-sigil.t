@@ -5,10 +5,10 @@ plan 10;
 
 # L<S02/Names/"In declarative constructs bare sigils">
 
-lives_ok { my $ }, 'basic bare sigil $';
-lives_ok { my @ }, 'basic bare sigil @';
+lives-ok { my $ }, 'basic bare sigil $';
+lives-ok { my @ }, 'basic bare sigil @';
 #?niecza skip 'bare sigil % generates postcircumfix:<()> exception'
-lives_ok { my % }, 'basic bare sigil %';
+lives-ok { my % }, 'basic bare sigil %';
 
 is (my $ = "foo"), "foo", 'initialized bare sigil scalar $';
 ok (my @ = 1, 2, 3), 'initialized bare sigil array @';

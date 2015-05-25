@@ -9,7 +9,7 @@ plan 3;
 
 my @test = 1..5;
 my $test = 42;
-lives_ok {
+lives-ok {
     my sub should_work ( *@list is rw ) {
         @list[0]   = "hi"; 
         @list[*-1] = "ho"; 

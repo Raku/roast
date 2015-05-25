@@ -13,7 +13,7 @@ nok(~Foo.parse("abc123xyz"), ".parse method invokes TOP rule, no match");
 is(~Foo.parse("123"), "123",  ".parse method invokes TOP rule, match");
 nok(Foo.parse("123xyz"),  ".parse method requires match to end");
 is(~Foo.subparse("123xyz"), "123",  ".subparse method doesn't require match to end");
-dies_ok({ Bar.parse("abc123xyz") }, "dies if no TOP rule");
+dies-ok({ Bar.parse("abc123xyz") }, "dies if no TOP rule");
 
 my $fh = open("parse_and_parsefile_test", :w);
 $fh.say("abc\n123\nxyz");
@@ -27,8 +27,8 @@ $fh.say("123");
 $fh.close();
 #?niecza skip 'Unable to resolve method parsefile in class Foo'
 is(~Baz.parsefile("parse_and_parsefile_test"), "123\n",  ".parsefile method invokes TOP rule, match");
-dies_ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
-dies_ok({ Foo.parsefile("non_existent_file") },        "dies if file not found");
+dies-ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
+dies-ok({ Foo.parsefile("non_existent_file") },        "dies if file not found");
 
 unlink("parse_and_parsefile_test");
 
@@ -39,12 +39,12 @@ nok(A::B.parse("zzz42zzz"), ".parse works with namespaced grammars, no match");
 is(~A::B.parse("42"), "42", ".parse works with namespaced grammars, match");
 
 # TODO: Check for a good error message, not just the absence of a bad one.
-eval_dies_ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
+eval-dies-ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
 
 # RT #71062
 {
     grammar Integer { rule TOP { x } };
-    lives_ok { Integer.parse('x') }, 'can .parse grammar named "Integer"';
+    lives-ok { Integer.parse('x') }, 'can .parse grammar named "Integer"';
 }
 
 # RT #76884
@@ -66,7 +66,7 @@ eval_dies_ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
         token TOP() { <lit 'a'> };
         token lit($s) { $s };
     }
-    lives_ok { RT116597.parse('a') },
+    lives-ok { RT116597.parse('a') },
         'can use <rule "param"> form of rule invocation in grammar';
 }
 
@@ -80,7 +80,5 @@ eval_dies_ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
     }
     is RT111768.parse("aaaa;", :rule<e>).ast, ';;;;a', "Recursive .ast calls work";
 }
-
-done;
 
 # vim: ft=perl6 expandtab sw=4

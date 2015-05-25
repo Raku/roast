@@ -61,7 +61,7 @@ Basic C<pairs> tests, see S32::Containers.
 {
     my %hash = (:a(1), :b(2), :c(3));
 
-    lives_ok { for %hash.pairs -> $pair {
+    lives-ok { for %hash.pairs -> $pair {
         $pair.value += 100;
     } }, 'aliases returned by %hash.pairs should be rw (1)';
 
@@ -73,7 +73,7 @@ Basic C<pairs> tests, see S32::Containers.
     my $var = 42;
     my $pair = (a => $var);
 
-    lives_ok { for $pair.pairs -> $p {
+    lives-ok { for $pair.pairs -> $p {
         $p.value += 100;
     } }, 'aliases returned by $pair.value should be rw (1)';
 

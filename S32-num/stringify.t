@@ -34,8 +34,8 @@ is Complex.gist, '(Complex)', 'Complex.gist';
 is Complex.perl, 'Complex', 'Complex.perl';
 # XXX Should ~Complex and Complex.Str return something specific?  For now
 # just make sure they don't die
-lives_ok { ~Complex }, '~Complex does not die';
-lives_ok { Complex.Str }, 'Complex.Str does not die';
+lives-ok { ~Complex }, '~Complex does not die';
+lives-ok { Complex.Str }, 'Complex.Str does not die';
 
 # L<S32::Numeric/Rat/"=item gist">
 
@@ -73,8 +73,8 @@ Rat_str_test (4.5 ** 60),
 
 is Rat.gist, '(Rat)', 'Rat.gist';
 is Rat.perl, 'Rat', 'Rat.perl';
-lives_ok { ~Rat }, '~Rat does not die';
-lives_ok { Rat.Str }, 'Rat.Str does not die';
+lives-ok { ~Rat }, '~Rat does not die';
+lives-ok { Rat.Str }, 'Rat.Str does not die';
 
 # TODO: FatRat, Num (once better specced), Int (maybe, but hard to mess up)
 

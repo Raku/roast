@@ -57,13 +57,13 @@ class B {
             @bar = $!an_A!A::bar;
         };
         is( $!.defined ?? 1 !! 0, 0, 'A trusts B, B can get an A array attr; '~($!//''));
-        is_deeply( @bar, [1,2,3], 'value read by B from an A scalar var is correct');
+        is-deeply( @bar, [1,2,3], 'value read by B from an A scalar var is correct');
 
         try {
             %baz = $!an_A!A::baz;
         };
         is( $!.defined ?? 1 !! 0, 0, 'A trusts B, B can get an A hash attr; '~($!//'') );
-        is_deeply( %baz, {'m'=>'v'}, 'value read by B from an A scalar var is correct' );
+        is-deeply( %baz, {'m'=>'v'}, 'value read by B from an A scalar var is correct' );
     }
 }
 

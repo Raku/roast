@@ -23,6 +23,4 @@ plan 6;
     ok !(1  ~~ [1, 2]),         'Any ~~ Array (Int, -, it is not any())';
 }
 
-done;
-
 # vim: ft=perl6

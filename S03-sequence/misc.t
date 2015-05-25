@@ -10,14 +10,14 @@ is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it bein
     sub f (Int $n) { $n > 3 ?? 'liftoff!' !! $n + 1 }
     is (1, &f ... Str)[^8].join(' '), '1 2 3 4 liftoff!',
         'sequence stops when type of endpoint matches';
-    throws_like { sink (1, &f ... *)[^8].join(' ') },
+    throws-like { sink (1, &f ... *)[^8].join(' ') },
         X::TypeCheck::Binding,
         'sequence terminated by signature mismatch';
 }
 
 # L<S03/List infix precedence/'the list on the left is C<Nil>'>
 
-throws_like {(() ... *)[0]}, X::Cannot::Empty, 'Nil sequence';
+throws-like {(() ... *)[0]}, X::Cannot::Empty, 'Nil sequence';
 
 # L<S03/List infix precedence/interleave unrelated sequences>
 # multiple return values
@@ -32,7 +32,7 @@ is ('a', 'b', 'c', { $^x ~ 'x', $^y ~ 'y' ~ $^z ~ 'z' } ... *)[^9].join(' '), 'a
 
 # L<S03/List infix precedence/it will be taken as a yada>
 
-eval_dies_ok '(1, 2, ... 3)[2]', 'yada operator not confused for sequence operator';    #OK apparent sequence operator
+eval-dies-ok '(1, 2, ... 3)[2]', 'yada operator not confused for sequence operator';    #OK apparent sequence operator
 
 # L<S03/List infix precedence/and another function to continue the list>
 # chained sequence
@@ -120,14 +120,14 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 
 # RT #1233303
 {
-    throws_like { 1, 2, 5 ... 10 }, X::Sequence::Deduction, from => '1,2,5'
+    throws-like { 1, 2, 5 ... 10 }, X::Sequence::Deduction, from => '1,2,5'
 }
 
 # RT #112288
 {
-    throws_like { (1, 2, 6 ... *)[5] }, X::Sequence::Deduction, from => '1,2,6',
+    throws-like { (1, 2, 6 ... *)[5] }, X::Sequence::Deduction, from => '1,2,6',
         'non-deducible sequence ending in * throws X::Sequence::Deduction (1)';
-    throws_like { ~(1, 2, 6 ... *)[5] }, X::Sequence::Deduction, from => '1,2,6',
+    throws-like { ~(1, 2, 6 ... *)[5] }, X::Sequence::Deduction, from => '1,2,6',
         'non-deducible sequence ending in * throws X::Sequence::Deduction (2)';
 }
 

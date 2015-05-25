@@ -18,16 +18,16 @@ sub execute-test ( :$function, :$line ) {
 }
 
 #?DOES 1
-execute-test(:function("cmp_ok"), :line(9));
+execute-test(:function("cmp-ok"), :line(9));
 
 #?DOES 1
-execute-test(:function("dies_ok"), :line(9));
+execute-test(:function("dies-ok"), :line(9));
 
 #?DOES 1
-execute-test(:function("eval_dies_ok"), :line(9));
+execute-test(:function("eval-dies-ok"), :line(9));
 
 #?DOES 1
-execute-test(:function("eval_lives_ok"), :line(9));
+execute-test(:function("eval-lives-ok"), :line(9));
 
 #?DOES 1
 execute-test(:function("isa-ok"), :line(9));
@@ -36,7 +36,7 @@ execute-test(:function("isa-ok"), :line(9));
 execute-test(:function("is_approx"), :line(9));
 
 #?DOES 1
-execute-test(:function("is_deeply"), :line(9));
+execute-test(:function("is-deeply"), :line(9));
 
 #?DOES 1
 execute-test(:function("isnt"), :line(9));
@@ -45,7 +45,7 @@ execute-test(:function("isnt"), :line(9));
 execute-test(:function("is"), :line(9));
 
 #?DOES 1
-execute-test(:function("lives_ok"), :line(9));
+execute-test(:function("lives-ok"), :line(9));
 
 #?DOES 1
 execute-test(:function("nok"), :line(9));
@@ -54,4 +54,4 @@ execute-test(:function("nok"), :line(9));
 execute-test(:function("ok"), :line(9));
 
 #?DOES 1
-execute-test(:function("throws_like"), :line(9));
+execute-test(:function("throws-like"), :line(9));

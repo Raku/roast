@@ -70,13 +70,13 @@ is((foo\.lc  ), 'a', 'short unspace');
 is((foo\ .lc ), 'a', 'unspace');
 is((foo\ ('x')), 'x', "unspace before arguments");
 is((foo \ .lc), 'b', 'not a unspace');
-throws_like { EVAL 'fo\ o.lc' },
+throws-like { EVAL 'fo\ o.lc' },
   X::Syntax::Confused,
   'unspace not allowed in identifier';
 is((foo\    .lc), 'a', 'longer dot');
 is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');
 #?rakudo todo 'NYI RT #125072'
-throws_like { EVAL 'foo\#\ ( comment ).lc' },
+throws-like { EVAL 'foo\#\ ( comment ).lc' },
   Exception,
   'unspace can\'t hide space between # and opening bracket';
 is((foo\ # comment
@@ -191,7 +191,7 @@ end comment		#5
 # L<S04/"Statement-ending blocks"/"Because subroutine declarations are expressions">
 #XXX probably shouldn't be in this file...
 
-throws_like { EVAL 'sub f { 3 } sub g { 3 }' },
+throws-like { EVAL 'sub f { 3 } sub g { 3 }' },
   X::Syntax::Confused,
   'semicolon or newline required between blocks';
 
@@ -229,7 +229,7 @@ throws_like { EVAL 'sub f { 3 } sub g { 3 }' },
     sub infix:<++>($x, $y) { 42 }    #OK not used
 
     #'$n++$m' should be a syntax error
-    throws_like { EVAL '$n++$m' },
+    throws-like { EVAL '$n++$m' },
       X::Syntax::Confused,
       'infix requires space when ambiguous with postfix';
     is($n, 1, 'check $n');
@@ -250,13 +250,13 @@ throws_like { EVAL 'sub f { 3 } sub g { 3 }' },
 
     #These should all be postfix syntax errors
     $n = 1; $m = 2;
-    throws_like { EVAL '$n.++ $m' },
+    throws-like { EVAL '$n.++ $m' },
       X::Syntax::Confused,
       'postfix dot w/ infix ambiguity';
-    throws_like { EVAL '$n\ ++ $m' },
+    throws-like { EVAL '$n\ ++ $m' },
       X::Comp,
       'postfix unspace w/ infix ambiguity';
-    throws_like { EVAL '$n\ .++ $m' },
+    throws-like { EVAL '$n\ .++ $m' },
       X::Comp,
       'postfix unspace w/ infix ambiguity';
     is($n, 1, 'check $n');
@@ -269,7 +269,7 @@ throws_like { EVAL 'sub f { 3 } sub g { 3 }' },
     is($m, 2, 'check $m');
 
     $n = 1;
-    throws_like { EVAL '$n ++' },
+    throws-like { EVAL '$n ++' },
       X::Comp::AdHoc,
       'postfix requires no space';
     is($n, 1, 'check $n');
@@ -289,7 +289,7 @@ throws_like { EVAL 'sub f { 3 } sub g { 3 }' },
     # L<S02/"Bracketing Characters"/"U+301D codepoint has two closing alternatives">
     #?niecza skip 'Unable to resolve method id in class Str'
     is((foo\#`〝 comment 〞.lc), 'a', 'unspace with U+301D/U+301E comment');
-    throws_like { EVAL 'foo\#`〝 comment 〟.id' },
+    throws-like { EVAL 'foo\#`〝 comment 〟.id' },
       X::Comp::AdHoc,
       'unspace with U+301D/U+301F is invalid';
 

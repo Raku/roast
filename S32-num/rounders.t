@@ -156,6 +156,4 @@ for %tests.keys.sort -> $t {
     is $big-rat.truncate, $big-int, "truncate handles FatRats properly";
 }
 
-done;
-
 # vim: ft=perl6

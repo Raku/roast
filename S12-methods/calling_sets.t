@@ -36,7 +36,7 @@ class C is B {
     try { $c.+bar(); $lived = 1; }
     is $lived, 0, '.+ on undefined method is an error';
 
-    is_deeply $c.*bar(), (), '.* on undefined method gives Nil';
+    is-deeply $c.*bar(), (), '.* on undefined method gives Nil';
 
     my $foo = "foo";
 
@@ -52,11 +52,11 @@ class C is B {
     $c.+"$foo"();
     is $c.cnt, 7, '.+ with dynamic method name';
 
-    dies_ok { $c."?foo"() }, '? at start of dynamic name does not imply .?';
+    dies-ok { $c."?foo"() }, '? at start of dynamic name does not imply .?';
 
-    dies_ok { $c."+foo"() }, '+ at start of dynamic name does not imply .+';
+    dies-ok { $c."+foo"() }, '+ at start of dynamic name does not imply .+';
 
-    dies_ok { $c."*foo"() }, '* at start of dynamic name does not imply .*';
+    dies-ok { $c."*foo"() }, '* at start of dynamic name does not imply .*';
 }
 
 
@@ -168,10 +168,9 @@ class MMT2 is MMT1 {
 is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find next one up';
 
 {
-    my @list =  MMT1.new.?nonexistent();
-    is +@list, 0, '.?nonexisent() returns Nil';
+    isa_ok MMT1.new.?nonexistent(), Nil, '.?nonexisent() returns Nil';
 }
 
-eval_dies_ok '1.*WHAT', '.WHAT is a macro and cannoted be .*ed';
+eval-dies-ok '1.*WHAT', '.WHAT is a macro and cannoted be .*ed';
 
 # vim: ft=perl6

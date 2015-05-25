@@ -27,11 +27,11 @@ use lib '.';
     is( waz(), 'Foo::waz', 'Foo::waz is the sub we expect' );
     is( waz(1), 'Foo::wazhere', 'Foo::waz imported does not wipe out our other waz multis' );
 
-    dies_ok { EVAL 'qux()' }, 'qux() not imported';
-    dies_ok { EVAL 'gaz()' }, 'gaz() not imported';
+    dies-ok { EVAL 'qux()' }, 'qux() not imported';
+    dies-ok { EVAL 'gaz()' }, 'gaz() not imported';
 }
 
-dies_ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
+dies-ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
 
 {
     use lib 't/spec/packages';
@@ -41,12 +41,12 @@ dies_ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
             A::B::D.new();
         }
     }
-    lives_ok { TestImportInClass.doit() },
+    lives-ok { TestImportInClass.doit() },
              "can instantiate class that's loaded from inside another class";
 
 }
 
-eval_dies_ok 'use t::spec::packages::S11-modules::Foo :NoSucTag;',
+eval-dies-ok 'use t::spec::packages::S11-modules::Foo :NoSucTag;',
              'die while trying to import a non-existent export tag';
 
 # vim: ft=perl6

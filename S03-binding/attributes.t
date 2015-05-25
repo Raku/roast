@@ -14,7 +14,7 @@ plan 12;
     class Klass1 { has $.x; method bind { $!x := $var } }
 
     my $obj1 = Klass1.new;
-    lives_ok { $obj1.bind() }, 'attribute binding lives';
+    lives-ok { $obj1.bind() }, 'attribute binding lives';
 
     is $obj1.x, 42, 'binding $!x instance attribute (1)';
     $var = 23;

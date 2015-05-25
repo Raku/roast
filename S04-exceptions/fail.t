@@ -45,7 +45,7 @@ plan 26;
     sub rt70229 { return fail() }
     my $rt70229 = rt70229();
     ok $rt70229 ~~ Failure, 'got a Failure';
-    dies_ok { ~$rt70229 }, 'attempt to stringify Failure dies';
+    dies-ok { ~$rt70229 }, 'attempt to stringify Failure dies';
 }
 
 # RT #77946
@@ -71,18 +71,18 @@ plan 26;
 
 {
     sub it-will-fail() { fail 'whale' }
-    dies_ok { use fatal; my $x = it-will-fail(); 1 }, 'use fatal causes call to die';
-    lives_ok { use fatal; my $x = it-will-fail() // 0; 1 }, 'use fatal respects //';
-    lives_ok { use fatal; my $x = it-will-fail() || 0; 1 }, 'use fatal respects ||';
-    lives_ok { use fatal; my $x = it-will-fail() && 0; 1 }, 'use fatal respects &&';
-    lives_ok { use fatal; if it-will-fail() { 1 } else { 0 } }, 'use fatal respects if';
-    lives_ok { use fatal; unless it-will-fail() { 1 }; 0 }, 'use fatal respects unless';
-    lives_ok { use fatal; it-will-fail() ?? 1 !! 0 }, 'use fatal respects ?? !!';
-    lives_ok { use fatal; my $x = ?it-will-fail(); 1 }, 'use fatal respects ?';
-    lives_ok { use fatal; my $x = so it-will-fail(); 1 }, 'use fatal respects so';
-    lives_ok { use fatal; my $x = !it-will-fail(); 1 }, 'use fatal respects !';
-    lives_ok { use fatal; my $x = not it-will-fail(); 1 }, 'use fatal respects not';
-    lives_ok { use fatal; my $x = defined it-will-fail(); 1 }, 'use fatal respects defined';
+    dies-ok { use fatal; my $x = it-will-fail(); 1 }, 'use fatal causes call to die';
+    lives-ok { use fatal; my $x = it-will-fail() // 0; 1 }, 'use fatal respects //';
+    lives-ok { use fatal; my $x = it-will-fail() || 0; 1 }, 'use fatal respects ||';
+    lives-ok { use fatal; my $x = it-will-fail() && 0; 1 }, 'use fatal respects &&';
+    lives-ok { use fatal; if it-will-fail() { 1 } else { 0 } }, 'use fatal respects if';
+    lives-ok { use fatal; unless it-will-fail() { 1 }; 0 }, 'use fatal respects unless';
+    lives-ok { use fatal; it-will-fail() ?? 1 !! 0 }, 'use fatal respects ?? !!';
+    lives-ok { use fatal; my $x = ?it-will-fail(); 1 }, 'use fatal respects ?';
+    lives-ok { use fatal; my $x = so it-will-fail(); 1 }, 'use fatal respects so';
+    lives-ok { use fatal; my $x = !it-will-fail(); 1 }, 'use fatal respects !';
+    lives-ok { use fatal; my $x = not it-will-fail(); 1 }, 'use fatal respects not';
+    lives-ok { use fatal; my $x = defined it-will-fail(); 1 }, 'use fatal respects defined';
 }
 
 # RT #118785
@@ -102,7 +102,5 @@ plan 26;
 
     is fatal-scope(&non-fatal-scope), 42, "Fatal scopes are lexical rather than dynamic";
 }
-
-done;
 
 # vim: ft=perl6

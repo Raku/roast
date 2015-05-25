@@ -117,7 +117,7 @@ is(~$/<name>, "john", 'Metaname is john');
 
 # RT #77570
 {
-    eval_lives_ok('$' ~ 1 x 1000000, 'Can refer to very high numbered capture variable without exploding');
+    eval-lives-ok('$' ~ 1 x 1000000, 'Can refer to very high numbered capture variable without exploding');
 }
 
 # vim: ft=perl6

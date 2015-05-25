@@ -58,6 +58,4 @@ is (1 RR[R-] 2),   1, 'RR[R-] works';
     is 1031 [blue] 4, 3, "1031 [blue] 4 == 3";
 }
 
-done;
-
 # vim: ft=perl6

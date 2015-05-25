@@ -14,7 +14,7 @@ plan 36;
   my $b_var = "a_var";
 
   is $::($b_var), 42, 'basic symbolic scalar dereferentiation works';
-  lives_ok { $::($b_var) = 23 }, 'can use $::(...) as lvalue';
+  lives-ok { $::($b_var) = 23 }, 'can use $::(...) as lvalue';
   is $a_var, 23, 'and the assignment worked';
   $::($b_var) = 'a', 'b', 'c';
   is $a_var, 'a', '... and it is item assignment';
@@ -53,7 +53,7 @@ my $outer = 'outside';
     is ::('$inner'), $inner, 'can look up lexical from same block';
     is ::('$outer'), $outer, 'can look up lexical from outer block';
 
-    lives_ok { ::('$outer') = 'new' }, 'Can use ::() as lvalue';
+    lives-ok { ::('$outer') = 'new' }, 'Can use ::() as lvalue';
     is $outer, 'new', 'and the assignment worked';
     sub c { 'sub c' }; #OK not used
     is ::('&c').(), 'sub c', 'can look up lexical sub';
@@ -82,7 +82,7 @@ my $outer = 'outside';
   #?niecza 2 skip "Object reference not set to an instance of an object"
   is $::("pugs")::is::($cool), 42, 'not so basic symbolic dereferentiation works';
   is $::($pugsis)::($cool),    42, 'symbolic derefertiation with multiple packages in one variable works';
-  throws_like { EVAL '$::($pugsis)cool' },
+  throws-like { EVAL '$::($pugsis)cool' },
     X::Syntax::Confused,
     '$::($foo)bar is illegal';
 }
@@ -149,7 +149,7 @@ my $outer = 'outside';
 
 # Symbolic dereferentiation syntax should work with $?SPECIAL etc. too.
 # Note: I'm not 100% sure this is legal syntax. If it turns out it isn't, we'll
-# have to s/ok/dies_ok/.
+# have to s/ok/dies-ok/.
 {
   try { die 'to set $!' };
   ok $::("!"),    "symbolic dereferentiation works with special chars (1)";
@@ -166,13 +166,13 @@ my $outer = 'outside';
   is $::("symderef_test_var"), 42, "symbolic dereferentiation works with package vars";
 }
 
-throws_like { EVAL ' ::().Str ' },
+throws-like { EVAL ' ::().Str ' },
   Exception,
   'Cannot look up empty name';
 
 # RT #76400
 {
-    throws_like { EVAL 'my $foo::; say $foo;' },
+    throws-like { EVAL 'my $foo::; say $foo;' },
     X::Undeclared,
     'name with trailing :: not same as sans',
 }

@@ -13,7 +13,7 @@ plan 13;
     ok :($a) ~~ Signature, ':($a) create a Signature object';
     my ($a) := \3;
     is $a, 3, 'can bind to one-element signature';
-    throws_like { $a++ },
+    throws-like { $a++ },
       Exception,  # no exception type yet
       'cannot increment an Int';
 

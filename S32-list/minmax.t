@@ -253,6 +253,4 @@ is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
         '.minmax combine .minmax of empty, non-empty, empty sublist of Strs';
 }
 
-done;
-
 # vim: ft=perl6

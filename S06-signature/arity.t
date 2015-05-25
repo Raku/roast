@@ -124,7 +124,7 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
        '... also when passed to a sub first';
 }
 
-dies_ok { EVAL("a_zero( 'hello', 'world' )") }, 'no matching sub signature';
+dies-ok { EVAL("a_zero( 'hello', 'world' )") }, 'no matching sub signature';
 
 {
     my proto sub a($, $?) { * }

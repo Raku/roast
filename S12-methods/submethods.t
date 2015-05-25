@@ -16,13 +16,13 @@ Basic submethod tests. See L<S12/"Submethods">
   class Bar is Foo { has $.bar_build; submethod BUILD() { $!bar_build++ } }
 
   my $a;
-  lives_ok {$a = Foo.new()},    "Foo.new() worked (1)";
+  lives-ok {$a = Foo.new()},    "Foo.new() worked (1)";
   is $a.foo_build, 1,           "Foo's BUILD was called";
   # is instead of todo_is to avoid unexpected succeedings
-  dies_ok { $a.bar_build },     "Bar's BUILD counter not available";
+  dies-ok { $a.bar_build },     "Bar's BUILD counter not available";
 
   my $b;
-  lives_ok {$b = Bar.new()},    "Bar.new() worked";
+  lives-ok {$b = Bar.new()},    "Bar.new() worked";
   is $b.foo_build, 1,           "Foo's BUILD was called again";
   is $b.bar_build, 1,           "Bar's BUILD was called, too";
 
@@ -31,7 +31,7 @@ Basic submethod tests. See L<S12/"Submethods">
   # Bar.new didn't removed/changed some internal structures which'd prevent
   # Foo.BUILD of getting called.
   my $c;
-  lives_ok {$c = Foo.new()}, "Foo.new() worked (2)";
+  lives-ok {$c = Foo.new()}, "Foo.new() worked (2)";
   is $c.foo_build, 1,      "Foo's BUILD was called again";
 }
 
@@ -48,18 +48,18 @@ Basic submethod tests. See L<S12/"Submethods">
   }
 
   my ($baz, $grtz);
-  lives_ok {$baz  = Baz.new},  "Baz.new() worked";
-  lives_ok {$grtz = Grtz.new}, "Grtz.new() worked";
+  lives-ok {$baz  = Baz.new},  "Baz.new() worked";
+  lives-ok {$grtz = Grtz.new}, "Grtz.new() worked";
 
-  lives_ok { $baz.blarb },      'can call submethod on parent class';
+  lives-ok { $baz.blarb },      'can call submethod on parent class';
   is $baz.baz_blarb,         1, "Baz's submethod blarb was called";
   is $grtz.grtz_blarb,       0, "Grtz's submethod blarb was not called";
 
-  lives_ok { $grtz.blarb },     'can call submethod on child class';
+  lives-ok { $grtz.blarb },     'can call submethod on child class';
   is $grtz.baz_blarb,        0, "Baz's submethod blarb was not called";
   is $grtz.grtz_blarb,       1, "Grtz's submethod blarb was called now";
 
-  lives_ok { $grtz.Baz::blarb }, '$obj.Class::submthod';
+  lives-ok { $grtz.Baz::blarb }, '$obj.Class::submthod';
   is $grtz.baz_blarb,        1, "Baz's submethod blarb was called now";
   is $grtz.grtz_blarb,       1, "Grtz's submethod blarb was not called again";
 }

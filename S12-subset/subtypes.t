@@ -62,7 +62,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     # Subs with arguments of a subtype
     sub only_accepts_odds(Int::Odd $odd) { $odd + 1 }
     is only_accepts_odds(3), 4, "calling sub worked";
-    dies_ok { only_accepts_odds(4) },  "calling sub did not work";
+    dies-ok { only_accepts_odds(4) },  "calling sub did not work";
 
     # Can smartmatch too
     sub is_num_odd(Int::Odd $odd) { $odd ~~ Int::Odd },
@@ -92,12 +92,12 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 
   ok (my Num::Multiple $d = 10), "creating a new Num::Multiple";
   is $d,                   10,   "creating a new Num::Multiple actually worked";
-  dies_ok { $d = 7 },            'negative test also works';
+  dies-ok { $d = 7 },            'negative test also works';
   is $d,                   10,   'variable kept previous value';
 
   
   $multiple_of = 6;
-  dies_ok { my Num::Multiple $e = 10 }, "changed subtype definition worked";
+  dies-ok { my Num::Multiple $e = 10 }, "changed subtype definition worked";
 }
 
 # Rakudo had a bug where 'where /regex/' failed
@@ -105,8 +105,8 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 #?DOES 2
 {
     subset HasA of Str where /a/;
-    lives_ok { my HasA $x = 'bla' },   'where /regex/ works (positive)';
-    eval_dies_ok 'my HasA $x = "foo"', 'where /regex/ works (negative)';
+    lives-ok { my HasA $x = 'bla' },   'where /regex/ works (positive)';
+    eval-dies-ok 'my HasA $x = "foo"', 'where /regex/ works (negative)';
 }
 
 # You can write just an expression rather than a block after where in a sub
@@ -115,10 +115,10 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     sub anon_where_1($x where "x") { 1 }   #OK not used
     sub anon_where_2($x where /x/) { 1 }   #OK not used
     is(anon_where_1('x'), 1,       'where works with smart-matching on string');
-    dies_ok({ anon_where_1('y') }, 'where works with smart-matching on string');
+    dies-ok({ anon_where_1('y') }, 'where works with smart-matching on string');
     is(anon_where_2('x'), 1,       'where works with smart-matching on regex');
     is(anon_where_2('xyz'), 1,     'where works with smart-matching on regex');
-    dies_ok({ anon_where_2('y') }, 'where works with smart-matching on regex');
+    dies-ok({ anon_where_2('y') }, 'where works with smart-matching on regex');
 }
 
 # Block parameter to smart-match is readonly.
@@ -126,8 +126,8 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     subset SoWrong of Str where { $^epic = "fail" }
     sub so_wrong_too($x where { $^epic = "fail" }) { }   #OK not used
     my SoWrong $x;
-    dies_ok({ $x = 42 },          'parameter in subtype is read-only...');
-    dies_ok({ so_wrong_too(42) }, '...even in anonymous ones.');
+    dies-ok({ $x = 42 },          'parameter in subtype is read-only...');
+    dies-ok({ so_wrong_too(42) }, '...even in anonymous ones.');
 }
 
 # ensure that various operations do type cheks
@@ -135,9 +135,9 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 {
     subset AnotherEven of Int where { $_ % 2 == 0 };
     my AnotherEven $x = 2;
-    throws_like { $x++ }, X::TypeCheck::Assignment, 'Even $x can not be ++ed';
+    throws-like { $x++ }, X::TypeCheck::Assignment, 'Even $x can not be ++ed';
     is $x, 2,         '..and the value was preserved';
-    throws_like { $x-- }, X::TypeCheck::Assignment, 'Even $x can not be --ed';
+    throws-like { $x-- }, X::TypeCheck::Assignment, 'Even $x can not be --ed';
     is $x, 2,         'and the value was preserved';
 }
 
@@ -148,9 +148,9 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 
     my NotTooLarge $x;
 
-    lives_ok { $x = 5 }, 'can satisfy both conditions on chained subset types';
-    dies_ok { $x = -2 }, 'violating first condition barfs';
-    dies_ok { $x = 22 }, 'violating second condition barfs';
+    lives-ok { $x = 5 }, 'can satisfy both conditions on chained subset types';
+    dies-ok { $x = -2 }, 'violating first condition barfs';
+    dies-ok { $x = 22 }, 'violating second condition barfs';
 }
 
 
@@ -185,14 +185,14 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
         has Small $.small;
     }
     #?niecza todo
-    dies_ok { RT65700.new( small => 20 ) }, 'subset type is enforced as attribute in new() (1)';
-    lives_ok { RT65700.new( small => 2 ) }, 'subset type enforced as attribute in new() (2)';
+    dies-ok { RT65700.new( small => 20 ) }, 'subset type is enforced as attribute in new() (1)';
+    lives-ok { RT65700.new( small => 2 ) }, 'subset type enforced as attribute in new() (2)';
 
     my subset Teeny of Int where { $^n < 10 }
     class T { has Teeny $.teeny }
     #?niecza todo
-    dies_ok { T.new( teeny => 20 ) }, 'my subset type is enforced as attribute in new() (1)';
-    lives_ok { T.new( teeny => 2 ) }, 'my subset type enforced as attribute in new() (2)';
+    dies-ok { T.new( teeny => 20 ) }, 'my subset type is enforced as attribute in new() (1)';
+    lives-ok { T.new( teeny => 2 ) }, 'my subset type enforced as attribute in new() (2)';
 }
 
 # RT #78318
@@ -257,7 +257,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 {
     subset Int::Positive of Int where { $_ > 0 };
     sub f(Int::Positive $a) { $a * $a };
-    dies_ok { EVAL('f(-2)') }, 'Cannot violate Int::Positive constraint';
+    dies-ok { EVAL('f(-2)') }, 'Cannot violate Int::Positive constraint';
 }
 
 # RT #71820

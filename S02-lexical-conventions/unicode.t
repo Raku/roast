@@ -8,56 +8,56 @@ plan 44;
 
 # Unicode variables
 # english ;-)
-lives_ok {my $foo; sub foo {}; 1}, "ascii declaration"; #OK not used
+lives-ok {my $foo; sub foo {}; 1}, "ascii declaration"; #OK not used
 is (do {my $bar = 2; sub id ($x) { $x }; id($bar)}), 2, "evaluation";
 
 # umlauts
-lives_ok {my $übervar; sub fü {}; 1}, "umlauts declaration"; #OK not used
+lives-ok {my $übervar; sub fü {}; 1}, "umlauts declaration"; #OK not used
 is (do {my $schloß = 2; sub öok ($x) { $x }; öok($schloß)}), 2, "evaluation";
 
 # monty python
-lives_ok {my $møøse; sub bïte {}; 1}, "a møøse once bit my sister"; #OK not used
+lives-ok {my $møøse; sub bïte {}; 1}, "a møøse once bit my sister"; #OK not used
 is (do {my $møøse = 2; sub såck ($x) { $x }; såck($møøse)}), 2,
     "møøse bites kan be preti nasti";
 
 # french
-lives_ok {my $une_variable_française; sub blâ {}; 1}, "french declaration"; #OK not used
+lives-ok {my $une_variable_française; sub blâ {}; 1}, "french declaration"; #OK not used
 is (do {my $frénch = 2; sub bléch ($x) { $x }; bléch($frénch)}), 2, "evaluation";
 
 # Some Chinese Characters
-lives_ok {my $一; 1}, "chinese declaration"; #OK not used
+lives-ok {my $一; 1}, "chinese declaration"; #OK not used
 is (do {my $二 = 2; sub 恆等($x) {$x}; 恆等($二)}), 2, "evaluation";
 
 # Tibetan Characters
-lives_ok {my $ཀ; 1}, "tibetan declaration"; #OK not used
+lives-ok {my $ཀ; 1}, "tibetan declaration"; #OK not used
 is (do {my $ཁ = 2; $ཁ}), 2, "evaluation";
 
 # Japanese
-lives_ok {my $い; 1}, "japanese declaration"; #OK not used
+lives-ok {my $い; 1}, "japanese declaration"; #OK not used
 is (do {my $に = 2; $に}), 2, "evaluation";
 
 # arabic
-lives_ok {my $الصفحة ; 1}, "arabic declaration"; #OK not used
+lives-ok {my $الصفحة ; 1}, "arabic declaration"; #OK not used
 is (do {my $الصفحة = 2; $الصفحة}), 2, "evaluation";
 
 # hebrew
-lives_ok {my $פוו; sub לה {}; 1}, "hebrew declaration"; #OK not used
+lives-ok {my $פוו; sub לה {}; 1}, "hebrew declaration"; #OK not used
 is (do {my $באר = 2; sub זהות ($x) { $x }; זהות($באר)}), 2, "evaluation";
 
 # magyar
-lives_ok {my $aáeéiíoóöőuúüű ; 1}, "magyar declaration"; #OK not used
+lives-ok {my $aáeéiíoóöőuúüű ; 1}, "magyar declaration"; #OK not used
 is (do {my $áéóőöúűüí = 42; sub űáéóőöúüí ($óőöú) { $óőöú }; űáéóőöúüí($áéóőöúűüí)}),
        42, "evaluation";
 
 # russian
-lives_ok {my $один; sub раз {}; 1}, "russian declaration"; #OK not used
+lives-ok {my $один; sub раз {}; 1}, "russian declaration"; #OK not used
 is
     (do {my $два = 2; sub идентичный ($x) { $x }; идентичный($два)}),
     2,
     "evaluation";
 
 #?rakudo 2 skip 'VOWEL SIGNs in identifiers; RT #122340'
-lives_ok { my $पहला = 1; }, "hindi declaration";
+lives-ok { my $पहला = 1; }, "hindi declaration";
 is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल($दूसरा) }), 4, "evaluation");
 
 # Unicode subs
@@ -109,35 +109,35 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 # L<S02/Unicode Semantics/Perl can count Unicode line and paragraph separators>
 # see also RT #122341
 
-lives_ok { EVAL "\{ 1 \} \x0a \{ 1 \}" },
+lives-ok { EVAL "\{ 1 \} \x0a \{ 1 \}" },
   "Unicode 000A (LINE FEED (LF)) can terminate lines";
-lives_ok { EVAL "\{ 1 \} \x0b \{ 1 \}" },
+lives-ok { EVAL "\{ 1 \} \x0b \{ 1 \}" },
   "Unicode 000B (LINE TABULATION) can terminate lines";
-lives_ok { EVAL "\{ 1 \} \x0c \{ 1 \}" },
+lives-ok { EVAL "\{ 1 \} \x0c \{ 1 \}" },
   "Unicode 000C (FORM FEED (FF)) can terminate lines";
-lives_ok { EVAL "\{ 1 \} \x0d \{ 1 \}" },
+lives-ok { EVAL "\{ 1 \} \x0d \{ 1 \}" },
   "Unicode 000D (CARRIAGE RETURN (CR)) can terminate lines";
-lives_ok { EVAL "\{ 1 \} \x85 \{ 1 \}" },
+lives-ok { EVAL "\{ 1 \} \x85 \{ 1 \}" },
   "Unicode 0085 (NEXT LINE (NEL)) can terminate lines";
-lives_ok { EVAL "\{ 1 \} \x2028 \{ 1 \}" },
+lives-ok { EVAL "\{ 1 \} \x2028 \{ 1 \}" },
   "Unicode 2028 (LINE SEPARATOR) can terminate lines";
-lives_ok { EVAL "\{ 1 \} \x2029 \{ 1 \}" },
+lives-ok { EVAL "\{ 1 \} \x2029 \{ 1 \}" },
   "Unicode 2029 (PARAGRAPH SEPARATOR) can terminate lines";
 
 # L<S02/Bracketing Characters/If a character is already used>
 
-lives_ok { EVAL "q\x298d test \x298e" },
+lives-ok { EVAL "q\x298d test \x298e" },
   "Unicode open-298d maps to close-298e";
-lives_ok { EVAL "q\x301d test \x301e" },
+lives-ok { EVAL "q\x301d test \x301e" },
   "Unicode open-301d maps to close-301e";
-throws_like { EVAL "q\x301d test \x301f" },
+throws-like { EVAL "q\x301d test \x301f" },
   Exception,
   "Unicode open-301d does not map to close-301f";
-lives_ok { EVAL "q\x2018 test \x2019" },
+lives-ok { EVAL "q\x2018 test \x2019" },
   "Unicode open-2018 maps to to close-2019";
-lives_ok { EVAL "q\x201a test \x2019" },
+lives-ok { EVAL "q\x201a test \x2019" },
   "Unicode open-201a maps to to close-2019";
-lives_ok { EVAL "q\x2018 \x201a test \x2019" },
+lives-ok { EVAL "q\x2018 \x201a test \x2019" },
   "Alternative open-brakets treat their other alternates as non-special";
 
 # vim: ft=perl6 fileencoding=utf-8

@@ -46,7 +46,7 @@ sub test_lines(@lines) {
 }
 
 # RT #124391
-throws_like { open("this-surely-won't-exist", :r) }, Exception,
+throws-like { open("this-surely-won't-exist", :r) }, Exception,
     message => { m/"this-surely-won't-exist"/ };
 
 # RT #124394

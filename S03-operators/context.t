@@ -57,10 +57,10 @@ plan 38;
     my @a = 1, 2;
     my %b = 'x' => 42;
  
-    is_deeply [@a], [1, 2], '@array flattening';
-    is_deeply [item @a], [[1, 2]], 'item @array non-flattening';
-    is_deeply [%b], ['x' => 42], '%hash flattening';
-    is_deeply [item %b], [{'x' => 42}], 'item %hash non-flattening';
+    is-deeply [@a], [1, 2], '@array flattening';
+    is-deeply [item @a], [[1, 2]], 'item @array non-flattening';
+    is-deeply [%b], ['x' => 42], '%hash flattening';
+    is-deeply [item %b], [{'x' => 42}], 'item %hash non-flattening';
 }
 
 {
@@ -72,7 +72,7 @@ plan 38;
     ok(%('a', 1, 'b', 2)     eqv {a => 1, b => 2}, '%(values) builds a hash');
     ok(hash('a', 1, 'b', 2)  eqv {a => 1, b => 2}, 'hash(values) builds a hash');
     ok((hash 'a', 1, 'b', 2) eqv {a => 1, b => 2}, 'hash values builds a hash');
-    eval_dies_ok('hash("a")', 'building a hash of one item fails');
+    eval-dies-ok('hash("a")', 'building a hash of one item fails');
 }
 
 # L<S03/"Changes to Perl 5 operators"/Perl 5's ${...}, @{...}, %{...}, etc>
@@ -80,13 +80,13 @@ plan 38;
 # Deprecated P5 dereferencing operators:
 {
     my $scalar = 'abcd';
-    eval_dies_ok('${$scalar}', 'Perl 5 form of ${$scalar} dies');
+    eval-dies-ok('${$scalar}', 'Perl 5 form of ${$scalar} dies');
 
     my $array  = [1, 2, 3];
-    eval_dies_ok('@{$array}', 'Perl 5 form of @{$array} dies');
+    eval-dies-ok('@{$array}', 'Perl 5 form of @{$array} dies');
 
     my $hash  = {a => 1, b => 2, c => 3};
-    eval_dies_ok('%{$hash}', 'Perl 5 form of %{$hash} dies');
+    eval-dies-ok('%{$hash}', 'Perl 5 form of %{$hash} dies');
 }
 
 is(($).WHAT.gist, '(Any)', 'Anonymous $ variable can be declared');

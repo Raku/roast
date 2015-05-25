@@ -101,7 +101,7 @@ sub j(*@i) {
     sub h(::T $x, T $y) { };   #OK not used
     my @l = &h.signature.params;
     is @l[0].type_captures, 'T', '.type_captures';
-    lives_ok { @l[1].type }, "can access a type_capture'd type";
+    lives-ok { @l[1].type }, "can access a type_capture'd type";
 }
 
 {
@@ -145,7 +145,5 @@ sub j(*@i) {
     is_run q[sub wtvr(|) {}; &wtvr.perl], { err => "", out => "" }, ".perl on unnamed | parameters doesn't err";
     is_run q[sub prcl(\\) {}; &prcl.perl], { err => "", out => "" }, ".perl on unnamed \\ parameters doesn't err";
 }
-
-done;
 
 # vim: ft=perl6

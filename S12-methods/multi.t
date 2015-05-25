@@ -49,7 +49,7 @@ role R1 {
 role R2 {
     method foo($x, $y) { 2 }   #OK not used
 }
-eval_dies_ok 'class X does R1 does R2 { }', 'sanity: get composition conflict error';
+eval-dies-ok 'class X does R1 does R2 { }', 'sanity: get composition conflict error';
 class C does R1 does R2 {
     proto method foo(|) { * }
 }
@@ -155,7 +155,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         multi method has_tie(Int $y) { 'tie2' };   #OK not used
     }
 
-    dies_ok { BrokenTie.has_tie( 42 ) }, 'call to tied method dies';
+    dies-ok { BrokenTie.has_tie( 42 ) }, 'call to tied method dies';
 
     class WorkingTie is BrokenTie {
         multi method has_tie(Int $z) { 'tie3' };   #OK not used
@@ -190,13 +190,13 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     is $a.foo("oh hai"), "oh hai",
         'foo() method works when $.foo attribute is present';
 
-    dies_ok { $a.foo }, 
+    dies-ok { $a.foo }, 
         '$.foo attribute has no accessor when foo() method is present';
 }
 
 # RT #57788
 {
-    eval_dies_ok 'class RT57788 { method m() { }; method m() { } }';
+    eval-dies-ok 'class RT57788 { method m() { }; method m() { } }';
 }
 
 {
@@ -205,10 +205,8 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         multi method bar() { }
     }
 
-    lives_ok { B.new.foo() },
+    lives-ok { B.new.foo() },
         'multis with different names but same signatures are not ambiguous';
 }
-
-done;
 
 # vim: ft=perl6

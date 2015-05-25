@@ -9,12 +9,12 @@ use lib 't/spec/packages';
     # defined in t/spec/packages/Exportops.pm
     use Exportops;
 
-    # note that eval_dies_ok executes in the context of
+    # note that eval-dies-ok executes in the context of
     # Test.pm, and Test.pm doesn't import or lift the operators
 
     ok EVAL('5!'), 'postfix:<!> was exported...';
     ok EVAL('5! == 120 or die'), '... and it works';
-    eval_dies_ok '5!', 'Test.pm does not import the operators';
+    eval-dies-ok '5!', 'Test.pm does not import the operators';
 
     ok EVAL('"a" yadayada "b"'), 'infix:<yadayada> was exported';
     ok EVAL('"a" yadayada "b" eq "a..b" or die'), '... and it works';
@@ -34,7 +34,7 @@ use lib 't/spec/packages';
     
     is 4 + 2, 6, "Normal infix:<+> still works";
 
-    dies_ok { EVAL('3 notthere 4') }, 'not-exported operator was not imported';
+    dies-ok { EVAL('3 notthere 4') }, 'not-exported operator was not imported';
 
     {
         my $fail = try EVAL q{3 notthere 4};
@@ -45,6 +45,6 @@ use lib 't/spec/packages';
     is answer["Life, the Universe, and Everything"], 42, 'exporting circumfixes works';
 }
 
-eval_dies_ok '5!', 'import of operators is lexical';
+eval-dies-ok '5!', 'import of operators is lexical';
 
 # vim: ft=perl6

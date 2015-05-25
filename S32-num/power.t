@@ -40,18 +40,14 @@ is(NaN ** 2, NaN, "NaN propagates with integer powers");
 is(NaN ** 3.14, NaN, "NaN propagates with numeric powers");
 is(0 ** NaN, NaN, "0**NaN=NaN");
 
-# Not at all sure the next three cases are correct!
+# Not at all sure the next two cases are correct!
 
 #?niecza 2 todo 'complex NaN stringy'
-#?rakudo.jvm skip 'NaN**1i should be NaN RT #124800'
-#?rakudo.moar todo 'NaN**1i should be NaN RT #124802'
+#?rakudo 2 todo 'wrong results for "NaN" used with "**" RT #124800'
 is(NaN ** 1i, NaN, "NaN**1i=NaN");
-#?rakudo.jvm skip '1i**NaN should be NaN RT #124803'
-#?rakudo.moar todo '1i**NaN should be NaN RT #124805'
 is(1i ** NaN, NaN, "1i**NaN=NaN");
-#?rakudo.jvm skip 'NaN**0 should be NaN RT #124806'
-#?rakudo.moar todo 'NaN**0 should be NaN RT #124808'
-is(NaN ** 0, NaN, "NaN**0=NaN");
+# RT #124450
+is(NaN ** 0, 1, "NaN**0=1");
 
 is(NaN ** NaN, NaN, "NaN**NaN=NaN");
 is(Inf ** NaN, NaN, "Inf**NaN=NaN");
@@ -72,8 +68,7 @@ is_approx(5i ** 3, -125i, "5i ** 3 = -125i");
 is_approx(3i ** 3, -27i, "3i ** 3 = -27i");
 is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 
-#?rakudo.jvm skip 'i RT #124810'
-#?rakudo.moar todo 'i RT #124811'
+#?rakudo todo 'i RT #124810'
 is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 
 {
@@ -93,7 +88,5 @@ is_approx((4 + 0i) ** (2 + 0i), 4 ** 2, "(4+0i) ** (2+0i) == 16");
 # Rat ** a large number
 ok(1.015 ** 200 !~~ NaN, "1.015 ** 200 is not NaN");
 is_approx(1.015 ** 200, 19.6430286394751, "1.015 ** 200 == 19.6430286394751");
-
-done;
 
 # vim: ft=perl6

@@ -93,7 +93,7 @@ my @tests = (
 # RT #65988
 {
     my $rt65988 = (\(1,2), \(3,4));
-    is_deeply EVAL( $rt65988.perl ), $rt65988, $rt65988.perl ~ '.perl';
+    is-deeply EVAL( $rt65988.perl ), $rt65988, $rt65988.perl ~ '.perl';
 }
 
 # probably there is a better place for this test
@@ -106,8 +106,6 @@ my @tests = (
     is (%count<basename>, %count<dirname>), (1, 1),
         'no duplicate keys in .gist of Match of regex which backtracked';
 }
-
-done;
 
 # vim: ft=perl6
 

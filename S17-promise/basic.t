@@ -8,7 +8,7 @@ plan 22;
     is $p.status, Planned, "Newly created Promise has Planned status";
     nok $p.Bool, "Newly created Promise has now result yet";
     nok ?$p, "Newly created Promise is false";
-    dies_ok { $p.cause }, "Cannot call cause on a Planned Promise";
+    dies-ok { $p.cause }, "Cannot call cause on a Planned Promise";
     
     $p.keep("kittens");
     is $p.status, Kept, "Kept Promise has Kept status";
@@ -16,12 +16,12 @@ plan 22;
     ok ?$p, "Kept Promise is true";
     is $p.result, "kittens", "Correct result";
     
-    dies_ok { $p.cause }, "Cannot call cause on a Kept Promise";
-    throws_like { $p.cause }, X::Promise::CauseOnlyValidOnBroken,
+    dies-ok { $p.cause }, "Cannot call cause on a Kept Promise";
+    throws-like { $p.cause }, X::Promise::CauseOnlyValidOnBroken,
         status => 'Kept';
-    dies_ok { $p.keep("eating") }, "Cannot re-keep a Kept Promise";
-    throws_like { $p.keep('eating') }, X::Promise::Vowed;
-    dies_ok { $p.break("bad") }, "Cannot break a Kept Promise";
+    dies-ok { $p.keep("eating") }, "Cannot re-keep a Kept Promise";
+    throws-like { $p.keep('eating') }, X::Promise::Vowed;
+    dies-ok { $p.break("bad") }, "Cannot break a Kept Promise";
 }
 
 {
@@ -32,10 +32,10 @@ plan 22;
     ok ?$p, "Broken Promise is true";
     isa-ok $p.cause, Exception, "cause returns an exception";
     is $p.cause.message, "glass", "Correct message";
-    dies_ok { $p.result }, "result throws exception";
+    dies-ok { $p.result }, "result throws exception";
     
-    dies_ok { $p.keep("eating") }, "Cannot keep a Broken Promise";
-    dies_ok { $p.break("bad") }, "Cannot re-break a Broken Promise";
+    dies-ok { $p.keep("eating") }, "Cannot keep a Broken Promise";
+    dies-ok { $p.break("bad") }, "Cannot re-break a Broken Promise";
 }
 
 { # RT #124190

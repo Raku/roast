@@ -17,7 +17,7 @@ is hash(a => 1).values, 1, 'hash() with autoquoted pair (values)';
 
 #RT #78096
 {
-    lives_ok { my @r=2..10,<j q k a>;my %v=j=>10,q=>10,k=>10,a=>1|11;},
+    lives-ok { my @r=2..10,<j q k a>;my %v=j=>10,q=>10,k=>10,a=>1|11;},
         "q => doesn't trigger quoting construct";
 }
 

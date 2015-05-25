@@ -121,11 +121,11 @@ is +@a, 0, '... empty arrays are not fatal anymore';
 # But this should generate a warning, but unfortunately we can't test for
 # warnings yet.
 
-dies_ok({ 42.splice }, '.splice should not work on scalars');
+dies-ok({ 42.splice }, '.splice should not work on scalars');
 
 @a = (1..10);
-dies_ok({use fatal; splice(@a,-2)}, "negative offset dies");
-dies_ok({use fatal; splice(@a,2,-20)}, "negative size dies");
+dies-ok({use fatal; splice(@a,-2)}, "negative offset dies");
+dies-ok({use fatal; splice(@a,2,-20)}, "negative size dies");
 
 {
     my @empty;

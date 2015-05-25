@@ -71,38 +71,38 @@ sub f2 (:$a!) { WHAT($a) }
     isa-ok $f2(:a),         Bool, "in '\$f2(:a)', ':a' is a named";
     isa-ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";
 
-    throws_like 'f2("a"   => 42)',
+    throws-like 'f2("a"   => 42)',
       Exception,
       "'\"a\" => 42' is a pair";
-    throws_like 'f2(("a") => 42)',
+    throws-like 'f2(("a") => 42)',
       Exception,
       "'(\"a\") => 42' is a pair";
-    throws_like 'f2((a   => 42))',
+    throws-like 'f2((a   => 42))',
       Exception,
       "'(a => 42)' is a pair";
-    throws_like 'f2(("a" => 42))',
+    throws-like 'f2(("a" => 42))',
       Exception,
       "'(\"a\" => 42)' is a pair";
-    throws_like 'f2((:a(42)))',
+    throws-like 'f2((:a(42)))',
       Exception,
       "'(:a(42))' is a pair";
-    throws_like 'f2((:a))',
+    throws-like 'f2((:a))',
       Exception,
       "'(:a)' is a pair";
-    throws_like '&f2.((:a))',
+    throws-like '&f2.((:a))',
       Exception,
       'in \'&f2.((:a))\', \'(:a)\' is a pair';
 
-    throws_like '$f2((:a))',
+    throws-like '$f2((:a))',
       Exception,
       "in '\$f2((:a))', '(:a)' is a pair";
-    throws_like '$f2.((:a))',
+    throws-like '$f2.((:a))',
       Exception,
       "in '\$f2.((:a))', '(:a)' is a pair";
-    throws_like '$f2(((:a)))',
+    throws-like '$f2(((:a)))',
       Exception,
       "in '\$f2(((:a)))', '(:a)' is a pair";
-    throws_like '$f2.(((:a)))',
+    throws-like '$f2.(((:a)))',
       Exception,
       "in '\$f2.(((:a)))', '(:a)' is a pair";
 }
@@ -112,7 +112,7 @@ sub f3 ($a) { WHAT($a) }
     my $pair = (a => 42);
 
     isa-ok f3($pair),  Pair, 'a $pair is not treated magically...';
-    dies_ok { EVAL 'f3(|$pair)' }, '|$pair becomes a name, which fails to dispatch';
+    dies-ok { EVAL 'f3(|$pair)' }, '|$pair becomes a name, which fails to dispatch';
 }
 
 sub f4 ($a)    { WHAT($a) }
@@ -135,7 +135,7 @@ sub f7 (:$bar!) { WHAT($bar) }
 {
     my $bar = 'bar';
 
-    throws_like 'f7($bar => 42)',
+    throws-like 'f7($bar => 42)',
       Exception,
       "variables cannot be keys of syntactical pairs (1)";
 }
@@ -144,7 +144,7 @@ sub f8 (:$bar!) { WHAT($bar) }
 {
     my @array = <bar>;
 
-    throws_like 'f8(@array => 42)',
+    throws-like 'f8(@array => 42)',
       Exception,
       "variables cannot be keys of syntactical pairs (2)";
 }
@@ -153,7 +153,7 @@ sub f9 (:$bar!) { WHAT($bar) }
 {
     my $arrayref = <bar>;
 
-    throws_like 'f9($arrayref => 42)',
+    throws-like 'f9($arrayref => 42)',
       Exception,
       "variables cannot be keys of syntactical pairs (3)";
 }

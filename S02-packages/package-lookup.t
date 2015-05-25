@@ -23,7 +23,7 @@ is $a.x, 5,
 is $a.lexical, 10, 'but a lexical of the same name is independent';
 
 # RT 75632
-lives_ok { my $A::y = 6; $A::y ~~ 6 or die },
+lives-ok { my $A::y = 6; $A::y ~~ 6 or die },
     'can declare and access variable in a class package through its long name from outside class';
-lives_ok { my $B::x = 7; $B::x ~~ 7 or die },
+lives-ok { my $B::x = 7; $B::x ~~ 7 or die },
     'can declare and access variable through its long name without declaring package';

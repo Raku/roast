@@ -27,7 +27,7 @@ role SocketPower {
 }
 
 #~ class Notebook does BatteryPower does SocketPower {}
-throws_like { EVAL 'class Notebook does BatteryPower does SocketPower {}' },
+throws-like { EVAL 'class Notebook does BatteryPower does SocketPower {}' },
   Exception, # doesn't have its own exception yet
   "Method 'find-power-accessories' collides and a resolution must be provided by the class";
 
@@ -95,5 +95,3 @@ my $reactor-top-up = HeavyWater.new(:dimensions<1m X 1m X 1m>, :mass<1107Kg>);
 
 is $king-sized-bed.calculate('down-town'), 'ship 1.8m X 2.0m X 0.5m to down-town', 'parametic role;';
 is $reactor-top-up.calculate('Springfield'), 'lug 1107Kg to Springfield', 'parametic role;';
-
-done();

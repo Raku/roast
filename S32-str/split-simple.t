@@ -112,6 +112,4 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
        q<.split('') does the same thing as .split(/''/) (RT #112868)>;
 }
 
-done;
-
 # vim: ft=perl6

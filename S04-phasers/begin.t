@@ -70,6 +70,6 @@ plan 11;
 
 # RT #119749
 {
-    lives_ok { enum A (a=>3); BEGIN for A.enums { } },
+    lives-ok { enum A (a=>3); BEGIN for A.enums { } },
         'no Null PMC access when looping over SomeEnum.enums in blockless BEGIN';
 }

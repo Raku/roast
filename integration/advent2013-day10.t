@@ -115,7 +115,7 @@ sub foo2($z, :$bar, :$baz) {
     is $applies-to, '.bar()', 'applies to .bar()';
 
     my @a = 10, 20, 30, 40, 50;
-    is_deeply @a[0..2] :kv, (0, 10, 1, 20, 2, 30), 'applies to []';
+    is-deeply @a[0..2] :kv, (0, 10, 1, 20, 2, 30), 'applies to []';
 
     sub infix:<+>($a, $b, :$adv){
 	$applies-to = "...+{$b}"
@@ -150,8 +150,8 @@ my $greeting2 = qq:!s 'Hello, $name. You have { +@msgs } messages.';
 ok $greeting2.match(/12/), 'closure interpolation';
 ok $greeting2.match(/\$name/), 'variabled non-interpolation';
 
-lives_ok {EVAL '$data ~~ m:nth(5)/fo+/'}, 'Round parens ok';
-throws_like {EVAL '$data ~~ m:nth[5]/fo+/'},
+lives-ok {EVAL '$data ~~ m:nth(5)/fo+/'}, 'Round parens ok';
+throws-like {EVAL '$data ~~ m:nth[5]/fo+/'},
   X::Comp::Group,
   'Square parens not ok';
 
@@ -162,11 +162,11 @@ sub root4($num, :$adv1 = 42, :$adv2, :$adv3!) {
     is $adv3, 'hi', 'adverb passed value';
 }
 
-throws_like {root4(10)}, Exception, 'missing required adverb - dies';
+throws-like {root4(10)}, Exception, 'missing required adverb - dies';
 root4(10, :adv3<hi>);
 
 sub root3($num, *%advs) {
-    is_deeply %advs, {"foo" => False, "bar" => True, "baz" => True, "qux" => "blah"}, 'adverb catch all';
+    is-deeply %advs, {"foo" => False, "bar" => True, "baz" => True, "qux" => "blah"}, 'adverb catch all';
 }
 
 root3(42, :!foo, :bar, :baz(True), :qux<blah>);

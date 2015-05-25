@@ -6,7 +6,7 @@ use Test::Tap;
 
 plan 3;
 
-dies_ok { Supply.new.interval(1) }, 'can not be called as an instance method';
+dies-ok { Supply.new.interval(1) }, 'can not be called as an instance method';
 
 {
     tap-ok Supply.interval(1),

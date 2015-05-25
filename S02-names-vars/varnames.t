@@ -6,33 +6,33 @@ plan 13;
 
 # L<S02/Names and Variables/special variables of Perl 5 are going away>
 
-lives_ok { EVAL 'my $!' },
+lives-ok { EVAL 'my $!' },
   '$! can be declared again';
-lives_ok { EVAL 'my $/' },
+lives-ok { EVAL 'my $/' },
   'as can $/';
 
-dies_ok { EVAL '$/ = "foo"' },
+dies-ok { EVAL '$/ = "foo"' },
   'S05: Perl 6\'s $/ variable may not be assigned to directly.';
 
 #?niecza todo
-lives_ok { EVAL 'my proto $!' },
+lives-ok { EVAL 'my proto $!' },
   '$! can be declared again if proto is used though';
 #?niecza todo
-lives_ok { EVAL 'my proto $/' },
+lives-ok { EVAL 'my proto $/' },
   'as can $/';
 
-throws_like { EVAL 'my $f!ao = "beh";' },
+throws-like { EVAL 'my $f!ao = "beh";' },
   Exception,
   "normal varnames can't have ! in their name";
-throws_like { EVAL 'my $fo:o::b:ar = "bla"' },
+throws-like { EVAL 'my $fo:o::b:ar = "bla"' },
   X::Syntax::Confused,
   "var names can't have colons in their names either";
 
 {
-    throws_like "my Int a = 10;", X::Syntax::Malformed, message => / sigilless /;
-    throws_like "my Int a;", X::Syntax::Malformed, message => / sigilless /;
-    throws_like "my a = 10;", X::Syntax::Malformed, message => / sigilless /;
-    throws_like "my a;", X::Syntax::Malformed, message => / sigilless /;
+    throws-like "my Int a = 10;", X::Syntax::Malformed, message => / sigilless /;
+    throws-like "my Int a;", X::Syntax::Malformed, message => / sigilless /;
+    throws-like "my a = 10;", X::Syntax::Malformed, message => / sigilless /;
+    throws-like "my a;", X::Syntax::Malformed, message => / sigilless /;
 }
 
 {

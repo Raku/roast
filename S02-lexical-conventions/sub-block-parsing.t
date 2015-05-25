@@ -26,14 +26,14 @@ ok(sub{ 42 }(),  'sub{...}() works'); # TODO: clarify
 }
 
 # RT #76432
-throws_like { EVAL q[
+throws-like { EVAL q[
     sub x { die }
     x();
 ] },
   Exception, # no exception object yet
   'block parsing works with newline';
 
-throws_like { EVAL q[
+throws-like { EVAL q[
     sub x { die };
     x();
 ] },
@@ -42,8 +42,8 @@ throws_like { EVAL q[
 
 # RT #85844
 {
-    throws_like { EVAL 'sub foo;' },
-      X::SemicolonForm::Invalid,
+    throws-like { EVAL 'sub foo;' },
+      X::UnitScope::Invalid,
       'RT #85844';
 }
 

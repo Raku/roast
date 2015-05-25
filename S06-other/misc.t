@@ -8,21 +8,21 @@ plan 9;
 
 sub a () { my $a=4; }; #zero-arg sub to test the underlying problem   #OK not used
 
-eval_dies_ok 'e("wtz")', "e should not be defined to accept arguments";
-eval_dies_ok 'pi("wtz")',"pi should not be defined to accept arguments either :) ";
-dies_ok { EVAL('a(3)') }, "this should die, no arguments defined";
+eval-dies-ok 'e("wtz")', "e should not be defined to accept arguments";
+eval-dies-ok 'pi("wtz")',"pi should not be defined to accept arguments either :) ";
+dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
 
 # RT #76096
 {
-    lives_ok {  sub foo($ where 1 --> Int) { return 42 } },
+    lives-ok {  sub foo($ where 1 --> Int) { return 42 } },
         "where clause combined with --> works";
-    lives_ok {  sub foo($ where 1, $y  --> Int) { return 42 } },
+    lives-ok {  sub foo($ where 1, $y  --> Int) { return 42 } },
         "where clause combined with --> works";
 }
 
 # RT #118875
 {
-    lives_ok { sub ndr($r where ($r ||= 10) > 0 && 1) { } },
+    lives-ok { sub ndr($r where ($r ||= 10) > 0 && 1) { } },
         'where clause followed by (non-parenthesized) expression with "&&" in it does parse';
 }
 

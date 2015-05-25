@@ -109,7 +109,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 }
 
 {
-    eval_dies_ok('if 1; 2', '"if" requires a block');
+    eval-dies-ok('if 1; 2', '"if" requires a block');
 }
 
 # L<S04/"Conditional statements"/The value of the conditional expression may be optionally bound to a closure parameter>
@@ -177,7 +177,7 @@ is (if 0 { 42 } elsif 0 { 43 }), (), "if+elsif evaluates to () when no block cho
 is (if 0 { 42 }), (), "if evaluates to () when no block chosen";
 
 # L<S04/Statement parsing/keywords require whitespace>
-eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
+eval-dies-ok('if($x > 1) {}','keyword needs at least one whitespace after it');
 
 # RT #76174
 # scoping of $_ in 'if' shouldn't break aliasing

@@ -18,7 +18,7 @@ plan 3;
 
 # L<S04/"Phasers">
 
-#?rakudo.moar todo "unknown phasers issue RT #124955"
+#?rakudo.moar todo "NEXT/LEAVE ordering RT #124952"
 #?rakudo.jvm skip "RT #122134 - last+ENTER in loop"
 {
     my $str;
@@ -42,7 +42,7 @@ plan 3;
        'trait blocks work properly in for loop';
 }
 
-#?rakudo.moar todo "unknown phasers issue RT #124957"
+#?rakudo.moar todo "NEXT/LEAVE ordering RT #124952"
 #?rakudo.jvm skip "RT #122134 - last+ENTER in loop"
 {
     my $str;

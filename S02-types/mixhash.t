@@ -33,14 +33,14 @@ sub showkv($x) {
     nok ?MixHash.new(), "Bool returns False if there is nothing in the MixHash";
     
     my $hash;
-    lives_ok { $hash = $m.hash }, ".hash doesn't die";
+    lives-ok { $hash = $m.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    throws_like { $m.keys = <c d> },
+    throws-like { $m.keys = <c d> },
       X::Assignment::RO,
       "Can't assign to .keys";
-    throws_like { $m.values = 3, 4 },
+    throws-like { $m.values = 3, 4 },
       X::Assignment::RO,
       "Can't assign to .values";
 
@@ -52,25 +52,25 @@ sub showkv($x) {
     is $m.elems, 3, '.total gives sum of values';
     is +$m, 8, '+$mix gives sum of values';
 
-    lives_ok { $m<a> = 42 }, "Can assign to an existing element";
+    lives-ok { $m<a> = 42 }, "Can assign to an existing element";
     is $m<a>, 42, "... and assignment takes effect";
-    lives_ok { $m<brady> = 12 }, "Can assign to a new element";
+    lives-ok { $m<brady> = 12 }, "Can assign to a new element";
     is $m<brady>, 12, "... and assignment takes effect";
-    lives_ok { $m<spiderman> = 0 }, "Can assign zero to a nonexistent element";
+    lives-ok { $m<spiderman> = 0 }, "Can assign zero to a nonexistent element";
     nok $m<spiderman>:exists, "... and that didn't create the element";
-    lives_ok { $m<brady> = 0 }, "Can assign zero to a existing element";
+    lives-ok { $m<brady> = 0 }, "Can assign zero to a existing element";
     nok $m<brady>:exists, "... and it goes away";
     
-    lives_ok { $m<a>++ }, "Can ++ an existing element";
+    lives-ok { $m<a>++ }, "Can ++ an existing element";
     is $m<a>, 43, "... and the increment happens";
-    lives_ok { $m<carter>++ }, "Can ++ a new element";
+    lives-ok { $m<carter>++ }, "Can ++ a new element";
     is $m<carter>, 1, "... and the element is created";
-    lives_ok { $m<a>-- }, "Can -- an existing element";
+    lives-ok { $m<a>-- }, "Can -- an existing element";
     is $m<a>, 42, "... and the decrement happens";
-    lives_ok { $m<carter>-- }, "Can -- an element with value 1";
+    lives-ok { $m<carter>-- }, "Can -- an element with value 1";
     nok $m<carter>:exists, "... and it goes away";
     #?niecza todo
-    lives_ok { $m<farve>-- }, "Can -- an element that doesn't exist";
+    lives-ok { $m<farve>-- }, "Can -- an element that doesn't exist";
     ok $m<farve>:exists, "... and everything is still okay";
 }
 
@@ -131,7 +131,7 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like 'my %h = MixHash.new(<a b o p a p o o>)', X::Hash::Store::OddNumber;
+    throws-like 'my %h = MixHash.new(<a b o p a p o o>)', X::Hash::Store::OddNumber;
 }
 
 {
@@ -218,10 +218,10 @@ sub showkv($x) {
     my $m = { foo => 10000000000, bar => 17, baz => 42 }.MixHash;
     my $s;
     my $c;
-    lives_ok { $s = $m.perl }, ".perl lives";
+    lives-ok { $s = $m.perl }, ".perl lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
-    lives_ok { $c = EVAL $s }, ".perl.EVAL lives";
+    lives-ok { $c = EVAL $s }, ".perl.EVAL lives";
     isa-ok $c, MixHash, "... and produces a MixHash";
     is showkv($c), showkv($m), "... and it has the correct values";
 }
@@ -229,7 +229,7 @@ sub showkv($x) {
 {
     my $m = { foo => 2, bar => 3, baz => 1 }.MixHash;
     my $s;
-    lives_ok { $s = $m.Str }, ".Str lives";
+    lives-ok { $s = $m.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
@@ -237,7 +237,7 @@ sub showkv($x) {
 {
     my $m = { foo => 10000000000, bar => 17, baz => 42 }.MixHash;
     my $s;
-    lives_ok { $s = $m.gist }, ".gist lives";
+    lives-ok { $s = $m.gist }, ".gist lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     ok $s ~~ /foo/, "... which mentions foo";
@@ -255,7 +255,7 @@ sub showkv($x) {
     is %b<b>, 2, 'Single-key subscript (existing element)';
     is %b<santa>, 0, 'Single-key subscript (nonexistent element)';
 
-    lives_ok { %b<a> = 4 }, "Assign to an element";
+    lives-ok { %b<a> = 4 }, "Assign to an element";
     is %b<a>, 4, "... and gets the correct value";
 }
 
@@ -306,7 +306,7 @@ sub showkv($x) {
 
 {
     my $m = MixHash.new("a", "b", "b");
-    throws_like { $m.pick },
+    throws-like { $m.pick },
       Exception,
       '.pick does not work on MixHash';
 }
@@ -316,7 +316,7 @@ sub showkv($x) {
 #?niecza skip '.grab NYI'
 {
     my $m = <a b b c c c>.MixHash;
-    throws_like { $m.grab },
+    throws-like { $m.grab },
       Exception,
       'cannot call .grab on a MixHash';
 }
@@ -353,7 +353,7 @@ sub showkv($x) {
     is $m.elems, 0, '.grabpairs *should* change MixHash';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124490"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
@@ -368,12 +368,12 @@ sub showkv($x) {
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124491"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
 
-    lives_ok { %h<c> = 0 }, 'can set an item to 0';
+    lives-ok { %h<c> = 0 }, 'can set an item to 0';
     #?rakudo todo 'todo'
     nok %h<c>:exists, '"c", set to zero, does not exist';
     #?rakudo todo 'todo'
@@ -381,28 +381,28 @@ sub showkv($x) {
     #?rakudo todo 'todo'
     is %h.keys, ('a'), '... and the right one is gone';
 
-    lives_ok { %h<c>++ }, 'can add (++) an item that was removed';
+    lives-ok { %h<c>++ }, 'can add (++) an item that was removed';
     #?rakudo todo 'todo'
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124492"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, c => 1;
 
-    lives_ok { %h<c>++ }, 'can "add" (++) an existing item';
+    lives-ok { %h<c>++ }, 'can "add" (++) an existing item';
     is %h<c>, 2, '++ on an existing item increments the counter';
     is %h.keys.sort, <a c>, '++ on an existing item does not add a key';
 
-    lives_ok { %h<a>-- }, 'can remove an item with decrement (--)';
+    lives-ok { %h<a>-- }, 'can remove an item with decrement (--)';
     #?rakudo todo 'todo'
     is %h.keys, ('c'), 'decrement (--) removes items';
     #?rakudo todo 'todo'
     nok %h<a>:exists, 'item is gone according to exists too';
     is %h<a>, 0, 'removed item is zero';
 
-    lives_ok { %h<a>-- }, 'remove a missing item lives';
+    lives-ok { %h<a>-- }, 'remove a missing item lives';
     #?rakudo todo 'todo'
     is %h.keys, ('c'), 'removing missing item does not change contents';
     #?rakudo todo 'todo'
@@ -414,7 +414,7 @@ sub showkv($x) {
     my %h of MixHash;
     ok %h.of.perl eq 'MixHash', 'is the hash really a MixHash';
     #?rakudo 2 todo 'in flux'
-    lives_ok { %h = mix <a b c d c b> }, 'Assigning a Mix to a MixHash';
+    lives-ok { %h = mix <a b c d c b> }, 'Assigning a Mix to a MixHash';
     is %h.keys.sort.map({ $^k ~ ':' ~ %h{$k} }).join(' '),
         'a:1 b:2 c:2 d:1', '... works as expected';
 }

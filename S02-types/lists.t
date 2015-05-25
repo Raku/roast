@@ -26,11 +26,11 @@ plan 32;
 
   is ($foo, "does_not_matter")[*-2], 42,
     "indexing lists by a negative index works correctly";
-  eval_dies_ok q/sub foo { @_[-1] }/, "indexing lists by explicit negative index is parsefail (compact)";
-  eval_dies_ok q/sub foo { @_[ -42 ] }/, "indexing lists by explicit negative index is parsefail (spaced)";
-  eval_dies_ok q/sub foo { @_[0..-1] }/, "indexing lists by range ending with negative index is parsefail (compact)";
-  eval_dies_ok q/sub foo { @_[ 0 .. -42 ] }/, "indexing lists by range ending with negative index is parsefail (spaced)";
-  throws_like { EVAL q/my @a = <one two>; @a[*-3] = 'zero'/ },
+  eval-dies-ok q/sub foo { @_[-1] }/, "indexing lists by explicit negative index is parsefail (compact)";
+  eval-dies-ok q/sub foo { @_[ -42 ] }/, "indexing lists by explicit negative index is parsefail (spaced)";
+  eval-dies-ok q/sub foo { @_[0..-1] }/, "indexing lists by range ending with negative index is parsefail (compact)";
+  eval-dies-ok q/sub foo { @_[ 0 .. -42 ] }/, "indexing lists by range ending with negative index is parsefail (spaced)";
+  throws-like { EVAL q/my @a = <one two>; @a[*-3] = 'zero'/ },
     X::OutOfRange,
  	"indexing lists by an effective negative index with * dies";
 }
@@ -62,7 +62,7 @@ plan 32;
 {
   my $foo = 42;
   
-  lives_ok { ($foo, *) = (23, 24) },
+  lives-ok { ($foo, *) = (23, 24) },
     "using lists with embedded Whatevers as lvalues works (1)";
   ok $foo == 23,
     "using lists with embedded Whatevers as lvalues works (2)";
@@ -77,7 +77,7 @@ plan 32;
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
-  throws_like { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
+  throws-like { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
     X::Assignment::RO,
     "using list slices as lvalues works (2)";
 }
@@ -103,8 +103,8 @@ plan 32;
 }
 
 # Lists as lvalues to swap, this time we use binding instead of assignment
-#?rakudo skip 'list binding RT #124494'
-#?niecza skip 'Cannot use bind operator with this LHS'
+#?rakudo 2 skip 'list binding RT #124494'
+#?niecza 2 skip 'Cannot use bind operator with this LHS'
 {
   my $foo = 42;
   my $bar = 23;
@@ -118,8 +118,6 @@ plan 32;
     "the vars didn't lose the readwrite-ness";
 }
 
-#?rakudo skip 'list binding RT #124495'
-#?niecza skip 'Cannot use bind operator with this LHS'
 {
   my $foo = 1;
   my $bar = 2;
@@ -142,7 +140,7 @@ plan 32;
 {
     sub Parcel::rt62836 { 62836 }
 
-    throws_like { <1 2 3>.rt62836 },
+    throws-like { <1 2 3>.rt62836 },
       X::Method::NotFound,
       'call to user-declared sub in Parcel:: class dies';
     try { EVAL '<1 2 3>.rt62836' };
@@ -159,7 +157,7 @@ plan 32;
     isa-ok $rt66304, Parcel, 'List assigned to scalar is-a Parcel';
     is( $rt66304.WHAT.perl, (1, 2, 4).WHAT.perl,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
-    throws_like { $rt66304[1] = 'ro' },
+    throws-like { $rt66304[1] = 'ro' },
       X::Assignment::RO,
       'literal List element is immutable';
     is $rt66304, (1, 2, 4), 'List is not changed by attempted assignment';

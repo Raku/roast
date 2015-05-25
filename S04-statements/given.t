@@ -246,7 +246,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
 
 # given + n>1-arg closure (should fail)
 {
-    dies_ok {
+    dies-ok {
         given 41 {
             when -> $t, $r { $t == $r } { ... }
         }
@@ -283,8 +283,8 @@ Tests the given block, as defined in L<S04/"Switch statements">
 }
 
 # RT #78234
-eval_lives_ok 'given 3 { sub a() { } }', 'can define a sub inside a given';
-eval_lives_ok 'sub a() { } given 3',     'can define a sub inside a statement-modifying given';
+eval-lives-ok 'given 3 { sub a() { } }', 'can define a sub inside a given';
+eval-lives-ok 'sub a() { } given 3',     'can define a sub inside a statement-modifying given';
 
 {
     my $capture-is-correct = False;

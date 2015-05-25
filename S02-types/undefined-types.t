@@ -1,21 +1,23 @@
 use v6;
 use Test;
-plan 49;
+plan 50;
 
 # L<S02/Names and Variables/The empty>
 
-# Nil is an empty container. As a container, it is defined.
+# Empty is an empty container. As a container, it is defined.
 {
-    ok !Nil.defined, 'Nil is undefined';
+    ok !Empty.defined, 'Empty is undefined';
     ok ().defined, '() is defined';
     my @a= 1, Nil, 3;
-    is @a.elems, 2, 'Nil as part of list, is empty list';
-    ok (@a.push: Nil) =:= @a, "Pushing Nil returns same array";
-    is @a.elems, 2, 'Pushing Nil in list context is empty list';
-    ok (@a.unshift: Nil) =:= @a, "Unshifting Nil returns same array";
-    is @a.elems, 2, 'Unshifting Nil in list context is empty list';
-    is (@a = Nil), '', "Setting array to Nil returns empty string";
-    is @a.elems, 0, 'Setting to Nil restores original state';
+    is @a.elems, 3, 'Nil as part of list is element';
+    @a= 1, Empty, 3;
+    is @a.elems, 2, 'Empty as part of list, is empty list';
+    ok (@a.push: Empty) =:= @a, "Pushing Empty returns same array";
+    is @a.elems, 2, 'Pushing Empty in list context is empty list';
+    ok (@a.unshift: Empty) =:= @a, "Unshifting Empty returns same array";
+    is @a.elems, 2, 'Unshifting Empty in list context is empty list';
+    is (@a = Empty), '', "Setting array to Empty returns empty string";
+    is @a.elems, 0, 'Setting to Empty restores original state';
 } #7
 
 # typed scalar
@@ -29,35 +31,35 @@ plan 49;
 # typed array
 #?niecza skip "doesn't know typed stuff"
 {
-    my Int @a = 1, Nil, 3;
+    my Int @a = 1, Empty, 3;
     #?rakudo todo ".clone doesn't copy typedness"
     is @a.of, '(Int)', "Check that we have an 'Int' array";
-    is @a.elems, 2,  'Nil as part of Int list, is empty list';
-    ok ( @a.push: Nil ) =:= @a, "assigning Nil returns same array";
-    is @a.elems, 2, 'Pushing Nil in Int list context is empty list';
-    ok ( @a.unshift: Nil ) =:= @a, "assigning Nil returns same array";
-    is @a.elems, 2, 'Unshifting Nil in Int list context is empty list';
+    is @a.elems, 2,  'Empty as part of Int list, is empty list';
+    ok ( @a.push: Empty ) =:= @a, "assigning Empty returns same array";
+    is @a.elems, 2, 'Pushing Empty in Int list context is empty list';
+    ok ( @a.unshift: Empty ) =:= @a, "assigning Empty returns same array";
+    is @a.elems, 2, 'Unshifting Empty in Int list context is empty list';
     ok !defined(@a[1] = Nil), "assigning Nil to Int should work";
     ok !@a[1].defined,  "Nil makes undefined here";
-    is (@a = Nil), '', "setting array to Nil returns empty string";
+    is (@a = Empty), '', "setting array to Empty returns empty string";
     #?rakudo todo ".clone doesn't copy typedness"
     is @a.of, '(Int)', "Check that we still have an 'Int' array";
-    is @a.elems, 0, 'Setting to Nil restores original state';
+    is @a.elems, 0, 'Setting to Empty restores original state';
 } #11
 
 # typed hash
 #?niecza skip "doesn't know typed stuff"
 {
-    my Int %a = a => 1, Nil, c => 3;
+    my Int %a = a => 1, Empty, c => 3;
     #?rakudo todo ".clone doesn't copy typedness"
     is %a.of, '(Int)', "Check that we have an 'Int' hash";
-    is %a.elems, 2,  'Nil as part of Int list, is empty pair';
+    is %a.elems, 2,  'Empty as part of Int list, is empty pair';
     is (%a<b> = Nil), Int, "assigning Nil to hash element should work";
     ok !%a<b>.defined,  "Nil makes undefined here";
-    is ( %a = Nil ), '', "setting hash to Nil returns empty string";
+    is ( %a = Empty ), '', "setting hash to Empty returns empty string";
     #?rakudo todo ".clone doesn't copy typedness"
     is %a.of, '(Int)', "Check that we still have an 'Int' hash";
-    is %a.elems, 0, 'Setting to Nil restores original state';
+    is %a.elems, 0, 'Setting to Empty restores original state';
 } #7
 
 # sink context returns Nil
@@ -65,12 +67,12 @@ plan 49;
     my @a;
     my $i = 0;
     @a.push: 1, sink $i++;
-    is @a.elems, 1, 'sink statement prefix returns Nil (list context)';
+    is @a.elems, 2, 'sink statement prefix returns Nil (list context)';
     is $i, 1, 'sink execucted the statement';
 
     @a = ();
     @a.push: 2, sink { $i = 2 };
-    is @a.elems, 1, 'sink block prefix returns Nil (list context)';
+    is @a.elems, 2, 'sink block prefix returns Nil (list context)';
     is $i, 2, 'the block was executed';
     ok !defined(sink $i = 5 ), 'sink in scalar context (statement)';
     is $i, 5, '... statement executed';

@@ -8,7 +8,7 @@ plan 27;
 
 {
     my @a = (1, 2, 3);
-    lives_ok({@a .= map: { $_ + 1 }}, '.= runs with block');
+    lives-ok({@a .= map: { $_ + 1 }}, '.= runs with block');
     is(@a[0], 2, 'inplace map [0]');
     is(@a[1], 3, 'inplace map [1]');
     is(@a[2], 4, 'inplace map [2]');
@@ -16,7 +16,7 @@ plan 27;
 
 {
     my @b = <foo 123 bar 456 baz>;
-    lives_ok { @b.=grep(/<[a..z]>/)},
+    lives-ok { @b.=grep(/<[a..z]>/)},
              '.= works without surrounding whitespace';
     is @b[0], 'foo', 'inplace grep [0]';
     is @b[1], 'bar', 'inplace grep [1]';

@@ -29,7 +29,7 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 
 {
     my $a = 1;
-    eval_dies_ok '$a:delete', "Can't :delete a scalar";
+    eval-dies-ok '$a:delete', "Can't :delete a scalar";
 }
 
 # RT #68482
@@ -41,7 +41,5 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
     my $rt68482 = %rt68482<1>:delete;
     is $rt68482.WHAT.gist, 3.WHAT.gist, '.WHAT of stored delete is the element';
 }
-
-done;
 
 # vim: ft=perl6

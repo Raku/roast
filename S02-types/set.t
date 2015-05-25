@@ -24,15 +24,15 @@ sub showset($s) { $s.keys.sort.join(' ') }
     nok ?Set.new(), "Bool returns False if there is nothing in the Set";
 
     my $hash;
-    lives_ok { $hash = $s.hash }, ".hash doesn't die";
+    lives-ok { $hash = $s.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showset($hash), 'a b foo', '...with the right elements';
     is $hash.values.grep({ ($_ ~~ Bool) && $_ }).elems, 3, "...and values";
 
-    dies_ok { $s<a> = True }, "Can't assign to an element (Sets are immutable)";
-    dies_ok { $s.keys = <c d> }, "Can't assign to .keys";
-    dies_ok { $s.values = <True False> }, "Can't assign to .values";
-    dies_ok { $s<a>:delete }, "Can't :delete from Set";
+    dies-ok { $s<a> = True }, "Can't assign to an element (Sets are immutable)";
+    dies-ok { $s.keys = <c d> }, "Can't assign to .keys";
+    dies-ok { $s.values = <True False> }, "Can't assign to .values";
+    dies-ok { $s<a>:delete }, "Can't :delete from Set";
 
     is ($s<a b>).grep(?*).elems, 2, 'Multiple-element access';
     is ($s<a santa b easterbunny>).grep(?*).elems, 2, 'Multiple-element access (with nonexistent elements)';
@@ -76,7 +76,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set <a b foo>;
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
-    dies_ok { $s<a>:delete }, ':delete does not work on set';
+    dies-ok { $s<a>:delete }, ':delete does not work on set';
 }
 
 {
@@ -91,7 +91,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like 'my %h = set <a b o p a p o o>', X::Hash::Store::OddNumber;
+    throws-like 'my %h = set <a b o p a p o o>', X::Hash::Store::OddNumber;
 }
 {
     my %h := set <a b o p a p o o>;
@@ -171,23 +171,23 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set <foo bar baz>;
     my $str;
     my $c;
-    lives_ok { $str = $s.perl }, ".perl lives";
+    lives-ok { $str = $s.perl }, ".perl lives";
     isa-ok $str, Str, "... and produces a string";
-    lives_ok { $c = EVAL $str }, ".perl.EVAL lives";
+    lives-ok { $c = EVAL $str }, ".perl.EVAL lives";
     isa-ok $c, Set, "... and produces a Set";
     is showset($c), showset($s), "... and it has the correct values";
 }
 
 {
     my $s = set <foo bar baz>;
-    lives_ok { $s = $s.Str }, ".Str lives";
+    lives-ok { $s = $s.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";
 }
 
 {
     my $s = set <foo bar baz>;
-    lives_ok { $s = $s.gist }, ".gist lives";
+    lives-ok { $s = $s.gist }, ".gist lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";
@@ -204,9 +204,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is %s<a>, True, 'Single-key subscript (existing element)';
     is %s<santa>, False, 'Single-key subscript (nonexistent element)';
 
-    dies_ok { %s<a> = True }, "Can't assign to an element (Sets are immutable)";
-    dies_ok { %s = a => True, b => True }, "Can't assign to a %var implemented by Set";
-    dies_ok { %s<a>:delete }, "Can't :delete a key from a Set";
+    dies-ok { %s<a> = True }, "Can't assign to an element (Sets are immutable)";
+    dies-ok { %s = a => True, b => True }, "Can't assign to a %var implemented by Set";
+    dies-ok { %s<a>:delete }, "Can't :delete a key from a Set";
 }
 
 # L<S03/Hyper operators/'unordered type'>
@@ -218,16 +218,16 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset(-« set(3, 9, -4)), '-9 -3 4', '-« Set';
     is showset(set(<b e g k z>)».pred), 'a d f j y', 'Set».pred';
 
-    throws_like { set(1, 2) »+« set(3, 4) }, X::AdHoc,'Set »+« Set is illegal';
-    throws_like { set(1, 2) »+« [3, 4] }, X::AdHoc, 'Set »+« Array is illegal';
-    throws_like { set(1, 2) «+» [3, 4] }, X::AdHoc, 'Set «+» Array is illegal';
-    throws_like { [1, 2] »+« set(3, 4) }, X::AdHoc, 'Set »+« Array is illegal';
-    throws_like { [1, 2] «+» set(3, 4) }, X::AdHoc, 'Set «+» Array is illegal';
+    throws-like { set(1, 2) »+« set(3, 4) }, X::AdHoc,'Set »+« Set is illegal';
+    throws-like { set(1, 2) »+« [3, 4] }, X::AdHoc, 'Set »+« Array is illegal';
+    throws-like { set(1, 2) «+» [3, 4] }, X::AdHoc, 'Set «+» Array is illegal';
+    throws-like { [1, 2] »+« set(3, 4) }, X::AdHoc, 'Set »+« Array is illegal';
+    throws-like { [1, 2] «+» set(3, 4) }, X::AdHoc, 'Set «+» Array is illegal';
 }
 
 #?niecza skip "Hypers not yet Set compatible"
 #?rakudo todo "Hypers not yet Set compatible RT #124488"
-dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
+dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # L<S32::Containers/Set/roll>
 
@@ -281,7 +281,7 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 #?niecza skip '.grab NYI'
 {
     my $s = set <a b c>;
-    dies_ok { $s.grab }, 'cannot call .grab on a Set';
+    dies-ok { $s.grab }, 'cannot call .grab on a Set';
 }
 
 # L<S32::Containers/Set/grabpairs>
@@ -289,7 +289,7 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 #?niecza skip '.grabpairs NYI'
 {
     my $s = set <a b c>;
-    dies_ok { $s.grabpairs }, 'cannot call .grabpairs on a Set';
+    dies-ok { $s.grabpairs }, 'cannot call .grabpairs on a Set';
 }
 
 # RT 107022
@@ -358,8 +358,8 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 {
     my $s = <a b c>.Set;
-    dies_ok { $s.pairs[0].key++ },     'Cannot change key of Set.pairs';
-    dies_ok { $s.pairs[0].value = 0 }, 'Cannot change value of Set.pairs';
+    dies-ok { $s.pairs[0].key++ },     'Cannot change key of Set.pairs';
+    dies-ok { $s.pairs[0].value = 0 }, 'Cannot change value of Set.pairs';
 }
 
 # RT #117103

@@ -21,7 +21,7 @@ plan 3;
     }
     is C.new.get-attr, 71356, 'can read from readonly private attributes';
     #?rakudo todo 'readonly attributes'
-    dies_ok { my $c = C.new; $c.set-attr: 99; }, 'cannot assign to readonly private attribute'
+    dies-ok { my $c = C.new; $c.set-attr: 99; }, 'cannot assign to readonly private attribute'
 }
 
 # vim: ft=perl6

@@ -1,6 +1,7 @@
 use v6;
 use Test;
 
+plan 96;
 
 {
     my $r = RangeIter.new(1..5);
@@ -148,5 +149,3 @@ use Test;
     is $r.get, 6, '$r.get == 6';
     is $r.get, 7, '$r.get == 7';
 }
-
-done;

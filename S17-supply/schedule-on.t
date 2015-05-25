@@ -6,7 +6,7 @@ use Test::Tap;
 
 plan 7;
 
-dies_ok { Supply.schedule-on($*SCHEDULER) },
+dies-ok { Supply.schedule-on($*SCHEDULER) },
   'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {

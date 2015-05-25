@@ -20,11 +20,11 @@ class Trustee {
     }
 }
 
-eval_dies_ok 'Truster.new()!Truster::get-x-priv',
+eval-dies-ok 'Truster.new()!Truster::get-x-priv',
     'can not access private method without a trust';
 is Trustee.x(Truster.new(x => 5)), 5, 'can access private method with trust';
 is Trustee.x(ChildTruster.new(x => 5)), 5, 'can access private method with trust + subclass';
-eval_dies_ok q[class ChildTrustee { method x($t) { $t!Truster>>get-x-priv()} }],
+eval-dies-ok q[class ChildTrustee { method x($t) { $t!Truster>>get-x-priv()} }],
     'trust relation does not extend to child classes of the trustee'
 
 

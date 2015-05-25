@@ -17,6 +17,4 @@ plan 6;
 
 }
 
-done;
-
 # vim: ft=perl6

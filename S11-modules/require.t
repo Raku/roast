@@ -1,6 +1,6 @@
 use v6;
 
-my $istrue = (require Test <&plan &is &lives_ok &skip &todo>);
+my $istrue = (require Test <&plan &is &lives-ok &skip &todo>);
 
 plan 16;
 
@@ -13,14 +13,14 @@ is $staticname.gist, '(Test)', "require Test installs stub Test package at compi
 
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
-lives_ok { require "t/spec/S11-modules/InnerModule.pm"; },
+lives-ok { require "t/spec/S11-modules/InnerModule.pm"; },
          'can load InnerModule from a path at run time';
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
 
 #?rakudo todo 'variable form plus imports NYI RT #125084'
-lives_ok { require $name '&bar'; },
+lives-ok { require $name '&bar'; },
          'can load InnerModule from a variable at run time';
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
 
@@ -31,7 +31,7 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 }
 
 #RT #118407
-#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux RT # quux RT#:125085"
+#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux RT #118407"
 { 
     require InnerModule:file($name) <quux>;
     is quux(), 'Inner::quux', "can import quux without ampersand (&quux)";
@@ -43,13 +43,13 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 # Next line is for final test.
 GLOBAL::<$x> = 'still here';
 
-lives_ok { require Fancy::Utilities; },
+lives-ok { require Fancy::Utilities; },
          'can load Fancy::Utilities at run time';
 is Fancy::Utilities::lolgreet('me'),
    'O HAI ME', 'can call our-sub from required module';
 
 # L<S11/"Runtime Importation"/"It is also possible to specify the module name indirectly by string">
-lives_ok { my $name = 'A'; require ::($name) }, 'can require with variable name';
+lives-ok { my $name = 'A'; require ::($name) }, 'can require with variable name';
 
 {
     require ::('Fancy::Utilities');
@@ -67,11 +67,11 @@ lives_ok { my $name = 'A'; require ::($name) }, 'can require with variable name'
 is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 
 # tests the combination of chdir+require
-lives_ok { chdir "t/spec/packages"; require "Foo.pm"; },
+lives-ok { chdir "t/spec/packages"; require "Foo.pm"; },
          'can change directory and require a module';
 
 # RT #115626
-lives_ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm"; },
+lives-ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm"; },
          'requiring something non-existent does not make it segfault';
 
 # vim: ft=perl6

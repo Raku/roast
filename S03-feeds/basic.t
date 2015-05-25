@@ -64,7 +64,7 @@ plan 24;
     my @data = <1 2 4 5 7 8>;
     my @odds = <1 5 7>;
 
-    eval_dies_ok('@data <== grep {$_ % 2} <== @data', 'a chain of feeds may not begin and end with the same array');
+    eval-dies-ok('@data <== grep {$_ % 2} <== @data', 'a chain of feeds may not begin and end with the same array');
 
     @data = <1 2 4 5 7 8>;
     @data <== grep {$_ % 2} <== eager @data;
@@ -117,7 +117,7 @@ plan 24;
 # feed and Inf
 #?nieza skip "unhandled exception
 {
-  lives_ok { my @a <== 0..Inf }
+  lives-ok { my @a <== 0..Inf }
 }
 
 #?nieza skip "Unhandled exception"
@@ -143,8 +143,5 @@ plan 24;
     # XXX: currently the same as the @(*) test above. Needs to be improved
     @data ==> grep {/<[aeiouy]>/} ==> is(@(*).slice, @(@out).slice, 'basic test for @(*).slice');
 }
-
-
-done;
 
 # vim: ft=perl6

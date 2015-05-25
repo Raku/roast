@@ -187,14 +187,14 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 }
 
 {
-    throws_like { EVAL ' @%(a => <b>)<a>' },
+    throws-like { EVAL ' @%(a => <b>)<a>' },
       Exception,
       "doesn't really make sense, but shouldn't segfault, either ($!)";
 }
 
 # test for RT #62730
 #?niecza todo
-lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
+lives-ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #71022
 {
@@ -227,7 +227,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     is %h.elems, 0, 'reading multi-level non-existing hash keys does not create it';
     %h<foo><bar> = "baz";
     is %h.elems, 1, 'multi-level auto-vivify number of elements';
-    is_deeply %h<foo>, (bar => "baz").hash, "multi-level auto-vivify";
+    is-deeply %h<foo>, (bar => "baz").hash, "multi-level auto-vivify";
 } #4
 
 #RT #76644
@@ -242,9 +242,9 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 # Any
 {
     my $x;
-    lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
+    lives-ok { $x{'a'} }, 'can index a variable that defaults to Any';
     nok $x{'a'}.defined, '... and the result is not defined';
-    throws_like { Mu.{'a'} },
+    throws-like { Mu.{'a'} },
       X::Multi::NoMatch,
       'no .{ } in Mu';
 }
@@ -292,11 +292,11 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 } #1
 
 # RT #75694
-eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting with 'has-' in a hash");
+eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting with 'has-' in a hash");
 
 # RT #99854
 {
-    eval_lives_ok 'my $rt = { grammar => 5 }',
+    eval-lives-ok 'my $rt = { grammar => 5 }',
                   "can have a bareword 'grammar' as a hash key";
 }
 
@@ -329,15 +329,15 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 
 # RT #77504
 {
-    throws_like { ~[]<c> }, Exception,
+    throws-like { ~[]<c> }, Exception,
         message => 'postcircumfix:<{ }> not defined for type Array',
         'adequate Failure error message when hash-indexing a non-hash using .<> (1)';
 
-    throws_like { ~5<c> }, Exception,
+    throws-like { ~5<c> }, Exception,
         message => 'postcircumfix:<{ }> not defined for type Int',
         'adequate Failure error message when hash-indexing a non-hash using .<> (2)';
 
-    throws_like { ~5{'c'} }, Exception,
+    throws-like { ~5{'c'} }, Exception,
         message => 'postcircumfix:<{ }> not defined for type Int',
         'adequate Failure error message when hash-indexing a non-hash using .{}';
 }
@@ -347,7 +347,5 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
     my %hash = not => 42;
     is %hash<not>, 42, "can use bare 'not' as hash key";
 }
-
-done;
 
 # vim: ft=perl6

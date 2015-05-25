@@ -27,7 +27,7 @@ ok(Foo.^can('bar'), '... Foo can bar (as class method)');
 ok(Foo.HOW.isa(Foo, Foo), '... Foo is-a Foo (of course)');
 ok(Foo.^isa(Foo), '... Foo is-a Foo (of course) (as class method)');
 
-lives_ok { 4.HOW.HOW }, 'Can access meta class of meta class';
+lives-ok { 4.HOW.HOW }, 'Can access meta class of meta class';
 
 # L<S12/Introspection/Class traits may include:>
 
@@ -38,18 +38,16 @@ is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
 is Foo.^layout, P6opaque, '^.layout';
 
 # RT #115208
-eval_lives_ok "True.HOW.say", "can output the .gist of a .HOW";
+eval-lives-ok "True.HOW.say", "can output the .gist of a .HOW";
 
 # RT #114130
 {
-    throws_like 'Any.HOW(Foo)', X::Syntax::Argument::MOPMacro;
+    throws-like 'Any.HOW(Foo)', X::Syntax::Argument::MOPMacro;
 }
 
 # RT #121885
 class IntrospectAtBEGINTime {
     is BEGIN { IntrospectAtBEGINTime.^name }, 'IntrospectAtBEGINTime', '.^foo works at BEGIN time';
 }
-
-done;
 
 # vim: ft=perl6

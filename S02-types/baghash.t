@@ -33,14 +33,14 @@ sub showkv($x) {
     nok ?BagHash.new(), "Bool returns False if there is nothing in the BagHash";
 
     my $hash;
-    lives_ok { $hash = $b.hash }, ".hash doesn't die";
+    lives-ok { $hash = $b.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    throws_like { $b.keys = <c d> },
+    throws-like { $b.keys = <c d> },
       X::Assignment::RO,
       "Can't assign to .keys";
-    throws_like { $b.values = 3, 4 },
+    throws-like { $b.values = 3, 4 },
       X::Assignment::RO,
       "Can't assign to .values";
 
@@ -51,22 +51,22 @@ sub showkv($x) {
     is $b.elems, 3, '.elems gives number of elements';
     is +$b, 8, '+$bag gives sum of values';
 
-    lives_ok { $b<a> = 42 }, "Can assign to an existing element";
+    lives-ok { $b<a> = 42 }, "Can assign to an existing element";
     is $b<a>, 42, "... and assignment takes effect";
-    lives_ok { $b<brady> = 12 }, "Can assign to a new element";
+    lives-ok { $b<brady> = 12 }, "Can assign to a new element";
     is $b<brady>, 12, "... and assignment takes effect";
-    lives_ok { $b<spiderman> = 0 }, "Can assign zero to a nonexistent element";
+    lives-ok { $b<spiderman> = 0 }, "Can assign zero to a nonexistent element";
     nok $b<spiderman>:exists, "... and that didn't create the element";
-    lives_ok { $b<brady> = 0 }, "Can assign zero to a existing element";
+    lives-ok { $b<brady> = 0 }, "Can assign zero to a existing element";
     nok $b<brady>:exists, "... and it goes away";
 
-    lives_ok { $b<a>++ }, "Can ++ an existing element";
+    lives-ok { $b<a>++ }, "Can ++ an existing element";
     is $b<a>, 43, "... and the increment happens";
-    lives_ok { $b<carter>++ }, "Can ++ a new element";
+    lives-ok { $b<carter>++ }, "Can ++ a new element";
     is $b<carter>, 1, "... and the element is created";
-    lives_ok { $b<a>-- }, "Can -- an existing element";
+    lives-ok { $b<a>-- }, "Can -- an existing element";
     is $b<a>, 42, "... and the decrement happens";
-    lives_ok { $b<carter>-- }, "Can -- an element with value 1";
+    lives-ok { $b<carter>-- }, "Can -- an element with value 1";
     nok $b<carter>:exists, "... and it goes away";
     #?niecza todo
     is $b<farve>--, 0, "Can -- an element that doesn't exist";
@@ -130,7 +130,7 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like { EVAL 'my %h = BagHash.new(<a b o p a p o o>)' },
+    throws-like { EVAL 'my %h = BagHash.new(<a b o p a p o o>)' },
       X::Hash::Store::OddNumber;
 }
 
@@ -214,10 +214,10 @@ sub showkv($x) {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.BagHash;
     my $s;
     my $c;
-    lives_ok { $s = $b.perl }, ".perl lives";
+    lives-ok { $s = $b.perl }, ".perl lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
-    lives_ok { $c = EVAL $s }, ".perl.EVAL lives";
+    lives-ok { $c = EVAL $s }, ".perl.EVAL lives";
     isa-ok $c, BagHash, "... and produces a BagHash";
     is showkv($c), showkv($b), "... and it has the correct values";
 }
@@ -225,7 +225,7 @@ sub showkv($x) {
 {
     my $b = { foo => 2, bar => 3, baz => 1 }.BagHash;
     my $s;
-    lives_ok { $s = $b.Str }, ".Str lives";
+    lives-ok { $s = $b.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
@@ -233,7 +233,7 @@ sub showkv($x) {
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.BagHash;
     my $s;
-    lives_ok { $s = $b.gist }, ".gist lives"; isa-ok $s, Str, "... and produces a string";
+    lives-ok { $s = $b.gist }, ".gist lives"; isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";
@@ -250,7 +250,7 @@ sub showkv($x) {
     is %b<b>, 2, 'Single-key subscript (existing element)';
     is %b<santa>, 0, 'Single-key subscript (nonexistent element)';
 
-    lives_ok { %b<a> = 4 }, "Assign to an element";
+    lives-ok { %b<a> = 4 }, "Assign to an element";
     is %b<a>, 4, "... and gets the correct value";
 }
 
@@ -425,7 +425,7 @@ sub showkv($x) {
     is $b.elems, 0, '.grabpairs *should* change BagHash';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124510"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
@@ -440,12 +440,12 @@ sub showkv($x) {
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124511"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
 
-    lives_ok { %h<c> = 0 }, 'can set an item to 0';
+    lives-ok { %h<c> = 0 }, 'can set an item to 0';
     #?rakudo todo 'todo'
     nok %h<c>:exists, '"c", set to zero, does not exist';
     #?rakudo todo 'todo'
@@ -453,28 +453,28 @@ sub showkv($x) {
     #?rakudo todo 'todo'
     is %h.keys, ('a'), '... and the right one is gone';
 
-    lives_ok { %h<c>++ }, 'can add (++) an item that was removed';
+    lives-ok { %h<c>++ }, 'can add (++) an item that was removed';
     #?rakudo todo 'todo'
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
-#?rakudo skip "'is ObjectType' NYI RT #124512"
+#?rakudo skip "'is TypeObject' NYI RT #124490"
 #?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, c => 1;
 
-    lives_ok { %h<c>++ }, 'can "add" (++) an existing item';
+    lives-ok { %h<c>++ }, 'can "add" (++) an existing item';
     is %h<c>, 2, '++ on an existing item increments the counter';
     is %h.keys.sort, <a c>, '++ on an existing item does not add a key';
 
-    lives_ok { %h<a>-- }, 'can remove an item with decrement (--)';
+    lives-ok { %h<a>-- }, 'can remove an item with decrement (--)';
     #?rakudo todo 'todo'
     is %h.keys, ('c'), 'decrement (--) removes items';
     #?rakudo todo 'todo'
     nok %h<a>:exists, 'item is gone according to exists too';
     is %h<a>, 0, 'removed item is zero';
 
-    lives_ok { %h<a>-- }, 'remove a missing item lives';
+    lives-ok { %h<a>-- }, 'remove a missing item lives';
     #?rakudo todo 'todo'
     is %h.keys, ('c'), 'removing missing item does not change contents';
     #?rakudo todo 'todo'
@@ -486,7 +486,7 @@ sub showkv($x) {
     my %h of BagHash;
     ok %h.of.perl eq 'BagHash', 'is the hash really a BagHash';
     #?rakudo 2 todo 'in flux'
-    lives_ok { %h = bag <a b c d c b> }, 'Assigning a Bag to a BagHash';
+    lives-ok { %h = bag <a b c d c b> }, 'Assigning a Bag to a BagHash';
     is %h.keys.sort.map({ $^k ~ ':' ~ %h{$k} }).join(' '),
         'a:1 b:2 c:2 d:1', '... works as expected';
 }

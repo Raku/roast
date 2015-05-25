@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 24;
+plan 32;
 
 # L<S05/Variable (non-)interpolation/The default way in which the engine handles a scalar>
 
@@ -68,6 +68,35 @@ is 'foobar' ~~ /@( <a b c o> )+/,   'ooba', '@( <a b c o> )+';
     ok 'Rex' ~~ m:i/<$rex>/, 'can case-insensitive match against var in assertion';
 }
 
-done;
+# $i was picked here because it is an internal variable in rakudo that was
+# visible in regex interpolations in the past.
+$var = '$i';
+throws-like { EVAL '"foo" ~~ /<$var>/' }, X::Undeclared, symbol => '$i',
+    'undeclared var in assertion in interpolated string throws';
+{
+    my $i = 'f+o';
+    $var  = '$i';
+    is "foo" ~~ /<$var>/, Nil,
+        'assertions only reinterpret one level deep';
+
+    $var = '<$i>';
+    is "foo" ~~ /<$var>/, 'fo',
+        'assertion in reinterpreted assertion matches';
+}
+
+$var = 'fo+';
+is "foo" ~~ /<$var>/, 'foo', 'string with metachars in assertion matches';
+
+$var = 'fO+';
+is "foo" ~~ /:i <$var>/, 'foo', 'string with metachars in assertion matches (:i)';
+
+#?rakudo.jvm 3 skip ':ignoremark needs NFG RT #124500'
+$var = 'fö+';
+is "foo" ~~ /:m <$var>/, 'foo', 'string with metachars in assertion matches (:m)';
+
+$var = 'fÖ+';
+is "foo" ~~ /:i:m <$var>/, 'foo', 'string with metachars in assertion matches (:i:m)';
+
+is "fo+" ~~ /:i:m $var/, 'fo+', 'string with metachars matches literally (:i:m)';
 
 # vim: ft=perl6

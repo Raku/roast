@@ -43,7 +43,7 @@ sub fail_it { fail $^a }
 # L<S04/Exceptions/"The .handled method is rw">
 
     ok ! @fails[2].handled, 'fail 2 is not handled';
-    lives_ok { @fails[2].handled = 1 }, 'assign to .handled';
+    lives-ok { @fails[2].handled = 1 }, 'assign to .handled';
     ok   @fails[2].handled, 'fail 2 is now handled';
 
     is +($!.pending.grep( ! *.handled )), 1,

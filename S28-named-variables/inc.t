@@ -19,7 +19,7 @@ is(+@*INC, $number_in_inc + 1, 'we added something to @INC');
 pop @*INC;
 is(+@*INC, $number_in_inc, 'we removed something from @INC');
 
-lives_ok { @*INC = <a b c> }, 'Can assign to @*INC';
+lives-ok { @*INC = <a b c> }, 'Can assign to @*INC';
 is @*INC.join(','), 'a,b,c', '... and assignment worked';
 
 # vim: ft=perl6

@@ -5,7 +5,7 @@ plan 8;
 
 use lib '.';
 
-throws_like { EVAL 'use t::spec::S12-meta::InvalidDirective;' },
+throws-like { EVAL 'use t::spec::S12-meta::InvalidDirective;' },
     X::EXPORTHOW::InvalidDirective, directive => 'BBQ';
 
 {
@@ -15,12 +15,12 @@ throws_like { EVAL 'use t::spec::S12-meta::InvalidDirective;' },
 }
 
 class HopefullyUsual { }
-dies_ok { HopefullyUsual.^tryit() }, 'EXPORTHOW::SUPERSEDE is lexical';
+dies-ok { HopefullyUsual.^tryit() }, 'EXPORTHOW::SUPERSEDE is lexical';
 
-throws_like { EVAL 'use t::spec::S12-meta::SupersedeBad;' },
+throws-like { EVAL 'use t::spec::S12-meta::SupersedeBad;' },
     X::EXPORTHOW::NothingToSupersede, declarator => 'nobody-will-add-this-declarator';
 
-throws_like { EVAL 'use t::spec::S12-meta::Supersede1;
+throws-like { EVAL 'use t::spec::S12-meta::Supersede1;
                     use t::spec::S12-meta::Supersede2;' },
     X::EXPORTHOW::Conflict, directive => 'SUPERSEDE', declarator => 'class';
 
@@ -30,7 +30,7 @@ throws_like { EVAL 'use t::spec::S12-meta::Supersede1;
     ok Home ~~ Controller, 'Type declared with new controller declarator got Controller role added';
 }
 
-dies_ok { EVAL 'controller Fat { }' }, 'Imported declarators do not leak out of lexical scope';
+dies-ok { EVAL 'controller Fat { }' }, 'Imported declarators do not leak out of lexical scope';
 
-throws_like { EVAL 'use t::spec::S12-meta::DeclareBad;' },
+throws-like { EVAL 'use t::spec::S12-meta::DeclareBad;' },
     X::EXPORTHOW::Conflict, directive => 'DECLARE', declarator => 'class';

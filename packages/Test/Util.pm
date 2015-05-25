@@ -1,4 +1,4 @@
-module Test::Util;
+unit module Test::Util;
 
 use Test;
 

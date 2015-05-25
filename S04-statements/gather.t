@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 33;
 
 # L<S04/The C<gather> statement prefix/>
 
@@ -237,7 +237,7 @@ plan 32;
 #?rakudo skip 'RT #66820'
 {
     my $cat;
-    lives_ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a };  +@a }, 'can access bound gather result while gathering';
+    lives-ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a };  +@a }, 'can access bound gather result while gathering';
     is $cat, "11 21 2 3", 'bound gather result has up-to-date value while gathering';
 }
 
@@ -254,6 +254,15 @@ plan 32;
     }
     ok @grid[1][1] =:= @neigh[2][2][0], "Neighbor is same object as in grid";
     ok @neigh[1][1].elems == 8, "There are eight neighbors";
+}
+
+# RT #122114
+{
+    throws-like 'say (gather for 1..3 { INIT take "OH HAI"; take $_ })',
+        X::ControlFlow,
+        illegal => "take",
+        enclosing => "gather",
+        '"INIT take" inside of a "gather for" fails with X::ControlFlow';
 }
 
 # vim: ft=perl6

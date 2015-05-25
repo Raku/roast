@@ -9,7 +9,7 @@ plan 11;
         my sub g(){"g"}; my sub h(){g()}; h();
     };
     is(f(), 'g', 'can indirectly call lexical sub');
-    eval_dies_ok('g', 'lexical sub not visible outside current scope');
+    eval-dies-ok('g', 'lexical sub not visible outside current scope');
 }
 
 {
@@ -59,12 +59,12 @@ plan 11;
     package TestScope {
         sub f { };
     }
-    dies_ok { TestScope::f }, 'subs without scoping modifiers are not entered in the namespace';
+    dies-ok { TestScope::f }, 'subs without scoping modifiers are not entered in the namespace';
 }
 
 # RT #57788
 {
-    eval_dies_ok 'sub a { }; sub a { }';
+    eval-dies-ok 'sub a { }; sub a { }';
 }
 
 # vim: ft=perl6 :

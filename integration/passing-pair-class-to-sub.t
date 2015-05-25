@@ -14,7 +14,7 @@ plan 2;
     my $pair = (a => 1);
     my $Pair = $pair.WHAT;
 
-    lives_ok { foo($Pair) }, "passing ::Pair to a sub works";
+    lives-ok { foo($Pair) }, "passing ::Pair to a sub works";
 }
 
 {
@@ -23,7 +23,7 @@ plan 2;
     my $int = 42;
     my $Int = $int.WHAT;
 
-    lives_ok { foo($Int) }, "passing ::Int to a sub works";
+    lives-ok { foo($Int) }, "passing ::Int to a sub works";
 }
 
 # vim: ft=perl6

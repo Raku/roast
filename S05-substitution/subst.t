@@ -205,7 +205,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     isa-ok s/BC/@a[]/.WHAT, Match, 'Single list replacement succeeds and returns a Match';
     is($_, q{Wow I know my ZA ZBC's}, 'List replacement produces correct result');
 
-    dies_ok { 'abc' ~~ s/b/g/ },
+    dies-ok { 'abc' ~~ s/b/g/ },
             "can't modify string literal (only variables)";
 }
 
@@ -217,7 +217,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     # RT #120526
     is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
 
-    dies_ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
+    dies-ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
 }
 
 #L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
@@ -232,8 +232,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 {
-    eval_dies_ok '$_ = "a"; s:unkonwn/a/b/', 's/// dies on unknown adverb';
-    eval_dies_ok '$_ = "a"; s:overlap/a/b/', ':overlap does not make sense on s///';
+    eval-dies-ok '$_ = "a"; s:unkonwn/a/b/', 's/// dies on unknown adverb';
+    eval-dies-ok '$_ = "a"; s:overlap/a/b/', ':overlap does not make sense on s///';
 }
 
 # note that when a literal is passed to 'given', $_ is bound read-only
@@ -394,10 +394,10 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 {
     #?niecza todo "Niecza works when it shouldn't?"
-    eval_dies_ok q[ $_ = "abc"; my $i = 1; s:i($i)/a/b/ ],
+    eval-dies-ok q[ $_ = "abc"; my $i = 1; s:i($i)/a/b/ ],
         'Value of :i must be known at compile time';
     #?rakudo todo 'be smarter about constant detection'
-    eval_lives_ok q[ $_ = "abc";s:i(1)/a/b/ ],
+    eval-lives-ok q[ $_ = "abc";s:i(1)/a/b/ ],
         ':i(1) is OK';
 }
 
@@ -413,7 +413,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
         method ro($_ ) { s/c// }
     }
     
-    dies_ok { SubstInsideMethod.new.ro('ccc') }, '(sanely) dies when trying to s/// a read-only variable';
+    dies-ok { SubstInsideMethod.new.ro('ccc') }, '(sanely) dies when trying to s/// a read-only variable';
 }
 
 # RT #83552
@@ -422,7 +422,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     $_ = "foo"; s[f] = 'bar';
     is $_, "baroo", 's[f] is parsed as a substitution op';
-    throws_like q{$_ = "foo"; s[] = "bar";}, X::Syntax::Regex::NullRegex;
+    throws-like q{$_ = "foo"; s[] = "bar";}, X::Syntax::Regex::NullRegex;
 }
 
 # RT #119201
@@ -435,7 +435,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #122349
 {
-    eval_lives_ok '$_ = "a";s/a$/b/;s|b$|c|;s!c$!d!;', '$ anchor directly at the end of the search pattern works';
+    eval-lives-ok '$_ = "a";s/a$/b/;s|b$|c|;s!c$!d!;', '$ anchor directly at the end of the search pattern works';
 }
 
 # RT #123168
@@ -465,7 +465,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $_, "rreal", 's[]="" works when $_ is set';
 
     $_ = "";
-    throws_like { EVAL 's[] = "rea"' },
+    throws-like { EVAL 's[] = "rea"' },
         X::Syntax::Regex::NullRegex;
 }
 
@@ -476,7 +476,5 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     s[ea] = "rea";
     is $_, "", 'can use s[]="" when $_ is not set';
 }
-
-done;
 
 # vim: ft=perl6

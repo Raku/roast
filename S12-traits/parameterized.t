@@ -23,7 +23,7 @@ role cool {
 
 my $a = 42;
 is           $a, 42, "basic sanity (1)";
-lives_ok {$a does cool(23)},   "imperative does worked (1)";
+lives-ok {$a does cool(23)},   "imperative does worked (1)";
 is $a.cool,      23,   "attribute was set correctly (1)";
 
 my $b = 23;

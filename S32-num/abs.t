@@ -34,6 +34,4 @@ is( abs("-10"), 10, 'absolute value of "-10" is 10');
 
 is( abs(70596).WHAT.gist, 70596.abs.WHAT.gist, 'abs(x).WHAT parses as x.abs.WHAT' );
 
-done;
-
 # vim: ft=perl6

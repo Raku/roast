@@ -7,28 +7,28 @@ plan 38;
 # L<S02/Names/"The following pseudo-package names are reserved">
 #?niecza todo 'System.NullReferenceException: Object reference not set to an instance of an object'
 {
-    throws_like { EVAL 'module MY;' },
+    throws-like { EVAL 'module MY;' },
       X::PseudoPackage::InDeclaration,
       'MY is an out of scope name';
-    throws_like { EVAL 'module OUR;' },
+    throws-like { EVAL 'module OUR;' },
       X::PseudoPackage::InDeclaration,
       'OUR is an out of scope name';
-    throws_like { EVAL 'module GLOBAL;' },
+    throws-like { EVAL 'module GLOBAL;' },
       Exception,
       'GLOBAL is an out of scope name';
-    throws_like { EVAL 'module PROCESS;' },
+    throws-like { EVAL 'module PROCESS;' },
       X::PseudoPackage::InDeclaration,
       'PROCESS is an out of scope name';
-    throws_like { EVAL 'module OUTER;' },
+    throws-like { EVAL 'module OUTER;' },
       X::PseudoPackage::InDeclaration,
       'OUTER is an out of scope name';
-    throws_like { EVAL 'module CALLER;' },
+    throws-like { EVAL 'module CALLER;' },
       X::PseudoPackage::InDeclaration,
       'CALLER is an out of scope name';
-    throws_like { EVAL 'module DYNAMIC;' },
+    throws-like { EVAL 'module DYNAMIC;' },
       X::PseudoPackage::InDeclaration,
       'DYNAMIC is an out of scope name';
-    throws_like { EVAL 'module COMPILING;' },
+    throws-like { EVAL 'module COMPILING;' },
       X::PseudoPackage::InDeclaration,
       'COMPILING is an out of scope name';
 }
@@ -161,7 +161,7 @@ plan 38;
 }
 
 {
-  throws_like { EVAL q/
+  throws-like { EVAL q/
     sub s($i is copy) {
         my @array;
         for 1..3 {

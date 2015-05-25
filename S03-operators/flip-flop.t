@@ -130,11 +130,11 @@ plan 40;
         return [$lhs_run, $rhs_run];
     }
 
-    is_deeply ff_eval({@_[0]() ff @_[1]()}, /B/, /B/, <A B A B A>),
+    is-deeply ff_eval({@_[0]() ff @_[1]()}, /B/, /B/, <A B A B A>),
         [5, 2], "count lhs & rhs evals for ff";
 
     
-    is_deeply ff_eval({@_[0]() fff @_[1]()}, /B/, /B/, <A B A B A>),
+    is-deeply ff_eval({@_[0]() fff @_[1]()}, /B/, /B/, <A B A B A>),
         [3, 2], "count lhs & rhs evals for fff";
 }
 
@@ -148,7 +148,5 @@ plan 40;
     }
     is $result, 'BCB', 'smart-matching against a flip-flop works';
 }
-
-done;
 
 # vim: ft=perl6

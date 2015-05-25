@@ -28,7 +28,7 @@ is (5, 7, 8).Parcel.elems, 3, '.Parcel contains the right number of elements';
 is ?(), False, 'empty Parcel is False';
 is ?(1,2,3), True, 'non-empty Parcel is True';
 
-lives_ok { <5 7 8>[] }, 'can zen slice a Parcel';
+lives-ok { <5 7 8>[] }, 'can zen slice a Parcel';
 
 # WAS: RT #115282, modified for lolly brannch
 is $(;).elems, 0, '$(;) parses, and is empty';
@@ -81,10 +81,10 @@ is $(;).elems, 0, '$(;) parses, and is empty';
 } #13
 
 {
-    cmp_ok <a b c>, '===', <a b c>, 'a b c === a b c';
+    cmp-ok <a b c>, '===', <a b c>, 'a b c === a b c';
     ok (my $x1=42,1) !=== (42,1), '$x1 = 42,1 !==== 42,1'; # !=== not an op
     ok (my $x2=42,1) !=== (my $y=42,1), '$x2 = 42,1 !==== $y = 42,1';
-    cmp_ok (my $x3=42,1), '===', (my $y2:=$x3,1), '$x3=42,1 ==== $y2 := $x3,1';
+    cmp-ok (my $x3=42,1), '===', (my $y2:=$x3,1), '$x3=42,1 ==== $y2 := $x3,1';
 } #4
 
 {

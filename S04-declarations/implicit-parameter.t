@@ -34,8 +34,8 @@ plan 19;
 
 {
     $_ = 'Ack!';
-    dies_ok({ (-> { "Boo!" }).(42) },     '-> {} is arity 0');
-    dies_ok({ (-> { $_ }).(42) },         'Even when we use $_>');
+    dies-ok({ (-> { "Boo!" }).(42) },     '-> {} is arity 0');
+    dies-ok({ (-> { $_ }).(42) },         'Even when we use $_>');
 
     #?niecza todo
     is((-> { $_ }).(),      'Ack!',       '$_ is lexical here');
@@ -43,13 +43,13 @@ plan 19;
     is(-> $a { $_ }.(42),   'Ack!',       'Even with parameters');
     is(-> $_ { $_ }.(42),   42,           'But not when the parameter is $_');
 
-    eval_dies_ok( 'sub () { -> { $^a }.() }',  'Placeholders not allowed in ->');
+    eval-dies-ok( 'sub () { -> { $^a }.() }',  'Placeholders not allowed in ->');
 
     is(-> { }.arity, 0,                 '->{} is arity 0, again');
 }
 
 {
-    eval_dies_ok('sub () { $^foo }.(42)',  'Placeholders not allowed in sub()');
+    eval-dies-ok('sub () { $^foo }.(42)',  'Placeholders not allowed in sub()');
 }
 
 # RT #114696

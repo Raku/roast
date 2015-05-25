@@ -5,7 +5,7 @@ use Test;
 
 plan 10;
 
-eval_dies_ok ' chdir() ', 'Cannot call chdir without an argument';
+eval-dies-ok ' chdir() ', 'Cannot call chdir without an argument';
 
 ### You can use Unix style folder separator / to set folders on windows too.
 my $sep = '/';
@@ -37,7 +37,8 @@ if $no_subdir.IO ~~ :d {
     skip "subdir '$no_subdir' does exist, actually.", 2;
 }
 else {
-    lives_ok { chdir("$no_subdir") // 1 },
+    #?rakudo 2 skip 'spec non-conformance due to missing sink context'
+    lives-ok { chdir("$no_subdir") },
              'chdir to a non-existent does not by default throw an exception';
     ok !chdir("$no_subdir"),
        'change to non-existent directory gives a false value';

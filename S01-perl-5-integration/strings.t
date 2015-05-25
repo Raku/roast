@@ -2,6 +2,11 @@ use Test;
 
 plan 6;
 
+unless (try { EVAL("1", :lang<perl5>) }) {
+    skip_rest;
+    exit;
+}
+
 is(EVAL("'Yet Another Perl Hacker'",:lang<perl5>),"Yet Another Perl Hacker");
 #?rakudo todo "NativeCall strings not yet Null safe RT #124649"
 {

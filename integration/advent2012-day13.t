@@ -24,10 +24,10 @@ sub baggy(Str $s) {
 
 my %words1 := hashy($slurp1);
 my %words2 := baggy($slurp1);
-is_deeply %words1.keys.sort, %words1.keys.sort, 'standard vs baggy word-count';
-is_deeply %words1.values.sort, %words1.values.sort, 'standard vs baggy word-count';
-lives_ok {EVAL q<%words1{"the"} = "green">}, 'hash assign (lives)';
-throws_like {EVAL q<%words2{"the"} = "green">},
+is-deeply %words1.keys.sort, %words1.keys.sort, 'standard vs baggy word-count';
+is-deeply %words1.values.sort, %words1.values.sort, 'standard vs baggy word-count';
+lives-ok {EVAL q<%words1{"the"} = "green">}, 'hash assign (lives)';
+throws-like {EVAL q<%words2{"the"} = "green">},
   X::Multi::NoMatch,
   'baggy assign (dies)';
 
@@ -56,7 +56,7 @@ ok red-blue-roll( $bag ), 'weighted roll';
 
 # > say $bag.pick(*).join(" ");
 my @pick = $bag.pick(*);
-is_deeply @pick.sort, <blue blue blue blue blue blue blue blue blue blue red red>, '.pick(*)';
+is-deeply @pick.sort, <blue blue blue blue blue blue blue blue blue blue red red>, '.pick(*)';
 
 $bag = {"red" => 20000000000000000001, "blue" => 100000000000000000000}.Bag;
 
@@ -72,7 +72,7 @@ do {
     my $words2 = set $slurp2.comb(/\w+/).map(*.lc);
     my $unique = ($words1 (-) $words2);
     isa-ok $unique, Bag, 'set difference (-)';
-    is_deeply $unique.keys.sort, qw<aa bb cc zz>, 'set difference (-)';
+    is-deeply $unique.keys.sort, qw<aa bb cc zz>, 'set difference (-)';
 }
 
 my $s1 = set <A B>;
@@ -127,10 +127,10 @@ for @set-and-bag-ops {
 my $a = bag <a a a b b c>;
 my $b = bag <a b b b>;
  
-is_deeply $a (|) $b, {"a" => 3, "b" => 3, "c" => 1}.Bag, '$a (|) $b';
+is-deeply $a (|) $b, {"a" => 3, "b" => 3, "c" => 1}.Bag, '$a (|) $b';
  
-is_deeply $a (&) $b, {"a" => 1, "b" => 2}.Bag, '$a (&) $b';
+is-deeply $a (&) $b, {"a" => 1, "b" => 2}.Bag, '$a (&) $b';
  
-is_deeply $a (+) $b, {"a" => 4, "b" => 5, "c" => 1}.Bag, '$a (+) $b';
+is-deeply $a (+) $b, {"a" => 4, "b" => 5, "c" => 1}.Bag, '$a (+) $b';
  
-is_deeply $a (.) $b, {"a" => 3, "b" => 6}.Bag, '$a (.) $b';
+is-deeply $a (.) $b, {"a" => 3, "b" => 6}.Bag, '$a (.) $b';

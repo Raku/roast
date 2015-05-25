@@ -62,8 +62,8 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
     isa-ok @a.roll, Int, "rolling a single element from an array of Ints produces an Int";
     ok @a.roll ~~ 1..100, "rolling a single element from an array of Ints produces one of them";
 
-    isa-ok @a.roll(1), Int, "rolling 1 from an array of Ints produces an Int";
-    ok @a.roll(1) ~~ 1..100, "rolling 1 from an array of Ints produces one of them";
+    isa-ok @a.roll(1), List, "rolling 1 from an array of Ints produces a List";
+    ok @a.roll(1)[0] ~~ 1..100, "rolling 1 from an array of Ints produces one of them";
 
     my @c = @a.roll(2);
     isa-ok @c[0], Int, "rolling 2 from an array of Ints produces an Int...";

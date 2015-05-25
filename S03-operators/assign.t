@@ -25,8 +25,8 @@ plan 296;
     &infix:<=>.($x, 0);
     is($x, 0, 'assignment operator called as function');
     my Int $y;
-    lives_ok { &infix:<=>($y, 3) }, 'assignment as function with types (1)';
-    dies_ok  { &infix:<=>($y, 'foo') }, 'assignment as function with types (2)';
+    lives-ok { &infix:<=>($y, 3) }, 'assignment as function with types (1)';
+    dies-ok  { &infix:<=>($y, 'foo') }, 'assignment as function with types (2)';
 
 }
 
@@ -375,7 +375,7 @@ my @p;
 
 # RT #64818
 {
-    eval_dies_ok q{my $foo = 'foo'; $foo R~= 'foo';},
+    eval-dies-ok q{my $foo = 'foo'; $foo R~= 'foo';},
                  'use of R~= operator on a non-container dies';
     my ($x, $y) = <a b>; $x R~= $y;
     is("$x $y", "a ba", "R~= operator works");
@@ -532,7 +532,7 @@ my @p;
 }
 
 # XXX: The following tests assume autoconvertion between "a" and buf8 type
-#?rakudo skip "Two terms in a row RT #124531"
+#?rakudo 2 skip "~< and ~> NYI RT #124531"
 #?niecza skip "Buffer bitops NYI"
 {
     my $x = "a";
@@ -542,7 +542,6 @@ my @p;
     is(@p[1],9, "~<= operator parses as item assignment 2");
 }
 
-#?rakudo skip "expects a term, found infix >= instead RT #124532"
 #?niecza skip "Buffer bitops NYI"
 {
     my $x = "aa";
@@ -851,7 +850,7 @@ sub l () { 1, 2 };
 # RT #75950
 {
     my $x;
-    lives_ok { ($x,) = grep 5, 1..1_000_000 },
+    lives-ok { ($x,) = grep 5, 1..1_000_000 },
             'Can grep lazily through a very long range';
     is $x, 5, '... with correct result';
 }
@@ -887,7 +886,7 @@ sub l () { 1, 2 };
         $cc = 1;
     };
 
-    dies_ok { called pi = 4 },
+    throws-like { EVAL 'called pi = 4' }, X::Assignment::RO,
         'correct precedence between sub call and assignment (1)';
     is $cc, 0,
         'correct precedence between sub call and assignment (2)';
@@ -950,17 +949,16 @@ sub l () { 1, 2 };
 
 # RT #72874
 {
-    throws_like { EVAL "6 >== 2" }, X::Syntax::CannotMeta,
+    throws-like { EVAL "6 >== 2" }, X::Syntax::CannotMeta,
         "Can't use diffy >= with the = metaop ";
 }
 
 {
-    throws_like { EVAL "6 ~~= 2" }, X::Syntax::CannotMeta,
+    throws-like { EVAL "6 ~~= 2" }, X::Syntax::CannotMeta,
         "Can't use fiddly ~~ with the = metaop ";
 }
 
 # RT #116178
-#?rakudo skip 'RT #116178'
 {
     my $x //= .uc for 'a';
     is $x, 'A',

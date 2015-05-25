@@ -28,7 +28,7 @@ is($t3.x, 42,        'anonymous classes can have attributes');
 
 {
     my $class;
-    lives_ok { $class = class { method meth() { return 42 } }} ,
+    lives-ok { $class = class { method meth() { return 42 } }} ,
     "anonymous class creation";
 
     my $a;
@@ -61,8 +61,8 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     my $i1;
     my $i2;
 
-    lives_ok { $i1 = rt64888() }, 'can get anonymous class instance once';
-    lives_ok { $i2 = rt64888() }, 'can get anonymous class instance twice';
+    lives-ok { $i1 = rt64888() }, 'can get anonymous class instance once';
+    lives-ok { $i2 = rt64888() }, 'can get anonymous class instance twice';
 
     #?niecza todo
     is ~$i1, 'RT #64888', 'anonymous class stringified works';
@@ -70,6 +70,6 @@ is($t3.x, 42,        'anonymous classes can have attributes');
 }
 
 # RT #80024
-eval_dies_ok q[anon class C { }; C.WHAT; ], 'anon class is actually anon';
+eval-dies-ok q[anon class C { }; C.WHAT; ], 'anon class is actually anon';
 
 # vim: ft=perl6

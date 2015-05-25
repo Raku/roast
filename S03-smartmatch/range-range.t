@@ -26,6 +26,4 @@ plan 14;
     ok  (2^..^3 ~~ 2^..^3), 'exclusive vs exclusive both ends';
 }
 
-done;
-
 # vim: ft=perl6

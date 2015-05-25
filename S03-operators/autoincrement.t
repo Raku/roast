@@ -192,7 +192,7 @@ is(%z{0},           $base, '%z{0}');
 }
 
 # RT #63644
-eval_dies_ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
+eval-dies-ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
 
 # RT #99731
 {

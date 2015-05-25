@@ -14,7 +14,7 @@ plan 12;
 
     is m1("foo"), 1,       "literal Str in signature matches value correctly";
     is m1("bar"), 2,       "literal Str in signature matches value correctly";
-    dies_ok { m1("baz") }, "dies if no matching value even if type matches";
+    dies-ok { m1("baz") }, "dies if no matching value even if type matches";
 }
 
 # More complex case. Here we check that the multis get the right narrowness,
@@ -53,7 +53,7 @@ plan 12;
     sub f(True) { 'a' }
     is f(True), 'a', 'can call a sub f(True)  with True as argument';
     is f(False), 'a', 'works with False too, since False ~~ True';
-    dies_ok { EVAL 'f(1)' }, 'type constraint is still Bool';
+    dies-ok { EVAL 'f(1)' }, 'type constraint is still Bool';
 }
 
 # vim: ft=perl6

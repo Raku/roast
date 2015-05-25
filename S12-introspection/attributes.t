@@ -67,7 +67,7 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     my $attr = $x.^attributes(:local).[0];
     isa-ok $attr, Attribute;
     is $attr.get_value($x), 'abc', '.get_value works';
-    lives_ok { $attr.set_value($x, 'new') }, 'can set_value';
+    lives-ok { $attr.set_value($x, 'new') }, 'can set_value';
     is $x.a, 'new', 'set_value worked';
 
 }

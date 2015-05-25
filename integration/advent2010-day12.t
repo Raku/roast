@@ -4,8 +4,8 @@ use Test;
 
 plan 13;
 
-is_deeply [1, 2, 4 ... 32], [1, 2, 4, 8, 16, 32], 'sequence';
-is_deeply [1, 2, 4 ... * > 10], [1, 2, 4, 8, 16], 'sequence';
+is-deeply [1, 2, 4 ... 32], [1, 2, 4, 8, 16, 32], 'sequence';
+is-deeply [1, 2, 4 ... * > 10], [1, 2, 4, 8, 16], 'sequence';
 
 my @results;
 for 17, 50, 100 -> $age {
@@ -17,7 +17,7 @@ for 17, 50, 100 -> $age {
    @results.push: $result;
 }
 
-is_deeply @results, ["You're not of age yet", '', "congratulations!"], 'given/when'; 
+is-deeply @results, ["You're not of age yet", '', "congratulations!"], 'given/when'; 
 
 sub smart-match-medley($foo) {
     [
@@ -44,14 +44,14 @@ sub smart-match-medley($foo) {
     ]
 }
 
-is_deeply smart-match-medley("6"), [str => True, six => True, bar => False, match => False, '15..25' => False, closure => True, arr => False];
-is_deeply smart-match-medley(6), [str => False, six => True, bar => False, match => False, '15..25' => False, closure => True, arr => False];
-is_deeply smart-match-medley(3), [str => False, six => False, bar => False, match => False, '15..25' => False, closure => False, arr => False];
-is_deeply smart-match-medley(9), [str => False, six => False, bar => False, match => False, '15..25' => False, closure => True, arr => False];
-is_deeply smart-match-medley('bar'), [str => True, six => False, bar => True, match => False, '15..25' => False, closure => False, arr => False];
-is_deeply smart-match-medley('bar-42'), [str => True, six => False, bar => False, match => True, '15..25' => False, closure => False, arr => False];
-is_deeply smart-match-medley([1,10, 1,20, 1,30]), [str => False, six => True, bar => False, match => False, '15..25' => False, closure => True, arr => True];
-is_deeply smart-match-medley([1,10, 1,20, 2,30]), [str => False, six => True, bar => False, match => False, '15..25' => False, closure => True, arr => False];
+is-deeply smart-match-medley("6"), [str => True, six => True, bar => False, match => False, '15..25' => False, closure => True, arr => False];
+is-deeply smart-match-medley(6), [str => False, six => True, bar => False, match => False, '15..25' => False, closure => True, arr => False];
+is-deeply smart-match-medley(3), [str => False, six => False, bar => False, match => False, '15..25' => False, closure => False, arr => False];
+is-deeply smart-match-medley(9), [str => False, six => False, bar => False, match => False, '15..25' => False, closure => True, arr => False];
+is-deeply smart-match-medley('bar'), [str => True, six => False, bar => True, match => False, '15..25' => False, closure => False, arr => False];
+is-deeply smart-match-medley('bar-42'), [str => True, six => False, bar => False, match => True, '15..25' => False, closure => False, arr => False];
+is-deeply smart-match-medley([1,10, 1,20, 1,30]), [str => False, six => True, bar => False, match => False, '15..25' => False, closure => True, arr => True];
+is-deeply smart-match-medley([1,10, 1,20, 2,30]), [str => False, six => True, bar => False, match => False, '15..25' => False, closure => True, arr => False];
 
 class Point {
     has $.x;
@@ -62,5 +62,5 @@ class Point {
 }
 
 my $a = Point.new(x => 7, y => 9);
-is_deeply ([3, 5] ~~ $a), Bool::False, 'accepts';
-is_deeply ((7, 9) ~~ $a), Bool::True, 'accepts';
+is-deeply ([3, 5] ~~ $a), Bool::False, 'accepts';
+is-deeply ((7, 9) ~~ $a), Bool::True, 'accepts';

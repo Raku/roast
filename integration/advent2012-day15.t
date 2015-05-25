@@ -13,20 +13,20 @@ class C {
 	LEAVE $in_prompt = False;
 
 	# Lots of stuff here
-	is_deeply $in_prompt, True, 'ENTER phaser';
+	is-deeply $in_prompt, True, 'ENTER phaser';
     }
 }
 
-is_deeply $in_prompt, Any, 'pre ENTER/LEAVE';
+is-deeply $in_prompt, Any, 'pre ENTER/LEAVE';
 
 C.issue_prompt(42, 'foo');
-is_deeply $in_prompt, False, 'LEAVE phaser';
+is-deeply $in_prompt, False, 'LEAVE phaser';
 
 sub Open($file, :$w) {
     plan 11;
     nok $run-time, "INIT sub call";
     is $file, 'logfile', 'INIT sub arg';
-    is_deeply $w, True, 'INIT sub arg';
+    is-deeply $w, True, 'INIT sub arg';
     return 42;
 }
 
@@ -91,7 +91,7 @@ for <yay yippe sinbad good baddie> {
     process($_)
 }
 
-is_deeply @success, [qw<yay yippe good>], 'KEEP';
-is_deeply @failure, [qw<sinbad baddie>], 'UNDO';
+is-deeply @success, [qw<yay yippe good>], 'KEEP';
+is-deeply @failure, [qw<sinbad baddie>], 'UNDO';
 
 # vim: ft=perl6

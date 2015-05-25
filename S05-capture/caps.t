@@ -70,11 +70,9 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
     is ca($/.caps),     'alpha:a',  '.caps && - last term';
 
     ok 'a' ~~ m/<alpha> & <ident>/,  'Regex matches';
-#?rakudo.jvm todo '& caps on jvm RT #125001'
     is ca($/.caps.sort(*.key)),     'alpha:a|ident:a',  '.caps & - multiple terms';
 
     ok 'a' ~~ m/<alpha> && <ident>/,  'Regex matches';
-#?rakudo.jvm todo '&& caps on jvm RT #125002'
     is ca($/.caps.sort(*.key)),     'alpha:a|ident:a',  '.caps && - multiple terms';
 
     ok 'ab' ~~ m/([a|b] && <alpha>)**1..2/,  'Regex matches';
@@ -84,7 +82,5 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
 #?rakudo todo 'RT #117955 - quantified conjunctive capture'
     is ca($/.caps),     'alpha:a|alpha:b',    '.caps on quantified &&';
 }
-
-done;
 
 # vim: ft=perl6

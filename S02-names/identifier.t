@@ -14,19 +14,19 @@ plan 22;
     my $a'b'c = 'foo';
     is $a'b'c, 'foo', "\$a'b'c is a valid variable name";
 
-    throws_like { EVAL q[sub foo-($x) { ... }] },
+    throws-like { EVAL q[sub foo-($x) { ... }] },
       X::Syntax::Missing,
       'foo- (trailing hyphen) is not an identifier';
-    throws_like { EVAL q[sub foo'($x) { ... }] },
+    throws-like { EVAL q[sub foo'($x) { ... }] },
       X::Syntax::Missing,
       "foo' (trailing apostrophe) is not an identifier";
-    throws_like { EVAL q[sub foob'4($x) { ... }] },
+    throws-like { EVAL q[sub foob'4($x) { ... }] },
       X::Syntax::Missing,
       "foob'4 is not a valid identifier (not alphabetic after apostrophe)";
-    throws_like { EVAL q[sub foob-4($x) { ... }] },
+    throws-like { EVAL q[sub foob-4($x) { ... }] },
       X::Syntax::Missing,
       "foob-4 is not a valid identifier (not alphabetic after hyphen)";
-    lives_ok { EVAL q[sub foo4'b($x) { ... }] },
+    lives-ok { EVAL q[sub foo4'b($x) { ... }] },
       "foo4'b is a valid identifier";
 }
 
@@ -112,10 +112,8 @@ plan 22;
         'can call subroutines whos name begin with an alphabetic infix (and)';
 
     # RT #75710
-    eval_lives_ok q{our sub xyz($abc) { $abc }; xyz(1);},
+    eval-lives-ok q{our sub xyz($abc) { $abc }; xyz(1);},
         'can call subroutine which starts with infix x';
 }
-
-done;
 
 # vim: ft=perl6

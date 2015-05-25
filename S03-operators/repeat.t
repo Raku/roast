@@ -28,7 +28,7 @@ is(@foo[0], 'x', 'list repeat operator created correct array');
 is(@foo[9], 'x', 'list repeat operator created correct array');
 is(+@foo, 10, 'list repeat operator created array of the right size');
 
-lives_ok { my @foo2 = Mu xx 2; }, 'can repeat Mu';
+lives-ok { my @foo2 = Mu xx 2; }, 'can repeat Mu';
 my @foo3 = (1, 2) xx 2;
 is(@foo3[0], 1, 'can repeat lists');
 is(@foo3[1], 2, 'can repeat lists');

@@ -3,16 +3,16 @@ use Test;
 
 plan 29;
 
-eval_dies_ok('qr/foo/', 'qr// is gone');
+eval-dies-ok('qr/foo/', 'qr// is gone');
 
 isa-ok(rx/oo/, Regex);
 isa-ok(rx (o), Regex);
-eval_dies_ok('rx(o)', 'rx () whitespace if the delims are parens');
+eval-dies-ok('rx(o)', 'rx () whitespace if the delims are parens');
 isa-ok(regex {oo}, Regex);
 
-eval_dies_ok('rx :foo:', 'colons are not allowed as rx delimiters');
+eval-dies-ok('rx :foo:', 'colons are not allowed as rx delimiters');
 
-lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
+lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 
 {
     my $var = /foo/;
@@ -51,8 +51,8 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 # we'll just check that this syntax is valid for now
 #?niecza todo 'invalid syntax'
 {
-    eval_lives_ok('token foo {bar}', 'token foo {...} is valid');
-    eval_lives_ok('regex baz {qux}', 'regex foo {...} is valid');
+    eval-lives-ok('token foo {bar}', 'token foo {...} is valid');
+    eval-lives-ok('regex baz {qux}', 'regex foo {...} is valid');
 }
 
 {
@@ -68,12 +68,12 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 
 ok Any !~~ / 'RT #67234' /, 'match against undefined does not match';
 
-eval_dies_ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
+eval-dies-ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
 
 # L<S05/Simplified lexical parsing of patterns/The semicolon character>
 
-eval_dies_ok 'rx/;/',       'bare ";" in rx is not allowed';
-eval_dies_ok q{';' ~~ /;/}, 'bare ";" in match is not allowed';
+eval-dies-ok 'rx/;/',       'bare ";" in rx is not allowed';
+eval-dies-ok q{';' ~~ /;/}, 'bare ";" in match is not allowed';
 isa-ok rx/\;/, Regex,       'escaped ";" in rx// works';
 ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
@@ -86,7 +86,7 @@ ok ';' ~~ /\;/,             'escaped ";" in m// works';
 }
 
 #?niecza todo 'invalid syntax'
-eval_lives_ok '/<[..b]>/', '/<[..b]>/ lives';
+eval-lives-ok '/<[..b]>/', '/<[..b]>/ lives';
 
 # RT #118985
 {

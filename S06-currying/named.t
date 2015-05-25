@@ -8,11 +8,13 @@ sub tester(:$a, :$b, :$c) {
     "a$a b$b c$c";
 }
 
+#?rakudo.jvm skip 'probably optimizer bug RT #125207'
 {
     my $w = &tester.assuming(b => 'x');
     is $w(a => 'w', c => 'y'), 'aw bx cy', 'currying one named param';
 }
 
+#?rakudo.jvm skip 'probably optimizer bug RT #125207'
 {
     my $w = &tester.assuming(b => 'b');
     my $v =  $w.assuming(c => 'c');
@@ -21,7 +23,7 @@ sub tester(:$a, :$b, :$c) {
 }
 
 #?rakudo.moar todo 'RT 123498'
-dies_ok { sub {}.assuming(named => True)() },
+dies-ok { sub {}.assuming(named => True)() },
     'cannot assume unknown named params';
 
 # vim: ft=perl6

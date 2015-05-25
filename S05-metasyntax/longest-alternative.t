@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 48;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -419,8 +419,22 @@ my $str = 'a' x 7;
         }
     }
 
-    lives_ok { WithHugeToken.parse('a' x 10000) },
+    lives-ok { WithHugeToken.parse('a' x 10000) },
         'token with huge number of alternations does not explode when used many times';
+}
+
+# LTM and ignorecase/ignoremark
+{
+    my $str = 'äaÄAÁbbBB';
+    ok $str ~~ m:i/b+|bb/, 'alternation with :i matches';
+    is ~$/, 'bbBB', 'got longest alternative with :i';
+
+    #?rakudo.jvm 4 skip ':ignoremark needs NFG RT #124500'
+    ok $str ~~ m:m/ä|bb|a+/, 'alternation with :m matches';
+    is ~$/, 'äa', 'got longest alternative with :m';
+
+    ok $str ~~ m:i:m/b+|bb|a+|äa/, 'alternation with :i:m matches';
+    is ~$/, 'äaÄAÁ', 'got longest alternative with :i:m';
 }
 
 # vim: ft=perl6 et

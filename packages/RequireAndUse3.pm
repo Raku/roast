@@ -5,6 +5,6 @@ use v6;
 # started by Ingo Blechschmidt,
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22258">.
 
-module t::spec::packages::RequireAndUse3;
+unit module t::spec::packages::RequireAndUse3;
 
 23;

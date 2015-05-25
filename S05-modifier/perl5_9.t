@@ -96,12 +96,16 @@ is(("foobarbar" ~~ rx:P5/^(?:f|o|b){3,4}(.+?)\1\z/ && $0), "bar", 're_tests 1340
 is(("foobarbar" ~~ rx:P5/^.{3,4}((?:b|a|r)+?)\1\z/ && $0), "bar", 're_tests 1342/1 (1560)');
 is(("foobarbar" ~~ rx:P5/^(?:f|o|b){3,4}((?:b|a|r)+?)\1\z/ && $0), "bar", 're_tests 1344/1 (1562)');
 is(("foobarbar" ~~ rx:P5/^.{2,3}?(.+)\1\z/ && $0), "bar", 're_tests 1346/1 (1564)');
+#?rakudo.jvm todo 'gives Nil instead of "bar"'
 is(("foobarbar" ~~ rx:P5/^(?:f|o|b){2,3}?(.+)\1\z/ && $0), "bar", 're_tests 1348/1 (1566)');
 is(("foobarbar" ~~ rx:P5/^.{2,3}?((?:b|a|r)+)\1\z/ && $0), "bar", 're_tests 1350/1 (1568)');
+#?rakudo.jvm todo 'gives Nil instead of "bar"'
 is(("foobarbar" ~~ rx:P5/^(?:f|o|b){2,3}?((?:b|a|r)+)\1\z/ && $0), "bar", 're_tests 1352/1 (1570)');
 is(("foobarbar" ~~ rx:P5/^.{2,3}?(.+?)\1\z/ && $0), "bar", 're_tests 1354/1 (1572)');
+#?rakudo.jvm todo 'gives Nil instead of "bar"'
 is(("foobarbar" ~~ rx:P5/^(?:f|o|b){2,3}?(.+?)\1\z/ && $0), "bar", 're_tests 1356/1 (1574)');
 is(("foobarbar" ~~ rx:P5/^.{2,3}?((?:b|a|r)+?)\1\z/ && $0), "bar", 're_tests 1358/1 (1576)');
+#?rakudo.jvm todo 'gives Nil instead of "bar"'
 is(("foobarbar" ~~ rx:P5/^(?:f|o|b){2,3}?((?:b|a|r)+?)\1\z/ && $0), "bar", 're_tests 1360/1 (1578)');
 ok((not ("......abef" ~~ rx:P5/.*a(?!(b|cd)*e).*f/)), 're_tests 1362  (1580)');
 

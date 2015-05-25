@@ -34,16 +34,15 @@ class Bar is Foo {
 {
     my @o = (5..10).map({Foo.new(count => $_)});
     is(@o.map({.count}), (5..10), 'object sanity test');
-    lives_ok({@o».?not_here},  'parallel dispatch using @o».?not_here lives');
-    lives_ok({@o>>.?not_here}, 'parallel dispatch using @o>>.?not_here lives');
-    dies_ok({@o».not_here},    'parallel dispatch using @o».not_here dies');
-    dies_ok({@o>>.not_here},   'parallel dispatch using @o>>.not_here dies');
+    lives-ok({@o».?not_here},  'parallel dispatch using @o».?not_here lives');
+    lives-ok({@o>>.?not_here}, 'parallel dispatch using @o>>.?not_here lives');
+    dies-ok({@o».not_here},    'parallel dispatch using @o».not_here dies');
+    dies-ok({@o>>.not_here},   'parallel dispatch using @o>>.not_here dies');
 
     @o».?doit;
     is(@o.map({.count}), (6..11), 'parallel dispatch using @o».?doit works');
     @o>>.?doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o>>.?doit works');
-    #?rakudo todo 'is_deeply does not think map results are the same as list on LHS'
     #?niecza skip "=== Nil NYI"
     is (@o».?not_here).map({ $_ === Nil }).join(", "), @o.map({ True }).join(", "),
        '$obj».?nonexistingmethod returns a list of Nil';
@@ -55,10 +54,10 @@ class Bar is Foo {
 {
     my @o = (5..10).map({Bar.new(count => $_)});
     is(@o.map({.count}), (5..10), 'object sanity test');
-    lives_ok({@o».*not_here},  'parallel dispatch using @o».*not_here lives');
-    lives_ok({@o>>.*not_here}, 'parallel dispatch using @o>>.*not_here lives');
-    dies_ok({@o».+not_here},   'parallel dispatch using @o».+not_here dies');
-    dies_ok({@o>>.+not_here},  'parallel dispatch using @o>>.+not_here dies');
+    lives-ok({@o».*not_here},  'parallel dispatch using @o».*not_here lives');
+    lives-ok({@o>>.*not_here}, 'parallel dispatch using @o>>.*not_here lives');
+    dies-ok({@o».+not_here},   'parallel dispatch using @o».+not_here dies');
+    dies-ok({@o>>.+not_here},  'parallel dispatch using @o>>.+not_here dies');
 
     @o».*doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o».*doit works');
@@ -101,22 +100,22 @@ class Bar is Foo {
     is (@a».?mul(3)).join(", "), (3, 6, 9).join(", "), 'return value of @a».?method(@args)';
     is (@a».?"$method"(3)).join(", "), (3, 6, 9).join(", "), '... indirect';
 
-    #?rakudo 4 todo 'is_deeply does not think map results are the same as list on LHS'
+    #?rakudo 4 todo 'is-deeply does not think map results are the same as list on LHS'
     #?niecza 4 skip 'NYI dottyop form'
-    is_deeply @a».+mul(2), ([2, 4], [4, 8], [6, 12]),
+    is-deeply @a».+mul(2), ([2, 4], [4, 8], [6, 12]),
               'return value of @a».+method is a list of lists';
-    is_deeply @a».+"$method"(2), ([2, 4], [4, 8], [6, 12]),
+    is-deeply @a».+"$method"(2), ([2, 4], [4, 8], [6, 12]),
               '... indirect';
 
-    is_deeply @a».*mul(2), ([2, 4], [4, 8], [6, 12]),
+    is-deeply @a».*mul(2), ([2, 4], [4, 8], [6, 12]),
               'return value of @a».*method is a list of lists';
-    is_deeply @a».*"$method"(2), ([2, 4], [4, 8], [6, 12]),
+    is-deeply @a».*"$method"(2), ([2, 4], [4, 8], [6, 12]),
               '... indirect';
 }
 
 # test postcircumfix parallel dispatch
 #?niecza skip 'Cannot use hash access on an object of type Pair'
-#?rakudo skip 'No such method postcircumfix:<( )> for invocant of type Pair RT #124849'
+#?rakudo skip 'No such method postcircumfix:<( )> for invocant of type Pair RT #124513'
 {
     is (a => 1, a => 2)>>.<a>, '1 2',   # METHOD TO SUB CASUALTY
         '>>.<a>';

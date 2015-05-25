@@ -45,12 +45,12 @@ is_run 'use v6; warn; say "alive"',
     },
     'warn() without arguments';
 
-#?rakudo todo 'nom regression RT #124767'
+# RT #124767
 is_run 'use v6; warn("OH NOEZ"); say "alive"',
     {
         status => 0,
         out => rx/alive/,
-        err => rx/ 'OH NOEZ'/ & rx/:i 'line 1'>>/,
+        err => rx/ 'OH NOEZ'/ & rx/:i \W '1'>>/,
     },
     'warn() with arguments; line number';
 

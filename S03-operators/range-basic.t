@@ -116,10 +116,10 @@ plan 140;
 #?niecza skip "No exceptions"
 #?DOES 8
 {
-    throws_like '10 .. ^20', X::Range::InvalidArg ;
-    throws_like '^10 .. 20', X::Range::InvalidArg ;
-    throws_like '* .. ^20',  X::Range::InvalidArg ;
-    throws_like '^10 .. *',  X::Range::InvalidArg ;
+    throws-like '10 .. ^20', X::Range::InvalidArg ;
+    throws-like '^10 .. 20', X::Range::InvalidArg ;
+    throws-like '* .. ^20',  X::Range::InvalidArg ;
+    throws-like '^10 .. *',  X::Range::InvalidArg ;
 }
 
 ok 3 ~~ 1..5,         '3 ~~ 1..5';
@@ -211,7 +211,5 @@ nok 'd' ~~ *..'c',      "not 'd' ~~ *..'c'";
     ok ' ' ~~ ' '..' ', "' ' ~~ ' '..' '";
     ok ' ' ~~ ' '..'A', "' ' ~~ ' '..'A'";
 }
-
-done;
 
 # vim: ft=perl6

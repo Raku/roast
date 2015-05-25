@@ -21,7 +21,7 @@ plan 8;
 
 {
     my $l = Lock.new;
-    dies_ok { $l.protect({ die "oops" }) }, "code that dies under lock throws";
+    dies-ok { $l.protect({ die "oops" }) }, "code that dies under lock throws";
     $l.protect({
         pass "Code that dies in run does release the lock";
     });

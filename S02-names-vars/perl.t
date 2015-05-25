@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 99;
+plan 103;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
 my @tests = (
@@ -140,16 +140,16 @@ my @tests = (
 # RT #64080
 {
     my %h;
-    lives_ok { %h<a> = [%h<a>] },
+    lives-ok { %h<a> = [%h<a>] },
              'can assign list with new hash element to itself';
-    lives_ok { %h<a>.perl }, 'can take .perl from hash element';
+    lives-ok { %h<a>.perl }, 'can take .perl from hash element';
     ok %h<a> !=== %h<a>[0], 'hoa does not refer to hash element';
 }
 
 # RT #67790
 {
     class RT67790 {}
-    lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
+    lives-ok { RT67790.HOW.perl }, 'can .perl on .HOW';
     #?rakudo skip 'RT #67790'
     #?niecza skip '>>>Stub code executed'
     ok EVAL(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
@@ -179,6 +179,18 @@ my @tests = (
 {
     my Blob $a = "asdf".encode();
     is EVAL($a.perl).decode("utf8"), "asdf";
+}
+
+{
+    my $ch;
+    lives-ok { $ch = EVAL 100.chr.perl }, '100.chr.perl - lives';
+    is $ch, 100.chr, ".perl on latin character";
+    $ch = '';
+
+#?rakudo.moar 2 todo 'RT #125110'
+
+    lives-ok { $ch = EVAL 780.chr.perl }, '780.chr.perl - lives';
+    is $ch, 780.chr, ".perl on composing character";
 }
 
 # vim: ft=perl6

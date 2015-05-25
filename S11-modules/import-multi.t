@@ -14,8 +14,8 @@ plan 17;
     import A;
 
     is Afoo( 7 ), 'sub A::Afoo Int', 'A) merge multis without protos';
-    dies_ok { EVAL 'Abar( 7 )' },    "A) doesn't import non-exported multis";
-    dies_ok { EVAL 'Afoo( "a" )' },  "A) doesn't dispatch to wrong signature";
+    dies-ok { EVAL 'Abar( 7 )' },    "A) doesn't import non-exported multis";
+    dies-ok { EVAL 'Afoo( "a" )' },  "A) doesn't dispatch to wrong signature";
 }
 
 # with proto in module
@@ -49,7 +49,7 @@ plan 17;
     }
     import D;
     #?rakudo todo "huh?"
-    throws_like 'proto sub Dfoo( Mu ) { * }', X::Redeclaration, symbol => 'Dfoo';
+    throws-like 'proto sub Dfoo( Mu ) { * }', X::Redeclaration, symbol => 'Dfoo';
 
     multi sub Dfoo( Str $a ) { 'sub D::Dfoo Str' };
 
@@ -78,8 +78,8 @@ plan 17;
         multi sub Ffoo( Int $a ) is export { 'sub F::Ffoo Int' };
     }
     import F;
-    #?rakudo todo "it just dies, can't check using throws_like"
-    throws_like 'proto sub Ffoo( Mu ) { * }', X::Redeclaration, symbol => 'Ffoo';
+    #?rakudo todo "it just dies, can't check using throws-like"
+    throws-like 'proto sub Ffoo( Mu ) { * }', X::Redeclaration, symbol => 'Ffoo';
     multi sub Ffoo( Str $a ) { 'sub F::Ffoo Str' };
 
     is Ffoo( 7 ),   'sub F::Ffoo Int', 'F) merge multis with proto after import and in module';
@@ -116,7 +116,5 @@ plan 17;
     ok &Hfoo ~~ Awesome-Things, 'H) trait "is awesome" applied';
     is Hfoo(), 'sub H::Hfoo',   'H) standard traits like "is export" still work';
 }
-
-done;
 
 # vim: ft=perl6

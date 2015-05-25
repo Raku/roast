@@ -52,6 +52,3 @@ vtest Order::More, @sorted.reverse;
 
 # RT #116016
 is v12.3.4 cmp Version.new("12.3.4"), Order::Same, 'can parse literal versions where major version is more than one digit';
-
-done;
-

@@ -60,9 +60,9 @@ sub ia($got, $expected, $descr =  "$got is approximately $expected") {
     isa-ok(Vector.new(1, 2, 3), Vector, "Vector.new produces a Vector object");
     my @a1 = (3, -3/2, 5.4);
     isa-ok(Vector.new(@a1), Vector, "Vector.new produces a Vector object");
-    dies_ok({ Vector.new(1, 2, 3, 4) }, "Vector.new requires 3 parameters");
+    dies-ok({ Vector.new(1, 2, 3, 4) }, "Vector.new requires 3 parameters");
     my @a2 = (-3/2, 5.4);
-    dies_ok({ Vector.new(@a2) }, "Vector.new requires an array with 3 members");
+    dies-ok({ Vector.new(@a2) }, "Vector.new requires an array with 3 members");
 
     my Vector $v1 = Vector.new(@a1);
     is($v1.coords[0], @a1[0], 'Constructor correctly assigns @coords[0]');

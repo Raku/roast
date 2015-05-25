@@ -261,14 +261,14 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   my $pair        = ($key => $val);
 
   #?rakudo.jvm    todo "?"
-  throws_like { $pair.key = "KEY" },
+  throws-like { $pair.key = "KEY" },
     X::Assignment::RO,
     "setting .key dies";
   is $pair.key,         "key",   "attempt to set .key doesn't change the key";
   #?niecza todo "setting .key changes original val!"
   is $key,              "key",   "attempt to set .key does not change the original var either";
 
-  lives_ok { $pair.value = "VAL" }, "setting .value does not die";
+  lives-ok { $pair.value = "VAL" }, "setting .value does not die";
   is $pair.value,          "VAL",   "setting .value actually changes the value";
   #?niecza todo "setting .key changes original val!"
   is $val,                 "val",   "setting .value does not change the original var";
@@ -301,17 +301,17 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
 # RT #67218
 {
-    eval_lives_ok ':a()',    'can parse ":a()"';
-    lives_ok     {; :a() }, 'can execute ":a()"';
+    eval-lives-ok ':a()',    'can parse ":a()"';
+    lives-ok     {; :a() }, 'can execute ":a()"';
 
-    eval_lives_ok ':a[]',    'can parse ":a[]"';
-    lives_ok     {; :a[] }, 'can execute ":a[]"';
+    eval-lives-ok ':a[]',    'can parse ":a[]"';
+    lives-ok     {; :a[] }, 'can execute ":a[]"';
 
-    eval_lives_ok '(a => ())',    'can parse "(a => ())"';
-    lives_ok     { (a => ()) }, 'can execute "(a => ())"';
+    eval-lives-ok '(a => ())',    'can parse "(a => ())"';
+    lives-ok     { (a => ()) }, 'can execute "(a => ())"';
 
-    eval_lives_ok '(a => [])',    'can parse "(a => [])"';
-    lives_ok     { (a => []) }, 'can execute "(a => [])"';
+    eval-lives-ok '(a => [])',    'can parse "(a => [])"';
+    lives-ok     { (a => []) }, 'can execute "(a => [])"';
 }
 
 {
@@ -339,9 +339,9 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 # RT #123215
 #?rakudo.jvm todo 'RT #123215'
 {
-    cmp_ok (:a(2) :b(3) :c(4)), "eqv", ( a => 2, b => 3, c => 4 ),
+    cmp-ok (:a(2) :b(3) :c(4)), "eqv", ( a => 2, b => 3, c => 4 ),
         "chained colonpairs in parens build a list of pairs";
-    cmp_ok {:a(2) :b(3) :c(4)}<a b c>, "eqv", ( 2, 3, 4 ),
+    cmp-ok {:a(2) :b(3) :c(4)}<a b c>, "eqv", ( 2, 3, 4 ),
         "chained colonpairs in curlies construct hashes with more than one element";
 }
 

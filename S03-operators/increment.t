@@ -70,16 +70,16 @@ is($moo, 0, "var was not touched");
 }
 
 # test incrementing literals
-# all of those can be detected at compile time, so use eval_dies_ok here
+# all of those can be detected at compile time, so use eval-dies-ok here
 {
-    eval_dies_ok ' 4++ ', "can't postincrement a literal number";
-    eval_dies_ok ' ++4 ', "can't preincrement a literal number";
-    eval_dies_ok ' 4-- ', "can't postdecrement a literal number";
-    eval_dies_ok ' --4 ', "can't predecrement a literal number";
-    eval_dies_ok ' "x"++ ', "can't postincrement a literal string";
-    eval_dies_ok ' ++"x" ', "can't preincrement a literal string";
-    eval_dies_ok ' "x"-- ', "can't postdecrement a literal string";
-    eval_dies_ok ' --"x" ', "can't predecrement a literal string";
+    eval-dies-ok ' 4++ ', "can't postincrement a literal number";
+    eval-dies-ok ' ++4 ', "can't preincrement a literal number";
+    eval-dies-ok ' 4-- ', "can't postdecrement a literal number";
+    eval-dies-ok ' --4 ', "can't predecrement a literal number";
+    eval-dies-ok ' "x"++ ', "can't postincrement a literal string";
+    eval-dies-ok ' ++"x" ', "can't preincrement a literal string";
+    eval-dies-ok ' "x"-- ', "can't postdecrement a literal string";
+    eval-dies-ok ' --"x" ', "can't predecrement a literal string";
 }
 
 # this used to be a rakudo regression
@@ -118,7 +118,7 @@ is($moo, 0, "var was not touched");
 
 # RT #74912
 #?niecza todo 'Works fine in niecza...'
-eval_dies_ok 'my $x = 0; ++++$x',
+eval-dies-ok 'my $x = 0; ++++$x',
     'can not double-increment, because the return value is not a container';
 
 {

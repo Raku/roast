@@ -6,5 +6,5 @@ use Test;
 plan 3;
 
 isa-ok $*CWD, IO::Dir;
-lives_ok { $*CWD.perl }, '$*CWD.perl works';
-lives_ok { $*CWD.gist }, '$*CWD.gist works';
+lives-ok { $*CWD.perl }, '$*CWD.perl works';
+lives-ok { $*CWD.gist }, '$*CWD.gist works';

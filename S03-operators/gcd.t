@@ -37,5 +37,4 @@ is ([gcd] 25..26), 1, '[gcd] Range works';
     is 123123123123123123123123123123 gcd 123123123123123123123123123, 123, "gcd handles big Int and big Int";
 }
 
-done;
 # vim: ft=perl6

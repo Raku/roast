@@ -83,7 +83,7 @@ plan 32;
         die 42;
     }
 
-    dies_ok { test2() },
+    dies-ok { test2() },
         'return() inside a try{}-block should cause following exceptions to really die';
 }
 
@@ -160,14 +160,12 @@ plan 32;
 }
 
 # RT #123053
-lives_ok { try +'foo' }, 'Failure does not escape try (statement form)';
-lives_ok { try { +'foo' } }, 'Failure does not escape try (block form)';
-lives_ok { try { +'foo'; CATCH { default { } } } }, 'Failure does not escape try (block form with CATCH)';
+lives-ok { try +'foo' }, 'Failure does not escape try (statement form)';
+lives-ok { try { +'foo' } }, 'Failure does not escape try (block form)';
+lives-ok { try { +'foo'; CATCH { default { } } } }, 'Failure does not escape try (block form with CATCH)';
 
 # RT #117217
-lives_ok { try ... }, '... failure does not escape try (statement form)';
-lives_ok { try { ... } }, '... failure does not escape try (block form)';
-
-done;
+lives-ok { try ... }, '... failure does not escape try (statement form)';
+lives-ok { try { ... } }, '... failure does not escape try (block form)';
 
 # vim: ft=perl6

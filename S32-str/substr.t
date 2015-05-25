@@ -132,7 +132,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 
 #?niecza todo
 #?rakudo todo "This seems unneccessarily restrictive RT #124695"
-eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
+eval-dies-ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
 # RT #76682
 #?niecza skip "'Failure' used at line 244"

@@ -26,14 +26,14 @@ plan 16;
 # RT #66648
 {
     enum RT66648 <a b c>;
-    dies_ok { RT66648.c }, 'die attempting to access enum item as method';
+    dies-ok { RT66648.c }, 'die attempting to access enum item as method';
 }
 
 # RT #70894
 
 {
     enum SomeEnum <a b c>;
-    lives_ok {SomeEnum::.keys}, 'keys on enum stash works';
+    lives-ok {SomeEnum::.keys}, 'keys on enum stash works';
 
 }
 
@@ -50,7 +50,7 @@ plan 16;
     is +FAIL, 1,        'non-conflicting enum key (numeric)';
     # RT #112202
     #?niecza todo
-    lives_ok { OK.^methods }, 'can call .^methods on an enum';
+    lives-ok { OK.^methods }, 'can call .^methods on an enum';
 }
 
 # anonymous Enum in our context, # RT #122514

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 {
     my $p = Promise.start({
@@ -31,7 +31,7 @@ plan 15;
         die "trying";
     });
     sleep 1;
-    dies_ok { $p.result }, "result throws exception";
+    dies-ok { $p.result }, "result throws exception";
     is $p.status, Broken, "Promise was broken";
     is $p.cause.message, "trying", "Correct exception stored";
 }
@@ -63,4 +63,10 @@ plan 15;
     await $p;
     is $p.result.join(', '), '1, 2, 3, 4', 'can return a lazy map from a start block';
 
+}
+
+# RT #123702
+{
+    my @got = await do for 1..5 { start { buf8.new } };
+    ok all(@got.map(* ~~ buf8)), 'buf8.new in many start blocks does not explode';
 }

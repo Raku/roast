@@ -25,7 +25,7 @@ plan 11;
     my $pall = Promise.allof(@p);
     @p[0].keep(1);
     @p[1].break("danger danger");
-    dies_ok { $pall.result }, "result on broken all-Promise throws";
+    dies-ok { $pall.result }, "result on broken all-Promise throws";
     is $pall.status, Broken, "all-Promise was broken";
 }
 
@@ -44,4 +44,4 @@ plan 11;
     is ~@a, "0 1 2 3 4 5 6 7 8 9", 'got the right order';
 }
 
-throws_like { Promise.allof(42) }, X::Promise::Combinator;
+throws-like { Promise.allof(42) }, X::Promise::Combinator;

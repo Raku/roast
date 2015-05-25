@@ -113,7 +113,7 @@ ok(!defined(Mu), "Mu is not defined");
     ok(EVAL('!defined(&a_subwoofer)'), "undefined sub");
     ok(EVAL('!defined(%«$?PACKAGE\::»<&a_subwoofer>)'), "undefined sub (symbol table)");
     
-    dies_ok { undefine &a_sub }, 'die trying to undefine a sub';
+    dies-ok { undefine &a_sub }, 'die trying to undefine a sub';
     ok defined &a_sub, 'sub is still defined after attempt to undefine';
 }
 
@@ -302,7 +302,7 @@ is((Any) + 1, 1, 'Any + 1');
 is(1 + (Any), 1, '1 + Any');
 is((Any) * 2, 0, 'Any * 2');
 is(2 * (Any), 0, '2 * Any');
-is_deeply([(Any) xx 2], [Any, Any], 'Any xx 2');
+is-deeply([(Any) xx 2], [Any, Any], 'Any xx 2');
 is((Any) * (Any), 0, 'Any * Any');
 
 # L<http://colabti.de/irclogger/irclogger_log/perl6?date=2006-09-12,Tue&sel=145#l186>
@@ -314,22 +314,22 @@ is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
 is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';
 
 #?niecza todo 'dubious'
-lives_ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
+lives-ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
 
 {
     sub lie { Bool::False }
     ok lie() ~~ Bool, 'sub returns a bool';
-    dies_ok { undefine lie }, 'attempt to undefine returned Bool type dies';
+    dies-ok { undefine lie }, 'attempt to undefine returned Bool type dies';
     ok lie() ~~ Bool, 'sub still returns a bool';
 }
 
 {
     sub def is rw { my $x = [] }   #OK not used
     ok def() ~~ Array, 'sub returns array';
-    lives_ok { undefine def }, 'attempt to undefine returned array lives';
+    lives-ok { undefine def }, 'attempt to undefine returned array lives';
     ok def() ~~ Array, 'sub still returns array';
 
-    dies_ok { undefine &def }, 'attempt to undefine sub dies';
+    dies-ok { undefine &def }, 'attempt to undefine sub dies';
     ok defined(&def), 'attempt to undefine sub fails';
     ok def() ~~ Array, 'can still call sub after attempt to undefine it';
 }
@@ -358,7 +358,5 @@ lives_ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
     is $c, Any, "temp restores value after undefine";
     is $d, 42, "temp restore default value after undefine";
 }
-
-done;
 
 # vim: ft=perl6

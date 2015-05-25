@@ -44,7 +44,7 @@ regex two {..}
 ok("abcd" ~~ m/a  @<foo>=(<two>)  d/, 'Compound hypothetical capture');
 {
   my $ret;
-  lives_ok { $ret = $/[0]<two> }, 'Implicit hypothetical variable captured -- lives_ok';
+  lives-ok { $ret = $/[0]<two> }, 'Implicit hypothetical variable captured -- lives-ok';
   is $ret, "bc", 'Implicit hypothetical variable captured -- retval is correct';
 }
 ok(! EVAL('@<foo>'), 'Explicit hypothetical variable not captured');

@@ -23,7 +23,7 @@ my $foo = Foo.new();
 is($foo.doit(1,2,3), 6, "dot method invocation");
 
 my $val;
-lives_ok { $val = doit $foo: 1,2,3; }, '... indirect method invocation works';
+lives-ok { $val = doit $foo: 1,2,3; }, '... indirect method invocation works';
 is($val, 6, '... got the right value for indirect method invocation');
 
 is($foo.noargs, 42, "... no parentheses after method");
@@ -31,25 +31,25 @@ is($foo.noargs(), 42, "... parentheses after method");
 
 {
     my $val;
-    lives_ok { $val = $foo.noargs\ (); }, "... <unspace> + parentheses after method";
+    lives-ok { $val = $foo.noargs\ (); }, "... <unspace> + parentheses after method";
     is($val, 42, '... we got the value correctly');
 }
 
 {
     my $val;
-    lives_ok { $val = $foo.nobrackets() }, 'method declared with no brackets';
+    lives-ok { $val = $foo.nobrackets() }, 'method declared with no brackets';
     is($val, 'mice', '... we got the value correctly');
 }
 
 {
     my $val;
-    lives_ok { $val = $foo.callsmethod1() }, 'method calling method';
+    lives-ok { $val = $foo.callsmethod1() }, 'method calling method';
     is($val, 42, '... we got the value correctly');
 };
 
 {
     my $val;
-    lives_ok { $val = $foo.callsmethod2() }, 'method calling method with no brackets';
+    lives-ok { $val = $foo.callsmethod2() }, 'method calling method with no brackets';
     is($val, 42, '... we got the value correctly');
 };
 
@@ -58,7 +58,7 @@ is($foo.noargs(), 42, "... parentheses after method");
     class Zoo {
         method a () { my %s; %s.b }
     }
-    dies_ok( { Zoo.new.a }, "can't call current object methods on lexical data structures");
+    dies-ok( { Zoo.new.a }, "can't call current object methods on lexical data structures");
 }
 # doesn't match, but defines "b"
 sub b() { die "oops" }
@@ -87,14 +87,14 @@ sub b() { die "oops" }
 
     is $obj.m('a'),        'a|',   'basic sanity 1';
     is $obj.m('a', :y<b>), 'a|b',  'basic sanity 2';
-    lives_ok { $obj.m('a', :y<b>, :z<b>) }, 'additional named args are ignored';
+    lives-ok { $obj.m('a', :y<b>, :z<b>) }, 'additional named args are ignored';
     is $obj.m('a', :y<b>, :z<b>), 'a|b', '... same, but test value';
 
     # and the same with class methods
 
     is MethodTester.m('a'),        'a|',   'basic sanity 1 (class method)';
     is MethodTester.m('a', :y<b>), 'a|b',  'basic sanity 2 (class method)';
-    lives_ok { MethodTester.m('a', :y<b>, :z<b>) }, 
+    lives-ok { MethodTester.m('a', :y<b>, :z<b>) }, 
              'additional named args are ignored (class method)';
     is MethodTester.m('a', :y<b>, :z<b>), 'a|b', 
        '... same, but test value (class method)';
@@ -161,9 +161,9 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
             track(|%_);
         }
     }
-    lives_ok { PercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method';
+    lives-ok { PercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method';
     is $tracker, 5, ' ... and got right result';
-    lives_ok { PercentUnderscore.new.implicit(:x(42)) },
+    lives-ok { PercentUnderscore.new.implicit(:x(42)) },
                     'can use implicit %_ in a method';
     is $tracker, 42, '... and got he right result';
 }
@@ -179,7 +179,7 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
             track(|%_);
         }
     }
-    lives_ok { ImplicitPercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method (implicit)';
+    lives-ok { ImplicitPercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method (implicit)';
     is $tracker, 5, ' ... and got right result (implicit)';
 }
 
@@ -205,7 +205,7 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
             42;
         }
     }
-    dies_ok { InvocantTypeCheck.new.x() }, 'Invocant type is checked';
+    dies-ok { InvocantTypeCheck.new.x() }, 'Invocant type is checked';
 }
 
 # RT #83902

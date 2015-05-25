@@ -57,7 +57,7 @@ ok('}' ~~ m/(<[\}]>)/, 'quoted close LCB match');
 is($0, '}', 'quoted close LCB capture');
 
 # RT #67124
-eval_lives_ok( '"foo" ~~ /<[f] #`[comment] + [o]>/',
+eval-lives-ok( '"foo" ~~ /<[f] #`[comment] + [o]>/',
                'comment embedded in charset can be parsed' );
 ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 
@@ -65,7 +65,7 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 ok "\x[FFEF]" ~~ /<[\x0..\xFFEF]>/, 'large \\x char spec';
 
 #?niecza todo
-eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
+eval-dies-ok( "'RT 71702' ~~ /<[d..b]>? RT/",
     'reverse range in charset is lethal (RT 71702)' );
 
 # RT #64220
@@ -92,7 +92,5 @@ nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
     nok 'x' ~~ / <[a..z]-[x]> /, 'char excluded from class';
      ok 'z' ~~ / <[a..z]-[x]> /, '... but others are fine';
 }
-
-done;
 
 # vim: ft=perl6

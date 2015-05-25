@@ -47,7 +47,7 @@ plan 13;
         }
     }
     sub foo is woowoo { };
-    lives_ok &foo, 'Can call subroutine that was wrapped by a trait';
+    lives-ok &foo, 'Can call subroutine that was wrapped by a trait';
     #?rakudo todo 'trait mod / .wrap interaction'
     is $recorder, 'wrap', 'and the wrapper has been called once';
 }
@@ -60,7 +60,7 @@ plan 13;
     }
     sub rt112664 is a {}
 
-    lives_ok { rt112664 },
+    lives-ok { rt112664 },
     '[BUG] multi without proto gets wrong lexical lookup chain (RT 112664)';
 }
 
@@ -79,7 +79,5 @@ plan 13;
     sub wrappee($a, $b) is trait_that_wraps { 42 };
     is wrappee(1, 2), 84, 'wrapping a routine at compile time makes it soft';
 }
-
-done();
 
 # vim: ft=perl6

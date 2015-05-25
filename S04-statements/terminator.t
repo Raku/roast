@@ -7,19 +7,19 @@ plan 20;
 # L<S04/"Statement-ending blocks"/"will terminate a statement">
 
 # the 'empty statement' case responsible for the creation of this test file
-eval_lives_ok(';', 'empty statement');
+eval-lives-ok(';', 'empty statement');
 
-eval_lives_ok('my $x = 2', 'simple statement no semi');
-eval_lives_ok('my $x =
+eval-lives-ok('my $x = 2', 'simple statement no semi');
+eval-lives-ok('my $x =
 9', 'simple statement on two lines no semi');
-eval_lives_ok('my $x = 2;', 'simple statement with semi');
-eval_lives_ok('{my $x = 2}', 'end of closure terminator');
-eval_lives_ok('{my $x =
+eval-lives-ok('my $x = 2;', 'simple statement with semi');
+eval-lives-ok('{my $x = 2}', 'end of closure terminator');
+eval-lives-ok('{my $x =
 2;}', 'double terminator');
-eval_lives_ok(';my $x = 2;{my $x = 2;;};', 'extra terminators');
+eval-lives-ok(';my $x = 2;{my $x = 2;;};', 'extra terminators');
 
-eval_dies_ok('{my $x = 2;', 'open closure');
-eval_dies_ok('my $x = ', 'incomplete expression');
+eval-dies-ok('{my $x = 2;', 'open closure');
+eval-dies-ok('my $x = ', 'incomplete expression');
 
 {
     my $x = do {
@@ -44,23 +44,23 @@ eval_dies_ok('my $x = ', 'incomplete expression');
     is($z, 1, 'auto-curly applies inside array composer');
 }
 
-eval_dies_ok "42 if 23\nis 50; 1",
+eval-dies-ok "42 if 23\nis 50; 1",
     "if postfix modifier and is() is parsed correctly";
 
 # not sure this belong here, suggestions for better places are welcome
-eval_dies_ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
+eval-dies-ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
 
 # RT #79964
-eval_lives_ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';
+eval-lives-ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';
 
 # not sure this belong here, suggestions for better places are welcome
 # RT #115842
 {
-    eval_lives_ok 'my @ := 0,', 'trailing comma allowed (1)';
-    eval_lives_ok 'my @ := 0, ;', 'trailing comma allowed (2)';
-    eval_lives_ok 'my @array = 1, 2, 3, ;', 'trailing comma allowed (3)';
-    eval_lives_ok '1, 2, 3,', 'trailing comma allowed (4)';
-    eval_lives_ok '0,', 'trailing comma allowed (5)';
+    eval-lives-ok 'my @ := 0,', 'trailing comma allowed (1)';
+    eval-lives-ok 'my @ := 0, ;', 'trailing comma allowed (2)';
+    eval-lives-ok 'my @array = 1, 2, 3, ;', 'trailing comma allowed (3)';
+    eval-lives-ok '1, 2, 3,', 'trailing comma allowed (4)';
+    eval-lives-ok '0,', 'trailing comma allowed (5)';
 }
 
 # vim: ft=perl6

@@ -29,7 +29,7 @@ my $echoTap = $server.tap(-> $c {
     }, quit => { say $_; });
 });
 
-await IO::Socket::Async.connect($hostname, $port).then(-> $sr{
+await IO::Socket::Async.connect($hostname, $port).then(-> $sr {
 	is $sr.status, Kept, 'Async connect to available server keeps promise';
 	$sr.result.close() if $sr.status == Kept;
 });

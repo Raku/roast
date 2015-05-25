@@ -20,18 +20,18 @@ isa-ok($c, Foo);
 is($c.get_attr(), 13, '... cloned object retained attr value');
 
 my $val;
-lives_ok {
+lives-ok {
     $val = $c === $a;
 }, "... cloned object isn't identity equal to the original object";
 ok($val.defined && !$val, "... cloned object isn't identity equal to the original object");
 
 my $d;
-lives_ok {
+lives-ok {
     $d = $a.clone(attr => 42)
 }, '... cloning with supplying a new attribute value';
 
 my $val2;
-lives_ok {
+lives-ok {
    $val2 = $d.get_attr()
 }, '... getting attr from cloned value';
 is($val2, 42, '... cloned object has proper attr value');
@@ -58,7 +58,7 @@ is($val2, 42, '... cloned object has proper attr value');
     $p = 'a' ~~ /$<foo>='a'/;
     
     # previously it was timeout on Rakudo
-    lives_ok { $q = $p.clone }, 'Match object can be cloned';
+    lives-ok { $q = $p.clone }, 'Match object can be cloned';
     
     is ~$q{'foo'}, 'a', 'cloned Match object retained named capture value';
 }
@@ -79,31 +79,31 @@ is($val2, 42, '... cloned object has proper attr value');
     my $a1 = ArrTest.new(:array<a b>);
     my $a2 = $a1.clone(:array<c d>);
     #?rakudo todo "clone currently messes up original"
-    is_deeply $a1.array, ['a', 'b'], 'original object has its original array';
-    is_deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array';
+    is-deeply $a1.array, ['a', 'b'], 'original object has its original array';
+    is-deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array';
 
     my $b1 = HshTest.new(hash=> 'a' => 'b' );
     my $b2 = $b1.clone(hash=> 'c' => 'd' );
     #?rakudo todo "clone currently messes up original"
-    is_deeply $b1.hash, {'a' => 'b'}, 'original object has its original hash';
-    is_deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash';
+    is-deeply $b1.hash, {'a' => 'b'}, 'original object has its original hash';
+    is-deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash';
 
     # when cloning without new versions of attributes, it should not deep-copy the array/hash
     my $a3 = ArrTest.new(:array<a b>);
     my $a4 = $a3.clone;
-    is_deeply $a3.array, ['a', 'b'], 'original array attr sanity test';
-    is_deeply $a4.array, ['a', 'b'], 'cloned array attr sanity test';
+    is-deeply $a3.array, ['a', 'b'], 'original array attr sanity test';
+    is-deeply $a4.array, ['a', 'b'], 'cloned array attr sanity test';
     push $a3.array, 'c';
-    is_deeply $a3.array, ['a', 'b', 'c'], 'array on original is updated';
-    is_deeply $a4.array, ['a', 'b', 'c'], 'array on copy is updated';
+    is-deeply $a3.array, ['a', 'b', 'c'], 'array on original is updated';
+    is-deeply $a4.array, ['a', 'b', 'c'], 'array on copy is updated';
 
     my $b3 = HshTest.new(hash=>{'a' => 'b'});
     my $b4 = $b3.clone;
-    is_deeply $b3.hash, {'a' => 'b'}, 'original hash attr sanity test';
-    is_deeply $b4.hash, {'a' => 'b'}, 'cloned hash attr sanity test';
+    is-deeply $b3.hash, {'a' => 'b'}, 'original hash attr sanity test';
+    is-deeply $b4.hash, {'a' => 'b'}, 'cloned hash attr sanity test';
     $b3.hash{'c'} = 'd';
-    is_deeply $b3.hash, {'a' => 'b', 'c' => 'd'}, 'hash on original is updated';
-    is_deeply $b4.hash, {'a' => 'b', 'c' => 'd'}, 'hash on copy is updated';
+    is-deeply $b3.hash, {'a' => 'b', 'c' => 'd'}, 'hash on original is updated';
+    is-deeply $b4.hash, {'a' => 'b', 'c' => 'd'}, 'hash on copy is updated';
 }
 
 # test cloning of custom class objects
@@ -121,23 +121,23 @@ is($val2, 42, '... cloned object has proper attr value');
     my $cont_clone_same = $cont.clone;
 
     # cont_clone_diff should contain a new value, altering its contained values should not alter the original
-    is_deeply $cont_clone_diff.obj.arr, ['d', 'e', 'f'], 'cloned object sanity';
-    is_deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object is untouched';
+    is-deeply $cont_clone_diff.obj.arr, ['d', 'e', 'f'], 'cloned object sanity';
+    is-deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object is untouched';
 
     # change the cloned objects contained object, the original should be intact afterwards
     $cont_clone_diff.obj.arr = 'g', 'h', 'i';
-    is_deeply $cont_clone_diff.obj.arr, ['g', 'h', 'i'], 'cloned object sanity';
-    is_deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object is untouched';
+    is-deeply $cont_clone_diff.obj.arr, ['g', 'h', 'i'], 'cloned object sanity';
+    is-deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object is untouched';
 
     # change attributes on contained object should change clones if a new object was not assigned
-    is_deeply $cont_clone_same.obj.arr, ['a', 'b', 'c'], 'cloned object has identical value';
-    is_deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object sanity test';
+    is-deeply $cont_clone_same.obj.arr, ['a', 'b', 'c'], 'cloned object has identical value';
+    is-deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object sanity test';
    
     $cont.obj.arr = 'j', 'k', 'l';
-    is_deeply $cont_clone_same.obj.arr, ['j', 'k', 'l'], 'cloned object has new value';
-    is_deeply $cont.obj.arr, ['j', 'k', 'l'], 'original object has new value';
+    is-deeply $cont_clone_same.obj.arr, ['j', 'k', 'l'], 'cloned object has new value';
+    is-deeply $cont.obj.arr, ['j', 'k', 'l'], 'original object has new value';
 }
 
-lives_ok { Int.clone }, 'cloning a type object does not explode';
+lives-ok { Int.clone }, 'cloning a type object does not explode';
 
 # vim: ft=perl6

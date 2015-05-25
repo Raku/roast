@@ -26,10 +26,10 @@ plan 17;
     my sub test-but-dont-call(&testcode:(Int)) { True }
 
     ok(testit(&testint), 'code runs with proper signature (1)');
-    eval_dies_ok('testit(&teststr)', 'code dies with invalid signature (1)');
+    eval-dies-ok('testit(&teststr)', 'code dies with invalid signature (1)');
 
     ok(test-but-dont-call(&testint), 'code runs with proper signature (1)');
-    eval_dies_ok('test-but-dont-call(&teststr)', 'code dies with invalid signature (1)');
+    eval-dies-ok('test-but-dont-call(&teststr)', 'code dies with invalid signature (1)');
 }
 
 {
@@ -40,9 +40,9 @@ plan 17;
     my Int  sub teststrint (Str $foo) {return 0}   #OK not used
 
     ok(testit(&testintbool), 'code runs with proper signature (2)');
-    eval_dies_ok('testit(&testintint)',  'code dies with invalid signature (2)');
-    eval_dies_ok('testit(&teststrbool)', 'code dies with invalid signature (3)');
-    eval_dies_ok('testit(&teststrint)',  'code dies with invalid signature (4)');
+    eval-dies-ok('testit(&testintint)',  'code dies with invalid signature (2)');
+    eval-dies-ok('testit(&teststrbool)', 'code dies with invalid signature (3)');
+    eval-dies-ok('testit(&teststrint)',  'code dies with invalid signature (4)');
 }
 
 #?rakudo skip 'subsignatures dont factor into multi candidates yet RT #124935'
@@ -63,7 +63,7 @@ plan 17;
     is t1(&takes-str-returns-bool), 'Str --> Bool',
        'Multi dispatch based on closure parameter syntax (4)';
 
-    dies_ok { t1( -> { 3 }) }, 
+    dies-ok { t1( -> { 3 }) }, 
        'Multi dispatch based on closure parameter syntax (5)';
 }
 

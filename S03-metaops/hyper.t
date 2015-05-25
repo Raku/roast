@@ -246,10 +246,10 @@ my @e;
          my @a = 1 .. 3;
          is @a»foo, (42, 42, 42), 'wordy postfix operator';
          is @a>>foo, (42, 42, 42), 'wordy postfix operator, ASCII';
-         throws_like { @a».foo }, X::Method::NotFound,
+         throws-like { @a».foo }, X::Method::NotFound,
              message => "No such method 'foo' for invocant of type 'Int'",
              'wordy postfix operator: dotted form not allowed';
-         throws_like { @a>>.foo }, X::Method::NotFound,
+         throws-like { @a>>.foo }, X::Method::NotFound,
              message => "No such method 'foo' for invocant of type 'Int'",
              'wordy postfix operator, ASCII: dotted form not allowed';
     }
@@ -261,7 +261,7 @@ my @e;
 
         is 4i, Complex.new(0, 4), 'postfix:<i> still works';
         is 4\i, Complex.new(0, 4), 'postfix:<i> still works (2)';
-        throws_like { 4.i }, X::Method::NotFound,
+        throws-like { 4.i }, X::Method::NotFound,
             message => "No such method 'i' for invocant of type 'Int'",
             'dotted form of postfix:<i> fails';
         is (2,3)»i, (Complex.new(0, 2), Complex.new(0, 3)),
@@ -320,7 +320,7 @@ my @e;
     @r = -«([1, 2], [3, [4, 5]]);
     my @e = ([-1, -2], [-3, [-4, -5]]);
     is(~@r, ~@e, "distribution for unary prefix");
-    is_deeply(@r, @e, "distribution for unary prefix, deep comparison");
+    is-deeply(@r, @e, "distribution for unary prefix, deep comparison");
 };
 
 { # distribution for unary postfix autoincrement
@@ -329,7 +329,7 @@ my @e;
     @r»++;
     my @e = [2, 3], [4, [5, 6]];
     is(~@r, ~@e, "distribution for unary postfix autoincr");
-    is_deeply(@r, @e, "distribution for unary postfix autoincr, deep comparison");
+    is-deeply(@r, @e, "distribution for unary postfix autoincr, deep comparison");
 
     is @e»[1], '3 5 6', "nodal postcircumfixes do not distribute";
     is @e».elems, '2 2', "nodal methods do not distribute (elems)";
@@ -343,17 +343,17 @@ my @e;
     @r = (1, 2, [3, 4]) >>+<< (4, 5, [6, 7]);
     my @e = (5, 7, [9, 11]);
     is(~@r, ~@e, "distribution for binary infix, same shape, ASCII");
-    is_deeply(@r, @e, "distribution for binary infix, same shape, ASCII, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, same shape, ASCII, deep comparison");
 
     @r = (1, 2, [3, 4]) >>+>> (5, 6, 7);
     @e = (6, 8, [10, 11]);
     is(~@r, ~@e, "distribution for binary infix, dimension upgrade, ASCII");
-    is_deeply(@r, @e, "distribution for binary infix, dimension upgrade, ASCII, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, dimension upgrade, ASCII, deep comparison");
 
     @r = ([1, 2], 3) <<+>> (4, [5, 6]);
     @e = ([5, 6], [8, 9]);
     is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade, ASCII");
-    is_deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, ASCII, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, ASCII, deep comparison");
 };
 
 #?DOES 3
@@ -362,17 +362,17 @@ my @e;
     @r = (1, 2, [3, 4]) »+« (4, 5, [6, 7]);
     my @e = (5, 7, [9, 11]);
     is(~@r, ~@e, "distribution for binary infix, same shape");
-    is_deeply(@r, @e, "distribution for binary infix, same shape, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, same shape, deep comparison");
 
     @r = (1, 2, [3, 4]) »+» (5, 6, 7);
     @e = (6, 8, [10, 11]);
     is(~@r, ~@e, "distribution for binary infix, dimension upgrade");
-    is_deeply(@r, @e, "distribution for binary infix, dimension upgrade, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, dimension upgrade, deep comparison");
 
     @r = ([1, 2], 3) «+» (4, [5, 6]);
     @e = ([5, 6], [8, 9]);
     is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade");
-    is_deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, deep comparison");
+    is-deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, deep comparison");
 };
 
 { # regression test, ensure that hyper works on arrays
@@ -748,7 +748,7 @@ my @e;
 
 {
     # niecza doesn't propagate slangs into &EVAL yet
-    eval_lives_ok 'sub infix:<+++>($a, $b) { ($a + $b) div 2 }; 10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
+    eval-lives-ok 'sub infix:<+++>($a, $b) { ($a + $b) div 2 }; 10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
 }
 
 # RT #74530
@@ -818,7 +818,7 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 # RT #77114
 {
     #?rakudo todo "can_meta check for meta operators NYI"
-    eval_dies_ok 'my @a >>[=]>> (1,2,3)', "hypering assignment dies correctly";
+    eval-dies-ok 'my @a >>[=]>> (1,2,3)', "hypering assignment dies correctly";
 }
 
 # RT #123178
@@ -838,14 +838,14 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
     is True «+« (), (), "left-dwim hyper against empty RHS doesn't hang";
     is True »+» (), (), "right-dwim hyper against empty RHS doesn't hang";
     is True «+» (), (), "both-dwim hyper against empty RHS doesn't hang";
-    throws_like {True »+« ()}, X::HyperOp::NonDWIM,
+    throws-like {True »+« ()}, X::HyperOp::NonDWIM,
         left-elems => 1, right-elems => 0,
         "non-dwim hyper against empty RHS dies";
     # <empty list> <hyper> <item>
     is () «+« True, (), "left-dwim hyper against empty LHS doesn't hang";
     is () «+» True, (), "right-dwim hyper against empty LHS doesn't hang";
     is () «+» True, (), "both-dwim hyper against empty LHS doesn't hang";
-    throws_like {() »+« True}, X::HyperOp::NonDWIM,
+    throws-like {() »+« True}, X::HyperOp::NonDWIM,
         left-elems => 0, right-elems => 1,
         "non-dwim hyper against empty RHS dies";
     my @a = «"Furthermore, Subhuti," "the basic nature" "of the five" "aggregates" "is emptiness."»;
@@ -853,18 +853,16 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
     is @a «+« (), (), "left-dwim hyper against empty RHS doesn't hang";
     is @a »+» (), (), "right-dwim hyper against empty RHS doesn't hang";
     is @a «+» (), (), "both-dwim hyper against empty RHS doesn't hang";
-    throws_like {@a »+« ()}, X::HyperOp::NonDWIM,
+    throws-like {@a »+« ()}, X::HyperOp::NonDWIM,
         left-elems => 5, right-elems => 0,
         "non-dwim hyper against empty RHS dies";
     # <empty list> <hyper> <list>
     is () «+« @a, (), "left-dwim hyper against empty LHS doesn't hang";
     is () »+» @a, (), "right-dwim hyper against empty LHS doesn't hang";
     is () «+» @a, (), "both-dwim hyper against empty LHS doesn't hang";
-    throws_like {() »+« @a}, X::HyperOp::NonDWIM,
+    throws-like {() »+« @a}, X::HyperOp::NonDWIM,
         left-elems => 0, right-elems => 5,
         "non-dwim hyper against empty RHS dies";
 }
-
-done;
 
 # vim: ft=perl6

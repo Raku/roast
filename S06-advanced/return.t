@@ -202,10 +202,10 @@ is(%foo_hash_return<bar>, 2, 'got the right return value');
 is(%foo_hash_return<baz>, 3, 'got the right return value');
 
 my $keys;
-lives_ok({ $keys = +(foo_hash().keys) },
+lives-ok({ $keys = +(foo_hash().keys) },
     "can call method on return value (hashref)");
 is($keys, 3, "got right result");
-lives_ok({ foo_hash()<foo> },
+lives-ok({ foo_hash()<foo> },
     "can hash de-ref return value (hashref)");
 
 # now hash refs
@@ -222,10 +222,10 @@ is($foo_hash_ref_return<foo>, 1, 'got the right return value');
 is($foo_hash_ref_return<bar>, 2, 'got the right return value');
 is($foo_hash_ref_return<baz>, 3, 'got the right return value');
 
-lives_ok({ $keys = +(foo_hash_ref().keys) },
+lives-ok({ $keys = +(foo_hash_ref().keys) },
     "can call method on return value (hashref)");
 is($keys, 3, "got right result");
-lives_ok({ foo_hash_ref()<foo> },
+lives-ok({ foo_hash_ref()<foo> },
     "can hash de-ref return value (hashref)");
 
 # from return2.t
@@ -326,7 +326,7 @@ is Foo::official(), 44,
 # RT #63912
 {
     sub rt63912 { return 1, 2; }
-    lives_ok { rt63912() }, 'can call sub that returns two things (no parens)';
+    lives-ok { rt63912() }, 'can call sub that returns two things (no parens)';
 }
 
 # RT #72836
@@ -334,7 +334,7 @@ is Foo::official(), 44,
     class RT72836 {
         method new() { }
     }
-    lives_ok {my $c = RT72836.new},
+    lives-ok {my $c = RT72836.new},
         'can use value returned from empty routine';
 }
 

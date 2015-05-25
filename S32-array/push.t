@@ -119,10 +119,10 @@ plan 51;
 
 # testing some error cases
 {
-    eval_dies_ok 'push()', 'push() requires arguments (1)';
+    eval-dies-ok 'push()', 'push() requires arguments (1)';
     # This one is okay, as push will push 0 elems to a rw arrayref.
-    lives_ok({ push([])  }, 'push() requires arguments (2)');
-    eval_dies_ok '42.push(3)', '.push should not work on scalars';
+    lives-ok({ push([])  }, 'push() requires arguments (2)');
+    eval-dies-ok '42.push(3)', '.push should not work on scalars';
 }
 
 # Push with Inf arrays (waiting on answers to perl6-compiler email)
@@ -174,7 +174,7 @@ plan 51;
 #?niecza todo "https://github.com/sorear/niecza/issues/184"
 {
     my Int @a;
-    dies_ok( { @a.push: "a" }, "cannot push strings onto in Int array" );
+    dies-ok( { @a.push: "a" }, "cannot push strings onto in Int array" );
 }
 
 # vim: syn=perl6

@@ -7,29 +7,29 @@ plan 72;
 
 # construction
 {
-    lives_ok { Date.new('2010-01-01') }, 'Date.new("2010-01-01")';
-    lives_ok { Date.new(2010, 1, 1) }, 'List constructor';
-    lives_ok { Date.new(:year(2010), :month(1), :day(1)) }, 'named arguments';
-    lives_ok { Date.today }, 'Date.today';
-    lives_ok { 
+    lives-ok { Date.new('2010-01-01') }, 'Date.new("2010-01-01")';
+    lives-ok { Date.new(2010, 1, 1) }, 'List constructor';
+    lives-ok { Date.new(:year(2010), :month(1), :day(1)) }, 'named arguments';
+    lives-ok { Date.today }, 'Date.today';
+    lives-ok { 
         my $dt = DateTime.new(:year(2010),:month(06), :day(04));   #OK octal
         Date.new($dt); 
     }, 'Date.new from DateTime';
 
-    dies_ok { Date.new('malformed') }, 'obviously malformed string';
-    dies_ok { Date.new('2010-00-23') }, 'dies on zero-based months';
-    dies_ok { Date.new('2010-13-23') }, 'dies on month 13';
-    dies_ok { Date.new('2010-01-00') }, 'dies on zero-based days';
-    dies_ok { Date.new('2010-01-32') }, 'dies on day of month 32';
-    dies_ok { Date.new('1999-02-29') }, 'dies on 29 February 1999';
-    dies_ok { Date.new('1900-02-29') }, 'dies on 29 February 1900';
-    lives_ok { Date.new('2000-02-29') }, '...but not 29 February 2000';
+    dies-ok { Date.new('malformed') }, 'obviously malformed string';
+    dies-ok { Date.new('2010-00-23') }, 'dies on zero-based months';
+    dies-ok { Date.new('2010-13-23') }, 'dies on month 13';
+    dies-ok { Date.new('2010-01-00') }, 'dies on zero-based days';
+    dies-ok { Date.new('2010-01-32') }, 'dies on day of month 32';
+    dies-ok { Date.new('1999-02-29') }, 'dies on 29 February 1999';
+    dies-ok { Date.new('1900-02-29') }, 'dies on 29 February 1900';
+    lives-ok { Date.new('2000-02-29') }, '...but not 29 February 2000';
 
     isa-ok Date.new(2010, 01, 01), Date, 'Date.new() returns a Date';  #OK octal
 
     my $date = Date.new('1999-01-29');
-    dies_ok { $date.clone(month => 2) }, 'dies on 29 February 1999 (Date.clone)';
-    lives_ok { $date.clone(:month(2), :year(2000)) }, '..but not 29 February 2000 (Date.clone)';
+    dies-ok { $date.clone(month => 2) }, 'dies on 29 February 1999 (Date.clone)';
+    lives-ok { $date.clone(:month(2), :year(2000)) }, '..but not 29 February 2000 (Date.clone)';
 }
 
 # RT 112376, stringification
@@ -133,5 +133,3 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
     is d('2014-03-14').earlier(weeks => 2), d('2014-02-28'), 'subtracting 2 weeks, overflowing from March';
     is d('2015-01-20').earlier(weeks => 3), d('2014-12-30'), 'subtracting 3 weeks, overflowing to years';
 }
-
-done;

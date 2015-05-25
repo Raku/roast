@@ -44,7 +44,7 @@ plan 15;
         return leaves($tree[1]), leaves($tree[2]);
     }
     
-    is_deeply([leaves($tree)], @expected, "leaves() works");
+    is-deeply([leaves($tree)], @expected, "leaves() works");
 }
 
 {
@@ -71,7 +71,7 @@ plan 15;
          };
     }
     
-    is_deeply([internals($tree)], @expected, "internals() collects internal nodes");
+    is-deeply([internals($tree)], @expected, "internals() collects internal nodes");
     
     # P62B (*) Collect the nodes at a given level in a list
     # 
@@ -97,9 +97,9 @@ plan 15;
     my @e1 = 'A', ;
     my @e2 = 'B', 'E';
     my @e3 = 'C', 'D';
-    is_deeply([atlevel($tree, 1)], @e1, "atlevel() works at level 1");
-    is_deeply([atlevel($tree, 2)], @e2, "atlevel() works at level 2");
-    is_deeply([atlevel($tree, 3)], @e3, "atlevel() works at level 3");
+    is-deeply([atlevel($tree, 1)], @e1, "atlevel() works at level 1");
+    is-deeply([atlevel($tree, 2)], @e2, "atlevel() works at level 2");
+    is-deeply([atlevel($tree, 3)], @e3, "atlevel() works at level 3");
 }
 
 {
@@ -199,7 +199,7 @@ sub count($tree) {
     }
     my $result = align($tree, 0, 0, "r");
     
-    is_deeply($result, $expected, "tree alignment works");
+    is-deeply($result, $expected, "tree alignment works");
 }
 
 {
@@ -263,7 +263,7 @@ sub count($tree) {
     }
     my $result = align2($tree, 0, 0, "r");
     
-    is_deeply($result, $expected, "tree alignment works");
+    is-deeply($result, $expected, "tree alignment works");
 }
 
 {

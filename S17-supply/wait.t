@@ -4,7 +4,7 @@ use Test;
 
 plan 4;
 
-dies_ok { Supply.wait }, 'can not be called as a class method';
+dies-ok { Supply.wait }, 'can not be called as a class method';
 
 {
     my $s = Supply.new;

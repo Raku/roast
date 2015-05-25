@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 15;
 
 # L<S12/Fancy method calls/"no space between the method name and the left parenthesis">
 
@@ -16,7 +16,7 @@ $_ = A.new();
 
 is .doit,       'empty',        'plain call with no args';
 is .doit(),     'empty',        'method call with parens and no args';
-eval_dies_ok '.doit ()',        '.doit () illegal';
+eval-dies-ok '.doit ()',        '.doit () illegal';
 is .doit\ (),   'empty',        'method call with unspace';
 
 is (.doit: 1, 2, 3),    'a:1|b:2!3',    'list op with colon';
@@ -28,10 +28,16 @@ is (.doit(1, 2): 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit\  (1, 2): 3), 'a:1|b:2!3',    'list op with colon, unspace';
 
 # L<S12/Fancy method calls/"if any term in a list is a bare closure">
-#?rakudo skip 'adverbial closures RT #124853'
+is (1..8).grep({ $_ % 2 }).map({ $_ - 1 }).join('|'), '0|2|4|6',
+   'sanity check, should give same result as the next two tests';
 #?niecza skip 'Excess arguments to Any.map, used 2 of 4 positionals'
-is (1..8).grep: { $_ % 2 }.map: { $_ - 1}.join('|'), '0|2|4|6', 
+#?rakudo 3 skip 'adverbial closures RT #67700'
+is (1..8).grep: { $_ % 2 }.map: { $_ - 1 }.join('|'), '0|2|4|6',
    'adverbial closure has right precedence and associativity';
+is (1..8).grep:{ $_ % 2 }.map:{ $_ - 1 }.join('|'), '0|2|4|6',
+   'adverbial closure without space after colon';
+is (^10).map: { $^n * 2 + 1 }.join('|'), '1|3|5|7|9|11|13|15|17|19',
+   'Method calls after blocks passed to list-operator methods, RT #67700';
 
 # Used to be Rakudo RT #61988, $.foo form didn't accept arguments
 

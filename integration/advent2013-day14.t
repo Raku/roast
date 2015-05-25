@@ -33,7 +33,7 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
     await Promise.anyof(Promise.allof(@getting), Promise.in(5));
     my @quotes = @getting.grep(*.status == Kept).map(*.result);
 
-    is_deeply @quotes, [42, 42*3], 'quotes example';
+    is-deeply @quotes, [42, 42*3], 'quotes example';
 }
 
 {

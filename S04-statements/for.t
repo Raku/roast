@@ -19,8 +19,8 @@ for statement as possible
 # L<S04/The C<for> statement/"no foreach statement any more">
 {
     my $times_run = 0;
-    eval_dies_ok 'foreach 1..10 { $times_run++ }; 1', "foreach is gone";
-    eval_dies_ok 'foreach (1..10) { $times_run++}; 1',
+    eval-dies-ok 'foreach 1..10 { $times_run++ }; 1', "foreach is gone";
+    eval-dies-ok 'foreach (1..10) { $times_run++}; 1',
         "foreach is gone, even with parens";
     is $times_run, 0, "foreach doesn't work";
 }
@@ -164,7 +164,7 @@ my @elems = <a b c d e>;
 {
 
 
-    eval_dies_ok('for @a -> $elem {$elem = 5}', '-> $var is ro by default');
+    eval-dies-ok('for @a -> $elem {$elem = 5}', '-> $var is ro by default');
 
    {
         my @a = <1 2 3 4>;
@@ -364,7 +364,7 @@ class TestClass{ has $.key is rw  };
 }
 
 # L<S04/Statement parsing/keywords require whitespace>
-eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
+eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # looping with more than one loop variables
 {
@@ -378,7 +378,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 {
   #my $str = '';
-  eval_dies_ok('for 1..5 ->  $x, $y { $str ~= "$x$y" }', 'Should throw exception, no value for parameter $y');
+  eval-dies-ok('for 1..5 ->  $x, $y { $str ~= "$x$y" }', 'Should throw exception, no value for parameter $y');
   #is $str, "1234", "loop ran before throwing exception";
   #diag ">$str<";
 }
@@ -422,8 +422,8 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 {
-  eval_dies_ok 'for 1.. { };', "Please use ..* for indefinite range";
-  eval_dies_ok 'for 1... { };', "1... does not exist";
+  eval-dies-ok 'for 1.. { };', "Please use ..* for indefinite range";
+  eval-dies-ok 'for 1... { };', "1... does not exist";
 }
 
 {
@@ -463,6 +463,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 {
     is (for ^2 { 41; 42 }), (42,42), "for loop value is list of iter values";
+#?rakudo.jvm todo 'gives Any instead of ()'
     is (for ^5 { 41; next if $_ == 2; $_; }).flat, (0,1,3,4),
                 "for loop with value-less next flattens out nexted iterations";
 
@@ -470,6 +471,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     my $l = (for ^5 { 41; next if $_ == 2; $_; });
     is $l[2].perl, "()", "for loop iteration with value-less 'next' gives ()";
 
+#?rakudo.jvm todo 'gives "" instead of "0 1"'
     is (for ^5 { 41; last if $_ == 2; $_; }).flat, (0,1),
                 "for loop with value-less last flattens out last iteration";
 
@@ -496,14 +498,14 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 # RT #71268
 {
     sub rt71268 { for ^1 {} }
-    lives_ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
+    lives-ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
     # This test is actually wrong design-wise, should return ()
     is rt71268(), Nil, 'result of "for ^1 {}" is Nil';
 }
 
 # RT #62478
 {
-    eval_dies_ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
+    eval-dies-ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
 
 {
@@ -522,7 +524,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #60780
-lives_ok {
+lives-ok {
     for 1 .. 5 -> $x, $y? { }
 }, 'Iteration variables do not need to add up if one is optional';
 
@@ -576,11 +578,11 @@ lives_ok {
 # RT #78406
 {
     my $c = 0;
-    dies_ok { for ^8 { .=fmt('%03b'); $c++ } }, '$_ is read-only here';
+    dies-ok { for ^8 { .=fmt('%03b'); $c++ } }, '$_ is read-only here';
     is $c, 0, '... and $_ is *always* read-only here';
 }
 
-dies_ok
+dies-ok
     {
         my class Foo {
             has @.items;
@@ -621,7 +623,7 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     is [$a, $b], [2, 2], 'is rw on slurpy parameters works (2)';
     incr3($a, $b);
     is [$a, $b], [3, 3], 'is rw on slurpy parameters works (3)';
-    throws_like { incr4($a, $b) }, Exception, message => /readonly/;
+    throws-like { incr4($a, $b) }, Exception, message => /readonly/;
 }
 
 # RT #123005

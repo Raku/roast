@@ -10,6 +10,4 @@ plan 3;
     ok !('foo' ~~ %h),      'Cool ~~ Hash (-)';
 }
 
-done;
-
 # vim: ft=perl6

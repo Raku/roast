@@ -90,10 +90,10 @@ is(+Range, 0, 'type numification');
 {
     my $r = 1..5;
 
-    dies_ok { $r.shift       }, 'range is immutable (shift)';
-    dies_ok { $r.pop         }, 'range is immutable (pop)';
-    dies_ok { $r.push(10)    }, 'range is immutable (push)';
-    dies_ok { $r.unshift(10) }, 'range is immutable (unshift)';
+    dies-ok { $r.shift       }, 'range is immutable (shift)';
+    dies-ok { $r.pop         }, 'range is immutable (pop)';
+    dies-ok { $r.push(10)    }, 'range is immutable (push)';
+    dies-ok { $r.unshift(10) }, 'range is immutable (unshift)';
 
     my $s = 1..5;
     is $r, $s, 'range has not changed';
@@ -173,8 +173,8 @@ is(+Range, 0, 'type numification');
     isa-ok (1..100).pick, Int, "picking a single element from an range of Ints produces an Int";
     ok (1..100).pick ~~ 1..100, "picking a single element from an range of Ints produces one of them";
 
-    isa-ok (1..100).pick(1), Int, "picking 1 from an range of Ints produces an Int";
-    ok (1..100).pick(1) ~~ 1..100, "picking 1 from an range of Ints produces one of them";
+    isa-ok (1..100).pick(1), List, "picking 1 from an range of Ints produces a List";
+    ok (1..100).pick(1)[0] ~~ 1..100, "picking 1 from an range of Ints produces one of them";
 
     my @c = (1..100).pick(2);
     isa-ok @c[0], Int, "picking 2 from an range of Ints produces an Int...";
@@ -200,8 +200,8 @@ is(+Range, 0, 'type numification');
     isa-ok ('b' .. 'y').pick, Str, "picking a single element from an range of Strs produces an Str";
     ok ('b' .. 'y').pick ~~ 'b' .. 'y', "picking a single element from an range of Strs produces one of them";
 
-    isa-ok ('b' .. 'y').pick(1), Str, "picking 1 from an range of Strs produces an Str";
-    ok ('b' .. 'y').pick(1) ~~ 'b' .. 'y', "picking 1 from an range of Strs produces one of them";
+    isa-ok ('b' .. 'y').pick(1), List, "picking 1 from an range of Strs produces a List";
+    ok ('b' .. 'y').pick(1)[0] ~~ 'b' .. 'y', "picking 1 from an range of Strs produces one of them";
 
     my @c = ('b' .. 'y').pick(2);
     isa-ok @c[0], Str, "picking 2 from an range of Strs produces an Str...";
@@ -227,8 +227,8 @@ is(+Range, 0, 'type numification');
     isa-ok (1..100).roll, Int, "rolling a single element from an range of Ints produces an Int";
     ok (1..100).roll ~~ 1..100, "rolling a single element from an range of Ints produces one of them";
 
-    isa-ok (1..100).roll(1), Int, "rolling 1 from an range of Ints produces an Int";
-    ok (1..100).roll(1) ~~ 1..100, "rolling 1 from an range of Ints produces one of them";
+    isa-ok (1..100).roll(1), List, "rolling 1 from an range of Ints produces a List";
+    ok (1..100).roll(1)[0] ~~ 1..100, "rolling 1 from an range of Ints produces one of them";
 
     my @c = (1..100).roll(2);
     isa-ok @c[0], Int, "rolling 2 from an range of Ints produces an Int...";
@@ -253,8 +253,8 @@ is(+Range, 0, 'type numification');
     isa-ok ('b' .. 'y').roll, Str, "rolling a single element from an range of Strs produces an Str";
     ok ('b' .. 'y').roll ~~ 'b' .. 'y', "rolling a single element from an range of Strs produces one of them";
 
-    isa-ok ('b' .. 'y').roll(1), Str, "rolling 1 from an range of Strs produces an Str";
-    ok ('b' .. 'y').roll(1) ~~ 'b' .. 'y', "rolling 1 from an range of Strs produces one of them";
+    isa-ok ('b' .. 'y').roll(1), List, "rolling 1 from an range of Strs produces a List";
+    ok ('b' .. 'y').roll(1)[0] ~~ 'b' .. 'y', "rolling 1 from an range of Strs produces one of them";
 
     my @c = ('b' .. 'y').roll(2);
     isa-ok @c[0], Str, "rolling 2 from an range of Strs produces an Str...";
@@ -267,7 +267,7 @@ is(+Range, 0, 'type numification');
 
 is join(':',grep 1..3, 0..5), '1:2:3', "ranges itemize or flatten lazily";
 
-lives_ok({'A'..'a'}, "A..a range completes");
-lives_ok({"\0".."~"}, "low ascii range completes");
+lives-ok({'A'..'a'}, "A..a range completes");
+lives-ok({"\0".."~"}, "low ascii range completes");
 
 # vim:set ft=perl6

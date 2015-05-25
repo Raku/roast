@@ -359,7 +359,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 # RT #63686
 {
-    lives_ok { try { for any(1,2) -> $x {}; } },
+    lives-ok { try { for any(1,2) -> $x {}; } },
              'for loop over junction in try block';
 
     sub rt63686 {
@@ -463,7 +463,5 @@ is ((<a b c>,(4,5,6)).one eq 'a b c').gist, 'one(True, False)', '.one is not fla
 nok ((4,5,6),(4,5,6,7)).none == 3, '.none is not flattening 1';
 ok (<a b c>,(4,5,6)).none eq 'a' , '.none is not flattening 2';
 is ((<a b c>,(4,5,6)).none eq 'a b c').gist, 'none(True, False)', '.none is not flattening 3';
-
-done();
 
 # vim: ft=perl6

@@ -45,7 +45,7 @@ Basic C<pairs> tests, see S32.
 {
     my @array = (17, 23, 42);
 
-    lives_ok { for @array.pairs -> $pair {
+    lives-ok { for @array.pairs -> $pair {
         $pair.value += 100;
     } }, 'aliases returned by @array.pairs should be rw (1)';
 

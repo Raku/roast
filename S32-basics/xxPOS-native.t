@@ -24,17 +24,17 @@ for int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64 -> \T {
     is @a.elems,             3, "array[$t].elens (one added)";
 
     my $a = 45;
-    throws_like { @a.BIND-POS(0,$a) }, X::AdHoc,
+    throws-like { @a.BIND-POS(0,$a) }, X::AdHoc,
       message => 'Cannot bind to a natively typed array',
       "array[$t].BIND-POS (existing)";
-    throws_like { @a.BIND-POS(3,$a) }, X::AdHoc,
+    throws-like { @a.BIND-POS(3,$a) }, X::AdHoc,
       message => 'Cannot bind to a natively typed array',
       "array[$t].BIND-POS (non-existing)";
 
-    throws_like { @a.DELETE-POS(0) }, X::AdHoc,
+    throws-like { @a.DELETE-POS(0) }, X::AdHoc,
       message => 'Cannot delete from a natively typed array',
       "array[$t].DELETE-POS (existing)";
-    throws_like { @a.DELETE-POS(3) }, X::AdHoc,
+    throws-like { @a.DELETE-POS(3) }, X::AdHoc,
       message => 'Cannot delete from a natively typed array',
       "array[$t].DELETE-POS (non-existing)";
 }

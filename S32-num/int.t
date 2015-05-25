@@ -80,10 +80,10 @@ is('-1.999'.Int, -1, "int('-1.999') is -1");
 #?niecza 3 skip "0x, 0d, and 0o NYI"
 is('0x123'.Int, 0x123, "int('0x123') is 0x123");
 is('0d456'.Int, 0d456, "int('0d456') is 0d456");
-#?rakudo 2 skip "trailing characters produce failures RT #124817"
-is('0o678'.Int, 0o67, "int('0o678') is 0o67");
-#?niecza skip "trailing d produces a failure"
-is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
+throws-like q['0o678'.Int], X::Str::Numeric,
+    'conversion from string to number fails because of trailing characters (1)';
+throws-like q['3e4d5'.Int], X::Str::Numeric,
+    'conversion from string to number fails because of trailing characters (2)';
 
 #?DOES 24
 {
@@ -105,15 +105,14 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 #?DOES 1
 # Special values
 is((1.9e3).Int, 1900, "int 1.9e3 is 1900");
-#?rakudo 2 todo 'Inf and NaN NYI for Int RT #124818'
+#?rakudo 3 todo 'Inf and NaN NYI for Int RT #124818'
 is((Inf).Int,    Inf, "int Inf is Inf");
 is((-Inf).Int,  -Inf, "int -Inf is -Inf");
-#?rakudo todo 'Inf and NaN NYI for Int RT #124819'
-#?rakudo.jvm skip 'Inf and NaN NYI for Int RT #124820'
 is((NaN).Int,    NaN, "int NaN is NaN");
 
 # RT #65132
-eval_dies_ok 'int 3.14', 'dies: int 3.14 (prefix:int is gone)';
+throws-like 'int 3.14', X::Syntax::Confused,
+    'dies: int 3.14 (prefix:int is gone)';
 
 is 0.lsb,        Nil, "0.lsb is Nil";
 is 1.lsb,        0,   "1.lsb is 0";
