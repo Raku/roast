@@ -77,8 +77,6 @@ plan 16;
       }).hash, 'multi-level classify' );
 }
 
-#?rakudo.jvm todo 'RT #125148'
-#?rakudo.moar todo 'RT #125148'
 lives-ok { my %h = classify { "foo" }, (); }, 'classify an empty list';
 
 # vim: ft=perl6
