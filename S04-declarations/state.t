@@ -249,7 +249,8 @@ sub bughunt1 { (state $svar) }    #OK not used
 # niecza regression: state not working at top level
 eval-lives-ok 'state $x; $x', 'state outside control structure';
 
-#?rakudo todo 'initialization happens only on first call(?) RT #125052'
+# RT #102994
+#?rakudo todo 'initialization happens only on first call(?) RT #102994'
 {
     sub f($x) {
         return if $x;
