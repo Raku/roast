@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 60;
+plan 61;
 
 # type based dispatching
 #
@@ -172,19 +172,26 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 }
 
 # make sure that multi sub dispatch also works if the sub is defined
-# in a class (was a Rakudo regression, RT #65674)
-
-#?rakudo skip 'our sub in class RT #124771'
+# in a class (was a Rakudo regression)
+# RT #65674
 #?niecza skip 'Two definitions found for symbol ::GLOBAL::A::&a'
 {
+    throws-like q[
+        class RT65674 {
+            our multi sub a(Int $x) { 'Int ' ~ $x }
+            our multi sub a(Str $x) { 'Str ' ~ $x }
+        }
+    ], X::Declaration::Scope::Multi, 'no individual multi candidates in "our" scope';
+
     class A {
+        our proto sub a(|) { * }
         our multi sub a(Int $x) { 'Int ' ~ $x }
         our multi sub a(Str $x) { 'Str ' ~ $x }
     }
 
     is A::a(3),     'Int 3',  'multis in classes (1)';
     is A::a('f'),   'Str f',  'multis in classes (2)';
-    dies-ok { A::a([4, 5]) }, 'multis in classes (3)';
+    throws-like 'A::a([4, 5])', X::Multi::NoMatch, 'multis in classes (3)';
 }
 
 {
