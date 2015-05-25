@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 35;
+plan 36;
 
 # make sure we have a controlled environment here
 my $*SPEC = IO::Spec::Unix;
@@ -24,7 +24,8 @@ is $path.perl.EVAL, $path, ".perl loopback";
 
 is IO::Path::Unix.new(".").Str,  ".",  "current directory";
 is IO::Path::Unix.new("..").Str, "..", "parent directory";
-is IO::Path::Unix.new('').Str,   "",   "empty is empty";
+throws_like { IO::Path::Unix.new },     X::AdHoc, "no path not allowed";
+throws_like { IO::Path::Unix.new('') }, X::AdHoc, "empty not allowed";
 
 is IO::Path::Unix.new("/usr/////local/./bin/././perl/").cleanup,
   "/usr/local/bin/perl",
