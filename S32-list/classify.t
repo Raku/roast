@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 16;
+plan 35;
 
 {
     my @list = 1, 2, 3, 4;
@@ -19,8 +19,22 @@ plan 16;
           "basic classify from list with {$classifier.^name}";
         is-deeply classify( $classifier, @list ), $classified1,
           "basic classify as subroutine with {$classifier.^name}";
+
+        classify( $classifier, @list, :into(my %h) );
+        is-deeply %h, $classified1,
+          "basic classify as sub with {$classifier.^name} and new into";
+        classify( $classifier, @list, :into(%h) );
+        is-deeply %h, $classified2,
+          "basic classify as sub with {$classifier.^name} and existing into";
+
+        @list.classify( $classifier, :into(my %i) );
+        is-deeply %i, $classified1,
+          "basic classify from list with {$classifier.^name} and new into";
+        @list.classify( $classifier, :into(%i) );
+        is-deeply %i, $classified2,
+          "basic classify from list with {$classifier.^name} and existing into";
     }
-} #4*2
+} #4*6
 
 #?rakudo skip 'Cannot use bind operator with this LHS RT #124751'
 #?niecza skip 'Cannot use bind operator with this LHS'
@@ -33,12 +47,21 @@ plan 16;
 } #3
 
 {
-    my %by_five;
-    is-deeply
-      classify( { $_ * 5 }, 1, 2, 3, 4 ),
-      { 5 => [1], 10 => [2], 15 => [3], 20 => [4] },
+    my $result = { 5 => [1], 10 => [2], 15 => [3], 20 => [4] };
+    is-deeply classify( { $_ * 5 }, 1, 2, 3, 4 ), $result,
       'can classify by numbers';
-} #1
+    classify( { $_ * 5 }, 1, 2, 3, 4, :into(my %by_five) );
+    is-deeply %by_five, $result,
+      'can classify by numbers into an existing empty hash';
+    classify( { $_ * 5 }, 1, 2, 3, 4, :into(%by_five) );
+    $_[1] = $_[0] for $result.values;
+    is-deeply %by_five, $result,
+      'can classify by numbers into an existing filled hash';
+    classify( { $_ * 5 }, 1, 2, 3, 4, :into(%by_five), :as(* * 2) );
+    $_[2] = 2 * $_[1] for $result.values;
+    is-deeply %by_five, $result,
+      'can classify by numbers into an existing filled hash with an :as';
+} #4
 
 # .classify should work on non-arrays
 {
@@ -77,6 +100,6 @@ plan 16;
       }).hash, 'multi-level classify' );
 }
 
-lives-ok { my %h = classify { "foo" }, (); }, 'classify an empty list';
+is classify( { "foo" }, () ).elems, 0, 'classify an empty list';
 
 # vim: ft=perl6
