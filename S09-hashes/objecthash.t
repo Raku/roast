@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 33;
 
 {
     class A { method Str() { 'foo' } };
@@ -73,4 +73,10 @@ plan 32;
     my %h{Any};
     %h{Any}=1;
     ok %h{Any}:exists, '.exists returns True on a %h{Any} in a TypedHash';
+}
+
+# RT #125249
+{
+    lives-ok { my %h = my %x{Date}; },
+        'declaring empty object hash on rhs of assignment to hash does not die with "Cannot look up attributes in a type object"';
 }
