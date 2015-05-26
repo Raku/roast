@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 15;
 
 # L<S32::IO/IO::Path>
 
@@ -9,6 +9,12 @@ my $path = '/foo/bar.txt'.IO;
 isa-ok $path, IO::Path, "Str.IO returns an IO::Path";
 is IO::Path.new('/foo/bar.txt'), $path,
    "Constructor works without named arguments";
+
+is IO::Path.new(:basename<bar.txt>), IO::Path.new('bar.txt'),
+    "Can use either :basename or positional argument";
+
+is IO::Path.new(:dirname</foo>, :basename<bar.txt>).cleanup, $path.cleanup,
+    "Can construct path from :dirname and :basename";
 
 # This assumes slash-separated paths, so it will break on, say, VMS
 
