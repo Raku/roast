@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 32;
 
 {
     class A { method Str() { 'foo' } };
@@ -56,11 +56,11 @@ plan 33;
 
 {
     my %h{Mu};
-    #?rakudo 2 skip 'oh noes, it dies'
-    ok %h{Mu} = 2, "just make the fudging work";
-    is %h{Mu}, 2, 'using Mu as a key';
-    ok %h{Any} = 3, "just make the fudging work";
     #?rakudo todo 'oh noes, it dies'
+    lives-ok { %h{Mu} = 2 }, "using Mu as a key (1)"; # TODO: remove 'lives-ok' when this no longer dies
+    #?rakudo skip 'oh noes, it dies'
+    is %h{Mu}, 2, 'using Mu as a key (2)';
+    %h{Any} = 3;
     is %h{Any}, 3, 'using Any as a key';
     #?rakudo skip 'oh noes, it dies'
     is %h{ Mu, Any }.join(","), "2,3", 'check slice access on Mu';
