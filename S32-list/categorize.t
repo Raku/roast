@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item categorize">
 
-plan 12;
+plan 28;
 
 { # basic categorize with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
@@ -21,11 +21,26 @@ plan 12;
           "simple sub call with {$mapper.^name}";
         is-deeply @list.categorize( $mapper ), %expected1,
           "method call on list with {$mapper.^name}";
+
+        categorize( $mapper, @list, :into(my %h) );
+        is-deeply %h, %expected1,
+          "basic categorize as sub with {$mapper.^name} and new into";
+        categorize( $mapper, @list, :into(%h) );
+        is-deeply %h, %expected2,
+          "basic categorize as sub with {$mapper.^name} and existing into";
+
+        @list.categorize( $mapper, :into(my %i) );
+        is-deeply %i, %expected1,
+          "basic categorize from list with {$mapper.^name} and new into";
+        @list.categorize( $mapper, :into(%i) );
+        is-deeply %i, %expected2,
+          "basic categorize from list with {$mapper.^name} and existing into";
     }
-} #4*2
+} #4*6
 
 { # basic categorize
-    my %got = categorize { .comb }, <A♣ 10♣ 6♥ 3♦ A♠ 3♣ K♠ J♥ 6♦ Q♠ K♥ 8♦ 5♠>;
+    sub mapper { $^a.comb };
+    my %got = categorize &mapper, <A♣ 10♣ 6♥ 3♦ A♠ 3♣ K♠ J♥ 6♦ Q♠ K♥ 8♦ 5♠>;
     my %expected = (
       'A' => ['A♣', 'A♠'],
       '♣' => ['A♣', '10♣', '3♣'],
@@ -46,31 +61,31 @@ plan 12;
 } #1
 
 {
-    # Method form, code block mapper
+    # Method form, code block mapper, using :as
     my %got = (1...6).categorize: {
         my @categories = ( $_ % 2 ?? 'odd' !! 'even');
         unless $_ % 3 { push @categories, 'triple'}
         @categories;
-    };
-    my %expected = ('odd'=>[1,3,5], 'even'=>[2,4,6], 'triple'=>[3,6]);
-    is-deeply(%got, %expected, 'method with code block mapper');
+    }, :as(* * 10);
+    my %expected = ('odd'=>[10,30,50], 'even'=>[20,40,60], 'triple'=>[30,60]);
+    is-deeply(%got, %expected, 'method with code block mapper using :as');
 } #1
 
 {
     # Method form, named sub mapper
     sub charmapper($c) {
-        my @categories;
-        push @categories, 'perlish' if $c.lc ~~ /<[perl]>/;
-        push @categories, 'vowel'   if $c.lc eq any <a e i o u>;
-        push @categories, ($c ~~ .uc) ?? 'uppercase' !! 'lowercase';
-        @categories;
+        gather {
+            take 'perlish' if $c.lc ~~ /<[perl]>/;
+            take 'vowel'   if $c.lc eq any <a e i o u>;
+            take ($c ~~ .uc) ?? 'uppercase' !! 'lowercase';
+        }
     }
     my %got      = 'Padre'.comb.categorize(&charmapper);
-    my %expected = ( 'perlish'   => ['P', 'r', 'e'],
-                     'vowel'     => ['a', 'e'],
-                     'uppercase' => ['P'],
-                     'lowercase' => ['a', 'd', 'r', 'e'] );
-    is-deeply(%got, %expected, 'method with named sub mapper');
+    my %expected = ( 'perlish'   => [< P     r e >],
+                     'vowel'     => [<   a     e >],
+                     'uppercase' => [< P         >],
+                     'lowercase' => [<   a d r e >] );
+    is-deeply(%got, %expected, 'method with named sub mapper using gather');
 }
 
 #?niecza todo 'feature'
