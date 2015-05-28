@@ -1,7 +1,9 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
+
+throws_like { await }, X::AdHoc, "a bare await should not work";
 
 {
     my $p = Promise.start({
