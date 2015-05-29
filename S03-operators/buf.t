@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 43;
+plan 45;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -106,6 +106,14 @@ ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
     
     my $d = buf64.new(1, 2, 3, 4, 5);
     is $d.bytes, 40, "buf64 .bytes correct";
+}
+
+# .push tests (RT #125182)
+{
+    my $a = Buf.new(1, 2, 3);
+    $a.push(4);
+    is $a.elems, 4, "Buf .elems correct after push";
+    is $a[3], 4, "Buf last element correct after push";
 }
 
 # RT #123928
