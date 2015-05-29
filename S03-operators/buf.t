@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 45;
+plan 48;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -114,6 +114,13 @@ ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
     $a.push(4);
     is $a.elems, 4, "Buf .elems correct after push";
     is $a[3], 4, "Buf last element correct after push";
+
+    my @items = 5, 6;
+    $a.push(@items);
+
+    is $a.elems, 6, "Buf .elems correct after pushing a list";
+    is $a[4], 5, "Buf penultimate element correct after push a list";
+    is $a[5], 6, "Buf last element correct after push a list";
 }
 
 # RT #123928
