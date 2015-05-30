@@ -14,6 +14,7 @@ my $tmpfile = "temp-evalfile" ~ nonce();
     close $fh;
 }
 
+#?rakudo skip 'RT #125294 - evalfile NYI'
 is evalfile($tmpfile), 42, "evalfile() works";
 
 END { unlink $tmpfile }
