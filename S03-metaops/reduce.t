@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 366;
+plan 369;
 
 =begin pod
 
@@ -382,5 +382,13 @@ ok ([+]) == 0, 'argumentless [+] parses';
     throws-like '[leg] <a b c>', X::Syntax::CannotMeta,
         'non-associative operator "[leg]" can not be used as reduction operator';
 }
+
+# RT #125289
+{
+    is [:a],  [a => True],  'does  [:a] parse ok and give the right value';
+    is [:a,], [a => True],  'does [:a,] parse ok and give the right value';
+    is [:!a], [a => False], 'does [:!a] parse ok and give the right value';
+}
+
 
 # vim: ft=perl6
