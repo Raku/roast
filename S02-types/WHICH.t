@@ -77,7 +77,6 @@ my @normal = <
   Nil
   Num
   ObjAt
-  Obsolete
   Pair
   PairMap
   Parameter
