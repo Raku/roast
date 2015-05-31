@@ -2,40 +2,32 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 8;
 
 # currently deprecated core features
 
 my $line;
+my $absPROGRAM = $*PROGRAM.abspath;
 
-# $*OS
+# $*OS and $OSVER
 #?niecza skip 'is DEPRECATED NYI'
 {
-    $line = $?LINE; say $*OS;
-    say $*OS;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*OS';
-Saw 1 occurrence of deprecated code.
-================================================================================
-\$*OS seen at:
-  $*PROGRAM, lines $line,{$line + 1}
-Deprecated since v2014.9, will be removed with release v2015.9!
-Please use \$*DISTRO.name instead.
---------------------------------------------------------------------------------
-TEXT
-} #1
-
-# $*OSVER
-#?niecza skip 'is DEPRECATED NYI'
-{
-    $line = $?LINE; say $*OSVER;
-    say $*OSVER;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*OSVER';
-Saw 1 occurrence of deprecated code.
+    $line = $?LINE; $*OS;
+    $*OSVER;
+    $*OS;
+    $*OSVER;
+    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*OS and $*OSVER';
+Saw 2 occurrences of deprecated code.
 ================================================================================
 \$*OSVER seen at:
-  $*PROGRAM, lines $line,{$line + 1}
+  $absPROGRAM, lines {$line + 1},{$line + 3}
 Deprecated since v2014.9, will be removed with release v2015.9!
 Please use \$*DISTRO.version instead.
+--------------------------------------------------------------------------------
+\$*OS seen at:
+  $absPROGRAM, lines $line,{$line + 2}
+Deprecated since v2014.9, will be removed with release v2015.9!
+Please use \$*DISTRO.name instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
