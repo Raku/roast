@@ -189,12 +189,16 @@ role Boxer {
     method actor { }
 }
 
+# remove the $pod_index increment after the block once this is fixed
+#?DOES 15
+#?rakudo skip 'Returning anonymous wrappers for pun methods does not preserve metadata RT #125304'
 {
     my $method = Boxer.^find_method('actor');
     ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
     test-leading(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?');
     test-leading($method, 'Robert De Niro');
 }
+$pod_index += 2;
 
 class C {
     #|{Bob}
