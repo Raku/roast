@@ -9,7 +9,7 @@ plan 3;
 {
     my @order;
     await Promise.anyof(
-        start({ sleep 3; @order.push(3) }),
+        start { sleep 3; @order.push(3) },
         Promise.in(1).then({ @order.push(1) }));
     sleep 1;
     @order.push(2);
