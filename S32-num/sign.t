@@ -46,8 +46,8 @@ is(sign(Inf), 1, 'got correct sign for +Inf');
 is(sign(-Inf), -1, 'got correct sign for -Inf');
 isa-ok(sign(Inf), Int, 'got correct type for +Inf');
 isa-ok(sign(-Inf), Int, 'got correct type for -Inf');
-#?rakudo todo "Nom does not yet have a NaN framework in place RT #124813"
 #?niecza todo
+# RT #124813 & #125317
 is(sign(NaN),NaN, 'sign of NaN is NaN');
 
 #?niecza todo
