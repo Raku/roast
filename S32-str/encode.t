@@ -50,6 +50,7 @@ is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of cod
     is $temp.decode(), "\x1F63E",          'decoding utf16 Buf to original value';
 }
 
+# RT #120651
 lives-ok { "\x[effff]".encode('utf-8') },           'Can encode noncharacters to UTF-8';
 is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip with UTF-8';
 
