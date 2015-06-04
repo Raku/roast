@@ -1,22 +1,33 @@
 use v6;
 use Test;
 
-plan 1;
+plan 2;
 
-# L<S29/Context/"=item evalfile">
+# L<S29/Context/"=item EVALFILE">
 
 sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
 
-my $tmpfile = "temp-evalfile" ~ nonce();
 {
-    my $fh = open("$tmpfile", :w);
-    say $fh: "32 + 10";
-    close $fh;
+    my $tmpfile = "temp-evalfile" ~ nonce();
+    {
+        my $fh = open("$tmpfile", :w);
+        say $fh: "32 + 10";
+        close $fh;
+    }
+    is EVALFILE($tmpfile), 42, "EVALFILE() works";
+    END { unlink $tmpfile }
 }
 
-#?rakudo skip 'RT #125294 - evalfile NYI'
-is evalfile($tmpfile), 42, "evalfile() works";
-
-END { unlink $tmpfile }
+{
+    my $tmpfile = "temp-evalfile-lexical" ~ nonce();
+    {
+        my $fh = open("$tmpfile", :w);
+        say $fh: '$some_var';
+        close $fh;
+    }
+    my $some_var = 'samovar';
+    is EVALFILE($tmpfile), 'samovar', "EVALFILE() evaluated code can see lexicals";
+    END { unlink $tmpfile }
+}
 
 # vim: ft=perl6
