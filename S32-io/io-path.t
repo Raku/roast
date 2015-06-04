@@ -1,14 +1,20 @@
 use v6;
 use Test;
 
-plan 13;
+plan 15;
 
 # L<S32::IO/IO::Path>
 
-my $path = '/foo/bar.txt'.path;
-isa-ok $path, IO::Path, "Str.path returns an IO::Path";
+my $path = '/foo/bar.txt'.IO;
+isa-ok $path, IO::Path, "Str.IO returns an IO::Path";
 is IO::Path.new('/foo/bar.txt'), $path,
    "Constructor works without named arguments";
+
+is IO::Path.new(:basename<bar.txt>), IO::Path.new('bar.txt'),
+    "Can use either :basename or positional argument";
+
+is IO::Path.new(:dirname</foo>, :basename<bar.txt>).cleanup, $path.cleanup,
+    "Can construct path from :dirname and :basename";
 
 # This assumes slash-separated paths, so it will break on, say, VMS
 
@@ -32,14 +38,14 @@ isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 {
   if $*DISTRO.name eq any <win32 mswin32 os2 dos symbian netware> {
       ok "c:\\".IO.is-absolute, "Win32ish OS loaded (volume)";
-      is "/".path.cleanup, "\\", "Win32ish OS loaded (back slash)"
+      is "/".IO.cleanup, "\\", "Win32ish OS loaded (back slash)"
   }
   elsif $*DISTRO.name eq 'cygwin' {
       ok "c:\\".IO.is-absolute, "Cygwin OS loaded (volume)";
-      is "/".path.cleanup, "/", "Cygwin OS loaded (forward slash)"
+      is "/".IO.cleanup, "/", "Cygwin OS loaded (forward slash)"
   }
   else { # assume POSIX
       nok "c:\\".IO.is-absolute, "POSIX OS loaded (no volume)";
-      is "/".path.cleanup, "/", "POSIX OS loaded (forward slash)"
+      is "/".IO.cleanup, "/", "POSIX OS loaded (forward slash)"
   }
 }

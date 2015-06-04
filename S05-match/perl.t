@@ -17,8 +17,10 @@ my $m = ExprT1.parse('2 + 4');
 ok $m, 'Regex matches (1)';
 lives-ok { $m.perl }, '$/.perl lives (with named captures';
 #?niecza skip 'No value for parameter $a in is-deeply'
+#?rakudo todo 'RT #125293 - .perl does not roundtrip as expected'
 is-deeply EVAL($m.perl), $m, '... and it reproduces the right thing (1)'; 
 #?niecza todo 'empty result'
+#?rakudo skip 'RT #125293 - .perl does not roundtrip as expected - operator is null'
 is ~EVAL($m.perl).<operator>, '+', ' right result (2)';
 
 my regex f { f };

@@ -56,11 +56,11 @@ plan 32;
 
 {
     my %h{Mu};
-    #?rakudo 2 skip 'oh noes, it dies'
-    ok %h{Mu} = 2, "just make the fudging work";
-    is %h{Mu}, 2, 'using Mu as a key';
-    ok %h{Any} = 3, "just make the fudging work";
     #?rakudo todo 'oh noes, it dies'
+    lives-ok { %h{Mu} = 2 }, "using Mu as a key (1)"; # TODO: remove 'lives-ok' when this no longer dies
+    #?rakudo skip 'oh noes, it dies'
+    is %h{Mu}, 2, 'using Mu as a key (2)';
+    %h{Any} = 3;
     is %h{Any}, 3, 'using Any as a key';
     #?rakudo skip 'oh noes, it dies'
     is %h{ Mu, Any }.join(","), "2,3", 'check slice access on Mu';
@@ -73,4 +73,10 @@ plan 32;
     my %h{Any};
     %h{Any}=1;
     ok %h{Any}:exists, '.exists returns True on a %h{Any} in a TypedHash';
+}
+
+# RT #125249
+{
+    lives-ok { my %h = my %x{Date}; },
+        'declaring empty object hash on rhs of assignment to hash does not die with "Cannot look up attributes in a type object"';
 }

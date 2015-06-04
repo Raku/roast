@@ -1,7 +1,9 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
+
+throws_like { await }, X::AdHoc, "a bare await should not work";
 
 {
     my $p = Promise.start({
@@ -37,9 +39,7 @@ plan 16;
 }
 
 {
-    my $p = start {
-        (1, 2, 3, 4);
-    };
+    my $p = start (1, 2, 3, 4);  # does start handle a blorst
     await $p;
     is $p.result.join(', '), '1, 2, 3, 4', 'can returns a Parcel from a start block';
 }

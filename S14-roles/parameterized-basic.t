@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 36;
 
 =begin pod
 
@@ -161,6 +161,12 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
         'question mark for optional parameter is parsed correctly';
     eval-dies-ok 'role A[::T?] {}; class B does A[] {}',
         'cannot put question mark on a type constraint';
+}
+
+# RT #109880
+{
+    role Foo[::T] { has T @.a = T }; class Bar {};
+    is( Foo[Bar].new.a[0], Bar, 'generic role with defaulted and typed attr' );
 }
 
 # vim: ft=perl6

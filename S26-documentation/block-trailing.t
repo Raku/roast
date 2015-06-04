@@ -180,7 +180,7 @@ role Boxer {
 }
 
 {
-    my $method = Boxer.^find_method('actor');
+    my $method = Boxer.^lookup('actor');
     ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
     test-trailing(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?');
     test-trailing($method, 'Robert De Niro');

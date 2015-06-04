@@ -254,16 +254,15 @@ my $z = 42; #OK not used
 }
 
 # used to be RT #76366, #76466
-#?rakudo skip 'nom regression, OUR:: RT #125068'
 {
-    nok OUR::access_lexical_a().defined,
+    nok &OUR::access_lexical_a().defined,
         'can call our-sub that accesses a lexical before the block was run';
     {
         my $a = 42;
         our sub access_lexical_a() { $a }
     }
     #?niecza todo 'NYI'
-    is  OUR::access_lexical_a(), 42,
+    is  &OUR::access_lexical_a(), 42,
         'can call our-sub that accesses a lexical after the block was run';
 
 }
