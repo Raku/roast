@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 30;
 
 eval-dies-ok('qr/foo/', 'qr// is gone');
 
@@ -118,5 +118,8 @@ eval-lives-ok '/<[..b]>/', '/<[..b]>/ lives';
     is HasSubMethod.parse('foo'),    43, 'can have a lexical regex in a submethod in a class';
     is HasMethod.parse('foo'),       44, 'can have a lexical regex in a method in a class';
 }
+
+# RT #125302
+lives-ok { Regex.new.perl }, '"Regex.new.perl does not segfault';
 
 # vim: ft=perl6
