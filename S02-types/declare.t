@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 78;
+plan 72;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -346,50 +346,6 @@ plan 78;
 {
   my Proxy $krati;
   isa-ok($krati, Proxy);
-}
-
-# CharLingua Byte Char AnyChar 
-
-#?rakudo skip 'Char NYI RT #124471'
-#?niecza skip 'Char NYI'
-{
-  my Char $pav;
-  isa-ok($pav, Char);
-}
-
-#?rakudo skip 'Byte NYI RT #124472'
-#?niecza skip 'Byte NYI'
-{
-  my Byte $biv;
-  isa-ok($biv, Byte);
-}
-
-#?rakudo skip 'AnyChar NYI RT #124473'
-#?niecza skip 'AnyChar NYI'
-{
-  my AnyChar $lerfu;
-  isa-ok($lerfu, AnyChar);
-}
-
-#?rakudo skip 'CharLingua NYI RT #124474'
-#?niecza skip 'CharLingua NYI'
-{
-  my CharLingua  $lerfu;
-  isa-ok($lerfu, CharLingua );
-}
-
-#?rakudo skip 'Codepoint NYI RT #124475'
-#?niecza skip 'Codepoint NYI'
-{
-  my Codepoint $cypy;
-  isa-ok($cypy,Codepoint );
-}
-
-#?rakudo skip 'Grapheme NYI RT #124476'
-#?niecza skip 'Grapheme NYI'
-{
-  my Grapheme $gy;
-  isa-ok($gy,Grapheme );
 }
 
 # Positional Associative Ordering Ordered
