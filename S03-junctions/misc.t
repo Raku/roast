@@ -370,13 +370,11 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
-#?rakudo skip 'lower case junction RT #124842'
-#?niecza skip 'Impossible test: === takes Any'
 {
-    ok((WHAT any()) === Junction, "test WHAT on empty any junction");
-    ok(any().WHAT === Junction, "test WHAT on empty any junction");
-    ok((WHAT any(1,2)) === Junction, "test WHAT on any junction");
-    ok(any(1,2).WHAT === Junction, "test WHAT on any junction");
+    ok((WHAT any()) ~~ Junction, "test WHAT on empty any junction");
+    ok(any().WHAT ~~ Junction, "test WHAT on empty any junction");
+    ok((WHAT any(1,2)) ~~ Junction, "test WHAT on any junction");
+    ok(any(1,2).WHAT ~~ Junction, "test WHAT on any junction");
 }
 
 # Any list has junction methods
