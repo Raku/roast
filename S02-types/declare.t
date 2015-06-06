@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 72;
+plan 71;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -63,7 +63,7 @@ plan 72;
 }
 
 
-# mutable (container) types, such as Scalar, Array, Hash, Buf, Routine, Module
+# mutable (container) types, such as Scalar, Array, Hash, Buf, Routine,
 # Buf nacpoi
 
 {
@@ -95,13 +95,6 @@ plan 72;
 {
  my Stash $igeda;
  isa-ok($igeda, Stash);
-}
-
-#?rakudo skip 'Module NYI RT #124459'
-#?niecza skip 'Module NYI'
-{
- my Module $brodu;
- isa-ok($brodu, Module);
 }
 
 # non-instantiable Roles such as Callable, Failure, and Integral
