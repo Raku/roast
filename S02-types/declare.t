@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 80;
+plan 78;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -166,25 +166,10 @@ plan 80;
  isa-ok($nacpoi, buf);
 }
 
-# StrPos StrLen uint Nil Whatever Mu Failure
+# uint Nil Whatever Mu Failure
 # Exception Range Bag Signature Capture Blob Instant Duration
 # Keyhash SetHash BagHash Pair Mapping IO Routine Sub Method
 # Submethod Macro Match Package Module Class Role Grammar Any
-
-#?rakudo skip 'StrPos NYI RT #124468'
-#?niecza skip 'StrPos NYI'
-{
- my StrPos $pa;
- isa-ok($pa,StrPos  );
-}
-
-
-#?rakudo skip 'StrLen NYI RT #124469'
-#?niecza skip 'StrLen NYI'
-{
- my StrLen $re;
- isa-ok($re,StrLen  );
-}
 
 #?niecza skip 'No value for parameter $l in infix:<===>'
 {
