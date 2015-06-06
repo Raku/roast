@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 129;
+plan 131;
 
 =begin pod
 
@@ -461,5 +461,10 @@ is ((<a b c>,(4,5,6)).one eq 'a b c').gist, 'one(True, False)', '.one is not fla
 nok ((4,5,6),(4,5,6,7)).none == 3, '.none is not flattening 1';
 ok (<a b c>,(4,5,6)).none eq 'a' , '.none is not flattening 2';
 is ((<a b c>,(4,5,6)).none eq 'a b c').gist, 'none(True, False)', '.none is not flattening 3';
+
+throws-like 'multi sub foo($) { }; foo(Junction)', X::Multi::NoMatch,
+    'Do not try to auto-thread Junction type object (multi case)';
+throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
+    'Do not try to auto-thread Junction type object (only case)';
 
 # vim: ft=perl6
