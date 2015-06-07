@@ -290,8 +290,8 @@ throws-like '1.List::join', X::Method::InvalidQualifier,
             qualifier-type => List;
 
 # RT #58558
-throws-like '!!! 42', Exception, message => 42;
-throws-like 'use fatal; ... 42', Exception, message => 42;
+throws-like '!!! 42', X::StubCode, message => 42;
+throws-like 'use fatal; ... 42', X::StubCode, message => 42;
 {
     my $c = 0;
     try {
