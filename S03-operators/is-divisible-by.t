@@ -35,9 +35,11 @@ plan 15;
 {
     throws-like { 9 %% 0 }, X::Numeric::DivideByZero,
         using => 'infix:<%%>',
+        numerator => 9,
         'cannot divide by zero using infix:<%%>';
     #?rakudo todo "not sure why this doesn't fire"
     throws-like { EVAL "9 !%% 0" }, X::Numeric::DivideByZero,
         using => 'infix:<%%>',
+        numerator => 9,
         'cannot divide by zero using infix:<%%>';
 } #2

@@ -301,8 +301,10 @@ All uses of a zero modulus or divisor should 'die', and the
 # RT #77592
 {
     throws-like { 3 mod 0 }, X::Numeric::DivideByZero,
+        numerator => 3,
         'Modulo zero with infix:<mod> dies and is catchable';
     throws-like { my $x = 0; 3 mod $x }, X::Numeric::DivideByZero,
+        numerator => 3,
         'Modulo zero with infix:<mod> dies and is catchable with VInt variables';
     throws-like { my $x := 0; 3 mod $x }, X::Numeric::DivideByZero,
         'Modulo zero with infix:<mod> dies and is catchable with VRef variables';
@@ -321,10 +323,13 @@ All uses of a zero modulus or divisor should 'die', and the
         'Modulo zero with infix:<%> dies and is catchable with VRef variables';
 
     throws-like { 3 div 0 }, X::Numeric::DivideByZero,
+        numerator => 3,
         'Division by zero with infix:<div> dies and is catchable';
     throws-like { my $x = 0; 3 div $x }, X::Numeric::DivideByZero,
+        numerator => 3,
         'Division by zero with infix:<div> dies and is catchable with VInt variables';
     throws-like { my $x := 0; 3 div $x }, X::Numeric::DivideByZero,
+        numerator => 3,
         'Division by zero with infix:<div> dies and is catchable with VRef variables';
 
     throws-like { say 0 / 0 }, X::TypeCheck::Binding,
@@ -332,10 +337,13 @@ All uses of a zero modulus or divisor should 'die', and the
 #        gotn      => Failure,
         'Division by zero with infix:</> dies and is catchable (1)';
     throws-like { say 3 / 0 }, X::Numeric::DivideByZero,
+#        numerator => 3,
         'Division by zero with infix:</> dies and is catchable (2)';
     throws-like { my $x = 0; say 3.5 / $x }, X::Numeric::DivideByZero,
+#        numerator => 3.5,
         'Division by zero with infix:</> dies and is catchable with VInt/VRat variables';
     throws-like { my $x = 0; say 4 / $x }, X::Numeric::DivideByZero,
+#        numerator => 4,
         'Division by zero with infix:</> dies and is catchable with VRef variables';
 }
 
