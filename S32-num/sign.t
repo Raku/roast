@@ -51,7 +51,7 @@ isa-ok(sign(-Inf), Int, 'got correct type for -Inf');
 is(sign(NaN),NaN, 'sign of NaN is NaN');
 
 #?niecza todo
-nok sign(Int).defined, 'sign(Int) is undefined';
+throws-like { sign(Int) }, X::AdHoc;
 throws-like { sign(3+4i) }, X::Numeric::Real;
 
 # vim: ft=perl6
