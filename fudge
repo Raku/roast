@@ -63,6 +63,10 @@ Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
         by default, fudge modifies the exit code for fudged test files to 1.
         supplying this option will suppress that behavior.
 
+    --version="v6.0.0"
+        pass the targeted Perl 6 language version you attempt to comply with,
+        defaults to 'v6.0.0'.
+
     Verbs:
     #?implname [num] skip 'reason'
         comment out num tests or blocks and call skip(num)
