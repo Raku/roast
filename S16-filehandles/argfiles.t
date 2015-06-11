@@ -4,7 +4,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 7;
+plan 8;
 
 sub create-temporary-file {
     my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
@@ -55,5 +55,11 @@ $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n", :@args);
 @lines  = lines($output);
 
 is-deeply @lines, [<one two three>], '$*ARGFILES should not use $*IN if files are in @*ARGS';
+
+$output = Test::Util::run('.say for lines(); .say for lines()', "foo\nbar\nbaz\n", :@args);
+@lines  = lines($output);
+
+# RT #125380
+is-deeply @lines, [<one two three>], 'Calling lines() twice should not read from $*IN';
 
 $tmp-file-name.IO.unlink;
