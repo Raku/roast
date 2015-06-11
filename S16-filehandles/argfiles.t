@@ -4,7 +4,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 8;
+plan 9;
 
 sub create-temporary-file {
     my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
@@ -50,6 +50,11 @@ $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n");
 @lines  = lines($output);
 
 is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if no files are in @*ARGS';
+
+$output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n", :args(['-']));
+@lines  = lines($output);
+
+is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if - is in @*ARGS';
 
 $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n", :@args);
 @lines  = lines($output);
