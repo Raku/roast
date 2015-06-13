@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 48;
 
 {
     my int $x;
@@ -172,5 +172,27 @@ plan 42;
 dies-ok { EVAL 'my int $x = Int;' }, '"my int $x = Int" dies';
 dies-ok { EVAL 'my num $x = Num;' }, '"my num $x = Num" dies';
 dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
+
+# RT #124084
+{
+    my num $a;
+    is NaN, $a, "num defaults to NaN";
+    my num32 $b;
+    #?rakudo todo 'wrong default'
+    is NaN, $b, "num32 defaults to NaN";
+    my num64 $c;
+    is NaN, $c, "num64 defaults to NaN";
+}
+
+# RT ¤124084
+#?rakudo skip 'cannot unbox to a native number'
+{
+    my num $d = 42.0;
+    is 42.0, $d, "assign 42.0 to num";
+    my num32 $e = 42.0;
+    is 42.0, $e, "assign 42.0 to num32";
+    my num64 $f = 42.0;
+    is 42.0, $f, "assign 42.0 to num64";
+}
 
 # vim: ft=perl6
