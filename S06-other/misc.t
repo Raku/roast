@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 10;
 
 #not really much of a test (no links to the spec either). Please improve, I only wrote what was required! --lue
 
@@ -38,4 +38,10 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
     is $rt117901, "nyan", "can name sub 'so-what'";
     m-bar();
     is $rt117901, "string", "can name sub 'm-bar'";
+}
+
+# RT #125376
+{
+    throws-like 'my $rt125376 = Sub.new; say $rt125376', Exception,
+        'no Segfault when creating a Sub object with .new and trying to say it';
 }
