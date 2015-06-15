@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 89;
+plan 104;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -344,5 +344,23 @@ plan 89;
     #          any( tp("bar", 1, 0), tp("bar", 2, 0)))
     is $res.Str, q{all(any("foo 1 0", "foo 2 0"), any("bar 1 0", "bar 2 0"))}, "an & junction left of a | junction will be autothreaded first";
 }
+
+ok all(1,2,3) ~~ Mu, 'all/Mu smartmatch True';
+ok all(1,2,3) ~~ Any, 'all/Any smartmatch autothreads';
+ok all(1,2,3) ~~ Cool, 'all/Cool smartmatch autothreads True';
+ok all(1,2,3) ~~ Int, 'all/Int smartmatch autothreads True';
+ok all(1,2,3) ~~ Real, 'all/Real smartmatch autothreads True';
+ok all(1.0,2,'3') !~~ Int, 'all/Int smartmatch autothreads False';
+ok all(1,2,3) ~~ Junction, 'all/Junction smartmatch does not autothread';
+
+ok any(1.0,2,'3') ~~ Int, 'any/Int smartmatch autothreads True';
+ok any(1.0,2,'3') ~~ Rat, 'any/Rat smartmatch autothreads True';
+ok any(1.0,2,'3') ~~ Str, 'any/Str smartmatch autothreads True';
+ok any(1.0,2,'3') !~~ Num, 'any/Num smartmatch autothreads False';
+ok any(1.0,2,'3') ~~ Junction, 'any/Junction smartmatch does not autothread';
+
+ok Mu !~~ Junction, 'Mu/Junction smartmatch False';
+ok Junction ~~ Junction, 'Junction/Junction smartmatch True';
+ok Junction ~~ Mu, 'Junction/Mu smartmatch True';
 
 # vim: ft=perl6

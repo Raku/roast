@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 28;
 
 
 # L<S32::Containers/Buf>
@@ -49,5 +49,9 @@ is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of cod
     is $temp[1], 0xDE3E,                   'indexing a utf16 gives correct value';
     is $temp.decode(), "\x1F63E",          'decoding utf16 Buf to original value';
 }
+
+# RT #120651
+lives-ok { "\x[effff]".encode('utf-8') },           'Can encode noncharacters to UTF-8';
+is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip with UTF-8';
 
 # vim: ft=perl6

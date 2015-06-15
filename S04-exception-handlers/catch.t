@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 30;
 
 =begin desc
 
@@ -250,5 +250,9 @@ eval-dies-ok 'try { CATCH { ~$! }; die }', "doesn't segfault";
         failing-routine;
     }, 'Two invocations of a die()ing routine should still hit the CATCH handler';
 }
+
+# RT #124191
+lives-ok { for ^1000 { die Exception.new; CATCH { default {} } } },
+    'Hot-path optimization does not break exception handling';
 
 # vim: ft=perl6

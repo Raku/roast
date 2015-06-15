@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 80;
+plan 71;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -63,7 +63,7 @@ plan 80;
 }
 
 
-# mutable (container) types, such as Scalar, Array, Hash, Buf, Routine, Module
+# mutable (container) types, such as Scalar, Array, Hash, Buf, Routine,
 # Buf nacpoi
 
 {
@@ -95,13 +95,6 @@ plan 80;
 {
  my Stash $igeda;
  isa-ok($igeda, Stash);
-}
-
-#?rakudo skip 'Module NYI RT #124459'
-#?niecza skip 'Module NYI'
-{
- my Module $brodu;
- isa-ok($brodu, Module);
 }
 
 # non-instantiable Roles such as Callable, Failure, and Integral
@@ -166,25 +159,10 @@ plan 80;
  isa-ok($nacpoi, buf);
 }
 
-# StrPos StrLen uint Nil Whatever Mu Failure
+# uint Nil Whatever Mu Failure
 # Exception Range Bag Signature Capture Blob Instant Duration
 # Keyhash SetHash BagHash Pair Mapping IO Routine Sub Method
 # Submethod Macro Match Package Module Class Role Grammar Any
-
-#?rakudo skip 'StrPos NYI RT #124468'
-#?niecza skip 'StrPos NYI'
-{
- my StrPos $pa;
- isa-ok($pa,StrPos  );
-}
-
-
-#?rakudo skip 'StrLen NYI RT #124469'
-#?niecza skip 'StrLen NYI'
-{
- my StrLen $re;
- isa-ok($re,StrLen  );
-}
 
 #?niecza skip 'No value for parameter $l in infix:<===>'
 {
@@ -361,50 +339,6 @@ plan 80;
 {
   my Proxy $krati;
   isa-ok($krati, Proxy);
-}
-
-# CharLingua Byte Char AnyChar 
-
-#?rakudo skip 'Char NYI RT #124471'
-#?niecza skip 'Char NYI'
-{
-  my Char $pav;
-  isa-ok($pav, Char);
-}
-
-#?rakudo skip 'Byte NYI RT #124472'
-#?niecza skip 'Byte NYI'
-{
-  my Byte $biv;
-  isa-ok($biv, Byte);
-}
-
-#?rakudo skip 'AnyChar NYI RT #124473'
-#?niecza skip 'AnyChar NYI'
-{
-  my AnyChar $lerfu;
-  isa-ok($lerfu, AnyChar);
-}
-
-#?rakudo skip 'CharLingua NYI RT #124474'
-#?niecza skip 'CharLingua NYI'
-{
-  my CharLingua  $lerfu;
-  isa-ok($lerfu, CharLingua );
-}
-
-#?rakudo skip 'Codepoint NYI RT #124475'
-#?niecza skip 'Codepoint NYI'
-{
-  my Codepoint $cypy;
-  isa-ok($cypy,Codepoint );
-}
-
-#?rakudo skip 'Grapheme NYI RT #124476'
-#?niecza skip 'Grapheme NYI'
-{
-  my Grapheme $gy;
-  isa-ok($gy,Grapheme );
 }
 
 # Positional Associative Ordering Ordered

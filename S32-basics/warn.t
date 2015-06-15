@@ -60,9 +60,8 @@ is_run 'use v6; try {warn("OH NOEZ") }; say "alive"',
         out => rx/alive/,
         err => rx/ 'OH NOEZ'/,
     },
-    'try does not surpress warnings';
+    'try does not suppress warnings';
 
-#?rakudo todo 'quietly NYI RT #124768'
 #?niecza todo 'quietly NYI'
 is_run 'use v6; quietly {warn("OH NOEZ") }; say "alive"',
     {
@@ -70,6 +69,6 @@ is_run 'use v6; quietly {warn("OH NOEZ") }; say "alive"',
         out => rx/alive/,
         err => '',
     },
-    'quietly does not surpress warnings';
+    'quietly suppresses warnings';
 
 # vim: ft=perl6

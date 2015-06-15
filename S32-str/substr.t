@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 70;
+plan 47;
 
 # L<S32::Str/Str/=item substr>
 
@@ -49,85 +49,29 @@ plan 70;
     is substr($str, 1, 1), 0x10427.chr, "Taking second char of Deseret string";
 }
 
-sub l (Int $a) {  my $l = $a; return $l }
-
-#Substr with StrLen
-{ # read only
-    my $str = "foobar";
-
-    is(substr($str, 0, l(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrLen)).');
-    is(substr($str, 3, l(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrLen)).');
-    is(substr($str, 0, l(1)), "f", "first char (substr(Int, StrLen)).");
-    is(substr($str, *-1, l(1)), "r", "last char (substr(Int, StrLen)).");
-    is(substr($str, *-4, l(2)), "ob", "counted from the end (substr(Int, StrLen)).");
-    is(substr($str, 1, l(2)), "oo", "arbitrary middle (substr(Int, StrLen)).");
-    is(substr($str, 3, l(6)), "bar", "length goes past end (substr(Int, StrLen)).");
-    ok(!defined(substr($str, 20, l(5))), "substr outside of string (substr(Int, StrLen)).");
-    ok(!defined(substr($str, *-100, l(5))), "... on the negative side (substr(Int, StrLen)).");
-
-    is($str, "foobar", "original string still not changed (substr(Int, StrLen)).");
-};
-
 { # misc
     my $str = "hello foo and bar";
 
-    is(substr($str, 6, l(3)), "foo", "substr (substr(Int, StrLen)).");
-    is($str.substr(6, l(3)), "foo", ".substr (substr(Int, StrLen)).");
-    is(substr("hello foo bar", 6, l(3)), "foo", "substr on literal string (substr(Int, StrLen)).");
-    is("hello foo bar".substr(6, l(3)), "foo", ".substr on literal string (substr(Int, StrLen)).");
-    is("hello foo bar".substr(6, l(3)).uc, "FOO", ".substr.uc on literal string (substr(Int, StrLen)).");
-    is("hello foo bar and baz".substr(6, l(10)).wordcase, "Foo Bar An", ".substr.wordcase on literal string (substr(Int, StrLen)).");
-    is("hello »« foo".substr(6, l(2)), "»«", ".substr on unicode string (substr(Int, StrLen)).");
-    is("שיעבוד כבר".substr(4, l(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrLen)).");
+    is(substr($str, 6, 3), "foo", "substr (substr(Int, Int)).");
+    is($str.substr(6, 3), "foo", ".substr (substr(Int, Int)).");
+    is(substr("hello foo bar", 6, 3), "foo", "substr on literal string (substr(Int, Int)).");
+    is("hello foo bar".substr(6, 3), "foo", ".substr on literal string (substr(Int, Int)).");
+    is("hello foo bar".substr(6, 3).uc, "FOO", ".substr.uc on literal string (substr(Int, Int)).");
+    is("hello foo bar and baz".substr(6, 10).wordcase, "Foo Bar An", ".substr.wordcase on literal string (substr(Int, Int)).");
+    is("hello »« foo".substr(6, 2), "»«", ".substr on unicode string (substr(Int, Int)).");
+    is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text (substr(Int, Int)).");
 }
 
-sub p (Int $a) {  my $p = $a; return $p }
-
-#Substr with StrPos
-#?rakudo skip 'StrPos NYI RT #124693'
-#?niecza skip 'StrPos tests broken'
-{ # read only
-    my $str = "foobar";
-    is(substr($str, 0, p(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrPos)).');
-    is(substr($str, 3, p(3)), '', 'Empty string with 0 as thrid arg (substr(Int, StrPos)).');
-    is(substr($str, 0, p(1)), "f", "first char (substr(Int, StrPos)).");
-
-    is(substr($str, 1, p(3)), "oo", "arbitrary middle (substr(Int, StrPos)).");
-    is(substr("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy", 1, p(2)), "MA", "substr works with named argument (substr(Int, StrPos)).");
-    is(substr($str, 3, p(6)), "bar", "length goes past end (substr(Int, StrPos)).");
-    ok(!defined(substr($str, 20, p(5))), "substr outside of string (substr(Int, StrPos)).");
-    ok(!defined(substr($str, *-100, p(5))), "... on the negative side (substr(Int, StrPos)).");
-
-    is($str, "foobar", "original string still not changed (substr(Int, StrPos)).");
-};
-
-#?rakudo skip 'StrPos NYI RT #124694'
-#?niecza skip 'StrPos tests broken'
-{ # replacement
-    my $str = "foobar";
-    substr($str, 2, p(1), "i");
-    is($str, "foibar", "fourth arg to substr replaced part (substr(Int, StrPos)).");
-
-    substr($str, 2, p(1), "a");
-    is($str, "foabar", "substr with replacement works with named argument (substr(Int, StrPos)).");
-
-    substr($str, *-1, p(1), "blah");
-    is($str, "foibablah", "longer replacement expands string (substr(Int, StrPos)).");
-
-    substr($str, 1, p(3), "");
-    is($str, "fablah", "shorter replacement shrunk it (substr(Int, StrPos)).");
-};
-
 { # misc
     my $str = "hello foo and bar";
-    is(substr($str, 6, p(3)), "foo", "substr (substr(Int, StrPos)).");
-    is($str.substr(6, p(3)), "foo", ".substr (substr(Int, StrPos)).");
-    is(substr("hello foo bar", 6, p(3)), "foo", "substr on literal string (substr(Int, StrPos)).");
-    is("hello foo bar".substr(6, p(3)), "foo", ".substr on literal string (substr(Int, StrPos)).");
-    is("hello foo bar".substr(6, p(3)).uc, "FOO", ".substr.uc on literal string (substr(Int, StrPos)).");
-    is("hello foo bar and baz".substr(6, p(10)).wordcase, "Foo Bar An", ".substr.wordcase on literal string (substr(Int, StrPos)).");
-    is("hello »« foo".substr(6, p(2)), "»«", ".substr on unicode string (substr(Int, StrPos)).");
-    is("שיעבוד כבר".substr(4, p(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrPos)).");
+    is(substr($str, 6, 3), "foo", "substr (substr(Int, Int)).");
+    is($str.substr(6, 3), "foo", ".substr (substr(Int, Int)).");
+    is(substr("hello foo bar", 6, 3), "foo", "substr on literal string (substr(Int, Int)).");
+    is("hello foo bar".substr(6, 3), "foo", ".substr on literal string (substr(Int, Int)).");
+    is("hello foo bar".substr(6, 3).uc, "FOO", ".substr.uc on literal string (substr(Int, Int)).");
+    is("hello foo bar and baz".substr(6, 10).wordcase, "Foo Bar An", ".substr.wordcase on literal string (substr(Int, Int)).");
+    is("hello »« foo".substr(6, 2), "»«", ".substr on unicode string (substr(Int, Int)).");
+    is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text (substr(Int, Int)).");
 }
 
 #?niecza todo

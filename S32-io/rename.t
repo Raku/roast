@@ -1,8 +1,6 @@
 use v6;
 use Test;
 
-plan 19;
-
 my $existing-file1 = "tempfile-rename1";
 my $existing-file2 = "tempfile-rename2";
 my $non-existent-file = "non-existent-rename";
@@ -39,7 +37,15 @@ nok $non-existent-file.IO.e, "sanity check 2";
     throws-like { $non-existent-file.IO.rename( $dest1b ) }, X::IO::Rename, '.IO.rename non-existent file';
     nok $dest1b.IO.e, "dest file doesn't exist";
 
-    ok unlink($dest1a), 'clean-up 1';
+    throws-like { $dest1b.IO.rename( $dest1a, :createonly ) },
+      X::IO::Rename, '.IO.rename createonly fail';
+    nok $dest1b.IO.e, "dest file doesn't exist";
+
+    ok $dest1a.IO.rename( $dest1b, :createonly ), '.IO.rename createonly';
+    ok $dest1b.IO.e, "dest file does exist";
+
+    ok unlink($dest1a), 'clean-up 1a';
+    ok unlink($dest1b), 'clean-up 1b';
 }
 
 # sub rename()
@@ -57,11 +63,21 @@ nok $non-existent-file.IO.e, "sanity check 2";
     throws-like { rename( $non-existent-file, $dest2b ) }, X::IO::Rename; '.IO.rename missing file';
     nok $dest2b.IO.e, "It doesn't";
 
-    ok unlink($dest2a), 'clean-up 2';
+    throws-like { rename( $dest2b, $dest2a, :createonly ) },
+      X::IO::Rename, 'rename createonly fail';
+    nok $dest2b.IO.e, "dest file doesn't exist";
+
+    ok rename( $dest2a, $dest2b, :createonly ), 'rename createonly';
+    ok $dest2b.IO.e, "dest file does exist";
+
+    ok unlink($dest2a), 'clean-up 2a';
+    ok unlink($dest2b), 'clean-up 2b';
 }
 
 # clean up
 ok unlink($existing-file1), 'clean-up 3';
 ok unlink($existing-file2), 'clean-up 4';
+
+done;
 
 # vim: ft=perl6

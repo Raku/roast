@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 129;
+plan 131;
 
 =begin pod
 
@@ -370,13 +370,11 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
-#?rakudo skip 'lower case junction RT #124842'
-#?niecza skip 'Impossible test: === takes Any'
 {
-    ok((WHAT any()) === Junction, "test WHAT on empty any junction");
-    ok(any().WHAT === Junction, "test WHAT on empty any junction");
-    ok((WHAT any(1,2)) === Junction, "test WHAT on any junction");
-    ok(any(1,2).WHAT === Junction, "test WHAT on any junction");
+    ok((WHAT any()) ~~ Junction, "test WHAT on empty any junction");
+    ok(any().WHAT ~~ Junction, "test WHAT on empty any junction");
+    ok((WHAT any(1,2)) ~~ Junction, "test WHAT on any junction");
+    ok(any(1,2).WHAT ~~ Junction, "test WHAT on any junction");
 }
 
 # Any list has junction methods
@@ -463,5 +461,10 @@ is ((<a b c>,(4,5,6)).one eq 'a b c').gist, 'one(True, False)', '.one is not fla
 nok ((4,5,6),(4,5,6,7)).none == 3, '.none is not flattening 1';
 ok (<a b c>,(4,5,6)).none eq 'a' , '.none is not flattening 2';
 is ((<a b c>,(4,5,6)).none eq 'a b c').gist, 'none(True, False)', '.none is not flattening 3';
+
+throws-like 'multi sub foo($) { }; foo(Junction)', X::Multi::NoMatch,
+    'Do not try to auto-thread Junction type object (multi case)';
+throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
+    'Do not try to auto-thread Junction type object (only case)';
 
 # vim: ft=perl6

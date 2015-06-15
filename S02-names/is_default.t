@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 114;
+plan 118;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -35,6 +35,22 @@ plan 114;
     is $d, 353, "untyped variable should be initialized";
     ok $d.VAR.default === Nil, 'is the default set correctly for $d';
 } #19
+
+# RT 125324
+{
+    my ($a, $b) is default(42);
+    is $a, 42, 'is default() works on a group of variables too (1)';
+    is $b, 42, 'is default() works on a group of variables too (2)';
+}
+#?rakudo skip 'is default on attributes'
+{
+    my class A {
+        has ($.x, $.y) is default(23);
+    }
+    my $obj = A.new(x => 5);
+    is $obj.x, 5, 'is default on attributes: basic sanity';
+    is $obj.y, 42, 'is default on attributes applies to all in a list';
+}
 
 #?niecza skip "Int is default NYI"
 # typed

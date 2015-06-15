@@ -25,7 +25,6 @@ sub fail_it { fail $^a }
 {
     my @fails = ( fail_it(1), fail_it(2), fail_it(3), fail_it(4) );
 
-    #?rakudo todo 'not full of fail?'
     ok all(@fails) ~~ Failure, '@fails is full of fail';
     ok $! !~~ Exception, 'fails do not enter $!';
     #?rakudo 11 skip '$!.pending'
