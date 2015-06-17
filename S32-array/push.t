@@ -170,11 +170,12 @@ plan 51;
     is %h<foo>, 'bar', 'pushing assignment to array-in-hash';
 }
 
-# RT 119061
+# RT #119061
 #?niecza todo "https://github.com/sorear/niecza/issues/184"
 {
     my Int @a;
-    dies-ok( { @a.push: "a" }, "cannot push strings onto in Int array" );
+    throws-like '@a.push: "a"', X::TypeCheck,
+        "cannot push strings onto in Int array";
 }
 
 # vim: syn=perl6

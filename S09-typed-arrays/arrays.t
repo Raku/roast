@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 75;
+plan 73;
 
 # L<S09/Typed arrays/>
 
@@ -164,8 +164,6 @@ plan 75;
 # RT #119061
 {
     my Int @a;
-    throws-like { @a.push: "a"; }, X::TypeCheck, '.push checks for types';
-    throws-like { @a.unshift: "a"; }, X::TypeCheck, '.unshift checks for types';
     throws-like { @a[@a.elems] = "a"; }, X::TypeCheck::Assignment,
         'assignment checks for types';
 }
