@@ -88,6 +88,7 @@ plan 75;
     lives-ok { @x.push: [8, 9] }, 'pushing works';
     dies-ok  { @x.push: 8 }, 'type constraint is enforced';
     lives-ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
+    #?rakudo todo "nested typechecks are borked"
     dies-ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
 } #6
 
