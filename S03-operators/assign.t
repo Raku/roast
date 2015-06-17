@@ -862,7 +862,6 @@ sub l () { 1, 2 };
    my $rt80614 = @b[0] = @a[1];
 
    is $rt80614, 2, 'assignment to scalar via array item from array item';
-   #?rakudo todo 'RT #80614'
    is @b[0], 2, 'assignment to array item from array item to scalar';
 }
 
