@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 73;
+plan 74;
 
 # L<S09/Typed arrays/>
 
@@ -166,6 +166,15 @@ plan 73;
     my Int @a;
     throws-like { @a[@a.elems] = "a"; }, X::TypeCheck::Assignment,
         'assignment checks for types';
+}
+
+# RT #125428
+{
+    subset Y of Int where 1..10;
+    my Y @x;
+    @x.push: 10;
+    throws-like '@x[0]++', X::TypeCheck,
+        'pushed value to typed array (using "subset") is type checked';
 }
 
 {
