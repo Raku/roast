@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 296;
+plan 299;
 
 
 # tests various assignment styles
@@ -863,6 +863,27 @@ sub l () { 1, 2 };
 
    is $rt80614, 2, 'assignment to scalar via array item from array item';
    is @b[0], 2, 'assignment to array item from array item to scalar';
+
+   my $x;
+   my @c; @c = (); # used to break chained assignment below
+   $x = @c[0] = 21;
+   is @c[0], 21, 'chained assignment works';
+
+   my @d;
+   my $y; ($y) = 1; # used to break chained assignment below
+   my $z = @d[0] = 42;
+   is @d[0], 42, 'chained assignment works';
+}
+
+# RT #125407
+{
+    my @rt125407 = 84, 85;
+    if False { # note how this never runs
+        my @ref;
+        @ref[0] = 1; # used to break chained assignment below
+    }
+    my $rt125407 = @rt125407[0] = @rt125407.pop;
+    is $rt125407, @rt125407[0], '$rt125407 and @rt125407[0] should be equal';
 }
 
 # RT #76734
