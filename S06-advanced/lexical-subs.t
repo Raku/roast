@@ -9,7 +9,8 @@ plan 11;
         my sub g(){"g"}; my sub h(){g()}; h();
     };
     is(f(), 'g', 'can indirectly call lexical sub');
-    eval-dies-ok('g', 'lexical sub not visible outside current scope');
+    throws-like 'g', X::Undeclared::Symbols,
+        'lexical sub not visible outside current scope';
 }
 
 {
@@ -64,7 +65,7 @@ plan 11;
 
 # RT #57788
 {
-    eval-dies-ok 'sub a { }; sub a { }';
+    throws-like 'sub a { }; sub a { }', X::Redeclaration;
 }
 
 # vim: ft=perl6 :
