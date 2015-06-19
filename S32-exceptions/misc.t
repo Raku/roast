@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 304;
+plan 308;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -655,5 +655,15 @@ throws-like 'my Int (Str $x);', X::Syntax::Variable::ConflictingTypes, outer => 
 
 throws-like '$k', X::Undeclared, post => '$k', highexpect => (),
     "X::Undeclared precedes the name and doesn't expect anything else";
+
+# RT #125427
+throws-like 'multi sub prefix:<|> (\a) { a.flat }', X::Syntax::Extension::SpecialForm,
+    category => 'prefix', opname => '|';
+throws-like 'multi sub infix:<=>(\a, \b) { }', X::Syntax::Extension::SpecialForm,
+    category => 'infix', opname => '=';
+throws-like 'multi sub infix:<:=>(\a, \b) { }', X::Syntax::Extension::SpecialForm,
+    category => 'infix', opname => ':=';
+throws-like 'multi sub infix:<::=>(\a, \b) { }', X::Syntax::Extension::SpecialForm,
+    category => 'infix', opname => '::=';
 
 # vim: ft=perl6
