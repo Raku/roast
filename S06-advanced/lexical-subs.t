@@ -95,7 +95,6 @@ plan 13;
         }
     };
     bar('x', 1);
-    #?rakudo.moar todo 'RT #109322'
     is $rt109322, 'zzxx', 'no lexical weirdness from blocks inside re-entrant subs (2)';
 }
 
