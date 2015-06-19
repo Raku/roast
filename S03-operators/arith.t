@@ -309,15 +309,15 @@ All uses of a zero modulus or divisor should 'die', and the
     throws-like { my $x := 0; 3 mod $x }, X::Numeric::DivideByZero,
         'Modulo zero with infix:<mod> dies and is catchable with VRef variables';
 
-    throws-like { say 3 % 0 }, X::TypeCheck::Return,
+    throws-like { say 3 % 0 }, X::Numeric::DivideByZero,
 #        expectedn => Int,
 #        gotn      => Failure,
         'Modulo zero with infix:<%> dies and is catchable';
-    throws-like { my $x = 0; say 3 % $x }, X::TypeCheck::Return,
+    throws-like { my $x = 0; say 3 % $x }, X::Numeric::DivideByZero,
 #        expectedn => Int,
 #        gotn      => Failure,
         'Modulo zero with infix:<%> dies and is catchable with VInt variables';
-    throws-like { my $x := 0; say 3 % $x }, X::TypeCheck::Return,
+    throws-like { my $x := 0; say 3 % $x }, X::Numeric::DivideByZero,
 #        expectedn => Int,
 #        gotn      => Failure,
         'Modulo zero with infix:<%> dies and is catchable with VRef variables';
