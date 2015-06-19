@@ -4,7 +4,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 9;
+plan 10;
 
 =begin desc
 
@@ -63,3 +63,11 @@ is_run( 'next; CONTROL { }',
     ok $ok, "warn causes CX::Warn control exception";
     is $msg, 'ing', "CX::Warn carries the message we warned with";
 }
+
+# RT #125339
+is_run( 'sub mention-me() { take 1; }; mention-me',
+        { status => sub { 0 != $^a },
+          out    => '',
+          err    => rx/'mention-me'/,
+        },
+        'take without gather error mentions location' );
