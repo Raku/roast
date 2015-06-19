@@ -54,7 +54,7 @@ class C does R1 does R2 {
     proto method foo(|) { * }
 }
 my $obj = C.new;
-#?rakudo 2 skip 'proto does not promote to multi RT #124847'
+#?rakudo 2 skip 'proto does not promote to multi RT #118069'
 #?niecza skip 'No candidates for dispatch to C.foo'
 is($obj.foo('a'),     1, 'method composed into multi from role called');
 #?niecza skip 'No candidates for dispatch to C.foo'
