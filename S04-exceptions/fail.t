@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 # L<S04/Exceptions/The fail function>
 
@@ -101,6 +101,13 @@ plan 26;
     }
 
     is fatal-scope(&non-fatal-scope), 42, "Fatal scopes are lexical rather than dynamic";
+}
+
+# RT #115436
+{
+    #?rakudo todo 'RT #115436'
+    throws-like 'Failure.new("foo").()', X::TypeCheck,
+        "type check for creating Failure object with '.new' (1)";
 }
 
 # vim: ft=perl6
