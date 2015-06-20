@@ -19,7 +19,6 @@ class Foo:ver<0.0.1> {
 # L<S12/Introspection/should be called through the meta object>
 
 ok(Foo.HOW.can(Foo, 'bar'), '... Foo can bar');
-#?rakudo skip 'precedence of HOW RT #125015'
 ok(HOW(Foo).can(Foo, 'bar'), '... Foo can bar (anthoer way)');
 ok(Foo.^can('bar'), '... Foo can bar (as class method)');
 ok(Foo.HOW.isa(Foo, Foo), '... Foo is-a Foo (of course)');
