@@ -32,7 +32,7 @@ isa-ok WithAttrib.new.sep, Str, 'empty attribute intilized to Str';
 {
     try { EVAL 'grammar A { token a { ... }; token a { ... } }' };
     my $error = ~$!;
-    ok $error ~~ / 'already has a Regex \'a\'' /, "duplicate methods err sanely";
+    ok $error ~~ /:i 'already has a Regex \'a\'' /, "duplicate methods err sanely";
 }
 
 # RT #125169
