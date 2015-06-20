@@ -330,7 +330,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 }
 
 # RT #120059
-#?rakudo skip 'RT #120059'
 {
     class RT120059 { has Int @.ints };
     my RT120059 $one .= new( ints => [1, 2] );
