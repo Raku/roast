@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 308;
+plan 309;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -665,5 +665,8 @@ throws-like 'multi sub infix:<:=>(\a, \b) { }', X::Syntax::Extension::SpecialFor
     category => 'infix', opname => ':=';
 throws-like 'multi sub infix:<::=>(\a, \b) { }', X::Syntax::Extension::SpecialForm,
     category => 'infix', opname => '::=';
+
+# RT #125441
+throws-like 'enum Error ( Metadata => -20); class Metadata { }', X::Redeclaration;
 
 # vim: ft=perl6
