@@ -32,8 +32,7 @@ lives-ok { 4.HOW.HOW }, 'Can access meta class of meta class';
 is Foo.^name(), 'Foo', '... the name() property is Foo';
 #?rakudo skip '.version, version number parsing RT #125017'
 is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
-#?rakudo skip '.layout RT #125018'
-is Foo.^layout, P6opaque, '^.layout';
+is Foo.REPR, 'P6opaque', '.REPR';
 
 # RT #115208
 eval-lives-ok "True.HOW.say", "can output the .gist of a .HOW";
