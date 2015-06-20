@@ -105,7 +105,6 @@ plan 27;
 
 # RT #115436
 {
-    #?rakudo todo 'RT #115436'
     throws-like 'Failure.new("foo").()', X::TypeCheck,
         "type check for creating Failure object with '.new' (1)";
 }
