@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 143;
+plan 147;
 
 =begin pod
 
@@ -317,6 +317,27 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     #?niecza todo "original not affected"
     is $a.x, 1, '...leaves original intact...';
     is $c.y, 2, '...and copies what we did not change.';
+}
+
+# RT #118559
+{
+    class RT118559 { has @.fields; };
+    my $x1 = RT118559.new( fields => ['a','b'] );
+    my $x2 = $x1.clone( :fields('c','d') );
+    #?rakudo todo 'RT #118559'
+    is $x1.fields.join('-'), 'a-b', 'original object not modified';
+    is $x2.fields.join('-'), 'c-d', 'cloned object has its own attributes';
+}
+
+# RT #120059
+#?rakudo skip 'RT #120059'
+{
+    class RT120059 { has Int @.ints };
+    my RT120059 $one .= new( ints => [1, 2] );
+    my $two = $one.clone( ints => [3, 4, 5] );
+    #?rakudo todo 'RT #118559'
+    is $one.ints.join('-'), '1-2', 'original object not modified';
+    is $two.ints.join('-'), '3-4-5', 'cloned object has new attributes';
 }
 
 # tests for *-1 indexing on classes, RT #61766
