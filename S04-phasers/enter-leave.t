@@ -234,7 +234,6 @@ plan 25;
         last;
         LEAVE $rt113950_last ~= " bye!";
     }
-    #?rakudo todo 'RT #113950'
     is $rt113950_last, "hello! bye!",
         '"last" triggers LEAVE phaser in loop';
 
