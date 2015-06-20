@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 156;
+plan 157;
 
 my $five = abs(-5);
 
@@ -344,6 +344,13 @@ All uses of a zero modulus or divisor should 'die', and the
     throws-like { my $x = 0; say 4 / $x }, X::Numeric::DivideByZero,
         numerator => 4,
         'Division by zero with infix:</> dies and is catchable with VRef variables';
+}
+
+# RT #123077
+{
+    my $rt123077 = 1 / 0;
+    throws-like '$rt123077.gist', X::Numeric::DivideByZero,
+        ".gist on '1/0' blows up with X::Numeric::DivideByZero";
 }
 
 # This is a rakudo regression wrt bignum:
