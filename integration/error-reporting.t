@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 use lib 't/spec/packages';
 
@@ -109,6 +109,14 @@ is_run 'die "foo"; END { say "end run" }',
         out    => "end run\n",
     },
     'END phasers are run after die()';
+
+# RT #123684
+is_run '{;}',
+    {
+        status => 0,
+        err    => '',
+    },
+    'empty code block does not crash (used to do that on JVM);
 
 # RT #113848
 {
