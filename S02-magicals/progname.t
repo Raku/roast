@@ -13,18 +13,18 @@ ok(PROCESS::<$PROGRAM> ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']pro
 # changed junction hack in test 2 to regex for Rakudo fudged filename - mberends
 
 #?niecza todo
-lives-ok { $*PROGRAM_NAME = "coldfusion" }, '$*PROGRAM_NAME is assignable';
+lives-ok { my $*PROGRAM-NAME = "coldfusion" }, '$*PROGRAM-NAME is assignable';
 
 # RT #113078
 {
     use lib 't/spec/packages';
     use Test::Util;
-    is_run 'print $*PROGRAM_NAME', {
+    is_run 'print $*PROGRAM-NAME', {
         out => -> $x { $x !~~ /IGNOREME/ },
     },
     :compiler-args['-IGNOREME'],
     :args['IGNOREME'],
-    '$*PROGRAM_NAME is not confused by compiler options';
+    '$*PROGRAM-NAME is not confused by compiler options';
 }
 
 
