@@ -42,8 +42,7 @@ plan 93;
 
     is A.new.colonpair_private, 8, 'colonpair with a private variable';
     is B.new.colonpair_public, 12, 'colonpair with a public variable';
-    #?rakudo skip 'Not enough positional parameters passed; got 0 but expected 1'
-    is colonpair_positional(:g<10>), 15, 'colonpair with a positional variable';
+    is colonpair_positional(10), 15, 'colonpair with a positional variable';
 }
 
 
@@ -88,7 +87,7 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
 
 # L<S06/Named arguments/multiple same-named arguments>
 #?niecza skip 'multiple same-named arguments NYI' 
-    #?rakudo skip 'multiple same-named arguments NYI'
+#?rakudo skip 'multiple same-named arguments NYI RT #124921'
 {
     sub named_array(:@x) { +«@x }
 
@@ -253,14 +252,13 @@ eval-dies-ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # L<S06/Named parameters/Bindings happen in declaration order>
-#?rakudo skip 'where constraints RT #124922'
 {
     my $t = '';
-    sub order_test($a where { $t ~= 'a' },   #OK not used
-                   $b where { $t ~= 'b' },   #OK not used
-                   $c where { $t ~= 'c' }) { 8 };   #OK not used
+    sub order_test(:$a where { $t ~= 'a' },   #OK not used
+                   :$b where { $t ~= 'b' },   #OK not used
+                   :$c where { $t ~= 'c' }) { 8 };   #OK not used
     is order_test(c => 5, a => 3, b => 2), 8,
-        'can fill positional by name';
+        'passing in three named arguments';
     ok $t ~~ /a.*b/, '$a was bound before $b';
     ok $t ~~ /a.*c/, '$a was bound before $c';
     ok $t ~~ /b.*c/, '$b was bound before $c';
