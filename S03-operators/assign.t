@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 299;
+plan 301;
 
 
 # tests various assignment styles
@@ -983,6 +983,13 @@ sub l () { 1, 2 };
     my $x //= .uc for 'a';
     is $x, 'A',
         'default-assignment (//=) does mix with implicit-variable method call';
+}
+
+# RT #125416
+{
+    sub x(*@x) { +@x }
+    is x(1.Int, my $x = 2, 3), 3, 'declarator gets its own precedence analysis (1)';
+    is x(Int(1), my $y = 2, 3), 3, 'declarator gets its own precedence analysis (2)';
 }
 
 # vim: ft=perl6
