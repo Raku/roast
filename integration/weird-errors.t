@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 15;
+plan 16;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -122,3 +122,11 @@ is_run(
        { status => 0, err => -> $o {  $o.chars > 2 }},
        'sorting method list does not segfault',
 );
+
+# RT #123684
+is_run '{;}',
+    {
+        status => 0,
+        err    => '',
+    },
+    'empty code block does not crash (used to do that on JVM)';
