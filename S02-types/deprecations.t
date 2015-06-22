@@ -26,15 +26,15 @@ Saw 4 occurrences of deprecated code.
 Deprecated since v2015.6, will be removed with release v2015.9!
 Please use \$*EXECUTABLE-NAME instead.
 --------------------------------------------------------------------------------
-\$*OSVER seen at:
-  $absPROGRAM, lines {$line + 1},{$line + 3}
-Deprecated since v2014.9, will be removed with release v2015.9!
-Please use \$*DISTRO.version instead.
---------------------------------------------------------------------------------
 \$*OS seen at:
   $absPROGRAM, lines $line,{$line + 2}
 Deprecated since v2014.9, will be removed with release v2015.9!
 Please use \$*DISTRO.name instead.
+--------------------------------------------------------------------------------
+\$*OSVER seen at:
+  $absPROGRAM, lines {$line + 1},{$line + 3}
+Deprecated since v2014.9, will be removed with release v2015.9!
+Please use \$*DISTRO.version instead.
 --------------------------------------------------------------------------------
 \$*PROGRAM_NAME seen at:
   $absPROGRAM, line {$line + 5}
