@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 34;
 
 {
     class A { method Str() { 'foo' } };
@@ -80,3 +80,11 @@ plan 32;
     lives-ok { my %h = my %x{Date}; },
         'declaring empty object hash on rhs of assignment to hash does not die with "Cannot look up attributes in a type object"';
 }
+
+# RT #125352
+{
+    is (my %h).list.perl, '()', 'empty hash listifies to "()"';
+    is (my %h{Any}).list.perl, '()', 'empty object hash listifies to "()"';
+}
+
+#vim: ft=perl6
