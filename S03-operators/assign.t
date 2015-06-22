@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 296;
+plan 303;
 
 
 # tests various assignment styles
@@ -862,8 +862,28 @@ sub l () { 1, 2 };
    my $rt80614 = @b[0] = @a[1];
 
    is $rt80614, 2, 'assignment to scalar via array item from array item';
-   #?rakudo todo 'RT #80614'
    is @b[0], 2, 'assignment to array item from array item to scalar';
+
+   my $x;
+   my @c; @c = (); # used to break chained assignment below
+   $x = @c[0] = 21;
+   is @c[0], 21, 'chained assignment works';
+
+   my @d;
+   my $y; ($y) = 1; # used to break chained assignment below
+   my $z = @d[0] = 42;
+   is @d[0], 42, 'chained assignment works';
+}
+
+# RT #125407
+{
+    my @rt125407 = 84, 85;
+    if False { # note how this never runs
+        my @ref;
+        @ref[0] = 1; # used to break chained assignment below
+    }
+    my $rt125407 = @rt125407[0] = @rt125407.pop;
+    is $rt125407, @rt125407[0], '$rt125407 and @rt125407[0] should be equal';
 }
 
 # RT #76734
@@ -963,6 +983,20 @@ sub l () { 1, 2 };
     my $x //= .uc for 'a';
     is $x, 'A',
         'default-assignment (//=) does mix with implicit-variable method call';
+}
+
+# RT #125416
+{
+    sub x(*@x) { +@x }
+    is x(1.Int, my $x = 2, 3), 3, 'declarator gets its own precedence analysis (1)';
+    is x(Int(1), my $y = 2, 3), 3, 'declarator gets its own precedence analysis (2)';
+}
+
+{
+    my (@foo,$bar);
+    @foo = $bar = 5, 10;
+    is $bar, 5, 'Chained assignment respects right associativity when evaluating left sigil for $';
+    is @foo, '5 10', 'Internal chained item assignment does not mess up outer list assignment';
 }
 
 # vim: ft=perl6

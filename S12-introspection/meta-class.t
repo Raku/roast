@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 12;
 
 =begin pod
 
@@ -19,10 +19,7 @@ class Foo:ver<0.0.1> {
 # L<S12/Introspection/should be called through the meta object>
 
 ok(Foo.HOW.can(Foo, 'bar'), '... Foo can bar');
-#?rakudo skip 'precedence of HOW RT #125015'
 ok(HOW(Foo).can(Foo, 'bar'), '... Foo can bar (anthoer way)');
-#?rakudo skip 'precedence of prefix:<^> RT #125016'
-ok(^Foo.can(Foo, 'bar'), '... Foo can bar (another way)');
 ok(Foo.^can('bar'), '... Foo can bar (as class method)');
 ok(Foo.HOW.isa(Foo, Foo), '... Foo is-a Foo (of course)');
 ok(Foo.^isa(Foo), '... Foo is-a Foo (of course) (as class method)');
@@ -34,8 +31,7 @@ lives-ok { 4.HOW.HOW }, 'Can access meta class of meta class';
 is Foo.^name(), 'Foo', '... the name() property is Foo';
 #?rakudo skip '.version, version number parsing RT #125017'
 is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
-#?rakudo skip '.layout RT #125018'
-is Foo.^layout, P6opaque, '^.layout';
+is Foo.REPR, 'P6opaque', '.REPR';
 
 # RT #115208
 eval-lives-ok "True.HOW.say", "can output the .gist of a .HOW";

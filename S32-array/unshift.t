@@ -162,11 +162,12 @@ plan 57;
 }
 
 
-# RT 119061
+# RT #119061
 #?niecza todo "https://github.com/sorear/niecza/issues/184"
 {
     my Int @a;
-    dies-ok( { @a.unshift: "a" }, "cannot unshift strings onto in Int array" );
+    throws-like '@a.unshift: "a"', X::TypeCheck,
+        "cannot unshift strings onto in Int array";
 }
 
 # vim: ft=perl6

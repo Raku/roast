@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 15;
 
 # L<S14/Traits/>
 {
@@ -78,6 +78,19 @@ plan 13;
     }
     sub wrappee($a, $b) is trait_that_wraps { 42 };
     is wrappee(1, 2), 84, 'wrapping a routine at compile time makes it soft';
+}
+
+{
+    multi trait_mod:<is>(Routine $r, :$test_trait!) {
+        $r does role { #`( I only came for the type change ) }
+    }
+    my class A {
+        submethod m() is test_trait { 42 }
+    }
+    my class B is A { }
+    is A.m, 42, 'Applying traits to submethods works';
+    throws-like { B.m }, X::Method::NotFound,
+        'Applying traits to submethods retains submethod semantics';
 }
 
 # vim: ft=perl6

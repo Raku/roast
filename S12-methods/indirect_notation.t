@@ -4,7 +4,7 @@ use Test;
 
 # L<S12/Method calls/"Indirect object notation now requires a colon after the invocant, even if there are no arguments">
 
-plan 37;
+plan 38;
 
 
 ##### Without arguments
@@ -51,6 +51,8 @@ class T2 {
     is  b($o: 21, 21), 42, "The indirect object notation call with multiple arguments with ()";
 }
 
+# RT #125440
+is EVAL('abs -42:'), 42, 'indirect object notation with colon at EOF works';
 
 # L<S12/Fancy method calls/"There are several forms of indirection for the method name">
 

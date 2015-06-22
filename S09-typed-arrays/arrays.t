@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 75;
+plan 74;
 
 # L<S09/Typed arrays/>
 
@@ -88,6 +88,7 @@ plan 75;
     lives-ok { @x.push: [8, 9] }, 'pushing works';
     dies-ok  { @x.push: 8 }, 'type constraint is enforced';
     lives-ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
+    #?rakudo todo "nested typechecks are borked"
     dies-ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
 } #6
 
@@ -163,10 +164,17 @@ plan 75;
 # RT #119061
 {
     my Int @a;
-    throws-like { @a.push: "a"; }, X::TypeCheck, '.push checks for types';
-    throws-like { @a.unshift: "a"; }, X::TypeCheck, '.unshift checks for types';
     throws-like { @a[@a.elems] = "a"; }, X::TypeCheck::Assignment,
         'assignment checks for types';
+}
+
+# RT #125428
+{
+    subset Y of Int where 1..10;
+    my Y @x;
+    @x.push: 10;
+    throws-like '@x[0]++', X::TypeCheck,
+        'pushed value to typed array (using "subset") is type checked';
 }
 
 {

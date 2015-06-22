@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 =begin pod
 
@@ -116,5 +116,9 @@ eval-dies-ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
         message => /Positional\[Int\]/,
         'error message mentions expected type when a typed array in a signature fails to bind';
 }
+
+# RT #123623
+lives-ok { EVAL 'my role A [ :$bs where { True } = 512] { }; class B does A { }' },
+    'role with where clause and default in parametric signature works out OK';
 
 # vim: ft=perl6

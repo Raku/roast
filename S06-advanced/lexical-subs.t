@@ -2,14 +2,15 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 13;
 
 {
     sub f() {
         my sub g(){"g"}; my sub h(){g()}; h();
     };
     is(f(), 'g', 'can indirectly call lexical sub');
-    eval-dies-ok('g', 'lexical sub not visible outside current scope');
+    throws-like 'g', X::Undeclared::Symbols,
+        'lexical sub not visible outside current scope';
 }
 
 {
@@ -64,7 +65,37 @@ plan 11;
 
 # RT #57788
 {
-    eval-dies-ok 'sub a { }; sub a { }';
+    throws-like 'sub a { }; sub a { }', X::Redeclaration;
+}
+
+# RT #109322
+{
+    my $rt109322;
+    sub foo ($a, $f) {
+        if $f {
+            foo('z', 0);
+        }
+        given $a {
+            $rt109322 ~= $a;
+            $rt109322 ~= $_;
+        }
+    }
+    foo('x', 1);
+    is $rt109322, 'zzxx', 'no lexical weirdness from blocks inside re-entrant subs (1)';
+
+    $rt109322 = '';
+    sub bar ($a, $f) {
+        if $f {
+            bar('z', 0);
+        }
+        {
+            $_ = $a;
+            $rt109322 ~= $a;
+            $rt109322 ~= $_;
+        }
+    };
+    bar('x', 1);
+    is $rt109322, 'zzxx', 'no lexical weirdness from blocks inside re-entrant subs (2)';
 }
 
 # vim: ft=perl6 :

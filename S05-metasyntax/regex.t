@@ -120,6 +120,6 @@ eval-lives-ok '/<[..b]>/', '/<[..b]>/ lives';
 }
 
 # RT #125302
-lives-ok { Regex.new.perl }, '"Regex.new.perl does not segfault';
+throws-like 'Regex.new.perl', Exception, '"Regex.new.perl dies but does not segfault';
 
 # vim: ft=perl6

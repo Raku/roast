@@ -389,7 +389,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #63126
-#?rakudo todo 'nom regression RT #124843'
+#?rakudo todo 'junction transformed into string before attemting to match RT #111726'
 #?DOES 2
 {
     my @a = "foo", "foot";

@@ -65,7 +65,7 @@ Basic C<pairs> tests, see S32::Containers.
         $pair.value += 100;
     } }, 'aliases returned by %hash.pairs should be rw (1)';
 
-    #?rakudo todo "Rakudo seems to make a copy rather than a reference"
+    #?rakudo todo "Rakudo seems to make a copy rather than a reference, RT #124640"
     is %hash<b>, 102, 'aliases returned by %hash.pairs should be rw (2)';
 }
 

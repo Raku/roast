@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 14;
+plan 16;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -115,3 +115,18 @@ lives-ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
         (((1220703125 * 4 + 123327057) ** 2) % 6103515625),
         "at one point rakudo evaluated the first expression to 0, RT #123570"
 }
+
+# RT #125365
+is_run(
+       '0.^methods(:all).sort',
+       { status => 0, err => -> $o {  $o.chars > 2 }},
+       'sorting method list does not segfault',
+);
+
+# RT #123684
+is_run '{;}',
+    {
+        status => 0,
+        err    => '',
+    },
+    'empty code block does not crash (used to do that on JVM)';

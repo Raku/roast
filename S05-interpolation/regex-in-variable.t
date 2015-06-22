@@ -46,7 +46,7 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 }
 
 # RT #100232
-#?rakudo skip 'escaping characters before EVAL is the wrong way to fix this RT #100232'
+#?rakudo todo 'escaping characters before EVAL is the wrong way to fix this RT #100232'
 eval-dies-ok Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbage-in recognized as being garbage (see RT)";
 
 # because it broke these:
@@ -56,7 +56,7 @@ eval-dies-ok Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbag
     is ~("foo" ~~ /<{' o ** 2 '}>/), "oo", 'returns correct Match';
 }
 
-#?rakudo skip 'and no need to go all Bobby Tables either RT #124633'
+#?rakudo todo 'and no need to go all Bobby Tables either RT #124633'
 eval-dies-ok Q['a' ~~ /<{'$(say "trivially pwned")'}>/], "should handle this too";
 
 # Arrays

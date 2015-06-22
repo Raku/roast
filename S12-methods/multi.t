@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 34;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -54,7 +54,7 @@ class C does R1 does R2 {
     proto method foo(|) { * }
 }
 my $obj = C.new;
-#?rakudo 2 skip 'proto does not promote to multi RT #124847'
+#?rakudo 2 skip 'proto does not promote to multi RT #118069'
 #?niecza skip 'No candidates for dispatch to C.foo'
 is($obj.foo('a'),     1, 'method composed into multi from role called');
 #?niecza skip 'No candidates for dispatch to C.foo'
@@ -207,6 +207,18 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
     lives-ok { B.new.foo() },
         'multis with different names but same signatures are not ambiguous';
+}
+
+# RT #74646
+{
+    my class A {
+        multi method foo($a) { "general" }
+        multi submethod foo(Str $a) { "specific" }
+    }
+    my class B is A {}
+    is A.new.foo("OH HAI"), 'specific', 'multi submethod can be called on exact instance';
+    #?rakudo todo 'RT #74646'
+    is B.new.foo("OH HAI"), 'general', 'multi submethod is not inherited';
 }
 
 # vim: ft=perl6

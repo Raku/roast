@@ -65,7 +65,7 @@ is-deeply @triplet-prods, [31875000], 'Pythagorean triplet products (dataflow)';
 
 # Problem 47
 
-BEGIN my %cache = 1 => 0;
+my %cache = 1 => 0;
 
 multi factors($n where %cache{$n}:exists) { %cache{$n} }
 multi factors($n) {

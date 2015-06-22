@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 61;
+plan 62;
 
 # type based dispatching
 #
@@ -245,6 +245,12 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     ok try { main '123e3' } eqv 123e3, "can distinguish Num-like string in main";
     ok try { main '42'    } eqv 42,    "can distinguish Int-like string in main";
     ok try { main '2+1i'  } eqv 2+1i,  "can distinguish Complex-like string in main";
+}
+
+# RT #123623
+{
+    multi foo($a where { $_ == False } = True) { }
+    lives-ok { foo(False) }, 'Combination of where clause plus default parses correctly';
 }
 
 # vim: ft=perl6
