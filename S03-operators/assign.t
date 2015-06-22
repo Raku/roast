@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 301;
+plan 303;
 
 
 # tests various assignment styles
@@ -990,6 +990,13 @@ sub l () { 1, 2 };
     sub x(*@x) { +@x }
     is x(1.Int, my $x = 2, 3), 3, 'declarator gets its own precedence analysis (1)';
     is x(Int(1), my $y = 2, 3), 3, 'declarator gets its own precedence analysis (2)';
+}
+
+{
+    my (@foo,$bar);
+    @foo = $bar = 5, 10;
+    is $bar, 5, 'Chained assignment respects right associativity when evaluating left sigil for $';
+    is @foo, '5 10', 'Internal chained item assignment does not mess up outer list assignment';
 }
 
 # vim: ft=perl6
