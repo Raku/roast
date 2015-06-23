@@ -99,10 +99,10 @@ ok("\c[BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE]\c[KATAKANA MIDDLE DOT]" ~~ m/<:
 ok("\x[8AB0]" ~~ m/^<:Ideographic>$/, q{Match <:Ideographic>} );
 ok(!( "\x[8AB0]" ~~ m/^<:!Ideographic>$/ ), q{Don't match negated <Ideographic>} );
 ok(!( "\x[8AB0]" ~~ m/^<-:Ideographic>$/ ), q{Don't match inverted <Ideographic>} );
-ok(!( "\x[9FCD]"  ~~ m/^<:Ideographic>$/ ), q{Don't match unrelated <Ideographic>} );
-ok("\x[9FCD]"  ~~ m/^<:!Ideographic>$/, q{Match unrelated negated <Ideographic>} );
-ok("\x[9FCD]"  ~~ m/^<-:Ideographic>$/, q{Match unrelated inverted <Ideographic>} );
-ok("\x[9FCD]\x[8AB0]" ~~ m/<:Ideographic>/, q{Match unanchored <Ideographic>} );
+ok(!( "A"  ~~ m/^<:Ideographic>$/ ), q{Don't match unrelated <Ideographic>} );
+ok("A"  ~~ m/^<:!Ideographic>$/, q{Match unrelated negated <Ideographic>} );
+ok("A"  ~~ m/^<-:Ideographic>$/, q{Match unrelated inverted <Ideographic>} );
+ok("A\x[8AB0]" ~~ m/<:Ideographic>/, q{Match unanchored <Ideographic>} );
 
 # IDSBinaryOperator
 
