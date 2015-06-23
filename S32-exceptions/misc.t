@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 310;
+plan 311;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -671,5 +671,8 @@ throws-like 'enum Error ( Metadata => -20); class Metadata { }', X::Redeclaratio
 
 # RT #125228
 throws-like 'sub foo() is export(WTF) { }', X::Undeclared::Symbols;
+
+# RT #125259
+throws-like 'sub x(array[Int]) { }', X::Comp::BeginTime;
 
 # vim: ft=perl6
