@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 31;
+plan 32;
 
 =begin description
 
@@ -121,6 +121,14 @@ sub make-string(@a) {
     @array[2]:delete;
     is @array.elems, 2,
         'deletion of trailing item does not purge elements we assigned to (2)';
+}
+
+# RT #125457
+{
+    my @array = 1, 2, 3;
+    @array[2]:delete;
+    @array[3] = 4;
+    is @array[2], Any, 'deletion of trailing item followed by add item beyond does not resurrect deleted item';
 }
 
 # TODO More exclusive bounds checks
