@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 12;
 
 #not really much of a test (no links to the spec either). Please improve, I only wrote what was required! --lue
 
@@ -44,4 +44,7 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
 {
     throws-like 'my $rt125376 = Sub.new; say $rt125376', Exception,
         'no Segfault when creating a Sub object with .new and trying to say it';
+    throws-like 'my $rt125376 = Sub.bless; say $rt125376', Exception,
+        'no Segfault when creating a Sub object with .bless and trying to say it';
+    throws-like 'Sub(0)', Exception, 'no Segfault when trying to invoke the Sub type object';
 }
