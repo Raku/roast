@@ -1,5 +1,5 @@
 use Test;
-plan 277;
+plan 284;
 
 my $pod_index = 0;
 
@@ -295,5 +295,11 @@ our $fancy-var = 17;
 
 test-both($fancy-var.VAR, 'Very', 'fancy!');
 )
+
+#| where constraints shouldn't
+sub has-where(Int $n where * > 10) {}
+#= prevent declarative comments
+
+test-both(&has-where, "where constraints shouldn't", 'prevent declarative comments');
 
 is $=pod.elems, $pod_index;

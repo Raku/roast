@@ -1,5 +1,5 @@
 use Test;
-plan 334;
+plan 341;
 
 my $pod_index = 0;
 
@@ -299,5 +299,11 @@ our $fancy-var = 17;
 
 test-trailing($fancy-var.VAR, 'Very fancy!');
 )
+
+# RT #125253
+sub has-where(Int $n where * > 10) {}
+#= where constraints shouldn't prevent declarative comments
+
+test-trailing(&has-where, "where constraints shouldn't prevent declarative comments");
 
 is $=pod.elems, $pod_index;
