@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 34;
+plan 36;
 
 =begin description
 
@@ -115,6 +115,13 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 {
     eval-dies-ok "enum rt_101900 < a b >; class A { }; say A but rt_101900::a",
         "Cannot mixin an enum into a class";
+}
+
+# RT #125445
+{
+    my enum Bar <A B C>;
+    ok B.can("value"), '.can(...) on an enum';
+    ok B.^can("value"), '.^can(...) on an enum';
 }
 
 # vim: ft=perl6
