@@ -184,7 +184,6 @@ plan 303;
     is($s, $t, 'chained $ = % = list assignment');
 }
 
-#?rakudo skip 'Odd number of elements found where hash expected RT #124530'
 {
     # chained $scalar = %hash = list assignment 
     my ($s, $t, %h);
