@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 34;
 
 {
     my $str = "gorch ding";
@@ -123,6 +123,13 @@ plan 33;
     substr-rw($str, 0, 3) = '/';
     is "--$str--", '--/--',
         'substr-rw handles end positions that are out of range';
+}
+
+# RT #125402
+{
+    my $s = 'foobar';
+    $s.substr-rw(3, 3) = 1;
+    is $s, 'foo1', 'assigning a non-string coerces';
 }
 
 # vim: ft=perl6
