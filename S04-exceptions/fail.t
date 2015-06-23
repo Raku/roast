@@ -31,7 +31,6 @@ plan 27;
 }
 
 # RT #64990
-#?rakudo skip 'RT #64990'
 {
     our Int sub rt64990 { fail() }
     ok rt64990() ~~ Failure, 'sub typed Int can fail()';
