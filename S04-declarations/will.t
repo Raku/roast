@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-BEGIN plan 17;
+BEGIN plan 19;
 
 # L<S04/Phasers>
 
@@ -114,6 +114,16 @@ is $same3, "aebebebc", 'all for blocks get $_';
     is $seen, 42, 'block should not have executed';
     lives-ok {my $a will compose { $seen = 1 }}, "don't know how to test yet";
     is $seen, 42, 'block should not have executed';
+}
+
+# RT #125455
+{
+    my $did-we-leave = 0;
+    class A {
+        my $boo will leave { $did-we-leave = 1 };
+        is $did-we-leave, 0, 'will leave trait on class-scoped my variable not run yet';
+    }
+    is $did-we-leave, 1, 'will leave trait on class-scoped my variable ran';
 }
 
 # vim: ft=perl6
