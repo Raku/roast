@@ -1,5 +1,7 @@
 use v6;
 
+BEGIN %*ENV<RAKUDO_DEPRECATIONS_FATAL>:delete; # disable fatal setting for tests
+
 use Test;
 
 plan 21;
