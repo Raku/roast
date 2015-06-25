@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 49;
+plan 55;
 
 # L<S32::Str/Str/=item substr>
 
@@ -78,8 +78,17 @@ plan 49;
 
     my $str = "hello foo and bar";
 
-    is(substr($str, 6..9), "foo", "substr (substr(Range)).");
-    is($str.substr(6..9), "foo", "substr (substr(Range)).");
+    is(substr($str, 6..8), "foo", "substr (substr(Range)).");
+    is($str.substr(6..8), "foo", "substr (substr(Range)).");
+
+    is(substr($str, 6^..8), "oo", "substr (substr(Range)).");
+    is($str.substr(6^..8), "oo", "substr (substr(Range)).");
+
+    is(substr($str, 6..^8), "fo", "substr (substr(Range)).");
+    is($str.substr(6..^8), "fo", "substr (substr(Range)).");
+
+    is(substr($str, 6^..^8), "o", "substr (substr(Range)).");
+    is($str.substr(6^..^8), "o", "substr (substr(Range)).");
 }
 
 #?niecza todo

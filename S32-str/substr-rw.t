@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 39;
 
 {
     my $str = "gorch ding";
@@ -120,11 +120,21 @@ plan 36;
 { # ranges
 
     my $str = 'foo';
-    substr-rw($str, 2..3) = 'x';
+    substr-rw($str, 2..2) = 'x';
     is($str, 'fox', 'substr-rw with a Range should work');
 
-    substr-rw($str, 1..2) = 'a';
-    is($str, 'fax', 'Str.substr-rw with a Range should work');
+    substr-rw($str, 1..2) = 'at';
+    is($str, 'fat', 'Str.substr-rw with a Range should work');
+
+    substr-rw($str, 0..^1) = 'h';
+    is($str, 'hat', 'Str.substr-rw with a Range should work');
+
+    substr-rw($str, 0^..1) = 'o';
+    is($str, 'hot', 'Str.substr-rw with a Range should work');
+
+    substr-rw($str, 0^..^1) = 'o';
+    is($str, 'hoot', 'Str.substr-rw with a Range should work');
+
 }
 
 # RT #114526
