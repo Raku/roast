@@ -46,7 +46,7 @@ eval-dies-ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
     try { EVAL 'sub rt72082(@a, $b) {}; rt72082(5)' }
     my $error = ~$!;
     ok $error ~~ /:i 'rt72082(Int)' .*? /, "too few args reports call profile";
-    ok $error ~~ /:i '(@a, Any $b)' /, "too few args reports declared signature";
+    ok $error ~~ /:i '(@a, $b)' /, "too few args reports declared signature";
     ok $error ~~ /signature/, "too few args mentions signature";
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }

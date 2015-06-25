@@ -490,7 +490,7 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
     {
         my $code = q[ sub foo($x) { }; foo; ];
         throws-like $code, X::TypeCheck::Argument,
-            signature => rx/ '(Any $x)' /, 
+            signature => rx/ '($x)' /, 
             objname   => { m/foo/ };
     }
 
