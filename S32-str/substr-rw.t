@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 36;
 
 {
     my $str = "gorch ding";
@@ -116,6 +116,16 @@ plan 34;
     $str.substr-rw(2,1) = 'x';
     is($str, 'fox', 'method form of substr-rw works');
 };
+
+{ # ranges
+
+    my $str = 'foo';
+    substr-rw($str, 2..3) = 'x';
+    is($str, 'fox', 'substr-rw with a Range should work');
+
+    substr-rw($str, 1..2) = 'a';
+    is($str, 'fax', 'Str.substr-rw with a Range should work');
+}
 
 # RT #114526
 {

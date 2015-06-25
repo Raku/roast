@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 49;
 
 # L<S32::Str/Str/=item substr>
 
@@ -72,6 +72,14 @@ plan 47;
     is("hello foo bar and baz".substr(6, 10).wordcase, "Foo Bar An", ".substr.wordcase on literal string (substr(Int, Int)).");
     is("hello »« foo".substr(6, 2), "»«", ".substr on unicode string (substr(Int, Int)).");
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text (substr(Int, Int)).");
+}
+
+{ # ranges
+
+    my $str = "hello foo and bar";
+
+    is(substr($str, 6..9), "foo", "substr (substr(Range)).");
+    is($str.substr(6..9), "foo", "substr (substr(Range)).");
 }
 
 #?niecza todo
