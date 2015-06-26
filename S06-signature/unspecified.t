@@ -17,26 +17,23 @@ dies-ok { EVAL("simple( 'india' )") },
         'sub with no signature dies when given positional argument';
 
 sub positional { @_[0] }
-#?rakudo todo 'RT #125486 autogenned sigs do not have multi-invocant set'
 is &positional.signature.perl, ':(*@_)',
-   'signature is :(Mu *@_) when none is specified and @_ is used';
+   'signature is :(Mu *@_) when none is specified and @_ is used, RT #125486';
 is positional( 'alpha' ), 'alpha', 'can call sub with positional param used';
 nok positional().defined, 'sub using positional param called with no params';
 dies-ok { positional( :victor<whiskey> ) },
    'sub using positional param called with named param';
 
 sub named { %_<bravo> }
-#?rakudo todo 'RT #125486 autogenned sigs do not have multi-invocant set'
 is &named.signature.perl, ':(*%_)',
-   'signature is :(Mu *%_) when none is specified and %_ is used';
+   'signature is :(Mu *%_) when none is specified and %_ is used, RT #125486';
 is named( :bravo<charlie> ), 'charlie', 'can call sub with named param used';
 nok named().defined, 'named param sub is callable with no params';
 dies-ok { named( 'zulu' ) }, 'named param sub dies with positional param';
 
 sub both { @_[1] ~ %_<delta> }
-#?rakudo todo 'RT #125486 autogenned sigs do not have multi-invocant set'
 is &both.signature.perl, ':(*@_, *%_)',
-   'signature is :(Mu *@_, Mu *%_) when none is specified and @_ and %_ are used';
+   'signature is :(Mu *@_, Mu *%_) when none is specified and @_ and %_ are used, RT #125486';
 is both( 'x', :delta<echo>, 'foxtrot' ), 'foxtrotecho',
    'can call sub with both named and positional params used';
 is both(), '',
