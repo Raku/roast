@@ -66,8 +66,8 @@ if $*DISTRO.name eq any <linux Linux darwin solaris mswin32 macosx> { # please a
     my $is-win;
     $is-win = True if $*DISTRO.name eq 'mswin32';
     my $runner = $is-win
-        ?? "SET PERL6_BINARY={$*EXECUTABLE_NAME.path.absolute} &&"
-        !! "PERL6_BINARY={$*EXECUTABLE_NAME.path.absolute}";
+        ?? "SET PERL6_BINARY={$*EXECUTABLE-NAME.IO.absolute} &&"
+        !! "PERL6_BINARY={$*EXECUTABLE-NAME.IO.absolute}";
 
     # test 2 does echo protocol - Internet RFC 862
     if $is-win {
