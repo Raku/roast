@@ -70,6 +70,7 @@ plan 13;
     my (@c) = @a;
     my $i = 0;
     $i++ for @c;
+    # XXX this test appears to be bogus to me, as there is no signature involved
     is $i, 3, 'asigning to an array in a signature is sane';
 }
 
