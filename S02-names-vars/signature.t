@@ -44,7 +44,6 @@ plan 13;
 
     ok ~$signature,
         "a signature stringifies";
-    #?rakudo todo 'eqv on signatures'
     ok $signature eqv &foo1.signature,
         "a subroutine's signature can be accessed via .signature (1)";
 }
@@ -54,7 +53,6 @@ plan 13;
     my sub foo (Num $a, $b?, *@rest) {}    #OK not used
     my $signature = :(Num $a, $b?, *@rest);
 
-    #?rakudo todo 'eqv on signatures'
     ok $signature eqv &foo.signature ,
         "a subroutine's signature can be accessed via .signature (2)";
 }
