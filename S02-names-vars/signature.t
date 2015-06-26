@@ -5,7 +5,7 @@ use Test;
 plan 13;
 
 # The :() form constructs signatures similar to how \() constructs Captures.
-# A subroutine's .signature is a Siglist object.
+# A subroutine's .signature is a Signature object.
 
 #L<S02/Names and Variables/"A signature object">
 
@@ -37,7 +37,7 @@ plan 13;
     ok(!$x.defined, "complex siglist bindings works (2)");
 }
 
-# &sub.signature should return a Siglist object
+# &sub.signature should return a Signature object
 {
     sub foo1 ($a, $b) {}    #OK not used
     my $siglist = :($a, $b);
