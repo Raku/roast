@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;
-plan 46;
+plan 50;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -177,6 +177,19 @@ plan 46;
     'x' ~~ /(y)? (z)*/;
     is $0.defined, False, 'quantifier ? matching 0 values returns Nil';
     is $1.defined, True, 'quantifier * matching 0 values returns empty list';
+}
+
+# RT #125345
+{
+    my $*guard = 0;
+    grammar Foo1 { regex TOP { [a | [ "[" <R> b? "]" ]]+ % b { die if $*guard++ > 500 } }; regex b { b }; regex R { <TOP>+ % [ <.b>? "/" ] } };
+    is Foo1.parse("[aba]").gist,  "｢[aba]｣\n R => ｢aba｣\n  TOP => ｢aba｣",  '(non-)capturing subrules advance cursor position (1)';
+    is Foo1.parse("[abab]").gist, "｢[abab]｣\n R => ｢aba｣\n  TOP => ｢aba｣", '(non-)capturing subrules advance cursor position (2)';
+
+    $*guard = 0;
+    grammar Foo2 { regex TOP { [a | [ "[" <R> b? "]" ]]+ % b { die if $*guard++ > 500 } }; regex b { b }; regex R { <TOP>+ % [ <b>? "/" ] } };
+    is Foo2.parse("[aba]").gist,  "｢[aba]｣\n R => ｢aba｣\n  TOP => ｢aba｣",  '(non-)capturing subrules advance cursor position (3)';
+    is Foo2.parse("[abab]").gist, "｢[abab]｣\n R => ｢aba｣\n  TOP => ｢aba｣", '(non-)capturing subrules advance cursor position (4)';
 }
 
 # vim: ft=perl6
