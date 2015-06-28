@@ -2,7 +2,7 @@ use v6;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;
-plan 54;
+plan 56;
 
 # L<S06/Signature Introspection>
 
@@ -144,6 +144,15 @@ sub j(*@i) {
 {
     is_run q[sub wtvr(|) {}; &wtvr.perl], { err => "", out => "" }, ".perl on unnamed | parameters doesn't err";
     is_run q[sub prcl(\\) {}; &prcl.perl], { err => "", out => "" }, ".perl on unnamed \\ parameters doesn't err";
+}
+
+# RT #125482
+{
+    sub rt125482($a;; $b) { 42 };
+    is &rt125482.signature.gist, '($a;; $b)',
+        '";;" in signature stringifies correctly using .gist';
+    is &rt125482.signature.perl, ':($a;; $b)',
+        '";;" in signature stringifies correctly using .perl';
 }
 
 # vim: ft=perl6
