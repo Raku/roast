@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 use lib 't/spec/packages';
 
@@ -136,6 +136,18 @@ is_run 'die "foo"; END { say "end run" }',
     # for .t here
     ok any($bt>>.file) ~~ /'error-reporting'\./, 'found script file name in the backtrace';
 
+}
+
+# RT #125495
+{
+    is_run 'class RT125495 {
+            sub foo( $class, \@args, $object_name ) is export { 42 }
+        }',
+        {
+            status  => { $_ != 0 },
+            out     => '',
+            err     => all(rx:i/obsolete/, rx/'at' \N+ ':2'/),
+        }, 'Error for obsolete syntax contains line number';
 }
 
 # vim: ft=perl6
