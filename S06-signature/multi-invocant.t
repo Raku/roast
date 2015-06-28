@@ -66,7 +66,7 @@ plan 25;
     sub none(;; $a) { }
     my @params = &none.signature.params;
     is +@params, 1, 'one non-multi positional';
-    #?rakudo todo 'seems we cannot handle no multi-invocant case anymore'
+    # RT #125502
     nok @params[0].multi-invocant, 'is positional *not* a multi-invocant';
 } #2
 
