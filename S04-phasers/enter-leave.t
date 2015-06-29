@@ -5,7 +5,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 25;
+plan 27;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -245,5 +245,10 @@ plan 25;
     is $rt113950_next, "hello! yay! yay! yay!",
         '"next" triggers LEAVE phaser in "for" loop';
 }
+
+# RT #116102
+is ENTER { 42 }, 42, 'ENTER works as an r-value (mainline)';
+sub enter-test() { ENTER 'SANDMAN' }
+is enter-test(), 'SANDMAN', 'ENTER works as an r-value (sub)';
 
 # vim: ft=perl6
