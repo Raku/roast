@@ -2,7 +2,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 33;
+plan 36;
 
 my $precomp-ext    := $*VM.precomp-ext;
 my $precomp-target := $*VM.precomp-target;
@@ -295,6 +295,39 @@ unlink $_ for @precomp-paths; # don't care if worked
       "use $module-name; say 42;",
       { err    => '',
         out    => "42\n",
+        status => 0,
+      },
+      :compiler-args[
+        '-I', 't/spec/packages'
+      ],
+      'precompile load - from the command line';
+
+    unlink $output-path; # don't care if failed
+}
+
+# RT #125245
+{
+    my $module-name = 'RT125245';
+    my $output-path = "t/spec/packages/" ~ $module-name ~ '.pm.' ~ $precomp-ext;
+    unlink $output-path; # don't care if failed
+
+    is_run
+      'subset File of Str; my File $in = "README.md";',
+      { err    => '',
+        out    => '',
+        status => 0,
+      },
+      :compiler-args[
+        '--target', $precomp-target,
+        '--output', $output-path,
+      ],
+      'precomp of assignment to variable using subset type';
+    ok $output-path.IO.e, "did we create a $output-path";
+
+    is_run
+      "use $module-name; say 'wurst!';",
+      { err    => '',
+        out    => "wurst!\n",
         status => 0,
       },
       :compiler-args[
