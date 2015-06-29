@@ -187,8 +187,6 @@ my @tests = (
     is $ch, 100.chr, ".perl on latin character";
     $ch = '';
 
-#?rakudo.moar 2 todo 'RT #125110'
-
     lives-ok { $ch = EVAL 780.chr.perl }, '780.chr.perl - lives';
     is $ch, 780.chr, ".perl on composing character";
 }
