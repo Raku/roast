@@ -186,11 +186,11 @@ isa-ok  1|2 === 1, Junction,  '=== does autothread (2)';
 {
     my $a = do {
         my role A { };
-        1 but A;
+        "x" but A;
     };
     my $b = do {
         my role A { };
-        1 but A;
+        "x" but A;
     };
     #?rakudo todo '.WHICH based on type names'
     nok $a === $b, 'two lexical roles come out as different when compared with ===';
