@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 29;
 
 {
     my $capture = \(1,2,3);
@@ -156,6 +156,20 @@ nok (defined  \()[0]), '\()[0] is not defined';
     sub f(|everything) { everything.perl };
     my %h = :a, :b, :!c;
     ok f(%h) ~~ /'\(' \s* '{'/, 'Hashes not flattened into capture list';
+}
+
+# RT #125505
+{
+    my $a = 41;
+    my $c = \$a;
+    $c[0]++;
+    is $a, 42, 'Can modify Capture positional elements';
+}
+{
+    my $a = 41;
+    my $c = \(:$a);
+    $c<a>++;
+    is $a, 42, 'Can modify Capture associative elements';
 }
 
 # vim: ft=perl6
