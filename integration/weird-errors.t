@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 16;
+plan 17;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -130,3 +130,17 @@ is_run '{;}',
         err    => '',
     },
     'empty code block does not crash (used to do that on JVM)';
+
+# RT #125227
+{
+    my $code = q:to'--END--';
+        class C {
+            has $!x is rw;
+        }
+        --END--
+    is_run(
+        $code,
+        { status => 0, err => -> $o { $o ~~ /useless/ && $o ~~ /':2'/ } },
+        'useless use of is rw reported on meaningful line'
+    );
+}
