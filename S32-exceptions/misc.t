@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 317;
+plan 318;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -684,5 +684,8 @@ throws-like 'my class C { my method foo { say "OMG" }; my method foo { say "WTF"
 throws-like 'my class C { our method foo { say "OMG" }; our method foo { say "WTF" } }', X::Redeclaration;
 throws-like 'my grammar G { my token foo { OMG }; my token foo { WTF } }', X::Redeclaration;
 throws-like 'my grammar G { our token foo { OMG }; our token foo { WTF } }', X::Redeclaration;
+
+# RT #125335
+throws-like 'use fatal; +("\b" x 10)', X::Str::Numeric, source-indicator => /'\b'/;
 
 # vim: ft=perl6
