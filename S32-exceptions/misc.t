@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 312;
+plan 317;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -677,5 +677,12 @@ throws-like 'sub x(array[Int]) { }', X::Comp::BeginTime;
 
 # RT #125120
 throws-like 'enum X <A>; sub foo(A $a) { True', X::Syntax::Missing;
+
+# RT #108462
+throws-like '{ our sub foo { say "OMG" } }; { our sub foo { say "WTF" } };', X::Redeclaration;
+throws-like 'my class C { my method foo { say "OMG" }; my method foo { say "WTF" } }', X::Redeclaration;
+throws-like 'my class C { our method foo { say "OMG" }; our method foo { say "WTF" } }', X::Redeclaration;
+throws-like 'my grammar G { my token foo { OMG }; my token foo { WTF } }', X::Redeclaration;
+throws-like 'my grammar G { our token foo { OMG }; our token foo { WTF } }', X::Redeclaration;
 
 # vim: ft=perl6
