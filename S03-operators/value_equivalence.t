@@ -14,7 +14,7 @@ false, and C<[1,2] eqv [1,2]> returns true.
 
 # L<S03/"Chaining binary precedence" /Value identity>
 
-plan 75;
+plan 85;
 
 # === on values
 {
@@ -40,6 +40,12 @@ plan 75;
   ok 0.5e0 !=== 1.5e0,           "!=== on Nums";
   isa-ok 0.5e0 === 0.5e0, Bool,  "=== on Nums yields Bool";
   isa-ok 0.5e0 !=== 1.5e0, Bool, "!=== on Nums yields Bool";
+  ok 1i === 1i,                  "=== on Complex (1)";
+  ok 2 + 4i === 2 + 4i,          "=== on Complex (2)";
+  ok 1i !=== 2i,                 "!=== on Complex (1)";
+  ok 2 + 4i !=== 3 + 4i,         "!=== on Complex (2)";
+  isa-ok 1i === 1i, Bool,        "=== on Complexes yields Bool";
+  isa-ok 1i !=== 2i, Bool,       "!=== on Complexes yields Bool";
 }
 
 # Value types
@@ -188,6 +194,13 @@ isa-ok  1|2 === 1, Junction,  '=== does autothread (2)';
     };
     #?rakudo todo '.WHICH based on type names'
     nok $a === $b, 'two lexical roles come out as different when compared with ===';
+}
+
+{
+    nok 1 === 1 but role { },     '=== on Int correctly demands exact type match';
+    nok 1e1 === 1e1 but role { }, '=== on Num correctly demands exact type match';
+    nok 1/2 === 1/2 but role { }, '=== on Rat correctly demands exact type match';
+    nok 1i === 1i but role { },   '=== on Complex correctly demands exact type match';
 }
 
 # vim: ft=perl6
