@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 93;
+plan 95;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -300,6 +300,17 @@ eval-dies-ok 'sub svn28865( :$a, :@a ) {}',
     }
     my %h = '' => 500;
     is named_empty(|%h), 42, 'can call function with empty named argument';
+}
+
+# RT #77788
+{
+    sub rt77788 (*%p) { %p<a> };
+    is rt77788(a => 'b', a => 'c'), 'c',
+        'can pass in several same-named arguments to sub, sigils other than "@" bind to last argument (1)';
+    my %h = a => 'b';
+    #?rakudo.moar todo 'RT #77788'
+    is rt77788(|%h, a => 'c'), 'c',
+        'can pass in several same-named arguments to sub, sigils other than "@" bind to last argument (2)';
 }
 
 # vim: ft=perl6
