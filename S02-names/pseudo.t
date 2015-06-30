@@ -251,8 +251,8 @@ plan 142;
 #RT #89706
 #?niecza skip "readonly"
 {
-    $PROCESS::PROGRAM_NAME = "otter";
-    is $*PROGRAM_NAME, "otter", 'existing $* assignable via PROCESS';
+    $PROCESS::PROGRAM-NAME = "otter";
+    is $*PROGRAM-NAME, "otter", 'existing $* assignable via PROCESS';
     $PROCESS::SOME_OTHER_VAR = "else";
     is $*SOME_OTHER_VAR, "else", 'new $* assignable via PROCESS';
 }
