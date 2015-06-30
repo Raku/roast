@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 29;
+plan 30;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -130,6 +130,8 @@ eval-dies-ok 'sub opt($a = 1, $b) { }',
 {
     throws-like 'sub foo(Int $x = "omg") { }', X::Parameter::Default::TypeCheck,
         'Catch impossible default types at compile time';
+    throws-like 'sub foo(Bool $b = sub { False }) {}', X::Parameter::Default::TypeCheck,
+        'Catch impossible default types at compile time (code object)';
 }
 
 # vim: ft=perl6
