@@ -15,7 +15,6 @@ ok 'ab)d'  !~~ m/<&t1>/, '~ and constant atoms (missing opening bracket)';
 ok '(a)d'  !~~ m/<&t1>/, '~ and constant atoms (wrong content)';
 # this shouldn't throw an exception. See here:
 # http://irclog.perlgeek.de/perl6/2009-01-08#i_816425
-#?rakudo skip 'should not throw exceptions RT #62086'
 #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
 
@@ -29,7 +28,6 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok '(aa)'   ~~ m/^ <&recursive> $/, 'recursive "(aa)"';
     ok '(a(a))' ~~ m/^ <&recursive> $/, 'recursive "(a(a))"';
     ok '(()())' ~~ m/^ <&recursive> $/, 'recursive "(()())"';
-    #?rakudo 4 skip 'should not throw exceptions'
     #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '('     !~~ m/^ <&recursive> $/, '"(" is not matched';
     #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
@@ -48,7 +46,6 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok '(aa)'   ~~ m/^ <&m1> $/, 'mutually recursive "(aa)"';
     ok '(a(a))' ~~ m/^ <&m1> $/, 'mutually recursive "(a(a))"';
     ok '(()())' ~~ m/^ <&m1> $/, 'mutually recursive "(()())"';
-    #?rakudo 3 skip 'exceptions from regexes'
     #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '('     !~~ m/^ <&m1> $/, '"(" is not matched';
     #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
@@ -58,7 +55,6 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok 'a()'   !~~ m/^ <&m1> $/, '"a()" is not matched';
 }
 
-#?rakudo skip 'backtracking into ~ RT #124949'
 #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 {
     my regex even_a { ['a' ~ 'a' <&even_a> ]? };
@@ -66,12 +62,11 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok 'aaa' !~~ m/^ <&even_a> $ /, 'backtracking into tilde rule (2)';
 }
 
-#?rakudo skip 'backtracking to find ~ goal RT #124950'
 #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 {
     my regex even_b { 'a' ~ 'a' <&even_b>? };
-    ok 'aaaa' ~~ m/^ <&even_b> /, 'tilde regex backtracks to find its goal';
-    ok 'aaa' !~~ m/^ <&even_b> /, '...and fails for odd numbers';
+    ok 'aaaa' ~~ m/^ <&even_b> $/, 'tilde regex backtracks to find its goal';
+    ok 'aaa' !~~ m/^ <&even_b> $/, '...and fails for odd numbers';
 }
 
 {
