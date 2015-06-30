@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 28;
+plan 29;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -124,6 +124,12 @@ eval-dies-ok 'sub opt($a = 1, $b) { }',
     throws-like { EVAL q[ sub foo($x is rw = 42) {} ] }, Exception,
         message => "Cannot use 'is rw' on an optional parameter",
         'making an "is rw" parameter optional dies with adequate error message';
+}
+
+# RT #112922
+{
+    throws-like 'sub foo(Int $x = "omg") { }', X::Parameter::Default::TypeCheck,
+        'Catch impossible default types at compile time';
 }
 
 # vim: ft=perl6
