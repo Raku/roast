@@ -88,7 +88,8 @@ eval-dies-ok 'sub opt($a = 1, $b) { }',
     sub opt-type1(Int $x?) { $x };
     ok opt-type1() === Int,
         'optional param with type constraints gets the right value';
-    sub opt-type2(Int $x = 'str') { };  #OK not used
+    my $default = 'str';
+    sub opt-type2(Int $x = $default) { };  #OK not used
     dies-ok { EVAL('opt-type2()') }, 'default values are type-checked';
 }
 
