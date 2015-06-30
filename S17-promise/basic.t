@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 23;
 
 {
     my $p = Promise.new;
@@ -43,4 +43,9 @@ plan 22;
     my $vowname = $p.vow.^name;
 
     ok Promise.WHO{$vowname} :!exists, "the nested Vow class is lexically scoped";
+}
+
+# RT #125257
+{
+    throws-like 'await', Exception, 'bare "await" dies';
 }
