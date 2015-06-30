@@ -233,7 +233,7 @@ plan 76;
     my $y = 6;
     @rt81682[2] := $y;
     is ~@rt81682, '5 1 6',
-        'can bind element of typed array to scalar container of same type (but not explicitely typed)';
+        'can bind element of typed array to scalar container of same type (but not explicitly typed)';
 }
 
 # vim: ft=perl6
