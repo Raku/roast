@@ -99,12 +99,12 @@ END RESULTS
 
 like(qq:!s"It costs $10 to {<eat nom>.pick} here.", /^'It costs $10 to '[eat|nom]' here.'$/), 'quoting features';
 
-is Q{$*OS\n&sin(3)}, q:to"END".chomp;
-$*OS\n&sin(3)
+is Q{$*DISTRO.name\n&sin(3)}, q:to"END".chomp;
+$*DISTRO.name\n&sin(3)
 END
 
-like(Q:s{$*OS\n&sin(3)}, /\w+ .*? '\n&sin(3)'/), 'Q:s(...)';
+like(Q:s{$*DISTRO.name\n&sin(3)}, /\w+ .*? '\n&sin(3)'/), 'Q:s(...)';
 
-like(Q:s:b{$*OS\n&sin(3)}, /\w+ .*? \n '&sin(3)'/), 'Q:s:b(...)';
+like(Q:s:b{$*DISTRO.name\n&sin(3)}, /\w+ .*? \n '&sin(3)'/), 'Q:s:b(...)';
 
-like(Q:s:b:f{$*OS\n&sin(3)}, /\w+ .*? \n '0.14112'\d+$/), 'Q:s:b:f(...)';
+like(Q:s:b:f{$*DISTRO.name\n&sin(3)}, /\w+ .*? \n '0.14112'\d+$/), 'Q:s:b:f(...)';

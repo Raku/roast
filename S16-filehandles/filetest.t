@@ -34,11 +34,11 @@ ok $*PROGRAM.IO ~~ :w,  "~~:w returns true on writable files";
 if $*DISTRO.is-win {
   skip "win32 doesn't have ~~:x", 2;
 } else {
-  if $*EXECUTABLE_NAME.IO ~~ :e {
-    ok $*EXECUTABLE_NAME.IO ~~ :x, "~~:x returns true on executable files";
+  if $*EXECUTABLE-NAME.IO ~~ :e {
+    ok $*EXECUTABLE-NAME.IO ~~ :x, "~~:x returns true on executable files";
   }
   else {
-    skip "'$*EXECUTABLE_NAME' is not present (interactive mode?)", 1;
+    skip "'$*EXECUTABLE-NAME' is not present (interactive mode?)", 1;
   }
   ok 't'.IO ~~ :x,    "~~:x returns true on cwd()able directories";
 }

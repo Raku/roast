@@ -168,7 +168,7 @@ class MMT2 is MMT1 {
 is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find next one up';
 
 {
-    isa_ok MMT1.new.?nonexistent(), Nil, '.?nonexisent() returns Nil';
+    isa-ok MMT1.new.?nonexistent(), Nil, '.?nonexisent() returns Nil';
 }
 
 eval-dies-ok '1.*WHAT', '.WHAT is a macro and cannoted be .*ed';
