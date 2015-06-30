@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 29;
 
 # L<S05/New metacharacters/"The ~ operator is a helper for matching
 # nested subrules with a specific terminator">
@@ -73,5 +73,9 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     "abc" ~~ /a ~ (c) (b)/;
     is ($0,$1), ("c","b"), "~ operator in regexp does not revert capture order";
 }
+
+# RT #72440
+ok "(f)oo" ~~ /^ \( ~ \) foo $/, 'Only take single atom after goal (1)';
+nok "(fo)o" ~~ /^ \( ~ \) foo $/, 'Only take single atom after goal (2)';
 
 # vim: ft=perl6
