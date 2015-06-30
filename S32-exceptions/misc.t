@@ -24,7 +24,7 @@ throws-like 'qr/a/', X::Obsolete, old => rx/<<qr>>/, replacement => rx/<<rx>>/;
 throws-like '"a" . "b"', X::Obsolete, replacement => '~';
 throws-like 's/a/b/i', X::Obsolete;
 # RT #112470
-throws-like 'my ${a} = 5', X::Obsolete;
+throws-like 'my $a; ${a} = 5', X::Obsolete;
 
 throws-like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws-like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
