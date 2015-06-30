@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 30;
+plan 31;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -127,11 +127,15 @@ eval-dies-ok 'sub opt($a = 1, $b) { }',
 }
 
 # RT #112922
+# RT #123897
 {
     throws-like 'sub foo(Int $x = "omg") { }', X::Parameter::Default::TypeCheck,
         'Catch impossible default types at compile time';
     throws-like 'sub foo(Bool $b = sub { False }) {}', X::Parameter::Default::TypeCheck,
         'Catch impossible default types at compile time (code object)';
+    throws-like 'my class BSON::Javascript { }; multi c1 (BSON::Javascript :$js2 = "") { }',
+        X::Parameter::Default::TypeCheck,
+        'Catch impossible default types at compile time (multi)';
 }
 
 # vim: ft=perl6
