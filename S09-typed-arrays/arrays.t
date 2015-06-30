@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 74;
+plan 76;
 
 # L<S09/Typed arrays/>
 
@@ -221,6 +221,19 @@ plan 74;
     }
     is-deeply RT121804, Array[Hash].new({:x<y>, :y<z>, :w<c>}, {:x<y>, :y<t>, :w<c>}, {:x<y>, :y<z>, :w<h>}),
         "Can assign to and return Array[Hash] from type-constrained sub";
+}
+
+# RT #81682
+{
+    my Int @rt81682 = ^3;
+    my Int $x = 5;
+    @rt81682[0] := $x;
+    is ~@rt81682, '5 1 2',
+        'can bind element of typed array to scalar container of same type';
+    my $y = 6;
+    @rt81682[2] := $y;
+    is ~@rt81682, '5 1 6',
+        'can bind element of typed array to scalar container of same type (but not explicitely typed)';
 }
 
 # vim: ft=perl6
