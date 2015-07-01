@@ -29,7 +29,7 @@ plan 22;
     is-deeply @b[1000], False, 'array default';
 }
 
-throws-like { EVAL 'my Bool $a is default(42)' }, X::TypeCheck::Assignment;
+throws-like 'my Bool $a is default(42)', X::Parameter::Default::TypeCheck;
 lives-ok { EVAL 'my Bool $a is default(True)' }, 'eval type check';
 
 {

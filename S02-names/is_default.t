@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 118;
+plan 107;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -70,18 +70,7 @@ plan 118;
     my Int $b is default(42) = 768;
     is $b, 768, "typed variable should be initialized";
     is $b.VAR.default, 42, 'is the default set correctly for Int $b';
-
-    my Int $c is default(Nil);
-    ok $c.VAR.default === Nil, 'is the default set correctly for Int $c';
-    lives-ok { $c++ }, 'should be able to increment typed variable';
-    is $c, 1, "typed variable should be incremented";
-    lives-ok { $c = Nil }, "should be able to assign Nil to typed variable";
-    ok $c === Nil, 'is the default value correctly reset for Int $c';
-
-    my Int $d is default(Nil) = 353;
-    is $d, 353, "typed variable should be initialized";
-    ok $d.VAR.default === Nil, 'is the default set correctly for Int $d';
-} #19
+} #11
 
 #?niecza skip "is default NYI"
 # not specifically typed
@@ -132,18 +121,7 @@ plan 118;
     my Int @b is default(42) = 768;
     is @b[0], 768, "typed array element should be initialized";
     is @b.VAR.default, 42, 'is the default set correctly for Int @b';
-
-    my Int @c is default(Nil);
-    ok @c.VAR.default === Nil, 'is the default set correctly for Int @c';
-    lives-ok { @c[0]++ }, 'should be able to increment typed variable';
-    is @c[0], 1, "typed variable should be incremented";
-    lives-ok { @c[0] = Nil }, "able to assign Nil to typed variable";
-    ok @c[0] === Nil, 'is the default value correctly reset for Int @c[0]';
-
-    my Int @d is default(Nil) = 353;
-    is @d[0], 353, "typed variable should be initialized";
-    ok @d.VAR.default === Nil, 'is the default set correctly for Int @d';
-} #19
+} #12
 
 #?niecza skip "is default NYI"
 # not specifically typed
@@ -194,17 +172,60 @@ plan 118;
     my Int %b is default(42) = o => 768;
     is %b<o>, 768, "typed hash element should be initialized";
     is %b.VAR.default, 42, 'is the default set correctly for Int %b';
+} #12
 
-    my Int %c is default(Nil);
-    ok %c.VAR.default === Nil, 'is the default set correctly for Int %c';
-    lives-ok { %c<o>++ }, 'should be able to increment typed variable';
-    is %c<o>, 1, "typed variable should be incremented";
-    lives-ok { %c<o> = Nil }, "able to assign Nil to typed variable";
-    ok %c<o> === Nil, 'is the default value correctly reset for Int %c<o>';
+#?niecza skip "is default NYI"
+# type mismatches in setting default
+{
+    throws-like 'my Int $a is default("foo")',
+      X::Parameter::Default::TypeCheck,
+      expected => Int,
+      got      => 'foo';
+    #?rakudo todo 'Nil does not survive passing to the exception'
+    throws-like 'my Int $a is default(Nil)',
+      X::Parameter::Default::TypeCheck,
+      expected => Int,
+      got      => Nil;
+    throws-like 'my Int @a is default("foo")',
+      X::Parameter::Default::TypeCheck,
+      expected => Array[Int],
+      got      => 'foo';
+    #?rakudo todo 'Nil does not survive passing to the exception'
+    throws-like 'my Int @a is default(Nil)',
+      X::Parameter::Default::TypeCheck,
+      expected => Array[Int],
+      got      => Nil;
+    throws-like 'my Int %a is default("foo")',
+      X::Parameter::Default::TypeCheck,
+      expected => Hash[Int],
+      got      => 'foo';
+    #?rakudo todo 'Nil does not survive passing to the exception'
+    throws-like 'my Int %a is default(Nil)',
+      X::Parameter::Default::TypeCheck,
+      expected => Hash[Int],
+      got      => Nil;
+} #6
 
-    my Int %d is default(Nil) = o => 353;
-    is %d<o>, 353, "typed variable should be initialized";
-    ok %d.VAR.default === Nil, 'is the default set correctly for Int %d';
-} #19
+#?niecza skip "is default NYI"
+# native types
+{
+    throws-like 'my int $a is default(42)',
+      X::Comp::Trait::NotOnNative,
+      type    => 'is',
+      subtype => 'default';
+    throws-like 'my int @a is default(42)',
+      X::Comp::Trait::NotOnNative,
+      type    => 'is',
+      subtype => 'default';
+    #?rakudo todo 'fails first on native int hashes being NYI'
+    throws-like 'my int %a is default(42)',
+      X::Comp::Trait::NotOnNative,
+      type    => 'is',
+      subtype => 'default';
+
+    #?rakudo todo 'native int default(*) is NYI'
+    lives-ok { EVAL 'my int $a is default(*)' },
+      'the default(*) trait on natives';
+} #4
 
 # vim: ft=perl6
