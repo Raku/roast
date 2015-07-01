@@ -203,6 +203,7 @@ my @normal = <
   X::Parameter::MultipleTypeConstraints
   X::Parameter::Placeholder
   X::Parameter::Twigil
+  X::Parameter::Default::TypeCheck
   X::Parameter::WrongOrder
   X::Phaser::Multiple
   X::Phaser::PrePost
