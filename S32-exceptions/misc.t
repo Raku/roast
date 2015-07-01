@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 318;
+plan 317;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -512,11 +512,6 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
 # RT #78012
 throws-like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assuming($a); $b();',
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
-
-# RT #98854
-#?rakudo todo 'Cannot find method "returns" RT #124680'
-throws-like 'sub f { f(|$) }', X::Obsolete,
-    old => { m/'$) variable'/ }, replacement => { m/'$*EGID'/ }, when => { m/'in Perl 6'/ };
 
 # RT #66776
 throws-like 'for 1,2,3, { say 3 }', X::Comp::Group, 
