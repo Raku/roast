@@ -32,7 +32,8 @@ eval-dies-ok q[my class StubbedButNotDeclared { ... }], 'stubbing a class but no
         message => "The following packages were stubbed but not defined:\n    A";
     throws-like { EVAL 'class A { ... }; class B is A {}' },
         X::Inheritance::NotComposed,
-        message => "'B' cannot inherit from 'A' because 'A' isn't compose yet (maybe it is stubbed)";
+        child-name  => 'B',
+        parent-name => 'A';
 }
 
 # vim: ft=perl6
