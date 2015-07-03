@@ -180,8 +180,8 @@ plan 52;
 
 # RT #112660
 {
-    class A { has Method @.slots; };
-    throws-like 'A.new.slots.push: [1, 2, 3]', X::TypeCheck::Assignment,
+    class RT112660 { has Method @.slots; };
+    throws-like 'RT112660.new.slots.push: [1, 2, 3]', X::TypeCheck::Assignment,
         'pushing non-A objects to an attribute array typed with A dies'
 }
 
