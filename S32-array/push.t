@@ -9,7 +9,7 @@ Push tests
 
 =end description
 
-plan 51;
+plan 52;
 
 # basic push tests
 {
@@ -176,6 +176,13 @@ plan 51;
     my Int @a;
     throws-like '@a.push: "a"', X::TypeCheck,
         "cannot push strings onto in Int array";
+}
+
+# RT #112660
+{
+    class A { has Method @.slots; };
+    throws-like 'A.new.slots.push: [1, 2, 3]', X::TypeCheck::Assignment,
+        'pushing non-A objects to an attribute array typed with A dies'
 }
 
 # vim: syn=perl6
