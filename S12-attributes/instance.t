@@ -324,7 +324,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     class RT118559 { has @.fields; };
     my $x1 = RT118559.new( fields => ['a','b'] );
     my $x2 = $x1.clone( :fields('c','d') );
-    #?rakudo todo 'RT #118559'
     is $x1.fields.join('-'), 'a-b', 'original object not modified';
     is $x2.fields.join('-'), 'c-d', 'cloned object has its own attributes';
 }
@@ -334,7 +333,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     class RT120059 { has Int @.ints };
     my RT120059 $one .= new( ints => [1, 2] );
     my $two = $one.clone( ints => [3, 4, 5] );
-    #?rakudo todo 'RT #118559'
     is $one.ints.join('-'), '1-2', 'original object not modified';
     is $two.ints.join('-'), '3-4-5', 'cloned object has new attributes';
 }

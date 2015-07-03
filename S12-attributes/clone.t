@@ -78,13 +78,11 @@ is($val2, 42, '... cloned object has proper attr value');
     # when cloning with new versions of attributes, it should not update the original
     my $a1 = ArrTest.new(:array<a b>);
     my $a2 = $a1.clone(:array<c d>);
-    #?rakudo todo "clone currently messes up original"
     is-deeply $a1.array, ['a', 'b'], 'original object has its original array';
     is-deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array';
 
     my $b1 = HshTest.new(hash=> 'a' => 'b' );
     my $b2 = $b1.clone(hash=> 'c' => 'd' );
-    #?rakudo todo "clone currently messes up original"
     is-deeply $b1.hash, {'a' => 'b'}, 'original object has its original hash';
     is-deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash';
 
