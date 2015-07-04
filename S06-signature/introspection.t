@@ -2,7 +2,8 @@ use v6;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;
-plan 56;
+use Test::Idempotence;
+plan 85;
 
 # L<S06/Signature Introspection>
 
@@ -61,6 +62,8 @@ sub j(*@i) {
     sub d(:x(:y(:z($a)))) { };   #OK not used
     is ~&d.signature.params.[0].named_names.sort, 'x y z', 'multi named_names';
     is ~&d.signature.params.[0].name, '$a',    '... and .name still works';
+    #?rakudo todo 'needs/find RT: Logic to make :a($a) into :$a makes :a(:b($a) into ::b(:$a)';
+    is :(:a(:b($a))).perl, :(:b($a)).perl, '... and .perl abbreviates separated name/named_name';
 }
 
 #?niecza skip "Parameter separator ;  NYI"
@@ -110,7 +113,6 @@ sub j(*@i) {
     #?niecza 2 todo
     ok $s ~~ /'$a' >> /, '.perl on a nested signature contains variables of the subsignature (1)';
     ok $s ~~ /'$b' >> /, '.perl on a nested signature contains variables of the subsignature (2)';
-
 }
 
 #?niecza skip "Action method fakesignature not yet implemented"
@@ -140,6 +142,40 @@ sub j(*@i) {
     is &xyz.signature.params[0].named,      False, '.named on Capture param is True';
 }
 
+{
+    is-perl-idempotent(:($a, :$b),:eqv);
+    is-perl-idempotent(:(@a, :@b), :eqv);
+    is-perl-idempotent(:(%a, :%b), :eqv);
+    is-perl-idempotent(:(:a(:b($c))), :eqv);
+    is-perl-idempotent(:(|a), :eqv);
+    is-perl-idempotent(:(&a, :&b), :eqv);
+    is-perl-idempotent(:(\a), :eqv);
+    is-perl-idempotent(:(\a, $b, &c, :$d, |e), :eqv);
+    is-perl-idempotent(:($a = 2, :$b = 2), :eqv);
+    is-perl-idempotent(:(@a = [2, 3], :@b = [2,3]), :eqv);
+    is-perl-idempotent(:(%a = {:a(2)}, :%b = {:a(2)}), :eqv);
+    is-perl-idempotent(:(&a = &say, :&b = &say), Nil, { '= { ... }' => '= &say' },:eqv);
+    is-perl-idempotent(:(\a = 2), :eqv);
+    is-perl-idempotent(:(Int $a, Int :$b), :eqv);
+    is-perl-idempotent(:(Int @a, Int :@b), :eqv);
+    is-perl-idempotent(:(Int %a, Int :%b), :eqv);
+    is-perl-idempotent(:(Int :a(:b($c))), :eqv);
+    is-perl-idempotent(:(|a ($a)), :eqv);
+    is-perl-idempotent(:(Sub &a, Sub :&b), :eqv);
+    is-perl-idempotent(:(Int \a), :eqv);
+    is-perl-idempotent(:(Int \a, Int $b, Sub &c, Int :$d, |e), :eqv);
+    is-perl-idempotent(:(Int $a = 2, Int :$b = 2), Nil, { '= { ... }' => '= 2' }, :eqv);
+    is-perl-idempotent(:(Int @a = [2, 3], Int :@b = [2,3]), Nil, { '= { ... }' => '= [2,3]' }, :eqv);
+    is-perl-idempotent(:(Int %a = :a(2), Int :%b = :a(2)), Nil, { '= { ... }' => '= {:a(2)}' }, :eqv);
+    is-perl-idempotent(:(Sub &a = &say, Sub :&b = &say), Nil, { '= { ... }' => '= &say' },:eqv);
+    #?rakudo todo 'needs/find RT'
+    is-perl-idempotent(:(|a ($a) = 2), :eqv);
+    #?rakudo todo 'needs/find RT'
+    is-perl-idempotent(:(@a ($a) = [2]), :eqv);
+    #?rakudo todo 'needs/find RT'
+    is-perl-idempotent(:(%a (:a($b)) = {:a(2)}, %b (:c(:d($e))) = {:c(2)}), :eqv);
+}
+
 # RT #123895
 {
     is_run q[sub wtvr(|) {}; &wtvr.perl], { err => "", out => "" }, ".perl on unnamed | parameters doesn't err";
@@ -154,5 +190,6 @@ sub j(*@i) {
     is &rt125482.signature.perl, ':($a;; $b)',
         '";;" in signature stringifies correctly using .perl';
 }
+
 
 # vim: ft=perl6
