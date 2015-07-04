@@ -155,7 +155,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
 # zen
 {
-    is %h{}.sort,                   (:1a,:2b,:3c,:4d), "$n zen: value";
+    is %h{},                                       %h, "$n zen: value";
     is (%h{}:k).sort,                       <a b c d>, "$n zen: :k";
     is (%h{}:k($ok)).sort,                  <a b c d>, "$n zen: :k(\$ok)";
     is (%h{}:!k).sort,                      <a b c d>, "$n zen: :!k";
