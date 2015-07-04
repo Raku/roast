@@ -39,7 +39,7 @@ PERL
 {
     my $code = q:to/PERL/;
     my sub return-failure(--> Nil) {
-        return Failure.new(X::Adhoc.new(4))
+        return Failure.new(X::AdHoc.new(4))
     }
 PERL
     eval-dies-ok($code, 'A function with a definite return value may not use return with a value, even a Failure')
