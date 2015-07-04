@@ -62,7 +62,7 @@ sub j(*@i) {
     sub d(:x(:y(:z($a)))) { };   #OK not used
     is ~&d.signature.params.[0].named_names.sort, 'x y z', 'multi named_names';
     is ~&d.signature.params.[0].name, '$a',    '... and .name still works';
-    #?rakudo todo 'needs/find RT: Logic to make :a($a) into :$a makes :a(:b($a) into ::b(:$a)';
+    #?rakudo todo 'needs/find RT: Logic to make :a($a) into :$a makes :a(:b($a) into ::b(:$a)'
     is :(:a(:b($a))).perl, :(:b($a)).perl, '... and .perl abbreviates separated name/named_name';
 }
 
