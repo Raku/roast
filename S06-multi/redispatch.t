@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 13;
 
 # it doesn't seem to be explicit in S06, but {next,call}{same,with}
 # work with multi subs too, not just with methods
@@ -53,4 +53,21 @@ plan 10;
 {
     try { nextsame };
     isa-ok $!, X::NoDispatcher, 'nextsame in main block dies due to lack of dispatcher';
+}
+
+# RT 125539
+{
+    multi a(Int $a) { samewith "$a" }
+    multi a(Str $a) { is $a, "42", 'samewith $a stringified in sub' }
+
+    class B {
+        multi method b(Int $b) { samewith "$b" }
+        multi method b(Str $b) {
+            is $b, "42", 'samewith $b stringified for ' ~ self.perl;
+        }
+    }
+
+    a 42;
+    B.b(42);
+    B.new.b(42);
 }
