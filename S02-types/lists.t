@@ -131,10 +131,10 @@ plan 32;
 #?niecza skip 'Cannot use value like Capture as a number'
 {
   my @array    = (1,2,3);
-  my $capture = \@array;
+  my $capture = \(@array);
 
-  is +$capture,    1, '\@array creates a capture (1)';
-  is +$capture[0], 3, '\@array creates a capture (2)';
+  is +$capture,    1, '\(@array) creates a capture (1)';
+  is +$capture[0], 3, '\(@array) creates a capture (2)';
 }
 
 {
