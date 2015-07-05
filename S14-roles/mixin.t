@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 36;
+plan 37;
 
 # L<S14/Run-time Mixins/>
 
@@ -123,6 +123,18 @@ is $y.test,     42,         'method from other role was OK too';
     my $a = 0 but True;
     is +$a, 0, 'RT #100782 1/2';
     is ?$a, Bool::True, 'RT #100782 2/2';
+}
+
+# RT 115390
+{
+    my $rt115390 = 0;
+    for 1..1000 -> $i {
+        $rt115390 += $i.perl;
+        my $error = (my $val = (^10).pick(3).min but !$val);
+        1
+    }
+    is $rt115390, 500500,
+        'no crash with mixin in loop when it is not the last statement in loop';
 }
 
 # RT #79866
