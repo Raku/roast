@@ -161,7 +161,7 @@ nok (defined  \()[0]), '\()[0] is not defined';
 # RT #125505
 {
     my $a = 41;
-    my $c = \$a;
+    my $c = \($a);
     $c[0]++;
     is $a, 42, 'Can modify Capture positional elements';
 }
