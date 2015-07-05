@@ -222,32 +222,32 @@ for $@n, Any, $@s, Str -> @a, $T {
 
 # range multiple missing elems
 {
-    #?rakudo todo 'something wrong here'
-    is @a[11..12],                 ($T,$T), "$n ran multi elem miss: value";
+    # see a8df1c96d9ba: ranges *always* auto-truncate
+    is @a[11..12],                      (), "$n ran multi elem miss: value";
     is @a[11..12]:k,                    (), "$n ran multi elem miss: :k";
     is @a[11..12]:k($ok),               (), "$n ran multi elem miss: :k(\$ok)";
-    #?rakudo todo 'something wrong here'
-    is @a[11..12]:!k,              (11,12), "$n ran multi elem miss: :!k";
-    #?rakudo todo 'something wrong here'
-    is @a[11..12]:k($no),          (11,12), "$n ran multi elem miss: :k(\$no)";
+    # see a8df1c96d9ba: ranges *always* auto-truncate
+    is @a[11..12]:!k,                   (), "$n ran multi elem miss: :!k";
+    # see a8df1c96d9ba: ranges *always* auto-truncate
+    is @a[11..12]:k($no),               (), "$n ran multi elem miss: :k(\$no)";
     is @a[11..12]:v,                    (), "$n ran multi elem miss: :v";
     is @a[11..12]:v($ok),               (), "$n ran multi elem miss: :v(\$ok)";
-    #?rakudo todo 'something wrong here'
-    is @a[11..12]:!v,              ($T,$T), "$n ran multi elem miss: :!v";
-    #?rakudo todo 'something wrong here'
-    is @a[11..12]:v($no),          ($T,$T), "$n ran multi elem miss: :v(\$no)";
+    # see a8df1c96d9ba: ranges *always* auto-truncate
+    is @a[11..12]:!v,                   (), "$n ran multi elem miss: :!v";
+    # see a8df1c96d9ba: ranges *always* auto-truncate
+    is @a[11..12]:v($no),               (), "$n ran multi elem miss: :v(\$no)";
     is @a[11..12]:kv,                   (), "$n ran multi elem miss: :kv(\$ok)";
     is @a[11..12]:kv($ok),              (), "$n ran multi elem miss: :kv";
-    #?rakudo todo 'something wrong here'
-    is @a[11..12]:!kv,       (11,$T,12,$T), "$n ran multi elem miss: :!kv";
-    #?rakudo todo 'something wrong here'
-    is @a[11..12]:kv($no),   (11,$T,12,$T), "$n ran multi elem miss: :kv(\$no)";
+    # see a8df1c96d9ba: ranges *always* auto-truncate
+    is @a[11..12]:!kv,                  (), "$n ran multi elem miss: :!kv";
+    # see a8df1c96d9ba: ranges *always* auto-truncate
+    is @a[11..12]:kv($no),              (), "$n ran multi elem miss: :kv(\$no)";
     is @a[11..12]:p,                    (), "$n ran multi elem miss: :p(\$ok)";
     is @a[11..12]:p($ok),               (), "$n ran multi elem miss: :p";
-    #?rakudo todo 'something wrong here'
-    is @a[11..12]:!p,      (11=>$T,12=>$T), "$n ran multi elem miss: :!p";
-    #?rakudo todo 'something wrong here'
-    is @a[11..12]:p($no),  (11=>$T,12=>$T), "$n ran multi elem miss: :p(\$no)";
+    # see a8df1c96d9ba: ranges *always* auto-truncate
+    is @a[11..12]:!p,                   (), "$n ran multi elem miss: :!p";
+    # see a8df1c96d9ba: ranges *always* auto-truncate
+    is @a[11..12]:p($no),               (), "$n ran multi elem miss: :p(\$no)";
 } #17
 
 # mixed existing/missing elems
