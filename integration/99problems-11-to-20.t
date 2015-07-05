@@ -228,7 +228,7 @@ plan 25;
     
     sub splitter ( @array is copy, Int $length ) {
         my @head = @array.splice(0, $length);
-        return (\@head, \@array);
+        return ($@head, $@array);
     }
     my ( $a, $b ) = splitter(<a b c d e f g h i j k>, 3);
     is $a, <a b c>,
