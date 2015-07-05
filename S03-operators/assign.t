@@ -127,7 +127,7 @@ plan 303;
     is($a,1,"'\$a' is '1'?: (\$,\$,\$) = 1 .. 3");
     is($b,2,"'\$b' is '2'?: (\$,\$,\$) = 1 .. 3");
     is($c,3,"'\$c' is '3'?: (\$,\$,\$) = 1 .. 3"); 
-    is(@a,'1 2 3',"'@a' is '1 2 3'?:       @a = 1 .. 3");
+    is(@a,'1 2 3',"'@a' is '1 2 3'?:        @a = 1 .. 3");
     is($s,'1',    "\$s is '1'?:    my (\$s,@a) = 1 .. 3");
     is(@b,'2 3',  "'@b' is '2 3'?: my (\$s,@a) = 1 .. 3"); 
 }
@@ -747,13 +747,12 @@ sub l () { 1, 2 };
 {
     my @a;
     my $b = 0;
-    my sub foo { \@a }
+    my sub foo { @a }
     my @z = (foo()[$b] = l, l);
-    #?rakudo todo 'list assignment'
     #?niecza todo
     is(@a.elems,    1,  'lhs treats foo()[$b] as list');
-    is(@z[0].elems, 1,  'lhs treats foo()[$b] as list');
     #?rakudo todo 'list assignment'
+    is(@z[0].elems, 1,  'lhs treats foo()[$b] as list');
     #?niecza todo
     ok(!defined(@z[1]), 'lhs treats foo()[$b] as list');
 }
@@ -761,12 +760,10 @@ sub l () { 1, 2 };
 {
     my @a;
     my $b = 0;
-    my sub foo { \@a }
+    my sub foo { @a }
     my @z = (foo()[$b,] = l, l);
-    #?rakudo todo 'list assignment'
     #?niecza todo
     is(@a.elems,    1,  'lhs treats foo()[$b,] as list');
-    #?rakudo todo 'list assignment'
     is(@z[0].elems, 1,  'lhs treats foo()[$b,] as list');
     #?niecza todo
     ok(!defined(@z[1]), 'lhs treats foo()[$b,] as list');
