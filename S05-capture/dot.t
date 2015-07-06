@@ -57,8 +57,7 @@ is(~$0[1], "d", 'Nested $3');
 
 ok("bookkeeper" ~~ m/(((\w)$0)+)/, 'Backreference');
 is(~$0, 'ookkee', 'Captured');
-#?rakudo todo 'really? :-) RT #125003'
-is(~$0[0], 'ee', 'Captured');
+is(~$0[0], ~['oo', 'kk', 'ee'], 'Captured');
 
 # L<S05/Accessing captured subrules/The hash entries>
 
