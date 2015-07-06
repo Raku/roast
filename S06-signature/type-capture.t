@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 # TODO: move to S02?
 # L<S02/Generic types/>
@@ -41,4 +41,16 @@ ok($ok, 'can use captured type in declaration');
 
 #RT #114216
 eval-lives-ok q':(::T $x)', "No error on type capture";
+
+# RT #125537
+{
+    sub foo(::T) {
+        {
+            my T $b;
+            is $b, Int, 'Type capture works on variable in nested scope';
+        }
+    }
+    foo(1)
+}
+
 # vim: ft=perl6
