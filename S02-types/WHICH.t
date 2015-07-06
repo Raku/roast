@@ -117,6 +117,7 @@ my @normal = <
   Whatever
   WhateverCode
   X::AdHoc
+  X::Adverb::Slice
   X::Anon::Augment
   X::Anon::Multi
   X::Assignment::RO
