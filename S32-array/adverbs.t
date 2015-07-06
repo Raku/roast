@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 2 * ( 1 + 14 * 20 );
+plan 2 * ( 1 + 15 * 20 );
 
 #-------------------------------------------------------------------------------
 # initialisations
@@ -361,6 +361,33 @@ for $@n, Any, $@s, Str -> @a, $T {
       :what(@a.name), :nogo(<k v>);
     throws-like '@a[@bC]:cheese', X::AdHoc;  # caught by MMD
     throws-like '@a[@bC]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
+
+# Callable
+{
+    is @a[*-1],                                  <d>, "$n callable: value";
+    is @a[*-1]:k,                                (3), "$n callable: :k";
+    is @a[*-1]:k($ok),                           (3), "$n callable: :k(\$ok)";
+    is @a[*-1]:!k,                               (3), "$n callable: :!k";
+    is @a[*-1]:k($no),                           (3), "$n callable: :k(\$no)";
+    is @a[*-1]:v,                                <d>, "$n callable: :v";
+    is @a[*-1]:v($ok),                           <d>, "$n callable: :v(\$ok)";
+    is @a[*-1]:!v,                               <d>, "$n callable: :!v";
+    is @a[*-1]:v($no),                           <d>, "$n callable: :v(\$no)";
+    is @a[*-1]:kv,                           (3,"d"), "$n callable: :kv(\$ok)";
+    is @a[*-1]:kv($ok),                      (3,"d"), "$n callable: :kv";
+    is @a[*-1]:!kv,                          (3,"d"), "$n callable: :!kv";
+    is @a[*-1]:kv($no),                      (3,"d"), "$n callable: :kv(\$no)";
+    is @a[*-1]:p,                           (3=>"d"), "$n callable: :p(\$ok)";
+    is @a[*-1]:p($ok),                      (3=>"d"), "$n callable: :p";
+    is @a[*-1]:!p,                          (3=>"d"), "$n callable: :!p";
+    is @a[*-1]:p($no),                      (3=>"d"), "$n callable: :p(\$no)";
+
+    throws-like '@a[*-1]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[*-1]:callable', X::AdHoc;  # caught by MMD
+    throws-like '@a[*-1]:kv:p:zip:zop', X::Adverb::Slice,
       :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
