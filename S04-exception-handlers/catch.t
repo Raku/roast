@@ -44,7 +44,7 @@ lives-ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 #L<S04/"Exception handlers"/An exception handler is just a switch statement>
 
 #unless EVAL 'Exception.new' {
-#    skip_rest "No Exception objects"; exit;
+#    skip-rest "No Exception objects"; exit;
 #}
 
 {

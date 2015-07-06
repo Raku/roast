@@ -3,7 +3,7 @@ use Test;
 plan 2;
 
 unless (try { EVAL("1", :lang<perl5>) }) {
-    skip_rest;
+    skip-rest;
     exit;
 }
 

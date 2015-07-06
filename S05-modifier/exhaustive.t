@@ -111,7 +111,7 @@ regex adj   { time }
 regex art   { an? }
 regex prep  { like }
 
-skip_rest("XXX - infinite loop"); exit;
+skip-rest("XXX - infinite loop"); exit;
 
 ok("time   flies   like    an     arrow" ~~
     m:s:ex/^ [ <adj>  <subj> <verb> <art> <obj>

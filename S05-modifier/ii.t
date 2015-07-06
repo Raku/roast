@@ -3,7 +3,7 @@ use Test;
 
 plan 21;
 
-#?kp6 emit skip_rest("unimpl");
+#?kp6 emit skip-rest("unimpl");
 
 #L<S05/Modifiers/"The :ii">
 

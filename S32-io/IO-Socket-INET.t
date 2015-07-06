@@ -39,7 +39,7 @@ given $*DISTRO.name {
         $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ }; # same as linux
     }
     default {
-        skip_rest('Operating system not yet supported');
+        skip-rest('Operating system not yet supported');
         exit 0;
     }
     # TODO: other operating systems; *BSD etc.	 

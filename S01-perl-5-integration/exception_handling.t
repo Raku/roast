@@ -6,7 +6,7 @@ use Test;
 BEGIN {
 plan 3;
 unless (try { EVAL("1", :lang<perl5>) }) {
-    skip_rest('no perl 5 support'); exit;
+    skip-rest('no perl 5 support'); exit;
 }
 }
 

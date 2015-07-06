@@ -189,7 +189,7 @@ is $Unix.rel2abs('../t4','/t1/t2/t3'),        '/t1/t2/t3/../t4', "rel2abs: ('../
 is $Unix.rel2abs('/t1','/t1/t2/t3'),          '/t1',             "rel2abs: ('/t1','/t1/t2/t3') -> '/t1'";
 
 if $*DISTRO.name ~~ any(<mswin32 os2 netware symbian dos cygwin>) {
-	skip_rest 'Unix on-platform tests'
+	skip-rest 'Unix on-platform tests'
 }
 else {
 	isa-ok $*SPEC, IO::Spec::Unix, "unix: loads correct module";

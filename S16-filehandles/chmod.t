@@ -29,7 +29,7 @@ We really need the stat() function in order to test this.
 plan 19;
 
 if $*DISTRO.is-win {
-    skip_rest "file tests not fully available on win32";
+    skip-rest "file tests not fully available on win32";
     exit;
 };
 

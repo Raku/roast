@@ -10,7 +10,7 @@ P5 module import test
 =end pod
 
 unless (try { EVAL("1", :lang<perl5>) }) {
-    skip_rest;
+    skip-rest;
     exit;
 }
 

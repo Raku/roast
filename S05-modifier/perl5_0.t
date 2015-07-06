@@ -9,7 +9,7 @@ plan 24;
 #L<S05/Modifiers/"The extended syntax">
 
 unless "a" ~~ m:P5/a/ {
-  skip_rest "skipped tests - P5 regex support appears to be missing";
+  skip-rest "skipped tests - P5 regex support appears to be missing";
   exit;
 }
 
