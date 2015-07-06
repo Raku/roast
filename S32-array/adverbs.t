@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 2 * ( 1 + 14 * 17 );
+plan 2 * ( 1 + 14 * 20 );
 
 #-------------------------------------------------------------------------------
 # initialisations
@@ -50,7 +50,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[1]:p($ok), (1=>"b"), "$n single elem existing: :p(\$ok)";
     is @a[1]:!p,     (1=>"b"), "$n single elem existing: :!p";
     is @a[1]:p($no), (1=>"b"), "$n single elem existing: :p(\$no)";
-} #17
+
+    throws-like '@a[1]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[1]:zorp', X::AdHoc; # caught by MMD
+    throws-like '@a[1]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # array single existing element
 {
@@ -71,7 +77,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[@b]:p($ok), (1=>"b"), "$n array single elem existing: :p(\$ok)";
     is @a[@b]:!p,     (1=>"b"), "$n array single elem existing: :!p";
     is @a[@b]:p($no), (1=>"b"), "$n array single elem existing: :p(\$no)";
-} #17
+
+    throws-like '@a[@b]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[@b]:zippo', X::AdHoc;  # caught by MMD
+    throws-like '@a[@b]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # single missing element
 {
@@ -92,7 +104,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[11]:p($ok),       (), "$n single elem missing: :p";
     is @a[11]:!p,     (11=>$T), "$n single elem missing: :!p";
     is @a[11]:p($no), (11=>$T), "$n single elem missing: :p(\$no)";
-} #17
+
+    throws-like '@a[11]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[11]:kabam', X::AdHoc;  # caught by MMD
+    throws-like '@a[11]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # array single missing element
 {
@@ -113,7 +131,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[@B]:p($ok),       (), "$n array single elem missing: :p";
     is @a[@B]:!p,     (11=>$T), "$n array single elem missing: :!p";
     is @a[@B]:p($no), (11=>$T), "$n array single elem missing: :p(\$no)";
-} #17
+
+    throws-like '@a[@B]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[@B]:zlonk', X::AdHoc;  # caught by MMD
+    throws-like '@a[@B]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # multiple existing elems
 {
@@ -134,7 +158,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[1,2]:p($ok), (1=>"b",2=>"c"), "$n multiple elem existing: :p(\$ok)";
     is @a[1,2]:!p,     (1=>"b",2=>"c"), "$n multiple elem existing: :!p";
     is @a[1,2]:p($no), (1=>"b",2=>"c"), "$n multiple elem existing: :p(\$no)";
-} #17
+
+    throws-like '@a[1,2]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[1,2]:dirgo', X::AdHoc;  # caught by MMD
+    throws-like '@a[1,2]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # array multiple existing elems
 {
@@ -155,7 +185,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[@bc]:p($ok), (1=>"b",2=>"c"), "$n arr multi elem existing: :p(\$ok)";
     is @a[@bc]:!p,     (1=>"b",2=>"c"), "$n arr multi elem existing: :!p";
     is @a[@bc]:p($no), (1=>"b",2=>"c"), "$n arr multi elem existing: :p(\$no)";
-} #17
+
+    throws-like '@a[@bc]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[@bc]:fnarg', X::AdHoc;  # caught by MMD
+    throws-like '@a[@bc]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # range multiple existing elems
 {
@@ -176,7 +212,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[1..2]:p($ok), (1=>"b",2=>"c"), "$n arr multi elem existing: :p(\$ok)";
     is @a[1..2]:!p,     (1=>"b",2=>"c"), "$n arr multi elem existing: :!p";
     is @a[1..2]:p($no), (1=>"b",2=>"c"), "$n arr multi elem existing: :p(\$no)";
-} #17
+
+    throws-like '@a[1..2]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[1..2]:fnarg', X::AdHoc;  # caught by MMD
+    throws-like '@a[1..2]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # multiple missing elems
 {
@@ -197,7 +239,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[11,12]:p($ok),               (), "$n multiple elem missing: :p";
     is @a[11,12]:!p,      (11=>$T,12=>$T), "$n multiple elem missing: :!p";
     is @a[11,12]:p($no),  (11=>$T,12=>$T), "$n multiple elem missing: :p(\$no)";
-} #17
+
+    throws-like '@a[11,12]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[11,12]:zniknop', X::AdHoc;  # caught by MMD
+    throws-like '@a[11,12]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # array multiple missing elems
 {
@@ -218,7 +266,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[@BC]:p($ok),               (), "$n arr multi elem missing: :p";
     is @a[@BC]:!p,      (11=>$T,12=>$T), "$n arr multi elem missing: :!p";
     is @a[@BC]:p($no),  (11=>$T,12=>$T), "$n arr multi elem missing: :p(\$no)";
-} #17
+
+    throws-like '@a[@BC]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[@BC]:lotne', X::AdHoc;  # caught by MMD
+    throws-like '@a[@BC]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # range multiple missing elems
 {
@@ -248,7 +302,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[11..12]:!p,                   (), "$n ran multi elem miss: :!p";
     # see a8df1c96d9ba: ranges *always* auto-truncate
     is @a[11..12]:p($no),               (), "$n ran multi elem miss: :p(\$no)";
-} #17
+
+    throws-like '@a[11..12]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[11..12]:bolton', X::AdHoc;  # caught by MMD
+    throws-like '@a[11..12]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # mixed existing/missing elems
 {
@@ -269,7 +329,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[1,12]:p($ok),        (1=>"b"), "$n multiple elem mixed: :p";
     is @a[1,12]:!p,     (1=>"b",12=>$T), "$n multiple elem mixed: :!p";
     is @a[1,12]:p($no), (1=>"b",12=>$T), "$n multiple elem mixed: :p(\$no)";
-} #17
+
+    throws-like '@a[1,12]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[1,12]:notlob', X::AdHoc;  # caught by MMD
+    throws-like '@a[1,12]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # array mixed existing/missing elems
 {
@@ -290,7 +356,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[@bC]:p($ok),        (1=>"b"), "$n arr multi elem mixed: :p";
     is @a[@bC]:!p,     (1=>"b",12=>$T), "$n arr multi elem mixed: :!p";
     is @a[@bC]:p($no), (1=>"b",12=>$T), "$n arr multi elem mixed: :p(\$no)";
-} #17
+
+    throws-like '@a[@bC]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[@bC]:cheese', X::AdHoc;  # caught by MMD
+    throws-like '@a[@bC]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # whatever
 {
@@ -311,7 +383,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[*]:p($ok), (0=>"a",1=>"b",2=>"c",3=>"d"), "$n whatever: :p";
     is @a[*]:!p,     (0=>"a",1=>"b",2=>"c",3=>"d"), "$n whatever: :!p";
     is @a[*]:p($no), (0=>"a",1=>"b",2=>"c",3=>"d"), "$n whatever: :p(\$no)";
-} #17
+
+    throws-like '@a[*]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[*]:whatever', X::AdHoc;  # caught by MMD
+    throws-like '@a[*]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 # zen
 {
@@ -332,7 +410,13 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[]:p($ok), (0=>"a",1=>"b",2=>"c",3=>"d"), "$n zen: :p";
     is @a[]:!p,     (0=>"a",1=>"b",2=>"c",3=>"d"), "$n zen: :!p";
     is @a[]:p($no), (0=>"a",1=>"b",2=>"c",3=>"d"), "$n zen: :p(\$no)";
-} #17
+
+    throws-like '@a[]:k:v', X::Adverb::Slice,
+      :what(@a.name), :nogo(<k v>);
+    throws-like '@a[]:zen', X::AdHoc;  # caught by MMD
+    throws-like '@a[]:kv:p:zip:zop', X::Adverb::Slice,
+      :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
+} #20
 
 }
 
