@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 use Test::Idempotence;
-plan 85;
+plan 125;
 
 # L<S06/Signature Introspection>
 
@@ -150,11 +150,15 @@ sub j(*@i) {
     is-perl-idempotent(:(|a), :eqv);
     is-perl-idempotent(:(&a, :&b), :eqv);
     is-perl-idempotent(:(\a), :eqv);
-    is-perl-idempotent(:(\a, $b, &c, :$d, |e), :eqv);
+    is-perl-idempotent(:(\a, $b, &c, %d, |e), :eqv);
     is-perl-idempotent(:($a = 2, :$b = 2), :eqv);
     is-perl-idempotent(:(@a = [2, 3], :@b = [2,3]), :eqv);
     is-perl-idempotent(:(%a = {:a(2)}, :%b = {:a(2)}), :eqv);
     is-perl-idempotent(:(&a = &say, :&b = &say), Nil, { '= { ... }' => '= &say' },:eqv);
+    is-perl-idempotent(:($a is parcel = 2), :eqv);
+    is-perl-idempotent(:(@a is parcel = [2]), :eqv);
+    is-perl-idempotent(:(%a is parcel = {:a(2)}), :eqv);
+    is-perl-idempotent(:(&a is parcel = &say), :eqv);
     is-perl-idempotent(:(\a = 2), :eqv);
     is-perl-idempotent(:(Int $a, Int :$b), :eqv);
     is-perl-idempotent(:(Int @a, Int :@b), :eqv);
@@ -174,6 +178,46 @@ sub j(*@i) {
     is-perl-idempotent(:(@a ($a) = [2]), :eqv);
     #?rakudo todo 'needs/find RT'
     is-perl-idempotent(:(%a (:a($b)) = {:a(2)}, %b (:c(:d($e))) = {:c(2)}), :eqv);
+
+    is-perl-idempotent(:($, :a($)),:eqv);
+    is-perl-idempotent(:(@, :a(@)), :eqv);
+    is-perl-idempotent(:(%, :a(%)), :eqv);
+    is-perl-idempotent(:(:a(:b($))), :eqv);
+    is-perl-idempotent(:(|), :eqv);
+    is-perl-idempotent(:(&, :a(&)), :eqv);
+    is-perl-idempotent(:(\), :eqv);
+    is-perl-idempotent(:(\, $, &, %, |), :eqv);
+    is-perl-idempotent(:($ = 2, :a($) = 2), :eqv);
+    is-perl-idempotent(:(@ = [2, 3], :a(@) = [2,3]), :eqv);
+    is-perl-idempotent(:(% = {:a(2)}, :a(%) = {:a(2)}), :eqv);
+    is-perl-idempotent(:(& = &say, :a(&) = &say), Nil, { '= { ... }' => '= &say' },:eqv);
+    is-perl-idempotent(:($ is parcel = 2), :eqv);
+    is-perl-idempotent(:(@ is parcel = [2]), :eqv);
+    is-perl-idempotent(:(% is parcel = {:a(2)}), :eqv);
+    is-perl-idempotent(:(& is parcel = &say), :eqv);
+    is-perl-idempotent(:(Int $, Int :a($)), :eqv);
+    is-perl-idempotent(:(Int @, Int :a(@)), :eqv);
+    is-perl-idempotent(:(Int %, Int :a(%)), :eqv);
+    is-perl-idempotent(:(Int :a(:b($))), :eqv);
+    is-perl-idempotent(:(|a ($)), :eqv);
+    is-perl-idempotent(:(Sub &, Sub :a(&)), :eqv);
+    is-perl-idempotent(:(Int \), :eqv);
+    is-perl-idempotent(:(Int \, Int $, Sub &, Int %, |), :eqv);
+    is-perl-idempotent(:(Int $ = 2, Int :a($) = 2), Nil, { '= { ... }' => '= 2' }, :eqv);
+    is-perl-idempotent(:(Int @ = [2, 3], Int :a(@) = [2,3]), Nil, { '= { ... }' => '= [2,3]' }, :eqv);
+    is-perl-idempotent(:(Int % = :a(2), Int :a(%) = :a(2)), Nil, { '= { ... }' => '= {:a(2)}' }, :eqv);
+    is-perl-idempotent(:(Sub & = &say, Sub :a(&) = &say), Nil, { '= { ... }' => '= &say' },:eqv);
+    #?rakudo todo 'needs/find RT'
+    is-perl-idempotent(:(| ($a) = 2), :eqv);
+    #?rakudo todo 'needs/find RT'
+    is-perl-idempotent(:(@ ($a) = [2]), :eqv);
+    #?rakudo todo 'needs/find RT'
+    is-perl-idempotent(:(% (:a($)) = {:a(2)}, % (:c(:d($))) = {:c(2)}), :eqv);
+    is-perl-idempotent(:($ is parcel, & is parcel, % is parcel, | is parcel), :eqv);
+    is-perl-idempotent(:($ is parcel where True, $ is copy, Int $ is rw, $ is parcel where True = 2), :eqv);
+    is-perl-idempotent(:(@ is parcel where True, @ is copy, Int @ is rw, @ is parcel where True = [2]), :eqv);
+    is-perl-idempotent(:(% is parcel where True, % is copy, Int % is rw, % is parcel where True = {:a(2)}), :eqv);
+    is-perl-idempotent(:(& is parcel where True, & is copy, Int & is rw, & is parcel where True = {:a(2)}), :eqv);
 }
 
 # RT #123895
