@@ -276,6 +276,7 @@ my @normal = <
   X::Undeclared
   X::Undeclared::Symbols
   X::Value::Dynamic
+
   bit
   byte
   int
@@ -285,7 +286,11 @@ my @normal = <
   int2
   int4
   int64
-  int8
+  X::Worry
+  X::Worry::P5
+  X::Worry::P5::BackReference
+  X::Worry::P5::LeadingZero
+  X::Worry::P5::Reference
   num
   num32
   num64
