@@ -384,7 +384,6 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     is ~$dt, '2004-12-31T23:57:00+00:35', 'DateTime.in-timezone (year rollover)';
 
     $dt = with-tz(dt(second => 15.5), 0, 0, 5);
-    #?rakudo todo 'nom regression'
     is $dt.second, 20.5, 'DateTime.in-timezone (fractional seconds)';
 
     $dt = dt(year => 2005, month => 1, day => 3,
