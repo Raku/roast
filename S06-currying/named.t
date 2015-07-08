@@ -26,7 +26,7 @@ my &tester2 = &tester.assuming(&tester, :b<b>);
     is $w(a => 'x', c => 'd'), 'ax bb cd', '... and the old one still works';
 }
 
-#?rakudo todo 'last part of RT #123498 is still unresolved.'
+#?rakudo.moar todo 'last part of RT #123498 is still unresolved.'
 priming-fails-bind-ok(sub { }, "", "Unexpected named", :named);
 
 # Since you can override named params .assuming does not alter sig
@@ -48,8 +48,9 @@ is-primed-sig(sub (:b($a)!) { }, :(:b($a)), :b);
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a))), :c);
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a))), :b);
 
-#?rakudo todo 'last part of RT #123498 is still unresolved.'
+#?rakudo.moar todo 'last part of RT #123498 is still unresolved.'
 priming-fails-bind-ok(sub (:b(:c($a))!) { }, "", "Unexpected named", :d);
+
 
 is-primed-sig(sub (:$a! where { True }) { }, :(:$a?), :a);
 is-primed-sig(sub (:$a! is parcel where { True }) { }, :(:$a? is parcel), :a);
@@ -60,7 +61,10 @@ is-primed-sig(sub (:$a! is copy where { True }) { }, :(:$a? is copy), :a);
 #is-primed-sig(sub (:$a! is rw where { True }) { }, :(:$a is rw), :a);
 is-primed-sig(sub (:$a is copy where { True } = 4) { }, :(:$a is copy), :a);
 is-primed-sig(sub (Int :$a! where { True }) { }, :(Int :$a?), :a(1));
+
 #?rakudo.jvm todo 'need/find RT JVM seems to not mind the type conflict'
 priming-fails-bind-ok(sub (Int :$a!) { }, '$a', Int, :a);
+
+
 
 # vim: ft=perl6
