@@ -29,7 +29,11 @@ sub is-primed-sig (Block $b, Signature $s, Capture |cap) is export {
 
 sub priming-fails-bind-ok (Block $b, $symbol, $expected, Capture |cap) is export {
     my $thrown;
-    my $r = try { $b.assuming(|cap); CATCH { default { $_.defined; $thrown = $_; } } }
+    my $r;
+    try {
+        $r = $b.assuming(|cap);
+        CATCH { default { $_.defined; $thrown = $_; } }
+    };
     my $expected_s = $expected;
     $expected_s //= $expected.^name;
     # We will eventually throw everything rather than mix it in.
