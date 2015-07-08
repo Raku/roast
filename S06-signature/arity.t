@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 54;
+plan 56;
 
 # L<S06/Required parameters/method:>
 sub a_zero  ()           { };
@@ -144,6 +144,23 @@ is (-> *%a { }).count, 0,   'slurpy named causes no count change';      #OK not 
     my &b = &a.assuming(1);
     is &a.arity, 3, 'arity of original sub is 3';
     is &b.arity, 2, '.assuming(1) reduces arity by 1';
+}
+
+# RT #77744
+{
+    class A {
+        our method f ($x: $y) { $y * 2 }
+    }
+    my $a = A.new;
+    my &g = &A::f.assuming( $a );
+    is g(3), 6, 'correct number of required parameters for assuming-derived method (1)';
+
+    class B {
+        our method f ($x: $y, $z) { $y + $z }
+    }
+    my $b = B.new;
+    my &h = &B::f.assuming( $b );
+    is h(3, 11), 14, 'correct number of required parameters for assuming-derived method (1)';
 }
 
 # vim: ft=perl6
