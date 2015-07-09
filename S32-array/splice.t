@@ -9,7 +9,7 @@ This test tests the C<splice> builtin
 
 =end description
 
-plan (2 * 29) + 3 + 1;
+plan (2 * 44) + 3 + 1 + 1;
 
 sub splice-ok(\ret, \ret_exp, \rem, \rem_exp, Str $comment) {
     subtest {
@@ -36,7 +36,7 @@ for $@Any, Array, $@Int, Array[Int] -> @a, $T {
             # sub
             @a = values;
             splice-ok splice(@a,|params),$T.new(return),@a,$T.new(remain),
-              "sub: $comment";
+              "$T.perl() sub: $comment";
 
             # method
             @a = values;
@@ -80,7 +80,32 @@ for $@Any, Array, $@Int, Array[Int] -> @a, $T {
     submeth-ok (^10),    (5,0),   (),          (^10), 'replace none with none';
     submeth-ok  (^9), (5,0,@a),   (),  (^5,^9,5..^9), 'replace none with self';
 
-#    submeth-ok (), (0,1), ($T,), (), 'remove 1 past end'
+    submeth-ok (),     (0,1), (),    (), 'remove 1 past end';
+    submeth-ok (), (0,1,1,2), (), (1,2), 'remove 1 past end + push';
+    submeth-ok (), (0,*,1,2), (), (1,2), 'remove whatever past end + push';
+
+    @a = ^10;
+    for 'splice @a,0,0,1..Inf', '@a.splice: 0,0,1..Inf' -> $code {
+        throws-like $code, X::Cannot::Infinite, :action('splice in');
+    }
+
+    for 11, 11, -1, -1, '*-11', -1 -> $offset, $got {
+        for "splice @a,$offset,1", "@a.splice: $offset,1" -> $code {
+            throws-like $code, X::OutOfRange,
+              :what("Offset argument to List.splice"),
+              :$got,
+              :range("0..10");
+        }
+    }
+
+    for -1, -1, '*-8', -1 -> $size, $got {
+        for "splice @a,3,$size", "@a.splice: 3,$size" -> $code {
+            throws-like $code, X::OutOfRange,
+              :what("Size argument to List.splice"),
+              :$got,
+              :range("0..^7");
+        }
+    }
 }
 
 # splice4 gets "CxtItem _" or "CxtArray _" instead of "CxtSlurpy _"
@@ -104,32 +129,12 @@ for $@Any, Array, $@Int, Array[Int] -> @a, $T {
     is( @a, [6..8], "Explicit scalar context returns an array reference");
 } #1
 
-=finish
-
-## test some error conditions
-
-@a = splice([], 1);
-is +@a, 0, '... empty arrays are not fatal anymore';
-# But this should generate a warning, but unfortunately we can't test for
-# warnings yet.
-
-dies-ok({ 42.splice }, '.splice should not work on scalars');
-
-@a = (1..10);
-dies-ok({use fatal; splice(@a,-2)}, "negative offset dies");
-dies-ok({use fatal; splice(@a,2,-20)}, "negative size dies");
-
-{
-    my @empty;
-    nok @empty.splice(0, 3), 'splicing an empty array should return the empty list';
-}
-
 # RT #116897
 {
     my @empty = ();
     my $i = 0;
     while splice(@empty, 0, 3) { $i++; last }
     is $i, 0, "'while (…splice…)' should neither hang nor even run";
-}
+} #1
 
 # vim: ft=perl6
