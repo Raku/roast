@@ -40,11 +40,12 @@ plan 55;
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text");
 }
 
-#?rakudo.jvm skip 'java.nio.charset.MalformedInputException RT #124692'
 { # codepoints greater than 0xFFFF
     my $str = join '', 0x10426.chr, 0x10427.chr;
+    #?rakudo.jvm todo 'codepoints greater than 0xFFFF RT #124692'
     is $str.codes, 2, "Sanity check string";
     #?niecza 2 todo "substr bug"
+    #?rakudo.jvm 2 skip 'java.nio.charset.MalformedInputException RT #124692'
     is substr($str, 0, 1), 0x10426.chr, "Taking first char of Deseret string";
     is substr($str, 1, 1), 0x10427.chr, "Taking second char of Deseret string";
 }
