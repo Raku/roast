@@ -164,8 +164,9 @@ sub functionB {
 #?rakudo todo 'temp and wrap RT #124654'
 is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 
-#?rakudo todo 'RT #70267: call to nextsame with nowhere to go'
-dies-ok { {nextsame}() }, '{nextsame}() dies properly';
+# RT #70267
+# call to nextsame with nowhere to go
+throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
 
 # RT #66658
 #?niecza skip "undefined undefined"
