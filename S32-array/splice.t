@@ -9,7 +9,7 @@ This test tests the C<splice> builtin
 
 =end description
 
-plan 2 * 12;
+plan (2 * 29) + 3 + 1;
 
 sub splice-ok(\ret, \ret_exp, \rem, \rem_exp, Str $comment) {
     subtest {
@@ -45,71 +45,66 @@ for $@Any, Array, $@Int, Array[Int] -> @a, $T {
         }, "$T.perl() $comment";
     }
 
-    submeth-ok (1..10),      \(),  (1..10),        (), 'whole';
-    submeth-ok (1..12),   \(0,1),     (1,),   (2..12), 'simple 1 elem';
-    submeth-ok (1..10),   \(8,2),   (9,10),    (1..8), 'simple 2 elems';
-    submeth-ok (1..10),     \(7), (8,9,10),    (1..7), 'simple rest';
-    submeth-ok (1..10),   \(7,*), (8,9,10),    (1..7), 'simple rest whatever';
-    submeth-ok (1..10),    \(10),       (),   (1..10), 'none rest';
-    submeth-ok (1..10),     \(*),       (),   (1..10), 'none whatever rest';
-    submeth-ok (1..10),   \(*-3), (8,9,10),    (1..7), 'end rest';
-    submeth-ok (1..10), \(*-3,2),    (8,9), (1..7,10), 'end some';
+#---------------------+--------+---------+----------+---------------------------
+#                init | params |  return |   remain | comment
+#---------------------+--------+---------+----------+---------------------------
+    submeth-ok (1..10),      (),  (1..10),        (), 'whole';
+    submeth-ok (1..12),   (0,1),     (1,),   (2..12), 'simple 1 elem';
+    submeth-ok (1..10),   (8,2),   (9,10),    (1..8), 'simple 2 elems';
+    submeth-ok (1..10),     (7), (8,9,10),    (1..7), 'simple rest';
+    submeth-ok (1..10),   (7,*), (8,9,10),    (1..7), 'simple rest *';
+    submeth-ok (1..10),    (10),       (),   (1..10), 'none rest';
+    submeth-ok (1..10),     (*),       (),   (1..10), 'none * rest';
+    submeth-ok (1..10),   (*-3), (8,9,10),    (1..7), 'end rest';
+    submeth-ok (1..10), (*-3,2),    (8,9), (1..7,10), 'end some';
+    submeth-ok (1..10), (*-3,*-1),  (8,9), (1..7,10), 'end some callable';
 
-    submeth-ok (1..10), \(10,0,11,12),  (),   (1..12), "push";
-    submeth-ok (1..10),  \(*,0,11,12),  (),   (1..12), "push whatever";
-    submeth-ok (2..10),    \(0,0,0,1),  (),   (0..10), "unshift";
+    submeth-ok  (^10),       (10,0),    (),     (^10), 'push none';
+    submeth-ok  (^10),        (*,0),    (),     (^10), 'push none *';
+    submeth-ok  (^10),     (*-@a,0),    (),     (^10), 'push none callable';
+    submeth-ok  (^10), (10,0,10,11),    (),     (^12), 'push two';
+    submeth-ok  (^10),  (*,0,10,11),    (),     (^12), 'push two *';
+    submeth-ok  (^10),    (10,0,@a),    (), (^10,^10), 'push self';
+    submeth-ok  (^10),     (*,0,@a),    (), (^10,^10), 'push self *';
+    submeth-ok (2..9),    (0,0,0,1),    (),     (^10), 'unshift';
+    submeth-ok  (^10),        (0,0),    (),     (^10), 'unshift none';
+    submeth-ok  (^10),     (0,0,@a),    (), (^10,^10), 'unshift self';
+    submeth-ok  (^10),    (0,10,@a), (^10),     (^10), 'replace self';
+
+    submeth-ok (^10), (5,1,42), (5,), (^5,42,6..^10), 'replace 1 with 1';
+    submeth-ok (^10), (5,1,^3), (5,), (^5,^3,6..^10), 'replace 1 with range';
+    submeth-ok (^10),    (5,1), (5,),    (^5,6..^10), 'replace 1 with none';
+    submeth-ok  (^9), (5,1,@a), (5,),  (^5,^9,6..^9), 'replace 1 with self';
+    submeth-ok (^10), (5,0,42),   (), (^5,42,5..^10), 'replace none with 1';
+    submeth-ok (^10), (5,0,^3),   (), (^5,^3,5..^10), 'replace none with range';
+    submeth-ok (^10),    (5,0),   (),          (^10), 'replace none with none';
+    submeth-ok  (^9), (5,0,@a),   (),  (^5,^9,5..^9), 'replace none with self';
+
+#    submeth-ok (), (0,1), ($T,), (), 'remove 1 past end'
 }
-
-=finish
-
-# to be converted into more descriptive tests
-@a = (2..10);
-splice_ok splice(@a,0,0,0,1), @a, [], [0..10], "Prepending values works";
-
-# Need to convert these
-# skip 5, "Need to convert more tests from Perl5";
-@a = (0..11);
-splice_ok splice(@a,5,1,5), @a, [5], [0..11], "Replacing an element with itself";
-
-@a = (0..11);
-splice_ok splice(@a, +@a, 0, 12, 13), @a, [], [0..13], "Appending an array";
-
-{
-    @a = (0..13);
-    @res = splice(@a, *-@a, +@a, 1, 2, 3);
-    splice_ok @res, @a, [0..13], [1..3], "Replacing the array contents from right end";
-}
-
-{
-    @a = (1, 2, 3);
-    splice_ok splice(@a, 1, *-1, 7, 7), @a, [2], [1,7,7,3], "Replacing a array into the middle";
-} 
-
-{
-    @a = (1,7,7,3);
-    splice_ok splice(@a,*-3,*-2,2), @a, [7], [1,2,7,3], "Replacing negative count of elements";
-}
-
-# Test the identity of calls to splice:
-sub indirect_slurpy_context( *@got ) { @got };
 
 # splice4 gets "CxtItem _" or "CxtArray _" instead of "CxtSlurpy _"
-my @tmp = (1..10);
+# Test the identity of calls to splice:
 {
-    @a = splice @tmp, 5, 3;
+    sub indirect_slurpy_context( *@got ) { @got };
+
+    my @tmp = (1..10);
+    my @a = splice @tmp, 5, 3;
     @a = indirect_slurpy_context( @a );
     @tmp = (1..10);
-    @b = indirect_slurpy_context( splice @tmp, 5, 3 );
+    my @b = indirect_slurpy_context( splice @tmp, 5, 3 );
     is( @b, @a, "Calling splice with immediate and indirect context returns consistent results");
     is( @a, [6,7,8], "Explicit call/assignment gives the expected results");
     is( @b, [6,7,8], "Implicit context gives the expected results"); # this is due to the method-fallback bug
-}
+} #3
 
 {
-    @tmp = (1..10);
-    @a = item splice @tmp, 5, 3;
+    my @tmp = (1..10);
+    my @a = item splice @tmp, 5, 3;
     is( @a, [6..8], "Explicit scalar context returns an array reference");
-}
+} #1
+
+=finish
 
 ## test some error conditions
 
