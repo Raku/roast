@@ -9,61 +9,58 @@ This test tests the C<splice> builtin
 
 =end description
 
-plan 39;
+plan 2 * 12;
 
-my (@a,@b,@res);
-
-#?DOES 2
-sub splice_ok (@got, @ref, @exp, @exp_ref, Str $comment) {
-  is @got, @exp, "$comment - results match";
-  is @ref, @exp_ref, "$comment - array got modified in-place";
-};
-
-@a = (1..10);
-@b = splice(@a,+@a,0,11,12);
-
-is( @b, [], "push-via-splice result works" );
-is( @a, [1..12], "push-via-splice modification works");
-
-{
-    my @a = (1..10);
-    my @b = splice(@a,+@a,0,11,12);
-
-    is( @b, [], "push-via-splice result works" );
-    is( @a, [1..12], "push-via-splice modification works");
+sub splice-ok(\ret, \ret_exp, \rem, \rem_exp, Str $comment) {
+    subtest {
+        plan 4;
+        is ret.WHAT, ret_exp.WHAT, 'return types match';
+        is ret,      ret_exp,      'return results match';
+        is rem.WHAT, rem_exp.WHAT, 'remainder types match';
+        is rem,      rem_exp,      'remainder results match';
+    }, $comment;
 }
 
-@a  = ('red', 'green', 'blue');
-is( splice(@a, 1, 2), [<green blue>],
-  "splice() in scalar context returns an array references");
+my     @Any;
+my int @int;
+my Int @Int;
 
-# Test the single arg form of splice (which should die IMO)
-@a = (1..10);
-@res = splice(@a);
-splice_ok( @res, @a, [1..10],[], "Single-arg splice returns the whole array" );
+#for $@Any, Array, $@int, array[int], $@Int, Array[Int] -> @a, $T {
+for $@Any, Array, $@Int, Array[Int] -> @a, $T {
+#for $@Any, Array -> @a, $T {
 
-@a = (1..10);
-@res = splice(@a,8,2);
-splice_ok( @res, @a, [9,10], [1..8], "3-arg positive indices work");
+    sub submeth-ok(\values,\params,\return,\remain,$comment){
+        subtest {
+            plan 2;
 
-@a = (1..12);
-splice_ok splice(@a,0,1), @a, [1], [2..12], "Simple 3-arg splice";
+            # sub
+            @a = values;
+            splice-ok splice(@a,|params),$T.new(return),@a,$T.new(remain),
+              "sub: $comment";
 
-@a = (1..10);
-@res = splice(@a,8);
-splice_ok @res, @a, [9,10], [1..8], "2-arg positive indices work";
+            # method
+            @a = values;
+            splice-ok @a.splice(|params),$T.new(return),@a,$T.new(remain),
+              "$T.perl() method: $comment";
+        }, "$T.perl() $comment";
+    }
 
-{
-    @a = (1..10);
-    @res = splice(@a,*-2,2);
-    splice_ok @res, @a, [9,10], [1..8], "3-arg negative indices work";
+    submeth-ok (1..10),      \(),  (1..10),        (), 'whole';
+    submeth-ok (1..12),   \(0,1),     (1,),   (2..12), 'simple 1 elem';
+    submeth-ok (1..10),   \(8,2),   (9,10),    (1..8), 'simple 2 elems';
+    submeth-ok (1..10),     \(7), (8,9,10),    (1..7), 'simple rest';
+    submeth-ok (1..10),   \(7,*), (8,9,10),    (1..7), 'simple rest whatever';
+    submeth-ok (1..10),    \(10),       (),   (1..10), 'none rest';
+    submeth-ok (1..10),     \(*),       (),   (1..10), 'none whatever rest';
+    submeth-ok (1..10),   \(*-3), (8,9,10),    (1..7), 'end rest';
+    submeth-ok (1..10), \(*-3,2),    (8,9), (1..7,10), 'end some';
+
+    submeth-ok (1..10), \(10,0,11,12),  (),   (1..12), "push";
+    submeth-ok (1..10),  \(*,0,11,12),  (),   (1..12), "push whatever";
+    submeth-ok (2..10),    \(0,0,0,1),  (),   (0..10), "unshift";
 }
 
-{
-    @a = (1..10);
-    @res = splice(@a,*-2);
-    splice_ok @res, @a, [9,10], [1..8], "2-arg negative indices work";
-}
+=finish
 
 # to be converted into more descriptive tests
 @a = (2..10);
