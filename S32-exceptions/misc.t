@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 318;
+plan 319;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -685,5 +685,8 @@ throws-like 'use fatal; +("\b" x 10)', X::Str::Numeric, source-indicator => /'\b
 
 # RT #125574
 throws-like 'my class A { ... }; my class A is repr("Uninstantiable") { }', X::TooLateForREPR;
+
+# RT #114274
+throws-like 'gather { return  1}', X::ControlFlow::Return;
 
 # vim: ft=perl6
