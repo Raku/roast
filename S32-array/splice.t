@@ -9,7 +9,7 @@ This test tests the C<splice> builtin
 
 =end description
 
-plan (2*44) + (1*1) + 3 + 1 + 1;
+plan (3*45) + (2*1) + 3 + 1 + 1;
 
 sub splice-ok(\ret, \ret_exp, \rem, \rem_exp, Str $comment) {
     subtest {
@@ -24,23 +24,53 @@ sub splice-ok(\ret, \ret_exp, \rem, \rem_exp, Str $comment) {
 my     @Any;
 my int @int;
 my Int @Int;
+my num @num;
+my Num @Num;
 
-#for $@Any, Array, $@int, array[int], $@Int, Array[Int] -> @a, $T {
-for $@Any, Array, $@Int, Array[Int] -> @a, $T {
+for
+    $@Any,      Array, False
+  , $@int, array[int], False
+  , $@Int, Array[Int], False
+#  , $@num, array[num],  True
+#  , $@Num, Array[Num],  True
+-> @a, $T, $toNum {
 
     sub submeth-ok(\values,\params,\return,\remain,$comment){
         subtest {
             plan 2;
 
-            # sub
-            @a = values;
-            splice-ok splice(@a,|params),$T.new(return),@a,$T.new(remain),
-              "$T.perl() sub: $comment";
+            if $toNum {
+                my @params  = params;
+                @params[$_] = @params[$_].Num for 2 .. @params.end;
 
-            # method
-            @a = values;
-            splice-ok @a.splice(|params),$T.new(return),@a,$T.new(remain),
-              "$T.perl() method: $comment";
+                my $Treturn := $T.new(return.list.map(*.Num));
+                my $Tremain := $T.new(remain.list.map(*.Num));
+
+                # sub
+                @a = values.map(*.Num);
+                splice-ok splice(@a,|@params), $Treturn, @a, $Tremain,
+                  "$T.perl() sub: $comment";
+
+                # method
+                @a = values.map(*.Num);
+                splice-ok @a.splice(|@params), $Treturn, @a, $Tremain,
+                  "$T.perl() method: $comment";
+            }
+
+            else {
+                my $Treturn := $T.new(return.list);
+                my $Tremain := $T.new(remain.list);
+
+                # sub
+                @a = values;
+                splice-ok splice(@a,|params), $Treturn, @a, $Tremain,
+                  "$T.perl() sub: $comment";
+
+                # method
+                @a = values;
+                splice-ok @a.splice(|params), $Treturn, @a, $Tremain,
+                  "$T.perl() method: $comment";
+            }
         }, "$T.perl() $comment";
     }
 
@@ -50,6 +80,7 @@ for $@Any, Array, $@Int, Array[Int] -> @a, $T {
     submeth-ok (1..10),      (),  (1..10),        (), 'whole';
     submeth-ok (1..12),   (0,1),     (1,),   (2..12), 'simple 1 elem';
     submeth-ok (1..10),   (8,2),   (9,10),    (1..8), 'simple 2 elems';
+    submeth-ok (1..10),   <8 2>,   (9,10),    (1..8), 'simple 2 elems, as Str';
     submeth-ok (1..10),     (7), (8,9,10),    (1..7), 'simple rest';
     submeth-ok (1..10),   (7,*), (8,9,10),    (1..7), 'simple rest *';
     submeth-ok (1..10),    (10),       (),   (1..10), 'none rest';
@@ -84,31 +115,36 @@ for $@Any, Array, $@Int, Array[Int] -> @a, $T {
     submeth-ok (), (0,*,1,2), (), (1,2), 'remove whatever past end + push';
 
     @a = ^10;
+
+    # splicing in an infinite list
     for 'splice @a,0,0,1..Inf', '@a.splice: 0,0,1..Inf' -> $code {
         throws-like $code, X::Cannot::Infinite, :action('splice in');
     }
 
+    # offset out of range
     for 11, 11, -1, -1, '*-11', -1 -> $offset, $got {
         for "splice @a,$offset,1", "@a.splice: $offset,1" -> $code {
             throws-like $code, X::OutOfRange,
-              :what("Offset argument to List.splice"),
+              :what("Offset argument to splice"),
               :$got,
               :range("0..10");
         }
     }
 
+    # size out of range
     for -1, -1, '*-8', -1 -> $size, $got {
         for "splice @a,3,$size", "@a.splice: 3,$size" -> $code {
             throws-like $code, X::OutOfRange,
-              :what("Size argument to List.splice"),
+              :what("Size argument to splice"),
               :$got,
               :range("0..^7");
         }
     }
 }
 
-#for $@int, array[int], $@Int, Array[Int] -> @a, $T {
-for $@Int, Array[Int] -> @a, $T {
+# wrong type
+for $@int, array[int], $@Int, Array[Int] -> @a, $T {
+#for $@Int, Array[Int] -> @a, $T {
     @a = ^10;
     #?rakudo todo "somehow the test causes different typecheck error"
     throws-like 'splice @a,0,0,"foo"', X::TypeCheck::Splice,
