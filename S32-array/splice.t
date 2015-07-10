@@ -9,8 +9,6 @@ This test tests the C<splice> builtin
 
 =end description
 
-plan (3*45) + (2*1) + 3 + 1 + 1;
-
 sub splice-ok(\ret, \ret_exp, \rem, \rem_exp, Str $comment) {
     subtest {
         plan 4;
@@ -27,19 +25,26 @@ my Int @Int;
 my num @num;
 my Num @Num;
 
-for
-    $@Any,      Array, False
-  , $@int, array[int], False
-  , $@Int, Array[Int], False
-#  , $@num, array[num],  True
-#  , $@Num, Array[Num],  True
--> @a, $T, $toNum {
+my @testing =
+  $@Any,      Array,
+  $@int, array[int],
+  $@Int, Array[Int],
+#  $@num, array[num],  # breaks stuff :-(
+  $@Num, Array[Num],
+;
+
+plan (@testing/2 * 47) + 3 + 1 + 1;
+
+for @testing -> @a, $T {
+    my $toNum = @a.of ~~ Num;
 
     sub submeth-ok(\values,\params,\return,\remain,$comment){
         subtest {
             plan 2;
 
             if $toNum {
+                @a = values.map(*.Num);
+
                 my @params  = params;
                 @params[$_] = @params[$_].Num for 2 .. @params.end;
 
@@ -47,7 +52,6 @@ for
                 my $Tremain := $T.new(remain.list.map(*.Num));
 
                 # sub
-                @a = values.map(*.Num);
                 splice-ok splice(@a,|@params), $Treturn, @a, $Tremain,
                   "$T.perl() sub: $comment";
 
@@ -58,11 +62,12 @@ for
             }
 
             else {
+                @a = values;
+
                 my $Treturn := $T.new(return.list);
                 my $Tremain := $T.new(remain.list);
 
                 # sub
-                @a = values;
                 splice-ok splice(@a,|params), $Treturn, @a, $Tremain,
                   "$T.perl() sub: $comment";
 
@@ -114,7 +119,8 @@ for
     submeth-ok (), (0,1,1,2), (), (1,2), 'remove 1 past end + push';
     submeth-ok (), (0,*,1,2), (), (1,2), 'remove whatever past end + push';
 
-    @a = ^10;
+    # make sure we initialize with properly typed values
+    @a = $toNum ?? (^10).map(*.Num) !! ^10;
 
     # splicing in an infinite list
     for 'splice @a,0,0,1..Inf', '@a.splice: 0,0,1..Inf' -> $code {
@@ -143,14 +149,24 @@ for
 }
 
 # wrong type
-for $@int, array[int], $@Int, Array[Int] -> @a, $T {
-#for $@Int, Array[Int] -> @a, $T {
-    @a = ^10;
-    #?rakudo todo "somehow the test causes different typecheck error"
-    throws-like 'splice @a,0,0,"foo"', X::TypeCheck::Splice,
-      :action<splice>,
-      :got(Str),
-      :expected($T);
+for @testing -> @a, $T {
+
+    # make sure we initialize with properly typed values
+    @a = @a.of ~~ Num ?? (^10).map(*.Num) !! ^10;
+
+    if @a.of =:= Mu {   # can't be wrong, so don't test
+        pass; pass;
+    }
+
+    else {
+        for 'splice @a,0,0,"foo"', '@a.splice: 0,0,"foo"' -> $code {
+            #?rakudo todo "somehow the test causes different typecheck error"
+            throws-like $code, X::TypeCheck::Splice,
+              :action<splice>,
+              :got(Str),
+              :expected($T.^name);
+        }
+    }
 }
 
 # splice4 gets "CxtItem _" or "CxtArray _" instead of "CxtSlurpy _"
