@@ -9,7 +9,7 @@ This test tests the C<splice> builtin
 
 =end description
 
-plan (2 * 44) + 3 + 1 + 1;
+plan (2*44) + (1*1) + 3 + 1 + 1;
 
 sub splice-ok(\ret, \ret_exp, \rem, \rem_exp, Str $comment) {
     subtest {
@@ -27,7 +27,6 @@ my Int @Int;
 
 #for $@Any, Array, $@int, array[int], $@Int, Array[Int] -> @a, $T {
 for $@Any, Array, $@Int, Array[Int] -> @a, $T {
-#for $@Any, Array -> @a, $T {
 
     sub submeth-ok(\values,\params,\return,\remain,$comment){
         subtest {
@@ -106,6 +105,16 @@ for $@Any, Array, $@Int, Array[Int] -> @a, $T {
               :range("0..^7");
         }
     }
+}
+
+#for $@int, array[int], $@Int, Array[Int] -> @a, $T {
+for $@Int, Array[Int] -> @a, $T {
+    @a = ^10;
+    #?rakudo todo "somehow the test causes different typecheck error"
+    throws-like 'splice @a,0,0,"foo"', X::TypeCheck::Splice,
+      :action<splice>,
+      :got(Str),
+      :expected($T);
 }
 
 # splice4 gets "CxtItem _" or "CxtArray _" instead of "CxtSlurpy _"
