@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 # TODO: move to S02?
 # L<S02/Generic types/>
@@ -50,6 +50,16 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
         }
     }
     foo(1)
+}
+
+# RT #114724
+{
+    sub f (::T $g) {
+        for ($g) -> T $h {
+            return $h ~ ":" ~ T.perl
+        }
+    };
+    is f("blah"), "blah:Str", 'Type variable matches in signature to "for" loop';
 }
 
 # vim: ft=perl6
