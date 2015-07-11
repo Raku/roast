@@ -27,7 +27,8 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
     # RT #107756
     throws-like ':10(42)',
       X::Numeric::Confused,
-      :what(42),
+      :num(42),
+      :base(10),
       ':10() really wants a string, not a number';
 }
 
