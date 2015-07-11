@@ -19,21 +19,33 @@ sub splice-ok(\ret, \ret_exp, \rem, \rem_exp, Str $comment) {
     }, $comment;
 }
 
-my     @Any;
-my int @int;
-my Int @Int;
-my num @num;
-my Num @Num;
+my       @Any;
+my   int @int;
+my  int8 @int8;
+my int16 @int16;
+my int32 @int32;
+my int64 @int64;
+my   Int @Int;
+my   num @num;
+my num32 @num32;
+my num64 @num64;
+my   Num @Num;
 
 my @testing =
-  $@Any,      Array,
-  $@int, array[int],
-  $@Int, Array[Int],
-#  $@num, array[num],  # breaks stuff :-(
-  $@Num, Array[Num],
+    $@Any, Array,
+    $@int, array[int],
+   $@int8, array[int8],
+  $@int16, array[int16],
+  $@int32, array[int32],
+  $@int64, array[int64],
+    $@Int, Array[Int],
+#    $@num, array[num],  # breaks stuff :-(
+#  $@num32, array[num],  # breaks stuff :-(
+#  $@num64, array[num],  # breaks stuff :-(
+#    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 47) + 3 + 1 + 1;
+plan (@testing/2 * 50) + 3 + 1 + 1;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -48,7 +60,8 @@ for @testing -> @a, $T {
                 my @params  = params;
                 @params[$_] = @params[$_].Num for 2 .. @params.end;
 
-                my $Treturn := $T.new(return.list.map(*.Num));
+                my $Treturn :=
+                  return === Nil ?? Nil !! $T.new(return.list.map(*.Num));
                 my $Tremain := $T.new(remain.list.map(*.Num));
 
                 # sub
@@ -64,7 +77,8 @@ for @testing -> @a, $T {
             else {
                 @a = values;
 
-                my $Treturn := $T.new(return.list);
+                my $Treturn :=
+                  return === Nil ?? Nil !! $T.new(return.list);
                 my $Tremain := $T.new(remain.list);
 
                 # sub
@@ -118,6 +132,11 @@ for @testing -> @a, $T {
     submeth-ok (),     (0,1), (),    (), 'remove 1 past end';
     submeth-ok (), (0,1,1,2), (), (1,2), 'remove 1 past end + push';
     submeth-ok (), (0,*,1,2), (), (1,2), 'remove whatever past end + push';
+
+    # test some SINKs
+    submeth-ok (1..10),     \(:SINK),  Nil,      (), 'whole SINK';
+    submeth-ok (1..12), \(0,1,:SINK),  Nil, (2..12), 'simple 1 elem SINK';
+    submeth-ok (1..10),  \(10,:SINK),  Nil, (1..10), 'none rest SINK';
 
     # make sure we initialize with properly typed values
     @a = $toNum ?? (^10).map(*.Num) !! ^10;
