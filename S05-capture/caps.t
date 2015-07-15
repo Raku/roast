@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 42;
+plan 43;
 
 # L<S05/Match objects/"$/.caps">
 
@@ -81,6 +81,15 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
     ok 'ab' ~~ m/[[a|b] && <alpha>]**1..2/,  'Regex matches';
 #?rakudo todo 'RT #117955 - quantified conjunctive capture'
     is ca($/.caps),     'alpha:a|alpha:b',    '.caps on quantified &&';
+}
+
+# RT #125391
+{
+    my grammar Gram {
+        regex TOP { ('XX')+ %% $<delim>=<[a..z]>* }
+    }
+    is Gram.parse('XXXXXX').caps.map(*.key), (0, "delim", 0, "delim", 0, "delim"),
+        '.caps respects order of matching even with zero-width delimeters';
 }
 
 # vim: ft=perl6
