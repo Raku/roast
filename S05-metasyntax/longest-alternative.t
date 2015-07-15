@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 50;
+plan 53;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -447,5 +447,14 @@ my $str = 'a' x 7;
     is ~('ab' ~~ / a | b | $y /), 'a', "non constants don't count toward LTM";
 }
 
+# RT #125608
+{
+    is ~('food' ~~ / 'foo' | ('food' || 'doof')/), 'food',
+        'sequential alternation first branch involved in longest alternative (1)';
+    dies-ok { 'food' ~~ / 'foo' | ('food' <!> || { die "Should die here" })/ },
+        'sequential alternation first branch involved in longest alternative (2)';
+    is ~('food' ~~ / 'foo' | ('food' <!> || 'doof')/), 'foo',
+        'sequential alternation first branch failure after LTM tries next best option';
+}
 
 # vim: ft=perl6 et
