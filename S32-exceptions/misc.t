@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 320;
+plan 326;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -691,5 +691,15 @@ throws-like 'gather { return  1}', X::ControlFlow::Return;
 
 # RT #125595
 throws-like 'loop (my $i = 0; $i <= 5; $i++;) { say $i }', X::Syntax::Malformed, what => 'loop spec';
+
+# RT #115398
+throws-like 'my package P { }; P[Int]', X::NotParametric;
+throws-like 'my module M { }; M[Int]', X::NotParametric;
+throws-like 'my class C { }; C[Int]', X::NotParametric;
+
+# RT #115400
+throws-like 'my package P { }; sub foo(P of Int) { }', X::NotParametric;
+throws-like 'my module M { }; sub foo(M of Int) { }', X::NotParametric;
+throws-like 'my class C { }; sub foo(C of Int)', X::NotParametric;
 
 # vim: ft=perl6
