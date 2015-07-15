@@ -124,11 +124,11 @@ for @int,@uint -> $T {
 
     @arr = ();
     throws-like { @arr.pop }, X::Cannot::Empty,
-      action => '.pop',
+      action => 'pop',
       what   => "array[$t]",
       "Trying to pop an empty $t array dies";
     throws-like { @arr.shift }, X::Cannot::Empty,
-      action => '.shift',
+      action => 'shift',
       what   => "array[$t]",
       "Trying to shift an empty $t array dies";
 
