@@ -4,8 +4,9 @@ use Test;
 plan 1;
 
 # RT #125616
+my $prog = $*DISTRO.is-win ?? 'ping' !! 'cat';
 for ^1000 {
-    my $proc = Proc::Async.new('cat', '/tmp/test-file', :w);
+    my $proc = Proc::Async.new($prog, '/tmp/test-file', :w);
     $proc.stdout.tap(-> $data {});
     my $p = $proc.start;
     $proc.close-stdin;
