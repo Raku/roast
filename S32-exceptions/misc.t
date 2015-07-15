@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 319;
+plan 320;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -688,5 +688,8 @@ throws-like 'my class A { ... }; my class A is repr("Uninstantiable") { }', X::T
 
 # RT #114274
 throws-like 'gather { return  1}', X::ControlFlow::Return;
+
+# RT #125595
+throws-like 'loop (my $i = 0; $i <= 5; $i++;) { say $i }', X::Syntax::Malformed, what => 'loop spec';
 
 # vim: ft=perl6
