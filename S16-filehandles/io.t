@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 112;
+plan 116;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -147,6 +147,35 @@ is(@lines8[1], "Foo Bar Baz", 'lines($in,3) worked in list context');
 is(@lines8[2], "The End", 'lines($in,3) worked in list context');
 is(@lines8[3], "and finally... Its not over yet!", 'get($in) worked after lines($in,$n)');
 }
+
+{
+    # Test $fh.lines(*)  RT #125626
+    my $in = open($filename);
+    my @lines = try $in.lines(*);
+    is(+@lines, 4, 'we got all lines from the file');
+}
+
+{
+    # Test $fh.lines(Inf)  RT #125626
+    my $in = open($filename);
+    my @lines = try $in.lines(Inf);
+    is(+@lines, 4, 'we got all lines from the file');
+}
+
+{
+    # Test lines($fh,*)  RT #125626
+    my $in = open($filename);
+    my @lines = try lines($in,*);
+    is(+@lines, 4, 'we got all lines from the file');
+
+}
+{
+    # Test lines($fh,Inf)  RT #125626
+    my $in = open($filename);
+    my @lines = try lines($in,Inf);
+    is(+@lines, 4, 'we got all lines from the file');
+}
+
 
 #now be sure to delete the file as well
 ok(unlink($filename), 'file has been removed');
