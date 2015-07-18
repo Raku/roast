@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 37;
+plan 45;
 
 # L<S14/Run-time Mixins/>
 
@@ -61,8 +61,6 @@ is $y.test,     42,         'method from other role was OK too';
     is $x.b,        2,          'mixining in two roles one after the other';
 }
 
-
-#?rakudo skip 'mixin at the point of declaration is compile time RT #124747'
 #?niecza skip 'Trait does not available on variables'
 {
     my @array does R1;
@@ -186,5 +184,25 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
     my role B { }
     ok ([] but B) ~~ B, 'Mix-in to item array works';
 }
+
+# RT #124121
+{
+    my $x;
+    lives-ok { $x = True but [1, 2] }, 'but with array literal on RHS works';
+    is $x.Array, [1, 2], 'but with array literal provides a .Array method';
+}
+{
+    my $x;
+    lives-ok { $x = True but (1, 2).list }, 'but with (1, 2).list on RHS works';
+    is $x.List, (1, 2).list, 'but with (1, 2).list provides a .List method';
+}
+{
+    my $x;
+    lives-ok { $x = True but (1, "x") }, 'but with (1, "2") on RHS works';
+    is $x.Int, 1, 'but with (1, "x") provides a .Int method returning 1';
+    is $x.Str, "x", 'but with (1, "x") provides a .Str method returning "x"';
+}
+throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /resolved/ },
+    'True but (1, 1) gets Int conflict to resolve due to generating two Int methods';
 
 # vim: syn=perl6

@@ -7,16 +7,15 @@ use Test;
 plan 53;
 
 # split on empty string
-#?niecza todo "split on empty string has leading empty elements"
 {
-    is split("", "forty-two").join(','), 'f,o,r,t,y,-,t,w,o',
+    is split("", "forty-two").join(','), ',f,o,r,t,y,-,t,w,o,',
       q{split "", Str};
-    is "forty-two".split("").join(','), 'f,o,r,t,y,-,t,w,o',
+    is "forty-two".split("").join(','), ',f,o,r,t,y,-,t,w,o,',
       q{Str.split: ""};
 
-    is split("", "forty-two", 3).join(','), 'f,o,rty-two',
+    is split("", "forty-two", 3).join(','), ',f,orty-two',
       q{split "", Str};
-    is "forty-two".split("",3).join(','), 'f,o,rty-two',
+    is "forty-two".split("",3).join(','), ',f,orty-two',
       q{Str.split: ""};
 }
 
