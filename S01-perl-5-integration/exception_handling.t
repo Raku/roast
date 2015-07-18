@@ -5,7 +5,7 @@ use Test;
 
 BEGIN {
 plan 3;
-unless (try { EVAL("1", :lang<perl5>) }) {
+unless (try { EVAL("1", :lang<Perl5>) }) {
     skip-rest('no perl 5 support'); exit;
 }
 }
@@ -29,9 +29,9 @@ sub error {
 }
 
 sub test { "1" }
-], :lang<perl5>);
+], :lang<Perl5>);
 
-my $foo = EVAL("Foo->new",:lang<perl5>);
+my $foo = EVAL("Foo->new",:lang<Perl5>);
 try { $foo.error };
 lives-ok( {
     my $err = $!;

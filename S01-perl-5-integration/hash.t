@@ -4,7 +4,7 @@ use Test;
 
 plan(6);
 
-unless (try { EVAL("1", :lang<perl5>) }) {
+unless (try { EVAL("1", :lang<Perl5>) }) {
     skip-rest;
     exit;
 }
@@ -49,9 +49,9 @@ sub push {
 }
 
 1;
-/, :lang<perl5>);
+/, :lang<Perl5>);
 
-my $p5ha = EVAL('sub { My::Hash->new($_[0]) }', :lang<perl5>);
+my $p5ha = EVAL('sub { My::Hash->new($_[0]) }', :lang<Perl5>);
 my %hash = (5 => 'a', 6 => 'b', 7 => 'c', 8 => 'd');
 my $p5hash = $p5ha($%hash);
 

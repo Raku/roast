@@ -4,7 +4,7 @@ use Test;
 
 plan 17;
 
-unless (try { EVAL("1", :lang<perl5>) }) {
+unless (try { EVAL("1", :lang<Perl5>) }) {
     skip-rest;
     exit;
 }
@@ -50,9 +50,9 @@ sub push {
 }
 
 1;
-/, :lang<perl5>);
+/, :lang<Perl5>);
 
-my $p5ar = EVAL('sub { My::Array->new($_[0]) }', :lang<perl5>);
+my $p5ar = EVAL('sub { My::Array->new($_[0]) }', :lang<Perl5>);
 my @array = (5,6,7,8);
 my $p5array = $p5ar($@array);
 
