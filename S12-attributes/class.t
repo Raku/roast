@@ -137,7 +137,7 @@ is_run(
     'useless our $.a accessor method generation error contains useful enough hints'
 );
 is_run(
-    'our $.a',
+    'my $.a',
     { err => -> $o { $o ~~ /:i useless/ && $o ~~ /:i accessor/ } },
     'useless my $.a accessor method generation error contains useful enough hints'
 );
