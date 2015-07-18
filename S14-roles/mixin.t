@@ -61,8 +61,6 @@ is $y.test,     42,         'method from other role was OK too';
     is $x.b,        2,          'mixining in two roles one after the other';
 }
 
-
-#?rakudo skip 'mixin at the point of declaration is compile time RT #124747'
 #?niecza skip 'Trait does not available on variables'
 {
     my @array does R1;
