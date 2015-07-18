@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 326;
+plan 328;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -701,5 +701,14 @@ throws-like 'my class C { }; C[Int]', X::NotParametric;
 throws-like 'my package P { }; sub foo(P of Int) { }', X::NotParametric;
 throws-like 'my module M { }; sub foo(M of Int) { }', X::NotParametric;
 throws-like 'my class C { }; sub foo(C of Int)', X::NotParametric;
+
+# RT #125620
+{
+    my class CustomException is Exception {}
+    try die CustomException.new;
+    lives-ok { $!.gist }, 'Can gist an exception with no message method';
+    ok $!.gist ~~ /CustomException/,
+        'The gist of exception with no message method mentions the type';
+}
 
 # vim: ft=perl6
