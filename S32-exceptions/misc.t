@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 328;
+plan 332;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -710,5 +710,11 @@ throws-like 'my class C { }; sub foo(C of Int)', X::NotParametric;
     ok $!.gist ~~ /CustomException/,
         'The gist of exception with no message method mentions the type';
 }
+
+# RT #125642
+throws-like 'sub foo() returns Bar { }', X::InvalidType, typename => 'Bar';
+throws-like 'my class C hides Baz { }', X::InvalidType, typename => 'Baz';
+throws-like 'my class C does InNoWayExist { }', X::InvalidType, typename => 'InNoWayExist';
+throws-like 'sub foo() returns !!!wtf??? { }', X::Syntax::Malformed, what => 'trait';
 
 # vim: ft=perl6
