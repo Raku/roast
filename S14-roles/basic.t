@@ -94,7 +94,6 @@ eval-dies-ok '0 but RT66178', '"but" with non-existent role dies';
 
     try { EVAL 'class AnotherAnimal does NonExistentRole { }; 1' };
     my $err = "$!";
-    #?rakudo todo 'RT #121308'
     ok $err ~~ /NonExistentRole/,
        '... and the error message mentions the role';
 }
@@ -111,7 +110,6 @@ eval-dies-ok '0 but RT66178', '"but" with non-existent role dies';
 # RT #72840
 {
     try EVAL 'class Boo does Boo { };';
-    #?rakudo todo "can see it in the position, but even STD message doesn't include it"
     ok "$!" ~~ /Boo/, 'class does itself produces sensible error message';
 }
 
