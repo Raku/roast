@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 30;
+plan 32;
 
 eval-dies-ok('qr/foo/', 'qr// is gone');
 
@@ -121,5 +121,9 @@ eval-lives-ok '/<[..b]>/', '/<[..b]>/ lives';
 
 # RT #125302
 throws-like 'Regex.new.perl', Exception, '"Regex.new.perl dies but does not segfault';
+
+# RT #77524
+ok 'a' ~~ /a:/, '/a:/ is a valid pattern and matches a';
+ok 'a' ~~ /a: /, '/a: / is a valid pattern and matches a';
 
 # vim: ft=perl6
