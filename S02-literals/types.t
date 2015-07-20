@@ -14,7 +14,7 @@ throws-like { EVAL 'class B is C { }' },
   X::Inheritance::UnknownParent,
   "Can't inherit from a non-existing class";
 throws-like { EVAL 'class D does E { }' },
-  X::Comp::AdHoc,
+  X::InvalidType,
   "Can't do a non-existing role";
 throws-like { EVAL 'my F $x;' },
   X::Comp::Group,
