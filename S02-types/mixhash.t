@@ -357,14 +357,10 @@ sub showkv($x) {
 #?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
-    #?rakudo todo 'todo'
     nok %h<b>:exists, '"b", initialized to zero, does not exist';
-    #?rakudo todo 'todo'
     is +%h.keys, 2, 'Inititalization worked';
     is %h.elems, 3, '.elems works';
-    #?rakudo todo 'todo'
     isa-ok %h<nonexisting>, Int, '%h<nonexisting> is an Int';
-    #?rakudo todo 'todo'
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
@@ -374,15 +370,11 @@ sub showkv($x) {
     my %h is MixHash = a => 1, b => 0, c => 2;
 
     lives-ok { %h<c> = 0 }, 'can set an item to 0';
-    #?rakudo todo 'todo'
     nok %h<c>:exists, '"c", set to zero, does not exist';
-    #?rakudo todo 'todo'
     is %h.elems, 1, 'one item left';
-    #?rakudo todo 'todo'
     is %h.keys, ('a'), '... and the right one is gone';
 
     lives-ok { %h<c>++ }, 'can add (++) an item that was removed';
-    #?rakudo todo 'todo'
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
@@ -396,16 +388,12 @@ sub showkv($x) {
     is %h.keys.sort, <a c>, '++ on an existing item does not add a key';
 
     lives-ok { %h<a>-- }, 'can remove an item with decrement (--)';
-    #?rakudo todo 'todo'
     is %h.keys, ('c'), 'decrement (--) removes items';
-    #?rakudo todo 'todo'
     nok %h<a>:exists, 'item is gone according to exists too';
     is %h<a>, 0, 'removed item is zero';
 
     lives-ok { %h<a>-- }, 'remove a missing item lives';
-    #?rakudo todo 'todo'
     is %h.keys, ('c'), 'removing missing item does not change contents';
-    #?rakudo todo 'todo'
     is %h<a>, 0, 'item removed again is still zero';
 }
 

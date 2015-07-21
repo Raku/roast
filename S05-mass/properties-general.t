@@ -154,7 +154,7 @@ ok("\x[FFFF]\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/<:OtherLetter>/, q{Match unanc
 # Lr             # Alias for "Ll", "Lu", and "Lt".
 
 
-#?rakudo 10 skip "No [Lr] property defined RT #124860"
+#?rakudo 3 todo "No [Lr] property defined RT #124860"
 #?niecza 10 skip "No [Lr] property defined"
 ok("\c[LATIN CAPITAL LETTER A]" ~~ m/^<:Lr>$/, q{Match (Alias for "Ll", "Lu", and "Lt".)} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<:!Lr>$/ ), q{Don't match negated (Alias for "Ll", "Lu", and "Lt".)} );
@@ -165,6 +165,7 @@ ok("\x[87B5]"  ~~ m/^<-:Lr>$/, q{Match unrelated inverted (Alias for "Ll", "Lu",
 ok(!( "\x[87B5]" ~~ m/^<:Lr>$/ ), q{Don't match related (Alias for "Ll", "Lu", and "Lt".)} );
 ok("\x[87B5]" ~~ m/^<:!Lr>$/, q{Match related negated (Alias for "Ll", "Lu", and "Lt".)} );
 ok("\x[87B5]" ~~ m/^<-:Lr>$/, q{Match related inverted (Alias for "Ll", "Lu", and "Lt".)} );
+#?rakudo todo "No [Lr] property defined RT #124860"
 ok("\x[87B5]\x[87B5]\c[LATIN CAPITAL LETTER A]" ~~ m/<:Lr>/, q{Match unanchored (Alias for "Ll", "Lu", and "Lt".)} );
 
 

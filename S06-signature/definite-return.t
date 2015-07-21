@@ -7,7 +7,7 @@ plan 9;
 # L<S06/Signatures>
 
 # Nil is treated as definite value in return specifications
-#?rakudo skip 'definite values as return specifications dont parse yet RT #124927'
+#?rakudo todo 'definite values as return specifications dont parse yet RT #124927'
 {
     my sub return-nil(--> Nil) {
         1
@@ -25,7 +25,7 @@ plan 9;
     is return-two(), 2, 'A function with a non-Nil definite return value should ignore the result of its last statement';
 }
 
-#?rakudo skip 'definite values as return specifications dont parse yet RT #124927'
+#?rakudo todo 'definite values as return specifications dont parse yet RT #124927'
 {
     my $code = q:to/PERL/;
     my sub return-nil(--> Nil) {
@@ -35,7 +35,7 @@ PERL
     eval-dies-ok($code, 'A function with a definite return value may not use return with a value')
 }
 
-#?rakudo skip 'definite values as return specifications dont parse yet RT #124927'
+#?rakudo todo 'definite values as return specifications dont parse yet RT #124927'
 {
     my $code = q:to/PERL/;
     my sub return-failure(--> Nil) {

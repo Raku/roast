@@ -44,7 +44,6 @@ class NastyChild is Parent { };
     sub f1(Str:D(Cool:D) $x) { $x }
     sub f2(Str(Cool:D)   $x) { $x; }
     dies-ok { EVAL 'f1(Cool)' }, 'Definedness check in constraint type rejects type object (1)';
-    #?rakudo todo 'definedness checks'
     dies-ok { EVAL 'f2(Cool)' }, 'Definedness check in constraint type rejects type object (2)';
     isa-ok f1(23), Str, 'Definedness check + coercion (1)';
     isa-ok f2(23), Str, 'Definedness check + coercion (2)';
