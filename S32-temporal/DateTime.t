@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 219;
+plan 231;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -603,4 +603,24 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
 
     ok $now ~~ $today, "positive smartmatch against a Date";
     ok $not-now !~~ $today, "negative smartmatch against a Date";
+}
+
+# RT #125555 Comparison ops
+{
+    my $d0 = ds('1971-10-28T10:45:00');
+    my $d1 = $d0;
+    my $d2 = ds('1998-10-19T02:03:00');
+
+    ok $d0 == $d1,  "$d0 == $d1";
+    ok $d0 <= $d1,  "$d0 <= $d1";
+    ok $d0 <= $d2,  "$d0 <= $d2";
+    ok $d0 < $d2,   "$d0 < $d2";
+    ok $d0 >= $d1,  "$d0 >= $d1";
+    ok $d2 >= $d1,  "$d2 >= $d1";
+    ok $d2 > $d1,   "$d2 > $d1";
+    ok ($d0 cmp $d1) == 0,  "$d0 cmp $d1 == 0";
+    ok ($d0 cmp $d2) == -1, "$d0 cmp $d2 == -1";
+    ok ($d2 cmp $d1) == 1,  "$d2 cmp $d1 == 1";
+    ok $d0 before $d2,   "$d0 before $d2";
+    ok $d2 after $d1,   "$d2 after $d1";
 }
