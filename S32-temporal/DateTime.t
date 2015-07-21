@@ -612,6 +612,7 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     my $d2 = ds('1998-10-19T02:03:00');
 
     ok $d0 == $d1,  "$d0 == $d1";
+    ok $d0 != $d2,  "$d0 != $d2";
     ok $d0 <= $d1,  "$d0 <= $d1";
     ok $d0 <= $d2,  "$d0 <= $d2";
     ok $d0 < $d2,   "$d0 < $d2";
