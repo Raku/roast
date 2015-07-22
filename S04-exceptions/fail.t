@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 26;
 
 # L<S04/Exceptions/The fail function>
 
@@ -104,8 +104,14 @@ plan 27;
 
 # RT #115436
 {
-    throws-like 'Failure.new("foo").()', X::TypeCheck,
-        "type check for creating Failure object with '.new' (1)";
+    # We now allow more things in Failure.new than when the original RT
+    # was filed.
+    #
+    # Leaving this here in case anyone can figure out some esoteric way to
+    # get an X::TypeCheck when Failure.new takes almost any arglist
+#    throws-like 'Failure.new("foo").()', X::TypeCheck,
+#        "type check for creating Failure object with '.new' (1)";
+
 }
 
 # vim: ft=perl6

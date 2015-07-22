@@ -82,7 +82,7 @@ plan 6;
     };
     my $cookies;
     throws-like { $cookies!!; }, Exception,
-        payload => 'Null check failed for $cookies';
+        message => 'Null check failed for $cookies';
 }
 
 # vim: ft=perl6
