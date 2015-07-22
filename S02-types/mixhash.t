@@ -153,7 +153,6 @@ sub showkv($x) {
     isa-ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
     is +$m, 4, "... with four elements";
     #?niecza todo "Non-string mix elements NYI"
-    #?rakudo todo "Needs to catch up with spec"
     is +$m.grep(Pair), 4, "... which are all Pairs";
 }
 

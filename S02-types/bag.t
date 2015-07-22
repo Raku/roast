@@ -133,7 +133,6 @@ sub showkv($x) {
     isa-ok $b, Bag, '&Bag.new given a Hash produces a Bag';
     is +$b, 4, "... with four elements";
     #?niecza todo "Non-string bag elements NYI"
-    #?rakudo todo "Not properly interpolating"
     is +$b.grep(Enum), 4, "... which are all Enums";
 }
 

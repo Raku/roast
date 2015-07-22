@@ -151,7 +151,6 @@ sub showkv($x) {
     isa-ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
     is +$b, 4, "... with four elements";
     #?niecza todo "Non-string bag elements NYI"
-    #?rakudo todo "Needs to catch up with spec"
     is +$b.grep(Pair), 4, "... which are all Pairs";
 }
 
