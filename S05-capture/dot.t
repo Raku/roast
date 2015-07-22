@@ -16,7 +16,7 @@ Broken:
 ## L<S05/Extensible metasyntax (C<< <...> >>)/A leading C<.> causes>
 =end pod
 
-plan 62;
+plan 59;
 
 my regex dotdot { (.)(.) };
 
@@ -94,18 +94,12 @@ grammar Russian { regex name { ivan } }
 ok("john" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'English name');
 is(~$/, "john", 'Match is john');
 ok($/ ne "jean", "Match isn't jean");
-#?rakudo todo 'needs review RT #125006'
-is(~$/<name>, "john", 'Name is john');
 
 ok("jean" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'French name');
 is(~$/, "jean", 'Match is jean');
-#?rakudo todo 'needs review RT #125007'
-is(~$/<name>, "jean", 'Name is jean');
 
 ok("ivan" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'Russian name');
 is(~$/, "ivan", 'Match is ivan');
-#?rakudo todo 'needs review RT #125008'
-is(~$/<name>, "ivan", 'Name is ivan');
 
 my regex name { <.English::name> | <.French::name> | <.Russian::name> }
  
