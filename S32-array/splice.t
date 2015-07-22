@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 50) + 3 + 1 + 1;
+plan (@testing/2 * 50) + 3 + 1 + 1 + 2;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -216,5 +216,12 @@ for @testing -> @a, $T {
     while splice(@empty, 0, 3) { $i++; last }
     is $i, 0, "'while (…splice…)' should neither hang nor even run";
 } #1
+
+# RT #125571
+{
+    my Int @a = 1, 2, 3;
+    dies-ok { splice @a, 1, 1, 'not an integer'}, '&splice is type-safe';
+    dies-ok { @a.splice(1, 1, 'not an integer')}, '.splice is type-safe';
+} #2
 
 # vim: ft=perl6
