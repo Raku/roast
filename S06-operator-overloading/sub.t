@@ -146,12 +146,11 @@ Testing operator overloading subroutines
 
 # Overloading by setting the appropriate code variable using symbolic
 # dereferentiation
-#?rakudo skip '&:: RT #124980'
 #?niecza skip 'Cannot use hash access on an object of type Array'
 {
   my &infix:<times>;
   BEGIN {
-    &::["infix:<times>"] := { $^a * $^b };
+    &::("infix:<times>") = { $^a * $^b };
   }
 
   is 3 times 5, 15, 'operator overloading using symbolic dereferentiation';
