@@ -15,7 +15,7 @@ eval-lives-ok q[ module StubC { ... }; module StubC { sub foo { } }; ],
 #?niecza todo 'broken in nom-derived stub model'
 #?rakudo todo 'nom regression RT #125044'
 eval-lives-ok q[ package StubD { ... }; class StubD { method foo { } }; ],
-              'Can stub a package, and later on implement it as a method';
+              'Can stub a package, and later on implement it as a class';
 
 # not quite class stubs, but I don't know where else to put the tests...
 
