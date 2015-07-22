@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S12/Private methods/"Private methods are declared using">
 
@@ -97,5 +97,11 @@ dies-ok {$o."b"() },  'can not call private method via quotes from outside';   #
 #?niecza skip "throws-like NYI"
 #?DOES 2
 throws-like '$_!X::a', X::Method::Private::Permission;
+
+# RT #125661
+throws-like q[class Foo {method bar () {try {self!wrong()}}};
+              my $f = Foo.new;
+              $f.bar;
+            ], X::Method::NotFound, method => 'wrong', private => &so;
 
 # vim: syn=perl6
