@@ -708,7 +708,18 @@ throws-like 'my class C { }; sub foo(C of Int)', X::NotParametric;
     try die CustomException.new;
     lives-ok { $!.gist }, 'Can gist an exception with no message method';
     ok $!.gist ~~ /CustomException/,
-        'The gist of exception with no message method mentions the type';
+        'Gist of exception with no message method mentions the type';
+    ok CustomException.new.gist ~~ /CustomException/,
+        'Gist of unthrown exception with no message method mentions the type';
+}
+
+ok Exception.new.Str.chars, "Exception.new.Str produces some default text";
+ok X::AdHoc.new.gist ~~ m:i/explain/,
+    "X::AdHoc.new.gist mentions the word 'explain'";
+
+for <fail die throw rethrow resumable resume> -> $meth {
+    throws-like 'Exception.' ~ $meth, X::AdHoc,
+        message => "Invocant requires a 'Exception' instance, but a type object was passed.  Did you forget a .new?";
 }
 
 # RT #125642

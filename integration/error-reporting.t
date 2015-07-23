@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 19;
 
 use lib 't/spec/packages';
 
@@ -137,6 +137,23 @@ is_run 'die "foo"; END { say "end run" }',
     ok any($bt>>.file) ~~ /'error-reporting'\./, 'found script file name in the backtrace';
 
 }
+
+my $b = Backtrace.new;
+ok $b.full eq $b.full eq $b.full, "Backtrace may be used more than once";
+
+my $b1;
+my $b2;
+
+sub a {
+  {
+    try die("foo");
+    $b1 = $!.backtrace;
+  }
+  $b2 = $!.backtrace;
+};
+
+a();
+ok $b1 === $b2, "Backtrace does not change on additional .backtrace";
 
 # RT #125495
 {
