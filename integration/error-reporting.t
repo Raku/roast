@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 20;
 
 use lib 't/spec/packages';
 
@@ -166,5 +166,9 @@ ok $b1 === $b2, "Backtrace does not change on additional .backtrace";
             err     => all(rx:i/obsolete/, rx/'at' \N+ ':2'/),
         }, 'Error for obsolete syntax contains line number';
 }
+
+is_run 'sub s1 { sub s2 { fail("foo"); }; s2()(); }; s1();', {
+            err => rx/sub\ss2.*sub\ss1.*thrown<-[s]>+sub\ss1/
+        }, "Thrown Failure outputs dual backtraces";
 
 # vim: ft=perl6

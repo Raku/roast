@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 # L<S04/Exceptions/The fail function>
 
@@ -113,5 +113,19 @@ plan 26;
 #        "type check for creating Failure object with '.new' (1)";
 
 }
+
+sub s1 {
+  sub s2 {
+     fail("foo");
+  }
+  s2();
+  CATCH {
+      default {
+          ok $_.gist ~~ /sub\ss2/,
+          "Failure reports backtrace from its creation point."
+      }
+  }
+}
+s1();
 
 # vim: ft=perl6

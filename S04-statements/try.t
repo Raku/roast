@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 32;
+plan 40;
 
 {
     # simple try
@@ -143,6 +143,29 @@ plan 32;
     isa-ok $!, X::AdHoc, 'die($non-exception) creates an X::AdHoc';
     ok $!.payload === $p, '$!.payload is the argument to &die';
     is $!.Str, 'something exceptional', '$!.Str uses the payload';
+
+    try die($p,42);
+    isa-ok $!, X::AdHoc, 'die($,$) creates an X::AdHoc';
+    ok $!.payload[0] === $p, '$!.payload[0] is the first argument to &die';
+    ok $!.payload[1] == 42, '$!.payload[1] is the second argument to &die';
+    is $!.Str, 'something exceptional42', '$!.Str culls whitespace';
+
+    try die(X::NYI.new(:feature<fee>),"fee");
+    isa-ok $!, X::AdHoc, 'die(Exception,$) creates an X::AdHoc';
+    ok $!.payload[0] ~~ X::NYI, '$!.payload[0] is the Exception';
+
+    sub a { # new $!
+        try die();
+        is $!.Str, 'Died', 'When $! not set, die() has default message "Died"';
+        try die("fee");
+        die();
+        CATCH {
+            default {
+                is $_.Str, 'fee', 'When $! is set, die() is die($!).';
+            }
+        };
+    }
+    a();
 
     class MyEx is Exception {
         has $.s;
