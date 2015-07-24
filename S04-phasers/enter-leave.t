@@ -247,8 +247,11 @@ plan 27;
 }
 
 # RT #116102
-is ENTER { 42 }, 42, 'ENTER works as an r-value (mainline)';
-sub enter-test() { ENTER 'SANDMAN' }
-is enter-test(), 'SANDMAN', 'ENTER works as an r-value (sub)';
+#?rakudo.jvm skip 'java.lang.NullPointerException (second one only with is())'
+{
+    is ENTER { 42 }, 42, 'ENTER works as an r-value (mainline)';
+    sub enter-test() { ENTER 'SANDMAN' }
+    is enter-test(), 'SANDMAN', 'ENTER works as an r-value (sub)';
+}
 
 # vim: ft=perl6
