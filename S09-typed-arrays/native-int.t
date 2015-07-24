@@ -238,6 +238,10 @@ for @uint -> $T {
     if $t eq "uint" or $t eq "uint64" {
         #?rakudo todo 'highest bit length stays negative, RT #124088'
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
+    }
+    elsif $t eq "uint32" {
+        #?rakudo.jvm todo 'missing an invert? (-1 --> 0, -2 --> -1)'
+        ok @arr[0] > 0,        "negative value on $t array becomes positive";
     } else {
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     }
