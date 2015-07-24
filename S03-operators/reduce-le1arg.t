@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 54;
+plan 52;
 
 # smartlink to top and bottom of long table
 # L<S03/Reduction operators/"Builtin reduce operators return the following identity values">
@@ -39,9 +39,6 @@ is ([>] ()), Bool::True, "[>] () eq True";
 is ([>=] ()), Bool::True, "[>=] () eq True";
 is ([before] ()), Bool::True, "[before] () eq True";
 is ([after] ()), Bool::True, "[after] () eq True";
-is ([~~] ()), Bool::True, "[~~] () eq True";
-#?rakudo skip 'expected Any but got Mu instead RT #124552'
-is ([!~~] ()), Bool::True, "[!~~] () eq True";
 is ([eq] ()), Bool::True, "[eq] () eq True)";
 is ([ne] ()), Bool::True, "[ne] () eq True)";
 is ([!eq] ()), Bool::True, "[!eq] () eq True";
