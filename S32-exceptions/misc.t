@@ -684,6 +684,7 @@ throws-like 'my grammar G { our token foo { OMG }; our token foo { WTF } }', X::
 throws-like 'use fatal; +("\b" x 10)', X::Str::Numeric, source-indicator => /'\b'/;
 
 # RT #125574
+#?rakudo.jvm todo 'Error while compiling, type X::TooLateForREPR'
 throws-like 'my class A { ... }; my class A is repr("Uninstantiable") { }', X::TooLateForREPR;
 
 # RT #114274
@@ -718,8 +719,8 @@ ok X::AdHoc.new.gist ~~ m:i/explain/,
     "X::AdHoc.new.gist mentions the word 'explain'";
 
 for <fail die throw rethrow resumable resume> -> $meth {
-    throws-like 'Exception.' ~ $meth, X::AdHoc,
-        message => "Invocant requires a 'Exception' instance, but a type object was passed.  Did you forget a .new?";
+    throws-like 'X::NYI.' ~ $meth, X::AdHoc,
+        message => rx/equire.*instance.*type\sobject/;
 }
 
 # RT #125642
