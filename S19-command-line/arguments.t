@@ -18,7 +18,7 @@ use Test::Util;
         is_run( $x, :args[$file],
         {
             out => '',
-            err => { .chars < 256 && m/"Could not open $file"/ },
+            err => { .chars < 256 && m/"Could not open $file"|"Can not run directory $file"/ },
         },
         'concise error message when called script not found' );
     }
