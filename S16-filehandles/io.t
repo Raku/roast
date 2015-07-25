@@ -1,6 +1,8 @@
 use v6;
 
 use Test;
+use lib 't/spec/packages';
+use Test::Util;
 
 # L<S32::IO/IO::Handle/open>
 # old: L<S16/"Filehandles, files, and directories"/"open">
@@ -13,7 +15,7 @@ I/O tests
 
 =end pod
 
-plan 116;
+plan 119;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -356,6 +358,17 @@ unlink($filename);
 {
     dies-ok { open('t').read(42) }, '.read on a directory fails';
     dies-ok { open('t').get(1) }, '.get on a directory fails';
+}
+
+# RT #113100
+{
+    my %r;
+    %r = get_out(q[for lines() { say $*IN.ins }], "one\ntwo");
+    is %r<out>, "1\n2\n", "\$*IN.ins gets the right line numbers";
+    %r = get_out(q[say $*IN.ins], "one\ntwo\nthree", :compiler-args(["-n"]));
+    is %r<out>, "1\n2\n3\n", "\$*IN.ins gets the right line numbers";
+    %r = get_out(q[say $*IN.ins], "one\ntwo\nthree\nfour", :args(['-']), :compiler-args(["-n"]));
+    is %r<out>, "1\n2\n3\n4\n", "\$*IN.ins gets the right line numbers";
 }
 
 # vim: ft=perl6
