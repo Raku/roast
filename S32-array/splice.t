@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 50) + 3 + 1 + 1 + 2;
+plan (@testing/2 * 50) + 3 + 1 + 1 + 2 + 1;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -223,5 +223,12 @@ for @testing -> @a, $T {
     dies-ok { splice @a, 1, 1, 'not an integer'}, '&splice is type-safe';
     dies-ok { @a.splice(1, 1, 'not an integer')}, '.splice is type-safe';
 } #2
+
+# RT #119913
+{
+    my @l = 1..100;
+    @l.splice( 5, *, "borrowed", "blue");
+    is @l.join(" "), "1 2 3 4 5 borrowed blue", "Whatever splice"
+} #1
 
 # vim: ft=perl6
