@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S05/Simplified lexical parsing of patterns/not all non-identifier glyphs are currently meaningful as metasyntax>
 
@@ -41,5 +41,8 @@ lives-ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 {
     lives-ok { /$'x'/ }, 'can parse /$\'x\'/';
 }
+
+# RT #125648
+throws-like '/00:11:22/', X::Syntax::Regex::UnrecognizedModifier, modifier => '11';
 
 # vim: ft=perl6

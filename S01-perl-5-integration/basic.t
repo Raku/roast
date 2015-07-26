@@ -2,27 +2,27 @@ use v6;
 use Test;
 plan 15;
 
-unless (try { EVAL("1", :lang<perl5>) }) {
-    skip_rest;
+unless (try { EVAL("1", :lang<Perl5>) }) {
+    skip-rest;
     exit;
 }
 
 {
-    my $r = EVAL("0", :lang<perl5>);
+    my $r = EVAL("0", :lang<Perl5>);
     is($r, 0, "number");
 }
 
 {
-    my $r = EVAL("2", :lang<perl5>);
+    my $r = EVAL("2", :lang<Perl5>);
     is($r, 2, "number");
 }
 
 {
-    my $r = EVAL('"perl6 now"', :lang<perl5>);
+    my $r = EVAL('"perl6 now"', :lang<Perl5>);
     is($r, 'perl6 now', "string");
 }
 
-my $p5_dumper = EVAL('sub {return(wantarray ? @_ : $_[0]); }', :lang<perl5>);
+my $p5_dumper = EVAL('sub {return(wantarray ? @_ : $_[0]); }', :lang<Perl5>);
 
 my %h = ( a => 1 );
 
@@ -72,7 +72,7 @@ my $s = 'str';
     my $test = q{ (&p6func) Passing a Perl 6 coderef to Perl 5 };
 
     sub  plus_one (Int $int) { $int+1 }
-    my $sub = EVAL('sub { my $p6_coderef = shift; $p6_coderef->(3) }', :lang<perl5>);
+    my $sub = EVAL('sub { my $p6_coderef = shift; $p6_coderef->(3) }', :lang<Perl5>);
     my $result = $sub(&plus_one);
     is($result,4,$test);
 }

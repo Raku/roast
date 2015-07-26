@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 79;
+plan 81;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -346,7 +346,12 @@ is Foo::official(), 44,
 
     sub baz61126 { eager map { return 1 }, 1; return 2 };
     is baz61126, 1;
+}
 
+# RT #115868
+{
+    throws-like 'my class A { has Str method foo(--> Int) { "hi" } }', X::Redeclaration;
+    throws-like 'my class A { has Int method foo() { return "hi" } }; A.foo', X::TypeCheck::Return;
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 # L<S02/Names/"In declarative constructs bare sigils">
 
@@ -30,3 +30,7 @@ ok (my % = baz => "luhrman"), 'initialized bare sigil hash %';
     is +d(), 2, "anonymous 'state' bare sigil array retains state";
     is d()[2], 2, "anonymous 'state' bare sigil array can grow";
 }
+
+# RT #98854
+lives-ok { sub f { f(|$) } },
+    'no misleading warning about P5 special var \'$)\'';

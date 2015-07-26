@@ -1,5 +1,5 @@
 use Test;
-plan 341;
+plan 348;
 
 my $pod_index = 0;
 
@@ -309,5 +309,10 @@ our $fancy-var = 17;
 
 test-leading($fancy-var.VAR, 'Very fancy!');
 )
+
+#| where constraints shouldn't prevent declarative comments
+sub has-where(Int $n where * > 10) {}
+
+test-leading(&has-where, "where constraints shouldn't prevent declarative comments");
 
 is $=pod.elems, $pod_index;

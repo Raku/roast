@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 52;
+plan 54;
 
 isa-ok (5, 7, 8), Parcel, '(5, 7, 8) is Parcel';
 is +(5, 7, 8), 3, 'prefix:<+> on a Parcel';
@@ -79,6 +79,13 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     is ~rotate($p, -8), 'c d e a b', 'rotate(@a, -8)';
     is ~$p, 'a b c d e', 'original still unmodified (negative)';
 } #13
+
+# RT125677 Make sure Parcel.rotate is Cool with stuff
+{
+    my $p = <a b c d e>;
+    is ~$p.rotate('2'), 'c d e a b', '.rotate("2")';
+    is ~$p.rotate(2.5), 'c d e a b', '.rotate(2.5)';
+} #2
 
 {
     cmp-ok <a b c>, '===', <a b c>, 'a b c === a b c';

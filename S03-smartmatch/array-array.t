@@ -64,7 +64,7 @@ plan 36;
     ok ((1, 2, 3) ~~ @m), 'smartmatch List ~~ Array with dwim';
 
     ok (1 ~~ *,1,*),     'smartmatch with Array RHS co-erces LHS to list';
-    ok (1..10 ~~ *,5,*), 'smartmatch with Array RHS co-erces LHS to list';
+    ok ((1..10) ~~ *,5,*), 'smartmatch with Array RHS co-erces LHS to list';
 }
 
 # vim: ft=perl6

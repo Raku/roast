@@ -116,10 +116,10 @@ is date(2020, 5, 4).week.join(' '), '2020 19', 'Date.week (2020-5-4)';
 
 # From http://en.wikipedia.org/w/index.php?title=ISO_week_dtim&oldid=370553706#Examples
 
-is date(2005, 01, 01).week.join(' '), '2004 53', 'Date.week (2005-01-01)';
-is date(2005, 01, 02).week.join(' '), '2004 53', 'Date.week (2005-01-02)';
+is date(2005, 1, 1).week.join(' '), '2004 53', 'Date.week (2005-01-01)';
+is date(2005, 1, 2).week.join(' '), '2004 53', 'Date.week (2005-01-02)';
 is date(2005, 12, 31).week.join(' '), '2005 52', 'Date.week (2005-12-31)';
-is date(2007, 01, 01).week.join(' '), '2007 1',  'Date.week (2007-01-01)';
+is date(2007, 1, 1).week.join(' '), '2007 1',  'Date.week (2007-01-01)';
 is date(2007, 12, 30).week.join(' '), '2007 52', 'Date.week (2007-12-30)';
 is dtim(2007, 12, 30).week.join(' '), '2007 52', 'DateTime.week (2007-12-30)';
 is date(2007, 12, 30).week-year, 2007, 'Date.week (2007-12-30)';
@@ -127,17 +127,17 @@ is dtim(2007, 12, 30).week-year, 2007, 'DateTime.week (2007-12-30)';
 is date(2007, 12, 30).week-number, 52, 'Date.week-number (2007-12-30)';
 is dtim(2007, 12, 30).week-number, 52, 'DateTime.week-number (2007-12-30)';
 is date(2007, 12, 31).week.join(' '), '2008 1',  'Date.week (2007-12-31)';
-is date(2008, 01, 01).week.join(' '), '2008 1',  'Date.week (2008-01-01)';
+is date(2008, 1, 1).week.join(' '), '2008 1',  'Date.week (2008-01-01)';
 is date(2008, 12, 29).week.join(' '), '2009 1',  'Date.week (2008-12-29)';
 is date(2008, 12, 31).week.join(' '), '2009 1',  'Date.week (2008-12-31)';
-is date(2009, 01, 01).week.join(' '), '2009 1',  'Date.week (2009-01-01)';
+is date(2009, 1, 1).week.join(' '), '2009 1',  'Date.week (2009-01-01)';
 is date(2009, 12, 31).week.join(' '), '2009 53', 'Date.week (2009-12-31)';
-is date(2010, 01, 03).week.join(' '), '2009 53', 'Date.week (2010-01-03)';
-is dtim(2010, 01, 03).week.join(' '), '2009 53', 'DateTime.week (2010-01-03)';
-is date(2010, 01, 03).week-year, 2009, 'Date.week-year (2010-01-03)';
-is dtim(2010, 01, 03).week-year, 2009, 'DateTime.week-year (2010-01-03)';
-is date(2010, 01, 03).week-number, 53, 'Date.week-number (2010-01-03)';
-is dtim(2010, 01, 03).week-number, 53, 'DateTime.week-number (2010-01-03)';
+is date(2010, 1, 3).week.join(' '), '2009 53', 'Date.week (2010-01-03)';
+is dtim(2010, 1, 3).week.join(' '), '2009 53', 'DateTime.week (2010-01-03)';
+is date(2010, 1, 3).week-year, 2009, 'Date.week-year (2010-01-03)';
+is dtim(2010, 1, 3).week-year, 2009, 'DateTime.week-year (2010-01-03)';
+is date(2010, 1, 3).week-number, 53, 'Date.week-number (2010-01-03)';
+is dtim(2010, 1, 3).week-number, 53, 'DateTime.week-number (2010-01-03)';
 
 # day-of-week is tested each time show-dt is called.
 

@@ -206,7 +206,6 @@ character classes), and those are referenced at the correct spot.
 
 # If it is a string, the compiled form is cached with the string so that
 # it is not recompiled next time you use it unless the string changes.
-#?rakudo skip '<$subrule> NYI RT #124524'
 {
     my $counter = 0;
     my $subrule = '{$counter++; \'<alpha>\'}';
@@ -216,6 +215,7 @@ character classes), and those are referenced at the correct spot.
 
     'def' ~~ /<$subrule>/;
     #?niecza todo "string value was cached"
+    #?rakudo todo '<$subrule> NYI RT #124524'
     is($counter, 1, 'string value was cached');
 }
 

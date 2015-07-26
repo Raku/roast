@@ -39,8 +39,8 @@ is $uncpath2.Str, "//server/share/a", '"//server/share/a" restringifies to itsel
 
 is IO::Path::Win32.new(".").Str,  ".",  "current directory";
 is IO::Path::Win32.new("..").Str, "..", "parent directory";
-throws_like { IO::Path::Win32.new },     X::AdHoc, "no path not allowed";
-throws_like { IO::Path::Win32.new('') }, X::AdHoc, "empty not allowed";
+throws-like { IO::Path::Win32.new },     X::AdHoc, "no path not allowed";
+throws-like { IO::Path::Win32.new('') }, X::AdHoc, "empty not allowed";
 
 is IO::Path::Win32.new("/usr/////local/./bin/././perl/").cleanup,
   "\\usr\\local\\bin\\perl",

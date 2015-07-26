@@ -1,6 +1,8 @@
 use v6;
 
 use Test;
+use lib 't/spec/packages';
+use Test::Util;
 
 =begin pod
 
@@ -11,7 +13,7 @@ Class Attributes
 #L<S12/Class attributes/"Class attributes are declared">
 #L<S12/Class methods/Such a metaclass method is always delegated>
 
-plan 21;
+plan 23;
 
 class Foo {
     our $.bar = 23;
@@ -127,5 +129,17 @@ dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
         X::Method::NotFound,
         'cannot declare attribute inside of an EVAL in class';
 }
+
+# RT #125625
+is_run(
+    'our $.a',
+    { err => -> $o { $o ~~ /:i useless/ && $o ~~ /:i accessor/ } },
+    'useless our $.a accessor method generation error contains useful enough hints'
+);
+is_run(
+    'my $.a',
+    { err => -> $o { $o ~~ /:i useless/ && $o ~~ /:i accessor/ } },
+    'useless my $.a accessor method generation error contains useful enough hints'
+);
 
 # vim: ft=perl6

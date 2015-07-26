@@ -88,7 +88,7 @@ plan 8;
       is @log.join(','), 'ale,porter,stout', 'Condition variable worked';
 }
 
-#?rakudo skip 'not sure this test is valid RT #124793'
+#?rakudo todo 'not sure this test is valid RT #124793'
 {
     my $times = 100;
     my $tried;

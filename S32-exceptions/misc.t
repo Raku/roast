@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 309;
+plan 341;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -24,7 +24,7 @@ throws-like 'qr/a/', X::Obsolete, old => rx/<<qr>>/, replacement => rx/<<rx>>/;
 throws-like '"a" . "b"', X::Obsolete, replacement => '~';
 throws-like 's/a/b/i', X::Obsolete;
 # RT #112470
-throws-like 'my ${a} = 5', X::Obsolete;
+throws-like 'my $a; ${a} = 5', X::Obsolete;
 
 throws-like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws-like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
@@ -490,7 +490,7 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
     {
         my $code = q[ sub foo($x) { }; foo; ];
         throws-like $code, X::TypeCheck::Argument,
-            signature => rx/ '(Any $x)' /, 
+            signature => rx/ '($x)' /, 
             objname   => { m/foo/ };
     }
 
@@ -512,11 +512,6 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
 # RT #78012
 throws-like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assuming($a); $b();',
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
-
-# RT #98854
-#?rakudo todo 'Cannot find method "returns" RT #124680'
-throws-like 'sub f { f(|$) }', X::Obsolete,
-    old => { m/'$) variable'/ }, replacement => { m/'$*EGID'/ }, when => { m/'in Perl 6'/ };
 
 # RT #66776
 throws-like 'for 1,2,3, { say 3 }', X::Comp::Group, 
@@ -668,5 +663,70 @@ throws-like 'multi sub infix:<::=>(\a, \b) { }', X::Syntax::Extension::SpecialFo
 
 # RT #125441
 throws-like 'enum Error ( Metadata => -20); class Metadata { }', X::Redeclaration;
+
+# RT #125228
+throws-like 'sub foo() is export(WTF) { }', X::Undeclared::Symbols;
+
+# RT #125259
+throws-like 'sub x(array[Int]) { }', X::Comp::BeginTime;
+
+# RT #125120
+throws-like 'enum X <A>; sub foo(A $a) { True', X::Syntax::Missing;
+
+# RT #108462
+throws-like '{ our sub foo { say "OMG" } }; { our sub foo { say "WTF" } };', X::Redeclaration;
+throws-like 'my class C { my method foo { say "OMG" }; my method foo { say "WTF" } }', X::Redeclaration;
+throws-like 'my class C { our method foo { say "OMG" }; our method foo { say "WTF" } }', X::Redeclaration;
+throws-like 'my grammar G { my token foo { OMG }; my token foo { WTF } }', X::Redeclaration;
+throws-like 'my grammar G { our token foo { OMG }; our token foo { WTF } }', X::Redeclaration;
+
+# RT #125335
+throws-like 'use fatal; +("\b" x 10)', X::Str::Numeric, source-indicator => /'\b'/;
+
+# RT #125574
+#?rakudo.jvm todo 'Error while compiling, type X::TooLateForREPR'
+throws-like 'my class A { ... }; my class A is repr("Uninstantiable") { }', X::TooLateForREPR;
+
+# RT #114274
+throws-like 'gather { return  1}', X::ControlFlow::Return;
+
+# RT #125595
+throws-like 'loop (my $i = 0; $i <= 5; $i++;) { say $i }', X::Syntax::Malformed, what => 'loop spec';
+
+# RT #115398
+throws-like 'my package P { }; P[Int]', X::NotParametric;
+throws-like 'my module M { }; M[Int]', X::NotParametric;
+throws-like 'my class C { }; C[Int]', X::NotParametric;
+
+# RT #115400
+throws-like 'my package P { }; sub foo(P of Int) { }', X::NotParametric;
+throws-like 'my module M { }; sub foo(M of Int) { }', X::NotParametric;
+throws-like 'my class C { }; sub foo(C of Int)', X::NotParametric;
+
+# RT #125620
+{
+    my class CustomException is Exception {}
+    try die CustomException.new;
+    lives-ok { $!.gist }, 'Can gist an exception with no message method';
+    ok $!.gist ~~ /CustomException/,
+        'Gist of exception with no message method mentions the type';
+    ok CustomException.new.gist ~~ /CustomException/,
+        'Gist of unthrown exception with no message method mentions the type';
+}
+
+ok Exception.new.Str.chars, "Exception.new.Str produces some default text";
+ok X::AdHoc.new.gist ~~ m:i/explain/,
+    "X::AdHoc.new.gist mentions the word 'explain'";
+
+for <fail die throw rethrow resumable resume> -> $meth {
+    throws-like 'X::NYI.' ~ $meth, X::AdHoc,
+        message => rx/equire.*instance.*type\sobject/;
+}
+
+# RT #125642
+throws-like 'sub foo() returns Bar { }', X::InvalidType, typename => 'Bar';
+throws-like 'my class C hides Baz { }', X::InvalidType, typename => 'Baz';
+throws-like 'my class C does InNoWayExist { }', X::InvalidType, typename => 'InNoWayExist';
+throws-like 'sub foo() returns !!!wtf??? { }', X::Syntax::Malformed, what => 'trait';
 
 # vim: ft=perl6

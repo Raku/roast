@@ -122,6 +122,7 @@ my @normal = <
   Whatever
   WhateverCode
   X::AdHoc
+  X::Adverb::Slice
   X::Anon::Augment
   X::Anon::Multi
   X::Assignment::RO
@@ -208,6 +209,7 @@ my @normal = <
   X::Parameter::MultipleTypeConstraints
   X::Parameter::Placeholder
   X::Parameter::Twigil
+  X::Parameter::Default::TypeCheck
   X::Parameter::WrongOrder
   X::Phaser::Multiple
   X::Phaser::PrePost
@@ -289,6 +291,11 @@ my @normal = <
   int4
   int64
   int8
+  X::Worry
+  X::Worry::P5
+  X::Worry::P5::BackReference
+  X::Worry::P5::LeadingZero
+  X::Worry::P5::Reference
   num
   num32
   num64

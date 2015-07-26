@@ -164,7 +164,7 @@ is $cygwin.updir,   '..',  'updir is ".."';
 
 
 if $*DISTRO.name !~~ any(<cygwin>) {
-	skip_rest 'cygwin on-platform tests'
+	skip-rest 'cygwin on-platform tests'
 }
 else {
 	# double check a couple of things to see if IO::Spec loaded correctly

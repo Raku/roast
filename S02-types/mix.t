@@ -135,7 +135,6 @@ sub showkv($x) {
     isa-ok $m, Mix, '&Mix.new given a Hash produces a Mix';
     is +$m, 4, "... with four elements";
     #?niecza todo "Non-string mix elements NYI"
-    #?rakudo todo "Not properly interpolating"
     is +$m.grep(Enum), 4, "... which are all Enums";
 }
 

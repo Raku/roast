@@ -3,7 +3,7 @@ use Test;
 
 plan 17;
 
-throws_like { await }, X::AdHoc, "a bare await should not work";
+throws-like { await }, X::AdHoc, "a bare await should not work";
 
 {
     my $p = Promise.start({
@@ -44,7 +44,7 @@ throws_like { await }, X::AdHoc, "a bare await should not work";
     is $p.result.join(', '), '1, 2, 3, 4', 'can returns a Parcel from a start block';
 }
 
-#?rakudo skip 'RT #122715'
+#?rakudo todo 'RT #122715'
 {
     my $p = start {
         (0..3).map: *+1;

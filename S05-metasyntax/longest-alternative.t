@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 48;
+plan 53;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -435,6 +435,26 @@ my $str = 'a' x 7;
 
     ok $str ~~ m:i:m/b+|bb|a+|äa/, 'alternation with :i:m matches';
     is ~$/, 'äaÄAÁ', 'got longest alternative with :i:m';
+}
+
+# RT #113884
+{
+    #?rakudo todo "RT #113884 - constant variables not counted in LTM yet"
+    constant $x = 'ab'; 
+    is ~('ab' ~~ / a | b | $x /), 'ab', 'got longest alternative with constant';
+
+    my $y = 'ab';
+    is ~('ab' ~~ / a | b | $y /), 'a', "non constants don't count toward LTM";
+}
+
+# RT #125608
+{
+    is ~('food' ~~ / 'foo' | ('food' || 'doof')/), 'food',
+        'sequential alternation first branch involved in longest alternative (1)';
+    dies-ok { 'food' ~~ / 'foo' | ('food' <!> || { die "Should die here" })/ },
+        'sequential alternation first branch involved in longest alternative (2)';
+    is ~('food' ~~ / 'foo' | ('food' <!> || 'doof')/), 'foo',
+        'sequential alternation first branch failure after LTM tries next best option';
 }
 
 # vim: ft=perl6 et

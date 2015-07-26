@@ -157,6 +157,6 @@ flunk('This test failed', :todo(1));
 
 skip('skip this test for now');
 skip('skip 3 more tests for now', 3);
-skip_rest('skipping the rest');
+skip-rest('skipping the rest');
 
 # vim: expandtab shiftwidth=4 ft=perl6

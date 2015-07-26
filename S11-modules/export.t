@@ -116,13 +116,13 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     'exp_my_tag -- EXPORT::DEFAULT::exp_my_tag does not exist' );
 
 
-#?rakudo skip "export issue RT #125086"
 {
     package Foo {
         sub Foo_exp_parens is export()  { 'r_Foo_exp_parens' }
     }
 
     ##  make sure each side isn't undefined
+    #?rakudo 3 skip "export issue RT #125086"
     is( Foo::Foo_exp_parens(), 'r_Foo_exp_parens',
         'Foo_exp_parens() is defined' );
     is( Foo::Foo_exp_parens, 'r_Foo_exp_parens',
@@ -132,6 +132,7 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     is( Foo::EXPORT::ALL::Foo_exp_parens(), 'r_Foo_exp_parens',
         'Foo_exp_parens() is defined' );
 
+    #?rakudo 2 todo "export issue RT #125086"
     ok( &Foo::Foo_exp_parens === &Foo::EXPORT::ALL::Foo_exp_parens,
         'Foo_exp_parens() -- values agree' );
     ok( &Foo::Foo_exp_parens =:= &Foo::EXPORT::ALL::Foo_exp_parens,

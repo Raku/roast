@@ -62,15 +62,15 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     my @a = 1..100;
 
     isa-ok @a.pick, Int, "picking a single element from an array of Ints produces an Int";
-    ok @a.pick ~~ 1..100, "picking a single element from an array of Ints produces one of them";
+    ok @a.pick ~~ (1..100), "picking a single element from an array of Ints produces one of them";
 
     isa-ok @a.pick(1), List, "picking 1 from an array of Ints produces a List";
-    ok @a.pick(1)[0] ~~ 1..100, "picking 1 from an array of Ints produces one of them";
+    ok @a.pick(1)[0] ~~ (1..100), "picking 1 from an array of Ints produces one of them";
 
     my @c = @a.pick(2);
     isa-ok @c[0], Int, "picking 2 from an array of Ints produces an Int...";
     isa-ok @c[1], Int, "... and an Int";
-    ok (@c[0] ~~ 1..100) && (@c[1] ~~ 1..100), "picking 2 from an array of Ints produces two of them";
+    ok (@c[0] ~~ (1..100)) && (@c[1] ~~ (1..100)), "picking 2 from an array of Ints produces two of them";
     ok @c[0] != @c[1], "picking 2 from an array of Ints produces two distinct results";
 
     is @a.pick("25").elems, 25, ".pick works Str arguments";
@@ -146,7 +146,8 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 
 {
     my %seen;
-    %seen{$_} = 1 for (1 .. (10**1000) ).pick(50);
+    try { %seen{$_} = 1 for (1 .. (10**1000) ).pick(50); }
+#?rakudo.jvm todo '"Cannot .pick from an infinite list" (but not from CLI)'
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems in huge range';
     ok (so 1 <= all(%seen.keys) <= 10**1000), '... and all the elements are in range';
 }

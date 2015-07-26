@@ -157,6 +157,16 @@ my $IS = _register_functions(  # regex with test functions used in roast
       loads_is          loads-is
       precomp_loads_is  precomp-loads-is
     ),
+    # from Test::Idempotency
+    qw(
+      is-perl-idempotent
+    ),
+    # from Test::Assuming
+    qw(
+      is-primed-sig
+      is-primed-call
+      priming-fails-bind-ok
+    ),
 );
 my %DOES;
 my $DOES = 0;

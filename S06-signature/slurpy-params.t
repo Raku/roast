@@ -20,7 +20,7 @@ is mixed(1),           '|1|',    'Positional and slurp params';
 is mixed(1, 2, 3),     '|1|2!3', 'Positional and slurp params';
 dies-ok {EVAL(' mixed()')},      'at least one arg required';
 
-#?rakudo skip 'types on slurpy params RT #124936'
+#?rakudo skip 'types on slurpy params RT #113964'
 {
     sub x_typed_join(Int *@args){ @args.join('|') }
     is x_typed_join(1),           '1',      'Basic slurpy params with types 1';
@@ -181,7 +181,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
 }
 
 # RT #64814
-#?rakudo skip 'types on slurpy params RT #124937'
+#?rakudo skip 'types on slurpy params RT #113964'
 #?niecza skip 'Unhandled trait of'
 {
     sub slurp_any( Any *@a ) { @a[0] }
@@ -227,7 +227,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
 ##  Note:  I've listed these as though they succeed, but it's possible
 ##  that the parameter binding should fail outright.  --pmichaud
-#?rakudo skip 'types on slurpy params RT #124938'
+#?rakudo skip 'types on slurpy params RT #113964'
 {
     my $count = 0;
     sub slurp_any_thread(Any *@a) { $count++; }   #OK not used
@@ -244,7 +244,7 @@ eval-dies-ok 'sub rt65324(*@x, $oops) { say $oops }',
              "Can't put required parameter after variadic parameters";
 
 # used to be RT #69424
-#?rakudo skip 'types on slurpy params RT #124939'
+#?rakudo skip 'types on slurpy params RT #113964'
 {
     sub typed-slurpy(Int *@a) { 5 }   #OK not used
     my Int @b;

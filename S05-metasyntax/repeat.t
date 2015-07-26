@@ -14,7 +14,7 @@ be valid perl6.
 
 # Note: single-quotes.t tests repetition on single quoted items in regexes.
 
-plan 27;
+plan 30;
 
 # L<S05/Bracket rationalization/The general repetition specifier is now>
 
@@ -73,6 +73,16 @@ ok ('a b,c,d' ~~ token { \w \s \w+ % \, }), 'can combine % with backslash charac
 {
     throws-like q[/ : /], X::Syntax::Regex::SolitaryBacktrackControl,
         'adequate error message when backtrack control is out of control';
+}
+
+# RT #72440
+ok '1a2a3bc' ~~ /^ \d+ % abc $/, '% only takes single atom as separator';
+nok '1ab2ab3c' ~~ /^ \d+ % abc $/, '% only takes single atom as separator';
+
+# RT #125521
+{
+    my $m = 'AAA' ~~ /$<letter>=(A)**{3}/;
+    is +$m<letter>, 3, 'dynamic quantifiers interact correctly with captures';
 }
 
 # vim: ft=perl6

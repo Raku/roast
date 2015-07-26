@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 170;
+plan 171;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -116,7 +116,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $b = set { foo => 10, bar => 17, baz => 42 }.hash;
     isa-ok $b, Set, '&Set.new given a Hash produces a Set';
     is +$b, 3, "... with three elements";
-    #?rakudo todo "Not properly interpolating"
     #?niecza todo "Losing type in Set"
     is +$b.grep(Enum), 3, "... all of which are Enums";
 }
@@ -382,6 +381,13 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     ok $s.keys[0] eqv any([1,2], [3,4]), 'arrays not flattened out by Set.new (2)';
     ok $s.keys[1] eqv any([1,2], [3,4]), 'arrays not flattened out by Set.new (3)';
     nok $s.keys[0] eqv $s.keys[1], 'arrays not flattened out by Set.new (4)';
+}
+
+# RT #125611
+{
+    class MySet is Set { };
+    my $s = MySet.new([1, 2], 3);
+    is $s.elems, 2, 'Can subclass Set';
 }
 
 # vim: ft=perl6

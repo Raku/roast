@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 14;
 
 =begin pod
 
@@ -44,6 +44,22 @@ eval-lives-ok "True.HOW.say", "can output the .gist of a .HOW";
 # RT #121885
 class IntrospectAtBEGINTime {
     is BEGIN { IntrospectAtBEGINTime.^name }, 'IntrospectAtBEGINTime', '.^foo works at BEGIN time';
+}
+
+# RT #80694
+{
+    my class A {
+        method foo { 'abc' };
+        A.^add_method('bar', A.^can('foo'));
+    }
+    dies-ok { A.new().bar() }, 'Using .^add_method with what .^can returns (a list) will never work';
+}
+{
+    my class A {
+        method foo { 'abc' };
+        A.^add_method('bar', A.^lookup('foo'));
+    }
+    is A.new().bar(), 'abc', 'Can .^add_method what .^lookup returns under another name and it works';
 }
 
 # vim: ft=perl6

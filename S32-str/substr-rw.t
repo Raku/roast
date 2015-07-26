@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 39;
 
 {
     my $str = "gorch ding";
@@ -117,12 +117,39 @@ plan 33;
     is($str, 'fox', 'method form of substr-rw works');
 };
 
+{ # ranges
+
+    my $str = 'foo';
+    substr-rw($str, 2..2) = 'x';
+    is($str, 'fox', 'substr-rw with a Range should work');
+
+    substr-rw($str, 1..2) = 'at';
+    is($str, 'fat', 'Str.substr-rw with a Range should work');
+
+    substr-rw($str, 0..^1) = 'h';
+    is($str, 'hat', 'Str.substr-rw with a Range should work');
+
+    substr-rw($str, 0^..1) = 'o';
+    is($str, 'hot', 'Str.substr-rw with a Range should work');
+
+    substr-rw($str, 0^..^1) = 'o';
+    is($str, 'hoot', 'Str.substr-rw with a Range should work');
+
+}
+
 # RT #114526
 {
     my $str = 'ab';
     substr-rw($str, 0, 3) = '/';
     is "--$str--", '--/--',
         'substr-rw handles end positions that are out of range';
+}
+
+# RT #125402
+{
+    my $s = 'foobar';
+    $s.substr-rw(3, 3) = 1;
+    is $s, 'foo1', 'assigning a non-string coerces';
 }
 
 # vim: ft=perl6

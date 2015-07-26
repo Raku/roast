@@ -4,7 +4,7 @@ use Test;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there. 
 
-plan 6;
+plan 8;
 
 my $res;
 
@@ -28,6 +28,24 @@ ok(!$res, "run() to a nonexisting program with an argument list does not die (an
             err => / ^ "woot" [\r]? \n $ /,
         },
         'qx{} does not capture stderr';
+}
+
+# RT #115390
+{
+    my $rt115390;
+    for 1..100 -> $i {
+        $rt115390 += $i.perl;
+        run "true";
+        1;
+    }
+    is $rt115390, 5050, 'no crash with run() in loop; run() in sink context';
+    $rt115390 = 0;
+    for 1..100 -> $i {
+        $rt115390 += $i.perl;
+        my $var = run "true";
+        1;
+    }
+    is $rt115390, 5050, 'no crash with run() in loop; run() not in sink context';
 }
 
 # all these tests feel like bogus, what are we testing here???

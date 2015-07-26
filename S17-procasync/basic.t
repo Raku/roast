@@ -36,7 +36,7 @@ throws-like { $pc.write(Buf.new(0)) }, X::Proc::Async::OpenForWriting, :method<w
 throws-like { $pc.stdout.tap(&say)  }, X::Proc::Async::TapBeforeSpawn, :handle<stdout>;
 
 my $ps = await $pm;
-isa-ok $ps, Proc::Status;
+isa-ok $ps, Proc;
 ok $ps, 'was execution successful';
 is $ps.?exitcode, 0, 'is the status ok';
 
@@ -78,7 +78,7 @@ is $start-promise.status, Planned, 'external program still running (stdin still 
 $pc.close-stdin;
 
 #?rakudo 3 skip 'returns Nil (flapping tests) RT #125047'
-isa-ok $start-promise.result, Proc::Status, 'Can finish, return Proc::Status';
+isa-ok $start-promise.result, Proc, 'Can finish, return Proc';
 
 is $stdout, 'Perl 6', 'got correct STDOUT';
 is $stderr, '',       'got correct STDERR';

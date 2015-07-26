@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 51;
+plan 53;
 
 #L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
@@ -96,4 +96,10 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 }
 
+# RT #72580
+#?rakudo todo 'RT #72580'
+{
+    ok True ~~ Int, "True ~~ Int";
+    ok Bool ~~ Int, "Bool ~~ Int";
+}
 # vim: ft=perl6

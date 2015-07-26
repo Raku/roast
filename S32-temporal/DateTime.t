@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 219;
+plan 232;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -384,7 +384,6 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     is ~$dt, '2004-12-31T23:57:00+00:35', 'DateTime.in-timezone (year rollover)';
 
     $dt = with-tz(dt(second => 15.5), 0, 0, 5);
-    #?rakudo todo 'nom regression'
     is $dt.second, 20.5, 'DateTime.in-timezone (fractional seconds)';
 
     $dt = dt(year => 2005, month => 1, day => 3,
@@ -604,4 +603,25 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
 
     ok $now ~~ $today, "positive smartmatch against a Date";
     ok $not-now !~~ $today, "negative smartmatch against a Date";
+}
+
+# RT #125555 Comparison ops
+{
+    my $d0 = ds('1971-10-28T10:45:00');
+    my $d1 = $d0;
+    my $d2 = ds('1998-10-19T02:03:00');
+
+    ok $d0 == $d1,  "$d0 == $d1";
+    ok $d0 != $d2,  "$d0 != $d2";
+    ok $d0 <= $d1,  "$d0 <= $d1";
+    ok $d0 <= $d2,  "$d0 <= $d2";
+    ok $d0 < $d2,   "$d0 < $d2";
+    ok $d0 >= $d1,  "$d0 >= $d1";
+    ok $d2 >= $d1,  "$d2 >= $d1";
+    ok $d2 > $d1,   "$d2 > $d1";
+    ok ($d0 cmp $d1) == 0,  "$d0 cmp $d1 == 0";
+    ok ($d0 cmp $d2) == -1, "$d0 cmp $d2 == -1";
+    ok ($d2 cmp $d1) == 1,  "$d2 cmp $d1 == 1";
+    ok $d0 before $d2,   "$d0 before $d2";
+    ok $d2 after $d1,   "$d2 after $d1";
 }

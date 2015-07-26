@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 29;
 
 # L<S32::Containers/Array/rotate>
 
@@ -50,5 +50,12 @@ plan 27;
     is ~rotate(@a, -8), 'c d e a b', 'rotate(@a, -8)';
     is ~@a, 'a b c d e', 'original still unmodified (negative)';
 } #13
+
+# RT125677 Make sure rotate is Cool with stuff
+{
+    my @a = <a b c d e>;
+    is ~@a.rotate('2'), 'c d e a b', '.rotate("2")';
+    is ~@a.rotate(2.5), 'c d e a b', '.rotate(2.5)';
+}
 
 # vim: ft=perl6

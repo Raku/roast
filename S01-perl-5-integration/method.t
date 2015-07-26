@@ -4,8 +4,8 @@ use Test;
 
 plan(13);
 
-unless (try { EVAL("1", :lang<perl5>) }) {
-    skip_rest;
+unless (try { EVAL("1", :lang<Perl5>) }) {
+    skip-rest;
     exit;
 }
 
@@ -58,17 +58,17 @@ sub invoke {
     $obj->me ('invoking');
 }
 
-/, :lang<perl5>);
+/, :lang<Perl5>);
 
 {
-    my $r = EVAL("FooBar->VERSION", :lang<perl5>);
+    my $r = EVAL("FooBar->VERSION", :lang<Perl5>);
     is($r, '6.0', "class method");
 }
 
 my $obj;
 
 {
-    $obj = EVAL("FooBar->new", :lang<perl5>);
+    $obj = EVAL("FooBar->new", :lang<Perl5>);
     #?rakudo todo "P5 classes not yet shadowed in P6"
     {
         isa-ok($obj, 'FooBar', "blessed");
@@ -120,7 +120,7 @@ my $obj;
         method me ($class: $arg) { 'Foo6'~$arg };    #OK not used
     };
     my $obj6 = Foo6.new;
-    $obj = EVAL("FooBar->new", :lang<perl5>);
+    $obj = EVAL("FooBar->new", :lang<Perl5>);
     is($obj.invoke($obj6), 'Foo6invoking', 'invoke p6 method from p5');
 }
 

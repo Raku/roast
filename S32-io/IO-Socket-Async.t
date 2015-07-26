@@ -18,20 +18,20 @@ try {
 }
 
 await IO::Socket::Async.connect($hostname, $port).then(-> $sr {
-	is $sr.status, Broken, 'Async connect to unavailable server breaks promise';
+    is $sr.status, Broken, 'Async connect to unavailable server breaks promise';
 });
 
 my $server = IO::Socket::Async.listen($hostname, $port);
 
 my $echoTap = $server.tap(-> $c {
-    $c.chars_supply.tap(-> $chars {
+    $c.chars-supply.tap(-> $chars {
         $c.send($chars).then({ $c.close });
     }, quit => { say $_; });
 });
 
 await IO::Socket::Async.connect($hostname, $port).then(-> $sr {
-	is $sr.status, Kept, 'Async connect to available server keeps promise';
-	$sr.result.close() if $sr.status == Kept;
+    is $sr.status, Kept, 'Async connect to available server keeps promise';
+    $sr.result.close() if $sr.status == Kept;
 });
 
 multi sub client(&code) {
@@ -41,17 +41,17 @@ multi sub client(&code) {
     my $client = IO::Socket::Async.connect($hostname, $port).then(-> $sr {
         if $sr.status == Kept {
             my $socket = $sr.result;
-		    code($socket, $v);
+            code($socket, $v);
         }
         else {
             $v.break($sr.cause);
         }
-    });
+    }); 
     $p
 }
 
 multi sub client(Str $message) {
-	client(-> $socket, $vow {
+    client(-> $socket, $vow {
     $socket.send($message).then(-> $wr {
         if $wr.status == Broken {
             $vow.break($wr.cause);
@@ -59,7 +59,7 @@ multi sub client(Str $message) {
         }
     });
     my @chunks;
-    $socket.chars_supply.tap(-> $chars { @chunks.push($chars) },
+    $socket.chars-supply.tap(-> $chars { @chunks.push($chars) },
         done => {
             $socket.close();
             $vow.keep([~] @chunks);
@@ -75,7 +75,7 @@ $echoTap.close;
 ok $echoResult eq $message, 'Echo server';
 
 my $discardTap = $server.tap(-> $c {
-    $c.chars_supply.tap(-> $chars { $c.close });
+    $c.chars-supply.tap(-> $chars { $c.close });
 });
 
 my $discardResult = await client($message);
@@ -84,23 +84,23 @@ ok $discardResult eq '', 'Discard server';
 
 my Buf $binary = slurp( 't/spec/S32-io/socket-test.bin', bin => True );
 my $binaryTap = $server.tap(-> $c {
-	sleep 0.1;
-	$c.write($binary).then({ $c.close });
+    sleep 0.1;
+    $c.write($binary).then({ $c.close });
 });
 
 multi sub client(Buf $message) {
-	client(-> $socket, $vow {
-        my @chunks;
-        $socket.bytes_supply.tap(-> $bytes { @chunks.push: $bytes },
-            done => {
+    client(-> $socket, $vow {
+        my $buf = Buf[uint8].new;
+        $socket.bytes-supply.act(-> $bytes { 
+                $buf ~= $bytes;
                 $socket.close();
-                $vow.keep([~] @chunks);
+                $vow.keep($buf);
             },
             quit => { $vow.break($_); });
-	});
+    });
 }
 
 my $received = await client($binary);
 $binaryTap.close;
 #?rakudo.moar skip "RT #122318 - test is flapping"
-ok $binary eqv $received, 'bytes_supply';
+ok $binary eqv $received, 'bytes-supply';

@@ -124,11 +124,11 @@ for @int,@uint -> $T {
 
     @arr = ();
     throws-like { @arr.pop }, X::Cannot::Empty,
-      action => '.pop',
+      action => 'pop',
       what   => "array[$t]",
       "Trying to pop an empty $t array dies";
     throws-like { @arr.shift }, X::Cannot::Empty,
-      action => '.shift',
+      action => 'shift',
       what   => "array[$t]",
       "Trying to shift an empty $t array dies";
 
@@ -234,6 +234,15 @@ for @uint -> $T {
 
     my @arr := array[$T].new;
     is (@arr[0] = -1), -1, "assigning -1 on $t array passes value on through?";
-    #?rakudo skip 'highest bit length stays negative, RT #124088'
-    ok @arr[0] > 0,        "negative value on $t array becomes positive";
+    # DRY once the failing cases pass. RT #124088
+    if $t eq "uint" or $t eq "uint64" {
+        #?rakudo todo 'highest bit length stays negative, RT #124088'
+        ok @arr[0] > 0,        "negative value on $t array becomes positive";
+    }
+    elsif $t eq "uint32" {
+        #?rakudo.jvm todo 'missing an invert? (-1 --> 0, -2 --> -1)'
+        ok @arr[0] > 0,        "negative value on $t array becomes positive";
+    } else {
+        ok @arr[0] > 0,        "negative value on $t array becomes positive";
+    }
 }

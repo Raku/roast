@@ -7,9 +7,9 @@ plan 39;
 
 my @list = (1 .. 10);
 
-is-deeply grep-index( { ($_ % 2) }, @list ), (0,2,4,6,8).list.item,
+is grep-index( { ($_ % 2) }, @list ), (0,2,4,6,8).list.item,
   'simple direct test of sub';
-is-deeply @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
+is @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
   'simple direct test of method';
 
 {
@@ -70,34 +70,34 @@ is-deeply @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
 {
   my @array = <a b c d>;
   #?rakudo 2 skip 'test error -- is $_ rw here?'
-  is-deeply @array.grep-index({ $_ ~= "c"; 1 })), [0..3],
+  is @array.grep-index({ $_ ~= "c"; 1 })), [0..3],
     'mutating $_ in grep-index works (1)';
-  is-deeply @array, [<ac bc cc dc>],
+  is @array, [<ac bc cc dc>],
     'mutating $_ in grep-index works (2)';
 }
 
 # grep-index with last, next etc.
 {
-    is-deeply (1..16).grep-index({last if $_ % 5 == 0; $_ % 2 == 0}),
+    is (1..16).grep-index({last if $_ % 5 == 0; $_ % 2 == 0}),
        (1,3).list.item, 'last works in grep-index';
-    is-deeply (1..12).grep-index({next if $_ % 5 == 0; $_ % 2 == 0}),
+    is (1..12).grep-index({next if $_ % 5 == 0; $_ % 2 == 0}),
        (1,3,5,7,11).list.item, 'next works in grep-index';
 }
 
 # since the test argument to .grep-index is a Matcher, we can also
 # check type constraints:
 {
-    is-deeply (2, [], 4, [], 5).grep-index(Int),
+    is (2, [], 4, [], 5).grep-index(Int),
        (0,2,4).list.item, ".grep-index with non-Code matcher";
 
-    is-deeply grep-index(Int, 2, [], 4, [], 5),
+    is grep-index(Int, 2, [], 4, [], 5),
        (0,2,4).list.item, "grep-index with non-Code matcher";
 }
 
 {
     my @a = <a b c>;
     my @b = <b c d>;
-    is-deeply @a.grep-index(any(@b)), (1,2).list.item, 'Junction matcher';
+    is @a.grep-index(any(@b)), (1,2).list.item, 'Junction matcher';
 
 }
 

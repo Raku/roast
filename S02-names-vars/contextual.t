@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 24;
 
 # L<S02/Names/"for the identifier of the variable">
 
@@ -77,5 +77,8 @@ nok foo().defined, 'contextual $*VAR is undefined';
     package Foo { our sub run() { return @*INC } };
     ok Foo::run().chars > 0;
 }
+
+# RT #74756
+throws-like 'say $*a; my $*a;', X::Dynamic::Postdeclaration, symbol => '$*a';
 
 # vim: ft=perl6

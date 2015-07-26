@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 34;
+plan 59;
 
 =begin description
 
@@ -19,6 +19,7 @@ is day.gist, '(day)', 'enum itself stringififes';
 ok day.WHAT === day,  'enum.WHAT returned a value';
 ok day.perl, 'enum.perl returned a value';
 
+#?DOES 12
 sub test_stuff($x) {
   #?niecza skip 'No candidates for dispatch to infix:<does>'
   ok $x.does(day::Tue),    "basic enum mixing worked ($x-2)";
@@ -56,7 +57,6 @@ sub test_stuff($x) {
   test_stuff($x);
 }
 
-#?DOES 16
 #?rakudo skip 'does &day::("Tue") RT #124831'
 {
   my $x = 4;
@@ -69,7 +69,6 @@ sub test_stuff($x) {
 }
 
 # used to be Rakudo regression, RT #64098
-#?DOES 2
 {
     augment class Mu {
         method f { 'inMu' };
@@ -115,6 +114,13 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 {
     eval-dies-ok "enum rt_101900 < a b >; class A { }; say A but rt_101900::a",
         "Cannot mixin an enum into a class";
+}
+
+# RT #125445
+{
+    my enum Bar <A B C>;
+    ok B.can("value"), '.can(...) on an enum';
+    ok B.^can("value"), '.^can(...) on an enum';
 }
 
 # vim: ft=perl6

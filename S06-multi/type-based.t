@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 62;
+plan 63;
 
 # type based dispatching
 #
@@ -251,6 +251,14 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 {
     multi foo($a where { $_ == False } = True) { }
     lives-ok { foo(False) }, 'Combination of where clause plus default parses correctly';
+}
+
+# RT #125483
+{
+    multi a (;; Any $b) { "one" }
+    multi a (;; Int $a) { "two" }
+    throws-like { a(42) }, X::Multi::Ambiguous,
+        'arguments after ;; not considered by multi-dispatch';
 }
 
 # vim: ft=perl6

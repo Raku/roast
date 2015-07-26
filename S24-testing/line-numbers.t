@@ -7,13 +7,10 @@ my $dir    = 't/spec/S24-testing/test-data/';
 my $prefix = 'line-number-';
 my $suffix = '.txt';
 
-my $cmd;
-my $full-path;
-
 sub execute-test ( :$function, :$line ) {
-    $full-path = $dir ~ $prefix ~ $function ~ $suffix;
-    $cmd = "$*EXECUTABLE $full-path 2>&1";
-    ok qqx[$cmd] ~~ /'Failed test ' (\N* \n \N*)? 'at ' $full-path ' line ' $line/,
+    my $full-path = $dir ~ $prefix ~ $function ~ $suffix;
+    my $proc = run($*EXECUTABLE, $full-path, :!out, :err);
+    ok $proc.err.slurp-rest ~~ /'Failed test ' (\N* \n \N*)? 'at ' $full-path ' line ' $line/,
         "failing test with $function reports correct line number $line";
 }
 

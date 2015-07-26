@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 10;
 
 # TODO: move to S02?
 # L<S02/Generic types/>
@@ -30,7 +30,6 @@ sub declare_cap_type(::T $x) {   #OK not used
     my T $y = 4.2;   #OK not used
     1
 }
-#?rakudo skip 'nom regression RT #124940'
 ok(declare_cap_type(3.3), 'can use captured type in declaration');
 $ok = 1;
 try {
@@ -41,4 +40,26 @@ ok($ok, 'can use captured type in declaration');
 
 #RT #114216
 eval-lives-ok q':(::T $x)', "No error on type capture";
+
+# RT #125537
+{
+    sub foo(::T) {
+        {
+            my T $b;
+            is $b, Int, 'Type capture works on variable in nested scope';
+        }
+    }
+    foo(1)
+}
+
+# RT #114724
+{
+    sub f (::T $g) {
+        for ($g) -> T $h {
+            return $h ~ ":" ~ T.perl
+        }
+    };
+    is f("blah"), "blah:Str", 'Type variable matches in signature to "for" loop';
+}
+
 # vim: ft=perl6

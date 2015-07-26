@@ -45,7 +45,7 @@ VERBs include:
     eval "reason"	# eval the test because it doesn't parse yet
     try "reason"	# try the test because it throws exception
     todo "reason"	# mark "todo" because "not ok" is expected
-    emit code		# insert code (such as "skip_rest();") inline
+    emit code		# insert code (such as "skip-rest();") inline
 
 All fudged tests return an exit code of 1 by default, so the test harness
 will mark it as "dubious" even if all the tests supposedly pass.

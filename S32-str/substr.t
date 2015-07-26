@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 55;
 
 # L<S32::Str/Str/=item substr>
 
@@ -40,11 +40,12 @@ plan 47;
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text");
 }
 
-#?rakudo.jvm skip 'java.nio.charset.MalformedInputException RT #124692'
 { # codepoints greater than 0xFFFF
     my $str = join '', 0x10426.chr, 0x10427.chr;
+    #?rakudo.jvm todo 'codepoints greater than 0xFFFF RT #124692'
     is $str.codes, 2, "Sanity check string";
     #?niecza 2 todo "substr bug"
+    #?rakudo.jvm 2 skip 'java.nio.charset.MalformedInputException RT #124692'
     is substr($str, 0, 1), 0x10426.chr, "Taking first char of Deseret string";
     is substr($str, 1, 1), 0x10427.chr, "Taking second char of Deseret string";
 }
@@ -72,6 +73,23 @@ plan 47;
     is("hello foo bar and baz".substr(6, 10).wordcase, "Foo Bar An", ".substr.wordcase on literal string (substr(Int, Int)).");
     is("hello »« foo".substr(6, 2), "»«", ".substr on unicode string (substr(Int, Int)).");
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text (substr(Int, Int)).");
+}
+
+{ # ranges
+
+    my $str = "hello foo and bar";
+
+    is(substr($str, 6..8), "foo", "substr (substr(Range)).");
+    is($str.substr(6..8), "foo", "substr (substr(Range)).");
+
+    is(substr($str, 6^..8), "oo", "substr (substr(Range)).");
+    is($str.substr(6^..8), "oo", "substr (substr(Range)).");
+
+    is(substr($str, 6..^8), "fo", "substr (substr(Range)).");
+    is($str.substr(6..^8), "fo", "substr (substr(Range)).");
+
+    is(substr($str, 6^..^8), "o", "substr (substr(Range)).");
+    is($str.substr(6^..^8), "o", "substr (substr(Range)).");
 }
 
 #?niecza todo

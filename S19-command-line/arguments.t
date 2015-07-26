@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 2;
+plan 3;
 
 use lib 't/spec/packages';
 use Test::Util;
@@ -17,8 +17,8 @@ use Test::Util;
     else {
         is_run( $x, :args[$file],
         {
-            out => { .chars < 256 && m/"Could not open $file"/ },
-            err => "",
+            out => '',
+            err => { .chars < 256 && m/"Could not open $file"|"Can not run directory $file"/ },
         },
         'concise error message when called script not found' );
     }
@@ -31,4 +31,18 @@ use Test::Util;
         !! 'echo "exit(42)" | \qq[$*EXECUTABLE] -';
 
     is shell($cmd).exitcode, 42, "'-' as argument means STDIN";
+}
+
+# RT #125600
+{
+    my $dir = 'omg-a-directory';
+    mkdir $dir;
+    LEAVE rmdir 'omg-a-directory';
+    my Str $x;
+    is_run( $x, :args[$dir],
+    {
+        out => '',
+        err => { .chars < 256 && m/$dir/ && m/directory/ },
+    },
+    'concise error message when called script is a directory' );
 }

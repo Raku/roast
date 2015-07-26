@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 39;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
@@ -78,15 +78,19 @@ is($val2, 42, '... cloned object has proper attr value');
     # when cloning with new versions of attributes, it should not update the original
     my $a1 = ArrTest.new(:array<a b>);
     my $a2 = $a1.clone(:array<c d>);
-    #?rakudo todo "clone currently messes up original"
     is-deeply $a1.array, ['a', 'b'], 'original object has its original array';
-    is-deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array';
+    #?rakudo.jvm todo 'cloned object has @.array as Parcel instead of Array RT #125577'
+    is-deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array (1)';
+    is $a2.array[0], 'c', 'cloned object has the newly-provided array (2)';
+    is $a2.array[1], 'd', 'cloned object has the newly-provided array (3)';
 
     my $b1 = HshTest.new(hash=> 'a' => 'b' );
     my $b2 = $b1.clone(hash=> 'c' => 'd' );
-    #?rakudo todo "clone currently messes up original"
     is-deeply $b1.hash, {'a' => 'b'}, 'original object has its original hash';
-    is-deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash';
+    #?rakudo.jvm todo 'cloned object has @.hash as Pair instead of Hash RT #125577'
+    is-deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash (1)';
+    is $b2.hash.elems, 1, 'cloned object has the newly-provided hash (2)';
+    is $b2.hash<c>, 'd', 'cloned object has the newly-provided hash (3)';
 
     # when cloning without new versions of attributes, it should not deep-copy the array/hash
     my $a3 = ArrTest.new(:array<a b>);

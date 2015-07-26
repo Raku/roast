@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 193;
+plan 195;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -133,7 +133,6 @@ sub showkv($x) {
     isa-ok $b, Bag, '&Bag.new given a Hash produces a Bag';
     is +$b, 4, "... with four elements";
     #?niecza todo "Non-string bag elements NYI"
-    #?rakudo todo "Not properly interpolating"
     is +$b.grep(Enum), 4, "... which are all Enums";
 }
 
@@ -472,6 +471,14 @@ sub showkv($x) {
     }
     is $string, 'foofoofoobarbarfoobarbar',
         'can use cross operator X with bag keys';
+}
+
+# RT #125611
+{
+    my class MyBag is Bag { }
+    my $b = MyBag.new(|<a foo a a a a b foo>);
+    isa-ok $b, MyBag, 'MyBag.new produces a MyBag';
+    is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
 }
 
 # vim: ft=perl6

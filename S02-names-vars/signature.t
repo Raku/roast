@@ -5,7 +5,7 @@ use Test;
 plan 13;
 
 # The :() form constructs signatures similar to how \() constructs Captures.
-# A subroutine's .signature is a Siglist object.
+# A subroutine's .signature is a Signature object.
 
 #L<S02/Names and Variables/"A signature object">
 
@@ -23,48 +23,46 @@ plan 13;
 
 {
     my ($x,$y,$z) := (1,2,3);
-    is("$x $y $z", "1 2 3", "siglist bindings works");
+    is("$x $y $z", "1 2 3", "signature bindings works");
 }
 
 # Same, but more complex
 {
     my ($x,@y,*@rest) := (42,[13,17],5,6,7);
-    is("$x!{@y}!{@rest}", "42!13 17!5 6 7", "complex siglist bindings works (1)");
+    is("$x!{@y}!{@rest}", "42!13 17!5 6 7", "complex signature bindings works (1)");
 }
 
 {
     my ($x?) := ();
-    ok(!$x.defined, "complex siglist bindings works (2)");
+    ok(!$x.defined, "complex signature bindings works (2)");
 }
 
-# &sub.signature should return a Siglist object
+# &sub.signature should return a Signature object
 {
     sub foo1 ($a, $b) {}    #OK not used
-    my $siglist = :($a, $b);
+    my $signature = :($a, $b);
 
-    ok ~$siglist,
-        "a siglist stringifies";
-    #?rakudo todo 'eqv on signatures'
-    ok $siglist eqv &foo1.signature,
-        "a subroutine's siglist can be accessed via .signature (1)";
+    ok ~$signature,
+        "a signature stringifies";
+    ok $signature eqv &foo1.signature,
+        "a subroutine's signature can be accessed via .signature (1)";
 }
 
 # Same as above, but more complex
 {
     my sub foo (Num $a, $b?, *@rest) {}    #OK not used
-    my $siglist = :(Num $a, $b?, *@rest);
+    my $signature = :(Num $a, $b?, *@rest);
 
-    #?rakudo todo 'eqv on signatures'
-    ok $siglist eqv &foo.signature ,
-        "a subroutine's siglist can be accessed via .signature (2)";
+    ok $signature eqv &foo.signature ,
+        "a subroutine's signature can be accessed via .signature (2)";
 }
 
 {
     my sub foo ($a, $b) {}   #OK not used
-    my $siglist = :($a);
+    my $signature = :($a);
 
-    ok $siglist !eqv &foo.signature,
-        "a subroutine's siglist can be accessed via .signature (3)";
+    ok $signature !eqv &foo.signature,
+        "a subroutine's signature can be accessed via .signature (3)";
 }
 
 {
@@ -72,6 +70,7 @@ plan 13;
     my (@c) = @a;
     my $i = 0;
     $i++ for @c;
+    # XXX this test appears to be bogus to me, as there is no signature involved
     is $i, 3, 'asigning to an array in a signature is sane';
 }
 
@@ -79,7 +78,7 @@ plan 13;
 {
     my @list = 1..4;
     my (:@even, :@odd) := classify { $_ %% 2 ?? 'even' !! 'odd' }, @list;
-    is @even, (2, 4), 'siglist binding with a hash works';
+    is @even, (2, 4), 'signature binding with a hash works';
 }
 
 # vim: ft=perl6

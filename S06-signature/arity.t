@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 52;
+plan 56;
 
 # L<S06/Required parameters/method:>
 sub a_zero  ()           { };
@@ -137,5 +137,30 @@ dies-ok { EVAL("a_zero( 'hello', 'world' )") }, 'no matching sub signature';
 # RT #111646
 is (-> *@a { }).count, Inf, 'slurpy positional causes infinite count';  #OK not used
 is (-> *%a { }).count, 0,   'slurpy named causes no count change';      #OK not used
+
+# RT #78240
+{
+    sub a ($a, $b, $c) { 42 }
+    my &b = &a.assuming(1);
+    is &a.arity, 3, 'arity of original sub is 3';
+    is &b.arity, 2, '.assuming(1) reduces arity by 1';
+}
+
+# RT #77744
+{
+    class A {
+        our method f ($x: $y) { $y * 2 }
+    }
+    my $a = A.new;
+    my &g = &A::f.assuming( $a );
+    is g(3), 6, 'correct number of required parameters for assuming-derived method (1)';
+
+    class B {
+        our method f ($x: $y, $z) { $y + $z }
+    }
+    my $b = B.new;
+    my &h = &B::f.assuming( $b );
+    is h(3, 11), 14, 'correct number of required parameters for assuming-derived method (1)';
+}
 
 # vim: ft=perl6

@@ -33,8 +33,8 @@ throws-like { for "a b c".split(/\s/) -> $foo { $foo = $foo; } },
 #?niecza todo 'Suspect test'
 {
     my @foo = 'AB'.split('');
-    @foo[0]++;
-    is ~@foo, 'B B', 'Str.split(Str) works with postfix:<++>';
+    @foo[1]++;
+    is ~@foo, ' B B ', 'Str.split(Str) works with postfix:<++>';
 }
 
 ok 1.Str ~~ / ^ 1 $ /, 'RT 66366; 1.Str is a "good" Str';

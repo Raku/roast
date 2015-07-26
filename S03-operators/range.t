@@ -61,7 +61,7 @@ is ['b'^..^'a'], [], "double-exclusive string auto-rev range (^..^) can produce 
 is ['a' ^..^ 'a'], [], "double-exclusive range (x ^..^ x) where x is a char";
 is ('a'..'z').list.join(' '), 'a b c d e f g h i j k l m n o p q r s t u v w x y z', '"a".."z"';
 
-is 1.5 ~~ 1^..^2, Bool::True, "lazy evaluation of the range operator";
+is 1.5 ~~ (1 ^..^ 2), Bool::True, "lazy evaluation of the range operator";
 
 # Test the unary ^ operator
 is ~(^5), "0 1 2 3 4", "unary ^num produces the range 0..^num";

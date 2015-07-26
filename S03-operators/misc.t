@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 36;
+plan 38;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -124,5 +124,13 @@ is (2 Z 3), @z, 'joining of single items';
     throws-like "555 ~~!~~ 666", X::Syntax::DuplicatedPrefix, prefixes => "~~",
         "~~!~~ fails to parse (RT #76436)";
 }
+
+# comparison complains if either of its arguments is undefined - RT #93978
+{
+    throws-like {Int < 0}, X::AdHoc;
+    #?rakudo todo "RT #93978"
+    throws-like {"cat" gt Str}, X::AdHoc;
+}
+
 
 # vim: ft=perl6

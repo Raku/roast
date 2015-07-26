@@ -36,7 +36,7 @@ plan 7;
             more @c { @a.push: $:v }
 # When using multiple channels, and they don't close simultaneously, there is
 # a chance that the "done" section of a closed channel is executed more than
-# once.  Hence the the use of a hash, rather than just a simple counter.
+# once.  Hence the use of a hash, rather than just a simple counter.
             done @c { %done{$:k}++; last if +%done == 2 }
         }
     }

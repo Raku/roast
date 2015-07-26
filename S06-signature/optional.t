@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 28;
+plan 31;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -88,7 +88,8 @@ eval-dies-ok 'sub opt($a = 1, $b) { }',
     sub opt-type1(Int $x?) { $x };
     ok opt-type1() === Int,
         'optional param with type constraints gets the right value';
-    sub opt-type2(Int $x = 'str') { };  #OK not used
+    my $default = 'str';
+    sub opt-type2(Int $x = $default) { };  #OK not used
     dies-ok { EVAL('opt-type2()') }, 'default values are type-checked';
 }
 
@@ -123,6 +124,18 @@ eval-dies-ok 'sub opt($a = 1, $b) { }',
     throws-like { EVAL q[ sub foo($x is rw = 42) {} ] }, Exception,
         message => "Cannot use 'is rw' on an optional parameter",
         'making an "is rw" parameter optional dies with adequate error message';
+}
+
+# RT #112922
+# RT #123897
+{
+    throws-like 'sub foo(Int $x = "omg") { }', X::Parameter::Default::TypeCheck,
+        'Catch impossible default types at compile time';
+    throws-like 'sub foo(Bool $b = sub { False }) {}', X::Parameter::Default::TypeCheck,
+        'Catch impossible default types at compile time (code object)';
+    throws-like 'my class BSON::Javascript { }; multi c1 (BSON::Javascript :$js2 = "") { }',
+        X::Parameter::Default::TypeCheck,
+        'Catch impossible default types at compile time (multi)';
 }
 
 # vim: ft=perl6

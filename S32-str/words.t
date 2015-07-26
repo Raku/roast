@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 16;
 
 # L<S32::Str/Str/=item words>
 
@@ -36,6 +36,21 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
 {
     my $RT120517 = "FOO";
     is qq:ww/$RT120517 "BAR BAZ"/.perl, qq:ww/FOO "BAR BAZ"/.perl, "interpolated variable .perl's like a literal"
+}
+
+{
+    my $str = "foo bar baz";
+
+    # Test that sub form of words works at all
+    my @first-words = try words($str);
+    is +@first-words, 3, 'words($str)';
+
+    # Test sub form of words with * and Inf args; RT #125626
+    my @words = try words($str, Inf);
+    is +@words, 3, 'words($str, Inf)';
+
+    my @other-words = try words($str, *);
+    is +@other-words, 3, 'words($str, *)';
 }
 
 # vim: ft=perl6

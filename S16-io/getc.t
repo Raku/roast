@@ -23,7 +23,7 @@ my $tmpfile = "temp-test" ~ nonce();
 }
 
 {
-    dies_ok { open('t').getc }, 'getc on a directory fails';
+    dies-ok { open('t').getc }, 'getc on a directory fails';
 }
 
 END { unlink $tmpfile }

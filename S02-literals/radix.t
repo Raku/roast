@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 138;
+plan 152;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -18,17 +18,43 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 # setting the default radix
 
 {
-    is(:10('01110') ,  0d1110, ":10('01110') is default decimal");
-    is(:10('0b1110'), 0b1110, ":10('0b1110') overrides default decimal");
-    is(:10('0x20'),   0x20, ":10('0x20') overrides default decimal");
-    is(:10('0o377'),  0o377, ":10('0o255') overrides default decimal");
-    is(:10('0d37'),   0d37, ":10('0d37') overrides default decimal");
+    is(:10('01110') ,   0d1110, ":10('01110') is default decimal");
+    is(:10('0b1110'),   0b1110, ":10('0b1110') overrides default decimal");
+    is(:10(':2<1110>'), 0b1110, ":10(':2<1110>') overrides default decimal");
+    is(:10('0x20'),     0x20,   ":10('0x20') overrides default decimal");
+    is(:10(':16<20>'),  0x20,   ":10(':16<20>') overrides default decimal");
+    is(:10('0o377'),    0o377,  ":10('0o255') overrides default decimal");
+    is(:10(':8<377>'),  0o377,  ":10(':8<255>') overrides default decimal");
+    is(:10('0d37'),     0d37,   ":10('0d37') overrides default decimal");
+    is(:10(':10<37>'),  0d37,   ":10(':10<37>') overrides default decimal");
 
     # RT #107756
     throws-like ':10(42)',
       X::Numeric::Confused,
-      :what(42),
-      ':10() really wants a string, not a number';
+      :num(42),
+      :base(10),
+      :message(/Int/),
+      ':10() really wants a string, not an integer';
+
+    throws-like ':12(42.2)',
+      X::Numeric::Confused,
+      :num(42.2),
+      :base(12),
+      :message(/Rat/),
+      ':10() really wants a string, not a rational';
+
+    throws-like ':16(6.02e23)',
+      X::Numeric::Confused,
+      :num(6.02e23),
+      :base(16),
+      :message(/Num/),
+      ':10() really wants a string, not a num';
+
+    throws-like ':10([1,2,3])',
+      X::Numeric::Confused,
+      :base(10),
+      :message(/Array/),
+      ':10() really wants a string, not an array';
 }
 
 # L<S29/Conversions/"prefix:<:16>">
@@ -85,10 +111,13 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 {
-    is :16('0d10'),      0xd10, ':16("0d..") is hex, not decimal';
-    is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
-    is(:16('0x20'),      0x20, ":16('0x20') stays hexadecimal");
-    is(:16('0o377'),    0o377, ":16('0o255') converts from octal");
+    is :16('0d10'),     0xd10,  ':16("0d..") is hex, not decimal';
+    is(:16('0fff'),     0xfff,  ":16('0fff') defaults to hexadecimal");
+    is(:16('0x20'),     0x20,   ":16('0x20') stays hexadecimal");
+    is(:16('0o377'),    0o377,  ":16('0o255') converts from octal");
+    is(:16(':8<377>'),  0o377,  ":16(':8<255>') converts from octal");
+    is(:16(':2<1110>'), 0b1110, ":16(':2<1110>') overrides default hex"  );
+    is(:16(':10<37>'),  0d37,   ":16(':10<37>') overrides default hex"     );
 }
 
 # L<S02/Exponentials/"which will be interpreted as they would outside the string">
@@ -144,13 +173,16 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
-#?rakudo todo "Some question of what this form should actually do RT #124561"
 #?niecza todo ":radix() NYI"
 {
-    is(:8('0b1110'),  0o14, ':8(0b1110) converts from decimal');
-    is(:8('0x20'),    0o32, ':8(0x20) converts from decimal');
-    is(:8('0o377'),  0o255, ':8(0o255) stays decimal');
-    is(:8('0d37'),    0o37, ':8(0d37) converts from decimal');
+    is(:8('0b1110'),   0b1110,  ':8(0b1110) overrides from default octal');
+    is(:8(':2<1110>'), 0b1110,  ':8(:2<1110>) overrides from default octal');
+    is(:8('0x20'),     0x20,  ':8(0x20) overrides from default octal');
+    is(:8(':16<20>'),  0x20,  ':8(:16<20>) overrides from default octal');
+    is(:8('0o377'),    0o377, ':8(0o377) stays octal');
+    is(:8(':8<377>'),  0o377, ':8(:8<377>) stays octal');
+    is(:8('0d37'),     0d37,  ':8(0d37) overrides from default octal');
+    is(:8(':10<37>'),  0d37,  ':8(:10<37>) overrides from default octal');
 }
 
 

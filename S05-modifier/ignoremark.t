@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 =begin description
 
@@ -30,5 +30,10 @@ is('fooäàaáâåbar' ~~ m:m/<[ab]>+/, 'äàaáâåba', 'Ignoremark with charac
 is('fooäàaáâåbar' ~~ m:m/<-[a]>+/, 'foo',      'Ignoremark with negated character class');
 
 is('fooäàaáâåbar' ~~ m:m/<[a..b]>+/, 'äàaáâåba', 'Ignoremark with range in character class');
+
+# RT #116256
+{
+    ok("ü" ~~ /:ignoremark 'u'/, 'Ignoremark with subrule');
+}
 
 # vim: syn=perl6 sw=4 ts=4 expandtab

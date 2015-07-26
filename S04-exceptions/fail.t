@@ -31,7 +31,6 @@ plan 27;
 }
 
 # RT #64990
-#?rakudo skip 'RT #64990'
 {
     our Int sub rt64990 { fail() }
     ok rt64990() ~~ Failure, 'sub typed Int can fail()';
@@ -105,8 +104,28 @@ plan 27;
 
 # RT #115436
 {
-    throws-like 'Failure.new("foo").()', X::TypeCheck,
-        "type check for creating Failure object with '.new' (1)";
+    # We now allow more things in Failure.new than when the original RT
+    # was filed.
+    #
+    # Leaving this here in case anyone can figure out some esoteric way to
+    # get an X::TypeCheck when Failure.new takes almost any arglist
+#    throws-like 'Failure.new("foo").()', X::TypeCheck,
+#        "type check for creating Failure object with '.new' (1)";
+
 }
+
+sub s1 {
+  sub s2 {
+     fail("foo");
+  }
+  s2();
+  CATCH {
+      default {
+          ok $_.gist ~~ /sub\ss2/,
+          "Failure reports backtrace from its creation point."
+      }
+  }
+}
+s1();
 
 # vim: ft=perl6

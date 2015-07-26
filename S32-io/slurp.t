@@ -39,15 +39,14 @@ is slurp($empty-path), '', "empty files yield empty string";
     is $fh.slurp-rest, $test-contents, "method form .slurp-rest works";
     $fh.close;
 }
-#?niecza skip "slurp(filehandle) doesn't work"
+
 {
-    my $fh = open $test-path, :r;
-    is slurp($fh), $test-contents, "function passed a filehandle works";
-    $fh.close;
+    is slurp($test-path), $test-contents, "function passed a path works";
 }
 
 # RT #112276
 # 0-argument slurp set to $*ARGFILES
+# XXX This will break due to deprecation
 {
     my $*ARGFILES = open $test-path, :r;
     is slurp(), $test-contents, "slurp with no parameters loads \$*ARGFILES";

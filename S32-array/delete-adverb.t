@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 216;
+plan 218;
 
 # L<S02/Names and Variables/:delete>
 
@@ -385,4 +385,13 @@ sub gen_array { (1..10).list }
     is @a[0]:!v, 42, ':!v non-existing';
     is @a.elems, 0,  'should not vivify';
 } #86
+
+# RT #125457
+{
+    my Int @a = ^3;
+    @a[2] :delete;
+    is @a.elems, 2, 'array was shortened';
+    @a[3] = 3;
+    is @a[2], Int, 'properly nulled even at end of array';
+} #2
 # vim: ft=perl6

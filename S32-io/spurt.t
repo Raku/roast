@@ -59,29 +59,23 @@ sub all-basic(Callable $handle) {
 # Corner cases
 #?niecza skip "Unable to resolve method open in type IO"
 {
-    # Spurt on open handle
+    # Spurt on open file
     {
-        my $io = $path.IO.open(:w);
-        spurt $io, "42";
-        close $io;
-        is slurp($path), "42", 'can spurt into an open handle';
+        spurt $path, "42";
+        is slurp($path), "42", 'can spurt into an open file';
     }
 
-    # Buf into an open non binary handle
+    # Buf into an open non binary file
 {
-        my $io = $path.IO.open(:w);
         my Buf $buf = Buf.new(0xC0, 0x01, 0xF0, 0x0D);
-        spurt $io, $buf;
-        close $io;
+        spurt $path, $buf;
         is slurp($path, :bin), $buf, 'can spurt a Buf into an open handle';
 }
 
-    # Text into a open binary handle
+    # Text into a open binary file
 {
-        my $io = $path.IO.open(:bin, :w);
         my Str $txt = "Bli itj nå trønder-rock uten tennis-sokk";
-        spurt $io, $txt;
-        close $io;
+        spurt $path, $txt;
         is slurp($path), $txt, 'can spurt text into a binary handle';
 }
 

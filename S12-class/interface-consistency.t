@@ -4,7 +4,7 @@ use Test;
 
 # L<S12/Interface Consistency>
 
-plan 8;
+plan 9;
 
 class Foo {
     our &m1 = method m1($a) {   #OK not used
@@ -51,5 +51,9 @@ class Faz hides Fiz {
 }
 
 is Faz.new.m1(42), 1, 'hides Fiz means we skip over Fiz in deferal';
+
+# RT #125513
+lives-ok { EVAL('class C { method foo(*%_, *@_) { } }; C.new.foo') },
+    '*%_ before a *@_ also correctly prevents generation of auto-%_';
 
 # vim: ft=perl6

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 16;
 
 class Ap {
     has $.s;
@@ -33,5 +33,12 @@ is  $x.a.join('|'), '1|2', 'slurpy array param set correctly';
 
 is  $x.ssh(a=> 1, b => 2), 15, 'slurpy hash attributive paramed method returns the right thing';
 is  $x.h<b a>.join('|'), '2|1', 'slurpy hash param set correctly';
+
+# RT #125591
+throws-like 'my class C { has $.x; submethod BUILD(:$.x) {} }',
+    X::Syntax::VirtualCall, call => '$.x';
+
+throws-like 'sub optimal($.x) { }', X::Syntax::NoSelf, variable => '$.x';
+throws-like 'sub optimal($!x) { }', X::Syntax::NoSelf, variable => '$!x';
 
 # vim: ft=perl6

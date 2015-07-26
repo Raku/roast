@@ -38,7 +38,7 @@ is(~$/<two>, "bc", 'Implicit hypothetical variable captured');
 is(~$/<foo>, "bc", 'Explicit hypothetical variable captured');
 
 $foo = "";
-#?rakudo 3 skip 'Package variable capture RT #125122'
+#?rakudo 3 todo 'Package variable capture RT #125122'
 ok("abcd" ~~ m/a  $foo=[<two>]  d/, 'Mixed capture');
 is(~$/<two>, "bc", 'Implicit hypothetical variable captured');
 is($foo, "bc", 'Explicit package variable captured');

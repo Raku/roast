@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 61;
+plan 62;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -250,7 +250,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 # RT #112596
 #?niecza todo "https://github.com/sorear/niecza/issues/182"
-#?rakudo.jvm skip 'probably optimizer bug RT #125207'
+# also RT #125207
 {
     my @a = map &sprintf.assuming("%x"), 9..12;
     is(@a, <9 a b c>, "map over a callable with a slurpy");
@@ -262,6 +262,13 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
         'map on list in array does not lose content';
     is {foo => (1,2,3).map: {$_}}<foo>.join(":"), '1:2:3',
         'map on list in hash does not lose content';
+}
+
+# RT #116731
+{
+    my @a = <foo bar baz>;
+    map { s/a/A/ }, @a;
+    is @a.join(":"), "foo:bAr:bAz", 'map can modify what it iterates';
 }
 
 # vim: ft=perl6

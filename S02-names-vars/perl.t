@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 103;
+plan 106;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
 my @tests = (
@@ -187,10 +187,17 @@ my @tests = (
     is $ch, 100.chr, ".perl on latin character";
     $ch = '';
 
-#?rakudo.moar 2 todo 'RT #125110'
-
     lives-ok { $ch = EVAL 780.chr.perl }, '780.chr.perl - lives';
     is $ch, 780.chr, ".perl on composing character";
+
+    # RT #125110
+    my $non-print-then-combchar = 1.chr ~ 780.chr;
+    lives-ok { $ch = EVAL $non-print-then-combchar.perl },
+        '.perl on string with combining char on a non-printable - lives';
+    is $ch, $non-print-then-combchar,
+        ".perl on string with combining char on a non-printable - roundtrips";
+
+    is "Ħ".perl.chars, 3, 'non-combining start does not need escaping';
 }
 
 # vim: ft=perl6

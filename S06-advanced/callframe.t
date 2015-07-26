@@ -43,8 +43,7 @@ is $x,  23, '$x successfully modified';
 is $y, 353, '$y not modified';
 
 # RT #77752
-is index(callframe.perl,"CallFrame.new("), 0, 'CallFrame.perl works';
-# (Could probably be more readable, currently same as .perl)
-is index(callframe.gist,"CallFrame.new("), 0, 'CallFrame.gist works';
+ok callframe.perl.starts-with("CallFrame.new("), 'CallFrame.perl works';
+ok callframe.gist.starts-with($*PROGRAM-NAME),   'CallFrame.gist works';
 
 # vim: ft=perl6
