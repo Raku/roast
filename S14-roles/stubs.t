@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 role WithStub { method a() { ... } };
 role ProvidesStub1 { method a() { 1 } };
@@ -33,3 +33,12 @@ lives-ok { EVAL 'class RT115212Child is HasA does WithStub { }' }, 'stubbed meth
 # RT #119643
 throws-like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
     X::Role::Parametric::NoSuchCandidate;
+
+# RT #125606
+{
+    my role WithPrivate { method !foo { "p" } };
+    my role WithPrivateStub { method !foo { ... } };
+    my class ClassPrivate does WithPrivate does WithPrivateStub { method bar {self!foo } };
+
+    is ClassPrivate.new.bar(), 'p', 'RT #125606: Stub resolution works for private methods too';
+}
