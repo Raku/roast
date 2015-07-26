@@ -38,6 +38,7 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
     is $variable, &baz, '&?ROUTINE is correct inside a rule';
 }
 
+#?rakudo.jvm skip 'java.lang.NullPointerException (openjdk)'
 {
     my @collected;
     sub foo($a) {
