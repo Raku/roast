@@ -30,10 +30,10 @@ sub eval_elsewhere($code){ EVAL($code) }
 #L<S03/"Smart matching"/in range>
 { 
     # more range tests in t/spec/S03-operators/range.t
-    ok((5 ~~ (1 .. 10)), "5 is in 1 .. 10");
-    ok(!(10 ~~ (1 .. 5)), "10 is not in 1 .. 5");
-    ok(!(1 ~~ (5 .. 10)), "1 is not i n 5 .. 10");
-    ok(!(5 ~~ (5 ^..^ 10)), "5 is not in 5 .. 10, exclusive");
+    ok((5 ~~ 1 .. 10), "5 is in 1 .. 10");
+    ok(!(10 ~~ 1 .. 5), "10 is not in 1 .. 5");
+    ok(!(1 ~~ 5 .. 10), "1 is not i n 5 .. 10");
+    ok(!(5 ~~ 5 ^..^ 10), "5 is not in 5 .. 10, exclusive");
 };
 
 # TODO:
