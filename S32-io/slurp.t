@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 17;
 
 # older: L<S16/"Unfiled"/"=item IO.slurp">
 # old: L<S32::IO/IO::FileNode/slurp>
@@ -42,15 +42,6 @@ is slurp($empty-path), '', "empty files yield empty string";
 
 {
     is slurp($test-path), $test-contents, "function passed a path works";
-}
-
-# RT #112276
-# 0-argument slurp set to $*ARGFILES
-# XXX This will break due to deprecation
-{
-    my $*ARGFILES = open $test-path, :r;
-    is slurp(), $test-contents, "slurp with no parameters loads \$*ARGFILES";
-    $*ARGFILES.close;
 }
 
 #?niecza skip ":bin option for slurp fails"
