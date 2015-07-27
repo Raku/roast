@@ -10,7 +10,6 @@ plan 27;
 sub tester(:$a, :$b, :$c) {
     "a$a b$b c$c";
 }
-my &tester2 = &tester.assuming(&tester, :b<b>);
 
 # RT #125207
 {
