@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-BEGIN plan 19;
+BEGIN plan 20;
 
 # L<S04/Phasers>
 
@@ -124,6 +124,13 @@ is $same3, "aebebebc", 'all for blocks get $_';
         is $did-we-leave, 0, 'will leave trait on class-scoped my variable not run yet';
     }
     is $did-we-leave, 1, 'will leave trait on class-scoped my variable ran';
+}
+
+# RT #119109 
+{
+    my $what;
+    my @a will begin { $what = $_.WHAT.perl; };
+    is $what, 'Array', 'will begin block gets var as topic';
 }
 
 # vim: ft=perl6
