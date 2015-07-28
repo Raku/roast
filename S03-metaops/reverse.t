@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 40;
 
 =begin pod
 
@@ -88,4 +88,12 @@ eval-dies-ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
     $foo [R~]= "bar";
     is $foo, "barfoo", '[Rop]= works correctly.';
 }
+
+# RT #118791
+#?rakudo todo 'RT #118791 Rxx does not yet thunk the RHS'
+{
+    my @a = 5 Rxx rand;
+    ok !([==] @a), "Rxx thunks the RHS";
+}
+
 # vim: ft=perl6
