@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 use Test::Idempotence;
-plan 125;
+plan 133;
 
 # L<S06/Signature Introspection>
 
@@ -212,7 +212,29 @@ sub j(*@i) {
     is-perl-idempotent(:(@ is parcel where True, @ is copy, Int @ is rw, @ is parcel where True = [2]), :eqv);
     is-perl-idempotent(:(% is parcel where True, % is copy, Int % is rw, % is parcel where True = {:a(2)}), :eqv);
     is-perl-idempotent(:(& is parcel where True, & is copy, Int & is rw, & is parcel where True = {:a(2)}), :eqv);
+
+    is-perl-idempotent(:(::T $a, T $b), :eqv);
+    # Not sure if this one makes much sense.
+    is-perl-idempotent(:(::T T $a, T $b), :eqv);
+
+    my $f;
+    is-perl-idempotent($f = -> $a { }, Nil,
+                       :{ rx/Block\|\d+/ => '' });
+    is-perl-idempotent(-> { }, Nil,
+                       :{ rx/Block\|\d+/ => '' });
+    is-perl-idempotent(-> ($a) { }, Nil,
+                       :{ rx/Block\|\d+/ => '' });
+    is-perl-idempotent(-> $ { }, Nil,
+                       :{ rx/Block\|\d+/ => '' });
+    is-perl-idempotent(-> $a ($b) { }, Nil,
+                       :{ rx/Block\|\d+/ => '' });
+
 }
+
+role A { sub a ($a, $b, ::?CLASS $c) { }; method foo { &a } };
+class C does A {  };
+my $rolesig = try C.foo.signature.perl;
+is $rolesig, ':($a, $b, ::?CLASS $c)', ".perl of a sigature that has ::?CLASS";
 
 # RT #123895
 {
@@ -228,6 +250,5 @@ sub j(*@i) {
     is &rt125482.signature.perl, ':($a;; $b)',
         '";;" in signature stringifies correctly using .perl';
 }
-
 
 # vim: ft=perl6

@@ -5,18 +5,22 @@ use Test;
 sub is-perl-idempotent($thing, $desc?, %subst?, :$eqv = False) is export {
     my $fail = 1;
     my $stage1p;
+    my $stage1r;
     my $stage2;
     my $stage2p;
     subtest {
         plan $eqv ?? 3 !! 2;
         try {
             $stage1p = $thing.perl;
-            my $stage1r = $stage1p;
+            $stage1r = $stage1p;
             for %subst.kv -> $old, $new {
                 $stage1r ~~ s:g/$old/$new/;
             }
             $stage2 = EVAL $stage1r;
             $stage2p = $stage2.perl;
+            for %subst.kv -> $old, $new {
+                $stage2p ~~ s:g/$old/$new/;
+            }
             CATCH {
                 default { $fail = $_ };
             }
@@ -24,7 +28,7 @@ sub is-perl-idempotent($thing, $desc?, %subst?, :$eqv = False) is export {
         if ($eqv) {
             ok $thing eqv $stage2, "Result is same as original";
         }
-        is $stage1p, $stage2p, "Same .perl output";
+        is $stage1r, $stage2p, "Same .perl output";
         is $fail, 1, "...and no failures.";
     }, $desc // (".perl of " ~ $thing.gist ~ " is idempotent");
 }
@@ -85,9 +89,10 @@ hash, like so:
 
 ...in which case any keys that are Regex objects are used as such.
 
-The substitutions are performed on $thing.perl before sending it to EVAL.
-They are intended to be used to gloss over things that C<.perl> cannot
-be reasonably expected to emit useable code for, and should be used sparingly.
+The substitutions are performed on $thing.perl before sending it to EVAL,
+and again on the result of the EVAL. They are intended to be used to gloss
+over things that C<.perl> cannot be reasonably expected to emit useable code
+for, and should be used sparingly.
 
 The C<$desc> simply sets the description of the test which is output.
 
