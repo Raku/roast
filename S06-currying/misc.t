@@ -19,7 +19,7 @@ is-primed-sig(sub (::T $a, Array[T] $b, Array[Int] :$c) { }, :(Array[Int] :$c), 
 is-primed-sig(sub (::T $a, Array[Array[T]] $b, Array[Array[Int]] :$c) { }, :($b, Array[Array[Int]] :$c), 1);
 is-primed-sig(sub (::T $a, Array[Positional[T]] $b, Array[Positional[Int]] :$c) { }, :($b, Array[Positional[Int]] :$c), 1);
 
-#?rakudo.jvm skip 'JVM binding problems with non-nominal types'
+#?rakudo skip 'We could do a better here'
 is-primed-call(sub (::T $a, T $b is copy, T :$c) { "a" ~ $a.perl ~ "b" ~ $b.perl ~ "c" ~ $c.perl }, \("A", :c<C>), ["aAb(Any)cC"], *, Nil);
 
 # How or whether this should fail is less clear to me.  Currently LTA error.
