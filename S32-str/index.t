@@ -3,11 +3,11 @@ use Test;
 
 # L<S32::Str/Str/"=item index">
 
-plan 38;
+plan 37;
 
 # Type of return value
-isa-ok('abc'.index('b'), Int);
-isa-ok('abc'.index('d'), Int);
+isa-ok('abc'.index('b'), Index);
+isa-ok('abc'.index('d'), Nil);
 ok(!'abc'.index('d'), 'failure object from index() evaluates to false');
 
 # Simple - with just a single char
@@ -44,9 +44,8 @@ nok(index("Hello", "", 999).defined, "Substr is empty, pos > length of str");
 
 is(index("ababcabcd", "abcd"), 5, "Start-of-substr matches several times");
 
-is(index("uuúuúuùù", "úuù"), 4, "Accented chars");
+is(index("uuúuúuùù", "úuù"), 4, "Accented chars"); # RT #73122
 is(index("Ümlaut", "Ü"), 0, "Umlaut");
-
 
 #  call directly with the .notation
 
@@ -61,8 +60,6 @@ my @a = <Hello World>;
 is(index(@a[0], "l"), 2, "on array element");
 is(@a[0].index("l"), 2, ".index on array element");
 
-# index on junctions, maybe this should be moved to t/junctions/ ?
-
 {
     my $j = ("Hello"|"World");
     ok(index($j, "l") == 2, "index on junction");
@@ -72,14 +69,10 @@ is(@a[0].index("l"), 2, ".index on array element");
 }
 
 ok 1234.index(3) == 2, '.index on non-strings (here: Int)';
-
 {
     my $s = '1023';
     is $s.substr($s.index('0')), '023', 'Str.index("0") works';
     is $s.substr($s.index(0)),   '023', 'Str.index(0) works';
 }
-
-# RT #73122
-is index("uuúuúuùù", "úuù"), 4, 'index works for non-ascii';
 
 # vim: ft=perl6
