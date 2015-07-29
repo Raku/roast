@@ -3,12 +3,11 @@ use Test;
 
 # L<S32::Str/Str/"=item index">
 
-plan 37;
+plan 36;
 
 # Type of return value
 isa-ok('abc'.index('b'), Index);
 isa-ok('abc'.index('d'), Nil);
-ok(!'abc'.index('d'), 'failure object from index() evaluates to false');
 
 # Simple - with just a single char
 
