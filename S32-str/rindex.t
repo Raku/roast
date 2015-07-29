@@ -3,7 +3,11 @@ use Test;
 
 # L<S32::Str/Str/"=item rindex">
 
-plan 33;
+plan 35;
+
+# Type of return value
+isa-ok('abc'.rindex('b'), Index);
+isa-ok('abc'.rindex('d'), Nil);
 
 # Simple - with just a single char
 
@@ -44,7 +48,7 @@ is(rindex("what are these « » unicode characters for ?", "uni"), 19, "over uni
 
 # .rindex use
 is("Hello World".rindex("l"), 9, ".rindex on string");
-is("Hello World".rindex(''), 11, ".rindex('') on string gives string length in bytes");
+is("Hello World".rindex(''), 11, ".rindex('') on string gives string length graphemes");
 
 # on scalar variable
 my $s = "Hello World";
