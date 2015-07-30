@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 role WithStub { method a() { ... } };
 role ProvidesStub1 { method a() { 1 } };
@@ -41,4 +41,12 @@ throws-like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
     my class ClassPrivate does WithPrivate does WithPrivateStub { method bar {self!foo } };
 
     is ClassPrivate.new.bar(), 'p', 'RT #125606: Stub resolution works for private methods too';
+}
+
+# RT #125694
+{
+    my role A { method !foo(A:D:) { "success!" } };
+    my role B { method !foo { ... }; method bar {self!foo } };
+    my class C does B does A { }
+    is C.new.bar(), "success!", 'private method call in role dispatches on type of target class';
 }
