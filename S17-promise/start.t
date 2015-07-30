@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 18;
 
 throws-like { await }, X::AdHoc, "a bare await should not work";
 
@@ -69,4 +69,23 @@ throws-like { await }, X::AdHoc, "a bare await should not work";
 {
     my @got = await do for 1..5 { start { buf8.new } };
     ok all(@got.map(* ~~ buf8)), 'buf8.new in many start blocks does not explode';
+}
+
+# RT #125346
+{
+    sub worker(Any $a, Int $b) {}
+    my $deaths = 0;
+    for ^200 {
+        my $value = Any;
+        my @workers = (^4).map: {
+            start { worker($value) }
+        };
+        try {
+            await @workers;
+            CATCH {
+                default { $deaths++ }
+            }
+        }
+    }
+    is $deaths, 200, 'Getting signature bind failure in Promise reliably breaks the Promise';
 }
