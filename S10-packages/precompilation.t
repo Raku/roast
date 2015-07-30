@@ -75,9 +75,9 @@ unlink $_ for @precomp-paths; # don't care if worked
     ok $output-path.IO.e, "did we create a $output-path";
 
     is_run
-      '0',
+      'print "ok"',
       { err    => '',
-        out    => '',
+        out    => 'ok',
         status => 0,
       },
       :compiler-args[
