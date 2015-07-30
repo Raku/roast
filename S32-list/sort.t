@@ -46,7 +46,7 @@ plan 32;
     is(@s, @e, '... with explicit spaceship');
 }
 
-#?rakudo todo "closure as non-final argument RT #124762"
+#?rakudo skip "closure as non-final argument RT #124762"
 #?niecza skip 'Invocant handling is NYI'
 {
     my @a = (2, 45, 6, 1, 3);
@@ -56,7 +56,7 @@ plan 32;
     is(@s, @e, '... with closure as indirect invocant');
 }
 
-#?rakudo todo "method fallback to sub unimpl RT #124763"
+#?rakudo skip "method fallback to sub unimpl RT #124763"
 #?niecza skip 'err, what?'
 {
     my @a = (2, 45, 6, 1, 3);
