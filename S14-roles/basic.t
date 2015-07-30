@@ -138,8 +138,8 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
 
 # RT #114380
 {
-    lives-ok { my role R { our $.r }; my class C does R {} },
-        'Can have "our $.r" in a role (RT #114380)';
+    lives-ok { my role R { my $.r }; my class C does R {} },
+        'Can have "my $.r" in a role (RT #114380)';
 }
 
 # RT #116226
