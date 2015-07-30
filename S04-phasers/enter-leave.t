@@ -5,7 +5,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 27;
+plan 28;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -252,6 +252,17 @@ plan 27;
     is ENTER { 42 }, 42, 'ENTER works as an r-value (mainline)';
     sub enter-test() { ENTER 'SANDMAN' }
     is enter-test(), 'SANDMAN', 'ENTER works as an r-value (sub)';
+}
+
+# RT #125480
+{
+    sub doit() {
+        if True {
+            LEAVE 1;
+            return 'ls';
+        }
+    }
+    is doit(), 'ls', 'return in nested block with LEAVE works';
 }
 
 # vim: ft=perl6
