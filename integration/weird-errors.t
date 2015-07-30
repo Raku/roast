@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 17;
+plan 18;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -143,4 +143,13 @@ is_run '{;}',
         { status => 0, err => -> $o { $o ~~ /useless/ && $o ~~ /':2'/ } },
         'useless use of is rw reported on meaningful line'
     );
+}
+
+{
+    is_run('(1,2,3).map({ die "oh noes" })',
+    {
+        out => '',
+        err => { .chars < 256 && m/'oh noes'/ },
+    },
+    'concise error message when sinking last statement in a file' );
 }
