@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 32;
 
 # L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped alias>
 our $a = 1;
@@ -108,13 +108,8 @@ our $c = 42; #OK not used
     is $Color::blue, 3, 'declaring and initializing several vars at once';
 }
 
-# RT #76450
 {
-    role PiRole   { our $pi = 3 };
     class PiClass { our $pi = 3 };
-#?rakudo todo 'our-scoped var in role RT #76450'
-#?niecza todo 'our-scoped var in role'
-    is $PiRole::pi,  3, 'declaring/initializing our-scoped var in role';
     is $PiClass::pi, 3, 'declaring/initializing our-scoped var in class';
 }
 
