@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 341;
+plan 342;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -728,5 +728,8 @@ throws-like 'sub foo() returns Bar { }', X::InvalidType, typename => 'Bar';
 throws-like 'my class C hides Baz { }', X::InvalidType, typename => 'Baz';
 throws-like 'my class C does InNoWayExist { }', X::InvalidType, typename => 'InNoWayExist';
 throws-like 'sub foo() returns !!!wtf??? { }', X::Syntax::Malformed, what => 'trait';
+
+# RT #125675
+throws-like '(1, 2, 3).map(True)', X::Multi::NoMatch;
 
 # vim: ft=perl6
