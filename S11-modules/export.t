@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 41;
 
 # L<S11/"Exportation"/>
 
@@ -177,6 +177,19 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     throws-like { bar { 1 } }, X::Multi::NoMatch,
         message => /'none of these signatures match'/,
         'adequate error message when multi sub exported out of a module fails to bind to an argument that happens to be a block';
+}
+
+# RT #125715
+{
+    use lib 't/spec/packages';
+    use RT125715;
+
+    my class Baz {
+        has Bar $.bar;
+    }
+
+    lives-ok { Baz.new(bar => Bar.new) },
+        'Using EXPORT-d type as attribute type works';
 }
 
 # vim: ft=perl6
