@@ -25,7 +25,7 @@ my $server = IO::Socket::Async.listen($hostname, $port);
 
 my $echoTap = $server.tap(-> $c {
     $c.chars-supply.tap(-> $chars {
-        $c.send($chars).then({ $c.close });
+        $c.print($chars).then({ $c.close });
     }, quit => { say $_; });
 });
 
@@ -52,7 +52,7 @@ multi sub client(&code) {
 
 multi sub client(Str $message) {
     client(-> $socket, $vow {
-    $socket.send($message).then(-> $wr {
+    $socket.print($message).then(-> $wr {
         if $wr.status == Broken {
             $vow.break($wr.cause);
             $socket.close();
