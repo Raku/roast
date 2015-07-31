@@ -8,7 +8,7 @@ This tests the &?ROUTINE magical value
 
 =end comment
 
-plan 8;
+plan 10;
 
 # L<S06/The C<&?ROUTINE> object>
 # L<S02/Names/Which routine am I in>
@@ -51,6 +51,23 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
     my $r2 = foo('b');
     is $r1(4), 24, 'Correct result from function generator returning function using &?ROUTINE';
     is @collected.join(''), 'aaaa', 'Correct closure semantics with &?ROUTINE';
+}
+
+{
+    my @collected;
+    sub foo($a) {
+        sub bar($n) {
+            my $what-to-do = {
+                @collected.push($a);
+                $n == 1 ?? 1 !! $n * &?ROUTINE($n - 1)
+            }
+            $what-to-do();
+        }
+    }
+    my $r1 = foo('a');
+    my $r2 = foo('b');
+    is $r1(4), 24, 'Correct result using &?ROUTINE in nested closure';
+    is @collected.join(''), 'aaaa', 'Correct closure semantics with &?ROUTINE in nested closure';
 }
 
 # vim: ft=perl6
