@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 # it doesn't seem to be explicit in S06, but {next,call}{same,with}
 # work with multi subs too, not just with methods
@@ -70,4 +70,11 @@ plan 13;
     a 42;
     B.b(42);
     B.new.b(42);
+}
+
+{
+    multi foo($n) {
+        { $n ?? $n * samewith($n - 1) !! 1 }()
+    }
+    is foo(5), 120, 'samewith works from inside a nested closure';
 }
