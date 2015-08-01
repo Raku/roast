@@ -3,6 +3,7 @@ use Test;
 plan 5;
 
 # RT 66588
+#?rakudo skip 'Ambiguous dispatch for &uno_mas'
 {
     my $ro_call = 0;
     my $rw_call = 0;
