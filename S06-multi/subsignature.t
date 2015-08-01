@@ -236,6 +236,7 @@ eval-dies-ok 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};',
     ], 'proto signature is checked, not just that of the candidates';
 }
 
+# RT#125732
 #?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     my $tracker = '';
@@ -246,6 +247,7 @@ eval-dies-ok 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};',
     is $tracker, 'IntAny', 'called in the right order';
 }
 
+# RT#125732
 #?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     my $tracker = '';
@@ -256,6 +258,7 @@ eval-dies-ok 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};',
     is $tracker, 'IntAnyInt', 'called in the right order';
 }
 
+# RT#125732
 #?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     my $tracker = '';
@@ -266,6 +269,7 @@ eval-dies-ok 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};',
     is $tracker, 'IntAny4', 'called in the right order';
 }
 
+# RT#125732
 #?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     my $tracker = '';
@@ -373,6 +377,7 @@ is(bar(S,S), 1, "not tied as only first type in the dispatch");
 }
 
 # RT #64922
+# RT #125732
 #?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     multi rt64922(|c($x, %h?)) { 1 }    #OK not used
