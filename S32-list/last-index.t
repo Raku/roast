@@ -9,20 +9,20 @@ my @list = (1 ... 10);
 
 {
     my $result = last-index { $^a % 2 }, |@list;
-    ok($result ~~ Int, "last-index() returns an Int");
+    ok($result ~~ Index, "last-index() returns an Index");
     is($result, 8, "returned value by last-index() is correct");
 }
 
 {
     my $result = last-index { $^a % 2 }, 1, 2, 3, 4, 5, 6, 7, 8;
-    ok($result ~~ Int, "last-index() returns an Int");
+    ok($result ~~ Index, "last-index() returns an Index");
     is($result, 6, "returned value by last-index() is correct");
 }
 
 
 {
     my $result = @list.last-index( { $^a == 4} );
-    ok($result ~~ Int, "method form of last-index returns an Int");
+    ok($result ~~ Index, "method form of last-index returns an Index");
     is($result, 3, "method form of last-index returns the expected item");
 }
 
@@ -30,7 +30,7 @@ my @list = (1 ... 10);
 #?niecza skip 'No value for parameter Mu $filter in CORE Any.first'
 {
     my $result = @list.last-index():{ $^a == 4 };
-    ok($result ~~ Int, "last-index():<block> returns an Int");
+    ok($result ~~ Index, "last-index():<block> returns an Index");
     is($result, 3, "last-index() returned the expected value");
 }
 

@@ -9,20 +9,20 @@ my @list = (1 ... 10);
 
 {
     my $result = first-index { $^a % 2 }, |@list;
-    ok($result ~~ Int, "first-index() returns an Int");
+    ok($result ~~ Index, "first-index() returns an Index");
     is($result, 0, "returned value by first-index() is correct");
 }
 
 {
     my $result = first-index { $^a % 2 }, 1, 2, 3, 4, 5, 6, 7, 8;
-    ok($result ~~ Int, "first-index() returns an Int");
+    ok($result ~~ Index, "first-index() returns an Index");
     is($result, 0, "returned value by first-index() is correct");
 }
 
 
 {
     my $result = @list.first-index( { $^a == 4} );
-    ok($result ~~ Int, "method form of first-index returns an Int");
+    ok($result ~~ Index, "method form of first-index returns an Index");
     is($result, 3, "method form of first-index returns the expected item");
 }
 
@@ -30,7 +30,7 @@ my @list = (1 ... 10);
 #?niecza skip 'No value for parameter Mu $filter in CORE Any.first'
 {
     my $result = @list.first-index():{ $^a == 4 };
-    ok($result ~~ Int, "first-index():<block> returns an Int");
+    ok($result ~~ Index, "first-index():<block> returns an Index");
     is($result, 3, "first-index() returned the expected value");
 }
 
