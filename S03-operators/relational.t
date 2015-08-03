@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 122;
+plan 124;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -121,6 +121,10 @@ ok(!("3" gt "4" lt "5"), "!(3 gt 4 lt 5) chained str comparison");
 ok("5" eq "5" gt "0", '"5" eq "5" gt "0" chained str comparison with equality');
 ok("5" le "5" gt "0", "5 le 5 gt 0 chained str comparison with le");
 ok("0" lt "5" ge "5", "0 lt 5 ge 5 chained comparison with ge");
+
+#?rakudo 2 todo 'RT #81336'
+is(0 ~~ 0 ~~ 0, 0 ~~ 0 && 0 ~~ 0, "chained smartmatch");
+is("foo" ~~ "foo" ge "bar", "foo" ~~ "foo" && "foo" ge "bar", "chained mixed ~~ and ge");
 
 #?rakudo 4 todo 'RT #121987'
 is  1 !before 2 !before 3,  1 !before 2 && 2 !before 3,  'chained !before';
