@@ -10,7 +10,7 @@ Nested array tests; various interactions of arrayrefs, arrays, flattening and ne
 
 =end description
 
-plan 9;
+plan 10;
 
 {   # UNSPECCED
     my @a = (1,2,[3,4]);
@@ -34,12 +34,13 @@ plan 9;
 }
 
 # RT #98954
-#?rakudo todo 'Should we fail, or should we throw RT #124449'
 {
     my @a = [1], [2], [3];
-    is (map { @a[1 - $_][0] }, 0 .. 3).perl,
-        q[(2, 1, Failure.new(exception => X::Subscript::Negative.new(index => -1, type => Array)), Failure.new(exception => X::Subscript::Negative.new(index => -2, type => Array))).list],
-        'correct Failures for negative subscript of nested array';
+    my @b = map { @a[1 - $_][0] }, 0 .. 3;
+    isa-ok @b[3], Failure, 'Out of range index returns Failure object';
+    throws-like '@b[3]', X::OutOfRange,
+        what => 'Index', got => -2, range => '0..Inf',
+        'Failure object contains X::OutOfRange exception';
 }
 
 # vim: ft=perl6
