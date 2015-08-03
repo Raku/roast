@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 3;
+plan 5;
 
 # TODO, based on synopsis 4:
 #
@@ -85,6 +85,30 @@ plan 3;
 
     is $str, "",
        'LAST does not fire for empty loop';
+}
+
+# RT #121145
+{
+    my $rt121156;
+    my $i = 0;
+    while $i < 6 {
+        LEAVE { last };
+        $i++;
+        $rt121156 ~= $i;
+    }
+    is $rt121156, '1',
+        '"last" statement called by LEAVE breaks out of while loop';
+
+    $rt121156 = '';
+    $i = 0;
+    while $i < 3 {
+        LEAVE { $rt121156 ~= "leaving" };
+        $i++;
+        $rt121156 ~= $i;
+    }
+    #?rakudo.jvm todo 'this test works "standalone", but not after previous test; RT #121145'
+    is $rt121156, '1leaving2leaving3leaving',
+        'LEAVE in while loop works as expected';
 }
 
 # vim: ft=perl6
