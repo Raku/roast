@@ -1,8 +1,8 @@
 use v6;
 use Test;
 
-#?niecza emit plan 8; #
-plan 11;
+#?niecza emit plan 12; #
+plan 15;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -31,6 +31,15 @@ sub f() {
     is callframe(1).my.<$y>, 353, 'can access outer lexicals via .my';
     #?niecza emit #
     dies-ok { callframe(1).my.<$y> = 768 }, 'cannot mutate without is dynamic';;
+
+    lower();
+}
+
+sub lower() {
+    ok callframe(0).code ~~ Sub, 'callframe(0).code returns this Sub';
+    ok callframe(1).code ~~ Sub, 'callframe(1).code returns the calling Sub';
+    is callframe(0).code.name, 'lower';
+    is callframe(1).code.name, 'f';
 }
 
 my $x is dynamic = 42;
