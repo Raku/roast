@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 171;
+plan 172;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -388,6 +388,14 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     class MySet is Set { };
     my $s = MySet.new([1, 2], 3);
     is $s.elems, 2, 'Can subclass Set';
+
+    class RT125611 is Set {
+        method foo( $foo ) {
+            self{$foo} = True; self
+        }
+    }
+    throws-like 'my $rt125611 = RT125611.new.foo: "a"', X::Assignment::RO,
+        'trying to assign throws X::Assignment::RO';
 }
 
 # vim: ft=perl6

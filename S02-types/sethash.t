@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 199;
+plan 200;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -415,4 +415,15 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
     is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
+}
+
+# RT #125611
+{
+    class RT125611 is SetHash {
+        method foo( $foo ) {
+            self{$foo} = True; self
+        }
+    }
+    my $rt125611 = RT125611.new.foo: "a";
+    is $rt125611<a>, True, 'can assign to subclassed SetHash';
 }
