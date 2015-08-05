@@ -12,7 +12,8 @@ for @signals -> $signal {
 signal($signal).act: \{ .say \};
 
 say 'Started';
-sleep 5;
+my \$ = get();
+my \$ = get();
 say 'Done';
 ";
     ok $program.IO.spurt($source),   'could we write the tester';
@@ -33,15 +34,16 @@ say 'Done';
     isa-ok $pm, Promise;
 
     # give it a little time
-#    sleep 2;
+    $pc.print("1\n");
 
     # stop what you're doing
 #    $pc.kill($signal);    # XXX cannot call this yet, it will cause hanging
+    $pc.print("2\n");
 
     # done processing, from sleep
     await $pm;
 
-    isa-ok $pm.result, Proc::Status;
+    can-ok $pm.result, 'exitcode';
     is $pm.result.?exitcode, 0, 'did it exit with the right value';
 
     #?rakudo todo 'we cannot actually send signals yet'
