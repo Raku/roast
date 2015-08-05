@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 55;
+plan 57;
 
 # L<S32::Str/Str/=item substr>
 
@@ -79,17 +79,20 @@ plan 55;
 
     my $str = "hello foo and bar";
 
-    is(substr($str, 6..8), "foo", "substr (substr(Range)).");
-    is($str.substr(6..8), "foo", "substr (substr(Range)).");
+    is substr($str, 6..8), "foo", "substr (substr(Range))";
+    is $str.substr(6..8),  "foo", "substr (substr(Range))";
 
-    is(substr($str, 6^..8), "oo", "substr (substr(Range)).");
-    is($str.substr(6^..8), "oo", "substr (substr(Range)).");
+    is substr($str, 6^..8), "oo", "substr (substr(^Range))";
+    is $str.substr(6^..8),  "oo", "substr (substr(^Range))";
 
-    is(substr($str, 6..^8), "fo", "substr (substr(Range)).");
-    is($str.substr(6..^8), "fo", "substr (substr(Range)).");
+    is substr($str, 6..^8), "fo", "substr (substr(Range^))";
+    is $str.substr(6..^8),  "fo", "substr (substr(Range^))";
 
-    is(substr($str, 6^..^8), "o", "substr (substr(Range)).");
-    is($str.substr(6^..^8), "o", "substr (substr(Range)).");
+    is substr($str, 6^..^8), "o", "substr (substr(^Range^))";
+    is $str.substr(6^..^8),  "o", "substr (substr(^Range^))";
+
+    is substr($str, 10..*), "and bar", "substr (substr(Range Inf))";
+    is $str.substr(10..*),  "and bar", "substr (substr(Range Inf))";
 }
 
 #?niecza todo
