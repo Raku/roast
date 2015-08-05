@@ -23,7 +23,6 @@ $name = $*SCHEDULER.^name;
     my $tracker;
     my $c = $*SCHEDULER.cue({ $tracker++ }, :times(10));
     ok $c.can("cancel"), 'can we cancel';
-    sleep 5;
     is $tracker, 10, "Cue on $name with :times(10)";
     LEAVE $c.cancel;
 }
