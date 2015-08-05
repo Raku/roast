@@ -237,46 +237,46 @@ eval-dies-ok 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};',
 }
 
 # RT#125732
-#?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     my $tracker = '';
     multi a(|c($))     { $tracker ~= 'Any' };
     multi a(|c(Int $)) { $tracker ~= 'Int'; nextsame; $tracker ~= 'Int' };
 
     lives-ok { a(3) },      'can call nextsame inside a multi sub';
+    #?rakudo todo 'Multimethod sort does not descend into subsignatures'
     is $tracker, 'IntAny', 'called in the right order';
 }
 
 # RT#125732
-#?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     my $tracker = '';
     multi b(|c($))     { $tracker ~= 'Any' };
     multi b(|c(Int $)) { $tracker ~= 'Int'; callsame; $tracker ~= 'Int' };
 
     lives-ok { b(3) },        'can call callsame inside a multi sub';
+    #?rakudo todo 'Multimethod sort does not descend into subsignatures'
     is $tracker, 'IntAnyInt', 'called in the right order';
 }
 
 # RT#125732
-#?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     my $tracker = '';
     multi c(|c($x))     { $tracker ~= 'Any' ~ $x };
     multi c(|c(Int $x)) { $tracker ~= 'Int'; nextwith($x+1); $tracker ~= 'Int' };
 
     lives-ok { c(3) },      'can call nextwith inside a multi sub';
+    #?rakudo todo 'Multimethod sort does not descend into subsignatures'
     is $tracker, 'IntAny4', 'called in the right order';
 }
 
 # RT#125732
-#?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     my $tracker = '';
     multi d(|c($x))     { $tracker ~= 'Any' ~ $x };
     multi d(|c(Int $x)) { $tracker ~= 'Int'; callwith($x+1); $tracker ~= 'Int' };
 
     lives-ok { d(3) },         'can call callwith inside a multi sub';
+    #?rakudo todo 'Multimethod sort does not descend into subsignatures'
     is $tracker, 'IntAny4Int', 'called in the right order';
 }
 
@@ -378,11 +378,11 @@ is(bar(S,S), 1, "not tied as only first type in the dispatch");
 
 # RT #64922
 # RT #125732
-#?rakudo todo 'Multimethod sort does not descend into subsignatures'
 {
     multi rt64922(|c($x, %h?)) { 1 }    #OK not used
     multi rt64922(|c(@x)) { 2 }    #OK not used
     is rt64922(1),     1, 'optional parameter does not break type-based candidate sorting';
+    #?rakudo todo 'Multimethod sort does not descend into subsignatures'
     is rt64922([1,2]), 2, 'optional parameter does not break type-based candidate sorting';
 }
 
