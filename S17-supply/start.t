@@ -24,10 +24,10 @@ dies-ok { Supply.start({...}) }, 'can not be called as a class method';
 
     my @supplies;
     my @taps;
-    my @seen;
+    my $seen = Channel.new;
     my $tap = $starter.tap( {
         @supplies.push: $_;
-        @taps.push: .tap( { @seen.push: $_ } );
+        @taps.push: .tap( { $seen.send: $_ } );
     } );
     isa-ok $tap, Tap, 'Did we get a Tap';
 
@@ -41,7 +41,7 @@ dies-ok { Supply.start({...}) }, 'can not be called as a class method';
     $master.emit(1);  # shall not be seen
     $master.emit(2);
     await @promises[2];
-    sleep 0.1;
+    my @seen = $seen.receive() xx 2;
 
     is +@supplies.grep( { $_ ~~ Supply } ), 3, 'did we get two extra supplies?';
     is +@taps.grep(Tap),                    3, 'did we get two extra taps?';
