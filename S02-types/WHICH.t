@@ -42,7 +42,6 @@ my @normal = <
   Hash
   HashIter
   HyperWhatever
-  Index
   IO::ArgFiles
   IO::Handle
   IO::Path

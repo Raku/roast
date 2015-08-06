@@ -7,7 +7,7 @@ plan 40;
 
 my @list = (1 .. 10);
 
-is grep-index( { ($_ % 2) }, @list ).grep(Index), (0,2,4,6,8).list.item, 'do we get Indexes';
+is grep-index( { ($_ % 2) }, @list ).grep(Int), (0,2,4,6,8).list.item, 'do we get Ints';
 is grep-index( { ($_ % 2) }, @list ), (0,2,4,6,8).list.item,
   'simple direct test of sub';
 is @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,

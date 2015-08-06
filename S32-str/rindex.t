@@ -6,7 +6,7 @@ use Test;
 plan 35;
 
 # Type of return value
-isa-ok('abc'.rindex('b'), Index);
+isa-ok('abc'.rindex('b'), Int);
 isa-ok('abc'.rindex('d'), Nil);
 
 # Simple - with just a single char

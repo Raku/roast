@@ -6,10 +6,10 @@ use Test;
 plan 24;
 
 # Type of return value
-isa-ok 'abc'.indices('b')[0], Index;
+isa-ok 'abc'.indices('b')[0], Int;
 isa-ok 'abc'.indices('d'), Parcel;
 is 'abc'.indices('d').elems, 0, "method did not find anything";
-isa-ok indices('abc','b')[0], Index;
+isa-ok indices('abc','b')[0], Int;
 isa-ok indices('abc','d'), Parcel;
 is indices('abc','d').elems, 0, "sub did not find anything";
 
