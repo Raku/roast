@@ -14,17 +14,17 @@ Basic "if" tests.
 # L<S04/Conditional statements>
 
 my $x = 'test';
-if ($x eq $x) { pass('if ($x eq $x) {} works'); } else { flunk('if ($x eq $x) {} failed'); }
-if ($x ne $x) { flunk('if ($x ne $x) {} failed'); } else { pass('if ($x ne $x) {} works'); }
-if (1) { pass('if (1) {} works'); } else { flunk('if (1) {} failed'); }
-if (0) { flunk('if (0) {} failed'); } else { pass('if (0) {} works'); }
-if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
+if $x eq $x { pass('if ($x eq $x) {} works'); } else { flunk('if ($x eq $x) {} failed'); }
+if $x ne $x { flunk('if ($x ne $x) {} failed'); } else { pass('if ($x ne $x) {} works'); }
+if 1 { pass('if (1) {} works'); } else { flunk('if (1) {} failed'); }
+if 0 { flunk('if (0) {} failed'); } else { pass('if (0) {} works'); }
+if Mu { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 {
     # die called in the condition part of an if statement should die immediately
     # rather than being evaluated as true
     my $foo = 1;
-    try { if (die "should die") { $foo = 3 } else { $foo = 2; } };
+    try { if die "should die" { $foo = 3 } else { $foo = 2; } };
     #say '# $foo = ' ~ $foo;
     is $foo, 1, "die should stop execution immediately.";
 }
@@ -38,25 +38,25 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 # if...elsif
 {
     my $foo = 1;
-    if (1) { $foo = 2 } elsif (1) { $foo = 3 };
+    if 1 { $foo = 2 } elsif 1 { $foo = 3 };
     is $foo, 2, 'if (1) {} elsif (1) {}';
 }
 
 {
     my $foo = 1;
-    if (1) { $foo = 2 } elsif (0) { $foo = 3 };
+    if 1 { $foo = 2 } elsif 0 { $foo = 3 };
     is $foo, 2, 'if (1) {} elsif (0) {}';
 }
 
 {
     my $foo = 1;
-    if (0) { $foo = 2 } elsif (1) { $foo = 3 };
+    if 0 { $foo = 2 } elsif 1 { $foo = 3 };
     is $foo, 3, 'if (0) {} elsif (1) {}';
 }
 
 {
     my $foo = 1;
-    if (0) { $foo = 2 } elsif (0) { $foo = 3 };
+    if 0 { $foo = 2 } elsif 0 { $foo = 3 };
     is $foo, 1, 'if (0) {} elsif (0) {}';
 }
 
@@ -65,31 +65,31 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 {
     my $foo = 1;
-    if (0) { $foo = 2 } elsif (0) { $foo = 3 } else { $foo = 4 };
+    if 0 { $foo = 2 } elsif 0 { $foo = 3 } else { $foo = 4 };
     is $foo, 4;
 }
 
 {
     my $foo = 1;
-    if (1) { $foo = 2 } elsif (0) { $foo = 3 } else { $foo = 4 };
+    if 1 { $foo = 2 } elsif 0 { $foo = 3 } else { $foo = 4 };
     is $foo, 2;
 }
 
 {
     my $foo = 1;
-    if (1) { $foo = 2 } elsif (1) { $foo = 3 } else { $foo = 4 };
+    if 1 { $foo = 2 } elsif 1 { $foo = 3 } else { $foo = 4 };
     is $foo, 2;
 }
 
 {
     my $foo = 1;
-    if (0) { $foo = 2 } elsif (1) { $foo = 3 } else { $foo = 4 };
+    if 0 { $foo = 2 } elsif 1 { $foo = 3 } else { $foo = 4 };
     is $foo, 3;
 }
 
 {
     my $foo = 1;
-    if ({ 1 > 0 }) { $foo = 2 } else { $foo = 3 };
+    if { 1 > 0 } { $foo = 2 } else { $foo = 3 };
     is $foo, 2, 'if with parens, and closure as cond';
 }
 
@@ -104,7 +104,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 {
     my $flag = 0;
-    if ( my $x = 2 ) == 2 { $flag = $x }
+    if (my $x = 2) == 2 { $flag = $x }
     is($flag, 2, "'my' variable within 'if' conditional");
 }
 
