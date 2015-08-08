@@ -16,7 +16,7 @@ use Test;
 #   
 #   should do.
 
-plan 18;
+plan 24;
 
 my $foo        = 42;
 my $was_inside = 0;
@@ -69,6 +69,32 @@ sub lvalue_test2() is rw {
 
     is lvalue_test2(),               16, "getting var through Proxy (5)";
     is      $was_inside,              3, "lvalue_test2() was called (5)";
+}
+
+$foo        = 4;
+$was_inside = 0;
+
+sub lvalue_test3() {
+  $was_inside++;
+  return Proxy.new:
+    FETCH => method ()     { 10 + $foo },
+    STORE => method ($new) { $was_inside = 42 };
+};
+
+{
+    is $foo, 4,        "basic sanity (6)";
+    is $was_inside, 0, "basic sanity (7)";
+
+
+    is lvalue_test3(),               14, "getting var through Proxy (8)";
+    # No todo_is here to avoid unexpected succeeds
+    is      $was_inside,              1, "lvalue_test3() was called (8)";
+
+    #?rakudo todo 'RT#124341 Proxy should not escape return from a non is-rw'
+    dies-ok { EVAL '(lvalue_test3() = 42)' }, "Proxy returned from non is-rw is prefetched rvalue";
+    #?rakudo todo 'RT#124341 Proxy should not escape return from a non is-rw'
+    is      $was_inside,              2, "lvalue_test3() was called (9)";
+
 }
 
 # vim: ft=perl6
