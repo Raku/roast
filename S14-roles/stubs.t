@@ -1,11 +1,12 @@
 use v6;
 use Test;
 
-plan 12;
+plan 14;
 
 role WithStub { method a() { ... } };
 role ProvidesStub1 { method a() { 1 } };
 role ProvidesStub2 { method a() { 2 } };
+role WithMultiStub { multi method a(Int) { ... }; };
 
 dies-ok  { EVAL 'class A does WithStub { }' },
         'need to implement stubbed methods at role-into-class composition time';
@@ -20,6 +21,14 @@ dies-ok  { EVAL 'class E does WithStub does ProvidesStub1 does ProvidesStub2 { }
 lives-ok { EVAL 'class F does WithStub does ProvidesStub1 does ProvidesStub2 {
     method a() { 4 } }' },
         'composing stub and 2 implementations allows custom implementation';
+
+#?rakudo todo 'RT#124393 Stubbing individual multis as role interface NYI'
+{
+    class G does WithMultiStub { multi method a(Int) { } };
+    lives-ok { EVAL 'G.a(1)' }, "No ambiguous dispatch on stubbed multi in interface";
+    dies-ok { EVAL 'class H does WithMultiStub { multi method a(Str) { } }' },
+        "Interface contract enforced on stubbed multi";
+}
 
 class ProvidesA { method a() { 5 } };
 lives-ok { EVAL 'class ChildA is ProvidesA does WithStub { }' },
