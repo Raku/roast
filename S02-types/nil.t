@@ -3,7 +3,7 @@ use Test;
 
 # Nil may be a type now.  Required?
 
-plan 51;
+plan 52;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -47,6 +47,9 @@ ok Nil.JustAnyMethod == Nil, 'Any method on Nil should return Nil';
     $x++ for Nil;
     is $x, 1, '$Statement for Nil; does one iteration';
 }
+
+# RT #118717
+ok Nil.^mro.gist !~~ rx:i/iter/, "Nil is not any sort of Iter*";
 
 # RT 93980
 ok (my $rt93980 = Nil) === Any, 'Nil assigned to scalar produces an Any'; #OK
