@@ -208,6 +208,7 @@ sub init_compunit {
             # CompUnit.load is broken right now.
             # $cu.load($fp, { from => "Perl6" });
             # So we hit some rakudo internals to do the same thing
+            use nqp;
             my Mu $p6ml := nqp::gethllsym("perl6", "ModuleLoader");
 
             if ($compunit_available eq "Source") {
@@ -300,6 +301,7 @@ sub do_compunit($code_as_str, $reason, $leavefiles = False, $compile = True) {
 	    }
         @compunits_to_delete.push($cu.precomp-path);
         try EVAL '
+            use nqp;
             # CompUnit.load is broken right now.
             # $cu.load($fp, { from => "Perl6" });
 
@@ -333,6 +335,7 @@ sub do_compunit($code_as_str, $reason, $leavefiles = False, $compile = True) {
         }
         @compunits_to_delete.push("$fp.pm6");
         try EVAL '
+            use nqp;
             $cu = CompUnit.new("$fp.pm6");
 
             # CompUnit.load is broken right now.

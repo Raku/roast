@@ -19,7 +19,7 @@ use Test::Compile;
 # CompUnit or CompUnitRepo or are just too complex for Test::Compile
 # A few of the tests in there could eventually be moved here, probably.
 
-plan 5;
+plan 6;
 
 loads_ok '42', "loads_ok is working";
 precomp_loads_ok '42', "precomp_loads_ok is working";
@@ -33,3 +33,9 @@ precomp_loads_is '42', 42, "precomp_loads_is is working";
 # RT #124162
 precomp_loads_is '[ $(array[uint8].new(1)), $(array[uint8].new(1)) ]', [1,1],
                  "precompiled Array of native arrays (RT #124162)";
+
+#?rakudo todo 'RT #124324 Missing or wrong version of dependency'
+precomp_loads_is 'BEGIN { EVAL "43" }', 43, "precompiled EVAL in BEGIN";
+
+
+
