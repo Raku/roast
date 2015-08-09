@@ -67,4 +67,11 @@ plan 36;
     ok (1..10 ~~ *,5,*), 'smartmatch with Array RHS co-erces LHS to list';
 }
 
+# RT#123144
+#?rakudo todo 'RT#123144 comparison dies on forced numeric context'
+{
+    eval-lives-ok '["a","b","c"] ~~ [*, "b", "c"]', "Str and Whatever (1)";
+    eval-lives-ok '[1,2,3] ~~ [*, "b", "c"]', "Str and Whatever (2)";
+}
+
 # vim: ft=perl6
