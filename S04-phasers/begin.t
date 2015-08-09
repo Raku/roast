@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 # the boundary between run time and compile time is hard to implement right.
 # Some of those tests might look trivial, but nearly all of them are based
@@ -72,6 +72,14 @@ plan 12;
 {
     lives-ok { enum A (a=>3); BEGIN for A.enums { } },
         'no Null PMC access when looping over SomeEnum.enums in blockless BEGIN';
+}
+
+# RT #123776
+#?rakudo todo 'RT#123776'
+{
+    my $bound = 'bar';
+    BEGIN { $bound = 'foo'; }
+    is $bound, 'foo', "Value bound to variable in BEGIN persists";
 }
 
 # RT #123777
