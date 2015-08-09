@@ -627,7 +627,7 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 }
 
 # RT #123005
-#?rakudo todo 'RT #123005'
+#?rakudo todo 'RT #123005 RT #118705'
 {
     my $str = 'ACCB';
     my $rt123323;
