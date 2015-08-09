@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 34;
+plan 36;
 
 {
     class A { method Str() { 'foo' } };
@@ -85,6 +85,16 @@ plan 34;
 {
     is (my %h).list.perl, '()', 'empty hash listifies to "()"';
     is (my %h{Any}).list.perl, '()', 'empty object hash listifies to "()"';
+}
+
+# RT #118031
+{
+    my %h{Any};
+    my %i:=%h.new;
+    is %h.WHAT, %i.WHAT, "New on an object hash instance produces an object hash";
+
+    my %j:=%h.new;
+    is %h.WHAT, %j.WHAT, "Clone of an object hash instance is an object hash";
 }
 
 #vim: ft=perl6
