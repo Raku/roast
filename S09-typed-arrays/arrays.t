@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 76;
+plan 77;
 
 # L<S09/Typed arrays/>
 
@@ -159,6 +159,9 @@ plan 76;
 {
     throws-like 'my Int @a = "ab", "cd"', X::TypeCheck::Assignment,
         'typed arrays do check type during list assignment';
+    #?rakudo todo 'RT#124079 RT#122440 laziness defers typecheck'
+    throws-like 'my Int @a = "ab", "cd"; 42.Str;', X::TypeCheck::Assignment,
+        'typed arrays do check type during list assignment in sink';
 }
 
 # RT #119061
