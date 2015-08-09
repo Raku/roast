@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 49;
 
 =begin description
 
@@ -112,6 +112,11 @@ eval-dies-ok '0 but RT66178', '"but" with non-existent role dies';
     try EVAL 'class Boo does Boo { };';
     ok "$!" ~~ /Boo/, 'class does itself produces sensible error message';
 }
+
+# RT #120646
+throws-like 'role RR { }; class RR { };', X::Redeclaration, symbol => 'RR';
+throws-like 'role RRR { }; class RRR does RRR { };', X::Redeclaration,
+             symbol => 'RRR';
 
 # RT #69170
 {
