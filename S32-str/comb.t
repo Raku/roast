@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 45;
 
 # L<S32::Str/Str/=item comb>
 
@@ -102,6 +102,16 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     is comb(/./ , "abcd" , 2 ), <a b>, 'Subroutine form with supplied limit';
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng"), <3 3 4 3 0 3 3 1 1 1>, 'Subroutine form with no limit returns all matches';
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng" , 2), <3 3>, 'Subroutine form with limit';
+}
+
+# RT #123760
+#?rakudo todo 'NYI RT#123760 Str:D matcher candidates'
+{
+    my $res = ();
+    lives-ok { EVAL '$res = comb("o","ooo")' }, "comb(Str,Str) lives";
+    is $res, <o o o>, "comb(Str,Str) works";
+    lives-ok { EVAL '$res = "qqq".comb("q")' }, "Str.comb(Str) lives";
+    is $res, <q q q>, "Str.comb(Str) works";
 }
 
 # vim: ft=perl6
