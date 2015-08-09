@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 43;
 
 =begin kwid
 
@@ -144,6 +144,40 @@ if Mu { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     if    testa() -> $a { $got = $a }
     else          -> $c { $got = $c }
     is $got, '', 'else -> $c { } binding previous if';
+}
+# Sing it again.  This time with slurpy.
+#?rakudo todo 'RT#105872'
+{
+    my ($got, $a_val, $b_val);
+    my sub testa { $a_val };
+    my sub testb { $b_val };
+
+    $a_val = 'truea';
+    $b_val = 0;
+    if    testa() -> *@a { $got = @a }
+    elsif testb() -> *@b { $got = @b }
+    else          -> *@c { $got = @c }
+    is $got, ('truea',), 'if test() -> *@a { } binding';
+
+    $a_val = 0;
+    $b_val = 2;
+    if    testa() -> *@a { $got = @a }
+    elsif testb() -> *@b { $got = @b }
+    else          -> *@c { $got = @c }
+    is $got, 2, 'elsif test() -> *@b { } binding';
+
+    $a_val = '';
+    $b_val = 3 but False;
+    if    testa() -> *@a { $got = @a }
+    elsif testb() -> *@b { $got = @b }
+    else          -> *@c { $got = (@c, "yes") }
+    is $got, (3, "yes"), 'else -> *@c { } binding previous elsif';
+
+    $a_val = 4 but False;
+    $b_val = 0;
+    if    testa() -> *@a { $got = @a }
+    else          -> *@c { $got = (@c, "yes") }
+    is $got, (4, "yes"), 'else -> *@c { } binding previous if';
 }
 
 {
