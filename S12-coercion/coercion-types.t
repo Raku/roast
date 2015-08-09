@@ -39,7 +39,7 @@ class NastyChild is Parent { };
 
 # with definedness checks
 
-#?rakudo skip 'dies RT #124839'
+#?rakudo skip 'dies RT #124839 / RT#123770'
 {
     sub f1(Str:D(Cool:D) $x) { $x }
     sub f2(Str(Cool:D)   $x) { $x; }
