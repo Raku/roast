@@ -1,7 +1,8 @@
 use v6;
 use Test;
+use Test::Idempotence;
 
-plan 6;
+plan 7;
 
 # simple array
 {
@@ -25,5 +26,8 @@ plan 6;
     #?rakudo todo "cannot roundtrip constrained scalars yet"
     ok $ra.VAR.of =:= Int, 'make sure roundtripped values are Int';
 } #3
+
+# RT#123741
+is-perl-idempotent 2/6, :eqv, 'Rat.perl is idempotent';
 
 #vim: ft=perl6
