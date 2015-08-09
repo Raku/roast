@@ -253,12 +253,31 @@ sub init_compunit {
     $compunit_available ||= "Precomp";
 }
 
-# This will actually be internal but exported for preliminary testing
-sub do_compunit($code_as_str, $reason, $leavefiles = False, $compile = True) {
+# Loads a chain of compunits, each using the one before it.
+multi sub do_compunit(@code_as_str, $reason is copy, $leavefiles = False, $compile = True) {
+    my @fns = (tmpident for @code_as_str);
+    my $lastfn = '';
+    my $ret;
+    @*INC.unshift("file#$precomp_dir");
+    subtest {
+        for flat @code_as_str Z @fns -> $code_as_str is copy, $fn {
+            $code_as_str [R~]= "use $lastfn;\n" if $lastfn;
+            $ret = do_compunit($code_as_str, $reason, True, $compile, :$fn);
+            last unless $ret ~~ Array;
+            $lastfn = $fn;
+            $reason [R~]= "use ";
+        }
+    }
+    delete_compunits($leavefiles);
+    $ret;
+}
+
+multi sub do_compunit($code_as_str, $reason, $leavefiles = False,
+                      $compile = True, :$fn? is copy) {
     # once init_compunit(); But we do not want to rely on working "once"
     init_compunit() unless $compunit_tried;
 
-    my $fn = tmpident;
+    $fn //= tmpident;
     my $fp = $precomp_dir_sep ~ $fn;
     my $cu;
 
@@ -266,7 +285,6 @@ sub do_compunit($code_as_str, $reason, $leavefiles = False, $compile = True) {
     $_ = "Source" if not $compile and $_ eq "Precomp";
 
     my $*compunit_result = Nil;
-
     when "Precomp" {
         unless "$fp.pm6".IO.spurt($code_as_str) {
             flunk($reason);
@@ -350,7 +368,7 @@ sub do_compunit($code_as_str, $reason, $leavefiles = False, $compile = True) {
             );
         ';
         if defined $! {
-            flunk(0, $reason);
+            flunk($reason);
             diag($!);
             delete_compunits($leavefiles);
             return;

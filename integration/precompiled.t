@@ -19,7 +19,7 @@ use Test::Compile;
 # CompUnit or CompUnitRepo or are just too complex for Test::Compile
 # A few of the tests in there could eventually be moved here, probably.
 
-plan 6;
+plan 7;
 
 loads_ok '42', "loads_ok is working";
 precomp_loads_ok '42', "precomp_loads_ok is working";
@@ -34,8 +34,11 @@ precomp_loads_is '42', 42, "precomp_loads_is is working";
 precomp_loads_is '[ $(array[uint8].new(1)), $(array[uint8].new(1)) ]', [1,1],
                  "precompiled Array of native arrays (RT #124162)";
 
+# RT #123679
+#?rakudo todo 'RT #123679 Cannot invoke this object (REPR: Null, cs = 0)'
+precomp_loads_ok(['role Bar { has Str $.my-str handles <lines words> }','class Foo does Bar { }; my $io = Foo.new(:my-str<OHAI>);'], "precompiled role with handles trait on attribute");
+
 #?rakudo todo 'RT #124324 Missing or wrong version of dependency'
 precomp_loads_is 'BEGIN { EVAL "43" }', 43, "precompiled EVAL in BEGIN";
-
 
 
