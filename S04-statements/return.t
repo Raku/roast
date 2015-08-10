@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 18;
+plan 20;
 
 # Is there a better reference for the spec for how return return works? 
 # There is "return function" but that's a more advanced feature.
@@ -68,6 +68,13 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     }
     is f(), 42, 'proxied return produces the correct value';
     is $tracker, 'LOL', 'proxied return produced the right side effect';
+}
+
+{
+    sub a { .return with 42 }
+    is a, 42, 'does .return work?';
+    sub b { (1|2|3).return }  # don't auto-thread on return
+    isa_ok b, Junction;
 }
 
 # vim: ft=perl6
