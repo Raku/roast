@@ -133,11 +133,15 @@ is (-Inf, Inf).max, Inf,"Inf is greater than -Inf";
 #is (0, NaN).max, NaN,    "max(0,NaN)=NaN";
 #is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
 
-is ([min] (5,10,-15,20)), -15, 'reduce min int';
-is ([max] (5,10,-15,20)), 20, 'reduce max int';
+#?rakudo 2 skip "post-GLR"
+is ([min] 42..4200000000000000000), 42, '[min] doesn't flatten';
+is ([max] -4200000000000000000..42), 42, '[max] doesn't flatten';
 
-is ([min] (5.1,10.3,-15.7,20.9)), -15.7, 'reduce min numeric';
-is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
+is ([min] 5,10,-15,20), -15, 'reduce min int';
+is ([max] 5,10,-15,20), 20, 'reduce max int';
+
+is ([min] 5.1,10.3,-15.7,20.9), -15.7, 'reduce min numeric';
+is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
 
 {
     my @strings = <Inspiring bold John Barleycorn!
