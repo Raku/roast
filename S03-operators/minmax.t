@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 30;
 
 # L<S03/Tight or precedence/Minimum and maximum>
 # L<S03/Tight or precedence/"any value of any type may be compared with +Inf
@@ -39,6 +39,10 @@ This test min/max functions in their operator form. To see them tested in their 
 }
 
 #testing the minmax operator
+{
+    is (1..100000000000000000 minmax 2..999999999999999999).gist, (1..999999999999999999).gist, 'minmax does not flatten ranges';
+}
+
 {
     my @a = 1,2,3,4;
     my @b = 9,8,7,1;
