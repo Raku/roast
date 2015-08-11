@@ -21,7 +21,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s = Supply.new;
         ok $s ~~ Supply, "we got a base Supply ($what)";
         my $c = $s.classify( mapper );
-        ok $s ~~ Supply, "we got a classification Supply ($what)";
+        ok $c ~~ Supply, "we got a classification Supply ($what)";
 
         my @keys;
         my @supplies;
