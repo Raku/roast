@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item rindex">
 
-plan 35;
+plan 43;
 
 # Type of return value
 isa-ok('abc'.rindex('b'), Int);
@@ -66,5 +66,14 @@ ok 3459.rindex(5) == 2, 'rindex on integers';
 
 # RT #112818
 is "\x261b perl \x261a".rindex('e'), 3, 'rindex with non-latin-1 strings';
+
+
+# RT #125784
+{
+    for -1e34, -1e35, 1e34, 1e35 -> $pos {
+        is rindex( 'xxy','y', $pos ), Nil, "sub does $pos give Nil";
+        is 'xxy'.rindex( 'y', $pos ), Nil, "method does $pos give Nil";
+    }
+}
 
 # vim: ft=perl6

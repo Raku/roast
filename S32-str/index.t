@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item index">
 
-plan 36;
+plan 44;
 
 # Type of return value
 isa-ok('abc'.index('b'), Int);
@@ -72,6 +72,14 @@ ok 1234.index(3) == 2, '.index on non-strings (here: Int)';
     my $s = '1023';
     is $s.substr($s.index('0')), '023', 'Str.index("0") works';
     is $s.substr($s.index(0)),   '023', 'Str.index(0) works';
+}
+
+# RT #125784
+{
+    for -1e34, -1e35, 1e34, 1e35 -> $pos {
+        is index( 'xxy','y', $pos ), Nil, "sub does $pos give Nil";
+        is 'xxy'.index( 'y', $pos ), Nil, "method does $pos give Nil";
+    }
 }
 
 # vim: ft=perl6
