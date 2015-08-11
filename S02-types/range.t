@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 135;
+plan 137;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -269,5 +269,14 @@ is join(':',grep 1..3, 0..5), '1:2:3', "ranges itemize or flatten lazily";
 
 lives-ok({'A'..'a'}, "A..a range completes");
 lives-ok({"\0".."~"}, "low ascii range completes");
+
+# RT #125791
+{
+    for 0,1 -> $i {
+        throws-like { (^10).bounds[$i] = 1 }, X::Assignment::RO,
+          typename => 'Int',
+          "is Range.bounds[$i] ro";
+    }
+}
 
 # vim:set ft=perl6
