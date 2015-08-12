@@ -1,5 +1,5 @@
 use Test;
-plan 348;
+plan 355;
 
 my $pod_index = 0;
 
@@ -314,5 +314,11 @@ test-leading($fancy-var.VAR, 'Very fancy!');
 sub has-where(Int $n where * > 10) {}
 
 test-leading(&has-where, "where constraints shouldn't prevent declarative comments");
+
+#| this is a block
+my $block = {;
+};
+
+test-leading($block, 'this is a block');
 
 is $=pod.elems, $pod_index;

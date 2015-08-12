@@ -1,5 +1,5 @@
 use Test;
-plan 341;
+plan 348;
 
 my $pod_index = 0;
 
@@ -305,5 +305,11 @@ sub has-where(Int $n where * > 10) {}
 #= where constraints shouldn't prevent declarative comments
 
 test-trailing(&has-where, "where constraints shouldn't prevent declarative comments");
+
+my $block = {;
+};
+#= this is a block
+
+test-trailing($block, 'this is a block');
 
 is $=pod.elems, $pod_index;

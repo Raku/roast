@@ -1,5 +1,5 @@
 use Test;
-plan 284;
+plan 291;
 
 my $pod_index = 0;
 
@@ -301,5 +301,12 @@ sub has-where(Int $n where * > 10) {}
 #= prevent declarative comments
 
 test-both(&has-where, "where constraints shouldn't", 'prevent declarative comments');
+
+#| this is
+my $block = {;
+};
+#= a block
+
+test-both($block, 'this is', 'a block');
 
 is $=pod.elems, $pod_index;
