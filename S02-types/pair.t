@@ -2,47 +2,53 @@ use v6;
 
 use Test;
 
-plan 108;
+plan 3 * 19 + 89;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
 
-my $pair = 'foo' => 'bar';
-isa-ok($pair, Pair);
+for
+  foo => "bar",                     'fat-comma',
+  Pair.new(:key<foo>, :value<bar>), 'Pair.new',
+  pair("foo","bar"),                'pair()'
+-> $pair, $type {
+    diag "checking $type";
+    isa-ok($pair, Pair);
 
 # get key and value from the pair as many ways as possible
 
 #?niecza 2 skip 'Invocant handling is NYI'
-is(key($pair:), 'foo', 'got the right key($pair:)');
-is(value($pair:), 'bar', 'got the right value($pair:)');
+    is(key($pair:), 'foo', 'got the right key($pair:)');
+    is(value($pair:), 'bar', 'got the right value($pair:)');
 
-is($pair.key(), 'foo', 'got the right $pair.key()');
-is($pair.value(), 'bar', 'got the right $pair.value()');
+    is($pair.key(), 'foo', 'got the right $pair.key()');
+    is($pair.value(), 'bar', 'got the right $pair.value()');
 
-is($pair.key, 'foo', 'got the right $pair.key');
-is($pair.value, 'bar', 'got the right $pair.value');
+    is($pair.key, 'foo', 'got the right $pair.key');
+    is($pair.value, 'bar', 'got the right $pair.value');
 
 # get both (kv) as many ways as possible
 
-my @pair1a = kv($pair);
-is(+@pair1a, 2, 'got the right number of elements in the list');
-is(@pair1a[0], 'foo', 'got the right key');
-is(@pair1a[1], 'bar', 'got the right value');
+    my @pair1a = kv($pair);
+    is(+@pair1a, 2, 'got the right number of elements in the list');
+    is(@pair1a[0], 'foo', 'got the right key');
+    is(@pair1a[1], 'bar', 'got the right value');
 
-my @pair1b = kv $pair;
-is(+@pair1b, 2, 'got the right number of elements in the list');
-is(@pair1b[0], 'foo', 'got the right key');
-is(@pair1b[1], 'bar', 'got the right value');
+    my @pair1b = kv $pair;
+    is(+@pair1b, 2, 'got the right number of elements in the list');
+    is(@pair1b[0], 'foo', 'got the right key');
+    is(@pair1b[1], 'bar', 'got the right value');
 
-my @pair1c = $pair.kv;
-is(+@pair1c, 2, 'got the right number of elements in the list');
-is(@pair1c[0], 'foo', 'got the right key');
-is(@pair1c[1], 'bar', 'got the right value');
+    my @pair1c = $pair.kv;
+    is(+@pair1c, 2, 'got the right number of elements in the list');
+    is(@pair1c[0], 'foo', 'got the right key');
+    is(@pair1c[1], 'bar', 'got the right value');
 
-my @pair1d = $pair.kv();
-is(+@pair1d, 2, 'got the right number of elements in the list');
-is(@pair1d[0], 'foo', 'got the right key');
-is(@pair1d[1], 'bar', 'got the right value');
+    my @pair1d = $pair.kv();
+    is(+@pair1d, 2, 'got the right number of elements in the list');
+    is(@pair1d[0], 'foo', 'got the right key');
+    is(@pair1d[1], 'bar', 'got the right value');
+} #19
 
 # Pair with a numeric value
 
@@ -295,7 +301,7 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 #?niecza skip "eqv NYI for Pair"
 {
     my sub code {return 42}
-    $pair = (:&code);
+    my $pair = (:&code);
     ok($pair eqv (code => &code), ':&foo syntax works');
 }
 
