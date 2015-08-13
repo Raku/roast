@@ -80,7 +80,6 @@ my @normal = <
   Pair
   PairMap
   Parameter
-  Parcel
   Perl
   Pod::Block
   Pod::Block::Code
@@ -101,6 +100,7 @@ my @normal = <
   Regex
   Routine
   Scalar
+  Seq
   Set
   SetHash
   Signature

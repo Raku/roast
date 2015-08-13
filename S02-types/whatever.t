@@ -61,7 +61,7 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is @a[1..*], 2..4, '@a[1..*] skips first element, stops at last';
     is @a, 1..4, 'array is unmodified after reference to [1..*]';
     # RT #61844
-    is (0, 1)[*-1..*], 1, '*-1..* lives and clips to range of Parcel';
+    is (0, 1)[*-1..*], 1, '*-1..* lives and clips to range of List';
 }
 
 # RT #68894

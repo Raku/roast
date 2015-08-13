@@ -13,10 +13,10 @@ is <a b c> ⊆ <a b d>, False,                 'a b c   ⊆ a b d';
 
 # in the advent article, it returned False.  Since then, S07:55
 #
-#   "A C<Parcel> is immutable, although the elements of a C<Parcel>
+#   "A C<List> is immutable, although the elements of a C<List>
 #    may be either mutable or immutable."
 #
-# is interpreted in such a way that Parcels have become value based,
+# is interpreted in such a way that Lists have become value based,
 # and that means that this test should return True
 is <a b c> === <a b c>, True, 'a b c === a b c';
 

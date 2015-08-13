@@ -49,7 +49,7 @@ my @tests = (
     #?rakudo emit #
     [ { :a(1) }, { :b(2), :c(3) } ],
 
-    # a Parcel
+    # a List
     <a b c>
 );
 

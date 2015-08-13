@@ -386,8 +386,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.SetHash, SetHash, "Method .SetHash works on Hash-1";
     is showset(%x.SetHash), "a b", "Method .SetHash works on Hash-2";
-    isa-ok (@a, %x).SetHash, SetHash, "Method .SetHash works on Parcel-1";
-    is showset((@a, %x).SetHash), "Now Paradise a b cross-handed set the was way", "Method .SetHash works on Parcel-2";
+    isa-ok (@a, %x).SetHash, SetHash, "Method .SetHash works on List-1";
+    is showset((@a, %x).SetHash), "Now Paradise a b cross-handed set the was way", "Method .SetHash works on List-2";
 }
 
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'

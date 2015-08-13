@@ -324,8 +324,8 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.Set, Set, "Method .Set works on Hash-1";
     is showset(%x.Set), "a b", "Method .Set works on Hash-2";
-    isa-ok (@a, %x).Set, Set, "Method .Set works on Parcel-1";
-    is showset((@a, %x).Set), "Now Paradise a b cross-handed set the was way", "Method .Set works on Parcel-2";
+    isa-ok (@a, %x).Set, Set, "Method .Set works on List-1";
+    is showset((@a, %x).Set), "Now Paradise a b cross-handed set the was way", "Method .Set works on List-2";
 }
 
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
