@@ -143,7 +143,7 @@ for @testing -> @a, $T {
 
     # splicing in an infinite list
     for 'splice @a,0,0,1..Inf', '@a.splice: 0,0,1..Inf' -> $code {
-        throws-like $code, X::Cannot::Infinite, :action('splice in');
+        throws-like $code, X::Cannot::Lazy, :action('splice in');
     }
 
     # offset out of range

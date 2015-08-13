@@ -141,11 +141,11 @@ for @num -> $T {
     throws-like { @arr[0]:delete }, X::AdHoc,
       message => 'Cannot delete from a natively typed array',
       "Cannot push non-int/Int to $t array";
-    throws-like { @arr = 0e0..Inf }, X::Cannot::Infinite,
+    throws-like { @arr = 0e0..Inf }, X::Cannot::Lazy,
       action => 'initialize',
       what   => "array[$t]",
       "Trying to initialize a $t array with a right infinite list";
-    throws-like { @arr = -Inf..0e0 }, X::Cannot::Infinite,
+    throws-like { @arr = -Inf..0e0 }, X::Cannot::Lazy,
       action => 'initialize',
       what   => "array[$t]",
       "Trying to initialize a $t array with a left infinite list";
