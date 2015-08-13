@@ -95,7 +95,7 @@ plan 21;
     @a[2] = 'b';
     my @b = @a;
     is +@b, 3, 'really a degenerative case of assigning list to array';
-    @b = (6, @a);
+    @b = flat (6, @a);
     is +@b, 4, 'assigning list with extended array to an array';
     my $s = @a.join(':');
     is $s, '::b', 'join on extended array';
