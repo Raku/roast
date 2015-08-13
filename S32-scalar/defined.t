@@ -19,7 +19,7 @@ ok(defined(1),   'numeric literal 1 is defined');
 ok(defined(""),  'empty string is defined');
 ok(defined("a"), '"a" is defined');
 ok(defined(0),   'numeric literal 0 is defined');
-ok(defined(()),  'empty Parcel is defined');
+ok(defined(()),  'empty List is defined');
 ok(defined([]),  'empty Array is defined');
 ok(defined({}),  'empty Hash is defined');
 

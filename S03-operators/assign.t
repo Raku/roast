@@ -926,7 +926,7 @@ sub l () { 1, 2 };
        'Assign to array with the same array on rhs (RT #93972)';
     $rt93972 = (1, 2, 3);
     $rt93972 = $rt93972.grep({1});
-    is $rt93972.join(','), '1,2,3', 'same with Parcel';
+    is $rt93972.join(','), '1,2,3', 'same with List';
 }
 
 {

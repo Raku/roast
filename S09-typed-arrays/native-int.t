@@ -66,7 +66,7 @@ for @int,@uint -> $T {
     is +@arr, 0,      "Cleared $t array numifies to 0";
     nok @arr,         "Cleared $t array is falsey";
 
-    is (@arr = 1..50), (1..50).Parcel, "Can assign integer range to $t array";
+    is (@arr = 1..50), (1..50).List, "Can assign integer range to $t array";
     is @arr.elems, 50, "Got correct elems from range assign on $t array";
     is @arr[0], 1,     "Got correct element from range assign on $t array (1)";
     is @arr[49], 50,   "Got correct element from range assign on $t array (2)";
@@ -177,7 +177,7 @@ for @int,@uint -> $T {
     is @arr.shift, 3, "shift from $t array works (1)";
     is @arr.elems, 4, "shift from $t array works (2)";
 
-    is (@arr = 1..10), (1..10).Parcel, "can initialize $t from Range";
+    is (@arr = 1..10), (1..10).List, "can initialize $t from Range";
     my @replaced = @arr.splice(3, 2, 98, 99, 100);
     is @arr.elems, 11, "Number of elems after splice $t array";
     is @arr[2],   3, "Splice on $t array did the right thing (1)";

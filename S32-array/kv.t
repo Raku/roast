@@ -62,7 +62,7 @@ is( 42.kv, [0, 42], "(42).kv works");
 # RT #71086
 {
     use MONKEY-TYPING;
-    augment class Parcel {
+    augment class List {
         method test_kv() {
             my @a;
             for <a b c>.kv -> $x {
@@ -71,7 +71,7 @@ is( 42.kv, [0, 42], "(42).kv works");
             @a.join('|');
         }
     }
-    is (1, 2).test_kv, '0|a|1|b|2|c', '.kv works within class Parcel';
+    is (1, 2).test_kv, '0|a|1|b|2|c', '.kv works within class List';
 }
 
 # vim: ft=perl6

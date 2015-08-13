@@ -23,7 +23,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       [1..10], "Supply coercer worked on Range";
 
     tap-ok (1,2,3,4,5,6,7,8,9,10).Supply,
-      [1..10], "Supply coercer worked on Parcel";
+      [1..10], "Supply coercer worked on List";
 
     tap-ok "food".Supply,
       [<food>], "Supply coercer worked on scalar";

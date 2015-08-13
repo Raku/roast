@@ -56,8 +56,8 @@ my @list = (1 .. 5);
 
 # Testing map that returns an array
 {
-    my @result = map { ($_, $_ * 2) }, @list;
-    is(+@result, 10, 'Parcel returned from closure: we got a list back');
+    my @result = map { slip($_, $_ * 2) }, @list;
+    is(+@result, 10, 'Slip returned from closure interpolates elements');
     is @result.join(', '),
         '1, 2, 2, 4, 3, 6, 4, 8, 5, 10',
         'got the values we expected';
