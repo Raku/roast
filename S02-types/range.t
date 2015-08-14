@@ -274,7 +274,7 @@ lives-ok({"\0".."~"}, "low ascii range completes");
 {
     for 0,1 -> $i {
         throws-like { (^10).bounds[$i] = 1 }, X::Assignment::RO,
-          typename => 'Int',
+          typename => / ^ 'Int' | 'value' $ /,
           "is Range.bounds[$i] ro";
     }
 }
