@@ -40,7 +40,7 @@ plan 303;
     # swap two elements in the same array 
     # (moved this from array.t)
     my @a = 1 .. 5;
-    @a[0,1] = @a[1,0];
+    @a[0,1] = flat @a[1,0];
     is(@a[0], 2, "slice assignment swapping two element in the same array");
     is(@a[1], 1, "slice assignment swapping two element in the same array");
 }
@@ -50,7 +50,7 @@ plan 303;
 
     my @a = 1 .. 2;
     my @b = 0 .. 2;
-    @a[@b] = @a[1, 0], 3;
+    @a[@b] = flat @a[1, 0], 3;
     is(@a[0], 2, "slice assignment swapping with array dwim");
     is(@a[1], 1, "slice assignment swapping with array dwim");
     is(@a[2], 3, "slice assignment swapping with array dwim makes listop");
@@ -197,7 +197,7 @@ plan 303;
     my (@a, @b);
     @a = 1;
     @b = 2;
-    (@b, @a) = (@a, @b);
+    (@b, @a) = flat (@a, @b);
     ok(!defined(@a[0]), '(@b, @a) = (@a, @b) assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = (@a, @b) assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
@@ -208,7 +208,7 @@ plan 303;
     my (@a, @b);
     @a = (1);
     @b = (2);
-    (@b, @a) = @a, @b;
+    (@b, @a) = flat @a, @b;
     ok(!defined(@a[0]), '(@b, @a) = @a, @b assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = @a, @b assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = @a, @b assignment \@b[1]');
@@ -386,20 +386,6 @@ my @p;
     is($x, 'abcabcabc', 'x= operator');
     is(@p[0],'abcabcabc', "x= operator parses as item assignment 1");
     is(@p[1],4, "x= operator parses as item assignment 2");
-}
-
-{
-    my @x = ( 'a', 'z' );
-    @p = @x xx= 3, 4;
-    is(+@x,   6,   'xx= operator elems');
-    is(@x[0], 'a', 'xx= operator 0');
-    is(@x[1], 'z', 'xx= operator 1');
-    is(@x[2], 'a', 'xx= operator 2');
-    is(@x[3], 'z', 'xx= operator 3');
-    is(@x[4], 'a', 'xx= operator 4');
-    is(@x[5], 'z', 'xx= operator 5');
-    ok(!defined(@x[6]), 'xx= operator 6');
-    is(~@p,~(@x,4), "xx= operator parses as item assignment 1");
 }
 
 {
@@ -783,6 +769,7 @@ sub l () { 1, 2 };
 
 
 # L<S03/Assignment operators/",=">
+#?rakudo skip ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
 {
     my @a = 1, 2;
     is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)';
