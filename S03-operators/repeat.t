@@ -29,7 +29,7 @@ is(@foo[9], 'x', 'list repeat operator created correct array');
 is(+@foo, 10, 'list repeat operator created array of the right size');
 
 lives-ok { my @foo2 = Mu xx 2; }, 'can repeat Mu';
-my @foo3 = (1, 2) xx 2;
+my @foo3 = flat (1, 2) xx 2;
 is(@foo3[0], 1, 'can repeat lists');
 is(@foo3[1], 2, 'can repeat lists');
 is(@foo3[2], 1, 'can repeat lists');
@@ -61,7 +61,7 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     @a[0] = 'b';
     is @a.join('|'), 'b|a|a', 'change to one item left the others unchanged';
 
-    my @b = <x y> xx 3;
+    my @b = flat <x y> xx 3;
     is @b.join('|'), 'x|y|x|y|x|y', 'basic sanity with <x y> xx 3';
     @b[0] = 'z';
     @b[3] = 'a';
@@ -76,7 +76,7 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     my @a = <a b c>;
     is(("a" xx @a).join('|'), 'a|a|a', 'repeat properly numifies rhs');
 
-    my @b = <a b c> Z (1 xx *);
+    my @b = flat <a b c> Z (1 xx *);
     is(@b.join('|'), 'a|1|b|1|c|1', 'xx understands Whatevers');
 }
 
