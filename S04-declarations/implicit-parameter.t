@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan 20;
 
 # L<S04/The Relationship of Blocks and Declarations/A bare closure
 # (except the block associated with a conditional statement)>
@@ -61,6 +61,11 @@ plan 19;
         { $string ~= $_; }
     }
     is $string, 'MooMooMooMooMooMoo', 'outer $_ is seen within nested blocks';
+}
+
+# RT #125767
+{
+    is (1.map: { .sqrt => .sqrt }), (1 => 1), 'hash like block with implicit parameter'
 }
 
 # vim: ft=perl6
