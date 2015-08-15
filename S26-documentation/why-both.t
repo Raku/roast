@@ -65,7 +65,7 @@ class Sheep {
 
 test-both(Sheep, 'a sheep', 'or is it?');
 
-my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
+my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' }).list[0];
 
 test-both($wool-attr, 'usually white', 'not very dirty');
 

@@ -75,7 +75,7 @@ class Sheep {
     method roar { 'roar!' }
 }
 
-my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
+my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' }).list[0];
 my $roar-method = Sheep.^lookup('roar');
 
 test-leading(Sheep,'a sheep');
