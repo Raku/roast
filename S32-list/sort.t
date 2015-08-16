@@ -46,26 +46,6 @@ plan 32;
     is(@s, @e, '... with explicit spaceship');
 }
 
-#?rakudo skip "closure as non-final argument RT #124762"
-#?niecza skip 'Invocant handling is NYI'
-{
-    my @a = (2, 45, 6, 1, 3);
-    my @e = (1, 2, 3, 6, 45);
-
-    my @s = sort { $^a <=> $^b }: @a;
-    is(@s, @e, '... with closure as indirect invocant');
-}
-
-#?rakudo skip "method fallback to sub unimpl RT #124763"
-#?niecza skip 'err, what?'
-{
-    my @a = (2, 45, 6, 1, 3);
-    my @e = (1, 2, 3, 6, 45);
-
-    my @s = { $^a <=> $^b }.sort: @a;
-    is(@s, @e, '... with closure as direct invocant');
-}
-
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
