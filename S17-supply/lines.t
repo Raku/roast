@@ -46,7 +46,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     {
         my $s = Supply.new;
         tap-ok $s.lines,
-          [<a b c d>, '', 'eeee'],
+          ['a','b','c','d', '', 'eeee'],
           "handle chunked lines",
           :after-tap( {
               $s.emit( "a\nb\r" );
