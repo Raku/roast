@@ -34,7 +34,7 @@ plan 11;
     my @p = (^10).pick(*).map: {
         start {
             sleep 2 * $_;
-            cas @a, -> @current { my @ = @current, OUTER::<$_> };
+            cas @a, -> @current { my @ = flat @current, OUTER::<$_> };
         }
     };
     my $all = Promise.allof(@p);
