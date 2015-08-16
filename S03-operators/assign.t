@@ -943,6 +943,7 @@ sub l () { 1, 2 };
 }
 
 # RT #76414
+#?rakudo skip ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
 {
     my @rt76414 = (1, 2);
     @rt76414 ,= 3, 4;         # same as push(@rt76414,3,4) according to S03
