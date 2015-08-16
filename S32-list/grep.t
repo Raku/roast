@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 43;
+plan 37;
 
 my @list = (1 .. 10);
 

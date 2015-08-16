@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 32;
+plan 30;
 
 # L<S32::Containers/"List"/"=item sort">
 
