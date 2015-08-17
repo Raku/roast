@@ -20,7 +20,7 @@ is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
 # L<S03/List infix precedence/This becomes a flat list in>
 {
     my @result = gather {
-        for @(1..3 X 'a'..'b') -> $n, $a {
+        for flat @(1..3 X 'a'..'b') -> $n, $a {
             take "$n|$a"
         }
     }
@@ -50,7 +50,7 @@ ok EVAL('<a b> X, <c d>'), 'cross metaoperator parses';
 # L<S03/Cross operators/list concatenating form when used like this>
 {
     my @result = <a b> X, 1,2 X, <x y>;
-    is @result.elems, 24, 'chained cross-comma produces correct number of elements';
+    is @result.elems, 8, 'chained cross-comma produces correct number of elements';
 
     my @expected = (
         ['a', 1, 'x'],
@@ -107,7 +107,7 @@ is (<a b> X <c d> X < e f>).flat.join(','),
 #?niecza todo
 is ([1,2] X~ <a b>), '1 2a 1 2b', '[] does not flatten';
 
-is (1,2 X ( <a b> X "x")).flat.join, '1a1x1b1x2a2x2b2x',
+is (1,2 X ( <a b> X "x").flat).flat.join, '1a1x1b1x2a2x2b2x',
     'Nested X works';
 
 # RT #77660
