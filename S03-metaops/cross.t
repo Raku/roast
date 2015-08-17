@@ -105,7 +105,7 @@ is (<a b> X <c d> X < e f>).flat.join(','),
     'cross works with three lists';
 
 #?niecza todo
-is ([1,2] X~ <a b>), '1 2a 1 2b', '[] does not flatten';
+is (([1,2],) X~ <a b>), '1 2a 1 2b', '[] does not flatten';
 
 is (1,2 X ( <a b> X "x").flat).flat.join, '1a1x1b1x2a2x2b2x',
     'Nested X works';
