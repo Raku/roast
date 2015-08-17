@@ -166,7 +166,7 @@ plan 38;
         my @array;
         for 1..3 {
             @array.push($i);
-            my $i = 1 + $i;
+            my $i = 1;
         }
     };
     s(9);/ },
