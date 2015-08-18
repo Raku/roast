@@ -37,11 +37,12 @@ my @normal = <
   Failure
   FatRat
   ForeignCode
-  GatherIter
   Grammar
   Hash
-  HashIter
+  HyperConfiguration
+  HyperSeq
   HyperWhatever
+  HyperWorkBuffer
   IO::ArgFiles
   IO::Handle
   IO::Path
@@ -57,18 +58,14 @@ my @normal = <
   IO::Spec::Win32
   Instant
   Int
-  Iterable
-  Iterator
+  IterationBuffer
   JSONPrettyActions
   Junction
   Kernel
   Label
   List
-  ListIter
-  LoL
   Lock
   Macro
-  MapIter
   Match
   Method
   Mix
@@ -104,6 +101,7 @@ my @normal = <
   Set
   SetHash
   Signature
+  Slip
   SprintfHandler
   Stash
   Str
