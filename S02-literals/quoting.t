@@ -259,7 +259,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 {
     #L<S02/Forcing item context/"relationship" "single quotes" "double angles">
     my ($x, $y) = <a b>;
-    ok(«$x $y» === <a b>, "«$x $y» interpolation works correctly");
+    ok(«$x $y» eqv <a b>, "«$x $y» interpolation works correctly");
 };
 
 
