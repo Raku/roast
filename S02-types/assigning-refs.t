@@ -55,7 +55,7 @@ plan 18;
   try { %hash = $hashref };
 
   #?niecza todo
-  is +%hash, 0, '%hash = $hashref works due to single argument rule';
+  is +%hash, 3, '%hash = $hashref works due to single argument rule';
 }
 
 # Same as above, but now we never use arrays, but only array*refs*.
