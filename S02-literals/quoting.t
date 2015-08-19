@@ -268,7 +268,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     my (@q1, @q2) = ();
     my $gorch = "foo bar";
 
-    @q1 = «$foo $gorch $bar»;
+    @q1 = flat «$foo $gorch $bar»;
     is(+@q1, 4, "4 elements in unquoted «» list");
     is(@q1[2], "bar", '$gorch was exploded');
     is(@q1[3], "BAR", '$bar was interpolated');
