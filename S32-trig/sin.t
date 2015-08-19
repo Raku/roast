@@ -94,42 +94,42 @@ for @sines -> $angle
         
 {
     # Num tests
-    is_approx(sin((-6.28318530723787).Num), 0, "sin(Num) - -6.28318530723787");
+    is_approx(sin((-6.283185).Num), 0, "sin(Num) - -6.283185");
 }
 
 {
     # Rat tests
-    is_approx((-3.92699081702367).Rat(1e-9).sin, 0.707106781186548, "Rat.sin - -3.92699081702367");
-    is_approx(sin((-0.523598775603156).Rat(1e-9)), -0.5, "sin(Rat) - -0.523598775603156");
+    is_approx((-3.9269908).Rat(1e-9).sin, 0.707106781186548, "Rat.sin - -3.9269908");
+    is_approx(sin((-0.5235988).Rat(1e-9)), -0.5, "sin(Rat) - -0.5235988");
 }
 
 {
     # Complex tests
-    is_approx(sin((0 + 2i).Complex), 0 + 3.62686040784702i, "sin(Complex) - 0 + 2i");
+    is_approx(sin((0+2i).Complex), 0+3.62686040784702i, "sin(Complex) - 0+2i");
 }
 
 {
     # Str tests
-    is_approx((0.523598775603156).Str.sin, 0.5, "Str.sin - 0.523598775603156");
-    is_approx(sin((0.785398163404734).Str), 0.707106781186548, "sin(Str) - 0.785398163404734");
+    is_approx((0.5235988).Str.sin, 0.5, "Str.sin - 0.5235988");
+    is_approx(sin((0.7853982).Str), 0.707106781186548, "sin(Str) - 0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx(NotComplex.new(1.57079632680947 + 2i).sin, 3.76219569108363 - 5.28492170249481e-11i, "NotComplex.sin - 1.57079632680947 + 2i");
-    is_approx(sin(NotComplex.new(2.3561944902142 + 2i)), 2.6602740852579 - 2.56457758886169i, "sin(NotComplex) - 2.3561944902142 + 2i");
+    is_approx(NotComplex.new(1.57079632680947+2i).sin, 3.76219569108363-5.28492170249481e-11i, "NotComplex.sin - 1.57079632680947+2i");
+    is_approx(sin(NotComplex.new(2.3561944902142+2i)), 2.6602740852579-2.56457758886169i, "sin(NotComplex) - 2.3561944902142+2i");
 }
 
 {
     # DifferentReal tests
-    is_approx(DifferentReal.new(3.14159265361894).sin, 0, "DifferentReal.sin - 3.14159265361894");
-    is_approx(sin(DifferentReal.new(3.92699081702367)), -0.707106781186548, "sin(DifferentReal) - 3.92699081702367");
+    is_approx(DifferentReal.new(3.141593).sin, 0, "DifferentReal.sin - 3.141593");
+    is_approx(sin(DifferentReal.new(3.9269908)), -0.707106781186548, "sin(DifferentReal) - 3.9269908");
 }
 
 {
     # FatRat tests
-    is_approx((4.7123889804284).FatRat.sin, -1, "FatRat.sin - 4.7123889804284");
-    is_approx(sin((5.49778714383314).FatRat), -0.707106781186548, "sin(FatRat) - 5.49778714383314");
+    is_approx((4.7123890).FatRat.sin, -1, "FatRat.sin - 4.7123890");
+    is_approx(sin((5.4977871).FatRat), -0.707106781186548, "sin(FatRat) - 5.4977871");
 }
 
 
@@ -153,44 +153,44 @@ for @sines -> $angle
         
 {
     # Num tests
-    is_approx(asin((0.5).Num), 0.523598775603156, "asin(Num) - 0.523598775603156");
+    is_approx(asin((0.5).Num), 0.5235988, "asin(Num) - 0.5235988");
 }
 
 {
     # Rat tests
-    is_approx(((0.707106781186548).Rat(1e-9)).asin, 0.785398163404734, "Rat.asin - 0.785398163404734");
-    is_approx(asin((0.5).Rat(1e-9)), 0.523598775603156, "asin(Rat) - 0.523598775603156");
+    is_approx(((0.707106781186548).Rat(1e-9)).asin, 0.7853982, "Rat.asin - 0.7853982");
+    is_approx(asin((0.5).Rat(1e-9)), 0.5235988, "asin(Rat) - 0.5235988");
 }
 
 {
     # Complex tests
-    is_approx(asin((0.785398163404734 + 2i).Complex), 0.341338918259482 + 1.49709293866352i, "asin(Complex) - 0.341338918259482 + 1.49709293866352i");
+    is_approx(asin((0.785398163404734+2i).Complex), 0.341338918259482+1.49709293866352i, "asin(Complex) - 0.341338918259482+1.49709293866352i");
 }
 
 {
     # Str tests
-    is_approx(((0.5).Str).asin, 0.523598775603156, "Str.asin - 0.523598775603156");
-    is_approx(asin((0.707106781186548).Str), 0.785398163404734, "asin(Str) - 0.785398163404734");
+    is_approx(((0.5).Str).asin, 0.5235988, "Str.asin - 0.5235988");
+    is_approx(asin((0.707106781186548).Str), 0.7853982, "asin(Str) - 0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx((NotComplex.new(0.523598775603156 + 2i)).asin, 0.231190695652916 + 1.46781890096429i, "NotComplex.asin - 0.231190695652916 + 1.46781890096429i");
-    is_approx(asin(NotComplex.new(0.785398163404734 + 2i)), 0.341338918259482 + 1.49709293866352i, "asin(NotComplex) - 0.341338918259482 + 1.49709293866352i");
+    is_approx((NotComplex.new(0.523598775603156+2i)).asin, 0.231190695652916+1.46781890096429i, "NotComplex.asin - 0.231190695652916+1.46781890096429i");
+    is_approx(asin(NotComplex.new(0.785398163404734+2i)), 0.341338918259482+1.49709293866352i, "asin(NotComplex) - 0.341338918259482+1.49709293866352i");
 }
 
 {
     # DifferentReal tests
-    is_approx((DifferentReal.new(0.5)).asin, 0.523598775603156, "DifferentReal.asin - 0.523598775603156");
-    is_approx(asin(DifferentReal.new(0.707106781186548)), 0.785398163404734, "asin(DifferentReal) - 0.785398163404734");
+    is_approx((DifferentReal.new(0.5)).asin, 0.5235988, "DifferentReal.asin - 0.5235988");
+    is_approx(asin(DifferentReal.new(0.707106781186548)), 0.7853982, "asin(DifferentReal) - 0.7853982");
 }
 
 {
     # FatRat tests
-    is_approx(((0.5).FatRat).asin, 0.523598775603156, "FatRat.asin - 0.523598775603156");
-    is_approx(asin((0.707106781186548).FatRat), 0.785398163404734, "asin(FatRat) - 0.785398163404734");
+    is_approx(((0.5).FatRat).asin, 0.5235988, "FatRat.asin - 0.5235988");
+    is_approx(asin((0.707106781186548).FatRat), 0.7853982, "asin(FatRat) - 0.7853982");
 }
 
-done;
+done-testing;
 
 # vim: ft=perl6 nomodifiable

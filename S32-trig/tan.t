@@ -94,42 +94,42 @@ for @sines -> $angle
         
 {
     # Num tests
-    is_approx(tan((-6.28318530723787).Num), -5.82864638634609e-11, "tan(Num) - -6.28318530723787");
+    is_approx(tan((-6.283185).Num), -5.82864638634609e-11, "tan(Num) - -6.283185");
 }
 
 {
     # Rat tests
-    is_approx((-3.92699081702367).Rat(1e-9).tan, -1.00000000007286, "Rat.tan - -3.92699081702367");
-    is_approx(tan((-0.523598775603156).Rat(1e-9)), -0.577350269196102, "tan(Rat) - -0.523598775603156");
+    is_approx((-3.9269908).Rat(1e-9).tan, -1.00000000007286, "Rat.tan - -3.9269908");
+    is_approx(tan((-0.5235988).Rat(1e-9)), -0.577350269196102, "tan(Rat) - -0.5235988");
 }
 
 {
     # Complex tests
-    is_approx(tan((0 + 2i).Complex), 0 + 0.964027580075817i, "tan(Complex) - 0 + 2i");
+    is_approx(tan((0+2i).Complex), 0+0.964027580075817i, "tan(Complex) - 0+2i");
 }
 
 {
     # Str tests
-    is_approx((0.523598775603156).Str.tan, 0.577350269196102, "Str.tan - 0.523598775603156");
-    is_approx(tan((0.785398163404734).Str), 1.00000000001457, "tan(Str) - 0.785398163404734");
+    is_approx((0.5235988).Str.tan, 0.577350269196102, "Str.tan - 0.5235988");
+    is_approx(tan((0.7853982).Str), 1.00000000001457, "tan(Str) - 0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx(NotComplex.new(2.3561944902142 + 2i).tan, -0.0366189934736279 + 0.999329299737467i, "NotComplex.tan - 2.3561944902142 + 2i");
-    is_approx(tan(NotComplex.new(3.14159265361894 + 2i)), 2.05899337486384e-12 + 0.964027580075817i, "tan(NotComplex) - 3.14159265361894 + 2i");
+    is_approx(NotComplex.new(2.3561944902142+2i).tan, -0.0366189934736279+0.999329299737467i, "NotComplex.tan - 2.3561944902142+2i");
+    is_approx(tan(NotComplex.new(3.14159265361894+2i)), 2.05899337486384e-12+0.964027580075817i, "tan(NotComplex) - 3.14159265361894+2i");
 }
 
 {
     # DifferentReal tests
-    is_approx(DifferentReal.new(3.92699081702367).tan, 1.00000000007286, "DifferentReal.tan - 3.92699081702367");
-    is_approx(tan(DifferentReal.new(5.49778714383314)), -0.999999999897998, "tan(DifferentReal) - 5.49778714383314");
+    is_approx(DifferentReal.new(3.9269908).tan, 1.00000000007286, "DifferentReal.tan - 3.9269908");
+    is_approx(tan(DifferentReal.new(5.4977871)), -0.999999999897998, "tan(DifferentReal) - 5.4977871");
 }
 
 {
     # FatRat tests
-    is_approx((6.28318530723787).FatRat.tan, 5.82864638634609e-11, "FatRat.tan - 6.28318530723787");
-    is_approx(tan((6.80678408284103).FatRat), 0.577350269273818, "tan(FatRat) - 6.80678408284103");
+    is_approx((6.283185).FatRat.tan, 5.82864638634609e-11, "FatRat.tan - 6.283185");
+    is_approx(tan((6.8067841).FatRat), 0.577350269273818, "tan(FatRat) - 6.8067841");
 }
 
 
@@ -153,44 +153,44 @@ for @sines -> $angle
         
 {
     # Num tests
-    is_approx(atan((0.577350269196102).Num), 0.523598775603156, "atan(Num) - 0.523598775603156");
+    is_approx(atan((0.577350269196102).Num), 0.5235988, "atan(Num) - 0.5235988");
 }
 
 {
     # Rat tests
-    is_approx(((1.00000000001457).Rat(1e-9)).atan, 0.785398163404734, "Rat.atan - 0.785398163404734");
-    is_approx(atan((0.577350269196102).Rat(1e-9)), 0.523598775603156, "atan(Rat) - 0.523598775603156");
+    is_approx(((1.00000000001457).Rat(1e-9)).atan, 0.7853982, "Rat.atan - 0.7853982");
+    is_approx(atan((0.577350269196102).Rat(1e-9)), 0.5235988, "atan(Rat) - 0.5235988");
 }
 
 {
     # Complex tests
-    is_approx(atan((0.785398163404734 + 2i).Complex), 1.36593583676998 + 0.445759203696597i, "atan(Complex) - 1.36593583676998 + 0.445759203696597i");
+    is_approx(atan((0.785398163404734+2i).Complex), 1.36593583676998+0.445759203696597i, "atan(Complex) - 1.36593583676998+0.445759203696597i");
 }
 
 {
     # Str tests
-    is_approx(((0.577350269196102).Str).atan, 0.523598775603156, "Str.atan - 0.523598775603156");
-    is_approx(atan((1.00000000001457).Str), 0.785398163404734, "atan(Str) - 0.785398163404734");
+    is_approx(((0.577350269196102).Str).atan, 0.5235988, "Str.atan - 0.5235988");
+    is_approx(atan((1.00000000001457).Str), 0.7853982, "atan(Str) - 0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx((NotComplex.new(0.523598775603156 + 2i)).atan, 1.41601859067084 + 0.496236956634457i, "NotComplex.atan - 1.41601859067084 + 0.496236956634457i");
-    is_approx(atan(NotComplex.new(0.785398163404734 + 2i)), 1.36593583676998 + 0.445759203696597i, "atan(NotComplex) - 1.36593583676998 + 0.445759203696597i");
+    is_approx((NotComplex.new(0.523598775603156+2i)).atan, 1.41601859067084+0.496236956634457i, "NotComplex.atan - 1.41601859067084+0.496236956634457i");
+    is_approx(atan(NotComplex.new(0.785398163404734+2i)), 1.36593583676998+0.445759203696597i, "atan(NotComplex) - 1.36593583676998+0.445759203696597i");
 }
 
 {
     # DifferentReal tests
-    is_approx((DifferentReal.new(0.577350269196102)).atan, 0.523598775603156, "DifferentReal.atan - 0.523598775603156");
-    is_approx(atan(DifferentReal.new(1.00000000001457)), 0.785398163404734, "atan(DifferentReal) - 0.785398163404734");
+    is_approx((DifferentReal.new(0.577350269196102)).atan, 0.5235988, "DifferentReal.atan - 0.5235988");
+    is_approx(atan(DifferentReal.new(1.00000000001457)), 0.7853982, "atan(DifferentReal) - 0.7853982");
 }
 
 {
     # FatRat tests
-    is_approx(((0.577350269196102).FatRat).atan, 0.523598775603156, "FatRat.atan - 0.523598775603156");
-    is_approx(atan((1.00000000001457).FatRat), 0.785398163404734, "atan(FatRat) - 0.785398163404734");
+    is_approx(((0.577350269196102).FatRat).atan, 0.5235988, "FatRat.atan - 0.5235988");
+    is_approx(atan((1.00000000001457).FatRat), 0.7853982, "atan(FatRat) - 0.7853982");
 }
 
-done;
+done-testing;
 
 # vim: ft=perl6 nomodifiable
