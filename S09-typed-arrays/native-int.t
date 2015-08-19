@@ -10,7 +10,7 @@ if $*KERNEL.bits == 64 {
 plan (@int + @uint) * 137 + @uint * 2;
 
 # Basic native int array tests.
-for @int,@uint -> $T {
+for flat @int,@uint -> $T {
     my $t = $T.^name;
     diag "Testing $t array";
 
