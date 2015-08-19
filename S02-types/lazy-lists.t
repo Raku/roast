@@ -15,7 +15,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 22;
 
 {
     my @a = (1..Inf);
@@ -26,13 +26,9 @@ plan 23;
 
 # basic list operations
 
-is( (1...Inf).elems,
-    Inf,
+isa-ok( (1...Inf).elems,
+    Failure,
     "elems" );
-
-is( (1...Inf).shift,
-    1,
-    "shift" );
 
 is( (1...Inf)[2..5],
     [3, 4, 5, 6],
@@ -77,71 +73,71 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 } };
     my @a = make-lazy-list(4);
     nok $was-lazy, "sanity: make-lazy-list sets $was-lazy.";
     $was-lazy = 1;
-    my @b := make-lazy-list(4);
+    my $b := make-lazy-list(4);
     ok $was-lazy, "sanity: binding won't slurp up the lazy list";
 }
 
 {
     $was-lazy = 1;
-    my @one := make-lazy-list(10);
-    is @one.first(*.is-prime), 2, "sanity: first is-prime is 2";
+    my $one := make-lazy-list(10);
+    is $one.first(*.is-prime), 2, "sanity: first is-prime is 2";
     ok $was-lazy, "first is lazy";
 }
 
 {
     $was-lazy = 1;
-    my @one := make-lazy-list(10);
-    is @one.grep(*.is-prime)[^3], (2, 3, 5), "sanity: first three primes are 2, 3 and 5";
+    my \one = make-lazy-list(10);
+    is one.grep(*.is-prime)[^3], (2, 3, 5), "sanity: first three primes are 2, 3 and 5";
     ok $was-lazy, "grep is lazy";
 }
 
 {
     $was-lazy = 1;
-    my @one := make-lazy-list(10);
-    is @one.map({ $^num * 2 })[^3], (0, 2, 4), "sanity: first three numbers doubled are 0, 2, 4";
+    my \one = make-lazy-list(10);
+    is one.map({ $^num * 2 })[^3], (0, 2, 4), "sanity: first three numbers doubled are 0, 2, 4";
     ok $was-lazy, "map is lazy";
 }
 
 {
     $was-lazy = 1;
-    my @one := make-lazy-list(10);
+    my \one = make-lazy-list(10);
     my @two = <a b c d e f>;
-    my @res = (@one Z @two)[^3];
+    my @res = (one Z @two)[^3];
     ok $was-lazy, "first argument of Z is lazy";
 }
 
 {
     $was-lazy = 1;
-    my @two := make-lazy-list(10);
+    my \two = make-lazy-list(10);
     my @one = <a b c d e f>;
-    my @res = (@one Z @two)[^3];
+    my @res = (@one Z two)[^3];
     ok $was-lazy, "second argument of Z is lazy";
 }
 
 {
     $was-lazy = 1;
-    my @one := make-lazy-list(10);
+    my \one = make-lazy-list(10);
     my @two = <a b c d e f>;
-    my @res = (@one X @two)[^20];
+    my @res = (one X @two)[^20];
     ok $was-lazy, "first argument of X is lazy";
 }
 
 {
     $was-lazy = 1;
-    my @one := make-lazy-list(10);
+    my \one = make-lazy-list(10);
     my @two = <a b c d e f>;
-    my @res = (@one X~ @two)[^20];
+    my @res = (one X~ @two)[^20];
     ok $was-lazy, "first argument of X~ is lazy";
 }
 
 # RT #121994
 {
     my @a;
-    @a.push: $("one,two,three".split(","));
-    is-deeply @a, [(<one two three>).list.item], "push: did we not lose the split?";
+    @a.push: $("one,two,three".split(",").list);
+    is-deeply @a, [<one two three>.list.item, ], "push: did we not lose the split?";
     my @b;
-    @b.unshift: $("one,two,three".split(","));
-    is-deeply @b, [(<one two three>).list.item], "unshift: did we not lose the split?";
+    @b.unshift: $("one,two,three".split(",").list);
+    is-deeply @b, [(<one two three>).list.item, ], "unshift: did we not lose the split?";
 }
 
 # RT #120035
