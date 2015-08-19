@@ -13,8 +13,8 @@ sub ca(@x) {
 }
 
 ok 'a b c d' ~~ /(.*)/, 'basic sanity';
-ok $/.caps ~~ Positional, '$/.caps returns something Positional';
-ok $/.chunks ~~ Positional, '$/.chunks returns something Positional';
+ok $/.caps ~~ Iterable, '$/.caps returns something Iterable';
+ok $/.chunks ~~ Iterable, '$/.chunks returns something Iterable';
 isa-ok $/.caps.[0],   Pair, '.. and the items are Pairs (caps);';
 isa-ok $/.chunks.[0], Pair, '.. and the items are Pairs (chunks);';
 isa-ok $/.caps.[0].value,   Match, '.. and the values are Matches (caps);';
