@@ -77,8 +77,8 @@ plan 13;
 # RT #123776
 #?rakudo todo 'RT#123776'
 {
-    my $bound = 'bar';
-    BEGIN { $bound = 'foo'; }
+    my $bound;
+    BEGIN { $bound := 'foo'; }
     is $bound, 'foo', "Value bound to variable in BEGIN persists";
 }
 
