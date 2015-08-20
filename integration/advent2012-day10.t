@@ -66,7 +66,7 @@ is q:to"THE END", $pub-with-no-beer, 'heredoc auto indent';
 
 my @expected-searches = <beer masak vacation whisky>;
 
-my ($input, @searches) = q:to/INPUT/, q:to/SEARCHES/.lines;
+my ($input, $searches) = q:to/INPUT/, q:to/SEARCHES/.lines.Array;
     Once upon a time, there was a pub. The pub had
     lots of awesome beer. One day, a Perl workshop
     was held near to the pub. The hackers drank
@@ -80,10 +80,10 @@ my ($input, @searches) = q:to/INPUT/, q:to/SEARCHES/.lines;
     SEARCHES
 
 is $input, $pub-with-no-beer;
-is-deeply @searches, @expected-searches;
+is-deeply $searches, @expected-searches;
 
 my @results = gather {
-   for @searches -> $s {
+   for $searches -> $s {
    take $input ~~ /$s/
         ?? "Found $s"
         !! "Didn't find $s";
