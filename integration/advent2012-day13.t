@@ -10,14 +10,14 @@ our $slurp2 = q<dd ee ff gg>;
 sub hashy(Str $s) {
     my %words;
     for $s.comb(/\w+/).map(*.lc) -> $word {
-	%words{$word}++;
+    %words{$word}++;
     }
     %words;
 }
 sub baggy(Str $s) {
     my %words := BagHash.new();
     for $slurp1.comb(/\w+/).map(*.lc) -> $word {
-	%words{$word}++;
+    %words{$word}++;
     }
     %words;
 }
@@ -43,11 +43,11 @@ sub red-blue-roll($bag) {
     my @rolls = $bag.roll(100);
     my $elems = @rolls.elems;
     for @rolls {
-	$_ eq  'red' ?? $reds++ !! $_ eq 'blue' ?? $blues++ !! $others++
+    $_ eq  'red' ?? $reds++ !! $_ eq 'blue' ?? $blues++ !! $others++
     }
     my $ok = $elems == 100 && $blues > $reds && $others == 0;
     diag "elems: $elems,  reds: $reds,  blues: $blues,  others: $others"
-	unless $ok;
+    unless $ok;
     return $ok;
 }
 
@@ -86,40 +86,40 @@ isa-ok 'B' (cont) $s1, Bool, 'set (cont) result type';
 isa-ok 'B' ∌ $s1, Bool, 'set ∌ result type';
 
 my @set-and-bag-ops = 
-    # Operation                 Unicode         Texas                   Type
-    # ---------                 -------         ---------------         ----
-    ['union',			&infix:«∪»,	&infix:«(|)»,		[Set,Bag]],
-    ['intersection',		&infix:«∩»,	&infix:«(&)»,		[Set,Bag]],
-    ['set difference',		Mu,		&infix:«(-)»,		Set],
-    ['set symmetric difference',Mu,		&infix:«(^)»,		Set],
+    # Operation                  Unicode         Texas              Type
+    # ---------                  -------         ---------------    ----
+    ['union',                    &infix:«∪»,     &infix:«(|)»,      [Set,Bag]],
+    ['intersection',             &infix:«∩»,     &infix:«(&)»,      [Set,Bag]],
+    ['set difference',           Mu,             &infix:«(-)»,      Set],
+    ['set symmetric difference', Mu,             &infix:«(^)»,      Set],
 
-    ['subset',			&infix:«⊆»,	&infix:«(<=)»,		Bool],
-    ['not a subset',		&infix:«⊈»,	Mu,			Bool],
+    ['subset',                   &infix:«⊆»,     &infix:«(<=)»,     Bool],
+    ['not a subset',             &infix:«⊈»,     Mu,                Bool],
 
-    ['proper subset',		&infix:«⊂»,	&infix:«(<)»,		Bool],
-    ['not a proper subset',	&infix:«⊄»,	Mu,			Bool],
+    ['proper subset',            &infix:«⊂»,     &infix:«(<)»,      Bool],
+    ['not a proper subset',      &infix:«⊄»,     Mu,                Bool],
 
-    ['superset',		&infix:«⊇»,	&infix:«(>=)»,		Bool],
-    ['not a superset',		&infix:«⊉»,	Mu,			Bool],
+    ['superset',                 &infix:«⊇»,     &infix:«(>=)»,     Bool],
+    ['not a superset',           &infix:«⊉»,     Mu,                Bool],
 
-    ['proper superset',		&infix:«⊃»,	&infix:«(>)»,		Bool],
-    ['not a proper superset',	&infix:«⊅»,	Mu,			Bool],
+    ['proper superset',          &infix:«⊃»,     &infix:«(>)»,      Bool],
+    ['not a proper superset',    &infix:«⊅»,     Mu,                Bool],
 
-    ['bag multiplication',	&infix:«⊍»,	&infix:«(.)»,		Bag],
-    ['bag addition',		&infix:«⊎»,	&infix:«(+)»,		Bag],
-    ;
+    ['bag multiplication',       &infix:«⊍»,     &infix:«(.)»,      Bag],
+    ['bag addition',             &infix:«⊎»,     &infix:«(+)»,      Bag],
+;
 
 for @set-and-bag-ops {
     my ($operation, $unicode-op, $texas-op, $result-type) = @$_;
 
     if $unicode-op.defined {
-	my $result = $unicode-op($s1, $s2);
-	ok $result-type.grep({$result.isa($_)}), "{$unicode-op.name} return type";
+        my $result = $unicode-op($s1, $s2);
+        ok $result-type.grep({$result.isa($_)}), "{$unicode-op.name} return type";
     }
 
     if $texas-op.defined {
-	my $result = $texas-op($s1, $s2);
-	ok $result-type.grep({$result.isa($_)}), "{$texas-op.name} return type";
+        my $result = $texas-op($s1, $s2);
+        ok $result-type.grep({$result.isa($_)}), "{$texas-op.name} return type";
     }
 
 }
