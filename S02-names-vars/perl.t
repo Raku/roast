@@ -28,15 +28,15 @@ my @tests = (
     #?niecza emit # Autoloading NYI
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
-    # References to scalars
-    \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, 
+    # Captures containing scalars
+    \(42), \(Inf), \(-Inf), \(NaN), \("string"), \(""), \(?1), \(?0), 
 
     \Mu,
 
     (a => 1),
     :b(2),
 
-    # References to aggregates
+    # Aggregates
     {},           # empty hash
     { a => 42 },  # only one elem
     #?rakudo emit #
