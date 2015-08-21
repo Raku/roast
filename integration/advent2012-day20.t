@@ -47,7 +47,7 @@ sub _(@rest?) {
     unless @rest {
         finish-last-pile();
     }
-    @*current-pile = 0, @rest;
+    @*current-pile = 0, @rest.Slip;
     return @*current-pile;
 }
 
@@ -55,13 +55,13 @@ sub o(@rest?) {
     unless @rest {
         finish-last-pile();
     }
-    @*current-pile = 1, @rest;
+    @*current-pile = 1, @rest.Slip;
     return @*current-pile;
 }
 
 sub finish-last-pile() {
     if @*current-pile {
-        push @*piles, [@*current-pile];
+        push @*piles, $[@*current-pile];
     }
     @*current-pile = ();
 }
@@ -73,5 +73,3 @@ my $dsl-y = nim {
 };
 
 is-deeply $dsl-y, $svg-serialize-input ;
-
-
