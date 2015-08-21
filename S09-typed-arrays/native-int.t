@@ -90,7 +90,6 @@ for flat @int,@uint -> $T {
     is @arr[*-1,*-2], (16,12), "Can also get last 2 elements on $t array";
 
     ok @arr.flat  === @arr, "$t array .flat returns identity";
-    ok @arr.list  === @arr, "$t array .list returns identity";
     ok @arr.eager === @arr, "$t array .eager returns identity";
 
     diag qq:!a:!c/my $t \$s; for @arr { \$s += \$_ }; \$s/ if !

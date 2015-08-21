@@ -90,7 +90,6 @@ for @num -> $T {
     @arr[*-1,*-2];                                # cannot approx test Parcels
 
     ok @arr.flat  === @arr, "$t array .flat returns identity";
-    ok @arr.list  === @arr, "$t array .list returns identity";
     ok @arr.eager === @arr, "$t array .eager returns identity";
 
 #?rakudo skip "borkedness with num and iteration RT #124678"
