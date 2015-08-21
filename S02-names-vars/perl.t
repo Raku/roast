@@ -96,7 +96,7 @@ my @tests = (
 
 {
     # test a bug reported by Chewie[] - apparently this is from S03
-    is(EVAL((("f","oo","bar").keys).perl), <0 1 2>, ".perl on a .keys list");
+    is(EVAL((("f","oo","bar").keys.List).perl), <0 1 2>, ".perl on a .keys list");
 }
 
 
