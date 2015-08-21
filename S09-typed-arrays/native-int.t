@@ -7,7 +7,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 137 + @uint * 2;
+plan (@int + @uint) * 136 + @uint * 2;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {

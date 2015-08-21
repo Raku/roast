@@ -5,7 +5,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 129;
+plan @num * 128;
 
 # Basic native num array tests.
 for @num -> $T {
