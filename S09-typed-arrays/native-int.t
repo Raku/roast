@@ -207,7 +207,7 @@ for flat @int,@uint -> $T {
     is @untyped[0], 1, "List-assigning $t array to untyped works (2)";
     is @untyped[9], 10, "List-assigning $t array to untyped works (3)";
 
-    @untyped = 0, @native, 11;
+    @untyped = flat 0, @native, 11;
     is @untyped.elems, 12, "List-assign $t array surrounded by literals (1)";
     is @untyped[ 0],  0, "List-assign $t array surrounded by literals (2)";
     is @untyped[ 5],  5, "List-assign $t array surrounded by literals (3)";

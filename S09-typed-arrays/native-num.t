@@ -219,7 +219,7 @@ for @num -> $T {
     is_approx @untyped[0],   1e0, "List-assign $t array to untyped works (2)";
     is_approx @untyped[9],  10e0, "List-assign $t array to untyped works (3)";
 
-    @untyped = 0e0, @native, 11e0;
+    @untyped = flat 0e0, @native, 11e0;
     is @untyped.elems, 12,        "List-assign $t array surrounded by lits (1)";
     is_approx @untyped[0],   0e0, "List-assign $t array surrounded by lits (2)";
     is_approx @untyped[5],   5e0, "List-assign $t array surrounded by lits (3)";
