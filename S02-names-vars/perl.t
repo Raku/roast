@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 106;
+plan 102;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
 my @tests = (
