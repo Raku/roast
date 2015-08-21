@@ -29,7 +29,7 @@ sub nim-svg(@piles) {
     return [ :$width, :$height, |@elements ];
 }
 
-my $svg-serialize-input = ["width" => 9, "height" => 3, "circle" => $["cx" => 8.5, "cy" => 0.5, "r" => 0.4], "circle" => $["cx" => 0.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 1.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 2.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 3.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 5.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 6.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 8.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 0.5, "cy" => 2.5, "r" => 0.4], "circle" => $["cx" => 1.5, "cy" => 2.5, "r" => 0.4], "circle" => $["cx" => 2.5, "cy" => 2.5, "r" => 0.4], "circle" => $["cx" => 3.5, "cy" => 2.5, "r" => 0.4], "circle" => $["cx" => 8.5, "cy" => 2.5, "r" => 0.4]];
+my $svg-serialize-input = ["width" => 9, "height" => 3, "circle" => ["cx" => 8.5, "cy" => 0.5, "r" => 0.4], "circle" => ["cx" => 0.5, "cy" => 1.5, "r" => 0.4], "circle" => ["cx" => 1.5, "cy" => 1.5, "r" => 0.4], "circle" => ["cx" => 2.5, "cy" => 1.5, "r" => 0.4], "circle" => ["cx" => 3.5, "cy" => 1.5, "r" => 0.4], "circle" => ["cx" => 5.5, "cy" => 1.5, "r" => 0.4], "circle" => ["cx" => 6.5, "cy" => 1.5, "r" => 0.4], "circle" => ["cx" => 8.5, "cy" => 1.5, "r" => 0.4], "circle" => ["cx" => 0.5, "cy" => 2.5, "r" => 0.4], "circle" => ["cx" => 1.5, "cy" => 2.5, "r" => 0.4], "circle" => ["cx" => 2.5, "cy" => 2.5, "r" => 0.4], "circle" => ["cx" => 3.5, "cy" => 2.5, "r" => 0.4], "circle" => ["cx" => 8.5, "cy" => 2.5, "r" => 0.4]];
 
 is-deeply nim-svg(@piles), $svg-serialize-input ;
 
