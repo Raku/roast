@@ -68,7 +68,7 @@ for 'I must go down to the seas again' {
     my @chars;
 
     @chars = $word.split('');
-    is-deeply @chars, ['', <C a m e l i a>.Slip, ''], q<@chars = $word.split('');>;
+    is-deeply @chars, ['', |<C a m e l i a>, ''], q<@chars = $word.split('');>;
 
     @chars = $word.comb;
     is-deeply @chars, [<C a m e l i a>], '@chars = $word.comb;';

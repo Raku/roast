@@ -26,7 +26,7 @@ sub nim-svg(@piles) {
     }
     
 ##    say SVG.serialize('svg' => [ :$width, :$height, @elements ]);
-    return [ :$width, :$height, @elements.Slip ];
+    return [ :$width, :$height, |@elements ];
 }
 
 my $svg-serialize-input = ["width" => 9, "height" => 3, "circle" => $["cx" => 8.5, "cy" => 0.5, "r" => 0.4], "circle" => $["cx" => 0.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 1.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 2.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 3.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 5.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 6.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 8.5, "cy" => 1.5, "r" => 0.4], "circle" => $["cx" => 0.5, "cy" => 2.5, "r" => 0.4], "circle" => $["cx" => 1.5, "cy" => 2.5, "r" => 0.4], "circle" => $["cx" => 2.5, "cy" => 2.5, "r" => 0.4], "circle" => $["cx" => 3.5, "cy" => 2.5, "r" => 0.4], "circle" => $["cx" => 8.5, "cy" => 2.5, "r" => 0.4]];
@@ -47,7 +47,7 @@ sub _(@rest?) {
     unless @rest {
         finish-last-pile();
     }
-    @*current-pile = 0, @rest.Slip;
+    @*current-pile = 0, |@rest;
     return @*current-pile;
 }
 
@@ -55,7 +55,7 @@ sub o(@rest?) {
     unless @rest {
         finish-last-pile();
     }
-    @*current-pile = 1, @rest.Slip;
+    @*current-pile = 1, |@rest;
     return @*current-pile;
 }
 

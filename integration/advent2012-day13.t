@@ -56,7 +56,7 @@ ok red-blue-roll( $bag ), 'weighted roll';
 
 # > say $bag.pick(*).join(" ");
 my @pick = $bag.pick(*);
-is-deeply @pick.sort.Slip, <blue blue blue blue blue blue blue blue blue blue red red>.Slip, '.pick(*)';
+is-deeply @pick.sort, [|<blue blue blue blue blue blue blue blue blue blue red red>], '.pick(*)';
 
 $bag = {"red" => 20000000000000000001, "blue" => 100000000000000000000}.Bag;
 
@@ -72,7 +72,7 @@ do {
     my $words2 = set $slurp2.comb(/\w+/).map(*.lc);
     my $unique = ($words1 (-) $words2);
     isa-ok $unique, Bag, 'set difference (-)';
-    is-deeply $unique.keys.sort.Slip, qw<aa bb cc zz>.Slip, 'set difference (-)';
+    is-deeply $unique.keys.sort, [|<aa bb cc zz>], 'set difference (-)';
 }
 
 my $s1 = set <A B>;
