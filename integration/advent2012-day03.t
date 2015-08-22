@@ -31,7 +31,7 @@ class Widget {
 
             $remaining-space -= [+] @static-sizes;
 
-            $unspecified-size = ([-] $remaining-space, @dynamic-sizes».($remaining-space))
+            $unspecified-size = ([-] $remaining-space, @dynamic-sizes».($remaining-space).Slip)
                                  / $nb-unspecified;
 
             .compute-layout($remaining-space, $unspecified-size) for @!sub-widgets;
