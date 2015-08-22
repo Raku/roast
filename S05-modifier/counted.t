@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 119;
+plan 126;
 
 # L<S05/Modifiers/If the number is followed by an>
 
@@ -22,7 +22,10 @@ my $sub6 = "f fo foo fooo foooo fooooo bar";
 
 # :nth(N)...
 
-ok(!( $data ~~ m:nth(0)/fo+/ ), 'No match nth(0)');
+#RT #125815
+throws-like '$data ~~ m:nth(0)/fo+/', Exception, message => rx/nth/;
+throws-like '$data ~~ m:nth(-1)/fo+/', Exception, message => rx/nth/;
+throws-like '$data ~~ m:nth(-Inf)/fo+/', Exception, message => rx/nth/;
 
 ok($data ~~ m:nth(1)/fo+/, 'Match nth(1)');
 is($/, 'fo', 'Matched value for nth(1)');
@@ -155,8 +158,14 @@ ok(!( $data ~~ m:7th/fo+/ ), 'No match 7th');
 # Substitutions...
 {
     my $try = $data;
-    ok(!( $try ~~ s:0th{fo+}=q{bar} ), "Can't substitute 0th" );
+
+#RT #125815
+    throws-like '$try ~~ s:0th{fo+}=q{bar}', Exception, message => rx/nth/;
     is($try, $data, 'No change to data for 0th');
+    throws-like '$try ~~ s:th(-1){fo+}=q{bar}', Exception, message => rx/nth/;
+    is($try, $data, 'No change to data for :th(-1)');
+    throws-like '$try ~~ s:th(-Inf){fo+}=q{bar}', Exception, message => rx/nth/;
+    is($try, $data, 'No change to data for :th(-Inf)');
 
     $try = $data;
     ok($try ~~ s:1st{fo+}=q{bar}, 'substitute 1st');
@@ -201,8 +210,9 @@ is($/, 'foo', 'Matched value for 3th « <ident>');
 
 # :nth and *-N
 
-is("ABCDE" ~~ m:nth(*-1)/\w/, "E", "Can match with *-1 index");
-
+#?rakudo skip 'Cannot call Real(Whatever: );'
+is("ABCDE" ~~ m:nth(*)/\w/, "E", "Can match with * index");
+is("ABCDE" ~~ m:nth(*-1)/\w/, "D", "Can match with *-1 index");
 
 $data = "f fo foo fooo foooo fooooo foooooo";
 $sub1 = "f bar foo fooo foooo fooooo foooooo";
