@@ -90,23 +90,23 @@ my @set-and-bag-ops =
     # ---------                  -------         ---------------    ----
     ['union',                    &infix:«∪»,     &infix:«(|)»,      [Set,Bag]],
     ['intersection',             &infix:«∩»,     &infix:«(&)»,      [Set,Bag]],
-    ['set difference',           Mu,             &infix:«(-)»,      Set],
-    ['set symmetric difference', Mu,             &infix:«(^)»,      Set],
+    ['set difference',           Mu,             &infix:«(-)»,      [Set]],
+    ['set symmetric difference', Mu,             &infix:«(^)»,      [Set]],
 
-    ['subset',                   &infix:«⊆»,     &infix:«(<=)»,     Bool],
-    ['not a subset',             &infix:«⊈»,     Mu,                Bool],
+    ['subset',                   &infix:«⊆»,     &infix:«(<=)»,     [Bool]],
+    ['not a subset',             &infix:«⊈»,     Mu,                [Bool]],
 
-    ['proper subset',            &infix:«⊂»,     &infix:«(<)»,      Bool],
-    ['not a proper subset',      &infix:«⊄»,     Mu,                Bool],
+    ['proper subset',            &infix:«⊂»,     &infix:«(<)»,      [Bool]],
+    ['not a proper subset',      &infix:«⊄»,     Mu,                [Bool]],
 
-    ['superset',                 &infix:«⊇»,     &infix:«(>=)»,     Bool],
-    ['not a superset',           &infix:«⊉»,     Mu,                Bool],
+    ['superset',                 &infix:«⊇»,     &infix:«(>=)»,     [Bool]],
+    ['not a superset',           &infix:«⊉»,     Mu,                [Bool]],
 
-    ['proper superset',          &infix:«⊃»,     &infix:«(>)»,      Bool],
-    ['not a proper superset',    &infix:«⊅»,     Mu,                Bool],
+    ['proper superset',          &infix:«⊃»,     &infix:«(>)»,      [Bool]],
+    ['not a proper superset',    &infix:«⊅»,     Mu,                [Bool]],
 
-    ['bag multiplication',       &infix:«⊍»,     &infix:«(.)»,      Bag],
-    ['bag addition',             &infix:«⊎»,     &infix:«(+)»,      Bag],
+    ['bag multiplication',       &infix:«⊍»,     &infix:«(.)»,      [Bag]],
+    ['bag addition',             &infix:«⊎»,     &infix:«(+)»,      [Bag]],
 ;
 
 for @set-and-bag-ops {
