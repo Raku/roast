@@ -6,7 +6,10 @@ use v6;
 
 say "1..8";
 
-# Tests for say
+# for easy text
+$*ERR = $*OUT;
+
+# Tests for note
 {
     note "ok 1 - basic form of note";
 }
