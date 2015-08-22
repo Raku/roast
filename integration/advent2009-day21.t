@@ -28,7 +28,7 @@ class Question {
         print "> ";
         my $line = $*IN.get();
         my @answers = $line.comb(/<digit>+/)>>.Int.sort;
-        my @correct = @.answers.kv.map({ $^value.correct ?? $^key !! () });
+        my @correct = flat @.answers.kv.map({ $^value.correct ?? $^key !! () });
         if @correct ~~ @answers {
             say "Yay, you got it right!";
             return 1;
