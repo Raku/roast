@@ -15,7 +15,7 @@ say "1..8";
     say "o", "k 2 - say with multiple parame", "ters (1)";
 
     my @array = ("o", "k 3 - say with multiple parameters (2)");
-    say |@array;
+    say @array;
 }
 
 {
