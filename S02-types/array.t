@@ -14,21 +14,19 @@ plan 97;
 
 
 {
-    # see RT #63350 for discussion
-    # also: RT #78284
     my $i = 0;
-    $i++ for (1, 2, 3).item;
-    is $i, 1, 'for (1, 2, 3).item does one iteration';
+    $i++ for flat 0, (1, 2, 3).item;
+    is $i, 2, 'for 0, (1, 2, 3).item does two iteraions';
 
     $i = 0;
-    $i++ for $(1, 2, 3);
-    is $i, 1, 'for $(1, 2, 3) does one iteration';
+    $i++ for flat 0, $(1, 2, 3);
+    is $i, 2, 'for flat 0, $(1, 2, 3) does two iterations';
 }
 
 {
     my $i = 0;
-    $i++ for [1, 2, 3];
-    is $i, 1, 'for [1, 2, 3] does one iteration';
+    $i++ for flat 0, $[1, 2, 3];
+    is $i, 2, 'for flat 0, $[1, 2, 3] does two iterations';
 }
 
 # uninitialized array variables should work too...
