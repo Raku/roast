@@ -141,9 +141,9 @@ sub showkv($x) {
 }
 
 {
-    my $b = BagHash.new([ foo => 10, bar => 17, baz => 42, santa => 0 ]);
-    isa-ok $b, BagHash, '&BagHash.new given an array of pairs produces a BagHash';
-    is +$b, 1, "... with one element";
+    my $b = BagHash.new(1, [ foo => 10, bar => 17, baz => 42, santa => 0 ]);
+    isa-ok $b, BagHash, '&BagHash.new given something and an array of pairs produces a BagHash';
+    is +$b, 2, "... with two elements";
 }
 
 {
@@ -155,9 +155,9 @@ sub showkv($x) {
 }
 
 {
-    my $b = BagHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 });
-    isa-ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
-    is +$b, 1, "... with one element";
+    my $b = BagHash.new(1, { foo => 10, bar => 17, baz => 42, santa => 0 });
+    isa-ok $b, BagHash, '&BagHash.new given a Hash and something produces a BagHash';
+    is +$b, 2, "... with one element";
 }
 
 {
