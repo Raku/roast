@@ -56,7 +56,7 @@ is-deeply [(2 .. 20).grep({is-prime-alpha($_)})], @primes_lt_20, 'prime (alpha)'
 is-deeply [(2 .. 20).grep({is-prime-beta($_)})], @primes_lt_20, 'prime (beta)';
 is-deeply [(2 .. 20).grep({is-prime-rm($_, $_)})], @primes_lt_20, 'prime (rabin-miller)';
 
-my @primes_lt_200 = (@primes_lt_20, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199);
+my @primes_lt_200 = (@primes_lt_20.Slip, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199);
 
 {
     my @primes-beta = (2 .. 200).grep({is-prime-beta($_)});
