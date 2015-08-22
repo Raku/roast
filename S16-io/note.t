@@ -6,7 +6,7 @@ use v6;
 
 say "1..8";
 
-# for easy text
+# We can't write TAP output to STDERR
 $*ERR = $*OUT;
 
 # Tests for note
