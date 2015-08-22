@@ -16,8 +16,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       "ascending min works";
     tap-ok Supply.from-list(10...1).min, [10...1],
       "descending min works";
-    tap-ok Supply.from-list("a".."e","A".."E").min(*.uc), ["a"],
+    tap-ok Supply.from-list(("a".."e").Slip,("A".."E").Slip).min(*.uc), ["a"],
       "ascending alpha works";
-    tap-ok Supply.from-list("E"..."A","e".."a").min(*.lc), [<E D C B A>],
+    tap-ok Supply.from-list("E"..."A",("e".."a").Slip).min(*.lc), [<E D C B A>],
       "descending alpha works";
 }
