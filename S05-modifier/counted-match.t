@@ -8,14 +8,18 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 22;
+plan 28;
 
 my $data = "f fo foo fooo foooo fooooo foooooo";
 
 # :nth(N)...
 
 {
-    nok $data.match(/fo+/, :nth(0)), 'No match nth(0)';
+
+    #RT #125815
+    throws-like '$data.match(/fo+/, :nth(0))', Exception, message => rx/nth/;
+    throws-like '$data.match(/fo+/, :nth(-1))', Exception, message => rx/nth/;
+    throws-like '$data.match(/fo+/, :nth(-2))', Exception, message => rx/nth/;
 
     my $match = $data.match(/fo+/, :nth(1));
     ok $match, 'Match :nth(1)';
@@ -45,7 +49,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 # 
 
 # more interesting variations of :nth(...)
-#?rakudo skip 'hangs RT #125026'
 #?niecza skip 'hangs'
 {
     my @match = $data.match(/fo+/, :nth(2, 3)).list;
@@ -56,10 +59,19 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     is +@match, 3, 'nth(Range) is ok';
     is @match, <foo fooo foooo>, 'nth(Range) matched correctly';
 
+    @match = $data.match(/fo+/, :nth(2..Inf)).list;
+    is +@match, 5, 'nth(infinite range) is ok';
+    is @match, <foo fooo foooo fooooo foooooo>, 'nth(infinite range) matched correctly';
+}
+
+#?rakudo skip 'hangs RT #125026'
+#?niecza skip 'hangs'
+{
     @match = $data.match(/fo+/, :nth(2, 4 ... *)).list;
     is +@match, 3, 'nth(infinite series) is ok';
     is @match, <foo foooo foooooo>, 'nth(infinite series) matched correctly';
 }
+
 
 #?niecza skip 'Excess arguments to CORE Cool.match'
 {
@@ -81,6 +93,10 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 {
     is 'abacadaeaf'.match(/a./, :nth(2, 1, 4)).join(', '),
         'ac, ae', 'non-monotonic items in :nth are ignored';
+    is 'abacadaeaf'.match(/a./, :nth(2, -1, 4)).join(', '),
+        'ac, ae', 'negative non-monotonic items in :nth are ignored';
+    is 'abacadaeaf'.match(/a./, :nth(2, 0, 4)).join(', '),
+        'ac, ae', 'zero non-monotonic items in :nth are ignored';
 }
 
 # RT 77408
