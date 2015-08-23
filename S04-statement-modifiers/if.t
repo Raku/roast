@@ -22,7 +22,7 @@ plan 13;
 {
 	my $answer = 1;
 	my @x = 41, (42 if $answer), 43;
-	my @y = 41, ($answer ?? 42 !! ()), 43;
+	my @y = 41, ($answer ?? 42 !! slip()), 43;
 	my @z = 41, 42, 43;
 	is @y, @z, "sanity check";
 	is @x, @y, "if expr on true cond"; 
@@ -31,7 +31,7 @@ plan 13;
 {
 	my $answer = 0;
 	my @x = 41, (42 if $answer), 43;
-	my @y = 41, ($answer ?? 42 !! ()), 43;
+	my @y = 41, ($answer ?? 42 !! slip()), 43;
 	my @z = 41, 43;
 	is @y, @z, "sanity check";
         #?niecza todo "empty list as element not flattened - https://github.com/sorear/niecza/issues/180"
