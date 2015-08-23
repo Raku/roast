@@ -66,7 +66,7 @@ is q:to"THE END", $pub-with-no-beer, 'heredoc auto indent';
 
 my @expected-searches = <beer masak vacation whisky>;
 
-my ($input, @searches) = q:to/INPUT/, q:to/SEARCHES/.lines;
+my ($input, @searches) = q:to/INPUT/, q:to/SEARCHES/.lines.list;
     Once upon a time, there was a pub. The pub had
     lots of awesome beer. One day, a Perl workshop
     was held near to the pub. The hackers drank
