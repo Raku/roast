@@ -19,7 +19,7 @@ eval-dies-ok 'my $var; (key => $var) = "value"';
 
 {
     my ($t, $m);
-    :(:type($t), :motivation($m)) := (type => 'geek', motivation => '-Ofun');
+    try :(:type($t), :motivation($m)) := (type => 'geek', motivation => '-Ofun');
     is $t, 'geek',  'bound to the first pair';
     is $m, '-Ofun', 'bound to the second pair';
 }

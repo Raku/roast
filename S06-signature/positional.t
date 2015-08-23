@@ -24,7 +24,7 @@ is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
     sub f(@a, $i) {
         $i ~ "[{map { f($_, $i + 1) }, @a}]"
     };
-    is f([[], [[]], []], 0), "0[1[] 1[2[]] 1[]]",
+    is f([[], [[],], []], 0), "0[1[] 1[2[]] 1[]]",
        'recusion and parameter binding work out fine';
 }
 

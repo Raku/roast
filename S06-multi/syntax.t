@@ -149,14 +149,14 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 
 #RT #114886 - order of declaration matters
 {
+    proto sub fizzbuzz($) {*};
     multi sub fizzbuzz(Int $ where * %% 15) { 'FizzBuzz' };
     multi sub fizzbuzz(Int $ where * %% 5) { 'Buzz' };
     multi sub fizzbuzz(Int $ where * %% 3) { 'Fizz' };
     multi sub fizzbuzz(Int $number) { $number };
-    is
-        (1,3,5,15).map(&fizzbuzz).join(" "),
-        <1 Fizz Buzz FizzBuzz>,
-        "ordered multi subs";
+    my $a;
+    try $a = (1,3,5,15).map(&fizzbuzz).join(" ");
+    is $a, <1 Fizz Buzz FizzBuzz>, "ordered multi subs";
 }
 
 # RT #68528

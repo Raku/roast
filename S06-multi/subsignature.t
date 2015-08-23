@@ -5,7 +5,7 @@ use Test;
 plan 97;
 
 # Lots of the same tests from this directory run again with
-# the parameters in a sibsignature.
+# the parameters in a subsignature.
 
 # from by-trait.t
 # RT 66588
@@ -413,14 +413,14 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 
 #RT #114886 - order of declaration matters
 {
+    proto sub fizzbuzz($) {*};
     multi sub fizzbuzz(|c(Int $ where * %% 15)) { 'FizzBuzz' };
     multi sub fizzbuzz(|c(Int $ where * %% 5)) { 'Buzz' };
     multi sub fizzbuzz(|c(Int $ where * %% 3)) { 'Fizz' };
     multi sub fizzbuzz(|c(Int $number)) { $number };
-    is
-        (1,3,5,15).map(&fizzbuzz).join(" "),
-        <1 Fizz Buzz FizzBuzz>,
-        "ordered multi subs";
+    my $a;
+    try $a = (1,3,5,15).map(&fizzbuzz).join(" ");
+    is $a, <1 Fizz Buzz FizzBuzz>, "ordered multi subs";
 }
 
 # RT #68528

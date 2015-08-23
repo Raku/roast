@@ -41,15 +41,17 @@ is blat( 2, [2,3,4] ), "2-3-4", 'unpack named array with named pieces';
     my @my-array = 4,2,3,4;
 
     sub fsort-only([$p?,*@r]) {
-        return fsort-only(@r.grep( {$_ <= $p} )),$p,fsort-only(@r.grep( {$_ > $p} )) if $p || @r;
+        return flat fsort-only(@r.grep( {$_ <= $p} )),$p,fsort-only(@r.grep( {$_ > $p} )) if $p || @r;
     }
     multi fsort-multi([$p?,*@r]) {
-        return fsort-multi(@r.grep( {$_ <= $p} )),$p,fsort-multi(@r.grep( {$_ > $p} )) if $p || @r;
+        return flat fsort-multi(@r.grep( {$_ <= $p} )),$p,fsort-multi(@r.grep( {$_ > $p} )) if $p || @r;
     }
 
    #?niecza 2 todo "https://github.com/sorear/niecza/issues/180"
-   is fsort-only(@my-array).join(' '), '2 3 4 4', 'array unpacking and only-subs';
-   is fsort-multi(@my-array).join(' '), '2 3 4 4', 'array unpacking and only-multi';
+   my $a = try fsort-only(@my-array).join(' ');
+   is $a, '2 3 4 4', 'array unpacking and only-subs';
+   my $b = try fsort-multi(@my-array).join(' ');
+   is $b, '2 3 4 4', 'array unpacking and only-multi';
 }
 
 for [1,2],[3,4] -> $a [$x, $y] {

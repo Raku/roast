@@ -74,6 +74,8 @@ my @list = (1 .. 5);
 
 # map with n-ary functions
 {
+  # XXX GLR find hang-proof a way to test that map of 
+  # 0-arity and Inf-arity (proto-less multi) does not hang.
   is ~(1,2,3,4).map({ $^a + $^b             }), "3 7", "map() works with 2-ary functions";
   #?niecza skip 'No value for parameter $b in ANON'
   #?rakudo skip "Too few positionals passed; expected 3 arguments but got 1; RT #125146"
