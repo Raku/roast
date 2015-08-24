@@ -126,7 +126,7 @@ sub showkv($x) {
 
 {
     my $a = (1,2,3,2,2,2,2).MixHash;
-    is $a.kv.tree.sort({ .[0] }), ([1, 1], [2, 5], [3, 1]), "MixHash.kv returns list of keys and values";
+    is $a.kv.sort({ .[0] }), ([1, 1], [2, 5], [3, 1]), "MixHash.kv returns list of keys and values";
 }
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
