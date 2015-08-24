@@ -310,7 +310,7 @@ my @e;
     is($t, 42, 'plain method call works OK');
 
     my @r;
-    class FooTest2 { method bar { 42 } }; @r = (FooTest2.new)>>.bar;
+    class FooTest2 { method bar { 42 } }; @r = (FooTest2.new,)>>.bar;
     my @e = (42);
     is(~@r, ~@e, "hyper-method-call on list of user-defined objects");
 };
