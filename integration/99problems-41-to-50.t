@@ -305,7 +305,7 @@ plan 13;
 
     sub gray($n) is cached {
         return [''] if $n == 0;
-        ['0' xx 2**($n-1) >>~<< gray($n-1), 
+        [flat '0' xx 2**($n-1) >>~<< gray($n-1), 
          '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse];
     }
     is-deeply gray(0), [''];
@@ -317,7 +317,7 @@ plan 13;
 {    
     sub gray2($n) {
         return [''] if $n == 0;
-        (state @g)[$n] //= ['0' xx 2**($n-1) >>~<< gray2($n-1),
+        (state @g)[$n] //= [flat '0' xx 2**($n-1) >>~<< gray2($n-1),
                             '1' xx 2**($n-1) >>~<< gray2($n-1).reverse];
     }
     is-deeply gray2(0), [''];
