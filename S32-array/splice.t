@@ -78,8 +78,8 @@ for @testing -> @a, $T {
                 @a = values;
 
                 my $Treturn :=
-                  return === Nil ?? Nil !! $T.new(return.list);
-                my $Tremain := $T.new(remain.list);
+                  return === Nil ?? Nil !! $T.new(|return.list);
+                my $Tremain := $T.new(|remain.list);
 
                 # sub
                 splice-ok splice(@a,|params), $Treturn, @a, $Tremain,
