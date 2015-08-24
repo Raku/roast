@@ -476,7 +476,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     #?niecza 4 todo 'typed arrays'
     dies-ok { $o.a = <foo bar> }, 'type enforced on array attrib (assignment)';
     dies-ok { $o.a[2] = $*IN   }, 'type enforced on array attrib (item assignment)';
-    dies-ok { $o.a.push: [2, 3]}, 'type enforced on array attrib (push)';
+    dies-ok { $o.a.push: 1, [2, 3]}, 'type enforced on array attrib (push)';
     dies-ok { $o.a[42]<foo> = 3}, 'no autovivification (typed array)';
 
     #?rakudo todo 'over-eager auto-vivification bugs'
