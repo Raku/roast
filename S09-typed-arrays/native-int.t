@@ -35,7 +35,7 @@ for flat @int,@uint -> $T {
     is @arr.Int,    0, "New $t array Int-ifies to 0";
     is +@arr,       0, "New $t array numifies to 0";
     nok @arr,          "New $t array is falsey";
-    nok @arr.infinite, "Empty $t array is not infinite";
+    nok @arr.is-lazy , "Empty $t array is not lazy";
 
     is @arr[5], 0,    "Accessing non-existing on $t array gives 0";
     is @arr.elems, 0, "Elems do not grow just from an access on $t array";
@@ -52,7 +52,7 @@ for flat @int,@uint -> $T {
     is @arr.end, 2,    "The end value matches grown elems on $t array";
     is @arr.Int, 3,    "Int-ifies to grown number of elems on $t array";
     is +@arr, 3,       "Numifies to grown number of elems on $t array";
-    nok @arr.infinite, "$t array with values is not infinite";
+    nok @arr.is-lazy,  "$t array with values is not lazy";
 
     is (@arr[10] = 100), 100, "Can assign non-contiguously to $t array";
     is @arr[  9],   0, "Elems behind non-contiguous assign are 0 on $t array";
