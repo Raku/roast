@@ -24,16 +24,16 @@ plan 25;
                     $count++;
                     next;
                 }
-                @encoded.push( 1 == $count ?? $previous !! [$count, $previous]);
+                @encoded.push( 1 == $count ?? $previous !! $[$count, $previous]);
                 $count = 1;
             }
             $previous = $x;
         }
-        @encoded.push([$count, $x]);
+        @encoded.push($[$count, $x]);
         return @encoded;
     }
     is encode(<a a a a b c c a a d e e e e>),
-        [ [<4 a>], 'b', [<2 c>], [<2 a>], 'd', [<4 e>] ],
+        [ $[<4 a>], 'b', $[<2 c>], $[<2 a>], 'd', $[<4 e>] ],
         'We should be able to run-length encode lists';
 }
 
@@ -46,14 +46,13 @@ plan 25;
     sub decode(*@list) returns Iterable {
         gather {
             for @list -> $elem {
-                take $elem.isa(Array) ?? $elem[1] xx $elem[0] !! $elem;
+                take $elem.isa(Array) ?? ($elem[1] xx $elem[0]).Slip !! $elem;
             }
         }
     }
-    is decode( [4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"] ),
+    is decode( $[4, "a"], "b", $[2, "c"], $[2, "a"], "d", $[4, "e"] ),
         <a a a a b c c a a d e e e e>,
         'We should be able to decode run-length encoded lists';
-    
 }
 
 {
@@ -148,13 +147,13 @@ plan 25;
     # * (dupli '(a b c c d))
     # (A A B B C C C C D D)
     
-    is map({ $_ xx 2 }, <a b c c d>), <a a b b c c c c d d>,
+    is map({ ($_ xx 2).Slip }, <a b c c d>), <a a b b c c c c d d>,
         'We should be able to duplicate the elements of a list';
 }
 
 #?niecza skip 'Feed ops NYI'
 {    
-    my @result = EVAL '<a b c c d> ==> map { $_ xx 2 }';
+    my @result = EVAL '<a b c c d> ==> map { ($_ xx 2).Slip }';
     is @result, <a a b b c c c c d d>,
         'We should be able to duplicate the elements of a list';
 }
@@ -167,7 +166,7 @@ plan 25;
     # (A A A B B B C C C)
     
     sub repli (@list, Int $count) {
-        return map { $_ xx $count }, @list;
+        return map { ($_ xx $count).Slip }, @list;
     }
     is repli(<a b c>, 3), <a a a b b b c c c>,
         'We should be able to replicate array elements';
