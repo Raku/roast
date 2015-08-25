@@ -56,7 +56,7 @@ plan 14;
 }
 
 {
-    my @a = (1..3, 5) Z (6..8, 10);
+    my @a = flat (flat 1..3, 5) Z (flat 6..8, 10);
     is @a.join(', '), "1, 6, 2, 7, 3, 8, 5, 10", 'infix:<Z> imposes list context';
 }
 
@@ -64,7 +64,7 @@ plan 14;
 is ('a'..'c' Z 1, 2, 3).flat.join(','), 'a,1,b,2,c,3',
     'can mix arrays and ranges for infix:<Z>';
 
-is ("a".."c" Z "?", "a".."b").flat.join('|'), 'a|?|b|a|c|b',
+is ("a".."c" Z flat "?", "a".."b").flat.join('|'), 'a|?|b|a|c|b',
     'can mix arrays and ranges for infix:<Z>';
 
 is zip(1,2; 3,4; 5,6):with(&infix:<~>), '135 246', 'zip:with works on list associative';
