@@ -8,7 +8,7 @@ plan 95;
 # L<S09/Hashes>
 
 my %hash1;
-ok(%hash1.does(Hash), '%hash1 does Hash');
+does-ok %hash1, Hash, '%hash1 does Hash';
 %hash1{"one"} = 5;
 is(%hash1{"one"}, 5, 'lvalue hash assignment works (w/ double quoted keys)');
 
@@ -21,19 +21,19 @@ is(%hash1<three>, 3, 'lvalue hash assignment works (w/ unquoted style <key>)');
 # basic hash creation w/ comma separated key/values
 
 my %hash2 = ("one", 1);
-ok(%hash2.does(Hash), '%hash2 does Hash');
+does-ok %hash2, Hash, '%hash2 does Hash';
 is(%hash2{"one"}, 1, 'comma separated key/value hash creation works');
 is(%hash2<one>, 1, 'unquoted <key> fetching works');
 
 my %hash3 = ("one", 1, "two", 2);
-ok(%hash3.does(Hash), '%hash3 does Hash');
+does-ok %hash3, Hash, '%hash3 does Hash';
 is(%hash3{"one"}, 1, 'comma separated key/value hash creation works with more than one pair');
 is(%hash3{"two"}, 2, 'comma separated key/value hash creation works with more than one pair');
 
 # basic hash creation w/ => separated key/values (pairs?)
 
 my %hash4;
-ok(%hash4.does(Hash), '%hash4 does Hash');
+does-ok %hash4, Hash, '%hash4 does Hash';
 %hash4 = ("key" => "value");
 is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation works');
 
@@ -46,7 +46,7 @@ is( (map { .WHAT.gist } , %flattens).join(' ') , Pair.gist ~ ' ' ~ Pair.gist, 'F
 # hash slicing
 
 my %hash5 = ("one", 1, "two", 2, "three", 3);
-ok(%hash5.does(Hash), '%hash5 does Hash');
+does-ok %hash5, Hash, '%hash5 does Hash';
 
 {
     my @slice1 = %hash5{"one", "three"};
@@ -87,7 +87,7 @@ ok(%hash5.does(Hash), '%hash5 does Hash');
 # keys
 
 my %hash6 = ("one", 1, "two", 2, "three", 3);
-ok(%hash6.does(Hash), '%hash6 does Hash');
+does-ok %hash6, Hash, '%hash6 does Hash';
 
 my @keys1 = (keys %hash6).sort;
 is(+@keys1, 3, 'got the right number of keys');
@@ -104,7 +104,7 @@ is(@keys2[2], 'two', 'got the right key');
 # values
 
 my %hash7 = ("one", 1, "two", 2, "three", 3);
-ok(%hash7.does(Hash), '%hash7 does Hash');
+does-ok %hash7, Hash, '%hash7 does Hash';
 
 my @values1 = (values %hash7).sort;
 is(+@values1, 3, 'got the right number of values');
@@ -121,7 +121,7 @@ is(@values1[2], 3, 'got the right values');
 # misc stuff ...
 
 my %hash8;
-ok(%hash8.does(Hash), '%hash8 does Hash');
+does-ok %hash8, Hash, '%hash8 does Hash';
 %hash8 = (:one, :key<value>, :three(3));
 ok(%hash8{'one'} === True, 'colonpair :one');
 is(%hash8{'key'}, 'value', 'colonpair :key<value>');
@@ -133,7 +133,7 @@ my $key;
 my $val;
 
 my %hash9;
-ok(%hash9.does(Hash), '%hash9 does Hash');
+does-ok %hash9, Hash, '%hash9 does Hash';
 %hash9{1} = 2;
 
 for (%hash9.kv) -> $k,$v {
