@@ -64,9 +64,9 @@ isa-ok (1 Z 2)[0], List, 'zip returns a list of lists';
 #?niecza skip "Unable to resolve method lol in type Parcel"
 {
     my $l = (1,2,3 Z, 4,5,6 Z, 7,8,9);
-    is $l.[0].lol.elems, 3, 'Z, retains list associativity';
-    is $l.[1].lol.elems, 3, 'Z, retains list associativity';
-    is $l.[2].lol.elems, 3, 'Z, retains list associativity';
+    is $l.[0].elems, 3, 'Z, retains list associativity';
+    is $l.[1].elems, 3, 'Z, retains list associativity';
+    is $l.[2].elems, 3, 'Z, retains list associativity';
 }
 
 # RT #73948
@@ -80,7 +80,7 @@ is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
 
 # RT #116036
 {
-    is (<a b> Z=> []), (a => []), 'zip does not flatten itemized list';
+    is (<a b> Z=> ([],)), (a => []), 'zip does not flatten itemized list';
 }
 
 # RT #77114
