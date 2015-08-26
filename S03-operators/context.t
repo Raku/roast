@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 37;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -109,14 +109,6 @@ is((@).push(42,43), '42 43', 'Anonymous @ variable can be pushed');
     my $c = 0;
     $c++ for @$h;
     is $c, 4, '@$var coercion';
-}
-
-#?niecza skip "Invalid hard reference syntax"
-{
-    my @a = <a b c d>;
-    my $c = 0;
-    $c++ for $@a;
-    is $c, 1, '$@var itemization'
 }
 
 # vim: ft=perl6
