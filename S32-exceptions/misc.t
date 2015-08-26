@@ -613,15 +613,6 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 # RT #117859
 throws-like 'class RT117859 { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 'Type';
 
-throws-like 'my $a = |(1, 2, 3)', X::Syntax::ArgFlattener;
-throws-like 'sub foo($x) { }; foo({ |(1, 2, 3) })', X::Syntax::ArgFlattener;
-
-# RT #71034
-throws-like 'my $a = (1, 2, 3); my @a = |$a;', X::Syntax::ArgFlattener;
-
-# RT #115276
-throws-like 'say(|(|([4])))', X::Syntax::ArgFlattener;
-
 # RT #93988
 throws-like '5.', X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::Number::IllegalDecimal };
 
