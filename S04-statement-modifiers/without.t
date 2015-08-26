@@ -34,8 +34,9 @@ plan 8;
 
 {
         my $answer = Failure.new;
-        my @x = 41, (42 without $answer), 43;
-        my @y = 41, (!$answer ?? 42 !! ()), 43;
+        my @x;
+        try @x = 41, (42 without $answer), 43;
+        my @y = 41, (!$answer ?? 42 !! Slip.new()), 43;
         my @z = 41, 42, 43;
         is @y, @z, "sanity check";
         is @x, @y, "without expr on false cond";
@@ -49,7 +50,7 @@ plan 8;
 
 {
     my $a = 'oops';
-    { $a = $^x } without Failure.new;
+    try ({ $a = $^x } without Failure.new);
     is $a.WHAT, Failure, 'Statement-modifier without runs block with placeholder';
 }
 

@@ -125,9 +125,12 @@ plan 34;
 
 {
 	my $answer = Failure.new;
-	my @x = 41, (42 with $answer), 43;
-	my @y = 41, ($answer andthen 42), 43;
+        my @x;
+	try @x = 41, (42 with $answer), 43;
+	my @y;
+        try @y = 41, ($answer andthen 42), 43;
 	my @z = 41, 43;
+
 	is @y, @z, "sanity check";
         #?niecza todo "empty list as element not flattened - https://github.com/sorear/niecza/issues/180"
 	is @x, @y, "with expr on false cond"; 
@@ -187,7 +190,7 @@ plan 34;
 
 {
     my @x;
-    (push @x, .abs with 12 div $_) for 0..4;
+    try (push @x, .abs with 12 div $_) for 0..4;
     is @x, (12,6,4,3), 'with/for list comprehension works with parens';
 }
 
@@ -200,7 +203,7 @@ plan 34;
 
 {
     my @x;
-    (push @x, .WHAT.gist without 12 div $_) for 0..4;
+    try (push @x, .WHAT.gist without 12 div $_) for 0..4;
     is @x, '(Failure)', 'without/for list comprehension works with parens';
 }
 

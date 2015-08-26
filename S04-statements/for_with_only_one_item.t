@@ -6,7 +6,7 @@ use Test;
 
 # Test primarily aimed at PIL2JS
 
-plan 9;
+plan 12;
 
 # sanity tests
 {
@@ -73,6 +73,28 @@ plan 9;
   for $arrayref { $count++ }
 
   is $count, 1, 'for $arrayref {...} executes the loop body only once';
+}
+
+# for with only one item, is rw
+{
+  my $a = 42;
+
+  for ($a,) -> $v is rw { $v++ }
+  is $a, 43, "for on (a_single_var,) -> is rw";
+}
+
+{
+  my $a = 42;
+
+  try for ($a) -> $v is rw { $v++ }
+  is $a, 43, "for on (a_single_var) -> is rw";
+}
+
+{
+  my $a = 42;
+
+  try for $a -> $v is rw { $v++ }
+  is $a, 43, "for on a_single_var -> is rw";
 }
 
 # RT #73400
