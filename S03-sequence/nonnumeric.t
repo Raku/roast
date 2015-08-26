@@ -55,7 +55,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 
 #?niecza skip 'munch NYI'
 {
-    ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
+    ok ('A' ... 'ZZ')[^1000].elems < 1000, "'A' ... 'ZZ' does not go on forever";
 
     is ('ZZ' ... 'AA')[*-1], 'AA', "last element of 'ZZ' ... 'AA' is 'AA'";
     throws-like { 'ZZ' ... 'A' },
