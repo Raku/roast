@@ -191,7 +191,7 @@ sub eval_elsewhere($code){ EVAL($code) }
 
     my $y = [601, 700, 888];
 
-    my @total = (@$x, @$y);
+    my @total = (flat @$x, @$y);
 
     is @total[0], 0, "total[0] is 0";
     is @total[1], 100, "total[1] is 100";
