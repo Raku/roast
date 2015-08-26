@@ -125,6 +125,7 @@ my $IS = _register_functions(  # regex with test functions used in roast
     qw(
       cmp_ok            cmp-ok
       dies_ok           dies-ok
+      does-ok
       eval_dies_ok      eval-dies-ok
       eval_lives_ok     eval-lives-ok
       flunk
