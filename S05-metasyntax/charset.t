@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 41;
+plan 42;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -91,6 +91,12 @@ nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
     nok  '' ~~ / <[a..z]-[x]> /, 'Can match empty string against char class';
     nok 'x' ~~ / <[a..z]-[x]> /, 'char excluded from class';
      ok 'z' ~~ / <[a..z]-[x]> /, '... but others are fine';
+}
+
+# RT #120511
+{
+    is "\r\na" ~~ /<?[\n]>"\r\na"/, "\r\na",
+        'look-ahead with windows newline does not advance cursor position';
 }
 
 # vim: ft=perl6

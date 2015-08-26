@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 72;
+plan 75;
 
 # construction
 {
@@ -132,4 +132,11 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
     is d('2014-02-07').earlier(week => 1), d('2014-01-31'), 'subtracting 1 week, overflowing from February';
     is d('2014-03-14').earlier(weeks => 2), d('2014-02-28'), 'subtracting 2 weeks, overflowing from March';
     is d('2015-01-20').earlier(weeks => 3), d('2014-12-30'), 'subtracting 3 weeks, overflowing to years';
+    lives-ok { Date.new('2010-01-31').later(month => 1) }, '.later does not try to create an impossible date';
+}
+
+# RT #125681
+{
+    is Date.new("0000-01-01").truncated-to("week"), "-0001-12-27", "negative dates ISO-8601 rendering";
+    is Date.new("9900-01-01") + 100000, "+10173-10-16", "very large years, ISO-8601 rendering";
 }

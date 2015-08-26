@@ -128,7 +128,7 @@ is $y.test,     42,         'method from other role was OK too';
     my $rt115390 = 0;
     for 1..1000 -> $i {
         $rt115390 += $i.perl;
-        my $error = (my $val = (^10).pick(3).min but !$val);
+        my $error = (my $val = (^10).pick(3).min but !$rt115390);
         1
     }
     is $rt115390, 500500,

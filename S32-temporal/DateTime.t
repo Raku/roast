@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 233;
+plan 234;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -593,6 +593,10 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     is ds('2015-01-20T12:56:34Z').earlier(weeks => 3),
        ds('2014-12-30T12:56:34Z'),
        'subtracting 3 weeks, overflowing to years';
+
+    lives-ok {
+        ds('2010-01-31T12:56:34Z').later(month => 1);
+    }, '.later does not try to create an impossible datetime';
 }
 
 # RT #121990 Smartmatch against a Date 

@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+plan 29;
+
 my $existing-file1 = "tempfile-rename1";
 my $existing-file2 = "tempfile-rename2";
 my $non-existent-file = "non-existent-rename";
@@ -77,7 +79,5 @@ nok $non-existent-file.IO.e, "sanity check 2";
 # clean up
 ok unlink($existing-file1), 'clean-up 3';
 ok unlink($existing-file2), 'clean-up 4';
-
-done;
 
 # vim: ft=perl6

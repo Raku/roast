@@ -74,5 +74,3 @@ eval-dies-ok("say :36<αω>", "Scripts without Hex_Digit characters not allowed 
 is :36<utf១៦>, 51760986, "Nd numerals can be used in general radix numbers";
 eval-dies-ok("say :36<utfⅧ>", "Nl numerals are not allowed in general radix numbers");
 eval-dies-ok("say :36<utf㉜>", "No numerals are not allowed in general radix numbers");
-
-done;

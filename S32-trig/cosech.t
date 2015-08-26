@@ -86,7 +86,7 @@ for @sines -> $angle
     is_approx($zp2.cosech, $sz2, "Complex.cosech - $zp2");
 }
 
-#?niecza todo "Inf results wrong"
+#?niecza skip "Inf results wrong"
 {
     is(cosech(Inf), 0, "cosech(Inf) -");
     is(cosech(-Inf), "-0", "cosech(-Inf) -");
@@ -94,42 +94,42 @@ for @sines -> $angle
         
 {
     # Num tests
-    is_approx(cosech((-6.28318530723787).Num), -0.00373489848806798, "cosech(Num) - -6.28318530723787");
+    is_approx(cosech((-6.283185).Num), -0.00373489848806798, "cosech(Num) - -6.283185");
 }
 
 {
     # Rat tests
-    is_approx((-3.92699081702367).Rat(1e-9).cosech, -0.0394210493494572, "Rat.cosech - -3.92699081702367");
-    is_approx(cosech((-0.523598775603156).Rat(1e-9)), -1.8253055746695, "cosech(Rat) - -0.523598775603156");
+    is_approx((-3.9269908).Rat(1e-9).cosech, -0.0394210493494572, "Rat.cosech - -3.9269908");
+    is_approx(cosech((-0.5235988).Rat(1e-9)), -1.8253055746695, "cosech(Rat) - -0.5235988");
 }
 
 {
     # Complex tests
-    is_approx(cosech((0.523598775603156 + 2i).Complex), -0.202302149262384 - 0.920006877922264i, "cosech(Complex) - 0.523598775603156 + 2i");
+    is_approx(cosech((0.523598775603156+2i).Complex), -0.202302149262384-0.920006877922264i, "cosech(Complex) - 0.523598775603156+2i");
 }
 
 {
     # Str tests
-    is_approx((0.785398163404734).Str.cosech, 1.15118387090806, "Str.cosech - 0.785398163404734");
-    is_approx(cosech((1.57079632680947).Str), 0.434537208087792, "cosech(Str) - 1.57079632680947");
+    is_approx((0.7853982).Str.cosech, 1.15118387090806, "Str.cosech - 0.7853982");
+    is_approx(cosech((1.5707963).Str), 0.434537208087792, "cosech(Str) - 1.5707963");
 }
 
 {
     # NotComplex tests
-    is_approx(NotComplex.new(2.3561944902142 + 2i).cosech, -0.0772627459225851 - 0.171882832059526i, "NotComplex.cosech - 2.3561944902142 + 2i");
-    is_approx(cosech(NotComplex.new(3.14159265361894 + 2i)), -0.0358119530230833 - 0.078543348553443i, "cosech(NotComplex) - 3.14159265361894 + 2i");
+    is_approx(NotComplex.new(2.3561944902142+2i).cosech, -0.0772627459225851-0.171882832059526i, "NotComplex.cosech - 2.3561944902142+2i");
+    is_approx(cosech(NotComplex.new(3.14159265361894+2i)), -0.0358119530230833-0.078543348553443i, "cosech(NotComplex) - 3.14159265361894+2i");
 }
 
 {
     # DifferentReal tests
-    is_approx(DifferentReal.new(3.92699081702367).cosech, 0.0394210493494572, "DifferentReal.cosech - 3.92699081702367");
-    is_approx(cosech(DifferentReal.new(4.7123889804284)), 0.0179680320529917, "cosech(DifferentReal) - 4.7123889804284");
+    is_approx(DifferentReal.new(3.9269908).cosech, 0.0394210493494572, "DifferentReal.cosech - 3.9269908");
+    is_approx(cosech(DifferentReal.new(4.7123890)), 0.0179680320529917, "cosech(DifferentReal) - 4.7123890");
 }
 
 {
     # FatRat tests
-    is_approx((5.49778714383314).FatRat.cosech, 0.00819178720191627, "FatRat.cosech - 5.49778714383314");
-    is_approx(cosech((6.28318530723787).FatRat), 0.00373489848806798, "cosech(FatRat) - 6.28318530723787");
+    is_approx((5.4977871).FatRat.cosech, 0.00819178720191627, "FatRat.cosech - 5.4977871");
+    is_approx(cosech((6.283185).FatRat), 0.00373489848806798, "cosech(FatRat) - 6.283185");
 }
 
 
@@ -153,44 +153,44 @@ for @sines -> $angle
         
 {
     # Num tests
-    is_approx(acosech((1.8253055746695).Num), 0.523598775603156, "acosech(Num) - 0.523598775603156");
+    is_approx(acosech((1.8253055746695).Num), 0.5235988, "acosech(Num) - 0.5235988");
 }
 
 {
     # Rat tests
-    is_approx(((1.15118387090806).Rat(1e-9)).acosech, 0.785398163404734, "Rat.acosech - 0.785398163404734");
-    is_approx(acosech((1.8253055746695).Rat(1e-9)), 0.523598775603156, "acosech(Rat) - 0.523598775603156");
+    is_approx(((1.15118387090806).Rat(1e-9)).acosech, 0.7853982, "Rat.acosech - 0.7853982");
+    is_approx(acosech((1.8253055746695).Rat(1e-9)), 0.5235988, "acosech(Rat) - 0.5235988");
 }
 
 {
     # Complex tests
-    is_approx(acosech((0.785398163404734 + 2i).Complex), 0.186914543518615 - 0.439776333846415i, "acosech(Complex) - 0.186914543518615 - 0.439776333846415i");
+    is_approx(acosech((0.785398163404734+2i).Complex), 0.186914543518615-0.439776333846415i, "acosech(Complex) - 0.186914543518615-0.439776333846415i");
 }
 
 {
     # Str tests
-    is_approx(((1.8253055746695).Str).acosech, 0.523598775603156, "Str.acosech - 0.523598775603156");
-    is_approx(acosech((1.15118387090806).Str), 0.785398163404734, "acosech(Str) - 0.785398163404734");
+    is_approx(((1.8253055746695).Str).acosech, 0.5235988, "Str.acosech - 0.5235988");
+    is_approx(acosech((1.15118387090806).Str), 0.7853982, "acosech(Str) - 0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx((NotComplex.new(0.523598775603156 + 2i)).acosech, 0.137815559024863 - 0.481963452541975i, "NotComplex.acosech - 0.137815559024863 - 0.481963452541975i");
-    is_approx(acosech(NotComplex.new(0.785398163404734 + 2i)), 0.186914543518615 - 0.439776333846415i, "acosech(NotComplex) - 0.186914543518615 - 0.439776333846415i");
+    is_approx((NotComplex.new(0.523598775603156+2i)).acosech, 0.137815559024863-0.481963452541975i, "NotComplex.acosech - 0.137815559024863-0.481963452541975i");
+    is_approx(acosech(NotComplex.new(0.785398163404734+2i)), 0.186914543518615-0.439776333846415i, "acosech(NotComplex) - 0.186914543518615-0.439776333846415i");
 }
 
 {
     # DifferentReal tests
-    is_approx((DifferentReal.new(1.8253055746695)).acosech, 0.523598775603156, "DifferentReal.acosech - 0.523598775603156");
-    is_approx(acosech(DifferentReal.new(1.15118387090806)), 0.785398163404734, "acosech(DifferentReal) - 0.785398163404734");
+    is_approx((DifferentReal.new(1.8253055746695)).acosech, 0.5235988, "DifferentReal.acosech - 0.5235988");
+    is_approx(acosech(DifferentReal.new(1.15118387090806)), 0.7853982, "acosech(DifferentReal) - 0.7853982");
 }
 
 {
     # FatRat tests
-    is_approx(((1.8253055746695).FatRat).acosech, 0.523598775603156, "FatRat.acosech - 0.523598775603156");
-    is_approx(acosech((1.15118387090806).FatRat), 0.785398163404734, "acosech(FatRat) - 0.785398163404734");
+    is_approx(((1.8253055746695).FatRat).acosech, 0.5235988, "FatRat.acosech - 0.5235988");
+    is_approx(acosech((1.15118387090806).FatRat), 0.7853982, "acosech(FatRat) - 0.7853982");
 }
 
-done;
+done-testing;
 
 # vim: ft=perl6 nomodifiable

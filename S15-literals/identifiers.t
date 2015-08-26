@@ -31,5 +31,3 @@ my $fi = False;
 
 is $fi, False, "Identifiers are not put through compatability decomposition";
 is $ﬁ, True, "Identifiers are not put through compatability decomposition";
-
-done;

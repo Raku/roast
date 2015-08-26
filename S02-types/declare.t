@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 71;
+plan 70;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -113,9 +113,9 @@ plan 71;
 # Non-object (native) types are lowercase: int, num, complex, rat, buf, bit.
 
 {
- my int $namcu; $namcu = 2**100;
- isa-ok $namcu, Int, "int reports as Int";
- ok $namcu==0, "Can tell it's an int because it overflowed";
+ throws-like { my int $namcu; $namcu = 2**100 }, X::AdHoc,
+    message => 'Cannot unbox 101 bit wide bigint into native integer',
+    "Assign big bigint to native won't overflow silently";
 }
 
 {

@@ -9,7 +9,6 @@ plan 144;
 # L<S02/Names/>
 # syn r14552
 
-#?rakudo skip 'package variable autovivification RT #124637'
 #?niecza skip 'Undeclared name: Terrain::'
 {
     my $mountain = 'Hill';
@@ -18,8 +17,10 @@ plan 144;
     our $river = 'Terrain::Hill';
     is($mountain, 'Hill', 'basic variable name');
     is($Terrain::mountain, 108, 'variable name with package');
+    #?rakudo skip 'package variable autovivification RT #124637'
     is(Terrain::<$mountain>, 108, 'variable name with sigil not in front of package');
     is($Terrain::Hill::mountain, 1024, 'variable name with 2 deep package');
+    #?rakudo skip 'package variable autovivification RT #124637'
     is(Terrain::Hill::<$mountain>, 1024, 'varaible name with sigil not in front of 2 package levels deep');
     is($Terrain::($mountain)::mountain, 1024, 'variable name with a package name partially given by a variable ');
     is($::($river)::mountain, 1024, 'variable name with package name completely given by variable');
@@ -29,11 +30,11 @@ plan 144;
     my $bear = 2.16;
     is($bear,       2.16, 'simple variable lookup');
     #?niecza skip 'Object reference not set to an instance of an object'
-    #?rakudo skip 'this kind of lookup NYI'
+    #?rakudo skip 'this kind of lookup NYI RT #125659'
     is($::{'bear'}, 2.16, 'variable lookup using $::{\'foo\'}');
     is(::{'$bear'}, 2.16, 'variable lookup using ::{\'$foo\'}');
     #?niecza skip 'Object reference not set to an instance of an object'
-    #?rakudo skip 'this kind of lookup NYI'
+    #?rakudo skip 'this kind of lookup NYI RT #125659'
     is($::<bear>,   2.16, 'variable lookup using $::<foo>');
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');
 }
@@ -46,7 +47,6 @@ plan 144;
     is(::{'$!@#$'}, 2.22, 'variable lookup using ::{\'$symbols\'}');
     is($::<!@#$>,   2.22, 'variable lookup using $::<symbols>');
     is(::<$!@#$>,   2.22, 'variable lookup using ::<$symbols>');
-
 }
 
 # RT #65138, Foo::_foo() parsefails

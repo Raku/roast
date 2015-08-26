@@ -23,7 +23,7 @@ for 1..7 {
 is $r.contents[1].contents[0].contents, 'Happy', 'contents is happy :)';
 is $r.contents[2].contents[0].contents, 'Dopey';
 is $r.contents[7].contents[0].contents, 'Keyser Soze';
-nok $r.contents[4].level.defined, 'no level information';
+ok $r.contents[4].level.defined, '=item is an abbreviation of =item1';
 
 =begin pod
 =item1  Animal
