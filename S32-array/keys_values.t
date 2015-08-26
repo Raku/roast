@@ -22,7 +22,7 @@ is(~@array.values, 'a b c d', '@array.values works');
 is(~values(@array), 'a b c d', 'values(@array) works');
 is(+@array.values, +@array, 'we have the same number of values as elements in the array');
 
-my $v := @array.values;
+my $v := @array.values.Array;
 $v.shift; $v.shift;
 is($v.elems, 2, "shifting .values removes an element...");
 is(@array.elems, 4, "...while leaving original list alone.");
