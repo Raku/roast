@@ -97,12 +97,12 @@ plan 77;
     my Int @a = 1, 2, 3;
     my Int @b;
     lives-ok { @b = @a }, 'can assign typed array to typed array';
-    #?rakudo todo 'need parameterized Lists'
+    #?rakudo skip 'need parameterized Lists'
     ok @a.values.VAR.of.WHICH eqv Int.WHICH, '@a.values is typed (1)';
     lives-ok { @b = @a.values }, '@a.values is typed (2)';
 } #3
 
-#?rakudo todo 'initialization RT #124676'
+#?rakudo skip 'initialization RT #124676'
 {
     my Str @c = <foo bar baz>;
     ok @c.keys.VAR.of.WHICH eqv Str.WHICH, '@array.keys is typed with Str';
