@@ -94,42 +94,42 @@ for @cosines -> $angle
         
 {
     # Num tests
-    is_approx(cos((-7.85398163404734).Num), 0, "cos(Num) - -7.85398163404734");
+    is_approx(cos((-7.8539816).Num), 0, "cos(Num) - -7.8539816");
 }
 
 {
     # Rat tests
-    is_approx((-5.49778714383314).Rat(1e-9).cos, 0.707106781186548, "Rat.cos - -5.49778714383314");
-    is_approx(cos((-2.09439510241262).Rat(1e-9)), -0.5, "cos(Rat) - -2.09439510241262");
+    is_approx((-5.4977871).Rat(1e-9).cos, 0.707106781186548, "Rat.cos - -5.4977871");
+    is_approx(cos((-2.0943951).Rat(1e-9)), -0.5, "cos(Rat) - -2.0943951");
 }
 
 {
     # Complex tests
-    is_approx(cos((-1.57079632680947 + 2i).Complex), -5.48212707989036e-11 + 3.62686040784702i, "cos(Complex) - -1.57079632680947 + 2i");
+    is_approx(cos((-1.57079632680947+2i).Complex), -5.48212707989036e-11+3.62686040784702i, "cos(Complex) - -1.57079632680947+2i");
 }
 
 {
     # Str tests
-    is_approx((-1.04719755120631).Str.cos, 0.5, "Str.cos - -1.04719755120631");
-    is_approx(cos((-0.785398163404734).Str), 0.707106781186548, "cos(Str) - -0.785398163404734");
+    is_approx((-1.0471976).Str.cos, 0.5, "Str.cos - -1.0471976");
+    is_approx(cos((-0.7853982).Str), 0.707106781186548, "cos(Str) - -0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx(NotComplex.new(0 + 2i).cos, 3.76219569108363 + 0i, "NotComplex.cos - 0 + 2i");
-    is_approx(cos(NotComplex.new(0.785398163404734 + 2i)), 2.66027408529666 - 2.56457758882432i, "cos(NotComplex) - 0.785398163404734 + 2i");
+    is_approx(NotComplex.new(0+2i).cos, 3.76219569108363+-0i, "NotComplex.cos - 0+2i");
+    is_approx(cos(NotComplex.new(0.785398163404734+2i)), 2.66027408529666-2.56457758882432i, "cos(NotComplex) - 0.785398163404734+2i");
 }
 
 {
     # DifferentReal tests
-    is_approx(DifferentReal.new(1.57079632680947).cos, 0, "DifferentReal.cos - 1.57079632680947");
-    is_approx(cos(DifferentReal.new(2.3561944902142)), -0.707106781186548, "cos(DifferentReal) - 2.3561944902142");
+    is_approx(DifferentReal.new(1.5707963).cos, 0, "DifferentReal.cos - 1.5707963");
+    is_approx(cos(DifferentReal.new(2.3561945)), -0.707106781186548, "cos(DifferentReal) - 2.3561945");
 }
 
 {
     # FatRat tests
-    is_approx((3.14159265361894).FatRat.cos, -1, "FatRat.cos - 3.14159265361894");
-    is_approx(cos((3.92699081702367).FatRat), -0.707106781186548, "cos(FatRat) - 3.92699081702367");
+    is_approx((3.141593).FatRat.cos, -1, "FatRat.cos - 3.141593");
+    is_approx(cos((3.9269908).FatRat), -0.707106781186548, "cos(FatRat) - 3.9269908");
 }
 
 
@@ -153,44 +153,44 @@ for @cosines -> $angle
         
 {
     # Num tests
-    is_approx(acos((0.707106781186548).Num), 0.785398163404734, "acos(Num) - 0.785398163404734");
+    is_approx(acos((0.707106781186548).Num), 0.7853982, "acos(Num) - 0.7853982");
 }
 
 {
     # Rat tests
-    is_approx(((0.707106781186548).Rat(1e-9)).acos, 0.785398163404734, "Rat.acos - 0.785398163404734");
-    is_approx(acos((0.707106781186548).Rat(1e-9)), 0.785398163404734, "acos(Rat) - 0.785398163404734");
+    is_approx(((0.707106781186548).Rat(1e-9)).acos, 0.7853982, "Rat.acos - 0.7853982");
+    is_approx(acos((0.707106781186548).Rat(1e-9)), 0.7853982, "acos(Rat) - 0.7853982");
 }
 
 {
     # Complex tests
-    is_approx(acos((0.785398163404734 + 2i).Complex), 1.22945740674052 - 1.49709293866352i, "acos(Complex) - 1.22945740674052 - 1.49709293866352i");
+    is_approx(acos((0.785398163404734+2i).Complex), 1.22945740853541-1.49709293866352i, "acos(Complex) - 1.22945740853541-1.49709293866352i");
 }
 
 {
     # Str tests
-    is_approx(((0.707106781186548).Str).acos, 0.785398163404734, "Str.acos - 0.785398163404734");
-    is_approx(acos((0.707106781186548).Str), 0.785398163404734, "acos(Str) - 0.785398163404734");
+    is_approx(((0.707106781186548).Str).acos, 0.7853982, "Str.acos - 0.7853982");
+    is_approx(acos((0.707106781186548).Str), 0.7853982, "acos(Str) - 0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx((NotComplex.new(0.785398163404734 + 2i)).acos, 1.22945740674052 - 1.49709293866352i, "NotComplex.acos - 1.22945740674052 - 1.49709293866352i");
-    is_approx(acos(NotComplex.new(0.785398163404734 + 2i)), 1.22945740674052 - 1.49709293866352i, "acos(NotComplex) - 1.22945740674052 - 1.49709293866352i");
+    is_approx((NotComplex.new(0.785398163404734+2i)).acos, 1.22945740853541-1.49709293866352i, "NotComplex.acos - 1.22945740853541-1.49709293866352i");
+    is_approx(acos(NotComplex.new(0.785398163404734+2i)), 1.22945740853541-1.49709293866352i, "acos(NotComplex) - 1.22945740853541-1.49709293866352i");
 }
 
 {
     # DifferentReal tests
-    is_approx((DifferentReal.new(0.707106781186548)).acos, 0.785398163404734, "DifferentReal.acos - 0.785398163404734");
-    is_approx(acos(DifferentReal.new(0.707106781186548)), 0.785398163404734, "acos(DifferentReal) - 0.785398163404734");
+    is_approx((DifferentReal.new(0.707106781186548)).acos, 0.7853982, "DifferentReal.acos - 0.7853982");
+    is_approx(acos(DifferentReal.new(0.707106781186548)), 0.7853982, "acos(DifferentReal) - 0.7853982");
 }
 
 {
     # FatRat tests
-    is_approx(((0.707106781186548).FatRat).acos, 0.785398163404734, "FatRat.acos - 0.785398163404734");
-    is_approx(acos((0.707106781186548).FatRat), 0.785398163404734, "acos(FatRat) - 0.785398163404734");
+    is_approx(((0.707106781186548).FatRat).acos, 0.7853982, "FatRat.acos - 0.7853982");
+    is_approx(acos((0.707106781186548).FatRat), 0.7853982, "acos(FatRat) - 0.7853982");
 }
 
-done;
+done-testing;
 
 # vim: ft=perl6 nomodifiable

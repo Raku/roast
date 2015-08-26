@@ -359,7 +359,7 @@ sub CloseOutputFile($file)
     # the {} afer 'vim' just generate an empty string.
     # this is to avoid the string constant being interpreted as a modeline
     # here in generate-tests.pl
-    $file.say: "done;";
+    $file.say: "done-testing;";
     $file.say: "";
     $file.say: '# vim: ft=perl6 nomodifiable';
     $file.close;

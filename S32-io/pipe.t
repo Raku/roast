@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 shell_captures_out_ok '1',              '',    0, 'Child succeeds but does not print anything';
 shell_captures_out_ok 'say 42',         '42',  0, 'Child succeeds and prints something';
@@ -46,4 +46,11 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
     my $sh2 = run($*EXECUTABLE, '-e', 'my @l = lines; say @l; note @l.elems', :in($sh1.out), :out, :err);
     is $sh2.out.slurp-rest, "baz bar foo\n", 'Can capture stdout and stderr, and chain stdin';
     is $sh2.err.slurp-rest, "3\n",           'Can capture stdout and stderr, and chain stdin';
+}
+
+# RT #125796
+{
+    my $p     = shell "$*EXECUTABLE -e \"say 42 for ^10\"", :out;
+    my @lines = $p.out.lines;
+    ok all(@lines) eq '42', 'There is no empty line due to no EOF for pipes';
 }

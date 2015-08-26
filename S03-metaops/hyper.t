@@ -701,7 +701,7 @@ my @e;
 
 # test non-UTF-8 input
 #?niecza skip 'nonsensical test'
-#?rakudo skip 'EVAL(Buf) RT #124514'
+#?rakudo skip 'EVAL(Buf) RT #122256'
 #?DOES 1
 {
     my $t = '(1, 2, 3) »+« (4, 3, 2)';

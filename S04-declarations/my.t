@@ -159,11 +159,8 @@ is(EVAL('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y #OK'), 2, '2nd m
     is($f, 5, "two lexicals declared in scope is noop");
 }
 
-my $z = 42; #OK not used
-{
-    my $z = $z;
-    nok( $z.defined, 'my $z = $z; can not see the value of the outer $z');
-}
+# RT #125371
+throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
 
 # interaction of my and EVAL
 # yes, it's weird... but that's the way it is

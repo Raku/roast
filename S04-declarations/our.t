@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 31;
 
 # L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped alias>
 our $a = 1;
@@ -29,12 +29,6 @@ is($a, 3, '$a has changed'); # XXX is that right?
     lives-ok { @b.push(3) }, 'Can use @b';
     is ~@a, '2', 'push actually worked on @a';
     is ~@b, '3', 'push actually worked on @b';
-}
-
-our $c = 42; #OK not used
-{
-    my $c = $c;
-    nok( $c.defined, 'my $c = $c; can not see the value of the outer $c');
 }
 
 # check that our-scoped variables really belong to the package
