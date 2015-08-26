@@ -1,12 +1,11 @@
 use v6;
 use Test;
-plan 50;
+plan 49;
 
 # L<S02/Names and Variables/The empty>
 
 # Empty is an empty container. As a container, it is defined.
 {
-    ok !Empty.defined, 'Empty is undefined';
     ok ().defined, '() is defined';
     my @a= 1, Nil, 3;
     is @a.elems, 3, 'Nil as part of list is element';
