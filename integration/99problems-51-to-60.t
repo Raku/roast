@@ -53,7 +53,7 @@ plan 37;
     # etc......No
 
     sub cbal-tree(Int $n) {
-        return Any if $n == 0;
+        return [Any] if $n == 0;
         gather {
             if $n % 2 == 1 {
                 my $k = ($n - 1) div 2;
@@ -243,17 +243,17 @@ plan 37;
     }
 
     sub hbal-tree(Int $n) {
-        return Any if $n == 0;
-        return(['x', Any, Any],) if $n == 1;
+        return [Any] if $n == 0;
+        return [$['x', Any, Any]] if $n == 1;
         gather {
             for hbal-tree($n - 1) -> $a {
                 for hbal-tree($n - 1) -> $b {
-                    take ['x', $a, $b],;
+                    take $['x', $a, $b];
                 }
                 for hbal-tree($n - 2) -> $b {
                     if is-hbal(['x', $a, $b]) {
-                        take ['x', $a, $b],;
-                        take ['x', $b, $a],;
+                        take $['x', $a, $b];
+                        take $['x', $b, $a];
                     }
                 }
             }
