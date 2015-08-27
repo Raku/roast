@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 15;
+plan 13;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -53,13 +53,11 @@ plan 15;
   my $hash = {a => {b => {c => 42}}};
   my @reftypes;
   sub foo (Hash $hash, Str $key) {
-    push @reftypes, $hash.WHAT;
+    push @reftypes, $hash ~~ Hash;
     $hash.{$key};
   }
   is((reduce(&foo, $hash, <a b c>)), 42, 'reduce(&foo) (foo ~~ .{}) works three levels deep');
-  isa-ok(@reftypes[0], Hash, "first application of reduced hash subscript passed in a Hash");
-  isa-ok(@reftypes[1], Hash, "second application of reduced hash subscript passed in a Hash");
-  isa-ok(@reftypes[2], Hash, "third application of reduced hash subscript passed in a Hash");
+  ok ([&&] @reftypes), "All the types were hashes";
 }
 
 is( (1).list.reduce({$^a * $^b}), 1, "Reduce of one element list produces correct result");
