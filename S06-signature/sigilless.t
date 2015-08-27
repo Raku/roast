@@ -7,10 +7,8 @@ plan 10;
 {
     sub identity(\x) { x }
 
-    sub count(\x) {
-        my $c = 0;
-        ++$c for x;
-        $c
+    sub is-item(\x) {
+        x.VAR !=== x;
     }
 
     sub swap(\x, \y) {
@@ -21,8 +19,8 @@ plan 10;
 
     is identity('foo'), 'foo',
        'basic passing of an argument to backslashed identifier';
-    is count((1, 2, 3)), 3, 'passing of flattening arguments ';
-    is count([1, 2, 3]), 1, 'passing of non-flatteing arguments';
+    nok is-item((1, 2, 3)), 'passing of flattening arguments ';
+    ok is-item($[1, 2, 3]), 'passing of non-flatteing arguments';
 
     my $a = 5;
     my $b = 3;
