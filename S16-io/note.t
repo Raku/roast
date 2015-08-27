@@ -4,7 +4,7 @@ use v6;
 
 # doesn't use Test.pm and plan() intentionally
 
-say "1..8";
+say "1..7";
 
 # We can't write TAP output to STDERR
 $*ERR = $*OUT;
@@ -37,6 +37,6 @@ grammar A {
     token TOP { .+ };
 }
 
-A.parse("ok 7 - Match.note\n").note;
+A.parse("ok 7 - Match.note\n").Str.note;
 
 # vim: ft=perl6
