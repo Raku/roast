@@ -320,10 +320,10 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 #?niecza skip '^^'
 {
     is ([\^^] False, 0, 5, '', False, 16, 0, Any, "hello", False).gist,
-       'False 0 5 5 5 Nil Nil Nil Nil Nil',
+       '(False 0 5 5 5 Nil Nil Nil Nil Nil)',
        '[\^^]';
     is ([\xor] 'xyzzy', Int, 0.0, '', False, 'plugh', 4, 2, 'xyzzy').gist,
-       'xyzzy xyzzy xyzzy xyzzy xyzzy Nil Nil Nil Nil',
+       '(xyzzy xyzzy xyzzy xyzzy xyzzy Nil Nil Nil Nil)',
        '[\xor]';
 }
 
