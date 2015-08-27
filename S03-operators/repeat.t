@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 34;
+plan 30;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
