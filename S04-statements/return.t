@@ -74,7 +74,7 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     sub a { .return with 42 }
     is a, 42, 'does .return work?';
     sub b { (1|2|3).return }  # don't auto-thread on return
-    isa_ok b, Junction;
+    isa-ok b, Junction;
 }
 
 # vim: ft=perl6
