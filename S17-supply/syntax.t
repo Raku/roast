@@ -3,8 +3,8 @@ use Test;
 
 {
     my $s = supply {
-        supply-emit 42;
-        supply-emit 'answer';
+        emit 42;
+        emit 'answer';
     }
 
     my @collected;
@@ -21,10 +21,10 @@ use Test;
 {
     my $oops = False;
     my $s = supply {
-        supply-emit 101;
-        supply-done;
+        emit 101;
+        done;
         $oops = True;
-        supply-emit 'oh noes';
+        emit 'oh noes';
     }
 
     my @collected;
@@ -36,8 +36,8 @@ use Test;
 
 {
     my $s = supply {
-        supply-emit 'beans';
-        supply-done;
+        emit 'beans';
+        done;
     }
 
     my $emits-run = 0;
@@ -51,7 +51,7 @@ use Test;
 
 {
     my $s = supply {
-        supply-emit 'peas';
+        emit 'peas';
     }
 
     my $emits-run = 0;
@@ -65,7 +65,7 @@ use Test;
 
 {
     my $s = supply {
-        supply-emit 'onions';
+        emit 'onions';
         die 'poop';
     }
 
@@ -82,7 +82,7 @@ use Test;
     my $trigger = Supply.new;
     my $s = supply {
         whenever $trigger -> $value {
-            supply-emit $value * 2;
+            emit $value * 2;
         }
     }
 
@@ -111,9 +111,9 @@ use Test;
     my $trigger = Supply.new;
     my $s = supply {
         whenever $trigger -> $value {
-            supply-emit $value.subst('fruit', 'bacon');
+            emit $value.subst('fruit', 'bacon');
             LAST {
-                supply-emit "The end.";
+                emit "The end.";
             }
         }
     }
@@ -135,10 +135,10 @@ use Test;
     my $trigger2 = Supply.new;
     my $s = supply {
         whenever $trigger1 -> $value {
-            supply-emit "a $value";
+            emit "a $value";
         }
         whenever $trigger2 -> $value {
-            supply-emit "the $value";
+            emit "the $value";
         }
     }
 
@@ -162,13 +162,13 @@ use Test;
     my $s = supply {
         whenever $trigger1 { }
         whenever $trigger2 { }
-        supply-done;
+        done;
     }
 
-    my $supply-done = False;
-    $s.tap(done => { $supply-done = True });
+    my $done = False;
+    $s.tap(done => { $done = True });
 
-    ok $supply-done, 'supply block with two whenevers then done runs its done';
+    ok $done, 'supply block with two whenevers then done runs its done';
     ok $closed1, 'first whenever closes its supply due to the done';
     ok $closed2, 'second whenever closes its supply due to the done';
 }
@@ -180,16 +180,16 @@ use Test;
     my $trigger2 = Supply.new does role { method close(|) { $closed2 = True; nextsame; } };
     my $s = supply {
         whenever $trigger1 {
-            supply-emit $_;
+            emit $_;
         }
         whenever $trigger2 {
-            supply-done;
+            done;
         }
     }
 
     my @collected;
-    my $supply-done = False;
-    $s.tap({ @collected.push($_) }, done => { $supply-done = True });
+    my $done = False;
+    $s.tap({ @collected.push($_) }, done => { $done = True });
 
     $trigger1.emit('tea');
     $trigger1.emit('coffee');
@@ -197,7 +197,7 @@ use Test;
     $trigger1.emit('cocoa');
 
     is @collected, ['tea', 'coffee'], 'take-until style supply emitted correct values';
-    ok $supply-done, 'take-until style supply is done after second supply emits';
+    ok $done, 'take-until style supply is done after second supply emits';
     ok $closed1, 'first supply tapped was closed';
     ok $closed2, 'second supply tapped was closed';
 }
@@ -210,16 +210,16 @@ use Test;
         whenever $trigger2 { }
     }
 
-    my $supply-done = False;
-    $s.tap(done => { $supply-done = True });
+    my $done = False;
+    $s.tap(done => { $done = True });
 
-    nok $supply-done, 'supply block with two whenevers starts out not done';
+    nok $done, 'supply block with two whenevers starts out not done';
 
     $trigger2.done;
-    nok $supply-done, 'still not done after one whenever gets done';
+    nok $done, 'still not done after one whenever gets done';
 
     $trigger1.done;
-    ok $supply-done, 'but done after all whenevers get done';
+    ok $done, 'but done after all whenevers get done';
 }
 
 {
@@ -247,11 +247,11 @@ use Test;
     my $trigger = Supply.new;
     my $s = supply {
         whenever $trigger {
-            supply-emit $_;
+            emit $_;
             QUIT {
                 when OMGBears {
-                    supply-emit 'Run you fools!';
-                    supply-done;
+                    emit 'Run you fools!';
+                    done;
                 }
             }
         }
@@ -327,10 +327,10 @@ use Test;
     my $s = supply {
         whenever $trigger1 -> $value {
             $lock.protect({ $cv1.signal; $cv2.wait });
-            supply-emit "a $value";
+            emit "a $value";
         }
         whenever $trigger2 -> $value {
-            supply-emit "the $value";
+            emit "the $value";
         }
     }
 
@@ -347,4 +347,4 @@ use Test;
     is @collected, ['a bear', 'the wolf'], 'Can only be in one whatever block at a time';
 }
 
-done;
+done-testing;
