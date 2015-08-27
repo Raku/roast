@@ -51,7 +51,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             ($a,$b) => sub ($val,$index) {
                 @values[$index].push($val);
                 if all(@values) {
-                    $res.emit( (@values>>.shift) );
+                    $res.emit( (@values.map: *.shift) );
                 }
             }
         }
@@ -68,7 +68,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             @s => -> \val, \index {
                 @values[index].push(val);
                 if all(@values) {
-                    $res.emit( [op] @values>>.shift );
+                    $res.emit( [op] @values.map: *.shift );
                 }
             }
         }
