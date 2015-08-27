@@ -34,7 +34,7 @@ is_run( 'my $a = <stringify args>; note $a',
         {
             status => 0,
             out    => '',
-            err    => "(stringify args)\n",
+            err    => "stringifyargs\n",
         },
         'note an array reference' );
 
