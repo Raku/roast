@@ -26,7 +26,7 @@ is_run( 'my @a = ("array", "of", "params"); note @a',
         {
             status => 0,
             out    => '',
-            err    => "array of params\n",
+            err    => "arrayofparams\n",
         },
         'note array' );
 
