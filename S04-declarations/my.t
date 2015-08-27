@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 96;
+plan 97;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -161,6 +161,12 @@ is(EVAL('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y #OK'), 2, '2nd m
 
 # RT #125371
 throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
+
+# RT #125371
+{
+    my $py = 0 && try { my $py = 42; $py.bla() };
+    is $py, 0, 'initializing a variable using a try block containing same name works';
+}
 
 # interaction of my and EVAL
 # yes, it's weird... but that's the way it is
