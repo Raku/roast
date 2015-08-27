@@ -27,7 +27,7 @@ plan 10;
     is(+@b, 3, 'Array length, nested [], outer []s');
     is(+$b, 3, 'Array object length, nested [], outer []s');
 
-    is(+@c, 4, 'Array length, nested ()');
+    is(+@c, 3, 'Array length, nested ()');
     is(+$c, 3, 'Array object length, nested ()');
     is(+@d, 3, 'Array length, nested (), outer []s');
     is(+$d, 3, 'Array object length, nested (), outer []s');
