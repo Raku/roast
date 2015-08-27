@@ -22,7 +22,7 @@ $*ERR = $*OUT;
 }
 
 {
-    my $arrayref = <ok 4 - note stringifies its args>;
+    my $arrayref = <<'ok 4 - ' note stringifies its args>>;
     note $arrayref;
 }
 

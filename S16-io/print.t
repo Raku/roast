@@ -4,7 +4,7 @@ use v6;
 
 # doesn't use Test.pm and plan() intentionally
 
-print "1..12\n";
+print "1..11\n";
 
 # Tests for print
 {
@@ -57,12 +57,5 @@ print "1..12\n";
     my @array = 'ok', ' ',  '11 - $*OUT.print(LIST)', "\n";
     $*OUT.print(@array);
 }
-
-{
-    my @array = 'ok', ' ',  '12 - $*OUT.say(LIST)';
-    $*OUT.say(@array);
-}
-
-
 
 # vim: ft=perl6
