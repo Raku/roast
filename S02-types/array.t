@@ -63,7 +63,7 @@ my @array2 = ("test", 1, Mu);
 
 # combine 2 arrays
 {
-    my @array3 = (@array1, @array2);
+    my @array3 = flat @array1, @array2;
     isa-ok(@array3, Array);
 
     is(+@array3, 6, 'the array3 has 6 elements');
@@ -88,7 +88,7 @@ my @array2 = ("test", 1, Mu);
 
 {
     # create new array with 2 array slices
-    my @array5 = ( @array2[2, 1, 0], @array1[2, 1, 0] );
+    my @array5 = flat @array2[2, 1, 0], @array1[2, 1, 0];
     isa-ok(@array5, Array);
 
     is(+@array5, 6, 'the array5 has 6 elements');
