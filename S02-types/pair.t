@@ -340,7 +340,7 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
     is ~<a b c>.pairs.invert.map({ .key ~ '|' ~ .value}),
         'a|0 b|1 c|2', 'list of array pairs can be inverted';
-    is { a => (1,2), b => <x y z> }.pairs.invert.sort.gist, '1 => a 2 => a x => b y => b z => b', 'list of hash pairs can be inverted';
+    is { a => (1,2), b => <x y z> }.pairs.invert.sort.gist, '(1 => a 2 => a x => b y => b z => b)', 'list of hash pairs can be inverted';
 }
 
 # RT #123215
