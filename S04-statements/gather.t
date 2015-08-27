@@ -224,15 +224,13 @@ plan 33;
 }
 
 #?niecza skip 'Cannot use bind operator with this LHS'
-# XXX GLR
-#?rakudo skip 'LoL is dead, long live LoL'
 {
-    my ($c) := \(gather for 1..2 {
+    my \c := (gather for 1..2 {
         take $_, $_ * 10;
-    });
-    is $c.flat, (1,10,2,20), ".flat flattens fully into a list of Ints.";
-    is $c.lol, LoL.new($(1,10),$(2,20)), ".lol: list of Parcels.";
-    is $c.item, ($(1,10),$(2,20)).list.item, "a list of Parcels, as an item.";
+    }).list;
+    is c.flat, (1,10,2,20), ".flat flattens fully into a list of Ints.";
+    is c.elems, 2, 'gather/take does not flatten out sublists';
+    is c.item, $($(1,10),$(2,20)), "a list of Lists, as an item.";
 }
 
 # XXX GLR
