@@ -22,7 +22,7 @@ ok day.perl, 'enum.perl returned a value';
 #?DOES 12
 sub test_stuff($x) {
   #?niecza skip 'No candidates for dispatch to infix:<does>'
-  ok $x.does(day::Tue),    "basic enum mixing worked ($x-2)";
+  does-ok $x, day::Tue,    "basic enum mixing worked ($x-2)";
   is $x.day, 2,            "automatically created accessor worked ($x)";
   is day::Tue, 2,          "enum provided a correct mapping ($x)";
   ok $x ~~ day,            "smartmatch worked correctly ($x-1)";
@@ -32,7 +32,7 @@ sub test_stuff($x) {
   #?niecza skip 'No candidates for dispatch to infix:<does>'
   ok $x.does(Tue),         ".does worked correctly ($x-1)";
   #?niecza skip 'No candidates for dispatch to infix:<does>'
-  ok $x.does(day),         ".does worked correctly ($x-2)";
+  does-ok $x, day,         ".does worked correctly ($x-2)";
   ok $x.Tue,               ".Tue() worked correctly ($x)";
   ok $x.Tue.WHAT === day,  '$obj.Tue.WHAT returns the proper type object';
   ok $x.Tue.perl,          '$obj.Tue.perl returns a true valuee';

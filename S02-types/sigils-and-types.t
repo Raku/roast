@@ -13,64 +13,64 @@ ok $scalar ~~ Any, 'value contained in a $var does Mu';
 
 {
     my @array;
-    ok @array.does(Positional), 'unitialized @var does Positional';
+    does-ok @array, Positional, 'unitialized @var does Positional';
 }
 {
     my @array = [];
-    ok @array.does(Positional), 'value contained in a @var does Positional';
+    does-ok @array, Positional, 'value contained in a @var does Positional';
 }
 {
     my @array = 1;
-    ok @array.does(Positional), 'generic val in a @var is converted to Positional';
+    does-ok @array, Positional, 'generic val in a @var is converted to Positional';
 }
 
-ok EVAL('List').does(Positional), "List does Positional";
-ok EVAL('Array').does(Positional), "Array does Positional";
-ok EVAL('Range').does(Positional), "Range does Positional";
+does-ok EVAL('List'), Positional, "List does Positional";
+does-ok EVAL('Array'), Positional, "Array does Positional";
+does-ok EVAL('Range'), Positional, "Range does Positional";
 #?niecza skip 'Undeclared name Buf'
-ok EVAL('Buf').does(Positional), "Buf does Positional";
+does-ok EVAL('Buf'), Positional, "Buf does Positional";
 #?rakudo todo "Capture does Positional RT #124484"
-ok EVAL('Capture').does(Positional), "Capture does Positional";
+does-ok EVAL('Capture'), Positional, "Capture does Positional";
 
 my %hash;
-ok %hash.does(Associative), 'uninitialized %var does Associative';
+does-ok %hash, Associative, 'uninitialized %var does Associative';
 %hash = a => 1;
-ok %hash.does(Associative), 'value in %var does Associative';
+does-ok %hash, Associative, 'value in %var does Associative';
 
 #?niecza todo
-ok EVAL('Pair').does(Associative), "Pair does Associative";
-ok EVAL('Set').does(Associative), "Set does Associative";
-ok EVAL('Bag').does(Associative), "Bag does Associative";
+does-ok EVAL('Pair'), Associative, "Pair does Associative";
+does-ok EVAL('Set'), Associative, "Set does Associative";
+does-ok EVAL('Bag'), Associative, "Bag does Associative";
 #?niecza skip 'Undeclared name QuantHash'
-ok EVAL('QuantHash').does(Associative), "QuantHash does Associative";
+does-ok EVAL('QuantHash'), Associative, "QuantHash does Associative";
 #?rakudo todo "Capture does Associative RT #124485"
-ok EVAL('Capture').does(Associative), "Capture does Associative";
+does-ok EVAL('Capture'), Associative, "Capture does Associative";
 
 
 sub foo {}
-ok &foo.does(Callable), 'a Sub does Callable';
+does-ok &foo, Callable, 'a Sub does Callable';
 
 #?niecza skip 'Methods must be used in some kind of package'
 {
     my method meth {}
-    ok &meth.does(Callable), 'a Method does Callable';
+    does-ok &meth, Callable, 'a Method does Callable';
 }
 proto mul(|) {*}
 multi mul {}
-ok &mul.does(Callable), 'a multi does Callable';
+does-ok &mul, Callable, 'a multi does Callable';
 proto pro {}
-ok &pro.does(Callable), 'a proto does Callable';
+does-ok &pro, Callable, 'a proto does Callable';
 
 # &token, &rule return a Method?
 #?niecza skip 'Methods must be used in some kind of package'
 {
     my token bar {<?>}
-    ok &bar.does(Callable), 'a token does Callable';
+    does-ok &bar, Callable, 'a token does Callable';
     my rule baz {<?>}
-    ok &baz.does(Callable), 'a rule does Callable';
+    does-ok &baz, Callable, 'a rule does Callable';
     # &quux returns a Sub ?
     macro quux {}
-    ok &quux.does(Callable), 'a macro does Callable';
+    does-ok &quux, Callable, 'a macro does Callable';
 }
 
 # RT 69318
