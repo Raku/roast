@@ -48,13 +48,13 @@ is $distance, 5;
     my $vec = Vector.new(1, 2);
     $vec.z = 3;
     is $vec.WHAT.gist, '(Vector)';
-    is $vec.gist, '1 2 3';
+    is $vec.gist, '[1 2 3]';
 };
 
 {
     my $vec = Vector.new(:x(1), :y(2));
     $vec.z = 3;
-    is $vec.gist, '1 2 3';
+    is $vec.gist, '[1 2 3]';
 }
 
 {
