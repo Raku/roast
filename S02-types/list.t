@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 55;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -103,5 +103,13 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     is $p.elems, 3, 'did we get the parameters';
     is $p, <a b c>, 'did we get what we put in';
 } #4
+
+#RT #116527
+{
+    role sidecat {};
+    my @a = 1,2,3;
+    my @b = @a.pick(*).sort.list but sidecat;
+    is @b.gist, "[1 2 3]", "can gist a list with a role";
+}
 
 # vim: ft=perl6
