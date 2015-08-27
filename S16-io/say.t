@@ -4,7 +4,7 @@ use v6;
 
 # doesn't use Test.pm and plan() intentionally
 
-say "1..8";
+say "1..10";
 
 # Tests for say
 {
@@ -20,21 +20,28 @@ say "1..8";
 
 {
     my $arrayref = <ok 4 - say stringifies its args>;
-    say $arrayref;
+    say $arrayref.gist;
 }
 
 {
-    "ok 5 - method form of say".say;
+    my @a = <ok 5 - say stringifies its args>;
+    @a[*-1] ~= "\n";
+    my @b = <ok 6 - say stringifies its args>;
+    say @a, @b;
 }
 
-$*OUT.say('ok 6 - $*OUT.say(...)');
+{
+    "ok 7 - method form of say".say;
+}
 
-"ok 7 - Mu.print\n".print;
+$*OUT.say('ok 8 - $*OUT.say(...)');
+
+"ok 9 - Mu.print\n".print;
 
 grammar A {
     token TOP { .+ };
 }
 
-A.parse("ok 8 - Match.print\n").print;
+A.parse("ok 10 - Match.print\n").print;
 
 # vim: ft=perl6
