@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 343;
+plan 339;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
