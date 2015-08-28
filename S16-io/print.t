@@ -1,36 +1,49 @@
 use v6;
 
+use Test;
+
+use lib 't/spec/packages';
+use Test::Util;
+
 # L<S32::IO/IO/=item print>
-
-# doesn't use Test.pm and plan() intentionally
-
-print "1..11\n";
+plan(11);
 
 # Tests for print
-{
-    print "ok 1 - basic form of print\n";
-}
+is_run 'print "ok\n"',
+    {
+        out => "ok\n",
+    },
+    'basic form of print';
 
-{
-    print "o", "k 2 - print with multiple parame", "ters (1)\n";
+is_run 'print "o", "k", "k"',
+    {
+        out => "okk",
+    },
+    'print with multiple parameters(1)';
 
-    my @array = ("o", "k 3 - print with multiple parameters (2)\n");
-    print @array;
-}
+is_run 'my @array = ("o", "k"); print @array',
+    {
+        out => "ok",
+    },
+    'print with multiple parameters(2)';
 
-{
-    my $arrayref = (<ok 4 - print stringifies its args>, "\n");
-    print $arrayref;
-}
+is_run 'my $array-ref = ("o", "k"); print $array-ref',
+    {
+        out => "ok",
+    },
+    'print stringifies its args';
 
-{
-   "ok 5 - method form of print\n".print;
-}
+is_run '"ok".print',
+    {
+        out => "ok",
+    },
+    'method form of print';
 
-{
-    print "o";
-    print "k 6 - print doesn't add newlines\n";
-}
+is_run 'print "o"; print "k";',
+    {
+        out => "ok",
+    },
+    'print doesn\'t add newlines';
 
 # Perl6::Spec::IO mentions
 # print FILEHANDLE: LIST
@@ -38,24 +51,34 @@ print "1..11\n";
 #  FILEHANDLE.print: LIST
 #  same holds for say, even though it is not (yet?) explicitly mentioned
 
-{
-    #?niecza emit #
-    print $*OUT: 'ok 7 - print with $*OUT: as filehandle' ~ "\n";
-    #?niecza emit #
-    say $*OUT: 'ok 8 - say with $*OUT: as filehandle';
-    #?niecza emit print "not ok 7 # TODO\n";
-    #?niecza emit print "not ok 8 # TODO\n";
-}
+is_run 'print $*OUT: \'ok\'',
+    {
+        out => 'ok',
+    },
+    'print with $*OUT: as filehandle';
 
-{
-    $*OUT.print: 'ok 9 - $*OUT.print: list' ~ "\n";
-    $*OUT.say: 'ok 10 - $OUT.say: list';
+is_run 'say $*OUT: \'ok\'',
+    {
+        out => "ok\n",
+    },
+    'say with $*OUT: as filehandle';
 
-}
+is_run '$*OUT.print: \'o\' ~ "k\n"',
+    {
+        out => "ok\n",
+    },
+    '$*OUT.print: list';
 
-{
-    my @array = 'ok', ' ',  '11 - $*OUT.print(LIST)', "\n";
-    $*OUT.print(@array);
-}
+is_run '$*OUT.say: \'o\' ~ "k\n"',
+    {
+        out => "ok\n\n",
+    },
+    '$*OUT.say: list';
+
+is_run 'my @array = \'o\', \'k\', \'k\'; $*OUT.print: @array',
+    {
+        out => "okk",
+    },
+    '$*OUT.print: List';
 
 # vim: ft=perl6
