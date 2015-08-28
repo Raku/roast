@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 303;
+plan 294;
 
 
 # tests various assignment styles
@@ -554,7 +554,7 @@ my @p;
 
 # Tests of dwimming scalar/listiness of lhs
 
-sub l () { (1, 2).Slip };
+sub l () { 1, 2 };
 
 {
     my $x;
@@ -572,14 +572,14 @@ sub l () { (1, 2).Slip };
 {
     package Foo {
         our $b;
-        my @z = ($::('Foo::b') = l(), l());
+        my @z = (flat $::('Foo::b') = l(), l());
         is($b.elems, 2,    q/lhs treats $::('Foo::b') as scalar (1)/);
         is(@z.elems, 3,    q/lhs treats $::('Foo::b') as scalar (2)/);
     }
 }
 
 {
-    my @z = ($Foo::c = l, l);
+    my @z = (flat $Foo::c = l, l);
     is($Foo::c.elems, 2,    'lhs treats $Foo::c as scalar (1)');
     is(@z.elems,      3,    'lhs treats $Foo::c as scalar (2)');
 }
@@ -604,7 +604,7 @@ sub l () { (1, 2).Slip };
 
 {
     my $a;
-    my @z = (($a, *) = l, l, l);
+    my @z = (($a, *) = flat l, l, l);
     is($a.elems, 1, 'lhs treats ($a, *) as list (1)');
     #?rakudo todo 'list assignment with ($var, *)'
     #?niecza todo 'assigning to ($a, *)'
@@ -631,7 +631,7 @@ sub l () { (1, 2).Slip };
 {
     my $a;
     my $b;
-    my @z = (($a,$b) = l, l);
+    my @z = (($a,$b) = flat l, l);
     is($a,  1,   'lhs treats ($a,$b) as list');
     is($b,  2,   'lhs treats ($a,$b) as list');
     is(+@z, 2,   'lhs treats ($a,$b) as list, and passes only two items on');
@@ -667,7 +667,7 @@ sub l () { (1, 2).Slip };
 
 {
     my %a;
-    my @z = (%a<x y z> = l, l);
+    my @z = (%a<x y z> = flat l, l);
     is(%a<x>, 1,    'lhs treats %a<x y z> as list');
     is(%a<y>, 2,    'lhs treats %a<x y z> as list');
     is(%a<z>, 1,    'lhs treats %a<x y z> as list');
@@ -685,7 +685,7 @@ sub l () { (1, 2).Slip };
 
 {
     my %a;
-    my @z = (%a{'x','y','z'} = l, l);
+    my @z = (%a{'x','y','z'} = flat l, l);
     is(%a<x>, 1,    q/lhs treats %a{'x','y','z'} as list/);
     is(%a<y>, 2,    q/lhs treats %a{'x','y','z'} as list/);
     is(%a<z>, 1,    q/lhs treats %a{'x','y','z'} as list/);
@@ -696,7 +696,7 @@ sub l () { (1, 2).Slip };
 
 {
     my %a;
-    my @z = (%a{'x'..'z'} = l, l);
+    my @z = (%a{'x'..'z'} = flat l, l);
     is(%a<x>, 1,    q/lhs treats %a{'x'..'z'} as list/);
     is(%a<y>, 2,    q/lhs treats %a{'x'..'z'} as list/);
     is(%a<z>, 1,    q/lhs treats %a{'x'..'z'} as list/);
@@ -722,7 +722,7 @@ sub l () { (1, 2).Slip };
     my @a;
     my @b = (0,0);
     my $c = 1;
-    my @z = (@a[@b[$c,]] = l, l);
+    my @z = (@a[@b[$c,]] = flat l, l);
     is(~@a,     '1',    'lhs treats @a[@b[$c,]] as list');
     #?rakudo todo 'list assignment'
     #?niecza todo
@@ -747,7 +747,7 @@ sub l () { (1, 2).Slip };
     my @a;
     my $b = 0;
     my sub foo { @a }
-    my @z = (foo()[$b,] = l, l);
+    my @z = (foo()[$b,] = flat l, l);
     #?niecza todo
     is(@a.elems,    1,  'lhs treats foo()[$b,] as list');
     is(@z[0].elems, 1,  'lhs treats foo()[$b,] as list');
@@ -777,6 +777,7 @@ sub l () { (1, 2).Slip };
 }
 
 # RT #63642
+#?rakudo skip ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
 {
     my %part1 = a => 'b';
     my %part2 = d => 'c';
