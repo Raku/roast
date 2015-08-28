@@ -888,7 +888,6 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
     is () »+» (), (), "right-dwim hyper between empty lists doesn't hang";
     is () «+» (), (), "both-dwim hyper between empty lists doesn't hang";
     # <item> <hyper> <empty list>
-    #?rakudo 3 skip "broken due to external reasons"
     is True «+« (), (), "left-dwim hyper against empty RHS doesn't hang";
     is True »+» (), (), "right-dwim hyper against empty RHS doesn't hang";
     is True «+» (), (), "both-dwim hyper against empty RHS doesn't hang";
@@ -896,7 +895,6 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
         left-elems => 1, right-elems => 0,
         "non-dwim hyper against empty RHS dies";
     # <empty list> <hyper> <item>
-    #?rakudo 3 skip "broken due to external reasons"
     is () «+« True, (), "left-dwim hyper against empty LHS doesn't hang";
     is () «+» True, (), "right-dwim hyper against empty LHS doesn't hang";
     is () «+» True, (), "both-dwim hyper against empty LHS doesn't hang";
