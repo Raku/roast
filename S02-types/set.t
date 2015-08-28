@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 172;
+plan 175;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -91,8 +91,10 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws-like 'my %h = set <a b o p a p o o>', X::Hash::Store::OddNumber;
+    my %h = set <a b o p a p o o>;
+    is %h, { :a, :b, :o, :p }, 'flatten set under single arg rule';
 }
+
 {
     my %h := set <a b o p a p o o>;
     ok %h ~~ Set, 'A hash to which a Set has been bound becomes a set';
@@ -108,6 +110,11 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = set [ foo => 10, bar => 17, baz => 42 ];
     isa-ok $b, Set, '&Set.new given an array of pairs produces a Set';
+    is +$b, 3, "... with three elements under the single arg rule";
+}
+{
+    my $b = set $[ foo => 10, bar => 17, baz => 42 ];
+    isa-ok $b, Set, '&Set.new given an itemized array of pairs produces a Set';
     is +$b, 1, "... with one element";
 }
 
@@ -121,9 +128,13 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    # plain {} does not interpolate in list context
     my $b = set { foo => 10, bar => 17, baz => 42 };
     isa-ok $b, Set, '&Set.new given a Hash produces a Set';
+    is +$b, 3, "... with three elements under the single arg rule";
+}
+{
+    my $b = set ${ foo => 10, bar => 17, baz => 42 };
+    isa-ok $b, Set, '&Set.new given an itemized Hash produces a Set';
     is +$b, 1, "... with one element";
 }
 
@@ -155,8 +166,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = set <foo bar baz>;
-    isa-ok $s.list.elems, 3, ".list returns 3 things";
-    is $s.list.grep(Str).elems, 3, "... all of which are Str";
+    is $s.list.elems, 3, ".list returns 3 things";
+    is $s.list.grep(Enum).elems, 3, "... all of which are Enums";
     isa-ok $s.pairs.elems, 3, ".pairs returns 3 things";
     is $s.pairs.grep(Enum).elems, 3, "... all of which are Enums";
     #?niecza 2 todo
@@ -210,7 +221,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # L<S03/Hyper operators/'unordered type'>
 #?niecza skip "Hypers not yet Set compatible"
-#?rakudo todo "Hypers not yet Set compatible RT #124487"
+#?rakudo skip "Hypers not yet Set compatible RT #124487"
 {
     is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';
     is showset("a" «~« set(<pple bbot rmadillo>)), 'abbot apple armadillo', 'Str «~« Set';
@@ -225,7 +236,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 #?niecza skip "Hypers not yet Set compatible"
-#?rakudo todo "Hypers not yet Set compatible RT #124488"
 dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # L<S32::Containers/Set/roll>
@@ -294,23 +304,25 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 # RT 107022
 {
     my $s1 = set ( set <a b c> ), <c d>;
-    is +$s1, 3, "Three elements";
-    ok $s1<c>, "One of them is 'c'";
-    ok $s1<d>, "One of them is 'd'";
-    my $inner-set = $s1.list.first(Set);
+    is +$s1, 2, "Two elements";
+    my $inner-set = $s1.keys.first(Set);
     #?niecza 2 todo 'Set in Set does not work correctly yet'
-    isa-ok $inner-set, Set, "One of the set's elements is indeed a set!";
+    isa-ok $inner-set, Set, "One of the set's elements is indeed a Set!";
     is showset($inner-set), "a b c", "With the proper elements";
+    my $inner-list = $s1.keys.first(List);
+    isa-ok $inner-list, List, "One of the set's elements is indeed a List!";
+    is $inner-list, <c d>, "With the proper elements";
 
     my $s = set <a b c>;
     $s1 = set $s, <c d>;
-    is +$s1, 3, "Three elements";
-    ok $s1<c>, "One of them is 'c'";
-    ok $s1<d>, "One of them is 'd'";
-    $inner-set = $s1.list.first(Set);
+    is +$s1, 2, "Two elements";
+    $inner-set = $s1.keys.first(Set);
     #?niecza 2 todo 'Set in Set does not work correctly yet'
     isa-ok $inner-set, Set, "One of the set's elements is indeed a set!";
     is showset($inner-set), "a b c", "With the proper elements";
+    my $inner-list = $s1.keys.first(List);
+    isa-ok $inner-list, List, "One of the set's elements is indeed a List!";
+    is $inner-list, <c d>, "With the proper elements";
 }
 
 {
@@ -362,6 +374,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 }
 
 # RT #117103
+#?rakudo todo 'problems with metaop on sets after GLR'
 {
     my $s = set();
     $s (|)= 5;
@@ -378,9 +391,8 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 {
     my $s = Set.new([1,2],[3,4]);
     is $s.elems, 2, 'arrays not flattened out by Set.new (1)';
-    ok $s.keys[0] eqv any([1,2], [3,4]), 'arrays not flattened out by Set.new (2)';
-    ok $s.keys[1] eqv any([1,2], [3,4]), 'arrays not flattened out by Set.new (3)';
-    nok $s.keys[0] eqv $s.keys[1], 'arrays not flattened out by Set.new (4)';
+    is $s.keys.sort[0], [1,2], 'arrays not flattened out by Set.new (2)';
+    is $s.keys.sort[1], [3,4], 'arrays not flattened out by Set.new (3)';
 }
 
 # RT #125611
