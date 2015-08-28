@@ -284,7 +284,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 #?niecza todo
 {
     my $gorch = "foo bar";
-    my @q := «a b c "$foo" f g $gorch m n '$bar' x y z»;
+    my @q := «a b c "$foo" f g "$gorch" m n '$bar' x y z»;
     is(+@q, 13, "13 elements in mixed quoted/unquoted «» list, non-flattened");
     is(@q[0], 'a', 'unquoted words are split correctly in the presence of quotes');
     is(@q[3], $foo, 'first interpolation is $foo');
