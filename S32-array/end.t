@@ -22,7 +22,7 @@ plan 12;
 
 {
   my $a;
-  is $a.end, -1, ".end works on arbitrary scalars (1)";
+  is $a.end, 0, ".end works on arbitrary scalars (1)";
 }
 
 {
