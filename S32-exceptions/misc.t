@@ -639,7 +639,7 @@ throws-like 'no DoesNotMatter Undeclared;', X::Undeclared::Symbols;
 # RT #73102
 throws-like 'my Int (Str $x);', X::Syntax::Variable::ConflictingTypes, outer => Int, inner => Str;
 
-throws-like '$k', X::Undeclared, post => '$k', highexpect => (),
+throws-like '$k', X::Undeclared, post => '$k', highexpect => &not,
     "X::Undeclared precedes the name and doesn't expect anything else";
 
 # RT #125427
