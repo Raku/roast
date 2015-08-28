@@ -6,7 +6,7 @@ use lib 't/spec/packages';
 use Test::Util;
 
 # L<S32::IO/IO/=item print>
-plan(11);
+plan(12);
 
 # Tests for print
 is_run 'print "ok\n"',
@@ -79,6 +79,13 @@ is_run 'my @array = \'o\', \'k\', \'k\'; $*OUT.print: @array',
     {
         out => "okk",
     },
-    '$*OUT.print: List';
+    '$*OUT.print: Array';
+
+is_run 'my $array-ref = (\'o\', \'k\', \'k\'); $*OUT.print: $array-ref',
+    {
+        out => "okk",
+    },
+    '$*OUT.print: Array ref';
+
 
 # vim: ft=perl6
