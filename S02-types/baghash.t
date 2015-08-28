@@ -130,8 +130,8 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws-like { EVAL 'my %h = BagHash.new(<a b o p a p o o>)' },
-      X::Hash::Store::OddNumber;
+    my %h = BagHash.new(<a b o p a p o o>);
+    is %h, {:2a, :1b, :3o, :2p}, 'we now flatten according to single arg';
 }
 
 {
