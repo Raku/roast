@@ -46,7 +46,7 @@ for statement as possible
     my $str;
     my @a = 1..3;
     my @b = 4..6;
-    for flat zip(@a; @b) -> $x, $y {
+    for zip(@a, @b) -> ($x, $y) {
         $str ~= "($x $y)";
     }
     is $str, "(1 4)(2 5)(3 6)", 'for zip(@a; @b) -> $x, $y works';
@@ -288,7 +288,7 @@ class TestClass{ has $.key is rw  };
     is($a, $b, 'List context');
 
     $a = '';
-    for [1..3, 4..6] { $a ~= $_.WHAT.gist };
+    for ([1..3, 4..6],) { $a ~= $_.WHAT.gist };
     is($a, Array.gist, 'List context');
 
     $a = '';
@@ -627,7 +627,7 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 }
 
 # RT #123005
-#?rakudo todo 'RT #123005 RT #118705'
+#?rakudo skip 'RT #123005 RT #118705'
 {
     my $str = 'ACCB';
     my $rt123323;
