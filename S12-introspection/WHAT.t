@@ -88,7 +88,7 @@ my class H is Hash  {};
 {
     my $a = Array[Int].new;
     ok $a.WHAT    === Array[Int], 'Array[Int].new default is Array';
-    #?rakudo todo "Foo[Int].new on scalars fails"
+    #?rakudo skip "Foo[Int].new on scalars fails"
     ok $a[0].WHAT === Int,        'Array[Int].new[0] default is Int';
     my $h = Hash[Int].new;
     ok $h.WHAT    === Hash[Int],  'Hash[Int].new default is Hash[Int]';
@@ -100,7 +100,7 @@ my class H is Hash  {};
 {
     my $a = A[Int].new;
     ok $a.WHAT    === A[Int], 'A[Int].new default is A[Int]';
-    #?rakudo todo "Foo[Int].new on scalars fails"
+    #?rakudo skip "Foo[Int].new on scalars fails"
     ok $a[0].WHAT === Int,    'A[Int].new[0] default is Int';
     my $h = H[Int].new;
     ok $h.WHAT    === H[Int], 'H[Int].new default is H[Int]';
