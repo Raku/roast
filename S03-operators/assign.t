@@ -554,7 +554,7 @@ my @p;
 
 # Tests of dwimming scalar/listiness of lhs
 
-sub l () { 1, 2 };
+sub l () { (1, 2).Slip };
 
 {
     my $x;
