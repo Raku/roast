@@ -1,5 +1,15 @@
 # for background, see http://irclog.perlgeek.de/perl6/2015-06-08#i_10716770 through 16:44 UTC
 
+# non-normative references:
+# http://unicode.org/faq/char_combmark.html#14
+# http://unicode.org/faq/char_combmark.html#15
+# http://unicode.org/faq/char_combmark.html#16
+# http://unicode.org/faq/char_combmark.html#17
+# http://unicode.org/faq/char_combmark.html#18
+
+# normative reference
+# http://www.unicode.org/versions/Unicode7.0.0/ch23.pdf (pages numbered 805-807)
+
 use Test;
 
 plan 8;
