@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 35;
 
 my $existing-file     = "tempfile-copy";
 my $non-existent-file = "non-existent-copy";
@@ -42,6 +42,10 @@ nok $non-existent-file.IO.e, "It doesn't";
     nok $zero-length-file-mtgt.IO.s, 'It has no size';
     is $zero-length-file-mtgt.IO.s, $zero-length-file.IO.s, 'The size is equal to source file';
 
+    ok $zero-length-file.IO.copy( $existing-file-mtgt ), '.IO.copy empty file (dest exists)';
+    ok $existing-file-mtgt.IO.e, 'It exists';
+    nok $existing-file-mtgt.IO.s, 'It has no size';
+
     ok unlink($existing-file-mtgt), 'file has been removed';
     ok unlink($zero-length-file-mtgt), 'file has been removed';
 }
@@ -65,6 +69,10 @@ nok $non-existent-file.IO.e, "It doesn't";
     ok $zero-length-file-stgt.IO.e, 'It exists';
     nok $zero-length-file-stgt.IO.s, 'It has no size';
     is $zero-length-file-stgt.IO.s, $zero-length-file.IO.s, 'The size is equal to source file';
+
+    ok copy( $zero-length-file, $existing-file-stgt ), 'copy() empty file (dest exists)';
+    ok $existing-file-stgt.IO.e, 'It exists';
+    nok $existing-file-stgt.IO.s, 'It has no size';
 
     ok unlink($existing-file-stgt), 'file has been removed';
     ok unlink($zero-length-file-stgt), 'file has been removed';
