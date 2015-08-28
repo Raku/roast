@@ -14,7 +14,7 @@ my %ret;
     is ~%ret.sort, "a\tA b\tB c\tC", "=> works in a map block";
 }
 
-%ret = map { $_, uc $_ }, $text.comb;
+%ret = flat map { $_, uc $_ }, $text.comb;
 is ~%ret.sort, "a\tA b\tB c\tC", "map called with function return values works";
 
 # vim: ft=perl6
