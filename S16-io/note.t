@@ -2,41 +2,29 @@ use v6;
 
 # L<S32::IO/IO/=item note>
 
-# doesn't use Test.pm and plan() intentionally
+use Test;
 
-say "1..7";
+plan 5;
 
-# We can't write TAP output to STDERR
-$*ERR = $*OUT;
-
-# Tests for note
-{
-    note "ok 1 - basic form of note";
+class FakeIO {
+    has $.Str = '';
+    method print(\arg) { $!Str ~= arg };
 }
 
-{
-    note "o", "k 2 - note with multiple parame", "ters (1)";
-
-    my @array = ("o", "k 3 - say with multiple parameters (2)");
-    note @array;
+class InterestingGist {
+    has $.x;
+    multi method gist(InterestingGist:D:) { "[$.x]" };
 }
 
-{
-    my $arrayref = <<'ok 4 - ' note stringifies its args>>;
-    note $arrayref;
+sub cap(&code) {
+    my  $*ERR = FakeIO.new;
+    code();
+    $*ERR.Str;
 }
 
-{
-    "ok 5 - method form of note".note;
-}
+is cap({ note 42 }), "42\n", 'note(an integer)';
+is cap({ note InterestingGist.new(x => "abc") }), "[abc]\n", "note() calls .gist method of a single argument";
+is cap({ note InterestingGist.new(x => 1), "foo"}), "[1]foo\n", "note() joins multiple args with whitespace";
 
-
-"ok 6 - Mu.note\n".note;
-
-grammar A {
-    token TOP { .+ };
-}
-
-A.parse("ok 7 - Match.note\n").Str.note;
-
-# vim: ft=perl6
+is cap({ "flurb".note }), "flurb\n", ".note as a method on Str (for example)";
+is cap({ note Int}), "(Int)\n", "note Class name is ok";

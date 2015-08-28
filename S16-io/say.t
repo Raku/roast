@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 4;
+plan 5;
 
 class FakeIO {
     has $.Str = '';
@@ -27,3 +27,4 @@ is cap({ say InterestingGist.new(x => "abc") }), "[abc]\n", "say() calls .gist m
 is cap({ say InterestingGist.new(x => 1), "foo"}), "[1]foo\n", "say() joins multiple args with whitespace";
 
 is cap({ "flurb".say }), "flurb\n", ".say as a method on Str (for example)";
+is cap({ say Int}), "(Int)\n", "say Class name is ok";
