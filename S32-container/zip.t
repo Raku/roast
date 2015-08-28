@@ -20,7 +20,7 @@ plan 14;
     my @e = (0 .. 5);
 
     #?niecza skip 'Slicel lists are NYI'
-    is(~zip(@a; @b), ~@e, "simple zip");
+    is(~zip([@a], [@b]), ~@e, "simple zip");
     is(~(@a Z @b), ~@e, "also with Z char");
 };
 
@@ -32,7 +32,7 @@ plan 14;
     my @e = (0 .. 5);
 
     #?niecza skip 'Slicel lists are NYI'
-    is(~zip(@a; @b; @c), ~@e, "zip of 3 arrays");
+    is(~zip([@a], [@b], [@c]), ~@e, "zip of 3 arrays");
     is(~(@a Z @b Z @c), ~@e, "also with Z char");
 };
 
