@@ -88,7 +88,6 @@ plan 77;
     lives-ok { @x.push: [8, 9] }, 'pushing works';
     dies-ok  { @x.push: 8 }, 'type constraint is enforced';
     lives-ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
-    #?rakudo todo "nested typechecks are borked"
     dies-ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
 } #6
 
@@ -159,7 +158,6 @@ plan 77;
 {
     throws-like 'my Int @a = "ab", "cd"', X::TypeCheck::Assignment,
         'typed arrays do check type during list assignment';
-    #?rakudo todo 'RT#124079 RT#122440 laziness defers typecheck'
     throws-like 'my Int @a = "ab", "cd"; 42.Str;', X::TypeCheck::Assignment,
         'typed arrays do check type during list assignment in sink';
 }
