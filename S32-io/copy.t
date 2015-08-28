@@ -46,7 +46,7 @@ nok $non-existent-file.IO.e, "It doesn't";
     ok $existing-file-mtgt.IO.e, 'It exists';
     nok $existing-file-mtgt.IO.s, 'It has no size';
 
-    dies-ok { $existing-file.IO.copy( $existing-file-mtgt, :createonly ) }, '.IO.copy normal file with :createonly';
+    throws-like { $existing-file.IO.copy( $existing-file-mtgt, :createonly ) }, X::IO::Copy, '.IO.copy normal file with :createonly';
     ok $existing-file-mtgt.IO.e, 'It exists';
     nok $existing-file-mtgt.IO.s, 'It has no size';
 
@@ -78,7 +78,7 @@ nok $non-existent-file.IO.e, "It doesn't";
     ok $existing-file-stgt.IO.e, 'It exists';
     nok $existing-file-stgt.IO.s, 'It has no size';
 
-    dies-ok { copy( $existing-file, $existing-file-stgt, :createonly ) }, '.copy() normal file with :createonly';
+    throws-like { copy( $existing-file, $existing-file-stgt, :createonly ) }, X::IO::Copy, '.copy() normal file with :createonly';
     ok $existing-file-stgt.IO.e, 'It exists';
     nok $existing-file-stgt.IO.s, 'It has no size';
 
