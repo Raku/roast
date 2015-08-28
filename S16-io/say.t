@@ -2,41 +2,28 @@ use v6;
 
 # L<S32::IO/IO/=item say>
 
-# doesn't use Test.pm and plan() intentionally
+use Test;
 
-say "1..9";
+plan 4;
 
-# Tests for say
-{
-    say "ok 1 - basic form of say";
+class FakeIO {
+    has $.Str = '';
+    method print(\arg) { $!Str ~= arg };
 }
 
-{
-    say "o", "k 2 - say with multiple parame", "ters (1)";
-
-    my @array = ("o", "k 3 - say with multiple parameters (2)");
-    say @array;
+class InterestingGist {
+    has $.x;
+    multi method gist(InterestingGist:D:) { "[$.x]" };
 }
 
-{
-    my @a = <ok 4 - say stringifies its args>;
-    @a[*-1] ~= "\n";
-    my @b = <ok 5 - say stringifies its args>;
-    say @a, @b;
+sub cap(&code) {
+    my  $*OUT = FakeIO.new;
+    code();
+    $*OUT.Str;
 }
 
-{
-    "ok 6 - method form of say".say;
-}
+is cap({ say 42 }), "42\n", 'say(an integer)';
+is cap({ say InterestingGist.new(x => "abc") }), "[abc]\n", "say() calls .gist method of a single argument";
+is cap({ say InterestingGist.new(x => 1), "foo"}), "[1]foo\n", "say() joins multiple args with whitespace";
 
-$*OUT.say('ok 7 - $*OUT.say(...)');
-
-"ok 8 - Mu.print\n".print;
-
-grammar A {
-    token TOP { .+ };
-}
-
-A.parse("ok 9 - Match.print\n").print;
-
-# vim: ft=perl6
+is cap({ "flurb".say }), "flurb\n", ".say as a method on Str (for example)";
