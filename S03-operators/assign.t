@@ -588,7 +588,6 @@ sub l () { 1, 2 };
     my @a;
     my @z = ($(@a[0]) = l, l);
     is(@a[0].elems, 2, 'lhs treats $(@a[0]) as scalar (1)');
-    #?rakudo todo 'item assignment'
     #?niecza todo
     is(@z.elems,    2, 'lhs treats $(@a[0]) as scalar (2)');
 }
