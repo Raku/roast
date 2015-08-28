@@ -131,7 +131,8 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws-like 'my %h = MixHash.new(<a b o p a p o o>)', X::Hash::Store::OddNumber;
+    my %h = MixHash.new(<a b o p a p o o>);
+    is %h, { :2a, :1b, :3o, :2p }, 'list flattens according to single arg rule';
 }
 
 {
