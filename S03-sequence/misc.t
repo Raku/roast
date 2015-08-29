@@ -100,7 +100,7 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 #     'chained sequence with an empty subsequence';
 #RT #80574'
 {
-    my @rt80574 := @(-> { 'zero', 'one' } ... *);
+    my @rt80574 = -> { 'zero', 'one' } ... *;
     is @rt80574[0], 'zero', 'Generator output is flattened';
 }
 
