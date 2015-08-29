@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 136;
+plan 135;
 
 # single-term sequence
 
@@ -230,7 +230,7 @@ is (5,4,3, { $_ - 1 || last } ... *)[^10].join(', '), '5, 4, 3, 2, 1', "sequence
 
 {
     is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';
-    my @fib := (0, 1, *+* ... * );
+    my @fib = 0, 1, *+* ... *;
     # RT #98790
     is (@fib ... 8), (0, 1, 1, 2 , 3, 5, 8), '@fib ... 8';
 }
@@ -265,11 +265,8 @@ is ((1,1,2,4,8)[^4], *+*+*+* ... *)[4], 8, 'WhateverCode with arity > 3 gets eno
 is (1 … 10), 1..10, 'Unicode ellipsis works';
 is (1 …^ 10), 1..^10, 'Unicode ellipsis works excluding final value';
 
-#RT #114326
-isa-ok ([] ... [])[0], Array, '[] ... [] returns []';
-
 {
-    my @a := [1,2],{ [.[0]+2,.[1]+2] } ... *;
+    my @a = [1,2],{ $[.[0]+2,.[1]+2] } ... *;
     isa-ok @a[1], Array, 'containers returned from seq iterator are respected (1)';
     is @a[1].join('_'), '3_4', 'containers returned from seq iterator are respected (2)';
 }
