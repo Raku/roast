@@ -22,9 +22,9 @@ Basic tests for the hash() built-in
 }
 
 {
-    is ('a'..'c' Z 1..3).hash.<a>, 1, "hash() builds a sensible hash";
-    is ('a'..'c' Z 1..3).hash.<b>, 2, "hash() builds a sensible hash";
-    is ('a'..'c' Z 1..3).hash.<c>, 3, "hash() builds a sensible hash";
+    is flat('a'..'c' Z 1..3).hash.<a>, 1, "hash() builds a sensible hash";
+    is flat('a'..'c' Z 1..3).hash.<b>, 2, "hash() builds a sensible hash";
+    is flat('a'..'c' Z 1..3).hash.<c>, 3, "hash() builds a sensible hash";
 }
 
 {
