@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 214;
+plan 213;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -143,10 +143,9 @@ sub showkv($x) {
 
 {
     my $m = MixHash.new([ foo => 10.1, bar => 17.2, baz => 42.3, santa => 0 ]);
-    is $m.total, 1, 'make sure .total is ok';
-    is $m.elems, 1, 'make sure .elems is ok';
     isa-ok $m, MixHash, '&MixHash.new given an array of pairs produces a MixHash';
-    is +$m, 1, "... with one element";
+    is $m.total, 4, 'make sure .total is ok';
+    is $m.elems, 4, 'make sure .elems is ok';
 }
 
 {
@@ -160,7 +159,7 @@ sub showkv($x) {
 {
     my $m = MixHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 });
     isa-ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
-    is +$m, 1, "... with one element";
+    is +$m, 4, "... with four elements";
 }
 
 {
