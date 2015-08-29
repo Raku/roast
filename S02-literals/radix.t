@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 152;
+plan 154;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -278,6 +278,12 @@ throws-like { EVAL ':0<0>' },
 
 for 2..36 {
     is EVAL(":{$_}<11>"), $_ + 1, "Adverbial form of base $_ works";
+}
+
+# RT #112728
+{
+    throws-like { EVAL ':2()' }, X::Numeric::Confused, ':2() is Confused';
+    throws-like { EVAL ':2' }, X::Syntax::Malformed, ':2 is Malformed';
 }
 
 # vim: ft=perl6
