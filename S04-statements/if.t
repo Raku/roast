@@ -205,8 +205,8 @@ is (if 0 { 42 } elsif 1 { 43 } else { 44 }), (43), "if+elsif+else elsif evaluate
 is (if 1 { 42 } elsif 0 { 43 } else { 44 }), (42), "if+elsif+else if evaluates to executed block";
 is (if 0 { 42 } elsif 1 { 43 }), (43), "if+elsif elsif evaluates to executed block";
 is (if 1 { 42 } elsif 0 { 43 }), (42), "if+elsif if evaluates to executed block";
-is (if 0 { 42 } elsif 0 { 43 }), (), "if+elsif evaluates to () when no block chosen";
-is (if 0 { 42 }), (), "if evaluates to () when no block chosen";
+is-deeply (if 0 { 42 } elsif 0 { 43 }), Empty, "if+elsif evaluates to () when no block chosen";
+is-deeply (if 0 { 42 }), Empty, "if evaluates to () when no block chosen";
 
 # L<S04/Statement parsing/keywords require whitespace>
 eval-dies-ok('if($x > 1) {}','keyword needs at least one whitespace after it');
