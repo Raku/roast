@@ -108,7 +108,7 @@ is ('1a', '1b' ... '1e').Str, '1a 1b 1c 1d 1e', 'sequence with strings that star
 	method pred { H.new(y => $.y - 1) }
 	method gist { $.y }
     }
-    is (H.new ... *.y > 10).gist, '5 6 7 8 9 10 11', "intuition does not try to cmp a WhateverCode";
+    is (H.new ... *.y > 10).gist, '(5 6 7 8 9 10 11)', "intuition does not try to cmp a WhateverCode";
 }
 
 {
