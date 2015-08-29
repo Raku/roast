@@ -243,7 +243,7 @@ plan 33;
 
 # RT #111962
 {
-    my @grid = [ Bool.pick xx 5 ] xx 5;
+    my @grid = [ $++ xx 5 ] xx 5;
     my @neigh = [ ] xx 5;
     for ^5 X ^5 -> ($i, $j) {
         @neigh[$i][$j] = gather take-rw @grid[$i + .[0]][$j + .[1]]
@@ -252,7 +252,7 @@ plan 33;
                         [-1,+0],        [+1,+0],
                         [-1,+1],[+0,+1],[+1,+1];
     }
-    ok @grid[1][1] =:= @neigh[2][2][0], "Neighbor is same object as in grid";
+    ok @grid[1][1] === @neigh[2][2][0], "Neighbor is same object as in grid";
     ok @neigh[1][1].elems == 8, "There are eight neighbors";
 }
 
