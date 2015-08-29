@@ -6,7 +6,7 @@ plan 6;
 
 sub is-prime-alpha($n) { $n %% none 2..sqrt $n }
 
-my @primes := 2, 3, 5, -> $p { ($p+2, $p+4 ... &is-prime-beta)[*-1] } ... *;
+my @primes = 2, 3, 5, -> $p { ($p+2, $p+4 ... &is-prime-beta)[*-1] } ... *;
 sub is-prime-beta($n) { $n %% none @primes ...^  * > sqrt $n }
 
 sub expmod(Int $a is copy, Int $b is copy, $n) {
