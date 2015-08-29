@@ -35,7 +35,6 @@ precomp_loads_is '[ $(array[uint8].new(1)), $(array[uint8].new(1)) ]', [1,1],
                  "precompiled Array of native arrays (RT #124162)";
 
 # RT #123679
-#?rakudo todo 'RT #123679 Cannot invoke this object (REPR: Null, cs = 0)'
 precomp_loads_ok(['role Bar { has Str $.my-str handles <lines words> }','class Foo does Bar { }; my $io = Foo.new(:my-str<OHAI>);'], "precompiled role with handles trait on attribute");
 
 #?rakudo todo 'RT #124324 Missing or wrong version of dependency'
