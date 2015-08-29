@@ -110,9 +110,9 @@ sub showkv($x) {
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %s = mix <a b o p a p o o>;
-    is %s, { :2a, :1b, :2p, :3o }, 'flattens under single arg rule';
+    is-deeply %s, { :2a, :1b, :2p, :3o }, 'flattens under single arg rule';
     my %m = mix <a b o p>,< a p o o>;
-    is %m, { <a b o p> => 1, <a p o o> => 1 }, 'does not flatten under single arg rule';
+    is-deeply %m, { :2a, :1b, :2p, :3o }, 'also flattens';
 }
 {
     my %h := mix <a b o p a p o o>;
@@ -338,7 +338,7 @@ sub showkv($x) {
 }
 
 {
-    my $m1 = mix ( mix <a b c> ), <c c c d d d d>;
+    my $m1 = Mix.new(( mix <a b c> ), <c c c d d d d>);
     is +$m1, 2, "Two elements";
     my $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
@@ -349,7 +349,7 @@ sub showkv($x) {
     is $inner-list, <c c c d d d d>, "With the proper elements";
 
     my $m = mix <a b c>;
-    $m1 = mix $m, <c d>;
+    $m1 = Mix.new($m, <c d>);
     is +$m1, 2, "Two elements";
     $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
