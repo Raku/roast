@@ -44,7 +44,7 @@ is blat( 2, [2,3,4] ), "2-3-4", 'unpack named array with named pieces';
         return flat fsort-only(@r.grep( {$_ <= $p} )),$p,fsort-only(@r.grep( {$_ > $p} )) if $p || @r;
     }
     multi fsort-multi([$p?,*@r]) {
-        return flat fsort-multi(@r.grep( {$_ <= $p} )),$p,fsort-multi(@r.grep( {$_ > $p} )) if $p || @r;
+        return |fsort-multi(@r.grep( {$_ <= $p} ).list),$p,|fsort-multi(@r.grep( {$_ > $p} ).list) if $p || @r;
     }
 
    #?niecza 2 todo "https://github.com/sorear/niecza/issues/180"
