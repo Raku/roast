@@ -303,7 +303,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # RT 107022
 {
-    my $s1 = set ( set <a b c> ), <c d>;
+    my $s1 = Set.new(( set <a b c> ), <c d>);
     is +$s1, 2, "Two elements";
     my $inner-set = $s1.keys.first(Set);
     #?niecza 2 todo 'Set in Set does not work correctly yet'
@@ -314,7 +314,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is $inner-list, <c d>, "With the proper elements";
 
     my $s = set <a b c>;
-    $s1 = set $s, <c d>;
+    $s1 = Set.new($s, <c d>);
     is +$s1, 2, "Two elements";
     $inner-set = $s1.keys.first(Set);
     #?niecza 2 todo 'Set in Set does not work correctly yet'
