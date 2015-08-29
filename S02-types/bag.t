@@ -107,9 +107,9 @@ sub showkv($x) {
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %s = bag <a b o p a p o o>;
-    is %s, { :2a, :1b, :3o, :2p }, 'single arg rule rules';
+    is-deeply %s, { :2a, :1b, :3o, :2p }, 'single arg rule rules';
     my %m = bag <a b o p>,< a p o o>;
-    is %m, { <a b o p> => 1, <a p o o> => 1 }, 'multiple arg rule rules';
+    is-deeply %m, { :2a, :1b, :3o, :2p }, 'flattening rules';
 }
 {
     my %h := bag <a b o p a p o o>;
@@ -381,7 +381,7 @@ sub showkv($x) {
 }
 
 {
-    my $b1 = bag ( bag <a b c> ), <c c c d d d d>;
+    my $b1 = Bag.new( (bag <a b c>) , <c c c d d d d>);
     is +$b1, 2, "Two elements";
     my $inner-bag = $b1.keys.first(Bag);
     #?niecza 2 todo 'Bag in Bag does not work correctly yet'
@@ -392,7 +392,7 @@ sub showkv($x) {
     is $inner-list, <c c c d d d d>, 'with the proper elements';
 
     my $b = bag <a b c>;
-    $b1 = bag $b, <c d>;
+    $b1 = Bag.new($b, <c d>);
     is +$b1, 2, "Two elements";
     $inner-bag = $b1.keys.first(Bag);
     #?niecza 2 todo 'Bag in Bag does not work correctly yet'
