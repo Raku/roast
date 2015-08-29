@@ -159,7 +159,7 @@ plan 34;
 }
 
 {
-    is (42 with Nil), Empty, '"$something with Nil" is Empty';
+    is-deeply (42 with Nil), Empty, '"$something with Nil" is Empty';
 }
 
 {
