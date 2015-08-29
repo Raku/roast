@@ -26,7 +26,7 @@ is_run( 'my @a = ("array", "of", "params"); note @a',
         {
             status => 0,
             out    => '',
-            err    => "arrayofparams\n",
+            err    => "[array of params]\n",
         },
         'note array' );
 
@@ -34,7 +34,7 @@ is_run( 'my $a = <stringify args>; note $a',
         {
             status => 0,
             out    => '',
-            err    => "stringifyargs\n",
+            err    => "(stringify args)\n",
         },
         'note an array reference' );
 
