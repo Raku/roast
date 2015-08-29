@@ -29,7 +29,7 @@ is_run 'my @array = ("o", "k"); print @array',
 
 is_run 'my $array-ref = ("o", "k"); print $array-ref',
     {
-        out => "ok",
+        out => "o k",
     },
     'print stringifies its args';
 
@@ -83,7 +83,7 @@ is_run 'my @array = \'o\', \'k\', \'k\'; $*OUT.print: @array',
 
 is_run 'my $array-ref = (\'o\', \'k\', \'k\'); $*OUT.print: $array-ref',
     {
-        out => "okk",
+        out => "o k k",
     },
     '$*OUT.print: Array ref';
 
