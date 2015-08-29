@@ -59,7 +59,7 @@ my @b = (3, 4);
     # special case; one elment
     is +(gather for $scalar {
         take 1;
-         }), 2, 'for $scalar { }';
+         }), 1, 'for $scalar { }';
 
     # but normally, it doesn't interpolate:
     is +(gather for 42, $scalar {
