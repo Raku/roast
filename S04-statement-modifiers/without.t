@@ -50,7 +50,7 @@ plan 8;
 
 {
     my $a = 'oops';
-    try ({ $a = $^x } without Failure.new);
+    { { $a = $^x } without Failure.new; CATCH { default { $_.defined } }; }
     is $a.WHAT, Failure, 'Statement-modifier without runs block with placeholder';
 }
 
