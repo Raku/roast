@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 31;
+plan 29;
 
 is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it being confused for closure";
 
@@ -92,12 +92,6 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
     is (1, 2 ... 4, 6 ... 10, 12).join(' '),
         '1 2 3 4 6 8 10 12',
         'chained sequence with more than one value after last infix:<...>';
-    is (1, 2 ... * > 3, 6 ... 10).join(' '),
-        '1 2 3 4 6 8 10',
-        'chained sequence with whatever expression';
-    is (1, 2 ... { $_ > 3 }, 6 ... 10).join(' '),
-        '1 2 3 4 6 8 10',
-        'chained sequence with closure (3)';
 }
 
 # The following is now an infinite sequence...
