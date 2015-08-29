@@ -374,7 +374,6 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 }
 
 # RT #117103
-#?rakudo todo 'problems with metaop on sets after GLR'
 {
     my $s = set();
     $s (|)= 5;
