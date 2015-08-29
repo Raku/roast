@@ -69,7 +69,7 @@ plan 13;
 # return value of false 'if' should be Empty
 # RT #66544
 {
-    is (42 if 0), Empty, '"$something if 0" is Empty';
+    is-deeply (42 if 0), Empty, '"$something if 0" is Empty';
 }
 
 {
