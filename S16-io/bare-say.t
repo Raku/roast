@@ -13,7 +13,7 @@ eval-dies-ok('print', 'bare print is a compiler error');
 is_run( 'say ()',
         {
             status => 0,
-            out    => "\n",
+            out    => "()\n",
             err    => '',
         },
         'say ()' );
