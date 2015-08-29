@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 56;
+plan 58;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -335,5 +335,12 @@ plan 56;
 
 throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     symbol  => 'Mouse';
+
+# RT #122895
+{
+     # constants and non constants are consistently non flattening.
+     is (my @ = 'a', <b c>)[1], <b c>, "non constant doesn't flatten"; 
+     is (constant @ = 'a', <b c>)[1], <b c>, "constant doesn't flatten"; 
+}
 
 # vim: ft=perl6
