@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 234;
+plan 236;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -632,3 +632,7 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
 
 # RT #124683
 throws-like { DateTime.new("1994-05-03T00:00:00+00:99") }, X::OutOfRange, what => rx{minute};
+
+# RT #125872
+is DateTime.new("2015-08-23T02:27:33-07:00"), DateTime.new("2015-08-23t02:27:33-07:00"), "t and T work, are same";
+is DateTime.new("2015-08-23T02:27:33Z"), DateTime.new("2015-08-23t02:27:33z"), "z and Z work, are same";

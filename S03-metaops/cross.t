@@ -21,6 +21,7 @@ is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
 {
     my @result = gather {
         for flat 1..3 X 'a'..'b' -> $n, $a {
+        for 1..3 X 'a'..'b' -> ($n, $a) {
             take "$n|$a"
         }
     }

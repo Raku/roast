@@ -5,9 +5,6 @@ use MONKEY-TYPING;
 use Test;
 
 # L<S02/Lists>
-# XXX -- Lists are not real datatypes, but I haven't found a better location
-# for this test. See
-# L<"http://www.nntp.perl.org/group/perl.perl6.language/22924">
 
 plan 32;
 
