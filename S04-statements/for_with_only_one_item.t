@@ -63,7 +63,7 @@ plan 12;
   my $count=0;
   for ($arrayref) { $count++ }
 
-  is $count, 3, 'for ($arrayref) {...} executes the loop body three times (one arg rule)';
+  is $count, 1, 'for ($arrayref) {...} executes the loop body only once';
 }
 
 {
@@ -72,7 +72,7 @@ plan 12;
   my $count=0;
   for $arrayref { $count++ }
 
-  is $count, 3, 'for $arrayref {...} executes the loop body three times (one arg rule)';
+  is $count, 1, 'for $arrayref {...} executes the loop body only once';
 }
 
 # for with only one item, is rw
