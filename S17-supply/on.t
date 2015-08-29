@@ -45,9 +45,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $a = Supply.from-list("a".."e");
-        my $b = Supply.from-list("f".."k");
+        my $b = Supply.from-list("f".."j");
         my $on = on -> $res {
-            my @values = ($[],$[]);
+            my @values = [],[];
             ($a,$b) => sub ($val,$index) {
                 @values[$index].push($val);
                 if all(@values) {
