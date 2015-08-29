@@ -19,7 +19,7 @@ plan 12;
 # hash with constrained values
 {
     my Int %h = a => 1, b => 2;
-    is %h.perl, 'Hash[Int].new("a" => 1, "b" => 2)'|'Hash[Int].new("b" => 2, "a" => 1)',
+    is %h.perl, '(my Int % = :a(1), :b(2))',
       'can we serialize a hash with constrained values';
     my $rh = EVAL(%h.perl);
     is-deeply $rh, %h, 'can we roundtrip hash constrained values';
@@ -31,7 +31,7 @@ plan 12;
 # hash with constrained keys & values
 {
     my Int %h{Str} = a => 1, b => 2;
-    is %h.perl, 'Hash[Int,Str].new("a" => 1, "b" => 2)'|'Hash[Int,Str].new("b" => 2, "a" => 1)',
+    is %h.perl, '(my Int %{Str} = :a(1), :b(2))',
       'can we serialize a hash with constrained keys & values';
     my $rh = EVAL(%h.perl);
     is-deeply $rh, %h, 'can we roundtrip hash constrained keys & values';
