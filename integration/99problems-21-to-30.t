@@ -50,7 +50,7 @@ plan 15;
     
 {
     my $compress = sub ($x) {
-        state $previous;
+        state $previous = '';
         return $x ne $previous ?? ($previous = $x) !! ();
     }
 
