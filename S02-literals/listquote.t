@@ -19,8 +19,8 @@ is($s, "xayaz", 'listop |<< <list>');
 #?niecza skip "Preceding context expects a term, but found infix , instead"
 ok( [1,2,3].join<abc> ~~ Failure , '.join<abc> parses and fails');
 
-my @y = try { ({:a<1>, :b(2)}<a b c>) };
-ok(@y eqv ["1",2,Any], '{...}<a b c> is hash subscript');
+my @y = try { ({:a<d>, :b(2)}<a b c>) };
+ok(@y eqv ["d",2,Any], '{...}<a b c> is hash subscript');
 
 throws-like { EVAL '({:a<1>, :b(2)} <1 2 3>)' },
   X::Syntax::Confused,
