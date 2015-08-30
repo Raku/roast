@@ -114,7 +114,7 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 
 # RT #1233303
 {
-    throws-like { 1, 2, 5 ... 10 }, X::Sequence::Deduction, from => '1,2,5'
+    throws-like { (1, 2, 5 ... 10)[0] }, X::Sequence::Deduction, from => '1,2,5'
 }
 
 # RT #112288
