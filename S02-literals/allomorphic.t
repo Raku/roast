@@ -11,7 +11,7 @@ plan 93;
 ## rest of the test)
 
 #?rakudo skip 'undeclared routine'
-lives-ok val("foo"), "val() exists";
+lives-ok {val("foo")}, "val() exists";
 
 ## IntStr
 
@@ -23,8 +23,8 @@ lives-ok val("foo"), "val() exists";
     isa-ok $intval, Int,    "val(\"42\") can be an Int";
     isa-ok $intval, Str,    "val(\"42\") can be a Str";
 
-    is $intval, 42, "val(\"42\") is equal to integer 42";
-    is $intval, "42", "val(\"42\") is equal to string \"42\"";
+    is +$intval, 42, "val(\"42\") is equal to integer 42";
+    is ~$intval, "42", "val(\"42\") is equal to string \"42\"";
 }
 
 #?rakudo skip 'val and IntStr NYI'
@@ -35,8 +35,8 @@ lives-ok val("foo"), "val() exists";
     isa-ok $intval, Int,    "val(\"    -42\") can be an Int";
     isa-ok $intval, Str,    "val(\"    -42\") can be a Str";
 
-    is $intval, -42, "val(\"    -42\") is equal to integer -42";
-    is $intval, "    -42", "val(\"    -42\") is equal to string \"    -42\"";
+    is +$intval, -42, "val(\"    -42\") is equal to integer -42";
+    is ~$intval, "    -42", "val(\"    -42\") is equal to string \"    -42\"";
 }
 
 ## RatStr
@@ -49,8 +49,8 @@ lives-ok val("foo"), "val() exists";
     isa-ok $ratval, Rat,    "val(\"1/5\") can be a Rat";
     isa-ok $ratval, Str,    "val(\"1/5\") can be a Str";
 
-    is $ratval, 0.2,   "val(\"1/5\") is equal to rational 0.2";
-    is $ratval, "1/5", "val(\"1/5\") is equal to string \"1/5\"";
+    is +$ratval, 0.2,   "val(\"1/5\") is equal to rational 0.2";
+    is ~$ratval, "1/5", "val(\"1/5\") is equal to string \"1/5\"";
 }
 
 #?rakudo skip 'val and RatStr NYI'
@@ -61,8 +61,8 @@ lives-ok val("foo"), "val() exists";
     isa-ok $ratval, Rat,    "val(\" -0.7\\t\") can be a Rat";
     isa-ok $ratval, Str,    "val(\" -0.7\\t\") can be a Str";
 
-    is $ratval, -0.7, "val(\" -0.7\\t\") is equal to rational -0.7";
-    is $ratval, " -0.7\t", "val(\" -0.7\\t\") is equal to string \" -0.7\\t\"";
+    is +$ratval, -0.7, "val(\" -0.7\\t\") is equal to rational -0.7";
+    is ~$ratval, " -0.7\t", "val(\" -0.7\\t\") is equal to string \" -0.7\\t\"";
 }
 
 ## NumStr
@@ -75,8 +75,8 @@ lives-ok val("foo"), "val() exists";
     isa-ok $numval, Num,    "val(\"6.02e23\") can be a Num";
     isa-ok $numval, Str,    "val(\"6.02e23\") can be a Str";
 
-    is $numval, 6.02e23, "val(\"6.02e23\") is equal to floating-point 6.02e23";
-    is $numval, "6.02e23", "val(\"6.02e23\") is equal to string \"6.02e23\"";
+    is +$numval, 6.02e23, "val(\"6.02e23\") is equal to floating-point 6.02e23";
+    is ~$numval, "6.02e23", "val(\"6.02e23\") is equal to string \"6.02e23\"";
 }
 
 #?rakudo skip 'val and NumStr NYI'
@@ -87,8 +87,8 @@ lives-ok val("foo"), "val() exists";
     isa-ok $numval, Num,    "val(\"+1.200e-10  \") can be a Num";
     isa-ok $numval, Str,    "val(\"+1.200e-10  \") can be a Str";
 
-    is $numval, 1.2e-10, "val(\"+1.200e-10  \") is equal to floating-point 1.2e-10";
-    is $numval, "+1.200e-10  ", "val(\"+1.200e-10  \") is equal to string \"+1.200e-10  \"";
+    is +$numval, 1.2e-10, "val(\"+1.200e-10  \") is equal to floating-point 1.2e-10";
+    is ~$numval, "+1.200e-10  ", "val(\"+1.200e-10  \") is equal to string \"+1.200e-10  \"";
 }
 
 ## ComplexStr
@@ -101,8 +101,8 @@ lives-ok val("foo"), "val() exists";
     isa-ok $cmpxval, Complex,    "val(\"1+2i\") can be a Complex";
     isa-ok $cmpxval, Str,        "val(\"1+2i\") can be a Str";
 
-    is $cmpxval, (1+2i), "val(\"1+2i\") is equal to complex number 1+2i";
-    is $cmpxval, "1+2i", "val(\"1+2i\") is equal to string \"1+2i\"";
+    is +$cmpxval, (1+2i), "val(\"1+2i\") is equal to complex number 1+2i";
+    is ~$cmpxval, "1+2i", "val(\"1+2i\") is equal to string \"1+2i\"";
 }
 
 #?rakudo skip 'val and ComplexStr NYI'
@@ -113,8 +113,8 @@ lives-ok val("foo"), "val() exists";
     isa-ok $cmpxval, Complex,    "val(\" +1.0+-3.2i \") can be a Complex";
     isa-ok $cmpxval, Str,        "val(\" +1.0+-3.2i \") can be a Str";
 
-    is $cmpxval, (1-3.2i), "val(\" +1.0+-3.2i \") is equal to complex number 1-3.2i";
-    is $cmpxval, " +1.0+-3.2i ", "val(\" +1.0+-3.2i \") is equal to string \" +1.0+-3.2i \"";
+    is +$cmpxval, (1-3.2i), "val(\" +1.0+-3.2i \") is equal to complex number 1-3.2i";
+    is ~$cmpxval, " +1.0+-3.2i ", "val(\" +1.0+-3.2i \") is equal to string \" +1.0+-3.2i \"";
 }
 
 # Note: L<S02/The :val modifier> seems to suggest that version literals and
@@ -130,7 +130,7 @@ lives-ok val("foo"), "val() exists";
 
     for @wordlist -> $val, $wrong-type {
         isa-ok $val, Str, "'$val' from qw[] is a Str";
-        nok $val.isa($wrong-type), "'$val' from qw[] is not a $wrong-type";
+        nok $val.isa($wrong-type), "'$val' from qw[] is not a $wrong-type.perl()";
     }
 }
 
@@ -140,7 +140,7 @@ lives-ok val("foo"), "val() exists";
 
     for @wordlist -> $val, $wrong-type {
         isa-ok $val, Str, "'$val' from qqww[] is a Str";
-        nok $val.isa($wrong-type), "'$val' from qqww[] is not a $wrong-type";
+        nok $val.isa($wrong-type), "'$val' from qqww[] is not a $wrong-type.perl()";
     }
 }
 
@@ -150,10 +150,10 @@ lives-ok val("foo"), "val() exists";
     my @purenum   = Int, Rat, Rat, Num, Complex;
     my @allotypes = IntStr, RatStr, RatStr, NumStr, ComplexStr;
 
-    for (@wordlist Z @purenum Z @allotypes) -> $val, $ntype, $atype {
+    for (@wordlist Z @purenum Z @allotypes) -> ($val, $ntype, $atype) {
         isa-ok $val, Str,    "'$val' from qw:v[] is a Str";
-        isa-ok $val, $ntype, "'$val' from qw:v[] is a $ntype";
-        isa-ok $val, $atype, "'$val' from qw:v[] is a $atype";
+        isa-ok $val, $ntype, "'$val' from qw:v[] is a $ntype.perl()";
+        isa-ok $val, $atype, "'$val' from qw:v[] is a $atype.perl()";
     }
 }
 
@@ -163,10 +163,10 @@ lives-ok val("foo"), "val() exists";
     my @purenum   = Int, Rat, Rat, Num, Complex;
     my @allotypes = IntStr, RatStr, RatStr, NumStr, ComplexStr;
 
-    for (@wordlist Z @purenum Z @allotypes) -> $val, $ntype, $atype {
+    for (@wordlist Z @purenum Z @allotypes) -> ($val, $ntype, $atype) {
         isa-ok $val, Str,    "'$val' from qw:v[] is a Str";
-        isa-ok $val, $ntype, "'$val' from qw:v[] is a $ntype";
-        isa-ok $val, $atype, "'$val' from qw:v[] is a $atype";
+        isa-ok $val, $ntype, "'$val' from qw:v[] is a $ntype.perl()";
+        isa-ok $val, $atype, "'$val' from qw:v[] is a $atype.perl()";
     }
 }
 
