@@ -7,7 +7,7 @@ use Test;
 plan 25;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
-is $/.WHAT.gist, Match.gist,    'got right type';
+is $/.WHAT, Match.WHAT,         'got right type';
 ok $/.Bool,                     '.Bool';
 ok $/.defined,                  '.defined';
 is $/.Str,         '12',        '.Str';
@@ -36,8 +36,8 @@ is  $/.Str,          '',        'false match stringifies to empty string';
 
 my $c;
 ok 'abc' ~~ /.{ $c = $¢ }/,     'current match state';
-#?rakudo todo 'Unsupported use of $¢ variable RT #124998'
-is $c.WHAT.gist, Cursor.gist,   'got right type';
+#?rakudo todo 'Type of $¢ is Any instead of Cursor - RT #124998'
+is $c.WHAT, Cursor.WHAT,        'got right type';
 #?rakudo skip "No such method pos for invocant of type Any RT #124999"
 ok defined($c.pos),             '.pos';
 
