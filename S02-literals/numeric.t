@@ -27,6 +27,7 @@ ok <-1/3> * -3 == 1, 'negative Rat literal';
 
 #?rakudo.jvm todo 'fails with "Attempt to divide by zero using div" on JVM RT #124559'
 is <0x01/0x03>, (0x01/0x03), 'Rat works with hexadecimal numbers';
+#?rakudo 2 todo 'Adverbial numbers in Rat literals not supported'
 is <:13<01>/:13<07>>, (1/7), 'Rat works with colon radix numbers';
 is <:12<1a>/:12<7b>>, (:12<1a> / :12<7b>), 'Rat works with colon radix numbers';
 
