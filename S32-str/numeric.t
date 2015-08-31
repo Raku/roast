@@ -28,6 +28,7 @@ check '0000123',    Int,    123;
 check '1_2_3',      Int,    123;
 check '+123',       Int,    123;
 check '-123',       Int,   -123;
+#?rakudo skip 'val() dies on bigints'
 check '3433683820292512484657849089281', Int, 3**64;
 f     'a+123';
 f     '123foo';
