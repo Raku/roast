@@ -309,9 +309,9 @@ plan 13;
          '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse];
     }
     is-deeply gray(0), [''];
-    is-deeply gray(1), [<0 1>];
-    is-deeply gray(2), [<00 01 11 10>];
-    is-deeply gray(3), [<000 001 011 010 110 111 101 100>];
+    is-deeply gray(1), [<0 1>».Str];
+    is-deeply gray(2), [<00 01 11 10>».Str];
+    is-deeply gray(3), [<000 001 011 010 110 111 101 100>».Str];
 }
 
 {    
@@ -321,9 +321,9 @@ plan 13;
                             '1' xx 2**($n-1) >>~<< gray2($n-1).reverse];
     }
     is-deeply gray2(0), [''];
-    is-deeply gray2(1), [<0 1>];
-    is-deeply gray2(2), [<00 01 11 10>];
-    is-deeply gray2(3), [<000 001 011 010 110 111 101 100>];
+    is-deeply gray2(1), [<0 1>».Str];
+    is-deeply gray2(2), [<00 01 11 10>».Str];
+    is-deeply gray2(3), [<000 001 011 010 110 111 101 100>».Str];
 }
 
 {

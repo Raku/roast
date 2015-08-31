@@ -7,13 +7,13 @@ plan 6;
 $_ = '1 23 456 78.9';
 my @g;
 @g.push(.Str) for m:g/(\d+)/;
-is-deeply @g, [<1 23 456 78 9>], 'm:g';
+is-deeply @g, [<1 23 456 78 9>».Str], 'm:g';
 
 my @global;
 @global.push(.Str) for m:global/(\d+)/;
-is-deeply @global, [<1 23 456 78 9>], 'm:global';
+is-deeply @global, [<1 23 456 78 9>».Str], 'm:global';
 
-is-deeply [.comb(/\d+/)], [<1 23 456 78 9>], 'comb';
+is-deeply [.comb(/\d+/)], [<1 23 456 78 9>».Str], 'comb';
 
 $_ = "Go 127.0.0.1, I said! He went to 173.194.32.32.";
 
