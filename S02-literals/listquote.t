@@ -9,7 +9,7 @@ plan 24;
 my $s = join 'a', <x y z>;
 is($s, "xayaz", 'list context <list>');
 
-#?rakudo skip 'meta operators RT #124558'
+#?rakudo todo 'meta operators RT #124558'
 #?niecza skip '|<<'
 {
 my $s = join |<< <a x y z>;

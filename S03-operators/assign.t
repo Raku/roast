@@ -776,7 +776,7 @@ sub l () { 1, 2 };
 }
 
 # RT #63642
-#?rakudo skip ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
+#?rakudo todo ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
 {
     my %part1 = a => 'b';
     my %part2 = d => 'c';

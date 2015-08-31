@@ -210,7 +210,6 @@ is($/, 'foo', 'Matched value for 3th « <ident>');
 
 # :nth and *-N
 
-#?rakudo skip 'Cannot call Real(Whatever: );'
 is("ABCDE" ~~ m:nth(*)/\w/, "E", "Can match with * index");
 is("ABCDE" ~~ m:nth(*-1)/\w/, "D", "Can match with *-1 index");
 

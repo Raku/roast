@@ -35,7 +35,6 @@ is  $/.Str,          '',        'false match stringifies to empty string';
 }
 
 my $c;
-#?rakudo skip 'Unsupported use of $¢ variable RT #124997'
 ok 'abc' ~~ /.{ $c = $¢ }/,     'current match state';
 #?rakudo todo 'Unsupported use of $¢ variable RT #124998'
 is $c.WHAT.gist, Cursor.gist,   'got right type';

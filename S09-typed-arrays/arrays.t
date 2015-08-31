@@ -82,7 +82,7 @@ plan 77;
 {
     my Array of Int @x;
     ok @x.VAR.of === Array[Int], 'my Array of Int @x declares a nested array';
-    #?rakudo skip "nested typechecks are borked"
+    #?rakudo todo "nested typechecks are borked"
     lives-ok { @x = [2, 3], [5, 6] }, 'assignment works';
     #?rakudo todo "nested typechecks are borked"
     lives-ok { @x.push: [8, 9] }, 'pushing works';
