@@ -45,7 +45,7 @@ line 4
 
 {
     is 'something'.new, '', '"string literal".new just creates an empty string';
-    is +''.new, 0, '... and that strinig works normally';
+    isa-ok +''.new, Failure, '... and that string works normally';
 }
 
 # RT #79568
