@@ -169,12 +169,12 @@ sub combination($n, @xs) {
     # XXX treats @elems as a set; i.e. duplicated values are 
     # treated as identical, not distinct.
     sub group(@sizes, @elems) {
-        return [] if @sizes == 0;
+        return $[] if @sizes == 0;
         map -> $e {
             map -> $g {
-                [ [@$e], @$g ]
+                $[ [|@$e], |@$g ]
             }, group(@sizes[1..*], grep { not $_ === any(@$e) }, @elems)
-        }, combination(@sizes[0], @elems)
+        }, [combination(@sizes[0], @elems)]
     }
 
     is group((2,1), (1,2,3,4)),
