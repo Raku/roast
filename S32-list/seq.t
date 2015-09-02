@@ -27,9 +27,10 @@ is(@searches.elems, 1, "We didn't flatten the RHS because it's no single argumen
 is(@searches[0].WHAT, Seq, "Seq stayed intact");
 is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 
+#?rakudo skip "Aborts test file.  See first commit of PR#522 for fix"
 {
     my @n;
     @n[0, 1] = <a b>.sort;
     # bug found by the IRC::Utils test suite
-    say @n.join('|'), 'a|b', 'can assign a Seq to an array slice';
+    is @n.join('|'), 'a|b', 'can assign a Seq to an array slice';
 }
