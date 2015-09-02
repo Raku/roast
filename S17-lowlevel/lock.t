@@ -88,7 +88,6 @@ plan 8;
       is @log.join(','), 'ale,porter,stout', 'Condition variable worked';
 }
 
-#?rakudo todo 'not sure this test is valid RT #124793'
 {
     my $times = 100;
     my $tried;
@@ -98,15 +97,19 @@ plan 8;
         my $c = $l.condition;
         my $now1;
         my $now2;
+        my $counter = 0;
         my $t1 = Thread.start({
             $l.protect({
-                $c.wait();
+                while $counter == 0 {
+                    $c.wait();
+                }
                 $now1 = now;
             });
         });
 
         my $t2 = Thread.start({
             $l.protect({
+                $counter++;
                 $c.signal();
             });
         });

@@ -149,6 +149,7 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     try { %seen{$_} = 1 for (1 .. (10**1000) ).pick(50); }
 #?rakudo.jvm todo '"Cannot .pick from an infinite list" (but not from CLI)'
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems in huge range';
+#?rakudo skip 'val() fails on bigints'
     ok (so 1 <= all(%seen.keys) <= 10**1000), '... and all the elements are in range';
 }
 
