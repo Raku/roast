@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 174;
+plan 175;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -259,7 +259,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 {
     #L<S02/Forcing item context/"relationship" "single quotes" "double angles">
     my ($x, $y) = <a b>;
-    ok(«$x $y» eqv <a b>, "«$x $y» interpolation works correctly");
+    ok(«$x $y» === <a b>, "«$x $y» interpolation works correctly");
 };
 
 
@@ -280,19 +280,19 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q2[2], '$bar', 'single quoted $bar was not interpolated');
 };
 
-# non-flattening context still counts adjacent non-quoted words separately
 #?niecza todo
 {
     my $gorch = "foo bar";
     my @q := «a b c "$foo" f g $gorch m n '$bar' x y z»;
-    is(+@q, 13, "13 elements in mixed quoted/unquoted «» list, non-flattened");
+    is(+@q, 14, "14 elements in mixed quoted/unquoted «» list, non-flattened");
     is(@q[0], 'a', 'unquoted words are split correctly in the presence of quotes');
     is(@q[3], $foo, 'first interpolation is $foo');
     is(@q[4], 'f', 'unquoted between quotes is split correctly');
-    is(@q[6], $gorch, 'second quote is both parts of $gorch interpolated as sublist in non-flat context');
-    is(@q[8], 'n', 'unquoted between quotes is split correctly');
-    is(@q[9], '$bar', 'single quoted $bar was not interpolated');
-    is(@q[12], 'z', 'trailing unquoted words are split correctly in the presence of quotes');
+    is(@q[6], "foo", 'Unquoted variable\'s first word interpolated correctly');
+    is(@q[7], "bar", 'Unquoted variable\'s second word interpolated correctly');
+    is(@q[9], 'n', 'unquoted between quotes is split correctly');
+    is(@q[10], '$bar', 'single quoted $bar was not interpolated');
+    is(@q[13], 'z', 'trailing unquoted words are split correctly in the presence of quotes');
 };
 
 { # Q L<S02/Literals/No escapes at all>
