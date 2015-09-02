@@ -310,23 +310,23 @@ plan 110;
     #?niecza 4 todo
     is +(%hash<0 1 2>:kv), 4,
         "non-existing entries should be weeded out (3:kv)";
-    is-deeply %hash<0 1 2>:kv, (val("0"),42,val("2"),23),
+    is-deeply %hash<0 1 2>:kv, ("0",42,"2",23),
         "non-existing entries should be weeded out (4:kv)";
     is +(%hash<0 1 2>:!kv), 6,
         "non-existing entries should be weeded out (3:!kv)";
-    is-deeply %hash<0 1 2>:!kv, (val("0"),42,val("1"),Any,val("2"),23),
+    is-deeply %hash<0 1 2>:!kv, ("0",42,"1",Any,"2",23),
         "non-existing entries should be weeded out (4:!kv)";
 
     # {}:p
     #?niecza 2 todo
     is +(%hash<0 1 2>:p), 2,
         "non-existing entries should be weeded out (3:p)";
-    is-deeply %hash<0 1 2>:p, (val("0")=>42,val("2")=>23),
+    is-deeply %hash<0 1 2>:p, ("0"=>42,"2"=>23),
         "non-existing entries should be weeded out (4:p)";
     is +(%hash<0 1 2>:!p), 3,
         "non-existing entries should not be weeded out (3:!p)";
     #?niecza todo 
-    is-deeply %hash<0 1 2>:!p, (val("0")=>42,val("1")=>Any,val("2")=>23),
+    is-deeply %hash<0 1 2>:!p, ("0"=>42,"1"=>Any,"2"=>23),
         "non-existing entries should not be weeded out (4:!p)";
 
     #?niecza 2 todo 

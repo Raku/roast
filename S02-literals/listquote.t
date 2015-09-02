@@ -86,10 +86,11 @@ throws-like { EVAL '<STDIN>' },
     is ~@a, 'foo 3 4.5 5.60 1.2e1 -2+3i',
        '<...> numeric literals stringify correctly';
     isa-ok @a[0], Str, '<foo ...> is a Str';
+    #?rakudo 4 todo 'IntStr/RatStr/NumStr types NYI'
     isa-ok @a[1], Int, '< ... 3 ...> is an Int';
     isa-ok @a[2], Rat, '< ... 4.5 ...> is a Rat';
     isa-ok @a[4], Num, '< ... 1.2e1 ...> is a Num';
-    isa-ok @a[5], Complex, '< ... -2+3i ...> is a Complex';
+    isa-ok @a[5], Complex, '< ... -2+3i ...> is a Num';
 }
 
 # probably doesn't really belong here, but I don't know where else to put it
