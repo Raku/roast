@@ -119,7 +119,7 @@ lives-ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
 # RT #125365
 is_run(
        '0.^methods(:all)».gist.sort',
-       { status => 0, err => -> $o {  $o.chars > 2 }},
+       { status => 0, err => ""},
        'sorting method list does not segfault',
 );
 
