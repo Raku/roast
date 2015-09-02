@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 30;
 
 =begin pod
 
@@ -109,5 +109,18 @@ ok !$d.^does(InitialAttribBoth["type1", "name1"]),
   ".^does gives correct information (4-3)";
 is $d.type, "type1", ".type works correctly";
 is $d.name, "name1", ".name works correctly";
+
+# RT #123511
+{
+    role A [ :$a = 1, :$b = $a * 2] {
+        method foo { $a ~ "-" ~ $b }
+    }
+    role B does A[:a(1)] { };
+    role C does A[:a(2)] { };
+    is B.new.foo, '1-2',
+        'Parametric role used first time uses correct default value';
+    is C.new.foo, '2-4',
+        'Parametric role used a second time uses correct default value';
+}
 
 # vim: ft=perl6
