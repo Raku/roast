@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 my @result = 1,2,3;
 
@@ -26,3 +26,10 @@ my ($y, @searches) = q:to/INPUT/, q:to/SEARCHES/.lines;
 is(@searches.elems, 1, "We didn't flatten the RHS because it's no single argument");
 is(@searches[0].WHAT, Seq, "Seq stayed intact");
 is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
+
+{
+    my @n;
+    @n[0, 1] = <a b>.sort;
+    # bug found by the IRC::Utils test suite
+    say @n.join('|'), 'a|b', 'can assign a Seq to an array slice';
+}
