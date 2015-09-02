@@ -10,12 +10,10 @@ plan 93;
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
 
-#?rakudo skip 'undeclared routine'
 lives-ok {val("foo")}, "val() exists";
 
 ## IntStr
 
-#?rakudo skip 'val and IntStr NYI'
 {
     my $intval = val("42");
 
@@ -27,7 +25,6 @@ lives-ok {val("foo")}, "val() exists";
     is ~$intval, "42", "val(\"42\") is equal to string \"42\"";
 }
 
-#?rakudo skip 'val and IntStr NYI'
 {
     my $intval = val("    -42");
 
@@ -41,7 +38,6 @@ lives-ok {val("foo")}, "val() exists";
 
 ## RatStr
 
-#?rakudo skip 'val and RatStr NYI'
 {
     my $ratval = val("1/5");
 
@@ -53,7 +49,6 @@ lives-ok {val("foo")}, "val() exists";
     is ~$ratval, "1/5", "val(\"1/5\") is equal to string \"1/5\"";
 }
 
-#?rakudo skip 'val and RatStr NYI'
 {
     my $ratval = val(" -0.7\t");
 
@@ -67,7 +62,6 @@ lives-ok {val("foo")}, "val() exists";
 
 ## NumStr
 
-#?rakudo skip 'val and NumStr NYI'
 {
     my $numval = val("6.02e23");
 
@@ -79,7 +73,6 @@ lives-ok {val("foo")}, "val() exists";
     is ~$numval, "6.02e23", "val(\"6.02e23\") is equal to string \"6.02e23\"";
 }
 
-#?rakudo skip 'val and NumStr NYI'
 {
     my $numval = val("+1.200e-10  ");
 
@@ -93,7 +86,6 @@ lives-ok {val("foo")}, "val() exists";
 
 ## ComplexStr
 
-#?rakudo skip 'val and ComplexStr NYI'
 {
     my $cmpxval = val("1+2i");
 
@@ -105,7 +97,6 @@ lives-ok {val("foo")}, "val() exists";
     is ~$cmpxval, "1+2i", "val(\"1+2i\") is equal to string \"1+2i\"";
 }
 
-#?rakudo skip 'val and ComplexStr NYI'
 {
     my $cmpxval = val(" +1.0+-3.2i ");
 
@@ -124,7 +115,6 @@ lives-ok {val("foo")}, "val() exists";
 
 ## Quoting forms (consider using subtests on these?)
 
-#?rakudo skip 'Allomorphic types NYI'
 {
     my @wordlist = qw[1 2/3 4.5 6e7 8+9i] Z (IntStr, RatStr, RatStr, NumStr, ComplexStr);
 
@@ -134,7 +124,6 @@ lives-ok {val("foo")}, "val() exists";
     }
 }
 
-#?rakudo skip 'Allomorphic types NYI'
 {
     my @wordlist = qqww[1 2/3 4.5 6e7 8+9i] Z (IntStr, RatStr, RatStr, NumStr, ComplexStr);
 
@@ -144,7 +133,6 @@ lives-ok {val("foo")}, "val() exists";
     }
 }
 
-#?rakudo skip ':v and allomorphic types NYI'
 {
     my @wordlist  = qw:v[1 2/3 4.5 6e7 8+9i];
     my @purenum   = Int, Rat, Rat, Num, Complex;
@@ -157,7 +145,6 @@ lives-ok {val("foo")}, "val() exists";
     }
 }
 
-#?rakudo skip ':v and allomorphic types NYI'
 {
     my @wordlist  = qqww:v[1 2/3 4.5 6e7 8+9i];
     my @purenum   = Int, Rat, Rat, Num, Complex;
@@ -170,7 +157,6 @@ lives-ok {val("foo")}, "val() exists";
     }
 }
 
-#?rakudo skip ':v NYI'
 {
     my @written = qw:v[1 2/3 4.5 6e7 8+9i ten];
     my @angled  =     <1 2/3 4.5 6e7 8+9i ten>;
@@ -178,7 +164,6 @@ lives-ok {val("foo")}, "val() exists";
     is-deeply @angled, @written, "<...> is equivalent to qw:v[...]";
 }
 
-#?rakudo skip ':v NYI'
 {
     my $num = "4.5";
     my @written = qqww:v[1 2/3 $num 6e7 8+9i ten];

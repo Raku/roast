@@ -31,7 +31,7 @@ sub MAIN-ish(:$year = Date.today.year, :$month = Date.today.month) {
     for @slots.kv -> $k, $v {
 	print "$v ";
 
-	print "\n" if ($k+1) %% 7 or (+$v // 0) == $days-in-month;
+	print "\n" if ($k+1) %% 7 or $v == $days-in-month;
     }
 }
 

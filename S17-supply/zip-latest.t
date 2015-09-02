@@ -17,14 +17,14 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           [(<2 a>), (<2 b>), (<2 c>), (<3 c>), (<4 c>)],
           'zipping 2 supplies works with "zip-latest"',
           :after-tap( {
-              $s1.emit(val('1'));
-              $s1.emit(val('2'));
+              $s1.emit('1');
+              $s1.emit('2');
               $s2.emit('a');
               $s2.emit('b');
               $s2.emit('c');
-              $s1.emit(val('3'));
+              $s1.emit('3');
               $s1.done();
-              $s1.emit(val('4'));
+              $s1.emit('4');
               $s2.done();
           } );
     }

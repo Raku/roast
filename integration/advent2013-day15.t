@@ -37,6 +37,7 @@ is_approx (0, 1e-1 ... 2)[11], 1.1, 'missed the 1';
 is (0, 1e-1 ... * >= 1).gist, '(0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1.1)', '(oops)';
 is (1e0/10 + 1/10 + 1/10 == 0.3).gist, 'False', '(awww!)';
 
+#?rakudo todo "list of numbers"
 {
     my @numbers = <1 2.0 3e0>;
     isa-ok @numbers[0], Int;
