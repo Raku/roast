@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 89;
+plan 93;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -281,6 +281,20 @@ eval-dies-ok '{*.{}}()', '{*.{}}() dies';
 {
     isa-ok Whatever eqv 42, Bool, "Whatever type object does not autoprime";
     isa-ok WhateverCode eqv 42, Bool, "WhateverCode type object does not autoprime";
+}
+
+{
+    my $*f = 1;
+    my $*g = 2;
+    my sub f ($i) { $i($*f); };
+    my sub g ($i) { $i($*g); };
+    my sub fg ($i) { $i($*f, $*g); };
+
+    isa-ok (*++), Code, '*++ is some kind of code';
+    isa-ok (++*), Code, '++* is some kind of code';
+    lives-ok { f(*++); g(*--); fg(*++ + *--) }, "Can call *++ WhateverCode";
+    is ($*f, $*g), (3, 0), 'WhateverCode parameters are rw';
+
 }
 
 # vim: ft=perl6
