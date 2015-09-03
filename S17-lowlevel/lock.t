@@ -88,7 +88,7 @@ plan 8;
       is @log.join(','), 'ale,porter,stout', 'Condition variable worked';
 }
 
-#?rakudo todo 'runs out of filehandles on OS X RT #125977'
+#?rakudo skip 'runs out of filehandles on OS X RT #125977'
 {
     my $times = 100;
     my $tried;
