@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 # $?KERNEL.name is the kernel we were compiled in.
 #?rakudo skip 'unimpl $?KERNEL RT #124624'
@@ -63,6 +63,7 @@ isa-ok $*KERNEL.bits, Int;
 
     my $hup = $*KERNEL.signal(SIGHUP);
     isa-ok $hup, Int, 'did we get an Int back';
+    ok defined($hup), 'was the Int defined';
     isnt $hup, 0, "no signal should come out as 0";
     is $*KERNEL.signal("SIGHUP"), $hup, "also ok as string?";
     is $*KERNEL.signal("HUP"),    $hup, "also ok as partial string?";
