@@ -50,7 +50,7 @@ plan 15;
     
 {
     my $compress = sub ($x) {
-        state $previous;
+        state $previous = '';
         return $x ne $previous ?? ($previous = $x) !! ();
     }
 
@@ -72,7 +72,7 @@ plan 15;
     # subset Positive::Int of Int where { $_ >= 0 };
     # sub lotto (Positive::Int $count, Positive::Int $range) returns List {
     
-    sub lotto (Int $count, Int $range) returns List {
+    sub lotto (Int $count, Int $range) returns Iterable {
         return (1 .. $range).pick($count);
     }
     
@@ -114,18 +114,18 @@ sub combination($n, @xs) {
     if $n > @xs {
         ()
     } elsif $n == 0 {
-        ([])
+        ([],)
     } elsif $n == @xs {
-        [@xs]
+        ([@xs],)
     } else {
-        (map { [@xs[0],$_.list] },combination($n-1,@xs[1..*])), combination($n,@xs[1..*])
+        combination($n-1, @xs[1..*]).map({ [@xs[0], |$_ ] }).Slip, combination($n, @xs[1..*]).Slip;
     }
 }
 
 #?niecza skip 'hangs'
 {
     
-    is combination(3, (1..5)),
+    is combination(3, (1..5)).perl,
     ([1, 2, 3],
      [1, 2, 4],
      [1, 2, 5],
@@ -135,7 +135,7 @@ sub combination($n, @xs) {
      [2, 3, 4],
      [2, 3, 5],
      [2, 4, 5],
-     [3, 4, 5]), "combinations work.";
+     [3, 4, 5]).perl, "combinations work.";
 }
 
 #?niecza skip 'hangs'
@@ -169,12 +169,12 @@ sub combination($n, @xs) {
     # XXX treats @elems as a set; i.e. duplicated values are 
     # treated as identical, not distinct.
     sub group(@sizes, @elems) {
-        return [] if @sizes == 0;
+        return $[] if @sizes == 0;
         map -> $e {
             map -> $g {
-                [ [@$e], @$g ]
+                $[ [|@$e], |@$g ]
             }, group(@sizes[1..*], grep { not $_ === any(@$e) }, @elems)
-        }, combination(@sizes[0], @elems)
+        }, [combination(@sizes[0], @elems)]
     }
 
     is group((2,1), (1,2,3,4)),

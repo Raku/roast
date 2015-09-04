@@ -173,7 +173,7 @@ is(+Range, 0, 'type numification');
     isa-ok (1..100).pick, Int, "picking a single element from an range of Ints produces an Int";
     ok (1..100).pick ~~ 1..100, "picking a single element from an range of Ints produces one of them";
 
-    isa-ok (1..100).pick(1), List, "picking 1 from an range of Ints produces a List";
+    isa-ok (1..100).pick(1), Seq, "picking 1 from an range of Ints produces a Seq";
     ok (1..100).pick(1)[0] ~~ 1..100, "picking 1 from an range of Ints produces one of them";
 
     my @c = (1..100).pick(2);
@@ -200,7 +200,7 @@ is(+Range, 0, 'type numification');
     isa-ok ('b' .. 'y').pick, Str, "picking a single element from an range of Strs produces an Str";
     ok ('b' .. 'y').pick ~~ 'b' .. 'y', "picking a single element from an range of Strs produces one of them";
 
-    isa-ok ('b' .. 'y').pick(1), List, "picking 1 from an range of Strs produces a List";
+    isa-ok ('b' .. 'y').pick(1), Seq, "picking 1 from an range of Strs produces a Seq";
     ok ('b' .. 'y').pick(1)[0] ~~ 'b' .. 'y', "picking 1 from an range of Strs produces one of them";
 
     my @c = ('b' .. 'y').pick(2);
@@ -227,7 +227,7 @@ is(+Range, 0, 'type numification');
     isa-ok (1..100).roll, Int, "rolling a single element from an range of Ints produces an Int";
     ok (1..100).roll ~~ 1..100, "rolling a single element from an range of Ints produces one of them";
 
-    isa-ok (1..100).roll(1), List, "rolling 1 from an range of Ints produces a List";
+    isa-ok (1..100).roll(1), Seq, "rolling 1 from an range of Ints produces a Seq";
     ok (1..100).roll(1)[0] ~~ 1..100, "rolling 1 from an range of Ints produces one of them";
 
     my @c = (1..100).roll(2);
@@ -253,7 +253,7 @@ is(+Range, 0, 'type numification');
     isa-ok ('b' .. 'y').roll, Str, "rolling a single element from an range of Strs produces an Str";
     ok ('b' .. 'y').roll ~~ 'b' .. 'y', "rolling a single element from an range of Strs produces one of them";
 
-    isa-ok ('b' .. 'y').roll(1), List, "rolling 1 from an range of Strs produces a List";
+    isa-ok ('b' .. 'y').roll(1), Seq, "rolling 1 from an range of Strs produces a Seq";
     ok ('b' .. 'y').roll(1)[0] ~~ 'b' .. 'y', "rolling 1 from an range of Strs produces one of them";
 
     my @c = ('b' .. 'y').roll(2);

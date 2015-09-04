@@ -20,7 +20,7 @@ sub bentley_clever($seed) {
     &subrand ... *;
 }
 
-my @sr := bentley_clever(292929);
+my @sr = bentley_clever(292929);
 is @sr[^6].join('|'),
    '467478574|512932792|539453717|20349702|615542081|378707948',
    'can do funny things with lazy series';

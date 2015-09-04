@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 35;
+plan 39;
 
 {
     my @list = 1, 2, 3, 4;
@@ -33,6 +33,13 @@ plan 35;
         @list.classify( $classifier, :into(%i) );
         is-deeply %i, $classified2,
           "basic classify from list with {$classifier.^name} and existing into";
+    }
+    
+    {
+        classify( &subber, @list, :into(my %b := BagHash.new) );
+        is %b<even>, 2, "basic classify as sub with Sub and new into Bag 1) two evens";
+        is %b<odd>, 2, "    2) two odds";
+        is +%b.keys, 2, "    3) no other keys";
     }
 } #4*6
 
@@ -101,5 +108,8 @@ plan 35;
 }
 
 is classify( { "foo" }, () ).elems, 0, 'classify an empty list';
+
+#?rakudo todo "Not sure how this should be fixed"
+lives-ok { my %b := BagHash.new(); %b.classify-list( {.comb}, 20..40 ); }, "Baggy classify-list shouldn't die on this case";
 
 # vim: ft=perl6

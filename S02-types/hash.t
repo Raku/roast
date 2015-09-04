@@ -37,7 +37,7 @@ does-ok %hash4, Hash, '%hash4 does Hash';
 %hash4 = ("key" => "value");
 is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation works');
 
-is( (map { .WHAT.gist } , {"a"=> 1 , "b"=>2}).join(' ') , Hash.gist , 'Non flattening Hashes do not become Pairs when passed to map');
+is( (map { .WHAT.gist } , ${"a"=> 1 , "b"=>2}).join(' ') , Hash.gist , 'Non flattening Hashes do not become Pairs when passed to map');
 my $does_not_flatten= {"a"=> 1 , "b"=>2};
 is( (map { .WHAT.gist } , $does_not_flatten).join(' ') , Hash.gist , 'Non flattening Hashes do not become Pairs when passed to map');
 my %flattens= ("a"=> 1 , "b"=>2);
@@ -177,8 +177,8 @@ my %dupl = (a => 1, b => 2, a => 3);
 is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
 {
-    my %hash = %('a'..'d' Z 1..4);
-    my $i = %hash.elems; # segfaults
+    my %hash = %(flat 'a'..'d' Z 1..4);
+    my $i = %hash.elems;
     is $i, 4, "%hash.elems works";
 
     $i = 0;

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 200;
+plan 202;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -138,13 +138,15 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = SetHash.new(<foo bar foo bar baz foo>);
+    isa-ok $s, SetHash, 'SetHash.new given a List produces a SetHash';
     is showset($s), 'bar baz foo', 'SetHash.new discards duplicates';
 }
 
 {
     my $b = SetHash.new([ foo => 10, bar => 17, baz => 42 ]);
     isa-ok $b, SetHash, 'SetHash.new given an array of pairs produces a SetHash';
-    is +$b, 1, '... with one element';
+    is +$b, 3, '... with three element';
+    is +$b.keys.grep(Pair), 3, '... which are all Pairs';
 }
 
 {
@@ -157,8 +159,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $b = SetHash.new({ foo => 10, bar => 17, baz => 42 });
-    isa-ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
-    is +$b, 1, '... with one element';
+    isa-ok $b, SetHash, 'SetHash.new given a itemized Hash produces a SetHash';
+    is +$b, 3, '... with three elements';
+    is +$b.keys.grep(Pair), 3, '... which are all Pairs';
 }
 
 {
@@ -187,10 +190,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = SetHash.new(<foo bar baz>);
-    isa-ok $s.list.elems, 3, ".list returns 3 things";
-    is $s.list.grep(Str).elems, 3, "... all of which are Str";
-    #?rakudo skip 'no longer Iterable'
-    is $s.iterator.grep(Str).elems, 3, ".iterator yields three Strs";
+    isa-ok $s.elems, 3, ".list returns 3 things";
+    is $s.grep(Pair).elems, 3, "... all of which are Pair";
 }
 
 {
@@ -386,8 +387,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.SetHash, SetHash, "Method .SetHash works on Hash-1";
     is showset(%x.SetHash), "a b", "Method .SetHash works on Hash-2";
-    isa-ok (@a, %x).SetHash, SetHash, "Method .SetHash works on Parcel-1";
-    is showset((@a, %x).SetHash), "Now Paradise a b cross-handed set the was way", "Method .SetHash works on Parcel-2";
+    isa-ok (@a, %x).SetHash, SetHash, "Method .SetHash works on List-1";
+    is showset((@a, %x).SetHash), "Now Paradise a b cross-handed set the was way", "Method .SetHash works on List-2";
 }
 
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'

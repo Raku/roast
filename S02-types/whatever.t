@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 89;
+plan 93;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -61,7 +61,7 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is @a[1..*], 2..4, '@a[1..*] skips first element, stops at last';
     is @a, 1..4, 'array is unmodified after reference to [1..*]';
     # RT #61844
-    is (0, 1)[*-1..*], 1, '*-1..* lives and clips to range of Parcel';
+    is (0, 1)[*-1..*], 1, '*-1..* lives and clips to range of List';
 }
 
 # RT #68894
@@ -116,7 +116,7 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 }
 
 #?niecza skip 'hangs'
-is (0,0,0,0,0,0) >>+>> ((1,2) xx *).flat, <1 2 1 2 1 2>, 'xx * works';
+is (0,0,0,0,0,0) >>+>> (Slip(1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 {
     is (1, Mu, 2, 3).grep(*.defined), <1 2 3>, '*.defined works in grep';
@@ -281,6 +281,20 @@ eval-dies-ok '{*.{}}()', '{*.{}}() dies';
 {
     isa-ok Whatever eqv 42, Bool, "Whatever type object does not autoprime";
     isa-ok WhateverCode eqv 42, Bool, "WhateverCode type object does not autoprime";
+}
+
+{
+    my $*f = 1;
+    my $*g = 2;
+    my sub f ($i) { $i($*f); };
+    my sub g ($i) { $i($*g); };
+    my sub fg ($i) { $i($*f, $*g); };
+
+    isa-ok (*++), Code, '*++ is some kind of code';
+    isa-ok (++*), Code, '++* is some kind of code';
+    lives-ok { f(*++); g(*--); fg(*++ + *--) }, "Can call *++ WhateverCode";
+    is ($*f, $*g), (3, 0), 'WhateverCode parameters are rw';
+
 }
 
 # vim: ft=perl6

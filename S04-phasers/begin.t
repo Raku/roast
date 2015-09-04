@@ -83,7 +83,6 @@ plan 13;
 }
 
 # RT #123777
-#?rakudo todo 'RT#123777'
 {
     lives-ok { my @a; BEGIN { @a = 1 }; +@a },
         'Assigment in BEGIN to list declared outside BEGIN lives';

@@ -815,7 +815,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
 
     is '	 	' ~~ /<:space>+/, ' ', 'space chars';
 
-    is $latin-chars.comb(/<:cntrl>/)>>.ord.join(","), ((0..31, 127..159).join(",")), 'cntrl chars';
+    is $latin-chars.comb(/<:cntrl>/)>>.ord.join(","), (flat 0..31, 127..159).join(","), 'cntrl chars';
 
     is 'abc' ~~ /<:lower>+/, 'abc', 'lower chars';
     is 'ABC' ~~ /<:upper>+/, 'ABC', 'upper chars';

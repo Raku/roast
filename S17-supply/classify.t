@@ -15,8 +15,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     my %mapper is default(0) = ( 11=>1, 12=>1, 13=>1 );
     my &mapper = { $_ div 10 };
-    my @mapper = (0 xx 10, 1 xx 10);
-    for &mapper, $%mapper, $@mapper -> \mapper {
+    my @mapper = 0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1;
+    for &mapper, %mapper, @mapper -> \mapper {
+        diag "mapping {mapper.^name} now";
         my $what = mapper.WHAT.perl;
         my $s = Supply.new;
         ok $s ~~ Supply, "we got a base Supply ($what)";

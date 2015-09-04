@@ -12,10 +12,10 @@ is-deeply %h<a>:exists, True, 'exists';
 is-deeply %h<a b c>:exists, (True, True, False), 'exists - slice';
 
 isa-ok ((%h<a>:exists).WHAT), Bool, 'exists type';
-isa-ok ((%h<a b c>:exists).WHAT), Parcel, 'exists type - slice';
+isa-ok ((%h<a b c>:exists).WHAT), List, 'exists type - slice';
 
 my @a="a";
-isa-ok ((%h{@a}:exists).WHAT), Parcel, 'exists type - array';
+isa-ok ((%h{@a}:exists).WHAT), List, 'exists type - array';
 
 is-deeply %h<c>:!exists, True, 'does not exist';
 

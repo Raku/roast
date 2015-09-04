@@ -9,7 +9,7 @@ plan 24;
 my $s = join 'a', <x y z>;
 is($s, "xayaz", 'list context <list>');
 
-#?rakudo skip 'meta operators RT #124558'
+#?rakudo todo 'meta operators RT #124558'
 #?niecza skip '|<<'
 {
 my $s = join |<< <a x y z>;
@@ -74,7 +74,7 @@ throws-like { EVAL '<STDIN>' },
 # L<S02/Quoting forms/"is autopromoted into">
 {
     my $c = <a b c>;
-    isa-ok($c, Parcel, 'List in scalar context becomes a Capture');
+    isa-ok($c, List, '<a b c> produces a List');
     throws-like {$c.push: 'd'},
       X::Multi::NoMatch,
       '... which is immutable';

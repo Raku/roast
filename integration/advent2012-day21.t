@@ -92,7 +92,7 @@ sub MAIN(*@numbers) {
 }
 END
 
-my @numbers = 1..200, 10000..10200;
+my @numbers = flat 1..200, 10000..10200;
 
 sub collatz-length(Int $start) {
     +($start, { when * %% 2 { $_ / 2 }; when * !%% 2 { 3 * $_ + 1 }; } ... 1);

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 304;
+plan 318;
 
 =begin pod
 
@@ -108,6 +108,16 @@ my @e;
     is(~@r, ~@e, "auto dimension upgrade on lhs ASCII notation");
 }
 
+{ # both-dwim and non-dwim sanity
+    my @r = (1,2,3) <<~>> <A B C D E>;
+    my @e = <1A 2B 3C 1D 2E>;
+    is(~@r, ~@e, "both dwim short side lengthening on ASCII notation");
+
+    throws-like {(1,2,3) >>~<< <A B C D E>}, X::HyperOp::NonDWIM,
+        left-elems => 3, right-elems => 5,
+        "both non-dwim dies correctly on ASCII notation";
+}
+
 { # extension
     @r = (1,2,3,4) >>~>> <A B C D E>;
     @e = <1A 2B 3C 4D>;
@@ -190,6 +200,49 @@ my @e;
     @r = 1 «~« <A B C D>;
     @e = <1A 1B 1C 1D>;
     is(~@r, ~@e, "scalar element extension on lhs unicode notation");
+};
+
+{ # binary infix with lazy or infinite lists
+    my @r = (0 xx *) <<+<< (1..9);
+    my @e = <1 2 3 4 5 6 7 8 9>;
+    is(~@r, ~@e, "lazy list-level extension on lhs ascii notation");
+
+    throws-like {(0 xx *) <<+>> (1..9)}, X::HyperOp::Infinite,
+        side => <left>,
+        "lazy list on left side with both dwim dies correctly";
+    throws-like {(0 xx *) >>+>> (1..9)}, X::HyperOp::Infinite,
+        side => <left>,
+        "lazy list on left side with right dwim dies correctly";
+    throws-like {(0 xx *) >>+<< (1..9)}, X::HyperOp::Infinite,
+        side => <left>,
+        "lazy list on left side with both non-dwim dies correctly";
+
+    @r = (1..9) >>+>> (0 xx *);
+    @e = <1 2 3 4 5 6 7 8 9>;
+    is(~@r, ~@e, "lazy list-level extension on rhs ascii notation");
+
+    throws-like {(1..9) <<+>> (0 xx *)}, X::HyperOp::Infinite,
+        side => <right>,
+        "lazy list on right side with both dwim dies correctly";
+    throws-like {(1..9) <<+<< (0 xx *)}, X::HyperOp::Infinite,
+        side => <right>,
+        "lazy list on right side with left dwim dies correctly";
+    throws-like {(1..9) >>+<< (0 xx *)}, X::HyperOp::Infinite,
+        side => <right>,
+        "lazy list on right side with both non-dwim dies correctly";
+
+    throws-like {(1..Inf) >>+<< (1..Inf)}, X::HyperOp::Infinite,
+        side => <both>,
+        "lazy list on both sides with both non-dwim dies correctly";
+    throws-like {(1..Inf) <<+>> (1..Inf)}, X::HyperOp::Infinite,
+        side => <both>,
+        "lazy list on both sides with both dwim dies correctly";
+    throws-like {(1..Inf) <<+<< (1..Inf)}, X::HyperOp::Infinite,
+        side => <both>,
+        "lazy list on both sides with left dwim dies correctly";
+    throws-like {(1..Inf) >>+>> (1..Inf)}, X::HyperOp::Infinite,
+        side => <both>,
+        "lazy list on both sides with right dwim dies correctly";
 };
 
 { # unary postfix with integers
@@ -310,7 +363,7 @@ my @e;
     is($t, 42, 'plain method call works OK');
 
     my @r;
-    class FooTest2 { method bar { 42 } }; @r = (FooTest2.new)>>.bar;
+    class FooTest2 { method bar { 42 } }; @r = (FooTest2.new,)>>.bar;
     my @e = (42);
     is(~@r, ~@e, "hyper-method-call on list of user-defined objects");
 };
@@ -823,7 +876,7 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 
 # RT #123178
 {
-    is 42 «~~« (Array, List, Parcel), (False, False, False), "hyper against an undefined Iterable doesn't hang";
+    is 42 «~~« (Array, List, Seq), (False, False, False), "hyper against an undefined Iterable doesn't hang";
     is 42 «~~« (Hash, Bag, Enum), (False, False, False), "hyper against an undefined Associative doesn't hang";
 }
 

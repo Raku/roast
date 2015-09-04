@@ -55,7 +55,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 
 #?niecza skip 'munch NYI'
 {
-    ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
+    ok ('A' ... 'ZZ')[^1000].elems < 1000, "'A' ... 'ZZ' does not go on forever";
 
     is ('ZZ' ... 'AA')[*-1], 'AA', "last element of 'ZZ' ... 'AA' is 'AA'";
     throws-like { 'ZZ' ... 'A' },
@@ -108,7 +108,7 @@ is ('1a', '1b' ... '1e').Str, '1a 1b 1c 1d 1e', 'sequence with strings that star
 	method pred { H.new(y => $.y - 1) }
 	method gist { $.y }
     }
-    is (H.new ... *.y > 10).gist, '5 6 7 8 9 10 11', "intuition does not try to cmp a WhateverCode";
+    is (H.new ... *.y > 10).gist, '(5 6 7 8 9 10 11)', "intuition does not try to cmp a WhateverCode";
 }
 
 {

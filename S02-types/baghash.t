@@ -125,13 +125,13 @@ sub showkv($x) {
 
 {
     my $a = (1,2,3,2,2,2,2).BagHash;
-    is $a.kv.tree.sort({ .[0] }), ([1, 1], [2, 5], [3, 1]).list.sort, "BagHash.kv returns list of keys and values";
+    is $a.kv.sort({ .[0] }), ([1, 1], [2, 5], [3, 1]).list.sort, "BagHash.kv returns list of keys and values";
 }
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws-like { EVAL 'my %h = BagHash.new(<a b o p a p o o>)' },
-      X::Hash::Store::OddNumber;
+    my %h = BagHash.new(<a b o p a p o o>);
+    is %h, {:2a, :1b, :3o, :2p}, 'we now flatten according to single arg';
 }
 
 {
@@ -141,9 +141,9 @@ sub showkv($x) {
 }
 
 {
-    my $b = BagHash.new([ foo => 10, bar => 17, baz => 42, santa => 0 ]);
-    isa-ok $b, BagHash, '&BagHash.new given an array of pairs produces a BagHash';
-    is +$b, 1, "... with one element";
+    my $b = BagHash.new(1, [ foo => 10, bar => 17, baz => 42, santa => 0 ]);
+    isa-ok $b, BagHash, '&BagHash.new given something and an array of pairs produces a BagHash';
+    is +$b, 2, "... with two elements";
 }
 
 {
@@ -155,9 +155,9 @@ sub showkv($x) {
 }
 
 {
-    my $b = BagHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 });
-    isa-ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
-    is +$b, 1, "... with one element";
+    my $b = BagHash.new(1, { foo => 10, bar => 17, baz => 42, santa => 0 });
+    isa-ok $b, BagHash, '&BagHash.new given a Hash and something produces a BagHash';
+    is +$b, 2, "... with one element";
 }
 
 {
@@ -489,9 +489,9 @@ sub showkv($x) {
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.BagHash, BagHash, "Method .BagHash works on Hash-1";
     is showkv(%x.BagHash), "a:1 b:2", "Method .BagHash works on Hash-2";
-    isa-ok (@a, %x).BagHash, BagHash, "Method .BagHash works on Parcel-1";
+    isa-ok (@a, %x).BagHash, BagHash, "Method .BagHash works on List-1";
     is showkv((@a, %x).BagHash), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
-       "Method .BagHash works on Parcel-2";
+       "Method .BagHash works on List-2";
 }
 
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'

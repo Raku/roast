@@ -124,8 +124,8 @@ sub hamming-sequence() { # 2**a * 3**b * 5**c, where { all(a,b,c) >= 0 }
 # TODO - we need some tests for merge and hamming problem above
 
 my @tree = gather {
-    my %r=[^8]>>.fmt("%03b") Z (0,1,1,1,1,0,0,0);
-    take <. X>[my@i=0 xx 9,1,0 xx 9].join;
+    my %r=(^8)>>.fmt("%03b") Z=> (0,1,1,1,1,0,0,0);
+    take <. X>[my@i=flat 0 xx 9,1,0 xx 9].join;
     for ^9 {take <. X>[@i=map {%r{@i[($_-1)%19,$_,($_+1)%19].join}},^19].join};
 }
 

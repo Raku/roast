@@ -43,10 +43,10 @@ plan 18;
 {
   my $hashref = {:a(1), :b(2), :c(3)};
   my %hash;
-  try { %hash = ($hashref) };
+  try { %hash = ($hashref,) };
 
   #?niecza todo
-  is +%hash, 0, '%hash = ($hashref) does not flatten the hashref';
+  is +%hash, 0, '%hash = ($hashref,) does not flatten the hashref';
 }
 
 {
@@ -55,7 +55,7 @@ plan 18;
   try { %hash = $hashref };
 
   #?niecza todo
-  is +%hash, 0, '%hash = $hashref does not flatten the hashref';
+  is +%hash, 3, '%hash = $hashref works due to single argument rule';
 }
 
 # Same as above, but now we never use arrays, but only array*refs*.

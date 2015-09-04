@@ -45,13 +45,13 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $a = Supply.from-list("a".."e");
-        my $b = Supply.from-list("f".."k");
+        my $b = Supply.from-list("f".."j");
         my $on = on -> $res {
-            my @values = ([],[]);
+            my @values = [],[];
             ($a,$b) => sub ($val,$index) {
                 @values[$index].push($val);
                 if all(@values) {
-                    $res.emit( (@values>>.shift) );
+                    $res.emit( (@values.map: *.shift).list.item );
                 }
             }
         }
@@ -63,12 +63,11 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     {
         my @s=(Supply.from-list("a".."e"),Supply.from-list("f".."k"),Supply.from-list("l".."p"));
         my $on = on -> $res {
-            my @values = ([] xx +@s);
-            my &infix:<op> = &[,];
+            my @values = ($[] xx +@s);
             @s => -> \val, \index {
                 @values[index].push(val);
                 if all(@values) {
-                    $res.emit( [op] @values>>.shift );
+                    $res.emit( ([,] @values.map: *.shift).list.item );
                 }
             }
         }

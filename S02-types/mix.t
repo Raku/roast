@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 176;
+plan 181;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -109,7 +109,10 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws-like 'my %h = mix <a b o p a p o o>', X::Hash::Store::OddNumber;
+    my %s = mix <a b o p a p o o>;
+    is-deeply %s, { :2a, :1b, :2p, :3o }, 'flattens under single arg rule';
+    my %m = mix <a b o p>,< a p o o>;
+    is-deeply %m, { :2a, :1b, :2p, :3o }, 'also flattens';
 }
 {
     my %h := mix <a b o p a p o o>;
@@ -126,6 +129,11 @@ sub showkv($x) {
 {
     my $m = mix [ foo => 10, bar => 17, baz => 42, santa => 0 ];
     isa-ok $m, Mix, '&Mix.new given an array of pairs produces a Mix';
+    is +$m, 4, "... with four elements under the single arg rule";
+}
+{
+    my $m = mix $[ foo => 10, bar => 17, baz => 42, santa => 0 ];
+    isa-ok $m, Mix, '&Mix.new given an itemized array of pairs produces a Mix';
     is +$m, 1, "... with one element";
 }
 
@@ -139,9 +147,13 @@ sub showkv($x) {
 }
 
 {
-    # plain {} does not interpolate in list context
     my $m = mix { foo => 10, bar => 17, baz => 42, santa => 0 };
     isa-ok $m, Mix, '&Mix.new given a Hash produces a Mix';
+    is +$m, 4, "... with four elements under the single arg rule";
+}
+{
+    my $m = mix ${ foo => 10, bar => 17, baz => 42, santa => 0 };
+    isa-ok $m, Mix, '&Mix.new given an itemized Hash produces a Mix';
     is +$m, 1, "... with one element";
 }
 
@@ -326,24 +338,26 @@ sub showkv($x) {
 }
 
 {
-    my $m1 = mix ( mix <a b c> ), <c c c d d d d>;
-    is +$m1, 8, "Three elements";
-    is $m1<c>, 3, "One of them is 'c'";
-    is $m1<d>, 4, "One of them is 'd'";
+    my $m1 = Mix.new(( mix <a b c> ), <c c c d d d d>);
+    is +$m1, 2, "Two elements";
     my $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
-    isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
+    isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a Mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
+    my $inner-list = $m1.keys.first(List);
+    isa-ok $inner-list, List, "One of the mix's elements is indeed a List!";
+    is $inner-list, <c c c d d d d>, "With the proper elements";
 
     my $m = mix <a b c>;
-    $m1 = mix $m, <c d>;
-    is +$m1, 3, "Three elements";
-    is $m1<c>, 1, "One of them is 'c'";
-    is $m1<d>, 1, "One of them is 'd'";
+    $m1 = Mix.new($m, <c d>);
+    is +$m1, 2, "Two elements";
     $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
+    my $inner-list = $m1.keys.first(List);
+    isa-ok $inner-list, List, "One of the mix's elements is indeed a List!";
+    is $inner-list, <c d>, "With the proper elements";
 }
 
 {
@@ -357,9 +371,9 @@ sub showkv($x) {
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.Mix, Mix, "Method .Mix works on Hash-1";
     is showkv(%x.Mix), "a:1 b:2", "Method .Mix works on Hash-2";
-    isa-ok (@a, %x).Mix, Mix, "Method .Mix works on Parcel-1";
+    isa-ok (@a, %x).Mix, Mix, "Method .Mix works on List-1";
     is showkv((@a, %x).Mix), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
-       "Method .Mix works on Parcel-2";
+       "Method .Mix works on List-2";
 }
 
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'

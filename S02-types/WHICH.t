@@ -37,11 +37,12 @@ my @normal = <
   Failure
   FatRat
   ForeignCode
-  GatherIter
   Grammar
   Hash
-  HashIter
+  HyperConfiguration
+  HyperSeq
   HyperWhatever
+  HyperWorkBuffer
   IO::ArgFiles
   IO::Handle
   IO::Path
@@ -57,18 +58,14 @@ my @normal = <
   IO::Spec::Win32
   Instant
   Int
-  Iterable
-  Iterator
+  IterationBuffer
   JSONPrettyActions
   Junction
   Kernel
   Label
   List
-  ListIter
-  LoL
   Lock
   Macro
-  MapIter
   Match
   Method
   Mix
@@ -80,7 +77,6 @@ my @normal = <
   Pair
   PairMap
   Parameter
-  Parcel
   Perl
   Pod::Block
   Pod::Block::Code
@@ -101,9 +97,11 @@ my @normal = <
   Regex
   Routine
   Scalar
+  Seq
   Set
   SetHash
   Signature
+  Slip
   SprintfHandler
   Stash
   Str
@@ -136,7 +134,7 @@ my @normal = <
   X::Buf::Pack::NonASCII
   X::Caller::NotDynamic
   X::Cannot::Empty
-  X::Cannot::Infinite
+  X::Cannot::Lazy
   X::Comp::AdHoc
   X::Comp::Group
   X::Comp::NYI

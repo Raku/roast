@@ -68,7 +68,7 @@ for 'I must go down to the seas again' {
     my @chars;
 
     @chars = $word.split('');
-    is-deeply @chars, ['', <C a m e l i a>, ''], q<@chars = $word.split('');>;
+    is-deeply @chars, ['', |<C a m e l i a>, ''], q<@chars = $word.split('');>;
 
     @chars = $word.comb;
     is-deeply @chars, [<C a m e l i a>], '@chars = $word.comb;';
@@ -198,14 +198,13 @@ class Dog {
 my @y = 3, 5, 7, 9;
 my @z;
 
-@z = map { $_ > 5 ?? ($_) xx 3 !! Nil }, @y;
+@z = flat map { $_ > 5 ?? ($_) xx 3 !! Nil }, @y;
 is-deeply [@z], [Nil, Nil, 7,7,7, 9,9,9], '@z = map { $_ > 5 ?? ($_) xx 3 !! Nil }, @y';
 
-@z = @y.map: { $_ xx 3 if $_ > 5 };
+@z = flat @y.map: { $_ xx 3 if $_ > 5 };
 is-deeply @z, [7,7,7, 9,9,9], '@y.map: { $_ xx 3 if $_ > 5 };';
 
-@z = ($_ xx 3 if $_ > 5 for @y);
-
+@z = flat ($_ xx 3 if $_ > 5 for @y);
 is-deeply @z, [7,7,7, 9,9,9], '@z = ($_ xx 3 if $_ > 5 for @y);';
 
 # Random integer between 3 and 7 inclusive

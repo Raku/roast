@@ -82,13 +82,12 @@ plan 77;
 {
     my Array of Int @x;
     ok @x.VAR.of === Array[Int], 'my Array of Int @x declares a nested array';
-    #?rakudo skip "nested typechecks are borked"
+    #?rakudo todo "nested typechecks are borked"
     lives-ok { @x = [2, 3], [5, 6] }, 'assignment works';
     #?rakudo todo "nested typechecks are borked"
     lives-ok { @x.push: [8, 9] }, 'pushing works';
     dies-ok  { @x.push: 8 }, 'type constraint is enforced';
     lives-ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
-    #?rakudo todo "nested typechecks are borked"
     dies-ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
 } #6
 
@@ -97,12 +96,12 @@ plan 77;
     my Int @a = 1, 2, 3;
     my Int @b;
     lives-ok { @b = @a }, 'can assign typed array to typed array';
-    #?rakudo todo 'need parameterized Lists'
+    #?rakudo skip 'need parameterized Lists'
     ok @a.values.VAR.of.WHICH eqv Int.WHICH, '@a.values is typed (1)';
     lives-ok { @b = @a.values }, '@a.values is typed (2)';
 } #3
 
-#?rakudo todo 'initialization RT #124676'
+#?rakudo skip 'initialization RT #124676'
 {
     my Str @c = <foo bar baz>;
     ok @c.keys.VAR.of.WHICH eqv Str.WHICH, '@array.keys is typed with Str';
@@ -159,7 +158,6 @@ plan 77;
 {
     throws-like 'my Int @a = "ab", "cd"', X::TypeCheck::Assignment,
         'typed arrays do check type during list assignment';
-    #?rakudo todo 'RT#124079 RT#122440 laziness defers typecheck'
     throws-like 'my Int @a = "ab", "cd"; 42.Str;', X::TypeCheck::Assignment,
         'typed arrays do check type during list assignment in sink';
 }
@@ -202,14 +200,12 @@ plan 77;
 # RT #120506
 {
     my @RT120506-bind := Array[Array[Bool]].new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
-    #?rakudo todo 'unexpectedly getting array Array[Bool].new'
-    is-deeply @RT120506-bind[0, 1]».Parcel, ((True, False, True), (True,)),
+    is-deeply @RT120506-bind[0, 1]».List, ((True, False, True), (True,)),
         "Can feed Arrays of Type to .new of Array[Array[Type]] (binding)";
     is @RT120506-bind[0].WHAT, Array[Bool], "Type is maintained (binding)";
 
     my Array of Bool @RT120506-assign .= new($(Array[Bool].new(True, False, True)), $(Array[Bool].new(True)));
-    #?rakudo todo 'unexpectedly getting array Array[Bool].new'
-    is-deeply @RT120506-assign[0, 1]».Parcel, ((True, False, True), (True,)),
+    is-deeply @RT120506-assign[0, 1]».List, ((True, False, True), (True,)),
         "Can feed Arrays of Type to .new of Array[Array[Type]] (assignment)";
     is @RT120506-assign[0].WHAT, Array[Bool], "Type is maintained (assignment)";
 }

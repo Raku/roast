@@ -23,7 +23,7 @@ plan 11;
         return $x;
     }
 
-    is count2((1,2,3)),           1, 'count2((1,2,3))';
+    is count2((1,2,3)),           3, 'count2((1,2,3))';
 }
 
 {

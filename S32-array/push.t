@@ -135,7 +135,7 @@ plan 52;
 # nested arrayref
 {
     my @push = ();
-    push @push, [ 21 ... 25 ];
+    push @push, $[ 21 ... 25 ];
 
     is(@push.elems,     1, 'nested arrayref, array length is 1');
     is(@push[0].elems,  5, 'nested arrayref, arrayref length is 5');

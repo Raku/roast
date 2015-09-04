@@ -5,7 +5,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 129;
+plan @num * 128;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -33,7 +33,7 @@ for @num -> $T {
     is @arr.Int,    0, "New $t array Int-ifies to 0";
     is +@arr,       0, "New $t array numifies to 0";
     nok @arr,          "New $t array is falsey";
-    nok @arr.infinite, "Empty $t array is not infinite";
+    nok @arr.is-lazy,  "Empty $t array is not lazy";
 
     is @arr[5],  0e0, "Accessing non-existing on $t array gives 0";
     is @arr.elems, 0, "Elems do not grow just from an access on $t array";
@@ -50,7 +50,7 @@ for @num -> $T {
     is @arr.end,   2,  "The end value matches grown elems on $t array";
     is @arr.Int,   3,  "Int-ifies to grown number of elems on $t array";
     is +@arr,      3,  "Numifies to grown number of elems on $t array";
-    nok @arr.infinite, "$t array with values is not infinite";
+    nok @arr.is-lazy,  "$t array with values is not lazy";
 
     is (@arr[^3] = NaN,-Inf,Inf), (NaN,-Inf,Inf),
       "are special IEEE values supported on $t array";
@@ -90,7 +90,6 @@ for @num -> $T {
     @arr[*-1,*-2];                                # cannot approx test Parcels
 
     ok @arr.flat  === @arr, "$t array .flat returns identity";
-    ok @arr.list  === @arr, "$t array .list returns identity";
     ok @arr.eager === @arr, "$t array .eager returns identity";
 
 #?rakudo skip "borkedness with num and iteration RT #124678"
@@ -141,11 +140,11 @@ for @num -> $T {
     throws-like { @arr[0]:delete }, X::AdHoc,
       message => 'Cannot delete from a natively typed array',
       "Cannot push non-int/Int to $t array";
-    throws-like { @arr = 0e0..Inf }, X::Cannot::Infinite,
+    throws-like { @arr = 0e0..Inf }, X::Cannot::Lazy,
       action => 'initialize',
       what   => "array[$t]",
       "Trying to initialize a $t array with a right infinite list";
-    throws-like { @arr = -Inf..0e0 }, X::Cannot::Infinite,
+    throws-like { @arr = -Inf..0e0 }, X::Cannot::Lazy,
       action => 'initialize',
       what   => "array[$t]",
       "Trying to initialize a $t array with a left infinite list";
@@ -219,7 +218,7 @@ for @num -> $T {
     is_approx @untyped[0],   1e0, "List-assign $t array to untyped works (2)";
     is_approx @untyped[9],  10e0, "List-assign $t array to untyped works (3)";
 
-    @untyped = 0e0, @native, 11e0;
+    @untyped = flat 0e0, @native, 11e0;
     is @untyped.elems, 12,        "List-assign $t array surrounded by lits (1)";
     is_approx @untyped[0],   0e0, "List-assign $t array surrounded by lits (2)";
     is_approx @untyped[5],   5e0, "List-assign $t array surrounded by lits (3)";

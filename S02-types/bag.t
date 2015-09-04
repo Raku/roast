@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 195;
+plan 200;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -106,8 +106,10 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws-like { EVAL 'my %h = bag <a b o p a p o o>' },
-      X::Hash::Store::OddNumber;
+    my %s = bag <a b o p a p o o>;
+    is-deeply %s, { :2a, :1b, :3o, :2p }, 'single arg rule rules';
+    my %m = bag <a b o p>,< a p o o>;
+    is-deeply %m, { :2a, :1b, :3o, :2p }, 'flattening rules';
 }
 {
     my %h := bag <a b o p a p o o>;
@@ -124,6 +126,12 @@ sub showkv($x) {
 {
     my $b = bag [ foo => 10, bar => 17, baz => 42, santa => 0 ];
     isa-ok $b, Bag, '&Bag.new given an array of pairs produces a Bag';
+    is +$b, 4, "... with four elements under the single arg rule";
+}
+
+{
+    my $b = bag $[ foo => 10, bar => 17, baz => 42, santa => 0 ];
+    isa-ok $b, Bag, '&Bag.new given an itemized array of pairs produces a Bag';
     is +$b, 1, "... with one element";
 }
 
@@ -137,9 +145,13 @@ sub showkv($x) {
 }
 
 {
-    # plain {} does not interpolate in list context
     my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 };
     isa-ok $b, Bag, '&Bag.new given a Hash produces a Bag';
+    is +$b, 4, "... with one element";
+}
+{
+    my $b = bag ${ foo => 10, bar => 17, baz => 42, santa => 0 };
+    isa-ok $b, Bag, '&Bag.new given an itemized Hash produces a Bag';
     is +$b, 1, "... with one element";
 }
 
@@ -369,24 +381,26 @@ sub showkv($x) {
 }
 
 {
-    my $b1 = bag ( bag <a b c> ), <c c c d d d d>;
-    is +$b1, 8, "Three elements";
-    is $b1<c>, 3, "One of them is 'c'";
-    is $b1<d>, 4, "One of them is 'd'";
+    my $b1 = Bag.new( (bag <a b c>) , <c c c d d d d>);
+    is +$b1, 2, "Two elements";
     my $inner-bag = $b1.keys.first(Bag);
     #?niecza 2 todo 'Bag in Bag does not work correctly yet'
-    isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
+    isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a Bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
+    my $inner-list = $b1.keys.first(List);
+    isa-ok $inner-list, List, "One of the bag's elements is indeed a List!";
+    is $inner-list, <c c c d d d d>, 'with the proper elements';
 
     my $b = bag <a b c>;
-    $b1 = bag $b, <c d>;
-    is +$b1, 3, "Three elements";
-    is $b1<c>, 1, "One of them is 'c'";
-    is $b1<d>, 1, "One of them is 'd'";
+    $b1 = Bag.new($b, <c d>);
+    is +$b1, 2, "Two elements";
     $inner-bag = $b1.keys.first(Bag);
     #?niecza 2 todo 'Bag in Bag does not work correctly yet'
     isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
+    my $inner-list = $b1.keys.first(List);
+    isa-ok $inner-list, List, "One of the bag's elements is indeed a List!";
+    is $inner-list, <c d>, 'with the proper elements';
 }
 
 {
@@ -400,9 +414,9 @@ sub showkv($x) {
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.Bag, Bag, "Method .Bag works on Hash-1";
     is showkv(%x.Bag), "a:1 b:2", "Method .Bag works on Hash-2";
-    isa-ok (@a, %x).Bag, Bag, "Method .Bag works on Parcel-1";
+    isa-ok (@a, %x).Bag, Bag, "Method .Bag works on List-1";
     is showkv((@a, %x).Bag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
-       "Method .Bag works on Parcel-2";
+       "Method .Bag works on List-2";
 }
 
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'

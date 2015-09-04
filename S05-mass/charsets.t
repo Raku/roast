@@ -14,7 +14,7 @@ plan 17;
 
     is $latin-chars.comb(/<alpha>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'alpha chars';
 
-    is $latin-chars.comb(/<space>/)>>.ord.join(","), ((9..13,32,133,160).join(",")), 'space chars';
+    is $latin-chars.comb(/<space>/)>>.ord.join(","), (flat 9..13,32,133,160).join(","), 'space chars';
 
     is $latin-chars.comb(/<digit>/).join, "0123456789", 'digit chars';
 
@@ -22,7 +22,7 @@ plan 17;
 
     is $latin-chars.comb(/<blank>/)>>.ord.join(","), '9,32,160', 'blank chars';
 
-    is $latin-chars.comb(/<cntrl>/)>>.ord.join(","), ((0..31, 127..159).join(",")), 'cntrl chars';
+    is $latin-chars.comb(/<cntrl>/)>>.ord.join(","), (flat 0..31, 127..159).join(","), 'cntrl chars';
 
     #?rakudo.jvm todo 'Unicode 6.3 -- lower characters'
     is $latin-chars.comb(/<lower>/).join, "abcdefghijklmnopqrstuvwxyzµßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'lower chars';

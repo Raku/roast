@@ -18,7 +18,7 @@ nok $tracker, 'orelse thunks';
         ok(~$! eq "oh noes!", 'orelse sets $! after an exception');
 }
 
-#?rakudo skip 'orelse passes $! as argument RT #124535'
+#?rakudo todo 'orelse passes $! as argument RT #124535'
 {
     try { die "oh noes!" } orelse -> $foo {
         ok ~$foo eq "oh noes!", 'orelse passes $! to one argument after an exception';

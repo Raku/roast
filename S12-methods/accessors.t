@@ -13,8 +13,8 @@ class A {
     }
     method test-scalar-a {
         my $x = 0;
-        $x++ for $.a;
-        $x;
+        $x++ for flat 0, $.a;
+        $x - 1;
     }
     method test-list-b {
         my $x = 0;
@@ -23,8 +23,8 @@ class A {
     }
     method test-scalar-b {
         my $x = 0;
-        $x++ for $.b;
-        $x;
+        $x++ for flat 0, $.b;
+        $x - 1;
     }
     method test-hash-a {
         my $x = 0;

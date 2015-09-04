@@ -53,25 +53,25 @@ plan 37;
     # etc......No
 
     sub cbal-tree(Int $n) {
-        return Any if $n == 0;
+        return [Any] if $n == 0;
         gather {
             if $n % 2 == 1 {
                 my $k = ($n - 1) div 2;
                 for cbal-tree($k) -> $a {
                     for cbal-tree($k) -> $b {
-                        take ['x', $a, $b];
+                        take ['x', $a, $b],;
                     }
                 }
             } else {
                 my $k = $n div 2;
                 for cbal-tree($k) -> $a {
                     for cbal-tree($k - 1) -> $b {
-                        take ['x', $a, $b];
+                        take ['x', $a, $b],;
                     }
                 }
                 for cbal-tree($k - 1) -> $a {
                     for cbal-tree($k) -> $b {
-                        take ['x', $a, $b];
+                        take ['x', $a, $b],;
                     }
                 }
             }
@@ -79,7 +79,7 @@ plan 37;
     }
 
     is-deeply [ cbal-tree(1) ],
-       [['x', Any, Any]],
+       [['x', Any, Any],],
        'built a balanced binary tree with 1 item';
 
     is-deeply [ cbal-tree(2) ], 
@@ -243,17 +243,17 @@ plan 37;
     }
 
     sub hbal-tree(Int $n) {
-        return Mu if $n == 0;
-        return ['x', Mu, Mu] if $n == 1;
+        return [Any] if $n == 0;
+        return [$['x', Any, Any]] if $n == 1;
         gather {
             for hbal-tree($n - 1) -> $a {
                 for hbal-tree($n - 1) -> $b {
-                    take ['x', $a, $b];
+                    take $['x', $a, $b];
                 }
                 for hbal-tree($n - 2) -> $b {
                     if is-hbal(['x', $a, $b]) {
-                        take ['x', $a, $b];
-                        take ['x', $b, $a];
+                        take $['x', $a, $b];
+                        take $['x', $b, $a];
                     }
                 }
             }

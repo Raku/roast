@@ -13,7 +13,7 @@ eval-dies-ok('print', 'bare print is a compiler error');
 is_run( 'say ()',
         {
             status => 0,
-            out    => "\n",
+            out    => "()\n",
             err    => '',
         },
         'say ()' );
@@ -33,7 +33,7 @@ is_run( 'say("")',
 }
 
 # RT #74822
-is_run( 'my %h=<a b c> Z 1,2,3; for %h.sort(*.key) { .say }',
+is_run( 'my %h= flat <a b c> Z 1,2,3; for %h.sort(*.key) { .say }',
         {
             status => 0,
             out    => "a => 1\nb => 2\nc => 3\n",

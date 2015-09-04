@@ -28,7 +28,7 @@ sub foobar2 { return() if 1; }
 is(foobar2(), Nil, '... bare return worked with a statement modifier');
 
 my $should_ret_empty_list1 = sub { return; 1 };
-is $should_ret_empty_list1().elems, 0, "our sub returned an empty list (1)";
+is $should_ret_empty_list1(), Nil, "sub returned Nil";
 
 sub return_1 { return 1; }
 is(return_1(), 1, '... return_1() returned 1 correctly');
@@ -74,7 +74,7 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     sub a { .return with 42 }
     is a, 42, 'does .return work?';
     sub b { (1|2|3).return }  # don't auto-thread on return
-    isa_ok b, Junction;
+    isa-ok b, Junction;
 }
 
 # vim: ft=perl6

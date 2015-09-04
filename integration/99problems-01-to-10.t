@@ -101,12 +101,12 @@ plan 22;
     # 
     # Hint: Use the predefined functions list and append.
     
-    my $flatten = { $_ ~~ List ?? ( map $flatten, @($_) ) !! $_ }; 
-    my @flattened = map $flatten, ('a', ['b', ['c', 'd', 'e']]);
+    my &flatten = { $_ ~~ List ?? ( map &flatten, @($_) ).Slip !! $_ }; 
+    my @flattened = map &flatten, ('a', ['b', ['c', 'd', 'e']]);
     is-deeply @flattened, [<a b c d e>], 'We should be able to flatten lists';
     
     sub my_flatten (*@xs) {
-        return map { $_ ~~ List ?? my_flatten( |@$_ ) !! $_ }, @xs;
+        return (map { $_ ~~ List ?? my_flatten( |@$_ ) !! $_ }, @xs).Slip;
     }
     my @flattened2 = map {my_flatten($_)}, ('a', ['b', ['c', 'd', 'e']]);
     is-deeply @flattened2, [<a b c d e>], 'We should be able to flatten lists';
@@ -125,19 +125,19 @@ plan 22;
     # (A B C A D E)
     
     # parens required in the assignment.  See http://perlmonks.org/?node=587242
-    my $compress = sub ($x) {
+    my &compress = sub ($x) {
         state $previous = '';
-        return $x ne $previous ?? ($previous = $x) !! ();
+        ($x ne $previous ?? ($previous = $x) !! ()).Slip;
     }
-    my @compressed = map $compress, <a a a a b c c a a d e e e e>;
+    my @compressed = map &compress, <a a a a b c c a a d e e e e>;
     #?niecza todo
     is-deeply @compressed, [<a b c a d e>], 'We should be able to compress lists';
 }
 
 {
     multi compress2 () { () }
-    multi compress2 ($a) { $a }
-    multi compress2 ($x, $y, *@xs) { @( $x xx ($x !=== $y), @( compress2($y, |@xs) )) }
+    multi compress2 ($a) { ($a) }
+    multi compress2 ($x, $y, *@xs) { ($x === $y ?? ().Slip !! ($x).Slip, compress2($y, |@xs)).Slip }
     
     my @x = <a a a a b c c a a d e e e e>;
     is-deeply [compress2(|@x)], [<a b c a d e>], '... even with multi subs';
@@ -158,7 +158,7 @@ plan 22;
             my @list;
             @list.push(@array.shift)
                 while @array && (!@list || @list[0] eq @array[0]);
-            @packed.push([@list]);
+            @packed.push($@list);
         }
         return @packed;
     }
@@ -231,12 +231,12 @@ plan 22;
                     $count++;
                     next;
                 }
-                @encoded.push([$count, $previous]);
+                @encoded.push($[$count, $previous]);
                 $count = 1;
             }
             $previous = $x;
         }
-        @encoded.push([$count, $x]);
+        @encoded.push($[$count, $x]);
         return @encoded;
     }
     

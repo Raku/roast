@@ -36,7 +36,7 @@ is (<a b c d> Z 'x', 'z', *), <a x b z c z d z>, 'non-meta zip extends right arg
 is (1, 2, 3, * Z 10, 20, 30, 40, 50),
     (1, 10, 2, 20, 3, 30, 3, 40, 3, 50), 'non-meta zip extends left argument ending with *';
 #?niecza skip 'Unable to resolve method munch in class List'
-is (2, 10, * Z 3, 4, 5, *).munch(10),
+is (2, 10, * Z 3, 4, 5, *).[^10],
     (2, 3, 10, 4, 10, 5, 10, 5, 10, 5),
     'non-meta zip extends two arguments ending with *';
 #?niecza todo
@@ -47,7 +47,7 @@ is (<a b c d> Z~ 'x', 'z', *), <ax bz cz dz>, 'zip-concat extends right argument
 #?niecza skip 'Cannot use value like Whatever as a number'
 {
 is (1, 2, 3, * Z+ 10, 20, 30, 40, 50), (11, 22, 33, 43, 53), 'zip-plus extends left argument ending with *';
-is (2, 10, * Z* 3, 4, 5, *).munch(5),
+is (2, 10, * Z* 3, 4, 5, *).[^5],
     (6, 40, 50, 50, 50), 'zip-product extends two arguments ending with *';
 }
 
@@ -58,15 +58,15 @@ is (2, 10, * Z* 3, 4, 5, *).munch(5),
 }
 
 # RT #75818
-isa-ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
+isa-ok (1 Z 2)[0], List, 'zip returns a list of lists';
 
 # RT #113800  - multiple Z operators work with list associative
 #?niecza skip "Unable to resolve method lol in type Parcel"
 {
     my $l = (1,2,3 Z, 4,5,6 Z, 7,8,9);
-    is $l.[0].lol.elems, 3, 'Z, retains list associativity';
-    is $l.[1].lol.elems, 3, 'Z, retains list associativity';
-    is $l.[2].lol.elems, 3, 'Z, retains list associativity';
+    is $l.[0].elems, 3, 'Z, retains list associativity';
+    is $l.[1].elems, 3, 'Z, retains list associativity';
+    is $l.[2].elems, 3, 'Z, retains list associativity';
 }
 
 # RT #73948
@@ -80,7 +80,7 @@ is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
 
 # RT #116036
 {
-    is (<a b> Z=> []), (a => []), 'zip does not flatten itemized list';
+    is (<a b> Z=> ([],)), (a => []), 'zip does not flatten itemized list';
 }
 
 # RT #77114

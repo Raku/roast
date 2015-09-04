@@ -305,7 +305,7 @@ plan 13;
 
     sub gray($n) is cached {
         return [''] if $n == 0;
-        ['0' xx 2**($n-1) >>~<< gray($n-1), 
+        [flat '0' xx 2**($n-1) >>~<< gray($n-1), 
          '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse];
     }
     is-deeply gray(0), [''];
@@ -317,7 +317,7 @@ plan 13;
 {    
     sub gray2($n) {
         return [''] if $n == 0;
-        (state @g)[$n] //= ['0' xx 2**($n-1) >>~<< gray2($n-1),
+        (state @g)[$n] //= [flat '0' xx 2**($n-1) >>~<< gray2($n-1),
                             '1' xx 2**($n-1) >>~<< gray2($n-1).reverse];
     }
     is-deeply gray2(0), [''];
@@ -363,12 +363,12 @@ plan 13;
     # cases in p54.lisp.
     
     my @fr = (
-            ['a', 45],
-            ['b', 13],
-            ['c', 12],
-            ['d', 16],
-            ['e', 9 ],
-            ['f', 5 ],
+            $['a', 45],
+            $['b', 13],
+            $['c', 12],
+            $['d', 16],
+            $['e', 9 ],
+            $['f', 5 ],
     	 );
     
     my %expected = (
@@ -389,7 +389,7 @@ plan 13;
         @c = sort { $^a[1] <=> $^b[1] || $^a[0] cmp $^b[0] }, @c;
         my $a = shift @c;
         my $b = shift @c;
-        unshift @c, [[$a[0], $b[0]], $a[1] + $b[1]];
+        unshift @c, $[ $[$a[0], $b[0]], $a[1] + $b[1]];
     }
     
     my %res;

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 38;
 
 {
     my @array = 11 .. 15;
@@ -10,15 +10,6 @@ plan 41;
     is(@array.elems,     5, 'array has 5 elements');
     is(@array[0],       11, 'first value is 11');
     is(@array[*-1],     15, 'last value is 15');
-}
-
-{
-    my @array = [ 11 .. 15 ];
-
-    is(@array[0].elems,  5, 'arrayref has 5 elements');
-    is(@array[0][0],    11, 'first element in arrayref is 11');
-
-    is(@array[0][*-1],  15, 'last element in arrayref is 15');
 }
 
 {
@@ -60,9 +51,9 @@ plan 41;
     my @a;
     push @a, 1;
     is(@a.elems, 1, 'Simple push works');
-    push @a, [];
+    push @a, $[];
     is(@a.elems, 2, 'Arrayref literal not flattened');
-    push @a, {};
+    push @a, {}.item;
     is(@a.elems, 3, 'Hashref literal not flattened');
     my @foo;
     push @a, $@foo;
@@ -79,12 +70,12 @@ plan 41;
 # RT #112362
 {
     my @a = <a b c d e f>;
-    is @a[[3, 4], 0,], 'c a', '[] in array slice numifies (1)';
-    is @a[[3, 4]],     'c',    '[] in array slice numifies (2)';
+    is @a[$[3, 4], 0,], 'c a', '$[] in array slice numifies (1)';
+    is @a[$[3, 4]],     'c',    '$[] in array slice numifies (2)';
 
     my %h = a => 1, b => 2, 'a b' => 3;
     is %h{<a b>}, '1 2', 'hash slicing sanity';
-    is %h{[<a b>]}, '3', 'hash slicing stringifies []';
+    is %h{$[<a b>]}, '3', 'hash slicing stringifies []';
 }
 
 {

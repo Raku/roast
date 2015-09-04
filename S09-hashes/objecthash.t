@@ -12,7 +12,7 @@ plan 36;
     is  %h{$a}, 'blubb', 'Any-typed hash access (+)';
     nok %h{A.new},       'and the hash really uses ===-semantics';
     dies-ok { %h{Mu.new} = 3 }, 'Any-typed hash does not like Mu keys';
-    ok %h.keys[0] === $a, 'returned key is correct';
+    ok %h.keys.list[0] === $a, 'returned key is correct';
 } #4
 
 {
@@ -32,10 +32,10 @@ plan 36;
     dies-ok { %h{2} = 0.5 },   'key and value type mismatch';
     is %h.keys.sort.join(','), '0.3,0.5', '.keys';
     is ~%h.values.sort,        '1 2',     '.values';
-    isa-ok %h.kv.flat[0],      Rat,       '.kv types (1)';
-    isa-ok %h.kv.flat[1],      Int,       '.kv types (2)';
-    isa-ok %h.pairs[0].key,    Rat,       '.pairs.key type';
-    isa-ok %h.pairs[0].value,  Int,       '.pairs.value type';
+    isa-ok %h.kv.list[0],           Rat,  '.kv types (1)';
+    isa-ok %h.kv.list[1],           Int,  '.kv types (2)';
+    isa-ok %h.pairs.list[0].key,    Rat,  '.pairs.key type';
+    isa-ok %h.pairs.list[0].value,  Int,  '.pairs.value type';
     is %h.elems,               2,         '.elems';
     lives-ok { %h{0.2} := 3 }, 'binding to typed objecthash elements';
     is %h.elems,               3,         'updated .elems';
@@ -51,7 +51,7 @@ plan 36;
 {
     my %h{Any};
     %h = 1, 2;
-    ok %h.keys[0] === 1, 'list assignment + object hashes';
+    ok %h.keys.list[0] === 1, 'list assignment + object hashes';
 } #1
 
 {

@@ -46,7 +46,7 @@ for statement as possible
     my $str;
     my @a = 1..3;
     my @b = 4..6;
-    for flat zip(@a; @b) -> $x, $y {
+    for zip(@a, @b) -> ($x, $y) {
         $str ~= "($x $y)";
     }
     is $str, "(1 4)(2 5)(3 6)", 'for zip(@a; @b) -> $x, $y works';
@@ -288,7 +288,7 @@ class TestClass{ has $.key is rw  };
     is($a, $b, 'List context');
 
     $a = '';
-    for [1..3, 4..6] { $a ~= $_.WHAT.gist };
+    for ([1..3, 4..6],) { $a ~= $_.WHAT.gist };
     is($a, Array.gist, 'List context');
 
     $a = '';
@@ -559,7 +559,6 @@ lives-ok {
 }
 
 # RT #113026
-#?rakudo todo 'RT #113026 array iterator does not track a growing array'
 #?niecza todo 'array iterator does not track a growing array'
 {
     my @rt113026 = 1 .. 10;

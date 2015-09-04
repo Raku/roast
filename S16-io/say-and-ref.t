@@ -8,7 +8,7 @@ plan 3;
 
 is_run q{my $a = [1, 2, 3]; say   $a},
     {
-        out     => "1 2 3\n",
+        out     => "[1 2 3]\n",
         err     => '',
         status  => 0,
     }, 'Can say array ref';

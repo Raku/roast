@@ -338,8 +338,9 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     isa-ok (a => [3,4]).invert[0].key, Int, 'Pair.invert.key type';
     is (a => [3,4]).invert».value, 'a a', 'Pair.invert splits positional values and dups keys';
 
-    is <a b c>.pairs.invert.perl, '(:a(0), :b(1), :c(2))', 'list of array pairs can be inverted';
-    is { a => (1,2), b => <x y z> }.pairs.invert.sort.gist, '1 => a 2 => a x => b y => b z => b', 'list of hash pairs can be inverted';
+    is ~<a b c>.pairs.invert.map({ .key ~ '|' ~ .value}),
+        'a|0 b|1 c|2', 'list of array pairs can be inverted';
+    is { a => (1,2), b => <x y z> }.pairs.invert.sort.gist, '(1 => a 2 => a x => b y => b z => b)', 'list of hash pairs can be inverted';
 }
 
 # RT #123215

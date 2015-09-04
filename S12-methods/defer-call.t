@@ -9,7 +9,7 @@ plan 14;
 # Simple test, making sure callwith passes on parameters properly.
 class A {
     method a(*@A) {
-        (self.perl, @A)
+        flat (self.perl, @A)
     }
 }
 class B is A {

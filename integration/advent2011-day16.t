@@ -1,7 +1,7 @@
 # http://perl6advent.wordpress.com/2011/12/16/where-have-all-the-references-gone/
 use v6;
 use Test;
-plan 11;
+plan 12;
 
 class My::Class {
      # attribute with accessor (indicated by the dot)
@@ -56,10 +56,15 @@ my @b = (3, 4);
         take 1;
     }), 2, 'for @a { }';
 
+    # special case; one elment
     is +(gather for $scalar {
-        # one iteration only
         take 1;
          }), 1, 'for $scalar { }';
+
+    # but normally, it doesn't interpolate:
+    is +(gather for 42, $scalar {
+        take 1;
+         }), 2, 'for thing, $scalar { }';
 
     is +(gather for @$scalar {
         # two iterations again

@@ -41,7 +41,7 @@ plan 10;
         "LoL assignment on Array with WhateverCode indices";
 
     @lmao-matrix[*; {$_}; 0, 1] = <appended to each list>;
-    is-deeply @lmao-matrix, Array.new([<lists are>, [<appended to>]], [<end of>, [<each list>]]),
+    is-deeply @lmao-matrix, Array.new([|<lists are>, [<appended to>]], [|<end of>, [<each list>]]),
         "Autovivifying LoL assignment on Array with Whatever/Code indices";
 }
 

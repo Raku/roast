@@ -87,7 +87,7 @@ plan 29;
     my $capture2 = \(1,2,3);
     try { foo8 $capture2 };  # note: no |$args here
 
-    ok $capture1 === $capture2,
+    ok $capture1 eqv $capture2,
         "unflattened captures can be passed to subs";
 }
 

@@ -63,7 +63,7 @@ plan 13;
     is $str, '123', "die didn't trigger NEXT \{}";
 }
 
-#?rakudo skip 'leave NYI RT #124951'
+#RT #124951
 {
     my $str = '';
     try {

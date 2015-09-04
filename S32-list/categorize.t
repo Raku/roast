@@ -14,7 +14,7 @@ plan 28;
     my sub subber ($a) { $a - ($a % 10) };
     my $blocker = { $_ - ($_ % 10) };
     my $hasher  = { 3=>0, 7=>0, 9=>0, 12=>10, 18=>10, 23=>20, 29=>20 };
-    my $arrayer = [ 0 xx 10, 10 xx 10, 20 xx 10 ];
+    my $arrayer = [ flat 0 xx 10, 10 xx 10, 20 xx 10 ];
 
     for &subber, $blocker, $hasher, $arrayer -> $mapper {
         is-deeply categorize( $mapper, @list ), %expected1,

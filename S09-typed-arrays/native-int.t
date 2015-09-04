@@ -7,10 +7,10 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 137 + @uint * 2;
+plan (@int + @uint) * 136 + @uint * 2;
 
 # Basic native int array tests.
-for @int,@uint -> $T {
+for flat @int,@uint -> $T {
     my $t = $T.^name;
     diag "Testing $t array";
 
@@ -35,7 +35,7 @@ for @int,@uint -> $T {
     is @arr.Int,    0, "New $t array Int-ifies to 0";
     is +@arr,       0, "New $t array numifies to 0";
     nok @arr,          "New $t array is falsey";
-    nok @arr.infinite, "Empty $t array is not infinite";
+    nok @arr.is-lazy , "Empty $t array is not lazy";
 
     is @arr[5], 0,    "Accessing non-existing on $t array gives 0";
     is @arr.elems, 0, "Elems do not grow just from an access on $t array";
@@ -52,7 +52,7 @@ for @int,@uint -> $T {
     is @arr.end, 2,    "The end value matches grown elems on $t array";
     is @arr.Int, 3,    "Int-ifies to grown number of elems on $t array";
     is +@arr, 3,       "Numifies to grown number of elems on $t array";
-    nok @arr.infinite, "$t array with values is not infinite";
+    nok @arr.is-lazy,  "$t array with values is not lazy";
 
     is (@arr[10] = 100), 100, "Can assign non-contiguously to $t array";
     is @arr[  9],   0, "Elems behind non-contiguous assign are 0 on $t array";
@@ -66,7 +66,7 @@ for @int,@uint -> $T {
     is +@arr, 0,      "Cleared $t array numifies to 0";
     nok @arr,         "Cleared $t array is falsey";
 
-    is (@arr = 1..50), (1..50).Parcel, "Can assign integer range to $t array";
+    is (@arr = 1..50), (1..50).List, "Can assign integer range to $t array";
     is @arr.elems, 50, "Got correct elems from range assign on $t array";
     is @arr[0], 1,     "Got correct element from range assign on $t array (1)";
     is @arr[49], 50,   "Got correct element from range assign on $t array (2)";
@@ -90,7 +90,6 @@ for @int,@uint -> $T {
     is @arr[*-1,*-2], (16,12), "Can also get last 2 elements on $t array";
 
     ok @arr.flat  === @arr, "$t array .flat returns identity";
-    ok @arr.list  === @arr, "$t array .list returns identity";
     ok @arr.eager === @arr, "$t array .eager returns identity";
 
     diag qq:!a:!c/my $t \$s; for @arr { \$s += \$_ }; \$s/ if !
@@ -114,7 +113,6 @@ for @int,@uint -> $T {
 
     is @arr.values,                (22,32,26,34), ".values from a $t array";
     is @arr.pairup,              (22=>32,26=>34), ".pairup from a $t array";
-    #?rakudo 6 skip 'nativeint.list loops on itself'
     is @arr.keys,                  ( 0, 1, 2, 3), ".keys from a $t array";
     is @arr.pairs,     (0=>22,1=>32,2=>26,3=>34), ".pairs from a $t array";
     is @arr.antipairs, (22=>0,32=>1,26=>2,34=>3), ".antipairs from a $t array";
@@ -177,7 +175,7 @@ for @int,@uint -> $T {
     is @arr.shift, 3, "shift from $t array works (1)";
     is @arr.elems, 4, "shift from $t array works (2)";
 
-    is (@arr = 1..10), (1..10).Parcel, "can initialize $t from Range";
+    is (@arr = 1..10), (1..10).List, "can initialize $t from Range";
     my @replaced = @arr.splice(3, 2, 98, 99, 100);
     is @arr.elems, 11, "Number of elems after splice $t array";
     is @arr[2],   3, "Splice on $t array did the right thing (1)";
@@ -207,7 +205,7 @@ for @int,@uint -> $T {
     is @untyped[0], 1, "List-assigning $t array to untyped works (2)";
     is @untyped[9], 10, "List-assigning $t array to untyped works (3)";
 
-    @untyped = 0, @native, 11;
+    @untyped = flat 0, @native, 11;
     is @untyped.elems, 12, "List-assign $t array surrounded by literals (1)";
     is @untyped[ 0],  0, "List-assign $t array surrounded by literals (2)";
     is @untyped[ 5],  5, "List-assign $t array surrounded by literals (3)";

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 37;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -43,11 +43,11 @@ plan 38;
     is($($a),     $a, '$($a) is just $a');
 
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
-    isa-ok((item $a, $b).WHAT, Parcel, '(item $a, $b) makes a Parcel');
+    isa-ok((item $a, $b).WHAT, List, '(item $a, $b) makes a List');
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
-    isa-ok(item($a, $b).WHAT,  Parcel, 'item $a, $b makes a Parcel');
+    isa-ok(item($a, $b).WHAT,  List, 'item $a, $b makes a List');
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
-    isa-ok($($a, $b).WHAT,     Parcel, '$ $a, $b makes a Parcel');
+    isa-ok($($a, $b).WHAT,     List, '$ $a, $b makes a List');
     my @array = ($a, $b);
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
@@ -58,9 +58,9 @@ plan 38;
     my %b = 'x' => 42;
  
     is-deeply [@a], [1, 2], '@array flattening';
-    is-deeply [item @a], [[1, 2]], 'item @array non-flattening';
+    is-deeply [item @a], [$[1, 2]], 'item @array non-flattening';
     is-deeply [%b], ['x' => 42], '%hash flattening';
-    is-deeply [item %b], [{'x' => 42}], 'item %hash non-flattening';
+    is-deeply [item %b], [${'x' => 42}], 'item %hash non-flattening';
 }
 
 {
@@ -109,14 +109,6 @@ is((@).push(42,43), '42 43', 'Anonymous @ variable can be pushed');
     my $c = 0;
     $c++ for @$h;
     is $c, 4, '@$var coercion';
-}
-
-#?niecza skip "Invalid hard reference syntax"
-{
-    my @a = <a b c d>;
-    my $c = 0;
-    $c++ for $@a;
-    is $c, 1, '$@var itemization'
 }
 
 # vim: ft=perl6

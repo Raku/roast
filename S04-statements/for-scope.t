@@ -53,7 +53,7 @@ for 1, 2 -> $_ {
     }
 
     is respect(1,2,3), 3, 'a for loop inside a sub loops over each of the elements';
-    is respect([1,2,3]), 1, '... but only over one array ref';
+    is respect($[1,2,3]), 1, '... but only over one itemized array';
     is respect( my @a = 1, 2, 3 ), 3, '...and when the array is declared in the argument list';
     is @a.join(','), '1,2,3', 'and the array get the right values';
 }

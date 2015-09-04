@@ -126,8 +126,8 @@ is $action.calls, 'ab', '... and in the right order';
     my $x = Grammar::Trivial.parse: 'a',
         actions => Grammar::Trivial::A.new;
     ok $x, 'Trivial grammar parsed';
-    is $x.ast[0], 1, 'make(Parcel) (1)';
-    is $x.ast[1], 2, 'make(Parcel) (2)';
+    is $x.ast[0], 1, 'make(List) (1)';
+    is $x.ast[1], 2, 'make(List) (2)';
 
     class MethodMake {
         method TOP($m) { $m.make('x') }

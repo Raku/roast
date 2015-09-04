@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 214;
+plan 213;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -126,12 +126,13 @@ sub showkv($x) {
 
 {
     my $a = (1,2,3,2,2,2,2).MixHash;
-    is $a.kv.tree.sort({ .[0] }), ([1, 1], [2, 5], [3, 1]), "MixHash.kv returns list of keys and values";
+    is $a.kv.sort({ .[0] }), ([1, 1], [2, 5], [3, 1]), "MixHash.kv returns list of keys and values";
 }
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws-like 'my %h = MixHash.new(<a b o p a p o o>)', X::Hash::Store::OddNumber;
+    my %h = MixHash.new(<a b o p a p o o>);
+    is %h, { :2a, :1b, :3o, :2p }, 'list flattens according to single arg rule';
 }
 
 {
@@ -142,10 +143,9 @@ sub showkv($x) {
 
 {
     my $m = MixHash.new([ foo => 10.1, bar => 17.2, baz => 42.3, santa => 0 ]);
-    is $m.total, 1, 'make sure .total is ok';
-    is $m.elems, 1, 'make sure .elems is ok';
     isa-ok $m, MixHash, '&MixHash.new given an array of pairs produces a MixHash';
-    is +$m, 1, "... with one element";
+    is $m.total, 4, 'make sure .total is ok';
+    is $m.elems, 4, 'make sure .elems is ok';
 }
 
 {
@@ -159,7 +159,7 @@ sub showkv($x) {
 {
     my $m = MixHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 });
     isa-ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
-    is +$m, 1, "... with one element";
+    is +$m, 4, "... with four elements";
 }
 
 {
@@ -417,9 +417,9 @@ sub showkv($x) {
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.MixHash, MixHash, "Method .MixHash works on Hash-1";
     is showkv(%x.MixHash), "a:1 b:2", "Method .MixHash works on Hash-2";
-    isa-ok (@a, %x).MixHash, MixHash, "Method .MixHash works on Parcel-1";
+    isa-ok (@a, %x).MixHash, MixHash, "Method .MixHash works on List-1";
     is showkv((@a, %x).MixHash), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
-       "Method .MixHash works on Parcel-2";
+       "Method .MixHash works on List-2";
 }
 
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'

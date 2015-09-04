@@ -1,34 +1,34 @@
 use v6;
 use Test;
 
-plan 54;
+plan 55;
 
-isa-ok (5, 7, 8), Parcel, '(5, 7, 8) is Parcel';
-is +(5, 7, 8), 3, 'prefix:<+> on a Parcel';
-is ~(5, 7, 8), '5 7 8', 'prefix:<~> on a Parcel';
-is (5, 7, 8).Str, '5 7 8', '.Str on a Parcel';
+isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
+is +(5, 7, 8), 3, 'prefix:<+> on a List';
+is ~(5, 7, 8), '5 7 8', 'prefix:<~> on a List';
+is (5, 7, 8).Str, '5 7 8', '.Str on a List';
 
 # .perl
-is ().perl, '()', '.perl on empty Parcel';
-#?niecza todo '.item.perl on empty Parcel gives Match.ast shorthand'
-is ().item.perl, '$( )', '.item.perl on empty Parcel';
+is ().perl, '()', '.perl on empty List';
+#?niecza todo '.item.perl on empty List gives Match.ast shorthand'
+is ().item.perl, '$()', '.item.perl on empty List';
 
 # L<S02/Quoting forms/Elsewhere it is equivalent to a parenthesized list of strings>
 
-isa-ok <5 7 8>, Parcel, '<5 7 8> is Parcel';
-is +<5 7 8>, 3, 'prefix:<+> on an angle bracket Parcel';
-is ~<5 7 8>, '5 7 8', 'prefix:<~> on an angle bracket Parcel';
-is <5 7 8>.Str, '5 7 8', '.Str on an angle bracket Parcel';
+isa-ok <5 7 8>, List, '<5 7 8> is List';
+is +<5 7 8>, 3, 'prefix:<+> on an angle bracket List';
+is ~<5 7 8>, '5 7 8', 'prefix:<~> on an angle bracket List';
+is <5 7 8>.Str, '5 7 8', '.Str on an angle bracket List';
 
-#?niecza 3 skip ".Parcel NYI"
-isa-ok (5, 7, 8).Parcel, Parcel, '.Parcel returns an parcel';
-is (5, 7, 8).Parcel, [5,7,8], '.Parcel contains the right items';
-is (5, 7, 8).Parcel.elems, 3, '.Parcel contains the right number of elements';
+#?niecza 3 skip ".List NYI"
+isa-ok (5, 7, 8).List, List, '.List returns an parcel';
+is (5, 7, 8).List, [5,7,8], '.List contains the right items';
+is (5, 7, 8).List.elems, 3, '.List contains the right number of elements';
 
-is ?(), False, 'empty Parcel is False';
-is ?(1,2,3), True, 'non-empty Parcel is True';
+is ?(), False, 'empty List is False';
+is ?(1,2,3), True, 'non-empty List is True';
 
-lives-ok { <5 7 8>[] }, 'can zen slice a Parcel';
+lives-ok { <5 7 8>[] }, 'can zen slice a List';
 
 # WAS: RT #115282, modified for lolly brannch
 is $(;).elems, 0, '$(;) parses, and is empty';
@@ -36,9 +36,9 @@ is $(;).elems, 0, '$(;) parses, and is empty';
 # .rotate
 {
     my $p = <a b c d e>;
-    is ~$p.rotate, 'b c d e a', 'Parcel.rotate defaults to +1';
+    is ~$p.rotate, 'b c d e a', 'List.rotate defaults to +1';
     is ~$p, 'a b c d e', 'original parcel unmodified';
-    ok $p.rotate ~~ Parcel, 'Parcel.rotate returns a Parcel';
+    ok $p.rotate ~~ List, 'List.rotate returns a List';
 
     is ~$p.rotate(2), 'c d e a b', '.rotate(2)';
     is ~$p, 'a b c d e', 'original parcel still unmodified';
@@ -80,7 +80,7 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     is ~$p, 'a b c d e', 'original still unmodified (negative)';
 } #13
 
-# RT125677 Make sure Parcel.rotate is Cool with stuff
+# RT125677 Make sure List.rotate is Cool with stuff
 {
     my $p = <a b c d e>;
     is ~$p.rotate('2'), 'c d e a b', '.rotate("2")';
@@ -95,13 +95,21 @@ is $(;).elems, 0, '$(;) parses, and is empty';
 } #4
 
 {
-    my $p = Parcel.new( <a b c> );
+    my $p = List.new( <a b c> );
     is $p.elems, 1, 'did we get the list';
     is $p, <a b c>, 'did we get what we put in';
 
-    $p = Parcel.new( 'a','b','c' );
+    $p = List.new( 'a','b','c' );
     is $p.elems, 3, 'did we get the parameters';
     is $p, <a b c>, 'did we get what we put in';
 } #4
+
+#RT #116527
+{
+    role sidecat {};
+    my @a = 1,2,3;
+    my @b = @a.pick(*).sort.list but sidecat;
+    is @b.gist, "[1 2 3]", "can gist a list with a role";
+}
 
 # vim: ft=perl6

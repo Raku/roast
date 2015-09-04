@@ -41,10 +41,10 @@ throws-like { await }, X::AdHoc, "a bare await should not work";
 {
     my $p = start (1, 2, 3, 4);  # does start handle a blorst
     await $p;
-    is $p.result.join(', '), '1, 2, 3, 4', 'can returns a Parcel from a start block';
+    is $p.result.join(', '), '1, 2, 3, 4', 'can returns a List from a start block';
 }
 
-#?rakudo todo 'RT #122715'
+#?rakudo skip 'RT #122715'
 {
     my $p = start {
         (0..3).map: *+1;

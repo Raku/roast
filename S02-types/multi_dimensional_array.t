@@ -85,7 +85,7 @@ is(+$multi2, 2, 'the multi2 has 2 elements');
     is(+$array, 3, 'multi2[0] has 3 elements');
     is(+$multi2[0], 3, '+$multi2[0] works');
 }
-isa-ok($multi2[0], Parcel);
+isa-ok($multi2[0], List);
 
 # slice
 

@@ -101,7 +101,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 {
     is ~([\+] [\+] 1 xx 5), '1 3 6 10 15', 'two nested [\+]';
     #?niecza todo 'unary [] does not context yet'
-    is ([+] [1, 2, 3, 4]), 4,  '[+] does not flatten []-arrays';
+    is ([+] 0, [1, 2, 3, 4]), 4,  '[+] does not flatten []-arrays';
 }
 
 #?niecza skip '[macro]'
@@ -320,23 +320,22 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 #?niecza skip '^^'
 {
     is ([\^^] False, 0, 5, '', False, 16, 0, Any, "hello", False).gist,
-       'False 0 5 5 5 Nil Nil Nil Nil Nil',
+       '(False 0 5 5 5 Nil Nil Nil Nil Nil)',
        '[\^^]';
     is ([\xor] 'xyzzy', Int, 0.0, '', False, 'plugh', 4, 2, 'xyzzy').gist,
-       'xyzzy xyzzy xyzzy xyzzy xyzzy Nil Nil Nil Nil',
+       '(xyzzy xyzzy xyzzy xyzzy xyzzy Nil Nil Nil Nil)',
        '[\xor]';
 }
 
 # RT 57976 implement orelse
 #?niecza skip 'huh?  these are macros'
-#?rakudo todo 'orelse RT #124516'
 {
 
-    is (join ', ', [\//] Any,    0, 1),
-       (join ', ',      'Any()', 0, 0),
+    is (join ', ', [\//] Any, 0, 1),
+       (join ', ',       Any, 0, 0),
        '[\orelse]';
-    is (join ', ', [\orelse] Any,    0, 1),
-       (join ', ',          'Any()', 0, 0),
+    is (join ', ', [\orelse] Any, 0, 1),
+       (join ', ',           Any, 0, 0),
        '[\orelse]';
 
 }

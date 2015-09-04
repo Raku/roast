@@ -35,7 +35,7 @@ plan 29;
 
     %hash{(1,2)} = "one", "two";
     is %hash, {"1" => "one", "2" => "two"},
-        "assigning a slice using keys from Parcel";
+        "assigning a slice using keys from List";
 
     %hash{Array.new(1,2)} = "one", "two";
     is %hash, {"1" => "one", "2" => "two"},

@@ -41,6 +41,6 @@ for sliding-window($model-text.comb, 3) -> $a, $b, $c {
 
 my $first = $model-text.substr(0, 1);
 my $second = $model-text.substr(1, 1);
-my @chain := $first, $second, -> $a, $b { my $r = %next-step{$a ~ $b}.roll.key } ... *;
-my @result = @chain.munch(80);
+my @chain = $first, $second, -> $a, $b { my $r = %next-step{$a ~ $b}.roll.key } ... *;
+my @result = @chain[0..79];
 ok @result > 2, 'got result';

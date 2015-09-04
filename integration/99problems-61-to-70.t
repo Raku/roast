@@ -38,10 +38,10 @@ plan 15;
     my @expected = 'C', 'D';
     
     sub leaves($tree){
-        return @() unless defined($tree);
+        return Empty unless defined($tree);
         return @($tree[0],)
             if (not defined($tree[1])) and (not defined($tree[2]));
-        return leaves($tree[1]), leaves($tree[2]);
+        return flat leaves($tree[1]), leaves($tree[2]);
     }
     
     is-deeply([leaves($tree)], @expected, "leaves() works");
@@ -62,7 +62,7 @@ plan 15;
     # assume preorder traversal
     
     sub internals($tree){
-        return @() unless defined($tree);
+        return Empty unless defined($tree);
         gather {
             take $tree[0]
                 if defined($tree[1]) and defined($tree[2]);
@@ -71,7 +71,7 @@ plan 15;
          };
     }
     
-    is-deeply([internals($tree)], @expected, "internals() collects internal nodes");
+    is-deeply([flat internals($tree)], @expected, "internals() collects internal nodes");
     
     # P62B (*) Collect the nodes at a given level in a list
     # 
@@ -86,7 +86,7 @@ plan 15;
     # to do that.
     
     sub atlevel($tree, $level) {
-        return @() unless defined($tree);
+        return Empty unless defined($tree);
         return @($tree[0]) if $level == 1;
         gather {
            take atlevel($tree[1], $level - 1);
@@ -97,9 +97,9 @@ plan 15;
     my @e1 = 'A', ;
     my @e2 = 'B', 'E';
     my @e3 = 'C', 'D';
-    is-deeply([atlevel($tree, 1)], @e1, "atlevel() works at level 1");
-    is-deeply([atlevel($tree, 2)], @e2, "atlevel() works at level 2");
-    is-deeply([atlevel($tree, 3)], @e3, "atlevel() works at level 3");
+    is-deeply([flat atlevel($tree, 1)], @e1, "atlevel() works at level 1");
+    is-deeply([flat atlevel($tree, 2)], @e2, "atlevel() works at level 2");
+    is-deeply([flat atlevel($tree, 3)], @e3, "atlevel() works at level 3");
 }
 
 {

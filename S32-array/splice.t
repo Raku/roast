@@ -78,8 +78,8 @@ for @testing -> @a, $T {
                 @a = values;
 
                 my $Treturn :=
-                  return === Nil ?? Nil !! $T.new(return.list);
-                my $Tremain := $T.new(remain.list);
+                  return === Nil ?? Nil !! $T.new(|return.list);
+                my $Tremain := $T.new(|remain.list);
 
                 # sub
                 splice-ok splice(@a,|params), $Treturn, @a, $Tremain,
@@ -105,29 +105,29 @@ for @testing -> @a, $T {
     submeth-ok (1..10),    (10),       (),   (1..10), 'none rest';
     submeth-ok (1..10),     (*),       (),   (1..10), 'none * rest';
     submeth-ok (1..10),   (*-3), (8,9,10),    (1..7), 'end rest';
-    submeth-ok (1..10), (*-3,2),    (8,9), (1..7,10), 'end some';
-    submeth-ok (1..10), (*-3,*-1),  (8,9), (1..7,10), 'end some callable';
+    submeth-ok (1..10), (*-3,2),    (8,9), (flat 1..7,10), 'end some';
+    submeth-ok (1..10), (*-3,*-1),  (8,9), (flat 1..7,10), 'end some callable';
 
     submeth-ok  (^10),       (10,0),    (),     (^10), 'push none';
     submeth-ok  (^10),        (*,0),    (),     (^10), 'push none *';
     submeth-ok  (^10),     (*-@a,0),    (),     (^10), 'push none callable';
     submeth-ok  (^10), (10,0,10,11),    (),     (^12), 'push two';
     submeth-ok  (^10),  (*,0,10,11),    (),     (^12), 'push two *';
-    submeth-ok  (^10),    (10,0,@a),    (), (^10,^10), 'push self';
-    submeth-ok  (^10),     (*,0,@a),    (), (^10,^10), 'push self *';
+    submeth-ok  (^10),    (10,0,@a),    (), (flat ^10,^10), 'push self';
+    submeth-ok  (^10),     (*,0,@a),    (), (flat ^10,^10), 'push self *';
     submeth-ok (2..9),    (0,0,0,1),    (),     (^10), 'unshift';
     submeth-ok  (^10),        (0,0),    (),     (^10), 'unshift none';
-    submeth-ok  (^10),     (0,0,@a),    (), (^10,^10), 'unshift self';
+    submeth-ok  (^10),     (0,0,@a),    (), (flat ^10,^10), 'unshift self';
     submeth-ok  (^10),    (0,10,@a), (^10),     (^10), 'replace self';
 
-    submeth-ok (^10), (5,1,42), (5,), (^5,42,6..^10), 'replace 1 with 1';
-    submeth-ok (^10), (5,1,^3), (5,), (^5,^3,6..^10), 'replace 1 with range';
-    submeth-ok (^10),    (5,1), (5,),    (^5,6..^10), 'replace 1 with none';
-    submeth-ok  (^9), (5,1,@a), (5,),  (^5,^9,6..^9), 'replace 1 with self';
-    submeth-ok (^10), (5,0,42),   (), (^5,42,5..^10), 'replace none with 1';
-    submeth-ok (^10), (5,0,^3),   (), (^5,^3,5..^10), 'replace none with range';
+    submeth-ok (^10), (5,1,42), (5,), (flat ^5,42,6..^10), 'replace 1 with 1';
+    submeth-ok (^10), (5,1,^3), (5,), (flat ^5,^3,6..^10), 'replace 1 with range';
+    submeth-ok (^10),    (5,1), (5,),    (flat ^5,6..^10), 'replace 1 with none';
+    submeth-ok  (^9), (5,1,@a), (5,),  (flat ^5,^9,6..^9), 'replace 1 with self';
+    submeth-ok (^10), (5,0,42),   (), (flat ^5,42,5..^10), 'replace none with 1';
+    submeth-ok (^10), (5,0,^3),   (), (flat ^5,^3,5..^10), 'replace none with range';
     submeth-ok (^10),    (5,0),   (),          (^10), 'replace none with none';
-    submeth-ok  (^9), (5,0,@a),   (),  (^5,^9,5..^9), 'replace none with self';
+    submeth-ok  (^9), (5,0,@a),   (),  (flat ^5,^9,5..^9), 'replace none with self';
 
     submeth-ok (),     (0,1), (),    (), 'remove 1 past end';
     submeth-ok (), (0,1,1,2), (), (1,2), 'remove 1 past end + push';
@@ -143,7 +143,7 @@ for @testing -> @a, $T {
 
     # splicing in an infinite list
     for 'splice @a,0,0,1..Inf', '@a.splice: 0,0,1..Inf' -> $code {
-        throws-like $code, X::Cannot::Infinite, :action('splice in');
+        throws-like $code, X::Cannot::Lazy, :action('splice in');
     }
 
     # offset out of range

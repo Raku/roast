@@ -69,7 +69,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s = Supply.new;
         tap-ok $s.unique( :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
           [<a b c B>],
-          'unique with as and expiry works',
+          'unique with with and expiry works',
           :after-tap( {
               $s.emit("a");
               sleep 1;
@@ -89,7 +89,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         tap-ok $s.unique(
           :as( *.substr(0,1) ), :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
           [<a bb c B>],
-          'unique with as and expiry works',
+          'unique with with, as and expiry works',
           :after-tap( {
               $s.emit("a");
               sleep 1;

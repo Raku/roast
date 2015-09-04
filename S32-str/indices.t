@@ -7,10 +7,10 @@ plan 24;
 
 # Type of return value
 isa-ok 'abc'.indices('b')[0], Int;
-isa-ok 'abc'.indices('d'), Parcel;
+isa-ok 'abc'.indices('d'), List;
 is 'abc'.indices('d').elems, 0, "method did not find anything";
 isa-ok indices('abc','b')[0], Int;
-isa-ok indices('abc','d'), Parcel;
+isa-ok indices('abc','d'), List;
 is indices('abc','d').elems, 0, "sub did not find anything";
 
 is "foo".indices("o"),              (1,2), "meth o simple test, no overlap";

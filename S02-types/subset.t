@@ -55,7 +55,7 @@ dies-ok { my Digit $x = 3.1 },
     lives-ok { my Subhash $a = {} },
              'can create subset of hash';
 
-    subset Person of Hash where { .keys.sort ~~ <firstname lastname> }
+    subset Person of Hash where { .keys.sort ~~ ['firstname', 'lastname'] }
     lives-ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
              'can create subset of hash with where';
     dies-ok { my Person $p = { :first<Charlie>, :last<Delta> } },

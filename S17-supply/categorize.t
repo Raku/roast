@@ -16,8 +16,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     {
         my &mapper = { $_ div 10 };
         my %mapper is default(0) = ( 11=>1, 12=>1, 13=>1 );
-        my @mapper = (0 xx 10, 1 xx 10);
-        for &mapper, $%mapper, $@mapper -> \mapper {
+        my @mapper = 0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1;
+        for &mapper, %mapper, @mapper -> \mapper {
             my $what = mapper.WHAT.perl;
             my $s = Supply.new;
             ok $s ~~ Supply, "we got a base Supply ($what)";
@@ -41,8 +41,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     {
         my &mapper = { $_ div 10 ?? (0,1) !! () };
         my %mapper is default( () ) = ( 11=>(0,1), 12=>(0,1), 13=>(0,1) );
-        my @mapper = ( ().item xx 10, $(0,1) xx 10);
-        for &mapper, $%mapper, $@mapper -> \mapper {
+        my @mapper = (),(),(),(),(),(),(),(),(),(),
+          $(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1);
+        for &mapper, %mapper, @mapper -> \mapper {
             my $what = mapper.WHAT.perl;
             my $s = Supply.new;
             ok $s ~~ Supply, "we got a base Supply ($what)";

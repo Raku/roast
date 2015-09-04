@@ -7,7 +7,7 @@ plan 10;
 
 # compact array acting as a buffer
 {
-    my uint8 @buffer = ('A' .. 'Z').map({ .ord });
+    my uint8 @buffer = ('A' .. 'Z').map({ .ord }).list;
     is(@buffer[0],  ord('A'), 'basic sanity test (1)');
     is(@buffer[25], ord('Z'), 'basic sanity test (2)');
     #?rakudo 3 todo "substr issues on compact array - RT #124455"

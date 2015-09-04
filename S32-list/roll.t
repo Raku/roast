@@ -30,7 +30,7 @@ is roll(2, @arr), <z z>, 'sub roll with $num < +@values, implicit no-replace';
 is roll(4, @arr), <z z z z>, 'sub roll with $num > +@values';
 
 is <a b c d>.roll(*)[^10].elems, 10, 'roll(*) generates at least ten elements';
-ok <a b c d>.roll(*).infinite, 'roll(*) knows itself to be infinite';
+ok <a b c d>.roll(*).is-lazy, 'roll(*) knows itself to be lazy';
 
 {
   my @items = <1 2 3 4>;
@@ -62,7 +62,7 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
     isa-ok @a.roll, Int, "rolling a single element from an array of Ints produces an Int";
     ok @a.roll ~~ 1..100, "rolling a single element from an array of Ints produces one of them";
 
-    isa-ok @a.roll(1), List, "rolling 1 from an array of Ints produces a List";
+    ok @a.roll(1) ~~ Iterable, "rolling 1 from an array of Ints produces something iterable";
     ok @a.roll(1)[0] ~~ 1..100, "rolling 1 from an array of Ints produces one of them";
 
     my @c = @a.roll(2);
@@ -86,8 +86,8 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
 {
     ok 1 <= (1..1_000_000).roll() <= 1_000_000, 'no argument roll works';
     
-    my @matches := (1..1_000_000).roll(*);
-    ok (so 1 <= all(@matches[^100]) <= 1_000_000), 'the first 100 elems are in range';
+    my \matches = (1..1_000_000).roll(*);
+    ok (so 1 <= all(matches[^100]) <= 1_000_000), 'the first 100 elems are in range';
 }
 
 {

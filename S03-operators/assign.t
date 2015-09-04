@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 303;
+plan 294;
 
 
 # tests various assignment styles
@@ -40,7 +40,7 @@ plan 303;
     # swap two elements in the same array 
     # (moved this from array.t)
     my @a = 1 .. 5;
-    @a[0,1] = @a[1,0];
+    @a[0,1] = flat @a[1,0];
     is(@a[0], 2, "slice assignment swapping two element in the same array");
     is(@a[1], 1, "slice assignment swapping two element in the same array");
 }
@@ -50,7 +50,7 @@ plan 303;
 
     my @a = 1 .. 2;
     my @b = 0 .. 2;
-    @a[@b] = @a[1, 0], 3;
+    @a[@b] = flat @a[1, 0], 3;
     is(@a[0], 2, "slice assignment swapping with array dwim");
     is(@a[1], 1, "slice assignment swapping with array dwim");
     is(@a[2], 3, "slice assignment swapping with array dwim makes listop");
@@ -197,7 +197,7 @@ plan 303;
     my (@a, @b);
     @a = 1;
     @b = 2;
-    (@b, @a) = (@a, @b);
+    (@b, @a) = flat (@a, @b);
     ok(!defined(@a[0]), '(@b, @a) = (@a, @b) assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = (@a, @b) assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
@@ -208,7 +208,7 @@ plan 303;
     my (@a, @b);
     @a = (1);
     @b = (2);
-    (@b, @a) = @a, @b;
+    (@b, @a) = flat @a, @b;
     ok(!defined(@a[0]), '(@b, @a) = @a, @b assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = @a, @b assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = @a, @b assignment \@b[1]');
@@ -386,20 +386,6 @@ my @p;
     is($x, 'abcabcabc', 'x= operator');
     is(@p[0],'abcabcabc', "x= operator parses as item assignment 1");
     is(@p[1],4, "x= operator parses as item assignment 2");
-}
-
-{
-    my @x = ( 'a', 'z' );
-    @p = @x xx= 3, 4;
-    is(+@x,   6,   'xx= operator elems');
-    is(@x[0], 'a', 'xx= operator 0');
-    is(@x[1], 'z', 'xx= operator 1');
-    is(@x[2], 'a', 'xx= operator 2');
-    is(@x[3], 'z', 'xx= operator 3');
-    is(@x[4], 'a', 'xx= operator 4');
-    is(@x[5], 'z', 'xx= operator 5');
-    ok(!defined(@x[6]), 'xx= operator 6');
-    is(~@p,~(@x,4), "xx= operator parses as item assignment 1");
 }
 
 {
@@ -586,14 +572,14 @@ sub l () { 1, 2 };
 {
     package Foo {
         our $b;
-        my @z = ($::('Foo::b') = l(), l());
+        my @z = (flat $::('Foo::b') = l(), l());
         is($b.elems, 2,    q/lhs treats $::('Foo::b') as scalar (1)/);
         is(@z.elems, 3,    q/lhs treats $::('Foo::b') as scalar (2)/);
     }
 }
 
 {
-    my @z = ($Foo::c = l, l);
+    my @z = (flat $Foo::c = l, l);
     is($Foo::c.elems, 2,    'lhs treats $Foo::c as scalar (1)');
     is(@z.elems,      3,    'lhs treats $Foo::c as scalar (2)');
 }
@@ -602,7 +588,6 @@ sub l () { 1, 2 };
     my @a;
     my @z = ($(@a[0]) = l, l);
     is(@a[0].elems, 2, 'lhs treats $(@a[0]) as scalar (1)');
-    #?rakudo todo 'item assignment'
     #?niecza todo
     is(@z.elems,    2, 'lhs treats $(@a[0]) as scalar (2)');
 }
@@ -618,7 +603,7 @@ sub l () { 1, 2 };
 
 {
     my $a;
-    my @z = (($a, *) = l, l, l);
+    my @z = (($a, *) = flat l, l, l);
     is($a.elems, 1, 'lhs treats ($a, *) as list (1)');
     #?rakudo todo 'list assignment with ($var, *)'
     #?niecza todo 'assigning to ($a, *)'
@@ -645,7 +630,7 @@ sub l () { 1, 2 };
 {
     my $a;
     my $b;
-    my @z = (($a,$b) = l, l);
+    my @z = (($a,$b) = flat l, l);
     is($a,  1,   'lhs treats ($a,$b) as list');
     is($b,  2,   'lhs treats ($a,$b) as list');
     is(+@z, 2,   'lhs treats ($a,$b) as list, and passes only two items on');
@@ -681,7 +666,7 @@ sub l () { 1, 2 };
 
 {
     my %a;
-    my @z = (%a<x y z> = l, l);
+    my @z = (%a<x y z> = flat l, l);
     is(%a<x>, 1,    'lhs treats %a<x y z> as list');
     is(%a<y>, 2,    'lhs treats %a<x y z> as list');
     is(%a<z>, 1,    'lhs treats %a<x y z> as list');
@@ -699,7 +684,7 @@ sub l () { 1, 2 };
 
 {
     my %a;
-    my @z = (%a{'x','y','z'} = l, l);
+    my @z = (%a{'x','y','z'} = flat l, l);
     is(%a<x>, 1,    q/lhs treats %a{'x','y','z'} as list/);
     is(%a<y>, 2,    q/lhs treats %a{'x','y','z'} as list/);
     is(%a<z>, 1,    q/lhs treats %a{'x','y','z'} as list/);
@@ -710,7 +695,7 @@ sub l () { 1, 2 };
 
 {
     my %a;
-    my @z = (%a{'x'..'z'} = l, l);
+    my @z = (%a{'x'..'z'} = flat l, l);
     is(%a<x>, 1,    q/lhs treats %a{'x'..'z'} as list/);
     is(%a<y>, 2,    q/lhs treats %a{'x'..'z'} as list/);
     is(%a<z>, 1,    q/lhs treats %a{'x'..'z'} as list/);
@@ -736,7 +721,7 @@ sub l () { 1, 2 };
     my @a;
     my @b = (0,0);
     my $c = 1;
-    my @z = (@a[@b[$c,]] = l, l);
+    my @z = (@a[@b[$c,]] = flat l, l);
     is(~@a,     '1',    'lhs treats @a[@b[$c,]] as list');
     #?rakudo todo 'list assignment'
     #?niecza todo
@@ -761,7 +746,7 @@ sub l () { 1, 2 };
     my @a;
     my $b = 0;
     my sub foo { @a }
-    my @z = (foo()[$b,] = l, l);
+    my @z = (foo()[$b,] = flat l, l);
     #?niecza todo
     is(@a.elems,    1,  'lhs treats foo()[$b,] as list');
     is(@z[0].elems, 1,  'lhs treats foo()[$b,] as list');
@@ -783,6 +768,7 @@ sub l () { 1, 2 };
 
 
 # L<S03/Assignment operators/",=">
+#?rakudo skip ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
 {
     my @a = 1, 2;
     is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)';
@@ -790,6 +776,7 @@ sub l () { 1, 2 };
 }
 
 # RT #63642
+#?rakudo todo ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
 {
     my %part1 = a => 'b';
     my %part2 = d => 'c';
@@ -926,7 +913,7 @@ sub l () { 1, 2 };
        'Assign to array with the same array on rhs (RT #93972)';
     $rt93972 = (1, 2, 3);
     $rt93972 = $rt93972.grep({1});
-    is $rt93972.join(','), '1,2,3', 'same with Parcel';
+    is $rt93972.join(','), '1,2,3', 'same with List';
 }
 
 {
@@ -956,6 +943,7 @@ sub l () { 1, 2 };
 }
 
 # RT #76414
+#?rakudo skip ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
 {
     my @rt76414 = (1, 2);
     @rt76414 ,= 3, 4;         # same as push(@rt76414,3,4) according to S03

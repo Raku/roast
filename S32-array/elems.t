@@ -23,7 +23,7 @@ plan 11;
 #?niecza todo
 {
   my $a;
-  is $a.elems, 0, ".elems does works on arbitrary scalars";
+  is $a.elems, 1, ".elems does works on arbitrary scalars";
 }
 
 {

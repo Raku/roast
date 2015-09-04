@@ -4,7 +4,7 @@ use Test;
 plan 8;
 
 is ~("food and drink" ~~ / foo | food /), 'food', 'ltm';
-is ~("food and drink" ~~ / foo || food /), 'foo', 'first alternantive';
+is ~("food and drink" ~~ / foo || food /), 'foo', 'first alternative';
 
 grammar Letter {
     rule text     { <greet> $<body>=<line>+? <close> }
@@ -20,10 +20,10 @@ my $informal-letter = "Yo Cabal,
 Informal body text.
 Later dude, Random Hacker";
 
-my $p = Letter.parse($informal-letter, :rule<text>);
-is ~$p, $informal-letter, 'informal letter parse';
+my @p = Letter.parse($informal-letter, :rule<text>);
+is ~@p, $informal-letter, 'informal letter parse';
 
-for $p -> $/ {
+for @p -> $/ {
     is ~$<greet><to>, 'Cabal', 'informal letter greet';
     is ~$<close><from>, 'Random Hacker', 'informal letter close';
 }
@@ -37,5 +37,5 @@ my $formal-letter = "Dear Perl6,
    Formal body text.
    Yours sincerely, Tester";
 
-$p = FormalLetter.parse($formal-letter, :rule<text>);
-is ~$p, $formal-letter, 'formal letter parse';
+@p = FormalLetter.parse($formal-letter, :rule<text>);
+is ~@p, $formal-letter, 'formal letter parse';

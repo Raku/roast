@@ -78,7 +78,6 @@ plan 85;
   ok  (\@a === \@a), "=== on array references (1)";
   #?niecza todo
   ok  (\@b === \@b), "=== on array references (2)";
-  #?rakudo todo '\@a seems to flatten when it should not'
   ok !(\@a === \@b), "=== on array references (3)";
   isa-ok (\@a === \@a), Bool, "=== on array references (4)";
 }

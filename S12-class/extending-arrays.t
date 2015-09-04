@@ -49,7 +49,7 @@ my $pair = :key<value>;
 is $pair.value, 'value', "method on a named pair";
 
 {
-    augment class Parcel {
+    augment class List {
         method twice {
             gather {
                 take $_ * 2 for self.list;
@@ -57,7 +57,7 @@ is $pair.value, 'value', "method on a named pair";
         }
     }
 
-    is (1, 2, 3).twice.join('|'), "2|4|6", 'can extend class Parcel';
+    is (1, 2, 3).twice.join('|'), "2|4|6", 'can extend class List';
 }
 
 # vim: ft=perl6

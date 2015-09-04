@@ -6,7 +6,7 @@ plan 6;
 
 sub is-prime-alpha($n) { $n %% none 2..sqrt $n }
 
-my @primes := 2, 3, 5, -> $p { ($p+2, $p+4 ... &is-prime-beta)[*-1] } ... *;
+my @primes = 2, 3, 5, -> $p { ($p+2, $p+4 ... &is-prime-beta)[*-1] } ... *;
 sub is-prime-beta($n) { $n %% none @primes ...^  * > sqrt $n }
 
 sub expmod(Int $a is copy, Int $b is copy, $n) {
@@ -56,7 +56,7 @@ is-deeply [(2 .. 20).grep({is-prime-alpha($_)})], @primes_lt_20, 'prime (alpha)'
 is-deeply [(2 .. 20).grep({is-prime-beta($_)})], @primes_lt_20, 'prime (beta)';
 is-deeply [(2 .. 20).grep({is-prime-rm($_, $_)})], @primes_lt_20, 'prime (rabin-miller)';
 
-my @primes_lt_200 = (@primes_lt_20, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199);
+my @primes_lt_200 = @primes_lt_20.Slip, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199;
 
 {
     my @primes-beta = (2 .. 200).grep({is-prime-beta($_)});

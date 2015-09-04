@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 34;
+plan 38;
 
 # L<S32::Containers/"List"/"=item join">
 
@@ -21,8 +21,11 @@ is($joined2, "a|b|c", 'join("|", @list) works');
 my $joined3 = join("|", "a", "b", "c");
 is($joined3, "a|b|c", 'join("|", 1, 2, 3) works');
 
-my $joined4 = join("|", [ "a", "b", "c" ]);
-is($joined4, "a b c", 'join("|", []) should not join anything');
+my $joined4 = join("|", $[ "a", "b", "c" ]);
+is($joined4, "a b c", 'join("|", $[]) should not join anything');
+
+my $joined5 = join("|", [ "a", "b", "c" ]);
+is($joined5, "a|b|c", 'join("|", ["a", "b", "c"]) works');
 
 # join() without a separator (defaults to '', per S32)
 is(<a b c>.join, 'abc', 'join() separator defaults to "".');
@@ -42,7 +45,7 @@ my $joined3a = join($sep, "a", "b", "c");
 is($joined3a, "a, b, c", 'join($sep, "a", "b", "c") works');
 
 my $joined4a = join($sep, [ "a", "b", "c" ]);
-is($joined4a, "a b c", 'join($sep, []) works');
+is($joined4a, "a, b, c", 'join($sep, ["a", "b", "c"]) works');
 
 # join ... without parens
 
@@ -58,11 +61,17 @@ is($joined3b, "a, b, c", 'join $sep, "a", "b", "c" works');
 my $joined3c = join ":", "a", "b", "c";
 is($joined3c, "a:b:c", 'join(":", "a", "b", "c") works');
 
-my $joined4b = join $sep, [ "a", "b", "c" ];
-is($joined4b, "a b c", 'join $sep, [] should not join anything');
+my $joined4b = join $sep, $[ "a", "b", "c" ];
+is($joined4b, "a b c", 'join $sep, $["a", "b", "c"] should not join anything');
 
-my $joined4c = join ":", [ "a", "b", "c" ];
-is($joined4c, "a b c", 'join ":", [] should not join anything');
+my $joined4c = join ":", $[ "a", "b", "c" ];
+is($joined4c, "a b c", 'join ":", $["a", "b", "c"] should not join anything');
+
+my $joined5b = join $sep, [ "a", "b", "c" ];
+is($joined5b, "a, b, c", 'join $sep, ["a", "b", "c"] works');
+
+my $joined5c = join ":", [ "a", "b", "c" ];
+is($joined5c, "a:b:c", 'join ":", ["a", "b", "c"] works');
 
 # join() with empty string as separator
 
@@ -78,8 +87,11 @@ is($joined2d, "abc", 'join("", @list) works');
 my $joined3d = join('', "a", "b", "c");
 is($joined3d, "abc", 'join("", 1, 2, 3) works');
 
-my $joined4d = join("", [ "a", "b", "c" ]);
-is($joined4d, "a b c", 'join("", []) works');
+my $joined4d = join("", $[ "a", "b", "c" ]);
+is($joined4d, "a b c", 'join("", $["a", "b", "c"]) should not join anything');
+
+my $joined5d = join("", [ "a", "b", "c" ]);
+is($joined5d, "abc", 'join("", ["a", "b", "c"]) works');
 
 # some odd edge cases
 

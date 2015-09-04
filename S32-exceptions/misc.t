@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 343;
+plan 339;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -525,7 +525,9 @@ throws-like 'CATCH { when X::Y {} }', X::Comp::Group,
 
 # RT #75230
 throws-like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
-    reason => { m/'Missing semicolon'/ }, pre => { m/'1 if 2 '/ }, post => { m/'3 { say 3 }'/ }, highexpect => @('postfix');
+    reason => { m/'Missing semicolon'/ },
+    pre => { m/'1 if 2 if'/ },
+    post => { m/'3 { say 3 }'/ };
 
 # RT #77522
 throws-like '/\ X/', X::Syntax::Regex::Unspace,
@@ -613,15 +615,6 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 # RT #117859
 throws-like 'class RT117859 { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 'Type';
 
-throws-like 'my $a = |(1, 2, 3)', X::Syntax::ArgFlattener;
-throws-like 'sub foo($x) { }; foo({ |(1, 2, 3) })', X::Syntax::ArgFlattener;
-
-# RT #71034
-throws-like 'my $a = (1, 2, 3); my @a = |$a;', X::Syntax::ArgFlattener;
-
-# RT #115276
-throws-like 'say(|(|([4])))', X::Syntax::ArgFlattener;
-
 # RT #93988
 throws-like '5.', X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::Number::IllegalDecimal };
 
@@ -648,7 +641,7 @@ throws-like 'no DoesNotMatter Undeclared;', X::Undeclared::Symbols;
 # RT #73102
 throws-like 'my Int (Str $x);', X::Syntax::Variable::ConflictingTypes, outer => Int, inner => Str;
 
-throws-like '$k', X::Undeclared, post => '$k', highexpect => (),
+throws-like '$k', X::Undeclared, post => '$k', highexpect => &not,
     "X::Undeclared precedes the name and doesn't expect anything else";
 
 # RT #125427

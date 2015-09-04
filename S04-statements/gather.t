@@ -8,15 +8,14 @@ plan 33;
 
 # Standard gather
 {
-    my @a;
     my $i;
     
-    @a := gather {
+    my @a := gather {
         $i = 1;
         for (1 .. 5) -> $j {
             take $j;
         }
-    };
+    }.values;
 
     ok(!$i, "not yet gathered");
     is(+@a, 5, "5 elements gathered");
@@ -106,7 +105,7 @@ plan 33;
             take $a;
             $count++
         }
-    };
+    }.List;
     my $result = @list[2];
     is($count, 2, "gather is lazy");	
 }
@@ -123,13 +122,13 @@ plan 33;
 }
 
 {
-    my @list = gather {
+    my \list := gather {
         loop (my $v = 1; $v <= 10; $v++)
         {
             take $v if $v % 2 == 0;
         }
     };
-    is ~@list, "2 4 6 8 10", "gather with nested loop";
+    is ~list, "2 4 6 8 10", "gather with nested loop";
 }
 
 {
@@ -148,8 +147,8 @@ plan 33;
         }
     }
     
-    my @evens := grep-div((1...*), 2);
-    is ~grep-div(@evens, 3)[^16], ~grep-div((1...100), 6), "Nested identical gathers";
+    my \evens = grep-div((1...*), 2);
+    is ~grep-div(evens, 3)[^16], ~grep-div((1...100), 6), "Nested identical gathers";
 }
 
 # RT #77036
@@ -226,33 +225,34 @@ plan 33;
 
 #?niecza skip 'Cannot use bind operator with this LHS'
 {
-    my ($c) := \(gather for 1..2 {
+    my \c := (gather for 1..2 {
         take $_, $_ * 10;
-    });
-    is $c.flat, (1,10,2,20), ".flat flattens fully into a list of Ints.";
-    is $c.lol, LoL.new($(1,10),$(2,20)), ".lol: list of Parcels.";
-    is $c.item, ($(1,10),$(2,20)).list.item, "a list of Parcels, as an item.";
+    }).list;
+    is c.flat, (1,10,2,20), ".flat flattens fully into a list of Ints.";
+    is c.elems, 2, 'gather/take does not flatten out sublists';
+    is c.item, $($(1,10),$(2,20)), "a list of Lists, as an item.";
 }
 
-#?rakudo todo 'RT #66820'
+# XXX GLR
+#?rakudo skip 'RT #66820, and hangs under GLR'
 {
     my $cat;
-    lives-ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a };  +@a }, 'can access bound gather result while gathering';
+    lives-ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a }.list;  +@a }, 'can access bound gather result while gathering';
     is $cat, "11 21 2 3", 'bound gather result has up-to-date value while gathering';
 }
 
 # RT #111962
 {
-    my @grid = [ Bool.pick xx 5 ] xx 5;
+    my @grid = [ $++ xx 5 ] xx 5;
     my @neigh = [ ] xx 5;
-    for ^5 X ^5 -> $i, $j {
+    for ^5 X ^5 -> ($i, $j) {
         @neigh[$i][$j] = gather take-rw @grid[$i + .[0]][$j + .[1]]
                 if 0 <= $i + .[0] < 5 and 0 <= $j + .[1] < 5
                     for [-1,-1],[+0,-1],[+1,-1],
                         [-1,+0],        [+1,+0],
                         [-1,+1],[+0,+1],[+1,+1];
     }
-    ok @grid[1][1] =:= @neigh[2][2][0], "Neighbor is same object as in grid";
+    ok @grid[1][1] === @neigh[2][2][0], "Neighbor is same object as in grid";
     ok @neigh[1][1].elems == 8, "There are eight neighbors";
 }
 

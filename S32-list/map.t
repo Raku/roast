@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 62;
+plan 57;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -12,19 +12,6 @@ plan 62;
 
 
 my @list = (1 .. 5);
-
-#?niecza skip 'NYI'
-{
-    my Int $s;
-    my Str @a;
-    my Num %h;
-    ok $s === $s.map(*), 'is $s.map(*) a noop';
-    ok $s === map(*,$s), 'is map(*,$s) a noop';
-    ok @a === @a.map(*), 'is @a.map(*) a noop';
-    ok @a === map(*,@a), 'is map(*,@a) a noop';
-    ok %h === %h.map(*), 'is %h.map(*) a noop';
-    ok %h === map(*,%h), 'is map(*,%h) a noop';
-}
 
 {
     my @result = map { $_ * 2 }, @list;
@@ -56,8 +43,8 @@ my @list = (1 .. 5);
 
 # Testing map that returns an array
 {
-    my @result = map { ($_, $_ * 2) }, @list;
-    is(+@result, 10, 'Parcel returned from closure: we got a list back');
+    my @result = map { slip($_, $_ * 2) }, @list;
+    is(+@result, 10, 'Slip returned from closure interpolates elements');
     is @result.join(', '),
         '1, 2, 2, 4, 3, 6, 4, 8, 5, 10',
         'got the values we expected';
@@ -87,6 +74,8 @@ my @list = (1 .. 5);
 
 # map with n-ary functions
 {
+  # XXX GLR find hang-proof a way to test that map of 
+  # 0-arity and Inf-arity (proto-less multi) does not hang.
   is ~(1,2,3,4).map({ $^a + $^b             }), "3 7", "map() works with 2-ary functions";
   #?niecza skip 'No value for parameter $b in ANON'
   #?rakudo skip "Too few positionals passed; expected 3 arguments but got 1; RT #125146"
@@ -126,11 +115,13 @@ should be equivalent to
 {
   my @a = (1, 2, 3);
   my @b = map { hash("v"=>$_, "d" => $_*2) }, @a;
-  is(+@b, 6, "should be 6 elements (list context)");
+  is(+@b, 3, "should be 3 elements");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
   #?niecza todo
-  is(+@c, 6, "should be 6 elements (bare block)");
+  is(+@c, 3, "should be 6 elements (bare block)");
+
+  is map({("v"=>$_, "d" => $_*2).Slip}, @a).elems, 6, 'flattens with .Slip';
 }
 
 # Map with mutating block
@@ -155,7 +146,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   my @array  = <a b c d>;
   my @result = map { (), }, @array;
 
-  is +@result, 0, "map works with the map body returning an empty list";
+  is +@result, 4, "map works with the map body returning an empty list";
 }
 
 {
@@ -163,7 +154,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   my @empty  = ();
   my @result = map { @empty }, @array;
 
-  is +@result, 0, "map works with the map body returning an empty array";
+  is +@result, 4, "map works with the map body returning an empty array";
 }
 
 {
@@ -200,7 +191,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   my @array  = <a b c d>;
   my @result = map { () }, @array;
 
-  is +@result, 0, "map works with the map body returning ()";
+  is +@result, 4, "map works with the map body returning () for each iteration";
 }
 
 # test map with a block that takes more than one parameter

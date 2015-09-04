@@ -3,7 +3,7 @@ use Test;
 plan 13;
 
 my $said;
-sub say(*@a) { $said = @a>>.gist.join }   # don't care about the new line
+sub say(*@a) { $said = @a.map(*.gist).join }   # don't care about the new line
 
 {
     my $a = 42;

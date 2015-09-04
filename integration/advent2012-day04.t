@@ -19,7 +19,7 @@ is largest-prime-factor(600_851_475_143), 6857, 'largest prime factor';
 
 # Problem 53
 is-deeply do {
-    [1], -> @p { [0, @p Z+ @p, 0] } ... * #    generate Pascal's triangle
+    $[1], -> @p { $[0, |@p Z+ |@p, 0] } ... * #    generate Pascal's triangle
         ==> (*[0..100])()                     # get rows up to n = 100
         ==> map *.list                        # flatten rows into a single list
         ==> grep * > 1_000_000                # filter elements exceeding 1e6
@@ -52,7 +52,7 @@ is-deeply @triplet-prods, [31875000], 'Pythagorean triplet products (gathered)';
     constant N = 1000;
 
     1..Int((1 - sqrt(0.5)) * N)
-    ==> map -> \a { [ a, N * (N - 2 * a), 2 * (N - a) ] } \
+    ==> map -> \a { $[ a, N * (N - 2 * a), 2 * (N - a) ] } \
     ==> grep -> [ \a, \u, \v ] { u %% v } \
     ==> map -> [ \a, \u, \v ] {
         my \b = u div v;

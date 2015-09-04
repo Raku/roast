@@ -14,21 +14,19 @@ plan 97;
 
 
 {
-    # see RT #63350 for discussion
-    # also: RT #78284
     my $i = 0;
-    $i++ for (1, 2, 3).item;
-    is $i, 1, 'for (1, 2, 3).item does one iteration';
+    $i++ for flat 0, (1, 2, 3).item;
+    is $i, 2, 'for 0, (1, 2, 3).item does two iteraions';
 
     $i = 0;
-    $i++ for $(1, 2, 3);
-    is $i, 1, 'for $(1, 2, 3) does one iteration';
+    $i++ for flat 0, $(1, 2, 3);
+    is $i, 2, 'for flat 0, $(1, 2, 3) does two iterations';
 }
 
 {
     my $i = 0;
-    $i++ for [1, 2, 3];
-    is $i, 1, 'for [1, 2, 3] does one iteration';
+    $i++ for flat 0, $[1, 2, 3];
+    is $i, 2, 'for flat 0, $[1, 2, 3] does two iterations';
 }
 
 # uninitialized array variables should work too...
@@ -65,7 +63,7 @@ my @array2 = ("test", 1, Mu);
 
 # combine 2 arrays
 {
-    my @array3 = (@array1, @array2);
+    my @array3 = flat @array1, @array2;
     isa-ok(@array3, Array);
 
     is(+@array3, 6, 'the array3 has 6 elements');
@@ -90,7 +88,7 @@ my @array2 = ("test", 1, Mu);
 
 {
     # create new array with 2 array slices
-    my @array5 = ( @array2[2, 1, 0], @array1[2, 1, 0] );
+    my @array5 = flat @array2[2, 1, 0], @array1[2, 1, 0];
     isa-ok(@array5, Array);
 
     is(+@array5, 6, 'the array5 has 6 elements');

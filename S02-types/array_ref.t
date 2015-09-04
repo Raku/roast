@@ -7,7 +7,7 @@ plan 45;
 # array_ref of strings
 
 my $array_ref1 = ("foo", "bar", "baz");
-isa-ok($array_ref1, Parcel);
+isa-ok($array_ref1, List);
 
 is(+$array_ref1, 3, 'the array_ref1 has 3 elements');
 is($array_ref1[0], 'foo', 'got the right value at array_ref1 index 0');
@@ -43,7 +43,7 @@ isa-ok($array_ref4, Array);
 
 # create new array_ref with 2 array_ref slices
 
-my $array_ref5 = [ $array_ref2[2, 1, 0], $array_ref1[2, 1, 0] ];
+my $array_ref5 = [ flat $array_ref2[2, 1, 0], $array_ref1[2, 1, 0] ];
 isa-ok($array_ref5, Array);
 
 {
@@ -96,10 +96,10 @@ is     $array9[1][1][1][0], 42, "recursive array access (3)";
 
 # changing nested array
 {
-    my $array10 = [[2]];
+    my $array10 = [[2],];
     $array10[0][0] = 6;
     is $array10[0][0], 6, "changing nested array (1)";
-    my $array11 = [[2,3]];
+    my $array11 = [[2,3],];
     $array11[0][0] = 6;
     is $array11[0][0], 6, "changing nested array (2)";
 }

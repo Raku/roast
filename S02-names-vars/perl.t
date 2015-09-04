@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 106;
+plan 102;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
 my @tests = (
@@ -28,15 +28,15 @@ my @tests = (
     #?niecza emit # Autoloading NYI
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
-    # References to scalars
-    \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, 
+    # Captures containing scalars
+    \(42), \(Inf), \(-Inf), \(NaN), \("string"), \(""), \(?1), \(?0), 
 
     \Mu,
 
     (a => 1),
     :b(2),
 
-    # References to aggregates
+    # Aggregates
     {},           # empty hash
     { a => 42 },  # only one elem
     #?rakudo emit #
@@ -49,7 +49,7 @@ my @tests = (
     #?rakudo emit #
     [ { :a(1) }, { :b(2), :c(3) } ],
 
-    # a Parcel
+    # a List
     <a b c>
 );
 
@@ -96,7 +96,7 @@ my @tests = (
 
 {
     # test a bug reported by Chewie[] - apparently this is from S03
-    is(EVAL((("f","oo","bar").keys).perl), <0 1 2>, ".perl on a .keys list");
+    is(EVAL((("f","oo","bar").keys.List).perl), <0 1 2>, ".perl on a .keys list");
 }
 
 

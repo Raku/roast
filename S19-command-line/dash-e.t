@@ -33,7 +33,7 @@ is_run $x,  :args['-e', 'print <1 2> »+« <1 1>'],
 
 is_run $x, :args['-e', 'say @*ARGS', '-e=foo'],
     {
-        out     => "-e=foo\n",
+        out     => "[-e=foo]\n",
         err     => '',
         status  => 0,
     },

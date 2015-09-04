@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 27;
 
 my $scalar;
 ok $scalar.WHAT === Any, 'unitialized $var does Mu';
@@ -27,7 +27,6 @@ ok $scalar ~~ Any, 'value contained in a $var does Mu';
 does-ok EVAL('List'), Positional, "List does Positional";
 does-ok EVAL('Array'), Positional, "Array does Positional";
 does-ok EVAL('Range'), Positional, "Range does Positional";
-does-ok EVAL('Parcel'), Positional, "Parcel does Positional";
 #?niecza skip 'Undeclared name Buf'
 does-ok EVAL('Buf'), Positional, "Buf does Positional";
 #?rakudo todo "Capture does Positional RT #124484"
