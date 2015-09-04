@@ -88,10 +88,10 @@ is $(;).elems, 0, '$(;) parses, and is empty';
 } #2
 
 {
-    cmp-ok <a b c>, '===', <a b c>, 'a b c === a b c';
-    ok (my $x1=42,1) !=== (42,1), '$x1 = 42,1 !==== 42,1'; # !=== not an op
-    ok (my $x2=42,1) !=== (my $y=42,1), '$x2 = 42,1 !==== $y = 42,1';
-    cmp-ok (my $x3=42,1), '===', (my $y2:=$x3,1), '$x3=42,1 ==== $y2 := $x3,1';
+    ok <a b c> !=== <a b c>, 'a b c !=== a b c (List is not a value type)';
+    ok (my $x1=42,1) !=== (42,1), '$x1 = 42,1 !=== 42,1';
+    ok (my $x2=42,1) !=== (my $y=42,1), '$x2 = 42,1 !=== $y = 42,1';
+    ok (my $x3=42,1) !=== (my $y2:=$x3,1), '$x3=42,1 !=== $y2 := $x3,1 (List is not a value type)';
 } #4
 
 {

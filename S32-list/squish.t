@@ -159,5 +159,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
     is-deeply( @a, [<a b c>], '.= squish in sink context works on @a' );
 } #2
 
-is ((3,3,1),(1,2),(1,2)).squish.list.Str, '3 3 1 1 2', ".squish doesn't flatten";
+my @a := (1, 2);
+is ((3,3,1),@a,@a).squish.list.Str, '3 3 1 1 2', ".squish doesn't flatten";
 # vim: ft=perl6
