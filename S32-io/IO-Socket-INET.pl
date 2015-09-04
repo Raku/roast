@@ -29,7 +29,7 @@ given $test {
                 # warn "SERVER ACCEPTED";
                 my $received = $client.recv();
                 # warn "SERVER RECEIVED '$received'";
-                $client.send( $received );
+                $client.print( $received );
                 # warn "SERVER REPLIED";
                 $client.close();
             }
@@ -42,7 +42,7 @@ given $test {
             unlink $server_ready_flag_fn;
             my $client = IO::Socket::INET.new(:$host, :$port);
             # warn "CLIENT OPENED";
-            $client.send( [~] '0'..'9', 'a'..'z' );
+            $client.print( [~] flat '0'..'9', 'a'..'z' );
             # warn "CLIENT SENT";
             my $received = $client.recv();
             # warn "CLIENT RECEIVED '$received'";
@@ -72,7 +72,7 @@ given $test {
             unlink $server_ready_flag_fn;
             my $client = IO::Socket::INET.new(:$host, :$port);
             # warn "CLIENT OPENED";
-            $client.send( [~] '0'..'9', 'a'..'z' );
+            $client.print( [~] flat '0'..'9', 'a'..'z' );
             # warn "CLIENT SENT";
             my $received = $client.recv();
             # warn "CLIENT RECEIVED '$received'";
@@ -89,7 +89,7 @@ given $test {
             $fd.close();
             while my $client = $server.accept() {
                 # Also sends two 3 byte unicode characters
-                $client.send(join '',  '0'..'9', 'a'..'z',
+                $client.print(join '',  '0'..'9', 'a'..'z',
                         chr(0xbeef),  chr(0xbabe) );
                 $client.close();
             }
@@ -123,14 +123,14 @@ given $test {
             $fd.close();
             while my $client = $server.accept() {
                 # default line separator
-                $client.send("'Twas brillig, and the slithy toves\n");
-                $client.send("Did gyre and gimble in the wabe;\n");
+                $client.print("'Twas brillig, and the slithy toves\n");
+                $client.print("Did gyre and gimble in the wabe;\n");
                 # custom line separator: \r\n
-                $client.send("All mimsy were the borogoves,\r\n");
+                $client.print("All mimsy were the borogoves,\r\n");
                 # another custom separator: .
-                $client.send("And the mome raths outgrabe.");
+                $client.print("And the mome raths outgrabe.");
                 # separator not at the end of the sent data: !
-                $client.send("O frabjous day! Callooh! Callay!");
+                $client.print("O frabjous day! Callooh! Callay!");
                 $client.close();
             }
         } else { # client
@@ -159,7 +159,7 @@ given $test {
             while my $client = $server.accept() {
                 # send 4 packets á 4096 bytes
                 for ^4 {
-                    $client.send( $_ x 4096 );
+                    $client.print( $_ x 4096 );
                     sleep 1;
                 }
                 $client.close();
@@ -235,7 +235,7 @@ given $test {
             $fd.close();
             while my $client = $server.accept() {
                 # send 4 byte string in one packet
-                $client.send( 'xxxx' );
+                $client.print( 'xxxx' );
                 $client.close();
             }
         }
