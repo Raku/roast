@@ -90,7 +90,6 @@ my @normal = <
   Pod::Heading
   Pod::Item
   Pod::Raw
-  Proc::Status
   PseudoStash
   Range
   Rat
