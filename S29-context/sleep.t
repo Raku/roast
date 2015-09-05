@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Context/"=item sleep">
 
-plan 17;
+plan 19;
 
 my $seconds = 3;
 my $nil is default(Nil);
@@ -43,6 +43,10 @@ my $b;
 
     $left = sleep-timer 0;
     isa-ok $left, Duration, 'did we get a Duration back (3)';
+    is $left, 0, 'no time left to wait either';
+
+    $left = sleep-timer "$seconds";
+    isa-ok $left, Duration, 'did we get a Duration back (4)';
     is $left, 0, 'no time left to wait either';
 } #6
 
