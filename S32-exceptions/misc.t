@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 339;
+plan 341;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -145,6 +145,9 @@ throws-like 'my role R { }; 99 does R("wrong");', X::Role::Initialization;
 throws-like 'my role R { has $.x; has $.y }; 99 does R("wrong");', X::Role::Initialization;
 # RT #73806
 throws-like q[if() {}], X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::KeywordAsFunction};
+# RT #125812
+throws-like q[with() {}], X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::KeywordAsFunction};
+throws-like q[without() {}], X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::KeywordAsFunction};
 
 # RT #78404
 throws-like q[my grammar G { regex foo { } }], X::Syntax::Regex::NullRegex;
