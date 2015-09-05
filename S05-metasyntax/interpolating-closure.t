@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 6;
+plan 7;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/unambiguously calls a routine instead>
 
@@ -35,5 +35,8 @@ ok("aaabccc" ~~ m/aa <{ $var ?? $var !! rx{abc} }> cc/, 'Rule block interp');
 # RT #102860
 ok 'abc' ~~ /<{ '.+' }>/, 'interpolating string with meta characters';
 is $/.Str, 'abc', '... gives the right match';
+
+# RT #125973
+is 't' ~~ /<{'a'...'z'}>/, 't', 'sequence in a closure interpolates ok';
 
 # vim: ft=perl6
