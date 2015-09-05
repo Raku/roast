@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Context/"=item sleep">
 
-plan 19;
+plan 22;
 
 my $seconds = 3;
 my $nil is default(Nil);
@@ -52,16 +52,24 @@ my $b;
 
 #?niecza skip "NYI"
 {
-    diag "sleep-till() for $seconds seconds";
+    diag "sleep-until() for $seconds seconds";
     my $then  = now;
-    my $slept = sleep-till $then + $seconds;
+    my $slept = sleep-until $then + $seconds;
     my $now   = now;
 
     isa-ok $slept, Bool, 'did we get a Bool back';
     ok $slept, 'did we actually wait';
     ok $now - $then + $seconds >= 0, 'does elapsed time make sense';
 
-    nok sleep-till($then + $seconds), 'should not actually sleep again';
+    $then  = now;
+    $slept = sleep-until DateTime.now.later(:$seconds);
+    $now   = now;
+
+    isa-ok $slept, Bool, 'did we get a Bool back (DateTime)';
+    ok $slept, 'did we actually wait (DateTime)';
+    ok $now - $then + $seconds >= 0, 'does elapsed time make sense (DateTime)';
+
+    nok sleep-until($then + $seconds), 'should not actually sleep again';
 } #4
 
 #?niecza todo "NYI"
