@@ -253,8 +253,8 @@ plan 70;
 }
 
 {
- my EnumMap $paso;
- isa-ok($paso,EnumMap  );
+ my Map $paso;
+ isa-ok($paso,Map  );
 }
 
 {

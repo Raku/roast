@@ -32,7 +32,7 @@ my @normal = <
   Distro
   Duration
   Enum
-  EnumMap
+  Map
   Exception
   Failure
   FatRat
