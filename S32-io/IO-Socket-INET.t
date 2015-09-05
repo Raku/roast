@@ -55,7 +55,7 @@ my $port = 1024;
 while $port < 65535 && $port==any(@ports) { $port++; }
 if $port >= 65535 {
     diag "no free port; aborting";
-    skip_rest 'No port free - cannot test';
+    skip-rest 'No port free - cannot test';
     exit 0;
 }
 diag "{elapsed} Testing on port $port";

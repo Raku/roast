@@ -17,7 +17,7 @@ my $foo = "foo";
 $foo ~~ s:Perl5{f}=q{b};
 is($foo, "boo", 'substitute regexp works');
 unless $foo eq "boo" {
-  skip_rest "Skipping test which depend on a previous failed test";
+  skip-rest "Skipping test which depend on a previous failed test";
 }
 
 my $bar = "barrrr";
