@@ -143,7 +143,7 @@ sub showkv($x) {
     isa-ok $m, Mix, '&Mix.new given a Hash produces a Mix';
     is +$m, 4, "... with four elements";
     #?niecza todo "Non-string mix elements NYI"
-    is +$m.grep(Enum), 4, "... which are all Enums";
+    is +$m.grep(Pair), 4, "... which are all Pairs";
 }
 
 {
@@ -210,15 +210,15 @@ sub showkv($x) {
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $m.list.elems, 3, ".list returns 3 things";
-    is $m.list.grep(Enum).elems, 3, "... all of which are Enums";
+    is $m.list.grep(Pair).elems, 3, "... all of which are Pairs";
 
     isa-ok $m.pairs.elems, 3, ".pairs returns 3 things";
-    is $m.pairs.grep(Enum).elems, 3, "... all of which are Enums";
+    is $m.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
     is $m.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $m.pairs.grep({ .value ~~ Real }).elems, 3, "... and the values of which are Reals";
 
     #?rakudo 3 skip 'No longer Iterable'
-    is $m.iterator.grep(Enum).elems, 3, ".iterator yields three Enums";
+    is $m.iterator.grep(Pair).elems, 3, ".iterator yields three Pairs";
     is $m.iterator.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $m.iterator.grep({True}).elems, 3, "... and nothing else";
 }

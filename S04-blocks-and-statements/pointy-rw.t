@@ -40,7 +40,7 @@ plan 10;
 }
 
 {
-    my $pair = (a => 42);
+    my $pair = (a => my $ = 42);
     #?niecza todo
     lives-ok {
         for $pair.value -> $v is rw { $v += 1 }

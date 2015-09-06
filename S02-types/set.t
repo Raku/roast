@@ -118,7 +118,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa-ok $b, Set, '&Set.new given a Hash produces a Set';
     is +$b, 3, "... with three elements";
     #?niecza todo "Losing type in Set"
-    is +$b.grep(Enum), 3, "... all of which are Enums";
+    is +$b.grep(Pair), 3, "... all of which are Pairs";
 }
 
 {
@@ -161,9 +161,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $s = set <foo bar baz>;
     is $s.list.elems, 3, ".list returns 3 things";
-    is $s.list.grep(Enum).elems, 3, "... all of which are Enums";
+    is $s.list.grep(Pair).elems, 3, "... all of which are Pairs";
     isa-ok $s.pairs.elems, 3, ".pairs returns 3 things";
-    is $s.pairs.grep(Enum).elems, 3, "... all of which are Enums";
+    is $s.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
     #?niecza 2 todo
     is $s.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $s.pairs.grep({ .value ~~ Bool }).elems, 3, "... and the values of which are Bool";

@@ -31,7 +31,6 @@ my @normal = <
   Distribution
   Distro
   Duration
-  Enum
   Map
   Exception
   Failure

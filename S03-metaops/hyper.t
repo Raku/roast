@@ -877,7 +877,7 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 # RT #123178
 {
     is 42 «~~« (Array, List, Seq), (False, False, False), "hyper against an undefined Iterable doesn't hang";
-    is 42 «~~« (Hash, Bag, Enum), (False, False, False), "hyper against an undefined Associative doesn't hang";
+    is 42 «~~« (Hash, Bag, Pair), (False, False, False), "hyper against an undefined Associative doesn't hang";
 }
 
 # RT #120662

@@ -17,8 +17,8 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 {
     # check that the values can be used for ordinary tasks, like
     # constructing ranges
-    isa-ok (Mon..Wed), Range, 'Can construct ranges from Enum values';
-    ok Mon + Tue == Wed, 'Can do arithmetics with Enum values';
+    isa-ok (Mon..Wed), Range, 'Can construct ranges from Pair values';
+    ok Mon + Tue == Wed, 'Can do arithmetics with Pair values';
 }
 
 #?rakudo skip 'Cannot convert string to number RT #124832'
@@ -45,11 +45,11 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 {
     # usually we don't test explicit value for .perl, but here
     # it's specced, so we make an exception
-    is Day::Mon.perl, 'Day::Mon', '.perl on long form of Enum key';
-    is Mon.perl,      'Day::Mon', '.perl on short form of Enum value';
+    is Day::Mon.perl, 'Day::Mon', '.perl on long form of Pair key';
+    is Mon.perl,      'Day::Mon', '.perl on short form of Pair value';
 
-    is Day::Mon.key,  'Mon',      '.key on long form of Enum value';
-    is Mon.key,       'Mon',      '.key on short form of Enum value';
+    is Day::Mon.key,  'Mon',      '.key on long form of Pair value';
+    is Mon.key,       'Mon',      '.key on short form of Pair value';
 
     is Day::Mon.WHAT.gist, '(Day)',    '.WHAT.gist on enum value stringifies to the enum name';
 }
@@ -66,13 +66,13 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 
 enum JustOne <Thing>;
 {
-    ok JustOne::Thing == 0, 'Enum of one element works.';
+    ok JustOne::Thing == 0, 'Pair of one element works.';
 }
 
-#?niecza skip "Enum must have at least one value"
+#?niecza skip "Pair must have at least one value"
 lives-ok { enum Empty < > }, "empty enum can be constructed";
 
-#?niecza todo "Enum must have at least one value"
+#?niecza todo "Pair must have at least one value"
 eval-lives-ok 'enum Empty2 ()', 'empty enum with () can be constructed';
 
 enum Color <white gray black>;
