@@ -7,18 +7,14 @@ sub check($str, $expected_type, $expected_number, $desc?) {
     my $result = +$str;
     my $description = $desc // $str;
     is $result.WHAT.gist, $expected_type.gist, "$description (type)";
-    ok $result == $expected_number, "$description (value)"
-        or diag(
-              "got:      $result\n"
-            ~ "expected: $expected_number"
-        );
+    is $result, $expected_number, "$description (value)";
 }
 
 #?DOES 1
 sub f($str) {
     my $num = +$str;
     #?niecza todo 'Failure'
-    ok !$num.defined, "+$str fails";
+    ok !$num.defined, "+{$str.perl} fails";
 }
 
 check '',           Int,      0;
