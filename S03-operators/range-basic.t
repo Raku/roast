@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 140;
+plan 142;
 
 {
     my $range = 2..6;
@@ -211,5 +211,8 @@ nok 'd' ~~ *..'c',      "not 'd' ~~ *..'c'";
     ok ' ' ~~ ' '..' ', "' ' ~~ ' '..' '";
     ok ' ' ~~ ' '..'A', "' ' ~~ ' '..'A'";
 }
+
+ok (1 .. *).is-lazy, "1 .. * is lazy";
+ok !(1 .. 2).is-lazy, "1 .. 2 is not lazy";
 
 # vim: ft=perl6

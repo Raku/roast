@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 135;
+plan 143;
 
 # single-term sequence
 
@@ -271,4 +271,15 @@ is (1 …^ 10), 1..^10, 'Unicode ellipsis works excluding final value';
     is @a[1].join('_'), '3_4', 'containers returned from seq iterator are respected (2)';
 }
 
+{
+    ok (1,2,3 ... *).is-lazy, "Final * is lazy numeric";
+    ok (1 ... Inf).is-lazy, "Final Inf is lazy";
+    ok ('a' ... *).is-lazy, "Final * is lazy alpha";
+    ok ({rand} ... *).is-lazy, "Final * is lazy functional";
+
+    ok !(1,2,3 ... 10).is-lazy, "Final Int is not lazy numeric";
+    ok !(1 ...^ 10|11).is-lazy, "Final junction is not lazy";
+    ok !('a' ... 'z').is-lazy, "Final 'z' is not lazy";
+    ok !({rand} ... * > .5).is-lazy, "Final condition is not lazy";
+}
 # vim: ft=perl6
