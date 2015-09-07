@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 236;
+plan 238;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -634,5 +634,9 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
 throws-like { DateTime.new("1994-05-03T00:00:00+00:99") }, X::OutOfRange, what => rx{minute};
 
 # RT #125872
-is DateTime.new("2015-08-23T02:27:33-07:00"), DateTime.new("2015-08-23t02:27:33-07:00"), "t and T work, are same";
-is DateTime.new("2015-08-23T02:27:33Z"), DateTime.new("2015-08-23t02:27:33z"), "z and Z work, are same";
+is ds("2015-08-23T02:27:33-07:00"), ds("2015-08-23t02:27:33-07:00"), "t and T work, are same";
+is ds("2015-08-23T02:27:33Z"), ds("2015-08-23t02:27:33z"), "z and Z work, are same";
+
+# RT #125686 Date overflows
+is ds('1994-05-03T12:00:00Z').later(days => 536106031).Str, "+1469802-10-18T12:00:00Z", "adding large values of days does not overflow";
+is ds('2015-12-24T12:23:00Z').later(days => -537643699).Str, "-1470003-07-12T12:23:00Z", "subtracting large values days does not overflow";

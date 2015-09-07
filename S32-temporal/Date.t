@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 75;
+plan 77;
 
 # construction
 {
@@ -137,6 +137,12 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
 
 # RT #125681
 {
-    is Date.new("0000-01-01").truncated-to("week"), "-0001-12-27", "negative dates ISO-8601 rendering";
-    is Date.new("9900-01-01") + 100000, "+10173-10-16", "very large years, ISO-8601 rendering";
+    is d("0000-01-01").truncated-to("week"), "-0001-12-27", "negative dates ISO-8601 rendering";
+    is d("9900-01-01") + 100000, "+10173-10-16", "very large years, ISO-8601 rendering";
+}
+
+# RT #125682 Overflows
+{
+    is d('2015-12-25').later( years => 1_000_000_000_000 ), "+1000000002015-12-25", "adding large years does not overflow";
+    is d('2015-12-25').earlier( days => 1_000_000_000_000 ),   "-2737904992-12-29", "subtracting large days does not underflow";
 }
