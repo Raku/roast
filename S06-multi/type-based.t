@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 63;
+plan 64;
 
 # type based dispatching
 #
@@ -259,6 +259,12 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi a (;; Int $a) { "two" }
     throws-like { a(42) }, X::Multi::Ambiguous,
         'arguments after ;; not considered by multi-dispatch';
+}
+
+# RT #126003
+{
+    multi sub want-array(@array) { @array.elems }
+    is want-array("abc".comb), 3, 'Can pass a Seq to an @-sigil arg in a multi';
 }
 
 # vim: ft=perl6
