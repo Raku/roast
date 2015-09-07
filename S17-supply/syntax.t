@@ -316,6 +316,17 @@ use Test;
     is $dones-run, 0, '...and done will not be run';
 }
 
+# RT #125987
+{
+    my $i = 0;
+    react {
+        whenever supply { emit 'x'; emit 'y'; } {
+            $i++
+        }
+    }
+    is $i, 2, 'react/whenever with supply that immediately emits values works';
+}
+
 {
     my $trigger1 = Supply.new;
     my $trigger2 = Supply.new;
