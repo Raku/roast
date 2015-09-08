@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 75;
+plan 83;
 
 #L<S02/Literals>
 # TODO:
@@ -94,9 +94,24 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 
 # smart quotes
 {
-    is ‘"Beth's Cafe"’, “"Beth's Cafe"”, "smart quotes are accepted and not confused with ASCII quotes";
+    is ‘"Beth's Cafe"’, “"Beth's Cafe"”, "smart “” quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL '“phooey"' },
 	X::Comp::AdHoc,
 	"Can't mix smart quote with ASCII quote";
+    is ‘"Beth's Cafe"’, „"Beth's Cafe"”, "smart „” quotes are accepted and not confused with ASCII quotes";
+    throws-like { EVAL '“phooey"' },
+	X::Comp::AdHoc,
+	"Can't mix smart quote with ASCII quote";
+    is ‘"Beth's Cafe"’, „"Beth's Cafe"“, "smart „“ quotes are accepted and not confused with ASCII quotes";
+
+    is ‘"Beth's Cafe"’, ‘"Beth's Cafe"’, "smart ‘’ quotes are accepted and not confused with ASCII quotes";
+    throws-like { EVAL "‘phooey'" },
+	X::Comp::AdHoc,
+	"Can't mix smart quote with ASCII quote";
+    is ‘"Beth's Cafe"’, ‚"Beth's Cafe"’, "smart ‚’ quotes are accepted and not confused with ASCII quotes";
+    throws-like { EVAL '‚phooey"' },
+	X::Comp::AdHoc,
+	"Can't mix smart quote with ASCII quote";
+    is ‘"Beth's Cafe"’, ‚"Beth's Cafe"‘, "smart ‚‘ quotes are accepted and not confused with ASCII quotes";
 }
 # vim: ft=perl6
