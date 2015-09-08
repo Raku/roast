@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 828;
+plan 829;
 
 # Basic test functions specific to rational numbers.
 
@@ -23,6 +23,7 @@ is( (EVAL (1/3).perl), 1/3, 'EVAL (1/3).perl is 1/3' );
 is( (1/10).perl, "0.1", '(1/10).perl is 0.1' );
 is( (1/5).perl, "0.2", '(1/5).perl is .2' );
 is( (1/2).perl, "0.5", '(1/2).perl is .5' );
+is 1/128, (1/128).perl.EVAL, '(1/128).perl.EVAL round trips with sufficient accuracy';
 
 # Test ~
 is(~(Rat.new(1,4)), ~(0.25e0), "Rats stringify properly");
