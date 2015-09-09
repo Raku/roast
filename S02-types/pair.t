@@ -277,7 +277,7 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   lives-ok { $pair.value = "VAL" }, "setting .value does not die";
   is $pair.value,          "VAL",   "setting .value actually changes the value";
   #?niecza todo "setting .key changes original val!"
-  is $val,                 "val",   "setting .value does not change the original var";
+  is $val,                 "VAL",   "setting .value does change the original var as it was itemized";
 }
 
 ##  These tests really belong in a different test file -- probably
