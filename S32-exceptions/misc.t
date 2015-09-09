@@ -272,7 +272,7 @@ throws-like 'my sub a { PRE 0  }; a()', X::Phaser::PrePost, phaser => 'PRE', con
 throws-like 'my sub a { POST 0 }; a()', X::Phaser::PrePost, phaser => 'POST', condition => /0/;
 
 throws-like 'use fatal; my $x = "5 foo" + 8;', X::Str::Numeric, source => '5 foo', pos => 1,
-            reason => /trailing/;
+            reason => /:i trailing/;
 throws-like '"a".match(:x([1, 2, 3]), /a/).Str', X::Str::Match::x, got => Array;
 throws-like '"a".trans([Any.new] => [Any.new])', X::Str::Trans::IllegalKey, key => Any;
 throws-like '"a".trans(rx/a/)', X::Str::Trans::InvalidArg, got => Regex;

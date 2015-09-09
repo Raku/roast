@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 168;
+plan 166;
 
 #?DOES 2
 sub check($str, $expected_type, $expected_number, $desc?) {
@@ -21,7 +21,7 @@ sub f($str) {
     ok !$num.defined, "+$str fails";
 }
 
-check '',           Int,      0;
+f     '';
 check '123',        Int,    123;
 check ' 123',       Int,    123;
 check '0000123',    Int,    123;
@@ -41,7 +41,6 @@ check '0b111',      Int,      7;
 check '0b1_1_1',    Int,      7;
 check '+0b111',     Int,      7;
 check '-0b111',     Int,     -7;
-# the spec is silent about this one, but rakudo and niecza agree
 check '0b_1',       Int,      1;
 f     '0b112';
 f     '0b';
@@ -82,7 +81,6 @@ check '+1_2_3.0_0', Rat,    123;
 check '3/2',        Rat,    1.5;
 check '+3/2',       Rat,    1.5;
 check '-3/2',       Rat,    -1.5;
-#?rakudo 5 todo 'Failure RT #124690'
 f     '-3/-2';
 f     '3/-2';
 f     '+3/-2';
@@ -148,14 +146,8 @@ is +"NaN",  'NaN',  'NaN';
     f      '3+3+4i';
 }
 
-#?rakudo todo "complex Str.Numeric RT #124691"
 f      '3+Infi';
 
 # TODO: Complex with radix
-
-# RT #100778
-{
-    is +Str.new, 0, 'RT #100778'
-}
 
 # vim: ft=perl6 
