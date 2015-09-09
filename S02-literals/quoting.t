@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 176;
+plan 175;
 
 my $foo = "FOO";
 my $bar = "BAR";
