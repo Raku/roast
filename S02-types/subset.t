@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 43;
+plan 44;
 
 =begin description
 
@@ -193,5 +193,9 @@ my $a = 1;
     subset D of A where B & C;
     ok [] ~~ D, "complicated subset combinations #74352";
 }
+
+# RT #126018
+lives-ok { EVAL 'my class A { has $.integer where * > 0; method meth { 1 / $!integer } }' },
+    'subset constraint in attribute does not blow up optimizer dispatch analysis';
 
 # vim: ft=perl6
