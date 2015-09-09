@@ -59,7 +59,7 @@ isa-ok($s2a, Block, 'it is a Parametric type (bare block with placeholder parame
 my $int = 0;
 isa-ok($int, Int, 'it is an Int type');
 
-my $num = '0';
+my $num = '';
 ok(+$num ~~ Real, 'it is an Real type');
 
 my $float = 0.5e0;

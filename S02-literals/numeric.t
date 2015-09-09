@@ -19,6 +19,7 @@ does-ok <1/2>, Numeric, '<1/2> does Numeric';
 does-ok <1/2>, Real, '<1/2> does Real';
 isa-ok <0x01/0x02>, Rat, 'same with hexadecimal numbers';
 
+#?rakudo 2 todo "Unsure of what's acceptable for val()"
 ok <1/-3>.WHAT === Str, 'negative allowed only on numerator';
 ok <-1/-3>.WHAT === Str, 'negative allowed only on numerator';
 
