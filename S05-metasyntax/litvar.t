@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 32;
+plan 33;
 
 # L<S05/Variable (non-)interpolation/The default way in which the engine handles a scalar>
 
@@ -98,5 +98,11 @@ $var = 'fÖ+';
 is "foo" ~~ /:i:m <$var>/, 'foo', 'string with metachars in assertion matches (:i:m)';
 
 is "fo+" ~~ /:i:m $var/, 'fo+', 'string with metachars matches literally (:i:m)';
+
+{
+    my Str $s;
+    my Regex $r = rx{ "a" | "b" | $s | $s };
+    nok "fooo" ~~ $r, 'Interpolating Str type object on typed variable fails to match';
+}
 
 # vim: ft=perl6
