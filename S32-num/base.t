@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 31;
+plan 44;
 
 # Int
 {
@@ -16,6 +16,8 @@ plan 31;
     is (-12).base(16), '-C',    '(-12).base(16)';
     is 121.base(11,3), '100.000', 'Integer digits are 0s';
     is 121.base(11,0), '100',   'Integer with 0 digits fraction leaves off radix point';
+
+    isa-ok 1.base(10, -1), Failure, "negative digits arg fails";
 }
 
 # Rat
@@ -34,6 +36,20 @@ plan 31;
     is :8<773320.123>.base(8,0), '773320',   'Rat with 0 digits fraction leaves off radix point';
     is 16.0.base(16,3), '10.000', 'explicit digits are produced even if 0';
     is 16.5.base(16,3), '10.800', 'explicit digits are produced even if some are 0';
+
+    is (3/2).base(10, 1), "1.5", "(3/2).base(10, 1)";
+    is (49/999).base(10, 1), "0.0", "(49/999).base(10, 1) rounds down integer";
+    is (98/99).base(10, 1), "1.0", "(98/99).base(10, 1) rounds up integer";
+    is (100/99).base(10, 1), "1.0", "(100/99).base(10, 1) rounds down integer";
+    is (98/99).base(10, 0), "1", "(98/99).base(10, 0) rounds up integer (RT #126022)";
+    is (100/99).base(10, 0), "1", "(100/99).base(10, 0) rounds down integer";
+    is (.01).base(10, 0), "0", "(.01).base(10, 0) rounds down integer";
+
+    is (1/100).base(10, *), "0.01", "decimal base with Whatever digits";
+    is (1/128).base(10, *), "0.0078125", "longer number with Whatever digits";
+    is (3/1024).base(16, *), "0.00C", "hex base with Whatever";
+
+    isa-ok 1.5.base(10, -1), Failure, "negative digits arg fails";
 }
 
 # base-repeating
@@ -53,4 +69,6 @@ plan 31;
     is (6.02214129e23 / 10 ** 23).base(3,0), '20', 'Num with 0 digits fraction leaves off radix point';
     is 16e0.base(16,3), '10.000', 'explicit digits are produced even if 0';
     is 16.5e0.base(16,3), '10.800', 'explicit digits are produced even if some are 0';
+
+    isa-ok 1.5e0.base(10, -1), Failure, "negative digits arg fails";
 }
