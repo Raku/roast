@@ -79,6 +79,7 @@ check '+1_2_3.0_0', Rat,    123;
 check '3/2',        Rat,    1.5;
 check '+3/2',       Rat,    1.5;
 check '-3/2',       Rat,    -1.5;
+#?rakudo 5 todo 'Unsure of what val() should accept'
 f     '-3/-2';
 f     '3/-2';
 f     '+3/-2';
