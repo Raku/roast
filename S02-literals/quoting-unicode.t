@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 83;
+plan 89;
 
 #L<S02/Literals>
 # TODO:
@@ -109,9 +109,23 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 	X::Comp::AdHoc,
 	"Can't mix smart quote with ASCII quote";
     is ‘"Beth's Cafe"’, ‚"Beth's Cafe"’, "smart ‚’ quotes are accepted and not confused with ASCII quotes";
-    throws-like { EVAL '‚phooey"' },
+    throws-like { EVAL "‚phooey'" },
 	X::Comp::AdHoc,
 	"Can't mix smart quote with ASCII quote";
     is ‘"Beth's Cafe"’, ‚"Beth's Cafe"‘, "smart ‚‘ quotes are accepted and not confused with ASCII quotes";
+
+    # Allow Swedish, Finnish, Serbian, and Macedonian quotes
+
+    is ‘"Beth's Cafe"’, ”"Beth's Cafe"”, "smart ”” quotes are accepted and not confused with ASCII quotes";
+    throws-like { EVAL '”phooey"' },
+	X::Comp::AdHoc,
+	"Can't mix smart quote with ASCII quote";
+    is ‘"Beth's Cafe"’, ”"Beth's Cafe"“, "smart ”“ quotes are accepted and not confused with ASCII quotes";
+
+    is ‘"Beth's Cafe"’, ’"Beth's Cafe"’, "smart ’’ quotes are accepted and not confused with ASCII quotes";
+    throws-like { EVAL "’phooey'" },
+	X::Comp::AdHoc,
+	"Can't mix smart quote with ASCII quote";
+    is ‘"Beth's Cafe"’, ’"Beth's Cafe"‘, "smart ’‘ quotes are accepted and not confused with ASCII quotes";
 }
 # vim: ft=perl6
