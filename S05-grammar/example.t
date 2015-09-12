@@ -47,11 +47,13 @@ $content = '<title>Exactly</title> aosihdas
 <small>C</small> aosidh
 <small>D</small>';
 
+#?rakudo skip 'Method "speaker" not found for invocant of class "Cursor" RT #124795'
 is($content ~~ m/<title>/, '<title>Exactly</title>', 'match token');
 
 # XXX this can't work this way
 # 'schedule' is a rule (non-backtracking) so the implicit <.ws> will always
 # match zero characters. 
-#?rakudo todo 'test erroris($content ~~ m/<schedule>/, $content, 'match rule');
+#?rakudo skip 'Method "speaker" not found for invocant of class "Cursor" RT #124795'
+is($content ~~ m/<schedule>/, $content, 'match rule');
 
 # vim: ft=perl6
