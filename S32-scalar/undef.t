@@ -23,7 +23,7 @@ perl6-specific tests.
 #   
 #   Larry
 
-plan 93;
+plan 91;
 
 our $GLOBAL;
 
@@ -304,14 +304,6 @@ is((Any) * 2, 0, 'Any * 2');
 is(2 * (Any), 0, '2 * Any');
 is-deeply([(Any) xx 2], [Any, Any], 'Any xx 2');
 is((Any) * (Any), 0, 'Any * Any');
-
-# L<http://colabti.de/irclogger/irclogger_log/perl6?date=2006-09-12,Tue&sel=145#l186>
-# See log above.  From IRC, TimToady says that both of these
-# should be false.  (At time of writing, @(Mu,) is true.)
-#?rakudo 2 todo 'todo: lists, defined, truthness RT #124567'
-#?niecza 2 todo 'huh?'
-is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
-is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';
 
 #?niecza todo 'dubious'
 lives-ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
