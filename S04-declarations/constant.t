@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 58;
+plan 62;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -341,6 +341,17 @@ throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
      # constants and non constants are consistently non flattening.
      is (my @ = 'a', <b c>)[1], <b c>, "non constant doesn't flatten"; 
      is (constant @ = 'a', <b c>)[1], <b c>, "constant doesn't flatten"; 
+}
+
+# test that constant @x caches Seq
+{
+    constant @x = (^5).grep(* > 2);
+    ok @x ~~ Positional, "constant @x does Positional";
+    my @a = @x>>.Str;
+    my @b = @x>>.Str;
+    is-deeply @a, @b, 'constant @ sequence can be evaluated more than once';
+    is @x[0], 3, "can subscript into constant @ (1)";
+    is @x[1], 4, "can subscript into constant @ (2)";
 }
 
 # vim: ft=perl6
