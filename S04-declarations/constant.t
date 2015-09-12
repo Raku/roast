@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 62;
+plan 63;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -33,6 +33,10 @@ plan 62;
 # RT #69740
 {
     eval-dies-ok 'constant ($a, $b) = (3, 4)', 'constant no longer takes list';
+}
+
+{
+    eval-dies-ok 'constant %hash = "nothash"', 'constant hash requires Associative';
 }
 
 {
