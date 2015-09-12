@@ -611,10 +611,10 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 
 # RT #77738
 {
-    sub incr1 (*@v is rw) { @v[0]++; @v[1]++; };
-    sub incr2 (*@v is rw) { for @v { $_++} };
-    sub incr3 (*@v is rw) { for @v -> $x is rw { $x++ } };
-    sub incr4 (*@v is rw) { for @v -> $x { $x++ } };
+    sub incr1 (*@v is raw) { @v[0]++; @v[1]++; };
+    sub incr2 (*@v is raw) { for @v { $_++} };
+    sub incr3 (*@v is raw) { for @v -> $x is rw { $x++ } };
+    sub incr4 (*@v is raw) { for @v -> $x { $x++ } };
     my ($a, $b) = (0, 0);
     incr1($a, $b);
     is [$a, $b], [1, 1], 'is rw on slurpy parameters works (1)';

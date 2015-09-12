@@ -30,7 +30,7 @@ dies-ok {EVAL(' mixed()')},      'at least one arg required';
 }
 
 sub first_arg      ( *@args         ) { ~@args[0]; }
-sub first_arg_rw   ( *@args is rw   ) { ~@args[0]; }
+sub first_arg_rw   ( *@args is raw  ) { ~@args[0]; }
 sub first_arg_copy ( *@args is copy ) { ~@args[0]; }
 
 is first_arg(1, 2, 3),      '1',  'can grab first item of a slurpy array';
