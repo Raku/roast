@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 103;
 
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
@@ -234,6 +234,22 @@ sub eval_elsewhere($code){ EVAL($code) }
     ok  10 !~~ ^@a, '10 is not in ^10';
     is (^@a).elems, 10, '^10 has 10 elems';
     isa-ok ^@a, Range;
+}
+
+{
+    my $l = list 1,2,4...16;
+    ok $l.WHAT === List, "list listop produces List";
+    ok $l.gist eq '(1 2 4 8 16)', "list listop doesn't double wrap";
+    my \seq = 1,2,4...16;
+    dies-ok { sink (list seq)».abs, (list seq)».abs }, "list listop doesn't cache";
+}
+
+{
+    my $l = cache 1,2,4...16;
+    ok $l.WHAT === List, "cache listop produces List";
+    ok $l.gist eq '(1 2 4 8 16)', "cache listop doesn't double wrap";
+    my \seq = 1,2,4...16;
+    is ((cache seq)».abs, (cache seq)».abs).gist, '((1 2 4 8 16) (1 2 4 8 16))', "cache listop does cache";
 }
 
 # vim: ft=perl6
