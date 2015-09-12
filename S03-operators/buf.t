@@ -130,8 +130,8 @@ ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
 
     $a.push(9 xx 1);
 
-    is $a.elems, 9, "Buf .elems correct after pushing Parcel";
-    is $a[8], 9, "Buf last element correct after pushing Parcel";
+    is $a.elems, 9, "Buf .elems correct after pushing xx list";
+    is $a[8], 9, "Buf last element correct after pushing xx list";
 }
 
 # RT #123928

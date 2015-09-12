@@ -178,7 +178,7 @@ plan 30;
 {
     is ~42.sort, "42", "method form of sort should work on numbers";
     is ~"str".sort, "str", "method form of sort should work on strings";
-    is ~(42,).sort, "42",  "method form of sort should work on parcels";
+    is ~(42,).sort, "42",  "method form of sort should work on lists";
 }
 
 # RT #67010

@@ -21,7 +21,7 @@ is ~<5 7 8>, '5 7 8', 'prefix:<~> on an angle bracket List';
 is <5 7 8>.Str, '5 7 8', '.Str on an angle bracket List';
 
 #?niecza 3 skip ".List NYI"
-isa-ok (5, 7, 8).List, List, '.List returns an parcel';
+isa-ok (5, 7, 8).List, List, '.List returns a list';
 is (5, 7, 8).List, [5,7,8], '.List contains the right items';
 is (5, 7, 8).List.elems, 3, '.List contains the right number of elements';
 
@@ -37,11 +37,11 @@ is $(;).elems, 0, '$(;) parses, and is empty';
 {
     my $p = <a b c d e>;
     is ~$p.rotate, 'b c d e a', 'List.rotate defaults to +1';
-    is ~$p, 'a b c d e', 'original parcel unmodified';
+    is ~$p, 'a b c d e', 'original list unmodified';
     ok $p.rotate ~~ List, 'List.rotate returns a List';
 
     is ~$p.rotate(2), 'c d e a b', '.rotate(2)';
-    is ~$p, 'a b c d e', 'original parcel still unmodified';
+    is ~$p, 'a b c d e', 'original list still unmodified';
 
     is ~$p.rotate(-2), 'd e a b c', '.rotate(-2)';
     is ~$p, 'a b c d e', 'original still unmodified (negative)';
@@ -61,10 +61,10 @@ is $(;).elems, 0, '$(;) parses, and is empty';
 {
     my $p = <a b c d e>;
     is ~rotate($p), 'b c d e a', 'rotate(@a)';
-    is ~$p, 'a b c d e', 'original parcel unmodified';
+    is ~$p, 'a b c d e', 'original list unmodified';
 
     is ~rotate($p, 2), 'c d e a b', 'rotate(@a, 2)';
-    is ~$p, 'a b c d e', 'original parcel still unmodified';
+    is ~$p, 'a b c d e', 'original list still unmodified';
 
     is ~rotate($p, -2), 'd e a b c', 'rotate(@a, -2)';
     is ~$p, 'a b c d e', 'original still unmodified (negative)';

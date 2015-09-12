@@ -22,5 +22,5 @@ is (1, ((2, 3),  (4, 5))).tree(*.join('-'), *.join('+'), *.join('|')),
 {
     my $t = '';
     $t ~= "|$_" for (<a b c> Z <X Y Z>).tree[];
-    is $t, "|a X|b Y|c Z", '(parcel of parcels).tree';
+    is $t, "|a X|b Y|c Z", '(list of lists).tree';
 }

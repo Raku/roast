@@ -66,7 +66,6 @@ plan 22;
     is @array.elems, 5, '... and arrays';
 }
 
-#?niecza skip 'Unable to resolve method reverse in class Parcel'
 {
     # P05 (*) Reverse a list.
 
@@ -188,7 +187,6 @@ plan 22;
         '... even using gather/take';
 }
 
-#?niecza skip 'Unable to resolve method reverse in class Parcel'
 {    
     sub group2 (*@array is copy) {
         gather while @array {

@@ -38,7 +38,7 @@ ok((MyPack::val_v), "default sub called in package namespace");
     sub default_with_list($x = (1, 2)) {
         $x[0];
     }
-    is default_with_list(), 1, 'can have a parcel literal as default value';
+    is default_with_list(), 1, 'can have a list literal as default value';
 }
 
 # RT #69200

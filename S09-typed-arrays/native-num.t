@@ -43,7 +43,7 @@ for @num -> $T {
     is @arr.elems, 1,  "The elems grew as expected on $t array";
     ok @arr,           "$t array becomes truthy when it has an element";
 
-    @arr[1,2] = 6.9e0, 7.0e0;                     # cannot approx test Parcels
+    @arr[1,2] = 6.9e0, 7.0e0;
     is_approx @arr[1], 6.9e0, "Can get slice-assigned value from $t array (1)";
     is_approx @arr[2], 7.0e0, "Can get slice-assigned value from $t array (2)";
     is @arr.elems, 3,  "The elems grew as expected on $t array";
@@ -68,7 +68,7 @@ for @num -> $T {
     is +@arr,      0, "Cleared $t array numifies to 0";
     nok @arr,         "Cleared $t array is falsey";
 
-    @arr = 1e0..50e0;                             # cannot approx test Parcels
+    @arr = 1e0..50e0;
     is @arr.elems, 50, "Got correct elems from range assign on $t array";
     is_approx @arr[0],   1e0, "Correct elem from range assign on $t array (1)";
     is_approx @arr[49], 50e0, "Correct elem from range assign on $t array (2)";
@@ -77,17 +77,17 @@ for @num -> $T {
     ok  @arr[49]:exists, ":exists works on $t array (2)";
     nok @arr[50]:exists, ":exists works on $t array (3)";
 
-    @arr := array[$T].new(4.2e0);                 # cannot approx test Parcels
+    @arr := array[$T].new(4.2e0);
     is @arr.elems,  1, "Correct number of elems set in constructor of $t array";
     is_approx @arr[0], 4.2e0, "Correct elem set by constructor of $t array";
 
-    @arr := array[$T].new(1.0e0,1.5e0,1.2e0,1.6e0); # cannot approx test Parcels
+    @arr := array[$T].new(1.0e0,1.5e0,1.2e0,1.6e0);
     is @arr.elems,  4, "Correct number of elems set in constructor of $t array";
     is_approx @arr[0], 1.0e0, "Correct elem set by constructor of $t array (1)";
     is_approx @arr[1], 1.5e0, "Correct elem set by constructor of $t array (2)";
     is_approx @arr[2], 1.2e0, "Correct elem set by constructor of $t array (3)";
     is_approx @arr[3], 1.6e0, "Correct elem set by constructor of $t array (4)";
-    @arr[*-1,*-2];                                # cannot approx test Parcels
+    @arr[*-1,*-2];
 
     ok @arr.flat  === @arr, "$t array .flat returns identity";
     ok @arr.eager === @arr, "$t array .eager returns identity";
@@ -105,7 +105,7 @@ for @num -> $T {
     is_approx @arr[2], 2.2e0, "Mutating for loop on $t array works (3)";
     is_approx @arr[3], 2.6e0, "Mutating for loop on $t array works (4)";
 
-    @arr.map(* *= 2);                             # cannot approx test Parcels
+    @arr.map(* *= 2);
     is_approx @arr[0], 4.0e0, "Mutating map on $t array works (1)";
     is_approx @arr[1], 5.0e0, "Mutating map on $t array works (2)";
     is_approx @arr[2], 4.4e0, "Mutating map on $t array works (3)";
@@ -149,14 +149,14 @@ for @num -> $T {
       what   => "array[$t]",
       "Trying to initialize a $t array with a left infinite list";
 
-    @arr.push(4.2e0);                             # cannot approx test Parcels
+    @arr.push(4.2e0);
     is @arr.elems, 1,  "push to $t array works (1)";
     is_approx @arr[0], 4.2e0, "push to $t array works (2)";
     throws-like { @arr.push('it real good') }, X::AdHoc,
       message => 'This type cannot unbox to a native number',
       "Cannot push non-num/Num to $t array";
 
-    @arr.push(10.1e0, 10.5e0);                    # cannot approx test Parcels
+    @arr.push(10.1e0, 10.5e0);
     is @arr.elems, 3, "push multiple to $t array works (1)";
     is_approx @arr[1], 10.1e0,  "push multiple to $t array works (2)";
     is_approx @arr[2], 10.5e0,  "push multiple to $t array works (3)";
@@ -167,7 +167,7 @@ for @num -> $T {
     is_approx @arr.pop, 10.5e0, "pop from $t array works (1)";
     is @arr.elems,    2, "pop from $t array works (2)";
 
-    @arr.unshift(-1e0);                           # cannot approx test Parcels
+    @arr.unshift(-1e0);
     is @arr.elems,  3, "unshift to $t array works (1)";
     is_approx @arr[0],  -1e0, "unshift to $t array works (2)";
     is_approx @arr[1], 4.2e0, "unshift to $t array works (3)";
@@ -175,7 +175,7 @@ for @num -> $T {
       message => 'This type cannot unbox to a native number',
       "Cannot unshift non-num/Num to $t array";
 
-    @arr.unshift(-3e0,-2e0);                      # cannot approx test Parcels
+    @arr.unshift(-3e0,-2e0);
     is @arr.elems,  5, "unshift multiple to $t array works (1)";
     is_approx @arr[0],  -3e0, "unshift multiple to $t array works (2)";
     is_approx @arr[1],  -2e0, "unshift multiple to $t array works (3)";
@@ -188,7 +188,7 @@ for @num -> $T {
     is_approx @arr.shift, -3e0, "shift from $t array works (1)";
     is @arr.elems,    4, "shift from $t array works (2)";
 
-    @arr = 1e0..10e0;                             # cannot approx test Parcels
+    @arr = 1e0..10e0;
     my @replaced = @arr.splice(3, 2, 98e0, 99e0, 100e0);
     is @arr.elems, 11, "Number of elems after splice $t array";
     is_approx @arr[2],   3e0, "Splice on $t array did the right thing (1)";
@@ -200,7 +200,7 @@ for @num -> $T {
     is_approx @replaced[0],  4e0, "Correct value in splice from $t array (1)";
     is_approx @replaced[1],  5e0, "Correct value in splice from $t array (2)";
 
-    @arr = 1e0..5e0;                              # cannot approx test Parcels
+    @arr = 1e0..5e0;
     is @arr.Str,  '1 2 3 4 5', ".Str space-separates on $t array";
     is @arr.gist, '1 2 3 4 5', ".gist space-separates on $t array";
     is @arr.perl, "array[$t].new(1e0, 2e0, 3e0, 4e0, 5e0)",

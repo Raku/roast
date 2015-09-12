@@ -52,7 +52,7 @@ priming-fails-bind-ok(sub (:b(:c($a))!) { }, "", "Unexpected named", :d);
 
 
 is-primed-sig(sub (:$a! where { True }) { }, :(:$a?), :a);
-is-primed-sig(sub (:$a! is parcel where { True }) { }, :(:$a? is parcel), :a);
+is-primed-sig(sub (:$a! is raw where { True }) { }, :(:$a? is raw), :a);
 is-primed-sig(sub (:$a! is copy where { True }) { }, :(:$a? is copy), :a);
 
 # This will not even compile.  Maybe this should be a runtime error?

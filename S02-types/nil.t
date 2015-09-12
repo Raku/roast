@@ -22,7 +22,7 @@ ok rt74448()            === Nil, 'EVAL of empty string is Nil';
 nok Nil.defined, 'Nil is not defined';
 ok  ().defined,  '() is defined';
 nok (my $x = Nil).defined, 'assigning Nil to scalar leaves it undefined'; #OK
-ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel'; #OK
+ok (my $y = ()).defined, 'assigning () to scalar results in a defined list'; #OK
 
 nok Nil.so,                  'Nil.so is False';
 ok Nil.ACCEPTS(Any)  == Nil, 'Nil.ACCEPTS always returns Nil';

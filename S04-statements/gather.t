@@ -215,7 +215,7 @@ plan 33;
 #?niecza skip 'Cannot use bind operator with this LHS'
 {
     my @y;
-    my @x = gather for 1..2 {            # flat context for list of parcels
+    my @x = gather for 1..2 {            # flat context for list of lists
         my ($y) := \(take $_, $_ * 10);  # binding forces item context
         push @y, $y;
     }

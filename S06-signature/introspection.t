@@ -24,7 +24,7 @@ sub j(*@i) {
     is j(@l>>.readonly), '1 1 1', 'they are all read-only';
     is j(@l>>.rw),       '0 0 0', '... none rw';
     is j(@l>>.copy),     '0 0 0', '... none copy';
-    is j(@l>>.parcel),   '0 0 0', '... none ref';
+    is j(@l>>.raw),      '0 0 0', '... none raw';
     is j(@l>>.slurpy),   '0 0 0', '... none slurpy';
     is j(@l>>.optional), '0 1 1', '... some optional';
     is j(@l>>.invocant), '0 0 0', '... none invocant';
@@ -33,11 +33,11 @@ sub j(*@i) {
 
 #?niecza skip "Unhandled trait rwt"
 {
-    sub b(:x($a)! is rw, :$y is parcel, :$z is copy) { };   #OK not used
+    sub b(:x($a)! is rw, :$y is raw, :$z is copy) { };   #OK not used
     my @l = &b.signature.params;
     is j(@l>>.readonly), '0 0 0', '(second sig) none are all read-only';
     is j(@l>>.rw),       '1 0 0', '... one rw';
-    is j(@l>>.parcel),   '0 1 0', '... one parcel';
+    is j(@l>>.raw),   '0 1 0', '... one raw';
     is j(@l>>.copy),     '0 0 1', '... one copy';
     is j(@l>>.slurpy),   '0 0 0', '... none slurpy';
     is j(@l>>.optional), '0 1 1', '... some optional';
@@ -121,7 +121,7 @@ sub j(*@i) {
     ok :(|x).params[0].capture, 'prefix | makes .capture true';
     ok :(|x).perl  ~~ / '|' /,  'prefix | appears in .perl output';
 
-    ok :(\x).params[0].parcel, 'prefix \\ makes .parcel true';
+    ok :(\x).params[0].raw, 'prefix \\ makes .raw true';
     ok :(\x).perl ~~ / '\\' /, 'prefix \\ appears in .perl output';
 }
 
@@ -155,10 +155,10 @@ sub j(*@i) {
     is-perl-idempotent(:(@a = [2, 3], :@b = [2,3]), :eqv);
     is-perl-idempotent(:(%a = {:a(2)}, :%b = {:a(2)}), :eqv);
     is-perl-idempotent(:(&a = &say, :&b = &say), Nil, { '= { ... }' => '= &say' },:eqv);
-    is-perl-idempotent(:($a is parcel = 2), :eqv);
-    is-perl-idempotent(:(@a is parcel = [2]), :eqv);
-    is-perl-idempotent(:(%a is parcel = {:a(2)}), :eqv);
-    is-perl-idempotent(:(&a is parcel = &say), :eqv);
+    is-perl-idempotent(:($a is raw = 2), :eqv);
+    is-perl-idempotent(:(@a is raw = [2]), :eqv);
+    is-perl-idempotent(:(%a is raw = {:a(2)}), :eqv);
+    is-perl-idempotent(:(&a is raw = &say), :eqv);
     is-perl-idempotent(:(\a = 2), :eqv);
     is-perl-idempotent(:(Int $a, Int :$b), :eqv);
     is-perl-idempotent(:(Int @a, Int :@b), :eqv);
@@ -188,10 +188,10 @@ sub j(*@i) {
     is-perl-idempotent(:(@ = [2, 3], :a(@) = [2,3]), :eqv);
     is-perl-idempotent(:(% = {:a(2)}, :a(%) = {:a(2)}), :eqv);
     is-perl-idempotent(:(& = &say, :a(&) = &say), Nil, { '= { ... }' => '= &say' },:eqv);
-    is-perl-idempotent(:($ is parcel = 2), :eqv);
-    is-perl-idempotent(:(@ is parcel = [2]), :eqv);
-    is-perl-idempotent(:(% is parcel = {:a(2)}), :eqv);
-    is-perl-idempotent(:(& is parcel = &say), :eqv);
+    is-perl-idempotent(:($ is raw = 2), :eqv);
+    is-perl-idempotent(:(@ is raw = [2]), :eqv);
+    is-perl-idempotent(:(% is raw = {:a(2)}), :eqv);
+    is-perl-idempotent(:(& is raw = &say), :eqv);
     is-perl-idempotent(:(Int $, Int :a($)), :eqv);
     is-perl-idempotent(:(Int @, Int :a(@)), :eqv);
     is-perl-idempotent(:(Int %, Int :a(%)), :eqv);
@@ -207,11 +207,11 @@ sub j(*@i) {
     is-perl-idempotent(:(| ($a) = 2), :eqv);
     is-perl-idempotent(:(@ ($a) = [2]), :eqv);
     is-perl-idempotent(:(% (:a($)) = {:a(2)}, % (:c(:d($))) = {:c(2)}), :eqv);
-    is-perl-idempotent(:($ is parcel, & is parcel, % is parcel, | is parcel), :eqv);
-    is-perl-idempotent(:($ is parcel where True, $ is copy, Int $ is rw, $ is parcel where True = 2), :eqv);
-    is-perl-idempotent(:(@ is parcel where True, @ is copy, Int @ is rw, @ is parcel where True = [2]), :eqv);
-    is-perl-idempotent(:(% is parcel where True, % is copy, Int % is rw, % is parcel where True = {:a(2)}), :eqv);
-    is-perl-idempotent(:(& is parcel where True, & is copy, Int & is rw, & is parcel where True = {:a(2)}), :eqv);
+    is-perl-idempotent(:($ is raw, & is raw, % is raw, | is raw), :eqv);
+    is-perl-idempotent(:($ is raw where True, $ is copy, Int $ is rw, $ is raw where True = 2), :eqv);
+    is-perl-idempotent(:(@ is raw where True, @ is copy, Int @ is rw, @ is raw where True = [2]), :eqv);
+    is-perl-idempotent(:(% is raw where True, % is copy, Int % is rw, % is raw where True = {:a(2)}), :eqv);
+    is-perl-idempotent(:(& is raw where True, & is copy, Int & is rw, & is raw where True = {:a(2)}), :eqv);
 
     is-perl-idempotent(:(::T $a, T $b), :eqv);
     # Not sure if this one makes much sense.

@@ -71,9 +71,8 @@ plan 43;
         "using a multidimensional structure as LHS in a binding op works (3)";
 }
 
-# Evil more evil structure: with an embedded "is parcel" sub!
+# Evil more evil structure: with an embedded "is raw" sub!
 # As RHS...
-#?niecza skip "is parcel - https://github.com/sorear/niecza/issues/177"
 {
     my $innerstruct = {
         ignored => 23,
@@ -83,7 +82,7 @@ plan 43;
         ],
     };
 
-    my sub get_innerstruct () is parcel { $innerstruct }
+    my sub get_innerstruct () is raw { $innerstruct }
 
     my $struct = [
         "ignored",
@@ -109,7 +108,6 @@ plan 43;
 }
 
 # ...and as LHS
-#?niecza skip "is parcel - https://github.com/sorear/niecza/issues/177"
 {
     my $innerstruct = {
         ignored => 23,
@@ -119,7 +117,7 @@ plan 43;
         ],
     };
 
-    my sub get_innerstruct () is parcel { $innerstruct }
+    my sub get_innerstruct () is raw { $innerstruct }
 
     my $struct = [
         "ignored",

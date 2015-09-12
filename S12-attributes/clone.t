@@ -79,7 +79,7 @@ is($val2, 42, '... cloned object has proper attr value');
     my $a1 = ArrTest.new(:array<a b>);
     my $a2 = $a1.clone(:array<c d>);
     is-deeply $a1.array, ['a', 'b'], 'original object has its original array';
-    #?rakudo.jvm todo 'cloned object has @.array as Parcel instead of Array RT #125577'
+    #?rakudo.jvm todo 'cloned object has @.array as List instead of Array RT #125577'
     is-deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array (1)';
     is $a2.array[0], 'c', 'cloned object has the newly-provided array (2)';
     is $a2.array[1], 'd', 'cloned object has the newly-provided array (3)';

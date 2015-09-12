@@ -59,13 +59,13 @@ sub boom ($arg is copy = 0) { $arg++ }
 lives-ok { boom(42) }, "can modify a copy";
 
 
-# is parcel
+# is raw
 {
     $foo=1;
-    sub mods_param_parcel ($x is parcel) { $x++;  }
-    dies-ok { mods_param_parcel(1); }, 'is parcel with non-lvalue';
-    lives-ok { mods_param_parcel($foo); }, 'is parcel with non-lvalue';
-    is($foo, 2, 'is parcel works');
+    sub mods_param_raw ($x is raw) { $x++;  }
+    dies-ok { mods_param_raw(1); }, 'is raw with non-lvalue';
+    lives-ok { mods_param_raw($foo); }, 'is raw with non-lvalue';
+    is($foo, 2, 'is raw works');
 }
 
 
