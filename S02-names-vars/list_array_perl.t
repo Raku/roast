@@ -90,7 +90,7 @@ my @tests = (
        "EVAL of .perl returns original for '$dehydrated'";
 }
 
-# RT 123072
+# RT 124342
 {
     my $l := (1,);
     is-deeply (EVAL $l.perl), $l;
