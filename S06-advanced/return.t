@@ -305,7 +305,6 @@ is Foo::official(), 44,
     }
     is named().elems, 3,       'return with named arguments';
     is named().[2].key, 'c',   ' ... correct key';
-    #?rakudo todo "RT #75118"
     is named().[2].value, '3', ' ... correct value';
 }
 
