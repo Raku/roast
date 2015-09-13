@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 369;
+plan 371;
 
 =begin pod
 
@@ -215,6 +215,9 @@ ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
 is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 
     'triangle reduce is lazy');
+
+ok ([\*] 1..*).is-lazy, "triangle reduce knows if it's lazy";
+ok !([\*] 1..5).is-lazy, "triangle reduce knows if it's lazy";
 
 is( ([max]()), -Inf, '[max]() returns -Inf');
 is( ([min]()),  Inf, '[min]() returns -Inf');
