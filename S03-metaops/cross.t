@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 34;
+plan 40;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -140,6 +140,15 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
     @rt120973 = <a b>.map({$_}) X <1 2>.map({$_});
     is @rt120973, <a 1 a 2 b 1 b 2>,
     'cross product with a .map in lhs and rhs produces expected result';
+}
+
+{
+    ok (1..* X* 42).is-lazy, "laziness induced by first argument";
+    ok (42 X* 1..*).is-lazy, "laziness induced by last argument";
+    ok (42 X* 1..* X* 43).is-lazy, "laziness induced by middle argument";
+    ok !(1..5 X* 42).is-lazy, "laziness not induced by first argument";
+    ok !(42 X* 1..5).is-lazy, "laziness not induced by last argument";
+    ok !(42 X* 1..5 X* 43).is-lazy, "laziness not induced by middle argument";
 }
 
 # vim: ft=perl6
