@@ -113,6 +113,34 @@ my @normal = <
   Version
   Whatever
   WhateverCode
+  bit
+  byte
+  int
+  int1
+  int16
+  int32
+  int2
+  int4
+  int64
+  int8
+  num
+  num32
+  num64
+  str
+  uint
+  uint1
+  uint16
+  uint2
+  uint32
+  uint4
+  uint64
+  uint8
+  utf16
+  utf32
+  utf8
+>;
+
+my @exception = <
   X::AdHoc
   X::Adverb::Slice
   X::Anon::Augment
@@ -273,36 +301,11 @@ my @normal = <
   X::Undeclared
   X::Undeclared::Symbols
   X::Value::Dynamic
-  bit
-  byte
-  int
-  int1
-  int16
-  int32
-  int2
-  int4
-  int64
-  int8
   X::Worry
   X::Worry::P5
   X::Worry::P5::BackReference
   X::Worry::P5::LeadingZero
   X::Worry::P5::Reference
-  num
-  num32
-  num64
-  str
-  uint
-  uint1
-  uint16
-  uint2
-  uint32
-  uint4
-  uint64
-  uint8
-  utf16
-  utf32
-  utf8
 >;
 
 my @concurrent = <
@@ -337,9 +340,14 @@ my @moar = <
   X::Proc::Async::TapBeforeSpawn
 >;
 
-plan 2 * ( @normal + @concurrent + @moar );
+plan 2 * ( @normal + @exception + @concurrent + @moar );
 
 for @normal -> $class {
+    is ::($class).WHICH, $class, "checking $class.WHICH";
+    is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
+}
+
+for @exception -> $class {
     is ::($class).WHICH, $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
 }
