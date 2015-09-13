@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 22;
+plan 23;
 
 # L<S02/Names and Variables/so that Perl can evaluate the result
 # back to the same object>
@@ -86,8 +86,14 @@ my @tests = (
     $dehydrated    = @original.perl;
     @reconstituted = @( EVAL $dehydrated );
 
-    is @reconstituted, @original,
+    is-deeply @reconstituted, @original,
        "EVAL of .perl returns original for '$dehydrated'";
+}
+
+# RT 123072
+{
+    my $l := (1,);
+    is-deeply (EVAL $l.perl), $l;
 }
 
 # RT #65988
