@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;
-plan 50;
+plan 51;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -190,6 +190,13 @@ plan 50;
     grammar Foo2 { regex TOP { [a | [ "[" <R> b? "]" ]]+ % b { die if $*guard++ > 500 } }; regex b { b }; regex R { <TOP>+ % [ <b>? "/" ] } };
     is Foo2.parse("[aba]").gist,  "｢[aba]｣\n R => ｢aba｣\n  TOP => ｢aba｣",  '(non-)capturing subrules advance cursor position (3)';
     is Foo2.parse("[abab]").gist, "｢[abab]｣\n R => ｢aba｣\n  TOP => ｢aba｣", '(non-)capturing subrules advance cursor position (4)';
+}
+
+# RT #126033
+{
+    my $a = '<4';
+    $a = $a ~~ /\<(\d+)/;
+    is ~$a, '<4', 'result of match assigned to variable matched against works';
 }
 
 # vim: ft=perl6
