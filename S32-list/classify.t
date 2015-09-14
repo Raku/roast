@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 39;
+plan 40;
 
 {
     my @list = 1, 2, 3, 4;
@@ -108,6 +108,14 @@ plan 39;
 }
 
 is classify( { "foo" }, () ).elems, 0, 'classify an empty list';
+
+# RT #126032
+{
+    is-deeply
+        <a b c>.classify({ ~($ ~= $_); }),
+        {'a' => ['a'], 'ab' => ['b'], 'abc' => ['c']},
+        '&test only run once for each item';
+}
 
 #?rakudo todo "Not sure how this should be fixed"
 lives-ok { my %b := BagHash.new(); %b.classify-list( {.comb}, 20..40 ); }, "Baggy classify-list shouldn't die on this case";
