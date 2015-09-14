@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 40;
+plan 42;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -11,6 +11,10 @@ ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
     is @result, <a 1 a 2 b 1 b 2>,
     'non-meta cross produces expected result';
 
+    @result = 1 X 1 X 1 X 1;
+    is @result, (1, 1, 1, 1), 'cross with more than 3 dimensions works';
+
+    is (1 X (1..*))[0], (1, 1), 'cross with infinite second list works';
 }
 
 is (1, 2, 3 X** 2, 4), (1, 1, 4, 16, 9, 81), 'X** works';
