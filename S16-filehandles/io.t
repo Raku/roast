@@ -15,7 +15,7 @@ I/O tests
 
 =end pod
 
-plan 119;
+plan 125;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -148,6 +148,19 @@ is(@lines8[0], "Hello World", 'lines($in,3) worked in list context');
 is(@lines8[1], "Foo Bar Baz", 'lines($in,3) worked in list context');
 is(@lines8[2], "The End", 'lines($in,3) worked in list context');
 is(@lines8[3], "and finally... Its not over yet!", 'get($in) worked after lines($in,$n)');
+}
+{
+# test if reading a file with lines() is really lazy
+my $in9 = open($filename);
+#?niecza skip 'open does not yet produce an IO object'
+isa-ok($in9, IO::Handle);
+my $lines9 := $in9.lines;
+is($in9.ins, 0);
+for ^4 {
+    $lines9[$_];
+    is($in9.ins, $_ + 1);
+}
+$in9.close;
 }
 
 {
