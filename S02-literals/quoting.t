@@ -487,15 +487,11 @@ Hello, World
     sub zeta {42};
 
     is(qw[a b], <a b>, 'qw');
-    #?rakudo todo 'quoting adverbs'
-    is(qww[$alpha $beta], <foo bar>, 'qww');
+    is(qqww[$alpha $beta], <foo bar>, 'qww');
     is(qq[$alpha $beta], 'foo bar', 'qq');
-    #?rakudo todo 'quoting adverbs'
-    is(Qs[$alpha @delta[] %gamma<>], 'foo @delta %gamma', 'Qs');
-    #?rakudo todo 'quoting adverbs'
-    is(Qa[$alpha @delta[] %gamma<>], '$alpha ' ~ @delta ~ ' %gamma', 'Qa');
-    #?rakudo todo 'quoting adverbs'
-    is(Qh[$alpha @delta[] %gamma<>], '$alpha @delta ' ~ %gamma, 'Qh');
+    is(Qs[$alpha @delta[] %gamma<>], 'foo @delta[] %gamma<>', 'Qs');
+    is(Qa[$alpha @delta[] %gamma<>], '$alpha ' ~ @delta ~ ' %gamma<>', 'Qa');
+    is(Qh[$alpha @delta[] %gamma<>], '$alpha @delta[] ' ~ %gamma, 'Qh');
     is(Qf[$alpha &zeta()], '$alpha 42', 'Qf');
     is(Qb[$alpha\t$beta], '$alpha	$beta', 'Qb');
     is(Qc[{1+1}], 2, 'Qc');
