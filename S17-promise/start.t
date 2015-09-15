@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 38;
 
 throws-like { await }, X::AdHoc, "a bare await should not work";
 
@@ -88,4 +88,13 @@ throws-like { await }, X::AdHoc, "a bare await should not work";
         }
     }
     is $deaths, 200, 'Getting signature bind failure in Promise reliably breaks the Promise';
+}
+
+# RT #125161
+{
+    my @p = map { start { my @a = [ rand xx 1_000 ]; @a } }, ^10;
+    for @p.kv -> $i, $_ {
+        ok .result, "Got result from Promise populating/returning an array ($i)";
+        is .result.elems, 1000, "Correct number of results in array ($i)";
+    }
 }
