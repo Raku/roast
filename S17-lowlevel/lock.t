@@ -7,7 +7,7 @@ use Test;
 # start {...}), Channels and Supplies.  Thank you!
 #-------------------------------------------------------------------------------
 
-plan 8;
+plan 23;
 
 {
     my $l = Lock.new;
@@ -123,4 +123,34 @@ plan 8;
         last if $failed = ( !$now1.defined or $now1 > $now2 );
     }
     ok !$failed, "Thread 1 never ran after it was tried $tried times";
+}
+
+{
+    for 1..15 -> $iter {
+        my $lock = Lock.new;
+        my $cond = $lock.condition;
+        my $todo = 0;
+        my $done = 0;
+        my @in = 1..100;
+        my @out;
+
+        loop ( my $i = 0; $i < @in; $i++ ) {
+            my $in := @in[$i];
+            my $out := @out[$i];
+            $lock.protect( {
+                $*SCHEDULER.cue( {
+                    $out = $in * 10;
+                    $lock.protect( {
+                        $done++;
+                        $cond.signal if $done == $todo;
+                    } );
+                } );
+                $todo++;
+            } );
+        }
+        $lock.protect( { $cond.wait unless $done == $todo; } );
+
+        is @out, [10, 20 ... 1000],
+            "Correct result and no crash in lock/condvar use ($iter)";
+    }
 }
