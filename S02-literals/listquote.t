@@ -76,7 +76,7 @@ throws-like { EVAL '<STDIN>' },
     my $c = <a b c>;
     isa-ok($c, List, '<a b c> produces a List');
     throws-like {$c.push: 'd'},
-      X::Multi::NoMatch,
+      X::Immutable,
       '... which is immutable';
 }
 
