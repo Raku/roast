@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 45;
+plan 47;
 
 # L<S14/Run-time Mixins/>
 
@@ -204,5 +204,13 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
 }
 throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /resolved/ },
     'True but (1, 1) gets Int conflict to resolve due to generating two Int methods';
+
+# RT #119925
+{
+    is (gather {} but role {})[0], Nil,
+        'mixing roles into lazy lists does not fail (1)';
+    is ((^Inf) but role {})[2], 2,
+        'mixing roles into lazy lists does not fail (2)';
+}
 
 # vim: syn=perl6
