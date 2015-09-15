@@ -241,11 +241,10 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(~@q4, 'FOO gorch BAR', ", and long form");
 }
 
-#?rakudo todo "comments inside qq:ww NYI RT #ww NYI RT#:124555"
 {
-    is (try EVAL "« one #'[[[comment]]] two »"), "one two", "«» handles embedded comments";
-    is (try EVAL "« one #'«comment» two »"), "one two", "«» handles embedded comments containing french quotes";
-    is (try EVAL "<< one #'<<comment>> two >>"), "one two", "<<>> handles embedded comments containing texas quotes";
+    is (try EVAL "« one #`[[[comment]]] two »"), "one two", "«» handles embedded comments";
+    is (try EVAL "« one #`«comment» two »"), "one two", "«» handles embedded comments containing french quotes";
+    is (try EVAL "<< one #`<<comment>> two >>"), "one two", "<<>> handles embedded comments containing texas quotes";
     is (try EVAL "« one #comment\n two »"), "one two", "«» handles line-end comments";
 }
 
