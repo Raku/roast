@@ -487,7 +487,7 @@ Hello, World
     sub zeta {42};
 
     is(qw[a b], <a b>, 'qw');
-    is(qqww[$alpha $beta], <foo bar>, 'qww');
+    is(qqww[$alpha $beta], <foo bar>, 'qqww');
     is(qq[$alpha $beta], 'foo bar', 'qq');
     is(Qs[$alpha @delta[] %gamma<>], 'foo @delta[] %gamma<>', 'Qs');
     is(Qa[$alpha @delta[] %gamma<>], '$alpha ' ~ @delta ~ ' %gamma<>', 'Qa');
