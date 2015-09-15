@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 28;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -151,6 +151,11 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
     my %h;
     %h{.value} //= .key for @a.pairs;
     is %h, {:a(0), :b(1), :c(2)}, "default-assignment (//-) doesn't mix with implicit-variable method call";
+}
+
+# RT #126060
+{
+    is ($_ for $[1,2,3]).elems, 1, "does for modifier respect itemization";
 }
 
 # vim: ft=perl6

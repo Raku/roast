@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 29;
+plan 30;
 
 is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it being confused for closure";
 
@@ -123,6 +123,14 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
         'non-deducible sequence ending in * throws X::Sequence::Deduction (1)';
     throws-like { ~(1, 2, 6 ... *)[5] }, X::Sequence::Deduction, from => '1,2,6',
         'non-deducible sequence ending in * throws X::Sequence::Deduction (2)';
+}
+
+# RT #126060
+{
+    sub identity-matrix($n) {
+	[$[1, |(0 xx $n-1)], *.rotate(-1).item ... *[*-1] == 1]
+    }
+    is identity-matrix(5).perl, $[[1,0,0,0,0], [0,1,0,0,0], [0,0,1,0,0], [0,0,0,1,0], [0,0,0,0,1]].perl, "code endpoint protects item";
 }
 
 # vim: ft=perl6
