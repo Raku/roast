@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 59;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -110,6 +110,15 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     my @a = 1,2,3;
     my @b = @a.pick(*).sort.list but sidecat;
     is @b.gist, "[1 2 3]", "can gist a list with a role";
+}
+
+{
+    for <push pop shift unshift> -> $method {
+        throws-like { (1,2,3)."$method"(42) }, X::Immutable,
+          method   => $method,
+          typename => 'List',
+        ;
+    }
 }
 
 # vim: ft=perl6
