@@ -330,15 +330,15 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 # RT #77504
 {
     throws-like { ~[]<c> }, Exception,
-        message => 'postcircumfix:<{ }> not defined for type Array',
+        message => 'Type Array does not support associative indexing.',
         'adequate Failure error message when hash-indexing a non-hash using .<> (1)';
 
     throws-like { ~5<c> }, Exception,
-        message => 'postcircumfix:<{ }> not defined for type Int',
+        message => 'Type Int does not support associative indexing.',
         'adequate Failure error message when hash-indexing a non-hash using .<> (2)';
 
     throws-like { ~5{'c'} }, Exception,
-        message => 'postcircumfix:<{ }> not defined for type Int',
+        message => 'Type Int does not support associative indexing.',
         'adequate Failure error message when hash-indexing a non-hash using .{}';
 }
 
