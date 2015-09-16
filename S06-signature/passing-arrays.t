@@ -19,7 +19,7 @@ plan 11;
 
     sub count2($a) {
         my $x = 0;
-        $x++ for $a;
+        $x++ for $a.list;
         return $x;
     }
 
