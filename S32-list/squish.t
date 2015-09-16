@@ -72,12 +72,10 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 #?niecza skip 'NYI'
 {
     my @rt124204 = ('', '', Any, Any);
-    #?rakudo todo 'RT #124204'
     is-deeply @rt124204.squish(:as(-> $x {$x})).list, ('', Any),
       "method form of squish with :as does not needlessly stringify";
     is-deeply @rt124204.squish.list, ('', Any),
       "method form of squish without :as does not needlessly stringify";
-    #?rakudo todo 'RT #124204'
     is-deeply @rt124204.squish(:as(-> $x {$x}), :with({$^b === $^a})).list, ('', Any),
       "method form of squish with :as and :with does not needlessly stringify";
     is-deeply @rt124204.squish(:with({$^b === $^a})).list, ('', Any),
