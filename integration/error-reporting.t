@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 22;
 
 use lib 't/spec/packages';
 
@@ -175,6 +175,17 @@ is_run 'sub s1 { sub s2 { fail("foo"); }; s2()(); }; s1();', {
 is_run 'sub foo { ({a=>1,b=>2}, {c=>3,d=>4}).map({ if (.<a>) {return $_} else { return } }) }; say foo', {
             err => rx:i/Attempt\sto\sreturn\soutside\N+Routine.*in\sblock/
         }, "Correct error and a backtrace for return in mainline code";
+
+
+# RT #113888
+{
+    is_run 'print "a".WHAT',
+        {
+            status  => 0,
+            out     => '',
+            err     => all(rx/Str/, rx/\^name|gist|perl|say/)
+        }, 'Using type object in string context provides help';
+}
 
 
 
