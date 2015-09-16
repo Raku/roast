@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 341;
+plan 342;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -731,5 +731,9 @@ throws-like 'sub foo() returns !!!wtf??? { }', X::Syntax::Malformed, what => 'tr
 
 # RT #125675
 throws-like '(1, 2, 3).map(True)', X::Multi::NoMatch;
+
+# RT #125504
+my $notahash = "a";
+throws-like '$notahash<foo>', X::AdHoc, payload => rx:i/associative/, payload => rx/^^<-[\{\}]>+$$/;
 
 # vim: ft=perl6
