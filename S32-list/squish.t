@@ -94,7 +94,7 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
     # somewhat more real-world examples:
 
-    my @rt124205_b = '', '', <b b B B>;
+    my @rt124205_b = '', '', |<b b B B>;
 
     is-deeply @rt124205_b.squish(:with(*.Str eq *.Str)).list, ('', 'b', 'B'),
       "method form of squish with :with preserves the first element even if it stringifies to ''";
