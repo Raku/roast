@@ -20,7 +20,7 @@ plan 13;
   my $sum   = 5 + -3 + 7 + 0 + 1 + -9; # laziness :)
 
 
-  is((reduce { $^a + $^b }, 0, @array), $sum, "basic reduce works (1)");
+  is((reduce { $^a + $^b }, 0, |@array), $sum, "basic reduce works (1)");
 }
 
 # Reduce with n-ary functions
