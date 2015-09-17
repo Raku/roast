@@ -83,7 +83,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 } #4
 
 #?niecza skip 'NYI'
-#?rakudo todo 'RT #124205'
 {
     my @rt124205 = <a a>;
 
