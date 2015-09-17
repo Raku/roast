@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 10;
+plan 11;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -88,4 +88,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         }
         tap-ok $on, @seen, "basic 2 supply with array without index 'on' works";
     }
+}
+
+# RT #126073
+{
+    tap-ok Supply.new.flat.flat.last,[],'test for #126073';
 }
