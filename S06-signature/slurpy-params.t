@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 93;
+plan 100;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -294,6 +294,28 @@ These tests are the testing for "List parameters" section of Synopsis 06
     sub f(+a) { a };
     ok f((1,2,3).grep({$_})).WHAT === Seq, "+args passes through Seq unscathed";
     is-deeply f((1,2,3).grep({$_})),(1,2,3), "+args passes through Seq unscathed";
+
+    my @result;
+    nok try {
+	my \seq = f((1,2,3).grep({$_}));
+	push @result, $_ for seq;
+	is-deeply @result, [1,2,3], "iteration succeeds on first pass";
+	push @result, $_ for seq;
+    }.defined, "+args can't repeat a Seq";
+    ok $!.WHAT === X::Seq::Consumed, "produces the right error";
+    is-deeply @result, [1,2,3], "iteration dies on second pass";
+}
+
+{
+    sub f(+@a) { @a };
+    ok f((1,2,3).grep({$_})).WHAT === List, "+@args converts Seq to List";
+    is-deeply f((1,2,3).grep({$_})),(1,2,3), "+@args handles List from Seq";
+
+    my @result;
+    my \seq = f((1,2,3).grep({$_}));
+    push @result, $_ for seq;
+    push @result, $_ for seq;
+    is-deeply @result, [1,2,3,1,2,3], "iteration succeeds on second pass";
 }
 
 eval-dies-ok 'sub rt65324(*@x, $oops) { say $oops }',
