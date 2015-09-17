@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 91;
+plan 93;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -288,6 +288,12 @@ These tests are the testing for "List parameters" section of Synopsis 06
     is oneargraw(0,:y,[1,2,3],4).elems, 2, "final top-level arg contains array";
     is oneargraw(0,:y,1..3,4).elems, 2, "final top-level arg contains range";
     is oneargraw(0,:y,1..*)[^5], (1,2,3,4,5), "final top-level arg is lazy";
+}
+
+{
+    sub f(+a) { a };
+    ok f((1,2,3).grep({$_})).WHAT === Seq, "+args passes through Seq unscathed";
+    is-deeply f((1,2,3).grep({$_})),(1,2,3), "+args passes through Seq unscathed";
 }
 
 eval-dies-ok 'sub rt65324(*@x, $oops) { say $oops }',
