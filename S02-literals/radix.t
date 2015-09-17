@@ -22,6 +22,7 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
     is(:10('0b1110'),   0b1110, ":10('0b1110') overrides default decimal");
     is(:10(':2<1110>'), 0b1110, ":10(':2<1110>') overrides default decimal");
     is(:10('0x20'),     0x20,   ":10('0x20') overrides default decimal");
+    # RT #77624
     is(:10(':16<20>'),  0x20,   ":10(':16<20>') overrides default decimal");
     is(:10('0o377'),    0o377,  ":10('0o255') overrides default decimal");
     is(:10(':8<377>'),  0o377,  ":10(':8<255>') overrides default decimal");
