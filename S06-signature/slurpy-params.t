@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 57;
+plan 91;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -238,6 +238,56 @@ These tests are the testing for "List parameters" section of Synopsis 06
     $count = 0;
     slurp_any_multi(3|4|5);
     is $count, 1, 'Any slurpy param doesnt autothread';
+}
+
+{
+    sub oneargcached (+@foo) { @foo }
+    is oneargcached(1,2,3).elems, 3, "comma separates top-level args";
+    is oneargcached((1,2,3)).elems, 3, "top-level arg is list";
+    is oneargcached([1,2,3]).elems, 3, "top-level arg is array";
+    is oneargcached(1..3).elems, 3, "top-level arg is range";
+    is oneargcached(1...3).elems, 3, "top-level arg is seq";
+    is oneargcached((1,2,3),4).elems, 2, "top-level arg contains list";
+    is oneargcached([1,2,3],4).elems, 2, "top-level arg contains array";
+    is oneargcached(1..3,4).elems, 2, "top-level arg contains range";
+}
+
+{
+    sub oneargraw (+foo) { foo }
+    is oneargraw(1,2,3).elems, 3, "comma separates top-level args";
+    is oneargraw((1,2,3)).elems, 3, "top-level arg is list";
+    is oneargraw([1,2,3]).elems, 3, "top-level arg is array";
+    is oneargraw(1..3).elems, 3, "top-level arg is range";
+    is oneargraw(1...3).elems, 3, "top-level arg is seq";
+    is oneargraw((1,2,3),4).elems, 2, "top-level arg contains list";
+    is oneargraw([1,2,3],4).elems, 2, "top-level arg contains array";
+    is oneargraw(1..3,4).elems, 2, "top-level arg contains range";
+    is oneargraw(1..*)[^5], (1,2,3,4,5), "top-level arg is lazy";
+}
+
+{
+    sub oneargcached ($x, :$y, +@foo) { @foo }
+    is oneargcached(0,:y,1,2,3).elems, 3, "comma separates final top-level args";
+    is oneargcached(0,:y,(1,2,3)).elems, 3, "final top-level arg is list";
+    is oneargcached(0,:y,[1,2,3]).elems, 3, "final top-level arg is array";
+    is oneargcached(0,:y,1..3).elems, 3, "final top-level arg is range";
+    is oneargcached(0,:y,(1...3)).elems, 3, "final top-level arg is seq";
+    is oneargcached(0,:y,(1,2,3),4).elems, 2, "final top-level arg contains list";
+    is oneargcached(0,:y,[1,2,3],4).elems, 2, "final top-level arg contains array";
+    is oneargcached(0,:y,1..3,4).elems, 2, "final top-level arg contains range";
+}
+
+{
+    sub oneargraw ($x, :$y, +foo) { foo }
+    is oneargraw(0,:y,1,2,3).elems, 3, "comma separates final top-level args";
+    is oneargraw(0,:y,(1,2,3)).elems, 3, "final top-level arg is list";
+    is oneargraw(0,:y,[1,2,3]).elems, 3, "final top-level arg is array";
+    is oneargraw(0,:y,1..3).elems, 3, "final top-level arg is range";
+    is oneargraw(0,:y,(1...3)).elems, 3, "final top-level arg is seq";
+    is oneargraw(0,:y,(1,2,3),4).elems, 2, "final top-level arg contains list";
+    is oneargraw(0,:y,[1,2,3],4).elems, 2, "final top-level arg contains array";
+    is oneargraw(0,:y,1..3,4).elems, 2, "final top-level arg contains range";
+    is oneargraw(0,:y,1..*)[^5], (1,2,3,4,5), "final top-level arg is lazy";
 }
 
 eval-dies-ok 'sub rt65324(*@x, $oops) { say $oops }',
