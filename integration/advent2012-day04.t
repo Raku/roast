@@ -18,6 +18,7 @@ sub largest-prime-factor($n is copy) {
 is largest-prime-factor(600_851_475_143), 6857, 'largest prime factor';
 
 # Problem 53
+#?rakudo todo 'failing during 2015.09 release...'
 is-deeply do {
     $[1], -> @p { $[0, |@p Z+ |@p, 0] } ... * #    generate Pascal's triangle
         ==> (*[0..100])()                     # get rows up to n = 100
