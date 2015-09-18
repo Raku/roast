@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  26;
+plan  27;
 
 use lib 't/spec/packages';
 
@@ -219,3 +219,11 @@ is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" 
     :args['--foo=bar', '--foo=baz'],
     'correct select Array candidate from Scalar and Array candidates.';
 
+# RT #119001
+is_run 'sub MAIN (Str $value) { print "String $value" }',
+    {
+        out => 'String 10',
+        err => '',
+    },
+    :args[10],
+    'passing an integer matches MAIN(Str)';
