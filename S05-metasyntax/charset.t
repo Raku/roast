@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 42;
+plan 44;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -97,6 +97,12 @@ nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
 {
     is "\r\na" ~~ /<?[\n]>"\r\na"/, "\r\na",
         'look-ahead with windows newline does not advance cursor position';
+}
+
+{
+    grammar G { token TOP { <+ kebab-case> }; token kebab-case { 'a' } };
+    is G.subparse('aaa').Str, 'a', "kebab-case allowed in character classes";
+    dies-ok { 'a' ~~ / <+xdigit-digit> / }, "accidental kebabs disallowed";
 }
 
 # vim: ft=perl6
