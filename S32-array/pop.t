@@ -83,18 +83,19 @@ plan 37;
 # testing some error cases
 {
     my @pop = 1 .. 5;
-    eval-dies-ok('pop',            'pop() requires arguments');
-    eval-dies-ok('42.pop',         '.pop should not work on scalars');
-    eval-dies-ok('pop(@pop,10)'),  'pop() should not allow extra arguments';
-    eval-dies-ok('@pop.pop(10)'),  '.pop() should not allow extra arguments';
+    throws-like 'pop', X::TypeCheck::Argument, 'pop() requires arguments';
+    throws-like '42.pop', X::Method::NotFound, '.pop should not work on scalars';
+    throws-like 'pop(@pop,10)', Exception,     'pop() should not allow extra arguments';
+    throws-like '@pop.pop(10)', Exception,     '.pop() should not allow extra arguments';
+    ## TODO the reason this dies is: Variable '@pop' is not declared
     eval-dies-ok('@pop.pop = 3'),  'Cannot assign to a readonly variable or a value';
-    eval-dies-ok('pop(@pop) = 3'), 'Cannot assign to a readonly variable or a value';
+    throws-like 'pop(@pop) = 3', Exception, 'Cannot assign to a readonly variable or a value';
 } #6
 
 #?niecza     skip "may run forever"
 {
     my @push = 1 .. Inf;
-    eval-dies-ok( 'pop @push', 'cannot pop from an Inf array' );
+    throws-like 'pop @push', X::Cannot::Lazy, 'cannot pop from a lazy list';
 } #1
 
 # RT #111720
