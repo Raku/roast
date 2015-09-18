@@ -398,7 +398,7 @@ sub showkv($x) {
     #?niecza 2 todo 'Bag in Bag does not work correctly yet'
     isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
-    my $inner-list = $b1.keys.first(List);
+    $inner-list = $b1.keys.first(List);
     isa-ok $inner-list, List, "One of the bag's elements is indeed a List!";
     is $inner-list, <c d>, 'with the proper elements';
 }
@@ -480,7 +480,7 @@ sub showkv($x) {
 {
     my @pairings;
     my Bag $bag .= new: <foo foo bar>;
-    for flat $bag.keys X $bag.keys -> ($a, $b) {
+    for $bag.keys X $bag.keys -> ($a, $b) {
         @pairings.push: $a ~ $b;
     }
     @pairings .= sort;
