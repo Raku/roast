@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 100;
 
 # Lots of the same tests from this directory run again with
 # the parameters in a subsignature.
@@ -109,10 +109,26 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
     is catch(0, 5, :!really), 2, 'slurpy and named interact well (2)';
 }
 
+# Same, with an anonymous capture
+{
+    multi catch(| (*@all            )) { 1 }   #OK not used
+    multi catch(| (*@all, :$really! )) { 2 }   #OK not used
+    is catch(0, 5),           1, 'slurpy and named interact well (1)';
+    is catch(0, 5, :!really), 2, 'slurpy and named interact well (2)';
+}
+
 # RT #78738
 {
     multi zero(|c())       { 'no args' };
     multi zero(|c(:$foo!)) { 'named'   };
+    is zero(), 'no args',
+        'presence of mandatory named multi does not corrupt calling a nullary'
+}
+
+# Same, with an anonymous capture
+{
+    multi zero(| ())       { 'no args' };
+    multi zero(| (:$foo!)) { 'named'   };
     is zero(), 'no args',
         'presence of mandatory named multi does not corrupt calling a nullary'
 }

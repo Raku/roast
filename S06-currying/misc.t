@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Assuming;
 
-plan 12;
+plan 13;
 
 # How clever we get with type-captures and subsignatures is TBD.  So
 # these tests are more tenuous, they just test the intent
@@ -32,3 +32,6 @@ throws-like { 42 same-in-Int "42" }, X::TypeCheck::Binding,
     backtrace => rx:i/.*in\s+\S+\s+\S*curr{fail}||prim/,
     "Backtrace mentions priming and does not mention currying";
 
+# Try with an anonymous capture in the mix
+sub abc123 (| ($a,$b,$c,$o,$t,$th)) { $a,$b,$c,$o,$t,$th; }
+is-primed-call(&abc123, \(1,2,3), ['a','b','c',1,2,3], 'a','b','c');

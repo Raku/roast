@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 32;
 
 # Test for proto definitions
 class A { }
@@ -54,6 +54,16 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     multi prefix:<elk> ($arg) { $arg + 1 }
     is (elk 3), 4, "multi definition of prefix:<elk> works";
 }
+
+# Anonymous capture interaction with proto optimizations.
+proto bar(| ($x)) { * }    #OK not used
+multi bar(| (A $x)) { 2 }  #OK not used
+multi bar(| (B $x)) { 3 }  #OK not used
+multi bar(| where { $_[0] == 42 })   { 1 }  #OK not used
+is(bar(A.new), 2, 'dispatch on class worked (anon cap)');
+is(bar(B.new), 3, 'dispatch on class worked (anon cap)');
+is(bar(42),    1, 'dispatch with no possible candidates fell back to proto (anon cap)');
+eval-dies-ok 'bar(41)', 'impossible dispatch failed (anon cap)';
 
 eval-dies-ok 'proto rt68242($a){};proto rt68242($c,$d){};',
     'attempt to define two proto subs with the same name dies';
