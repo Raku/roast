@@ -129,12 +129,6 @@ sub showkv($x) {
     is $a.kv.sort({ .[0] }), ([1, 1], [2, 5], [3, 1]), "MixHash.kv returns list of keys and values";
 }
 
-#?niecza skip "Unmatched key in Hash.LISTSTORE"
-{
-    my %h = MixHash.new(<a b o p a p o o>);
-    is %h, { :2a, :1b, :3o, :2p }, 'list flattens according to single arg rule';
-}
-
 {
     my $m = MixHash.new(<a b o p a p o o>);
     isa-ok $m, MixHash, '&MixHash.new given an array of strings produces a MixHash';

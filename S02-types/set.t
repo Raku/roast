@@ -89,12 +89,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$s, 3, 'Keys are counted correctly even when a key is False';
 }
 
-#?niecza skip "Unmatched key in Hash.LISTSTORE"
-{
-    my %h = set <a b o p a p o o>;
-    is %h, { :a, :b, :o, :p }, 'flatten set under single arg rule';
-}
-
 {
     my %h := set <a b o p a p o o>;
     ok %h ~~ Set, 'A hash to which a Set has been bound becomes a set';

@@ -128,12 +128,6 @@ sub showkv($x) {
     is $a.kv.sort({ .[0] }), ([1, 1], [2, 5], [3, 1]).list.sort, "BagHash.kv returns list of keys and values";
 }
 
-#?niecza skip "Unmatched key in Hash.LISTSTORE"
-{
-    my %h = BagHash.new(<a b o p a p o o>);
-    is %h, {:2a, :1b, :3o, :2p}, 'we now flatten according to single arg';
-}
-
 {
     my $b = BagHash.new(<a b o p a p o o>);
     isa-ok $b, BagHash, '&BagHash.new given an array of strings produces a BagHash';
