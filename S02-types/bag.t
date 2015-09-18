@@ -483,7 +483,7 @@ sub showkv($x) {
     for flat $bag.keys X $bag.keys -> ($a, $b) {
         @pairings.push: $a ~ $b;
     }
-    @parings .= sort;
+    @pairings .= sort;
     my $string = [~] @pairings;
     is $string, 'barbarbarfoofoobarfoofoo',
         'can use cross operator X with bag keys';
