@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 99;
+plan 101;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -255,6 +255,15 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
         '.minmax combine .minmax of non-empty sublist of Strs';
     is (@words[ () ].minmax.item, @words[0..5].minmax.item, @words[6..*].minmax.item).minmax.perl, ('five'..'two').perl,
         '.minmax combine .minmax of empty, non-empty, empty sublist of Strs';
+}
+
+# RT #112250
+{
+    my $rt112250 = [max] <2 11>;
+    is $rt112250, 11,
+        '[max] of <>-style list finds the numerically largest number';
+    is <1 2 3 4 5 10>.max, 10,
+        '.max on <>-style list finds the numerically largest number';
 }
 
 # vim: ft=perl6
