@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 107;
+plan 108;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -227,5 +227,8 @@ plan 107;
     lives-ok { EVAL 'my int $a is default(*)' },
       'the default(*) trait on natives';
 } #4
+
+# RT #126104
+lives-ok { EVAL 'my Any $a is default(3)' }, 'Default value that is subtype of constraint works fine';
 
 # vim: ft=perl6
