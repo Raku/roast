@@ -13,7 +13,7 @@ Tests for the feed operators
     
 =end pod
 
-plan 24;
+plan 23;
 
 {
     my @a = (1, 2);
@@ -63,8 +63,6 @@ plan 24;
 {
     my @data = <1 2 4 5 7 8>;
     my @odds = <1 5 7>;
-
-    eval-dies-ok('@data <== grep {$_ % 2} <== @data', 'a chain of feeds may not begin and end with the same array');
 
     @data = <1 2 4 5 7 8>;
     @data <== grep {$_ % 2} <== eager @data;
