@@ -31,21 +31,25 @@ plan 8;
     }
 }
 
-eval-lives-ok 'my $x = 3; END { $x * $x }',
-    'outer lexicals are visible in END { ... } blocks';
-
 # RT #112408
-eval-lives-ok 'my %rt112408 = END => "parsing clash with block-less END"',
+lives-ok { EVAL 'my %rt112408 = END => "parsing clash with block-less END"' },
     'Can use END as a bareword hash key (RT 112408)';
 
+lives-ok { EVAL 'my $x = 3; END { $x * $x }' },
+    'outer lexicals are visible in END { ... } blocks';
+
 my $a = 0;
-#?rakudo 2 todo 'lexicals and EVAL() RT #124963'
 #?niecza todo
-eval-lives-ok 'my $x = 3; END { $a = $x * $x };',
-              'and those from eval as well';
+lives-ok { EVAL 'my $x = 3; END { $a = $x * $x };' },
+    'and those from EVAL as well';
 
 #?niecza todo
-is $a, 9, 'and they really worked';
+is_run( 'my $a = 2; EVAL q[my $x = 3; END { $a = $x * $x; print $a }]; print $a, ":"',
+    {
+        out => '2:9',
+        err => '',
+    },
+    'and they really worked' );
 
 END { pass("exit does not prevent running of END blocks"); }
 exit;
