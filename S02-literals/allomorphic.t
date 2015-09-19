@@ -118,7 +118,7 @@ lives-ok {val("foo")}, "val() exists";
 {
     my @wordlist = qw[1 2/3 4.5 6e7 8+9i] Z (IntStr, RatStr, RatStr, NumStr, ComplexStr);
 
-    for @wordlist -> $val, $wrong-type {
+    for @wordlist -> ($val, $wrong-type) {
         isa-ok $val, Str, "'$val' from qw[] is a Str";
         nok $val.isa($wrong-type), "'$val' from qw[] is not a $wrong-type.perl()";
     }
@@ -127,7 +127,7 @@ lives-ok {val("foo")}, "val() exists";
 {
     my @wordlist = qqww[1 2/3 4.5 6e7 8+9i] Z (IntStr, RatStr, RatStr, NumStr, ComplexStr);
 
-    for @wordlist -> $val, $wrong-type {
+    for @wordlist -> ($val, $wrong-type) {
         isa-ok $val, Str, "'$val' from qqww[] is a Str";
         nok $val.isa($wrong-type), "'$val' from qqww[] is not a $wrong-type.perl()";
     }
