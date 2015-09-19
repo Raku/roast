@@ -1,8 +1,11 @@
 use v6;
 
-use Test;
+use lib 't/spec/packages';
 
-plan 6;
+use Test;
+use Test::Util;
+
+plan 7;
 
 ## If this test file is fudged, then MAIN never executes because 
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -26,5 +29,12 @@ ok( @*ARGS == 5, '@*ARGS has correct elements');
 @*INC.push: 't/spec/packages/';
 #?niecza todo
 lives-ok { require HasMain }, 'MAIN in a module did not get executed';
+
+# RT #126029
+is_run 'sub MAIN() { map { print "ha" }, ^3 }',
+    {
+        out => "hahaha",
+    },
+    'MAIN return value is sunk';
 
 # vim: ft=perl6
