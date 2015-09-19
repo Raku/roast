@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 10;
 
 {
     my $i = 0;
@@ -73,5 +73,8 @@ plan 9;
     eval-dies-ok('my $i = 1; while($i < 5) { $i++; }',
         'keyword needs at least one whitespace after it');
 }
+
+# RT #125876
+lives-ok { EVAL 'while 0 { my $_ }' }, 'Can declare $_ in a loop body';
 
 # vim: ft=perl6
