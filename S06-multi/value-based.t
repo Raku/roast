@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -25,11 +25,13 @@ plan 12;
     multi m2(2)      { "b" }
     multi m2(Int $x) { "c" }   #OK not used
     multi m2($x)     { "d" }   #OK not used
+    multi m2(-1)     { "e" }
 
     is m2(1),   "a", 'literal Int in signature matches value correctly';
     is m2(2),   "b", 'literal Int in signature matches value correctly';
     is m2(3),   "c", 'fallback to Int variant which is less narrow than constrained one';
     is m2("x"), "d", 'if not an Int at all, fall back to Any candidate';
+    is m2(-1),  "e", 'negative literal Int in signature matches value correctly';
 }
 
 # RT #88562
