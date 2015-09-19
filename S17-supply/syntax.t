@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+plan 53;
+
 {
     my $s = supply {
         emit 42;
@@ -358,4 +360,6 @@ use Test;
     is @collected, ['a bear', 'the wolf'], 'Can only be in one whatever block at a time';
 }
 
-done-testing;
+# RT #126089
+throws-like 'emit 42', X::ControlFlow, illegal => 'emit';
+throws-like 'done', X::ControlFlow, illegal => 'done';
