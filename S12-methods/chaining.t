@@ -66,7 +66,7 @@ eval-dies-ok('$foo->num', 'Perl 5 -> is dead (method call)');
     # (A => (B => Mu)) => (C => Mu))
     # ((A B) C)
     
-    my $cons = [=>] ( [=>] <A B>, Mu ), <C>, Mu;
+    my $cons = [=>] ( [=>] |<A B>, Mu ), <C>, Mu;
     
     my $p = $cons.key;
     ok( $cons.key.key =:= $p.key, 'chaining through temp variable' );

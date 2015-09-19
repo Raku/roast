@@ -19,7 +19,7 @@ is ([+] @a), 20, 'Sum all elements in a list';
 is ([*] @a), 384, 'Multiply all elements in a list';
 ok ([<=] @a), 'All elements of list are numerically sorted';
 nok ([<=] @b), 'Not all elements of list are numerically sorted';
-is ([min] @a, @b), 2, 'Find the smallest element of two lists';
+is ([min] flat @a, @b), 2, 'Find the smallest element of two lists';
 is (@a »+« @b), [18, 18, 18, 18], 'Hyper operator - pairwise addition';
 is $(@a_copy = @a; @a_copy»++; @a_copy), [3, 5, 7, 9], 'Hyper operator - increment all elements in a list';
 is (@a »min« @b), [2, 4, 6, 8], 'Hyper operator - finding minimum elements';
