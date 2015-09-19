@@ -98,14 +98,14 @@ lives-ok {val("foo")}, "val() exists";
 }
 
 {
-    my $cmpxval = val(" +1.0+-3.2i ");
+    my $cmpxval = val(" +1.0-Inf\\i ");
 
-    isa-ok $cmpxval, ComplexStr, "val(\" +1.0+-3.2i \") returns a ComplexStr";
-    isa-ok $cmpxval, Complex,    "val(\" +1.0+-3.2i \") can be a Complex";
-    isa-ok $cmpxval, Str,        "val(\" +1.0+-3.2i \") can be a Str";
+    isa-ok $cmpxval, ComplexStr, Q[val(" +1.0-Inf\\i ") returns a ComplexStr];
+    isa-ok $cmpxval, Complex,    Q[val(" +1.0-Inf\\i ") can be a Complex];
+    isa-ok $cmpxval, Str,        Q[val(" +1.0-Inf\\i ") can be a Str];
 
-    is +$cmpxval, (1-3.2i), "val(\" +1.0+-3.2i \") is equal to complex number 1-3.2i";
-    is ~$cmpxval, " +1.0+-3.2i ", "val(\" +1.0+-3.2i \") is equal to string \" +1.0+-3.2i \"";
+    is +$cmpxval, (1-Inf\i), Q[val(" +1.0-Inf\\i ") is equal to complex number 1-Inf\i];
+    is ~$cmpxval, " +1.0-Inf\\i ", Q[val(" +1.0-Inf\\i ") is equal to string " +1.0-Inf\\i "];
 }
 
 # Note: L<S02/The :val modifier> seems to suggest that version literals and
