@@ -2,6 +2,9 @@ use v6;
 use Test;
 plan 20;
 
+use lib 't/spec/packages';
+use Test::Util;
+
 # Is there a better reference for the spec for how return return works? 
 # There is "return function" but that's a more advanced feature.
 #L<S04/"Control Exceptions">
@@ -37,13 +40,28 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
 
 # S04: "A return always exits from the lexically surrounding sub or method definition"
 {
-    eval-dies-ok('return 1', 'bare return fails');
-    eval-dies-ok('for 1 {return 2}', 'cannot return out of a bare for block');
-    eval-dies-ok('my $i = 1; while $i-- {return 3}', 'cannot return out of a bare while');
-    eval-dies-ok('my $i = 0; until $i++ {return 4}', 'cannot return out of a bare until');
-    eval-dies-ok('loop (my $i = 0; $i < 1; $i++) {return 5}', 'cannot return out of a bare loop');
+    ## throws-like, dies-ok and friends (even is_run from Test::Util) do
+    ## not catch this error (Attempt to return outside of any Routine) properly
+    is run($*EXECUTABLE, '-e', 'return 1; CATCH { default { print .^name } }', :out).out.lines[0],
+        'X::ControlFlow::Return',
+        'bare return fails (2)';
+    #?rakudo todo 'for is implemented in terms of map, so return is inside routine'
+    is run($*EXECUTABLE, '-e', 'for 1 {return 2}; CATCH { default { print .^name } }', :out).out.lines[0],
+        'X::ControlFlow::Return',
+        'cannot return out of a bare for block';
+    is run($*EXECUTABLE, '-e', 'my $i = 1; while $i-- {return 3}; CATCH { default { print .^name } }', :out).out.lines[0],
+        'X::ControlFlow::Return',
+        'cannot return out of a bare while';
+    is run($*EXECUTABLE, '-e', 'my $i = 0; until $i++ {return 4}; CATCH { default { print .^name } }', :out).out.lines[0],
+        'X::ControlFlow::Return',
+        'cannot return out of a bare until';
+    is run($*EXECUTABLE, '-e', 'loop (my $i = 0; $i < 1; $i++) {return 5}; CATCH { default { print .^name } }', :out).out.lines[0],
+        'X::ControlFlow::Return',
+        'cannot return out of a bare loop';
     # XXX: Not 100% sure on this one
-    eval-dies-ok('do {return 5}', 'cannot return out of a do block');
+    is run($*EXECUTABLE, '-e', 'do {return 5}; CATCH { default { print .^name } }', :out).out.lines[0],
+        'X::ControlFlow::Return',
+        'cannot return out of a do block';
 
     #?rakudo todo 'lexotic return'
     is (try EVAL 'my $double = -> $x { return 2 * $x }; sub foo($x) { $double($x) }; foo 42').defined, False, 'return is lexotic only; must not attempt dynamic return';
