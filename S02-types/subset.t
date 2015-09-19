@@ -124,8 +124,9 @@ dies-ok { my Digit $x = 3.1 },
 # RT #74234
 #?niecza todo
 {
-    eval-lives-ok 'subset A of Mu; my A $x = 23;',
-        'subset A of Mu + type check and assignment works';
+    subset RT74234 of Mu;
+    my RT74234 $rt74234 = 23;
+    is $rt74234, 23, 'subset RT74234 of Mu + type check and assignment works';
 }
 
 # RT #77356
