@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 213;
+plan 212;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
