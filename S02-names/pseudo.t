@@ -192,7 +192,6 @@ plan 142;
 }
 
 # CORE
-#?rakudo skip 'CORE NYI RT #124916'
 {
     my $real = &not;
     my $core = "CORE";
@@ -216,6 +215,7 @@ plan 142;
     ok &none =:= &f1, '... and works';
     lives-ok { CORE::.<&none> := &f2 }, 'CORE::.{} binding lives';
     ok &none =:= &f2, '... and works';
+    #?rakudo 2 skip 'Cannot bind to &::("CORE")::foo RT #126113'
     lives-ok { &::($core)::none := &f3 }, '::("CORE") binding lives';
     ok &none =:= &f3, '... and works';
 
@@ -223,6 +223,7 @@ plan 142;
     # make sure accessing it in CORE works
     lives-ok { $CORE::_ := 50 }, 'Binding to $CORE::_ lives';
     is $CORE::_, 50, 'Accessing $CORE::_ works';
+    #?rakudo 2 skip 'Cannot bind to &::("CORE")::foo RT #126113'
     lives-ok { $::($core)::_ := 51 }, 'Binding to $::("CORE")::_ lives';
     is $::($core)::_, 51, 'Accessing $::("CORE")::_ works';
 }
