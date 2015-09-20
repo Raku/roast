@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 103;
+plan 106;
 
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
@@ -238,9 +238,17 @@ sub eval_elsewhere($code){ EVAL($code) }
 
 {
     my $l = list 1,2,4...16;
-    ok $l.WHAT === List, "list listop produces List";
+    ok $l.WHAT === Seq, "list listop on Seq is no-op";
     ok $l.gist eq '(1 2 4 8 16)', "list listop doesn't double wrap";
     my \seq = 1,2,4...16;
+    dies-ok { sink (list seq)».abs, (list seq)».abs }, "list listop doesn't cache";
+}
+
+{
+    my $l = list 1..5;
+    ok $l.WHAT === List, "list listop on non-Seq is List";
+    ok $l.gist eq '(1 2 3 4 5)', "list listop doesn't double wrap";
+    my \seq = $l.grep(* > 0);
     dies-ok { sink (list seq)».abs, (list seq)».abs }, "list listop doesn't cache";
 }
 
