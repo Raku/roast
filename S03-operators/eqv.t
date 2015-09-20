@@ -142,7 +142,7 @@ plan 54;
 }
 
 {
-    ok 'a' eqv any <a b c>, "eqv autothreads correctly";
+    ok 'a' eqv any(<a b c>), "eqv autothreads correctly";
 }
 
 # RT #75322 - Rakudo used to be confused when lists began with ()

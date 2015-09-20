@@ -169,7 +169,7 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 # list prefix
 
 {
-    my $c = any 1, 2 Z 3, 4;
+    my $c = any flat 1, 2 Z 3, 4;
     ok($c == 3, "any is less tight than comma and Z");
 }
 
