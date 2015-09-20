@@ -78,7 +78,7 @@ plan 40;
 
 #?niecza todo 'feature'
 {
-    is-deeply( classify( {.comb}, 100 .. 119, 104, 119 ),
+    is-deeply( classify( {.comb}, flat 100 .. 119, 104, 119 ),
       ("1" => {
         "0" => {
           "0" => [100],
