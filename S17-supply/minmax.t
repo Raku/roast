@@ -19,7 +19,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list("a".."e","A".."E").minmax(*.uc),
       [("a".."a"),("a".."b"),("a".."c"),("a".."d"),("a".."e")],
       "ascending alpha works";
-    tap-ok Supply.from-list(reverse("a".."e","A".."E")).minmax(*.lc),
+    tap-ok Supply.from-list(reverse(flat "a".."e","A".."E")).minmax(*.lc),
       [("E".."E"),("D".."E"),("C".."E"),("B".."E"),("A".."E")],
       "descending alpha works";
 }
