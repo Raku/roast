@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -107,6 +107,13 @@ plan 9;
 {
     class C { has %!p; submethod BUILD(:%!p) {} };
     lives-ok { C.new }, 'can call BUILD without providing a value for a !-twigiled named parameter';
+}
+
+# RT #123407
+{
+    lives-ok {
+        role A { has $!a; submethod BUILD(:$!a) {}}; class B does A {}; B.new
+    }, 'BUILD provided by role can use attributes in signature';
 }
 
 # vim: ft=perl6
