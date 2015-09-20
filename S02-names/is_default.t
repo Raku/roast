@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 108;
+plan 110;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -230,5 +230,11 @@ plan 108;
 
 # RT #126104
 lives-ok { EVAL 'my Any $a is default(3)' }, 'Default value that is subtype of constraint works fine';
+
+# RT #126110
+lives-ok { EVAL 'my $a is default(Mu); 1' }, 'Mu as a default value on an unconstrained Scalar works';
+
+# RT #126115
+lives-ok { EVAL 'my $a is default(Failure.new); 1' }, 'Failure.new as a default value on an unconstrained Scalar works';
 
 # vim: ft=perl6
