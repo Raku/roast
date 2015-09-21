@@ -224,9 +224,9 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 # these should be the same values as the previous tests
 {
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
-    #?rakudo todo "Really?!"
+    #?rakudo skip "Really?!"
     #?niecza skip "WTF?"
-    is( 2«1.1*:2<10>**:2<10>»,    6, 'Powers of two in <<>> works');
+    is( :2«1.1*:2<10>**:2<10>»,    6, 'Powers of two in <<>> works');
 }
 
 # Tests for the :x[ <list> ] notations
