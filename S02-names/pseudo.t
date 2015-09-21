@@ -349,6 +349,7 @@ plan 142;
     sub f1($f) { my $x is dynamic = 100; $f() } #OK
     sub f2($f) { my $*x = 101; $f() } #OK
     my $outer = 'OUTER';
+    my $outers = 'OUTERS';
 
     my $x = 102; #OK
     my $y = 103; #OK
@@ -361,9 +362,8 @@ plan 142;
         {
             my $x = 105; #OK
             my $y = 106; #OK
-            #?rakudo 2 todo 'these tests disagree with STD'
-            is $OUTER::y, 103, '$OUTER:: keeps going until match';
-            is $::($outer)::y, 103, '::("OUTER") keeps going until match';
+            is $OUTERS::y, 103, '$OUTER:: keeps going until match';
+            is $::($outers)::y, 103, '::("OUTER") keeps going until match';
 
             is $OUTER::OUTER::x, 102, '$OUTER::OUTER:: works';
             is $::($outer)::($outer)::x, 102, '::("OUTER")::("OUTER") works';
