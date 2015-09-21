@@ -46,7 +46,8 @@ plan 12;
 }
 
 {
-  eval-dies-ok 'end(1,2,3,4)', "end(1,2,3,4) should not work";
+  throws-like 'end(1,2,3,4)', X::TypeCheck::Argument,
+    "end(1,2,3,4) should not work";
 }
 
 {

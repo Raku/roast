@@ -80,8 +80,8 @@ plan 31;
 # testing some error cases
 {
     my @shift = 1 .. 5;
-    eval-dies-ok('shift() ', 'shift() requires arguments');
-    eval-dies-ok('42.shift', '.shift should not work on scalars');
+    throws-like 'shift()', X::TypeCheck::Argument, 'shift() requires arguments';
+    throws-like '42.shift', X::Method::NotFound, '.shift should not work on scalars';
     dies-ok { EVAL('shift(@shift, 10)') }, 'shift() should not allow extra arguments';
     dies-ok { EVAL(' @shift.shift(10)') }, 'shift() should not allow extra arguments';
 }

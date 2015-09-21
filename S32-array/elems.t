@@ -42,7 +42,8 @@ plan 11;
 }
 
 {
-  eval-dies-ok 'elems(1,2,3,4', "elems(1,2,3,4) should not work";
+  throws-like 'elems(1,2,3,4)', X::TypeCheck::Argument,
+    "elems(1,2,3,4) should not work";
 }
 
 {

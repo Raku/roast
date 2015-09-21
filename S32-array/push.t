@@ -119,10 +119,12 @@ plan 52;
 
 # testing some error cases
 {
-    eval-dies-ok 'push()', 'push() requires arguments (1)';
+    throws-like 'push()', X::TypeCheck::Argument,
+        'push() requires arguments (1)';
     # This one is okay, as push will push 0 elems to a rw arrayref.
     lives-ok({ push([])  }, 'push() requires arguments (2)');
-    eval-dies-ok '42.push(3)', '.push should not work on scalars';
+    throws-like '42.push(3)', X::Multi::NoMatch,
+        '.push should not work on scalars';
 }
 
 # Push with Inf arrays (waiting on answers to perl6-compiler email)
