@@ -167,7 +167,7 @@ throws-like '$pt.test(1)',
 }
 
 #?niecza skip 'unspecced'
-#?rakudo skip "POST and exceptions RT #124962"
+#?rakudo skip "POST and exceptions RT #124961"
 {
     try {
         POST { 0 }
