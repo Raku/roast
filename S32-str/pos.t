@@ -8,7 +8,7 @@ plan 2;
 
 my $str = 'moose';
 $str ~~ /oo/;
-eval-dies-ok('$str.pos', 'Str.pos superseeded by $/.to');
+throws-like '$str.pos', X::Method::NotFound, 'Str.pos superseeded by $/.to';
 
 is($/.to, 3, '$/.to works');
 

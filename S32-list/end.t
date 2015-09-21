@@ -58,6 +58,7 @@ is  3.end, 0,  'Scalars look like wrapped in a single-item list';
 
 # test some errors
 {
-    eval-dies-ok ' end() ', '... end() dies without an argument';
+    throws-like ' end() ', X::TypeCheck::Argument,
+        '... end() dies without an argument';
 }
 #vim: ft=perl6
