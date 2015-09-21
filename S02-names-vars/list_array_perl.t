@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 23;
+plan 25;
 
 # L<S02/Names and Variables/so that Perl can evaluate the result
 # back to the same object>
@@ -34,14 +34,15 @@ my @tests = (
 }
 
 # Recursive data structures
-#?rakudo skip 'recursive data structure RT #124639'
 {
     my $foo = [ 42 ]; $foo[1] = $foo;
     is $foo[1][1][1][0], 42, "basic recursive arrayref";
 
     #?niecza skip 'hanging test'
-    is ~$foo.perl.EVAL, ~$foo,
-        ".perl worked correctly on a recursive arrayref";
+    ok $foo.perl,
+        ".perl doesn't hang on a recursive arrayref";
+    ok $foo.perl.EVAL.perl,
+        ".perl output parses on a recursive arrayref";
 }
 
 {
@@ -59,18 +60,14 @@ my @tests = (
 }
 
 {
-    # beware: S02 says that .perl should evaluate the invocant in item
-    # context, so EVAL @thing.perl returns a scalar. Always.
-
-    # L<S02/Names and Variables/regenerate the object as a scalar in
-    # item context>
-
-
     my @list = (1, 2);
     push @list, EVAL (3, 4).perl;
-    #?rakudo todo "List.perl bug"
     #?niecza todo
-    is +@list, 3, 'EVAL(@list.perl) gives a list, not an array ref';
+    is +@list, 4, 'EVAL(@list.perl) gives a list, not a scalar';
+
+    @list = (1,2);
+    push @list, EVAL $(3, 4).perl;
+    is +@list, 3, 'EVAL($@list.perl) gives a scalar list, not a list';
 }
 
 # RT #63724
