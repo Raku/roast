@@ -84,7 +84,7 @@ is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
 
 # RT #77114
 {
-    eval-dies-ok 'my @a Z= 1,2,3', "zip doesn't handle assignment";
+    throws-like 'my @a Z= 1,2,3', X::Syntax::CannotMeta, "zip doesn't handle assignment";
 }
 
 {

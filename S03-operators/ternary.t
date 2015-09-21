@@ -70,7 +70,7 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
         'Ternary error (RT 66840)';
 }
 
-eval-dies-ok q[ 71704 !! 'bust' ], 'Ternary error (RT 71704)';
+throws-like q[ 71704 !! 'bust' ], X::Syntax::Confused, 'Ternary error (RT 71704)';
 
 throws-like { EVAL '1 ?? 3 :: 2' },
     X::Syntax::ConditionalOperator::SecondPartInvalid,

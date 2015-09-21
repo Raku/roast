@@ -72,7 +72,8 @@ plan 37;
     ok(%('a', 1, 'b', 2)     eqv {a => 1, b => 2}, '%(values) builds a hash');
     ok(hash('a', 1, 'b', 2)  eqv {a => 1, b => 2}, 'hash(values) builds a hash');
     ok((hash 'a', 1, 'b', 2) eqv {a => 1, b => 2}, 'hash values builds a hash');
-    eval-dies-ok('hash("a")', 'building a hash of one item fails');
+    throws-like 'hash("a")', X::Hash::Store::OddNumber,
+        'building a hash of one item fails';
 }
 
 # L<S03/"Changes to Perl 5 operators"/Perl 5's ${...}, @{...}, %{...}, etc>
@@ -80,13 +81,13 @@ plan 37;
 # Deprecated P5 dereferencing operators:
 {
     my $scalar = 'abcd';
-    eval-dies-ok('${$scalar}', 'Perl 5 form of ${$scalar} dies');
+    throws-like '${$scalar}', X::Obsolete, 'Perl 5 form of ${$scalar} dies';
 
     my $array  = [1, 2, 3];
-    eval-dies-ok('@{$array}', 'Perl 5 form of @{$array} dies');
+    throws-like '@{$array}', X::Obsolete, 'Perl 5 form of @{$array} dies';
 
     my $hash  = {a => 1, b => 2, c => 3};
-    eval-dies-ok('%{$hash}', 'Perl 5 form of %{$hash} dies');
+    throws-like '%{$hash}', X::Obsolete, 'Perl 5 form of %{$hash} dies';
 }
 
 is(($).WHAT.gist, '(Any)', 'Anonymous $ variable can be declared');

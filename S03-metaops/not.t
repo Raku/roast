@@ -50,7 +50,7 @@ isa-ok 4 !=:= 5, Bool, "4 !=:= 5 is Bool";
 
 # Tests based on http://irclog.perlgeek.de/perl6/2012-01-24#i_5045770
 # and the next few minutes of log.  --colomon
-eval-dies-ok '"a" !!eq "a"', 'Doubled prefix:<!> is illegal';
+throws-like '"a" !!eq "a"', X::Syntax::Confused, 'Doubled prefix:<!> is illegal';
 ok "a" ![!eq] "a", '![!eq] is legal and works (1)';
 nok "a" ![!eq] "b", '![!eq] is legal and works (2)';
 

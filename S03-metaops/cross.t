@@ -75,6 +75,8 @@ is (1,2 X* 3,4), (3,4,6,8), 'cross-product works';
 is (1,2 Xcmp 3,2,0), (Order::Less, Order::Less, Order::More, Order::Less, Order::Same, Order::More), 'Xcmp works';
 
 # L<S03/Cross operators/underlying operator non-associating>
+# TODO test belongs to block 'L<S03/Cross operators/list concatenating form when used like this>'
+# TODO code does not die when run separately
 eval-dies-ok '@result Xcmp @expected Xcmp <1 2>',
     'non-associating ops cannot be cross-ops';
 
@@ -128,7 +130,7 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
 
 # RT #77114
 {
-    eval-dies-ok 'my %foo XX= 1', "cross doesn't handle assignment";
+    throws-like 'my %foo XX= 1', X::Syntax::CannotMeta, "cross doesn't handle assignment";
 }
 
 # RT #120973
