@@ -227,10 +227,9 @@ plan 47;
 # RT #61566
 #?niecza todo
 {
-    eval-dies-ok 'my @rt61566 := 1', 'can only bind Positional stuff to @a';
-    # TODO: check that the error is the right one
-    # <pmichaud> you should get a "Int does not do Positional role"
-    #            exception or something like that.
+    throws-like 'my @rt61566 := 1',
+        X::TypeCheck::Binding,
+        'can only bind Positional stuff to @a';
 }
 
 # vim: ft=perl6

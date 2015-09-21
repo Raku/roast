@@ -180,7 +180,7 @@ plan 39;
   is ~%hash\  .values.sort, "a c", 'binding %hash := $hashref works (3)';
 }
 
-eval-dies-ok 'my %h = a => 1, b => 2; %h<a b> := (4, 5)',
+throws-like 'my %h = a => 1, b => 2; %h<a b> := (4, 5)', X::Bind::Slice,
     'Cannot bind to hash slices';
 is 1,1, 'dummy';
 
