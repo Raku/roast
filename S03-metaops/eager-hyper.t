@@ -32,11 +32,11 @@ plan 8;
 
 # L<S02/Lists/A variant of eager is the hyper list operator>
 # Hyper
-#?rakudo skip 'hyper prefix NYI RT #124517'
 {
     my $counter = 0;
-    my $test := hyper gather { for 1 .. 5 { $counter++; take $_; } };
-    is(sort $test, <1 2 3 4 5>, 'hyper returned all the values in some order');
+    my $test := hyper gather { for 1 .. 5 { $counter++; take $_; } }
+    #?rakudo todo "hyper NYI entirely, I guess"
+    is($test.sort.values, <1 2 3 4 5>, 'hyper returned all the values in some order');
     is($counter, 5, 'iterator was hyper and calculated all the values');
 }
 
