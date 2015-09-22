@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 212;
+plan 209;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -200,11 +200,6 @@ sub showkv($x) {
     is $m.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
     is $m.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $m.pairs.grep({ .value ~~ Real }).elems, 3, "... and the values of which are Ints";
-
-    #?rakudo 3 skip 'No longer Iterable'
-    is $m.iterator.grep(Pair).elems, 3, ".iterator yields three Pairs";
-    is $m.iterator.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
-    is $m.iterator.grep({True}).elems, 3, "... and nothing else";
 }
 
 {

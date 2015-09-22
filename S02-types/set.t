@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 174;
+plan 173;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -167,8 +167,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     #?niecza 2 todo
     is $s.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $s.pairs.grep({ .value ~~ Bool }).elems, 3, "... and the values of which are Bool";
-    #?rakudo skip "Set is no longer Iterable"
-    is $s.iterator.grep(Str).elems, 3, ".iterator yields three Strs";
 }
 
 {

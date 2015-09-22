@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 181;
+plan 178;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -216,11 +216,6 @@ sub showkv($x) {
     is $m.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
     is $m.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $m.pairs.grep({ .value ~~ Real }).elems, 3, "... and the values of which are Reals";
-
-    #?rakudo 3 skip 'No longer Iterable'
-    is $m.iterator.grep(Pair).elems, 3, ".iterator yields three Pairs";
-    is $m.iterator.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
-    is $m.iterator.grep({True}).elems, 3, "... and nothing else";
 }
 
 {
