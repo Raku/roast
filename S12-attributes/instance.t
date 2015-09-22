@@ -10,7 +10,8 @@ Class attributes tests from L<S12/Attributes>
 
 =end pod
 
-eval-dies-ok 'has $.x;', "'has' only works inside of class|role definitions";
+throws-like 'has $.x;', X::Attribute::NoPackage,
+    "'has' only works inside of class|role definitions";
 
 # L<S12/Attributes/the automatic generation of an accessor method of the same name>
 

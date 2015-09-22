@@ -56,8 +56,8 @@ is($foo.num(), 15, '... got the right num value');
 # test attribute accessors, too
 is($foo.baz(7).baz(6).num, 28, 'chained an auto-generated accessor');
 
-eval-dies-ok('Foo->new',  'Perl 5 -> is dead (class constructor)');
-eval-dies-ok('$foo->num', 'Perl 5 -> is dead (method call)');
+throws-like 'Foo->new', X::Obsolete, 'Perl 5 -> is dead (class constructor)';
+throws-like '$foo->num', X::Obsolete, 'Perl 5 -> is dead (method call)';
 
 # L<S03/"Changes to Perl 5 operators"/"-> becomes .">
 # L<S12/"Open vs Closed Classes"/"though you have to be explicit">
