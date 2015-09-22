@@ -54,17 +54,20 @@ is(bar(S,S), 1, "not tied as only first type in the dispatch");
 
 # not allowed to declare anonymous routines with only, multi or proto.
 #?niecza todo
-eval-dies-ok 'only sub {}', 'anonymous only sub is an error';
-eval-dies-ok 'multi sub {}', 'anonymous multi sub is an error';
-eval-dies-ok 'proto sub {}', 'anonymous proto sub is an error';
+throws-like 'only sub {}', X::Anon::Multi, 'anonymous only sub is an error';
+throws-like 'multi sub {}', X::Anon::Multi, 'anonymous multi sub is an error';
+throws-like 'proto sub {}', X::Anon::Multi, 'anonymous proto sub is an error';
 #?niecza todo
-eval-dies-ok 'only {}', 'anonymous only is an error';
-eval-dies-ok 'multi {}', 'anonymous multi is an error';
-eval-dies-ok 'proto {}', 'anonymous proto is an error';
+throws-like 'only {}', X::Anon::Multi, 'anonymous only is an error';
+throws-like 'multi {}', X::Anon::Multi, 'anonymous multi is an error';
+throws-like 'proto {}', X::Anon::Multi, 'anonymous proto is an error';
 #?niecza todo
-eval-dies-ok 'class A { only method {} }', 'anonymous only method is an error';
-eval-dies-ok 'class B { multi method {} }', 'anonymous multi method is an error';
-eval-dies-ok 'class C { proto method {} }', 'anonymous proto method is an error';
+throws-like 'class A { only method {} }', X::Anon::Multi,
+    'anonymous only method is an error';
+throws-like 'class B { multi method {} }', X::Anon::Multi,
+    'anonymous multi method is an error';
+throws-like 'class C { proto method {} }', X::Anon::Multi,
+    'anonymous proto method is an error';
 
 ok(&foo ~~ Callable, 'a multi does Callable');
 #?niecza todo

@@ -10,13 +10,16 @@ plan 12;
     is myNamedStr(), 'string', 'lexical named sub() return Str';
 }
 
-eval-dies-ok 'myNamedStr()', 'Correct : lexical named sub myNamedStr() should NOT BE available outside its scope';
+throws-like 'myNamedStr()', X::Undeclared::Symbols,
+    'Correct : lexical named sub myNamedStr() should NOT BE available outside its scope';
 
 {
     my Int sub myNamedInt() { return 55 };
     is myNamedInt(), 55, 'lexical named sub() return Int';
 }
-eval-dies-ok('myNamedInt()', 'Correct : lexical named sub myNamedInt() should NOT BE available outside its scope');
+
+throws-like 'myNamedInt()', X::Undeclared::Symbols,
+    'Correct : lexical named sub myNamedInt() should NOT BE available outside its scope';
 
 
 #packge-scoped named subs
@@ -41,8 +44,9 @@ eval-dies-ok('myNamedInt()', 'Correct : lexical named sub myNamedInt() should NO
     is ourNamedInt(), 55, 'Correct : package-scoped named sub ourNamedInt() should BE available in the whole package';
 }
 
-eval-dies-ok
-    'my Num List sub f () { return ("A") }; f()',
+## TODO temporarily X::Comp::NYI (Multiple prefix constraints not yet implemented. Sorry.)
+throws-like 'my Num List sub f () { return ("A",) }; f()',
+    X::Comp::NYI,
     'Return of list with wrong type dies';
 
 eval-lives-ok
@@ -51,8 +55,9 @@ eval-lives-ok
 is EVAL('my List sub f () { return () }; (f(), "a")'), ((),'a'),
     'return of empty List should be empty List';
 
-eval-dies-ok
-    'my Num List sub f () { ("A") }; f()',
+## TODO temporarily X::Comp::NYI (Multiple prefix constraints not yet implemented. Sorry.)
+throws-like 'my Num List sub f () { ("A",) }; f()',
+    X::Comp::NYI,
     'implicit return of list with wrong type dies';
 
 # vim: ft=perl6

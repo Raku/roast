@@ -7,12 +7,13 @@ plan 10;
 
 lives-ok({sub thunder {...}}, 'sub foo {...} works');
 
-eval-dies-ok('sub foo;', 'old Perl 5 "sub foo;" syntax is dead');
+throws-like 'sub foo;', X::UnitScope::Invalid,
+    'old Perl 5 "sub foo;" syntax is dead';
 
 {
     sub lightning {...}
     # Maybe should be warns_ok
-    eval-dies-ok('lightning()', 'executing stub subroutine dies');
+    throws-like 'lightning()', X::StubCode, 'executing stub subroutine dies';
     sub lightning {42}
     is(lightning(), 42, 'redefining stub subroutine works without extra syntax');
 
@@ -23,7 +24,7 @@ eval-dies-ok('sub foo;', 'old Perl 5 "sub foo;" syntax is dead');
     is(hail(), 47, 'redefining stub subroutine works without extra syntax');
 
     sub wind {!!!}
-    eval-dies-ok('wind()', 'executing stub subroutine dies');
+    throws-like 'wind()', X::StubCode, 'executing stub subroutine dies';
     sub wind {17}
     is(wind(), 17, 'redefining stub subroutine works without extra syntax');
 
@@ -32,8 +33,8 @@ eval-dies-ok('sub foo;', 'old Perl 5 "sub foo;" syntax is dead');
 {
     use MONKEY-TYPING;
     sub hail {26}
-    # Maybe should be warns_ok
-    eval-dies-ok('sub hail {10}', 'redefining existing subroutine dies');
+    throws-like 'sub hail {10}', X::Redeclaration,
+        'redefining existing subroutine dies');
     supersede sub hail {8}
     is(hail(), 8, 'redefining non-stub subroutine with supersede');
 }

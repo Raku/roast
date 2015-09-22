@@ -38,11 +38,17 @@ is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
     is dollar-slash(1, { b => 2 }, 3), '1 2 3', '$/ works as parameter name';
 }
 
-eval-dies-ok 'sub foo( $a, $a ) { }', 'two sub params with the same scalar name';
-eval-dies-ok 'sub foo( @a, @a ) { }', 'two sub params with the same array name';
-eval-dies-ok 'sub foo( %a, %a ) { }', 'two sub params with the same hash name';
-eval-dies-ok 'sub foo( &a, &a ) { }', 'two sub params with the same callable name';
-eval-dies-ok 'sub foo( \a, \a ) { }', 'two sub params with the same sigilles name';
-eval-dies-ok 'sub foo( ::T, ::T) { }', 'two sub params with the same type capture name';
+throws-like 'sub foo( $a, $a ) { }', X::Redeclaration,
+    'two sub params with the same scalar name';
+throws-like 'sub foo( @a, @a ) { }', X::Redeclaration,
+    'two sub params with the same array name';
+throws-like 'sub foo( %a, %a ) { }', X::Redeclaration,
+    'two sub params with the same hash name';
+throws-like 'sub foo( &a, &a ) { }', X::Redeclaration,
+    'two sub params with the same callable name';
+throws-like 'sub foo( \a, \a ) { }', X::Redeclaration,
+    'two sub params with the same sigilles name';
+throws-like 'sub foo( ::T, ::T) { }', X::Redeclaration,
+    'two sub params with the same type capture name';
 
 # vim: ft=perl6
