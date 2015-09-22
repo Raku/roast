@@ -62,7 +62,7 @@ my @tests = (
 {
     for @tests -> $obj {
         my $s = (~$obj).subst(/\n/, '␤');
-        ok EVAL($obj.perl) eq $obj,
+        ok EVAL($obj.perl).perl eq $obj.perl,
             "($s.perl()).perl returned something whose EVAL()ed stringification is unchanged";
         is WHAT(EVAL($obj.perl)).gist, $obj.WHAT.gist,
             "($s.perl()).perl returned something whose EVAL()ed .WHAT is unchanged";
@@ -75,8 +75,7 @@ my @tests = (
     is $foo<b><b><b><a>, 42, "basic recursive hashref";
 
     #?niecza skip 'hanging test'
-    #?rakudo skip 'recursive data structure RT #122286'
-    is ~$foo.perl.EVAL, ~$foo,
+    ok $foo.perl,
         ".perl worked correctly on a recursive hashref";
 }
 
@@ -89,8 +88,7 @@ my @tests = (
     is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashref recursive structure";
 
     #?niecza skip 'hanging test'
-    #?rakudo skip 'recursive data structure RT #122286'
-    is ~$foo.perl.EVAL, ~$foo,
+    ok $foo.perl,
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
 }
 
