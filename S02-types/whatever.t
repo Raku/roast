@@ -219,7 +219,7 @@ is (0,0,0,0,0,0) >>+>> (Slip(1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 # RT #73162
 # WAS:  eval-lives-ok '{*.{}}()', '{*.{}}() lives';
 # This is now supposed tobe a double-closure error:
-eval-dies-ok '{*.{}}()', '{*.{}}() dies';
+throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
 
 # RT #80256
 {

@@ -41,8 +41,8 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 # Not sure whether you should be able to access something in package this way
 # might change to match likely error (top of file) when passes
 {
-    eval-dies-ok 'ThisEmpty.no_such_sub_or_prop',
-                 'Non-existent method with package';
+    throws-like 'ThisEmpty.no_such_sub_or_prop', X::Method::NotFound,
+        'Non-existent method with package';
 }
 
 {
@@ -163,12 +163,12 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 
 # RT #68290
 {
-    eval-dies-ok q[class A { sub a { say "a" }; sub a { say "a" } }],
-                 'sub redefined in class dies';
-    eval-dies-ok q[package P { sub p { say "p" }; sub p { say "p" } }],
-                 'sub redefined in package dies';
-    eval-dies-ok q[module M { sub m { say "m" }; sub m { say "m" } }],
-                 'sub redefined in module dies';
+    throws-like q[class A { sub a { say "a" }; sub a { say "a" } }],
+        X::Redeclaration, 'sub redefined in class dies';
+    throws-like q[package P { sub p { say "p" }; sub p { say "p" } }],
+        X::Redeclaration, 'sub redefined in package dies';
+    throws-like q[module M { sub m { say "m" }; sub m { say "m" } }],
+        X::Redeclaration, 'sub redefined in module dies';
     eval-dies-ok q[grammar B { token b { 'b' }; token b { 'b' } };],
                  'token redefined in grammar dies';
     eval-dies-ok q[class C { method c { say "c" }; method c { say "c" } }],
@@ -217,8 +217,8 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 }
 
 #RT 80856
-eval-dies-ok 'module RT80856 is not_RT80856 {}',
-             'die if module "is" a nonexistent';
+throws-like 'module RT80856 is not_RT80856 {}', X::Inheritance::UnknownParent,
+    'die if module "is" a nonexistent';
 
 {
     isa-ok Int.WHO, Stash, 'SomeType.WHO is a Stash';
@@ -234,12 +234,12 @@ eval-lives-ok q[
 ], 'can re-declare a class over a package of the same name';
 
 # RT #73328
-eval-dies-ok q[
+throws-like q[
     my package A {
         package B;
         1+1;
     }
-], 'Too late for semicolon form';
+], X::UnitScope::TooLate, 'Too late for semicolon form';
 
 # RT #74592
 #?niecza skip 'Nominal type check failed in binding $l in infix:<===>; got My74592, needed Any'

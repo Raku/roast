@@ -59,7 +59,8 @@ my Str $bar;
 {
     sub paramtype (Int $i) {return $i+1}
     is(paramtype(5), 6, 'sub parameters with matching type');
-    eval-dies-ok('paramtype("foo")', 'sub parameters with non-matching type dies');
+    throws-like 'paramtype("foo")', X::TypeCheck::Argument,
+        'sub parameters with non-matching type dies';
 }
 
 {
@@ -126,10 +127,11 @@ dies-ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 }
 
 {
-    eval-dies-ok('my Int Str $x', 'multiple prefix constraints not allowed');
-    eval-dies-ok('sub foo(Int Str $x) { }', 'multiple prefix constraints not allowed');
+    throws-like 'my Int Str $x', X::Comp::NYI, 'multiple prefix constraints not allowed';
+    throws-like 'sub foo(Int Str $x) { }', X::Parameter::MultipleTypeConstraints,
+        'multiple prefix constraints not allowed';
     eval-dies-ok('sub foo(--> Int Str) { }', 'multiple prefix constraints not allowed');
-    eval-dies-ok('our Int Str sub foo() { }', 'multiple prefix constraints not allowed');
+    throws-like 'our Int Str sub foo() { }', X::Comp::NYI, 'multiple prefix constraints not allowed';
 }
 
 {

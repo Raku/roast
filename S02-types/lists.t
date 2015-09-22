@@ -23,10 +23,14 @@ plan 32;
 
   is ($foo, "does_not_matter")[*-2], 42,
     "indexing lists by a negative index works correctly";
-  eval-dies-ok q/sub foo { @_[-1] }/, "indexing lists by explicit negative index is parsefail (compact)";
-  eval-dies-ok q/sub foo { @_[ -42 ] }/, "indexing lists by explicit negative index is parsefail (spaced)";
-  eval-dies-ok q/sub foo { @_[0..-1] }/, "indexing lists by range ending with negative index is parsefail (compact)";
-  eval-dies-ok q/sub foo { @_[ 0 .. -42 ] }/, "indexing lists by range ending with negative index is parsefail (spaced)";
+  throws-like q/sub foo { @_[-1] }/, X::Obsolete,
+    "indexing lists by explicit negative index is parsefail (compact)";
+  throws-like q/sub foo { @_[ -42 ] }/, X::Obsolete,
+    "indexing lists by explicit negative index is parsefail (spaced)";
+  throws-like q/sub foo { @_[0..-1] }/, X::Obsolete,
+    "indexing lists by range ending with negative index is parsefail (compact)";
+  throws-like q/sub foo { @_[ 0 .. -42 ] }/, X::Obsolete,
+    "indexing lists by range ending with negative index is parsefail (spaced)";
   throws-like { EVAL q/my @a = <one two>; @a[*-3] = 'zero'/ },
     X::OutOfRange,
  	"indexing lists by an effective negative index with * dies";
