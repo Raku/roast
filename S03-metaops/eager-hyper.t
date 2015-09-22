@@ -35,7 +35,7 @@ plan 8;
 {
     my $counter = 0;
     my $test := hyper gather { for 1 .. 5 { $counter++; take $_; } }
-    #?rakudo todo "hyper NYI entirely, I guess"
+    #?rakudo todo "hyper NYI entirely, I guess RT #124517"
     is($test.sort.values, <1 2 3 4 5>, 'hyper returned all the values in some order');
     is($counter, 5, 'iterator was hyper and calculated all the values');
 }
