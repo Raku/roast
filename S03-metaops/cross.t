@@ -32,10 +32,8 @@ is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
 }
 
 # L<S03/List infix precedence/and a list of arrays in>
-#?rakudo skip ".slice for iterators NYI RT #124518"
-#?niecza skip 'Unable to resolve method slice in class List'
 {
-    my @result = gather for (1..3 X 'A'..'B').slice -> $na {
+    my @result = gather for (1..3 X 'A'..'B') -> $na {
         take $na.join(':');
     }
     is @result, <1:A 1:B 2:A 2:B 3:A 3:B>, 'chunky cross operator works';
