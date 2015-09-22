@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 17;
 
 {
     class EnumClass     { enum C <a b c> }
@@ -62,6 +62,14 @@ plan 15;
     }
     import RT123114;
     is C.value, 1, 'Enum members are exported with enumeration itself';
+}
+
+# compile-time indirect list
+{
+    constant @stuff = <A B C>;
+    enum Stuff (@stuff);
+    is (A,B,C), (A,B,C), "can declare enums using constant lists";
+    is (+A,+B,+C), (0,1,2), "and they get the right values";
 }
 
 # vim: ft=perl6
