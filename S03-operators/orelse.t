@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 10;
 
 is (1 orelse 2), 1, 'orelse basics';
 is (1 orelse 2 orelse 3), 1, 'orelse chained';
@@ -18,16 +18,9 @@ nok $tracker, 'orelse thunks';
         ok(~$! eq "oh noes!", 'orelse sets $! after an exception');
 }
 
-#?rakudo todo 'orelse passes $! as argument RT #124535'
 {
-    try { die "oh noes!" } orelse -> $foo {
-        ok ~$foo eq "oh noes!", 'orelse passes $! to one argument after an exception';
+    Failure.new("oh noes!") orelse -> $foo {
+        is $foo.gist, "oh noes!\n", 'orelse passes lhs to one argument after an exception';
     };
 }
 
-#?rakudo skip 'orelse passes $! as multiple arguments RT #124536'
-{
-    try { die "oh noes!" } orelse -> $foo, $bar {
-        ok ~$foo eq "oh noes!" && ~$bar eq "oh noes!", 'orelse passes $! to two arguments after an exception';
-    };
-}
