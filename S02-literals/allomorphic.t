@@ -5,7 +5,7 @@ use Test;
 
 # L<S02/Allomorphic value semantics>
 
-plan 93;
+plan 99;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -170,4 +170,16 @@ lives-ok {val("foo")}, "val() exists";
     my @angled  =       «1 2/3 $num 6e7 8+9i ten»;
 
     is-deeply @angled, @written, "«...» is equivalent to qqww:v[...]";
+}
+
+{
+    sub want-int(int $x) { $x }
+    sub want-num(num $x) { $x }
+    sub want-str(str $x) { $x }
+    lives-ok { want-int(val('42')) }, 'val("42") can be passed to native int parameter';
+    dies-ok { want-int(val('4e2')) }, 'val("4e2") cannot be passed to native int parameter';
+    lives-ok { want-num(val('4e2')) }, 'val("4e2") can be passed to native num parameter';
+    dies-ok { want-num(val('42')) }, 'val("42") cannot be passed to native num parameter';
+    lives-ok { want-str(val('42')) }, 'val("42") can be passed to native str parameter';
+    lives-ok { want-str(val('4e2')) }, 'val("4e2") can be passed to native str parameter';
 }
