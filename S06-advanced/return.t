@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 81;
+plan 87;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -45,12 +45,36 @@ plan 81;
 # ok(EVAL('sub ret { return }; 1'), "return without value parses ok");
 
 sub bare_return { return };
+sub implicit_bare_return { }; # RT #126049
 
 ok(! bare_return(), "A bare return is a false value");
+ok(! implicit_bare_return(), "An implicit bare return is a false value");
 
 my @l = <some values>;
-@l = bare_return();
-is( @l, [], "A bare return is an empty list in array/list context");
+
+#?rakudo todo 'RT #126049'
+{
+    @l = bare_return();
+    is-deeply( @l, [], "A bare return is an empty list in array/list context");
+
+    @l = <some values>;
+    @l = implicit_bare_return();
+    is-deeply( @l, [], "An implicit bare return is an empty list in array/list context");
+}
+
+sub empty_list { return () };
+sub implicit_empty_list { () };
+
+ok(! empty_list(), "A bare return is a false value");
+ok(! implicit_empty_list(), "An implicit bare return is a false value");
+
+@l = <some values>;
+@l = empty_list();
+is-deeply( @l, [], "A returned empty list is an empty list in array/list context");
+
+@l = <some values>;
+@l = implicit_empty_list();
+is-deeply( @l, [], "An implicit returned empty list is an empty list in array/list context");
 
 my $s = "hello";
 $s = bare_return();
