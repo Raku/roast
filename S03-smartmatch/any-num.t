@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 18;
+plan 19;
 
 #L<S03/Smart matching/Any Num numeric equality>
 {
@@ -14,12 +14,10 @@ plan 18;
     ok  ('1.2' ~~ 1.2),         '$thing ~~ Rat does numeric comparison';
     ok  ('1.2' ~~ 1.2.Num),     '$thing ~~ Num does numeric comparison';
 
-    # yes, this warns, but it should still be true
-    #?rakudo 2 skip "Mu ~~ Num doesn't work yet: RT #122395"
-    #?niecza skip 'Nominal type check failed for #1'
-    ok  (Mu ~~ 0),              'Mu ~~ 0';
-    #?niecza skip 'Nominal type check failed for #1'
-    ok !(Mu ~~ 2.3),            'Mu ~~ $other_number';
+    #?niecza 3 skip 'Nominal type check failed for #1'
+    ok  !(Mu ~~ 0),              'Mu ~~ 0';
+    ok  !(Mu ~~ 'foo'),          'Mu ~~ 0';
+    ok  !(Mu ~~ 2.3),            'Mu ~~ $other_number';
 
     ok  (3+0i  ~~ 3),           'Complex ~~ Int (+)';
     nok (3+1i  ~~ 3),           'Complex ~~ Int (-)';
