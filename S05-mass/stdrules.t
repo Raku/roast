@@ -168,7 +168,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # graph
 
-#?rakudo skip '<.graph> RT #124887'
 {
     ok("V" ~~ m/^<.graph>$/, q{Match graph as subrule});
     ok(!( "V" ~~ m/^<!graph>.$/ ), q{Don't match negated graph as subrule} );
@@ -209,7 +208,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # print
 
-#?rakudo skip '<.print> RT #124888'
 {
     ok("M" ~~ m/^<.print>$/, q{Match print as subrule});
     ok(!( "M" ~~ m/^<!print>.$/ ), q{Don't match negated print as subrule} );
