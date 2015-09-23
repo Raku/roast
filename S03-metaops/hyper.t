@@ -460,7 +460,6 @@ my @e;
 =end todo_unspecced
 
 #?niecza skip 'does not work; recurses into hash'
-#?rakudo skip 'nom regression: possible spec change/improvement RT #124513'
 #?DOES 2
 { # hyper dereferencing
     my @array = (

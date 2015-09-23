@@ -455,8 +455,7 @@ my @p;
     is(@p[0],42, "^^= operator parses as item assignment 1");
     is(@p[1],43, "^^= operator parses as item assignment 2");
     $x ^^= 15;
-    #?rakudo todo 'unknown'
-    is $x, False, '^^= with two true arguments yields False';
+    is $x, Any, '^^= with two true arguments yields Nil -> Any';
     $x ^^= 'xyzzy';
     is $x, 'xyzzy', "^^= doesn't permanently falsify scalars";
 }
@@ -470,8 +469,7 @@ my @p;
     is(@p[0][0],42, "xor= operator parses as list assignment 1");
     is(@p[0][1],43, "xor= operator parses as list assignment 2");
     $x xor= 15;
-    #?rakudo todo 'unknown'
-    is $x, False, 'xor= with two true arguments yields False';
+    is $x, Any, 'xor= with two true arguments yields Nil -> Any';
     $x xor= 'xyzzy';
     is $x, 'xyzzy', "xor= doesn't permanently falsify scalars";
 }
