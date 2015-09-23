@@ -6,6 +6,7 @@ plan 8;
 
 # L<S05/Syntactic categories/>
 
+#?rakudo skip "RT #126142 - NYI"
 {
     augment slang Regex {
         token backslash:sym<Y> { YY };
@@ -16,8 +17,10 @@ plan 8;
     ok 'YY'  ~~ /^\Y$/, 'can use that rule (positive)';
     ok 'yX' !~~ /^\Y$/, 'can use that rule (negative)';
 }
+#?rakudo skip "RT #126142 - NYI"
 eval-dies-ok '/\Y/', 'backslash rules are lexically scoped';
 
+#?rakudo skip "RT #126142 - NYI"
 {
     # nothing in the spec says that backslash rules need to be one char
     # only, and we have LTM after all
