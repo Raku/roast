@@ -106,7 +106,7 @@ my @squares = map { $_ * $_ }, @a;
 is-deeply [@squares], [1, 4, 9], 'my @squares = map { $_ * $_ }, @a;';
 
 @a = 10, 20, 'dog', 30, 'cat', 'dog', 20, '40';
-my @starts_with_number = grep { /^\d/ }, @a;
+my @starts_with_number = grep /^\d/, @a;
 is-deeply [@starts_with_number], [10, 20, 30, 20, '40'], '@starts_with_number = grep { /^\d/ }, @a;';
 
 # Magic diamond

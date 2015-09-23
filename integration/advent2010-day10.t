@@ -23,5 +23,5 @@ my @result;
 }
 
 my @rakudo-people = <scott patrick carl moritz jonathan jerry stephen>;
-@rakudo-people ==> grep { /at/ } ==> map { .tc } ==> my @who-it's-at;
+@rakudo-people ==> grep /at/ ==> map { .tc } ==> my @who-it's-at;
 is ~@who-it's-at, 'Patrick Jonathan', 'right feed';
