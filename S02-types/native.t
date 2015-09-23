@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 48;
+plan 52;
 
 {
     my int $x;
@@ -193,6 +193,15 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     is 42.0, $e, "assign 42.0 to num32";
     my num64 $f = 42.0;
     is 42.0, $f, "assign 42.0 to num64";
+}
+
+{
+    sub want-int(int $x) { }
+    sub want-num(num $x) { }
+    dies-ok { EVAL 'my num $y = 4e2; want-int($y)' }, 'Passing num to int parameter dies';
+    dies-ok { EVAL 'my $y = 4e2; want-int($y)' }, 'Passing Num to int parameter dies';
+    dies-ok { EVAL 'my int $y = 42; want-num($y)' }, 'Passing int to num parameter dies';
+    dies-ok { EVAL 'my $y = 42; want-num($y)' }, 'Passing Int to num parameter dies';
 }
 
 # vim: ft=perl6
