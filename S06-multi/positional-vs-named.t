@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 27;
 
 # check the subroutine with the closest matching signature is called
 #
@@ -65,10 +65,6 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
 {
     multi catch(*@all            ) { 1 }   #OK not used
     multi catch(*@all, :$really! ) { 2 }   #OK not used
-    #?rakudo todo 'RT #118467'
-    lives-ok { catch() }, # TODO: remove 'lives-ok' when this no longer dies
-        'required named occurring after slurpy not considered a multi candidate (temp. test)';
-    #?rakudo 2 skip 'slurpy and named interaction RT #118467'
     is catch(0, 5),           1, 'slurpy and named interact well (1)';
     is catch(0, 5, :!really), 2, 'slurpy and named interact well (2)';
 }
