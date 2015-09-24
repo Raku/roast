@@ -383,11 +383,12 @@ eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
   #diag ">$str<";
 }
 
+# RT #63994
 #?niecza 2 todo 'NYI'
 {
   my $str = '';
   for 1..5 -> $x, $y? {
-    $str ~= " " ~ $x*$y;
+    $str ~= " " ~ $x * ($y//0);
   }
   is $str, " 2 12 0";
 }
