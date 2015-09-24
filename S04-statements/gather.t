@@ -233,6 +233,8 @@ plan 33;
     is c.item, $($(1,10),$(2,20)), "a list of Lists, as an item.";
 }
 
+# XXX GLR
+#?rakudo skip 'RT #66820, and hangs under GLR'
 {
     my $cat;
     lives-ok { my @a := gather for 1..3 { take $_; $cat ~= ~@a }.list;  +@a }, 'can access bound gather result while gathering';
