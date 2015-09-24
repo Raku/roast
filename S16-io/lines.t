@@ -55,9 +55,8 @@ for @endings -> (:key($eol), :value($EOL)) {
         is $handle.lines[*-1], @text[*-1], "handle last line: $status";
 
         # slicing on IO::Path
-        #?rakudo skip "Reading from filehandle failed: bad file descriptor"
         is $filename.IO.lines(|$chomp)[1,2].join($end),
-          @text[1,2].join($end) ~ $end,
+          @text[1,2].map({ $_ ~ $end }).join($end),
           "path 1,2: $status";
 
         is $filename.IO.lines(|$chomp)[*-1],
