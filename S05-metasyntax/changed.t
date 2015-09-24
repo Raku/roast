@@ -30,9 +30,9 @@ plan 12;
 
 # The \A, \Z, and \z metacharacters are gone.
 {
-    eval-dies-ok('/\A/', '\\A is gone');
-    eval-dies-ok('/\Z/', '\\Z is gone');
-    eval-dies-ok('/\z/', '\\z is gone');
+    throws-like '/\A/', X::Obsolete, '\\A is gone';
+    throws-like '/\Z/', X::Obsolete, '\\Z is gone';
+    throws-like '/\z/', X::Obsolete, '\\z is gone';
 }
 
 # vim: ft=perl6
