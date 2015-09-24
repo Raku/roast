@@ -3,11 +3,12 @@ use Test;
 
 plan 32;
 
-eval-dies-ok('qr/foo/', 'qr// is gone');
+throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
 isa-ok(rx/oo/, Regex);
 isa-ok(rx (o), Regex);
-eval-dies-ok('rx(o)', 'rx () whitespace if the delims are parens');
+throws-like 'rx(o)', X::Undeclared::Symbols,
+    'rx () requires whitespace if the delims are parens';
 isa-ok(regex {oo}, Regex);
 
 eval-dies-ok('rx :foo:', 'colons are not allowed as rx delimiters');
@@ -72,8 +73,10 @@ eval-dies-ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
 
 # L<S05/Simplified lexical parsing of patterns/The semicolon character>
 
-eval-dies-ok 'rx/;/',       'bare ";" in rx is not allowed';
-eval-dies-ok q{';' ~~ /;/}, 'bare ";" in match is not allowed';
+throws-like 'rx/;/', X::Syntax::Regex::UnrecognizedMetachar,
+    'bare ";" in rx is not allowed';
+throws-like q{';' ~~ /;/}, X::Syntax::Regex::UnrecognizedMetachar,
+    'bare ";" in match is not allowed';
 isa-ok rx/\;/, Regex,       'escaped ";" in rx// works';
 ok ';' ~~ /\;/,             'escaped ";" in m// works';
 

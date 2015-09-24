@@ -7,7 +7,8 @@ plan 13;
 
 # testing unknown metasyntax handling
 
-eval-dies-ok('"aa!" ~~ /!/', '"!" is not valid metasyntax');
+throws-like '"aa!" ~~ /!/', X::Syntax::Regex::UnrecognizedMetachar,
+    '"!" is not valid metasyntax';
 lives-ok({"aa!" ~~ /\!/}, 'escaped "!" is valid');
 lives-ok({"aa!" ~~ /'!'/}, 'quoted "!" is valid');
 
