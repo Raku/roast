@@ -18,7 +18,7 @@ plan 12;
     ok(!($str ~~ /bc$/), '$ does not match \n');
     
     # (The /m modifier is gone.)
-    eval-dies-ok('$str ~~ m:m/bc$/', '/m modifier (as :m) is gone');
+    throws-like '$str ~~ m/bc$/m', X::Obsolete, '/m modifier is gone';
 }
 
 # A $ no longer matches an optional preceding \n
