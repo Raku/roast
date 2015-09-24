@@ -37,7 +37,8 @@ eval-lives-ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 }
 
 # RT #109064
-eval-dies-ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
+throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
+    X::Attribute::Undeclared,
     'named parameter of undeclared attribute dies';
 
 # RT #72082
