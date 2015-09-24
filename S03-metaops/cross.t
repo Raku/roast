@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 42;
+plan 48;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -147,12 +147,21 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
 }
 
 {
-    ok (1..* X* 42).is-lazy, "laziness induced by first argument";
-    ok (42 X* 1..*).is-lazy, "laziness induced by last argument";
-    ok (42 X* 1..* X* 43).is-lazy, "laziness induced by middle argument";
-    ok !(1..5 X* 42).is-lazy, "laziness not induced by first argument";
-    ok !(42 X* 1..5).is-lazy, "laziness not induced by last argument";
-    ok !(42 X* 1..5 X* 43).is-lazy, "laziness not induced by middle argument";
+    ok (1..* X 42).is-lazy, "laziness induced by first argument (X)";
+    ok (42 X 1..*).is-lazy, "laziness induced by last argument (X)";
+    ok (42 X 1..* X 43).is-lazy, "laziness induced by middle argument (X)";
+    ok !(1..5 X 42).is-lazy, "laziness not induced by first argument (X)";
+    ok !(42 X 1..5).is-lazy, "laziness not induced by last argument (X)";
+    ok !(42 X 1..5 X 43).is-lazy, "laziness not induced by middle argument (X)";
+}
+
+{
+    ok (1..* X* 42).is-lazy, "laziness induced by first argument (X*)";
+    ok (42 X* 1..*).is-lazy, "laziness induced by last argument (X*)";
+    ok (42 X* 1..* X* 43).is-lazy, "laziness induced by middle argument (X*)";
+    ok !(1..5 X* 42).is-lazy, "laziness not induced by first argument (X*)";
+    ok !(42 X* 1..5).is-lazy, "laziness not induced by last argument (X*)";
+    ok !(42 X* 1..5 X* 43).is-lazy, "laziness not induced by middle argument (X*)";
 }
 
 # vim: ft=perl6

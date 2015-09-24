@@ -15,7 +15,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 23;
 
 {
     my @a = (1..Inf);
@@ -66,11 +66,14 @@ is( (1...Inf)[2..5],
 }
 
 my $was-lazy = 1;
-sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 } };
+sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 }.lazy };
 
 {
     $was-lazy = 1;
     my @a = make-lazy-list(4);
+    ok $was-lazy, "sanity: make-lazy-list sets $was-lazy.";
+    $was-lazy = 1;
+    my @b = eager make-lazy-list(4);
     nok $was-lazy, "sanity: make-lazy-list sets $was-lazy.";
     $was-lazy = 1;
     my $b := make-lazy-list(4);

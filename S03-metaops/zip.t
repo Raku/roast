@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 31;
+plan 47;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -91,9 +91,31 @@ is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
     is [Z](1,2,3;4,5,6;7,8,9), '1 4 7 2 5 8 3 6 9', 'can reduce-zip a direct lol';
     is [Z<](1,2,3;4,5,6;7,8,9), 'True True True', 'can reduce-zip-< a direct lol';
 
-    my \lol = ((1..*),(4..6),(7..*));
-    is [Z](|lol), '1 4 7 2 5 8 3 6 9', 'can reduce-zip an indirect lol';
-    is [Z<](|lol), 'True True True', 'can reduce-zip-< an indirect lol';
+    my \lol = (1..*),(4..6),(7..*);
+    is [Z](lol), '1 4 7 2 5 8 3 6 9', 'can reduce-zip an indirect lol';
+    is [Z<](lol), 'True True True', 'can reduce-zip-< an indirect lol';
+}
+
+{
+    ok (1..* Z 1..*).is-lazy, "laziness induced by two arguments (Z)";
+    ok (1..* Z 1..* Z 1..*).is-lazy, "laziness induced by three arguments (Z)";
+    ok !(1..* Z 42).is-lazy, "laziness defeated by last argument (Z)";
+    ok !(42 Z 1..*).is-lazy, "laziness defeated by first argument (Z)";
+    ok !(1..* Z 42 Z 1..*).is-lazy, "laziness defeated by middle argument (Z)";
+    ok !(1..5 Z 1..*).is-lazy, "laziness defeated by first argument (Z)";
+    ok !(1..* Z 1..5).is-lazy, "laziness defeated by last argument (Z)";
+    ok !(1..* Z 1..5 Z 1..*).is-lazy, "laziness defeated by middle argument (Z)";
+}
+
+{
+    ok (1..* Z* 1..*).is-lazy, "laziness induced by two arguments (Z*)";
+    ok (1..* Z* 1..* Z* 1..*).is-lazy, "laziness induced by three arguments (Z*)";
+    ok !(1..* Z* 42).is-lazy, "laziness defeated by last argument (Z*)";
+    ok !(42 Z* 1..*).is-lazy, "laziness defeated by first argument (Z*)";
+    ok !(1..* Z* 42 Z* 1..*).is-lazy, "laziness defeated by middle argument (Z*)";
+    ok !(1..5 Z* 1..*).is-lazy, "laziness defeated by first argument (Z*)";
+    ok !(1..* Z* 1..5).is-lazy, "laziness defeated by last argument (Z*)";
+    ok !(1..* Z* 1..5 Z* 1..*).is-lazy, "laziness defeated by middle argument (Z*)";
 }
 
 # vim: ft=perl6
