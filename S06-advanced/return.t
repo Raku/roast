@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 87;
+plan 93;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -45,22 +45,39 @@ plan 87;
 # ok(EVAL('sub ret { return }; 1'), "return without value parses ok");
 
 sub bare_return { return };
-sub implicit_bare_return { }; # RT #126049
+sub implicit_bare_return { }; # RT #126049 (rejected)
 
-ok(! bare_return(), "A bare return is a false value");
-ok(! implicit_bare_return(), "An implicit bare return is a false value");
+ok(bare_return() =:= Nil, "A bare return is Nil");
+ok(implicit_bare_return() =:= Nil, "An implicit bare return is Nil");
 
 my @l = <some values>;
 
-#?rakudo todo 'RT #126049'
 {
     @l = bare_return();
-    is-deeply( @l, [], "A bare return is an empty list in array/list context");
+    is-deeply( @l, [Any], "A bare return returns Nil --> Any in array/list context");
 
     @l = <some values>;
     @l = implicit_bare_return();
-    is-deeply( @l, [], "An implicit bare return is an empty list in array/list context");
+    is-deeply( @l, [Any], "An implicit bare return Nil --> Any in array/list context");
 }
+
+sub empty_return { return Empty };
+
+ok(!empty_return(), "An empty return is false");
+ok(empty_return() == 0, "An empty return is 0");
+
+@l = <some values>;
+@l = 1,empty_return(),3;
+is-deeply( @l, [1,3], "An empty return interpolates nothing in array/list context");
+
+sub slip_return { return slip };
+
+ok(!slip_return(), "A slip return is false");
+ok(slip_return() == 0, "A slip return is 0");
+
+@l = <some values>;
+@l = 1,slip_return(),3;
+is-deeply( @l, [1,3], "A slip return interpolates nothing in array/list context");
 
 sub empty_list { return () };
 sub implicit_empty_list { () };
