@@ -8,6 +8,7 @@ plan 4;
 
 # L<S05/Match objects/"Fortunately, when you just want to return a different">
 
+# RT #76278
 "blah foo blah" ~~ / foo                 # Match 'foo'
                       { make 'bar' }     # But pretend we matched 'bar'
                     /;
