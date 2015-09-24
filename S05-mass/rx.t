@@ -1,6 +1,6 @@
 use Test;
 
-plan 736;
+plan 734;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -762,19 +762,17 @@ ok 'bcd' ~~ /^ [ <[a..c]>+ | <[b..e]>+ ] $/, 'alternation (|)';
 ok 'bcd' ~~ /^ [ <[a..d]>+ | <[c..e]>+ ] $/, 'alternation (|)';
 
 #### b|			bcd		/rule error/	alternation (|) - null right arg illegal
-eval-dies-ok '/b|/', 'alternation (|) - null right arg illegal';
+throws-like '/b|/', X::Syntax::Regex::NullRegex, 'alternation (|) - null right arg illegal';
 
 #### |b			bcd		y	alternation (|) - null left arg ignored
 ok 'bcd' ~~ /|b/, 'alternation (|) - null left arg ignored';
 
 #### |			bcd		/rule error/	alternation (|) - null both args illegal
-eval-dies-ok '/|/', 'alternation (|) - null both args illegal';
+#### |			|		/rule error/	alternation (|) - literal must be escaped
+throws-like '/|/', X::Syntax::Regex::NullRegex, 'alternation (|) - null both args illegal';
 
 #### \|			|		y	alternation (|) - literal must be escaped
 ok '|' ~~ /\|/, 'alternation (|) - literal must be escaped';
-
-#### |			|		/rule error/	alternation (|) - literal must be escaped
-eval-dies-ok '/|/', 'alternation (|) - literal must be escaped';
 
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
 #?niecza todo ''
@@ -802,24 +800,22 @@ ok 'bcd' ~~ /<[a..c]>+ & <[b..e]>+/, 'conjunction (&)';
 ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 
 #### b&			bcd		/rule error/	conjunction (&) - null right arg illegal
-eval-dies-ok '/b&/', 'conjunction (&) - null right arg illegal';
+throws-like '/b&/', X::Syntax::Regex::NullRegex, 'conjunction (&) - null right arg illegal';
 
 #### &b			bcd		/rule error/	conjunction (&) - null left arg legal
 #?niecza todo ''
 eval-lives-ok '/&b/', 'conjunction (&) - null left arg legal';
 
 #### &			bcd		/rule error/	conjunction (&) - null both args illegal
-eval-dies-ok '/&/', 'conjunction (&) - null both args illegal';
+#### &			&		/rule error/	conjunction (&) - literal must be escaped
+throws-like '/&/', X::Syntax::Regex::NullRegex, 'conjunction (&) - null both args illegal';
 
 #### \&			&		y	conjunction (&) - literal must be escaped
 ok '&' ~~ /\&/, 'conjunction (&) - literal must be escaped';
 
-#### &			&		/rule error/	conjunction (&) - literal must be escaped
-eval-dies-ok '/&/', 'conjunction (&) - literal must be escaped';
-
 # todo :pge<leading |>
 #### a &| b		a		/rule error/	trailing & not allowed inside |
-eval-dies-ok '/a &| b/', 'alternation and conjunction (&|) - parse error';
+throws-like '/a &| b/', X::Syntax::Regex::NullRegex, 'alternation and conjunction (&|) - parse error';
 
 #### a |& b		a		y       leading & inside | is okay
 ok 'a' ~~ /a |& b/, 'alternation and conjunction (|&) - leading & inside | is okay';
@@ -837,7 +833,7 @@ ok 'abc' ~~ /|d |b/, 'leading alternation ignored';
 ok 'abc' ~~ / | d | b/, 'leading alternation ignored';
 
 ####  b |  | d		abc		n	null pattern invalid
-eval-dies-ok '/ b |  | d/', 'null pattern invalid';
+throws-like '/ b |  | d/', X::Syntax::Regex::NullRegex, 'null pattern invalid';
 
 #### \pabc			pabc		/reserved/	retired metachars (\p)
 eval-dies-ok '/\pabc/', 'retired metachars (\p)';
@@ -864,10 +860,10 @@ eval-dies-ok '/\Uabc\E/', 'retired metachars (\U...\E)';
 eval-dies-ok '/\Uabc\E/', 'retired metachars (\U...\E)';
 
 #### \Qabc\E			QabcE		/reserved/	retired metachars (\Q...\E)
-eval-dies-ok '/\Qabc\E/', 'retired metachars (\Q...\E)';
+throws-like '/\Qabc\E/', X::Obsolete, 'retired metachars (\Q...\E)';
 
 #### \Qabc d?\E		abc d		/reserved/	retired metachars (\Q...\E)
-eval-dies-ok '/\Qabc d?\E/', 'retired metachars (\Q...\E)';
+throws-like '/\Qabc d?\E/', X::Obsolete, 'retired metachars (\Q...\E)';
 
 #### \Gabc			Gabc		/reserved/	retired metachars (\G)
 eval-dies-ok '/\Gabc/', 'retired metachars (\G)';
@@ -2311,70 +2307,70 @@ eval-dies-ok '/\X[/', 'unterminated \X[..]';
 
 
 #### * abc		abcdef		/Quantifier follows nothing/	bare * at start
-eval-dies-ok '/* abc/', 'bare * at start';
+throws-like '/* abc/', X::Syntax::Regex::SolitaryQuantifier, 'bare * at start';
 
 ####   * abc		abcdef		/Quantifier follows nothing/	bare * after ws
-eval-dies-ok '/  * abc/', 'bare * after ws';
+throws-like '/  * abc/', X::Syntax::Regex::SolitaryQuantifier, 'bare * after ws';
 
 #### [*|a]		abcdef		/Quantifier follows nothing/	bare * after [
-eval-dies-ok '/[*|a]/', 'bare * after [';
+throws-like '/[*|a]/', X::Syntax::Regex::SolitaryQuantifier, 'bare * after [';
 
 #### [ *|a]		abcdef		/Quantifier follows nothing/	bare * after [+sp
-eval-dies-ok '/[ *|a]/', 'bare * after [+sp';
+throws-like '/[ *|a]/', X::Syntax::Regex::SolitaryQuantifier, 'bare * after [+sp';
 
 #### [a|*]		abcdef		/Quantifier follows nothing/	bare * after |
-eval-dies-ok '/[a|*]/', 'bare * after |';
+throws-like '/[a|*]/', X::Syntax::Regex::SolitaryQuantifier, 'bare * after |';
 
 #### [a| *]		abcdef		/Quantifier follows nothing/	bare * after |+sp
-eval-dies-ok '/[a| *]/', 'bare * after |+sp';
+throws-like '/[a| *]/', X::Syntax::Regex::SolitaryQuantifier, 'bare * after |+sp';
 
 
 #### + abc		abcdef		/Quantifier follows nothing/	bare + at start
-eval-dies-ok '/+ abc/', 'bare + at start';
+throws-like '/+ abc/', X::Syntax::Regex::SolitaryQuantifier, 'bare + at start';
 
 ####   + abc		abcdef		/Quantifier follows nothing/	bare + after ws
-eval-dies-ok '/  + abc/', 'bare + after ws';
+throws-like '/  + abc/', X::Syntax::Regex::SolitaryQuantifier, 'bare + after ws';
 
 #### [+|a]		abcdef		/Quantifier follows nothing/	bare + after [
-eval-dies-ok '/[+|a]/', 'bare + after [';
+throws-like '/[+|a]/', X::Syntax::Regex::SolitaryQuantifier, 'bare + after [';
 
 #### [ +|a]		abcdef		/Quantifier follows nothing/	bare + after [+sp
-eval-dies-ok '/[ +|a]/', 'bare + after [+sp';
+throws-like '/[ +|a]/', X::Syntax::Regex::SolitaryQuantifier, 'bare + after [+sp';
 
 #### [a|+]		abcdef		/Quantifier follows nothing/	bare + after |
-eval-dies-ok '/[a|+]/', 'bare + after |';
+throws-like '/[a|+]/', X::Syntax::Regex::SolitaryQuantifier, 'bare + after |';
 
 #### [a| +]		abcdef		/Quantifier follows nothing/	bare + after |+sp
-eval-dies-ok '/[a| +]/', 'bare + after |+sp';
+throws-like '/[a| +]/', X::Syntax::Regex::SolitaryQuantifier, 'bare + after |+sp';
 
 
 #### ? abc		abcdef		/Quantifier follows nothing/	bare ? at start
-eval-dies-ok '/? abc/', 'bare ? at start';
+throws-like '/? abc/', X::Syntax::Regex::SolitaryQuantifier, 'bare ? at start';
 
 ####   ? abc		abcdef		/Quantifier follows nothing/	bare ? after ws
-eval-dies-ok '/  ? abc/', 'bare ? after ws';
+throws-like '/  ? abc/', X::Syntax::Regex::SolitaryQuantifier, 'bare ? after ws';
 
 #### [?|a]		abcdef		/Quantifier follows nothing/	bare ? after [
-eval-dies-ok '/[?|a]/', 'bare ? after [';
+throws-like '/[?|a]/', X::Syntax::Regex::SolitaryQuantifier, 'bare ? after [';
 
 #### [ ?|a]		abcdef		/Quantifier follows nothing/	bare ? after [+sp
-eval-dies-ok '/[ ?|a]/', 'bare ? after [+sp';
+throws-like '/[ ?|a]/', X::Syntax::Regex::SolitaryQuantifier, 'bare ? after [+sp';
 
 #### [a|?]		abcdef		/Quantifier follows nothing/	bare ? after |
-eval-dies-ok '/[a|?]/', 'bare ? after |';
+throws-like '/[a|?]/', X::Syntax::Regex::SolitaryQuantifier, 'bare ? after |';
 
 #### [a| ?]		abcdef		/Quantifier follows nothing/	bare ? after |+sp
-eval-dies-ok '/[a| ?]/', 'bare ? after |+sp';
+throws-like '/[a| ?]/', X::Syntax::Regex::SolitaryQuantifier, 'bare ? after |+sp';
 
 # L<S05/Nothing is illegal/"The empty pattern is now illegal">
 
 #### 		abcdef		/Null pattern illegal/		null pattern
-eval-dies-ok '//', '';
+throws-like '//', X::Syntax::Regex::NullRegex, '';
 
 ####   		abcdef		/Null pattern illegal/		ws null pattern
-eval-dies-ok '/  /', 'ws null pattern';
+throws-like '/  /', X::Syntax::Regex::NullRegex, 'ws null pattern';
 
-eval-dies-ok '"b" ~~ /b| /', 'null pattern after alternation';
+throws-like '"b" ~~ /b| /', X::Syntax::Regex::NullRegex, 'null pattern after alternation';
 
 # RT #71702
 #?niecza todo 'allows them'
