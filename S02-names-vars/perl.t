@@ -103,7 +103,7 @@ my @tests = (
     my $a1 = Bug.new;
     $a1.bind( $a1 );
     say $a1;
-    ok("survived saying a self-referencing object");
+    pass "survived saying a self-referencing object";
 }
 
 # RT #122286
@@ -129,7 +129,7 @@ my @tests = (
     $l1.put($i1);
     $i1.locate($l1);
     say $i1.whereis;
-    ok("survived saying two mutually referencing objects");
+    pass "survived saying two mutually referencing objects";
 }
 
 {
