@@ -439,7 +439,6 @@ my $str = 'a' x 7;
 
 # RT #113884
 {
-    #?rakudo todo "RT #113884 - constant variables not counted in LTM yet"
     constant $x = 'ab'; 
     is ~('ab' ~~ / a | b | $x /), 'ab', 'got longest alternative with constant';
 
