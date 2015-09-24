@@ -5,7 +5,7 @@ plan 5;
 
 # L<S06/Pairs as lvalues/>
 
-eval-dies-ok 'my $var; (key => $var) = "value"';
+throws-like 'my $var; (key => $var) = "value"', X::Assignment::RO;
 
 #?rakudo.moar todo "NYI RT #124660"
 #?rakudo.jvm skip "Flattening named argument must have VMHash REPR RT #124661"

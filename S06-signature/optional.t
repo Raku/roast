@@ -37,11 +37,14 @@ is opt_typed() , 'undef',  'can leave out optional typed param';
 
 # L<S06/Parameters and arguments/"required positional parameters must come
 # before those bound to optional positional">
-eval-dies-ok 'sub wrong1 ($a?, $b) {...}', 'optional params before required ones are forbidden';
+throws-like 'sub wrong1 ($a?, $b) {...}', X::Parameter::WrongOrder,
+    'optional params before required ones are forbidden';
 # RT #76022
 {
-    eval-dies-ok 'sub wrong2 ($a = 1, $b) {...}', "...even if they're only optional by virtue of a default";
-    eval-dies-ok 'sub wrong3 ($a = 0, $b) {...}', '...and the default is 0';
+    throws-like 'sub wrong2 ($a = 1, $b) {...}', X::Parameter::WrongOrder,
+        "...even if they're only optional by virtue of a default";
+    throws-like 'sub wrong3 ($a = 0, $b) {...}', X::Parameter::WrongOrder,
+        '...and the default is 0';
 }
 
 sub foo_53814($w, $x?, :$y = 2) { $w~"|"~$x~"|"~$y };
@@ -54,7 +57,7 @@ dies-ok {foo_53814(1,Mu,'something_extra',:y(3))},
     # old test is bogus, nullterm only allowed at the end of a list
     # is rt54804( 1, , 3, ), '1|undef|3|undef',
     #    'two commas parse as if undef is between them';
-    eval-dies-ok q/sub rt54804( $v, $w?, $x?, $y? ) {
+    throws-like q/sub rt54804( $v, $w?, $x?, $y? ) {
         (defined( $v ) ?? $v !! 'undef')
         ~ '|' ~
         (defined( $w ) ?? $w !! 'undef')
@@ -63,11 +66,11 @@ dies-ok {foo_53814(1,Mu,'something_extra',:y(3))},
         ~ '|' ~
         (defined( $y ) ?? $y !! 'undef')
     }
-    rt54804( 1, , 3, )/, "two commas in a row doesn't parse";
+    rt54804( 1, , 3, )/, X::Syntax::InfixInTermPosition, "two commas in a row doesn't parse";
 }
 
-eval-dies-ok( 'sub rt66822($opt?, $req) { "$opt, $req" }',
-              "Can't put required parameter after optional parameters" );
+throws-like 'sub rt66822($opt?, $req) { "$opt, $req" }', X::Parameter::WrongOrder,
+    "Can't put required parameter after optional parameters";
 
 # Niecza bug#49
 sub opt_array1(@x?) { @x.elems }
@@ -80,7 +83,7 @@ is opt_hash1(),  0, "optional hash not passed is empty";
 is opt_hash2(),  0, "optional hash not passed is empty (copy)";
 
 # RT #71110
-eval-dies-ok 'sub opt($a = 1, $b) { }',
+throws-like 'sub opt($a = 1, $b) { }', X::Parameter::WrongOrder,
     'Cannot put required parameter after optional parameters';
 
 # RT #74758

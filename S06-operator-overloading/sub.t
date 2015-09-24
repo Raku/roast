@@ -270,7 +270,9 @@ Testing operator overloading subroutines
   }
   is (2 our_non_assoc_infix 3), (2 ** 3), "Non-associative works for just tow operands.";
   is ((2 our_non_assoc_infix 2) our_non_assoc_infix 3), (2 ** 2) ** 3, "Non-associative works when used with parens.";
-  eval-dies-ok '2 our_non_assoc_infix 3 our_non_assoc_infix 4', "Non-associative should not parsed when used chainly.";
+  throws-like '2 our_non_assoc_infix 3 our_non_assoc_infix 4',
+      X::Syntax::NonAssociative,
+      "Non-associative should not parsed when used chainly.";
 }
 
 #?niecza skip "roles NYI"

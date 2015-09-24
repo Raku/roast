@@ -318,7 +318,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
     is-deeply @result, [1,2,3,1,2,3], "iteration succeeds on second pass";
 }
 
-eval-dies-ok 'sub rt65324(*@x, $oops) { say $oops }',
+throws-like 'sub rt65324(*@x, $oops) { say $oops }', X::Parameter::WrongOrder,
              "Can't put required parameter after variadic parameters";
 
 # used to be RT #69424

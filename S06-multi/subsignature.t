@@ -187,7 +187,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     is (elk 3), 4, "multi definition of prefix:<elk> works";
 }
 
-eval-dies-ok 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};',
+throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclaration,
     'attempt to define two proto subs with the same name dies';
 
 # RT #65322
@@ -196,7 +196,7 @@ eval-dies-ok 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};',
         multi sub rt65322(|c( Int $n where 1 )) { 1 }
               sub rt65322(|c( Int $n )) { 2 }
     ];
-    eval-dies-ok $rt65322, "Can't define sub and multi sub without proto";
+    throws-like 'EVAL $rt65322', X::Redeclaration, "Can't define sub and multi sub without proto";
 }
 
 # RT #111454
