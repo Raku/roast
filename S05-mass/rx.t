@@ -1,6 +1,6 @@
 use Test;
 
-plan 739;
+plan 736;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -681,22 +681,13 @@ ok "abc\r\ndef" !~~ /c \N d/, 'not logical newline (\N)';
 ok "abc\ndef" ~~ /b \N \n/, 'not logical newline (\N)';
 
 #### \Aabc			Aabc		/reserved/	retired metachars (\A)
-eval-dies-ok '/\Aabc/', 'retired metachars (\A)';
-
-#### \Aabc			abc\ndef	/reserved/	retired metachars (\A)
-eval-dies-ok '/\Aabc/', 'retired metachars (\A)';
+throws-like '/\Aabc/', X::Obsolete, 'retired metachars (\A)';
 
 #### abc\Z			abcZ		/reserved/	retired metachars (\Z)
-eval-dies-ok '/abc\Z/', 'retired metachars (\Z)';
-
-#### abc\Z			abc\ndef	/reserved/	retired metachars (\Z)
-eval-dies-ok '/abc\Z/', 'retired metachars (\Z)';
+throws-like '/abc\Z/', X::Obsolete, 'retired metachars (\Z)';
 
 #### abc\z			abcz		/reserved/	retired metachars (\z)
-eval-dies-ok '/abc\z/', 'retired metachars (\z)';
-
-#### def\z			abc\ndef	/reserved|Obsolete|Unsupported/	retired metachars (\z)
-eval-dies-ok '/def\z/', 'retired metachars (\z)';
+throws-like '/abc\z/', X::Obsolete, 'retired metachars (\z)';
 
 #### abc # def		abc#def		y	comments (#)
 ok 'abc#def' ~~ /abc # def
