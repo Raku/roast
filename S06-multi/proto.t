@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 32;
+plan 31;
 
 # Test for proto definitions
 class A { }
@@ -65,28 +65,26 @@ is(bar(B.new), 3, 'dispatch on class worked (anon cap)');
 is(bar(42),    1, 'dispatch with no possible candidates fell back to proto (anon cap)');
 eval-dies-ok 'bar(41)', 'impossible dispatch failed (anon cap)';
 
-eval-dies-ok 'proto rt68242($a){};proto rt68242($c,$d){};',
-    'attempt to define two proto subs with the same name dies';
-
 # RT #65322
 {
     my $rt65322 = q[
         multi sub rt65322( Int $n where 1 ) { 1 }
               sub rt65322( Int $n ) { 2 }
     ];
-    eval-dies-ok $rt65322, "Can't define sub and multi sub without proto";
+    throws-like 'EVAL $rt65322', X::Redeclaration,
+        "Can't define sub and multi sub without proto";
 }
 
 {
-    eval-dies-ok q[
+    throws-like q[
         multi sub i1(Int $x) {}
         sub i1(Int $x, Str $y) {} 
-    ], 'declaring a multi and a single routine dies';
+    ], X::Redeclaration, 'declaring a multi and a single routine dies';
 
-    eval-dies-ok q[
+    throws-like q[
         sub i2(Int $x, Str $y) {1}
         sub i2(Int $x, Str $y) {2}
-    ], 'declaring two only-subs with same name dies';
+    ], X::Redeclaration, 'declaring two only-subs with same name dies';
 
 
 
@@ -94,7 +92,8 @@ eval-dies-ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 
 # RT #68242
 {
-    eval-dies-ok 'proto foo($bar) {}; proto foo($baz, $quux) {}';
+    throws-like 'proto rt68242($a){};proto rt68242($c,$d){};', X::Redeclaration,
+        'attempt to define two proto subs with the same name dies';
 }
 
 # RT #111454
@@ -155,9 +154,9 @@ eval-dies-ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 # RT #116164
 #?niecza todo
 {
-    eval-dies-ok q[
+    throws-like q[
         proto f(Int $x) {*}; multi f($) { 'default' }; f 'foo'
-    ], 'proto signature is checked, not just that of the candidates';
+    ], X::TypeCheck::Argument, 'proto signature is checked, not just that of the candidates';
 }
 
 # vim: ft=perl6
