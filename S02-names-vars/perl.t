@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 102;
+plan 103;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
 my @tests = (
@@ -90,6 +90,19 @@ my @tests = (
     #?niecza skip 'hanging test'
     ok $foo.perl,
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
+}
+
+{
+    class Bug {
+        has @.myself;
+        method bind( $myself ) {
+            @.myself[0] = $myself;
+        }
+    }
+    my $a1 = Bug.new;
+    $a1.bind( $a1 );
+    say $a1;
+    ok("survived saying a self-referencing object");
 }
 
 {
