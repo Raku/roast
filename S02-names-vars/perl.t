@@ -92,6 +92,7 @@ my @tests = (
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
 }
 
+# RT #124242
 {
     class Bug {
         has @.myself;
@@ -103,6 +104,32 @@ my @tests = (
     $a1.bind( $a1 );
     say $a1;
     ok("survived saying a self-referencing object");
+}
+
+# RT #122286
+{
+    class Location {...}
+    class Item {
+        has Location $.loc is rw;
+        method locate (Location $l) {
+            self.loc=$l;
+        }
+        method whereis () {
+            return self.loc;
+        }
+    }
+    class Location {
+        has Item @.items;
+        method put (Item $item) {
+            push(@.items, $item);
+        }
+    }
+    my $i1=Item.new;
+    my $l1=Location.new;
+    $l1.put($i1);
+    $i1.locate($l1);
+    say $i1.whereis;
+    ok("survived saying two mutually referencing objects");
 }
 
 {
