@@ -458,7 +458,7 @@ sub showkv($x) {
     my $b = <a b c>.Bag;
     #?rakudo.jvm    todo "?"
     throws-like { $b.pairs[0].key++ },
-      X::Assignment::RO,
+      X::Parameter::RW,
       'Cannot change key of Bag.pairs';
     throws-like { $b.pairs[0].value++ },
       Exception,  # no exception type yet

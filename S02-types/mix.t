@@ -414,7 +414,7 @@ sub showkv($x) {
     my $m = <a b c>.Mix;
     #?rakudo.jvm    todo "?"
     throws-like { $m.pairs[0].key++ },
-      X::Assignment::RO,
+      X::Parameter::RW,
       'Cannot change key of Mix.pairs';
     throws-like { $m.pairs[0].value++ },
       Exception,
