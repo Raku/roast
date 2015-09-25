@@ -88,7 +88,6 @@ plan 23;
       is @log.join(','), 'ale,porter,stout', 'Condition variable worked';
 }
 
-#?rakudo.moar skip 'runs out of filehandles on OS X RT #125977'
 {
     my $times = 100;
     my $tried;
