@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 344;
+plan 347;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -310,7 +310,10 @@ throws-like 'use fatal; ~(1, 2, 6 ... 10)', X::Sequence::Deduction;
 throws-like 'my class B does Int { }', X::Composition::NotComposable, target-name => 'B', composer => Int;
 throws-like 'my Str $x := 3', X::TypeCheck::Binding, got => Int, expected => Str;
 throws-like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, expected => Str;
-throws-like 'sub f(--> Nil) { 5 }; f', X::TypeCheck::Return, got => Int, expected => Nil;
+throws-like 'sub f(--> Nil) { return 5 }; f', X::Comp::AdHoc, payload => /Nil/;
+throws-like 'sub f(--> 42) { return 43 }; f', X::Comp::AdHoc, payload => /42/;
+throws-like 'sub f(--> 42) { return 42 }; f', X::Comp::AdHoc, payload => /42/, "we don't allow args even if the same";
+throws-like 'sub f(--> "foo") { return () }; f', X::Comp::AdHoc, payload => /'"foo"'/;
 throws-like 'sub f(--> Junction) { 5 }; f', X::TypeCheck::Return, got => Int, expected => Junction;
 throws-like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
             expected => Int, symbol => '$x';
