@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 17;
 
 # L<S06/Signatures>
 
@@ -100,6 +100,28 @@ PERL
     my sub return-eleven(--> Empty) { 1, { ++$got-here; last } ... * }
     is return-eleven().elems, 0, 'We can return Empty';
     ok $got-here, "and the last statement of the function was sunk";
+}
+
+{
+    my sub return-twelve(--> True) { False }
+    is return-twelve(), Bool::True, 'can return True';
+}
+
+{
+    my sub return-thirteen(--> False) { True }
+    is return-thirteen(), Bool::False, 'can return False';
+}
+
+{
+    my sub return-fourteen(--> pi) { True }
+    is return-fourteen(), pi, 'can return pi';
+}
+
+constant indiana-pi = 3;
+
+{
+    my sub return-fifteen(--> indiana-pi) { True }
+    is return-fifteen(), indiana-pi, 'can return indiana-pi';
 }
 
 # returns vs -->
