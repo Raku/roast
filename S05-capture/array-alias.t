@@ -26,11 +26,11 @@ is(join("|", @<first>), "  a| b", 'First captured strings');
 is(join("|", @<last>), "\tc", 'Last captured strings');
 
 ok("abcxyd" ~~ m/a  @<foo>=(.(.))+ d/, 'Repeated hypothetical array capture');
-is("@<foo>", "c y", 'Hypothetical variable captured');
+is(~@<foo>, "c y", 'Hypothetical variable captured');
 ok(%$/.keys == 1, 'No extra captures');
 
 ok("abcd" ~~ m/a  @<foo>=(.(.))  d/, 'Hypothetical array capture');
-is("@<foo>", "c", 'Hypothetical variable captured');
+is(~@<foo>, "c", 'Hypothetical variable captured');
 
 our @GA;
 ok("abcxyd" ~~ m/a  @GA=(.(.))+  d/, 'Global array capture');
@@ -41,7 +41,7 @@ my @foo;
 ok("abcxyd" ~~ m/a  @foo=(.(.))+  d/, 'Package array capture');
 is("@foo[]", "c y", 'Package array captured');
 
-regex two {..}
+my regex two {..}
 
 ok("abcd" ~~ m/a  @<foo>=(<two>)  d/, 'Compound hypothetical capture');
 {
@@ -52,14 +52,14 @@ ok("abcd" ~~ m/a  @<foo>=(<two>)  d/, 'Compound hypothetical capture');
 ok(! EVAL('@<foo>'), 'Explicit hypothetical variable not captured');
 
 ok("  a b\tc" ~~ m/@<chars>=( @<spaces>=[\s+] (\S+))+/, 'Nested array capture');
-is("@<chars>", "a b c", 'Outer array capture');
+is(~@<chars>, "a b c", 'Outer array capture');
 is(join("|", @<spaces>), "  | |\t", 'Inner array capture');
 
-regex spaces { @<spaces>=[(\s+)] }
+my regex spaces { @<spaces>=[(\s+)] }
 
 ok("  a b\tc" ~~ m/@<chars>=( <spaces> (\S+))+/, 'Subrule array capture');
 
-is("@<chars>", "a b c", 'Outer rule array capture');
+is(~@<chars>, "a b c", 'Outer rule array capture');
 is($<spaces>, "\t", 'Final subrule array capture');
 
 ok("  a b\tc" ~~ m/@<chars>=( @<spaces>=[<?spaces>] (\S+))+/, 'Nested subrule array capture');
@@ -83,7 +83,7 @@ is(~$<chars>[2][1], "c", 'Multiple capture value of nested AoA[2][1]');
 
 my @bases = ();
 ok("GATTACA" ~~ m/ @bases=(A|C|G|T)+ /, 'All your bases...');
-is("@bases", "G A T T A C A", '...are belong to us');
+is("@bases[]", "G A T T A C A", '...are belong to us');
 
 @bases = ();
 ok("GATTACA" ~~ m/ @bases=(A|C|G|T)**{4} (@bases+) /, 'Array reinterpolation');
