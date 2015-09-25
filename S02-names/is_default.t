@@ -181,7 +181,6 @@ plan 110;
       X::Parameter::Default::TypeCheck,
       expected => Int,
       got      => 'foo';
-    #?rakudo todo 'Nil does not survive passing to the exception'
     throws-like 'my Int $a is default(Nil)',
       X::Parameter::Default::TypeCheck,
       expected => Int,
@@ -190,7 +189,6 @@ plan 110;
       X::Parameter::Default::TypeCheck,
       expected => Array[Int],
       got      => 'foo';
-    #?rakudo todo 'Nil does not survive passing to the exception'
     throws-like 'my Int @a is default(Nil)',
       X::Parameter::Default::TypeCheck,
       expected => Array[Int],
@@ -199,7 +197,6 @@ plan 110;
       X::Parameter::Default::TypeCheck,
       expected => Hash[Int],
       got      => 'foo';
-    #?rakudo todo 'Nil does not survive passing to the exception'
     throws-like 'my Int %a is default(Nil)',
       X::Parameter::Default::TypeCheck,
       expected => Hash[Int],
