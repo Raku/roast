@@ -55,8 +55,8 @@ is  '   quack'.indent(-2),
     'Simple outdent';
 
 is  "\t quack".indent(-1),
-    "\tquack",
-    'Simple outdent with tab (no explosion)';
+    ' ' x $tab ~ "quack",
+    'Simple outdent with tab (explodes because we delete from left)';
 
 is  '   quack'.indent(-4),
     'quack',
@@ -106,7 +106,7 @@ is  "  \t!".indent(-1),
     'Spaces before a hard tab should be coalesced into the tabstop when exploding';
 
 is  "  \t\t!".indent(-1),
-    "  \t" ~ ' ' x ($tab - 1) ~ '!',
+    "\t" ~ ' ' x ($tab - 1) ~ '!',
     'Test that space-tab-tab outdent works as intended';
 
 is  " \t \t quack".indent(-2),
