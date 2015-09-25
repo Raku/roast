@@ -2,12 +2,11 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 13;
 
 # L<S06/Signatures>
 
 # Nil is treated as definite value in return specifications
-#?rakudo todo 'definite values as return specifications dont parse yet RT #124927'
 {
     my sub return-nil(--> Nil) {
         1
@@ -42,15 +41,14 @@ PERL
     eval-dies-ok($code, 'A function with a definite return value may not use return with a value, even a Failure')
 }
 
-#?rakudo todo "failure bypass of declared return value NYI"
 {
     my sub fail-five(--> 5) {
-        fail 5
+        fail "five"
     }
 
     my $failure = fail-five();
     isnt $failure, 5, 'Failures bypass the return value of function with a definite return value in the signature';
-    ok $failure === Failure, 'Failures bypass the return value of function with a definite return value in the signature';
+    ok $failure ~~ Failure, 'Failures bypass the return value of function with a definite return value in the signature';
 }
 
 {
@@ -83,6 +81,25 @@ PERL
     }
 
     is eight(), 8, 'Variables used as return specifications *always* shadow existing variables with the same name';
+}
+
+{
+    my sub return-nine(--> "nine") { 42 }
+
+    is return-nine(), "nine", 'We can return strings';
+}
+
+{
+    my sub return-ten(--> "ten") { }
+
+    is return-ten(), "ten", 'We can return from statement-less blocks';
+}
+
+{
+    my $got-here = False;
+    my sub return-eleven(--> Empty) { 1, { ++$got-here; last } ... * }
+    is return-eleven().elems, 0, 'We can return Empty';
+    ok $got-here, "and the last statement of the function was sunk";
 }
 
 # returns vs -->
