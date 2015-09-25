@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 3 * 19 + 89;
+plan 3 * 19 + 94;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -350,6 +350,14 @@ Note, "non-chaining binary" was later renamed to "structural infix".
         "chained colonpairs in parens build a list of pairs";
     cmp-ok {:a(2) :b(3) :c(4)}<a b c>, "eqv", ( 2, 3, 4 ),
         "chained colonpairs in curlies construct hashes with more than one element";
+}
+
+{
+    is ((Nil) => Nil).gist, 'Nil => Nil', "both key and value can convey a raw Nil";
+    is ((Mu) => Mu).gist, '(Mu) => (Mu)', "both key and value can convey a Mu type";
+    is ((Any) => Any).gist, '(Any) => (Any)', "both key and value can convey an Any type";
+    is ((Junction) => Junction).gist, '(Junction) => (Junction)', "both key and value can convey a Junction type";
+    is ((1|2|3) => 1&2&3).gist, 'any(1, 2, 3) => all(1, 2, 3)', "both key and value can convey a Junction object";
 }
 
 # vim: ft=perl6
