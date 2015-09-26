@@ -1,5 +1,5 @@
 use Test;
-plan 17;
+plan 21;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -148,4 +148,31 @@ $multiline = "Hello\n    World";
     END
 
     is no-r(TEXT), "Hello world\n:)\n", "Constant heredocs work";
+}
+
+# RT #117705
+{
+    my $eefee = q:to<END>;
+
+
+something
+
+
+END
+    is $eefee, "\n\nsomething\n\n\n", 'Heredoc leading and trailing empty lines';
+
+    my $none = q:to<END>;
+END
+    is $none, "", 'Completely empty heredoc';
+
+    my $e = q:to<END>;
+
+END
+    is $e, "\n", 'Heredoc one empty line';
+    my $ee = q:to<END>;
+
+
+END
+    is $ee, "\n\n", 'Heredoc two empty lines';
+
 }
