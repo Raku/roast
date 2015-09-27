@@ -21,7 +21,8 @@ is $o.accessor, 'blubb',              'accessor can use inherited attribute';
 class Artie61500 {
     has $!p = 61500;
 }
-eval-dies-ok 'class Artay61500 is Artie61500 { method bomb { return $!p } }',
+throws-like 'class Artay61500 is Artie61500 { method bomb { return $!p } }',
+    X::Attribute::Undeclared,
     'Compile error for subclass to access private attribute of parent';
 
 class Parent {
@@ -49,7 +50,13 @@ nok $child.report.defined,
 
 # RT #61500
 {
-    eval-dies-ok 'class A { has $!foo = 7 }; class B is A { method x { say $!foo } }; B.new.x', 'rt 61500';
+    throws-like q{
+        class RT61500_A { has $!foo = 7 };
+        class RT61500_B is RT61500_A { method x { say $!foo } };
+        RT61500_B.new.x
+    },
+        X::Attribute::Undeclared,
+        'rt 61500';
 }
 
 # vim: ft=perl6

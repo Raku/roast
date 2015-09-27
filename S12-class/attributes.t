@@ -107,13 +107,13 @@ is($bar.bar[2], 300,       'array attribute initialized/works');
 }
 
 # RT 81718
-eval-dies-ok q[
+throws-like q[
     class RT81718 {
         has $.bughunt is rw;
         sub bomb { "life is a $.bughunt" }
         method meta_bomb { "the good " ~ bomb() }
     }
-], 'no attr access for sub inside class';
+], X::Syntax::NoSelf, 'no attr access for sub inside class';
 
 # RT 74850
 #?niecza skip "Unhandled exception: Unable to resolve method ctxzyg in type Method"

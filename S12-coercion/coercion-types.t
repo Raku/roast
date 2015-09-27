@@ -13,7 +13,7 @@ plan 18;
     }
     isa-ok f(42), Str, 'Coercion type coerces';
     is f(42), '42',   'Coercion type coerces to correct value';
-    eval-dies-ok q[ sub g(Str(Cool) $x) { $x }; g(Any) ],
+    throws-like q[ sub g(Str(Cool) $x) { $x }; g(Any) ], X::TypeCheck::Binding,
         'coercion type still type-checks';
 }
 

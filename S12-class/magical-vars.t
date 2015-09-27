@@ -119,7 +119,8 @@ class SimpleClass does Bar {}
 }
 
 {
-  eval-dies-ok 'self' , "there is no self outside of a method";
+  throws-like 'self', X::Syntax::Self::WithoutObject,
+    "there is no self outside of a method";
 }
 
 # vim: ft=perl6

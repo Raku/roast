@@ -70,6 +70,7 @@ is($t3.x, 42,        'anonymous classes can have attributes');
 }
 
 # RT #80024
-eval-dies-ok q[anon class C { }; C.WHAT; ], 'anon class is actually anon';
+throws-like q[anon class C { }; C.WHAT; ], X::Undeclared::Symbols,
+    'anon class is actually anon';
 
 # vim: ft=perl6

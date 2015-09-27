@@ -23,7 +23,8 @@ lives-ok { sub {...} }, 'not execued stub code is fine';
 dies-ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
 dies-ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 
-eval-dies-ok q[my class StubbedButNotDeclared { ... }], 'stubbing a class but not providing a definition dies';
+throws-like q[my class StubbedButNotDeclared { ... }], X::Package::Stubbed,
+    'stubbing a class but not providing a definition dies';
 
 # RT #81060
 {

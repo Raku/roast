@@ -44,7 +44,8 @@ class T2 {
     is( a($o: $seed), $seed, "The indirect object notation call with argument with ()" );
 
     my $name = 'a';
-    eval-dies-ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
+    throws-like '$name $o: $seed', X::Syntax::Confused,
+        'Indirect object notation and indirect method calls cannot be combined';
 
     #?niecza 2 skip 'Invocant handling is NYI'
     is  (b $o: 21, 21), 42, "The indirect object notation call with multiple arguments without ()";

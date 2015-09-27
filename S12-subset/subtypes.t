@@ -106,7 +106,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 {
     subset HasA of Str where /a/;
     lives-ok { my HasA $x = 'bla' },   'where /regex/ works (positive)';
-    eval-dies-ok 'my HasA $x = "foo"', 'where /regex/ works (negative)';
+    throws-like 'my HasA $x = "foo"', X::TypeCheck::Assignment, 'where /regex/ works (negative)';
 }
 
 # You can write just an expression rather than a block after where in a sub

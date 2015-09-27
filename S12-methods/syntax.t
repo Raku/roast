@@ -16,7 +16,7 @@ $_ = A.new();
 
 is .doit,       'empty',        'plain call with no args';
 is .doit(),     'empty',        'method call with parens and no args';
-eval-dies-ok '.doit ()',        '.doit () illegal';
+throws-like '.doit ()', X::Syntax::Confused, '.doit () illegal';
 is .doit\ (),   'empty',        'method call with unspace';
 
 is (.doit: 1, 2, 3),    'a:1|b:2!3',    'list op with colon';

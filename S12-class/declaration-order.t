@@ -15,6 +15,7 @@ A class can only derive already declared classes.
 
 # need eval-lives-ok here because class declarations happen at compile time
 eval-lives-ok ' class A {}; class B is A {}; ', "base before derived: lives";
-eval-dies-ok ' class D is C {}; class C {}; ', "derived before base: dies";
+throws-like ' class D is C {}; class C {}; ', X::Inheritance::UnknownParent,
+    "derived before base: dies";
 
 # vim: ft=perl6

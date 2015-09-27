@@ -40,7 +40,7 @@ class A {
     is(A::B.new.x, 2,   'called correct method on class A::B');
     is(A::B.new.y, 'b', 'could access attribute in class A::B');
     is(A::B.new.z, 'b', 'method access correct attribute in class A::B');
-    eval-dies-ok(q{ B.new },  'class A::B not available outside of class as B');
+    throws-like q{ B.new }, X::Undeclared::Symbols, 'class A::B not available outside of class as B';
 }
 
 class C {

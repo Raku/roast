@@ -17,7 +17,7 @@ eval-lives-ok '{ my class B {} }; { my class B {} }',
               'declare classes with the same name in two scopes.';
 eval-lives-ok '{ my class B {}; B.new; }',
               'can instantiate lexical class';
-eval-dies-ok  '{ my class B {}; B.new; }; B.new',
+throws-like '{ my class B {}; B.new; }; B.new', X::Undeclared::Symbols,
               'scope is correctly restricted';
 
 {
