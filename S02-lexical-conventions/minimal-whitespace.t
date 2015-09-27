@@ -20,20 +20,16 @@ throws-like { EVAL '%hash {"a"}' },
   'hash with space before opening braces does not work (2)';
 
 class Thing {method whatever (Int $a) {3 * $a}}
-throws-like { EVAL 'Thing .new' },
-  X::Syntax::Confused,
-  'whitespace is not allowed before . after class name';
-throws-like { EVAL 'Thing. new' },
-  X::Obsolete,
-  'whitespace is not allowed after . after class name';
+lives-ok { EVAL 'Thing .new' },
+  'whitespace *is* allowed before . after class name';
+lives-ok { EVAL 'Thing. new' },
+  'whitespace *is* allowed after . after class name';
 
 my $o = Thing.new;
-throws-like { EVAL '$o .whatever(5)' },
-  X::Syntax::Confused,
-  'whitespace is not allowed before . before method';
-throws-like { EVAL '$o. whatever(5)' },
-  X::Obsolete,
-  'whitespace is not allowed after . before method';
+lives-ok { EVAL '$o .whatever(5)' },
+  'whitespace *is* allowed before . before method';
+lives-ok { EVAL '$o. whatever(5)' },
+  'whitespace *is* allowed after . before method';
 
 lives-ok { EVAL 'my @rt80330; [+] @rt80330' },
   'a [+] with whitespace works';
