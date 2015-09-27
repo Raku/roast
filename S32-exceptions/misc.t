@@ -605,7 +605,7 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 
 # RT #114014
 {
-    throws-like { EVAL q[ ord.Cool ] }, X::Comp::Group,
+    throws-like { EVAL q[ ord.Cool ] }, Exception,
         'adequate error message when calling bare "ord"';
 }
 

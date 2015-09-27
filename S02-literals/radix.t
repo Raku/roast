@@ -212,7 +212,7 @@ is(
 
 # L<S02/Exponentials/"not clear whether the exponentiator should be 10 or the radix">
 throws-like { EVAL '0b1.1e10' },
-  X::Syntax::Confused,
+  X::Obsolete,
   'Ambiguous, illegal syntax doesn\'t work';
 
 # L<S02/Exponentials/"and this makes it explicit">
