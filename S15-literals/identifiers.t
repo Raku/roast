@@ -7,9 +7,11 @@ plan 7;
 # tests that the proper characters are supported
 eval-lives-ok('my $foo', "Handles ASCII identifier");
 eval-lives-ok('my $ｆｏｏ', "Handles non-ASCII identifier");
-eval-dies-ok('my $১০kinds', "Doesn't allow non-ASCII digits at start of identifier");
+throws-like 'my $১০kinds', X::Syntax::Variable::Numeric,
+    "Doesn't allow non-ASCII digits at start of identifier";
 
-eval-dies-ok('my $̈a;', "Combining marks not allowed as first character of identifier");
+throws-like 'my $̈a;', X::Syntax::Malformed,
+    "Combining marks not allowed as first character of identifier";
 
 my $ẛ̣ = 42; # LATIN SMALL LETTER LONG S WITH DOT ABOVE + COMBINING DOT BELOW
 
