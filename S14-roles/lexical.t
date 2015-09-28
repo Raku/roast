@@ -15,7 +15,7 @@ Tests for lexical roles delcared with 'my role'
 eval-lives-ok 'my role R1 {}', 'my role parses OK';
 eval-lives-ok '{ my role R2 {} }; { my role R2 {} }',
               'declare roles with the same name in two scopes.';
-eval-dies-ok  '{ my class R3 {}; R3; }; R3',
+throws-like '{ my class R3 {}; R3; }; R3', X::Undeclared::Symbols,
               'scope is correctly restricted';
 
 {
