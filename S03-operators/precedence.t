@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 59;
+plan 63;
 
 
 # terms
@@ -42,6 +42,11 @@ isa-ok(~2**4, Str, "~4**4 is a string");
 is(!0 * 2, 2, "unary ! binds tighter than *");
 ok(!(0 * 2), "beh");
 is(?2*2, 2, "binary -> numify causes reinterpretation as, binds tighter than *");
+
+is -2**2 . abs, 4, "on left side . is looser than ** and left-to-right with unary -";
+is -2**2 . abs + 1, 5, "on right side . is tighter than addition";
+is -2**2 . abs.Str.ord, "4".ord, "on right side . is tighter than methodcall";
+is -1 * -1 . abs, -1, "on left side . is tighter than *";
 
 # multiplicative
 
