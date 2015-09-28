@@ -66,6 +66,7 @@ my @normal = <
   Lock
   Macro
   Match
+  Metamodel::Primitives
   Method
   Mix
   MixHash
@@ -98,6 +99,7 @@ my @normal = <
   Set
   SetHash
   Signature
+  Slang
   Slip
   SprintfHandler
   Stash
