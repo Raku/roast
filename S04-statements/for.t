@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 93;
+plan 94;
 
 =begin description
 
@@ -19,8 +19,8 @@ for statement as possible
 # L<S04/The C<for> statement/"no foreach statement any more">
 {
     my $times_run = 0;
-    eval-dies-ok 'foreach 1..10 { $times_run++ }; 1', "foreach is gone";
-    eval-dies-ok 'foreach (1..10) { $times_run++}; 1',
+    throws-like 'foreach 1..10 { $times_run++ }; 1', X::Obsolete, "foreach is gone";
+    throws-like 'foreach (1..10) { $times_run++}; 1', X::Obsolete,
         "foreach is gone, even with parens";
     is $times_run, 0, "foreach doesn't work";
 }
@@ -364,7 +364,7 @@ class TestClass{ has $.key is rw  };
 }
 
 # L<S04/Statement parsing/keywords require whitespace>
-eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
+throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitespace after it';
 
 # looping with more than one loop variables
 {
@@ -377,9 +377,10 @@ eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 {
-  #my $str = '';
-  eval-dies-ok('for 1..5 ->  $x, $y { $str ~= "$x$y" }', 'Should throw exception, no value for parameter $y');
-  #is $str, "1234", "loop ran before throwing exception";
+  my $str = '';
+  throws-like 'for 1..5 ->  $x, $y { $str ~= "$x$y" }', X::AdHoc,
+      'Should throw exception, no value for parameter $y';
+  is $str, "1234", "loop ran before throwing exception";
   #diag ">$str<";
 }
 
@@ -422,8 +423,8 @@ eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 {
-  eval-dies-ok 'for 1.. { };', "Please use ..* for indefinite range";
-  eval-dies-ok 'for 1... { };', "1... does not exist";
+  throws-like 'for 1.. { };', X::Comp::Group, "Please use ..* for indefinite range";
+  throws-like 'for 1... { };', X::Comp::Group, "1... does not exist";
 }
 
 {
@@ -505,7 +506,7 @@ eval-dies-ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # RT #62478
 {
-    eval-dies-ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
+    throws-like 'for (my $i; $i <=3; $i++) { $i; }', X::Obsolete, 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
 
 {

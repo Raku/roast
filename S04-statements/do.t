@@ -6,16 +6,16 @@ plan 29;
 
 # L<S04/The do-once loop/"can't" put "statement modifier">
 # Note in accordance with STD, conditionals are OK, loops are not.
-eval-dies-ok 'my $i = 1; do { $i++ } while $i < 5;',
+throws-like 'my $i = 1; do { $i++ } while $i < 5;', X::Obsolete,
     "'do' can't take the 'while' modifier";
 
-eval-dies-ok 'my $i = 1; do { $i++ } until $i > 4;',
+throws-like 'my $i = 1; do { $i++ } until $i > 4;', X::Obsolete,
     "'do' can't take the 'until' modifier";
 
-eval-dies-ok 'my $i; do { $i++ } for 1..3;',
+throws-like 'my $i; do { $i++ } for 1..3;', X::Obsolete,
     "'do' can't take the 'for' modifier";
 
-eval-dies-ok 'my $i; do { $i++ } given $i;',
+throws-like 'my $i; do { $i++ } given $i;', X::Obsolete,
     "'do' can't take the 'given' modifier";
 
 eval-lives-ok 'my $i; do { $i++ } unless $i;',
@@ -135,13 +135,13 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 
 # L<S04/The do-once loop/"bare block is not a do-once">
 {
-    eval-dies-ok 'my $i; { $i++; next; $i--; }',
+    throws-like 'my $i; { $i++; next; $i--; }', X::ControlFlow,
         "bare block can't take 'next'";
 
-    eval-dies-ok 'my $i; { $i++; last; $i--; }',
+    throws-like 'my $i; { $i++; last; $i--; }', X::ControlFlow,
         "bare block can't take 'last'";
     
-    eval-dies-ok 'my $i; { $i++; redo; $i--; }',
+    throws-like 'my $i; { $i++; redo; $i--; }', X::ControlFlow,
         "bare block can't take 'last'";
 }
 
