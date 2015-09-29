@@ -253,7 +253,7 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 }
 
 # RT #77572
-eval-dies-ok '1..2..3', '.. is not associative';
+throws-like '1..2..3', X::Syntax::NonAssociative, '.. is not associative';
 
 {
     ## once this block died at compile time

@@ -374,8 +374,9 @@ my @p;
 
 # RT #64818
 {
-    eval-dies-ok q{my $foo = 'foo'; $foo R~= 'foo';},
-                 'use of R~= operator on a non-container dies';
+    throws-like q{my $foo = 'foo'; $foo R~= 'foo';},
+        X::Assignment::RO,
+        'use of R~= operator on a non-container dies';
     my ($x, $y) = <a b>; $x R~= $y;
     is("$x $y", "a ba", "R~= operator works");
 }

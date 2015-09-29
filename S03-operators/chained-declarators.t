@@ -19,12 +19,12 @@ is((try {  my $a5 = state $b5 = 42; $b5++; "$a5, $b5" }), '42, 43', "chained my,
 
 # scoping
 
-eval-dies-ok '
+throws-like '
     {
         our $sa2 = my $sb2 = 42;
     }
     ($sa2, $sb2);
-   ', "scoping our, my ('our' doesn't leak)";
+   ', X::Undeclared, "scoping our, my ('our' doesn't leak)";
 
 # XXX: add more!
 
