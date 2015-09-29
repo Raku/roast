@@ -74,17 +74,17 @@ ok Foo::Bar.HOW.isa(Foo::Bar, Foo::Bar), "subclass.HOW.isa(same_subclass) is tru
 
 # Erroneous dispatch found by TimToady++
 
-class X {
+class ClassX {
     method j () { 'X' }
 };
-class Z is X {}
-class Y is X {
-    method k () { Z.new.j() }
+class ClassZ is ClassX {}
+class ClassY is ClassX {
+    method k () { ClassZ.new.j() }
     method j () { 'Y' }
 };
 
-is(Z.new.j(), 'X', 'inherited method dispatch works');
-is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with same-named method');
+is(ClassZ.new.j(), 'X', 'inherited method dispatch works');
+is(ClassY.new.k(), 'X', 'inherited method dispatch works inside another class with same-named method');
 
 {
     my class A {
@@ -128,7 +128,8 @@ eval-lives-ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
     ok !( any(DirectMu.^parents).gist eq '(Any)'), 'and Any does not appear in the list of parents either';
 }
 
-eval-dies-ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
+throws-like 'class RT64642 is ::Nowhere {}', X::Inheritance::UnknownParent,
+    'dies: class D is ::C {}';
 
 # check that inheriting from Array works
 {
