@@ -1,5 +1,5 @@
 use Test;
-plan 21;
+plan 22;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -175,4 +175,37 @@ END
 END
     is $ee, "\n\n", 'Heredoc two empty lines';
 
+}
+
+# RT #120895 
+{
+    #  Should also try this with varying $?TABSTOP when that gets implemented
+
+    # Take care to keep tabs and spaces as is here
+    ok ([eq] Q:to<MAKEFILE1>,
+        foo: bar
+        	echo 'AGAIN';
+        bar:
+        	echo 'OHAI';
+        MAKEFILE1
+            Q:to<MAKEFILE2>,
+        foo: bar
+        	echo 'AGAIN';
+        bar:
+		echo 'OHAI';
+        MAKEFILE2
+            Q:to<MAKEFILE3>,
+	foo: bar
+		echo 'AGAIN';
+	bar:
+		echo 'OHAI';
+        MAKEFILE3
+            Q:to<MAKEFILE4>,
+        foo: bar
+        	echo 'AGAIN';
+        bar:
+		echo 'OHAI';
+	MAKEFILE4
+        "foo: bar\n\techo 'AGAIN';\nbar:\n\techo 'OHAI';\n"),
+        "Heredoc tab explosion makefile use case is usesul.";
 }
