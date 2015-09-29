@@ -8,7 +8,7 @@ plan 6;
     is b.Str, 'bar', 'stringy enum first value';
 }
 
-eval-dies-ok 'my enum B (a => 1, b => "bar")',
+throws-like 'my enum B (a => 1, b => "bar")', X::AdHoc,
              'mixed type enums are forbidden';
 
 #?rakudo todo 'NYI RT #124833'
@@ -17,7 +17,7 @@ eval-lives-ok 'my Cool enum C (a => 1, b => "bar")',
              '... unless that type covers both enum value types';
 
 #?niecza todo
-eval-dies-ok 'my Str enum D (a => 1)',
+throws-like 'my Str enum D (a => 1)', X::AdHoc,
              'violating an explicit type constraint dies';
 
 {

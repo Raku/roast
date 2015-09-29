@@ -41,10 +41,10 @@ is      $was_in_sentry_shake,   1, "conflict resolution works (2-3)";
 is      $was_in_pet_shake,      1, "conflict resolution works (2-4)";
 
 # RT #111664
-eval-dies-ok q[
+throws-like q[
     role R1 { method !foo() { 1 }}
     role R2 { method !foo() { 2 } }
     class A does R1 does R2 { }
-    ], 'private roles can cause conflicts too';
+    ], X::AdHoc, 'private roles can cause conflicts too';
 
 # vim: ft=perl6

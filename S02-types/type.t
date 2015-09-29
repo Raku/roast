@@ -43,7 +43,7 @@ my Str $bar;
 #?niecza skip 'native types (noauto)'
 {
     eval-lives-ok('my int $alpha = 1',    'Has native type int');
-    eval-dies-ok('my int $alpha = Nil', 'native int type cannot be undefined');
+    throws-like 'my int $alpha = Nil', X::AdHoc, 'native int type cannot be undefined';
     lives-ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval-lives-ok('my num $alpha = 1e0',    'Has native type num');
     #?rakudo.jvm todo "nigh"

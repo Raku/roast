@@ -16,7 +16,7 @@ class Foo {
     method a {'called Foo.a'}
 }
 
-eval-dies-ok('augment class Foo {method b {"called Foo.b"}}}', 'adding to closed class dies');
+throws-like 'augment class Foo {method b {"called Foo.b"}}}', X::AdHoc, 'adding to closed class dies');
 
 class Bar is open {
     method c {'called Bar.c'}
@@ -60,7 +60,7 @@ class Qux {method g {'called Qux.g'}}
 
 # L<S12/"Open vs Closed Classes"/"declaring individual classes closed or final">
 # try a few things that come to mind to make sure it's not lurking
-eval-dies-ok('class ClosedAlpha is closed {}', '"is closed" is unimplemented');
-eval-dies-ok('class ClosedBeta  is final  {}', '"is final"  is unimplemented');
+throws-like 'class ClosedAlpha is closed {}', X::AdHoc, '"is closed" is unimplemented');
+throws-like 'class ClosedBeta  is final  {}', X::AdHoc, '"is final"  is unimplemented');
 
 # vim: ft=perl6

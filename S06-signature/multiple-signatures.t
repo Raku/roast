@@ -48,14 +48,14 @@ plan 11;
 # L<S13/Syntax/"must all bind the same set of formal variable names">
 
 {
-    eval-dies-ok q[ multi sub x ($x, $y) | ($x, $y, $z) { 1 }],
+    throws-like q[ multi sub x ($x, $y) | ($x, $y, $z) { 1 }], X::AdHoc,
         'multis with multiple sigs must have the same set of formal variables';
-    eval-dies-ok q[ multi sub x ($x, $y) | ($x, @y) { 1 }],
+    throws-like q[ multi sub x ($x, $y) | ($x, @y) { 1 }], X::AdHoc,
         'multis with multiple sigs must have the same set of formal variables';
 }
 
 # common sense
-eval-dies-ok q[ only sub y (Int $x, Str $y) | (Str $x, Int $y) ],
+throws-like q[ only sub y (Int $x, Str $y) | (Str $x, Int $y) ], X::AdHoc,
     'and "only" sub can not have multiple signatures';
 
 # vim: ft=perl6

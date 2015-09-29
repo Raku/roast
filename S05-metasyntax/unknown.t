@@ -12,7 +12,7 @@ throws-like '"aa!" ~~ /!/', X::Syntax::Regex::UnrecognizedMetachar,
 lives-ok({"aa!" ~~ /\!/}, 'escaped "!" is valid');
 lives-ok({"aa!" ~~ /'!'/}, 'quoted "!" is valid');
 
-eval-dies-ok('"aa!" ~~ /\a/', 'escaped "a" is not valid metasyntax');
+throws-like '"aa!" ~~ /\a/', X::AdHoc, 'escaped "a" is not valid metasyntax';
 lives-ok({"aa!" ~~ /a/}, '"a" is valid');
 lives-ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 

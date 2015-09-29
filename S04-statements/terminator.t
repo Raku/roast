@@ -48,7 +48,7 @@ throws-like "42 if 23\nis 50; 1", X::Syntax::Confused,
     "if postfix modifier and is() is parsed correctly";
 
 # not sure this belong here, suggestions for better places are welcome
-eval-dies-ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
+throws-like '(1) { $foo = 2 }', X::AdHoc, 'parens do not eat spaces after them';
 
 # RT #79964
 eval-lives-ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';

@@ -32,7 +32,7 @@ is ('a', 'b', 'c', { $^x ~ 'x', $^y ~ 'y' ~ $^z ~ 'z' } ... *)[^9].join(' '), 'a
 
 # L<S03/List infix precedence/it will be taken as a yada>
 
-eval-dies-ok '(1, 2, ... 3)[2]', 'yada operator not confused for sequence operator';    #OK apparent sequence operator
+throws-like '(1, 2, ... 3)[2]', X::AdHoc, 'yada operator not confused for sequence operator';    #OK apparent sequence operator
 
 # L<S03/List infix precedence/and another function to continue the list>
 # chained sequence

@@ -11,7 +11,7 @@ throws-like 'rx(o)', X::Undeclared::Symbols,
     'rx () requires whitespace if the delims are parens';
 isa-ok(regex {oo}, Regex);
 
-eval-dies-ok('rx :foo:', 'colons are not allowed as rx delimiters');
+throws-like 'rx :foo:', X::AdHoc, 'colons are not allowed as rx delimiters';
 
 lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 

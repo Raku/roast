@@ -229,7 +229,7 @@ eval-lives-ok 'my %a; %a{ CATCH { } }', 'can define CATCH bock in .{}';
 # RT #73988
 throws-like 'do { CATCH {}; CATCH { } }', X::Phaser::Multiple, 'only one CATCH per block allowed';
 # RT #115184
-eval-dies-ok 'try { CATCH { ~$! }; die }', "doesn't segfault";
+throws-like 'try { CATCH { ~$! }; die }', X::AdHoc, "doesn't segfault";
 
 # RT #121213
 {
