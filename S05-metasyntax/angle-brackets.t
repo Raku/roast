@@ -22,7 +22,7 @@ character classes), and those are referenced at the correct spot.
     is('aaaaa' ~~ /< a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (space)');
     is('aaaaa' ~~ /<	a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (tab)');
 
-    eval-dies-ok('"aaaa" ~~ /<a aa>/', '<...> without whitespace calls a function (not quote words)');
+    throws-like '"aaaa" ~~ /<a aa>/', X::Method::NotFound, '<...> without whitespace calls a method (not quote words)';
     
     is('hello' ~~ /< hello >/, 'hello', 'degenerate case of quote list');
 }
@@ -257,7 +257,7 @@ character classes), and those are referenced at the correct spot.
 # meanings within regexes that the bare elipses have in ordinary code
 #?niecza skip 'Action method assertion:sym<???> not yet implemented'
 {
-    eval-dies-ok('"foo" ~~ /<...>/', '<...> dies in regex match');
+    throws-like '"foo" ~~ /<...>/', X::Comp::Group, '<...> dies in regex match';
     # XXX: Should be warns_ok, but we don't have that yet
     lives-ok({'foo' ~~ /<???>/}, '<???> lives in regex match');
     #?rakudo todo '!!! in regexes'

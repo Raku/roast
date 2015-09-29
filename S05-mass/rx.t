@@ -364,7 +364,7 @@ ok '\\' ~~ /<["\\]>/, 'escaped backslash';
 ok ']' ~~ /<[\]]>/, 'escaped close bracket';
 
 #### <[\]>			\\]]		/parse error/	unescaped backslash (or no closing brace)
-eval-dies-ok ' /<[\]>/ ', 'unescaped backslash (or no closing brace)';
+throws-like ' /<[\]>/ ', X::Comp::Group, 'unescaped backslash (or no closing brace)';
 
 #### ^\><[<]>		><		y	lt character class
 ok '><' ~~ /^\><[<]>/, 'lt character class';
@@ -2294,7 +2294,7 @@ ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
 ##  syntax errors
 
 #### {{		abcdef		/Missing closing braces/	unterminated closure
-eval-dies-ok '/{{/', 'unterminated closure';
+throws-like '/{{/', X::Comp::Group, 'unterminated closure';
 
 #### \1		abcdef		/reserved/			back references
 throws-like '/\1/', X::AdHoc, 'back references';
