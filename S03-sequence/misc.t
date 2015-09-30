@@ -22,13 +22,13 @@ throws-like {(() ... *)[0]}, X::Cannot::Empty, 'Nil sequence';
 # L<S03/List infix precedence/interleave unrelated sequences>
 # multiple return values
 
-is (1, 1, { $^a + 1, $^b * 2 } ... *).flat.[^12].join(' '), '1 1 2 2 3 4 4 8 5 16 6 32', 'sequence of two interleaved sequences';
-is (1, 1, 1, { $^a + 1, $^b * 2, $^c - 1 } ... *).flat.[^18].join(' '), '1 1 1 2 2 0 3 4 -1 4 8 -2 5 16 -3 6 32 -4', 'sequence of three interleaved sequences';
-is (1, { $^n + 1 xx $^n + 1 } ... *)[^10].join(' '), '1 2 2 3 3 3 4 4 4 4', 'sequence with list-returning block';
+is (1, 1, { slip $^a + 1, $^b * 2 } ... *).[^12].join(' '), '1 1 2 2 3 4 4 8 5 16 6 32', 'sequence of two interleaved sequences';
+is (1, 1, 1, { slip $^a + 1, $^b * 2, $^c - 1 } ... *).[^18].join(' '), '1 1 1 2 2 0 3 4 -1 4 8 -2 5 16 -3 6 32 -4', 'sequence of three interleaved sequences';
+is (1, { |($^n + 1 xx $^n + 1) } ... *)[^10].join(' '), '1 2 2 3 3 3 4 4 4 4', 'sequence with list-returning block';
 #RT #80574
-is ('a', 'b', { $^a ~ 'x', $^a ~ $^b, $^b ~ 'y' } ... *)[^11].join(' '), 'a b ax ab by abx abby byy abbyx abbybyy byyy', 'sequence with arity < number of return values';
+is ('a', 'b', { slip $^a ~ 'x', $^a ~ $^b, $^b ~ 'y' } ... *)[^11].join(' '), 'a b ax ab by abx abby byy abbyx abbybyy byyy', 'sequence with arity < number of return values';
 #RT #80574
-is ('a', 'b', 'c', { $^x ~ 'x', $^y ~ 'y' ~ $^z ~ 'z' } ... *)[^9].join(' '), 'a b c ax bycz cx axybyczz byczx cxyaxybyczzz', 'sequence with arity > number of return values';
+is ('a', 'b', 'c', { slip $^x ~ 'x', $^y ~ 'y' ~ $^z ~ 'z' } ... *)[^9].join(' '), 'a b c ax bycz cx axybyczz byczx cxyaxybyczzz', 'sequence with arity > number of return values';
 
 # L<S03/List infix precedence/it will be taken as a yada>
 
@@ -100,8 +100,8 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 #     'chained sequence with an empty subsequence';
 #RT #80574'
 {
-    my @rt80574 = -> { 'zero', 'one' } ... *;
-    is @rt80574[0], 'zero', 'Generator output is flattened';
+    my @rt80574 = -> { slip 'zero', 'one' } ... *;
+    is @rt80574[0], 'zero', '0-ary generator output can be slipped from the start';
 }
 
 # RT #116348
