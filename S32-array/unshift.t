@@ -9,7 +9,7 @@ Unshift tests
 
 =end description
 
-plan 57;
+plan 76;
 
 # basic unshift tests
 
@@ -64,19 +64,19 @@ plan 57;
     is(@unshift[2], $val, 'unshift @array, $val worked');
 }
 
-# try unshifting more than one element
+# try unshifting more than one element using prepend for 1-arg semantics
 
 {
     my @unshift = ();
 
-    unshift @unshift, (1, 2, 3);
+    prepend @unshift, (1, 2, 3);
     is(+@unshift, 3, 'we have 3 elements in the array');
     is(@unshift[0], 1, 'got the expected element');
     is(@unshift[1], 2, 'got the expected element');
     is(@unshift[2], 3, 'got the expected element');
 
     my @val2 = (4, 5);
-    unshift @unshift, @val2;
+    prepend @unshift, @val2;
     is(+@unshift, 5, 'we have 5 elements in the array');
     is(@unshift[0], 4, 'got the expected element');
     is(@unshift[1], 5, 'got the expected element');
@@ -84,7 +84,7 @@ plan 57;
     is(@unshift[3], 2, 'got the expected element');
     is(@unshift[4], 3, 'got the expected element');
 
-    unshift @unshift, 6, 7, 8;
+    prepend @unshift, 6, 7, 8;
     is(+@unshift, 8, 'we have 8 elements in the array');
     is(@unshift[0], 6, 'got the expected element');
     is(@unshift[1], 7, 'got the expected element');
@@ -94,6 +94,36 @@ plan 57;
     is(@unshift[5], 1, 'got the expected element');
     is(@unshift[6], 2, 'got the expected element');
     is(@unshift[7], 3, 'got the expected element');
+}
+
+{
+    my @unshift = ();
+
+    unshift @unshift, (1, 2, 3);
+    is(+@unshift, 1, 'we have 1 element in the array');
+    is(@unshift[0][0], 1, 'got the expected element');
+    is(@unshift[0][1], 2, 'got the expected element');
+    is(@unshift[0][2], 3, 'got the expected element');
+
+    my @val2 = (4, 5);
+    unshift @unshift, @val2;
+    is(+@unshift, 2, 'we have 5 elements in the array');
+    is(@unshift[0][0], 4, 'got the expected element');
+    is(@unshift[0][1], 5, 'got the expected element');
+    is(@unshift[1][0], 1, 'got the expected element');
+    is(@unshift[1][1], 2, 'got the expected element');
+    is(@unshift[1][2], 3, 'got the expected element');
+
+    unshift @unshift, [6, 7, 8];
+    is(+@unshift, 3, 'we have 8 elements in the array');
+    is(@unshift[0][0], 6, 'got the expected element');
+    is(@unshift[0][1], 7, 'got the expected element');
+    is(@unshift[0][2], 8, 'got the expected element');
+    is(@unshift[1][0], 4, 'got the expected element');
+    is(@unshift[1][1], 5, 'got the expected element');
+    is(@unshift[2][0], 1, 'got the expected element');
+    is(@unshift[2][1], 2, 'got the expected element');
+    is(@unshift[2][2], 3, 'got the expected element');
 }
 
 # now for the unshift() on an uninitialized array issue

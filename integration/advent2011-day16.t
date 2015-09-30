@@ -22,7 +22,7 @@ my @b = (3, 4);
 
 {
     temp @a;
-    push @a, @b;
+    append @a, @b;
     is-deeply @a, [1, 2, 3, 4], 'automatic list flattening';
 }
 

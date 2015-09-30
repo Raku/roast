@@ -62,7 +62,7 @@ is_approx( (EVAL (3i).perl), 3i, 'EVAL (3i).perl is 3i' );
 my @examples = (0i, 1 + 0i, -1 + 0i, 1i, -1i, 2 + 0i, -2 + 0i, 2i, -2i,
                 2 + 3i, 2 - 3i, -2 + 3i, -2 - 3i);
 
-push @examples, (cis(1.1), cis(3.1), cis(5.1), 35.unpolar(0.8), 40.unpolar(3.7));
+append @examples, cis(1.1), cis(3.1), cis(5.1), 35.unpolar(0.8), 40.unpolar(3.7);
 
 for @examples -> $z {
     is_approx($z + 0, $z, "$z + 0 = $z");

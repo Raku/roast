@@ -72,14 +72,14 @@ plan 52;
 {
     my @push = ();
 
-    push @push, (1, 2, 3);
+    append @push, (1, 2, 3);
     is(+@push, 3, 'we have 3 elements in the array');
     is(@push[0], 1, 'got the expected element');
     is(@push[1], 2, 'got the expected element');
     is(@push[2], 3, 'got the expected element');
 
     my @val2 = (4, 5);
-    push @push, @val2;
+    append @push, @val2;
     is(+@push, 5, 'we have 5 elements in the array');
     is(@push[3], 4, 'got the expected element');
     is(@push[4], 5, 'got the expected element');

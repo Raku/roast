@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 42;
 
 {
     my @array = 11 .. 15;
@@ -51,20 +51,32 @@ plan 38;
     my @a;
     push @a, 1;
     is(@a.elems, 1, 'Simple push works');
-    push @a, $[];
-    is(@a.elems, 2, 'Arrayref literal not flattened');
-    push @a, {}.item;
-    is(@a.elems, 3, 'Hashref literal not flattened');
+    push @a, [];
+    is(@a.elems, 2, 'Array literal not flattened');
+    push @a, {};
+    is(@a.elems, 3, 'Hash literal not flattened');
     my @foo;
-    push @a, $@foo;
-    is(@a.elems, 4, 'Arrayref not flattened');
-    my %foo;
-    push @a, $%foo;
-    is(@a.elems, 5, 'Hashref not flattened');
     push @a, @foo;
-    is(@a.elems, 5, 'Array flattened');
+    is(@a.elems, 4, 'Array not flattened');
+    my %foo;
     push @a, %foo;
-    is(@a.elems, 5, 'Hash flattened');
+    is(@a.elems, 5, 'Hash not flattened');
+
+    append @a, @foo;
+    is(@a.elems, 5, 'Array flattened by append');
+    my %foo;
+    append @a, %foo;
+    is(@a.elems, 5, 'Hash flattened by append');
+
+    @a.push: |@foo;
+    is(@a.elems, 5, '|Array flattened');
+    @a.push: |%foo;
+    is(@a.elems, 5, '|Hash flattened');
+
+    @a.append: @foo;
+    is(@a.elems, 5, 'Array flattened by .append');
+    @a.append: %foo;
+    is(@a.elems, 5, 'Hash flattened by .append');
 }
 
 # RT #112362
