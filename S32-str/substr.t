@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 57;
+plan 56;
 
 # L<S32::Str/Str/=item substr>
 
@@ -94,10 +94,6 @@ plan 57;
     is substr($str, 10..*), "and bar", "substr (substr(Range Inf))";
     is $str.substr(10..*),  "and bar", "substr (substr(Range Inf))";
 }
-
-#?niecza todo
-#?rakudo todo "This seems unneccessarily restrictive RT #124695"
-eval-dies-ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
 # RT #76682
 #?niecza skip "'Failure' used at line 244"
