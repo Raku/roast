@@ -111,8 +111,10 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 }
 
 # RT #101900
+#?rakudo todo 'RT #101900'
 {
-    eval-dies-ok "enum rt_101900 < a b >; class A { }; say A but rt_101900::a",
+    throws-like 'enum rt_101900 < a b >; class A { }; say A but rt_101900::a',
+        Exception,
         "Cannot mixin an enum into a class";
 }
 
