@@ -5,7 +5,7 @@ plan 3;
 
 lives-ok { 4.HOW.HOW }, 'Can access meta class of meta class';
 
-eval-dies-ok 'my $x; ($x = "hi").HOW = Block;',
+throws-like 'my $x; ($x = "hi").HOW = Block;', X::Assignment::RO,
             'Cannot assign to .HOW';
 
 # RT #76928

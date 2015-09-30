@@ -2,10 +2,6 @@ use v6;
 use Test;
 plan 2;
 
-# can't  use eval-lives-ok or eval-dies-ok here, because it runs
-# the EVAL() in a different lexical scope, thus never finding lexical
-# imports.
-
 {
     use lib '.';
     use t::spec::packages::S11-modules::Foo;

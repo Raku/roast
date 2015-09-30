@@ -10,8 +10,8 @@ use lib '.';
 
     is t::spec::packages::Export_PackA::exported_foo(),
        42, 'Can "need" a module';
-    eval-dies-ok 'exported_foo()',
-                 '"need" did not import the default export list';
+    throws-like 'exported_foo()',
+        X::Undeclared::Symbols, '"need" did not import the default export list';
 }
 
 # vim: ft=perl6

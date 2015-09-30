@@ -45,6 +45,6 @@ use lib 't/spec/packages';
     is answer["Life, the Universe, and Everything"], 42, 'exporting circumfixes works';
 }
 
-eval-dies-ok '5!', 'import of operators is lexical';
+throws-like '5!', X::Syntax::Confused, 'import of operators is lexical';
 
 # vim: ft=perl6

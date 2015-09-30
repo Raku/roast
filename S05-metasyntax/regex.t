@@ -69,7 +69,7 @@ lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 
 ok Any !~~ / 'RT #67234' /, 'match against undefined does not match';
 
-eval-dies-ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
+throws-like q['x' ~~ m/RT (#)67612 /], X::Comp::Group, 'commented capture end = parse error';
 
 # L<S05/Simplified lexical parsing of patterns/The semicolon character>
 

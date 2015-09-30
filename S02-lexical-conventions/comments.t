@@ -140,7 +140,7 @@ plan 51;
     # NB: This is as it should be.  The inside is not parsed till EVAL time.
     # Interpolation happens before that.  --law
 
-    eval-dies-ok " #`<<\n comment\n # >>\n >> 3",
+    throws-like " #`<<\n comment\n # >>\n >> 3", Exception,
         'single line comment in multiline does not hide delims';
 }
 
