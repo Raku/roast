@@ -135,7 +135,7 @@ character classes), and those are referenced at the correct spot.
     throws-like '"foo" ~~ /<test|>/', X::AdHoc, 'no other characters are allowed (|)';
     throws-like '"foo" ~~ /<test&>/', X::AdHoc, 'no other characters are allowed (&)';
     # TODO currently fails with "Method 'test' not found for invocant of class 'Cursor'"
-    throws-like '"foo" ~~ /<test:>/', Exception, 'no other characters are allowed (:)');
+    throws-like '"foo" ~~ /<test:>/', Exception, 'no other characters are allowed (:)';
 }
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/explicitly calls a method as a subrule>
