@@ -459,7 +459,7 @@ ok ('abacad' ~~ /<before .d> a./) && matchcheck($/, q/mob: <ad @ 4>/), 'lookahea
 ok 'abacad' !~~ /<before c> ..../, 'lookahead <before>';
 
 #### <before> .		abcd		n				null <before>
-eval-dies-ok "'abcd' !~~ /<before> ./", 'null <before>';
+throws-like "'abcd' !~~ /<before> ./", Exception, 'null <before>';
 
 #### <!before ..b> aa	aabaaa		/mob: <aa @ 3>/			negated lookahead
 ok ('aabaaa' ~~ /<!before ..b> aa/) && matchcheck($/, q/mob: <aa @ 3>/), 'negated lookahead';

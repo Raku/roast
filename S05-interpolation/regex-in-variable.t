@@ -80,7 +80,7 @@ ok(!("aaaabbbbbcaaab" ~~ /^@foo+$/), 'Multiple array non-compiling');
 ok("aaaabbbbbcaaab" ~~ /^<@foo>+$/, 'Multiple array compiling');
 
 # L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
-eval-dies-ok 'm/%var/', 'cannot interpolate hashes into regexes';
+throws-like 'm/%var/', Exception, 'cannot interpolate hashes into regexes';
 
 # L<S05/Variable (non-)interpolation/If $var is undefined>
 # This is similar to a test in S05-match/capturing-contexts.t

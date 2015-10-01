@@ -130,7 +130,7 @@ dies-ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     throws-like 'my Int Str $x', X::Comp::NYI, 'multiple prefix constraints not allowed';
     throws-like 'sub foo(Int Str $x) { }', X::Parameter::MultipleTypeConstraints,
         'multiple prefix constraints not allowed';
-    eval-dies-ok('sub foo(--> Int Str) { }', 'multiple prefix constraints not allowed');
+    throws-like 'sub foo(--> Int Str) { }', Exception, 'multiple prefix constraints not allowed';
     throws-like 'our Int Str sub foo() { }', X::Comp::NYI, 'multiple prefix constraints not allowed';
 }
 

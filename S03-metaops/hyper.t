@@ -870,7 +870,7 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 # RT #77114
 {
     #?rakudo todo "can_meta check for meta operators NYI"
-    eval-dies-ok 'my @a >>[=]>> (1,2,3)', "hypering assignment dies correctly";
+    throws-like 'my @a >>[=]>> (1,2,3)', Exception, "hypering assignment dies correctly";
 }
 
 # RT #123178

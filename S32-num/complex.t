@@ -17,7 +17,9 @@ isa-ok(3\i, Complex, '$n\i form creates a Complex number');
 is_approx((2i)i, -2, 'postfix:<i> works on an imaginary number');
 is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
 
-eval-dies-ok '(2 + 3i) > (2 + 2i)', '> comparison of complex numbers dies';
+# RT #104660
+throws-like '(2 + 3i) > (2 + 2i)', Exception, '> comparison of complex numbers dies';
+throws-like "(1 + 2i) < (2 + 4i)", Exception, 'Cannot arithmetically compare Complex numbers';
 
 is_approx(i, 1i, 'standalone i works to generate a Complex number');
 is_approx(1 - i, 1 - 1i, 'standalone i works to generate a Complex number');
@@ -139,7 +141,5 @@ is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
   is (2+3i).conj, 2-3i, 'conj 2+3i -> 2-3i';
   is (5-4i).conj, 5+4i, 'conj 5-4i -> 5+4i';
 }
-
-eval-dies-ok "(1 + 2i) < (2 + 4i)", 'Cannot arithmetically compare Complex numbers';
 
 # vim: ft=perl6
