@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 10;
 
 sub double ($x) { $x * 2 };
 sub invert ($x) { 1 / $x };
@@ -20,3 +20,6 @@ is ((* + 1) o (* * 2))(3), 7, "can use WhateverCodes on both sides";
 is (* o (* * 2))(* + 1)(3), 7, "can autocurry with Whatever on left side";
 is ((* + 1) o *)(* * 2)(3), 7, "can autocurry with Whatever on right side";
 is (* o *)(* + 1, * * 2)(3), 7, "can autocurry with Whatever on both sides";
+
+is ((* + *) o { $_ + 7, $_ * 6 })(5), 42, "can compose functions that pass two arguments";
+is ({ [+] @_ } o *.map(* * 2))(1..10), 110, "can compose functions that pass multiple arguments";
