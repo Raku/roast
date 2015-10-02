@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 42;
 
 =begin pod
 
@@ -96,4 +96,6 @@ throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return valu
     ok !([==] @a), "Rxx thunks the RHS";
 }
 
+throws-like '3 R. foo', X::Syntax::CannotMeta, "R. is too fiddly";
+throws-like '3 R. "foo"', X::Obsolete, "R. can't do P5 concat";
 # vim: ft=perl6

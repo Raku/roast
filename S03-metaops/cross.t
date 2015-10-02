@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 48;
+plan 50;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -164,5 +164,8 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
     ok !(42 X* 1..5).is-lazy, "laziness not induced by last argument (X*)";
     ok !(42 X* 1..5 X* 43).is-lazy, "laziness not induced by middle argument (X*)";
 }
+
+throws-like '3 X. foo', X::Syntax::CannotMeta, "X. is too fiddly";
+throws-like '3 X. "foo"', X::Obsolete, "X. can't do P5 concat";
 
 # vim: ft=perl6
