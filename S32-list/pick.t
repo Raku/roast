@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 57;
+plan 56;
 
 =begin description
 
@@ -75,11 +75,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 
     is @a.pick("25").elems, 25, ".pick works Str arguments";
     is pick("25", @a).elems, 25, "pick works Str arguments";
-}
-
-{
-    #?rakudo todo 'error on pick :replace'
-    dies-ok({ [1,2,3].pick(4, :replace) }, 'error on deprecated :replace');
 }
 
 # enums + pick
