@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 354;
+plan 353;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -129,7 +129,6 @@ throws-like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws-like '{ use MONKEY-TYPING; }; augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping,
     'MONKEY-TYPING applies lexically';
 throws-like 'use MONKEY-TYPING; augment role Positional { }', X::Syntax::Augment::Illegal;
-throws-like 'use MONKEY-TYPING; enum Weekday <Mon Tue>; augment class Weekday { }', X::Syntax::Augment::Illegal;
 throws-like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
 # RT #73938
 throws-like 'sub twigil:<@>() { }', X::Syntax::Extension::Category, category => 'twigil';
