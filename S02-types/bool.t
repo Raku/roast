@@ -59,8 +59,8 @@ ok(+Bool::False ~~ Numeric);
 isa-ok(+Bool::True, Int, 'True numifies to an Int');
 isa-ok(+Bool::False, Int, 'False numifies to an Int');
 
-is(Bool::True.Int, '1', 'True Intifies to 1');
-is(Bool::False.Int, '0', 'False Intifies to 1');
+ok(Bool::True.Int == 1, 'True Intifies to 1');
+ok(Bool::False.Int == 0, 'False Intifies to 0');
 
 is(+Bool::True, '1', 'True numifies to 1');
 is(+Bool::False, '0', 'False numifies to 0');
@@ -97,7 +97,6 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 }
 
 # RT #72580
-#?rakudo todo 'RT #72580'
 {
     ok True ~~ Int, "True ~~ Int";
     ok Bool ~~ Int, "Bool ~~ Int";
