@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 27;
+plan 31;
 
 {
     my @a = (1, 2, 3);
@@ -92,6 +92,16 @@ is ~@b, "a b d e z", "inplace sort";
    $x .= Bool;
    isa-ok $x, Bool, '.= Bool (type)';
    is $x, True, '.= Bool (value)';
+}
+
+# RT #69204
+{
+    my $a = 'oh hai';
+    my $b = 'uc';
+    is $a.="uc"(), 'OH HAI', 'quoted method call with .= works with parens';
+    is $a.="$b"(), 'OH HAI', 'quoted method call (variable) with .= works with parens';
+    is $a .= "uc"(), 'OH HAI', 'quoted method call with .= works with parens and whitespace';
+    is $a .= "$b"(), 'OH HAI', 'quoted method call (variable) with .= works with parens and whitespace';
 }
 
 # vim: ft=perl6
