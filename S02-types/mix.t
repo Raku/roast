@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 180;
+plan 186;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -270,6 +270,13 @@ sub showkv($x) {
     my $a = $m.roll;
     ok $a eq "a" || $a eq "b", "We got one of the two choices";
 
+    isa-ok $m.roll, Str, ".roll with no arguments returns a key of the Mix";
+    ok $m.roll(0) ~~ Iterable, ".roll(0) gives you an Iterable";
+    ok $m.roll(1) ~~ Iterable, ".roll(1) gives you an Iterable";
+    ok $m.roll(2) ~~ Iterable, ".roll(2) gives you an Iterable";
+    is +$m.roll(0), 0, ".roll(0) returns 0 results";
+    is +$m.roll(1), 1, ".roll(1) returns 1 result";
+    
     my @a = $m.roll(2);
     is +@a, 2, '.roll(2) returns the right number of items';
     is @a.grep(* eq 'a').elems + @a.grep(* eq 'b').elems, 2, '.roll(2) returned "a"s and "b"s';
