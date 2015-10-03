@@ -61,7 +61,7 @@ is-primed-sig(sub (:$a! is copy where { True }) { }, :(:$a? is copy), :a);
 is-primed-sig(sub (:$a is copy where { True } = 4) { }, :(:$a is copy), :a);
 is-primed-sig(sub (Int :$a! where { True }) { }, :(Int :$a?), :a(1));
 
-priming-fails-bind-ok(sub (Int :$a!) { }, '$a', Int, :a);
+priming-fails-bind-ok(sub (Str :$a!) { }, '$a', Str, :a);
 
 
 
