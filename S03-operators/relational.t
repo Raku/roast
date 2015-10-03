@@ -126,9 +126,9 @@ ok("0" lt "5" ge "5", "0 lt 5 ge 5 chained comparison with ge");
 is(0 ~~ 0 ~~ 0, 0 ~~ 0 && 0 ~~ 0, "chained smartmatch");
 is("foo" ~~ "foo" ge "bar", "foo" ~~ "foo" && "foo" ge "bar", "chained mixed ~~ and ge");
 
-#?rakudo 4 todo 'RT #121987'
 is  1 !before 2 !before 3,  1 !before 2 && 2 !before 3,  'chained !before';
 is  1 !after 2 !after 2,  1 !after 2 && 2 !after 2,  'chained !after';
+#?rakudo 2 todo 'RT #121987'
 is  3 !> 3 !> 1,  3 !> 3 && 3 !> 1,  'chained !>';
 is  3 !< 3 !< 2,  3 !< 3 && 3 !< 2,  'chained !<';
 
