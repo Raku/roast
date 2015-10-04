@@ -32,11 +32,11 @@ plan 63;
 
 # RT #69740
 {
-    eval-dies-ok 'constant ($a, $b) = (3, 4)', 'constant no longer takes list';
+    throws-like 'constant ($a, $b) = (3, 4)', X::Syntax::Missing, 'constant no longer takes list';
 }
 
 {
-    eval-dies-ok 'constant %hash = "nothash"', 'constant hash requires Associative';
+    throws-like 'constant %hash = "nothash"', X::TypeCheck, 'constant hash requires Associative';
 }
 
 {

@@ -162,9 +162,11 @@ my @elems = <a b c d e>;
 
 # "for @a -> $var" is ro by default.
 {
-
-
-    eval-dies-ok('for @a -> $elem {$elem = 5}', '-> $var is ro by default');
+   {
+        my @a = <1 2 3 4>;
+        throws-like 'for @a -> $elem {$elem = 5}', X::AdHoc,
+            '-> $var is ro by default';
+   }
 
    {
         my @a = <1 2 3 4>;

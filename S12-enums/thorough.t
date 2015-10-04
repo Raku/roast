@@ -94,7 +94,7 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 # RT #66886
 {
     enum RT66886 <b>;
-    eval-dies-ok 'RT66886::c', 'accessing non-value of enum dies proper-like';
+    throws-like 'RT66886::c', X::AdHoc, 'accessing non-value of enum dies proper-like';
 }
 
 # RT #65658
@@ -111,8 +111,10 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 }
 
 # RT #101900
+#?rakudo todo 'RT #101900'
 {
-    eval-dies-ok "enum rt_101900 < a b >; class A { }; say A but rt_101900::a",
+    throws-like 'enum rt_101900 < a b >; class A { }; say A but rt_101900::a',
+        Exception,
         "Cannot mixin an enum into a class";
 }
 

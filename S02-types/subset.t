@@ -17,12 +17,12 @@ subset Even of Int where { $_ % 2 == 0 };
     is $x, 2, 'Can assign value to a type variable with subset';
 };
 
-dies-ok { EVAL('my Even $x = 3') },
-              "Can't assign value that violates type constraint via subset";
+throws-like 'my Even $x = 3', X::TypeCheck::Assignment,
+    "Can't assign value that violates type constraint via subset";
 
 # RT # 69518'
 #?niecza todo
-dies-ok { EVAL('Even.new') }, 'Cannot instantiate a subtype';
+throws-like 'Even.new', X::AdHoc, 'Cannot instantiate a subtype';
 
 {
     ok 2 ~~ Even,  'Can smartmatch against subsets 1';
@@ -42,12 +42,12 @@ subset Digit of Int where ^10;
     is  $x,     9,  "other end of range";
 }
 
-dies-ok { my Digit $x = 10 },
-             'type constraints prevents assignment 1';
-dies-ok { my Digit $x = -1 },
-        'type constraints prevents assignment 2';
-dies-ok { my Digit $x = 3.1 },
-             'original type prevents assignment';
+throws-like 'my Digit $x = 10', X::TypeCheck::Assignment,
+    'type constraints prevents assignment 1';
+throws-like 'my Digit $x = -1', X::TypeCheck::Assignment,
+    'type constraints prevents assignment 2';
+throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
+    'original type prevents assignment';
 
 # RT #67818
 {
@@ -58,8 +58,9 @@ dies-ok { my Digit $x = 3.1 },
     subset Person of Hash where { .keys.sort ~~ ['firstname', 'lastname'] }
     lives-ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
              'can create subset of hash with where';
-    dies-ok { my Person $p = { :first<Charlie>, :last<Delta> } },
-            'subset of hash with where enforces where clause';
+    throws-like 'my Person $p = { :first<Charlie>, :last<Delta> }',
+        X::TypeCheck::Assignment,
+        'subset of hash with where enforces where clause';
 
     subset Austria of Array;
     lives-ok { my Austria $a = [] },
@@ -68,9 +69,9 @@ dies-ok { my Digit $x = 3.1 },
     subset NumArray of Array where { .elems == .grep: { $_ ~~ Num } }
     lives-ok { my NumArray $n = [] },
              'can create subset of array with where';
-    #?rakudo skip '(noauto) succeeds for the wrong reason (need to test the error)'
-    dies-ok { my NumArray $n = <Echo 2> },
-            'subset of array with where enforces where clause';
+    throws-like 'my NumArray $n = <Echo 2>',
+        X::TypeCheck::Assignment,
+        'subset of array with where enforces where clause';
 
     subset Meercat of Pair;
     lives-ok { my Meercat $p = :a<b> },
@@ -79,8 +80,9 @@ dies-ok { my Digit $x = 3.1 },
     subset Ordered of Pair where { .key < .value }
     lives-ok { my Ordered $o = 23 => 42 },
              'can create subset of Pair with where';
-    dies-ok { my Ordered $o = 42 => 23 },
-            'subset of pair with where enforces where clause';
+    throws-like 'my Ordered $o = 42 => 23',
+        X::TypeCheck::Assignment,
+        'subset of pair with where enforces where clause';
 }
 
 {
@@ -88,8 +90,9 @@ dies-ok { my Digit $x = 3.1 },
     my Str_not2b $text;
     $text = 'amnot';
     is $text, 'amnot', 'assignment to my subset of Str where pattern worked';
-    dies-ok { $text = 'oops' },
-            'my subset of Str where pattern enforces pattern';
+    throws-like q[ $text = 'oops' ],
+        X::TypeCheck::Assignment,
+        'my subset of Str where pattern enforces pattern';
 }
 
 {
@@ -97,7 +100,9 @@ dies-ok { my Digit $x = 3.1 },
     my Negation $text;
     $text = 'amnot';
     is $text, 'amnot', 'assignment to subset of Str where pattern worked';
-    dies-ok { $text = 'oops' }, 'subset of Str where pattern enforces pattern';
+    throws-like q[ $text = 'oops' ],
+        X::TypeCheck:Assignment,
+        'subset of Str where pattern enforces pattern';
 }
 
 # RT #67256
@@ -175,7 +180,7 @@ my $a = 1;
     }
     my &bar := producer();
     lives-ok { bar(2) }, 'where-constraint picks up the right lexical (+)';
-    dies-ok  { bar(1) }, 'where-constraint picks up the right lexical (-)';
+    throws-like 'bar(1)', X::AdHoc, 'where-constraint picks up the right lexical (-)';
 }
 
 {

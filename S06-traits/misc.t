@@ -14,30 +14,30 @@ Testing parameter traits for subroutines
 
 my $foo=1;
 
-# note: many of these errors can be detected at compile time, so need
-# eval-dies-ok instead of dies-ok
-#
 # test twice, once with assignment and once with increment, rakudo
 # used to catch the first but not the latter.
 #
-eval-dies-ok '
+throws-like '
     my $tmp = 1;
     sub mods_param ($x) { $x++; }
     mods_param($tmp)
     ',
+    X::Parameter::RW,
     'can\'t modify parameter, constant by default';
 
-eval-dies-ok '
+throws-like '
     my $tmp = 1;
     sub mods_param ($x) { $x = 1; }
     mods_param($tmp)
     ',
+    X::AdHoc,
     'can\'t modify parameter, constant by default';
 
 # is readonly
-eval-dies-ok 'sub mods_param_constant ($x is readonly) { $x++; };
-              mods_param_constant($foo);' ,
-              'can\'t modify constant parameter, constant by default';
+throws-like 'sub mods_param_constant ($x is readonly) { $x++; };
+             mods_param_constant($foo);',
+             X::Parameter::RW,
+            'can\'t modify constant parameter, constant by default';
 
 sub mods_param_rw ($x is rw) { $x++; }
 dies-ok  { mods_param_rw(1) }, 'can\'t modify constant even if we claim it\'s rw';

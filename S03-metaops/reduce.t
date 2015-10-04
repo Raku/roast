@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 371;
+plan 372;
 
 =begin pod
 
@@ -387,6 +387,11 @@ ok ([+]) == 0, 'argumentless [+] parses';
     is [:a],  [a => True],  'does  [:a] parse ok and give the right value';
     is [:a,], [a => True],  'does [:a,] parse ok and give the right value';
     is [:!a], [a => False], 'does [:!a] parse ok and give the right value';
+}
+
+{
+    $_ = [42];
+    is [.[0]].gist, '[42]', ". infix is not attempted in reduce";
 }
 
 

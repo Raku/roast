@@ -43,22 +43,22 @@ is($a, 3, '$a has changed'); # XXX is that right?
                 our $d3 = 9;
             }
             {
-                eval-dies-ok('$d3', "variables aren't seen within other lexical child blocks");
+                throws-like '$d3', X::Undeclared, "variables aren't seen within other lexical child blocks";
                 is($D2::d3, 9, "variables are seen within other lexical child blocks via package");
                 
                 package D3 {
-                    eval-dies-ok('$d3', " ... and not from within child packages");
+                    throws-like '$d3', X::Undeclared, " ... and not from within child packages";
                     is($D2::d3, 9, " ... and from within child packages via package");
                 }
             }
-            eval-dies-ok('d3', "variables do not leak from lexical blocks");
+            throws-like 'd3', X::Undeclared::Symbols, "variables do not leak from lexical blocks";
             is($D2::d3, 9, "variables are seen from lexical blocks via pacakage");
         }
-        eval-dies-ok('$d2', 'our() variable not yet visible outside its package');
-        eval-dies-ok('$d3', 'our() variable not yet visible outside its package');
+        throws-like '$d2', X::Undeclared, 'our() variable not yet visible outside its package';
+        throws-like '$d3', X::Undeclared, 'our() variable not yet visible outside its package';
         
     }
-    eval-dies-ok('$d1', 'our() variable not yet visible outside its package');
+    throws-like '$d1', X::Undeclared, 'our() variable not yet visible outside its package';
 }
 
 # RT #100560, #102876

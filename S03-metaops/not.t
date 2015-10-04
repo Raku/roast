@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 41;
 
 =begin pod
 
@@ -61,5 +61,8 @@ ok False !|| False, '!|| is legal and works (1)';
 nok False !|| True, '!|| is legal and works (2)';
 ok True !^^ True, '!^^ is legal and works (1)';
 nok False !^^ True, '!^^ is legal and works (2)';
+
+throws-like '3 !. foo', X::Syntax::CannotMeta, "!. is too fiddly";
+throws-like '3 !. "foo"', X::Obsolete, "!. can't do P5 concat";
 
 # vim: ft=perl6

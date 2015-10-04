@@ -26,10 +26,10 @@ plan 17;
     my sub test-but-dont-call(&testcode:(Int)) { True }
 
     ok(testit(&testint), 'code runs with proper signature (1)');
-    eval-dies-ok('testit(&teststr)', 'code dies with invalid signature (1)');
+    throws-like 'testit(&teststr)', X::AdHoc, 'code dies with invalid signature (1)';
 
     ok(test-but-dont-call(&testint), 'code runs with proper signature (1)');
-    eval-dies-ok('test-but-dont-call(&teststr)', 'code dies with invalid signature (1)');
+    throws-like 'test-but-dont-call(&teststr)', X::AdHoc, 'code dies with invalid signature (1)';
 }
 
 {
@@ -40,9 +40,10 @@ plan 17;
     my Int  sub teststrint (Str $foo) {return 0}   #OK not used
 
     ok(testit(&testintbool), 'code runs with proper signature (2)');
-    eval-dies-ok('testit(&testintint)',  'code dies with invalid signature (2)');
-    eval-dies-ok('testit(&teststrbool)', 'code dies with invalid signature (3)');
-    eval-dies-ok('testit(&teststrint)',  'code dies with invalid signature (4)');
+    #?rakudo todo 'code does not die'
+    throws-like 'testit(&testintint)', Exception, 'code dies with invalid signature (2)';
+    throws-like 'testit(&teststrbool)', X::AdHoc, 'code dies with invalid signature (3)';
+    throws-like 'testit(&teststrint)', X::AdHoc,  'code dies with invalid signature (4)';
 }
 
 #?rakudo skip 'subsignatures dont factor into multi candidates yet RT #124935'

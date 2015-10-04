@@ -70,8 +70,8 @@ plan 10;
 #?mildew skip 1
 # L<S04/Statement parsing/keywords require whitespace>
 {
-    eval-dies-ok('my $i = 1; while($i < 5) { $i++; }',
-        'keyword needs at least one whitespace after it');
+    throws-like 'my $i = 1; while($i < 5) { $i++; }', X::Comp::Group,
+        'keyword needs at least one whitespace after it';
 }
 
 # RT #125876

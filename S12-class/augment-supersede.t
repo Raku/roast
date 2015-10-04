@@ -40,10 +40,10 @@ use MONKEY-TYPING;
 }
 
 # RT #66694
-eval-dies-ok q[
+throws-like q[
     class MethodClash { method foo() { 3 } };
     augment class MethodClash { method foo() { 3 } };
-], 'cannot override a method by monkey-typing';
+], X::Syntax::Augment::WithoutMonkeyTyping, 'cannot override a method by monkey-typing';
 
 # RT #76600
 eval-lives-ok q[
@@ -65,7 +65,7 @@ eval-lives-ok q[
     }
 
     my $o = Bar.new;
-    eval-dies-ok('$o.c', 'overridden method is gone completely');
+    throws-like '$o.c', X::AdHoc, 'overridden method is gone completely';
     is($o.d, 'called Bar.d', 'new method is present instead');
 }
 

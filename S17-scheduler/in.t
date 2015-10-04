@@ -11,9 +11,9 @@ my $name = $*SCHEDULER.^name;
     # Hopefully the times are enough leeway.
     my $tracker = '';
     my @c;
-    push @c, $*SCHEDULER.cue({ cas $tracker, {$_ ~ '2s'} }, :in(2));
+    append @c, $*SCHEDULER.cue({ cas $tracker, {$_ ~ '2s'} }, :in(2));
     isa-ok @c[*-1], Cancellation;
-    push @c, $*SCHEDULER.cue({ cas $tracker, {$_ ~ '1s'} }, :in(1));
+    append @c, $*SCHEDULER.cue({ cas $tracker, {$_ ~ '1s'} }, :in(1));
     isa-ok @c[*-1], Cancellation;
     is $tracker, '', "Cue on $name with :in doesn't schedule immediately";
     sleep 3;
@@ -24,13 +24,13 @@ my $name = $*SCHEDULER.^name;
 {
     my $tracker = '';
     my @c;
-    push @c, $*SCHEDULER.cue(
+    append @c, $*SCHEDULER.cue(
       { cas $tracker, {$_ ~ '2s'} },
       :in(2),
       :catch({ cas $tracker, { $_ ~ '2scatch'} })
     );
     isa-ok @c[*-1], Cancellation;
-    push @c, $*SCHEDULER.cue(
+    append @c, $*SCHEDULER.cue(
       { cas $tracker, {$_ ~ '1s'}; die },
       :in(1),
       :catch({ cas $tracker, {$_ ~ '1scatch'} })
@@ -49,9 +49,9 @@ $name = $*SCHEDULER.^name;
 {
     my $tracker = '';
     my @c;
-    push @c, $*SCHEDULER.cue({ $tracker ~= '2s'; }, :in(2));
+    append @c, $*SCHEDULER.cue({ $tracker ~= '2s'; }, :in(2));
     ok @c[*-1].can("cancel"), 'can we cancel (1)';
-    push @c, $*SCHEDULER.cue({ $tracker ~= '1s'; }, :in(1));
+    append @c, $*SCHEDULER.cue({ $tracker ~= '1s'; }, :in(1));
     ok @c[*-1].can("cancel"), 'can we cancel (2)';
     is $tracker, '2s1s', "Cue on $name with :in *DOES* schedule immediately";
     LEAVE @c>>.cancel;
@@ -60,13 +60,13 @@ $name = $*SCHEDULER.^name;
 {
     my $tracker = '';
     my @c;
-    push @c, $*SCHEDULER.cue(
+    append @c, $*SCHEDULER.cue(
       { $tracker ~= '2s'; },
       :in(2),
       :catch({ $tracker ~= '2scatch'})
     );
     ok @c[*-1].can("cancel"), 'can we cancel (3)';
-    push @c, $*SCHEDULER.cue(
+    append @c, $*SCHEDULER.cue(
       { $tracker ~= '1s'; die },
       :in(1),
       :catch({ $tracker ~= '1scatch'})

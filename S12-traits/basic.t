@@ -41,7 +41,7 @@ $b = B.new;
 ok($b, 'creating an instance worked');
 is($b.is_cool,    42,  'our class "inherited" an attribute');
 
-eval-dies-ok(' %!P = 1; 1',
-        'calling a trait outside of a class should be a syntax error');
+throws-like ' %!P = 1; 1', Exception,
+    'calling a trait outside of a class should be a syntax error';
 
 # vim: ft=perl6

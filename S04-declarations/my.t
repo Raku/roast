@@ -7,14 +7,14 @@ plan 97;
 # lexically scoped declarations are visible"> 
 {
 
-    eval-dies-ok('$x; my $x = 42', 'my() variable not yet visible prior to declaration');
+    throws-like '$foo; my $foo = 42', X::Undeclared, 'my() variable not yet visible prior to declaration';
     is(EVAL('my $x = 42; $x'), 42, 'my() variable is visible now (2)');
 }
 
 
 {
     my $ret = 42;
-    eval-dies-ok '$ret = $x ~ my $x;', 'my() variable not yet visible (1)';
+    throws-like '$ret = $foo ~ my $foo;', X::Undeclared, 'my() variable not yet visible (1)';
     is $ret, 42,                       'my() variable not yet visible (2)';
 }
 
@@ -38,7 +38,7 @@ plan 97;
   is $was_in_sub, 42, 'calling a lexically defined my()-code var worked';
 }
 
-eval-dies-ok 'foo(42)', 'my &foo is lexically scoped';
+throws-like 'foo(42)', X::Undeclared::Symbols, 'my &foo is lexically scoped';
 
 {
   is(do {my $a = 3; $a}, 3, 'do{my $a = 3; $a} works');
@@ -64,7 +64,7 @@ if (1) { # create a new lexical scope
     my $b = 1;
     ok($b, '$b is available in this scope');
 }
-eval-dies-ok '$b', '$b is not available in this scope';
+throws-like '$b', X::Undeclared, '$b is not available in this scope';
 
 # changing a lexical within a block retains the changed value
 my $c = 1;
@@ -105,7 +105,7 @@ $d;
         $func2 = sub { $e };  # one to access it
     }
 
-    eval-dies-ok '$e', '$e is not available in this scope';
+    throws-like '$e', X::Undeclared, '$e is not available in this scope';
     is($func2(), 0, '$func2() just returns the $e lexical which is held by the closure');
     $func();
     is($func2(), 1, '$func() increments the $e lexical which is held by the closure');
@@ -191,7 +191,7 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
 # (but they need to exist by CHECK)
 {
     eval-lives-ok '&x; 1; sub x {}', '&x does not need to be pre-declared';
-    eval-dies-ok '&x()', '&x() dies when empty';
+    throws-like '&x()', X::Undeclared::Symbols, '&x() dies when empty';
 }
 
 # RT #62766

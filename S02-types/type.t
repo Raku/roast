@@ -23,19 +23,19 @@ my Int $foo;
 my Str $bar;
 
 {
-    dies-ok({$foo = 'xyz'},      'Int restricts to integers');
-    dies-ok { $foo = Mu },       'Int does not accept Mu';
+    throws-like q[$foo = 'xyz'], X::TypeCheck::Assignment, 'Int restricts to integers';
+    throws-like q[$foo = Mu], X::TypeCheck::Assignment, 'Int does not accept Mu';
     is(($foo = 42),       42,    'Int is an integer');
 
-    dies-ok({$bar = 42},         'Str restricts to strings');
-    dies-ok { $bar = Mu },       'Str does not accept Mu';
+    throws-like q[$bar = 42], X::TypeCheck::Assignment, 'Str restricts to strings';
+    throws-like q[$bar = Mu], X::TypeCheck::Assignment, 'Str does not accept Mu';
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
 
 #?niecza skip 'Trait of not available on variables'
 {
     my $baz of Int;
-    dies-ok({$baz = 'xyz'},      'of Int restricts to integers');
+    throws-like q[$baz = 'xyz'], X::TypeCheck::Assignment, 'of Int restricts to integers';
     is(($baz = 42),       42,    'of Int is an integer');
 }
 
@@ -43,7 +43,7 @@ my Str $bar;
 #?niecza skip 'native types (noauto)'
 {
     eval-lives-ok('my int $alpha = 1',    'Has native type int');
-    eval-dies-ok('my int $alpha = Nil', 'native int type cannot be undefined');
+    throws-like 'my int $alpha = Nil', X::AdHoc, 'native int type cannot be undefined';
     lives-ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval-lives-ok('my num $alpha = 1e0',    'Has native type num');
     #?rakudo.jvm todo "nigh"
@@ -77,7 +77,7 @@ my Str $bar;
 }
 
 # Num does not accept Int (used to, then spec changed)
-dies-ok { my Num $n; $n = 42; }, 'Num does not accept Int';
+throws-like q[my Num $n; $n = 42], X::TypeCheck::Assignment, 'Num does not accept Int';
 
 # L<S02/Return types/a return type can be specified before or after the name>
 {
@@ -89,18 +89,18 @@ dies-ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype1(Bool::True), 'ok', 'good return value works (returns)');
     #?niecza todo 'retrun value type checking NYI'
-    dies-ok({ returntype1(Bool::False) }, 'bad return value dies (returns)');
+    throws-like 'returntype1(Bool::False)', X::TypeCheck::Return, 'bad return value dies (returns)';
     is(returntype2(Bool::True), 42, 'good return value works (of)');
     #?niecza todo 'retrun value type checking NYI'
-    dies-ok({ returntype2(Bool::False) }, 'bad return value dies (of)');
+    throws-like 'returntype2(Bool::False)', X::TypeCheck::Return, 'bad return value dies (of)';
 
     is(returntype3(Bool::True), True, 'good return value works (my Type sub)');
     #?niecza todo 'retrun value type checking NYI'
-    dies-ok({ returntype3(Bool::False) }, 'bad return value dies (my Type sub)');
+    throws-like 'returntype3(Bool::False)', X::TypeCheck::Return, 'bad return value dies (my Type sub)';
 
     is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
     #?niecza todo 'retrun value type checking NYI'
-    dies-ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
+    throws-like 'returntype4(Bool::False)', X::TypeCheck::Return, 'bad return value dies (-->)';
 }
 
 {
@@ -112,25 +112,25 @@ dies-ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype1(Bool::True), 'ok', 'good implicit return value works (returns)');
     #?niecza todo 'retrun value type checking NYI'
-    dies-ok({ returntype1(Bool::False) }, 'bad implicit return value dies (returns)');
+    throws-like 'returntype1(Bool::False)', X::TypeCheck::Return, 'bad implicit return value dies (returns)';
     is(returntype2(Bool::True), 42, 'good implicit return value works (of)');
     #?niecza todo 'retrun value type checking NYI'
-    dies-ok({ returntype2(Bool::False) }, 'bad implicit return value dies (of)');
+    throws-like 'returntype2(Bool::False)', X::TypeCheck::Return, 'bad implicit return value dies (of)';
 
     is(returntype3(Bool::True), True, 'good implicit return value works (my Type sub)');
     #?niecza todo 'retrun value type checking NYI'
-    dies-ok({ returntype3(Bool::False) }, 'bad implicit return value dies (my Type sub)');
+    throws-like 'returntype3(Bool::False)', X::TypeCheck::Return, 'bad implicit return value dies (my Type sub)';
 
     is(returntype4(Bool::True), 'ok', 'good implicit return value works (-->)');
     #?niecza todo 'retrun value type checking NYI'
-    dies-ok({ returntype4(Bool::False) }, 'bad implicit return value dies (-->)');
+    throws-like 'returntype4(Bool::False)', X::TypeCheck::Return, 'bad implicit return value dies (-->)';
 }
 
 {
     throws-like 'my Int Str $x', X::Comp::NYI, 'multiple prefix constraints not allowed';
     throws-like 'sub foo(Int Str $x) { }', X::Parameter::MultipleTypeConstraints,
         'multiple prefix constraints not allowed';
-    eval-dies-ok('sub foo(--> Int Str) { }', 'multiple prefix constraints not allowed');
+    throws-like 'sub foo(--> Int Str) { }', Exception, 'multiple prefix constraints not allowed';
     throws-like 'our Int Str sub foo() { }', X::Comp::NYI, 'multiple prefix constraints not allowed';
 }
 

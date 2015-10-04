@@ -11,14 +11,14 @@ plan 8;
     augment slang Regex {
         token backslash:sym<Y> { YY };
     }
-    eval-dies-ok  '/foo \y/', 
+    throws-like  '/foo \y/', X::AdHoc,
         'can not compile regex with unknown backslash rule';
     eval-lives-ok '/fuu \Y/', 'can compile a regex with new backslash rule';
     ok 'YY'  ~~ /^\Y$/, 'can use that rule (positive)';
     ok 'yX' !~~ /^\Y$/, 'can use that rule (negative)';
 }
 #?rakudo skip "RT #126142 - NYI"
-eval-dies-ok '/\Y/', 'backslash rules are lexically scoped';
+throws-like '/\Y/', X::AdHoc, 'backslash rules are lexically scoped';
 
 #?rakudo skip "RT #126142 - NYI"
 {

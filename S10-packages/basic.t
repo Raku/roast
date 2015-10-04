@@ -35,7 +35,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 # change to match likely error (top of file) when passes
 {
-    eval-dies-ok 'ThisEmpty::no_such_sub()', 'Non-existent sub through package';
+    throws-like 'ThisEmpty::no_such_sub()', X::AdHoc, 'Non-existent sub through package';
 }
 
 # Not sure whether you should be able to access something in package this way
@@ -169,10 +169,10 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
         X::Redeclaration, 'sub redefined in package dies';
     throws-like q[module M { sub m { say "m" }; sub m { say "m" } }],
         X::Redeclaration, 'sub redefined in module dies';
-    eval-dies-ok q[grammar B { token b { 'b' }; token b { 'b' } };],
-                 'token redefined in grammar dies';
-    eval-dies-ok q[class C { method c { say "c" }; method c { say "c" } }],
-                 'method redefined in class dies';
+    throws-like q[grammar B { token b { 'b' }; token b { 'b' } };],
+        X::AdHoc, 'token redefined in grammar dies';
+    throws-like q[class C { method c { say "c" }; method c { say "c" } }],
+        X::AdHoc, 'method redefined in class dies';
 }
 
 {
@@ -212,7 +212,7 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 # package Foo; is perl 5 code;
 # RT #75458
 {
-    eval-dies-ok "package Perl5Code;\n'this is Perl 5 code'",
+    throws-like "package Perl5Code;\n'this is Perl 5 code'", X::AdHoc,
         'package Foo; is indicator for Perl 5 code';
 }
 

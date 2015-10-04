@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 318;
+plan 319;
 
 =begin pod
 
@@ -870,7 +870,7 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 # RT #77114
 {
     #?rakudo todo "can_meta check for meta operators NYI"
-    eval-dies-ok 'my @a >>[=]>> (1,2,3)', "hypering assignment dies correctly";
+    throws-like 'my @a >>[=]>> (1,2,3)', Exception, "hypering assignment dies correctly";
 }
 
 # RT #123178
@@ -916,5 +916,7 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
         left-elems => 0, right-elems => 5,
         "non-dwim hyper against empty RHS dies";
 }
+
+throws-like '3 «.» foo', X::Obsolete, "«.» can't be hypered";
 
 # vim: ft=perl6

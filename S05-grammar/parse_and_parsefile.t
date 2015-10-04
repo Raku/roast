@@ -39,7 +39,7 @@ nok(A::B.parse("zzz42zzz"), ".parse works with namespaced grammars, no match");
 is(~A::B.parse("42"), "42", ".parse works with namespaced grammars, match");
 
 # TODO: Check for a good error message, not just the absence of a bad one.
-eval-dies-ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
+throws-like '::No::Such::Grammar.parse()', X::AdHoc, '.parse on missing grammar dies';
 
 # RT #71062
 {

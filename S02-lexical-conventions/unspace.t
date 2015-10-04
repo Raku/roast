@@ -71,7 +71,7 @@ is((foo\ .lc ), 'a', 'unspace');
 is((foo\ ('x')), 'x', "unspace before arguments");
 is((foo \ .lc), 'b', 'not a unspace');
 throws-like { EVAL 'fo\ o.lc' },
-  X::Syntax::Confused,
+  X::Comp,
   'unspace not allowed in identifier';
 is((foo\    .lc), 'a', 'longer dot');
 is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');

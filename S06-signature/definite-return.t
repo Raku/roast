@@ -24,21 +24,19 @@ plan 17;
 }
 
 {
-    my $code = q:to/PERL/;
-    my sub return-nil(--> Nil) {
-        return 1
-    }
-PERL
-    eval-dies-ok($code, 'A function with a definite return value may not use return with a value')
+    throws-like '
+        my sub return-nil(--> Nil) {
+            return 1
+        }
+    ', X::AdHoc, 'A function with a definite return value may not use return with a value';
 }
 
 {
-    my $code = q:to/PERL/;
-    my sub return-failure(--> Nil) {
-        return Failure.new(X::AdHoc.new(4))
-    }
-PERL
-    eval-dies-ok($code, 'A function with a definite return value may not use return with a value, even a Failure')
+    throws-like '
+        my sub return-failure(--> Nil) {
+            return Failure.new(X::AdHoc.new(4))
+        }
+    ', X::AdHoc, 'A function with a definite return value may not use return with a value, even a Failure';
 }
 
 {

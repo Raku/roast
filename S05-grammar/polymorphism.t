@@ -77,11 +77,11 @@ is(~$/, "DeF", '.Yet::Another.def $/');
 
 # Non-existent rules...
 
-eval-dies-ok q{ 'abc' ~~ m/ (<Another.sea>) /  }, '<Another.sea>';
+throws-like q{ 'abc' ~~ m/ (<Another.sea>) /  }, X::AdHoc, '<Another.sea>';
 
 # RT #63466
 {
-    eval-dies-ok q{ 'x' ~~ / <No::Such::Rule> / },
+    throws-like q{ 'x' ~~ / <No::Such::Rule> / }, X::AdHoc,
             'match against No::Such::Rule dies';
 }
 

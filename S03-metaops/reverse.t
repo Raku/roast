@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 42;
 
 =begin pod
 
@@ -58,11 +58,11 @@ is 4 R- 5 R/ 10, -2, "Rop gets the precedence of op";
 is (9 R... 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
 
 # RT #93350
-eval-dies-ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
+throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return value of R~';
 
 # RT #77114
 {
-    eval-dies-ok '1 R= my $x', "R doesn't handle assignment";
+    throws-like '1 R= my $x', X::Syntax::CannotMeta, "R doesn't handle assignment";
 }
 
 # RT #118793
@@ -96,4 +96,6 @@ eval-dies-ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
     ok !([==] @a), "Rxx thunks the RHS";
 }
 
+throws-like '3 R. foo', X::Syntax::CannotMeta, "R. is too fiddly";
+throws-like '3 R. "foo"', X::Obsolete, "R. can't do P5 concat";
 # vim: ft=perl6

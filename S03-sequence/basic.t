@@ -242,7 +242,7 @@ is (5,4,3, { $_ - 1 || last } ... *)[^10].join(', '), '5, 4, 3, 2, 1', "sequence
 }
 
 # RT #75828
-eval-dies-ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
+throws-like '1, 2, 3, ... 5', X::AdHoc, 'comma before sequence operator is caught';
 
 # RT #73268
 is ~(1...^*).[^10], '1 2 3 4 5 6 7 8 9 10', 'RT #73268';
@@ -253,7 +253,7 @@ is (1, 1, &[+] ... *).[^10], '1 1 2 3 5 8 13 21 34 55', 'use &[+] on infix:<...>
 
 # see http://irclog.perlgeek.de/perl6/2012-05-30#i_5659147 ff.
 # previously rakudo said Not enough positional parameters passed; got 3 but expected 4
-is ((1,1,2,4,8)[^4], *+*+*+* ... *)[4], 8, 'WhateverCode with arity > 3 gets enough arguments';
+is (|(1,1,2,4,8)[^4], *+*+*+* ... *)[4], 8, 'WhateverCode with arity > 3 gets enough arguments';
 
 #RT #75674
 {

@@ -115,8 +115,8 @@ eval-lives-ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {
 }
 
 # RT #64686
-eval-dies-ok 'class Romeo::Tango {}; Romeo::Juliet.rt64686',
-             'call to missing method in A::B dies after class A::C defined';
+throws-like 'class Romeo::Tango {}; Romeo::Juliet.rt64686', X::AdHoc,
+             'call to method in undeclared A::B dies after class A::C defined';
 
 # RT 72286
 throws-like 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',

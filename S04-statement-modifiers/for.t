@@ -100,7 +100,7 @@ plan 28;
     is $rt66622, 66622, 'statement modifier "for" makes no implicit block';
 }
 
-eval-dies-ok '1 for <a b> for <c d>;', 'double statement-modifying for is not allowed';
+throws-like '1 for <a b> for <c d>;', X::Syntax::Confused, 'double statement-modifying for is not allowed';
 
 # RT #66606
 {

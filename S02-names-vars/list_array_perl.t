@@ -61,12 +61,12 @@ my @tests = (
 
 {
     my @list = (1, 2);
-    push @list, EVAL (3, 4).perl;
+    append @list, EVAL (3, 4).perl;
     #?niecza todo
     is +@list, 4, 'EVAL(@list.perl) gives a list, not a scalar';
 
     @list = (1,2);
-    push @list, EVAL $(3, 4).perl;
+    append @list, EVAL $(3, 4).perl;
     is +@list, 3, 'EVAL($@list.perl) gives a scalar list, not a list';
 }
 

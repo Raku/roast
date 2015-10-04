@@ -43,13 +43,15 @@ plan 20;
     is(-> $a { $_ }.(42),   'Ack!',       'Even with parameters');
     is(-> $_ { $_ }.(42),   42,           'But not when the parameter is $_');
 
-    eval-dies-ok( 'sub () { -> { $^a }.() }',  'Placeholders not allowed in ->');
+    throws-like 'sub () { -> { $^a }.() }', X::Signature::Placeholder,
+        'Placeholders not allowed in ->';
 
     is(-> { }.arity, 0,                 '->{} is arity 0, again');
 }
 
 {
-    eval-dies-ok('sub () { $^foo }.(42)',  'Placeholders not allowed in sub()');
+    throws-like 'sub () { $^foo }.(42)', X::Signature::Placeholder,
+        'Placeholders not allowed in sub()';
 }
 
 # RT #114696

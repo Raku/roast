@@ -247,9 +247,9 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
 # RT #116164
 #?niecza todo
 {
-    eval-dies-ok q[
+    throws-like q[
         proto f(|c(Int $x)) {*}; multi f(|c($)) { 'default' }; f 'foo'
-    ], 'proto signature is checked, not just that of the candidates';
+    ], Exception, 'proto signature is checked, not just that of the candidates';
 }
 
 # RT#125732

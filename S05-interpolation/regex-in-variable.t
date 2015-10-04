@@ -47,7 +47,7 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 
 # RT #100232
 #?rakudo todo 'escaping characters before EVAL is the wrong way to fix this RT #100232'
-eval-dies-ok Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbage-in recognized as being garbage (see RT)";
+throws-like Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], X::AdHoc, "particular garbage-in recognized as being garbage (see RT)";
 
 # because it broke these:
 {
@@ -57,7 +57,7 @@ eval-dies-ok Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], "particular garbag
 }
 
 #?rakudo todo 'and no need to go all Bobby Tables either RT #124633'
-eval-dies-ok Q['a' ~~ /<{'$(say "trivially pwned")'}>/], "should handle this too";
+throws-like Q['a' ~~ /<{'$(say "trivially pwned")'}>/], X::AdHoc, "should handle this too";
 
 # Arrays
 
@@ -80,7 +80,7 @@ ok(!("aaaabbbbbcaaab" ~~ /^@foo+$/), 'Multiple array non-compiling');
 ok("aaaabbbbbcaaab" ~~ /^<@foo>+$/, 'Multiple array compiling');
 
 # L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
-eval-dies-ok 'm/%var/', 'cannot interpolate hashes into regexes';
+throws-like 'm/%var/', Exception, 'cannot interpolate hashes into regexes';
 
 # L<S05/Variable (non-)interpolation/If $var is undefined>
 # This is similar to a test in S05-match/capturing-contexts.t

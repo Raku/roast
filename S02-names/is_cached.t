@@ -47,7 +47,7 @@ plan 38;
 {
     my @seen;
     sub noflat (@a) is cached {
-        @seen.push: @a;
+        @seen.append: @a;
         [~] @a;
     }
     my @b = <foo bar>;

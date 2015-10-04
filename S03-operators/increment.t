@@ -70,16 +70,16 @@ is($moo, 0, "var was not touched");
 }
 
 # test incrementing literals
-# all of those can be detected at compile time, so use eval-dies-ok here
+# all of those can be detected at compile time
 {
-    eval-dies-ok ' 4++ ', "can't postincrement a literal number";
-    eval-dies-ok ' ++4 ', "can't preincrement a literal number";
-    eval-dies-ok ' 4-- ', "can't postdecrement a literal number";
-    eval-dies-ok ' --4 ', "can't predecrement a literal number";
-    eval-dies-ok ' "x"++ ', "can't postincrement a literal string";
-    eval-dies-ok ' ++"x" ', "can't preincrement a literal string";
-    eval-dies-ok ' "x"-- ', "can't postdecrement a literal string";
-    eval-dies-ok ' --"x" ', "can't predecrement a literal string";
+    throws-like ' 4++ ', X::Parameter::RW, "can't postincrement a literal number";
+    throws-like ' ++4 ', X::Parameter::RW, "can't preincrement a literal number";
+    throws-like ' 4-- ', X::Parameter::RW, "can't postdecrement a literal number";
+    throws-like ' --4 ', X::Parameter::RW, "can't predecrement a literal number";
+    throws-like ' "x"++ ', X::Parameter::RW, "can't postincrement a literal string";
+    throws-like ' ++"x" ', X::Parameter::RW, "can't preincrement a literal string";
+    throws-like ' "x"-- ', X::Parameter::RW, "can't postdecrement a literal string";
+    throws-like ' --"x" ', X::Parameter::RW, "can't predecrement a literal string";
 }
 
 # this used to be a rakudo regression
@@ -118,7 +118,7 @@ is($moo, 0, "var was not touched");
 
 # RT #74912
 #?niecza todo 'Works fine in niecza...'
-eval-dies-ok 'my $x = 0; ++++$x',
+throws-like 'my $x = 0; ++++$x', X::Parameter::RW,
     'can not double-increment, because the return value is not a container';
 
 {

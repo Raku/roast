@@ -20,11 +20,11 @@ eval-lives-ok 'state $x; state $x',
 }
 
 # this is not exactly S04 material
-eval-dies-ok 'sub foo {1; }; sub foo($x) {1; };',
-             'multiple declarations need multi or proto';
+throws-like 'sub foo {1; }; sub foo($x) {1; };', X::Redeclaration,
+    'multiple declarations need multi or proto';
 
-eval-dies-ok 'only sub foo {1; }; sub foo($x) {1; };',
-             'multiple declarations need multi or proto';
+throws-like 'only sub foo {1; }; sub foo($x) {1; };', X::Redeclaration,
+    'multiple declarations need multi or proto';
 
 #?niecza todo "MMD"
 #?rakudo todo 'nom regression RT #125053'

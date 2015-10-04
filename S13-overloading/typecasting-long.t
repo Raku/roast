@@ -104,13 +104,14 @@ plan 32;
     class B { method postcircumfix:<( )>(B:U: $x) { 3 } };
     is B(0), 3, 'RT #112642 ($: $) -> (:U, $) case';
     is B.(0), 3, 'RT #112642 .($: $) -> (:U, $) case, dotted form';
+    ## TODO test for specific exception once the code dies
 #?rakudo todo 'RT #112642 A() unwanted magic for :(A:U) with an overloaded .()'
-    eval-dies-ok 'class XXX { method postcircumfix:<( )>(XXX:U: $x) { } }; XXX();', 'RT #112642 ($:) -> (:U, $) arity check';
-    eval-dies-ok 'class XYX { method postcircumfix:<( )>(XYX:U: $x) { } }; XYX(:a);', 'RT #112642 ($:, :$) -> (:U, $) arity check';
-    eval-dies-ok 'class XYY { method postcircumfix:<( )>(XYY:U: $x) { } }; XYY.();', 'RT #112642 .($:) -> (:U, $) arity check';
-    eval-dies-ok 'class YYY { method postcircumfix:<( )>(YYY:U: $x) { } }; YYY.(:a);', 'RT #112642 .($:, :$) -> (:U, $) arity check';
-    eval-dies-ok 'class XYZ { method postcircumfix:<( )>(XYZ:U: $x) { } }; XYZ(3,4,5);', 'RT #112642 ($: $, $, $) -> (:U, $) arity check';
-    eval-dies-ok 'class XZZ { method postcircumfix:<( )>(XZZ:U: $x) { } }; XZZ.(3,4,5);', 'RT #112642 .($: $, $, $) -> (:U, $) arity check';
+    throws-like 'class XXX { method postcircumfix:<( )>(XXX:U: $x) { } }; XXX();', Exception, 'RT #112642 ($:) -> (:U, $) arity check';
+    throws-like 'class XYX { method postcircumfix:<( )>(XYX:U: $x) { } }; XYX(:a);', X::AdHoc, 'RT #112642 ($:, :$) -> (:U, $) arity check';
+    throws-like 'class XYY { method postcircumfix:<( )>(XYY:U: $x) { } }; XYY.();', X::AdHoc, 'RT #112642 .($:) -> (:U, $) arity check';
+    throws-like 'class YYY { method postcircumfix:<( )>(YYY:U: $x) { } }; YYY.(:a);', X::AdHoc, 'RT #112642 .($:, :$) -> (:U, $) arity check';
+    throws-like 'class XYZ { method postcircumfix:<( )>(XYZ:U: $x) { } }; XYZ(3,4,5);', X::AdHoc, 'RT #112642 ($: $, $, $) -> (:U, $) arity check';
+    throws-like 'class XZZ { method postcircumfix:<( )>(XZZ:U: $x) { } }; XZZ.(3,4,5);', X::AdHoc, 'RT #112642 .($: $, $, $) -> (:U, $) arity check';
 }
 
 # RT #115850

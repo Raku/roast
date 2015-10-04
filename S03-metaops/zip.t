@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 47;
+plan 49;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -117,5 +117,8 @@ is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
     ok !(1..* Z* 1..5).is-lazy, "laziness defeated by last argument (Z*)";
     ok !(1..* Z* 1..5 Z* 1..*).is-lazy, "laziness defeated by middle argument (Z*)";
 }
+
+throws-like '3 Z. foo', X::Syntax::CannotMeta, "Z. is too fiddly";
+throws-like '3 Z. "foo"', X::Obsolete, "Z. can't do P5 concat";
 
 # vim: ft=perl6

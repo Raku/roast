@@ -110,7 +110,7 @@ plan 12;
 
 {
     # RT #72442
-    eval-dies-ok '{redo}', 'redo without loop construct dies';
+    throws-like '{redo}', X::ControlFlow, 'redo without loop construct dies';
 }
 
 {
