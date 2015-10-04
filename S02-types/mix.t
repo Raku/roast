@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 178;
+plan 182;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -425,6 +425,25 @@ sub showkv($x) {
 {
     isnt 'a(1) Str|b(1) Str|c'.Mix.WHICH, <a b c>.Mix.WHICH, 
       'Faulty .WHICH creation';
+}
+
+{
+    my $m = <a>.Mix;
+    throws-like { $m<a> = 42.1 },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a key';
+
+    throws-like { $_ = 666.1 for $m.values },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a .values alias';
+
+    throws-like { .value = 999.1 for $m.pairs },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a .pairs alias';
+
+    throws-like { for $m.kv -> \k, \v { v = 22.1 } },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a .kv alias';
 }
 
 # vim: ft=perl6

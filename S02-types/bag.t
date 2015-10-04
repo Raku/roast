@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 197;
+plan 201;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -490,6 +490,25 @@ sub showkv($x) {
     my $b = MyBag.new(|<a foo a a a a b foo>);
     isa-ok $b, MyBag, 'MyBag.new produces a MyBag';
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
+}
+
+{
+    my $b = <a>.Bag;
+    throws-like { $b<a> = 42 },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a key';
+
+    throws-like { $_ = 666 for $b.values },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a .values alias';
+
+    throws-like { .value = 999 for $b.pairs },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a .pairs alias';
+
+    throws-like { for $b.kv -> \k, \v { v = 22 } },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a .kv alias';
 }
 
 # vim: ft=perl6
