@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 246;
+plan 254;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -532,3 +532,32 @@ sub showkv($x) {
     ok $b3.elems == 0,
         'named argument is happily eaten by .new method';
 }
+
+{
+    my $b = <a>.BagHash;
+    $b<a> = 42;
+    is $b<a>, 42, 'did we set an Int value';
+    throws-like { $b<a> = "foo" },
+      X::Multi::NoMatch, # X::TypeCheck::Assignment ???
+      'Make sure we cannot assign Str on a key';
+
+    $_ = 666 for $b.values;
+    is $b<a>, 666, 'did we set an Int value from a .values alias';
+    throws-like { $_ = "foo" for $b.values },
+      X::TypeCheck::Assignment,
+      'Make sure we cannot assign Str on a .values alias';
+
+    .value = 999 for $b.pairs;
+    is $b<a>, 999, 'did we set an Int value from a .pairs alias';
+    throws-like { .value = "foo" for $b.pairs },
+      X::TypeCheck::Assignment,
+      'Make sure we cannot assign Str on a .pairs alias';
+
+    for $b.kv -> \k, \v { v = 22 };
+    is $b<a>, 22, 'did we set an Int value from a .kv alias';
+    throws-like { for $b.kv -> \k, \v { v = "foo" } },
+      X::TypeCheck::Assignment,
+      'Make sure we cannot assign Str on a .kv alias';
+}
+
+# vim: ft=perl6
