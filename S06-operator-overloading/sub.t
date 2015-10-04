@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 77;
+plan 84;
 
 =begin pod
 
@@ -472,6 +472,34 @@ Testing operator overloading subroutines
         'can define circumfix operator with a double quote (")';
     my $RT115724 = EVAL 'sub circumfix:<w "> ($a) { $a }; w 111 "';
     is $RT115724 , 111, 'can define and use circumfix operator with a double quote (")';
+}
+
+# RT #117737
+{
+    throws-like { EVAL q< sub infix:[/./] { 42 } > },
+        X::Syntax::Extension::TooComplex,
+        message => "Colon pair value '/./' too complex to use in name",
+        'infix definition for /./ fails with X::Syntax::Extension::TooComplex';
+}
+
+# RT #119919
+{
+    lives-ok { sub infix:["@"] ($a, $b) { 42 } },
+        'can define infix with brackets as delimiter';
+    my $RT119919 = EVAL 'sub infix:["@"] ($a, $b) { 42 }; 5@5';
+    is $RT119919, 42, 'can define and use infix with brackets as delimiter';
+
+    lives-ok { sub circumfix:["@", "@"] ($a) { $a } },
+        'can define circumfix with brackets as delimiter';
+       $RT119919 = EVAL 'sub circumfix:["@", "@"] ($a) { $a }; @ 5 @';
+    is $RT119919, 5, 'can define and use circumfix with brackets as delimiter';
+
+    constant sym = "µ";
+    sub infix:[sym] { "$^a$^b" };
+    is 5 µ 5, "55", 'can define and use operator with a sigilless constant as symbol';
+    constant $sym = "°";
+    sub infix:[$sym] { "$^a$^b" };
+    is 5 ° 5, "55", 'can define and use operator with a sigiled constant as symbol';
 }
 
 # vim: ft=perl6
