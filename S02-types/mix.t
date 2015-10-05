@@ -423,7 +423,7 @@ sub showkv($x) {
       'Make sure we cannot assign on a key';
 
     throws-like { $_ = 666.1 for $m.values },
-      X::Assignment::RO,
+      X::AdHoc,  # X::Assignment::RO  ???
       'Make sure we cannot assign on a .values alias';
 
     throws-like { .value = 999.1 for $m.pairs },
