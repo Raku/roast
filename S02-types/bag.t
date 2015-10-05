@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 201;
+plan 199;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -452,17 +452,6 @@ sub showkv($x) {
     is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
     is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
-}
-
-{
-    my $b = <a b c>.Bag;
-    #?rakudo.jvm    todo "?"
-    throws-like { $b.pairs[0].key++ },
-      X::Parameter::RW,
-      'Cannot change key of Bag.pairs';
-    throws-like { $b.pairs[0].value++ },
-      Exception,  # no exception type yet
-      'Cannot change value of Bag.pairs';
 }
 
 #?rakudo todo 'we have not secured .WHICH creation yet RT #124454'
