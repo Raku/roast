@@ -2,14 +2,15 @@ use v6;
 
 use Test;
 
-plan 3 * 19 + 94;
+plan 4 * 19 + 94;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
 
 for
   foo => "bar",                     'fat-comma',
-  Pair.new(:key<foo>, :value<bar>), 'Pair.new',
+  Pair.new(:key<foo>, :value<bar>), 'Pair.new(:key,:value)',
+  Pair.new("foo", "bar"),           'Pair.new(key,value)',
   pair("foo","bar"),                'pair()'
 -> $pair, $type {
     diag "checking $type";
