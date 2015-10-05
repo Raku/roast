@@ -41,7 +41,7 @@ plan 5;
 {
     class B {
         has $.x;
-        method postcircumfix:<( )>($y) {
+        method CALL-ME($y) {
             $.x ~ $y;
         }
     }
