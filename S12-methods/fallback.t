@@ -56,11 +56,11 @@ is F.new.something(''), 'Str', 'Can multi-dispatch on regular arguments (also on
 dies-ok { F.something() }, 'Error when none of the candidates match';
 
 class I {
-    method postcircumfix:<( )>(|) { 'invaught' }
+    method CALL-ME { 'invaught' }
     method FALLBACK($name, |c) { 'yes, I work' }
 }
 my $i = I.new;
-is $i.spy, 'yes, I work', 'FALLBACK is effective with a postcircumfix:<( )>';
-is $i(), 'invaught', 'postcircumfix:<( )> beats FALLBACK';
+is $i.spy, 'yes, I work', 'FALLBACK is effective with a CALL-ME';
+is $i(), 'invaught', 'CALL-ME beats FALLBACK';
 
 # vim: ft=perl6
