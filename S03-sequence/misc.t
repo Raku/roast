@@ -130,7 +130,7 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
     sub identity-matrix($n) {
 	[$[1, |(0 xx $n-1)], *.rotate(-1).item ... *[*-1] == 1]
     }
-    is identity-matrix(5).perl, $[[1,0,0,0,0], [0,1,0,0,0], [0,0,1,0,0], [0,0,0,1,0], [0,0,0,0,1]].perl, "code endpoint protects item";
+    is identity-matrix(5).perl, [[1,0,0,0,0], [0,1,0,0,0], [0,0,1,0,0], [0,0,0,1,0], [0,0,0,0,1]].perl, "code endpoint protects item";
 }
 
 # vim: ft=perl6
