@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 142;
+plan 144;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -411,5 +411,16 @@ my $x110 = 110; #OK
 }
 
 # PARENT - NYI in any compiler
+
+# RT #123154
+{
+    my $x = 'really unlikely value';
+    ok MY::.values.grep({ ($_ // '') eq 'really unlikely value' }),
+        'MY::.values actually produces values';
+    {
+        ok OUTER::.values.grep({ ($_ // '') eq 'really unlikely value' }),
+            'OUTER::.values actually produces values';
+    }
+}
 
 # vim: ft=perl6

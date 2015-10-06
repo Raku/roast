@@ -5,7 +5,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 28;
+plan 30;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -182,7 +182,6 @@ plan 28;
 # RT #121530
 #?niecza todo '@!'
 #?rakudo.jvm todo 'unwind, RT #121530'
-#?rakudo.moar todo 'unwind, RT #121530'
 {
     my $str;
     try {
@@ -190,6 +189,7 @@ plan 28;
         LEAVE { $str ~= '2'; die 'foo' }
     }
     is $str, '21', 'die doesn\'t abort LEAVE queue';
+    is $!.message, 'foo', 'single exception from LEAVE is rethrown after running LEAVEs';
 }
 
 # RT #113548
@@ -263,6 +263,15 @@ plan 28;
         }
     }
     is doit(), 'ls', 'return in nested block with LEAVE works';
+}
+
+{
+    sub foo() {
+        LEAVE die 'wtf';
+        LEAVE die 'omg';
+    }
+    throws-like { foo() }, X::PhaserExceptions,
+        exceptions => sub (@ex) { @ex>>.message ~~ <omg wtf> };
 }
 
 # vim: ft=perl6

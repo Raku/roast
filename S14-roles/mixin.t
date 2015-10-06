@@ -137,7 +137,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 # RT #79866
 {
-    my $x = 42 but role { method postcircumfix:<( )>($arg) { self * $arg[0] } };
+    my $x = 42 but role { method CALL-ME($arg) { self * $arg[0] } };
     is $x(13), 546, 'can mix a &.() method into an Int';
 }
 

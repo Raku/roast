@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 197;
+plan 199;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -454,17 +454,6 @@ sub showkv($x) {
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
-{
-    my $b = <a b c>.Bag;
-    #?rakudo.jvm    todo "?"
-    throws-like { $b.pairs[0].key++ },
-      X::Parameter::RW,
-      'Cannot change key of Bag.pairs';
-    throws-like { $b.pairs[0].value++ },
-      Exception,  # no exception type yet
-      'Cannot change value of Bag.pairs';
-}
-
 #?rakudo todo 'we have not secured .WHICH creation yet RT #124454'
 {
         isnt 'a(1) Str|b(1) Str|c'.Bag.WHICH, <a b c>.Bag.WHICH,
@@ -490,6 +479,25 @@ sub showkv($x) {
     my $b = MyBag.new(|<a foo a a a a b foo>);
     isa-ok $b, MyBag, 'MyBag.new produces a MyBag';
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
+}
+
+{
+    my $b = <a>.Bag;
+    throws-like { $b<a> = 42 },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a key';
+
+    throws-like { $_ = 666 for $b.values },
+     X::AdHoc,   # X::Assignment::RO ???
+      'Make sure we cannot assign on a .values alias';
+
+    throws-like { .value = 999 for $b.pairs },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a .pairs alias';
+
+    throws-like { for $b.kv -> \k, \v { v = 22 } },
+      X::Assignment::RO,
+      'Make sure we cannot assign on a .kv alias';
 }
 
 # vim: ft=perl6

@@ -2,14 +2,15 @@ use v6;
 
 use Test;
 
-plan 3 * 19 + 94;
+plan 4 * 19 + 100;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
 
 for
   foo => "bar",                     'fat-comma',
-  Pair.new(:key<foo>, :value<bar>), 'Pair.new',
+  Pair.new(:key<foo>, :value<bar>), 'Pair.new(:key,:value)',
+  Pair.new("foo", "bar"),           'Pair.new(key,value)',
   pair("foo","bar"),                'pair()'
 -> $pair, $type {
     diag "checking $type";
@@ -358,6 +359,22 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     is ((Any) => Any).gist, '(Any) => (Any)', "both key and value can convey an Any type";
     is ((Junction) => Junction).gist, '(Junction) => (Junction)', "both key and value can convey a Junction type";
     is ((1|2|3) => 1&2&3).gist, 'any(1, 2, 3) => all(1, 2, 3)', "both key and value can convey a Junction object";
+}
+
+{
+    my $p = Pair.new("foo",my Int $);
+    isa-ok $p.value, Int;
+    is ($p.value = 42), 42, 'can assign integer value and return that';
+    is $p.value, 42, 'the expected Int value was set';
+    throws-like { $p.value = "bar" },
+      X::TypeCheck::Assignment,
+      'cannot assign a Str to an Int';
+
+    $p.freeze;
+    throws-like { $p.value = 666 },
+      X::Assignment::RO,
+      'cannot assign an Int to a frozen';
+    is $p.value, 42, 'did not change integer value';
 }
 
 # vim: ft=perl6

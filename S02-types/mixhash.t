@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 209;
+plan 217;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -448,6 +448,33 @@ sub showkv($x) {
     is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
     is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
+}
+
+{
+    my $m = <a>.MixHash;
+    $m<a> = 42.1;
+    is $m<a>, 42.1, 'did we set a Real value';
+    throws-like { $m<a> = "foo" },
+      X::Str::Numeric, # X::TypeCheck::Assignment ???
+      'Make sure we cannot assign Str on a key';
+
+    $_ = 666.1 for $m.values;
+    is $m<a>, 666.1, 'did we set a Real value from a .values alias';
+    throws-like { $_ = "foo" for $m.values },
+      X::TypeCheck::Assignment,
+      'Make sure we cannot assign Str on a .values alias';
+
+    .value = 999.1 for $m.pairs;
+    is $m<a>, 999.1, 'did we set a Real value from a .pairs alias';
+    throws-like { .value = "foo" for $m.pairs },
+      X::TypeCheck::Assignment,
+      'Make sure we cannot assign Str on a .pairs alias';
+
+    for $m.kv -> \k, \v { v = 22.1 };
+    is $m<a>, 22.1, 'did we set a Real value from a .kv alias';
+    throws-like { for $m.kv -> \k, \v { v = "foo" } },
+      X::TypeCheck::Assignment,
+      'Make sure we cannot assign Str on a .kv alias';
 }
 
 # vim: ft=perl6

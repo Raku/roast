@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 6;
 
 #L<S06/Operator overloading>
 
@@ -23,14 +23,16 @@ plan 5;
 }
 
 {
+    my @keys;
     class A does Associative {
-        method postcircumfix:<{ }>(*@ix) {   # METHOD TO SUB CASUALTY
-            return @ix
+        multi method AT-KEY(A:D: $key) {
+            push @keys, $key;
+            ++state $i
         }
     };
 
-    #?rakudo skip 'cannot easily override {} at the moment'
-    is A.new<foo bar>, <foo bar>, 'defining postcircumfix:<{ }> works';
+    is A.new<foo bar>, (1, 2), 'implementing AT-KEY gets {...} indexing working';
+    is @keys, [<foo bar>], 'AT-KEY called once for each key';
 }
 
 # overloaded invoke
@@ -41,7 +43,7 @@ plan 5;
 {
     class B {
         has $.x;
-        method postcircumfix:<( )>($y) {
+        method CALL-ME($y) {
             $.x ~ $y;
         }
     }
