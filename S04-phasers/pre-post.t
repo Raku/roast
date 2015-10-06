@@ -128,7 +128,6 @@ throws-like '$pt.test(1)',
             POST    { $str ~= ')'; 1 }
         }
     }
-    #?rakudo.moar todo 'failing PRE block should not run any other phasers, RT #121531'
     is $str, '(', 'failing PRE runs nothing else';
 }
 
