@@ -46,6 +46,7 @@ dies-ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
 
 }
 
+# RT #125846
 throws-like 'use t::spec::packages::S11-modules::Foo :NoSucTag;', X::Import::NoSuchTag,
                 :source-package<t::spec::packages::S11-modules::Foo>,
                 :tag<NoSucTag>,
