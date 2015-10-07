@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 31;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -42,24 +42,6 @@ is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispa
 try { EVAL '$foo.baz()' };
 #?niecza todo 'This test is pretty dubious IMO'
 ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
-
-role R1 {
-    method foo($x) { 1 }   #OK not used
-}
-role R2 {
-    method foo($x, $y) { 2 }   #OK not used
-}
-throws-like 'class X does R1 does R2 { }', X::AdHoc, 'sanity: get composition conflict error';
-class C does R1 does R2 {
-    proto method foo(|) { * }
-}
-my $obj = C.new;
-#?rakudo 2 skip 'proto does not promote to multi RT #118069'
-#?niecza skip 'No candidates for dispatch to C.foo'
-is($obj.foo('a'),     1, 'method composed into multi from role called');
-#?niecza skip 'No candidates for dispatch to C.foo'
-is($obj.foo('a','b'), 2, 'method composed into multi from role called');
-
 
 class Foo2 {
     multi method a($d) {   #OK not used
