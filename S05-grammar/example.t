@@ -7,8 +7,11 @@ plan 5;
 
 grammar G { rule rule($arg) {  { $arg == 42 } } }
 ok( G.parse('', :rule<rule>, :args(\(42)) ), 'call rule with positional argument' );
+ok( G.parse('', :rule<rule>, :args(42,)), 'call rule with positional argument' );
 grammar H { rule rule(:$arg) {  { $arg == 42 } } }
 ok( H.parse('', :rule<rule>, :args( \(:arg(42)))), 'call rule with named argument' );
+ok( H.parse('', :rule<rule>, :args( :arg(42),)) , 'call rule with named argument' );
+
 
 my rule schedule { <title> [ <talk> ]+ }
 
