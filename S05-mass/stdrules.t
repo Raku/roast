@@ -14,7 +14,7 @@ be valid perl6.
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include">
 
-plan 188;
+plan 191;
 
 
 ok("abc1_2" ~~ m/^ <ident> $/, '<ident>');
@@ -318,7 +318,12 @@ ok '' !~~ /<!>/, '<!> fails (empty string)';
 
 #?niecza 3 skip '<at>'
  ok 'abc' ~~ /^<at(0)>/, 'basic <at>';
-nok 'abc' ~~ /^<at(1)>/, '^<at(1) fails';
- ok 'abc' ~~ /<at(1)>/, '<at(1) searches until it matches';
+nok 'abc' ~~ /^<at(1)>/, '^<at(1)> fails';
+ ok 'abc' ~~ /<at(1)>/, '<at(1)> searches until it matches';
+
+#?rakudo 3 skip '<same> NYI'
+ok 'aac' ~~ /^a <?same>/, '<?same> succeeds between two of the same character';
+ok 'abc' ~~ /^a <!same>/, '<!same> succeeds between two different characters';
+ok 'abb' ~~ /<?same>/, '<?same> searches until it matches';
 
 # vim: ft=perl6
