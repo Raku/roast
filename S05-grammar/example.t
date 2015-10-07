@@ -1,12 +1,16 @@
 use v6;
 use Test;
 
-plan 4;
+plan 5;
 
 =pod calling a rule a grammar with arguments
 
-grammar G { rule rule($arg) {  {? $arg == 42 } } }
-ok( G.parse('', :rule<rule>, :args(42,) ), 'call rule with argument' );
+grammar G { rule rule($arg) {  { $arg == 42 } } }
+ok( G.parse('', :rule<rule>, :args(\(42)) ), 'call rule with positional argument' );
+ok( G.parse('', :rule<rule>, :args(42,)), 'call rule with positional argument' );
+grammar H { rule rule(:$arg) {  { $arg == 42 } } }
+ok( H.parse('', :rule<rule>, :args( \(:arg(42)))), 'call rule with named argument' );
+ok( H.parse('', :rule<rule>, :args( :arg(42),)) , 'call rule with named argument' );
 
 
 my rule schedule { <title> [ <talk> ]+ }

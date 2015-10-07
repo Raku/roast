@@ -204,6 +204,7 @@ my @exception = <
   X::Inheritance::SelfInherit
   X::Inheritance::UnknownParent
   X::Inheritance::Unsupported
+  X::InvalidTypeSmiley
   X::Item
   X::Localizer::NoContainer
   X::Match::Bool
@@ -233,6 +234,11 @@ my @exception = <
   X::Phaser::PrePost
   X::Placeholder::Block
   X::Placeholder::Mainline
+  X::Pragma::CannotNo
+  X::Pragma::MustOneOf
+  X::Pragma::NoArgs
+  X::Pragma::OnlyOne
+  X::Pragma::UnknownArg
   X::PseudoPackage::InDeclaration
   X::Range::InvalidArg
   X::Redeclaration

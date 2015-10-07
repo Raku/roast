@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 64;
+plan 66;
 
 # type based dispatching
 #
@@ -169,6 +169,19 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is f4(@a), 'Array of Int',   'can dispatch on typed Array (Int)';
     is f4(@b), 'Array of Str',   'can dispatch on typed Array (Str)';
     is f4(@c), 'Array of Array', 'can dispatch on typed Array (Array)';
+}
+
+# Multi-dispach on declared return type
+# RT #121426
+{
+    sub i() returns Int { 3 }
+    sub s() returns Str { 'little pigs' }
+
+    multi by-return-type(Int &x) { 'Int ' ~ x() }
+    multi by-return-type(Str &x) { 'Str ' ~ x() }
+
+    is by-return-type(&s), 'Str little pigs', 'can dispatch on typed routine (Str)';
+    is by-return-type(&i), 'Int 3', 'can dispatch on typed routine (Int)';
 }
 
 # make sure that multi sub dispatch also works if the sub is defined

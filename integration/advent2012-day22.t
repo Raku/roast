@@ -27,5 +27,5 @@ is-deeply @ip4addrs, [<127.0.0.1 173.194.32.32>], '.comb';
 @ip = ();
 @ip.push(.list>>.Str[0].perl) for m:g/ (\d ** 1..3) ** 4 % '.' /;
 # RT #121789'
-is-deeply @ip, [q<["127", "0", "0", "1"]>, q<["173", "194", "32", "32"]>], 'integer parse';
+is-deeply @ip, [q<$["127", "0", "0", "1"]>, q<$["173", "194", "32", "32"]>], 'integer parse';
 

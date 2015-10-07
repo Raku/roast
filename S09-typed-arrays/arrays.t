@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 77;
+plan 79;
 
 # L<S09/Typed arrays/>
 
@@ -233,6 +233,13 @@ plan 77;
     @rt81682[2] := $y;
     is ~@rt81682, '5 1 6',
         'can bind element of typed array to scalar container of same type (but not explicitly typed)';
+}
+
+# RT #123769
+{
+    my Int @a;
+    dies-ok { @a[0] := "foo" }, 'Binding literal to typed array checks types';
+    dies-ok { my Str $x = "foo"; @a[0] := $x; }, 'Binding variablle to typed array checks type';
 }
 
 # vim: ft=perl6

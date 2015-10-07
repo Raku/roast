@@ -46,7 +46,10 @@ dies-ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
 
 }
 
-throws-like 'use t::spec::packages::S11-modules::Foo :NoSucTag;', X::AdHoc,
+# RT #125846
+throws-like 'use t::spec::packages::S11-modules::Foo :NoSucTag;', X::Import::NoSuchTag,
+                :source-package<t::spec::packages::S11-modules::Foo>,
+                :tag<NoSucTag>,
              'die while trying to import a non-existent export tag';
 
 # vim: ft=perl6

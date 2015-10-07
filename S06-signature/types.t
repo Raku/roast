@@ -1,12 +1,15 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 sub f($x) returns Int { return $x };
 
 ok &f.returns === Int, 'sub f returns Int can be queried for its return value';
 ok &f.of === Int, 'sub f returns Int can be queried for its return value (.of)';
+
+# RT #121426
+ok &f ~~ Callable[Int], 'sub f ~~ Callable[Int]';
 
 lives-ok { f(3) },      'type check allows good return';
 dies-ok  { f('m') },    'type check forbids bad return';
