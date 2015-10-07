@@ -24,8 +24,8 @@ class Foo5 { has Int:U $.bar = IntStr }
 ok Foo5.new.bar ~~ Int, 'Int:U on attribute with initializer';
 
 {
-    use variables :D;
-    #?rakudo todo 'variables pragma NYI'
+    use attributes :D;
+    #?rakudo todo 'attributes pragma NYI'
     throws-like 'class Foo6 { has Int $.bar }',
         X::Syntax::Variable::MissingInitializer,
         type => 'Int:D',
