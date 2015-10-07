@@ -12,7 +12,7 @@ is ([*] ()), 1, "[*] () eq 1";
 ok( !([/] ()).defined, "[/] () should fail");
 ok( !([%] ()).defined, "[%] () should fail");
 ok( !([x] ()).defined, "[x] () should fail");
-ok( !([xx] ()).defined, "[xx] () should fail");
+ok( !(try [xx] ()).defined, "[xx] () should fail");
 is ([+&] ()), +^0, "[+&] () eq +^0";
 ok( !([+<] ()).defined, "[+<] () should fail");
 ok( !([+>] ()).defined, "[+>] () should fail");
