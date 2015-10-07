@@ -20,7 +20,8 @@ nok $tracker, 'orelse thunks';
 
 {
     Failure.new("oh noes!") orelse -> $foo {
-        is $foo.gist, "oh noes!\n", 'orelse passes lhs to one argument after an exception';
+        ok $foo.gist.match('oh noes!'),
+          'orelse passes lhs to one argument after an exception';
     };
 }
 
