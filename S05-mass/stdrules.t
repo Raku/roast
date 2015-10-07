@@ -321,7 +321,6 @@ ok '' !~~ /<!>/, '<!> fails (empty string)';
 nok 'abc' ~~ /^<at(1)>/, '^<at(1)> fails';
  ok 'abc' ~~ /<at(1)>/, '<at(1)> searches until it matches';
 
-#?rakudo 3 skip '<same> NYI'
 ok 'aac' ~~ /^a <?same>/, '<?same> succeeds between two of the same character';
 ok 'abc' ~~ /^a <!same>/, '<!same> succeeds between two different characters';
 ok 'abb' ~~ /<?same>/, '<?same> searches until it matches';
