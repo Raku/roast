@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 7;
 
 =pod calling a rule a grammar with arguments
 
