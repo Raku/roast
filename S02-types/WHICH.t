@@ -204,6 +204,7 @@ my @exception = <
   X::Inheritance::SelfInherit
   X::Inheritance::UnknownParent
   X::Inheritance::Unsupported
+  X::InvalidTypeSmiley
   X::Item
   X::Localizer::NoContainer
   X::Match::Bool
