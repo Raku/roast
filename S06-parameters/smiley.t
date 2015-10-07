@@ -5,7 +5,6 @@ plan 35;
 
 is { sub a(Int $a)   { $a }; a Int }(), Int, 'can Int   take an Int:U';
 is { sub a(Int $a)   { $a }; a 42  }(),  42, 'can Int   take an Int:D';
-#?rakudo 2 skip 'Int:_ not allowed'
 is { sub a(Int:_ $a) { $a }; a Int }(), Int, 'can Int:_ take an Int:U';
 is { sub a(Int:_ $a) { $a }; a 42  }(),  42, 'can Int:_ take an Int:D';
 is { sub a(Int:U $a) { $a }; a Int }(), Int, 'can Int:U take an Int:U';
@@ -19,7 +18,6 @@ throws-like 'sub a(Int:foo $a) { $a }',
 
 is { sub a(--> Int)   { Int }; a  }(), Int, 'can --> Int   return an Int:U';
 is { sub a(--> Int)   { 42  }; a  }(),  42, 'can --> Int   return an Int:D';
-#?rakudo 2 skip 'Int:_ not allowed'
 is { sub a(--> Int:_) { Int }; a  }(), Int, 'can --> Int:_ return an Int:U';
 is { sub a(--> Int:_) { 42  }; a  }(),  42, 'can --> Int:_ return an Int:D';
 is { sub a(--> Int:U) { Int }; a  }(), Int, 'can --> Int:U return an Int:U';
