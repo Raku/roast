@@ -146,8 +146,11 @@ my @exception = <
   X::Anon::Augment
   X::Anon::Multi
   X::Assignment::RO
+  X::Assignment::RO::Comp
   X::Attribute::NoPackage
   X::Attribute::Package
+  X::Attribute::Regex
+  X::Attribute::Required
   X::Attribute::Undeclared
   X::Augment::NoSuchType
   X::Backslash::NonVariableDollar
@@ -163,6 +166,7 @@ my @exception = <
   X::Cannot::Empty
   X::Cannot::Lazy
   X::Comp::AdHoc
+  X::Comp::BeginTime
   X::Comp::Group
   X::Comp::NYI
   X::Comp::Trait::NotOnNative
@@ -174,15 +178,22 @@ my @exception = <
   X::ControlFlow::Return
   X::DateTime::InvalidDeltaUnit
   X::DateTime::TimezoneClash
+  X::Declaration::OurScopeInRole
   X::Declaration::Scope
   X::Declaration::Scope::Multi
   X::Does::TypeObject
   X::Dynamic::NotFound
+  X::Dynamic::Postdeclaration
   X::Eval::NoSuchLang
   X::Export::NameClash
+  X::EXPORTHOW::Conflict
+  X::EXPORTHOW::InvalidDirective
+  X::EXPORTHOW::NothingToSupersede
   X::Hash::Store::OddNumber
+  X::HyperOp::Infinite
   X::HyperOp::NonDWIM
   X::HyperWhatever::Multiple
+  X::IllegalOnFixedDimensionArray
   X::IO::Chdir
   X::IO::Chmod
   X::IO::Copy
@@ -199,11 +210,15 @@ my @exception = <
   X::IO::Unlink
   X::Immutable
   X::Import::MissingSymbols
+  X::Import::NoSuchTag
   X::Import::OnlystarProto
+  X::Import::Positional
   X::Import::Redeclaration
+  X::Inheritance::NotComposed
   X::Inheritance::SelfInherit
   X::Inheritance::UnknownParent
   X::Inheritance::Unsupported
+  X::InvalidType
   X::InvalidTypeSmiley
   X::Item
   X::Localizer::NoContainer
@@ -216,24 +231,35 @@ my @exception = <
   X::Multi::Ambiguous
   X::Multi::NoMatch
   X::NYI
+  X::NYI::Available
   X::NoDispatcher
   X::NoSuchSymbol
+  X::NotEnoughDimensions
+  X::NotParametric
   X::Numeric::DivideByZero
   X::Numeric::Real
   X::Obsolete
   X::OutOfRange
   X::Package::Stubbed
+  X::Pairup::OddNumber
+  X::Parameter::AfterDefault
+  X::Parameter::BadType
   X::Parameter::Default
+  X::Parameter::Default::TypeCheck
   X::Parameter::InvalidType
   X::Parameter::MultipleTypeConstraints
   X::Parameter::Placeholder
+  X::Parameter::RW
   X::Parameter::Twigil
-  X::Parameter::Default::TypeCheck
   X::Parameter::WrongOrder
   X::Phaser::Multiple
   X::Phaser::PrePost
+  X::PhaserExceptions
+  X::Placeholder::Attribute
   X::Placeholder::Block
   X::Placeholder::Mainline
+  X::Placeholder::NonPlaceholder
+  X::PoisonedAlias
   X::Pragma::CannotNo
   X::Pragma::MustOneOf
   X::Pragma::NoArgs
@@ -244,7 +270,10 @@ my @exception = <
   X::Redeclaration
   X::Redeclaration::Outer
   X::Role::Initialization
+  X::Role::Parametric::NoSuchCandidate
   X::Routine::Unwrap
+  X::Seq::Consumed
+  X::Seq::NotIndexable
   X::Sequence::Deduction
   X::Set::Coerce
   X::Signature::NameClash
@@ -253,15 +282,26 @@ my @exception = <
   X::Str::Numeric
   X::Str::Trans::IllegalKey
   X::Str::Trans::InvalidArg
+  X::StubCode
   X::Subscript::Negative
+  X::Syntax::AddCategorical::TooFewParts
+  X::Syntax::AddCategorical::TooManyParts
+  X::Syntax::Adverb
   X::Syntax::Argument::MOPMacro
   X::Syntax::Augment::Illegal
   X::Syntax::Augment::WithoutMonkeyTyping
   X::Syntax::BlockGobbled
+  X::Syntax::CannotMeta
   X::Syntax::Comment::Embedded
+  X::Syntax::ConditionalOperator::PrecedenceTooLoose
+  X::Syntax::ConditionalOperator::SecondPartGobbled
+  X::Syntax::ConditionalOperator::SecondPartInvalid
   X::Syntax::Confused
+  X::Syntax::DuplicatedPrefix
   X::Syntax::Extension::Category
   X::Syntax::Extension::Null
+  X::Syntax::Extension::SpecialForm
+  X::Syntax::Extension::TooComplex
   X::Syntax::InfixInTermPosition
   X::Syntax::KeywordAsFunction
   X::Syntax::Malformed
@@ -271,6 +311,7 @@ my @exception = <
   X::Syntax::NegatedPair
   X::Syntax::NoSelf
   X::Syntax::NonAssociative
+  X::Syntax::Number::IllegalDecimal
   X::Syntax::Number::RadixOutOfRange
   X::Syntax::P5
   X::Syntax::Perl5Var
@@ -279,20 +320,29 @@ my @exception = <
   X::Syntax::Regex::Adverb
   X::Syntax::Regex::MalformedRange
   X::Syntax::Regex::NullRegex
+  X::Syntax::Regex::SolitaryBacktrackControl
+  X::Syntax::Regex::SolitaryQuantifier
   X::Syntax::Regex::SpacesInBareRange
   X::Syntax::Regex::UnrecognizedMetachar
+  X::Syntax::Regex::UnrecognizedModifier
   X::Syntax::Regex::Unspace
   X::Syntax::Regex::Unterminated
   X::Syntax::Reserved
   X::Syntax::Self::WithoutObject
   X::Syntax::Signature::InvocantMarker
+  X::Syntax::Term::MissingInitializer
   X::Syntax::UnlessElse
+  X::Syntax::Variable::BadType
+  X::Syntax::Variable::ConflictingTypes
   X::Syntax::Variable::IndirectDeclaration
+  X::Syntax::Variable::Initializer
   X::Syntax::Variable::Match
+  X::Syntax::Variable::MissingInitializer
   X::Syntax::Variable::Numeric
   X::Syntax::Variable::Twigil
   X::Syntax::VirtualCall
   X::Temporal::InvalidFormat
+  X::TooLateForREPR
   X::Trait::NotOnNative
   X::Trait::Scope
   X::Trait::Unknown
@@ -304,6 +354,8 @@ my @exception = <
   X::TypeCheck::Splice
   X::Undeclared
   X::Undeclared::Symbols
+  X::UnitScope::Invalid
+  X::UnitScope::TooLate
   X::Value::Dynamic
   X::Worry
   X::Worry::P5
