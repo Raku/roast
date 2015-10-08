@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 =begin description
 
@@ -13,9 +13,9 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 #?niecza skip 'NYI'
 {
     my @array = <a b b c d e f f a>;
-    is-deeply @array.squish.list,  <a b c d e f a>,
+    is-deeply @array.squish,  <a b c d e f a>,
       "method form of squish works";
-    is-deeply squish(@array).list, <a b c d e f a>,
+    is-deeply squish(@array), <a b c d e f a>,
       "subroutine form of squish works";
     is-deeply @array .= squish, [<a b c d e f a>],
       "inplace form of squish works";
@@ -24,8 +24,8 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 } #4
 
 {
-    is-deeply squish(Any,'a', 'b', 'b', 'c', 'd', 'e', 'f', 'f', 'a').list,
-      (flat Any, <a b c d e f a>),
+    is squish(Any,'a', 'b', 'b', 'c', 'd', 'e', 'f', 'f', 'a'),
+      (Any, <a b c d e f a>),
       'slurpy subroutine form of squish works';
 } #1
 
@@ -59,9 +59,9 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 {
     my @array = <a b bb c d e f f a>;
     my $as    = *.substr: 0,1;
-    is-deeply @array.squish(:$as).list,  <a b c d e f a>,
+    is-deeply @array.squish(:$as),  <a b c d e f a>,
       "method form of squish with :as works";
-    is-deeply squish(@array,:$as).list, <a b c d e f a>,
+    is-deeply squish(@array,:$as), <a b c d e f a>,
       "subroutine form of squish with :as works";
     is-deeply @array .= squish(:$as), [<a b c d e f a>],
       "inplace form of squish with :as works";
@@ -72,13 +72,13 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 #?niecza skip 'NYI'
 {
     my @rt124204 = ('', '', Any, Any);
-    is-deeply @rt124204.squish(:as(-> $x {$x})).list, ('', Any),
+    is-deeply @rt124204.squish(:as(-> $x {$x})), ('', Any),
       "method form of squish with :as does not needlessly stringify";
-    is-deeply @rt124204.squish.list, ('', Any),
+    is-deeply @rt124204.squish, ('', Any),
       "method form of squish without :as does not needlessly stringify";
-    is-deeply @rt124204.squish(:as(-> $x {$x}), :with({$^b === $^a})).list, ('', Any),
+    is-deeply @rt124204.squish(:as(-> $x {$x}), :with({$^b === $^a})), ('', Any),
       "method form of squish with :as and :with does not needlessly stringify";
-    is-deeply @rt124204.squish(:with({$^b === $^a})).list, ('', Any),
+    is-deeply @rt124204.squish(:with({$^b === $^a})), ('', Any),
       "method form of squish with :with does not needlessly stringify";
 } #4
 
@@ -86,19 +86,19 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 {
     my @rt124205 = <a a>;
 
-    is-deeply @rt124205.squish(:as(-> $x {1}), :with(-> $a, $b {1})).list, <a>.list,
+    is @rt124205.squish(:as(-> $x {1}), :with(-> $a, $b {1})), <a>,
       "method form of squish with :as and :with always returns at least the first element";
-    is-deeply @rt124205.squish(:with(-> $a, $b {1})).list, <a>.list,
+    is @rt124205.squish(:with(-> $a, $b {1})), <a>,
       "method form of squish with :with always returns at least the first element";
 
     # somewhat more real-world examples:
 
     my @rt124205_b = '', '', |<b b B B>;
 
-    is-deeply @rt124205_b.squish(:with(*.Str eq *.Str)).list, ('', 'b', 'B'),
+    is-deeply @rt124205_b.squish(:with(*.Str eq *.Str)), ('', 'b', 'B'),
       "method form of squish with :with preserves the first element even if it stringifies to ''";
 
-    is-deeply @rt124205_b.squish(:as(*.Str), :with(&infix:<eq>)).list, ('', 'b', 'B'),
+    is-deeply @rt124205_b.squish(:as(*.Str), :with(&infix:<eq>)), ('', 'b', 'B'),
       "method form of squish with :as and :with preserves the first element even if it stringifies to ''";
 
 } #4
@@ -107,9 +107,9 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 {
     my @array = <a aa b bb c d e f f a>;
     my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
-    is-deeply @array.squish(:$with).list,  <a b c d e f a>,
+    is-deeply @array.squish(:$with),  <a b c d e f a>,
       "method form of squish with :with works";
-    is-deeply squish(@array,:$with).list, <a b c d e f a>,
+    is-deeply squish(@array,:$with), <a b c d e f a>,
       "subroutine form of squish with :with works";
     is-deeply @array .= squish(:$with), [<a b c d e f a>],
       "inplace form of squish with :with works";
@@ -122,9 +122,9 @@ This test tests the C<squish> builtin and .squish method on Any/List.
     my @array = <a aa b bb c d e f f a>;
     my $as    = *.substr(0,1).ord;
     my $with  = &[==];
-    is-deeply @array.squish(:$as, :$with).list,  <a b c d e f a>,
+    is-deeply @array.squish(:$as, :$with),  <a b c d e f a>,
       "method form of squish with :as and :with works";
-    is-deeply squish(@array,:$as, :$with).list, <a b c d e f a>,
+    is-deeply squish(@array,:$as, :$with), <a b c d e f a>,
       "subroutine form of squish with :as and :with works";
     is-deeply @array .= squish(:$as, :$with), [<a b c d e f a>],
       "inplace form of squish with :as and :with works";
@@ -136,9 +136,9 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 {
     my @array = ({:a<1>}, {:a<1>}, {:b<1>});
     my $with  = &[eqv];
-    is-deeply @array.squish(:$with).list,  ({:a<1>}, {:b<1>}),
+    is-deeply @array.squish(:$with),  ({:a<1>}, {:b<1>}),
       "method form of squish with [eqv] and objects works";
-    is-deeply squish(@array,:$with).list, ({:a<1>}, {:b<1>}),
+    is-deeply squish(@array,:$with), ({:a<1>}, {:b<1>}),
       "subroutine form of squish with [eqv] and objects works";
     is-deeply @array .= squish(:$with), [{:a<1>}, {:b<1>}],
       "inplace form of squish with [eqv] and objects works";
@@ -150,18 +150,20 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 {
     my $a = <a b b c>;
     $a .= squish;
-    is-deeply( $a.list, <a b c>, '.= squish in sink context works on $a' );
+    is-deeply( $a, <a b c>, '.= squish in sink context works on $a' );
     my @a = <a b b c>;
     @a .= squish;
     is-deeply( @a, [<a b c>], '.= squish in sink context works on @a' );
 } #2
 
 my @a := (1, 2);
-is ((3,3,1),@a,@a).squish.list.Str, '3 3 1 1 2', ".squish doesn't flatten";
+is ((3,3,1),@a,@a).squish.Str, '3 3 1 1 2', ".squish doesn't flatten";
 
 # RT #126293
 {
     is <a a b b c c>.squish, <a b c>, 'do we squish at all?';
+    my $as = *.lc;
+    is <a A b B c>.squish(:$as), <a b c>, 'do we squish at all with :as?';
 }
 
 # vim: ft=perl6
