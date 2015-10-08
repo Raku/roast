@@ -4,6 +4,7 @@ use Test;
 my @normal = <
   AST
   Any
+  array
   Array
   Attribute
   Backtrace
@@ -19,10 +20,12 @@ my @normal = <
   Code
   CompUnit
   CompUnitRepo
+  CompUnitRepo::Distribution
   CompUnitRepo::Local::File
   CompUnitRepo::Local::Installation
   Compiler
   Complex
+  ComplexStr
   Cool
   Cursor
   Date
@@ -43,12 +46,16 @@ my @normal = <
   HyperWhatever
   HyperWorkBuffer
   IO::ArgFiles
+  IO::Dir
+  IO::File
   IO::Handle
+  IO::Notification
   IO::Path
   IO::Path::Cygwin
   IO::Path::QNX   
   IO::Path::Unix  
   IO::Path::Win32 
+  IO::Pipe
   IO::Socket::INET
   IO::Spec
   IO::Spec::Cygwin
@@ -57,6 +64,10 @@ my @normal = <
   IO::Spec::Win32
   Instant
   Int
+  IntAttrRef
+  IntLexRef
+  IntPosRef
+  IntStr
   IterationBuffer
   JSONPrettyActions
   Junction
@@ -65,18 +76,28 @@ my @normal = <
   List
   Lock
   Macro
+  Map
   Match
   Metamodel::Primitives
   Method
   Mix
   MixHash
   Mu
+  NFC
+  NFD
+  NFKC
+  NFKD
   Nil
   Num
+  NumAttrRef
+  NumLexRef
+  NumPosRef
+  NumStr
   ObjAt
   Pair
   Parameter
   Perl
+  Perl5ModuleLoaderStub
   Pod::Block
   Pod::Block::Code
   Pod::Block::Comment
@@ -90,8 +111,10 @@ my @normal = <
   Pod::Item
   Pod::Raw
   PseudoStash
+  Rakudo::Internals
   Range
   Rat
+  RatStr
   Regex
   Routine
   Scalar
@@ -104,10 +127,14 @@ my @normal = <
   SprintfHandler
   Stash
   Str
+  StrAttrRef
   StrDistance
+  StrLexRef
+  StrPosRef
   Sub
   Submethod
   UInt
+  Uni
   VM
   Variable
   Version
