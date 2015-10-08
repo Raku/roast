@@ -13,45 +13,45 @@ is $j, 111, 'typeobject assignment to Int:D via MY:: pseudo package fails';
 try $j = Int;
 is $j, 111, 'typeobject assignment to Int:D fails';
 
-is { my Int   $a       }(), Int, 'can Int   be on its own';
-is { my Int   $a = Int }(), Int, 'can Int   take an Int:U';
-is { my Int   $a =  42 }(),  42, 'can Int   take an Int:D';
+is { my Int   $a       }(),   Int, 'can Int   be on its own';
+is { my Int   $a = Int }(),   Int, 'can Int   take an Int:U';
+is { my Int   $a =  42 }(),    42, 'can Int   take an Int:D';
 
-is { my Int:_ $a       }(), Int, 'can Int:_ be on its own';
-is { my Int:_ $a = Int }(), Int, 'can Int:_ take an Int:U';
-is { my Int:_ $a = 42  }(),  42, 'can Int:_ take an Int:D';
+is { my Int:_ $a       }(),   Int, 'can Int:_ be on its own';
+is { my Int:_ $a = Int }(),   Int, 'can Int:_ take an Int:U';
+is { my Int:_ $a = 42  }(),    42, 'can Int:_ take an Int:D';
 
-#?rakudo todo 'type is being set weirdly'
-is { my Int:U $a       }(), Int, 'can Int:U be on its own';
-is { my Int:U $a = Int }(), Int, 'can Int:U take an Int:U';
+#?rakudo todo 'Int:U is not being parsed correctly yet'
+is { my Int:U $a       }(), Int:U, 'can Int:U be on its own';
+is { my Int:U $a = Int }(),   Int, 'can Int:U take an Int:U';
 throws-like { my Int:U $a = 42 }, 
   X::TypeCheck::Assignment,
-  symbol => '$a',                'can Int:U take an Int:D';
+  symbol => '$a',                  'can Int:U take an Int:D';
 
 throws-like 'my Int:D $a', 
   X::Syntax::Variable::MissingInitializer,
-  type => 'Int:D',               'can Int:D be on its own';
+  type => 'Int:D',                 'can Int:D be on its own';
 throws-like { my Int:D $a = Int }, 
   X::TypeCheck::Assignment,
-  symbol => '$a',                'can Int:D take an Int:U';
-is { my Int:D $a = 42  }(),  42, 'can Int:D take an Int:D';
+  symbol => '$a',                  'can Int:D take an Int:U';
+is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
 
 {
     use variables :_;
-    is { my Int   $a       }(), Int, 'with :_, can Int   be on its own';
-    is { my Int   $a = Int }(), Int, 'with :_, can Int   take an Int:U';
-    is { my Int   $a =  42 }(),  42, 'with :_, can Int   take an Int:D';
+    is { my Int   $a       }(),   Int, 'with :_, can Int   be on its own';
+    is { my Int   $a = Int }(),   Int, 'with :_, can Int   take an Int:U';
+    is { my Int   $a =  42 }(),    42, 'with :_, can Int   take an Int:D';
 
-    is { my Int:_ $a       }(), Int, 'with :_, can Int:_ be on its own';
-    is { my Int:_ $a = Int }(), Int, 'with :_, can Int:_ take an Int:U';
-    is { my Int:_ $a = 42  }(),  42, 'with :_, can Int:_ take an Int:D';
+    is { my Int:_ $a       }(),   Int, 'with :_, can Int:_ be on its own';
+    is { my Int:_ $a = Int }(),   Int, 'with :_, can Int:_ take an Int:U';
+    is { my Int:_ $a = 42  }(),    42, 'with :_, can Int:_ take an Int:D';
 
-    #?rakudo todo 'type is being set weirdly'
-    is { my Int:U $a       }(), Int, 'with :_, can Int:U be on its own';
-    is { my Int:U $a = Int }(), Int, 'with :_, can Int:U take an Int:U';
+    #?rakudo todo 'Int:U is not being parsed correctly yet'
+    is { my Int:U $a       }(), Int:U, 'with :_, can Int:U be on its own';
+    is { my Int:U $a = Int }(),   Int, 'with :_, can Int:U take an Int:U';
     throws-like { my Int:U $a = 42 }, 
       X::TypeCheck::Assignment,
-      symbol => '$a',                'with :_, can Int:U take an Int:D';
+      symbol => '$a',                  'with :_, can Int:U take an Int:D';
 
     throws-like 'my Int:D $a', 
       X::Syntax::Variable::MissingInitializer,
@@ -64,31 +64,31 @@ is { my Int:D $a = 42  }(),  42, 'can Int:D take an Int:D';
 
 {
     use variables :U;
-    #?rakudo todo 'type is being set weirdly'
-    is { my Int   $a       }(), Int, 'with :U, can Int   be on its own';
-    is { my Int   $a = Int }(), Int, 'with :U, can Int   take an Int:U';
+    #?rakudo todo 'Int:U is not being parsed correctly yet'
+    is { my Int   $a       }(), Int:U, 'with :U, can Int   be on its own';
+    is { my Int   $a = Int }(),   Int, 'with :U, can Int   take an Int:U';
     throws-like { my Int   $a = 42 }, 
       X::TypeCheck::Assignment,
       symbol => '$a',                'with :U, can Int   take an Int:D';
 
-    is { my Int:_ $a       }(), Int, 'with :U, can Int:_ be on its own';
-    is { my Int:_ $a = Int }(), Int, 'with :U, can Int:_ take an Int:U';
-    is { my Int:_ $a = 42  }(),  42, 'with :U, can Int:_ take an Int:D';
+    is { my Int:_ $a       }(),   Int, 'with :U, can Int:_ be on its own';
+    is { my Int:_ $a = Int }(),   Int, 'with :U, can Int:_ take an Int:U';
+    is { my Int:_ $a = 42  }(),    42, 'with :U, can Int:_ take an Int:D';
 
-    #?rakudo todo 'type is being set weirdly'
-    is { my Int:U $a       }(), Int, 'with :U, can Int:U be on its own';
-    is { my Int:U $a = Int }(), Int, 'with :U, can Int:U take an Int:U';
+    #?rakudo todo 'Int:U is not being parsed correctly yet'
+    is { my Int:U $a       }(), Int:U, 'with :U, can Int:U be on its own';
+    is { my Int:U $a = Int }(),   Int, 'with :U, can Int:U take an Int:U';
     throws-like { my Int:U $a = 42 }, 
       X::TypeCheck::Assignment,
-      symbol => '$a',                'with :U, can Int:U take an Int:D';
+      symbol => '$a',                  'with :U, can Int:U take an Int:D';
 
     throws-like 'use variables :U; my Int:D $a', # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
-      type => 'Int:D',               'with :U, can Int:D be on its own';
+      type => 'Int:D',                 'with :U, can Int:D be on its own';
     throws-like { my Int:D $a = Int }, 
       X::TypeCheck::Assignment,
-      symbol => '$a',                'with :U, can Int:D take an Int:U';
-    is { my Int:D $a = 42  }(),  42, 'with :U, can Int:D take an Int:D';
+      symbol => '$a',                  'with :U, can Int:D take an Int:U';
+    is { my Int:D $a = 42  }(),    42, 'with :U, can Int:D take an Int:D';
 }
 
 {
@@ -96,30 +96,30 @@ is { my Int:D $a = 42  }(),  42, 'can Int:D take an Int:D';
     throws-like 'use variables :D; my Int $a',  # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
       type => 'Int (with implicit :D)',
-                                     'with :D, can Int   be on its own';
+                                       'with :D, can Int   be on its own';
     throws-like { my Int   $a = Int }, 
       X::TypeCheck::Assignment,
-      symbol => '$a',                'with :D, can Int   take an Int:U';
-    is { my Int   $a =  42 }(),  42, 'with :D, can Int   take an Int:D';
+      symbol => '$a',                  'with :D, can Int   take an Int:U';
+    is { my Int   $a =  42 }(),    42, 'with :D, can Int   take an Int:D';
 
-    is { my Int:_ $a       }(), Int, 'with :D, can Int:_ be on its own';
-    is { my Int:_ $a = Int }(), Int, 'with :D, can Int:_ take an Int:U';
-    is { my Int:_ $a = 42  }(),  42, 'with :D, can Int:_ take an Int:D';
+    is { my Int:_ $a       }(),   Int, 'with :D, can Int:_ be on its own';
+    is { my Int:_ $a = Int }(),   Int, 'with :D, can Int:_ take an Int:U';
+    is { my Int:_ $a = 42  }(),    42, 'with :D, can Int:_ take an Int:D';
 
-    #?rakudo todo 'type is being set weirdly'
-    is { my Int:U $a       }(), Int, 'with :D, can Int:U be on its own';
-    is { my Int:U $a = Int }(), Int, 'with :D, can Int:U take an Int:U';
+    #?rakudo todo 'Int:U is not being parsed correctly yet'
+    is { my Int:U $a       }(), Int:U, 'with :D, can Int:U be on its own';
+    is { my Int:U $a = Int }(),   Int, 'with :D, can Int:U take an Int:U';
     throws-like { my Int:U $a = 42 }, 
       X::TypeCheck::Assignment,
-      symbol => '$a',                'with :D, can Int:U take an Int:D';
+      symbol => '$a',                  'with :D, can Int:U take an Int:D';
 
     throws-like 'use variables :D; my Int:D $a', # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
-      type => 'Int:D',               'with :D, can Int:D be on its own';
+      type => 'Int:D',                 'with :D, can Int:D be on its own';
     throws-like { my Int:D $a = Int }, 
       X::TypeCheck::Assignment,
-      symbol => '$a',                'with :D, can Int:D take an Int:U';
-    is { my Int:D $a = 42  }(),  42, 'with :D, can Int:D take an Int:D';
+      symbol => '$a',                  'with :D, can Int:D take an Int:U';
+    is { my Int:D $a = 42  }(),    42, 'with :D, can Int:D take an Int:D';
 }
 
 throws-like 'my Int:foo $a', 
