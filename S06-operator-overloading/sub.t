@@ -502,7 +502,6 @@ Testing operator overloading subroutines
     is 5 ° 5, "55", 'can define and use operator with a sigiled constant as symbol';
 }
 
-#?rakudo skip 'goes into never never land for a minute, then crashes'
 {
     lives-ok { constant $x = "µ, @"; sub circumfix:<<$x>>($) { 42 } },
         'can define circumfix using << >> and both delimiters from the same constant';
