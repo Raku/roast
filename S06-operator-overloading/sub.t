@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 86;
+plan 88;
 
 =begin pod
 
@@ -506,7 +506,13 @@ Testing operator overloading subroutines
     lives-ok { constant $x = "µ, @"; sub circumfix:<<$x>>($) { 42 } },
         'can define circumfix using << >> and both delimiters from the same constant';
     my $test = EVAL 'constant $x = "µ, @"; sub circumfix:<<$x>>($) { 42 }; µ 5 @';
+    is $test, 42, 'can define and use circumfix using << >> and both delimiters from the same constant';
+
+    lives-ok { constant sym = "µ, @"; sub circumfix:<< {sym} >>($) { 42 } },
+        'can define circumfix using << {sym} >> and both delimiters from the same constant';
+       $test = EVAL 'constant sym = "µ, @"; sub circumfix:<< {sym} >>($) { 42 }; µ 5 @';
     is $test, 42, 'can define and use circumfix using << >> and both delimiters from the same constant'
+
 }
 
 # vim: ft=perl6
