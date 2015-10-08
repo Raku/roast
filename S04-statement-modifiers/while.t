@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 6;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -40,6 +40,11 @@ plan 5;
     my $a = 0;
     ++$a while shift(@a) ne 'd';
     is($a, 3, "post while");
+}
+
+# RT #79174
+{
+    eval-lives-ok '1,2, while $++ < 1', "while is a terminator even after comma";
 }
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4;
+plan 5;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -33,6 +33,11 @@ plan 4;
     my $a = 0;
     $a++ until shift(@a) eq 'c';
     is($a, 2, "post until");
+}
+
+# RT #79174
+{
+    eval-lives-ok '1,2, until $++', "until is a terminator even after comma";
 }
 
 # vim: ft=perl6

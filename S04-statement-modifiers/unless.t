@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 9;
 
 # test the unless statement modifier
 
@@ -48,6 +48,11 @@ plan 8;
     my $a = 'oops';
     { $a = $^x } unless 0;
     is $a, 0, 'Statement-modifier unless runs block with placeholder';
+}
+
+# RT #79174
+{
+    is (1,2, unless 0), "1 2", "unless is a terminator even after comma";
 }
 
 # vim: ft=perl6
