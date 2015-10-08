@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 39;
 
 =begin description
 
@@ -158,4 +158,10 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
 my @a := (1, 2);
 is ((3,3,1),@a,@a).squish.list.Str, '3 3 1 1 2', ".squish doesn't flatten";
+
+# RT #126293
+{
+    is <a a b b c c>.squish, <a b c>, 'do we squish at all?';
+}
+
 # vim: ft=perl6
