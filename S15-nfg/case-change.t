@@ -63,7 +63,7 @@ plan 52;
 
     is $x.lc.chars, 1, 'lc still gives us one char';
     is $x.lc, $x, 'lc gives identity';
-    is $x.lc.NFD.list, (0x01F0, 0x0323), 'lc gives correct NFD';
+    is $x.lc.NFD.list, (0x006a, 0x0323, 0x030c), 'lc gives correct NFD';
 
     is $x.tc.chars, 1, 'tc still gives us one char';
     isnt $x.tc, $x, 'tc does not give identity';
@@ -71,7 +71,7 @@ plan 52;
 
     is $x.fc.chars, 1, 'fc still gives us one char';
     is $x.fc, $x, 'fc gives identity';
-    is $x.fc.NFD.list, (0x01F0, 0x0323), 'fc gives correct NFD';
+    is $x.fc.NFD.list, (0x006a, 0x0323, 0x030c), 'fc gives correct NFD';
 }
 
 # LATIN SMALL LIGATURE FF, COMBINING DOT BELOW
