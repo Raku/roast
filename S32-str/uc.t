@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 19;
 
 # L<S32::Str/"Str"/=item uc>
 
@@ -58,6 +58,18 @@ is ~(0.lc),         ~0, '.lc on Int';
         my $str = "('Nothing much' but A).$meth eq 'Nothing much'.$meth";
         ok EVAL($str), $str;
     }
+}
+
+# There are a handful of chars that have a precomposed lowercase, but no
+# precomposed uppercase. That is, NFC is sufficient for the lowercase to
+# be an NFG string, but on uppercasing there's no way to represent it in
+# NFC and so we need to produce a synthetic.
+#?rakudo.jvm skip 'NFG'
+{
+    my $s = "\c[GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS]";
+    is $s.uc, "\c[GREEK CAPITAL LETTER IOTA]\c[COMBINING DIAERESIS]\c[COMBINING ACUTE ACCENT]",
+        "Correct uppercasing of char with no precomposed upper";
+   is $s.uc.chars, 1, "Char with no precomposed upper gets NFG'd so upper is one grapheme";
 }
 
 # vim: ft=perl6
