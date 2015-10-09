@@ -8,7 +8,7 @@ This test tests the C<produce> builtin.
 
 =end description
 
-plan 23;
+plan 25;
 
 {
     is-deeply (produce *+*, 1..10), +«<1 3 6 10 15 21 28 36 45 55>, "produce listop works on a range (+)";
@@ -32,30 +32,35 @@ plan 23;
 }
 
 # Produce with n-ary functions
-#?rakudo skip "busted"
 {
   my @array  = <1 2 3 4 5 6 7 8 9>;
-  my @result =
+  my \result =
+       1,
        1 + 2 * 3,
       (1 + 2 * 3) + 4 * 5,
      ((1 + 2 * 3) + 4 * 5) + 6 * 7,
     (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * 9;
+  sub leftly { $^a + $^b * $^c }
+  sub infix:<leftly> { $^a + $^b * $^c }
 
-  is (@array.produce: { $^a + $^b * $^c }).gist, @result.gist, "n-ary produce() works";
+  is (@array.produce: &leftly).gist, result.gist, "n-ary produce() works";
+  is ([\leftly] @array).gist, result.gist, "n-ary produce() works as triangle op";
 }
 
 # Produce with right associative n-ary functions
-#?rakudo skip "busted"
 {
   my @array  = <1 2 3 4 5 6 7 8 9>;
-  my @result =
+  my \result =
+                                       9,
                                7 + 8 * 9,
                       5 + 6 * (7 + 8 * 9),
              3 + 4 * (5 + 6 * (7 + 8 * 9)),
     1 + 2 * (3 + 4 * (5 + 6 * (7 + 8 * 9)));
   sub rightly is assoc<right> { $^a + $^b * $^c }
+  sub infix:<rightly> is assoc<right> { $^a + $^b * $^c }
 
-  is (@array.produce: &rightly).gist, @result.gist, "right assoc n-ary produce() works";
+  is (@array.produce: &rightly).gist, result.gist, "right assoc n-ary produce() works";
+  is ([\rightly] @array).gist, result.gist, "right assoc n-ary produce() works as triangle operator";
 }
 
 {

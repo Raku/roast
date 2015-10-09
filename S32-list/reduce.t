@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 13;
+plan 15;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -32,6 +32,17 @@ plan 13;
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
 }
 
+# Reduce with n-ary operator
+{
+  my @array  = <1 2 3 4 5 6 7 8 9>;
+  my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * 9;
+
+  sub infix:<leftly> { $^a + $^b * $^c } 
+
+  #?niecza skip 'n-ary reduce'
+  is ([leftly] @array), $result, "n-ary reduce() works";
+}
+
 # Reduce with right associative n-ary functions
 {
   my @array  = <1 2 3 4 5 6 7 8 9>;
@@ -39,7 +50,16 @@ plan 13;
   sub rightly is assoc<right> { $^a + $^b * $^c }
 
   #?niecza skip 'n-ary reduce'
-  is (@array.reduce: &rightly), $result, "right assoc n-ary reduce() works";
+  is (@array.reduce: &rightly).gist, $result.gist, "right assoc n-ary reduce() works";
+}
+
+{
+  my @array  = <1 2 3 4 5 6 7 8 9>;
+  my $result = 1 + 2 * (3 + 4 * (5 + 6 * (7 + 8 * 9)));
+  sub infix:<rightly> is assoc<right> { $^a + $^b * $^c }
+
+  #?niecza skip 'n-ary reduce'
+  is ([rightly] @array).gist, $result.gist, "right assoc n-ary reduce() works";
 }
 
 
