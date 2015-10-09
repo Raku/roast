@@ -34,7 +34,6 @@ is("ÁÉÍÖÜÓŰŐÚ".lc, "áéíöüóűőú", ".lc on Hungarian vowels");
 # position and "σ" elsewhere."
 
 #?niecza 3 todo 'advanced Unicode wizardry'
-#?rakudo.moar 3 todo 'case folding, MoarVM #87 RT #124689'
 is 'ΣΣΣ'.lc, 'σσς', 'lower-casing of greek Sigma respects word-final special case (EOS)';
 is 'ΣΣΣ.'.lc, 'σσς.', 'lower-casing of greek Sigma respects word-final special case (.)';
 is 'ΣΣΣ '.lc, 'σσς ', 'lower-casing of greek Sigma respects word-final special case (ws)';
