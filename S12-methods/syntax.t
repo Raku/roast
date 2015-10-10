@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 14;
 
 # L<S12/Fancy method calls/"no space between the method name and the left parenthesis">
 
@@ -31,13 +31,13 @@ is (.doit\  (1, 2): 3), 'a:1|b:2!3',    'list op with colon, unspace';
 is (1..8).grep({ $_ % 2 }).map({ $_ - 1 }).join('|'), '0|2|4|6',
    'sanity check, should give same result as the next two tests';
 #?niecza skip 'Excess arguments to Any.map, used 2 of 4 positionals'
-#?rakudo 3 skip 'adverbial closures RT #67700'
-is (1..8).grep: { $_ % 2 }.map: { $_ - 1 }.join('|'), '0|2|4|6',
-   'adverbial closure has right precedence and associativity';
-is (1..8).grep:{ $_ % 2 }.map:{ $_ - 1 }.join('|'), '0|2|4|6',
-   'adverbial closure without space after colon';
-is (^10).map: { $^n * 2 + 1 }.join('|'), '1|3|5|7|9|11|13|15|17|19',
-   'Method calls after blocks passed to list-operator methods, RT #67700';
+# RT #67700
+{
+    is ((1..8).map:{ "$^x$^y" }.assuming: 'x').join('|'), 'x1|x2|x3|x4|x5|x6|x7|x8',
+       'block as arg in methodcall is the invocant of a following methodcall';
+    is ((1..8).map: { "$^x$^y" }.assuming: 'x').join('|'), 'x1|x2|x3|x4|x5|x6|x7|x8',
+       'block as arg in methodcall is the invocant of a following methodcall';
+}
 
 # Used to be Rakudo RT #61988, $.foo form didn't accept arguments
 
