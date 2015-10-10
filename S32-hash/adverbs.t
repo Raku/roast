@@ -403,10 +403,10 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is (%h{}:p($ok)).sort(*.key),   (:1a,:2b,:3c,:4d), "$n zen: :p";
     is (%h{}:!p).sort(*.key),       (:1a,:2b,:3c,:4d), "$n zen: :!p";
     is (%h{}:p($no)).sort(*.key),   (:1a,:2b,:3c,:4d), "$n zen: :p(\$no)";
+    is %h{}:foo,                                   %h, "$n zen:foo value";
 
     throws-like '%h{}:k:v', X::Adverb::Slice,
       :what(%h.name), :nogo(<k v>);
-    throws-like '%h{}:zen', X::AdHoc; # caught by MMD
     throws-like '%h{}:kv:p:zip:zop', X::Adverb::Slice,
       :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
