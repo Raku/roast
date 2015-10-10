@@ -28,7 +28,6 @@ is (1 Z* 3), (3), 'zip-product works with scalar both sides';
 
 # L<S03/"Hyper operators"/is assumed to be infinitely extensible>
 
-#?rakudo todo 'nom regression RT #122230'
 {
 #?niecza todo
 is (<a b c d> Z 'x', 'z', *), <a x b z c z d z>, 'non-meta zip extends right argument ending with *';
@@ -36,14 +35,13 @@ is (<a b c d> Z 'x', 'z', *), <a x b z c z d z>, 'non-meta zip extends right arg
 is (1, 2, 3, * Z 10, 20, 30, 40, 50),
     (1, 10, 2, 20, 3, 30, 3, 40, 3, 50), 'non-meta zip extends left argument ending with *';
 #?niecza skip 'Unable to resolve method munch in class List'
-is (2, 10, * Z 3, 4, 5, *).[^10],
+is (2, 10, * Z 3, 4, 5, *).[^5],
     (2, 3, 10, 4, 10, 5, 10, 5, 10, 5),
     'non-meta zip extends two arguments ending with *';
 #?niecza todo
 is (<a b c d> Z~ 'x', 'z', *), <ax bz cz dz>, 'zip-concat extends right argument ending with *';
 }
 
-#?rakudo todo 'nom regression RT #122230'
 #?niecza skip 'Cannot use value like Whatever as a number'
 {
 is (1, 2, 3, * Z+ 10, 20, 30, 40, 50), (11, 22, 33, 43, 53), 'zip-plus extends left argument ending with *';
