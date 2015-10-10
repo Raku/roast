@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 57;
+plan 60;
 
 my Int:D $j = 256;
 MY::<$j> = 111;
@@ -141,5 +141,18 @@ throws-like 'use variables :foo',
   X::InvalidTypeSmiley,
   name => 'foo',
   'does use variables :foo fail';
+
+# RT #126291
+{
+    my Int:D $x is default(0);
+    is $x, 0, 'Int:D with default value via trait';
+
+    my Int:D @array is default(0); @array[0] = Nil;
+    is @array[0], 0, 'Int:D array with default value via trait';
+
+    throws-like { @array[0] = Int },
+        X::TypeCheck::Assignment,
+        symbol => '@array', 'type check happens for Int:D array';
+}
 
 # vim: ft=perl6
