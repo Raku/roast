@@ -2,9 +2,14 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 28;
 
 # L<S04/Exceptions/The fail function>
+
+given (Failure.new()) {
+  .defined;
+  is .exception.message, "Failed", 'Default message for Failure is "Failed" without $!';
+}
 
 {
   # "use fatal" is not standard, so we don't have to disable it here
