@@ -4,7 +4,7 @@ use Test;
 
 # L<S32::Str/Str/"=item indent">
 
-plan 67;
+plan 62;
 
 # TODO: Rakudo doesn't have full support for constants, so we have to assume a
 # hardcoded 8 instead of $?TABSTOP for now.
@@ -98,17 +98,8 @@ is  "\t\t!".indent(-1),
     "\t" ~ ' ' x ($tab - 1) ~ '!',
     'Test that tabs explode from the right';
 
-ok  ([eq] ((' ' Xx 0..^$tab) X~ "\t")».indent(-Int(floor(($tab + 1) div 2)))),
-    "Sweep 0..{$tab-1} spaces before a tabstop explode in a visually consistent way";
-
-ok  ([eq] ((' ' Xx $tab..^$tab * 2) X~ "\t")».indent(-Int(floor(($tab + 1) div 2)))),
-    "Sweep {$tab}..{$tab*2-1} spaces before tab (non-explosion) visual consistency";
-
-ok  ([eq] ((' ' Xx $tab..^$tab * 2 - 1) X~ "\x2002\t")».indent(-Int(floor(($tab + 1) div 2)))),
-    "Sweep {$tab}..{$tab*2-2} spaces + mixed space visual consistency";
-
-is  "       \x2000\x2001\t\x2002".indent(-1), "     \x2000\x2001\t\x2002       ",
-    'Tabs later in mixed line notched back by removing from front';
+ok  ([eq] ((' ' Xx 0..$tab - 1) X~ "\t")».indent(-4)),
+    'Check that varying amounts of space before a tabstop explode in a visually consistent way';
 
 is  "  \t!".indent(-1),
     ' ' x ($tab - 1) ~ '!',
@@ -134,11 +125,6 @@ is  "\tquack\nmeow".indent($tab),
     "\t\tquack\n{' ' x $tab}meow",
     'Multiline $?TABSTOP-width indent with an unindented line and a tab-indented line';
 
-is  " \r \f \x0b \x85 \x2028 \x2029".indent(1), "  \r  \f  \x0b  \x85  \x2028  \x2029",
-    'All specced \v characters in multiline indent';
-
-is  " \r \f \x0b \x85 \x2028 \x2029".indent(-1), "\r\f\x0b\x85\x2028\x2029",
-    'All specced \v characters in multiline outdent';
 
 # Misc
 is  "\ta\n b".indent(0),
