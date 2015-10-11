@@ -21,6 +21,7 @@ is { sub a(--> Int)   { 42  }; a  }(),  42, 'can --> Int   return an Int:D';
 is { sub a(--> Int:_) { Int }; a  }(), Int, 'can --> Int:_ return an Int:U';
 is { sub a(--> Int:_) { 42  }; a  }(),  42, 'can --> Int:_ return an Int:D';
 is { sub a(--> Int:U) { Int }; a  }(), Int, 'can --> Int:U return an Int:U';
+# RT #126284
 throws-like { sub a(--> Int:U) {  42 }; a },
   X::TypeCheck::Return,                     'can --> Int:U return an Int:D';
 throws-like { sub a(--> Int:D) { Int }; a },
