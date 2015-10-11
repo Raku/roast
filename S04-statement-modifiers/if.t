@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 14;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -83,6 +83,11 @@ plan 13;
     my $a = 'oops';
     { $a = $^x } if 100;
     is $a, 100, 'Statement-modifier if runs block with placeholder';
+}
+
+# RT #79174
+{
+    is (1,2, if 3), "1 2", "if is a terminator even after comma";
 }
 
 # vim: ft=perl6

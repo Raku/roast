@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 7;
+plan 10;
 
 # Tests for anonymous enumerations.
 
@@ -16,5 +16,15 @@ isa-ok $e, Map, 'anonymous enum returns an Map';
 my %e1 = enum <foo>;
 is %e1.keys.elems, 1, 'single-value anonymous enum created correct sized hash';
 is %e1<foo>,       0, 'single-value anonymous enum created correctly';
+
+# RT #123083
+{
+    anon enum <un>;
+    is +un, 0, 'anon enum <un> is identical to enum :: <un>';
+
+    my %e = enum :: < foo bar baz >;
+    is +%e<bar>, 1, 'my %e = enum :: works';
+    is +baz, 2, 'my %e = enum :: works';
+}
 
 # vim: ft=perl6

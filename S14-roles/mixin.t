@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 47;
+plan 48;
 
 # L<S14/Run-time Mixins/>
 
@@ -211,6 +211,11 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
         'mixing roles into lazy lists does not fail (1)';
     is ((^Inf) but role {})[2], 2,
         'mixing roles into lazy lists does not fail (2)';
+}
+
+# RT #122030
+{
+    ok (Any but role { }) !=== (Any but role { }), 'anonymous roles are distinct';
 }
 
 # vim: syn=perl6

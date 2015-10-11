@@ -101,7 +101,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
     $text = 'amnot';
     is $text, 'amnot', 'assignment to subset of Str where pattern worked';
     throws-like q[ $text = 'oops' ],
-        X::TypeCheck:Assignment,
+        X::TypeCheck::Assignment,
         'subset of Str where pattern enforces pattern';
 }
 

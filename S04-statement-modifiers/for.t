@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 29;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -156,6 +156,11 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
 # RT #126060
 {
     is ($_ for $[1,2,3]).elems, 1, "does for modifier respect itemization";
+}
+
+# RT #79174
+{
+    is (1,2, for 3,4), "1 2 1 2", "for is a terminator even after comma";
 }
 
 # vim: ft=perl6

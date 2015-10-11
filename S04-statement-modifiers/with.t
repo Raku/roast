@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 35;
 
 # Test the topical aspects of the with statement modifier
 
@@ -205,6 +205,11 @@ plan 34;
     my @x;
     try (push @x, .WHAT.gist without 12 div $_) for 0..4;
     is @x, '(Failure)', 'without/for list comprehension works with parens';
+}
+
+# RT #79174
+{
+    is (1,2, with 3), "1 2", "with is a terminator even after comma";
 }
 
 # vim: ft=perl6

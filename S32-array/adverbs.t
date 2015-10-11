@@ -437,10 +437,10 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[]:p($ok), (0=>"a",1=>"b",2=>"c",3=>"d"), "$n zen: :p";
     is @a[]:!p,     (0=>"a",1=>"b",2=>"c",3=>"d"), "$n zen: :!p";
     is @a[]:p($no), (0=>"a",1=>"b",2=>"c",3=>"d"), "$n zen: :p(\$no)";
+    is @a[]:foo,                               @a, "$n zen:foo value";
 
     throws-like '@a[]:k:v', X::Adverb::Slice,
       :what(@a.name), :nogo(<k v>);
-    throws-like '@a[]:zen', X::AdHoc;  # caught by MMD
     throws-like '@a[]:kv:p:zip:zop', X::Adverb::Slice,
       :what(@a.name), :nogo(<kv p>), :unexpected(<zip zop>);
 } #20

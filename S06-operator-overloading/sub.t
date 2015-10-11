@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 84;
+plan 91;
 
 =begin pod
 
@@ -500,6 +500,27 @@ Testing operator overloading subroutines
     constant $sym = "°";
     sub infix:[$sym] { "$^a$^b" };
     is 5 ° 5, "55", 'can define and use operator with a sigiled constant as symbol';
+}
+
+{
+    lives-ok { constant $x = "µ @"; sub circumfix:<<$x>>($) { 42 } },
+        'can define circumfix using << >> and both delimiters from the same constant';
+    my $test = EVAL 'constant $x = "µ @"; sub circumfix:<<$x>>($) { 42 }; µ 5 @';
+    is $test, 42, 'can define and use circumfix using << >> and both delimiters from the same constant (1)';
+
+    lives-ok { constant $x = "µµ @@"; sub circumfix:<<$x>>($) { 42 } },
+        'can define circumfix using << >> and both delimiters from the same constant';
+       $test = EVAL 'constant $x = "µµ @@"; sub circumfix:<<$x>>($) { 42 }; µµ 5 @@';
+    is $test, 42, 'can define and use circumfix using << >> and both delimiters from the same constant (2)';
+
+    lives-ok { constant sym = "µ @"; sub circumfix:<< {sym} >>($) { 42 } },
+        'can define circumfix using << {sym} >> and both delimiters from the same constant';
+       $test = EVAL 'constant sym = "µ @"; sub circumfix:<< {sym} >>($) { 42 }; µ 5 @';
+    is $test, 42, 'can define and use circumfix using << >> and both delimiters from the same constant';
+
+    throws-like { EVAL q[ constant $x = "@ µ ."; sub circumfix:<<$x>>($) { 42 } ] },
+        X::Syntax::AddCategorical::TooManyParts, 
+        'constants containing too many parts throw correctly';
 }
 
 # vim: ft=perl6

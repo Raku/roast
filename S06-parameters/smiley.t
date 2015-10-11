@@ -21,12 +21,11 @@ is { sub a(--> Int)   { 42  }; a  }(),  42, 'can --> Int   return an Int:D';
 is { sub a(--> Int:_) { Int }; a  }(), Int, 'can --> Int:_ return an Int:U';
 is { sub a(--> Int:_) { 42  }; a  }(),  42, 'can --> Int:_ return an Int:D';
 is { sub a(--> Int:U) { Int }; a  }(), Int, 'can --> Int:U return an Int:U';
-#?rakudo todo 'not yet checking return value definedness'
-dies-ok { sub a(--> Int:U) {  42 }; a }, # change to throws-like if passes
-                                            'can --> Int:U return an Int:D';
-#?rakudo todo 'not yet checking return value definedness'
-dies-ok { sub a(--> Int:D) { Int }; a }, # change to throws-like if passes
-                                            'can --> Int:D return an Int:U';
+# RT #126284
+throws-like { sub a(--> Int:U) {  42 }; a },
+  X::TypeCheck::Return,                     'can --> Int:U return an Int:D';
+throws-like { sub a(--> Int:D) { Int }; a },
+  X::TypeCheck::Return,                     'can --> Int:D return an Int:U';
 is { sub a(--> Int:D) { 42  }; a  }(),  42, 'can --> Int:D return an Int:D';
 throws-like 'sub a(--> Int:foo) { }', 
   X::InvalidTypeSmiley,                     'does --> Int:foo fail';

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 18;
 
 # L<S32::Str/Str/lc>
 
@@ -33,8 +33,12 @@ is("ÁÉÍÖÜÓŰŐÚ".lc, "áéíöüóűőú", ".lc on Hungarian vowels");
 # "The Greek letter Σ has two different lowercase forms: "ς" in word-final
 # position and "σ" elsewhere."
 
-#?niecza todo 'advanced Unicode wizardry'
-#?rakudo.moar todo 'case folding, MoarVM #87 RT #124689'
-is 'ΣΣΣ'.lc, 'σσς', 'lower-casing of greek Sigma respects word-final special case';
+#?niecza 3 todo 'advanced Unicode wizardry'
+is 'ΣΣΣ'.lc, 'σσς', 'lower-casing of greek Sigma respects word-final special case (EOS)';
+is 'ΣΣΣ.'.lc, 'σσς.', 'lower-casing of greek Sigma respects word-final special case (.)';
+is 'ΣΣΣ '.lc, 'σσς ', 'lower-casing of greek Sigma respects word-final special case (ws)';
+is 'Σ'.lc, 'σ', 'final sigma does not apply if string is only an uppercase sigma';
+is 'The Σ is a Sigma'.lc, 'the σ is a sigma', 'final sigma does not apply if only letter in word (ws)';
+is 'Sigma looks like Σ.'.lc, 'sigma looks like σ.', 'final sigma does not apply if only letter in word (.)';
 
 # vim: ft=perl6

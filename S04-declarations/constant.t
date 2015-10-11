@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 63;
+plan 70;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -356,6 +356,34 @@ throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     is-deeply @a, @b, 'constant @ sequence can be evaluated more than once';
     is @x[0], 3, "can subscript into constant @ (1)";
     is @x[1], 4, "can subscript into constant @ (2)";
+}
+
+# test use of 'constant' to make synonym to operator
+{
+    constant &infix:<`> = &infix:<+>;
+
+    is 1 ` 5, 6, "can add operator synonym via 'constant'";
+    is 1 ` 2 * 3, 7, "new synonym has same precedence as what it's aliasing";
+}
+
+{
+    constant &postfix:<`> = &prefix:<?>;
+
+    is 1`, True, "can create synonym of operator in different grammatical category";
+}
+
+{
+    multi sub infix:<☃>(Int $a, Int $b) { $a * $b }
+
+    constant &infix:<☄> := &infix:<☃>;
+
+    is 7 ☃ 6, 42, "Operator multi defined on snowman works using snowman";
+    is 6 ☄ 6, 36, "Operator multi defined on snowman works using comet";
+
+    multi sub infix:<☄>(Str $a, Int $b) { $a x $b }
+
+    is "A" ☄ 5, "AAAAA", "Operator multi defined on comet works using comet";
+    is "B" ☃ 4, "BBBB", "Operator multi defined on comet works using snowman";
 }
 
 # vim: ft=perl6
