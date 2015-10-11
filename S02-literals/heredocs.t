@@ -1,5 +1,5 @@
 use Test;
-plan 22;
+plan 23;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -208,4 +208,20 @@ END
 	MAKEFILE4
         "foo: bar\n\techo 'AGAIN';\nbar:\n\techo 'OHAI';\n"),
         "Heredoc tab explosion makefile use case is usesul.";
+}
+
+# RT #125543
+{
+    is qq:to<FOO>,
+    line1\n    line1
+    line2\r    line2
+    line3\f    line3
+    line4\x0b    line4
+    line5\x85    line5
+    line6\x2028    line6
+    line7\x2029    line7
+    FOO
+    "line1\n    line1\nline2\r    line2\nline3\f    line3\nline4\x0b    line4\nline5\x85    line5\nline6\x2028    line6\nline7\x2029    line7\n",
+    "Backslashes for line ending characters are indent-transparent";
+
 }
