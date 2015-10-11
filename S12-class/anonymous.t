@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 # L<S12/Classes/"Perl 6 supports multiple inheritance, anonymous classes">
-plan 17;
+plan 18;
 
 # Create and instantiate empty class; check .WHAT works and stringifies to
 # empty string.
@@ -72,5 +72,10 @@ is($t3.x, 42,        'anonymous classes can have attributes');
 # RT #80024
 throws-like q[anon class C { }; C.WHAT; ], X::Undeclared::Symbols,
     'anon class is actually anon';
+
+# RT 114716
+{
+    ok (class {}) !=== (class {}), 'anonymous classes are distinct';
+}
 
 # vim: ft=perl6
