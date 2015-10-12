@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 20;
 
 #?niecza skip "$a.VAR.name NYI"
 # not specifically typed
@@ -74,5 +74,16 @@ plan 15;
 #    &a = -> { ... };
 #    is &a.VAR.name, '&a', "initialized typed sub should have name";
 } #2
+
+# RT #126241
+{
+    is &[=>].name, 'infix:«=>»', '=> op name uses «»';
+    is &[>=].name, 'infix:«>=»', '>= op name uses «»';
+    is &[<=].name, 'infix:«<=»', '<= op name uses «»';
+    is &[<=>].name, 'infix:«<=>»', '<=> op name uses «»';
+
+    sub infix:«~~>» { "$^a -> $^b\n" };
+    is &[~~>].name, 'infix:«~~>»', 'custom ~~> op name uses «»';
+}
 
 # vim: ft=perl6
