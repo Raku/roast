@@ -19,7 +19,6 @@ plan 52;
     is $x.tc, $x, 'tc gives identity';
     is $x.tc.NFD.list, (0x0044, 0x0323, 0x0307), 'tc gives correct NFD';
 
-    #?rakudo.moar 3 skip 'NYI'
     is $x.fc.chars, 1, 'fc still gives us one char';
     isnt $x.fc, $x, 'fc does not give identity';
     is $x.fc.NFD.list, (0x0064, 0x0323, 0x0307), 'fc gives correct NFD';
@@ -42,7 +41,6 @@ plan 52;
     isnt $x.tc, $x, 'tc does not give identity';
     is $x.tc.NFD.list, (0x0044, 0x0323, 0x0307), 'tc gives correct NFD';
 
-    #?rakudo.moar 3 skip 'NYI'
     is $x.fc.chars, 1, 'fc still gives us one char';
     is $x.fc, $x, 'fc gives identity';
     is $x.fc.NFD.list, (0x0064, 0x0323, 0x0307), 'fc gives correct NFD';
@@ -52,7 +50,6 @@ plan 52;
 # Interesting because on .uc, .tc there is no precomposed uppercase char, so
 # we will have to form a new synthetic. And with .fc, the CaseFolder table
 # has us take it to pieces, but we'll still need to re-compose it for NFG.
-#?rakudo.moar skip 'NYI'
 {
     my $x = Uni.new(0x01F0, 0x0323).Str;
     is $x.chars, 1, 'Sanity: 0x01F0, 0x0323 = 1 grapheme';
@@ -79,7 +76,6 @@ plan 52;
 # codepoints, the second is a combiner. But this expands to two base
 # chars, meaning that we need to make sure to sneak the combiner in
 # between the two.
-#?rakudo.moar skip 'NYI'
 {
     my $x = Uni.new(0xFB00, 0x0323).Str;
     is $x.chars, 1, 'Sanity: 0xFB00, 0x0323 = 1 grapheme';
