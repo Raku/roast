@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 24;
 
 #?niecza skip "$a.VAR.name NYI"
 # not specifically typed
@@ -77,6 +77,7 @@ plan 20;
 
 # RT #126241
 {
+    is &[==].name, 'infix:<==>', '== op name uses <>';
     is &[=>].name, 'infix:«=>»', '=> op name uses «»';
     is &[>=].name, 'infix:«>=»', '>= op name uses «»';
     is &[<=].name, 'infix:«<=»', '<= op name uses «»';
@@ -84,6 +85,15 @@ plan 20;
 
     sub infix:«~~>» { "$^a -> $^b\n" };
     is &[~~>].name, 'infix:«~~>»', 'custom ~~> op name uses «»';
+
+    sub infix:«~~>\»» { "$^a -> $^b\n" };
+    is &[~~>»].name, 'infix:<~~\>»>', 'custom ~~>» op name uses <> and backslash';
+
+    sub infix:«\$>» { "$^a -> $^b\n" };
+    is &[$>].name, 'infix:<$\>>', 'custom $> op name uses <> and backslash';
+    
+    sub infix:<$\<> { "$^a -> $^b\n" };
+    is &[$<].name, 'infix:<$\<>', 'custom $< op name uses <> and backslash';
 }
 
 # vim: ft=perl6
