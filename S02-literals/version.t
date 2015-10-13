@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 30;
+plan 31;
 
 is v1.2.3, '1.2.3', 'version literal stringification';
 is v1.2.3+, '1.2.3+', 'version literal stringification';
@@ -34,3 +34,4 @@ ok  v1.2.0 eqv  v1.2.0.0.0.0.0,   'trailing zeroes are equivalent';
 
 is Version.new(""), '', "can we handle empty string versions";
 is Version.new("").gist, 'v', "can we handle empty string versions";
+is Version.new(*).gist, 'v*', "can we handle a bare Whatever";
