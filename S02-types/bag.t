@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 199;
+plan 205;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -498,6 +498,28 @@ sub showkv($x) {
     throws-like { for $b.kv -> \k, \v { v = 22 } },
       X::Assignment::RO,
       'Make sure we cannot assign on a .kv alias';
+}
+
+{
+    my $b = <a b b c c c d d d d>.Bag;
+    my @a1;
+    for $b.values -> \v { @a1.push(v) }
+    is @a1.sort, (1,2,3,4), 'did we see all values';
+    my @a2;
+    for $b.keys -> \v { @a2.push(v) }
+    is @a2.sort, <a b c d>, 'did we see all keys';
+    my %h1;
+    for $b.pairs -> \p { %h1{p.key} = p.value }
+    is %h1.sort, (:1a, :2b, :3c, :4d), 'did we see all the pairs';
+    my %h2;
+    for $b.kv -> \k, \v { %h2{k} = v }
+    is %h2.sort, (:1a, :2b, :3c, :4d), 'did we see all the kv';
+    my %h3;
+    for $b.antipairs -> \p { %h3{p.value} = p.key }
+    is %h3.sort, (:1a, :2b, :3c, :4d), 'did we see all the antipairs';
+    my %h4;
+    for $b.kxxv -> \k { %h4{k}++ }
+    is %h4.sort, (:1a, :2b, :3c, :4d), 'did we see all the kxxv';
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 223;
+plan 229;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -482,6 +482,26 @@ sub showkv($x) {
     throws-like { for $m.kv -> \k, \v { v = "foo" } },
       X::TypeCheck::Assignment,
       'Make sure we cannot assign Str on a .kv alias';
+}
+
+{
+    my $m = (a=>1.1, b=>2.2, c=>3.3, d=> 4.4).MixHash;
+    my @a1;
+    for $m.values -> \v { @a1.push(v) }
+    is @a1.sort, (1.1,2.2,3.3,4.4), 'did we see all values';
+    my @a2;
+    for $m.keys -> \v { @a2.push(v) }
+    is @a2.sort, <a b c d>, 'did we see all keys';
+    my %h1;
+    for $m.pairs -> \p { %h1{p.key} = p.value }
+    is %h1.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the pairs';
+    my %h2;
+    for $m.kv -> \k, \v { %h2{k} = v }
+    is %h2.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the kv';
+    my %h3;
+    for $m.antipairs -> \p { %h3{p.value} = p.key }
+    is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
+    throws-like { for $m.kxxv -> \k { say k } }, X::AdHoc, 'cannot call kxxv';
 }
 
 # vim: ft=perl6
