@@ -22,7 +22,6 @@ ok(Grammar::With::Signatures.parse("barfoo"), 'barfoo matches');
 ok(Grammar::With::Signatures.parse("foobar"), 'foobar doesnt match');
 
 # RT #113544
-#?rakudo.jvm todo 'Regex compiler needs updating for these arg kinds'
 {
     grammar AllTheArgKinds {
         token TOP {

@@ -26,7 +26,6 @@ ok <-1/-3>.WHAT === Str, 'negative allowed only on numerator';
 isa-ok <-1/3>, Rat, 'negative Rat literal';
 ok <-1/3> * -3 == 1, 'negative Rat literal';
 
-#?rakudo.jvm todo 'fails with "Attempt to divide by zero using div" on JVM RT #124559'
 is <0x01/0x03>, (0x01/0x03), 'Rat works with hexadecimal numbers';
 #?rakudo 2 todo 'Adverbial numbers in Rat literals not supported'
 is <:13<01>/:13<07>>, (1/7), 'Rat works with colon radix numbers';

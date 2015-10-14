@@ -181,7 +181,6 @@ plan 30;
 
 # RT #121530
 #?niecza todo '@!'
-#?rakudo.jvm todo 'unwind, RT #121530'
 {
     my $str;
     try {
@@ -189,6 +188,7 @@ plan 30;
         LEAVE { $str ~= '2'; die 'foo' }
     }
     is $str, '21', 'die doesn\'t abort LEAVE queue';
+    #?rakudo.jvm todo 'RT #121530'
     is $!.message, 'foo', 'single exception from LEAVE is rethrown after running LEAVEs';
 }
 
