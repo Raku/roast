@@ -121,7 +121,7 @@ for $%h, Any, $%hi, Int, $%hia, Int -> \h, \T {
       X::Immutable, :method<DELETE-KEY>, :typename<Bag>, "\$b.DELETE-KEY";
     is $b.AT-KEY("a"), 1, "\$b.AT-KEY (after delete)";
     throws-like { $b.ASSIGN-KEY("a",42) },
-      X::Assignment::RO, :typename<Bag>, "\$b.ASSIGN-KEY";
+      X::Assignment::RO, :typename<Int>, "\$b.ASSIGN-KEY";
     is $b.AT-KEY("a"), 1, "\$b.AT-KEY (after assignment)";
 }
 
@@ -152,7 +152,7 @@ for $%h, Any, $%hi, Int, $%hia, Int -> \h, \T {
       X::Immutable, :method<DELETE-KEY>, :typename<Mix>, "\$m.DELETE-KEY";
     is $m.AT-KEY("a"), 1, "\$m.AT-KEY (after delete)";
     throws-like { $m.ASSIGN-KEY("a",42) },
-      X::Assignment::RO, :typename<Mix>, "\$m.ASSIGN-KEY";
+      X::Assignment::RO, :typename<Int>, "\$m.ASSIGN-KEY";
     is $m.AT-KEY("a"), 1, "\$m.AT-KEY (after assignment)";
 }
 
