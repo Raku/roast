@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 52;
+plan 53;
 
 isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
@@ -26,7 +26,9 @@ ok <-1/-3>.WHAT === Str, 'negative allowed only on numerator';
 isa-ok <-1/3>, Rat, 'negative Rat literal';
 ok <-1/3> * -3 == 1, 'negative Rat literal';
 
+# RT #124559
 is <0x01/0x03>, (0x01/0x03), 'Rat works with hexadecimal numbers';
+is <0b01/0b10>, (0b01/0b10), 'Rat works with binary numbers';
 #?rakudo 2 todo 'Adverbial numbers in Rat literals not supported'
 is <:13<01>/:13<07>>, (1/7), 'Rat works with colon radix numbers';
 is <:12<1a>/:12<7b>>, (:12<1a> / :12<7b>), 'Rat works with colon radix numbers';
