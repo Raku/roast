@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 11;
+plan 15;
 
 dies-ok { Supply.squish }, 'can not be called as a class method';
 
@@ -32,4 +32,12 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       ),
       [<a B cc AA>],
       "squish with as and with tap works";
+
+    tap-ok Supply.from-list(<a>).squish( :with( -> $a, $b {1} )),
+      [<a>],
+      "squish with with that always says it's the same, tap works";
+
+    tap-ok Supply.from-list(<a>).squish( :as({1}) ),
+      [<a>],
+      "squish with as that always returns the same value, tap works";
 }
