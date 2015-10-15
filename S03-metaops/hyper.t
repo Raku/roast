@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 319;
+plan 386;
 
 =begin pod
 
@@ -387,7 +387,97 @@ my @e;
     is @e»[1], '3 5 6', "nodal postcircumfixes do not distribute";
     is @e».elems, '2 2', "nodal methods do not distribute (elems)";
     is @e».reverse, '3 2 5 6 4', "nodal methods do not distribute (reverse)";
-    # XXX need to test all the things
+
+    is [[2, 3], [4, [5, 6]]]».all.gist, "(all(2, 3) all(4, [5 6]))", ".all is nodal";
+    is [[2, 3], [4, [5, 6]]]».antipairs.gist, "((2 => 0 3 => 1) (4 => 0 [5 6] => 1))", ".antipairs is nodal";
+    is [[2, 3], [4, [5, 6]]]».any.gist, "(any(2, 3) any(4, [5 6]))", ".any is nodal";
+    is [[2, 3], [4, [5, 6]]]».Array.gist, "([2 3] [4 [5 6]])", ".Array is nodal";
+    is [[2, 3], [4, [5, 6]]]».BagHash».keys».sort.gist, "((2 3) (4 [5 6]))", ".BagHash is nodal";
+    is [[2, 3], [4, [5, 6]]]».Bag».keys».sort.gist, "((2 3) (4 [5 6]))", ".Bag is nodal";
+    is [[2, 3], [4, [5, 6]]]».categorize(*.[0]).gist, "(2 => [2], 3 => [3] 4 => [4], 5 => [[5 6]])", ".categorize is nodal";
+    is [[2, 3], [4, [5, 6]]]».classify(*.[0]).gist, "(2 => [2], 3 => [3] 4 => [4], 5 => [[5 6]])", ".classify is nodal";
+    is [[2, 3], [4, [5, 6]]]».combinations.gist, "((() (2) (3) (2 3)) (() (4) ([5 6]) (4 [5 6])))", ".combinations is nodal";
+    is [[2, 3], [4, [5, 6]]]».deepmap(*+1).gist, "([3 4] [5 [6 7]])", ".deepmap is nodal";
+    is [[2, 3], [4, [5, 6]]]».duckmap(*+1).gist, "((3 4) (5 3))", ".duckmap is nodal";
+    is [[2, 3], [4, [5, 6]]]».eager.gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".eager is nodal";
+    is [[2, 3], [4, [5, 6]]]».elems.gist, "(2 2)", ".elems is nodal";
+    is [[2, 3], [4, [5, 6]]]».end.gist, "(1 1)", ".end is nodal";
+    is [[2, 3], [4, [5, 6]]]».first-index(* > 2).gist, "(1 0)", ".index is nodal";
+    is [[2, 3], [4, [5, 6]]]».first(* > 2).gist, "(3 4)", ".first is nodal";
+    is [[2, 3], [4, [5, 6]]]».flat.gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".flat is nodal";
+    is [[2, 3], [4, [5, 6]]]».flatmap(*+1).gist, "((3 4) (5 3))", ".flatmap is nodal";
+    is [[2, 3], [4, [5, 6]]]».grep-index(* > 2).gist, "((1) (0))", ".index is nodal";
+    is [[2, 3], [4, [5, 6]]]».grep(* > 2).gist, "((3) (4))", ".grep is nodal";
+    is [[2, 3], [4, [5, 6]]]».hash.gist, "(2 => 3 4 => [5 6])", ".hash is nodal";
+    is [[2, 3], [4, [5, 6]]]».Hash.gist, "(2 => 3 4 => [5 6])", ".Hash is nodal";
+    is [[2, 3], [4, [5, 6]]]».join(":").gist, "(2:3 4:5 6)", ".join is nodal";
+    is [[2, 3], [4, [5, 6]]]».keys.gist, "(0..1 0..1)", ".keys is nodal";
+    is [[2, 3], [4, [5, 6]]]».kv.gist, "((0 2 1 3) (0 4 1 [5 6]))", ".kv is nodal";
+    is [[2, 3], [4, [5, 6]]]».last-index(* > 2).gist, "(1 0)", ".index is nodal";
+    is [[2, 3], [4, [5, 6]]]».list.gist, "([2 3] [4 [5 6]])", ".list is nodal";
+    is [[2, 3], [4, [5, 6]]]».List.gist, "((2 3) (4 [5 6]))", ".List is nodal";
+    is [[2, 3], [4, [5, 6]]]».map(* + 1).gist, "((3 4) (5 3))", ".map is nodal";
+    is [[2, 3], [4, [5, 6]]]».max.gist, "(3 [5 6])", ".max is nodal";
+    is [[2, 3], [4, [5, 6]]]».min.gist, "(2 4)", ".min is nodal";
+    is [[2, 3], [4, [5, 6]]]».minmax.gist, "(2..3 4..6)", ".minmax is nodal";
+    is [[2, 3], [4, [5, 6]]]».MixHash».keys».sort.gist, "((2 3) (4 [5 6]))", ".MixHash is nodal";
+    is [[2, 3], [4, [5, 6]]]».Mix».keys».sort.gist, "((2 3) (4 [5 6]))", ".Mix is nodal";
+    is [[2, 3], [4, [5, 6]]]».nodemap(*+1).gist, "((3 4) (5 3))", ".nodemap is nodal";
+    is [[2, 3], [4, [5, 6]]]».none.gist, "(none(2, 3) none(4, [5 6]))", ".none is nodal";
+    is [[2, 3], [4, [5, 6]]]».one.gist, "(one(2, 3) one(4, [5 6]))", ".one is nodal";
+    is [[2, 3], [4, [5, 6]]]».pairs.gist, "((0 => 2 1 => 3) (0 => 4 1 => [5 6]))", ".pairs is nodal";
+    is [[2, 3], [4, [5, 6]]]».pairup.gist, "((2 => 3) (4 => [5 6]))", ".pairup is nodal";
+    is [[2, 3], [4, [5, 6]]]».permutations.gist, "(((2 3) (3 2)) ((4 [5 6]) ([5 6] 4)))", ".permutations is nodal";
+    is [[2, 3], [4, [5, 6]]]».pick(*)».sort.gist, "((2 3) (4 [5 6]))", ".pick is nodal";
+    is [[2, 3], [4, [5, 6]]]».[1].gist, "(3 [5 6])", ".postcircumfix:<[ ]> is nodal";
+#?rakudo skip "doesn't work"
+    is [[2, [3,4]], [4, [5, 6]]]».[1;1].gist, "", ".postcircumfix:<[; ]> is nodal";
+    is [[2, 3], [4, [5, 6]]]».produce(&[+]).gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".produce is nodal";
+    is [[2, 3], [4, [5, 6]]]».reduce(&[+]).gist, "[[2 3] [4 [5 6]]]", ".reduce is nodal";
+    is [[2, 3], [4, [5, 6]]]».repeated.gist, "(() ())", ".repeated is nodal";
+    is [[2, 3], [4, [5, 6]]]».reverse.gist, "([3 2] [[5 6] 4])", ".reverse is nodal";
+    is [[2, 3], [4, [5, 6]]]».roll(*).gist, "((...) (...))", ".roll is nodal";
+    is [[2, 3], [4, [5, 6]]]».rotate(1).gist, "([3 2] [[5 6] 4])", ".rotate is nodal";
+    is [[2, 3], [4, [5, 6]]]».rotor(2).gist, "(((2 3)) ((4 [5 6])))", ".rotor is nodal";
+    is [[2, 3], [4, [5, 6]]]».Seq.gist, "((2 3) (4 [5 6]))", ".Seq is nodal";
+    is [[2, 3], [4, [5, 6]]]».SetHash».keys».sort.gist, "((2 3) (4 [5 6]))", ".SetHash is nodal";
+    is [[2, 3], [4, [5, 6]]]».Set».keys».sort.gist, "((2 3) (4 [5 6]))", ".Set is nodal";
+    is [[2, 3], [4, [5, 6]]]».Slip.gist, "((2 3) (4 [5 6]))", ".Slip is nodal";
+    is [[2, 3], [4, [5, 6]]]».sort.gist, "((2 3) (4 [5 6]))", ".sort is nodal";
+    is [[2, 3], [4, [5, 6]]]».squish.gist, "((2 3) (4 [5 6]))", ".squish is nodal";
+    is [[2, 3], [4, [5, 6]]]».Supply.elems, 2, ".Supply is nodal";
+    is [[2, 3], [4, [5, 6]]]».tree(*.reverse,*.reverse).gist, "((3 2) ([6 5] 4))", ".tree is nodal";
+    is ((2, 3), (2,3), (4, (5, (6, 7), (6, 7)), (5, (6, 7), (6, 7))))».unique(:with(&[eqv])).gist, "((2 3) (2 3) (4 (5 (6 7) (6 7))))", ".unique is nodal";
+    is [[2, 3], [4, [5, 6]]]».values.gist, "((2 3) (4 [5 6]))", ".values is nodal";
+
+    # handle mutators specially
+    is [[2, 3], [4, [5, 6]]]».push((42,43)).gist, "([2 3 (42 43)] [4 [5 6] (42 43)])", ".push is nodal";
+    is [[2, 3], [4, [5, 6]]]».pop.gist, "(3 [5 6])", ".pop is nodal";
+    is [[2, 3], [4, [5, 6]]]».append(42,43).gist, "([2 3 42 43] [4 [5 6] 42 43])", ".append is nodal";
+    is [[2, 3], [4, [5, 6]]]».unshift((42,43)).gist, "([(42 43) 2 3] [(42 43) 4 [5 6]])", ".unshift is nodal";
+    is [[2, 3], [4, [5, 6]]]».shift.gist, "(2 4)", ".shift is nodal";
+    is [[2, 3], [4, [5, 6]]]».prepend((42,43)).gist, "([42 43 2 3] [42 43 4 [5 6]])", ".prepend is nodal";
+#?rakudo skip "doesn't seem to see the nodal"
+    is [[2, 3], [4, [5, 6]]]».splice(0,1).gist, "", ".splice is nodal";
+
+# XXX What about these?
+#    is @e».HYPER.gist, '', ".HYPER is nodal";
+#    is @e».ASSIGN-POS.gist, '', ".POS is nodal";
+#    is @e».AT-POS.gist, '', ".POS is nodal";
+#    is @e».DELETE-POS.gist, '', ".POS is nodal";
+#    is @e».EXISTS-POS.gist, '', ".POS is nodal";
+
+#    is @e».FLATTENABLE_HASH.gist, '', ".FLATTENABLE_HASH is nodal";
+#    is @e».FLATTENABLE_LIST.gist, '', ".FLATTENABLE_LIST is nodal";
+
+#    is @e».ASSIGN-KEY.gist, '', ".KEY is nodal";
+#    is @e».AT-KEY.gist, '', ".KEY is nodal";
+#    is @e».BIND-KEY.gist, '', ".KEY is nodal";
+#    is @e».EXISTS-KEY.gist, '', ".KEY is nodal";
+#    is @e».DELETE-KEY.gist, '', ".KEY is nodal";
+#    is @e».<a>.gist, '', ".postcircumfix:<{ }> is nodal";
+#    is @e».{'a';'a'}.gist, '', ".postcircumfix:<{; }> is nodal";
+#    is [[2, 3], [4, [5, 6]]]».invert.gist, "", ".invert is nodal";
 };
 
 #?DOES 3
