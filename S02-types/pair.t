@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 100;
+plan 4 * 19 + 101;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -374,6 +374,15 @@ Note, "non-chaining binary" was later renamed to "structural infix".
       X::Assignment::RO,
       'cannot assign an Int to a frozen';
     is $p.value, 42, 'did not change integer value';
+}
+
+# RT #126369
+{
+    my $x = 42;
+    $x = :$x;
+    #?rakudo.moar todo 'RT #126369'
+    #?rakudo.jvm todo 'RT #126369'
+    is-deeply $x, 'x' => 42, 'pair assignment';
 }
 
 # vim: ft=perl6
