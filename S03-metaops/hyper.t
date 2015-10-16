@@ -430,8 +430,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».permutations.gist, "(((2 3) (3 2)) ((4 [5 6]) ([5 6] 4)))", ".permutations is nodal";
     is [[2, 3], [4, [5, 6]]]».pick(*)».sort.gist, "((2 3) (4 [5 6]))", ".pick is nodal";
     is [[2, 3], [4, [5, 6]]]».[1].gist, "(3 [5 6])", ".postcircumfix:<[ ]> is nodal";
-#?rakudo skip "doesn't work"
-    is [[2, [3,4]], [4, [5, 6]]]».[1;1].gist, "", ".postcircumfix:<[; ]> is nodal";
+    is [[2, [3,4]], [4, [5, 6]]]».[1;1].gist, "(4 6)", ".postcircumfix:<[; ]> is nodal";
     is [[2, 3], [4, [5, 6]]]».produce(&[+]).gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".produce is nodal";
     is [[2, 3], [4, [5, 6]]]».reduce(&[+]).gist, "[[2 3] [4 [5 6]]]", ".reduce is nodal";
     is [[2, 3], [4, [5, 6]]]».repeated.gist, "(() ())", ".repeated is nodal";
