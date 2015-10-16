@@ -169,7 +169,7 @@ my @normal = <
 
 my @exception = <
   X::AdHoc
-  X::Adverb::Slice
+  X::Adverb
   X::Anon::Augment
   X::Anon::Multi
   X::Assignment::RO

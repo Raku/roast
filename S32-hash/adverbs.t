@@ -53,11 +53,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h<b>:!p,       (b=>2), "$n single key existing: :!p";
     is %h<b>:p($no),   (b=>2), "$n single key existing: :p(\$no)";
 
-    throws-like '%h<b>:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h<b>:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h<b>:zorp', X::AdHoc; # caught by MMD
-    throws-like '%h<b>:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h<b>:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # array single existing key
@@ -80,11 +80,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h{@b}:!p,       (b=>2), "$n single key existing: :!p";
     is %h{@b}:p($no),   (b=>2), "$n single key existing: :p(\$no)";
 
-    throws-like '%h{@b}:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h{@b}:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h{@b}:rickroll', X::AdHoc; # caught by MMD
-    throws-like '%h{@b}:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h{@b}:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # single missing key
@@ -107,11 +107,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h<B>:!p,       (B=>$T), "$n single key missing: :!p";
     is %h<B>:p($no),   (B=>$T), "$n single key missing: :p(\$no)";
 
-    throws-like '%h<B>:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h<B>:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h<B>:baxter', X::AdHoc; # caught by MMD
-    throws-like '%h<B>:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h<B>:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # array single missing key
@@ -134,11 +134,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h{@B}:!p,       (B=>$T), "$n array single key missing: :!p";
     is %h{@B}:p($no),   (B=>$T), "$n array single key missing: :p(\$no)";
 
-    throws-like '%h{@B}:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h{@B}:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h{@B}:jefferson', X::AdHoc; # caught by MMD
-    throws-like '%h{@B}:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h{@B}:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # multiple existing keys
@@ -161,11 +161,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h<b c>:!p,        (b=>2,c=>3), "$n multiple key existing: :!p";
     is %h<b c>:p($no),    (b=>2,c=>3), "$n multiple key existing: :p(\$no)";
 
-    throws-like '%h<b c>:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h<b c>:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h<b c>:egg', X::AdHoc; # caught by MMD
-    throws-like '%h<b c>:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h<b c>:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # array multiple existing keys
@@ -188,11 +188,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h{@bc}:!p,        (b=>2,c=>3), "$n array multi key existing: :!p";
     is %h{@bc}:p($no),    (b=>2,c=>3), "$n array multi key existing: :p(\$no)";
 
-    throws-like '%h{@bc}:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h{@bc}:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h{@bc}:omelet', X::AdHoc; # caught by MMD
-    throws-like '%h{@bc}:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h{@bc}:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # range multiple existing keys
@@ -215,11 +215,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h{"b".."c"}:!p,        (b=>2,c=>3), "$n range mult key exist: :!p";
     is %h{"b".."c"}:p($no),    (b=>2,c=>3), "$n range mult key exist: :p(\$no)";
 
-    throws-like '%h{"b".."c"}:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h{"b".."c"}:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h{"b".."c"}:rivet', X::AdHoc; # caught by MMD
-    throws-like '%h{"b".."c"}:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h{"b".."c"}:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # multiple missing keys
@@ -242,11 +242,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h<B C>:!p,        (B=>$T,C=>$T), "$n multiple key missing: :!p";
     is %h<B C>:p($no),    (B=>$T,C=>$T), "$n multiple key missing: :p(\$no)";
 
-    throws-like '%h<B C>:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h<B C>:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h<B C>:echt', X::AdHoc; # caught by MMD
-    throws-like '%h<B C>:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h<B C>:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # array multiple missing keys
@@ -269,11 +269,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h{@BC}:!p,        (B=>$T,C=>$T), "$n array multi key missing: :!p";
     is %h{@BC}:p($no),    (B=>$T,C=>$T), "$n array multi key missing: :p(\$no)";
 
-    throws-like '%h{@BC}:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h{@BC}:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h{@BC}:gaston', X::AdHoc; # caught by MMD
-    throws-like '%h{@BC}:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h{@BC}:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # range multiple missing keys
@@ -296,11 +296,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h{"B".."C"}:!p,        (B=>$T,C=>$T), "$n range mul key miss: :!p";
     is %h{"B".."C"}:p($no),    (B=>$T,C=>$T), "$n range mul key miss: :p(\$no)";
 
-    throws-like '%h{"B".."C"}:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h{"B".."C"}:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h{"B".."C"}:noshit', X::AdHoc; # caught by MMD
-    throws-like '%h{"B".."C"}:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h{"B".."C"}:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # mixed existing/missing keys
@@ -323,11 +323,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h<b C>:!p,        (b=>2,C=>$T), "$n multiple key mixed: :!p";
     is %h<b C>:p($no),    (b=>2,C=>$T), "$n multiple key mixed: :p(\$no)";
 
-    throws-like '%h<b C>:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h<b C>:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h<b C>:fnoppo', X::AdHoc; # caught by MMD
-    throws-like '%h<b C>:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h<b C>:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # array mixed existing/missing keys
@@ -350,11 +350,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h{@bC}:!p,        (b=>2,C=>$T), "$n array multiple key mixed: :!p";
     is %h{@bC}:p($no),    (b=>2,C=>$T), "$n array multiple key mixed: :p(\$no)";
 
-    throws-like '%h{@bC}:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
+    throws-like '%h{@bC}:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
     throws-like '%h{@bC}:frits', X::AdHoc; # caught by MMD
-    throws-like '%h{@bC}:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h{@bC}:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # whatever
@@ -377,11 +377,11 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is (%h{*}:!p).sort(*.key),       (:1a,:2b,:3c,:4d), "$n whatever: :!p";
     is (%h{*}:p($no)).sort(*.key),   (:1a,:2b,:3c,:4d), "$n whatever: :p(\$no)";
 
-    throws-like '%h{*}:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
-    throws-like '%h{*}:whatever', X::AdHoc; # caught by MMD
-    throws-like '%h{*}:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h{*}:k:v', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<k v>);
+    throws-like '%h{*}:sourceever', X::AdHoc; # caught by MMD
+    throws-like '%h{*}:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 # zen
@@ -404,12 +404,12 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is (%h{}:!p).sort(*.key),       (:1a,:2b,:3c,:4d), "$n zen: :!p";
     is (%h{}:p($no)).sort(*.key),   (:1a,:2b,:3c,:4d), "$n zen: :p(\$no)";
 
-    throws-like '%h{}:foo', X::Adverb::Slice,
-      :what(%h.name), :unexpected<foo>, :type<{}>;
-    throws-like '%h{}:k:v', X::Adverb::Slice,
-      :what(%h.name), :nogo(<k v>);
-    throws-like '%h{}:kv:p:zip:zop', X::Adverb::Slice,
-      :what(%h.name), :nogo(<kv p>), :unexpected(<zip zop>);
+    throws-like '%h{}:foo', X::Adverb,
+      :source(%h.name), :what('{} slice'), :unexpected<foo>;
+    throws-like '%h{}:k:v', X::Adverb,
+      :source(%h.name), :nogo(<k v>);
+    throws-like '%h{}:kv:p:zip:zop', X::Adverb,
+      :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
 
 }
