@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 7;
+plan 10;
 
 # L<S32::Containers/Hash/"Like hash assignment insofar">
 
@@ -32,6 +32,24 @@ my %ref2 = (a => [1, 4, 5], b => 2, c => 3);
     my %gg;
     %gg.push: 5 => 'bar';
     is-deeply %gg, { 5 => 'bar' }, 'Hash.push works pushing a non-Str-keyed Pair';
+}
+
+{
+    my %a = :a(1), :b(2, 3), :c[4, 5], :d(6);
+    my %to-append = :a('X'), :b('Y'), :c('Z');
+    %a.append(%to-append);
+    is-deeply %a, %( :a[1, 'X'], :b[2, 3, 'Y'], :c[4, 5, 'Z'], :d(6) ),
+        'Hash.apend general functionailty';
+}
+
+{
+    my %a = :a[1, 2];
+    my %p = :a[1, 2];
+
+    %p.push( %( :a[3, 4] ) );
+    %a.append( %( :a[3, 4] ) );
+    is-deeply %p, %( :a[1, 2, [3, 4]] ), 'Hash.push pushes to array elements';
+    is-deeply %a, %( :a[1, 2, 3, 4] ), 'Hash.append appends to array elements';
 }
 
 # vim: ft=perl6
