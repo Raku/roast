@@ -10,7 +10,7 @@ Tests for precedence of self defined operators
 
 # L<S06/Subroutine traits/"relative to an existing">
 
-plan 10;
+plan 15;
 
 do {
     sub prefix:<!> (Int $x) is tighter(&infix:<**>) {
@@ -43,8 +43,26 @@ do {
         return $a * $b;
     }
 
-    is 2 mul 3 + 4, 14, "'is looser' infix works 1";
-    is 4 + 3 mul 2 , 14, "'is looser' infix works 2";
+    is 2 mul 3 + 4, 14, "'is looser(&infix:<+>' works 1";
+    is 4 + 3 mul 2 , 14, "'is looser(&infix:<+>' works 2";
+}
+
+{
+    sub infix:<mul> ($a, $b) is looser<+> {
+        return $a * $b;
+    }
+
+    is 2 mul 3 + 4, 14, "'is looser<+>' infix works 1";
+    is 4 + 3 mul 2 , 14, "'is looser<+>' infix works 2";
+}
+
+{
+    sub infix:<add> ($a, $b) is tighter<*> {
+        return $a + $b;
+    }
+
+    is 2 * 3 add 4, 14, "'is tighter<*>' infix works 1";
+    is 4 add 3 * 2 , 14, "'is tighter<*>' infix works 2";
 }
 
 {
@@ -52,8 +70,18 @@ do {
         return $a / $b;
     }
 
-    ok((4 div 2 * 3) == 6, "'is equiv' works");
+    ok((4 div 2 * 3) == 6, "'is equiv(&infix:<*>)' works");
 }
+
+{
+    sub infix:<div> ($a, $b) is equiv<*> {
+        return $a / $b;
+    }
+
+    ok((4 div 2 * 3) == 6, "'is equiv<*>' works");
+}
+
+
 
 # prefix/postfix precedence
 
