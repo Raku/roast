@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 386;
+plan 383;
 
 =begin pod
 
@@ -402,18 +402,15 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».eager.gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".eager is nodal";
     is [[2, 3], [4, [5, 6]]]».elems.gist, "(2 2)", ".elems is nodal";
     is [[2, 3], [4, [5, 6]]]».end.gist, "(1 1)", ".end is nodal";
-    is [[2, 3], [4, [5, 6]]]».first-index(* > 2).gist, "(1 0)", ".index is nodal";
     is [[2, 3], [4, [5, 6]]]».first(* > 2).gist, "(3 4)", ".first is nodal";
     is [[2, 3], [4, [5, 6]]]».flat.gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".flat is nodal";
     is [[2, 3], [4, [5, 6]]]».flatmap(*+1).gist, "((3 4) (5 3))", ".flatmap is nodal";
-    is [[2, 3], [4, [5, 6]]]».grep-index(* > 2).gist, "((1) (0))", ".index is nodal";
     is [[2, 3], [4, [5, 6]]]».grep(* > 2).gist, "((3) (4))", ".grep is nodal";
     is [[2, 3], [4, [5, 6]]]».hash.gist, "(2 => 3 4 => [5 6])", ".hash is nodal";
     is [[2, 3], [4, [5, 6]]]».Hash.gist, "(2 => 3 4 => [5 6])", ".Hash is nodal";
     is [[2, 3], [4, [5, 6]]]».join(":").gist, "(2:3 4:5 6)", ".join is nodal";
     is [[2, 3], [4, [5, 6]]]».keys.gist, "(0..1 0..1)", ".keys is nodal";
     is [[2, 3], [4, [5, 6]]]».kv.gist, "((0 2 1 3) (0 4 1 [5 6]))", ".kv is nodal";
-    is [[2, 3], [4, [5, 6]]]».last-index(* > 2).gist, "(1 0)", ".index is nodal";
     is [[2, 3], [4, [5, 6]]]».list.gist, "([2 3] [4 [5 6]])", ".list is nodal";
     is [[2, 3], [4, [5, 6]]]».List.gist, "((2 3) (4 [5 6]))", ".List is nodal";
     is [[2, 3], [4, [5, 6]]]».map(* + 1).gist, "((3 4) (5 3))", ".map is nodal";
