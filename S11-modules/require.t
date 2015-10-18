@@ -1,5 +1,7 @@
 use v6;
 
+use lib '.';
+
 my $istrue = (require Test <&plan &is &lives-ok &skip &todo>);
 
 plan 16;
