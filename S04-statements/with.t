@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 61;
+plan 80;
 
 sub oops { fail "oops" }
 
@@ -171,5 +171,60 @@ for
 throws-like 'without 1 {...} else {...}', X::Comp, "else is not valid on without";
 throws-like 'without 1 {...} orwith 2 {...}', X::Comp, "orwith is not valid on without";
 throws-like 'without 1 {...} elsif 2 {...}', X::Comp, "elsif is not valid on without";
+
+for
+      0,  1,0,
+      1,  0,1,
+     (),  3,(),
+    Int,  0,43,
+    Int,  1,1,
+    Int,Str,43,
+    Int,Nil,43,
+    Nil,Int,43,
+    Int,oops,43
+
+-> $with, $elsif, $expected {
+
+    $_ = 43;
+    my $foo is default(Nil) = 42;
+    with $with {
+        $foo = $_;
+    }
+    elsif $elsif {
+        $foo = $elsif;
+    }
+    else {
+        $foo = $_;
+    }
+    ok $foo ~~ $expected, "\$_: with on { $with // $with.^name }, elsif on { $elsif // $elsif.^name }";
+}
+
+for
+      0,  1,1,
+      1,  0,1,
+     (),  3,3,
+      0, (),(),
+      0,  0,0,
+      0,  1,1,
+      0,Str,Str,
+      0,Nil,Nil,
+      0,Int,Int,
+      0,oops,Failure
+
+-> $if, $orwith, $expected {
+
+    $_ = 43;
+    my $foo is default(Nil) = 42;
+    if $if {
+        $foo = $if;
+    }
+    orwith $orwith {
+        $foo = $_;
+    }
+    else {
+        $foo = $_;
+    }
+    ok $foo ~~ $expected, "\$_: if on { $if // $if.^name }, orwith on { $orwith // $orwith.^name }";
+}
 
 # vim: ft=perl6
