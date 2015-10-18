@@ -8,7 +8,7 @@ Basic "unless" tests
 
 =end kwid
 
-plan 10;
+plan 11;
 
 # L<S04/Conditional statements/unless statements 
 #   work as in Perl 5>
@@ -70,5 +70,7 @@ throws-like ' unless 1 { 2 } else { 3 } ', X::Syntax::UnlessElse,
     'no else allowed in unless';
 throws-like ' unless 1 { 2 } elsif 4 { 3 } ', X::Syntax::UnlessElse,
     'no elsif allowed in unless';
+
+ok (unless 1 { 2 }) ~~ Slip, "unless returns Slip when not taken";
 
 # vim: ft=perl6
