@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 94;
+plan 97;
 
 =begin description
 
@@ -628,8 +628,7 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     throws-like { incr4($a, $b) }, X::Parameter::RW;
 }
 
-# RT #123005
-#?rakudo todo 'RT #123005 RT #118705'
+# RT #123005, #118705
 {
     my $str = 'ACCB';
     my $rt123323;
@@ -656,6 +655,28 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
         }
     };
     is $good, True, '.WHICH value did not change in for loop';
+}
+
+# RT #126349
+{
+    my @strs = ("11 22 33", "44 55 66", "77 88 99");
+
+    for @strs {
+        $_ ~~ s/\s(\S+)\s(\S+)/-$0-$1/;
+    }
+
+    is @strs.join(' '), '11-22-33 44-55-66 77-88-99', 'substitution with backreferences in for loop'
+}
+
+# RT #125598
+{
+    my $x = 'a1'; $x ~~ s/(\d+)/<$0>/;
+    is $x, 'a<1>', 'substitution with backreferences outside of loop';
+
+    for 1 {
+        my $x = 'a1'; $x ~~ s/(\d+)/<$0>/;
+        is $x, 'a<1>', 'substitution with backreferences inside of loop';
+    }
 }
 
 # vim: ft=perl6
