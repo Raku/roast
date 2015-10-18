@@ -22,7 +22,6 @@ for
     else {
         $foo = 2;
     }
-#?rakudo todo '$_ not yet set in with/without block'
     is $foo, $expected, "\$_: with on { $with // $with.^name }, orwith on { $orwith // $orwith.^name }";
 }
 
