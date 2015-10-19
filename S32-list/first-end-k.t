@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 25;
+plan 26;
 
 my @list = (1 ... 10);
 
@@ -78,6 +78,11 @@ my @list = (1 ... 10);
     throws-like { (1,2,3).first: $_== 1, :end, :k }, X::Match::Bool;
     is first( Bool,True,False,Int, :end, :k ), 1, 'can we match on Bool as type';
     is (True,False,Int).first(Bool, :end, :k), 1, 'can we match on Bool as type';
+}
+
+# :!k handling
+{
+    is (^10).first(Int, :!k), 0, 'is :!k the same as no attribute';
 }
 
 #vim: ft=perl6
