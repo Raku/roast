@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 26;
+plan 24;
 
 my @list = (1 ... 10);
 
