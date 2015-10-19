@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 46;
 
 {
     my @array = 11 .. 15;
@@ -104,6 +104,19 @@ plan 42;
     is-deeply +@h-a, 3, '% sigil flattening of itemized array';
     is-deeply +@a-h, 3, '@ sigil flattening of itemized hash';
     is-deeply +@h-h, 3, '% sigil flattening of itemized hash';
+}
+
+# RT #126172
+{
+    my @a1 = 1,2,3; my @b1; @b1.push:   @a1,;
+    my @a2 = 1,2,3; my @b2; @b2.push:   @a2;
+    my @a3 = 1,2,3; my @b3; @b3.append: @a3,;
+    my @a4 = 1,2,3; my @b4; @b4.append: @a4;
+
+    is-deeply @b1, [[1, 2, 3],], 'method push does not flatten an array arg (1)';
+    is-deeply @b2, [[1, 2, 3],], 'method push does not flatten an array arg (2)';
+    is-deeply @b3,  [1, 2, 3],   'method append does flatten an array arg (1)';
+    is-deeply @b4,  [1, 2, 3],   'method append does flatten an array arg (2)';
 }
 
 # vim: ft=perl6
