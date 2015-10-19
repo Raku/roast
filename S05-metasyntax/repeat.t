@@ -14,7 +14,7 @@ be valid perl6.
 
 # Note: single-quotes.t tests repetition on single quoted items in regexes.
 
-plan 30;
+plan 32;
 
 # L<S05/Bracket rationalization/The general repetition specifier is now>
 
@@ -83,6 +83,16 @@ nok '1ab2ab3c' ~~ /^ \d+ % abc $/, '% only takes single atom as separator';
 {
     my $m = 'AAA' ~~ /$<letter>=(A)**{3}/;
     is +$m<letter>, 3, 'dynamic quantifiers interact correctly with captures';
+}
+
+# RT #77564
+{
+    throws-like q[/ {}* /], X::Syntax::Regex::NonQuantifiable,
+        message => 'Can only quantify a construct that produces a match',
+        'adequate error message when quantifier follows non-match construct (1)';
+    throws-like q[/ <?{1}>? /], X::Syntax::Regex::NonQuantifiable,
+        message => 'Can only quantify a construct that produces a match',
+        'adequate error message when quantifier follows non-match construct (2)';
 }
 
 # vim: ft=perl6
