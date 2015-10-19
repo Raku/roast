@@ -7,8 +7,8 @@ plan 16;
 
 my @list = (1 .. 10);
 
-is grep( { ($_ % 2) }, @list, :kv ).grep(Int),
-  (0,1,2,3,4,5,6,7,8,9).list.item, 'do we get Ints';
+is grep( { ($_ % 2) }, @list, :kv ).grep(Int), [0,1,2,3,4,5,6,7,8,9],
+  'do we get Ints';
 is grep( { ($_ % 2) }, @list, :kv ), [0,1,2,3,4,5,6,7,8,9],
   'simple direct test of sub';
 is @list.grep( { ($_ % 2) }, :kv ), [0,1,2,3,4,5,6,7,8,9],
