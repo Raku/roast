@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18; # 35; when we have 'use parameters' working again
+plan 35;
 
 is { sub a(Int $a)   { $a }; a Int }(), Int, 'can Int   take an Int:U';
 is { sub a(Int $a)   { $a }; a 42  }(),  42, 'can Int   take an Int:D';
@@ -30,9 +30,7 @@ is { sub a(--> Int:D) { 42  }; a  }(),  42, 'can --> Int:D return an Int:D';
 throws-like 'sub a(--> Int:foo) { }', 
   X::InvalidTypeSmiley,                     'does --> Int:foo fail';
 
-# use parameters is NYI until further notice
-=finish
-
+#?rakudo skip 'use parameters is NYI until further notice'
 {
     use parameters :_;
     is { sub a(Int $a) { $a }; a Int }(), Int, 'with :_, can Int take an Int:U';
@@ -41,18 +39,18 @@ throws-like 'sub a(--> Int:foo) { }',
     is { sub a(--> Int) {  42 }() }(),  42, 'with :_, can --> Int return Int:D';
 }
 
+#?rakudo skip 'use parameters is NYI until further notice'
 {
     use parameters :U;
     is { sub a(Int $a) { $a }; a Int }(), Int, 'with :U, can Int take an Int:U';
-    #?rakudo todo 'not yet checking parameters pragma'
     dies-ok { sub a(Int $a) { $a }; a 42 },  # change to throws-like if passes
       'with :U, can Int take an Int:D';
     is { sub a(--> Int) { Int }() }(), Int, 'with :U, can --> Int return Int:U';
-    #?rakudo todo 'not yet checking parameters pragma'
     dies-ok { sub a(--> Int) { 42 }() },  # change to throws-like if passes
       'with :U, can --> Int return an Int:D';
 }
 
+#?rakudo skip 'use parameters is NYI until further notice'
 {
     use parameters :D;
     #?rakudo todo 'not yet checking parameters pragma'
@@ -65,6 +63,7 @@ throws-like 'sub a(--> Int:foo) { }',
     is { sub a(--> Int) { 42 }() }(), 42, 'with :D, can --> Int return Int:D';
 }
 
+#?rakudo 5 skip 'use parameters is NYI until further notice'
 throws-like 'use parameters', 
   X::Pragma::MustOneOf,
   name => "parameters",
