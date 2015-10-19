@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 10;
 
 {
     my constant name = 'TestName';
@@ -32,4 +32,13 @@ plan 6;
     }
     is A.indirect,       42, 'can declare method with indirect name';
     is A."with space"(), 23, 'can declare indirect method name with space';
+}
+
+# RT #126385
+{
+    ok ::('&say')   =:= &say, '::("&foo") without whitespace';
+    ok ::( '&say')  =:= &say, '::("&foo") with whitespace (1)';
+    ok ::( '&say' ) =:= &say, '::("&foo") with whitespace (2)';
+    ok ::( # we do something explainable to have the need for a comment
+        '&say' ) =:= &say, '::("&foo") with a comment';
 }
