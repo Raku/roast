@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 35;
+plan 18; # 35; when we have 'use parameters' working again
 
 is { sub a(Int $a)   { $a }; a Int }(), Int, 'can Int   take an Int:U';
 is { sub a(Int $a)   { $a }; a 42  }(),  42, 'can Int   take an Int:D';
@@ -29,6 +29,9 @@ throws-like { sub a(--> Int:D) { Int }; a },
 is { sub a(--> Int:D) { 42  }; a  }(),  42, 'can --> Int:D return an Int:D';
 throws-like 'sub a(--> Int:foo) { }', 
   X::InvalidTypeSmiley,                     'does --> Int:foo fail';
+
+# use parameters is NYI until further notice
+=finish
 
 {
     use parameters :_;
