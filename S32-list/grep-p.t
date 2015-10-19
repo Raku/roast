@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item grep">
 
-plan 16;
+plan 17;
 
 my @list = (1 .. 10);
 
@@ -67,6 +67,11 @@ is @list.grep( { ($_ % 2) }, :p ), [0=>1,2=>3,4=>5,6=>7,8=>9],
       'can we match on Bool as type';
     is (True,False,Int).grep(Bool, :p), [0=>True,1=>False],
       'can we match on Bool as type';
+}
+
+# :!p handling
+{
+    is (^10).grep(Int, :!p), [^10], 'is :!p the same as no attribute';
 }
 
 # vim: ft=perl6
