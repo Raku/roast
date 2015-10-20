@@ -33,6 +33,8 @@ say 'Done';
     my $pm = $pc.start;
     isa-ok $pm, Promise;
 
+    sleep 1;
+
     # give it a little time
     $pc.print("1\n");
 
