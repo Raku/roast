@@ -282,6 +282,7 @@ my @exception = <
   X::Placeholder::Mainline
   X::Placeholder::NonPlaceholder
   X::PoisonedAlias
+  X::Pragma::CannotPrecomp
   X::Pragma::CannotWhat
   X::Pragma::MustOneOf
   X::Pragma::NoArgs
