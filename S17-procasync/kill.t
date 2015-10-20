@@ -9,7 +9,7 @@ my $program = 'async-kill-tester';
 
 for @signals -> $signal {
     my $source = "
-signal($signal).act: \{ .say \};
+signal($signal).act: \{ .say; exit \};
 
 say 'Started';
 my \$ = get();
