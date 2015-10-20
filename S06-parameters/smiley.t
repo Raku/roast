@@ -69,7 +69,8 @@ throws-like 'use parameters',
   name => "parameters",
   'does use parameters fail';
 throws-like 'no parameters', 
-  X::Pragma::CannotNo,
+  X::Pragma::CannotWhat,
+  what => "no",
   name => "parameters",
   'does no parameters fail';
 throws-like 'use parameters "bar"', 

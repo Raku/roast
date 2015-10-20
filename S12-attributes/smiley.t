@@ -114,7 +114,8 @@ throws-like 'use attributes',
   name => "attributes",
   'does use attributes fail';
 throws-like 'no attributes', 
-  X::Pragma::CannotNo,
+  X::Pragma::CannotWhat,
+  what => 'no',
   name => "attributes",
   'does no attributes fail';
 throws-like 'use attributes "bar"', 

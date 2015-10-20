@@ -287,7 +287,7 @@ my @exception = <
   X::Placeholder::Mainline
   X::Placeholder::NonPlaceholder
   X::PoisonedAlias
-  X::Pragma::CannotNo
+  X::Pragma::CannotWhat
   X::Pragma::MustOneOf
   X::Pragma::NoArgs
   X::Pragma::OnlyOne

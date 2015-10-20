@@ -125,7 +125,8 @@ throws-like 'use variables',
   name => "variables",
   'does use variables fail';
 throws-like 'no variables', 
-  X::Pragma::CannotNo,
+  X::Pragma::CannotWhat,
+  what => "no",
   name => "variables",
   'does no variables fail';
 throws-like 'use variables "bar"', 
