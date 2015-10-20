@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 135;
+plan 141;
 
 =begin pod
 
@@ -389,7 +389,6 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #63126
-#?rakudo todo 'junction transformed into string before attemting to match RT #111726'
 #?DOES 2
 {
     my @a = "foo", "foot";
@@ -402,6 +401,26 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
     );
     ok %h{all(0,1)} ~~ /^foo/,
         'junction can be used to index Hash';
+}
+
+# RT #111726
+{
+    is (all() ~~ /^ \d+ $/).gist,  'all()',
+        'regex match in all junction is an empty all junction (1)';
+    is (all() ~~ /./).gist,        'all()',
+        'regex match in all junction is an empty all junction (2)';
+    is (all() ~~ /all/).gist,      'all()',
+        'regex match in all junction is an empty all junction (3)';
+    is (all() ~~ /bll/).gist,      'all()',
+        'regex match in all junction is an empty all junction (4)';
+    is (any("4","5") ~~ /4/).gist, 'any(｢4｣, Nil)',
+        'successful regex match in any junction';
+}
+
+# RT #103106
+{
+    is ("foo" & "a nice old foo" ~~ /foo/).gist, 'all(｢foo｣, ｢foo｣)',
+        'successful regex match in all junction';
 }
 
 # stringy tests
