@@ -39,7 +39,7 @@ say 'Done';
     $pc.print("1\n");
 
     # stop what you're doing
-#    $pc.kill($signal);    # XXX cannot call this yet, it will cause hanging
+    $pc.kill($signal);
     $pc.print("2\n");
 
     # done processing, from sleep
@@ -48,7 +48,6 @@ say 'Done';
     can-ok $pm.result, 'exitcode';
     is $pm.result.?exitcode, 0, 'did it exit with the right value';
 
-    #?rakudo todo 'we cannot actually send signals yet'
     is $stdout, "Started\n$signal\n", 'did we get STDOUT';
 }
 
