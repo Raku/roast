@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-my @signals = $*KERNEL.signals.grep(Signal);
+my @signals = SIGINT;
 plan @signals * 9;
 
 my $program = 'async-kill-tester';
