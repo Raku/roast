@@ -263,6 +263,7 @@ my @exception = <
   X::Obsolete
   X::OutOfRange
   X::Package::Stubbed
+  X::Package::UseLib
   X::Pairup::OddNumber
   X::Parameter::AfterDefault
   X::Parameter::BadType
