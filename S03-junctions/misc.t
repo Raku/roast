@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 141;
+plan 142;
 
 =begin pod
 
@@ -421,6 +421,12 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 {
     is ("foo" & "a nice old foo" ~~ /foo/).gist, 'all(｢foo｣, ｢foo｣)',
         'successful regex match in all junction';
+}
+
+# RT #120992
+{
+    is (all("a","b") ~~ /a/).gist, 'all(｢a｣, Nil)',
+        'successful regex match in all junction if one element does not match';
 }
 
 # stringy tests
