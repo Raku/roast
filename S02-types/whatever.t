@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 93;
+plan 109;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -177,7 +177,6 @@ is (0,0,0,0,0,0) >>+>> (Slip(1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 # RT #122708
 {
     isa-ok * + 2,      Code, "'* + 2' curries";
-    #?rakudo 3 todo 'RT #122708 - currying of min/max'
     isa-ok * min 2,    Code, "'* min 2' curries";
     isa-ok * max 2,    Code, "'* max 2' curries";
     isa-ok * max *,    Code, "'* max *' curries";
@@ -230,7 +229,7 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     ok $f(4), 'Whatever-currying !< (4)';
 }
 
-#?rakudo skip 'currying plus meta ops RT #124486'
+#?rakudo skip 'currying plus R meta op RT #124486'
 {
     my $f = 5 R- *;
     isa-ok $f, Code, 'Whatever-currying with R- (1)';
@@ -240,6 +239,48 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     dies-ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
     #?niecza skip 'Undeclared routine'
     dies-ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+}
+
+{
+    my $f = (1 X+ * X+ 3);
+    isa-ok $f, Code, 'Whatever-currying single * with X+ (1)';
+    is $f(2), 6, 'Whatever-currying single * with X+ (2)';
+    is $f(-4), 0, 'Whatever-currying single * with X+ (3)';
+}
+
+{
+    my $f = (* X+ *);
+    isa-ok $f, Code, 'Whatever-currying multi * with X+ (1)';
+    #?rakudo 2 skip "generated sig has wrong arity"
+    is $f(-1,1), 0, 'Whatever-currying multi * with X+ (2)';
+    is $f(41,43), 2*42, 'Whatever-currying multi * with X+ (3)';
+}
+
+{
+    my $f = (1,2 X~ * X~ 3,4);
+    isa-ok $f, Code, 'Whatever-currying with X+ lists (1)';
+    is $f(<a b>), '1a3 1a4 1b3 1b4 2a3 2a4 2b3 2b4', 'Whatever-currying with X+ lists (2)';
+}
+
+{
+    my $f = (1 Z+ * Z+ 3);
+    isa-ok $f, Code, 'Whatever-currying single * with Z+ (1)';
+    is $f(2), 6, 'Whatever-currying single * with Z+ (2)';
+    is $f(-4), 0, 'Whatever-currying single * with Z+ (3)';
+}
+
+{
+    my $f = (* Z+ *);
+    isa-ok $f, Code, 'Whatever-currying multi * with Z+ (1)';
+    #?rakudo 2 skip "generated sig has wrong arity"
+    is $f(-1,1), 0, 'Whatever-currying multi * with Z+ (2)';
+    is $f(41,43), 2*42, 'Whatever-currying multi * with Z+ (3)';
+}
+
+{
+    my $f = (1,2 Z~ * Z~ 3,4);
+    isa-ok $f, Code, 'Whatever-currying with Z+ lists (1)';
+    is $f(<a b>), '1a3 2b4', 'Whatever-currying with Z+ lists (2)';
 }
 
 # RT 79166
