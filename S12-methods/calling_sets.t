@@ -173,4 +173,26 @@ is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find nex
 
 throws-like '1.*WHAT', X::AdHoc, '.WHAT is a macro and cannoted be .*ed';
 
+class H {
+    method foo(H:D:) { 'meh' }
+    method bar($x) { 10 }
+
+    multi method baz(H:D:) { 'ok' }
+    multi method baz($x) { 42 }
+}
+
+{
+    my H $h;
+
+    # signature mismatch causes exception even on .?
+    dies-ok { $h.?foo }, 'Invocant requires an instance of type H, but a type object was passed.  Did you forget a .new?';
+    dies-ok { $h.?bar }, 'Too few positionals passed; expected 2 arguments but got 1';
+
+    # signature mismatch on .? does not except on multi
+    lives-ok { $h.?baz };
+    $h .= new;
+    lives-ok { $h.?baz };
+}
+
+
 # vim: ft=perl6
