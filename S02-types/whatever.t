@@ -229,7 +229,6 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     ok $f(4), 'Whatever-currying !< (4)';
 }
 
-#?rakudo skip 'currying plus R meta op RT #124486'
 {
     my $f = 5 R- *;
     isa-ok $f, Code, 'Whatever-currying with R- (1)';
@@ -238,6 +237,7 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
 
     dies-ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
     #?niecza skip 'Undeclared routine'
+    #?rakudo skip 'currying plus R meta op RT #124486'
     dies-ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
 }
 
