@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 154;
+plan 162;
 
 # L<S05/Substitution/>
 
@@ -477,6 +477,32 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     $_ = Any;
     s[ea] = "rea";
     is $_, "", 'can use s[]="" when $_ is not set';
+}
+
+{
+    $_ = "foo";
+    is S/o/O/, "fOo", "non-mutating single substitution works ($/)";
+
+    $_ = "foo";
+    is S:g/o/O/, "fOO", "non-mutating global substitution works ($/)";
+
+    $_ = "foo";
+    is S[o] = 'O', "fOo", "non-mutating single substitution assignment works ($/)";
+
+    $_ = "foo";
+    is S:g[o] = 'O', "fOO", "non-mutating global substitution assignment works ($/)";
+
+    $_ = "foo";
+    is S/(o)/{$0.uc}/, "fOo", "non-mutating single substitution works ($0)";
+
+    $_ = "foo";
+    is S:g/(o)/{$0.uc}/, "fOO", "non-mutating global substitution works ($0)";
+
+    $_ = "foo";
+    is S[(o)] = $0.uc, "fOo", "non-mutating single substitution assignment works ($0)";
+
+    $_ = "foo";
+    is S:g[(o)] = $0.uc, "fOO", "non-mutating global substitution assignment works ($0)";
 }
 
 # vim: ft=perl6
