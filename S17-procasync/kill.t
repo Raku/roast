@@ -2,6 +2,11 @@ use v6;
 
 use Test;
 
+# ignore SIGPIPE from writing to a child process
+try {
+    signal(::('SIGPIPE')).act: {};
+}
+
 my @signals = SIGINT;
 plan @signals * 9;
 
