@@ -251,7 +251,6 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
 {
     my $f = (* X+ *);
     isa-ok $f, Code, 'Whatever-currying multi * with X+ (1)';
-    #?rakudo 2 skip "generated sig has wrong arity"
     is $f(-1,1), 0, 'Whatever-currying multi * with X+ (2)';
     is $f(41,43), 2*42, 'Whatever-currying multi * with X+ (3)';
 }
@@ -272,7 +271,6 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
 {
     my $f = (* Z+ *);
     isa-ok $f, Code, 'Whatever-currying multi * with Z+ (1)';
-    #?rakudo 2 skip "generated sig has wrong arity"
     is $f(-1,1), 0, 'Whatever-currying multi * with Z+ (2)';
     is $f(41,43), 2*42, 'Whatever-currying multi * with Z+ (3)';
 }
