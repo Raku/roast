@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;
-plan 51;
+plan 52;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -197,6 +197,14 @@ plan 51;
     my $a = '<4';
     $a = $a ~~ /\<(\d+)/;
     is ~$a, '<4', 'result of match assigned to variable matched against works';
+}
+
+# RT #118453
+{
+    my $rt118453 = 'pre x post';
+    $rt118453 ~~ /^ (<-[x]>+) 'x' (\N+) $/;
+    $rt118453 = ~$0;
+    is ~$1, ' post', 'Reassigning to matched-against string and then accessing submatches works';
 }
 
 # vim: ft=perl6
