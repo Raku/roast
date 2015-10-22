@@ -53,6 +53,7 @@ say 'Done';
     can-ok $pm.result, 'exitcode';
     is $pm.result.?exitcode, 0, 'did it exit with the right value';
 
+    #?rakudo todo 'RT #126425 - order of operations for Proc::Async is nondeterminstic'
     is $stdout, "Started\n$signal\n", 'did we get STDOUT';
 }
 
