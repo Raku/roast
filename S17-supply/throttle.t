@@ -25,7 +25,7 @@ for ThreadPoolScheduler.new -> $*SCHEDULER {
         sleep 6;
         is @seen, (1..10), 'did we see all of the element';
         ok $min > .5, 'difference between each at least .5 seconds';
-        ok $max < .6, 'difference between each at most .6 seconds';
+        ok $max < .8, 'difference between each at most .8 seconds';
     }
 
     {
@@ -42,10 +42,10 @@ for ThreadPoolScheduler.new -> $*SCHEDULER {
             $before  = now;
         };
         sleep 1;
-        $control.emit( (limit => 2) );
+        $control.emit( "limit:2" );
         sleep 3;
         is @seen, (1..10), 'did we see all of the element';
         ok $min >  0, 'difference between each at least something';
-        ok $max < .3, 'difference between each at most .3 seconds';
+        ok $max < .5, 'difference between each at most .5 seconds';
     }
 }
