@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 42;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -43,10 +43,31 @@ lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 }
 
 {
-
     $_ = 'foo';
     my $match = m/oo/;
     is($match, 'oo', 'm{} always matches instead of making a Regex object');
+}
+
+{
+    $_ = 'foo';
+    ok ?/foo/,     'does    ?/foo/      work';
+    is ~$/, 'foo', 'did it set $/ (1)';
+
+    $_ = 'goo';
+    ok so /goo/,   'does  so /goo/      work';
+    is ~$/, 'goo', 'did it set $/ (2)';
+
+    $_ = 'hoo';
+    nok !/hoo/,    'does    !/hoo/      work';
+    is ~$/, 'hoo', 'did it set $/ (3)';
+
+    $_ = 'ioo';
+    nok not /ioo/, 'does not /ioo/      work';
+    is ~$/, 'ioo', 'did it set $/ (4)';
+
+    $_ = 'joo';
+    ok /joo/.Bool, 'does     /joo/.Bool work';
+    is ~$/, 'joo', 'did it set $/ (5)';
 }
 
 # we'll just check that this syntax is valid for now
