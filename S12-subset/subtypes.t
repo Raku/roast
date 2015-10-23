@@ -2,7 +2,10 @@ use v6;
 
 use Test;
 
-plan 77;
+plan 79;
+
+use lib 't/spec/packages';
+use Test::Util;
 
 =begin description
 
@@ -283,6 +286,28 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 {
     try { EVAL 'sub foo($x where { $x == $y }, $y) { }' };
     isa-ok $!, X::Undeclared, 'subset in signature cannot use non-predeclared variable';
+}
+
+# RT #123700
+{
+    throws-like q[
+        subset Tiny of Any where ^3;
+        my Tiny $foo;
+        $foo = 42; say $foo;
+    ],
+    X::TypeCheck, 'code dies with right exception';
+
+    is_run q[
+        subset Tiny of Any where {say $_; $_ ~~ ^3};
+        my Tiny $foo;
+        $foo = 0; say $foo;
+    ],
+    {
+        status => 0,
+        out    => rx/^ 0 \n 0 \n $/,
+        err    => '',
+    },
+    'code runs without error (and does not mention "Obsolete"!)';
 }
 
 # vim: ft=perl6
