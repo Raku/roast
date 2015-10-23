@@ -64,12 +64,12 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     is @match, <foo fooo foooo fooooo foooooo>, 'nth(infinite range) matched correctly';
 }
 
-#?rakudo skip 'hangs RT #125026'
+#?rakudo todo 'RT #125026'
 #?niecza skip 'hangs'
 {
-    @match = $data.match(/fo+/, :nth(2, 4 ... *)).list;
+    my @match = $data.match(/fo+/, :nth(2, 4 ... *)).list;
     is +@match, 3, 'nth(infinite series) is ok';
-    is @match, <foo foooo foooooo>, 'nth(infinite series) matched correctly';
+    is @match, <foo foooo foooooo>, 'nth(infinite sequence) matched correctly';
 }
 
 
