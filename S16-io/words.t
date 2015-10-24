@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 2 + 4 + 4;
+plan 1 + 4 + 4;
 
 my $filename = 't/spec/S16-io/words.testing';
 my @text  = <<zero " one" " two " "   three   " "four\n">>;
@@ -10,10 +10,6 @@ my @clean = <zero one two three four>;
 unlink $filename;  # make sure spurt will work
 
 ok $filename.IO.spurt(@text), "could we spurt a file";
-
-throws-like { open($filename).words }, X::NYI,
-  feature => "'words' without closing the file handle",
-;
 
 # IO::Handle
 my @words;
