@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 383;
+plan 386;
 
 =begin pod
 
@@ -1004,5 +1004,17 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 }
 
 throws-like '3 «.» foo', X::Obsolete, "«.» can't be hypered";
+
+# RT #125265
+{
+    is 10 <<*<< (1 .. 4), <10 20 30 40>,
+        'hyper op works with range on non-magical side (1)';
+    is 10 <<**<< (1 .. 4), <10 100 1000 10000>,
+        'hyper op works with range on non-magical side (2)';
+    my $base = 10;
+    my %bases = <K M G T> Z=> ( $base <<**<< (1 .. 4) );
+    is %bases, { K=>10, M=>100, G=>1000, T=>10000 },
+        'hyper op works with (finite) range on non-magical side (3)';
+}
 
 # vim: ft=perl6
