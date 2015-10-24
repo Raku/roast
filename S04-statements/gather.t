@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 34;
 
 # L<S04/The C<gather> statement prefix/>
 
@@ -263,6 +263,13 @@ plan 33;
         illegal => "take",
         enclosing => "gather",
         '"INIT take" inside of a "gather for" fails with X::ControlFlow';
+}
+
+# RT #125401
+{
+    my @result = flat gather { take "foo=bar".split("=") };
+    is @result, <foo bar>,
+        'take on a listy expression takes each element of that list';
 }
 
 # vim: ft=perl6
