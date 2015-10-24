@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 79;
+plan 81;
 
 # L<S09/Typed arrays/>
 
@@ -240,6 +240,23 @@ plan 79;
     my Int @a;
     dies-ok { @a[0] := "foo" }, 'Binding literal to typed array checks types';
     dies-ok { my Str $x = "foo"; @a[0] := $x; }, 'Binding variablle to typed array checks type';
+}
+
+# RT #120071
+{
+    my Int @a = 0 .. 2;
+    @a[1]:delete;
+    my @types = @a.map:{.^name};
+    is @types, <Int Int Int>,
+        'deleted element of typed arrays does not lose type info inside .map';
+}
+
+# RT #123037
+{
+    my Int @a;
+    @a[4]++;
+    is @a.gist, '[(Int) (Int) (Int) (Int) 1]',
+        '.gist on typed array shows real type objects';
 }
 
 # vim: ft=perl6
