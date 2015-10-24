@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 41;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
@@ -143,5 +143,14 @@ is($val2, 42, '... cloned object has proper attr value');
 }
 
 lives-ok { Int.clone }, 'cloning a type object does not explode';
+
+# RT #125109
+{
+    my @a = 42;
+    lives-ok { try { @a.clone } }, 'calling .clone on array does not die';
+    my @b = @a.clone;
+    @a.push: 44;
+    is @b, <42>, '.clone on array @a works as expected';
+}
 
 # vim: ft=perl6
