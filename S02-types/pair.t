@@ -267,7 +267,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   my ($key, $val) = <key val>;
   my $pair        = ($key => $val);
 
-  #?rakudo.jvm    todo "?"
   throws-like { $pair.key = "KEY" },
     X::Assignment::RO,
     "setting .key dies";
