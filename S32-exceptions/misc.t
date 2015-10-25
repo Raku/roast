@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 349;
+plan 350;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -119,6 +119,8 @@ throws-like 'my class A { my $!foo }', X::Syntax::Variable::Twigil, twigil => '!
 throws-like 'role Breakable { my $!broken = Bool::False; }; class Frobnitz does Breakable {};',
     X::Syntax::Variable::Twigil, twigil => '!', scope => 'my';
 throws-like 'my $?FILE', X::Syntax::Variable::Twigil, twigil => '?', scope => 'my';
+# RT #125780
+throws-like 'constant $?FILE = "foo"', X::Comp::NYI;
 throws-like 'my $::("foo")', X::Syntax::Variable::IndirectDeclaration;
 throws-like '@a', X::Undeclared, symbol => '@a';
 # RT #115396
