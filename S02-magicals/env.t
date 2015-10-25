@@ -6,7 +6,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 # L<S28/Named variables>
-plan 17;
+plan 18;
 
 =begin desc
 
@@ -105,6 +105,13 @@ throws-like { EVAL "%ENV" },
 # RT #117951
 {
     ok $%*ENV, "itemizer works on %*ENV.";
+}
+
+# RT #125953
+{
+    %*ENV<FOOBAR> = 1;
+    lives-ok { run('echo', 'hello') },
+        'call run($command) after setting non-strings into %*ENV does not die';
 }
 
 # vim: ft=perl6
