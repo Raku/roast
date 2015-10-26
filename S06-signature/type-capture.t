@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 12;
 
 # TODO: move to S02?
 # L<S02/Generic types/>
@@ -60,6 +60,19 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
         }
     };
     is f("blah"), "blah:Str", 'Type variable matches in signature to "for" loop';
+}
+
+# RT #126383
+{
+    sub accum( ::T \a, T(Cool) \b ) { a += b };
+
+    my $t = 3;
+    accum( $t, 2/3 );
+    is $t, 3, 'coerce to Int via type capture';
+
+    $t = 3.0;
+    accum( $t, 2/3 );
+    is-approx $t, 3.666667, 'coerce to Rat via type capture';
 }
 
 # vim: ft=perl6
