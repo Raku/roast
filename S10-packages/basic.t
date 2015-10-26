@@ -2,6 +2,7 @@ use v6;
 
 # L<S10/Packages>
 
+use lib 't/spec/packages';
 use Test;
 
 plan 81;
@@ -187,7 +188,6 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 
 #?niecza skip 'Export tags NYI'
 {
-    @*INC.unshift: 't/spec/packages';
     eval-lives-ok 'use LoadFromInsideAModule',
         'can "use" a class inside a module';
     eval-lives-ok 'use LoadFromInsideAClass',
