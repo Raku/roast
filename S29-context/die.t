@@ -2,7 +2,7 @@ use v6;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;
-plan 16;
+plan 17;
 
 # L<S29/Context/=item die>
 
@@ -73,5 +73,14 @@ is_run( 'say "hello"; die "Nos morituri te salutant!\n"',
 # will be executed multiple times, resulting in a "too many tests run" error
 # (which is what we want). (Test primarily aimed at PIL2JS)
 is 42-19, 23, "basic sanity";
+
+# RT #125573
+is_run( 'use Test; pass; die "uh-oh"',
+        { status => sub { 0 != $^a },
+          out    => rx/'ok 1 -'/,
+          err    => rx/'uh-oh'/,
+        },
+        'die() in combination with Test.pm exists non-zero-ish' );
+
 
 # vim: ft=perl6
