@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 37;
 
 # L<S09/Typed arrays>
 
@@ -59,5 +59,21 @@ plan 33;
     is %h{2}:delete, 'b', ':delete adverb works with key constraint hashes';
     ok %h{2}:!exists, ':delete adverb works with key constraint hashes';
 } #13
+
+# RT #118031
+{
+    my Int %h{Int} = 1 => 2, 3 => 4;
+    my %bound := %h;
+    ok %bound ~~ Hash[Int, Int], 'Binding typed hash "preserves" type';
+    my %assigned = %h;
+    nok %assigned ~~ Hash[Int, Int], 'Assigning from a typed hash copies values, but not type';
+}
+{
+    my Int %h{Int} = 1 => 2, 3 => 4;
+    my %bound := %h.clone;
+    ok %bound ~~ Hash[Int, Int], 'Binding clone of a typed hash "preserves" type';
+    my %assigned = %h.clone;
+    nok %assigned ~~ Hash[Int, Int], 'Assigning from clone of a typed hash copies values, but not type';
+}
 
 # vim: ft=perl6
