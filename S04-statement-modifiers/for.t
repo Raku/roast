@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 30;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -161,6 +161,12 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
 # RT #79174
 {
     is (1,2, for 3,4), "1 2 1 2", "for is a terminator even after comma";
+}
+
+# RT #77334
+{
+    sub foo { my $s; ($s += $_ for 1..3) }
+    is foo(), (6, 6, 6), 'for loops do not decontainerize';
 }
 
 # vim: ft=perl6

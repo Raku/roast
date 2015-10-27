@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 97;
+plan 98;
 
 =begin description
 
@@ -677,6 +677,12 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
         my $x = 'a1'; $x ~~ s/(\d+)/<$0>/;
         is $x, 'a<1>', 'substitution with backreferences inside of loop';
     }
+}
+
+# RT #77334
+{
+    sub foo { my $s; (for 1..3 { $s += $_ }) }
+    is foo(), (6, 6, 6), 'for loops do not decontainerize';
 }
 
 # vim: ft=perl6
