@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 32;
 
 {
     my $capture = \(1,2,3);
@@ -171,5 +171,11 @@ nok (defined  \()[0]), '\()[0] is not defined';
     $c<a>++;
     is $a, 42, 'Can modify Capture associative elements';
 }
+
+lives-ok { (1..*).Capture.perl }, '.perl of Capture formed from Range does not explode';
+
+# RT #123581
+throws-like '(1..*).list.Capture', X::Cannot::Lazy, :action('create a Capture from');
+throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture from');
 
 # vim: ft=perl6
