@@ -1,6 +1,6 @@
 use Test;
 
-plan 18;
+plan 24;
 
 my $c = { when 1 { 'one' }; when 2 { 'two!' }; default { 'many' } };
 is $c(1), 'one', 'when works in a circumfix:<{ }> (1)';
@@ -45,3 +45,35 @@ my $nest = sub ($n) {
 is $nest(1), 'little', 'nested when in a sub works (1)';
 is $nest(2), 'four!', 'nested when in a sub works (2)';
 is $nest(3), 'huge', 'nested when in a sub works (3)';
+
+# RT #115384
+{
+    my $iters = 0;
+    $iters++ for do given 1 { when True { { a => 1, b => 2 } } };
+    is $iters, 2, 'when does not force itemization';
+}
+{
+    my $iters = 0;
+    $iters++ for do given 1 { when True { ${ a => 1, b => 2 } } };
+    is $iters, 1, 'when does not strip itemization';
+}
+{
+    my $a = 41;
+    .++ for do given 1 { when True { $a } };
+    is $a, 42, 'when does not strip Scalar containers';
+}
+{
+    my $iters = 0;
+    $iters++ for do given 1 { default { { a => 1, b => 2 } } };
+    is $iters, 2, 'default does not force itemization';
+}
+{
+    my $iters = 0;
+    $iters++ for do given 1 { default { ${ a => 1, b => 2 } } };
+    is $iters, 1, 'default does not strip itemization';
+}
+{
+    my $a = 41;
+    .++ for do given 1 { default { $a } };
+    is $a, 42, 'default does not strip Scalar containers';
+}
