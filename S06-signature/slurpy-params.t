@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 100;
+plan 85;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -19,15 +19,6 @@ sub mixed($pos1, *@slurp) { "|$pos1|" ~ @slurp.join('!') }
 is mixed(1),           '|1|',    'Positional and slurp params';
 is mixed(1, 2, 3),     '|1|2!3', 'Positional and slurp params';
 dies-ok {EVAL(' mixed()')},      'at least one arg required';
-
-#?rakudo skip 'types on slurpy params RT #113964'
-{
-    sub x_typed_join(Int *@args){ @args.join('|') }
-    is x_typed_join(1),           '1',      'Basic slurpy params with types 1';
-    is x_typed_join(1, 2, 5),     '1|2|5',  'Basic slurpy params with types 2';
-    #?niecza todo 'Types on slurpy params are checked'
-    dies-ok { x_typed_join(3, 'x') }, 'Types on slurpy params are checked';
-}
 
 sub first_arg      ( *@args         ) { ~@args[0]; }
 sub first_arg_rw   ( *@args is raw  ) { ~@args[0]; }
@@ -180,38 +171,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
     is @copied, @not_copied, 'slurpy array copy same as not copied';
 }
 
-# RT #64814
-#?rakudo skip 'types on slurpy params RT #113964'
-#?niecza skip 'Unhandled trait of'
-{
-    sub slurp_any( Any *@a ) { @a[0] }
-    is slurp_any( 'foo' ), 'foo', 'call to sub with (Any *@a) works';
-
-    sub slurp_int( Int *@a ) { @a[0] }
-    dies-ok { slurp_int( 'foo' ) }, 'dies: call (Int *@a) sub with string';
-    is slurp_int( 27.Int ), 27, 'call to sub with (Int *@a) works';
-
-    sub slurp_of_int( *@a of Int ) { @a[0] }
-    dies-ok { slurp_of_int( 'foo' ) }, 'dies: call (*@a of Int) with string';
-    is slurp_of_int( 99.Int ), 99, 'call to (*@a of Int) sub works';
-
-    class X64814 {}
-    class Y64814 {
-        method x_slurp ( X64814 *@a ) { 2 }   #OK not used
-        method of_x ( *@a of X64814 ) { 3 }   #OK not used
-        method x_array ( X64814 @a ) { 4 }   #OK not used
-    }
-
-    my $x = X64814.new;
-    my $y = Y64814.new;
-    is $y.x_array( $x ), 4, 'call to method with typed array sig works';
-    is $y.of_x( $x ),    3, 'call to method with "slurp of" sig works';
-    is $y.x_slurp( $x ), 2, 'call to method with typed slurpy sig works';
-    dies-ok { $y.x_array( 23 ) }, 'die calling method with typed array sig';
-    dies-ok { $y.of_x( 17 ) }, 'dies calling method with "slurp of" sig';
-    dies-ok { $y.x_slurp( 35 ) }, 'dies calling method with typed slurpy sig';
-}
-
 {
     my $count = 0;
     sub slurp_obj_thread(*@a) { $count++; }   #OK not used
@@ -223,21 +182,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
     $count = 0;
     slurp_obj_multi(3|4|5);
     is $count, 1, 'Mu slurpy param doesnt autothread';
-}
-
-##  Note:  I've listed these as though they succeed, but it's possible
-##  that the parameter binding should fail outright.  --pmichaud
-#?rakudo skip 'types on slurpy params RT #113964'
-{
-    my $count = 0;
-    sub slurp_any_thread(Any *@a) { $count++; }   #OK not used
-    multi sub slurp_any_multi(Any *@a) { $count++; }   #OK not used
-
-    slurp_any_thread(3|4|5);
-    is $count, 1, 'Any slurpy param doesnt autothread';
-    $count = 0;
-    slurp_any_multi(3|4|5);
-    is $count, 1, 'Any slurpy param doesnt autothread';
 }
 
 {
@@ -321,14 +265,13 @@ These tests are the testing for "List parameters" section of Synopsis 06
 throws-like 'sub rt65324(*@x, $oops) { say $oops }', X::Parameter::WrongOrder,
              "Can't put required parameter after variadic parameters";
 
-# used to be RT #69424
-#?rakudo skip 'types on slurpy params RT #113964'
-{
-    sub typed-slurpy(Int *@a) { 5 }   #OK not used
-    my Int @b;
-    is typed-slurpy(@b), 5, 'can fill typed slurpy with typed array';
-}
+# RT #113964, RT #69424
+throws-like 'sub typed-slurpy-pos(Int *@a) { }',
+    X::Parameter::TypedSlurpy, kind => 'positional';
 
+# RT #120994
+throws-like 'sub typed-slurpy-pos(Int *%h) { }',
+    X::Parameter::TypedSlurpy, kind => 'named';
 
 # RT #61772
 {
