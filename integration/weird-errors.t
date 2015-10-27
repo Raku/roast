@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 18;
+plan 19;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -153,3 +153,8 @@ is_run '{;}',
     },
     'concise error message when sinking last statement in a file' );
 }
+
+#RT #119999
+throws-like { EVAL '&&::{}[];;' },
+  X::Undeclared::Symbols,
+  "Doesn't die with weird internal error";
