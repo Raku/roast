@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 350;
+plan 351;
 
 throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
 
@@ -601,6 +601,9 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 # RT #120831
 {
     throws-like 'my Int a;', X::Syntax::Malformed,
+        'adequate error message when declaring "my Int a;"',
+        message => { m/"Malformed my (did you mean to declare a sigilless"/ };
+    throws-like 'my Int a', X::Syntax::Malformed,
         'adequate error message when declaring "my Int a"',
         message => { m/"Malformed my (did you mean to declare a sigilless"/ };
 }
