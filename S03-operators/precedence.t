@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 63;
+plan 64;
 
 
 # terms
@@ -255,5 +255,10 @@ throws-like '1, 2 Z 3, 4 X 5, 6',
     is not(0) + 1, 2,
         '"not(0) + 1" is parsed as "(not 0) + 1"';
 }
+
+# RT #125210
+throws-like 'my $lizmat = 42; ++$lizmat++',
+    X::Syntax::NonAssociative,
+    'prefix/postfix ++ are not associative';
 
 # vim: ft=perl6
