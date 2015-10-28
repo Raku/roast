@@ -1,6 +1,8 @@
 use v6;
 use Test;
-plan 15;
+use lib 't/spec/packages';
+use Test::Util;
+plan 16;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
@@ -63,6 +65,17 @@ line 4
 {
     sub Good ($time) { "Good $time #perl6." }
     is Good("morning"), "Good morning #perl6.", "# after an interpolated var";
+}
+
+# RT #120449
+{
+    is_run 'say «1 see{2}it 3»',
+    {
+        status => 0,
+        out    => / '(1 see 2 it 3)' /,
+        err    => '',
+    },
+    'interpolation at edge of quoteword items does not cancel out inter-item space';
 }
 
 # vim: ft=perl6
