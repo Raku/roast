@@ -479,11 +479,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $_, "", 'can use s[]="" when $_ is not set';
 }
 
+# RT #126476
+#?rakudo todo "non-matching S/// should return string unchanged"
 {
-    #?rakudo todo "non-matching S/// should return string unchanged"
     $_ = "foo";
     is S/a/A/, "foo", "non-mutating single substitution works ($/)";
+}
 
+{
     $_ = "foo";
     is S/o/O/, "fOo", "non-mutating single substitution works ($/)";
 
