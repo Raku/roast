@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 97;
+plan 98;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -158,6 +158,10 @@ is(EVAL('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y #OK'), 2, '2nd m
     my $f; #OK
     is($f, 5, "two lexicals declared in scope is noop");
 }
+
+# RT #121807
+throws-like 'my %h is default(%h<foo>)',
+    X::Syntax::Variable::Initializer, name => '%h';
 
 # RT #125371
 throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
