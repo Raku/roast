@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 27;
+plan 28;
 
 # check the subroutine with the closest matching signature is called
 #
@@ -77,5 +77,12 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
         'presence of mandatory named multi does not corrupt calling a nullary'
 }
 
+# RT #119929
+{
+    multi optname() { 'no args' }
+    multi optname(:$bar) { 'optional named' }
+    is optname(), 'optional named',
+        'optional named param in a multi still makes candidate narrower';
+}
 
 # vim: ft=perl6
