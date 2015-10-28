@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 19;
+plan 20;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -158,3 +158,13 @@ is_run '{;}',
 throws-like { EVAL '&&::{}[];;' },
   X::Undeclared::Symbols,
   "Doesn't die with weird internal error";
+
+#RT #115326
+{
+    is_run('(:::[])',
+    {
+        out => '',
+        err => { m/'Could not locate compile-time value'/ },
+    },
+    'appropriate error message instead of internal compiler error' );
+}
