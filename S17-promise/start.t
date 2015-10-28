@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 39;
 
 throws-like { await }, X::AdHoc, "a bare await should not work";
 
@@ -44,25 +44,25 @@ throws-like { await }, X::AdHoc, "a bare await should not work";
     is $p.result.join(', '), '1, 2, 3, 4', 'can returns a List from a start block';
 }
 
-#?rakudo skip 'RT #122715'
+# RT #122715
 {
     my $p = start {
         (0..3).map: *+1;
     };
-    await $p;
-    is $p.result.join(', '), '1, 2, 3, 4', 'can return a potentially lazy list from a start block';
-
+    my \seq = await $p;
+    is seq.join(', '), '1, 2, 3, 4', 'can return a potentially lazy list from a start block';
 }
-
-#?rakudo skip 'RT #122715'
 {
     my @outer = 0..3;
     my $p = start {
         @outer.map: *+1;
     };
-    await $p;
-    is $p.result.join(', '), '1, 2, 3, 4', 'can return a lazy map from a start block';
-
+    my \seq = await $p;
+    is seq.join(', '), '1, 2, 3, 4', 'can return a lazy map from a start block';
+}
+{
+    is (await start "d\te\tf".split("\t")), ('d', 'e', 'f').Seq,
+        'can return a lazy split from a start block';
 }
 
 # RT #123702
