@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 162;
+plan 163;
 
 # L<S05/Substitution/>
 
@@ -480,6 +480,10 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 {
+    #?rakudo todo "non-matching S/// should return string unchanged"
+    $_ = "foo";
+    is S/a/A/, "foo", "non-mutating single substitution works ($/)";
+
     $_ = "foo";
     is S/o/O/, "fOo", "non-mutating single substitution works ($/)";
 
