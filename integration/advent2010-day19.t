@@ -12,6 +12,7 @@ plan 6;
 {
     my $value = 42 but False;
     is $value, 42, '42 but False';
+    #?rakudo.jvm todo "RT #126491"
     is ?$value, False, '42 but False';
 }
 
