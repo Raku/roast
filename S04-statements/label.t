@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 # L<S04/"Loop statements"/"next, last, and redo">
-plan 5;
+plan 6;
 
 {
     my $x = 0;
@@ -69,3 +69,10 @@ plan 5;
 }
 
 throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclaration;
+
+# RT #126490
+#?rakudo skip "SEGV on moar, wrong Exception type on jvm"
+{
+    throws-like 'A: for 1 { for 1 { last A }; CONTROL { default { die $_ } } }', CX::Last,
+        "last-ing and outer loop and catching that in a CONTROL block doesn't SEGV";
+}
