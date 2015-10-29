@@ -609,7 +609,7 @@ sub l () { 1, 2 };
     is(@z.elems, 6, 'lhs treats ($a, *) as list (2)');
 }
 
-#?rakudo skip 'cannot modifiy an immutable value RT #124533'
+#?rakudo skip 'cannot modify an immutable value RT #124533'
 #?niecza skip 'Unable to resolve method LISTSTORE in class List'
 {
     my $a;
@@ -618,7 +618,7 @@ sub l () { 1, 2 };
     is @z.elems, 6, 'lhs treats @$a as list (2)';
 }
 
-#?rakudo skip 'cannot modifiy an immutable value RT #124534'
+#?rakudo skip 'cannot modify an immutable value RT #124533'
 #?niecza skip '$a[] autovivification (unspecced?)'
 {
     my $a;
