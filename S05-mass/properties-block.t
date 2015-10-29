@@ -345,7 +345,7 @@ ok(!( "\x[0900]" ~~ m/^<-:InDevanagari>$/ ), q{Don't match inverted <InDevanagar
 ok(!( "\x[BB12]"  ~~ m/^<:InDevanagari>$/ ), q{Don't match unrelated <InDevanagari>} );
 ok("\x[BB12]"  ~~ m/^<:!InDevanagari>$/, q{Match unrelated negated <InDevanagari>} );
 ok("\x[BB12]"  ~~ m/^<-:InDevanagari>$/, q{Match unrelated inverted <InDevanagari>} );
-ok("\x[BB12]\x[0900]" ~~ m/<:InDevanagari>/, q{Match unanchored <InDevanagari>} );
+ok("\x[BB12]\n\x[0900]" ~~ m/<:InDevanagari>/, q{Match unanchored <InDevanagari>} );
 
 # InDingbats
 
@@ -1047,7 +1047,7 @@ ok(!( "\x[0C00]" ~~ m/^<-:InTelugu>$/ ), q{Don't match inverted <InTelugu>} );
 ok(!( "\x[8AC5]"  ~~ m/^<:InTelugu>$/ ), q{Don't match unrelated <InTelugu>} );
 ok("\x[8AC5]"  ~~ m/^<:!InTelugu>$/, q{Match unrelated negated <InTelugu>} );
 ok("\x[8AC5]"  ~~ m/^<-:InTelugu>$/, q{Match unrelated inverted <InTelugu>} );
-ok("\x[8AC5]\x[0C00]" ~~ m/<:InTelugu>/, q{Match unanchored <InTelugu>} );
+ok("\x[8AC5]\n\x[0C00]" ~~ m/<:InTelugu>/, q{Match unanchored <InTelugu>} );
 
 # InThaana
 

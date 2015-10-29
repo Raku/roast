@@ -205,7 +205,7 @@ ok(!( "\c[TAGALOG VOWEL SIGN I]" ~~ m/^<-:NonspacingMark>$/ ), q{Don't match inv
 ok(!( "\c[CANADIAN SYLLABICS TYA]"  ~~ m/^<:NonspacingMark>$/ ), q{Don't match unrelated <NonspacingMark>} );
 ok("\c[CANADIAN SYLLABICS TYA]"  ~~ m/^<:!NonspacingMark>$/, q{Match unrelated negated <NonspacingMark>} );
 ok("\c[CANADIAN SYLLABICS TYA]"  ~~ m/^<-:NonspacingMark>$/, q{Match unrelated inverted <NonspacingMark>} );
-ok("\c[CANADIAN SYLLABICS TYA]\c[TAGALOG VOWEL SIGN I]" ~~ m/<:NonspacingMark>/, q{Match unanchored <NonspacingMark>} );
+ok("\c[CANADIAN SYLLABICS TYA]\n\c[TAGALOG VOWEL SIGN I]" ~~ m/<:NonspacingMark>/, q{Match unanchored <NonspacingMark>} );
 
 # Mc          SpacingMark
 
@@ -219,7 +219,7 @@ ok("\x[9981]"  ~~ m/^<-:Mc>$/, q{Match unrelated inverted <Mc> (SpacingMark)} );
 ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<:Mc>$/ ), q{Don't match related <Mc> (SpacingMark)} );
 ok("\c[COMBINING GRAVE ACCENT]" ~~ m/^<:!Mc>$/, q{Match related negated <Mc> (SpacingMark)} );
 ok("\c[COMBINING GRAVE ACCENT]" ~~ m/^<-:Mc>$/, q{Match related inverted <Mc> (SpacingMark)} );
-ok("\x[9981]\c[COMBINING GRAVE ACCENT]\c[DEVANAGARI SIGN VISARGA]" ~~ m/<:Mc>/, q{Match unanchored <Mc> (SpacingMark)} );
+ok("\x[9981]\c[COMBINING GRAVE ACCENT]\n\c[DEVANAGARI SIGN VISARGA]" ~~ m/<:Mc>/, q{Match unanchored <Mc> (SpacingMark)} );
 
 ok("\c[DEVANAGARI SIGN VISARGA]" ~~ m/^<:SpacingMark>$/, q{Match <:SpacingMark>} );
 ok(!( "\c[DEVANAGARI SIGN VISARGA]" ~~ m/^<:!SpacingMark>$/ ), q{Don't match negated <SpacingMark>} );
@@ -227,7 +227,7 @@ ok(!( "\c[DEVANAGARI SIGN VISARGA]" ~~ m/^<-:SpacingMark>$/ ), q{Don't match inv
 ok(!( "\x[35E3]"  ~~ m/^<:SpacingMark>$/ ), q{Don't match unrelated <SpacingMark>} );
 ok("\x[35E3]"  ~~ m/^<:!SpacingMark>$/, q{Match unrelated negated <SpacingMark>} );
 ok("\x[35E3]"  ~~ m/^<-:SpacingMark>$/, q{Match unrelated inverted <SpacingMark>} );
-ok("\x[35E3]\c[DEVANAGARI SIGN VISARGA]" ~~ m/<:SpacingMark>/, q{Match unanchored <SpacingMark>} );
+ok("\x[35E3]\n\c[DEVANAGARI SIGN VISARGA]" ~~ m/<:SpacingMark>/, q{Match unanchored <SpacingMark>} );
 
 # Me          EnclosingMark
 
@@ -241,7 +241,7 @@ ok("\x[9400]"  ~~ m/^<-:Me>$/, q{Match unrelated inverted <Me> (EnclosingMark)} 
 ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<:Me>$/ ), q{Don't match related <Me> (EnclosingMark)} );
 ok("\c[COMBINING GRAVE ACCENT]" ~~ m/^<:!Me>$/, q{Match related negated <Me> (EnclosingMark)} );
 ok("\c[COMBINING GRAVE ACCENT]" ~~ m/^<-:Me>$/, q{Match related inverted <Me> (EnclosingMark)} );
-ok("\x[9400]\c[COMBINING GRAVE ACCENT]\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/<:Me>/, q{Match unanchored <Me> (EnclosingMark)} );
+ok("\x[9400]\c[COMBINING GRAVE ACCENT]\n\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/<:Me>/, q{Match unanchored <Me> (EnclosingMark)} );
 
 ok("\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/^<:EnclosingMark>$/, q{Match <:EnclosingMark>} );
 ok(!( "\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/^<:!EnclosingMark>$/ ), q{Don't match negated <EnclosingMark>} );
@@ -249,7 +249,7 @@ ok(!( "\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/^<-:EnclosingMark>$/ 
 ok(!( "\x[7C68]"  ~~ m/^<:EnclosingMark>$/ ), q{Don't match unrelated <EnclosingMark>} );
 ok("\x[7C68]"  ~~ m/^<:!EnclosingMark>$/, q{Match unrelated negated <EnclosingMark>} );
 ok("\x[7C68]"  ~~ m/^<-:EnclosingMark>$/, q{Match unrelated inverted <EnclosingMark>} );
-ok("\x[7C68]\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/<:EnclosingMark>/, q{Match unanchored <EnclosingMark>} );
+ok("\x[7C68]\n\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/<:EnclosingMark>/, q{Match unanchored <EnclosingMark>} );
 
 
 # N           Number
@@ -746,7 +746,7 @@ ok("\x[AC00]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
 ok(!( "\x[A679]"  ~~ m/^<:Other>$/ ), q{Don't match unrelated <Other>} );
 ok("\x[A679]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
 ok("\x[A679]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
-ok("\x[AC00]\x[200C]" ~~ m/<:Other>/, q{Match unanchored <Other>} );
+ok("\x[AC00]\n\x[200C]" ~~ m/<:Other>/, q{Match unanchored <Other>} );
 
 # Cc          Control
 

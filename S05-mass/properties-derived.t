@@ -135,7 +135,7 @@ ok(!( "\c[BENGALI LETTER DDHA]"  ~~ m/^<:JoinControl>$/ ), q{Don't match unrelat
 #?niecza todo
 ok("\c[BENGALI LETTER DDHA]"  ~~ m/^<:!JoinControl>$/, q{Match unrelated negated <JoinControl>} );
 ok("\c[BENGALI LETTER DDHA]"  ~~ m/^<-:JoinControl>$/, q{Match unrelated inverted <JoinControl>} );
-ok("\c[BENGALI LETTER DDHA]\c[ZERO WIDTH NON-JOINER]" ~~ m/<:JoinControl>/, q{Match unanchored <JoinControl>} );
+ok("\c[BENGALI LETTER DDHA]\n\c[ZERO WIDTH NON-JOINER]" ~~ m/<:JoinControl>/, q{Match unanchored <JoinControl>} );
 
 # LogicalOrderException
 
@@ -191,7 +191,7 @@ ok(!( "\c[BENGALI VOWEL SIGN AA]" ~~ m/^<-:OtherGraphemeExtend>$/ ), q{Don't mat
 ok(!( "\c[APL FUNCTIONAL SYMBOL EPSILON UNDERBAR]"  ~~ m/^<:OtherGraphemeExtend>$/ ), q{Don't match unrelated <OtherGraphemeExtend>} );
 ok("\c[APL FUNCTIONAL SYMBOL EPSILON UNDERBAR]"  ~~ m/^<:!OtherGraphemeExtend>$/, q{Match unrelated negated <OtherGraphemeExtend>} );
 ok("\c[APL FUNCTIONAL SYMBOL EPSILON UNDERBAR]"  ~~ m/^<-:OtherGraphemeExtend>$/, q{Match unrelated inverted <OtherGraphemeExtend>} );
-ok("\c[APL FUNCTIONAL SYMBOL EPSILON UNDERBAR]\c[BENGALI VOWEL SIGN AA]" ~~ m/<:OtherGraphemeExtend>/, q{Match unanchored <OtherGraphemeExtend>} );
+ok("\c[APL FUNCTIONAL SYMBOL EPSILON UNDERBAR]\n\c[BENGALI VOWEL SIGN AA]" ~~ m/<:OtherGraphemeExtend>/, q{Match unanchored <OtherGraphemeExtend>} );
 
 # OtherLowercase
 
@@ -307,7 +307,7 @@ ok(!( "\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/^<-:Alphabetic>$/ ), q{Don't match 
 ok(!( "\x[297C]"  ~~ m/^<:Alphabetic>$/ ), q{Don't match unrelated (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
 ok("\x[297C]"  ~~ m/^<:!Alphabetic>$/, q{Match unrelated negated (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
 ok("\x[297C]"  ~~ m/^<-:Alphabetic>$/, q{Match unrelated inverted (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
-ok("\x[297C]\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/<:Alphabetic>/, q{Match unanchored (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
+ok("\x[297C]\n\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/<:Alphabetic>/, q{Match unanchored (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
 
 # Lowercase       # Ll + OtherLowercase
 

@@ -100,7 +100,7 @@ ok(!( "\c[BENGALI SIGN CANDRABINDU]" ~~ m/^<-:Bengali>$/ ), q{Don't match invert
 ok(!( "\x[D1E8]"  ~~ m/^<:Bengali>$/ ), q{Don't match unrelated <Bengali>} );
 ok("\x[D1E8]"  ~~ m/^<!:Bengali>.$/, q{Match unrelated negated <Bengali>} );
 ok("\x[D1E8]"  ~~ m/^<-:Bengali>$/, q{Match unrelated inverted <Bengali>} );
-ok("\x[D1E8]\c[BENGALI SIGN CANDRABINDU]" ~~ m/<:Bengali>/, q{Match unanchored <Bengali>} );
+ok("\x[D1E8]\n\c[BENGALI SIGN CANDRABINDU]" ~~ m/<:Bengali>/, q{Match unanchored <Bengali>} );
 
 # Bopomofo
 
@@ -182,7 +182,7 @@ ok(!( "\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/^<-:Devanagari>$/ ), q{Don't match 
 ok(!( "\x[D291]"  ~~ m/^<:Devanagari>$/ ), q{Don't match unrelated <Devanagari>} );
 ok("\x[D291]"  ~~ m/^<!:Devanagari>.$/, q{Match unrelated negated <Devanagari>} );
 ok("\x[D291]"  ~~ m/^<-:Devanagari>$/, q{Match unrelated inverted <Devanagari>} );
-ok("\x[D291]\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/<:Devanagari>/, q{Match unanchored <Devanagari>} );
+ok("\x[D291]\n\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/<:Devanagari>/, q{Match unanchored <Devanagari>} );
 
 # Ethiopic
 
@@ -233,7 +233,7 @@ ok(!( "\c[GUJARATI SIGN CANDRABINDU]" ~~ m/^<-:Gujarati>$/ ), q{Don't match inve
 ok(!( "\x[D108]"  ~~ m/^<:Gujarati>$/ ), q{Don't match unrelated <Gujarati>} );
 ok("\x[D108]"  ~~ m/^<!:Gujarati>.$/, q{Match unrelated negated <Gujarati>} );
 ok("\x[D108]"  ~~ m/^<-:Gujarati>$/, q{Match unrelated inverted <Gujarati>} );
-ok("\x[D108]\c[GUJARATI SIGN CANDRABINDU]" ~~ m/<:Gujarati>/, q{Match unanchored <Gujarati>} );
+ok("\x[D108]\n\c[GUJARATI SIGN CANDRABINDU]" ~~ m/<:Gujarati>/, q{Match unanchored <Gujarati>} );
 
 # Gurmukhi
 
@@ -244,7 +244,7 @@ ok(!( "\c[GURMUKHI SIGN BINDI]" ~~ m/^<-:Gurmukhi>$/ ), q{Don't match inverted <
 ok(!( "\x[5E05]"  ~~ m/^<:Gurmukhi>$/ ), q{Don't match unrelated <Gurmukhi>} );
 ok("\x[5E05]"  ~~ m/^<!:Gurmukhi>.$/, q{Match unrelated negated <Gurmukhi>} );
 ok("\x[5E05]"  ~~ m/^<-:Gurmukhi>$/, q{Match unrelated inverted <Gurmukhi>} );
-ok("\x[5E05]\c[GURMUKHI SIGN BINDI]" ~~ m/<:Gurmukhi>/, q{Match unanchored <Gurmukhi>} );
+ok("\x[5E05]\n\c[GURMUKHI SIGN BINDI]" ~~ m/<:Gurmukhi>/, q{Match unanchored <Gurmukhi>} );
 
 # Han
 
@@ -320,7 +320,7 @@ ok(!( "\c[KANNADA SIGN ANUSVARA]" ~~ m/^<-:Kannada>$/ ), q{Don't match inverted 
 ok(!( "\x[C1DF]"  ~~ m/^<:Kannada>$/ ), q{Don't match unrelated <Kannada>} );
 ok("\x[C1DF]"  ~~ m/^<!:Kannada>.$/, q{Match unrelated negated <Kannada>} );
 ok("\x[C1DF]"  ~~ m/^<-:Kannada>$/, q{Match unrelated inverted <Kannada>} );
-ok("\x[C1DF]\c[KANNADA SIGN ANUSVARA]" ~~ m/<:Kannada>/, q{Match unanchored <Kannada>} );
+ok("\x[C1DF]\n\c[KANNADA SIGN ANUSVARA]" ~~ m/<:Kannada>/, q{Match unanchored <Kannada>} );
 
 # Katakana
 
@@ -384,7 +384,7 @@ ok("\x[625C]"  ~~ m/^<-:Malayalam>$/, q{Match unrelated inverted <Malayalam>} );
 ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<:Malayalam>$/ ), q{Don't match related <Malayalam>} );
 ok("\c[COMBINING GRAVE ACCENT]" ~~ m/^<!:Malayalam>.$/, q{Match related negated <Malayalam>} );
 ok("\c[COMBINING GRAVE ACCENT]" ~~ m/^<-:Malayalam>$/, q{Match related inverted <Malayalam>} );
-ok("\x[625C]\c[COMBINING GRAVE ACCENT]\c[MALAYALAM SIGN ANUSVARA]" ~~ m/<:Malayalam>/, q{Match unanchored <Malayalam>} );
+ok("\x[625C]\c[COMBINING GRAVE ACCENT]\n\c[MALAYALAM SIGN ANUSVARA]" ~~ m/<:Malayalam>/, q{Match unanchored <Malayalam>} );
 
 # Mongolian
 
@@ -441,7 +441,7 @@ ok(!( "\c[ORIYA SIGN CANDRABINDU]" ~~ m/^<-:Oriya>$/ ), q{Don't match inverted <
 ok(!( "\x[4292]"  ~~ m/^<:Oriya>$/ ), q{Don't match unrelated <Oriya>} );
 ok("\x[4292]"  ~~ m/^<!:Oriya>.$/, q{Match unrelated negated <Oriya>} );
 ok("\x[4292]"  ~~ m/^<-:Oriya>$/, q{Match unrelated inverted <Oriya>} );
-ok("\x[4292]\c[ORIYA SIGN CANDRABINDU]" ~~ m/<:Oriya>/, q{Match unanchored <Oriya>} );
+ok("\x[4292]\n\c[ORIYA SIGN CANDRABINDU]" ~~ m/<:Oriya>/, q{Match unanchored <Oriya>} );
 
 # Runic
 
@@ -466,7 +466,7 @@ ok("\x[5DF5]"  ~~ m/^<-:Sinhala>$/, q{Match unrelated inverted <Sinhala>} );
 ok(!( "\c[YI RADICAL QOT]" ~~ m/^<:Sinhala>$/ ), q{Don't match related <Sinhala>} );
 ok("\c[YI RADICAL QOT]" ~~ m/^<!:Sinhala>.$/, q{Match related negated <Sinhala>} );
 ok("\c[YI RADICAL QOT]" ~~ m/^<-:Sinhala>$/, q{Match related inverted <Sinhala>} );
-ok("\x[5DF5]\c[YI RADICAL QOT]\c[SINHALA SIGN ANUSVARAYA]" ~~ m/<:Sinhala>/, q{Match unanchored <Sinhala>} );
+ok("\x[5DF5]\c[YI RADICAL QOT]\n\c[SINHALA SIGN ANUSVARAYA]" ~~ m/<:Sinhala>/, q{Match unanchored <Sinhala>} );
 
 # Syriac
 
@@ -513,7 +513,7 @@ ok(!( "\c[TAMIL SIGN ANUSVARA]" ~~ m/^<-:Tamil>$/ ), q{Don't match inverted <Tam
 ok(!( "\x[8DF2]"  ~~ m/^<:Tamil>$/ ), q{Don't match unrelated <Tamil>} );
 ok("\x[8DF2]"  ~~ m/^<!:Tamil>.$/, q{Match unrelated negated <Tamil>} );
 ok("\x[8DF2]"  ~~ m/^<-:Tamil>$/, q{Match unrelated inverted <Tamil>} );
-ok("\x[8DF2]\c[TAMIL SIGN ANUSVARA]" ~~ m/<:Tamil>/, q{Match unanchored <Tamil>} );
+ok("\x[8DF2]\n\c[TAMIL SIGN ANUSVARA]" ~~ m/<:Tamil>/, q{Match unanchored <Tamil>} );
 
 # Telugu
 
@@ -524,7 +524,7 @@ ok(!( "\c[TELUGU SIGN CANDRABINDU]" ~~ m/^<-:Telugu>$/ ), q{Don't match inverted
 ok(!( "\x[8088]"  ~~ m/^<:Telugu>$/ ), q{Don't match unrelated <Telugu>} );
 ok("\x[8088]"  ~~ m/^<!:Telugu>.$/, q{Match unrelated negated <Telugu>} );
 ok("\x[8088]"  ~~ m/^<-:Telugu>$/, q{Match unrelated inverted <Telugu>} );
-ok("\x[8088]\c[TELUGU SIGN CANDRABINDU]" ~~ m/<:Telugu>/, q{Match unanchored <Telugu>} );
+ok("\x[8088]\n\c[TELUGU SIGN CANDRABINDU]" ~~ m/<:Telugu>/, q{Match unanchored <Telugu>} );
 
 # Thaana
 
