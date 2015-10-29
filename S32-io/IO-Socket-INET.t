@@ -107,7 +107,7 @@ if $*DISTRO.name eq any <linux Linux darwin solaris mswin32 macosx> { # please a
     nok $elapsed > $toolong, "finished in time #5";
     # Multibyte characters
     # RT #115862
-    is $expected[$i], chr(0xbeef), "{elapsed} received {chr 0xbeef}";
+    is $expected[$i], chr(0xA001), "{elapsed} received {chr 0xA001}";
     nok $elapsed > $toolong, "finished in time #6";
     $i++;
     is $expected[$i++], 1, "{elapsed} ... which is 1 character";
@@ -115,7 +115,7 @@ if $*DISTRO.name eq any <linux Linux darwin solaris mswin32 macosx> { # please a
     is $expected[$i++], 1, "{elapsed} received another character";
     nok $elapsed > $toolong, "finished in time #8";
     # RT #115862
-    is $expected[$i], chr(0xbabe), "{elapsed} combined the bytes form {chr 0xbabe}";
+    is $expected[$i], chr(0xA002), "{elapsed} combined the bytes form {chr 0xA002}";
     nok $elapsed > $toolong, "finished in time #9";
     $i++;
 

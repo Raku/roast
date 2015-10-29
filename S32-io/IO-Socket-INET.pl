@@ -90,7 +90,7 @@ given $test {
             while my $client = $server.accept() {
                 # Also sends two 3 byte unicode characters
                 $client.print(join '',  '0'..'9', 'a'..'z',
-                        chr(0xbeef),  chr(0xbabe) );
+                        chr(0xA001),  chr(0xA002) );
                 $client.close();
             }
         }
@@ -104,14 +104,14 @@ given $test {
             say $sock.recv(3); # 789
             say $sock.recv(26); # a-z
             # All is left are the two 3 byte characters 
-            my $beef = $sock.recv(1);
-            say $beef;
-            say $beef.chars;
+            my $unifirst = $sock.recv(1);
+            say $unifirst;
+            say $unifirst.chars;
             # get second character
-            my $babe = $sock.recv(1);
-            say $babe.chars;
+            my $unisecond = $sock.recv(1);
+            say $unisecond.chars;
             # join it together
-            say $babe;
+            say $unisecond;
             $sock.close();
         }
     }
