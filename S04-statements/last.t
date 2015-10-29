@@ -86,6 +86,7 @@ plan 9;
     is($tracker, 15, 'our inner loop only runs once per (last inside nested loops)');
 }
 
+#?rakudo.jvm skip "control exception without handler, RT 126490"
 {
     my $var = 0;
     OUT: for (1..2) {
