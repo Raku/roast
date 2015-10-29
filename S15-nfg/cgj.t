@@ -36,6 +36,5 @@ my @cgj-first-combiner = (
 );
 
 for @cgj-first-combiner -> $test-str {
-    #?rakudo todo 'CGJ special case of combining character with ccc=0'
     is $test-str.chars, 1, "Correct value of .chars for '$test-str' (combining characters, including CGJ)";
 }
