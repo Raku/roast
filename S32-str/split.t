@@ -45,6 +45,16 @@ plan 53;
       q{Str.split: '$', 2};
 }
 
+# split on start/end of string
+{
+
+    is split('|', '|life|universe|everything|').join("-"), "-life-universe-everything-",
+        "Splitting string where delimiter occurs at start/end has null strings at start/end of list";
+
+    is split('|', '|life|universe|the third thing|', 5).join("-"), "-life-universe-the third thing-",
+        "Splitting string where delimiter occurs at start/end with limit on number of splits";
+}
+
 # split on a multi-character delimiter
 {
     is split(', ', "comma, separated, values").join('|'),
