@@ -413,7 +413,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
         'regex match in all junction is an empty all junction (3)';
     is (all() ~~ /bll/).gist,      'all()',
         'regex match in all junction is an empty all junction (4)';
-    is (any("4","5") ~~ /4/).gist, 'any(｢4｣, Nil)',
+    is (any("4","5") ~~ /4/).gist, 'any(｢4｣, (Nil))',
         'successful regex match in any junction';
 }
 
@@ -425,7 +425,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 # RT #120992
 {
-    is (all("a","b") ~~ /a/).gist, 'all(｢a｣, Nil)',
+    is (all("a","b") ~~ /a/).gist, 'all(｢a｣, (Nil))',
         'successful regex match in all junction if one element does not match';
 }
 
