@@ -201,7 +201,6 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
 }
 
 # RT #69312
-#?rakudo.jvm skip "control operator crossed continuation barrier RT #124655"
 {
     my @t = gather {
         sub triangle { take '=' x 3; }
