@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 390;
+plan 392;
 
 =begin pod
 
@@ -1017,9 +1017,15 @@ throws-like '3 «.» foo', X::Obsolete, "«.» can't be hypered";
         'hyper op works with (finite) range on non-magical side (3)';
 }
 
+my &pre = &prefix:<-«>;
+is pre((2,3,4)).gist, '(-2 -3 -4)', "Hyper prefix can autogen";
+
 is-deeply &infix:<»+«>((1,2,3),(4,5,6)), (5, 7, 9), "Hyper >><< can autogen";
 is-deeply &infix:<»+»>((1,2,3),1), (2, 3, 4), "Hyper >>>> can autogen";
 is-deeply &infix:<«+«>(1,(4,5,6)), (5, 6, 7), "Hyper <<<< can autogen";
 is-deeply &infix:<«+»>((1,2),(4,5,6)), (5, 7, 7), "Hyper <<>> can autogen";
+
+my &post = &postfix:<»i>;
+is post((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen";
 
 # vim: ft=perl6
