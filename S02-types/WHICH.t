@@ -423,25 +423,33 @@ my @moar = <
   X::Proc::Async::TapBeforeSpawn
 >;
 
-plan 2 * ( @normal + @exception + @concurrent + @moar );
+plan 4 * ( @normal + @exception + @concurrent + @moar );
 
 for @normal -> $class {
-    is ::($class).WHICH, $class, "checking $class.WHICH";
+    is ::($class).WHICH,            $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
+    is ::($class).perl,             $class, "$class.perl returns self";
+    is ::($class).gist,         "($class)", "$class.gist returns self";
 }
 
 for @exception -> $class {
-    is ::($class).WHICH, $class, "checking $class.WHICH";
+    is ::($class).WHICH,            $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
+    is ::($class).perl,             $class, "$class.perl returns self";
+    is ::($class).gist,         "($class)", "$class.gist returns self";
 }
 
 for @concurrent -> $class {
-    is ::($class).WHICH, $class, "checking $class.WHICH";
+    is ::($class).WHICH,            $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
+    is ::($class).perl,             $class, "$class.perl returns self";
+    is ::($class).gist,         "($class)", "$class.gist returns self";
 }
 
 for @moar -> $class {
-    #?rakudo.jvm 2    skip 'NYI on jvm'
-    is ::($class).WHICH, $class, "checking $class.WHICH";
+    #?rakudo.jvm 3    skip 'NYI on jvm'
+    is ::($class).WHICH,            $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
+    is ::($class).perl,             $class, "$class.perl returns self";
+    is ::($class).gist,         "($class)", "$class.gist returns self";
 }
