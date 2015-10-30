@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 372;
+plan 374;
 
 =begin pod
 
@@ -394,5 +394,8 @@ ok ([+]) == 0, 'argumentless [+] parses';
     is [.[0]].gist, '[42]', ". infix is not attempted in reduce";
 }
 
+
+is &prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen";
+is &prefix:<[R**]>(2,3,4), 262144, "Reduce R** can autogen";
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 41;
+plan 44;
 
 =begin pod
 
@@ -64,5 +64,9 @@ nok False !^^ True, '!^^ is legal and works (2)';
 
 throws-like '3 !. foo', X::Syntax::CannotMeta, "!. is too fiddly";
 throws-like '3 !. "foo"', X::Obsolete, "!. can't do P5 concat";
+
+is &infix:<!===>(1,2), True, "Meta not can autogen (!===)";
+is &infix:<!%%>(3,2), True, "Meta not can autogen (!%%)";
+is &infix:<![!%%]>(3,2), False, "Meta not can autogen (![!%%])";
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 44;
 
 =begin pod
 
@@ -98,4 +98,8 @@ throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return valu
 
 throws-like '3 R. foo', X::Syntax::CannotMeta, "R. is too fiddly";
 throws-like '3 R. "foo"', X::Obsolete, "R. can't do P5 concat";
+
+is &infix:<R/>(1,2), 2, "Meta reverse R/ can autogen";
+is &infix:<RR/>(1,2), 0.5, "Meta reverse RR/ can autogen";
+
 # vim: ft=perl6

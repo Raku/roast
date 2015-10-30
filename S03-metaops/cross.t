@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 50;
+plan 51;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -167,5 +167,7 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
 
 throws-like '3 X. foo', X::Syntax::CannotMeta, "X. is too fiddly";
 throws-like '3 X. "foo"', X::Obsolete, "X. can't do P5 concat";
+
+is-deeply &infix:<X+>((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "Meta X can autogen";
 
 # vim: ft=perl6

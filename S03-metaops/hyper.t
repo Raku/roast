@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 386;
+plan 390;
 
 =begin pod
 
@@ -1016,5 +1016,10 @@ throws-like '3 «.» foo', X::Obsolete, "«.» can't be hypered";
     is %bases, { K=>10, M=>100, G=>1000, T=>10000 },
         'hyper op works with (finite) range on non-magical side (3)';
 }
+
+is-deeply &infix:<»+«>((1,2,3),(4,5,6)), (5, 7, 9), "Hyper >><< can autogen";
+is-deeply &infix:<»+»>((1,2,3),1), (2, 3, 4), "Hyper >>>> can autogen";
+is-deeply &infix:<«+«>(1,(4,5,6)), (5, 6, 7), "Hyper <<<< can autogen";
+is-deeply &infix:<«+»>((1,2),(4,5,6)), (5, 7, 7), "Hyper <<>> can autogen";
 
 # vim: ft=perl6
