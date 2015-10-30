@@ -322,7 +322,7 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     $s = '';
     lives-ok { $s ~= $fh.getc for 1..3; },
       "windows-1252 unmapped chars from fh";
-#?rakudo.jvm todo 'builtin JVM charset folds these RT #125078'
+#?rakudo.jvm todo 'builtin JVM charset folds these RT #124686'
     is $s, '', "correct windows-1252 unmapped chars from fh";
 # Switching encoding on read may or may not ever be supported
 #?rakudo.moar todo 'Too late to change filehandle encoding RT #125079'
