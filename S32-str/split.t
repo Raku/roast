@@ -4,7 +4,7 @@ use Test;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 53;
+plan 55;
 
 # split on empty string
 {
