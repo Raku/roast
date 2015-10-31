@@ -87,7 +87,6 @@ my @normal = <
   NFD
   NFKC
   NFKD
-  Nil
   Num
   NumAttrRef
   NumLexRef
@@ -423,7 +422,12 @@ my @moar = <
   X::Proc::Async::TapBeforeSpawn
 >;
 
-plan 4 * ( @normal + @exception + @concurrent + @moar );
+plan 4 + 4 * ( @normal + @exception + @concurrent + @moar );
+
+is Nil.WHICH,             'Nil', "checking Nil.WHICH";
+is Nil.WHICH.WHAT.perl, 'ObjAt', "Nil returns an ObjAt";
+is Nil.perl,              'Nil', "Nil.perl returns 'Nil'";
+is Nil.gist,              'Nil', "Nil.gist returns 'Nil'";
 
 for @normal -> $class {
     is ::($class).WHICH,            $class, "checking $class.WHICH";
