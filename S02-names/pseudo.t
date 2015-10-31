@@ -233,7 +233,8 @@ plan 144;
     { our $x60 = 60; }
     package A61 {
         is $GLOBAL::x60, 60, '$GLOBAL:: works';
-        #?rakudo todo 'GLOBAL and interpolation'
+        #?rakudo.moar skip 'RT #126523'
+        #?rakudo.jvm  todo 'RT #126523'
         is ::("GLOBAL")::('$x60'), 60, '::("GLOBAL") works';
         is GLOBAL::.<$x60>, 60, 'GLOBAL::.{} works';
     }
@@ -330,15 +331,19 @@ plan 144;
     is f1({ $::($caller)::x }), 90, '::("CALLER") works';
 
     is f2({ $CALLER::CALLER::x }), 91, 'CALLER::CALLER:: works';
+    #?rakudo.moar skip 'RT #126523'
     is f2({ $::($caller)::($caller)::x }), 91, 'indirect CALLER::CALLER works';
 
     my $*foo = 92;
-    #?rakudo 2 todo 'not entirely sure these make sense...'
+    #?rakudo todo 'not entirely sure these make sense...'
     is f2({ CALLER::<$*foo> }), 92, 'CALLER::<$*foo> works';
+    #?rakudo.moar skip 'RT #126523'
+    #?rakudo.jvm  todo 'RT #126523'
     is f2({ ::($caller)::('$*foo') }), 92, '::("CALLER")::<$*foo> works';
 
     my $y is dynamic = 93; #OK
     if 1 {
+        #?rakudo.moar skip 'RT #126523'
         is $CALLER::y, 93, 'CALLER:: works in inline blocks';
         is $::($caller)::y, 93, '::("CALLER") works in inline blocks';
     }
@@ -413,6 +418,7 @@ my $x110 = 110; #OK
 # PARENT - NYI in any compiler
 
 # RT #123154
+#?rakudo.jvm skip 'RT #123154'
 {
     my $x = 'really unlikely value';
     ok MY::.values.grep({ ($_ // '') eq 'really unlikely value' }),
