@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 104;
+plan 116;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
 my @tests = (
@@ -21,10 +21,6 @@ my @tests = (
     'שלום',
 
     ?1, ?0,
-    #?rakudo emit # Mu eq Mu is an error now
-    #?niecza emit # Dunno what's wrong with this one
-    Mu,
-    #?rakudo emit # parse error
     #?niecza emit # Autoloading NYI
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
@@ -39,14 +35,11 @@ my @tests = (
     # Aggregates
     {},           # empty hash
     { a => 42 },  # only one elem
-    #?rakudo emit #
     { :a(1), :b(2), :c(3) },
 
     # Nested things
     { a => [1,2,3] },  # only one elem
-    #?rakudo emit #
     { a => [1,2,3], b => [4,5,6] },
-    #?rakudo emit #
     [ { :a(1) }, { :b(2), :c(3) } ],
 
     # a List
