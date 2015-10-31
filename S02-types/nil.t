@@ -56,7 +56,7 @@ ok (my $rt93980 = Nil) === Any, 'Nil assigned to scalar produces an Any'; #OK
 
 ok (my Str $str93980 = Nil) === Str; #OK
 
-is Nil.gist, '(Nil)', 'Nil.gist eq "Nil"';
+is Nil.gist, 'Nil', 'Nil.gist eq "Nil"';
 ok !Nil.new.defined, 'Nil.new is not defined';
 
 {

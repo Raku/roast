@@ -352,7 +352,7 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 }
 
 {
-    is ((Nil) => Nil).gist, '(Nil) => (Nil)', "both key and value can convey a raw Nil";
+    is ((Nil) => Nil).gist, 'Nil => Nil', "both key and value can convey a raw Nil";
     is ((Mu) => Mu).gist, '(Mu) => (Mu)', "both key and value can convey a Mu type";
     is ((Any) => Any).gist, '(Any) => (Any)', "both key and value can convey an Any type";
     is ((Junction) => Junction).gist, '(Junction) => (Junction)', "both key and value can convey a Junction type";
