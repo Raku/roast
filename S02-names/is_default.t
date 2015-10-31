@@ -206,6 +206,7 @@ plan 110;
 #?niecza skip "is default NYI"
 # native types
 {
+    #?rakudo.jvm todo "RT #126519"
     throws-like 'my int $a is default(42)',
       X::Comp::Trait::NotOnNative,
       type    => 'is',
@@ -220,7 +221,7 @@ plan 110;
       type    => 'is',
       subtype => 'default';
 
-    #?rakudo todo 'native int default(*) is NYI'
+    #?rakudo.moar todo 'native int default(*) is NYI'
     lives-ok { EVAL 'my int $a is default(*)' },
       'the default(*) trait on natives';
 } #4
