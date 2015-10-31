@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 46;
 
 # adapted from t/operators/eq.t and t/operators/cond.t
 # relational ops are in relational.t
@@ -40,13 +40,28 @@ ok(2 != 3,         "!= true");
 ok(!(2 != 2),      "!= false");
 
 #?niecza skip 'No value for parameter $r in CORE infix:<==>'
-ok infix:<==>(False), "== with one argument is correct";
-#?niecza skip 'No value for parameter $l in CORE infix:<==>'
-ok  infix:<==>(),     "== with no arguments is correct";
-#?niecza skip 'No value for parameter $r in CORE infix:<!=>'
-ok infix:<!=>(False), "!= with one argument is correct";
-#?niecza skip 'No value for parameter $l in CORE infix:<!=>'
-ok  infix:<!=>(),     "!= with no arguments is correct";
+{
+    ok &infix:<==>(False), "&infix:<==> with one argument is correct";
+    ok &infix:<==>(),      "&infix:<==> with no arguments is correct";
+    ok &infix:<!=>(False), "&infix:<!=> with one argument is correct";
+    ok &infix:<!=>(),      "&infix:<!=> with no arguments is correct";
+    ok &infix:<!==>(False),"&infix:<!==> with one argument is correct";
+    ok &infix:<!==>(),     "&infix:<!==> with no arguments is correct";
+
+    ok infix:<==>(False),  "infix:<==> with one argument is correct";
+    ok infix:<==>(),       "infix:<==> with no arguments is correct";
+    ok infix:<!=>(False),  "infix:<!=> with one argument is correct";
+    ok infix:<!=>(),       "infix:<!=> with no arguments is correct";
+    ok infix:<!==>(False), "infix:<!==> with one argument is correct";
+    ok infix:<!==>(),      "infix:<!==> with no arguments is correct";
+
+    ok &[==](False),       "&[==] with one argument is correct";
+    ok &[==](),            "&[==] with no arguments is correct";
+    ok &[!=](False),       "&[!=] with one argument is correct";
+    ok &[!=](),            "&[!=] with no arguments is correct";
+    ok &[!==](False),      "&[!==] with one argument is correct";
+    ok &[!==](),           "&[!==] with no arguments is correct";
+}
 
 #L<S03/Negated relational operators>
 ok(2 !== 3,         "!== true");
