@@ -41,6 +41,7 @@ my @tests = (
     #?niecza skip 'hanging test'
     ok $foo.perl,
         ".perl doesn't hang on a recursive arrayref";
+    #?rakudo.jvm skip 'RT #126518'
     ok $foo.perl.EVAL.perl,
         ".perl output parses on a recursive arrayref";
 }
