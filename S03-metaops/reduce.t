@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 374;
+plan 375;
 
 =begin pod
 
@@ -397,5 +397,6 @@ ok ([+]) == 0, 'argumentless [+] parses';
 
 is &prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen";
 is &prefix:<[R**]>(2,3,4), 262144, "Reduce R** can autogen";
+is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen without &";
 
 # vim: ft=perl6

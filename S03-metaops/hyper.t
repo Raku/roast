@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 392;
+plan 402;
 
 =begin pod
 
@@ -1018,14 +1018,26 @@ throws-like '3 «.» foo', X::Obsolete, "«.» can't be hypered";
 }
 
 my &pre = &prefix:<-«>;
-is pre((2,3,4)).gist, '(-2 -3 -4)', "Hyper prefix can autogen";
+is pre((2,3,4)).gist, '(-2 -3 -4)', "Hyper prefix can autogen with &";
+is prefix:<-«>((2,3,4)).gist, '(-2 -3 -4)', "Hyper prefix can autogen without &";
 
-is-deeply &infix:<»+«>((1,2,3),(4,5,6)), (5, 7, 9), "Hyper >><< can autogen";
-is-deeply &infix:<»+»>((1,2,3),1), (2, 3, 4), "Hyper >>>> can autogen";
-is-deeply &infix:<«+«>(1,(4,5,6)), (5, 6, 7), "Hyper <<<< can autogen";
-is-deeply &infix:<«+»>((1,2),(4,5,6)), (5, 7, 7), "Hyper <<>> can autogen";
+is-deeply &infix:<»+«>((1,2,3),(4,5,6)), (5, 7, 9), "Hyper >><< can autogen with &";
+is-deeply &infix:<»+»>((1,2,3),1), (2, 3, 4), "Hyper >>>> can autogen with &";
+is-deeply &infix:<«+«>(1,(4,5,6)), (5, 6, 7), "Hyper <<<< can autogen with &";
+is-deeply &infix:<«+»>((1,2),(4,5,6)), (5, 7, 7), "Hyper <<>> can autogen with &";
+
+is-deeply infix:<»+«>((1,2,3),(4,5,6)), (5, 7, 9), "Hyper >><< can autogen without &";
+is-deeply infix:<»+»>((1,2,3),1), (2, 3, 4), "Hyper >>>> can autogen without &";
+is-deeply infix:<«+«>(1,(4,5,6)), (5, 6, 7), "Hyper <<<< can autogen without &";
+is-deeply infix:<«+»>((1,2),(4,5,6)), (5, 7, 7), "Hyper <<>> can autogen without &";
+
+is-deeply &[»+«]((1,2,3),(4,5,6)), (5, 7, 9), "Hyper >><< can autogen with &[]";
+is-deeply &[»+»]((1,2,3),1), (2, 3, 4), "Hyper >>>> can autogen with &[]";
+is-deeply &[«+«](1,(4,5,6)), (5, 6, 7), "Hyper <<<< can autogen with &[]";
+is-deeply &[«+»]((1,2),(4,5,6)), (5, 7, 7), "Hyper <<>> can autogen with &[]";
 
 my &post = &postfix:<»i>;
-is post((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen";
+is post((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen with &";
+is &postfix:<»i>((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen without &";
 
 # vim: ft=perl6

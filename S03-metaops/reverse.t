@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 46;
+plan 48;
 
 =begin pod
 
@@ -101,6 +101,8 @@ throws-like '3 R. "foo"', X::Obsolete, "R. can't do P5 concat";
 
 is &infix:<R/>(1,2), 2, "Meta reverse R/ can autogen";
 is &infix:<RR/>(1,2), 0.5, "Meta reverse RR/ can autogen";
+is infix:<R/>(1,2), 2, "Meta reverse R/ can autogen without &";
+is &[R/](1,2), 2, "Meta reverse R/ can autogen with &[]";
 
 sub infix:<op> ($a,$b) { $a - $b }
 {

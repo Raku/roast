@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 44;
+plan 46;
 
 =begin pod
 
@@ -68,5 +68,7 @@ throws-like '3 !. "foo"', X::Obsolete, "!. can't do P5 concat";
 is &infix:<!===>(1,2), True, "Meta not can autogen (!===)";
 is &infix:<!%%>(3,2), True, "Meta not can autogen (!%%)";
 is &infix:<![!%%]>(3,2), False, "Meta not can autogen (![!%%])";
+is infix:<!===>(1,2), True, "Meta not can autogen (!===) without &";
+is &[!===](1,2), True, "Meta not can autogen (!===) with &[]";
 
 # vim: ft=perl6

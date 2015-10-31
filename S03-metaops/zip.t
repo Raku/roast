@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 51;
+plan 53;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -121,5 +121,7 @@ throws-like '3 Z. "foo"', X::Obsolete, "Z. can't do P5 concat";
 
 is-deeply &infix:<Z+>((1,2,3),(4,5,6)), (5, 7, 9), "Meta zip can autogen";
 is-deeply &infix:<Z+>((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ary)";
+is-deeply infix:<Z+>((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ary) without &";
+is-deeply &[Z+]((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ary) with &[]";
 
 # vim: ft=perl6
