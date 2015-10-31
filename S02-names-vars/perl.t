@@ -63,6 +63,7 @@ my @tests = (
 }
 
 # Recursive data structures
+#?rakudo.jvm skip "RT #126518"
 {
     my $foo = { a => 42 }; $foo<b> = $foo;
     is $foo<b><b><b><a>, 42, "basic recursive hashref";
