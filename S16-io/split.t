@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 18;
 
 my $filename = 't/spec/S16-io/split.testing';
 
@@ -74,6 +74,20 @@ for "x",/x/ -> $sep {
 for "x",/x/ -> $sep {
     my $text  = "Z" x 100000 ~ "xa";
     my @clean = "Z" x 100000, "a";
+    test-split($text,@clean,$sep);
+}
+
+# split with nothing
+for "" -> $sep {
+    my $text  = "abcde";
+    my @clean = flat "", <a b c d e>, "";
+    test-split($text,@clean,$sep);
+}
+
+# split with nothing on nothing
+for "" -> $sep {
+    my $text  = "";
+    my @clean;
     test-split($text,@clean,$sep);
 }
 
