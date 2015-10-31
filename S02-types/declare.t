@@ -112,6 +112,7 @@ plan 70;
 
 # Non-object (native) types are lowercase: int, num, complex, rat, buf, bit.
 
+#?rakudo.jvm todo "RT #126526"
 {
  throws-like { my int $namcu; $namcu = 2**100 }, X::AdHoc,
     message => 'Cannot unbox 101 bit wide bigint into native integer',
