@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 19;
 
 =begin description
 
@@ -19,7 +19,9 @@ This test tests the C<head> builtin.
     is $scalar.head(5).List, (42,),      "Scalar.head works";
     my $range = ^10;
     is $range.head(5).List, (0,1,2,3,4), "Range.head works";
-} #4
+    my $inf = ^Inf;
+    is $inf.head(5).List, (0,1,2,3,4),   "Range.head works on lazy list also";
+} #5
 
 {
     for 0, -1 {
