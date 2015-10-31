@@ -83,9 +83,13 @@ my @normal = (
   'Mix',
   'MixHash',
   'Mu',
+  #?rakudo.jvm emit # NYI - RT #124500
   'NFC',
+  #?rakudo.jvm emit # NYI - RT #124500
   'NFD',
+  #?rakudo.jvm emit # NYI - RT #124500
   'NFKC',
+  #?rakudo.jvm emit # NYI - RT #124500
   'NFKD',
   'Num',
   'NumAttrRef',
@@ -133,6 +137,7 @@ my @normal = (
   'Sub',
   'Submethod',
   'UInt',
+  #?rakudo.jvm emit # NYI - RT #124500
   'Uni',
   'VM',
   'Variable',
@@ -451,7 +456,7 @@ for @concurrent -> $class {
 }
 
 for @moar -> $class {
-    #?rakudo.jvm 3    skip 'NYI on jvm'
+    #?rakudo.jvm 4    skip 'NYI on jvm - RT #126524'
     is ::($class).WHICH,            $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
