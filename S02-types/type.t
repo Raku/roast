@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Types as Constraints"/"A variable's type is a constraint indicating what sorts">
 
-plan 51;
+plan 74;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -76,8 +76,45 @@ my Str $bar;
     is fact(5), 120, 'recursive factorial with type contstraints work';
 }
 
-# Num does not accept Int (used to, then spec changed)
-throws-like q[my Num $n; $n = 42], X::TypeCheck::Assignment, 'Num does not accept Int';
+# Num does not accept Int
+throws-like q[my Num $n; $n = 42], X::Syntax::Number::LiteralType, 'Num does not accept Int';
+throws-like q[my Num $n; $n = $*PID], X::TypeCheck::Assignment, 'Num does not accept Int';
+# Complex does not accept Int
+throws-like q[my Complex $n; $n = 42], X::Syntax::Number::LiteralType, 'Complex does not accept Int';
+throws-like q[my Complex $n; $n = $*PID], X::TypeCheck::Assignment, 'Complex does not accept Int';
+# Rat does not accept Int
+throws-like q[my Rat $n; $n = 42], X::Syntax::Number::LiteralType, 'Rat does not accept Int';
+throws-like q[my Rat $n; $n = $*PID], X::TypeCheck::Assignment, 'Rat does not accept Int';
+
+# Int does not accept Num
+throws-like q[my Int $n; $n = 42e0], X::Syntax::Number::LiteralType, 'Int does not accept Num';
+throws-like q[my Int $n; $n = $*PID.Num], X::TypeCheck::Assignment, 'Int does not accept Num';
+# Complex does not accept Num
+throws-like q[my Complex $n; $n = 42e0], X::Syntax::Number::LiteralType, 'Complex does not accept Num';
+throws-like q[my Complex $n; $n = $*PID.Num], X::TypeCheck::Assignment, 'Complex does not accept Num';
+# Rat does not accept Num
+throws-like q[my Rat $n; $n = 42e0], X::Syntax::Number::LiteralType, 'Rat does not accept Num';
+throws-like q[my Rat $n; $n = $*PID.Num], X::TypeCheck::Assignment, 'Rat does not accept Num';
+
+# Int does not accept Rat
+throws-like q[my Int $n; $n = 42.0], X::Syntax::Number::LiteralType, 'Int does not accept Rat';
+throws-like q[my Int $n; $n = $*PID.Rat], X::TypeCheck::Assignment, 'Int does not accept Rat';
+# Complex does not accept Rat
+throws-like q[my Complex $n; $n = 42.0], X::Syntax::Number::LiteralType, 'Complex does not accept Rat';
+throws-like q[my Complex $n; $n = $*PID.Rat], X::TypeCheck::Assignment, 'Complex does not accept Rat';
+# Num does not accept Rat
+throws-like q[my Num $n; $n = 42.0], X::Syntax::Number::LiteralType, 'Num does not accept Rat';
+throws-like q[my Num $n; $n = $*PID.Rat], X::TypeCheck::Assignment, 'Num does not accept Rat';
+
+# Int does not accept Complex
+throws-like q[my Int $n; $n = <42+0i>], X::Syntax::Number::LiteralType, 'Int does not accept Complex';
+throws-like q[my Int $n; $n = $*PID\i], X::TypeCheck::Assignment, 'Int does not accept Complex';
+# Complex does not accept Complex
+throws-like q[my Rat $n; $n = <42+0i>], X::Syntax::Number::LiteralType, 'Rat does not accept Complex';
+throws-like q[my Rat $n; $n = $*PID\i], X::TypeCheck::Assignment, 'Rat does not accept Complex';
+# Num does not accept Complex
+throws-like q[my Num $n; $n = <42+0i>], X::Syntax::Number::LiteralType, 'Num does not accept Complex';
+throws-like q[my Num $n; $n = $*PID\i], X::TypeCheck::Assignment, 'Num does not accept Complex';
 
 # L<S02/Return types/a return type can be specified before or after the name>
 {
