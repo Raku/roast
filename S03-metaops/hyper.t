@@ -440,6 +440,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».Set».keys».sort.gist, "((2 3) (4 [5 6]))", ".Set is nodal";
     is [[2, 3], [4, [5, 6]]]».Slip.gist, "((2 3) (4 [5 6]))", ".Slip is nodal";
     is [[2, 3], [4, [5, 6]]]».sort.gist, "((2 3) (4 [5 6]))", ".sort is nodal";
+    #?rakudo.jvm todo "RT #126527"
     is [[2, 3], [4, [5, 6]]]».squish.gist, "((2 3) (4 [5 6]))", ".squish is nodal";
     is [[2, 3], [4, [5, 6]]]».Supply.elems, 2, ".Supply is nodal";
     is [[2, 3], [4, [5, 6]]]».tree(*.reverse,*.reverse).gist, "((3 2) ([6 5] 4))", ".tree is nodal";
@@ -989,14 +990,19 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
     my @a = «"Furthermore, Subhuti," "the basic nature" "of the five" "aggregates" "is emptiness."»;
     # <list> <hyper> <empty list>
     is @a «+« (), (), "left-dwim hyper against empty RHS doesn't hang";
+    #?rakudo.jvm skip 'RT #126528'
     is @a »+» (), (), "right-dwim hyper against empty RHS doesn't hang";
+    #?rakudo.jvm skip 'RT #126528'
     is @a «+» (), (), "both-dwim hyper against empty RHS doesn't hang";
+    #?rakudo.jvm skip 'RT #126528'
     throws-like {@a »+« ()}, X::HyperOp::NonDWIM,
         left-elems => 5, right-elems => 0,
         "non-dwim hyper against empty RHS dies";
     # <empty list> <hyper> <list>
+    #?rakudo.jvm skip 'RT #126528'
     is () «+« @a, (), "left-dwim hyper against empty LHS doesn't hang";
     is () »+» @a, (), "right-dwim hyper against empty LHS doesn't hang";
+    #?rakudo.jvm skip 'RT #126528'
     is () «+» @a, (), "both-dwim hyper against empty LHS doesn't hang";
     throws-like {() »+« @a}, X::HyperOp::NonDWIM,
         left-elems => 0, right-elems => 5,
