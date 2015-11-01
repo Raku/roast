@@ -4,7 +4,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 10;
+plan 11;
 
 sub create-temporary-file {
     my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
@@ -45,6 +45,12 @@ $output = Test::Util::run('.say for lines()', :@args);
 @lines  = lines($output);
 
 is-deeply @lines, [<one two three>], 'lines() should read from $*ARGFILES, which reads from files in @*ARGS';
+
+$output = Test::Util::run('.say for lines()', :args($tmp-file-name xx 3));
+@lines  = lines($output);
+
+# RT #126494
+is-deeply @lines, [|<one two three> xx 3], 'lines() using $*ARGFILES, works for more than one file';
 
 $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n");
 @lines  = lines($output);
