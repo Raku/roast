@@ -168,6 +168,7 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
 throws-like '3 X. foo', X::Syntax::CannotMeta, "X. is too fiddly";
 throws-like '3 X. "foo"', X::Obsolete, "X. can't do P5 concat";
 
+#?rakudo.jvm 3 skip 'RT #126493'
 is-deeply &infix:<X+>((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&infix:<X+> can autogen";
 is-deeply infix:<X+>((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "infix:<X+> can autogen";
 is-deeply &[X+]((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&[X+] can autogen";
