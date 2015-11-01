@@ -98,7 +98,7 @@ eval-lives-ok('class A { has $!to; method x { loop { (:$!to); } } };', 'pair col
 
 # RT #63760
 throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
-             '"loop {} while" is a syntax error (RT 63760)';
+             '"loop {} while" is a syntax error (RT #63760)';
 
 # RT #112654
 {

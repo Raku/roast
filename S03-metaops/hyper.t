@@ -349,7 +349,7 @@ my @e;
     @r = ("f", "oo", "bar").>>.chars;
     is(~@r, ~@e, "method call on list elements (ASCII, Same thing, dot form)");
 
-    # RT 122342
+    # RT #122342
     @r = ("f", "oo", "bar")»."chars"();
     is(~@r, ~@e, "method call on list elements (quoted method name)");
 

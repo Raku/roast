@@ -136,7 +136,7 @@ ok do if 1 | 2 | 3 <= 3 <= 2 { 0 } else { 1 };
 ok do if 1 <= 1 & 2 & 3 & 4 <= 4 { 1 } else { 0 };
 ok do if 1 <= 1 & 2 & 3 & 4 <= 3 { 0 } else { 1 };
 
-# RT 117579
+# RT #117579
 {
     ok do if 1 ne 2|3|4 { 1 } else { 0 }, "ne in if context";
     ok do if 1 ne 1|3|4 { 0 } else { 1 }, "ne in if context";

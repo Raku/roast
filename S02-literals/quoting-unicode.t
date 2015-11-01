@@ -87,7 +87,7 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
     throws-like { EVAL "q\c[SNOWMAN].\c[COMET]" },
       X::Comp::AdHoc,
       "Can't quote a string with a snowman and comet (U+2603 and U+2604)";
-    throws-like { EVAL "'RT 66498' ~~ m\c[SNOWMAN].\c[COMET]" },
+    throws-like { EVAL "'RT #66498' ~~ m\c[SNOWMAN].\c[COMET]" },
       X::Comp::Group,
       "Can't quote a regex with a snowman and comet (U+2603 and U+2604)";
 }

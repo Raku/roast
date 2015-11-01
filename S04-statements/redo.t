@@ -113,7 +113,7 @@ plan 12;
     throws-like '{redo}', X::ControlFlow, 'redo without loop construct dies';
 }
 
-#?rakudo.jvm skip "control exception without handler, RT 126490"
+#?rakudo.jvm skip "control exception without handler, RT #126490"
 {
     my $x;
     my $out = '';

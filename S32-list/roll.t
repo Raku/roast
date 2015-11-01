@@ -124,7 +124,7 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
 is (1..^2).roll, 1, '1-elem Range roll';
 ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
 
-# RT 89972
+# RT #89972
 {
     my $a = Test::Util::run( "print ~(1..10).pick(5)" );
     my $b = Test::Util::run( "print ~(1..10).pick(5)" );

@@ -49,7 +49,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     ok ! RT66204.defined, 'NewClass is still not .defined';
 }
 
-# RT 71706
+# RT #71706
 {
     class RT71706 {
         class RT71706::Artie {}

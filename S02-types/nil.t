@@ -51,7 +51,7 @@ ok Nil.JustAnyMethod == Nil, 'Any method on Nil should return Nil';
 # RT #118717
 ok Nil.^mro.gist !~~ rx:i/iter/, "Nil is not any sort of Iter*";
 
-# RT 93980
+# RT #93980
 ok (my $rt93980 = Nil) === Any, 'Nil assigned to scalar produces an Any'; #OK
 
 ok (my Str $str93980 = Nil) === Str; #OK

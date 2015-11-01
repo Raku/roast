@@ -138,7 +138,7 @@ our $outer_package = 19;
         'Should be able to update outer package var';
 }
 
-# change tests to match likely error (top of file) when they pass (RT 64204)
+# change tests to match likely error (top of file) when they pass (RT #64204)
 {
     try { EVAL 'my $x = ::P' };
     ok  ~$! !~~ /<&fairly_conclusive_platform_error>/, 
@@ -216,7 +216,7 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
         'package Foo; is indicator for Perl 5 code';
 }
 
-#RT 80856
+#RT #80856
 throws-like 'module RT80856 is not_RT80856 {}', X::Inheritance::UnknownParent,
     'die if module "is" a nonexistent';
 

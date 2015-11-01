@@ -33,7 +33,7 @@ plan 8;
 
 # RT #112408
 lives-ok { EVAL 'my %rt112408 = END => "parsing clash with block-less END"' },
-    'Can use END as a bareword hash key (RT 112408)';
+    'Can use END as a bareword hash key (RT #112408)';
 
 lives-ok { EVAL 'my $x = 3; END { $x * $x }' },
     'outer lexicals are visible in END { ... } blocks';

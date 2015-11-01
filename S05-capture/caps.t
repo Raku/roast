@@ -40,7 +40,7 @@ is ca($/.caps), '0:a|0:b|1:c', '.caps distinguishes quantified () and multiple (
 is ca($/.chunks), '0:a|~: |0:b|~: |1:c', '.chunks distinguishes quantified () and multiple ()';
 
 ok 'a b c d' ~~ /:s [(\w) <wc=&wc> ]+/, 'regex matches';
-#'RT 75484 (fails randomly) (noauto)'
+#'RT #75484 (fails randomly) (noauto)'
 is ca($/.caps), '0:a|wc:b|0:c|wc:d',
                       'mixed named/positional flattening with quantifiers';
 is ca($/.chunks), '0:a|~: |wc:b|~: |0:c|~: |wc:d',

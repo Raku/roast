@@ -57,7 +57,7 @@ This test tests the C<WHAT> builtin.
     is +("bac" ~~ /a/).WHAT, 0, 'numification of .WHAT of a Match works';
 }
 
-ok &infix:<+>.WHAT ~~ Sub, '.WHAT of built-in infix op is Multi (RT 66928)';
+ok &infix:<+>.WHAT ~~ Sub, '.WHAT of built-in infix op is Multi (RT #66928)';
 
 # RT #69915
 {
@@ -105,12 +105,12 @@ ok 1.1 == 11/10, 'decimal == the equivalent rational';
 
 }
 
-# RT 112364
+# RT #112364
 {
     class RT112364 {
         our sub xyz() { 'xyz' }
     };
-    ok RT112364::.WHAT ~~ Stash, 'RT 112364';
+    ok RT112364::.WHAT ~~ Stash, 'RT #112364';
 }
 
 # vim: ft=perl6

@@ -99,7 +99,7 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
         'ac, ae', 'zero non-monotonic items in :nth are ignored';
 }
 
-# RT 77408
+# RT #77408
 {
     dies-ok { "a" ~~ m:nth(Mu)/a/ }, ':nth does not accept Mu param';
 }

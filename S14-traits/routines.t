@@ -52,7 +52,7 @@ plan 15;
     is $recorder, 'wrap', 'and the wrapper has been called once';
 }
 
-# RT 112664
+# RT #112664
 {
     multi trait_mod:<is>(Routine $m, :$a!) {
 	multi y(|) { my $x = $m }   #OK not used
@@ -61,10 +61,10 @@ plan 15;
     sub rt112664 is a {}
 
     lives-ok { rt112664 },
-    '[BUG] multi without proto gets wrong lexical lookup chain (RT 112664)';
+    '[BUG] multi without proto gets wrong lexical lookup chain (RT #112664)';
 }
 
-# RT 74092
+# RT #74092
 {
     try { EVAL 'sub yulia is krassivaya { }' };
     diag $!

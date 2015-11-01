@@ -79,14 +79,14 @@ dies-ok({EVAL {; 42} }, 'block EVAL is gone');
 
 }
 
-# RT 112472
+# RT #112472
 #?niecza todo "No :lang argument yet..."
 {
     try EVAL(:lang<rt112472>, '1');
     ok "$!" ~~ / 'rt112472' /, 'EVAL in bogus language mentions the language';
 }
 
-# RT 115344
+# RT #115344
 my $rt115344 = 115344;
 #?niecza skip 'method form of EVAL does not see outer lexicals'
 is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');

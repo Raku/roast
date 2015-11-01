@@ -7,7 +7,7 @@ plan 28;
 #L<S06/"Longname parameters">
 #L<S12/"Multisubs and Multimethods">
 
-# the single parameter cases named and positional below - part of RT 53814
+# the single parameter cases named and positional below - part of RT #53814
 
 multi earth (:$me!)                 {"me $me"};
 multi earth (:$him!)                {"him $him"};

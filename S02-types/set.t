@@ -293,7 +293,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     dies-ok { $s.grabpairs }, 'cannot call .grabpairs on a Set';
 }
 
-# RT 107022
+# RT #107022
 {
     my $s1 = Set.new(( set <a b c> ), <c d>);
     is +$s1, 2, "Two elements";

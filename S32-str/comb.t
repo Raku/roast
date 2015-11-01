@@ -87,12 +87,12 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 {
     my $expected_reason = rx:s/none of these signatures match/;
 
-    try { 'RT 66340'.comb( 1 ) };
+    try { 'RT #66340'.comb( 1 ) };
     ok $! ~~ Exception, '.comb(1) dies';
     ok "$!" ~~ $expected_reason, '.comb(1) dies for the expected reason';
 
     my $calls = 0;
-    try { 'RT 66340'.comb( { $calls++ } ) };
+    try { 'RT #66340'.comb( { $calls++ } ) };
     is $calls, 0, 'code passed to .comb is not called';
     ok $! ~~ Exception, '.comb({...}) dies';
     ok "$!" ~~ $expected_reason, '.comb({...}) dies for the expected reason';

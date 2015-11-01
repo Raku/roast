@@ -88,7 +88,7 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     for 1..4 {
         @x1[+*] = $_;
     }
-    is @x1.join('|'), '1|2|3|4', '+* in hash slice (RT 67450)';
+    is @x1.join('|'), '1|2|3|4', '+* in hash slice (RT #67450)';
 }
 
 # L<S02/Currying of Unary and Binary Operators/are internally curried into closures of one or two
@@ -281,12 +281,12 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     is $f(<a b>), '1a3 2b4', 'Whatever-currying with Z+ lists (2)';
 }
 
-# RT 79166
+# RT #79166
 {
     my $rt79166 = *;
     isa-ok $rt79166, Whatever, 'assignment of whatever still works';
-    $rt79166 = 'RT 79166';
-    is $rt79166, 'RT 79166', 'assignment to variable with whatever in it';
+    $rt79166 = 'RT #79166';
+    is $rt79166, 'RT #79166', 'assignment to variable with whatever in it';
 }
 
 # RT #81448

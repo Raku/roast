@@ -123,7 +123,7 @@ is $y.test,     42,         'method from other role was OK too';
     is ?$a, Bool::True, 'RT #100782 2/2';
 }
 
-# RT 115390
+# RT #115390
 {
     my $rt115390 = 0;
     for 1..1000 -> $i {

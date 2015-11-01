@@ -19,7 +19,7 @@ plan 6;
     is $t, 'A1B1A1A2', 'labeled while loops with redo and last'
 }
 
-#?rakudo.jvm skip "control exception without handler, RT 126490"
+#?rakudo.jvm skip "control exception without handler, RT #126490"
 {
     my $i = 0;
     my $t = '';
@@ -33,7 +33,7 @@ plan 6;
     is($t, 'ABAB', 'redoing outer for loop');
 }
 
-#?rakudo.jvm todo "redo of outer labels broken, related to RT 126490"
+#?rakudo.jvm todo "redo of outer labels broken, related to RT #126490"
 {
     my $i = 0;
     my $t = '';
@@ -50,7 +50,7 @@ plan 6;
     is($t, 'A1BCBCA2BC', 'redoing outer for loop');
 }
 
-#?rakudo.jvm todo "redo of outer labels broken, related to RT 126490"
+#?rakudo.jvm todo "redo of outer labels broken, related to RT #126490"
 {
     my $i = 0;
     my $t = '';
@@ -74,7 +74,7 @@ plan 6;
 throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclaration;
 
 # RT #126490
-#?rakudo skip "SEGV on moar, wrong Exception type on jvm, RT 126490"
+#?rakudo skip "SEGV on moar, wrong Exception type on jvm, RT #126490"
 {
     throws-like 'A: for 1 { for 1 { last A }; CONTROL { default { die $_ } } }', CX::Last,
         "last-ing and outer loop and catching that in a CONTROL block doesn't SEGV";

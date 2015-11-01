@@ -56,7 +56,7 @@ sub foo (:$x = 3) { $x }
 
 is(foo(), 3, "not specifying named params that aren't mandatory works");
 
-# part of RT 53814
+# part of RT #53814
 dies-ok({foo(4)}, "using a named as a positional fails");
 
 is(foo( x => 5), 5, "naming named param also works");

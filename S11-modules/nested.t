@@ -15,10 +15,10 @@ eval-lives-ok 'use A::A; A::B::D ~~ A::B::B or die()',
 eval-lives-ok 'use A::A; A::B::D.new()',
               '... and instantiation works';
 
-eval-lives-ok 'use A; A.new()', 'RT 62162';
+eval-lives-ok 'use A; A.new()', 'RT #62162';
 
 eval-lives-ok 'use RoleA',
-              'can use multiple "Role $name" statements (in multiple files) RT 67976';
+              'can use multiple "Role $name" statements (in multiple files) RT #67976';
 
 {
     use RoleA;

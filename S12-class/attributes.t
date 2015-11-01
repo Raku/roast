@@ -106,7 +106,7 @@ is($bar.bar[2], 300,       'array attribute initialized/works');
         'Providing a list of attributes to a single "has" works';
 }
 
-# RT 81718
+# RT #81718
 throws-like q[
     class RT81718 {
         has $.bughunt is rw;
@@ -115,7 +115,7 @@ throws-like q[
     }
 ], X::Syntax::NoSelf, 'no attr access for sub inside class';
 
-# RT 74850
+# RT #74850
 #?niecza skip "Unhandled exception: Unable to resolve method ctxzyg in type Method"
 {
     class A { };

@@ -153,7 +153,7 @@ lives-ok { (1 ... 5).perl }, 'Can take .perl of sequence';
 is EVAL((1 ... 5).perl).join(','), '1,2,3,4,5',
     'EVAL($sequence.perl) reproduces result list';
 
-# RT 98790
+# RT #98790
 is ~((1 ... *) Z~ ('a' ... 'z')).[^5], "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";
 
 {

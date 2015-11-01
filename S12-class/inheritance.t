@@ -165,7 +165,7 @@ throws-like 'class RT64642 is ::Nowhere {}', X::Inheritance::UnknownParent,
     is B.new.c, 42, 'nextsame in constructor works';
 }
 
-# RT 75376
+# RT #75376
 #?niecza skip "Pathed definitions require our scope"
 {
     my class RT75376::A { };

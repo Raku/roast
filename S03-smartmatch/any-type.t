@@ -29,7 +29,7 @@ plan 15;
     is 5         ~~ Callable, False, '~~ Callable returns a Bool (2)';
 }
 
-# RT 76610
+# RT #76610
 {
     module M { };
     #?niecza todo "Unable to resolve method ACCEPTS in type M"

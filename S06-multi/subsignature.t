@@ -8,7 +8,7 @@ plan 100;
 # the parameters in a subsignature.
 
 # from by-trait.t
-# RT 66588
+# RT #66588
 {
     my $ro_call = 0;
     my $rw_call = 0;
@@ -49,7 +49,7 @@ dies-ok { EVAL("waz('vtak')") }, '...but lexical multi no longer callable';
 #L<S06/"Longname parameters">
 #L<S12/"Multisubs and Multimethods">
 
-# the single parameter cases named and positional below - part of RT 53814
+# the single parameter cases named and positional below - part of RT #53814
 
 multi earth (|c(:$me!))                 {"me $me"};
 multi earth (|c(:$him!))                {"him $him"};
@@ -302,7 +302,7 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     lives-ok &e, "It's ok to call nextsame in the last/only candidate";
 }
 
-# RT 125539
+# RT #125539
 {
     multi a(|c(Int $a)) { samewith "$a" }
     multi a(|c(Str $a)) { is $a, "42", 'samewith $a stringified in sub' }

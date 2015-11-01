@@ -30,13 +30,13 @@ is ~(('OMG','BBQ') <<wtf<< ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '<<...<< hyper
 is ~(('OMG','BBQ') >>wtf>> ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '>>...>> hyper generated';
 is ~(('OMG','BBQ') <<wtf>> ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '<<...>> hyper generated';
 
-# RT 121692
+# RT #121692
 {
     sub foo { $^a ~ $^b };
     is ([[&foo]] <a b c d e>), 'abcde', "can we use a sub as an reduce op between [[]]";
 }
 
-# RT 122332
+# RT #122332
 {
     sub foo ($a, $b) { $a * $b };
     is (2 [&foo] 3 [&foo] 4), 24, "can we use a sub as an infix op between []";

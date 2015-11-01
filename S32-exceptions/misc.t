@@ -457,7 +457,7 @@ if $emits_suggestions {
     throws-like 'class Greeter { has $.name; method greet { say "hi, $name" } }', X::Undeclared, suggestions => '$!name';
 }
 
-# RT 77270
+# RT #77270
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
 
 throws-like 'my class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";

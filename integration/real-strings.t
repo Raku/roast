@@ -37,13 +37,13 @@ throws-like { for "a b c".split(/\s/) -> $foo { $foo = $foo; } },
     is ~@foo, ' B B ', 'Str.split(Str) works with postfix:<++>';
 }
 
-ok 1.Str ~~ / ^ 1 $ /, 'RT 66366; 1.Str is a "good" Str';
+ok 1.Str ~~ / ^ 1 $ /, 'RT #66366; 1.Str is a "good" Str';
 
-is "helo".flip().trans("aeiou" => "AEIOU"), 'OlEh', '.flip.trans (RT 66300)';
-is "helo".flip.trans(("aeiou" => "AEIOU")), 'OlEh', '.flip.trans (RT 66300)';
-is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
-is <h e l o>.join.trans, 'helo', 'join returns P6 strings (RT 76564, RT 71088)';
-is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 71088)';
+is "helo".flip().trans("aeiou" => "AEIOU"), 'OlEh', '.flip.trans (RT #66300)';
+is "helo".flip.trans(("aeiou" => "AEIOU")), 'OlEh', '.flip.trans (RT #66300)';
+is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT #66300)';
+is <h e l o>.join.trans, 'helo', 'join returns P6 strings (RT #76564, RT #71088)';
+is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT #76564, RT #71088)';
 
 
 # RT #66596

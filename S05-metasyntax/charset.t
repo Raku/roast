@@ -65,8 +65,8 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 ok "\x[FFEF]" ~~ /<[\x0..\xFFEF]>/, 'large \\x char spec';
 
 #?niecza todo
-throws-like "'RT 71702' ~~ /<[d..b]>? RT/", X::AdHoc,
-    'reverse range in charset is lethal (RT 71702)';
+throws-like "'RT #71702' ~~ /<[d..b]>? RT/", X::AdHoc,
+    'reverse range in charset is lethal (RT #71702)';
 
 # RT #64220
 ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
@@ -79,7 +79,7 @@ ok ~$! ~~ / 'Unsupported use of - as character range; in Perl 6 please use ..'/,
 }
 
 ok 'ab' ~~ /^(.*) b/,
-    'Quantifiers in capture groups work (RT 100650)';
+    'Quantifiers in capture groups work (RT #100650)';
 
 # RT #74012
 # backslashed characters in char classes

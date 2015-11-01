@@ -73,7 +73,7 @@ is($t3.x, 42,        'anonymous classes can have attributes');
 throws-like q[anon class C { }; C.WHAT; ], X::Undeclared::Symbols,
     'anon class is actually anon';
 
-# RT 114716
+# RT #114716
 {
     ok (class {}) !=== (class {}), 'anonymous classes are distinct';
 }

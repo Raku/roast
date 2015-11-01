@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 3;
 
-# RT 71754
+# RT #71754
 {
     my @called;
     multi rt71754( Numeric $x ) {    #OK not used
@@ -16,7 +16,7 @@ plan 3;
     is @called, <Int Numeric>, 'multi with "callsame" worked';
 }
 
-# RT 69314
+# RT #69314
 #?niecza todo
 {
     sub rt69314($n) { 

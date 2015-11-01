@@ -535,8 +535,8 @@ Hello, World
 
 # RT #75320
 {
-    is "$foo >>", "FOO >>", 'quoting and >> (RT 75320, 1)';
-    is "$foo>>",  "FOO>>",  'quoting and >> (RT 75320, 2)';
+    is "$foo >>", "FOO >>", 'quoting and >> (RT #75320, 1)';
+    is "$foo>>",  "FOO>>",  'quoting and >> (RT #75320, 2)';
 }
 
 # RT #85506

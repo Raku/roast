@@ -89,7 +89,7 @@ caught that case.
 # need to test in EVAL() since class definitions happen at compile time,
 # ie before the plan is set up.
 eval-lives-ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
-              'smartmatch in a class lives (RT 62196)';
+              'smartmatch in a class lives (RT #62196)';
 
 # RT #69762
 {
@@ -129,7 +129,7 @@ eval-lives-ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
 
 }
 
-# RT 72048
+# RT #72048
 {
     role RT72048_role {}
     class RT72048_class does RT72048_role {}

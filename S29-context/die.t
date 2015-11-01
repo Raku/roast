@@ -47,7 +47,7 @@ is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
 
 #?niecza skip 'test needs rewriting, EVAL does not catch exceptions'
 {
-    my $msg = 'RT 67374';
+    my $msg = 'RT #67374';
     try { die $msg };
     is "$!", $msg, 'die with argument sets $!';
     try { die };

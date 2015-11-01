@@ -68,7 +68,7 @@ Testing named capture variables nested inside each other. This doesn't appear to
         token y { z };
         rule TOP { [ <x> ]? [c || b <y>] }
     };
-    is ~a.parse('a b z')<x>, 'a', 'can capture inside a || alternation even if previous capture was quantified (RT 107746)';
+    is ~a.parse('a b z')<x>, 'a', 'can capture inside a || alternation even if previous capture was quantified (RT #107746)';
 }
 
 # vim: ft=perl6

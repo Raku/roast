@@ -36,7 +36,7 @@ plan 110;
     ok $d.VAR.default === Nil, 'is the default set correctly for $d';
 } #19
 
-# RT 125324
+# RT #125324
 {
     my ($a, $b) is default(42);
     is $a, 42, 'is default() works on a group of variables too (1)';

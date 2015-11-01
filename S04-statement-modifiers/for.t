@@ -94,7 +94,7 @@ plan 30;
     is $_, 42, '"for" statement modifier restored $_ of outer block';
 }
 
-# RT 66622
+# RT #66622
 {
     my $rt66622 = 66622 for 1, 2, 3;
     is $rt66622, 66622, 'statement modifier "for" makes no implicit block';

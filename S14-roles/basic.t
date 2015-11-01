@@ -175,7 +175,7 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
     is C.new.pub, 42, 'private methods in roles bind "self" correctly';
 }
 
-# RT 120931
+# RT #120931
 {
     lives-ok { role RT120931 { method foo {}; RT120931.foo } },
         'can call a role method from within the role block';

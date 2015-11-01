@@ -16,13 +16,13 @@ isa-ok A::, Stash, 'Typename:: is a Stash';
 ok A::<&foo>, 'can access a subroutine in the stash';
 ok A:: === A.WHO, 'A::  returns the same as A.WHO';
 
-# RT 74412
+# RT #74412
 my $a = A.new;
 is $a.x, 5,
     'can autovivify an our-variable in a class package through its long name from class method';
 is $a.lexical, 10, 'but a lexical of the same name is independent';
 
-# RT 75632
+# RT #75632
 lives-ok { my $A::y = 6; $A::y ~~ 6 or die },
     'can declare and access variable in a class package through its long name from outside class';
 lives-ok { my $B::x = 7; $B::x ~~ 7 or die },

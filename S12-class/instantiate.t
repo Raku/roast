@@ -38,7 +38,7 @@ is($foo2.check(), 42, 'initializing attributes in new');
        'error for "NoSuch::Subclass.new()" mentions NoSuch::Subclass';
 }
 
-# RT 65224
+# RT #65224
 
 #instantiation from class name unexpectedly creates a class object instead of Str object
 {

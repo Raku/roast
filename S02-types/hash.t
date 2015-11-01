@@ -308,7 +308,7 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
     is $h<a>, 5, 'can normally modify items created from Hash.new';
 }
 
-# RT 77598
+# RT #77598
 #?niecza skip "Unsupported use of [-1] subscript to access from end of array"
 {
     isa-ok {}[*-1], Failure, 'array-indexing a hash with a negative index is Failure';

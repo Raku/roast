@@ -67,10 +67,10 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
 {
     throws-like { EVAL '1 ?? 2,3 !! 4,5' },
         X::Syntax::ConditionalOperator::PrecedenceTooLoose,
-        'Ternary error (RT 66840)';
+        'Ternary error (RT #66840)';
 }
 
-throws-like q[ 71704 !! 'bust' ], X::Syntax::Confused, 'Ternary error (RT 71704)';
+throws-like q[ 71704 !! 'bust' ], X::Syntax::Confused, 'Ternary error (RT #71704)';
 
 throws-like { EVAL '1 ?? 3 :: 2' },
     X::Syntax::ConditionalOperator::SecondPartInvalid,

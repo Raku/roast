@@ -98,7 +98,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 
 
 # inheritance through role composition - specced in A12
-# RT 69254
+# RT #69254
 {
     class irA {};
     role  irB is   irA {};

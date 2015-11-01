@@ -32,7 +32,7 @@ plan 77;
     lives-ok { $date.clone(:month(2), :year(2000)) }, '..but not 29 February 2000 (Date.clone)';
 }
 
-# RT 112376, stringification
+# RT #112376, stringification
 is ~Date.new(:year(2010), :month(3), :day(5)), '2010-03-05',
     'normal Date strinfies sanely';
 

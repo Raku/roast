@@ -24,7 +24,7 @@ is foo($obj),   'sub', 'adding trailing comma should call the "sub"';
     }
 
     ok( { "foo" => &RT69610::rt69610 }.<foo>( RT69610.new ) ~~ RT69610,
-        "Can return from method called from a hash lookup (RT 69610)" );
+        "Can return from method called from a hash lookup (RT #69610)" );
 }
 
 # RT #92192

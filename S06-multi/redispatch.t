@@ -49,13 +49,13 @@ plan 14;
     lives-ok &e, "It's ok to call nextsame in the last/only candidate";
 }
 
-# RT 76328
+# RT #76328
 {
     try { nextsame };
     isa-ok $!, X::NoDispatcher, 'nextsame in main block dies due to lack of dispatcher';
 }
 
-# RT 125539
+# RT #125539
 {
     multi a(Int $a) { samewith "$a" }
     multi a(Str $a) { is $a, "42", 'samewith $a stringified in sub' }

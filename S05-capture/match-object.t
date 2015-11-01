@@ -41,7 +41,7 @@ is $c.WHAT, Cursor.WHAT,        'got right type';
 #?rakudo skip "No such method pos for invocant of type Any RT #124999"
 ok defined($c.pos),             '.pos';
 
-# RT 77146
+# RT #77146
 {
     my token RT77146_rx { 77146 };
 

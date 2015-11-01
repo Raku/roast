@@ -24,6 +24,6 @@ is "\c[LATIN CAPITAL LETTER A, LATIN CAPITAL LETTER B]", 'AB', 'two letters in \
 is "\c[LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT]", "\x[0041,0300]", 'letter and combining char in \c[]';
 
 ok "\c[LATIN SMALL LETTER A WITH DIAERESIS,COMBINING CEDILLA]" ~~ /\w/,
-   'RT 64918 (some strings throw "Malformed UTF-8 string" errors';
+   'RT #64918 (some strings throw "Malformed UTF-8 string" errors';
 
 # vim: ft=perl6

@@ -276,7 +276,7 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
 
 eval-lives-ok 'my (%h?) #OK', 'my (%h?) lives';
 
-#RT 63588
+#RT #63588
 eval-lives-ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
         'global scoped variables are visible inside class definitions';
 
@@ -318,7 +318,7 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
         @tracker.push($inner) and t() for $inner ?? () !! ^2;
     }
     t();
-    is @tracker.join(', '), '0, 0', 'RT 102650';
+    is @tracker.join(', '), '0, 0', 'RT #102650';
 }
 
 # RT #114202
@@ -333,7 +333,7 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     ok (my &) eqv Callable, q{anonymous sub doesn't overshare};
 }
 
-# RT 117043
+# RT #117043
 #?rakudo todo 'RT #117043'
 {
     my (\x1) = 1;

@@ -73,7 +73,7 @@ does-ok &pro, Callable, 'a proto does Callable';
     does-ok &quux, Callable, 'a macro does Callable';
 }
 
-# RT 69318
+# RT #69318
 {
     sub a { return 'a' };
     sub b { return 'b' };

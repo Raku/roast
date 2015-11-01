@@ -95,7 +95,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
     # RT #114394
     sub p($a, $b) { wins($a, $b) };
-    is p(Paper, Paper), 0, 'Type captures and containers mix (RT 114394)';
+    is p(Paper, Paper), 0, 'Type captures and containers mix (RT #114394)';
 
     multi wins2(Scissor $x, Paper   $y) { 1 }   #OK not used
     multi wins2($x, $y where { $x.WHAT.gist eq $y.WHAT.gist }) { 0 }
