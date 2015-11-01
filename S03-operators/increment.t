@@ -71,6 +71,7 @@ is($moo, 0, "var was not touched");
 
 # test incrementing literals
 # all of those can be detected at compile time
+#?rakudo.jvm todo "RT #126531"
 {
     throws-like ' 4++ ', X::Parameter::RW, "can't postincrement a literal number";
     throws-like ' ++4 ', X::Parameter::RW, "can't preincrement a literal number";
@@ -118,6 +119,7 @@ is($moo, 0, "var was not touched");
 
 # RT #74912
 #?niecza todo 'Works fine in niecza...'
+#?rakudo.jvm todo "RT #126531"
 throws-like 'my $x = 0; ++++$x', X::Parameter::RW,
     'can not double-increment, because the return value is not a container';
 
