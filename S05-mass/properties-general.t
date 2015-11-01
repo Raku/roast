@@ -154,7 +154,8 @@ ok("\x[FFFF]\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/<:OtherLetter>/, q{Match unanc
 # Lr             # Alias for "Ll", "Lu", and "Lt".
 
 
-#?rakudo 3 todo "No [Lr] property defined RT #124860"
+#?rakudo.moar 3 todo "No [Lr] property defined RT #124860"
+#?rakudo.jvm  10 skip "RT #124500" 
 #?niecza 10 skip "No [Lr] property defined"
 ok("\c[LATIN CAPITAL LETTER A]" ~~ m/^<:Lr>$/, q{Match (Alias for "Ll", "Lu", and "Lt".)} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<:!Lr>$/ ), q{Don't match negated (Alias for "Ll", "Lu", and "Lt".)} );
@@ -799,7 +800,7 @@ ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Forma
     ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
     ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
 }
-#?rakudo.jvm 3 todo "Unicode spec change in v6.1 RT #124872"
+
 ok(!( "\c[KHMER VOWEL INHERENT AQ]"   ~~ m/^<:Format>$/ ),  q{Don't match unrelated <Format>} );
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
