@@ -3,7 +3,7 @@ use Test;
 
 plan 14;
 
-shell_captures_out_ok '1',              '',    0, 'Child succeeds but does not print anything';
+shell_captures_out_ok '',               '',    0, 'Child succeeds but does not print anything';
 shell_captures_out_ok 'say 42',         '42',  0, 'Child succeeds and prints something';
 shell_captures_out_ok 'exit 1',         '',    1, 'Child fails and prints nothing';
 shell_captures_out_ok 'exit 42',        '',   42, 'Child fails and prints nothing';
