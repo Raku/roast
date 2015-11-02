@@ -57,6 +57,7 @@ for (1..6) -> $N {
 
 # more interesting variations of :nth(...)
 #?niecza skip 'm:g'
+#?rakudo.jvm skip 'RT #124279'
 {
     ok($data ~~ m:nth(2,3):global/(fo+)/, 'nth(list) is ok');
     is(@(), <foo fooo>, 'nth(list) matched correctly');
@@ -223,6 +224,7 @@ $sub6 = "f bar bar bar bar bar bar";
 
 # :Nx...
 
+#?rakudo.jvm skip 'RT #124279'
 {
     my $try = $data;
     ok(!( $try ~~ s:0x{fo+}=q{bar} ), "Can't substitute 0x" );
