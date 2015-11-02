@@ -285,7 +285,7 @@ lives-ok({"\0".."~"}, "low ascii range completes");
     is (5 + $r).gist, '6..^15', "can shift a right ..^ range up";
     is ($r * 2).gist, '2..^20', "can scale a left ..^ range up";
     is (2 * $r).gist, '2..^20', "can scale a right ..^ range up";
-    is ($r - 1).gist, '0..^9', "can shift a ..^ range down";
+    is ($r - 1).gist, '^9', "can shift a ..^ range down";
     is ($r / 2).gist, '0.5..^5.0', "can scale a ..^ range down";
 
     $r = 1^..10;
