@@ -2,124 +2,56 @@ use v6;
 
 use Test;
 
-plan 142;
+plan 105;
 
-{
-    my $range = 2..6;
-    isa-ok $range, Range, '2..6 is a Range';
-    is $range.min, 2, "2..6.min is 2";
-    is $range.max, 6, "2..6.max is 6";
-    is $range.excludes-min, Bool::False, "2..6.excludes-min is false";
-    is $range.excludes-max, Bool::False, "2..6.excludes-max is false";
-    is $range.perl, "2..6", '.perl is correct';
+sub test($range,$min,$max,$exmin,$exmax,$inf,$perl) {
+    subtest {
+        plan 7;
+        isa-ok $range,           Range, "$range.gist() is a Range";
+        is $range.min,            $min, "$range.gist().min is 2";
+        is $range.max,            $max, "$range.gist().max is 6";
+        is $range.excludes-min, $exmin, "$range.gist().excludes-min is $exmin";
+        is $range.excludes-max, $exmax, "$range.gist().excludes-max is $exmax";
+        is $range.infinite,       $inf, "$range.gist().infinite is $inf";
+        is $range.perl,          $perl, "$range.gist().perl is $perl";
+    }, "Testing $range.gist()"
 }
 
-{
-    my $range = -1^..7;
-    isa-ok $range, Range, '-1^..7 is a Range';
-    is $range.min, -1, "-1^..7.min is -1";
-    is $range.max, 7, "-1^..7.max is 7";
-    is $range.excludes-min, Bool::True, "-1^..7.excludes-min is true";
-    is $range.excludes-max, Bool::False, "-1^..7.excludes-max is false";
-    is $range.perl, "-1^..7", '.perl is correct';
-}
+test       2..6,    2,     6, False, False, False,        "2..6";
+test     -1^..7,   -1,     7,  True, False, False,      "-1^..7";
+test     3..^-1,    3,    -1, False,  True, False,      "3..^-1";
+test "a"^..^"g",  'a',   'g',  True,  True, False,  '"a"^..^"g"';
 
-{
-    my $range = 3..^-1;
-    isa-ok $range, Range, '3..^-1 is a Range';
-    is $range.min, 3, "3..^-1.min is 3";
-    is $range.max, -1, "3..^-1.max is -1";
-    is $range.excludes-min, Bool::False, "3..^-1.excludes-min is false";
-    is $range.excludes-max, Bool::True, "3..^-1.excludes-max is true";
-    is $range.perl, "3..^-1", '.perl is correct';
-}
+test         ^5,    0,     5, False,  True, False,          "^5";
+test       ^5.5,    0,   5.5, False,  True, False,     "0..^5.5";
+test     ^5.5e0,    0, 5.5e0, False,  True, False,   "0..^5.5e0";
 
-{
-    my $range = 'a'^..^'g';
-    isa-ok $range, Range, "'a'^..^'g' is a Range";
-    is $range.min, 'a', "'a'^..^'g'.min is 'a'";
-    is $range.max, 'g', "'a'^..^'g'.max is 'g'";
-    is $range.excludes-min, Bool::True, "'a'^..^'g'.excludes-min is true";
-    is $range.excludes-max, Bool::True, "'a'^..^'g'.excludes-max is true";
-    is $range.perl, '"a"^..^"g"', '.perl is correct';
-}
+test       1..*,    1,   Inf, False, False,  True,      "1..Inf";
+test      1^..*,    1,   Inf,  True, False,  True,     "1^..Inf";
+test      1..^*,    1,   Inf, False,  True,  True,     "1..^Inf";
+test     1^..^*,    1,   Inf,  True,  True,  True,    "1^..^Inf";
 
-{
-    my $range = ^5;
-    isa-ok $range, Range, '^5 is a Range';
-    is $range.min, 0, "^5.min is 0";
-    is $range.max, 5, "^5.max is 5";
-    is $range.excludes-min, Bool::False, "^5.excludes-min is false";
-    is $range.excludes-max, Bool::True, "^5.excludes-max is true";
-    is $range.perl, "0..^5", '.perl is correct';
-}
+test       *..1, -Inf,     1, False, False,  True,     "-Inf..1";
+test      *^..1, -Inf,     1,  True, False,  True,    "-Inf^..1";
+test      *..^1, -Inf,     1, False,  True,  True,    "-Inf..^1";
+test     *^..^1, -Inf,     1,  True,  True,  True,   "-Inf^..^1";
 
-{
-    my $range = ^5.5;
-    isa-ok $range, Range, '^5.5 is a Range';
-    is $range.min, 0, "^5.5.min is 0";
-    is $range.max, 5.5, "^5.5.max is 5.5";
-    is $range.excludes-min, Bool::False, "^5.5.excludes-min is false";
-    is $range.excludes-max, Bool::True, "^5.5.excludes-max is true";
-}
-
-{
-    my $range = ^5.5e0;
-    isa-ok $range, Range, '^5.5e0 is a Range';
-    is $range.min, 0, "^5.5e0.min is 0";
-    is $range.max, 5.5e0, "^5.5e0.max is 5.5e0";
-    is $range.excludes-min, Bool::False, "^5.5e0.excludes-min is false";
-    is $range.excludes-max, Bool::True, "^5.5e0.excludes-max is true";
-}
-
-{
-    my $range = 1..*;
-    isa-ok $range, Range, '1..* is a Range';
-    is $range.min, 1, "1..*.min is 1";
-    is $range.max, Inf, "1..*.max is Inf";
-    is $range.excludes-min, Bool::False, "1..*.excludes-min is false";
-    is $range.excludes-max, Bool::False, "1..*.excludes-max is false";
-}
-
-# next three blocks of tests may seem kind of redundant, but actually check that 
-# the various Range operators are not mistakenly turned into Whatever
-# closures.
-
-{
-    my $range = 1^..*;
-    isa-ok $range, Range, '1^..* is a Range';
-    is $range.min, 1, "1^..*.min is 1";
-    is $range.max, Inf, "1^..*.max is Inf";
-    is $range.excludes-min, Bool::True, "1^..*.excludes-min is true";
-    is $range.excludes-max, Bool::False, "1^..*.excludes-max is false";
-}
-
-{
-    my $range = *..^1;
-    isa-ok $range, Range, '*..^1 is a Range';
-    is $range.min, -Inf, "*..^1.min is -Inf";
-    is $range.max, 1, "*..^1.max is 1";
-    is $range.excludes-min, Bool::False, "*..^1.excludes-min is false";
-    is $range.excludes-max, Bool::True, "*..^1.excludes-max is true";
-}
-
-{
-    my $range = 1^..^*;
-    isa-ok $range, Range, '1^..^* is a Range';
-    is $range.min, 1, "1^..^*.min is 1";
-    is $range.max, Inf, "1^..^*.max is Inf";
-    is $range.excludes-min, Bool::True, "1^..^*.excludes-min is true";
-    is $range.excludes-max, Bool::True, "1^..^*.excludes-max is true";
-}
+test       *..*, -Inf,   Inf, False, False,  True,   "-Inf..Inf";
+test      *^..*, -Inf,   Inf,  True, False,  True,  "-Inf^..Inf";
+test      *..^*, -Inf,   Inf, False,  True,  True,  "-Inf..^Inf";
+test     *^..^*, -Inf,   Inf,  True,  True,  True, "-Inf^..^Inf";
 
 # some range constructions are invalid
 #?niecza skip "No exceptions"
-#?DOES 8
 {
-    throws-like '10 .. ^20', X::Range::InvalidArg ;
-    throws-like '^10 .. 20', X::Range::InvalidArg ;
-    throws-like '* .. ^20',  X::Range::InvalidArg ;
-    throws-like '^10 .. *',  X::Range::InvalidArg ;
+    throws-like          '10 .. ^20', X::Range::InvalidArg, got => ^20;
+    throws-like          '^10 .. 20', X::Range::InvalidArg, got => ^10;
+    throws-like          '* .. ^20',  X::Range::InvalidArg, got => ^20;
+    throws-like          '^10 .. *',  X::Range::InvalidArg, got => ^10;
+    throws-like          '* .. 42i',  X::Range::InvalidArg, got => 42i;
+    throws-like          '42i .. *',  X::Range::InvalidArg, got => 42i;
+    throws-like '42.map({$_}) .. *',  X::Range::InvalidArg, got => Seq; 
+    throws-like '* .. 42.map({$_})',  X::Range::InvalidArg, got => Seq;
 }
 
 ok 3 ~~ 1..5,         '3 ~~ 1..5';
