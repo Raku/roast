@@ -54,8 +54,10 @@ for @endings -> (:key($eol), :value($EOL)) {
 
         is $handle.lines[*-1], @text[*-1], "handle last line: $status";
 
+        $handle.close;
+
         # slicing on IO::Path
-        is $filename.IO.lines(|$chomp)[1,2].join($end),
+        is $filename.IO.lines(|$chomp)[1,2,*-1][^2].join($end),
           @text[1,2].map({ $_ ~ $end }).join($end),
           "path 1,2: $status";
 
