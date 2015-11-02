@@ -168,6 +168,7 @@ $in9.close;
     my $in = open($filename);
     my @lines = try $in.lines(*);
     is(+@lines, 4, 'we got all lines from the file');
+    $in.close;
 }
 
 {
@@ -175,6 +176,7 @@ $in9.close;
     my $in = open($filename);
     my @lines = try $in.lines(Inf);
     is(+@lines, 4, 'we got all lines from the file');
+    $in.close;
 }
 
 {
@@ -182,13 +184,14 @@ $in9.close;
     my $in = open($filename);
     my @lines = try lines($in,*);
     is(+@lines, 4, 'we got all lines from the file');
-
+    $in.close;
 }
 {
     # Test lines($fh,Inf)  RT #125626
     my $in = open($filename);
     my @lines = try lines($in,Inf);
     is(+@lines, 4, 'we got all lines from the file');
+    $in.close;
 }
 
 
