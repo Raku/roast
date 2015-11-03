@@ -52,4 +52,4 @@ my $expected = "               *
 ";
 
 $*OUT = $oldOUT;
-is($output.subst("\r", '', :g), $expected.subst("\r", '', :g), "Sierpinski Triangle");
+is($output.subst("\r\n", "\n", :g), $expected.subst("\r\n", "\n", :g), "Sierpinski Triangle");

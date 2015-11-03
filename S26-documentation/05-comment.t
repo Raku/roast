@@ -3,7 +3,7 @@ plan 9;
 my $r;
 
 sub norm_crlf($str) {
-    $str.subst("\r", "", :g)
+    $str.subst("\r\n", "\n", :g)
 }
 
 =begin pod

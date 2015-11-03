@@ -34,4 +34,4 @@ my
 74
 ";
 
-is($output.subst("\r", '', :g), $expected.subst("\r", '', :g), "Greatest element of a list");
+is($output.subst("\r\n", "\n", :g), $expected.subst("\r\n", "\n", :g), "Greatest element of a list");

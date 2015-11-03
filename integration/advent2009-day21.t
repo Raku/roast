@@ -113,7 +113,7 @@ my @input = '0 1 2', '1';
 }
 
 is-deeply @input, [], 'questions consumed';
-is $output.subst("\r", "", :g), ("\n" ~ q:to"END-OUT").subst("\r", "", :g), 'questions output';
+is $output.subst("\r\n", "\n", :g), ("\n" ~ q:to"END-OUT").subst("\r\n", "\n", :g), 'questions output';
 Choose all that are true
 
 Which items are food?

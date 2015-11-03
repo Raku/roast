@@ -357,13 +357,13 @@ is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<texas>> quotes (RT #66888)' );
 Hello, World
 STREAM
 
-    is $t.subst(/\r/, '', :g), "Hello, World\n", "Testing for q:to operator.";
+    is $t.subst("\r\n", "\n", :g), "Hello, World\n", "Testing for q:to operator.";
 
 $t = q:to /结束/;
 Hello, World
 结束
 
-    is $t.subst(/\r/, '', :g), "Hello, World\n", "Testing for q:to operator. (utf8)";
+    is $t.subst("\r\n", "\n", :g), "Hello, World\n", "Testing for q:to operator. (utf8)";
 }
 
 # Q

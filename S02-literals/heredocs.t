@@ -4,7 +4,7 @@ plan 22;
 my $foo = "FOO";
 my $bar = "BAR";
 
-sub no-r(Str $in) { $in.subst(/\r/, '', :g) }
+sub no-r(Str $in) { $in.subst("\r\n", "\n", :g) }
 
 # L<S02/Heredocs/Heredocs are no longer written>
 { # qq:to
@@ -159,7 +159,7 @@ something
 
 
 END
-    is $eefee, "\n\nsomething\n\n\n", 'Heredoc leading and trailing empty lines';
+    is no-r($eefee), "\n\nsomething\n\n\n", 'Heredoc leading and trailing empty lines';
 
     my $none = q:to<END>;
 END
@@ -168,12 +168,12 @@ END
     my $e = q:to<END>;
 
 END
-    is $e, "\n", 'Heredoc one empty line';
+    is no-r($e), "\n", 'Heredoc one empty line';
     my $ee = q:to<END>;
 
 
 END
-    is $ee, "\n\n", 'Heredoc two empty lines';
+    is no-r($ee), "\n\n", 'Heredoc two empty lines';
 
 }
 
@@ -182,25 +182,25 @@ END
     #  Should also try this with varying $?TABSTOP when that gets implemented
 
     # Take care to keep tabs and spaces as is here
-    ok ([eq] Q:to<MAKEFILE1>,
+    ok ([eq] no-r(Q:to<MAKEFILE1>),
         foo: bar
         	echo 'AGAIN';
         bar:
         	echo 'OHAI';
         MAKEFILE1
-            Q:to<MAKEFILE2>,
+            no-r(Q:to<MAKEFILE2>),
         foo: bar
         	echo 'AGAIN';
         bar:
 		echo 'OHAI';
         MAKEFILE2
-            Q:to<MAKEFILE3>,
+            no-r(Q:to<MAKEFILE3>),
 	foo: bar
 		echo 'AGAIN';
 	bar:
 		echo 'OHAI';
         MAKEFILE3
-            Q:to<MAKEFILE4>,
+            no-r(Q:to<MAKEFILE4>),
         foo: bar
         	echo 'AGAIN';
         bar:

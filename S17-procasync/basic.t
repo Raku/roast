@@ -16,8 +16,8 @@ cmp-ok $se, '~~', Supply;
 
 my $stdout = "";
 my $stderr = "";
-$so.act: { $stdout ~= $_.subst("\r", "", :g) };
-$se.act: { $stderr ~= $_.subst("\r", "", :g) };
+$so.act: { $stdout ~= $_.subst("\r\n", "\n", :g) };
+$se.act: { $stderr ~= $_.subst("\r\n", "\n", :g) };
 
 nok $pc.started, 'program not yet started';
 nok $pc.w, 'Not opened for writing';
@@ -59,8 +59,8 @@ throws-like { $pc.write(Buf.new(0)) }, X::Proc::Async::MustBeStarted, :method<wr
 
 $stdout = '';
 $stderr = '';
-$pc.stdout.act: { $stdout ~= $_.subst("\r", "", :g) };
-$pc.stderr.act: { $stderr ~= $_.subst("\r", "", :g) };
+$pc.stdout.act: { $stdout ~= $_.subst("\r\n", "\n", :g) };
+$pc.stderr.act: { $stderr ~= $_.subst("\r\n", "\n", :g) };
 
 throws-like { $pc.stdout(:bin) }, X::Proc::Async::CharsOrBytes, :handle<stdout>;
 

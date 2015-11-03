@@ -3,7 +3,7 @@ use Test;
 
 plan 7;
 
-sub un-r($str) { $str.subst("\r", "", :g) }
+sub un-r($str) { $str.subst("\r\n", "\n", :g) }
 
 is un-r(q:to"FIN"), "Hello again.\n", 'basic heredoc with :to';
 Hello again.

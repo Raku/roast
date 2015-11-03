@@ -15,10 +15,10 @@ This ordinary paragraph introduces a code block:
 $r = $=pod[0];
 is $r.contents[0].contents, 'This ordinary paragraph introduces a code block:';
 isa-ok $r.contents[1], Pod::Block::Code;
-is $r.contents[1].contents.Str.subst("\r", "", :g), q[$this = 1 * code('block');
+is $r.contents[1].contents.Str.subst("\r\n", "\n", :g), q[$this = 1 * code('block');
 $which.is_specified(:by<indenting>);
 
-$which.spans(:newlines);].subst("\r", "", :g);
+$which.spans(:newlines);].subst("\r\n", "\n", :g);
 
 # more fancy code blocks
 =begin pod

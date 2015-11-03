@@ -24,7 +24,7 @@ switch, and wraps the whole script in
 
 my $str = "foo
 bar
-".subst("\r", "", :g);
+".subst("\r\n", "\n", :g);
 
 is_run(
     $str,          # input

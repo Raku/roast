@@ -68,7 +68,7 @@ Q{1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 };
 
-my @snowman-data = $snowman.split("\n");
+my @snowman-data = $snowman.split(/\n/);
 
 # using map
 for ^$height Z subdivide($upper-right.re, $lower-left.re, $height) -> ($i, $re) {

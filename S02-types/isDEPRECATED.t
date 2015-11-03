@@ -20,7 +20,7 @@ my $line;
 
     $line = $?LINE; a();
     is $a, 1, 'was "a" really called';
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for a()';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for a()';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Sub a (from GLOBAL) seen at:
@@ -32,7 +32,7 @@ TEXT
     $line = $?LINE; awith();
     awith();
     is $awith, 2, 'was "awith" really called';
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for awith()';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for awith()';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Sub awith (from GLOBAL) seen at:
@@ -50,7 +50,7 @@ TEXT
 
     $line = $?LINE; A.new;
     #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for A.new';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for A.new';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method new (from A) seen at:
@@ -62,7 +62,7 @@ TEXT
     $line = $?LINE; Awith.new;
     Awith.new;
     #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for Awith.new';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for Awith.new';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method new (from Awith) seen at:
@@ -83,7 +83,7 @@ TEXT
     $line = $?LINE; B.new;
     is $B, 1, 'was "B.new" really called';
     #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for B.new';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for B.new';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method new (from B) seen at:
@@ -96,7 +96,7 @@ TEXT
     Bwith.new;
     is $Bwith, 2, 'was "Bwith.new" really called';
     #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for Bwith.new';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for Bwith.new';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method new (from Bwith) seen at:
@@ -116,7 +116,7 @@ TEXT
 
     $line = $?LINE; C.new.foo;
     is $C, 1, 'was "C.new.foo" really called';
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for C.new.foo';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for C.new.foo';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method foo (from C) seen at:
@@ -128,7 +128,7 @@ TEXT
     $line = $?LINE; Cwith.new.foo;
     Cwith.new.foo;
     is $Cwith, 2, 'was "Cwith.new.foo" really called';
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation Cwith.new.foo';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation Cwith.new.foo';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method foo (from Cwith) seen at:
@@ -146,7 +146,7 @@ TEXT
 
     $line = $?LINE; D.new.foo;
     #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for D.new.foo';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for D.new.foo';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method foo (from D) seen at:
@@ -158,7 +158,7 @@ TEXT
     $line = $?LINE; Dwith.new;
     Dwith.new;
     #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation Dwith.new.foo';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation Dwith.new.foo';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method foo (from Dwith) seen at:
@@ -179,7 +179,7 @@ TEXT
     $line = $?LINE; E.new.foo;
     is $E, 1, 'was "E.new.foo" really called';
     #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for E.new.foo';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for E.new.foo';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method foo (from E) seen at:
@@ -192,7 +192,7 @@ TEXT
     Ewith.new.foo;
     is $Ewith, 2, 'was "Ewith.new.foo" really called';
     #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation Ewith.new.foo';
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation Ewith.new.foo';
 Saw 1 occurrence of deprecated code.
 ================================================================================
 Method foo (from Ewith) seen at:
