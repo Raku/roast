@@ -44,10 +44,10 @@ dies-ok  { mods_param_rw(1) }, 'can\'t modify constant even if we claim it\'s rw
 sub mods_param_rw_enforces ($x is rw) { $x; }
 throws-like { mods_param_rw_enforces(1) },
     X::Parameter::RW,
-    'is rw dies in signature bidning if passed a literal Int';
+    'is rw dies in signature binding if passed a literal Int';
 throws-like { mods_param_rw_enforces($[1,2]) },
     X::Parameter::RW,
-    'is rw dies in signature bidning if passed an itemized array';
+    'is rw dies in signature binding if passed an itemized array';
 
 lives-ok  { mods_param_rw($foo) }, 'pass by "is rw" doesn\'t die';
 is($foo, 2, 'pass by reference works');
