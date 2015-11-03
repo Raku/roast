@@ -90,18 +90,13 @@ is(+Range, 0, 'type numification');
 {
     my $r = 1..5;
 
-    throws-like { $r.push(42) }, X::Immutable,
-      :typename<Range>, :method<push>,    'range is immutable (push)';
-    throws-like { $r.append(42) }, X::Immutable,
-      :typename<Range>, :method<append>,  'range is immutable (append)';
-    throws-like { $r.unshift(42) }, X::Immutable,
-      :typename<Range>, :method<unshift>, 'range is immutable (unshift)';
-    throws-like { $r.prepend(42) }, X::Immutable,
-      :typename<Range>, :method<prepend>, 'range is immutable (prepend)';
-    throws-like { $r.shift }, X::Immutable,
-      :typename<Range>, :method<shift>,   'range is immutable (shift)';
-    throws-like { $r.pop }, X::Immutable,
-      :typename<Range>, :method<pop>,     'range is immutable (pop)';
+    for <push pop shift unshift append prepend> -> $method {
+        throws-like { $r."$method"(42) }, X::Immutable,
+          method   => $method,
+          typename => 'Range',
+          "range is immutable ($method)",
+        ;
+    }
 
     my $s = 1..5;
     is $r, $s, 'range has not changed';

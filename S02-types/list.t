@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 61;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -113,7 +113,7 @@ is $(;).elems, 0, '$(;) parses, and is empty';
 }
 
 {
-    for <push pop shift unshift> -> $method {
+    for <push pop shift unshift append prepend> -> $method {
         throws-like { (1,2,3)."$method"(42) }, X::Immutable,
           method   => $method,
           typename => 'List',
