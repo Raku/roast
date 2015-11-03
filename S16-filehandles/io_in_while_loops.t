@@ -50,7 +50,7 @@ ok(unlink($filename), 'file has been removed');
         MVNSNQNQNGNSNGHDDDFPQDSITEPEHMRKLFIGGLDYRTTDENLKAHEKWGNIVDVV
         FASTAISH
 
-    my $fh = open($filename, nl-in => "\n>");
+    my $fh = open($filename, nl-in => ["\n>", "\r\n>"]);
     my @lines;
     while my $line = get $fh {
         @lines.push($line);
