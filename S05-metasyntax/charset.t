@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 44;
+plan 47;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -67,6 +67,15 @@ ok "\x[FFEF]" ~~ /<[\x0..\xFFEF]>/, 'large \\x char spec';
 #?niecza todo
 throws-like "'RT #71702' ~~ /<[d..b]>? RT/", X::AdHoc,
     'reverse range in charset is lethal (RT #71702)';
+
+throws-like "'x' ~~ /<[abc] [def]>? RT/", X::AdHoc,
+    'missing + or - is fatal 1';
+
+throws-like "'x' ~~ /<:Kata :Hira]>? RT/", X::AdHoc,
+    'missing + or - is fatal 2';
+
+throws-like "'x' ~~ /<+alpha digit]>? RT/", X::AdHoc,
+    'missing + or - is fatal 3';
 
 # RT #64220
 ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
