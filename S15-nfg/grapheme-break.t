@@ -69,7 +69,6 @@ is Uni.new(0x000D, 0x000D).Str.chars, 2, '÷ [0.2] <CARRIAGE RETURN (CR)> (CR) �
 
 is Uni.new(0x000D, 0x0308, 0x000D).Str.chars, 3, '÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3]';
 
-#?rakudo todo '\r\n is not yet a single grapheme'
 is Uni.new(0x000D, 0x000A).Str.chars, 1, '÷ [0.2] <CARRIAGE RETURN (CR)> (CR) × [3.0] <LINE FEED (LF)> (LF) ÷ [0.3]';
 
 is Uni.new(0x000D, 0x0308, 0x000A).Str.chars, 3, '÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3]';
