@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 161;
+plan 168;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -90,10 +90,18 @@ is(+Range, 0, 'type numification');
 {
     my $r = 1..5;
 
-    dies-ok { $r.shift       }, 'range is immutable (shift)';
-    dies-ok { $r.pop         }, 'range is immutable (pop)';
-    dies-ok { $r.push(10)    }, 'range is immutable (push)';
-    dies-ok { $r.unshift(10) }, 'range is immutable (unshift)';
+    throws-like { $r.push(42) }, X::Immutable,
+      :typename<Range>, :method<push>,    'range is immutable (push)';
+    throws-like { $r.append(42) }, X::Immutable,
+      :typename<Range>, :method<append>,  'range is immutable (append)';
+    throws-like { $r.unshift(42) }, X::Immutable,
+      :typename<Range>, :method<unshift>, 'range is immutable (unshift)';
+    throws-like { $r.prepend(42) }, X::Immutable,
+      :typename<Range>, :method<prepend>, 'range is immutable (prepend)';
+    throws-like { $r.shift }, X::Immutable,
+      :typename<Range>, :method<shift>,   'range is immutable (shift)';
+    throws-like { $r.pop }, X::Immutable,
+      :typename<Range>, :method<pop>,     'range is immutable (pop)';
 
     my $s = 1..5;
     is $r, $s, 'range has not changed';
@@ -312,6 +320,26 @@ lives-ok({"\0".."~"}, "low ascii range completes");
           typename => / ^ 'Int' | 'value' $ /,
           "is Range.bounds[$i] ro";
     }
+}
+
+{
+    sub test($range,$min,$max,$minbound,$maxbound) {
+        subtest {
+            plan 5;
+            ok $range.is-int, "is $range.gist() an integer range";
+            is $range.min, $min, "is $range.gist().min $min";
+            is $range.max, $max, "is $range.gist().max $max";
+            my ($low,$high) = $range.int-bounds;
+            is  $low, $minbound, "is $range.gist().int-bounds[0] $minbound";
+            is $high, $maxbound, "is $range.gist().int-bounds[1] $maxbound";
+        }, "Testing min, max, int-bounds on $range.gist()";
+    }
+
+    test(     ^10,  0, 10,  0,  9);
+    test(  -1..10, -1, 10, -1, 10);
+    test( -1^..10, -1, 10,  0, 10);
+    test( -1..^10, -1, 10, -1,  9);
+    test(-1^..^10, -1, 10,  0,  9);
 }
 
 # vim:set ft=perl6
