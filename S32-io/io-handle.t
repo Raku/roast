@@ -29,7 +29,7 @@ my $path = "io-handle-testfile";
         $path.IO.open(:w).print("A+B+C+D+");
     }
     my $RT123888 = $path.IO.open(:r);
-    $RT123888.nl= "+";
+    $RT123888.nl-in = "+";
     is $RT123888.lines, <A+ B+ C+ D+>, "Changing input-line-separator works for .lines";
 }
 

@@ -195,9 +195,9 @@ throws-like '$#foo', X::Obsolete;
 lives-ok { EVAL '$@' }, '$@ is no longer a problem';
 
 # RT #123884
-throws-like '$\\ = 1;', X::Syntax::Perl5Var, message => /\.nl/, "Error message for \$\\ mentions .nl";
+throws-like '$\\ = 1;', X::Syntax::Perl5Var, message => /'.nl-out'/, "Error message for \$\\ mentions .nl-out";
 
-throws-like '$/ = "\n\n";', X::Syntax::Perl5Var, message => /\.nl/, "Error message for \$/ mentions .nl";
+throws-like '$/ = "\n\n";', X::Syntax::Perl5Var, message => /'.nl-in'/, "Error message for \$/ mentions .nl-in";
 
 throws-like { EVAL '"$"' }, X::Backslash::NonVariableDollar, 'non-variable $ in double quotes requires backslash';
 lives-ok { EVAL 'class frob { has @!bar; method test { return $@!bar } }' },

@@ -4,7 +4,7 @@ use Test;
 # L<S32::IO/IO::File/open>
 # old: L<S16/"Filehandles, files, and directories"/"open">
 
-plan 16;
+plan 17;
 
 my $filename = 'tempfile_io_in_while_loop';
 
@@ -50,7 +50,7 @@ ok(unlink($filename), 'file has been removed');
         MVNSNQNQNGNSNGHDDDFPQDSITEPEHMRKLFIGGLDYRTTDENLKAHEKWGNIVDVV
         FASTAISH
 
-    my $fh = open($filename, nl => "\n>");
+    my $fh = open($filename, nl-in => "\n>");
     my @lines;
     while my $line = get $fh {
         @lines.push($line);
@@ -59,6 +59,8 @@ ok(unlink($filename), 'file has been removed');
     ok @lines[0] ~~ /^'>roa1'/, 'Correct first line';
     ok @lines[1] ~~ /^'roa2'/, 'Correct second line';
     $fh.close;
+
+    ok(unlink($filename), 'file has been removed');
 }
 
 # vim: ft=perl6
