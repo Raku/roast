@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 91;
+plan 93;
 
 =begin pod
 
@@ -522,5 +522,8 @@ Testing operator overloading subroutines
         X::Syntax::AddCategorical::TooManyParts, 
         'constants containing too many parts throw correctly';
 }
+
+is infix:['+'](2,3), 5, 'can call existing infix via compile-time string lookup';
+is infix:['Z~'](<a b>, <c d>), 'ac bd', 'can call autogen infix via compile-time string lookup';
 
 # vim: ft=perl6
