@@ -1,7 +1,9 @@
 use v6;
 use Test;
 
-plan 20;
+plan 32;
+
+my $temp-file = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
 
 for <utf-8 ascii latin-1 windows-1252> -> $encoding {
     my $buf = "\r\n".encode($encoding);
@@ -12,4 +14,16 @@ for <utf-8 ascii latin-1 windows-1252> -> $encoding {
     my $str = $buf.decode($encoding);
     is $str.chars, 1, "decoding it gives back one grapheme ($encoding)";
     is $str, "\r\n", "decoding it gives back the correct grapheme ($encoding)";
+
+    given open($temp-file, :w, enc => $encoding) {
+        .print: "goat\r\nboat\r\n";
+        .close;
+    }
+    is $temp-file.IO.s, 12, "Wrote file of correct length ($encoding)";
+
+    given open($temp-file, :r, enc => $encoding, :!chomp) {
+        is .get.chars, 5, "Read file and got expected number of chars ($encoding)";
+        is .get, "boat\r\n", "Chars read from file were correct ($encoding)";
+        .close;
+    }
 }
