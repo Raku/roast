@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 48;
+plan 78;
 
 # L<S32::Str/Str/=item comb>
 
@@ -87,10 +87,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 {
     my $expected_reason = rx:s/none of these signatures match/;
 
-    try { 'RT #66340'.comb( 1 ) };
-    ok $! ~~ Exception, '.comb(1) dies';
-    ok "$!" ~~ $expected_reason, '.comb(1) dies for the expected reason';
-
     my $calls = 0;
     try { 'RT #66340'.comb( { $calls++ } ) };
     is $calls, 0, 'code passed to .comb is not called';
@@ -117,6 +113,46 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on", 1), <on>, "Str.comb - partial match with a limit"; 
     is 3.14159265358979323.comb("3"), 3 xx 4 , "Cool.comb";
     is 3.14159265358979323.comb("3", 2), 3 xx 2 , "Cool.comb with a limit";
+}
+
+{
+    sub test($str,$size,$result) {
+        subtest {
+            plan 2;
+            is comb($size,$str), $result, "comb($size,$str)";
+            is $str.comb($size),  $result, "$str\.comb($size)";
+        }, "comb with \"$str\", size $size";
+    }
+
+    test( "foobarbaz", 10, <foobarbaz> );
+    test( "foobarbaz",  9, <foobarbaz> );
+    test( "foobarbaz",  8, <foobarba z> );
+    test( "foobarbaz",  3, <foo bar baz> );
+    test( "foobarbaz",  2, <fo ob ar ba z> );
+    test( "foobarbaz",  1, <f o o b a r b a z> );
+    test( "foobarbaz",  0, <f o o b a r b a z> );
+    test( "foobarbaz", -1, <f o o b a r b a z> );
+}
+
+{
+    sub test($str,$size,$result,$limit) {
+        subtest {
+            plan 2;
+            is comb($size,$str), $result, "comb($size,$str)";
+            is $str.comb($size),  $result, "$str\.comb($size)";
+        }, "comb with \"$str\", size $size, limit $limit.perl()";
+    }
+
+    for *, Inf, 20 -> $times {
+        test( "foobarbaz", 10, <foobarbaz>,         $times );
+        test( "foobarbaz",  9, <foobarbaz>,         $times );
+        test( "foobarbaz",  8, <foobarba z>,        $times );
+        test( "foobarbaz",  3, <foo bar baz>,       $times );
+        test( "foobarbaz",  2, <fo ob ar ba z>,     $times );
+        test( "foobarbaz",  1, <f o o b a r b a z>, $times );
+        test( "foobarbaz",  0, <f o o b a r b a z>, $times );
+        test( "foobarbaz", -1, <f o o b a r b a z>, $times );
+    }
 }
 
 # vim: ft=perl6
