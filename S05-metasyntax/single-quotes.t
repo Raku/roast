@@ -11,7 +11,7 @@ be valid perl6.
 
 =end description
 
-plan 5;
+plan 30;
 
 # L<S05/Simplified lexical parsing of patterns/Sequences of one or more glyphs of either type>
 
@@ -23,5 +23,46 @@ ok("ab cd" ~~ m/ab ' ' c d/, 'ab cd 2');
 ok 'abab' ~~ m/'ab' **2/, "Single quotes group";
 
 ok("ab/cd" ~~ m/ab '/' c d/, 'ab/cd');
+is("ab/cd" ~~ m/[\w+] +% '/'/, 'ab/cd', "Can use after %");
+
+
+ok("ab cd" ~~ m/a ‘b c’ d/, 'ab cd 1');
+ok(!( "abcd" ~~ m/a ‘b c’ d/ ), 'not abcd 1');
+ok("ab cd" ~~ m/ab ‘ ’ c d/, 'ab cd 2');
+
+ok 'abab' ~~ m/‘ab’ **2/, "Single quotes group";
+
+ok("ab/cd" ~~ m/ab ‘/’ c d/, 'ab/cd');
+is("ab/cd" ~~ m/[\w+] +% ‘/’/, 'ab/cd', "Can use after %");
+
+
+ok("ab cd" ~~ m/a ‚b c’ d/, 'ab cd 1');
+ok(!( "abcd" ~~ m/a ‚b c’ d/ ), 'not abcd 1');
+ok("ab cd" ~~ m/ab ‚ ’ c d/, 'ab cd 2');
+
+ok 'abab' ~~ m/‚ab’ **2/, "Single quotes group";
+
+ok("ab/cd" ~~ m/ab ‚/’ c d/, 'ab/cd');
+is("ab/cd" ~~ m/[\w+] +% ‚/’/, 'ab/cd', "Can use after %");
+
+
+ok("ab cd" ~~ m/a ‚b c‘ d/, 'ab cd 1');
+ok(!( "abcd" ~~ m/a ‚b c‘ d/ ), 'not abcd 1');
+ok("ab cd" ~~ m/ab ‚ ‘ c d/, 'ab cd 2');
+
+ok 'abab' ~~ m/‚ab‘ **2/, "Single quotes group";
+
+ok("ab/cd" ~~ m/ab ‚/‘ c d/, 'ab/cd');
+is("ab/cd" ~~ m/[\w+] +% ‚/‘/, 'ab/cd', "Can use after %");
+
+
+ok("ab cd" ~~ m/a ｢b c｣ d/, 'ab cd 1');
+ok(!( "abcd" ~~ m/a ｢b c｣ d/ ), 'not abcd 1');
+ok("ab cd" ~~ m/ab ｢ ｣ c d/, 'ab cd 2');
+
+ok 'abab' ~~ m/｢ab｣ **2/, "Single quotes group";
+
+ok("ab/cd" ~~ m/ab ｢/｣ c d/, 'ab/cd');
+is("ab/cd" ~~ m/[\w+] +% ｢/｣/, 'ab/cd', "Can use after %");
 
 # vim: ft=perl6
