@@ -186,6 +186,7 @@ my @exception = <
   X::Caller::NotDynamic
   X::Cannot::Empty
   X::Cannot::Lazy
+  X::Cannot::New
   X::Comp::AdHoc
   X::Comp::BeginTime
   X::Comp::Group
