@@ -95,14 +95,18 @@ my $filename = 'tempfile_io_in_for_loop';
 
 # RT #122963
 { # now read it without using the value, just using as loop control
+    # On Windows we will have \r\n in the file, elsewhere \n. So tell could
+    # be 2 or 3 bytes.
+    my $ok-tell = 2|3;
+
     my $fh = open($filename);
     for $fh.lines() {
         is $fh.ins, 1, "\$fh.lines loop sets .ins";
-        is $fh.tell, 2, "\$fh.lines loop sets .tell";
+        is $fh.tell, $ok-tell, "\$fh.lines loop sets .tell";
         last;
     }
     is $fh.ins, 1, "last in loop leaves .ins at the same place";
-    is $fh.tell, 2, "last in loop leaves .tell at the same place";
+    is $fh.tell, $ok-tell, "last in loop leaves .tell at the same place";
     $fh.close();
 }
 
