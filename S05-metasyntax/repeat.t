@@ -14,7 +14,7 @@ be valid perl6.
 
 # Note: single-quotes.t tests repetition on single quoted items in regexes.
 
-plan 32;
+plan 46;
 
 # L<S05/Bracket rationalization/The general repetition specifier is now>
 
@@ -36,6 +36,25 @@ ok("abcabcabcabcd" ~~ m/'abc'**2..*/, 'Open range repetition');
 ok(!( "abcd"       ~~ m/'abc'**2..*/ ), 'Fail open range repetition');
 ok("abcabcabcabcd" ~~ m/'abc'**{2..*}/, 'Open range repetition using closure');
 ok(!( "abcd"       ~~ m/'abc'**{2..*}/), 'Fail open range repetition using closure');
+
+# Closed non inclusive range repetition
+ok("abcabcabcabcd" ~~ m/'abc'**2..^5/, 'Fixed non inclusive max range repetition');
+ok(!( "abc"        ~~ m/'abc'**2..^5/ ), 'Fail fixed non inclusive max range repetition');
+ok("abcabcabcabcd" ~~ m/'abc'**1^..4/, 'Fixed non inclusive min range repetition');
+ok(!( "abc"        ~~ m/'abc'**1^..4/ ), 'Fail fixed non inclusive min range repetition');
+ok("abcabcabcabcd" ~~ m/'abc'**1^..^5/, 'Fixed non inclusive min & max range repetition');
+ok(!( "abc"        ~~ m/'abc'**1^..^5/ ), 'Fail fixed non inclusive min & max range repetition');
+say $/;
+ok("abcabcabcabcd" ~~ m/'abc'**^5/, 'Fixed non inclusive max repetition');
+is $/, 'abc' x 4, '...with the correct capture';
+ok("abcabcabcabcd" ~~ m/'abc'**^2/, 'Fixed non inclusive max repetition');
+is $/, 'abc' x 1, '...with the correct capture';
+ok("babcabcabcabcd" ~~ m/'abc'**^2/, 'Fixed non inclusive max repetition');
+is $/, '', '...with the correct capture';
+
+# Open non inclusive range repetition
+ok("abcabcabcabcd" ~~ m/'abc'**1^..*/, 'Open non inclusive min range repetition');
+ok(!( "abcd"       ~~ m/'abc'**1^..*/ ), 'Fail open non inclusive min range repetition');
 
 # It is illegal to return a list, so this easy mistake fails:
 throws-like '"foo" ~~ m/o{1,3}/', X::Obsolete, 'P5-style {1,3} range mistake is caught';
