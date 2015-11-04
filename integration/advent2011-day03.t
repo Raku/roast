@@ -4,6 +4,8 @@ use v6;
 use Test;
 plan 2;
 
+use newline :lf;
+
 sub capture-out($code) {
     my $output;
     my $*OUT = class {
