@@ -1,6 +1,6 @@
 use Test;
 
-plan 734;
+plan 740;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -424,6 +424,24 @@ ok "ab\x[5c]cd" ~~ /"ab\\cd"/, 'literal match with backslash';
 ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
 
 #### (ab)"x$0"		abxab		y	literal match with interpolation
+ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
+
+#### (ab)x“$0”		abxab		y	literal match with interpolation
+ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
+
+#### (ab)“x$0”		abxab		y	literal match with interpolation
+ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
+
+#### (ab)x„$0”		abxab		y	literal match with interpolation
+ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
+
+#### (ab)„x$0”		abxab		y	literal match with interpolation
+ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
+
+#### (ab)x„$0“		abxab		y	literal match with interpolation
+ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
+
+#### (ab)„x$0“		abxab		y	literal match with interpolation
 ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading ? indicates">
