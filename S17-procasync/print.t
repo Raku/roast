@@ -15,7 +15,7 @@ while my $line = $*IN.get {
 say "Done";
 ';
 ok $program.IO.spurt($source),   'could we write the tester';
-is $program.IO.s, $source.chars, 'did the tester arrive ok';
+is $program.IO.s, $source.codes, 'did the tester arrive ok';
 
 my $pc = Proc::Async.new( $*EXECUTABLE, $program, :w );
 isa-ok $pc, Proc::Async;
