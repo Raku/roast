@@ -4,7 +4,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 11;
+plan 12;
 
 sub create-temporary-file {
     my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
@@ -77,5 +77,9 @@ $output = Test::Util::run("@*ARGS = '$tmp-file-name'; .say for lines()", "foo\nb
 @lines  = lines($output);
 
 is-deeply @lines, [<one two three>], 'Changing @*ARGS before calling things on $*ARGFILES should open the new file';
+
+# RT #123888
+$output = Test::Util::run('$*IN.nl-in = "+"; say get() eq "A";', "A+B+C+");
+is $output, "True\n", 'Can change $*IN.nl-in and it has effect';
 
 $tmp-file-name.IO.unlink;
