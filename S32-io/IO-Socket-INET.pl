@@ -123,6 +123,7 @@ given $test {
             $fd.close();
             while my $client = $server.accept() {
                 # default line separator
+                use newline :lf;
                 $client.print("'Twas brillig, and the slithy toves\n");
                 $client.print("Did gyre and gimble in the wabe;\n");
                 # custom line separator: \r\n
