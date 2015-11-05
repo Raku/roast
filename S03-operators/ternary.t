@@ -77,7 +77,7 @@ throws-like { EVAL '1 ?? 3 :: 2' },
     second-part => "::",
     'conditional operator written as ?? :: throws typed exception';
 
-throws-like { EVAL '1 ?? 3:foo :: 2' },
+throws-like { EVAL '1 ?? 3 :foo :: 2' },
     X::Syntax::ConditionalOperator::PrecedenceTooLoose,
     operator => ":foo",
     'adverbed literal in second part of ternary';
@@ -94,14 +94,14 @@ throws-like { EVAL '1 ?? 3:foo :: 2' },
         'adverb in second part of ternary used with parenthesis works';
 }
 
-throws-like { EVAL '1 ?? (3:foo) !! 2' },
+throws-like { EVAL '1 ?? (3 :foo) !! 2' },
     X::Syntax::Adverb,
     'parenthesized adverbed literal in second part of ternary';
 
 {
-    my $three = 3;
-    my $thing = 1 ?? $three:foo !! 2;
-    is $three, 3, 'variable and adverb in second part of ternary';
+    my $three:foo = 3;
+    my $thing:foo = 1 ?? $three:foo !! 2;
+    is $three:foo, 3, 'variable and adverb in second part of ternary';
 }
 
 throws-like { EVAL '1 ?? 3 : 2' },
