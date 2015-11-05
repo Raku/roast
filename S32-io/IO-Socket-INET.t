@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 47;
+plan 48;
 
 diag "{elapsed} starting tests";
 my $elapsed;
@@ -135,6 +135,9 @@ if $*DISTRO.name eq any <linux Linux darwin solaris mswin32 macosx> { # please a
     nok $elapsed > $toolong, "finished in time #11";
     is $expected[$i++], 'All mimsy were the borogoves,',
       "{elapsed} \\r\\n separator";
+    # RT #109306
+    is $expected[$i++], 29,
+      "{elapsed} \\r was not left behind on the string";
     nok $elapsed > $toolong, "finished in time #12";
     is $expected[$i++], 'And the mome raths outgrabe',
       "{elapsed} . as a separator";

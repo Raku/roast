@@ -141,7 +141,9 @@ given $test {
             # Default separator should handle \n and \r\n
             say $sock.get();
             say $sock.get();
-            say $sock.get();
+            my $crlf-line = $sock.get();
+            say $crlf-line;
+            say $crlf-line.encode('ascii').elems;
             $sock.nl-in = '.';
             say $sock.get();
             $sock.nl-in = '!';
