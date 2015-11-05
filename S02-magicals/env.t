@@ -110,7 +110,7 @@ throws-like { EVAL "%ENV" },
 # RT #125953
 {
     %*ENV<FOOBAR> = 1;
-    lives-ok { run('echo', 'hello') },
+    lives-ok { run($*EXECUTABLE, '-v') },
         'call run($command) after setting non-strings into %*ENV does not die';
 }
 
