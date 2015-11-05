@@ -142,9 +142,9 @@ given $test {
             say $sock.get();
             say $sock.get();
             say $sock.get();
-            $sock.input-line-separator = '.';
+            $sock.nl-in = '.';
             say $sock.get();
-            $sock.input-line-separator = '!';
+            $sock.nl-in = '!';
             say $sock.get();
             say $sock.get(); # will begin
             say $sock.get(); # with a space
