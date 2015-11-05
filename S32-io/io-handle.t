@@ -30,7 +30,7 @@ my $path = "io-handle-testfile";
     }
     my $RT123888 = $path.IO.open(:r);
     $RT123888.nl-in = "+";
-    is $RT123888.lines, <A+ B+ C+ D+>, "Changing input-line-separator works for .lines";
+    is $RT123888.lines, <A B C D>, "Changing input-line-separator works for .lines";
 }
 
 try { unlink $path }
