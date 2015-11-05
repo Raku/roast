@@ -4,7 +4,7 @@ use Test;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there. 
 
-plan 18;
+plan 20;
 
 my $res;
 
@@ -18,7 +18,6 @@ ok($res, "shell() to an existing program does not die (and returns something tru
 isa-ok($res, Proc, 'shell() returns a Proc');
 is($res.exitcode, 0, 'shell() exit code when successful is zero');
 
-# RT #117039
 $res = run("program_that_does_not_exist_ignore_this_error_please.exe");
 ok(!$res, "run() to a nonexisting program does not die (and returns something false)");
 isa-ok($res, Proc, 'run() returns a Proc even when not successful');
@@ -31,6 +30,14 @@ $res = shell("program_that_does_not_exist_ignore_this_error_please.exe");
 ok(!$res, "shell() to a nonexisting program does not die (and returns something false)");
 isa-ok($res, Proc, 'shell() returns a Proc even when not successful');
 ok($res.exitcode != 0, 'shell() exit code is not zero on failure');
+
+# RT #117039
+throws-like { run("program_that_does_not_exist_ignore_errors_please.exe") },
+    X::Proc::Unsuccessful,
+    'run in sink context throws on unsuccessful exit';
+throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
+    X::Proc::Unsuccessful,
+    'shell in sink context throws on unsuccessful exit';
 
 # RT #104794
 {
