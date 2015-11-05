@@ -29,7 +29,6 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 
 {
     my $a = 1;
-    #?rakudo todo '$var:adverb does not die currently'
     throws-like '$a:delete', Exception, "Can't :delete a scalar";
 }
 
