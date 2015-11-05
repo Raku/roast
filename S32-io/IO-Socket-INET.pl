@@ -138,9 +138,9 @@ given $test {
             until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
             unlink $server_ready_flag_fn;
             my $sock = IO::Socket::INET.new(:$host, :$port);
+            # Default separator should handle \n and \r\n
             say $sock.get();
             say $sock.get();
-            $sock.input-line-separator = "\r\n";
             say $sock.get();
             $sock.input-line-separator = '.';
             say $sock.get();
