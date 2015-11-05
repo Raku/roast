@@ -50,14 +50,14 @@ ok($res.exitcode != 0, 'shell() exit code is not zero on failure');
     my $rt115390;
     for 1..100 -> $i {
         $rt115390 += $i.perl;
-        run "true";
+        run "$*EXECUTABLE", "-v";
         1;
     }
     is $rt115390, 5050, 'no crash with run() in loop; run() in sink context';
     $rt115390 = 0;
     for 1..100 -> $i {
         $rt115390 += $i.perl;
-        my $var = run "true";
+        my $var = run "$*EXECUTABLE", "-v";
         1;
     }
     is $rt115390, 5050, 'no crash with run() in loop; run() not in sink context';
