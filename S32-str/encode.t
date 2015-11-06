@@ -1,7 +1,5 @@
 use v6;
 use Test;
-plan 32;
-
 
 # L<S32::Containers/Buf>
 
@@ -63,5 +61,29 @@ is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of cod
 # RT #120651
 lives-ok { "\x[effff]".encode('utf-8') },           'Can encode noncharacters to UTF-8';
 is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip with UTF-8';
+
+# RT #123673
+for (
+    'å', 'ascii', '?',
+    '☃', 'latin-1', '?',
+    '☃', 'windows-1252', '?',
+    "\x[FFFFFF]", 'utf-8', "\x[FFFD]",
+    "\x[FFFFFF]", 'utf-16', "\x[FFFD]",
+) -> $string, $encoding, $default-replacement {
+#!rakudo.moar todo 'Only moar handles this'
+    subtest {
+        throws-like { $string.encode($encoding) }, X::AdHoc, message => rx:s:i/Error encoding $encoding string/,
+            'No replacement dies';
+        is $string.encode($encoding, :replacement).decode($encoding), $default-replacement,
+            'Default replacement';
+        is $string.encode($encoding, :replacement('')).decode($encoding), '',
+            'Zero-character replacement';
+        is $string.encode($encoding, :replacement('XXX')).decode($encoding), 'XXX',
+            'Multi-character replacement';
+    }, "Non-$encoding character";
+
+}
+
+done-testing;
 
 # vim: ft=perl6
