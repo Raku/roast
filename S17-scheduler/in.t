@@ -38,7 +38,7 @@ my $name = $*SCHEDULER.^name;
     isa-ok @c[*-1], Cancellation;
     is $tracker, '', "Cue on $name with :in/:catch doesn't schedule immediately";
     sleep 3;
-    is $tracker, "1s1scatch2s", "Timer tasks on $name:in/:catch ran in right order";
+    is $tracker, "1s1scatch2s", "Timer tasks on $name :in/:catch ran in right order";
     LEAVE @c>>.cancel;
 }
 
