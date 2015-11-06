@@ -4,7 +4,7 @@ use Test;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 55;
+plan 106;
 
 # split on empty string
 {
@@ -181,6 +181,118 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
     #?niecza skip 'Unable to resolve method wb in class Cursor'
     is '-a-b-c-'.split(/<.wb>/).join('|'), '-|a|-|b|-|c|-',
       'zero-width delimiter (<.wb>) (2)';
+}
+
+{
+    my $str = "foobarbaz";
+    is $str.split(<a o>), <<f "" b rb z>>,
+      "split '$str' on a o";
+    is $str.split(<a o>,2), <<f obarbaz>>,
+      "split '$str' on a o for 2";
+    is $str.split(<a o>,:k), <<f 1 "" 1 b 0 rb 0 z>>,
+      "split '$str' on a o with :k";
+    is $str.split(<a o>,2,:k), <<f 1 obarbaz>>,
+      "split '$str' on a o for 2 with :k";
+    is $str.split(<a o>,:v), <<f o "" o b a rb a z>>,
+      "split '$str' on a o with :v";
+    is $str.split(<a o>,2,:v), <<f o obarbaz>>,
+      "split '$str' on a o for 2 with :v";
+    is $str.split(<a o>,:kv), <<f 1 o "" 1 o b 0 a rb 0 a z>>,
+      "split '$str' on a o with :kv";
+    is $str.split(<a o>,2,:kv), <<f 1 o obarbaz>>,
+      "split '$str' on a o for 2 with :kv";
+    is $str.split(<a o>,:p), ('f',1=>'o',"",1=>'o','b',0=>'a','rb',0=>'a','z'),
+      "split '$str' on a o with :p";
+    is $str.split(<a o>,2,:p), ('f',1=>'o','obarbaz'),
+      "split '$str' on a o for 2 with :p";
+
+    is $str.split(<a o>, :skip-empty), <f b rb z>,
+      "split '$str' on a o with :skip-empty";
+    is $str.split(<a o>,:k, :skip-empty), <<f 1 1 b 0 rb 0 z>>,
+      "split '$str' on a o with :k with :skip-empty";
+    is $str.split(<a o>,:v, :skip-empty), <<f o o b a rb a z>>,
+      "split '$str' on a o with :v with :skip-empty";
+    is $str.split(<a o>,:kv, :skip-empty), <<f 1 o 1 o b 0 a rb 0 a z>>,
+      "split '$str' on a o with :kv with skip-empty";
+    is $str.split(<a o>,:p, :skip-empty),
+      ('f',1=>'o',1=>'o','b',0=>'a','rb',0=>'a','z'),
+      "split '$str' on a o with :p with skip-empty";
+
+    throws-like { $str.split(<a o>,:k, :v) }, X::Adverb,
+      what   => 'split',
+      source => 'Str',
+      nogo   => <k v>,
+      'clashing named parameters';
+    throws-like { $str.split(<a o>, 3, :skip-empty) }, X::AdHoc,
+      "cannot combine limit with :skip-empty";
+    throws-like { $str.split((/a/,/o/), :k) }, X::AdHoc,
+      "Can only :k, :kv, :p when using multiple Cool needles";
+
+    is $str,"foobarbaz", "no changes made to $str";
+}
+
+{
+    my $str = "zzzzzzzzzzzzzzzzzz";
+    is $str.split(<a o>),       ($str), "split '$str' on a o";
+    is $str.split(<a o>,2),     ($str), "split '$str' on a o for 2";
+    is $str.split(<a o>,:k),    ($str), "split '$str' on a o with :k";
+    is $str.split(<a o>,2,:k),  ($str), "split '$str' on a o for 2 with :k";
+    is $str.split(<a o>,:v),    ($str), "split '$str' on a o with :v";
+    is $str.split(<a o>,2,:v),  ($str), "split '$str' on a o for 2 with :v";
+    is $str.split(<a o>,:kv),   ($str), "split '$str' on a o with :kv";
+    is $str.split(<a o>,2,:kv), ($str), "split '$str' on a o for 2 with :kv";
+    is $str.split(<a o>,:p),    ($str), "split '$str' on a o with :p";
+    is $str.split(<a o>,2,:p),  ($str), "split '$str' on a o for 2 with :p";
+
+    is $str.split(<a o>, :skip-empty), ($str),
+      "split '$str' on a o with :skip-empty";
+    is $str.split(<a o>,:k, :skip-empty), ($str),
+      "split '$str' on a o with :k with :skip-empty";
+    is $str.split(<a o>,:v, :skip-empty), ($str),
+      "split '$str' on a o with :v with :skip-empty";
+    is $str.split(<a o>,:kv, :skip-empty), ($str),
+      "split '$str' on a o with :kv with skip-empty";
+    is $str.split(<a o>,:p, :skip-empty), ($str),
+      "split '$str' on a o with :p with skip-empty";
+
+    is $str,"zzzzzzzzzzzzzzzzzz", "no changes made to $str";
+}
+
+{
+    my $str = "oooo";
+    is $str.split(<a o>),       <<"" "" "" "" "">>,
+      "split '$str' on a o";
+    is $str.split(<a o>,2),     <<"" ooo>>,
+      "split '$str' on a o for 2";
+    is $str.split(<a o>,:k),    <<"" 1 "" 1 "" 1 "" 1 "">>,
+      "split '$str' on a o with :k";
+    is $str.split(<a o>,2,:k),  <<"" 1 ooo>>,
+      "split '$str' on a o for 2 with :k";
+    is $str.split(<a o>,:v),    <<"" o "" o "" o "" o "">>,
+      "split '$str' on a o with :v";
+    is $str.split(<a o>,2,:v),  <<"" o ooo>>,
+      "split '$str' on a o for 2 with :v";
+    is $str.split(<a o>,:kv),   <<"" 1 o "" 1 o "" 1 o "" 1 o "">>,
+      "split '$str' on a o with :kv";
+    is $str.split(<a o>,2,:kv), <<"" 1 o ooo>>,
+      "split '$str' on a o for 2 with :kv";
+    is $str.split(<a o>,:p),    ("",1=>"o","",1=>"o","",1=>"o","",1=>"o",""),
+      "split '$str' on a o with :p";
+    is $str.split(<a o>,2,:p),  ("",1=>"o","ooo"),
+      "split '$str' on a o for 2 with :p";
+
+    is $str.split(<a o>, :skip-empty),     (),
+      "split '$str' on a o with :skip-empty";
+    is $str.split(<a o>,:k, :skip-empty),  (1,1,1,1),
+      "split '$str' on a o with :k with :skip-empty";
+    is $str.split(<a o>,:v, :skip-empty),  <o o o o>,
+      "split '$str' on a o with :v with :skip-empty";
+    is $str.split(<a o>,:kv, :skip-empty), <<1 o 1 o 1 o 1 o>>,
+      "split '$str' on a o with :kv with skip-empty";
+    is $str.split(<a o>,:p, :skip-empty), (1=>"o",1=>"o",1=>"o",1=>"o"),
+      "split '$str' on a o with :p with skip-empty";
+
+    is $str,"oooo", "no changes made to $str";
 }
 
 # vim: ft=perl6
