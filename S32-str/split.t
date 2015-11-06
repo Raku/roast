@@ -4,7 +4,7 @@ use Test;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 106;
+plan 104;
 
 # split on empty string
 {
@@ -223,10 +223,6 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
       source => 'Str',
       nogo   => <k v>,
       'clashing named parameters';
-    throws-like { $str.split(<a o>, 3, :skip-empty) }, X::AdHoc,
-      "cannot combine limit with :skip-empty";
-    throws-like { $str.split((/a/,/o/), :k) }, X::AdHoc,
-      "Can only :k, :kv, :p when using multiple Cool needles";
 
     is $str,"foobarbaz", "no changes made to $str";
 }
