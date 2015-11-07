@@ -488,7 +488,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #126476
-#?rakudo todo "non-matching S/// should return string unchanged"
 {
     $_ = "foo";
     is S/a/A/, "foo", "non-mutating single substitution works ($/)";
