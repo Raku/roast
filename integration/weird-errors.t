@@ -155,6 +155,7 @@ is_run '{;}',
 }
 
 #RT #119999
+#?rakudo todo 'Feels like a bogus test in light of recent changes'
 throws-like { EVAL '&&::{}[];;' },
   X::Undeclared::Symbols,
   "Doesn't die with weird internal error";
