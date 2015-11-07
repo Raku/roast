@@ -42,6 +42,7 @@ throws-like 'sub mods_param_constant ($x is readonly) { $x++; };
 sub mods_param_rw ($x is rw) { $x++; }
 dies-ok  { mods_param_rw(1) }, 'can\'t modify constant even if we claim it\'s rw';
 sub mods_param_rw_enforces ($x is rw) { $x; }
+#?rakudo todo "optimizer too greedy: RT #126585"
 throws-like { mods_param_rw_enforces(1) },
     X::Parameter::RW,
     'is rw dies in signature binding if passed a literal Int';
