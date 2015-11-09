@@ -5,7 +5,7 @@ use Test;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 23;
+plan 29;
 
 {
     my $test-str;
@@ -47,6 +47,18 @@ plan 23;
         'utf8-c8 can cope with ordinary synthetics';
     is $buf.decode('utf8-c8'), $test-str,
         'utf8-c8 round-trips ordinary synthetics';
+}
+
+{
+    my $test-str;
+    lives-ok { $test-str = Buf.new(ord('L'), 0xE9, ord('o'), ord('n')).decode('utf8-c8') },
+        'Can decode byte buffer with 0xE9 in middle as utf8-c8';
+    is $test-str.chars, 4, 'Got expected number of chars';
+    is $test-str.substr(0, 1), 'L', 'Got first char, which was valid UTF-8';
+    is $test-str.substr(2, 1), 'o', 'Got third char, which was valid UTF-8';
+    is $test-str.substr(3, 1), 'n', 'Got forth char, which was valid UTF-8';
+    is $test-str.encode('utf8-c8').list, (ord('L'), 0xE9, ord('o'), ord('n')),
+        'Encoding back to utf8-c8 round-trips';
 }
 
 {
