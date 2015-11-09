@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 26;
 
 # L<S02/Names/"for the identifier of the variable">
 
@@ -80,5 +80,9 @@ nok foo().defined, 'contextual $*VAR is undefined';
 
 # RT #74756
 throws-like 'say $*a; my $*a;', X::Dynamic::Postdeclaration, symbol => '$*a';
+
+# RT #82790
+throws-like 'my $*FOO::BAR = 2', X::Dynamic::Package, symbol => '$*FOO::BAR';
+throws-like 'say $*OH::BAZ::WAZ', X::Dynamic::Package, symbol => '$*OH::BAZ::WAZ';
 
 # vim: ft=perl6
