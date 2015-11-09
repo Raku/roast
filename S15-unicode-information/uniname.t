@@ -2,11 +2,20 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 39;
 
 # Unicode version pragma not needed here, as names cannot change.
 
 # L<S15/Character Name>
+
+is uniname(""), Str, "uniname an empty string yields a Str type object";
+is uninames(""), (), "uninames an empty string yields an empty list";
+is "".uniname, Str, "''.uniname yields a Str type object";
+is "".uninames, (), "''.uninames yields an empty list";
+throws-like "uniname Str", X::Multi::NoMatch, 'cannot call uniname with a Str';
+throws-like "Str.uniname", X::Multi::NoMatch, 'cannot call uniname with a Str';
+throws-like "uniname Int", X::Multi::NoMatch, 'cannot call uniname with a Int';
+throws-like "Int.uniname", X::Multi::NoMatch, 'cannot call uniname with a Int';
 
 # method forms
 #?niecza 2 skip "uniname NYI"
