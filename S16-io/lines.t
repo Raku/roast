@@ -4,8 +4,9 @@ use Test;
 my @endings =
   "\n"   => "LF",
   "\r\n" => "CRLF",
-#  "\r"   => "CR",   # CR later
-                     # other line endings later still
+  "\r"   => "CR",
+  ";"    => "semi-colon",
+  ":\n:" => "colons",
 ;
 
 plan @endings * (1 + 3 * ( (3 * 7) + 7));
@@ -23,7 +24,7 @@ for @endings -> (:key($eol), :value($EOL)) {
         my $status = "{$chomp.gist} / $EOL";
 
         for (), True, :close, False, :!close, True -> $closing, $open {
-            my $handle = open($filename, |$chomp);
+            my $handle = open($filename, :nl-in($eol), |$chomp);
             isa-ok $handle, IO::Handle;
 
             my $status = OUTER::<$status> ~ " / {$open ?? 'open' !! 'close'}";
@@ -45,7 +46,7 @@ for @endings -> (:key($eol), :value($EOL)) {
         }
 
         # slicing
-        my $handle = open($filename, |$chomp);
+        my $handle = open($filename, :nl-in($eol), |$chomp);
         isa-ok $handle, IO::Handle;
 
         my @lines = $handle.lines[1,2];
@@ -57,15 +58,17 @@ for @endings -> (:key($eol), :value($EOL)) {
         $handle.close;
 
         # slicing on IO::Path
-        is $filename.IO.lines(|$chomp)[1,2,*-1][^2].join($end),
+        is $filename.IO.lines(:nl-in($eol), |$chomp)[1,2,*-1][^2].join($end),
           @text[1,2].map({ $_ ~ $end }).join($end),
           "path 1,2: $status";
 
-        is $filename.IO.lines(|$chomp)[*-1],
+        is $filename.IO.lines(:nl-in($eol), |$chomp)[*-1],
           @text[*-1],
           "path last line: $status";
 
-        is $filename.IO.lines(|$chomp).elems, +@text, "path elems: $status";
+        is $filename.IO.lines(:nl-in($eol), |$chomp).elems,
+          +@text,
+          "path elems: $status";
     }
 }
 
