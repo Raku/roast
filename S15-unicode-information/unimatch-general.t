@@ -2,13 +2,19 @@ use v6;
 
 use Test;
 
-plan 217;
+plan 223;
 
 #use unicode :v(6.3)
 
 # L<S15/Binary Category Check>
 
-#?niecza 214 skip "unimatch NYI"
+#?niecza 223 skip "unimatch NYI"
+is unimatch("",'Nd'), Str, "unimatch an empty string yields a Str type object";
+is "".unimatch('Nd'), Str, "''.unimatch yields a Str type object";
+throws-like "unimatch Str", X::Multi::NoMatch, 'cannot call unimatch with a Str';
+throws-like "Str.unimatch", X::Multi::NoMatch, 'cannot call unimatch with a Str';
+throws-like "unimatch Int", X::TypeCheck::Argument, 'cannot call unimatch with a Int';
+throws-like "Int.unimatch", X::Multi::NoMatch, 'cannot call unimatch with a Int';
 
 nok unimatch(0x29, 'Nd'), "0x29 is not Nd";
 ok unimatch(0x30, 'Nd'), "0x30 is Nd";
