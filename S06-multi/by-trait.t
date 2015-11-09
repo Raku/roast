@@ -2,8 +2,10 @@ use v6;
 use Test;
 plan 5;
 
-# RT #66588
-#?rakudo skip 'Ambiguous dispatch for &uno_mas'
+# originally for RT #66588, which was closed
+# RT #74414 is related, and works on moar, but
+# likely not on jvm
+#?rakudo.jvm skip 'Ambiguous dispatch for &uno_mas'
 {
     my $ro_call = 0;
     my $rw_call = 0;
