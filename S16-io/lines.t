@@ -2,11 +2,12 @@ use v6;
 use Test;
 
 my @endings =
-  "\n"   => "LF",
-  "\r\n" => "CRLF",
-  "\r"   => "CR",
-  ";"    => "semi-colon",
-  ":\n:" => "colons",
+  "\n"               => "LF",
+  "\r\n"             => "CRLF",
+  "\r"               => "CR",
+  ";"                => "semi-colon",
+  ":\n:"             => "colons",
+  ("\n","\r\n","\r") => "multi",
 ;
 
 plan @endings * (1 + 3 * ( (3 * 7) + 7));
@@ -17,7 +18,7 @@ my @text = <zero one two three four>;
 for @endings -> (:key($eol), :value($EOL)) {
     unlink $filename;  # make sure spurt will work
 
-    my $text = @text.join($eol);
+    my $text = @text.join($eol[0]);
     ok $filename.IO.spurt($text), "could we spurt a file with $EOL";
 
     for (), '', :chomp, '', :!chomp, $eol -> $chomp, $end {
@@ -31,14 +32,14 @@ for @endings -> (:key($eol), :value($EOL)) {
 
             my $first;
             for $handle.lines -> $line {
-                is $line,"@text[0]$end", "read first line: $status";
+                is $line,"@text[0]$end[0]", "read first line: $status";
                 $first = $line;
                 last;
             }
 
             is $handle.ins, 1, "read one line: $status";
             my @lines = $first, |$handle.lines(|$closing);
-            is @lines.join, @text.join($end), "rest of file: $status";
+            is @lines.join, @text.join($end[0]), "rest of file: $status";
 
             is $handle.ins, ($open ?? 5 !! 1), "read five lines: $status";
             is $handle.opened, $open, "handle still open: $status";
@@ -50,7 +51,8 @@ for @endings -> (:key($eol), :value($EOL)) {
         isa-ok $handle, IO::Handle;
 
         my @lines = $handle.lines[1,2];
-        is @lines.join, @text[1,2].join($end) ~ $end, "handle 1,2: $status";
+        is @lines.join, @text[1,2].join($end[0]) ~ $end[0],
+          "handle 1,2: $status";
         is $handle.ins, 3, "handle read three lines: $status";
 
         is $handle.lines[*-1], @text[*-1], "handle last line: $status";
@@ -58,8 +60,8 @@ for @endings -> (:key($eol), :value($EOL)) {
         $handle.close;
 
         # slicing on IO::Path
-        is $filename.IO.lines(:nl-in($eol), |$chomp)[1,2,*-1][^2].join($end),
-          @text[1,2].map({ $_ ~ $end }).join($end),
+        is $filename.IO.lines(:nl-in($eol), |$chomp)[1,2,*-1][^2].join($end[0]),
+          @text[1,2].map({ $_ ~ $end[0] }).join($end[0]),
           "path 1,2: $status";
 
         is $filename.IO.lines(:nl-in($eol), |$chomp)[*-1],
