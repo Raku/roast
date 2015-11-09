@@ -2,13 +2,21 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 40;
 
 #use unicode :v(6.3);
 
 # L<S15/Numeric Value>
 
-#?niecza 25 skip "unival NYI"
+#?niecza 40 skip "unival NYI"
+is unival(""), Str, "unival an empty string yields a Str type object";
+is univals(""), (), "univals an empty string yields an empty list";
+is "".unival, Str, "''.unival yields a Str type object";
+is "".univals, (), "''.univals yields an empty list";
+throws-like "unival Str", X::Multi::NoMatch, 'cannot call unival with a Str';
+throws-like "Str.unival", X::Multi::NoMatch, 'cannot call unival with a Str';
+throws-like "unival Int", X::Multi::NoMatch, 'cannot call unival with a Int';
+throws-like "Int.unival", X::Multi::NoMatch, 'cannot call unival with a Int';
 
 is unival(0x30).WHAT.gist, '(Int)', "0x30 is Int";
 is unival(0x30), 0, "0x30 has numeric value 0";
