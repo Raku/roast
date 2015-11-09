@@ -5,7 +5,7 @@ use Test;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 17;
+plan 23;
 
 {
     my $test-str;
@@ -47,4 +47,25 @@ plan 17;
         'utf8-c8 can cope with ordinary synthetics';
     is $buf.decode('utf8-c8'), $test-str,
         'utf8-c8 round-trips ordinary synthetics';
+}
+
+{
+    my $test-file = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
+    LEAVE unlink $test-file;
+
+    given open($test-file, :w, :bin) {
+        .write: Buf.new(ord('A'), 0xFA, ord('B'), 0xFB, 0xFC, ord('C'), 0xFD);
+        .close;
+    }
+
+    my $test-str;
+    lives-ok { $test-str = slurp($test-file, enc => 'utf8-c8') },
+        'Can slurp file with non-UTF-8 octets as utf8-c8';
+    is $test-str.chars, 7, 'Slurped correct number of chars';
+    is $test-str.substr(0, 1), 'A', 'First valid UTF-8 char OK';
+    is $test-str.substr(2, 1), 'B', 'Second valid UTF-8 char OK';
+    is $test-str.substr(5, 1), 'C', 'Third valid UTF-8 char OK';
+    is $test-str.encode('utf8-c8').list,
+        (ord('A'), 0xFA, ord('B'), 0xFB, 0xFC, ord('C'), 0xFD),
+        'Encoding back to utf8-c8 roundtrips';
 }
