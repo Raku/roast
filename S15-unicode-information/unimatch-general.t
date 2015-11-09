@@ -9,8 +9,8 @@ plan 223;
 # L<S15/Binary Category Check>
 
 #?niecza 223 skip "unimatch NYI"
-is unimatch("",'Nd'), Str, "unimatch an empty string yields a Str type object";
-is "".unimatch('Nd'), Str, "''.unimatch yields a Str type object";
+is unimatch("",'Nd'), Nil, "unimatch an empty string yields Nil";
+is "".unimatch('Nd'), Nil, "''.unimatch yields Nil";
 throws-like "unimatch Str", X::Multi::NoMatch, 'cannot call unimatch with a Str';
 throws-like "Str.unimatch", X::Multi::NoMatch, 'cannot call unimatch with a Str';
 throws-like "unimatch Int", X::TypeCheck::Argument, 'cannot call unimatch with a Int';

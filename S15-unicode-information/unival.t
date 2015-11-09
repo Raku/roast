@@ -9,9 +9,9 @@ plan 40;
 # L<S15/Numeric Value>
 
 #?niecza 40 skip "unival NYI"
-is unival(""), Str, "unival an empty string yields a Str type object";
+is unival(""), Nil, "unival an empty string yields Nil";
 is univals(""), (), "univals an empty string yields an empty list";
-is "".unival, Str, "''.unival yields a Str type object";
+is "".unival, Nil, "''.unival yields Nil";
 is "".univals, (), "''.univals yields an empty list";
 throws-like "unival Str", X::Multi::NoMatch, 'cannot call unival with a Str';
 throws-like "Str.unival", X::Multi::NoMatch, 'cannot call unival with a Str';

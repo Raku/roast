@@ -8,9 +8,9 @@ plan 39;
 
 # L<S15/Character Name>
 
-is uniname(""), Str, "uniname an empty string yields a Str type object";
+is uniname(""), Nil, "uniname an empty string yields Nil";
 is uninames(""), (), "uninames an empty string yields an empty list";
-is "".uniname, Str, "''.uniname yields a Str type object";
+is "".uniname, Nil, "''.uniname yields Nil";
 is "".uninames, (), "''.uninames yields an empty list";
 throws-like "uniname Str", X::Multi::NoMatch, 'cannot call uniname with a Str';
 throws-like "Str.uniname", X::Multi::NoMatch, 'cannot call uniname with a Str';

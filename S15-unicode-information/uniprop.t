@@ -9,8 +9,8 @@ plan 6;
 # L<S15/uniprop>
 
 #?niecza 6 skip "uniprop NYI"
-is uniprop(""), Str, "uniprop an empty string yields a Str type object";
-is "".uniprop, Str, "''.uniprop yields a Str type object";
+is uniprop(""), Nil, "uniprop an empty string yields Nil";
+is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
 throws-like "Str.uniprop", X::Multi::NoMatch, 'cannot call uniprop with a Str';
 throws-like "uniprop Int", X::Multi::NoMatch, 'cannot call uniprop with a Int';
