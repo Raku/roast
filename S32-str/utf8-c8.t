@@ -5,7 +5,7 @@ use Test;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 29;
+plan 31;
 
 {
     my $test-str;
@@ -80,4 +80,21 @@ plan 29;
     is $test-str.encode('utf8-c8').list,
         (ord('A'), 0xFA, ord('B'), 0xFB, 0xFC, ord('C'), 0xFD),
         'Encoding back to utf8-c8 roundtrips';
+}
+
+# RT #125420
+if $*DISTRO.is-win {
+    skip('Not clear how to recreate this situation on Windows', 2);
+}
+else {
+    {
+        my $cmd = Q{env - ACME=$'L\xe9on' } ~ $*EXECUTABLE ~ Q{ -e 'say("lived")'};
+        my $proc = shell $cmd, :out;
+        is $proc.out.get, 'lived', 'Can run Perl 6 with non-UTF-8 environment';
+    }
+    {
+        my $cmd = Q{echo 'say(42)' > $'L\xe9on' && } ~ $*EXECUTABLE ~ Q{ $'L\xe9on' && rm $'L\xe9on'};
+        my $proc = shell $cmd, :out;
+        is $proc.out.get, '42', 'Can run Perl 6 sourcefile with non-UTF-8 name';
+    }
 }
