@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 sub test_lines(@lines) {
     #!rakudo todo 'line counts'
@@ -59,6 +59,14 @@ throws-like { open("this-surely-won't-exist", :r) }, Exception,
     is $fh.get, '+', 'Reading a line form a one-byte file works';
     $fh.close;
     unlink 'basic-open-tests';
+}
+
+# RT #126598
+#?rakudo todo 'end of file flag is set too early'
+{
+    spurt("empty-line","\n");
+    is open("empty-line").get, "", 'last empty line should be returned';
+    unlink "empty-line";
 }
 
 # vim: ft=perl6
