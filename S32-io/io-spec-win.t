@@ -48,7 +48,7 @@ for @canonpath-parent -> $in, $out {
 	is $win32.canonpath($in, :parent), $out,
            "canonpath(:parent): '$in' -> '$out'";
 }
-say "# Warning expected here:";
+diag "Warning expected here:";
 is $win32.canonpath( Any, :parent ), '', "canonpath: Any -> ''";
 
 my @splitdir = 
@@ -149,7 +149,7 @@ for @catpath -> $in, $out {
 	is $win32.catpath(|$in), $out, "catpath: {$in.perl} -> '$out'"
 }
 
-say "# split tests";
+diag "split tests";
 my @split = 
         '\\',                               ',\\,\\',
         '.',                               ',.,.',
@@ -179,7 +179,7 @@ for @split -> $in, $out {
           $out, "split: {$in.perl} -> '$out'"
 }
 
-say "# join tests";
+diag "join tests";
 my @join = 
 	('','\\','\\').item,                            '\\',
 	('','/','\\').item,                             '/',
