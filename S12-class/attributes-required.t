@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 3;
+plan 5;
 
 class fish {
     has $.x is required;
@@ -17,3 +17,12 @@ class lemur {
 
 lives-ok { lemur.new() }, "Non-required attributes aren't";
 
+class sloth {
+    has Int:D $.x is required;
+    has Int:D $.y = self.x;
+}
+
+throws-like { sloth.new() }, X::Attribute::Required,
+    "required attributes are checked before defaults run";
+
+is sloth.new(:x(3)).y,3,"required attribute in default";
