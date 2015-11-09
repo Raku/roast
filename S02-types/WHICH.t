@@ -205,6 +205,7 @@ my @exception = <
   X::Declaration::Scope::Multi
   X::Does::TypeObject
   X::Dynamic::NotFound
+  X::Dynamic::Package
   X::Dynamic::Postdeclaration
   X::Eval::NoSuchLang
   X::Export::NameClash
