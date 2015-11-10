@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 98;
+plan 99;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -170,6 +170,12 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
 {
     my $py = 0 && try { my $py = 42; $py.bla() };
     is $py, 0, 'initializing a variable using a try block containing same name works';
+}
+
+# RT #87034
+{
+    throws-like 'my @foo := 1..3, (@foo Z+ 100)',
+        X::Syntax::Variable::Initializer, name => '@foo';
 }
 
 # interaction of my and EVAL
