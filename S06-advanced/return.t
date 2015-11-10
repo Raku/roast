@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 93;
+plan 98;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -394,4 +394,12 @@ is Foo::official(), 44,
     throws-like 'my class A { has Int method foo() { return "hi" } }; A.foo', X::TypeCheck::Return;
 }
 
+{
+    sub return-Int ($x --> Int) { $x }
+    is return-Int(42), 42, "Can return 42 through Int typecheck";
+    is return-Int(Nil), Nil, "Can return Nil through Int typecheck";
+    ok return-Int(Failure.new) ~~ Failure, "Can return Failure through Int typecheck";
+    dies-ok { return-Int(42.0) }, "Can't return 42.0 through Int typecheck";
+    dies-ok { return-Int(Cool) }, "Can't return Cool through Int typecheck";
+}
 # vim: ft=perl6
