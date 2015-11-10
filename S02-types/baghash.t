@@ -538,7 +538,7 @@ sub showkv($x) {
     $b<a> = 42;
     is $b<a>, 42, 'did we set an Int value';
     throws-like { $b<a> = "foo" },
-      X::Multi::NoMatch, # X::TypeCheck::Assignment ???
+      X::Str::Numeric, # X::TypeCheck::Assignment ???
       'Make sure we cannot assign Str on a key';
 
     $_ = 666 for $b.values;
