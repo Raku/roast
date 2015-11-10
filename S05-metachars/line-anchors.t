@@ -14,7 +14,7 @@ be valid perl6.
 
 # L<S05/New metacharacters/"^^ and $$ match line beginnings and endings">
 
-plan 23;
+plan 24;
 
 my $str = q{abc
 def
@@ -51,5 +51,9 @@ ok(   $str ~~ m/^abc$$\n^^d.*f$$\n^^ghi$/, 'All dot' );
     throws-like q[/ $$+ /], X::Syntax::Regex::NonQuantifiable,
         'error when quantifying $$';
 }
+
+# RT #122891
+#?rakudo.jvm todo 'NFG'
+nok "a\r\n" ~~ /^^\s*$$/, 'No accidental match of ^^\s$$ between \r and \n';
 
 # vim: ft=perl6
