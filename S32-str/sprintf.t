@@ -202,16 +202,16 @@ is sprintf('%G', 2.718281828459), sprintf('%.6G', 2.718281828459), '%G defaults 
 # I don't know about the wisdom of these, but this is how Perl 5 handles it
 #?rakudo.moar 10 todo "Issues with Inf: RT #116280"
 #?rakudo.jvm  10 skip "Issues with Inf: RT #116280"
-is sprintf('%e', Inf), "inf", 'Inf properly handled %e';
-is sprintf('%E', Inf), "INF", 'Inf properly handled %E';
-is sprintf('%f', Inf), "inf", 'Inf properly handled %f';
-is sprintf('%g', Inf), "inf", 'Inf properly handled %g';
-is sprintf('%G', Inf), "INF", 'Inf properly handled %G';
-is sprintf('%e', -Inf), "-inf", '-Inf properly handled %e';
-is sprintf('%E', -Inf), "-INF", '-Inf properly handled %E';
-is sprintf('%f', -Inf), "-inf", '-Inf properly handled %f';
-is sprintf('%g', -Inf), "-inf", '-Inf properly handled %g';
-is sprintf('%G', -Inf), "-INF", '-Inf properly handled %G';
+is sprintf('%e', Inf), "Inf", 'Inf properly handled %e';
+is sprintf('%E', Inf), "Inf", 'Inf properly handled %E';
+is sprintf('%f', Inf), "Inf", 'Inf properly handled %f';
+is sprintf('%g', Inf), "Inf", 'Inf properly handled %g';
+is sprintf('%G', Inf), "Inf", 'Inf properly handled %G';
+is sprintf('%e', -Inf), "-Inf", '-Inf properly handled %e';
+is sprintf('%E', -Inf), "-Inf", '-Inf properly handled %E';
+is sprintf('%f', -Inf), "-Inf", '-Inf properly handled %f';
+is sprintf('%g', -Inf), "-Inf", '-Inf properly handled %g';
+is sprintf('%G', -Inf), "-Inf", '-Inf properly handled %G';
 
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
 dies-ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
@@ -235,12 +235,12 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 
 # RT #116280
 #?rakudo.jvm skip "java.lang.NumberFormatException: RT#116280"
-#?rakudo.moar todo 'RT #116280 -- sprintf prints numbers instead of NaN/inf/-inf'
+#?rakudo.moar todo 'RT #116280 -- sprintf prints numbers instead of NaN/Inf/-Inf'
 {
     is sprintf('%12.5f',  NaN), '         NaN', 'RT #116280';
     #?niecza 2 todo "https://github.com/sorear/niecza/issues/181"
-    is sprintf('%12.5f',  Inf), '         inf', 'RT #116280';
-    is sprintf('%12.5f', -Inf), '        -inf', 'RT #116280';
+    is sprintf('%12.5f',  Inf), '         Inf', 'RT #116280';
+    is sprintf('%12.5f', -Inf), '        -Inf', 'RT #116280';
 }
 
 # RT #106594, #62316, #74610
