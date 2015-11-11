@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;
-plan 54;
+plan 56;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -208,10 +208,19 @@ plan 54;
 }
 
 # RT #125285
+#?rakudo.jvm todo 'RT #125285'
 {
     my $m = 'rule1 foo rule2 bar' ~~ /^ ( 'rule1' || 'rule2' )* %% (.+?) $/;
     is $m[0].elems, 2, 'Correct number of captures when backtracking (1)';
     is $m[1].elems, 2, 'Correct number of captures when backtracking (2)';
+}
+
+# RT #116895
+#?rakudo.jvm todo 'RT #116895'
+{
+    my $m = "abcde" ~~ / (a | b | bc | cde)+»/;
+    is $m[0].elems, 3, 'OK1';
+    is join(" ", $m[0]), 'a b cde', 'OK2';
 }
 
 # vim: ft=perl6
