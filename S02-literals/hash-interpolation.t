@@ -2,7 +2,13 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 12;
+
+{
+  my %hash = (a => 1, b => 2, d => 4, c => 3);
+  is "%hash[]",   "a\t1\nb\t2\nc\t3\nd\t4", '"%hash[]" works and sorts keys';
+  is "{%hash[]}", "a\t1\nb\t2\nc\t3\nd\t4", '"{%hash}" works and sorts keys';
+}
 
 {
   my %hash = (a => 1, b => 2);
