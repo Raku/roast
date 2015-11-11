@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 55;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -458,5 +458,9 @@ my $str = 'a' x 7;
 
 # RT #126573
 ok "\r\n" ~~ /[";"|"\r\n"]/, '\r\n grapheme in an alternation matches correctly';
+
+# RT #122951
+#?rakudo todo 'negative lookahead does not LTM properly, RT #122951'
+is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM properly';
 
 # vim: ft=perl6 et
