@@ -14,7 +14,7 @@ be valid perl6.
 
 =end pod
 
-plan 45;
+plan 50;
 
 ok("  a b\tc" ~~ m/@<chars>=( \s+ \S+ )+/, 'Named simple array capture');
 is(join("|", @<chars>), "  a| b|\tc", 'Captured strings');
@@ -92,5 +92,16 @@ ok("GATTACA" ~~ m/ @bases=(A|C|G|T)**{4} (@bases+) /, 'Array reinterpolation');
 is("@bases[]", "G A T T", '...are belong to...');
 is("$0", "A", '...A');
 
+# RT #121061
+{
+    ok("a" ~~ /@<from1>=(.)*/,
+        'no error with array alias and list-quantified subpattern (1)');
+    is(~@<from1>[0], "a", '... and correct result');
+    ok("b" ~~ /@<from2>=(.)+/,
+        'no error with array alias and list-quantified subpattern (2)');
+    is(~@<from2>[0], "b", '... and correct result');
+    my $m = "c" ~~ /@<from3>=[.]+/;
+    is(~$m<from3>, "c", 'array alias works with quantified non-capturing structure');
+}
 
 # vim: ft=perl6
