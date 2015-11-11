@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 47;
+plan 52;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -113,5 +113,16 @@ nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
     is G.subparse('aaa').Str, 'a', "kebab-case allowed in character classes";
     dies-ok { 'a' ~~ / <+xdigit-digit> / }, "accidental kebabs disallowed";
 }
+
+dies-ok { EVAL '/<[Ḍ̇..\x2FFF]>/' }, 'Cannot use NFG synthetic as range endpoint';
+
+# RT #125753
+is "Aa1" ~~ /:i <[a..z0..9]>+/, "Aa1", ':i with cclass with multiple ranges works';
+is '%E3%81%82' ~~ /:ignorecase ['%' (<[a..f0..9]>|x)**2]+/, '%E3%81%82',
+    ':ignorecase in combination with charclass ranges works with LTM';
+is 'Ä' ~~ /:ignoremark (<[A..F]>|x)/, 'Ä',
+    ':ignoremark in combination with charclass ranges works with LTM';
+is 'Ä' ~~ /:ignoremark :ignorecase (<[a..f]>|x)/, 'Ä',
+    ':ignoremark :ignorecase in combination with charclass ranges works with LTM';
 
 # vim: ft=perl6
