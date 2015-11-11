@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 53;
+plan 54;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -455,5 +455,8 @@ my $str = 'a' x 7;
     is ~('food' ~~ / 'foo' | ('food' <!> || 'doof')/), 'foo',
         'sequential alternation first branch failure after LTM tries next best option';
 }
+
+# RT #126573
+ok "\r\n" ~~ /[";"|"\r\n"]/, '\r\n grapheme in an alternation matches correctly';
 
 # vim: ft=perl6 et
