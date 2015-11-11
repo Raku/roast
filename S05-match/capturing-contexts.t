@@ -219,8 +219,8 @@ plan 56;
 #?rakudo.jvm todo 'RT #116895'
 {
     my $m = "abcde" ~~ / (a | b | bc | cde)+»/;
-    is $m[0].elems, 3, 'OK1';
-    is join(" ", $m[0]), 'a b cde', 'OK2';
+    is $m[0].elems, 3, 'LTM alternation does not capture the wrong stuff when backtracking (1)';
+    is join(" ", $m[0]), 'a b cde', 'LTM alternation does not capture the wrong stuff when backtracking (2)';
 }
 
 # vim: ft=perl6
