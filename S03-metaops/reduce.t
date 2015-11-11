@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 375;
+plan 376;
 
 =begin pod
 
@@ -399,4 +399,9 @@ is &prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen";
 is &prefix:<[R**]>(2,3,4), 262144, "Reduce R** can autogen";
 is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen without &";
 
+{
+    my $a; my $b; my $c;
+    [=] $a, $b, $c, 42;
+    is "$a $b $c", "42 42 42", "[=] works";
+}
 # vim: ft=perl6

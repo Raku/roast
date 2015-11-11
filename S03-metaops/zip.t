@@ -80,9 +80,10 @@ is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
     is (<a b> Z=> ([],)), (a => []), 'zip does not flatten itemized list';
 }
 
-# RT #77114
 {
-    throws-like 'my @a Z= 1,2,3', X::Syntax::CannotMeta, "zip doesn't handle assignment";
+    my @a = 0 xx 3;
+    @a Z= 1,2,3;
+    is @a, '1 2 3', "Z= works";
 }
 
 {

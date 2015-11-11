@@ -127,9 +127,10 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
     is (1..* X* 1..*)[^3], (1, 2, 3), 'cross handles lazy lists';
 }
 
-# RT #77114
 {
-    throws-like 'my %foo XX= 1', X::Syntax::CannotMeta, "cross doesn't handle assignment";
+    my @foo = 0 xx 3;
+    @foo X= 1;
+    is @foo, '1 1 1', "X= works";
 }
 
 # RT #120973

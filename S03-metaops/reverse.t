@@ -60,9 +60,9 @@ is (9 R... 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
 # RT #93350
 throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return value of R~';
 
-# RT #77114
 {
-    throws-like '1 R= my $x', X::Syntax::CannotMeta, "R doesn't handle assignment";
+    1 R= my $x;
+    is $x, 1, "R= works";
 }
 
 # RT #118793
