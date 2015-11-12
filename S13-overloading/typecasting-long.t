@@ -95,8 +95,6 @@ plan 32;
 # RT #112642
 {
     class A { method CALL-ME (A:U:) { 3 } };
-#?rakudo todo 'RT #112642 A() unwanted magic for :(A:U) with an overloaded .()'
-    is A(), 3, 'RT #112642 () -> (:U) works';
     is A.(), 3, 'RT #112642 .() -> (:U) works, dotted form';
     is A(:a), 3, 'RT #112642 (:a) -> (:U) works';
     is A.(:a), 3, 'RT #112642 .(:a) -> (:U) works, dotted form';
@@ -104,14 +102,14 @@ plan 32;
     class B { method CALL-ME(B:U: $x) { 3 } };
     is B(0), 3, 'RT #112642 ($: $) -> (:U, $) case';
     is B.(0), 3, 'RT #112642 .($: $) -> (:U, $) case, dotted form';
-    ## TODO test for specific exception once the code dies
-#?rakudo todo 'RT #112642 A() unwanted magic for :(A:U) with an overloaded .()'
-    throws-like 'class XXX { method CALL-ME(XXX:U: $x) { } }; XXX();', Exception, 'RT #112642 ($:) -> (:U, $) arity check';
     throws-like 'class XYX { method CALL-ME(XYX:U: $x) { } }; XYX(:a);', X::AdHoc, 'RT #112642 ($:, :$) -> (:U, $) arity check';
     throws-like 'class XYY { method CALL-ME(XYY:U: $x) { } }; XYY.();', X::AdHoc, 'RT #112642 .($:) -> (:U, $) arity check';
     throws-like 'class YYY { method CALL-ME(YYY:U: $x) { } }; YYY.(:a);', X::AdHoc, 'RT #112642 .($:, :$) -> (:U, $) arity check';
     throws-like 'class XYZ { method CALL-ME(XYZ:U: $x) { } }; XYZ(3,4,5);', X::AdHoc, 'RT #112642 ($: $, $, $) -> (:U, $) arity check';
     throws-like 'class XZZ { method CALL-ME(XZZ:U: $x) { } }; XZZ.(3,4,5);', X::AdHoc, 'RT #112642 .($: $, $, $) -> (:U, $) arity check';
+
+    isa-ok A().HOW, Metamodel::CoercionHOW, 'A() is a type coercion literal';
+    isa-ok A(Any).HOW, Metamodel::CoercionHOW, 'A(Any) is a type coercion literal';
 }
 
 # RT #115850
