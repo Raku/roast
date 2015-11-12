@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 18;
 
 # L<S06/Perl5ish subroutine declarations/You can declare a sub without
 # parameter list>
@@ -41,11 +41,11 @@ is both(), '',
 
 # RT #71112
 {
-    sub rt71112 { @_[0] = 'bug' }
+    sub rt71112 { @_[0] = 'changed'; @_[0]  }
     my $tender = 'sanity';
-    #?rakudo todo 'RT #71112: Cannot assign to readonly variable.'
-    dies-ok { rt71112( $tender ) }, 'Sub that tries to modify @_ dies';
-    is $tender, 'sanity', 'The variable passed is unchanged.';
+    lives-ok { rt71112( $tender ) }, 'Sub can modify its @_ as it has is copy semantics';
+    is rt71112( $tender ), 'changed', 'And its modifications stick in its copy';
+    is $tender, 'sanity', 'The variable passed is unchanged';
 }
 
 # vim: ft=perl6
