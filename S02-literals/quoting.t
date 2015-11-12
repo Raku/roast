@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 178;
+plan 180;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -601,5 +601,37 @@ is q :heredoc :w "EOF", <omg wtf bbq amazing cat>, ':w applied after :heredoc ha
     omg wtf bbq
     amazing cat
     EOF
+
+# RT #125543
+{
+    my $warned = 0;
+    EVAL Q:to/CODE_END/;
+        my $here = qq:to/END_TEXT/;
+        foo\nbar
+        END_TEXT
+    CODE_END
+    CONTROL {
+        when CX::Warn {
+            $warned = 1;
+            .resume;
+        }
+    }
+    nok $warned, '\n in a heredoc does not factor into dedenting';
+}
+{
+    my $warned = 0;
+    EVAL Q:to/CODE_END/;
+        my $here = qq:to/END_TEXT/;
+        foo\r\nbar
+        END_TEXT
+    CODE_END
+    CONTROL {
+        when CX::Warn {
+            $warned = 1;
+            .resume;
+        }
+    }
+    nok $warned, '\r\n in a heredoc does not factor dedenting';
+}
 
 # vim: ft=perl6
