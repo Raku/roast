@@ -16,13 +16,13 @@ is ''.encode('windows-1252').values, (0x81,0x8d,0x8f), 'cp1252 encode tole
 
 # RT#107204
 #?rakudo.jvm todo 'JVM builtin code folds these RT #124686'
-throws-like '"aouÄÖÜ".encode("latin1").decode("utf8")', X::AdHoc, message => rx:s:i/line 1 col\w* 4/;
+throws-like '"aouÄÖÜ".encode("latin1").decode("utf8")', Exception, message => rx:s:i/line 1 col\w* 4/;
 #?rakudo.jvm todo 'JVM builtin code folds these RT #124686'
-throws-like '"ssß".encode("latin1").decode("utf8")', X::AdHoc, message => rx:s:i/term/;
+throws-like '"ssß".encode("latin1").decode("utf8")', Exception, message => rx:s:i/term/;
 #?rakudo todo 'RT#107204 should say line and column or mention term(ination)'
-throws-like '"aoaou".encode("latin1").decode("utf16")', X::AdHoc, message => rx:s:i/line 1 col\w* 2|term/;
+throws-like '"aoaou".encode("latin1").decode("utf16")', Exception, message => rx:s:i/line 1 col\w* 2|term/;
 #?rakudo todo 'RT#107204 should say line and column'
-throws-like '"aouÄÖÜ".encode("latin1").decode("utf16")', X::AdHoc, message => rx:s:i/line 1 col\w* 2/;
+throws-like '"aouÄÖÜ".encode("latin1").decode("utf16")', Exception, message => rx:s:i/line 1 col\w* 2/;
 
 is 'abc'.encode()[0], 97, 'can index one element in a Buf';
 is-deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
@@ -72,7 +72,7 @@ for (
 ) -> $string, $encoding, $default-replacement {
 #!rakudo.moar todo 'Only moar handles this'
     subtest {
-        throws-like { $string.encode($encoding) }, X::AdHoc, message => rx:s:i/Error encoding $encoding string/,
+        throws-like { $string.encode($encoding) }, Exception, message => rx:s:i/Error encoding $encoding string/,
             'No replacement dies';
         is $string.encode($encoding, :replacement).decode($encoding), $default-replacement,
             'Default replacement';

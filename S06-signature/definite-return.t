@@ -28,7 +28,7 @@ plan 17;
         my sub return-nil(--> Nil) {
             return 1
         }
-    ', X::AdHoc, 'A function with a definite return value may not use return with a value';
+    ', Exception, 'A function with a definite return value may not use return with a value';
 }
 
 {

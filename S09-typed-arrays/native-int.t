@@ -133,13 +133,13 @@ for flat @int,@uint -> $T {
     is @arr.push(42), (42,), "can push to $t array";
     is @arr.elems, 1, "push to $t array works (1)";
     is @arr[0], 42,   "push to $t array works (2)";
-    throws-like { @arr.push('it real good') }, X::AdHoc,
+    throws-like { @arr.push('it real good') }, Exception,
       message => 'This type cannot unbox to a native integer',
       "Cannot push non-int/Int to $t array";
-    throws-like { @arr[0] := my $a }, X::AdHoc,
+    throws-like { @arr[0] := my $a }, Exception,
       message => 'Cannot bind to a natively typed array',
       "Cannot push non-int/Int to $t array";
-    throws-like { @arr[0]:delete }, X::AdHoc,
+    throws-like { @arr[0]:delete }, Exception,
       message => 'Cannot delete from a natively typed array',
       "Cannot push non-int/Int to $t array";
 
@@ -147,7 +147,7 @@ for flat @int,@uint -> $T {
     is @arr.elems, 3, "push multiple to $t array works (1)";
     is @arr[1], 101,  "push multiple to $t array works (2)";
     is @arr[2], 105,  "push multiple to $t array works (3)";
-    throws-like { @arr.push('omg', 'wtf') }, X::AdHoc,
+    throws-like { @arr.push('omg', 'wtf') }, Exception,
       message => 'This type cannot unbox to a native integer',
       "Cannot push non-int/Int to $t array (multiple push)";
 
@@ -158,7 +158,7 @@ for flat @int,@uint -> $T {
     is @arr.elems, 3, "unshift to $t array works (1)";
     is @arr[0],  1,   "unshift to $t array works (2)";
     is @arr[1], 42,   "unshift to $t array works (3)";
-    throws-like { @arr.unshift('part of the day not working') }, X::AdHoc,
+    throws-like { @arr.unshift('part of the day not working') }, Exception,
       message => 'This type cannot unbox to a native integer',
       "Cannot unshift non-int/Int to $t array";
 
@@ -168,7 +168,7 @@ for flat @int,@uint -> $T {
     is @arr[1],  2,   "unshift multiple to $t array works (3)";
     is @arr[2],  1,   "unshift multiple to $t array works (4)";
     is @arr[3], 42,   "unshift multiple to $t array works (5)";
-    throws-like { @arr.unshift('wtf', 'bbq') }, X::AdHoc,
+    throws-like { @arr.unshift('wtf', 'bbq') }, Exception,
       message => 'This type cannot unbox to a native integer',
       "Cannot unshift non-int/Int to $t array (multiple unshift)";
 
@@ -220,7 +220,7 @@ for flat @int,@uint -> $T {
     is @native2[9], 30, "List-assign untyped array of Int to $t array (3)";
 
     @untyped2.push('C-C-C-C-Combo Breaker!');
-    throws-like { @native2 = @untyped2 }, X::AdHoc,
+    throws-like { @native2 = @untyped2 }, Exception,
       message => 'This type cannot unbox to a native integer',
       "List-assigning incompatible untyped array to $t array dies";
 }

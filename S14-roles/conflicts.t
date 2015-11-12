@@ -45,6 +45,6 @@ throws-like q[
     role R1 { method !foo() { 1 }}
     role R2 { method !foo() { 2 } }
     class A does R1 does R2 { }
-    ], X::AdHoc, 'private roles can cause conflicts too';
+    ], Exception, 'private roles can cause conflicts too';
 
 # vim: ft=perl6

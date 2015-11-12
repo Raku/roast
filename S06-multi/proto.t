@@ -47,7 +47,7 @@ multi bar(| where { $_[0] == 42 })   { 1 }  #OK not used
 is(bar(A.new), 2, 'dispatch on class worked (anon cap)');
 is(bar(B.new), 3, 'dispatch on class worked (anon cap)');
 is(bar(42),    1, 'dispatch with no possible candidates fell back to proto (anon cap)');
-throws-like 'bar(41)', X::AdHoc, 'impossible dispatch failed (anon cap)';
+throws-like 'bar(41)', Exception, 'impossible dispatch failed (anon cap)';
 
 # RT #65322
 {

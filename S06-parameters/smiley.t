@@ -9,9 +9,9 @@ is { sub a(Int:_ $a) { $a }; a Int }(), Int, 'can Int:_ take an Int:U';
 is { sub a(Int:_ $a) { $a }; a 42  }(),  42, 'can Int:_ take an Int:D';
 is { sub a(Int:U $a) { $a }; a Int }(), Int, 'can Int:U take an Int:U';
 throws-like { sub a(Int:U $a) { $a }; a 42 }, 
-  X::AdHoc,                                  'can Int:U take an Int:D';
+  Exception,                                  'can Int:U take an Int:D';
 throws-like { sub a(Int:D $a) { $a }; a Int }, 
-  X::AdHoc,                                  'can Int:D take an Int:U';
+  Exception,                                  'can Int:D take an Int:U';
 is { sub a(Int:D $a) { $a }; a 42  }(),  42, 'can Int:D take an Int:D';
 throws-like 'sub a(Int:foo $a) { $a }', 
   X::InvalidTypeSmiley,                      'does Int:foo fail';

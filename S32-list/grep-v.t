@@ -71,7 +71,7 @@ is @list.grep( { ($_ % 2) }, :v ), [1,3,5,7,9],
 
 # :!v handling
 {
-    throws-like { (^10).grep(Int, :!v) }, X::AdHoc;
+    throws-like { (^10).grep(Int, :!v) }, Exception;
 }
 
 # vim: ft=perl6

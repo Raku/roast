@@ -3,7 +3,7 @@ use Test;
 
 plan 39;
 
-throws-like { await }, X::AdHoc, "a bare await should not work";
+throws-like { await }, Exception, "a bare await should not work";
 
 {
     my $p = Promise.start({

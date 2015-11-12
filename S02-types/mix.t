@@ -430,7 +430,7 @@ sub showkv($x) {
       'Make sure we cannot assign on a key';
 
     throws-like { $_ = 666.1 for $m.values },
-      X::AdHoc,  # X::Assignment::RO  ???
+      Exception,  # X::Assignment::RO  ???
       'Make sure we cannot assign on a .values alias';
 
     throws-like { .value = 999.1 for $m.pairs },
@@ -459,7 +459,7 @@ sub showkv($x) {
     my %h3;
     for $m.antipairs -> \p { %h3{p.value} = p.key }
     is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
-    throws-like { for $m.kxxv -> \k { say k } }, X::AdHoc, 'cannot call kxxv';
+    throws-like { for $m.kxxv -> \k { say k } }, Exception, 'cannot call kxxv';
 }
 
 # vim: ft=perl6

@@ -24,8 +24,8 @@ is $path.perl.EVAL, $path, ".perl loopback";
 
 is IO::Path::Unix.new(".").Str,  ".",  "current directory";
 is IO::Path::Unix.new("..").Str, "..", "parent directory";
-throws-like { IO::Path::Unix.new },     X::AdHoc, "no path not allowed";
-throws-like { IO::Path::Unix.new('') }, X::AdHoc, "empty not allowed";
+throws-like { IO::Path::Unix.new },     Exception, "no path not allowed";
+throws-like { IO::Path::Unix.new('') }, Exception, "empty not allowed";
 
 is IO::Path::Unix.new("/usr/////local/./bin/././perl/").cleanup,
   "/usr/local/bin/perl",

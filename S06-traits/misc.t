@@ -30,7 +30,7 @@ throws-like '
     sub mods_param ($x) { $x = 1; }
     mods_param($tmp)
     ',
-    X::AdHoc,
+    Exception,
     'can\'t modify parameter, constant by default';
 
 # is readonly

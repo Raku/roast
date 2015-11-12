@@ -5,7 +5,7 @@ use Test;
 
 plan 10;
 
-throws-like ' chdir() ', X::AdHoc, 'Cannot call chdir without an argument';
+throws-like ' chdir() ', Exception, 'Cannot call chdir without an argument';
 
 ### You can use Unix style folder separator / to set folders on windows too.
 my $sep = '/';

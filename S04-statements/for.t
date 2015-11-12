@@ -164,7 +164,7 @@ my @elems = <a b c d e>;
 {
    {
         my @a = <1 2 3 4>;
-        throws-like 'for @a -> $elem {$elem = 5}', X::AdHoc,
+        throws-like 'for @a -> $elem {$elem = 5}', Exception,
             '-> $var is ro by default';
    }
 
@@ -380,7 +380,7 @@ throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitesp
 
 {
   my $str = '';
-  throws-like 'for 1..5 ->  $x, $y { $str ~= "$x$y" }', X::AdHoc,
+  throws-like 'for 1..5 ->  $x, $y { $str ~= "$x$y" }', Exception,
       'Should throw exception, no value for parameter $y';
   is $str, "1234", "loop ran before throwing exception";
   #diag ">$str<";

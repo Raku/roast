@@ -311,7 +311,7 @@ ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 
 #### <-[d..b]>		dies
 #?niecza todo ""
-throws-like '/<-[d..b]>/', X::AdHoc, 'illegal character range';
+throws-like '/<-[d..b]>/', Exception, 'illegal character range';
 
 ok '-' ~~ /<[-]>/, 'unescaped hyphen is fine on its own';
 
@@ -539,7 +539,7 @@ ok 'az' ~~ /<+alpha>+/, 'metasyntax with leading + (<+...>)';
 
 
 #### a[b}		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/rule error/	mismatched close
-throws-like '/a[b}/', X::AdHoc, 'mismatched close';
+throws-like '/a[b}/', Exception, 'mismatched close';
 
 
 #### c <before .d>		abacad		/mob: <c @ 3>/				one character and lookahead <before>
@@ -854,28 +854,28 @@ ok 'abc' ~~ / | d | b/, 'leading alternation ignored';
 throws-like '/ b |  | d/', X::Syntax::Regex::NullRegex, 'null pattern invalid';
 
 #### \pabc			pabc		/reserved/	retired metachars (\p)
-throws-like '/\pabc/', X::AdHoc, 'retired metachars (\p)';
+throws-like '/\pabc/', Exception, 'retired metachars (\p)';
 
 #### \p{InConsonant}		a		/reserved/	retired metachars (\p)
-throws-like '/\p{InConsonant}/', X::AdHoc, 'retired metachars (\p)';
+throws-like '/\p{InConsonant}/', Exception, 'retired metachars (\p)';
 
 #### \Pabc			Pabc		/reserved/	retired metachars (\P)
-throws-like '/\Pabc/', X::AdHoc, 'retired metachars (\P)';
+throws-like '/\Pabc/', Exception, 'retired metachars (\P)';
 
 #### \P{InConsonant}		a		/reserved/	retired metachars (\P)
-throws-like '/\P{InConsonant}/', X::AdHoc, 'retired metachars (\P)';
+throws-like '/\P{InConsonant}/', Exception, 'retired metachars (\P)';
 
 #### \Labc\E			LabcE		/reserved/	retired metachars (\L...\E)
-throws-like '/\Labc\E/', X::AdHoc, 'retired metachars (\L...\E)';
+throws-like '/\Labc\E/', Exception, 'retired metachars (\L...\E)';
 
 #### \LABC\E			abc		/reserved/	retired metachars (\L...\E)
-throws-like '/\LABC\E/', X::AdHoc, 'retired metachars (\L...\E)';
+throws-like '/\LABC\E/', Exception, 'retired metachars (\L...\E)';
 
 #### \Uabc\E			UabcE		/reserved/	retired metachars (\U...\E)
-throws-like '/\Uabc\E/', X::AdHoc, 'retired metachars (\U...\E)';
+throws-like '/\Uabc\E/', Exception, 'retired metachars (\U...\E)';
 
 #### \Uabc\E			ABC		/reserved/	retired metachars (\U...\E)
-throws-like '/\Uabc\E/', X::AdHoc, 'retired metachars (\U...\E)';
+throws-like '/\Uabc\E/', Exception, 'retired metachars (\U...\E)';
 
 #### \Qabc\E			QabcE		/reserved/	retired metachars (\Q...\E)
 throws-like '/\Qabc\E/', X::Obsolete, 'retired metachars (\Q...\E)';
@@ -884,10 +884,10 @@ throws-like '/\Qabc\E/', X::Obsolete, 'retired metachars (\Q...\E)';
 throws-like '/\Qabc d?\E/', X::Obsolete, 'retired metachars (\Q...\E)';
 
 #### \Gabc			Gabc		/reserved/	retired metachars (\G)
-throws-like '/\Gabc/', X::AdHoc, 'retired metachars (\G)';
+throws-like '/\Gabc/', Exception, 'retired metachars (\G)';
 
 #### \1abc			1abc		/reserved/	retired metachars (\1)
-throws-like '/\1abc/', X::AdHoc, 'retired metachars (\1)';
+throws-like '/\1abc/', Exception, 'retired metachars (\1)';
 
 #### ^ \s+ $			\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085	y	0-255 whitespace (\s)
 ok "\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085" ~~ /^ \s+ $/, '0-255 whitespace (\s)';
@@ -2315,13 +2315,13 @@ ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
 throws-like '/{{/', X::Comp::Group, 'unterminated closure';
 
 #### \1		abcdef		/reserved/			back references
-throws-like '/\1/', X::AdHoc, 'back references';
+throws-like '/\1/', Exception, 'back references';
 
 #### \x[		abcdef		/Missing close bracket/		unterminated \x[..]
-throws-like '/\x[/', X::AdHoc, 'unterminated \x[..]';
+throws-like '/\x[/', Exception, 'unterminated \x[..]';
 
 #### \X[		abcdef		/Missing close bracket/		unterminated \X[..]
-throws-like '/\X[/', X::AdHoc, 'unterminated \X[..]';
+throws-like '/\X[/', Exception, 'unterminated \X[..]';
 
 
 #### * abc		abcdef		/Quantifier follows nothing/	bare * at start
@@ -2392,6 +2392,6 @@ throws-like '"b" ~~ /b| /', X::Syntax::Regex::NullRegex, 'null pattern after alt
 
 # RT #71702
 #?niecza todo 'allows them'
-throws-like '"foo" ~~ /<[d..b]>? foo/', X::AdHoc, 'no reversed char ranges';
+throws-like '"foo" ~~ /<[d..b]>? foo/', Exception, 'no reversed char ranges';
 
 # vim: ft=perl6 sw=4 expandtab

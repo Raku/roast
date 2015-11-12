@@ -632,12 +632,12 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 }
 
 # RT #108670
-throws-like 'my class AccessorClash { has @.a; has &.a }', X::AdHoc,
+throws-like 'my class AccessorClash { has @.a; has &.a }', Exception,
     'cannot have two attributes with same accessor name';
 # RT #74274
 throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
     my $method = method { return $!a }; $a.$method()],
-    X::AdHoc,
+    Exception,
     'cannot sneak in access to private attribute through the backdoor';
 
 # RT #74636

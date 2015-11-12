@@ -65,16 +65,16 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 ok "\x[FFEF]" ~~ /<[\x0..\xFFEF]>/, 'large \\x char spec';
 
 #?niecza todo
-throws-like "'RT #71702' ~~ /<[d..b]>? RT/", X::AdHoc,
+throws-like "'RT #71702' ~~ /<[d..b]>? RT/", Exception,
     'reverse range in charset is lethal (RT #71702)';
 
-throws-like "'x' ~~ /<[abc] [def]>? RT/", X::AdHoc,
+throws-like "'x' ~~ /<[abc] [def]>? RT/", Exception,
     'missing + or - is fatal 1';
 
-throws-like "'x' ~~ /<:Kata :Hira]>? RT/", X::AdHoc,
+throws-like "'x' ~~ /<:Kata :Hira]>? RT/", Exception,
     'missing + or - is fatal 2';
 
-throws-like "'x' ~~ /<+alpha digit]>? RT/", X::AdHoc,
+throws-like "'x' ~~ /<+alpha digit]>? RT/", Exception,
     'missing + or - is fatal 3';
 
 # RT #64220

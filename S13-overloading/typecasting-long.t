@@ -102,11 +102,11 @@ plan 32;
     class B { method CALL-ME(B:U: $x) { 3 } };
     is B(0), 3, 'RT #112642 ($: $) -> (:U, $) case';
     is B.(0), 3, 'RT #112642 .($: $) -> (:U, $) case, dotted form';
-    throws-like 'class XYX { method CALL-ME(XYX:U: $x) { } }; XYX(:a);', X::AdHoc, 'RT #112642 ($:, :$) -> (:U, $) arity check';
-    throws-like 'class XYY { method CALL-ME(XYY:U: $x) { } }; XYY.();', X::AdHoc, 'RT #112642 .($:) -> (:U, $) arity check';
-    throws-like 'class YYY { method CALL-ME(YYY:U: $x) { } }; YYY.(:a);', X::AdHoc, 'RT #112642 .($:, :$) -> (:U, $) arity check';
-    throws-like 'class XYZ { method CALL-ME(XYZ:U: $x) { } }; XYZ(3,4,5);', X::AdHoc, 'RT #112642 ($: $, $, $) -> (:U, $) arity check';
-    throws-like 'class XZZ { method CALL-ME(XZZ:U: $x) { } }; XZZ.(3,4,5);', X::AdHoc, 'RT #112642 .($: $, $, $) -> (:U, $) arity check';
+    throws-like 'class XYX { method CALL-ME(XYX:U: $x) { } }; XYX(:a);', Exception, 'RT #112642 ($:, :$) -> (:U, $) arity check';
+    throws-like 'class XYY { method CALL-ME(XYY:U: $x) { } }; XYY.();', Exception, 'RT #112642 .($:) -> (:U, $) arity check';
+    throws-like 'class YYY { method CALL-ME(YYY:U: $x) { } }; YYY.(:a);', Exception, 'RT #112642 .($:, :$) -> (:U, $) arity check';
+    throws-like 'class XYZ { method CALL-ME(XYZ:U: $x) { } }; XYZ(3,4,5);', Exception, 'RT #112642 ($: $, $, $) -> (:U, $) arity check';
+    throws-like 'class XZZ { method CALL-ME(XZZ:U: $x) { } }; XZZ.(3,4,5);', Exception, 'RT #112642 .($: $, $, $) -> (:U, $) arity check';
 
     isa-ok A().HOW, Metamodel::CoercionHOW, 'A() is a type coercion literal';
     isa-ok A(Any).HOW, Metamodel::CoercionHOW, 'A(Any) is a type coercion literal';

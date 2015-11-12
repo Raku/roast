@@ -114,7 +114,7 @@ plan 70;
 
 #?rakudo.jvm todo "RT #126526"
 {
- throws-like { my int $namcu; $namcu = 2**100 }, X::AdHoc,
+ throws-like { my int $namcu; $namcu = 2**100 }, Exception,
     message => 'Cannot unbox 101 bit wide bigint into native integer',
     "Assign big bigint to native won't overflow silently";
 }

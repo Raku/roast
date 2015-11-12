@@ -47,7 +47,7 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 
 # RT #100232
 #?rakudo todo 'escaping characters before EVAL is the wrong way to fix this RT #100232'
-throws-like Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], X::AdHoc, "particular garbage-in recognized as being garbage (see RT)";
+throws-like Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], Exception, "particular garbage-in recognized as being garbage (see RT)";
 
 # because it broke these:
 {
@@ -57,7 +57,7 @@ throws-like Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], X::AdHoc, "particul
 }
 
 #?rakudo todo 'and no need to go all Bobby Tables either RT #124633'
-throws-like Q['a' ~~ /<{'$(say "trivially pwned")'}>/], X::AdHoc, "should handle this too";
+throws-like Q['a' ~~ /<{'$(say "trivially pwned")'}>/], Exception, "should handle this too";
 
 # Arrays
 

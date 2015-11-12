@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 351;
 
-throws-like '42 +', X::AdHoc, "missing rhs of infix", message => rx/term/;
+throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
 #?DOES 1
 throws-like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -729,7 +729,7 @@ ok X::AdHoc.new.gist ~~ m:i/explain/,
     "X::AdHoc.new.gist mentions the word 'explain'";
 
 for <fail die throw rethrow resumable resume> -> $meth {
-    throws-like 'X::NYI.' ~ $meth, X::AdHoc,
+    throws-like 'X::NYI.' ~ $meth, Exception,
         message => rx/equire.*instance.*type\sobject/;
 }
 
@@ -744,7 +744,7 @@ throws-like '(1, 2, 3).map(True)', X::Multi::NoMatch;
 
 # RT #125504
 my $notahash = "a";
-throws-like '$notahash<foo>', X::AdHoc, payload => rx:i/associative/, payload => rx/^^<-[\{\}]>+$$/;
+throws-like '$notahash<foo>', Exception, payload => rx:i/associative/, payload => rx/^^<-[\{\}]>+$$/;
 
 # RT #119763
 throws-like 'my $x :a', X::Syntax::Adverb;

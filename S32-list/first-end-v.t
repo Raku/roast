@@ -82,7 +82,7 @@ my @list = (1 ... 10);
 
 # :!v handling
 {
-    throws-like { (^10).first(Int, :end, :!v) }, X::AdHoc;
+    throws-like { (^10).first(Int, :end, :!v) }, Exception;
 }
 
 #vim: ft=perl6

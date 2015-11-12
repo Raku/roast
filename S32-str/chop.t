@@ -44,10 +44,10 @@ is chop(""), "", "chop on empty string literal";
 is chop("bar","2"), "b", "check coercion of number of characters";
 
 # temporary, until we have a typed exception
-throws-like 'chop(Str)',    X::AdHoc;
-throws-like 'chop(Str,10)', X::AdHoc;
-throws-like 'Str.chop',     X::AdHoc;
-throws-like 'Str.chop(10)', X::AdHoc;
+throws-like 'chop(Str)',    Exception;
+throws-like 'chop(Str,10)', Exception;
+throws-like 'Str.chop',     Exception;
+throws-like 'Str.chop(10)', Exception;
 
 # See L<"http://use.perl.org/~autrijus/journal/25351">:
 #   &chomp and &wrap are now nondestructive; chomp returns the chomped part,

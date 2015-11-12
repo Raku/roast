@@ -65,7 +65,7 @@ eval-lives-ok q[
     }
 
     my $o = Bar.new;
-    throws-like '$o.c', X::AdHoc, 'overridden method is gone completely';
+    throws-like '$o.c', Exception, 'overridden method is gone completely';
     is($o.d, 'called Bar.d', 'new method is present instead');
 }
 

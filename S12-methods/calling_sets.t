@@ -171,6 +171,6 @@ is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find nex
     isa-ok MMT1.new.?nonexistent(), Nil, '.?nonexisent() returns Nil';
 }
 
-throws-like '1.*WHAT', X::AdHoc, '.WHAT is a macro and cannoted be .*ed';
+throws-like '1.*WHAT', Exception, '.WHAT is a macro and cannoted be .*ed';
 
 # vim: ft=perl6

@@ -55,7 +55,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<b>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h<b>:zorp', X::AdHoc; # caught by MMD
+    throws-like '%h<b>:zorp', Exception; # caught by MMD
     throws-like '%h<b>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -82,7 +82,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@b}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h{@b}:rickroll', X::AdHoc; # caught by MMD
+    throws-like '%h{@b}:rickroll', Exception; # caught by MMD
     throws-like '%h{@b}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -109,7 +109,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<B>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h<B>:baxter', X::AdHoc; # caught by MMD
+    throws-like '%h<B>:baxter', Exception; # caught by MMD
     throws-like '%h<B>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -136,7 +136,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@B}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h{@B}:jefferson', X::AdHoc; # caught by MMD
+    throws-like '%h{@B}:jefferson', Exception; # caught by MMD
     throws-like '%h{@B}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -163,7 +163,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<b c>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h<b c>:egg', X::AdHoc; # caught by MMD
+    throws-like '%h<b c>:egg', Exception; # caught by MMD
     throws-like '%h<b c>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -190,7 +190,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@bc}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h{@bc}:omelet', X::AdHoc; # caught by MMD
+    throws-like '%h{@bc}:omelet', Exception; # caught by MMD
     throws-like '%h{@bc}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -217,7 +217,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{"b".."c"}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h{"b".."c"}:rivet', X::AdHoc; # caught by MMD
+    throws-like '%h{"b".."c"}:rivet', Exception; # caught by MMD
     throws-like '%h{"b".."c"}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -244,7 +244,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<B C>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h<B C>:echt', X::AdHoc; # caught by MMD
+    throws-like '%h<B C>:echt', Exception; # caught by MMD
     throws-like '%h<B C>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -271,7 +271,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@BC}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h{@BC}:gaston', X::AdHoc; # caught by MMD
+    throws-like '%h{@BC}:gaston', Exception; # caught by MMD
     throws-like '%h{@BC}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -298,7 +298,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{"B".."C"}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h{"B".."C"}:noshit', X::AdHoc; # caught by MMD
+    throws-like '%h{"B".."C"}:noshit', Exception; # caught by MMD
     throws-like '%h{"B".."C"}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -325,7 +325,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<b C>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h<b C>:fnoppo', X::AdHoc; # caught by MMD
+    throws-like '%h<b C>:fnoppo', Exception; # caught by MMD
     throws-like '%h<b C>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -352,7 +352,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@bC}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h{@bC}:frits', X::AdHoc; # caught by MMD
+    throws-like '%h{@bC}:frits', Exception; # caught by MMD
     throws-like '%h{@bC}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20
@@ -379,7 +379,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{*}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h{*}:sourceever', X::AdHoc; # caught by MMD
+    throws-like '%h{*}:sourceever', Exception; # caught by MMD
     throws-like '%h{*}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
 } #20

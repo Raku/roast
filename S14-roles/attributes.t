@@ -33,8 +33,8 @@ role R2 {
     has Int $!a;
 }
 
-throws-like 'class C3 does R2 { has $!a }', X::AdHoc, 'Roles with conflicing attributes';
-throws-like 'class C2 does R2 { has Int $!a }', X::AdHoc, 'Same name, same type will also conflicts';
+throws-like 'class C3 does R2 { has $!a }', Exception, 'Roles with conflicing attributes';
+throws-like 'class C2 does R2 { has Int $!a }', Exception, 'Same name, same type will also conflicts';
 
 role R3 {
     has $.x = 42;

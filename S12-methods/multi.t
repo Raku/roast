@@ -178,7 +178,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 # RT #57788
 {
-    throws-like 'class RT57788 { method m() { }; method m() { } }', X::AdHoc;
+    throws-like 'class RT57788 { method m() { }; method m() { } }', Exception;
 }
 
 {

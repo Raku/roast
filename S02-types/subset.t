@@ -22,7 +22,7 @@ throws-like 'my Even $x = 3', X::TypeCheck::Assignment,
 
 # RT # 69518'
 #?niecza todo
-throws-like 'Even.new', X::AdHoc, 'Cannot instantiate a subtype';
+throws-like 'Even.new', Exception, 'Cannot instantiate a subtype';
 
 {
     ok 2 ~~ Even,  'Can smartmatch against subsets 1';
@@ -180,7 +180,7 @@ my $a = 1;
     }
     my &bar := producer();
     lives-ok { bar(2) }, 'where-constraint picks up the right lexical (+)';
-    throws-like 'bar(1)', X::AdHoc, 'where-constraint picks up the right lexical (-)';
+    throws-like 'bar(1)', Exception, 'where-constraint picks up the right lexical (-)';
 }
 
 {

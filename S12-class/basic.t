@@ -115,7 +115,7 @@ eval-lives-ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {
 }
 
 # RT #64686
-throws-like 'class Romeo::Tango {}; Romeo::Juliet.rt64686', X::AdHoc,
+throws-like 'class Romeo::Tango {}; Romeo::Juliet.rt64686', Exception,
              'call to method in undeclared A::B dies after class A::C defined';
 
 # RT #72286

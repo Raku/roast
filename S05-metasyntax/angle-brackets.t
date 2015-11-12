@@ -131,9 +131,9 @@ character classes), and those are referenced at the correct spot.
 
 # No other characters are allowed after the initial identifier.
 {
-    throws-like '"foo" ~~ /<test*>/', X::AdHoc, 'no other characters are allowed (*)';
-    throws-like '"foo" ~~ /<test|>/', X::AdHoc, 'no other characters are allowed (|)';
-    throws-like '"foo" ~~ /<test&>/', X::AdHoc, 'no other characters are allowed (&)';
+    throws-like '"foo" ~~ /<test*>/', Exception, 'no other characters are allowed (*)';
+    throws-like '"foo" ~~ /<test|>/', Exception, 'no other characters are allowed (|)';
+    throws-like '"foo" ~~ /<test&>/', Exception, 'no other characters are allowed (&)';
     # TODO currently fails with "Method 'test' not found for invocant of class 'Cursor'"
     throws-like '"foo" ~~ /<test:>/', Exception, 'no other characters are allowed (:)';
 }
@@ -262,7 +262,7 @@ character classes), and those are referenced at the correct spot.
     # XXX: Should be warns_ok, but we don't have that yet
     lives-ok({'foo' ~~ /<???>/}, '<???> lives in regex match');
     #?rakudo todo '!!! in regexes'
-    throws-like '"foo" ~~ /<!!!>/', X::AdHoc, '<!!!> dies in regex match';
+    throws-like '"foo" ~~ /<!!!>/', Exception, '<!!!> dies in regex match';
 }
 
 # A leading * indicates that the following pattern allows a partial match.

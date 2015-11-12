@@ -29,7 +29,7 @@ plan 4;
     class vertical   is grid { }
     class hv is horizontal is vertical   { }
     class vh is vertical   is horizontal { }
-    throws-like 'class confused is vh is hv { }', X::AdHoc,
+    throws-like 'class confused is vh is hv { }', Exception,
         'Cannot do multi inheritance that causes inconsistent MRO';
 }
 
