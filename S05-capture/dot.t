@@ -16,7 +16,7 @@ Broken:
 ## L<S05/Extensible metasyntax (C<< <...> >>)/A leading C<.> causes>
 =end pod
 
-plan 59;
+plan 61;
 
 my regex dotdot { (.)(.) };
 
@@ -58,6 +58,10 @@ is(~$0[1], "d", 'Nested $3');
 ok("bookkeeper" ~~ m/(((\w)$0)+)/, 'Backreference');
 is(~$0, 'ookkee', 'Captured');
 is(~$0[0], ~['oo', 'kk', 'ee'], 'Captured');
+
+# RT #88340
+is('aaaaa' ~~ /(\w)+$0/, 'aaaa', 'Correct semantics of contiguous captures in backref');
+is($0.join(''), 'aa', 'Backtracking and backref interaction resulted in correct capture');
 
 # L<S05/Accessing captured subrules/The hash entries>
 
