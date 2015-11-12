@@ -41,7 +41,6 @@ default';
 $dlrs dollars and {$cnts} cents.
 EOF
 
-#?rakudo todo ':c in heredocs'
 is q:to:c/EOF/.chop, '$dlrs dollars and 18 cents.', ':c enables closure compilation';
 $dlrs dollars and {$cnts} cents.
 EOF
