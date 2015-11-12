@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 180;
+plan 181;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -633,5 +633,10 @@ is q :heredoc :w "EOF", <omg wtf bbq amazing cat>, ':w applied after :heredoc ha
     }
     nok $warned, '\r\n in a heredoc does not factor dedenting';
 }
+
+# RT #120895
+ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
+    \thello
+    EOF
 
 # vim: ft=perl6
