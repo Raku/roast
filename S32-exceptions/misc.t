@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 351;
+plan 353;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -751,5 +751,12 @@ throws-like 'my $x :a', X::Syntax::Adverb;
 
 # RT #117417
 throws-like 'sub foo ($bar :D) { 1; }', X::Parameter::InvalidType;
+
+# RT #126091
+{
+    throws-like 'my Nil $a = 3', X::TypeCheck::Assignment, expected => Nil;
+    throws-like 'sub aa (Nil $a) { }; my $b = 3; aa($b)',
+        X::TypeCheck::Binding, expected => Nil;
+}
 
 # vim: ft=perl6
