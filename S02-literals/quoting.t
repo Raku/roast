@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 176;
+plan 178;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -592,5 +592,14 @@ is "\c@a", "\0a", '\c@ is a NUL';
     my $res = a << a b >>;
     is $res, 1, '<< a b >> does not accidentally flatten into arg list';
 }
+
+# RT #120788
+is q :heredoc :c "EOF", "2+3=5\n", ':c applied after :heredoc has effect';
+    2+3={2+3}
+    EOF
+is q :heredoc :w "EOF", <omg wtf bbq amazing cat>, ':w applied after :heredoc has effect';
+    omg wtf bbq
+    amazing cat
+    EOF
 
 # vim: ft=perl6
