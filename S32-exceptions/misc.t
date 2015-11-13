@@ -511,7 +511,7 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
         my $code = q[ sub foo(Str) { }; foo 42; ];
         throws-like $code, X::TypeCheck::Argument, 
             signature => rx/ '(Str)' /, 
-            arguments => { .[0] eq "int" };
+            arguments => { .[0] eq "Int" };
     }
 
     {
