@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 16;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
 
@@ -91,6 +91,24 @@ class BarCallWithInt is Foo {
         callwith($n - 1);
     }
     lives-ok { f(3) }, 'can recurse several levels with callwith()';
+}
+
+# RT #125783
+{
+    use soft;
+    my @xs;
+    sub foo { push @xs, 'X' };
+    &foo.wrap: { callsame; callsame; callsame };
+    foo;
+    is @xs, ['X'], 'callsame exhausts the iterator';
+}
+{
+    use soft;
+    my @xs;
+    sub foo { push @xs, 'X' };
+    &foo.wrap: { my &wrappee = nextcallee; wrappee; wrappee; wrappee; };
+    foo;
+    is @xs, ['X', 'X', 'X'], 'use nextcallee in order to call multiple times';
 }
 
 # vim: ft=perl6
