@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 5;
+plan 6;
 
 # originally for RT #66588, which was closed
 # RT #74414 is related, and works on moar, but
@@ -22,6 +22,21 @@ plan 5;
     is $x, 100, 'variable was modified';
     #?niecza todo
     is $rw_call, 1, 'read-write multi was called';
+}
+
+#?rakudo.jvm skip 'Ambiguous dispatch'
+{
+    # Makes sure dynamic optimization copes with the rw vs. ro distinction
+    # also (early patches to the MoarVM multi cache didn't handle this, so
+    # we could end up inlining the wrong thing; other backends are likely
+    # to intensively optimize multi calls too, and could hit the same kind
+    # of trap).
+    multi foo($x is rw) { 1 };
+    multi foo($x) { 2 };
+    foo [];
+    my $got;
+    for ^500 { $got = foo $ = []; }
+    is $got, 1, 'Optimization respects is rw';
 }
 
 # vim: ft=perl6
