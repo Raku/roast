@@ -177,7 +177,10 @@ throws-like 'sub f(*@a, $b?) { }', X::Parameter::WrongOrder,
     after       => 'variadic';
 
 #?rakudo todo 'parsing regression RT #124679'
-throws-like '#`', X::Syntax::Comment::Embedded;
+{
+    throws-like '#`', X::Syntax::Comment::Embedded;
+}
+
 # RT #71814
 throws-like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/EVAL/;
 
@@ -588,7 +591,7 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
     throws-like { EVAL q[given 42 { when SomeUndeclaredType { 1 }; default { 0 } }] },
         X::Comp::Group,
         'adequate error message when undeclared type is used in "when" clause',
-        message => { m/'Function SomeUndeclaredType needs parens to avoid gobbling block'/ };
+        message => { m/SomeUndeclaredType/ };
 }
 
 # RT #118067
