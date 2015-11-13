@@ -199,7 +199,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     }
     my class B is A {}
     is A.new.foo("OH HAI"), 'specific', 'multi submethod can be called on exact instance';
-    #?rakudo todo 'RT #74646'
     is B.new.foo("OH HAI"), 'general', 'multi submethod is not inherited';
 }
 
