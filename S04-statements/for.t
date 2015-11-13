@@ -625,7 +625,7 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     is [$a, $b], [2, 2], 'is rw on slurpy parameters works (2)';
     incr3($a, $b);
     is [$a, $b], [3, 3], 'is rw on slurpy parameters works (3)';
-    throws-like { incr4($a, $b) }, X::Parameter::RW;
+    throws-like { incr4($a, $b) }, X::Multi::NoMatch;
 }
 
 # RT #123005, #118705

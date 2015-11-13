@@ -22,7 +22,7 @@ throws-like '
     sub mods_param ($x) { $x++; }
     mods_param($tmp)
     ',
-    X::Parameter::RW,
+    X::Multi::NoMatch,
     'can\'t modify parameter, constant by default';
 
 throws-like '
@@ -36,7 +36,7 @@ throws-like '
 # is readonly
 throws-like 'sub mods_param_constant ($x is readonly) { $x++; };
              mods_param_constant($foo);',
-             X::Parameter::RW,
+             X::Multi::NoMatch,
             'can\'t modify constant parameter, constant by default';
 
 sub mods_param_rw ($x is rw) { $x++; }
