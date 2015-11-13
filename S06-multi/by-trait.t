@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 13;
 
 # originally for RT #66588, which was closed
 # RT #74414 is related, and works on moar, but
@@ -45,6 +45,14 @@ plan 11;
     my $got;
     for ^500 { $got = foo $ = []; }
     is $got, 1, 'Optimization respects is rw';
+}
+
+#?rakudo.jvm skip 'Ambiguous dispatch'
+{
+    multi x(int $x is rw) { 1 }
+    multi x(Int $x) { 2 }
+    is x(my int $x = 42), 1, 'rw native container hits correct candidate';
+    is x(1), 2, 'non-rw literal does not reach is rw candidate';
 }
 
 # vim: ft=perl6
