@@ -29,7 +29,7 @@ plan 11;
     is uno_mas( $y ), 100, 'multi works with primitive';
     is $rw_call, 1, 'read-write multi was not called';
     is $ro_call, 1, 'read-only multi was not called';
-    is $primrw_call, 1, 'read-only multi was not called';
+    is $primrw_call, 1, 'native rw multi was called';
 }
 
 #?rakudo.jvm skip 'Ambiguous dispatch'
