@@ -308,7 +308,6 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 #?rakudo.moar todo 'Too late to change filehandle encoding RT #125079'
     lives-ok { $fh.encoding('ISO-8859-1') }, "reset input fh encoding";
     $s = '';
-#?rakudo.jvm todo 'will fail due to above failures RT #125080'
     lives-ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
 #?rakudo.jvm todo 'will fail due to above failures RT #125081'
     is $s, 'a¢ÿ', "correct iso-8859-1 chars from fh";

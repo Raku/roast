@@ -41,7 +41,6 @@ my $filename = 'tempfile_io_in_while_loop';
 ok(unlink($filename), 'file has been removed');
 
 # RT #122971
-#?rakudo.jvm todo 'Multi-line separators on JVM'
 {
     spurt($filename, q:to/FASTAISH/.subst(/\r\n/, "\n"));
         >roa1_drome Rea guano receptor type III >> 0.1
