@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 53;
+plan 55;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -140,3 +140,11 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
     my Buf $raw-bin .= new(0x55 xx 3);
     is $raw-bin.elems, 3, 'Can create Buf with .= new';
 }
+
+{
+    my $b = Buf.new(^100);
+    is-deeply $b.subbuf(^10), Buf.new(^10),
+      'can we use ^10 as specifier';
+    is-deeply $b.subbuf(10..20), Buf.new(10..20),
+      'can we use 10..20 as specifier';
+} 
