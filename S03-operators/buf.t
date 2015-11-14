@@ -48,34 +48,33 @@ ok Buf.new(1, 2, 3, 4).subbuf(1, 2) eqv Buf.new(2, 3), '.subbuf(start, len)';
 ok Buf.new(1, 2).subbuf(0, 3) eqv Buf.new(1,2), '.subbuf length out of bounds';
 ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
 
-{ # Throw on negative range
-    Buf.new(1).subbuf(-1, 1);
-    ok 0, "throw on negative range";
-    CATCH { when X::OutOfRange { ok 1, "throw on negative range" } }
-}
+# Throw on negative range
+throws-like { Buf.new(1).subbuf(-1, 1) }, X::OutOfRange,
+  got   => -1,
+  range => "0..1",
+  "throw on negative range";
 
-{ # Throw on out of bounds
-    Buf.new(0xFF).subbuf(2, 1);
-    ok 0, "throw on out of range (positive)";
-    CATCH { when X::OutOfRange { ok 1, "throw on out of range (positive)" } }
-}
+# Throw on out of bounds
+throws-like { Buf.new(0xFF).subbuf(2, 1) }, X::OutOfRange,
+  got   => 2,
+  range => "0..1",
+  "throw on out of range (positive)";
 
 { # Counted from the end
     ok Buf.new(^10).subbuf(*-5, 5) eqv Buf.new(5..9), "counted from the end";
     ok Buf.new(1, 2).subbuf(*-1, 10) eqv Buf.new(2), "counted from the end, length out of bounds";
 }
 
-{ # Throw on out of bounds, from the end.
-    Buf.new(0xFF).subbuf(*-2, 1);
-    ok 0, "throw on out of bounds, counted from the end";
-    CATCH { when X::OutOfRange { ok 1, "throw on out of bounds, counted from the end"; } }
-}
+# Throw on out of bounds, from the end.
+throws-like { Buf.new(0xFF).subbuf(*-2, 1) }, X::OutOfRange,
+  got   => *,
+  range => "0..1",
+  "throw on out of bounds, counted from the end";
 
-{ 
-    Buf.new().subbuf(0, -1);
-    ok 0, "throw on negative len";
-    CATCH { when X::OutOfRange { ok 1, "throw on negative len" } }
-}
+throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
+  got   => -1,
+  range => "0..0",
+  "throw on negative len";
 
 # RT #122827
 {
