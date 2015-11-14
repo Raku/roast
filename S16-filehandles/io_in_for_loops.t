@@ -5,7 +5,7 @@ use Test;
 # old: L<S16/"Filehandles, files, and directories"/"open">
 # old: L<S16/"Filehandles, files, and directories"/"close">
 
-plan 33;
+plan 32;
 
 my $filename = 'tempfile_io_in_for_loop';
 
@@ -100,12 +100,11 @@ my $filename = 'tempfile_io_in_for_loop';
     my $ok-tell = 2|3;
 
     my $fh = open($filename);
-    for $fh.lines() {
-        is $fh.ins, 1, "\$fh.lines loop sets .ins";
+    for $fh.lines.kv -> \k, \v {
+        is k, 0, "\$fh.lines.kv works";
         is $fh.tell, $ok-tell, "\$fh.lines loop sets .tell";
         last;
     }
-    is $fh.ins, 1, "last in loop leaves .ins at the same place";
     is $fh.tell, $ok-tell, "last in loop leaves .tell at the same place";
     $fh.close();
 }

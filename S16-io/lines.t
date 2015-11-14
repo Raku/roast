@@ -10,7 +10,7 @@ my @endings =
   ("\n","\r\n","\r") => "multi",
 ;
 
-plan @endings * (1 + 3 * ( (3 * 7) + 7));
+plan @endings * (1 + 3 * ( (3 * 5) + 6));
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -31,17 +31,15 @@ for @endings -> (:key($eol), :value($EOL)) {
             my $status = OUTER::<$status> ~ " / {$open ?? 'open' !! 'close'}";
 
             my $first;
-            for $handle.lines -> $line {
+            for $handle.lines(|$closing) -> $line {
                 is $line,"@text[0]$end[0]", "read first line: $status";
                 $first = $line;
                 last;
             }
 
-            is $handle.ins, 1, "read one line: $status";
             my @lines = $first, |$handle.lines(|$closing);
             is @lines.join, @text.join($end[0]), "rest of file: $status";
 
-            is $handle.ins, ($open ?? 5 !! 1), "read five lines: $status";
             is $handle.opened, $open, "handle still open: $status";
             ok $handle.close, "closed handle: $status";
         }
@@ -53,7 +51,6 @@ for @endings -> (:key($eol), :value($EOL)) {
         my @lines = $handle.lines[1,2];
         is @lines.join, @text[1,2].join($end[0]) ~ $end[0],
           "handle 1,2: $status";
-        is $handle.ins, 3, "handle read three lines: $status";
 
         is $handle.lines[*-1], @text[*-1], "handle last line: $status";
 

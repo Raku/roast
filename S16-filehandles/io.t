@@ -15,7 +15,7 @@ I/O tests
 
 =end pod
 
-plan 125;
+plan 111;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -37,16 +37,10 @@ my $in1 = open($filename);
 isa-ok($in1, IO::Handle);
 my $line1a = get($in1);
 is($line1a, "Hello World", 'get($in) worked (and autochomps)');
-#?niecza skip 'IO.ins NYI'
-is $in1.ins, 1, 'read one line (.ins)';
 my $line1b = get($in1);
 is($line1b, "Foo Bar Baz", 'get($in) worked (and autochomps)');
-#?niecza skip 'IO.ins NYI'
-is $in1.ins, 2, 'read two lines (.ins)';
 my $line1c = get($in1);
 is($line1c, "The End", 'get($in) worked');
-#?niecza skip 'IO.ins NYI'
-is $in1.ins, 3, 'read three lines (.ins)';
 ok($in1.close, 'file closed okay (1)');
 
 my $in2 = open($filename);
@@ -89,8 +83,6 @@ my $in4 = open($filename);
 isa-ok($in4, IO::Handle);
 my @lines4 = lines($in4);
 is(+@lines4, 4, 'we got four lines from the file');
-#?niecza skip 'IO.ins NYI'
-is $in4.ins, 4, 'same with .ins';
 is(@lines4[0], "Hello World", 'lines($in) worked in list context');
 is(@lines4[1], "Foo Bar Baz", 'lines($in) worked in list context');
 is(@lines4[2], "The End", 'lines($in) worked in list context');
@@ -104,8 +96,6 @@ my $in5 = open($filename);
 isa-ok($in5, IO::Handle);
 my @lines5 = lines($in5, 3);
 is(+@lines5, 3, 'we got two lines from the file');
-#?niecza skip 'IO.ins NYI'
-is $in5.ins, 3, 'same with .ins';
 is(@lines5[0], "Hello World", 'lines($in) worked in list context');
 is(@lines5[1], "Foo Bar Baz", 'lines($in) worked in list context');
 is(@lines5[2], "The End", 'lines($in) worked in list context');
@@ -148,19 +138,6 @@ is(@lines8[0], "Hello World", 'lines($in,3) worked in list context');
 is(@lines8[1], "Foo Bar Baz", 'lines($in,3) worked in list context');
 is(@lines8[2], "The End", 'lines($in,3) worked in list context');
 is(@lines8[3], "and finally... Its not over yet!", 'get($in) worked after lines($in,$n)');
-}
-{
-# test if reading a file with lines() is really lazy
-my $in9 = open($filename);
-#?niecza skip 'open does not yet produce an IO object'
-isa-ok($in9, IO::Handle);
-my $lines9 := $in9.lines;
-is($in9.ins, 0);
-for ^4 {
-    $lines9[$_];
-    is($in9.ins, $_ + 1);
-}
-$in9.close;
 }
 
 {
@@ -374,17 +351,6 @@ unlink($filename);
 {
     dies-ok { open('t').read(42) }, '.read on a directory fails';
     dies-ok { open('t').get(1) }, '.get on a directory fails';
-}
-
-# RT #113100
-{
-    my %r;
-    %r = get_out(q[for lines() { say $*IN.ins }], "one\ntwo");
-    is %r<out>, "1\n2\n", "\$*IN.ins gets the right line numbers";
-    %r = get_out(q[say $*IN.ins], "one\ntwo\nthree", :compiler-args(["-n"]));
-    is %r<out>, "1\n2\n3\n", "\$*IN.ins gets the right line numbers";
-    %r = get_out(q[say $*IN.ins], "one\ntwo\nthree\nfour", :args(['-']), :compiler-args(["-n"]));
-    is %r<out>, "1\n2\n3\n4\n", "\$*IN.ins gets the right line numbers";
 }
 
 # vim: ft=perl6
