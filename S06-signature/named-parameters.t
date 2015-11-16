@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 95;
+plan 99;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -311,6 +311,17 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     #?rakudo.moar todo 'RT #77788'
     is rt77788(|%h, a => 'c'), 'c',
         'can pass in several same-named arguments to sub, sigils other than "@" bind to last argument (2)';
+}
+
+# RT #113546
+{
+    sub np(:$assoc) { $assoc }
+    sub snp(*%n) { %n<assoc> }
+
+    is np(|{:assoc<list>}, :assoc<left>), 'left', 'rightmost named argument wins (1)';
+    is np(:assoc<left>, |{:assoc<list>}), 'list', 'rightmost named argument wins (2)';
+    is snp(|{:assoc<list>}, :assoc<left>), 'left', 'rightmost named argument wins (3)';
+    is snp(:assoc<left>, |{:assoc<list>}), 'list', 'rightmost named argument wins (4)';
 }
 
 # vim: ft=perl6
