@@ -308,7 +308,6 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     is rt77788(a => 'b', a => 'c'), 'c',
         'can pass in several same-named arguments to sub, sigils other than "@" bind to last argument (1)';
     my %h = a => 'b';
-    #?rakudo.moar todo 'RT #77788'
     is rt77788(|%h, a => 'c'), 'c',
         'can pass in several same-named arguments to sub, sigils other than "@" bind to last argument (2)';
 }
