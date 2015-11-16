@@ -114,10 +114,9 @@ eval-lives-ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
         'call of method defined in package';
 }
 
-#?rakudo todo 'RT #64606'
 #?niecza todo
 {
-    eval-lives-ok 'package DoMap {my @a = map { $_ }, (1, 2, 3)}}',
+    eval-lives-ok 'package DoMap {my @a = map { $_ }, (1, 2, 3)}',
         'map in package';
 }
 
