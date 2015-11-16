@@ -7,8 +7,8 @@ plan 260;
 
 # A BagHash is a QuantHash of UInt, i.e. the values are positive Int
 
-sub showkv($given, $expected, $message) {
-    is $given.keys.sort.map({"$_:{$given{$_}}"}).join(' '), $expected, $message;
+sub showkv($x) {
+    $x.keys.sort.map({"$_:{$x{$_}}"}).join(' ')
 }
 
 # L<S02/Immutable types/'the bag listop'>
