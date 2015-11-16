@@ -25,7 +25,6 @@ sub tester(:$a, :$b, :$c) {
     is $w(a => 'x', c => 'd'), 'ax bb cd', '... and the old one still works';
 }
 
-#?rakudo.moar todo 'last part of RT #123498 is still unresolved.'
 priming-fails-bind-ok(sub { }, "", "Unexpected named", :named);
 
 # Since you can override named params .assuming does not alter sig
@@ -47,7 +46,6 @@ is-primed-sig(sub (:b($a)!) { }, :(:b($a)), :b);
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a))), :c);
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a))), :b);
 
-#?rakudo.moar todo 'last part of RT #123498 is still unresolved.'
 priming-fails-bind-ok(sub (:b(:c($a))!) { }, "", "Unexpected named", :d);
 
 
