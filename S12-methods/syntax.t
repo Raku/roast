@@ -54,7 +54,7 @@ is (1..8).grep({ $_ % 2 }).map({ $_ - 1 }).join('|'), '0|2|4|6',
 # test that you can't manipulate methods by writinig to the symbol table
 {
     class Manip { method a { 1} };
-    &Manip::a = sub ($:) { 2 };
+    &Manip::a = anon method ($:) { 2 };
     is Manip.new.a, 1, 'Writing to a symbol table does not alter methods';
 }
 
