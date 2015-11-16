@@ -7,8 +7,8 @@ plan 260;
 
 # A BagHash is a QuantHash of UInt, i.e. the values are positive Int
 
-sub showkv($x) {
-    $x.keys.sort.map({"$_:{$x{$_}}"}).join(' ')
+sub showkv($given, $expected, $message) {
+    is $given.keys.sort.map({"$_:{$given{$_}}"}).join(' '), $expected, $message;
 }
 
 # L<S02/Immutable types/'the bag listop'>
@@ -17,6 +17,7 @@ sub showkv($x) {
     say "We do get here, right?";
     my $b = BagHash.new("a", "foo", "a", "a", "a", "a", "b", "foo");
     isa-ok $b, BagHash, 'we got a BagHash';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
 
     is $b.default, 0, "Defaults to 0";
@@ -35,6 +36,7 @@ sub showkv($x) {
     my $hash;
     lives-ok { $hash = $b.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
     throws-like { $b.keys = <c d> },
@@ -90,18 +92,25 @@ sub showkv($x) {
 
 {
     isa-ok "a".BagHash, BagHash, "Str.BagHash makes a BagHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv("a".BagHash), 'a:1', "'a'.BagHash is bag a";
 
     isa-ok (a => 100000).BagHash, BagHash, "Pair.BagHash makes a BagHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv((a => 100000).BagHash), 'a:100000', "(a => 100000).BagHash is bag a:100000";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv((a => 0).BagHash), '', "(a => 0).BagHash is the empty bag";
 
     isa-ok <a b c>.BagHash, BagHash, "<a b c>.BagHash makes a BagHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(<a b c a>.BagHash), 'a:2 b:1 c:1', "<a b c a>.BagHash makes the bag a:2 b:1 c:1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(["a", "b", "c", "a"].BagHash), 'a:2 b:1 c:1', "[a b c a].BagHash makes the bag a:2 b:1 c:1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv([a => 3, b => 0, 'c', 'a'].BagHash), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].BagHash makes the bag a:4 c:1";
 
     isa-ok {a => 2, b => 4, c => 0}.BagHash, BagHash, "{a => 2, b => 4, c => 0}.BagHash makes a BagHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv({a => 2, b => 4, c => 0}.BagHash), 'a:2 b:4', "{a => 2, b => 4, c => 0}.BagHash makes the bag a:2 b:4";
 }
 
@@ -110,6 +119,7 @@ sub showkv($x) {
     is $b<a>:exists, True, ':exists with existing element';
     is $b<santa>:exists, False, ':exists with nonexistent element';
     is $b<a>:delete, 2, ':delete works on BagHash';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($b), 'b:1 foo:1', '...and actually deletes';
 }
 
@@ -123,6 +133,7 @@ sub showkv($x) {
     is $b{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $a = (1,2,3,2,2,2,2).BagHash;
     is $a.kv.sort, (1,1,1,2,3,5), "BagHash.kv returns list of keys and values";
@@ -131,12 +142,14 @@ sub showkv($x) {
 {
     my $b = BagHash.new(<a b o p a p o o>);
     isa-ok $b, BagHash, '&BagHash.new given an array of strings produces a BagHash';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($b), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
 {
     my $b = BagHash.new(1, [ foo => 10, bar => 17, baz => 42, santa => 0 ]);
     isa-ok $b, BagHash, '&BagHash.new given something and an array of pairs produces a BagHash';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is +$b, 2, "... with two elements";
 }
 
@@ -151,9 +164,11 @@ sub showkv($x) {
 {
     my $b = BagHash.new(1, { foo => 10, bar => 17, baz => 42, santa => 0 });
     isa-ok $b, BagHash, '&BagHash.new given a Hash and something produces a BagHash';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is +$b, 2, "... with one element";
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $b = BagHash.new(set <foo bar foo bar baz foo>);
     isa-ok $b, BagHash, '&BagHash.new given a Set produces a BagHash';
@@ -166,6 +181,7 @@ sub showkv($x) {
     is +$b, 1, "... with one element";
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $b = BagHash.new(bag <foo bar foo bar baz foo>);
     isa-ok $b, BagHash, '&BagHash.new given a Bag produces a BagHash';
@@ -207,6 +223,7 @@ sub showkv($x) {
     ok $s.chars < 1000, "... of reasonable length";
     lives-ok { $c = EVAL $s }, ".perl.EVAL lives";
     isa-ok $c, BagHash, "... and produces a BagHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
@@ -215,6 +232,7 @@ sub showkv($x) {
     my $s;
     lives-ok { $s = $b.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
@@ -233,6 +251,7 @@ sub showkv($x) {
 {
     my %b := BagHash.new("a", "b", "c", "b");
     isa-ok %b, BagHash, 'A BagHash bound to a %var is a BagHash';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -407,6 +426,7 @@ sub showkv($x) {
     is +@a, 8, '.grabpairs(*) returns the right number of items';
     is @a.grep( {.isa(Pair)} ).Num, 8, 'are they all Pairs';
     is @a.grep( {.value == 2} ).Num, 8, 'and they all have an expected value';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is @a.sort.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) gets all elements';
     isnt @a.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) returns elements in a random order';
     is $b.total, 0, '.grabpairs *should* change BagHash';
@@ -469,16 +489,21 @@ sub showkv($x) {
 
 {
     isa-ok 42.BagHash, BagHash, "Method .BagHash works on Int-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(42.BagHash), "42:1", "Method .BagHash works on Int-2";
     isa-ok "blue".BagHash, BagHash, "Method .BagHash works on Str-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv("blue".BagHash), "blue:1", "Method .BagHash works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
     isa-ok @a.BagHash, BagHash, "Method .BagHash works on Array-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(@a.BagHash), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .BagHash works on Array-2";
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.BagHash, BagHash, "Method .BagHash works on Hash-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(%x.BagHash), "a:1 b:2", "Method .BagHash works on Hash-2";
     isa-ok (@a, %x).BagHash, BagHash, "Method .BagHash works on List-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv((@a, %x).BagHash), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .BagHash works on List-2";
 }
@@ -490,35 +515,49 @@ sub showkv($x) {
     is +$b1, 10, '+$bag gives sum of values (non-empty) 10';
     is $b1.minpairs, [a=>1], '.minpairs works (non-empty) 10';
     is $b1.maxpairs, [d=>4], '.maxpairs works (non-empty) 10';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $b1.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
       '.fmt(%s) works (non-empty 10)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $b1.fmt('%s',',').split(',').sort, <a b c d>,
       '.fmt(%s,sep) works (non-empty 10)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $b1.fmt('%s foo %s').split("\n").sort, ('a foo 1', 'b foo 2', 'c foo 3', 'd foo 4'),
       '.fmt(%s%s) works (non-empty 10)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $b1.fmt('%s,%s',':').split(':').sort, <a,1 b,2 c,3 d,4>,
       '.fmt(%s%s,sep) works (non-empty 10)';
 
     my $b2 = <a b c c c d d d>.BagHash;
     is $b2.total, 8, '.total gives sum of values (non-empty) 8';
     is +$b2, 8, '+$bag gives sum of values (non-empty) 8';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $b2.minpairs.sort, [a=>1,b=>1], '.minpairs works (non-empty) 8';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $b2.maxpairs.sort, [c=>3,d=>3], '.maxpairs works (non-empty) 8';
 
     my $b3 = <a b c d>.BagHash;
     is $b3.total, 4, '.total gives sum of values (non-empty) 4';
     is +$b3, 4, '+$bag gives sum of values (non-empty) 4';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $b3.minpairs.sort,[a=>1,b=>1,c=>1,d=>1], '.minpairs works (non-empty) 4';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $b3.maxpairs.sort,[a=>1,b=>1,c=>1,d=>1], '.maxpairs works (non-empty) 4';
 
     my $e = ().BagHash;
     is $e.total, 0, '.total gives sum of values (empty)';
     is +$e, 0, '+$bag gives sum of values (empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $e.minpairs, (), '.minpairs works (empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $e.maxpairs, (), '.maxpairs works (empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $e.fmt('foo %s'), "", '.fmt(%s) works (empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
@@ -560,6 +599,7 @@ sub showkv($x) {
       'Make sure we cannot assign Str on a .kv alias';
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $b = <a b b c c c d d d d>.BagHash;
     my @a1;

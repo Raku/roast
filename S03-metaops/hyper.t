@@ -392,6 +392,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».antipairs.gist, "((2 => 0 3 => 1) (4 => 0 [5 6] => 1))", ".antipairs is nodal";
     is [[2, 3], [4, [5, 6]]]».any.gist, "(any(2, 3) any(4, [5 6]))", ".any is nodal";
     is [[2, 3], [4, [5, 6]]]».Array.gist, "([2 3] [4 [5 6]])", ".Array is nodal";
+    #?rakudo.jvm 48 skip 'NullPointerException - RT #126656'
     is [[2, 3], [4, [5, 6]]]».BagHash».keys».sort.gist, "((2 3) (4 [5 6]))", ".BagHash is nodal";
     is [[2, 3], [4, [5, 6]]]».Bag».keys».sort.gist, "((2 3) (4 [5 6]))", ".Bag is nodal";
     is [[2, 3], [4, [5, 6]]]».categorize(*.[0]).gist, "(2 => [2], 3 => [3] 4 => [4], 5 => [[5 6]])", ".categorize is nodal";
@@ -1018,7 +1019,9 @@ throws-like '3 «.» foo', X::Obsolete, "«.» can't be hypered";
     is 10 <<**<< (1 .. 4), <10 100 1000 10000>,
         'hyper op works with range on non-magical side (2)';
     my $base = 10;
+    #?rakudo.jvm emit # RT #126656
     my %bases = <K M G T> Z=> ( $base <<**<< (1 .. 4) );
+    #?rakudo.jvm skip 'NullPointerException - RT #126656'
     is %bases, { K=>10, M=>100, G=>1000, T=>10000 },
         'hyper op works with (finite) range on non-magical side (3)';
 }
