@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 31;
 
 =begin pod
 
@@ -83,4 +83,10 @@ throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
     ok $error ~~ /^^ \h* '(Int'/, "Error mentions Int";
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }
+
+throws-like 'sub foo($a:) { }', X::Syntax::Signature::InvocantNotAllowed;
+throws-like 'sub foo($a: $b) { }', X::Syntax::Signature::InvocantNotAllowed;
+throws-like '-> $a: { }', X::Syntax::Signature::InvocantNotAllowed;
+throws-like '-> $a: $b { }', X::Syntax::Signature::InvocantNotAllowed;
+
 # vim: ft=perl6
