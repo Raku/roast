@@ -14,6 +14,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $s = SetHash.new(<a b foo>);
     isa-ok $s, SetHash, 'SetHash.new produces a SetHash';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a b foo', '...with the right elements';
 
     is $s.default, False, "Default value is false";
@@ -30,6 +31,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $hash;
     lives-ok { $hash = $s.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($hash), 'a b foo', '...with the right elements';
     is $hash.values.grep({ ($_ ~~ Bool) && $_ }).elems, 3, "...and values";
 
@@ -44,30 +46,40 @@ sub showset($s) { $s.keys.sort.join(' ') }
     
     $s<baz> = True;
     lives-ok { $s<baz> = True }, 'can set an item to True';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a b baz foo', '...and it adds it to the SetHash';
     lives-ok { $s<baz> = True }, 'can set the same item to True';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a b baz foo', '...and it does nothing';
 
     lives-ok { $s<baz> = False }, 'can set an item to False';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a b foo', 'and it removes it';
     lives-ok { $s<baz> = False }, 'can set an item which does not exist to False';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a b foo', '... and it is not added to the set';
     
     lives-ok { $s<foo> = False }, 'can set an item to False';
     is $s.elems, 2, '... and an item is gone';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a b', '... and the right one is gone';
     
     lives-ok { $s<foo>++ }, 'can ++ an item';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a b foo', '++ on an item reinstates it';
     lives-ok { $s<foo>++ }, 'can ++ an item';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a b foo', '++ on an existing item does nothing';
 
     lives-ok { $s<b>-- }, 'can -- an item';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a foo', '-- on an item removes it';
     lives-ok { $s<bar>-- }, 'can -- an item';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'a foo', '... but only if they were there to start with';
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $a = (1,2,3,2,2,2,2).SetHash;
     is $a.kv.sort, (1,2,3,True,True,True), "SetHash.kv returns list of keys and values";
@@ -90,18 +102,25 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     isa-ok "a".SetHash, SetHash, "Str.SetHash makes a SetHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset("a".SetHash), 'a', "'a'.SetHash is set a";
 
     isa-ok (a => 1).SetHash, SetHash, "Pair.SetHash makes a SetHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset((a => 1).SetHash), 'a', "(a => 1).SetHash is set a";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset((a => 0).SetHash), '', "(a => 0).SetHash is the empty set";
 
     isa-ok <a b c>.SetHash, SetHash, "<a b c>.SetHash makes a SetHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset(<a b c a>.SetHash), 'a b c', "<a b c a>.SetHash makes the set a b c";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset(["a", "b", "c", "a"].SetHash), 'a b c', "[a b c a].SetHash makes the set a b c";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset([a => 3, b => 0, 'c', 'a'].SetHash), 'a c', "[a => 3, b => 0, 'c', 'a'].SetHash makes the set a c";
 
     isa-ok {a => 2, b => 4, c => 0}.SetHash, SetHash, "{a => 2, b => 4, c => 0}.SetHash makes a SetHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset({a => 2, b => 4, c => 0}.SetHash), 'a b', "{a => 2, b => 4, c => 0}.SetHash makes the set a b";
 }
 
@@ -110,9 +129,11 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
     is $s<a>:delete, True, ':delete returns current value on set';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'b foo', '...and actually deletes';
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my %h := SetHash.new(<a c>);
     is +%h.elems, 2, 'Inititalization worked';
@@ -138,6 +159,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $s = SetHash.new(<foo bar foo bar baz foo>);
     isa-ok $s, SetHash, 'SetHash.new given a List produces a SetHash';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($s), 'bar baz foo', 'SetHash.new discards duplicates';
 }
 
@@ -162,31 +184,36 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$b, 3, '... with three elements';
     is +$b.keys.grep(Pair), 3, '... which are all Pairs';
 }
-
+    
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $b = SetHash.new(set <foo bar foo bar baz foo>);
     isa-ok $b, SetHash, 'SetHash.new given a Set produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $b = SetHash.new(SetHash.new(<foo bar foo bar baz foo>));
     isa-ok $b, SetHash, 'SetHash.new given a SetHash produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $b = SetHash.new(BagHash.new(<foo bar foo bar baz foo>));
     isa-ok $b, SetHash, 'SetHash.new given a BagHash produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $b = SetHash.new(bag <foo bar foo bar baz foo>);
     isa-ok $b, SetHash, 'SetHash given a Bag produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $s = SetHash.new(<foo bar baz>);
     isa-ok $s.elems, 3, ".list returns 3 things";
@@ -201,6 +228,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa-ok $str, Str, "... and produces a string";
     lives-ok { $c = EVAL $str }, ".perl.eval lives";
     isa-ok $c, SetHash, "... and produces a SetHash";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset($c), showset($s), "... and it has the correct values";
 }
 
@@ -208,6 +236,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = SetHash.new(<foo bar baz>);
     lives-ok { $s = $s.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";
 }
 
@@ -225,6 +254,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my %s := SetHash.new(<a b c b>);
     isa-ok %s, SetHash, 'A SetHash bound to a %var is a SetHash';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset(%s), 'a b c', '...with the right elements';
 
     is %s<a>, True, 'Single-key subscript (existing element)';
@@ -255,6 +285,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # L<S32::Containers/SetHash/pick>
 
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $s = SetHash.new(<a b c d e f g h>);
     my @a = $s.pick: *;
@@ -286,6 +317,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 # L<S32::Containers/SetHash/grab>
 
 #?niecza skip '.grab NYI'
+#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $s = SetHash.new(<a b c d e f g h>);
     my @a = $s.grab: *;
@@ -323,7 +355,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my @a = $s.grabpairs: *;
     is @a.grep( {.isa(Pair)} ).Num, 8, 'are they all Pairs';
     is @a.grep( {.value === True} ).Num, 8, 'and they all have a True value';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is @a.sort.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) gets all elements';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     isnt @a.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) returns elements in a random order';
       # There's only a 1/40_320 chance of that test failing by chance alone.
     is $s.total, 0, '.grabpairs *should* change the SetHash';
@@ -377,16 +411,21 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     isa-ok 42.SetHash, SetHash, "Method .SetHash works on Int-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset(42.SetHash), "42", "Method .SetHash works on Int-2";
     isa-ok "blue".SetHash, SetHash, "Method .SetHash works on Str-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset("blue".SetHash), "blue", "Method .SetHash works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
     isa-ok @a.SetHash, SetHash, "Method .SetHash works on Array-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset(@a.SetHash), "Now Paradise cross-handed set the was way", "Method .SetHash works on Array-2";
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.SetHash, SetHash, "Method .SetHash works on Hash-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset(%x.SetHash), "a b", "Method .SetHash works on Hash-2";
     isa-ok (@a, %x).SetHash, SetHash, "Method .SetHash works on List-1";
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showset((@a, %x).SetHash), "Now Paradise a b cross-handed set the was way", "Method .SetHash works on List-2";
 }
 
@@ -395,14 +434,20 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = <a b b c c c d d d d>.SetHash;
     is $s.total, 4, '.total gives sum of values (non-empty)';
     is +$s, 4, '+$set gives sum of values (non-empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $s.minpairs.sort, [a=>True,b=>True,c=>True,d=>True], '.minpairs works (non-empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $s.maxpairs.sort, [a=>True,b=>True,c=>True,d=>True], '.maxpairs works (non-empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $s.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
       '.fmt(%s) works (non-empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $s.fmt('%s',',').split(',').sort, <a b c d>,
       '.fmt(%s,sep) works (non-empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $s.fmt('%s foo %s').split("\n").sort, ('a foo True', 'b foo True', 'c foo True', 'd foo True'),
       '.fmt(%s%s) works (non-empty)';
+    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $s.fmt('%s,%s',':').split(':').sort, <a,True b,True c,True d,True>,
       '.fmt(%s%s,sep) works (non-empty)';
 
