@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 63;
+plan 81;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -274,6 +274,56 @@ throws-like q[
 {
     lives-ok { use lib "$?FILE.IO.dirname()/t/spec/packages" },
         'no Null PMC access with "use lib $double_quoted_string"';
+}
+
+# RT #118361
+{
+    class Pub::Bar::Tap { }
+    is Pub::Bar::Tap.gist, '(Tap)', 'type object of class gists to short name in parens';
+    is Pub::Bar::Tap.WHO.gist, 'Pub::Bar::Tap', '.WHO of class gists to long name';
+    is Pub::Bar::Tap.WHO.Str, 'Pub::Bar::Tap', '.WHO of class stringifies to long name';
+
+    module Cafe {
+        module Kitchen {
+            module Blowtorch { }
+        }
+    }
+    is Cafe::Kitchen::Blowtorch.gist, '(Blowtorch)',
+        'type object of nested module definition gists to short name in parens';
+    is Cafe::Kitchen::Blowtorch.WHO.gist, 'Cafe::Kitchen::Blowtorch',
+        '.WHO of nested module definition gists to long name';
+    is Cafe::Kitchen::Blowtorch.WHO.Str, 'Cafe::Kitchen::Blowtorch',
+        '.WHO of nested module definition stringifies to long name';
+
+    role Metal::Djent { }
+    is Metal::Djent.gist, '(Djent)', 'type object of role gists to short name in parens';
+    is Metal::Djent.WHO.gist, 'Metal::Djent', '.WHO of role gists to long name';
+    is Metal::Djent.WHO.Str, 'Metal::Djent', '.WHO of role stringifies to long name';
+
+    package Castle {
+        role Princess { }
+    }
+    is Castle::Princess.gist, '(Princess)',
+        'type object of nested role definition gists to short name in parens';
+    is Castle::Princess.WHO.gist, 'Castle::Princess',
+        '.WHO of nested role definition gists to long name';
+    is Castle::Princess.WHO.Str, 'Castle::Princess',
+        '.WHO of nested role definition stringifies to long name';
+
+    package Tour {
+        subset AllInclusive of Any;
+    }
+    is Tour::AllInclusive.gist, '(AllInclusive)', 'type object of subset gists to short name in parens';
+    is Tour::AllInclusive.WHO.gist, 'Tour::AllInclusive', '.WHO of subset gists to long name';
+    is Tour::AllInclusive.WHO.Str, 'Tour::AllInclusive', '.WHO of subset stringifies to long name';
+
+    subset Digestive::Chocolate of Any;
+    is Digestive::Chocolate.gist, '(Chocolate)',
+        'type object of nested subset definition gists to short name in parens';
+    is Digestive::Chocolate.WHO.gist, 'Digestive::Chocolate',
+        '.WHO of nested subset definition gists to long name';
+    is Digestive::Chocolate.WHO.Str, 'Digestive::Chocolate',
+        '.WHO of nested subset definition stringifies to long name';
 }
 
 # vim: ft=perl6
