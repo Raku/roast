@@ -14,7 +14,7 @@ role A::B {
     method foo { "Foo" }
 };
 
-#?rakudo todo 'nom regression RT #124750'
+# RT #124750
 is(A::B.WHAT.gist, '(B)', 'A::B.WHAT stringifies to short name B');
 
 class Z does A::B {
