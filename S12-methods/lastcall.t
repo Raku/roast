@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 # L<S12/"Calling sets of methods"/"It is also possible to trim the candidate list so that the current call is considered the final candidate.">
 
@@ -31,8 +31,8 @@ class BazLastCallNext is Foo {
     is($o.show, 'baz,foo,', 'no lastcall, so we defer up the inheritance tree');
     $o.clear;
     is($o.show, '', 'sanity test for clearing');
-    $o.doit(5);
-    is($o.show, 'bazint,ret3,', 'lastcall meant nextsame failed, no deferal happened');
+    is $o.doit(5), Nil, 'lastcall means nextsame causes Nil return of method';
+    is($o.show, 'bazint,', 'lastcall meant nextsame failed, no deferal happened');
 }
 
 class BarLastCallSame is Foo {
