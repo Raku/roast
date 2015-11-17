@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 20;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
 
@@ -109,6 +109,20 @@ class BarCallWithInt is Foo {
     &foo.wrap: { my &wrappee = nextcallee; wrappee; wrappee; wrappee; };
     foo;
     is @xs, ['X', 'X', 'X'], 'use nextcallee in order to call multiple times';
+}
+
+# callwith and callsame without anywhere to defer to return Nil
+{
+    my $after-cw = False;
+    my $after-cs = False;
+    my class DeadEnd {
+        method cw($a) { my \result = callwith(42); $after-cw = True; result }
+        method cs($a) { my \result = callsame(); $after-cs = True; result }
+    }
+    is DeadEnd.cw(1), Nil, 'callwith with nowhere to defer produces Nil';
+    ok $after-cw, 'control reaches after callwith that has nowhere to go';
+    is DeadEnd.cs(1), Nil, 'callsame with nowhere to defer produces Nil';
+    ok $after-cs, 'control reaches after callsame that has nowhere to go';
 }
 
 # vim: ft=perl6
