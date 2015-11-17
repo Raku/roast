@@ -60,7 +60,6 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 {
     lives-ok {Simple::Bar.new.WHO}, 'some WHO implementation';
-    #?rakudo todo 'ticket based only on class... RT #60446'
     #?niecza todo
     is ~(Simple::Bar.new.WHO), 'Simple::Bar',
         'WHO implementation with longname';
