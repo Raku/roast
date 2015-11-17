@@ -432,30 +432,34 @@ is Nil.perl,              'Nil', "Nil.perl returns 'Nil'";
 is Nil.gist,              'Nil', "Nil.gist returns 'Nil'";
 
 for @normal -> $class {
+    my $short = $class.split('::')[* - 1];
     is ::($class).WHICH,            $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
-    is ::($class).gist,         "($class)", "$class.gist returns self";
+    is ::($class).gist,         "($short)", "$class.gist returns self";
 }
 
 for @exception -> $class {
+    my $short = $class.split('::')[* - 1];
     is ::($class).WHICH,            $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
-    is ::($class).gist,         "($class)", "$class.gist returns self";
+    is ::($class).gist,         "($short)", "$class.gist returns self";
 }
 
 for @concurrent -> $class {
+    my $short = $class.split('::')[* - 1];
     is ::($class).WHICH,            $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
-    is ::($class).gist,         "($class)", "$class.gist returns self";
+    is ::($class).gist,         "($short)", "$class.gist returns self";
 }
 
 for @moar -> $class {
+    my $short = $class.split('::')[* - 1];
     #?rakudo.jvm 4    skip 'NYI on jvm - RT #126524 / RT #124500'
     is ::($class).WHICH,            $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
-    is ::($class).gist,         "($class)", "$class.gist returns self";
+    is ::($class).gist,         "($short)", "$class.gist returns self";
 }
