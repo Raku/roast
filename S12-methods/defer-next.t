@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 23;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
 
@@ -115,6 +115,21 @@ class BarNextWithInt is Foo {
     $r='';
     is $a.l( my @a, 7,8,9 ), '@789&789', 'return from array candidate';
     is $r, '@789&789', "call to array candidate";
+}
+
+# nextwith and nextsame without anywhere to defer to make surrounding routine
+# return Nil
+{
+    my $after-nw = False;
+    my $after-ns = False;
+    my class DeadEnd {
+        method nw($a) { my \result = nextwith(42); $after-nw = True; result }
+        method ns($a) { my \result = nextsame(); $after-ns = True; result }
+    }
+    is DeadEnd.nw(1), Nil, 'nextwith with nowhere to defer produces Nil';
+    nok $after-nw, 'control does not reach beyond nextwith that has nowhere to go';
+    is DeadEnd.ns(1), Nil, 'nextsame with nowhere to defer produces Nil';
+    nok $after-ns, 'control does not reach beyond nextsame that has nowhere to go';
 }
 
 # vim: ft=perl6
