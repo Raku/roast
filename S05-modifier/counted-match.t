@@ -18,6 +18,7 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
     #RT #125815
     throws-like '$data.match(/fo+/, :nth(0))', Exception, message => rx/nth/;
+    #?rakudo.jvm 2 todo 'RT #125815'
     throws-like '$data.match(/fo+/, :nth(-1))', Exception, message => rx/nth/;
     throws-like '$data.match(/fo+/, :nth(-2))', Exception, message => rx/nth/;
 
