@@ -55,17 +55,12 @@ my class H is Hash  {};
 #?niecza skip "no typed support"
 {
     my $a of Int;
-    #?rakudo todo "of Type on scalars fails"
     ok $a.WHAT    === Int,        '$a of Int default is Int';
     my @a of Int;
-    #?rakudo todo "looks like a type object, but is not"
     ok @a.WHAT    === Array[Int], '@a of Int default is Array[Int]';
-    #?rakudo todo "of Type on scalars fails"
     ok @a[0].WHAT === Int,        '@a[0] of Int default is Int';
     my %a of Int;
-    #?rakudo todo "looks like a type object, but is not"
     ok %a.WHAT    === Hash[Int],  '%a of Int default is Hash[Int]';
-    #?rakudo todo "of Type on scalars fails"
     ok %a<a>.WHAT === Int,        '%a<a> of Int default is Int';
 } #5
 
@@ -77,7 +72,6 @@ my class H is Hash  {};
 } #2
 
 #?niecza skip "no typed support"
-#?rakudo todo '%h{Str} of Int fails RT #125010'
 {
     my %a{Str} of Int;
     ok %a.WHAT    === Hash[Int,Str], '%a{Str} of Int default is Hash[Int,Str]';
