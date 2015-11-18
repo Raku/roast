@@ -491,7 +491,9 @@ Testing operator overloading subroutines
 
     lives-ok { sub circumfix:["@", "@"] ($a) { $a } },
         'can define circumfix with brackets as delimiter';
+    #?rakudo.jvm emit # TTIAR
        $RT119919 = EVAL 'sub circumfix:["@", "@"] ($a) { $a }; @ 5 @';
+    #?rakudo.jvm skip 'failing due to above failure'
     is $RT119919, 5, 'can define and use circumfix with brackets as delimiter';
 
     constant sym = "µ";
