@@ -237,6 +237,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
 {
     sub f(+a) { a };
     ok f((1,2,3).grep({$_})).WHAT === Seq, "+args passes through Seq unscathed";
+    #?rakudo.jvm skip 'RT #126493'
     is-deeply f((1,2,3).grep({$_})),(1,2,3), "+args passes through Seq unscathed";
 
     my @result;
