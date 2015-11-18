@@ -1,10 +1,15 @@
 use Test;
 
-plan 8;
+plan 10;
 
 {
     my int @is;
     ok @is ~~ array[int], 'my int @x gives a native int array';
+}
+
+{
+    my @is of int;
+    ok @is ~~ array[int], 'my @x of int gives a native int array';
 }
 
 {
@@ -17,6 +22,11 @@ plan 8;
 {
     my num @ns;
     ok @ns ~~ array[num], 'my int @x gives a native num array';
+}
+
+{
+    my @ns of num;
+    ok @ns ~~ array[num], 'my @x of num gives a native num array';
 }
 
 {
