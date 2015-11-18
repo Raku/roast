@@ -208,10 +208,10 @@ plan 56;
 }
 
 # RT #125285
-#?rakudo.jvm todo 'RT #125285'
 {
     my $m = 'rule1 foo rule2 bar' ~~ /^ ( 'rule1' || 'rule2' )* %% (.+?) $/;
     is $m[0].elems, 2, 'Correct number of captures when backtracking (1)';
+    #?rakudo.jvm todo 'RT #125285'
     is $m[1].elems, 2, 'Correct number of captures when backtracking (2)';
 }
 
