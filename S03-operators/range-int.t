@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 493;
+plan 506;
 
 is ~(-17..-19), '', '-17..-19';
 is ~(-17..^-19), '', '-17..^-19';
@@ -496,5 +496,19 @@ is (1e0 .. 10e0).sum, 55, "works with floater start/end";
 is (0.01 .. 10.01).sum.WHAT, Rat, "delegates properly to Rat summation";
 is (0.01 .. 10.01).sum, 55.11, "and produces correct answer";
 is ("1".."9").sum, 45, "delegates to non-Real summation";
+
+is sum(1 .. 10).WHAT, Int, 'sum always produces Int';
+is sum(1.0 .. 10.0).WHAT, Int, "even if endpoints are Rat integers";
+is sum(1e0 .. 10e0).WHAT, Int, "even if endpoints are Num integers";
+is sum(1..10**100), 50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, 'sum of googol range';
+is sum(1.0 .. 10.1).WHAT, Int, "sum allows non-Int integer ranges with slop on right and produces Int";
+is sum(1.0 .. 10.1), 55, "sum allows non-Int integer ranges with slop on right";
+is sum(1.0 ..^ 10.1), 55, "sum doesn't exclude endpoint if it doesn't match last integer that would be produced";
+is sum(1e0 .. 10.0), 55, "works with floater start";
+is sum(1.0 .. 10e0), 55, "works with floater end";
+is sum(1e0 .. 10e0), 55, "works with floater start/end";
+is sum(0.01 .. 10.01).WHAT, Rat, "delegates properly to Rat summation";
+is sum(0.01 .. 10.01), 55.11, "and produces correct answer";
+is sum("1".."9"), 45, "delegates to non-Real summation";
  
 # vim: ft=perl6
