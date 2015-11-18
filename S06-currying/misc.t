@@ -34,4 +34,5 @@ throws-like { 42 same-in-Int "42" }, X::TypeCheck::Binding,
 
 # Try with an anonymous capture in the mix
 sub abc123 (| ($a,$b,$c,$o,$t,$th)) { $a,$b,$c,$o,$t,$th; }
+#?rakudo.jvm skip 'NullPointerException'
 is-primed-call(&abc123, \(1,2,3), ['a','b','c',1,2,3], 'a','b','c');
