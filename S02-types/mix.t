@@ -12,7 +12,6 @@ sub showkv($x) {
 {
     my $m = mix <a foo a a a a b foo>;
     isa-ok $m, Mix, '&mix produces a Mix';
-    #?rakudo.jvm skip 'NPE'
     is showkv($m), 'a:5 b:1 foo:2', '...with the right elements';
 
     is $m.default, 0, "Defaults to 0";
@@ -31,7 +30,6 @@ sub showkv($x) {
     my $hash;
     lives-ok { $hash = $m.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
-    #?rakudo.jvm skip 'NPE'
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
     throws-like { $m<a> = 5 },
@@ -75,25 +73,18 @@ sub showkv($x) {
 
 {
     isa-ok "a".Mix, Mix, "Str.Mix makes a Mix";
-    #?rakudo.jvm skip 'NPE'
     is showkv("a".Mix), 'a:1', "'a'.Mix is mix a";
 
     isa-ok (a => 100000).Mix, Mix, "Pair.Mix makes a Mix";
-    #?rakudo.jvm skip 'NPE'
     is showkv((a => 100000).Mix), 'a:100000', "(a => 100000).Mix is mix a:100000";
-    #?rakudo.jvm skip 'NPE'
     is showkv((a => 0).Mix), '', "(a => 0).Mix is the empty mix";
 
     isa-ok <a b c>.Mix, Mix, "<a b c>.Mix makes a Mix";
-    #?rakudo.jvm skip 'NPE'
     is showkv(<a b c a>.Mix), 'a:2 b:1 c:1', "<a b c a>.Mix makes the mix a:2 b:1 c:1";
-    #?rakudo.jvm skip 'NPE'
     is showkv(["a", "b", "c", "a"].Mix), 'a:2 b:1 c:1', "[a b c a].Mix makes the mix a:2 b:1 c:1";
-    #?rakudo.jvm skip 'NPE'
     is showkv([a => 3, b => 0, 'c', 'a'].Mix), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].Mix makes the mix a:4 c:1";
 
     isa-ok {a => 2, b => 4, c => 0}.Mix, Mix, "{a => 2, b => 4, c => 0}.Mix makes a Mix";
-    #?rakudo.jvm skip 'NPE'
     is showkv({a => 2, b => 4, c => 0}.Mix), 'a:2 b:4', "{a => 2, b => 4, c => 0}.Mix makes the mix a:2 b:4";
 }
 
@@ -126,14 +117,12 @@ sub showkv($x) {
 {
     my %h := mix <a b o p a p o o>;
     ok %h ~~ Mix, 'A hash to which a Mix has been bound becomes a Mix';
-    #?rakudo.jvm skip 'NPE'
     is showkv(%h), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
 {
     my $m = mix <a b o p a p o o>;
     isa-ok $m, Mix, '&Mix.new given an array of strings produces a Mix';
-    #?rakudo.jvm skip 'NPE'
     is showkv($m), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
@@ -168,7 +157,6 @@ sub showkv($x) {
     is +$m, 1, "... with one element";
 }
 
-#?rakudo.jvm skip 'NPE'
 {
     my $m = mix set <foo bar foo bar baz foo>;
     isa-ok $m, Mix, '&Mix.new given a Set produces a Mix';
@@ -181,14 +169,12 @@ sub showkv($x) {
     is +$m, 1, "... with one element";
 }
 
-#?rakudo.jvm skip 'NPE'
 {
     my $m = mix MixHash.new(<foo bar foo bar baz foo>);
     isa-ok $m, Mix, '&Mix.new given a MixHash produces a Mix';
     is +$m, 1, "... with one element";
 }
 
-#?rakudo.jvm skip 'NPE'
 {
     my $m = mix set <foo bar foo bar baz foo>;
     isa-ok $m, Mix, '&mix given a Set produces a Mix';
@@ -200,7 +186,6 @@ sub showkv($x) {
 {
     my %m := mix <a b c b>;
     isa-ok %m, Mix, 'A Mix bound to a %var is a Mix';
-    #?rakudo.jvm skip 'NPE'
     is showkv(%m), 'a:1 b:2 c:1', '...with the right elements';
 
     is %m<b>, 2, 'Single-key subscript (existing element)';
@@ -243,7 +228,6 @@ sub showkv($x) {
     ok $s.chars < 1000, "... of reasonable length";
     lives-ok { $c = EVAL $s }, ".perl.EVAL lives";
     isa-ok $c, Mix, "... and produces a Mix";
-    #?rakudo.jvm skip 'NPE'
     is showkv($c), showkv($m), "... and it has the correct values";
 }
 
@@ -253,7 +237,6 @@ sub showkv($x) {
     my $s;
     lives-ok { $s = $m.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
-    #?rakudo.jvm skip 'NPE'
     is $s.split(" ").sort.join(" "), "bar(-2.2) baz foo(3.1)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
@@ -273,7 +256,6 @@ sub showkv($x) {
 {
     my %b := mix "a", "b", "c", "b";
     isa-ok %b, Mix, 'A Mix bound to a %var is a Mix';
-    #?rakudo.jvm skip 'NPE'
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -357,14 +339,12 @@ sub showkv($x) {
       'cannot call .grabpairs on a Mix';
 }
 
-#?rakudo.jvm skip 'NPE'
 {
     my $m1 = Mix.new(( mix <a b c> ), <c c c d d d d>);
     is +$m1, 2, "Two elements";
     my $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a Mix!";
-    #?rakudo.jvm skip 'NPE'
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
     my $inner-list = $m1.keys.first(List);
     isa-ok $inner-list, List, "One of the mix's elements is indeed a List!";
@@ -376,7 +356,6 @@ sub showkv($x) {
     $inner-mix = $m1.keys.first(Mix);
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
-    #?rakudo.jvm skip 'NPE'
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
     my $inner-list = $m1.keys.first(List);
     isa-ok $inner-list, List, "One of the mix's elements is indeed a List!";
@@ -385,21 +364,16 @@ sub showkv($x) {
 
 {
     isa-ok 42.Mix, Mix, "Method .Mix works on Int-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv(42.Mix), "42:1", "Method .Mix works on Int-2";
     isa-ok "blue".Mix, Mix, "Method .Mix works on Str-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv("blue".Mix), "blue:1", "Method .Mix works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
     isa-ok @a.Mix, Mix, "Method .Mix works on Array-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv(@a.Mix), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .Mix works on Array-2";
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.Mix, Mix, "Method .Mix works on Hash-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv(%x.Mix), "a:1 b:2", "Method .Mix works on Hash-2";
     isa-ok (@a, %x).Mix, Mix, "Method .Mix works on List-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv((@a, %x).Mix), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .Mix works on List-2";
 }
@@ -411,7 +385,6 @@ sub showkv($x) {
     is +$m1, 11, '+$set gives sum of values (non-empty) 11';
     is $m1.minpairs, [a=>1.1], '.minpairs works (non-empty) 11';
     is $m1.maxpairs, [d=>4.4], '.maxpairs works (non-empty) 11';
-    #?rakudo.jvm 4 skip 'NPE'
     is $m1.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
       '.fmt(%s) works (non-empty 11)';
     is $m1.fmt('%s',',').split(',').sort, <a b c d>,
@@ -424,21 +397,18 @@ sub showkv($x) {
     my $m2 = (a => 1.1, b => 1.1, c => 3.3, d => 3.3).Mix;
     is $m2.total, 8.8, '.total gives sum of values (non-empty) 8.8';
     is +$m2, 8.8, '+$set gives sum of values (non-empty) 8.8';
-    #?rakudo.jvm 2 skip 'NPE'
     is $m2.minpairs.sort, [a=>1.1,b=>1.1], '.minpairs works (non-empty) 8.8';
     is $m2.maxpairs.sort, [c=>3.3,d=>3.3], '.maxpairs works (non-empty) 8.8';
 
     my $m3 = (a => 1.1, b => 1.1, c => 1.1, d => 1.1).Mix;
     is $m3.total, 4.4, '.total gives sum of values (non-empty) 4.4';
     is +$m3, 4.4, '+$set gives sum of values (non-empty) 4.4';
-    #?rakudo.jvm 2 skip 'NPE'
     is $m3.minpairs.sort,[a=>1.1,b=>1.1,c=>1.1,d=>1.1], '.minpairs works (non-empty) 4.4';
     is $m3.maxpairs.sort,[a=>1.1,b=>1.1,c=>1.1,d=>1.1], '.maxpairs works (non-empty) 4.4';
 
     my $e = ().Mix;
     is $e.total, 0, '.total gives sum of values (empty)';
     is +$e, 0, '+$mix gives sum of values (empty)';
-    #?rakudo.jvm 6 skip 'NPE'
     is $e.minpairs, (), '.minpairs works (empty)';
     is $e.maxpairs, (), '.maxpairs works (empty)';
     is $e.fmt('foo %s'), "", '.fmt(%s) works (empty)';
@@ -447,8 +417,7 @@ sub showkv($x) {
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
-#?rakudo.moar todo 'we have not secured .WHICH creation yet RT #124496'
-#?rakudo.jvm skip 'NPE'
+#?rakudo todo 'we have not secured .WHICH creation yet RT #124496'
 {
     isnt 'a(1) Str|b(1) Str|c'.Mix.WHICH, <a b c>.Mix.WHICH, 
       'Faulty .WHICH creation';
@@ -473,7 +442,6 @@ sub showkv($x) {
       'Make sure we cannot assign on a .kv alias';
 }
 
-#?rakudo.jvm skip 'NPE'
 {
     my $m = (a=>1.1, b=>2.2, c=>3.3, d=> 4.4).Mix;
     my @a1;

@@ -12,7 +12,6 @@ sub showkv($x) {
 {
     my $b = bag <a foo a a a a b foo>;
     isa-ok $b, Bag, '&bag produces a Bag';
-    #?rakudo.jvm skip 'NPE'
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
 
     is $b.default, 0, "Defaults to 0";
@@ -32,7 +31,6 @@ sub showkv($x) {
     lives-ok { $hash = $b.hash },
       ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
-    #?rakudo.jvm skip 'NPE'
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
     throws-like { $b<a> = 5 },
@@ -72,25 +70,18 @@ sub showkv($x) {
 
 {
     isa-ok "a".Bag, Bag, "Str.Bag makes a Bag";
-    #?rakudo.jvm skip 'NPE'
     is showkv("a".Bag), 'a:1', "'a'.Bag is bag a";
 
     isa-ok (a => 100000).Bag, Bag, "Pair.Bag makes a Bag";
-    #?rakudo.jvm skip 'NPE'
     is showkv((a => 100000).Bag), 'a:100000', "(a => 100000).Bag is bag a:100000";
-    #?rakudo.jvm skip 'NPE'
     is showkv((a => 0).Bag), '', "(a => 0).Bag is the empty bag";
 
     isa-ok <a b c>.Bag, Bag, "<a b c>.Bag makes a Bag";
-    #?rakudo.jvm skip 'NPE'
     is showkv(<a b c a>.Bag), 'a:2 b:1 c:1', "<a b c a>.Bag makes the bag a:2 b:1 c:1";
-    #?rakudo.jvm skip 'NPE'
     is showkv(["a", "b", "c", "a"].Bag), 'a:2 b:1 c:1', "[a b c a].Bag makes the bag a:2 b:1 c:1";
-    #?rakudo.jvm skip 'NPE'
     is showkv([a => 3, b => 0, 'c', 'a'].Bag), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].Bag makes the bag a:4 c:1";
 
     isa-ok {a => 2, b => 4, c => 0}.Bag, Bag, "{a => 2, b => 4, c => 0}.Bag makes a Bag";
-    #?rakudo.jvm skip 'NPE'
     is showkv({a => 2, b => 4, c => 0}.Bag), 'a:2 b:4', "{a => 2, b => 4, c => 0}.Bag makes the bag a:2 b:4";
 }
 
@@ -123,14 +114,12 @@ sub showkv($x) {
 {
     my %h := bag <a b o p a p o o>;
     ok %h ~~ Bag, 'A hash to which a Bag has been bound becomes a Bag';
-    #?rakudo.jvm skip 'NPE'
     is showkv(%h), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
 {
     my $b = bag <a b o p a p o o>;
     isa-ok $b, Bag, '&Bag.new given an array of strings produces a Bag';
-    #?rakudo.jvm skip 'NPE'
     is showkv($b), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
@@ -166,7 +155,6 @@ sub showkv($x) {
     is +$b, 1, "... with one element";
 }
 
-#?rakudo.jvm skip 'NPE'
 {
     my $b = bag set <foo bar foo bar baz foo>;
     isa-ok $b, Bag, '&Bag.new given a Set produces a Bag';
@@ -181,14 +169,12 @@ sub showkv($x) {
 }
 
 #?niecza skip 'BagHash'
-#?rakudo.jvm skip 'NPE'
 {
     my $b = bag BagHash.new(<foo bar foo bar baz foo>);
     isa-ok $b, Bag, '&Bag.new given a BagHash produces a Bag';
     is +$b, 1, "... with one element";
 }
 
-#?rakudo.jvm skip 'NPE'
 {
     my $b = bag set <foo bar foo bar baz foo>;
     isa-ok $b, Bag, '&bag given a Set produces a Bag';
@@ -200,7 +186,6 @@ sub showkv($x) {
 {
     my %b := bag <a b c b>;
     isa-ok %b, Bag, 'A Bag bound to a %var is a Bag';
-    #?rakudo.jvm skip 'NPE'
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -243,7 +228,6 @@ sub showkv($x) {
     lives-ok { $c = EVAL $s },
       ".perl.EVAL lives";
     isa-ok $c, Bag, "... and produces a Bag";
-    #?rakudo.jvm skip 'NPE'
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
@@ -253,7 +237,6 @@ sub showkv($x) {
     lives-ok { $s = $b.Str },
       ".Str lives";
     isa-ok $s, Str, "... and produces a string";
-    #?rakudo.jvm skip 'NPE'
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
@@ -274,7 +257,6 @@ sub showkv($x) {
 {
     my %b := bag "a", "b", "c", "b";
     isa-ok %b, Bag, 'A Bag bound to a %var is a Bag';
-    #?rakudo.jvm skip 'NPE'
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -393,7 +375,6 @@ sub showkv($x) {
       'cannot call .grabpairs on a Bag';
 }
 
-#?rakudo.jvm skip 'NPE'
 {
     my $b1 = Bag.new( (bag <a b c>) , <c c c d d d d>);
     is +$b1, 2, "Two elements";
@@ -419,21 +400,16 @@ sub showkv($x) {
 
 {
     isa-ok 42.Bag, Bag, "Method .Bag works on Int-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv(42.Bag), "42:1", "Method .Bag works on Int-2";
     isa-ok "blue".Bag, Bag, "Method .Bag works on Str-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv("blue".Bag), "blue:1", "Method .Bag works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
     isa-ok @a.Bag, Bag, "Method .Bag works on Array-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv(@a.Bag), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .Bag works on Array-2";
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.Bag, Bag, "Method .Bag works on Hash-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv(%x.Bag), "a:1 b:2", "Method .Bag works on Hash-2";
     isa-ok (@a, %x).Bag, Bag, "Method .Bag works on List-1";
-    #?rakudo.jvm skip 'NPE'
     is showkv((@a, %x).Bag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .Bag works on List-2";
 }
@@ -446,7 +422,6 @@ sub showkv($x) {
     is $b1.minpairs, [a=>1], '.minpairs works (non-empty 10)';
     is $b1.maxpairs, [d=>4], '.maxpairs works (non-empty 10)';
     # Bag is unordered according to S02:1476
-    #?rakudo.jvm 4 skip 'NPE'
     is $b1.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
       '.fmt(%s) works (non-empty 10)';
     is $b1.fmt('%s',',').split(',').sort, <a b c d>,
@@ -459,21 +434,18 @@ sub showkv($x) {
     my $b2 = <a b c c c d d d>.Bag;
     is $b2.total, 8, '.total gives sum of values (non-empty 8)';
     is +$b2, 8, '+$bag gives sum of values (non-empty 8)';
-    #?rakudo.jvm 2 skip 'NPE'
     is $b2.minpairs.sort, [a=>1, b=>1], '.minpairs works (non-empty 8)';
     is $b2.maxpairs.sort, [c=>3, d=>3], '.maxpairs works (non-empty 8)';
 
     $b2 = <a b c d>.Bag;
     is $b2.total, 4, '.total gives sum of values (non-empty 4)';
     is +$b2, 4, '+$bag gives sum of values (non-empty 4)';
-    #?rakudo.jvm 2 skip 'NPE'
     is $b2.minpairs.sort,[a=>1,b=>1,c=>1,d=>1], '.minpairs works (non-empty 4)';
     is $b2.maxpairs.sort,[a=>1,b=>1,c=>1,d=>1], '.maxpairs works (non-empty 4)';
 
     my $e = ().Bag;
     is $e.total, 0, '.total gives sum of values (empty)';
     is +$e, 0, '+$bag gives sum of values (empty)';
-    #?rakudo.jvm 6 skip 'NPE'
     is $e.minpairs, (), '.minpairs works (empty)';
     is $e.maxpairs, (), '.maxpairs works (empty)';
     is $e.fmt('foo %s'), "", '.fmt(%s) works (empty)';
@@ -482,15 +454,13 @@ sub showkv($x) {
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
-#?rakudo.moar todo 'we have not secured .WHICH creation yet RT #124454'
-#?rakudo.jvm skip 'NPE'
+#?rakudo todo 'we have not secured .WHICH creation yet RT #124454'
 {
         isnt 'a(1) Str|b(1) Str|c'.Bag.WHICH, <a b c>.Bag.WHICH,
           'Faulty .WHICH creation';
 }
 
 # RT #117915
-#?rakudo.jvm skip 'NPE'
 {
     my @pairings;
     my Bag $bag .= new: <foo foo bar>;
@@ -508,7 +478,6 @@ sub showkv($x) {
     my class MyBag is Bag { }
     my $b = MyBag.new(|<a foo a a a a b foo>);
     isa-ok $b, MyBag, 'MyBag.new produces a MyBag';
-    #?rakudo.jvm skip 'NPE'
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
 }
 
@@ -531,7 +500,6 @@ sub showkv($x) {
       'Make sure we cannot assign on a .kv alias';
 }
 
-#?rakudo.jvm skip 'NPE'
 {
     my $b = <a b b c c c d d d d>.Bag;
     my @a1;
