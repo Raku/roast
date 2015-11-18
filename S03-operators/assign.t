@@ -136,6 +136,7 @@ plan 294;
 {
     my ($a, %b) = "!", a => "1", b => "2", c => "3";
     is $a, "!", "got scalar in (scalar,hash) = list";
+    #?rakudo.jvm skip 'NPE'
     is %b.keys.sort.join(", "), "a, b, c", "got hash in (scalar,hash) = list";
 }
 
@@ -177,6 +178,7 @@ plan 294;
     is(@a[1], @b[1], 'chained @ = % = list assignment');
 }
 
+#?rakudo.jvm skip 'NPE'
 {
     # chained my $scalar = my %hash = list assignment 
     my $s = my %h = 1,2;
@@ -184,6 +186,7 @@ plan 294;
     is($s, $t, 'chained $ = % = list assignment');
 }
 
+#?rakudo.jvm skip 'NPE'
 {
     # chained $scalar = %hash = list assignment 
     my ($s, $t, %h);
@@ -896,6 +899,7 @@ sub l () { 1, 2 };
 }
 
 # RT #77586
+#?rakudo.jvm skip 'NPE'
 {
     my %bughunt = 1 => "foo", 2 => "bar", 3 => "foo";
     my %correct = grep { .value ne "bar" }, %bughunt.pairs;

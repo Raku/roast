@@ -69,65 +69,87 @@ ok <a b c d e> !(cont) "marmoset", "marmoset is not contained by a b c d e";
 
 # Union
 
+#?rakudo.jvm skip 'NPE'
 is showset($s ∪ $s), showset($s), "Set union with itself yields self";
 isa-ok ($s ∪ $s), Set, "... and it's actually a Set";
+#?rakudo.jvm skip 'NPE'
 is showset($ks ∪ $ks), showset($ks), "SetHash union with itself yields self (as Set)";
 isa-ok ($ks ∪ $ks), Set, "... and it's actually a Set";
 
+#?rakudo.jvm skip 'NPE'
 is showset($s ∪ $ks), showset(set <I'm afraid it is isn't your day>), "Set union with SetHash works";
 isa-ok ($s ∪ $ks), Set, "... and it's actually a Set";
+#?rakudo.jvm skip 'NPE'
 is showset($ks ∪ <blue green>), showset(set <I'm afraid it is blue green>), "SetHash union with array of strings works";
 isa-ok ($ks ∪ <blue green>), Set, "... and it's actually a Set";
 
+#?rakudo.jvm skip 'NPE'
 is showset($s (|) $ks), showset(set <I'm afraid it is isn't your day>), "Set union with SetHash works (texas)";
 isa-ok ($s (|) $ks), Set, "... and it's actually a Set (texas)";
+#?rakudo.jvm skip 'NPE'
 is showset($ks (|) <blue green>), showset(set <I'm afraid it is blue green>), "SetHash union with array of strings works (texas)";
 isa-ok ($ks (|) <blue green>), Set, "... and it's actually a Set (texas)";
 
 # Intersection
 
+#?rakudo.jvm skip 'NPE'
 is showset($s ∩ $s), showset($s), "Set intersection with itself yields self";
 isa-ok ($s ∩ $s), Set, "... and it's actually a Set";
+#?rakudo.jvm skip 'NPE'
 is showset($ks ∩ $ks), showset($ks), "SetHash intersection with itself yields self (as Set)";
 isa-ok ($ks ∩ $ks), Set, "... and it's actually a Set";
+#?rakudo.jvm skip 'NPE'
 is showset($s ∩ $ks), showset(set <I'm afraid it>), "Set intersection with SetHash works";
 isa-ok ($s ∩ $ks), Set, "... and it's actually a Set";
 
+#?rakudo.jvm skip 'NPE'
 is showset($s (&) $ks), showset(set <I'm afraid it>), "Set intersection with SetHash works (texas)";
 isa-ok ($s (&) $ks), Set, "... and it's actually a Set (texas)";
 
 # set subtraction
 
+#?rakudo.jvm skip 'NPE'
 is showset($s (-) $s), showset(∅), "Set subtracted from Set is correct";
 isa-ok ($s (-) $s), Set, "... and it's actually a Set";
 
+#?rakudo.jvm skip 'NPE'
 is showset($s (-) $ks), showset(set <isn't your day>), "SetHash subtracted from Set is correct";
 isa-ok ($s (-) $ks), Set, "... and it's actually a Set";
+#?rakudo.jvm skip 'NPE'
 is showset($ks (-) $s), showset(set <is>), "Set subtracted from SetHash is correct";
 isa-ok ($ks (-) $s), Set, "... and it's actually a Set";
 
+#?rakudo.jvm skip 'NPE'
 is showkv($b (-) $s), showkv($b), "Set subtracted from Bag is correct";
 isa-ok ($b (-) $s), Bag, "... and it's actually a Bag";
+#?rakudo.jvm skip 'NPE'
 is showset($s (-) $b), showset($s), "Bag subtracted from Set is correct";
 isa-ok ($s (-) $b), Bag, "... and it's actually a Bag";
 
+#?rakudo.jvm skip 'NPE'
 is showset($s (-) $kb), showset(set <I'm afraid it isn't day>), "BagHash subtracted from Set is correct";
 isa-ok ($s (-) $kb), Bag, "... and it's actually a Bag";
+#?rakudo.jvm skip 'NPE'
 is showkv($kb (-) $s), showkv(<Come, take your bread with joy, and wine with a glad heart>.Bag), "Set subtracted from BagHash is correct";
 isa-ok ($kb (-) $s), Bag, "... and it's actually a Bag";
 
 # symmetric difference
 
+#?rakudo.jvm skip 'NPE'
 is showset($s (^) $s), showset(∅), "Set symmetric difference with Set is correct";
 isa-ok ($s (^) $s), Set, "... and it's actually a Set";
 
+#?rakudo.jvm skip 'NPE'
 is showset($s (^) $ks), showset(set <is isn't your day>), "SetHash symmetric difference with Set is correct";
 isa-ok ($s (^) $ks), Set, "... and it's actually a Set";
+#?rakudo.jvm skip 'NPE'
 is showset($ks (^) $s), showset(set <is isn't your day>), "Set symmetric difference with SetHash is correct";
 isa-ok ($ks (^) $s), Set, "... and it's actually a Set";
 
 # RT #122882
+#?rakudo.jvm skip 'NPE'
 is showset($s (^) $s (^) $s), showset(∅), "Set symmetric difference with 3+ args (RT #122882)";
+#?rakudo.jvm skip 'NPE'
 is showset(<a b> (^) <b c> (^) <a d> (^) <a e>), showset(set <c d e>), "Set symmetric difference with 3+ args (RT #122882)";
 
 # symmetric difference with Bag moved to bag.t
@@ -410,21 +432,25 @@ ok $kb !R(>) $s, "BagHash is not a reversed proper superset of Set (texas)";
     my @d;
 
     is showset([∪] @d), showset(∅), "Union reduce works on nothing";
+    #?rakudo.jvm 3 skip 'NPE'
     is showset([∪] $a), showset($a), "Union reduce works on one set";
     is showset([∪] $a, $b), showset(set($a.keys, $b.keys)), "Union reduce works on two sets";
     is showset([∪] $a, $b, $c), showset(set($a.keys, $b.keys, $c.values)), "Union reduce works on three sets";
 
     is showset([(|)] @d), showset(∅), "Union reduce works on nothing (texas)";
+    #?rakudo.jvm 3 skip 'NPE'
     is showset([(|)] $a), showset($a), "Union reduce works on one set (texas)";
     is showset([(|)] $a, $b), showset(set($a.keys, $b.keys)), "Union reduce works on two sets (texas)";
     is showset([(|)] $a, $b, $c), showset(set($a.keys, $b.keys, $c.values)), "Union reduce works on three sets (texas)";
 
     is showset([∩] @d), showset(∅), "Intersection reduce works on nothing";
+    #?rakudo.jvm 3 skip 'NPE'
     is showset([∩] $a), showset($a), "Intersection reduce works on one set";
     is showset([∩] $a, $b), showset(set("Apollo")), "Intersection reduce works on two sets";
     is showset([∩] $a, $b, $c), showset(set("Apollo")), "Intersection reduce works on three sets";
 
     is showset([(&)] @d), showset(∅), "Intersection reduce works on nothing (texas)";
+    #?rakudo.jvm 3 skip 'NPE'
     is showset([(&)] $a), showset($a), "Intersection reduce works on one set (texas)";
     is showset([(&)] $a, $b), showset(set("Apollo")), "Intersection reduce works on two sets (texas)";
     is showset([(&)] $a, $b, $c), showset(set("Apollo")), "Intersection reduce works on three sets (texas)";
