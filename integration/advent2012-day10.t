@@ -47,7 +47,7 @@ is q{{Unmatched } and { are { OK } in { here}}, q:to"END".chomp;
 Unmatched } and { are { OK } in { here
 END
 
-like(qq!Lottery results: {(1..49).roll(6).sort}!, /^'Lottery results:'[' '\d+]**6$/), 'lottery results';
+like(qq!Lottery results: {(1..49).roll(6).sort}!, /^'Lottery results:'[' '\d+]**6$/, 'lottery results');
 
 my $pub-with-no-beer = q<Once upon a time, there was a pub. The pub had
 lots of awesome beer. One day, a Perl workshop
@@ -97,14 +97,14 @@ Found vacation
 Didn't find whisky
 END RESULTS
 
-like(qq:!s"It costs $10 to {<eat nom>.pick} here.", /^'It costs $10 to '[eat|nom]' here.'$/), 'quoting features';
+like(qq:!s"It costs $10 to {<eat nom>.pick} here.", /^'It costs $10 to '[eat|nom]' here.'$/, 'quoting features');
 
 is Q{$*DISTRO.name\n&sin(3)}, q:to"END".chomp;
 $*DISTRO.name\n&sin(3)
 END
 
-like(Q:s{$*DISTRO.name\n&sin(3)}, /\w+ .*? '\n&sin(3)'/), 'Q:s(...)';
+like(Q:s{$*DISTRO.name\n&sin(3)}, /\w+ .*? '\n&sin(3)'/, 'Q:s(...)');
 
-like(Q:s:b{$*DISTRO.name\n&sin(3)}, /\w+ .*? \n '&sin(3)'/), 'Q:s:b(...)';
+like(Q:s:b{$*DISTRO.name\n&sin(3)}, /\w+ .*? \n '&sin(3)'/, 'Q:s:b(...)');
 
-like(Q:s:b:f{$*DISTRO.name\n&sin(3)}, /\w+ .*? \n '0.14112'\d+$/), 'Q:s:b:f(...)';
+like(Q:s:b:f{$*DISTRO.name\n&sin(3)}, /\w+ .*? \n '0.14112'\d+$/, 'Q:s:b:f(...)');
