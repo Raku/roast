@@ -358,7 +358,6 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 } #20
 
 # whatever
-#?rakudo.jvm skip 'NullPointerException - RT #126655'
 {
     is %h{*}.sort,                           (1,2,3,4), "$n whatever: value";
     is (%h{*}:k).sort,                       <a b c d>, "$n whatever: :k";
@@ -386,7 +385,6 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 } #20
 
 # zen
-#?rakudo.jvm skip 'NullPointerException - RT #126655'
 {
     is %h{},                                       %h, "$n zen: value";
     is (%h{}:k).sort,                       <a b c d>, "$n zen: :k";
