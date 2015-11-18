@@ -114,10 +114,12 @@ nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
     dies-ok { 'a' ~~ / <+xdigit-digit> / }, "accidental kebabs disallowed";
 }
 
+#?rakudo.jvm 2 todo 'ignorecase and character ranges RT #125753'
 dies-ok { EVAL '/<[Ḍ̇..\x2FFF]>/' }, 'Cannot use NFG synthetic as range endpoint';
 
 # RT #125753
 is "Aa1" ~~ /:i <[a..z0..9]>+/, "Aa1", ':i with cclass with multiple ranges works';
+#?rakudo.jvm 3 skip '"ordbaseat NYI", ignorecase and character ranges RT #125753'
 is '%E3%81%82' ~~ /:ignorecase ['%' (<[a..f0..9]>|x)**2]+/, '%E3%81%82',
     ':ignorecase in combination with charclass ranges works with LTM';
 is 'Ä' ~~ /:ignoremark (<[A..F]>|x)/, 'Ä',
