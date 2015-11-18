@@ -10,13 +10,16 @@ eval-lives-ok('my $ｆｏｏ', "Handles non-ASCII identifier");
 throws-like 'my $১০kinds', X::Syntax::Variable::Numeric,
     "Doesn't allow non-ASCII digits at start of identifier";
 
+#?rakudo.jvm todo 'parsing issue: X::Syntax::Confused'
 throws-like 'my $̈a;', X::Syntax::Malformed,
     "Combining marks not allowed as first character of identifier";
 
+#?rakudo.jvm emit # parsing issue: "Bogus postfix"
 my $ẛ̣ = 42; # LATIN SMALL LETTER LONG S WITH DOT ABOVE + COMBINING DOT BELOW
 
 # this reference is spelled in source as LATIN SMALL LETTER LONG S + COMBINING
 # DOT ABOVE + COMBINING DOT BELOW
+#?rakudo.jvm skip 'fails due to above failure'
 is $ẛ̣, 42, "Identifiers are normalized";
 
 # XXX it would be nice to test for NFG normalization, but since .name returns a
