@@ -63,6 +63,7 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
 }
 
 # RT #126383
+#?rakudo.jvm skip "Method 'T' not found for invocant of class 'Rat', RT #126383"
 {
     sub accum( ::T \a, T(Cool) \b ) { a += b };
 
