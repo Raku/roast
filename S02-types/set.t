@@ -10,6 +10,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $s = set <a b foo>;
     isa-ok $s, Set, '&set produces a Set';
+    #?rakudo.jvm skip 'NPE'
     is showset($s), 'a b foo', '...with the right elements';
 
     is $s.default, False, "Default value is false";
@@ -26,6 +27,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $hash;
     lives-ok { $hash = $s.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
+    #?rakudo.jvm skip 'NPE'
     is showset($hash), 'a b foo', '...with the right elements';
     is $hash.values.grep({ ($_ ~~ Bool) && $_ }).elems, 3, "...and values";
 
@@ -57,18 +59,25 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     isa-ok "a".Set, Set, "Str.Set makes a Set";
+    #?rakudo.jvm skip 'NPE'
     is showset("a".Set), 'a', "'a'.Set is set a";
 
     isa-ok (a => 1).Set, Set, "Pair.Set makes a Set";
+    #?rakudo.jvm skip 'NPE'
     is showset((a => 1).Set), 'a', "(a => 1).Set is set a";
+    #?rakudo.jvm skip 'NPE'
     is showset((a => 0).Set), '', "(a => 0).Set is the empty set";
 
     isa-ok <a b c>.Set, Set, "<a b c>.Set makes a Set";
+    #?rakudo.jvm skip 'NPE'
     is showset(<a b c a>.Set), 'a b c', "<a b c a>.Set makes the set a b c";
+    #?rakudo.jvm skip 'NPE'
     is showset(["a", "b", "c", "a"].Set), 'a b c', "[a b c a].Set makes the set a b c";
+    #?rakudo.jvm skip 'NPE'
     is showset([a => 3, b => 0, 'c', 'a'].Set), 'a c', "[a => 3, b => 0, 'c', 'a'].Set makes the set a c";
 
     isa-ok {a => 2, b => 4, c => 0}.Set, Set, "{a => 2, b => 4, c => 0}.Set makes a Set";
+    #?rakudo.jvm skip 'NPE'
     is showset({a => 2, b => 4, c => 0}.Set), 'a b', "{a => 2, b => 4, c => 0}.Set makes the set a b";
 }
 
@@ -92,12 +101,14 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my %h := set <a b o p a p o o>;
     ok %h ~~ Set, 'A hash to which a Set has been bound becomes a set';
+    #?rakudo.jvm skip 'NPE'
     is %h.keys.sort.join, 'abop', '...with the right keys';
     is %h.values, (True xx 4), '...and values all True';
 }
 
 {
     my $s = set <foo bar foo bar baz foo>;
+    #?rakudo.jvm skip 'NPE'
     is showset($s), 'bar baz foo', '&set discards duplicates';
 }
 
@@ -132,6 +143,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$b, 1, "... with one element";
 }
 
+#?rakudo.jvm skip 'NPE'
 {
     my $b = set set <foo bar foo bar baz foo>;
     isa-ok $b, Set, '&Set.new given a Set produces a Set';
@@ -146,12 +158,14 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 #?niecza skip 'BagHash'
+#?rakudo.jvm skip 'NPE'
 {
     my $b = set BagHash.new(<foo bar foo bar baz foo>);
     isa-ok $b, Set, '&Set.new given a SetHash produces a Set';
     is +$b, 1, "... with one element";
 }
 
+#?rakudo.jvm skip 'NPE'
 {
     my $b = set bag <foo bar foo bar baz foo>;
     isa-ok $b, Set, '&set given a Bag produces a Set';
@@ -177,6 +191,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa-ok $str, Str, "... and produces a string";
     lives-ok { $c = EVAL $str }, ".perl.EVAL lives";
     isa-ok $c, Set, "... and produces a Set";
+    #?rakudo.jvm skip 'NPE'
     is showset($c), showset($s), "... and it has the correct values";
 }
 
@@ -184,6 +199,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set <foo bar baz>;
     lives-ok { $s = $s.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
+    #?rakudo.jvm skip 'NPE'
     is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";
 }
 
@@ -201,6 +217,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my %s := set <a b c b>;
     isa-ok %s, Set, 'A Set bound to a %var is a Set';
+    #?rakudo.jvm skip 'NPE'
     is showset(%s), 'a b c', '...with the right elements';
 
     is %s<a>, True, 'Single-key subscript (existing element)';
@@ -251,6 +268,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # L<S32::Containers/Set/pick>
 
+#?rakudo.jvm skip 'NPE'
 {
     my $s = set <a b c d e f g h>;
     my @a = $s.pick: *;
@@ -294,6 +312,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 }
 
 # RT #107022
+#?rakudo.jvm skip 'NPE'
 {
     my $s1 = Set.new(( set <a b c> ), <c d>);
     is +$s1, 2, "Two elements";
@@ -319,16 +338,21 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 {
     isa-ok 42.Set, Set, "Method .Set works on Int-1";
+    #?rakudo.jvm skip 'NPE'
     is showset(42.Set), "42", "Method .Set works on Int-2";
     isa-ok "blue".Set, Set, "Method .Set works on Str-1";
+    #?rakudo.jvm skip 'NPE'
     is showset("blue".Set), "blue", "Method .Set works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
     isa-ok @a.Set, Set, "Method .Set works on Array-1";
+    #?rakudo.jvm skip 'NPE'
     is showset(@a.Set), "Now Paradise cross-handed set the was way", "Method .Set works on Array-2";
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.Set, Set, "Method .Set works on Hash-1";
+    #?rakudo.jvm skip 'NPE'
     is showset(%x.Set), "a b", "Method .Set works on Hash-2";
     isa-ok (@a, %x).Set, Set, "Method .Set works on List-1";
+    #?rakudo.jvm skip 'NPE'
     is showset((@a, %x).Set), "Now Paradise a b cross-handed set the was way", "Method .Set works on List-2";
 }
 
@@ -337,6 +361,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     my $s = <a b b c c c d d d d>.Set;
     is $s.total, 4, '.total gives sum of values (non-empty)';
     is +$s, 4, '+$set gives sum of values (non-empty)';
+    #?rakudo.jvm 6 skip 'NPE'
     is $s.minpairs.sort,[a=>True,b=>True,c=>True,d=>True], '.minpairs works (non-empty)';
     is $s.maxpairs.sort,[a=>True,b=>True,c=>True,d=>True], '.maxpairs works (non-empty)';
     is $s.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
@@ -372,7 +397,8 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is $s, set(5), 'can metaop set assign like: (|)=';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet RT #124489'
+#?rakudo.moar todo 'we have not secured .WHICH creation yet RT #124489'
+#?rakudo.jvm skip 'NPE'
 {
     isnt 'a Str|b Str|c'.Set.WHICH, <a b c>.Set.WHICH,
       'Faulty .WHICH creation';
@@ -382,6 +408,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 {
     my $s = Set.new([1,2],[3,4]);
     is $s.elems, 2, 'arrays not flattened out by Set.new (1)';
+    #?rakudo.jvm 2 skip 'NPE'
     is $s.keys.sort[0], [1,2], 'arrays not flattened out by Set.new (2)';
     is $s.keys.sort[1], [3,4], 'arrays not flattened out by Set.new (3)';
 }
@@ -403,6 +430,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 {
     my $a = (1,2,3,2,2,2,2).Set;
+    #?rakudo.jvm skip 'NPE'
     is $a.kv.sort, (1,2,3,True,True,True), "Set.kv returns list of keys and values";
 }
 

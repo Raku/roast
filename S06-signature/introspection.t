@@ -57,7 +57,7 @@ sub j(*@i) {
     is ~(@l>>.name),     '@pos %named', '.name for slurpies';
 }
 
-
+#?rakudo.jvm skip 'NPE'
 {
     sub d(:x(:y(:z($a)))) { };   #OK not used
     is ~&d.signature.params.[0].named_names.sort, 'x y z', 'multi named_names';

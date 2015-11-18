@@ -22,41 +22,55 @@ my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3);
 
 # Mix Union
 
+#?rakudo.jvm skip 'NPE'
 is showkv($m ∪ $m), showkv($m), "Mix union with itself yields self";
 isa-ok ($m ∪ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($mh ∪ $mh), showkv($mh), "MixHash union with itself yields (as Mix)";
 isa-ok ($mh ∪ $mh), Mix, "... and it's actually a Mix";
 
+#?rakudo.jvm skip 'NPE'
 is showkv($b ∪ $m), "blood:1.1 love:1.2 rhetoric:1", "Bag union with Mix works";
 isa-ok ($b ∪ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($b ∪ $mh), "blood:1.1 love:1.3", "Bag union with MixHash works";
 isa-ok ($b ∪ $mh), Mix, "... and it's actually a Mix";
 
+#?rakudo.jvm skip 'NPE'
 is showkv($b (|) $m), "blood:1.1 love:1.2 rhetoric:1", "Bag union with Mix works (texas)";
 isa-ok ($b (|) $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($b (|) $mh), "blood:1.1 love:1.3", "Bag union with MixHash works (texas)";
 isa-ok ($b (|) $mh), Mix, "... and it's actually a Mix";
 
 # Mix Intersection
 
+#?rakudo.jvm skip 'NPE'
 is showkv($m ∩ $m), showkv($m), "Mix intersection with itself yields self (as Mix)";
 isa-ok ($m ∩ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($mh ∩ $mh), showkv($mh), "MixHash intersection with itself yields self (as Mix)";
 isa-ok ($mh ∩ $mh), Mix, "... and it's actually a Mix";
 
+#?rakudo.jvm skip 'NPE'
 is showkv($b ∩ $m), "blood:1 love:1", "Bag intersection with Mix works";
 isa-ok ($b ∩ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($b ∩ $mh), "blood:1 love:1", "Bag intersection with MixHash works";
 isa-ok ($b ∩ $mh), Mix, "... and it's actually a Mix";
 #?niecza todo 'Right now this works as $mh ∩ glag ∩ green ∩ blood.  Test may be wrong'
+#?rakudo.jvm skip 'NPE'
 is showkv($mh ∩ <glad green blood>), "blood:1", "MixHash intersection with array of strings works";
 isa-ok ($mh ∩ <glad green blood>), Mix, "... and it's actually a Mix";
 
+#?rakudo.jvm skip 'NPE'
 is showkv($b (&) $m), "blood:1 love:1", "Bag intersection with Mix works (texas)";
 isa-ok ($b (&) $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($b (&) $mh), "blood:1 love:1", "Bag intersection with MixHash works (texas)";
 isa-ok ($b (&) $mh), Mix, "... and it's actually a Mix";
 #?niecza todo 'Right now this works as $mh ∩ glag ∩ green ∩ blood.  Test may be wrong?'
+#?rakudo.jvm skip 'NPE'
 is showkv($mh (&) <glad green blood>), "blood:1", "MixHash intersection with array of strings works (texas)";
 isa-ok ($mh (&) <glad green blood>), Mix, "... and it's actually a Mix";
 
@@ -66,8 +80,8 @@ sub symmetric-difference($a, $m) {
     ($a (|) $m) (-) ($m (&) $a)
 }
 
-#?rakudo 8 todo "Rakudo update in progress, but not done yet RT #124541"
-
+#?rakudo.moar 8 todo "Rakudo update in progress, but not done yet RT #124541"
+#?rakudo.jvm 8 skip 'NPE'
 is showkv($b (^) $m), showkv(symmetric-difference($b, $m)), "Mix symmetric difference with Bag is correct";
 isa-ok ($b (^) $m), Mix, "... and it's actually a Mix";
 is showkv($m (^) $b), showkv(symmetric-difference($b, $m)), "Bag symmetric difference with Mix is correct";
@@ -82,47 +96,64 @@ isa-ok ($mh (^) $b), Mix, "... and it's actually a Mix";
 
 # Mix multiplication
 
+#?rakudo.jvm skip 'NPE'
 is showkv($m ⊍ $m), "blood:1.21 love:1.44 rhetoric:1", "Mix multiplication with itself yields self squared";
 isa-ok ($m ⊍ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($mh ⊍ $mh), "blood:1.21 love:1.69", "MixHash multiplication with itself yields self squared";
 isa-ok ($mh ⊍ $mh), Mix, "... and it's actually a Mix";
 
+#?rakudo.jvm skip 'NPE'
 is showkv($b ⊍ $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works";
 isa-ok ($b ⊍ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($bh ⊍ $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works";
 isa-ok ($bh ⊍ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($mh ⊍ $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works";
 isa-ok ($mh ⊍ $m), Mix, "... and it's actually a Mix";
 
+#?rakudo.jvm skip 'NPE'
 is showkv($b (.) $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works (texas)";
 isa-ok ($b (.) $m), Mix, "... and it's actually a Mix (texas)";
+#?rakudo.jvm skip 'NPE'
 is showkv($bh (.) $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works (texas)";
 isa-ok ($bh (.) $m), Mix, "... and it's actually a Mix (texas)";
+#?rakudo.jvm skip 'NPE'
 is showkv($mh (.) $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works (texas)";
 isa-ok ($mh (.) $m), Mix, "... and it's actually a Mix";
 
 # Mix addition
 
+#?rakudo.jvm skip 'NPE'
 is showkv($m ⊎ $m), "blood:2.2 love:2.4 rhetoric:2", "Mix addition with itself yields twice self";
 isa-ok ($m ⊎ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($mh ⊎ $mh), "blood:2.2 love:2.6", "Mix addition with itself yields twice self";
 isa-ok ($mh ⊎ $mh), Mix, "... and it's actually a Mix";
 
+#?rakudo.jvm skip 'NPE'
 is showkv($b ⊎ $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works";
 isa-ok ($b ⊎ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($bh ⊎ $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works";
 isa-ok ($bh ⊎ $m), Mix, "... and it's actually a Mix";
+#?rakudo.jvm skip 'NPE'
 is showkv($mh ⊎ $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works";
 isa-ok ($mh ⊎ $m), Mix, "... and it's actually a Mix";
 
+#?rakudo.jvm skip 'NPE'
 is showkv($b (+) $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works (texas)";
 isa-ok ($b (+) $m), Mix, "... and it's actually a Mix (texas)";
+#?rakudo.jvm skip 'NPE'
 is showkv($bh (+) $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works (texas)";
 isa-ok ($bh (+) $m), Mix, "... and it's actually a Mix (texas)";
+#?rakudo.jvm skip 'NPE'
 is showkv($mh (+) $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works (texas)";
 isa-ok ($mh (+) $m), Mix, "... and it's actually a Mix";
 
 # for https://rt.perl.org/Ticket/Display.html?id=122810
+#?rakudo.jvm skip 'hangs'
 ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - I mean mix - with 50k elems and lives";
 
 # msubset
@@ -196,38 +227,46 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     # my $mh = MixHash.new(<blood love love>);
     my @d;
     
+    #?rakudo.jvm 4 skip 'NPE'
     is showkv([⊎] @d), showkv(∅), "Mix sum reduce works on nothing";
     is showkv([⊎] $b), showkv($b.Mix), "Mix sum reduce works on one set";
     is showkv([⊎] $b, $m), showkv({ blood => 2.1, love => 2.2, rhetoric => 1 }), "Mix sum reduce works on two sets";
     is showkv([⊎] $b, $m, $mh), showkv({ blood => 3.2, love => 3.5, rhetoric => 1 }), "Mix sum reduce works on three sets";
 
+    #?rakudo.jvm 4 skip 'NPE'
     is showkv([(+)] @d), showkv(∅), "Mix sum reduce works on nothing (Texas)";
     is showkv([(+)] $m), showkv($m), "Mix sum reduce works on one set (Texas)";
     is showkv([(+)] $b, $m), showkv({ blood => 2.1, love => 2.2, rhetoric => 1 }), "Mix sum reduce works on two sets (Texas)";
     is showkv([(+)] $b, $m, $mh), showkv({ blood => 3.2, love => 3.5, rhetoric => 1 }), "Mix sum reduce works on three sets (Texas)";
 
+    #?rakudo.jvm 4 skip 'NPE'
     is showkv([⊍] @d), showkv(∅), "Mix multiply reduce works on nothing";
     is showkv([⊍] $b), showkv($b.Mix), "Mix multiply reduce works on one set";
     is showkv([⊍] $b, $m), showkv({ blood => 1.1, love => 1.2 }), "Mix multiply reduce works on two sets";
     is showkv([⊍] $b, $m, $mh), showkv({ blood => 1.21, love => 1.56 }), "Mix multiply reduce works on three sets";
 
+    #?rakudo.jvm 4 skip 'NPE'
     is showkv([(.)] @d), showkv(∅), "Mix multiply reduce works on nothing (Texas)";
     is showkv([(.)] $b), showkv($b.Mix), "Mix multiply reduce works on one set (Texas)";
     is showkv([(.)] $b, $m), showkv({ blood => 1.1, love => 1.2 }), "Mix multiply reduce works on two sets (Texas)";
     is showkv([(.)] $b, $m, $mh), showkv({ blood => 1.21, love => 1.56 }), "Mix multiply reduce works on three sets (Texas)";
 
+    #?rakudo.jvm skip 'NPE'
     is showkv([(^)] @d), showset(∅), "Mix symmetric difference reduce works on nothing";
-    #?rakudo 4 todo "NYI"
+    #?rakudo.moar 4 todo "NYI"
+    #?rakudo.jvm 4 skip 'NPE'
     is showkv([(^)] $b), showset($b), "Bag symmetric difference reduce works on one set";
     isa-ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one set, yields set";
     is showkv([(^)] $m), showkv($m), "Mix symmetric difference reduce works on one mix";
     isa-ok showkv([(^)] $m), Mix, "Mix symmetric difference reduce works on one mix, yields mix";
-    #?rakudo 4 todo "Wrong answer at the moment"
+    #?rakudo.moar 4 todo "Wrong answer at the moment"
+    #?rakudo.jvm 4 skip 'NPE'
     is showkv([(^)] $b, $m), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on a mix and a set";
     isa-ok showkv([(^)] $b, $m), Mix, "... and produces a Mix";
     is showkv([(^)] $m, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
     isa-ok showkv([(^)] $m, $b), Mix, "... and still produces a Mix that way too";
-    #?rakudo 2 todo "Crashing"
+    #?rakudo.moar 2 todo "Crashing"
+    #?rakudo.jvm 2 skip 'NPE'
     is showkv([(^)] $b, $m, $mh), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on three mixs";
     isa-ok showkv([(^)] $b, $m, $mh), Mix, "Mix symmetric difference reduce works on three mixs";
 }
