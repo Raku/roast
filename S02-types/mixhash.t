@@ -17,7 +17,6 @@ sub showkv($x) {
     say "We do get here, right?";
     my $m = MixHash.new("a", "foo", "a", "a", "a", "a", "b", "foo");
     isa-ok $m, MixHash, 'we got a MixHash';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($m), 'a:5 b:1 foo:2', '...with the right elements';
 
     is $m.default, 0, "Defaults to 0";
@@ -36,7 +35,6 @@ sub showkv($x) {
     my $hash;
     lives-ok { $hash = $m.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
     throws-like { $m.keys = <c d> },
@@ -93,25 +91,18 @@ sub showkv($x) {
 
 {
     isa-ok "a".MixHash, MixHash, "Str.MixHash makes a MixHash";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv("a".MixHash), 'a:1', "'a'.MixHash is mix a";
 
     isa-ok (a => 100000).MixHash, MixHash, "Pair.MixHash makes a MixHash";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv((a => 100000).MixHash), 'a:100000', "(a => 100000).MixHash is mix a:100000";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv((a => 0).MixHash), '', "(a => 0).MixHash is the empty mix";
 
     isa-ok <a b c>.MixHash, MixHash, "<a b c>.MixHash makes a MixHash";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(<a b c a>.MixHash), 'a:2 b:1 c:1', "<a b c a>.MixHash makes the mix a:2 b:1 c:1";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(["a", "b", "c", "a"].MixHash), 'a:2 b:1 c:1', "[a b c a].MixHash makes the mix a:2 b:1 c:1";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv([a => 3, b => 0, 'c', 'a'].MixHash), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].MixHash makes the mix a:4 c:1";
 
     isa-ok {a => 2, b => 4, c => 0}.MixHash, MixHash, "{a => 2, b => 4, c => 0}.MixHash makes a MixHash";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv({a => 2, b => 4, c => 0}.MixHash), 'a:2 b:4', "{a => 2, b => 4, c => 0}.MixHash makes the mix a:2 b:4";
 }
 
@@ -120,7 +111,6 @@ sub showkv($x) {
     is $m<a>:exists, True, ':exists with existing element';
     is $m<santa>:exists, False, ':exists with nonexistent element';
     is $m<a>:delete, 2, ':delete works on MixHash';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($m), 'b:1 foo:1', '...and actually deletes';
 }
 
@@ -134,7 +124,6 @@ sub showkv($x) {
     is $m{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
-#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $a = (1,2,3,2,2,2,2).MixHash;
     is $a.kv.sort, (1,1,1,2,3,5), "MixHash.kv returns list of keys and values";
@@ -143,7 +132,6 @@ sub showkv($x) {
 {
     my $m = MixHash.new(<a b o p a p o o>);
     isa-ok $m, MixHash, '&MixHash.new given an array of strings produces a MixHash';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($m), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
@@ -159,7 +147,6 @@ sub showkv($x) {
     isa-ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
     is +$m, 4, "... with four elements";
     #?niecza todo "Non-string mix elements NYI"
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is +$m.grep(Pair), 4, "... which are all Pairs";
 }
 
@@ -169,21 +156,18 @@ sub showkv($x) {
     is +$m, 4, "... with four elements";
 }
 
-#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $m = MixHash.new(set <foo bar foo bar baz foo>);
     isa-ok $m, MixHash, '&MixHash.new given a Set produces a MixHash';
     is +$m, 1, "... with one element";
 }
 
-#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $m = MixHash.new(MixHash.new(<foo bar foo bar baz foo>));
     isa-ok $m, MixHash, '&MixHash.new given a MixHash produces a MixHash';
     is +$m, 1, "... with one element";
 }
-    
-#?rakudo.jvm skip 'NullPointerException - RT #126657'
+
 {
     my $m = MixHash.new(mix <foo bar foo bar baz foo>);
     isa-ok $m, MixHash, '&MixHash.new given a Mix produces a MixHash';
@@ -227,7 +211,6 @@ sub showkv($x) {
     ok $s.chars < 1000, "... of reasonable length";
     lives-ok { $c = EVAL $s }, ".perl.EVAL lives";
     isa-ok $c, MixHash, "... and produces a MixHash";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv($c), showkv($m), "... and it has the correct values";
 }
 
@@ -236,7 +219,6 @@ sub showkv($x) {
     my $s;
     lives-ok { $s = $m.Str }, ".Str lives";
     isa-ok $s, Str, "... and produces a string";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
@@ -256,7 +238,6 @@ sub showkv($x) {
 {
     my %b := MixHash.new("a", "b", "c", "b");
     isa-ok %b, MixHash, 'A MixHash bound to a %var is a MixHash';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
@@ -361,7 +342,6 @@ sub showkv($x) {
     is +@a, 8, '.grabpairs(*) returns the right number of items';
     is @a.grep( {.isa(Pair)} ).Num, 8, 'are they all Pairs';
     is @a.grep( {1.1 <= .value <= 8.8} ).Num, 8, 'and they all have an expected value';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is @a.sort.map({.key}).join, "abcdefgh", 'MixHash.grabpairs(*) gets all elements';
     isnt @a.map({.key}).join, "abcdefgh", 'MixHash.grabpairs(*) returns elements in a random order';
     is $m.total, 0, '.grabpairs *should* change MixHash';
@@ -424,21 +404,16 @@ sub showkv($x) {
 
 {
     isa-ok 42.MixHash, MixHash, "Method .MixHash works on Int-1";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(42.MixHash), "42:1", "Method .MixHash works on Int-2";
     isa-ok "blue".MixHash, MixHash, "Method .MixHash works on Str-1";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv("blue".MixHash), "blue:1", "Method .MixHash works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
     isa-ok @a.MixHash, MixHash, "Method .MixHash works on Array-1";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(@a.MixHash), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .MixHash works on Array-2";
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.MixHash, MixHash, "Method .MixHash works on Hash-1";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv(%x.MixHash), "a:1 b:2", "Method .MixHash works on Hash-2";
     isa-ok (@a, %x).MixHash, MixHash, "Method .MixHash works on List-1";
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is showkv((@a, %x).MixHash), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .MixHash works on List-2";
 }
@@ -450,33 +425,25 @@ sub showkv($x) {
     is +$m1, 11, '+$mix gives sum of values (non-empty) 11';
     is $m1.minpairs, [a=>1.1], '.minpairs works (non-empty) 11';
     is $m1.maxpairs, [d=>4.4], '.maxpairs works (non-empty) 11';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $m1.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
       '.fmt(%s) works (non-empty 11)';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $m1.fmt('%s',',').split(',').sort, <a b c d>,
       '.fmt(%s,sep) works (non-empty 11)';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $m1.fmt('%s foo %s').split("\n").sort, ('a foo 1.1', 'b foo 2.2', 'c foo 3.3', 'd foo 4.4'),
       '.fmt(%s%s) works (non-empty 11)';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $m1.fmt('%s,%s',':').split(':').sort, <a,1.1 b,2.2 c,3.3 d,4.4>,
       '.fmt(%s%s,sep) works (non-empty 11)';
 
     my $m2 = (a => 1.1, b => 1.1, c => 3.3, d => 3.3).MixHash;
     is $m2.total, 8.8, '.total gives sum of values (non-empty) 8.8';
     is +$m2, 8.8, '+$mix gives sum of values (non-empty) 8.8';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $m2.minpairs.sort, [a=>1.1,b=>1.1], '.minpairs works (non-empty) 8.8';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $m2.maxpairs.sort, [c=>3.3,d=>3.3], '.maxpairs works (non-empty) 8.8';
 
     my $m3 = (a => 1.1, b => 1.1, c => 1.1, d => 1.1).MixHash;
     is $m3.total, 4.4, '.total gives sum of values (non-empty) 4.4';
     is +$m3, 4.4, '+$mix gives sum of values (non-empty) 4.4';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $m3.minpairs.sort,[a=>1.1,b=>1.1,c=>1.1,d=>1.1], '.minpairs works (non-empty) 4.4';
-    #?rakudo.jvm skip 'NullPointerException - RT #126657'
     is $m3.maxpairs.sort,[a=>1.1,b=>1.1,c=>1.1,d=>1.1], '.maxpairs works (non-empty) 4.4';
 
     my $e = ().MixHash;
@@ -517,7 +484,6 @@ sub showkv($x) {
       'Make sure we cannot assign Str on a .kv alias';
 }
 
-#?rakudo.jvm skip 'NullPointerException - RT #126657'
 {
     my $m = (a=>1.1, b=>2.2, c=>3.3, d=> 4.4).MixHash;
     my @a1;
