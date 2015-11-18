@@ -16,11 +16,11 @@ plan 17;
     my @a[3, 3];
     is @a.shape, (3,3), 'Declared two-dim shape returned by .shape';
     is @a.elems, 3, 'First dimension size returned by .elems';
-    lives-ok { @a[2,1] = 1 }, 'Can assign to multi-dim array in bounds (1)';
-    lives-ok { @a[1,2] = 1 }, 'Can assign to multi-dim array in bounds (2)';
-    dies-ok { @a[3,1] = 1 }, 'Cannot assign to multi-dim array out of bounds (1)';
-    dies-ok { @a[1,3] = 1 }, 'Cannot assign to multi-dim array out of bounds (2)';
-    dies-ok { @a[3,3] = 1 }, 'Cannot assign to multi-dim array out of bounds (3)';
+    lives-ok { @a[2;1] = 1 }, 'Can assign to multi-dim array in bounds (1)';
+    lives-ok { @a[1;2] = 1 }, 'Can assign to multi-dim array in bounds (2)';
+    dies-ok { @a[3;1] = 1 }, 'Cannot assign to multi-dim array out of bounds (1)';
+    dies-ok { @a[1;3] = 1 }, 'Cannot assign to multi-dim array out of bounds (2)';
+    dies-ok { @a[3;3] = 1 }, 'Cannot assign to multi-dim array out of bounds (3)';
 }
 
 {
