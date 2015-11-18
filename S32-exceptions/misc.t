@@ -430,7 +430,6 @@ if $emits_suggestions {
 
     try EVAL('toolongtomatchanything()');
     is +($!.routine_suggestion<toolongtomatchanything>), 0, "no suggestions for a strange name";
-    #?rakudo.jvm skip 'NPE'
     ok $!.message !~~ /:s Did you mean/, "doesn't show suggestions if there are none.";
 
     try EVAL('my class TestClassFactoryInterfaceBridgeMock is TooLongOfANameToBeConsideredGoodPerl { }');
@@ -447,7 +446,6 @@ if $emits_suggestions {
         try EVAL('my cool $a');
         ok $! ~~ X::Comp::Group, 'my cool $a throws an X::Comp::Group.';
         ok $!.sorrows[0] ~~ X::Undeclared, "the first sorrow is X::Undeclared.";
-        #?rakudo.jvm skip 'NPE'
         is $!.sorrows[0].suggestions.sort, <Bool Cool>, "the suggestions are Cool and Bool";
     }
 

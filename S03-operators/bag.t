@@ -22,55 +22,41 @@ my $kb = BagHash.new(<blood love love>);
 
 # Bag Union
 
-#?rakudo.jvm skip 'NPE'
 is showkv($b ∪ $b), showkv($b), "Bag union with itself yields self";
 isa-ok ($b ∪ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($kb ∪ $kb), showkv($kb), "BagHash union with itself yields (as Bag)";
 isa-ok ($kb ∪ $kb), Bag, "... and it's actually a Bag";
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s ∪ $b), "blood:2 love:2 rhetoric:1", "Set union with Bag works";
 isa-ok ($s ∪ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($s ∪ $kb), "blood:1 love:2", "Set union with BagHash works";
 isa-ok ($s ∪ $kb), Bag, "... and it's actually a Bag";
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s (|) $b), "blood:2 love:2 rhetoric:1", "Set union with Bag works (texas)";
 isa-ok ($s (|) $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($s (|) $kb), "blood:1 love:2", "Set union with BagHash works (texas)";
 isa-ok ($s (|) $kb), Bag, "... and it's actually a Bag";
 
 # Bag Intersection
 
-#?rakudo.jvm skip 'NPE'
 is showkv($b ∩ $b), showkv($b), "Bag intersection with itself yields self (as Bag)";
 isa-ok ($b ∩ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($kb ∩ $kb), showkv($kb), "BagHash intersection with itself yields self (as Bag)";
 isa-ok ($kb ∩ $kb), Bag, "... and it's actually a Bag";
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s ∩ $b), "blood:1 love:1", "Set intersection with Bag works";
 isa-ok ($s ∩ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($s ∩ $kb), "blood:1 love:1", "Set intersection with BagHash works";
 isa-ok ($s ∩ $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong'
-#?rakudo.jvm skip 'NPE'
 is showkv($kb ∩ <glad green blood>), "blood:1", "BagHash intersection with array of strings works";
 isa-ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s (&) $b), "blood:1 love:1", "Set intersection with Bag works (texas)";
 isa-ok ($s (&) $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($s (&) $kb), "blood:1 love:1", "Set intersection with BagHash works (texas)";
 isa-ok ($s (&) $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong?'
-#?rakudo.jvm skip 'NPE'
 is showkv($kb (&) <glad green blood>), "blood:1", "BagHash intersection with array of strings works (texas)";
 isa-ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
@@ -80,8 +66,8 @@ sub symmetric-difference($a, $b) {
     ($a (|) $b) (-) ($b (&) $a)
 }
 
-#?rakudo.moar 8 todo "Rakudo update in progress, but not done yet RT #124529"
-#?rakudo.jvm 8 skip 'NPE'
+#?rakudo 8 todo "Rakudo update in progress, but not done yet RT #124529"
+
 is showkv($s (^) $b), showkv(symmetric-difference($s, $b)), "Bag symmetric difference with Set is correct";
 isa-ok ($s (^) $b), Bag, "... and it's actually a Bag";
 is showkv($b (^) $s), showkv(symmetric-difference($s, $b)), "Set symmetric difference with Bag is correct";
@@ -96,88 +82,63 @@ isa-ok ($kb (^) $s), Bag, "... and it's actually a Bag";
 
 # Bag multiplication
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s ⊍ $s), "blood:1 love:1", "Bag multiplication with itself yields self squared";
 isa-ok ($s ⊍ $s), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($ks ⊍ $ks), "blood:1 rhetoric:1", "Bag multiplication with itself yields self squared";
 isa-ok ($ks ⊍ $ks), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($b ⊍ $b), "blood:4 love:4 rhetoric:1", "Bag multiplication with itself yields self squared";
 isa-ok ($b ⊍ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($kb ⊍ $kb), "blood:1 love:4", "Bag multiplication with itself yields self squared";
 isa-ok ($kb ⊍ $kb), Bag, "... and it's actually a Bag";
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s ⊍ $ks), "blood:1", "Bag multiplication (Set / SetHash) works";
 isa-ok ($s ⊍ $ks), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($s ⊍ $b), "blood:2 love:2", "Bag multiplication (Set / Bag) works";
 isa-ok ($s ⊍ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($ks ⊍ $b), "blood:2 rhetoric:1", "Bag multiplication (SetHash / Bag) works";
 isa-ok ($ks ⊍ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($kb ⊍ $b), "blood:2 love:4", "Bag multiplication (BagHash / Bag) works";
 isa-ok ($kb ⊍ $b), Bag, "... and it's actually a Bag";
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s (.) $ks), "blood:1", "Bag multiplication (Set / SetHash) works (texas)";
 isa-ok ($s (.) $ks), Bag, "... and it's actually a Bag (texas)";
-#?rakudo.jvm skip 'NPE'
 is showkv($s (.) $b), "blood:2 love:2", "Bag multiplication (Set / Bag) works (texas)";
 isa-ok ($s (.) $b), Bag, "... and it's actually a Bag (texas)";
-#?rakudo.jvm skip 'NPE'
 is showkv($ks (.) $b), "blood:2 rhetoric:1", "Bag multiplication (SetHash / Bag) works (texas)";
 isa-ok ($ks (.) $b), Bag, "... and it's actually a Bag (texas)";
-#?rakudo.jvm skip 'NPE'
 is showkv($kb (.) $b), "blood:2 love:4", "Bag multiplication (BagHash / Bag) works (texas)";
 isa-ok ($kb (.) $b), Bag, "... and it's actually a Bag";
 
 # Bag addition
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s ⊎ $s), "blood:2 love:2", "Bag addition with itself yields twice self";
 isa-ok ($s ⊎ $s), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($ks ⊎ $ks), "blood:2 rhetoric:2", "Bag addition with itself yields twice self";
 isa-ok ($ks ⊎ $ks), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($b ⊎ $b), "blood:4 love:4 rhetoric:2", "Bag addition with itself yields twice self";
 isa-ok ($b ⊎ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($kb ⊎ $kb), "blood:2 love:4", "Bag addition with itself yields twice self";
 isa-ok ($kb ⊎ $kb), Bag, "... and it's actually a Bag";
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s ⊎ $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / SetHash) works";
 isa-ok ($s ⊎ $ks), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($s ⊎ $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works";
 isa-ok ($s ⊎ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($ks ⊎ $b), "blood:3 love:2 rhetoric:2", "Bag addition (SetHash / Bag) works";
 isa-ok ($ks ⊎ $b), Bag, "... and it's actually a Bag";
-#?rakudo.jvm skip 'NPE'
 is showkv($kb ⊎ $b), "blood:3 love:4 rhetoric:1", "Bag addition (BagHash / Bag) works";
 isa-ok ($kb ⊎ $b), Bag, "... and it's actually a Bag";
 
-#?rakudo.jvm skip 'NPE'
 is showkv($s (+) $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / SetHash) works (texas)";
 isa-ok ($s (+) $ks), Bag, "... and it's actually a Bag (texas)";
-#?rakudo.jvm skip 'NPE'
 is showkv($s (+) $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works (texas)";
 isa-ok ($s (+) $b), Bag, "... and it's actually a Bag (texas)";
-#?rakudo.jvm skip 'NPE'
 is showkv($ks (+) $b), "blood:3 love:2 rhetoric:2", "Bag addition (SetHash / Bag) works (texas)";
 isa-ok ($ks (+) $b), Bag, "... and it's actually a Bag (texas)";
-#?rakudo.jvm skip 'NPE'
 is showkv($kb (+) $b), "blood:3 love:4 rhetoric:1", "Bag addition (BagHash / Bag) works (texas)";
 isa-ok ($kb (+) $b), Bag, "... and it's actually a Bag";
 
 # for https://rt.perl.org/Ticket/Display.html?id=122810
-#?rakudo.jvm skip 'hang'
 ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - I mean bag - with 50k elems and lives";
 
 # msubset
@@ -213,46 +174,41 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     # my $kb = BagHash.new(<blood love love>);
     my @d;
     
-    #?rakudo.jvm 4 skip 'NPE'
     is showkv([⊎] @d), showkv(∅), "Bag sum reduce works on nothing";
     is showkv([⊎] $s), showkv($s.Bag), "Bag sum reduce works on one set";
     is showkv([⊎] $s, $b), showkv({ blood => 3, rhetoric => 1, love => 3 }), "Bag sum reduce works on two sets";
     is showkv([⊎] $s, $b, $kb), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Bag sum reduce works on three sets";
 
-    #?rakudo.jvm 4 skip 'NPE'
     is showkv([(+)] @d), showkv(∅), "Bag sum reduce works on nothing";
     is showkv([(+)] $s), showkv($s.Bag), "Bag sum reduce works on one set";
     is showkv([(+)] $s, $b), showkv({ blood => 3, rhetoric => 1, love => 3 }), "Bag sum reduce works on two sets";
     is showkv([(+)] $s, $b, $kb), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Bag sum reduce works on three sets";
 
-    #?rakudo.jvm 4 skip 'NPE'
     is showkv([⊍] @d), showkv(∅), "Bag multiply reduce works on nothing";
     is showkv([⊍] $s), showkv($s.Bag), "Bag multiply reduce works on one set";
     is showkv([⊍] $s, $b), showkv({ blood => 2, love => 2 }), "Bag multiply reduce works on two sets";
     is showkv([⊍] $s, $b, $kb), showkv({ blood => 2, love => 4 }), "Bag multiply reduce works on three sets";
 
-    #?rakudo.jvm 4 skip 'NPE'
     is showkv([(.)] @d), showkv(∅), "Bag multiply reduce works on nothing";
     is showkv([(.)] $s), showkv($s.Bag), "Bag multiply reduce works on one set";
     is showkv([(.)] $s, $b), showkv({ blood => 2, love => 2 }), "Bag multiply reduce works on two sets";
     is showkv([(.)] $s, $b, $kb), showkv({ blood => 2, love => 4 }), "Bag multiply reduce works on three sets";
 
-    #?rakudo.jvm skip 'NPE'
     is showkv([(^)] @d), showset(∅), "Bag symmetric difference reduce works on nothing";
-    #?rakudo.moar 4 todo "NYI"
-    #?rakudo.jvm 4 skip 'NPE'
+    #?rakudo todo "NYI"
     is showkv([(^)] $s), showset($s), "Set symmetric difference reduce works on one set";
+    #?rakudo todo "NYI"
     isa-ok showkv([(^)] $s), Set, "Set symmetric difference reduce works on one set, yields set";
+    #?rakudo todo "NYI"
     is showkv([(^)] $b), showkv($b), "Bag symmetric difference reduce works on one bag";
+    #?rakudo todo "NYI"
     isa-ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one bag, yields bag";
-    #?rakudo.moar 4 todo "Wrong answer at the moment"
-    #?rakudo.jvm 4 skip 'NPE'
+    #?rakudo 4 todo "Wrong answer at the moment"
     is showkv([(^)] $s, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on a bag and a set";
     isa-ok showkv([(^)] $s, $b), Bag, "... and produces a Bag";
     is showkv([(^)] $b, $s), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
     isa-ok showkv([(^)] $b, $s), Bag, "... and still produces a Bag that way too";
-    #?rakudo.moar 2 todo "Crashing"
-    #?rakudo.jvm 2 skip 'NPE'
+    #?rakudo 2 todo "Crashing"
     is showkv([(^)] $s, $b, $kb), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on three bags";
     isa-ok showkv([(^)] $s, $b, $kb), Bag, "Bag symmetric difference reduce works on three bags";
 }
