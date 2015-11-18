@@ -88,6 +88,7 @@ ok (''.split('')).elems == 0, q{''.split('') returns empty list};
 ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
 # split with :all should return capture
+#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
 {
     my @split = 'abc def ghi'.split(/(\s+)/, :all);
     ok @split.elems == 5, q{split returns captured delimiter} ;
@@ -95,6 +96,7 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
     ok @split[3] eq ' ', q{split captured multiple spaces};
 }
 
+#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
 {
     my @split = split(/\d+/, 'a4b5', :all);
     is @split.elems, 5, 'split() with :all and trailing delimiter (count)';
