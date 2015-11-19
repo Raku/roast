@@ -29,22 +29,27 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       @original,
       "handle a simple list of lines with CR without chomping";
 
+    #?rakudo.jvm todo '\r\n not yet handled as grapheme'
     tap-ok Supply.from-list( @simple.map: * ~ "\r\n" ).lines,
       @simple,
       "handle a simple list of lines with CRLF";
+    #?rakudo.jvm todo '\r\n not yet handled as grapheme'
     tap-ok Supply.from-list( @original = @simple.map: * ~ "\r\n" ).lines(:!chomp),
       @original,
       "handle a simple list of lines with CRLF without chomping";
 
+    #?rakudo.jvm todo '\r\n not yet handled as grapheme'
     tap-ok Supply.from-list( @simple.map: * ~ @endings.pick ).lines,
       @simple,
       "handle a simple list of lines with mixed line ending";
+    #?rakudo.jvm todo '\r\n not yet handled as grapheme'
     tap-ok Supply.from-list(@original= @simple.map: * ~ @endings.pick).lines(:!chomp),
       @original,
       "handle a simple list of lines with mixed line ending w/o chomping";
 
     {
         my $s = Supply.new;
+        #?rakudo.jvm todo '\r\n not yet handled as grapheme'
         tap-ok $s.lines,
           ['a','b','c','d', '', 'eeee'],
           "handle chunked lines",
@@ -59,6 +64,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $s = Supply.new;
+        #?rakudo.jvm todo '\r\n not yet handled as grapheme'
         tap-ok $s.lines(:!chomp),
           ["a\n","b\r\n","c\r","d\n","\n","eeee"],
           "handle chunked lines",
