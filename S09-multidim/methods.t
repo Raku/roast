@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 34;
+plan 36;
 
 my @arr := Array.new(:shape(2;2));
 
@@ -54,3 +54,7 @@ is @arr.pick(*).sort, <a b c d>, '.pick is over leaves (2)';
 ok 'a' le @arr.pick le 'd', '.roll is over leaves';
 is @arr.rotor(2 => -1), <a b c d>.rotor(2 => -1), '.rotor is over leaves';
 is @arr.join(','), 'a,b,c,d', '.join is over leaves';
+
+is @arr.gist, '[[a b] [c d]]', '.gist represents structure';
+is @arr.perl, 'Array.new(:shape(2, 2), ["a", "b"], ["c", "d"])',
+    '.perl retains structure';
