@@ -15,7 +15,7 @@ I/O tests
 
 =end pod
 
-plan 111;
+plan 112;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -325,6 +325,13 @@ $out.say("Hello World");
 $out.say("Foo Bar Baz");
 $out.say("The End");
 $out.close;
+
+# RT #123347
+
+{
+    my $fh = open($filename, :r);
+    ok(!$fh.t, 'checking if a file handle is a TTY - negative case');
+}
 
 #?niecza skip 'IO.close'
 {
