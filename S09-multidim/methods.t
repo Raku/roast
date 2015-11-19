@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 34;
 
 my @arr := Array.new(:shape(2;2));
 
@@ -44,6 +44,8 @@ is $iter.pull-one, 'b', '.iterator gives iterator walking leaves (2)';
 is $iter.pull-one, 'c', '.iterator gives iterator walking leaves (3)';
 is $iter.pull-one, 'd', '.iterator gives iterator walking leaves (4)';
 ok $iter.pull-one =:= IterationEnd, '.iterator gives iterator walking leaves (5)';
+
+is @arr.flat, <a b c d>, '.flat gives the leaves';
 
 is @arr.combinations, <a b c d>.combinations, '.combinations is over leaves';
 is @arr.permutations, <a b c d>.permutations, '.permutations is over leaves';
