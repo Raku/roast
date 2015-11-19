@@ -17,6 +17,7 @@ my $foo=1;
 # test twice, once with assignment and once with increment, rakudo
 # used to catch the first but not the latter.
 #
+#?rakudo.jvm todo "RT #126531"
 throws-like '
     my $tmp = 1;
     sub mods_param ($x) { $x++; }
@@ -34,6 +35,7 @@ throws-like '
     'can\'t modify parameter, constant by default';
 
 # is readonly
+#?rakudo.jvm todo "RT #126531"
 throws-like 'sub mods_param_constant ($x is readonly) { $x++; };
              mods_param_constant($foo);',
              X::Multi::NoMatch,
@@ -42,6 +44,7 @@ throws-like 'sub mods_param_constant ($x is readonly) { $x++; };
 sub mods_param_rw ($x is rw) { $x++; }
 dies-ok  { mods_param_rw(1) }, 'can\'t modify constant even if we claim it\'s rw';
 sub mods_param_rw_enforces ($x is rw) { $x; }
+#?rakudo.jvm 2 todo "RT #126531"
 throws-like { mods_param_rw_enforces(1) },
     X::Parameter::RW,
     'is rw dies in signature binding if passed a literal Int';
