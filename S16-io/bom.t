@@ -2,6 +2,7 @@ use Test;
 
 plan 10;
 
+#?rakudo.jvm todo 'UTF-8 BOM stripping RT #124024'
 {
     my $starts_with_bom = Buf.new(0xEF, 0xBB, 0xBF, 0x70, 0x69, 0x76, 0x6F);
     my $decoded = $starts_with_bom.decode('utf-8');
@@ -9,6 +10,7 @@ plan 10;
     is $decoded, 'pivo', 'got correct string with UTF-8 BOM stripped';
 }
 
+#?rakudo.jvm todo 'UTF-8 BOM stripping RT #124024'
 {
     my $only_bom = Buf.new(0xEF, 0xBB, 0xBF);
     my $decoded = $only_bom.decode('utf-8');
@@ -23,17 +25,20 @@ plan 10;
     }
 
     my $slurped = slurp($temp-file);
+    #?rakudo.jvm 2 todo 'UTF-8 BOM stripping RT #124024'
     is $slurped.chars, 4, 'BOM stripped when reading from file';
     is $slurped, 'pivo', 'Got correct BOM-stripped string reading form file';
 
     my @lines = $temp-file.IO.lines;
     is @lines.elems, 1, 'lines sanity with BOM stripping';
+    #?rakudo.jvm 2 todo 'UTF-8 BOM stripping RT #124024'
     is @lines[0].chars, 4, 'BOM stripped first line has correct chars';
     is @lines[0], 'pivo', 'BOM stripped first line is correct';
 
     LEAVE unlink $temp-file;
 }
 
+#?rakudo.jvm todo 'UTF-8 BOM stripping RT #124024'
 {
     my $temp-file = "bom-test-2-$*PID";
     given open($temp-file, :w) {
