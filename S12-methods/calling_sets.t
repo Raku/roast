@@ -1,5 +1,5 @@
 use Test;
-plan 32;
+plan 38;
 
 # L<S12/"Calling sets of methods">
 
@@ -60,61 +60,45 @@ class C is B {
 }
 
 
-# Some tests involiving .?, .+ and .* with multi-methods.
+# Some tests involiving .?, .+ and .* with multi-methods. Since .+ and
+# .* are only about single dispatch, then we end up calling the proto
+# available at each inheritance level.
 class D {
-    has $.cnt is rw;
-    multi method foo() { $.cnt++ }
-    multi method foo(Int $x) { $.cnt++ }   #OK not used
-    multi method foo($x) { $.cnt++ }   #OK not used
+    multi method foo() { 'd' }
+    multi method foo(Int $x) { 'dInt' }   #OK not used
+    multi method foo($x) { 'dAny' }   #OK not used
 }
 class E is D {
-    multi method foo() { $.cnt++ }
-    multi method foo($x) { $.cnt++ }   #OK not used
+    multi method foo() { 'e' }
+    multi method foo(Int $x) { 'eInt' }   #OK not used
+    multi method foo($x, $y, $z) { 'eAnyAnyAny' }   #OK not used
 }
 
-#?rakudo skip 'ambiguous dispatch RT #124846'
+# RT #119193
 {
     my $e = E.new();
 
-    $e.cnt = 0;
-    $e.foo();
-    is $e.cnt, 1, 'dispatch to one sanity test';
+    is $e.foo(), 'e', 'dispatch to one sanity test';
+    is $e.foo(2.5), 'dAny', 'dispatch to one inherited sanity test';
+    dies-ok { $e.foo('omg', 'fail') }, 'dispatch to one with no matching multi (sanity test)';
 
-    $e.cnt = 0;
-    $e.?foo();
-    is $e.cnt, 1, '.? calls first matching multi method';
+    is $e.?foo(), 'e', '.? gets same result as . if there is a multi (match)';
+    is $e.?foo(2.5), 'dAny', '.? gets same result as . if there is a multi (inherited)';
+    dies-ok { is $e.?foo('omg', 'fail') }, '.? gets same result as . if there is a multi (no match)';
 
-    $e.cnt = 0;
-    $e.*foo();
-    is $e.cnt, 2, '.* calls up inheritance hierarchy and all possible multis';
+    is $e.*foo(), <e d>, '.* calls multis up inheritance hierarchy';
+    is $e.*foo(2.5), <dAny dAny>, '.* behaves as single dispatch at each step';
+    dies-ok { $e.*foo(1, 2, 3) }, '.* dies if there is no matching multi in a base class';
 
-    $e.cnt = 0;
-    $e.*foo(2.5);
-    is $e.cnt, 2, '.* calls up inheritance hierarchy and all possible multis';
+    is $e.*foo(), <e d>, '.* calls multis up inheritance hierarchy';
+    is $e.*foo(2.5), <dAny dAny>, '.* behaves as single dispatch at each step';
+    dies-ok { $e.*foo(Mu) }, '.* dies if there is no matching multi in subclass';
+    dies-ok { $e.*foo(1, 2, 3) }, '.* dies if there is no matching multi in a base class';
 
-    $e.cnt = 0;
-    $e.*foo(2);
-    is $e.cnt, 3, '.* calls up inheritance hierarchy and all possible multis';
-
-    $e.cnt = 0;
-    $e.+foo();
-    is $e.cnt, 2, '.+ calls up inheritance hierarchy and all possible multis';
-
-    $e.cnt = 0;
-    $e.+foo(2.5);
-    is $e.cnt, 2, '.+ calls up inheritance hierarchy and all possible multis';
-
-    $e.cnt = 0;
-    $e.+foo(2);
-    is $e.cnt, 3, '.+ calls up inheritance hierarchy and all possible multis';
-
-    is $e.?foo("lol", "no", "match"), Nil, '.? when no possible multis gives Nil';
-
-    my $lived = 0;
-    try { $e.+foo("lol", "no", "match"); $lived = 1; }
-    is $lived, 0, '.+ with no matching multis is an error';
-
-    is ($e.*foo("lol", "no", "match")).elems, 0, '.* when no possible multis gives empty list';
+    is $e.+foo(), <e d>, '.* calls multis up inheritance hierarchy';
+    is $e.+foo(2.5), <dAny dAny>, '.* behaves as single dispatch at each step';
+    dies-ok { $e.+foo(Mu) }, '.* dies if there is no matching multi in subclass';
+    dies-ok { $e.+foo(1, 2, 3) }, '.* dies if there is no matching multi in a base class';
 }
 
 # Some tests to make sure we walk methods from roles too.
