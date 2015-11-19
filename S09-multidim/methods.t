@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 33;
 
 my @arr := Array.new(:shape(2;2));
 
@@ -20,6 +20,8 @@ throws-like { @arr.prepend(1) }, X::IllegalOnFixedDimensionArray, operation => '
 throws-like { @arr.shift() }, X::IllegalOnFixedDimensionArray, operation => 'shift';
 throws-like { @arr.splice(1) }, X::IllegalOnFixedDimensionArray, operation => 'splice';
 throws-like { @arr.plan(1) }, X::IllegalOnFixedDimensionArray, operation => 'plan';
+throws-like { @arr.reverse }, X::IllegalOnFixedDimensionArray, operation => 'reverse';
+throws-like { @arr.rotate(1) }, X::IllegalOnFixedDimensionArray, operation => 'rotate';
 
 @arr[0;0] = 'a';
 @arr[0;1] = 'b';
@@ -35,3 +37,18 @@ is @arr.antipairs, ('a' => (0, 0), 'b' => (0, 1), 'c' => (1, 0), 'd' => (1, 1)),
     '.antipairs on a 2x2 array gives list of pairs mapping values to indice lists';
 
 is Array.new(:shape(4)).keys, (0, 1, 2, 3), '.keys on 1-dim gives list of indices';
+
+my $iter = @arr.iterator;
+is $iter.pull-one, 'a', '.iterator gives iterator walking leaves (1)';
+is $iter.pull-one, 'b', '.iterator gives iterator walking leaves (2)';
+is $iter.pull-one, 'c', '.iterator gives iterator walking leaves (3)';
+is $iter.pull-one, 'd', '.iterator gives iterator walking leaves (4)';
+ok $iter.pull-one =:= IterationEnd, '.iterator gives iterator walking leaves (5)';
+
+is @arr.combinations, <a b c d>.combinations, '.combinations is over leaves';
+is @arr.permutations, <a b c d>.permutations, '.permutations is over leaves';
+ok 'a' le @arr.pick le 'd', '.pick is over leaves (1)';
+is @arr.pick(*).sort, <a b c d>, '.pick is over leaves (2)';
+ok 'a' le @arr.pick le 'd', '.roll is over leaves';
+is @arr.rotor(2 => -1), <a b c d>.rotor(2 => -1), '.rotor is over leaves';
+is @arr.join(','), 'a,b,c,d', '.join is over leaves';
