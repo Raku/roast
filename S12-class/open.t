@@ -2,7 +2,7 @@ use v6;
 use MONKEY-TYPING;
 
 use Test;
-plan 8;
+plan 10;
 
 # L<S12/Open vs Closed Classes>
 
@@ -66,5 +66,8 @@ is $x.in_Something, 'ab', 'basic OO sanity';
     my @a = 1, 3, 7, 0;
     is @a.last-and-first, '01', 'can extend class Array';
 }
+
+throws-like 'use MONKEY-TYPING; class RT124017_A {}; augment class RT124017_A:D {}', X::Syntax::Augment::Adverb, "can't pass :D when augmenting class";
+throws-like 'use MONKEY-TYPING; class RT124017_B {}; augment class RT124017_B:auth<random_auth> {}', X::Syntax::Augment::Adverb, "can't pass :auth when augmenting class";
 
 # vim: ft=perl6

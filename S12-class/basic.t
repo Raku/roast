@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 43;
 
 =begin pod
 
@@ -152,5 +152,18 @@ eval-lives-ok 'class Test1 { class A {};}; class Test2 {class A {};};',
 }
 
 is class :: { method foo { 42 }}.foo, 42, "Can call method on class definition without parens";
+
+
+# RT #124017
+throws-like 'class RT124017_A:D {}', X::Syntax::Type::Adverb,
+             "RT124017 - can't declare Foo:D";
+
+
+throws-like 'class RT124017_B:no_such_adverb {}', X::Syntax::Type::Adverb,
+             "RT124017 - can't declare Foo:no-such-adverb";
+
+{
+    eval-lives-ok 'class Adverbed:auth<random_auth>:ver<0.0.1> { }', 'can declare class with :auth and :ver adverbs';
+}
 
 # vim: ft=perl6
