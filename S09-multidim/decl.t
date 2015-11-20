@@ -1,7 +1,16 @@
 use v6;
 use Test;
 
-plan 24;
+plan 39;
+
+{
+    my @a;
+    my Int @b;
+    my int @c;
+    is @a.shape, (*,), 'Shape of untyped array is (*,)';
+    is @b.shape, (*,), 'Shape of typed object array is (*,)';
+    is @c.shape, (*,), 'Shape of native array is (*,)';
+}
 
 {
     my @a[5];
@@ -45,4 +54,24 @@ plan 24;
     dies-ok { $c.a[3;1] = 1 }, 'Cannot assign to multi-dim array out of bounds (attribute) (1)';
     dies-ok { $c.a[1;3] = 1 }, 'Cannot assign to multi-dim array out of bounds (attribute) (2)';
     dies-ok { $c.a[3;3] = 1 }, 'Cannot assign to multi-dim array out of bounds (attribute) (3)';
+}
+
+{
+    my int @a[3];
+    is @a.shape, (3,), 'Fixed size native int array returns correct shape';
+    is @a.elems, 3, 'Fixed size native int array returns correct elems';
+    lives-ok { @a[0] = 1 }, 'Can assign to sized native int array in bounds (1)';
+    lives-ok { @a[2] = 1 }, 'Can assign to sized native int array in bounds (2)';
+    dies-ok { @a[3] = 1 }, 'Cannot assign to sized native int array out of bounds';
+}
+
+{
+    my int @a[2;2];
+    is @a.shape, (2,2), 'Multi-dim native int array returns correct shape';
+    is @a.elems, 2, 'Multi-dim native int array returns correct elems';
+    lives-ok { @a[0;1] = 1 }, 'Can assign to multi-dim native int array in bounds (1)';
+    lives-ok { @a[1;0] = 1 }, 'Can assign to multi-dim native int array in bounds (2)';
+    dies-ok { @a[2;1] = 1 }, 'Cannot assign to multi-dim native int array out of bounds (1)';
+    dies-ok { @a[1;2] = 1 }, 'Cannot assign to multi-dim native int array out of bounds (2)';
+    dies-ok { @a[2;2] = 1 }, 'Cannot assign to multi-dim native int array out of bounds (3)';
 }
