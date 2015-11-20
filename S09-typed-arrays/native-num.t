@@ -89,7 +89,7 @@ for @num -> $T {
     is_approx @arr[3], 1.6e0, "Correct elem set by constructor of $t array (4)";
     @arr[*-1,*-2];
 
-    ok @arr.flat  === @arr, "$t array .flat returns identity";
+    ok @arr.flat ~~ Seq, "$t array .flat returns a Seq";
     ok @arr.eager === @arr, "$t array .eager returns identity";
 
 #?rakudo skip "borkedness with num and iteration RT #124678"
