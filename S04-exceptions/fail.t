@@ -36,7 +36,6 @@ given (Failure.new()) {
 }
 
 # RT #64990
-#?rakudo.jvm skip 'RT #126673'
 {
     our Int sub rt64990 { fail() }
     ok rt64990() ~~ Failure, 'sub typed Int can fail()';

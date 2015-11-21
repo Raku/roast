@@ -398,10 +398,8 @@ is Foo::official(), 44,
     sub return-Int ($x --> Int) { $x }
     is return-Int(42), 42, "Can return 42 through Int typecheck";
     is return-Int(Nil), Nil, "Can return Nil through Int typecheck";
-    #?rakudo.jvm skip 'RT #126673'
     ok return-Int(Failure.new) ~~ Failure, "Can return Failure through Int typecheck";
     dies-ok { return-Int(42.0) }, "Can't return 42.0 through Int typecheck";
-    #?rakudo.jvm todo 'code does not die'
     dies-ok { return-Int(Cool) }, "Can't return Cool through Int typecheck";
 }
 # vim: ft=perl6
