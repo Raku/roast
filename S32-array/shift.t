@@ -9,7 +9,7 @@ Shift tests
 
 =end description
 
-plan 31;
+plan 32;
 
 {
 
@@ -92,5 +92,11 @@ plan 31;
 #     # best not to uncomment this it just go on forever
 #     todo_throws_ok { 'shift(@shift)' }, '?? what should this error message be ??', 'cannot shift off of a Inf array';
 # }
+
+{
+    my @a = 1,2;
+    @a[0]:delete;
+    ok @a.shift === Nil, "shifting sparse array results in Nil, not failure";
+}
 
 # vim: syn=perl6
