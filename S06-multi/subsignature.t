@@ -114,6 +114,7 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
     multi catch(| (*@all            )) { 1 }   #OK not used
     multi catch(| (*@all, :$really! )) { 2 }   #OK not used
     is catch(0, 5),           1, 'slurpy and named interact well (1)';
+    #?rakudo.jvm todo 'RT #126702'
     is catch(0, 5, :!really), 2, 'slurpy and named interact well (2)';
 }
 
