@@ -24,6 +24,7 @@ my $path = "io-handle-testfile";
 }
 
 # RT #123888
+#?rakudo.jvm todo 'RT #123888'
 {
     {
         $path.IO.open(:w).print("A+B+C+D+");

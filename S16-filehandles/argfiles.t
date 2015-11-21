@@ -80,6 +80,7 @@ is-deeply @lines, [<one two three>], 'Changing @*ARGS before calling things on $
 
 # RT #123888
 $output = Test::Util::run('$*IN.nl-in = "+"; say get() eq "A";', "A+B+C+");
+#?rakudo.jvm todo 'RT #123888'
 is $output, "True\n", 'Can change $*IN.nl-in and it has effect';
 
 $tmp-file-name.IO.unlink;
