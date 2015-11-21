@@ -2,11 +2,16 @@ use v6;
 
 use lib '.';
 
-my $istrue = (require Test <&plan &is &lives-ok &skip &todo>);
+my $required-Test = (require Test <&plan &is &lives-ok &skip &todo>);
 
-plan 16;
+plan 17;
 
-is $istrue, True, "successful require returns True";
+# RT #126100
+{
+    is $required-Test.gist, '(Test)', "successful require PACKAGE returns PACKAGE";
+    is (require "t/spec/S11-modules/InnerModule.pm"), "t/spec/S11-modules/InnerModule.pm",
+        "successful require STRING returns STRING";
+}
 
 my $staticname;
 BEGIN try EVAL '$staticname = Test';
