@@ -120,6 +120,7 @@ is $y.test,     42,         'method from other role was OK too';
 {
     my $a = 0 but True;
     is +$a, 0, 'RT #100782 1/2';
+    #?rakudo.jvm todo 'RT #100782'
     is ?$a, Bool::True, 'RT #100782 2/2';
 }
 
