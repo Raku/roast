@@ -151,8 +151,6 @@ test( "abcde","",3,"empty string",
   <a bcde>,      # rlpse
 );
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
-#?DOES 1
 test( "abcd",/./,3,"any character",
   <<"" "" "" "" "">>,                           # r
   <<"" a "" b "" c "" d "">>,                   # rv
@@ -177,8 +175,6 @@ test( "abcd",/./,3,"any character",
   (0=>"a",0=>"b","cd"),       # rlpse
 );
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
-#?DOES 3
 test( "aaaa",$_,3,"only chars matching $_.perl()",
   <<"" "" "" "" "">>,                           # r
   <<"" a "" a "" a "" a "">>,                   # rv
@@ -203,7 +199,7 @@ test( "aaaa",$_,3,"only chars matching $_.perl()",
   (0=>"a",0=>"a","aa"),       # rlpse
 ) for "a", /a/, rx:Perl5/a/;
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
+#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 7
 test( "foo bar baz",$_,2,$_,
   <foo bar baz>,                     # r
@@ -229,7 +225,7 @@ test( "foo bar baz",$_,2,$_,
   ("foo",0=>" ","bar baz"), # rlpse
 ) for " ", / " " /, / \s /, / \s+ /, rx:Perl5/ /, rx:Perl5/\s/, rx:Perl5/\s+/;
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
+#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 2
 test( "thisisit",$_,2,$_,
   <thi i it>,                     # r
@@ -255,8 +251,6 @@ test( "thisisit",$_,2,$_,
   ("thi",0=>"s","isit"), # rlpse
 ) for "s", /s/;
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
-#?DOES 2
 test( "|foo|bar|baz|zoo",$_,3,$_,
   <<"" foo bar baz zoo>>,                                   # r
   <<"" | foo | bar | baz | zoo>>,                           # rv
@@ -281,7 +275,7 @@ test( "|foo|bar|baz|zoo",$_,3,$_,
   (0=>"|","foo",0=>"|","bar|baz|zoo"),    # rlpse
 ) for "|", / \| /;
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
+#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 3
 test( "foo|bar|baz|zoo|",$_,2,$_,
   <<foo bar baz zoo "">>,                                   # r
@@ -307,7 +301,7 @@ test( "foo|bar|baz|zoo|",$_,2,$_,
   ("foo",0=>"|","bar|baz|zoo|"), # rlpse
 ) for "|", / \| /, rx:Perl5/\|/;
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
+#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 7
 test( "comma, separated, values",$_,2,$_,
   <comma separated values>,                       # r
@@ -366,8 +360,6 @@ test( "hello world",<a e i o u>,3,<a e i o u>,
   ("h",1=>"e","ll",3=>"o"," world"), # rlpse
 );
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
-#?DOES 2
 test( "hello world",$_,3,$_,
   <<h ll " w" rld>>,                          # r
   <<h e ll o " w" o rld>>,                    # rv
@@ -392,7 +384,6 @@ test( "hello world",$_,3,$_,
   ("h",0=>"e","ll",0=>"o"," world"), # rlpse
 ) for /<[aeiou]>/, rx:Perl5/[aeiou]/;
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
 {
     my @a = "hello world".split(/<[aeiou]>/, :v);
     is +@a, 7, "split:v resulted in seven pieces";
@@ -401,7 +392,6 @@ test( "hello world",$_,3,$_,
     isa-ok @a[5], Match, "sixth is a Match object";
 }
 
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
 {
     my @a = "hello world".split(/(<[aeiou]>)(.)/, :v);
     is +@a, 7, "split:v resulted in seven pieces";
@@ -412,8 +402,6 @@ test( "hello world",$_,3,$_,
 }
 
 # RT #63066
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
-#?DOES 2
 test( "hello-world",$_,3,$_,
   <<"" hello - world "">>,                             # r
   <<"" "" hello "" - "" world "" "">>,                 # rv
@@ -440,8 +428,6 @@ test( "hello-world",$_,3,$_,
 
 # RT #63066
 my $p = 0=>"";
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
-#?DOES 1
 test( "-a-b-c-",/<.ws>/,4,/<.ws>/,
   <<"" - a - b - c - "">>,                                         # r
   <<"" "" - "" a "" - "" b "" - "" c "" - "" "">>,                 # rv
@@ -467,8 +453,6 @@ test( "-a-b-c-",/<.ws>/,4,/<.ws>/,
 );
 
 # RT #63066
-#?rakudo.jvm skip 'Cannot access a native attribute as a reference attribute, RT #126679'
-#?DOES 1
 test( "-a-b-c-",/<.wb>/,4,/<.wb>/,
   <- a - b - c ->,                                 # r
   <<- "" a "" - "" b "" - "" c "" ->>,             # rv

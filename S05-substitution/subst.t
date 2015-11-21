@@ -217,9 +217,9 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
 #?niecza skip "Action method quote:ss not yet implemented"
+# also RT #126679
 {
     $_ = "a\nb\tc d";
-    #?rakudo.jvm 2 skip 'Cannot access a native attribute as a reference attribute, RT #126679'
     ok ss/a b c d/w x y z/, 'successful substitution returns truthy';
     # RT #120526
     is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
