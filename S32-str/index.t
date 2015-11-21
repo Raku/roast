@@ -76,7 +76,12 @@ ok 1234.index(3) == 2, '.index on non-strings (here: Int)';
 
 # RT #125784
 {
-    for -1e34, -1e35, 1e34, 1e35 -> $pos {
+    for -1e34, -1e35 -> $pos {
+        #?rakudo.jvm 2 todo 'RT #126700'
+        is index( 'xxy','y', $pos ), Nil, "sub does $pos give Nil";
+        is 'xxy'.index( 'y', $pos ), Nil, "method does $pos give Nil";
+    }
+    for 1e34, 1e35 -> $pos {
         is index( 'xxy','y', $pos ), Nil, "sub does $pos give Nil";
         is 'xxy'.index( 'y', $pos ), Nil, "method does $pos give Nil";
     }
