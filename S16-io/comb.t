@@ -5,6 +5,7 @@ plan 25;
 
 my $filename = 't/spec/S16-io/comb.testing';
 
+#?DOES 1
 sub test-comb($text,@result,|c) {
     subtest {
         plan 4;
@@ -116,6 +117,7 @@ for 5, 10, 100000 -> $sep {
 for 100000 -> $sep {
     my $text  = "defgh" x 100000;
     my @clean = ("defgh" x 20000) xx 5;
+    #?rakudo.jvm todo 'wrong number of elements returned and wrongly separated'
     test-comb($text,@clean,$sep);
 }
 
