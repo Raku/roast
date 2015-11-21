@@ -171,6 +171,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     subset SR1 of R1 where 1;
     ok !(1 ~~ SR1), 'subtypes based on roles work';
     my $x = 1 but R1;
+    #?rakudo.jvm todo 'mixin of role does not work correctly'
     ok $x ~~ SR1,   'subtypes based on roles work';
 }
 
