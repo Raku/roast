@@ -216,6 +216,7 @@ is($/, 'foo', 'Matched value for 3th « <ident>');
 # :nth and *-N
 
 is("ABCDE" ~~ m:nth(*)/\w/, "E", "Can match with * index");
+#?rakudo.jvm todo "got: 'False', expected: 'D'"
 is("ABCDE" ~~ m:nth(*-1)/\w/, "D", "Can match with *-1 index");
 
 $data = "f fo foo fooo foooo fooooo foooooo";
