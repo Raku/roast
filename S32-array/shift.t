@@ -9,7 +9,7 @@ Shift tests
 
 =end description
 
-plan 32;
+plan 33;
 
 {
 
@@ -97,6 +97,7 @@ plan 32;
     my @a = 1,2;
     @a[0]:delete;
     ok @a.shift === Nil, "shifting sparse array results in Nil, not failure";
+    is @a.elems, 1, "and it actually shifted the array";
 }
 
 # vim: syn=perl6
