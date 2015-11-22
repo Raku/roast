@@ -54,9 +54,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[1]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[1]:zorp', Exception; # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[1]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # array single existing element
@@ -82,9 +81,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[@b]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[@b]:zippo', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[@b]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # single missing element
@@ -110,9 +108,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[11]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[11]:kabam', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[11]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # array single missing element
@@ -138,9 +135,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[@B]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[@B]:zlonk', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[@B]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # multiple existing elems
@@ -166,9 +162,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[1,2]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[1,2]:dirgo', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[1,2]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # array multiple existing elems
@@ -194,9 +189,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[@bc]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[@bc]:fnarg', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[@bc]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # range multiple existing elems
@@ -222,9 +216,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[1..2]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[1..2]:fnarg', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[1..2]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # multiple missing elems
@@ -250,9 +243,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[11,12]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[11,12]:zniknop', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[11,12]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # array multiple missing elems
@@ -278,9 +270,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[@BC]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[@BC]:lotne', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[@BC]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # range multiple missing elems
@@ -315,9 +306,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[11..12]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[11..12]:bolton', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[11..12]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # mixed existing/missing elems
@@ -343,9 +333,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[1,12]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[1,12]:notlob', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[1,12]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # array mixed existing/missing elems
@@ -371,9 +360,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[@bC]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[@bC]:cheese', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[@bC]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # Callable
@@ -399,9 +387,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[*-1]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[*-1]:callable', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[*-1]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # whatever
@@ -427,9 +414,8 @@ for $@n, Any, $@s, Str -> @a, $T {
     throws-like '@a[*]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
     throws-like '@a[*]:sourceever', Exception;  # caught by MMD
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[*]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # zen
@@ -456,9 +442,8 @@ for $@n, Any, $@s, Str -> @a, $T {
       :source(@a.name), :what('[] slice'), :unexpected<foo>,
     throws-like '@a[]:k:v', X::Adverb,
       :source(@a.name), :nogo(<k v>);
-    #?rakudo.jvm todo 'RT #126671'
     throws-like '@a[]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected(<zip zop>);
+      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 }
