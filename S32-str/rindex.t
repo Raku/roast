@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item rindex">
 
-plan 43;
+plan 45;
 
 # Type of return value
 isa-ok('abc'.rindex('b'), Int);
@@ -67,12 +67,20 @@ ok 3459.rindex(5) == 2, 'rindex on integers';
 # RT #112818
 is "\x261b perl \x261a".rindex('e'), 3, 'rindex with non-latin-1 strings';
 
+# rindex with negative start position not allowed
+ok rindex("xxyxx", "y", -1) ~~ Failure, 'rindex with negative start position fails (1)';
+throws-like 'rindex("xxyxx", "y", -1)', X::OutOfRange, 'rindex with negative start position fails (2)';
 
 # RT #125784
 {
-    for -1e34, -1e35, 1e34, 1e35 -> $pos {
-        is rindex( 'xxy','y', $pos ), Nil, "sub does $pos give Nil";
-        is 'xxy'.rindex( 'y', $pos ), Nil, "method does $pos give Nil";
+    for -1e34, -1e35 -> $pos {
+        #?rakudo.moar 2 todo 'RT #126700'
+        ok rindex( 'xxyxx','y', $pos ) ~~ Failure, "sub does $pos fails";
+        ok 'xxyxx'.rindex( 'y', $pos ) ~~ Failure, "method does $pos fails";
+    }
+    for 1e34, 1e35 -> $pos {
+        is rindex( 'xxyxx','y', $pos ), Nil, "sub does $pos give Nil";
+        is 'xxyxx'.rindex( 'y', $pos ), Nil, "method does $pos give Nil";
     }
 }
 

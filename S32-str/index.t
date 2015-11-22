@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item index">
 
-plan 44;
+plan 46;
 
 # Type of return value
 isa-ok('abc'.index('b'), Int);
@@ -74,12 +74,16 @@ ok 1234.index(3) == 2, '.index on non-strings (here: Int)';
     is $s.substr($s.index(0)),   '023', 'Str.index(0) works';
 }
 
+# index with negative start position not allowed
+ok(index("xxy", "y", -1) ~~ Failure, 'index with negative start position fails (1)');
+throws-like 'index("xxy", "y", -1)', X::OutOfRange, 'index with negative start position fails (2)';
+
 # RT #125784
 {
     for -1e34, -1e35 -> $pos {
-        #?rakudo.jvm 2 todo 'RT #126700'
-        is index( 'xxy','y', $pos ), Nil, "sub does $pos give Nil";
-        is 'xxy'.index( 'y', $pos ), Nil, "method does $pos give Nil";
+        #?rakudo.moar 2 todo 'RT #126700'
+        ok index( 'xxy','y', $pos ) ~~ Failure, "sub does $pos fails";
+        ok 'xxy'.index( 'y', $pos ) ~~ Failure, "method does $pos fails";
     }
     for 1e34, 1e35 -> $pos {
         is index( 'xxy','y', $pos ), Nil, "sub does $pos give Nil";
