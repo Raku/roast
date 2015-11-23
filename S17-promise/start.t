@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 40;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -97,4 +97,14 @@ throws-like { await }, Exception, "a bare await should not work";
         ok .result, "Got result from Promise populating/returning an array ($i)";
         is .result.elems, 1000, "Correct number of results in array ($i)";
     }
+}
+
+# RT #125196
+{
+    sub foo() {
+        my $p = start { $*E + 1 }
+        return $p.result;
+    }
+    my $*E = 5;
+    is foo(), 6, 'Code running in start can see dynamic variables of the start point';
 }
