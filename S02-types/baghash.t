@@ -117,7 +117,7 @@ sub showkv($x) {
     my $b = BagHash.new('a', False, 2, 'a', False, False);
     my @ks = $b.keys;
     #?niecza 3 skip "Non-Str keys NYI"
-    is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
+    is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
     is $b{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';

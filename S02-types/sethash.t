@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 202;
+plan 203;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -70,7 +70,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $a = (1,2,3,2,2,2,2).SetHash;
-    is $a.kv.sort, (1,2,3,True,True,True), "SetHash.kv returns list of keys and values";
+    is $a.kv[0,2,4].sort, (1,2,3), "SetHash.kv returns list of keys and values (1)";
+    is $a.kv[1,3,5], (True,True,True), "SetHash.kv returns list of keys and values (2)";
 }
 
 {
