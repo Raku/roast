@@ -8,7 +8,7 @@ my @simple  = <a b c d e>;
 my @original;
 my @endings = "\n", "\r", "\r\n";
 
-plan 21;
+plan 23;
 
 dies-ok { Supply.lines }, 'can not be called as a class method';
 
@@ -75,5 +75,19 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               $s.emit( "eee" );
               $s.done;
           } );
+    }
+
+    # See 97b93c3.
+    {
+        my $s = Supply.new;
+        #?rakudo.jvm todo '\r\n not yet handled as grapheme'
+        my $l = $s.lines(:!chomp);
+        my @res;
+        $l.tap({ @res.push: $_ });
+        $s.emit("a\r");
+        $s.emit("\n");
+        for ^50 { last if @res; sleep .1 }
+        is-deeply(@res, ["a\r\n"], "handle chunked line endings");
+        $s.done;
     }
 }
