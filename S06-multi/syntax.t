@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 44;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -168,6 +168,16 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
     multi rt68528(:$a!, *%_) { return "first"  };
     multi rt68528(:$b,  *%_) { return "second" };
     is(rt68528(:a, :b), "first", "RT #68528 - first defined wins the tie");
+}
+
+# RT #74900
+{
+    multi rt74900() { "zero" };
+    multi rt74900(Int $a?) { "Int" };
+    multi rt74900(Str $a?) { "Str" };
+    is rt74900(), "zero", "Exact arity match wins over candidates with optionals";
+    is rt74900(42), "Int", "With Int argument hit optional Int candidate";
+    is rt74900("bar"), "Str", "With Str argument hit optional Str candidate";
 }
 
 # vim: ft=perl6
