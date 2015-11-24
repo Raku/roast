@@ -72,6 +72,7 @@ nok foo().defined, 'contextual $*VAR is undefined';
 
 #RT #63226
 # Not every impl has an @*INC by default...
+my @*INC;
 @*INC.push('not_a_directory');
 {
     package Foo { our sub run() { return @*INC } };
