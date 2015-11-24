@@ -45,7 +45,7 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 }
 
 # no need to do that at compile time, since require() really is run time
-@*INC.unshift: 't/spec/packages';
+PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:prefix<t/spec/packages>, :next-repo($*REPO));
 
 # Next line is for final test.
 GLOBAL::<$x> = 'still here';

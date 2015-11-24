@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 24;
+plan 19;
 
 # initializations
 my $cwd := $*CWD;
@@ -31,71 +31,40 @@ ok mkdir($cmpdir), "Could we create $cmpdir";
 ok signal(SIGINT).tap( {die} ), 'install Ctrl-C handler for cleanup in END';
 
 # basic CURLF sanity
-my $curlf1 = CompUnitRepo::Local::File.new($cwd);
-isa-ok $curlf1, CompUnitRepo::Local::File;
-isa-ok $curlf1.IO, IO::Path;
-is $curlf1.IO, $cwd, 'is . looking at the right directory';
+my $curlf1 = CompUnit::Repository::FileSystem.new(:prefix($cwd.Str));
+isa-ok $curlf1, CompUnit::Repository::FileSystem;
+isa-ok $curlf1.prefix, IO::Path;
+is $curlf1.prefix, $cwd, 'is . looking at the right directory';
 is $curlf1.short-id, 'file', 'is the short-id right';
-dies-ok { $curlf1.install( "foo" ) }, 'Cannot install on CUR::File';
+dies-ok { $curlf1.install( "foo" ) }, 'Cannot install on CUR::FileSystem';
 
-my $curlf2 = CompUnitRepo::Local::File.new($cwd);
-isa-ok $curlf2, CompUnitRepo::Local::File;
+my $curlf2 = CompUnit::Repository::FileSystem.new(:prefix($cwd.Str));
+isa-ok $curlf2, CompUnit::Repository::FileSystem;
 ok $curlf1 === $curlf2, 'are they the same';
 
-my $curlf = CompUnitRepo::Local::File.new($srcdir);
-isa-ok $curlf, CompUnitRepo::Local::File;
+my $curlf = CompUnit::Repository::FileSystem.new(:prefix($srcdir.Str));
+isa-ok $curlf, CompUnit::Repository::FileSystem;
 ok $curlf2 !=== $curlf, 'are they different';
-isa-ok $curlf.IO, IO::Path;
-is $curlf.IO, IO::Path.new($srcdir), "is '$srcdir' looking at the right dir";
+isa-ok $curlf.prefix, IO::Path;
+is $curlf.prefix, IO::Path.new($srcdir), "is '$srcdir' looking at the right dir";
 
 # all candidates
-my $candidates = $curlf.candidates('NanooNanoo');
-my $compunit-src = $candidates[0];
+my $compunit-src = $curlf.need(CompUnit::DependencySpecification.new(:short-name<NanooNanoo>));
 subtest {
-    is $candidates.elems, 1, "did we get 1 candidate";
     if isa-ok $compunit-src, CompUnit {
         is $compunit-src.from,        'Perl6', "is the language 'Perl6'";
-        is $compunit-src.name,        $module, "is the name '$module'";
-        is $compunit-src.extension,   $srcext, "is the extension '$srcext'";
-        is $compunit-src.path,        $srcsrc, "is the path '$srcsrc'";
-        is $compunit-src.is-loaded,     False, "is the module is-loaded";
-        is $compunit-src.has-source,     True, "do we have the source?";
-        is $compunit-src.has-precomp,   False, "is the module pre-compiled";
+        is $compunit-src.short-name,  $module, "is the name '$module'";
+        is $compunit-src.precompiled,   False, "is the module pre-compiled";
     }
 }, 'is there one candidate and is it sane';
 
 # a specific existing candidate
-$candidates = $curlf.candidates('NanooNanoo');
-is $candidates.elems, 1, "did we get 1 candidate";
-my $second = $candidates[0];
+my $second = $curlf.need(CompUnit::DependencySpecification.new(:short-name<NanooNanoo>));
 isa-ok $second, CompUnit;
 ok $compunit-src === $second, 'did we get the same CompUnit object';
 
 # a specific non-existing candidate
-$candidates = $curlf.candidates('Shazbat');
-is $candidates.elems, 0, "did we get 0 candidates";
-
-# create precomp file after creating CURLF, so we're sure it reads on-demand
-$curlf = CompUnitRepo::Local::File.new($cmpdir);
-isa-ok $curlf, CompUnitRepo::Local::File;
-ok $compunit-src.precomp($cmpcmp),   'did we pre-compile ok?';
-is $compunit-src.has-precomp, False, "is the module pre-compiled";
-
-# does it find the precomped version (without a source being present)
-$candidates = $curlf.candidates('NanooNanoo');
-subtest {
-    is $candidates.elems, 1, "did we get 1 candidate";
-    my $compunit-cmp = $candidates[0];
-    if isa-ok $compunit-cmp, CompUnit {
-        is $compunit-cmp.from,      'Perl6', "is the language 'Perl6'";
-        is $compunit-cmp.name,      $module, "is the name '$module'";
-        is $compunit-cmp.extension, $srcext, "is the extension '$srcext'";
-        is $compunit-cmp.path,      $cmpsrc, "is the path '$cmpsrc'";
-        is $compunit-cmp.is-loaded,   False, "is the module is-loaded";
-        is $compunit-cmp.has-source,  False, "don't we have the source?";
-        is $compunit-cmp.has-precomp,  True, "is the module pre-compiled";
-    }
-}, 'did we find the module again';
+throws-like { $curlf.need(CompUnit::DependencySpecification.new(:short-name<Shazbat>)) }, X::CompUnit::UnsatisfiedDependency;
 
 # always cleanup
 END {

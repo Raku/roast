@@ -21,8 +21,8 @@ my @normal = <
   CompUnit
   CompUnitRepo
   CompUnitRepo::Distribution
-  CompUnitRepo::Local::File
-  CompUnitRepo::Local::Installation
+  CompUnit::Repository::FileSystem
+  CompUnit::Repository::Installation
   Compiler
   Complex
   ComplexStr

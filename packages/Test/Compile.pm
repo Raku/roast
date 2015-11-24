@@ -258,7 +258,7 @@ multi sub do_compunit(@code_as_str, $reason is copy, $leavefiles = False, $compi
     my @fns = (tmpident for @code_as_str);
     my $lastfn = '';
     my $ret;
-    @*INC.unshift("file#$precomp_dir");
+    PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:prefix($precomp_dir), :next-repo($*REPO));
     subtest {
         for flat @code_as_str Z @fns -> $code_as_str is copy, $fn {
             $code_as_str [R~]= "use $lastfn;\n" if $lastfn;
