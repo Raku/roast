@@ -10,10 +10,10 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
-        my $s1 = Supply.new;
-        my $s2 = Supply.new;
+        my $s1 = Supplier.new;
+        my $s2 = Supplier.new;
 
-        tap-ok $s1.zip-latest($s2),
+        tap-ok $s1.Supply.zip-latest($s2.Supply),
           [(<2 a>), (<2 b>), (<2 c>), (<3 c>), (<4 c>)],
           'zipping 2 supplies works with "zip-latest"',
           :after-tap( {
@@ -30,11 +30,11 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $s1 = Supply.new;
-        my $s2 = Supply.new;
-        my $s3 = Supply.new;
+        my $s1 = Supplier.new;
+        my $s2 = Supplier.new;
+        my $s3 = Supplier.new;
 
-        tap-ok Supply.zip-latest($s1, $s2, $s3, :with( &infix:<~> )),
+        tap-ok Supply.zip-latest($s1.Supply, $s2.Supply, $s3.Supply, :with( &infix:<~> )),
           [<aaa aab abb bbb bcb bcc bcd>],
           'zipping three supplies with ~ works with "zip-latest"',
           :after-tap( {
@@ -58,11 +58,11 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $s1 = Supply.new;
-        my $s2 = Supply.new;
-        my $s3 = Supply.new;
+        my $s1 = Supplier.new;
+        my $s2 = Supplier.new;
+        my $s3 = Supplier.new;
 
-        tap-ok Supply.zip-latest($s1, $s2, $s3, :with(&infix:<~>), :initial(<x y z>)),
+        tap-ok Supply.zip-latest($s1.Supply, $s2.Supply, $s3.Supply, :with(&infix:<~>), :initial(<x y z>)),
           [<xaz aaz aaa aab abb bbb bcb bcc bcd>],
           'zipping three supplies works with "zip-latest"',
           :after-tap( {

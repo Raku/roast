@@ -10,8 +10,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
-        my $s = Supply.new;
-        my $c = $s.Channel;
+        my $s = Supplier.new;
+        my $c = $s.Supply.Channel;
         isa-ok $c, Channel, 'we got a Channel';
         $s.emit(42);
         is $c.receive, 42, 'got first emitted value';
@@ -24,8 +24,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 }
 
-my $s     = Supply.new;
-my $c     = $s.Channel;
+my $s     = Supplier.new;
+my $c     = $s.Supply.Channel;
 my $done  = 0;
 my $times = 10;
 

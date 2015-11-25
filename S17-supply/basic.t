@@ -8,11 +8,11 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
-        my $s = Supply.new;
+        my $s = Supplier.new;
     
         my @vals;
         my $saw_done;
-        my $tap = $s.tap( -> $val { @vals.push($val) },
+        my $tap = $s.Supply.tap( -> $val { @vals.push($val) },
           done => { $saw_done = True });
 
         $s.emit(1);
@@ -27,16 +27,16 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $s = Supply.new;
+        my $s = Supplier.new;
 
         my @tap1_vals;
         my @tap2_vals;
-        my $tap1 = $s.tap(-> $val { @tap1_vals.push($val) });
+        my $tap1 = $s.Supply.tap(-> $val { @tap1_vals.push($val) });
 
         $s.emit(1);
         is ~@tap1_vals, "1", "First tap got initial value";
 
-        my $tap2 = $s.tap(-> $val { @tap2_vals.push($val) });
+        my $tap2 = $s.Supply.tap(-> $val { @tap2_vals.push($val) });
         $s.emit(2);
         is ~@tap1_vals, "1 2", "First tap has both values";
         is ~@tap2_vals, "2", "Second tap missed first value";

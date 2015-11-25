@@ -14,8 +14,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list(42..51).elems, [1..10], "just tracing elems works";
 
     {
-        my $s = Supply.new;
-        tap-ok $s.elems(1),
+        my $s = Supplier.new;
+        tap-ok $s.Supply.elems(1),
           [1,2,5],
           'works in 1 second increments',
 #          :live,

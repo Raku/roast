@@ -10,21 +10,21 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
-        my $s  = Supply.new;
-        my $p1 = $s.Promise;
+        my $s  = Supplier.new;
+        my $p1 = $s.Supply.Promise;
         isa-ok $p1, Promise, 'we got a Promise';
         is $p1.status, Planned, 'Promise still waiting';
         $s.emit(42);
-        is $p1.status, Kept, 'Promise is kept';
-        is $p1.result, 42, 'got first emitted value';
+        is $p1.status, Planned, 'Promise is still Planned after emit';
 
-        my $p2 = $s.Promise;
         $s.emit(43);
-        $s.emit(44);
-        is $p2.result, 43, 'got second emitted value';
+        $s.done();
+        is $p1.status, Kept, 'Promise is kept after done';
+        is $p1.result, 43, 'got last emitted value';
 
-        my $p3 = $s.Promise;
-        $s.done;
-        is $p3.status, Broken, 'Promise is broken';
+        $s = Supplier.new;
+        my $p2 = $s.Supply.Promise;
+        $s.quit('oops');
+        is $p2.status, Broken, 'Promise is broken after quit';
     }
 }

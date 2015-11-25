@@ -81,7 +81,7 @@ plan 53;
 }
 
 {
-    my $trigger = Supply.new;
+    my $trigger = Supplier.new;
     my $s = supply {
         whenever $trigger -> $value {
             emit $value * 2;
@@ -110,7 +110,7 @@ plan 53;
 }
 
 {
-    my $trigger = Supply.new;
+    my $trigger = Supplier.new;
     my $s = supply {
         whenever $trigger -> $value {
             emit $value.subst('fruit', 'bacon');
@@ -133,8 +133,8 @@ plan 53;
 }
 
 {
-    my $trigger1 = Supply.new;
-    my $trigger2 = Supply.new;
+    my $trigger1 = Supplier.new;
+    my $trigger2 = Supplier.new;
     my $s = supply {
         whenever $trigger1 -> $value {
             emit "a $value";
@@ -158,12 +158,12 @@ plan 53;
 
 {
     my $closed1 = False;
-    my $trigger1 = Supply.new does role { method close(|) { $closed1 = True; nextsame; } };
+    my $trigger1 = Supplier.new;
     my $closed2 = False;
-    my $trigger2 = Supply.new does role { method close(|) { $closed2 = True; nextsame; } };
+    my $trigger2 = Supplier.new;
     my $s = supply {
-        whenever $trigger1 { }
-        whenever $trigger2 { }
+        whenever $trigger1.Supply.on-close({ $closed1 = True; }) { }
+        whenever $trigger2.Supply.on-close({ $closed2 = True; }) { }
         done;
     }
 
@@ -177,14 +177,14 @@ plan 53;
 
 {
     my $closed1 = False;
-    my $trigger1 = Supply.new does role { method close(|) { $closed1 = True; nextsame; } };
+    my $trigger1 = Supplier.new;
     my $closed2 = False;
-    my $trigger2 = Supply.new does role { method close(|) { $closed2 = True; nextsame; } };
+    my $trigger2 = Supplier.new;
     my $s = supply {
-        whenever $trigger1 {
+        whenever $trigger1.Supply.on-close({ $closed1 = True; }) {
             emit $_;
         }
-        whenever $trigger2 {
+        whenever $trigger2.Supply.on-close({ $closed2 = True; }) {
             done;
         }
     }
@@ -205,8 +205,8 @@ plan 53;
 }
 
 {
-    my $trigger1 = Supply.new;
-    my $trigger2 = Supply.new;
+    my $trigger1 = Supplier.new;
+    my $trigger2 = Supplier.new;
     my $s = supply {
         whenever $trigger1 { }
         whenever $trigger2 { }
@@ -225,7 +225,7 @@ plan 53;
 }
 
 {
-    my $trigger = Supply.new;
+    my $trigger = Supplier.new;
     my $s = supply {
         whenever $trigger {
         }
@@ -246,7 +246,7 @@ plan 53;
 {
     my class OMGBears is Exception { }
 
-    my $trigger = Supply.new;
+    my $trigger = Supplier.new;
     my $s = supply {
         whenever $trigger {
             emit $_;
@@ -275,7 +275,7 @@ plan 53;
 }
 
 {
-    my $trigger = Supply.new;
+    my $trigger = Supplier.new;
     my $s = supply {
         whenever $trigger {
             QUIT {
@@ -298,7 +298,7 @@ plan 53;
 {
     my class UselessException is Exception { }
 
-    my $trigger = Supply.new;
+    my $trigger = Supplier.new;
     my $s = supply {
         whenever $trigger {
             QUIT {
@@ -330,8 +330,8 @@ plan 53;
 }
 
 {
-    my $trigger1 = Supply.new;
-    my $trigger2 = Supply.new;
+    my $trigger1 = Supplier.new;
+    my $trigger2 = Supplier.new;
 
     my $lock = Lock.new;
     my $cv1 = $lock.condition;

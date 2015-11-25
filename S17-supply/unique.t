@@ -30,8 +30,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       "unique with as and with tap works";
 
     {
-        my $s = Supply.new;
-        tap-ok $s.unique( :expires(2) ),
+        my $s = Supplier.new;
+        tap-ok $s.Supply.unique( :expires(2) ),
           [1,2,3,1,2],
           'unique with expiry works',
           :after-tap( {
@@ -48,8 +48,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $s = Supply.new;
-        tap-ok $s.unique( :as( * div 2 ), :expires(2) ),
+        my $s = Supplier.new;
+        tap-ok $s.Supply.unique( :as( * div 2 ), :expires(2) ),
           [1,2,1,2],
           'unique with as and expiry works',
           :after-tap( {
@@ -66,8 +66,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $s = Supply.new;
-        tap-ok $s.unique( :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
+        my $s = Supplier.new;
+        tap-ok $s.Supply.unique( :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
           [<a b c B>],
           'unique with with and expiry works',
           :after-tap( {
@@ -85,8 +85,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $s = Supply.new;
-        tap-ok $s.unique(
+        my $s = Supplier.new;
+        tap-ok $s.Supply.unique(
           :as( *.substr(0,1) ), :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
           [<a bb c B>],
           'unique with with, as and expiry works',

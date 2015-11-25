@@ -16,8 +16,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       "handle a simple list of words";
 
     {
-        my $s = Supply.new;
-        tap-ok $s.words,
+        my $s = Supplier.new;
+        tap-ok $s.Supply.words,
           [<a b cc d eeee fff>],
           "handle chunked lines",
           :after-tap( {

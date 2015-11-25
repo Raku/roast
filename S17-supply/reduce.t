@@ -7,7 +7,7 @@ use Test::Tap;
 plan 10;
 
 dies-ok { Supply.reduce( {...} ) }, 'can not be called as a class method';
-dies-ok { Supply.new.reduce(23) }, 'must be code if specified';
+dies-ok { Supplier.new.Supply.reduce(23) }, 'must be code if specified';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -21,8 +21,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       "reducing with concatenate works";
 
     {
-        my $s = Supply.new;
-        tap-ok $s.reduce( &infix:<(+)> ),
+        my $s = Supplier.new;
+        tap-ok $s.Supply.reduce( &infix:<(+)> ),
         [
           {a =>  1, b => 2},
           (a =>  1, b => 4, c => 42).Bag,

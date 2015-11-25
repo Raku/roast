@@ -2,15 +2,14 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 8;
 
 dies-ok { Supply.start({...}) }, 'can not be called as a class method';
 
 {
-    my $master = Supply.new;
-    ok $master ~~ Supply, 'Did we get a master Supply?';
+    my $master = Supplier.new;
     my @promises = Promise.new xx 3;
-    my $starter = $master.start( {
+    my $starter = $master.Supply.start( {
             if $_ == 1 {
                 await @promises[$_];
             }
