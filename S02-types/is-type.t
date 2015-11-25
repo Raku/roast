@@ -41,8 +41,9 @@ sub test-state() {
     }
     $got
 }
-#?rakudo todo 'state variables with `is BagHash`'
+#?rakudo skip 'state variables with `is BagHash`'
 is test-state(), 2, 'state variable with `is BagHash` retains state...';
+#?rakudo skip 'state variables with `is BagHash`'
 is test-state(), 2, '...and it is per closure clone';
 
 for ^2 {
