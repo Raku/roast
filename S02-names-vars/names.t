@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 144;
+plan 149;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -147,6 +147,26 @@ throws-like {
 {
     throws-like 'my ::foo $x, say $x', Exception,
         'no Null PMC access when printing a variable typed as ::foo ';
+}
+
+# RT #113892
+{
+    my module A {
+        enum Day is export <Mon Tue>;
+        sub Day is export { 'sub Day' }
+    }
+    import A;
+    is Day(0), Mon, 'when enum and sub Day exported, Day(0) is enum coercer';
+    is &Day(), 'sub Day', 'can get sub using & to disamgibuate';
+}
+
+# RT #115608
+{
+    my module foo {}
+    sub foo() { "OH HAI" }
+    ok foo.HOW ~~ Metamodel::ModuleHOW, 'when module and sub foo, bare foo is module type object';
+    ok foo().HOW ~~ Metamodel::CoercionHOW, 'when module and sub foo, foo() is coercion type';
+    is &foo(), 'OH HAI', 'can get sub using & to disambiguate';
 }
 
 # vim: ft=perl6
