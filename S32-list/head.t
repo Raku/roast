@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 24;
 
 =begin description
 
@@ -12,15 +12,28 @@ This test tests the C<head> builtin.
 
 {
     my $list = <a b b c d e b b e b b f b>;
-    is $list.head(5).List, <a b b c d>,  "List.head works";
+    is $list.head.List, ("a",),  "List.head works";
     my @array = <a b b c d e b b e b b f b>;
-    is @array.head(5).List, <a b b c d>, "Array.head works";
+    is @array.head.List, ("a",), "Array.head works";
     my $scalar = 42;
-    is $scalar.head(5).List, (42,),      "Scalar.head works";
+    is $scalar.head.List, (42,),      "Scalar.head works";
     my $range = ^10;
-    is $range.head(5).List, (0,1,2,3,4), "Range.head works";
+    is $range.head.List, (0,),        "Range.head works";
     my $inf = ^Inf;
-    is $inf.head(5).List, (0,1,2,3,4),   "Range.head works on lazy list also";
+    is $inf.head.List, (0,),          "Range.head works on lazy list";
+} #5
+
+{
+    my $list = <a b b c d e b b e b b f b>;
+    is $list.head(5).List, <a b b c d>,  "List.head(5) works";
+    my @array = <a b b c d e b b e b b f b>;
+    is @array.head(5).List, <a b b c d>, "Array.head(5) works";
+    my $scalar = 42;
+    is $scalar.head(5).List, (42,),      "Scalar.head(5) works";
+    my $range = ^10;
+    is $range.head(5).List, (0,1,2,3,4), "Range.head(5) works";
+    my $inf = ^Inf;
+    is $inf.head(5).List, (0,1,2,3,4),   "Range.head(5) works on lazy list";
 } #5
 
 {
