@@ -14,7 +14,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $s2 = Supplier.new;
 
         tap-ok $s1.Supply.zip-latest($s2.Supply),
-          [(<2 a>), (<2 b>), (<2 c>), (<3 c>), (<4 c>)],
+          [(<2 a>), (<2 b>), (<2 c>), (<3 c>), (<3 d>)],
           'zipping 2 supplies works with "zip-latest"',
           :after-tap( {
               $s1.emit(val('1'));
@@ -24,7 +24,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               $s2.emit('c');
               $s1.emit(val('3'));
               $s1.done();
-              $s1.emit(val('4'));
+              $s2.emit(val('d'));
               $s2.done();
           } );
     }
