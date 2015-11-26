@@ -406,8 +406,6 @@ my @concurrent = <
   X::Promise::Combinator
   X::Promise::Vowed
   X::Supply::Migrate::Needs
-  X::Supply::On::BadSetup
-  X::Supply::On::NoEmit
 >;
 
 my @moar = <
