@@ -29,7 +29,7 @@ multi sub tap-ok (
         after-tap() if &after-tap;
 
         $timeout *= 10;
-        for ^$timeout { last if $done || $s.done; sleep .1 }
+        for ^$timeout { last if $done; sleep .1 }
         ok $done, "$desc was really done";
         @res .= sort if $sort;
         is-deeply @res, $expected, $desc;
