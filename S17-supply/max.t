@@ -16,8 +16,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       "ascending max works";
     tap-ok Supply.from-list(10...1).max, [10],
       "descending max works";
-    tap-ok Supply.from-list("a".."e","A".."E").max(*.uc), [<a b c d e>],
+    tap-ok Supply.from-list(flat("a".."e","A".."E")).max(*.uc), [<a b c d e>],
       "ascending alpha works";
-    tap-ok Supply.from-list("E"..."A","e".."a").max(*.lc), ["E"],
+    tap-ok Supply.from-list(flat("E"..."A","e".."a")).max(*.lc), ["E"],
       "descending alpha works";
 }
