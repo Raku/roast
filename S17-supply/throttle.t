@@ -32,7 +32,7 @@ for ThreadPoolScheduler.new -> $*SCHEDULER {
         my $min = 0;
         my $max = 10;
         my @seen;
-        my $control = Supply.new;
+        my $control = Supplier.new;
         my $before = now;
         (1..10).Supply.throttle(0,.5,:$control).tap: {
             @seen.push($_);
