@@ -11,7 +11,7 @@ dies-ok { Supply.unique }, 'can not be called as a class method';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap-ok Supply.from-list(1..10,1..10).unique,
+    tap-ok Supply.from-list(flat(1..10,1..10)).unique,
       [1,2,3,4,5,6,7,8,9,10],
       "unique tap works";
 
@@ -44,6 +44,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               $s.emit(1);
               $s.emit(2);
               $s.emit(3); # twice within expiration time
+              $s.done;
           } );
     }
 
@@ -62,6 +63,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               $s.emit(1);
               $s.emit(2);
               $s.emit(3); # twice within expiration time
+              $s.done;
           } );
     }
 
@@ -81,6 +83,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               sleep 1;
               $s.emit("B");
               $s.emit("b"); # same as "B"
+              $s.done;
           } );
     }
 
@@ -100,6 +103,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               $s.emit("c");
               $s.emit("B");
               $s.emit("bb"); # same as "B"
+              $s.done;
           } );
     }
 }
