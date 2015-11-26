@@ -11,7 +11,7 @@ dies-ok { Supply.unique }, 'can not be called as a class method';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap-ok Supply.from-list(1..10,1..10).unique,
+    tap-ok Supply.from-list(flat(1..10,1..10)).unique,
       [1,2,3,4,5,6,7,8,9,10],
       "unique tap works";
 
@@ -30,8 +30,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       "unique with as and with tap works";
 
     {
-        my $s = Supply.new;
-        tap-ok $s.unique( :expires(2) ),
+        my $s = Supplier.new;
+        tap-ok $s.Supply.unique( :expires(2) ),
           [1,2,3,1,2],
           'unique with expiry works',
           :after-tap( {
@@ -44,12 +44,13 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               $s.emit(1);
               $s.emit(2);
               $s.emit(3); # twice within expiration time
+              $s.done;
           } );
     }
 
     {
-        my $s = Supply.new;
-        tap-ok $s.unique( :as( * div 2 ), :expires(2) ),
+        my $s = Supplier.new;
+        tap-ok $s.Supply.unique( :as( * div 2 ), :expires(2) ),
           [1,2,1,2],
           'unique with as and expiry works',
           :after-tap( {
@@ -62,12 +63,13 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               $s.emit(1);
               $s.emit(2);
               $s.emit(3); # twice within expiration time
+              $s.done;
           } );
     }
 
     {
-        my $s = Supply.new;
-        tap-ok $s.unique( :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
+        my $s = Supplier.new;
+        tap-ok $s.Supply.unique( :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
           [<a b c B>],
           'unique with with and expiry works',
           :after-tap( {
@@ -81,12 +83,13 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               sleep 1;
               $s.emit("B");
               $s.emit("b"); # same as "B"
+              $s.done;
           } );
     }
 
     {
-        my $s = Supply.new;
-        tap-ok $s.unique(
+        my $s = Supplier.new;
+        tap-ok $s.Supply.unique(
           :as( *.substr(0,1) ), :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
           [<a bb c B>],
           'unique with with, as and expiry works',
@@ -100,6 +103,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
               $s.emit("c");
               $s.emit("B");
               $s.emit("bb"); # same as "B"
+              $s.done;
           } );
     }
 }

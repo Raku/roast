@@ -17,8 +17,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $seconds = 5;
-        my $s = Supply.new;
-        my $b = $s.batch( :$seconds );
+        my $s = Supplier.new;
+        my $b = $s.Supply.batch( :$seconds );
         sleep $seconds - now % $seconds; # wait until next $sleep second period
         my $base = time div $seconds;
         tap-ok $b,
@@ -38,8 +38,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my $elems   = 7;
         my $spurt   = 10;
         my $rest    = $spurt - $elems;
-        my $s = Supply.new;
-        my $b = $s.batch( :$elems, :$seconds );
+        my $s = Supplier.new;
+        my $b = $s.Supply.batch( :$elems, :$seconds );
         sleep $seconds - now % $seconds; # wait until next $sleep second period
         my $base = time div $seconds;
         tap-ok $b,

@@ -10,9 +10,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
-        my $s1 = Supply.new;
-        my $s2 = Supply.new;
-        tap-ok $s1.merge($s2),
+        my $s1 = Supplier.new;
+        my $s2 = Supplier.new;
+        tap-ok $s1.Supply.merge($s2.Supply),
           [1,2,'a',3,'b'],
           "merging supplies works",
           :after-tap( {

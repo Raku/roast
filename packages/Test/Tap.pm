@@ -14,26 +14,71 @@ multi sub tap-ok (
   :&after-tap,
   :$timeout is copy = 10,
   :$sort,
+  :$virtual-time
 ) {
     subtest {
-        plan 5;
+        plan $virtual-time ?? 4 !! 5;
         ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
         is $s.live, $live, "Supply appears to {'NOT ' unless $live}be live";
 
         my @res;
         my $done;
         isa-ok $s.tap(
-                 { emit() if &emit; @res.append($_) },
+                 { emit() if &emit; @res.push($_) },
           :done( { done() if &done; $done = True } ),
         ), Tap, "$desc got a tap";
         after-tap() if &after-tap;
 
-        $timeout *= 10;
-        for ^$timeout { last if $done or $s.done; sleep .1 }
-        ok $done, "$desc was really done";
+        unless $virtual-time {
+            $timeout *= 10;
+            for ^$timeout { last if $done; sleep .1 }
+            ok $done, "$desc was really done";
+        }
         @res .= sort if $sort;
         is-deeply @res, $expected, $desc;
     }, $desc;
+}
+
+# Rather cheating test scheduler.
+my class FakeScheduler does Scheduler is export {
+    has $.time = now;
+    has @.upcoming;
+
+    my class Scheduled {
+        has $.deadline;
+        has &.code;
+    }
+
+    method cue(&code, :$every, :$in = Duration.new(0), *%unknown) {
+        die "Fake scheduler does not understand: %unknown.keys().join(', ')"
+            if %unknown;
+
+        if $every {
+            for ^100 {
+                state $deadline = $!time + $in;
+                @!upcoming.push(Scheduled.new(:$deadline, :&code));
+                $deadline += $every;
+            }
+        }
+        else {
+            code();
+        }
+    }
+
+    method loads() { ??? }
+
+    method progress-by(Duration $d) {
+        $!time += $d;
+        @!upcoming .= grep: {
+            if .deadline <= $!time {
+                .code().();
+                False
+            }
+            else {
+                True
+            }
+        }
+    }
 }
 
 =begin pod

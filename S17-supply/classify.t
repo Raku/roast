@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 39;
+plan 33;
 
 dies-ok { Supply.classify( {...}  ) }, 'can not be called as a class method';
 dies-ok { Supply.classify( {a=>1} ) }, 'can not be called as a class method';
@@ -19,9 +19,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     for &mapper, %mapper, @mapper -> \mapper {
         diag "mapping {mapper.^name} now";
         my $what = mapper.WHAT.perl;
-        my $s = Supply.new;
-        ok $s ~~ Supply, "we got a base Supply ($what)";
-        my $c = $s.classify( mapper );
+        my $s = Supplier.new;
+        my $c = $s.Supply.classify( mapper );
         ok $c ~~ Supply, "we got a classification Supply ($what)";
 
         my @keys;
@@ -32,6 +31,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         } ), Tap, "we got a tap ($what)";
 
         $s.emit($_) for 1,2,3,11,12,13;
+        $s.done;
         is-deeply @keys, [0,1], "did we get the right keys ($what)";
         tap-ok @supplies[0], [1,2,3],   "got the 0 supply ($what)", :live;
         tap-ok @supplies[1], [11,12,13], "got the 1 supply ($what)", :live;

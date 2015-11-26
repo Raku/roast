@@ -11,7 +11,7 @@ dies-ok { Supply.squish }, 'can not be called as a class method';
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap-ok Supply.from-list(1..10,1..10).squish,
+    tap-ok Supply.from-list(flat(1..10,1..10)).squish,
       [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],
       "squish tap with 2 ranges works";
 

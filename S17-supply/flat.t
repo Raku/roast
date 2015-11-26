@@ -14,8 +14,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list( [1,2],[3,4,5] ).flat,
       [1..5], "On demand publish with flat";
 
-    my $s = Supply.new;
-    my $f = $s.flat;
+    my $s = Supplier.new;
+    my $f = $s.Supply.flat;
 
     my $seen1 = [];
     my $t1 = $f.tap( { $seen1.push: $_ } );

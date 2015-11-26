@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 7;
+plan 5;
 
 dies-ok { Supply.schedule-on($*SCHEDULER) },
   'can not be called as a class method';
@@ -15,10 +15,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     {
         my $other_scheduler = CurrentThreadScheduler.new;
         ok $other_scheduler ~~ Scheduler, 'did we get a Scheduler';
-        my $master = Supply.new;
-        ok $master ~~ Supply, 'Did we get a master Supply?';
+        my $master = Supplier.new;
 
-        tap-ok $master.schedule-on($other_scheduler),
+        tap-ok $master.Supply.schedule-on($other_scheduler),
           [1,2,3],
           'did we get the original values',
           :live,

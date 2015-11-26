@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 75;
+plan 63;
 
 dies-ok { Supply.categorize( {...}  ) }, 'can not be called as a class method';
 dies-ok { Supply.categorize( {a=>1} ) }, 'can not be called as a class method';
@@ -19,9 +19,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my @mapper = 0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1;
         for &mapper, %mapper, @mapper -> \mapper {
             my $what = mapper.WHAT.perl;
-            my $s = Supply.new;
-            ok $s ~~ Supply, "we got a base Supply ($what)";
-            my $c = $s.categorize( mapper );
+            my $s = Supplier.new;
+            my $c = $s.Supply.categorize( mapper );
             ok $c ~~ Supply, "we got a classification Supply ($what)";
 
             my @keys;
@@ -32,6 +31,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             } ), Tap, "we got a tap ($what)";
 
             $s.emit($_) for 1,2,3,11,12,13;
+            $s.done();
             is-deeply @keys, [0,1], "did we get the right keys ($what)";
             tap-ok @supplies[0], [1,2,3],   "got the 0 supply ($what)", :live;
             tap-ok @supplies[1], [11,12,13], "got the 1 supply ($what)", :live;
@@ -45,10 +45,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           $(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1);
         for &mapper, %mapper, @mapper -> \mapper {
             my $what = mapper.WHAT.perl;
-            my $s = Supply.new;
-            ok $s ~~ Supply, "we got a base Supply ($what)";
-            my $c = $s.categorize( mapper );
-            ok $s ~~ Supply, "we got a classification Supply ($what)";
+            my $s = Supplier.new;
+            my $c = $s.Supply.categorize( mapper );
+            ok $c ~~ Supply, "we got a classification Supply ($what)";
 
             my @keys;
             my @supplies;
@@ -58,12 +57,12 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             } ), Tap, "we got a tap ($what)";
 
             $s.emit($_) for 1,2,3,11,12,13;
+            $s.done;
             is-deeply @keys, [0,1], "did we get the right keys ($what)";
             tap-ok @supplies[0], [11,12,13], "got the 0 supply ($what)", :live;
 
             my $done = False;
             @supplies[1].tap(done => sub { $done = True });
-            $s.done;
             ok $done, 'Sub-supply got .done (RT #123674)';
         }
     }

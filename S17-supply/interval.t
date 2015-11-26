@@ -10,17 +10,21 @@ plan 4;
 dies-ok { Supply.new.interval(1) }, 'can not be called as an instance method';
 
 {
-    tap-ok Supply.interval(1),
+    my $scheduler = FakeScheduler.new;
+    tap-ok Supply.interval(1, :$scheduler),
       [^5],
       'interval of 1 second',
-      :after-tap( { sleep 4.5 } );
+      :after-tap( { $scheduler.progress-by(Duration.new(4.5)) } ),
+      :virtual-time;
 }
 
 {
-    tap-ok Supply.interval(1, 2),
+    my $scheduler = FakeScheduler.new;
+    tap-ok Supply.interval(1, 2, :$scheduler),
       [^3],
       'interval of 1 second with delay of 2',
-      :after-tap( { sleep 4.5 } );
+      :after-tap( { $scheduler.progress-by(Duration.new(4.5)) } ),
+      :virtual-time;
 }
 
 # RT #125621

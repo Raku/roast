@@ -10,10 +10,10 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
-        my $s1 = Supply.new;
-        my $s2 = Supply.new;
+        my $s1 = Supplier.new;
+        my $s2 = Supplier.new;
 
-        tap-ok $s1.zip($s2, :with( &infix:<~> )),
+        tap-ok $s1.Supply.zip($s2.Supply, :with( &infix:<~> )),
           [<1a 2b>],
           'zipping taps works',
           :after-tap( {
