@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 88;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -46,5 +46,97 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         is ~@tap1_vals, "1 2", "First tap closed, missed third value";
         is ~@tap2_vals, "2 3", "Second tap gets third value";
         ok $tap2.close, "did the close of the second tap work";
+    }
+
+    my $p = Supplier.new;
+    lives-ok { $p.emit(1) }, 'Can emit to publisher with no supply taken';
+
+    my $s1 = $p.Supply;
+    lives-ok { $p.emit(1) }, 'Can emit to publisher with supply untapped';
+
+    {
+        my (@emitted, $done, $quit);
+        my $t1 = $s1.tap({@emitted.push($_)}, done => {$done++}, quit => {$quit++});
+
+        is @emitted, [], 'Right after tapping, nothing emitted';
+        nok $done, 'Right after tapping, no done';
+        nok $quit, 'Right after tapping, no quit';
+
+        $p.emit(42);
+        is @emitted, [42], 'Correct first event emitted';
+        nok $done, 'Not yet done';
+        nok $quit, 'Not quit';
+
+        $p.emit(44);
+        is @emitted, [42, 44], 'Correct second event emitted';
+
+        $p.done();
+        is @emitted, [42, 44], 'done does not emit events';
+        ok $done, 'done callback fires';
+        nok $quit, 'quit callback does not fire';
+
+        $p.emit(46);
+        is @emitted, [42, 44], 'no further events after done';
+
+        $t1.close;
+    }
+
+    # RT #123477
+    {
+        my (@emitted, $done, $quit);
+        my $t1 = $s1.tap({@emitted.push($_)}, done => {$done++}, quit => {$quit++});
+
+        is @emitted, [], 'Right after second tapping, nothing emitted';
+        nok $done, 'Right after second tapping, no done';
+        nok $quit, 'Right after second tapping, no quit';
+
+        $p.emit(42);
+        is @emitted, [], 'First tapping did done on the supply, so no more emits';
+
+        $t1.close;
+    }
+
+    my $s2;
+    lives-ok { $s2 = $p.Supply }, 'Can take second Supply from Supplier';
+
+    {
+        my (@emitted, $done, $quit);
+        my $t1 = $s2.tap({@emitted.push($_)}, done => {$done++}, quit => {$quit++});
+
+        is @emitted, [], 'Right after tapping, nothing emitted (second supply)';
+        nok $done, 'Right after tapping, no done (second supply)';
+        nok $quit, 'Right after tapping, no quit (second supply)';
+
+        $p.emit(42);
+        is @emitted, [42], 'Correct first event emitted (second supply)';
+        nok $done, 'Not yet done (second supply)';
+        nok $quit, 'Not quit (second supply)';
+
+        $p.emit(44);
+        is @emitted, [42, 44], 'Correct second event emitted (second supply)';
+
+        $p.quit(X::AdHoc.new);
+        is @emitted, [42, 44], 'quit does not emit events';
+        nok $done, 'done callback does not fire';
+        ok $quit, 'quit callback fires';
+
+        $p.emit(46);
+        is @emitted, [42, 44], 'no further events after quit';
+
+        $t1.close;
+    }
+
+    {
+        my (@emitted, $done, $quit);
+        my $t1 = $s2.tap({@emitted.push($_)}, done => {$done++}, quit => {$quit++});
+
+        is @emitted, [], 'Right after second tapping, nothing emitted (second supply)';
+        nok $done, 'Right after second tapping, no done (second supply)';
+        nok $quit, 'Right after second tapping, no quit (second supply)';
+
+        $p.emit(42);
+        is @emitted, [], 'First tapping did quit on the supply, so no more emits';
+
+        $t1.close;
     }
 }
