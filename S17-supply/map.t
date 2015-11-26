@@ -4,24 +4,20 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 9;
+plan 7;
 
 dies-ok { Supply.map({...}) }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
-    tap-ok Supply.from-list( (1..5).map( {$[$_]} ) ),
-      [[1],[2],[3],[4],[5]], "On demand publish with arrays";
-
-    tap-ok Supply.from-list( [1,2],[3,4,5] ).map( {.flat} ),
-      [1..5], "On demand publish with flattened arrays";
-
     tap-ok Supply.from-list(1..10).map( * * 5 ),
       [5,10,15,20,25,30,35,40,45,50],
       "mapping tap with single values works";
 
-    tap-ok Supply.from-list(1..10).map( { $_ xx 2 } ),
-      [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10],
-      "mapping tap with multiple values works";
+    tap-ok Supply.from-list(1..5).map( {[$_]} ),
+      [[1],[2],[3],[4],[5]], "On demand publish with arrays will not flatten them";
+
+    tap-ok Supply.from-list( [1,2],[3,4,5] ).map( {.reverse} ),
+      [[2, 1], [5, 4, 3]], "Same if we get lists";
 }
