@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 24;
 
 =begin description
 
@@ -12,16 +12,30 @@ This test tests the C<tail> builtin.
 
 {
     my $list = <a b b c d e b b e b b f b>;
-    is $list.tail(5).List, <e b b f b>,  "List.tail works";
+    is $list.tail.List, ("b",),  "List.tail works";
     my @array = <a b b c d e b b e b b f b>;
     is @array.tail(5).List, <e b b f b>, "Array.tail works";
     my $scalar = 42;
-    is $scalar.tail(5).List, (42,),      "Scalar.tail works";
+    is $scalar.tail.List, (42,),      "Scalar.tail works";
     my $range = ^10;
-    is $range.tail(5).List, (5,6,7,8,9), "Range.tail works";
-    throws-like { ^Inf .tail(5) }, X::Cannot::Lazy,
+    is $range.tail.List, (9,), "Range.tail works";
+    throws-like { ^Inf .tail }, X::Cannot::Lazy,
       :action<tail>,
       'Range.tail on lazy list does not work';
+} #5
+
+{
+    my $list = <a b b c d e b b e b b f b>;
+    is $list.tail(5).List, <e b b f b>,  "List.tail(5) works";
+    my @array = <a b b c d e b b e b b f b>;
+    is @array.tail(5).List, <e b b f b>, "Array.tail(5) works";
+    my $scalar = 42;
+    is $scalar.tail(5).List, (42,),      "Scalar.tail(5) works";
+    my $range = ^10;
+    is $range.tail(5).List, (5,6,7,8,9), "Range.tail(5) works";
+    throws-like { ^Inf .tail(5) }, X::Cannot::Lazy,
+      :action<tail>,
+      'Range.tail(5) on lazy list does not work';
 } #5
 
 {
