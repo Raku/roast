@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 24;
 
 # L<S09/Fixed-size arrays>
 
@@ -59,19 +59,11 @@ plan 26;
 
 {
     my @arr[5] of Int = <1 2 3 4 5>;
-    is(@arr, <1 2 3 4 5>, 'my @arr[num] of Type works');
+    is(@arr, <1 2 3 4 5>, 'my @arr[Int] of Type works');
 
-   #?rakudo todo 'code does not die, array shapes RT #124502'
     throws-like 'push @arr, 123',
       Exception,
-      'boundary constraints on my @arr[num] of Type works';
-    pop @arr; # remove the last item to ensure the next ones are type constraints
-    throws-like q[push @arr, 's'],
-      X::TypeCheck,
-      'type constraints on my @arr[num] of Type works (1)';
-    throws-like 'push @arr, 4.2',
-      X::TypeCheck,
-      'type constraints on my @arr[num] of Type works (2)';
+      'boundary constraints on my @arr[Int] of Type works';
 }
 
 {
