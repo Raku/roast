@@ -324,7 +324,7 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 # RT #117431
 {
     my %hash = a => 1;
-    is item(%hash).perl, ({ a => 1 }).perl, 'item(%hash) is equivalent to {%hash}';
+    is item(%hash).perl, (${ a => 1 }).perl, 'item(%hash) is equivalent to ${%hash}';
 }
 
 # RT #77504
