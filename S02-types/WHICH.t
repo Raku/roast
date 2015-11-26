@@ -395,7 +395,7 @@ my @concurrent = <
   IO::Socket::Async
   Promise
   Semaphore
-  SupplyOperations
+  Supplier
   Tap
   Thread
   ThreadPoolScheduler
