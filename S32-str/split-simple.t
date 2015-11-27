@@ -87,10 +87,10 @@ ok (''.split('')).elems == 0, q{''.split('') returns empty list};
 #?niecza todo 'returning 2 element list'
 ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
-# split with :all should return capture
+# split with :v should return capture
 # also RT #126679
 {
-    my @split = 'abc def ghi'.split(/(\s+)/, :all);
+    my @split = 'abc def ghi'.split(/(\s+)/, :v);
     ok @split.elems == 5, q{split returns captured delimiter} ;
     ok @split[1] eq ' ', q{split captured single space};
     ok @split[3] eq ' ', q{split captured multiple spaces};
@@ -98,10 +98,10 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
 # also RT #126679
 {
-    my @split = split(/\d+/, 'a4b5', :all);
-    is @split.elems, 5, 'split() with :all and trailing delimiter (count)';
+    my @split = split(/\d+/, 'a4b5', :v);
+    is @split.elems, 5, 'split() with :v and trailing delimiter (count)';
     is @split.join('|'), 'a|4|b|5|',
-       'split(:all) and trailing delimiter (values)';
+       'split(:v) and trailing delimiter (values)';
 }
 
 # RT #112868
