@@ -22,7 +22,7 @@ await IO::Socket::Async.connect($hostname, $port).then(-> $sr {
 my $server = IO::Socket::Async.listen($hostname, $port);
 
 my $echoTap = $server.tap(-> $c {
-    $c.chars-supply.tap(-> $chars {
+    $c.Supply.tap(-> $chars {
         $c.print($chars).then({ $c.close });
     }, quit => { say $_; });
 });
@@ -57,7 +57,7 @@ multi sub client(Str $message) {
         }
     });
     my @chunks;
-    $socket.chars-supply.tap(-> $chars { @chunks.push($chars) },
+    $socket.Supply.tap(-> $chars { @chunks.push($chars) },
         done => {
             $socket.close();
             $vow.keep([~] @chunks);
@@ -72,7 +72,7 @@ $echoTap.close;
 ok $echoResult eq $message, 'Echo server';
 
 my $discardTap = $server.tap(-> $c {
-    $c.chars-supply.tap(-> $chars { $c.close });
+    $c.Supply.tap(-> $chars { $c.close });
 });
 
 my $discardResult = await client($message);
@@ -88,7 +88,7 @@ my $binaryTap = $server.tap(-> $c {
 multi sub client(Buf $message) {
     client(-> $socket, $vow {
         my $buf = Buf[uint8].new;
-        $socket.bytes-supply.act(-> $bytes { 
+        $socket.Supply(:bin).act(-> $bytes { 
                 $buf ~= $bytes;
                 $socket.close();
                 $vow.keep($buf);
