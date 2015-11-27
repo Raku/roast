@@ -69,7 +69,6 @@ multi sub client(Str $message) {
 my $message = [~] '0'..'z';
 my $echoResult = await client($message);
 $echoTap.close;
-#?rakudo skip "Flapping RT #122318"
 ok $echoResult eq $message, 'Echo server';
 
 my $discardTap = $server.tap(-> $c {
@@ -100,5 +99,4 @@ multi sub client(Buf $message) {
 
 my $received = await client($binary);
 $binaryTap.close;
-#?rakudo.moar skip "RT #122318 - test is flapping"
 ok $binary eqv $received, 'bytes-supply';
