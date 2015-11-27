@@ -11,7 +11,7 @@ plan 2;
     class A { has $.b }
    
     throws-like { EVAL "new A" },
-      X::Undeclared::Symbols,
+      X::Obsolete,
       'parameterless prefixed new is allowed';
 
     throws-like { EVAL "new A( :b('bulbous bouffant') )" },
