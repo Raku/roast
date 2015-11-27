@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 52;
+plan 53;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -24,6 +24,11 @@ is($0, 'a', 'Simple set capture');
 ok(!( "a" ~~ m/<-[aeiou]>/ ), 'Simple neg set failure');
 ok("f" ~~ m/(<-[aeiou]>)/, 'Simple neg set match');
 is($0, 'f', 'Simple neg set capture');
+
+# RT #126746
+{
+    ok "a" ~~ m/<![a]>/, "zerowidth negated character class can match at end of string";
+}
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/Character classes can be combined>
 ok(!( "a" ~~ m/(<[a..z]-[aeiou]>)/ ), 'Difference set failure');
