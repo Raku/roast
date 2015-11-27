@@ -257,6 +257,40 @@ given $test {
             $sock.close();
         }
     }
+
+    when 10 { # test number 10 - echo protocol, RFC 862, with connect/listen methods
+        if $server_or_client eq 'server' {
+            # warn "SERVER TEST=$test PORT=$port";
+            my $server = IO::Socket::INET.listen($host, $port);
+            # warn "SERVER LISTENING";
+            my $fd = open( $server_ready_flag_fn, :w );
+            $fd.close();
+            while my $client = $server.accept() {
+                # warn "SERVER ACCEPTED";
+                my $received = $client.recv();
+                # warn "SERVER RECEIVED '$received'";
+                $client.print( $received );
+                # warn "SERVER REPLIED";
+                $client.close();
+            }
+        }
+        else { # $server_or_client eq 'client'
+            # warn "CLIENT TEST=$test PORT=$port";
+            # avoid a race condition, where the client tries to
+            # open() before the server gets to accept().
+            until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
+            unlink $server_ready_flag_fn;
+            my $client = IO::Socket::INET.connect($host, $port);
+            # warn "CLIENT OPENED";
+            $client.print( [~] flat '0'..'9', 'a'..'z' );
+            # warn "CLIENT SENT";
+            my $received = $client.recv();
+            # warn "CLIENT RECEIVED '$received'";
+            # let IO-Socket-INET.t judge the pass/fail
+            say "echo '$received' received";
+            $client.close();
+        }
+    }
 }
 
 =begin pod

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 48;
+plan 50;
 
 diag "{elapsed} starting tests";
 my $elapsed;
@@ -203,6 +203,17 @@ if $*DISTRO.name eq any <linux Linux darwin solaris mswin32 macosx> { # please a
     nok $elapsed > $toolong, "finished in time #22";
     is $expected[$i++], 4, "{elapsed} total amount ";
     nok $elapsed > $toolong, "finished in time #23";
+
+    # test 10 does echo protocol - Internet RFC 862 - with listen/connect methods
+    if $is-win {
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 10 $port};
+    } else {
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 10 $port};
+    }
+    #warn "TEST 10 $received";
+    $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
+    is $received, $expected, "{elapsed} echo server and client";
+    nok $elapsed > $toolong, "finished in time #1";
 }
 else {
     skip "OS '{$*DISTRO.name}' shell support not confirmed", 1;
