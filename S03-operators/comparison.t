@@ -36,10 +36,10 @@ is 1 cmp NaN, Less, "NaN generic comparison sorts NaN in with alphabetics";
 is NaN cmp 1, More, "NaN generic comparison sorts NaN in with alphabetics";
 is NaN cmp NaN, Same, "NaN generic comparison sorts NaN in with alphabetics";
 
-is i ** 2 <=> -1, Same, "<=> ignores tiny imaginary values";
+is exp(i * pi) <=> -1, Same, "<=> ignores tiny imaginary values";
 {
     my $*SIGNIFICANCE = 1e-20;
-    throws-like 'i ** 2 <=> -1', Exception, "(unless they exceed the signficance)";
+    throws-like 'exp(i * pi) <=> -1', Exception, "(unless they exceed the signficance)";
 }
 
 # leg comparison (Str)

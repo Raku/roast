@@ -179,8 +179,8 @@ is(2.4 >  7, False, 'Rat >  Int');
 is(2.4 >= 7, False, 'Rat >= Int');
 is(2.4 <=> 7, Order::Less, 'Rat <=> Int');
 
-ok i ** 2 =~= -1, "=~= does approximate equality";
-ok i ** 2 ≅ -1, "≅ does approximate equality";
+ok exp(i * pi) =~= -1, "=~= does approximate equality";
+ok exp(i * pi) ≅ -1, "≅ does approximate equality";
 
 {
     my $*SIGNIFICANCE = 0.1;
