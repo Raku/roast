@@ -19,7 +19,6 @@ sub all-basic(Callable $handle) {
 
     #?niecza 2 skip ":bin option for slurp fails"
     spurt $handle(), $buf; 
-    #?rakudo.jvm 11 skip 'RT #126495 - This type does not support positional operations'
     is slurp($path, :bin), $buf, "spurting Buf ok";
 
     spurt $handle(), $txt;
@@ -60,14 +59,12 @@ sub all-basic(Callable $handle) {
 #?niecza skip "Unable to resolve method open in type IO"
 {
     # Spurt on open file
-    #?rakudo.jvm skip 'RT #126495 - This type does not support positional operations'
     {
         spurt $path, "42";
         is slurp($path), "42", 'can spurt into an open file';
     }
 
     # Buf into an open non binary file
-    #?rakudo.jvm skip 'RT #126495 - This type does not support positional operations'
 {
         my Buf $buf = Buf.new(0xC0, 0x01, 0xF0, 0x0D);
         spurt $path, $buf;
@@ -101,7 +98,6 @@ sub all-basic(Callable $handle) {
     my Blob $buf = "meow".encode("ASCII");
     $path.IO.spurt($buf);
     #?niecza skip "Excess arguments to slurp, unused named bin"
-    #?rakudo.jvm skip 'RT #126495 - This type does not support positional operations'
     is slurp($path, :bin), $buf, "IO::Handle binary slurp";
     
     dies-ok { $path.IO.spurt("nope", :createonly) }, "IO::Handle :createonly dies";
