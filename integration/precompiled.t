@@ -1,7 +1,7 @@
 use v6;
-use Test;
 use lib 't/spec/packages';
 use lib 'packages';
+use Test;
 use Test::Compile;
 
 # Test::Compile is new and untested.  It is for simple precompilation
@@ -24,9 +24,8 @@ plan 7;
 loads_ok '42', "loads_ok is working";
 precomp_loads_ok '42', "precomp_loads_ok is working";
 
-# This works if you delete the previous test.  Mysterious problem with
-# dynamics.  Maybe look at RT #82790 as well, may be relevant.
-#?rakudo todo "Something wrong with dynamic variables."
+# This was mysteriously broken with the previous CompUnit implementation.
+# May have had something to do with dynamics. Maybe RT #82790 is relevant.
 loads_is '42', 42, "loads_is is working";
 precomp_loads_is '42', 42, "precomp_loads_is is working";
 

@@ -119,6 +119,7 @@ my sub precomp_loads_is($code, $expect, $reason) is export {
 # need that or the ability to make in-memory compunits.
 #
 my $precomp_dir = False;
+my $repo;
 my $precomp_dir_sep;
 my $compunit_tried = False;
 my $compunit_available = False;
@@ -167,88 +168,8 @@ sub init_compunit {
 	diag "Cannot do any precomp tests; Could not create a file";
 	return;
     }
-
     @compunits_to_delete.push("$fp.pm6");
-    try { $cu = EVAL '
-            CompUnit.new("$fp.pm6");
-        ';
-	CATCH {
-# For some reason rmdir does not work here.  Rely on END until that gets sussed.
-#	    my $pd = $precomp_dir;
-#	    $precomp_dir = False;
-#    	    try rmdir($pd);
-            diag "Cannot do any precomp tests because: " ~ $_;
-	    return;
-	}
-    }
-    unless $cu.defined {
-# For some reason rmdir does not work here.  Rely on END until that gets sussed.
-#	my $pd = $precomp_dir;
-#	$precomp_dir = False;
-#    	try rmdir($pd);
-	diag "Cannot do any precomp tests, CompUnit did not instantiate.";
-	return;
-    }
-    try {
-	EVAL '
-            $cu.precomp;
-        ';
-	CATCH {
-            diag "Cannot do real precomp tests, precomp failed because: " ~ $_;
-            # But we still may be able to load without precomp
-	    diag "Will try to run such tests anyway direct from source.";
-	    $compunit_available = "Source";
-	    # Very weird but we need an additional CATCH here or it throws.
-            CATCH { }
-	}
-    }
-    @compunits_to_delete.push($cu.precomp-path) if $cu.precomp-path;
-    try {
-        EVAL '
-            # CompUnit.load is broken right now.
-            # $cu.load($fp, { from => "Perl6" });
-            # So we hit some rakudo internals to do the same thing
-            use nqp;
-            my Mu $p6ml := nqp::gethllsym("perl6", "ModuleLoader");
 
-            if ($compunit_available eq "Source") {
-                $cu = $p6ml.load_module("$fn", { },
-                    :chosen{
-                        :pm("$fp.pm6")
-                    }
-                );
-            }
-            else {
-                $cu = $p6ml.load_module("$fn", {  },
-                    :chosen{
-                        :pm("$fp.pm6")
-                        :load($cu.precomp-path)
-                        :key($cu.precomp-path)
-                    }
-                );
-            }
-        ';
-	CATCH {
-            delete_compunits;
-	    my $pd = $precomp_dir;
-	    $precomp_dir = False;
-    	    try rmdir($pd);
-	    $compunit_available = False;
-            diag "Still cannot do any precomp tests, load failed because: " ~ $_;
-	    return;
-	}
-    }
-    # XXX Actually I am not sure how to test for a "{ }" created in .nqp
-    # versus any legit return value, but this seems to let the successes through. 
-    if nqp::ishash($cu) {
-        delete_compunits;
-	my $pd = $precomp_dir;
-	$precomp_dir = False;
-    	try rmdir($pd);
-	$compunit_available = False;
-	diag "Still cannot do any precomp tests, load failed.";
-	return;
-    }    
     delete_compunits;
     $compunit_available ||= "Precomp";
 }
@@ -258,7 +179,6 @@ multi sub do_compunit(@code_as_str, $reason is copy, $leavefiles = False, $compi
     my @fns = (tmpident for @code_as_str);
     my $lastfn = '';
     my $ret;
-    PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:prefix($precomp_dir), :next-repo($*REPO));
     subtest {
         for flat @code_as_str Z @fns -> $code_as_str is copy, $fn {
             $code_as_str [R~]= "use $lastfn;\n" if $lastfn;
@@ -285,6 +205,14 @@ multi sub do_compunit($code_as_str, $reason, $leavefiles = False,
     $_ = "Source" if not $compile and $_ eq "Precomp";
 
     my $*compunit_result = Nil;
+    my @*MODULES;
+    my $precomp-repository = $*REPO.precomp-repository;
+    unless $repo {
+        # this will fail spectacularily if $code_as_str tries to load modules from other repos
+        $repo := CompUnit::Repository::FileSystem.new(:prefix($precomp_dir));
+        nqp::bindattr($repo, CompUnit::Repository::FileSystem, '$!precomp', $precomp-repository);
+        PROCESS::<$REPO> := $repo;
+    }
     when "Precomp" {
         unless "$fp.pm6".IO.spurt($code_as_str) {
             flunk($reason);
@@ -294,46 +222,28 @@ multi sub do_compunit($code_as_str, $reason, $leavefiles = False,
         }
         @compunits_to_delete.push("$fp.pm6");
         my $cr;
-        try EVAL '
-            $cu = CompUnit.new("$fp.pm6");
-            $cr = $cu.precomp;
-        ';
+        $cu = $repo.need(CompUnit::DependencySpecification.new(:short-name($fn)), $precomp-repository);
+        CATCH {
+            default {
+                flunk($reason);
+                diag($_);
+                return;
+            }
+        }
         if defined $! {
             flunk($reason);
 	    diag($!);
 	    delete_compunits($leavefiles);
             return;
         }
-	unless $cr {
-	    # Would be nice to divert the compiler errors here somehow.
-            flunk($reason);
-	    diag("Failed to create CompUnit, normal compilation failure.");
-	    delete_compunits($leavefiles);
-            return;
-	    }
+        pass($reason);
+        return [ $*compunit_result ];
         if not defined $cu {
             flunk($reason);
 	    diag("Failed to create CompUnit, no but Failure thrown.");
 	    delete_compunits($leavefiles);
             return;
 	    }
-        @compunits_to_delete.push($cu.precomp-path);
-        try EVAL '
-            use nqp;
-            # CompUnit.load is broken right now.
-            # $cu.load($fp, { from => "Perl6" });
-
-            # So we hit some rakudo internals to do the same thing
-            my Mu $p6ml := nqp::gethllsym("perl6", "ModuleLoader");
-
-            $cu = $p6ml.load_module("$fn", { },
-                :chosen{
-                    :pm("$fp.pm6")
-                    :load($cu.precomp-path)
-                    :key($cu.precomp-path)
-                }
-            );
-        ';
         if defined $! {
             flunk($reason);
 	    diag($!);
@@ -352,21 +262,7 @@ multi sub do_compunit($code_as_str, $reason, $leavefiles = False,
             return;
         }
         @compunits_to_delete.push("$fp.pm6");
-        try EVAL '
-            use nqp;
-            $cu = CompUnit.new("$fp.pm6");
-
-            # CompUnit.load is broken right now.
-            # $cu.load($fp, { from => "Perl6" });
-
-            # So we hit some rakudo internals to do the same thing
-            my Mu $p6ml := nqp::gethllsym("perl6", "ModuleLoader");
-            $cu = $p6ml.load_module("$fn", { },
-                :chosen{
-                    :pm("$fp.pm6")
-                }
-            );
-        ';
+        my $comp-unit = $repo.need(CompUnit::DependencySpecification.new(:short-name($fn)), $precomp-repository);
         if defined $! {
             flunk($reason);
             diag($!);
