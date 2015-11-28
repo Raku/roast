@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 147;
+plan 150;
 
 =begin pod
 
@@ -646,9 +646,25 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
         has @.a;
     }
     my %h = a => <a b c>;
-    my $c = 0;
-    ++$c for HasArray.new(a => %h<a>).a;
-    is $c, 3, 'Correct flattening behavior for array attributes';
+    {
+        my $c = 0;
+        ++$c for HasArray.new(a => %h<a>).a;
+        is $c, 1, 'Scalar containers respected in attribute initialization';
+    }
+    {
+        my $c = 0;
+        ++$c for HasArray.new(a => %h<a>.list).a;
+        is $c, 3, 'Can use .list to remove container';
+    }
+}
+
+# RT #123757
+{
+    my class Foo { has @.bar }
+    is Foo.new( bar => [1,2,3] ).bar.elems, 3,
+        'initializing with [...] follows one-arg rule';
+    is Foo.new( bar => $[1,2,3] ).bar.elems, 1,
+        'initializing with $[...] is still one item';
 }
 
 # RT #110096
