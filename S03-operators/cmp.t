@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 31;
+plan 36;
 
 # cmp on scalar values
 {
@@ -63,6 +63,15 @@ plan 31;
     is [1,10] cmp [1,9], More, "cmp More on lists differing at pos 1";
     is [1,9] cmp [1,10,19], Less, "cmp Less on lists differing at pos 1 ignoring lengths";
     is [1,10] cmp [1,9,19], More, "cmp More on lists differing at pos 1 ignoring lengths";
+}
+
+# NaN always sorts as if "NaN" instead.
+{
+    is NaN cmp NaN, Same, "NaN cmp NaN";
+    is NaN cmp 0, More, "NaN cmp 0";
+    is 0 cmp NaN, Less, "0 cmp NaN";
+    is NaN cmp Inf, More, "NaN cmp Inf";
+    is Inf cmp NaN, Less, "Inf cmp NaN";
 }
 
 # vim: ft=perl6

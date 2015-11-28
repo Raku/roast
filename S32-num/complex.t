@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 488;
+plan 510;
 
 # Basic tests functions specific to complex numbers.
 
@@ -140,6 +140,31 @@ is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
 {
   is (2+3i).conj, 2-3i, 'conj 2+3i -> 2-3i';
   is (5-4i).conj, 5+4i, 'conj 5-4i -> 5+4i';
+}
+
+{
+    is <2+2i> cmp <2+2i>, Same, "<2+2i> cmp <2+2i>";
+    is <2-2i> cmp <2-2i>, Same, "<2-2i> cmp <2-2i>";
+    is <-2-2i> cmp <-2-2i>, Same, "<-2-2i> cmp <-2-2i>";
+    is <-2+2i> cmp <-2+2i>, Same, "<-2+2i> cmp <-2+2i>";
+    is <12+2i> cmp <2+2i>, More, "<12+2i> cmp <2+2i>";
+    is <-2+2i> cmp <2+2i>, Less, "<-2+2i> cmp <2+2i>";
+    is <2-12i> cmp <2-2i>, Less, "<2-12i> cmp <2-2i>";
+    is <12-2i> cmp <2-2i>, More, "<12-2i> cmp <2-2i>";
+    is <2+12i> cmp <2+2i>, More, "<2+12i> cmp <2+2i>";
+    is <2-12i> cmp <2-2i>, Less, "<2-12i> cmp <2-2i>";
+    is <2+2i> cmp <12+2i>, Less, "<2+2i> cmp <12+2i>";
+    is <2+2i> cmp <12+2i>, Less, "<2+2i> cmp <12+2i>";
+    is <2+2i> cmp 2, More, "<2+2i> cmp 2";
+    is <2-2i> cmp 2, Less, "<2-2i> cmp 2";
+    is <2+0i> cmp 2, Same, "<2+0i> cmp 2";
+    is 2 cmp <2-0i>, Same, "2 cmp <2-0i>";
+    is 1 cmp <2-2i>, Less, "1 cmp <2-2i>";
+    is 2 cmp <2+0i>, Same, "2 cmp <2+0i>";
+    is 2 cmp <2-2i>, More, "2 cmp <2-2i>";
+    is 2 cmp <2+2i>, Less, "2 cmp <2+2i>";
+    is <NaN+0i> cmp <0+0i>, More, "<NaN+0i> cmp <0+0i>";
+    is <0+NaNi> cmp <0+0i>, More, "<0+NaNi> cmp <0+0i>";
 }
 
 # vim: ft=perl6
