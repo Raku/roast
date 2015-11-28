@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+plan 11;
+
 # Covers RT #126315 (which wanted the right thing of recv) and RT #116288
 # (difference between recv and read semantics).
 
