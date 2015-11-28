@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 # L<S12/Single inheritance/An "isa" is just a trait that happens to be another class>
 
@@ -174,5 +174,9 @@ throws-like 'class RT64642 is ::Nowhere {}', X::Inheritance::UnknownParent,
     ok (RT75376::B.^mro[0] ~~ RT75376::B and RT75376::B.^mro[1] ~~ RT75376::A),
         'our-scoped class inherited from my-scoped class has proper inheritance hierarchy';
 }
+
+# RT #125689
+throws-like 'class X is nosuchtrait { }', X::Inheritance::UnknownParent,
+    'Get unkown parent error even when class is called X';
 
 # vim: ft=perl6
