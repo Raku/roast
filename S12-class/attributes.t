@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 35;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -174,6 +174,15 @@ throws-like q[
     my class RT122109 { has $.x where * > 0 };
     dies-ok { RT122109.new(:x(-42)) },
         'where clause on attributes is taken into account';
+}
+
+# RT #115310
+{
+    class RT115310 { has @.a of int };
+    my $foo = RT115310.new;
+    $foo.a = 1,2,3;
+    is $foo.a, (1,2,3), 'typed array attribute (1)';
+    throws-like '$foo.a = 1,"b"', Exception, 'typed array attribute (2)';
 }
 
 # vim: ft=perl6
