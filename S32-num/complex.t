@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 510;
+plan 512;
 
 # Basic tests functions specific to complex numbers.
 
@@ -165,6 +165,12 @@ is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
     is 2 cmp <2+2i>, Less, "2 cmp <2+2i>";
     is <NaN+0i> cmp <0+0i>, More, "<NaN+0i> cmp <0+0i>";
     is <0+NaNi> cmp <0+0i>, More, "<0+NaNi> cmp <0+0i>";
+}
+
+ok Num(i ** 2) == -1, 'Num(Complex) pays attention to $*SIGNIFICANCE';
+{
+    my $*SIGNIFICANCE = 1e-20;
+    throws-like 'Num(i ** 2)', Exception, 'Num(Complex) pays attention to $*SIGNIFICANCE';
 }
 
 # vim: ft=perl6

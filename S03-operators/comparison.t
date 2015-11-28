@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 41;
+plan 49;
 
 # N.B.:  relational ops are in relational.t
 
@@ -27,6 +27,20 @@ is 1/2 <=> 1/2,   Order::Same, '1/2 <=> 1/2 is same';
 is -1/2 <=> -1/2, Order::Same, '-1/2 <=> -1/2 is same';
 is 1/2 <=> -1/2,  Order::More, '1/2 <=> -1/2 is more';
 is -1/2 <=> 1/2,  Order::Less, '-1/2 <=> 1/2 is less';
+
+is 1 <=> NaN, Nil, "NaN numeric comparison always produces Nil";
+is NaN <=> 1, Nil, "NaN numeric comparison always produces Nil";
+is NaN <=> NaN, Nil, "NaN numeric comparison always produces Nil";
+
+is 1 cmp NaN, Less, "NaN generic comparison sorts NaN in with alphabetics";
+is NaN cmp 1, More, "NaN generic comparison sorts NaN in with alphabetics";
+is NaN cmp NaN, Same, "NaN generic comparison sorts NaN in with alphabetics";
+
+is i ** 2 <=> -1, Same, "<=> ignores tiny imaginary values";
+{
+    my $*SIGNIFICANCE = 1e-20;
+    throws-like 'i ** 2 <=> -1', Exception, "(unless they exceed the signficance)";
+}
 
 # leg comparison (Str)
 is('a' leg 'a',     Order::Same, 'a leg a is same');

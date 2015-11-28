@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 124;
+plan 132;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -178,5 +178,18 @@ is(2.4 <= 7, True , 'Rat <= Int');
 is(2.4 >  7, False, 'Rat >  Int');
 is(2.4 >= 7, False, 'Rat >= Int');
 is(2.4 <=> 7, Order::Less, 'Rat <=> Int');
+
+ok i ** 2 =~= -1, "=~= does approximate equality";
+ok i ** 2 ≅ -1, "≅ does approximate equality";
+
+{
+    my $*SIGNIFICANCE = 0.1;
+    ok 1.01 =~= 1, '=~= pays attention to $*SIGNIFICANCE (More)';
+    ok 0.99 =~= 1, '=~= pays attention to $*SIGNIFICANCE (Less)';
+    ok 1.01 ≅ 1, '≅ pays attention to $*SIGNIFICANCE (More)';
+    ok 0.99 ≅ 1, '≅ pays attention to $*SIGNIFICANCE (Less)';
+    nok 1.2 ≅ 1, '≅ pays attention to $*SIGNIFICANCE (more More)';
+    nok 0.8 ≅ 1, '≅ pays attention to $*SIGNIFICANCE (more Less)';
+}
 
 # vim: ft=perl6
