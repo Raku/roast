@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 53;
 
 # cmp on scalar values
 {
@@ -72,6 +72,31 @@ plan 36;
     is 0 cmp NaN, Less, "0 cmp NaN";
     is NaN cmp Inf, More, "NaN cmp Inf";
     is Inf cmp NaN, Less, "Inf cmp NaN";
+}
+
+# ranges vs ranges and reals
+{
+    is (5..10)  cmp (5..10),   Same, "(5..10) cmp (5..10)";
+    is (5..10)  cmp (5^..10),  Less, "(5..10) cmp (5^..10)";
+    is (5..10)  cmp (5..^10),  More, "(5..10) cmp (5..^10)";
+    is (5^..10) cmp (5..10),   More, "(5^..10) cmp (5..10)";
+    is (5..^10) cmp (5..10),   Less, "(5..^10) cmp (5..10)";
+    is (5..^11) cmp (5..10),   More, "(5..^11) cmp (5..10)";
+    is  5       cmp (5..10),   Less, "5 cmp (5..10)";
+    is  6       cmp (5..10),   More, "6 cmp (5..10)";
+    is  5.1     cmp (5^..10),  More, "5.1 cmp (5..10)";
+    is (5..10)  cmp (5..10.1), Less, "(5..10) cmp (5..10.1)";
+    is (5..10)  cmp (5..9.9),  More, "(5..10) cmp (5..9.9)";
+}
+
+# ranges vs lists
+{
+    is (5..10) cmp (5,6,7,8,9,10), Same, "(5..10) cmp (5,6,7,8,9,10),";
+    is (5^..10) cmp (6,7,8,9,10), Same, "(5^..10) cmp (6,7,8,9,10),";
+    is (5..^10) cmp (5,6,7,8,9), Same, "(5..^10) cmp (5,6,7,8,9),";
+    is (5^..^10) cmp (6,7,8,9), Same, "(5^..^10) cmp (6,7,8,9),";
+    is (5^..10) cmp (5,6,7,8,9,10), More, "(5^..10) cmp (5,6,7,8,9,10),";
+    is (5..^10) cmp (5,6,7,8,9,10), Less, "(5..^10) cmp (5,6,7,8,9,10),";
 }
 
 # vim: ft=perl6
