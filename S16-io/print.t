@@ -6,7 +6,7 @@ use lib 't/spec/packages';
 use Test::Util;
 
 # L<S32::IO/IO/=item print>
-plan(12);
+plan(13);
 
 # Tests for print
 is_run 'print "ok\n"',
@@ -23,9 +23,15 @@ is_run 'print "o", "k", "k"',
 
 is_run 'my @array = ("o", "k"); print @array',
     {
-        out => "ok",
+        out => "o k",
     },
-    'print with multiple parameters(2)';
+    'print array';
+
+is_run 'my @array = ("o", "k"); @array.print',
+    {
+        out => "o k",
+    },
+    'array.print';
 
 is_run 'my $array-ref = ("o", "k"); print $array-ref',
     {
