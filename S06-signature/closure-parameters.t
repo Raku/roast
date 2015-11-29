@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 18;
 
 # L<S06/Closure parameters>
 
@@ -71,6 +71,11 @@ plan 17;
     sub foo(:&a) { bar(:&a) }
     sub bar(*%_) { "OH HAI" }
     is foo(), 'OH HAI', 'can use &a as a named parameter';
+}
+
+# RT #125988
+{
+    throws-like 'sub f (Int &b:(--> Bool)) { }', X::Redeclaration, 'only one way of specifying sub-signature return type allowed';
 }
 
 # vim: ft=perl6
