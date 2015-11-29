@@ -81,13 +81,16 @@ throws-like 'index("xxy", "y", -1)', X::OutOfRange, 'index with negative start p
 # RT #125784
 {
     for -1e34, -1e35 -> $pos {
-        #?rakudo.moar 2 todo 'RT #125784'
         ok index( 'xxy','y', $pos ) ~~ Failure, "sub does $pos fails";
         ok 'xxy'.index( 'y', $pos ) ~~ Failure, "method does $pos fails";
     }
     for 1e34, 1e35 -> $pos {
-        is index( 'xxy','y', $pos ), Nil, "sub does $pos give Nil";
-        is 'xxy'.index( 'y', $pos ), Nil, "method does $pos give Nil";
+        throws-like index( 'xxy','y', $pos ), X::OutOfRange,
+          got => $pos,
+          "sub does $pos fails";
+        throws-like 'xxy'.index( 'y', $pos ), X::OutOfRange,
+          got => $pos,
+          "method does $pos fails";
     }
 }
 

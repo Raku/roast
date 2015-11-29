@@ -74,13 +74,16 @@ throws-like 'rindex("xxyxx", "y", -1)', X::OutOfRange, 'rindex with negative sta
 # RT #125784
 {
     for -1e34, -1e35 -> $pos {
-        #?rakudo.moar 2 todo 'RT #125784'
         ok rindex( 'xxyxx','y', $pos ) ~~ Failure, "sub does $pos fails";
         ok 'xxyxx'.rindex( 'y', $pos ) ~~ Failure, "method does $pos fails";
     }
     for 1e34, 1e35 -> $pos {
-        is rindex( 'xxyxx','y', $pos ), Nil, "sub does $pos give Nil";
-        is 'xxyxx'.rindex( 'y', $pos ), Nil, "method does $pos give Nil";
+        throws-like rindex( 'xxyxx','y', $pos ), X::OutOfRange,
+          got => $pos,
+          "sub does $pos fails";
+        throws-like 'xxyxx'.rindex( 'y', $pos ), X::OutOfRange,
+          got => $pos,
+          "method does $pos fails";
     }
 }
 
