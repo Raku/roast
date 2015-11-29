@@ -119,7 +119,6 @@ my @normal = <
   Signature
   Slang
   Slip
-  SprintfHandler
   Stash
   Str
   StrAttrRef
