@@ -167,10 +167,10 @@ is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
     is <0+NaNi> cmp <0+0i>, More, "<0+NaNi> cmp <0+0i>";
 }
 
-ok Num(i ** 2) == -1, 'Num(Complex) pays attention to $*SIGNIFICANCE';
+ok Num(exp i * π) == -1, 'Num(Complex) pays attention to $*TOLERANCE';
 {
-    my $*SIGNIFICANCE = 1e-20;
-    throws-like 'Num(i ** 2)', Exception, 'Num(Complex) pays attention to $*SIGNIFICANCE';
+    my $*TOLERANCE = 1e-20;
+    throws-like 'Num(exp i * π)', Exception, 'Num(Complex) pays attention to $*TOLERANCE';
 }
 
 # vim: ft=perl6

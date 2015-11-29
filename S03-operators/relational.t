@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 132;
+plan 144;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -183,13 +183,30 @@ ok exp(i * pi) =~= -1, "=~= does approximate equality";
 ok exp(i * pi) ≅ -1, "≅ does approximate equality";
 
 {
-    my $*SIGNIFICANCE = 0.1;
-    ok 1.01 =~= 1, '=~= pays attention to $*SIGNIFICANCE (More)';
-    ok 0.99 =~= 1, '=~= pays attention to $*SIGNIFICANCE (Less)';
-    ok 1.01 ≅ 1, '≅ pays attention to $*SIGNIFICANCE (More)';
-    ok 0.99 ≅ 1, '≅ pays attention to $*SIGNIFICANCE (Less)';
-    nok 1.2 ≅ 1, '≅ pays attention to $*SIGNIFICANCE (more More)';
-    nok 0.8 ≅ 1, '≅ pays attention to $*SIGNIFICANCE (more Less)';
+    my $*TOLERANCE = 0.1;
+    ok 1.01 =~= 1, '=~= pays attention to $*TOLERANCE (More)';
+    ok 0.99 =~= 1, '=~= pays attention to $*TOLERANCE (Less)';
+    ok 1.01 ≅ 1, '≅ pays attention to $*TOLERANCE (More)';
+    ok 0.99 ≅ 1, '≅ pays attention to $*TOLERANCE (Less)';
+    nok 1.2 ≅ 1, '≅ pays attention to $*TOLERANCE (more More)';
+    nok 0.8 ≅ 1, '≅ pays attention to $*TOLERANCE (more Less)';
+
+    # ≅ is scaled up to larger arg
+    ok 101 =~= 100, '=~= pays attention to scaled-up $*TOLERANCE (More)';
+    ok 99 =~= 100, '=~= pays attention to scaled-up $*TOLERANCE (Less)';
+    ok 101 ≅ 100, '≅ pays attention to scaled-up $*TOLERANCE (More)';
+    ok 99 ≅ 100, '≅ pays attention to scaled-up $*TOLERANCE (Less)';
+    nok 120 ≅ 100, '≅ pays attention to scaled-up $*TOLERANCE (more More)';
+    nok 80 ≅ 100, '≅ pays attention to scaled-up $*TOLERANCE (more Less)';
+
+    # ≅ is scaled down to larger arg
+    ok 0.00101 =~= .001, '=~= pays attention to scaled-down $*TOLERANCE (More)';
+    ok 0.00099 =~= .001, '=~= pays attention to scaled-down $*TOLERANCE (Less)';
+    ok 0.00101 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (More)';
+    ok 0.00099 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (Less)';
+    nok 0.00120 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (more More)';
+    nok 0.00080 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (more Less)';
+
 }
 
 # vim: ft=perl6

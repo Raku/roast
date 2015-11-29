@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 49;
+plan 53;
 
 # N.B.:  relational ops are in relational.t
 
@@ -37,9 +37,13 @@ is NaN cmp 1, More, "NaN generic comparison sorts NaN in with alphabetics";
 is NaN cmp NaN, Same, "NaN generic comparison sorts NaN in with alphabetics";
 
 is exp(i * pi) <=> -1, Same, "<=> ignores tiny imaginary values";
+is exp(i * pi) * 1e10 <=> -1 * 1e10, Same, "<=> ignores tiny imaginary values, scaled up";
+is exp(i * pi) * 1e-10 <=> -1 * 1e-10, Same, "<=> ignores tiny imaginary values, scaled down";
 {
-    my $*SIGNIFICANCE = 1e-20;
+    my $*TOLERANCE = 1e-18;
     throws-like 'exp(i * pi) <=> -1', Exception, "(unless they exceed the signficance)";
+    throws-like 'exp(i * pi) * 1e10 <=> -1 * 1e10', Exception, "(still fails scaled up)";
+    throws-like 'exp(i * pi) * 1e-10 <=> -1 * 1e-10', Exception, "(still fails scaled down)";
 }
 
 # leg comparison (Str)
