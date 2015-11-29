@@ -495,7 +495,7 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
     throws-like { "foobar".split(<a o>,:k, :v) }, X::Adverb,
       what   => 'split',
       source => 'Str',
-      nogo   => <v k>,
+      nogo   => <k v>,
       'clashing named parameters';
 }
 
