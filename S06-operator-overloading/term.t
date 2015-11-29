@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 10;
 
 {
     package Foo {
@@ -15,6 +15,7 @@ plan 9;
     {
         my \term:<∞> = Inf;
         is ∞, Inf, "Can define \\term:<∞> as lexical variable";
+        is EVAL('∞'),Inf, "\\term:<∞> works in EVAL";
     }
     dies-ok { EVAL "∞" }, "my \\term:<∞> really is lexical";
 }
