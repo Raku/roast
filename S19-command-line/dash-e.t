@@ -25,7 +25,7 @@ is_run $x,  :args['-e', "print q[\c[LATIN SMALL LETTER A WITH DOT ABOVE]]"],
 
 is_run $x,  :args['-e', 'print <1 2> »+« <1 1>'],
     {
-        out     => "23",
+        out     => "2 3",
         err     => '',
         status  => 0,
     },
