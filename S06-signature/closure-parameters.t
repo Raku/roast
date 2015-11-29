@@ -40,7 +40,6 @@ plan 17;
     my Int  sub teststrint (Str $foo) {return 0}   #OK not used
 
     ok(testit(&testintbool), 'code runs with proper signature (2)');
-    #?rakudo todo 'code does not die'
     throws-like 'testit(&testintint)', Exception, 'code dies with invalid signature (2)';
     throws-like 'testit(&teststrbool)', Exception, 'code dies with invalid signature (3)';
     throws-like 'testit(&teststrint)', Exception,  'code dies with invalid signature (4)';
