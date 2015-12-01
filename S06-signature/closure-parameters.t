@@ -8,9 +8,9 @@ plan 18;
 {
     my sub testit (&testcode) {testcode()}
 
-    ok(testit({return 1}), 'code executes as testsub({...})');
+    ok(testit({1}), 'code executes as testsub({...})');
 
-    my $code = {return 1};
+    my $code = {1};
     ok(testit($code), 'code executes as testsub($closure)');
 
     my sub returntrue {return 1}
