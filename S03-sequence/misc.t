@@ -8,7 +8,7 @@ is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it bein
 #?niecza skip 'Nominal type check failed in binding Int $n in f; got Str, needed Int'
 {
     sub f (Int $n) { $n > 3 ?? 'liftoff!' !! $n + 1 }
-    is (1, &f ... Str)[^8].join(' '), '1 2 3 4 liftoff!',
+    is (1, &f ... Str)[^5].join(' '), '1 2 3 4 liftoff!',
         'sequence stops when type of endpoint matches';
     throws-like { sink (1, &f ... *)[^8].join(' ') },
         X::TypeCheck::Binding,

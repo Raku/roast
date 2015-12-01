@@ -16,7 +16,7 @@ plan 13;
 # Test with exact limit
 #?niecza skip 'Unable to resolve method munch in class List'
 {
-    my @rolls = ({ (1..2).pick } ... 2)[^100];
+    my @rolls = ({ (1..2).pick } ... 2)[lazy ^100];
     ok +@rolls > 0, 'the sequence had at least one element...';
     ok +@rolls < 100, '... and the sequence terminated';
     is @rolls.grep(Int).elems, +@rolls, 'all the rolls are Ints';

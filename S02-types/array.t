@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 98;
 
 #L<S02/Mutable types/Array>
 
@@ -207,7 +207,8 @@ my @array2 = ("test", 1, Mu);
 # RT #76676
 #?niecza todo
 {
-    is ~<a b>.[^10], 'a b', 'Range subscript as rvalues clip to existing elems';
+    is ~<a b>.[^*], 'a b', 'Infinite range subscript as rvalues clip to existing elems';
+    is ~<a b>.[lazy ^10], 'a b', 'Lazy range subscript as rvalues clip to existing elems';
 }
 
 # This test may seem overly simplistic, but it was actually a bug in PIL2JS, so

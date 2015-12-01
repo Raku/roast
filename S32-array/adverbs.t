@@ -276,32 +276,24 @@ for $@n, Any, $@s, Str -> @a, $T {
 
 # range multiple missing elems
 {
-    # see a8df1c96d9ba: ranges *always* auto-truncate
-    is @a[11..12],                      (), "$n ran multi elem miss: value";
-    is @a[11..12]:k,                    (), "$n ran multi elem miss: :k";
-    is @a[11..12]:k($ok),               (), "$n ran multi elem miss: :k(\$ok)";
-    # see a8df1c96d9ba: ranges *always* auto-truncate
-    is @a[11..12]:!k,                   (), "$n ran multi elem miss: :!k";
-    # see a8df1c96d9ba: ranges *always* auto-truncate
-    is @a[11..12]:k($no),               (), "$n ran multi elem miss: :k(\$no)";
-    is @a[11..12]:v,                    (), "$n ran multi elem miss: :v";
-    is @a[11..12]:v($ok),               (), "$n ran multi elem miss: :v(\$ok)";
-    # see a8df1c96d9ba: ranges *always* auto-truncate
-    is @a[11..12]:!v,                   (), "$n ran multi elem miss: :!v";
-    # see a8df1c96d9ba: ranges *always* auto-truncate
-    is @a[11..12]:v($no),               (), "$n ran multi elem miss: :v(\$no)";
-    is @a[11..12]:kv,                   (), "$n ran multi elem miss: :kv(\$ok)";
-    is @a[11..12]:kv($ok),              (), "$n ran multi elem miss: :kv";
-    # see a8df1c96d9ba: ranges *always* auto-truncate
-    is @a[11..12]:!kv,                  (), "$n ran multi elem miss: :!kv";
-    # see a8df1c96d9ba: ranges *always* auto-truncate
-    is @a[11..12]:kv($no),              (), "$n ran multi elem miss: :kv(\$no)";
-    is @a[11..12]:p,                    (), "$n ran multi elem miss: :p(\$ok)";
-    is @a[11..12]:p($ok),               (), "$n ran multi elem miss: :p";
-    # see a8df1c96d9ba: ranges *always* auto-truncate
-    is @a[11..12]:!p,                   (), "$n ran multi elem miss: :!p";
-    # see a8df1c96d9ba: ranges *always* auto-truncate
-    is @a[11..12]:p($no),               (), "$n ran multi elem miss: :p(\$no)";
+    # lazy ranges *always* auto-truncate
+    is @a[lazy 11..12],                      (), "$n ran multi elem miss: value";
+    is @a[lazy 11..12]:k,                    (), "$n ran multi elem miss: :k";
+    is @a[lazy 11..12]:k($ok),               (), "$n ran multi elem miss: :k(\$ok)";
+    is @a[lazy 11..12]:!k,                   (), "$n ran multi elem miss: :!k";
+    is @a[lazy 11..12]:k($no),               (), "$n ran multi elem miss: :k(\$no)";
+    is @a[lazy 11..12]:v,                    (), "$n ran multi elem miss: :v";
+    is @a[lazy 11..12]:v($ok),               (), "$n ran multi elem miss: :v(\$ok)";
+    is @a[lazy 11..12]:!v,                   (), "$n ran multi elem miss: :!v";
+    is @a[lazy 11..12]:v($no),               (), "$n ran multi elem miss: :v(\$no)";
+    is @a[lazy 11..12]:kv,                   (), "$n ran multi elem miss: :kv(\$ok)";
+    is @a[lazy 11..12]:kv($ok),              (), "$n ran multi elem miss: :kv";
+    is @a[lazy 11..12]:!kv,                  (), "$n ran multi elem miss: :!kv";
+    is @a[lazy 11..12]:kv($no),              (), "$n ran multi elem miss: :kv(\$no)";
+    is @a[lazy 11..12]:p,                    (), "$n ran multi elem miss: :p(\$ok)";
+    is @a[lazy 11..12]:p($ok),               (), "$n ran multi elem miss: :p";
+    is @a[lazy 11..12]:!p,                   (), "$n ran multi elem miss: :!p";
+    is @a[lazy 11..12]:p($no),               (), "$n ran multi elem miss: :p(\$no)";
 
     throws-like '@a[11..12]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);

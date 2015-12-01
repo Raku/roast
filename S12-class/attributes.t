@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 36;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -140,19 +140,21 @@ throws-like q[
 }
 
 #RT #75010
-# Note, all ranges now autotruncate if they run off the end, not just infinite ones
+# Note, lazy ranges autotruncate if they run off the end (including infinite),
+# others not
 {
 
     my @y=1,2,3;
     is-deeply( [@y], [ 1, 2, 3 ], 'Plain array' );
-    is-deeply( [@y[1 .. +@y]], [ 2, 3 ], 'Array from 2-nd element to end+1' );
+    is-deeply( [@y[1 .. +@y]], [ 2, 3, Any ], 'Array from 2-nd element to end+1, non-lazy' );
+    is-deeply( [@y[lazy 1 .. +@y]], [ 2, 3 ], 'Array from 2-nd element to end+1, lazy' );
     is-deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Array from 2-nd element to end' );
 
     class AB {
         has @.x; 
         method aa { 
             my @y=1,2,3; 
-            is-deeply( [@y[1 .. +@y]], [ 2, 3 ], 'Plain array in the method' );
+            is-deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Plain array in the method' );
             is-deeply( [@.x], [ 1, 2, 3 ], 'Array from 2-nd element to end+1 in the method' );
             is-deeply( [@.x[1 ..^ +@.x]], [ 2, 3 ], 'Array from 2-nd element to end in the method' );
         }
