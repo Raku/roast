@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 294;
+plan 295;
 
 
 # tests various assignment styles
@@ -980,6 +980,13 @@ sub l () { 1, 2 };
     @foo = $bar = 5, 10;
     is $bar, 5, 'Chained assignment respects right associativity when evaluating left sigil for $';
     is @foo, '5 10', 'Internal chained item assignment does not mess up outer list assignment';
+}
+
+# RT #124316
+{
+    my @a;
+    @a[^2] = 42,43;
+    is @a, [42,43], '@a[^2] on empty array vivifies the slots and assignment works';
 }
 
 # vim: ft=perl6
