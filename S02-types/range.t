@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 168;
+plan 172;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -335,6 +335,13 @@ lives-ok({"\0".."~"}, "low ascii range completes");
     test( -1^..10, -1, 10,  0, 10);
     test( -1..^10, -1, 10, -1,  9);
     test(-1^..^10, -1, 10,  0,  9);
+}
+
+{
+    ok 0 <= (^10).rand < 10, 'simple rand';
+    ok 1 < (1..10).rand < 10, 'no borders excluded';
+    ok 0.1 < (0.1^..0.3).rand <= 0.3, 'lower border excluded';
+    throws-like ("a".."z").rand, Exception, 'cannot rand on string range';
 }
 
 # vim:set ft=perl6
