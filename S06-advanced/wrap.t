@@ -154,7 +154,7 @@ sub functionB {
     is( functionB, "xxx", "Sanity" );
     {
         try {
-            temp &functionB.wrap({ return 'yyy' });
+            temp &functionB.wrap({ 'yyy' });
         };
         is( functionB, 'yyy', 'Check that function is wrapped.' );
     }
