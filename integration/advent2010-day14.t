@@ -49,7 +49,7 @@ sub bray {
 }
 
 # Oh right, forgot to add the first line of the song...
-&bray.wrap( {
+&bray.wrap(sub {
     say "Old MacDonald had a farm,";
     nextsame;
 } );
