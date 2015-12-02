@@ -156,6 +156,7 @@ plan 16;
     is($str, '01234', 'NEXT {} works in for loop');
 }
 
+# RT #123731
 {
     my $str = '';
     for ^5 {
