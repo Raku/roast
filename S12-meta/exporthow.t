@@ -16,6 +16,7 @@ throws-like { EVAL 'use t::spec::S12-meta::InvalidDirective;' },
 
 #?rakudo skip 'RT #126759'
 {
+    use t::spec::S12-meta::Supersede1;
     EVAL q|
        class ActEval { }
        is ActEval.^tryit,'pony','supersede works in EVAL';
@@ -40,6 +41,7 @@ throws-like { EVAL 'use t::spec::S12-meta::Supersede1;
 
 #?rakudo skip 'RT #126759'
 {
+    use t::spec::S12-meta::Declare;
     EVAL q|
        controller TestEval { }
        ok TestEval ~~ Controller,'declarator works inside EVAL';
