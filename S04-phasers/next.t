@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 16;
 
 # L<S04/Phasers/NEXT executes "only if" 
 #   "end of the loop block" or "explicit next">
@@ -154,6 +154,35 @@ plan 13;
     }
 
     is($str, '01234', 'NEXT {} works in for loop');
+}
+
+{
+    my $str = '';
+    for ^5 {
+        $str ~= $_;
+        NEXT { last }
+    }
+    is $str, '0', 'last in a NEXT in a for loop terminates the loop';
+}
+
+{
+    my $str = '';
+    for ^5 {
+        $str ~= $_;
+        next;
+        $str ~= 'oops';
+        NEXT { last }
+    }
+    is $str, '0', 'last in a NEXT in a for loop terminates the loop, when triggered by next';
+}
+
+{
+    my $str = '';
+    loop (my $i = 0; $i < 5; $i++) {
+        $str ~= $i;
+        NEXT { last }
+    }
+    is $str, '0', 'last in a NEXT in a loop terminates the loop';
 }
 
 # vim: ft=perl6
