@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 9;
+plan 10;
 
 use lib '.';
 
@@ -12,6 +12,14 @@ throws-like { EVAL 'use t::spec::S12-meta::InvalidDirective;' },
     use t::spec::S12-meta::Supersede1;
     class Act { }
     is Act.^tryit(), 'pony', 'Can supersede meta-type for class';
+}
+
+#?rakudo skip 'RT #126759'
+{
+    EVAL q|
+       class ActEval { }
+       is ActEval.^tryit,'pony','supersede works in EVAL';
+    |;
 }
 
 class HopefullyUsual { }
@@ -28,7 +36,14 @@ throws-like { EVAL 'use t::spec::S12-meta::Supersede1;
     use t::spec::S12-meta::Declare;
     controller Home { }
     ok Home ~~ Controller, 'Type declared with new controller declarator got Controller role added';
-    EVAL(q|ok Home ~~ Controller|),'declarator works inside EVAL';
+}
+
+#?rakudo skip 'RT #126759'
+{
+    EVAL q|
+       controller TestEval { }
+       ok TestEval ~~ Controller,'declarator works inside EVAL';
+    |;
 }
 
 dies-ok { EVAL 'controller Fat { }' }, 'Imported declarators do not leak out of lexical scope';
