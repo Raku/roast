@@ -24,15 +24,15 @@ Testing the C<:mm> or C<:samemark> modifier - as always, need more tests
 }
 
 {
-    my $s = 'aä';
-    ok $s ~~ s:mm/a+/oooo/, ':mm works with quantified atoms';
-    is $s, 'oöoo', ':mm transported mark information to longer substitution string but does not propagate';
+    my $s = 'aa⃨';
+    ok $s ~~ s:m/a+/oooo/, ':mm works with quantified atoms';
+    is $s, 'oo⃨o⃨o⃨', ':mm transported mark information to longer substitution string';
 }
 
 {
-    my $s = 'aäää öoöö';
+    my $s = 'aääa öoöö';
     ok $s ~~ s:mm:s/a+ o+/OOOOO UUU/, 'combined :mm and :s match';
-    is $s, 'OÖÖÖO ÜUÜ', ':mm :s carry marks on a word-by-word base';
+    is $s, 'OÖÖOO ÜUÜ', ':mm :s carry marks on a word-by-word base';
 }
 
 
