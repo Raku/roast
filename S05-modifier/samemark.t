@@ -25,7 +25,7 @@ Testing the C<:mm> or C<:samemark> modifier - as always, need more tests
 
 {
     my $s = 'aa⃨';
-    ok $s ~~ s:m/a+/oooo/, ':mm works with quantified atoms';
+    ok $s ~~ s:mm/a+/oooo/, ':mm works with quantified atoms';
     is $s, 'oo⃨o⃨o⃨', ':mm transported mark information to longer substitution string';
 }
 
