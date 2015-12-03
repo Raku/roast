@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 =begin description
 
@@ -31,5 +31,12 @@ is('fooäàAÁâåbar' ~~ m:m:i/<[aB]>+/, 'äàAÁâåba', 'character class');
 is('fooäàAÁâåbar' ~~ m:m:i/<-[A]>+/, 'foo',      'negated character class');
 
 is('fooäàAÁâåbar' ~~ m:m:i/<[a..b]>+/, 'äàAÁâåba', 'range in character class');
+
+# RT #126771
+{
+    $_ = "Bruce Gray";
+    my $x = "Andrew Egeler";
+    is m:i:m/$x/, Nil, "interpolation longer than topic doesn't blow up";
+}
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
