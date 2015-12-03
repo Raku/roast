@@ -7,7 +7,7 @@ use Test::Util;
 
 plan 4;
 
-dies-ok { Supply.new.interval(1) }, 'can not be called as an instance method';
+dies-ok { Supplier.new.Supply.interval(1) }, 'can not be called as an instance method';
 
 {
     my $scheduler = FakeScheduler.new;
