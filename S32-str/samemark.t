@@ -15,6 +15,6 @@ is('z̆ôō'.samemark('ŏôō'), 'z̆ôō', 'samemark without a change (accents
 is('ẓo⃥o⃝'.samemark('ŏôō'), 'z̆ôō', 'samemark changes to new accents');
 
 is('tëxt'.samemark('thiș is longer'), 'texț', 'samemark with longer base string');
-is('zoö'.samemark('ŏô'), 'z̆ôö', 'samemark with longer source string');
+is('zoö'.samemark('ŏô'), 'z̆ôô', 'samemark with longer source string');
 
 # vim: ft=perl6
