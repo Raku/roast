@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 23;
 
 #?kp6 emit skip-rest("unimpl");
 
@@ -34,14 +34,16 @@ for @tests -> $t {
 my @passing = (
     ['HELLO',       'foo',         'FOO',         'uc()'],
     ['hello',       'fOo',         'foo',         'lc()'],
-);
-my @todo = (
-    ['HE LO',       'foo',         'FOO',         'uc()'],
     ['he lo',       'FOOOoO',      'fooooo',      'lc()'],
     ['He lo',       'FOOO',        'Fooo',        'ucfrst(lc())'],
     ['hE LO',       'fooo',        'fOOO',        'lcfrst(uc())'],
     ['hE LO',       'foobar',      'fOOBAR',      'lcfrst(uc())'],
-    ['Ab Cd E',     'abc de gh i', 'Abc De Gh I', 'wordcase()'],
+    ['HE LO',       'foo',         'FOO',         'uc()'],
+    ['Ab Cd E',     'abc de ghi j', 'Abc De GHI J', 'wordcase()'],
+    ['Ab CD',       'abc de ghi j', 'Abc DE GHI J', 'wordcase()'],
+    ['Ab Cd',       'abc de ghi j', 'Abc De Ghi J', 'wordcase()'],
+);
+my @todo = (
 );
 
 for @passing -> $t {

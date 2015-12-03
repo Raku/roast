@@ -20,19 +20,19 @@ Testing the C<:mm> or C<:samemark> modifier - as always, need more tests
 {
     my $s = 'äa';
     ok $s ~~ s:mm/a+/oooo/, ':mm works with quantified atoms';
-    is $s, 'öooo', ':mm transported case information to longer substitution string';
+    is $s, 'öooo', ':mm transported mark information to longer substitution string';
 }
 
 {
     my $s = 'aä';
     ok $s ~~ s:mm/a+/oooo/, ':mm works with quantified atoms';
-    is $s, 'oööö', ':mm transported case information to longer substitution string';
+    is $s, 'oöoo', ':mm transported mark information to longer substitution string but does not propagate';
 }
 
 {
-    my $s = 'aäää oööö';
-    ok $s ~~ s:mm:s/a+ o+/OOO UU/, 'combined :mm and :s match';
-    is $s, 'OÖÖ UÜ', ':mm :s carry marks on a word-by-word base';
+    my $s = 'aäää öoöö';
+    ok $s ~~ s:mm:s/a+ o+/OOOOO UUU/, 'combined :mm and :s match';
+    is $s, 'OÖÖÖO ÜUÜ', ':mm :s carry marks on a word-by-word base';
 }
 
 

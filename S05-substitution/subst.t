@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 163;
+plan 179;
 
 # L<S05/Substitution/>
 
@@ -219,12 +219,50 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 #?niecza skip "Action method quote:ss not yet implemented"
 # also RT #126679
 {
+    dies-ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
+
     $_ = "a\nb\tc d";
-    ok ss/a b c d/w x y z/, 'successful substitution returns truthy';
+    ok s:ss/a b c d/w x y z/, 'successful s:ss substitution returns truthy';
+    is $_, "w\nx\ty z", 's:ss/.../.../ preserves whitespace';
+
+    $_ = "a\nb\tc d";
+    # note, the ss here implies :samespace, not just :sigspace
+    ok ss/a b c d/w x y z/, 'successful ss substitution returns truthy';
     # RT #120526
     is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
 
-    dies-ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
+    $_ = "a\nb\tc d";
+    ok s:s/a b c d/w x y z/, 'successful s:s substitution returns truthy';
+    is $_, "w x y z", 's:s/.../.../ does not preserve whitespace';
+
+
+    $_ = "A\nb\tc D";
+    ok s:ss:ii/a B c D/w x y z/, 'successful s:ss:ii substitution returns truthy';
+    is $_, "W\nx\ty Z", 's:ss:ii/.../.../ preserves whitespace and case';
+
+    $_ = "A\nb\tC d";
+    ok ss:i/A B c d/w x y z/, 'successful ss:i substitution returns truthy';
+    # RT #120526
+    is $_, "w\nx\ty z", 'ss:i/.../.../ preserves whitespace';
+
+    $_ = "A\nb\tC D";
+    ok s:s:ii/A B c D/w x y z/, 'successful s:s:ii substitution returns truthy';
+    is $_, "W x Y Z", 's:s:ii/.../.../ does not preserve whitespace but preserves case';
+
+
+    $_ = "Ä\nb\tć D";
+    ok s:ss:ii:mm/a ḇ?   c D/w x y z/, 'successful s:ss:ii:mm substitution returns truthy';
+    is $_, "Ẅ\nx\tý Z", 's:ss:ii:mm/.../.../ preserves whitespace, case, and marks';
+
+    $_ = "a\nḇ\tĆ d";
+    ok ss:i:m/Å b C d/w x y z/, 'successful ss substitution returns truthy';
+    # RT #120526
+    is $_, "w\nx̱\tý z", 'ss/.../.../ preserves whitespace';
+
+    $_ = "Å\nḇ\tć d";
+    ok s:s:ii:mm/a  B+  c   D/w x y z/, 'successful s:s substitution returns truthy';
+    is $_, "W̊ x̱ ý z", 's:s/.../.../ does not preserve whitespace but preserves case and marks';
+
 }
 
 #L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
