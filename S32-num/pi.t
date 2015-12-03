@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 5;
+plan 8;
 
 # L<S32::Numeric/Numeric/"Numeric provides some constants">
 
@@ -8,7 +8,7 @@ plan 5;
 
 =head1 DESCRIPTION
 
-Basic tests for builtin Num::pi
+Basic tests for builtin Num::pi and Num::tau
 
 =end pod
 
@@ -25,5 +25,12 @@ is_approx(EVAL("3 + pi"), $PI+3, "3+pi, as a bareword");
 is_approx(EVAL("pi + 3"), $PI+3, "pi+3, as a bareword");
 
 is_approx(π, $PI, "unicode π as a bareword");
+
+# Tau, see also: L<"http://tauday.com/tau-digits">
+is(EVAL("tau"), EVAL("2 * pi"), "pi = tau / 2");
+
+throws-like "3 + tau()", X::Undeclared, "tau() is not a sub";
+
+is_approx(τ, 2*$PI, "unicode τ as a bareword");
 
 # vim: ft=perl6
