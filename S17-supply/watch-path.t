@@ -77,7 +77,6 @@ sub macosx {
     is +@seen, 4, 'the unlink caused an event';
 
     ok $tap.close, 'could we close the tap';
-    $s.done;
 
     is +@seen.grep( IO::Notification::Change ), +@seen, 'only Change objects';
 
