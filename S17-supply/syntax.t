@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 53;
+plan 54;
 
 {
     my $s = supply {
@@ -363,3 +363,19 @@ plan 53;
 # RT #126089
 throws-like 'emit 42', X::ControlFlow, illegal => 'emit';
 throws-like 'done', X::ControlFlow, illegal => 'done';
+
+# whenever with channels
+{
+    my $c = Channel.new;
+    start {
+        $c.send($_) for 1..10;
+        $c.close();
+    }
+    my $total = 0;
+    react {
+        whenever $c {
+            $total += $_;
+        }
+    }
+    is $total, 55, 'can use channels with whenever';
+}
