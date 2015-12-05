@@ -127,8 +127,13 @@ for %tests.keys.sort -> $t {
     is $num.round(1e-5),  123.45679, "($num).round(1e-5) == 123.45679";
 }
 
-
-
+{  # RT 126825
+    my $complex = 5.123456789+3.987654321i;
+    is $complex.round(1),             5+4i,  "complex round with argument";
+    is $complex.round(5),             5+5i,  "($complex).round(5) == 5+5i";
+    is $complex.round(1/100),   5.12+3.99i,  "($complex).round(1/100) == 5.12+3.99i";
+    is $complex.round(1e-3),  5.123+3.988i,  "($complex).round(1e-3) == 5.123+3.988i";
+}
 
 {
     my $big-int = 1234567890123456789012345678903;
