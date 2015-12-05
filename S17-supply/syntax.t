@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 55;
 
 {
     my $s = supply {
@@ -364,7 +364,7 @@ plan 54;
 throws-like 'emit 42', X::ControlFlow, illegal => 'emit';
 throws-like 'done', X::ControlFlow, illegal => 'done';
 
-# whenever with channels
+# whenever with channel
 {
     my $c = Channel.new;
     start {
@@ -378,4 +378,35 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
         }
     }
     is $total, 55, 'can use channels with whenever';
+}
+
+# multiple whenevers with channels
+{
+    my $c1 = Channel.new;
+    my $c2 = Channel.new;
+    my $p1 = Promise.new;
+    my $p2 = Promise.new;
+    start {
+        $c1.send(1);
+        await $p2;
+        $c1.send(3);
+        $c1.close();
+    }
+    start {
+        await $p1;
+        $c2.send(2);
+        $c2.close();
+    }
+    my $order = '';
+    react {
+        whenever $c1 {
+            $order ~= $_;
+            $p1.keep(True) unless $p1;
+        }
+        whenever $c2 {
+            $order ~= $_;
+            $p2.keep(True);
+        }
+    }
+    is $order, '123', 'multiple channels in whenever blocks work';
 }
