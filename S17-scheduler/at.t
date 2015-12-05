@@ -64,7 +64,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
       :at(now + 2),
       :catch({ $tracker ~= '2scatch'})
     );
-    #?rakudo todo "huh?"
     ok @c && @c[*-1].can("cancel"), 'can we cancel (3)';
     push @c, $*SCHEDULER.cue(
       { $tracker ~= '1s'; },
