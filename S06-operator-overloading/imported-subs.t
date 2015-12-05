@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 20;
 
 use lib 't/spec/packages';
 
@@ -42,5 +42,18 @@ use lib 't/spec/packages';
 }
 
 throws-like '5!', X::Syntax::Confused, 'import of operators is lexical';
+
+# RT #126761
+{
+    my @results;
+    module m {
+	sub infix:<o1> ($a, $b) is equiv(&infix:<+>)  is export { push @results, 1 }
+	sub infix:<o2> ($a, $b) is tighter(&infix:<+>) is export { push @results, 2 }
+	1 o1 1 o2 1;  # should make 2, 1 inside
+    }
+    import m;
+    1 o1 1 o2 1;  # should make 2, 1 outside
+    is @results, "2 1 2 1", "precedence is exported/imported properly along with operators";
+}
 
 # vim: ft=perl6
