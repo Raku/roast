@@ -103,6 +103,7 @@ plan 15;
   is $foo, 43, '"is dynamic" vars are rw in the creating scope (2)';
 } #1
 
+#?rakudo skip '::= NYI'
 {
   my sub modify { $CALLER::foo++; 'success' }
   my $foo is dynamic ::= 42;

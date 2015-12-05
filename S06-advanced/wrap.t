@@ -236,7 +236,7 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
             my $name = $attr.name;
             my $accessor = $name.subst(/^../, '');
             my $r = sub ($obj, |args) is rw {
-                my (|c) ::= callsame;
+                my (|c) := callsame;
                 c;
             }
             $pkg.^find_method($accessor).wrap($r);
