@@ -197,7 +197,7 @@ is_run 'sub MAIN(:@foo) { print @foo }',
 #?niecza todo
 is_run 'sub MAIN(:@foo) { print @foo }',
     {
-        out => "barbaz"
+        out => "bar baz"
     },
     :args['--foo=bar', '--foo=baz'],
     'multiple occurence for named array param';
