@@ -110,7 +110,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
         $message = $exception.message;
     };
     my $c = $*SCHEDULER.cue({ die "oh noes" });
-    #?rakudo todo "huh?"
     ok $c.can("cancel"), 'can we cancel (2)';
     1 while $*SCHEDULER.loads;
     is $message, "oh noes", "$name setting uncaught_handler works";
@@ -126,7 +125,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
           $tracker ~= 'caught';
       })
     );
-    #?rakudo todo "huh?"
     ok $c.can("cancel"), 'can we cancel (3)';
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,caught", "Code run on $name, then handler";
