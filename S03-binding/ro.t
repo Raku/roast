@@ -5,6 +5,7 @@ plan 11;
 
 # L<S03/Item assignment precedence/bind and make readonly>
 
+#?rakudo skip '::= NYI'
 {
     my $x = 5;
     my $y = 3;
@@ -16,6 +17,7 @@ plan 11;
     is $x, 3, 'variable is still 3';
 }
 
+#?rakudo skip '::= NYI'
 {
     my Int $a = 4;
     my Str $b;
@@ -23,13 +25,13 @@ plan 11;
         'Cannot ro-bind variables with incompatible type constraints';
 }
 
+#?rakudo skip '::= NYI'
 {
     my @x = <a b c>;
     my @y = <d e>;
 
     @x ::= @y;
     is @x.join('|'), 'd|e', '::= on arrays';
-    #?rakudo 4 todo '::= on arrays'
     #?niecza todo
     dies-ok { @x := <3 4 foo> }, '... make RO';
     #?niecza todo
