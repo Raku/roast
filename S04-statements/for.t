@@ -686,4 +686,23 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     is foo(), (6, 6, 6), 'for loops do not decontainerize';
 }
 
+# RT #126270
+{
+    my $expected = "A, then B\nC, then D\n";
+    my $result;
+
+    for "A\nB\nC\nD".lines() -> $x, $y { $result ~= "$x, then $y\n" }
+
+    is $result, $expected, 'for with pointy block iterates correctly with two arguments';
+
+    CATCH
+    {
+        default
+        {
+            skip 'Since the GLR, "for" with pointy block does not iterate correctly with two arguments';
+        }
+    }
+}
+
+
 # vim: ft=perl6
