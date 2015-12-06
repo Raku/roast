@@ -65,4 +65,16 @@ is_run( 'print lines[0]',
         { out => "abcd", err => '', status => 0 },
         'lines returns things in lines' );                  
 
+# RT #126270 [BUG] Something fishy with lines() and looping over two items at a time in Rakudo
+{
+    my $expected = "A, then B\nC, then D\n";
+    my $result;
+
+    # This use to fail saying "Too few positionals passed; expected 2 arguments but got 0"
+    for "A\nB\nC\nD".lines() -> $x, $y { $result ~= "$x, then $y\n" } 
+
+    is $result, $expected, 'lines iterates correctly with for block taking two arguments at a time';
+}
+
+
 # vim: ft=perl6
