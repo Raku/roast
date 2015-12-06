@@ -70,7 +70,7 @@ is_run( 'print lines[0]',
     my $expected = "A, then B\nC, then D\n";
     my $result;
 
-    # This used to fail saying "Too few positionals passed; expected 2 arguments but got 0"
+    # This used to fail, saying "Too few positionals passed; expected 2 arguments but got 0"
     for "A\nB\nC\nD".lines() -> $x, $y { $result ~= "$x, then $y\n" } 
 
     is $result, $expected, 'lines iterates correctly with for block taking two arguments at a time';
