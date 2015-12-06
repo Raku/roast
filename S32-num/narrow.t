@@ -8,7 +8,7 @@ is     (1+2i).narrow,     1+2i, 'narrow on complex with imaginary part != 0';
 isa-ok (2.5e0+0i).narrow, Num,  'narrow on complex without imaginary part (Num)';
 isa-ok (2+0i).narrow,     Int,  'narrow on complex without imaginary part (Int)';
 
-#?rakudo skip RT #126828
+#?rakudo skip 'RT #126828'
 { # RT #126828
   isa-ok (0+1.5e0i).narrow, Num,  'narrow on complex without real part (Num)';
   isa-ok (0+2i).narrow,     Int,  'narrow on complex without real part (Int)';
