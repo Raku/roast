@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 34;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
@@ -77,14 +77,8 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       "$name cannot combine :catch with :in and :at";
     dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
       "$name cannot combine :every/:catch with :in and :at";
-    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10)) },
-      "$name cannot combine :every and :times";
-    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :at(now + 2)) },
-      "$name cannot combine :every and :times with :at";
-    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :in(1)) },
-      "$name cannot combine :every and :times with :in";
-    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :catch({...})) },
-      "$name cannot combine :every and :times with :catch";
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :stop({...})) },
+      "$name cannot combine :every, :times and :stop";
 }
 
 # fake scheduling from here on out
@@ -154,12 +148,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
       "$name cannot combine :catch with :in and :at";
     dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
       "$name cannot combine :every/:catch with :in and :at";
-    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10)) },
-      "$name cannot combine :every and :times";
-    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :at(now + 2)) },
-      "$name cannot combine :every and :times with :at";
-    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :in(1)) },
-      "$name cannot combine :every and :times with :in";
-    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :catch({...})) },
-      "$name cannot combine :every and :times with :catch";
+    dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :stop({...})) },
+      "$name cannot combine :every, :times and :stop";
 }

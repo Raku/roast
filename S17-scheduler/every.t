@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 20;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
@@ -80,6 +80,16 @@ my $name = $*SCHEDULER.^name;
     sleep 3;
     diag "seen $a runs" if !
       ok 5 < $a < 15, "Cue with :every/:at schedules repeatedly";
+    LEAVE $c.cancel;
+}
+
+{
+    my $a = 0;
+    my $c = $*SCHEDULER.cue({ cas $a, {.succ} }, :every(0.1), :10times);
+    isa-ok $c, Cancellation;
+    sleep 3;
+    diag "seen $a runs" if !
+      is $a, 10, "Cue with :every/:times schedules repeatedly for 10 times";
     LEAVE $c.cancel;
 }
 
