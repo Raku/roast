@@ -20,6 +20,7 @@ my @precompiled = Test::Util::run( q:to"--END--").lines;
 is @precompiled.elems, 3;
 is $_, 'True' for @precompiled;
 
+# RT #122773
 my @keys = Test::Util::run( q:to"--END--").lines;
     use lib 't/spec/packages';
     use Example::A;
