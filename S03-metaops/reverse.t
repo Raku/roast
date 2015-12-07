@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 48;
+plan 50;
 
 =begin pod
 
@@ -90,10 +90,15 @@ throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return valu
 }
 
 # RT #118791
-#?rakudo todo 'RT #118791 Rxx does not yet thunk the RHS'
 {
     my @a = 5 Rxx rand;
     ok !([==] @a), "Rxx thunks the RHS";
+
+    my @b = rand RRxx 5;
+    ok !([==] @b), "RRxx thunks the LHS again";
+
+    my @c = 5 RRRxx rand;
+    ok !([==] @c), "RRRxx thunks the RHS again";
 }
 
 throws-like '3 R. foo', X::Syntax::CannotMeta, "R. is too fiddly";
