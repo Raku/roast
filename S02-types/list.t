@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 61;
+plan 65;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -119,6 +119,15 @@ is $(;).elems, 0, '$(;) parses, and is empty';
           typename => 'List',
         ;
     }
+}
+
+{
+    is (1,2,3,4).sum, 10, 'can we do .sum on a List';
+    is (.1,.2,.3,.4).sum, 1, 'even if they are not ints';
+    is <1 2 3 4>.sum, 10, 'even if they are numified strings';
+    throws-like { <a b c d>.sum }, X::Str::Numeric,
+      reason => "base-10 number must begin with valid digits or '.'",
+      'fail if they are non-numeric strings';
 }
 
 # vim: ft=perl6
