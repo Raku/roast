@@ -222,16 +222,19 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     dies-ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
 
     $_ = "a\nb\tc d";
+    #?rakudo.jvm 2 skip 'samemark NYI'
     ok s:ss/a b c d/w x y z/, 'successful s:ss substitution returns truthy';
     is $_, "w\nx\ty z", 's:ss/.../.../ preserves whitespace';
 
     $_ = "a\nb\tc d";
     # note, the ss here implies :samespace, not just :sigspace
+    #?rakudo.jvm 2 skip 'samemark NYI'
     ok ss/a b c d/w x y z/, 'successful ss substitution returns truthy';
     # RT #120526
     is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
 
     $_ = "a\nb\tc d";
+    #?rakudo.jvm 2 skip 'samemark NYI'
     ok s:s/a b c d/w x y z/, 'successful s:s substitution returns truthy';
     is $_, "w x y z", 's:s/.../.../ does not preserve whitespace';
 
@@ -241,6 +244,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $_, "W\nx\ty Z", 's:ss:ii/.../.../ preserves whitespace and case';
 
     $_ = "A\nb\tC d";
+    #?rakudo.jvm 2 skip 'samemark NYI'
     ok ss:i/A B c d/w x y z/, 'successful ss:i substitution returns truthy';
     # RT #120526
     is $_, "w\nx\ty z", 'ss:i/.../.../ preserves whitespace';
@@ -251,15 +255,18 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 
     $_ = "Ä\nb\tć D";
+    #?rakudo.jvm 2 skip '"ordbaseat NYI" RT #125753'
     ok s:ss:ii:mm/a ḇ?   c D/w x y z/, 'successful s:ss:ii:mm substitution returns truthy';
     is $_, "Ẅ\nx\tý Z", 's:ss:ii:mm/.../.../ preserves whitespace, case, and marks';
 
     $_ = "a\nḇ\tĆ d";
+    #?rakudo.jvm 2 skip '"ordbaseat NYI" RT #125753'
     ok ss:i:m/Å b C d/w x y z/, 'successful ss substitution returns truthy';
     # RT #120526
     is $_, "w\nx̱\tý z", 'ss/.../.../ preserves whitespace';
 
     $_ = "Å\nḇ\tć d";
+    #?rakudo.jvm 2 skip '"ordbaseat NYI" RT #125753'
     ok s:s:ii:mm/a  B+  c   D/w x y z/, 'successful s:s substitution returns truthy';
     is $_, "W̊ x̱ ý z", 's:s/.../.../ does not preserve whitespace but preserves case and marks';
 
@@ -399,10 +406,12 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     sub s { 'sub s' }
     $_ = "foo";
+    #?rakudo.jvm skip 'samemark NYI'
     ok s:s,foo,bar, , 's with colon is always substitution';
     is s(), 'sub s', 'can call sub s as "s()"';
     is s, 'sub s', 'can call sub s as "s"';
     $_ = "foo";
+    #?rakudo.jvm skip 'samemark NYI'
     ok ss (foo) = 'bar', 'bare ss is substitution before whitespace then parens';
 }
 
