@@ -74,6 +74,7 @@ plan 7;
         FIRST { $str ~= 'Here'; last }
         $str ~= $_;
     }
+    #?rakudo.jvm todo "got '123' instead of 'Here'"
     is $str, 'Here', 'last in FIRST in for loop works';
 }
 

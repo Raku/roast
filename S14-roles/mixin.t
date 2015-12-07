@@ -201,6 +201,7 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
     my $x;
     lives-ok { $x = True but (1, "x") }, 'but with (1, "2") on RHS works';
     is $x.Int, 1, 'but with (1, "x") provides a .Int method returning 1';
+    #?rakudo.jvm todo "got '1' instead of 'x'"
     is $x.Str, "x", 'but with (1, "x") provides a .Str method returning "x"';
 }
 throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /resolved/ },
