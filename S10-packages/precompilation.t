@@ -28,7 +28,6 @@ my @keys = Test::Util::run( q:to"--END--").lines;
     .say for Example::.keys.sort;
     --END--
 
-#?rakudo.jvm todo 'RT #122773'
 is-deeply @keys, [<A B C>], 'Diamond relationship';
 
 #?rakudo.jvm skip 'RT #122896'

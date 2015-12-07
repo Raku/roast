@@ -172,7 +172,6 @@ nok (defined  \()[0]), '\()[0] is not defined';
     is $a, 42, 'Can modify Capture associative elements';
 }
 
-#?rakudo.jvm todo 'RT #126525'
 lives-ok { (1..*).Capture.perl }, '.perl of Capture formed from Range does not explode';
 
 # RT #123581
