@@ -29,6 +29,7 @@ for False, True -> $eager {
     is "a\rb\r\rc\r".lines(2,:$eager).join('|'),
       'a|b',    'CR .lines with limit';
 
+    #?rakudo.jvm 5 todo '\r\n not yet handled as grapheme'
     is "a\r\nb\r\n\r\nc".lines(:$eager).join('|'), 'a|b||c',
       'CRLF .lines without trailing';
     is "a\r\nb\r\n\r\nc\r\n".lines(:$eager).join('|'), 'a|b||c',
