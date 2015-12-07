@@ -37,3 +37,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         tap-ok @supplies[1], [11,12,13], "got the 1 supply ($what)", :live;
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

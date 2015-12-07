@@ -44,4 +44,4 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 }
 
-# vim: syn=perl6
+# vim: ft=perl6 expandtab sw=4

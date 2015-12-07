@@ -51,3 +51,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         tap-ok $delay, [1..10], "noop delay";
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

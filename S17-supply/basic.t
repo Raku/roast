@@ -140,3 +140,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         $t1.close;
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

@@ -23,3 +23,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       ["a".."e"],
       "grepping taps with a Regex works";
 }
+
+# vim: ft=perl6 expandtab sw=4

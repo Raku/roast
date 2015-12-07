@@ -21,3 +21,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list(flat("E"..."A","e".."a")).max(*.lc), ["E"],
       "descending alpha works";
 }
+
+# vim: ft=perl6 expandtab sw=4

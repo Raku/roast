@@ -16,3 +16,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list(1..10).head(5), [1..5], "head five works";
     tap-ok Supply.from-list(1..10).head(15), [1..10], "head 15 works";
 }
+
+# vim: ft=perl6 expandtab sw=4

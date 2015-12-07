@@ -84,3 +84,5 @@ sub macosx {
     is +@seen.grep( { .event ~~ FileRenamed } ), (3|4), 'at least 3 renaming';
     is +@seen.grep( { .event ~~ FileChanged } ), (0|1), 'maybe one changing';
 }
+
+# vim: ft=perl6 expandtab sw=4

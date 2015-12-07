@@ -27,3 +27,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
          ok $done, 'done callback fires on done event';
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

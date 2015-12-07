@@ -49,3 +49,5 @@ for ThreadPoolScheduler.new -> $*SCHEDULER {
         ok $max < .5, 'difference between each at most .5 seconds';
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

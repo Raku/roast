@@ -17,3 +17,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         $^a.lc cmp $^b.lc || $^b cmp $^a
     } ), [<a A b B c C d D>], "we can sort in special ways";
 }
+
+# vim: ft=perl6 expandtab sw=4

@@ -63,3 +63,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       [[1,2,3],[5,6],[6,7,8],[10]],
       "we can rotor with multiple different gaps with partial";
 }
+
+# vim: ft=perl6 expandtab sw=4

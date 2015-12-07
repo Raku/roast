@@ -19,3 +19,5 @@ dies-ok { Supply.wait }, 'can not be called as a class method';
     $s.Supply.wait;
     ok $waiting + 2 < now, "did we wait long enough?";
 }
+
+# vim: ft=perl6 expandtab sw=4

@@ -33,3 +33,5 @@ my $promise = start { while $done < $times { $c.receive; $done++ } };
 $s.emit($_) for ^$times;
 await $promise;
 is $done, $times, 'did we receive all?';
+
+# vim: ft=perl6 expandtab sw=4

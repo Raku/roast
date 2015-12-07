@@ -410,3 +410,5 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
     }
     is $order, '123', 'multiple channels in whenever blocks work';
 }
+
+# vim: ft=perl6 expandtab sw=4

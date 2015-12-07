@@ -18,3 +18,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         is $seen, 10, "did the side effect work";
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

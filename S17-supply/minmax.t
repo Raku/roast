@@ -23,3 +23,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       [("E".."E"),("D".."E"),("C".."E"),("B".."E"),("A".."E")],
       "descending alpha works";
 }
+
+# vim: ft=perl6 expandtab sw=4

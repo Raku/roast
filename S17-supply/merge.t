@@ -41,3 +41,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     throws-like( { Supply.merge(42) },
       X::Supply::Combinator, combinator => 'merge' );
 }
+
+# vim: ft=perl6 expandtab sw=4

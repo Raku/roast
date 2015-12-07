@@ -28,3 +28,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok "food".Supply,
       [<food>], "Supply coercer worked on scalar";
 }
+
+# vim: ft=perl6 expandtab sw=4

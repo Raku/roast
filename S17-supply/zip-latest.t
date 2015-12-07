@@ -92,3 +92,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     throws-like( { Supply.zip-latest(42) },
       X::Supply::Combinator, combinator => 'zip-latest' );
 }
+
+# vim: ft=perl6 expandtab sw=4

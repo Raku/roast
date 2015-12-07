@@ -38,3 +38,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         tap-ok $stable, [1..10], "noop stable";
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

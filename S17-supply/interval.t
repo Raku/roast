@@ -33,3 +33,5 @@ is_run(
        { status => * != 0, err => /"uh-oh"/},
        'Exception thrown in a timer and unhandled terminates program',
 );
+
+# vim: ft=perl6 expandtab sw=4

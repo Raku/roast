@@ -41,3 +41,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       [<a>],
       "squish with as that always returns the same value, tap works";
 }
+
+# vim: ft=perl6 expandtab sw=4

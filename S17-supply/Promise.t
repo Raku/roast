@@ -28,3 +28,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         is $p2.status, Broken, 'Promise is broken after quit';
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

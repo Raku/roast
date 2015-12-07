@@ -17,3 +17,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         is-deeply @b, [42..50], "Supply.list can be stored in array";
 }
 }
+
+# vim: ft=perl6 expandtab sw=4

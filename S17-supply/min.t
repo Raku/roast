@@ -21,3 +21,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list("E"..."A",("e".."a").Slip).min(*.lc), [<E D C B A>],
       "descending alpha works";
 }
+
+# vim: ft=perl6 expandtab sw=4

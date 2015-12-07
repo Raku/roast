@@ -62,3 +62,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         tap-ok $b, [1..10], "noop batch";
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

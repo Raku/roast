@@ -19,3 +19,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         ok $s.Supply === $s, '.Supply on a Supply is a noop';
     }
 }
+
+# vim: ft=perl6 expandtab sw=4

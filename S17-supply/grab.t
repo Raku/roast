@@ -14,3 +14,5 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list(1..10).grab( {.reverse} ), [10...1], "we can reverse";
     tap-ok Supply.from-list(1..10).grab( {[min] $_} ), [1], "we can find the min";
 }
+
+# vim: ft=perl6 expandtab sw=4

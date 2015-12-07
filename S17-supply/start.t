@@ -48,3 +48,5 @@ dies-ok { Supply.start({...}) }, 'can not be called as a class method';
     @promises[1].keep(2);
     $master.done;
 }
+
+# vim: ft=perl6 expandtab sw=4
