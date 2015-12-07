@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 98;
+plan 100;
 
 #L<S02/Mutable types/Array>
 
@@ -367,6 +367,14 @@ my @array2 = ("test", 1, Mu);
     lives-ok { $res = ~@bar },
       '~@bar containing a Str type object lives';
     is $res, "", '~@bar containing a Str type object gives empty string';
+}
+
+{
+    my @a = ^10;
+    is @a.sum, 45, 'simple integer sum in array works';
+    my @b;
+    @b[9] = 10;
+    is @b.sum, 10, 'handle sparse arrays correctly';
 }
 
 # vim: ft=perl6
