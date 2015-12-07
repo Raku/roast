@@ -5,6 +5,7 @@ use Test;
 
 plan 8;
 
+#?rakudo.jvm 8 skip 'samemark NYI'
 is(samemark('zoo', 'ŏôō'), 'z̆ôō', 'samemark as a function works');
 is(samemark('TexT','aSdF'), 'TexT', 'samemark without a change (no accents)');
 
