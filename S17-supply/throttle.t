@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 37;
+plan 47;
 
 dies-ok { Supply.throttle(1,1) }, 'can not be called as a class method';
 
@@ -60,6 +60,39 @@ for 1..10 -> $n {
     (1..10).Supply.throttle( $n, { sleep rand; @a[$_] = 1 } ).wait;
     ok now < $before + ((12 - $n) * .6), "parallelism as expected with $n";
     is @a.sum, 10, "ok with $n at a time with random delay";
+}
+
+{
+    my $status = Supplier.new;
+    my @statuses;
+    $status.Supply.tap: { @statuses.push: $_ };
+    my $control = Supplier.new;
+
+    my @seen;
+    (1..4).Supply.throttle(
+      0,
+      { sleep $_ / 4; $_ },
+      :$control,
+      :$status,
+    ).act: { @seen.push($_.result) };
+    is +@seen, 0, 'Nothing should be seen yet';
+
+    $control.emit( "limit: 2" );
+    sleep 3;  # no way to wait yet  :-(
+
+    is @seen, (1,2,3,4), 'did we see all in the right order?';
+    is +@statuses, 1, 'did we get the final status?';
+
+    for @statuses -> $s {
+        is $s<allowed>,  2, 'currently allowed to run';
+        is $s<bled>,     0, 'no bleeds done';
+        is $s<buffered>, 0, 'none left in buffer';
+        is $s<emitted>,  4, 'number of results emitted';
+        is $s<id>,  "done", 'correct status ID';
+        is $s<limit>,    2, 'maximally allowed to run';
+        is $s<running>,  0, 'none are running still';
+        last;
+    }
 }
 
 # vim: ft=perl6 expandtab sw=4
