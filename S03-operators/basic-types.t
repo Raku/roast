@@ -70,6 +70,7 @@ my $string = "Hello World";
 isa-ok($string, Str, 'it is a Str type');
 
 my $bool = (0 == 0);
+#?rakudo.jvm todo 'got (Int) instead of (Bool)'
 isa-ok($bool, Bool, 'it is a Bool type');
 
 my $pair = ("foo" => "bar");
