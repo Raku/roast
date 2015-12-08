@@ -19,8 +19,7 @@ my @normal = <
   Capture
   Code
   CompUnit
-  CompUnitRepo
-  CompUnitRepo::Distribution
+  CompUnit::RepositoryRegistry
   CompUnit::Repository::FileSystem
   CompUnit::Repository::Installation
   Compiler
