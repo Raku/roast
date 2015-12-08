@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan 20;
 
 #L<S03/Smart matching/Signature-signature>
 {
@@ -22,6 +22,7 @@ plan 19;
          :([Any, Str, Numeric]),                    :(@ (Complex, Str, Int)),   True,
          :(Complex $z, :$x, :$y, :$q),              :(Complex, *%rest),         False,
          :(:$x, Int :$y, Cool :$z, *%_),            :(*%_),                     False,
+         :(:$x, *%_),                               :(:$x, *%_),                True,
          :(Mu, Any, Numeric),                       :(Mu, *@_),                 False,
         );
 
