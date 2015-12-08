@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 23;
+plan 27;
 
 my \PATH = 't-S32-io-open.tmp';
 my \PATH-RX = rx/'t-S32-io-open.tmp'/;
@@ -145,6 +145,27 @@ LEAVE unlink PATH;
 
     throws-like 'open PATH, :rx', Exception,
         'cannot use :rx to open existing file', message => PATH-RX;
+}
+
+# test default mode
+{   unlink PATH;
+    my $fh;
+
+    ok open(PATH) ~~ Failure, 'opening nonexistent file in default mode fails';
+
+    $fh = open PATH, :w;
+    $fh.print('onions are tasty');
+    $fh.close;
+
+    $fh = open PATH;
+    ok defined($fh), 'can open existing file in default mode';
+
+    ok $fh.get eq 'onions are tasty', 'can read from file in default mode';
+
+    throws-like '$fh.print("42")', Exception,
+        'cannot write to file in default mode';
+
+    $fh.close;
 }
 
 # vim: ft=perl6
