@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 50;
+plan 67;
 
 =begin pod
 
@@ -99,6 +99,61 @@ throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return valu
 
     my @c = 5 RRRxx rand;
     ok !([==] @c), "RRRxx thunks the RHS again";
+}
+{
+    my $side-effect = 0;
+    0 Rxx $side-effect++;
+    is $side-effect, 0, "Rxx thunks left side properly";
+    1 Rxx $side-effect++;
+    is $side-effect, 1, "Rxx thunk runs when needed";
+    9 Rxx $side-effect++;
+    is $side-effect, 10, "Rxx thunk runs repeatedly when needed";
+}
+{
+    my Mu $side-effect = 0;
+    $side-effect++ Rand 0;
+    is $side-effect, 0, "Rand thunks left side properly";
+    $side-effect++ Rand 1;
+    is $side-effect, 1, "Rand thunks runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    $side-effect++ R&& 0;
+    is $side-effect, 0, "R&& thunks left side properly";
+    $side-effect++ R&& 1;
+    is $side-effect, 1, "R&& thunk runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    $side-effect++ Ror 1;
+    is $side-effect, 0, "Ror thunks left side properly";
+    $side-effect++ Ror 0;
+    is $side-effect, 1, "Ror thunk runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    $side-effect++ R|| 1;
+    is $side-effect, 0, "R|| thunks left side properly";
+    $side-effect++ R|| 0;
+    is $side-effect, 1, "R|| thunk runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    $side-effect++ Randthen Nil;
+    is $side-effect, 0, "Randthen thunks left side properly";
+    $side-effect++ Randthen 1;
+    is $side-effect, 1, "Randthen thunks runs when needed";
+    $side-effect = $_ Randthen 23;
+    is $side-effect, 23, "Randthen topicalizes when needed";
+}
+{
+    my Mu $side-effect is default(Nil) = 0;
+    $side-effect++ Rorelse 1;
+    is $side-effect, 0, "Rorelse thunks left side properly";
+    $side-effect++ Rorelse Nil;
+    is $side-effect, 1, "Rorelse thunk runs when needed";
+    $side-effect = $_ Rorelse Nil;
+    ok $side-effect === Nil, "Rorelse topicalizes when needed";
 }
 
 throws-like '3 R. foo', X::Syntax::CannotMeta, "R. is too fiddly";
