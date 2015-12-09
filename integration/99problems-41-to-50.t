@@ -303,6 +303,7 @@ plan 13;
     # Can you apply the method of "result caching" in order to make the predicate
     # more efficient, when it is to be used repeatedly?
 
+    use experimental :cached;
     sub gray($n) is cached {
         return [''] if $n == 0;
         [flat '0' xx 2**($n-1) >>~<< gray($n-1), 

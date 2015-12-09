@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+use experimental :cached;
+
 plan 38;
 
 #?niecza skip "is cached NYI"
