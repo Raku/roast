@@ -1,6 +1,7 @@
 use v6;
 
 use Test;
+use experimental :macros;
 plan 14;
 
 # Just to avoid tedium, the macros in this file are

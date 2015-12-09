@@ -1,6 +1,7 @@
 use v6;
 
 use Test;
+use experimental :macros;
 
 =begin pod
 =head1 DESCRIPTION

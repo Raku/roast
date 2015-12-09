@@ -95,6 +95,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     # So, we wrap the code in a EVAL() with an inner BEGIN.
     # (The macros are subject to MMD thing still needs to be fleshed out, I
     # think.)
+    use experimental :macros;
     our &foo_macro ::= macro ($x) { "1000 + $x" };
     isa-ok(&foo_macro, Code);
     isa-ok(&foo_macro, Routine);

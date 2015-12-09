@@ -167,6 +167,7 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
 
 # RT #119371
 {
+    use experimental :macros;
     throws-like q[role popo { macro marco { $^a but popo }; marco popo; }],
         X::Role::Parametric::NoSuchCandidate,
         role    => { .^name eq 'popo' }

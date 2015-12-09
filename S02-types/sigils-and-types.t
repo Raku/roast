@@ -69,6 +69,7 @@ does-ok &pro, Callable, 'a proto does Callable';
     my rule baz {<?>}
     does-ok &baz, Callable, 'a rule does Callable';
     # &quux returns a Sub ?
+    use experimental :macros;
     macro quux {}
     does-ok &quux, Callable, 'a macro does Callable';
 }

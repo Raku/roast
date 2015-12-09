@@ -248,6 +248,7 @@ multi sub greeble(Str) { }
     test-both(@candidates[1], 'beta', 'male');
 }
 
+use experimental :macros;
 #| I like
 macro four { quasi { 2+2 } }
 #= numbers

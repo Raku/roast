@@ -112,6 +112,7 @@ Testing operator overloading subroutines
 #?rakudo skip 'macros RT #124978'
 #?niecza skip 'Unhandled exception: Malformed block at (eval) line 1'
 {
+    use experimental :macros;
     my $var = 0;
     ok(EVAL('macro circumfix:["<!--","-->"] ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}');
     ok(EVAL('macro circumfix:«<!-- -->» ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro «»');

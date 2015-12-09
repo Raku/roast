@@ -259,6 +259,7 @@ multi sub greeble(Str) { }
     test-trailing(@candidates[1], 'beta');
 }
 
+use experimental :macros;
 macro four { quasi { 2+2 } }
 #= I like numbers
 

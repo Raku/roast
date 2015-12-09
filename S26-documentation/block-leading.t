@@ -277,6 +277,7 @@ multi sub greeble(Str) { }
     test-leading(@candidates[1], 'beta');
 }
 
+use experimental :macros;
 #|{I like numbers}
 macro four { quasi { 2+2 } }
 
