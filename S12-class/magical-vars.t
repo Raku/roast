@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 18;
 
 # L<S02/Names/"Which class am I in?">
 
@@ -121,6 +121,17 @@ class SimpleClass does Bar {}
 {
   throws-like 'self', X::Syntax::Self::WithoutObject,
     "there is no self outside of a method";
+}
+
+# RT #126754
+{
+  class ev {
+    method foo {
+      EVAL 'class GLOBAL::evo { method bar { self.WHAT.^name } }'
+    }
+  };
+  ev.foo;
+  is EVAL('evo.new.bar'), "evo", 'self is not overridden inside an EVAL' ;
 }
 
 # vim: ft=perl6
