@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 39;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -82,12 +82,14 @@ plan 37;
 {
     my $scalar = 'abcd';
     throws-like '${$scalar}', X::Obsolete, 'Perl 5 form of ${$scalar} dies';
+    throws-like '"${$scalar}"', X::Obsolete, 'Perl 5 form of "${$scalar}" dies';
 
     my $array  = [1, 2, 3];
     throws-like '@{$array}', X::Obsolete, 'Perl 5 form of @{$array} dies';
+    throws-like '"@{$array}"', X::Obsolete, 'Perl 5 form of "@{$array}" dies';
 
     my $hash  = {a => 1, b => 2, c => 3};
-    throws-like '%{$hash}', X::Obsolete, 'Perl 5 form of %{$hash} dies';
+    throws-like '%{$hash}', X::Hash::Store::OddNumber, 'Let rare Perl 5 form of %{$hash} fail for other reasons';
 }
 
 is(($).WHAT.gist, '(Any)', 'Anonymous $ variable can be declared');
