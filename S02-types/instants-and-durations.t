@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S02/Immutable types/'term now'>
 
@@ -16,6 +16,9 @@ plan 14;
 }
 
 isa-ok EVAL('now +300'), Instant, 'now is a term, not a function';
+
+# L<S02/Immutable types/'must be explicitly created via any of'>
+throws-like { Instant.new(123) }, X::Cannot::New, 'Instant.new is illegal';
 
 # L<S02/Immutable types/'you may not add two instants'>
 
