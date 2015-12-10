@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 520;
+plan 522;
 
 =begin pod
 
@@ -640,6 +640,11 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is ([\orelse] Nil,Failure,Cool,Complex,++$side-effect).gist, '((Any) (Failure) (Cool) (Complex) 1)', "[\\orelse] on long list produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
+}
+
+{
+    is ([&&] |0), 0, "slipped args work with reduce";
+    is ([&&] 1,|(2,3,4)), 4, "slipped args work with reduce";
 }
 
 # vim: ft=perl6 et
