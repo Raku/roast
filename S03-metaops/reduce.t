@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 376;
+plan 520;
 
 =begin pod
 
@@ -404,4 +404,243 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     [=] $a, $b, $c, 42;
     is "$a $b $c", "42 42 42", "[=] works";
 }
-# vim: ft=perl6
+
+#?rakudo todo 'need thunkyreduce branch'
+{
+    my $side-effect;
+
+    $side-effect = 0;
+    is ([&&] 0, ++$side-effect), 0, "[&&] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([&&] 1, ++$side-effect), 1, "[&&] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([&&] 1,1,1,0,++$side-effect), 0, "[&&] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([&&] 1,1,1,1,++$side-effect), 1, "[&&] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([||] 2, ++$side-effect), 2, "[||] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([||] 0, ++$side-effect), 1, "[||] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([||] 0,0,0,2,++$side-effect), 2, "[||] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([||] 0,0,0,0,++$side-effect), 1, "[||] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([and] 0, ++$side-effect), 0, "[and] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([and] 1, ++$side-effect), 1, "[and] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([and] 1,1,1,0,++$side-effect), 0, "[and] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([and] 1,1,1,1,++$side-effect), 1, "[and] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([or] 2, ++$side-effect), 2, "[or] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([or] 0, ++$side-effect), 1, "[or] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([or] 0,0,0,2,++$side-effect), 2, "[or] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([or] 0,0,0,0,++$side-effect), 1, "[or] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([xor] 1, 1, ++$side-effect), Nil, "[xor] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+
+    $side-effect = 0;
+    is ([xor] 0, 0, ++$side-effect), 1, "[xor] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([xor] 0, 1, ++$side-effect), Nil, "[xor] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([xor] 0, 0, $side-effect++), 0, "[xor] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([^^] 1, 1, ++$side-effect), Nil, "[^^] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+
+    $side-effect = 0;
+    is ([^^] 0, 0, ++$side-effect), 1, "[^^] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([^^] 0, 1, ++$side-effect), Nil, "[^^] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([^^] 0, 0, $side-effect++), 0, "[^^] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([andthen] Int, ++$side-effect).perl, '()', "[andthen] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([andthen] 1, ++$side-effect), 1, "[andthen] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([andthen] 1,1,1,Any,++$side-effect).perl, '()', "[andthen] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([andthen] 1,1,1,1,++$side-effect), 1, "[andthen] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([orelse] 2, ++$side-effect), 2, "[orelse] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([orelse] Cool, ++$side-effect), 1, "[orelse] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([orelse] Nil,Int,Num,2,++$side-effect), 2, "[orelse] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([orelse] Nil,Failure,Cool,Complex,++$side-effect), 1, "[orelse] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([Z&&] (1,1,0),(1,2,++$side-effect)), "1 2 0", "[Z&&] produces correct distributed result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([Z&&] (1,0,1),(1,2,++$side-effect)), "1 0 1", "[Z&&] produces correct distributed result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([Z||] (0,0,1),(1,2,++$side-effect)), "1 2 1", "[Z||] produces correct distributed result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([Z||] (0,2,0),(1,3,++$side-effect)), "1 2 1", "[Z||] produces correct distributed result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([Zand] (1,1,0),(1,2,++$side-effect)), "1 2 0", "[Zand] produces correct distributed result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([Zand] (1,0,1),(1,2,++$side-effect)), "1 0 1", "[Zand] produces correct distributed result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([Zor] (0,0,1),(1,2,++$side-effect)), "1 2 1", "[Zor] produces correct distributed result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([Zor] (0,2,0),(1,3,++$side-effect)), "1 2 1", "[Zor] produces correct distributed result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\&&] 0, ++$side-effect), '0 0', "[\\&&] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\&&] 1, ++$side-effect), '1 1', "[\\&&] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\&&] 1,1,1,0,++$side-effect), '1 1 1 0 0', "[\\&&] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\&&] 1,1,1,1,++$side-effect), '1 1 1 1 1', "[\\&&] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\||] 2, ++$side-effect), '2 2', "[\\||] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\||] 0, ++$side-effect), '0 1', "[\\||] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\||] 0,0,0,2,++$side-effect), '0 0 0 2 2', "[\\||] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\||] 0,0,0,0,++$side-effect), '0 0 0 0 1', "[\\||] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\and] 0, ++$side-effect), '0 0', "[\\and] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\and] 1, ++$side-effect), '1 1', "[\\and] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\and] 1,1,1,0,++$side-effect), '1 1 1 0 0', "[\\and] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\and] 1,1,1,1,++$side-effect), '1 1 1 1 1', "[\\and] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\or] 2, ++$side-effect), '2 2', "[\\or] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\or] 0, ++$side-effect), '0 1', "[\\or] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\or] 0,0,0,2,++$side-effect), '0 0 0 2 2', "[\\or] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\or] 0,0,0,0,++$side-effect), '0 0 0 0 1', "[\\or] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is-deeply ([\xor] 1, 1, ++$side-effect), (1,Nil,Nil), "[\\xor] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+
+    $side-effect = 0;
+    is ([\xor] 0, 0, ++$side-effect), '0 0 1', "[\\xor] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is-deeply ([\xor] 0, 1, ++$side-effect), (0,1,Nil), "[\\xor] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\xor] 0, 0, $side-effect++), '0 0 0', "[\\xor] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is-deeply ([\^^] 1, 1, ++$side-effect), (1,Nil,Nil), "[\\^^] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+
+    $side-effect = 0;
+    is ([\^^] 0, 0, ++$side-effect), '0 0 1', "[\\^^] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is-deeply ([\^^] 0, 1, ++$side-effect), (0,1,Nil), "[\\^^] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\^^] 0, 0, $side-effect++), '0 0 0', "[\\^^] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\andthen] Int, ++$side-effect).gist, '((Int))', "[\\andthen] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\andthen] 1, ++$side-effect), '1 1', "[\\andthen] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\andthen] 1,1,1,Any,++$side-effect).gist, '(1 1 1 (Any))', "[\\andthen] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\andthen] 1,1,1,1,++$side-effect), '1 1 1 1 1', "[\\andthen] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\orelse] 2, ++$side-effect).gist, '(2 2)', "[\\orelse] produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\orelse] Cool, ++$side-effect).gist, '((Cool) 1)', "[\\orelse] produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+    $side-effect = 0;
+    is ([\orelse] Nil,Int,Num,2,++$side-effect).gist, '((Any) (Int) (Num) 2 2)', "[\\orelse] on long list produces correct result without thunk";
+    is $side-effect, 0, "and doesn't have a side effect";
+    is ([\orelse] Nil,Failure,Cool,Complex,++$side-effect).gist, '((Any) (Failure) (Cool) (Complex) 1)', "[\\orelse] on long list produces correct result with thunk";
+    is $side-effect, 1, "and does have a side effect";
+
+}
+
+# vim: ft=perl6 et
