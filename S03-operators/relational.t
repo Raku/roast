@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 144;
+plan 156;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -122,9 +122,25 @@ ok("5" eq "5" gt "0", '"5" eq "5" gt "0" chained str comparison with equality');
 ok("5" le "5" gt "0", "5 le 5 gt 0 chained str comparison with le");
 ok("0" lt "5" ge "5", "0 lt 5 ge 5 chained comparison with ge");
 
-#?rakudo 2 todo 'RT #81336'
-is(0 ~~ 0 ~~ 0, 0 ~~ 0 && 0 ~~ 0, "chained smartmatch");
-is("foo" ~~ "foo" ge "bar", "foo" ~~ "foo" && "foo" ge "bar", "chained mixed ~~ and ge");
+is(0 ~~ 0 ~~ 0, 0 ~~ 0 && 0 ~~ 0, "chained smartmatch ~~ ~~ true (0)");
+is(1 ~~ 1 ~~ 1, 1 ~~ 1 && 1 ~~ 1, "chained smartmatch ~~ ~~ true (1)");
+is(0 ~~ 0 ~~ 1, 0 ~~ 0 && 0 ~~ 1, "chained smartmatch ~~ ~~ false");
+is(0 ~~ 0 == 0, 0 ~~ 0 && 0 == 0, "chained smartmatch ~~ ==");
+is(0 == 0 ~~ 0, 0 == 0 && 0 ~~ 0, "chained smartmatch == ~~");
+is(0 ~~ 0 !~~ 0, 0 ~~ 0 && 0 !~~ 0, "chained smartmatch ~~ !~~ false");
+is(0 ~~ 0 !~~ 1, 0 ~~ 0 && 0 !~~ 1, "chained smartmatch ~~ !~~ true");
+is("a" lt "foo" ~~ "foo" ge "bar", "a" lt "foo" && "foo" ~~ "foo" && "foo" ge "bar", "chained mixed ~~ and ge");
+
+is(0 ~~ 0 ~~ /0/, True, "chained smartmatch ~~ ~~ with regex true");
+is(0 ~~ 0 ~~ /1/, False, "chained smartmatch ~~ ~~ with regex false");
+is(0 == 0 ~~ /0/, True, "chained smartmatch == ~~ with regex");
+is(0 == 0 ~~ (* == 0), 0 ~~ 0 && 0 ~~ (* == 0), "chained smartmatch == ~~ with closure");
+{
+    my $a = my $b = my $c = "pink";
+    is($a ~~ $b ~~ $c, $a ~~ $b && $b ~~ $c, "chained smartmatch ~~ ~~ with variables true");
+    $b = "blue";
+    is($a ~~ $b ~~ $c, $a ~~ $b && $b ~~ $c, "chained smartmatch ~~ ~~ with variables false");
+}
 
 is  1 !before 2 !before 3,  1 !before 2 && 2 !before 3,  'chained !before';
 is  1 !after 2 !after 2,  1 !after 2 && 2 !after 2,  'chained !after';

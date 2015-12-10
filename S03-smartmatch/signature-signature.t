@@ -34,8 +34,8 @@ plan 20;
     #?niecza skip "Parametric types"
     # Can't deal with parameters.
     ok (:(::T $x, T $y) R~~ :(Str $y, Str $z)), "Parametric types";
-    # No support for code params with signatures yet.
-    ok (:(&foo:(Str --> Bool)) R~~ :(&bar:(Str --> Bool))),
+
+    ok (:(&foo:(Str --> Bool)) ~~ :(&bar:(Str --> Bool))),
         "Code params with signatures";
 }
 
