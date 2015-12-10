@@ -153,7 +153,6 @@ throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return valu
     $side-effect++ Rorelse Nil;
     is $side-effect, 1, "Rorelse thunk runs when needed";
     $side-effect = $_ Rorelse Nil;
-    #?rakudo todo 'needs &infix:<orelse> to not use **@a as a param'
     ok $side-effect === Nil, "Rorelse topicalizes when needed";
 }
 
