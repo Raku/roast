@@ -8,8 +8,8 @@ use experimental :macros;
 plan 2;
 
 #RT #115506
-eval-lives-ok
-    'macro pathological { AST.new }; pathological();',
+lives-ok
+    { EVAL 'macro pathological { AST.new }; pathological();' },
     "macro returning AST.new doesn't blow up";
 
 #RT #115504
