@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 238;
+plan 239;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -268,6 +268,9 @@ dies-ok { ds('2012-12-22T07:02:00+7:') }, 'single digit hour, trailing colon';
         timezone => 22*60*60,
         formatter => { ~($^x.hour) });
     is ~$dt2, ~(($dt1.hour + 22) % 24), 'DateTime.now with time zone and formatter';
+
+    is_approx(DateTime.now.Instant, now,
+        'DateTime.now agrees with now pseudo-constant');
 }
 
 # --------------------------------------------------------------------

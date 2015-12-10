@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 15;
 
 # L<S02/Immutable types/'term now'>
 
@@ -10,9 +10,15 @@ plan 12;
     isa-ok $i, Instant, 'now returns an Instant';
     isa-ok 5 + $i, Instant, 'Int + Instant ~~ Instant';
     isa-ok $i - 1/3, Instant, 'Instant - Rat ~~ Instant';
+    my $later = now;
+    is_approx $i, $later, 'now and just now are close';
+    ok $later >= $i, 'time does not move backwards';
 }
 
 isa-ok EVAL('now +300'), Instant, 'now is a term, not a function';
+
+# L<S02/Immutable types/'must be explicitly created via any of'>
+throws-like { Instant.new(123) }, X::Cannot::New, 'Instant.new is illegal';
 
 # L<S02/Immutable types/'you may not add two instants'>
 

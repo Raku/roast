@@ -1,12 +1,11 @@
 use v6;
 use Test;
 
-plan 33;
+plan 55;
 
 =begin pod
 
-DateTime is the only means of constructing arbitrary Instants,
-so we test some of the properties of Instants and Durations here
+We test some of the properties of Instants and Durations here
 rather than in S02/instants-and-duration.t.
 
 =end pod
@@ -123,7 +122,13 @@ is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping
 
 {
     my $i = dtpi 1988, 11, 22,   18, 42, 15.9;
-    is $i.perl.EVAL, $i, 'Round-tripping Instant.perl';
+    isa-ok $i.perl.EVAL, Instant, 'Instant.perl evals to Instant';
+}
+
+for 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1449755609 {
+    my $i = Instant.from-posix($_);
+    is $i.to-posix[0], $_, "Round-tripping Instant.[from|to]-posix ($_)";
+    is $i.DateTime.Instant, $i, "Round-tripping Instant.DateTime ($_)";
 }
 
 # vim: ft=perl6
