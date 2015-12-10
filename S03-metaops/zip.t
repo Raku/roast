@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 53;
+plan 70;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -126,4 +126,59 @@ is-deeply &infix:<Z+>((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen
 is-deeply infix:<Z+>((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ary) without &";
 is-deeply &[Z+]((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ary) with &[]";
 
+{
+    my $side-effect = 0;
+    ($side-effect++,) Zxx 0;
+    is $side-effect, 0, "Zxx thunks right side properly";
+    ($side-effect++,) Zxx 1;
+    is $side-effect, 1, "Zxx thunk runs when needed";
+    ($side-effect++,) Zxx 9;
+    is $side-effect, 10, "Zxx thunk runs repeatedly when needed";
+}
+{
+    my Mu $side-effect = 0;
+    0 Zand ($side-effect++,);
+    is $side-effect, 0, "Zand thunks right side properly";
+    1 Zand ($side-effect++,);
+    is $side-effect, 1, "Zand thunks runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    0 Z&& ($side-effect++,);
+    is $side-effect, 0, "Z&& thunks right side properly";
+    1 Z&& ($side-effect++,);
+    is $side-effect, 1, "Z&& thunk runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    1 Zor ($side-effect++,);
+    is $side-effect, 0, "Zor thunks right side properly";
+    0 Zor ($side-effect++,);
+    is $side-effect, 1, "Zor thunk runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    1 Z|| ($side-effect++,);
+    is $side-effect, 0, "Z|| thunks right side properly";
+    0 Z|| ($side-effect++,);
+    is $side-effect, 1, "Z|| thunk runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    Nil Zandthen ($side-effect++,);
+    is $side-effect, 0, "Zandthen thunks right side properly";
+    1 Zandthen ($side-effect++,);
+    is $side-effect, 1, "Zandthen thunks runs when needed";
+    23 Zandthen ($side-effect = $_,);
+    is $side-effect, 23, "Zandthen topicalizes when needed";
+}
+{
+    my Mu $side-effect is default(Nil) = 0;
+    1 Zorelse ($side-effect++,);
+    is $side-effect, 0, "Zorelse thunks right side properly";
+    Nil Zorelse ($side-effect++,);
+    is $side-effect, 1, "Zorelse thunk runs when needed";
+    Nil Zorelse ($side-effect = $_,);
+    ok $side-effect === Nil, "Zorelse topicalizes when needed";
+}
 # vim: ft=perl6

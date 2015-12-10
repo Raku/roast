@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 53;
+plan 70;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -174,4 +174,59 @@ is-deeply &infix:<X+>((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&infix:<X+
 is-deeply infix:<X+>((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "infix:<X+> can autogen";
 is-deeply &[X+]((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&[X+] can autogen";
 
-# vim: ft=perl6
+{
+    my $side-effect = 0;
+    (($side-effect++,),) Xxx 0;
+    is $side-effect, 0, "Xxx thunks right side properly";
+    (($side-effect++,),) Xxx 1;
+    is $side-effect, 1, "Xxx thunk runs when needed";
+    (($side-effect++,),) Xxx 9;
+    is $side-effect, 10, "Xxx thunk runs repeatedly when needed";
+}
+{
+    my Mu $side-effect = 0;
+    0 Xand (($side-effect++,),);
+    is $side-effect, 0, "Xand thunks right side properly";
+    1 Xand (($side-effect++,),);
+    is $side-effect, 1, "Xand thunks runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    0 X&& (($side-effect++,),);
+    is $side-effect, 0, "X&& thunks right side properly";
+    1 X&& (($side-effect++,),);
+    is $side-effect, 1, "X&& thunk runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    1 Xor (($side-effect++,),);
+    is $side-effect, 0, "Xor thunks right side properly";
+    0 Xor (($side-effect++,),);
+    is $side-effect, 1, "Xor thunk runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    1 X|| (($side-effect++,),);
+    is $side-effect, 0, "X|| thunks right side properly";
+    0 X|| (($side-effect++,),);
+    is $side-effect, 1, "X|| thunk runs when needed";
+}
+{
+    my Mu $side-effect = 0;
+    Nil Xandthen (($side-effect++,),);
+    is $side-effect, 0, "Xandthen thunks right side properly";
+    1 Xandthen (($side-effect++,),);
+    is $side-effect, 1, "Xandthen thunks runs when needed";
+    23 Xandthen ($side-effect = $_,);
+    is $side-effect, 23, "Xandthen topicalizes when needed";
+}
+{
+    my Mu $side-effect is default(Nil) = 0;
+    1 Xorelse (($side-effect++,),);
+    is $side-effect, 0, "Xorelse thunks right side properly";
+    Nil Xorelse (($side-effect++,),);
+    is $side-effect, 1, "Xorelse thunk runs when needed";
+    Nil Xorelse ($side-effect = $_,);
+    ok $side-effect === Nil, "Xorelse topicalizes when needed";
+}
+# vim: ft=perl6 et
