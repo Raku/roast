@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 70;
+plan 71;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -128,8 +128,13 @@ is-deeply &[Z+]((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ar
 
 {
     my $side-effect = 0;
+    $side-effect++ Zxx 0;
+    is $side-effect, 1, "Zxx does not thunk non-list";
+}
+{
+    my $side-effect = 0;
     ($side-effect++,) Zxx 0;
-    is $side-effect, 0, "Zxx thunks right side properly";
+    is $side-effect, 0, "Zxx thunks left side properly";
     ($side-effect++,) Zxx 1;
     is $side-effect, 1, "Zxx thunk runs when needed";
     ($side-effect++,) Zxx 9;

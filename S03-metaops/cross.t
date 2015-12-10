@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 70;
+plan 71;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -176,8 +176,13 @@ is-deeply &[X+]((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&[X+] can autoge
 
 {
     my $side-effect = 0;
+    $side-effect++ Xxx 0;
+    is $side-effect, 1, "Xxx does not thunk non-list";
+}
+{
+    my $side-effect = 0;
     (($side-effect++,),) Xxx 0;
-    is $side-effect, 0, "Xxx thunks right side properly";
+    is $side-effect, 0, "Xxx thunks left side properly";
     (($side-effect++,),) Xxx 1;
     is $side-effect, 1, "Xxx thunk runs when needed";
     (($side-effect++,),) Xxx 9;
