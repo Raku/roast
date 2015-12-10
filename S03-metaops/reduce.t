@@ -405,7 +405,6 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is "$a $b $c", "42 42 42", "[=] works";
 }
 
-#?rakudo todo 'need thunkyreduce branch'
 {
     my $side-effect;
 
