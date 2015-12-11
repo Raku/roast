@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 19;
 
 # L<S06/Signatures>
 
@@ -120,6 +120,16 @@ constant indiana-pi = 3;
 {
     my sub return-fifteen(--> indiana-pi) { True }
     is return-fifteen(), indiana-pi, 'can return indiana-pi';
+}
+
+{
+    my $pointy = -> --> 42 { };
+    is $pointy(), 42, 'pointy can have definite return type that is an integer';
+}
+
+{
+    my $pointy = -> --> Nil { sin(1) };
+    ok $pointy() === Nil, 'pointy can have definite return type of Nil';
 }
 
 # returns vs -->
