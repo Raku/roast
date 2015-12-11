@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 23;
 
 # L<S04/"Phasers"/once "runs separately for each clone">
 {
@@ -103,6 +103,15 @@ for <first second> {
     $sub();
     is $was_in_once, 1,
         'our once { ...; Mu } block was invoked exactly once';
+}
+
+# RT #114914
+{
+    my $run = False;
+    my $i = 0;
+    $i += once { $run = True; 21 } for 1, 2;
+    ok $run, 'once block in statement modifier for will be run';
+    is $i, 42, 'once block in statement modifier evaluates to correct result';
 }
 
 # vim: ft=perl6
