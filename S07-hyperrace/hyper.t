@@ -2,7 +2,6 @@ use Test;
 
 plan 6;
 
-#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
     is @result, <A B C D E F G>, "can hypermap a simple code block";
@@ -11,7 +10,6 @@ plan 6;
     is @result, (^50).map({$_*2}), "hyper over a big-ish list of Ints";
 }
 
-#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     my @result = (^50).list.hyper.map({ $_ * 2 }).map({ $_ div 2 });
     is @result, (^50).list, "two-stage map over big-ish Int list";
@@ -19,11 +17,13 @@ plan 6;
     @result = <a b c d e f g>.list.hyper.map({ $_.uc }).map({ $_ x 2 });
     is @result, <AA BB CC DD EE FF GG>, "two-stage map over some strings";
 }
+
 #?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     my @result = (50..100).list.hyper.grep({ $_ %% 10 });
     is @result, (50, 60, 70, 80, 90, 100), "hyper + grep";
 }
+
 #?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     my @result = (^100).list.hyper.grep({ $_.is-prime }).map({ $_ * $_ });
