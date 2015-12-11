@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 31;
 
 # L<S04/Exceptions/The fail function>
 
@@ -132,5 +132,18 @@ sub s1 {
   }
 }
 s1();
+
+{
+    my $died;
+    my $here;
+    {
+        my $dummy = fail 'oops';
+        $here = True;
+        CATCH { default { $died = $_ } }
+    }
+    ok $died ~~ Exception, 'fail outside of routine just behaves like die (1)';
+    is ~$died, 'oops', 'fail outside of routine just behaves like die (2)';
+    nok $here, 'fail outside of routine just behaves like die (3)';
+}
 
 # vim: ft=perl6
