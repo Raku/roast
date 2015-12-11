@@ -133,14 +133,10 @@ my @normal = <
   Version
   Whatever
   WhateverCode
-  bit
   byte
   int
-  int1
   int16
   int32
-  int2
-  int4
   int64
   int8
   num
@@ -148,11 +144,8 @@ my @normal = <
   num64
   str
   uint
-  uint1
   uint16
-  uint2
   uint32
-  uint4
   uint64
   uint8
   utf16
