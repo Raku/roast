@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 20;
 
 =begin description
 
@@ -109,6 +109,12 @@ lives-ok {my $x = -> {}; my $y = $x(); },
 {
     throws-like q[say -> {YOU_ARE_HERE}], X::Syntax::Reserved,
         '{YOU_ARE_HERE} disallowed outside of a setting';
+}
+
+# RT #126232
+{
+    is (-> --> Int { 42 })(), 42, 'pointy with return type allows return if it matches';
+    throws-like '(-> --> Int { |(1,2,3) })()', X::TypeCheck::Return;
 }
 
 # vim: ft=perl6
