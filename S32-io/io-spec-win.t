@@ -296,7 +296,7 @@ if $*DISTRO.name !~~ any(<mswin32 netware symbian os2 dos>) {
 }
 else {
 	# double check a couple of things to see if IO::Spec loaded correctly
-	is IO::Spec.devnull, 'nul', 'devnull is nul';
-	is IO::Spec.rootdir, '\\',  'rootdir is "\\"';
-	ok {.IO.d && .IO.w}.(IO::Spec.tmpdir), "tmpdir: {IO::Spec.tmpdir} is a writable directory";
+	is $*SPEC.devnull, 'nul', 'devnull is nul';
+	is $*SPEC.rootdir, '\\',  'rootdir is "\\"';
+	ok {.IO.d && .IO.w}.($*SPEC.tmpdir), "tmpdir: {$*SPEC.tmpdir} is a writable directory";
 }
