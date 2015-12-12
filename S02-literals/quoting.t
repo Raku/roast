@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 181;
+plan 184;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -638,5 +638,13 @@ is q :heredoc :w "EOF", <omg wtf bbq amazing cat>, ':w applied after :heredoc ha
 ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
     \thello
     EOF
+
+# RT #123808
+{
+    my $a = 42;
+    for (<<$a b c>>, qqww{$a b c}, qqw{$a b c}).kv -> $i, $_ {
+        ok .WHAT === List, "word-split qouting constructs return List ($i)";
+    }
+}
 
 # vim: ft=perl6
