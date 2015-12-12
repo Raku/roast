@@ -16,7 +16,7 @@ rm_rf $path.IO if $path.IO.e;
     is $*REPO.short-id, 'inst', 'short-id exposes type of repository';
     is $*REPO.loaded.elems, 0, 'no compilation units were loaded so far';
 }
-my $dist = CompUnitRepo::Distribution.new(:name<Foo>);
+my $dist = Distribution.new(:name<Foo>);
 
 $*REPO.install($dist, { Foo => 't/spec/packages/Foo.pm' });
 

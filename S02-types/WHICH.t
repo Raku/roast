@@ -19,10 +19,11 @@ my @normal = <
   Capture
   Code
   CompUnit
-  CompUnitRepo
-  CompUnitRepo::Distribution
+  CompUnit::RepositoryRegistry
   CompUnit::Repository::FileSystem
   CompUnit::Repository::Installation
+  CompUnit::Repository::NQP
+  CompUnit::Repository::Perl5
   Compiler
   Complex
   ComplexStr
@@ -92,7 +93,6 @@ my @normal = <
   Pair
   Parameter
   Perl
-  Perl5ModuleLoaderStub
   Pod::Block
   Pod::Block::Code
   Pod::Block::Comment

@@ -1,9 +1,9 @@
 use v6;
 use Test;
 
-plan 17;
+plan 9;
 
-for <id need load loaded>.combinations[0 .. *-2] {
+for <id need loaded>.combinations[0 .. *-2] {
     throws-like "class :: does CompUnit::Repository \{ { $_.map({"method {$_}() \{\}"}).join(';') } \}", X::AdHoc;
 }
 
