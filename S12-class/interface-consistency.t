@@ -4,7 +4,7 @@ use Test;
 
 # L<S12/Interface Consistency>
 
-plan 9;
+plan 10;
 
 class Foo {
     our &m1 = method m1($a) {   #OK not used
@@ -55,5 +55,12 @@ is Faz.new.m1(42), 1, 'hides Fiz means we skip over Fiz in deferal';
 # RT #125513
 lives-ok { EVAL('class C { method foo(*%_, *@_) { } }; C.new.foo') },
     '*%_ before a *@_ also correctly prevents generation of auto-%_';
+
+# RT #126708
+{
+    my grammar Foo { rule TOP { . } };
+    is Foo.parse('f', :subclass_arg_to_ignore), 'f',
+        'interface consistency rules apply to Grammar.parse';
+}
 
 # vim: ft=perl6
