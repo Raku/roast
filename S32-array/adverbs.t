@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 2 * ( 1 + 15 * 20 );
+plan 2 * ( 1 + 15 * 20 ) + 4;
 
 #-------------------------------------------------------------------------------
 # initialisations
@@ -438,6 +438,17 @@ for $@n, Any, $@s, Str -> @a, $T {
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
+}
+
+# RT #126507
+{
+    my @a;
+    @a[$(7,8,9)] = 101;
+    is @a.elems, 4, 'container respected in array assign';
+    is @a[$(7,8,9)], 101, 'container respected in array access';
+    is @a[$(7,8,9)]:exists, True, 'container respected in array :exists';
+    @a[$(7,8,9)]:delete;
+    is @a[$(7,8,9)]:exists, False, 'container respected in array :delete';
 }
 
 # vim: ft=perl6

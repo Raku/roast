@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * ( 1 + 14 * 20 );
+plan 4 * ( 1 + 14 * 20 ) + 4;
 
 #-------------------------------------------------------------------------------
 # initialisations
@@ -412,6 +412,18 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
+}
+
+# RT #126507
+{
+    my %h{Any};
+    my $key = $(1,2,3);
+    %h{$key} = 42;
+    is %h.elems, 1, 'container respected in hash assign';
+    is %h{$key}, 42, 'container respected in hash access';
+    is %h{$key}:exists, True, 'container respected in hash :exists';
+    %h{$key}:delete;
+    is %h.elems, 0, 'container respected in hash :delete';
 }
 
 # vim: ft=perl6
