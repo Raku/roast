@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 28;
 
 role WithStub { method a() { ... } };
 role ProvidesStub1 { method a() { 1 } };
@@ -58,4 +58,12 @@ throws-like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
     my role B { method !foo { ... }; method bar {self!foo } };
     my class C does B does A { }
     is C.new.bar(), "success!", 'private method call in role dispatches on type of target class';
+}
+
+# RT #126606
+{
+    my role R { method m() { ... } }
+    for <gist perl DUMP item Str Bool defined so not WHICH WHERE Stringy Numeric Real> {
+        lives-ok { R."$_"() }, ".$_ on role with requirement does not pun it and die";
+    }
 }
