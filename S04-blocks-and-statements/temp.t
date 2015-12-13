@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 40;
 
 # L<S04/The Relationship of Blocks and Declarations/function has been renamed>
 {
@@ -53,17 +53,22 @@ plan 36;
   is $a, 42, "temp() restored the variable, the block was exited using an exception";
 }
 
-EVAL('
+
 {
   my @array = (0, 1, 2);
   {
-    temp @array[1] = 42; 
+    temp @array[1] = 42;
     is @array[1], 42, "temp() changed our array element";
   }
-    is @array[1], 1, "temp() restored our array element";
+  is @array[1], 1, "temp() restored our array element";
+
+  {
+    temp @array[42] = 42;
+  }
+  #?rakudo 2 skip 'RT #126447'
+  ok not @array[42]:exists,"temp() removed previously non-exitent element";
+  is @array.elems, 3, "temp() restored array has correct .elems";
 }
-"1 - delete this line when the parsefail EVAL() is removed";
-') or skip("parsefail: temp \@array[1]", 2);
 
 {
   my %hash = (:a(1), :b(2), :c(3));
@@ -72,6 +77,13 @@ EVAL('
     is %hash<b>, 42, "temp() changed our hash element";
   }
   is %hash<b>, 2, "temp() restored our array element";
+
+  {
+    temp %hash<z> = 42;
+  }
+  #?rakudo 2 skip 'RT #126447'
+  ok not %hash<z>:exists, "temp() removed previously non-existent key";
+  is %hash.elems, 3, "temp() restored hash has correct .elems";
 }
 
 {
