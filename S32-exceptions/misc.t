@@ -618,7 +618,7 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 
 # RT #123584
 {
-    is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS:" \n "Useless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
+    is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
 }
 
 # RT #114430
