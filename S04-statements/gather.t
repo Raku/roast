@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 36;
 
 # L<S04/The C<gather> statement prefix/>
 
@@ -270,6 +270,13 @@ plan 34;
     my @result = flat gather { take "foo=bar".split("=") };
     is @result, <foo bar>,
         'take on a listy expression takes each element of that list';
+}
+
+# RT #126424
+{
+    my $l = gather { take-rw my $ = 1 };
+    lives-ok { $l.AT-POS(0) = 42 }, 'AT-POS on gather Seq with take-rw value lives';
+    is $l.AT-POS(0), 42, 'AT-POS on gather Seq with take-rw value works';
 }
 
 # vim: ft=perl6
