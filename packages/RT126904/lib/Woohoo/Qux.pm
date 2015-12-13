@@ -1,0 +1,2 @@
+class Woohoo::Qux {
+}
