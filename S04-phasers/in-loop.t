@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 6;
 
 # TODO, based on synopsis 4:
 #
@@ -18,8 +18,7 @@ plan 5;
 
 # L<S04/"Phasers">
 
-#?rakudo.moar todo "NEXT/LEAVE ordering RT #124952"
-#?rakudo.jvm skip "RT #122134 - last+ENTER in loop"
+#?rakudo todo "NEXT/LEAVE ordering RT #124952"
 {
     my $str;
 
@@ -42,8 +41,7 @@ plan 5;
        'trait blocks work properly in for loop';
 }
 
-#?rakudo.moar todo "NEXT/LEAVE ordering RT #124952"
-#?rakudo.jvm skip "RT #122134 - last+ENTER in loop"
+#?rakudo todo "NEXT/LEAVE ordering RT #124952"
 {
     my $str;
 
@@ -109,6 +107,13 @@ plan 5;
     #?rakudo.jvm todo 'this test works "standalone", but not after previous test; RT #121145'
     is $rt121156, '1leaving2leaving3leaving',
         'LEAVE in while loop works as expected';
+}
+
+# RT #122134
+{
+    my $rt122134;
+    for 1 { last; ENTER { $rt122134 = "hurz" } };
+    is $rt122134, 'hurz', 'no UnwindException with "last" and "ENTER" in for loop';
 }
 
 # vim: ft=perl6
