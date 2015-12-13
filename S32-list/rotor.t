@@ -17,13 +17,11 @@ sub r(\pos, $expected, $descr? is copy, *%named) {
 }
 
 r(3, 'a b c|d e f');
-#?rakudo.jvm skip 'UnwindException RT #124279'
 r(3, :partial, 'a b c|d e f|g h');
 r(2 => 1, 'a b|d e|g h');
 r(3 => -1, 'a b c|c d e|e f g');
 r((2, 3), 'a b|c d e|f g');
 r((1 => 1, 3), 'a|c d e|f');
-#?rakudo.jvm 2 skip 'UnwindException RT #124279'
 r((1 => 1, 3), :partial, 'a|c d e|f|h');
 r((1 => 1, 3 => -1), :partial, 'a|c d e|e|g h');
 

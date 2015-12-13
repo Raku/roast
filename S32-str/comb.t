@@ -105,7 +105,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 
 # RT #123760
 {
-    #?rakudo.jvm skip "RT #124279 - UnwindException"
     is comb("o","ooo"), <o o o>, "comb(Str,Str)";
     is "qqq".comb("q"), <q q q>, "Str.comb(Str)";
     is "asdf".comb("z"), (), "Str.comb(Str) with no match"; 
