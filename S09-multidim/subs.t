@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 46;
 
 # Object array
 {
@@ -39,6 +39,13 @@ plan 42;
     is join(',', @arr), 'a,b,c,d', '.join is over leaves';
     is map(* x 2, @arr), <aa bb cc dd>, '.map is over leaves';
     is sort(@arr), <a b c d>, '.sort is over leaves';
+
+    my @one-dim := Array.new(:shape(4));
+    @one-dim = 1..4;
+    is reverse(@one-dim), [4,3,2,1], 'can reverse a 1-dim fixed size array';
+    is reverse(@one-dim).shape, (4,), 'reverse on fixed-dim array retains shape';
+    is rotate(@one-dim, -1), [4,1,2,3], 'can rotate a 1-dim fixed size array';
+    is rotate(@one-dim, -1).shape, (4,), 'rotate a 1-dim fixed size array retains shape';
 }
 
 # Native array

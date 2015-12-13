@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 78;
+plan 82;
 
 # Object array
 {
@@ -63,6 +63,13 @@ plan 78;
     is @arr.gist, '[[a b] [c d]]', '.gist represents structure';
     is @arr.perl, 'Array.new(:shape(2, 2), ["a", "b"], ["c", "d"])',
         '.perl retains structure';
+
+    my @one-dim := Array.new(:shape(4));
+    @one-dim = 1..4;
+    is @one-dim.reverse, [4,3,2,1], 'can reverse a 1-dim fixed size array';
+    is @one-dim.reverse.shape, (4,), 'reverse on fixed-dim array retains shape';
+    is @one-dim.rotate(-1), [4,1,2,3], 'can rotate a 1-dim fixed size array';
+    is @one-dim.rotate(-1).shape, (4,), 'rotate a 1-dim fixed size array retains shape';
 }
 
 # Native array
