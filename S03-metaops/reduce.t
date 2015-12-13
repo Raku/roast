@@ -491,14 +491,14 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
 
     #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
-    is ([andthen] Int, ++$side-effect).perl, '()', "[andthen] produces correct result without thunk";
+    is ([andthen] Int, ++$side-effect).perl, 'slip()', "[andthen] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([andthen] 1, ++$side-effect), 1, "[andthen] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
     #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
-    is ([andthen] 1,1,1,Any,++$side-effect).perl, '()', "[andthen] on long list produces correct result without thunk";
+    is ([andthen] 1,1,1,Any,++$side-effect).perl, 'slip()', "[andthen] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([andthen] 1,1,1,1,++$side-effect), 1, "[andthen] on long list produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
