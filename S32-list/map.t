@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 57;
+plan 58;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -261,6 +261,12 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     my @a = <foo bar baz>;
     map { s/a/A/ }, @a;
     is @a.join(":"), "foo:bAr:bAz", 'map can modify what it iterates';
+}
+
+# RT #126883
+{
+    ok Any.map({ Slip }) ~~ :(Slip:U),
+        'only defined Slips are treated specially';
 }
 
 # vim: ft=perl6
