@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 72;
+plan 78;
 
 # Object array
 {
@@ -56,6 +56,9 @@ plan 72;
     ok 'a' le @arr.roll le 'd', '.roll is over leaves';
     is @arr.rotor(2 => -1), <a b c d>.rotor(2 => -1), '.rotor is over leaves';
     is @arr.join(','), 'a,b,c,d', '.join is over leaves';
+    is @arr.map(* x 2), <aa bb cc dd>, '.map is over leaves';
+    is @arr.sort, <a b c d>, '.sort is over leaves';
+    is @arr.Slip, <a b c d>.Slip, '.Slip is over leaves';
     
     is @arr.gist, '[[a b] [c d]]', '.gist represents structure';
     is @arr.perl, 'Array.new(:shape(2, 2), ["a", "b"], ["c", "d"])',
@@ -116,7 +119,10 @@ plan 72;
     ok 42 <= @arr.roll <= 45, '.roll is over leaves (native)';
     is @arr.rotor(2 => -1), (42, 43, 44, 45).rotor(2 => -1), '.rotor is over leaves (native)';
     is @arr.join(','), '42,43,44,45', '.join is over leaves (native)';
-    
+    is @arr.map(* + 2), (44,45,46,47), '.map is over leaves (native)';
+    is @arr.sort(-*), (45,44,43,42), '.sort is over leaves (native)';
+    is @arr.Slip, (42, 43, 44, 45).Slip, '.Slip is over leaves (native)';
+
     is @arr.gist, '[[42 43] [44 45]]', '.gist represents structure (native)';
     is @arr.perl, 'array[int].new(:shape(2, 2), [42, 43], [44, 45])',
         '.perl retains structure (native)';

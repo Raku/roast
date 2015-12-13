@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 42;
 
 # Object array
 {
@@ -37,6 +37,8 @@ plan 38;
     
     is flat(@arr), <a b c d>, '.flat gives the leaves';
     is join(',', @arr), 'a,b,c,d', '.join is over leaves';
+    is map(* x 2, @arr), <aa bb cc dd>, '.map is over leaves';
+    is sort(@arr), <a b c d>, '.sort is over leaves';
 }
 
 # Native array
@@ -74,4 +76,6 @@ plan 38;
 
     is flat(@arr), (42, 43, 44, 45), '.flat gives the leaves (native)';
     is join(',', @arr), '42,43,44,45', '.join is over leaves (native)';
+    is map(* + 2, @arr), (44,45,46,47), '.map is over leaves (native)';
+    is sort(-*, @arr), (45,44,43,42), '.sort is over leaves (native)';
 }
