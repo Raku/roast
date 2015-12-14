@@ -245,7 +245,7 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
     }
 
     multi trait_mod:<is>(Attribute $var, :$wtf!) {
-        die "Must have accessor" unless $var.has-accessor;
+        die "Must have accessor" unless $var.has_accessor;
         $var.set_rw;
         $var does SomeTrait;
         $var.foo;
@@ -282,7 +282,7 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
     }
 
     multi trait_mod:<is>(Attribute $var, :$wtf!) {
-        die "Must have accessor" unless $var.has-accessor;
+        die "Must have accessor" unless $var.has_accessor;
         $var.set_rw;
         $var does SomeTrait;
         $var.foo;
@@ -318,7 +318,7 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
     }
 
     multi trait_mod:<is>(Attribute $var, :$wtf!) {
-        die "Must have accessor" unless $var.has-accessor;
+        die "Must have accessor" unless $var.has_accessor;
         $var.set_rw;
         $var does SomeTrait;
         $var.foo;
@@ -353,7 +353,7 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
     }
 
     multi trait_mod:<is>(Attribute $var, :$wtf!) {
-        die "Must have accessor" unless $var.has-accessor;
+        die "Must have accessor" unless $var.has_accessor;
         $var.set_rw;
         $var does SomeTrait;
         $var.foo;
