@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 12;
 
 # L<S03/Argument List Interpolating/"interpolate">
 
@@ -41,5 +41,17 @@ dies-ok {
 # RT #113804
 #?niecza skip "Unable to resolve method Capture in type Range"
 is join('|', |(1..5)), '1|2|3|4|5', 'can interpolate ranges into arglists';
+
+# RT #126212
+# Some implementations have limitations with regards to how many args can be
+# flattened into a callsite. This test covers a case where we could SEGV when
+# around that limit.
+{
+    sub foo(|c) { }
+    for 65534..65538 {
+        try foo 1, |(2 xx $_);
+        pass "Survived trying to pass $_ flattened args";
+    }
+}
 
 # vim: ft=perl6
