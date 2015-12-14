@@ -6,7 +6,7 @@ plan 2;
 my $hostname = 'localhost';
 my $port = 5001;
 
-# Promise used to check listener received data, and to make
+# Promise used to check listener received the correct data.
 my $rec-prom;
 
 # Listener
