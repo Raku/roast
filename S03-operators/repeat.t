@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 32;
+plan 38;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -98,4 +98,15 @@ is ('foo' xx Inf)[8], 'foo', 'xx Inf';
 
 ok (42 xx *).is-lazy, "xx * is lazy";
 ok !(42 xx 3).is-lazy, "xx 3 is not lazy";
+
+# RT #126576
+is ((2, 4, 6) xx 2).elems, 2, 'xx retains structure with list on LHS';
+is ((2, 4, 6) xx 2).flat.elems, 6, 'xx retained list structure can be flattened with .flat';
+is ((2, 4, 6).Seq xx 2).elems, 2, 'xx retains structure with Seq on LHS';
+is ((2, 4, 6).Seq xx 2).flat.elems, 6, 'xx retained Seq structure can be flattened with .flat';
+is ((2, 4, 6) xx *)[^2], ((2, 4, 6), (2, 4, 6)),
+    'xx * retains structure with list on LHS';
+is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
+    'xx * retains structure with Seq on LHS';
+
 # vim: ft=perl6
