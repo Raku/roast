@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 # L<S14/Traits/>
 {
@@ -91,6 +91,26 @@ plan 15;
     is A.m, 42, 'Applying traits to submethods works';
     throws-like { B.m }, X::Method::NotFound,
         'Applying traits to submethods retains submethod semantics';
+}
+
+# RT #112666
+# Note: it's important this test stays in its nested block, not in the test
+# mainline, as there was a bug that was hidden in the case it was in the
+# mainline.
+{
+    my role R {
+        has @.s is rw
+    }
+    multi trait_mod:<is>(Routine $r, :$x!) {
+        $r does R;
+        sub h(|){ for $r.s { &^m() } }
+        $r.wrap(&h)
+    };
+    sub b is x {};
+    my $called = False;
+    push &b.s, { $called = True };
+    b;
+    ok $called, 'interaction of mixin to routine with array attribute and wrap is correct';
 }
 
 # vim: ft=perl6
