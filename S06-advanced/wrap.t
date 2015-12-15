@@ -236,8 +236,8 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
             my $name = $attr.name;
             my $accessor = $name.subst(/^../, '');
             my $r = sub ($obj, |args) is rw {
-                my (|c) := callsame;
-                c;
+                my \c := callsame;
+                c
             }
             $pkg.^find_method($accessor).wrap($r);
         }
@@ -258,8 +258,7 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
     ok $didfoo, "Did foo, capture return";
     my $foo = foo.new;  # x = 16;
     my $bar = foo.new(x => 32);
-    #?rakudo.moar   2 todo 'RT #122259'
-    #?rakudo.jvm    3 skip 'RT #122259'
+    #?rakudo.jvm    3 skip 'was 122259, but were all fixed on moar'
     is $foo.x, 16, "default works with wrapped accessor, capture return";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, capture return";
     try $bar.x = 64;
@@ -274,7 +273,7 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
             my $name = $attr.name;
             my $accessor = $name.subst(/^../, '');
             my $r = sub ($obj, |args) is rw {
-                return callsame;
+                return-rw callsame;
             }
             $pkg.^find_method($accessor).wrap($r);
         }
@@ -298,7 +297,6 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
     is $foo.x, 16, "default works with wrapped accessor, return callsame";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, return callsame";
     try $bar.x = 64;
-    #?rakudo todo 'RT #122259'
     is $bar.x, 64, "assignment works with wrapped accessor, return callsame";
 }
 
@@ -369,7 +367,6 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
     is $foo.x, 16, "default works with wrapped accessor, nextsame";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, nextsame";
     try $bar.x = 64;
-    #?rakudo todo 'RT #122259'
     is $bar.x, 64, "assignment works with wrapped accessor, nextsame";
 }
 
