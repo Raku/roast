@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 71;
+plan 75;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -234,4 +234,15 @@ is-deeply &[X+]((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&[X+] can autoge
     Nil Xorelse ($side-effect = $_,);
     ok $side-effect === Nil, "Xorelse topicalizes when needed";
 }
+
+# RT #126522
+is ($(1, 2) X <a b c>), (($(1, 2), 'a'), ($(1, 2), 'b'), ($(1, 2), 'c')),
+    'X respects itemization of arguments (1)';
+is (<a b c> X $(1, 2)), (('a', $(1, 2)), ('b', $(1, 2)), ('c', $(1, 2))),
+    'X respects itemization of arguments (2)';
+is ($(1, 2) X~ <a b c>), ('1 2a', '1 2b', '1 2c'),
+    'X meta-op respects itemization of arguments (1)';
+is (<a b c> X~ $(1, 2)), ('a1 2', 'b1 2', 'c1 2'),
+    'X meta-op respects itemization of arguments (2)';
+
 # vim: ft=perl6 et

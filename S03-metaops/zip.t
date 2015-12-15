@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 71;
+plan 75;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -186,4 +186,15 @@ is-deeply &[Z+]((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ar
     Nil Zorelse ($side-effect = $_,);
     ok $side-effect === Nil, "Zorelse topicalizes when needed";
 }
+
+# RT #126522
+is ($(1, 2) Z <a b c>), (($(1, 2), 'a'),),
+    'Z respects itemization of arguments (1)';
+is (<a b c> Z $(1, 2)), (('a', $(1, 2)),),
+    'Z respects itemization of arguments (2)';
+is ($(1, 2) Z~ <a b c>), ('1 2a',),
+    'Z meta-op respects itemization of arguments (1)';
+is (<a b c> Z~ $(1, 2)), ('a1 2',),
+    'Z meta-op respects itemization of arguments (2)';
+
 # vim: ft=perl6
