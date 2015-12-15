@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 49;
+plan 51;
 
 =begin description
 
@@ -192,6 +192,12 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
 {
     lives-ok { sub rt123002 { EVAL 'role RT123002 { }' }; rt123002 },
         'can call a sub which runs EVAL on minimal role declaration';
+}
+
+{
+    my role R:ver<0.1>:auth<ority> {}
+    is R.^ver, v0.1, '.^ver on role works';
+    is R.^auth, 'ority', '.^auth on role works';
 }
 
 # vim: ft=perl6
