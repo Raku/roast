@@ -19,7 +19,11 @@ IO::Socket::Async.listen($hostname, $port).tap(-> $conn {
 });
 
 $send-rest = Promise.new;
-$client = IO::Socket::INET.new(:host("$hostname:$port"));
+for ^10 {
+    $client = IO::Socket::INET.new(:host("$hostname:$port"));
+    last;
+    CATCH { default { sleep 0.2; } }
+}
 is $client.recv, 'first thing', 'can recv immediately with recv (chars)';
 $send-rest.keep(True);
 is $client.recv, 'another thing', 'can recv rest afterwards (chars)';
