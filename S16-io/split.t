@@ -22,8 +22,8 @@ sub test-split($text,@result,|c) {
 }
 
 # standard text file
-for "\r\n", /\r\n/ -> $sep {
-    my $text  = "zero\r\none\r\ntwo\r\nthree\r\nfour";
+for "\n", /\n/ -> $sep {
+    my $text  = "zero\none\ntwo\nthree\nfour";
     my @clean = <zero one two three four>;
     test-split($text,@clean,$sep);
 }

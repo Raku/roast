@@ -23,9 +23,9 @@ sub test-comb($text,@result,|c) {
 }
 
 # standard text file
-for "\r\n", /\r\n/ -> $sep {
-    my $text  = "zero\r\none\r\ntwo\r\nthree\r\nfour";
-    my @clean = "\r\n" xx 4;
+for "\n", /\n/ -> $sep {
+    my $text  = "zero\none\ntwo\nthree\nfour";
+    my @clean = "\n" xx 4;
     test-comb($text,@clean,$sep);
 }
 

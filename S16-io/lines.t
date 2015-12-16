@@ -3,7 +3,6 @@ use Test;
 
 my @endings =
   "\n"               => "LF",
-  "\r\n"             => "CRLF",
   "\r"               => "CR",
   ";"                => "semi-colon",
   ":\n:"             => "colons",

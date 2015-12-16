@@ -21,9 +21,11 @@ for <utf-8 ascii latin-1 windows-1252> -> $encoding {
     }
     is $temp-file.IO.s, 12, "Wrote file of correct length ($encoding)";
 
-    given open($temp-file, :r, enc => $encoding, :!chomp) {
-        is .get.chars, 5, "Read file and got expected number of chars ($encoding)";
-        is .get, "boat\r\n", "Chars read from file were correct ($encoding)";
+    given open($temp-file, :r, :bin) {
+        my $buf = .read(12);
+        my $str = $buf.decode($encoding);
+        is $str.chars, 10, "Read file and got expected number of chars ($encoding)";
+        is $str, "goat\r\nboat\r\n", "Chars read from file were correct ($encoding)";
         .close;
     }
 }
