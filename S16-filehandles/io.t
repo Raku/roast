@@ -331,6 +331,7 @@ $out.close;
 {
     my $fh = open($filename, :r);
     ok(!$fh.t, 'checking if a file handle is a TTY - negative case');
+    $fh.close;
 }
 
 #?niecza skip 'IO.close'
