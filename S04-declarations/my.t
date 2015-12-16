@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 99;
+plan 105;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -340,13 +340,23 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 }
 
 # RT #117043
+# RT #126626
 {
     my (\x1) = 1;
-    is \x1, 1,
+    is x1, 1,
         'can declare sigilless within parenthesis';
+    dies-ok { x1 = 2 }, 'cannot assign to sigilless variable after declaration (one)';
     my ($x2, \x3) = (2, 3);
-    is ($x2, \x3).join(" "), '2 3',
+    is ($x2, x3).join(" "), '2 3',
         'declarator with multiple variables can contain sigilless';
+    dies-ok { x3 = 4 }, 'cannot assign to sigilless variable after declaration (many)';
+
+    throws-like 'my (\a)', X::Syntax::Term::MissingInitializer;
+    throws-like 'my (\a, \b)', X::Syntax::Term::MissingInitializer;
+
+    my (\x5, \x6) := 7, 8;
+    is x5, 7, 'can signature-bind to my (\a, \b) and get correct values (1)';
+    is x6, 8, 'can signature-bind to my (\a, \b) and get correct values (2)';
 }
 
 {
