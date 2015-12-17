@@ -247,6 +247,7 @@ my @exception = <
   X::Multi::NoMatch
   X::NYI
   X::NYI::Available
+  X::NYI::BigInt
   X::NoDispatcher
   X::NoSuchSymbol
   X::NotEnoughDimensions
