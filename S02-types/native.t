@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 52;
+plan 71;
 
 {
     my int $x;
@@ -201,6 +201,76 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     dies-ok { EVAL 'my $y = 4e2; want-int($y)' }, 'Passing Num to int parameter dies';
     dies-ok { EVAL 'my int $y = 42; want-num($y)' }, 'Passing int to num parameter dies';
     dies-ok { EVAL 'my $y = 42; want-num($y)' }, 'Passing Int to num parameter dies';
+}
+
+{
+    my int64 $i64;
+    is $i64, 0, 'int64 starts off as 0';
+
+    my int32 $i32;
+    is $i32, 0, 'int32 starts off as 0';
+
+    my int16 $i16;
+    is $i16, 0, 'int16 starts off as 0';
+
+    my int8 $i8;
+    is $i8, 0, 'int8 starts off as 0';
+
+    $i8 = 42;
+    is $i8, 42, 'can assign in-range value to int8';
+    $i8 = 131;
+    isnt $i8 + 1, 132, 'assigning out-of-range value to int8 truncates';
+
+    $i16 = 342;
+    is $i16, 342, 'can assign in-range value to int16';
+    $i16 = 32770;
+    isnt $i16 + 1, 32771, 'assigning out-of-range value to int16 truncates';
+
+    $i32 = 32771;
+    is $i32, 32771, 'can assign in-range value to int32';
+    $i32 = 2147483650;
+    isnt $i32 + 1, 2147483651, 'assigning out-of-range value to int32 truncates';
+}
+
+{
+    sub n64(num64 $i) {
+        is $i, 4e2, 'called num64 sub successfully';
+    }
+    sub n32(num32 $i) {
+        is $i, 4e2, 'called num32 sub successfully';
+    }
+    n64(4e2);
+    n32(4e2);
+    
+    sub i64(int64 $i) {
+        is $i, 42, 'called int64 sub successfully';
+    }
+    sub i32(int32 $i) {
+        is $i, 42, 'called int32 sub successfully';
+    }
+    sub i16(int16 $i) {
+        is $i, 42, 'called int16 sub successfully';
+    }
+    sub i8(int8 $i) {
+        is $i, 42, 'called int8 sub successfully';
+    }
+    i64(42);
+    i32(42);
+    i16(42);
+    i8(42);
+
+    sub i32_o(int32 $i) {
+        isnt $i, 2147483650, 'sub with int8 arg will see it truncated';
+    }
+    sub i16_o(int16 $i) {
+        isnt $i, 32770, 'sub with int8 arg will see it truncated';
+    }
+    sub i8_o(int8 $i) {
+        isnt $i, 257, 'sub with int8 arg will see it truncated';
+    }
+    i32_o(2147483650);
+    i16_o(32770);
+    i8_o(257);
 }
 
 # vim: ft=perl6
