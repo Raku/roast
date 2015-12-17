@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 # L<S32::IO/IO::Path>
 
@@ -48,4 +48,10 @@ isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
       nok "c:\\".IO.is-absolute, "POSIX OS loaded (no volume)";
       is "/".IO.cleanup, "/", "POSIX OS loaded (forward slash)"
   }
+}
+
+# RT #126935
+{
+    my $perl = "/foo|\\bar".IO.perl;
+    is $perl.EVAL.perl, $perl, "does $perl roundtrip?";
 }
