@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 37;
+plan 38;
 
 sub check ($a, $b, $ls, $rs) {
     is $a * 2**$b, $ls, "expected value for shl $a by $b is sane";
@@ -31,3 +31,6 @@ check -17, 3, -136, -3;
 #RT #121909
 my int $t = 10;
 is (2 * $t) + ($t +> 2), 22;
+
+#RT #126942
+is -123 +> 32, -1, "too large right shift for Int should be -1";
