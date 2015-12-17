@@ -178,7 +178,6 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     my num $a;
     is NaN, $a, "num defaults to NaN";
     my num32 $b;
-    #?rakudo.moar todo 'wrong default'
     is NaN, $b, "num32 defaults to NaN";
     my num64 $c;
     is NaN, $c, "num64 defaults to NaN";
