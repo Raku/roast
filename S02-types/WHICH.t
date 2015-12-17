@@ -245,6 +245,7 @@ my @exception = <
   X::Mixin::NotComposable
   X::Multi::Ambiguous
   X::Multi::NoMatch
+  X::NQP::NotFound
   X::NYI
   X::NYI::Available
   X::NYI::BigInt
