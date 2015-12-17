@@ -341,6 +341,7 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 
 # RT #117043
 # RT #126626
+#?rakudo.jvm skip 'RuntimeException: java.lang.ArrayIndexOutOfBoundsException: -1'
 {
     my (\x1) = 1;
     is x1, 1,
