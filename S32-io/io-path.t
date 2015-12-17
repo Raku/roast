@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 # L<S32::IO/IO::Path>
 
@@ -54,4 +54,6 @@ isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 {
     my $perl = "/foo|\\bar".IO.perl;
     is $perl.EVAL.perl, $perl, "does $perl roundtrip?";
+    my $nul = "/foo\0bar".IO.perl;
+    is $nul.EVAL.perl, $nul, "does $nul roundtrip?";
 }
