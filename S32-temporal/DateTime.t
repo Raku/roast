@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 239;
+plan 241;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -222,6 +222,10 @@ is ds('2012-12-22T07:02:00+00'), '2012-12-22T07:02:00Z', '+00 with no minutes';
 is ds('2012-12-22T07:02:00-00'), '2012-12-22T07:02:00Z', '-00 with no minutes';
 is ds('2012-12-22T07:02:00+00:00'), '2012-12-22T07:02:00Z', 'colonated +00';
 is ds('2012-12-22T07:02:00-00:00'), '2012-12-22T07:02:00Z', 'colonated -00';
+
+is ds('2015-12-11T20:41:10.5Z'), '2015-12-11T20:41:10.500000Z', 'More seconds precision';
+is ds('2015-12-11T20:41:10.562000+00:00'), '2015-12-11T20:41:10.562000Z', 'More seconds precision';
+
 dies-ok { ds('2012-12-22T07:02:00+00:') }, '+00 with trailing colon';
 dies-ok { ds('2012-12-22T07:02:00+0') }, 'single digit hour +0';
 dies-ok { ds('2012-12-22T07:02:00+0:') }, '+0 with trailing colon';
