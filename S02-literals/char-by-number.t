@@ -64,10 +64,10 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
 
 {
     throws-like { EVAL q{"\123"} },
-      X::Backslash::UnrecognizedSequence,
+      X::Comp,
       '"\123" form is no longer valid Perl 6';
     throws-like { EVAL q{"\10"} },
-      X::Backslash::UnrecognizedSequence,
+      X::Comp,
       '"\10" form is no longer valid Perl 6';
 }
 
