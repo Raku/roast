@@ -13,7 +13,9 @@ my $rec-prom;
 {
     my $sock = IO::Socket::Async.bind-udp($hostname, $port);
     my $tap = $sock.Supply.tap: -> $chars {
-        $rec-prom.keep($chars);
+        if $chars.chars > 0 {
+            $rec-prom.keep($chars);
+        }
     }
 }
 
