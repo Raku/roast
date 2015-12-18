@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 53;
+plan 58;
 
 isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
@@ -93,5 +93,14 @@ is_approx 3.14159265358979323846264338327950288419716939937510e0,
 # RT #70600
 #?niecza todo 'exactly rounded Str->Num without FatRat'
 ok 0e999999999999999 == 0, '0e999999999999 equals zero';
+
+# We are not afraid of unicode
+{
+    is ۵۵, 55, "We can handle Unicode digits";
+    is ⅷ , 8, "We can handle Unicode non-digit numerics";
+    is ⅔, 2/3, "We can handle vulgar fractions";
+    is 𒑡  × 𒑒, 2/3, "We can multiply cuneiform :-)";
+    ok -𝑒 ** −π\i ≅ 1, "We can write 1 in funny ways too";
+}
 
 # vim: ft=perl6 sw=4 ts=4 expandtab
