@@ -143,6 +143,7 @@ is (2 Z 3), @z, 'joining of single items';
 
     is 2 × 3, 6, "we have infix MULTIPLICATION SIGN";
 
+    #?rakudo.jvm skip 'Bogus term'
     is 2 ÷ 3, ⅔, "we have infix DIVISION SIGN";
 }
 
