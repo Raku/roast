@@ -219,16 +219,19 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     $i8 = 42;
     is $i8, 42, 'can assign in-range value to int8';
     $i8 = 131;
+    #?rakudo.jvm todo 'native int does not truncate, yet'
     isnt $i8 + 1, 132, 'assigning out-of-range value to int8 truncates';
 
     $i16 = 342;
     is $i16, 342, 'can assign in-range value to int16';
     $i16 = 32770;
+    #?rakudo.jvm todo 'native int does not truncate, yet'
     isnt $i16 + 1, 32771, 'assigning out-of-range value to int16 truncates';
 
     $i32 = 32771;
     is $i32, 32771, 'can assign in-range value to int32';
     $i32 = 2147483650;
+    #?rakudo.jvm todo 'native int does not truncate, yet'
     isnt $i32 + 1, 2147483651, 'assigning out-of-range value to int32 truncates';
 }
 
@@ -259,15 +262,19 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     i16(42);
     i8(42);
 
+    #?DOES 1
     sub i32_o(int32 $i) {
-        isnt $i, 2147483650, 'sub with int8 arg will see it truncated';
+        isnt $i, 2147483650, 'sub with int32 arg will see it truncated';
     }
+    #?DOES 1
     sub i16_o(int16 $i) {
-        isnt $i, 32770, 'sub with int8 arg will see it truncated';
+        isnt $i, 32770, 'sub with int16 arg will see it truncated';
     }
+    #?DOES 1
     sub i8_o(int8 $i) {
         isnt $i, 257, 'sub with int8 arg will see it truncated';
     }
+    #?rakudo.jvm 3 todo 'native int args do not truncate, yet'
     i32_o(2147483650);
     i16_o(32770);
     i8_o(257);
@@ -276,29 +283,35 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
 # RT #124294
 {
     my int32 $i32 = 2 ** 32 - 1;
+    #?rakudo.jvm todo 'signed/unsigned native ints RT #124294'
     isnt $i32, 4294967295, 'cannot store 2**32 - 1 in a signed int32';
     my uint32 $u32 = 2**32 - 1;
     is $u32, 4294967295, 'can store 2**32 - 1 in an unsigned int32';
     $u32 = 2 ** 33;
-    isnt $u32, 8589934592, 'cannot store 2**33 in an unsinged uint32';
+    #?rakudo.jvm 2 todo 'signed/unsigned native ints RT #124294'
+    isnt $u32, 8589934592, 'cannot store 2**33 in an unsigned uint32';
     $u32 = 2 ** 63;
     ok $u32 >= 0, 'cannot make a uint32 go negative by overflowing it';
 
     my int16 $i16 = 2 ** 16 - 1;
+    #?rakudo.jvm todo 'signed/unsigned native ints RT #124294'
     isnt $i16, 65535, 'cannot store 2**16 - 1 in a signed int16';
     my uint16 $u16 = 2**16 - 1;
     is $u16, 65535, 'can store 2**16 - 1 in an unsigned int16';
     $u16 = 2 ** 33;
-    isnt $u16, 8589934592, 'cannot store 2**33 in an unsinged uint16';
+    #?rakudo.jvm 2 todo 'signed/unsigned native ints RT #124294'
+    isnt $u16, 8589934592, 'cannot store 2**33 in an unsigned uint16';
     $u16 = 2 ** 63;
     ok $u16 >= 0, 'cannot make a uint16 go negative by overflowing it';
 
     my int8 $i8 = 2 ** 8 - 1;
+    #?rakudo.jvm todo 'signed/unsigned native ints RT #124294'
     isnt $i8, 255, 'cannot store 2**8 - 1 in a signed int8';
     my uint8 $u8 = 2**8 - 1;
     is $u8, 255, 'can store 2**8 - 1 in an unsigned int8';
     $u8 = 2 ** 33;
-    isnt $u8, 8589934592, 'cannot store 2**33 in an unsinged uint8';
+    #?rakudo.jvm 2 todo 'signed/unsigned native ints RT #124294'
+    isnt $u8, 8589934592, 'cannot store 2**33 in an unsigned uint8';
     $u8 = 2 ** 63;
     ok $u8 >= 0, 'cannot make a uint8 go negative by overflowing it';
 }
