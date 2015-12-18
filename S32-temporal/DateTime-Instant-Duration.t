@@ -109,7 +109,8 @@ is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping
     my $i = now;    # $t and $i are supposed to be within the
                     # same UTC second, but if we're unlucky they
                     # might not be.
-    is ~DateTime.new($i), ~DateTime.new($t), 'DateTime.new(now)';
+    is DateTime.new($i).Str.substr(^19),DateTime.new($t).Str.substr(^19),
+      'DateTime.new(now)';
 }
 
 {
