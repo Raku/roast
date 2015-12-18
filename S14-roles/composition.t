@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 31;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -129,6 +129,38 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     class ClassUsesSettingSub does UsesSettingSub { };
     is ClassUsesSettingSub.new.doit, 'A',
         'can use a sub from the setting in a method composed from a role';
+}
+
+# RT #64766
+{
+    my class A {
+        method foo { "OH HAI" }
+        method aie { "AIE!" }
+    }
+
+    {
+        my role B { has A $.bar handles 'aie' }
+        my class C does B { }
+        is C.new.aie, 'AIE!', 'literal handles from role is composed (1)';
+        throws-like { C.new.foo }, X::Method::NotFound,
+             'literal handles from role is composed (2)';
+    }
+
+    {
+        my role B { has A $.bar handles * }
+        my class C does B { }
+        is C.new.foo, 'OH HAI', 'wildcard handles from role is composed (1)';
+        is C.new.aie, 'AIE!', 'wildcard handles from role is composed (2)';
+    }
+
+    eval-dies-ok q:to/END/, 'attributes conflict in role composition';
+        my role B {
+            has A $.bar handles "aie"
+        }
+        my class C does B {
+            has A $.bar handles "foo"
+        }
+        END
 }
 
 # vim: syn=perl6
