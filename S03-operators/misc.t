@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 38;
+plan 44;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -132,5 +132,18 @@ is (2 Z 3), @z, 'joining of single items';
     throws-like {"cat" gt Str}, Exception;
 }
 
+# unicode operators are there
+{
+    is −1, -1, "unary MINUS SIGN";
+
+    is 42−1, 42-1, "infix MINUS SIGN";
+    my \a = 42; my \b = 1;
+    is a−b, a - b, "infix MINUS SIGN is not considered a hyphen";
+    is −a−b, -a - b, "prefix MINUS SIGN works with infix";
+
+    is 2 × 3, 6, "we have infix MULTIPLICATION SIGN";
+
+    is 2 ÷ 3, ⅔, "we have infix DIVISION SIGN";
+}
 
 # vim: ft=perl6
