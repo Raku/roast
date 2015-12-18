@@ -1009,7 +1009,7 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
         "non-dwim hyper against empty RHS dies";
 }
 
-throws-like '3 «.» foo', X::Obsolete, "«.» can't be hypered";
+throws-like '3 «.» foo', Exception, "«.» can't be hypered";
 
 # RT #125265
 {
