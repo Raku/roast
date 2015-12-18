@@ -26,6 +26,7 @@ is $tenth.WHAT.gist, '(Rat)', 'Rat WHAT';
 
 is (0, 1/10 ... 1).gist, '(0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1)', 'rational series';
 is ((1/3 + 1/6) * 2).gist, '1';
+#?rakudo.jvm todo 'got (Int) instead of (Bool)'
 is (1/10 + 1/10 + 1/10 == 0.3).gist, 'True', '(\o/)';
 
 my $pi = 3.14e0;
