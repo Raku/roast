@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 71;
+plan 83;
 
 {
     my int $x;
@@ -271,6 +271,36 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     i32_o(2147483650);
     i16_o(32770);
     i8_o(257);
+}
+
+# RT #124294
+{
+    my int32 $i32 = 2 ** 32 - 1;
+    isnt $i32, 4294967295, 'cannot store 2**32 - 1 in a signed int32';
+    my uint32 $u32 = 2**32 - 1;
+    is $u32, 4294967295, 'can store 2**32 - 1 in an unsigned int32';
+    $u32 = 2 ** 33;
+    isnt $u32, 8589934592, 'cannot store 2**33 in an unsinged uint32';
+    $u32 = 2 ** 63;
+    ok $u32 >= 0, 'cannot make a uint32 go negative by overflowing it';
+
+    my int16 $i16 = 2 ** 16 - 1;
+    isnt $i16, 65535, 'cannot store 2**16 - 1 in a signed int16';
+    my uint16 $u16 = 2**16 - 1;
+    is $u16, 65535, 'can store 2**16 - 1 in an unsigned int16';
+    $u16 = 2 ** 33;
+    isnt $u16, 8589934592, 'cannot store 2**33 in an unsinged uint16';
+    $u16 = 2 ** 63;
+    ok $u16 >= 0, 'cannot make a uint16 go negative by overflowing it';
+
+    my int8 $i8 = 2 ** 8 - 1;
+    isnt $i8, 255, 'cannot store 2**8 - 1 in a signed int8';
+    my uint8 $u8 = 2**8 - 1;
+    is $u8, 255, 'can store 2**8 - 1 in an unsigned int8';
+    $u8 = 2 ** 33;
+    isnt $u8, 8589934592, 'cannot store 2**33 in an unsinged uint8';
+    $u8 = 2 ** 63;
+    ok $u8 >= 0, 'cannot make a uint8 go negative by overflowing it';
 }
 
 # vim: ft=perl6
