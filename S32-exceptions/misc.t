@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 356;
+plan 373;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -769,5 +769,25 @@ throws-like 'sub foo ($bar :D) { 1; }', X::Parameter::InvalidType;
 # RT #126105
 throws-like 'my Int $a is default(Nil)',
     X::Parameter::Default::TypeCheck, got => Nil;
+
+{
+    is_run q[1;2], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* "Useless use"/ }, "sink distributes to statement list with 2 messages";
+    is_run q[1,2], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* "Useless use"/ }, "sink distributes to comma list with 2 messages";
+    is_run q[{ 1,2 },Nil], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* "Useless use"/ }, "sink distributes to comma list with 2 messages with bare block before Nil";
+    is_run q[{ 1,2 }], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* "Useless use"/ }, "sink distributes to comma list with 2 messages with bare block alone";
+    is_run q[my $x; $x = 1, 123], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 123/ }, "sink distributes to comma list when first is item assignment";
+    is_run q[my $x = 1, 123], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 123/ }, "sink distributes to comma list when first is item initializer";
+    is_run q["foo"], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'foo' / }, "sink warns on string";
+    is_run q[6.0221409e+23], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '6.0221409e' / }, "sink warns on num";
+    is_run q[my $x; $x], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '$x' / }, "sink warns on variable";
+    is_run q[1+2], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '1+2' / }, "sink warns on operator";
+    is_run q[:foo(42)], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* ':foo(42)' / }, "sink warns on colonpair";
+    is_run q[foo => 42], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'foo => 42' / }, "sink warns on fatarrow";
+    is_run q["foo" => 42], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '=>' / }, "sink warns on pair composer";
+    is_run q[<42i>], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '42' / }, "sink warns on complex";
+    is_run q[<1/3i>], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '1/3' / }, "sink warns on fractional rat";
+    is_run q[<123.456>], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '123.456' / }, "sink warns on decimal rat";
+    is_run q[<123i 456i>], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '456' / }, "sink warns components of qw";
+}
 
 # vim: ft=perl6
