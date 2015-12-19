@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 384;
+plan 387;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -799,6 +799,29 @@ throws-like 'my Int $a is default(Nil)',
     is_run q[my $sink; $sink for 1], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on variable and suggests Nil";
     is_run q[() while 0], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on () and suggests Nil";
     is_run q[my @x = gather 43], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '43' / }, "sink warns inside of gather";
+}
+
+# RT #125769
+{
+    sub a {
+	if 1 { my $f = Failure.new("foo"); }
+	unless 0 { my $f = Failure.new("foo"); }
+	return 1;
+    }
+    is a(), 1, "failure assignment at end of if block doesn't blow up";
+    sub b {
+	if 1 { my $f := Failure.new("bar"); }
+	unless 0 { my $f := Failure.new("bar"); }
+	return 2;
+    }
+    is b(), 2, "failure binding at end of if block doesn't blow up";
+    sub c {
+	{ my $f := Failure.new("bar"); }
+	{ my $f := Failure.new("bar") if 1; }
+	{ my $f := Failure.new("bar") unless 0; }
+	return 3;
+    }
+    is c(), 3, "failure binding at end of block doesn't blow up with or without modifier if";
 }
 
 # vim: ft=perl6
