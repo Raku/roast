@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 58;
+plan 59;
 
 isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
@@ -104,6 +104,7 @@ ok 0e999999999999999 == 0, '0e999999999999 equals zero';
     is 𒑡  × 𒑒, 2/3, "We can multiply cuneiform :-)";
     #?rakudo.jvm skip 'Prefix - requires an argument, but no valid term found'
     ok -𝑒 ** −π\i ≅ 1, "We can write 1 in funny ways too";
+    is ∞, Inf, "yeah, we do that too...";
 }
 
 # vim: ft=perl6 sw=4 ts=4 expandtab
