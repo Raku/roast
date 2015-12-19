@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 31;
+plan 38;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -161,6 +161,37 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
             has A $.bar handles "foo"
         }
         END
+}
+
+# RT #124393
+{
+    my role R1 {
+        multi method m(Int $x) { ... }
+        multi method m(Str $x) { ... }
+    }
+    my class C1 does R1 {
+        multi method m(Int $x) { 42 }
+        multi method m(Str $x) { 'the answer' }
+    }
+    is C1.m(1), 42, 'stubbed multi in role implemented in class can be called (1)';
+    is C1.m('x'), 'the answer', 'stubbed multi in role implemented in class can be called (2)';
+
+    eval-dies-ok 'my class C2 does R1 { }', 'must implement stubbed multi methods in roles';
+
+    my role R2 {
+        multi method m(Int $x) { 99 }
+        multi method m(Str $x) { 'ice cream' }
+    }
+    class C3 does R1 does R2 {
+    }
+    is C3.m(1), 99, 'another role can provided required multi implementation (1)';
+    is C3.m('x'), 'ice cream', 'another role can provided required multi implementation (2)';
+
+    my class C4 does R1 does R2 {
+        multi method m(Int $x) { 69 }
+    }
+    is C4.m(1), 69, 'class can override multi method from role';
+    is C4.m('x'), 'ice cream', 'other multi candidates from role survive';
 }
 
 # vim: syn=perl6
