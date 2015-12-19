@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 60;
 
 {
     my $s = supply {
@@ -410,6 +410,35 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
         }
     }
     is $order, '123', 'multiple channels in whenever blocks work';
+}
+
+{
+    my $closed = False;
+    my $input = Supplier.new;
+    my $s = supply {
+        whenever $input {
+            emit .uc;
+        }
+        CLOSE {
+            $closed = True;
+        }
+    }
+
+    my @got;
+    my $t = $s.tap({ @got.push: $_ });
+    $input.emit('dugong!');
+    is @got, 'DUGONG!', 'supply block with CLOSE phaser works as normal';
+    nok $closed, 'CLOSE phaser not run yet';
+    $t.close;
+    ok $closed, 'CLOSE phaser run on tap close';
+
+    $closed = False;
+    my $t2 = $s.tap();
+    $input.done();
+    ok $closed, 'CLOSE phaser runs also on normal termination';
+    $closed = False;
+    $t2.close;
+    nok $closed, 'CLOSE phasers do not run twice (normal termination then .close)';
 }
 
 # vim: ft=perl6 expandtab sw=4
