@@ -4,20 +4,20 @@ plan 10;
 
 {
     package Foo {
-        constant \term:<א₀> = Inf;
-        is א₀, Inf, "Can define \\term:<א₀> as a constant";
+        constant \term:<ℵ₀> = Inf;
+        is ℵ₀, Inf, "Can define \\term:<ℵ₀> as a constant";
     }
-    dies-ok { EVAL "א₀" }, "constant \\term:<א₀> really is scoped to package";
-    is Foo::term:<א₀>, Inf, "Constant available from package";
+    dies-ok { EVAL "ℵ₀" }, "constant \\term:<ℵ₀> really is scoped to package";
+    is Foo::term:<ℵ₀>, Inf, "Constant available from package";
 }
 
 {
     {
-        my \term:<א₀> = Inf;
-        is א₀, Inf, "Can define \\term:<א₀> as lexical variable";
-        is EVAL('א₀'),Inf, "\\term:<א₀> works in EVAL";
+        my \term:<ℵ₀> = Inf;
+        is ℵ₀, Inf, "Can define \\term:<ℵ₀> as lexical variable";
+        is EVAL('ℵ₀'),Inf, "\\term:<ℵ₀> works in EVAL";
     }
-    dies-ok { EVAL "א₀" }, "my \\term:<א₀> really is lexical";
+    dies-ok { EVAL "ℵ₀" }, "my \\term:<ℵ₀> really is lexical";
 }
 
 {
