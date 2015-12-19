@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 39;
+plan 54;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -56,6 +56,21 @@ throws-like Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], Exception, "particu
 }
 
 throws-like Q['a' ~~ /<{'$(say "trivially pwned")'}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' "{say q/pwnzered/}"    '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' "foo $_ bar "          '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' "foo @*ARGS[] bar "    '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' "foo %*ENV{} bar "     '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' "foo &infix:<+>() "    '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' :my $x = {say q/hi!/}; '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' {say q/gotcha/}        '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' <{say q/gotcha/}>      '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' <?{say q/gotcha/}>     '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' <!{say q/gotcha/}>     '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' <foo=!{say q/gotcha/}> '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' <alpha(say q/gotcha/)> '}> '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' $x:(say "busted")      '}> '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' "$x:(say "busted")"    '}> '}>/], Exception, "should handle this too";
+throws-like Q['a' ~~ /<{' q/\qq[{say "busted"}]/ '}> '}>/], Exception, "should handle this too";
 
 # Arrays
 
