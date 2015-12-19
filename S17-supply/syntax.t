@@ -333,17 +333,19 @@ plan 55;
     my $trigger1 = Supplier.new;
     my $trigger2 = Supplier.new;
 
-    my $lock = Lock.new;
-    my $cv1 = $lock.condition;
-    my $cv2 = $lock.condition;
+    my $p1 = Promise.new;
+    my $p2 = Promise.new;
+    my $p3 = Promise.new;
 
     my $s = supply {
         whenever $trigger1 -> $value {
-            $lock.protect({ $cv1.signal; $cv2.wait });
+            $p1.keep(True);
+            await $p2;
             emit "a $value";
         }
         whenever $trigger2 -> $value {
             emit "the $value";
+            $p3.keep(True);
         }
     }
 
@@ -351,11 +353,10 @@ plan 55;
     $s.tap({ @collected.push($_) });
 
     start { $trigger1.emit('bear'); }
-    $lock.protect({ $cv1.wait });
+    await $p1;
     start { $trigger2.emit('wolf'); }
-    sleep 0.5;
-    $lock.protect({ $cv2.signal });
-    sleep 0.5;
+    $p2.keep(True);
+    await $p3;
 
     is @collected, ['a bear', 'the wolf'], 'Can only be in one whatever block at a time';
 }
