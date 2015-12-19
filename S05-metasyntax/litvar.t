@@ -80,8 +80,8 @@ throws-like { EVAL '"foo" ~~ /<$var>/' }, X::Undeclared, symbol => '$i',
         'assertions only reinterpret one level deep';
 
     $var = '<$i>';
-    is "foo" ~~ /<$var>/, 'fo',
-        'assertion in reinterpreted assertion matches';
+    dies-ok { "foo" ~~ /<$var>/},
+        'assertion in reinterpreted assertion is disallowed';
 }
 
 $var = 'fo+';
