@@ -2,7 +2,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 22;
+plan 27;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -30,6 +30,33 @@ my @keys = Test::Util::run( q:to"--END--").lines;
     --END--
 
 is-deeply @keys, [<A B C>], 'Diamond relationship';
+
+my @precompiled2 = Test::Util::run( q:to"--END--").lines;
+    use lib 't/spec/packages';
+
+    for <T P D N S B G K C E F H R A U> {
+        my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name("Example2::$_")));
+        say $comp-unit.precompiled;
+    }
+    --END--
+is @precompiled2.elems, 15;
+is $_, 'True' for @precompiled;
+
+# RT #123272
+my @keys2 = Test::Util::run( q:to"--END--").lines;
+    use v6;
+    use lib 't/spec/packages';
+    use Example2::T;
+
+    use Example2::G;
+    use Example2::F;
+    use Example2::A;
+    use Example2::U;
+
+    .say for Example2::.keys.sort;
+    --END--
+
+is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all different';
 
 #?rakudo.jvm skip 'RT #122896'
 #?rakudo.moar skip 'RT #122896'
