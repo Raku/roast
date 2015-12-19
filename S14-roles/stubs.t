@@ -22,7 +22,6 @@ lives-ok { EVAL 'class F does WithStub does ProvidesStub1 does ProvidesStub2 {
     method a() { 4 } }' },
         'composing stub and 2 implementations allows custom implementation';
 
-#?rakudo todo 'RT#124393 Stubbing individual multis as role interface NYI'
 {
     class G does WithMultiStub { multi method a(Int) { } };
     lives-ok { EVAL 'G.a(1)' }, "No ambiguous dispatch on stubbed multi in interface";
