@@ -199,10 +199,9 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
         multi method m(Int $x) { 101 }
         multi method m(Str $x) { 'dalmatians' }
     }
-    #?rakudo 2 todo 'multi composition conflict'
     dies-ok { EVAL 'my class C5 does R2 does R3 { }'; CATCH { $msg = .message } },
         'multis with same sig are composition conflicts (1)';
-    ok $msg ~~ /conflict/, 'multis with same sig are composition conflicts (2)';
+    ok $msg ~~ /'multiple roles'/, 'multis with same sig are composition conflicts (2)';
     my class C6 does R2 does R3 {
         multi method m(Int $x) { 11 }
         multi method m(Str $x) { 'pipers' }
