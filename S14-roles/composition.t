@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 38;
+plan 43;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -175,14 +175,16 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     }
     is C1.m(1), 42, 'stubbed multi in role implemented in class can be called (1)';
     is C1.m('x'), 'the answer', 'stubbed multi in role implemented in class can be called (2)';
-
-    eval-dies-ok 'my class C2 does R1 { }', 'must implement stubbed multi methods in roles';
+    my $msg;
+    dies-ok { EVAL 'my class C2 does R1 { }'; CATCH { $msg = .message } },
+        'must implement stubbed multi methods in roles (1)';
+    ok $msg ~~ /required/, 'must implement stubbed multi methods in roles (2)';
 
     my role R2 {
         multi method m(Int $x) { 99 }
         multi method m(Str $x) { 'ice cream' }
     }
-    class C3 does R1 does R2 {
+    my class C3 does R1 does R2 {
     }
     is C3.m(1), 99, 'another role can provided required multi implementation (1)';
     is C3.m('x'), 'ice cream', 'another role can provided required multi implementation (2)';
@@ -192,6 +194,21 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     }
     is C4.m(1), 69, 'class can override multi method from role';
     is C4.m('x'), 'ice cream', 'other multi candidates from role survive';
+
+    my role R3 {
+        multi method m(Int $x) { 101 }
+        multi method m(Str $x) { 'dalmatians' }
+    }
+    #?rakudo 2 todo 'multi composition conflict'
+    dies-ok { EVAL 'my class C5 does R2 does R3 { }'; CATCH { $msg = .message } },
+        'multis with same sig are composition conflicts (1)';
+    ok $msg ~~ /conflict/, 'multis with same sig are composition conflicts (2)';
+    my class C6 does R2 does R3 {
+        multi method m(Int $x) { 11 }
+        multi method m(Str $x) { 'pipers' }
+    }
+    is C6.m(1), 11, 'class can resolve conflicts from multis by implementing method (1)';
+    is C6.m(1), 11, 'class can resolve conflicts from multis by implementing method (2)';
 }
 
 # vim: syn=perl6
