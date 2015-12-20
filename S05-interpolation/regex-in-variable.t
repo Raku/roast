@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 54;
+plan 52;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -39,38 +39,39 @@ ok("aaaaab" ~~ m/<$foo>/,   'Rulish scalar match 5');
 ok(!("aaaaab" ~~ m/$foo/),  'Rulish scalar match 6');
 ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 
-# RT #61960
 {
-    my $a = 'a';
-    ok 'a' ~~ / $a /, 'match with string as rx works';
+    no MONKEY-SEE-NO-EVAL;
+    # RT #61960
+    {
+	my $a = 'a';
+	ok 'a' ~~ / $a /, 'match with string as rx works';
+    }
+
+    # RT #100232
+    throws-like { my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/ }, X::SecurityPolicy, "particular garbage-in recognized as being garbage (see RT)";
+
+    # because it broke these:
+    {
+	ok "foo" ~~ /<{' o ** 2 '}>/, 'returns true';
+	isa-ok "foo" ~~ /<{' o ** 2 '}>/, Match, 'returns a valid Match';
+	is ~("foo" ~~ /<{' o ** 2 '}>/), "oo", 'returns correct Match';
+    }
+
+    throws-like { 'a' ~~ /<{'$(say "trivially pwned")'}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' "{say q/pwnzered/}"    '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' "foo $_ bar "          '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' "foo @*ARGS[] bar "    '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' "foo %*ENV{} bar "     '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' "foo &infix:<+>() "    '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' :my $x = {say q/hi!/}; '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' {say q/gotcha/}        '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' <{say q/gotcha/}>      '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' <?{say q/gotcha/}>     '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' <!{say q/gotcha/}>     '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' <foo=!{say q/gotcha/}> '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' <alpha(say q/gotcha/)> '}>/ }, X::SecurityPolicy, "should handle this too";
+    throws-like { 'a' ~~ /<{' "$x:(say "busted")"    '}>/ }, X::SecurityPolicy, "should handle this too";
 }
-
-# RT #100232
-throws-like Q[my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/], Exception, "particular garbage-in recognized as being garbage (see RT)";
-
-# because it broke these:
-{
-    ok "foo" ~~ /<{' o ** 2 '}>/, 'returns true';
-    isa-ok "foo" ~~ /<{' o ** 2 '}>/, Match, 'returns a valid Match';
-    is ~("foo" ~~ /<{' o ** 2 '}>/), "oo", 'returns correct Match';
-}
-
-throws-like Q['a' ~~ /<{'$(say "trivially pwned")'}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' "{say q/pwnzered/}"    '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' "foo $_ bar "          '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' "foo @*ARGS[] bar "    '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' "foo %*ENV{} bar "     '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' "foo &infix:<+>() "    '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' :my $x = {say q/hi!/}; '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' {say q/gotcha/}        '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' <{say q/gotcha/}>      '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' <?{say q/gotcha/}>     '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' <!{say q/gotcha/}>     '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' <foo=!{say q/gotcha/}> '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' <alpha(say q/gotcha/)> '}> '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' $x:(say "busted")      '}> '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' "$x:(say "busted")"    '}> '}>/], Exception, "should handle this too";
-throws-like Q['a' ~~ /<{' q/\qq[{say "busted"}]/ '}> '}>/], Exception, "should handle this too";
 
 # Arrays
 

@@ -1,6 +1,7 @@
 use v6;
 
 use lib '.';
+use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo>);
 

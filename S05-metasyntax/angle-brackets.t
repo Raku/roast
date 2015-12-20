@@ -258,7 +258,7 @@ character classes), and those are referenced at the correct spot.
 # meanings within regexes that the bare elipses have in ordinary code
 #?niecza skip 'Action method assertion:sym<???> not yet implemented'
 {
-    throws-like '"foo" ~~ /<...>/', X::Comp::Group, '<...> dies in regex match';
+    throws-like '"foo" ~~ /<...>/', Exception, '<...> dies in regex match';
     # XXX: Should be warns_ok, but we don't have that yet
     lives-ok({'foo' ~~ /<???>/}, '<???> lives in regex match');
     #?rakudo todo '!!! in regexes'

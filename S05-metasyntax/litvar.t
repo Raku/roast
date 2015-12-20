@@ -74,6 +74,7 @@ $var = '$i';
 throws-like { EVAL '"foo" ~~ /<$var>/' }, X::Undeclared, symbol => '$i',
     'undeclared var in assertion in interpolated string throws';
 {
+    no MONKEY-SEE-NO-EVAL;
     my $i = 'f+o';
     $var  = '$i';
     is "foo" ~~ /<$var>/, Nil,
