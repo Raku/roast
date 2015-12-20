@@ -808,6 +808,7 @@ throws-like 'my Int $a is default(Nil)',
 	unless 0 { my $f = Failure.new("foo"); }
 	return 1;
     }
+    #?rakudo.jvm skip 'failure assignment still blows up on JVM, RT #125769'
     is a(), 1, "failure assignment at end of if block doesn't blow up";
     sub b {
 	if 1 { my $f := Failure.new("bar"); }
