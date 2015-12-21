@@ -1,13 +1,13 @@
 use Test;
-plan 45;
+plan 42;
 
 my $r;
 
 =pod
 B<I am a formatting code>
 
-$r = $=pod[0].contents[0].contents[1];
-isa-ok $r, Pod::FormattingCode;
+$r = $=pod[0].contents[0].contents[0];
+isa-ok $r, Pod::FormattingCode,"a single FC becomes a single FC";
 is $r.type, 'B';
 is $r.contents[0], 'I am a formatting code';
 
@@ -27,25 +27,23 @@ isa-ok $r[5], Pod::FormattingCode;
 is $r[4], " ";
 is $r[5].type, 'B';
 $r = $r[5].contents;
-is $r[0], "";
-isa-ok $r[1], Pod::FormattingCode;
-is $r[1].type, 'R';
-is $r[1].contents, 'source_file';
-is $r[2], ' ';
-isa-ok $r[3], Pod::FormattingCode;
-is $r[3].type, 'R';
-is $r[3].contents, 'target_file';
+isa-ok $r[0], Pod::FormattingCode;
+is $r[0].type, 'R';
+is $r[0].contents, 'source_file';
+is $r[1], ' ';
+isa-ok $r[2], Pod::FormattingCode;
+is $r[2].type, 'R';
+is $r[2].contents, 'target_file';
 
 =pod
 L<C<b>|a>
 L<C<b>|a>
 
 $r = $=pod[2].contents[0].contents;
-for $r[1], $r[3] -> $link {
+for $r[0], $r[2] -> $link {
     is $link.type, 'L';
-    is $link.contents[0], '';
-    isa-ok $link.contents[1], Pod::FormattingCode;
-    is $link.contents[1].contents, 'b';
+    isa-ok $link.contents[0], Pod::FormattingCode;
+    is $link.contents[0].contents, 'b';
     is $link.meta, 'a';
 }
 
@@ -83,7 +81,7 @@ is $r.contents[0].contents, 'C<boo> B<bar> asd';
 =pod C<< infix:<+> >>
 
 for @$=pod[5, 6] {
-    is .contents[0].contents[1].contents[0], "infix:<+> ", "Can parse nested angles in formatting codes"
+    is .contents[0].contents[0].contents[0], "infix:<+> ", "Can parse nested angles in formatting codes"
 }
 
 # vim: ft=perl6
