@@ -390,7 +390,8 @@ Hello, World
 
 # q:x
 {
-    my $result = $*DISTRO.is-win ?? "hello\r\n" !! "hello\n";
+    # due to automatic newline translation, no need to check for \r\n on win32
+    my $result = "hello\n";
     is q:x/echo hello/, $result, "Testing for q:x operator.";
 }
 # utf8
