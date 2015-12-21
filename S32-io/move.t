@@ -58,7 +58,7 @@ nok $non-existent-file.IO.e, "sanity check 2";
     
     my $existing-size3 = $existing-file2.IO.s;
     ok move( $existing-file2, $dest2a ), 'move() normal file';
-    nok $existing-file1.IO.e, 'source file no longer exists';
+    nok $existing-file2.IO.e, 'source file no longer exists';
     ok $dest2a.IO.e, 'dest file exists';
     is $dest2a.IO.s, $existing-size3, 'dest file has same size as source file';
 
