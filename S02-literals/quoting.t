@@ -410,7 +410,7 @@ Hello, World
 {
     my $output = $*DISTRO.is-win
         ?? q:x/echo hello& echo world/
-        !! q:x/echo hello ; echo world/;
+        !! q:x/echo hello; echo world/;
     my @two_lines = $output.trim-trailing.lines;
     is @two_lines, ["hello", "world"], 'testing q:x assigned to array';
 }
@@ -418,8 +418,9 @@ Hello, World
 #?niecza todo ':x'
 {
     my $hello = 'howdy';
-    my @two_lines = qq:x/echo $hello ; echo world/.trim-trailing.lines;
-    is @two_lines, ("$hello", "world"), 'testing qq:x assigned to array';
+    my $sep = $*DISTRO.is-win ?? '&' !! ';';
+    my @two_lines = qq:x/echo $hello$sep echo world/.trim-trailing.lines;
+    is @two_lines, ["$hello", "world"], 'testing qq:x assigned to array';
 }
 
 
