@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 43;
+plan 49;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -208,6 +208,22 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     }
     is C6.m(1), 11, 'class can resolve conflicts from multis by implementing method (1)';
     is C6.m(1), 11, 'class can resolve conflicts from multis by implementing method (2)';
+
+    my role R4 does R1 { }
+    dies-ok { EVAL 'my class C7 does R4 { }'; CATCH { $msg = .message } },
+        'stubbed method from role brought in by role must be satisfied (1)';
+    ok $msg ~~ /required/, 'stubbed method from role brought in by role must be satisfied (2)';
+
+    my class C8 does R4 {
+        multi method m(Int $x) { 40 }
+        multi method m(Str $x) { 'days' }
+    }
+    is C8.m(1), 40, 'class can satisfy stub from role brought in by role (1)';
+    is C8.m('x'), 'days', 'class can satisfy stub from role brought in by role (2)';
+
+    my class C9 does R4 does R2 { }
+    is C9.m(1), 99, 'another role can provided indirectly required multi implementation (1)';
+    is C9.m('x'), 'ice cream', 'another role can provided indirectly required multi implementation (2)';
 }
 
 # vim: syn=perl6
