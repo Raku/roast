@@ -46,7 +46,7 @@ nok $non-existent-file.IO.e, "sanity check 2";
     ok $dest1a.IO.move( $dest1b, :createonly ), '.IO.move createonly';
     ok $dest1b.IO.e, "dest file does exist";
 
-    ok unlink($dest1a) == 0, 'clean-up 1a';
+    ok unlink($dest1a), 'clean-up 1a';
     ok unlink($dest1b), 'clean-up 1b';
 }
 
@@ -58,7 +58,7 @@ nok $non-existent-file.IO.e, "sanity check 2";
     
     my $existing-size3 = $existing-file2.IO.s;
     ok move( $existing-file2, $dest2a ), 'move() normal file';
-    nok $existing-file2.IO.e, 'source file no longer exists';
+    nok $existing-file1.IO.e, 'source file no longer exists';
     ok $dest2a.IO.e, 'dest file exists';
     is $dest2a.IO.s, $existing-size3, 'dest file has same size as source file';
 
@@ -72,12 +72,12 @@ nok $non-existent-file.IO.e, "sanity check 2";
     ok move( $dest2a, $dest2b, :createonly ), 'move() createonly';
     ok $dest2b.IO.e, "dest file does exist";
 
-    ok unlink($dest2a) == 0, 'clean-up 2a';
+    ok unlink($dest2a), 'clean-up 2a';
     ok unlink($dest2b), 'clean-up 2b';
 }
 
 # clean up
-ok unlink($existing-file1) == 0, 'clean-up 3';
-ok unlink($existing-file2) == 0, 'clean-up 4';
+ok unlink($existing-file1), 'clean-up 3';
+ok unlink($existing-file2), 'clean-up 4';
 
 # vim: ft=perl6
