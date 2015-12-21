@@ -28,7 +28,7 @@ my class ProfiledGrammarHOW is Metamodel::GrammarHOW {
 }
 
 sub get-timing is export { %timing }
-sub reset-timing is export { %timing = {} }
+sub reset-timing is export { %timing = () }
 
 my module EXPORTHOW { }
 EXPORTHOW.WHO.<grammar> = ProfiledGrammarHOW;
