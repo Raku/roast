@@ -15,4 +15,4 @@ ok MyGrammar.parse("37 + 10 - 5 = 42"), "parsed";
 my %timing = get-timing();
 
 ok %timing<MyGrammar><num><calls>, "num calls recorded";
-ok %timing<MyGrammar><num><time>, "time recorded";
+ok %timing<MyGrammar><num><time> ~~ Real:D, "time recorded";
