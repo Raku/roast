@@ -390,7 +390,8 @@ Hello, World
 
 # q:x
 {
-    my $result = $*DISTRO.is-win ?? "hello\r\n" !! "hello\n";
+    # due to automatic newline translation, no need to check for \r\n on win32
+    my $result = "hello\n";
     is q:x/echo hello/, $result, "Testing for q:x operator.";
 }
 # utf8
@@ -409,7 +410,7 @@ Hello, World
 {
     my $output = $*DISTRO.is-win
         ?? q:x/echo hello& echo world/
-        !! q:x/echo hello ; echo world/;
+        !! q:x/echo hello; echo world/;
     my @two_lines = $output.trim-trailing.lines;
     is @two_lines, ["hello", "world"], 'testing q:x assigned to array';
 }
@@ -417,8 +418,9 @@ Hello, World
 #?niecza todo ':x'
 {
     my $hello = 'howdy';
-    my @two_lines = qq:x/echo $hello ; echo world/.trim-trailing.lines;
-    is @two_lines, ("$hello", "world"), 'testing qq:x assigned to array';
+    my $sep = $*DISTRO.is-win ?? '&' !! ';';
+    my @two_lines = qq:x/echo $hello$sep echo world/.trim-trailing.lines;
+    is @two_lines, ["$hello", "world"], 'testing qq:x assigned to array';
 }
 
 

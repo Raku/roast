@@ -101,10 +101,11 @@ for %tests.keys.sort -> $t {
     my $number   = 5e+33;
     my $result_1 = 4999999999999999727876154935214080;   # result on Moar and Parrot
     my $result_2 = 5000000000000000000000000000000000;   # result on JVM
+    my $result_3 = 5000000000000000304336907238637568;   # result seen on Moar/MinGW
 
-    ok round($number) ~~ any($result_1,$result_2),
+    ok round($number) ~~ any($result_1,$result_2,$result_3),
         'large positive numbers rounded do not give negative numbers (1)';
-    ok $number.round ~~ any($result_1,$result_2),
+    ok $number.round ~~ any($result_1,$result_2,$result_3),
         'large positive numbers rounded do not give negative numbers (2)';
 }
 
