@@ -2,7 +2,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 27;
+plan 39;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -40,7 +40,7 @@ my @precompiled2 = Test::Util::run( q:to"--END--").lines;
     }
     --END--
 is @precompiled2.elems, 15;
-is $_, 'True' for @precompiled;
+is $_, 'True' for @precompiled2;
 
 # RT #123272
 my @keys2 = Test::Util::run( q:to"--END--").lines;
