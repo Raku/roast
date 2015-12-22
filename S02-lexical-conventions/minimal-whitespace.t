@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 18;
 
 # L<S03/Minimal whitespace DWIMmery/Whitespace is no longer allowed before>
 
@@ -51,5 +51,24 @@ lives-ok { EVAL 'my @rt80330; [+] @rt80330' },
 throws-like  { EVAL 'my @rt80330; [+]@rt80330' },
   X::Syntax::Confused,
   'a [+] without whitespace dies';
+
+#RT #126959
+{
+    throws-like { EVAL '42.,' },
+      X::Comp::Group, message => /"Decimal point must be followed by digit"/,
+      'comma is not allowed after dot after digit';
+    throws-like { EVAL '42.=' },
+      X::Comp::Group, message => /"Decimal point must be followed by digit"/,
+      'equal sign is not allowed after dot after digit';
+    throws-like { EVAL '42.:' },
+      X::Comp::Group, message => /"Decimal point must be followed by digit"/,
+      'colon is not allowed after dot after digit';
+    throws-like { EVAL '42.:all' },
+      X::Syntax::Number::IllegalDecimal,
+      'colonpair is not allowed after dot after digit';
+    throws-like { EVAL 'say 42.:all' },
+      X::Syntax::Number::IllegalDecimal,
+      'colonpair is not allowed after dot after digit in arglist';
+}
 
 # vim: ft=perl6
