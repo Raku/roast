@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 242;
+plan 244;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -649,4 +649,12 @@ is ds('1994-05-03T12:00:00Z').later(days => 536106031).Str, "+1469802-10-18T12:0
 is ds('2015-12-24T12:23:00Z').later(days => -537643699).Str, "-1470003-07-12T12:23:00Z", "subtracting large values days does not overflow";
 
 # RT #127003 comma not accepted
-is ds("2000-01-01T00:00:00,456"), "2000-01-01T00:00:00.456000Z", 'comma works';
+is ds("2000-01-01T00:00:00,456"), "2000-01-01T00:00:00.456000Z",
+  'second value with a comma works';
+
+# RT #127004
+is ds("+9992000-01-01T00:00:00"), "+9992000-01-01T00:00:00Z",
+  'large value of year in string works';
+is ds("-4004-10-23T00:00:00"), "-4004-10-23T00:00:00Z",
+  'negative value of year in string works';
+
