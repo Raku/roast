@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 =begin pod
 
@@ -25,3 +25,10 @@ class C {
 }
 is C.DEFINITE,     False, "Class declaring DEFINITE method doesn't influence .DEFINITE macro";
 is C."DEFINITE"(), True,  "Quoting lets us call the method, however";  #OK Useless
+
+lives-ok {
+    my $a = 0;
+    my Mu \a := $a;
+    a.DEFINITE;
+    a = 10;
+}, "DEFINITE doesn't destroy containers";
