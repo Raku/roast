@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 241;
+plan 242;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -647,3 +647,6 @@ is ds("2015-08-23T02:27:33Z"), ds("2015-08-23t02:27:33z"), "z and Z work, are sa
 # RT #125686 Date overflows
 is ds('1994-05-03T12:00:00Z').later(days => 536106031).Str, "1469802-10-18T12:00:00Z", "adding large values of days does not overflow";
 is ds('2015-12-24T12:23:00Z').later(days => -537643699).Str, "-1470003-07-12T12:23:00Z", "subtracting large values days does not overflow";
+
+# RT #127003 comma not accepted
+is ds("2000-01-01T00:00:00,456"), "2000-01-01T00:00:00.456000Z", 'comma works';
