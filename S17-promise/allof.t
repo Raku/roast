@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 {
     my $p1 = Promise.new;
@@ -42,6 +42,13 @@ plan 11;
     my $b = $all.result;  # block
     isa-ok $b, Bool, 'get a bool of the result';
     is ~@a, "0 1 2 3 4 5 6 7 8 9", 'got the right order';
+}
+
+# RT #122802
+{
+    my $job1 = start { print "" };
+    my $job2 = start { print "" };
+    ok (await Promise.allof($job1, $job2)), "start + await + allof combo, RT #122802";
 }
 
 throws-like { Promise.allof(42) }, X::Promise::Combinator;
