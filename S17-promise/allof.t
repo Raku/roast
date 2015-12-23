@@ -25,8 +25,8 @@ plan 12;
     my $pall = Promise.allof(@p);
     @p[0].keep(1);
     @p[1].break("danger danger");
-    dies-ok { $pall.result }, "result on broken all-Promise throws";
-    is $pall.status, Broken, "all-Promise was broken";
+    lives-ok { $pall.result }, "result on broken all-Promise does not throw";
+    is $pall.status, Kept, "all-Promise was kept";
 }
 
 {

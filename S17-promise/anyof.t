@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 9;
 
 {
     my $p1 = Promise.new;
@@ -24,12 +24,11 @@ plan 10;
     my $pany = Promise.anyof($p1, $p2);
     
     $p2.break("oh noes");
-    dies-ok { $pany.result }, "Getting result of broken anyof dies";
-    is $pany.status, Broken, "Promise was broken";
-    is $pany.cause.message, "oh noes", "breakage reason conveyed";
+    lives-ok { $pany.result }, "Getting result of anyof where on Promise broke lives";
+    is $pany.status, Kept, "Promise from anyof was kept";
     
     $p1.keep(1);
-    is $pany.status, Broken, "Other promise keeping doesn't affect status";
+    is $pany.status, Kept, "Other promise keeping doesn't affect status";
 }
 
 throws-like { Promise.anyof(42) }, X::Promise::Combinator;
