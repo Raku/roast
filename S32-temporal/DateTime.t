@@ -645,7 +645,7 @@ is ds("2015-08-23T02:27:33-07:00"), ds("2015-08-23t02:27:33-07:00"), "t and T wo
 is ds("2015-08-23T02:27:33Z"), ds("2015-08-23t02:27:33z"), "z and Z work, are same";
 
 # RT #125686 Date overflows
-is ds('1994-05-03T12:00:00Z').later(days => 536106031).Str, "1469802-10-18T12:00:00Z", "adding large values of days does not overflow";
+is ds('1994-05-03T12:00:00Z').later(days => 536106031).Str, "+1469802-10-18T12:00:00Z", "adding large values of days does not overflow";
 is ds('2015-12-24T12:23:00Z').later(days => -537643699).Str, "-1470003-07-12T12:23:00Z", "subtracting large values days does not overflow";
 
 # RT #127003 comma not accepted
