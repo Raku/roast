@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 295;
+plan 296;
 
 
 # tests various assignment styles
@@ -379,6 +379,11 @@ my @p;
         'use of R~= operator on a non-container dies';
     my ($x, $y) = <a b>; $x R~= $y;
     is("$x $y", "a ba", "R~= operator works");
+}
+
+{
+    dies-ok { my $foo = Failure.new(); $foo += 1 },
+        "use of += on a Failure will trigger the failure to be thrown";
 }
 
 {
