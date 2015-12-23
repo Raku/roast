@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 172;
+plan 179;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -342,6 +342,16 @@ lives-ok({"\0".."~"}, "low ascii range completes");
     ok 1 < (1..10).rand < 10, 'no borders excluded';
     ok 0.1 < (0.1^..0.3).rand <= 0.3, 'lower border excluded';
     throws-like ("a".."z").rand, Exception, 'cannot rand on string range';
+}
+
+{
+    is (1..10).minmax,        '1 10',     "simple Range.minmax on Ints";
+    is (3.5..4.5).minmax,     '3.5 4.5',  "simple Range.minmax on Rats";
+    is (3.5e1..4.5e1).minmax, '35 45',    "simple Range.minmax on Reals";
+    is ("a".."z").minmax,     'a z',      "simple Range.minmax on Strs";
+    is (-Inf..Inf).minmax,    '-Inf Inf', "simple Range.minmax on Nums";
+    is (^10).minmax,          '0 9',      "Range.minmax on Ints with exclusion";
+    dies-ok { ^Inf .minmax },  "cannot have exclusions for minmax otherwise";
 }
 
 # vim:set ft=perl6
