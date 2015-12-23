@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 387;
+plan 389;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -824,5 +824,9 @@ throws-like 'my Int $a is default(Nil)',
     }
     is c(), 3, "failure binding at end of block doesn't blow up with or without modifier if";
 }
+
+# RT #126987
+throws-like 'enum Animal (Cat, Dog)', X::Undeclared::Symbols;
+throws-like 'constant foo = bar', X::Undeclared::Symbols;
 
 # vim: ft=perl6
