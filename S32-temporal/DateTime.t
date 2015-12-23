@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 244;
+plan 245;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -658,3 +658,6 @@ is ds("+9992000-01-01T00:00:00"), "+9992000-01-01T00:00:00Z",
 is ds("-4004-10-23T00:00:00"), "-4004-10-23T00:00:00Z",
   'negative value of year in string works';
 
+# problem labster++ found
+is DateTime.new(127317232781632218937129), "+4034522497029953-07-13T17:38:49Z",
+  'very large value for epoch';
