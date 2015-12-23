@@ -1,5 +1,6 @@
 use v6;
 use Test;
+use experimental :pack;
 
 # L<S32::Str/Str/"=item pack">
 

@@ -78,6 +78,7 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 
 # RT #122827
 {
+    use experimental :pack;
     my Blob $x;
     throws-like { $x ~= pack "V",1 }, X::Buf::AsStr, :method<Stringy>;
 }

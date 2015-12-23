@@ -9,9 +9,9 @@ throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
 #?DOES 1
 throws-like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
-throws-like 'pack("B",  1)',       X::Buf::Pack, directive => 'B';
-throws-like 'Buf.new.unpack("B")', X::Buf::Pack, directive => 'B';
-throws-like 'pack "A2", "mÄ"',     X::Buf::Pack::NonASCII, char => 'Ä';
+throws-like 'use experimental :pack; pack("B",  1)',       X::Buf::Pack, directive => 'B';
+throws-like 'use experimental :pack; Buf.new.unpack("B")', X::Buf::Pack, directive => 'B';
+throws-like 'use experimental :pack; pack "A2", "mÄ"',     X::Buf::Pack::NonASCII, char => 'Ä';
 throws-like 'my class Foo { method a() { $!bar } }', X::Attribute::Undeclared,
             symbol => '$!bar', package-name => 'Foo', package-kind => 'class',
             what => 'attribute';

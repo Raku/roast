@@ -4,6 +4,7 @@ use Test;
 # L<S32::Str/Str/"=item pack">
 
 plan 2 * 12;
+use experimental :pack;
 
 {
     for "H*", <H*> -> $template {
