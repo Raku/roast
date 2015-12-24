@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 77;
+plan 78;
 
 # construction
 {
@@ -145,4 +145,9 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
 {
     is d('2015-12-25').later( years => 1_000_000_000_000 ), "+1000000002015-12-25", "adding large years does not overflow";
     is d('2015-12-25').earlier( days => 1_000_000_000_000 ),   "-2737904992-12-29", "subtracting large days does not underflow";
+}
+
+# RT #127010 negative years
+{
+    is d('-1234-12-24'), '-1234-12-24', 'negative years handled correctly';
 }
