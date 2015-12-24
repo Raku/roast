@@ -1,19 +1,12 @@
-	The Official Perl 6 Test Suite (someday...)
-
-This is the Official Perl 6 test suite. It evolved out of the pugs
-test suite, and is now maintained in a separate repository.
+	The Official Perl 6 Test Suite
 
 Its purpose is to validate implementations that wish to be known
 as a conforming Perl 6 implementation. 
 
-Please consider this test suite to be the result
-of an ongoing negotiation: since many of these tests are inspired
-by seeing how the various prototype implementations are screwed up
-(or even more likely, how the design of Perl 6 is screwed up), this
-test suite should be considered a work in progress until one or more
-of the implementations gets close to passing the entire test suite,
-at which point we will freeze version 6.0 of the test suite, and any
-implementation that passes it can then call itself Perl 6.
+Please consider this test suite to be the bleeding edge of Perl 6
+development. New tests, tests for experimental new features, etc.
+will live on this branch. Once a specification is cut, a branch
+will be created for that version of the spec, e.g. 6.c for Christmas.
 
 As they develop, different implementations will certainly be in
 different states of readiness with respect to the test suite, so
