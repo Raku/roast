@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 245;
+plan 246;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -661,3 +661,7 @@ is ds("-4004-10-23T00:00:00"), "-4004-10-23T00:00:00Z",
 # problem labster++ found
 is DateTime.new(127317232781632218937129), "+4034522497029953-07-13T17:38:49Z",
   'very large value for epoch';
+
+# problem lizmat found
+is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
+  'moving a year from a leap-date into a year without leap-date';
