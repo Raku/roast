@@ -1,5 +1,5 @@
 use Test;
-plan 42;
+plan 43;
 
 my $r;
 
@@ -83,5 +83,10 @@ is $r.contents[0].contents, 'C<boo> B<bar> asd';
 for @$=pod[5, 6] {
     is .contents[0].contents[0].contents[0], "infix:<+> ", "Can parse nested angles in formatting codes"
 }
+
+=pod B< < B<foo> > >
+
+$r = $=pod[7];
+is $r.contents[0].contents[0].contents[1].contents[0], 'foo','FC inside balanced <>';
 
 # vim: ft=perl6
