@@ -9,7 +9,7 @@ my $port = 5000;
 try {
     my $sync = Promise.new;
     IO::Socket::Async.listen('veryunlikelyhostname.bogus', $port).tap(quit => {
-        is $_.payload, 'Failed to resolve host name', 'Async listen on bogus hostname';
+        ok $_ ~~ Exception, 'Async listen on bogus hostname';
         $sync.keep(1);
     });
     await $sync;
