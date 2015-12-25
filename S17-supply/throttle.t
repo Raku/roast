@@ -16,15 +16,16 @@ diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
     my $before = now;
     (1..10).Supply.throttle(1,.5).tap: {
         @seen.push($_);
-        my $diff = now - $before;
-        $max     = $max min now - $before;
-        $min     = $min max now - $before;
-        $before  = now;
+        my $now  = now;
+        my $diff = $now - $before;
+        $max     = $max min $now - $before;
+        $min     = $min max $now - $before;
+        $before  = $now;
     };
     sleep 6;
     is @seen, (1..10), 'did we see all of the element';
     ok $min > .5, 'difference between each at least .5 seconds';
-    ok $max < .8, 'difference between each at most .8 seconds';
+    ok $max < .9, 'difference between each at most .8 seconds';
 }
 
 {
