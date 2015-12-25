@@ -49,15 +49,15 @@ diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 }
 
 for 1..10 -> $n {
-    my @a; @a[9] = 0; # pre-size array to allow seamless multi-thread updates
-    (1..10).Supply.throttle( $n, { @a[$_] = 1 } ).wait;
+    my @a[10];   # pre-size array to allow seamless multi-thread updates
+    (^10).Supply.throttle( $n, { @a[$_] = 1 } ).wait;
     is @a.sum, 10, "ok with $n at a time";
 }
 
 for 1..10 -> $n {
-    my @a; @a[9] = 0; # pre-size array to allow seamless multi-thread updates
+    my @a[10];   # pre-size array to allow seamless multi-thread updates
     my $before = now;
-    (1..10).Supply.throttle( $n, { sleep rand; @a[$_] = 1 } ).wait;
+    (^10).Supply.throttle( $n, { sleep rand; @a[$_] = 1 } ).wait;
     ok now < $before + ((12 - $n) * .6), "parallelism as expected with $n";
     is @a.sum, 10, "ok with $n at a time with random delay";
 }
