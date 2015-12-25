@@ -7,7 +7,7 @@ as a conforming Perl 6 implementation.
 
 Any tests that contain a "use experimental" are not considered
 part of the specification, and their behavior is subject to
-change.
+change. Anything not explicitly tested here is experimental.
 
 As they develop, different implementations will certainly be in
 different states of readiness with respect to the test suite, so
