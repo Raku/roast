@@ -5,6 +5,10 @@ Version: 6.c (Christmas)
 Its purpose is to validate implementations that wish to be known
 as a conforming Perl 6 implementation.
 
+Any tests that contain a "use experimental" are not considered
+part of the specification, and their behavior is subject to
+change.
+
 As they develop, different implementations will certainly be in
 different states of readiness with respect to the test suite, so
 in order for the various implementations to track their progress
