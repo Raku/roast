@@ -60,7 +60,8 @@ subtest {
 }, "alternate method of extracting two length-prefixed blobs";
 
 {
-    my @origs = <Reimu Marisa Sakuya Youmu Sanae Reisen>.map({Blob.new($_)});
+    my @origs =
+      <Reimu Marisa Sakuya Youmu Sanae Reisen>.map({.encode("Windows-1252")});
     my $blob = [~] @origs.map: -> $b {
       Blob.new($b.bytes, 0, 0, 0) ~ $b;
     }

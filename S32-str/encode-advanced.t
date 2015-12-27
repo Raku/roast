@@ -52,7 +52,8 @@ plan 11;
 }
 
 {
-    my @origs = <Reimu Marisa Sakuya Youmu Sanae Reisen>.map({Blob.new($_)});
+    my @origs =
+      <Reimu Marisa Sakuya Youmu Sanae Reisen>.map({.encode("Windows-1252")});
     my $expected-blob = [~] @origs.map: -> $b {
       Blob.new($b.bytes, 0, 0, 0) ~ $b;
     }
