@@ -54,7 +54,7 @@ plan 11;
 {
     my @origs = <Reimu Marisa Sakuya Youmu Sanae Reisen>.map({Blob.new($_)});
     my $expected-blob = [~] @origs.map: -> $b {
-      return Blob.new($b.bytes, 0, 0, 0) ~ $b;
+      Blob.new($b.bytes, 0, 0, 0) ~ $b;
     }
     my $actual-blob = encode([::Inf => [::uint32 => Blob]], @origs);
     is $actual-blob, $expected-blob,
@@ -65,7 +65,7 @@ plan 11;
     my @origs = <Reimu Marisa Sakuya Youmu Sanae Reisen>;
     my $expected-blob = [~] @origs.map: -> $name {
       my $b = $name.encode("Windows-1252");
-      return Blob.new($b.bytes, 0, 0, 0) ~ $b;
+      Blob.new($b.bytes, 0, 0, 0) ~ $b;
     }
     my $actual-blob = encode([::Inf => [::uint32 => "Windows-1252"]], @origs);
     is $actual-blob, $expected-blob,

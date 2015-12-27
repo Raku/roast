@@ -62,7 +62,7 @@ subtest {
 {
     my @origs = <Reimu Marisa Sakuya Youmu Sanae Reisen>.map({Blob.new($_)});
     my $blob = [~] @origs.map: -> $b {
-      return Blob.new($b.bytes, 0, 0, 0) ~ $b;
+      Blob.new($b.bytes, 0, 0, 0) ~ $b;
     }
     my @blobs = $blob.decode([::Inf => [::uint32 => Blob]]);
     is-deeply @blobs, @origs,
@@ -73,7 +73,7 @@ subtest {
     my @origs = <Reimu Marisa Sakuya Youmu Sanae Reisen>;
     my $blob = [~] @origs.map: -> $name {
       my $b = $name.encode("Windows-1252");
-      return Blob.new($b.bytes, 0, 0, 0) ~ $b;
+      Blob.new($b.bytes, 0, 0, 0) ~ $b;
     }
     my @strings = $blob.decode([::Inf => [::uint32 => "Windows-1252"]]);
     is-deeply @strings, @origs,
