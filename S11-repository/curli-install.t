@@ -1,12 +1,12 @@
 use v6;
-use Test;
-
-constant $path = 't/spec/packages/curli-install';
+constant $path = 't/spec/packages/curi-install';
 use lib "inst#$path";
 
+use Test;
 plan 18;
 
 rm_rf $path.IO if $path.IO.e;
+$path.IO.mkdir;
 
 # Tests on non-existing repository path
 {
