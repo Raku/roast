@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 79;
+plan 81;
 
 # construction
 {
@@ -155,3 +155,8 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
 # problem lizmat found
 is d("2016-02-29").later(:1year), "2017-02-28",
   'moving a year from a leap-date into a year without leap-date';
+
+is Date.new(2015,12,29,:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
+   '29/12/2015', 'formatter with y,m,d';
+is Date.new('2015-12-29',:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
+   '29/12/2015', 'formatter with "yyyy-mm-dd"';
