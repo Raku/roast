@@ -487,7 +487,7 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
 
     is ds('2013-12-23T12:56:34Z').later(hours => 14),
        ds('2013-12-24T02:56:34Z'),
-       'adding 14 horus, overflowing to days';
+       'adding 14 hours, overflowing to days';
 
     is ds('2013-12-23T12:34:36Z').later(day => 1),
        ds('2013-12-24T12:34:36Z'),
@@ -502,8 +502,8 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
        'adding 2 days, overflowing to March';
 
     is ds('2008-12-31T23:59:60Z').later(day => 1),
-       ds('2009-01-02T00:00:00Z'),
-       'adding a day to a leap second';
+       ds('2009-01-01T23:59:59Z'),
+       'adding a day to a leap second clips';
 
     is ds('1972-12-31T23:59:60Z').later(year => 1),
        ds('1973-12-31T23:59:60Z'),
@@ -571,7 +571,7 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
 
     is ds('2013-12-24T02:56:34Z').earlier(hours => 14),
        ds('2013-12-23T12:56:34Z'),
-       'subtracting 14 horus, overflowing to days';
+       'subtracting 14 hours, overflowing to days';
 
     is ds('2013-12-24T12:34:36Z').earlier(day => 1),
        ds('2013-12-23T12:34:36Z'),
