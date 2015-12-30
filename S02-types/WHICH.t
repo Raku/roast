@@ -46,7 +46,6 @@ my @normal = <
   HyperSeq
   HyperWhatever
   HyperWorkBuffer
-  IO::ArgFiles
   IO::Dir
   IO::File
   IO::Handle
