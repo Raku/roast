@@ -258,14 +258,14 @@ dies-ok { ds('2012-12-22T07:02:00+7:') }, 'single digit hour, trailing colon';
 
 {
     my $t = time;
-    1 while time == $t; # loop until the next second
+    Nil while time == $t; # loop until the next second
     $t = time;
     my $dt1 = DateTime.new($t);
     my $dt2 = DateTime.now.utc;        # $dt1 and $dt2 might differ very occasionally
     is show-dt($dt1), show-dt($dt2), 'DateTime.now uses current time';
 
     $t = time;
-    1 while time == $t;
+    Nil while time == $t;
     $t = time;
     $dt1 = DateTime.new($t);
     $dt2 = DateTime.now(
