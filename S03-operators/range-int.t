@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 506;
+plan 507;
 
 is ~(-17..-19), '', '-17..-19';
 is ~(-17..^-19), '', '-17..^-19';
@@ -510,5 +510,7 @@ is sum(1e0 .. 10e0), 55, "works with floater start/end";
 is sum(0.01 .. 10.01).WHAT, Rat, "delegates properly to Rat summation";
 is sum(0.01 .. 10.01), 55.11, "and produces correct answer";
 is sum("1".."9"), 45, "delegates to non-Real summation";
+
+is sum(10..0),0, "reversed range sums to 0";
  
 # vim: ft=perl6
