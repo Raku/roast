@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 31;
 
 {
     my $i = 0;
@@ -156,6 +156,12 @@ lives-ok { EVAL 'while 0 { my $_ }' }, 'Can declare $_ in a loop body';
 {
     sub f($x) { my $z; do +$z while ++$z < $x }
     is f(5), '1 2 3 4', "can return values from loop at end of sub";
+}
+
+# RT #127069
+{
+    is { loop (my int $i = 0; $i < 10; $i++) { +$i } }(), '0 1 2 3 4 5 6 7 8 9', "can return ints from loop at end of immediate block";
+    is { loop (my Int $i = 0; $i < 10; $i++) { +$i } }(), '0 1 2 3 4 5 6 7 8 9', "can return Ints from loop at end of immediate block";
 }
 
 # vim: ft=perl6
