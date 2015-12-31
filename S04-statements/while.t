@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 29;
 
 {
     my $i = 0;
@@ -126,7 +126,6 @@ lives-ok { EVAL 'while 0 { my $_ }' }, 'Can declare $_ in a loop body';
     is $undone, 0, "UNDO doesn't run in successful loop block";
 }
 
-#?rakudo skip "bug, loops"
 {
     my $undone = 0;
     is (loop (my $x = 1; $x < 3; ++$x) { UNDO ++$undone; +$x }), '1 2', 'can return values from a loop';
@@ -151,6 +150,12 @@ lives-ok { EVAL 'while 0 { my $_ }' }, 'Can declare $_ in a loop body';
 {
     $_ = 0;
     is (+$_ if $_ %% 2 until ++$_ > 9), '2 4 6 8', 'can use while as list comprehension';
+}
+
+# RT #127013
+{
+    sub f($x) { my $z; do +$z while ++$z < $x }
+    is f(5), '1 2 3 4', "can return values from loop at end of sub";
 }
 
 # vim: ft=perl6
