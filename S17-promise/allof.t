@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 {
     my $p1 = Promise.new;
@@ -49,6 +49,12 @@ plan 12;
     my $job1 = start { print "" };
     my $job2 = start { print "" };
     ok (await Promise.allof($job1, $job2)), "start + await + allof combo, RT #122802";
+}
+
+# RT #127101
+{
+    my $p = Promise.allof(my @promises);
+    is $p.status, Kept, 'an empty list should give a kept Promise';
 }
 
 throws-like { Promise.allof(42) }, X::Promise::Combinator;
