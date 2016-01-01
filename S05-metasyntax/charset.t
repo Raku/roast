@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 53;
+plan 54;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -131,5 +131,9 @@ is 'Ä' ~~ /:ignoremark (<[A..F]>|x)/, 'Ä',
     ':ignoremark in combination with charclass ranges works with LTM';
 is 'Ä' ~~ /:ignoremark :ignorecase (<[a..f]>|x)/, 'Ä',
     ':ignoremark :ignorecase in combination with charclass ranges works with LTM';
+
+{
+    is ("\0\0\0" ~~ /<[\0]>+/).Str, "\0\0\0", '\0 works inside character classes and matches null';
+}
 
 # vim: ft=perl6
