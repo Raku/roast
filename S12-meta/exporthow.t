@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 10;
+plan 11;
 
 use lib '.';
 
@@ -52,3 +52,11 @@ dies-ok { EVAL 'controller Fat { }' }, 'Imported declarators do not leak out of 
 
 throws-like { EVAL 'use t::spec::S12-meta::DeclareBad;' },
     X::EXPORTHOW::Conflict, directive => 'DECLARE', declarator => 'class';
+
+{
+    use t::spec::S12-meta::MultiDeclare;
+    lives-ok {
+        pokemon pikachu { }
+        digimon augmon  { }
+    }, 'multiple DECLAREs work';
+}
