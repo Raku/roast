@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 83;
+plan 87;
 
 {
     my int $x;
@@ -314,6 +314,26 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     isnt $u8, 8589934592, 'cannot store 2**33 in an unsigned uint8';
     $u8 = 2 ** 63;
     ok $u8 >= 0, 'cannot make a uint8 go negative by overflowing it';
+}
+
+# RT #127144, uint increment in sink context
+{
+    sub d { "++ on uint$^n overflows to 0 in sink context" }
+    my uint8  $uint8  = 0xff;
+    $uint8++;
+    #?rakudo todo "uint8 increment in sink context doesn't work"
+    is($uint8,  0, d 8);
+    my uint16 $uint16 = 0xffff;
+    $uint16++;
+    #?rakudo todo "uint16 increment in sink context doesn't work"
+    is($uint16, 0, d 16);
+    my uint32 $uint32 = 0xffffffff;
+    $uint32++;
+    #?rakudo todo "uint32 increment in sink context doesn't work"
+    is($uint32, 0, d 32);
+    my uint64 $uint64 = 0xffffffffffffffff;
+    $uint64++;
+    is($uint64, 0, d 64);
 }
 
 # vim: ft=perl6
