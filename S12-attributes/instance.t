@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 150;
+plan 169;
 
 =begin pod
 
@@ -714,6 +714,94 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
       subtype   => 'bar',
       declaring => 'n attribute',
     ;
+}
+
+# has $!foo declares private readonly accessor
+{
+    my class PrivateAccessor {
+	has $!secret = 42;
+	method peek()       { self!secret(); }
+	method poke($overt) { self!secret = $overt; }
+    }
+
+    my $pa = PrivateAccessor.new();
+    ok(!$pa.can("secret"), 'PrivateAccessor does not have a public accessor');
+    is($pa.peek(), 42, '...but it has a private accessor');
+    dies-ok { $pa.poke(43) }, '...which is a readonly accessor';
+}
+
+# has $!foo is readonly declares private readonly accessor
+{
+    my class PrivateAccessor {
+	has $!secret is readonly = 42;
+	method peek()       { self!secret(); }
+	method poke($overt) { self!secret = $overt; }
+    }
+
+    my $pa = PrivateAccessor.new();
+    ok(!$pa.can("secret"), 'PrivateAccessor does not have a public accessor');
+    is($pa.peek(), 42, '...but it has a private accessor');
+    dies-ok { $pa.poke(43) }, '...which is a readonly accessor';    
+}
+
+# has $!foo is rw declares private rw accessor
+{
+    my class PrivateAccessor {
+	has $!secret is rw = 42;
+	method peek()       { self!secret(); }
+	method poke($overt) { self!secret = $overt; }
+    }
+
+    my $pa = PrivateAccessor.new();
+    ok(!$pa.can("secret"), 'PrivateAccessor does not have a public accessor');
+    is($pa.peek(), 42, '...but it has a private accessor');
+    lives-ok { $pa.poke(43) }, '...which is a rw accessor';
+    is($pa.peek(), 43, '...that works');
+}
+
+# has $!foo does not declare a private accessor if there is already one defined
+{
+    my class PrivateAccessor {
+	has $!secret = 42;
+	method !secret() { $!secret + 1; }
+	method peek() { self!secret(); }
+    }
+
+    my $pa = PrivateAccessor.new();
+    ok(!$pa.can("secret"), 'PrivateAccessor does not have a public accessor');
+    is($pa.peek(), 43, '...the private accessor is not auto-generated');
+}
+
+# has $!foo does declare a private accessor if there is a public one defined
+{
+    my class PrivateAccessor {
+	has $!secret = 42;
+	method secret() { $!secret + 1; }
+	method peek() { self!secret(); }
+    }
+
+    my $pa = PrivateAccessor.new();
+    ok($pa.can("secret"), 'PrivateAccessor does have a public accessor');
+    is($pa.secret(), 43, '...but it is not auto-generated');
+    is($pa.peek(), 42, '...the private accessor is auto-generated');
+}
+
+# Can peruse private accessor within class for objects other than invocant
+{
+    my class PrivateAccessor {
+	has $!secret is rw;
+	submethod BUILD(:$!secret) {}
+	method sauce(PrivateAccessor $other) { self!secret() + $other!secret() }
+	method swap-secrets(PrivateAccessor $other) { (self!secret, $other!secret) = ($other!secret, self!secret) }
+	method peek() { $!secret }
+    }
+
+    my $secret1 = PrivateAccessor.new(:secret(5));
+    my $secret2 = PrivateAccessor.new(:secret(9));
+    is($secret1.sauce($secret2), 14, 'PrivateAccessor can access private data for other than invocant');
+    lives-ok { $secret1.swap-secrets($secret2) }, '...and can modify the data as well since it is declared as rw';
+    is($secret1.peek(), 9, '...secret1 contains secret2');
+    is($secret2.peek(), 5, '...and secret2 contains secret1');
 }
 
 # vim: ft=perl6

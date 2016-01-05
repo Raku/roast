@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 =begin pod
 
@@ -34,7 +34,8 @@ ok !@attrs[0].readonly,            'first attribute is not readonly';
 
 is @attrs[1].name,         '$!b',   'second attribute had correct name';
 is @attrs[1].type.gist,    '(Int)', 'second attribute had correct type';
-is @attrs[1].has_accessor, False,   'second attribute has no accessor';
+is @attrs[1].has_accessor, False,   'second attribute has no public accessor';
+is @attrs[1].has_private_accessor, True, 'second attribute has private accessor';
 ok @attrs[1].build ~~ Code,         'second attribute has build block';
 is @attrs[1].build().(C, $_), 42,
                               'second attribute build block gives expected value';
