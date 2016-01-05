@@ -136,7 +136,6 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
     is d('2014-03-14').earlier(weeks => 2), d('2014-02-28'), 'subtracting 2 weeks, overflowing from March';
     is d('2015-01-20').earlier(weeks => 3), d('2014-12-30'), 'subtracting 3 weeks, overflowing to years';
     lives-ok { Date.new('2010-01-31').later(month => 1) }, '.later does not try to create an impossible date';
-    #?rakudo 2 skip "month calculus wrong"
     is d('2014-02-07').earlier(months => 3), d('2013-11-07'), 'subtracting 3 months, underflowing year';
     is d('2014-02-07').earlier(months => 15), d('2012-11-07'), 'subtracting 15 months, underflowing 2 years';
     is d('2014-02-07').earlier(year => 1), d('2013-02-07'), 'subtracting 1 year';
