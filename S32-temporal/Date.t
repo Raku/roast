@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 81;
+plan 87;
 
 # construction
 {
@@ -125,6 +125,9 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
     is d('2014-01-31').later(week => 1), d('2014-02-07'), 'adding 1 week, overflowing to February';
     is d('2014-02-28').later(weeks => 2), d('2014-03-14'), 'adding 2 weeks, overflowing to March';
     is d('2014-12-30').later(weeks => 3), d('2015-01-20'), 'adding 3 weeks, overflowing to years';
+    is d('2014-12-30').later(months => 3), d('2015-03-30'), 'adding 3 months, overflowing to years';
+    is d('2014-12-30').later(months => 15), d('2016-03-30'), 'adding 15 months, overflowing to years';
+    is d('2014-12-30').later(years => 3), d('2017-12-30'), 'adding 3 years';
     is d('2013-12-24').earlier(day => 1), d('2013-12-23'), 'subtracting 1 day';
     is d('2014-02-01').earlier(day => 1), d('2014-01-31'), 'subtracting 1 day, overflowing from February';
     is d('2014-03-02').earlier(days => 2), d('2014-02-28'), 'subtracting 2 days, overflowing from March';
@@ -133,6 +136,10 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
     is d('2014-03-14').earlier(weeks => 2), d('2014-02-28'), 'subtracting 2 weeks, overflowing from March';
     is d('2015-01-20').earlier(weeks => 3), d('2014-12-30'), 'subtracting 3 weeks, overflowing to years';
     lives-ok { Date.new('2010-01-31').later(month => 1) }, '.later does not try to create an impossible date';
+    #?rakudo 2 skip "month calculus wrong"
+    is d('2014-02-07').earlier(months => 3), d('2013-11-07'), 'subtracting 3 months, underflowing year';
+    is d('2014-02-07').earlier(months => 15), d('2012-11-07'), 'subtracting 15 months, underflowing 2 years';
+    is d('2014-02-07').earlier(year => 1), d('2013-02-07'), 'subtracting 1 year';
 }
 
 # RT #125681
