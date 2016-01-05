@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 203;
+plan 204;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -428,3 +428,10 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $rt125611 = RT125611.new.foo: "a";
     is $rt125611<a>, True, 'can assign to subclassed SetHash';
 }
+
+# RT #127166
+{
+    ok <one two three>.map({$_}) ~~ SetHash.new(<two three one>), 'smartmatch a Seq';
+}
+
+# vim: ft=perl6

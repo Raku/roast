@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 175;
+plan 176;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -405,6 +405,11 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     my $a = (1,2,3,2,2,2,2).Set;
     is $a.kv[0,2,4].sort, (1,2,3), "Set.kv returns list of keys and values (1)";
     is $a.kv[1,3,5], (True, True, True), "Set.kv returns list of keys and values (2)";
+}
+
+# RT #127166
+{
+    ok <one two three>.map({$_}) ~~ set(<two three one>), 'smartmatch a Seq';
 }
 
 # vim: ft=perl6
