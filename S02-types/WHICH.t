@@ -232,6 +232,7 @@ my @exception = <
   X::Inheritance::SelfInherit
   X::Inheritance::UnknownParent
   X::Inheritance::Unsupported
+  X::Invalid::Value
   X::InvalidType
   X::InvalidTypeSmiley
   X::Item

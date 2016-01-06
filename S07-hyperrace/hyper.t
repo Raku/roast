@@ -1,6 +1,6 @@
 use Test;
 
-plan 6;
+plan 10;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -28,4 +28,15 @@ plan 6;
 {
     my @result = (^100).list.hyper.grep({ $_.is-prime }).map({ $_ * $_ });
     is @result, (4, 9, 25, 49, 121, 169, 289, 361, 529, 841, 961, 1369, 1681, 1849, 2209, 2809, 3481, 3721, 4489, 5041, 5329, 6241, 6889, 7921, 9409), "hyper + grep + map";
+}
+
+# RT #127191
+{
+    for <batch degree> -> $name {
+        for (-1,0) -> $value {
+            throws-like { ^10 .hyper(|($name => $value)) }, X::Invalid::Value,
+              :method<hyper>, :$name, :$value,
+              "cannot have a $name of $value for hyper";
+        }
+    }
 }
