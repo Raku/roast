@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 87;
+plan 88;
 
 # construction
 {
@@ -166,3 +166,10 @@ is Date.new(2015,12,29,:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
    '29/12/2015', 'formatter with y,m,d';
 is Date.new('2015-12-29',:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
    '29/12/2015', 'formatter with "yyyy-mm-dd"';
+
+# RT #127170
+{
+    role Foo { has @.a = 7, 8, 9 }
+    class BarDate is Date does Foo {}
+    is BarDate.today.a, [7,8,9], 'did role attributes get initialized ok';
+}

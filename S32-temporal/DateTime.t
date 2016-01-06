@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 246;
+plan 247;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -665,3 +665,10 @@ is DateTime.new(127317232781632218937129), "+4034522497029953-07-13T17:38:49Z",
 # problem lizmat found
 is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
   'moving a year from a leap-date into a year without leap-date';
+
+# RT #127170
+{
+    role Foo { has @.a = 7, 8, 9 }
+    class BarDate is DateTime does Foo {}
+    is BarDate.now.a, [7,8,9], 'did role attributes get initialized ok';
+}
