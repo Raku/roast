@@ -46,6 +46,7 @@ my @normal = <
   HyperSeq
   HyperWhatever
   HyperWorkBuffer
+  IO::ArgFiles
   IO::Dir
   IO::File
   IO::Handle
@@ -232,7 +233,6 @@ my @exception = <
   X::Inheritance::SelfInherit
   X::Inheritance::UnknownParent
   X::Inheritance::Unsupported
-  X::Invalid::Value
   X::InvalidType
   X::InvalidTypeSmiley
   X::Item
