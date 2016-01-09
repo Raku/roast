@@ -61,17 +61,17 @@ if $type eq "uint64" {
 }
 
 # RT #127210
-#?rakudo todo 'uint behaves like signed int in CUnion'
 {
-   class Overlap is repr('CUnion') {
-       has uint32 $.u32;
-       has uint16 $.u16;
-       has uint8  $.u8;
-   }
-   my $overlap = Overlap.new(u32 => -666, u16 => -10617, u8 => -121);
-   is $overlap.u32, 4294966630, "uint32 in union is unsigned";
-   is $overlap.u16,      54919, "uint16 in union is unsigned";
-   is $overlap.u8,         135,  "uint8 in union is unsigned";
+    class Overlap is repr('CUnion') {
+        has uint32 $.u32;
+        has uint16 $.u16;
+        has uint8  $.u8;
+    }
+    my $overlap = Overlap.new(u32 => 1234567);
+    is $overlap.u32, 1234567, "uint32 in union is unsigned";
+    #?rakudo 2 todo 'uint behaves like signed int in CUnion'
+    is $overlap.u16,   54919, "uint16 in union is unsigned";
+    is $overlap.u8,      135,  "uint8 in union is unsigned";
 }
 
 # vim: ft=perl6
