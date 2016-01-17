@@ -22,8 +22,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list("a".."z").grep(/<[a..e]>/),
       ["a".."e"],
       "grepping taps with a Regex works";
-    tap-ok Supply.from-list(<foo bar baz>).grep(/foo/).grep(/baz/),
-      [],
+    tap-ok Supply.from-list(<foo bar foobar>).grep(/foo/).grep(/bar/),
+      ['foobar'],
       "second grep only gets the results of the first RT#127297";
 }
 
