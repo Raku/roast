@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 7;
+plan 9;
 
 dies-ok { Supply.grep({...}) }, 'can not be called as a class method';
 
@@ -22,6 +22,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list("a".."z").grep(/<[a..e]>/),
       ["a".."e"],
       "grepping taps with a Regex works";
+    tap-ok Supply.from-list(<foo bar baz>).grep(/foo/).grep(/baz/),
+      [],
+      "second grep only gets the results of the first RT#127297";
 }
 
 # vim: ft=perl6 expandtab sw=4
