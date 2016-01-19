@@ -30,6 +30,80 @@ plan 10;
     is @result, (4, 9, 25, 49, 121, 169, 289, 361, 529, 841, 961, 1369, 1681, 1849, 2209, 2809, 3481, 3721, 4489, 5041, 5329, 6241, 6889, 7921, 9409), "hyper + grep + map";
 }
 
+#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
+{
+    # hyper + grep done in reverse
+
+    # This test only makes sense if the race version
+    # produces them in the exact opposite order.
+
+    my @promises;
+    for 0..4 {
+        @promises.push(Promise.new);
+    }
+    my $last = Promise.new;
+    @promises.push($last);
+    $last.keep;
+
+    #   0       1       2       3       4       5
+    # [ Planned Planned Planned Planned Planned Kept ]
+
+    #                        V===V                            V=V
+    my @result = (1..5).list.hyper( degree => 5, batch => 1 ).map({
+        # wait our turn
+        await @promises[$_];
+
+        # help prevent timing jitter from mattering
+        # by giving the thread that was blocking us
+        # a head start
+        sleep 0.01;
+
+        # allow the next lower one to proceed
+        @promises[$_ - 1].keep;
+
+        $_; # <==
+    });
+
+    is @result, (1, 2, 3, 4, 5), "test that hyper + map returns values in the right order";
+}
+
+#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
+{
+    # hyper + grep done in reverse
+
+    # this test only makes sense if the race version
+    # produces them in the exact opposite order
+
+    my @promises;
+    for 0..4 {
+        @promises.push(Promise.new);
+    }
+    my $last = Promise.new;
+    @promises.push($last);
+    $last.keep;
+
+    #   0       1       2       3       4       5
+    # [ Planned Planned Planned Planned Planned Kept ]
+
+    #                        V===V                            V==V
+    my @result = (1..5).list.hyper( degree => 5, batch => 1 ).grep({
+        # wait our turn
+        await @promises[$_];
+
+        # help prevent timing jitter from mattering
+        # by giving the thread that was blocking us
+        # a head start
+        sleep 0.01;
+
+        # allow the next lower one to proceed
+        @promises[$_ - 1].keep;
+
+        True; # <==
+    });
+
+    is @result, (1, 2, 3, 4, 5), "test that hyper + grep keeps values in the right order";
+}
+
 # RT #127191
 {
     for <batch degree> -> $name {
