@@ -1,11 +1,10 @@
 use v6;
 
-use lib $?FILE.IO.parent.Str;
 use MONKEY-SEE-NO-EVAL;
 
-my $required-Test = (require Test <&plan &is &lives-ok &skip &todo &nok>);
+my $required-Test = (require Test <&plan &is &lives-ok &skip &todo &nok &throws-like>);
 
-plan 19;
+plan 20;
 
 # RT #126100
 {
@@ -33,7 +32,7 @@ my $name = 't/spec/S11-modules/InnerModule.pm';
 }
 
 {
-    require NoModule <&bar>;
+    require t::spec::S11-modules::NoModule <&bar>;
     is bar(),'NoModule::bar','can import symbol not inside module';
 }
 
@@ -88,5 +87,10 @@ lives-ok { chdir "t/spec/packages"; require "Foo.pm"; },
 # RT #115626
 lives-ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm"; },
          'requiring something non-existent does not make it segfault';
+
+throws-like { require Fancy::Utilities <&aint-there> },
+    X::Import::MissingSymbols,'throws correct exception';
+
+nok ::('&bar'),"bar didn't leak";
 
 # vim: ft=perl6
