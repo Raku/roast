@@ -4,7 +4,7 @@ use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo &nok &throws-like>);
 
-plan 20;
+plan 19;
 
 # RT #126100
 {
@@ -22,7 +22,11 @@ is $staticname.gist, '(Test)', "require Test installs stub Test package at compi
 
 lives-ok { require "t/spec/S11-modules/InnerModule.pm"; },
          'can load InnerModule from a path at run time';
-is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
+
+# XXX: I'm not even sure that this should be part of the spec
+is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', "can introspect EXPORT of require'd package";
+
+is GLOBAL::InnerModule::<&oursub>(),"Inner::oursub","can call our-sub from required module";
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
 
@@ -35,8 +39,6 @@ my $name = 't/spec/S11-modules/InnerModule.pm';
     require t::spec::S11-modules::NoModule <&bar>;
     is bar(),'NoModule::bar','can import symbol not inside module';
 }
-
-is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
 
 # L<S11/"Runtime Importation"/"To specify both a module name and a filename, use a colonpair">
 {
