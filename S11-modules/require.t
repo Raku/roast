@@ -44,13 +44,6 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
     is bar(), 'Inner::bar', 'can load InnerModule by name and path, with import list';
 }
 
-#RT #118407
-#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux RT #118407"
-{ 
-    require InnerModule:file($name) <quux>;
-    is quux(), 'Inner::quux', "can import quux without ampersand (&quux)";
-}
-
 # no need to do that at compile time, since require() really is run time
 PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:prefix<t/spec/packages>, :next-repo($*REPO));
 
