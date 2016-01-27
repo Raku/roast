@@ -1,11 +1,11 @@
 use v6;
 
-use lib '.';
+use lib $?FILE.IO.parent.Str;
 use MONKEY-SEE-NO-EVAL;
 
-my $required-Test = (require Test <&plan &is &lives-ok &skip &todo>);
+my $required-Test = (require Test <&plan &is &lives-ok &skip &todo &nok>);
 
-plan 17;
+plan 19;
 
 # RT #126100
 {
@@ -27,9 +27,16 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
 
-#?rakudo todo 'variable form plus imports NYI RT #125084'
-lives-ok { require $name '&bar'; },
-         'can load InnerModule from a variable at run time';
+{
+    require $name '&bar';
+    is bar(),'Inner::bar','can load InnerModule from a variable at run time';
+}
+
+{
+    require NoModule <&bar>;
+    is bar(),'NoModule::bar','can import symbol not inside module';
+}
+
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
 
 # L<S11/"Runtime Importation"/"To specify both a module name and a filename, use a colonpair">
