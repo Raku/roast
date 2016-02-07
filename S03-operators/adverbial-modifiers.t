@@ -9,6 +9,7 @@ sub prefix:<blub> (Str $foo, Int :$times = 1) {
   ("BLUB" x $times) ~ $foo;
 }
 
+#doc-roast 'operators','operators accept adverbs'
 is prefix:<blub>("bar"), 'BLUBbar', 'user-defined prefix operator, long name';
 is prefix:<blub>("bar", times => 2), 'BLUBBLUBbar', 'user-defined prefix operator, long name, optional parameter';
 is prefix:<blub>(:times(2), "bar"), 'BLUBBLUBbar', 'user-defined prefix operator, long name, :times adverb, leading';
@@ -127,6 +128,7 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
 
 {
   # Exercise mixes of adverbs and positional arguments.
+  #doc-roast 'positional, named, and adverb arguments can be mixed'
 
   my $v;
   my sub f($s,:$x) { violin($x) ~ violin($s) }
@@ -184,6 +186,7 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
 }
 
 
+#doc-roast 'operators','prefix, infix, and postfix operators can have adverbs'
 {
   # Exercise adverbs on operators.
 

@@ -3,6 +3,7 @@ plan 8;
 
 # L<S03/"Junctive and (all) precedence"/"infix:<&>">
 
+#doc-roast 'operators','&infix:«S&»','sequential meta-operator to force order of &infix:«&»'
 ok ?(1 S& 2),         "basic infix:<S&>";
 #?niecza skip 'Excess arguments to CORE seqop, used 3 of 4 positionals'
 ok ?(1 S& 2 S& 3), "basic infix:<S&> (multiple S&'s)";

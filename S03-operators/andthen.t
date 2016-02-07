@@ -2,6 +2,7 @@ use v6;
 use Test;
 plan 8;
 
+#doc-roast 'operators','&infix:«andthen»'
 is (1 andthen 2), 2, 'andthen basics';
 is (1 andthen 2 andthen 3), 3, 'andthen chained';
 is (0 andthen 1), 1, 'definedness, not truthness';

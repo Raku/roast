@@ -9,10 +9,12 @@ plan 19;
 my $a;
 is($a.WHAT.gist, Any.gist, 'empty scalar is Any');
 
+#doc-roast 'declarator','unqualified @var is Array'
 my @a;
 ok(@a ~~ Array, 'it is an Array type');
 ok @a ~~ Positional, 'An Array does Positional';
 
+#doc-roast 'declarator','unqualified %var is Hash'
 my %a;
 ok(%a ~~ Hash, 'it is an Hash type');
 ok %a ~~ Associative, 'A Hash does Associative';
@@ -41,6 +43,7 @@ isa-ok($s1, Sub, 'it is a Sub type');
 #      |     |       |       |    |     |
 #     Sub Method Submethod Multi Rule Macro
 
+#doc-roast 'literal','hash','Empty {} is a Hash'
 # L<S06/Anonymous hashes vs blocks>
 my $s2 = {};
 ok($s2 ~~ Hash, 'it is a Hash type (bare block)');

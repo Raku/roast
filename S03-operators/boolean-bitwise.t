@@ -9,6 +9,7 @@ Tests for Synopsis 3
 
 plan 45;
 
+#doc-roast 'operators','&infix:«?|»','logical OR'
 { # L<S03/Changes to Perl 5 operators/ "?| is a logical OR">
   # work with pure Bool's
   ok( ?(False?|False == False), '?| works with Bools');
@@ -35,6 +36,7 @@ plan 45;
 
 }
 
+#doc-roast 'operators','&infix:«?&»','logical AND'
 { # L<S03/Changes to Perl 5 operators/ "?& is a logical AND">
   # work with pure Bool's
   ok( ?(False?&False == False), '?& works with Bools');
@@ -61,6 +63,7 @@ plan 45;
   isa-ok infix:<?&>(), Bool, '?& with no arguments yields a Bool';
 }
 
+#doc-roast 'operators','&infix:«?^»','logical XOR'
 { ## L<S03/Changes to Perl 5 operators/ "?^ is a logical XOR">
   # work with pure Bool's
   ok( ?(False?^False == False), '?^ works with Bools');
@@ -87,6 +90,7 @@ plan 45;
   isa-ok infix:<?^>(), Bool, '?^ with no arguments yields a Bool';
 }
 
+#doc-roast 'operators','&prefix:«?^»','logical NOT'
 #?rakudo.jvm 2 todo 'got (Int) instead of (Bool)'
 ok (?^5) === False, 'prefix ?^ (+)';
 ok (?^0) === True,  'prefix ?^ (-)';

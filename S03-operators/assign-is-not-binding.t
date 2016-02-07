@@ -26,6 +26,7 @@ plan 9;
 
 # test that assignment from arrays to scalars doesn't create a binding:
 
+#doc-roast 'operators','&infix«=»','assignment does not bind values'
 {
     my @array = 23, 42;
     is @array[0], 23, 'Could assign first element';

@@ -6,17 +6,16 @@ plan 40;
 
 # L<S03/Changes to Perl 5 operators/flipflop operator is now done with>
 
-
-# Basic ff
+#doc-roast 'operators','&infix:«ff»'
 {
     $_ = "1";
     ok (1 ff 1), 'flip-flop operator implemented';
-    
+
     ok (1 fff 1), 'fff operator implemented';
 }
 
 
-# test basic flip-flop operation
+#doc-roast 'operators','&infix:«ff»','compound ff'
 {
 
     sub test_ff($code, @a) {
@@ -31,7 +30,7 @@ plan 40;
     is test_ff({/B/ ^ff /D/  }, <A B C D E>), 'xxCDx', '/B/ ^ff /D/, lhs != rhs';
     is test_ff({/B/ ff^ /D/  }, <A B C D E>), 'xBCxx', '/B/ ff^ /D/, lhs != rhs';
     is test_ff({/B/ ^ff^ /D/ }, <A B C D E>), 'xxCxx', '/B/ ^ff^ /D/, lhs != rhs';
-    
+
     is test_ff({/B/ fff /D/  }, <A B C D E>), 'xBCDx', '/B/ fff /D/, lhs != rhs';
     is test_ff({/B/ ^fff /D/ }, <A B C D E>), 'xxCDx', '/B/ ^fff /D/, lhs != rhs';
     is test_ff({/B/ fff^ /D/ }, <A B C D E>), 'xBCxx', '/B/ fff^ /D/, lhs != rhs';
@@ -41,7 +40,7 @@ plan 40;
     is test_ff({/B/ ^ff /B/  }, <A B A B A>), 'xxxxx', '/B/ ^ff /B/, lhs == rhs';
     is test_ff({/B/ ff^ /B/  }, <A B A B A>), 'xxxxx', '/B/ ff^ /B/, lhs == rhs';
     is test_ff({/B/ ^ff^ /B/ }, <A B A B A>), 'xxxxx', '/B/ ^ff^ /B/, lhs == rhs';
-    
+
     is test_ff({/B/ fff /B/  }, <A B A B A>), 'xBABx', '/B/ fff /B/, lhs == rhs';
     is test_ff({/B/ ^fff /B/ }, <A B A B A>), 'xxABx', '/B/ ^fff /B/, lhs == rhs';
     is test_ff({/B/ fff^ /B/ }, <A B A B A>), 'xBAxx', '/B/ fff^ /B/, lhs == rhs';
@@ -52,6 +51,7 @@ plan 40;
 
 
 # test flip-flop sequence management
+#doc-roast 'operators','&infix:«ff»','flip-flop sequence management'
 {
     sub test_ff_cnt($code, @a) {
         my $ret = '';

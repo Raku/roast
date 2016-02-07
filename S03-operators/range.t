@@ -5,6 +5,7 @@ use Test;
 plan 125;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
+#doc-roast 'operators','&infix:«..»','Range object constructor'
 
 # 3..2 must *not* produce "3 2".  Use reverse to get a reversed range. -lwall
 is ~(3..6), "3 4 5 6", "(..) works on numbers (1)";

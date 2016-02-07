@@ -11,20 +11,21 @@ plan 38;
 # numerics
 
 # L<S03/Changes to Perl 5 operators/Bitwise operators get a data type prefix>
-#| D<operators/bitwise/data type prefix>
-#| D<operators/V«+&»>
-#| D<operators/V«+|»>
-#| D<operators/V«+^»>
+#doc-roast 'operators','bitwise'
+#doc-roast 'operators','&infix:«+&»','bitwise and'
+#doc-roast 'operators','&infix:«+|»','bitwise or'
+#doc-roast 'operators','&infix:«+^»','bitwise xor'
 {
 
   # numeric
+  #doc-roast 'operators','bitwise numeric'
   is( 0xdead +& 0xbeef,   0x9ead,    'numeric bitwise +& of hexadecimal' );
   is( 0xdead +| 0xbeef,   0xfeef,    'numeric bitwise +| of hexadecimal' );
   is( 0xdead +^ 0xbeef,   0x6042,    'numeric bitwise +^ of hexadecimal' );
   is( +^0xdead +& 0xbeef, 0x2042,    'numeric bitwise +^ and +& together' );
 
   # very large numbers
-  #| D<operators/bitwise/on large numbers>
+  #doc-roast 'operators','bitwise large numbers'
   is 0xdeaddead0000deaddead0000dead +& 0xbeef0000beef0000beef0000beef,
      0x9ead0000000000009ead00009ead,
      'numeric bitwise +& of bigint';
@@ -41,7 +42,6 @@ plan 38;
   is 0x0123456789abcdef, 81985529216486895,
       'correct bit result with big enough hexadecimal (0x) literal';
 
-  #| D<operators/bitwise/on negative numbers>
   # Negative numbers.  These really need more tests for bigint vs sized natives
   # RT #122310
   is (-5 +& -2),(-6), "logical AND of two negative Int is twos complement";
@@ -49,7 +49,7 @@ plan 38;
   is (-7 +^ -6),( 3), "logical XOR of two negative Int is twos complement";
 
   # string
-  #| D<operators/bitwise/on strings>
+  #doc-roast 'operators','bitwise strings'
   #?niecza 6 skip 'string bitops'
   is( 'a' ~& 'A',         'A',       'string bitwise ~& of "a" and "A"' );
   is( 'a' ~| 'b',         'c',       'string bitwise ~| of "a" and "b"' );
@@ -74,8 +74,8 @@ plan 38;
   is( "ok 20\n" ~| "ok \0\0\n", "ok 20\n",     'stringwise ~|, arbitrary string' );
 
   # bit shifting
-  #| D<operators/V«+<»>
-  #| D<operators/V«+>»>
+  #doc-roast 'operators','&infix:«+>»','bitwise shift right'
+  #doc-roast 'operators','&infix:«+<»','bitwise shift left'
   is( 32 +< 1,            64,     'shift one bit left' );
   is( 32 +> 1,            16,     'shift one bit right' );
   is( 257 +< 7,           32896,  'shift seven bits left' );
@@ -87,7 +87,6 @@ plan 38;
   is 0xdeaddead0000deaddead0000dead +> 4, 0xdeaddead0000deaddead0000dea, 'shift bigint 4 bits right';
 }
 
-#| D<operators/bitwise/cast negative floats to unsigned>
 {
   # Tests to see if you really can do casts negative floats to unsigned properly
   my $neg1 = -1.0.Num;
@@ -100,8 +99,8 @@ plan 38;
 }
 
 # RT #77232 - precedence of +< and +>
-#| D<operators/V«+<»/precedence>
-#| D<operators/V«+>»/precedence>
+#doc-roast 'operators','&infix:«+>»','precedence'
+#doc-roast 'operators','&infix:«+<»','precedence'
 {
   is( 48 + 0 +< 8, 48 + (0 +< 8), 'RT #77232 precedence of +<' );
   is( 48 + 0 +< 8, 48 + (0 +< 8), 'RT #77232 precedence of +>' );

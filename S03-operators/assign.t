@@ -11,10 +11,12 @@ plan 296;
 
 # tests various assignment styles
 {
+    #doc-roast 'operators','&infix:«=»','destructures lists'
     my ($foo, $bar) = ("FOO", "BAR");
     is($foo, "FOO", "assigned correct value to first of two scalars");
     is($bar, "BAR", "... and second");
 
+    #doc-roast 'operators','&infix:«=»','can be used for in-place swap'
     ($foo, $bar) = ($bar, $foo);
     is($foo, "BAR", "swap assignment works for the first value");
     is($bar, "FOO", "... and second");
@@ -215,6 +217,8 @@ plan 296;
 }
 
 my @p;
+
+#doc-roast 'operators','&infix:«=»','assignment can be used as a meta-operator'
 
 {
     my $a;

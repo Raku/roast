@@ -3,6 +3,7 @@ use Test;
 
 plan 36;
 
+#doc-roast 'hash','Any-typed hash access'
 {
     class A { method Str() { 'foo' } };
     my $a = A.new;
@@ -15,6 +16,7 @@ plan 36;
     ok %h.keys.list[0] === $a, 'returned key is correct';
 } #4
 
+#doc-roast 'hash','Any-valued hash semantics'
 {
     my %h{Int};
     %h{2} = 3;
@@ -22,7 +24,7 @@ plan 36;
     dies-ok { %h{'foo'} }, 'non-conformant type dies';
 } #2
 
-# combinations of typed and objecthash
+#doc-roast 'hash','Combination of typed and object hash'
 {
     my Int %h{Rat};
     %h{0.5} = 1;

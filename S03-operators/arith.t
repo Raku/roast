@@ -44,6 +44,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 }
 
 # L<S03/Operator precedence>
+#doc-roast 'operators','&infix:«%»'
 tryeq  13 %  4, 1;
 tryeq -13 %  4, 3;
 tryeq  13 % -4, -3;
@@ -72,6 +73,7 @@ ok abs( 13e21 % -4e21 - -3e21) < $limit;
 ok abs(-13e21 % -4e21 - -1e21) < $limit;
 
 # Hmm. Don t forget the simple stuff
+#doc-roast 'operators','&infix:«+»'
 tryeq 1 + 1, 2;
 tryeq 4 + -2, 2;
 tryeq -10 + 100, 90;
@@ -84,6 +86,7 @@ tryeq -1 + 4, 3;
 tryeq +4 + -17, -13;
 
 # subtraction
+#doc-roast 'operators','&infix:«-»'
 tryeq 3 - 1, 2;
 tryeq 3 - 15, -12;
 tryeq 3 - -7, 10;
@@ -139,6 +142,7 @@ tryeq 0 - -2147483647, 2147483647;
 }
 
 # Multiplication
+#doc-roast 'operators','&infix:«*»'
 
 tryeq 1 * 3, 3;
 tryeq -2 * 3, -6;
@@ -162,6 +166,7 @@ tryeq 1.2, " 1.2";
 tryeq -1.2, " -1.2";
 
 # divide
+#doc-roast 'operators','&infix:«div»'
 tryeq 28 div 14, 2;
 tryeq 28 div -7, -4;
 tryeq -28 div 4, -7;
@@ -173,6 +178,7 @@ is(9 div -4, -3, "9 div -4 == -3");
 is(-9 div -4, 2, "-9 div -4 == 2");
 
 # modulo
+#doc-roast 'operators','&infix:«mod»'
 is  13 mod  4, 1,  '13 mod 4';
 is -13 mod  4, 3,  '-13 mod 4';
 is  13 mod -4, -3, '13 mod -4';
@@ -182,12 +188,14 @@ is 4850761783423467784 mod 256, 8, '4850761783423467784 mod 256';
 is 2804985923338703271682399481743033703427656749129565173066 mod 256, 74,
     '2804985923338703271682399481743033703427656749129565173066 mod 256';
 
+#doc-roast 'operators','&infix:«/»'
 tryeq 2.5 / 2, 1.25;
 tryeq 3.5 / -2, -1.75;
 tryeq -4.5 / 2, -2.25;
 tryeq -5.5 / -2, 2.75;
 
 # exponentiation
+#doc-roast 'operators','&infix:«**»'
 
 is 2**2, 4;
 is 2.2**2, 4.84;
@@ -209,6 +217,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 
 {
 # Inf
+#doc-roast 'special-values','Inf'
     is Inf, Inf;
     is -Inf, -Inf;
     isnt Inf, -Inf;
@@ -259,6 +268,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 
 {
     # NaN
+    #doc-roast 'special-values','NaN'
     is NaN, NaN;
     is -NaN, NaN;
     is NaN+100, NaN;
@@ -299,6 +309,7 @@ All uses of a zero modulus or divisor should 'die', and the
 
 # RT #77592
 {
+    #doc-roast 'operators','&infix:«mod»','something mod 0 throws catchable exception'
     throws-like { 3 mod 0 }, X::Numeric::DivideByZero,
         numerator => 3,
         'Modulo zero with infix:<mod> dies and is catchable';
@@ -308,6 +319,7 @@ All uses of a zero modulus or divisor should 'die', and the
     throws-like { my $x := 0; 3 mod $x }, X::Numeric::DivideByZero,
         'Modulo zero with infix:<mod> dies and is catchable with VRef variables';
 
+    #doc-roast 'operators','&infix:«%»','something % 0 throws catchable exception'
     throws-like { say 3 % 0 }, X::Numeric::DivideByZero,
 #        expectedn => Int,
 #        gotn      => Failure,
@@ -321,6 +333,7 @@ All uses of a zero modulus or divisor should 'die', and the
 #        gotn      => Failure,
         'Modulo zero with infix:<%> dies and is catchable with VRef variables';
 
+    #doc-roast 'operators','&infix:«div»','something div 0 throws catchable exception'
     throws-like { 3 div 0 }, X::Numeric::DivideByZero,
         numerator => 3,
         'Division by zero with infix:<div> dies and is catchable';
@@ -331,6 +344,7 @@ All uses of a zero modulus or divisor should 'die', and the
         numerator => 3,
         'Division by zero with infix:<div> dies and is catchable with VRef variables';
 
+    #doc-roast 'operators','&infix:«/»','something / 0 throws catchable exception'
     throws-like { say 0 / 0 }, X::Numeric::DivideByZero,
         numerator => 0,
         'Division by zero with infix:</> dies and is catchable (1)';
@@ -389,7 +403,9 @@ All uses of a zero modulus or divisor should 'die', and the
 }
 
 # RT #122053
+#doc-roast 'operators','&infix:«/»','returns a Rat when it can'
 isa-ok 4.8 / 1, Rat, 'infix:</> returns Rat when it can';
+#doc-roast 'operators','&infix:«%»','returns a Rat when it can'
 isa-ok 4.8 % 1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
