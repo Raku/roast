@@ -53,8 +53,8 @@ is (1 RR[R-] 2),   1, 'RR[R-] works';
 
 # crazy stuff
 {
-    our sub infix:<blue>($a, $b) { 
-        $a % $b 
+    our sub infix:<blue>($a, $b) {
+        $a % $b
     }
     is 1031 [blue] 4, 3, "1031 [blue] 4 == 3";
 }
