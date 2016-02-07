@@ -1,6 +1,6 @@
 use Test;
 
-plan 10;
+plan 12;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -16,6 +16,24 @@ plan 10;
 
     @result = <a b c d e f g>.list.hyper.map({ $_.uc }).map({ $_ x 2 });
     is @result, <AA BB CC DD EE FF GG>, "two-stage map over some strings";
+}
+
+# RT #127099
+{
+    # This test may flap
+    my @result1 = ^1000 .hyper.map: * + 10;
+    is @result1, @result1.sort, 'hyper preserves the order of results';
+}
+
+#?rakudo todo 'hyper should always return something RT #127452'
+{
+    # This test may flap
+    my @result;
+    for ^10 { # try a couple of times
+        @result = ^10 .hyper(:3batch, :5degree).map({sleep rand * 0.001; $_ });
+        last if @result !~~ ^10;
+    }
+    is @result, ^10, 'hyper does not return an empty list';
 }
 
 #?rakudo todo 'hyper and race cause lists to become empty RT #126597'
