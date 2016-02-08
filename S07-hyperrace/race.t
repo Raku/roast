@@ -1,6 +1,6 @@
 use Test;
 
-plan 10;
+plan 12;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
