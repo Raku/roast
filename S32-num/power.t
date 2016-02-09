@@ -25,6 +25,7 @@ is (-1) ** $big-e,  1, "-1 ** $big-e == 1";
 #?rakudo.moar todo 'big exponents RT #124798'
 is (-1) ** $big-o, -1, "-1 ** $big-o == -1";
 #?rakudo.jvm 3 todo 'big exponents RT #127493'
+#?rakudo.moar 3 todo 'overflow exception is not thrown on OSX RT #127500'
 #?niecza skip "Slow and wrong"
 throws-like { EVAL qq[  2 ** $big-e]  }, $xno, " 2 ** $big-e";
 #?niecza 2 skip "Slow and wrong"
@@ -114,6 +115,7 @@ is (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴, 1, "(-1)⁴⁵⁵³�
 #?rakudo.moar todo 'big exponents RT #124798'
 #?rakudo.jvm 4 todo 'big exponents RT #124798 and RT #127493'
 is (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, -1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == -1";
+#?rakudo.moar 3 todo 'overflow exception is not thrown on OSX RT #127500'
 #?niecza skip "Slow and wrong"
 throws-like { EVAL qq[2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵] }, $xno, "2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws";
 #?niecza 2 skip "Slow and wrong"
