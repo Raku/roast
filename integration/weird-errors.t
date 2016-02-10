@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 20;
+plan 21;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -168,4 +168,10 @@ throws-like { EVAL '&&::{}[];;' },
         err => { m/"No such symbol ':<>'"/ },
     },
     'appropriate error message instead of internal compiler error' );
+}
+
+#RT #127504
+{
+    throws-like { "::a".EVAL }, X::NoSuchSymbol, symbol => "a",
+      "test throwing for ::a";
 }
