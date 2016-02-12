@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan 23;
 
 # XXX I'm not very confident in my reading of S04, so give a suspicious eye
 #     to these tests before using them.
@@ -23,13 +23,17 @@ sub fail_it { fail $^a }
 # L<S04/Exceptions/"test a Failure for .defined or .Bool">
 
 {
-    my @fails = ( fail_it(1), fail_it(2), fail_it(3), fail_it(4) );
+    my @fails = ( fail_it(1), fail_it(2), fail_it(3) );
 
     ok all(@fails) ~~ Failure, '@fails is full of fail';
     ok $! !~~ Exception, 'fails do not enter $!';
-    #?rakudo 11 skip '$!.pending'
-    is +($!.pending.grep( ! *.handled )), 4,
-       '$!.pending has three unhandled exceptions';
+
+    is +(@fails.grep( ! *.handled )), 3,
+       'none are handled yet';
+
+    ok @fails[0].handled ~~ Bool, '.handled returns a Bool';
+    ok ! @fails[0].handled,
+       'just calling .handled does not cause it to be handled';
 
     ok ! @fails[0].handled, 'fail 0 is not handled';
     ok   @fails[0].not,     'fail 0 is not true';
@@ -42,12 +46,15 @@ sub fail_it { fail $^a }
 # L<S04/Exceptions/"The .handled method is rw">
 
     ok ! @fails[2].handled, 'fail 2 is not handled';
-    lives-ok { @fails[2].handled = 1 }, 'assign to .handled';
+    lives-ok { @fails[2].handled = True }, 'assign True to .handled';
     ok   @fails[2].handled, 'fail 2 is now handled';
+    lives-ok { @fails[2].handled = False }, 'assign False to .handled';
+    ok ! @fails[2].handled, 'fail 2 is not handled anymore';
 
-    is +($!.pending.grep( ! *.handled )), 1,
-       '$!.pending has one unhandled exception';
 
+    # This is just a precaution to help protect the following
+    # set of tests from failing if something from this set
+    # of tests doesn't work correctly.
     undefine $!;
     ok ! $!, '$! has been cleared';
 }
@@ -58,7 +65,7 @@ sub fail_it { fail $^a }
     my $fails_thrown = 0;
     {
         my @throwable = ( fail_it(1), fail_it(2), fail_it(3) );
-        @throwable[1].handled = 1;
+        @throwable[1].handled = True;
         CATCH {
             default {
                 $fails_thrown += +($!.pending);
