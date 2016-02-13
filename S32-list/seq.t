@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan 28;
 
 my @result = 1,2,3;
 
@@ -112,4 +112,17 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 #?rakudo todo 'Cannot assign immutable'
     is @n, <a b>, 'WhateverCode in Seq slice assignment';
 
+}
+
+{
+    # RT #127492;
+    use MONKEY-SEE-NO-EVAL;
+    my \s = ().Seq;
+    # consume the seq
+    my @dummy = s.list;
+    my \roundtripped = EVAL s.perl;
+    ok roundtripped.defined, '.perl on an iterated sequence works';
+
+    throws-like { roundtripped.list }, X::Seq::Consumed,
+        '.perl on an iterated sequence faithfully reproduces such a sequence';
 }
