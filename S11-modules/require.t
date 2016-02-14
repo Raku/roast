@@ -27,7 +27,7 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
 
-#?rakudo todo 'variable form plus imports NYI RT #125084'
+# RT #125084'
 lives-ok { require $name '&bar'; },
          'can load InnerModule from a variable at run time';
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
