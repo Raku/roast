@@ -24,9 +24,7 @@ is $staticname.gist, '(Test)', "require Test installs stub Test package at compi
 lives-ok { require "t/spec/S11-modules/InnerModule.pm"; },
          'can load InnerModule from a path at run time';
 
-# XXX: I'm not even sure that this should be part of the spec
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', "can introspect EXPORT of require'd package";
-
 is GLOBAL::InnerModule::<&oursub>(),"Inner::oursub","can call our-sub from required module";
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
