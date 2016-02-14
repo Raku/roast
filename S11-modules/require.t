@@ -3,9 +3,9 @@ use v6;
 use lib '.';
 use MONKEY-SEE-NO-EVAL;
 
-my $required-Test = (require Test <&plan &is &lives-ok &skip &todo>);
-
-plan 17;
+my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
+                                  &nok &throws-like &eval-lives-ok>);
+plan 22;
 
 # RT #126100
 {
@@ -23,14 +23,23 @@ is $staticname.gist, '(Test)', "require Test installs stub Test package at compi
 
 lives-ok { require "t/spec/S11-modules/InnerModule.pm"; },
          'can load InnerModule from a path at run time';
-is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
+
+is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', "can introspect EXPORT of require'd package";
+is GLOBAL::InnerModule::<&oursub>(),"Inner::oursub","can call our-sub from required module";
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
 
-# RT #125084'
-lives-ok { require $name '&bar'; },
-         'can load InnerModule from a variable at run time';
-is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
+# RT #125084
+{
+    require $name '&bar';
+    is bar(),'Inner::bar','can load InnerModule from a variable at run time';
+}
+
+# RT #127233
+{
+    require t::spec::S11-modules::NoModule <&bar>;
+    is bar(),'NoModule::bar','can import symbol not inside module';
+}
 
 # L<S11/"Runtime Importation"/"To specify both a module name and a filename, use a colonpair">
 {
@@ -40,7 +49,7 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 
 #RT #118407
 #?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux RT #118407"
-{ 
+{
     require InnerModule:file($name) <quux>;
     is quux(), 'Inner::quux', "can import quux without ampersand (&quux)";
 }
@@ -81,5 +90,17 @@ lives-ok { chdir "t/spec/packages"; require "Foo.pm"; },
 # RT #115626
 lives-ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm"; },
          'requiring something non-existent does not make it segfault';
+
+
+throws-like { require Fancy::Utilities <&aint-there> },
+X::Import::MissingSymbols,'throws correct exception';
+
+eval-lives-ok q|BEGIN require Fancy::Utilities;|, 'require works at BEGIN';
+
+#?rakudo skip 'import require at compile time RT #127538'
+eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import at BEGIN';
+
+nok ::('&bar'),"bar didn't leak";
+
 
 # vim: ft=perl6
