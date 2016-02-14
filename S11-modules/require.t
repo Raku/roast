@@ -2,9 +2,10 @@ use v6;
 
 use MONKEY-SEE-NO-EVAL;
 
-my $required-Test = (require Test <&plan &is &lives-ok &skip &todo &nok &throws-like>);
+my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
+                                  &nok &throws-like &eval-lives-ok>);
 
-plan 19;
+plan 21;
 
 # RT #126100
 {
@@ -85,6 +86,11 @@ lives-ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm"; },
 
 throws-like { require Fancy::Utilities <&aint-there> },
     X::Import::MissingSymbols,'throws correct exception';
+
+eval-lives-ok q|BEGIN require Fancy::Utilities;|, 'require works at BEGIN';
+
+#?rakudo skip 'import require at compile time RT #127538'
+eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import at BEGIN';
 
 nok ::('&bar'),"bar didn't leak";
 
