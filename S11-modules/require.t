@@ -102,5 +102,14 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
 
 nok ::('&bar'),"bar didn't leak";
 
+# Test for behaviour relied on by e.g. "panda"
+# The change is in https://github.com/rakudo/rakudo/pull/714
+{
+        require "t/spec/S11-modules/GlobalOuter.pm";
+        nok ::('GlobalOuter') ~~ Failure, "got outer symbol";
+        ok  ::('GlobalOuter').load, "call method that causes a require";
+        nok ::('GlobalInner') ~~ Failure, "got inner symbol";
+}
+
 
 # vim: ft=perl6
