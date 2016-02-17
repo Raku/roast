@@ -5,7 +5,7 @@ use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
                                   &nok &throws-like &eval-lives-ok>);
-plan 22;
+plan 25;
 
 # RT #126100
 {
