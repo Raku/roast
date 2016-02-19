@@ -19,7 +19,7 @@ plan 3;
 
 {
     my $start = now;
-    my $p = Promise.at(now + 11);
+    my $p = Promise.at(now + 2);
     is $p.result, True, "Promise.at result is True";
     ok now - $start >= 1, "Promise.at took long enough";
 }
