@@ -8,12 +8,12 @@ plan 3;
 # this means we can test the actual bug in the ticket.
 {
     my @order;
-    await Promise.anyof(
-        start { sleep 3; @order.push(3) },
-        Promise.at(now + 1).then({ @order.push(1) }));
+    my $p1 = start { sleep 3; @order.push(3) },
+    my $p2 = Promise.at(now + 1).then({ @order.push(1) });
+    await Promise.anyof($p1, $p2);
     sleep 1;
     @order.push(2);
-    sleep 2;
+    await $p1, $p2;
     is @order, (1, 2, 3), 'Scheduler did not cause things to run in wrong order';
 }
 
