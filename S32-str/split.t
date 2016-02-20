@@ -499,7 +499,7 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
       'clashing named parameters';
 }
 
-is "aaaaabbbbb".split(<aaa aa bb bbb>,:v), " aaa aa bbb bb ",
+is "aaaaabbbbb".split(<aaa aa bb bbb>,:v), " aaa  aa  bbb  bb ",
   "test overlapping needles";
 
 # vim: ft=perl6
