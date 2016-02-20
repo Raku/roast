@@ -1,11 +1,10 @@
 use v6;
-
-use lib '.';
+use lib $?FILE.IO.parent.child("lib").Str;
 use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
                                   &nok &throws-like &eval-lives-ok &ok>);
-plan 25;
+plan 27;
 
 # RT #126100
 {
@@ -111,5 +110,12 @@ nok ::('&bar'),"bar didn't leak";
         nok ::('GlobalInner') ~~ Failure, "got inner symbol";
 }
 
+# Test that symbols under a core package namespace (Cool::) are merged.
+# see https://github.com/rakudo/rakudo/pull/714, WRT IO::Socket::SSL
+{
+    my $res = (require Cool::Utils);
+    nok ::('Cool::Utils') ~~ Failure,'Cool::Utils has been merged';
+    is $res,::('Cool::Utils'), 'Cool::Utils was returned';
+}
 
 # vim: ft=perl6
