@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 101;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -112,28 +112,57 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 
 # .append tests (RT #125182)
 {
-    my $a = Buf.new(1, 2, 3);
-    $a.append(4);
-    is $a.elems, 4, "Buf .elems correct after push";
-    is $a[3], 4, "Buf last element correct after push";
+    for <append push> -> $what {
+        my $a = Buf.new(1, 2, 3);
+        ok $a === $a."$what"(4), "$what returns self";
+        is $a.elems, 4, "Buf .elems correct after $what";
+        is $a[3], 4, "Buf last element correct after $what";
 
-    my @items = 5, 6;
-    $a.append(@items);
+        my @items = 5, 6;
+        ok $a === $a."$what"(@items), "$what returns self";
 
-    is $a.elems, 6, "Buf .elems correct after pushing a list";
-    is $a[4], 5, "Buf penultimate element correct after pushing a list";
-    is $a[5], 6, "Buf last element correct after pushing a list";
+        is $a.elems, 6, "Buf .elems correct after {$what}ing a list";
+        is $a[4], 5, "Buf penultimate element correct after {$what}ing a list";
+        is $a[5], 6, "Buf last element correct after {$what}ing a list";
 
-    $a.append(7, 8);
+        ok $a === $a."$what"(7, 8), "$what returns self";
 
-    is $a.elems, 8, "Buf .elems correct after pushing varargs";
-    is $a[6], 7, "Buf penultimate element correct after pushing varargs";
-    is $a[7], 8, "Buf last element correct after pushing varargs";
+        is $a.elems, 8, "Buf .elems correct after {$what}ing varargs";
+        is $a[6], 7, "Buf penultimate element correct {$what}ing appending varargs";
+        is $a[7], 8, "Buf last element correct after {$what}ing varargs";
 
-    $a.append(9 xx 1);
+        ok $a === $a."$what"(9 xx 1), "$what returns self";
 
-    is $a.elems, 9, "Buf .elems correct after pushing xx list";
-    is $a[8], 9, "Buf last element correct after pushing xx list";
+        is $a.elems, 9, "Buf .elems correct after {$what}ing xx list";
+        is $a[8], 9, "Buf last element correct after {$what}ing xx list";
+    }
+}
+
+{
+    for <prepend unshift> -> $what {
+        my $a = Buf.new(1, 2, 3);
+        ok $a === $a."$what"(4), "$what returns self";
+        is $a.elems, 4, "Buf .elems correct after $what";
+        is $a[0], 4, "Buf last element correct after $what";
+
+        my @items = 5, 6;
+        ok $a === $a."$what"(@items), "$what returns self";
+
+        is $a.elems, 6, "Buf .elems correct after {$what}ing a list";
+        is $a[0], 5, "Buf penultimate element correct after {$what}ing a list";
+        is $a[1], 6, "Buf last element correct after {$what}ing a list";
+
+        ok $a === $a."$what"(7, 8), "$what returns self";
+
+        is $a.elems, 8, "Buf .elems correct after {$what}ing varargs";
+        is $a[0], 7, "Buf penultimate element correct {$what}ing appending varargs";
+        is $a[1], 8, "Buf last element correct after {$what}ing varargs";
+
+        ok $a === $a."$what"(9 xx 1), "$what returns self";
+
+        is $a.elems, 9, "Buf .elems correct after {$what}ing xx list";
+        is $a[0], 9, "Buf last element correct after {$what}ing xx list";
+    }
 }
 
 # RT #123928
