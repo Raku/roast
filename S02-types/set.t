@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 176;
+plan 177;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -410,6 +410,10 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 # RT #127166
 {
     ok <one two three>.map({$_}) ~~ set(<two three one>), 'smartmatch a Seq';
+}
+
+{
+    isa-ok set(42).Hash.keys[0], Int, "make sure set.Hash returns objects";
 }
 
 # vim: ft=perl6
