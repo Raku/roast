@@ -143,25 +143,25 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
         my $a = Buf.new(1, 2, 3);
         ok $a === $a."$what"(4), "$what returns self";
         is $a.elems, 4, "Buf .elems correct after $what";
-        is $a[0], 4, "Buf last element correct after $what";
+        is $a[0], 4, "Buf first element correct after $what";
 
         my @items = 5, 6;
         ok $a === $a."$what"(@items), "$what returns self";
 
         is $a.elems, 6, "Buf .elems correct after {$what}ing a list";
-        is $a[0], 5, "Buf penultimate element correct after {$what}ing a list";
-        is $a[1], 6, "Buf last element correct after {$what}ing a list";
+        is $a[0], 5, "Buf first element correct after {$what}ing a list";
+        is $a[1], 6, "Buf second element correct after {$what}ing a list";
 
         ok $a === $a."$what"(7, 8), "$what returns self";
 
         is $a.elems, 8, "Buf .elems correct after {$what}ing varargs";
-        is $a[0], 7, "Buf penultimate element correct {$what}ing appending varargs";
-        is $a[1], 8, "Buf last element correct after {$what}ing varargs";
+        is $a[0], 7, "Buf first element correct {$what}ing appending varargs";
+        is $a[1], 8, "Buf second element correct after {$what}ing varargs";
 
         ok $a === $a."$what"(9 xx 1), "$what returns self";
 
         is $a.elems, 9, "Buf .elems correct after {$what}ing xx list";
-        is $a[0], 9, "Buf last element correct after {$what}ing xx list";
+        is $a[0], 9, "Buf first element correct after {$what}ing xx list";
     }
 }
 
