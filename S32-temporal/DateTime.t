@@ -502,7 +502,7 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
        'adding 2 days, overflowing to March';
 
     is ds('2008-12-31T23:59:60Z').later(day => 1),
-       ds('2009-01-02T00:00:00Z'),
+       ds('2009-01-01T23:59:59Z'),
        'adding a day to a leap second';
 
     is ds('1972-12-31T23:59:60Z').later(year => 1),
