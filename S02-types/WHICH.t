@@ -47,8 +47,6 @@ my @normal = <
   HyperWhatever
   HyperWorkBuffer
   IO::ArgFiles
-  IO::Dir
-  IO::File
   IO::Handle
   IO::Notification
   IO::Path
