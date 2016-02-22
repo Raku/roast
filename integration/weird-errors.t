@@ -165,7 +165,7 @@ throws-like { EVAL '&&::{}[];;' },
     is_run('(:::[])',
     {
         out => '',
-        err => { m/'Could not locate compile-time value'/ },
+        err => { m/"No such symbol ':<>'"/ },
     },
     'appropriate error message instead of internal compiler error' );
 }
