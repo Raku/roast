@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 BEGIN %*ENV<RAKUDO_DEPRECATIONS_FATAL>:delete; # disable fatal setting for tests
 

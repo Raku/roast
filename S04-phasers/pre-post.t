@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 use Test;
 # Test of PRE and POST traits

@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # Test phasers in EVAL strings
 

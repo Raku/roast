@@ -1,6 +1,6 @@
+use v6.c;
 # http://rosettacode.org/wiki/Sierpinski_triangle#Perl_6
 
-use v6;
 use Test;
 
 plan 1;

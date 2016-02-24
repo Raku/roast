@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # Test control blocks (BEGIN/CHECK/INIT/END) used as rvalues
 # [TODO] add tests for other control blocks

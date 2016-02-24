@@ -1,3 +1,4 @@
+use v6.c;
 unit module ArrayInit;
 
 # used by t/spec/S10-packages/basic.t

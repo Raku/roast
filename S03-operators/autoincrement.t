@@ -1,4 +1,4 @@
-
+use v6.c;
 use Test;
 
 # Tests for auto-increment and auto-decrement operators

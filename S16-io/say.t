@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # L<S32::IO/IO/=item say>
 

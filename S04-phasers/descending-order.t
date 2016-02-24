@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # Test the running order of phasers
 # These blocks appear in descending order

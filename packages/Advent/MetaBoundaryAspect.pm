@@ -1,3 +1,4 @@
+use v6.c;
 my class MethodBoundaryAspect is export {
 }
 

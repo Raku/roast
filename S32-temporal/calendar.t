@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # calendar.t: tests some calendar-related methods common to

@@ -1,3 +1,5 @@
+use v6.c;
+
 use Test;
 
 plan 6;

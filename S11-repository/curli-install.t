@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 constant $path = 't/spec/packages/curli-install';

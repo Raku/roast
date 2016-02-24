@@ -1,5 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2011/12/14/meta-programming-what-why-and-how/
-use v6;
+
 use Test;
 plan 8;
 

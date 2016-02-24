@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # Nil may be a type now.  Required?

@@ -1,3 +1,4 @@
+use v6.c;
 # S15-literals/identifiers.t --- tests Unicode (namely non-ASCII) identifiers
 
 use Test;

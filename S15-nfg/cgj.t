@@ -1,3 +1,4 @@
+use v6.c;
 # for background, see http://irclog.perlgeek.de/perl6/2015-06-08#i_10716770 through 16:44 UTC
 
 # non-normative references:

@@ -1,3 +1,4 @@
+use v6.c;
 use Test;
 
 # L<S16/IO/$*TMPDIR>

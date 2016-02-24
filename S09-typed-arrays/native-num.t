@@ -1,4 +1,5 @@
-﻿use Test;
+﻿use v6.c;
+use Test;
 
 my @num = num, num32;
 if $*KERNEL.bits == 64 {

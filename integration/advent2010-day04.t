@@ -1,6 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2010/12/04/the-sequence-operator/
 
-use v6;
 use Test;
 plan 11;
 

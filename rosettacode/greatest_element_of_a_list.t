@@ -1,6 +1,6 @@
+use v6.c;
 # http://rosettacode.org/wiki/Greatest_element_of_a_list#Perl_6
 
-use v6;
 use Test;
 
 plan 1;

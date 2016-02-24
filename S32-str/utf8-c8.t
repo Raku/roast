@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # The UTF-8 Clean 8-bit encoding is used to ensure we can roundtrip any

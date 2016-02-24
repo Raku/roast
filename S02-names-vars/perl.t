@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 plan 116;
 # L<S02/Names and Variables/To get a Perlish representation of any object>

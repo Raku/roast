@@ -1,2 +1,3 @@
+use v6.c;
 BEGIN $*KERNEL;
 BEGIN $*DISTRO;

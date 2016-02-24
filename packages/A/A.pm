@@ -1,3 +1,4 @@
+use v6.c;
 # used in t/spec/S11-modules/nested.t 
 
 use lib 't/spec/packages';

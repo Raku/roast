@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # L<S02/Mutable types/A single key-to-value association>

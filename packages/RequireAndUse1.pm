@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # require and use return the last statement evaluated in the .pm, in this case
 # 42. See thread "What do use and require evaluate to?" on p6l started by Ingo

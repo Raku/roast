@@ -1,6 +1,6 @@
+use v6.c;
 #! http://perl6advent.wordpress.com/2011/12/10/documenting-perl-6/
 
-use v6;
 use Test;
 use lib 't/spec/packages';
 use Test::Util;

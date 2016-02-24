@@ -1,3 +1,4 @@
+use v6.c;
 # Normal Form Grapheme .chars tests, generated from NormalizationTests.txt in
 # the Unicode database by S15-nfg/test-gen.p6. Check that a string in NFG form
 # gets the right number of characters.

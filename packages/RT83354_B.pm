@@ -1,3 +1,4 @@
+use v6.c;
 use RT83354_A;
 
 class RT83354_B {

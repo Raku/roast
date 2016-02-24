@@ -1,3 +1,4 @@
+use v6.c;
 class Stupid::Class {
     has $.attrib is rw;
     method setter($x) { $.attrib = $x; }

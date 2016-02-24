@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # L<S32::Containers/"Array"/"=item splice">

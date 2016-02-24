@@ -1,6 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2012/12/18/day-18-formulas-resistance-is-futile/
 
-use v6;
 use Test;
 
 plan 10;

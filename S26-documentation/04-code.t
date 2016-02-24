@@ -1,3 +1,4 @@
+use v6.c;
 use Test;
 plan 50;
 my $r;

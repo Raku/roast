@@ -1,5 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2010/12/22/day-22-the-meta-object-protocol/
-use v6;
+
 use Test;
 plan 3;
 

@@ -1,5 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2012/12/23/day-23-macros/
-use v6;
+
 use Test;
 use experimental :macros;
 

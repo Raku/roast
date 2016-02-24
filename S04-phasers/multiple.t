@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # [TODO] add tests for ENTER/LEAVE/KEEP/UNDO/PRE/POST/etc
 

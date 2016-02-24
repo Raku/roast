@@ -1,8 +1,8 @@
+use v6.c;
 # WARNING:
 # This is a generated file and should not be edited directly.
 # look into generate-tests.pl instead
 
-use v6;
 use Test;
 
 sub degrees-to-radians($x) {

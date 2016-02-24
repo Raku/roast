@@ -1,3 +1,4 @@
+use v6.c;
 use Test;
 
 # stress test for lexicals and lexical subs

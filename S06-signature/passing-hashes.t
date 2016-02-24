@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # L<S06/Parameters and arguments>
 # TODO: better smart-linking

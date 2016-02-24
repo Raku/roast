@@ -1,6 +1,6 @@
+use v6.c;
 # check output (text output and return code) of tests
 
-use v6;
 use Test;
 
 plan 4;

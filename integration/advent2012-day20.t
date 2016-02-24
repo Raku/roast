@@ -1,6 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2012/12/20/day-20-dynamic-variables-and-dsl-y-things/
 
-use v6;
 use Test;
 plan 2;
 

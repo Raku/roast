@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # Test the running order of BEGIN/CHECK/INIT/ENTER/END
 # These blocks appear in ascending order

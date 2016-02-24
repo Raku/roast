@@ -31,6 +31,7 @@ sub write-test-files($template, $method, @source, @expected) {
 sub write-test-file($target, $method, @source, @expected) {
     given open($target, :w) {
         .say: qq:to/HEADER/;
+use v6.c;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
 
@@ -55,6 +56,7 @@ sub write-sanity-test-file($target, $method, @source, @expected) {
 
     given open($target, :w) {
         .say: qq:to/HEADER/;
+use v6.c;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
 

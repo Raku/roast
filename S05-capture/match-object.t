@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # this file should become the test for systematically testing

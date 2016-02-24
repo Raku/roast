@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 module HasMain {
     sub MAIN() { die 'HasMain::Main' }
 }

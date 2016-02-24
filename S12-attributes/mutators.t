@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # this tests that you can define mutators, that do more interesting
 # things than merely assigning the value!

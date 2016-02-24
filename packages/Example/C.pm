@@ -1,3 +1,4 @@
+use v6.c;
 use experimental :cached;
 
 package Example::C {

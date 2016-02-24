@@ -1,3 +1,4 @@
+use v6.c;
 unit module Test::Idempotence;
 
 use Test;

@@ -1,5 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2011/12/16/where-have-all-the-references-gone/
-use v6;
+
 use Test;
 plan 12;
 

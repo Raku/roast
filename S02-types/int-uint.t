@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # L<S09/Sized types/Sized low-level types are named most generally by appending the number of bits to a generic low-level type name>

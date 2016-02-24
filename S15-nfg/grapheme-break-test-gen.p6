@@ -22,6 +22,7 @@ sub MAIN(Str $grapheme-break-test-file) {
 
     given open(TEST_FILE, :w) {
         .say: qq:to/HEADER/;
+use v6.c;
 # Tests generated from the Unicode Character Database's GraphemeBreakTest.txt
 # by S15-nfg/grapheme-break-test-gen.p6.
 

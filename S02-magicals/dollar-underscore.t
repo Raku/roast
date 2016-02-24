@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 
 # Tests for a bug uncovered when Jesse Vincent was testing
 # functionality for Patrick Michaud

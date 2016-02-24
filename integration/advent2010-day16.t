@@ -1,5 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2010/12/16/day-16-time-in-perl6/
-use v6;
+
 use Test;
 plan 13;
 

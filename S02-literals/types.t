@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # L<S02/Bare identifiers/"There are no barewords in Perl">

@@ -1,6 +1,5 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2010/12/07/day-7-lexical-variables/
-
-use v6;
 
 use Test;
 

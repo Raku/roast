@@ -33,6 +33,7 @@ sub MAIN(Str $unidata-normalization-tests) {
 sub write-chars-test-file($target, @source, @nfc, $limit) {
     given open($target, :w) {
         .say: qq:to/HEADER/;
+use v6.c;
 # Normal Form Grapheme .chars tests, generated from NormalizationTests.txt in
 # the Unicode database by S15-nfg/test-gen.p6. Check that a string in NFG form
 # gets the right number of characters.
@@ -66,6 +67,7 @@ HEADER
 sub write-roundtrip-test-file($target, @source, @expected, $form, $limit) {
     given open($target, :w) {
         .say: qq:to/HEADER/;
+use v6.c;
 # Normal Form Grapheme roundtrip tests, generated from NormalizationTests.txt in
 # the Unicode database by S15-nfg/test-gen.p6. Check we can take a Uni, turn it
 # into an NFG string, and then get codepoints back out of it in $form.
@@ -90,6 +92,7 @@ HEADER
 sub write-equality-test-file($target, @nfd, $limit) {
     given open($target, :w) {
         .say: qq:to/HEADER/;
+use v6.c;
 # Normal Form Grapheme equanity tests, generated from NormalizationTests.txt in
 # the Unicode database by S15-nfg/test-gen.p6. Check strings that should come
 # out equal under NFG do, and strings that are "tempting" to make equal but

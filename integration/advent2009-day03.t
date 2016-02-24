@@ -1,6 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2009/12/03/day-3-static-types-and-multi-subs/
 
-use v6;
 use Test;
 plan 6;
 

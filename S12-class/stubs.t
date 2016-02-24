@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # L<S12/Classes/You can predeclare a stub class>

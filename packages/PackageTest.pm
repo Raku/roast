@@ -1,3 +1,4 @@
+use v6.c;
 unit package t::spec::packages::PackageTest;
 
 sub ns  { "t::spec::packages::PackageTest" }

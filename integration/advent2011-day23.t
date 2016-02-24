@@ -1,5 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2011/12/23/day-23-idiomatic-perl-6/
-use v6;
+
 use Test;
 use lib 't/spec/packages';
 use Test::Util;

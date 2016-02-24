@@ -1,5 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2012/12/14/primal-needs/
-use v6;
+
 use Test;
 
 plan 6;

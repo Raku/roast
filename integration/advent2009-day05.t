@@ -1,6 +1,6 @@
+use v6.c;
 # http://perl6advent.wordpress.com/2009/12/05/day-5-metaoperator/
 
-use v6;
 use Test;
 
 plan 17;
