@@ -1,4 +1,5 @@
-﻿use Test;
+﻿use v6;
+use Test;
 
 my @int  =  int, int8, int16, int32;
 my @uint = uint,uint8,uint16,uint32;

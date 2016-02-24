@@ -288,10 +288,10 @@ sub OpenAndStartOutputFile($output_file)
     my $file = open $output_file, :w or die "Unable to open $output_file $!\n";
 
     $file.say: '# WARNING:
+use v6;
 # This is a generated file and should not be edited directly.
 # look into generate-tests.pl instead
 
-use v6;
 use Test;
 
 sub degrees-to-radians($x) {

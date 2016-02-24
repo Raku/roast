@@ -1,3 +1,4 @@
+use v6;
 module Fancy::Utilities {
  our sub lolgreet($who) is export(:lolcat, :greet) {
   return "O HAI " ~ uc $who;
