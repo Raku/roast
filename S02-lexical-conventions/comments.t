@@ -65,13 +65,13 @@ plan 51;
 {
 
     throws-like { EVAL "3 * #` (invalid comment) 2" },
-      X::Comp::AdHoc,  # no exception type yet
+      X::Comp,  # no exception type yet
       "no space allowed between '#`' and '('";
     throws-like { EVAL "3 * #`\t[invalid comment] 2" },
-      X::Comp::AdHoc,  # no exception type yet
+      X::Comp,  # no exception type yet
       "no tab allowed between '#`' and '['";
     throws-like { EVAL "3 * #`  \{invalid comment\} 2" },
-      X::Comp::AdHoc,  # no exception type yet
+      X::Comp,  # no exception type yet
       "no spaces allowed between '#`' and '\{'";
     throws-like { EVAL "3 * #`\n<invalid comment> 2" },
       X::Syntax::Confused,
@@ -175,7 +175,7 @@ plan 51;
 
 {
     my $a = Nil;
-    throws-like { EVAL '$a = q# 32 #;' }, X::Comp::AdHoc, 'misuse of # as quote delimiters';
+    throws-like { EVAL '$a = q# 32 #;' }, X::Comp, 'misuse of # as quote delimiters';
     ok !$a.defined, "The # character can't be used as quote delimiters";
 }
 

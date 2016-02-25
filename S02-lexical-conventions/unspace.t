@@ -270,7 +270,7 @@ throws-like { EVAL 'sub f { 3 } sub g { 3 }' },
 
     $n = 1;
     throws-like { EVAL '$n ++' },
-      X::Comp::AdHoc,
+      X::Comp,
       'postfix requires no space';
     is($n, 1, 'check $n');
 
@@ -290,7 +290,7 @@ throws-like { EVAL 'sub f { 3 } sub g { 3 }' },
     #?niecza skip 'Unable to resolve method id in class Str'
     is((foo\#`〝 comment 〞.lc), 'a', 'unspace with U+301D/U+301E comment');
     throws-like { EVAL 'foo\#`〝 comment 〟.id' },
-      X::Comp::AdHoc,
+      X::Comp,
       'unspace with U+301D/U+301F is invalid';
 
     # L<S02/"Implicit Topical Method Calls"/".123">

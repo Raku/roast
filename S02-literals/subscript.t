@@ -12,7 +12,7 @@ plan 2;
 
     my %hash = ("foo", "bar");
     throws-like { EVAL '%hash <foo>; 1'},
-      X::Comp::AdHoc,
+      X::Comp,
       '%hash \s+ <subscript> doesnt parse';
 };
 
