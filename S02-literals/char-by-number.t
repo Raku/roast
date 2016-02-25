@@ -14,7 +14,7 @@ is("\x[a0]", chr(0xa0), '\x[a0] non-breaking space');
 is("\x[263a]", '☺', '\x[263a] wide hex character (SMILEY)');
 is("\x[6211]", '我', '\x[597d] wide hex character (Chinese char)');
 throws-like { EVAL '"\x[6211"' },
-  X::Comp::AdHoc,
+  X::Comp,
   'broken "\x[6211"';
 throws-like { EVAL '"\x [6211]"' },
   X::Backslash::UnrecognizedSequence,
@@ -32,7 +32,7 @@ is("\o[240]", chr(160), '\o[240] non-breaking space');
 is("\o[23072]", '☺', '\o[23072] wide hex character (SMILEY)');
 is("\o[61021]", '我', '\o[61021] wide hex character (Chinese char)');
 throws-like { EVAL '"\o[6211"' },
-  X::Comp::AdHoc,
+  X::Comp,
   'broken "\o[6211"';
 throws-like { EVAL '"\o [6211]"' },
   X::Backslash::UnrecognizedSequence,
@@ -50,10 +50,10 @@ is("\c[160]", chr(160), '\c[240] non-breaking space');
 is("\c[9786]", '☺', '\c[9786] wide hex character (SMILEY)');
 is("\c[25105]", '我', '\c[25105] wide hex character (Chinese char)');
 throws-like { EVAL '"\c[6211"' },
-  X::Comp::AdHoc,
+  X::Comp,
   'broken "\c[6211"';
 throws-like { EVAL '"\c [6211]"' },
-  X::Comp::AdHoc,
+  X::Comp,
   'broken "\c [6211]"';
 
 is("\c[65,66,67]", 'ABC', '\c[list]');
