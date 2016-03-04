@@ -37,23 +37,23 @@ plan 13;
     ok(!$x.defined, "complex signature bindings works (2)");
 }
 
-# &sub.signature should return a Signature object
+# block.signature should return a Signature object
 {
-    sub foo1 ($a, $b) {}    #OK not used
+    my $foo = -> $a, $b {}    #OK not used
     my $signature = :($a, $b);
 
     ok ~$signature,
         "a signature stringifies";
-    ok $signature eqv &foo1.signature,
+    ok $signature eqv $foo.signature,
         "a subroutine's signature can be accessed via .signature (1)";
 }
 
 # Same as above, but more complex
 {
-    my sub foo (Num $a, $b?, *@rest) {}    #OK not used
+    my $foo = -> Num $a, $b?, *@rest {}    #OK not used
     my $signature = :(Num $a, $b?, *@rest);
 
-    ok $signature eqv &foo.signature ,
+    ok $signature eqv $foo.signature ,
         "a subroutine's signature can be accessed via .signature (2)";
 }
 
