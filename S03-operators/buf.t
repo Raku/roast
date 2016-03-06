@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 101;
+plan 103;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -183,3 +183,11 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
     is-deeply $b.subbuf(10..20), Buf.new(10..20),
       'can we use 10..20 as specifier';
 } 
+
+{
+    my @a;
+    my $b = Blob.new(@a);
+    is $b.elems, 0, "did Blob.new on empty array work";
+    my $c = Buf.new(@a);
+    is $c.elems, 0, "did Buf.new on empty array work";
+}
