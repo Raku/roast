@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 14;
 
 dies-ok { Supply.Channel }, 'can not be called as a class method';
 
@@ -33,5 +33,22 @@ my $promise = start { while $done < $times { $c.receive; $done++ } };
 $s.emit($_) for ^$times;
 await $promise;
 is $done, $times, 'did we receive all?';
+
+# RT #127629
+{
+    my $r = Supplier.new;
+    my $s = $r.Supply;
+    my $c = $s.Channel;
+    my $p = start {
+        for @$c { }
+    }
+    for 1..4 {
+        $r.emit($_);
+    }
+    $r.quit(X::AdHoc.new(:payload('le supply quit')));
+    try await $p;
+    ok $p.status == Broken, 'Supply.Channel passes on quit of supply';
+    is $p.cause.message, 'le supply quit', 'Correct message';
+}
 
 # vim: ft=perl6 expandtab sw=4
