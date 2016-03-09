@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 48;
+plan 50;
 
 # L<S14/Run-time Mixins/>
 
@@ -219,6 +219,14 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
 # RT #122030
 {
     ok (Any but role { }) !=== (Any but role { }), 'anonymous roles are distinct';
+}
+
+# RT #127660
+{
+    my $m = Any but role { method Bool { True } }
+    is $m || 42, $m, 'method Bool in mixin is used';
+    my $sm = Any but role { submethod Bool { True } }
+    is $sm || 42, $sm, 'submethod Bool in mixin is used';
 }
 
 # vim: syn=perl6

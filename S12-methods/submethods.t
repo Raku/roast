@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 29;
 
 =begin pod
 
@@ -119,6 +119,14 @@ Basic submethod tests. See L<S12/"Submethods">
 
   my $C2 = ClassC.new( :value(100) );
   is( $C2.double_value, 200, '... or value passed in' );
+}
+
+# RT #127660
+{
+    my class M { method Bool { True } }
+    is M || 42, M, 'Bool method in class is used in boolificiation';
+    my class SM { submethod Bool { True } }
+    is SM || 42, SM, 'Bool submethod in class is used in boolificiation';
 }
 
 # vim: ft=perl6
