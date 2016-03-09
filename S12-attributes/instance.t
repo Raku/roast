@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 150;
+plan 152;
 
 =begin pod
 
@@ -714,6 +714,16 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
       subtype   => 'bar',
       declaring => 'n attribute',
     ;
+}
+
+# RT #127665
+{
+    my class A {
+        has $.x is rw;
+        has $.y;
+    }
+    ok A.^lookup('x').rw, 'is rw accessor method marked rw';
+    nok A.^lookup('y').rw, 'readonly accessor method not marked rw';
 }
 
 # vim: ft=perl6
