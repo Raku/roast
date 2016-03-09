@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 11;
 
 my $a = "\x0044";
 my $b = "\x0307";
@@ -24,3 +24,8 @@ my $c = "\x0323";
 is ($a, $a, $a).join($b).chars, 3, 'join respects NFG (1)';
 is ($a, $a, $a).join($c).chars, 3, 'join respects NFG (2)';
 is ($a, $a, $a).join($b ~ $c).chars, 3, 'join respects NFG (3)';
+
+# RT #127530 (normalization on concat SEGV bug)
+is "\xfacf" ~ "\n", "\xfacf\n", '\xfacf ~ \n is ok';
+is "\xfad0" ~ "\n", "\xfad0\n", '\xfad0 ~ \n is ok';
+is "\xfad7" ~ "\n", "\xfad7\n", '\xfad7 ~ \n is ok';
