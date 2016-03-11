@@ -1,5 +1,9 @@
 use v6;
+
+use lib 't/spec/packages';
+
 use Test;
+use Test::Util;
 
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there. 
@@ -41,8 +45,6 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 
 # RT #104794
 {
-    use lib 't/spec/packages';
-    use Test::Util;
 
     is_run 'my $a = qx{echo woot>&2}; say "___ $a ___"',
         {

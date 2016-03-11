@@ -1,4 +1,7 @@
 use v6;
+
+use lib 't/spec/packages';
+
 use Test;
 
 plan 41;
@@ -141,7 +144,6 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
 
 # RT #83354
 {
-    use lib 't/spec/packages';
     use RT83354_B;
     use RT83354_A;
     my $a = RT83354_B.new( :b( 5 ) ) + RT83354_B.new( :b( 2 ) );
@@ -150,7 +152,6 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
 
 # RT #84280
 {
-    use lib 't/spec/packages';
     use RT84280;
     throws-like { bar { 1 } }, X::Multi::NoMatch,
         message => /'none of these signatures match'/,
@@ -159,7 +160,6 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
 
 # RT #125715
 {
-    use lib 't/spec/packages';
     use RT125715;
 
     my class Baz {

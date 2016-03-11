@@ -1,6 +1,8 @@
 use v6;
 use MONKEY-TYPING;
 
+use lib '.', 't/spec/packages';
+
 use Test;
 
 # L<S11/Compile-time Importation>
@@ -9,7 +11,6 @@ plan 9;
 
 # test that 'use' imports class names defined in importet packages
 
-use lib '.';
 use t::spec::packages::UseTest;
 
 ok Stupid::Class.new(), 'can instantiate object of "imported" class';
@@ -36,7 +37,6 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 # class loading inside a method
 # RT #73886
 {
-    use lib 't/spec/packages';
     class MethodLoadingTest {
         method doit {
             use Foo;

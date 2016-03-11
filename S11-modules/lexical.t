@@ -1,9 +1,11 @@
 use v6;
+
+use lib '.';
+
 use Test;
 plan 2;
 
 {
-    use lib '.';
     use t::spec::packages::S11-modules::Foo;
     is foo(), 'Foo::foo', 'could import foo()';
 }

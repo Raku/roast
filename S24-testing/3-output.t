@@ -1,14 +1,16 @@
 # check output (text output and return code) of tests
 
 use v6;
+
+use lib 't/spec/packages';
+
 use Test;
+use Test::Util;
 
 plan 4;
 
 # RT #115024
 {
-    use lib 't/spec/packages';
-    use Test::Util;
     my $code = 'use Test; my Str $str; is-deeply {b=>2}, {a=>$str, b=>2}, "should not work"';
     is_run $code,
         {
@@ -29,8 +31,6 @@ plan 4;
 
 # RT #77650
 {
-    use lib 't/spec/packages';
-    use Test::Util;
     is_run
         'use Test; eval-lives-ok q[foo<bar], "expected eval fail"',
         {

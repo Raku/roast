@@ -1,5 +1,9 @@
 use v6;
+
+use lib 't/spec/packages';
+
 use Test;
+use Test::Util;
 
 plan 10;
 
@@ -95,8 +99,6 @@ plan 10;
 #?rakudo todo 'method BUILD should warn RT #124642'
 #?niecza todo
 {
-    use lib 't/spec/packages';
-    use Test::Util;
     is_run
         'class Foo { method BUILD() { ... } }',
         { out => '', err => /BUILD/ & /submethod/ },

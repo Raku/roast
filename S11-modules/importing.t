@@ -1,11 +1,12 @@
 use v6;
+
+use lib '.', 't/spec/packages';
+
 use Test;
 
 plan 16;
 
 # L<S11/"Compile-time Importation"/>
-
-use lib '.';
 
 {
     use t::spec::packages::S11-modules::Foo;
@@ -34,7 +35,6 @@ use lib '.';
 dies-ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
 
 {
-    use lib 't/spec/packages';
     class TestImportInClass {
         use A::B;
         method doit {

@@ -1,11 +1,11 @@
 # http://perl6advent.wordpress.com/2009/12/12/day-12-modules-and-exporting/
 
 use v6;
+use lib 't/spec/packages';
+
 use Test;
 
 plan 9;
-
-use lib 't/spec/packages';
 
 {
     eval-lives-ok 'use Fancy::Utilities', 'Can use Fancy::Utilities';

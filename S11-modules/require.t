@@ -1,5 +1,7 @@
 use v6;
+
 use lib $?FILE.IO.parent.child("lib").Str;
+
 use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo

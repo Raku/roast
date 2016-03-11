@@ -1,9 +1,10 @@
 use v6;
+
+use lib 't/spec/packages';
+
 use Test;
 
 plan 20;
-
-use lib 't/spec/packages';
 
 {
     # defined in t/spec/packages/Exportops.pm

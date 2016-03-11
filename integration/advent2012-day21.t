@@ -1,10 +1,11 @@
 # http://perl6advent.wordpress.com/2012/12/21/day-21-collatz-variations/
 # more about benchmarking than anything else. Definitely a stress test!
 use v6;
+use lib 't/spec/packages';
+
 use Test;
 plan 9;
 
-use lib 't/spec/packages';
 use Test::Util;
 
 our $basic = q:to"END";

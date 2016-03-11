@@ -1,9 +1,9 @@
 use v6;
 
+use lib '.';
+
 use Test;
 plan 11;
-
-use lib '.';
 
 throws-like { EVAL 'use t::spec::S12-meta::InvalidDirective;' },
     X::EXPORTHOW::InvalidDirective, directive => 'BBQ';

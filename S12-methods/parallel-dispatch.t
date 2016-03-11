@@ -1,6 +1,9 @@
 use v6;
 
+use lib 't/spec/packages';
+
 use Test;
+use ContainsUnicode;
 
 plan 37;
 
@@ -121,8 +124,6 @@ class Bar is Foo {
 }
 
 {
-    use lib 't/spec/packages';
-    use ContainsUnicode;
     is uc-and-join('foo', 'bar'), 'FOO, BAR',
         'parallel dispatch with » works in modules too';
 

@@ -1,6 +1,8 @@
 use v6;
+use lib 't/spec/packages';
 
 use Test;
+use Test::Util;
 
 plan 4;
 
@@ -17,8 +19,6 @@ lives-ok { my $*PROGRAM-NAME = "coldfusion" }, '$*PROGRAM-NAME is assignable';
 
 # RT #113078
 {
-    use lib 't/spec/packages';
-    use Test::Util;
     is_run 'print $*PROGRAM-NAME', {
         out => -> $x { $x !~~ /IGNOREME/ },
     },

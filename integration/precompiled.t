@@ -1,6 +1,6 @@
 use v6;
-use lib 't/spec/packages';
-use lib 'packages';
+use lib 't/spec/packages', 'packages';
+
 use Test;
 use Test::Compile;
 

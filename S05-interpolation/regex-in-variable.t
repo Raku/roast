@@ -1,5 +1,9 @@
 use v6;
+
+use lib 't/spec/packages';
+
 use Test;
+use Test::Util;
 
 =begin pod
 
@@ -102,8 +106,6 @@ throws-like 'm/%var/', Exception, 'cannot interpolate hashes into regexes';
 {
     my $u;
     ok 'a' !~~ /$u/, 'undefined variable does not match';
-    use lib 't/spec/packages';
-    use Test::Util;
     #?rakudo todo 'warn on undef'
     is_run(
             q{my $u; 'a' ~~ /$u/},
