@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 103;
+plan 105;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -191,3 +191,7 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
     my $c = Buf.new(@a);
     is $c.elems, 0, "did Buf.new on empty array work";
 }
+
+# RT#127642
+ok Blob eqv Blob, 'Blob eqv Blob lives, works';
+nok Buf eqv Blob, 'Buf eqv Blob lives, works';
