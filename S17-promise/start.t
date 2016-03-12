@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 42;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -108,3 +108,8 @@ throws-like { await }, Exception, "a bare await should not work";
     my $*E = 5;
     is foo(), 6, 'Code running in start can see dynamic variables of the start point';
 }
+
+# RT #123204: retrowing of exceptions from start:
+
+dies-ok { await start { die 'oh noe' } }, 'await rethrows exceptions';
+dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
