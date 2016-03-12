@@ -1,9 +1,8 @@
 use v6;
-use Test;
-
-plan 22;
-
 use lib 't/spec/packages';
+
+use Test;
+plan 22;
 
 use Test::Util;
 

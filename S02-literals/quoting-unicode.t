@@ -85,7 +85,7 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 # RT #66498
 {
     throws-like { EVAL "q\c[SNOWMAN].\c[COMET]" },
-      X::Comp::AdHoc,
+      X::Comp,
       "Can't quote a string with a snowman and comet (U+2603 and U+2604)";
     throws-like { EVAL "'RT #66498' ~~ m\c[SNOWMAN].\c[COMET]" },
       X::Comp::Group,
@@ -96,21 +96,21 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 {
     is ‘"Beth's Cafe"’, “"Beth's Cafe"”, "smart “” quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL '“phooey"' },
-	X::Comp::AdHoc,
+	X::Comp,
 	"Can't mix smart quote with ASCII quote";
     is ‘"Beth's Cafe"’, „"Beth's Cafe"”, "smart „” quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL '“phooey"' },
-	X::Comp::AdHoc,
+	X::Comp,
 	"Can't mix smart quote with ASCII quote";
     is ‘"Beth's Cafe"’, „"Beth's Cafe"“, "smart „“ quotes are accepted and not confused with ASCII quotes";
 
     is ‘"Beth's Cafe"’, ‘"Beth's Cafe"’, "smart ‘’ quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL "‘phooey'" },
-	X::Comp::AdHoc,
+	X::Comp,
 	"Can't mix smart quote with ASCII quote";
     is ‘"Beth's Cafe"’, ‚"Beth's Cafe"’, "smart ‚’ quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL "‚phooey'" },
-	X::Comp::AdHoc,
+	X::Comp,
 	"Can't mix smart quote with ASCII quote";
     is ‘"Beth's Cafe"’, ‚"Beth's Cafe"‘, "smart ‚‘ quotes are accepted and not confused with ASCII quotes";
 
@@ -118,13 +118,13 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 
     is ‘"Beth's Cafe"’, ”"Beth's Cafe"”, "smart ”” quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL '”phooey"' },
-	X::Comp::AdHoc,
+	X::Comp,
 	"Can't mix smart quote with ASCII quote";
     is ‘"Beth's Cafe"’, ”"Beth's Cafe"“, "smart ”“ quotes are accepted and not confused with ASCII quotes";
 
     is ‘"Beth's Cafe"’, ’"Beth's Cafe"’, "smart ’’ quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL "’phooey'" },
-	X::Comp::AdHoc,
+	X::Comp,
 	"Can't mix smart quote with ASCII quote";
     is ‘"Beth's Cafe"’, ’"Beth's Cafe"‘, "smart ’‘ quotes are accepted and not confused with ASCII quotes";
 }

@@ -4,7 +4,7 @@ use Test;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 57;
+plan 58;
 
 # Legend:
 # r   result
@@ -498,5 +498,8 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
       nogo   => <k v>,
       'clashing named parameters';
 }
+
+is "aaaaabbbbb".split(<aaa aa bb bbb>,:v), " aaa  aa  bbb  bb ",
+  "test overlapping needles";
 
 # vim: ft=perl6

@@ -1,5 +1,7 @@
 use v6;
 
+use lib 't/spec/packages';
+
 use Test;
 
 plan 2;
@@ -7,7 +9,6 @@ plan 2;
 # L<S12/Classes/"class or type name using">
 
 # TODO: move that to t/spec/ as well
-use lib 't/spec/packages';
 
 # Testing class literals
 use  Foo;

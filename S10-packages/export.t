@@ -1,12 +1,11 @@
 use v6;
 
 # L<S11/Exportation>
+use lib '.';
 
 use Test;
 
 plan 7;
-
-use lib '.';
 
 # (Automatic s:g/::/$PATH_SEPARATOR_OF_CUR_OS/)++
 use t::spec::packages::Export_PackB;

@@ -1,3 +1,4 @@
+use v6;
 my class SingleInheritanceClassHOW
     is Metamodel::ClassHOW
 {

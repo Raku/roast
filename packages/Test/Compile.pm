@@ -1,3 +1,4 @@
+use v6;
 unit module Test::Compile;
 use nqp;
 use Test;

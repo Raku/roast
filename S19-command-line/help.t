@@ -1,8 +1,10 @@
 use v6;
+
+use lib 't/spec/packages';
+
 use Test;
 plan 1;
 
-use lib 't/spec/packages';
 use Test::Util;
 
 is_run Str,  :args['--help'],

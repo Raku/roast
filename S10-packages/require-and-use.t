@@ -1,12 +1,11 @@
 use v6;
 
 # L<S11/Runtime Importation>
+use lib '.';
 
 use Test;
 
 plan 18;
-
-use lib '.';
 
 my @tests = (
   "t::spec::packages::RequireAndUse1", { $^a == 42 },

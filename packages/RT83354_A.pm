@@ -1,3 +1,4 @@
+use v6;
 class RT83354_A {
     has $.a;
 

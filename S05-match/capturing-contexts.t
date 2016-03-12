@@ -1,8 +1,9 @@
 use v6;
+use lib 't/spec/packages';
+
 use MONKEY-TYPING;
 
 use Test;
-use lib 't/spec/packages';
 use Test::Util;
 plan 56;
 

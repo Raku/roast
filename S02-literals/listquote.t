@@ -29,7 +29,7 @@ throws-like { EVAL '({:a<1>, :b(2)} <1 2 3>)' },
 ok( ?((1 | 3) < 3), '(...) < 3 no parsefail');
 
 throws-like { EVAL '(1 | 3)<3' },
-  X::Comp::AdHoc,
+  X::Comp,
   '()<3 parsefail';
 
 # WRONG: should be parsed as print() < 3

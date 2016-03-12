@@ -1,9 +1,9 @@
 use v6;
-use Test;
-
-plan  27;
 
 use lib 't/spec/packages';
+
+use Test;
+plan  28;
 
 use Test::Util;
 
@@ -36,6 +36,12 @@ is_run 'sub MAIN($foo) { }',
         out     => '',
     },
     'auto-generated USAGE message goes to $*ERR and contains parameter name';
+
+is_run 'sub MAIN(\bar) { }',
+    {
+        err => /<< bar >>/,
+    },
+    'auto-generated USAGE should handle sigilles parameters';
 
 is_run 'sub MAIN($bar) { }',
     {

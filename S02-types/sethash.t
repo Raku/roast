@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 204;
+plan 205;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -432,6 +432,10 @@ sub showset($s) { $s.keys.sort.join(' ') }
 # RT #127166
 {
     ok <one two three>.map({$_}) ~~ SetHash.new(<two three one>), 'smartmatch a Seq';
+}
+
+{
+    isa-ok SetHash(42).Hash.keys[0], Int, "make sure SetHash.Hash returns objects";
 }
 
 # vim: ft=perl6

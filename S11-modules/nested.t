@@ -6,8 +6,7 @@ plan 6;
 # namespace
 
 # Used to be a Rakudo bug, RT #63956
-
-use lib 't/spec/packages';
+use lib 't/spec/packages';   # for some reason, this must be *AFTER* use Test
 
 eval-lives-ok 'use A::A', 'Can load classes from nested modules';
 eval-lives-ok 'use A::A; A::B::D ~~ A::B::B or die()', 

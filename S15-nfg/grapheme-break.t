@@ -1,3 +1,4 @@
+use v6;
 # Tests generated from the Unicode Character Database's GraphemeBreakTest.txt
 # by S15-nfg/grapheme-break-test-gen.p6.
 

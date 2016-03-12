@@ -1,9 +1,9 @@
 use v6;
 
 # Tests for magic variables
+use lib 't/spec/packages';
 
 use Test;
-use lib 't/spec/packages';
 use Test::Util;
 # L<S28/Named variables>
 plan 18;

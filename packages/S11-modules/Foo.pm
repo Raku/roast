@@ -1,3 +1,4 @@
+use v6;
 # L<S11/"Exportation"/>
 
 unit module t::spec::packages::S11-modules::Foo;

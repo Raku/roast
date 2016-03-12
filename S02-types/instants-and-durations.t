@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 33;
 
 # L<S02/Immutable types/'term now'>
 
@@ -39,6 +39,15 @@ throws-like { Instant.new(123) }, X::Cannot::New, 'Instant.new is illegal';
     isa-ok $d + $t0, Instant, 'Duration + Instant ~~ Instant';
     isa-ok $t0 - $d, Instant, 'Instant - Duration ~~ Instant';
     is $t0 + ($t1 - $t0), $t1, 'Instant A + (Instant B - Instant A) == Instant B';
+}
+
+{
+    for (-2**63, -400.2, -33/7, -1, 0, 1, 33/7, 400.2, 2**32, ) -> $e {
+        my $i = Instant.from-posix($e, False);
+        is $i.perl.EVAL, $i, 'Instant round trips properly';
+        my $i = Instant.from-posix($e, True);
+        is $i.perl.EVAL, $i, 'Instant round trips properly';
+    }
 }
 
 # See S32-temporal/DateTime-Instant-Duration.t for more.

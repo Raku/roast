@@ -13,10 +13,10 @@ throws-like { EVAL '@arr [0]' },
 
 my %hash = a => 1, b => 2;
 throws-like { EVAL '%hash <a>' },
-  X::Comp::AdHoc,  # no exception type yet
+  X::Comp,  # no exception type yet
   'hash with space before opening brackets does not work (1)';
 throws-like { EVAL '%hash {"a"}' },
-  X::Comp::AdHoc,  # no exception type yet
+  X::Comp,  # no exception type yet
   'hash with space before opening braces does not work (2)';
 
 class Thing {method whatever (Int $a) {3 * $a}}

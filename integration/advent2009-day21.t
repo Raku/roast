@@ -1,11 +1,12 @@
 # http://perl6advent.wordpress.com/2009/12/21/day-21-grammars-and-actions/
 
 use v6;
+use lib 't/spec/packages';
+
 use Test;
 
 plan 2;
 
-use lib 't/spec/packages';
 
 class Question::Answer {
     has $.text is rw;

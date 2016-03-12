@@ -1,3 +1,4 @@
+use v6;
 # S15-literals/numbers.t --- test Unicode (namely non-ASCII) numerals
 
 use Test;

@@ -1,3 +1,4 @@
+use v6;
 unit module Test::Tap;
 
 use Test;

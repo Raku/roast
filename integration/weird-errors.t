@@ -1,9 +1,10 @@
 use v6;
-use Test;
 use lib 't/spec/packages';
+
+use Test;
 use Test::Util;
 
-plan 20;
+plan 21;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -165,7 +166,13 @@ throws-like { EVAL '&&::{}[];;' },
     is_run('(:::[])',
     {
         out => '',
-        err => { m/'Could not locate compile-time value'/ },
+        err => { m/"No such symbol ':<>'"/ },
     },
     'appropriate error message instead of internal compiler error' );
+}
+
+#RT #127504
+{
+    throws-like { "::a".EVAL }, X::NoSuchSymbol, symbol => "a",
+      "test throwing for ::a";
 }

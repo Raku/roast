@@ -1,4 +1,6 @@
 use v6;
+use lib 't/spec/packages';
+
 use Test;
 
 plan 6;
@@ -7,8 +9,6 @@ isa-ok @*ARGS, Array, '@*ARGS is an Array';
 is-deeply @*ARGS, [], 'by default @*ARGS is empty array';
 
 lives-ok { @*ARGS = 1, 2 }, '@*ARGS is writable';
-
-use lib 't/spec/packages';
 
 use Test::Util;
 

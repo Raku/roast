@@ -1,9 +1,11 @@
 use v6;
-use Test;
+
 use lib 't/spec/packages';
+
+use Test;
 use Test::Util;
 use Test::Idempotence;
-plan 133;
+plan 129;
 
 # L<S06/Signature Introspection>
 
@@ -208,10 +210,6 @@ sub j(*@i) {
     is-perl-idempotent(:(@ ($a) = [2]), :eqv);
     is-perl-idempotent(:(% (:a($)) = {:a(2)}, % (:c(:d($))) = {:c(2)}), :eqv);
     is-perl-idempotent(:($ is raw, & is raw, % is raw, | is raw), :eqv);
-    is-perl-idempotent(:($ is raw where True, $ is copy, Int $ is rw, $ is raw where True = 2), :eqv);
-    is-perl-idempotent(:(@ is raw where True, @ is copy, Int @ is rw, @ is raw where True = [2]), :eqv);
-    is-perl-idempotent(:(% is raw where True, % is copy, Int % is rw, % is raw where True = {:a(2)}), :eqv);
-    is-perl-idempotent(:(& is raw where True, & is copy, Int & is rw, & is raw where True = {:a(2)}), :eqv);
 
     is-perl-idempotent(:(::T $a, T $b), :eqv);
     # Not sure if this one makes much sense.

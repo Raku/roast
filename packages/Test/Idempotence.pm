@@ -1,3 +1,4 @@
+use v6;
 unit module Test::Idempotence;
 
 use Test;
@@ -26,7 +27,8 @@ sub is-perl-idempotent($thing, $desc?, %subst?, :$eqv = False) is export {
             }
         }
         if ($eqv) {
-            ok $thing eqv $stage2, "Result is same as original";
+            diag "$thing.perl() !eqv $stage2.perl()"
+              unless ok $thing eqv $stage2, "Result is same as original";
         }
         is $stage1r, $stage2p, "Same .perl output";
         is $fail, 1, "...and no failures.";

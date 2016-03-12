@@ -1,7 +1,8 @@
 #! http://perl6advent.wordpress.com/2011/12/07/grammarprofiler/
 use v6;
-use Test;
 use lib 't/spec/packages';
+
+use Test;
 use Advent::GrammarProfiler;
 plan 3;
 

@@ -549,7 +549,7 @@ Hello, World
 
 # RT #90124
 throws-like { EVAL q["@a<"] },
-  X::Comp::AdHoc,
+  X::Comp,
   'unclosed quote after array variable is an error';
 
 # RT #114090
@@ -582,7 +582,7 @@ is "\c@a", "\0a", '\c@ is a NUL';
 
 {
     throws-like { EVAL 'q< < >' },
-      X::Comp::AdHoc,
+      X::Comp,
       "Unmatched openers and closers fails to parse";
     is q< \> >, " > ", "Escaped closer produces the opener unescaped";
     is q< \< >, " < ", "Escaped opener produces the opener unescaped";

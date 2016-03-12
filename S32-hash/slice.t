@@ -9,7 +9,7 @@ Testing hash slices.
 
 =end pod
 
-plan 29;
+plan 31;
 
 {   my %hash = (1=>2,3=>4,5=>6);
     my @s=(2,4,6);
@@ -127,4 +127,12 @@ Quoting Larry:
     is(@s, [%hash{%hash.keys.sort}],     "values from hash keys, part 2");
     is(@s, [%hash{(1,2,3) >>+<< (0,1,2)}], "calculated slice: hyperop");
 }
+
+# Whatever-slices plus hyper op, RT #64768
+{
+    my %h = 'foo' => [1,2,3], 'bar' => [4,5,6];
+    is join(',', sort %h{*}»[1]), '2,5', 'Combination of Whatever slice and hyper op indexing works (1)';
+    is join(',', sort %h{*}».[1]), '2,5', 'Combination of Whatever slice and hyper op indexing works (2)';
+}
+
 #vim: ft=perl6

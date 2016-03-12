@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 45;
 
 class C {
     has int $.int-ro = 1;
@@ -113,3 +113,11 @@ class NoTwigilNatives {
 }
 
 throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
+
+# RT #127548
+class MV {
+    has uint64 $.start;
+    method s { if $!start { 5 } }
+}
+is MV.new(start => 42).start, 42, 'uint64 native attribute accessor works';
+is MV.new(start => 4).s, 5, 'uint64 native attribute use in method works';
