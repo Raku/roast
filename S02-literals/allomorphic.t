@@ -2,10 +2,12 @@
 
 use v6;
 use Test;
+use lib 't/spec/packages';
+use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 99;
+plan 101;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -182,4 +184,16 @@ lives-ok {val("foo")}, "val() exists";
     dies-ok { want-num(val('42')) }, 'val("42") cannot be passed to native num parameter';
     lives-ok { want-str(val('42')) }, 'val("42") can be passed to native str parameter';
     lives-ok { want-str(val('4e2')) }, 'val("4e2") can be passed to native str parameter';
+}
+
+# Environment variables produce allomorphic types, too.
+{
+    %*ENV<FOO> = '42';
+    is_run 'print %*ENV<FOO>.^name', { status => 0, out => 'IntStr', err => '' },
+        'int/string "42" is an IntStr when passed via ENV';
+
+    # This test would break without allomorphs because the string "0" is trueish.
+    %*ENV<FOO> = '0';
+    is_run 'print so %*ENV<FOO>', { status => 0, out => 'False', err => '' },
+        'int/string "0" is falsish when passed via ENV';
 }
