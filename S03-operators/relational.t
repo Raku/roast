@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 159;
+plan 163;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -91,6 +91,12 @@ is('b' lt 'a', Bool::False, 'lt false');
 is('b' gt 'c', Bool::False, 'gt false');
 is('b' le 'a', Bool::False, 'le false');
 is('b' ge 'c', Bool::False, 'ge false');
+
+# RT #127272
+is ('a' xx 1000).map(+('a' le *)).index(0), Nil, 'le is ok over many iterations';
+is ('a' xx 1000).map(+('a' ge *)).index(0), Nil, 'ge is ok over many iterations';
+is ('b' xx 1000).map(+('a' lt *)).index(0), Nil, 'lt is ok over many iterations';
+is ('a' xx 1000).map(+('b' gt *)).index(0), Nil, 'gt is ok over many iterations';
 
 ## Multiway comparisons (RFC 025)
 # L<S03/"Chained comparisons">
