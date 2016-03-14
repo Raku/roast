@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 42;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
@@ -151,6 +151,14 @@ lives-ok { Int.clone }, 'cloning a type object does not explode';
     my @b = @a.clone;
     @a.push: 44;
     is @b, <42>, '.clone on array @a works as expected';
+}
+
+# RT #127704
+{
+    my %h1 = a => 1;
+    my %h2 := %h1.clone;
+    %h2<b> = 2;
+    is-deeply %h1, { a => 1 }, 'Hash.clone detangles the hashes';
 }
 
 # vim: ft=perl6
