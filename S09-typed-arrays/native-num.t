@@ -154,7 +154,6 @@ for @num -> $T {
     is @arr.elems, 1,  "push to $t array works (1)";
     is_approx @arr[0], 4.2e0, "push to $t array works (2)";
     throws-like { @arr.push('it real good') }, Exception,
-      message => 'This type cannot unbox to a native number',
       "Cannot push non-num/Num to $t array";
 
     @arr.push(10.1e0, 10.5e0);
@@ -162,7 +161,6 @@ for @num -> $T {
     is_approx @arr[1], 10.1e0,  "push multiple to $t array works (2)";
     is_approx @arr[2], 10.5e0,  "push multiple to $t array works (3)";
     throws-like { @arr.push('omg', 'wtf') }, Exception,
-      message => 'This type cannot unbox to a native number',
       "Cannot push non-num/Num to $t array (multiple push)";
 
     is_approx @arr.pop, 10.5e0, "pop from $t array works (1)";
@@ -173,7 +171,6 @@ for @num -> $T {
     is_approx @arr[0],  -1e0, "unshift to $t array works (2)";
     is_approx @arr[1], 4.2e0, "unshift to $t array works (3)";
     throws-like { @arr.unshift('part of the day not working') }, Exception,
-      message => 'This type cannot unbox to a native number',
       "Cannot unshift non-num/Num to $t array";
 
     @arr.unshift(-3e0,-2e0);
@@ -183,7 +180,6 @@ for @num -> $T {
     is_approx @arr[2],  -1e0, "unshift multiple to $t array works (4)";
     is_approx @arr[3], 4.2e0, "unshift multiple to $t array works (5)";
     throws-like { @arr.unshift('wtf', 'bbq') }, Exception,
-      message => 'This type cannot unbox to a native number',
       "Cannot unshift non-num/Num to $t array (multiple unshift)";
 
     is_approx @arr.shift, -3e0, "shift from $t array works (1)";
@@ -235,6 +231,5 @@ for @num -> $T {
 
     @untyped2.push('C-C-C-C-Combo Breaker!');
     throws-like { @native2 = @untyped2 }, Exception,
-      message => 'This type cannot unbox to a native number',
       "List-assigning incompatible untyped array to $t array dies";
 }

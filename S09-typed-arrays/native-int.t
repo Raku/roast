@@ -150,7 +150,6 @@ for flat @int,@uint -> $T {
     is @arr[1], 101,  "push multiple to $t array works (2)";
     is @arr[2], 105,  "push multiple to $t array works (3)";
     throws-like { @arr.push('omg', 'wtf') }, Exception,
-      message => 'This type cannot unbox to a native integer',
       "Cannot push non-int/Int to $t array (multiple push)";
 
     is @arr.pop, 105, "pop from $t array works (1)";
@@ -172,7 +171,6 @@ for flat @int,@uint -> $T {
     is @arr[2],  1,   "unshift multiple to $t array works (4)";
     is @arr[3], 42,   "unshift multiple to $t array works (5)";
     throws-like { @arr.unshift('wtf', 'bbq') }, Exception,
-      message => 'This type cannot unbox to a native integer',
       "Cannot unshift non-int/Int to $t array (multiple unshift)";
 
     is @arr.shift, 3, "shift from $t array works (1)";
@@ -224,7 +222,6 @@ for flat @int,@uint -> $T {
 
     @untyped2.push('C-C-C-C-Combo Breaker!');
     throws-like { @native2 = @untyped2 }, Exception,
-      message => 'This type cannot unbox to a native integer',
       "List-assigning incompatible untyped array to $t array dies";
 }
 
