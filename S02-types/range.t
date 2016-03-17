@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 179;
+plan 183;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -96,6 +96,22 @@ is(+Range, 0, 'type numification');
           typename => 'Range',
           "range is immutable ($method)",
         ;
+    }
+
+    throws-like { $r.min = 2 }, X::Assignment::RO, "range.min ro";
+    throws-like { $r.max = 4 }, X::Assignment::RO, "range.max ro";
+    throws-like { $r.excludes-min = True }, X::Assignment::RO,
+        "range.excludes-min ro";
+    throws-like { $r.excludes-max = True }, X::Assignment::RO,
+        "range.excludes-max ro";
+
+    # RT #125791
+    {
+        for 0,1 -> $i {
+            throws-like { (^10).bounds[$i] = 1 }, X::Assignment::RO,
+                typename => / ^ 'Int' | 'value' $ /,
+                "is Range.bounds[$i] ro";
+        }
     }
 
     my $s = 1..5;
@@ -306,15 +322,6 @@ lives-ok({"\0".."~"}, "low ascii range completes");
     is (2 * $r).gist, '2^..^20', "can scale a right ^..^ range up";
     is ($r - 1).gist, '0^..^9', "can shift a ^..^ range down";
     is ($r / 2).gist, '0.5^..^5.0', "can scale a ^..^ range down";
-}
-
-# RT #125791
-{
-    for 0,1 -> $i {
-        throws-like { (^10).bounds[$i] = 1 }, X::Assignment::RO,
-          typename => / ^ 'Int' | 'value' $ /,
-          "is Range.bounds[$i] ro";
-    }
 }
 
 {
