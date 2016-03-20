@@ -1,6 +1,6 @@
 use v6;
 
-use lib $?FILE.IO.parent.child("lib").Str;
+use lib ".", $?FILE.IO.parent.child("lib").Str;
 
 use MONKEY-SEE-NO-EVAL;
 
