@@ -6,7 +6,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 128;
+plan @num * 145;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -163,18 +163,31 @@ for @num -> $T {
     throws-like { @arr.push('omg', 'wtf') }, Exception,
       "Cannot push non-num/Num to $t array (multiple push)";
 
-    is_approx @arr.pop, 10.5e0, "pop from $t array works (1)";
-    is @arr.elems,    2, "pop from $t array works (2)";
+    @arr.append(4.2e1);
+    is @arr.elems, 4,  "append to $t array works (1)";
+    is_approx @arr[3], 4.2e1, "append to $t array works (2)";
+    throws-like { @arr.append('it real good') }, Exception,
+      "Cannot append non-num/Num to $t array";
+
+    @arr.append(10.1e1, 10.5e1);
+    is @arr.elems, 6, "append multiple to $t array works (1)";
+    is_approx @arr[4], 10.1e1,  "append multiple to $t array works (2)";
+    is_approx @arr[5], 10.5e1,  "append multiple to $t array works (3)";
+    throws-like { @arr.append('omg', 'wtf') }, Exception,
+      "Cannot push non-num/Num to $t array (multiple push)";
+
+    is_approx @arr.pop, 10.5e1, "pop from $t array works (1)";
+    is @arr.elems, 5, "pop from $t array works (2)";
 
     @arr.unshift(-1e0);
-    is @arr.elems,  3, "unshift to $t array works (1)";
+    is @arr.elems, 6, "unshift to $t array works (1)";
     is_approx @arr[0],  -1e0, "unshift to $t array works (2)";
     is_approx @arr[1], 4.2e0, "unshift to $t array works (3)";
     throws-like { @arr.unshift('part of the day not working') }, Exception,
       "Cannot unshift non-num/Num to $t array";
 
     @arr.unshift(-3e0,-2e0);
-    is @arr.elems,  5, "unshift multiple to $t array works (1)";
+    is @arr.elems, 8, "unshift multiple to $t array works (1)";
     is_approx @arr[0],  -3e0, "unshift multiple to $t array works (2)";
     is_approx @arr[1],  -2e0, "unshift multiple to $t array works (3)";
     is_approx @arr[2],  -1e0, "unshift multiple to $t array works (4)";
@@ -182,8 +195,24 @@ for @num -> $T {
     throws-like { @arr.unshift('wtf', 'bbq') }, Exception,
       "Cannot unshift non-num/Num to $t array (multiple unshift)";
 
-    is_approx @arr.shift, -3e0, "shift from $t array works (1)";
-    is @arr.elems,    4, "shift from $t array works (2)";
+    @arr.prepend(-1e1);
+    is @arr.elems, 9, "prepend to $t array works (1)";
+    is_approx @arr[0], -1e1, "prepend to $t array works (2)";
+    is_approx @arr[1], -3e0, "prepend to $t array works (3)";
+    throws-like { @arr.prepend('part of the day not working') }, Exception,
+      "Cannot prepend non-num/Num to $t array";
+
+    @arr.prepend(-3e1,-2e1);
+    is @arr.elems, 11, "prepend multiple to $t array works (1)";
+    is_approx @arr[0], -3e1, "prepend multiple to $t array works (2)";
+    is_approx @arr[1], -2e1, "prepend multiple to $t array works (3)";
+    is_approx @arr[2], -1e1, "prepend multiple to $t array works (4)";
+    is_approx @arr[3], -3e0, "prepend multiple to $t array works (5)";
+    throws-like { @arr.prepend('wtf', 'bbq') }, Exception,
+      "Cannot prepend non-num/Num to $t array (multiple unshift)";
+
+    is_approx @arr.shift, -3e1, "shift from $t array works (1)";
+    is @arr.elems, 10, "shift from $t array works (2)";
 
     @arr = 1e0..10e0;
     my @replaced = @arr.splice(3, 2, 98e0, 99e0, 100e0);
