@@ -11,7 +11,6 @@ is &foo.name, 'foo', 'Introspecting subroutine name';
 my $bar = &foo;
 is $bar.name, 'foo', 'Introspecting subroutine for a sub assigned to a scalar';
 
-#?rakudo todo 'fixed in eac1e26d6342d0d65'
 is &foo.signature.perl, ':(Int $i, @stuff, $blah = 5)', 'Introspecting and stringification of subroutine signature';
 
 # Not sure if this is an appropriate test - as this code doesn't exist in the Advent Calendar
