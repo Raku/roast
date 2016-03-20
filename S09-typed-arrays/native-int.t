@@ -135,8 +135,7 @@ for flat @int,@uint -> $T {
     is @arr.elems, 1, "push to $t array works (1)";
     is @arr[0], 42,   "push to $t array works (2)";
     # RT #125123
-    throws-like { @arr.push('it real good') }, X::TypeCheck,
-      got => Str,
+    throws-like { @arr.push('it real good') }, Exception,
       "Cannot push non-int/Int to $t array";
     throws-like { @arr[0] := my $a }, Exception,
       message => 'Cannot bind to a natively typed array',
@@ -160,8 +159,7 @@ for flat @int,@uint -> $T {
     is @arr[0],  1,   "unshift to $t array works (2)";
     is @arr[1], 42,   "unshift to $t array works (3)";
     # RT #125123
-    throws-like { @arr.unshift('part of the day not working') }, X::TypeCheck,
-      got => Str,
+    throws-like { @arr.unshift('part of the day not working') }, Exception,
       "Cannot unshift non-int/Int to $t array";
 
     is (@arr.unshift(3,2)), (3,2,1,42,101),"can unshift multiple to $t array";
