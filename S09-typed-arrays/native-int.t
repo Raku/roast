@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 157 + @uint * 2;
+plan (@int + @uint) * 160 + @uint * 2;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -232,9 +232,20 @@ for flat @int,@uint -> $T {
     @arr = 39, 3;
     is ftest(|@arr), 42, "Flattening $t array in call works";
 
+    @arr = ^5;
+    is @arr.join(":"), "0:1:2:3:4", "does join a $t array";
+
+    @arr = ();
+    @arr[4] = 22;
+    #?rakudo todo 'RT #127756'
+    is @arr.join(":"), "0:0:0:0:22", "does emptying a $t array really empty";
+
+    my @holes := array[$T].new;
+    @holes[4] = 22;
+    is @holes.join(":"), "0:0:0:0:22", "does join handle holes in a $t array";
+
     # Interaction of native int arrays and untyped arrays.
     my @native := array[$T].new(1..10);
-
     my @untyped = @native;
     is @untyped.elems, 10, "List-assigning $t array to untyped works (1)";
     is @untyped[0], 1, "List-assigning $t array to untyped works (2)";

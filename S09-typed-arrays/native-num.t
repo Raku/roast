@@ -6,7 +6,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 145;
+plan @num * 148;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -236,9 +236,22 @@ for @num -> $T {
     @arr = 3.9e0, 0.3e0;
     is_approx ftest(|@arr), 4.2e0, "Flattening $t array in call works";
 
+    @arr = 0e0..^5e0;  # cannot use 0.1e0 because of num32 accuracy issues
+    is @arr.join(":"), "0:1:2:3:4", "does join a $t array";
+
+    @arr = ();
+    @arr[4] = 22.1e0;
+    #?rakudo todo 'RT #127756'
+    ok @arr.join(":").starts-with("0:0:0:0:22.1"),  # num32 accurracy issues
+      "does emptying a $t array really empty";
+
+    my @holes := array[$T].new;
+    @holes[4] = 22.1e0;
+    ok @holes.join(":").starts-with("0:0:0:0:22.1"), # num32 accuracy issues
+      "does join handle holes in a $t array";
+
     # Interaction of native num arrays and untyped arrays.
     my @native := array[$T].new(1e0..10e0);
-
     my @untyped = @native;
     is @untyped.elems,        10, "List-assign $t array to untyped works (1)";
     is_approx @untyped[0],   1e0, "List-assign $t array to untyped works (2)";

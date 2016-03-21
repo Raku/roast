@@ -1,7 +1,7 @@
 ﻿use v6;
 use Test;
 
-plan 157;
+plan 160;
 
 # Basic native str array tests.
 my $T := str;
@@ -226,6 +226,18 @@ is @arr.perl, qq/array[$t].new("a", "b", "c", "d", "e")/,
 my &ftest := EVAL qq:!c/sub ftest($t \$a, $t \$b) { \$a ~ \$b }/;
 @arr = "a","h";
 is ftest(|@arr), "ah", "Flattening $t array in call works";
+
+@arr = "a".."e";
+is @arr.join(":"), "a:b:c:d:e", "does join a $t array";
+
+@arr = ();
+@arr[4] = "z";
+#?rakudo todo 'RT #127756'
+is @arr.join(":"), "::::z", "does emptying a $t array really empty";
+
+my @holes := array[$T].new;
+@holes[4] = "z";
+is @holes.join(":"), "::::z", "does join handle holes in a $t array";
 
 # Interaction of native int arrays and untyped arrays.
 {
