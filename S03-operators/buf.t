@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 105;
+plan 123;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -195,3 +195,37 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 # RT#127642
 ok Blob eqv Blob, 'Blob eqv Blob lives, works';
 nok Buf eqv Blob, 'Buf eqv Blob lives, works';
+
+{
+    for Blob, Buf -> $T {
+        my $a = $T.allocate(10);
+        is $a.elems, 10, 'did we allocate 10 elements';
+        is $a.join, "0000000000", "was it initialized correctly";
+
+        if $T === Buf {
+            $a.reallocate(12);
+            is $a.elems, 12, 'did we reallocate to 12 elements';
+            is $a.join, "000000000000", "was it changed correctly";
+        }
+
+        my $b = $T.allocate(10, 42);
+        is $b.elems, 10, 'did we allocate 10 elements';
+        is $b.join, "42424242424242424242", "was it initialized correctly";
+
+        if $T === Buf {
+            $b.reallocate(13);
+            is $b.elems, 13, 'did we reallocate to 13 elements';
+            is $b.join, "42424242424242424242000", "was it changed correctly";
+        }
+
+        my $c = $T.allocate(10, (1,2,3));
+        is $c.elems, 10, 'did we allocate 10 elements';
+        is $c.join, "1231231231", "was it initialized correctly";
+
+        if $T === Buf {
+            $c.reallocate(4);
+            is $c.elems, 4, 'did we reallocate to 4 elements';
+            is $c.join, "1231", "was it changed correctly";
+        }
+    }
+}
