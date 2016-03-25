@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 20;
+plan 23;
 
 #L<S03/Smart matching/Signature-signature>
 {
@@ -38,6 +38,11 @@ plan 20;
     #?rakudo todo "Parametric types"
     ok (:(&foo:(Str --> Bool)) ~~ :(&bar:(Str --> Bool))),
         "Code params with signatures";
+
+    # RT #127223
+    nok :(Int --> Int) ~~ :(), 'Can smartmatch against empty signature (False)';
+    nok :() ~~ :(Int ), 'Can smartmatch an empty signature (False)';
+    ok :() ~~ :(), 'Can smartmatch against empty signature (True)';
 }
 
 # vim: ft=perl6
