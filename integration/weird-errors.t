@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 21;
+plan 22;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -175,4 +175,17 @@ throws-like { EVAL '&&::{}[];;' },
 {
     throws-like { "::a".EVAL }, X::NoSuchSymbol, symbol => "a",
       "test throwing for ::a";
+}
+
+# RT #127748
+{
+    is_run(q:to/SEGV/, { out => "360360\n" }, 'Correct result instead of SEGV');
+        my $a = 14;
+        while (True) {
+            my $z = (2..13).first(-> $x { !($a %% $x) });
+            last if (!$z);
+            $a += 14
+        }
+        say $a
+        SEGV
 }
