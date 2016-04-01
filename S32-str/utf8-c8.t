@@ -5,7 +5,7 @@ use Test;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 31;
+plan 32;
 
 {
     my $test-str;
@@ -98,3 +98,6 @@ else {
         is $proc.out.get, '42', 'Can run Perl 6 sourcefile with non-UTF-8 name';
     }
 }
+
+# RT #126756
+is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works';
