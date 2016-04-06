@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 47;
+plan 48;
 
 for False, True -> $eager {
     is "a\nb\n\nc".lines(:$eager).join('|'),
