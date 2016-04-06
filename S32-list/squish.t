@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 62;
 
 =begin description
 
@@ -138,6 +138,59 @@ This test tests the C<squish> builtin and .squish method on Any/List.
     is-deeply @array, [<a b c d e f a>],
       "final result with :as and :with in place";
 } #4
+
+
+#?niecza skip 'NYI'
+{
+    my @a;
+    my $as = { @a.push($_); $_ };
+    my @w;
+    my $with = { @w.push("$^a $^b"); $^a + 1 == $^b };
+    is (1,2,3,2,1,0).squish(:$as,:$with), (1,2,1,0),
+        'Order of :with operands, and first one of each run (:as)';
+    is bag(@a), bag(1,2,3,2,1,0), ':as callbacks called once per element';
+    is bag(@w), bag("1 2","2 3","3 2","2 1","1 0"),
+        ':with callbacks called minimumish number of times (:as)';
+    @w = ();
+    is (1,2,3,2,1,0).squish(:$with), (1,2,1,0),
+        'Order of :with operands, and first one of each run';
+    is bag(@w), bag("1 2","2 3","3 2","2 1","1 0"),
+        ':with callbacks called minimumish number of times.';
+    @a = (); @w = ();
+    is (1).squish(:$with, :$as), (1),
+        'Single element list with :as and :with';
+    ok so all((@a.elems,@w.elems) Z< 2, 1),
+        'at most one :as and no :with callbacks with single element list';
+    @a = (); @w = ();
+    is (1).squish(:$with), (1),
+        'Single element list with :with';
+    is @w, [], "No callbacks with single element list";
+    @w = ();
+    my $i = (1,2,3,2,1,0).squish(:$as,:$with).iterator;
+    is $i.pull-one, 1, '.pull-one with :with and :as';
+    ok so all((@a.elems,@w.elems) Z< 2, 1),
+        '.pull-one called at most one :as and no :with on first pull';
+    is $i.pull-one, 2, 'second .pull-one with :with and :as';
+    ok so all((@a.elems,@w.elems) Z== 4, 3),
+        'second .pull-one called 4 :as and three :with';
+    my @c;
+    $i.push-all(@c);
+    is @c, (1,0), 'push-all after a couple pull-ones works (:as)';
+    is bag(@a), bag(1,2,3,2,1,0), ':as callbacks called once per element (fragged)';
+    is bag(@w), bag("1 2","2 3","3 2","2 1","1 0"),
+        ':with callbacks called minimumish number of times (:as, fragged)';
+    @w = ();
+    $i = (1,2,3,2,1,0).squish(:$with).iterator;
+    is $i.pull-one, 1, '.pull-one with :with';
+    nok @w.elems, 'no :with called on first pull';
+    is $i.pull-one, 2, 'second .pull-one with :with';
+    ok @w.elems == 3, 'second .pull-one called three :with';
+    @c = ();
+    $i.push-all(@c);
+    is @c, (1,0), 'push-all after a couple pull-ones works';
+    is bag(@w), bag("1 2","2 3","3 2","2 1","1 0"),
+        ':with callbacks called minimumish number of times (:as, fragged)';
+}
 
 #?niecza skip 'NYI'
 {
