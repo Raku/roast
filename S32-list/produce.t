@@ -79,7 +79,7 @@ plan 25;
     push @reftypes, $hash ~~ Hash;
     $hash.{$key};
   }
-  is((produce(&foo, flat $hash, <a b c>)).gist, '(a => b => c => 42 b => c => 42 c => 42 42)', 'produce(&foo) (foo ~~ .{}) works three levels deep');
+  is((produce(&foo, flat $hash, <a b c>)).gist, '({a => {b => {c => 42}}} {b => {c => 42}} {c => 42} 42)', 'produce(&foo) (foo ~~ .{}) works three levels deep');
   ok ([&&] @reftypes), "All the types were hashes";
 }
 
