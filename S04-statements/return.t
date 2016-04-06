@@ -45,7 +45,6 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     is run($*EXECUTABLE, '-e', 'return 1; CATCH { default { print .^name } }', :out).out.lines[0],
         'X::ControlFlow::Return',
         'bare return fails (2)';
-    #?rakudo todo 'for is implemented in terms of map, so return is inside routine'
     is run($*EXECUTABLE, '-e', 'for 1 {return 2}; CATCH { default { print .^name } }', :out).out.lines[0],
         'X::ControlFlow::Return',
         'cannot return out of a bare for block';
