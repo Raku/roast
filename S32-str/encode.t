@@ -84,6 +84,9 @@ for (
 
 }
 
+# Covers a UTF-16 BOM bug.
+is Buf.new([255, 254, 72, 0, 101, 0]).decode("utf-16"), 'He', 'utf-16 BOM handled ok';
+
 done-testing;
 
 # vim: ft=perl6
