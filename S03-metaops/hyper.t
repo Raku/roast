@@ -440,7 +440,6 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».Set».keys».sort.gist, "((2 3) (4 [5 6]))", ".Set is nodal";
     is [[2, 3], [4, [5, 6]]]».Slip.gist, "((2 3) (4 [5 6]))", ".Slip is nodal";
     is [[2, 3], [4, [5, 6]]]».sort.gist, "((2 3) (4 [5 6]))", ".sort is nodal";
-    #?rakudo.jvm todo "RT #126527"
     is [[2, 3], [4, [5, 6]]]».squish.gist, "((2 3) (4 [5 6]))", ".squish is nodal";
     is [[2, 3], [4, [5, 6]]]».Supply.elems, 2, ".Supply is nodal";
     is [[2, 3], [4, [5, 6]]]».tree(*.reverse,*.reverse).gist, "((3 2) ([6 5] 4))", ".tree is nodal";
