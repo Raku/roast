@@ -39,7 +39,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 #?niecza skip 'NYI'
 {
     my class A { method Str { '' } };
-    #?rakudo.jvm skip 'hangs because squish gives back infinite list with Mu.new'
     is (A.new, A.new).squish.elems, 2, 'squish has === semantics for objects';
 } #1
 
