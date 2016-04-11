@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 24;
+plan 27;
 
 # L<S09/Fixed-size arrays>
 
@@ -95,4 +95,14 @@ plan 24;
     throws-like 'push @arr, 4.2',
       X::IllegalOnFixedDimensionArray,
       operation => 'push';
+}
+
+# RT 126800
+{
+    throws-like 'my @a[0]',
+        X::IllegalDimensionInShape;
+    throws-like 'my @a[-9999999999999999]',
+        X::IllegalDimensionInShape;
+    throws-like 'my @a[-9223372036854775808,-2]',
+        X::IllegalDimensionInShape;
 }
