@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 37;
 
 {
     class A { method Str() { 'foo' } };
@@ -95,6 +95,17 @@ plan 36;
 
     my %j:=%h.new;
     is %h.WHAT, %j.WHAT, "Clone of an object hash instance is an object hash";
+}
+
+# RT #111498
+{
+    my $r1 = role { method foo() { 5 } };
+    my $r2 = role { method foo() { 7 } };
+    my %hash{Any};
+    %hash{"quux" but $r1} = 9;
+    %hash{"quux" but $r2} = 11;
+
+    is %hash.keys>>.foo.sort, (5, 7), 'Can use mixin objects as keys';
 }
 
 #vim: ft=perl6
