@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 12;
 
 # L<S32::Containers/List/=item combinations>
 
@@ -15,3 +15,13 @@ is (1, 2, 3).combinations(2..3).list.perl, ((1, 2), (1, 3), (2, 3), (1, 2, 3)).p
 is (1, 2, 3).combinations.list.perl, ((), (1,), (2,), (3,), (1, 2), (1, 3), (2, 3), (1, 2, 3)).perl, 'defaults to "powerset"';
 
 is combinations(3,2).list.perl, ((0, 1), (0, 2), (1, 2)).perl, "combinations function";
+
+# RT #127778
+is combinations(-2,2).list.perl, ((),).perl,
+    'negative $n in sub combinations (1)';
+is combinations(-9999999999999999999,2).list.perl, ((),).perl,
+    'negative $n in sub combinations (2)';
+is combinations(2,-2).list.perl, ().perl,
+    'negative $k in sub combinations gives empty list (1)';
+is combinations(-2,-2).list.perl, ().perl,
+    'negative $k in sub combinations gives empty list (2)';
