@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 109;
+plan 110;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -335,5 +335,8 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     is ($*f, $*g), (3, 0), 'WhateverCode parameters are rw';
 
 }
+
+# RT #127408
+throws-like '*(42)', X::Method::NotFound, typename => 'Whatever';
 
 # vim: ft=perl6
