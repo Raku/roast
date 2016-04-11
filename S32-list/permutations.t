@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 # L<S32::Containers/List/=item permutations>
 
@@ -16,3 +16,6 @@ is permutations(0).list.perl, ((),).perl, "permutations function with 0 for its 
 
 is +().permutations, 1, "there is 1 permutation of empty list";
 is +permutations(0), 1, "there is 1 permutation with 0 values";
+
+# RT #127777
+is permutations(-1).list.perl, ((),).perl, "sub permutations with negative argument gives empty list";
