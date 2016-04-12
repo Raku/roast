@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 35;
+plan 51;
 
 # L<S02/Immutable types/'term now'>
 
@@ -48,6 +48,31 @@ throws-like { Instant.new(123) }, X::Cannot::New, 'Instant.new is illegal';
             is $i.perl.EVAL, $i, 'Instant round trips properly';
         }
     }
+}
+
+# L<S02/Immutable types/'these types behave like values'>
+
+{
+    my ($i1, $i2) = Instant.from-posix(500000.0e0), Instant.from-posix(1000000/2);
+    my ($d1, $d2) = Duration.new(500000.0e0), Duration.new(1000000/2);
+    for < eq == eqv === > -> $op {
+        cmp-ok $i1, $op, $i2, "Instant A $op Instant B";
+        cmp-ok $d1, $op, $d2, "Duration A $op Duration B";
+    }
+    cmp-ok $i1.WHICH, '===', $i2.WHICH, "InstantA.WHICH === InstantB.WHICH";
+    cmp-ok $d1.WHICH, '===', $d2.WHICH, "DurationA.WHICH === DurationB.WHICH";
+}
+
+# L<S02/Immutable types/'In numeric context a Duration happily returns a Rat'>
+
+{
+    my ($d1, $d2) = Duration.new(Int(5000000)), Duration.new(10000000e0/2);
+    cmp-ok  $d1, '~~', Numeric,   "Duration.new(__) ~~ Numeric";
+    cmp-ok  $d2, '~~', Numeric,   "Duration.new(__) ~~ Numeric";
+    cmp-ok  $d1, '~~', Real,      "Duration.new(__) ~~ Real";
+    cmp-ok  $d2, '~~', Real,      "Duration.new(__) ~~ Real";
+    cmp-ok +$d1, '~~', Rational, "+Duration.new(__) ~~ Rational";
+    cmp-ok +$d2, '~~', Rational, "+Duration.new(__) ~~ Rational";
 }
 
 # See S32-temporal/DateTime-Instant-Duration.t for more.
