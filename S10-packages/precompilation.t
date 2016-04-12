@@ -115,9 +115,8 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
         say RT123276::B::C1.^methods
     --END--
 
-    #?rakudo.jvm todo 'RT #123276'
-    #?rakudo.moar todo 'RT #123276'
-    is-deeply @keys, [<foo>], 'RT123276';
+    #RT #123276
+    is-deeply @keys, [<(foo)>], 'RT123276';
 }
 
 #RT #124162
