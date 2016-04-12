@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 35;
 
 # L<S02/Immutable types/'term now'>
 
@@ -42,11 +42,11 @@ throws-like { Instant.new(123) }, X::Cannot::New, 'Instant.new is illegal';
 }
 
 {
-    for (-2**63, -400.2, -33/7, -1, 0, 1, 33/7, 400.2, 2**32, ) -> $e {
-        my $i = Instant.from-posix($e, False);
-        is $i.perl.EVAL, $i, 'Instant round trips properly';
-        my $i = Instant.from-posix($e, True);
-        is $i.perl.EVAL, $i, 'Instant round trips properly';
+    for (-2**63, -400.2, -33/7, -1, 0, 1, 33/7, 400.2, 2**32, 915148800) -> $e {
+        for (True, False) -> $prefer-leap {
+            my $i = Instant.from-posix($e, $prefer-leap);
+            is $i.perl.EVAL, $i, 'Instant round trips properly';
+        }
     }
 }
 
