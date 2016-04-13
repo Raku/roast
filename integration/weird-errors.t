@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 22;
+plan 23;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -189,3 +189,13 @@ throws-like { EVAL '&&::{}[];;' },
         say $a
         SEGV
 }
+
+# RT #127878
+
+sub decode_utf8c {
+    my @ints = 103, 248, 111, 217, 210, 97;
+    my $b = Buf.new(@ints);
+    my Str $u=$b.decode("utf8-c8");
+    $u.=subst("a","b");
+}
+lives-ok &decode_utf8c, 'RT #127878: Can decode and work with interesting byte sequences';
