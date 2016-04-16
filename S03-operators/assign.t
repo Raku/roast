@@ -873,19 +873,6 @@ sub l () { 1, 2 };
     is $rt125407, @rt125407[0], '$rt125407 and @rt125407[0] should be equal';
 }
 
-# RT #76734
-#?rakudo skip 'RT #76734'
-#?niecza skip "Overloading infix:<=> fails"
-{
-    class A {};
-    my $x = ['a'];
-    multi infix:<=> (A $a, Str $value) { $x.push: $value; }  #OK not used
-    (A.new() = 'b');
-    is $x.join(','), 'a,b', 'New multi infix:<=> works';
-    $x = 'c';
-    is $x, 'c', '...without screwing up ordinary assignment';
-}
-
 # RT #77142
 {
     my $cc = 0;
