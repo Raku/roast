@@ -385,7 +385,7 @@ All uses of a zero modulus or divisor should 'die', and the
     my role orig-string[$o] { method Str() { $o.Str } };
     my $a = 7 but orig-string['7'];
     is ($a - 3).Str, '4',
-        'infix:<-> produces a proper Int, even if some of the types invovled have mixins';
+        'infix:<-> produces a proper Int, even if some of the types involved have mixins';
 }
 
 # RT #122053
