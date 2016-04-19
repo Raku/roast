@@ -201,6 +201,7 @@ plan 36;
 }
 
 # tests for the S04-control.pod document
+#?rakudo.jvm skip 'UnwindException RT #124279'
 {
     my @list = 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 6, 6;
     my @uniq = gather for @list {

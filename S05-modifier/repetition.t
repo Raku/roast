@@ -25,6 +25,7 @@ nok('ab'  ~~ m:x(2)/ab/, ':2x (repetition) modifier (-)');
 {
     ok 'abacad'.match(rx/a./, :x(1..3)), ':x(Range)';
     nok 'abcabc'.match(rx/a./, :x(3..4)), ':x(Range) > number of matches';
+    #?rakudo.jvm skip 'UnwindException RT #124279'
     is 'abacadae'.match(rx/a./, :x(1..3)).join('|'), 'ab|ac|ad', ':x(Range) (upper bound)';
     is 'abacad'.match(rx/a./, :x(2..5)).join('|'), 'ab|ac|ad', ':x(Range) (takes as much as it can)';
 }
