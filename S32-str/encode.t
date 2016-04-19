@@ -52,6 +52,7 @@ is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of cod
     my $temp;
 
     ok $temp = "\x1F63E".encode('UTF-16'), 'encode a string to UTF-16 surrogate pair';
+    #?rakudo.jvm skip 'This type does not support positional operations'
     ok $temp = utf16.new($temp),           'creating utf16 Buf from a surrogate pair';
     is $temp[0], 0xD83D,                   'indexing a utf16 gives correct value';
     is $temp[1], 0xDE3E,                   'indexing a utf16 gives correct value';
@@ -63,28 +64,30 @@ lives-ok { "\x[effff]".encode('utf-8') },           'Can encode noncharacters to
 is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip with UTF-8';
 
 # RT #123673
-for (
-    'å', 'ascii', '?',
-    '☃', 'latin-1', '?',
-    '☃', 'windows-1252', '?',
-    "\x[FFFFFF]", 'utf-8', "\x[FFFD]",
-    "\x[FFFFFF]", 'utf-16', "\x[FFFD]",
-) -> $string, $encoding, $default-replacement {
-#!rakudo.moar todo 'Only moar handles this'
-    subtest {
-        throws-like { $string.encode($encoding) }, Exception, message => rx:s:i/Error encoding $encoding string/,
-            'No replacement dies';
-        is $string.encode($encoding, :replacement).decode($encoding), $default-replacement,
-            'Default replacement';
-        is $string.encode($encoding, :replacement('')).decode($encoding), '',
-            'Zero-character replacement';
-        is $string.encode($encoding, :replacement('XXX')).decode($encoding), 'XXX',
-            'Multi-character replacement';
-    }, "Non-$encoding character";
-
+#?rakudo.jvm skip 'Only moar handles this'
+{
+    for (
+        'å', 'ascii', '?',
+        '☃', 'latin-1', '?',
+        '☃', 'windows-1252', '?',
+        "\x[FFFFFF]", 'utf-8', "\x[FFFD]",
+        "\x[FFFFFF]", 'utf-16', "\x[FFFD]",
+    ) -> $string, $encoding, $default-replacement {
+        subtest {
+            throws-like { $string.encode($encoding) }, Exception, message => rx:s:i/Error encoding $encoding string/,
+                'No replacement dies';
+            is $string.encode($encoding, :replacement).decode($encoding), $default-replacement,
+                'Default replacement';
+            is $string.encode($encoding, :replacement('')).decode($encoding), '',
+                'Zero-character replacement';
+            is $string.encode($encoding, :replacement('XXX')).decode($encoding), 'XXX',
+                'Multi-character replacement';
+        }, "Non-$encoding character";
+    }
 }
 
 # Covers a UTF-16 BOM bug.
+#?rakudo.jvm todo 'uft-16'
 is Buf.new([255, 254, 72, 0, 101, 0]).decode("utf-16"), 'He', 'utf-16 BOM handled ok';
 
 done-testing;
