@@ -27,7 +27,6 @@ plan 23;
         );
 
     for @tests -> $s1, $s2, $res {
-        #?rakudo.jvm skip 'Cannot access a native attribute as a reference'
         is(($s2 ~~ $s1), $res, "{$s2.perl} ~~ {$s1.perl}");
     }
 
@@ -36,8 +35,7 @@ plan 23;
     # Can't deal with parameters.
     ok (:(::T $x, T $y) R~~ :(Str $y, Str $z)), "Parametric types";
 
-    #?rakudo.moar todo "Parametric types"
-    #?rakudo.jvm skip 'Cannot access a native attribute as a reference'
+    #?rakudo todo "Parametric types"
     ok (:(&foo:(Str --> Bool)) ~~ :(&bar:(Str --> Bool))),
         "Code params with signatures";
 

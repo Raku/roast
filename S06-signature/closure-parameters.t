@@ -25,11 +25,9 @@ plan 18;
 
     my sub test-but-dont-call(&testcode:(Int)) { True }
 
-    #?rakudo.jvm skip 'Cannot access a native attribute as a reference'
     ok(testit(&testint), 'code runs with proper signature (1)');
     throws-like 'testit(&teststr)', Exception, 'code dies with invalid signature (1)';
 
-    #?rakudo.jvm skip 'Cannot access a native attribute as a reference'
     ok(test-but-dont-call(&testint), 'code runs with proper signature (1)');
     throws-like 'test-but-dont-call(&teststr)', Exception, 'code dies with invalid signature (1)';
 }
@@ -41,7 +39,6 @@ plan 18;
     my Int  sub testintint (Int $foo) {return 1}   #OK not used
     my Int  sub teststrint (Str $foo) {return 0}   #OK not used
 
-    #?rakudo.jvm skip 'Cannot access a native attribute as a reference'
     ok(testit(&testintbool), 'code runs with proper signature (2)');
     throws-like 'testit(&testintint)', Exception, 'code dies with invalid signature (2)';
     throws-like 'testit(&teststrbool)', Exception, 'code dies with invalid signature (3)';
