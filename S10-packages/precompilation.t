@@ -30,6 +30,7 @@ my @keys = Test::Util::run( q:to"--END--").lines;
     .say for Example::.keys.sort;
     --END--
 
+#?rakudo.jvm todo 'got: $["B", "C"]'
 is-deeply @keys, [<A B C>], 'Diamond relationship';
 
 my @precompiled2 = Test::Util::run( q:to"--END--").lines;
@@ -57,6 +58,7 @@ my @keys2 = Test::Util::run( q:to"--END--").lines;
     .say for Example2::.keys.sort;
     --END--
 
+#?rakudo.jvm todo 'got: $["C", "K"]'
 is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all different';
 
 #?rakudo.jvm skip 'RT #122896'
@@ -116,6 +118,7 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
     --END--
 
     #RT #123276
+    #?rakudo.jvm todo 'got: $[]'
     is-deeply @keys, [<(foo)>], 'RT123276';
 }
 
