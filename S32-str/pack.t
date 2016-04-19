@@ -9,6 +9,7 @@ plan 14;
 {
     for 'H*', ('H*',) -> $t {
         my $buf = pack($t, "414243");
+        #?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
         is-deeply $buf.contents, (:16<41>, :16<42>, :16<43>), "$t works";
     }
 }
@@ -16,6 +17,7 @@ plan 14;
 {
     for 'H', ('H',) -> $t {
         my $buf = pack($t, 'a');
+        #?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
         is-deeply $buf.contents, ( 0xA0, ), "$t works on odd-length strings";
     }
 }
@@ -36,6 +38,7 @@ plan 14;
           0x130, 0x10030, 0x100000030,
           0x1234, 0x12345678,
           0x1234, 0x12345678);
+        #?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
         is-deeply $buf.contents,
           (0x30, 0x30, 0x00, 0x30, 0x00, 0x00, 0x00,
           0x12, 0x34, 0x12, 0x34, 0x56, 0x78,
@@ -47,6 +50,7 @@ plan 14;
 {
     for 'x', ('x',) -> $t {
         my $buf = pack($t);
+        #?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
         is-deeply $buf.contents, (0x00,), "$t by itself works";
     }
 }
@@ -54,6 +58,7 @@ plan 14;
 {
     for 'x4', ('x4',) -> $t {
         my $buf = pack($t);
+        #?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
         is-deeply $buf.contents, (0x00, 0x00, 0x00, 0x00), "$t & amount works";
     }
 }
@@ -61,6 +66,7 @@ plan 14;
 {
     for 'x*', ('x*',) -> $t {
         my $buf = pack($t);
+        #?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
         is-deeply $buf.contents, (), "$t & amount works: does nothing";
     }
 }
