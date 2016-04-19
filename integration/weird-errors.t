@@ -198,4 +198,5 @@ sub decode_utf8c {
     my Str $u=$b.decode("utf8-c8");
     $u.=subst("a","b");
 }
+#?rakudo.jvm todo "Unknown encoding 'utf8-c8' RT #127878"
 lives-ok &decode_utf8c, 'RT #127878: Can decode and work with interesting byte sequences';
