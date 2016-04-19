@@ -39,6 +39,7 @@ plan 32;
     # is-deeply (:%?LANG), (LANG => %?LANG), 'Adverb with %? twigil works';
     is-deeply (:$*CWD), (CWD => $*CWD), 'Adverb with $* twigil works';
     is-deeply (:@*ARGS), (ARGS => @*ARGS), 'Adverb with @* twigil works';
+    #?rakudo.jvm skip 'Cannot access a native attribute as a reference'
     is-deeply (:%*ENV), (ENV => %*ENV), 'Adverb with %* twigil works';
     is-deeply ({ :$^f }(3)), (f => 3), 'Adverb with $^ twigil works';
     is-deeply ({ :@^f }([3,3])), (f => [3,3]), 'Adverb with @^ twigil works';

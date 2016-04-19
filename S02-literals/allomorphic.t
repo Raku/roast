@@ -163,6 +163,7 @@ lives-ok {val("foo")}, "val() exists";
     my @written = qw:v[1 2/3 4.5 6e7 8+9i ten];
     my @angled  =     <1 2/3 4.5 6e7 8+9i ten>;
 
+    #?rakudo.jvm skip 'Cannot access a native attribute as a reference'
     is-deeply @angled, @written, "<...> is equivalent to qw:v[...]";
 }
 
@@ -171,6 +172,7 @@ lives-ok {val("foo")}, "val() exists";
     my @written = qqww:v[1 2/3 $num 6e7 8+9i ten];
     my @angled  =       «1 2/3 $num 6e7 8+9i ten»;
 
+    #?rakudo.jvm skip 'Cannot access a native attribute as a reference'
     is-deeply @angled, @written, "«...» is equivalent to qqww:v[...]";
 }
 
