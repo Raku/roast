@@ -93,6 +93,7 @@ class NastyChild is Parent { };
 
 # RT #127841
 is Int:U.gist, '(Int:U)', '.gist on coercion types';
+#?rakudo.jvm skip "Could not find symbol '&Async:U' RT #127841"
 is Proc::Async:U.gist, '(Async:U)', '.gist on coercion types uses shortname';
 
 # vim: ft=perl6
