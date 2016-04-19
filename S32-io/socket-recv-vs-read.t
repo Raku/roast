@@ -66,6 +66,7 @@ sleep 1;
 is $p.status, Planned,
     'read blocks until it has enough data';
 $send-rest.keep(True);
+#?rakudo.jvm 2 skip 'This type does not support positional operations'
 is $p.result[0].decode('ascii'), 'first thinganother t',
     'read gets the chars from across low level socket reads';
 is $p.result[1].decode('ascii'), 'hing',
