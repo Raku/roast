@@ -34,14 +34,22 @@ if $type eq "uint64" {
       "$type can be $minval";
 
 if $type eq "uint64" {
-#?rakudo 2 skip 'Cannot unbox 65 bit wide bigint into native integer'
+#?rakudo.moar 2 skip 'Cannot unbox 65 bit wide bigint into native integer'
+    is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
+      "$type overflows to $minval";
+#?rakudo.jvm 1 todo "expected: '18446744073709551615' got: '-1'"
+    is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
+      "$type underflows to $maxval";
+} elsif $type eq 'int64' {
     is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
       "$type overflows to $minval";
     is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
       "$type underflows to $maxval";
 } else {
+#?rakudo.jvm todo 'wrong overflow'
     is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
       "$type overflows to $minval";
+#?rakudo.jvm todo 'wrong underflow'
     is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
       "$type underflows to $maxval";
 }
