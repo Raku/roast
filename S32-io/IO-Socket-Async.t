@@ -85,7 +85,7 @@ my $binaryTap = $server.tap(-> $c {
     $c.write($binary).then({ $c.close });
 });
 
-#?rakudo.jvm skip 'hangs (sometimes)'
+#?rakudo.jvm skip 'hangs (sometimes) RT #127948'
 {
     multi sub client(Buf $message) {
         client(-> $socket, $vow {
