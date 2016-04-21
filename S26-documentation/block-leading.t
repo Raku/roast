@@ -11,12 +11,12 @@ my $pod_index = 0;
 #     in Perl 5) so that failures point at the caller
 sub test-leading($thing, $value) {
     is $thing.WHY.?contents, $value, $value  ~ ' - contents';
-    ok $thing.WHY.?WHEREFORE === $thing, $value ~ ' - WHEREFORE';
+    is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
     is $thing.WHY.?leading, $value, $value ~ ' - leading';
     ok !$thing.WHY.?trailing.defined, $value ~ ' - no trailing';
     is ~$thing.WHY, $value, $value ~ ' - stringifies correctly';
 
-    ok $=pod[$pod_index].?WHEREFORE === $thing, "\$=pod $value - WHEREFORE";
+    is $=pod[$pod_index].?WHEREFORE.^name,$thing.^name, "\$=pod $value - WHEREFORE";
     is ~$=pod[$pod_index], $value, "\$=pod $value";
     $pod_index++;
 }
