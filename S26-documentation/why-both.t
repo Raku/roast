@@ -9,12 +9,12 @@ sub test-both($thing, $leading, $trailing) {
     my $name     = "$leading\\n$trailing";
 
     is $thing.WHY.?contents, $combined, $name  ~ ' - contents';
-    ok $thing.WHY.?WHEREFORE === $thing, $name ~ ' - WHEREFORE';
+    is $thing.WHY.?WHEREFORE.^name, $thing.^name, $name ~ ' - WHEREFORE';
     is $thing.WHY.?leading, $leading, $name ~ ' - trailing';
     is $thing.WHY.?trailing, $trailing, $name ~ ' - trailing';
     is ~$thing.WHY, $combined, $name ~ ' - stringifies correctly';
 
-    ok $=pod[$pod_index].?WHEREFORE === $thing, "\$=pod $name - WHEREFORE";
+    is $=pod[$pod_index].?WHEREFORE.^name, $thing.^name, "\$=pod $name - WHEREFORE";
     is ~$=pod[$pod_index], $combined, "\$=pod $name";
     $pod_index++;
 }
