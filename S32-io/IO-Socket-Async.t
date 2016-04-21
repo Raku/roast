@@ -85,18 +85,21 @@ my $binaryTap = $server.tap(-> $c {
     $c.write($binary).then({ $c.close });
 });
 
-multi sub client(Buf $message) {
-    client(-> $socket, $vow {
-        my $buf = Buf[uint8].new;
-        $socket.Supply(:bin).act(-> $bytes { 
-                $buf ~= $bytes;
-                $socket.close();
-                $vow.keep($buf);
-            },
-            quit => { $vow.break($_); });
-    });
-}
+#?rakudo.jvm skip 'hangs (sometimes)'
+{
+    multi sub client(Buf $message) {
+        client(-> $socket, $vow {
+            my $buf = Buf[uint8].new;
+            $socket.Supply(:bin).act(-> $bytes { 
+                    $buf ~= $bytes;
+                    $socket.close();
+                    $vow.keep($buf);
+                },
+                quit => { $vow.break($_); });
+        });
+    }
 
-my $received = await client($binary);
-$binaryTap.close;
-ok $binary eqv $received, 'bytes-supply';
+    my $received = await client($binary);
+    $binaryTap.close;
+    ok $binary eqv $received, 'bytes-supply';
+}
