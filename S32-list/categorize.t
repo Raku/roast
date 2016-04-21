@@ -7,10 +7,10 @@ plan 28;
 
 { # basic categorize with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
-    my %expected1 =
-      ('0'=>[7,9,3,7],         '10'=>[12,18],       '20'=>[29,23]);
-    my %expected2 =
-      ('0'=>[7,9,3,7,7,9,3,7], '10'=>[12,18,12,18], '20'=>[29,23,29,23]);
+    my %expected1{Any} =
+      (0=>[7,9,3,7],         10=>[12,18],       20=>[29,23]);
+    my %expected2{Any} =
+      (0=>[7,9,3,7,7,9,3,7], 10=>[12,18,12,18], 20=>[29,23,29,23]);
     my sub subber ($a) { $a - ($a % 10) };
     my $blocker = { $_ - ($_ % 10) };
     my $hasher  = { 3=>0, 7=>0, 9=>0, 12=>10, 18=>10, 23=>20, 29=>20 };
@@ -22,14 +22,14 @@ plan 28;
         is-deeply @list.categorize( $mapper ), %expected1,
           "method call on list with {$mapper.^name}";
 
-        categorize( $mapper, @list, :into(my %h) );
+        categorize( $mapper, @list, :into(my %h{Any}) );
         is-deeply %h, %expected1,
           "basic categorize as sub with {$mapper.^name} and new into";
         categorize( $mapper, @list, :into(%h) );
         is-deeply %h, %expected2,
           "basic categorize as sub with {$mapper.^name} and existing into";
 
-        @list.categorize( $mapper, :into(my %i) );
+        @list.categorize( $mapper, :into(my %i{Any}) );
         is-deeply %i, %expected1,
           "basic categorize from list with {$mapper.^name} and new into";
         @list.categorize( $mapper, :into(%i) );
@@ -91,12 +91,13 @@ plan 28;
 #?niecza todo 'feature'
 {
     is-deeply( categorize( { map { [$_+0, $_+10] }, .comb }, 100,104,112,119 ),
-      :{1 => :{ 11 => [100, 104, 112, 112, 119, 119] },
-        0 => :{ 10 => [100, 100, 104] },
-        4 => :{ 14 => [104] },
-        2 => :{ 12 => [112] },
-        9 => :{ 19 => [119] },
-      }, 'multi-level categorize' );
+      (my %{Any} =
+        1 => ( my %{Any} = 11 => [100, 104, 112, 112, 119, 119] ),
+        0 => ( my %{Any} = 10 => [100, 100, 104] ),
+        4 => ( my %{Any} = 14 => [104] ),
+        2 => ( my %{Any} = 12 => [112] ),
+        9 => ( my %{Any} = 19 => [119] ),
+      ), 'multi-level categorize' );
 }
 
 # vim: ft=perl6
