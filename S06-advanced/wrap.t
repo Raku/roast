@@ -259,7 +259,6 @@ throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
     ok $didfoo, "Did foo, capture return";
     my $foo = foo.new;  # x = 16;
     my $bar = foo.new(x => 32);
-    #?rakudo.jvm    3 skip 'was 122259, but were all fixed on moar'
     is $foo.x, 16, "default works with wrapped accessor, capture return";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, capture return";
     try $bar.x = 64;
