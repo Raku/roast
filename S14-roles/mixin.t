@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 50;
+plan 51;
 
 # L<S14/Run-time Mixins/>
 
@@ -227,6 +227,13 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
     is $m || 42, $m, 'method Bool in mixin is used';
     my $sm = Any but role { submethod Bool { True } }
     is $sm || 42, $sm, 'submethod Bool in mixin is used';
+}
+
+# RT #127916
+{
+    role Foo::Bar { };
+    is (5 but Foo::Bar).^name, 'Int+{Foo::Bar}', 
+        "mixing in a role from a deeper namespace doesn't clobber the targets shortname";
 }
 
 # vim: syn=perl6
