@@ -3,7 +3,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan  28;
+plan 29;
 
 use Test::Util;
 
@@ -233,3 +233,11 @@ is_run 'sub MAIN (Str $value) { print "String $value" }',
     },
     :args[10],
     'passing an integer matches MAIN(Str)';
+
+# RT #127977
+is_run 'sub MAIN(*@arg where { False }) { }; sub USAGE { print "USAGE called" }',
+    {
+        out => 'USAGE called',
+        err => '',
+    },
+    "failed constraint check doesn't leak internal exception out to the user";
