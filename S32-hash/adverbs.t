@@ -55,7 +55,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<b>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h<b>:zorp', Exception; # caught by MMD
     throws-like '%h<b>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -83,7 +83,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@b}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h{@b}:rickroll', Exception; # caught by MMD
     throws-like '%h{@b}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -111,7 +111,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<B>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h<B>:baxter', Exception; # caught by MMD
     throws-like '%h<B>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -139,7 +139,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@B}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h{@B}:jefferson', Exception; # caught by MMD
     throws-like '%h{@B}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -167,7 +167,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<b c>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h<b c>:egg', Exception; # caught by MMD
     throws-like '%h<b c>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -195,7 +195,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@bc}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h{@bc}:omelet', Exception; # caught by MMD
     throws-like '%h{@bc}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -223,7 +223,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{"b".."c"}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h{"b".."c"}:rivet', Exception; # caught by MMD
     throws-like '%h{"b".."c"}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -251,7 +251,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<B C>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h<B C>:echt', Exception; # caught by MMD
     throws-like '%h<B C>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -279,7 +279,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@BC}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h{@BC}:gaston', Exception; # caught by MMD
     throws-like '%h{@BC}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -307,7 +307,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{"B".."C"}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h{"B".."C"}:noshit', Exception; # caught by MMD
     throws-like '%h{"B".."C"}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -335,7 +335,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h<b C>:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h<b C>:fnoppo', Exception; # caught by MMD
     throws-like '%h<b C>:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -363,7 +363,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{@bC}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h{@bC}:frits', Exception; # caught by MMD
     throws-like '%h{@bC}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -391,7 +391,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{*}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
+#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '%h{*}:sourceever', Exception; # caught by MMD
     throws-like '%h{*}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
