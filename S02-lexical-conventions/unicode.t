@@ -57,6 +57,7 @@ is
     "evaluation";
 
 #RT #122340
+#?rakudo.jvm 2 skip 'Bogus postfix RT #122340'
 lives-ok { my $पहला = 1; }, "hindi declaration";
 is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल($दूसरा) }), 4, "evaluation");
 
