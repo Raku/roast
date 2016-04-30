@@ -28,6 +28,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $handle = open($filename);
+        #?rakudo.jvm todo 'RT #128041'
         tap-ok $handle.Supply(:size(1),:bin),
           [<a b c d e>.map: { Buf[uint8].new(ord $_) }],
           :!live,
