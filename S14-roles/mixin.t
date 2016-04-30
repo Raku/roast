@@ -232,6 +232,7 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
 # RT #127916
 {
     role Foo::Bar { };
+    #?rakudo.jvm todo 'RT #127916'
     is (5 but Foo::Bar).^name, 'Int+{Foo::Bar}', 
         "mixing in a role from a deeper namespace doesn't clobber the targets shortname";
 }
