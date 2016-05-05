@@ -64,7 +64,7 @@ test-trailing(&panther, 'pink');
 class Sheep {
 #= a sheep
     has $.wool; #= usually white
-    has $.wolf is rw = "bad"; #= a predator
+    has $.sound is rw = "baa"; #= usually quiet
 
     method roar { 'roar!' }
     #= not too scary
@@ -72,11 +72,11 @@ class Sheep {
 
 {
     my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
-    my $wolf-attr = Sheep.^attributes.grep({ .name eq '$!wolf' })[0];
+    my $sound-attr = Sheep.^attributes.grep({ .name eq '$!sound' })[0];
     my $roar-method = Sheep.^lookup('roar');
     test-trailing(Sheep, 'a sheep');
     test-trailing($wool-attr, 'usually white');
-    test-trailing($wolf-attr, 'big bad wolf');
+    test-trailing($sound-attr, 'usually quiet');
     test-trailing($roar-method, 'not too scary');
 }
 
