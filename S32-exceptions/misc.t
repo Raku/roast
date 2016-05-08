@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 390;
+plan 391;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -621,6 +621,17 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 # RT #123584
 {
     is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
+}
+
+# RT #127062
+{
+    is_run 'my @a = -1, 2, -3; print [+] (.abs + .abs for @a)',
+        {
+            status => 0,
+            out    => '12',
+            err    => ''
+        },
+        'no warning about Useless use of "+" in sink context';
 }
 
 # RT #114430
