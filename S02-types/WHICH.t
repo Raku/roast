@@ -68,7 +68,6 @@ my @normal = <
   IntPosRef
   IntStr
   IterationBuffer
-  JSONPrettyActions
   Junction
   Kernel
   Label
