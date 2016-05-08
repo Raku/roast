@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 39;
+plan 40;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -192,4 +192,16 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
 {
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT125245>));
     ok $comp-unit.precompiled, 'precomp of assignment to variable using subset type';
+}
+
+# RT #127176
+{
+    is_run '',
+       {
+         out    => '',
+         err    => { not $_ ~~ / ( "SORRY!" .*) ** 2 / },
+         status => { $_ != 0 },
+       },
+       :compiler-args['-I', 't/spec/packages', '-M', 'RT127176'],
+       'no duplicate compilation error';
 }
