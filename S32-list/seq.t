@@ -128,19 +128,19 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 }
 
 {
+    ok Seq.from-loop({ 1 }).WHAT === Seq, 'from-loop(&body) returns a Seq';
     my @a;
     @a = Seq.from-loop({ 1 });
-    ok @a ~~ Seq, 'from-loop(&body) returns a Seq';
     is @a.is-lazy, True, 'the Seq object is lazy';
 
+    ok Seq.from-loop({ 1 }, { state $count = 0; $count++ < 10 }).WHAT === Seq, 'from-loop(&body, &condition) returns a Seq';
     @a = Seq.from-loop({ 1 }, { state $count = 0; $count++ < 10 });
-    ok @a ~~ Seq, 'from-loop(&body, &condition) returns a Seq';
     is @a, (1) xx 10, 'from-loop(&body, &condition) terminates calling &body if &condition returns False';
 
-
     my $count = 0;
+    ok Seq.from-loop({ 1 }, { $count < 10 }, { $count++ }).WHAT === Seq, 'from-loop(&body, &condition, &afterward) returns a Seq';
+    $count = 0;
     @a = Seq.from-loop({ 1 }, { $count < 10 }, { $count++ });
-    ok @a ~~ Seq, 'from-loop(&body, &condition, &afterward) returns a Seq';
     is $count, 10, '&afterward is called after each call to &body.';
     is @a, (1) xx 10, 'from-loop(&body, &condition, &afterward) terminates calling &body if &condition returns False';
 }
