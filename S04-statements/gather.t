@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 38;
 
 # L<S04/The C<gather> statement prefix/>
 
@@ -277,6 +277,22 @@ plan 36;
     my $l = gather { take-rw my $ = 1 };
     lives-ok { $l.AT-POS(0) = 42 }, 'AT-POS on gather Seq with take-rw value lives';
     is $l.AT-POS(0), 42, 'AT-POS on gather Seq with take-rw value works';
+}
+
+{
+    my @spot = [rand xx 10] xx 10;
+    my @neighbors;
+    for ^10 X ^10 -> ($i, $j) {
+        @neighbors[$i][$j] = eager gather for
+                [-1,-1],[+0,-1],[+1,-1],
+                [-1,+0],        [+1,+0],
+                [-1,+1],[+0,+1],[+1,+1]
+        {
+            take-rw @spot[$i + .[0]][$j + .[1]] // next;
+        }
+    }
+    ok @neighbors[1][1][0] === @spot[0][0], 'Got the value equality expected from take-rw';
+    ok @neighbors[1][1][0] =:= @spot[0][0], 'Got the reference equality expected from take-rw';
 }
 
 # vim: ft=perl6
