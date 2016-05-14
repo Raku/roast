@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 35;
 
 my @result = 1,2,3;
 
@@ -125,4 +125,22 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 
     throws-like { roundtripped.list }, X::Seq::Consumed,
         '.perl on an iterated sequence faithfully reproduces such a sequence';
+}
+
+{
+    my @a;
+    @a = Seq.from-loop({ 1 });
+    ok @a ~~ Seq, 'from-loop(&body) returns a Seq';
+    is @a.is-lazy, True, 'the Seq object is lazy';
+
+    @a = Seq.from-loop({ 1 }, { state $count = 0; $count++ < 10 });
+    ok @a ~~ Seq, 'from-loop(&body, &condition) returns a Seq';
+    is @a, (1) xx 10, 'from-loop(&body, &condition) terminates calling &body if &condition returns False';
+
+
+    my $count = 0;
+    @a = Seq.from-loop({ 1 }, { $count < 10 }, { $count++ });
+    ok @a ~~ Seq, 'from-loop(&body, &condition, &afterward) returns a Seq';
+    is $count, 10, '&afterward is called after each call to &body.';
+    is @a, (1) xx 10, 'from-loop(&body, &condition, &afterward) terminates calling &body if &condition returns False';
 }
