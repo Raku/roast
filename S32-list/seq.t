@@ -130,7 +130,7 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 {
     my $a = Seq.from-loop({ 1 });
     isa-ok $a, Seq, 'from-loop(&body) returns a Seq';
-    is $a.is-lazy, True, 'the Seq object is lazy';
+    ok $a.is-lazy, 'the Seq object is lazy';
 
     $a = Seq.from-loop({ 1 }, { state $count = 0; $count++ < 10 });
     isa-ok $a, Seq, 'from-loop(&body, &condition) returns a Seq';
