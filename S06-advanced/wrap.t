@@ -12,7 +12,7 @@ use soft;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 85;
+plan 86;
 
 my @log;
 
@@ -166,7 +166,20 @@ is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 
 # RT #70267
 # call to nextsame with nowhere to go
-throws-like '{nextsame}()', X::NoDispatcher, '{nextsame}() dies properly';
+# - Can't use throws-like() here due to difference in what error you get
+# - depending on version of Test.pm6: https://github.com/rakudo/rakudo/pull/743
+try {
+    my $msg = '{nextsame}() dies properly';
+    {nextsame}();
+    flunk $msg;
+    skip 'Code did not die, can not check exception', 1;
+    CATCH {
+        default {
+            pass $msg;
+            isa-ok $_, X::NoDispatcher, 'right exception type (X::NoDispatcher)';
+        }
+    }
+}
 
 # RT #66658
 #?niecza skip "undefined undefined"
