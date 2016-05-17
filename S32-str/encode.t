@@ -52,7 +52,6 @@ is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of cod
     my $temp;
 
     ok $temp = "\x1F63E".encode('UTF-16'), 'encode a string to UTF-16 surrogate pair';
-    #?rakudo.jvm skip 'This type does not support positional operations'
     ok $temp = utf16.new($temp),           'creating utf16 Buf from a surrogate pair';
     is $temp[0], 0xD83D,                   'indexing a utf16 gives correct value';
     is $temp[1], 0xDE3E,                   'indexing a utf16 gives correct value';
