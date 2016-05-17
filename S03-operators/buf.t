@@ -33,10 +33,8 @@ is  $a cmp $a, Order::Same, 'cmp (same)';
 is  $a cmp $b, Order::Less, 'cmp (smaller)';
 is  $b cmp $a, Order::More, 'cmp (larger)';
 
-#?rakudo.jvm skip 'RT #126530'
 ok $a ~ $b eq Buf.new(1, 2, 3, 1, 2, 3, 4), '~ and eq work on bufs';
 
-#?rakudo.jvm skip 'RT #126530'
 is-deeply Buf.new(1, 2, 3) ~ Buf.new(4, 5), Buf.new(1, 2, 3, 4, 5), '~ concatenates';
 nok Buf.new(), 'empty Buf is false';
 ok  Buf.new(1), 'non-empty Buf is true';
