@@ -238,5 +238,6 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
 {
     my Blob $a = "a".encode;
     my Blob $b = "b".encode;
-    is $a ~= $b, utf8.new(97,98), 'infix:<~> with Blob does not die';
+    $a ~= $b;
+    is $a, utf8.new(97,98), 'infix:<~> with Blob does not die';
 }
