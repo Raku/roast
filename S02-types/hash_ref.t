@@ -82,7 +82,6 @@ plan 31;
 }
 
 # infinity HoHoHoH...
-#?rakudo.jvm skip 'RT #126518'
 {
     my %hash = (val => 42);
     %hash<ref> = %hash;
