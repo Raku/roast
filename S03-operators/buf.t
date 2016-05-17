@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 124;
+plan 125;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -190,7 +190,7 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
     is $c.elems, 0, "did Buf.new on empty array work";
 }
 
-# RT#127642
+# RT #127642
 ok Blob eqv Blob, 'Blob eqv Blob lives, works';
 nok Buf eqv Blob, 'Buf eqv Blob lives, works';
 
@@ -232,4 +232,11 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
             is $c.join, "1231", "was the $t changed correctly";
         }
     }
+}
+
+# RT #126529
+{
+    my Blob $a = "a".encode;
+    my Blob $b = "b".encode;
+    is $a ~= $b, utf8.new(97,98), 'infix:<~> with Blob does not die';
 }
