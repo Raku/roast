@@ -20,7 +20,6 @@ plan 10;
     is identity('foo'), 'foo',
        'basic passing of an argument to backslashed identifier';
     nok is-item((1, 2, 3)), 'passing of flattening arguments ';
-    #?rakudo.jvm skip 'issue with harness, tests passes when test file is executed manually'
     ok is-item($[1, 2, 3]), 'passing of non-flatteing arguments';
 
     my $a = 5;

@@ -247,7 +247,6 @@ plan 30;
 }
 
 # RT #116102
-#?rakudo.jvm skip 'java.lang.NullPointerException (second one only with is())'
 {
     is ENTER { 42 }, 42, 'ENTER works as an r-value (mainline)';
     sub enter-test() { ENTER 'SANDMAN' }
