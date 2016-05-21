@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 40;
+plan 41;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -204,4 +204,16 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
        },
        :compiler-args['-I', 't/spec/packages', '-M', 'RT127176'],
        'no duplicate compilation error';
+}
+
+# RT #128156
+{
+    # precompile it in a different process
+    run $*EXECUTABLE,'-I','t/spec/packages','-e','use RT128156::One;';
+    # trigger recompilation
+    my $trigger-file = 't/spec/packages/RT128156/Two.pm6'.IO;
+    $trigger-file.IO.spurt($trigger-file.slurp);
+    my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT128156::One>));
+    ok $comp-unit.handle.globalish-package.WHO<RT128156>.WHO<One Two Three>:exists.all,
+       'GLOBAL symbols exist after re-precompiled';
 }
