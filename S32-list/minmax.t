@@ -134,8 +134,8 @@ is (-Inf, Inf).max, Inf,"Inf is greater than -Inf";
 #is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
 
 #?rakudo 2 skip "post-GLR"
-is ([min] 42..4200000000000000000), 42, '[min] doesn't flatten';
-is ([max] -4200000000000000000..42), 42, '[max] doesn't flatten';
+is ([min] 42..4200000000000000000), 42, '[min] does not flatten';
+is ([max] -4200000000000000000..42), 42, '[max] does not flatten';
 
 is ([min] 5,10,-15,20), -15, 'reduce min int';
 is ([max] 5,10,-15,20), 20, 'reduce max int';
