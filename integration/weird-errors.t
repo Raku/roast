@@ -62,6 +62,7 @@ lives-ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
 lives-ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-internal exception';
 
 # RT #90522
+#?rakudo.jvm todo "strange problem with prefix:<++> RT #128123"
 {
     my $i = 0;
     sub foo {
