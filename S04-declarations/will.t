@@ -73,7 +73,6 @@ is $same2, "abecd", 'all block blocks get $_';
 
 my $for;
 #?niezca skip "will variable trait NYI"
-#?rakudo.jvm todo '"will first" not working'
 {
     my @is = <a aeb aebeb>;
     for ^3 {
@@ -87,7 +86,6 @@ my $for;
     }
 }
 #?niezca skip "will variable trait NYI"
-#?rakudo.jvm todo '"will first" not working'
 is $for, "aebebebc", 'all for blocks set variable';
 
 my $same3;
