@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 391;
+plan 406;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -188,9 +188,19 @@ throws-like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filen
 for <
   $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
   $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
-  $* $" $$ $& $` $' $| $? $]
-  $: $= $^ $~ @- @+ %- %+ %!
+  $* $" $$ $; $& $` $' $, $. $| $? $@ $]
+  $: $= $% $^ $~ @- @+ %- %+ %!
 > {
+    throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
+}
+
+#?rakudo todo 'awesome error message is not printed because these are parsed differently'
+for qw{ $( $) $< $> $/ $\ $[ $- $+ } {
+    throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
+}
+
+#?rakudo todo 'good error message, but not the one that we are expecting'
+for '$#' {
     throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
