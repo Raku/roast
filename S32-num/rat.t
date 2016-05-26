@@ -149,15 +149,12 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 # there are a few division by zero tests in S03-operator/div.t
 
 #?niecza todo
-#?rakudo todo 'NaN.Rat dies'
 is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 {
     #?niecza todo
-    #?rakudo todo 'Inf.Rat dies'
     is Inf.Rat, Inf, "Inf.Rat == Inf";
     #?niecza todo
-    #?rakudo todo '-Inf.Rat dies'
     is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
     # RT #74648
