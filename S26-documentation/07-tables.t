@@ -142,5 +142,5 @@ is $r.contents.elems, 2;
 =end table
 
 $r = $=pod[9];
-is $r.contents.elems, 2;
+is $r.contents.elems, ;
 
