@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 20;
+plan 21;
 
 # coercion types in parameter lists
 {
@@ -95,5 +95,7 @@ class NastyChild is Parent { };
 is Int:U.gist, '(Int:U)', '.gist on coercion types';
 #?rakudo.jvm skip "Could not find symbol '&Async:U' RT #127841"
 is Proc::Async:U.gist, '(Async:U)', '.gist on coercion types uses shortname';
+
+is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
 
 # vim: ft=perl6
