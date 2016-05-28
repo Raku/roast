@@ -11,7 +11,7 @@ plan 37;
 {
     my Int %h;
     is %h.of,    Int, 'my Int %h declares a Hash of Int';
-    is %h.keyof, Any, 'my Int %h declares a Hash with Any keys';
+    is %h.keyof.^name, 'Str(Any)', 'my Int %h declares a Hash with Str(Any) keys';
     lives-ok { %h = (a => 3, b => 7) }, 'can assign Ints to an Hash of Int';
     lives-ok { %h<foo> = 8           }, 'can assign Int to hash slot';
     lives-ok { %h{'c', 'd' } = (3, 4) }, 'can assign to slice of typed hash';
