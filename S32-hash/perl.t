@@ -11,8 +11,8 @@ plan 12;
       'can we serialize a simple hash';
     my $rh = EVAL(%h.perl);
     is-deeply $rh, $%h, 'can we roundtrip simple hash';
-    ok $rh.of    =:= Mu,  'make sure any value can be stored';
-    ok $rh.keyof =:= Any, 'make sure keys are Any';
+    is $rh.of.^name, 'Mu',  'make sure any value can be stored';
+    is $rh.keyof.^name, 'Str(Any)', 'make sure keys are Str(Any)';
 } #4
 
 #?niecza skip "cannot roundtrip hashes with constrained values"
@@ -23,8 +23,8 @@ plan 12;
       'can we serialize a hash with constrained values';
     my $rh = EVAL(%h.perl);
     is-deeply $rh, %h, 'can we roundtrip hash constrained values';
-    ok $rh.of    =:= Int, 'make sure roundtripped values are Int';
-    ok $rh.keyof =:= Any, 'make sure roundtripped keys are Any';
+    is $rh.of, Int, 'make sure roundtripped values are Int';
+    is $rh.keyof.^name, 'Str(Any)', 'make sure roundtripped keys are Str(Any)';
 } #4
 
 #?niecza skip "cannot roundtrip hashes with constrained keys & values"
@@ -35,8 +35,8 @@ plan 12;
       'can we serialize a hash with constrained keys & values';
     my $rh = EVAL(%h.perl);
     is-deeply $rh, %h, 'can we roundtrip hash constrained keys & values';
-    ok $rh.of    =:= Int, 'make sure roundtripped values are Int';
-    ok $rh.keyof =:= Str, 'make sure roundtripped keys are Str';
+    is $rh.of, Int, 'make sure roundtripped values are Int';
+    is $rh.keyof, Str, 'make sure roundtripped keys are Str';
 } #4
 
 #vim: ft=perl6
