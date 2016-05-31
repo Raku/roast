@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 38;
+plan 39;
 my $r;
 
 =begin table
@@ -136,3 +136,11 @@ bar
 
 $r = $=pod[8];
 is $r.contents.elems, 2;
+
+=begin table
+-col1 col2
+=end table
+
+$r = $=pod[9];
+is $r.contents.elems, ;
+
