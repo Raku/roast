@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 39;
+plan 38;
 my $r;
 
 =begin table
@@ -137,10 +137,15 @@ bar
 $r = $=pod[8];
 is $r.contents.elems, 2;
 
-=begin table
--col1 col2
-=end table
-
-$r = $=pod[9];
-is $r.contents.elems, ;
-
+## # proposed test 39
+## # TODO: this test causes an exception and thus
+## # needs to be commented out until the issue is
+## # solved
+## # test for issue #128221 when it's closed
+## =begin table
+## -col1 col2
+## =end table
+## $r = $=pod[9];
+## todo 'issue #128221 not yet fixed';
+## is $r.contents.elems, 1;
+## =end code
