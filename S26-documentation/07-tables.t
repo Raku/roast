@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 38;
+plan 39;
 my $r;
 
 =begin table
@@ -137,15 +137,19 @@ bar
 $r = $=pod[8];
 is $r.contents.elems, 2;
 
-## # proposed test 39
-## # TODO: this test causes an exception and thus
-## # needs to be commented out until the issue is
-## # solved
-## # test for issue #128221 when it's closed
-## =begin table
-## -col1 col2
-## =end table
-## $r = $=pod[9];
-## todo 'issue #128221 not yet fixed';
-## is $r.contents.elems, 1;
-## =end code
+# TODO: test for issue #128221 when it's closed
+#       This test, without the leading'#' in
+#       the single table row causes an exception
+#       and thus the row needs to be commented
+#       out until the issue is closed.
+=begin table
+#-col1 col2 # <= remove leading '#' when the issue is fixed
+=end table
+$r = $=pod[9];
+my $issue-N128221-fixed = False;
+if !$issue-N128221-fixed  {
+    skip 'issue #128221 not yet fixed';
+}
+else {
+    is $r.contents.elems, 1;
+}
