@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 40;
+plan 39;
 my $r;
 
 =begin table
@@ -146,5 +146,10 @@ is $r.contents.elems, 2;
 #-col1 col2 # <= remove leading '#' when the issue is fixed
 =end table
 $r = $=pod[9];
-skip 'issue #128221 not yet fixed', 1;
-is $r.contents.elems, 1;
+my $issue-N128221-fixed = False;
+if !$issue-N128221-fixed  {
+    skip 'issue #128221 not yet fixed';
+}
+else {
+    is $r.contents.elems, 1;
+}
