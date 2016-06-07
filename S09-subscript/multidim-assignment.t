@@ -5,7 +5,7 @@ plan 11;
 {
     my @fifties-novels;
     @fifties-novels[2 ; 2,3] = "Charlotte's Web", "The Voyage of the Dawn Treader";
-    #?rakudo.jvm todo 'RuntimeException: No such attribute $!default for this object'
+    #?rakudo.jvm todo 'RuntimeException: No such attribute $!default for this object RT #128341'
     lives-ok { @fifties-novels.perl },
         'can call .perl on multidimensional array with only some elements autovivified';
     is-deeply @fifties-novels,
