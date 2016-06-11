@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 23;
+plan 24;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -201,3 +201,11 @@ sub decode_utf8c {
 }
 #?rakudo.jvm todo "Unknown encoding 'utf8-c8' RT #127878"
 lives-ok &decode_utf8c, 'RT #127878: Can decode and work with interesting byte sequences';
+
+# RT #128368
+sub bar() { foo; return 6 }
+sub foo() { return 42 }
+my $a = 0;
+$a += bar for ^158;  # 157 iterations works fine
+#?rakudo.moar todo "SPESH inline problem RT #128368"
+is $a, 158 * 6, 'SPESH inline works correctly after 158 iterations';
