@@ -11,7 +11,7 @@ class OwnConstr {
     my $in_own = 0;
     method own() {
         $in_own++;
-        return self.bless(self.CREATE(), :x(42));
+        return self.bless(:x(42));
     }
     method in_own {
         $in_own;
@@ -20,7 +20,7 @@ class OwnConstr {
 ok OwnConstr.new ~~ OwnConstr, "basic class instantiation";
 is OwnConstr.new.x, 13,        "basic attribute access";
 # As usual, is instead of todo_is to suppress unexpected succeedings
-is OwnConstr.in_own, 0,                   "own constructor was not called";
+is OwnConstr.in_own, 0,        "own constructor was not called";
 
 ok OwnConstr.own ~~ OwnConstr, "own construction instantiated its class";
 is OwnConstr.own.x, 42,        "attribute was set from our constructor";
