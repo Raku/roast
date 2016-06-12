@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 41;
+plan 43;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -216,4 +216,14 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT128156::One>));
     ok $comp-unit.handle.globalish-package.WHO<RT128156>.WHO<One Two Three>:exists.all,
        'GLOBAL symbols exist after re-precompiled';
+
+    # Run another test where a source file is change after precompilation.
+    # The dependency layout is: A -> B -> C -> D
+    #                            `-> C -> D
+    my $before    = run $*EXECUTABLE,'-I','t/spec/packages/RT128156','-M','A','-e','';
+    $trigger-file = 't/spec/packages/RT128156/C.pm6'.IO;
+    $trigger-file.IO.spurt($trigger-file.slurp);
+    my $after     = run $*EXECUTABLE,'-I','t/spec/packages/RT128156','-M','A','-e','';
+    is $before.status, 0, 'Can precompile modules before touching source file';
+    is $after.status,  0, 'Can precompile modules after touching source file';
 }
