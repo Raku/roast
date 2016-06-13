@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 10;
+plan 12;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -116,6 +116,15 @@ plan 10;
     lives-ok {
         role A { has $!a; submethod BUILD(:$!a) {}}; class B does A {}; B.new
     }, 'BUILD provided by role can use attributes in signature';
+}
+
+# RT #128393
+{
+    class Foo {
+        submethod BUILD { fail "noway" }
+    }
+    dies-ok { Foo.new }, "Foo.new dies when sunk";
+    ok Foo.new // "ok", "Foo.new can be caught as a Failure";
 }
 
 # vim: ft=perl6
