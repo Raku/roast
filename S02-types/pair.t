@@ -377,11 +377,9 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
 # RT #126369
 {
-    my $x = 42;
-    $x = :$x;
-    #?rakudo.moar todo 'RT #126369'
-    #?rakudo.jvm todo 'RT #126369'
-    is-deeply $x, 'x' => 42, 'pair assignment';
+    my $y = 42;
+    $y := :$y;
+    is-deeply $y, 'y' => 42, 'pair binding';
 }
 
 # vim: ft=perl6
