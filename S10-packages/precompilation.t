@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 43;
+plan 45;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -226,4 +226,22 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
     my $after     = run $*EXECUTABLE,'-I','t/spec/packages/RT128156','-M','A','-e','';
     is $before.status, 0, 'Can precompile modules before touching source file';
     is $after.status,  0, 'Can precompile modules after touching source file';
+}
+
+# RT #128156 (another)
+{
+    # Test file content actually changing (so that the precomp SHA changes)
+    run $*EXECUTABLE,'-I','t/spec/packages','-e','need RT128156::Top1; need RT128156::Top2;';
+    my $trigger-file = 't/spec/packages/RT128156/Needed.pm6';
+    for 1..2 -> $i {
+        # Alternates putting a '#' at the end of a file
+        my $new-content = $trigger-file.IO.slurp.subst(/$/,"#").subst(/"##"$/,"");
+        $trigger-file.IO.spurt($new-content);
+        my $output = run $*EXECUTABLE,:out,'-I','t/spec/packages','-e','
+             need RT128156::Top1;
+             need RT128156::Top2;
+             .say for GLOBAL::.keys.sort;
+             ';
+        is $output.out.slurp-rest,"Needed\nTop1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
+    }
 }
