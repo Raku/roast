@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 45;
+plan 46;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -91,6 +91,12 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
 {
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT115240>));
     ok $comp-unit.precompiled, 'precomp curried role compose';
+}
+
+#RT #126878
+{
+    my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT126878::Precomp>));
+    ok !$comp-unit.precompiled, '"need" survives "no precompilation"';
 }
 
 #RT #123276
