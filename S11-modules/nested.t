@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 7;
 
 # test that classes and roles declared in modules get into the correct
 # namespace
@@ -18,6 +18,9 @@ eval-lives-ok 'use A; A.new()', 'RT #62162';
 
 eval-lives-ok 'use RoleA',
               'can use multiple "Role $name" statements (in multiple files) RT #67976';
+
+use RT117117::Backends;
+is-deeply(RT117117::Backend::.keys.sort, ('AST', 'GNUC'), 'All nested modules available');
 
 {
     use RoleA;
