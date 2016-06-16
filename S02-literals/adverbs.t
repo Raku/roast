@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 33;
 
 # L<S02/Adverbial Pair forms>
 
@@ -21,6 +21,7 @@ plan 32;
     is-deeply (:%a), (a => %a), ":%a works";
     is-deeply (:&a), (a => &a), ":&a works";
     is-deeply (:42nd), (nd => 42), "Basic numeric adverb works";
+    is-deeply (:๔߂nd), (nd => 42), "Unicode numeric adverb works"; # RT #128306
     throws-like { EVAL ':69th($_)' },
       X::Comp,
       "Numeric adverb can't have an extra value";
