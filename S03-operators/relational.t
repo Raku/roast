@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 163;
+plan 167;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -203,7 +203,7 @@ is(2.4 <=> 7, Order::Less, 'Rat <=> Int');
 
 ok exp(i * pi) =~= -1, "=~= does approximate equality";
 ok exp(i * pi) ≅ -1, "≅ does approximate equality";
- 
+
 is sqrt((-1).Complex) ≅ 0+1i, True, "can use approximate on Complex with negligible real";
 is sqrt((-1).Complex) ≅ 0+2i, False, "can use approximate on Complex with non-negligible real";
 is sqrt((-1).Complex) ≅ 0+(1+1e-17)i, True, "can use approximate on Complex";
@@ -233,6 +233,11 @@ is sqrt((-1).Complex) ≅ 0+(1+1e-17)i, True, "can use approximate on Complex";
     nok 0.00120 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (more More)';
     nok 0.00080 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (more Less)';
 
+    # RT#128421
+    nok  100 =~= -100, '=~= correctly handles pos=~=neg comparison';
+    nok -100 =~=  100, '=~= correctly handles pos=~=neg comparison (reversed)';
+    nok  100  ≅  -100, '≅ correctly handles pos≅neg comparison';
+    nok -100  ≅   100, '≅ correctly handles pos≅neg comparison (reversed)';
 }
 
 # vim: ft=perl6
