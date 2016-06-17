@@ -207,5 +207,5 @@ sub bar() { foo; return 6 }
 sub foo() { return 42 }
 my $a = 0;
 $a += bar for ^158;  # 157 iterations works fine
-#?rakudo.moar todo "SPESH inline problem RT #128368"
+
 is $a, 158 * 6, 'SPESH inline works correctly after 158 iterations';
