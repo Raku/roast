@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # L<S32::Str/Str/"=item split">
-plan 29;
+plan 30;
 
 =begin description
 
@@ -112,6 +112,13 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
     ok $rt112868.split('').elems > 0, q<.split('') does something>;
     is $rt112868.split(''), $rt112868.split(/''/),
        q<.split('') does the same thing as .split(/''/) (RT #112868)>;
+}
+
+# RT #128034
+subtest 'split with NaN limit throws (RT #128034)', {
+    throws-like { split 'o',        'o', NaN }, X::TypeCheck;
+    throws-like { split /o/,        'o', NaN }, X::TypeCheck;
+    throws-like { split @(1, 2, 3), 'o', NaN }, X::TypeCheck;
 }
 
 # vim: ft=perl6
