@@ -110,7 +110,10 @@ is $r.contents[3].join('|'),
 
 $r = $=pod[6];
 is $r.contents.elems, 3;
-is $r.contents[0].join(','), 'X,O,';
+is $r.contents[0].join(','), 'X,O,',
+    'ensure trailing whitespace counts as a cell (WARNING: this test will'
+    ~ ' fail if you modified this file and your editor auto-stripped'
+    ~ ' trailing whitespace)';
 is $r.contents[1].join(','), ',X,O';
 is $r.contents[2].join(','), ',,X';
 
@@ -123,7 +126,10 @@ is $r.contents[2].join(','), ',,X';
 
 $r = $=pod[7];
 is $r.contents.elems, 3;
-is $r.contents[0].join(','), 'X,O,';
+is $r.contents[0].join(','), 'X,O,',
+    'ensure trailing whitespace counts as a cell (WARNING: this test will'
+    ~ ' fail if you modified this file and your editor auto-stripped'
+    ~ ' trailing whitespace)';
 is $r.contents[1].join(','), ',X,O';
 is $r.contents[2].join(','), ',,X';
 
