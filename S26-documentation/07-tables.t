@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 39;
+plan 40;
 my $r;
 
 =begin table
@@ -144,8 +144,8 @@ $r = $=pod[8];
 is $r.contents.elems, 2;
 
 # TODO: test for issue #128221 when it's closed
-#       This test, without the leading'#' in
-#       the single table row causes an exception
+#       This test, without the leading '#' in
+#       the single table row, causes an exception
 #       and thus the row needs to be commented
 #       out until the issue is closed.
 =begin table
@@ -159,3 +159,31 @@ if !$issue-N128221-fixed  {
 else {
     is $r.contents.elems, 1;
 }
+
+# TODO: an expanded test (from Zoffix) for issue #128221 when it's closed
+#       This test, without the leading '#' in
+#       the single table row, causes an exception
+#       and thus the row needs to be commented
+#       out until the issue is closed.
+=begin table
+Col 1 | -Col 2 | _Col 3 | =Col 4 #-col1 col2 # <= add a leading '-' when the issue is fixed
+=======+========+========+=======
+Col 1  | -Col 2 | _Col 3 | =Col 4
+-------|--------|--------|-------
+Col 1  | -Col 2 | _Col 3 | =Col 4
+Col 1  | -Col 2 | _Col 3 | =Col 4
+ Col 1 | -Col 2 | _Col 3 | =Col 4
+Col 1  | -Col 2 | _Col 3 | =Col 4
+Col 1  | -Col 2 | _Col 3 | =Col 4
+-------|--------|--------|-------
+Col  1 | Col 2  |  Col 3 |  Col 4
+=end table
+$r = $=pod[10];
+my $issue-N128221-fixed-b = False;
+if !$issue-N128221-fixed-b  {
+    skip 'issue #128221 not yet fixed';
+}
+else {
+    is $r.contents.elems, 7;
+}
+
