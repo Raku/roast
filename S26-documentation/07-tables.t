@@ -159,8 +159,8 @@ if !$issue-N128221-fixed  {
 }
 else {
     is $r.contents.elems, 1;
-    is $r.contents[0][0], "-col0";
-    is $r.contents[0][1], "col1";
+    is $r.contents[0][0], "-r0c0"; # <= note leading hyphen which needs to be added to the table
+    is $r.contents[0][1], "r0c1";
 }
 
 # TODO: an expanded test (per Zoffix) for issue #128221
@@ -193,7 +193,7 @@ else {
     is $r.contents.elems, 7;
 
     my $hdrs = $r.headers.join(' ');
-    is $hdrs, "-Col 1 -Col 2 _Col 3 =Col 4";
+    is $hdrs, "-Col 1 -Col 2 _Col 3 =Col 4"; # <= note leading hyphen which needs to be added to the table
     
     my @rows = $r.contents>>.join(' ');
     is @rows[0], "r0Col 1 -r0Col 2 _r0Col 3 =r0Col 4";
