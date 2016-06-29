@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 39;
+plan 40;
 my $r;
 
 =begin table
