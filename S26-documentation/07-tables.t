@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 40;
+plan 51;
 my $r;
 
 =begin table
@@ -155,9 +155,10 @@ r0c0  r0c1
 $r = $=pod[9];
 my $issue-N128221-fixed = False;
 if !$issue-N128221-fixed  {
-    skip 'issue #128221 not yet fixed';
+    skip 'issue #128221 not yet fixed', 3;
 }
 else {
+    # 3 tests
     is $r.contents.elems, 1;
     is $r.contents[0][0], "-r0c0"; # <= note leading hyphen which needs to be added to the table
     is $r.contents[0][1], "r0c1";
@@ -186,16 +187,16 @@ r6Col  1 | r6Col 2  |  r6Col 3 |  r6Col 4
 $r = $=pod[10];
 my $issue-N128221-fixed-b = False;
 if !$issue-N128221-fixed-b  {
-    skip 'issue #128221 not yet fixed';
+    skip 'issue #128221 not yet fixed', 10;
 }
 else {
+    my $hdrs = $r.headers.join(' ');
+    my @rows = $r.contents>>.join(' ');
+
+    # 10 tests
     is $r.headers.elems, 1;
     is $r.contents.elems, 7;
-
-    my $hdrs = $r.headers.join(' ');
     is $hdrs, "-Col 1 -Col 2 _Col 3 =Col 4"; # <= note leading hyphen which needs to be added to the table
-    
-    my @rows = $r.contents>>.join(' ');
     is @rows[0], "r0Col 1 -r0Col 2 _r0Col 3 =r0Col 4";
     is @rows[1], "r1Col 1 -r1Col 2 _r1Col 3 =r1Col 4";
     is @rows[2], "r2Col 1 -r2Col 2 _r2Col 3 =r2Col 4";
