@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 56;
+plan 58;
 
 # L<S32::Str/Str/=item substr>
 
@@ -118,5 +118,14 @@ plan 56;
     is ("0" x 3 ~ "1").substr(2), '01',
         'substr on a string built with infix:<x> works';
 }
+
+# RT #128039
+{
+    throws-like { 'foo'.substr(5) }, X::OutOfRange,
+        :message(/'Start argument to substr' .+ 'should be in 0..3' .+ '*-5'/);
+    throws-like { ''.substr(1000) }, X::OutOfRange,
+        :message(/'should be in 0..0' .+ '*-1000'/);
+}
+
 
 # vim: ft=perl6
