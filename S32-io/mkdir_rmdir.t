@@ -71,16 +71,15 @@ sub testdir {
 
 sub isa_fatal_ok($e, $wanted) {
     $e ~~ "blow up";
-    CATCH { 
+    CATCH {
         when $wanted {
             ok True, "Got expected " ~ $wanted.perl;
             return;
         }
-        default { 
+        default {
             ok False, "Got wrong error";
             return;
         }
     };
     ok False, "No exception, expected " ~ $wanted.perl;
 }
-
