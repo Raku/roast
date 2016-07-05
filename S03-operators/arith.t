@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 157;
+plan 158;
 
 my $five = abs(-5);
 
@@ -196,6 +196,14 @@ is_approx 2.2**2.2, 5.66669577;
 is 1**0, 1;
 is 1**1, 1;
 isnt 2**3**4, 4096, "** is right associative";
+
+# RT #125811
+{
+    throws-like { 2 ** 99999999999999999999999999999999999 },
+        X::Numeric::Overflow,
+        :message(/'Numeric overflow'/),
+    'extremely large exponents must throw numeric overflow';
+}
 
 # test associativity
 is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
