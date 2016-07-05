@@ -1,8 +1,10 @@
 use v6;
+use lib <t/spec/packages>;
 
 use Test;
+use Test::Util;
 
-plan 88;
+plan 90;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -138,6 +140,17 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         is @emitted, [], 'First tapping did quit on the supply, so no more emits';
 
         $t1.close;
+    }
+
+    # RT #126379
+    {
+        is_run q[Supply.interval(1).tap(-> { say 'hi' }); sleep 3;], {
+            status => 256,
+            err => /
+                'Unhandled exception in code scheduled on thread' .+
+                'Too many positionals' .+ 'expected 0 arguments but got 1'
+            /
+        }, '.tap block with incorrect signature must fail';
     }
 }
 
