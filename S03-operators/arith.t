@@ -145,7 +145,7 @@ tryeq -2 * 3, -6;
 tryeq 3 * -3, -9;
 tryeq -4 * -3, 12;
 
-{   
+{
     # 2147483647 is prime. bah.
     
     tryeq 46339 * 46341, 0x7ffea80f;
@@ -259,7 +259,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
         ## cmp. http://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=49240
         is 1**Inf, 1, "1**Inf returns 1";
     }
-    else {  
+    else {
         is 1**Inf, 1, "1**Inf returns 1";
     }
 
