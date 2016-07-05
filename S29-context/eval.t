@@ -1,6 +1,7 @@
 use v6;
+use nqp;
 use Test;
-plan 23;
+plan 24;
 
 # L<S29/Context/"=item EVAL">
 
@@ -103,6 +104,14 @@ is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
     my \a = rand;
     lives-ok { EVAL 'a' }, 'Can EVAL with a sigilless var';
     is EVAL('a'), a, 'EVAL with sigilless var gives correct result';
+}
+
+# RT #128457
+{
+    is
+        nqp::atkey(CompUnit::Loader.load-source(q<package Qux { BEGIN EVAL q<>; };>.encode).unit, q<$?PACKAGE>).^name,
+        "GLOBAL",
+        "EVAL's package does not leak to the surrounding compilation unit";
 }
 
 # vim: ft=perl6
