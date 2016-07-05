@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 23;
+plan 27;
 
 {
     my $p = Promise.new;
@@ -48,4 +50,12 @@ plan 23;
 # RT #125257
 {
     throws-like 'await', Exception, 'bare "await" dies';
+}
+
+# RT #122803
+{
+    is_run q[ await ^9 .map: { start { say "start"; sleep 1; say "end" } };],
+        { :0status, :err(''), :out("start\n" x 9 ~ "end\n" x 9) },
+        "promises execute asynchronously [try $_]"
+    for ^4;
 }
