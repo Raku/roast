@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 35;
+plan 36;
 
 # L<S32::IO/Functions/spurt>
 
@@ -140,4 +140,15 @@ CATCH {
 if $path.IO.e {
     say "Warn: '$path shouldn't exist";
     unlink $path;
+}
+
+# RT #126006
+{
+    given 'temp-file-RT-126006-test'.IO {
+        LEAVE .unlink;
+        when .e { flunk "ABORT: cannot run test while file `$_` exists"; }
+
+        .spurt: 'something';
+        is .e, True, 'for non-existent file after spurting, .e says it exists';
+    }
 }
