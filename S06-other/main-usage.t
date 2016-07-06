@@ -235,7 +235,6 @@ is_run 'sub MAIN (Str $value) { print "String $value" }',
     'passing an integer matches MAIN(Str)';
 
 # RT #127977
-#?rakudo todo 'RT #127977'
 is_run 'sub MAIN(*@arg where { False }) { }; sub USAGE { print "USAGE called" }',
     {
         out => 'USAGE called',
