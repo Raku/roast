@@ -1,6 +1,10 @@
 use v6;
+use lib 't/spec/packages';
+
 use Test;
-plan 1;
+use Test::Util;
+
+plan 2;
 
 # RT#126487
 {
@@ -15,4 +19,12 @@ plan 1;
     is $reader.out.get, '(cat dog bird Snake snake)',
         '$*IN.words.unique with no new line at the end must NOT hang'
             ~ " [using `$*EXECUTABLE` as Perl 6 executable]";
+}
+
+# RT#121149
+{
+    is_run 'say $*IN.get', 'Hello, World!',
+        { out => "Hello, World!\n", err => '', status => 0 },
+        '.get from $*IN works correctly';
+
 }
