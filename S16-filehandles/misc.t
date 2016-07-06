@@ -10,7 +10,7 @@ plan 2;
 {
     is_run 'say $*IN.words.unique',
         'cat dog cat dog bird dog Snake snake Snake',
-        { out => "(cat dog bird Snake snake)\n", err => '', :0status },
+        { out => "(cat dog bird Snake snake)\n", err => '', status => 0 },
     '$*IN.words.unique with no new line at the end must NOT hang';
 }
 
@@ -18,6 +18,6 @@ plan 2;
 {
     is_run 'say $*IN.get', 'Hello, World!',
         { out => "Hello, World!\n", err => '', status => 0 },
-        '.get from $*IN works correctly';
+    '.get from $*IN works correctly';
 
 }
