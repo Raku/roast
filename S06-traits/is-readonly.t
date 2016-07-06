@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 1;
 
 # L<S06/"Parameter traits"/"=item is readonly">
 # should be moved with other subroutine tests?
