@@ -127,6 +127,23 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
+sub is_run_repl ($code, %wanted, $desc) is export {
+    my $proc = &CORE::run( $*EXECUTABLE, :in, :out, :err );
+    $proc.in.print: $code;
+    subtest {
+        plan +(%wanted<out err>:v);
+        with %wanted<out> {
+            $_ ~~ Str ?? is   $proc.out.slurp-rest, $_, 'stdout is correct'
+                      !! like $proc.out.slurp-rest, $_, 'stdout is correct';
+        }
+
+        with %wanted<err> {
+            $_ ~~ Str ?? is   $proc.err.slurp-rest, $_, 'stderr is correct'
+                      !! like $proc.err.slurp-rest, $_, 'stderr is correct';
+        }
+    }, $desc;
+}
+
 =begin pod
 
 =head1 NAME
@@ -178,6 +195,19 @@ For example:
 
   is_run( 'rand.say', { out => sub { $^a > 0 && $^a < 1 }, err => '' },
           'output of rand is between zero and one' );
+
+=head2 is_run_repl ($code, %wanted, $desc)
+
+Fires up the REPL and enters the given C<$code>. Be sure to send correct
+newlines and C<exit> to exit the REPL. The C<%wanted> is a hash with
+zero to two keys. C<out> takes a Str or regex testing STDERR output and
+C<err> takes a Str or regex testing STDERR output. Keys not provided aren't
+tested. When Str is provided the output is tested with C<is> and regex
+is tested is tested with C<like>. B<NOTE:> STDOUT will generally contain
+all the messages displayed by the REPL at the start.
+
+    is_run_repl "say 42\nexit\n", { err => '', out => /"42\n"/ },                                                                                                                                                                                                  
+        'say 42 works fine';
 
 =head3 Errors
 
