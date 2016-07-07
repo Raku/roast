@@ -203,7 +203,7 @@ newlines and C<exit> to exit the REPL. The C<%wanted> is a hash with
 zero to two keys. C<out> takes a Str or regex testing STDERR output and
 C<err> takes a Str or regex testing STDERR output. Keys not provided aren't
 tested. When Str is provided the output is tested with C<is> and regex
-is tested is tested with C<like>. B<NOTE:> STDOUT will generally contain
+is tested with C<like>. B<NOTE:> STDOUT will generally contain
 all the messages displayed by the REPL at the start.
 
     is_run_repl "say 42\nexit\n", { err => '', out => /"42\n"/ },                                                                                                                                                                                                  
