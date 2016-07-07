@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item chop">
 
-plan 32;
+plan 34;
 
 #
 # Tests already covered by the specs
@@ -53,5 +53,9 @@ throws-like 'Str.chop(10)', Exception;
 #   &chomp and &wrap are now nondestructive; chomp returns the chomped part,
 #   which can be defined by the filehandle that obtains the default string at
 #   the first place. To get destructive behaviour, use the .= form.
+
+# RT #125814
+is "xx".chop(9999999999999999999), "", "a large value used to leave the string unchanged";
+is "xx".chop(99999999999999999999), "", "an even larger value used to complain 'Cannot unbox 67 bit wide bigint into native integer'";
 
 # vim: ft=perl6
