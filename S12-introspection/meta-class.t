@@ -33,7 +33,7 @@ is Foo.^ver(), v0.0.1, '... the ver() property is 0.0.1';
 is Foo.^auth(), 'ority', '... the auth() property is ority';
 is Foo.REPR, 'P6opaque', '.REPR';
 
-subtest {
+subtest { plan 3;
     my module M:ver<1.2.3>:auth<me> {};
     is M.^name, 'M',     '.name is correct';
     is M.^ver,  '1.2.3', '.ver is correct';
