@@ -348,6 +348,7 @@ throws-like 'my class NC { }; NC.new does NC', X::Mixin::NotComposable,
 throws-like 'my class NC { }; NC.new but  NC', X::Mixin::NotComposable,
             :target(*.defined), :rolish(*.^name eq 'NC');
 
+#?rakudo.jvm 3 todo 'NullPointerException instead of "XYZ without loop construct"'
 throws-like 'last', X::ControlFlow,
             illegal => 'last', enclosing => 'loop construct';
 throws-like 'next', X::ControlFlow,
