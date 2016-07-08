@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 38;
 
 # L<S03/Tight or precedence/Minimum and maximum>
 # L<S03/Tight or precedence/"any value of any type may be compared with +Inf
@@ -94,4 +94,32 @@ This test min/max functions in their operator form. To see them tested in their 
     is 2 max Any, 2, '2 max Any';
     #?niecza todo
     is Any max 2, 2, 'Any max 2';
+}
+
+
+# RT #125334
+# RT #128573
+{
+    my $message = /'Cannot convert string to number: base-10'
+        .* 'number must begin with valid digits'/;
+
+    throws-like "min +'a', +'a'", X::Str::Numeric, :$message,
+        'min with two Failures throws';
+    throws-like "max +'a', +'a'", X::Str::Numeric, :$message,
+        'max with two Failures throws';
+
+    #?rakudo skip 'Awaiting merge of PR https://github.com/rakudo/rakudo/pull/815'
+    {
+    throws-like "min +'a'      ", X::Str::Numeric, :$message,
+        'min with one Failure throws';
+    throws-like "max +'a'      ", X::Str::Numeric, :$message,
+        'max with one Failure throws';
+
+    throws-like "Failure.new.min", X::AdHoc, '.min on Failure throws';
+    throws-like "Failure.new.max", X::AdHoc, '.max on Failure throws';
+    throws-like "Failure.new.min: &infix:<cmp>", X::AdHoc,
+        '.min with :&by on Failure throws';
+    throws-like "Failure.new.max: &infix:<cmp>", X::AdHoc,
+        '.max with :&by on Failure throws';
+    }
 }
