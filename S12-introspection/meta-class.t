@@ -41,12 +41,11 @@ subtest { plan 3;
 }, 'metamethods on a module';
 
 # RT #128579
-subtest { plan 3;
+subtest { plan 2;
     my package P:ver<1.2.3>:auth<me> {};
-    is P.^name, 'P',     '.name is correct';
-    is P.^ver,  '1.2.3', '.ver is correct';
-    is P.^auth, 'me',    '.auth is correct';
-}, 'metamethods on a module';
+    throws-like { P.^ver  }, X::Method::NotFound, '.ver is absent';
+    throws-like { P.^auth }, X::Method::NotFound, '.auth is absent';
+}, 'ID metamethods on a package are absent by design';
 
 
 # RT #115208
