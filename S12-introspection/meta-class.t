@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 17;
 
 =begin pod
 
@@ -39,6 +39,15 @@ subtest { plan 3;
     is M.^ver,  '1.2.3', '.ver is correct';
     is M.^auth, 'me',    '.auth is correct';
 }, 'metamethods on a module';
+
+# RT #128579
+subtest { plan 3;
+    my package P:ver<1.2.3>:auth<me> {};
+    is P.^name, 'P',     '.name is correct';
+    is P.^ver,  '1.2.3', '.ver is correct';
+    is P.^auth, 'me',    '.auth is correct';
+}, 'metamethods on a module';
+
 
 # RT #115208
 eval-lives-ok "True.HOW.say", "can output the .gist of a .HOW";
