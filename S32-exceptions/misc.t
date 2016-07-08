@@ -365,6 +365,7 @@ throws-like '<a b> »+« <c>', X::HyperOp::NonDWIM,
             left-elems => 2, right-elems => 1,
             operator => { .name eq 'infix:<+>' };
 
+#?rakudo.jvm skip 'UnwindException'
 throws-like 'my sub f() { gather { return } }; ~f()', X::ControlFlow::Return;
 
 throws-like 'DateTime.new("2012/04")', X::Temporal::InvalidFormat,
