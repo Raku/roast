@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 4;
+plan 5;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -30,4 +30,16 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 
     is_run_repl "say 0o67\nexit\n", { out => /'55'/, err => '' },
         'prefix 0o on valid octal works fine in REPL';
+}
+
+{
+    # RT #70297
+    my $proc = &CORE::run( $*EXECUTABLE, :in, :out, :err);
+    $proc.in.close;
+    subtest {
+        plan 2;
+        is   $proc.err.slurp-rest, '', 'stderr is correct';
+        like $proc.out.slurp-rest, /"To exit type 'exit' or '^D'\n> "/,
+            'stdout is correct';
+    }, 'Pressing CTRL+D in REPL produces correct output on exit';
 }
