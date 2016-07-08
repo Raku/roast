@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item chop">
 
-plan 34;
+plan 36;
 
 #
 # Tests already covered by the specs
@@ -55,7 +55,10 @@ throws-like 'Str.chop(10)', Exception;
 #   the first place. To get destructive behaviour, use the .= form.
 
 # RT #125814
-is "xx".chop(9999999999999999999), "", "a large value used to leave the string unchanged";
-is "xx".chop(99999999999999999999), "", "an even larger value used to complain 'Cannot unbox 67 bit wide bigint into native integer'";
+{
+    is 'xx'.chop($_), '', ".chop with large values returns empty string [using $_]"
+        for 999_999, 999_999_999, 999_999_999_999,
+            9_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;
+}
 
 # vim: ft=perl6
