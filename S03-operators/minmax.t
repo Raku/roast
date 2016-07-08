@@ -108,8 +108,7 @@ This test min/max functions in their operator form. To see them tested in their 
     throws-like "max +'a', +'a'", X::Str::Numeric, :$message,
         'max with two Failures throws';
 
-    #?rakudo skip 'Awaiting merge of PR https://github.com/rakudo/rakudo/pull/815'
-    {
+    #?rakudo 6 skip 'Awaiting merge of PR https://github.com/rakudo/rakudo/pull/815'
     throws-like "min +'a'      ", X::Str::Numeric, :$message,
         'min with one Failure throws';
     throws-like "max +'a'      ", X::Str::Numeric, :$message,
@@ -121,5 +120,4 @@ This test min/max functions in their operator form. To see them tested in their 
         '.min with :&by on Failure throws';
     throws-like "Failure.new.max: &infix:<cmp>", X::AdHoc,
         '.max with :&by on Failure throws';
-    }
 }
