@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 16;
 
 =begin pod
 
@@ -32,6 +32,13 @@ is Foo.^name(), 'Foo', '... the name() property is Foo';
 is Foo.^ver(), v0.0.1, '... the ver() property is 0.0.1';
 is Foo.^auth(), 'ority', '... the auth() property is ority';
 is Foo.REPR, 'P6opaque', '.REPR';
+
+subtest {
+    my module M:ver<1.2.3>:auth<me> {};
+    is M.^name, 'M',     '.name is correct';
+    is M.^ver,  '1.2.3', '.ver is correct';
+    is M.^auth, 'me',    '.auth is correct';
+}, 'metamethods on a module';
 
 # RT #115208
 eval-lives-ok "True.HOW.say", "can output the .gist of a .HOW";
