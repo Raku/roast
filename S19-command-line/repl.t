@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 5;
+plan 6;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -42,4 +42,15 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         like $proc.out.slurp-rest, /"To exit type 'exit' or '^D'\n> "/,
             'stdout is correct';
     }, 'Pressing CTRL+D in REPL produces correct output on exit';
+}
+
+{
+    # RT #128470
+    my $code-to-run = q/[1..99].map:{[$_%%5&&'fizz', $_%%3&&'buzz'].grep:Str}/
+        ~ "\nsay 'We are still alive';\nexit\n";
+
+    is_run_repl $code-to-run, {
+        out => /'Cannot resolve caller grep' .* 'We are still alive'/,
+        err => '',
+    }, 'exceptions from lazy-evaluated things do not crash REPL';
 }
