@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 10;
 
 sub f($x) returns Int { return $x };
 
