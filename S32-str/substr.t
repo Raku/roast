@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 58;
+plan 59;
 
 # L<S32::Str/Str/=item substr>
 
@@ -127,5 +127,11 @@ plan 58;
         :message(/'should be in 0..0' .+ '*-1000'/);
 }
 
+
+# RT #128038
+{
+    is "".substr(5).handled, False,
+        'Failure in .substr does not get incorrectly handled';
+}
 
 # vim: ft=perl6
