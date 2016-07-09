@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 38;
+plan 39;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -108,5 +108,13 @@ is ((2, 4, 6) xx *)[^2], ((2, 4, 6), (2, 4, 6)),
     'xx * retains structure with list on LHS';
 is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
     'xx * retains structure with Seq on LHS';
+
+{
+    # RT #128382
+    my $is-sunk = 0;
+    my class A { method sink() { $is-sunk++ } };
+    my @a = A.new xx 10;
+    is $is-sunk, 0, 'xx does not sink';
+}
 
 # vim: ft=perl6
