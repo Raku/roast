@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 use Test::Idempotence;
-plan 129;
+plan 131;
 
 # L<S06/Signature Introspection>
 
@@ -247,6 +247,14 @@ is $rolesig, ':($a, $b, ::?CLASS $c)', ".perl of a sigature that has ::?CLASS";
         '";;" in signature stringifies correctly using .gist';
     is &rt125482.signature.perl, ':($a;; $b)',
         '";;" in signature stringifies correctly using .perl';
+}
+
+# RT #128392
+{
+    is :(Callable $a).perl, ':(Callable $a)',
+        'Callable in signature stringifies correctly using .perl';
+    is :(Callable $a).gist, '(Callable $a)',
+        'Callable in signature stringifies correctly using .gist';
 }
 
 # vim: ft=perl6
