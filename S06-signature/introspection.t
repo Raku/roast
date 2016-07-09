@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 use Test::Idempotence;
-plan 131;
+plan 134;
 
 # L<S06/Signature Introspection>
 
@@ -255,6 +255,13 @@ is $rolesig, ':($a, $b, ::?CLASS $c)', ".perl of a sigature that has ::?CLASS";
         'Callable in signature stringifies correctly using .perl';
     is :(Callable $a).gist, '(Callable $a)',
         'Callable in signature stringifies correctly using .gist';
+
+
+    is :(Callable).perl, ':(Callable $)', 'perl on :(Callable)';
+    is :(Array of Callable).perl, ':(Array[Callable] $)',
+        '.perl on :(Array of Callable)';
+    is :(Hash of Callable).perl, ':(Hash[Callable] $)',
+        '.perl on :(Hash of Callable)';
 }
 
 # vim: ft=perl6

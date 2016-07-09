@@ -35,12 +35,4 @@ dies-ok  { g('m') },    'type check forbids bad  implicitreturn';
         'no segfault when calling a routine having a native parameter with a type object argument';
 }
 
-# RT #128392
-{
-    ok :(Callable).perl eq ':(Callable $)',
-        "RT #128392 Doing .perl on a :(Callable)";
-    ok :(Array of Callable).perl eq ':(Array[Callable] $)',
-        "RT #128392 Doing .perl on an :(Array of Callable)";
-}
-
 # vim: ft=perl6
