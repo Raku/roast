@@ -17,7 +17,7 @@ dies-ok  { f('m') },    'type check forbids bad return';
 sub g($x) returns  Int { $x };
 
 lives-ok { g(3)   },    'type check allows good implicit return';
-dies-ok  { g('m') },    'type check forbids bad  implicitreturn';
+dies-ok  { g('m') },    'type check forbids bad implicit return';
 
 # RT #77158
 {
