@@ -146,6 +146,7 @@ my $IS = _register_functions(  # regex with test functions used in roast
     # from Test::Util
     qw(
       is_run            is-run
+      is_run_repl
     ),
     # from Test::Tap
     qw(
