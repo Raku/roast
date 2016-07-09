@@ -36,6 +36,8 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
     # RT #70297
     my $proc = &CORE::run( $*EXECUTABLE, :in, :out, :err);
     $proc.in.close;
+
+    #?rakudo 2 skip 'Result differs on OSX'
     subtest {
         plan 2;
         is   $proc.err.slurp-rest, '', 'stderr is correct';
