@@ -60,6 +60,11 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 {
     # RT #127695
     my $temp-dir = $*TMPDIR.child('rakudo-roast-RT127695-test' ~ rand);
+    LEAVE {
+        try $temp-dir.child('.precomp').rmdir;
+        try $temp-dir.rmdir;
+    }
+
     is $temp-dir.mkdir, True,
         'successfully created temp directory to use for -I in test';
 
