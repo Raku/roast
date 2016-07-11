@@ -40,10 +40,24 @@ plan 15;
 #     ~Inf eq ~Inf   # true
 
 ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
-#?rakudo 3 todo 'Int conversion of NaN and Inf RT #124453'
-ok NaN.Int === NaN,         'Inf.Int === Int';
-ok Inf.Int === Inf,         'Inf.Int === Int';
-ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
+
+# RT #124453
+{
+    throws-like { Inf.Int }, X::AdHoc, :message<Cannot coerce Inf to an Int>,
+        'attempting to convert Inf to Int throws';
+
+    throws-like { -Inf.Int }, X::AdHoc, :message<Cannot coerce -Inf to an Int>,
+        'attempting to convert Inf to Int throws';
+
+    throws-like { ∞.Int }, X::AdHoc, :message<Cannot coerce Inf to an Int>,
+        'attempting to convert ∞ to Int throws';
+
+    throws-like { -∞.Int }, X::AdHoc, :message<Cannot coerce Inf to an Int>,
+        'attempting to convert -∞ to Int throws';
+
+    throws-like { NaN.Int }, X::AdHoc, :message<Cannot coerce NaN to an Int>,
+        'attempting to convert NaN to Int throws';
+}
 
 # RT #70730
 {
