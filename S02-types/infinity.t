@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 15;
 
 # L<S02/"Infinity and C<NaN>" /Perl 6 by default makes standard IEEE floating point concepts visible>
 
@@ -49,5 +49,16 @@ ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
 {
     ok ( rand * Inf ) === Inf, 'multiply rand by Inf without maximum recursion depth exceeded';
 }
+
+{
+    #RT #126990
+    throws-like { my Int $x = Inf }, X::TypeCheck::Assignment,
+        message => /'expected Int but got Num (Inf)'/,
+    "trying to assign Inf to Int gives a helpful error";
+
+    my Num $x = Inf;
+    is $x, Inf, 'assigning Inf to Num works without errors';
+}
+
 
 # vim: ft=perl6

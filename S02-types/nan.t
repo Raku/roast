@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 23;
 
 # Undeterminate Math results
 # see L<"http://mathworld.wolfram.com/Indeterminate.html">
@@ -43,5 +43,16 @@ is NaN.perl, 'NaN', 'NaN perlification ok';
 
 #RT #83622
 ok NaN===NaN, "NaN value identity";
+
+{
+    #RT #126990
+    throws-like { my Int $x = NaN }, X::TypeCheck::Assignment,
+        message => /'expected Int but got Num (NaN)'/,
+    "trying to assign NaN to Int gives a helpful error";
+
+    my Num $x = NaN;
+    is $x, NaN, 'assigning NaN to Num works without errors';
+}
+
 
 # vim: ft=perl6
