@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 183;
+plan 184;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -360,5 +360,8 @@ lives-ok({"\0".."~"}, "low ascii range completes");
     is (^10).minmax,          '0 9',      "Range.minmax on Ints with exclusion";
     dies-ok { ^Inf .minmax },  "cannot have exclusions for minmax otherwise";
 }
+
+# RT #126990
+is-deeply Int.Range, -Inf^..^Inf, 'Int.range is -Inf^..^Inf';
 
 # vim:set ft=perl6
