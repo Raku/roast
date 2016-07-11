@@ -111,7 +111,7 @@ sub countdown_mod_named ($num) {
     return $num, countdown_mod_named($n);
 }
 
-
+#?rakudo.jvm 8 skip 'wrong number of positionals passed down in countdown_mod_named'
 is(  countup_nomod_named(5).flat.join,   "012345", "recursive count up: named param, no modified value");
 is(countdown_nomod_named(5).flat.join,   "543210", "recursive count down: named param, no modified value");
 is(  countup_nomod_unnamed(5).flat.join, "012345", "recursive count up: unnamed param, no modified value");

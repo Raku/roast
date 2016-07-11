@@ -12,6 +12,7 @@ my $cmd = $*DISTRO.is-win
     !! "echo 'exit(42)' | $*EXECUTABLE >/dev/null 2>&1";
 is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 
+#?rakudo.jvm skip 'is_run_repl hangs on JVM'
 {
     # RT #119339
     is_run_repl "say 069\nexit\n", {
@@ -51,6 +52,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
     my $code-to-run = q/[1..99].map:{[$_%%5&&'fizz', $_%%3&&'buzz'].grep:Str}/
         ~ "\nsay 'We are still alive';\nexit\n";
 
+    #?rakudo.jvm skip 'is_run_repl hangs on JVM'
     is_run_repl $code-to-run, {
         out => /'Cannot resolve caller grep' .* 'We are still alive'/,
         err => '',
