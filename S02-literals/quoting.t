@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 184;
+plan 185;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -647,6 +647,15 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
     for (<<$a b c>>, qqww{$a b c}, qqw{$a b c}).kv -> $i, $_ {
         ok .WHAT === List, "word-split qouting constructs return List ($i)";
     }
+}
+
+# RT #128304
+{
+    #?rakudo todo 'RT 128304'
+    is-deeply qww<a a ‘b b’ ‚b b’ ’b b‘ ’b b‘ ’b b’ ‚b b‘ ‚b b’ “b b” „b b”
+            ”b b“ ”b b“ ”b b” „b b“ „b b” ｢b b｣ ｢b b｣>,
+        ('a', 'a', |('b b' xx 16)),
+    'fancy quotes in qww work just like regular quotes';
 }
 
 # vim: ft=perl6
