@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 # L<S04/The C<repeat> statement/"more Pascal-like repeat loop">
 
@@ -129,6 +129,17 @@ plan 19;
 #?DOES 3
 {
     throws-like 'repeat { "but I myself" }', X::Syntax::Missing, what => '"while" or "until"';
+}
+
+# RT #128596
+#?rakudo todo 'RT 128596'
+{
+    my $runs = 0;
+    my sub foo { repeat { $runs++; } while 0; };
+    foo for ^2;
+
+    ok $runs == 2,
+    'repeat inside sub inside a loop executes even when condition is false';
 }
 
 # vim: ft=perl6
