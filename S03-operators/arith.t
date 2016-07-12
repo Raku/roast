@@ -199,6 +199,7 @@ isnt 2**3**4, 4096, "** is right associative";
 
 # RT #125811
 #?rakudo.moar 1 skip 'overflow exception is not thrown on OSX RT #127500'
+#?rakudo.jvm 1 todo 'overflow exception is not thrown on JVM RT #127500'
 {
     throws-like { 2 ** 99999999999999999999999999999999999 },
         X::Numeric::Overflow,

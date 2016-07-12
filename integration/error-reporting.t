@@ -171,6 +171,7 @@ is_run 'sub s1 { sub s2 { fail("foo"); }; s2()(); }; s1();', {
         }, "Thrown Failure outputs dual backtraces";
 
 # see http://irclog.perlgeek.de/perl6/2015-07-24#i_10947364 and commit c683fe9
+#?rakudo.jvm todo 'UnwindException'
 is_run 'sub foo { ({a=>1,b=>2}, {c=>3,d=>4}).map({ if (.<a>) {return $_} else { return } }) }; say foo', {
             err => rx:i/Attempt\sto\sreturn\soutside\N+Routine.*in\sblock/
         }, "Correct error and a backtrace for return in mainline code";

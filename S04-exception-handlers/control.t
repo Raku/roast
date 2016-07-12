@@ -14,6 +14,7 @@ Tests C<CONTROL> blocks.
 =end desc
 
 # RT #124255
+#?rakudo.jvm skip 'NullPointerException'
 is_run( 'next; CONTROL { }',
         { status => sub { 0 != $^a },
           out    => '',

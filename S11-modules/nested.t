@@ -22,6 +22,7 @@ eval-lives-ok 'use RoleA',
               'can use multiple "Role $name" statements (in multiple files) RT #67976';
 
 use RT117117::Backends;
+#?rakudo.jvm todo 'got: $("GNUC",)'
 is-deeply(RT117117::Backend::.keys.sort, ('AST', 'GNUC'), 'All nested modules available');
 
 {
