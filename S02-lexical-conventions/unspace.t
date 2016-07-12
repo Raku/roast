@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 87;
+plan 88;
 
 # L<S02/"Unspaces"/This is known as the "unspace">
 
@@ -318,5 +318,10 @@ is "foo"\ \ .perl, "foo".perl, 'two unspace in a row before . for method call';
 
 # \# okay within a regex
 ok '#' ~~ /\#/, 'Unspace restriction in regex does not apply to \#';
+
+# RT #128462
+#?rakudo todo 'RT 128462'
+eval-lives-ok 'my \term = 42; say term\   .Str; term == 42 or die;',
+    'unspace with method calls detached from sigiless terms works';
 
 # vim: ft=perl6
