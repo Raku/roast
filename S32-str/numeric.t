@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 168;
+plan 172;
 
 #?DOES 2
 sub check($str, $expected_type, $expected_number, $desc?) {
@@ -18,6 +18,8 @@ sub f($str) {
 }
 
 check '',           Int,      0;
+check ' ',          Int,      0; # RT128543
+check '   ',        Int,      0;
 check '123',        Int,    123;
 check ' 123',       Int,    123;
 check '0000123',    Int,    123;
