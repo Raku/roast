@@ -98,7 +98,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
     }
 
     #?rakudo 2 todo 'RT 128595'
-    subtest 'REPL with -M with non-existant module', {
+    subtest 'REPL with -M with non-existent module', {
         plan 2;
         ok $test-ok, 'typing exit exits fine';
         like $stdout, /'output works'/, 'REPL output was sane';
