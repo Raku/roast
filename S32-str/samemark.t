@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item samemark">
 
-plan 8;
+plan 9;
 
 #?rakudo.jvm 8 skip 'samemark NYI'
 is(samemark('zoo', 'ŏôō'), 'z̆ôō', 'samemark as a function works');
@@ -17,5 +17,12 @@ is('ẓo⃥o⃝'.samemark('ŏôō'), 'z̆ôō', 'samemark changes to new accent
 
 is('tëxt'.samemark('thiș is longer'), 'texț', 'samemark with longer base string');
 is('zoö'.samemark('ŏô'), 'z̆ôô', 'samemark with longer source string');
+
+# RT #128615
+{
+    throws-like { ‘a’.samemark: ‘’ }, X::AdHoc,
+        message => /"Must have at least 1 char of pattern with 'samemark'"/,
+    '.samemark with empty-string argument throws';
+}
 
 # vim: ft=perl6
