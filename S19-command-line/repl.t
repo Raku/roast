@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 8;
+plan 9;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -80,3 +80,27 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         '-I in REPL works';
 }
 
+{
+    # RT #128595
+    my $prog = Proc::Async.new: :w, $*EXECUTABLE, '-M', "SomeNonExistentMod";
+    my $stdout = '';
+    $prog.stdout.tap: { $stdout ~= $^a };
+    $prog.stderr.tap: {;};
+
+    my $promise = $prog.start;
+    await $prog.write: "say 'output works'\nexit\n".encode;
+    sleep 1;
+
+    my $test-ok = False;
+    given $promise.status {
+        when Kept { $test-ok = True };
+        $prog.kill;
+    }
+
+    #?rakudo 2 todo 'RT 128595'
+    subtest 'REPL with -M with non-existant module', {
+        plan 2;
+        ok $test-ok, 'typing exit exits fine';
+        like $stdout, /'output works'/, 'REPL output was sane';
+    };
+}
