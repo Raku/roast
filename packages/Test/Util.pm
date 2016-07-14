@@ -146,7 +146,7 @@ sub is_run_repl ($code, %wanted, $desc) is export {
 
 sub doesn't_hang (
     $args, $desc = 'code does not hang',
-    :$in, :$wait = 1, :$out, :$err,
+    :$in, :$wait = 1.5, :$out, :$err,
 ) is export {
     my $prog = Proc::Async.new: |$args;
     my ($stdout, $stderr) = '', '';
@@ -278,7 +278,7 @@ C<'code does not hang'>
 =head3 C<:wait>
 
 B<Optional.> Specifies the amount of time in seconds to wait for the
-executed program to finish. B<Defaults to:> C<1>
+executed program to finish. B<Defaults to:> C<1.5>
 
 =head3 C<:in>
 
