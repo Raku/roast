@@ -20,6 +20,7 @@ is('zoö'.samemark('ŏô'), 'z̆ôô', 'samemark with longer source string');
 
 # RT #128615
 {
+    #?rakudo.jvm skip 'samemark NYI'
     throws-like { ‘a’.samemark: ‘’ }, X::AdHoc,
         message => /"Must have at least 1 char of pattern with 'samemark'"/,
     '.samemark with empty-string argument throws';
