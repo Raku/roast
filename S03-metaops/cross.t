@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 75;
+plan 76;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -244,5 +244,16 @@ is ($(1, 2) X~ <a b c>), ('1 2a', '1 2b', '1 2c'),
     'X meta-op respects itemization of arguments (1)';
 is (<a b c> X~ $(1, 2)), ('a1 2', 'b1 2', 'c1 2'),
     'X meta-op respects itemization of arguments (2)';
+
+# RT #78188
+{
+    subtest '&infix: works with metaoperators regardless of combination', {
+        plan 4;
+        isa-ok &infix:<Xxx>,     Block, '&infix:<Xxx>     exists';
+        isa-ok &infix:<ZXxx>,    Block, '&infix:<ZXxx>    exists';
+        isa-ok &infix:<XXXXXxx>, Block, '&infix:<XXXXXxx> exists';
+        isa-ok &infix:<XZX~>,    Block, '&infix:<XZX~>    exists';
+    }
+}
 
 # vim: ft=perl6 et
