@@ -8,7 +8,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there. 
 
-plan 30;
+plan 31;
 
 my $res;
 
@@ -81,6 +81,22 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
             { status => 0 },
         ":merge with run on non-existent program does not crash [attempt $_]";
     }
+}
+
+# RT #128398
+{
+    my $p = Proc::Async.new: :w, $*EXECUTABLE, "-ne",
+        Q!last if /2/; .say; LAST { say "test worked" }!;
+
+    my $stdout = '';
+    $p.stdout.tap: { $stdout ~= $^a };
+    my $prom = $p.start;
+    await $p.write: "1\n2\n3\n4\n".encode;
+    await $prom;
+
+    #?rakudo.moar todo 'RT 128398'
+    is $stdout, "1\ntest worked\n",
+        'LAST phaser gets triggered when using -n command line switch';
 }
 
 # all these tests feel like bogus, what are we testing here???
