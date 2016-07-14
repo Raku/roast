@@ -32,7 +32,7 @@ if (@ARGV == 3) {
     $OUT = shift;
 } elsif (@ARGV == 1) {
     # test
-    $IN = shift; 
+    $IN = shift;
 } elsif (@ARGV == 2) {
     my $arg = shift;
     if ($arg =~ /\.t$/) {
@@ -42,7 +42,7 @@ if (@ARGV == 3) {
     } else {
         # impl test
         $ME = $arg;
-        $IN = shift; 
+        $IN = shift;
     }
 }
 
@@ -147,6 +147,7 @@ my $IS = _register_functions(  # regex with test functions used in roast
     qw(
       is_run            is-run
       is_run_repl
+      doesn't_hang
     ),
     # from Test::Tap
     qw(

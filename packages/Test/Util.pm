@@ -144,6 +144,38 @@ sub is_run_repl ($code, %wanted, $desc) is export {
     }, $desc;
 }
 
+sub doesn't_hang (
+    $args, $desc = 'code does not hang',
+    :$in, :$wait = 1, :$out, :$err,
+) is export {
+    my $prog = Proc::Async.new: |$args;
+    my ($stdout, $stderr) = '', '';
+    $prog.stdout.tap: { $stdout ~= $^a };
+    $prog.stderr.tap: { $stderr ~= $^a };
+
+    # We start two Promises: the program to run and a Promise that waits for
+    # $wait seconds. We await any of them, so if the $wait seconds pass,
+    # await returns and we follow the path that assumes the code we ran hung.
+    my $promise = $prog.start;
+    await $prog.write: $in.encode if $in.defined;
+    await Promise.anyof: Promise.in($wait), $promise;
+
+    my $did-not-hang = False;
+    given $promise.status {
+        when Kept { $did-not-hang = True };
+        $prog.kill;
+    }
+
+    subtest $desc, {
+        plan 1 + ( $did-not-hang ?? ($out, $err).grep(*.defined) !! 0 );
+        ok $did-not-hang, 'program did not hang';
+        if $did-not-hang {
+            like $stdout, $out, 'STDOUT matches' if $out.defined;
+            like $stderr, $err, 'STDERR matches' if $err.defined;
+        }
+    };
+}
+
 =begin pod
 
 =head1 NAME
@@ -196,19 +228,6 @@ For example:
   is_run( 'rand.say', { out => sub { $^a > 0 && $^a < 1 }, err => '' },
           'output of rand is between zero and one' );
 
-=head2 is_run_repl ($code, %wanted, $desc)
-
-Fires up the REPL and enters the given C<$code>. Be sure to send correct
-newlines and C<exit> to exit the REPL. The C<%wanted> is a hash with
-zero to two keys. C<out> takes a Str or regex testing STDERR output and
-C<err> takes a Str or regex testing STDERR output. Keys not provided aren't
-tested. When Str is provided the output is tested with C<is> and regex
-is tested with C<like>. B<NOTE:> STDOUT will generally contain
-all the messages displayed by the REPL at the start.
-
-    is_run_repl "say 42\nexit\n", { err => '', out => /"42\n"/ },                                                                                                                                                                                                  
-        'say 42 works fine';
-
 =head3 Errors
 
 If the underlying code could not be executed properly (e.g., because
@@ -219,6 +238,64 @@ is_run() will skip() (but it will still execute the code not being tested).
 
 is_run() depends on get_out(), which might die.  In that case, it dies
 also (this error is not trapped).
+
+=head2 is_run_repl ($code, %wanted, $desc)
+
+Fires up the REPL and enters the given C<$code>. Be sure to send correct
+newlines and C<exit> to exit the REPL. The C<%wanted> is a hash with
+zero to two keys. C<out> takes a Str or regex testing STDERR output and
+C<err> takes a Str or regex testing STDERR output. Keys not provided aren't
+tested. When Str is provided the output is tested with C<is> and regex
+is tested with C<like>. B<NOTE:> STDOUT will generally contain
+all the messages displayed by the REPL at the start.
+
+    is_run_repl "say 42\nexit\n", { err => '', out => /"42\n"/ },
+        'say 42 works fine';
+
+=head2 doesn't_hang ( ... )
+
+    doesn't_hang \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod"),
+        :in("say 'output works'\nexit\n"),
+        :out(/'output works'/),
+    'REPL with -M with non-existent module';
+
+Uses C<Proc::Async> to execute a potentially-hanging program and kills it after
+a specified timeout, if it doesn't surrender peacefully. Collects STDERR
+and STDOUT, optional taking regex matchers for additional testing. Takes
+the following arguments:
+
+=head3 First positional argument
+
+    \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod")
+
+B<Mandatory.> A C<Capture> of arguments to pass to C<Proc::Async.new()>
+
+=head3 Second positional argument
+
+B<Optional.> Takes a C<Str> for test description. B<Defaults to:>
+C<'code does not hang'>
+
+=head3 C<:wait>
+
+B<Optional.> Specifies the amount of time in seconds to wait for the
+executed program to finish. B<Defaults to:> C<1>
+
+=head3 C<:in>
+
+B<Optional>. Takes a C<Str> that will be sent to executed program's STDIN.
+B<By default> not specified.
+
+=head3 C<:out>
+
+B<Optional>. Takes a C<Regex> that will be used to match against program's
+STDOUT. If the program doesn't finish before C<:wait> seconds, no attempt
+to check STDOUT will be made. B<By default> not specified.
+
+=head3 C<:err>
+
+B<Optional>. Takes a C<Regex> that will be used to match against program's
+STDERR. If the program doesn't finish before C<:wait> seconds, no attempt
+to check STDERR will be made. B<By default> not specified.
 
 =head2 get_out( Str $code, Str $input?, :@args )
 
