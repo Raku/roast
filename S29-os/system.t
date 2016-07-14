@@ -8,7 +8,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there. 
 
-plan 20;
+plan 30;
 
 my $res;
 
@@ -72,15 +72,16 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
     is $rt115390, 5050, 'no crash with run() in loop; run() not in sink context';
 }
 
-# NOTE: THIS TEST HANGS ON OSX
 # RT #128594
-#{
-#    for ^10 {
-#        is_run q{run("non-existent-program-RT128594", :merge).out.slurp-rest},
-#            { status => 0 },
-#        ":merge with run on non-existent program does not crash [attempt $_]"
-#    }
-#}
+{
+    for ^10 {
+        # NOTE: THIS TEST HANGS ON OSX; double check before unfudging
+        #?rakudo.moar skip 'RT 128594'
+        is_run q{run("non-existent-program-RT128594", :merge).out.slurp-rest},
+            { status => 0 },
+        ":merge with run on non-existent program does not crash [attempt $_]";
+    }
+}
 
 # all these tests feel like bogus, what are we testing here???
 # note: is_run fails after these tests because we are no longer in the right dir
