@@ -144,7 +144,7 @@ sub is_run_repl ($code, %wanted, $desc) is export {
     }, $desc;
 }
 
-sub doesn't_hang (
+sub doesn't-hang (
     $args, $desc = 'code does not hang',
     :$in, :$wait = 1.5, :$out, :$err,
 ) is export {
@@ -252,9 +252,9 @@ all the messages displayed by the REPL at the start.
     is_run_repl "say 42\nexit\n", { err => '', out => /"42\n"/ },
         'say 42 works fine';
 
-=head2 doesn't_hang ( ... )
+=head2 doesn't-hang ( ... )
 
-    doesn't_hang \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod"),
+    doesn't-hang \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod"),
         :in("say 'output works'\nexit\n"),
         :out(/'output works'/),
     'REPL with -M with non-existent module';
