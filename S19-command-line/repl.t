@@ -82,25 +82,9 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 
 {
     # RT #128595
-    my $prog = Proc::Async.new: :w, $*EXECUTABLE, '-M', "SomeNonExistentMod";
-    my $stdout = '';
-    $prog.stdout.tap: { $stdout ~= $^a };
-    $prog.stderr.tap: {;};
-
-    my $promise = $prog.start;
-    await $prog.write: "say 'output works'\nexit\n".encode;
-    sleep 1;
-
-    my $test-ok = False;
-    given $promise.status {
-        when Kept { $test-ok = True };
-        $prog.kill;
-    }
-
-    #?rakudo 2 todo 'RT 128595'
-    subtest 'REPL with -M with non-existent module', {
-        plan 2;
-        ok $test-ok, 'typing exit exits fine';
-        like $stdout, /'output works'/, 'REPL output was sane';
-    };
+    #?rakudo todo 'RT 128595'
+    doesn't-hang \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod"),
+        :in("say 'output works'\nexit\n"),
+        :out(/'output works'/),
+    'REPL with -M with non-existent module';
 }
