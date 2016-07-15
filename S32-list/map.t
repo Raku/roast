@@ -251,7 +251,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 {
     is [foo => (1,2,3).map: {$_}].[0].value.join(":"), '1:2:3',
         'map on list in array does not lose content';
-    #?rakudo.jvm skip 'This Seq has already been iterated, and its values consumed'
     is {foo => (1,2,3).map: {$_}}<foo>.join(":"), '1:2:3',
         'map on list in hash does not lose content';
 }

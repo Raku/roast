@@ -61,8 +61,7 @@ my @keys2 = Test::Util::run( q:to"--END--").lines;
 #?rakudo.jvm todo 'got: $["C", "K"]'
 is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all different';
 
-#?rakudo.jvm skip 'RT #122896'
-#?rakudo.moar skip 'RT #122896'
+#?rakudo.moar todo 'RT #122896'
 {
     is_run
       'use lib "t/spec/packages";
