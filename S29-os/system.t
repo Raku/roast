@@ -77,6 +77,7 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
     for ^10 {
         # NOTE: THIS TEST HANGS ON OSX; double check before unfudging
         #?rakudo.moar skip 'RT 128594'
+        #?rakudo.jvm todo 'IOException "no such file" RT 128594'
         is_run q{run("non-existent-program-RT128594", :merge).out.slurp-rest},
             { status => 0 },
         ":merge with run on non-existent program does not crash [attempt $_]";
@@ -84,6 +85,7 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 }
 
 # RT #128398
+#?rakudo.jvm skip 'Proc::Async NYI'
 {
     my $p = Proc::Async.new: :w, $*EXECUTABLE, "-ne",
         Q!last if /2/; .say; LAST { say "test worked" }!;

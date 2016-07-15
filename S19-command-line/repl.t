@@ -82,7 +82,8 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 
 {
     # RT #128595
-    #?rakudo todo 'RT 128595'
+    #?rakudo.moar todo 'RT 128595'
+    #?rakudo.jvm skip 'Proc::Async NYI'
     doesn't-hang \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod"),
         :in("say 'output works'\nexit\n"),
         :out(/'output works'/),
