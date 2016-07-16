@@ -1,9 +1,11 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 85;
+plan 86;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -299,6 +301,13 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
 {
     is -> *@a { @a[+0] }.([5]), 5,
         'slurpy array can be indexed if index contains prefix:<+>';
+}
+
+# RT #128201
+{
+    #?rakudo.moar todo 'RT 128201'
+    doesn't-hang '{ say @_.gist }(1..Inf)', :out(/'[...]'/),
+        '.gist on @_ containing lazy list correctly thinks it is lazy';
 }
 
 # vim: ft=perl6
