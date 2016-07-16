@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/Buf>
 
-plan 38;
+plan 44;
 
 ok 'ab'.encode('ASCII') ~~ blob8, '$str.encode returns a blob8';
 ok ('ab'.encode('ASCII') eqv blob8.new(97, 98)),  'encoding to ASCII';
@@ -90,5 +90,29 @@ is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip wi
 # Covers a UTF-16 BOM bug.
 #?rakudo.jvm todo 'uft-16'
 is Buf.new([255, 254, 72, 0, 101, 0]).decode("utf-16"), 'He', 'utf-16 BOM handled ok';
+
+# RT#128184
+{
+    my @bufs =
+        Buf.new(61,29,61,200,30,99,107,150,71,11,253,134,110,27,35,227,88,140,
+            180,158,209),
+        Buf.new(61,2,71,91,58,252,6,247,88,58,121,32,124,129,191,126,36,222,
+            185,109,213),
+        Buf.new(61,147,135,8,82,78,208,66,205,164,204,162,140,97,175,37,108,
+            194,27,192,119),
+        Buf.new(61,10,0,56,143,36,56,119,182,81,88,70,88,139,28,119,142,151,
+            108,12,215),
+        Buf.new(61,93,12,110,139,89,42,134,251,165,68,32,104,225,44,112,194,
+            178,75,64,243),
+        Buf.new(61,185,242,97,170,122,52,182,62,236,186,222,213,63,189,203,241,
+            176,1,149,233);
+
+    for @bufs.kv -> $i, $buf {
+        #?rakudo.jvm skip 'uft8-c8 NIY'
+        #?rakudo.moar todo 'RT 128184'
+        is-deeply Buf.new($buf.decode('utf8-c8').encode('utf8-c8').list), $buf,
+            ".decode.encode roundtrips correctly for utf8-c8 [Buf #{$i+1}]";
+    }
+}
 
 # vim: ft=perl6
