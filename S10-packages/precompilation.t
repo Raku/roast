@@ -229,6 +229,7 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
     $trigger-file = 't/spec/packages/RT128156/C.pm6'.IO;
     $trigger-file.IO.spurt($trigger-file.slurp);
     my $after     = run $*EXECUTABLE,'-I','t/spec/packages/RT128156','-M','A','-e','';
+    #?rakudo.jvm 2 todo 'ClassCastException: __P6opaque__73 cannot be cast to P6OpaqueDelegateInstance'
     is $before.status, 0, 'Can precompile modules before touching source file';
     is $after.status,  0, 'Can precompile modules after touching source file';
 }
