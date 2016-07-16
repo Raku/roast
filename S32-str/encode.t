@@ -3,6 +3,8 @@ use Test;
 
 # L<S32::Containers/Buf>
 
+plan 38;
+
 ok 'ab'.encode('ASCII') ~~ blob8, '$str.encode returns a blob8';
 ok ('ab'.encode('ASCII') eqv blob8.new(97, 98)),  'encoding to ASCII';
 is 'ab'.encode('ASCII').elems, 2, 'right length of Buf';
@@ -88,7 +90,5 @@ is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip wi
 # Covers a UTF-16 BOM bug.
 #?rakudo.jvm todo 'uft-16'
 is Buf.new([255, 254, 72, 0, 101, 0]).decode("utf-16"), 'He', 'utf-16 BOM handled ok';
-
-done-testing;
 
 # vim: ft=perl6
