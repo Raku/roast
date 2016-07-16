@@ -144,8 +144,14 @@ sub is_run_repl ($code, %wanted, $desc) is export {
     }, $desc;
 }
 
-sub doesn't-hang (
-    $args, $desc = 'code does not hang',
+multi doesn't-hang (Str $args, $desc, :$in, :$wait = 1.5, :$out, :$err)
+is export {
+    doesn't-hang \($*EXECUTABLE, '-e', $args), $desc,
+        :$in, :$wait, :$out, :$err;
+}
+
+multi doesn't-hang (
+    Capture $args, $desc = 'code does not hang',
     :$in, :$wait = 1.5, :$out, :$err,
 ) is export {
     my $prog = Proc::Async.new: |$args;
@@ -254,6 +260,9 @@ all the messages displayed by the REPL at the start.
 
 =head2 doesn't-hang ( ... )
 
+    doesn't-hang 'say "some code"' :out(/'some code'/),
+        'some code does not hang';
+
     doesn't-hang \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod"),
         :in("say 'output works'\nexit\n"),
         :out(/'output works'/),
@@ -266,9 +275,14 @@ the following arguments:
 
 =head3 First positional argument
 
+    'say "some code"'
+
     \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod")
 
-B<Mandatory.> A C<Capture> of arguments to pass to C<Proc::Async.new()>
+B<Mandatory.> Can be a C<Capture> or a C<Str>. A C<Capture> represents
+arguments to pass to C<Proc::Async.new()>. If C<Str> is passed, it is treated
+as if a capture with C<\($*EXECUTABLE, '-e', $code-to-run)> passed, where
+C<$code-to-run> is the code contained in the passed C<Str>.
 
 =head3 Second positional argument
 
