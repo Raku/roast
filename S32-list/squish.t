@@ -13,7 +13,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 #?niecza skip 'NYI'
 {
     my @array = <a b b c d e f f a>;
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish,  <a b c d e f a>,
       "method form of squish works";
     is-deeply squish(@array), <a b c d e f a>,
@@ -60,7 +59,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 {
     my @array = <a b bb c d e f f a>;
     my $as    = *.substr: 0,1;
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish(:$as),  <a b c d e f a>,
       "method form of squish with :as works";
     is-deeply squish(@array,:$as), <a b c d e f a>,
@@ -72,7 +70,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 } #4
 
 #?niecza skip 'NYI'
-#?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
 {
     my @rt124204 = ('', '', Any, Any);
     is-deeply @rt124204.squish(:as(-> $x {$x})), ('', Any),
@@ -98,7 +95,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
     my @rt124205_b = '', '', |<b b B B>;
 
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @rt124205_b.squish(:with(*.Str eq *.Str)), ('', 'b', 'B'),
       "method form of squish with :with preserves the first element even if it stringifies to ''";
 
@@ -111,7 +107,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 {
     my @array = <a aa b bb c d e f f a>;
     my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish(:$with),  <a b c d e f a>,
       "method form of squish with :with works";
     is-deeply squish(@array,:$with), <a b c d e f a>,
@@ -127,7 +122,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
     my @array = <a aa b bb c d e f f a>;
     my $as    = *.substr(0,1).ord;
     my $with  = &[==];
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish(:$as, :$with),  <a b c d e f a>,
       "method form of squish with :as and :with works";
     is-deeply squish(@array,:$as, :$with), <a b c d e f a>,
@@ -195,7 +189,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 {
     my @array = ({:a<1>}, {:a<1>}, {:b<1>});
     my $with  = &[eqv];
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish(:$with),  ({:a<1>}, {:b<1>}),
       "method form of squish with [eqv] and objects works";
     is-deeply squish(@array,:$with), ({:a<1>}, {:b<1>}),

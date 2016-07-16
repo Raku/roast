@@ -120,7 +120,6 @@ is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
 throws-like '3 Z. foo', X::Syntax::CannotMeta, "Z. is too fiddly";
 throws-like '3 Z. "foo"', X::Obsolete, "Z. can't do P5 concat";
 
-#?rakudo.jvm 4 skip 'RT #126493'
 is-deeply &infix:<Z+>((1,2,3),(4,5,6)), (5, 7, 9), "Meta zip can autogen";
 is-deeply &infix:<Z+>((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ary)";
 is-deeply infix:<Z+>((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ary) without &";

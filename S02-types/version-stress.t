@@ -60,7 +60,6 @@ my sub test_same(@versions) {
 }
 
 #?DOES 3
-#?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
 is-deeply(
     @sorted.map({Version.new($_)}).pick(*).sort,
     @sorted.map({Version.new($_)}),
