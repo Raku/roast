@@ -143,7 +143,6 @@ throws-like {
 }
 
 # RT #75646
-#?rakudo.jvm skip 'RT #75646'
 {
     throws-like 'my ::foo $x, say $x', Exception,
         'no Null PMC access when printing a variable typed as ::foo ';

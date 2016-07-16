@@ -55,7 +55,6 @@ isa-ok $*KERNEL.version, Version;
 isa-ok $*KERNEL.signature, Blob;
 isa-ok $*KERNEL.bits, Int;
 
-#?rakudo.jvm    skip "jvm doesn't know about signals RT #124628"
 {
     ok $*KERNEL.signals ~~ Positional, 'did Kernel.signals return a list';
     is $*KERNEL.signals.elems, $*KERNEL.signals.grep(Signal|Any).elems,
@@ -63,10 +62,12 @@ isa-ok $*KERNEL.bits, Int;
 
     my $hup = $*KERNEL.signal(SIGHUP);
     isa-ok $hup, Int, 'did we get an Int back';
+    #?rakudo.jvm todo "limited signal handling on jvm RT #124628"
     ok defined($hup), 'was the Int defined';
     isnt $hup, 0, "no signal should come out as 0";
     is $*KERNEL.signal("SIGHUP"), $hup, "also ok as string?";
     is $*KERNEL.signal("HUP"),    $hup, "also ok as partial string?";
+    #?rakudo.jvm skip "limited signal handling on jvm RT #124628"
     is $*KERNEL.signal($hup),     $hup, "also ok as Int?";
 }
 

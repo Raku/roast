@@ -5,7 +5,6 @@ plan 13;
 # originally for RT #66588, which was closed
 # RT #74414 is related, and works on moar, but
 # likely not on jvm
-#?rakudo.jvm skip 'Ambiguous dispatch for &uno_mas'
 {
     my $ro_call     = 0;
     my $rw_call     = 0;
@@ -14,7 +13,9 @@ plan 13;
     multi sub uno_mas( int $rw is rw ) { $primrw_call++; return $rw * 2 }
     multi sub uno_mas( Int $rw is rw ) { $rw_call++; return ++$rw }
 
+    #?rakudo.jvm skip 'Ambiguous dispatch for &uno_mas'
     is uno_mas(42), 43, 'multi works with constant';
+    #?rakudo.jvm todo 'fails due to above skipped test'
     is $ro_call, 1, 'read-only multi was called';
 
     my $x = 99;
@@ -24,15 +25,16 @@ plan 13;
     is $x, 100, 'variable was modified';
     #?niecza todo
     is $rw_call, 1, 'read-write multi was called';
+    #?rakudo.jvm todo 'fails due to above skipped test'
     is $ro_call, 1, 'read-only multi was not called';
     my int $y = 50;
     is uno_mas( $y ), 100, 'multi works with primitive';
     is $rw_call, 1, 'read-write multi was not called';
+    #?rakudo.jvm todo 'fails due to above skipped test'
     is $ro_call, 1, 'read-only multi was not called';
     is $primrw_call, 1, 'native rw multi was called';
 }
 
-#?rakudo.jvm skip 'Ambiguous dispatch'
 {
     # Makes sure dynamic optimization copes with the rw vs. ro distinction
     # also (early patches to the MoarVM multi cache didn't handle this, so
@@ -44,10 +46,10 @@ plan 13;
     foo [];
     my $got;
     for ^500 { $got = foo $ = []; }
+    #?rakudo.jvm todo 'expected 1, got 2'
     is $got, 1, 'Optimization respects is rw';
 }
 
-#?rakudo.jvm skip 'Ambiguous dispatch'
 {
     multi x(int $x is rw) { 1 }
     multi x(Int $x) { 2 }
