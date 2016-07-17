@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 8;
 
 # TODO, based on synopsis 4:
 #
@@ -114,6 +114,15 @@ plan 6;
     my $rt122134;
     for 1 { last; ENTER { $rt122134 = "hurz" } };
     is $rt122134, 'hurz', 'no UnwindException with "last" and "ENTER" in for loop';
+}
+
+# RT #126001
+{
+    sub rt126001_a () { for 1, 2 { LAST return $_ } };
+    sub rt126001_b () { for 1, 2 -> $x { LAST { return $x } } };
+    #?rakudo.moar todo 'RT #126001'
+    is rt126001_a(), 2, 'LAST phaser with block does not put Mu in the iteration variable';
+    is rt126001_b(), 2, 'LAST phaser without block does not put Mu in the iteration variable';
 }
 
 # vim: ft=perl6
