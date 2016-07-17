@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 5;
+plan 9;
 
 # L<S32::Numeric/=item polymod>
 
@@ -18,4 +18,23 @@ subtest '.polymod with a lazy list does not lose divisors when list runs out', {
               42.Rat.polymod(     2, 3), 'last mod is non-zero (Rat)';
     is-deeply 12    .polymod(lazy 14, ),
                     (12,),               'last mod is zero';
+}
+
+#RT #128646
+{
+    throws-like { 1.polymod: 0           }, X::Numeric::DivideByZero,
+        gist => /^ [<!after 'CORE.setting.'> . ]+ $/,
+    'Int.polymod with zero divisor does not reference guts in error';
+
+    throws-like { 1.Rat.polymod: 0       }, X::Numeric::DivideByZero,
+        gist => /^ [<!after 'CORE.setting.'> . ]+ $/,
+    'Real.polymod with zero divisor does not reference guts in error';
+
+    throws-like { 1.polymod: lazy 0,     }, X::Numeric::DivideByZero,
+        gist => /^ [<!after 'CORE.setting.'> . ]+ $/,
+    'Int.polymod with [lazy] zero divisor does not reference guts in error';
+
+    throws-like { 1.Rat.polymod: lazy 0, }, X::Numeric::DivideByZero,
+        gist => /^ [<!after 'CORE.setting.'> . ]+ $/,
+    'Real.polymod with [lazy] zero divisor does not reference guts in error';
 }
