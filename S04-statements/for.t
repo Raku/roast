@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 98;
+plan 99;
 
 =begin description
 
@@ -684,6 +684,15 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 {
     sub foo { my $s; (for 1..3 { $s += $_ }) }
     is foo(), (6, 6, 6), 'for loops do not decontainerize';
+}
+
+# RT #128054
+{
+    my $out = '';
+    quietly $out ~= ("{$_}") for <aa bb>;
+    #?rakudo todo 'RT 128054'
+    is $out, 'aabb',
+        'topic of for loop has correct value in ("{$_}") construct';
 }
 
 # vim: ft=perl6
