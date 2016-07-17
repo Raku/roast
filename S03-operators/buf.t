@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 125;
+plan 131;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -240,4 +240,20 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
     my Blob $b = "b".encode;
     $a ~= $b;
     is $a, utf8.new(97,98), 'infix:<~> with Blob does not die';
+}
+
+# RT #128655
+{
+    is Blob.new((my int $i = 10) +& 0xFF).perl,'Blob.new(10)',
+      'check infix +& int/Int';
+    is Blob.new((my int $i = 10) +| 0xFF).perl,'Blob.new(255)',
+      'check infix +| int/Int';
+    is Blob.new((my int $i = 10) +^ 0xFF).perl,'Blob.new(245)',
+      'check infix +^ int/Int';
+    is Blob.new((my int $i = 10) +< 1).perl,'Blob.new(20)',
+      'check infix +< int/Int';
+    is Blob.new((my int $i = 10) +> 1).perl,'Blob.new(5)',
+      'check infix +> int/Int';
+    is Blob.new(+^(my int $i = 10)).perl,'Blob.new(245)',
+      'check prefix +^ int';
 }
