@@ -85,8 +85,10 @@ lives-ok { my $name = 'A'; require ::($name) }, 'can require with variable name'
 is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 
 # tests the combination of chdir+require
+my $cwd = $*CWD;
 lives-ok { chdir "t/spec/packages"; require "Foo.pm"; },
          'can change directory and require a module';
+chdir $cwd;
 
 # RT #115626
 lives-ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm"; },
