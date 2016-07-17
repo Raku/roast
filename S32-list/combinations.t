@@ -12,6 +12,7 @@ is (1, 2, 3).combinations(3).list.perl, ((1,2,3),).perl, "three items of a three
 is (1, 2, 3).combinations(1..2).list.perl, ((1,), (2,), (3,), (1, 2), (1, 3), (2, 3)).perl, "1..2 items";
 is (1, 2, 3).combinations(0..3).list.perl, ((), (1,), (2,), (3,), (1, 2), (1, 3), (2, 3), (1, 2, 3)).perl, "0..3 items";
 is (1, 2, 3).combinations(2..3).list.perl, ((1, 2), (1, 3), (2, 3), (1, 2, 3)).perl, "2..3 items";
+#?rakudo.jvm skip 'weird error related to previous tests RT #128123'
 is (1, 2, 3).combinations.list.perl, ((), (1,), (2,), (3,), (1, 2), (1, 3), (2, 3), (1, 2, 3)).perl, 'defaults to "powerset"';
 
 is combinations(3,2).list.perl, ((0, 1), (0, 2), (1, 2)).perl, "combinations function";
