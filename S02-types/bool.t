@@ -53,7 +53,7 @@ is Bool::False.gist, 'False', 'False.gist';
 is Bool::True.perl, 'Bool::True', 'True.perl';
 is Bool::False.perl, 'Bool::False', 'False.perl';
 
-# numification - interaction with +
+# numification - interaction with
 ok(+Bool::True ~~ Numeric);
 ok(+Bool::False ~~ Numeric);
 isa-ok(+Bool::True, Int, 'True numifies to an Int');
