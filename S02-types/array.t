@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 100;
+plan 101;
 
 #L<S02/Mutable types/Array>
 
@@ -375,6 +375,16 @@ my @array2 = ("test", 1, Mu);
     my @b;
     @b[9] = 10;
     is @b.sum, 10, 'handle sparse arrays correctly';
+}
+
+# RT#128005
+{
+    my %foo;
+    %foo<bar>[*-0] = 42;
+
+    #?rakudo todo 'RT 128005'
+    is-deeply %foo<bar>, [42],
+        '[*-0] index references correct element when autovivifying';
 }
 
 # vim: ft=perl6
