@@ -191,7 +191,7 @@ is(@c, [1,2,3], "@ = binds looser than ,");
     }
 
     # these are two tests per line, actually
-    # we should have a better way that doesn't just result in 
+    # we should have a better way that doesn't just result in
     # a wrong plan if gone wrong.
     isfive(5) and isfive(5);
     isfive 5  and isfive 5;
