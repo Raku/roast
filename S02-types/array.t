@@ -316,7 +316,7 @@ my @array2 = ("test", 1, Mu);
         $_++ if $_;
     }
     is ~@a, '0 2 3', "modifier form of 'if' within 'for' loop works";
-    
+
     my @b = 0, 1, 2;
     for @b {
         if $_ {
