@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 18;
 
 # L<S32::IO/IO::Path>
 
@@ -57,3 +57,7 @@ isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
     my $nul = "/foo\0bar".IO.perl;
     is $nul.EVAL.perl, $nul, "does $nul roundtrip?";
 }
+
+# RT #127989
+throws-like { IO::Path.new: 'foo', 'bar' }, X::Multi::NoMatch,
+    'IO::Path.new with wrong args must not claim it only takes named ones';
