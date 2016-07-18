@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 64;
+plan 65;
 
 
 # terms
@@ -260,5 +260,16 @@ throws-like '1, 2 Z 3, 4 X 5, 6',
 throws-like 'my $lizmat = 42; ++$lizmat++',
     X::Syntax::NonAssociative,
     'prefix/postfix ++ are not associative';
+
+# RT #128042
+{
+    module RT128042 {
+        multi infix:<§>($,$) is tighter(&[+]) is export {0};
+    };
+    import RT128042;
+
+    #?rakudo todo 'RT 128042'
+    is (1 + 2 § 3), 1, 'exported multi has correct precedence';
+}
 
 # vim: ft=perl6
