@@ -18,12 +18,10 @@ is('ẓo⃥o⃝'.samemark('ŏôō'), 'z̆ôō', 'samemark changes to new accent
 is('tëxt'.samemark('thiș is longer'), 'texț', 'samemark with longer base string');
 is('zoö'.samemark('ŏô'), 'z̆ôô', 'samemark with longer source string');
 
-# RT #128615
+# RT #128615 RT #128662
 {
     #?rakudo.jvm skip 'samemark NYI'
-    throws-like { ‘a’.samemark: ‘’ }, X::AdHoc,
-        message => /"Must have at least 1 char of pattern with 'samemark'"/,
-    '.samemark with empty-string argument throws';
+    is "foo".samemark(""), "foo", 'samemark "": nothing to be done';
 }
 
 # vim: ft=perl6
