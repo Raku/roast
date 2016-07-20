@@ -1,6 +1,8 @@
 use v6;
 use Test;
-plan 51;
+
+plan 56;
+
 my $r;
 
 =begin table
@@ -206,3 +208,8 @@ else {
     is @rows[6], "r6Col 1 r6Col 2 r6Col 3 r6Col 4";
 }
 
+# The following tests ensure known illegal table pod examples are
+# rejected.
+for 0..4 -> $num {
+    dies-ok { shell "perl6 ./known-bad-tables/$num.pod" }
+}

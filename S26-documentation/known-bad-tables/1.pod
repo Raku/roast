@@ -1,0 +1,8 @@
+# Following are tables that should generate an exception while parsing.
+
+# Mixed vis and ws col seps in the same table:
+
+=begin table
+r0c0 +  r0c1 | r0c3
+r1c0    r0c1   r0c3
+=end table
