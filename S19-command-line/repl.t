@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 9;
+plan 10;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -88,4 +88,18 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         :in("say 'output works'\n"),
         :out(/'output works'/),
     'REPL with -M with non-existent module';
+}
+
+# RT #127933
+{
+    my $code = [~]  'my ( int8 $a,  int16 $b,  int32 $c,  int64 $d,',
+                        'uint8 $e, uint16 $f, uint32 $g, uint64 $h,',
+                                              'num32 $i,  num64 $j,',
+                    ') = 1, 2, 3, 4, 5, 6, 7, 8, 9e0, 10e0;';
+
+    #?rakudo todo 'RT 127933'
+    is_run_repl "$code\nsay 'test is good';\n",
+        :err(''),
+        :out(/'(1 2 3 4 5 6 7 8 9 10)' .* 'test is good'/),
+    'Using native numeric types does not break REPL';
 }
