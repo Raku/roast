@@ -130,6 +130,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
 sub is_run_repl ($code, $desc, :$out, :$err) is export {
     my $proc = &CORE::run( $*EXECUTABLE, :in, :out, :err );
     $proc.in.print: $code;
+    $proc.in.close;
     subtest {
         plan +($out, $err).grep: *.defined;
         with $out {
@@ -247,17 +248,23 @@ also (this error is not trapped).
 
 =head2 is_run_repl ($code, $desc, :$out, :$err)
 
+    is_run_repl "say 42\nexit\n", :err(''), :out(/"42\n"/),
+        'say 42 works fine';
+
 Fires up the REPL and enters the given C<$code>. Be sure to send correct
-newlines and C<exit> to exit the REPL. The C<:$out> and C<:$err> named
+newlines, as you would press ENTER key when using the REPL manually.
+The C<:$out> and C<:$err> named
 arguments are optional and corresponding tests are only run when the
 arguments are specified. C<:$out> takes a Str or regex, testing STDOUT output
 and C<:$err> takes a Str or regex ,testing STDERR output. When Str is provided
-the output is tested with C<is> and regex is tested with C<like>. B<NOTE:>
+the output is tested with C<is> and regex is tested with C<like>.
+
+Will close STDIN (equivalent to sending CTRL+D in REPL) after sending the
+input, so you do not have to send explicit C<exit\n>
+
+B<NOTE:>
 STDOUT will generally contain all the messages displayed by the REPL at the
 start.
-
-    is_run_repl "say 42\nexit\n", :err(''), :out(/"42\n"/),
-        'say 42 works fine';
 
 =head2 doesn't-hang ( ... )
 

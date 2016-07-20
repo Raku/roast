@@ -15,21 +15,21 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 # RT #119339
 #?rakudo.jvm skip 'is_run_repl hangs on JVM'
 {
-    is_run_repl "say 069\nexit\n",
+    is_run_repl "say 069\n",
         out => /'69'/,
         err => /'Potential difficulties:'
             .* "Leading 0 is not allowed. For octals, use '0o' prefix,"
             .* 'but note that 69 is not a valid octal number'/,
         'prefix 0 on invalid octal warns in REPL';
 
-    is_run_repl "say 067\nexit\n",
+    is_run_repl "say 067\n",
         out => /'67'/,
         err => /'Potential difficulties:'
             .* 'Leading 0 does not indicate octal in Perl 6.'
             .* 'Please use 0o67 if you mean that.'/,
         'prefix 0 on valid octal warns in REPL';
 
-    is_run_repl "say 0o67\nexit\n", out => /'55'/, err => '',
+    is_run_repl "say 0o67\n", out => /'55'/, err => '',
         'prefix 0o on valid octal works fine in REPL';
 }
 
@@ -50,7 +50,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 # RT #128470
 {
     my $code-to-run = q/[1..99].map:{[$_%%5&&'fizz', $_%%3&&'buzz'].grep:Str}/
-        ~ "\nsay 'We are still alive';\nexit\n";
+        ~ "\nsay 'We are still alive';\n";
 
     #?rakudo.jvm skip 'is_run_repl hangs on JVM'
     is_run_repl $code-to-run,
@@ -85,7 +85,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
     #?rakudo.moar todo 'RT 128595'
     #?rakudo.jvm skip 'Proc::Async NYI'
     doesn't-hang \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod"),
-        :in("say 'output works'\nexit\n"),
+        :in("say 'output works'\n"),
         :out(/'output works'/),
     'REPL with -M with non-existent module';
 }
