@@ -1,0 +1,7 @@
+# Following are tables that should generate an exception while parsing.
+
+# Different col seps on the same line:
+
+=begin table
+r0c0 +  r0c1 | r0c3
+=end table
