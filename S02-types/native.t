@@ -244,7 +244,7 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     }
     n64(4e2);
     n32(4e2);
-    
+
     sub i64(int64 $i) {
         is $i, 42, 'called int64 sub successfully';
     }
