@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 87;
+plan 88;
 
 {
     my int $x;
@@ -334,6 +334,27 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     my uint64 $uint64 = 0xffffffffffffffff;
     $uint64++;
     is($uint64, 0, d 64);
+}
+
+# RT #127813
+{
+    subtest 'using native types as named parameters', {
+        #?rakudo 10 todo 'RT 127813'
+        eval-lives-ok '-> int    :$x { $x == 1   or die }(:x( 1 ))', 'int   ';
+        eval-lives-ok '-> int8   :$x { $x == 1   or die }(:x( 1 ))', 'int8  ';
+        eval-lives-ok '-> int16  :$x { $x == 1   or die }(:x( 1 ))', 'int16 ';
+        eval-lives-ok '-> int32  :$x { $x == 1   or die }(:x( 1 ))', 'int32 ';
+        eval-lives-ok '-> uint   :$x { $x == 1   or die }(:x( 1 ))', 'uint  ';
+        eval-lives-ok '-> uint8  :$x { $x == 1   or die }(:x( 1 ))', 'uint8 ';
+        eval-lives-ok '-> uint16 :$x { $x == 1   or die }(:x( 1 ))', 'uint16';
+        eval-lives-ok '-> uint32 :$x { $x == 1   or die }(:x( 1 ))', 'uint32';
+        eval-lives-ok '-> num    :$x { $x == 1e0 or die }(:x(1e0))', 'num   ';
+        eval-lives-ok '-> num32  :$x { $x == 1e0 or die }(:x(1e0))', 'num32 ';
+
+        eval-lives-ok '-> int64  :$x { $x == 1   or die }(:x( 1 ))', 'int64 ';
+        eval-lives-ok '-> uint64 :$x { $x == 1   or die }(:x( 1 ))', 'uint64';
+        eval-lives-ok '-> num64  :$x { $x == 1e0 or die }(:x(1e0))', 'num64 ';
+    }
 }
 
 # vim: ft=perl6
