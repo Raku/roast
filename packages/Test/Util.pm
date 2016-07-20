@@ -127,17 +127,17 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-sub is_run_repl ($code, %wanted, $desc) is export {
+sub is_run_repl ($code, $desc, :$out, :$err) is export {
     my $proc = &CORE::run( $*EXECUTABLE, :in, :out, :err );
     $proc.in.print: $code;
     subtest {
-        plan +(%wanted<out err>:v);
-        with %wanted<out> {
+        plan +($out, $err).grep: *.defined;
+        with $out {
             $_ ~~ Str ?? is   $proc.out.slurp-rest, $_, 'stdout is correct'
                       !! like $proc.out.slurp-rest, $_, 'stdout is correct';
         }
 
-        with %wanted<err> {
+        with $err {
             $_ ~~ Str ?? is   $proc.err.slurp-rest, $_, 'stderr is correct'
                       !! like $proc.err.slurp-rest, $_, 'stderr is correct';
         }
@@ -245,17 +245,18 @@ is_run() will skip() (but it will still execute the code not being tested).
 is_run() depends on get_out(), which might die.  In that case, it dies
 also (this error is not trapped).
 
-=head2 is_run_repl ($code, %wanted, $desc)
+=head2 is_run_repl ($code, $desc, :$out, :$err)
 
 Fires up the REPL and enters the given C<$code>. Be sure to send correct
-newlines and C<exit> to exit the REPL. The C<%wanted> is a hash with
-zero to two keys. C<out> takes a Str or regex testing STDERR output and
-C<err> takes a Str or regex testing STDERR output. Keys not provided aren't
-tested. When Str is provided the output is tested with C<is> and regex
-is tested with C<like>. B<NOTE:> STDOUT will generally contain
-all the messages displayed by the REPL at the start.
+newlines and C<exit> to exit the REPL. The C<:$out> and C<:$err> named
+arguments are optional and corresponding tests are only run when the
+arguments are specified. C<:$out> takes a Str or regex, testing STDOUT output
+and C<:$err> takes a Str or regex ,testing STDERR output. When Str is provided
+the output is tested with C<is> and regex is tested with C<like>. B<NOTE:>
+STDOUT will generally contain all the messages displayed by the REPL at the
+start.
 
-    is_run_repl "say 42\nexit\n", { err => '', out => /"42\n"/ },
+    is_run_repl "say 42\nexit\n", :err(''), :out(/"42\n"/),
         'say 42 works fine';
 
 =head2 doesn't-hang ( ... )

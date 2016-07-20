@@ -15,21 +15,21 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 #?rakudo.jvm skip 'is_run_repl hangs on JVM'
 {
     # RT #119339
-    is_run_repl "say 069\nexit\n", {
+    is_run_repl "say 069\nexit\n",
         out => /'69'/,
         err => /'Potential difficulties:'
             .* "Leading 0 is not allowed. For octals, use '0o' prefix,"
-            .* 'but note that 69 is not a valid octal number'/
-    }, 'prefix 0 on invalid octal warns in REPL';
+            .* 'but note that 69 is not a valid octal number'/,
+        'prefix 0 on invalid octal warns in REPL';
 
-    is_run_repl "say 067\nexit\n", {
+    is_run_repl "say 067\nexit\n",
         out => /'67'/,
         err => /'Potential difficulties:'
             .* 'Leading 0 does not indicate octal in Perl 6.'
-            .* 'Please use 0o67 if you mean that.'/
-    }, 'prefix 0 on valid octal warns in REPL';
+            .* 'Please use 0o67 if you mean that.'/,
+        'prefix 0 on valid octal warns in REPL';
 
-    is_run_repl "say 0o67\nexit\n", { out => /'55'/, err => '' },
+    is_run_repl "say 0o67\nexit\n", out => /'55'/, err => '',
         'prefix 0o on valid octal works fine in REPL';
 }
 
@@ -53,10 +53,10 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         ~ "\nsay 'We are still alive';\nexit\n";
 
     #?rakudo.jvm skip 'is_run_repl hangs on JVM'
-    is_run_repl $code-to-run, {
+    is_run_repl $code-to-run,
         out => /'Cannot resolve caller grep' .* 'We are still alive'/,
         err => '',
-    }, 'exceptions from lazy-evaluated things do not crash REPL';
+        'exceptions from lazy-evaluated things do not crash REPL';
 }
 
 {
