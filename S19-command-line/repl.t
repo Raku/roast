@@ -12,9 +12,9 @@ my $cmd = $*DISTRO.is-win
     !! "echo 'exit(42)' | $*EXECUTABLE >/dev/null 2>&1";
 is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 
+# RT #119339
 #?rakudo.jvm skip 'is_run_repl hangs on JVM'
 {
-    # RT #119339
     is_run_repl "say 069\nexit\n",
         out => /'69'/,
         err => /'Potential difficulties:'
@@ -33,8 +33,8 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         'prefix 0o on valid octal works fine in REPL';
 }
 
+# RT #70297
 {
-    # RT #70297
     my $proc = &CORE::run( $*EXECUTABLE, :in, :out, :err);
     $proc.in.close;
 
@@ -47,8 +47,8 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
     }, 'Pressing CTRL+D in REPL produces correct output on exit';
 }
 
+# RT #128470
 {
-    # RT #128470
     my $code-to-run = q/[1..99].map:{[$_%%5&&'fizz', $_%%3&&'buzz'].grep:Str}/
         ~ "\nsay 'We are still alive';\nexit\n";
 
@@ -59,8 +59,8 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         'exceptions from lazy-evaluated things do not crash REPL';
 }
 
+# RT #127695
 {
-    # RT #127695
     my $temp-dir = $*TMPDIR.child('rakudo-roast-RT127695-test' ~ rand);
     LEAVE {
         try $temp-dir.child('.precomp').rmdir;
@@ -80,8 +80,8 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         '-I in REPL works';
 }
 
+# RT #128595
 {
-    # RT #128595
     #?rakudo.moar todo 'RT 128595'
     #?rakudo.jvm skip 'Proc::Async NYI'
     doesn't-hang \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod"),
