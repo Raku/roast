@@ -11,7 +11,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $s = Supplier.new;
-    
+
         my @vals;
         my $saw_done;
         my $tap = $s.Supply.tap( -> $val { @vals.push($val) },
@@ -145,7 +145,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     # RT #126379
     {
         is_run q[Supply.interval(1).tap(-> { say 'hi' }); sleep 3;], {
-            status => 256,
+            status => 1,
             err => /
                 'Unhandled exception in code scheduled on thread' .+
                 'Too many positionals' .+ 'expected 0 arguments but got 1'
