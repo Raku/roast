@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 8;
+plan 9;
 
 is (1 andthen 2), 2, 'andthen basics';
 is (1 andthen 2 andthen 3), 3, 'andthen chained';
@@ -12,3 +12,7 @@ nok (Int andthen ($tracker = 1)), 'sanity';
 nok $tracker, 'andthen thunks';
 
 my $ = 'some arg' andthen -> $x { is $x, 'some arg', 'andthen passes on arguments' };
+
+# RT #127822
+#?rakudo todo 'RT 127822'
+is (S/a/A/ andthen S/b/B/ given "ab"), "AB", 'andthen with two S///';
