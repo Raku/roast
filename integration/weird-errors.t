@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 24;
+plan 28;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -209,3 +209,9 @@ my $a = 0;
 $a += bar for ^158;  # 157 iterations works fine
 
 is $a, 158 * 6, 'SPESH inline works correctly after 158 iterations';
+
+# RT #127473
+eval-lives-ok '(;)', '(;) does not explode the compiler';
+eval-lives-ok '(;;)', '(;;) does not explode the compiler';
+eval-lives-ok '[;]', '[;] does not explode the compiler';
+eval-lives-ok '[;0]', '[;0] does not explode the compiler';
