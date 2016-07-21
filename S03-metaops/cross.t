@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 76;
+plan 77;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -254,5 +254,8 @@ is (<a b c> X~ $(1, 2)), ('a1 2', 'b1 2', 'c1 2'),
         isa-ok &infix:<XZX~>,    Block, '&infix:<XZX~>    exists';
     }
 }
+
+# RT #127749
+is (for ^2 { [+] (^5 X ^5) }), (50, 50), 'No bogus constant-folding of X';
 
 # vim: ft=perl6 et
