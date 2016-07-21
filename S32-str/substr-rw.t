@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 {
     my $str = "gorch ding";
@@ -150,6 +150,14 @@ plan 39;
     my $s = 'foobar';
     $s.substr-rw(3, 3) = 1;
     is $s, 'foo1', 'assigning a non-string coerces';
+}
+
+# RT #127782
+{
+    my $s = '.' x 4 ~ 'a';
+    $s.substr-rw(1,1) = '';
+    #?rakudo.moar todo 'RT 127782'
+    is $s, '...a', '.substr-rw on a string constructed with `x` operator';
 }
 
 # vim: ft=perl6
