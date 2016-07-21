@@ -156,7 +156,6 @@ plan 40;
 {
     my $s = '.' x 4 ~ 'a';
     $s.substr-rw(1,1) = '';
-    #?rakudo.moar todo 'RT 127782'
     is $s, '...a', '.substr-rw on a string constructed with `x` operator';
 }
 

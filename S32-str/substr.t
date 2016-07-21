@@ -113,7 +113,6 @@ plan 59;
 }
 
 # RT #123602
-#?rakudo.moar todo 'RT #123602'
 {
     is ("0" x 3 ~ "1").substr(2), '01',
         'substr on a string built with infix:<x> works';
