@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 13;
 
 # L<S06/Named subroutines>
 
@@ -59,5 +59,9 @@ is EVAL('my List sub f () { return () }; (f(), "a")'), ((),'a'),
 throws-like 'my Num List sub f () { ("A",) }; f()',
     X::Comp::NYI,
     'implicit return of list with wrong type dies';
+
+# RT #127540
+eval-lives-ok Q/sub foo { }; anon sub foo() { }/,
+    'anon sub produces no redeclaration error';
 
 # vim: ft=perl6
