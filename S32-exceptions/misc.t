@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 406;
+plan 407;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -856,5 +856,8 @@ throws-like 'constant foo = bar', X::Undeclared::Symbols;
 
 # RT #126888
 throws-like '(1,2)[0] := 3', X::Bind;
+
+# RT #128581
+throws-like Q/my Array[Numerix] $x;/, X::Undeclared::Symbols, gist => /Numerix/;
 
 # vim: ft=perl6
