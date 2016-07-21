@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 79;
+plan 82;
 
 use Test::Util;
 
@@ -310,6 +310,15 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
         err    => '',
     },
     'code runs without error (and does not mention "Obsolete"!)';
+}
+
+# RT #127394
+{
+    my subset JJ where { !.defined || $_ > 2 };
+
+    dies-ok { -> JJ:D $a { }(Int) }, 'ASubType:D dies if passed type object';
+    dies-ok { -> JJ:D $a { }(2) }, 'ASubType:D dies if passed non-matching concrete value';
+    is (-> JJ:D $a { 'yup' }(3)), 'yup', 'ASubType:D passes if passed matching concrete value';
 }
 
 # vim: ft=perl6
