@@ -5,7 +5,7 @@ use MONKEY-TYPING;
 
 use Test;
 use Test::Util;
-plan 56;
+plan 57;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -222,6 +222,20 @@ plan 56;
     my $m = "abcde" ~~ / (a | b | bc | cde)+»/;
     is $m[0].elems, 3, 'LTM alternation does not capture the wrong stuff when backtracking (1)';
     is join(" ", $m[0]), 'a b cde', 'LTM alternation does not capture the wrong stuff when backtracking (2)';
+}
+
+# RT #127701
+#?rakudo 3 todo 'RT 127701'
+{
+    subtest 'postfix operators do not interfere with interpolation of $/[0]', {
+        plan 3;
+        '5x3' ~~ /(.)x(.)/;
+        is "$/[0]--", '5--', 'postfix --';
+        is "$/[0]++", '5++', 'postfix ++';
+
+        my sub postfix:<foo> { 42 }
+        is "$/[0]foo", '5foo', 'custom postfix `foo`';
+    }
 }
 
 # vim: ft=perl6
