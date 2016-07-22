@@ -137,6 +137,7 @@ is 'Ä' ~~ /:ignoremark :ignorecase (<[a..f]>|x)/, 'Ä',
 }
 
 # RT #128270
+#?rakudo.jvm skip 'ordbaseat NYI'
 ok "a" ~~ m:g:ignoremark/<[á]>/, ':g, :ignoremark, and cclass interaction ok';
 
 # vim: ft=perl6
