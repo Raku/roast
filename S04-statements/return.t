@@ -1,9 +1,10 @@
 use v6;
-use Test;
-plan 20;
 
 use lib 't/spec/packages';
+use Test;
 use Test::Util;
+
+plan 20;
 
 # Is there a better reference for the spec for how return return works? 
 # There is "return function" but that's a more advanced feature.

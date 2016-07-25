@@ -1,8 +1,8 @@
 # S02-literals/allomorphic.t --- Tests for the various allmorphic types, and val() processing
 
 use v6;
-use Test;
 use lib 't/spec/packages';
+use Test;
 use Test::Util;
 
 # L<S02/Allomorphic value semantics>
