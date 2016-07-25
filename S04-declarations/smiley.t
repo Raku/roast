@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 63;
 
 my Int:D $j = 256;
 MY::<$j> = 111;
@@ -159,6 +159,21 @@ throws-like 'use variables :foo',
     throws-like { @array[0] = Int },
         X::TypeCheck::Assignment,
         symbol => '@array', 'type check happens for Int:D array';
+}
+
+# RT #127958
+{
+    # At the time of writing these thrown at runtime. Though they
+    # could/should be thrown at compile time in the future so EVAL is used.
+    # See ticket for discussion.
+    throws-like { EVAL q|my Int:D $x = Nil| },
+    X::TypeCheck::Assignment,'Int:D $x = Nil; throws a typecheck';
+
+    throws-like { EVAL q|my Int:D @x = Nil| },
+    X::TypeCheck::Assignment,'Int:D @x = Nil; throws a typecheck';
+
+    throws-like { EVAL q|my Int:D %x = foo => Nil| },
+    X::TypeCheck::Assignment,'Int:D %x = foo => Nil; throws a typecheck';
 }
 
 # vim: ft=perl6
