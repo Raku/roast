@@ -162,6 +162,7 @@ throws-like 'use variables :foo',
 }
 
 # RT #127958
+#?rakudo.jvm todo 'code does not die, RT #127958'
 {
     # At the time of writing these thrown at runtime. Though they
     # could/should be thrown at compile time in the future so EVAL is used.
