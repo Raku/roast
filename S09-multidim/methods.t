@@ -1,7 +1,7 @@
 use v6.c;
 use Test;
 
-plan 82;
+plan 80;
 
 # Object array
 {
@@ -21,7 +21,6 @@ plan 82;
     throws-like { @arr.prepend(1) }, X::IllegalOnFixedDimensionArray, operation => 'prepend';
     throws-like { @arr.shift() }, X::IllegalOnFixedDimensionArray, operation => 'shift';
     throws-like { @arr.splice(1) }, X::IllegalOnFixedDimensionArray, operation => 'splice';
-    throws-like { @arr.plan(1) }, X::IllegalOnFixedDimensionArray, operation => 'plan';
     throws-like { @arr.reverse }, X::IllegalOnFixedDimensionArray, operation => 'reverse';
     throws-like { @arr.rotate(1) }, X::IllegalOnFixedDimensionArray, operation => 'rotate';
     
@@ -90,7 +89,6 @@ plan 82;
     throws-like { @arr.prepend(1) }, X::IllegalOnFixedDimensionArray, operation => 'prepend';
     throws-like { @arr.shift() }, X::IllegalOnFixedDimensionArray, operation => 'shift';
     throws-like { @arr.splice(1) }, X::IllegalOnFixedDimensionArray, operation => 'splice';
-    throws-like { @arr.plan(1) }, X::IllegalOnFixedDimensionArray, operation => 'plan';
     throws-like { @arr.reverse }, X::IllegalOnFixedDimensionArray, operation => 'reverse';
     throws-like { @arr.rotate(1) }, X::IllegalOnFixedDimensionArray, operation => 'rotate';
     
