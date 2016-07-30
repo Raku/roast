@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 2;
+plan 3;
 
 # RT #117235
 {
@@ -13,4 +13,11 @@ plan 2;
 # RT #117923
 {
     eval-lives-ok "List.sink", "can sink a List";
+}
+
+# RT #127491
+{
+    my $is-sunk = False;
+    my ($a) = class { method sink { $is-sunk = True } }.new;
+    isnt $is-sunk, True, 'my ($a) = ... does not trigger sinking';
 }
