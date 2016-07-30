@@ -118,6 +118,7 @@ my @list = (1 .. 10);
 
 # Bool handling
 {
+    temp $_ = 42;
     throws-like { grep $_ == 1, 1,2,3 }, X::Match::Bool;
     throws-like { (1,2,3).grep: $_== 1 }, X::Match::Bool;
     is grep( Bool,True,False,Int ), (True,False), 'can we match on Bool as type';
