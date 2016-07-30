@@ -183,9 +183,8 @@ plan 33;
 
 # RT #67010
 {
-    my @list = 1, 2, Code;
-    lives-ok { @list.sort: { $^a cmp $^b } },
-        'sort by class name';
+    my @list = 1, 2, Code, True;
+    quietly lives-ok { @list.sort: { $^a cmp $^b } }, 'sort by class name';
 }
 
 # RT #68112
