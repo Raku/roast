@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 37;
+plan 39;
 
 my @list = (1 .. 10);
 
@@ -130,6 +130,12 @@ my @list = (1 .. 10);
     @a.grep(* %% 2).>>++;
     is @a, <1 3 3 5 5 7 7 9 9 11>,
         'grep is rw-like, can chain it to modify elements of grepped list/array';
+}
+
+# RT #128773
+{
+    is (^∞).grep(*.is-prime).is-lazy, True, '.grep propagates .is-lazy';
+    is (grep *.is-prime, ^∞).is-lazy, True, 'grep() propagates .is-lazy';
 }
 
 # vim: ft=perl6
