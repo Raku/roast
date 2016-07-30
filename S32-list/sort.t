@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 32;
+plan 33;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -216,5 +216,8 @@ plan 32;
     is code-method(<y z x>).^name, 'List', '.sort stored in a sub returns a List';
     is code-sub(   <y z x>).^name, 'List', '&sort stored in a sub returns a List';
 }
+
+# RT #126921
+is (<2 1 3>   .sort).^name, 'List', 'detached .sort returns a List';
 
 # vim: ft=perl6
