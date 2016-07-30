@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 30;
+plan 32;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -207,6 +207,14 @@ plan 30;
     #?niecza todo 'Is this test actually testing for correct behavior?'
     lives-ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
+}
+
+# RT #128779
+{
+    my &code-method = *.sort;
+    my &code-sub    =  &sort;
+    is code-method(<y z x>).^name, 'List', '.sort stored in a sub returns a List';
+    is code-sub(   <y z x>).^name, 'List', '&sort stored in a sub returns a List';
 }
 
 # vim: ft=perl6
