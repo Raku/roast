@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 39;
 
 # L<S03/Tight or precedence/Minimum and maximum>
 # L<S03/Tight or precedence/"any value of any type may be compared with +Inf
@@ -119,4 +119,21 @@ This test min/max functions in their operator form. To see them tested in their 
         '.min with :&by on Failure throws';
     throws-like "Failure.new.max: &infix:<cmp>", X::AdHoc,
         '.max with :&by on Failure throws';
+}
+
+# RT #128780
+{
+    subtest 'min/max operations on Hashes' => {
+        plan 8;
+
+        my &by = *.value;
+        is-deeply { :2b, :1c, :3a }.max,        "c" => 1, '.max()';
+        is-deeply { :2b, :1c, :3a }.min,        "a" => 3, '.min()';
+        is-deeply { :2b, :1c, :3a }.max(&by),   "a" => 3, '.max(*.value)';
+        is-deeply { :2b, :1c, :3a }.min(&by),   "c" => 1, '.min(*.value)';
+        is-deeply max({ :2b, :1c, :3a }),       "c" => 1, '&max()';
+        is-deeply min({ :2b, :1c, :3a }),       "a" => 3, '&min()';
+        is-deeply max({ :2b, :1c, :3a }, :&by), "a" => 3, '&max(:by(*.value))';
+        is-deeply min({ :2b, :1c, :3a }, :&by), "c" => 1, '&min(:by(*.value))';
+    }
 }
