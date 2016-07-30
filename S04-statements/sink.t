@@ -17,7 +17,7 @@ plan 3;
 
 # RT #127491
 {
-    my $is-sunk = False;
-    my ($a) = class { method sink { $is-sunk = True } }.new;
-    isnt $is-sunk, True, 'my ($a) = ... does not trigger sinking';
+    my $sunk = False;
+    my ($a) = class { method sink { $sunk = True } }.new;
+    is $sunk, False, 'my ($a) = ... does not trigger sinking';
 }
