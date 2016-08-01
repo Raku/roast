@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 2;
+plan 3;
 
 # RT #82946
 subtest 'signature binding outside of routine calls' => {
@@ -21,5 +21,8 @@ subtest 'smartmatch on signatures with literal strings' => {
     is :("foo") ~~ :("bar"), False, 'two differing literal strings';
     is :(Str)   ~~ :("foo"), False, 'type object and a literal string';
 }
+
+# RT #128783
+lives-ok { EVAL ’:($:)‘ }, ’signature marker is allowed in bare signature‘;
 
 # vim: ft=perl6
