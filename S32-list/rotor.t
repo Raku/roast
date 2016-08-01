@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -29,3 +29,7 @@ r((1 => 1, 3 => -1), :partial, 'a|c d e|e|g h');
 
 is (1..*).rotor((1..*))[^4].join('|'),
    '1|2 3|4 5 6|7 8 9 10', '.rotor on infinite list';
+
+# RT #127437
+throws-like { <a b c>.rotor: 1 => -2 }, X::OutOfRange,
+    ’using negative gap that lands past the list's head throws‘;
