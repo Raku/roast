@@ -36,6 +36,7 @@ throws-like { <a b c>.rotor: 1 => -2 }, X::OutOfRange,
 
 # RT #127424
 subtest 'non-Int numerals as arguments to rotor get coersed to Int' => {
+    plan 4;
     is-deeply (^9 .rotor: 2.5       ), (^9 .rotor: 2         ), 'one-arg';
     is-deeply (^9 .rotor: 2.5 => 1  ), (^9 .rotor: 2.5 => 1  ), 'pair(Rat,Int)';
     is-deeply (^9 .rotor: 2   => 2.5), (^9 .rotor: 2   => 2.5), 'pair(Int,Rat)';
