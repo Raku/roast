@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 #?niecza emit plan 12; #
-plan 15;
+plan 16;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -55,5 +55,8 @@ is $y, 353, '$y not modified';
 #?rakudo.jvm skip 'ContextRef representation does not implement elems RT #77752'
 ok callframe.perl.starts-with("CallFrame.new("), 'CallFrame.perl works';
 ok callframe.gist.starts-with($*PROGRAM-NAME),   'CallFrame.gist works';
+
+# RT #127479
+lives-ok { sub{callframe.perl}() }, '.perl on callframe in a sub does not crash';
 
 # vim: ft=perl6
