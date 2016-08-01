@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -33,3 +33,11 @@ is (1..*).rotor((1..*))[^4].join('|'),
 # RT #127437
 throws-like { <a b c>.rotor: 1 => -2 }, X::OutOfRange,
     ’using negative gap that lands past the list's head throws‘;
+
+# RT #127424
+subtest 'non-Int numerals as arguments to rotor get coersed to Int' => {
+    is-deeply (^9 .rotor: 2.5       ), (^9 .rotor: 2         ), 'one-arg';
+    is-deeply (^9 .rotor: 2.5 => 1  ), (^9 .rotor: 2.5 => 1  ), 'pair(Rat,Int)';
+    is-deeply (^9 .rotor: 2   => 2.5), (^9 .rotor: 2   => 2.5), 'pair(Int,Rat)';
+    is-deeply (^9 .rotor: 2.5 => 2.5), (^9 .rotor: 2.5 => 2.5), 'pair(Rat,Rat)';
+}
