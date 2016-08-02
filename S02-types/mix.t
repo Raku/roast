@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 192;
+plan 193;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -207,7 +207,7 @@ sub showkv($x) {
     my $m = { foo => 10.1, bar => 1.2, baz => 2.3}.Mix;
     is $m.total, 13.6, 'is the total calculated correctly';
 
-    # .list is just the keys, as per TimToady: 
+    # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $m.list.elems, 3, ".list returns 3 things";
     is $m.list.grep(Pair).elems, 3, "... all of which are Pairs";
@@ -276,7 +276,7 @@ sub showkv($x) {
     ok $m.roll(2) ~~ Iterable, ".roll(2) gives you an Iterable";
     is +$m.roll(0), 0, ".roll(0) returns 0 results";
     is +$m.roll(1), 1, ".roll(1) returns 1 result";
-    
+
     my @a = $m.roll(2);
     is +@a, 2, '.roll(2) returns the right number of items';
     is @a.grep(* eq 'a').elems + @a.grep(* eq 'b').elems, 2, '.roll(2) returned "a"s and "b"s';
@@ -419,7 +419,7 @@ sub showkv($x) {
 
 #?rakudo todo 'we have not secured .WHICH creation yet RT #124496'
 {
-    isnt 'a(1) Str|b(1) Str|c'.Mix.WHICH, <a b c>.Mix.WHICH, 
+    isnt 'a(1) Str|b(1) Str|c'.Mix.WHICH, <a b c>.Mix.WHICH,
       'Faulty .WHICH creation';
 }
 
@@ -460,6 +460,15 @@ sub showkv($x) {
     for $m.antipairs -> \p { %h3{p.value} = p.key }
     is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
     throws-like { for $m.kxxv -> \k { say k } }, Exception, 'cannot call kxxv';
+}
+
+# RT #128806
+subtest '.hash does not cause keys to be stringified' => {
+    plan 3;
+    #?rakudo 3 todo 'RT 128806'
+    is Mix.new($(<a b>)).hash.keys[0][0], 'a', 'Mix.new';
+    is ($(<a b>),).Mix.hash.keys[0][0],   'a', '.Mix';
+    is mix($(<a b>)).hash.keys[0][0],     'a', 'mix()';
 }
 
 # vim: ft=perl6

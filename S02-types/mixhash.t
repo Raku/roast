@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 229;
+plan 230;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -31,7 +31,7 @@ sub showkv($x) {
     is ([+] $m.values), 8, "Values returns the correct sum";
     ok ?$m, "Bool returns True if there is something in the MixHash";
     nok ?MixHash.new(), "Bool returns False if there is nothing in the MixHash";
-    
+
     my $hash;
     lives-ok { $hash = $m.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
@@ -60,7 +60,7 @@ sub showkv($x) {
     nok $m<spiderman>:exists, "... and that didn't create the element";
     lives-ok { $m<brady> = 0 }, "Can assign zero to a existing element";
     nok $m<brady>:exists, "... and it goes away";
-    
+
     lives-ok { $m<a>++ }, "Can ++ an existing element";
     is $m<a>, 43, "... and the increment happens";
     lives-ok { $m<carter>++ }, "Can ++ a new element";
@@ -191,7 +191,7 @@ sub showkv($x) {
     is $m.total, 13.6, 'make sure .total is ok';
     is $m.elems, 3, 'make sure .elems is ok';
 
-    # .list is just the keys, as per TimToady: 
+    # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $m.list.elems, 3, ".list returns 3 things";
     is $m.list.grep(Pair).elems, 3, "... all of which are Pairs";
@@ -502,6 +502,14 @@ sub showkv($x) {
     for $m.antipairs -> \p { %h3{p.value} = p.key }
     is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
     throws-like { for $m.kxxv -> \k { say k } }, Exception, 'cannot call kxxv';
+}
+
+# RT #128806
+subtest '.hash does not cause keys to be stringified' => {
+    plan 2;
+    #?rakudo 2 todo 'RT 128806'
+    is MixHash.new($(<a b>)).hash.keys[0][0], 'a', 'MixHash.new';
+    is ($(<a b>),).MixHash.hash.keys[0][0],   'a', '.MixHash';
 }
 
 # vim: ft=perl6

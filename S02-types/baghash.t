@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 260;
+plan 261;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -187,7 +187,7 @@ sub showkv($x) {
 {
     my $b = { foo => 10, bar => 1, baz => 2}.BagHash;
 
-    # .list is just the keys, as per TimToady: 
+    # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $b.list.elems, 3, ".list returns 3 things";
     is $b.list.grep(Pair).elems, 3, "... all of which are Pairs";
@@ -580,6 +580,14 @@ sub showkv($x) {
     my %h4;
     for $b.kxxv -> \k { %h4{k}++ }
     is %h4.sort, (:1a, :2b, :3c, :4d), 'did we see all the kxxv';
+}
+
+# RT #128806
+subtest '.hash does not cause keys to be stringified' => {
+    plan 2;
+    #?rakudo 2 todo 'RT 128806'
+    is BagHash.new($(<a b>)).hash.keys[0][0], 'a', 'BagHash.new';
+    is ($(<a b>),).BagHash.hash.keys[0][0],   'a', '.BagHash';
 }
 
 # vim: ft=perl6
