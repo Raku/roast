@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 82;
+plan 83;
 
 use Test::Util;
 
@@ -319,6 +319,21 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     dies-ok { -> JJ:D $a { }(Int) }, 'ASubType:D dies if passed type object';
     dies-ok { -> JJ:D $a { }(2) }, 'ASubType:D dies if passed non-matching concrete value';
     is (-> JJ:D $a { 'yup' }(3)), 'yup', 'ASubType:D passes if passed matching concrete value';
+}
+
+# RT #127367
+subtest 'multi with :D subset dispatches correctly' => {
+    my @results;
+    lives-ok {
+        subset T127367 of List where *[0] eqv 1;
+        class R127367 {
+            multi method f(T127367:D $xs) { @results.push('T:D'); self.f(42) }
+            multi method f(Any:D $xs) { @results.push: $xs }
+        }
+        R127367.f([1, 2]);
+        R127367.f([2, 2]);
+    }, 'dispatch does not die';
+    is-deeply @results, ['T:D', 42, [2, 2]], 'dispatch happened in right order';
 }
 
 # vim: ft=perl6
