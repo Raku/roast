@@ -507,7 +507,6 @@ sub showkv($x) {
 # RT #128806
 subtest '.hash does not cause keys to be stringified' => {
     plan 2;
-    #?rakudo 2 todo 'RT 128806'
     is MixHash.new($(<a b>)).hash.keys[0][0], 'a', 'MixHash.new';
     is ($(<a b>),).MixHash.hash.keys[0][0],   'a', '.MixHash';
 }

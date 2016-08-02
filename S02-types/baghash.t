@@ -585,7 +585,6 @@ sub showkv($x) {
 # RT #128806
 subtest '.hash does not cause keys to be stringified' => {
     plan 2;
-    #?rakudo 2 todo 'RT 128806'
     is BagHash.new($(<a b>)).hash.keys[0][0], 'a', 'BagHash.new';
     is ($(<a b>),).BagHash.hash.keys[0][0],   'a', '.BagHash';
 }
