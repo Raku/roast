@@ -99,7 +99,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
   dies-ok { $d = 7 },            'negative test also works';
   is $d,                   10,   'variable kept previous value';
 
-  
+
   $multiple_of = 6;
   dies-ok { my Num::Multiple $e = 10 }, "changed subtype definition worked";
 }
@@ -168,7 +168,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 
 #?niecza skip 'Object reference not set to an instance of an object'
 {
-    role R1 { }; 
+    role R1 { };
     subset SR1 of R1 where 1;
     ok !(1 ~~ SR1), 'subtypes based on roles work';
     my $x = 1 but R1;
