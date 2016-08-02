@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 205;
+plan 206;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -41,7 +41,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
     is $s.elems, 3, '.elems gives number of keys';
     is +$s, 3, '+$set gives number of keys';
-    
+
     $s<baz> = True;
     lives-ok { $s<baz> = True }, 'can set an item to True';
     is showset($s), 'a b baz foo', '...and it adds it to the SetHash';
@@ -52,11 +52,11 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($s), 'a b foo', 'and it removes it';
     lives-ok { $s<baz> = False }, 'can set an item which does not exist to False';
     is showset($s), 'a b foo', '... and it is not added to the set';
-    
+
     lives-ok { $s<foo> = False }, 'can set an item to False';
     is $s.elems, 2, '... and an item is gone';
     is showset($s), 'a b', '... and the right one is gone';
-    
+
     lives-ok { $s<foo>++ }, 'can ++ an item';
     is showset($s), 'a b foo', '++ on an item reinstates it';
     lives-ok { $s<foo>++ }, 'can ++ an item';
@@ -436,6 +436,12 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     isa-ok SetHash(42).Hash.keys[0], Int, "make sure SetHash.Hash returns objects";
+}
+
+subtest '.hash does not cause keys to be stringified' => {
+    plan 2;
+    is SetHash.new($(<a b>)).hash.keys[0][0], 'a', 'SetHash.new';
+    is ($(<a b>),).SetHash.hash.keys[0][0],   'a', '.SetHash';
 }
 
 # vim: ft=perl6
