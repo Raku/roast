@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 177;
+plan 178;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -414,6 +414,14 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 {
     isa-ok set(42).Hash.keys[0], Int, "make sure set.Hash returns objects";
+}
+
+# RT #127402
+subtest '.hash does not cause keys to be stringified' => {
+    plan 3;
+    is Set.new($(<a b>)).hash.keys[0][0], 'a', 'Set.new';
+    is ($(<a b>),).Set.hash.keys[0][0],   'a', '.Set';
+    is set($(<a b>),).hash.keys[0][0],    'a', 'set()';
 }
 
 # vim: ft=perl6
