@@ -357,7 +357,7 @@ sub showkv($x) {
     #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
-    my $inner-list = $m1.keys.first(List);
+    $inner-list = $m1.keys.first(List);
     isa-ok $inner-list, List, "One of the mix's elements is indeed a List!";
     is $inner-list, <c d>, "With the proper elements";
 }
