@@ -312,7 +312,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     #?niecza 2 todo 'Set in Set does not work correctly yet'
     isa-ok $inner-set, Set, "One of the set's elements is indeed a set!";
     is showset($inner-set), "a b c", "With the proper elements";
-    my $inner-list = $s1.keys.first(List);
+    $inner-list = $s1.keys.first(List);
     isa-ok $inner-list, List, "One of the set's elements is indeed a List!";
     is $inner-list, <c d>, "With the proper elements";
 }
