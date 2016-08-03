@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 407;
+plan 409;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -644,6 +644,30 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
             err    => ''
         },
         'no warning about Useless use of "+" in sink context';
+}
+
+# RT #128770
+{
+    is_run q|print ($_ with 'foo')|,
+        {
+            status => 0,
+            out    => "foo",
+            err    => ''
+        },
+        'no warning about "Useless use" with say ($_ with "foo")';
+}
+
+# RT #128766
+{
+    is_run q|sub infix:<↑>($a, $b) is assoc<right> {$a ** $b};
+             sub infix:<↑↑>($a, $b) is assoc<right> { [↑] $a xx $b };
+             print 3↑↑3|,
+        {
+            status => 0,
+            out => "7625597484987",
+            err => '',
+        },
+        'no warning about "Useless use" with "onearg form of reduce"';
 }
 
 # RT #114430
