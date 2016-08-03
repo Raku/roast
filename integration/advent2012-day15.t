@@ -66,7 +66,6 @@ my $output;
     }
 }
 
-#?rakudo.moar todo 'RT #121722'
 is $output, q:to"END", 'FIRST/NEXT/LAST example';
 Score	Player
 -----	------
