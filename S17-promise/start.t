@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 47;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -113,3 +113,24 @@ throws-like { await }, Exception, "a bare await should not work";
 
 dies-ok { await start { die 'oh noe' } }, 'await rethrows exceptions';
 dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
+
+# Fresh $/ in start block
+{
+    my $/ = 42;
+    isnt await(start { $/ }), 42, 'Get a fresh $/ inside of a start block';
+    isnt await(start $/), 42, 'Get a fresh $/ inside of a start thunk';
+
+    is ([+] await map -> $n {
+            start { my $foo = "barbaz" x $n; $foo ~~ s/.+/$/.chars()/; $foo } },
+            ^100),
+        29700,
+        'No wrong answers due to over-sharing of $/';
+}
+
+# Fresh $! in start block
+{
+    my $ex = Exception.new;
+    my $! = $ex;
+    isnt await(start { $! }), $ex, 'Get a fresh $! inside of a start block';
+    isnt await(start $!), $ex, 'Get a fresh $! inside of a start thunk';
+}
