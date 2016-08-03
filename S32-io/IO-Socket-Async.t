@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 my $hostname = 'localhost';
 my $port = 5000;
@@ -102,4 +102,14 @@ my $binaryTap = $server.tap(-> $c {
     my $received = await client($binary);
     $binaryTap.close;
     ok $binary eqv $received, 'bytes-supply';
+}
+
+{
+    my $anotherPort = 6000;
+    my $badServer = IO::Socket::Async.listen($hostname, $anotherPort);
+    my $failed = Promise.new;
+    my $t1 = $badServer.tap();
+    my $t2 = $badServer.tap(quit => { $failed.keep });
+    await Promise.anyof($failed, Promise.in(5));
+    ok $failed, 'Address already in use results in a quit';
 }
