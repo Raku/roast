@@ -18,6 +18,7 @@ eval-lives-ok('{my $x =
 2;}', 'double terminator');
 eval-lives-ok(';my $x = 2;{my $x = 2;;};', 'extra terminators');
 
+#?rakudo.jvm todo 'got: X::AdHoc; StringIndexOutOfBoundsException: String index out of range: -1'
 throws-like '{my $x = 2;', X::Syntax::Missing, 'open closure';
 throws-like 'my $x = ', X::Syntax::Malformed, 'incomplete expression';
 

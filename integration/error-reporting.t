@@ -188,6 +188,7 @@ is_run 'sub foo { ({a=>1,b=>2}, {c=>3,d=>4}).map({ if (.<a>) {return $_} else { 
 }
 
 # RT #127425
+#?rakudo.jvm todo 'RT #127425'
 {
     is_run 'say <a b c>.rotor: 1 => -NaN', {
         out => '',

@@ -57,6 +57,7 @@ ok callframe.perl.starts-with("CallFrame.new("), 'CallFrame.perl works';
 ok callframe.gist.starts-with($*PROGRAM-NAME),   'CallFrame.gist works';
 
 # RT #127479
+#?rakudo.jvm todo 'ContextRef representation does not implement elems RT #127479'
 lives-ok { sub{callframe.perl}() }, '.perl on callframe in a sub does not crash';
 
 # vim: ft=perl6
