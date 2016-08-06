@@ -132,7 +132,6 @@ plan 20;
 }
 
 # RT #128596
-#?rakudo todo 'RT 128596'
 {
     my $runs = 0;
     my sub foo { repeat { $runs++; } while 0; };
