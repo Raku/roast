@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 # L<S04/The C<repeat> statement/"more Pascal-like repeat loop">
 
@@ -139,6 +139,21 @@ plan 20;
 
     ok $runs == 2,
     'repeat inside sub inside a loop executes even when condition is false';
+}
+
+# RT #127563
+{
+    sub foo($c) {
+	return if $c == 0;
+	{
+	    take "B $c";
+	    repeat {
+		take "A $c";
+		foo($c - 1);
+	    } while 0;
+	}
+    }
+    is (gather foo(3)), "B 3 A 3 B 2 A 2 B 1 A 1", "repeat calls itself once always at each recursion level";
 }
 
 # vim: ft=perl6
