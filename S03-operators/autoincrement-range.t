@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 96;
+plan 104;
 
 # TODO: Check that "Failure" results are "Decrement out of range"
 #       and not some other unrelated error.
@@ -287,5 +287,33 @@ my $x;
     #?niecza skip "Magical string decrement underflowed"
     is( --$x, "\x[b66]ZZ", "'\x[b67]AA'-- is '\x[b66]ZZ'" );
 }
+{
+    RT #128868
+    diag( "Tests for '\x[e50]' .. '\x[e59]' (Thai)" );
+    $x = "\x[e59]\x[e59]";
+    #?niecza 3 todo "Thai NYI"
+    is( ++$x, "\x[e51]\x[e50]\x[e50]",
+        "'\x[e59]\x[e59]'++ is '\x[e51]\x[e50]\x[e50]'" );
+    $x = "\x[e51]\x[e50]\x[e50]";
+    is( --$x, "\x[e50]\x[e59]\x[e59]",
+        "'\x[e51]\x[e50]\x[e50]'-- is '\x[e50]\x[e59]\x[e59]'" );
+    $x = "A\x[e50]";
+    is( ++$x, "A\x[e51]", "'A\x[e50]'++ is 'A\x[e51]'" );
+    $x = "A\x[e51]";
+    #?niecza skip "Magical string decrement underflowed"
+    is( --$x, "A\x[e50]", "'A\x[e51]'-- is 'A\x[e50]'" );
+    $x = "A\x[e59]";
+    #?niecza 3 todo "Thai NYI"
+    is( ++$x, "B\x[e50]", "'A\x[e59]'++ is 'B\x[e50]'" );
+    $x = "B\x[e50]";
+    is( --$x, "A\x[e59]", "'B\x[e50]'-- is 'A\x[e59]'" );
+    $x = "\x[e50]ZZ";
+    is( ++$x, "\x[e51]AA", "'\x[e50]ZZ'++ is '\x[e51]AA'" );
+    $x = "\x[e51]AA";
+    #?niecza skip "Magical string decrement underflowed"
+    is( --$x, "\x[e50]ZZ", "'\x[e51]AA'-- is '\x[e50]ZZ'" );
+}
+
+
 
 # vim: ft=perl6
