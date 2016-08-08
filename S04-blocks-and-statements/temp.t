@@ -65,7 +65,7 @@ plan 40;
   {
     temp @array[42] = 42;
   }
-  #?rakudo 2 skip 'RT #126447'
+  #?rakudo 2 skip 'RT #128544'
   ok not @array[42]:exists,"temp() removed previously non-exitent element";
   is @array.elems, 3, "temp() restored array has correct .elems";
 }
