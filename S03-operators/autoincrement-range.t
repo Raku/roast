@@ -288,7 +288,7 @@ my $x;
     is( --$x, "\x[b66]ZZ", "'\x[b67]AA'-- is '\x[b66]ZZ'" );
 }
 {
-    RT #128868
+    # RT #128868
     diag( "Tests for '\x[e50]' .. '\x[e59]' (Thai)" );
     $x = "\x[e59]\x[e59]";
     #?niecza 3 todo "Thai NYI"
