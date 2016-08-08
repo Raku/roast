@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 50) + 3 + 1 + 1 + 2 + 1;
+plan (@testing/2 * 47) + 3 + 1 + 1 + 2 + 1;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -132,11 +132,6 @@ for @testing -> @a, $T {
     submeth-ok (),     (0,1), (),    (), 'remove 1 past end';
     submeth-ok (), (0,1,1,2), (), (1,2), 'remove 1 past end + push';
     submeth-ok (), (0,*,1,2), (), (1,2), 'remove whatever past end + push';
-
-    # test some SINKs
-    submeth-ok (1..10),     \(:SINK),  Nil,      (), 'whole SINK';
-    submeth-ok (1..12), \(0,1,:SINK),  Nil, (2..12), 'simple 1 elem SINK';
-    submeth-ok (1..10),  \(10,:SINK),  Nil, (1..10), 'none rest SINK';
 
     # make sure we initialize with properly typed values
     @a = $toNum ?? (^10).map(*.Num) !! ^10;

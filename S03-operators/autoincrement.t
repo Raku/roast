@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 79;
+plan 80;
 
 #L<S03/Autoincrement precedence>
 
@@ -270,6 +270,10 @@ throws-like 'my $a; $a++ ++;', Exception, 'parse error for "$a++ ++"';
     is $y, False, "True predecrement returns False";
     is $x, False, "True postdecrement sets False";
 };
+
+# RT 126220
+throws-like '++.++', X::Multi::NoMatch,
+    '++.++ construct throws a multi no match exception';
 
 
 # vim: ft=perl6
