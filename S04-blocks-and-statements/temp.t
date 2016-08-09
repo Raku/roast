@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 38;
 
 # L<S04/The Relationship of Blocks and Declarations/function has been renamed>
 {
@@ -61,13 +61,6 @@ plan 40;
     is @array[1], 42, "temp() changed our array element";
   }
   is @array[1], 1, "temp() restored our array element";
-
-  {
-    temp @array[42] = 42;
-  }
-  #?rakudo 2 skip 'RT #128544'
-  ok not @array[42]:exists,"temp() removed previously non-exitent element";
-  is @array.elems, 3, "temp() restored array has correct .elems";
 }
 
 {
