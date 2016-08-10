@@ -131,7 +131,7 @@ plan 23;
         my $todo = 0;
         my $done = 0;
         my @in = 1..100;
-        my @out;
+        my @out = 0 xx 100;
 
         loop ( my $i = 0; $i < @in; $i++ ) {
             my $in := @in[$i];
