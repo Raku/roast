@@ -68,7 +68,6 @@ This test tests the C<repeated> builtin.
 {
     my $a = <a b c b d c>;
     $a .= repeated;
-    #?rakudo.jvm skip 'This Seq has already been iterated, RT #128720'
     is-deeply( $a.List, <b c>, '.= repeated in sink context works on $a' );
     my @a = <a b c b d c>;
     @a .= repeated;

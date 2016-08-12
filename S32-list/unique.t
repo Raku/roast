@@ -72,7 +72,6 @@ This test tests the C<unique> builtin.
 {
     my $a = <a b c b d>;
     $a .= unique;
-    #?rakudo.jvm skip 'This Seq has already been iterated, RT #128720'
     is-deeply( $a.List, <a b c d>, '.= unique in sink context works on $a' );
     my @a = <a b c b d>;
     @a .= unique;
