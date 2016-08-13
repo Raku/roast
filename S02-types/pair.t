@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 101;
+plan 4 * 19 + 102;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -380,6 +380,13 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     my $y = 42;
     $y := :$y;
     is-deeply $y, 'y' => 42, 'pair binding';
+}
+
+# RT #128860
+{
+    throws-like { (1,2,3).invert },
+	X::TypeCheck::Binding, got => Int, expected => Pair,
+	"List.invert maps via a required Pair binding";
 }
 
 # vim: ft=perl6
