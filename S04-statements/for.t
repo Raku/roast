@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 99;
+plan 100;
 
 =begin description
 
@@ -693,6 +693,12 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     #?rakudo todo 'RT 128054'
     is $out, 'aabb',
         'topic of for loop has correct value in ("{$_}") construct';
+}
+
+# RT #123072
+{
+    my class Sinker { method sink() { take "Blub" } }
+    is (gather for ^5 { Sinker.new(); }).gist, "(Blub Blub Blub Blub Blub)", "for loop properly sinks final statement method call";
 }
 
 # vim: ft=perl6
