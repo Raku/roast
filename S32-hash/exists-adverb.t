@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 48;
 
 # L<S02/Names and Variables/:exists>
 
@@ -96,6 +96,9 @@ sub gen_hash {
     dies-ok { %h<c>:!exists:!v },  "Test !exists:!v, invalid combo";
 
     is %h.elems, 26, "should not have changed hash";
+
+    my %multi-dim := { 1 => { 2 => { 3 => 42 } } };
+    isa-ok %multi-dim{1;2;3}:exists, Bool, "Bool test for literal multi dim key;"
 } #46
 
 # RT #122497
