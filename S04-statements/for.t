@@ -470,9 +470,9 @@ throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitesp
     is (for ^5 { 41; next if $_ == 2; $_; }).flat, (0,1,3,4),
                 "for loop with value-less next flattens out nexted iterations";
 
-#?rakudo todo 'Rakudo still uses Nil here RT #124568'
+# see RT #124568
     my $l = (for ^5 { 41; next if $_ == 2; $_; });
-    is $l[2].perl, "()", "for loop iteration with value-less 'next' gives ()";
+    is $l[2].perl, 3, "for loop iteration with value-less 'next' gives Empty";
 
 #?rakudo.jvm todo 'gives "" instead of "0 1"'
     is (for ^5 { 41; last if $_ == 2; $_; }).flat, (0,1),
