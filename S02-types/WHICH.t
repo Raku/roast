@@ -35,7 +35,6 @@ my @normal = <
   Distribution
   Distro
   Duration
-  Map
   Exception
   Failure
   FatRat
@@ -384,7 +383,6 @@ my @concurrent = <
   Cancellation
   Channel
   CurrentThreadScheduler
-  IO::Notification
   IO::Socket::Async
   Promise
   Semaphore
