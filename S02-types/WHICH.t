@@ -415,14 +415,16 @@ my @moar = <
 
 plan 4 + 4 * ( @normal + @exception + @concurrent + @moar );
 
-is Nil.WHICH,             'Nil', "checking Nil.WHICH";
+my %seen-which;
+
+nok %seen-which{Nil.WHICH}++,    "checking Nil.WHICH";
 is Nil.WHICH.WHAT.perl, 'ObjAt', "Nil returns an ObjAt";
 is Nil.perl,              'Nil', "Nil.perl returns 'Nil'";
 is Nil.gist,              'Nil', "Nil.gist returns 'Nil'";
 
 for @normal -> $class {
     my $short = $class.split('::')[* - 1];
-    is ::($class).WHICH,            $class, "checking $class.WHICH";
+    nok %seen-which{::($class).WHICH}++,    "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
     is ::($class).gist,         "($short)", "$class.gist returns self";
@@ -430,7 +432,7 @@ for @normal -> $class {
 
 for @exception -> $class {
     my $short = $class.split('::')[* - 1];
-    is ::($class).WHICH,            $class, "checking $class.WHICH";
+    nok %seen-which{::($class).WHICH}++,    "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
     is ::($class).gist,         "($short)", "$class.gist returns self";
@@ -438,7 +440,7 @@ for @exception -> $class {
 
 for @concurrent -> $class {
     my $short = $class.split('::')[* - 1];
-    is ::($class).WHICH,            $class, "checking $class.WHICH";
+    nok %seen-which{::($class).WHICH}++,    "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
     is ::($class).gist,         "($short)", "$class.gist returns self";
@@ -447,7 +449,7 @@ for @concurrent -> $class {
 for @moar -> $class {
     my $short = $class.split('::')[* - 1];
     #?rakudo.jvm 4    skip 'NYI on jvm - RT #126524 / RT #124500'
-    is ::($class).WHICH,            $class, "checking $class.WHICH";
+    nok %seen-which{::($class).WHICH}++,    "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
     is ::($class).gist,         "($short)", "$class.gist returns self";
