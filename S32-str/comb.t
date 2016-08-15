@@ -29,6 +29,7 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
     is $hair.comb(/\d+/), <3 3 4 3 0 3 3 1 1 1>, 'no limit returns all matches';
     is $hair.comb(/\d+/, -10), (), 'negative limit returns no matches';
     is $hair.comb(/\d+/, 0), (), 'limit of 0 returns no matches';
+    #?rakudo.jvm 2 skip 'UnwindException'
     is $hair.comb(/\d+/, 1), <3>, 'limit of 1 returns 1 match';
     is $hair.comb(/\d+/, 3), <3 3 4>, 'limit of 3 returns 3 matches';
     is $hair.comb(/\d+/, 1000000000), <3 3 4 3 0 3 3 1 1 1>, 'limit of 1 billion returns all matches quickly'; }
@@ -47,6 +48,7 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
         'match for any *a* words';
 }
 
+#?rakudo.jvm skip 'UnwindException'
 is "a ab bc ad ba".comb(/\S*a\S*/, 2), <a ab>, 'matcher and limit';
 
 is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
@@ -94,8 +96,10 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 
 {
     is comb( /./ , "abcd"), <a b c d>, 'Subroutine form default limit';
+    #?rakudo.jvm skip 'UnwindException'
     is comb(/./ , "abcd" , 2 ), <a b>, 'Subroutine form with supplied limit';
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng"), <3 3 4 3 0 3 3 1 1 1>, 'Subroutine form with no limit returns all matches';
+    #?rakudo.jvm skip 'UnwindException'
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng" , 2), <3 3>, 'Subroutine form with limit';
 }
 

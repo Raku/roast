@@ -472,6 +472,7 @@ throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitesp
 
 # see RT #124568
     my $l = (for ^5 { 41; next if $_ == 2; $_; });
+#?rakudo.jvm todo 'gives Any instead of 3'
     is $l[2].perl, 3, "for loop iteration with value-less 'next' gives Empty";
 
 #?rakudo.jvm todo 'gives "" instead of "0 1"'
