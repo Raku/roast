@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 9;
+plan 7;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -55,27 +55,6 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         out => /'Cannot resolve caller grep' .* 'We are still alive'/,
         err => '',
         'exceptions from lazy-evaluated things do not crash REPL';
-}
-
-# RT #127695
-{
-    my $temp-dir = $*TMPDIR.child('rakudo-roast-RT127695-test' ~ rand);
-    LEAVE {
-        try $temp-dir.child('.precomp').rmdir;
-        try $temp-dir.rmdir;
-    }
-
-    is $temp-dir.mkdir, True,
-        'successfully created temp directory to use for -I in test';
-
-    my $proc = &CORE::run(
-        $*EXECUTABLE, '-I', $temp-dir.Str, '-MNon::Existent::Module::Blah',
-        :in, :out, :err
-    );
-    $proc.in.write: "say 'hello'\n".encode;
-    $proc.in.close;
-    like $proc.out.slurp-rest, /'rakudo-roast-RT127695-test'/,
-        '-I in REPL works';
 }
 
 # RT #127933
