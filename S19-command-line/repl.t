@@ -85,7 +85,6 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
                                               'num32 $i,  num64 $j,',
                     ') = 1, 2, 3, 4, 5, 6, 7, 8, 9e0, 10e0;';
 
-    #?rakudo.moar todo 'RT 127933'
     is_run_repl "$code\nsay 'test is good';\n",
         :err(''),
         :out(/'(1 2 3 4 5 6 7 8 9 10)' .* 'test is good'/),
