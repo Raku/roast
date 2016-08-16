@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 10;
+plan 9;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -76,16 +76,6 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
     $proc.in.close;
     like $proc.out.slurp-rest, /'rakudo-roast-RT127695-test'/,
         '-I in REPL works';
-}
-
-# RT #128595
-{
-    #?rakudo.moar todo 'RT 128595'
-    #?rakudo.jvm skip 'Proc::Async NYI'
-    doesn't-hang \(:w, $*EXECUTABLE, '-M', "SomeNonExistentMod"),
-        :in("say 'output works'\n"),
-        :out(/'output works'/),
-    'REPL with -M with non-existent module';
 }
 
 # RT #127933
