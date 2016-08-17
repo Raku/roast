@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 53;
+plan 56;
 
 #L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
@@ -101,4 +101,14 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     ok True ~~ Int, "True ~~ Int";
     ok Bool ~~ Int, "Bool ~~ Int";
 }
+
+# RT #127019
+{
+    is Bool::True.Int, 1, 'Bool::True coerced to Int returns 1';
+    is Bool::False.Int, 0, 'Bool::False coerced to Int return 0';
+
+    my Bool $b = True;
+    is $b.Int, 1, 'Bool typed scalar coerces to Int';
+}
+
 # vim: ft=perl6
