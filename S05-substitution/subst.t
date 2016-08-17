@@ -1,8 +1,9 @@
 use v6;
-
+use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
-plan 179;
+plan 180;
 
 # L<S05/Substitution/>
 
@@ -566,6 +567,13 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
     $_ = "foo";
     is S:g[(o)] = $0.uc, "fOO", "non-mutating global substitution assignment works ($0)";
+}
+
+# RT #128809
+{
+    is_run 'await ^30 .map: { start { S/.+/{$/.chars.print}/ given "abc"; } }', {
+        :err(''), :out('3' x 30)
+    }, 'code in replacement part of s/// has correct scoping';
 }
 
 # vim: ft=perl6
