@@ -506,7 +506,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 {
-    my $_ = 42; 
+    $_ = 42;
     my $match = s/\d+/xxx/;
     isa-ok $match, Match, 's/// returns a Match object on non-strings';
     is $_, 'xxx', 's/// can modify a container that contains a non-string';
@@ -514,7 +514,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #123597
 {
-    my $_ = 0; s{^(\d+)$} = sprintf "%3d -", $_;
+    $_ = 0; s{^(\d+)$} = sprintf "%3d -", $_;
     is $_, "  0 -", 's{}="" can modify a container that contains a non-string';
 }
 
