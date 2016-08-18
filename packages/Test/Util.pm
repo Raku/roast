@@ -134,13 +134,23 @@ sub is_run_repl ($code, $desc, :$out, :$err) is export {
     subtest {
         plan +($out, $err).grep: *.defined;
         with $out {
-            $_ ~~ Str ?? is   $proc.out.slurp-rest, $_, 'stdout is correct'
-                      !! like $proc.out.slurp-rest, $_, 'stdout is correct';
+            my $output    = $proc.out.slurp-rest;
+            my $test-name = 'stdout is correct';
+            when Str      { is      $output, $_, $test-name; }
+            when Regex    { like    $output, $_, $test-name; }
+            when Callable { ok   $_($output),    $test-name; }
+
+            die "Don't know how to handle :out of type $_.^name()";
         }
 
         with $err {
-            $_ ~~ Str ?? is   $proc.err.slurp-rest, $_, 'stderr is correct'
-                      !! like $proc.err.slurp-rest, $_, 'stderr is correct';
+            my $output    = $proc.err.slurp-rest;
+            my $test-name = 'stderr is correct';
+            when Str      { is      $output, $_, $test-name; }
+            when Regex    { like    $output, $_, $test-name; }
+            when Callable { ok   $_($output),    $test-name; }
+
+            die "Don't know how to handle :err of type $_.^name()";
         }
     }, $desc;
 }
@@ -253,11 +263,12 @@ also (this error is not trapped).
 
 Fires up the REPL and enters the given C<$code>. Be sure to send correct
 newlines, as you would press ENTER key when using the REPL manually.
-The C<:$out> and C<:$err> named
-arguments are optional and corresponding tests are only run when the
-arguments are specified. C<:$out> takes a Str or regex, testing STDOUT output
-and C<:$err> takes a Str or regex ,testing STDERR output. When Str is provided
-the output is tested with C<is> and regex is tested with C<like>.
+
+The C<:$out> and C<:$err> named arguments are optional and corresponding
+tests are only run when the arguments are specified. They test REPL's STDOUT
+and STDERR respectively. Can take Str, Regex, or Callable, which respectively
+causes the test to use C<is>, C<like>, or execute the Callable with the output
+as the given argument and use C<ok> on its output.
 
 Will close STDIN (equivalent to sending CTRL+D in REPL) after sending the
 input, so you do not have to send explicit C<exit\n>
