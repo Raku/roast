@@ -92,8 +92,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 {
     # If the REPL evaluates all of the previously-entered code on each
     # entered line of code, then we'll have more than just two 'say' print
-    # outs. So we check the output just for those two, and use look arounds
-    # to ensure we don't have those printed elsewhere in the output
+    # outs. So we check the output each output happens just once
     my $code = join "\n", map { "say 'testing-repl-$_';"}, <one two>;
     is_run_repl "$code\n",
         :err(''),
