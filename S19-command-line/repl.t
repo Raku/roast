@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 9;
+plan 10;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -87,4 +87,19 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         :err(''),
         :out(/'The value is 42'/),
     'variables persist across multiple lines of input';
+}
+
+{
+    # If the REPL evaluates all of the previously-entered code on each
+    # entered line of code, then we'll have more than just two 'say' print
+    # outs. So we check the output just for those two, and use look arounds
+    # to ensure we don't have those printed elsewhere in the output
+    my $code = join "\n", map { "say 'testing-repl-$_';"}, <one two>;
+    is_run_repl "$code\n",
+        :err(''),
+        :out({
+                $^o.comb('testing-repl-one') == 1
+            and $^o.comb('testing-repl-two') == 1
+        }),
+    'previously-entered code must not be re-run on every line of input';
 }
