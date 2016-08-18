@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 8;
+plan 9;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -79,4 +79,12 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         :out(/^$/),
         :err(/'Could not find NonExistentModuleRT128595'/),
     'REPL with -M with non-existent module does not start';
+}
+
+# RT #128973
+{
+    is_run_repl "my \$x = 42;\nsay qq/The value is \$x/;\n",
+        :err(''),
+        :out(/'The value is 42'/),
+    'variables persist across multiple lines of input';
 }
