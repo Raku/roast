@@ -11,6 +11,7 @@ my &p5_void := EVAL(
 }',:lang<Perl5>);
 
 p5_void(:context<void>);
+#?rakudo todo ''
 is(EVAL(:lang<Perl5>,'$::got_void'),1,":context<void> sets void context");
 p5_void(:context<scalar>);
 is(EVAL(:lang<Perl5>,'$::got_void'),0,":context<scalar> doesn't set void context");
@@ -26,6 +27,7 @@ my &p5_scalar := EVAL(
         }
 }',:lang<Perl5>);
 p5_scalar(:context<scalar>);
+#?rakudo todo ''
 is(EVAL(:lang<Perl5>,'$::got_scalar'),1,":context<scalar> sets scalar context");
 p5_scalar(:context<void>);
 is(EVAL(:lang<Perl5>,'$::got_scalar'),0,":context<void> doesn't set scalar context");
@@ -43,6 +45,7 @@ my &p5_list := EVAL(
 p5_list(:context<list>);
 is(EVAL(:lang<Perl5>,'$::got_list'),1,":context<list> sets list context");
 p5_list(:context<scalar>);
+#?rakudo 3 todo ''
 is(EVAL(:lang<Perl5>,'$::got_list'),0,":context<scalar> doesn't set list context");
 p5_list(:context<void>);
 is(EVAL(:lang<Perl5>,'$::got_list'),0,":context<void> doesn't set list context");
