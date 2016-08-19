@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 23;
+plan 22;
 
 use Test::Util;
 
@@ -186,15 +186,5 @@ is_run 'sub foo { ({a=>1,b=>2}, {c=>3,d=>4}).map({ if (.<a>) {return $_} else { 
             err     => all(rx/Str/, rx/\^name|gist|perl|say/)
         }, 'Using type object in string context provides help';
 }
-
-# RT #127425
-#?rakudo.jvm todo 'RT #127425'
-{
-    is_run 'say <a b c>.rotor: 1 => -NaN', {
-        out => '',
-        err => /^ [ <!after 'Actually thrown'> . ]+ $/
-    }, '`Actually thrown at` portion of exception not printed when empty'
-}
-
 
 # vim: ft=perl6
