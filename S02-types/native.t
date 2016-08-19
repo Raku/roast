@@ -158,6 +158,14 @@ plan 88;
     is $n32, 4e0, 'Bound alias to num32 native works';
 }
 
+#?rakudo.moar skip 'the values get accidentally sign-extended'
+{
+    is class :: { has uint8  $.x; }.new( x => 2** 8-1 ).x, 2**8 -1, 'uint8 attributes don\'t get sign-extended';
+    is class :: { has uint16 $.x; }.new( x => 2**16-1 ).x, 2**16-1, 'uint16 attributes don\'t get sign-extended';
+    is class :: { has uint32 $.x; }.new( x => 2**32-1 ).x, 2**32-1, 'uint32 attributes don\'t get sign-extended';
+    is class :: { has uint64 $.x; }.new( x => 2**64-1 ).x, 2**64-1, 'uint64 attributes don\'t get sign-extended';
+}
+
 # RT #121071
 {
     my int $low  = 10**15;
