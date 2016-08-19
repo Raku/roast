@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 88;
+plan 92;
 
 {
     my int $x;
@@ -158,7 +158,8 @@ plan 88;
     is $n32, 4e0, 'Bound alias to num32 native works';
 }
 
-#?rakudo.moar skip 'the values get accidentally sign-extended'
+# https://github.com/MoarVM/MoarVM/issues/393
+#?rakudo.moar todo 'the values get accidentally sign-extended'
 {
     is class :: { has uint8  $.x; }.new( x => 2** 8-1 ).x, 2**8 -1, 'uint8 attributes don\'t get sign-extended';
     is class :: { has uint16 $.x; }.new( x => 2**16-1 ).x, 2**16-1, 'uint16 attributes don\'t get sign-extended';
