@@ -16,13 +16,11 @@ plan 5;
 
 {
     my $a = 10;
-    #?rakudo skip 'hangs'
     throws-like { $a[0] := 1; }, X::Bind, "Can't bind into a defined Int, either";
 }
 
 {
     my $a = "Hi";
-    #?rakudo skip 'hangs'
     throws-like { $a[0] := 1; }, X::Bind, "Can't bind into a defined Str";
 }
 
