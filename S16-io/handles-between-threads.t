@@ -39,7 +39,7 @@ is_run('await start { say $*IN.get.uc for ^3 }',
     my $proc = shell(
         Q:s"$cat $temp-file | $*EXECUTABLE -e $quote await start { say get().uc } $quote",
         :out);
-    #?rakudo todo 'RT12405'
+    #?rakudo.moar todo 'RT #124005'
     is $proc.out.get, "FOO", 'reading from $*IN from another thread works (pipe)';
     so $proc.out.close;
 }
