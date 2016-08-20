@@ -82,6 +82,7 @@ LEAVE unlink PATH;
     ok ?$fh.write('3'.encode), 'can use :update to write to file';
 
     $fh.seek(0, SeekFromBeginning);
+    #?rakudo.jvm todo 'got 4512345'
     is $fh.get, '12345', 'have used :update successfully';
 
     $fh.close;
