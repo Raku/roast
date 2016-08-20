@@ -19,7 +19,7 @@ is (1..^5).perl, '1..^5', ".perl ..^";
 is (1^..^5).perl, '1^..^5', ".perl ^..^";
 
 my @r = $r;
-is @r, [1, 2, 3, 4, 5], 'got the right array';
+is @r.perl, "[1..5,]", 'got the right array';
 
 # Range of Str
 
@@ -28,13 +28,13 @@ isa-ok $r, Range;
 # XXX unspecced: exact value of Range.perl
 is $r.perl, '"a".."c"', 'canonical representation';
 @r = $r;
-is @r, [< a b c >], 'got the right array';
+is @r.perl, '["a".."c",]', 'got the right array';
 
 # Stationary ranges
 is (1..1).perl, '1..1', "stationary num .perl ..";
 is (1..1), [1,], 'got the right array';
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
-is ('a'..'a'), [< a >], 'got the right array';
+is ('a'..'a'), "a", 'got the right stationary string';
 
 #?niecza skip 'Unable to resolve method reverse in class Range'
 {
