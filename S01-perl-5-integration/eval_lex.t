@@ -2,6 +2,11 @@ use v6;
 use Test;
 plan 1;
 
+unless (try { EVAL("1", :lang<Perl5>) }) {
+    skip-rest;
+    exit;
+}
+
 my $self = "some text";
 
 #?rakudo todo ''

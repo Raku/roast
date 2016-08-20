@@ -1,6 +1,12 @@
 use v6;
 use Test;
 plan 10;
+
+unless (try { EVAL("1", :lang<Perl5>) }) {
+    skip-rest;
+    exit;
+}
+
 my &p5_void := EVAL(
     'sub {
         if (defined(wantarray)) {
