@@ -44,7 +44,7 @@ plan 92;
     is f($Str), 'Str', 'can identify non-native type with multi dispatch (Str)';
 
     is $int * $Int, 12, 'can do math with mixed native/boxed ints';
-    is_approx $num * $Num, 30e0, 'can do math with mixed native/boxed nums';
+    is-approx $num * $Num, 30e0, 'can do math with mixed native/boxed nums';
     is $str ~ $Str, '78', 'can concatenate native and boxed strings';
 }
 
@@ -349,7 +349,6 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
 # RT #127813
 {
     subtest 'using native types as named parameters', {
-        #?rakudo 10 todo 'RT 127813'
         eval-lives-ok '-> int    :$x { $x == 1   or die }(:x( 1 ))', 'int   ';
         eval-lives-ok '-> int8   :$x { $x == 1   or die }(:x( 1 ))', 'int8  ';
         eval-lives-ok '-> int16  :$x { $x == 1   or die }(:x( 1 ))', 'int16 ';
