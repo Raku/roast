@@ -465,7 +465,7 @@ if $emits_suggestions {
     {
         try EVAL('Ecxeption.new("wrong!")');
         ok $! ~~ X::Undeclared::Symbols, "Ecxeption.new throws X::Undeclared::Symbols";
-        is $!.type_suggestion<Ecxeption>, ["Exception"], 'Exception is a suggestion';
+        is $!.type_suggestion<Ecxeption>.grep("Exception"), ["Exception"], 'Exception is a suggestion';
     }
 
     throws-like 'sub greet($name) { say "hello, $nam" }', X::Undeclared, suggestions => '$name';
