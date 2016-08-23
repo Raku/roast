@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 65;
+plan 67;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -128,6 +128,12 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     throws-like { <a b c d>.sum }, X::Str::Numeric,
       reason => "base-10 number must begin with valid digits or '.'",
       'fail if they are non-numeric strings';
+}
+
+# RT#129044
+{
+    is (a => 2).first(/a/), (a => 2), "first with a Regexp object";
+    is (a => 2).grep(/a/), (a => 2), "grep with a Regexp object";
 }
 
 # vim: ft=perl6
