@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 12;
 
 sub f($x) returns Int { return $x };
 
@@ -33,6 +33,16 @@ dies-ok  { g('m') },    'type check forbids bad implicit return';
     throws-like { rt123789(Int) }, Exception,
         message => 'Cannot unbox a type object',
         'no segfault when calling a routine having a native parameter with a type object argument';
+}
+
+# RT #126124
+{
+    throws-like { sub f(Mu:D $a) {}; f(Int) }, Exception,
+        message => 'Parameter \'$a\' requires an instance of type Mu, but a type object was passed.  Did you forget a .new?',
+        'type shown in the exception message is the right one';
+    throws-like { sub f(Mu:U $a) {}; f(123) }, Exception,
+        message => 'Parameter \'$a\' requires an instance of type Mu, but a type object was passed.  Did you forget a .new?',
+        'type shown in the exception message is the right one';
 }
 
 # vim: ft=perl6
