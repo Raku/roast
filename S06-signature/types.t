@@ -38,10 +38,10 @@ dies-ok  { g('m') },    'type check forbids bad implicit return';
 # RT #126124
 {
     throws-like { sub f(Mu:D $a) {}; f(Int) }, Exception,
-        message => 'Parameter \'$a\' requires an instance of type Mu, but a type object was passed.  Did you forget a .new?',
+        message => /'instance of type Mu' .+ 'type object'/,
         'type shown in the exception message is the right one';
     throws-like { sub f(Mu:U $a) {}; f(123) }, Exception,
-        message => 'Parameter \'$a\' requires an instance of type Mu, but a type object was passed.  Did you forget a .new?',
+        message => /'object of type Mu' .+ 'object instance'/,
         'type shown in the exception message is the right one';
 }
 
