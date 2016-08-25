@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 use Test::Idempotence;
-plan 133;
+plan 131;
 
 # L<S06/Signature Introspection>
 
@@ -172,7 +172,6 @@ sub j(*@i) {
     is-perl-idempotent(:(Int @a = [2, 3], Int :@b = [2,3]), Nil, { '= { ... }' => '= [2,3]' }, :eqv);
     is-perl-idempotent(:(Int %a = :a(2), Int :%b = :a(2)), Nil, { '= { ... }' => '= {:a(2)}' }, :eqv);
     is-perl-idempotent(:(Sub &a = &say, Sub :&b = &say), Nil, { '= { ... }' => '= &say' },:eqv);
-    is-perl-idempotent(:(|a ($a) = 2), :eqv);
     is-perl-idempotent(:(@a ($a) = [2]), :eqv);
     is-perl-idempotent(:(%a (:a($b)) = {:a(2)}, %b (:c(:d($e))) = {:c(2)}), :eqv);
 
@@ -204,7 +203,6 @@ sub j(*@i) {
     is-perl-idempotent(:(Int @ = [2, 3], Int :a(@) = [2,3]), Nil, { '= { ... }' => '= [2,3]' }, :eqv);
     is-perl-idempotent(:(Int % = :a(2), Int :a(%) = :a(2)), Nil, { '= { ... }' => '= {:a(2)}' }, :eqv);
     is-perl-idempotent(:(Sub & = &say, Sub :a(&) = &say), Nil, { '= { ... }' => '= &say' },:eqv);
-    is-perl-idempotent(:(| ($a) = 2), :eqv);
     is-perl-idempotent(:(@ ($a) = [2]), :eqv);
     is-perl-idempotent(:(% (:a($)) = {:a(2)}, % (:c(:d($))) = {:c(2)}), :eqv);
     is-perl-idempotent(:($ is raw, & is raw, % is raw, | is raw), :eqv);
