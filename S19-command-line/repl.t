@@ -64,7 +64,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
                                               'num32 $i,  num64 $j,',
                     ') = 1, 2, 3, 4, 5, 6, 7, 8, 9e0, 10e0;';
 
-    #?rakudo todo 'RT#127933'
+    #?rakudo.moar todo 'RT#127933'
     is_run_repl "$code\nsay 'test is good';\n",
         :err(''),
         :out(/'(1 2 3 4 5 6 7 8 9 10)' .* 'test is good'/),
@@ -72,6 +72,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 }
 
 # RT #128595
+#?rakudo.jvm skip 'Proc::Async NYI'
 {
     # REPL must not start, but if it does start and wait for input, it'll
     # "hang", from our point of view, which the test function will detect
