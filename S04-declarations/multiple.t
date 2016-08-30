@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 7;
+plan 8;
 
 # L<S04/The Relationship of Blocks and Declarations/"If you declare a lexical 
 #  twice in the same scope">
@@ -34,5 +34,8 @@ eval-lives-ok 'proto foo {1; }; sub foo {1; }; sub foo($x) {1; };',
 # RT #118607
 throws-like 'sub foo {1; }; sub foo($x) {1; };', X::Redeclaration,
     'suggest multi-sub for sub redeclaration', message => /'did you mean to declare a multi-sub'/;
+
+throws-like 'role RR { }; class RR { };', X::Redeclaration,
+    "don't suggest multi-sub for non-sub redeclaration", message => /^ [<!before 'multi-sub'> . ] * $/;
 
 # vim: ft=perl6
