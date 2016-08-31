@@ -653,6 +653,7 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
 
 {
     is ([&&] |0), 0, "slipped args work with reduce";
+    #?rakudo.jvm skip 'RT #129153 Type check failed in binding to &b; expected Callable but got Int (2)'
     is ([&&] 1,|(2,3,4)), 4, "slipped args work with reduce";
 }
 
