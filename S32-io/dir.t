@@ -1,7 +1,9 @@
 use v6;
+use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
-plan 13;
+plan 14;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -38,5 +40,10 @@ is dir('t').[0].dirname, $*CWD ~ 't', 'dir("t") returns paths with .dirname of "
     ok $res !~~ m/ "/" ** 2 /,
         'results for \'dir "/"\' do not begin with 2 slashes';
 }
+
+# RT #112662
+is_run 'dir | say', {
+    err => rx/'Argument' .* 'say' .* 'use .say'/,
+}, '`dir | say` has useful error message';
 
 # vim: ft=perl6
