@@ -150,14 +150,16 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
 {
     is-deeply (1.1 .. 3.1).roll(1000).Set, set(2.1, 1.1, 3.1),
         'roll on Range uses .succ';
-    subtest 'rand on ranges (this test has an infinitesimal chance to fail)' => {
-        plan 10;
+    subtest 'rand on ranges is implemented' => {
+        plan 2;
+        my ($n, $from, $to) = (1000, 0.1, 0.100001);
+        my @res = ($from .. $to).rand xx $n;
+        is @res.grep($from <= * <= $to).elems, $n,
+            'all generated numbers are in range';
 
-        my @res = (0.1 .. 0.100001).rand xx 10;
-        for @res {
-            is-approx $_, 0.1000005, :abs-tol(0.0000005),
-                'generated number is in range';
-        }
+        # Look for a bit less than exact number, since there's a small chance
+        # for some of them to be the same and we don't want the test to flap
+        cmp-ok @res.Set.elems, '>=', $n-$n/10, 'generated elements vary';
     }
 }
 
