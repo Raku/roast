@@ -81,3 +81,5 @@ is $nest(3), 'huge', 'nested when in a sub works (3)';
 
 # RT#120498
 lives-ok { while $++ < 2 { when 'hi' { } } }, '`when` in a loop lives';
+
+# vim: ft=perl6
