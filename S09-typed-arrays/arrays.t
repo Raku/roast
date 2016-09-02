@@ -60,7 +60,7 @@ plan 81;
     dies-ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies-ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
-    dies-ok { @x[0, 2] = 2, 3}, 
+    dies-ok { @x[0, 2] = 2, 3},
             'can not assign values of wrong type to a slice';
     lives-ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
@@ -73,7 +73,7 @@ plan 81;
     dies-ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies-ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
-    dies-ok { @x[0, 2] = 2, 3}, 
+    dies-ok { @x[0, 2] = 2, 3},
             'can not assign values of wrong type to a slice';
     lives-ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
