@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 47) + 3 + 1 + 1 + 2 + 1;
+plan (@testing/2 * 47) + 9;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -225,5 +225,24 @@ for @testing -> @a, $T {
     @l.splice( 5, *, "borrowed", "blue");
     is @l.join(" "), "1 2 3 4 5 borrowed blue", "Whatever splice"
 } #1
+
+# RT #128736
+{
+    subtest 'splice can extend an array' => {
+        my @a;
+        @a.splice: 0, 0, 42;
+        is-deeply @a, [42     ], 'method on empty array';
+
+        @a.splice: 1, 0, 'y';
+        is-deeply @a, [42, 'y'], 'method on array with elements';
+
+        my @b;
+        splice @b, 0, 0, 42;
+        is-deeply @b, [42     ], 'sub with empty array';
+
+        splice @b, 1, 0, 'y';
+        is-deeply @b, [42, 'y'], 'sub with array with elements';
+    }
+}
 
 # vim: ft=perl6
