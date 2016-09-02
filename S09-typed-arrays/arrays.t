@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 81;
+plan 82;
 
 # L<S09/Typed arrays/>
 
@@ -257,6 +257,13 @@ plan 81;
     @a[4]++;
     is @a.gist, '[(Int) (Int) (Int) (Int) 1]',
         '.gist on typed array shows real type objects';
+}
+
+# RT #126134
+{
+    sub rt126134 (Int @a) { pass '@a of Foo accepted by sub (Foo @a)' };
+    my @a of Int;
+    rt126134 @a;
 }
 
 # vim: ft=perl6
