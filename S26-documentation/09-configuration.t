@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 17;
+plan 18;
 my $r;
 
 =begin pod
@@ -28,11 +28,17 @@ is $r.config<formatted>, 'I';
 
 $r = $=pod[2].contents[0];
 is $r.config<number>, 42;
-#?rakudo todo 'non-string colonpair pod options RT #124281'
+
+# RT#127085
 {
+  isa-ok $r.config<zebras>, Bool;
+  isa-ok $r.config<sheep>, Bool;
   is $r.config<zebras>, True;
   is $r.config<sheep>, False;
-  isa-ok $r.config<sheep>, Bool;
+}
+
+#?rakudo todo 'non-string colonpair pod options RT #124281'
+{
   isa-ok $r.config<feist>, List;
 }
 
