@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 49;
+plan 50;
 
 use Test::Util;
 
@@ -144,6 +144,12 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
     is Same.roll(1), Same, 'one roll on Enum is sane';
     is Less.roll(4), (Less,Less,Less,Less), 'too many roll on Enum is sane';
     is More.roll(0), (), 'zero roll on Enum is sane';
+}
+
+# RT #126664
+{
+    is-deeply (1.1 .. 3.1).roll(1000).Set, set(2.1, 1.1, 3.1),
+        'roll on Range uses .succ';
 }
 
 # vim: ft=perl6
