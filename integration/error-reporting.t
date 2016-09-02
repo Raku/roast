@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 22;
+plan 23;
 
 use Test::Util;
 
@@ -185,6 +185,13 @@ is_run 'sub foo { ({a=>1,b=>2}, {c=>3,d=>4}).map({ if (.<a>) {return $_} else { 
             out     => '',
             err     => all(rx/Str/, rx/\^name|gist|perl|say/)
         }, 'Using type object in string context provides help';
+}
+
+# RT #128803
+{
+    is_run '*...‘WAT’', {
+        err => rx/^ [ <!after 'SORRY'> . ]+ $/,
+    }, 'runtime time errors do not contain ==SORRY==';
 }
 
 # vim: ft=perl6
