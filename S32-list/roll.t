@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 50;
+plan 51;
 
 use Test::Util;
 
@@ -150,6 +150,15 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
 {
     is-deeply (1.1 .. 3.1).roll(1000).Set, set(2.1, 1.1, 3.1),
         'roll on Range uses .succ';
+    subtest 'rand on ranges (this test has an infinitesimal chance to fail)' => {
+        plan 10;
+
+        my @res = (0.1 .. 0.100001).rand xx 10;
+        for @res {
+            is-approx $_, 0.1000005, :abs-tol(0.0000005),
+                'generated number is in range';
+        }
+    }
 }
 
 # vim: ft=perl6
