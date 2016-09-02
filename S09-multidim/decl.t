@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 40;
 
 {
     my @a;
@@ -74,4 +74,11 @@ plan 39;
     dies-ok { @a[2;1] = 1 }, 'Cannot assign to multi-dim native int array out of bounds (1)';
     dies-ok { @a[1;2] = 1 }, 'Cannot assign to multi-dim native int array out of bounds (2)';
     dies-ok { @a[2;2] = 1 }, 'Cannot assign to multi-dim native int array out of bounds (3)';
+}
+
+
+# RT#126979
+{
+    my @a[;];
+    pass 'shaped array declaration without numbers does not infini-loop';
 }
