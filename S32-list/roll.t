@@ -86,7 +86,7 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
 # ranges + roll
 {
     ok 1 <= (1..1_000_000).roll() <= 1_000_000, 'no argument roll works';
-    
+
     my \matches = (1..1_000_000).roll(*);
     ok (so 1 <= all(matches[^100]) <= 1_000_000), 'the first 100 elems are in range';
 }
