@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 40;
+plan 41;
 
 {
     my @list = 1, 2, 3, 4;
@@ -121,5 +121,18 @@ is classify( { "foo" }, () ).elems, 0, 'classify an empty list';
 
 #?rakudo todo "Not sure how this should be fixed"
 lives-ok { my %b := BagHash.new(); %b.classify-list( {.comb}, 20..40 ); }, "Baggy classify-list shouldn't die on this case";
+
+# RT #127803
+subtest 'classify works with Junctions' => {
+    plan 2;
+
+    my %expected{Any} = Bool::False => [<abc xyz xyz xyz xyz xyz xyz>],
+                        Bool::True => ['abc'];
+    is-deeply <abc xyz>.classify( *.contains: any 'a'..'f' ),
+        %expected, 'method form';
+
+    is-deeply classify( *.contains(any 'a'..'f'), <abc xyz> ),
+        %expected, 'sub form';
+}
 
 # vim: ft=perl6
