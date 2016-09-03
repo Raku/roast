@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 # L<S06/Signatures>
 
@@ -130,6 +130,78 @@ constant indiana-pi = 3;
 {
     my $pointy = -> --> Nil { sin(1) };
     ok $pointy() === Nil, 'pointy can have definite return type of Nil';
+}
+
+# RT #128964
+subtest 'type coercions work in returns' => {
+    plan 8;
+
+    subtest 'sub (Int --> Str())' => {
+        plan 3;
+
+        my sub     t (Int $x --> Str()) {$x}
+        isa-ok     t(42),     Str,      'returns correct type';
+        is         t(42),     "42",     'returns correct value';
+        is-deeply &t.returns, Str(Any), '.returns() gives correct value';
+    }
+
+    subtest 'sub (Num $x --> Int(Str))' => {
+        plan 3;
+
+        my sub     t (Num $x --> Int(Str)) {"$x"}
+        isa-ok     t(42e0),   Int,      'returns correct type';
+        is         t(42e0),   42,       'returns correct value';
+        is-deeply &t.returns, Int(Str), '.returns() gives correct value';
+    }
+
+    subtest 'sub (Int) returns Str()' => {
+        plan 3;
+
+        my sub     t (Int $x) returns Str() {$x}
+        isa-ok     t(42),     Str,      'returns correct type';
+        is         t(42),     "42",     'returns correct value';
+        is-deeply &t.returns, Str(Any), '.returns() gives correct value';
+    }
+
+    subtest 'sub (Num) returns Int(Str)' => {
+        plan 3;
+
+        my sub     t (Num $x) returns Int(Str) {"$x"}
+        isa-ok     t(42e0),   Int,      'returns correct type';
+        is         t(42e0),   42,       'returns correct value';
+        is-deeply &t.returns, Int(Str), '.returns() gives correct value';
+    }
+
+    subtest 'block Int --> Str()' => {
+        plan 3;
+
+        my        $block = -> Int $x --> Str() {$x};
+        isa-ok    $block(42),     Str,      'returns correct type';
+        is        $block(42),     "42",     'returns correct value';
+        is-deeply $block.returns, Str(Any), '.returns() gives correct value';
+    }
+
+    subtest 'block --> Str()' => {
+        plan 3;
+
+        my        $block = -> --> Str() {42};
+        isa-ok    $block(),       Str,      'returns correct type';
+        is        $block(),       "42",     'returns correct value';
+        is-deeply $block.returns, Str(Any), '.returns() gives correct value';
+    }
+
+    subtest 'method (Int --> Str())' => {
+        plan 3;
+
+        my        $o = class { method v (Int $x --> Str()) {$x} }.new;
+        isa-ok    $o.v(42), Str,  'returns correct type';
+        is        $o.v(42), "42", 'returns correct value';
+        is-deeply $o.^find_method('v').returns, Str(Any),
+            '.returns() gives correct value';
+    }
+
+    throws-like { sub (--> Str(Int)) { 42e0 }() }, X::TypeCheck::Return,
+        'returning incorrect type throws';
 }
 
 # returns vs -->
