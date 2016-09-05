@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 44;
+plan 48;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -18,9 +18,9 @@ is(1 x 5, '11111', 'number repeat operator works on number and creates string');
 is('' x 6, '', 'repeating an empty string creates an empty string');
 is('a' x 0, '', 'repeating zero times produces an empty string');
 is('a' x -1, '', 'repeating negative times produces an empty string');
-is 'a' x 2.2, 'aa', 'repeating with a fractional number coerces to Int';
+is('a' x 2.2, 'aa', 'repeating with a fractional number coerces to Int');
 # RT #114670
-is 'str' x Int, '', 'x with Int type object';
+is('str' x Int, '', 'x with Int type object');
 # RT #125628
 {
     throws-like(
@@ -43,6 +43,24 @@ is 'str' x Int, '', 'x with Int type object';
     );
     isa-ok('a' x Inf, Failure, 'repeating with Inf is a Failure');
     isa-ok('a' x *, WhateverCode, 'repeating with * is a WhateverCode');
+}
+# RT #128035
+{
+    my $a;
+    lives-ok({ $a = 'a' x 1073741824 }, 'repeat count equal to the NQP limit works');
+    is($a.chars, 1073741824, 'correct result for count equal to the NQP limit');
+    throws-like(
+        { 'a' x 1073741825 },
+        X::AdHoc,
+        message => 'repeat count > 1073741824 arbitrarily unsupported...',
+        'repeat count greater than the NQP limit dies'
+    );
+    throws-like(
+        { 'a' x int.Range.max + 1 },
+        X::AdHoc,
+        message => 'repeat count > 1073741824 arbitrarily unsupported...',
+        'repeat count greater than the max size of an int dies because of the NQP limit'
+    );
 }
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
