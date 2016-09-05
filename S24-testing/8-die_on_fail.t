@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 use Test;
 use Test::Util;
-plan 3;
+plan 4;
 
 is_run 'use Test; plan 3; ok 1; ok 0; ok 1;', {
     :out("1..3\nok 1 - \nnot ok 2 - \nok 3 - \n"),
@@ -27,11 +27,11 @@ is_run 'BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = 1;'
     :1status,
 }, 'PERL6_TEST_DIE_ON_FAIL does not exit on failed TODO tests';
 
-
-#      got status: 1
-#      got out: "1..2\nnot ok 1 - # TODO foo\n\n# Failed test at getout-21997-614887.code line 1\n# expected: '72'\n#      got: '42'\nnot ok 2 - test-ok\n"
-# expected out: "1..3\nok 1 - \nnot ok 2 - \n"
-#      got err: "\n# Failed test 'test-ok'\n# at getout-21997-614887.code line 1\n# expected: '72'\n#      got: '42'\n# Test failed. Stopping test suite, because PERL6_TEST_DIE_ON_FAIL environmental variable is set to a true value.\n# Looks like you failed 1 test of 2\n"
-
+# RT #129192
+is_run 'BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = 1;'
+        ~ 'use Test; plan 1; is "x", "test-ok"', {
+    :err(/'test-ok'/),
+    :1status,
+}, 'test failure diagnostics show up when PERL6_TEST_DIE_ON_FAIL is used';
 
 # vim: expandtab shiftwidth=4 ft=perl6
