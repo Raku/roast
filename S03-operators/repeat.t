@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 39;
+plan 44;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -21,6 +21,29 @@ is('a' x -1, '', 'repeating negative times produces an empty string');
 is 'a' x 2.2, 'aa', 'repeating with a fractional number coerces to Int';
 # RT #114670
 is 'str' x Int, '', 'x with Int type object';
+# RT #125628
+{
+    throws-like(
+        { 'a' x -NaN },
+        X::AdHoc,
+        message => 'Cannot coerce NaN to an Int',
+        'repeating with -NaN fails'
+    );
+    throws-like(
+        { 'a' x NaN },
+        X::AdHoc,
+        message => 'Cannot coerce NaN to an Int',
+        'repeating with NaN fails'
+    );
+    throws-like(
+        { 'a' x -Inf },
+        X::AdHoc,
+        message => 'Cannot coerce -Inf to an Int',
+        'repeating with -Inf fails'
+    );
+    isa-ok('a' x Inf, Failure, 'repeating with Inf is a Failure');
+    isa-ok('a' x *, WhateverCode, 'repeating with * is a WhateverCode');
+}
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
 my @foo = 'x' xx 10;
