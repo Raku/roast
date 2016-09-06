@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 45;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -178,6 +178,12 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
     is rt74900(), "zero", "Exact arity match wins over candidates with optionals";
     is rt74900(42), "Int", "With Int argument hit optional Int candidate";
     is rt74900("bar"), "Str", "With Str argument hit optional Str candidate";
+}
+
+{
+    multi foo(Int $a) { return "first" };
+    multi foo(Int $a where *.so) { return "second" }
+    is foo(10), "second", "where-blocked multi has higher priority than non-where-blocked multi";
 }
 
 # vim: ft=perl6
