@@ -66,7 +66,7 @@ multi sub client(Str $message) {
     });
 }
 
-my $message = [~] '0'..'z';
+my $message = [~] flat '0'..'z', "\n";
 my $echoResult = await client($message);
 $echoTap.close;
 ok $echoResult eq $message, 'Echo server';
