@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 use Test;
 use Test::Util;
-plan 4;
+plan 5;
 
 is_run 'use Test; plan 3; ok 1; ok 0; ok 1;', {
     :out("1..3\nok 1 - \nnot ok 2 - \nok 3 - \n"),
@@ -33,5 +33,11 @@ is_run 'BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = 1;'
     :err(/'test-ok'/),
     :1status,
 }, 'test failure diagnostics show up when PERL6_TEST_DIE_ON_FAIL is used';
+
+is_run 'BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = 1;'
+        ~ 'use Test; plan 1; todo "foo"; subtest "bar", { plan 2; ok 0; '
+        ~ 'subtest "ber", { ok 0 } };', {
+    :0status,
+}, 'PERL6_TEST_DIE_ON_FAIL does not exit in subtests that may be TODOed';
 
 # vim: expandtab shiftwidth=4 ft=perl6
