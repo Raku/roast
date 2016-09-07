@@ -40,7 +40,6 @@ is_run(
             ~ ' say "Did not hang"';
 
     for ^3 {
-        #?rakudo skip 'RT 128595'
         doesn't-hang \($*EXECUTABLE, '-e', $code), :out(/'Did not hang'/),
             'done() on first iteration of Supply.interval does not hang';
     }
