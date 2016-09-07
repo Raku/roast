@@ -4,7 +4,8 @@ use Test;
 use Test::Util;
 plan 5;
 
-is_run 'use Test; plan 3; ok 1; ok 0; ok 1;', {
+is_run 'BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = 0;'
+        ~ 'use Test; plan 3; ok 1; ok 0; ok 1;', {
     :out("1..3\nok 1 - \nnot ok 2 - \nok 3 - \n"),
     :err(/:i 'failed' .+ 'line 1' .+ 'failed 1 test of 3'/),
     :1status,
