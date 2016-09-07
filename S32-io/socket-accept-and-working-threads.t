@@ -28,7 +28,7 @@ start {
 
 await $ready;
 for ^5 {
-    my $conn = IO::Socket::INET.new(:host<localhost>, :port(10333));
+    my $conn = IO::Socket::INET.new(:host<127.0.0.1>, :port(10333));
     $conn.print: "Don't hang up";
     is $conn.recv, "Don't hang up", "Server responded ($_)";
     $conn.close;
