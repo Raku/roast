@@ -175,7 +175,8 @@ multi doesn't-hang (
     # await returns and we follow the path that assumes the code we ran hung.
     my $promise = $prog.start;
     await $prog.write: $in.encode if $in.defined;
-    await Promise.anyof: Promise.in($wait), $promise;
+    await Promise.anyof: Promise.in($wait * ($*ENV<ROAST_TIMING_SCALE>//1)),
+                         $promise;
 
     my $did-not-hang = False;
     given $promise.status {
