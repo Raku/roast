@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 38;
 
 =begin description
 
@@ -133,6 +133,21 @@ This test tests the C<unique> builtin.
       "inplace form of unique with [eqv] and objects works";
     is-deeply @array, [{:a<1>}, {:b<1>}],
       "final result with [eqv] and objects in place";
+} #4
+
+# :with and :as
+{
+    my @array = ({:a<1>}, {:b<1>}, {:A<1>});
+    my $as = &lc;
+    my $with = &[eqv];
+    is-deeply @array.unique(:$as, :$with).List,  ({:a<1>}, {:b<1>}),
+      "method form of unique with :as and :with and objects works";
+    is-deeply unique(@array, :$as, :$with).List, ({:a<1>}, {:b<1>}),
+      "subroutine form of unique with :as and :with and objects works";
+    is-deeply @array .= unique(:$as, :$with), [{:a<1>}, {:b<1>}],
+      "inplace form of unique with :as and :with and objects works";
+    is-deeply @array, [{:a<1>}, {:b<1>}],
+      "final result with :as and :with and objects in place";
 } #4
 
 # RT #121434
