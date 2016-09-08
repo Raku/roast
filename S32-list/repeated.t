@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 38;
 
 =begin description
 
@@ -129,6 +129,21 @@ This test tests the C<repeated> builtin.
       "inplace form of repeated with [eqv] and objects works";
     is-deeply @array, [{:a<1>},],
       "final result with [eqv] and objects in place";
+} #4
+
+# :with and :as
+{
+    my @array = ({:a<1>}, {:B<1>}, {:A<1>}, {:b<1>});
+    my $as = &lc;
+    my $with  = &[eqv];
+    is-deeply @array.repeated(:$as, :$with).List,  ({:A<1>}, {:b<1>}),
+      "method form of repeated with :as and :with and objects works";
+    is-deeply repeated(@array, :$as, :$with).List, ({:A<1>}, {:b<1>}),
+      "subroutine form of repeated with :as and :with and objects works";
+    is-deeply @array .= repeated(:$as, :$with), [{:A<1>}, {:b<1>}],
+      "inplace form of repeated with :as and :with and objects works";
+    is-deeply @array, [{:A<1>}, {:b<1>}],
+      "final result with :as and :with and objects in place";
 } #4
 
 {
