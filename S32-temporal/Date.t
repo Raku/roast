@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 100;
+plan 101;
 
 # construction
 {
@@ -184,3 +184,7 @@ is Date.new('2015-12-29',:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
         is $fd.foo,    42, "is foo in FooDate ok";
     }
 }
+
+# RT #128545
+throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
+    'synthetics are rejected in constructor string';

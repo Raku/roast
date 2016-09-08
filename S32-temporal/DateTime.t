@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 268;
+plan 269;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -688,4 +688,13 @@ is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
         is $fdt.second,  7, "is second in FooDateTime ok";
         is $fdt.foo,    42, "is foo in FooDateTime ok";
     }
+}
+
+# RT #128545
+subtest 'synthetics not allowed in date formats' => {
+    throws-like { DateTime.new: "20\x[308]16-07-05T00:00:00+01:00" },
+        X::Temporal::InvalidFormat, 'DateTime.new (+01:00 format)';
+
+    throws-like { DateTime.new: "2016-07-05T00:0\x[308]0:00Z" },
+        X::Temporal::InvalidFormat, 'DateTime.new (Z format)';
 }
