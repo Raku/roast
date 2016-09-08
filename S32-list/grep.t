@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 39;
+plan 41;
 
 my @list = (1 .. 10);
 
@@ -137,6 +137,22 @@ my @list = (1 .. 10);
 {
     is (^∞).grep(*.is-prime).is-lazy, True, '.grep propagates .is-lazy';
     is (grep *.is-prime, ^∞).is-lazy, True, 'grep() propagates .is-lazy';
+}
+
+# grep with an unexpected adverb
+{
+    throws-like(
+        { @list.grep(Mu, :asdf) },
+        X::Adverb,
+        message => q{Unexpected adverb 'asdf' passed to grep on @list},
+        'grep on an instance with an unexpected adverb'
+    );
+    throws-like(
+        { List.grep(Mu, :asdf) },
+        X::Adverb,
+        message => q{Unexpected adverb 'asdf' passed to grep on List},
+        'grep on a type object with an unexpected adverb'
+    );
 }
 
 # vim: ft=perl6
