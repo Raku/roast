@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 10;
 
 my $hostname = 'localhost';
 my $port = 5000;
@@ -66,15 +66,74 @@ multi sub client(Str $message) {
     });
 }
 
+multi sub client(Blob $message, Blob $second?) {
+    client(-> $socket, $vow {
+        $socket.write($message).then(-> $wr {
+            if $wr.status == Broken {
+                $vow.break($wr.cause);
+                $socket.close();
+            }
+            elsif $second {
+                $socket.write($second).then(-> $wr {
+                    if $wr.status == Broken {
+                        $vow.break($wr.cause);
+                        $socket.close();
+                    }
+                });
+            }
+        });
+        my $buf = Buf[uint8].new;
+        $socket.Supply(:bin).act(-> $bytes { 
+                $buf ~= $bytes;
+            },
+            done => {
+                $socket.close();
+                $vow.keep($buf);
+            },
+            quit => { $vow.break($_); });
+    });
+}
+
 my $message = [~] flat '0'..'z', "\n";
 my $echoResult = await client($message);
+is $echoResult, $message, 'Echo server';
 $echoTap.close;
-ok $echoResult eq $message, 'Echo server';
+
+my $firstReceive;
+my $splitGraphemeTap = $server.tap(-> $c {
+    $c.Supply.tap(
+        -> $msg { $firstReceive = $msg; $c.close; }
+    );
+});
+await client('u'.encode('utf-8'), "\c[COMBINING DOT ABOVE]\n".encode('utf-8'));
+$splitGraphemeTap.close;
+is $firstReceive, "u̇\n", 'Coped with grapheme split across packets';
+
+my $echo2Tap = $server.tap(-> $c {
+    $c.Supply.tap(-> $chars {
+        $c.print($chars).then({ $c.close });
+    }, quit => { say $_; });
+});
+my $encMessage = "пиво\n".encode('utf-8');
+my $splitResult = await client($encMessage.subbuf(0, 3), $encMessage.subbuf(3));
+$echo2Tap.close;
+is $splitResult.decode('utf-8'), "пиво\n", 'Coped with UTF-8 bytes split across packets';
+
+# RT #128862
+my $failed = False;
+my $badInputTap = $server.tap(-> $c {
+    $c.Supply.tap(
+        -> $chars { },
+        quit => { $failed = True; $c.close; }
+    );
+});
+try await client(Buf.new(0xFF, 0xFF));
+$badInputTap.close;
+ok $failed, 'Bad UTF-8 causes quit on Supply (but program survives)';
 
 my $discardTap = $server.tap(-> $c {
     $c.Supply.tap(-> $chars { $c.close });
 });
-
 my $discardResult = await client($message);
 $discardTap.close;
 ok $discardResult eq '', 'Discard server';
@@ -87,19 +146,7 @@ my $binaryTap = $server.tap(-> $c {
 
 #?rakudo.jvm skip 'hangs (sometimes) RT #127948'
 {
-    multi sub client(Buf $message) {
-        client(-> $socket, $vow {
-            my $buf = Buf[uint8].new;
-            $socket.Supply(:bin).act(-> $bytes { 
-                    $buf ~= $bytes;
-                    $socket.close();
-                    $vow.keep($buf);
-                },
-                quit => { $vow.break($_); });
-        });
-    }
-
-    my $received = await client($binary);
+    my $received = await client(Buf.new);
     $binaryTap.close;
     ok $binary eqv $received, 'bytes-supply';
 }
