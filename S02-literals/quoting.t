@@ -651,7 +651,6 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
 
 # RT #128304
 {
-    #?rakudo todo 'RT 128304'
     is-deeply qww<a a ‘b b’ ‚b b’ ’b b‘ ’b b‘ ’b b’ ‚b b‘ ‚b b’ “b b” „b b”
             ”b b“ ”b b“ ”b b” „b b“ „b b” ｢b b｣ ｢b b｣>,
         ('a', 'a', |('b b' xx 16)),
