@@ -12,7 +12,7 @@ my @endings =
 ## adjusted plan to allow fine grained fudging for rakudo.jvm
 #plan @endings * (1 + 3 * ( (3 * 5) + 6));
 my $extra_tests_jvm_fudging = 2 * 3 * ( 3 * ( 6 + 2 ) );
-plan @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
+plan 1 + @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -241,6 +241,12 @@ for @endings -> (:key($eol), :value($EOL)) {
               "path 1,2: $status";
         }
     }
+}
+
+# RT #127370
+{
+    (shell :out, $*EXECUTABLE ~ ’ -pe '' /proc/$$/statm‘).out.slurp-rest;
+    pass 'Attempting to read lines in from `/proc/$$/statm` does not hang';
 }
 
 unlink $filename; # cleanup
