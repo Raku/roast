@@ -269,7 +269,7 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 }
 
 {
-    throws-like { sprintf "%d", 0^1 }, X::Str::Sprintf::Directives::BadType, :type('Junction'), 
+    throws-like { sprintf "%d", 0^1 }, X::Str::Sprintf::Directives::BadType, :type('Junction'),
         "sprintf complains about types that can't be displayed as the directive specifies";
 }
 
