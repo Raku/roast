@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 159;
+plan 160;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -276,6 +276,13 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 {
     throws-like { sprintf "%q", 0 }, X::Str::Sprintf::Directives::Unsupported,
         'sprintf complains about unsupported directives';
+}
+
+# RT #129088
+{
+    throws-like { sprintf 'D6.2', 'foo' }, X::Str::Sprintf::Directives::Count,
+        backtrace => /^ [ <!after 'panic'> . ]+ $/,
+    'Invalid formats do not spill internal details';
 }
 
 # vim: ft=perl6
