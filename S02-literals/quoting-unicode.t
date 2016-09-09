@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 89;
+plan 90;
 
 #L<S02/Literals>
 # TODO:
@@ -59,6 +59,7 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
             '︿' => '﹀', '﹁' => '﹂', '﹃' => '﹄', '﹇' => '﹈',
             '﹙' => '﹚', '﹛' => '﹜', '﹝' => '﹞', '（' => '）',
             '［' => '］', '｛' => '｝', '｟' => '｠', '｢' => '｣',
+            '⸨' => '⸩',
             );
     for @ps_pe {
         next if .key eq '('; # skip '(' => ')' because q() is a sub call
