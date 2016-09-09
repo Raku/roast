@@ -413,7 +413,7 @@ my @moar = <
   X::Proc::Async::TapBeforeSpawn
 >;
 
-plan 4 + 4 * ( @normal + @exception + @concurrent + @moar );
+plan 5 + 4 * ( @normal + @exception + @concurrent + @moar );
 
 my %seen-which;
 
@@ -453,4 +453,12 @@ for @moar -> $class {
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
     is ::($class).perl,             $class, "$class.perl returns self";
     is ::($class).gist,         "($short)", "$class.gist returns self";
+}
+
+# RT #128944
+subtest 'ObjAt.perl gives distinct results for different objects' => {
+    my @obj = "rt", 128944, <128944>, rx/^/, NaN, ∞, τ+i, .5, class {}, 'a'|42,
+                sub {}, -> {}, method {}, *, *+5, start {}, supply {};
+    plan +@obj;
+    is .WHICH.perl, qq|ObjAt.new("{.WHICH}")|, "object: {.perl}" for @obj;
 }
