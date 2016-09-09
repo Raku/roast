@@ -76,9 +76,9 @@ is IO::Path::Cygwin.new("\\").parent,            "/",            "parent of root
 is IO::Path::Cygwin.new("/").child('foo'),    "/foo",        "append to root";
 is IO::Path::Cygwin.new(".").child('foo'),    "foo",        "append to cwd";
 
-my $numfile = IO::Path::Unix.new("foo/file01.txt");
+my $numfile = IO::Path::Cygwin.new("foo/file01.txt");
 is $numfile.succ,    "foo/file02.txt", "succ basic";
 is $numfile.succ.succ,    "foo/file03.txt", "succ x 2";
 is $numfile.pred,    "foo/file00.txt", "pred basic";
-is IO::Path::Unix.new("foo/()").succ, "foo/()", "succ only effects basename";
-is IO::Path::Unix.new("foo/()").succ, "foo/()", "pred only effects basename";
+is IO::Path::Cygwin.new("foo/()").succ, "foo/()", "succ only effects basename";
+is IO::Path::Cygwin.new("foo/()").succ, "foo/()", "pred only effects basename";
