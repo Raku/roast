@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 50;
+plan 51;
 
 my $*SPEC = IO::Spec::Win32;  # .IO needs to have IO::Spec::Win32
 my $*CWD  = 'C:\\zip\\loc'.IO;
@@ -81,3 +81,7 @@ is $numfile.succ.succ,    "foo\\file03.txt", "succ x 2";
 is $numfile.pred,    "foo\\file00.txt", "pred basic";
 is IO::Path::Win32.new("foo\\()").succ, "foo\\()", "succ only effects basename";
 is IO::Path::Win32.new("foo\\()").succ, "foo\\()", "pred only effects basename";
+
+# RT#128840
+isnt IO::Path::Win32.new('-a').absolute, '',
+    '.absolute on paths starting with `-` does not produce empty string';
