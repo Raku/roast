@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 28;
+plan 29;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -214,3 +214,20 @@ eval-lives-ok '(;)', '(;) does not explode the compiler';
 eval-lives-ok '(;;)', '(;;) does not explode the compiler';
 eval-lives-ok '[;]', '[;] does not explode the compiler';
 eval-lives-ok '[;0]', '[;0] does not explode the compiler';
+
+# RT #127208
+#?rakudo skip 'RT127208'
+#?DOES 1
+{
+    subtest 'accessing Seq from multiple threads does not segfault' => {
+        my $code = Q:to/CODE_END/;
+            my @primes = grep { .is-prime }, 1 .. *;
+            my @p = gather for 4000, 5, 100, 2000 -> $n {
+                take start { @primes[$n] }
+            }
+            .say for await @p;
+            CODE_END
+
+        is_run($code, { :1status }, 'no segfaults') for ^20;
+    }
+}
