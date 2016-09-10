@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 38;
+plan 39;
 
 # Very basic enum tests
 
@@ -132,6 +132,15 @@ dies-ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 {
     enum Foo <a b>;
     isa-ok Foo.enums, Map, '.enums returns a Map';
+}
+
+# RT #124251
+subtest 'dynamically created lists can be used to define an enum' => {
+    plan 2;
+    my enum rt124251 ('a'..'c' X~ 1 .. 2);
+    cmp-ok b2, '==', 3, 'enum element has correct value';
+    is-deeply rt124251.enums, Map.new( (:0a1,:1a2,:2b1,:3b2,:4c1,:5c2) ),
+        '.enums are all correct';
 }
 
 # vim: ft=perl6
