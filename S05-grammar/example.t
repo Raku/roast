@@ -1,7 +1,9 @@
 use v6;
+use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
-plan 9;
+plan 10;
 
 =pod calling a rule a grammar with arguments
 
@@ -68,6 +70,15 @@ is($content ~~ m/<schedule>/, $content, 'match rule');
         $result = grammar { token TOP { <return> }; token return { .+ }; }.parse("all-good");
     }, '<return> inside grammar must reference token `return`, not &return';
     is ~$result, 'all-good', 'token `return` parses things correctly';
+}
+
+# RT #124219
+{
+    my $code = ‘grammar Bug { token term { a }; token TOP { <term> % \n } }’
+        ~ ‘Bug.parse( 'a' );’;
+
+    is_run $code, { :out(''), :err(/'token TOP { <term>'/), :status },
+        '`quantifier with %` error includes the token it appears in';
 }
 
 # vim: ft=perl6
