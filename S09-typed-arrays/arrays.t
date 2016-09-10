@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 82;
+plan 84;
 
 # L<S09/Typed arrays/>
 
@@ -264,6 +264,23 @@ plan 82;
     sub rt126134 (Int @a) { pass '@a of Foo accepted by sub (Foo @a)' };
     my @a of Int;
     rt126134 @a;
+}
+
+# RT #126136
+{
+    {
+        my @a of Int;
+        my @b;
+        is @b.WHAT.perl, 'Array',
+            'using `of` does not affect arrays defined later';
+    }
+
+    {
+        my @a of Int;
+        my @b of Str;
+        is @b.WHAT.perl, 'Array[Str]',
+            'using `of` does not affect arrays with `of` defined later';
+    }
 }
 
 # vim: ft=perl6
