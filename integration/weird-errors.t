@@ -87,11 +87,11 @@ lives-ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
 {
     lives-ok { EVAL 'class A {
         has %!x;
-    
+
         method m {
             sub foo {
             }
-    
+
             %!x<bar> = 42;
         }
     }' }, "still able to parse statement after sub decl ending in newline";
