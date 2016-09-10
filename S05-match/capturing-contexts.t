@@ -225,11 +225,12 @@ plan 59;
 }
 
 # RT #127701
-#?rakudo 3 todo 'RT 127701'
 {
     subtest 'postfix operators do not interfere with interpolation of $/[0]', {
         plan 3;
         '5x3' ~~ /(.)x(.)/;
+
+        #?rakudo 3 todo 'RT 127701'
         is "$/[0]--", '5--', 'postfix --';
         is "$/[0]++", '5++', 'postfix ++';
 
