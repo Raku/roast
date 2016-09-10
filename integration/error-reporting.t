@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 23;
+plan 24;
 
 use Test::Util;
 
@@ -193,5 +193,9 @@ is_run 'sub foo { ({a=>1,b=>2}, {c=>3,d=>4}).map({ if (.<a>) {return $_} else { 
         err => rx/^ [ <!after 'SORRY'> . ]+ $/,
     }, 'runtime time errors do not contain ==SORRY==';
 }
+
+# RT #126264
+throws-like 'begin 42', X::Undeclared::Symbols, message => /'BEGIN'/,
+    '`BEGIN` suggested when `begin` is used';
 
 # vim: ft=perl6
