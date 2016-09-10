@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 98;
+plan 99;
 
 #L<S03/Autoincrement precedence>
 
@@ -262,5 +262,8 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
         'can construct Rat (or similar) with big denominator';
 }
 
+# RT 125938
+throws-like '2**10000000000', X::Numeric::Overflow,
+    'attempting to raise to a huge power throws';
 
 # vim: ft=perl6
