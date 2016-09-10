@@ -9,7 +9,7 @@ use Test;
 
 plan 9;
 
-# test that 'use' imports class names defined in importet packages
+# test that 'use' imports class names defined in imported packages
 
 use t::spec::packages::UseTest;
 
