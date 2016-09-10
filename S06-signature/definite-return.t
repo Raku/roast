@@ -1,8 +1,9 @@
 use v6;
-
+use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
-plan 20;
+plan 21;
 
 # L<S06/Signatures>
 
@@ -206,6 +207,13 @@ constant indiana-pi = 3;
         throws-like { sub (--> Str(Int)) { 42e0 }() }, X::TypeCheck::Return,
             'returning incorrect type throws';
     }
+}
+
+# RT #125181
+{
+    is_run 'sub rt125181 returns Str returns Int {}', {
+        :out(''), :err{ not $^o.contains: 'Unhandled exception' }
+    }, 'using two `returns` produces sane error';
 }
 
 # returns vs -->
