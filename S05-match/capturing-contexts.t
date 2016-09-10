@@ -5,7 +5,7 @@ use MONKEY-TYPING;
 
 use Test;
 use Test::Util;
-plan 57;
+plan 59;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -236,6 +236,16 @@ plan 57;
         my sub postfix:<foo> { 42 }
         is "$/[0]foo", '5foo', 'custom postfix `foo`';
     }
+}
+
+# RT #127075
+{
+    lives-ok
+        { grammar { token TOP { <número>+ }; token número {<< \d+ >>} } },
+        'non-ascii tokens in a grammar work';
+    lives-ok
+        { "abc 123" ~~ /$<número>=\d+/ },
+        'non-ascii token in a subcapture work';
 }
 
 # vim: ft=perl6
