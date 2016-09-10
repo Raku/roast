@@ -228,6 +228,6 @@ eval-lives-ok '[;0]', '[;0] does not explode the compiler';
             .say for await @p;
             CODE_END
 
-        is_run($code, { :1status }, 'no segfaults') for ^20;
+        is_run($code, { :status(1|0) }, 'no segfaults') for ^20;
     }
 }
