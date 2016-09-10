@@ -56,7 +56,7 @@ is($content ~~ m/<title>/, '<title>Exactly</title>', 'match token');
 
 # XXX this can't work this way
 # 'schedule' is a rule (non-backtracking) so the implicit <.ws> will always
-# match zero characters. 
+# match zero characters.
 #?rakudo skip 'Method "speaker" not found for invocant of class "Cursor" RT #124795'
 is($content ~~ m/<schedule>/, $content, 'match rule');
 
