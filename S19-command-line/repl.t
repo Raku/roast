@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 10;
+plan 11;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -102,4 +102,15 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
             and $^o.comb('testing-repl-two') == 1
         }),
     'previously-entered code must not be re-run on every line of input';
+}
+
+# RT #125412
+{
+    my $code = 'sub x() returns Array of Int { return my @x of Int = 1,2,3 };'
+        ~ "x().WHAT.say\n";
+
+    is_run_repl "$code" x 10,
+        :err(''),
+        :out({ not $^o.contains: '[Int][Int]' }),
+    'no bizzare types returned from redeclared "returns an `of` Array" sub';
 }
