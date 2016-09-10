@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 10;
+plan 11;
 
 =pod calling a rule a grammar with arguments
 
@@ -79,6 +79,17 @@ is($content ~~ m/<schedule>/, $content, 'match rule');
 
     is_run $code, { :out(''), :err(/'token TOP { <term>'/), :status },
         '`quantifier with %` error includes the token it appears in';
+}
+
+# RT #81136
+{
+    grammar rt81136 {
+        token a { a }
+        token b { b }
+        token TOP { <a><b><before $<b>> }
+    }
+    is rt81136.parse('abc'), Nil,
+        'lookbehind that should not match does not match';
 }
 
 # vim: ft=perl6
