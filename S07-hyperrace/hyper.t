@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -98,4 +98,10 @@ plan 12;
               "cannot have a $name of $value for hyper";
         }
     }
+}
+
+# RT #127099
+{
+    my @res = ^1000 .hyper.map: *+0;
+    is-deeply @res, [@res.sort], '.hyper preserves order';
 }
