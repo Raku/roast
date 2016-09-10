@@ -4,7 +4,7 @@ use Test;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 59;
+plan 60;
 
 # Legend:
 # r   result
@@ -524,4 +524,26 @@ is "aaaaabbbbb".split(<aaa aa bb bbb>,:v), " aaa  aa  bbb  bb ",
 {
     # .List is to check it's not a BOOTArray (which doesn't have p6 method resolution)
     is *.split("-").("a-b-c").List,<a b c>,'*.split result is HLLized';
+}
+
+# RT #129242
+subtest '.split works on Cool same as it works on Str' => {
+    plan 11;
+
+    my $m = Match.new(
+        ast => Any,    list => (), hash => Map.new(()),
+        orig => "123", to => 2,    from => 1,
+    );
+
+    is-deeply 123.split('2', :v),  ('1', '2',      '3'), ':v; Cool';
+    is-deeply 123.split(/2/, :v),  ('1', $m,       '3'), ':v; Regex';
+    is-deeply 123.split('2', :kv), ('1', 0, '2',   '3'), ':kv; Cool';
+    is-deeply 123.split(/2/, :kv), ('1', 0, $m,    '3'), ':kv; Regex';
+    is-deeply 123.split('2', :p),  ('1', 0 => '2', '3'), ':p; Cool';
+    is-deeply 123.split(/2/, :p),  ('1', 0 => $m,  '3'), ':p; Regex';
+    is-deeply 123.split('2', :k),  ('1', 0,        '3'), ':k; Cool';
+    is-deeply 123.split(/2/, :k),  ('1', 0,        '3'), ':k; Regex';
+    is-deeply 4.split('',      :skip-empty), ('4',),     ':skip-empty; Cool';
+    is-deeply 4.split(/<<|>>/, :skip-empty), ('4',),     ':skip-empty; Regex';
+    is-deeply 12345.split(('2', /4/)), ("1", "3", "5"),  '@needles form';
 }
