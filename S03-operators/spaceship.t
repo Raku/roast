@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Nonchaining binary precedence/Sort comparisons>
 
-plan 5;
+plan 6;
 
 my %ball = map {; $_ => 1 }, 1..12;
 is(
@@ -25,5 +25,9 @@ is($result_3, Order::Less, 'When spaceship terms are non-trivial members it pars
 
 %ball{12} = 0.5;
 is(%ball{12} <=> %ball{11}, Order::Less, 'When spaceship terms are non-integral numbers it parses incorrectly');
+
+# RT #126536
+throws-like { say ’a‘ <=> ’b‘ }, X::Str::Numeric,
+    '<=> with non-numerics throws correct exception';
 
 # vim: ft=perl6
