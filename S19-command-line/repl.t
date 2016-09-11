@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 11;
+plan 12;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -113,4 +113,13 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         :err(''),
         :out({ not $^o.contains: '[Int][Int]' }),
     'no bizzare types returned from redeclared "returns an `of` Array" sub';
+}
+
+# RT #127631
+{
+
+    is_run_repl join("\n", |<last next redo>, 'say "rt127631-pass"', ''),
+        :err(''),
+        :out(/'rt127631-pass'/),
+    'loop controls do not exit the REPL';
 }
