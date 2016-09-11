@@ -255,6 +255,7 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
 # RT #112626
 {
     # Run the test twice, so the first time precompiles the modules
+    #?rakudo.jvm todo "Invalid typename 'RT112626::Class1' in parameter declaration"
     for ^2 {
         is_run ｢use RT112626::Conflict; say 'pass'｣, {:out("pass\n"), :err('')},
             :compiler-args['-I', 't/spec/packages'],

@@ -99,37 +99,46 @@ my $echoResult = await client($message);
 is $echoResult, $message, 'Echo server';
 $echoTap.close;
 
-my $firstReceive;
-my $splitGraphemeTap = $server.tap(-> $c {
-    $c.Supply.tap(
-        -> $msg { $firstReceive = $msg; $c.close; }
-    );
-});
-await client('u'.encode('utf-8'), "\c[COMBINING DOT ABOVE]\n".encode('utf-8'));
-$splitGraphemeTap.close;
-is $firstReceive, "u̇\n", 'Coped with grapheme split across packets';
+#?rakudo.jvm skip 'NullPointerException'
+{
+    my $firstReceive;
+    my $splitGraphemeTap = $server.tap(-> $c {
+        $c.Supply.tap(
+            -> $msg { $firstReceive = $msg; $c.close; }
+        );
+    });
+    await client('u'.encode('utf-8'), "\c[COMBINING DOT ABOVE]\n".encode('utf-8'));
+    $splitGraphemeTap.close;
+    is $firstReceive, "u̇\n", 'Coped with grapheme split across packets';
+}
 
-my $echo2Tap = $server.tap(-> $c {
-    $c.Supply.tap(-> $chars {
-        $c.print($chars).then({ $c.close });
-    }, quit => { say $_; });
-});
-my $encMessage = "пиво\n".encode('utf-8');
-my $splitResult = await client($encMessage.subbuf(0, 3), $encMessage.subbuf(3));
-$echo2Tap.close;
-is $splitResult.decode('utf-8'), "пиво\n", 'Coped with UTF-8 bytes split across packets';
+#?rakudo.jvm skip 'NullPointerException'
+{
+    my $echo2Tap = $server.tap(-> $c {
+        $c.Supply.tap(-> $chars {
+            $c.print($chars).then({ $c.close });
+        }, quit => { say $_; });
+    });
+    my $encMessage = "пиво\n".encode('utf-8');
+    my $splitResult = await client($encMessage.subbuf(0, 3), $encMessage.subbuf(3));
+    $echo2Tap.close;
+    is $splitResult.decode('utf-8'), "пиво\n", 'Coped with UTF-8 bytes split across packets';
+}
 
 # RT #128862
-my $failed = False;
-my $badInputTap = $server.tap(-> $c {
-    $c.Supply.tap(
-        -> $chars { },
-        quit => { $failed = True; $c.close; }
-    );
-});
-try await client(Buf.new(0xFF, 0xFF));
-$badInputTap.close;
-ok $failed, 'Bad UTF-8 causes quit on Supply (but program survives)';
+#?rakudo.jvm skip 'hangs on JVM'
+{
+    my $failed = False;
+    my $badInputTap = $server.tap(-> $c {
+        $c.Supply.tap(
+            -> $chars { },
+            quit => { $failed = True; $c.close; }
+        );
+    });
+    try await client(Buf.new(0xFF, 0xFF));
+    $badInputTap.close;
+    ok $failed, 'Bad UTF-8 causes quit on Supply (but program survives)';
+}
 
 my $discardTap = $server.tap(-> $c {
     $c.Supply.tap(-> $chars { $c.close });
