@@ -200,6 +200,6 @@ throws-like 'begin 42', X::Undeclared::Symbols, message => /'BEGIN'/,
 
 # RT #127012
 throws-like 'gather for ^3 -> $a, $b { take 1 }', X::AdHoc, backtrace => /line/,
-    'too many positionals error in gather/for/take includes line number';
+    '`too few positionals` error in gather/for/take includes line number';
 
 # vim: ft=perl6
