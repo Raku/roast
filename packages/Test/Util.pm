@@ -217,7 +217,7 @@ across Perl 6 implementations.
 
 =head1 FUNCTIONS
 
-=head2 is_run( Str $code, Str $input?, %wanted, Str $name? )
+=head2 is_run( Str $code, Str $input?, %wanted, Str $name?, :@args, :@compiler-args )
 
 It runs the code given, feeding it the input given, and collects results
 in the form of its stdout, stderr, and exit status.  The %wanted hash
@@ -245,6 +245,12 @@ For example:
 
   is_run( 'rand.say', { out => sub { $^a > 0 && $^a < 1 }, err => '' },
           'output of rand is between zero and one' );
+
+You can use named arguments to pass arguments to the perl6 executable
+(C<:compiler-args>) or to the program being run (C<:args>):
+
+    is_run 'use Foo; sub MAIN (:$test) {...}',
+        :args['--test'], :compiler-args['-I', 'lib'];
 
 =head3 Errors
 
