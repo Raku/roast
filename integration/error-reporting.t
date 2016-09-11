@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 26;
+plan 27;
 
 use Test::Util;
 
@@ -205,5 +205,10 @@ throws-like 'gather for ^3 -> $a, $b { take 1 }', X::AdHoc, backtrace => /line/,
 # RT #125772
 throws-like ‘%::{''}’, X::Undeclared, line => /^\d+$/,
     Q|useful error message for ‘%::{''}’ construct|;
+
+
+# RT #125680
+is_run '...', {:out(''), :err{ not $^o.contains: 'Unhandled exception' }},
+    'stub code must not produce `Unhandled exception` message';
 
 # vim: ft=perl6
