@@ -1,8 +1,9 @@
 use v6;
-
+use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
-plan 76;
+plan 77;
 
 # Real **
 is(0 ** 0,    1, "0 ** 0 ==  1");
@@ -129,5 +130,13 @@ is-approx(27 ** ⅓, 3, "27 ** ⅓ ==  3");
 is-approx(27 ** ⅔, 9, "27 ** ⅔ ==  9");
 is-approx(27 ** -⅓, ⅓, "27 ** -⅓ == ⅓");
 is-approx(27 ** -⅔, ⅑, "27 ** -⅔ == ⅑");
+
+# RT #112788
+# if no throwage happens, as is wanted, the program will take forever to run
+# so we wait for 2 seconds, then print success message and exit; if the throw
+# occurs, the Promise won't have a chance to print the success message.
+is_run ｢start { sleep 2; say ‘pass’; exit }; EVAL ‘say 1.0000001 ** (10 ** 9)’｣,
+    {:out("pass\n"), :err(''), :0status },
+'rasing a Rat to largish power does not throw';
 
 # vim: ft=perl6
