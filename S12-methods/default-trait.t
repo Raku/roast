@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 # L<S12/Candidate Tiebreaking/"only candidates marked with the default
 # trait">
@@ -26,5 +26,10 @@ multi sub slurpy(*@args)      { return 'b' };   #OK not used
 
 is slurpy(2), 'b', 'basic sanity with arity based dispatch and slurpies';
 is slurpy(),  'a', '"is default" trait wins against empty slurpy param';
+
+# RT #126108
+throws-like 'my $a of Int is default("foo")', X::Parameter::Default::TypeCheck,
+    expected => Int,
+'error message for default() type mismatch indicates correct expected type';
 
 # vim: ft=perl6
