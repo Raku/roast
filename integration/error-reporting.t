@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 24;
+plan 25;
 
 use Test::Util;
 
@@ -197,5 +197,9 @@ is_run 'sub foo { ({a=>1,b=>2}, {c=>3,d=>4}).map({ if (.<a>) {return $_} else { 
 # RT #126264
 throws-like 'begin 42', X::Undeclared::Symbols, message => /'BEGIN'/,
     '`BEGIN` suggested when `begin` is used';
+
+# RT #127012
+throws-like 'gather for ^3 -> $a, $b { take 1 }', X::AdHoc, backtrace => /line/,
+    'too many positionals error in gather/for/take includes line number';
 
 # vim: ft=perl6
