@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 46;
+plan 48;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -249,5 +249,15 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
              .say for GLOBAL::.keys.sort;
              ';
         is $output.out.slurp-rest,"Needed\nTop1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
+    }
+}
+
+# RT #112626
+{
+    # Run the test twice, so the first time precompiles the modules
+    for ^2 {
+        is_run ｢use RT112626::Conflict; say 'pass'｣, {:out("pass\n"), :err('')},
+            :compiler-args['-I', 't/spec/packages'],
+        "roles in precompiled modules recognize type names (run $_)";
     }
 }
