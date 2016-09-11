@@ -49,11 +49,9 @@ my $name = 't/spec/S11-modules/InnerModule.pm';
 }
 
 #RT #118407
-#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux RT #118407"
-{
-    require InnerModule:file($name) <quux>;
-    is quux(), 'Inner::quux', "can import quux without ampersand (&quux)";
-}
+throws-like { require InnerModule:file($name) <quux> },
+    X::Import::MissingSymbols,
+'&-less import of sub does not produce `Null PMC access` error';
 
 # no need to do that at compile time, since require() really is run time
 PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:prefix<t/spec/packages>, :next-repo($*REPO));
