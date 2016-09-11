@@ -25,19 +25,19 @@ is 'str' x Int, '', 'x with Int type object';
 {
     throws-like(
         { 'a' x -NaN },
-        X::AdHoc,
+        Exception,
         message => 'Cannot coerce NaN to an Int',
         'repeating with -NaN fails'
     );
     throws-like(
         { 'a' x NaN },
-        X::AdHoc,
+        Exception,
         message => 'Cannot coerce NaN to an Int',
         'repeating with NaN fails'
     );
     throws-like(
         { 'a' x -Inf },
-        X::AdHoc,
+        Exception,
         message => 'Cannot coerce -Inf to an Int',
         'repeating with -Inf fails'
     );
@@ -46,19 +46,19 @@ is 'str' x Int, '', 'x with Int type object';
 
     throws-like(
         { 'a' xx -NaN },
-        X::AdHoc,
+        Exception,
         message => 'Cannot coerce NaN to an Int',
         'list repeating with -NaN fails'
     );
     throws-like(
         { 'a' xx NaN },
-        X::AdHoc,
+        Exception,
         message => 'Cannot coerce NaN to an Int',
         'list repeating with NaN fails'
     );
     throws-like(
         { 'a' xx -Inf },
-        X::AdHoc,
+        Exception,
         message => 'Cannot coerce -Inf to an Int',
         'list repeating with -Inf fails'
     );

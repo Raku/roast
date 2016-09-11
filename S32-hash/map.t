@@ -9,7 +9,7 @@ plan 3;
     is-deeply Hash.Map, Map, '.Map on undefined Hash produces Map type object';
     throws-like(
         { %hash.map(Hash) },
-        X::AdHoc,
+        Exception,
         message => /"Cannot map a {%hash.WHAT.perl} to a Hash."/,
         '<object|type>.map(Hash) should die'
     );

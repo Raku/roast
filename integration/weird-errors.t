@@ -235,5 +235,5 @@ eval-lives-ok '[;0]', '[;0] does not explode the compiler';
 # RT #114672
 throws-like ｢class A114672 {}; class B114672 is A114672 { has $!x = 5; ｣
     ~ ｢our method foo(A114672:) { say $!x } }; &B::foo(A.new)｣,
-    X::AdHoc,
+    Exception,
 'no segfault';

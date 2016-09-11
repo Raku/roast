@@ -199,7 +199,7 @@ throws-like 'begin 42', X::Undeclared::Symbols, message => /'BEGIN'/,
     '`BEGIN` suggested when `begin` is used';
 
 # RT #127012
-throws-like 'gather for ^3 -> $a, $b { take 1 }', X::AdHoc, backtrace => /line/,
+throws-like 'gather for ^3 -> $a, $b { take 1 }', Exception, backtrace => /line/,
     '`too few positionals` error in gather/for/take includes line number';
 
 # RT #125772
