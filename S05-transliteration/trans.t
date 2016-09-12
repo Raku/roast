@@ -54,16 +54,16 @@ is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&lt;', '&gt;', '&amp;'] =>
     [' ',      '<',    '>',    '&'     ])),
     " <>&","The array version can map one characters to one-or-more characters");
 
-is(" <>&".trans( ([' ',      '<',    '>',    '&'    ] => 
+is(" <>&".trans( ([' ',      '<',    '>',    '&'    ] =>
                   ['&nbsp;', '&lt;', '&gt;', '&amp;' ])),
                   "&nbsp;&lt;&gt;&amp;",
     "The array version can map one-or-more characters to one-or-more characters");
-    
+
 is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&nbsp;&lt;', '&lt;', '&gt;', '&amp;'] =>
                                  [' ',      'AB',         '<',    '>',    '&'    ])),
                                 "AB>&",
     "The array version can map one characters to one-or-more characters, using leftmost longest match");
-    
+
 is("Whfg nabgure Crey unpxre".trans('a'..'z' => ['n'..'z','a'..'m'], 'A'..'Z' => ['N'..'Z','A'..'M']),
     "Just another Perl hacker",
     "Ranges can be grouped");
@@ -122,7 +122,7 @@ is('bookkeeper'.trans(:s, 'a..z' => 'a..z'), 'bokeper',
 
 is('bookkeeper'.trans(:d, 'ok' => ''), 'beeper',
     ':d flag (delete)');
-    
+
 is('ABC123DEF456GHI'.trans('A..Z' => 'x'), 'xxx123xxx456xxx',
     'no flags');
 
@@ -160,7 +160,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, (['&nbsp;', '&gt;'] =>
     ['???',      'AB'])),
     '&nbsp;????????????&gt;???????????????',
     'fence-post issue (make sure to replace end bits as well)');
-   
+
 is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     ['???'])),
     '&nbsp;???&gt;&amp;',
@@ -212,7 +212,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     is(EVAL('"abc".trans(<== "a" => "A")'), "Abc",
         "you're allowed to leave off the (...) named arg parens when you use <==");
 
-    # Make sure the tr/// version works, too.  
+    # Make sure the tr/// version works, too.
 
     $_ = "ABC";
     tr/ABC/abc/;
@@ -243,7 +243,7 @@ throws-like '$_ = "axbycz"; y/abc/def/', X::Obsolete, 'y/// does not exist any l
 is('aaaaabbbbb'.trans(['aaa', 'aa', 'bb', 'bbb'] => ['1', '2', '3', '4']),
    '1243',
    'longest constant token preferred, regardless of declaration order');
-  
+
 is('foobar'.trans(/\w+/ => 'correct', /foo/ => 'RONG'), 'correct',
    'longest regex token preferred, regardless of declaration order');
 
