@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 
 use Test;
 use Test::Util;
-plan 16;
+plan 17;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
@@ -77,6 +77,13 @@ line 4
         err    => '',
     },
     'interpolation at edge of quoteword items does not cancel out inter-item space';
+}
+
+# RT #129257
+{
+    is ｢%%one @@two &&three rt%%one@@two&&three rt%% one@@ two&& three@@｣,
+       "%%one @@two &&three rt%%one@@two&&three rt%% one@@ two&& three@@",
+       '%%, @@, and && do not attempt to interpolate any variables';
 }
 
 # vim: ft=perl6
