@@ -35,6 +35,7 @@ is_run(
 );
 
 # RT #128469
+#?rakudo.jvm skip 'Proc::Async NYI'
 {
     my $code = 'react { whenever Supply.interval: .01 { done } };'
             ~ ' say "Did not hang"';
