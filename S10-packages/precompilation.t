@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 48;
+plan 50;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -249,6 +249,21 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
              .say for GLOBAL::.keys.sort;
              ';
         is $output.out.slurp-rest,"Needed\nTop1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
+    }
+}
+
+{
+    run $*EXECUTABLE,'-I','t/spec/packages','-e','need RT128156::Top1;';
+    my $trigger-file = 't/spec/packages/RT128156/Needed.pm6'.IO;
+    for 1..2 -> $i {
+        my $old-content = $trigger-file.slurp;
+        $trigger-file.spurt('class Needed { method version() { ' ~ $i ~ ' } }');
+        my $output = run $*EXECUTABLE,:out,'-I','t/spec/packages','-e','
+             need RT128156::Top1;
+             print Needed.version;
+             ';
+        is $output.out.slurp-rest, $i, "$i. change in source file of dependency detected";
+        $trigger-file.spurt($old-content);
     }
 }
 
