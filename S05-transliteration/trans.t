@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 63;
+plan 64;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -270,6 +270,18 @@ is ("!$_!" for (1, 2)>>.trans((1..26) => (14..26,1..13))), <!14! !15!>, "same wi
 {
     my $f = "foo";
     ok $f ~~ tr/o/u/ eq 'fuu', 'StrDistance stringifies to $!after'
+}
+
+# RT #129258
+subtest 'Adverbs on Cool.trans work the same as on Str.trans' => {
+    is-deeply 912381237    .trans(['7'..'9'] => '0',      :complement),
+        '900080007',                                      ':complement';
+    is-deeply 912381237    .trans(      '23' => '',       :delete),
+        '91817',                                          ':delete';
+    is-deeply 9991123881237.trans(  '7'..'9' => '4'..'6', :squash),
+        '6112351234',                                     ':squash';
+    is-deeply 9991123881237.trans(  '7'..'9' => '0',      :complement, :squash),
+        '99908807',                                      ':complement, :squash';
 }
 
 # vim: ft=perl6
