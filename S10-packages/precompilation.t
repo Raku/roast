@@ -284,17 +284,16 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
 subtest 'precompiled module constants get updated on change' => {
     plan 2;
 
-    constant $foo = 't/spec/packages/RT129266/Foo.pm6'.IO;
-    constant $bar = 't/spec/packages/RT129266/Bar.pm6'.IO;
-    constant $foo-content = $foo.slurp;
-    LEAVE { $foo.spurt: $foo-content }
+    constant $module = 't/spec/packages/RT129266/Foo.pm6'.IO;
+    constant $module-content = $module.slurp;
+    LEAVE $module.spurt: $module-content;
 
     is_run ｢use RT129266::Bar; say var() eq '«VALUE»' ?? 'pass' !! 'fail'｣,
         :compiler-args['-I', 't/spec/packages'],
         {:out("pass\n"), :err('')},
     "original content has correct value";
 
-    $foo.spurt: $foo-content.subst: '«VALUE»', '«NEW»';
+    $module.spurt: $module-content.subst: '«VALUE»', '«NEW»';
 
     is_run ｢use RT129266::Bar; say var() eq '«NEW»' ?? 'pass' !! 'fail'｣,
         :compiler-args['-I', 't/spec/packages'],
