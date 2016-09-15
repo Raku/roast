@@ -1,8 +1,11 @@
 use v6;
 
-use Test;
+use lib "t/spec/packages";
 
-plan 402;
+use Test;
+use Test::Util;
+
+plan 403;
 
 =begin pod
 
@@ -1044,5 +1047,15 @@ is-deeply &[«+»]((1,2),(4,5,6)), (5, 7, 7), "Hyper <<>> can autogen with &[]";
 my &post = &postfix:<»i>;
 is post((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen with &";
 is &postfix:<»i>((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen without &";
+
+# RT #118223
+{
+    # shouldn't warn about unitialized values of type Any in Numeric context
+    is_run(
+        q{ my %l = foo => 1, bar => 2; my %r = bar => 3, baz => 4; say %l >>+<< %r },
+        { out => qq[\{bar => 5, baz => 4, foo => 1\}\n], err => '' },
+        "union hyperoperator on a hash shouldn't warn about missing keys"
+    );
+}
 
 # vim: ft=perl6
