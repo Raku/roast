@@ -63,9 +63,14 @@ plan 68;
     #?niecza todo
     ok ((1, 2, 3) ~~ @m), 'smartmatch List ~~ Array with dwim';
 
-    #?rakudo.jvm 2 skip 'NullPointerException'
+    ## the next test is bogus, since ~~ has a tighter precendence than comma
+    ## with rakudo 2016.08.1-194-g0cf7128 there is no coercion to list
+    ## when using parentheses: 1 ~~ (**,1,**) returns False
+    ## cmp. http://irclog.perlgeek.de/perl6/2016-09-15#i_13217141
+    ## TODO modify test to whatever the answer to "is the LHS coerced" is
+    #?rakudo.jvm 1 skip 'NullPointerException'
     ok (1 ~~ **,1,**),     'smartmatch with Array RHS co-erces LHS to list';
-    ok (1..10 ~~ **,5,**), 'smartmatch with Array RHS co-erces LHS to list';
+    ok (1..10 ~~ (**,5,**)), 'smartmatch with List RHS co-erces LHS to list';
 
     # now test that each element does smartmatching
     ok(((<blah blah>) ~~ (/^bl/, /ah$/)), "smartmatch regex");
