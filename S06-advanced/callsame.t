@@ -1,6 +1,6 @@
 use v6.c;
 use Test;
-plan 3;
+plan 2;
 
 # RT #71754
 {
@@ -14,19 +14,6 @@ plan 3;
     }
     lives-ok { rt71754( 71754 ) }, 'Can call multi that uses "callsame"';
     is @called, <Int Numeric>, 'multi with "callsame" worked';
-}
-
-# RT #69314
-#?niecza todo
-{
-    sub rt69314($n) { 
-        if $n { 
-            callsame;
-        }
-    }; 
-    
-    lives-ok {rt69314(1)}, 'Calling callsame directly from a sub works';
-
 }
 
 # vim: ft=perl6
