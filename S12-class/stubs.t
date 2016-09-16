@@ -3,7 +3,7 @@ use Test;
 
 # L<S12/Classes/You can predeclare a stub class>
 
-plan 10;
+plan 11;
 
 eval-lives-ok q[ class StubA { ... }; class StubA { method foo { } }; ],
               'Can stub a class, and later on declare it';
@@ -35,6 +35,26 @@ throws-like q[my class StubbedButNotDeclared { ... }], X::Package::Stubbed,
         X::Inheritance::NotComposed,
         child-name  => 'B',
         parent-name => 'A';
+}
+
+# RT #129270
+subtest "all forms of yadas work to stub classes" => {
+    plan 2;
+    subtest "lives when stubbed, then defined" => {
+        plan 4;
+        eval-lives-ok ｢my class Foo { …   }; my class Foo {}｣, '…';
+        eval-lives-ok ｢my class Foo { ... }; my class Foo {}｣, '...';
+        eval-lives-ok ｢my class Foo { !!! }; my class Foo {}｣, '!!!';
+        eval-lives-ok ｢my class Foo { ??? }; my class Foo {}｣, '???';
+    }
+
+    subtest "throws when stubbed, and never defined" => {
+        plan 4;
+        throws-like ｢my class Foo { …   }｣, X::Package::Stubbed, '…';
+        throws-like ｢my class Foo { ... }｣, X::Package::Stubbed, '...';
+        throws-like ｢my class Foo { !!! }｣, X::Package::Stubbed, '!!!';
+        throws-like ｢my class Foo { ??? }｣, X::Package::Stubbed, '???';
+    }
 }
 
 # vim: ft=perl6
