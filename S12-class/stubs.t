@@ -3,7 +3,7 @@ use Test;
 
 # L<S12/Classes/You can predeclare a stub class>
 
-plan 11;
+plan 8;
 
 eval-lives-ok q[ class StubA { ... }; class StubA { method foo { } }; ],
               'Can stub a class, and later on declare it';
@@ -16,12 +16,6 @@ eval-lives-ok q[ module StubC { ... }; module StubC { sub foo { } }; ],
 #?rakudo todo 'nom regression RT #125044'
 eval-lives-ok q[ package StubD { ... }; class StubD { method foo { } }; ],
               'Can stub a package, and later on implement it as a class';
-
-# not quite class stubs, but I don't know where else to put the tests...
-
-lives-ok { sub {...} }, 'not execued stub code is fine';
-dies-ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
-dies-ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 
 throws-like q[my class StubbedButNotDeclared { ... }], X::Package::Stubbed,
     'stubbing a class but not providing a definition dies';
