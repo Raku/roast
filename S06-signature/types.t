@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 sub f($x) returns Int { return $x };
 
@@ -46,4 +46,10 @@ dies-ok  { g('m') },    'type check forbids bad implicit return';
         'type shown in the exception message is the right one';
 }
 
+# RT #129279
+{
+    lives-ok
+        { sub f(-١) { 2 }; f(-1) },
+        'Unicode digit negative type constraints work';
+}
 # vim: ft=perl6

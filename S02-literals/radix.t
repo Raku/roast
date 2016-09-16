@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 154;
+plan 155;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -287,4 +287,10 @@ for 2..36 {
     throws-like { EVAL ':2' }, X::Syntax::Malformed, ':2 is Malformed';
 }
 
+# RT #129279
+{
+    lives-ok
+        { :۳<12> },
+        'Unicode digit radix bases work';
+}
 # vim: ft=perl6

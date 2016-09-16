@@ -5,7 +5,7 @@ use MONKEY-TYPING;
 
 use Test;
 use Test::Util;
-plan 59;
+plan 60;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -249,4 +249,10 @@ plan 59;
         'non-ascii token in a subcapture work';
 }
 
+# RT #129279
+{
+    lives-ok
+        { "a b" ~~ /(\w) \s (\w)/; my $a = $١ },
+        'Unicode digit match variables work';
+}
 # vim: ft=perl6
