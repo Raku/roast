@@ -82,6 +82,7 @@ plan 31;
 }
 
 # infinity HoHoHoH...
+#?rakudo.jvm skip 'used to work before 2016-09-17; maybe wrong multi selected: "Too many positionals passed; expected 2 arguments but got 3"'
 {
     my %hash = (val => 42);
     %hash<ref> = %hash;

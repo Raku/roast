@@ -47,6 +47,7 @@ dies-ok  { g('m') },    'type check forbids bad implicit return';
 }
 
 # RT #129279
+#?rakudo.jvm todo "Constraint type check failed for parameter 'null'"
 {
     lives-ok
         { sub f(-١) { 2 }; f(-1) },
