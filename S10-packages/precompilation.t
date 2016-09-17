@@ -293,7 +293,9 @@ subtest 'precompiled module constants get updated on change' => {
         {:out("pass\n"), :err('')},
     "original content has correct value";
 
+    sleep 2;
     $module.spurt: $module-content.subst: '«VALUE»', '«NEW»';
+    sleep 2;
 
     is_run ｢use RT129266::Bar; say var() eq '«NEW»' ?? 'pass' !! 'fail'｣,
         :compiler-args['-I', 't/spec/packages'],
