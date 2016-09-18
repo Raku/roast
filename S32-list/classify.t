@@ -34,7 +34,7 @@ plan 41;
         is-deeply %i, %classified2,
           "basic classify from list with {$classifier.^name} and existing into";
     }
-    
+
     {
         classify( &subber, @list, :into(my %b := BagHash.new) );
         is %b<even>, 2, "basic classify as sub with Sub and new into Bag 1) two evens";
@@ -45,7 +45,7 @@ plan 41;
 
 #?rakudo skip 'Cannot use bind operator with this LHS RT #124751'
 #?niecza skip 'Cannot use bind operator with this LHS'
-{ 
+{
     my @list = (1, 2, 3, 4);
     my (@even,@odd);
     lives-ok { (:@even, :@odd) := classify { $_ % 2 ?? 'odd' !! 'even' }, 1,2,3,4}, 'Can bind result list of classify';
