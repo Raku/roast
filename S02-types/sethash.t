@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 206;
+plan 208;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -443,5 +443,15 @@ subtest '.hash does not cause keys to be stringified' => {
     is SetHash.new($(<a b>)).hash.keys[0][0], 'a', 'SetHash.new';
     is ($(<a b>),).SetHash.hash.keys[0][0],   'a', '.SetHash';
 }
+
+{   # coverage; 2016-09-18
+    my $sh = SetHash.new: <a b b c c c>;
+    is-deeply $sh.antipairs,
+              (Bool::True => "a", Bool::True => "c", Bool::True => "b"),
+              '.antipairs produces correct result';
+
+    is-deeply $sh.SetHash, $sh, '.SetHash returns self';
+}
+
 
 # vim: ft=perl6
