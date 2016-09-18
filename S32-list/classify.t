@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 43;
+plan 41;
 
 {
     my @list = 1, 2, 3, 4;
@@ -133,11 +133,6 @@ subtest 'classify works with Junctions' => {
 
     is-deeply classify( *.contains(any 'a'..'f'), <abc xyz> ),
         %expected, 'sub form';
-}
-
-{ # coverage; 2016-09-18
-    throws-like { 42.classify    }, Exception, '.classify() on Any throws';
-    throws-like { 42.classify: * }, Exception, '.classify(*) on Any throws';
 }
 
 # vim: ft=perl6

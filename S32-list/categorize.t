@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item categorize">
 
-plan 30;
+plan 28;
 
 { # basic categorize with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
@@ -98,11 +98,6 @@ plan 30;
         2 => ( my %{Any} = 12 => [112] ),
         9 => ( my %{Any} = 19 => [119] ),
       ), 'multi-level categorize' );
-}
-
-{ # coverage; 2016-09-18
-    throws-like { 42.categorize    }, Exception, '.categorize() on Any throws';
-    throws-like { 42.categorize: * }, Exception, '.categorize(*) on Any throws';
 }
 
 # vim: ft=perl6
