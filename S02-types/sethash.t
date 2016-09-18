@@ -446,9 +446,9 @@ subtest '.hash does not cause keys to be stringified' => {
 
 {   # coverage; 2016-09-18
     my $sh = SetHash.new: <a b b c c c>;
-    is-deeply $sh.antipairs,
-              (Bool::True => "a", Bool::True => "c", Bool::True => "b"),
-              '.antipairs produces correct result';
+    is-deeply $sh.antipairs.sort(*.value),
+        (Bool::True => "a", Bool::True => "c", Bool::True => "b").sort(*.value),
+        '.antipairs produces correct result';
 
     is-deeply $sh.SetHash, $sh, '.SetHash returns self';
 }
