@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 11;
 
 # tests for Match.perl
 
@@ -39,6 +39,15 @@ lives-ok { $/.perl }, 'lives on quantified named captures';
     is $/.ast, $code_str, 'Match.ast is the code matched';
     is $/.Str, $code_str, 'Match.Str is the code matched';
     is-deeply EVAL($/.perl), $/, 'EVAL of Match.perl recreates Match';
+}
+
+# RT #129299
+subtest '$/.list returns all items even with optional captures in the middle', {
+    "ac" ~~ /(.)(.)?(.)/;
+    my ($one, $two, $three) = $/.list;
+    is $one,       'a',  'first item';
+    is $two.^name, 'Mu', 'second item'; # can't use is-deeply to test for Mu's
+    is $three,     'c',  'third item';
 }
 
 # vim: ft=perl6
