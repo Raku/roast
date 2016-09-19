@@ -5,8 +5,8 @@ plan 10;
 # tests for Match.perl
 
 # the simplest tests are just that it lives, which isn't always the case
-# for early implementations. In particular there were some Rakudo 
-# regressions, like RT #63904 and RT #64944	
+# for early implementations. In particular there were some Rakudo
+# regressions, like RT #63904 and RT #64944
 
 grammar ExprT1 {
     rule TOP { ^ \d+ [ <operator> \d+ ]* }
@@ -18,7 +18,7 @@ ok $m, 'Regex matches (1)';
 lives-ok { $m.perl }, '$/.perl lives (with named captures';
 #?niecza skip 'No value for parameter $a in is-deeply'
 #?rakudo todo 'RT #125293 - .perl does not roundtrip as expected'
-is-deeply EVAL($m.perl), $m, '... and it reproduces the right thing (1)'; 
+is-deeply EVAL($m.perl), $m, '... and it reproduces the right thing (1)';
 #?niecza todo 'empty result'
 #?rakudo skip 'RT #125293 - .perl does not roundtrip as expected - operator is null'
 is ~EVAL($m.perl).<operator>, '+', ' right result (2)';
