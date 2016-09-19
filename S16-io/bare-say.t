@@ -33,6 +33,8 @@ is_run( 'say("")',
 # RT #61494
 {
     throws-like 'say for 1', X::Obsolete, 'say for 1  is an error';
+
+    # Note: the two spaces between 'say' and 'for' are significant:
     throws-like 'say  for 1', X::Obsolete, 'say  for 1  is an error';
 }
 
