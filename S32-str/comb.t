@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 78;
+plan 79;
 
 # L<S32::Str/Str/=item comb>
 
@@ -154,5 +154,9 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
         test( "foobarbaz", -1, <f o o b a r b a z>, $times );
     }
 }
+
+# RT #127215
+eval-lives-ok ｢"hello".comb(/:m <[o]>/)｣,
+    '.comb(/:m <[o]>/) construct does not die';
 
 # vim: ft=perl6
