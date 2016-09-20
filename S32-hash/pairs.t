@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 26;
 
 =begin description
 
@@ -87,6 +87,11 @@ Basic C<pairs> tests, see S32::Containers.
     is %rt117935<a>:p(0), (a => 1), ':p(0) with existing key returns pair';
     is %rt117935<b>:p, (), ':p with non-existing key returns empty list';
     is %rt117935<b>:p(0), (b => Any), ':p(0) with non-existing key returns pair';
+}
+
+{ # coverage; 2016-09-19
+    my @a = ^10;
+    is-deeply pairs(@a), @a.pairs, 'pairs() gives same result as .pairs';
 }
 
 # vim: ft=perl6

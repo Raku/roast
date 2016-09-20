@@ -14,7 +14,7 @@ false, and C<[1,2] eqv [1,2]> returns true.
 
 # L<S03/"Chaining binary precedence" /Value identity>
 
-plan 85;
+plan 87;
 
 # === on values
 {
@@ -199,6 +199,11 @@ isa-ok  1|2 === 1, Junction,  '=== does autothread (2)';
     nok 1e1 === 1e1 but role { }, '=== on Num correctly demands exact type match';
     nok 1/2 === 1/2 but role { }, '=== on Rat correctly demands exact type match';
     nok 1i === 1i but role { },   '=== on Complex correctly demands exact type match';
+}
+
+{ # coverage; 2016-09-19
+    is-deeply infix:<===>(42),    Bool::True, 'single arg === gives True';
+    is-deeply infix:<===>(),      Bool::True, '    no arg === gives True';
 }
 
 # vim: ft=perl6

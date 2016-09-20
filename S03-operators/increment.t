@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 39;
 
 #L<S03/Autoincrement precedence>
 
@@ -129,6 +129,12 @@ throws-like 'my $x = 0; ++++$x', X::Multi::NoMatch,
     is my $j.++, 0, '.++ is allowed on declarator';
     is $j, 1, '...and actually increments variable';
     is my $k.defined, False, 'method is allowed on declarator';
+}
+
+{ # coverage; 2016-09-19
+    my $i;
+    is --$i, -1, 'prefix:<--> on Any:U returns -1';
+    is   $i, -1, 'prefix:<--> on Any:U makes it -1';
 }
 
 # vim: ft=perl6

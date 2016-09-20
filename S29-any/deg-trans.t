@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 45;
+plan 36;
 
 # Degenerate and Transformative Any methods
 # -----
@@ -47,20 +47,6 @@ plan 45;
 }
 
 { # coverage; 2016-09-19
-    is-deeply infix:<===>(42),    Bool::True, 'single arg  ===     gives True';
-    is-deeply infix:<===>(),      Bool::True, '    no arg  ===     gives True';
-    is-deeply infix:<before>(42), Bool::True, 'single arg `before` gives True';
-    is-deeply infix:<before>(),   Bool::True, '    no arg `before` gives True';
-    is-deeply infix:<after>(42),  Bool::True, 'single arg `after`  gives True';
-    is-deeply infix:<after>(),    Bool::True, '    no arg `after`  gives True';
-
-    my $i;
-    is --$i, -1, 'prefix:<--> on Any:U returns -1';
-    is   $i, -1, 'prefix:<--> on Any:U makes it -1';
-
-    my @a = ^10;
-    is-deeply pairs(@a), @a.pairs, 'pairs() gives same result as .pairs';
-
     is sum(),        0, 'sum() without args gives 0';
     is sum(1, 2, 3), 6, 'sum() with several args gives .sum';
 

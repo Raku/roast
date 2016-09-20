@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 167;
+plan 171;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -238,6 +238,13 @@ is sqrt((-1).Complex) ≅ 0+(1+1e-17)i, True, "can use approximate on Complex";
     nok -100 =~=  100, '=~= correctly handles pos=~=neg comparison (reversed)';
     nok  100  ≅  -100, '≅ correctly handles pos≅neg comparison';
     nok -100  ≅   100, '≅ correctly handles pos≅neg comparison (reversed)';
+}
+
+{ # coverage; 2016-09-19
+    is-deeply infix:<before>(42), Bool::True, 'single arg `before` gives True';
+    is-deeply infix:<before>(),   Bool::True, '    no arg `before` gives True';
+    is-deeply infix:<after>(42),  Bool::True, 'single arg `after`  gives True';
+    is-deeply infix:<after>(),    Bool::True, '    no arg `after`  gives True';
 }
 
 # vim: ft=perl6
