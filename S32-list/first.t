@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 28;
+plan 29;
 
 my @list = (1 ... 10);
 
@@ -93,6 +93,28 @@ my @list = (1 ... 10);
     @a.first(* %% 2).++;
     is @a, <1 3 3 4 5 6 7 8 9 10>,
         'first is rw-like, can chain it to modify one element of grepped list/array';
+}
+
+subtest 'Junctions work correctly as a matcher in .first' => {
+    plan 2;
+    subtest 'method form' => {
+        plan 6;
+        is <a b c d e>.first(<c e>.any),    'c', 'matcher only (1)';
+        is <a b c d e>.first(<e d>.any),    'd', 'matcher only (2)';
+        is <a b c d e>.first(<c e>.any, :k), 2,  'with :k (1)';
+        is <a b c d e>.first(<b d>.any, :k), 1,  'with :k (2)';
+        is-deeply <a b c d e>.first(<c e>.any, :kv), (2, 'c'), 'with :kv (1)';
+        is-deeply <a b c d e>.first(<a d>.any, :kv), (0, 'a'), 'with :kv (2)';
+    }
+    subtest 'sub form' => {
+        plan 6;
+        is first(<c e>.any, <a b c d e>),    'c', 'matcher only (1)';
+        is first(<e d>.any, <a b c d e>),    'd', 'matcher only (2)';
+        is first(<c e>.any, :k, <a b c d e>), 2,  'with :k (1)';
+        is first(<b d>.any, :k, <a b c d e>), 1,  'with :k (2)';
+        is-deeply first(<c e>.any, :kv, <a b c d e>), (2, 'c'), 'with :kv (1)';
+        is-deeply first(<a d>.any, :kv, <a b c d e>), (0, 'a'), 'with :kv (2)';
+    }
 }
 
 #vim: ft=perl6
