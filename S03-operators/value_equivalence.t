@@ -5,9 +5,9 @@ use Test;
 =begin pod
 
 C<===> and C<eqv> are 2 distinct operators, where C<===> tests value
-equivalence for immutable types and reference equivalence for 
+equivalence for immutable types and reference equivalence for
 mutable types, and C<eqv> tests value equivalence for snapshots of mutable
-types.  So C<(1,2) === (1,2)> returns true but C<[1,2] === [1,2]> returns 
+types.  So C<(1,2) === (1,2)> returns true but C<[1,2] === [1,2]> returns
 false, and C<[1,2] eqv [1,2]> returns true.
 
 =end pod

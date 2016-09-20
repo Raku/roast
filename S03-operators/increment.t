@@ -29,7 +29,7 @@ Verify that autoincrement/autodecrement work properly.
 
 my %a = ('a' => 1);
 %a{"a"}++;
-is(%a{'a'}, 2, "hash key"); 
+is(%a{'a'}, 2, "hash key");
 
 
 my %b = ('b' => 1);
@@ -39,12 +39,12 @@ is(%b{$var}, 2, "hash key via var");
 
 my @a = (1);
 @a[0]++;
-is(@a[0], 2, "array elem"); 
+is(@a[0], 2, "array elem");
 
 my @b = (1);
 my $moo = 0;
 @b[$moo]++;
-is(@b[$moo], 2, "array elem via var"); 
+is(@b[$moo], 2, "array elem via var");
 is($moo, 0, "var was not touched");
 
 # Test that the expression to increment will only be evaluated once.

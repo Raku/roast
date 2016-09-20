@@ -52,9 +52,9 @@ Basic C<pairs> tests, see S32::Containers.
     "pairs() on 2-elem hash, 1-depth joined");
   is( $hash_of_1_pair.pairs.sort.join( ',' ), "a\tb",
     "pairs() on 1-elem hash, 1-depth joined");
-  is( $hash_of_2_pairs.pairs.sort.map({ .key~'='~.value }).join( ',' ), 'a=b,c=d', 
+  is( $hash_of_2_pairs.pairs.sort.map({ .key~'='~.value }).join( ',' ), 'a=b,c=d',
     "pairs() on 2-elem hash, 2-depth joined" );
-  is( try { $hash_of_1_pair.pairs.sort.map({ .key~'='~.value }).join( ',' ) }, 'a=b', 
+  is( try { $hash_of_1_pair.pairs.sort.map({ .key~'='~.value }).join( ',' ) }, 'a=b',
     "pairs() on 1-elem hash, 2-depth joined" );
 }
 
