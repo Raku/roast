@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 101;
+plan 102;
 
 #L<S02/Mutable types/Array>
 
@@ -385,6 +385,11 @@ my @array2 = ("test", 1, Mu);
     #?rakudo todo 'RT 128005'
     is-deeply %foo<bar>, [42],
         '[*-0] index references correct element when autovivifying';
+}
+
+{ # coverage; 2016-09-21
+    my $x = Array;
+    cmp-ok $x.flat,  '===', $x, 'Array:U.flat is identity';
 }
 
 # vim: ft=perl6
