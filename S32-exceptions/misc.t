@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 410;
+plan 411;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -886,5 +886,9 @@ throws-like Q/my Array[Numerix] $x;/, X::Undeclared::Symbols, gist => /Numerix/;
 
 # RT #129290
 throws-like 'for 1, 2 { my $p = {};', X::Syntax::Missing, what => 'block';
+
+# RT #129306
+throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
+    X::TypeCheck::Binding, got => IntStr, expected => Positional;
 
 # vim: ft=perl6
