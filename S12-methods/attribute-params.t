@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 20;
 
 class Ap {
     has $.s;
@@ -40,5 +40,39 @@ throws-like 'my class C { has $.x; submethod BUILD(:$.x) {} }',
 
 throws-like 'sub optimal($.x) { }', X::Syntax::NoSelf, variable => '$.x';
 throws-like 'sub optimal($!x) { }', X::Syntax::NoSelf, variable => '$!x';
+
+# RT #129278
+{
+    my class C {
+        has int $!i;
+        method xi($!i) {}
+        method yi() { $!i }
+
+        has num $!n;
+        method xn($!n) {}
+        method yn() { $!n }
+    }
+    my $o = C.new;
+    $o.xi: 42;
+    $o.xn: 1.5e0;
+    is $o.yi, 42, 'Can use attributive binding on a native attribute (int, positional)';
+    is $o.yn, 1.5e0, 'Can use attributive binding on a native attribute (num, positional)';
+}
+{
+    my class C {
+        has int $!i;
+        method xi(:$!i) {}
+        method yi() { $!i }
+
+        has num $!n;
+        method xn(:$!n) {}
+        method yn() { $!n }
+    }
+    my $o = C.new;
+    $o.xi: i => 69;
+    $o.xn: n => 2.5e0;
+    is $o.yi, 69, 'Can use attributive binding on a native attribute (int, named)';
+    is $o.yn, 2.5e0, 'Can use attributive binding on a native attribute (num, named)';
+}
 
 # vim: ft=perl6
