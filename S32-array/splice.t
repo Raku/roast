@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 53) + 9;
+plan (@testing/2 * 54) + 9;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -132,6 +132,7 @@ for @testing -> @a, $T {
     submeth-ok (),     (0,1), (),    (), 'remove 1 past end';
     submeth-ok (), (0,1,1,2), (), (1,2), 'remove 1 past end + push';
     submeth-ok (), (0,*,1,2), (), (1,2), 'remove whatever past end + push';
+    submeth-ok (1, 2, 3), (*, *), (), (1, 2, 3), 'two *, no list';
     submeth-ok (1, 2, 3), (*, *, 4, 5, 6), (), (^6+1), 'two * with a given list';
 
     # Callables
