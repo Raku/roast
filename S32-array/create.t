@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 8;
 
 # L<S32::Containers/"Array"/"=item ">
 
@@ -19,6 +19,11 @@ is(+$array_obj, 3, 'Finding the length functions properly.');
     ok +Array[Int].new(1, 2, 3, 4), "typed array";
     throws-like(q{ Array[Int].new(1, 2, "Foo") }, X::TypeCheck);
     throws-like(q{ Array[Str].new(1, 2, "Foo") }, X::TypeCheck);
+}
+
+{ # coverage; 2016-09-21
+    is-deeply circumfix:<[ ]>(), $[], 'circumfix:<[ ]>() creates Array';
+    is-deeply [],                $[], '[ ] creates Array';
 }
 
 # vim: ft=perl6
