@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 48) + 9;
+plan (@testing/2 * 53) + 9;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -133,6 +133,14 @@ for @testing -> @a, $T {
     submeth-ok (), (0,1,1,2), (), (1,2), 'remove 1 past end + push';
     submeth-ok (), (0,*,1,2), (), (1,2), 'remove whatever past end + push';
     submeth-ok (1, 2, 3), (*, *, 4, 5, 6), (), (^6+1), 'two * with a given list';
+
+    # Callables
+    my sub s-offset { ($^a / 2).Int }; my sub s-size   { $^a - 1 }
+    submeth-ok (1, 2, 3, 4), (&s-offset, *),           (3, 4), (1, 2),        '.splice(Callable, Whatever)';
+    submeth-ok (1, 2, 3, 4), (&s-offset, *, 42),       (3, 4), (1, 2, 42),    '.splice(Callable, Whatever, List)';
+    submeth-ok (1, 2, 3, 4), (2, &s-size, 42),         (3,),   (1, 2, 42, 4), '.splice(Int, Callable, List)';
+    submeth-ok (1, 2, 3, 4), (&s-offset, 1, 42),       (3,),   (1, 2, 42, 4), '.splice(Callable, Int, List)';
+    submeth-ok (1, 2, 3, 4), (&s-offset, &s-size, 42), (3,),   (1, 2, 42, 4), '.splice(Callable, Callable, List)';
 
     # make sure we initialize with properly typed values
     @a = $toNum ?? (^10).map(*.Num) !! ^10;
