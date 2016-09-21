@@ -156,6 +156,7 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 }
 
 # RT #127215
+#?rakudo.jvm skip 'ordbaseat NYI'
 eval-lives-ok ｢"hello".comb(/:m <[o]>/)｣,
     '.comb(/:m <[o]>/) construct does not die';
 
