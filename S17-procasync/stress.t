@@ -16,7 +16,7 @@ for ^100 {
 }
 is @got.unique.elems, 1, 'Proc::Async consistently reads data';
 
-# RT #128291
+# RT #129291
 {
     if $*DISTRO.is-win {
         skip 1, 'not sure how to test input redirection on Windows';
