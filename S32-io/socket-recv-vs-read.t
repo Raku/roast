@@ -7,7 +7,7 @@ plan 11;
 # (difference between recv and read semantics).
 
 my $hostname = 'localhost';
-my $port = 5000;
+my $port = 5002;
 
 my ($send-rest, $client);
 
