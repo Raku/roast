@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 =begin pod
 
@@ -70,6 +70,12 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     lives-ok { $attr.set_value($x, 'new') }, 'can set_value';
     is $x.a, 'new', 'set_value worked';
 
+}
+
+{ # coverage; 2016-09-21
+    like Attribute.new(:name('test-name'), :type(Int), :package('Foo')).gist,
+        /'Int' .* 'test-name' | 'test-name' .* 'Int'/,
+    '.gist of an Attribute includes name and type';
 }
 
 # vim: ft=perl6
