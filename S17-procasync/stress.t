@@ -23,6 +23,6 @@ is @got.unique.elems, 1, 'Proc::Async consistently reads data';
     } else {
         lives-ok
             { for ^10000 { my $p = run(:out, :bin, 'ls'); run(:in($p.out), 'true') } },
-            "run()ning two procs and passing the :out of one to the :in of the other doesn't hang";
+            "run()ning two procs and passing the :out of one to the :in of the other doesn't segfault";
     }
 }
