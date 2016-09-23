@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 261;
+plan 264;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -587,6 +587,13 @@ subtest '.hash does not cause keys to be stringified' => {
     plan 2;
     is BagHash.new($(<a b>)).hash.keys[0][0], 'a', 'BagHash.new';
     is ($(<a b>),).BagHash.hash.keys[0][0],   'a', '.BagHash';
+}
+
+{ # coverage; 2016-09-23
+    my $bh = BagHash.new: <a a b>;
+    cmp-ok $bh.BagHash, '===', $bh, '.BagHash is identity';
+    isa-ok $bh.Mix, Mix, '.Mix returns a Mix';
+    is-deeply $bh.Mix, Mix.new(<a a b>), '.Mix values are correct';
 }
 
 # vim: ft=perl6
