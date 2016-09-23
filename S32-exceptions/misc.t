@@ -516,20 +516,20 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
     {
         my $code = q[ sub foo($x) { }; foo; ];
         throws-like $code, X::TypeCheck::Argument,
-            signature => rx/ '($x)' /, 
+            signature => rx/ '($x)' /,
             objname   => { m/foo/ };
     }
 
     {
         my $code = q[ sub foo(Str) { }; foo 42; ];
-        throws-like $code, X::TypeCheck::Argument, 
-            signature => rx/ '(Str)' /, 
+        throws-like $code, X::TypeCheck::Argument,
+            signature => rx/ '(Str)' /,
             arguments => { .[0] eq "Int" };
     }
 
     {
         my $code = q[ sub foo(Int $x, Str $y) { }; foo "not", 42; ];
-        throws-like $code, X::TypeCheck::Argument, 
+        throws-like $code, X::TypeCheck::Argument,
             arguments => { .[0] ~ .[1] eq "StrInt" },
             signature => rx/ '(Int $x, Str $y)' /;
     }
@@ -540,9 +540,9 @@ throws-like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assu
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
 
 # RT #66776
-throws-like 'for 1,2,3, { say 3 }', X::Comp::Group, 
+throws-like 'for 1,2,3, { say 3 }', X::Comp::Group,
     sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].message ~~ /^Expression/ },
-    panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ }; 
+    panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
 # RT #66776
 throws-like 'CATCH { when X::Y {} }', X::Comp::Group,
@@ -550,7 +550,7 @@ throws-like 'CATCH { when X::Y {} }', X::Comp::Group,
     panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
 # RT #75230
-throws-like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
+throws-like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused,
     reason => { m/'Missing semicolon'/ },
     pre => { m/'1 if 2 if'/ },
     post => { m/'3 { say 3 }'/ };
@@ -560,7 +560,7 @@ throws-like '/\ X/', X::Syntax::Regex::Unspace,
     message => { m/'No unspace allowed in regex' .+ '(\' \')' .+ '\x20'/ }, char => { m/' '/ };
 
 # RT #77380
-throws-like '/m ** 1..-1/', X::Comp::Group, 
+throws-like '/m ** 1..-1/', X::Comp::Group,
     panic => { .payload ~~ m!'Unable to parse regex; couldn\'t find final \'/\''! },
     sorrows => { .[0] => { $_ ~~ X::Syntax::Regex::MalformedRange } and .[1] => { $_ ~~ X::Syntax::Regex::UnrecognizedMetachar } };
 
