@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 416;
+plan 422;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -923,6 +923,19 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
                 ~ 'routines or non-setting items';
         }}
     }
+}
+
+{ # RT #129334
+    my sub bar { X::AdHoc.new.throw }();
+    CATCH { default {
+        my $bt = .backtrace;
+        is $bt.list.elems, 4, 'expecting 4 frames in the backtrace';
+        is-deeply $bt.map({
+            isa-ok $^b, Backtrace::Frame,
+                 '.map arg (item #' ~ $++ ~ ') is a Backtrace::Frame';
+            $^b;
+        }), $bt.list, '.map operates correctly';
+    }}
 }
 
 # vim: ft=perl6
