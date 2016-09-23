@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 414;
+plan 416;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -902,6 +902,25 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
             is-deeply $bt.flat, $bt.list, '.flat on Backtrace returns .list';
             is $bt.list.elems, 4, 'we correctly have 2 elements in .list';
             is $bt.list[0].code.name, 'foo', '.list contains correct items';
+        }}
+    }
+
+    {
+        my sub bar { die }();
+        CATCH { default {
+            my $bt = .backtrace;
+            is $bt.concise, (
+                $bt.grep({ !.is-hidden && .is-routine && !.is-setting })
+                // "\n"
+            ).join,
+            '.concise output includes only non-hidden, non-setting routines';
+
+            is $bt.summary, (
+                $bt.grep({ !.is-hidden && (.is-routine || !.is-setting)})
+                // "\n"
+            ).join,
+            '.summary output includes only non-hidden items that are either '
+                ~ 'routines or non-setting items';
         }}
     }
 }
