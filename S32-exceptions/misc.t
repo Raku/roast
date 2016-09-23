@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 411;
+plan 414;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -891,5 +891,19 @@ throws-like 'for 1, 2 { my $p = {};', X::Syntax::Missing, what => 'block';
 #?rakudo.jvm todo 'dies with X::AdHoc -- __P6opaque__77@3dc2adf9 in sub-signature of parameter @array'
 throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
     X::TypeCheck::Binding, got => IntStr, expected => Positional;
+
+# NOTE: the number of blocks (2) below is important; otherwise
+# the $bt.list.elems will give the wrong number
+{ # coverage; 2016-09-22
+    {
+        my sub foo { fail }();
+        CATCH { default {
+            my $bt = .backtrace;
+            is-deeply $bt.flat, $bt.list, '.flat on Backtrace returns .list';
+            is $bt.list.elems, 4, 'we correctly have 2 elements in .list';
+            is $bt.list[0].code.name, 'foo', '.list contains correct items';
+        }}
+    }
+}
 
 # vim: ft=perl6
