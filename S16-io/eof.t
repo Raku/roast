@@ -20,15 +20,19 @@ my $tmpfile = "eof-test-" ~ nonce();
 }
 
 # RT #127370
-my $procfile = '/proc/1/comm';
 {
   if $*KERNEL.name eq 'linux' {
-    my $fh = open $procfile or die qq/Failed to open "$procfile": $!/;
-;
+    # RT #128831
+    my $files = gather {
+        for '/proc/1'.IO.dir() -> $file {
+            take $file if $file.f && $file.r;
+        }
+    }
+    my $fh = $files[0].open;
     $fh.slurp-rest;
 
     ok $fh.eof, '/proc file EOF was reached';
-    close $fh or die qq/Failed to close "$procfile": $!/;
+    $fh.close;
   }
   else {
     skip "Don't test reading /proc file if not in Linux", 1;
