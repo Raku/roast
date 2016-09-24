@@ -8,7 +8,7 @@ constant $read-file = "t/spec/packages/README".IO;
 $read-file.IO.r or bail-out "Missing $read-file that is needed to run a test";
 
 my @got;
-for ^100 {
+for ^400 {
     my $p = $*DISTRO.is-win
         ?? Proc::Async.new( | «cmd /c type $read-file» )
         !! Proc::Async.new( | «/bin/cat    $read-file» );
