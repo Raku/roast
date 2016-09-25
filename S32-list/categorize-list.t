@@ -744,3 +744,5 @@ subtest ‘on Baggy, exceptions, can't classify on immutable Baggies’ => {
     throws-like { Mix.new.categorize-list:  %,  ^2 }, X::Immutable, 'Mix, %';
     throws-like { Mix.new.categorize-list:  @,  ^2 }, X::Immutable, 'Mix, @';
 }
+
+# vim: ft=perl6
