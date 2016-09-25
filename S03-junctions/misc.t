@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 142;
+plan 143;
 
 =begin pod
 
@@ -495,5 +495,11 @@ throws-like 'multi sub foo($) { }; foo(Junction)', X::Multi::NoMatch,
     'Do not try to auto-thread Junction type object (multi case)';
 throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
     'Do not try to auto-thread Junction type object (only case)';
+
+{ # RT #129349
+    my %h;
+    %h{ any ^2 }.push: 42;
+    is-deeply %h, %(0 => [42], 1 => [42]), 'Junctions with autovivification';
+}
 
 # vim: ft=perl6
