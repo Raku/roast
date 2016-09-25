@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 17;
 
 # Tests for classify-list routine available on Baggy role and Hash class
 
@@ -99,70 +99,6 @@ subtest 'on empty Hash, multi-level, with &as' => {
     is-deeply % .classify-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
 }
 
-subtest 'on empty Hash, mixed-level' => {
-    plan 12;
-    my constant &m  = { $^a == 1 ?? 'cat1' !! <cat2 sub2> }
-    my constant @m  = Nil,   'cat1',      <cat2 sub2>,      <cat2 sub2>;
-    my constant %m  = %(1 => 'cat1', 2 => <cat2 sub2>, 3 => <cat2 sub2>);
-    my constant %ex = %(:cat2{:sub2[2, 3]}, :cat1[1]);
-
-    is-deeply % .classify-list(&m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .classify-list(%m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .classify-list(@m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .classify-list(&m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .classify-list(%m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .classify-list(@m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .classify-list(&m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .classify-list(%m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .classify-list(@m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .classify-list(&m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .classify-list(%m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .classify-list(@m,   (1…3)  ), %ex, '@, Seq';
-}
-
-subtest 'on empty Hash, mixed-level (reversed single/multi level cats)' => {
-    plan 12;
-    my constant &m  = { $^a == 1 ?? <cat1 sub1> !! 'cat2' }
-    my constant @m  = Nil,   <cat1 sub1>,      'cat2',      'cat2';
-    my constant %m  = %(1 => <cat1 sub1>, 2 => 'cat2', 3 => 'cat2');
-    my constant %ex = %(:cat2[2, 3], :cat1{:sub1[1]});
-
-    is-deeply % .classify-list(&m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .classify-list(%m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .classify-list(@m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .classify-list(&m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .classify-list(%m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .classify-list(@m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .classify-list(&m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .classify-list(%m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .classify-list(@m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .classify-list(&m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .classify-list(%m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .classify-list(@m,   (1…3)  ), %ex, '@, Seq';
-}
-
-subtest 'on empty Hash, mixed-level, with &as' => {
-    plan 12;
-    my constant &as = { "val $^a" }
-    my constant &m  = { $^a == 1 ?? 'cat1' !! <cat2 sub2> }
-    my constant @m  = Nil,   'cat1',      <cat2 sub2>,      <cat2 sub2>;
-    my constant %m  = %(1 => 'cat1', 2 => <cat2 sub2>, 3 => <cat2 sub2>);
-    my constant %ex = %(:cat2{:sub2['val 2', 'val 3']}, :cat1['val 1']);
-
-    is-deeply % .classify-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .classify-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .classify-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .classify-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .classify-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .classify-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .classify-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .classify-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .classify-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .classify-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .classify-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .classify-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
-}
-
 #------------------------------------------------------------------------------
 # populated Hash
 #------------------------------------------------------------------------------
@@ -239,49 +175,6 @@ subtest 'on populated Hash, multi-level, with &as' => {
     my constant %m  = %(1 => <cat1 sub1>, 2 => <cat2 sub2>, 3 => <cat2 sub2>);
     my constant %ex
     = %(:a(42), :cat2{:sub2['val 2', 'val 3']}, :cat1{:sub1['val 1']});
-
-    is-deeply %(:42a).classify-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply %(:42a).classify-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply %(:42a).classify-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply %(:42a).classify-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply %(:42a).classify-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply %(:42a).classify-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply %(:42a).classify-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
-    is-deeply %(:42a).classify-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
-    is-deeply %(:42a).classify-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
-    is-deeply %(:42a).classify-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply %(:42a).classify-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply %(:42a).classify-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
-}
-
-subtest 'on populated Hash, mixed-level' => {
-    plan 12;
-    my constant &m  = { $^a == 1 ?? 'cat1' !! <cat2 sub2> }
-    my constant @m  = Nil,   'cat1',      <cat2 sub2>,      <cat2 sub2>;
-    my constant %m  = %(1 => 'cat1', 2 => <cat2 sub2>, 3 => <cat2 sub2>);
-    my constant %ex = %(:42a, :cat2{:sub2[2, 3]}, :cat1[1]);
-
-    is-deeply %(:42a).classify-list(&m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply %(:42a).classify-list(%m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply %(:42a).classify-list(@m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply %(:42a).classify-list(&m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply %(:42a).classify-list(%m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply %(:42a).classify-list(@m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply %(:42a).classify-list(&m,   ^3+1   ), %ex, '&, Range';
-    is-deeply %(:42a).classify-list(%m,   ^3+1   ), %ex, '%, Range';
-    is-deeply %(:42a).classify-list(@m,   ^3+1   ), %ex, '@, Range';
-    is-deeply %(:42a).classify-list(&m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply %(:42a).classify-list(%m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply %(:42a).classify-list(@m,   (1…3)  ), %ex, '@, Seq';
-}
-
-subtest 'on populated Hash, mixed-level, with &as' => {
-    plan 12;
-    my constant &as = { "val $^a" }
-    my constant &m  = { $^a == 1 ?? 'cat1' !! <cat2 sub2> }
-    my constant @m  = Nil,   'cat1',      <cat2 sub2>,      <cat2 sub2>;
-    my constant %m  = %(1 => 'cat1', 2 => <cat2 sub2>, 3 => <cat2 sub2>);
-    my constant %ex = %(:42a, :cat2{:sub2['val 2', 'val 3']}, :cat1['val 1']);
 
     is-deeply %(:42a).classify-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
     is-deeply %(:42a).classify-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
