@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 18;
 
 # Tests for classify-list routine available on Baggy role and Hash class
 
@@ -249,6 +249,43 @@ subtest ‘on Hashes, exceptions, can't classify lazy lists’ => {
         'populated hash, :&as, %';
     throws-like { %(:42a).classify-list: :&as,  @, $l }, X::Cannot::Lazy,
         'populated hash, :&as, @';
+}
+
+subtest ‘on Hashes, exceptions, can't do mixed-level classification’ => {
+    plan 12;
+    my constant &m1  = { $^a == 1 ?? 'cat1' !! <cat2 cat3> }
+    my constant %m1  = %(1 => 'cat1', 2 => <cat2 cat3>, 3 => <cat2 cat3>);
+    my constant @m1  = Nil, 'cat1', <cat2 cat3>, <cat2 cat3>;
+    my constant &m2  = { $^a == 1 ?? <cat1 cat3> !! 'cat2' }
+    my constant %m2  = %(1 => <cat1 cat3>, 2 => 'cat2', 3 => 'cat2');
+    my constant @m2  = Nil, <cat1 cat3>, 'cat2', 'cat2';
+    my constant &as = { "val $^a" }
+
+    throws-like { % .classify-list: &m1, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '&, v1';
+    throws-like { % .classify-list: %m1, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '%, v1';
+    throws-like { % .classify-list: @m1, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '@, v1';
+    throws-like { % .classify-list: &m2, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '&, v2';
+    throws-like { % .classify-list: %m2, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '%, v2';
+    throws-like { % .classify-list: @m2, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '@, v2';
+
+    throws-like { % .classify-list: :&as, &m1, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, &, v1';
+    throws-like { % .classify-list: :&as, %m1, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, %, v1';
+    throws-like { % .classify-list: :&as, @m1, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, @, v1';
+    throws-like { % .classify-list: :&as, &m2, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, &, v2';
+    throws-like { % .classify-list: :&as, %m2, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, %, v2';
+    throws-like { % .classify-list: :&as, @m2, [1, 2, 3] },
+        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, @, v2';
 }
 
 ###############################################################################
