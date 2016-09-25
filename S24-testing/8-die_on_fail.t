@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 use Test;
 use Test::Util;
-plan 5;
+plan 6;
 
 my $Die-Off = 'BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = 0;';
 my $Die-On  = 'BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = 1;';
@@ -38,5 +38,13 @@ is_run $Die-On ~ 'use Test; plan 1; todo "foo"; subtest "bar", { plan 2; '
         ~ 'ok 0; subtest "ber", { ok 0 } };', {
     :0status,
 }, 'PERL6_TEST_DIE_ON_FAIL does not exit in subtests that may be TODOed';
+
+is_run $Die-On ~ 'use Test; plan 2; subtest "bar", { ok 0 }; ok 1', {
+    :err(/:i
+        'failed' .+
+        'Stopping test suite' .+ 'PERL6_TEST_DIE_ON_FAIL'
+    /),
+    :255status,
+}, 'PERL6_TEST_DIE_ON_FAIL exits even when failures are inside subtests';
 
 # vim: expandtab shiftwidth=4 ft=perl6
