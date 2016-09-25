@@ -6,7 +6,7 @@ plan 142;
 
 =begin pod
 
-Misc. Junction tests 
+Misc. Junction tests
 
 =end pod
 
@@ -28,53 +28,53 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
     my $a = '';
     my $b = '';
     my $c = '';
-    
+
     # make sure they all match to an empty string
     jok('' eq ($a & $b & $c), 'junction of ($a & $b & $c) matches an empty string');
-    jok('' eq all($a, $b, $c), 'junction of all($a, $b, $c) matches an empty string');   
-    
+    jok('' eq all($a, $b, $c), 'junction of all($a, $b, $c) matches an empty string');
+
     # give $a a value
-    $a = 'a';  
-    
-    # make sure that at least one of them matches 'a' 
+    $a = 'a';
+
+    # make sure that at least one of them matches 'a'
     jok('a' eq ($b | $c | $a), 'junction of ($b | $c | $a) matches at least one "a"');
-    jok('a' eq any($b, $c, $a), 'junction of any($b, $c, $a) matches at least one "a"');   
+    jok('a' eq any($b, $c, $a), 'junction of any($b, $c, $a) matches at least one "a"');
 
     jok('' eq ($b | $c | $a), 'junction of ($b | $c | $a) matches at least one empty string');
     jok('' eq any($b, $c, $a), 'junction of any($b, $c, $a) matches at least one empty string');
-    
+
     # make sure that ~only~ one of them matches 'a'
     jok('a' eq ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
     jok('a' eq one($b, $c, $a), 'junction of one($b, $c, $a) matches at ~only~ one "a"');
-    
+
     # give $b a value
     $b = 'a';
-    
+
     # now this will fail
-    jok('a' ne ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at more than one "a"');              
+    jok('a' ne ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at more than one "a"');
 
     # change $b and give $c a value
     $b = 'b';
     $c = 'c';
-    
+
     jok('a' eq ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
     jok('b' eq ($a ^ $b ^ $c), 'junction of ($a ^ $b ^ $c) matches at ~only~ one "b"');
-    jok('c' eq ($c ^ $a ^ $b), 'junction of ($c ^ $a ^ $b) matches at ~only~ one "c"');  
+    jok('c' eq ($c ^ $a ^ $b), 'junction of ($c ^ $a ^ $b) matches at ~only~ one "c"');
 
     jok('a' eq ($b | $c | $a), 'junction of ($b | $c | $a) matches at least one "a"');
     jok('b' eq ($a | $b | $c), 'junction of ($a | $b | $c) matches at least one "b"');
-    jok('c' eq ($c | $a | $b), 'junction of ($c | $a | $b) matches at least one "c"'); 
+    jok('c' eq ($c | $a | $b), 'junction of ($c | $a | $b) matches at least one "c"');
 
-    
+
     # test junction to junction
-    jok(('a' | 'b' | 'c') eq ($a & $b & $c), 'junction ("a" | "b" | "c") matches junction ($a & $b & $c)');    
-    jok(('a' & 'b' & 'c') eq ($a | $b | $c), 'junction ("a" & "b" & "c") matches junction ($a | $b | $c)'); 
-    
+    jok(('a' | 'b' | 'c') eq ($a & $b & $c), 'junction ("a" | "b" | "c") matches junction ($a & $b & $c)');
+    jok(('a' & 'b' & 'c') eq ($a | $b | $c), 'junction ("a" & "b" & "c") matches junction ($a | $b | $c)');
+
     # mix around variables and literals
-    
-    jok(($a & 'b' & 'c') eq ('a' | $b | $c), 'junction ($a & "b" & "c") matches junction ("a" | $b | $c)');              
-    jok(($a & 'b' & $c) eq ('a' | $b | 'c'), 'junction ($a & "b" & $c) matches junction ("a" | $b | "c")');              
-    
+
+    jok(($a & 'b' & 'c') eq ('a' | $b | $c), 'junction ($a & "b" & "c") matches junction ("a" | $b | $c)');
+    jok(($a & 'b' & $c) eq ('a' | $b | 'c'), 'junction ($a & "b" & $c) matches junction ("a" | $b | "c")');
+
 }
 
 # same tests, but with junctions as variables
@@ -83,41 +83,41 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
     my $a = '';
     my $b = '';
     my $c = '';
-    
+
     my Mu $all_of_them = $a & $b & $c;
     jok('' eq $all_of_them, 'junction variable of ($a & $b & $c) matches and empty string');
-    
-    $a = 'a';  
-    
+
+    $a = 'a';
+
     my Mu $any_of_them = $b | $c | $a;
-    jok('a' eq $any_of_them, 'junction variable of ($b | $c | $a) matches at least one "a"');  
+    jok('a' eq $any_of_them, 'junction variable of ($b | $c | $a) matches at least one "a"');
     jok('' eq $any_of_them, 'junction variable of ($b | $c | $a) matches at least one empty string');
-    
+
     my Mu $one_of_them = $b ^ $c ^ $a;
     jok('a' eq $one_of_them, 'junction variable of ($b ^ $c ^ $a) matches at ~only~ one "a"');
-    
+
     $b = 'a';
-    
+
     {
         my Mu $one_of_them = $b ^ $c ^ $a;
-        jok('a' ne $one_of_them, 'junction variable of ($b ^ $c ^ $a) matches at more than one "a"');              
+        jok('a' ne $one_of_them, 'junction variable of ($b ^ $c ^ $a) matches at more than one "a"');
     }
-    
+
     $b = 'b';
     $c = 'c';
-    
+
     {
-        my Mu $one_of_them = $b ^ $c ^ $a;    
+        my Mu $one_of_them = $b ^ $c ^ $a;
         jok('a' eq $one_of_them, 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
         jok('b' eq $one_of_them, 'junction of ($a ^ $b ^ $c) matches at ~only~ one "b"');
-        jok('c' eq $one_of_them, 'junction of ($c ^ $a ^ $b) matches at ~only~ one "c"');  
+        jok('c' eq $one_of_them, 'junction of ($c ^ $a ^ $b) matches at ~only~ one "c"');
     }
 
     {
         my Mu $any_of_them = $b | $c | $a;
         jok('a' eq $any_of_them, 'junction of ($b | $c | $a) matches at least one "a"');
         jok('b' eq $any_of_them, 'junction of ($a | $b | $c) matches at least one "b"');
-        jok('c' eq $any_of_them, 'junction of ($c | $a | $b) matches at least one "c"'); 
+        jok('c' eq $any_of_them, 'junction of ($c | $a | $b) matches at least one "c"');
     }
 
 }
@@ -142,7 +142,7 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
 
 =begin description
 
-Tests junction examples from Synopsis 03 
+Tests junction examples from Synopsis 03
 
 j() is used to convert a junction to canonical string form, currently
 just using .perl until a better approach presents itself.
@@ -207,7 +207,7 @@ sub j (Mu $j) { return $j.perl }
 
     # L<S03/Junctive operators/Junctions are specifically unordered>
     # Compiler *can* reorder and parallelize but *may not* so don't test
-    # for all(@foo) {...};  
+    # for all(@foo) {...};
 
     # Not sure what is expected
     #my %got = ('1' => 1); # Hashes are unordered too
@@ -224,8 +224,8 @@ These are implemented but still awaiting clarification on p6l.
  On Fri, 2005-02-11 at 10:46 +1100, Damian Conway wrote:
  > Subject: Re: Fwd: Junctive puzzles.
  >
- > Junctions have an associated boolean predicate that's preserved across 
- > operations on the junction. Junctions also implicitly distribute across 
+ > Junctions have an associated boolean predicate that's preserved across
+ > operations on the junction. Junctions also implicitly distribute across
  > operations, and rejunctify the results.
 
 =end description
@@ -267,7 +267,7 @@ These are implemented but still awaiting clarification on p6l.
     is(j((1|2)^(3&4)), j(one(any(1,2),all(3,4))),
         '((1|2)^(3&4)) equiv to one(any(1,2),all(3,4))');
 
-    is(j((1|2)&(3&4)), j(all(any(1,2),all(3,4))), 
+    is(j((1|2)&(3&4)), j(all(any(1,2),all(3,4))),
         '((1|2)&(3&4)) equiv to all(any(1,2),all(3,4))');
 
     is(j((1|2)|(3&4)), j(any(any(1,2),all(3,4))),
@@ -332,15 +332,15 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 {
   my Mu $res = substr("abcd", 1|2, 2);
   isa-ok $res, Junction;
-  ok $res eq "bc", "substr on junctions: bc"; 
+  ok $res eq "bc", "substr on junctions: bc";
   ok $res eq "cd", "substr on junctions: cd";
 }
 
 {
   my Mu $res = substr("abcd", 1, 1|2);
   isa-ok $res, Junction;
-  ok $res eq "bc", "substr on junctions: bc"; 
-  ok $res eq "b", "substr on junctions: b"; 
+  ok $res eq "bc", "substr on junctions: bc";
+  ok $res eq "b", "substr on junctions: b";
 }
 
 {
