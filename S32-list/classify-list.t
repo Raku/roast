@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 19;
 
 # Tests for classify-list routine available on Baggy role and Hash class
 
@@ -463,4 +463,19 @@ subtest ‘on Baggy, exceptions, can't classify on immutable Baggies’ => {
     throws-like { Mix.new.classify-list: {;}, ^2 }, X::Immutable, 'Mix, &';
     throws-like { Mix.new.classify-list:  %,  ^2 }, X::Immutable, 'Mix, %';
     throws-like { Mix.new.classify-list:  @,  ^2 }, X::Immutable, 'Mix, @';
+}
+
+###############################################################################
+# Miscelaneous
+###############################################################################
+
+subtest 'Callable mapper is executed only once per each item' => {
+    plan 6;
+    my $c;
+    $c = 0; %      .new.classify-list: {$c++}, ^10; is $c, 10, 'Hash,    ^10';
+    $c = 0; BagHash.new.classify-list: {$c++}, ^10; is $c, 10, 'BagHash, ^10';
+    $c = 0; MixHash.new.classify-list: {$c++}, ^10; is $c, 10, 'MixHash, ^10';
+    $c = 0; %      .new.classify-list: {$c++};  is $c, 0, 'Hash,    no items';
+    $c = 0; BagHash.new.classify-list: {$c++};  is $c, 0, 'BagHash, no items';
+    $c = 0; MixHash.new.classify-list: {$c++};  is $c, 0, 'MixHash, no items';
 }
