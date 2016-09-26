@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 512;
+plan 517;
 
 # Basic tests functions specific to complex numbers.
 
@@ -171,6 +171,14 @@ ok Num(exp i * π) == -1, 'Num(Complex) pays attention to $*TOLERANCE';
 {
     my $*TOLERANCE = 1e-20;
     throws-like 'Num(exp i * π)', Exception, 'Num(Complex) pays attention to $*TOLERANCE';
+}
+
+{ # coverage; 2016-09-26
+    is-deeply (42.5+72.7i).reals, (42.5e0, 72.7e0), '.reals';
+    is ( 42.5+72.7i).floor,  42+72i, '.floor (+r+i)';
+    is (-42.5+72.7i).floor, -43+72i, '.floor (-r+i)';
+    is ( 42.5-72.7i).floor,  42-73i, '.floor (+r-i)';
+    is (-42.5-72.7i).floor, -43-73i, '.floor (-r-i)';
 }
 
 # vim: ft=perl6
