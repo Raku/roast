@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -88,3 +88,6 @@ is $stderr, '',       'got correct STDERR';
         [$*EXECUTABLE, "-e", "exit"],
         'Proc returned from .start has correct .command';
 }
+
+throws-like { Proc::Async.new }, X::Multi::NoMatch,
+    'attempting to create Proc::Async with wrong arguments throws';
