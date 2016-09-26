@@ -1,14 +1,33 @@
+###########################################################################
+#####
+##### WARNING: the first 3 tests in this file rely on the name of this file
+#####          and the line number of the block it's testing in this. If
+#####          changing any of those, please adjust the test accordingly.
+#####
+###########################################################################
+
 use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 =begin description
 
 Test pointy sub behaviour described in S06
 
 =end description
+
+
+subtest 'if this test fails, check the block in test file was not moved' => {
+    ### DO NOT MOVE the block of this test, because the line number will be wrong
+    plan 3;
+    my $block = -> { }
+    is $block.line, 25, 'correct .line';
+    ok $block.file.IO.basename.starts-with("pointy."),  'correct .file';
+    is $block.file.IO.absolute(), $?FILE.IO.absolute(), '.file matches $?FILE';
+}
+
 
 # L<S06/""Pointy blocks""/"parameter list of a pointy block does not require
 # parentheses">
