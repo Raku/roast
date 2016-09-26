@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 131;
+plan 133;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -256,4 +256,24 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
       'check infix +> int/Int';
     is Blob.new(+^(my int $i = 10)).perl,'Blob.new(245)',
       'check prefix +^ int';
+}
+
+{ # coverage; 2016-09-26
+    subtest 'Blob:D le Blob:D' => {
+        plan 4;
+
+        is (Buf.new(<1 2 4>) le Buf.new(<1 2 4>)), True;
+        is (Buf.new(<1 2>)   le Buf.new(<1 2 4>)), True;
+        is (Buf.new(<1 2 4>) le Buf.new(<1 2 5>)), True;
+        is (Buf.new(<1 2 4>) le Buf.new(<1 2 3>)), False;
+    }
+
+    subtest 'Blob:D ge Blob:D' => {
+        plan 4;
+
+        is (Buf.new(<1 2 4>) ge Buf.new(<1 2 4>)), True;
+        is (Buf.new(<1 2>)   ge Buf.new(<1 2 4>)), False;
+        is (Buf.new(<1 2 4>) ge Buf.new(<1 2 5>)), False;
+        is (Buf.new(<1 2 4>) ge Buf.new(<1 2 3>)), True;
+    }
 }
