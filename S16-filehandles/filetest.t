@@ -10,7 +10,7 @@ This test tests the various filetest operators.
 
 =end pod
 
-plan 43;
+plan 44;
 
 # L<S32::IO/IO::FSNode/=item IO ~~ :X>
 # L<S03/Changes to Perl 5 operators/The filetest operators are gone.>
@@ -124,6 +124,19 @@ unlink "empty_file";
             'can :l-test against non-existing file and live';
         nok $file.IO ~~ :l, '~~:l returns false on non-existent files';
     }
+}
+
+# RT #129162
+{
+    my $name = "symlink-test-source";
+    my $target = "symlink-test-target";
+    my $src = open($name, :w);
+    $src.close;
+    symlink($target, $name);
+    unlink $name;
+
+    ok $target.IO.l, "Broken symlink exists";
+    unlink $target;
 }
 
 # vim: ft=perl6
