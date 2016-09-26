@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 sub f($x) returns Int { return $x };
 
@@ -53,4 +53,15 @@ dies-ok  { g('m') },    'type check forbids bad implicit return';
         { sub f(-١) { 2 }; f(-1) },
         'Unicode digit negative type constraints work';
 }
+
+# coverage; 2016-09-25
+subtest 'Code.of() returns return type' => {
+    plan 4;
+    my subset ofTest where True;
+    cmp-ok -> () --> Int    {}.of, '===', Int,    '--> type';
+    cmp-ok -> () --> Str:D  {}.of, '===', Str:D,  '--> smiley';
+    cmp-ok -> () --> ofTest {}.of, '===', ofTest, '--> subset';
+    is {;}.of.^name, 'Mu', 'no explicit return constraint';
+}
+
 # vim: ft=perl6
