@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 19;
 
 {
     my Channel $c .= new;
@@ -75,4 +75,9 @@ plan 17;
 
     pass("Both workers detected end-of-channel after a shared channel close");
     $timer.close;
+}
+
+{ # coverage; 2016-09-26
+    throws-like { Channel.elems     }, Exception, 'Channel:U.elems fails';
+    throws-like { Channel.new.elems }, Exception, 'Channel:D.elems fails';
 }
