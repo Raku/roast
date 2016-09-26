@@ -1,10 +1,10 @@
-###########################################################################
+#############################################################################
 #####
-##### WARNING: the first 3 tests in this file rely on the name of this file
-#####          and the line number of the block it's testing in this. If
-#####          changing any of those, please adjust the test accordingly.
+##### WARNING: the first subtest in this file relies on the name of this file
+#####          and the line number of the block it's testing. If changing
+#####          any of those, please adjust the test accordingly.
 #####
-###########################################################################
+#############################################################################
 
 use v6;
 
