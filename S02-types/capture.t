@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 33;
 
 {
     my $capture = \(1,2,3);
@@ -177,5 +177,13 @@ lives-ok { (1..*).Capture.perl }, '.perl of Capture formed from Range does not e
 # RT #123581
 throws-like '(1..*).list.Capture', X::Cannot::Lazy, :action('create a Capture from');
 throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture from');
+
+{ # coverage; 2016-09-26
+    is-deeply \(42, [1, 2], %(:42a), :72a, :x[3, 4], :y{:42a}).antipairs,
+    (
+        42 => 0,        ([1, 2]) => 1, ({:a(42)}) => 2,
+        ([3, 4]) => "x", 72 => "a",    ({:a(42)}) => "y",
+    ), '.antipairs returns correct result';
+}
 
 # vim: ft=perl6
