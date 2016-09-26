@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -82,3 +82,9 @@ isa-ok $start-promise.result, Proc, 'Can finish, return Proc';
 
 is $stdout, 'Perl 6', 'got correct STDOUT';
 is $stderr, '',       'got correct STDERR';
+
+{ # RT #129362
+    is-deeply (await Proc::Async.new($*EXECUTABLE, "-e", "exit").start).command,
+        [$*EXECUTABLE, "-e", "exit"],
+        'Proc returned from .start has correct .command';
+}
