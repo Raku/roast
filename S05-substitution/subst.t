@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 181;
+plan 183;
 
 # L<S05/Substitution/>
 
@@ -621,6 +621,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
             is-deeply $obj, $t[2], "correct modification when using $t[0].gist()";
         }
     }
+}
+
+{ # RT #129374
+    throws-like { "".subst: /\w/, "", :x(my class SomeInvalidXParam {}.new) },
+        X::Str::Match::x, 'giving .subst invalid args throws';
+
+    throws-like { ($ = "").subst-mutate: /\w/, "", :x(my class SomeInvalidXParam {}.new) }, 
+        X::Str::Match::x, 'giving .subst-mutate invalid args throws';
 }
 
 # vim: ft=perl6
