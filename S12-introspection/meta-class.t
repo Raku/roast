@@ -41,12 +41,15 @@ subtest { plan 3;
 }, 'metamethods on a module';
 
 # RT #128579
+#?rakudo.jvm todo "RT #128579"
+#?DOES 1
+{
 subtest { plan 2;
     my package P:ver<1.2.3>:auth<me> {};
     throws-like { P.^ver  }, X::Method::NotFound, '.ver is absent';
     throws-like { P.^auth }, X::Method::NotFound, '.auth is absent';
 }, 'ID metamethods on a package are absent by design';
-
+}
 
 # RT #115208
 eval-lives-ok "True.HOW.say", "can output the .gist of a .HOW";
