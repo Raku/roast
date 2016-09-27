@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 180;
+plan 181;
 
 # L<S05/Substitution/>
 
@@ -574,6 +574,53 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is_run 'await ^30 .map: { start { S/.+/{$/.chars.print}/ given "abc"; } }', {
         :err(''), :out('3' x 30)
     }, 'code in replacement part of s/// has correct scoping';
+}
+
+{ # coverage; 2016-09-27
+    subtest 'Cool.subst-mutate works same as on .Str' => {
+        my @tests = # args | returned stringified Match objects | result
+        [ \('', ''), '', "aabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('', '', :g),    ('' xx 20), "aabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('', '', :global), ('' xx 20), "aabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('a', ''), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('a', '', :g), ('a', 'a'), "bbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('a', '', :global), ('a', 'a'), "bbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('b', ''), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('b', '', :g), ('b', 'b'), "aab\x[308]b\x[308]cc \t  xz \t  y",  ],
+        [ \('b', '', :global), ('b', 'b'), "aab\x[308]b\x[308]cc \t  xz \t  y",  ],
+        [ \(/<[abc]>/, ''), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :g), ('a', 'a', 'b', 'b', 'c', 'c' ), "b\x[308]b\x[308] \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :global), ('a', 'a', 'b', 'b', 'c', 'c' ), "b\x[308]b\x[308] \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :1st), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :st{1;}), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :2nd), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :nd{2;}), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :3rd), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :rd{3;}), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :4th), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :th{4;}), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :5nth), 'c', "aabbb\x[308]b\x[308]c \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :nth{5;}), 'c', "aabbb\x[308]b\x[308]c \t  xz \t  y", ],
+        [ \(/<[cz]> \s+ <[xy]>/, 'Z P', :ss), "c \t  x", "aabbb\x[308]b\x[308]cZ \t  Pz \t  y", ],
+        [ \(/<[cz]> \s+ <[xy]>/, 'Z P', :ss, :global), ( "c \t  x", "z \t  y" ), "aabbb\x[308]b\x[308]cZ \t  PZ \t  P", ],
+        [ \('a', 'Z', :ii), 'a', "zabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('a', 'Z', :ii, :global), ( 'a', 'a' ), "zzbbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[b]+[b\x[308]]>/, 'Z', :mm), 'b', "aaZbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[b]+[b\x[308]]>/, 'Z', :mm, :global), ( 'b', 'b', "b\x[308]", "b\x[308]" ), "aaZZZ\x[308]Z\x[308]cc \t  xz \t  y", ],
+        [ \(/<[b]+[b\x[308]]>/, 'Z', :ii, :mm), 'b', "aazbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[b]+[b\x[308]]>/, 'Z', :ii, :mm, :global), ( 'b', 'b', "b\x[308]", "b\x[308]" ), "aazzz\x[308]z\x[308]cc \t  xz \t  y", ],
+        ;
+
+        plan 2*@tests;
+        for @tests -> $t {
+            # use IO::Path as our Cool object
+            my $obj = "aabbb\x[308]b\x[308]cc \t  xz \t  y".IO;
+            my $ret = $obj.subst-mutate(|$t[0]);
+            is-deeply ( $ret ~~ Iterable ?? $ret».Str !! $ret.Str ), $t[1],
+                "correct return value when using $t[0].gist()";
+            is-deeply $obj, $t[2], "correct modification when using $t[0].gist()";
+        }
+    }
 }
 
 # vim: ft=perl6
