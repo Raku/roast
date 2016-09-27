@@ -89,6 +89,7 @@ plan 16;
     }
     my class B is A { }
     is A.m, 42, 'Applying traits to submethods works';
+    #?rakudo.jvm todo "RT #129375"
     throws-like { B.m }, X::Method::NotFound,
         'Applying traits to submethods retains submethod semantics';
 }
