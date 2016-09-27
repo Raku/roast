@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 517;
+plan 551;
 
 # Basic tests functions specific to complex numbers.
 
@@ -179,6 +179,75 @@ ok Num(exp i * π) == -1, 'Num(Complex) pays attention to $*TOLERANCE';
     is (-42.5+72.7i).floor, -43+72i, '.floor (-r+i)';
     is ( 42.5-72.7i).floor,  42-73i, '.floor (+r-i)';
     is (-42.5-72.7i).floor, -43-73i, '.floor (-r-i)';
+}
+
+{ # coverage; 2016-09-27
+    is ( 42.5+72.7i).ceiling,  43+73i, '.ceiling (+r+i)';
+    is (-42.5+72.7i).ceiling, -42+73i, '.ceiling (-r+i)';
+    is ( 42.5-72.7i).ceiling,  43-72i, '.ceiling (+r-i)';
+    is (-42.5-72.7i).ceiling, -42-72i, '.ceiling (-r-i)';
+
+    is ( 42.5+72.7i).round,  43+73i, '.round (+r+i), .5r';
+    is (-42.5+72.3i).round, -42+72i, '.round (-r+i), .5r';
+    is ( 42.5-72.7i).round,  43-73i, '.round (+r-i), .5r';
+    is (-42.5-72.3i).round, -42-72i, '.round (-r-i), .5r';
+
+    is ( 42.3+72.5i).round,  42+73i, '.round (+r+i), .5i';
+    is (-42.3+72.5i).round, -42+73i, '.round (-r+i), .5i';
+    is ( 42.7-72.5i).round,  43-72i, '.round (+r-i), .5i';
+    is (-42.7-72.5i).round, -43-72i, '.round (-r-i), .5i';
+
+    is ( 42.5+72.5i).round,  43+73i, '.round (+r+i), .5r, .5i';
+    is (-42.5+72.5i).round, -42+73i, '.round (-r+i), .5r, .5i';
+    is ( 42.5-72.5i).round,  43-72i, '.round (+r-i), .5r, .5i';
+    is (-42.5-72.5i).round, -42-72i, '.round (-r-i), .5r, .5i';
+
+    is ( 42.5+72.7i).truncate,  42+72i, '.truncate (+r+i), .5r';
+    is (-42.5+72.3i).truncate, -42+72i, '.truncate (-r+i), .5r';
+    is ( 42.5-72.7i).truncate,  42-72i, '.truncate (+r-i), .5r';
+    is (-42.5-72.3i).truncate, -42-72i, '.truncate (-r-i), .5r';
+
+    is ( 42.3+72.5i).truncate,  42+72i, '.truncate (+r+i), .5i';
+    is (-42.3+72.5i).truncate, -42+72i, '.truncate (-r+i), .5i';
+    is ( 42.7-72.5i).truncate,  42-72i, '.truncate (+r-i), .5i';
+    is (-42.7-72.5i).truncate, -42-72i, '.truncate (-r-i), .5i';
+
+    is ( 42.5+72.5i).truncate,  42+72i, '.truncate (+r+i), .5r, .5i';
+    is (-42.5+72.5i).truncate, -42+72i, '.truncate (-r+i), .5r, .5i';
+    is ( 42.5-72.5i).truncate,  42-72i, '.truncate (+r-i), .5r, .5i';
+    is (-42.5-72.5i).truncate, -42-72i, '.truncate (-r-i), .5r, .5i';
+
+    is-deeply abs(3+4i),      5e0,     'abs(3+4i)';
+    is-deeply abs(i),         1e0,     'abs(i)';
+    cmp-ok    abs(1+i), '==', sqrt(2), 'abs(1+i)';
+
+    subtest 'Real ≅ Complex' => {
+        plan 6;
+
+        cmp-ok 42,   '≅', 42+0i,         'Int, True';
+        cmp-ok 42.0, '≅', 42+0i,         'Num, True';
+        cmp-ok 42e0, '≅', 42+0i,         'Rat, True';
+        is    (41     ≅   42+0i), False, 'Int, False';
+        is    (41e0   ≅   42+0i), False, 'Num, False';
+        is    (41.0   ≅   42+0i), False, 'Rat, False';
+    }
+
+    cmp-ok postfix:<i>(
+            class :: does Numeric { multi method Numeric { 42 } }
+           ), '==', 42i, 'i postfix with custom Numerics works';
+
+    subtest 'Real <=> Complex' => {
+        plan 6;
+
+        is-deeply (42 <=> 42+0i), Order::Same, 'Same, zero i part';
+        is-deeply (42 <=> 43+0i), Order::Less, 'Less, zero i part';
+        is-deeply (42 <=> 41+0i), Order::More, 'More, zero i part';
+
+        is-deeply (42 <=> 42+1e-15i), Order::Same, 'Same, negligible i part';
+        is-deeply (42 <=> 43+1e-15i), Order::Less, 'Less, negligible i part';
+        is-deeply (42 <=> 41+1e-15i), Order::More, 'More, negligible i part';
+    }
+
 }
 
 # vim: ft=perl6
