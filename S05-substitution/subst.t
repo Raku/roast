@@ -576,6 +576,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }, 'code in replacement part of s/// has correct scoping';
 }
 
+#?rakudo.jvm skip 'at least one of the sub-tests leads to an UnwindException'
+#?DOES 1
 { # coverage; 2016-09-27
     subtest 'Cool.subst-mutate works same as on .Str' => {
         my @tests = # args | returned stringified Match objects | result
