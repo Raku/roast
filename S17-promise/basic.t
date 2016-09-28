@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 27;
+plan 28;
 
 {
     my $p = Promise.new;
@@ -58,4 +58,10 @@ plan 27;
         { :0status, :err(''), :out("start\n" x 9 ~ "end\n" x 9) },
         "promises execute asynchronously [try $_]"
     for ^4;
+}
+
+# RT #129753
+{
+    throws-like { Promise.new ~~ Planned }, Exception,
+        'smartmatching Promise against an Enum does not hang';
 }
