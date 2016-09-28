@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 # Unicode version pragma not needed here, as names cannot change.
 
@@ -68,3 +68,6 @@ is uniname(0x210000), '<unassigned>', "uniname too high returns <unassigned> (2)
 #?rakudo.jvm 2 skip "Method 'NFC' not found for invocant of class 'Str' RT #124500"
 is uninames("AB"), ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";
 is "AB".uninames, ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";
+
+#?rakudo.jvm skip "No Unicode 9 yet"
+is uniname("🦋"), "BUTTERFLY", "Can resolve Unicode 9 character name";
