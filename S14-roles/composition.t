@@ -142,7 +142,6 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
         my role B { has A $.bar handles 'aie' }
         my class C does B { }
         is C.new.aie, 'AIE!', 'literal handles from role is composed (1)';
-        #?rakudo.jvm todo "RT #64766"
         throws-like { C.new.foo }, X::Method::NotFound,
              'literal handles from role is composed (2)';
     }
