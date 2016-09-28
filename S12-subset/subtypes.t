@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 83;
+plan 85;
 
 use Test::Util;
 
@@ -334,6 +334,13 @@ subtest 'multi with :D subset dispatches correctly' => {
         R127367.f([2, 2]);
     }, 'dispatch does not die';
     is-deeply @results, ['T:D', 42, [2, 2]], 'dispatch happened in right order';
+}
+
+# RT #129430
+{
+    sub f(|c where { c.elems == 1 }) {}
+    lives-ok { f(42) }, 'where constraint on |c parameter works';
+    dies-ok { f() }, 'where constraint on |c parameter is enforced';
 }
 
 # vim: ft=perl6
