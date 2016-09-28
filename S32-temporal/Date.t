@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 101;
+plan 104;
 
 # construction
 {
@@ -188,3 +188,19 @@ is Date.new('2015-12-29',:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
 # RT #128545
 throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
     'synthetics are rejected in constructor string';
+
+{ # coverage; 2016-09-28
+    subtest 'can create Date from Instant' => {
+        constant $i = Instant.from-posix: 1234567890;
+
+        is Date.new($i).Str, '2009-02-13', 'Instant only';
+        is Date.new($i, :formatter{ "It is {.year}" }).Str, 'It is 2009',
+            'Instant, with a custom formatter';
+    }
+
+    is-deeply Date.new('2016-09-28').perl.EVAL,
+              Date.new('2016-09-28'), 'can roundtrip .perl output';
+
+    is-deeply (62 + Date.new: '2016-11-10'), Date.new('2017-01-11'),
+        'can Int + Date to increment date by Int days';
+}
