@@ -214,7 +214,6 @@ try {
 }
 
 # RT #69312
-#?rakudo.jvm skip 'control operator crossed continuation barrier RT #127967'
 {
     my @t = gather {
         sub triangle { take '=' x 3; }
