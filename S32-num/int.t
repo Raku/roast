@@ -138,7 +138,7 @@ is (-129).msb,   8,   "(-129).msb is 8";
 is (-32768).msb, 15,  "(-32768).msb is 15";
 
 # Test issue fixed by https://github.com/rakudo/rakudo/commit/84b7ebdf42
-subtest 'smartmathing :U numeric against :D numeric does not throw' => {
+subtest 'smartmatching :U numeric against :D numeric does not throw' => {
     plan 15;
     for 42, τ, ½ -> $what {
         is (Numeric ~~ $what), False, "Numeric:U ~~ $what ($what.^name())";
