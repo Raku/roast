@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 107;
+plan 108;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -136,5 +136,17 @@ is (-127).msb,   7,   "(-127).msb is 7";     # 1000 0001
 is (-128).msb,   7,   "(-128).msb is 7";     # 1000 0000
 is (-129).msb,   8,   "(-129).msb is 8";
 is (-32768).msb, 15,  "(-32768).msb is 15";
+
+# Test issue fixed by https://github.com/rakudo/rakudo/commit/84b7ebdf42
+subtest 'smartmathing :U numeric against :D numeric does not throw' => {
+    plan 15;
+    for 42, τ, ½ -> $what {
+        is (Numeric ~~ $what), False, "Numeric:U ~~ $what ($what.^name())";
+        is (Int     ~~ $what), False, "Int:U     ~~ $what ($what.^name())";
+        is (UInt    ~~ $what), False, "UInt:U    ~~ $what ($what.^name())";
+        is (Num     ~~ $what), False, "Num:U     ~~ $what ($what.^name())";
+        is (Rat     ~~ $what), False, "Rat:U     ~~ $what ($what.^name())";
+    }
+}
 
 # vim: ft=perl6
