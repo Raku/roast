@@ -138,14 +138,18 @@ is (-129).msb,   8,   "(-129).msb is 8";
 is (-32768).msb, 15,  "(-32768).msb is 15";
 
 # Test issue fixed by https://github.com/rakudo/rakudo/commit/84b7ebdf42
-subtest 'smartmatching :U numeric against :D numeric does not throw' => {
-    plan 15;
-    for 42, τ, ½ -> $what {
-        is (Numeric ~~ $what), False, "Numeric:U ~~ $what ($what.^name())";
-        is (Int     ~~ $what), False, "Int:U     ~~ $what ($what.^name())";
-        is (UInt    ~~ $what), False, "UInt:U    ~~ $what ($what.^name())";
-        is (Num     ~~ $what), False, "Num:U     ~~ $what ($what.^name())";
-        is (Rat     ~~ $what), False, "Rat:U     ~~ $what ($what.^name())";
+#?rakudo.jvm skip 'parsing error with "τ, ½"'
+#?DOES 1
+{
+    subtest 'smartmatching :U numeric against :D numeric does not throw' => {
+        plan 15;
+        for 42, τ, ½ -> $what {
+            is (Numeric ~~ $what), False, "Numeric:U ~~ $what ($what.^name())";
+            is (Int     ~~ $what), False, "Int:U     ~~ $what ($what.^name())";
+            is (UInt    ~~ $what), False, "UInt:U    ~~ $what ($what.^name())";
+            is (Num     ~~ $what), False, "Num:U     ~~ $what ($what.^name())";
+            is (Rat     ~~ $what), False, "Rat:U     ~~ $what ($what.^name())";
+        }
     }
 }
 
