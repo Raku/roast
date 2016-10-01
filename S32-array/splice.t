@@ -267,7 +267,7 @@ for @testing -> @a, $T {
 
 subtest 'Array.splice' => { # coverage; 2016-10-01
     constant @tests = # Args | Return | Result
-        [ \(                ),  [1,2,3], []            ],
+        [ \(                 ), [1,2,3], []            ],
         [ \( *               ), [ ],     [1,2,3]       ],
         [ \( *,   *          ), [ ],     [1,2,3]       ],
         [ \( *,   *,  [4,5,6]), [ ],     [1,2,3,4,5,6] ],
