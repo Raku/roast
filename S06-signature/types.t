@@ -36,7 +36,6 @@ dies-ok  { g('m') },    'type check forbids bad implicit return';
 }
 
 # RT #126124
-#?rakudo.jvm todo "no mention of type 'Mu', yet"
 {
     throws-like { sub f(Mu:D $a) {}; f(Int) }, Exception,
         message => /'instance of type Mu' .+ 'type object'/,

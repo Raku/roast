@@ -120,7 +120,6 @@ for $%h, Any, $%hi, Int, $%hia, Int -> \h, \T {
     throws-like { $b.DELETE-KEY("a") },
       X::Immutable, :method<DELETE-KEY>, :typename<Bag>, "\$b.DELETE-KEY";
     is $b.AT-KEY("a"), 1, "\$b.AT-KEY (after delete)";
-    #?rakudo.jvm todo 'still mentions "value" instead of "Int"'
     throws-like { $b.ASSIGN-KEY("a",42) },
       X::Assignment::RO, :typename<Int>, "\$b.ASSIGN-KEY";
     is $b.AT-KEY("a"), 1, "\$b.AT-KEY (after assignment)";
@@ -152,7 +151,6 @@ for $%h, Any, $%hi, Int, $%hia, Int -> \h, \T {
     throws-like { $m.DELETE-KEY("a") },
       X::Immutable, :method<DELETE-KEY>, :typename<Mix>, "\$m.DELETE-KEY";
     is $m.AT-KEY("a"), 1, "\$m.AT-KEY (after delete)";
-    #?rakudo.jvm todo 'still mentions "value" instead of "Int"'
     throws-like { $m.ASSIGN-KEY("a",42) },
       X::Assignment::RO, :typename<Int>, "\$m.ASSIGN-KEY";
     is $m.AT-KEY("a"), 1, "\$m.AT-KEY (after assignment)";
