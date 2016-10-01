@@ -87,6 +87,6 @@ plan 45;
   isa-ok infix:<?^>(), Bool, '?^ with no arguments yields a Bool';
 }
 
-#?rakudo.jvm 2 todo 'got (Int) instead of (Bool)'
+#?rakudo.jvm 2 todo 'got (Int) instead of (Bool) RT #129782'
 ok (?^5) === False, 'prefix ?^ (+)';
 ok (?^0) === True,  'prefix ?^ (-)';
