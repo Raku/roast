@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 44;
+plan 47;
 
 {
     sub infix:<×> ($a, $b) { $a * $b }
@@ -253,3 +253,13 @@ plan 44;
 
 is infix:['+'](2,3), 5, 'can call existing infix via compile-time string lookup';
 is infix:['Z~'](<a b>, <c d>), 'ac bd', 'can call autogen infix via compile-time string lookup';
+
+# RT #68024
+{
+    BEGIN my $plus = '+';
+    is &infix:<<$plus>>(3,4), 7, '&infix:<<$foo>> works';
+    is &infix:«$plus»(3,4),   7, '&infix:«$foo» works';
+    is &infix:[$plus](3,4),   7, '&infix:[$foo] works';
+}
+
+# vim: ft=perl6 expandtab sw=4
