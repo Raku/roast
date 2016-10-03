@@ -56,7 +56,7 @@ is +(DateTime.new('1985-03-14T13:28:22').Instant - dti),
     my $b = dtp(2005,  1,  1,    2, 22, 13.4);
     my $expected-diff = 60 - 8.5 + 2*60 + 2*60*60 + 22*60 + 13.4;
     is +($b.Instant() - $a.Instant), $expected-diff, 'Instant subtraction (ugly case)';
-    
+
     $a .= clone(timezone => 35*60 - 5);
     $b .= clone(timezone => 3*60*60);
     is +($a.Instant() - $b.Instant), 0.1, 'Instant subtraction (time zones)';
@@ -77,7 +77,7 @@ is +(DateTime.new('1985-03-14T13:28:22').Instant - dti),
     $a .= clone(year => 1973);
     $b .= clone(year => 2008);
     is +($b.Instant() - $a.Instant), 1_104_451_227, 'Instant subtraction (thirty-year span)';
-      # I got this figure by adding 22 (the number of leap seconds 
+      # I got this figure by adding 22 (the number of leap seconds
       # between the two moments) to the difference of POSIX
       # times.
 }
