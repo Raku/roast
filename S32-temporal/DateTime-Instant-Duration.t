@@ -140,15 +140,15 @@ for 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1449755609 {
     subtest 'infix:<->(Duration, Real)' => {
         plan 9;
         constant $d = Duration.new: 4.5;
-        is-deeply $d + 1,     Duration.new(5.5),   '+1';
-        is-deeply $d - 1,     Duration.new(3.5),   '-1';
-        is-deeply $d - 100,   Duration.new(-95.5), '-100';
-        is-deeply $d + 1e0,   Duration.new(5.5),   '+1e0';
-        is-deeply $d - 1e0,   Duration.new(3.5),   '-1e0';
-        is-deeply $d - 1e2,   Duration.new(-95.5), '-1e2';
-        is-deeply $d + 1.5,   Duration.new(6),     '+1.5';
-        is-deeply $d - 1.5,   Duration.new(3),     '-1.5';
-        is-deeply $d - 100.5, Duration.new(-96),   '-1.5';
+        is-deeply $d - (-1),   Duration.new(5.5),   '-1';
+        is-deeply $d - 1,      Duration.new(3.5),   '1';
+        is-deeply $d - 100,    Duration.new(-95.5), '100';
+        is-deeply $d - (-1e0), Duration.new(5.5),   '-1e0';
+        is-deeply $d - 1e0,    Duration.new(3.5),   '1e0';
+        is-deeply $d - 1e2,    Duration.new(-95.5), '1e2';
+        is-deeply $d - (-1.5), Duration.new(6),     '-1.5';
+        is-deeply $d - 1.5,    Duration.new(3),     '1.5';
+        is-deeply $d - 100.5,  Duration.new(-96),   '1.5';
     }
 }
 
