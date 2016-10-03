@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 105;
+plan 109;
 
 # construction
 {
@@ -203,4 +203,14 @@ throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
 
     is-deeply (62 + Date.new: '2016-11-10'), Date.new('2017-01-11'),
         'can Int + Date to increment date by Int days';
+}
+
+# RT #129799
+{
+    is-deeply Date.new("2016-10-03").IO, "2016-10-03".IO, '.IO on Date';
+    is-deeply DateTime.new("2016-10-03T22:23:24Z").IO,
+        "2016-10-03T22:23:24Z".IO, '.IO on DateTime';
+
+    throws-like { Date    .IO }, Exception, ".IO on Date:U throws";
+    throws-like { DateTime.IO }, Exception, ".IO on DateTime:U throws";
 }
