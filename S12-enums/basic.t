@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 39;
+plan 42;
 
 # Very basic enum tests
 
@@ -141,6 +141,25 @@ subtest 'dynamically created lists can be used to define an enum' => {
     cmp-ok b2, '==', 3, 'enum element has correct value';
     is-deeply rt124251.enums, Map.new( (:0a1,:1a2,:2b1,:3b2,:4c1,:5c2) ),
         '.enums are all correct';
+}
+
+{ # coverage; 2016-10-03
+    my enum Cover20161003 <foo-cover bar-cover>;
+    subtest 'Enumeration:D.kv' => {
+        plan 2;
+        is-deeply foo-cover.kv, ('foo-cover', 0), 'first element';
+        is-deeply bar-cover.kv, ('bar-cover', 1), 'second element';
+    }
+    subtest 'Enumeration:D.pair' => {
+        plan 2;
+        is-deeply foo-cover.pair, (foo-cover => 0), 'first element';
+        is-deeply bar-cover.pair, (bar-cover => 1), 'second element';
+    }
+    subtest 'Enumeration:D.Int' => {
+        plan 2;
+        is-deeply foo-cover.Int, 0, 'first element';
+        is-deeply bar-cover.Int, 1, 'second element';
+    }
 }
 
 # vim: ft=perl6
