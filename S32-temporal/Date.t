@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 104;
+plan 105;
 
 # construction
 {
@@ -48,7 +48,7 @@ is ~Date.new(:year(2010), :month(3), :day(5)), '2010-03-05',
 
     is $d.day-of-week,             1, 'Day of week';
 
-    #is $d.is-leap-year,      Bool::True, 'leap year';
+    is $d.is-leap-year,   Bool::True, 'leap year';
     is $d.days-in-month,          29, 'days in month';
 }
 
