@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 269;
+plan 271;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -697,4 +697,80 @@ subtest 'synthetics not allowed in date formats' => {
 
     throws-like { DateTime.new: "2016-07-05T00:0\x[308]0:00Z" },
         X::Temporal::InvalidFormat, 'DateTime.new (Z format)';
+}
+
+{ # coverage; 2019-10-03
+    subtest 'DateTime.offset-in-hours' => {
+        plan 9;
+
+        my $d = '2016-10-03T20:20:20';
+        is DateTime.new($d ~ '+00:00').offset-in-hours,  0,      'UTC';
+        is DateTime.new($d ~ '+01:00').offset-in-hours,  1,      '+1';
+        is DateTime.new($d ~ '-01:00').offset-in-hours, -1,      '-1';
+        is DateTime.new($d ~ '+04:30').offset-in-hours,  4.5,    '+4:30';
+        is DateTime.new($d ~ '-04:30').offset-in-hours, -4.5,    '-4:30';
+        is DateTime.new($d ~ '+04:05').offset-in-hours,  4+1/12, '+4:20';
+        is DateTime.new($d ~ '-04:05').offset-in-hours, -4-1/12, '-4:20';
+        is DateTime.new($d ~ '+42:30').offset-in-hours,  42.5,   '+42:30';
+        is DateTime.new($d ~ '-42:30').offset-in-hours, -42.5,   '-42:30';
+    }
+
+    subtest 'DateTime <=> DateTime' => {
+        plan 16;
+
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Same,
+            'Same (same offsets)';
+        is  DateTime.new('1986-02-22T21:22:22+21:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Same,
+            'Same (LHS has smaller offset)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T21:22:22+21:22'), Order::Same,
+            'Same (RHS has smaller offset)';
+        is  DateTime.new('1986-02-24T22:22:22+48:22') <=>
+            DateTime.new('1986-02-20T22:22:22-47:38'), Order::Same,
+            'Same (multi-day difference in offsets)';
+
+        is  DateTime.new('1985-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different years)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1985-02-22T22:22:22+22:22'), Order::More,
+            'More (different years)';
+
+        is  DateTime.new('1986-01-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different months)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-01-22T22:22:22+22:22'), Order::More,
+            'More (different months)';
+
+        is  DateTime.new('1986-02-21T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different days)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-21T22:22:22+22:22'), Order::More,
+            'More (different days)';
+
+        is  DateTime.new('1986-02-22T21:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different hours)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T21:22:22+22:22'), Order::More,
+            'More (different hours)';
+
+        is  DateTime.new('1986-02-22T22:21:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different minutes)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:21:22+22:22'), Order::More,
+            'More (different minutes)';
+
+        is  DateTime.new('1986-02-22T22:22:21+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different seconds)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:21+22:22'), Order::More,
+            'More (different seconds)';
+    }
 }
