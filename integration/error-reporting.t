@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 27;
+plan 28;
 
 use Test::Util;
 
@@ -210,5 +210,19 @@ throws-like ‘%::{''}’, X::Undeclared, line => /^\d+$/,
 # RT #125680
 is_run '...', {:out(''), :err{ not $^o.contains: 'Unhandled exception' }},
     'stub code must not produce `Unhandled exception` message';
+
+# RT #129800
+subtest 'X::Multi::NoMatch correct shows named arguments' => {
+    my class RT129800 { multi method foo ($) {} }
+    throws-like { RT129800.foo: :foo(42) }, X::Multi::NoMatch,
+        message => /':foo(Int)'/, 'message mentions our positional';
+    throws-like { RT129800.foo: :foo("meow") }, X::Multi::NoMatch,
+        message => /':foo(Str)'/, 'type of named is correct';
+    throws-like { RT129800.foo: :foo(my class Foo {}) }, X::Multi::NoMatch,
+        message => /':foo(Foo)'/, 'custom types detected';
+    throws-like { RT129800.foo: :foo(my class Foo {method perl {die}}) },
+            X::Multi::NoMatch, message => /':Foo'/,
+    'fallback mechanism works';
+}
 
 # vim: ft=perl6
