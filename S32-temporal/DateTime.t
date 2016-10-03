@@ -709,8 +709,8 @@ subtest 'synthetics not allowed in date formats' => {
         is DateTime.new($d ~ '-01:00').offset-in-hours, -1,      '-1';
         is DateTime.new($d ~ '+04:30').offset-in-hours,  4.5,    '+4:30';
         is DateTime.new($d ~ '-04:30').offset-in-hours, -4.5,    '-4:30';
-        is DateTime.new($d ~ '+04:05').offset-in-hours,  4+1/12, '+4:20';
-        is DateTime.new($d ~ '-04:05').offset-in-hours, -4-1/12, '-4:20';
+        is DateTime.new($d ~ '+04:05').offset-in-hours,  4+1/12, '+4:05';
+        is DateTime.new($d ~ '-04:05').offset-in-hours, -4-1/12, '-4:05';
         is DateTime.new($d ~ '+42:30').offset-in-hours,  42.5,   '+42:30';
         is DateTime.new($d ~ '-42:30').offset-in-hours, -42.5,   '-42:30';
     }
