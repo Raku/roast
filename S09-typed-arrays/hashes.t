@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 41;
+plan 43;
 
 # L<S09/Typed arrays>
 
@@ -78,6 +78,17 @@ plan 41;
     ok %bound ~~ Hash[Int, Int], 'Binding clone of a typed hash "preserves" type';
     my %assigned = %h.clone;
     nok %assigned ~~ Hash[Int, Int], 'Assigning from clone of a typed hash copies values, but not type';
+}
+
+{ # coverage; 2016-10-04
+    my class Foo {};
+    my $o = Foo.new;
+    my %h{Any} = :42a, :72b, Foo, $o;
+    is-deeply set(%h.antipairs), set(42 => "a", 72 => "b", Pair.new: $o, Foo),
+        '.antipairs on typed Hash';
+
+    is-deeply set(%h.invert), set(42 => "a", 72 => "b", Pair.new: $o, Foo),
+        '.invert on typed Hash';
 }
 
 # vim: ft=perl6
