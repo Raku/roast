@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 8;
+plan 9;
 
 # L<S02/Names and Variables/:delete>
 
@@ -40,6 +40,10 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
     %rt68482 = 1 => 3;
     my $rt68482 = %rt68482<1>:delete;
     is $rt68482.WHAT.gist, 3.WHAT.gist, '.WHAT of stored delete is the element';
+}
+
+{ # coverage; 2016-10-04
+    is-deeply Hash<z>:delete, Nil, ':delete on Hash:U returns Nil';
 }
 
 # vim: ft=perl6
