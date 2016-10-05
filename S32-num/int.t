@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 108;
+plan 120;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -147,6 +147,29 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
         is (Num     ~~ $what), False, "Num:U     ~~ $what ($what.^name())";
         is (Rat     ~~ $what), False, "Rat:U     ~~ $what ($what.^name())";
     }
+}
+
+{ # coverage; 2016-10-05
+    my UInt $u;
+    is $u.defined, Bool::False, 'undefined UInt is undefined';
+    cmp-ok $u, '~~', UInt, 'UInt var smartmatches True against UInt';
+    is $u.HOW.^name, 'Perl6::Metamodel::SubsetHOW', 'UInt is a subset';
+    throws-like { UInt.new }, Exception,
+        'attempting to instantiate UInt throws';
+
+    is ($u = 42), 42, 'Can store a positive Int in UInt';
+    is ($u = 0),  0,  'Can store a zero in UInt';
+    throws-like { $u = -42 }, X::TypeCheck::Assignment,
+        'UInt rejects negative numbers';
+    throws-like { $u = "foo" }, X::TypeCheck::Assignment,
+        'UInt rejects other types';
+
+    is ($u = Nil), UInt,  'Can assign Nil to UInt';
+    my $u2 is default(72);
+    is $u2, 72, 'is default() trait works on brand new UInt';
+    is ($u2 = 1337), 1337, 'is default()ed UInt can take values';
+    is ($u2 = Nil),  72,
+        'Nil assigned to is default()ed UInt gives default values';
 }
 
 # vim: ft=perl6
