@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 120;
+plan 121;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -170,6 +170,18 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
     is ($u2 = 1337), 1337, 'is default()ed UInt can take values';
     is ($u2 = Nil),  72,
         'Nil assigned to is default()ed UInt gives default values';
+}
+
+subtest 'Int.new' => { # coverage; 2016-10-05
+    plan 8;
+
+    isnt 2.WHERE, Int.new(2).WHERE,
+        'returns a new object (not a cached constant)';
+ 
+   for '42', 42e0, 420/10, 42, ^42, (|^42,), [|^42] -> $n {
+        is-deeply Int.new($n), 42,
+           "Can use $n.^name() to construct an Int from";
+    }
 }
 
 # vim: ft=perl6
