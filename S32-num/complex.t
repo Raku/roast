@@ -2,9 +2,11 @@ use v6;
 
 use Test;
 
-plan 551;
+plan 552;
 
 # Basic tests functions specific to complex numbers.
+
+is-deeply Complex.new, 0+0i, 'Complex.new() gives 0+0i';
 
 isa-ok(1 + 2i, Complex, 'postfix:<i> creates a Complex number');
 isa-ok(i, Complex, 'i creates a Complex number');
