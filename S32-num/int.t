@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 121;
+plan 130;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -177,11 +177,38 @@ subtest 'Int.new' => { # coverage; 2016-10-05
 
     isnt 2.WHERE, Int.new(2).WHERE,
         'returns a new object (not a cached constant)';
- 
+
    for '42', 42e0, 420/10, 42, ^42, (|^42,), [|^42] -> $n {
         is-deeply Int.new($n), 42,
            "Can use $n.^name() to construct an Int from";
     }
+}
+
+{ # coverage; 2016-10-05
+    my int $i0 = 0;
+    my int $i1 = 1;
+    my int $i2 = 2;
+    my int $i3 = 3;
+    my int $i6 = 6;
+    my int $i8 = 8;
+    my int $iL = 2**62;
+    my int $iu;
+
+    is-deeply 42.narrow,  42,  'Int.narrow gives Int';
+
+    is-deeply $i2 ** $i3, $i8, 'int ** int returns int';
+    is-deeply $iu ** $i3, $i0, '0 (uninitialized int) ** int returns 0';
+    is-deeply $i8 ** $iu, $i1, 'int ** 0 (uninitialized int) returns 1';
+    #?rakudo todo 'RT 129373'
+    throws-like { $iL ** $iL },  X::Numeric::Overflow,
+        'overflowing int with ** throws correct exception';
+
+    is-deeply $i2 * $i3,  $i6, 'int * int returns int';
+    is-deeply $iu * $i3,  $i0, '0 (uninitialized int) * int returns 0';
+    is-deeply $i8 * $iu,  $i0, 'int * 0 (uninitialized int) returns 0';
+    #?rakudo todo 'RT 129373 and RT 129813'
+    throws-like { $iL * $iL },  X::Numeric::Overflow,
+        'overflowing int with * throws correct exception';
 }
 
 # vim: ft=perl6
