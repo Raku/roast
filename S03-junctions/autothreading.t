@@ -290,7 +290,6 @@ plan 104;
 # L<S03/Junctive operators/Use of negative operators with junctions>
 {
     my Mu $x = 'a' ne ('a'|'b'|'c');
-    #?rakudo.jvm todo 'got (Int) instead of (Bool) RT #129782'
     ok $x ~~ Bool, 'infix:<ne> collapses the junction (1)';
     ok $x !~~ Junction, 'infix:<ne> collapses the junction (2)';
     nok $x, '... and the result is False';

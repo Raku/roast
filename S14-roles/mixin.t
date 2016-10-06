@@ -120,7 +120,6 @@ is $y.test,     42,         'method from other role was OK too';
 {
     my $a = 0 but True;
     is +$a, 0, 'RT #100782 1/2';
-    #?rakudo.jvm todo 'RT #100782'
     is ?$a, Bool::True, 'RT #100782 2/2';
 }
 
@@ -202,7 +201,6 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
     my $x;
     lives-ok { $x = True but (1, "x") }, 'but with (1, "2") on RHS works';
     is $x.Int, 1, 'but with (1, "x") provides a .Int method returning 1';
-    #?rakudo.jvm todo "got '1' instead of 'x'"
     is $x.Str, "x", 'but with (1, "x") provides a .Str method returning "x"';
 }
 throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /resolved/ },
@@ -232,7 +230,6 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
 # RT #127916
 {
     role Foo::Bar { };
-    #?rakudo.jvm todo 'RT #127916'
     is (5 but Foo::Bar).^name, 'Int+{Foo::Bar}', 
         "mixing in a role from a deeper namespace doesn't clobber the targets shortname";
 }
