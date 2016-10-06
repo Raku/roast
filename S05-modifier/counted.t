@@ -229,33 +229,38 @@ $sub6 = "f bar bar bar bar bar bar";
 
 # :Nx...
 
-#?rakudo.jvm skip 'RT #124279'
 {
     my $try = $data;
     ok(!( $try ~~ s:0x{fo+}=q{bar} ), "Can't substitute 0x" );
     is($try, $data, 'No change to data for 0x');
 
     $try = $data;
+    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:1x{fo+}=q{bar}, 'substitute 1x');
     is($try, $sub1, 'substituted 1x correctly');
 
     $try = $data;
+    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:2x{fo+}=q{bar}, 'substitute 2x');
     is($try, $sub2, 'substituted 2x correctly');
 
     $try = $data;
+    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:3x{fo+}=q{bar}, 'substitute 3x');
     is($try, $sub3, 'substituted 3x correctly');
 
     $try = $data;
+    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:4x{fo+}=q{bar}, 'substitute 4x');
     is($try, $sub4, 'substituted 4x correctly');
 
     $try = $data;
+    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:5x{fo+}=q{bar}, 'substitute 5x');
     is($try, $sub5, 'substituted 5x correctly');
 
     $try = $data;
+    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:6x{fo+}=q{bar}, 'substitute 6x');
     is($try, $sub6, 'substituted 6x correctly');
 
