@@ -38,7 +38,6 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
     is $variable, &baz, '&?ROUTINE is correct inside a rule';
 }
 
-#?rakudo.jvm skip 'RT #126517'
 {
     my @collected;
     sub foo($a) {
@@ -53,7 +52,6 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
     is @collected.join(''), 'aaaa', 'Correct closure semantics with &?ROUTINE';
 }
 
-#?rakudo.jvm skip 'RT #126517'
 {
     my @collected;
     sub foo($a) {

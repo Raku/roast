@@ -68,7 +68,6 @@ plan 68;
     ## when using parentheses: 1 ~~ (**,1,**) returns False
     ## cmp. http://irclog.perlgeek.de/perl6/2016-09-15#i_13217141
     ## TODO modify test to whatever the answer to "is the LHS coerced" is
-    #?rakudo.jvm 1 skip 'NullPointerException'
     ok (1 ~~ **,1,**),     'smartmatch with Array RHS co-erces LHS to list';
     ok (1..10 ~~ (**,5,**)), 'smartmatch with List RHS co-erces LHS to list';
 
