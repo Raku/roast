@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 130;
+plan 164;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -189,6 +189,7 @@ subtest 'Int.new' => { # coverage; 2016-10-05
     my int $i1 = 1;
     my int $i2 = 2;
     my int $i3 = 3;
+    my int $i5 = 5;
     my int $i6 = 6;
     my int $i8 = 8;
     my int $iL = 2**62;
@@ -209,6 +210,51 @@ subtest 'Int.new' => { # coverage; 2016-10-05
     #?rakudo todo 'RT 129373 and RT 129813'
     throws-like { $iL * $iL },  X::Numeric::Overflow,
         'overflowing int with * throws correct exception';
+
+    is-deeply $i5 div $i2, $i2, 'int(5) div int(2) returns int(2)';
+    is-deeply $i8 div $i3, $i2, 'int(8) div int(3) returns int(2)';
+    is-deeply $i0 div $i2, $i0, '0 div int returns 0';
+    is-deeply $iu div $i2, $i0, '0 (uninitialized int) div int returns 0';
+    throws-like { $i5 div $i0 }, Exception, 'int div 0 throws';
+    throws-like { $i5 div $iu }, Exception, 'int div 0 (uninit. int) throws';
+
+    is-deeply $i5 % $i2, $i1, 'int(5) % int(2) returns int(1)';
+    is-deeply $i8 % $i2, $i0, 'int(8) % int(2) returns int(0)';
+    is-deeply $i0 % $i2, $i0, '0 % int returns 0';
+    is-deeply $iu % $i2, $i0, '0 (uninitialized int) div int returns 0';
+
+    is-deeply $i3 lcm $i2, $i6, 'int(3) lcm int(2) returns int(6)';
+    is-deeply $i3 lcm $i2, $i6, 'int(3) lcm int(2) returns int(6)';
+    is-deeply $i8 lcm $i8, $i8, 'int(8) lcm int(8) returns int(8)';
+    is-deeply $i0 lcm $i8, $i0, 'int(0) lcm int(8) returns int(0)';
+    is-deeply $iu lcm $i8, $i0, 'int(uninitialized) lcm int(8) returns int(0)';
+
+    is-deeply $i3 gcd $i2, $i1, 'int(3) gcd int(2) returns int(1)';
+    is-deeply $i8 gcd $i2, $i2, 'int(8) gcd int(2) returns int(2)';
+    is-deeply $i8 gcd $i0, $i8, 'int(8) gcd int(0) returns int(8)';
+    is-deeply $iu gcd $i0, $i0, 'int(uninitialized) gcd int(0) returns int(0)';
+
+    is-deeply $i8 === $i8, Bool::True,  'int === int (True)';
+    is-deeply $i8 === $i2, Bool::False, 'int === int (False)';
+    is-deeply $iu === $i0, Bool::True, 'int (uninit.) === int(0) (True)';
+
+    is-deeply $iu.chr, "\x[0]", 'int(uninit.) .chr works';
+    is-deeply $i0.chr, "\x[0]", 'int(0) .chr works';
+    is-deeply $i8.chr, "\x[8]", 'int(8) .chr works';
+}
+
+{ # coverage; 2016-10-06
+    is-deeply expmod(10, 3, 11), 10, 'expmod with Ints (1)';
+    is-deeply expmod(10, 0, 11), 1,  'expmod with Ints (2)';
+    is-deeply expmod("10", 0e0, 110/10), 1, 'expmod with other types';
+
+    is-deeply lsb(0b01011), 0, 'lsb (1)';
+    is-deeply lsb(0b01000), 3, 'lsb (2)';
+    is-deeply msb(0b01011), 3, 'msb (1)';
+    is-deeply msb(0b00010), 1, 'msb (2)';
+
+    is-deeply lsb(0), Nil, 'lsb 0';
+    is-deeply msb(0), Nil, 'msb 0';
 }
 
 # vim: ft=perl6
