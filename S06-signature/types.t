@@ -31,7 +31,7 @@ dies-ok  { g('m') },    'type check forbids bad  implicitreturn';
 {
     sub rt123789 (int $x) { say $x };
     throws-like { rt123789(Int) }, Exception,
-        message => 'Cannot unbox a type object',
+        message => /'Cannot unbox a type object'/,
         'no segfault when calling a routine having a native parameter with a type object argument';
 }
 
