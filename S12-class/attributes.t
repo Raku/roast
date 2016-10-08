@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 38;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -187,4 +187,17 @@ throws-like q[
     throws-like '$foo.a = 1,"b"', Exception, 'typed array attribute (2)';
 }
 
-# vim: ft=perl6
+# RT #129830
+{
+    class RT129830 { has Int @.array; has Str %.hash };
+    is
+        RT129830.^attributes[0].type.gist,
+        '(Positional[Int])',
+        '.gist works on attribute types (1)';
+    is
+        RT129830.^attributes[1].type.gist,
+        '(Associative[Str])',
+        '.gist works on attribute types (2)';
+    }
+
+# vim: ft=perl6 expandtab sw=4
