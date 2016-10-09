@@ -334,7 +334,6 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     is (join ', ', [\//] Any, 0, 1),
        (join ', ',       Any, 0, 0),
        '[\orelse]';
-    #?rakudo.jvm skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     is (join ', ', [\orelse] Any, 0, 1),
        (join ', ',           Any, 0, 0),
        '[\orelse]';
@@ -489,28 +488,24 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is ([^^] 0, 0, $side-effect++), 0, "[^^] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([andthen] Int, ++$side-effect).perl, 'slip()', "[andthen] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([andthen] 1, ++$side-effect), 1, "[andthen] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([andthen] 1,1,1,Any,++$side-effect).perl, 'slip()', "[andthen] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([andthen] 1,1,1,1,++$side-effect), 1, "[andthen] on long list produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([orelse] 2, ++$side-effect), 2, "[orelse] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([orelse] Cool, ++$side-effect), 1, "[orelse] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([orelse] Nil,Int,Num,2,++$side-effect), 2, "[orelse] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
@@ -621,21 +616,18 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is ([\^^] 0, 0, $side-effect++), '0 0 0', "[\\^^] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([\andthen] Int, ++$side-effect).gist, '((Int))', "[\\andthen] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([\andthen] 1, ++$side-effect), '1 1', "[\\andthen] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([\andthen] 1,1,1,Any,++$side-effect).gist, '(1 1 1 (Any))', "[\\andthen] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([\andthen] 1,1,1,1,++$side-effect), '1 1 1 1 1', "[\\andthen] on long list produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([\orelse] 2, ++$side-effect).gist, '(2 2)', "[\\orelse] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
@@ -643,7 +635,6 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is $side-effect, 1, "and does have a side effect";
 
     $side-effect = 0;
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     is ([\orelse] Nil,Int,Num,2,++$side-effect).gist, '((Any) (Int) (Num) 2 2)', "[\\orelse] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([\orelse] Nil,Failure,Cool,Complex,++$side-effect).gist, '((Any) (Failure) (Cool) (Complex) 1)', "[\\orelse] on long list produces correct result with thunk";
