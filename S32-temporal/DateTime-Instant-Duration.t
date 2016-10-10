@@ -151,7 +151,7 @@ for 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1449755609 {
         is-deeply $d - 100.5,  Duration.new(-96),   '1.5';
     }
 
-    is-deeply now.Date, Date.today, 'Instant.Date';
+    is-deeply now.Date, DateTime.now(:timezone(0)).Date, 'Instant.Date';
     throws-like { Instant.Date }, Exception, 'Instant:U.Date throws';
 }
 
