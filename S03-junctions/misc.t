@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 143;
+plan 144;
 
 =begin pod
 
@@ -500,6 +500,15 @@ throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
     my %h;
     %h{ any ^2 }.push: 42;
     is-deeply %h, %(0 => [42], 1 => [42]), 'Junctions with autovivification';
+}
+
+subtest 'Junction.new' => { # coverage; 2016-10-11
+    plan 4;
+
+    is-deeply Junction.new([^3], :type<all> ).perl, ^3  .all.perl, 'all';
+    is-deeply Junction.new([^3], :type<one> ).perl, ^3  .one.perl, 'one';
+    is-deeply Junction.new([^3], :type<any> ).perl, ^3  .any.perl, 'any';
+    is-deeply Junction.new([^3], :type<none>).perl, ^3 .none.perl, 'none';
 }
 
 # vim: ft=perl6
