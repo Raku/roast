@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 47;
+plan 54;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -157,6 +157,22 @@ is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
     my class A { method sink() { $is-sunk++ } };
     my @a = A.new xx 10;
     is $is-sunk, 0, 'xx does not sink';
+}
+
+{ # coverage; 2016-10-11
+    throws-like { infix:<xx>() }, Exception, 'xx with no args throws';
+    is-deeply infix:<xx>(2), 2, 'xx with single arg is identity';
+
+    is-deeply infix:<xx>({$++;}, *)[^200],  (|^200).Seq,
+        '(& xx *) works as & xx Inf';
+    is-deeply infix:<xx>({$++;}, Inf)[^20], (|^20).Seq,
+        '(& xx Inf) works as & xx Inf';
+    is-deeply infix:<xx>({$++;}, 4e0)[^4],  (|^4).Seq,
+        '(& xx Num) works as & xx Int';
+
+    'abc123def' ~~ m:g/\d/;
+    is-deeply $/.from, 3, 'List.from';
+    is-deeply $/.to,   6, 'List.to';
 }
 
 # vim: ft=perl6
