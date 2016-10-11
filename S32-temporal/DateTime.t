@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 271;
+plan 275;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -773,4 +773,19 @@ subtest 'synthetics not allowed in date formats' => {
             DateTime.new('1986-02-22T22:22:21+22:22'), Order::More,
             'More (different seconds)';
     }
+}
+
+{
+    my $dt = DateTime.now;
+    subtest 'DateTime:D.Date returns correct date' => {
+        plan 4;
+
+        cmp-ok    $dt.Date, '~~', Date:D,    '.Date returns Date:D';
+        is-deeply $dt.Date.year,  $dt.year,  '.year is right';
+        is-deeply $dt.Date.month, $dt.month, '.month is right';
+        is-deeply $dt.Date.day,   $dt.day,   '.day is right';
+    }
+    is-deeply DateTime.Date,     Date, 'DateTime:U.Date returns Date:U';
+    is-deeply DateTime.DateTime, DateTime, 'DateTime:U.DateTime returns self';
+    is-deeply      $dt.DateTime, $dt,     'DateTime:D.DateTime returns self';
 }

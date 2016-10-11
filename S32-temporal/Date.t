@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 109;
+plan 113;
 
 # construction
 {
@@ -213,4 +213,12 @@ throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
 
     throws-like { Date    .IO }, Exception, ".IO on Date:U throws";
     throws-like { DateTime.IO }, Exception, ".IO on DateTime:U throws";
+}
+
+{
+    my $date = Date.today;
+    is-deeply $date.DateTime.Date, $date, 'can roundtrip Date via DateTime';
+    is-deeply Date.DateTime, DateTime,    'Date:U.DateTime returns DateTime:U';
+    is-deeply Date.Date,     Date,        'Date:U.Date returns self';
+    is-deeply $date.Date,    $date,       'Date:D.Date returns self';
 }
