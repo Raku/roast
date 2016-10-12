@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 4;
+plan 11;
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*OUT.write(Blob.new(0x65, 0xD6, 0xFF))');
@@ -27,3 +27,43 @@ plan 4;
     nok $oops, 'No bogus quit on stdout Supply';
 }
 
+{
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'print $*IN.slurp-rest(:bin).bytes',
+        :w, :enc('latin-1'));
+    my $bytes = '';
+    $proc.stdout.tap({ $bytes ~= $_ });
+    my $exited = $proc.start;
+    await $proc.print('Öl');
+    $proc.close-stdin;
+    await $exited;
+    is +$bytes, 2, 'print sent data to process with correct encoding';
+}
+
+for <put say> -> $meth {
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', '.say for $*IN.slurp-rest(:bin).subbuf(0, 2).list',
+        :w, :enc('latin-1'));
+    my $got = '';
+    $proc.stdout.tap({ $got ~= $_ });
+    my $exited = $proc.start;
+    await $proc."$meth"('Öl');
+    $proc.close-stdin;
+    await $exited;
+    is +$got.lines[0], 214, "$meth sent data to process with correct encoding (1)";
+    is +$got.lines[1], 108, "$meth sent data to process with correct encoding (2)";
+}
+
+{
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*OUT.write(Blob.new(214, 108))', :enc('latin-1'));
+    my $got = '';
+    $proc.stdout.tap({ $got ~= $_ });
+    await $proc.start;
+    is $got, 'Öl', 'stdout Supply decoded with encoding set in constructor';
+}
+
+{
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*ERR.write(Blob.new(214, 108))', :enc('latin-1'));
+    my $got = '';
+    $proc.stderr.tap({ $got ~= $_ });
+    await $proc.start;
+    is $got, 'Öl', 'stderr Supply decoded with encoding set in constructor';
+}
