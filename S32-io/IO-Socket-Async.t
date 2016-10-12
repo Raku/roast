@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 13;
 
 my $hostname = 'localhost';
 my $port = 5000;
@@ -140,24 +140,63 @@ $echoTap.close;
     ok $failed, 'Bad UTF-8 causes quit on Supply (but program survives)';
 }
 
-my $discardTap = $server.tap(-> $c {
-    $c.Supply.tap(-> $chars { $c.close });
-});
-my $discardResult = await client($message);
-$discardTap.close;
-ok $discardResult eq '', 'Discard server';
-
-my Buf $binary = slurp( 't/spec/S32-io/socket-test.bin', bin => True );
-my $binaryTap = $server.tap(-> $c {
-    sleep 0.1;
-    $c.write($binary).then({ $c.close });
-});
-
-#?rakudo.jvm skip 'hangs (sometimes) RT #127948'
 {
-    my $received = await client(Buf.new);
+    my $discardTap = $server.tap(-> $c {
+        $c.Supply.tap(-> $chars { $c.close });
+    });
+    my $discardResult = await client($message);
+    $discardTap.close;
+    ok $discardResult eq '', 'Discard server';
+}
+
+{
+    my Buf $binary = slurp( 't/spec/S32-io/socket-test.bin', bin => True );
+    my $binaryTap = $server.tap(-> $c {
+        $c.write($binary).then({ $c.close });
+    });
+
+    #?rakudo.jvm skip 'hangs (sometimes) RT #127948'
+    {
+        my $received = await client(Buf.new);
+        ok $binary eqv $received, 'bytes-supply';
+    }
     $binaryTap.close;
-    ok $binary eqv $received, 'bytes-supply';
+}
+
+{
+    my $latin1server = IO::Socket::Async.listen($hostname, $port, :enc('latin-1'));
+    my $latin1Tap = $latin1server.tap(-> $c {
+        $c.Supply.tap(-> Str $msg { $c.print($msg).then({ $c.close }) });
+    });
+    my $latin1Buf = "Öl\n".encode('latin-1');
+    my $received = await client($latin1Buf);
+    ok $received.list eqv $latin1Buf.list, 'Server socket configured with latin-1 handles it';
+    $latin1Tap.close;
+}
+
+{
+    my $transcodeServer = IO::Socket::Async.listen($hostname, $port, :enc('utf-8'));
+    my $transcodeTap = $transcodeServer.tap(-> $c {
+        $c.Supply(:enc('latin-1')).tap(-> Str $msg { $c.print($msg).then({ $c.close }) });
+    });
+    my $latin1Buf = "Öl\n".encode('latin-1');
+    my $utf8Buf = "Öl\n".encode('utf-8');
+    my $received = await client($latin1Buf);
+    ok $received.list eqv $utf8Buf.list, 'Can set encoding on incoming Supply separately';
+    $transcodeTap.close;
+}
+
+{
+    my $byteCountTap = $server.tap(-> $c {
+        $c.Supply(:bin).tap(-> Blob $b { $c.write("Öl,$b.elems()\n".encode('latin-1')).then({ $c.close }) });
+    });
+    my $latin1Client = await IO::Socket::Async.connect($hostname, $port, :enc('latin-1'));
+    my $received = Promise.new;
+    my $receivedStr = '';
+    $latin1Client.Supply.tap({ $receivedStr ~= $_ }, done => { $received.keep($receivedStr) });
+    $latin1Client.print("Öl\n");
+    is await($received), "Öl,3\n", 'Latin-1 client socket correctly encodes';
+    $byteCountTap.close;
 }
 
 {
