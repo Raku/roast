@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 422;
+plan 423;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -302,6 +302,8 @@ throws-like 'my class Priv { method x { self!foo } }; Priv.x',
                       private   => { $_ === True };
 # RT #77582
 throws-like 'my %h; %h.nosuchmethods', X::Method::NotFound, typename => 'Hash';
+# RT #129772
+throws-like 'sub (int $i) { $i() }(42)', X::Method::NotFound;
 
 throws-like '1.List::join', X::Method::InvalidQualifier,
             method         => 'join',
