@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 47;
+plan 49;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -133,4 +133,17 @@ dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
     my $! = $ex;
     isnt await(start { $! }), $ex, 'Get a fresh $! inside of a start block';
     isnt await(start $!), $ex, 'Get a fresh $! inside of a start thunk';
+}
+
+# RT #127033
+{
+    sub t { $*d };
+    my $*d = 1;
+    is await( do { start { t() } }),1,
+        "dynamic variables don't disappear in call inside start nested inside block";
+
+    my $*A = 42;
+    do { start { $*A++ } };
+    sleep 1;
+    is $*A,43,'dynamic variables modified inside start nested inside a block';
 }
