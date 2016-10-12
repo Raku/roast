@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 13;
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*OUT.write(Blob.new(0x65, 0xD6, 0xFF))');
@@ -64,6 +64,22 @@ for <put say> -> $meth {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*ERR.write(Blob.new(214, 108))', :enc('latin-1'));
     my $got = '';
     $proc.stderr.tap({ $got ~= $_ });
+    await $proc.start;
+    is $got, 'Öl', 'stderr Supply decoded with encoding set in constructor';
+}
+
+{
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*OUT.write(Blob.new(214, 108))', :enc('utf-8'));
+    my $got = '';
+    $proc.stdout(:enc('latin-1')).tap({ $got ~= $_ });
+    await $proc.start;
+    is $got, 'Öl', 'stdout Supply decoded with encoding set in constructor';
+}
+
+{
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*ERR.write(Blob.new(214, 108))', :enc('utf-8'));
+    my $got = '';
+    $proc.stderr(:enc('latin-1')).tap({ $got ~= $_ });
     await $proc.start;
     is $got, 'Öl', 'stderr Supply decoded with encoding set in constructor';
 }
