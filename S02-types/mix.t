@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 193;
+plan 195;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -468,6 +468,15 @@ subtest '.hash does not cause keys to be stringified' => {
     is Mix.new($(<a b>)).hash.keys[0][0], 'a', 'Mix.new';
     is ($(<a b>),).Mix.hash.keys[0][0],   'a', '.Mix';
     is mix($(<a b>)).hash.keys[0][0],     'a', 'mix()';
+}
+
+{ # coverage; 2016-10-13
+    my $m = Mix.new-from-pairs: 'sugar' => .2, 'flour' => 2.7,
+        'sugar' => 1.1, 'cyanide' => 0;
+
+    is-deeply $m.Bag, Bag.new(<sugar flour flour flour>), '.Bag coercer';
+    is-deeply $m.BagHash, BagHash.new(<sugar flour flour flour>),
+        '.BagHash coercer';
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 230;
+plan 232;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -509,6 +509,15 @@ subtest '.hash does not cause keys to be stringified' => {
     plan 2;
     is MixHash.new($(<a b>)).hash.keys[0][0], 'a', 'MixHash.new';
     is ($(<a b>),).MixHash.hash.keys[0][0],   'a', '.MixHash';
+}
+
+{ # coverage; 2016-10-13
+    my $mh = MixHash.new-from-pairs: 'sugar' => .2, 'flour' => 2.7,
+        'sugar' => 1.1, 'cyanide' => 0;
+
+    is-deeply $mh.Bag, Bag.new(<sugar flour flour flour>), '.Bag coercer';
+    is-deeply $mh.BagHash, BagHash.new(<sugar flour flour flour>),
+        '.BagHash coercer';
 }
 
 # vim: ft=perl6
