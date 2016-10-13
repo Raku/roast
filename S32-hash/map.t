@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 10;
 
 {
     my %hash = :foo, :42bar;
@@ -26,6 +26,8 @@ plan 9;
 
     is-deeply $map.Int, 3, 'Map.Int gives number of pairs';
     is-deeply $map{42e0}, 'foo', 'Map{} with non-Str key gives right results';
+
+    is-deeply $map.clone, $map, 'Map.clone is identity';
 }
 
 # vim: ft=perl6
