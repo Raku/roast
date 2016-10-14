@@ -1,7 +1,9 @@
 use v6;
 use Test;
-my $r;
 
+plan 13;
+
+my $r;
 #?rakudo skip 'RT #128221'
 {
     # tables here are skipped until appropriate fixes are made
