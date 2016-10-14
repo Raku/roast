@@ -474,8 +474,8 @@ subtest '.hash does not cause keys to be stringified' => {
     my $m = Mix.new-from-pairs: 'sugar' => .2, 'flour' => 2.7,
         'sugar' => 1.1, 'cyanide' => 0;
 
-    is-deeply $m.Bag, Bag.new(<sugar flour flour flour>), '.Bag coercer';
-    is-deeply $m.BagHash, BagHash.new(<sugar flour flour flour>),
+    is-deeply $m.Bag, Bag.new(<sugar flour flour>), '.Bag coercer';
+    is-deeply $m.BagHash, BagHash.new(<sugar flour flour>),
         '.BagHash coercer';
 }
 
