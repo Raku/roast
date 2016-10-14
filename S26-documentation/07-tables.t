@@ -144,10 +144,15 @@ is $r.contents.elems, 2;
 
 # test for issue #129862
 # uneven rows
+
+# NOTE: This test may need to change after planned table pod fixes are
+# made because this is a malformed table and the user should be warned
+# of that fact.
+
 =begin table
 a | b | c
 l | m | n
-x | y     
+x | y
 =end table
 
 $r = $=pod[9];
