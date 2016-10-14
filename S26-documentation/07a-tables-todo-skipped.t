@@ -53,4 +53,3 @@ my $r;
     is @rows[6], "r6Col 1 r6Col 2 r6Col 3 r6Col 4";
 }
 
-done-testing
