@@ -94,6 +94,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 }
 
 # RT #128694
+#?rakudo.jvm skip 'RT #128694 hangs on JVM'
 {
 	my $source = Supply.interval(0.5);
 	my $heartbeat = Supply.interval(0.3);
