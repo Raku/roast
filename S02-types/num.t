@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 66;
+plan 72;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -180,5 +180,89 @@ ok 0xFFFFFFFFFFFFFFFF > 1, '0xFFFFFFFFFFFFFFFF is not -1';
 
 # RT #122593
 ok Num === Num, 'Num === Num should be truthy, and not die';
+
+{ # coverage; 2016-10-14
+    is-deeply Num.Range, -∞..∞, 'Num:U.Range gives -Inf to Inf range';
+
+    subtest 'Num.new coerces types that can .Num' => {
+        plan 6;
+
+        is-deeply Num.new(42e0),  42e0, 'Num';
+        is-deeply Num.new(42/1),  42e0, 'Rat';
+        is-deeply Num.new(42),    42e0, 'Int';
+        is-deeply Num.new(42+0i), 42e0, 'Complex';
+        is-deeply Num.new("42"),  42e0, 'Str';
+
+        throws-like { Num.new: class {} }, Exception,
+            'class that cannot .Num';
+    }
+
+    subtest '++Num' => {
+        plan 8;
+
+        my $v1 = 4e0;
+        is-deeply ++$v1, 5e0, 'return value (:D)';
+        is-deeply   $v1, 5e0, 'new value (:D)';
+
+        my Num $v2;
+        is-deeply ++$v2, 1e0, 'return value (:U)';
+        is-deeply   $v2, 1e0, 'new value (:U)';
+
+        my num $v3 = 4e0;
+        is-deeply ++$v3, (my num $=5e0), 'return value (native)';
+        is-deeply   $v3, (my num $=5e0), 'new value (native)';
+
+        my num $v4;
+        cmp-ok ++$v4, '===', NaN, 'return value (uninit. native)';
+        cmp-ok   $v4, '===', NaN, 'new value (uninit. native)';
+    }
+
+    subtest '--Num' => {
+        plan 8;
+
+        my $v1 = 4e0;
+        is-deeply --$v1, 3e0, 'return value (:D)';
+        is-deeply   $v1, 3e0, 'new value (:D)';
+
+        my Num $v2;
+        is-deeply --$v2, -1e0, 'return value (:U)';
+        is-deeply   $v2, -1e0, 'new value (:U)';
+
+        my num $v3 = 4e0;
+        is-deeply --$v3, (my num $ = 3e0), 'return value (native)';
+        is-deeply   $v3, (my num $ = 3e0), 'new value (native)';
+
+        my num $v4;
+        cmp-ok --$v4, '===', NaN, 'return value (uninit. native)';
+        cmp-ok   $v4, '===', NaN, 'new value (uninit. native)';
+    }
+
+    subtest 'Num++' => {
+        plan 4;
+        my Num $v1;
+        is-deeply $v1++, 0e0, 'return value';
+        is-deeply $v1,   1e0, 'new value';
+
+        my num $v2;
+        cmp-ok $v2++, '===', NaN, 'return value (uninit. native)';
+        cmp-ok $v2,   '===', NaN, 'new value (uninit. native)';
+    }
+
+    subtest 'Num--' => {
+        plan 6;
+
+        my Num $v1;
+        is-deeply $v1--,  0e0, 'return value (:U)';
+        is-deeply $v1,   -1e0, 'new value (:U)';
+
+        my num $v2 = 4e0;
+        is-deeply $v2--, (my num $ = 4e0), 'return value (native)';
+        is-deeply $v2,   (my num $ = 3e0), 'new value (native)';
+
+        my num $v3;
+        cmp-ok $v3--, '===', NaN, 'return value (uninit. native)';
+        cmp-ok $v3,   '===', NaN, 'new value (uninit. native)';
+    }
+}
 
 # vim: ft=perl6
