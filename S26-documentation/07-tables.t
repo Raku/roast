@@ -2,6 +2,8 @@ use v6;
 use Test;
 my $r;
 
+plan 42;
+
 =begin table
         The Shoveller   Eddie Stevens     King Arthur's singing shovel
         Blue Raja       Geoffrey Smith    Master of cutlery
@@ -160,5 +162,3 @@ is $r.contents.elems, 3;
 is $r.contents[0].join(','), 'a,b,c';
 is $r.contents[1].join(','), 'l,m,n';
 is $r.contents[2].join(','), 'x,y';
-
-done-testing
