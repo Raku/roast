@@ -8,7 +8,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there.
 
-plan 32;
+plan 33;
 
 my $res;
 
@@ -22,6 +22,7 @@ $res = shell("$*EXECUTABLE -e \"\"");
 ok($res, "shell() to an existing program does not die (and returns something true)");
 isa-ok($res, Proc, 'shell() returns a Proc');
 is($res.exitcode, 0, 'shell() exit code when successful is zero');
+is($res.command, "$*EXECUTABLE -e \"\"", 'Proc returned from .run has correct command');
 
 $res = run("program_that_does_not_exist_ignore_this_error_please.exe");
 ok(!$res, "run() to a nonexisting program does not die (and returns something false)");
