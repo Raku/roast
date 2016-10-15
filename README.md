@@ -111,7 +111,7 @@ relative path to itself is t/spec/S\d\d-$section/$filename.
 
 ## Environment Variables
 
-### *ROAST_TIMING_SCALE*
+- **ROAST_TIMING_SCALE**
 
 Some tests rely on a process to complete in a certain amount of time. If you're
 running on a slowish computer, try setting `ROAST_TIMING_SCALE` to a larger
