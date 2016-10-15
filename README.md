@@ -3,15 +3,15 @@
 The purpose of the test suite is to validate implementations that wish to be known
 as a conforming Perl 6 implementation.
 
-### Index
+### Contents
 
-####  [Introduction](##Introduction)
+####  [Introduction](#Introduction)
 
-####  [Environment Variables](##Environment-Variables)
+####  [Environment Variables](#Environment-Variables)
 
-####  [Example](##Example)
+####  [Example](#Example)
 
-## Introduction
+# Introduction
 
 Please consider this test suite to be the bleeding edge of Perl 6
 development. New tests, tests for experimental new features, etc.,
@@ -109,9 +109,9 @@ In cases where the current working directory makes a difference, the tests
 assume that the working directory is the root of the test suite, so that the
 relative path to itself is t/spec/S\d\d-$section/$filename.
 
-## Example
+# Example
 
-## Environment Variables
+# Environment Variables
 
 ### **ROAST_TIMING_SCALE**
 
