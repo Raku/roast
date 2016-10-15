@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 164;
+plan 162;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -200,16 +200,10 @@ subtest 'Int.new' => { # coverage; 2016-10-05
     is-deeply $i2 ** $i3, $i8, 'int ** int returns int';
     is-deeply $iu ** $i3, $i0, '0 (uninitialized int) ** int returns 0';
     is-deeply $i8 ** $iu, $i1, 'int ** 0 (uninitialized int) returns 1';
-    #?rakudo todo 'RT 129373'
-    throws-like { $iL ** $iL },  X::Numeric::Overflow,
-        'overflowing int with ** throws correct exception';
 
     is-deeply $i2 * $i3,  $i6, 'int * int returns int';
     is-deeply $iu * $i3,  $i0, '0 (uninitialized int) * int returns 0';
     is-deeply $i8 * $iu,  $i0, 'int * 0 (uninitialized int) returns 0';
-    #?rakudo todo 'RT 129373 and RT 129813'
-    throws-like { $iL * $iL },  X::Numeric::Overflow,
-        'overflowing int with * throws correct exception';
 
     is-deeply $i5 div $i2, $i2, 'int(5) div int(2) returns int(2)';
     is-deeply $i8 div $i3, $i2, 'int(8) div int(3) returns int(2)';
