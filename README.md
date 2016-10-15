@@ -5,11 +5,11 @@ as a conforming Perl 6 implementation.
 
 ### Index
 
-####  [Introduction](#Introduction)
+####  [Introduction](##Introduction)
 
-####  [Environment Variables](#Environment-Variables)
+####  [Environment Variables](##Environment-Variables)
 
-####  [Example](#Example)
+####  [Example](##Example)
 
 ## Introduction
 
