@@ -1,12 +1,12 @@
-	The Official Perl 6 Test Suite
+# The Official Perl 6 Test Suite
 
 Its purpose is to validate implementations that wish to be known
-as a conforming Perl 6 implementation. 
+as a conforming Perl 6 implementation.
 
 Please consider this test suite to be the bleeding edge of Perl 6
 development. New tests, tests for experimental new features, etc.
 will live on this branch. Once a specification is cut, a branch
-will be created for that version of the spec, e.g. 6.c for Christmas.
+will be created for that version of the spec, e.g., C<6.c> for Christmas.
 
 As they develop, different implementations will certainly be in
 different states of readiness with respect to the test suite, so
@@ -20,10 +20,10 @@ Individual implementations are not allowed to modify the actual test
 code, but may insert line comments before each actual test (or block
 of tests) that changes how those tests are to be treated for this
 platform.  The fudge preprocessor pays attention only to the comments
-that belong to the current platform and ignores all the rest.  If your
-platform is named "humpty" then your special comment lines look like:
+that belong to the current implementation and ignores all the rest.  If your
+implementation is named "rakudo" then your special comment lines look like:
 
-    #?humpty: [NUM] VERB ARGS
+    #?rakudo: [NUM] VERB ARGS
 
 (The colon is optional.)
 
@@ -83,18 +83,17 @@ it and then decides anew whether to regenerate it based on the internal
 fudge comments.
 
 The "fudgeall" program may be called to process all the needed fudging
-for a particular platform:
+for a particular implementation:
 
-    fudgeall humpty */*.t */*/*.t
+    fudgeall rakudo */*.t */*/*.t
 
 will use the "fudge" program to translate any fudged files to a new
-file where the extension is not *.t but instead is *.humpty to indicate
-the platform dependency.  It also returns the fudged list of filenames
+file where the extension is not *.t but instead is *.rakudo to indicate
+the implementation dependency.  It also returns the fudged list of filenames
 to run, where unfudged tests are just passed through unchanged as *.t.
 Each test comes through as either fudged or not, but never both.
 The test harness then runs the selected test files as it normally
-would (it shouldn't care whether they are named *.t or *.humpty).
-
+would (it shouldn't care whether they are named *.t or *.rakudo).
 
 In cases where the current working directory makes a difference, the tests
 assume that the working directory is the root of the test suite, so that the
