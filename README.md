@@ -5,11 +5,11 @@ as a conforming Perl 6 implementation.
 
 #### Contents
 
--  [Introduction](#introduction-1)
+-  [Introduction](#introduction)
 
--  [Environment Variables](#environment-variables-1)
+-  [Environment Variables](#environment-variables)
 
--  [Contributing](#contributing-1)
+-  [Contributing](#contributing)
 
 ## Introduction
 
