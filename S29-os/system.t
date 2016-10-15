@@ -16,7 +16,7 @@ $res = run($*EXECUTABLE,'-e', '');
 ok($res,"run() to an existing program does not die (and returns something true)");
 isa-ok($res, Proc, 'run() returns a Proc');
 is($res.exitcode, 0, 'run() exit code when successful is zero');
-is_deeply($res.command, [$*EXECUTABLE, '-e'], 'Proc returned from .run has correct command');
+is-deeply($res.command, [$*EXECUTABLE, '-e', ''], 'Proc returned from .run has correct command');
 
 $res = shell("$*EXECUTABLE -e \"\"");
 ok($res, "shell() to an existing program does not die (and returns something true)");
