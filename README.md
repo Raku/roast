@@ -3,7 +3,13 @@
 The purpose of the test suite is to validate implementations that wish to be known
 as a conforming Perl 6 implementation.
 
-## Index
+### Index
+
+####  [Introduction](#Introduction)
+
+####  [Environment Variables](#Environment-Variables)
+
+####  [Example](#Example)
 
 ## Introduction
 
@@ -60,7 +66,7 @@ of such a setting:
     #?MYSPECIALVAR: [NUM] VERB ARGS
     #!MYSPECIALVAR: [NUM] VERB ARGS
 
-The environement variable must be uppercase.
+The environment variable must be uppercase.
 
 There is also the following directive which modifies the test count of
 the next construct:
@@ -105,7 +111,7 @@ relative path to itself is t/spec/S\d\d-$section/$filename.
 
 ## Example
 
-## Environmental Variables
+## Environment Variables
 
 ### **ROAST_TIMING_SCALE**
 
