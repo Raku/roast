@@ -3,13 +3,13 @@
 The purpose of the test suite is to validate implementations that wish to be known
 as a conforming Perl 6 implementation.
 
-### Contents
+#### Contents
 
-####  [Introduction](#introduction-1)
+-  [Introduction](#introduction-1)
 
-####  [Environment Variables](#environment-variables-1)
+-  [Environment Variables](#environment-variables-1)
 
-####  [Example](#example-1)
+-  [Contributing](#contributing-1)
 
 ## Introduction
 
@@ -113,9 +113,25 @@ relative path to itself is t/spec/S\d\d-$section/$filename.
 
 ### **ROAST_TIMING_SCALE**
 
-Some tests rely on process to complete in a certain amount of time. If you're
+Some tests rely on a process to complete in a certain amount of time. If you're
 running on a slowish computer, try setting `ROAST_TIMING_SCALE` to a larger
 value that will be used as a multiplier for time to wait. We don't wait for
 too long a time by default so as to make the roast run faster.  Defaults to `1`
 
-## Example
+## Contributing
+
+A person who wants to contribute a test to the project should read
+this Github guide to
+issues and [pull requests](http://help.github.com/categories/collaborating-with-issues-and-pull-requests)
+(PRs) which describes in great detail the work flow for forks and
+submitting PRs to a project.
+
+Follow the same general steps for project `github.com/perl6/roast`:
+
+- fork project roast
+- clone your fork of roast to a local directory
+- set the origin and upstream remotes
+- checkout a branch to work on your issue
+- when through, ensure all desired commits are finished
+- push the issue branch to your origin (your fork of roast on github)
+- got to your github account for project roast and submit the PR
