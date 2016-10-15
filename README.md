@@ -1,12 +1,16 @@
 # The Official Perl 6 Test Suite
 
-Its purpose is to validate implementations that wish to be known
+The purpose of the test suite is to validate implementations that wish to be known
 as a conforming Perl 6 implementation.
 
-Please consider this test suite to be the bleeding edge of Perl 6
-development. New tests, tests for experimental new features, etc.
+## Index
+
+## Introduction
+
+Please consider this test suite to be the bleeding edge of Perl 6
+development. New tests, tests for experimental new features, etc.,
 will live on this branch. Once a specification is cut, a branch
-will be created for that version of the spec, e.g., C<6.c> for Christmas.
+will be created for that version of the spec, e.g., `6.c` for Christmas.
 
 As they develop, different implementations will certainly be in
 different states of readiness with respect to the test suite, so
@@ -99,9 +103,11 @@ In cases where the current working directory makes a difference, the tests
 assume that the working directory is the root of the test suite, so that the
 relative path to itself is t/spec/S\d\d-$section/$filename.
 
-# ENVIRONMENTAL VARIABLES
+## Example
 
-## `ROAST_TIMING_SCALE`
+## Environmental Variables
+
+### **ROAST_TIMING_SCALE**
 
 Some tests rely on process to complete in a certain amount of time. If you're
 running on a slowish computer, try setting `ROAST_TIMING_SCALE` to a larger
