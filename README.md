@@ -15,7 +15,7 @@ as a conforming Perl 6 implementation.
 
 Please consider this test suite to be the bleeding edge of Perl 6
 development. New tests, tests for experimental new features, etc.,
-will live on this branch. Once a specification is cut, a branch
+will live on this 'master' branch. Once a specification is cut, a branch
 will be created for that version of the spec, e.g., `6.c` for Christmas.
 
 As they develop, different implementations will certainly be in
@@ -141,4 +141,50 @@ Follow the same general steps for project `github.com/perl6/roast`:
 
 #### Normal tests
 
+New tests for existing features are usually accomplished by adding
+the test(s) to an existing test file. Then that file's 'plan' count is
+updated.  The new test(s) are tested locally by executing
+
+    perl6 <test file(s)>
+
+When all is well, the commits are finalized, the branch is pushed
+to the user's fork on Github, and there the PR is initiated.
+
+If a new test file has been created, one additional step has to be
+taken: the new test file has to be added to spectest.data and a PR
+for project 'github.com/rakudo/rakudo' can be submitted for that. However,
+it is easier just to ask for help adding the new test file on IRC channel #perl6.
+
 #### Fudged tests
+
+Let's say you want to propose a new feature for 'rakudo' and, being a believer
+in test-driven development, are submittng some test for something
+that can't yet be tested. Thus we will need to create the test
+but we will _fudge_ it so it will be ignored.
+
+We create a new test file named appropriately, say misc/00-new-feature.t,
+the contents of which are:
+
+    sub
+    ...
+
+We know the test doesn't work yet so we add the fudge to it to get the
+new contents:
+
+    sub
+    ...
+
+We want to test the fudged file before we submit the PR so we have to
+manually create the fudged test file:
+
+    fudge ...
+
+and then test it:
+
+    ...
+
+Now we can commit the new test file, but **NOT** the generated fudge
+test file&mdash;that will be generated automatically by the test
+harness during the regular testing on the servers. As before
+described, the new test file will have to be added to the spectest.data
+file, either via a PR or a request to someone on IRC to add it.
