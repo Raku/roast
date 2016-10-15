@@ -109,8 +109,6 @@ In cases where the current working directory makes a difference, the tests
 assume that the working directory is the root of the test suite, so that the
 relative path to itself is t/spec/S\d\d-$section/$filename.
 
-## Example
-
 ## Environment Variables
 
 ### **ROAST_TIMING_SCALE**
@@ -119,3 +117,5 @@ Some tests rely on process to complete in a certain amount of time. If you're
 running on a slowish computer, try setting `ROAST_TIMING_SCALE` to a larger
 value that will be used as a multiplier for time to wait. We don't wait for
 too long a time by default so as to make the roast run faster.  Defaults to `1`
+
+## Example
