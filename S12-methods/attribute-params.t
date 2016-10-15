@@ -42,7 +42,7 @@ throws-like 'sub optimal($.x) { }', X::Syntax::NoSelf, variable => '$.x';
 throws-like 'sub optimal($!x) { }', X::Syntax::NoSelf, variable => '$!x';
 
 # RT #129278
-#?rakudo.jvm skip 'BadReferenceRuntimeException: Cannot access a native attribute as a reference attribute'
+#?rakudo.jvm skip 'RT #129278 BadReferenceRuntimeException: Cannot access a native attribute as a reference attribute'
 #?DOES 2
 {
     my class C {
@@ -60,7 +60,7 @@ throws-like 'sub optimal($!x) { }', X::Syntax::NoSelf, variable => '$!x';
     is $o.yi, 42, 'Can use attributive binding on a native attribute (int, positional)';
     is $o.yn, 1.5e0, 'Can use attributive binding on a native attribute (num, positional)';
 }
-#?rakudo.jvm skip 'BadReferenceRuntimeException: Cannot access a native attribute as a reference attribute'
+#?rakudo.jvm skip 'RT #129278 BadReferenceRuntimeException: Cannot access a native attribute as a reference attribute'
 #?DOES 2
 {
     my class C {
