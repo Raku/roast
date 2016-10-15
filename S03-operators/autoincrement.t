@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 80;
+plan 88;
 
 #L<S03/Autoincrement precedence>
 
@@ -47,6 +47,19 @@ is(0 + %z{0},       $base, '0 + %z{0}');
 is(0 + ++%z{0} - 1, $base, '0 + ++%z{0} - 1');
 is(0 + --%z{0} + 0, $base, '0 + --%z{0} + 0');
 is(%z{0},           $base, '%z{0}');
+
+# Incrementing and decrementing Num
+{
+    my Num $x = 42e0;
+    is $x++, 42e0, 'result of Num++';
+    is $x,   43e0, 'side effect of Num++';
+    is $x--, 43e0, 'result of Num--';
+    is $x,   42e0, 'side effect of Num+--';
+    is ++$x, 43e0, 'result of ++Num';
+    is $x,   43e0, 'side effect of ++Num';
+    is --$x, 42e0, 'result of --Num';
+    is $x,   42e0, 'side effect of --Num';
+}
 
 # Increment of a Str
 #L<S03/Autoincrement precedence/Increment of a>
