@@ -5,13 +5,13 @@ as a conforming Perl 6 implementation.
 
 ### Contents
 
-####  [Introduction](#Introduction)
+####  [Introduction](#introduction)
 
-####  [Environment Variables](#Environment-Variables)
+####  [Environment Variables](#environment-variables)
 
-####  [Example](#Example)
+####  [Example](#example)
 
-# Introduction
+## Introduction
 
 Please consider this test suite to be the bleeding edge of Perl 6
 development. New tests, tests for experimental new features, etc.,
@@ -109,9 +109,9 @@ In cases where the current working directory makes a difference, the tests
 assume that the working directory is the root of the test suite, so that the
 relative path to itself is t/spec/S\d\d-$section/$filename.
 
-# Example
+## Example
 
-# Environment Variables
+## Environment Variables
 
 ### **ROAST_TIMING_SCALE**
 
