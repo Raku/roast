@@ -23,7 +23,7 @@ $res = shell("$*EXECUTABLE -e \"\"");
 ok($res, "shell() to an existing program does not die (and returns something true)");
 isa-ok($res, Proc, 'shell() returns a Proc');
 is($res.exitcode, 0, 'shell() exit code when successful is zero');
-is($res.signal, 0, 'run() signal after completion is zero');
+is($res.signal, 0, 'shell() signal after completion is zero');
 is($res.command, "$*EXECUTABLE -e \"\"", 'Proc returned from .run has correct command');
 
 $res = run("program_that_does_not_exist_ignore_this_error_please.exe");
