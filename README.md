@@ -145,7 +145,7 @@ New tests for existing features are usually accomplished by adding
 the test(s) to an existing test file. Then that file's `plan` count is
 updated.  The new test(s) are tested locally by executing
 
-    perl6 <test file(s)>
+    $ perl6 <test file(s)>
 
 When all is well, the commits are finalized, the branch is pushed
 to the user's fork on Github, and there the PR is initiated.
