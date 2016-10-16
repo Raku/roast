@@ -95,6 +95,7 @@ fudge comments.
 The "fudgeall" program may be called to process all the needed fudging
 for a particular implementation:
 
+```perl6
     fudgeall rakudo */*.t */*/*.t
 
 will use the "fudge" program to translate any fudged files to a new
@@ -145,7 +146,9 @@ New tests for existing features are usually accomplished by adding
 the test(s) to an existing test file. Then that file's `plan` count is
 updated.  The new test(s) are tested locally by executing
 
+```perl6
     $ perl6 <test file(s)>
+```
 
 When all is well, the commits are finalized, the branch is pushed
 to the user's fork on Github, and there the PR is initiated.
@@ -168,6 +171,7 @@ it will be ignored.
 We create a new test file named appropriately, say, `S16-io/printf.t` ,
 the contents of which are:
 
+```perl6
     use v6;
     use Test;
     plan 1;
@@ -179,9 +183,11 @@ the contents of which are:
     my $res = slurp $f;
     is $res, "Hi\n", "printf() works with zero args";
     unlink $f;
+```
 
 We know the test doesn't work yet
 
+```perl6
     $ perl6 S16-io/printf.t
     1..1
     No such method 'printf' for invocant of type 'IO::Handle'
@@ -191,6 +197,7 @@ We know the test doesn't work yet
 
 so we add the fudge to it to get the new contents:
 
+```perl6
     use v6;
     use Test;
     plan 1;
@@ -205,6 +212,7 @@ so we add the fudge to it to get the new contents:
         is $res, "Hi\n", "printf() works with zero args";
         unlink $f;
     }
+```
 
 Notice we put the test in a block.  All tests in that block
 are affected by the fudge line preceding it.
@@ -212,11 +220,13 @@ are affected by the fudge line preceding it.
 We want to test the fudged file before we submit the PR so we have to
 manually create the fudged test file:
 
+```perl6
     $ fudge rakudo S16-io/printf.t
     S16-io/printf.rakudo
 
 which produces file `S16-io/printf.rakudo` whose contents are
 
+```perl6
     use v6;
     use Test;
     plan 1;
@@ -234,13 +244,16 @@ which produces file `S16-io/printf.rakudo` whose contents are
 
     say "# FUDGED!";
     exit(1);
+```
 
 We can then test it:
 
+```perl6
     $ perl6 S16-io/printf.rakudo
     1..1
     ok 1 - \# SKIP RT \#999999 not yet implemented
     # FUDGED!
+```
 
 Success! Now we can commit the new test file, but **NOT** the generated fudge
 test file&mdash;that will be generated automatically by the test
