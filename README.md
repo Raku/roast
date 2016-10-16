@@ -92,11 +92,12 @@ without regenerating it.  If the fudged version is older, it removes
 it and then decides anew whether to regenerate it based on the internal
 fudge comments.
 
-The "fudgeall" program may be called to process all the needed fudging
+The `fudgeall` program may be called to process all the needed fudging
 for a particular implementation:
 
 ```perl6
-    fudgeall rakudo */*.t */*/*.t
+    $ fudgeall rakudo */*.t */*/*.t
+```
 
 will use the "fudge" program to translate any fudged files to a new
 file where the extension is not *.t but instead is *.rakudo to indicate
