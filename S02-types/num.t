@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 72;
+plan 76;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -262,6 +262,80 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my num $v3;
         cmp-ok $v3--, '===', NaN, 'return value (uninit. native)';
         cmp-ok $v3,   '===', NaN, 'new value (uninit. native)';
+    }
+}
+
+{ # coverage; 2016-10-16
+    subtest 'prefix:<->(num)' => {
+        plan 8;
+        cmp-ok -(my num $), '===', NaN, '- uninitialized';
+        cmp-ok −(my num $), '===', NaN, '− uninitialized';
+        is-deeply -(my num $ = 0e0  ), (my num $ = 0e0  ), '- zero';
+        is-deeply −(my num $ = 0e0  ), (my num $ = 0e0  ), '− zero';
+        is-deeply -(my num $ = 42e0 ), (my num $ = -42e0), '- positive';
+        is-deeply −(my num $ = 42e0 ), (my num $ = -42e0), '− positive';
+        is-deeply -(my num $ = -42e0), (my num $ = 42e0 ), '- negative';
+        is-deeply −(my num $ = -42e0), (my num $ = 42e0 ), '− negative';
+    }
+
+    subtest 'abs(num)' => {
+        plan 4;
+        cmp-ok    abs(my num $), '===', NaN, 'uninitialized';
+        is-deeply abs(my num $ = 0e0),   (my num $ = 0e0),  'zero';
+        is-deeply abs(my num $ = 42e0),  (my num $ = 42e0), 'positive';
+        is-deeply abs(my num $ = -42e0), (my num $ = 42e0), 'negative';
+    }
+
+    subtest 'infix:<+>(num, num)' => {
+        plan 16;
+        my num $nu;
+        my num $nz = 0e0;
+        my num $np = 42e0;
+        my num $nn = -42e0;
+
+        cmp-ok $nu + $nz, '===', NaN, 'uninit + zero';
+        cmp-ok $nu + $np, '===', NaN, 'uninit + positive';
+        cmp-ok $nu + $nn, '===', NaN, 'uninit + negative';
+        cmp-ok $nu + $nu, '===', NaN, 'uninit + uninit';
+        cmp-ok $nz + $nu, '===', NaN, 'zero + uninit';
+        cmp-ok $np + $nu, '===', NaN, 'positive + uninit';
+        cmp-ok $nn + $nu, '===', NaN, 'negative + uninit';
+
+        is-deeply $nz + $np, (my num $ = 42e0 ), 'zero + positive';
+        is-deeply $nz + $nn, (my num $ = -42e0), 'zero + negative';
+        is-deeply $nz + $nz, (my num $ = 0e0  ), 'zero + zero';
+        is-deeply $np + $nn, (my num $ = 0e0  ), 'positive + negative';
+        is-deeply $np + $nz, (my num $ = 42e0 ), 'positive + zero';
+        is-deeply $np + $np, (my num $ = 84e0 ), 'positive + positive';
+        is-deeply $nn + $nz, (my num $ = -42e0), 'negative + zero';
+        is-deeply $nn + $np, (my num $ = 0e0  ), 'negative + positive';
+        is-deeply $nn + $nn, (my num $ = -84e0), 'negative + negative';
+    }
+
+    subtest 'infix:<*>(num, num)' => {
+        plan 16;
+        my num $nu;
+        my num $nz = 0e0;
+        my num $np = 4e0;
+        my num $nn = -4e0;
+
+        cmp-ok $nu * $nz, '===', NaN, 'uninit * zero';
+        cmp-ok $nu * $np, '===', NaN, 'uninit * positive';
+        cmp-ok $nu * $nn, '===', NaN, 'uninit * negative';
+        cmp-ok $nu * $nu, '===', NaN, 'uninit * uninit';
+        cmp-ok $nz * $nu, '===', NaN, 'zero * uninit';
+        cmp-ok $np * $nu, '===', NaN, 'positive * uninit';
+        cmp-ok $nn * $nu, '===', NaN, 'negative * uninit';
+
+        is-deeply $nz * $np, (my num $ = 0e0  ), 'zero * positive';
+        is-deeply $nz * $nn, (my num $ = 0e0  ), 'zero * negative';
+        is-deeply $nz * $nz, (my num $ = 0e0  ), 'zero * zero';
+        is-deeply $np * $nn, (my num $ = -16e0), 'positive * negative';
+        is-deeply $np * $nz, (my num $ = 0e0  ), 'positive * zero';
+        is-deeply $np * $np, (my num $ = 16e0 ), 'positive * positive';
+        is-deeply $nn * $nz, (my num $ = 0e0  ), 'negative * zero';
+        is-deeply $nn * $np, (my num $ = -16e0), 'negative * positive';
+        is-deeply $nn * $nn, (my num $ = 16e0 ), 'negative * negative';
     }
 }
 
