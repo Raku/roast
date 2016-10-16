@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 52;
+plan 54;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -169,6 +169,12 @@ is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
         '(& xx Inf) works as & xx Inf';
     is-deeply infix:<xx>({$++;}, 4e0)[^4],  (|^4).Seq,
         '(& xx Num) works as & xx Int';
+}
+
+# RT 129899
+{
+    throws-like { 'a' x 'b' }, X::Str::Numeric, 'x does not silence failures';
+    is-deeply 'a' x Int, '', 'type objects get interpreted as 0 iterations';
 }
 
 # vim: ft=perl6
