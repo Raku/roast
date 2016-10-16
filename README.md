@@ -182,7 +182,7 @@ the contents of which are:
 
 We know the test doesn't work yet
 
-   $ perl6 S16-io/printf.t
+    $ perl6 S16-io/printf.t
     1..1
     No such method 'printf' for invocant of type 'IO::Handle'
       in block <unit> at ./S16-io/printf.t line 9
