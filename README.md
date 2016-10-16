@@ -40,7 +40,7 @@ implementation is named "rakudo" then your special comment lines look like:
 The optional NUM says how many statements or blocks to apply the
 verb to.  (If not supplied, a value of 1 is assumed).  A statement
 is arbitrarily defined as one or more lines starting with a test call
-and ending in semicolon (with an optional comment).
+and ending in a semicolon (with an optional comment).
 
 VERBs include:
 
@@ -77,7 +77,7 @@ The count may be an expression as long as any variables referenced in
 the expression are in scope at the location fudge eventually inserts a
 "skip()" call.
 
-When applied to a subsequent sub definition, registers the sub name as
+When applied to a subsequent sub definition, fudge registers the sub name as
 doing that many tests when called.  Note, however, that any skipping
 is done at the point of the call, not within the subroutine, so the count
 may not refer to any parameter of the sub.
@@ -115,7 +115,7 @@ relative path to itself is t/spec/S\d\d-$section/$filename.
 
 Some tests rely on a process to complete in a certain amount of time. If you're
 running on a slowish computer, try setting `ROAST_TIMING_SCALE` to a larger
-value that will be used as a multiplier for time to wait. We don't wait for
+value that will be used as a multiplier for the time to wait. We don't wait for
 too long a time by default so as to make the roast run faster.  Defaults to `1`.
 
 ## Contributing
@@ -162,7 +162,7 @@ in test-driven development, are submittng some test for something
 that can't yet be tested. Thus we will need to create the test
 but we will _fudge_ it so it will be ignored.
 
-We create a new test file named appropriately, say misc/00-new-feature.t,
+We create a new test file named appropriately, say, misc/00-new-feature.t,
 the contents of which are:
 
     sub
@@ -185,6 +185,6 @@ and then test it:
 
 Now we can commit the new test file, but **NOT** the generated fudge
 test file&mdash;that will be generated automatically by the test
-harness during the regular testing on the servers. As before
-described, the new test file will have to be added to the spectest.data
+harness during the regular testing on the servers. As
+described earlier, the new test file will have to be added to the spectest.data
 file, either via a PR or a request to someone on IRC to add it.
