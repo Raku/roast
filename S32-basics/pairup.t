@@ -9,8 +9,8 @@ plan 4;
     my @nums = 1..6;
     my %h = @nums.pairup;
     is(@nums.pairup.elems, 3, 'pairup returns correct list size');
-    is-deeply(%h.keys.sort, ('1', '3', '5'), 'pairup returns correct keys');
-    is-deeply(%h.values.sort, (2, 4, 6), 'pairup returns correct values');
+    is-deeply(%h.keys.sort, ('1', '3', '5'), 'hash constructed from pairup has correct keys');
+    is-deeply(%h.values.sort, (2, 4, 6), 'hash constructed from pairup has correct values');
 }
 
 # vim: ft=perl6
