@@ -55,7 +55,7 @@ will mark it as "dubious" even if all the tests supposedly pass.
 
 You may also negate the test:
 
-    #!rakudo: [NUM] VERB ARGS
+    #!rakudo [NUM] VERB ARGS
 
 This will apply the verb on any system that *isn't* rakudo.
 
@@ -63,8 +63,8 @@ Sometimes environment variables distinguish syntactic or semantic
 variants, so you may apply a verb depending on the presence or absence
 of such a setting:
 
-    #?MYSPECIALVAR: [NUM] VERB ARGS
-    #!MYSPECIALVAR: [NUM] VERB ARGS
+    #?MYSPECIALVAR [NUM] VERB ARGS
+    #!MYSPECIALVAR [NUM] VERB ARGS
 
 The environment variable must be uppercase.
 
@@ -159,33 +159,90 @@ easier just to ask for help adding the new test file on IRC channel
 
 #### Fudged tests
 
-Let's say you want to propose a new feature for `rakudo` and, being a believer
-in test-driven development, are submittng some test for something
-that can't yet be tested. Thus we will need to create the test
-but we will _fudge_ it so it will be ignored.
+Let's say you want to propose a new feature, method `printf` for
+IO::Handle, for `rakudo` and, being a believer in test-driven
+development, are submittng some test for something that can't yet be
+tested. Thus we will need to create the test but we will _fudge_ it so
+it will be ignored.
 
-We create a new test file named appropriately, say, misc/00-new-feature.t,
+We create a new test file named appropriately, say, `S16-io/printf.t` ,
 the contents of which are:
 
-    sub
-    ...
+    use v6;
+    use Test;
+    plan 1;
 
-We know the test doesn't work yet so we add the fudge to it to get the
-new contents:
+    my $f = './.printf-tmpfil';
+    my $fh = open $f, :w;
+    $fh.printf("Hi\n");
+    $fh.close;
+    my $res = slurp $f;
+    is $res, "Hi\n", "printf() works with zero args";
+    unlink $f;
 
-    sub
-    ...
+We know the test doesn't work yet
+
+   $ perl6 S16-io/printf.t
+    1..1
+    No such method 'printf' for invocant of type 'IO::Handle'
+      in block <unit> at ./S16-io/printf.t line 9
+
+    # Looks like you planned 1 test, but ran 0
+
+so we add the fudge to it to get the new contents:
+
+    use v6;
+    use Test;
+    plan 1;
+
+    #?rakudo skip 'RT #999999 not yet implemented'
+    {
+        my $f = './.printf-tmpfil';
+        my $fh = open $f, :w;
+        $fh.printf("Hi\n");
+        $fh.close;
+        my $res = slurp $f;
+        is $res, "Hi\n", "printf() works with zero args";
+        unlink $f;
+    }
+
+Notice we put the test in a block.  All tests in that block
+are affected by the fudge line preceding it.
 
 We want to test the fudged file before we submit the PR so we have to
 manually create the fudged test file:
 
-    fudge ...
+    $ fudge rakudo S16-io/printf.t
+    S16-io/printf.rakudo
 
-and then test it:
+which produces file `S16-io/printf.rakudo` whose contents are
 
-    ...
+    use v6;
+    use Test;
+    plan 1;
 
-Now we can commit the new test file, but **NOT** the generated fudge
+    #?rakudo skip 'RT #999999 not yet implemented'
+    skip('RT #999999 not yet implemented', 1);# {
+    #     my $f = './.printf-tmpfil';
+    #     my $fh = open $f, :w;
+    #     $fh.printf("Hi\n");
+    #     $fh.close;
+    #     my $res = slurp $f;
+    #     is $res, "Hi\n", "printf() works with zero args";
+    #     unlink $f;
+    # }
+
+    say "# FUDGED!";
+    exit(1);
+
+We can then test it:
+
+    $ perl6 S16-io/printf.rakudo
+    1..1
+    ok 1 - \# SKIP RT \#999999 not yet implemented
+    # FUDGED!
+
+Success! Now we can commit the new test file, but **NOT** the generated fudge
 test file&mdash;that will be generated automatically by the test
 harness during the regular testing on the servers. As
 described earlier, the new test file will have to be added to the spectest.data
