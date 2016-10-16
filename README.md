@@ -195,6 +195,7 @@ We know the test doesn't work yet
       in block <unit> at ./S16-io/printf.t line 9
 
     # Looks like you planned 1 test, but ran 0
+```
 
 so we add the fudge to it to get the new contents:
 
@@ -224,8 +225,10 @@ manually create the fudged test file:
 ```perl6
     $ fudge rakudo S16-io/printf.t
     S16-io/printf.rakudo
+```
 
 which produces file `S16-io/printf.rakudo` whose contents are
+
 
 ```perl6
     use v6;
