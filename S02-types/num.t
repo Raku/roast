@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 76;
+plan 78;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -336,6 +336,65 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-deeply $nn * $nz, (my num $ = 0e0  ), 'negative * zero';
         is-deeply $nn * $np, (my num $ = -16e0), 'negative * positive';
         is-deeply $nn * $nn, (my num $ = 16e0 ), 'negative * negative';
+    }
+}
+
+{ # coverage; 2016-10-16
+    subtest 'infix:<%>(num, num)' => {
+        plan 9;
+        my num $nu;
+        my num $nz  = 0e0;
+        my num $n4  = 4e0;
+        my num $n5  = 5e0;
+        my num $nn4 = -4e0;
+
+        cmp-ok $nu % $n5, '===', NaN, 'uninit % defined';
+        cmp-ok $n5 % $nu, '===', NaN, 'defined % uninit';
+        cmp-ok $nu % $nu, '===', NaN, 'uninit % uninit';
+
+        is-deeply $nz  % $n4,  (my num $ =  0e0), '0 % 4';
+        is-deeply $n4  % $n5,  (my num $ =  4e0), '4 % 5';
+        is-deeply $n5  % $n4,  (my num $ =  1e0), '5 % 4';
+        is-deeply $nz  % $nn4, (my num $ =  0e0), '0 % -4';
+        is-deeply $nn4 % $n5,  (my num $ =  1e0), '-4 % 5';
+        is-deeply $n5  % $nn4, (my num $ = -3e0), '5 % -4';
+    }
+
+    subtest 'infix:<**>(num, num)' => {
+        plan 21;
+        my num $nu;
+        my num $nz = 0e0;
+        my num $n1 = 1e0;
+        my num $np = 2e0;
+        my num $nn = -2e0;
+
+        #?rakudo todo 'RT 129894'
+        cmp-ok $nu ** $nz, '===', NaN, 'uninit * zero';
+        cmp-ok $nu ** $n1, '===', NaN, 'uninit * 1st power';
+        cmp-ok $nu ** $np, '===', NaN, 'uninit * positive';
+        cmp-ok $nu ** $nn, '===', NaN, 'uninit * negative';
+        cmp-ok $nu ** $nu, '===', NaN, 'uninit * uninit';
+        cmp-ok $nz ** $nu, '===', NaN, 'zero * uninit';
+        cmp-ok $np ** $nu, '===', NaN, 'positive * uninit';
+        cmp-ok $nn ** $nu, '===', NaN, 'negative * uninit';
+
+        is-deeply $nz ** $np, (my num $ = 0e0    ), 'zero * positive';
+        is-deeply $nz ** $nz, (my num $ = 1e0    ), 'zero * zero';
+        is-deeply $nz ** $n1, (my num $ = 0e0    ), 'zero * 1st power';
+        is-deeply $np ** $nz, (my num $ = 1e0    ), 'positive * zero';
+        is-deeply $np ** $n1, (my num $ = 2e0    ), 'positive * 1st power';
+        is-deeply $np ** $np, (my num $ = 4e0    ), 'positive * positive';
+        is-deeply $nn ** $nz, (my num $ = 1e0    ), 'negative * zero';
+        is-deeply $nn ** $n1, (my num $ = -2e0   ), 'negative * 1st power';
+        is-deeply $nn ** $np, (my num $ = 4e0    ), 'negative * positive';
+        is-approx $np ** $nn, (my num $ = 0.25e0 ), 'positive * negative';
+        is-approx $nn ** $nn, (my num $ = 0.25e0 ), 'negative * negative';
+
+        # rational powers => like taking roots
+        is-approx (my num $ = 125e0) ** (my num $ = (1/3).Num),
+            (my num $ = 5e0), '1/3 power (third root)';
+        is-approx (my num $ = 125e0) ** (my num $ = (4/6).Num),
+            (my num $ = 25e0), '4/6 power (6th root of 4th power)';
     }
 }
 
