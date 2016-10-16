@@ -134,15 +134,15 @@ Follow the same general steps for project `github.com/perl6/roast`:
 - checkout a branch to work on your issue or proposal
   - see [below](#working-the-issue) for details
 - when through, ensure all desired commits are finished
-- push the issue branch to your origin (your fork of roast on github)
-- got to your github account for project roast and submit the PR
+- push the issue branch to your origin (your fork of `roast` on github)
+- got to your github account for project `roast` and submit the PR
 
 ### Working the issue
 
 #### Normal tests
 
 New tests for existing features are usually accomplished by adding
-the test(s) to an existing test file. Then that file's 'plan' count is
+the test(s) to an existing test file. Then that file's `plan` count is
 updated.  The new test(s) are tested locally by executing
 
     perl6 <test file(s)>
@@ -151,13 +151,15 @@ When all is well, the commits are finalized, the branch is pushed
 to the user's fork on Github, and there the PR is initiated.
 
 If a new test file has been created, one additional step has to be
-taken: the new test file has to be added to spectest.data and a PR
-for project 'github.com/rakudo/rakudo' can be submitted for that. However,
-it is easier just to ask for help adding the new test file on IRC channel #perl6.
+taken: the new test file has to be added to
+`github.com/rakudo/rakudo/t/spectest.data` and a PR for project
+`github.com/rakudo/rakudo` can be submitted for that. However, it is
+easier just to ask for help adding the new test file on IRC channel
+`#perl6`.
 
 #### Fudged tests
 
-Let's say you want to propose a new feature for 'rakudo' and, being a believer
+Let's say you want to propose a new feature for `rakudo` and, being a believer
 in test-driven development, are submittng some test for something
 that can't yet be tested. Thus we will need to create the test
 but we will _fudge_ it so it will be ignored.
