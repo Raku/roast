@@ -361,15 +361,13 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     }
 
     subtest 'infix:<**>(num, num)' => {
-        plan 21;
+        plan 22;
         my num $nu;
         my num $nz = 0e0;
         my num $n1 = 1e0;
         my num $np = 2e0;
         my num $nn = -2e0;
 
-        #?rakudo todo 'RT 129894'
-        cmp-ok $nu ** $nz, '===', NaN, 'uninit * zero';
         cmp-ok $nu ** $n1, '===', NaN, 'uninit * 1st power';
         cmp-ok $nu ** $np, '===', NaN, 'uninit * positive';
         cmp-ok $nu ** $nn, '===', NaN, 'uninit * negative';
@@ -378,6 +376,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok $np ** $nu, '===', NaN, 'positive * uninit';
         cmp-ok $nn ** $nu, '===', NaN, 'negative * uninit';
 
+        is-deeply $n1 ** $nu, (my num $ = 1e0    ), '1 ** uninit';
+        is-deeply $nu ** $nz, (my num $ = 1e0    ), 'uninit ** zero';
         is-deeply $nz ** $np, (my num $ = 0e0    ), 'zero * positive';
         is-deeply $nz ** $nz, (my num $ = 1e0    ), 'zero * zero';
         is-deeply $nz ** $n1, (my num $ = 0e0    ), 'zero * 1st power';
