@@ -368,27 +368,27 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my num $np = 2e0;
         my num $nn = -2e0;
 
-        cmp-ok $nu ** $n1, '===', NaN, 'uninit * 1st power';
-        cmp-ok $nu ** $np, '===', NaN, 'uninit * positive';
-        cmp-ok $nu ** $nn, '===', NaN, 'uninit * negative';
-        cmp-ok $nu ** $nu, '===', NaN, 'uninit * uninit';
-        cmp-ok $nz ** $nu, '===', NaN, 'zero * uninit';
-        cmp-ok $np ** $nu, '===', NaN, 'positive * uninit';
-        cmp-ok $nn ** $nu, '===', NaN, 'negative * uninit';
+        cmp-ok $nu ** $n1, '===', NaN, 'uninit ** 1st power';
+        cmp-ok $nu ** $np, '===', NaN, 'uninit ** positive';
+        cmp-ok $nu ** $nn, '===', NaN, 'uninit ** negative';
+        cmp-ok $nu ** $nu, '===', NaN, 'uninit ** uninit';
+        cmp-ok $nz ** $nu, '===', NaN, 'zero ** uninit';
+        cmp-ok $np ** $nu, '===', NaN, 'positive ** uninit';
+        cmp-ok $nn ** $nu, '===', NaN, 'negative ** uninit';
 
         is-deeply $n1 ** $nu, (my num $ = 1e0    ), '1 ** uninit';
         is-deeply $nu ** $nz, (my num $ = 1e0    ), 'uninit ** zero';
-        is-deeply $nz ** $np, (my num $ = 0e0    ), 'zero * positive';
-        is-deeply $nz ** $nz, (my num $ = 1e0    ), 'zero * zero';
-        is-deeply $nz ** $n1, (my num $ = 0e0    ), 'zero * 1st power';
-        is-deeply $np ** $nz, (my num $ = 1e0    ), 'positive * zero';
-        is-deeply $np ** $n1, (my num $ = 2e0    ), 'positive * 1st power';
-        is-deeply $np ** $np, (my num $ = 4e0    ), 'positive * positive';
-        is-deeply $nn ** $nz, (my num $ = 1e0    ), 'negative * zero';
-        is-deeply $nn ** $n1, (my num $ = -2e0   ), 'negative * 1st power';
-        is-deeply $nn ** $np, (my num $ = 4e0    ), 'negative * positive';
-        is-approx $np ** $nn, (my num $ = 0.25e0 ), 'positive * negative';
-        is-approx $nn ** $nn, (my num $ = 0.25e0 ), 'negative * negative';
+        is-deeply $nz ** $np, (my num $ = 0e0    ), 'zero ** positive';
+        is-deeply $nz ** $nz, (my num $ = 1e0    ), 'zero ** zero';
+        is-deeply $nz ** $n1, (my num $ = 0e0    ), 'zero ** 1st power';
+        is-deeply $np ** $nz, (my num $ = 1e0    ), 'positive ** zero';
+        is-deeply $np ** $n1, (my num $ = 2e0    ), 'positive ** 1st power';
+        is-deeply $np ** $np, (my num $ = 4e0    ), 'positive ** positive';
+        is-deeply $nn ** $nz, (my num $ = 1e0    ), 'negative ** zero';
+        is-deeply $nn ** $n1, (my num $ = -2e0   ), 'negative ** 1st power';
+        is-deeply $nn ** $np, (my num $ = 4e0    ), 'negative ** positive';
+        is-approx $np ** $nn, (my num $ = 0.25e0 ), 'positive ** negative';
+        is-approx $nn ** $nn, (my num $ = 0.25e0 ), 'negative ** negative';
 
         # rational powers => like taking roots
         is-approx (my num $ = 125e0) ** (my num $ = (1/3).Num),
