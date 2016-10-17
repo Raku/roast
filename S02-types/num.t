@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 78;
+plan 80;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -395,6 +395,32 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
             (my num $ = 5e0), '1/3 power (third root)';
         is-approx (my num $ = 125e0) ** (my num $ = (4/6).Num),
             (my num $ = 25e0), '4/6 power (6th root of 4th power)';
+    }
+
+    subtest 'log(num)' => sub {
+        plan 8;
+        cmp-ok    log(my num $        ), '===', NaN, 'uninitialized';
+        cmp-ok    log(my num $ = NaN  ), '===', NaN, 'NaN';
+        cmp-ok    log(my num $ = -42e0), '===', NaN, 'negative';
+        cmp-ok    log(my num $ =    -∞), '===', NaN, '-∞';
+        is-deeply log(my num $ =     ∞), my num $ =      ∞, '+∞';
+        is-deeply log(my num $ =   0e0), my num $ =     -∞, 'zero';
+        is-deeply log(my num $ =   1e0), my num $ =    0e0, 'one';
+        is-approx log(my num $ =  42e0), my num $ = 3.74e0, '42',
+            :abs-tol(.01);
+    }
+
+    subtest 'ceiling(num)' => sub {
+        plan 9;
+        cmp-ok    ceiling(my num $         ), '===', NaN, 'uninitialized';
+        cmp-ok    ceiling(my num $ =    NaN), '===', NaN, 'NaN';
+        is-deeply ceiling(my num $ =     -∞), my num $ =   -∞, '-∞';
+        is-deeply ceiling(my num $ =      ∞), my num $ =    ∞, '+∞';
+        is-deeply ceiling(my num $ =    0e0), my num $ =  0e0, 'zero';
+        is-deeply ceiling(my num $ =  4.7e0), my num $ =  5e0, 'positive (1)';
+        is-deeply ceiling(my num $ =  4.2e0), my num $ =  5e0, 'positive (2)';
+        is-deeply ceiling(my num $ = -4.7e0), my num $ = -4e0, 'negative (1)';
+        is-deeply ceiling(my num $ = -4.2e0), my num $ = -4e0, 'negative (2)';
     }
 }
 
