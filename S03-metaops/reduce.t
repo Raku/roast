@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 542;
+plan 546;
 
 =begin pod
 
@@ -678,6 +678,14 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is ([?@x]),[ ?@x ], "parses [?@x] right";
     is ([~@x]),[ ~@x ], "parses [~@x] right";
 
+}
+
+# RT #128757
+{
+    throws-like {[+] 'hello'}, X::Str::Numeric, '[+] with single non-numeric argument errors';
+    throws-like {[-] 'hello'}, X::Str::Numeric, '[-] with single non-numeric argument errors';
+    throws-like {[*] 'hello'}, X::Str::Numeric, '[*] with single non-numeric argument errors';
+    throws-like {[/] 'hello'}, X::Str::Numeric, '[/] with single non-numeric argument errors';
 }
 
 # vim: ft=perl6 et
