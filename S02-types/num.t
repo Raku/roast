@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 80;
+plan 86;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -422,6 +422,115 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-deeply ceiling(my num $ =  4.2e0), my num $ =  5e0, 'positive (2)';
         is-deeply ceiling(my num $ = -4.7e0), my num $ = -4e0, 'negative (1)';
         is-deeply ceiling(my num $ = -4.2e0), my num $ = -4e0, 'negative (2)';
+    }
+}
+
+{ # coverage; 2016-10-18
+
+    # Special cases, like NaN/Inf returns, are based on 2008 IEEE 754 standard
+
+    subtest 'sin(num)' => {
+        plan 13;
+
+        cmp-ok sin(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok sin(my num $ = NaN), '===', NaN, 'NaN';
+        cmp-ok sin(my num $ =  -∞), '===', NaN, '-∞';
+        cmp-ok sin(my num $ =   ∞), '===', NaN, '+∞';
+
+        is-approx sin(my num $ =  0e0), my num $ =   0e0,       '0e0';
+        is-approx sin(my num $ =    τ), my num $ =   0e0,       'τ';
+        is-approx sin(my num $ =   -τ), my num $ =   0e0,       '-τ';
+        is-approx sin(my num $ =    π), my num $ =   0e0,       'π';
+        is-approx sin(my num $ =   -π), my num $ =   0e0,       '-π';
+        is-approx sin(my num $ =  π/2), my num $ =   1e0,       'π/2';
+        is-approx sin(my num $ = -π/2), my num $ =  -1e0,       '-π/2';
+        is-approx sin(my num $ =  π/4), my num $ =  .5*sqrt(2), 'π/4';
+        is-approx sin(my num $ = -π/4), my num $ = -.5*sqrt(2), '-π/4';
+    }
+
+    subtest 'asin(num)' => {
+        plan 11;
+
+        cmp-ok asin(my num $          ), '===', NaN, 'uninitialized';
+        cmp-ok asin(my num $ =     NaN), '===', NaN, 'NaN';
+        cmp-ok asin(my num $ =      -∞), '===', NaN, '-∞';
+        cmp-ok asin(my num $ =       ∞), '===', NaN, '+∞';
+        cmp-ok asin(my num $ =  -1.1e0), '===', NaN, '-1.1e0';
+        cmp-ok asin(my num $ =   1.1e0), '===', NaN, '+1.1e0';
+
+        is-approx asin(my num $ =        0e0), my num $ =  0e0,  '0e0';
+        is-approx asin(my num $ =        1e0), my num $ =  π/2, '1e0';
+        is-approx asin(my num $ =       -1e0), my num $ = -π/2, '-1e0';
+        is-approx asin(my num $ =  .5*sqrt 2), my num $ =  π/4, '½√2';
+        is-approx asin(my num $ = -.5*sqrt 2), my num $ = -π/4, '-½√2';
+    }
+
+    subtest 'cos(num)' => {
+        plan 13;
+
+        cmp-ok cos(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok cos(my num $ = NaN), '===', NaN, 'NaN';
+        cmp-ok cos(my num $ =  -∞), '===', NaN, '-∞';
+        cmp-ok cos(my num $ =   ∞), '===', NaN, '+∞';
+
+        is-approx cos(my num $ =  0e0), my num $ =  1e0,       '0e0';
+        is-approx cos(my num $ =  π/4), my num $ = .5*sqrt(2), 'π/4';
+        is-approx cos(my num $ = -π/4), my num $ = .5*sqrt(2), '-π/4';
+        is-approx cos(my num $ =    π), my num $ = -1e0,       'π';
+        is-approx cos(my num $ =   -π), my num $ = -1e0,       '-π';
+        is-approx cos(my num $ =  π/2), my num $ =  0e0,       'π/2';
+        is-approx cos(my num $ = -π/2), my num $ =  0e0,       '-π/2';
+        is-approx cos(my num $ =  π/4), my num $ = .5*sqrt(2), 'π/4';
+        is-approx cos(my num $ = -π/4), my num $ = .5*sqrt(2), '-π/4';
+    }
+
+    subtest 'acos(num)' => {
+        plan 11;
+
+        cmp-ok acos(my num $          ), '===', NaN, 'uninitialized';
+        cmp-ok acos(my num $ =     NaN), '===', NaN, 'NaN';
+        cmp-ok acos(my num $ =      -∞), '===', NaN, '-∞';
+        cmp-ok acos(my num $ =       ∞), '===', NaN, '+∞';
+        cmp-ok acos(my num $ =  -1.1e0), '===', NaN, '-1.1e0';
+        cmp-ok acos(my num $ =   1.1e0), '===', NaN, '+1.1e0';
+
+        is-approx acos(my num $ =        1e0), my num $ =  0e0,  '1e0';
+        is-approx acos(my num $ =       -1e0), my num $ =  π,    '-1e0';
+        is-approx acos(my num $ =        0e0), my num $ =  π/2,  '0e0';
+        is-approx acos(my num $ =  .5*sqrt 2), my num $ =  π/4,  '½√2';
+        is-approx acos(my num $ = -.5*sqrt 2), my num $ = .75*π, '-½√2';
+    }
+
+    subtest 'tan(num)' => {
+        plan 13;
+
+        cmp-ok tan(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok tan(my num $ = NaN), '===', NaN, 'NaN';
+        cmp-ok tan(my num $ =  -∞), '===', NaN, '-∞';
+        cmp-ok tan(my num $ =   ∞), '===', NaN, '+∞';
+
+        is-approx tan(my num $ =  0e0), my num $ =   0e0,       '0e0';
+        is-approx tan(my num $ =    τ), my num $ =   0e0,       'τ';
+        is-approx tan(my num $ =   -τ), my num $ =   0e0,       '-τ';
+        is-approx tan(my num $ =    π), my num $ =   0e0,       'π';
+        is-approx tan(my num $ =   -π), my num $ =   0e0,       '-π';
+        is-approx tan(my num $ =  π/4), my num $ =   1e0,       'π/4';
+        is-approx tan(my num $ = -π/4), my num $ =  -1e0,       '-π/4';
+        is-approx tan(my num $ =  π/2),  (sin(π/2) / cos(π/2)), 'π/2';
+        is-approx tan(my num $ = -π/2), -(sin(π/2) / cos(π/2)), '-π/2';
+    }
+
+    subtest 'atan(num)' => {
+        plan 7;
+
+        cmp-ok atan(my num $          ), '===', NaN, 'uninitialized';
+        cmp-ok atan(my num $ =     NaN), '===', NaN, 'NaN';
+
+        is-approx atan(my num $ =  0e0), my num $ =  0e0, '0e0';
+        is-approx atan(my num $ =  1e0), my num $ =  π/4, '1e0';
+        is-approx atan(my num $ = -1e0), my num $ = -π/4, '-1e0';
+        is-approx atan(my num $ =    π), my num $ =  1.26262725567891e0, 'π';
+        is-approx atan(my num $ =   -π), my num $ = -1.26262725567891e0, '-π';
     }
 }
 
