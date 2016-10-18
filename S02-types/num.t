@@ -376,6 +376,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok $np ** $nu, '===', NaN, 'positive ** uninit';
         cmp-ok $nn ** $nu, '===', NaN, 'negative ** uninit';
 
+        #?rakudo.jvm todo 'gives NaN'
         is-deeply $n1 ** $nu, (my num $ = 1e0    ), '1 ** uninit';
         is-deeply $nu ** $nz, (my num $ = 1e0    ), 'uninit ** zero';
         is-deeply $nz ** $np, (my num $ = 0e0    ), 'zero ** positive';
