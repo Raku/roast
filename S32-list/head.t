@@ -23,7 +23,6 @@ This test tests the C<head> builtin.
     is $inf.head.List, (0,),          "Range.head works on lazy list";
 } #5
 
-#?rakudo.jvm skip 'RT #129278 BadReferenceRuntimeException: Cannot access a native attribute as a reference attribute'
 {
     my $list = <a b b c d e b b e b b f b>;
     is $list.head(5).List, <a b b c d>,  "List.head(5) works";
@@ -50,7 +49,6 @@ This test tests the C<head> builtin.
     }
 } #8
 
-#?rakudo.jvm skip 'RT #129278 BadReferenceRuntimeException: Cannot access a native attribute as a reference attribute'
 {
     my $list = <a b c>;
     is $list.head(5).List, <a b c>,  "List.head works if too short";
@@ -60,7 +58,6 @@ This test tests the C<head> builtin.
     is $range.head(5).List, (0,1,2), "Range.head works if too short";
 } #3
 
-#?rakudo.jvm skip 'RT #129278 BadReferenceRuntimeException: Cannot access a native attribute as a reference attribute'
 {
     my $list = ();
     is $list.head(5).List, (),  "List.head works if empty";
