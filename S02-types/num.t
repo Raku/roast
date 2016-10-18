@@ -451,12 +451,12 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'asin(num)' => {
         plan 11;
 
-        cmp-ok asin(my num $          ), '===', NaN, 'uninitialized';
-        cmp-ok asin(my num $ =     NaN), '===', NaN, 'NaN';
-        cmp-ok asin(my num $ =      -∞), '===', NaN, '-∞';
-        cmp-ok asin(my num $ =       ∞), '===', NaN, '+∞';
-        cmp-ok asin(my num $ =  -1.1e0), '===', NaN, '-1.1e0';
-        cmp-ok asin(my num $ =   1.1e0), '===', NaN, '+1.1e0';
+        cmp-ok asin(my num $         ), '===', NaN, 'uninitialized';
+        cmp-ok asin(my num $ =    NaN), '===', NaN, 'NaN';
+        cmp-ok asin(my num $ =     -∞), '===', NaN, '-∞';
+        cmp-ok asin(my num $ =      ∞), '===', NaN, '+∞';
+        cmp-ok asin(my num $ = -1.1e0), '===', NaN, '-1.1e0';
+        cmp-ok asin(my num $ =  1.1e0), '===', NaN, '+1.1e0';
 
         is-approx asin(my num $ =        0e0), my num $ =  0e0,  '0e0';
         is-approx asin(my num $ =        1e0), my num $ =  π/2, '1e0';
@@ -487,12 +487,12 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'acos(num)' => {
         plan 11;
 
-        cmp-ok acos(my num $          ), '===', NaN, 'uninitialized';
-        cmp-ok acos(my num $ =     NaN), '===', NaN, 'NaN';
-        cmp-ok acos(my num $ =      -∞), '===', NaN, '-∞';
-        cmp-ok acos(my num $ =       ∞), '===', NaN, '+∞';
-        cmp-ok acos(my num $ =  -1.1e0), '===', NaN, '-1.1e0';
-        cmp-ok acos(my num $ =   1.1e0), '===', NaN, '+1.1e0';
+        cmp-ok acos(my num $         ), '===', NaN, 'uninitialized';
+        cmp-ok acos(my num $ =    NaN), '===', NaN, 'NaN';
+        cmp-ok acos(my num $ =     -∞), '===', NaN, '-∞';
+        cmp-ok acos(my num $ =      ∞), '===', NaN, '+∞';
+        cmp-ok acos(my num $ = -1.1e0), '===', NaN, '-1.1e0';
+        cmp-ok acos(my num $ =  1.1e0), '===', NaN, '+1.1e0';
 
         is-approx acos(my num $ =        1e0), my num $ =  0e0,  '1e0';
         is-approx acos(my num $ =       -1e0), my num $ =  π,    '-1e0';
@@ -523,8 +523,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'atan(num)' => {
         plan 7;
 
-        cmp-ok atan(my num $          ), '===', NaN, 'uninitialized';
-        cmp-ok atan(my num $ =     NaN), '===', NaN, 'NaN';
+        cmp-ok atan(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok atan(my num $ = NaN), '===', NaN, 'NaN';
 
         is-approx atan(my num $ =  0e0), my num $ =  0e0, '0e0';
         is-approx atan(my num $ =  1e0), my num $ =  π/4, '1e0';
