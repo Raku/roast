@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 #?niecza emit plan 12; #
-plan 17;
+plan 18;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -64,5 +64,10 @@ lives-ok {
     sub foo() { callframe(1).file.ends-with('x') }
     for ^300 { foo() }
 }, 'No crash when using callframe(1).file many times in a loop';
+
+lives-ok {
+    my $g;
+    for ^200 { next if $_ < 199; $g = callframe.gist }
+}, 'No crash when using callframe.gist in a hot loop';
 
 # vim: ft=perl6
