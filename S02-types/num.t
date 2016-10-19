@@ -622,10 +622,12 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     }
 
     subtest 'acotan(num)' => {
-        plan 28;
+        plan 29;
 
         cmp-ok acotan(my num $      ), '===', NaN, 'uninitialized';
         cmp-ok acotan(my num $ = NaN), '===', NaN, 'NaN';
+
+        is acotan(my num $ = -∞).Str, '-0', '-∞ is -0';
 
         is-approx acotan(my num $ =          ∞), my num $ =  0e0,    '∞';
         is-approx acotan(my num $ =         -∞), my num $ = -0e0,    '-∞';
