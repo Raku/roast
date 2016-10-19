@@ -12,8 +12,8 @@ Tests for pi function.
 my $PI = 3.141592653589e0;
 
 # -- pi
-is_approx(pi, $PI, "pi (using constant)");
-is_approx(pi, atan(1)*4, "pi checked by atan(1)*4");
-is_approx(pi + 3, $PI + 3, "'pi + 3' = PI +3");
+is-approx(pi, $PI, "pi (using constant)");
+is-approx(pi, atan(1)*4, "pi checked by atan(1)*4");
+is-approx(pi + 3, $PI + 3, "'pi + 3' = PI +3");
 
 # vim: ft=perl6

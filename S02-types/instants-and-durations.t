@@ -11,7 +11,7 @@ plan 33;
     isa-ok 5 + $i, Instant, 'Int + Instant ~~ Instant';
     isa-ok $i - 1/3, Instant, 'Instant - Rat ~~ Instant';
     my $later = now;
-    is_approx $i, $later, 'now and just now are close';
+    is-approx $i, $later, 'now and just now are close';
     ok $later >= $i, 'time does not move backwards';
 }
 

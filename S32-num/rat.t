@@ -87,7 +87,7 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
 {
     # use numbers that can be exactly represented as floating points
-    # so there's no need to use is_approx 
+    # so there's no need to use is-approx 
 
     my $a = 1/2;
     is ++$a, 3/2, 'prefix:<++> on Rats';
@@ -109,37 +109,37 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 {
     for 1/2, 2/3, -1/4, 4/5, 2/7, 65/8 -> $a {
         for -7, -1, 0, 1, 2, 5, 7, 42 -> $b {
-            is_approx($a + $b, $a.Num + $b.Num, "Rat + Int works ($a, $b)");
-            is_approx($b + $a, $b.Num + $a.Num, "Int + Rat works ($a, $b)");
-            is_approx($a - $b, $a.Num - $b.Num, "Rat - Int works ($a, $b)");
-            is_approx($b - $a, $b.Num - $a.Num, "Int - Rat works ($a, $b)");
-            is_approx($a * $b, $a.Num * $b.Num, "Rat * Int works ($a, $b)");
-            is_approx($b * $a, $b.Num * $a.Num, "Int * Rat works ($a, $b)");
-            is_approx($a / $b, $a.Num / $b.Num, "Rat / Int works ($a, $b)") if $b != 0;
-            is_approx($b / $a, $b.Num / $a.Num, "Int / Rat works ($a, $b)");
+            is-approx($a + $b, $a.Num + $b.Num, "Rat + Int works ($a, $b)");
+            is-approx($b + $a, $b.Num + $a.Num, "Int + Rat works ($a, $b)");
+            is-approx($a - $b, $a.Num - $b.Num, "Rat - Int works ($a, $b)");
+            is-approx($b - $a, $b.Num - $a.Num, "Int - Rat works ($a, $b)");
+            is-approx($a * $b, $a.Num * $b.Num, "Rat * Int works ($a, $b)");
+            is-approx($b * $a, $b.Num * $a.Num, "Int * Rat works ($a, $b)");
+            is-approx($a / $b, $a.Num / $b.Num, "Rat / Int works ($a, $b)") if $b != 0;
+            is-approx($b / $a, $b.Num / $a.Num, "Int / Rat works ($a, $b)");
         }
 
         for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $b {
-            is_approx($a + $b, $a.Num + $b.Num, "Rat + Rat works ($a, $b)");
-            is_approx($b + $a, $b.Num + $a.Num, "Rat + Rat works ($a, $b)");
-            is_approx($a - $b, $a.Num - $b.Num, "Rat - Rat works ($a, $b)");
-            is_approx($b - $a, $b.Num - $a.Num, "Rat - Rat works ($a, $b)");
-            is_approx($a * $b, $a.Num * $b.Num, "Rat * Rat works ($a, $b)");
-            is_approx($b * $a, $b.Num * $a.Num, "Rat * Rat works ($a, $b)");
-            is_approx($a / $b, $a.Num / $b.Num, "Rat / Rat works ($a, $b)");
-            is_approx($b / $a, $b.Num / $a.Num, "Rat / Rat works ($a, $b)");
+            is-approx($a + $b, $a.Num + $b.Num, "Rat + Rat works ($a, $b)");
+            is-approx($b + $a, $b.Num + $a.Num, "Rat + Rat works ($a, $b)");
+            is-approx($a - $b, $a.Num - $b.Num, "Rat - Rat works ($a, $b)");
+            is-approx($b - $a, $b.Num - $a.Num, "Rat - Rat works ($a, $b)");
+            is-approx($a * $b, $a.Num * $b.Num, "Rat * Rat works ($a, $b)");
+            is-approx($b * $a, $b.Num * $a.Num, "Rat * Rat works ($a, $b)");
+            is-approx($a / $b, $a.Num / $b.Num, "Rat / Rat works ($a, $b)");
+            is-approx($b / $a, $b.Num / $a.Num, "Rat / Rat works ($a, $b)");
         }
 
         my $neg = -$a;
         isa-ok($neg, Rat, "prefix<-> generates a Rat on $a");
-        is_approx($neg, -($a.Num), "prefix<-> generates the correct number for $a");
+        is-approx($neg, -($a.Num), "prefix<-> generates the correct number for $a");
     }
 }
 
 # used to be a (never ticketed) Rakudo bug: sin(Rat) died
 # (note that trig on Rats is tested extensively in S32-trig)
 
-is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
+is-approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
 # SHOULD: Add zero denominator tests
 # Added three constructor tests above.  Unsure about the
@@ -165,23 +165,23 @@ is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 # Quick test of some basic mixed type math
 
-is_approx (1 / 2) + 3.5e0, 4.0, "1/2 + 3.5 = 4.0";
-is_approx 3.5e0 + (1 / 2), 4.0, "3.5 + 1/2 = 4.0";
-is_approx (1 / 2) - 3.5e0, -3.0, "1/2 - 3.5 = -3.0";
-is_approx 3.5e0 - (1 / 2), 3.0, "3.5 - 1/2 = 3.0";
-is_approx (1 / 3) * 6.6e0, 2.2, "1/3 * 6.6 = 2.2";
-is_approx 6.6e0 * (1 / 3), 2.2, "6.6 * 1/3 = 2.2";
-is_approx (1 / 3) / 2.0e0, 1 / 6, "1/3 / 2.0 = 1/6";
-is_approx 2.0e0 / (1 / 3), 6.0, "2.0 / 1/3 = 6.0";
+is-approx (1 / 2) + 3.5e0, 4.0, "1/2 + 3.5 = 4.0";
+is-approx 3.5e0 + (1 / 2), 4.0, "3.5 + 1/2 = 4.0";
+is-approx (1 / 2) - 3.5e0, -3.0, "1/2 - 3.5 = -3.0";
+is-approx 3.5e0 - (1 / 2), 3.0, "3.5 - 1/2 = 3.0";
+is-approx (1 / 3) * 6.6e0, 2.2, "1/3 * 6.6 = 2.2";
+is-approx 6.6e0 * (1 / 3), 2.2, "6.6 * 1/3 = 2.2";
+is-approx (1 / 3) / 2.0e0, 1 / 6, "1/3 / 2.0 = 1/6";
+is-approx 2.0e0 / (1 / 3), 6.0, "2.0 / 1/3 = 6.0";
 
-is_approx (1 / 2) + 3.5e0 + 1i, 4.0 + 1i, "1/2 + 3.5 + 1i = 4.0 + 1i";
-is_approx (3.5e0 + 1i) + (1 / 2), 4.0 + 1i, "(3.5 + 1i) + 1/2 = 4.0 + 1i";
-is_approx (1 / 2) - (3.5e0 + 1i), -3.0 - 1i, "1/2 - (3.5 + 1i) = -3.0 - 1i";
-is_approx (3.5e0 + 1i) - (1 / 2), 3.0 + 1i, "(3.5 + 1i) - 1/2 = 3.0 + 1i";
-is_approx (1 / 3) * (6.6e0 + 1i), 2.2 + (1i/3), "1/3 * (6.6 + 1i) = 2.2 + (1/3)i";
-is_approx (6.6e0 + 1i) * (1 / 3), 2.2 + (1i/3), "(6.6 + 1i) * 1/3 = 2.2 + (1/3)i";
-is_approx (1 / 3) / 2.0i, 1 / (6.0i), "1/3 / 2.0i = 1/(6i)";
-is_approx 2.0i / (1 / 3), 6.0i, "2.0i / 1/3 = 6.0i";
+is-approx (1 / 2) + 3.5e0 + 1i, 4.0 + 1i, "1/2 + 3.5 + 1i = 4.0 + 1i";
+is-approx (3.5e0 + 1i) + (1 / 2), 4.0 + 1i, "(3.5 + 1i) + 1/2 = 4.0 + 1i";
+is-approx (1 / 2) - (3.5e0 + 1i), -3.0 - 1i, "1/2 - (3.5 + 1i) = -3.0 - 1i";
+is-approx (3.5e0 + 1i) - (1 / 2), 3.0 + 1i, "(3.5 + 1i) - 1/2 = 3.0 + 1i";
+is-approx (1 / 3) * (6.6e0 + 1i), 2.2 + (1i/3), "1/3 * (6.6 + 1i) = 2.2 + (1/3)i";
+is-approx (6.6e0 + 1i) * (1 / 3), 2.2 + (1i/3), "(6.6 + 1i) * 1/3 = 2.2 + (1/3)i";
+is-approx (1 / 3) / 2.0i, 1 / (6.0i), "1/3 / 2.0i = 1/(6i)";
+is-approx 2.0i / (1 / 3), 6.0i, "2.0i / 1/3 = 6.0i";
 
 # Cast from Num uses an epsilon value.
 is( exp(1).Rat, Rat.new(2721, 1001), "Num to Rat with default epsilon");
@@ -192,35 +192,35 @@ is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
 is (5/4).Int,       1, 'Rat.Int';
 is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT #69738)';
 
-is_approx 424/61731 + 832/61731, 424.Num / 61731.Num + 832.Num / 61731.Num, "424/61731 + 832/61731 works";
-is_approx 424/61731 - 832/61731, 424.Num / 61731.Num - 832.Num / 61731.Num, "424/61731 - 832/61731 works";
-is_approx 424/61731 + 833/123462, 424.Num / 61731.Num + 833.Num / 123462.Num, "424/61731 + 833/123462 works";
-is_approx 424/61731 - 833/123462, 424.Num / 61731.Num - 833.Num / 123462.Num, "424/61731 - 833/123462 works";
+is-approx 424/61731 + 832/61731, 424.Num / 61731.Num + 832.Num / 61731.Num, "424/61731 + 832/61731 works";
+is-approx 424/61731 - 832/61731, 424.Num / 61731.Num - 832.Num / 61731.Num, "424/61731 - 832/61731 works";
+is-approx 424/61731 + 833/123462, 424.Num / 61731.Num + 833.Num / 123462.Num, "424/61731 + 833/123462 works";
+is-approx 424/61731 - 833/123462, 424.Num / 61731.Num - 833.Num / 123462.Num, "424/61731 - 833/123462 works";
 
 isa-ok 424/61731 + 832/61731, Rat, "424/61731 + 832/61731 is a Rat";
 isa-ok 424/61731 - 832/61731, Rat, "424/61731 - 832/61731 is a Rat";
 isa-ok 424/61731 + 833/123462, Rat, "424/61731 + 833/123462 is a Rat";
 isa-ok 424/61731 - 833/123462, Rat, "424/61731 - 833/123462 is a Rat";
 
-is_approx 61731 + 832/61731, 61731.Num + 832.Num / 61731.Num, "61731 + 832/61731 works";
-is_approx 832/61731 + 61731, 61731.Num + 832.Num / 61731.Num, "832/61731 + 61731 works";
-is_approx 61731 - 832/61731, 61731.Num - 832.Num / 61731.Num, "61731 - 832/61731 works";
-is_approx 832/61731 - 61731, 832.Num / 61731.Num - 61731.Num, "832/61731 - 61731 works";
+is-approx 61731 + 832/61731, 61731.Num + 832.Num / 61731.Num, "61731 + 832/61731 works";
+is-approx 832/61731 + 61731, 61731.Num + 832.Num / 61731.Num, "832/61731 + 61731 works";
+is-approx 61731 - 832/61731, 61731.Num - 832.Num / 61731.Num, "61731 - 832/61731 works";
+is-approx 832/61731 - 61731, 832.Num / 61731.Num - 61731.Num, "832/61731 - 61731 works";
 
-is_approx 424/61731 + 832/61733, 424.Num / 61731.Num + 832.Num / 61733.Num, "424/61731 + 832/61733 works";
-is_approx 424/61731 - 832/61733, 424.Num / 61731.Num - 832.Num / 61733.Num, "424/61731 - 832/61733 works";
+is-approx 424/61731 + 832/61733, 424.Num / 61731.Num + 832.Num / 61733.Num, "424/61731 + 832/61733 works";
+is-approx 424/61731 - 832/61733, 424.Num / 61731.Num - 832.Num / 61733.Num, "424/61731 - 832/61733 works";
 
-is_approx (424/61731) * (832/61731), (424.Num / 61731.Num) * (832.Num / 61731.Num), "424/61731 * 832/61731 works";
-is_approx (424/61731) / (61731/832), (424.Num / 61731.Num) / (61731.Num / 832.Num), "424/61731 / 61731/832 works";
+is-approx (424/61731) * (832/61731), (424.Num / 61731.Num) * (832.Num / 61731.Num), "424/61731 * 832/61731 works";
+is-approx (424/61731) / (61731/832), (424.Num / 61731.Num) / (61731.Num / 832.Num), "424/61731 / 61731/832 works";
 
-is_approx 61731 * (61731/832), 61731.Num * (61731.Num / 832.Num), "61731 * 61731/832 works";
-is_approx (61731/832) * 61731, 61731.Num * (61731.Num / 832.Num), "61731/832 * 61731 works";
-is_approx (832/61731) / 61731, (832.Num / 61731.Num) / 61731.Num, "832/61731 / 61731 works";
-is_approx 61731 / (832/61731), 61731.Num / (832.Num / 61731.Num), "61731 / 832/61731 works";
+is-approx 61731 * (61731/832), 61731.Num * (61731.Num / 832.Num), "61731 * 61731/832 works";
+is-approx (61731/832) * 61731, 61731.Num * (61731.Num / 832.Num), "61731/832 * 61731 works";
+is-approx (832/61731) / 61731, (832.Num / 61731.Num) / 61731.Num, "832/61731 / 61731 works";
+is-approx 61731 / (832/61731), 61731.Num / (832.Num / 61731.Num), "61731 / 832/61731 works";
 
-is_approx (424/61731) * (61731/61733), (424.Num / 61731.Num) * (61731.Num / 61733.Num), "424/61731 * 61731/61733 works";
+is-approx (424/61731) * (61731/61733), (424.Num / 61731.Num) * (61731.Num / 61733.Num), "424/61731 * 61731/61733 works";
 isa-ok (424/61731) * (61731/61733), Rat, "424/61731 * 61731/61733 is a Rat";
-is_approx (424/61731) / (61733/61731), (424.Num / 61731.Num) / (61733.Num / 61731.Num), "424/61731 / 61733/61731 works";
+is-approx (424/61731) / (61733/61731), (424.Num / 61731.Num) / (61733.Num / 61731.Num), "424/61731 / 61733/61731 works";
 isa-ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
 
 ok (1/2) == (1/2).Rat, 'Rat.Rat works';
@@ -269,22 +269,22 @@ is 3 ** -3, 1/27, "Int raised to a negative Int power gets correct answer";
     for 1..1000 {
         $s += 1/$_**2
     };
-    is_approx $s, 1.64393456668156, 'can sum up 1/$_**2 in a loop';
+    is-approx $s, 1.64393456668156, 'can sum up 1/$_**2 in a loop';
     isa-ok $s, Num, 'and we had an overflow to Num';
     my $bigish = 2 ** 34;
     my $bigish_n = $bigish.Num;
     # TODO: not just check the type of the results, but also the numeric value
     isa-ok (1/$bigish) * (1/$bigish),       Num, 'multiplication overflows to Num';
-    is_approx (1/$bigish) * (1/$bigish), (1/$bigish_n) * (1/$bigish_n), '... right result';
+    is-approx (1/$bigish) * (1/$bigish), (1/$bigish_n) * (1/$bigish_n), '... right result';
     isa-ok (1/$bigish) ** 2,                Num, 'exponentation overflows to Num';
-    is_approx (1/$bigish) ** 2, (1/$bigish_n) ** 2, '... right result';
-    is_approx (1/$bigish) * (1/$bigish), (1/$bigish_n) * (1/$bigish_n), '... right result';
+    is-approx (1/$bigish) ** 2, (1/$bigish_n) ** 2, '... right result';
+    is-approx (1/$bigish) * (1/$bigish), (1/$bigish_n) * (1/$bigish_n), '... right result';
     isa-ok (1/$bigish) + (1 / ($bigish+1)), Num, 'addition overflows to Num';
-    is_approx (1/$bigish) + (1/($bigish+1)), (1/$bigish_n) + (1/($bigish_n+1)), '... right result';
+    is-approx (1/$bigish) + (1/($bigish+1)), (1/$bigish_n) + (1/($bigish_n+1)), '... right result';
     isa-ok (1/$bigish) - (1 / ($bigish+1)), Num, 'subtraction overflows to Num';
-    is_approx (1/$bigish) - (1/($bigish+1)), (1/$bigish_n) - (1/($bigish_n+1)), '... right result';
+    is-approx (1/$bigish) - (1/($bigish+1)), (1/$bigish_n) - (1/($bigish_n+1)), '... right result';
     isa-ok (1/$bigish) / (($bigish+1)/3),   Num, 'division overflows to Num';
-    is_approx (1/$bigish) / (($bigish+1)/3), (1/$bigish_n) / (($bigish_n+1)/3), '... right result';
+    is-approx (1/$bigish) / (($bigish+1)/3), (1/$bigish_n) / (($bigish_n+1)/3), '... right result';
 
 }
 

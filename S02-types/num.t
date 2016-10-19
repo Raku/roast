@@ -7,17 +7,17 @@ use Test;
 plan 86;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
-is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
+is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
 isa-ok( EVAL(0.Num.perl), Num, 'EVAL 0.Num.perl is Num' );
-is_approx( EVAL(0.Num.perl), 0, 'EVAL 0.Num.perl is 0' );
+is-approx( EVAL(0.Num.perl), 0, 'EVAL 0.Num.perl is 0' );
 isa-ok( EVAL((-1).Num.perl), Num, 'EVAL -1.Num.perl is Num' );
-is_approx( EVAL((-1).Num.perl), -1, 'EVAL -1.Num.perl is -1' );
+is-approx( EVAL((-1).Num.perl), -1, 'EVAL -1.Num.perl is -1' );
 isa-ok( EVAL(1.1.Num.perl), Num, 'EVAL 1.1.Num.perl is Num' );
-is_approx( EVAL(1.1.perl), 1.1, 'EVAL 1.1.Num.perl is 1.1' );
+is-approx( EVAL(1.1.perl), 1.1, 'EVAL 1.1.Num.perl is 1.1' );
 isa-ok( EVAL((-1.1).Num.perl), Num, 'EVAL -1.1.Num.perl is Num' );
-is_approx( EVAL((-1.1).perl), -1.1, 'EVAL -1.1.Num.perl is -1.1' );
+is-approx( EVAL((-1.1).perl), -1.1, 'EVAL -1.1.Num.perl is -1.1' );
 isa-ok( EVAL(1e100.Num.perl), Num, 'EVAL 1e100.Num.perl is Num' );
-is_approx( EVAL(1e100.Num.perl), 1e100, 'EVAL 1e100.Num.perl is 1' );
+is-approx( EVAL(1e100.Num.perl), 1e100, 'EVAL 1e100.Num.perl is 1' );
 
 {
     my $a = 1; "$a";

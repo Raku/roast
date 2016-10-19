@@ -156,7 +156,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 # Believe it or not, this one overflows on 32-bit Rakduo as of 3/8/2010.
 {
     # RT #73262
-    is_approx 7**(-1), 0.14285714285714, '7**(-1) works';
+    is-approx 7**(-1), 0.14285714285714, '7**(-1) works';
 }
 
 {

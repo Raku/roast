@@ -70,7 +70,7 @@ for @cosines -> $angle
     my $desired-result = 1.0 / cosh($angle.key());
 
     # Num.sech tests -- very thorough
-    is_approx($angle.key().sech, $desired-result, 
+    is-approx($angle.key().sech, $desired-result, 
               "Num.sech - {$angle.key()}");
 
     # Complex.sech tests -- also very thorough
@@ -81,9 +81,9 @@ for @cosines -> $angle
     my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { 1.0 / cosh($_) }($zp2);
     
-    is_approx($zp0.sech, $sz0, "Complex.sech - $zp0");
-    is_approx($zp1.sech, $sz1, "Complex.sech - $zp1");
-    is_approx($zp2.sech, $sz2, "Complex.sech - $zp2");
+    is-approx($zp0.sech, $sz0, "Complex.sech - $zp0");
+    is-approx($zp1.sech, $sz1, "Complex.sech - $zp1");
+    is-approx($zp2.sech, $sz2, "Complex.sech - $zp2");
 }
 
 #?niecza skip "Inf results wrong"
@@ -94,42 +94,42 @@ for @cosines -> $angle
         
 {
     # Num tests
-    is_approx(sech((-7.8539816).Num), 0.000776406290791195, "sech(Num) - -7.8539816");
+    is-approx(sech((-7.8539816).Num), 0.000776406290791195, "sech(Num) - -7.8539816");
 }
 
 {
     # Rat tests
-    is_approx((-5.4977871).Rat(1e-9).sech, 0.00819151235926221, "Rat.sech - -5.4977871");
-    is_approx(sech((-2.0943951).Rat(1e-9)), 0.242610328725292, "sech(Rat) - -2.0943951");
+    is-approx((-5.4977871).Rat(1e-9).sech, 0.00819151235926221, "Rat.sech - -5.4977871");
+    is-approx(sech((-2.0943951).Rat(1e-9)), 0.242610328725292, "sech(Rat) - -2.0943951");
 }
 
 {
     # Complex tests
-    is_approx(sech((-1.57079632680947+2i).Complex), -0.190922860876022+0.382612165180854i, "sech(Complex) - -1.57079632680947+2i");
+    is-approx(sech((-1.57079632680947+2i).Complex), -0.190922860876022+0.382612165180854i, "sech(Complex) - -1.57079632680947+2i");
 }
 
 {
     # Str tests
-    is_approx((-1.0471976).Str.sech, 0.624887966291348, "Str.sech - -1.0471976");
-    is_approx(sech((-0.7853982).Str), 0.754939708710524, "sech(Str) - -0.7853982");
+    is-approx((-1.0471976).Str.sech, 0.624887966291348, "Str.sech - -1.0471976");
+    is-approx(sech((-0.7853982).Str), 0.754939708710524, "sech(Str) - -0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx(NotComplex.new(0+2i).sech, -2.40299796172238+-0i, "NotComplex.sech - 0+2i");
-    is_approx(sech(NotComplex.new(0.785398163404734+2i)), -0.594148775843208-0.851377452397526i, "sech(NotComplex) - 0.785398163404734+2i");
+    is-approx(NotComplex.new(0+2i).sech, -2.40299796172238+-0i, "NotComplex.sech - 0+2i");
+    is-approx(sech(NotComplex.new(0.785398163404734+2i)), -0.594148775843208-0.851377452397526i, "sech(NotComplex) - 0.785398163404734+2i");
 }
 
 {
     # DifferentReal tests
-    is_approx(DifferentReal.new(1.5707963).sech, 0.398536815333061, "DifferentReal.sech - 1.5707963");
-    is_approx(sech(DifferentReal.new(2.3561945)), 0.187872734233684, "sech(DifferentReal) - 2.3561945");
+    is-approx(DifferentReal.new(1.5707963).sech, 0.398536815333061, "DifferentReal.sech - 1.5707963");
+    is-approx(sech(DifferentReal.new(2.3561945)), 0.187872734233684, "sech(DifferentReal) - 2.3561945");
 }
 
 {
     # FatRat tests
-    is_approx((3.141593).FatRat.sech, 0.0862667383315497, "FatRat.sech - 3.141593");
-    is_approx(sech((3.9269908).FatRat), 0.03939045447117, "sech(FatRat) - 3.9269908");
+    is-approx((3.141593).FatRat.sech, 0.0862667383315497, "FatRat.sech - 3.141593");
+    is-approx(sech((3.9269908).FatRat), 0.03939045447117, "sech(FatRat) - 3.9269908");
 }
 
 
@@ -141,54 +141,54 @@ for @cosines -> $angle
     my $desired-result = 1.0 / cosh($angle.key());
 
     # Num.asech tests -- thorough
-    is_approx($desired-result.Num.asech.sech, $desired-result, 
+    is-approx($desired-result.Num.asech.sech, $desired-result, 
               "Num.asech - {$angle.key()}");
     
     # Num.asech(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx($z.asech.sech, $z, 
+        is-approx($z.asech.sech, $z, 
                   "Complex.asech - $z");
     }
 }
         
 {
     # Num tests
-    is_approx(asech((0.754939708710524).Num), 0.7853982, "asech(Num) - 0.7853982");
+    is-approx(asech((0.754939708710524).Num), 0.7853982, "asech(Num) - 0.7853982");
 }
 
 {
     # Rat tests
-    is_approx(((0.754939708710524).Rat(1e-9)).asech, 0.7853982, "Rat.asech - 0.7853982");
-    is_approx(asech((0.754939708710524).Rat(1e-9)), 0.7853982, "asech(Rat) - 0.7853982");
+    is-approx(((0.754939708710524).Rat(1e-9)).asech, 0.7853982, "Rat.asech - 0.7853982");
+    is-approx(asech((0.754939708710524).Rat(1e-9)), 0.7853982, "asech(Rat) - 0.7853982");
 }
 
 {
     # Complex tests
-    is_approx(asech((0.785398163404734+2i).Complex), 0.425586400480703-1.41436665336946i, "asech(Complex) - 0.425586400480703-1.41436665336946i");
+    is-approx(asech((0.785398163404734+2i).Complex), 0.425586400480703-1.41436665336946i, "asech(Complex) - 0.425586400480703-1.41436665336946i");
 }
 
 {
     # Str tests
-    is_approx(((0.754939708710524).Str).asech, 0.7853982, "Str.asech - 0.7853982");
-    is_approx(asech((0.754939708710524).Str), 0.7853982, "asech(Str) - 0.7853982");
+    is-approx(((0.754939708710524).Str).asech, 0.7853982, "Str.asech - 0.7853982");
+    is-approx(asech((0.754939708710524).Str), 0.7853982, "asech(Str) - 0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx((NotComplex.new(0.785398163404734+2i)).asech, 0.425586400480703-1.41436665336946i, "NotComplex.asech - 0.425586400480703-1.41436665336946i");
-    is_approx(asech(NotComplex.new(0.785398163404734+2i)), 0.425586400480703-1.41436665336946i, "asech(NotComplex) - 0.425586400480703-1.41436665336946i");
+    is-approx((NotComplex.new(0.785398163404734+2i)).asech, 0.425586400480703-1.41436665336946i, "NotComplex.asech - 0.425586400480703-1.41436665336946i");
+    is-approx(asech(NotComplex.new(0.785398163404734+2i)), 0.425586400480703-1.41436665336946i, "asech(NotComplex) - 0.425586400480703-1.41436665336946i");
 }
 
 {
     # DifferentReal tests
-    is_approx((DifferentReal.new(0.754939708710524)).asech, 0.7853982, "DifferentReal.asech - 0.7853982");
-    is_approx(asech(DifferentReal.new(0.754939708710524)), 0.7853982, "asech(DifferentReal) - 0.7853982");
+    is-approx((DifferentReal.new(0.754939708710524)).asech, 0.7853982, "DifferentReal.asech - 0.7853982");
+    is-approx(asech(DifferentReal.new(0.754939708710524)), 0.7853982, "asech(DifferentReal) - 0.7853982");
 }
 
 {
     # FatRat tests
-    is_approx(((0.754939708710524).FatRat).asech, 0.7853982, "FatRat.asech - 0.7853982");
-    is_approx(asech((0.754939708710524).FatRat), 0.7853982, "asech(FatRat) - 0.7853982");
+    is-approx(((0.754939708710524).FatRat).asech, 0.7853982, "FatRat.asech - 0.7853982");
+    is-approx(asech((0.754939708710524).FatRat), 0.7853982, "asech(FatRat) - 0.7853982");
 }
 
 done-testing;

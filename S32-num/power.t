@@ -61,41 +61,41 @@ is(NaN ** NaN, NaN, "NaN**NaN=NaN");
 is(Inf ** NaN, NaN, "Inf**NaN=NaN");
 is(NaN ** Inf, NaN, "NaN**Inf=NaN");
 
-is_approx(exp(1) ** 0.5,  exp(0.5), "e **  .5 ==   exp(.5)");
-is_approx(exp(1) ** 2.5,  exp(2.5), "e ** 2.5 ==  exp(2.5)");
+is-approx(exp(1) ** 0.5,  exp(0.5), "e **  .5 ==   exp(.5)");
+is-approx(exp(1) ** 2.5,  exp(2.5), "e ** 2.5 ==  exp(2.5)");
 
 # Complex ** Real
 # These work by accident even if you don't have Complex **
-is_approx((4 + 0i) ** 2, 4 ** 2, "(4+0i) ** 2 == 16");
-is_approx(1i ** 4, 1, "i ** 4 == 1");
-is_approx((4 + 0i) ** .5, 2, "(4+0i) ** .5 == 2");
+is-approx((4 + 0i) ** 2, 4 ** 2, "(4+0i) ** 2 == 16");
+is-approx(1i ** 4, 1, "i ** 4 == 1");
+is-approx((4 + 0i) ** .5, 2, "(4+0i) ** .5 == 2");
 
-is_approx(1i ** 2, -1, "i ** 2 == -1");
-is_approx(1i ** 3, -1i, "i ** 3 == -i");
-is_approx(5i ** 3, -125i, "5i ** 3 = -125i");
-is_approx(3i ** 3, -27i, "3i ** 3 = -27i");
-is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
+is-approx(1i ** 2, -1, "i ** 2 == -1");
+is-approx(1i ** 3, -1i, "i ** 3 == -i");
+is-approx(5i ** 3, -125i, "5i ** 3 = -125i");
+is-approx(3i ** 3, -27i, "3i ** 3 = -27i");
+is-approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 
 #?rakudo todo 'i RT #124810'
-is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
+is-approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 
 {
     for (8i).roots(4) -> $z {
-        is_approx($z ** 4, 8i, "quartic root of 8i ** 4 = 8i");
+        is-approx($z ** 4, 8i, "quartic root of 8i ** 4 = 8i");
     }
 }
 
 # Real ** Complex
 {
-    is_approx(exp(1) ** (pi * 1i), -1, "e ** pi i = -1");
+    is-approx(exp(1) ** (pi * 1i), -1, "e ** pi i = -1");
 }
 
 # Complex ** Complex
-is_approx((4 + 0i) ** (2 + 0i), 4 ** 2, "(4+0i) ** (2+0i) == 16");
+is-approx((4 + 0i) ** (2 + 0i), 4 ** 2, "(4+0i) ** (2+0i) == 16");
 
 # Rat ** a large number
 ok(1.015 ** 200 !~~ NaN, "1.015 ** 200 is not NaN");
-is_approx(1.015 ** 200, 19.6430286394751, "1.015 ** 200 == 19.6430286394751");
+is-approx(1.015 ** 200, 19.6430286394751, "1.015 ** 200 == 19.6430286394751");
 
 is(0⁰,    1, "0⁰ ==  1");
 is(0¹,    0, "0¹ ==  0");

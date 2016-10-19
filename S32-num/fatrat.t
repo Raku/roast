@@ -15,7 +15,7 @@ isa-ok( 1.Num.FatRat, FatRat, "cast of Num makes a FatRat");
 isa-ok(1 / 4, Rat, "/ makes a Rat");
 
 isa-ok( EVAL(FatRat.new(1, 3).perl), FatRat, 'EVAL FatRat.new(1, 3).perl is FatRat' );
-is_approx (EVAL FatRat.new(1, 3).perl), 1/3, 'EVAL FatRat.new(1, 3).perl is 1/3';
+is-approx (EVAL FatRat.new(1, 3).perl), 1/3, 'EVAL FatRat.new(1, 3).perl is 1/3';
 
 # Test ~
 is(~(FatRat.new(1,4)), ~(0.25e0), "FatRats stringify properly");
@@ -87,7 +87,7 @@ is((2 / (2 / 3R)).nude, (3, 1), "2 / 2/3R = 3 is simplified internally");
 
 {
     # use numbers that can be exactly represented as floating points
-    # so there's no need to use is_approx 
+    # so there's no need to use is-approx 
 
     my $a = 1/2R;
     is ++$a, 3/2, 'prefix:<++> on FatRats';
@@ -110,55 +110,55 @@ is((2 / (2 / 3R)).nude, (3, 1), "2 / 2/3R = 3 is simplified internally");
 
 for -1/4R, 2/7R, 65/8R / 10**100 -> $a {
     for -7, 0, 1, 5 -> $b {
-        is_approx($a + $b, $a.Num + $b.Num, "FatRat + Int works ($a, $b)");
-        is_approx($b + $a, $b.Num + $a.Num, "Int + FatRat works ($a, $b)");
-        is_approx($a - $b, $a.Num - $b.Num, "FatRat - Int works ($a, $b)");
-        is_approx($b - $a, $b.Num - $a.Num, "Int - FatRat works ($a, $b)");
-        is_approx($a * $b, $a.Num * $b.Num, "FatRat * Int works ($a, $b)");
-        is_approx($b * $a, $b.Num * $a.Num, "Int * FatRat works ($a, $b)");
-        is_approx($a / $b, $a.Num / $b.Num, "FatRat / Int works ($a, $b)") if $b != 0;
-        is_approx($b / $a, $b.Num / $a.Num, "Int / FatRat works ($a, $b)");
+        is-approx($a + $b, $a.Num + $b.Num, "FatRat + Int works ($a, $b)");
+        is-approx($b + $a, $b.Num + $a.Num, "Int + FatRat works ($a, $b)");
+        is-approx($a - $b, $a.Num - $b.Num, "FatRat - Int works ($a, $b)");
+        is-approx($b - $a, $b.Num - $a.Num, "Int - FatRat works ($a, $b)");
+        is-approx($a * $b, $a.Num * $b.Num, "FatRat * Int works ($a, $b)");
+        is-approx($b * $a, $b.Num * $a.Num, "Int * FatRat works ($a, $b)");
+        is-approx($a / $b, $a.Num / $b.Num, "FatRat / Int works ($a, $b)") if $b != 0;
+        is-approx($b / $a, $b.Num / $a.Num, "Int / FatRat works ($a, $b)");
     }
 
     for (1R/2**256, -4/5R) -> $b {
-        is_approx($a + $b, $a.Num + $b.Num, "FatRat + FatRat works ($a, $b)");
-        is_approx($b + $a, $b.Num + $a.Num, "FatRat + FatRat works ($a, $b)");
-        is_approx($a - $b, $a.Num - $b.Num, "FatRat - FatRat works ($a, $b)");
-        is_approx($b - $a, $b.Num - $a.Num, "FatRat - FatRat works ($a, $b)");
-        is_approx($a * $b, $a.Num * $b.Num, "FatRat * FatRat works ($a, $b)");
-        is_approx($b * $a, $b.Num * $a.Num, "FatRat * FatRat works ($a, $b)");
-        is_approx($a / $b, $a.Num / $b.Num, "FatRat / FatRat works ($a, $b)");
-        is_approx($b / $a, $b.Num / $a.Num, "FatRat / FatRat works ($a, $b)");
+        is-approx($a + $b, $a.Num + $b.Num, "FatRat + FatRat works ($a, $b)");
+        is-approx($b + $a, $b.Num + $a.Num, "FatRat + FatRat works ($a, $b)");
+        is-approx($a - $b, $a.Num - $b.Num, "FatRat - FatRat works ($a, $b)");
+        is-approx($b - $a, $b.Num - $a.Num, "FatRat - FatRat works ($a, $b)");
+        is-approx($a * $b, $a.Num * $b.Num, "FatRat * FatRat works ($a, $b)");
+        is-approx($b * $a, $b.Num * $a.Num, "FatRat * FatRat works ($a, $b)");
+        is-approx($a / $b, $a.Num / $b.Num, "FatRat / FatRat works ($a, $b)");
+        is-approx($b / $a, $b.Num / $a.Num, "FatRat / FatRat works ($a, $b)");
     }
 
     my $neg = -$a;
     isa-ok($neg, FatRat, "prefix<-> geneFatRates a FatRat on $a");
-    is_approx($neg, -($a.Num), "prefix<-> geneFatRates the correct number for $a");
+    is-approx($neg, -($a.Num), "prefix<-> geneFatRates the correct number for $a");
 }
 
 # (note that trig on Rats is tested extensively in S32-trig but not trig on FatRats.  yet.)
 
-is_approx sin(5.0e0), sin(10/2R), 'sin(FatRat) works';
+is-approx sin(5.0e0), sin(10/2R), 'sin(FatRat) works';
 
 # Quick test of some basic mixed type math
 
-is_approx (1 / 2R) + 3.5e0, 4.0, "1/2R + 3.5 = 4.0";
-is_approx 3.5e0 + (1 / 2R), 4.0, "3.5 + 1/2R = 4.0";
-is_approx (1 / 2R) - 3.5e0, -3.0, "1/2R - 3.5 = -3.0";
-is_approx 3.5e0 - (1 / 2R), 3.0, "3.5 - 1/2R = 3.0";
-is_approx (1 / 3R) * 6.6e0, 2.2, "1/3R * 6.6 = 2.2";
-is_approx 6.6e0 * (1 / 3R), 2.2, "6.6 * 1/3R = 2.2";
-is_approx (1 / 3R) / 2.0e0, 1 / 6, "1/3R / 2.0 = 1/6";
-is_approx 2.0e0 / (1 / 3R), 6.0, "2.0 / 1/3R = 6.0";
+is-approx (1 / 2R) + 3.5e0, 4.0, "1/2R + 3.5 = 4.0";
+is-approx 3.5e0 + (1 / 2R), 4.0, "3.5 + 1/2R = 4.0";
+is-approx (1 / 2R) - 3.5e0, -3.0, "1/2R - 3.5 = -3.0";
+is-approx 3.5e0 - (1 / 2R), 3.0, "3.5 - 1/2R = 3.0";
+is-approx (1 / 3R) * 6.6e0, 2.2, "1/3R * 6.6 = 2.2";
+is-approx 6.6e0 * (1 / 3R), 2.2, "6.6 * 1/3R = 2.2";
+is-approx (1 / 3R) / 2.0e0, 1 / 6, "1/3R / 2.0 = 1/6";
+is-approx 2.0e0 / (1 / 3R), 6.0, "2.0 / 1/3R = 6.0";
 
-is_approx (1 / 2R) + 3.5e0 + 1i, 4.0 + 1i, "1/2R + 3.5 + 1i = 4.0 + 1i";
-is_approx (3.5e0 + 1i) + (1 / 2R), 4.0 + 1i, "(3.5 + 1i) + 1/2R = 4.0 + 1i";
-is_approx (1 / 2R) - (3.5e0 + 1i), -3.0 - 1i, "1/2R - (3.5 + 1i) = -3.0 - 1i";
-is_approx (3.5e0 + 1i) - (1 / 2R), 3.0 + 1i, "(3.5 + 1i) - 1/2R = 3.0 + 1i";
-is_approx (1 / 3R) * (6.6e0 + 1i), 2.2 + (1i/3), "1/3R * (6.6 + 1i) = 2.2 + (1/3)i";
-is_approx (6.6e0 + 1i) * (1 / 3R), 2.2 + (1i/3), "(6.6 + 1i) * 1/3R = 2.2 + (1/3)i";
-is_approx (1 / 3R) / 2.0i, 1 / (6.0i), "1/3R / 2.0i = 1/(6i)";
-is_approx 2.0i / (1 / 3R), 6.0i, "2.0i / 1/3R = 6.0i";
+is-approx (1 / 2R) + 3.5e0 + 1i, 4.0 + 1i, "1/2R + 3.5 + 1i = 4.0 + 1i";
+is-approx (3.5e0 + 1i) + (1 / 2R), 4.0 + 1i, "(3.5 + 1i) + 1/2R = 4.0 + 1i";
+is-approx (1 / 2R) - (3.5e0 + 1i), -3.0 - 1i, "1/2R - (3.5 + 1i) = -3.0 - 1i";
+is-approx (3.5e0 + 1i) - (1 / 2R), 3.0 + 1i, "(3.5 + 1i) - 1/2R = 3.0 + 1i";
+is-approx (1 / 3R) * (6.6e0 + 1i), 2.2 + (1i/3), "1/3R * (6.6 + 1i) = 2.2 + (1/3)i";
+is-approx (6.6e0 + 1i) * (1 / 3R), 2.2 + (1i/3), "(6.6 + 1i) * 1/3R = 2.2 + (1/3)i";
+is-approx (1 / 3R) / 2.0i, 1 / (6.0i), "1/3R / 2.0i = 1/(6i)";
+is-approx 2.0i / (1 / 3R), 6.0i, "2.0i / 1/3R = 6.0i";
 
 # # Cast from Num uses an epsilon value.
 # -- Off because we need to figure out the right way to do this

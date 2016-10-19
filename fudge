@@ -130,7 +130,7 @@ my $IS = _register_functions(  # regex with test functions used in roast
       eval_lives_ok     eval-lives-ok
       flunk
       is
-      is_approx         is-approx
+      is-approx
       is_deeply         is-deeply
       isa_ok            isa-ok
       isnt

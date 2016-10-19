@@ -70,7 +70,7 @@ for @sinhes -> $angle
     my $desired-result = $angle.value;
 
     # Num.sinh tests -- very thorough
-    is_approx($angle.key().sinh, $desired-result, 
+    is-approx($angle.key().sinh, $desired-result, 
               "Num.sinh - {$angle.key()}");
 
     # Complex.sinh tests -- also very thorough
@@ -81,9 +81,9 @@ for @sinhes -> $angle
     my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { (exp($_) - exp(-$_)) / 2 }($zp2);
     
-    is_approx($zp0.sinh, $sz0, "Complex.sinh - $zp0");
-    is_approx($zp1.sinh, $sz1, "Complex.sinh - $zp1");
-    is_approx($zp2.sinh, $sz2, "Complex.sinh - $zp2");
+    is-approx($zp0.sinh, $sz0, "Complex.sinh - $zp0");
+    is-approx($zp1.sinh, $sz1, "Complex.sinh - $zp1");
+    is-approx($zp2.sinh, $sz2, "Complex.sinh - $zp2");
 }
 
 #?niecza skip "Inf results wrong"
@@ -94,42 +94,42 @@ for @sinhes -> $angle
         
 {
     # Num tests
-    is_approx(sinh((-6.283185).Num), -267.744894056623, "sinh(Num) - -6.283185");
+    is-approx(sinh((-6.283185).Num), -267.744894056623, "sinh(Num) - -6.283185");
 }
 
 {
     # Rat tests
-    is_approx((-3.9269908).Rat(1e-9).sinh, -25.367158320299, "Rat.sinh - -3.9269908");
-    is_approx(sinh((-0.5235988).Rat(1e-9)), -0.547853473893578, "sinh(Rat) - -0.5235988");
+    is-approx((-3.9269908).Rat(1e-9).sinh, -25.367158320299, "Rat.sinh - -3.9269908");
+    is-approx(sinh((-0.5235988).Rat(1e-9)), -0.547853473893578, "sinh(Rat) - -0.5235988");
 }
 
 {
     # Complex tests
-    is_approx(sinh((0+2i).Complex), -0+0.909297426825682i, "sinh(Complex) - 0+2i");
+    is-approx(sinh((0+2i).Complex), -0+0.909297426825682i, "sinh(Complex) - 0+2i");
 }
 
 {
     # Str tests
-    is_approx((0.5235988).Str.sinh, 0.547853473893578, "Str.sinh - 0.5235988");
-    is_approx(sinh((0.7853982).Str), 0.86867096149566, "sinh(Str) - 0.7853982");
+    is-approx((0.5235988).Str.sinh, 0.547853473893578, "Str.sinh - 0.5235988");
+    is-approx(sinh((0.7853982).Str), 0.86867096149566, "sinh(Str) - 0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx(NotComplex.new(1.57079632680947+2i).sinh, -0.957678258159807+2.28158953412064i, "NotComplex.sinh - 1.57079632680947+2i");
-    is_approx(sinh(NotComplex.new(2.3561944902142+2i)), -2.17560397806036+4.83996483329327i, "sinh(NotComplex) - 2.3561944902142+2i");
+    is-approx(NotComplex.new(1.57079632680947+2i).sinh, -0.957678258159807+2.28158953412064i, "NotComplex.sinh - 1.57079632680947+2i");
+    is-approx(sinh(NotComplex.new(2.3561944902142+2i)), -2.17560397806036+4.83996483329327i, "sinh(NotComplex) - 2.3561944902142+2i");
 }
 
 {
     # DifferentReal tests
-    is_approx(DifferentReal.new(3.141593).sinh, 11.5487393575956, "DifferentReal.sinh - 3.141593");
-    is_approx(sinh(DifferentReal.new(3.9269908)), 25.367158320299, "sinh(DifferentReal) - 3.9269908");
+    is-approx(DifferentReal.new(3.141593).sinh, 11.5487393575956, "DifferentReal.sinh - 3.141593");
+    is-approx(sinh(DifferentReal.new(3.9269908)), 25.367158320299, "sinh(DifferentReal) - 3.9269908");
 }
 
 {
     # FatRat tests
-    is_approx((4.7123890).FatRat.sinh, 55.6543976018509, "FatRat.sinh - 4.7123890");
-    is_approx(sinh((5.4977871).FatRat), 122.073483520919, "sinh(FatRat) - 5.4977871");
+    is-approx((4.7123890).FatRat.sinh, 55.6543976018509, "FatRat.sinh - 4.7123890");
+    is-approx(sinh((5.4977871).FatRat), 122.073483520919, "sinh(FatRat) - 5.4977871");
 }
 
 
@@ -141,54 +141,54 @@ for @sinhes -> $angle
     my $desired-result = $angle.value;
 
     # Num.asinh tests -- thorough
-    is_approx($desired-result.Num.asinh.sinh, $desired-result, 
+    is-approx($desired-result.Num.asinh.sinh, $desired-result, 
               "Num.asinh - {$angle.key()}");
     
     # Num.asinh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx($z.asinh.sinh, $z, 
+        is-approx($z.asinh.sinh, $z, 
                   "Complex.asinh - $z");
     }
 }
         
 {
     # Num tests
-    is_approx(asinh((0.547853473893578).Num), 0.5235988, "asinh(Num) - 0.5235988");
+    is-approx(asinh((0.547853473893578).Num), 0.5235988, "asinh(Num) - 0.5235988");
 }
 
 {
     # Rat tests
-    is_approx(((0.86867096149566).Rat(1e-9)).asinh, 0.7853982, "Rat.asinh - 0.7853982");
-    is_approx(asinh((0.547853473893578).Rat(1e-9)), 0.5235988, "asinh(Rat) - 0.5235988");
+    is-approx(((0.86867096149566).Rat(1e-9)).asinh, 0.7853982, "Rat.asinh - 0.7853982");
+    is-approx(asinh((0.547853473893578).Rat(1e-9)), 0.5235988, "asinh(Rat) - 0.5235988");
 }
 
 {
     # Complex tests
-    is_approx(asinh((0.785398163404734+2i).Complex), 1.41841325789332+1.15495109689711i, "asinh(Complex) - 1.41841325789332+1.15495109689711i");
+    is-approx(asinh((0.785398163404734+2i).Complex), 1.41841325789332+1.15495109689711i, "asinh(Complex) - 1.41841325789332+1.15495109689711i");
 }
 
 {
     # Str tests
-    is_approx(((0.547853473893578).Str).asinh, 0.5235988, "Str.asinh - 0.5235988");
-    is_approx(asinh((0.86867096149566).Str), 0.7853982, "asinh(Str) - 0.7853982");
+    is-approx(((0.547853473893578).Str).asinh, 0.5235988, "Str.asinh - 0.5235988");
+    is-approx(asinh((0.86867096149566).Str), 0.7853982, "asinh(Str) - 0.7853982");
 }
 
 {
     # NotComplex tests
-    is_approx((NotComplex.new(0.523598775603156+2i)).asinh, 1.365827718396+1.28093108055158i, "NotComplex.asinh - 1.365827718396+1.28093108055158i");
-    is_approx(asinh(NotComplex.new(0.785398163404734+2i)), 1.41841325789332+1.15495109689711i, "asinh(NotComplex) - 1.41841325789332+1.15495109689711i");
+    is-approx((NotComplex.new(0.523598775603156+2i)).asinh, 1.365827718396+1.28093108055158i, "NotComplex.asinh - 1.365827718396+1.28093108055158i");
+    is-approx(asinh(NotComplex.new(0.785398163404734+2i)), 1.41841325789332+1.15495109689711i, "asinh(NotComplex) - 1.41841325789332+1.15495109689711i");
 }
 
 {
     # DifferentReal tests
-    is_approx((DifferentReal.new(0.547853473893578)).asinh, 0.5235988, "DifferentReal.asinh - 0.5235988");
-    is_approx(asinh(DifferentReal.new(0.86867096149566)), 0.7853982, "asinh(DifferentReal) - 0.7853982");
+    is-approx((DifferentReal.new(0.547853473893578)).asinh, 0.5235988, "DifferentReal.asinh - 0.5235988");
+    is-approx(asinh(DifferentReal.new(0.86867096149566)), 0.7853982, "asinh(DifferentReal) - 0.7853982");
 }
 
 {
     # FatRat tests
-    is_approx(((0.547853473893578).FatRat).asinh, 0.5235988, "FatRat.asinh - 0.5235988");
-    is_approx(asinh((0.86867096149566).FatRat), 0.7853982, "asinh(FatRat) - 0.7853982");
+    is-approx(((0.547853473893578).FatRat).asinh, 0.5235988, "FatRat.asinh - 0.5235988");
+    is-approx(asinh((0.86867096149566).FatRat), 0.7853982, "asinh(FatRat) - 0.7853982");
 }
 
 done-testing;
