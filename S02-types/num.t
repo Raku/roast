@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 90;
+plan 92;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -657,6 +657,43 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-approx acotan(my num $ =    -(√2-1)), my num $ = -3*π/8,  '-(√2-1)';
         is-approx acotan(my num $ = -√(1-2/√5)), my num $ = -2*π/5,  '-√(1-2/√5)';
         is-approx acotan(my num $ =    -(2-√3)), my num $ = -5*π/12, '-(2-√3)';
+    }
+
+    subtest 'sinh(num)' => {
+        my @test-values = 𝑒, 0e0, 1e0, π, τ, 1e2;
+        plan 2*@test-values + 6;
+
+        cmp-ok sinh(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok sinh(my num $ = NaN), '===', NaN, 'NaN';
+
+        cmp-ok sinh(my num $ =     ∞), '==',  ∞,     '∞';
+        cmp-ok sinh(my num $ =    -∞), '==', -∞,    '-∞';
+        cmp-ok sinh(my num $ =  1e20), '==',  ∞,  '1e20';
+        cmp-ok sinh(my num $ = -1e20), '==', -∞, '-1e20';
+
+        for @test-values.map({|($_, -$_)}) -> $x {
+            is-approx sinh(my num $ = $x), my num $ = (𝑒**$x - 𝑒**(-$x))/2, ~$x;
+        }
+    }
+
+    subtest 'asinh(num)' => {
+        my @test-values = 𝑒, 0e0, 1e0, π, τ, 1e2;
+        plan 2*@test-values + 7;
+
+        cmp-ok asinh(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok asinh(my num $ = NaN), '===', NaN, 'NaN';
+
+        cmp-ok asinh(my num $ =      ∞), '==',  ∞,      '∞';
+        cmp-ok asinh(my num $ =     -∞), '==', -∞,     '-∞';
+
+        cmp-ok asinh(my num $ =  1e200), '==',  ∞,  '1e200';
+        #?rakudo 2 todo 'RT 129919'
+        cmp-ok asinh(my num $ = -1e200), '==', -∞, '-1e200';
+        is asinh(my num $ = -0e0).Str, '-0', '-0e0 actually gives a minus 0';
+
+        for @test-values.map({|($_, -$_)}) -> $x {
+            is-approx asinh(my num $ = $x), my num $ = log($x+√($x²+1)), ~$x;
+        }
     }
 }
 
