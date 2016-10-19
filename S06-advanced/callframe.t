@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 #?niecza emit plan 12; #
-plan 16;
+plan 17;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -59,5 +59,10 @@ ok callframe.gist.starts-with($*PROGRAM-NAME),   'CallFrame.gist works';
 # RT #127479
 #?rakudo.jvm todo 'ContextRef representation does not implement elems RT #127479'
 lives-ok { sub{callframe.perl}() }, '.perl on callframe in a sub does not crash';
+
+lives-ok {
+    sub foo() { callframe(1).file.ends-with('x') }
+    for ^300 { foo() }
+}, 'No crash when using callframe(1).file many times in a loop';
 
 # vim: ft=perl6
