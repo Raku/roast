@@ -550,8 +550,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-approx sec(my num $ = -π/4), my num $ =  2/sqrt(2), '-π/4';
 
         # Since we don't have perfect π, cheetsy-doodle to get "infinity"
-        is-approx sec(my num $ =  π/2), my num $ = sin(π/2)/cos(π/2), 'π/2';
-        is-approx sec(my num $ = -π/2), my num $ = sin(π/2)/cos(π/2), '-π/2';
+        is-approx sec(my num $ =  π/2), my num $ = tan(π/2), 'π/2';
+        is-approx sec(my num $ = -π/2), my num $ = tan(π/2), '-π/2';
     }
 
     subtest 'asec(num)' => {
