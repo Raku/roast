@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 49;
+plan 50;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -146,4 +146,23 @@ dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
     do { start { $*A++ } };
     sleep 1;
     is $*A,43,'dynamic variables modified inside start nested inside a block';
+}
+
+# RT #128833
+{
+    grammar G {
+        token TOP { .+ { make ~$/ } }
+    }
+    my $warned = False;
+    await do for ^300 {
+        start {
+            CONTROL {
+                when CX::Warn {
+                    $warned = True;
+                }
+            }
+            G.parse("x" x 1000)
+        }
+    }
+    nok $warned, 'No spurious warnings when using closures in grammar rules';
 }
