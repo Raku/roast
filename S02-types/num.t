@@ -429,6 +429,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
 
     # Special cases, like NaN/Inf returns, are based on 2008 IEEE 754 standard
 
+    sub prefix:<√> { sqrt $^x }
+
     subtest 'sin(num)' => {
         plan 13;
 
@@ -437,15 +439,15 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok sin(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok sin(my num $ =   ∞), '===', NaN, '+∞';
 
-        is-approx sin(my num $ =  0e0), my num $ =   0e0,       '0e0';
-        is-approx sin(my num $ =    τ), my num $ =   0e0,       'τ';
-        is-approx sin(my num $ =   -τ), my num $ =   0e0,       '-τ';
-        is-approx sin(my num $ =    π), my num $ =   0e0,       'π';
-        is-approx sin(my num $ =   -π), my num $ =   0e0,       '-π';
-        is-approx sin(my num $ =  π/2), my num $ =   1e0,       'π/2';
-        is-approx sin(my num $ = -π/2), my num $ =  -1e0,       '-π/2';
-        is-approx sin(my num $ =  π/4), my num $ =  .5*sqrt(2), 'π/4';
-        is-approx sin(my num $ = -π/4), my num $ = -.5*sqrt(2), '-π/4';
+        is-approx sin(my num $ =  0e0), my num $ =   0e0,  '0e0';
+        is-approx sin(my num $ =    τ), my num $ =   0e0,  'τ';
+        is-approx sin(my num $ =   -τ), my num $ =   0e0,  '-τ';
+        is-approx sin(my num $ =    π), my num $ =   0e0,  'π';
+        is-approx sin(my num $ =   -π), my num $ =   0e0,  '-π';
+        is-approx sin(my num $ =  π/2), my num $ =   1e0,  'π/2';
+        is-approx sin(my num $ = -π/2), my num $ =  -1e0,  '-π/2';
+        is-approx sin(my num $ =  π/4), my num $ =  .5*√2, 'π/4';
+        is-approx sin(my num $ = -π/4), my num $ = -.5*√2, '-π/4';
     }
 
     subtest 'asin(num)' => {
@@ -458,11 +460,11 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok asin(my num $ = -1.1e0), '===', NaN, '-1.1e0';
         cmp-ok asin(my num $ =  1.1e0), '===', NaN, '+1.1e0';
 
-        is-approx asin(my num $ =        0e0), my num $ =  0e0,  '0e0';
-        is-approx asin(my num $ =        1e0), my num $ =  π/2, '1e0';
-        is-approx asin(my num $ =       -1e0), my num $ = -π/2, '-1e0';
-        is-approx asin(my num $ =  .5*sqrt 2), my num $ =  π/4, '½√2';
-        is-approx asin(my num $ = -.5*sqrt 2), my num $ = -π/4, '-½√2';
+        is-approx asin(my num $ =    0e0), my num $ =  0e0, '0e0';
+        is-approx asin(my num $ =    1e0), my num $ =  π/2, '1e0';
+        is-approx asin(my num $ =   -1e0), my num $ = -π/2, '-1e0';
+        is-approx asin(my num $ =  .5*√2), my num $ =  π/4, '½√2';
+        is-approx asin(my num $ = -.5*√2), my num $ = -π/4, '-½√2';
     }
 
     subtest 'cos(num)' => {
@@ -473,15 +475,15 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok cos(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok cos(my num $ =   ∞), '===', NaN, '+∞';
 
-        is-approx cos(my num $ =  0e0), my num $ =  1e0,       '0e0';
-        is-approx cos(my num $ =  π/4), my num $ = .5*sqrt(2), 'π/4';
-        is-approx cos(my num $ = -π/4), my num $ = .5*sqrt(2), '-π/4';
-        is-approx cos(my num $ =    π), my num $ = -1e0,       'π';
-        is-approx cos(my num $ =   -π), my num $ = -1e0,       '-π';
-        is-approx cos(my num $ =  π/2), my num $ =  0e0,       'π/2';
-        is-approx cos(my num $ = -π/2), my num $ =  0e0,       '-π/2';
-        is-approx cos(my num $ =  π/4), my num $ = .5*sqrt(2), 'π/4';
-        is-approx cos(my num $ = -π/4), my num $ = .5*sqrt(2), '-π/4';
+        is-approx cos(my num $ =  0e0), my num $ =  1e0,  '0e0';
+        is-approx cos(my num $ =  π/4), my num $ = .5*√2, 'π/4';
+        is-approx cos(my num $ = -π/4), my num $ = .5*√2, '-π/4';
+        is-approx cos(my num $ =    π), my num $ = -1e0,  'π';
+        is-approx cos(my num $ =   -π), my num $ = -1e0,  '-π';
+        is-approx cos(my num $ =  π/2), my num $ =  0e0,  'π/2';
+        is-approx cos(my num $ = -π/2), my num $ =  0e0,  '-π/2';
+        is-approx cos(my num $ =  π/4), my num $ = .5*√2, 'π/4';
+        is-approx cos(my num $ = -π/4), my num $ = .5*√2, '-π/4';
     }
 
     subtest 'acos(num)' => {
@@ -494,11 +496,11 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok acos(my num $ = -1.1e0), '===', NaN, '-1.1e0';
         cmp-ok acos(my num $ =  1.1e0), '===', NaN, '+1.1e0';
 
-        is-approx acos(my num $ =        1e0), my num $ =  0e0,  '1e0';
-        is-approx acos(my num $ =       -1e0), my num $ =  π,    '-1e0';
-        is-approx acos(my num $ =        0e0), my num $ =  π/2,  '0e0';
-        is-approx acos(my num $ =  .5*sqrt 2), my num $ =  π/4,  '½√2';
-        is-approx acos(my num $ = -.5*sqrt 2), my num $ = .75*π, '-½√2';
+        is-approx acos(my num $ =    1e0), my num $ =  0e0,  '1e0';
+        is-approx acos(my num $ =   -1e0), my num $ =  π,    '-1e0';
+        is-approx acos(my num $ =    0e0), my num $ =  π/2,  '0e0';
+        is-approx acos(my num $ =  .5*√2), my num $ =  π/4,  '½√2';
+        is-approx acos(my num $ = -.5*√2), my num $ = .75*π, '-½√2';
     }
 
     subtest 'tan(num)' => {
@@ -509,13 +511,13 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok tan(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok tan(my num $ =   ∞), '===', NaN, '+∞';
 
-        is-approx tan(my num $ =  0e0), my num $ =   0e0,       '0e0';
-        is-approx tan(my num $ =    τ), my num $ =   0e0,       'τ';
-        is-approx tan(my num $ =   -τ), my num $ =   0e0,       '-τ';
-        is-approx tan(my num $ =    π), my num $ =   0e0,       'π';
-        is-approx tan(my num $ =   -π), my num $ =   0e0,       '-π';
-        is-approx tan(my num $ =  π/4), my num $ =   1e0,       'π/4';
-        is-approx tan(my num $ = -π/4), my num $ =  -1e0,       '-π/4';
+        is-approx tan(my num $ =  0e0), my num $ =  0e0,        '0e0';
+        is-approx tan(my num $ =    τ), my num $ =  0e0,        'τ';
+        is-approx tan(my num $ =   -τ), my num $ =  0e0,        '-τ';
+        is-approx tan(my num $ =    π), my num $ =  0e0,        'π';
+        is-approx tan(my num $ =   -π), my num $ =  0e0,        '-π';
+        is-approx tan(my num $ =  π/4), my num $ =  1e0,        'π/4';
+        is-approx tan(my num $ = -π/4), my num $ = -1e0,        '-π/4';
         is-approx tan(my num $ =  π/2),  (sin(π/2) / cos(π/2)), 'π/2';
         is-approx tan(my num $ = -π/2), -(sin(π/2) / cos(π/2)), '-π/2';
     }
@@ -541,13 +543,13 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok sec(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok sec(my num $ =   ∞), '===', NaN, '+∞';
 
-        is-approx sec(my num $ =  0e0), my num $ =  1e0,       '0e0';
-        is-approx sec(my num $ =    τ), my num $ =  1e0,       'τ';
-        is-approx sec(my num $ =   -τ), my num $ =  1e0,       '-τ';
-        is-approx sec(my num $ =    π), my num $ = -1e0,       'π';
-        is-approx sec(my num $ =   -π), my num $ = -1e0,       '-π';
-        is-approx sec(my num $ =  π/4), my num $ =  2/sqrt(2), 'π/4';
-        is-approx sec(my num $ = -π/4), my num $ =  2/sqrt(2), '-π/4';
+        is-approx sec(my num $ =  0e0), my num $ =  1e0,  '0e0';
+        is-approx sec(my num $ =    τ), my num $ =  1e0,  'τ';
+        is-approx sec(my num $ =   -τ), my num $ =  1e0,  '-τ';
+        is-approx sec(my num $ =    π), my num $ = -1e0,  'π';
+        is-approx sec(my num $ =   -π), my num $ = -1e0,  '-π';
+        is-approx sec(my num $ =  π/4), my num $ =  2/√2, 'π/4';
+        is-approx sec(my num $ = -π/4), my num $ =  2/√2, '-π/4';
 
         # Since we don't have perfect π, cheetsy-doodle to get "infinity"
         is-approx sec(my num $ =  π/2), my num $ = tan(π/2), 'π/2';
@@ -563,11 +565,11 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok asec(my num $ =  .9e0), '===', NaN, '.9e0';
         cmp-ok asec(my num $ = -.9e0), '===', NaN, '-.9e0';
 
-        is-approx asec(my num $ =        1e0), my num $ = 0e0,   '1e0';
-        is-approx asec(my num $ =          ∞), my num $ = π/2,   '∞';
-        is-approx asec(my num $ =         -∞), my num $ = π/2,   '-∞';
-        is-approx asec(my num $ =  2/sqrt(2)), my num $ = π/4,   '2/√2';
-        is-approx asec(my num $ = -2/sqrt(2)), my num $ = 3/4*π, '-2/√2';
+        is-approx asec(my num $ =   1e0), my num $ = 0e0,   '1e0';
+        is-approx asec(my num $ =     ∞), my num $ = π/2,   '∞';
+        is-approx asec(my num $ =    -∞), my num $ = π/2,   '-∞';
+        is-approx asec(my num $ =  2/√2), my num $ = π/4,   '2/√2';
+        is-approx asec(my num $ = -2/√2), my num $ = 3/4*π, '-2/√2';
     }
 }
 
