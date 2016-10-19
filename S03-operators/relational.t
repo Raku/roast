@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 171;
+plan 179;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -207,6 +207,15 @@ ok exp(i * pi) ≅ -1, "≅ does approximate equality";
 is sqrt((-1).Complex) ≅ 0+1i, True, "can use approximate on Complex with negligible real";
 is sqrt((-1).Complex) ≅ 0+2i, False, "can use approximate on Complex with non-negligible real";
 is sqrt((-1).Complex) ≅ 0+(1+1e-17)i, True, "can use approximate on Complex";
+
+is-deeply  ∞    ≅     ∞, Bool::True,  ' ∞  ≅   ∞ gives True';
+is-deeply -∞    ≅    -∞, Bool::True,  '-∞  ≅  -∞ gives True';
+is-deeply  ∞   =~=    ∞, Bool::True,  ' ∞ =~=  ∞ gives True';
+is-deeply -∞   =~=   -∞, Bool::True,  '-∞ =~= -∞ gives True';
+is-deeply  ∞    ≅    -∞, Bool::False, ' ∞  ≅  -∞ gives False';
+is-deeply -∞    ≅     ∞, Bool::False, '-∞  ≅   ∞ gives False';
+is-deeply  ∞   =~=   -∞, Bool::False, ' ∞ =~= -∞ gives False';
+is-deeply -∞   =~=    ∞, Bool::False, '-∞ =~=  ∞ gives False';
 
 {
     my $*TOLERANCE = 0.1;
