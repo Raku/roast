@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 88;
+plan 90;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -570,6 +570,91 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-approx asec(my num $ =    -∞), my num $ = π/2,   '-∞';
         is-approx asec(my num $ =  2/√2), my num $ = π/4,   '2/√2';
         is-approx asec(my num $ = -2/√2), my num $ = 3/4*π, '-2/√2';
+    }
+
+    subtest 'cotan(num)' => {
+        plan 38;
+
+        cmp-ok cotan(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok cotan(my num $ = NaN), '===', NaN, 'NaN';
+        cmp-ok cotan(my num $ =  -∞), '===', NaN, '-∞';
+        cmp-ok cotan(my num $ =   ∞), '===', NaN, '+∞';
+
+        cmp-ok cotan(my num $ =  0e0), '==', my num $ =  ∞,         '0e0';
+        cmp-ok cotan(my num $ = -0e0), '==', my num $ = -∞,         '-0e0';
+
+        is-approx cotan(my num $ =    π/12), my num $ = 2+√3,       'π/12';
+        is-approx cotan(my num $ =    π/10), my num $ = √(5+2*√5),  'π/10';
+        is-approx cotan(my num $ =     π/8), my num $ = 1+√2,       'π/8';
+        is-approx cotan(my num $ =     π/6), my num $ = √3,         'π/6';
+        is-approx cotan(my num $ =     π/5), my num $ = √(1+2/√5),  'π/5';
+        is-approx cotan(my num $ =     π/4), my num $ = 1e0,        'π/4';
+        is-approx cotan(my num $ =  3*π/10), my num $ = √(5-2*√5),  '3*π/10';
+        is-approx cotan(my num $ =     π/3), my num $ = √3/3,       'π/3';
+        is-approx cotan(my num $ =   3*π/8), my num $ = √2-1,       '3*π/8';
+        is-approx cotan(my num $ =   2*π/5), my num $ = √(1-2/√5),  '2*π/5';
+        is-approx cotan(my num $ =  5*π/12), my num $ = 2-√3,       '5*π/12';
+        is-approx cotan(my num $ =     π/2), my num $ = 0e0,        '-π/2';
+        is-approx cotan(my num $ =   3*π/2), my num $ = 0e0,        '3*π/2';
+        is-approx cotan(my num $ =   5*π/2), my num $ = 0e0,        '5*π/2';
+
+        is-approx cotan(my num $ =   -π/12), my num $ = -(2+√3),    '-π/12';
+        is-approx cotan(my num $ =   -π/10), my num $ = -√(5+2*√5), '-π/10';
+        is-approx cotan(my num $ =    -π/8), my num $ = -(1+√2),    '-π/8';
+        is-approx cotan(my num $ =    -π/6), my num $ = -√3,        '-π/6';
+        is-approx cotan(my num $ =    -π/5), my num $ = -√(1+2/√5), '-π/5';
+        is-approx cotan(my num $ =    -π/4), my num $ = -1e0,       '-π/4';
+        is-approx cotan(my num $ = -3*π/10), my num $ = -√(5-2*√5), '-3*π/10';
+        is-approx cotan(my num $ =    -π/3), my num $ = -√3/3,      '-π/3';
+        is-approx cotan(my num $ =  -3*π/8), my num $ = -(√2-1),    '-3*π/8';
+        is-approx cotan(my num $ =  -2*π/5), my num $ = -√(1-2/√5), '-2*π/5';
+        is-approx cotan(my num $ = -5*π/12), my num $ = -(2-√3),    '-5*π/12';
+        is-approx cotan(my num $ =    -π/2), my num $ = 0e0,        '-π/2';
+        is-approx cotan(my num $ =  -3*π/2), my num $ = 0e0,        '-3*π/2';
+        is-approx cotan(my num $ =  -5*π/2), my num $ = 0e0,        '-5*π/2';
+
+        # Since we don't have perfect π, cheetsy-doodle to get "infinity"
+        # NOTE: the / on tan is to compensate for π's inexactness
+        is-approx cotan(my num $ =  π), my num $ = -tan(π/2)/2, 'π';
+        is-approx cotan(my num $ = -π), my num $ =  tan(π/2)/2, '-π';
+        is-approx cotan(my num $ =  τ), my num $ = -tan(π/2)/4, 'τ';
+        is-approx cotan(my num $ = -τ), my num $ =  tan(π/2)/4, '-τ';
+    }
+
+    subtest 'acotan(num)' => {
+        plan 28;
+
+        cmp-ok acotan(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok acotan(my num $ = NaN), '===', NaN, 'NaN';
+
+        is-approx acotan(my num $ =          ∞), my num $ =  0e0,    '∞';
+        is-approx acotan(my num $ =         -∞), my num $ = -0e0,    '-∞';
+        is-approx acotan(my num $ =        0e0), my num $ =  π/2,    '0e0';
+        is-approx acotan(my num $ =       -0e0), my num $ = -π/2,    '-0e0';
+
+        is-approx acotan(my num $ =       2+√3), my num $ =  π/12,   '2+√3';
+        is-approx acotan(my num $ =  √(5+2*√5)), my num $ =  π/10,   '√(5+2*√5)';
+        is-approx acotan(my num $ =       1+√2), my num $ =  π/8,    '1+√2';
+        is-approx acotan(my num $ =         √3), my num $ =  π/6,    '√3';
+        is-approx acotan(my num $ =  √(1+2/√5)), my num $ =  π/5,    '√(1+2/√5)';
+        is-approx acotan(my num $ =        1e0), my num $ =  π/4,    '1e0';
+        is-approx acotan(my num $ =  √(5-2*√5)), my num $ =  3*π/10, '√(5-2*√5)';
+        is-approx acotan(my num $ =       √3/3), my num $ =  π/3,    '√3/3';
+        is-approx acotan(my num $ =       √2-1), my num $ =  3*π/8,  '√2-1';
+        is-approx acotan(my num $ =  √(1-2/√5)), my num $ =  2*π/5,  '√(1-2/√5)';
+        is-approx acotan(my num $ =       2-√3), my num $ =  5*π/12, '2-√3';
+
+        is-approx acotan(my num $ =    -(2+√3)), my num $ = -π/12,   '-(2+√3)';
+        is-approx acotan(my num $ = -√(5+2*√5)), my num $ = -π/10,   '-√(5+2*√5)';
+        is-approx acotan(my num $ =    -(1+√2)), my num $ = -π/8,    '-(1+√2)';
+        is-approx acotan(my num $ =        -√3), my num $ = -π/6,    '-√3';
+        is-approx acotan(my num $ = -√(1+2/√5)), my num $ = -π/5,    '-√(1+2/√5)';
+        is-approx acotan(my num $ =       -1e0), my num $ = -π/4,    '-1e0';
+        is-approx acotan(my num $ = -√(5-2*√5)), my num $ = -3*π/10, '-√(5-2*√5)';
+        is-approx acotan(my num $ =      -√3/3), my num $ = -π/3,    '-√3/3';
+        is-approx acotan(my num $ =    -(√2-1)), my num $ = -3*π/8,  '-(√2-1)';
+        is-approx acotan(my num $ = -√(1-2/√5)), my num $ = -2*π/5,  '-√(1-2/√5)';
+        is-approx acotan(my num $ =    -(2-√3)), my num $ = -5*π/12, '-(2-√3)';
     }
 }
 
