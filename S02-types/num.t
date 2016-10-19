@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 86;
+plan 88;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -531,6 +531,43 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-approx atan(my num $ = -1e0), my num $ = -π/4, '-1e0';
         is-approx atan(my num $ =    π), my num $ =  1.26262725567891e0, 'π';
         is-approx atan(my num $ =   -π), my num $ = -1.26262725567891e0, '-π';
+    }
+
+    subtest 'sec(num)' => {
+        plan 13;
+
+        cmp-ok sec(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok sec(my num $ = NaN), '===', NaN, 'NaN';
+        cmp-ok sec(my num $ =  -∞), '===', NaN, '-∞';
+        cmp-ok sec(my num $ =   ∞), '===', NaN, '+∞';
+
+        is-approx sec(my num $ =  0e0), my num $ =  1e0,       '0e0';
+        is-approx sec(my num $ =    τ), my num $ =  1e0,       'τ';
+        is-approx sec(my num $ =   -τ), my num $ =  1e0,       '-τ';
+        is-approx sec(my num $ =    π), my num $ = -1e0,       'π';
+        is-approx sec(my num $ =   -π), my num $ = -1e0,       '-π';
+        is-approx sec(my num $ =  π/4), my num $ =  2/sqrt(2), 'π/4';
+        is-approx sec(my num $ = -π/4), my num $ =  2/sqrt(2), '-π/4';
+
+        # Since we don't have perfect π, cheetsy-doodle to get "infinity"
+        is-approx sec(my num $ =  π/2), my num $ = sin(π/2)/cos(π/2), 'π/2';
+        is-approx sec(my num $ = -π/2), my num $ = sin(π/2)/cos(π/2), '-π/2';
+    }
+
+    subtest 'asec(num)' => {
+        plan 10;
+
+        cmp-ok asec(my num $        ), '===', NaN, 'uninitialized';
+        cmp-ok asec(my num $ =   NaN), '===', NaN, 'NaN';
+        cmp-ok asec(my num $ =   0e0), '===', NaN, '0e0';
+        cmp-ok asec(my num $ =  .9e0), '===', NaN, '.9e0';
+        cmp-ok asec(my num $ = -.9e0), '===', NaN, '-.9e0';
+
+        is-approx asec(my num $ =        1e0), my num $ = 0e0,   '1e0';
+        is-approx asec(my num $ =          ∞), my num $ = π/2,   '∞';
+        is-approx asec(my num $ =         -∞), my num $ = π/2,   '-∞';
+        is-approx asec(my num $ =  2/sqrt(2)), my num $ = π/4,   '2/√2';
+        is-approx asec(my num $ = -2/sqrt(2)), my num $ = 3/4*π, '-2/√2';
     }
 }
 
