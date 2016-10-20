@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 208;
+plan 209;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -453,5 +453,28 @@ subtest '.hash does not cause keys to be stringified' => {
     is-deeply $sh.SetHash, $sh, '.SetHash returns self';
 }
 
+subtest 'SetHash autovivification of non-existent keys' => {
+    # Sets' values are just True/False, so all of the following operations
+    # simply control existence of a key
+    my SetHash  $sh1;
+    is-deeply   $sh1<poinc>++,  Bool::False, 'correct return of postfix ++';
+    is-deeply   $sh1<poinc>,    Bool::True,  'correct result of postfix ++';
+
+    my SetHash  $sh2;
+    is-deeply   $sh2<podec>--,  Bool::False, 'correct return of postfix --';
+    is-deeply   $sh2<podec>,    Bool::False, 'correct result of postfix --';
+
+    my SetHash  $sh3;
+    is-deeply ++$sh3<princ>,    Bool::True,  'correct return of prefix ++';
+    is-deeply   $sh3<princ>,    Bool::True,  'correct result of prefix ++';
+
+    my SetHash  $sh4;
+    is-deeply --$sh4<prdec>,    Bool::False, 'correct return of prefix --';
+    is-deeply   $sh4<prdec>,    Bool::False, 'correct result of prefix --';
+
+    my SetHash  $sh5;
+    is-deeply   ($sh5<as> = 2), Bool::True,  'correct return of assignment';
+    is-deeply   $sh5<as>,       Bool::True,  'correct result of assignment';
+}
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 206;
+plan 207;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -528,6 +528,11 @@ subtest '.hash does not cause keys to be stringified' => {
     is Bag.new($(<a b>)).hash.keys[0][0], 'a', 'Bag.new';
     is ($(<a b>),).Bag.hash.keys[0][0],   'a', '.Bag';
     is bag($(<a b>)).hash.keys[0][0],     'a', 'bag()';
+}
+
+{
+    throws-like { my Bag $b; $b<as> = 2 }, X::Assignment::RO,
+        'autovivification of of Bag:U complains about immutability';
 }
 
 # vim: ft=perl6

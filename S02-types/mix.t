@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 195;
+plan 196;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -477,6 +477,11 @@ subtest '.hash does not cause keys to be stringified' => {
     is-deeply $m.Bag, Bag.new(<sugar flour flour>), '.Bag coercer';
     is-deeply $m.BagHash, BagHash.new(<sugar flour flour>),
         '.BagHash coercer';
+}
+
+{
+    throws-like { my Mix $m; $m<as> = 2 }, X::Assignment::RO,
+        'autovivification of of Mix:U complains about immutability';
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 178;
+plan 179;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -422,6 +422,11 @@ subtest '.hash does not cause keys to be stringified' => {
     is Set.new($(<a b>)).hash.keys[0][0], 'a', 'Set.new';
     is ($(<a b>),).Set.hash.keys[0][0],   'a', '.Set';
     is set($(<a b>),).hash.keys[0][0],    'a', 'set()';
+}
+
+{
+    throws-like { my Set $s; $s<as> = 2 }, X::Assignment::RO,
+        'autovivification of of Set:U complains about immutability';
 }
 
 # vim: ft=perl6

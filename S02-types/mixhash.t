@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 232;
+plan 233;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -518,6 +518,28 @@ subtest '.hash does not cause keys to be stringified' => {
     is-deeply $mh.Bag, Bag.new(<sugar flour flour>), '.Bag coercer';
     is-deeply $mh.BagHash, BagHash.new(<sugar flour flour>),
         '.BagHash coercer';
+}
+
+subtest 'MixHash autovivification of non-existent keys' => {
+    my MixHash  $mh1;
+    is-deeply   $mh1<poinc>++,  0, 'correct return of postfix ++';
+    is-deeply   $mh1<poinc>,    1, 'correct result of postfix ++';
+
+    my MixHash  $mh2;
+    is-deeply   $mh2<podec>--,  0, 'correct return of postfix --';
+    is-deeply   $mh2<podec>,   -1, 'correct result of postfix --';
+
+    my MixHash  $mh3;
+    is-deeply ++$mh3<princ>,    1, 'correct return of prefix ++';
+    is-deeply   $mh3<princ>,    1, 'correct result of prefix ++';
+
+    my MixHash  $mh4;
+    is-deeply --$mh4<prdec>,   -1, 'correct return of prefix --';
+    is-deeply   $mh4<prdec>,   -1, 'correct result of prefix --';
+
+    my MixHash  $mh5;
+    is-deeply   ($mh5<as> = 2), 2, 'correct return of assignment';
+    is-deeply   $mh5<as>,       2, 'correct result of assignment';
 }
 
 # vim: ft=perl6

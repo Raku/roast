@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 264;
+plan 265;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -594,6 +594,30 @@ subtest '.hash does not cause keys to be stringified' => {
     cmp-ok $bh.BagHash, '===', $bh, '.BagHash is identity';
     isa-ok $bh.Mix, Mix, '.Mix returns a Mix';
     is-deeply $bh.Mix, Mix.new(<a a b>), '.Mix values are correct';
+}
+
+subtest 'BagHash autovivification of non-existent keys' => {
+    my BagHash  $bh1;
+    is-deeply   $bh1<poinc>++,  0, 'correct return of postfix ++';
+    is-deeply   $bh1<poinc>,    1, 'correct result of postfix ++';
+
+    my BagHash  $bh2;
+    is-deeply   $bh2<podec>--,  0, 'correct return of postfix --';
+    # Bags don't have negatives, so 0 is the expected result:
+    is-deeply   $bh2<podec>,    0, 'correct result of postfix --';
+
+    my BagHash  $bh3;
+    is-deeply ++$bh3<princ>,    1, 'correct return of prefix ++';
+    is-deeply   $bh3<princ>,    1, 'correct result of prefix ++';
+
+    my BagHash  $bh4;
+    # Bags don't have negatives, so 0 is the expected result:
+    is-deeply --$bh4<prdec>,    0, 'correct return of prefix --';
+    is-deeply   $bh4<prdec>,    0, 'correct result of prefix --';
+
+    my BagHash  $bh5;
+    is-deeply   ($bh5<as> = 2), 2, 'correct return of assignment';
+    is-deeply   $bh5<as>,       2, 'correct result of assignment';
 }
 
 # vim: ft=perl6
