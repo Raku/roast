@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 54) + 14;
+plan (@testing/2 * 54) + 15;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -305,6 +305,25 @@ subtest 'Array.splice' => { # coverage; 2016-10-01
         my @a = 1, 2, 3;
         is-deeply @a.splice(|$t[0]), $t[1], "return correct for $t[0].gist()";
         is-deeply @a,                $t[2], "result correct for $t[0].gist()";
+    }
+}
+
+subtest 'Array.splice callable args' => {
+    constant @tests =
+        [ [|'hello world'.comb], 11, 5 ],
+        [ [|'deadbeaf'.comb], 8, 2 ],
+        [ [|'I ❤️ Perl 6'.comb], 10, 6 ],
+        ;
+
+    plan 4 * @tests;
+    for @tests -> $t {
+        my @a = |$t[0];
+        @a.splice: { is $^a, $t[1], 'arg is correct for start'; $t[2] },
+                   { is $^a, $t[1]-$t[2], 'arg is correct for offset' };
+
+        my @b = |$t[0];
+        splice(@b, { is $^a, $t[1], 'arg is correct for start'; $t[2] },
+                   { is $^a, $t[1]-$t[2], 'arg is correct for offset' });
     }
 }
 
