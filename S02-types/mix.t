@@ -487,7 +487,7 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    throws-like { my Mix $m; $m<as> = 2 }, X::Assignment::RO,
+    throws-like { my Mix $m; $m<as> = 2 }, Exception,
         'autovivification of of Mix:U complains about immutability';
 }
 

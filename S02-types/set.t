@@ -425,7 +425,7 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    throws-like { my Set $s; $s<as> = 2 }, X::Assignment::RO,
+    throws-like { my Set $s; $s<as> = 2 }, Exception,
         'autovivification of of Set:U complains about immutability';
 }
 

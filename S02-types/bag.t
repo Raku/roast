@@ -531,7 +531,7 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    throws-like { my Bag $b; $b<as> = 2 }, X::Assignment::RO,
+    throws-like { my Bag $b; $b<as> = 2 }, Exception,
         'autovivification of of Bag:U complains about immutability';
 }
 
