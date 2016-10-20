@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 85;
+plan 86;
 
 use Test::Util;
 
@@ -102,6 +102,14 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 
   $multiple_of = 6;
   dies-ok { my Num::Multiple $e = 10 }, "changed subtype definition worked";
+}
+
+# Subsets with custom error messages
+{
+    my subset Even of Int where { $^num %% 2 or fail "$num is not even" };
+    throws-like {
+        my Even $e = 1;
+    }, Exception, :message("1 is not even");
 }
 
 # Rakudo had a bug where 'where /regex/' failed
