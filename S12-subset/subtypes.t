@@ -109,7 +109,8 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     my subset Even of Int where { $^num %% 2 or fail "$num is not even" };
     throws-like {
         my Even $e = 1;
-    }, Exception, :message("1 is not even");
+    }, Exception, :message("1 is not even"),
+    'custom subset errors can be created with fail()';
 }
 
 # Rakudo had a bug where 'where /regex/' failed
