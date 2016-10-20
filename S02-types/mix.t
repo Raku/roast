@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
+use Test::Util;
 use Test;
 
-plan 196;
+plan 197;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -477,6 +479,11 @@ subtest '.hash does not cause keys to be stringified' => {
     is-deeply $m.Bag, Bag.new(<sugar flour flour>), '.Bag coercer';
     is-deeply $m.BagHash, BagHash.new(<sugar flour flour>),
         '.BagHash coercer';
+
+    my $code = ｢my $m = Mix.new-from-pairs('a' => -20, 'b' => 1.5);｣
+        ~ ｢$m.Bag.say; $m.BagHash.say｣;
+    is_run $code, { :err(''), :out("bag(b)\nBagHash.new(b)\n"), :0status },
+        'negative Mix weights removed from Bag coercion without warnings';
 }
 
 {

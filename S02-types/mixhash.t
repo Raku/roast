@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
+use Test::Util;
 use Test;
 
-plan 233;
+plan 234;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -518,6 +520,11 @@ subtest '.hash does not cause keys to be stringified' => {
     is-deeply $mh.Bag, Bag.new(<sugar flour flour>), '.Bag coercer';
     is-deeply $mh.BagHash, BagHash.new(<sugar flour flour>),
         '.BagHash coercer';
+
+    my $code = ｢my $m = Mix.new-from-pairs('a' => -20, 'b' => 1.5);｣
+        ~ ｢$m.Bag.say; $m.BagHash.say｣;
+    is_run $code, { :err(''), :out("bag(b)\nBagHash.new(b)\n"), :0status },
+        'negative MixHash weights removed from Bag coercion without warnings';
 }
 
 subtest 'MixHash autovivification of non-existent keys' => {
