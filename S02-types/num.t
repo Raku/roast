@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 94;
+plan 96;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -732,6 +732,41 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         for @test-values -> $x {
             is-approx acosh(my num $ =  $x), my num $ = log($x+√($x²-1)), ~$x;
             cmp-ok    acosh(my num $ = -$x), '===',  NaN, '-' ~ $x;
+        }
+    }
+
+    subtest 'tanh(num)' => {
+        my @test-values = 𝑒, 0e0, 1e0, π, τ, 1e2;
+        plan 2*@test-values + 6;
+
+        cmp-ok tanh(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok tanh(my num $ = NaN), '===', NaN, 'NaN';
+
+        cmp-ok tanh(my num $ =     ∞), '==',  1e0,     '∞';
+        cmp-ok tanh(my num $ =    -∞), '==', -1e0,    '-∞';
+        cmp-ok tanh(my num $ =  1e20), '==',  1e0,  '1e20';
+        cmp-ok tanh(my num $ = -1e20), '==', -1e0, '-1e20';
+
+        for @test-values.map({|($_, -$_)}) -> $x {
+            my \term:<𝑒²ˣ> = e**(2*$x);
+            is-approx tanh(my num $ = $x), my num $ = (𝑒²ˣ-1)/(𝑒²ˣ+1), ~$x;
+        }
+    }
+
+    subtest 'atanh(num)' => {
+        my @nan-test-values = 𝑒, 1e1, π, τ, 1e20, 1e100, 1e200, 1e1000, ∞;
+        my     @test-values = 0e0, .2e0, .3e0, .5e0, .7e0, .9e0;
+        plan 2*@test-values + 2*@nan-test-values + 2;
+
+        cmp-ok atanh(my num $ =  1e0), '==',  ∞,  '1e0';
+        cmp-ok atanh(my num $ = -1e0), '==', -∞, '-1e0';
+
+        for @nan-test-values.map({|($_, -$_)}) -> $x {
+            cmp-ok atanh(my num $ = $x), '===', NaN, ~$x;
+        }
+
+        for @test-values.map({|($_, -$_)}) -> $x {
+            is-approx atanh(my num $ = $x), my num $ = log((1+$x)/(1-$x))/2, ~$x;
         }
     }
 }
