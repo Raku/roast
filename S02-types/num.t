@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 92;
+plan 94;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -693,6 +693,45 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
 
         for @test-values.map({|($_, -$_)}) -> $x {
             is-approx asinh(my num $ = $x), my num $ = log($x+√($x²+1)), ~$x;
+        }
+    }
+
+    subtest 'cosh(num)' => {
+        my @test-values = 𝑒, 0e0, 1e0, π, τ, 1e2;
+        plan 2*@test-values + 6;
+
+        cmp-ok cosh(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok cosh(my num $ = NaN), '===', NaN, 'NaN';
+
+        cmp-ok cosh(my num $ =     ∞), '==',  ∞,     '∞';
+        cmp-ok cosh(my num $ =    -∞), '==',  ∞,    '-∞';
+        cmp-ok cosh(my num $ =  1e20), '==',  ∞,  '1e20';
+        cmp-ok cosh(my num $ = -1e20), '==',  ∞, '-1e20';
+
+        for @test-values.map({|($_, -$_)}) -> $x {
+            is-approx cosh(my num $ = $x), my num $ = (𝑒**$x + 𝑒**(-$x))/2, ~$x;
+        }
+    }
+
+    subtest 'acosh(num)' => {
+        my @test-values = 𝑒, 1e0, π, τ, 1e20;
+        plan 2*@test-values + 10;
+
+        cmp-ok acosh(my num $         ), '===', NaN, 'uninitialized';
+        cmp-ok acosh(my num $ =    NaN), '===', NaN, 'NaN';
+        cmp-ok acosh(my num $ =    0e0), '===', NaN, '0e0';
+        cmp-ok acosh(my num $ =   .9e0), '===', NaN, '.9e0';
+        cmp-ok acosh(my num $ =   -1e0), '===', NaN, '-1e0';
+        cmp-ok acosh(my num $ = -1e100), '===', NaN, '-1e100';
+        cmp-ok acosh(my num $ = -1e200), '===', NaN, '-1e200';
+        cmp-ok acosh(my num $ =     -∞), '===', NaN, '-∞';
+
+        cmp-ok acosh(my num $ =      ∞), '==',  ∞, '∞';
+        cmp-ok acosh(my num $ =  1e200), '==',  ∞, '1e200';
+
+        for @test-values -> $x {
+            is-approx acosh(my num $ =  $x), my num $ = log($x+√($x²-1)), ~$x;
+            cmp-ok    acosh(my num $ = -$x), '===',  NaN, '-' ~ $x;
         }
     }
 }
