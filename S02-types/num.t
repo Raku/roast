@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 96;
+plan 97;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -180,6 +180,10 @@ ok 0xFFFFFFFFFFFFFFFF > 1, '0xFFFFFFFFFFFFFFFF is not -1';
 
 # RT #122593
 ok Num === Num, 'Num === Num should be truthy, and not die';
+
+{ # cover for https://github.com/rakudo/rakudo/commit/906719c8c528bb46c12ebd1ce857b7ec90ebe425
+    cmp-ok 1e0.atanh, '==', ∞, '1e0.atanh returns ∞';
+}
 
 { # coverage; 2016-10-14
     is-deeply Num.Range, -∞..∞, 'Num:U.Range gives -Inf to Inf range';
