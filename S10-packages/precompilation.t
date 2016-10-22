@@ -59,7 +59,7 @@ my @keys2 = Test::Util::run( q:to"--END--").lines;
     --END--
 
 #?rakudo.jvm todo 'got: $["C", "K"]'
-is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all different';
+is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
 #?rakudo.moar todo 'RT #122896'
 {
@@ -246,9 +246,9 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
         my $output = run $*EXECUTABLE,:out,'-I','t/spec/packages','-e','
              need RT128156::Top1;
              need RT128156::Top2;
-             .say for GLOBAL::.keys.sort;
+             .say for MY::.keys.grep(/Needed|Top/).sort;
              ';
-        is $output.out.slurp-rest,"Needed\nTop1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
+        is $output.out.slurp-rest,"Top1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
     }
 }
 
@@ -262,7 +262,7 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
         sleep 2;
         my $output = run $*EXECUTABLE,:out,'-I','t/spec/packages','-e','
              need RT128156::Top1;
-             print Needed.version;
+             print Top1.version-of-needed;
              ';
         is $output.out.slurp-rest, $i, "$i. change in source file of dependency detected";
         $trigger-file.spurt($old-content);

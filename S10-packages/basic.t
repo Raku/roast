@@ -254,6 +254,7 @@ throws-like q[
     use lib 't/spec/packages';
     use Bar;
     use Baz;
+    use Foo;
     is Foo.foo, 'foo', 'can use two packages that both use the same third package'
 }
 

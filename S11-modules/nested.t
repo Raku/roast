@@ -10,9 +10,9 @@ plan 11;
 # Used to be a Rakudo bug, RT #63956
 
 eval-lives-ok 'use A::A', 'Can load classes from nested modules';
-eval-lives-ok 'use A::A; A::B::D ~~ A::B::B or die()', 
+eval-lives-ok 'use A::A; use A::B; A::B::D ~~ A::B::B or die()',
               '... and the composition worked';
-eval-lives-ok 'use A::A; A::B::D.new()',
+eval-lives-ok 'use A::A; use A::B; A::B::D.new()',
               '... and instantiation works';
 
 eval-lives-ok 'use A; A.new()', 'RT #62162';
@@ -35,11 +35,14 @@ eval-lives-ok
     'Nested package not cought by lexically imported main package';
 
 use RT117117::Backends;
+use RT117117::Backend::AST;
+use RT117117::Backend::GNUC;
 #?rakudo.jvm todo 'got: $("GNUC",)'
 is-deeply(RT117117::Backend::.keys.sort, ('AST', 'GNUC'), 'All nested modules available');
 
 {
     use RoleA;
+    use RoleB;
     role RoleB {...}
 
     class MyFu does RoleB {}
