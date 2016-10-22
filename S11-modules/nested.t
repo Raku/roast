@@ -10,9 +10,9 @@ plan 6;
 use lib 't/spec/packages';
 
 eval-lives-ok 'use A::A', 'Can load classes from nested modules';
-eval-lives-ok 'use A::A; A::B::D ~~ A::B::B or die()', 
+eval-lives-ok 'use A::A; use A::B; A::B::D ~~ A::B::B or die()',
               '... and the composition worked';
-eval-lives-ok 'use A::A; A::B::D.new()',
+eval-lives-ok 'use A::A; use A::B; A::B::D.new()',
               '... and instantiation works';
 
 eval-lives-ok 'use A; A.new()', 'RT #62162';
@@ -22,6 +22,7 @@ eval-lives-ok 'use RoleA',
 
 {
     use RoleA;
+    use RoleB;
     role RoleB {...}
 
     class MyFu does RoleB {}
