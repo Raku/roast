@@ -120,8 +120,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        'a x c x e f g h',
        '.subst with :nth(2,4,6,8) and :x(2)';
 
-    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(2, 4, 1, 6), :x(3)),
-       'a x c x e x g h',
+    throws-like '"a b c d e f g h".subst(/\w/, "x", :nth(2, 4, 1, 6), :x(3))',
+       Exception,
        '.subst with :nth(2) and :x(3)';
 }
 
