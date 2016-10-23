@@ -93,13 +93,14 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 # test that non-monotonic items in :nth lists are ignored
 #?niecza todo
 #?rakudo.jvm skip 'RT #124279'
+#?rakudo todo 'RT #129945'
 {
-    is 'abacadaeaf'.match(/a./, :nth(2, 1, 4)).join(', '),
-        'ac, ae', 'non-monotonic items in :nth are ignored';
-    is 'abacadaeaf'.match(/a./, :nth(2, -1, 4)).join(', '),
-        'ac, ae', 'negative non-monotonic items in :nth are ignored';
-    is 'abacadaeaf'.match(/a./, :nth(2, 0, 4)).join(', '),
-        'ac, ae', 'zero non-monotonic items in :nth are ignored';
+    throws-like '"abacadaeaf".match(/a./, :nth(2, 1, 4)).join', Exception,
+        'non-monotonic items in :nth throw';
+    throws-like '"abacadaeaf".match(/a./, :nth(2, -1, 4)).join', Exception,
+        'negative non-monotonic items throw';
+    throws-like '"abacadaeaf".match(/a./, :nth(2, 0, 4)).join', Exception,
+        'zero non-monotonic items throw';
 }
 
 # RT #77408
