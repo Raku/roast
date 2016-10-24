@@ -27,8 +27,8 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
 {
     my Str $hair = "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng";
     is $hair.comb(/\d+/), <3 3 4 3 0 3 3 1 1 1>, 'no limit returns all matches';
-    is $hair.comb(/\d+/, -10), (), 'negative limit returns no matches';
-    is $hair.comb(/\d+/, 0), (), 'limit of 0 returns no matches';
+    is $hair.comb(/\d+/, -10).elems, 0, 'negative limit returns no matches';
+    is $hair.comb(/\d+/, 0).elems, 0, 'limit of 0 returns no matches';
     #?rakudo.jvm 2 skip "RT #124279 - UnwindException"
     is $hair.comb(/\d+/, 1), <3>, 'limit of 1 returns 1 match';
     is $hair.comb(/\d+/, 3), <3 3 4>, 'limit of 3 returns 3 matches';
