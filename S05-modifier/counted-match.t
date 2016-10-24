@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 28;
+plan 29;
 
 my $data = "f fo foo fooo foooo fooooo foooooo";
 
@@ -105,7 +105,8 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
 # RT #77408
 {
-    dies-ok { "a" ~~ m:nth(Mu)/a/ }, ':nth does not accept Mu param';
+    ok "aa" ~~ m:nth(1|2)/a/, ':nth accepts Junctions';
+    ok $/ ~~ Junction, 'and its result is a Junction';
 }
 
 # vim: ft=perl6
