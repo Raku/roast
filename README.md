@@ -137,7 +137,7 @@ Follow the same general steps for project `github.com/perl6/roast`:
   - see [below](#working-the-issue) for details
 - when through, ensure all desired commits are finished
 - push the issue branch to your origin (your fork of `roast` on github)
-- got to your github account for project `roast` and submit the PR
+- go to your github account for project `roast` and submit the PR
 
 ### Working the issue
 
