@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 55;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -159,6 +159,23 @@ plan 54;
 {
     nok 4 eqv 4.0, "Values should be eqv only if they are the same type";
     nok 4 eqv '4', 'Str vs. Int';
+}
+
+subtest 'Setty eqv Setty' => {
+    plan 8;
+
+    my $a = ["arr"];
+    ok Set.new(1, "a", Cool, $a) eqv Set.new(1, "a", Cool, $a),
+        'identical Sets eqv each other';
+    ok SetHash.new(1, "a", Cool, $a) eqv SetHash.new(1, "a", Cool, $a),
+        'identical SetHashes eqv each other';
+    nok Set.new(42) eqv SetHash.new(42), 'Set does not eqv SetHash';
+
+    nok set(<42>) eqv set( 42 ), 'IntStr does not eqv Int';
+    nok set(<42>) eqv set('42'), 'IntStr does not eqv Str';
+    nok set( 42 ) eqv set(<42>), 'Int    does not eqv IntStr';
+    nok set('42') eqv set(<42>), 'Str    does not eqv IntStr';
+    ok  set(<42>) eqv set(<42>), 'IntStr does     eqv IntStr';
 }
 
 # vim: ft=perl6
