@@ -664,7 +664,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     }
 
     subtest 'sinh(num)' => {
-        my @test-values = 𝑒, 0e0, 1e0, π, τ, 1e2;
+        my @test-values = e, 0e0, 1e0, π, τ, 1e2;
         plan 2*@test-values + 6;
 
         cmp-ok sinh(my num $      ), '===', NaN, 'uninitialized';
@@ -676,12 +676,12 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok sinh(my num $ = -1e20), '==', -∞, '-1e20';
 
         for @test-values.map({|($_, -$_)}) -> $x {
-            is-approx sinh(my num $ = $x), my num $ = (𝑒**$x - 𝑒**(-$x))/2, ~$x;
+            is-approx sinh(my num $ = $x), my num $ = (e**$x - e**(-$x))/2, ~$x;
         }
     }
 
     subtest 'asinh(num)' => {
-        my @test-values = 𝑒, 0e0, 1e0, π, τ, 1e2;
+        my @test-values = e, 0e0, 1e0, π, τ, 1e2;
         plan 2*@test-values + 7;
 
         cmp-ok asinh(my num $      ), '===', NaN, 'uninitialized';
@@ -701,7 +701,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     }
 
     subtest 'cosh(num)' => {
-        my @test-values = 𝑒, 0e0, 1e0, π, τ, 1e2;
+        my @test-values = e, 0e0, 1e0, π, τ, 1e2;
         plan 2*@test-values + 6;
 
         cmp-ok cosh(my num $      ), '===', NaN, 'uninitialized';
@@ -713,12 +713,12 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok cosh(my num $ = -1e20), '==',  ∞, '-1e20';
 
         for @test-values.map({|($_, -$_)}) -> $x {
-            is-approx cosh(my num $ = $x), my num $ = (𝑒**$x + 𝑒**(-$x))/2, ~$x;
+            is-approx cosh(my num $ = $x), my num $ = (e**$x + e**(-$x))/2, ~$x;
         }
     }
 
     subtest 'acosh(num)' => {
-        my @test-values = 𝑒, 1e0, π, τ, 1e20;
+        my @test-values = e, 1e0, π, τ, 1e20;
         plan 2*@test-values + 10;
 
         cmp-ok acosh(my num $         ), '===', NaN, 'uninitialized';
@@ -740,7 +740,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     }
 
     subtest 'tanh(num)' => {
-        my @test-values = 𝑒, 0e0, 1e0, π, τ, 1e2;
+        my @test-values = e, 0e0, 1e0, π, τ, 1e2;
         plan 2*@test-values + 6;
 
         cmp-ok tanh(my num $      ), '===', NaN, 'uninitialized';
@@ -752,13 +752,13 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok tanh(my num $ = -1e20), '==', -1e0, '-1e20';
 
         for @test-values.map({|($_, -$_)}) -> $x {
-            my \term:<𝑒²ˣ> = e**(2*$x);
-            is-approx tanh(my num $ = $x), my num $ = (𝑒²ˣ-1)/(𝑒²ˣ+1), ~$x;
+            my \term:<e²ˣ> = e**(2*$x);
+            is-approx tanh(my num $ = $x), my num $ = (e²ˣ-1)/(e²ˣ+1), ~$x;
         }
     }
 
     subtest 'atanh(num)' => {
-        my @nan-test-values = 𝑒, 1e1, π, τ, 1e20, 1e100, 1e200, 1e1000, ∞;
+        my @nan-test-values = e, 1e1, π, τ, 1e20, 1e100, 1e200, 1e1000, ∞;
         my     @test-values = 0e0, .2e0, .3e0, .5e0, .7e0, .9e0;
         plan 2*@test-values + 2*@nan-test-values + 2;
 
