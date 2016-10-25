@@ -18,7 +18,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
     #RT #125815
     throws-like '$data.match(/fo+/, :nth(0))', Exception, message => rx/nth/;
-    #?rakudo.jvm 2 todo 'RT #125815'
     throws-like '$data.match(/fo+/, :nth(-1))', Exception, message => rx/nth/;
     throws-like '$data.match(/fo+/, :nth(-2))', Exception, message => rx/nth/;
 
@@ -51,7 +50,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
 # more interesting variations of :nth(...)
 #?niecza skip 'hangs'
-#?rakudo.jvm skip 'RT #124279'
 {
     my @match = $data.match(/fo+/, :nth(2, 3)).list;
     is +@match, 2, 'nth(list) is ok';
@@ -73,7 +71,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     is @match, <foo foooo foooooo>, 'nth(infinite sequence) matched correctly';
 }
 
-#?rakudo.jvm skip 'RT #124279'
 #?niecza skip 'Excess arguments to CORE Cool.match'
 {
     is 'abecidofug'.match(/<[aeiou]>./, :nth(1,3,5), :x(2)).join('|'),

@@ -46,7 +46,6 @@ split_test @('theXbigXbang'.split(/X/, 0)),  (), 'Zero limit returns empty List'
 }
 split_test 'ab1cd12ef'.split(/\d+/, 1), @(<ab1cd12ef>), 'Limit of 1 returns a 1 element List (with identical string)';
 split_test '102030405'.split(0, 3),  <1 2 30405>, 'Split on an Integer with limit parameter works';
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 1
 split_test(
     '<tag>soup</tag>'.split(/\<\/?.*?\>/, 3),

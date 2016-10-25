@@ -19,7 +19,6 @@ how the C<$/> looks like with the C<:x($count)> modifier.
 my $str = "abbb";
 my regex rx { a b+ };
 
-#?rakudo.jvm 4 skip 'RT #124279'
 ok($str  ~~ m:ex:x(2)/<rx>/, "Simple combination of :x(2) and :exhaustive");
 #?rakudo todo 'exhaustive capture too greedy RT #125133'
 is(~$/[0],  "ab", 'First entry of prev. genenerated $/');

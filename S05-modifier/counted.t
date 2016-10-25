@@ -24,7 +24,6 @@ my $sub6 = "f fo foo fooo foooo fooooo bar";
 
 #RT #125815
 throws-like '$data ~~ m:nth(0)/fo+/', Exception, message => rx/nth/;
-#?rakudo.jvm 2 todo 'RT #125815'
 throws-like '$data ~~ m:nth(-1)/fo+/', Exception, message => rx/nth/;
 throws-like '$data ~~ m:nth(-Inf)/fo+/', Exception, message => rx/nth/;
 
@@ -58,7 +57,6 @@ for (1..6) -> $N {
 
 # more interesting variations of :nth(...)
 #?niecza skip 'm:g'
-#?rakudo.jvm skip 'RT #124279'
 {
     ok($data ~~ m:nth(2,3):global/(fo+)/, 'nth(list) is ok');
     is(@(), <foo fooo>, 'nth(list) matched correctly');
@@ -162,13 +160,10 @@ ok(!( $data ~~ m:7th/fo+/ ), 'No match 7th');
     my $try = $data;
 
 #RT #125815
-    #?rakudo.jvm todo 'RT #125815'
     throws-like '$try ~~ s:0th{fo+}=q{bar}', Exception, message => rx/nth/;
     is($try, $data, 'No change to data for 0th');
-    #?rakudo.jvm todo 'RT #125815'
     throws-like '$try ~~ s:th(-1){fo+}=q{bar}', Exception, message => rx/nth/;
     is($try, $data, 'No change to data for :th(-1)');
-    #?rakudo.jvm todo 'RT #125815'
     throws-like '$try ~~ s:th(-Inf){fo+}=q{bar}', Exception, message => rx/nth/;
     is($try, $data, 'No change to data for :th(-Inf)');
 
@@ -216,7 +211,6 @@ is($/, 'foo', 'Matched value for 3th « <ident>');
 # :nth and *-N
 
 is("ABCDE" ~~ m:nth(*)/\w/, "E", "Can match with * index");
-#?rakudo.jvm todo "got: 'False', expected: 'D'"
 is("ABCDE" ~~ m:nth(*-1)/\w/, "D", "Can match with *-1 index");
 
 $data = "f fo foo fooo foooo fooooo foooooo";
@@ -235,32 +229,26 @@ $sub6 = "f bar bar bar bar bar bar";
     is($try, $data, 'No change to data for 0x');
 
     $try = $data;
-    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:1x{fo+}=q{bar}, 'substitute 1x');
     is($try, $sub1, 'substituted 1x correctly');
 
     $try = $data;
-    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:2x{fo+}=q{bar}, 'substitute 2x');
     is($try, $sub2, 'substituted 2x correctly');
 
     $try = $data;
-    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:3x{fo+}=q{bar}, 'substitute 3x');
     is($try, $sub3, 'substituted 3x correctly');
 
     $try = $data;
-    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:4x{fo+}=q{bar}, 'substitute 4x');
     is($try, $sub4, 'substituted 4x correctly');
 
     $try = $data;
-    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:5x{fo+}=q{bar}, 'substitute 5x');
     is($try, $sub5, 'substituted 5x correctly');
 
     $try = $data;
-    #?rakudo.jvm 2 skip 'RT #124279'
     ok($try ~~ s:6x{fo+}=q{bar}, 'substitute 6x');
     is($try, $sub6, 'substituted 6x correctly');
 

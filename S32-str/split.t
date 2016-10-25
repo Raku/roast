@@ -151,7 +151,6 @@ test( "abcde","",3,"empty string",
   <a bcde>,      # rlpse
 );
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 1
 test( "abcd",/./,3,"any character",
   <<"" "" "" "" "">>,                           # r
@@ -177,7 +176,6 @@ test( "abcd",/./,3,"any character",
   (0=>"a",0=>"b","cd"),       # rlpse
 );
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 3
 test( "aaaa",$_,3,"only chars matching $_.perl()",
   <<"" "" "" "" "">>,                           # r
@@ -203,7 +201,6 @@ test( "aaaa",$_,3,"only chars matching $_.perl()",
   (0=>"a",0=>"a","aa"),       # rlpse
 ) for "a", /a/, rx:Perl5/a/;
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 7
 test( "foo bar baz",$_,2,$_,
   <foo bar baz>,                     # r
@@ -229,7 +226,6 @@ test( "foo bar baz",$_,2,$_,
   ("foo",0=>" ","bar baz"), # rlpse
 ) for " ", / " " /, / \s /, / \s+ /, rx:Perl5/ /, rx:Perl5/\s/, rx:Perl5/\s+/;
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 2
 test( "thisisit",$_,2,$_,
   <thi i it>,                     # r
@@ -255,7 +251,6 @@ test( "thisisit",$_,2,$_,
   ("thi",0=>"s","isit"), # rlpse
 ) for "s", /s/;
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 2
 test( "|foo|bar|baz|zoo",$_,3,$_,
   <<"" foo bar baz zoo>>,                                   # r
@@ -281,7 +276,6 @@ test( "|foo|bar|baz|zoo",$_,3,$_,
   (0=>"|","foo",0=>"|","bar|baz|zoo"),    # rlpse
 ) for "|", / \| /;
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 3
 test( "foo|bar|baz|zoo|",$_,2,$_,
   <<foo bar baz zoo "">>,                                   # r
@@ -307,7 +301,6 @@ test( "foo|bar|baz|zoo|",$_,2,$_,
   ("foo",0=>"|","bar|baz|zoo|"), # rlpse
 ) for "|", / \| /, rx:Perl5/\|/;
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 7
 test( "comma, separated, values",$_,2,$_,
   <comma separated values>,                       # r
@@ -342,7 +335,6 @@ test("","",2,"empty string", |(() xx 20));
 test("","foo",2,"empty string", |(() xx 20));
 test("zzzzz","a",2,"no match",|(("zzzzz",) xx 20));
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 1
 test( "hello world",<a e i o u>,3,<a e i o u>,
   <<h ll " w" rld>>,                          # r
@@ -368,7 +360,6 @@ test( "hello world",<a e i o u>,3,<a e i o u>,
   ("h",1=>"e","ll",3=>"o"," world"), # rlpse
 );
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 2
 test( "hello world",$_,3,$_,
   <<h ll " w" rld>>,                          # r
@@ -411,7 +402,6 @@ test( "hello world",$_,3,$_,
     is @a[3][1], " ", "Fourth capture worked";
 }
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 2
 # RT #63066
 test( "hello-world",$_,3,$_,
@@ -440,7 +430,6 @@ test( "hello-world",$_,3,$_,
 
 # RT #63066
 my $p = 0=>"";
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 1
 test( "-a-b-c-",/<.ws>/,4,/<.ws>/,
   <<"" - a - b - c - "">>,                                         # r
@@ -467,7 +456,6 @@ test( "-a-b-c-",/<.ws>/,4,/<.ws>/,
 );
 
 # RT #63066
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 1
 test( "-a-b-c-",/<.wb>/,4,/<.wb>/,
   <- a - b - c ->,                                 # r
