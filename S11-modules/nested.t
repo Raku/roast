@@ -1,7 +1,8 @@
 use v6;
-use lib 't/spec/packages';   # for some reason, this must be *AFTER* use Test
+use lib 't/spec/packages';
+use lib 't/spec/packages/S11-modules';
 use Test;
-plan 8;
+plan 10;
 
 # test that classes and roles declared in modules get into the correct
 # namespace
@@ -20,6 +21,14 @@ eval-dies-ok "use DependencyLoop::A;", 'dependency loop detected in use';
 
 eval-lives-ok 'use RoleA',
               'can use multiple "Role $name" statements (in multiple files) RT #67976';
+
+eval-lives-ok
+    'use MainLoadsNestedFirst;',
+    'Nested package not shadowed by later declaration of containing package';
+
+eval-lives-ok
+    'use MainLoadsNestedInside;',
+    'Main package not shadowed by later loading of nested package';
 
 use RT117117::Backends;
 #?rakudo.jvm todo 'got: $("GNUC",)'
