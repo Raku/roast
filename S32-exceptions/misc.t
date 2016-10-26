@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 423;
+plan 425;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -73,6 +73,11 @@ throws-like 'sub f(--> List) returns Str { }', X::Redeclaration;
 throws-like 'my Int sub f(--> Str) { }', X::Redeclaration;
 # RT #115356
 throws-like 'my class F { }; role F { }', X::Redeclaration, symbol => 'F';
+# RT #129968
+throws-like 'class AAAA { class B {} }; use MONKEY; augment class AAAA { class B { } }',
+    X::Redeclaration, symbol => 'B';
+throws-like 'class AAAAA { class B::C {} }; use MONKEY; augment class AAAAA { class B::C { } }',
+    X::Redeclaration, symbol => 'B::C';
 
 throws-like 'my class A { my @a; @a!List::foo() }',
     X::Method::Private::Permission,
