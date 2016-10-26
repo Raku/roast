@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 use lib 't/spec/packages/S11-modules';
 use Test;
-plan 10;
+plan 11;
 
 # test that classes and roles declared in modules get into the correct
 # namespace
@@ -29,6 +29,10 @@ eval-lives-ok
 eval-lives-ok
     'use MainLoadsNestedInside;',
     'Main package not shadowed by later loading of nested package';
+
+eval-lives-ok
+    'use Main::Nested; my Main::Nested $foo;',
+    'Nested package not cought by lexically imported main package';
 
 use RT117117::Backends;
 #?rakudo.jvm todo 'got: $("GNUC",)'
