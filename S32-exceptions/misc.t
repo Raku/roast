@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 425;
+plan 426;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -943,6 +943,17 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
             $^b;
         }), $bt.list, '.map operates correctly';
     }}
+}
+
+# RT #129921
+{
+    my $warned;
+    {
+        EVAL 'my $!a';
+        CONTROL { when CX::Warn { $warned = True; .resume } }
+        CATCH { default { } }
+    }
+    nok $warned, 'No warning when producing error for "my $!a"';
 }
 
 # vim: ft=perl6
