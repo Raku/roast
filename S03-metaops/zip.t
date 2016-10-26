@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 75;
+plan 76;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -195,5 +195,7 @@ is ($(1, 2) Z~ <a b c>), ('1 2a',),
     'Z meta-op respects itemization of arguments (1)';
 is (<a b c> Z~ $(1, 2)), ('a1 2',),
     'Z meta-op respects itemization of arguments (2)';
+
+is-deeply infix:<Z>(), ().Seq, 'artity-0 Z returns a Seq';
 
 # vim: ft=perl6
