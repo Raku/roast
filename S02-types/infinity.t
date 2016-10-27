@@ -43,19 +43,19 @@ ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 
 # RT #124453
 {
-    throws-like { Inf.Int }, Exception, :message(/'Cannot coerce Inf to an Int'/),
+    throws-like {    Inf.Int }, Exception, :message(/'Cannot coerce Inf to an Int'/),
         'attempting to convert Inf to Int throws';
 
-    throws-like { -Inf.Int }, Exception, :message(/'Cannot coerce -Inf to an Int'/),
+    throws-like { (-Inf).Int }, Exception, :message(/'Cannot coerce -Inf to an Int'/),
         'attempting to convert Inf to Int throws';
 
-    throws-like { ∞.Int }, Exception, :message(/'Cannot coerce Inf to an Int'/),
+    throws-like {      ∞.Int }, Exception, :message(/'Cannot coerce Inf to an Int'/),
         'attempting to convert ∞ to Int throws';
 
-    throws-like { -∞.Int }, Exception, :message(/'Cannot coerce Inf to an Int'/),
+    throws-like {   (-∞).Int }, Exception, :message(/'Cannot coerce -Inf to an Int'/),
         'attempting to convert -∞ to Int throws';
 
-    throws-like { NaN.Int }, Exception, :message(/'Cannot coerce NaN to an Int'/),
+    throws-like {    NaN.Int }, Exception, :message(/'Cannot coerce NaN to an Int'/),
         'attempting to convert NaN to Int throws';
 }
 
