@@ -131,9 +131,9 @@ is(0 ~~ 0 !~~ 0, 0 ~~ 0 && 0 !~~ 0, "chained smartmatch ~~ !~~ false");
 is(0 ~~ 0 !~~ 1, 0 ~~ 0 && 0 !~~ 1, "chained smartmatch ~~ !~~ true");
 is("a" lt "foo" ~~ "foo" ge "bar", "a" lt "foo" && "foo" ~~ "foo" && "foo" ge "bar", "chained mixed ~~ and ge");
 
-is(0 ~~ 0 ~~ /0/, True, "chained smartmatch ~~ ~~ with regex true");
-is(0 ~~ 0 ~~ /1/, False, "chained smartmatch ~~ ~~ with regex false");
-is(0 == 0 ~~ /0/, True, "chained smartmatch == ~~ with regex");
+ok( 0 ~~ 0 ~~ /0/, "chained smartmatch ~~ ~~ with regex true");
+nok(0 ~~ 0 ~~ /1/, "chained smartmatch ~~ ~~ with regex false");
+ok( 0 == 0 ~~ /0/, "chained smartmatch == ~~ with regex");
 is(0 == 0 ~~ (* == 0), 0 ~~ 0 && 0 ~~ (* == 0), "chained smartmatch == ~~ with closure");
 {
     my $a = my $b = my $c = "pink";
