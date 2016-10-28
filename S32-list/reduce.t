@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 15;
+plan 16;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -81,6 +81,7 @@ plan 15;
 }
 
 is( (1).list.reduce({$^a * $^b}), 1, "Reduce of one element list produces correct result");
+is-deeply(reduce(&infix:<+>, 72), 72, "reduce with one item returns that item");
 
 eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
 
