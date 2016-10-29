@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 91;
+plan 94;
 
 =begin pod
 
@@ -307,6 +307,13 @@ character classes), and those are referenced at the correct spot.
     #?niecza todo
     is('foo123bar' ~~ /foo <( 123 <( bar/, 'bar', 'multiple <(');
     is('foo123bar' ~~ /foo <( 123 [ <( xyz ]?/, '123', 'multiple <( backtracking');
+}
+
+# RT #129969
+{
+    is('abc xbc'.comb(/a<(bc)>/), 'bc', '.comb works well with <( )> (1)');
+    is('abc def abc'.comb(/a<(bc)>/), 'bc bc', '.comb works well with <( )> (2)');
+    is('abc'.match(/a<(bc)>/, :as(Str)), 'bc', '.match :as(Str) works with <( )>');
 }
 
 # A « or << token indicates a left word boundary.
