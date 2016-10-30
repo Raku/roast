@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 33;
 
 =begin pod
 
@@ -76,6 +76,17 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     like Attribute.new(:name('test-name'), :type(Int), :package('Foo')).gist,
         /'Int' .* 'test-name' | 'test-name' .* 'Int'/,
     '.gist of an Attribute includes name and type';
+}
+
+# RT #127059
+{
+    class RT127059 {
+        has Str @.rt127059;
+    }
+    is RT127059.^attributes[0].name, '@!rt127059',
+        'introspection of name of typed array attribute works';
+    is RT127059.^attributes[0].type.gist, '(Positional[Str])',
+        'introspection of type of typed array attribute works (using gist)';
 }
 
 # vim: ft=perl6
