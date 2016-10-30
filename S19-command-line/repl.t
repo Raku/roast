@@ -72,7 +72,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 }
 
 # RT #128595
-#?rakudo.jvm skip 'Proc::Async NYI'
+#?rakudo.jvm skip 'Proc::Async NYI RT #126524'
 {
     # REPL must not start, but if it does start and wait for input, it'll
     # "hang", from our point of view, which the test function will detect

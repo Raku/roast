@@ -89,7 +89,7 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 }
 
 # RT #128398
-#?rakudo.jvm skip 'Proc::Async NYI'
+#?rakudo.jvm skip 'Proc::Async NYI RT #126524'
 {
     my $p = Proc::Async.new: :w, $*EXECUTABLE, "-ne",
         Q!last if /2/; .say; LAST { say "test worked" }!;

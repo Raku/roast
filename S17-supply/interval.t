@@ -40,7 +40,7 @@ is_run(
             ~ ' say "Did not hang"';
 
     for ^3 {
-        #?rakudo.jvm skip 'Proc::Async NYI'
+        #?rakudo.jvm skip 'Proc::Async NYI RT #126524'
         doesn't-hang \($*EXECUTABLE, '-e', $code), :out(/'Did not hang'/),
             'done() on first iteration of Supply.interval does not hang';
     }
