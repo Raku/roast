@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 100;
+plan 102;
 
 =begin description
 
@@ -557,6 +557,14 @@ lives-ok {
 {
     my @s = ($_ * 2 if $_ ** 2 > 3 for 0 .. 5);
     is ~@s, '4 6 8 10', 'Can use statement-modifying "for" in list comprehension';
+}
+
+# RT #123506
+{
+    my \rt123506a = ($_ for ^1);
+    is ~rt123506a, '0', 'assigning list comprehension to sigilless works (1)';
+    my \rt123506b = ($_ for ^2);
+    is ~rt123506b, '0 1', 'assigning list comprehension to sigilless works (2)';
 }
 
 # RT #113026
