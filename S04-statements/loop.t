@@ -11,7 +11,7 @@ loop statement tests
 
 =end kwid
 
-plan 15;
+plan 16;
 
 # basic loop
 
@@ -104,6 +104,16 @@ throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
 {
     my @a = gather loop { take 1; take 2; last };
     is @a.join, '12', 'gather, take and loop work together';
+}
+
+# RT #127238
+{
+    my @rt127238;
+    sub rt127238 {
+        loop (my $i = 0; $i < 5; ++$i) { @rt127238.push: $i }
+    }
+    rt127238();
+    is @rt127238.join("-"), '0-1-2-3-4', 'loop variable inside sub is correctly set';
 }
 
 # vim: ft=perl6
