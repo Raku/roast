@@ -409,7 +409,8 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».hash.gist, '({2 => 3} {4 => [5 6]})', ".hash is nodal";
     is [[2, 3], [4, [5, 6]]]».Hash.gist, '({2 => 3} {4 => [5 6]})', ".Hash is nodal";
     is [[2, 3], [4, [5, 6]]]».join(":").gist, "(2:3 4:5 6)", ".join is nodal";
-    is [[2, 3], [4, [5, 6]]]».keys.gist, "(0..1 0..1)", ".keys is nodal";
+    #?rakudo todo "fixed in d53a90594ce8010d0c7"
+    is [[2, 3], [4, [5, 6]]]».keys.gist, "((0 1) (0 1))", ".keys is nodal";
     is [[2, 3], [4, [5, 6]]]».kv.gist, "((0 2 1 3) (0 4 1 [5 6]))", ".kv is nodal";
     is [[2, 3], [4, [5, 6]]]».list.gist, "([2 3] [4 [5 6]])", ".list is nodal";
     is [[2, 3], [4, [5, 6]]]».List.gist, "((2 3) (4 [5 6]))", ".List is nodal";
