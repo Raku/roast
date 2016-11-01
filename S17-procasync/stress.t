@@ -1,7 +1,8 @@
 use v6;
 use Test;
+use Test::Util;
 
-plan 2;
+plan 12;
 
 # RT #125515
 constant $read-file = "t/spec/packages/README".IO;
@@ -28,4 +29,19 @@ is @got.unique.elems, 1, 'Proc::Async consistently reads data';
             { for ^400 { my $p = run(:out, :bin, 'ls'); run(:in($p.out), 'true') } },
             "run()ning two procs and passing the :out of one to the :in of the other doesn't segfault";
     }
+}
+
+# RT #129834
+for ^10 {
+    my $code = q:to'--END--';
+		for ^4 {
+			my @cmd = < df -li >;
+			Supply.interval( 1 ).act: {
+				my $proc = Proc::Async.new: |@cmd;
+				$proc.stdout.act: -> $ {}, done => -> {}
+			}
+		}
+		sleep 0.2;
+        --END--
+    is_run $code, { status => 0 }, "No race/crash in concurrent setup of Proc::Async objects ($_)";
 }
