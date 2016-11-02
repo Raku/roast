@@ -24,8 +24,7 @@ given $*DISTRO.name {
 #====  specific tests from here
 sub macosx {
     plan 22;
-    my $s = IO::Notification.watch-path('.').grep({.path eq $filename}).unique,
-      'only about our file';
+    my $s = IO::Notification.watch-path('.').grep({.path eq $filename}).unique;
     ok $s ~~ Supply, 'Did we get a Supply?';
 
     my @seen;
