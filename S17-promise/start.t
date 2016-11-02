@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 50;
+plan 53;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -165,4 +165,36 @@ dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
         }
     }
     nok $warned, 'No spurious warnings when using closures in grammar rules';
+}
+
+# RT #125782
+{
+	sub baz {
+		die 'uh-oh';
+	}
+
+	sub bar {
+		baz();
+	}
+
+	sub foo {
+		bar();
+	}
+
+	my $p = start {
+		foo();
+	};
+
+	sub catcher() {
+		await $p;
+
+		CATCH {
+			default {
+				like .backtrace.Str, rx/foo/, 'The backtrace should contain throwing location';
+				like .gist, rx/foo/, 'The gist should contain throwing location';
+				like .gist, rx/catcher/, 'The gist should also contain re-throwing location';
+			}
+		}
+	}
+	catcher();
 }
