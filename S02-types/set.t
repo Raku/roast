@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 179;
+plan 181;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -427,6 +427,12 @@ subtest '.hash does not cause keys to be stringified' => {
 {
     throws-like { my Set $s; $s<as> = 2 }, Exception,
         'autovivification of of Set:U complains about immutability';
+}
+
+{
+    is-deeply set(42).Mix, Mix.new(42), '.Mix on set gives correct Mix';
+    is-deeply set(42).MixHash, MixHash.new(42),
+        '.MixHash on set gives correct MixHash';
 }
 
 # vim: ft=perl6
