@@ -6,20 +6,23 @@ use Test::Util;
 plan 12;
 
 # RT #125515
-constant $read-file = "t/spec/packages/README".IO;
-$read-file.IO.r or bail-out "Missing $read-file that is needed to run a test";
+#?rakudo.jvm skip 'Proc::Async NYI RT #126524'
+{
+    constant $read-file = "t/spec/packages/README".IO;
+    $read-file.IO.r or bail-out "Missing $read-file that is needed to run a test";
 
-my @got;
-for ^400 {
-    my $p = $*DISTRO.is-win
-        ?? Proc::Async.new( | «cmd /c type $read-file» )
-        !! Proc::Async.new( | «/bin/cat    $read-file» );
-    my $output = '';
-    $p.stdout.tap: -> $s { $output ~= $s; };
-    await $p.start;
-    @got.push: $output;
+    my @got;
+    for ^400 {
+        my $p = $*DISTRO.is-win
+            ?? Proc::Async.new( | «cmd /c type $read-file» )
+            !! Proc::Async.new( | «/bin/cat    $read-file» );
+        my $output = '';
+        $p.stdout.tap: -> $s { $output ~= $s; };
+        await $p.start;
+        @got.push: $output;
+    }
+    is @got.unique.elems, 1, 'Proc::Async consistently reads data';
 }
-is @got.unique.elems, 1, 'Proc::Async consistently reads data';
 
 # RT #129291
 {
@@ -44,5 +47,6 @@ for ^10 {
 		}
 		sleep 0.2;
         --END--
+    #?rakudo.jvm skip 'Proc::Async NYI RT #126524'
     is_run $code, { status => 0 }, "No race/crash in concurrent setup of Proc::Async objects ($_)";
 }
