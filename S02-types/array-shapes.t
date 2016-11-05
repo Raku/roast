@@ -4,7 +4,6 @@ plan 27;
 
 # L<S09/Fixed-size arrays>
 
-#?rakudo skip 'array shapes NYI RT #124502'
 {
     my @arr[*];
     @arr[42] = "foo";
