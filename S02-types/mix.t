@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 197;
+plan 199;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -489,6 +489,14 @@ subtest '.hash does not cause keys to be stringified' => {
 {
     throws-like { my Mix $m; $m<as> = 2 }, Exception,
         'autovivification of of Mix:U complains about immutability';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2016-11-07#i_13528982
+    my $a = (:a(-10), :b(-30)                 ).Mix;
+    my $b = (         :b(-20), :c(-10), :d(10)).Mix;
+    my $r = (:a(-10), :b(-20), :c(-10), :d(10)).Mix;
+    is-deeply $a  ∪  $b, $r, 'negative weights remain with  ∪  operator';
+    is-deeply $a (|) $b, $r, 'negative weights remain with (|) operator';
 }
 
 # vim: ft=perl6

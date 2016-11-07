@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 234;
+plan 236;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -547,6 +547,14 @@ subtest 'MixHash autovivification of non-existent keys' => {
     my MixHash  $mh5;
     is-deeply   ($mh5<as> = 2), 2, 'correct return of assignment';
     is-deeply   $mh5<as>,       2, 'correct result of assignment';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2016-11-07#i_13528982
+    my $a = (:a(-10), :b(-30)                 ).MixHash;
+    my $b = (         :b(-20), :c(-10), :d(10)).MixHash;
+    my $r = (:a(-10), :b(-20), :c(-10), :d(10)).Mix;
+    is-deeply $a  ∪  $b, $r, 'negative weights remain with  ∪  operator';
+    is-deeply $a (|) $b, $r, 'negative weights remain with (|) operator';
 }
 
 # vim: ft=perl6
