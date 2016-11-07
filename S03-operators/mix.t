@@ -68,7 +68,7 @@ sub symmetric-difference($a, $m) {
 
 is ($b (^) $m), symmetric-difference($b, $m), "Mix symmetric difference with Bag is correct";
 isa-ok ($b (^) $m), Mix, "... and it's actually a Mix";
-is showkv($m (^) $b), symmetric-difference($b, $m), "Bag symmetric difference with Mix is correct";
+is ($m (^) $b), symmetric-difference($b, $m), "Bag symmetric difference with Mix is correct";
 isa-ok ($m (^) $b), Mix, "... and it's actually a Mix";
 
 #?niecza todo "Test is wrong, implementation is wrong"
