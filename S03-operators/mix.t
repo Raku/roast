@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 128;
+plan 126;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 
