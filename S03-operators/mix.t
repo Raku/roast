@@ -66,18 +66,16 @@ sub symmetric-difference($a, $m) {
     ($a (|) $m) (-) ($m (&) $a)
 }
 
-#?rakudo 8 todo "Rakudo update in progress, but not done yet RT #124541"
-
-is showkv($b (^) $m), showkv(symmetric-difference($b, $m)), "Mix symmetric difference with Bag is correct";
+is ($b (^) $m), symmetric-difference($b, $m), "Mix symmetric difference with Bag is correct";
 isa-ok ($b (^) $m), Mix, "... and it's actually a Mix";
-is showkv($m (^) $b), showkv(symmetric-difference($b, $m)), "Bag symmetric difference with Mix is correct";
+is showkv($m (^) $b), symmetric-difference($b, $m), "Bag symmetric difference with Mix is correct";
 isa-ok ($m (^) $b), Mix, "... and it's actually a Mix";
 
 #?niecza todo "Test is wrong, implementation is wrong"
-is showkv($b (^) $mh), showkv(symmetric-difference($b, $mh)), "MixHash symmetric difference with Bag is correct";
+is ($b (^) $mh), symmetric-difference($b, $mh), "MixHash symmetric difference with Bag is correct";
 isa-ok ($b (^) $mh), Mix, "... and it's actually a Mix";
 #?niecza todo "Test is wrong, implementation is wrong"
-is showkv($mh (^) $b), showkv(symmetric-difference($b, $mh)), "Bag symmetric difference with MixHash is correct";
+is ($mh (^) $b), symmetric-difference($b, $mh), "Bag symmetric difference with MixHash is correct";
 isa-ok ($mh (^) $b), Mix, "... and it's actually a Mix";
 
 # Mix multiplication
@@ -190,10 +188,6 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
 }
 
 {
-    # my $b = set <blood love>;
-    # my $bh = BagHash.new(<blood rhetoric>);
-    # my $m = mix <blood blood rhetoric love love>;
-    # my $mh = MixHash.new(<blood love love>);
     my @d;
     
     is showkv([⊎] @d), showkv(∅), "Mix sum reduce works on nothing";
@@ -217,19 +211,14 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     is showkv([(.)] $b, $m, $mh), showkv({ blood => 1.21, love => 1.56 }), "Mix multiply reduce works on three sets (Texas)";
 
     is showkv([(^)] @d), showset(∅), "Mix symmetric difference reduce works on nothing";
-    #?rakudo 4 todo "NYI"
-    is showkv([(^)] $b), showset($b), "Bag symmetric difference reduce works on one set";
-    isa-ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one set, yields set";
-    is showkv([(^)] $m), showkv($m), "Mix symmetric difference reduce works on one mix";
-    isa-ok showkv([(^)] $m), Mix, "Mix symmetric difference reduce works on one mix, yields mix";
-    #?rakudo 4 todo "Wrong answer at the moment"
-    is showkv([(^)] $b, $m), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on a mix and a set";
-    isa-ok showkv([(^)] $b, $m), Mix, "... and produces a Mix";
-    is showkv([(^)] $m, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
-    isa-ok showkv([(^)] $m, $b), Mix, "... and still produces a Mix that way too";
-    #?rakudo 2 todo "Crashing"
-    is showkv([(^)] $b, $m, $mh), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on three mixs";
-    isa-ok showkv([(^)] $b, $m, $mh), Mix, "Mix symmetric difference reduce works on three mixs";
+    is ([(^)] $m), $m, "Mix symmetric difference reduce works on one mix";
+    isa-ok ([(^)] $m), Mix, "Mix symmetric difference reduce works on one mix, yields mix";
+    is ([(^)] $b, $m), (blood => 0.1, love => 0.2, :rhetoric).Mix, "Mix symmetric difference reduce works on a mix and a set";
+    isa-ok ([(^)] $b, $m), Mix, "... and produces a Mix";
+    is ([(^)] $m, $b), (blood => 0.1, love => 0.2, :rhetoric).Mix, "... and is actually symmetric";
+    isa-ok ([(^)] $m, $b), Mix, "... and still produces a Mix that way too";
+    is ([(^)] $b, $m, $mh), (blood => 1, love => 1.1, :rhetoric).Mix, "Mix symmetric difference reduce works on three mixs";
+    isa-ok ([(^)] $b, $m, $mh), Mix, "Mix symmetric difference reduce works on three mixs";
 }
 
 # vim: ft=perl6
