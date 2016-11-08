@@ -401,7 +401,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».classify(*.[0]).gist, '({2 => [2], 3 => [3]} {4 => [4], 5 => [[5 6]]})', ".classify is nodal";
     is [[2, 3], [4, [5, 6]]]».combinations.gist, "((() (2) (3) (2 3)) (() (4) ([5 6]) (4 [5 6])))", ".combinations is nodal";
     is [[2, 3], [4, [5, 6]]]».deepmap(*+1).gist, "([3 4] [5 [6 7]])", ".deepmap is nodal";
-    is [[2, 3], [4, [5, 6]]]».duckmap(*+1).gist, "((3 4) (5 3))", ".duckmap is nodal";
+    is [[2, 3], [4, [5, 6]]]».duckmap(*+1).gist, "([3 4] [5 3])", ".duckmap is nodal";
     is [[2, 3], [4, [5, 6]]]».eager.gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".eager is nodal";
     is [[2, 3], [4, [5, 6]]]».elems.gist, "(2 2)", ".elems is nodal";
     is [[2, 3], [4, [5, 6]]]».end.gist, "(1 1)", ".end is nodal";
