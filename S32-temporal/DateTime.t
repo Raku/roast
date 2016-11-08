@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 275;
+plan 276;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -788,4 +788,17 @@ subtest 'synthetics not allowed in date formats' => {
     is-deeply DateTime.Date,     Date, 'DateTime:U.Date returns Date:U';
     is-deeply DateTime.DateTime, DateTime, 'DateTime:U.DateTime returns self';
     is-deeply      $dt.DateTime, $dt,     'DateTime:D.DateTime returns self';
+}
+
+subtest '.hh-mm-ss' => {
+    plan 5;
+
+    is-deeply Date.today.DateTime.hh-mm-ss, '00:00:00', 'Date -> DateTime';
+    is-deeply DateTime.new('2006-01-01T00:00:00Z').earlier(:1second).hh-mm-ss,
+              '23:59:60', 'leap second';
+
+    my $d = DateTime.new(4242);
+    is-deeply $d.hh-mm-ss, '01:10:42', 'posix 4242';
+    is-deeply $d.later(:13hours).hh-mm-ss, '14:10:42', '13 hours later';
+    is-deeply $d.earlier(:50hours).hh-mm-ss, '23:10:42', '50 hours earlier';
 }
