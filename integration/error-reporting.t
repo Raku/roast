@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 28;
+plan 29;
 
 use Test::Util;
 
@@ -223,6 +223,19 @@ subtest 'X::Multi::NoMatch correct shows named arguments' => {
     throws-like { RT129800.foo: :foo(my class Foo {method perl {die}}) },
             X::Multi::NoMatch, message => /':Foo'/,
     'fallback mechanism works';
+}
+
+subtest 'composition errors do not crash when printing (RT129906)' => {
+    plan 2;
+
+    throws-like '-> ::RT129906 { class :: is RT129906 {} }',
+        X::Inheritance::Unsupported,  message => /RT129906/,
+    'Accessing X::Inheritance::Unsupported.message does not crash';
+
+    throws-like 'class A129906 { ... }; class B129906 '
+            ~ 'does A129906 { }; role A129906 { }',
+        X::Composition::NotComposable,  message => /129906/,
+    'Accessing X::Composition::NotComposable.message does not crash';
 }
 
 # vim: ft=perl6
