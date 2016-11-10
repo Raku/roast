@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 107;
+plan 108;
 
 {
     my $r = (1..5).iterator;
@@ -185,4 +185,14 @@ subtest 'Iterator.skip-at-least' => {
     is-deeply $r.pull-one, 4,        'next value after skip is correct';
     nok       $r.skip-at-least(10),  'skipping more values than we have is falsy';
     ok $r.pull-one =:= IterationEnd, 'no more values to pull';
+}
+
+subtest 'Iterator.skip-at-least-pull-one' => {
+    plan 3;
+
+    my $r = (1..6).iterator;
+    is-deeply $r.skip-at-least-pull-one(3), 4, 'method returns correct value';
+    is-deeply $r.pull-one,                  5, 'value after skip is correct';
+    ok $r.skip-at-least-pull-one(10) =:= IterationEnd,
+        'when not enough values to skip, returns IterationEnd';
 }
