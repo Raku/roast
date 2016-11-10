@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 105;
+plan 106;
 
 {
     my $r = (1..5).iterator;
@@ -162,4 +162,17 @@ plan 105;
     is $r.pull-one, 5, '$r.pull-one == 5';
     is $r.pull-one, 6, '$r.pull-one == 6';
     is $r.pull-one, 7, '$r.pull-one == 7';
+}
+
+subtest 'Iterator.skip-one' => {
+    plan 6;
+
+    my $r = (1..5).iterator;
+    ok $r.skip-one, '.skip-one returns truthy value on successfull skip';
+    is-deeply $r.pull-one, 2, '.pull-one after .skip-one gives correct value';
+
+    ok $r.skip-one, '.skip-one (1)';
+    ok $r.skip-one, '.skip-one (2)';
+    is-deeply $r.pull-one, 5, '.pull-one after 2 .skip-one gives correct value';
+    nok $r.skip-one, '.skip-one returns falsy value when there is nothing to skip';
 }
