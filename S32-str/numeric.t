@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 172;
+plan 173;
 
 #?DOES 2
 sub check($str, $expected_type, $expected_number, $desc?) {
@@ -154,5 +154,10 @@ f      '3+Infi';
 {
     is +Str.new, 0, 'RT #100778'
 }
+
+# RT #128542
+#?rakudo.jvm todo 'Need proper Str.codes on JVM'
+throws-like Q|"34\x[308]5".Int|, X::Str::Numeric,
+    '.Int on strings with numerics with combining characters throws';
 
 # vim: ft=perl6 
