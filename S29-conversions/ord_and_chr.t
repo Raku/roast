@@ -123,7 +123,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 53 + @maps;
+plan 54 + @maps;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -173,5 +173,7 @@ is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
     is "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord, 550, '.ord gives first NFC codepoint (1)';
     is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]".ord, 550, '.ord gives first NFC codepoint (2)';
 }
+
+is chrs("104", "101", "108", "108", "111"), 'hello', 'chrs works with a list of numifiable strings';
 
 #vim: ft=perl6
