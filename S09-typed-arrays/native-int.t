@@ -116,7 +116,6 @@ for flat @int,@uint -> $T {
     is @arr.pairup,              (22=>32,26=>34), ".pairup from a $t array";
     is @arr.keys,                  ( 0, 1, 2, 3), ".keys from a $t array";
     is @arr.pairs,     (0=>22,1=>32,2=>26,3=>34), ".pairs from a $t array";
-    #?rakudo.jvm todo "got: (22=>3,32=>3,26=>3,34=>3)"
     is @arr.antipairs, (22=>0,32=>1,26=>2,34=>3), ".antipairs from a $t array";
     is @arr.kv,            (0,22,1,32,2,26,3,34), ".kv from a $t array";
     is @arr.pick,                    22|32|26|34, ".pick from a $t array";
