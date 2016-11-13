@@ -37,8 +37,10 @@ throws-like { my @a[2;2] = <a b c d> }, X::Assignment::ToShaped,
 }
 
 my @a[2;3] = <a b c>, <d e f>;
+#?rakudo.jvm todo 'No such attribute $!default for this object'
 lives-ok { my @b[2;3] = @a },
     'Can assign shaped to shaped if shapes match exactly';
+#?rakudo.jvm skip 'No such attribute $!default for this object'
 {
     my @b[2;3] = @a;
     is @b[0;0], 'a', 'Assignment to 2-dim array works (1)';
