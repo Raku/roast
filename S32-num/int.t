@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 162;
+plan 164;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -226,6 +226,8 @@ subtest 'Int.new' => { # coverage; 2016-10-05
     is-deeply $i3 gcd $i2, $i1, 'int(3) gcd int(2) returns int(1)';
     is-deeply $i8 gcd $i2, $i2, 'int(8) gcd int(2) returns int(2)';
     is-deeply $i8 gcd $i0, $i8, 'int(8) gcd int(0) returns int(8)';
+    is-deeply $i0 gcd $i8, $i0, 'int(0) gcd int(8) returns int(8)';
+    is-deeply $i0 gcd $i0, $i0, 'int(0) gcd int(0) returns int(0)';
     is-deeply $iu gcd $i0, $i0, 'int(uninitialized) gcd int(0) returns int(0)';
 
     is-deeply $i8 === $i8, Bool::True,  'int === int (True)';

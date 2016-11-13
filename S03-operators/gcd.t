@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 19;
 
 # L<S32::Numeric/Numeric/"=item gcd">
 
@@ -15,6 +15,9 @@ isa-ok 10 gcd 5, Int, "The gcd of 10 and 5 is an Int";
 is -432 gcd 63, 9, "The gcd of -432 and 63 is 9";
 is 4342 gcd 65536, 2, "The gcd of 4342 and 65536 is 2";
 isa-ok 4342 gcd 65536, Int, "The gcd of 4342 and 65536 is an Int";
+is 0 gcd 42, 42, "The gcd of 0 and 42 is 42";
+is 42 gcd 0, 42, "The gcd of 42 and 0 is 42";
+is 0 gcd 0, 0, "The gcd of 0 and 0 is 0";
 
 is ([gcd] 25..26), 1, '[gcd] Range works';
 {
