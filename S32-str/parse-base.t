@@ -3,6 +3,9 @@ use Test;
 
 plan 2;
 
+constant $fancy-nums       = '໕໖໗۶۷៤៥１２３';
+constant $fancy-nums-value = 5676745123;
+
 constant $all-chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm'
     ~ 'nopqrstuvwxyz.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi'
     ~ 'jklmnopqrstuvwxyz';
@@ -10,7 +13,7 @@ constant $all-chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm'
 constant $all-chars-result = 2527079815159757168093382078421796304289747094823514859938627964591248797616216274592478001915.000816326530612244738449589931406080722808837890625;
 
 subtest '.parse-base() as method' => {
-    plan 43;
+    plan 45;
 
     is-deeply 'Perl6' .parse-base(30), 20652936,    '"Perl6"  in base-30';
     is-approx 'Perl.6'.parse-base(32), 834421.1875, '"Perl.6" in base-32';
@@ -20,6 +23,13 @@ subtest '.parse-base() as method' => {
 
     is-approx $all-chars.parse-base(36), $all-chars-result,
         'full character set';
+
+    is-deeply $fancy-nums.parse-base(10), $fancy-nums-value,
+        'can parse fancy Unicode numerals as Int';
+
+    is-approx "$fancy-nums.$fancy-nums".parse-base(10),
+        "$fancy-nums-value.$fancy-nums-value".Numeric,
+        'can parse fancy Unicode numerals as float';
 
     throws-like { "Perl6".parse-base(42) },
         X::Syntax::Number::RadixOutOfRange, radix => 42,
@@ -43,7 +53,7 @@ subtest '.parse-base() as method' => {
 }
 
 subtest 'parse-base() as sub' => {
-    plan 43;
+    plan 45;
 
     is-deeply parse-base('Perl6',  30), 20652936,    '"Perl6"  in base-30';
     is-approx parse-base('Perl.6', 32), 834421.1875, '"Perl.6" in base-32';
@@ -53,6 +63,13 @@ subtest 'parse-base() as sub' => {
 
     is-approx parse-base($all-chars, 36), $all-chars-result,
         'full character set';
+
+    is-deeply parse-base($fancy-nums, 10), $fancy-nums-value,
+        'can parse fancy Unicode numerals as Int';
+
+    is-approx parse-base("$fancy-nums.$fancy-nums", 10),
+        "$fancy-nums-value.$fancy-nums-value".Numeric,
+        'can parse fancy Unicode numerals as float';
 
     throws-like { parse-base "Perl6", 42 },
         X::Syntax::Number::RadixOutOfRange, radix => 42,
