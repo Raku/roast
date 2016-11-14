@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 104;
+plan 105;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -362,5 +362,46 @@ ok any(1.0,2,'3') ~~ Junction, 'any/Junction smartmatch does not autothread';
 ok Mu !~~ Junction, 'Mu/Junction smartmatch False';
 ok Junction ~~ Junction, 'Junction/Junction smartmatch True';
 ok Junction ~~ Mu, 'Junction/Mu smartmatch True';
+
+# RT#130099
+subtest 'defined with Junctions autothreads' => {
+    plan 2;
+
+    subtest 'defined() as a sub' => {
+        plan 10;
+
+        is-deeply defined(any  Str,  42), Bool::True,  'any() -> True';
+        is-deeply defined(any  Str, Int), Bool::False, 'any() -> False';
+
+        is-deeply defined(none Str, Int), Bool::True,  'none() -> True';
+        is-deeply defined(none Str,  42), Bool::False, 'none() -> False';
+
+        is-deeply defined(all  "x",  42), Bool::True,  'all() -> True';
+        is-deeply defined(all  Str, Int), Bool::False, 'all() -> False (1)';
+        is-deeply defined(all  Str,  42), Bool::False, 'all() -> False (1)';
+
+        is-deeply defined(one  Str,  42), Bool::True,  'one() -> True';
+        is-deeply defined(one  Str, Int), Bool::False, 'one() -> False (1)';
+        is-deeply defined(one  "x",  42), Bool::False, 'one() -> False (2)';
+    }
+
+    subtest '.defined() as a method' => {
+        plan 10;
+
+        is-deeply any( Str,  42).defined, Bool::True,  'any() -> True';
+        is-deeply any( Str, Int).defined, Bool::False, 'any() -> False';
+
+        is-deeply none(Str, Int).defined, Bool::True,  'none() -> True';
+        is-deeply none(Str,  42).defined, Bool::False, 'none() -> False';
+
+        is-deeply all( "x",  42).defined, Bool::True,  'all() -> True';
+        is-deeply all( Str, Int).defined, Bool::False, 'all() -> False (1)';
+        is-deeply all( Str,  42).defined, Bool::False, 'all() -> False (1)';
+
+        is-deeply one( Str,  42).defined, Bool::True,  'one() -> True';
+        is-deeply one( Str, Int).defined, Bool::False, 'one() -> False (1)';
+        is-deeply one( "x",  42).defined, Bool::False, 'one() -> False (2)';
+    }
+}
 
 # vim: ft=perl6
