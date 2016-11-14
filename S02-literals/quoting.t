@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 190;
+plan 189;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -527,8 +527,8 @@ Hello, World
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';
     is qqx/echo $var/.chomp,  "world", 'qqx';
-    is Qx[echo '\\'].chomp, "\\\\", "Qx treats backslash literally";
-    is qx[echo '\\'].chomp, "\\", 'qx escaping a backslash returns one backslash';
+    is  Qx[echo '\'] cmp qx[echo '\\'], Same, 'Qx treats backslash literally, qx treats \\ as one backslash';
+
     # RT #78874
     is qx/echo world/.trans('wd' => 'WD').chomp, "WorlD", "qx doesn't return a Parrot string";
 }
