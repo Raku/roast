@@ -390,7 +390,7 @@ subtest 'defined with Junctions autothreads' => {
         is-deeply defined(one  Str, $f),  Bool::False, 'one(Failure) -> False (3)';
     }
 
-    subtest 'defined() as a sub' => {
+    subtest 'defined() as a method' => {
         plan 14;
 
         is-deeply any( Str,  42).defined, Bool::True,  'any() -> True';
