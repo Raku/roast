@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 185;
+plan 190;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -336,7 +336,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
     is("\x41", "A", 'hex interpolation - \x41 is "A"');
     is("\o101", "A", 'octal interpolation - \o101 is also "A"' );
-    
+
     is("\c@", "\0", 'Unicode code point "@" converts correctly to "\0"');
     is("\cA", chr(1), 'Unicode "A" is #1!');
     is("\cZ", chr(26), 'Unicode "Z" is chr 26 (or \c26)');
@@ -497,6 +497,9 @@ Hello, World
     is(Qf[$alpha &zeta()], '$alpha 42', 'Qf');
     is(Qb[$alpha\t$beta], '$alpha	$beta', 'Qb');
     is(Qc[{1+1}], 2, 'Qc');
+    is(Qw["a b" \ {1+1}], ('"a', 'b"', '\\', '{1+1}'), 'Qw');
+    is(Q:w[a b \ {1+1}], ('a', 'b', '\\', '{1+1}'), 'Q:w');
+    is(Qww["a b" \ {1+1}], ( 'a b', '\\', '{1+1}'), 'Qww');
 }
 
 # L<S02/Backslashing/All other quoting forms (including standard single quotes)>
@@ -524,6 +527,8 @@ Hello, World
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';
     is qqx/echo $var/.chomp,  "world", 'qqx';
+    is Qx[echo '\\'].chomp, "\\\\", "Qx treats backslash literally";
+    is qx[echo '\\'].chomp, "\\", 'qx escaping a backslash returns one backslash';
     # RT #78874
     is qx/echo world/.trans('wd' => 'WD').chomp, "WorlD", "qx doesn't return a Parrot string";
 }
