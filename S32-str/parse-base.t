@@ -24,9 +24,11 @@ subtest '.parse-base() as method' => {
     is-approx $all-chars.parse-base(36), $all-chars-result,
         'full character set';
 
+    #?rakudo.jvm todo 'Invalid base-10 character'
     is-deeply $fancy-nums.parse-base(10), $fancy-nums-value,
         'can parse fancy Unicode numerals as Int';
 
+    #?rakudo.jvm skip 'Cannot resolve caller is-approx(Failure, Rat, Str)'
     is-approx "$fancy-nums.$fancy-nums".parse-base(10),
         "$fancy-nums-value.$fancy-nums-value".Numeric,
         'can parse fancy Unicode numerals as float';
@@ -64,9 +66,11 @@ subtest 'parse-base() as sub' => {
     is-approx parse-base($all-chars, 36), $all-chars-result,
         'full character set';
 
+    #?rakudo.jvm todo 'Invalid base-10 character'
     is-deeply parse-base($fancy-nums, 10), $fancy-nums-value,
         'can parse fancy Unicode numerals as Int';
 
+    #?rakudo.jvm skip 'Cannot resolve caller is-approx(Failure, Rat, Str)'
     is-approx parse-base("$fancy-nums.$fancy-nums", 10),
         "$fancy-nums-value.$fancy-nums-value".Numeric,
         'can parse fancy Unicode numerals as float';
