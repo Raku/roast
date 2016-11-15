@@ -11,7 +11,7 @@ This test tests the C<R...> reverse metaoperator.
 
 =end pod
 
-# Try mulitple versions of Rcmp, as it is one of the more
+# Try multiple versions of Rcmp, as it is one of the more
 # more useful reversed ops, and if it works, probably
 # most of the others will work as well.
 
