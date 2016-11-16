@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 28;
+plan 29;
 
 {
     my $p = Promise.new;
@@ -64,4 +64,12 @@ plan 28;
 {
     throws-like { Promise.new ~~ Planned }, Exception,
         'smartmatching Promise against an Enum does not hang';
+}
+
+# RT #130064
+{
+    my $p = Promise.new;
+    $p.break("OH NOES");
+    try await $p;
+    is $!.message, "OH NOES", "Promise broken with string form of .break conveys correct message";
 }
