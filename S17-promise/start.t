@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 53;
+plan 54;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -198,3 +198,13 @@ dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
 	}
 	catcher();
 }
+
+# Covers various SEGVs, including the one at the root of RT #129781.
+lives-ok {
+    for ^1000 {
+        my $a = ("A".."Z").pick x 1000;
+        for ^4 {
+            start { my %h; %h{$a} = 42; }
+        }
+    }
+}, 'Access of hash declared in start block with repeat string outside of it does not crash';
