@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 # tests .parse and .parsefile methods on a grammar
 
@@ -79,6 +79,12 @@ throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar
         }
     }
     is RT111768.parse("aaaa;", :rule<e>).ast, ';;;;a', "Recursive .ast calls work";
+}
+
+# RT #130081
+{
+    my grammar G { regex TOP { ‘a’ || ‘abc’ } };
+    is G.parse(‘abc’), 'abc', 'A regex TOP will be backtracked into to get a long enough match';
 }
 
 # vim: ft=perl6 expandtab sw=4
