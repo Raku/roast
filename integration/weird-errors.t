@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 30;
+plan 31;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -237,3 +237,13 @@ throws-like ｢class A114672 {}; class B114672 is A114672 { has $!x = 5; ｣
     ~ ｢our method foo(A114672:) { say $!x } }; &B::foo(A.new)｣,
     Exception,
 'no segfault';
+
+subtest 'using a null string to access a hash does not segfault' => {
+    my $code = Q:to/CODE_END/;
+        class HasNativeStr { has str $.attr }
+        my %h;
+        %h{HasNativeStr.new().attr} = 1;
+        CODE_END
+
+    is_run($code, { :status(1|0) }, 'no segfault')
+}
