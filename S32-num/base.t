@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 44;
+plan 45;
 
 # Int
 {
@@ -71,4 +71,12 @@ plan 44;
     is 16.5e0.base(16,3), '10.800', 'explicit digits are produced even if some are 0';
 
     isa-ok 1.5e0.base(10, -1), Failure, "negative digits arg fails";
+}
+
+subtest 'all Reals can accept Whatever for second .base argument' => {
+    my @reals = 255, 255e0, <255/1>, FatRat.new(255, 1),
+        Duration.new(255), Instant.from-posix(245); # 10 extra TAI - UTC seconds
+
+    plan +@reals;
+    is-deeply .base(16, *), 'FF', .^name for @reals;
 }
