@@ -24,9 +24,9 @@ subtest '.parse-base() as method' => {
     is-approx $all-chars.parse-base(36), $all-chars-result,
         'full character set';
 
-    is-deeply '-FF'.parse-base(16), -255, 'can parse - sign';
-    is-deeply '−FF'.parse-base(16), -255, 'can parse − sign';
-    is-deeply '+FF'.parse-base(16),  255, 'can parse + sign';
+    is-deeply        '-FF'.parse-base(16), -255, 'can parse - sign';
+    is-deeply "\x[2212]FF".parse-base(16), -255, 'can parse − sign (fancy Unicode minus)';
+    is-deeply        '+FF'.parse-base(16),  255, 'can parse + sign';
 
     #?rakudo.jvm todo 'Invalid base-10 character'
     is-deeply $fancy-nums.parse-base(10), $fancy-nums-value,
@@ -70,9 +70,9 @@ subtest 'parse-base() as sub' => {
     is-approx parse-base($all-chars, 36), $all-chars-result,
         'full character set';
 
-    is-deeply parse-base('-FF', 16), -255, 'can parse - sign';
-    is-deeply parse-base('−FF', 16), -255, 'can parse − sign';
-    is-deeply parse-base('+FF', 16),  255, 'can parse + sign';
+    is-deeply parse-base(       '-FF', 16), -255, 'can parse - sign';
+    is-deeply parse-base("\x[2212]FF", 16), -255, 'can parse − sign (fancy Unicode minus)';
+    is-deeply parse-base(       '+FF', 16),  255, 'can parse + sign';
 
     #?rakudo.jvm todo 'Invalid base-10 character'
     is-deeply parse-base($fancy-nums, 10), $fancy-nums-value,
