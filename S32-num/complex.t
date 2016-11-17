@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 552;
+plan 553;
 
 # Basic tests functions specific to complex numbers.
 
@@ -250,6 +250,16 @@ ok Num(exp i * π) == -1, 'Num(Complex) pays attention to $*TOLERANCE';
         is-deeply (42 <=> 41+1e-15i), Order::More, 'More, negligible i part';
     }
 
+}
+
+# RT #128785
+subtest 'exponentiation with zero (n = 0+0i)' => {
+    plan 3;
+
+    constant n = 0+0i;
+    is-deeply n**0, 1+0i, 'n**0';
+    is-deeply n**n, 1+0i, 'n**n';
+    is-deeply 0**n, 1+0i, '0**n';
 }
 
 # vim: ft=perl6
