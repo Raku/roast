@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 80;
+plan 82;
 
 # Object array
 {
@@ -131,4 +131,12 @@ plan 80;
     is @arr.gist, '[[42 43] [44 45]]', '.gist represents structure (native)';
     is @arr.perl, 'array[int].new(:shape(2, 2), [42, 43], [44, 45])',
         '.perl retains structure (native)';
+}
+
+{
+    my @a[5] = ^5;
+    @a = @a.rotate;
+    is @a, "1 2 3 4 0", 'can we assign after a .rotate?';
+    @a = @a.reverse;
+    is @a, "0 4 3 2 1", 'can we assign after a .reverse?';
 }
