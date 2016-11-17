@@ -13,7 +13,7 @@ constant $all-chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm'
 constant $all-chars-result = 2527079815159757168093382078421796304289747094823514859938627964591248797616216274592478001915.000816326530612244738449589931406080722808837890625;
 
 subtest '.parse-base() as method' => {
-    plan 45;
+    plan 48;
 
     is-deeply 'Perl6' .parse-base(30), 20652936,    '"Perl6"  in base-30';
     is-approx 'Perl.6'.parse-base(32), 834421.1875, '"Perl.6" in base-32';
@@ -23,6 +23,10 @@ subtest '.parse-base() as method' => {
 
     is-approx $all-chars.parse-base(36), $all-chars-result,
         'full character set';
+
+    is-deeply '-FF'.parse-base(16), -255, 'can parse - sign';
+    is-deeply '−FF'.parse-base(16), -255, 'can parse − sign';
+    is-deeply '+FF'.parse-base(16),  255, 'can parse + sign';
 
     #?rakudo.jvm todo 'Invalid base-10 character'
     is-deeply $fancy-nums.parse-base(10), $fancy-nums-value,
@@ -45,8 +49,8 @@ subtest '.parse-base() as method' => {
         X::Syntax::Number::InvalidCharacter, :20radix, :0pos, :str<###>,
     'invalid char at first position, base 20';
 
-    throws-like { "1238321".parse-base(8) },
-        X::Syntax::Number::InvalidCharacter, :8radix, :3pos, :str<1238321>,
+    throws-like { "-1238321".parse-base(8) },
+        X::Syntax::Number::InvalidCharacter, :8radix, :4pos, :str<1238321>,
     'invalid char in middle position, base 8';
 
     throws-like { "124".parse-base(4) },
@@ -55,7 +59,7 @@ subtest '.parse-base() as method' => {
 }
 
 subtest 'parse-base() as sub' => {
-    plan 45;
+    plan 48;
 
     is-deeply parse-base('Perl6',  30), 20652936,    '"Perl6"  in base-30';
     is-approx parse-base('Perl.6', 32), 834421.1875, '"Perl.6" in base-32';
@@ -65,6 +69,10 @@ subtest 'parse-base() as sub' => {
 
     is-approx parse-base($all-chars, 36), $all-chars-result,
         'full character set';
+
+    is-deeply parse-base('-FF', 16), -255, 'can parse - sign';
+    is-deeply parse-base('−FF', 16), -255, 'can parse − sign';
+    is-deeply parse-base('+FF', 16),  255, 'can parse + sign';
 
     #?rakudo.jvm todo 'Invalid base-10 character'
     is-deeply parse-base($fancy-nums, 10), $fancy-nums-value,
@@ -87,8 +95,8 @@ subtest 'parse-base() as sub' => {
         X::Syntax::Number::InvalidCharacter, :20radix, :0pos, :str<###>,
     'invalid char at first position, base 20';
 
-    throws-like { parse-base "1238321", 8 },
-        X::Syntax::Number::InvalidCharacter, :8radix, :3pos, :str<1238321>,
+    throws-like { parse-base "-1238321", 8 },
+        X::Syntax::Number::InvalidCharacter, :8radix, :4pos, :str<1238321>,
     'invalid char in middle position, base 8';
 
     throws-like { parse-base "124", 4 },
