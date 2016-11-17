@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 25;
+plan 26;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT, Match.WHAT,         'got right type';
@@ -47,4 +47,14 @@ ok defined($c.pos),             '.pos';
 
     "RT77146" ~~ /(RT)<RT77146_rx>/;
     is $/.keys, (0, "RT77146_rx"), "\$/.keys returns both positional and associative captures";
+}
+
+# https://github.com/rakudo/rakudo/commit/5ac593e
+subtest 'can smartmatch against regexes stored in variables' => {
+    plan 2;
+
+    my $re = rx/a/;
+    my $res = 'a' ~~ $re;
+    isa-ok $res, Match, 'return value is a Match object';
+    is $res, "a", 'return value contains right result';
 }
