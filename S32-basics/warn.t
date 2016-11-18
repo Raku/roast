@@ -47,6 +47,7 @@ is_run 'use v6; warn; say "alive"',
     'warn() without arguments';
 
 # RT #124767
+#?rakudo.jvm todo 'wrong line number (reference to gen/jvm/CORE.setting)'
 is_run 'use v6; warn("OH NOEZ"); say "alive"',
     {
         status => 0,
