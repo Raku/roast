@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 832;
+plan 833;
 
 # Basic test functions specific to rational numbers.
 
@@ -299,5 +299,16 @@ is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish 
 #RT #126391
 try {say 42/(.1+.2-.3)}; 
 isa-ok( $!.numerator, 42, "got the answer rather than 420");
+
+# RT#126016
+subtest '0.9999999999999999999999 to string conversions' => {
+    plan 3;
+
+    constant r = 0.9999999999999999999999;
+    is-deeply r.Str, '1', '.Str rounds off correctly';
+    is-deeply r.perl, '<9999999999999999999999/10000000000000000000000>',
+        '.perl gives accurate result';
+    is-deeply r.perl.EVAL, r, '.perl.EVAL roundtrips';
+}
 
 # vim: ft=perl6
