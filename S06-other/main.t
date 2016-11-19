@@ -47,9 +47,6 @@ subtest 'MAIN can take type-constrain using Enums' => {
             print "pass";
         }
     END
-
-    #?rakudo 3 skip 'Feature temporarily removed for release'
-
     is_run $code, :args[<Rock>                    ], { :out<pass>, :err('') }, 'positional works';
     is_run $code, :args[<--pos-hand=Scissors Rock>], { :out<pass>, :err('') }, 'positional + named works';
     is_run $code, :args[<Hand>                    ], { :out{not .contains: 'pass'}, :err(/'=<Hand>'/) },
