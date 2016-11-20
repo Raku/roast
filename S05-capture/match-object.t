@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 26;
+plan 31;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT, Match.WHAT,         'got right type';
@@ -25,6 +25,13 @@ is $/.kv.elems,       0,        '.kv (empty)';
 nok 'abde' ~~ /\d/,             'no match';
 nok $/.Bool,                    'failed match is False';
 is  $/.Str,          '',        'false match stringifies to empty string';
+
+# Equality checks
+is ('hey' ~~ /(.+)/) === ('foo' ~~ /(.+)/), False, '=== of different match objects';
+is ('foo' ~~ /(.+)/) === ('foo' ~~ /(.+)/), False, '=== of different but similar match objects';
+is $_ === $_, True, '=== of one and the same match object' with 'foo' ~~ /(.+)/;
+is ('hey' ~~ /(.+)/) eqv ('foo' ~~ /(.+)/), False, 'eqv of different match objects';
+is ('foo' ~~ /(.+)/) eqv ('foo' ~~ /(.+)/), True, 'eqv of different but similar match objects';
 
 # RT #76998, cmp. http://perl6advent.wordpress.com/2013/12/17/
 {
