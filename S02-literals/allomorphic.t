@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 101;
+plan 102;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -197,3 +197,6 @@ lives-ok {val("foo")}, "val() exists";
     is_run 'print so %*ENV<FOO>', { status => 0, out => 'False', err => '' },
         'int/string "0" is falsish when passed via ENV';
 }
+
+# https://irclog.perlgeek.de/perl6/2016-11-21#i_13606506
+is-deeply ~<2>, '2', 'prefix:<~> coerces allomorphs to Str';
