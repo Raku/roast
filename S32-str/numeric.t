@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 173;
+plan 174;
 
 #?DOES 2
 sub check($str, $expected_type, $expected_number, $desc?) {
@@ -160,4 +160,39 @@ f      '3+Infi';
 throws-like Q|"34\x[308]5".Int|, X::Str::Numeric,
     '.Int on strings with numerics with combining characters throws';
 
-# vim: ft=perl6 
+subtest 'can handle − (U+2212) minus as regular minus' => {
+    plan 4;
+    is-deeply +'−42', -42, 'Int';
+    is-deeply +'−42.72', -42.72, 'Rat';
+    subtest 'Num (minus in...)' => {
+        plan 3;
+        is-deeply +'−42e0',   -42e0,   'base';
+        is-deeply +'42e−10',   42e-10, 'exponent';
+        is-deeply +'−42e−10', -42e-10, 'both base and exponent';
+    }
+    subtest 'Complex' => {
+        plan 4;
+
+        #?rakudo 2 skip 'cannot handle lone i yet'
+        is-deeply +'−i',     -i, 'lone i';
+        is-deeply +'−10i', -10i, 'number with i';
+
+        subtest 'numberless i (minus in ...)' => {
+            plan 3;
+
+            #?rakudo 3 skip 'cannot handle lone i yet'
+            is-deeply +'−10-i', -10-i, 'real';
+            is-deeply +'10−i',   10-i, 'imaginary';
+            is-deeply +'−10−i', -10-i, 'both real and imaginary';
+        }
+
+        subtest 'i with number (minus in ...)' => {
+            plan 3;
+            is-deeply +'−10-10i', -10-10i, 'real';
+            is-deeply +'10−10i',   10-10i, 'imaginary';
+            is-deeply +'−10−10i', -10-10i, 'both real and imaginary';
+        }
+    }
+}
+
+# vim: ft=perl6
