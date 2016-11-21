@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 12;
+plan 13;
 
 sub create-temporary-file {
     my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
@@ -83,5 +83,13 @@ is-deeply @lines, [<one two three>], 'Changing @*ARGS before calling things on $
 $output = Test::Util::run('$*IN.nl-in = "+"; say get() eq "A";', "A+B+C+");
 #?rakudo.jvm todo 'RT #123888'
 is $output, "True\n", 'Can change $*IN.nl-in and it has effect';
+
+{ # https://github.com/rakudo/rakudo/commit/bd4236359c9150e4490d86275b3c2629b6466566
+    # https://github.com/rakudo/rakudo/commit/bd4236359c9150e4490d86275b3c2629b6466566
+    my @lines = lines Test::Util::run(
+        ｢@*ARGS = '｣ ~ $tmp-file-name ~ ｢' xx 2; .say for $*ARGFILES.lines(5)｣
+    );
+    is-deeply @lines, [<one two three one two>], '.lines with limit works across files';
+}
 
 $tmp-file-name.IO.unlink;
