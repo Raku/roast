@@ -123,6 +123,8 @@ check '-123E+0',    Num,   -123;
 check '-123E+0_1',  Num,  -1230;
 check '1230E-1',    Num,    123;
 check '-12E+1',     Num,   -120;
+#?rakudo.jvm skip 'StringIndexOutOfBoundsException, RT #130150'
+#?DOES 1
 f      '120e';
 f      '120e2_';
 
