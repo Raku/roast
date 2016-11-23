@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 62;
 
 {
     my $s = supply {
@@ -439,6 +439,18 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
     $closed = False;
     $t2.close;
     nok $closed, 'CLOSE phasers do not run twice (normal termination then .close)';
+}
+
+{
+    sub foo($a) {
+        supply {
+            whenever Supply.from-list() {
+                LAST emit $a;
+            }
+        }
+    }
+    is await(foo(42)), 42, 'LAST in whenever triggered without iterations sees correct outer (1)';
+    is await(foo(69)), 69, 'LAST in whenever triggered without iterations sees correct outer (2)';
 }
 
 # vim: ft=perl6 expandtab sw=4
