@@ -156,7 +156,6 @@ f      '3+Infi';
 }
 
 # RT #128542
-#?rakudo.jvm todo 'Need proper Str.codes on JVM'
 throws-like Q|"34\x[308]5".Int|, X::Str::Numeric,
     '.Int on strings with numerics with combining characters throws';
 
