@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 62;
+plan 65;
 
 {
     my $s = supply {
@@ -451,6 +451,30 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
     }
     is await(foo(42)), 42, 'LAST in whenever triggered without iterations sees correct outer (1)';
     is await(foo(69)), 69, 'LAST in whenever triggered without iterations sees correct outer (2)';
+}
+
+lives-ok {
+    react {
+        whenever Supply.from-list(gather { die }) {
+            QUIT { default { } }
+        }
+    }
+}, 'QUIT properly handles exception even when dieing synchronously with the .tap';
+
+{
+    sub foo($a) {
+        supply {
+            whenever Supply.from-list(gather { die }) {
+                QUIT {
+                   default {
+                       emit $a;
+                   }
+               }
+            }
+        }
+    }
+    is await(foo(42)), 42, 'QUIT in whenever triggered without iterations sees correct outer (1)';
+    is await(foo(69)), 69, 'QUIT in whenever triggered without iterations sees correct outer (2)';
 }
 
 # vim: ft=perl6 expandtab sw=4
