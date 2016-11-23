@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
-plan 67;
+plan 68;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -134,6 +136,20 @@ is $(;).elems, 0, '$(;) parses, and is empty';
 {
     is (a => 2).first(/a/), (a => 2), "first with a Regexp object";
     is (a => 2).grep(/a/), (a => 2), "grep with a Regexp object";
+}
+
+subtest '.sum can handle Junctions' => {
+    # http://www.perlmonks.org/?node_id=1176379
+    plan 7;
+    constant @a = (2, 3|4, 5, 6|7);
+    my $sum = @a.sum;
+    is-deeply-junction  sum(@a), $sum, 'sum() produces same thing as .sum';
+    is-deeply-junction ([+] @a), $sum, '[+] produces same thing as .sum';
+    cmp-ok $sum,  '==', 2+3+5+6, 'sum is correct (1)';
+    cmp-ok $sum,  '==', 2+4+5+6, 'sum is correct (2)';
+    cmp-ok $sum,  '==', 2+3+5+7, 'sum is correct (3)';
+    cmp-ok $sum,  '==', 2+4+5+7, 'sum is correct (4)';
+    ok     $sum   !==        42, 'sum is correct (6)';
 }
 
 # vim: ft=perl6
