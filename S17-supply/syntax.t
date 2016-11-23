@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 65;
+plan 67;
 
 {
     my $s = supply {
@@ -476,5 +476,28 @@ lives-ok {
     is await(foo(42)), 42, 'QUIT in whenever triggered without iterations sees correct outer (1)';
     is await(foo(69)), 69, 'QUIT in whenever triggered without iterations sees correct outer (2)';
 }
+
+# RT #128991
+lives-ok {
+    for ^5 {
+        my $p = Promise.new;
+        my $s = supply {
+            whenever Supply.interval(.001) {
+                done if $++ > 50;
+            }
+        }
+        $s.tap(done => { $p.keep(True) }); # Will die if keeping twice
+        await $p;
+    }
+}, 'Never get done message twice from a supply';
+lives-ok {
+    for ^5 {
+        react {
+            whenever Supply.interval(.001) {
+                done if $++ > 50;
+            }
+        }
+    }
+}, 'No react guts crash in case that once spat out two done messages either'; 
 
 # vim: ft=perl6 expandtab sw=4
