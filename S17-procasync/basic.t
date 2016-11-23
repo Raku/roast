@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 33;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -91,3 +91,18 @@ is $stderr, '',       'got correct STDERR';
 
 throws-like { Proc::Async.new }, X::Multi::NoMatch,
     'attempting to create Proc::Async with wrong arguments throws';
+
+# Check we don't have races if you tap the stdout supply after starting.
+{
+    my $pc = $*DISTRO.is-win
+        ?? Proc::Async.new( 'cmd', </c echo Hello World> )
+        !! Proc::Async.new( 'echo', <Hello World> );
+    my $stdout = $pc.stdout;
+    my $done = $pc.start;
+    sleep 0.1; # Enough to make the test flap if we're doing things wrong
+    my $captured = '';
+    $stdout.tap({ $captured ~= $_ });
+    await $done;
+    is $captured, "Hello World\n",
+        "Tapping stdout supply after start of process does not lose data";
+}
