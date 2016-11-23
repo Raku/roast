@@ -2,6 +2,23 @@ use v6;
 unit module Test::Util;
 
 use Test;
+use MONKEY-GUTS;
+
+sub is-deeply-junction (
+    Junction $got, Junction $expected, Str:D $desc
+) is export {
+    sub junction-guts (Junction $j) {
+        my $st = nqp::getattr(nqp::decont($j), Junction, '$!storage');
+        do for ^nqp::elems(nqp::decont($st)) {
+            given nqp::atpos(nqp::decont($st), $_) {
+                when Junction { junction-guts($_).Slip }
+                $_
+            }
+        }
+    }
+
+    is-deeply junction-guts($got), junction-guts($expected), $desc;
+}
 
 proto sub is_run(|) is export { * }
 
@@ -352,6 +369,13 @@ They may not contain quote characters, or get_out will complain loudly.
 
 This will die if it can't clean up the temp files it uses to do its work.
 All other errors should be trapped and reported via the 'test_died' item.
+
+=head2 is-deeply-junction( Junction $got, Junction $expected, Str:D $desc)
+
+Guts two junctions and uses C<is-deeply> test on those guts. Use to
+compare two Junctions for equivalence. I<Note:> this test is rather strict
+and will fail even if the two Junctions are functionally equivalent, for
+example 1|2 and 2|1 are considered to be different Junctions.
 
 =end pod
 
