@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 68;
+plan 69;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -150,6 +150,13 @@ subtest '.sum can handle Junctions' => {
     cmp-ok $sum,  '==', 2+3+5+7, 'sum is correct (3)';
     cmp-ok $sum,  '==', 2+4+5+7, 'sum is correct (4)';
     ok     $sum   !==        42, 'sum is correct (6)';
+}
+
+{ # RT#130160
+    my @a := <a b c>[0..2, 0..2].flat.cache;
+    @a.Bool;
+    @a.elems;
+    is-deeply @a, <a b c a b c>, '.flat does not skip inner iterables';
 }
 
 # vim: ft=perl6
