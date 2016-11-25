@@ -5,10 +5,10 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 13;
+plan 14;
 
-sub create-temporary-file {
-    my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
+sub create-temporary-file ($name = '') {
+    my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ $name ~ '-' ~ time;
     return $filename, open($filename, :w);
 }
 
