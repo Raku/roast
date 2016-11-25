@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 19;
 
 # L<S32::Containers/Classes and Roles/"=item Buf">
 
@@ -165,5 +165,12 @@ subtest 'Buf.prepend' => {
 
 
 } # </coverage; 2016-09-26>
+
+subtest 'arity-1 infix:<~> works on Blobs' => {
+    plan 2;
+    constant $b = Buf.new: <42 72 13>;
+    is-deeply infix:<~>($b), $b, 'arity-1 infix:<~> is unity';
+    is-deeply ([~] [$b]),    $b, '[~] works with array with 1 blob';
+}
 
 # vim: ft=perl6
