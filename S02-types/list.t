@@ -153,6 +153,7 @@ subtest '.sum can handle Junctions' => {
     ok     $sum   !==        42, 'sum is correct (6)';
 }
 
+#?rakudo.jvm skip 'RT #130160 works when run standalone, maybe wrong multi selected'
 { # RT#130160
     my @a := <a b c>[0..2, 0..2].flat.cache;
     @a.Bool;
