@@ -450,6 +450,7 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
         }
     }
     is await(foo(42)), 42, 'LAST in whenever triggered without iterations sees correct outer (1)';
+    #?rakudo.jvm todo "got: '42'"
     is await(foo(69)), 69, 'LAST in whenever triggered without iterations sees correct outer (2)';
 }
 
@@ -474,6 +475,7 @@ lives-ok {
         }
     }
     is await(foo(42)), 42, 'QUIT in whenever triggered without iterations sees correct outer (1)';
+    #?rakudo.jvm todo "got: '42'"
     is await(foo(69)), 69, 'QUIT in whenever triggered without iterations sees correct outer (2)';
 }
 

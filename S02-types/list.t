@@ -143,6 +143,7 @@ subtest '.sum can handle Junctions' => {
     plan 7;
     constant @a = (2, 3|4, 5, 6|7);
     my $sum = @a.sum;
+    #?rakudo.jvm 2 skip 'Type check failed in assignment to $st; expected Mu but got List ($(any(16, 17), any(17...)'
     is-deeply-junction  sum(@a), $sum, 'sum() produces same thing as .sum';
     is-deeply-junction ([+] @a), $sum, '[+] produces same thing as .sum';
     cmp-ok $sum,  '==', 2+3+5+6, 'sum is correct (1)';

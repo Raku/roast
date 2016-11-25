@@ -137,8 +137,10 @@ plan 11;
     foo(3);
     is @first, [3, 2, 1, 1, 2, 1, 1, 2, 1, 1],
         'FIRST in loop works fine with recursion';
+    #?rakudo.jvm todo "got '2 3 2 3 3 2 3 2 3 3 2 3 2 3 3'"
     is @next, [1, 2, 1, 2, 3, 1, 2, 1, 2, 3, 1, 2, 1, 2, 3],
         'NEXT in loop works fine with recursion';
+    #?rakudo.jvm todo "got '2 2 3 2 2 3 2 2 3 3'"
     is @last, [1, 1, 2, 1, 1, 2, 1, 1, 2, 3],
         'LAST in loop works fine with recursion';
 }
