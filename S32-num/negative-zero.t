@@ -2,7 +2,7 @@ use v6;
 use lib <t/spec/packages>;
 use Test;
 use Test::Util;
-plan 2;
+plan 3;
 
 =begin pod
 
@@ -30,4 +30,5 @@ subtest 'sprintf formats' => {
 }
 
 # RT#128897
-is-neg-zero val(<-0e0>), 'val() correctly handles negative zero';
+is-neg-zero val(<-0e0>), 'val() correctly handles negative zero, U+002D minus';
+is-neg-zero val(<−0e0>), 'val() correctly handles negative zero, U+2212 minus';
