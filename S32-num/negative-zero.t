@@ -2,13 +2,21 @@ use v6;
 use lib <t/spec/packages>;
 use Test;
 use Test::Util;
-plan 1;
+plan 2;
 
 =begin pod
 
 Tests for correct handling of negative zeros
 
 =end pod
+
+sub is-neg-zero ($v, $desc) {
+    # atan2 is sensitive to the sign of the zero; use it as a way to determine
+    # which zero we got from val()
+    is-approx atan2($v, -1e0), -π, $desc;
+}
+
+
 
 subtest 'sprintf formats' => {
     plan 6;
@@ -20,3 +28,6 @@ subtest 'sprintf formats' => {
     is-deeply '%e'.sprintf( -0e0), '-0.000000e+00', 'method, %e, -0e0';
     is-deeply '%g'.sprintf( -0e0), '-0',            'method, %g, -0e0';
 }
+
+# RT#128897
+is-neg-zero val(<-0e0>), 'val() correctly handles negative zero';
