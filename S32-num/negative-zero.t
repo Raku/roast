@@ -2,7 +2,7 @@ use v6;
 use lib <t/spec/packages>;
 use Test;
 use Test::Util;
-plan 7;
+plan 9;
 
 =begin pod
 
@@ -37,4 +37,48 @@ subtest 'sprintf formats' => {
     is-neg-zero '−0e0'.Num,  'Str.Num gives neg. zero, U+2212 minus';
     is-neg-zero   '-0'.Num,  'Str.Num gives neg. zero (non-num str), U+002D';
     is-neg-zero   '−0'.Num,  'Str.Num gives neg. zero (non-num str), U+2212';
+}
+
+subtest 'cmp on num zeros' => {
+    plan 12;
+
+    is-deeply ( 0e0 cmp -0e0), Same, ' 0e0 cmp -0e0';
+    is-deeply (-0e0 cmp  0e0), Same, '-0e0 cmp  0e0';
+    is-deeply (-0e0 cmp -0e0), Same,  '-0e0 cmp -0e0';
+    is-deeply ( 0e0 cmp  0e0), Same,  ' 0e0 cmp  0e0';
+
+    my num $nz = -0e0;
+    my num $pz =  0e0;
+    is-deeply ( $pz cmp  $nz), Same, ' 0e0 cmp -0e0, native nums';
+    is-deeply ( $nz cmp  $pz), Same, '-0e0 cmp  0e0, native nums';
+    is-deeply ( $nz cmp  $nz), Same,  '-0e0 cmp -0e0, native nums';
+    is-deeply ( $pz cmp  $pz), Same,  ' 0e0 cmp  0e0, native nums';
+
+    is-deeply (  0e0 cmp  $nz), Same, ' 0e0 cmp -0e0 (native)';
+    is-deeply (  $nz cmp  0e0), Same, '-0e0 (native) cmp  0e0';
+    is-deeply (  $pz cmp -0e0), Same, ' 0e0 (native) cmp -0e0';
+    is-deeply ( -0e0 cmp  $pz), Same, '-0e0 cmp  0e0 (native)';
+}
+
+
+# RT #128395
+subtest 'infix:<===> on num zeros' => {
+    plan 12;
+
+    is-deeply ( 0e0 === -0e0), False, ' 0e0 === -0e0';
+    is-deeply (-0e0 ===  0e0), False, '-0e0 ===  0e0';
+    is-deeply (-0e0 === -0e0), True,  '-0e0 === -0e0';
+    is-deeply ( 0e0 ===  0e0), True,  ' 0e0 ===  0e0';
+
+    my num $nz = -0e0;
+    my num $pz =  0e0;
+    is-deeply ( $pz ===  $nz), False, ' 0e0 === -0e0, native nums';
+    is-deeply ( $nz ===  $pz), False, '-0e0 ===  0e0, native nums';
+    is-deeply ( $nz ===  $nz), True,  '-0e0 === -0e0, native nums';
+    is-deeply ( $pz ===  $pz), True,  ' 0e0 ===  0e0, native nums';
+
+    is-deeply (  0e0 ===  $nz), False, ' 0e0 === -0e0 (native)';
+    is-deeply (  $nz ===  0e0), False, '-0e0 (native) ===  0e0';
+    is-deeply (  $pz === -0e0), False, ' 0e0 (native) === -0e0';
+    is-deeply ( -0e0 ===  $pz), False, '-0e0 ===  0e0 (native)';
 }
