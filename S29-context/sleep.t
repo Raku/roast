@@ -1,9 +1,11 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 # L<S29/Context/"=item sleep">
 
-plan 22;
+plan 23;
 
 my $seconds = 3;
 my $nil is default(Nil);
@@ -78,5 +80,12 @@ my $b;
     isa-ok EVAL('$b={sleep(Inf)}'),       Block, 'sleep(Inf) compiles';
     isa-ok EVAL('$b={sleep(*)}'),         Block, 'sleep(*) compiles';
 } #2
+
+
+{ # RT#130170
+    is_run ｢start { sleep 3; exit }; sleep 9999999999999999999; say "Fail"｣, {
+        :out(''), :err(''), :0status
+    }, 'huge values to sleep() work';
+}
 
 # vim: ft=perl6
