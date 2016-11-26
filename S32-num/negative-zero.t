@@ -2,7 +2,7 @@ use v6;
 use lib <t/spec/packages>;
 use Test;
 use Test::Util;
-plan 3;
+plan 7;
 
 =begin pod
 
@@ -30,5 +30,11 @@ subtest 'sprintf formats' => {
 }
 
 # RT#128897
-is-neg-zero val(<-0e0>), 'val() correctly handles negative zero, U+002D minus';
-is-neg-zero val(<−0e0>), 'val() correctly handles negative zero, U+2212 minus';
+{
+    is-neg-zero val(<-0e0>), 'val() negative zero, U+002D minus';
+    is-neg-zero val(<−0e0>), 'val() negative zero, U+2212 minus';
+    is-neg-zero '-0e0'.Num,  'Str.Num gives neg. zero, U+002D minus';
+    is-neg-zero '−0e0'.Num,  'Str.Num gives neg. zero, U+2212 minus';
+    is-neg-zero   '-0'.Num,  'Str.Num gives neg. zero (non-num str), U+002D';
+    is-neg-zero   '−0'.Num,  'Str.Num gives neg. zero (non-num str), U+2212';
+}
