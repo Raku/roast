@@ -82,6 +82,7 @@ my $b;
 } #2
 
 
+#?rakudo.jvm todo 'RT #130170 huge value to sleep()'
 { # RT#130170
     is_run ｢start { sleep 3; exit }; sleep 9999999999999999999; say "Fail"｣, {
         :out(''), :err(''), :0status
