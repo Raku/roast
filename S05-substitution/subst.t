@@ -132,9 +132,9 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(2)),
        'a x c d e f g h',
        '.subst with :p(2)';
-       
+
     # :p and :g
-    #?niecza todo 
+    #?niecza todo
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(0), :g),
        'x x x x x x x x',
        '.subst with :p(0) and :g';
@@ -143,7 +143,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        'a b c d e f g h',
        '.subst with :p(1) and :g';
 
-    #?niecza todo 
+    #?niecza todo
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(2), :g),
        'a x x x x x x x',
        '.subst with :p(2) and :g';
@@ -162,7 +162,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(2)),
        'a x c d e f g h',
        '.subst with :c(2)';
-       
+
     # :c and :g
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :g),
        'x x x x x x x x',
@@ -181,11 +181,11 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :nth(3, 4)),
        'a b x x e f g h',
        '.subst with :c(0) and :nth(3, 4)';
-    
+
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(1), :nth(3, 4)),
        'a b c x x f g h',
        '.subst with :c(1) and :nth(3, 4)';
-    
+
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(2), :nth(3, 4)),
        'a b c x x f g h',
        '.subst with :c(2) and :nth(3, 4)';
@@ -363,7 +363,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #83484
-# s// with other separators 
+# s// with other separators
 {
     my $x = 'abcde';
     $x ~~ s!bc!zz!;
@@ -463,7 +463,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     class SubstInsideMethod {
         method ro($_ ) { s/c// }
     }
-    
+
     dies-ok { SubstInsideMethod.new.ro('ccc') }, '(sanely) dies when trying to s/// a read-only variable';
 }
 
@@ -622,7 +622,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     throws-like { "".subst: /\w/, "", :x(my class SomeInvalidXParam {}.new) },
         X::Str::Match::x, 'giving .subst invalid args throws';
 
-    throws-like { ($ = "").subst-mutate: /\w/, "", :x(my class SomeInvalidXParam {}.new) }, 
+    throws-like { ($ = "").subst-mutate: /\w/, "", :x(my class SomeInvalidXParam {}.new) },
         X::Str::Match::x, 'giving .subst-mutate invalid args throws';
 }
 
