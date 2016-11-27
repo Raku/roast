@@ -126,7 +126,7 @@ is(@lines7[3], "... Its not over yet!", '$in.lines worked in list context');
 ok($in7.close, 'file closed okay (7)');
 
 {
-# test reading a file into an array and then closing before 
+# test reading a file into an array and then closing before
 # doing anything with the array (in other words, is perl too lazy)
 my $in8 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
@@ -194,7 +194,7 @@ ok($in8.close, 'file closed okay (in8)');
 
 #?niecza skip 'Not yet able to open both :r and :w'
 {
-    my $fh9 = open($filename, :r, :w);  # was "<+" ? 
+    my $fh9 = open($filename, :r, :w);  # was "<+" ?
     isa-ok($fh9, IO::Handle);
     #my $line9_1 = get($fh9);
     #is($line9_1, "Hello World");
@@ -211,7 +211,7 @@ ok($in8.close, 'file closed okay (in8)');
 
 #?niecza skip 'Not yet able to open both :r and :w'
 {
-    my $fh10 = open($filename, :rw);  # was "<+" ? 
+    my $fh10 = open($filename, :rw);  # was "<+" ?
     isa-ok($fh10, IO::Handle);
     $fh10.close;
     #ok($fh10.close, 'file closed okay (10)');
