@@ -16,7 +16,7 @@ I/O tests
 
 =end pod
 
-plan 112;
+plan 113;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -359,6 +359,24 @@ unlink($filename);
 {
     dies-ok { open('t').read(42) }, '.read on a directory fails';
     dies-ok { open('t').get(1) }, '.get on a directory fails';
+}
+
+subtest '.printf()' => {
+    plan 5;
+
+    constant $args = ｢'%% %d %f %e %x %s', 42, 42.1, 12e100, 16, 'foo'｣;
+    constant $result = '% 42 42.100000 1.200000e+101 10 foo';
+
+    is_run ｢$*OUT.printf: ｣ ~ $args, { :out($result), :err(''), :0status },
+        '$*OUT';
+    is_run ｢$*ERR.printf: ｣ ~ $args, { :out(''), :err($result), :0status },
+        '$*ERR';
+
+    throws-like { $*OUT.printf }, Exception, 'call without args';
+    throws-like { $*OUT.printf: '%z', 42 },
+        X::Str::Sprintf::Directives::Unsupported, 'wrong directive';
+    throws-like { $*OUT.printf: '%d %d', 42 },
+        X::Str::Sprintf::Directives::Count, 'args do not match format';
 }
 
 # vim: ft=perl6
