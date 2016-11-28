@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 77;
+plan 78;
 
 # Real **
 is(0 ** 0,    1, "0 ** 0 ==  1");
@@ -135,8 +135,10 @@ is-approx(27 ** -⅔, ⅑, "27 ** -⅔ == ⅑");
 # if no throwage happens, as is wanted, the program will take forever to run
 # so we wait for 2 seconds, then print success message and exit; if the throw
 # occurs, the Promise won't have a chance to print the success message.
-is_run ｢start { sleep 2; say ‘pass’; exit }; EVAL ‘say 1.0000001 ** (10 ** 9)’｣,
+is_run ｢start { sleep 2; say ‘pass’; exit }; EVAL ‘say 1.0000001 ** (10 ** 8)’｣,
     {:out("pass\n"), :err(''), :0status },
-'rasing a Rat to largish power does not throw';
+'raising a Rat to largish power does not throw';
+throws-like { EVAL qq[say 1.0000001 ** (10 ** 90000)] }, 
+    $xno, "raising a Rat to a very large number throws";
 
 # vim: ft=perl6
