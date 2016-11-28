@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 20;
+plan 21;
 
 class Ap {
     has $.s;
@@ -75,6 +75,16 @@ throws-like 'sub optimal($!x) { }', X::Syntax::NoSelf, variable => '$!x';
     $o.xn: n => 2.5e0;
     is $o.yi, 69, 'Can use attributive binding on a native attribute (int, named)';
     is $o.yn, 2.5e0, 'Can use attributive binding on a native attribute (num, named)';
+}
+
+{
+    my class C {
+        has $.foo;
+        method bar($bar) {
+            with $bar -> $!foo { self }
+        }
+    }
+    is C.new.bar("foo").foo, "foo", 'any Signature binds attributively to the next self in the outer chain';
 }
 
 # vim: ft=perl6
