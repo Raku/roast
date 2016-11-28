@@ -1,8 +1,9 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 160;
+plan 161;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -283,6 +284,12 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     throws-like { sprintf 'D6.2', 'foo' }, X::Str::Sprintf::Directives::Count,
         backtrace => /^ [ <!after 'panic'> . ]+ $/,
     'Invalid formats do not spill internal details';
+}
+
+{ # https://irclog.perlgeek.de/perl6/2016-11-28#i_13640361
+    is_run ｢print sprintf 'pass'｣, {
+        :out<pass>, :err(''), :0status
+    }, 'sprintf($format) does not issue spurious warnings';
 }
 
 # vim: ft=perl6
