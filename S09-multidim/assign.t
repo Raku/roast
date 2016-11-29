@@ -26,6 +26,7 @@ dies-ok { my @a[2;2] = <a b>, <c d>, <e f> },
     'Cannot assign to many lists at first dimension';
 dies-ok { my @a[2;2] = <a b>, <c d e> },
     'Cannot assign to many items at first dimension';
+#?rakudo.jvm skip 'StackOverflowError'
 throws-like { my @a[2;2] = <a b c d> }, X::Assignment::ToShaped,
     'Cannot assign flat list of items';
 {
