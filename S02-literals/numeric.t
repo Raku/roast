@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 67;
 
 isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
@@ -67,6 +67,18 @@ is-approx   <3.1e-99+2.9e-99i>.im,  2.9e-99, '<3.1e-99+2.9e-99i> produces correc
 
 is  <NaN+Inf\i>,   NaN + Inf\i, '<NaN+Inf\i> produces correct value';
 is  <NaN-Inf\i>,   NaN - Inf\i, '<NaN-Inf\i> produces correct value';
+
+# Weird edge cases
+#?rakudo 8 todo 'A fix for ticket #129915 should handle these as well'
+isa-ok <0--Inf\i>, Str, '0--Inf\i is a Str';
+isa-ok <0++Inf\i>, Str, '0++Inf\i is a Str';
+isa-ok <0+-Inf\i>, Str, '0+-Inf\i is a Str';
+isa-ok <0-+Inf\i>, Str, '0-+Inf\i is a Str';
+
+isa-ok <--Inf-1i>, Str, '--Inf-1i is a Str';
+isa-ok <++Inf-1i>, Str, '++Inf-1i is a Str';
+isa-ok <+-Inf-1i>, Str, '+-Inf-1i is a Str';
+isa-ok <-+Inf-1i>, Str, '-+Inf-1i is a Str';
 
 # RT #74640
 is-approx 3.14159265358979323846264338327950288419716939937510e0,
