@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 67;
+plan 68;
 
 {
     my $s = supply {
@@ -501,5 +501,16 @@ lives-ok {
         }
     }
 }, 'No react guts crash in case that once spat out two done messages either'; 
+
+lives-ok {
+    my $s = supply { whenever Supply.interval(0.001) { done } }
+    await do for ^4 {
+        start {
+            for ^500 {
+                react { whenever $s { } }
+            }
+        }
+    }
+}, 'No races/crashes around interval that emits done (used to SEGV and various errors)';
 
 # vim: ft=perl6 expandtab sw=4
