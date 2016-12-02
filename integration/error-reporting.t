@@ -167,7 +167,7 @@ ok $b1 === $b2, "Backtrace does not change on additional .backtrace";
 }
 
 is_run 'sub s1 { sub s2 { fail("foo"); }; s2()(); }; s1();', {
-            err => rx/sub\ss2.*sub\ss1.*thrown<-[s]>+sub\ss1/
+            err => rx/sub\ss2.*sub\ss1.*thrown.*sub\ss1/
         }, "Thrown Failure outputs dual backtraces";
 
 # see http://irclog.perlgeek.de/perl6/2015-07-24#i_10947364 and commit c683fe9
