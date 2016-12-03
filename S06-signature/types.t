@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 15;
 
 sub f($x) returns Int { return $x };
 
@@ -64,17 +64,75 @@ subtest 'Code.of() returns return type' => {
     is {;}.of.^name, 'Mu', 'no explicit return constraint';
 }
 
-{ # RT #129915
-    lives-ok { sub f(−42){}(−42) },
-        'U+2212 minus with literal Int can be used in signature';
-    lives-ok { sub f(−Inf){}(-Inf) },
-        'U+2212 minus with literal Inf can be used in signature';
-    lives-ok { sub f(−∞){}(-Inf) },
-        'U+2212 minus with literal ∞ can be used in signature';
-    lives-ok { sub f(+Inf){}(Inf) },
-        '+ with literal Inf can be used in signature';
-    lives-ok { sub f(+∞){}(Inf) },
-        '+ with literal ∞ can be used in signature';
+# RT #129915
+subtest 'numeric literals as type constraints' => {
+    subtest 'integers' => {
+        eval-lives-ok ｢sub f( 42){}( 42)｣, 'bare';
+        eval-lives-ok ｢sub f(+42){}(+42)｣, 'plus';
+        eval-lives-ok ｢sub f(-42){}(-42)｣, 'minus';
+        eval-lives-ok ｢sub f(−42){}(−42)｣, 'U+2212 minus';
+    }
+    subtest 'unum' => {
+        eval-lives-ok ｢sub f( ½){}( .5)｣, 'bare';
+        eval-lives-ok ｢sub f(+½){}( .5)｣, 'plus';
+        eval-lives-ok ｢sub f(-½){}(-.5)｣, 'minus';
+        eval-lives-ok ｢sub f(−½){}(-.5)｣, 'U+2212 minus';
+    }
+    subtest 'rats' => {
+        eval-lives-ok ｢sub f( <1/2>){}( .5) ｣, 'bare </> literal';
+        eval-lives-ok ｢sub f(<-1/2>){}(-.5) ｣, 'minus </> literal';
+        eval-lives-ok ｢sub f(<−1/2>){}(-.5) ｣, 'U+2212 minus </> literal';
+        eval-lives-ok ｢sub f(   1.5){}( 1.5)｣, 'bare \d.\d literal';
+        eval-lives-ok ｢sub f(  -1.5){}(-1.5)｣, 'minus \d.\d literal';
+        eval-lives-ok ｢sub f(  −1.5){}(-1.5)｣, 'U+2212 minus \d.\d literal';
+    }
+    subtest 'nums' => {
+        eval-lives-ok ｢sub f( 1e2 ){}( 1e2 )｣, 'bare';
+        eval-lives-ok ｢sub f(-1e2 ){}(-1e2 )｣, 'minus (base)';
+        eval-lives-ok ｢sub f(−1e2 ){}(-1e2 )｣, 'U+2212 minus (base)';
+        eval-lives-ok ｢sub f( 1e+2){}( 1e2 )｣, 'bare (plus exp)';
+        eval-lives-ok ｢sub f(-1e+2){}(-1e2 )｣, 'minus (base) (plus exp)';
+        eval-lives-ok ｢sub f(−1e+2){}(-1e2 )｣, 'U+2212 minus (base) (plus exp)';
+        eval-lives-ok ｢sub f( 1e-2){}( 1e-2)｣, 'minus (exp)';
+        eval-lives-ok ｢sub f( 1e−2){}( 1e−2)｣, 'U+2212 minus (exp)';
+        eval-lives-ok ｢sub f(-1e-2){}(-1e-2)｣, 'minus (base and exp)';
+        eval-lives-ok ｢sub f(−1e−2){}(-1e-2)｣, 'U+2212 minus (base and exp)';
+    }
+    subtest 'complex' => {
+        eval-lives-ok ｢sub f( <1+2i>){}( 1+2i)｣, 'bare';
+        eval-lives-ok ｢sub f(<-1+2i>){}(-1+2i)｣, 'minus (real)';
+        eval-lives-ok ｢sub f(<−1+2i>){}(-1+2i)｣, 'U+2212 minus (real)';
+        eval-lives-ok ｢sub f( <1-2i>){}( 1-2i)｣, 'minus (imaginary)';
+        eval-lives-ok ｢sub f( <1−2i>){}( 1−2i)｣, 'U+2212 minus (imaginary)';
+        eval-lives-ok ｢sub f(<-1-2i>){}(-1-2i)｣, 'minus (real and imaginary)';
+        eval-lives-ok ｢sub f(<−1−2i>){}(-1-2i)｣, 'U+2212 minus (real and imagin.)';
+    }
+    subtest 'infinity' => {
+        eval-lives-ok ｢sub f( Inf){}( Inf)｣, 'bare Inf';
+        eval-lives-ok ｢sub f(+Inf){}( Inf)｣, 'plus Inf';
+        eval-lives-ok ｢sub f(-Inf){}(-Inf)｣, 'minus Inf';
+        eval-lives-ok ｢sub f(−Inf){}(-Inf)｣, 'U+2212 minus Inf';
+        eval-lives-ok ｢sub f(   ∞){}( Inf)｣, 'bare ∞';
+        eval-lives-ok ｢sub f(  +∞){}( Inf)｣, 'plus ∞';
+        eval-lives-ok ｢sub f(  -∞){}(-Inf)｣, 'minus ∞';
+        eval-lives-ok ｢sub f(  −∞){}(-Inf)｣, 'U+2212 minus ∞';
+    }
+    subtest 'NaN' => {
+        eval-lives-ok ｢sub f(NaN){}(NaN)｣, 'bare';
+    }
+    subtest 'π' => {
+        eval-lives-ok ｢sub f(  π){}( π)｣, 'bare, π';
+        eval-lives-ok ｢sub f( pi){}( π)｣, 'bare, pi';
+    }
+    subtest 'τ' => {
+        eval-lives-ok ｢sub f(   τ){}( τ)｣, 'bare, τ';
+        eval-lives-ok ｢sub f( tau){}( τ)｣, 'bare, tau';
+    }
+    subtest '𝑒' => {
+        #?rakudo.jvm 2 skip '𝑒 does not work on JVM'
+        eval-lives-ok ｢sub f( 𝑒){}( 𝑒)｣, 'bare, 𝑒';
+        eval-lives-ok ｢sub f( e){}( 𝑒)｣, 'bare, e';
+    }
 }
 
 # vim: ft=perl6
