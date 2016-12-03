@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 17;
+plan 21;
 
 # L<S02/"Infinity and C<NaN>" /Perl 6 by default makes standard IEEE floating point concepts visible>
 
@@ -74,5 +74,13 @@ ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
     is $x, Inf, 'assigning Inf to Num works without errors';
 }
 
+{ # RT #129915
+    is-deeply -Inf², -Inf, '-Inf² follows mathematical order of operations';
+    is-deeply -∞², -Inf, '-∞² follows mathematical order of operations';
+    is-deeply −Inf², -Inf,
+        '−Inf² follows mathematical order of operations (U+2212 minus)';
+    is-deeply −∞², -Inf,
+        '−∞² follows mathematical order of operations (U+2212 minus)';
+}
 
 # vim: ft=perl6

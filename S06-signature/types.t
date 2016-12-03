@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 19;
 
 sub f($x) returns Int { return $x };
 
@@ -64,8 +64,17 @@ subtest 'Code.of() returns return type' => {
     is {;}.of.^name, 'Mu', 'no explicit return constraint';
 }
 
-# RT #129915 https://rt.perl.org/Ticket/Display.html?id=129915
-lives-ok { sub f(−42){}(−42) },
-    'U+2212 minus with literal Int can be used in signature';
+{ # RT #129915
+    lives-ok { sub f(−42){}(−42) },
+        'U+2212 minus with literal Int can be used in signature';
+    lives-ok { sub f(−Inf){}(-Inf) },
+        'U+2212 minus with literal Inf can be used in signature';
+    lives-ok { sub f(−∞){}(-Inf) },
+        'U+2212 minus with literal ∞ can be used in signature';
+    lives-ok { sub f(+Inf){}(Inf) },
+        '+ with literal Inf can be used in signature';
+    lives-ok { sub f(+∞){}(Inf) },
+        '+ with literal ∞ can be used in signature';
+}
 
 # vim: ft=perl6
