@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 102;
+plan 103;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -200,3 +200,12 @@ lives-ok {val("foo")}, "val() exists";
 
 # https://irclog.perlgeek.de/perl6/2016-11-21#i_13606506
 is-deeply ~<2>, '2', 'prefix:<~> coerces allomorphs to Str';
+
+subtest 'U+2212 parses correctly in compound literals' => {
+    plan 4;
+
+    is-deeply <5−1i>,   5-1i, '<5−1i> is a literal Complex';
+    is-deeply <−5−1i>, -5-1i, '<−5−1i> is a literal Complex';
+    is-deeply <−5+1i>, -5+1i, '<−5+1i> is a literal Complex';
+    is-deeply <−1/2>,   -0.5, '<−1/2> is a literal Rat';
+}

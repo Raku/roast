@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 174;
+plan 186;
 
 #?DOES 2
 sub check($str, $expected_type, $expected_number, $desc?) {
@@ -108,21 +108,27 @@ f     '3/2.0';
 
 check '123e0',      Num,    123;
 check '-123e0',     Num,   -123;
+check '−123e0',     Num,   -123; # U+2212 minus
 check '+123e0',     Num,    123;
 check '+123.0e0',   Num,    123;
 check '+123.0_1e2', Num,  12301;
 check '+123.0_1e0_2', Num,  12301;
 check '123e-0',     Num,    123;
 check '-123e+0',    Num,   -123;
+check '−123e+0',    Num,   -123; # U+2212 minus
 check '123E0',      Num,    123;
 check '1_2_3E0_0',  Num,    123;
 check '-123E0',     Num,   -123;
+check '−123E0',     Num,   -123; # U+2212 minus
 check '+123E0',     Num,    123;
 check '123E-0',     Num,    123;
+check '123E−0',     Num,    123; # U+2212 minus
 check '-123E+0',    Num,   -123;
 check '-123E+0_1',  Num,  -1230;
 check '1230E-1',    Num,    123;
+check '1230E−1',    Num,    123; # U+2212 minus
 check '-12E+1',     Num,   -120;
+check '−12E+1',     Num,   -120; # U+2212 minus
 f      '120e';
 f      '120e2_';
 
