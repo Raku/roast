@@ -46,15 +46,15 @@ subtest '.parse-base() as method' => {
     'too small radix throws';
 
     throws-like { "###".parse-base(20) },
-        X::Syntax::Number::InvalidCharacter, :20radix, :0pos, :str<###>,
+        X::Syntax::Number::InvalidCharacter, :20radix, :0at, :str<###>,
     'invalid char at first position, base 20';
 
     throws-like { "-1238321".parse-base(8) },
-        X::Syntax::Number::InvalidCharacter, :8radix, :4pos, :str<1238321>,
+        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<1238321>,
     'invalid char in middle position, base 8';
 
     throws-like { "124".parse-base(4) },
-        X::Syntax::Number::InvalidCharacter, :4radix, :2pos, :str<124>,
+        X::Syntax::Number::InvalidCharacter, :4radix, :2at, :str<124>,
     'invalid char at last position, base 4';
 }
 
@@ -92,15 +92,15 @@ subtest 'parse-base() as sub' => {
     'too small radix throws';
 
     throws-like { parse-base "###", 20 },
-        X::Syntax::Number::InvalidCharacter, :20radix, :0pos, :str<###>,
+        X::Syntax::Number::InvalidCharacter, :20radix, :0at, :str<###>,
     'invalid char at first position, base 20';
 
     throws-like { parse-base "-1238321", 8 },
-        X::Syntax::Number::InvalidCharacter, :8radix, :4pos, :str<1238321>,
+        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<1238321>,
     'invalid char in middle position, base 8';
 
     throws-like { parse-base "124", 4 },
-        X::Syntax::Number::InvalidCharacter, :4radix, :2pos, :str<124>,
+        X::Syntax::Number::InvalidCharacter, :4radix, :2at, :str<124>,
     'invalid char at last position, base 4';
 }
 
