@@ -321,4 +321,18 @@ subtest 'sane errors on failures to part rad numbers' => {
         'with fractional part, error in both parts, end';
 }
 
+# RT #130255
+subtest 'radix misparse message advises of valid chars' => {
+    plan 4;
+
+    throws-like ｢:2<3>｣, X::Syntax::Number::InvalidCharacter,
+        message => /"'3'" .+ '0..1'      /, 'base 2';
+    throws-like ｢:8<9>｣, X::Syntax::Number::InvalidCharacter,
+        message => /"'9'" .+ '0..7'      /, 'base 8';
+    throws-like ｢:11<Z>｣, X::Syntax::Number::InvalidCharacter,
+        message => /"'Z'" .+ '0..9, A'   /, 'base 11';
+    throws-like ｢:36<♥>｣, X::Syntax::Number::InvalidCharacter,
+        message => /"'♥'" .+ '0..9, A..Z'/, 'base 36';
+}
+
 # vim: ft=perl6
