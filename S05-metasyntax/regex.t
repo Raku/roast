@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 47;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -149,5 +149,13 @@ throws-like 'Regex.new.perl', Exception, '"Regex.new.perl dies but does not segf
 # RT #77524
 ok 'a' ~~ /a:/, '/a:/ is a valid pattern and matches a';
 ok 'a' ~~ /a: /, '/a: / is a valid pattern and matches a';
+
+{ # RT #128986
+    throws-like '/\b/', X::Obsolete, 'bare \b is no longer supported';
+    throws-like '/\B/', X::Obsolete, 'bare \B is no longer supported';
+    ok "\b" ~~ /"\b"/, '\b still works when quoted';
+    ok "\b" ~~ /<[\b]>/, '\b still works in character class';
+    is ("a\bc" ~~ m:g/<[\B]>/).join, 'ac', '\B still works in character class';
+}
 
 # vim: ft=perl6
