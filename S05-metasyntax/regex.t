@@ -32,7 +32,7 @@ lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 # Note for RT - change to $_ ~~ /oo/ to fudge ok
 {
     $_ = "foo";
-    my $mat_tern = /oo/ ?? "yes" !! "no"; 
+    my $mat_tern = /oo/ ?? "yes" !! "no";
     is($/, 'oo', 'matching should set match');
 }
 
