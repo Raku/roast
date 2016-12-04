@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 156;
+plan 157;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -331,8 +331,8 @@ subtest 'radix misparse message advises of valid chars' => {
         message => /"'9'" .+ '0..7'      /, 'base 8';
     throws-like ｢:11<Z>｣, X::Syntax::Number::InvalidCharacter,
         message => /"'Z'" .+ '0..9, A'   /, 'base 11';
-    throws-like ｢:36<♥>｣, X::Syntax::Number::InvalidCharacter,
-        message => /"'♥'" .+ '0..9, A..Z'/, 'base 36';
+    throws-like ｢:35<Z>｣, X::Syntax::Number::InvalidCharacter,
+        message => /"'Z'" .+ '0..9, A..Y'/, 'base 35';
 }
 
 # vim: ft=perl6
