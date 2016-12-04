@@ -292,7 +292,7 @@ for 2..36 {
 lives-ok { :۳<12> }, 'Unicode digit radix bases work';
 
 # RT #128804
-subtest 'sane errors on failures to part rad numbers' => {
+subtest 'sane errors on failures to parse rad numbers' => {
     plan 12;
 
     throws-like ｢:3<a11>｣, X::Syntax::Number::InvalidCharacter, :0at,
