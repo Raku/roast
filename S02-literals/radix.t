@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 155;
+plan 156;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -290,5 +290,35 @@ for 2..36 {
 # RT #129279
 #?rakudo.jvm skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
 lives-ok { :۳<12> }, 'Unicode digit radix bases work';
+
+# RT #128804
+subtest 'sane errors on failures to part rad numbers' => {
+    plan 12;
+
+    throws-like ｢:3<a11>｣, X::Syntax::Number::InvalidCharacter, :0at,
+        'whole part only, start';
+    throws-like ｢:3<1a1>｣, X::Syntax::Number::InvalidCharacter, :1at,
+        'whole part only, middle';
+    throws-like ｢:3<11a>｣, X::Syntax::Number::InvalidCharacter, :2at,
+        'whole part only, end';
+    throws-like ｢:3<a11.111>｣, X::Syntax::Number::InvalidCharacter, :0at,
+        'with fractional part, error in whole part, start';
+    throws-like ｢:3<1a1.111>｣, X::Syntax::Number::InvalidCharacter, :1at,
+        'with fractional part, error in whole part, middle';
+    throws-like ｢:3<11a.111>｣, X::Syntax::Number::InvalidCharacter, :2at,
+        'with fractional part, error in whole part, end';
+    throws-like ｢:3<111.a11>｣, X::Syntax::Number::InvalidCharacter, :4at,
+        'with fractional part, error in fractional part, start';
+    throws-like ｢:3<111.1a1>｣, X::Syntax::Number::InvalidCharacter, :5at,
+        'with fractional part, error in fractional part, middle';
+    throws-like ｢:3<111.11a>｣, X::Syntax::Number::InvalidCharacter, :6at,
+        'with fractional part, error in fractional part, end';
+    throws-like ｢:3<a11.a11>｣, X::Syntax::Number::InvalidCharacter, :0at,
+        'with fractional part, error in both parts, start';
+    throws-like ｢:3<1a1.1a1>｣, X::Syntax::Number::InvalidCharacter, :1at,
+        'with fractional part, error in both parts, middle';
+    throws-like ｢:3<11a.1a1>｣, X::Syntax::Number::InvalidCharacter, :2at,
+        'with fractional part, error in both parts, end';
+}
 
 # vim: ft=perl6
