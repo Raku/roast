@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 use Test::Idempotence;
-plan 132;
+plan 133;
 
 # L<S06/Signature Introspection>
 
@@ -261,5 +261,9 @@ is $rolesig, ':($a, $b, ::?CLASS $c)', ".perl of a sigature that has ::?CLASS";
     is :(Hash of Callable).perl, ':(Hash[Callable] $)',
         '.perl on :(Hash of Callable)';
 }
+
+# https://github.com/rakudo/rakudo/commit/219f527d4a
+is-deeply sub ($,$,$,$){}.signature.gist, '($, $, $, $)',
+    '.gist does not strip typeless anon sigils';
 
 # vim: ft=perl6
