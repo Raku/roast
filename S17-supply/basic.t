@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 90;
+plan 92;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -151,6 +151,14 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
                 'Too many positionals' .+ 'expected 0 arguments but got 1'
             /
         }, '.tap block with incorrect signature must fail';
+    }
+
+    # RT #128968
+    subtest 'can use .emit as a method' => {
+        plan 3;
+        react { whenever supply { .emit for "foo", 42, .5 } {
+            pass "can .emit {.^name} ($_)";
+        }}
     }
 }
 
