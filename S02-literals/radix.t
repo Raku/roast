@@ -133,7 +133,7 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
     #?rakudo skip "RT #123862 - negative radix"
     is-approx(:16<dead_beef> * 16**-1, :16<dead_beef*16**-1>,
-        'Negative powers inside');    
+        'Negative powers inside');
 }
 
 # L<S02/General radices/"Any radix may include a fractional part">
