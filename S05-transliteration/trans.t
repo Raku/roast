@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
 =begin pod
 
@@ -10,7 +11,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 64;
+plan 65;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -283,5 +284,10 @@ subtest 'Adverbs on Cool.trans work the same as on Str.trans' => {
     is-deeply 9991123881237.trans(  '7'..'9' => '0',      :complement, :squash),
         '99908807',                                      ':complement, :squash';
 }
+
+# https://irclog.perlgeek.de/perl6/2016-12-06#i_13692293
+is_run ｢print '@x'.trans: (/\@/ => '-',), :c｣, {
+    :out('@-'), :err(''),
+}, '.trans with complement regex pair does not produce spurious warnings';
 
 # vim: ft=perl6
