@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 80;
+plan 81;
 
 sub oops { fail "oops" }
 
@@ -286,6 +286,17 @@ for
         }
         ok $foo ~~ $expected, "\$_: if on { $if // $if.^name }, orwith on { $orwith // $orwith.^name }";
     }
+}
+
+# RT #130279
+subtest '`else` and kin with `without` errors out' => {
+    plan 3;
+    throws-like 'without 1 {} else     {}', X::Syntax::WithoutElse,
+        keyword => 'else',   'using `else`';
+    throws-like 'without 1 {} elsif 1  {}', X::Syntax::WithoutElse,
+        keyword => 'elsif',  'using `elsif`';
+    throws-like 'without 1 {} orwith 1 {}', X::Syntax::WithoutElse,
+        keyword => 'orwith', 'using `orwith`';
 }
 
 # vim: ft=perl6

@@ -8,7 +8,7 @@ Basic "unless" tests
 
 =end kwid
 
-plan 11;
+plan 10;
 
 # L<S04/Conditional statements/unless statements 
 #   work as in Perl 5>
@@ -65,11 +65,16 @@ try { unless (die "should die") { $foo = 3 }};
 is $foo, 1, "die should stop execution immediately.";
 
 # L<S04/Conditional statements/"The unless statement does not allow an elsif">
-
-throws-like ' unless 1 { 2 } else { 3 } ', X::Syntax::UnlessElse,
-    'no else allowed in unless';
-throws-like ' unless 1 { 2 } elsif 4 { 3 } ', X::Syntax::UnlessElse,
-    'no elsif allowed in unless';
+# RT #130279
+subtest '`else` and kin with `unless` errors out' => {
+    plan 3;
+    throws-like 'unless 1 {} else     {}', X::Syntax::UnlessElse,
+        keyword => 'else',   'using `else`';
+    throws-like 'unless 1 {} elsif 1  {}', X::Syntax::UnlessElse,
+        keyword => 'elsif',  'using `elsif`';
+    throws-like 'unless 1 {} orwith 1 {}', X::Syntax::UnlessElse,
+        keyword => 'orwith', 'using `orwith`';
+}
 
 ok (unless 1 { 2 }) ~~ Slip, "unless returns Slip when not taken";
 
