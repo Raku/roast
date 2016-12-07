@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 99;
+plan 100;
 
 #L<S03/Autoincrement precedence>
 
@@ -266,5 +266,8 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 #?rakudo skip 'fails on OSX; RT 125938'
 throws-like '2**10000000000', X::Numeric::Overflow,
     'attempting to raise to a huge power throws';
+
+throws-like '2**-10000000000', X::Numeric::Overflow,
+    'attempting to raise to a huge negative power throws';
 
 # vim: ft=perl6
