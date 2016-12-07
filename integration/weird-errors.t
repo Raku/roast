@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 31;
+plan 32;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -247,3 +247,7 @@ subtest 'using a null string to access a hash does not segfault' => {
 
     is_run($code, { :status(1|0) }, 'no segfault')
 }
+
+# RT #128985
+is (^1000 .grep: -> $n {([+] ^$n .grep: -> $m {$m and $n %% $m}) == $n }), (0,),
+    'No SEGV/crash on reduction in grep using %%';
