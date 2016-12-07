@@ -263,7 +263,6 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 }
 
 # RT #125938
-#?rakudo skip 'fails on OSX; RT 125938'
 throws-like '2**10000000000', X::Numeric::Overflow,
     'attempting to raise to a huge power throws';
 
