@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 # L<S04/Exceptions/The fail function>
 
@@ -145,5 +145,9 @@ s1();
     is ~$died, 'oops', 'fail outside of routine just behaves like die (2)';
     nok $here, 'fail outside of routine just behaves like die (3)';
 }
+
+# https://irclog.perlgeek.de/perl6/2016-12-08#i_13706422
+throws-like { sink Failure.new }, Exception,
+    'sink statement prefix explodes Failures';
 
 # vim: ft=perl6
