@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 29;
+plan 30;
 
 my @list = (1 ... 10);
 
@@ -115,6 +115,24 @@ subtest 'Junctions work correctly as a matcher in .first' => {
         is-deeply first(<c e>.any, :kv, <a b c d e>), (2, 'c'), 'with :kv (1)';
         is-deeply first(<a d>.any, :kv, <a b c d e>), (0, 'a'), 'with :kv (2)';
     }
+}
+
+# https://irclog.perlgeek.de/perl6/2016-12-08#i_13705826
+subtest '.first works on correctly when called on Numerics' => {
+    plan 12;
+    is-deeply 3.first,               3,      'no args';
+    is-deeply 3.first(/3/),          3,      'Regex matcher';
+    is-deeply 3.first(2|3),          3,      'Junction matcher';
+    is-deeply 3.first(3, :k),        0,      ':k';
+    is-deeply 3.first(3, :p),        0 => 3, ':p';
+    is-deeply 3.first(3, :kv),       (0, 3), ':kv';
+
+    is-deeply 3.first(:end),         3,      ':end, no args';
+    is-deeply 3.first(:end, /3/),    3,      ':end, Regex matcher';
+    is-deeply 3.first(:end, 2|3),    3,      ':end, Junction matcher';
+    is-deeply 3.first(:end, 3, :k),  0,      ':end, :k';
+    is-deeply 3.first(:end, 3, :p),  0 => 3, ':end, :p';
+    is-deeply 3.first(:end, 3, :kv), (0, 3), ':end, :kv';
 }
 
 #vim: ft=perl6
