@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 34;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -106,3 +106,12 @@ throws-like { Proc::Async.new }, X::Multi::NoMatch,
     is $captured, "Hello World\n",
         "Tapping stdout supply after start of process does not lose data";
 }
+
+$pc = Proc::Async.new("$*EXECUTABLE", "-e ''"); # It taps a warning, but it is safe to catch.
+my $is-tapped = False;
+
+$pc.stderr.tap(-> $v { $is-tapped = $v eq ''; });
+$pc.stdout.tap(-> $v { $is-tapped = $v eq ''; });
+await $pc.start;
+
+is $is-tapped, False, "Process that doesn't output anything will not emit";
