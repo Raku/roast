@@ -107,7 +107,7 @@ throws-like { Proc::Async.new }, X::Multi::NoMatch,
         "Tapping stdout supply after start of process does not lose data";
 }
 
-$pc = Proc::Async.new("perl6", "-e ''"); # It taps a warning, but it is safe to catch.
+$pc = Proc::Async.new("$*EXECUTABLE", "-e ''"); # It taps a warning, but it is safe to catch.
 my $is-tapped = False;
 
 $pc.stderr.tap(-> $v { $is-tapped = $v eq ''; });
