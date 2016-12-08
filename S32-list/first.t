@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 30;
+plan 31;
 
 my @list = (1 ... 10);
 
@@ -133,6 +133,28 @@ subtest '.first works on correctly when called on Numerics' => {
     is-deeply 3.first(:end, 3, :k),  0,      ':end, :k';
     is-deeply 3.first(:end, 3, :p),  0 => 3, ':end, :p';
     is-deeply 3.first(:end, 3, :kv), (0, 3), ':end, :kv';
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2016-12-08#i_13706306
+subtest 'adverbs work on .first without matcher' => {
+    plan 14;
+    constant $l = <a b c>;
+
+    is-deeply $l.first,      'a',      'no args';
+    is-deeply $l.first(:k ), 0,        ':k';
+    is-deeply $l.first(:kv), (0, 'a'), ':kv';
+    is-deeply $l.first(:p ), 0 => 'a', ':p';
+    throws-like { $l.first(:k, :kv) }, X::Adverb, ':k + :kv throws';
+    throws-like { $l.first(:k, :p ) }, X::Adverb, ':k + :p throws';
+    throws-like { $l.first(:p, :kv) }, X::Adverb, ':P + :kv throws';
+
+    is-deeply $l.first(:end     ), 'c',      ':end, no args';
+    is-deeply $l.first(:end, :k ), 2,        ':end, :k';
+    is-deeply $l.first(:end, :kv), (2, 'c'), ':end, :kv';
+    is-deeply $l.first(:end, :p ), 2 => 'c', ':end, :p';
+    throws-like { $l.first(:end, :k, :kv) }, X::Adverb, ':end, :k + :kv throws';
+    throws-like { $l.first(:end, :k, :p ) }, X::Adverb, ':end, :k + :p throws';
+    throws-like { $l.first(:end, :p, :kv) }, X::Adverb, ':end, :P + :kv throws';
 }
 
 #vim: ft=perl6
