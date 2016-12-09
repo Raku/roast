@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 184;
+plan 185;
 
 # L<S05/Substitution/>
 
@@ -628,5 +628,9 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # https://irclog.perlgeek.de/perl6-dev/2016-11-26#i_13630780
 throws-like { "".subst }, X::Multi::NoMatch, '.subst with no arguments throws';
+
+# RT #130289
+is-deeply (S:g/FAIL// with 'foo'), 'foo',
+    'S:g/// returns original string on failure to match';
 
 # vim: ft=perl6
