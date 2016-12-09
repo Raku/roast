@@ -13,7 +13,7 @@ constant $all-chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm'
 constant $all-chars-result = 2527079815159757168093382078421796304289747094823514859938627964591248797616216274592478001915.000816326530612244738449589931406080722808837890625;
 
 subtest '.parse-base() as method' => {
-    plan 48;
+    plan 49;
 
     is-deeply 'Perl6' .parse-base(30), 20652936,    '"Perl6"  in base-30';
     is-approx 'Perl.6'.parse-base(32), 834421.1875, '"Perl.6" in base-32';
@@ -50,16 +50,20 @@ subtest '.parse-base() as method' => {
     'invalid char at first position, base 20';
 
     throws-like { "-1238321".parse-base(8) },
-        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<1238321>,
-    'invalid char in middle position, base 8';
+        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<-1238321>,
+    'invalid char in middle position, negative, base 8';
 
     throws-like { "124".parse-base(4) },
         X::Syntax::Number::InvalidCharacter, :4radix, :2at, :str<124>,
     'invalid char at last position, base 4';
+
+    throws-like { "−1.5x".parse-base(8) },
+        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<−1.5x>,
+    'invalid char in last position, negative, base 8';
 }
 
 subtest 'parse-base() as sub' => {
-    plan 48;
+    plan 51;
 
     is-deeply parse-base('Perl6',  30), 20652936,    '"Perl6"  in base-30';
     is-approx parse-base('Perl.6', 32), 834421.1875, '"Perl.6" in base-32';
@@ -96,12 +100,24 @@ subtest 'parse-base() as sub' => {
     'invalid char at first position, base 20';
 
     throws-like { parse-base "-1238321", 8 },
-        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<1238321>,
+        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<-1238321>,
     'invalid char in middle position, base 8';
 
     throws-like { parse-base "124", 4 },
         X::Syntax::Number::InvalidCharacter, :4radix, :2at, :str<124>,
     'invalid char at last position, base 4';
+
+    throws-like { parse-base "−1.5x", 8 },
+        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<−1.5x>,
+    'invalid char in last position, negative, base 8';
+
+    throws-like { parse-base "−1.5x", 8 },
+        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<−1.5x>,
+    'invalid char in last position, negative, base 8';
+
+    throws-like { parse-base "1.x", 9 },
+        X::Syntax::Number::InvalidCharacter, :9radix, :2at, :str<1.x>,
+    'invalid char in first position of fractional part, base 9';
 }
 
 # vim: ft=perl6
