@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 35;
+plan 37;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT, Match.WHAT,         'got right type';
@@ -30,6 +30,8 @@ ok 'abc def' ~~ />>/, 'sanity 1';
 is $/.from, 3, 'sanity 2';
 is $/.prematch, 'abc', '.prematch for zero-width matches';
 is $/.postmatch, ' def', '.postmatch for zero-width matches';
+isa-ok $/.prematch,  Str, '.prematch produces a Str';
+isa-ok $/.postmatch, Str, '.postmatch produces a Str';
 
 nok 'abde' ~~ /\d/,             'no match';
 nok $/.Bool,                    'failed match is False';
