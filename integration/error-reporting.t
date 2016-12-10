@@ -211,6 +211,11 @@ throws-like ‘%::{''}’, X::Undeclared, line => /^\d+$/,
 is_run '...', {:out(''), :err{ not $^o.contains: 'Unhandled exception' }},
     'stub code must not produce `Unhandled exception` message';
 
+# RT #125247
+is_run Q[#`{{ my long
+	      unfinished comment'],
+	      { :out(''), :err{ $^o.contains: 'was at line 1' }}, 'Unfinished comment error points on correct line';
+
 # RT #129800
 subtest 'X::Multi::NoMatch correct shows named arguments' => {
     my class RT129800 { multi method foo ($) {} }
