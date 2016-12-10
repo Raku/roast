@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 36;
 
 =begin pod
 
@@ -87,6 +87,16 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
         'introspection of name of typed array attribute works';
     is RT127059.^attributes[0].type.gist, '(Positional[Str])',
         'introspection of type of typed array attribute works (using gist)';
+}
+
+# RT #77070
+{
+    # Attributes attributes are sure to actually be BOOTSTRAPATTRs because
+    # of bootstrapping
+    my $a = Attribute.^attributes[0];
+    like $a.gist, /^ <ident>+ \s '$!' <ident>+ $/, '.gist of a BOOTSTRAPATTR is the type and name';
+    like $a.Str,  /^ '$!' <ident>+ $/,             '.Str of a BOOTSTRAPATTR is the name';
+    is   $a.perl, 'BOOTSTRAPATTR.new',             '.perl of a BOOTSTRAPATTR is the class name ~ ".new"';
 }
 
 # vim: ft=perl6
