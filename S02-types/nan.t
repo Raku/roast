@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 24;
 
 # Undeterminate Math results
 # see L<"http://mathworld.wolfram.com/Indeterminate.html">
@@ -43,6 +43,7 @@ is NaN.perl, 'NaN', 'NaN perlification ok';
 
 #RT #83622
 ok NaN===NaN, "NaN value identity";
+ok (my num $ = NaN) === (my num $ = NaN), "NaN value identity (native num)";
 
 {
     #RT #126990
