@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 31;
+plan 35;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT, Match.WHAT,         'got right type';
@@ -21,6 +21,15 @@ is $/.keys.elems,     0,        '.keys (empty)';
 is $/.values.elems,   0,        '.values (empty)';
 is $/.pairs.elems,    0,        '.pairs (empty)';
 is $/.kv.elems,       0,        '.kv (empty)';
+
+
+# prematch and postmatch for zero-width matches,
+# which was broken in rakudo until https://github.com/rakudo/rakudo/commit/c04b8b5cc9
+
+ok 'abc def' ~~ />>/, 'sanity 1';
+is $/.from, 3, 'sanity 2';
+is $/.prematch, 'abc', '.prematch for zero-width matches';
+is $/.postmatch, ' def', '.postmatch for zero-width matches';
 
 nok 'abde' ~~ /\d/,             'no match';
 nok $/.Bool,                    'failed match is False';
