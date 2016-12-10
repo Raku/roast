@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 29;
+plan 30;
 
 use Test::Util;
 
@@ -214,7 +214,7 @@ is_run '...', {:out(''), :err{ not $^o.contains: 'Unhandled exception' }},
 # RT #125247
 is_run Q[#`{{ my long
 	      unfinished comment'],
-	      { :out(''), :err{ $^o.contains: 'was at line 1' }}, 'Unfinished comment error points on correct line';
+	      { :out(''), :err{ $^o.contains: 'line 1' }}, 'Unfinished comment error points on correct line';
 
 # RT #129800
 subtest 'X::Multi::NoMatch correct shows named arguments' => {
