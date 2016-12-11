@@ -19,7 +19,7 @@ throws-like "Int.uniprop", X::Multi::NoMatch, 'cannot call uniprop with a Int';
 is "".uniprops, (), "''.uniprops yields an empty list";
 is ("\x[1000]", "\x[100]")».uniprop('Script'), "\x[1000]\x[100]".uniprops('Script'),
     "uniprops returns properties of multiple characters in a string";
-#?rakudo.moar skip "Unicode properties don't always return the correct shortnames"
+#?rakudo.moar todo "Unicode properties don't always return the correct shortnames"
 #https://github.com/MoarVM/MoarVM/issues/448
 is "a".uniprop('sc'), "a".uniprop('Script'), "Unicode authoratative short names return the same result as full names";
 
