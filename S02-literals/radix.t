@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 157;
+plan 156;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -295,44 +295,30 @@ lives-ok { :۳<12> }, 'Unicode digit radix bases work';
 subtest 'sane errors on failures to parse rad numbers' => {
     plan 12;
 
-    throws-like ｢:3<a11>｣, X::Syntax::Number::InvalidCharacter, :0at,
+    throws-like ｢:3<a11>｣, X::Str::Numeric, :0pos,
         'whole part only, start';
-    throws-like ｢:3<1a1>｣, X::Syntax::Number::InvalidCharacter, :1at,
+    throws-like ｢:3<1a1>｣, X::Str::Numeric, :1pos,
         'whole part only, middle';
-    throws-like ｢:3<11a>｣, X::Syntax::Number::InvalidCharacter, :2at,
+    throws-like ｢:3<11a>｣, X::Str::Numeric, :2pos,
         'whole part only, end';
-    throws-like ｢:3<a11.111>｣, X::Syntax::Number::InvalidCharacter, :0at,
+    throws-like ｢:3<a11.111>｣, X::Str::Numeric, :0pos,
         'with fractional part, error in whole part, start';
-    throws-like ｢:3<1a1.111>｣, X::Syntax::Number::InvalidCharacter, :1at,
+    throws-like ｢:3<1a1.111>｣, X::Str::Numeric, :1pos,
         'with fractional part, error in whole part, middle';
-    throws-like ｢:3<11a.111>｣, X::Syntax::Number::InvalidCharacter, :2at,
+    throws-like ｢:3<11a.111>｣, X::Str::Numeric, :2pos,
         'with fractional part, error in whole part, end';
-    throws-like ｢:3<111.a11>｣, X::Syntax::Number::InvalidCharacter, :4at,
+    throws-like ｢:3<111.a11>｣, X::Str::Numeric, :4pos,
         'with fractional part, error in fractional part, start';
-    throws-like ｢:3<111.1a1>｣, X::Syntax::Number::InvalidCharacter, :5at,
+    throws-like ｢:3<111.1a1>｣, X::Str::Numeric, :5pos,
         'with fractional part, error in fractional part, middle';
-    throws-like ｢:3<111.11a>｣, X::Syntax::Number::InvalidCharacter, :6at,
+    throws-like ｢:3<111.11a>｣, X::Str::Numeric, :6pos,
         'with fractional part, error in fractional part, end';
-    throws-like ｢:3<a11.a11>｣, X::Syntax::Number::InvalidCharacter, :0at,
+    throws-like ｢:3<a11.a11>｣, X::Str::Numeric, :0pos,
         'with fractional part, error in both parts, start';
-    throws-like ｢:3<1a1.1a1>｣, X::Syntax::Number::InvalidCharacter, :1at,
+    throws-like ｢:3<1a1.1a1>｣, X::Str::Numeric, :1pos,
         'with fractional part, error in both parts, middle';
-    throws-like ｢:3<11a.1a1>｣, X::Syntax::Number::InvalidCharacter, :2at,
+    throws-like ｢:3<11a.1a1>｣, X::Str::Numeric, :2pos,
         'with fractional part, error in both parts, end';
-}
-
-# RT #130255
-subtest 'radix misparse message advises of valid chars' => {
-    plan 4;
-
-    throws-like ｢:2<3>｣, X::Syntax::Number::InvalidCharacter,
-        message => /"'3'" .+ '0..1'      /, 'base 2';
-    throws-like ｢:8<9>｣, X::Syntax::Number::InvalidCharacter,
-        message => /"'9'" .+ '0..7'      /, 'base 8';
-    throws-like ｢:11<Z>｣, X::Syntax::Number::InvalidCharacter,
-        message => /"'Z'" .+ '0..9, A'   /, 'base 11';
-    throws-like ｢:35<Z>｣, X::Syntax::Number::InvalidCharacter,
-        message => /"'Z'" .+ '0..9, A..Y'/, 'base 35';
 }
 
 # vim: ft=perl6

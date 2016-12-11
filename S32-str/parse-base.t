@@ -45,20 +45,20 @@ subtest '.parse-base() as method' => {
         X::Syntax::Number::RadixOutOfRange, radix => 1,
     'too small radix throws';
 
-    throws-like { "###".parse-base(20) },
-        X::Syntax::Number::InvalidCharacter, :20radix, :0at, :str<###>,
+    throws-like { "###".parse-base(20)     }, X::Str::Numeric,
+        reason => /'base-20'/, :0pos, :source<###>,
     'invalid char at first position, base 20';
 
-    throws-like { "-1238321".parse-base(8) },
-        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<-1238321>,
+    throws-like { "-1238321".parse-base(8) }, X::Str::Numeric,
+        reason => /'base-8'/, :4pos, :source<-1238321>,
     'invalid char in middle position, negative, base 8';
 
-    throws-like { "124".parse-base(4) },
-        X::Syntax::Number::InvalidCharacter, :4radix, :2at, :str<124>,
+    throws-like { "124".parse-base(4)      }, X::Str::Numeric,
+        reason => /'base-4'/, :2pos, :source<124>,
     'invalid char at last position, base 4';
 
-    throws-like { "−1.5x".parse-base(8) },
-        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<−1.5x>,
+    throws-like { "−1.5x".parse-base(8)    }, X::Str::Numeric,
+        reason => /'base-8'/, :4pos, :source<−1.5x>,
     'invalid char in last position, negative, base 8';
 }
 
@@ -95,28 +95,28 @@ subtest 'parse-base() as sub' => {
         X::Syntax::Number::RadixOutOfRange, radix => 1,
     'too small radix throws';
 
-    throws-like { parse-base "###", 20 },
-        X::Syntax::Number::InvalidCharacter, :20radix, :0at, :str<###>,
+    throws-like { parse-base "###", 20     }, X::Str::Numeric,
+        reason => /'base-20'/, :0pos, :source<###>,
     'invalid char at first position, base 20';
 
-    throws-like { parse-base "-1238321", 8 },
-        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<-1238321>,
+    throws-like { parse-base "-1238321", 8 }, X::Str::Numeric,
+        reason => /'base-8'/, :4pos, :source<-1238321>,
     'invalid char in middle position, base 8';
 
-    throws-like { parse-base "124", 4 },
-        X::Syntax::Number::InvalidCharacter, :4radix, :2at, :str<124>,
+    throws-like { parse-base "124", 4      }, X::Str::Numeric,
+        reason => /'base-4'/, :2pos, :source<124>,
     'invalid char at last position, base 4';
 
-    throws-like { parse-base "−1.5x", 8 },
-        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<−1.5x>,
+    throws-like { parse-base "−1.5x", 8    }, X::Str::Numeric,
+        reason => /'base-8'/, :4pos, :source<−1.5x>,
     'invalid char in last position, negative, base 8';
 
-    throws-like { parse-base "−1.5x", 8 },
-        X::Syntax::Number::InvalidCharacter, :8radix, :4at, :str<−1.5x>,
+    throws-like { parse-base "−1.5x", 8    }, X::Str::Numeric,
+        reason => /'base-8'/, :4pos, :source<−1.5x>,
     'invalid char in last position, negative, base 8';
 
-    throws-like { parse-base "1.x", 9 },
-        X::Syntax::Number::InvalidCharacter, :9radix, :2at, :str<1.x>,
+    throws-like { parse-base "1.x", 9      }, X::Str::Numeric,
+        reason => /'base-9'/, :2pos, :source<1.x>,
     'invalid char in first position of fractional part, base 9';
 }
 
