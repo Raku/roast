@@ -413,7 +413,7 @@ my @moar = <
   X::Proc::Async::TapBeforeSpawn
 >;
 
-plan 5 + 4 * ( @normal + @exception + @concurrent + @moar );
+plan 6 + 4 * ( @normal + @exception + @concurrent + @moar );
 
 my %seen-which;
 
@@ -462,3 +462,6 @@ subtest 'ObjAt.perl gives distinct results for different objects' => {
     plan +@obj;
     is .WHICH.perl, qq|ObjAt.new("{.WHICH}")|, "object: {.perl}" for @obj;
 }
+
+# RT #130271
+ok Bag.new.clone.WHICH.defined, 'cloned Bag does not lose WHICH';
