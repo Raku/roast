@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 164;
+plan 165;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -253,4 +253,5 @@ subtest 'Int.new' => { # coverage; 2016-10-05
     is-deeply msb(0), Nil, 'msb 0';
 }
 
+ok Int ~~ UInt, "accept undefined Int";
 # vim: ft=perl6
