@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 113;
+plan 114;
 
 # construction
 {
@@ -221,4 +221,32 @@ throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
     is-deeply Date.DateTime, DateTime,    'Date:U.DateTime returns DateTime:U';
     is-deeply Date.Date,     Date,        'Date:U.Date returns self';
     is-deeply $date.Date,    $date,       'Date:D.Date returns self';
+}
+
+# RT #130313
+subtest 'all Date constructors throw on invalid dates' => {
+    plan 3;
+    subtest '.new($year, $month, $day)' => {
+        plan 3;
+        throws-like { Date.new: 2015, 12, 42 }, X::OutOfRange, 'day';
+        throws-like { Date.new: 2015, 42, 25 }, X::OutOfRange, 'month';
+        throws-like { Date.new: 2015, 42, 42 }, X::OutOfRange, 'day + month';
+    }
+
+    subtest '.new(Str $date)' => {
+        plan 3;
+        throws-like { Date.new: '2015-12-42' }, X::OutOfRange, 'day';
+        throws-like { Date.new: '2015-42-25' }, X::OutOfRange, 'month';
+        throws-like { Date.new: '2015-42-42' }, X::OutOfRange, 'both';
+    }
+
+    subtest '.new(:$year, :$month, :$day)' => {
+        plan 3;
+        throws-like { Date.new: :year(2015), :month(12), :day(42) },
+            X::OutOfRange, 'day';
+        throws-like { Date.new: :year(2015), :month(42), :day(25) },
+            X::OutOfRange, 'month';
+        throws-like { Date.new: :year(2015), :month(42), :day(42) },
+            X::OutOfRange, 'both';
+    }
 }
