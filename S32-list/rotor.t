@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -42,3 +42,6 @@ subtest 'non-Int numerals as arguments to rotor get coersed to Int' => {
     is-deeply (^9 .rotor: 2   => 2.5), (^9 .rotor: 2   => 2.5), 'pair(Int,Rat)';
     is-deeply (^9 .rotor: 2.5 => 2.5), (^9 .rotor: 2.5 => 2.5), 'pair(Rat,Rat)';
 }
+
+# RT #130283
+is-deeply ().rotor(1), ().Seq, '.rotor on empty list gives empty Seq';
