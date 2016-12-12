@@ -2,7 +2,7 @@ use v6;
 use lib <t/spec/packages>;
 use Test;
 use Test::Util;
-plan 9;
+plan 10;
 
 =begin pod
 
@@ -81,4 +81,29 @@ subtest 'infix:<===> on num zeros' => {
     is-deeply (  $nz ===  0e0), False, '-0e0 (native) ===  0e0';
     is-deeply (  $pz === -0e0), False, ' 0e0 (native) === -0e0';
     is-deeply ( -0e0 ===  $pz), False, '-0e0 ===  0e0 (native)';
+}
+
+# RT #128999
+subtest 'infix:<===> on complex zeros' => {
+    plan 16;
+
+    is-deeply <-0-0i> === <-0-0i>, True,  '-0-0i === -0-0i';
+    is-deeply <-0-0i> === <+0-0i>, False, '-0-0i === +0-0i';
+    is-deeply <-0-0i> === <-0+0i>, False, '-0-0i === -0+0i';
+    is-deeply <-0-0i> === <+0+0i>, False, '-0-0i === +0+0i';
+
+    is-deeply <+0-0i> === <-0-0i>, False, '+0-0i === -0-0i';
+    is-deeply <+0-0i> === <+0-0i>, True,  '+0-0i === +0-0i';
+    is-deeply <+0-0i> === <-0+0i>, False, '+0-0i === -0+0i';
+    is-deeply <+0-0i> === <+0+0i>, False, '+0-0i === +0+0i';
+
+    is-deeply <-0+0i> === <-0-0i>, False, '-0+0i === -0-0i';
+    is-deeply <-0+0i> === <+0-0i>, False, '-0+0i === +0-0i';
+    is-deeply <-0+0i> === <-0+0i>, True,  '-0+0i === -0+0i';
+    is-deeply <-0+0i> === <+0+0i>, False, '-0+0i === +0+0i';
+
+    is-deeply <+0+0i> === <-0-0i>, False, '+0+0i === -0-0i';
+    is-deeply <+0+0i> === <+0-0i>, False, '+0+0i === +0-0i';
+    is-deeply <+0+0i> === <-0+0i>, False, '+0+0i === -0+0i';
+    is-deeply <+0+0i> === <+0+0i>, True,  '+0+0i === +0+0i';
 }
