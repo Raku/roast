@@ -2,7 +2,7 @@ use v6;
 use lib <t/spec/packages>;
 use Test;
 use Test::Util;
-plan 10;
+plan 11;
 
 =begin pod
 
@@ -106,4 +106,22 @@ subtest 'infix:<===> on complex zeros' => {
     is-deeply <+0+0i> === <+0-0i>, False, '+0+0i === +0-0i';
     is-deeply <+0+0i> === <-0+0i>, False, '+0+0i === -0+0i';
     is-deeply <+0+0i> === <+0+0i>, True,  '+0+0i === +0+0i';
+}
+
+subtest 'Stringification of Complex handles signed zeros' => {
+    plan 12;
+    is-deeply <-0-0i>.perl, '<-0-0i>', '<-0-0i>.perl';
+    is-deeply <-0+0i>.perl, '<-0+0i>', '<-0+0i>.perl';
+    is-deeply <+0-0i>.perl,  '<0-0i>', '<+0-0i>.perl';
+    is-deeply <+0+0i>.perl,  '<0+0i>', '<+0+0i>.perl';
+
+    is-deeply <-0-0i>.gist, '-0-0i',   '<-0-0i>.gist';
+    is-deeply <-0+0i>.gist, '-0+0i',   '<-0+0i>.gist';
+    is-deeply <+0-0i>.gist,  '0-0i',   '<+0-0i>.gist';
+    is-deeply <+0+0i>.gist,  '0+0i',   '<+0+0i>.gist';
+
+    is-deeply <-0-0i>.Str,  '-0-0i',   '<-0-0i>.Str';
+    is-deeply <-0+0i>.Str,  '-0+0i',   '<-0+0i>.Str';
+    is-deeply <+0-0i>.Str,   '0-0i',   '<+0-0i>.Str';
+    is-deeply <+0+0i>.Str,   '0+0i',   '<+0+0i>.Str';
 }
