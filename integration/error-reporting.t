@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 30;
+plan 31;
 
 use Test::Util;
 
@@ -243,6 +243,17 @@ subtest 'composition errors do not crash when printing (RT129906)' => {
             ~ 'does A129906 { }; role A129906 { }',
         X::Composition::NotComposable,  message => /129906/,
     'Accessing X::Composition::NotComposable.message does not crash';
+}
+
+subtest 'curly quotes are not called smart quotes' => {
+    my @quotes = ｢‘｣, ｢‚｣, ｢’｣, ｢“｣, ｢„｣, ｢”｣;
+    plan +@quotes;
+
+    for @quotes -> $q {
+        throws-like $q, Exception,
+            :message{ not .contains('smart') and .contains('curly') },
+        "$q (U+$q.ord.base(16)) quote is called curly, not smart";
+    }
 }
 
 # vim: ft=perl6
