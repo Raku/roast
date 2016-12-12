@@ -242,5 +242,4 @@ ok unimatch("\x1D76E", "Other_Math"), "MATHEMATICAL SANS-SERIF BOLD CAPITAL OMEG
 ok unimatch("\x1D7CE", "Other_Math"), "MATHEMATICAL BOLD DIGIT ZERO matches Other_Math";
 ok unimatch("\x1EE5F", "Other_Math"), "ARABIC MATHEMATICAL TAILED DOTLESS QAF matches Other_Math";
 ok unimatch("\x1EEAB", "Other_Math"), "ARABIC MATHEMATICAL DOUBLE-STRUCK LAM matches Other_Math";
-#?rakudo.moar todo #https://github.com/MoarVM/MoarVM/issues/448
 ok unimatch(0x1000, 'Myanmar', 'sc'), 'Unimatch properly checks alternate/short canonical Unicode names';
