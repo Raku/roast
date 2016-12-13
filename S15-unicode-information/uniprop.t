@@ -31,26 +31,26 @@ isa-ok 'a'.uniprop('Script'), Str, '.uniprop returns a Str for string Unicode pr
 is 'a'.uniprop('Script'), 'Latin', ".uniprop('Script') returns correct result for 'a'";
 
 is "\x[FB00]".lc, "\x[FB00]", ".lc: returns proper lowercase mapping for LATIN SMALL LIGATURE FF";
-#?rakudo.moar todo Coming soon
+#?rakudo.moar todo 'Coming soon'
 is uniprop(0xFB00, 'Lowercase_Mapping'), "\x[FB00]", "uniprop: returns proper lowercase mapping for LATIN SMALL LIGATURE FF";
 is "\x[FB00]".tc, "\x[0046]\x[0066]", ".tc: returns proper lowercase mapping for LATIN SMALL LIGATURE FF";
-#?rakudo.moar todo Coming soon
+#?rakudo.moar todo 'Coming soon'
 is uniprop(0xFB00, 'Titlecase_Mapping'), "\x[0046]\x[0066]", "uniprop: returns proper titlecase mapping for LATIN SMALL LIGATURE FF";
 is "\x[FB00]".uc, "\x[0046]\x[0046]", ".uc: returns proper uppercase mapping for LATIN SMALL LIGATURE FF";
-#?rakudo.moar todo Coming soon
+#?rakudo.moar todo 'Coming soon'
 is uniprop(0xFB00, 'Uppercase_Mapping'), "\x[0046]\x[0046]", ".uc: returns proper uppercase mapping for LATIN SMALL LIGATURE FF";
 is "\x[FB00]".uniname, "LATIN SMALL LIGATURE FF", "uniname: returns proper name for LATIN SMALL LIGATURE FF";
-#?rakudo.moar todo Coming soon
+#?rakudo.moar todo 'Coming soon'
 is uniprop(0xFB00, 'Name'), "LATIN SMALL LIGATURE FF", "uniprop: returns proper name for LATIN SMALL LIGATURE FF";
-#?rakudo.moar todo moar returns a string containing the unicode codepoint instead of an integer for Bidi_Mirroring_Glyph
+#?rakudo.moar todo 'moar returns a string containing the unicode codepoint instead of an integer for Bidi_Mirroring_Glyph'
 is '('.uniprop('Bidi_Mirroring_Glyph'), ')', "'('.uniprop('Bidi_Mirroring_Glyph') returns ')'";
-#?rakudo.moar 3 todo NYI
+#?rakudo.moar 3 todo 'NYI'
 is '('.uniprop('Bidi_Paired_Bracket'), ')', "uniprop: returns matching Bidi_Paired_Bracket";
 is '('.uniprop('Bidi_Paired_Bracket_Type'), 'o', "'('.uniprop('Bidi_Paired_Bracket_Type') returns 'o'";
 is ')'.uniprop('Bidi_Paired_Bracket_Type'), 'c', "')'.uniprop('Bidi_Paired_Bracket_Type') returns 'c'";
 
 ## Numeric Properties
-#?rakudo.moar 3 todo Coming soon
+#?rakudo.moar 3 todo 'Coming soon'
 isa-ok "½".uniprop('Numeric_Value'), Rat, "'½'.uniprop('Numeric_Value') returns a Rat";
 is "½".uniprop('Numeric_Value'), 0.5, "'½'.uniprop('Numeric_Value') returns the correct number";
 is "a".uniprop('Numeric_Value'), NaN, "'a'.uniprop('Numeric_Value') returns NaN";
