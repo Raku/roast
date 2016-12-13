@@ -2,17 +2,27 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 41;
 
 #use unicode :v(6.3);
 
 # L<S15/uniprop>
 ## Properties whose return value is tested to be the correct value. Boolean values must be tested
 ## for at least two codepoints, for both True and False.
-## Script, Dash, Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Name, Numeric_Value
-## Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph
+### The types in the comment below are taken from the Unicode property name types, which may or may
+### not correspond with types in Perl 6
 
-#?niecza 30 skip "uniprop NYI"
+## Binary
+#  ASCII_Hex_Digit Hex_Digit Dash Case_Ignorable
+## String
+# Script, Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Name
+## Enum
+#  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class
+#  Word_Break, Line_Break
+## Numeric
+#  Numeric_Value
+
+#?niecza 41 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -23,7 +33,7 @@ throws-like "Int.uniprop", X::Multi::NoMatch, 'cannot call uniprop with a Int';
 is "".uniprops, (), "''.uniprops yields an empty list";
 is ("\x[1000]", "\x[100]")».uniprop('Script'), "\x[1000]\x[100]".uniprops('Script'),
     "uniprops returns properties of multiple characters in a string";
-#https://github.com/MoarVM/MoarVM/issues/448
+# https://github.com/MoarVM/MoarVM/issues/448
 is "a".uniprop('sc'), "a".uniprop('Script'), "uniprop: Unicode authoratative short names return the same result as full names";
 
 ## String Properties
@@ -61,5 +71,21 @@ is-deeply 'a'.uniprop('Alphabetic'), True, "uniprop('Alphabetic') returns a True
 
 is-deeply "-".uniprop('Dash'), True, ".uniprop('Dash') returns True for the Dash property on dashes";
 is-deeply "a".uniprop('Dash'), False, ".uniprop('Dash') returns False for non-dashes";
+
+is-deeply "٢".uniprop('ASCII_Hex_Digit'), False, ".uniprop('ASCII_Hex_Digit') returns False for ARABIC-INDIC DIGIT TWO";
+is-deeply "a".uniprop('ASCII_Hex_Digit'), True, ".uniprop('ASCII_Hex_Digit') returns True for 'a'";
+is-deeply "0".uniprop('ASCII_Hex_Digit'), True, ".uniprop('ASCII_Hex_Digit') returns True for '0'";
+
+is-deeply "٢".uniprop('Hex_Digit'), False, ".uniprop('Hex_Digit') returns True for ARABIC-INDIC DIGIT TWO";
+is-deeply "Z".uniprop('Hex_Digit'), False, ".uniprop('Hex_Digit') returns False for 'Z'";
+
+is-deeply "\x[300]".uniprop('Case_Ignorable'), True, ".uniprop('Case_Ignorable') is True for COMBINING GRAVE ACCENT [Mn]";
+is-deeply 183.uniprop('Case_Ignorable'), True, ".uniprop('Case_Ignorable') is True for MIDDLE DOT";
+is-deeply "a".uniprop('Case_Ignorable'), False, ‘"a".uniprop('Case_Ignorable') is False’;
+
+## Enum Properties
+is 0x202A.uniprop('Bidi_Class'), 'LRE', "0x202A.uniprop('Bidi_Class') returns LRE";
+is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') returns Hebrew_Letter";
+is "\n".uniprop('Line_Break'), 'LF', ‘"\n".uniprop('Line_Break') return LF’;
 
 # vim: ft=perl6 expandtab sw=4
