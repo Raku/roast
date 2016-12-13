@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 30;
 
 #use unicode :v(6.3);
 
@@ -10,9 +10,9 @@ plan 27;
 ## Properties whose return value is tested to be the correct value. Boolean values must be tested
 ## for at least two codepoints, for both True and False.
 ## Script, Dash, Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Name, Numeric_Value
-## Bidi_Paired_Bracket
+## Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph
 
-#?niecza 27 skip "uniprop NYI"
+#?niecza 30 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -43,7 +43,11 @@ is "\x[FB00]".uniname, "LATIN SMALL LIGATURE FF", "uniname: returns proper name 
 #?rakudo.moar todo
 is uniprop(0xFB00, 'Name'), "LATIN SMALL LIGATURE FF", "uniprop: returns proper name for LATIN SMALL LIGATURE FF";
 #?rakudo.moar todo
+is '('.uniprop('Bidi_Mirroring_Glyph'), ')', "'('.uniprop('Bidi_Mirroring_Glyph') returns ')'";
+#?rakudo.moar 3 todo
 is '('.uniprop('Bidi_Paired_Bracket'), ')', "uniprop: returns matching Bidi_Paired_Bracket";
+is '('.uniprop('Bidi_Paired_Bracket_Type'), 'o', "'('.uniprop('Bidi_Paired_Bracket_Type') returns 'o'";
+is ')'.uniprop('Bidi_Paired_Bracket_Type'), 'c', "')'.uniprop('Bidi_Paired_Bracket_Type') returns 'c'";
 
 ## Numeric Properties
 #?rakudo.moar 3 todo
