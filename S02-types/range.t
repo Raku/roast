@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 184;
+plan 185;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -363,5 +363,9 @@ lives-ok({"\0".."~"}, "low ascii range completes");
 
 # RT #126990
 is-deeply Int.Range, -Inf^..^Inf, 'Int.range is -Inf^..^Inf';
+
+# RT #128887
+is-deeply (eager (^10+5)/2), (2.5, 3.5, 4.5, 5.5, 6.5),
+    'Rat range constructed with Range ops does not explode';
 
 # vim:set ft=perl6
