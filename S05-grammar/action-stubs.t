@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 # L<S05/Grammars/optionally pass an actions object>
 
@@ -177,6 +177,18 @@ is $*D, 'z', '$0 availiable';
     CPG.subparse('<foo>bar', :actions(CPA) );
     is $a, 1, 'a:sym«<foo>» can be used as token and action method';
     is $a, 1, 'b:sym<<bar>> can be used as token and action method';
+}
+
+subtest 'using <sym> in places without :sym throws useful message' => {
+    plan 4;
+    throws-like ｢/<sym>/｣, Exception,
+        message => /"<sym>"/, 'regex';
+    throws-like ｢/grammar { regex TOP { <sym> } }.parse(42)/｣, Exception,
+        message => /"<sym>"/, '`regex` (grammar method)';
+    throws-like ｢/grammar { token TOP { <sym> } }.parse(42)/｣, Exception,
+        message => /"<sym>"/, 'token';
+    throws-like ｢/grammar {  rule TOP { <sym> } }.parse(42)/｣, Exception,
+        message => /"<sym>"/, 'token';
 }
 
 # vim: ft=perl6
