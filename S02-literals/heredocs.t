@@ -1,6 +1,8 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
-plan 22;
+use Test::Util;
+plan 23;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -210,3 +212,9 @@ END
         "foo: bar\n\techo 'AGAIN';\nbar:\n\techo 'OHAI';\n"),
         "Heredoc tab explosion makefile use case is usesul.";
 }
+
+# RT #129838
+is_run "my \$x = q:to/END/;\ny\n END", {
+    :out(''),
+    :err{ not .contains('Actions.nqp') }
+}, 'heredoc trimming warnings do not reference guts';
