@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 49;
+plan 54;
 
 #use unicode :v(6.3);
 
@@ -27,11 +27,11 @@ plan 49;
 ## Enum [6/20]
 #  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class
 #  Word_Break, Line_Break
-## Additional [1/?]
-# Emoji
+## Additional [2/?]
+# Emoji Emoji_Modifier Emoji_All
 
 
-#?niecza 49 skip "uniprop NYI"
+#?niecza 54 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -109,10 +109,14 @@ is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') 
 is "\n".uniprop('Line_Break'), 'LF', ‘"\n".uniprop('Line_Break') return LF’;
 
 ## Additional Properties
-#?rakudo.moar 2 todo "Emoji properties NYI in MoarVM"
+#?rakudo.moar 7 todo "Emoji properties NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/453
-is-deeply "🐧".uniprop('Emoji'), True, "uniprop for Emoji's returns True for emoji's";
-is-deeply "A".uniprop('Emoji'), True, "uniprop for Emoji's returns False for non-emoji's";
-
+is-deeply "🐧".uniprop('Emoji'), True, "uniprop for Emoji returns True for emoji's";
+is-deeply "A".uniprop('Emoji'), True, "uniprop for Emoji returns False for non-emoji's";
+is-deeply 0x1F3FD.uniprop('Emoji_Modifier'), True, "uniprop for Emoji_Modifiers returns True for Emoji Modifiers";
+is-deeply "🐧".uniprop('Emoji_Modifier'), False, "uniprop for Emoji_Modifier returns False for non modifier Emoji's";
+is-deeply 0x1F3FD.uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for Emoji Modifiers";
+is-deeply "🐧".uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for non-modifier Emoji";
+is-deeply "a".uniprop('Emoji_All'), False, "uniprop for Emoji_All returns False for non-Emoji";
 
 # vim: ft=perl6 expandtab sw=4
