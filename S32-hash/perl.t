@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 #?niecza todo "cannot roundtrip hashes"
 # simple hash
@@ -38,5 +38,8 @@ plan 12;
     is $rh.of, Int, 'make sure roundtripped values are Int';
     is $rh.keyof, Str, 'make sure roundtripped keys are Str';
 } #4
+
+is-deeply (my %h{Int}).perl.EVAL.perl, '(my Any %{Int})',
+    'can roundtrip .perl.EVAL for parametarized hash with no keys in it';
 
 #vim: ft=perl6
