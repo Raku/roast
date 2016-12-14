@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 49;
 
 #use unicode :v(6.3);
 
@@ -27,9 +27,11 @@ plan 47;
 ## Enum [6/20]
 #  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class
 #  Word_Break, Line_Break
+## Additional [1/?]
+# Emoji
 
 
-#?niecza 47 skip "uniprop NYI"
+#?niecza 49 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -105,5 +107,12 @@ is-deeply 'a'.uniprop('Quotation_Mark'), False, ".uniprop('Quotation_Mark') retu
 is 0x202A.uniprop('Bidi_Class'), 'LRE', "0x202A.uniprop('Bidi_Class') returns LRE";
 is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') returns Hebrew_Letter";
 is "\n".uniprop('Line_Break'), 'LF', ‘"\n".uniprop('Line_Break') return LF’;
+
+## Additional Properties
+#?rakudo.moar 2 todo "Emoji properties NYI in MoarVM"
+# https://github.com/MoarVM/MoarVM/issues/453
+is-deeply "🐧".uniprop('Emoji'), True, "uniprop for Emoji's returns True for emoji's";
+is-deeply "A".uniprop('Emoji'), True, "uniprop for Emoji's returns False for non-emoji's";
+
 
 # vim: ft=perl6 expandtab sw=4
