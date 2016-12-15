@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 30;
+plan 31;
 
 use Test::Util;
 
@@ -215,6 +215,11 @@ is_run '...', {:out(''), :err{ not $^o.contains: 'Unhandled exception' }},
 is_run Q[#`{{ my long
 	      unfinished comment'],
 	      { :out(''), :err{ $^o.contains: 'line 1' }}, 'Unfinished comment error points on correct line';
+
+# RT 130211
+throws-like 'role R { method overload-this(){...} };
+             role C { method overload-this(){...} };
+             class A does R does C {};', X::Comp::AdHoc, message => /C .+? R/, 'all roles with unimplemented method pointed out in reverse order';
 
 # RT #129800
 subtest 'X::Multi::NoMatch correct shows named arguments' => {
