@@ -220,7 +220,8 @@ is_run Q[#`{{ my long
 throws-like 'role R-RT130211 { method overload-this(){...} };
              role C-RT130211 { method overload-this(){...} };
              class A does R does C {};', X::Comp::AdHoc, :message { .contains('R-RT130211') and
-                                                                    .contains('C-RT130211') }
+                                                                    .contains('C-RT130211') }, 'all roles with unimplemented method pointed out in reverse order';
+
 
 # RT #129800
 subtest 'X::Multi::NoMatch correct shows named arguments' => {
