@@ -217,9 +217,10 @@ is_run Q[#`{{ my long
 	      { :out(''), :err{ $^o.contains: 'line 1' }}, 'Unfinished comment error points on correct line';
 
 # RT 130211
-throws-like 'role R { method overload-this(){...} };
-             role C { method overload-this(){...} };
-             class A does R does C {};', X::Comp::AdHoc, message => /C .+? R/, 'all roles with unimplemented method pointed out in reverse order';
+throws-like 'role R-RT130211 { method overload-this(){...} };
+             role C-RT130211 { method overload-this(){...} };
+             class A does R does C {};', X::Comp::AdHoc, :message { .contains('R-RT130211') and
+                                                                    .contains('C-RT130211') }
 
 # RT #129800
 subtest 'X::Multi::NoMatch correct shows named arguments' => {
