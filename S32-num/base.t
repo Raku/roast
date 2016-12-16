@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 45;
+plan 47;
 
 # Int
 {
@@ -79,4 +79,14 @@ subtest 'all Reals can accept Whatever for second .base argument' => {
 
     plan +@reals;
     is-deeply .base(16, *), 'FF', .^name for @reals;
+}
+
+# RT#125819
+{
+    throws-like { 255.base: 16, -100 }, X::OutOfRange,
+        'negative $digits arg throws';
+    throws-like {
+        255.base(16, 9999999999999999999999999999999999999999999999999);
+    }, Exception, :message{ .contains('repeat count').not },
+    'huge digits arg does not throw weird error';
 }
