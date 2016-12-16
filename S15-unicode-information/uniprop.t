@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 60;
+plan 62;
 
 #use unicode :v(6.3);
 
@@ -18,12 +18,12 @@ plan 60;
 #  Numeric_Value
 ## String [5/12]
 # Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Case_Folding
-## Miscellaneous Properties [1/19]
-# Unicode_1_Name, Name
+## Miscellaneous Properties [3/19]
+# Unicode_1_Name, Name, Jamo_Short_Name
 ## Binary [6/60]
 #  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark
-## Catalog Properties [2/3]
-# Script Age
+## Catalog Properties [3/3]
+# Script, Age, Block
 ## Enum [8/20]
 #  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class East_Asian_Width
 #  Word_Break, Line_Break, Hangul_Syllable_Type
@@ -31,7 +31,7 @@ plan 60;
 # Emoji Emoji_Modifier Emoji_All
 
 
-#?niecza 60 skip "uniprop NYI"
+#?niecza 62 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -49,6 +49,7 @@ is "a".uniprop('sc'), "a".uniprop('Script'), "uniprop: Unicode authoratative sho
 isa-ok 'a'.uniprop('Script'), Str, '.uniprop returns a Str for string Unicode properties';
 is 'a'.uniprop('Script'), 'Latin', ".uniprop('Script') returns correct result for 'a'";
 like 'a'.uniprop('Age'), /'1.1'/, "'a'.uniprop('Age') looks like /'1.1'/";
+is 'a'.uniprop('Block'), 'Basic Latin', "uniprop for Block works";
 #?rakudo.moar todo 'Unicode 1 names NYI in MoarVM'
 is '¶'.uniprop('Unicode_1_Name'), "PARAGRAPH SIGN", "¶.uniprop('Unicode_1_Name') returns Unicode 1 name";
 is uniprop(0xFB00, 'Name'), "LATIN SMALL LIGATURE FF", "uniprop: returns proper name for LATIN SMALL LIGATURE FF";
@@ -63,6 +64,9 @@ is "\x[FB00]".uniname, "LATIN SMALL LIGATURE FF", "uniname: returns proper name 
 is "ﬆ".fc, "st", "'ﬆ'.fc returns ‘st’";
 #?rakudo.moar todo "uniprop('Case_Folding') does not yet work"
 is "ﬆ".uniprop('Case_Folding'), 'st', "'ﬆ'.uniprop for Case_Folding returns ‘st’";
+#?rakudo.moar todo "Jamo_Short_Name NYI in MoarVM"
+# https://github.com/MoarVM/MoarVM/issues/457
+is "ᄁ".uniprop('Jamo_Short_Name'), 'GG', "uniprop for Jamo_Short_Name works";
 
 #?rakudo.moar todo 'moar returns a string containing the unicode codepoint instead of an integer for Bidi_Mirroring_Glyph'
 # https://github.com/MoarVM/MoarVM/issues/451
