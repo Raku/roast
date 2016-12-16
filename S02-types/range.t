@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 185;
+plan 186;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -367,5 +367,25 @@ is-deeply Int.Range, -Inf^..^Inf, 'Int.range is -Inf^..^Inf';
 # RT #128887
 is-deeply (eager (^10+5)/2), (2.5, 3.5, 4.5, 5.5, 6.5),
     'Rat range constructed with Range ops does not explode';
+
+# RT #129104
+subtest '.rand does not generate value equal to excluded endpoints' => {
+    plan 3;
+
+    my $seen = 0;
+    for ^10000 { $seen = 1 if (1..^(1+10e-15)).rand == 1+10e-15 };
+    ok $seen == 0, '..^ range';
+
+    $seen = 0;
+    for ^10000 { $seen = 1 if (1^..(1+10e-15)).rand == 1 };
+    ok $seen == 0, '^.. range';
+
+    $seen = 0;
+    for ^10000 {
+        my $v = (1^..^(1+10e-15)).rand;
+        $seen = 1 if $v == 1 or $v == 1+10e-15
+    };
+    ok $seen == 0, '^..^ range';
+}
 
 # vim:set ft=perl6
