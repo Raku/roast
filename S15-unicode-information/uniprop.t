@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 54;
+plan 60;
 
 #use unicode :v(6.3);
 
@@ -11,27 +11,27 @@ plan 54;
 ### The types in the comment below are taken from the Unicode property name types, which may or may
 ### not correspond with types in Perl 6. The numbers in brackets show the number of each category
 ### we have tests for so far (Unicode 9.0). Hopefully eventually we include all of them.
-## Only list roperties whose return value is tested specifically to be the correct value.
+## Only list properties whose return value is tested specifically to be the correct value.
 ## Boolean values must be tested on at least two codepoints, for both True and False values.
 
 ## Numeric [1/4]
 #  Numeric_Value
-## String [4/12]
-# Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping
+## String [5/12]
+# Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Case_Folding
 ## Miscellaneous Properties [1/19]
 # Unicode_1_Name, Name
 ## Binary [6/60]
 #  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark
 ## Catalog Properties [2/3]
 # Script Age
-## Enum [6/20]
-#  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class
-#  Word_Break, Line_Break
+## Enum [8/20]
+#  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class East_Asian_Width
+#  Word_Break, Line_Break, Hangul_Syllable_Type
 ## Additional [2/?]
 # Emoji Emoji_Modifier Emoji_All
 
 
-#?niecza 54 skip "uniprop NYI"
+#?niecza 60 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -60,6 +60,9 @@ is uniprop(0xFB00, 'Titlecase_Mapping'), "\x[0046]\x[0066]", "uniprop: returns p
 is "\x[FB00]".uc, "\x[0046]\x[0046]", ".uc: returns proper uppercase mapping for LATIN SMALL LIGATURE FF";
 is uniprop(0xFB00, 'Uppercase_Mapping'), "\x[0046]\x[0046]", ".uc: returns proper uppercase mapping for LATIN SMALL LIGATURE FF";
 is "\x[FB00]".uniname, "LATIN SMALL LIGATURE FF", "uniname: returns proper name for LATIN SMALL LIGATURE FF";
+is "ﬆ".fc, "st", "'ﬆ'.fc returns ‘st’";
+#?rakudo.moar todo "uniprop('Case_Folding') does not yet work"
+is "ﬆ".uniprop('Case_Folding'), 'st', "'ﬆ'.uniprop for Case_Folding returns ‘st’";
 
 #?rakudo.moar todo 'moar returns a string containing the unicode codepoint instead of an integer for Bidi_Mirroring_Glyph'
 # https://github.com/MoarVM/MoarVM/issues/451
@@ -102,12 +105,18 @@ is-deeply 'a'.uniprop('Quotation_Mark'), False, ".uniprop('Quotation_Mark') retu
 is 0x202A.uniprop('Bidi_Class'), 'LRE', "0x202A.uniprop('Bidi_Class') returns LRE";
 is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') returns Hebrew_Letter";
 is "\n".uniprop('Line_Break'), 'LF', ‘"\n".uniprop('Line_Break') return LF’;
+#?rakudo.moar 2 todo "East_Asian_Width NYI in MoarVM"
+# https://github.com/MoarVM/MoarVM/issues/454
+is "↉".uniprop('East_Asian_Width'), 'A', "uniprop for ↉ returns A for East_Asian_Width";
+is "]".uniprop('East_Asian_Width'), 'Na', "uniprop for ] returns Na for East_Asian_Width";
+is '읔'.uniprop('Hangul_Syllable_Type'), 'LVT', "uniprop for Hangul_Syllable_Type works";
 
 ## Additional Properties
-#?rakudo.moar 7 todo "Emoji properties NYI in MoarVM"
+#?rakudo.moar 8 todo "Emoji properties NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/453
 is-deeply "🐧".uniprop('Emoji'), True, "uniprop for Emoji returns True for emoji's";
 is-deeply "A".uniprop('Emoji'), True, "uniprop for Emoji returns False for non-emoji's";
+is-deeply "#".uniprop('Emoji'), True, "uniprop for Emoji returns true for #";
 is-deeply 0x1F3FD.uniprop('Emoji_Modifier'), True, "uniprop for Emoji_Modifiers returns True for Emoji Modifiers";
 is-deeply "🐧".uniprop('Emoji_Modifier'), False, "uniprop for Emoji_Modifier returns False for non modifier Emoji's";
 is-deeply 0x1F3FD.uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for Emoji Modifiers";
