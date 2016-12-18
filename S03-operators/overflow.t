@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 100;
+plan 101;
 
 #L<S03/Autoincrement precedence>
 
@@ -268,5 +268,9 @@ throws-like '2**10000000000', X::Numeric::Overflow,
 
 throws-like '2**-10000000000', X::Numeric::Underflow,
     'attempting to raise to a huge negative power throws';
+
+# RT #130369
+throws-like '2**-999999', X::Numeric::Underflow,
+    'attempting to raise to a large negative power throws';
 
 # vim: ft=perl6
