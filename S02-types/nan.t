@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 26;
 
 # Undeterminate Math results
 # see L<"http://mathworld.wolfram.com/Indeterminate.html">
@@ -55,5 +55,10 @@ ok (my num $ = NaN) === (my num $ = NaN), "NaN value identity (native num)";
     is $x, NaN, 'assigning NaN to Num works without errors';
 }
 
+{ # RT #129002
+    my $mynan = my class MyNum is Num {}.new(NaN);
+    is-deeply $mynan == NaN,  False, 'sublcass of NaN !== NaN';
+    is-deeply $mynan === NaN, False, 'sublcass of NaN !=== NaN';
+}
 
 # vim: ft=perl6
