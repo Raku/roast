@@ -6,7 +6,7 @@ use Test;
 
 use Test::Util;
 
-plan 3;
+plan 6;
 
 =begin pod
 
@@ -55,6 +55,36 @@ is_run(
     },
     '-n -e "" works like awk ""',
     :compiler-args['-n -e ""'],
+);
+
+#?rakudo todo 'NYI RT #129093'
+is_run(
+    $str,          # input
+    {
+        out => "foo\n",
+    },
+    '-n -e "FIRST .say" prints the first line of the input',
+    :compiler-args['-n -e "FIRST .say"'],
+);
+
+#?rakudo todo 'NYI RT #129093'
+is_run(
+    $str,          # input
+    {
+        out => "bar\n",
+    },
+    '-n -e "LAST .say" prints the last line of the input',
+    :compiler-args['-n -e "LAST .say"'],
+);
+
+#?rakudo todo 'NYI RT #129093'
+is_run(
+    $str,          # input
+    {
+        out => $str,
+    },
+    '-n -e "NEXT .say" prints each line of the input',
+    :compiler-args['-n -e "NEXT .say"'],
 );
 
 # vim: ft=perl6
