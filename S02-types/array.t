@@ -382,7 +382,6 @@ my @array2 = ("test", 1, Mu);
     my %foo;
     %foo<bar>[*-0] = 42;
 
-    #?rakudo todo 'RT 128005'
     is-deeply %foo<bar>, [42],
         '[*-0] index references correct element when autovivifying';
 }
