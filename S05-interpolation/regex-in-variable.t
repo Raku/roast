@@ -12,7 +12,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 52;
+plan 53;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -98,6 +98,8 @@ ok(!("aaaabbbbbcaaab" ~~ /^@foo+$/), 'Multiple array non-compiling');
 ok("aaaabbbbbcaaab" ~~ /^<@foo>+$/, 'Multiple array compiling');
 
 # L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
+#?rakudo 2 todo "we are not checking for %hashes yet"
+throws-like  '/%var/', Exception, 'cannot interpolate hashes into regexes';
 throws-like 'm/%var/', Exception, 'cannot interpolate hashes into regexes';
 
 # L<S05/Variable (non-)interpolation/If $var is undefined>
