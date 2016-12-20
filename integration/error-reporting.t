@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 31;
+plan 32;
 
 use Test::Util;
 
@@ -253,5 +253,10 @@ subtest 'composition errors do not crash when printing (RT129906)' => {
         X::Composition::NotComposable,  message => /129906/,
     'Accessing X::Composition::NotComposable.message does not crash';
 }
+
+# https://irclog.perlgeek.de/perl6/2016-12-20#i_13774176
+throws-like { await start die 'test' }, Exception,
+	backtrace => *.is-runtime.so,
+'broken promise exception backtrace knows it is runtime';
 
 # vim: ft=perl6
