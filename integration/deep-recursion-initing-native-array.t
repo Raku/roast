@@ -3,6 +3,8 @@ use Test;
 plan 1;
 
 # RT #130294
+# This test is in a file of its own, because the bug it covered was quite
+# sensitive to small changes.
 
 my $size = 10001;
 my int @mat[$size; $size];
