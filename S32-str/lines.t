@@ -7,6 +7,13 @@ use Test::Util;
 
 plan 48;
 
+##############################################################
+####
+#### XXX TODO .lines does not take an $eager param so these
+#### tests needs to stop testing using it
+####
+##############################################################
+
 for False, True -> $eager {
     is "a\nb\n\nc".lines(:$eager).join('|'),
       'a|b||c', 'LF .lines without trailing';
