@@ -85,7 +85,6 @@ $output = Test::Util::run('$*IN.nl-in = "+"; say get() eq "A";', "A+B+C+");
 is $output, "True\n", 'Can change $*IN.nl-in and it has effect';
 
 { # https://github.com/rakudo/rakudo/commit/bd4236359c9150e4490d86275b3c2629b6466566
-    # https://github.com/rakudo/rakudo/commit/bd4236359c9150e4490d86275b3c2629b6466566
     my @lines = lines Test::Util::run(
         ｢@*ARGS = '｣ ~ $tmp-file-name ~ ｢' xx 2; .say for $*ARGFILES.lines(5)｣
     );
