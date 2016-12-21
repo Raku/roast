@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 14;
+plan 15;
 
 sub create-temporary-file ($name = '') {
     my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ $name ~ '-' ~ time;
@@ -89,6 +89,18 @@ is $output, "True\n", 'Can change $*IN.nl-in and it has effect';
         ｢@*ARGS = '｣ ~ $tmp-file-name ~ ｢' xx 2; .say for $*ARGFILES.lines(5)｣
     );
     is-deeply @lines, [<one two three one two>], '.lines with limit works across files';
+}
+
+subtest '.lines accepts all Numerics as limit' => {
+    my @stuff = 5, 5/1, 5e0, 5+0i, <5>, < 5/1>, <5e0>, < 5+0i>;
+    plan +@stuff;
+    for @stuff -> $limit {
+        my @lines = lines Test::Util::run(
+            ｢@*ARGS = '｣ ~ $tmp-file-name
+                ~ ｢' xx 2; .say for $*ARGFILES.lines: ｣ ~ $limit.perl
+        );
+        is-deeply @lines, [<one two three one two>], "{$limit.^name} limit";
+    }
 }
 
 subtest ':bin and :enc get passed through in slurp' => {
