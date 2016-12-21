@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 276;
+plan 277;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -802,3 +802,7 @@ subtest '.hh-mm-ss' => {
     is-deeply $d.later(:13hours).hh-mm-ss, '14:10:42', '13 hours later';
     is-deeply $d.earlier(:50hours).hh-mm-ss, '23:10:42', '50 hours earlier';
 }
+
+# https://github.com/rakudo/rakudo/commit/9eed2768d4751b4585bbd335016ca0d9ef
+throws-like { DateTime.new: :2016year, 42 }, Exception,
+    'unexpected named arg with positional arg to .new throws';
