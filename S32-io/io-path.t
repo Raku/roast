@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 20;
 
 # L<S32::IO/IO::Path>
 
@@ -61,3 +61,9 @@ isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 # RT #127989
 throws-like { IO::Path.new: 'foo', 'bar' }, X::Multi::NoMatch,
     'IO::Path.new with wrong args must not claim it only takes named ones';
+
+# RT #128097
+{
+    is IO::Handle.new(:path('-')).path.gist, '"-".IO', '"-" as the path of an IO::Handle gists correctly';
+    is '-'.IO.gist, '"-".IO', '"-".IO gists correctly';
+}
