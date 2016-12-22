@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 62;
+plan 63;
 
 #use unicode :v(6.3);
 
@@ -24,14 +24,14 @@ plan 62;
 #  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark
 ## Catalog Properties [3/3]
 # Script, Age, Block
-## Enum [8/20]
+## Enum [9/20]
 #  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class East_Asian_Width
-#  Word_Break, Line_Break, Hangul_Syllable_Type
+#  Word_Break, Line_Break, Hangul_Syllable_Type, Indic_Positional_Category
 ## Additional [2/?]
 # Emoji Emoji_Modifier Emoji_All
 
 
-#?niecza 62 skip "uniprop NYI"
+#?niecza 63 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -53,6 +53,9 @@ is 'a'.uniprop('Block'), 'Basic Latin', "uniprop for Block works";
 #?rakudo.moar todo 'Unicode 1 names NYI in MoarVM'
 is '¶'.uniprop('Unicode_1_Name'), "PARAGRAPH SIGN", "¶.uniprop('Unicode_1_Name') returns Unicode 1 name";
 is uniprop(0xFB00, 'Name'), "LATIN SMALL LIGATURE FF", "uniprop: returns proper name for LATIN SMALL LIGATURE FF";
+#?rakudo.moar todo 'Indic_Positional_Category NYI in MoarVM'
+# https://github.com/MoarVM/MoarVM/issues/461
+is 0x0BD7.uniprop('Indic_Positional_Category'), "Right", "uniprop for Indic_Positional_Category works";
 
 is "\x[FB00]".lc, "\x[FB00]", ".lc: returns proper lowercase mapping for LATIN SMALL LIGATURE FF";
 is uniprop(0xFB00, 'Lowercase_Mapping'), "\x[FB00]", "uniprop: returns proper lowercase mapping for LATIN SMALL LIGATURE FF";
