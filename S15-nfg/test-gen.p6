@@ -1,3 +1,4 @@
+#!/usr/bin/env perl6
 constant CHARS_TEST_CASES = 500;
 constant NFC_ROUNDTRIP_TEST_CASES = 500;
 constant OTHER_ROUNDTRIP_TEST_CASES = 100;
