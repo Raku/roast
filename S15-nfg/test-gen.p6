@@ -23,12 +23,12 @@ sub MAIN(Str $unidata-normalization-tests) {
     say "Found $source.elems() interesting cases for NFG tests.";
 
     # Write tests.
-    write-chars-test-file('t/spec/S15-nfg/mass-chars.t', $source, $nfc, CHARS_TEST_CASES);
-    write-roundtrip-test-file('t/spec/S15-nfg/mass-roundtrip-nfc.t', $source, $nfc, 'NFC', NFC_ROUNDTRIP_TEST_CASES);
-    write-roundtrip-test-file('t/spec/S15-nfg/mass-roundtrip-nfd.t', $source, $nfd, 'NFD', OTHER_ROUNDTRIP_TEST_CASES);
-    write-roundtrip-test-file('t/spec/S15-nfg/mass-roundtrip-nfkc.t', $source, $nfkc, 'NFKC', OTHER_ROUNDTRIP_TEST_CASES);
-    write-roundtrip-test-file('t/spec/S15-nfg/mass-roundtrip-nfkd.t', $source, $nfkd, 'NFKD', OTHER_ROUNDTRIP_TEST_CASES);
-    write-equality-test-file('t/spec/S15-nfg/mass-equality.t', $nfd, EQUALITY_TEST_CASES);
+    write-chars-test-file('S15-nfg/mass-chars.t', $source, $nfc, CHARS_TEST_CASES);
+    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfc.t', $source, $nfc, 'NFC', NFC_ROUNDTRIP_TEST_CASES);
+    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfd.t', $source, $nfd, 'NFD', OTHER_ROUNDTRIP_TEST_CASES);
+    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkc.t', $source, $nfkc, 'NFKC', OTHER_ROUNDTRIP_TEST_CASES);
+    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkd.t', $source, $nfkd, 'NFKD', OTHER_ROUNDTRIP_TEST_CASES);
+    write-equality-test-file('S15-nfg/mass-equality.t', $nfd, EQUALITY_TEST_CASES);
 }
 
 sub write-chars-test-file($target, @source, @nfc, $limit) {
