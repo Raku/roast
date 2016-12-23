@@ -114,7 +114,7 @@ is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') 
 is "\n".uniprop('Line_Break'), 'LF', ‘"\n".uniprop('Line_Break') return LF’;
 #?rakudo.moar 2 todo "MoarVM does not return correct values for all Line_Break properties"
 is 0x200D.uniprop('Line_Break'), 'ZWJ', ‘uniprop('Line_Break') returns ZWJ for U+200D ZERO WIDTH JOINER’;
-is 0x200D.uniprop('Line_Break'), 'SA', ‘uniprop('Line_Break') returns ZWJ for U+200D ZERO WIDTH JOINER’;
+is 0x103D.uniprop('Line_Break'), 'SA', ‘uniprop('Line_Break') returns ZWJ for U+103D MYANMAR CONSONANT SIGN MEDIAL WA’;
 
 #?rakudo.moar 2 todo "East_Asian_Width NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/454
