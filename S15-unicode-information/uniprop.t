@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 109;
+plan 113;
 
 #use unicode :v(6.3);
 
@@ -27,15 +27,15 @@ plan 109;
 #  ID_Continue, Sentence_Terminal
 ## Catalog Properties [3/3]
 # Script, Age, Block
-## Enum [14/20]
+## Enum [16/20]
 #  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class East_Asian_Width
 #  Word_Break, Line_Break, Hangul_Syllable_Type, Indic_Positional_Category, Grapheme_Cluster_Break
-#  General_Category, Joining_Group, Joining_Type, Sentence_Break
+#  General_Category, Joining_Group, Joining_Type, Sentence_Break, Decomposition_Type, NFC_Quick_Check
 ## Additional [4/?]
 # Emoji, Emoji_Modifier, Emoji_All, Emoji_Presentation
 
 
-#?niecza 109 skip "uniprop NYI"
+#?niecza 113 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -171,6 +171,11 @@ is "\n".uniprop('Line_Break'), 'LF', ‘"\n".uniprop('Line_Break') return LF’;
 #?rakudo.moar 2 todo "MoarVM does not return correct values for all Line_Break properties"
 is 0x200D.uniprop('Line_Break'), 'ZWJ', ‘uniprop('Line_Break') returns ZWJ for U+200D ZERO WIDTH JOINER’;
 is 0x103D.uniprop('Line_Break'), 'SA', ‘uniprop('Line_Break') returns SA for U+103D MYANMAR CONSONANT SIGN MEDIAL WA’;
+
+is 'Ö'.uniprop('Decomposition_Type'), 'Canonical', 'uniprop for Decomposition_Type returns Canonical for Canonical value codes';
+is 'ᆨ'.uniprop('NFC_Quick_Check'), 'M', 'uniprop for NFC_Quick_Check returns M for ‘Maybe’ value codes';
+is '都'.uniprop('NFC_Quick_Check'), 'Y', 'uniprop for NFC_Quick_Check returns Y for ‘Yes’ value codes';
+is 0x0374.uniprop('NFC_Quick_Check'), 'N', 'uniprop for NFC_Quick_Check returns N for ‘No’ value codes';
 
 #?rakudo.moar 2 todo "East_Asian_Width NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/454
