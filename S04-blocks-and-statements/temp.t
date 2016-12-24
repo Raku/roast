@@ -2,15 +2,30 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 42;
 
 # L<S04/The Relationship of Blocks and Declarations/function has been renamed>
 {
   my $a = 42;
   {
+    # warning - do {temp $a = 23; $a} not the same
+    #   https://irclog.perlgeek.de/perl6/2016-12-23#i_13791566
     is($(temp $a = 23; $a), 23, "temp() changed the variable (1)");
   }
   is $a, 42, "temp() restored the variable (1)";
+
+  my @a = (42);
+  {
+    is-deeply( (temp @a).push(64), [42, 64], 'changed the temp array' )
+  }
+  is-deeply(@a, [42], 'temp() restored the array');
+
+  my %h = k1 => 3;
+  {
+    (temp %h)<k2> = 5;
+    is-deeply(%h, {k1 => 3, k2 => 5}, 'changed the temp hash' )
+  }
+  is-deeply(%h, {k1 => 3}, 'temp() restored the hash')
 }
 
 # Test that temp() restores the variable at scope exit, not at subroutine
