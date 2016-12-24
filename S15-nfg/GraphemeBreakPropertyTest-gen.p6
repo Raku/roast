@@ -1,14 +1,27 @@
 #!/usr/bin/env perl6
 # Generates tests from GraphemeBreakPropertyTest.txt from UNIDATA
+# At the moment this test only checks how many graphemes we think exist
+# in the string. The test itself defines points where we should break or
+# not break. For now we just test if the number of graphemes is correct.
+# This is mostly good enough.
 use v6;
 sub MAIN ( Str $GrahemeBreakTest-file ) {
     my @text = $GrahemeBreakTest-file.IO.slurp.lines;
     my $line-no = 0;
     my @array;
+    say @text;
     for @text -> $line {
         $line-no++;
+        say $line;
         next if $line ~~ / ^ \s* '#' /;
         $line ~~ / ^ $<beginning>=(.*) '#' $<comment>=( .* ) $ /;
+        if ! defined any($<comment>, $<beginning>) {
+            say "Something went wrong.";
+            say "Or maybe you need to update this script?";
+            exit 1
+        }
+        say $<comment>.defined;
+        say $<beginning>.defined;
         my $comment = $<comment>.trim;
         my $beginning = $<beginning>.trim;
         # Remove the beginning and end, since we always break at start and end of string
@@ -16,7 +29,7 @@ sub MAIN ( Str $GrahemeBreakTest-file ) {
         # Remove all the 'break' symbols, we only care about where *not* to break
         $beginning ~~ s:g/'÷'//;
         my $no-break = 0;
-        # CCount how many codepoints we are not supposed to break between
+        # Count how many codepoints we are not supposed to break between
         while $beginning ~~ s/'×'// {
             $no-break++;
         }
@@ -40,7 +53,7 @@ sub MAIN ( Str $GrahemeBreakTest-file ) {
         $uni-codes ~~ s/ ', ' $ //;
         my $should-be;
         $should-be = $string.codes - $no-break;
-        push @array, qq<is Uni.new($uni-codes).Str.chars, $should-be, "GraphemeBreakTest Line: $line-no Codes: $string.codes() Non-break: $no-break";>;
+        push @array, qq<is Uni.new($uni-codes).Str.chars, $should-be, "GraphemeBreakTest.txt line #$line-no Codes: $string.codes() Non-break: $no-break";>;
     }
     my $file =
     qq:to/END/;
