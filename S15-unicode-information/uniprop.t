@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 118;
+plan 125;
 
 #use unicode :v(6.3);
 
@@ -16,26 +16,33 @@ plan 118;
 
 ## Numeric [2/4]
 #  Numeric_Value, Numeric_Type
+
 ## String [5/12]
 # Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Case_Folding
-## Miscellaneous Properties [4/19]
-# Unicode_1_Name, Name, Jamo_Short_Name, ISO_Comment
+
+## Miscellaneous Properties [5/19]
+# Unicode_1_Name, Name, Jamo_Short_Name, ISO_Comment, Bidi_Mirroring_Glyph
 ## Binary [24/60]
 #  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark, Math
 #  Grapheme_Extend, Hyphen, Extender, Grapheme_Base, Join_Control, Grapheme_Link
 #  Deprecated, White_Space, Ideographic, Radical, Alphabetic, Bidi_Mirrored, Variation_Selector
 #  ID_Continue, Sentence_Terminal, Changes_When_NFKC_Casefolded, Full_Composition_Exclusion
+
 ## Catalog Properties [3/3]
 # Script, Age, Block
-## Enum [16/20]
-#  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class East_Asian_Width
-#  Word_Break, Line_Break, Hangul_Syllable_Type, Indic_Positional_Category, Grapheme_Cluster_Break
-#  General_Category, Joining_Group, Joining_Type, Sentence_Break, Decomposition_Type, NFC_Quick_Check
+
+## Enum [20/20]
+#  Bidi_Class, Bidi_Paired_Bracket_Type, Bidi_Paired_Bracket, Canonical_Combining_Class,
+#  Decomposition_Type, , East_Asian_Width, General_Category, Grapheme_Cluster_Break,
+#  Hangul_Syllable_Type, Indic_Positional_Category, Indic_Syllabic_Category, Joining_Group
+#  Joining_Type, Line_Break, NFC_Quick_Check, NFD_Quick_Check, NFKC_Quick_Check, NFKD_Quick_Check,
+#  Sentence_Break, Word_Break
+
 ## Additional [4/?]
 # Emoji, Emoji_Modifier, Emoji_All, Emoji_Presentation
 
 
-#?niecza 118 skip "uniprop NYI"
+#?niecza 125 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -187,6 +194,20 @@ is 'Ö'.uniprop('Decomposition_Type'), 'Canonical', 'uniprop for Decomposition_T
 is 'ᆨ'.uniprop('NFC_Quick_Check'), 'M', 'uniprop for NFC_Quick_Check returns M for ‘Maybe’ value codes';
 is '都'.uniprop('NFC_Quick_Check'), 'Y', 'uniprop for NFC_Quick_Check returns Y for ‘Yes’ value codes';
 is 0x0374.uniprop('NFC_Quick_Check'), 'N', 'uniprop for NFC_Quick_Check returns N for ‘No’ value codes';
+#?rakudo.moar 6 todo "NFD_Quick_Check NFKC_Quick_Check NFKD_Quick_Check NYI in MoarVM"
+# https://github.com/MoarVM/MoarVM/issues/467
+is 0x3094.uniprop('NFD_Quick_Check'), False, 'uniprop for NFD_Quick_Check returns False for codes without this property';
+is 'a'.uniprop('NFD_Quick_Check'), True, 'uniprop for NFD_Quick_Check returns True for codes with this property';
+
+is 0x00A0.uniprop('NFKC_Quick_Check'), False, 'uniprop for NFKC_Quick_Check returns False for codes without this property';
+is 'a'.uniprop('NFKC_Quick_Check'), True, 'uniprop for NFKC_Quick_Check returns True for codes with this property';
+
+is 0x00A0.uniprop('NFKD_Quick_Check'), False, 'uniprop for NFKD_Quick_Check returns False for codes without this property';
+is 'a'.uniprop('NFKD_Quick_Check'), True, 'uniprop for NFKD_Quick_Check returns True for codes with this property';
+
+#?rakudo.moar todo "Indic_Syllabic_Category NYI in MoarVM"
+# https://github.com/MoarVM/MoarVM/issues/466
+is 0x0374.uniprop('Indic_Syllabic_Category'), 'Bindu', 'uniprop for Indic_Syllabic_Category returns N for ‘No’ value codes';
 #?rakudo.moar todo "MoarVM returns only int's but not Canonical_Combining_Class's string value"
 # https://github.com/MoarVM/MoarVM/issues/464
 is ' '.uniprop('Canonical_Combining_Class'), 'Not_Reordered', "uniprop for Canonical_Combining_Class works";
