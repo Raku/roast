@@ -88,8 +88,8 @@ is ')'.uniprop('Bidi_Paired_Bracket_Type'), 'c', "')'.uniprop('Bidi_Paired_Brack
 isa-ok "½".uniprop('Numeric_Value'), Rat, "'½'.uniprop('Numeric_Value') returns a Rat";
 is "½".uniprop('Numeric_Value'), 0.5, "'½'.uniprop('Numeric_Value') returns the correct number";
 is "a".uniprop('Numeric_Value'), NaN, "'a'.uniprop('Numeric_Value') returns NaN";
-is '1'.uniprop('Numeric_Type'), 'Decimal', "uniprop for Numeric_Value returns 'Decimal' for decimal numbers";
-is '1'.uniprop('Numeric_Type'), 'None', "uniprop for Numeric_Value returns 'None' for non-numbers";
+is '1'.uniprop('Numeric_Type'), 'Decimal', "uniprop for Numeric_Type returns 'Decimal' for decimal numbers";
+is 'a'.uniprop('Numeric_Type'), 'None', "uniprop for Numeric_Type returns 'None' for non-numbers";
 
 ## Binary Properties
 is-deeply '0'.uniprop('Alphabetic'), False, "'0'.uniprop('Alphabetic') returns a False";
