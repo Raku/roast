@@ -44,7 +44,7 @@ sub test-gmtime( Int $t is copy ) {
     }
     $mday = $t + 1;
     return ($sec, $min, $hour, $mday, $mon + 1, $year + 1900, $wday + 1);
-}        #   0     1      2      3       4          5             6 
+}        #   0     1      2      3       4          5             6
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/C<time>>
@@ -606,10 +606,10 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     }, '.later does not try to create an impossible datetime';
 }
 
-# RT #121990 Smartmatch against a Date 
+# RT #121990 Smartmatch against a Date
 {
-    my $now = DateTime.now; 
-    my $today = Date.today; 
+    my $now = DateTime.now;
+    my $today = Date.today;
     my $not-now = ds('1971-10-28T10:45:00');
 
     ok $now ~~ $today, "positive smartmatch against a Date";
