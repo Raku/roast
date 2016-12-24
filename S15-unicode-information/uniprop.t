@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 125;
+plan 143;
 
 #use unicode :v(6.3);
 
@@ -22,11 +22,13 @@ plan 125;
 
 ## Miscellaneous Properties [5/19]
 # Unicode_1_Name, Name, Jamo_Short_Name, ISO_Comment, Bidi_Mirroring_Glyph
-## Binary [24/60]
+## Binary [33/60]
 #  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark, Math
 #  Grapheme_Extend, Hyphen, Extender, Grapheme_Base, Join_Control, Grapheme_Link
 #  Deprecated, White_Space, Ideographic, Radical, Alphabetic, Bidi_Mirrored, Variation_Selector
 #  ID_Continue, Sentence_Terminal, Changes_When_NFKC_Casefolded, Full_Composition_Exclusion
+#  Cased, Changes_When_Casefolded, Changes_When_Casemapped, Changes_When_Lowercased
+#  Changes_When_Uppercased, Changes_When_Titlecased, Uppercase, Terminal_Punctuation, Bidi_Control
 
 ## Catalog Properties [3/3]
 # Script, Age, Block
@@ -42,7 +44,7 @@ plan 125;
 # Emoji, Emoji_Modifier, Emoji_All, Emoji_Presentation
 
 
-#?niecza 125 skip "uniprop NYI"
+#?niecza 143 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -175,12 +177,41 @@ is-deeply 'a'.uniprop('Sentence_Terminal'), False, "uniprop for Sentence_Termina
 is-deeply '🄡'.uniprop('Changes_When_NFKC_Casefolded'), True, "uniprop for Changes_When_NFKC_Casefolded property returns True for codes with this property";
 is-deeply 'a'.uniprop('Changes_When_NFKC_Casefolded'), False, "uniprop for Sentence_Terminal property returns False for codes without this property";
 
+is-deeply 'a'.uniprop('Cased'), True, "uniprop for Cased property returns True for codes with this property";
+is-deeply '0'.uniprop('Cased'), False, "uniprop for Cased property returns False for codes without this property";
+
 # The following two tests cannot be tested as strings/chars because of Unicode normalization.
 # Encoding it as a string will change the codepoint, so do not try this! It will give the incorrect
 # answer!
 is-deeply  0x0343.uniprop('Full_Composition_Exclusion'), True, "uniprop for Full_Composition_Exclusion property returns True for codes with this property";
 is-deeply 'a'.uniprop('Full_Composition_Exclusion'), False, "uniprop for Full_Composition_Exclusion property returns False for codes without this property";
 
+is-deeply 'A'.uniprop('Changes_When_Casefolded'), True, "uniprop for Changes_When_Casefolded property returns True for codes with this property";
+is-deeply 'a'.uniprop('Changes_When_Casefolded'), False, "uniprop for Changes_When_Casefolded property returns False for codes without this property";
+
+is-deeply 'A'.uniprop('Changes_When_Lowercased'), True, "uniprop for Changes_When_Lowercased property returns True for codes with this property";
+is-deeply 'a'.uniprop('Changes_When_Lowercased'), False, "uniprop for Changes_When_Lowercased property returns False for codes without this property";
+
+is-deeply 'A'.uniprop('Changes_When_Uppercased'), False, "uniprop for Changes_When_Uppercased property returns False for codes with this property";
+is-deeply 'a'.uniprop('Changes_When_Uppercased'), True, "uniprop for Changes_When_Uppercased property returns True for codes without this property";
+
+is-deeply 'A'.uniprop('Changes_When_Titlecased'), False, "uniprop for Changes_When_Titlecased property returns False for codes with this property";
+is-deeply 'a'.uniprop('Changes_When_Titlecased'), True, "uniprop for Changes_When_Titlecased property returns True for codes without this property";
+
+is-deeply 'ⓐ'.uniprop('Changes_When_Casemapped'), True, "uniprop for Changes_When_Casemapped property returns True for codes with this property";
+is-deeply '☕'.uniprop('Changes_When_Casemapped'), False, "uniprop for Changes_When_Casemapped property returns False for codes without this property";
+
+is-deeply 'A'.uniprop('Uppercase'), True, "uniprop for 'Upper' property returns False for codes with this property";
+is-deeply 'a'.uniprop('Uppercase'), False, "uniprop for 'Upper' property returns True for codes without this property";
+
+is-deeply 'A'.uniprop('Lowercase'), False, "uniprop for 'Lowercase' property returns False for codes with this property";
+is-deeply 'a'.uniprop('Lowercase'), True, "uniprop for 'Lowercase' property returns True for codes without this property";
+
+is-deeply 'A'.uniprop('Terminal_Punctuation'), False, "uniprop for Terminal_Punctuation property returns False for codes with this property";
+is-deeply '⁇'.uniprop('Terminal_Punctuation'), True, "uniprop for Terminal_Punctuation property returns True for codes without this property";
+
+is-deeply 'A'.uniprop('Bidi_Control'), False, "uniprop for 'Bidi_Control' property returns False for codes with this property";
+is-deeply 0x202D.uniprop('Bidi_Control'), True, "uniprop for 'Bidi_Control' property returns True for codes without this property";
 
 ## Enum Properties
 is 0x202A.uniprop('Bidi_Class'), 'LRE', "0x202A.uniprop('Bidi_Class') returns LRE";
