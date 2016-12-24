@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 67;
+plan 71;
 
 #use unicode :v(6.3);
 
@@ -20,8 +20,9 @@ plan 67;
 # Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Case_Folding
 ## Miscellaneous Properties [3/19]
 # Unicode_1_Name, Name, Jamo_Short_Name
-## Binary [6/60]
-#  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark
+## Binary [8/60]
+#  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark, Math
+#  Grapheme_Extend
 ## Catalog Properties [3/3]
 # Script, Age, Block
 ## Enum [10/20]
@@ -31,7 +32,7 @@ plan 67;
 # Emoji Emoji_Modifier Emoji_All
 
 
-#?niecza 67 skip "uniprop NYI"
+#?niecza 71 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -107,6 +108,12 @@ is-deeply 'o'.uniprop('Soft_Dotted'), False, ".uniprop('Soft_Dotted') for 'o' is
 
 is-deeply '“'.uniprop('Quotation_Mark'), True, ".uniprop('Quotation_Mark') returns True for LEFT DOUBLE QUOTATION MARK";
 is-deeply 'a'.uniprop('Quotation_Mark'), False, ".uniprop('Quotation_Mark') returns False for 'a'";
+
+is-deeply '+'.uniprop('Math'), True, ".uniprop('Math') returns True for Math properties";
+is-deeply 'a'.uniprop('Math'), False, ".uniprop('Math') returns False for non-Math properties";
+
+is-deeply 0x1D16E.uniprop('Grapheme_Extend'), True, "uniprop for Grapheme_Extend properties returns True for True values";
+is-deeply 'a'.uniprop('Grapheme_Extend'), False, "uniprop for Grapheme_Extend properties returns False for False values";
 
 ## Enum Properties
 is 0x202A.uniprop('Bidi_Class'), 'LRE', "0x202A.uniprop('Bidi_Class') returns LRE";
