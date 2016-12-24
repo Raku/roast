@@ -3,7 +3,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 29;
+plan 30;
 
 use Test::Util;
 
@@ -241,3 +241,7 @@ is_run 'sub MAIN(*@arg where { False }) { }; sub USAGE { print "USAGE called" }'
         err => '',
     },
     "failed constraint check doesn't leak internal exception out to the user";
+
+# RT #127621
+is_run 'sub MAIN($, *%) { }', { err => '', }, :args['--help'],
+    'use of anon slurpy hash does not cause a crash';
