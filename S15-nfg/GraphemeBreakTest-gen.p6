@@ -9,10 +9,8 @@ sub MAIN ( Str $GrahemeBreakTest-file ) {
     my @text = $GrahemeBreakTest-file.IO.slurp.lines;
     my $line-no = 0;
     my @array;
-    say @text;
     for @text -> $line {
         $line-no++;
-        say $line;
         next if $line ~~ / ^ \s* '#' /;
         $line ~~ / ^ $<beginning>=(.*) '#' $<comment>=( .* ) $ /;
         if ! defined any($<comment>, $<beginning>) {
@@ -20,8 +18,6 @@ sub MAIN ( Str $GrahemeBreakTest-file ) {
             say "Or maybe you need to update this script?";
             exit 1
         }
-        say $<comment>.defined;
-        say $<beginning>.defined;
         my $comment = $<comment>.trim;
         my $beginning = $<beginning>.trim;
         # Remove the beginning and end, since we always break at start and end of string
@@ -65,5 +61,5 @@ sub MAIN ( Str $GrahemeBreakTest-file ) {
     for @array {
         $file ~= $_ ~ "\n";
     }
-    spurt "S15-nfg/GraphemeBreakPropertyTest.t", $file;
+    spurt "S15-nfg/GraphemeBreakTest.t", $file;
 }
