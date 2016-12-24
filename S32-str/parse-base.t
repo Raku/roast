@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 51 * 2;
+plan 55 * 2;
 
 constant $fancy-nums       = '໕໖໗۶۷៤៥１２３';
 constant $fancy-nums-value = 5676745123;
@@ -28,6 +28,11 @@ for &parse-base, Str.^lookup('parse-base') -> &pb {
     is-deeply pb("\x[2212]FF", 16), -255,
         'can parse − sign (fancy Unicode minus)' ~ $t;
     is-deeply pb(       '+FF', 16),  255, 'can parse + sign';
+
+    is-deeply pb( '.42', 10),  .42, 'fractional without whole part';
+    is-deeply pb('+.42', 10),  .42, 'fractional without whole part with +';
+    is-deeply pb('-.42', 10), -.42, 'fractional without whole part with -';
+    is-deeply pb('−.42', 10), -.42, 'fractional without whole part with U+2212';
 
     #?rakudo.jvm todo 'Invalid base-10 character'
     is-deeply pb($fancy-nums, 10), $fancy-nums-value,
