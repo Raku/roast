@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 74;
+plan 90;
 
 #use unicode :v(6.3);
 
@@ -20,19 +20,20 @@ plan 74;
 # Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Case_Folding
 ## Miscellaneous Properties [3/19]
 # Unicode_1_Name, Name, Jamo_Short_Name
-## Binary [8/60]
+## Binary [13/60]
 #  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark, Math
-#  Grapheme_Extend, Hyphen
+#  Grapheme_Extend, Hyphen, Extender, Grapheme_Base, Join_Control, Grapheme_Link
 ## Catalog Properties [3/3]
 # Script, Age, Block
-## Enum [10/20]
+## Enum [14/20]
 #  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class East_Asian_Width
 #  Word_Break, Line_Break, Hangul_Syllable_Type, Indic_Positional_Category, Grapheme_Cluster_Break
+#  General_Category, Joining_Group, Joining_Type, Sentence_Break
 ## Additional [2/?]
 # Emoji Emoji_Modifier Emoji_All
 
 
-#?niecza 74 skip "uniprop NYI"
+#?niecza 90 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -47,6 +48,9 @@ is ("\x[1000]", "\x[100]")».uniprop('Script'), "\x[1000]\x[100]".uniprops('Scri
 is "a".uniprop('sc'), "a".uniprop('Script'), "uniprop: Unicode authoratative short names return the same result as full names";
 
 ## String/Catalog/Misc Properties
+is 'a'.uniprop('General_Category'), 'Ll', ".uniprop('General_Category') returns the correct result";
+is 'a'.uniprop, 'Ll', ".uniprop with no arguments returns the General_Category";
+
 isa-ok 'a'.uniprop('Script'), Str, '.uniprop returns a Str for string Unicode properties';
 is 'a'.uniprop('Script'), 'Latin', ".uniprop('Script') returns correct result for 'a'";
 like 'a'.uniprop('Age'), /'1.1'/, "'a'.uniprop('Age') looks like /'1.1'/";
@@ -84,6 +88,8 @@ is ')'.uniprop('Bidi_Paired_Bracket_Type'), 'c', "')'.uniprop('Bidi_Paired_Brack
 isa-ok "½".uniprop('Numeric_Value'), Rat, "'½'.uniprop('Numeric_Value') returns a Rat";
 is "½".uniprop('Numeric_Value'), 0.5, "'½'.uniprop('Numeric_Value') returns the correct number";
 is "a".uniprop('Numeric_Value'), NaN, "'a'.uniprop('Numeric_Value') returns NaN";
+is '1'.uniprop('Numeric_Type'), 'Decimal', "uniprop for Numeric_Value returns 'Decimal' for decimal numbers";
+is '1'.uniprop('Numeric_Type'), 'None', "uniprop for Numeric_Value returns 'None' for non-numbers";
 
 ## Binary Properties
 is-deeply '0'.uniprop('Alphabetic'), False, "'0'.uniprop('Alphabetic') returns a False";
@@ -116,8 +122,21 @@ is-deeply 'a'.uniprop('Quotation_Mark'), False, ".uniprop('Quotation_Mark') retu
 is-deeply '+'.uniprop('Math'), True, ".uniprop('Math') returns True for Math properties";
 is-deeply 'a'.uniprop('Math'), False, ".uniprop('Math') returns False for non-Math properties";
 
-is-deeply 0x1D16E.uniprop('Grapheme_Extend'), True, "uniprop for Grapheme_Extend properties returns True for True values";
-is-deeply 'a'.uniprop('Grapheme_Extend'), False, "uniprop for Grapheme_Extend properties returns False for False values";
+is-deeply 0x1D16E.uniprop('Grapheme_Extend'), True, "uniprop for Grapheme_Extend returns True for codes with this property";
+is-deeply 'a'.uniprop('Grapheme_Extend'), False, "uniprop for Grapheme_Extend returns False for codes without this property";
+
+is-deeply '۞'.uniprop('Grapheme_Base'), True, "uniprop for Grapheme_Base returns True for codes with this property";
+is-deeply 0x2028.uniprop('Grapheme_Base'), False, "uniprop for Grapheme_Base returns False for codes without this property";
+
+is-deeply 0xABED.uniprop('Grapheme_Link'), True, "uniprop for Grapheme_Link returns True for codes with this property";
+is-deeply 'ᖤ'.uniprop('Grapheme_Link'), False, "uniprop for Grapheme_Link returns False for codes without this property";
+
+is-deeply 'ๆ'.uniprop('Extender'), True, "uniprop for Extender property returns True for codepoints with this property";
+is-deeply 'a'.uniprop('Extender'), False, "uniprop for Extender property returns False for codepoints without this property";
+
+is-deeply 0x200D.uniprop('Join_Control'), True, "uniprop for Join_Control property returns True for U+200D";
+is-deeply 0x200C.uniprop('Join_Control'), True, "uniprop for Join_Control property returns True for U+200C";
+is-deeply 'a'.uniprop('Join_Control'), False, "uniprop for Join_Control property returns False for codes without this property";
 
 ## Enum Properties
 is 0x202A.uniprop('Bidi_Class'), 'LRE', "0x202A.uniprop('Bidi_Class') returns LRE";
@@ -125,7 +144,7 @@ is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') 
 is "\n".uniprop('Line_Break'), 'LF', ‘"\n".uniprop('Line_Break') return LF’;
 #?rakudo.moar 2 todo "MoarVM does not return correct values for all Line_Break properties"
 is 0x200D.uniprop('Line_Break'), 'ZWJ', ‘uniprop('Line_Break') returns ZWJ for U+200D ZERO WIDTH JOINER’;
-is 0x103D.uniprop('Line_Break'), 'SA', ‘uniprop('Line_Break') returns ZWJ for U+103D MYANMAR CONSONANT SIGN MEDIAL WA’;
+is 0x103D.uniprop('Line_Break'), 'SA', ‘uniprop('Line_Break') returns SA for U+103D MYANMAR CONSONANT SIGN MEDIAL WA’;
 
 #?rakudo.moar 2 todo "East_Asian_Width NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/454
@@ -134,6 +153,9 @@ is "]".uniprop('East_Asian_Width'), 'Na', "uniprop for ] returns Na for East_Asi
 is '읔'.uniprop('Hangul_Syllable_Type'), 'LVT', "uniprop for Hangul_Syllable_Type works";
 is "a".uniprop('Grapheme_Cluster_Break'), 'Other', "uniprop for Grapheme_Cluster_Break returns Other for normal codepoints";
 is "\n".uniprop('Grapheme_Cluster_Break'), 'LF', "uniprop for Grapheme_Cluster_Break returns LF for newline codepoint";
+is 'ܘ'.uniprop('Joining_Group'), "SYRIAC WAW", "uniprop for Joining_Group works";
+is 'ڵ'.uniprop('Joining_Type'), "D", "uniprop for Joining_Type works";
+is '.'.uniprop('Sentence_Break'), 'ATerm', "uniprop for Sentence_Break works";
 
 ## Additional Properties
 #?rakudo.moar 8 todo "Emoji properties NYI in MoarVM"
