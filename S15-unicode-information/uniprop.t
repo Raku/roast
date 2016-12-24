@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 71;
+plan 74;
 
 #use unicode :v(6.3);
 
@@ -22,7 +22,7 @@ plan 71;
 # Unicode_1_Name, Name, Jamo_Short_Name
 ## Binary [8/60]
 #  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark, Math
-#  Grapheme_Extend
+#  Grapheme_Extend, Hyphen
 ## Catalog Properties [3/3]
 # Script, Age, Block
 ## Enum [10/20]
@@ -32,7 +32,7 @@ plan 71;
 # Emoji Emoji_Modifier Emoji_All
 
 
-#?niecza 71 skip "uniprop NYI"
+#?niecza 74 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -91,6 +91,10 @@ is-deeply 'a'.uniprop('Alphabetic'), True, "uniprop('Alphabetic') returns a True
 
 is-deeply "-".uniprop('Dash'), True, ".uniprop('Dash') returns True for the Dash property on dashes";
 is-deeply "a".uniprop('Dash'), False, ".uniprop('Dash') returns False for non-dashes";
+is-deeply 0x30FB.uniprop('Dash'), False, ".uniprop('Dash') returns False for hyphens which are not dash's";
+
+is-deeply 0x30FB.uniprop('Hyphen'), True, ".uniprop('Hyphen') returns True for hyphens which are not dash's";
+is-deeply '—'.uniprop('Hyphen'), False, ".uniprop('Hyphen') returns False for em-dash";
 
 is-deeply "٢".uniprop('ASCII_Hex_Digit'), False, ".uniprop('ASCII_Hex_Digit') returns False for ARABIC-INDIC DIGIT TWO";
 is-deeply "a".uniprop('ASCII_Hex_Digit'), True, ".uniprop('ASCII_Hex_Digit') returns True for 'a'";
