@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 277;
+plan 283;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -806,3 +806,24 @@ subtest '.hh-mm-ss' => {
 # https://github.com/rakudo/rakudo/commit/9eed2768d4751b4585bbd335016ca0d9ef
 throws-like { DateTime.new: :2016year, 42 }, Exception,
     'unexpected named arg with positional arg to .new throws';
+
+{ # https://github.com/rakudo/rakudo/commit/6b850babd5
+    constant $dt1 = DateTime.new: :2017year, :11month, :15day, :18hour,
+        :36minute, :second(17.25), :timezone(-5*3600);
+    constant $dt2 = DateTime.new: :2015year, :12month, :25day, :3hour,
+        :6minute,  :second(7.77),  :timezone(14*3600);
+    constant $dur = Duration.new: 59826610.48;
+
+    is-deeply $dt1 - $dt2, $dur, 'DateTime - DateTime = Duration';
+    is-deeply $dt1 - $dur, $dt2.in-timezone($dt1.timezone),
+        'DateTime - Duration = DateTime';
+
+    is-deeply $dt1 − $dt2, $dur, 'DateTime − DateTime = Duration(U+2212 minus)';
+    is-deeply $dt1 − $dur, $dt2.in-timezone($dt1.timezone),
+        'DateTime − Duration = DateTime(U+2212 minus)';
+
+    is-deeply $dt2 + $dur, $dt1.in-timezone($dt2.timezone),
+        'DateTime + Duration = DateTime';
+    is-deeply $dur + $dt2, $dt1.in-timezone($dt2.timezone),
+        'Duration + DateTime = DateTime';
+}
