@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 90;
+plan 109;
 
 #use unicode :v(6.3);
 
@@ -14,26 +14,28 @@ plan 90;
 ## Only list properties whose return value is tested specifically to be the correct value.
 ## Boolean values must be tested on at least two codepoints, for both True and False values.
 
-## Numeric [1/4]
-#  Numeric_Value
+## Numeric [2/4]
+#  Numeric_Value, Numeric_Type
 ## String [5/12]
 # Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Case_Folding
-## Miscellaneous Properties [3/19]
-# Unicode_1_Name, Name, Jamo_Short_Name
-## Binary [13/60]
+## Miscellaneous Properties [4/19]
+# Unicode_1_Name, Name, Jamo_Short_Name, ISO_Comment
+## Binary [22/60]
 #  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark, Math
 #  Grapheme_Extend, Hyphen, Extender, Grapheme_Base, Join_Control, Grapheme_Link
+#  Deprecated, White_Space, Ideographic, Radical, Alphabetic, Bidi_Mirrored, Variation_Selector
+#  ID_Continue, Sentence_Terminal
 ## Catalog Properties [3/3]
 # Script, Age, Block
 ## Enum [14/20]
 #  Bidi_Paired_Bracket, Bidi_Paired_Bracket_Type, Bidi_Mirroring_Glyph, Bidi_Class East_Asian_Width
 #  Word_Break, Line_Break, Hangul_Syllable_Type, Indic_Positional_Category, Grapheme_Cluster_Break
 #  General_Category, Joining_Group, Joining_Type, Sentence_Break
-## Additional [2/?]
-# Emoji Emoji_Modifier Emoji_All
+## Additional [4/?]
+# Emoji, Emoji_Modifier, Emoji_All, Emoji_Presentation
 
 
-#?niecza 90 skip "uniprop NYI"
+#?niecza 109 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -138,6 +140,30 @@ is-deeply 0x200D.uniprop('Join_Control'), True, "uniprop for Join_Control proper
 is-deeply 0x200C.uniprop('Join_Control'), True, "uniprop for Join_Control property returns True for U+200C";
 is-deeply 'a'.uniprop('Join_Control'), False, "uniprop for Join_Control property returns False for codes without this property";
 
+is-deeply 'ŉ'.uniprop('Deprecated'), True, "uniprop for Depreciated property returns True for codes with this property";
+is-deeply 'a'.uniprop('Deprecated'), False, "uniprop for Depreciated property returns False for codes without this property";
+
+is-deeply ' '.uniprop('White_Space'), True, "uniprop for White_Space property returns True for codes with this property";
+is-deeply 'a'.uniprop('White_Space'), False, "uniprop for White_Space property returns False for codes without this property";
+
+is-deeply '〆'.uniprop('Ideographic'), True, "uniprop for Ideographic property returns True for codes with this property";
+is-deeply 'a'.uniprop('Ideographic'), False, "uniprop for Ideographic property returns False for codes without this property";
+
+is-deeply '⼒'.uniprop('Radical'), True, "uniprop for Ideographic property returns True for codes with this property";
+is-deeply 'a'.uniprop('Radical'), False, "uniprop for Ideographic property returns False for codes without this property";
+
+is-deeply '('.uniprop('Bidi_Mirrored'), True, "uniprop for Bidi_Mirrored property returns True for codes with this property";
+is-deeply 'a'.uniprop('Bidi_Mirrored'), False, "uniprop for Bidi_Mirrored property returns False for codes without this property";
+
+is-deeply 0x180B.uniprop('Variation_Selector'), True, "uniprop for Variation_Selector property returns True for codes with this property";
+is-deeply 'a'.uniprop('Variation_Selector'), False, "uniprop for Variation_Selector property returns False for codes without this property";
+
+is-deeply 0xD7A3.uniprop('ID_Continue'), True, "uniprop for ID_Continue property returns True for codes with this property";
+is-deeply 0xD7A4.uniprop('ID_Continue'), False, "uniprop for ID_Continue property returns False for codes without this property";
+
+is-deeply '!'.uniprop('Sentence_Terminal'), True, "uniprop for Sentence_Terminal property returns True for codes with this property";
+is-deeply 'a'.uniprop('Sentence_Terminal'), False, "uniprop for Sentence_Terminal property returns False for codes without this property";
+
 ## Enum Properties
 is 0x202A.uniprop('Bidi_Class'), 'LRE', "0x202A.uniprop('Bidi_Class') returns LRE";
 is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') returns Hebrew_Letter";
@@ -158,13 +184,19 @@ is 'ڵ'.uniprop('Joining_Type'), "D", "uniprop for Joining_Type works";
 is '.'.uniprop('Sentence_Break'), 'ATerm', "uniprop for Sentence_Break works";
 
 ## Additional Properties
-#?rakudo.moar 8 todo "Emoji properties NYI in MoarVM"
+#?rakudo.moar todo "ISO_Comment currently returns a 0 not an empty string"
+is 'a'.uniprop('ISO_Comment'), '', "uniprop for ISO_Comment returns an empty string. Must be empty since Unicode 5.2.0";
+
+#?rakudo.moar 10 todo "Emoji properties NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/453
 is-deeply "🐧".uniprop('Emoji'), True, "uniprop for Emoji returns True for emoji's";
 is-deeply "A".uniprop('Emoji'), True, "uniprop for Emoji returns False for non-emoji's";
 is-deeply "#".uniprop('Emoji'), True, "uniprop for Emoji returns true for #";
 is-deeply 0x1F3FD.uniprop('Emoji_Modifier'), True, "uniprop for Emoji_Modifiers returns True for Emoji Modifiers";
 is-deeply "🐧".uniprop('Emoji_Modifier'), False, "uniprop for Emoji_Modifier returns False for non modifier Emoji's";
+is-deeply "😂".uniprop('Emoji_Presentation'), True, "uniprop for Emoji_Presentation returns True for visible Emoji codes";
+is-deeply 0x1F3FD.uniprop('Emoji_Presentation'), False, "uniprop for Emoji_Presentation returns False for non-visible Emoji codes";
+
 is-deeply 0x1F3FD.uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for Emoji Modifiers";
 is-deeply "🐧".uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for non-modifier Emoji";
 is-deeply "a".uniprop('Emoji_All'), False, "uniprop for Emoji_All returns False for non-Emoji";
