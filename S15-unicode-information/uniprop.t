@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 113;
+plan 118;
 
 #use unicode :v(6.3);
 
@@ -20,11 +20,11 @@ plan 113;
 # Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Case_Folding
 ## Miscellaneous Properties [4/19]
 # Unicode_1_Name, Name, Jamo_Short_Name, ISO_Comment
-## Binary [22/60]
+## Binary [24/60]
 #  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark, Math
 #  Grapheme_Extend, Hyphen, Extender, Grapheme_Base, Join_Control, Grapheme_Link
 #  Deprecated, White_Space, Ideographic, Radical, Alphabetic, Bidi_Mirrored, Variation_Selector
-#  ID_Continue, Sentence_Terminal
+#  ID_Continue, Sentence_Terminal, Changes_When_NFKC_Casefolded, Full_Composition_Exclusion
 ## Catalog Properties [3/3]
 # Script, Age, Block
 ## Enum [16/20]
@@ -35,7 +35,7 @@ plan 113;
 # Emoji, Emoji_Modifier, Emoji_All, Emoji_Presentation
 
 
-#?niecza 113 skip "uniprop NYI"
+#?niecza 118 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -81,7 +81,8 @@ is "ᄁ".uniprop('Jamo_Short_Name'), 'GG', "uniprop for Jamo_Short_Name works";
 #?rakudo.moar todo 'moar returns a string containing the unicode codepoint instead of an integer for Bidi_Mirroring_Glyph'
 # https://github.com/MoarVM/MoarVM/issues/451
 is '('.uniprop('Bidi_Mirroring_Glyph'), ')', "'('.uniprop('Bidi_Mirroring_Glyph') returns ')'";
-#?rakudo.moar 3 todo 'NYI'
+#?rakudo.moar 3 todo 'Bidi_Paired_Bracket_Type and Bidi_Paired_Bracket NYI in MoarVM'
+# https://github.com/MoarVM/MoarVM/issues/465
 is '('.uniprop('Bidi_Paired_Bracket'), ')', "uniprop: returns matching Bidi_Paired_Bracket";
 is '('.uniprop('Bidi_Paired_Bracket_Type'), 'o', "'('.uniprop('Bidi_Paired_Bracket_Type') returns 'o'";
 is ')'.uniprop('Bidi_Paired_Bracket_Type'), 'c', "')'.uniprop('Bidi_Paired_Bracket_Type') returns 'c'";
@@ -164,6 +165,16 @@ is-deeply 0xD7A4.uniprop('ID_Continue'), False, "uniprop for ID_Continue propert
 is-deeply '!'.uniprop('Sentence_Terminal'), True, "uniprop for Sentence_Terminal property returns True for codes with this property";
 is-deeply 'a'.uniprop('Sentence_Terminal'), False, "uniprop for Sentence_Terminal property returns False for codes without this property";
 
+is-deeply '🄡'.uniprop('Changes_When_NFKC_Casefolded'), True, "uniprop for Changes_When_NFKC_Casefolded property returns True for codes with this property";
+is-deeply 'a'.uniprop('Changes_When_NFKC_Casefolded'), False, "uniprop for Sentence_Terminal property returns False for codes without this property";
+
+# The following two tests cannot be tested as strings/chars because of Unicode normalization.
+# Encoding it as a string will change the codepoint, so do not try this! It will give the incorrect
+# answer!
+is-deeply  0x0343.uniprop('Full_Composition_Exclusion'), True, "uniprop for Full_Composition_Exclusion property returns True for codes with this property";
+is-deeply 'a'.uniprop('Full_Composition_Exclusion'), False, "uniprop for Full_Composition_Exclusion property returns False for codes without this property";
+
+
 ## Enum Properties
 is 0x202A.uniprop('Bidi_Class'), 'LRE', "0x202A.uniprop('Bidi_Class') returns LRE";
 is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') returns Hebrew_Letter";
@@ -176,6 +187,9 @@ is 'Ö'.uniprop('Decomposition_Type'), 'Canonical', 'uniprop for Decomposition_T
 is 'ᆨ'.uniprop('NFC_Quick_Check'), 'M', 'uniprop for NFC_Quick_Check returns M for ‘Maybe’ value codes';
 is '都'.uniprop('NFC_Quick_Check'), 'Y', 'uniprop for NFC_Quick_Check returns Y for ‘Yes’ value codes';
 is 0x0374.uniprop('NFC_Quick_Check'), 'N', 'uniprop for NFC_Quick_Check returns N for ‘No’ value codes';
+#?rakudo.moar todo "MoarVM returns only int's but not Canonical_Combining_Class's string value"
+# https://github.com/MoarVM/MoarVM/issues/464
+is ' '.uniprop('Canonical_Combining_Class'), 'Not_Reordered', "uniprop for Canonical_Combining_Class works";
 
 #?rakudo.moar 2 todo "East_Asian_Width NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/454
