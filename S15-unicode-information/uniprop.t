@@ -189,7 +189,6 @@ is 'ڵ'.uniprop('Joining_Type'), "D", "uniprop for Joining_Type works";
 is '.'.uniprop('Sentence_Break'), 'ATerm', "uniprop for Sentence_Break works";
 
 ## Additional Properties
-#?rakudo.moar todo "ISO_Comment currently returns a 0 not an empty string"
 is 'a'.uniprop('ISO_Comment'), '', "uniprop for ISO_Comment returns an empty string. Must be empty since Unicode 5.2.0";
 
 #?rakudo.moar 10 todo "Emoji properties NYI in MoarVM"
