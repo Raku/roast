@@ -211,6 +211,19 @@ multi doesn't-hang (
     };
 }
 
+multi warns-like (Str $code, |c)  { warns-like {$code.EVAL}, |c }
+multi warns-like (&code, $test, Str $desc) {
+    my ($did-warn, $message) = False;
+    &code();
+    CONTROL { when CX::Warn { $did-warn = True; $message = .message; .resume } }
+
+    subtest $desc => {
+        plan 2;
+        ok $did-warn, 'code threw a warning';
+        cmp-ok $message, '~~', $test, 'warning message passes test';
+    }
+}
+
 =begin pod
 
 =head1 NAME
@@ -376,6 +389,15 @@ Guts two junctions and uses C<is-deeply> test on those guts. Use to
 compare two Junctions for equivalence. I<Note:> this test is rather strict
 and will fail even if the two Junctions are functionally equivalent, for
 example 1|2 and 2|1 are considered to be different Junctions.
+
+=head2 warns-like($code-or-str-to-eval, $expected, $desc)
+
+    multi warns-like (Str $code, |c)  { warns-like {$code.EVAL}, |c }
+    multi warns-like (&code, $test, Str $desc) {
+
+Catches warnings emited by the provided code (or, if Str is provided,
+the EVAL of that Str) and smartmatches them against `$test`, using `cmp-ok`
+to do the test..
 
 =end pod
 
