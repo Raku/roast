@@ -270,9 +270,9 @@ is 'a'.uniprop('ISO_Comment'), '', "uniprop for ISO_Comment returns an empty str
 #?rakudo.moar 11 todo "Emoji properties NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/453
 is-deeply "🐧".uniprop('Emoji'), True, "uniprop for Emoji returns True for emoji's";
-is-deeply "A".uniprop('Emoji'), True, "uniprop for Emoji returns False for non-emoji's";
+is-deeply "A".uniprop('Emoji'), False, "uniprop for Emoji returns False for non-emoji's";
 is-deeply "#".uniprop('Emoji'), True, "uniprop for Emoji returns true for #";
-is-deeply 0x1F3FD.uniprop('Emoji_Modifier'), True, "uniprop for Emoji_Modifiers returns True for Emoji Modifiers";
+is-deeply 0x1F3FB.uniprop('Emoji_Modifier'), True, "uniprop for Emoji_Modifier returns True for Emoji Modifiers";
 is-deeply "🐧".uniprop('Emoji_Modifier'), False, "uniprop for Emoji_Modifier returns False for non modifier Emoji's";
 is-deeply "😂".uniprop('Emoji_Presentation'), True, "uniprop for Emoji_Presentation returns True for visible Emoji codes";
 is-deeply 0x2B05.uniprop('Emoji_Presentation'), False, "uniprop for Emoji_Presentation returns False for Emoji's without this property";
