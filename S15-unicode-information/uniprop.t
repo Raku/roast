@@ -2,8 +2,8 @@ use v6;
 
 use Test;
 
-plan 151;
-#?niecza 151 skip "uniprop NYI"
+plan 152;
+#?niecza 152 skip "uniprop NYI"
 
 #use unicode :v(6.3);
 
@@ -14,6 +14,8 @@ plan 151;
 ### we have tests for so far (Unicode 9.0). Hopefully eventually we include all of them.
 ## Only list properties whose return value is tested specifically to be the correct value.
 ## Boolean values must be tested on at least two codepoints, for both True and False values.
+## Ideally, Enum type properties should be tested for codepoints listed inside their Unicode
+## source file as well as also ones which are *not* listed in them (AKA default values).
 
 ## Numeric [2/4]
 #  Numeric_Value, Numeric_Type
@@ -70,9 +72,10 @@ is 'a'.uniprop('Block'), 'Basic Latin', "uniprop for Block works";
 #?rakudo.moar todo 'Unicode 1 names NYI in MoarVM'
 is '¶'.uniprop('Unicode_1_Name'), "PARAGRAPH SIGN", "¶.uniprop('Unicode_1_Name') returns Unicode 1 name";
 is uniprop(0xFB00, 'Name'), "LATIN SMALL LIGATURE FF", "uniprop: returns proper name for LATIN SMALL LIGATURE FF";
-#?rakudo.moar todo 'Indic_Positional_Category NYI in MoarVM'
+#?rakudo.moar 2 todo 'Indic_Positional_Category NYI in MoarVM'
 # https://github.com/MoarVM/MoarVM/issues/461
 is 0x0BD7.uniprop('Indic_Positional_Category'), "Right", "uniprop for Indic_Positional_Category works";
+is 'a'.uniprop('Indic_Positional_Category'), "NA", "uniprop for Indic_Positional_Category returns NA for codes that should default to this property";
 
 is "\x[FB00]".lc, "\x[FB00]", ".lc: returns proper lowercase mapping for LATIN SMALL LIGATURE FF";
 is uniprop(0xFB00, 'Lowercase_Mapping'), "\x[FB00]", "uniprop: returns proper lowercase mapping for LATIN SMALL LIGATURE FF";
@@ -230,19 +233,19 @@ is 0x200D.uniprop('Line_Break'), 'ZWJ', ‘uniprop('Line_Break') returns ZWJ for
 is 0x103D.uniprop('Line_Break'), 'SA', ‘uniprop('Line_Break') returns SA for U+103D MYANMAR CONSONANT SIGN MEDIAL WA’;
 
 is 'Ö'.uniprop('Decomposition_Type'), 'Canonical', 'uniprop for Decomposition_Type returns Canonical for Canonical value codes';
-is 'ᆨ'.uniprop('NFC_Quick_Check'), 'M', 'uniprop for NFC_Quick_Check returns M for ‘Maybe’ value codes';
-is '都'.uniprop('NFC_Quick_Check'), 'Y', 'uniprop for NFC_Quick_Check returns Y for ‘Yes’ value codes';
-is 0x0374.uniprop('NFC_Quick_Check'), 'N', 'uniprop for NFC_Quick_Check returns N for ‘No’ value codes';
+is 'ᆨ'.uniprop('NFC_Quick_Check'), 'Maybe', 'uniprop for NFC_Quick_Check returns M for ‘Maybe’ value codes';
+is '都'.uniprop('NFC_Quick_Check'), 'Yes', 'uniprop for NFC_Quick_Check returns Y for ‘Yes’ value codes';
+is 0x0374.uniprop('NFC_Quick_Check'), 'No', 'uniprop for NFC_Quick_Check returns N for ‘No’ value codes';
 #?rakudo.moar 6 todo "NFD_Quick_Check NFKC_Quick_Check NFKD_Quick_Check NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/467
-is 0x3094.uniprop('NFD_Quick_Check'), False, 'uniprop for NFD_Quick_Check returns False for codes without this property';
-is 'a'.uniprop('NFD_Quick_Check'), True, 'uniprop for NFD_Quick_Check returns True for codes with this property';
+is 0x3094.uniprop('NFD_Quick_Check'), 'No', 'uniprop for NFD_Quick_Check returns False for codes without this property';
+is 'a'.uniprop('NFD_Quick_Check'), 'Yes', 'uniprop for NFD_Quick_Check returns True for codes with this property';
 
-is 0x00A0.uniprop('NFKC_Quick_Check'), False, 'uniprop for NFKC_Quick_Check returns False for codes without this property';
-is 'a'.uniprop('NFKC_Quick_Check'), True, 'uniprop for NFKC_Quick_Check returns True for codes with this property';
+is 0x0340.uniprop('NFKC_Quick_Check'), 'No', 'uniprop for NFKC_Quick_Check returns False for codes without this property';
+is 'a'.uniprop('NFKC_Quick_Check'), 'Yes', 'uniprop for NFKC_Quick_Check returns True for codes with this property';
 
-is 0x00A0.uniprop('NFKD_Quick_Check'), False, 'uniprop for NFKD_Quick_Check returns False for codes without this property';
-is 'a'.uniprop('NFKD_Quick_Check'), True, 'uniprop for NFKD_Quick_Check returns True for codes with this property';
+is 0x00C0.uniprop('NFKD_Quick_Check'), 'No', 'uniprop for NFKD_Quick_Check returns False for codes without this property';
+is 'a'.uniprop('NFKD_Quick_Check'), 'Yes', 'uniprop for NFKD_Quick_Check returns True for codes with this property';
 
 #?rakudo.moar 2 todo "Indic_Syllabic_Category NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/466
