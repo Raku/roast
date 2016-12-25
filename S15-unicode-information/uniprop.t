@@ -2,8 +2,8 @@ use v6;
 
 use Test;
 
-plan 148;
-#?niecza 148 skip "uniprop NYI"
+plan 150;
+#?niecza 150 skip "uniprop NYI"
 
 #use unicode :v(6.3);
 
@@ -97,11 +97,12 @@ is "ᄁ".uniprop('Jamo_Short_Name'), 'GG', "uniprop for Jamo_Short_Name works";
 #?rakudo.moar todo 'moar returns a string containing the unicode codepoint instead of an integer for Bidi_Mirroring_Glyph'
 # https://github.com/MoarVM/MoarVM/issues/451
 is '('.uniprop('Bidi_Mirroring_Glyph'), ')', "'('.uniprop('Bidi_Mirroring_Glyph') returns ')'";
-#?rakudo.moar 3 todo 'Bidi_Paired_Bracket_Type and Bidi_Paired_Bracket NYI in MoarVM'
+#?rakudo.moar 4 todo 'Bidi_Paired_Bracket_Type and Bidi_Paired_Bracket NYI in MoarVM'
 # https://github.com/MoarVM/MoarVM/issues/465
 is '('.uniprop('Bidi_Paired_Bracket'), ')', "uniprop: returns matching Bidi_Paired_Bracket";
 is '('.uniprop('Bidi_Paired_Bracket_Type'), 'o', "'('.uniprop('Bidi_Paired_Bracket_Type') returns 'o'";
 is ')'.uniprop('Bidi_Paired_Bracket_Type'), 'c', "')'.uniprop('Bidi_Paired_Bracket_Type') returns 'c'";
+is 'a'.uniprop('Bidi_Paired_Bracket_Type'), 'n', "uniprop for Bidi_Paired_Bracket_Type returns 'n' for codes without this property";
 
 ## Numeric Properties
 isa-ok "½".uniprop('Numeric_Value'), Rat, "'½'.uniprop('Numeric_Value') returns a Rat";
@@ -243,9 +244,11 @@ is 'a'.uniprop('NFKC_Quick_Check'), True, 'uniprop for NFKC_Quick_Check returns 
 is 0x00A0.uniprop('NFKD_Quick_Check'), False, 'uniprop for NFKD_Quick_Check returns False for codes without this property';
 is 'a'.uniprop('NFKD_Quick_Check'), True, 'uniprop for NFKD_Quick_Check returns True for codes with this property';
 
-#?rakudo.moar todo "Indic_Syllabic_Category NYI in MoarVM"
+#?rakudo.moar 2 todo "Indic_Syllabic_Category NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/466
 is 0x0374.uniprop('Indic_Syllabic_Category'), 'Bindu', 'uniprop for Indic_Syllabic_Category returns N for ‘No’ value codes';
+is 'a'.uniprop('Indic_Syllabic_Category'), 'Other', 'uniprop for Indic_Syllabic_Category returns Other for codes without this property';
+
 #?rakudo.moar todo "MoarVM returns only int's but not Canonical_Combining_Class's string value"
 # https://github.com/MoarVM/MoarVM/issues/464
 is ' '.uniprop('Canonical_Combining_Class'), 'Not_Reordered', "uniprop for Canonical_Combining_Class works";
