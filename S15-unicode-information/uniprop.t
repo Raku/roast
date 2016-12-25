@@ -79,6 +79,7 @@ is "\x[FB00]".tc, "\x[0046]\x[0066]", ".tc: returns proper lowercase mapping for
 is uniprop(0xFB00, 'Titlecase_Mapping'), "\x[0046]\x[0066]", "uniprop: returns proper titlecase mapping for LATIN SMALL LIGATURE FF";
 is "\x[FB00]".uc, "\x[0046]\x[0046]", ".uc: returns proper uppercase mapping for LATIN SMALL LIGATURE FF";
 is uniprop(0xFB00, 'Uppercase_Mapping'), "\x[0046]\x[0046]", ".uc: returns proper uppercase mapping for LATIN SMALL LIGATURE FF";
+#?rakudo.moar todo 'NYI'
 is 'ß'.uniprop('Simple_Uppercase_Mapping'), 'ß', "uniprop for Simple_Uppercase_Mapping returns LATIN SMALL LETTER SHARP S for LATIN SMALL LETTER SHARP S";
 
 
