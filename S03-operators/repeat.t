@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
 =begin description
 
@@ -8,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 56;
+plan 57;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -184,5 +185,10 @@ is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
     throws-like ｢42   xx '123aaa'｣, X::Str::Numeric,
         'Failures in RHS of xx explode (Int LHS)';
 }
+
+# RT #130281
+warns-like { 'x' x Int }, *.contains('uninitialized' & 'numeric'),
+    'using an unitialized value in repeat count throws';
+
 
 # vim: ft=perl6
