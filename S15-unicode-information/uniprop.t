@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 143;
+plan 146;
 
 #use unicode :v(6.3);
 
@@ -18,7 +18,7 @@ plan 143;
 #  Numeric_Value, Numeric_Type
 
 ## String [5/12]
-# Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Case_Folding
+# Lowercase_Mapping, Uppercase_Mapping, Titlecase_Mapping, Case_Folding, Simple_Uppercase_Mapping
 
 ## Miscellaneous Properties [5/19]
 # Unicode_1_Name, Name, Jamo_Short_Name, ISO_Comment, Bidi_Mirroring_Glyph
@@ -44,7 +44,7 @@ plan 143;
 # Emoji, Emoji_Modifier, Emoji_All, Emoji_Presentation
 
 
-#?niecza 143 skip "uniprop NYI"
+#?niecza 146 skip "uniprop NYI"
 is uniprop(""), Nil, "uniprop an empty string yields Nil";
 is "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
@@ -79,6 +79,9 @@ is "\x[FB00]".tc, "\x[0046]\x[0066]", ".tc: returns proper lowercase mapping for
 is uniprop(0xFB00, 'Titlecase_Mapping'), "\x[0046]\x[0066]", "uniprop: returns proper titlecase mapping for LATIN SMALL LIGATURE FF";
 is "\x[FB00]".uc, "\x[0046]\x[0046]", ".uc: returns proper uppercase mapping for LATIN SMALL LIGATURE FF";
 is uniprop(0xFB00, 'Uppercase_Mapping'), "\x[0046]\x[0046]", ".uc: returns proper uppercase mapping for LATIN SMALL LIGATURE FF";
+is 'ß'.uniprop('Simple_Uppercase_Mapping'), 'ß', "uniprop for Simple_Uppercase_Mapping returns LATIN SMALL LETTER SHARP S for LATIN SMALL LETTER SHARP S";
+
+
 is "\x[FB00]".uniname, "LATIN SMALL LIGATURE FF", "uniname: returns proper name for LATIN SMALL LIGATURE FF";
 is "ﬆ".fc, "st", "'ﬆ'.fc returns ‘st’";
 #?rakudo.moar todo "uniprop('Case_Folding') does not yet work"
