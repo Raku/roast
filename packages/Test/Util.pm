@@ -211,8 +211,8 @@ multi doesn't-hang (
     };
 }
 
-multi warns-like (Str $code, |c)  { warns-like {$code.EVAL}, |c }
-multi warns-like (&code, $test, Str $desc) {
+multi warns-like (Str $code, |c) is export { warns-like {$code.EVAL}, |c }
+multi warns-like (&code, $test, Str $desc) is export {
     my ($did-warn, $message) = False;
     &code();
     CONTROL { when CX::Warn { $did-warn = True; $message = .message; .resume } }
