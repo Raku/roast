@@ -2,8 +2,8 @@ use v6;
 
 use Test;
 
-plan 150;
-#?niecza 150 skip "uniprop NYI"
+plan 151;
+#?niecza 151 skip "uniprop NYI"
 
 #use unicode :v(6.3);
 
@@ -246,7 +246,7 @@ is 'a'.uniprop('NFKD_Quick_Check'), True, 'uniprop for NFKD_Quick_Check returns 
 
 #?rakudo.moar 2 todo "Indic_Syllabic_Category NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/466
-is 0x0374.uniprop('Indic_Syllabic_Category'), 'Bindu', 'uniprop for Indic_Syllabic_Category returns N for ‘No’ value codes';
+is 0x11052.uniprop('Indic_Syllabic_Category'), 'Brahmi_Joining_Number', 'uniprop for Indic_Syllabic_Category returns N for ‘No’ value codes';
 is 'a'.uniprop('Indic_Syllabic_Category'), 'Other', 'uniprop for Indic_Syllabic_Category returns Other for codes without this property';
 
 #?rakudo.moar todo "MoarVM returns only int's but not Canonical_Combining_Class's string value"
@@ -267,7 +267,7 @@ is '.'.uniprop('Sentence_Break'), 'ATerm', "uniprop for Sentence_Break works";
 ## Additional Properties
 is 'a'.uniprop('ISO_Comment'), '', "uniprop for ISO_Comment returns an empty string. Must be empty since Unicode 5.2.0";
 
-#?rakudo.moar 10 todo "Emoji properties NYI in MoarVM"
+#?rakudo.moar 11 todo "Emoji properties NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/453
 is-deeply "🐧".uniprop('Emoji'), True, "uniprop for Emoji returns True for emoji's";
 is-deeply "A".uniprop('Emoji'), True, "uniprop for Emoji returns False for non-emoji's";
@@ -275,7 +275,8 @@ is-deeply "#".uniprop('Emoji'), True, "uniprop for Emoji returns true for #";
 is-deeply 0x1F3FD.uniprop('Emoji_Modifier'), True, "uniprop for Emoji_Modifiers returns True for Emoji Modifiers";
 is-deeply "🐧".uniprop('Emoji_Modifier'), False, "uniprop for Emoji_Modifier returns False for non modifier Emoji's";
 is-deeply "😂".uniprop('Emoji_Presentation'), True, "uniprop for Emoji_Presentation returns True for visible Emoji codes";
-is-deeply 0x1F3FD.uniprop('Emoji_Presentation'), False, "uniprop for Emoji_Presentation returns False for non-visible Emoji codes";
+is-deeply 0x2B05.uniprop('Emoji_Presentation'), False, "uniprop for Emoji_Presentation returns False for Emoji's without this property";
+is-deeply 'a'.uniprop('Emoji_Presentation'), False, "uniprop for Emoji_Presentation returns False for non-Emoji's";
 
 is-deeply 0x1F3FD.uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for Emoji Modifiers";
 is-deeply "🐧".uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for non-modifier Emoji";
