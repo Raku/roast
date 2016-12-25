@@ -14,7 +14,7 @@ is Uni.new(0x1E0A, 0x031B, 0x0323, 0x1E0C, 0x031B, 0x0307).Str.chars, 2, '1E0A 0
 is Uni.new(0x0044, 0x031B, 0x0307, 0x0323, 0x1E0C, 0x031B, 0x0307).Str.chars, 2, '0044 031B 0307 0323 1E0C 031B 0307';
 is Uni.new(0x1E14, 0x0304, 0x1E14, 0x0304).Str.chars, 2, '1E14 0304 1E14 0304';
 is Uni.new(0x05B8, 0x05B9, 0x05B1, 0x0591, 0x05C3, 0x05B0, 0x05AC, 0x059F, 0x05B1, 0x05B8, 0x05B9, 0x0591, 0x05C3, 0x05B0, 0x05AC, 0x059F).Str.chars, 3, '05B8 05B9 05B1 0591 05C3 05B0 05AC 059F 05B1 05B8 05B9 0591 05C3 05B0 05AC 059F';
-#?rakudo.moar skip "Most likely cause: On MoarVM Line_Break returns incorrect values for many characters"
+#?rakudo.moar todo "Most likely cause: On MoarVM Line_Break returns incorrect values for many characters"
 # https://github.com/MoarVM/MoarVM/issues/463
 is Uni.new(0x0344, 0x0308, 0x0301).Str.chars, 2, '0344 0308 0301';
 is Uni.new(0x0959, 0x0916, 0x093C).Str.chars, 2, '0959 0916 093C';
@@ -27,7 +27,7 @@ is Uni.new(0x0A59, 0x0A16, 0x0A3C).Str.chars, 2, '0A59 0A16 0A3C';
 is Uni.new(0x0A5B, 0x0A1C, 0x0A3C).Str.chars, 2, '0A5B 0A1C 0A3C';
 is Uni.new(0x0B5C, 0x0B21, 0x0B3C).Str.chars, 2, '0B5C 0B21 0B3C';
 is Uni.new(0x0F73, 0x0F71, 0x0F72).Str.chars, 1, '0F73 0F71 0F72';
-#?rakudo.moar 2 skip "Most likely cause: On MoarVM Line_Break returns incorrect values for many characters"
+#?rakudo.moar 2 todo "Most likely cause: On MoarVM Line_Break returns incorrect values for many characters"
 # https://github.com/MoarVM/MoarVM/issues/463
 is Uni.new(0x0F76, 0x0FB2, 0x0F80).Str.chars, 2, '0F76 0FB2 0F80';
 is Uni.new(0x0F81, 0x0F71, 0x0F80).Str.chars, 2, '0F81 0F71 0F80';
@@ -54,7 +54,7 @@ is Uni.new(0x1D162, 0x1D158, 0x1D165, 0x1D170).Str.chars, 2, '1D162 1D158 1D165 
 is Uni.new(0x1D164, 0x1D158, 0x1D165, 0x1D172).Str.chars, 2, '1D164 1D158 1D165 1D172';
 is Uni.new(0x1D1BC, 0x1D1BA, 0x1D165).Str.chars, 2, '1D1BC 1D1BA 1D165';
 is Uni.new(0x1D1BE, 0x1D1BA, 0x1D165, 0x1D16E).Str.chars, 2, '1D1BE 1D1BA 1D165 1D16E';
-#?rakudo.moar skip "Caused by: On MoarVM Line_Break returns incorrect values for many characters"
+#?rakudo.moar todo "Caused by: On MoarVM Line_Break returns incorrect values for many characters"
 # https://github.com/MoarVM/MoarVM/issues/463
 is Uni.new(0x1D1C0, 0x1D1BA, 0x1D165, 0x1D16F).Str.chars, 4, '1D1C0 1D1BA 1D165 1D16F';
 is Uni.new(0x0061, 0x0300, 0x0315, 0x0300, 0x05AE, 0x0062, 0x00E0, 0x05AE, 0x0300, 0x0315, 0x0062).Str.chars, 4, '0061 0300 0315 0300 05AE 0062 00E0 05AE 0300 0315 0062';
