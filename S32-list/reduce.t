@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 =begin description
 
@@ -11,7 +12,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 16;
+plan 17;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -95,6 +96,12 @@ eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
     multi a (Str $a, Str $b) { [+$a, +$b] };
     multi a (Array $a,$b where "+") { [+] @($a) };  #OK not used
     is ("1", "2", "+").reduce(&a), 3, 'reduce and multi subs';
+}
+
+{
+    doesn't-warn {
+        (^10).reduce(sub f ($a, $b) is assoc<right> {"Tuple $a ($b)"})
+    }, 'no warnings when setting associativity on the reduce &with';
 }
 
 # vim: ft=perl6
