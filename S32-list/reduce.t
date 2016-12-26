@@ -37,7 +37,7 @@ plan 16;
   my @array  = <1 2 3 4 5 6 7 8 9>;
   my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * 9;
 
-  sub infix:<leftly> { $^a + $^b * $^c } 
+  sub infix:<leftly> { $^a + $^b * $^c }
 
   #?niecza skip 'n-ary reduce'
   is ([leftly] @array), $result, "n-ary reduce() works";
