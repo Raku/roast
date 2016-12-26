@@ -1,135 +1,69 @@
 #!/usr/bin/env perl6
-constant CHARS_TEST_CASES = 500;
 constant NFC_ROUNDTRIP_TEST_CASES = 500;
 constant OTHER_ROUNDTRIP_TEST_CASES = 100;
-constant EQUALITY_TEST_CASES = 500;
-
+my @source;
 sub MAIN(Str $unidata-normalization-tests) {
-    # Parse the normalization test data, and gather those cases where the NFC
-    # form contains a non-starter (Canonical_Combining_Class > 0).
-    my @targets = my ($source, $nfc, $nfd, $nfkc, $nfkd) = [] xx 5;
+
+    my $line-no = 0;
     for $unidata-normalization-tests.IO.lines {
+        $line-no++;
+        last if /^ \s* '@Part2'/; # We don't implement Part 2 yet
         next if /^['#'|'@'|\s+$]/;
         my @pieces = .split(';')[^5];
-        my @nfc-codes = @pieces[1].split(' ').map({ :16($_) });
-        next if @nfc-codes < 2;
-        for @nfc-codes -> $code {
-            if ccc($code) > 0 {
-                .push(@pieces.shift) for @targets;
-                last;
-            }
+        my @columns = 'source', 'NFC', 'NFD', 'NFKC', 'NFKD';
+        my %hash;
+        for @columns -> $column {
+            %hash{$line-no}{$column} = @pieces.shift.split(' ').map({:16($_)});
         }
+        push @source, %hash;
     }
-    say "Found $source.elems() interesting cases for NFG tests.";
-
+    say "Found @source.elems() tests for NFG tests.";
     # Write tests.
-    write-chars-test-file('S15-nfg/mass-chars.t', $source, $nfc, CHARS_TEST_CASES);
-    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfc.t', $source, $nfc, 'NFC', NFC_ROUNDTRIP_TEST_CASES);
-    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfd.t', $source, $nfd, 'NFD', OTHER_ROUNDTRIP_TEST_CASES);
-    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkc.t', $source, $nfkc, 'NFKC', OTHER_ROUNDTRIP_TEST_CASES);
-    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkd.t', $source, $nfkd, 'NFKD', OTHER_ROUNDTRIP_TEST_CASES);
-    write-equality-test-file('S15-nfg/mass-equality.t', $nfd, EQUALITY_TEST_CASES);
+    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfc.t', @source, 'NFC', NFC_ROUNDTRIP_TEST_CASES);
+    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfd.t', @source, 'NFD', OTHER_ROUNDTRIP_TEST_CASES, :CCC-only);
+    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkc.t', @source, 'NFKC', OTHER_ROUNDTRIP_TEST_CASES, :CCC-only);
+    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkd.t', @source, 'NFKD', OTHER_ROUNDTRIP_TEST_CASES, :CCC-only);
 }
 
-sub write-chars-test-file($target, @source, @nfc, $limit) {
-    given open($target, :w) {
-        .say: qq:to/HEADER/;
-use v6;
-# Normal Form Grapheme .chars tests, generated from NormalizationTests.txt in
-# the Unicode database by S15-nfg/test-gen.p6. Check that a string in NFG form
-# gets the right number of characters.
-
-use Test;
-
-plan $limit;
-HEADER
-
-        for @source Z @nfc -> $source, $nfc {
-            # The number of chars we expect is:
-            #   - Number of codes minus number of non-starters if the test
-            #     case begins with a starter
-            #   - Number of codes minus number of non-starts plus one
-            #     otherwise (to account for isolated non-starters).
-            my @codes = $nfc.split(' ').map({ :16($_) });
-            my $non-starters = +@codes.grep({ ccc($_) > 0 });
-            my $chars = ccc(@codes[0]) == 0
-                ?? @codes.elems - $non-starters
-                !! 1 + @codes.elems - $non-starters;
-            .say: "is Uni.new(&hexy($source)).Str.chars, $chars, '$source';";
-            last if ++$ == $limit;
-        }
-
-        .close;
-    }
-
-    say "Wrote $target";
-}
-
-sub write-roundtrip-test-file($target, @source, @expected, $form, $limit) {
-    given open($target, :w) {
-        .say: qq:to/HEADER/;
-use v6;
-# Normal Form Grapheme roundtrip tests, generated from NormalizationTests.txt in
-# the Unicode database by S15-nfg/test-gen.p6. Check we can take a Uni, turn it
-# into an NFG string, and then get codepoints back out of it in $form.
-
-use Test;
-
-plan $limit;
-HEADER
-
-        for @source Z @expected -> $source, $expected {
-            next if $source eq $expected;
-            .say: "ok Uni.new(&hexy($source)).Str.$form.list ~~ (&hexy($expected),), '$source -> Str -> $expected';";
-            last if ++$ == $limit;
-        }
-
-        .close;
-    }
-
-    say "Wrote $target";
-}
-
-sub write-equality-test-file($target, @nfd, $limit) {
-    given open($target, :w) {
-        .say: qq:to/HEADER/;
-use v6;
-# Normal Form Grapheme equanity tests, generated from NormalizationTests.txt in
-# the Unicode database by S15-nfg/test-gen.p6. Check strings that should come
-# out equal under NFG do, and strings that are "tempting" to make equal but
-# should not be don't. The "should not be" falls out of the definition of NFD,
-# of note the notion of blocked swaps in canonical sorting.
-
-use Test;
-
-plan $limit;
-HEADER
-
-        for @nfd -> $nfd {
-            # Look for cases where we have two distinct non-starters in a row.
-            my @codes = $nfd.split(' ').map({ :16($_) });
-            my @swap  = @codes;
-            my $test = 'is';
-            loop (my $i = 0; $i < @codes - 1; $i++) {
-                my $ccc1 = ccc(@codes[$i]);
-                my $ccc2 = ccc(@codes[$i + 1]);
-                if $ccc1 & $ccc2 > 0 && @codes[$i] != @codes[$i + 1] {
-                    # Swap the two non-starters. If they have an equal ccc
-                    # then they should test unequal.
-                    @swap[$i, $i + 1] = @swap[$i + 1, $i];
-                    $test = 'isnt' if $ccc1 == $ccc2;
-                    $i++; # don't swap with next thing also
+sub write-roundtrip-test-file($target, @source, $expected, $limit = Inf, Bool :$CCC-only = False) {
+    my $file-string;
+    my $fh = open($target, :w);
+    my $count = 0;
+    for @source -> %hash {
+        for %hash.keys -> $key {
+            next if %hash{$key}<source> eq %hash{$key}{$expected};
+            if $CCC-only {
+                # Parse the normalization test data, and gather those cases where the NFC
+                # form contains a non-starter (Canonical_Combining_Class > 0).
+                my $ccc = 0;
+                for %hash{$key}<NFC>.cache {
+                    if ccc($_) > 0 {
+                        $ccc++;
+                    }
                 }
+                next if $ccc <= 0;
             }
-            my $hexy-swapped = @swap.map('0x' ~ *.base(16)).join(', ');
-            my $hexy-nfd     = hexy($nfd);
-            .say: "$test Uni.new($hexy-nfd).Str, Uni.new($hexy-swapped).Str, '$hexy-nfd vs. $hexy-swapped';";
-            last if ++$ == $limit;
+            my $source-str = &hexy(%hash{$key}<source>);
+            my $expected-str = &hexy(%hash{$key}{$expected});
+            $file-string ~= "ok Uni.new($source-str).Str.$expected.list ~~ ($expected-str,), '$source-str -> Str -> $expected-str NormalizationTest.txt line no $key';\n";
+            $count++;
+            last if $count >= $limit;
         }
-
-        .close;
+        last if $count >= $limit;
     }
+    say "Found $count interesting cases for $expected NFG tests.";
+    my $header = qq:to/HEADER/;
+    use v6;
+    # Normal Form Grapheme roundtrip tests, generated from NormalizationTests.txt in
+    # the Unicode database by S15-nfg/test-gen.p6. Check we can take a Uni, turn it
+    # into an NFG string, and then get codepoints back out of it in $expected.
 
+    use Test;
+
+    plan $count;
+    HEADER
+    $fh.say( $header ~ $file-string);
+    $fh.close;
     say "Wrote $target";
 }
 
@@ -137,6 +71,6 @@ sub ccc($code) {
     uniprop($code, 'Canonical_Combining_Class')
 }
 
-sub hexy($codes) {
-    $codes.split(' ').map('0x' ~ *).join(', ')
+sub hexy(@list) {
+    @list.».base(16).map('0x' ~ *).join(', ');
 }
