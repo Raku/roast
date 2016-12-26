@@ -233,9 +233,10 @@ is 0x200D.uniprop('Line_Break'), 'ZWJ', ‘uniprop('Line_Break') returns ZWJ for
 is 0x103D.uniprop('Line_Break'), 'SA', ‘uniprop('Line_Break') returns SA for U+103D MYANMAR CONSONANT SIGN MEDIAL WA’;
 
 is 'Ö'.uniprop('Decomposition_Type'), 'Canonical', 'uniprop for Decomposition_Type returns Canonical for Canonical value codes';
-is 'ᆨ'.uniprop('NFC_Quick_Check'), 'Maybe', 'uniprop for NFC_Quick_Check returns M for ‘Maybe’ value codes';
-is '都'.uniprop('NFC_Quick_Check'), 'Yes', 'uniprop for NFC_Quick_Check returns Y for ‘Yes’ value codes';
-is 0x0374.uniprop('NFC_Quick_Check'), 'No', 'uniprop for NFC_Quick_Check returns N for ‘No’ value codes';
+#?rakudo.moar 3 todo "MoarVM returns N/M/Y instead of their full names"
+is 'ᆨ'.uniprop('NFC_Quick_Check'), 'Maybe', 'uniprop for NFC_Quick_Check returns Maybe for ‘Maybe’ value codes';
+is '都'.uniprop('NFC_Quick_Check'), 'Yes', 'uniprop for NFC_Quick_Check returns Yes for ‘Yes’ value codes';
+is 0x0374.uniprop('NFC_Quick_Check'), 'No', 'uniprop for NFC_Quick_Check returns No for ‘No’ value codes';
 #?rakudo.moar 6 todo "NFD_Quick_Check NFKC_Quick_Check NFKD_Quick_Check NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/467
 is 0x3094.uniprop('NFD_Quick_Check'), 'No', 'uniprop for NFD_Quick_Check returns False for codes without this property';
