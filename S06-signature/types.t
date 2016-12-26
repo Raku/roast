@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 15;
+plan 18;
 
 sub f($x) returns Int { return $x };
 
@@ -133,6 +135,16 @@ subtest 'numeric literals as type constraints' => {
         eval-lives-ok ｢sub f( 𝑒){}( 𝑒)｣, 'bare, 𝑒';
         eval-lives-ok ｢sub f( e){}( 𝑒)｣, 'bare, e';
     }
+}
+
+# RT#130182
+{
+    is_run ｢-> True  { }($)｣, {:err(/'smartmatch'/), :out('')},
+        '`True` signature literal warns';
+    is_run ｢-> False { }($)｣, {:err(/'smartmatch'/), :out('')},
+        '`False` signature literal warns';
+    is_run ｢-> Bool  { print "ok" }(True)｣, {:err(''), :out('ok')},
+        '`Bool` type constraint does not warn';
 }
 
 # vim: ft=perl6
