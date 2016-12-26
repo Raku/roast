@@ -224,6 +224,16 @@ multi warns-like (&code, $test, Str $desc) is export {
     }
 }
 
+multi doesn't-warn (Str $code, |c) is export { doesn't-warn {$code.EVAL}, |c }
+multi doesn't-warn (&code, Str $desc) is export {
+    my ($did-warn, $message) = False;
+    &code();
+    CONTROL { when CX::Warn { $did-warn = True; $message = .message; .resume } }
+
+    diag "code must not warn but it produced a warning: $message" if $did-warn;
+    nok $did-warn, $desc;
+}
+
 =begin pod
 
 =head1 NAME
@@ -398,6 +408,15 @@ example 1|2 and 2|1 are considered to be different Junctions.
 Catches warnings emited by the provided code (or, if Str is provided,
 the EVAL of that Str) and smartmatches them against `$test`, using `cmp-ok`
 to do the test..
+
+=head2 doesn't-warn($code-or-str-to-eval, $desc)
+
+    multi doesn't-warn (Str $code, |c)  { warns-like {$code.EVAL}, |c }
+    multi doesn't-warn (&code, Str $desc) {
+
+B<NOTE: currently this sub won't catch COMPILE TIME warnings!>
+
+Tests whether the code warns, passing the test if it doesn't.
 
 =end pod
 
