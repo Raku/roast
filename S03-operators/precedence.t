@@ -214,7 +214,7 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 # terminator
 
 # superscript exponentiation
-#?rakudo 3 skip 'superscript exponent associativity not right yet'
+#?rakudo 3 skip 'superscript exponent associativity not right yet RT #130414'
 is(++$i², 9, "++ bind tighter than superscript exponent");
 is(--$i², 4, "-- does too");
 is(2²**3, 256, "mixed exponent does right associative");
