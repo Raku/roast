@@ -212,11 +212,11 @@ plan 33;
 {
     my &code-method = *.sort;
     my &code-sub    =  &sort;
-    is code-method(<y z x>).^name, 'List', '.sort stored in a sub returns a List';
-    is code-sub(   <y z x>).^name, 'List', '&sort stored in a sub returns a List';
+    is code-method(<y z x>).^name, 'Seq', '.sort stored in a sub returns a List';
+    is code-sub(   <y z x>).^name, 'Seq', '&sort stored in a sub returns a List';
 }
 
 # RT #126921
-is (<2 1 3>   .sort).^name, 'List', 'detached .sort returns a List';
+is (<2 1 3>   .sort).^name, 'Seq', 'detached .sort returns a List';
 
 # vim: ft=perl6
