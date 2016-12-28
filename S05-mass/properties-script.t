@@ -6,7 +6,7 @@ use Test;
 This file was originally derived from the perl5 CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/properties_slow_to_compile.t.
 
-XXX needs more clarification on the case of the rules, 
+XXX needs more clarification on the case of the rules,
 ie letter vs. Letter vs isLetter
 
 =end pod
@@ -60,13 +60,13 @@ ok("\x[6780]\c[NUMBER SIGN]" ~~ m/<:bc<ET>>/, q{Match unanchored (European Numbe
 # bc<WS>      # Whitespace
 
 
-ok("\c[FORM FEED (FF)]" ~~ m/^<:bc<WS>>$/, q{Match (Whitespace)} );
-ok(!( "\c[FORM FEED (FF)]" ~~ m/^<!:bc<WS>>.$/ ), q{Don't match negated (Whitespace)} );
-ok(!( "\c[FORM FEED (FF)]" ~~ m/^<-:bc<WS>>$/ ), q{Don't match inverted (Whitespace)} );
+ok("\c[FF]" ~~ m/^<:bc<WS>>$/, q{Match (Whitespace)} );
+ok(!( "\c[FF]" ~~ m/^<!:bc<WS>>.$/ ), q{Don't match negated (Whitespace)} );
+ok(!( "\c[FF]" ~~ m/^<-:bc<WS>>$/ ), q{Don't match inverted (Whitespace)} );
 ok(!( "\x[6CF9]"  ~~ m/^<:bc<WS>>$/ ), q{Don't match unrelated (Whitespace)} );
 ok("\x[6CF9]"  ~~ m/^<!:bc<WS>>.$/, q{Match unrelated negated (Whitespace)} );
 ok("\x[6CF9]"  ~~ m/^<-:bc<WS>>$/, q{Match unrelated inverted (Whitespace)} );
-ok("\x[6CF9]\c[FORM FEED (FF)]" ~~ m/<:bc<WS>>/, q{Match unanchored (Whitespace)} );
+ok("\x[6CF9]\c[FF]" ~~ m/<:bc<WS>>/, q{Match unanchored (Whitespace)} );
 
 
 # Arabic
