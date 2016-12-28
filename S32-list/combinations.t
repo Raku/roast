@@ -18,9 +18,9 @@ is combinations(3,2).list.perl, ((0, 1), (0, 2), (1, 2)).perl, "combinations fun
 
 # RT #127778
 {
-    is combinations(-2,2).list.perl, ((),).perl,
+    is combinations(-2,2).list.perl, ().perl,
         'negative $n in sub combinations (1)';
-    is combinations(-9999999999999999999,2).list.perl, ((),).perl,
+    is combinations(-9999999999999999999,2).list.perl, ().perl,
         'negative $n in sub combinations (2)';
     is combinations(2,-2).list.perl, ().perl,
         'negative $k in sub combinations gives empty list (1)';
@@ -33,11 +33,11 @@ subtest {
     plan 12;
 
     is-deeply combinations(  2, 0.5), ((),), 'Rat in $k';
-    is-deeply combinations(0.5,   2), ((),), 'Rat in $n';
+    is-deeply combinations(0.5,   2), (),    'Rat in $n';
     is-deeply combinations(0.5, 0.5), ((),), 'Rat in $n and $k';
 
     is-deeply combinations( -2,  -0.5), ((),), 'Rat in $k (negatives)';
-    is-deeply combinations(-0.5,   -2), ((),), 'Rat in $n (negatives)';
+    is-deeply combinations(-0.5,   -2), (),    'Rat in $n (negatives)';
     is-deeply combinations(-0.5, -0.5), ((),), 'Rat in $n and $k (negatives)';
     
     is-deeply combinations(3, 2.5),   ((0, 1), (0, 2), (1, 2),),
