@@ -32,25 +32,25 @@ is combinations(3,2).list.perl, ((0, 1), (0, 2), (1, 2)).perl, "combinations fun
 subtest {
     plan 12;
 
-    is combinations(  2, 0.5), ((),), 'Rat in $k';
-    is combinations(0.5,   2), ((),), 'Rat in $n';
-    is combinations(0.5, 0.5), ((),), 'Rat in $n and $k';
+    is-deeply combinations(  2, 0.5), ((),), 'Rat in $k';
+    is-deeply combinations(0.5,   2), ((),), 'Rat in $n';
+    is-deeply combinations(0.5, 0.5), ((),), 'Rat in $n and $k';
 
-    is combinations( -2,  -0.5), ((),), 'Rat in $k (negatives)';
-    is combinations(-0.5,   -2), ((),), 'Rat in $n (negatives)';
-    is combinations(-0.5, -0.5), ((),), 'Rat in $n and $k (negatives)';
+    is-deeply combinations( -2,  -0.5), ((),), 'Rat in $k (negatives)';
+    is-deeply combinations(-0.5,   -2), ((),), 'Rat in $n (negatives)';
+    is-deeply combinations(-0.5, -0.5), ((),), 'Rat in $n and $k (negatives)';
     
-    is combinations(3, 2.5),   ((0, 1), (0, 2), (1, 2),),
+    is-deeply combinations(3, 2.5),   ((0, 1), (0, 2), (1, 2),),
         'Rat in $k (non-zero .Int)';
-    is combinations(3.5, 2),   ((0, 1), (0, 2), (1, 2),),
+    is-deeply combinations(3.5, 2),   ((0, 1), (0, 2), (1, 2),),
         'Rat in $n (non-zero .Int)';
-    is combinations(3.5, 2.5), ((0, 1), (0, 2), (1, 2),),
+    is-deeply combinations(3.5, 2.5), ((0, 1), (0, 2), (1, 2),),
         'Rat in $n and $k (non-zero .Int)';
         
-    is combinations(3.5e0, 2.5e0),  ((0, 1), (0, 2), (1, 2),),
+    is-deeply combinations(3.5e0, 2.5e0),  ((0, 1), (0, 2), (1, 2),),
         'Num in $n and $k';
-    is combinations(|<3.5 2e0>),     ((0, 1), (0, 2), (1, 2),),
+    is-deeply combinations(|<3.5 2e0>),     ((0, 1), (0, 2), (1, 2),),
         'RatStr/NumStr in $n and $k';
-    is combinations(3.5+0i, 2.5+0i), ((0, 1), (0, 2), (1, 2),),
+    is-deeply combinations(3.5+0i, 2.5+0i), ((0, 1), (0, 2), (1, 2),),
         'Complex in $n and $k';
 }, 'Non-Int values in combinations';
