@@ -72,7 +72,7 @@ is "a\nb\nc\n".lines(:count), 3, 'Str.lines(:count)';
 is_run( 'print lines[0]',
         "abcd\nefgh\nijkl\n",
         { out => "abcd", err => '', status => 0 },
-        'lines returns things in lines' );                  
+        'lines returns things in lines' );
 
 # RT #126270 [BUG] Something fishy with lines() and looping over two items at a time in Rakudo
 {
@@ -80,7 +80,7 @@ is_run( 'print lines[0]',
     my $result;
 
     # This used to fail, saying "Too few positionals passed; expected 2 arguments but got 0"
-    for "A\nB\nC\nD".lines() -> $x, $y { $result ~= "$x, then $y\n" } 
+    for "A\nB\nC\nD".lines() -> $x, $y { $result ~= "$x, then $y\n" }
 
     is $result, $expected, 'lines iterates correctly with for block taking two arguments at a time';
 }
