@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 48;
+plan 49;
 
 ##############################################################
 ####
@@ -85,5 +85,8 @@ is_run( 'print lines[0]',
     is $result, $expected, 'lines iterates correctly with for block taking two arguments at a time';
 }
 
+# RT #130430
+is-deeply "a\nb\nc".lines(2000), ('a', 'b', 'c'),
+    'we stop when data ends, even if limit has not been reached yet';
 
 # vim: ft=perl6

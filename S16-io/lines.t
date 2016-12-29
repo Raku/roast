@@ -12,7 +12,7 @@ my @endings =
 ## adjusted plan to allow fine grained fudging for rakudo.jvm
 #plan @endings * (1 + 3 * ( (3 * 5) + 6));
 my $extra_tests_jvm_fudging = 2 * 3 * ( 3 * ( 6 + 2 ) );
-plan 1 + @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
+plan 2 + @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -251,5 +251,14 @@ for @endings -> (:key($eol), :value($EOL)) {
 }
 
 unlink $filename; # cleanup
+
+{
+    # RT #130430
+    my $file = 't/spec/S16-io/lines.testing'.IO;
+    $file.spurt: join "\n", <a b c>;
+    is-deeply $file.lines(2000), ('a', 'b', 'c'),
+        'we stop when data ends, even if limit has not been reached yet';
+    unlink $file;
+}
 
 # vim: ft=perl6

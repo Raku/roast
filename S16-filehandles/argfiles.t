@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 15;
+plan 16;
 
 sub create-temporary-file ($name = '') {
     my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ $name ~ '-' ~ time;
@@ -160,5 +160,12 @@ subtest ':bin and :enc get passed through in slurp' => {
         :0status,
     }, 'slurp(:enc<Latin-1>), STDIN';
 }
+
+# RT #130430
+is_run ｢.put for $*ARGFILES.lines: 1000｣, "a\nb\nc", {
+    :out("a\nb\nc\n"),
+    :err(''),
+    :0status,
+}, '.lines stops when data ends, even if limit has not been reached yet';
 
 $tmp-file-name.IO.unlink;
