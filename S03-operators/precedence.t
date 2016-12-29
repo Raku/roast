@@ -21,16 +21,18 @@ plan 77;
 # FIXME how do we test this?
 
 # postfix method
-
-my @a = 1,2,3;
-is(++@a[2], 4, "bare postfix binds tighter than ++");
-is(++@a.[2], 5, "dotted postfix binds tighter than ++");
+{
+    my @a = 1,2,3;
+    is(++@a[2], 4, "bare postfix binds tighter than ++");
+    is(++@a.[2], 5, "dotted postfix binds tighter than ++");
+}
 
 # autoincrement
-
-my $i = 2;
-is(++$i ** 2, 9, "++ bind tighter than **");
-is(--$i ** 2, 4, "-- does too");
+{
+    my $i = 2;
+    is(++$i ** 2, 9, "++ bind tighter than **");
+    is(--$i ** 2, 4, "-- does too");
+}
 
 # exponentiation
 
@@ -214,17 +216,23 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 # terminator
 
 # superscript exponentiation
-#?rakudo 3 skip 'superscript exponent associativity not right yet RT #130414'
-is(++$i², 9, "++ bind tighter than superscript exponent");
-is(--$i², 4, "-- does too");
-is(2²**3, 256, "mixed exponent does right associative");
+{
+    my $i = 2;
 
-is(-2², -4, "superscript exponent binds tighter than unary -");
-isa-ok(~2⁴, Str, "~2⁴ is a string");
+    #?rakudo 2 skip 'superscript exponent associativity RT #130414'
+    is(++$i², 9, "++ bind tighter than superscript exponent");
+    is(--$i², 4, "-- does too");
 
-is -2² . abs, 4, "on left side . is looser than superscript exponent and left-to-right with unary -";
-is -2² . abs + 1, 5, "on right side . is tighter than addition";
-is -2² . abs.Str.ord, "4".ord, "on right side . is tighter than methodcall";
+    #?rakudo todo 'superscript exponent associativity RT #130414'
+    is(2²**3, 256, "mixed exponent does right associative");
+
+    is(-2², -4, "superscript exponent binds tighter than unary -");
+    isa-ok(~2⁴, Str, "~2⁴ is a string");
+
+    is -2² . abs, 4, "on left side . is looser than superscript exponent and left-to-right with unary -";
+    is -2² . abs + 1, 5, "on right side . is tighter than addition";
+    is -2² . abs.Str.ord, "4".ord, "on right side . is tighter than methodcall";
+}
 
 # Contrary to Perl 5 there are no prototypes, and since normal built-ins
 # are not defined as prefix ops, 'uc $a eq $A' actually parses as
