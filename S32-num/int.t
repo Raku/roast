@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 165;
+plan 162;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -102,13 +102,8 @@ throws-like q['3e4d5'.Int], X::Str::Numeric,
     }
 }
 
-#?DOES 1
 # Special values
 is((1.9e3).Int, 1900, "int 1.9e3 is 1900");
-#?rakudo 3 todo 'Inf and NaN NYI for Int RT #124818'
-is((Inf).Int,    Inf, "int Inf is Inf");
-is((-Inf).Int,  -Inf, "int -Inf is -Inf");
-is((NaN).Int,    NaN, "int NaN is NaN");
 
 # RT #65132
 throws-like 'int 3.14', X::Syntax::Confused,
