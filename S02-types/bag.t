@@ -4,7 +4,7 @@ use Test;
 plan 205;
 
 sub showkv($x) {
-    $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
+    $x.keys.sort({$^a.ords cmp $^b.ords}).map({ $^k ~ ':' ~ $x{$k} }).join(' ')
 }
 
 # L<S02/Immutable types/'the bag listop'>
@@ -206,7 +206,7 @@ sub showkv($x) {
 {
     my $b = { foo => 10, bar => 1, baz => 2}.Bag;
 
-    # .list is just the keys, as per TimToady: 
+    # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $b.list.elems, 3, ".list returns 3 things";
     is $b.list.grep(Pair).elems, 3, "... all of which are Pairs";
