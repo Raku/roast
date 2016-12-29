@@ -8,7 +8,7 @@ plan 260;
 # A BagHash is a QuantHash of UInt, i.e. the values are positive Int
 
 sub showkv($x) {
-    $x.keys.sort.map({"$_:{$x{$_}}"}).join(' ')
+    $x.keys.sort({$^a.ords cmp $^b.ords}).map({"$_:{$x{$_}}"}).join(' ')
 }
 
 # L<S02/Immutable types/'the bag listop'>
@@ -187,7 +187,7 @@ sub showkv($x) {
 {
     my $b = { foo => 10, bar => 1, baz => 2}.BagHash;
 
-    # .list is just the keys, as per TimToady: 
+    # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $b.list.elems, 3, ".list returns 3 things";
     is $b.list.grep(Pair).elems, 3, "... all of which are Pairs";
