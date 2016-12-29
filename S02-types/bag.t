@@ -403,14 +403,14 @@ sub showkv($x) {
     is showkv(42.Bag), "42:1", "Method .Bag works on Int-2";
     isa-ok "blue".Bag, Bag, "Method .Bag works on Str-1";
     is showkv("blue".Bag), "blue:1", "Method .Bag works on Str-2";
-    my @a = <Now the cross-handed set was the Paradise way>;
+    my @a = <now the cross-handed set was the paradise way>;
     isa-ok @a.Bag, Bag, "Method .Bag works on Array-1";
-    is showkv(@a.Bag), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .Bag works on Array-2";
+    is showkv(@a.Bag), "cross-handed:1 now:1 paradise:1 set:1 the:2 was:1 way:1", "Method .Bag works on Array-2";
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.Bag, Bag, "Method .Bag works on Hash-1";
     is showkv(%x.Bag), "a:1 b:2", "Method .Bag works on Hash-2";
     isa-ok (@a, %x).Bag, Bag, "Method .Bag works on List-1";
-    is showkv((@a, %x).Bag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
+    is showkv((@a, %x).Bag), "a:1 b:2 cross-handed:1 now:1 paradise:1 set:1 the:2 was:1 way:1",
        "Method .Bag works on List-2";
 }
 
