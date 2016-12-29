@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 833;
+plan 834;
 
 # Basic test functions specific to rational numbers.
 
@@ -87,7 +87,7 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
 {
     # use numbers that can be exactly represented as floating points
-    # so there's no need to use is-approx 
+    # so there's no need to use is-approx
 
     my $a = 1/2;
     is ++$a, 3/2, 'prefix:<++> on Rats';
@@ -297,7 +297,7 @@ is 241025348275725.3352.Rat.norm.nude, (301281685344656669, 1250), "Rat.Rat yiel
 is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish Rats';
 
 #RT #126391
-try {say 42/(.1+.2-.3)}; 
+try {say 42/(.1+.2-.3)};
 isa-ok( $!.numerator, 42, "got the answer rather than 420");
 
 # RT#126016
@@ -310,5 +310,9 @@ subtest '0.9999999999999999999999 to string conversions' => {
         '.perl gives accurate result';
     is-deeply r.perl.EVAL, r, '.perl.EVAL roundtrips';
 }
+
+# RT#130427
+cmp-ok Rat.Range, '===', -∞^..^∞,
+    'Rat.Range is from -inf to inf, excluding end points';
 
 # vim: ft=perl6
