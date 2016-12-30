@@ -192,43 +192,78 @@ is Uni.new(0x300, 0x1F466).Str.chars, 2, "0x300, 0x1F466 GraphemeBreakTest.txt l
 is Uni.new(0x300, 0x308, 0x1F466).Str.chars, 2, "0x300, 0x308, 0x1F466 GraphemeBreakTest.txt line #219 Codes: 2 Non-break: 1";
 is Uni.new(0x300, 0x378).Str.chars, 2, "0x300, 0x378 GraphemeBreakTest.txt line #220 Codes: 1 Non-break: 0";
 is Uni.new(0x300, 0x308, 0x378).Str.chars, 2, "0x300, 0x308, 0x378 GraphemeBreakTest.txt line #221 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x20).Str.chars, 1, "0x600, 0x20 GraphemeBreakTest.txt line #224 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x20).Str.chars, 2, "0x600, 0x308, 0x20 GraphemeBreakTest.txt line #225 Codes: 2 Non-break: 1";
 is Uni.new(0x600, 0xD).Str.chars, 2, "0x600, 0xD GraphemeBreakTest.txt line #226 Codes: 1 Non-break: 0";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0xD).Str.chars, 2, "0x600, 0x308, 0xD GraphemeBreakTest.txt line #227 Codes: 2 Non-break: 1";
 is Uni.new(0x600, 0xA).Str.chars, 2, "0x600, 0xA GraphemeBreakTest.txt line #228 Codes: 1 Non-break: 0";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0xA).Str.chars, 2, "0x600, 0x308, 0xA GraphemeBreakTest.txt line #229 Codes: 2 Non-break: 1";
 is Uni.new(0x600, 0x1).Str.chars, 2, "0x600, 0x1 GraphemeBreakTest.txt line #230 Codes: 1 Non-break: 0";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1).Str.chars, 2, "0x600, 0x308, 0x1 GraphemeBreakTest.txt line #231 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x300).Str.chars, 1, "0x600, 0x300 GraphemeBreakTest.txt line #232 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x300).Str.chars, 1, "0x600, 0x308, 0x300 GraphemeBreakTest.txt line #233 Codes: 2 Non-break: 2";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x600).Str.chars, 1, "0x600, 0x600 GraphemeBreakTest.txt line #234 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x600).Str.chars, 2, "0x600, 0x308, 0x600 GraphemeBreakTest.txt line #235 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x903).Str.chars, 1, "0x600, 0x903 GraphemeBreakTest.txt line #236 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x903).Str.chars, 1, "0x600, 0x308, 0x903 GraphemeBreakTest.txt line #237 Codes: 2 Non-break: 2";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x1100).Str.chars, 1, "0x600, 0x1100 GraphemeBreakTest.txt line #238 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1100).Str.chars, 2, "0x600, 0x308, 0x1100 GraphemeBreakTest.txt line #239 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x1160).Str.chars, 1, "0x600, 0x1160 GraphemeBreakTest.txt line #240 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1160).Str.chars, 2, "0x600, 0x308, 0x1160 GraphemeBreakTest.txt line #241 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x11A8).Str.chars, 1, "0x600, 0x11A8 GraphemeBreakTest.txt line #242 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x11A8).Str.chars, 2, "0x600, 0x308, 0x11A8 GraphemeBreakTest.txt line #243 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0xAC00).Str.chars, 1, "0x600, 0xAC00 GraphemeBreakTest.txt line #244 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0xAC00).Str.chars, 2, "0x600, 0x308, 0xAC00 GraphemeBreakTest.txt line #245 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0xAC01).Str.chars, 1, "0x600, 0xAC01 GraphemeBreakTest.txt line #246 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0xAC01).Str.chars, 2, "0x600, 0x308, 0xAC01 GraphemeBreakTest.txt line #247 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x1F1E6).Str.chars, 1, "0x600, 0x1F1E6 GraphemeBreakTest.txt line #248 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1F1E6).Str.chars, 2, "0x600, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #249 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x261D).Str.chars, 1, "0x600, 0x261D GraphemeBreakTest.txt line #250 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x261D).Str.chars, 2, "0x600, 0x308, 0x261D GraphemeBreakTest.txt line #251 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x1F3FB).Str.chars, 1, "0x600, 0x1F3FB GraphemeBreakTest.txt line #252 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1F3FB).Str.chars, 2, "0x600, 0x308, 0x1F3FB GraphemeBreakTest.txt line #253 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x200D).Str.chars, 1, "0x600, 0x200D GraphemeBreakTest.txt line #254 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x200D).Str.chars, 1, "0x600, 0x308, 0x200D GraphemeBreakTest.txt line #255 Codes: 2 Non-break: 2";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x2764).Str.chars, 1, "0x600, 0x2764 GraphemeBreakTest.txt line #256 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x2764).Str.chars, 2, "0x600, 0x308, 0x2764 GraphemeBreakTest.txt line #257 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x1F466).Str.chars, 1, "0x600, 0x1F466 GraphemeBreakTest.txt line #258 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1F466).Str.chars, 2, "0x600, 0x308, 0x1F466 GraphemeBreakTest.txt line #259 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x378).Str.chars, 1, "0x600, 0x378 GraphemeBreakTest.txt line #260 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x378).Str.chars, 2, "0x600, 0x308, 0x378 GraphemeBreakTest.txt line #261 Codes: 2 Non-break: 1";
 is Uni.new(0x903, 0x20).Str.chars, 2, "0x903, 0x20 GraphemeBreakTest.txt line #264 Codes: 1 Non-break: 0";
 is Uni.new(0x903, 0x308, 0x20).Str.chars, 2, "0x903, 0x308, 0x20 GraphemeBreakTest.txt line #265 Codes: 2 Non-break: 1";
@@ -524,7 +559,9 @@ is Uni.new(0x261D, 0x1F1E6).Str.chars, 2, "0x261D, 0x1F1E6 GraphemeBreakTest.txt
 is Uni.new(0x261D, 0x308, 0x1F1E6).Str.chars, 2, "0x261D, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #569 Codes: 2 Non-break: 1";
 is Uni.new(0x261D, 0x261D).Str.chars, 2, "0x261D, 0x261D GraphemeBreakTest.txt line #570 Codes: 1 Non-break: 0";
 is Uni.new(0x261D, 0x308, 0x261D).Str.chars, 2, "0x261D, 0x308, 0x261D GraphemeBreakTest.txt line #571 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x261D, 0x1F3FB).Str.chars, 1, "0x261D, 0x1F3FB GraphemeBreakTest.txt line #572 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x261D, 0x308, 0x1F3FB).Str.chars, 1, "0x261D, 0x308, 0x1F3FB GraphemeBreakTest.txt line #573 Codes: 2 Non-break: 2";
 is Uni.new(0x261D, 0x200D).Str.chars, 1, "0x261D, 0x200D GraphemeBreakTest.txt line #574 Codes: 1 Non-break: 1";
 is Uni.new(0x261D, 0x308, 0x200D).Str.chars, 1, "0x261D, 0x308, 0x200D GraphemeBreakTest.txt line #575 Codes: 2 Non-break: 2";
@@ -604,8 +641,10 @@ is Uni.new(0x200D, 0x1F3FB).Str.chars, 2, "0x200D, 0x1F3FB GraphemeBreakTest.txt
 is Uni.new(0x200D, 0x308, 0x1F3FB).Str.chars, 2, "0x200D, 0x308, 0x1F3FB GraphemeBreakTest.txt line #653 Codes: 2 Non-break: 1";
 is Uni.new(0x200D, 0x200D).Str.chars, 1, "0x200D, 0x200D GraphemeBreakTest.txt line #654 Codes: 1 Non-break: 1";
 is Uni.new(0x200D, 0x308, 0x200D).Str.chars, 1, "0x200D, 0x308, 0x200D GraphemeBreakTest.txt line #655 Codes: 2 Non-break: 2";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x200D, 0x2764).Str.chars, 1, "0x200D, 0x2764 GraphemeBreakTest.txt line #656 Codes: 1 Non-break: 1";
 is Uni.new(0x200D, 0x308, 0x2764).Str.chars, 2, "0x200D, 0x308, 0x2764 GraphemeBreakTest.txt line #657 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x200D, 0x1F466).Str.chars, 1, "0x200D, 0x1F466 GraphemeBreakTest.txt line #658 Codes: 1 Non-break: 1";
 is Uni.new(0x200D, 0x308, 0x1F466).Str.chars, 2, "0x200D, 0x308, 0x1F466 GraphemeBreakTest.txt line #659 Codes: 2 Non-break: 1";
 is Uni.new(0x200D, 0x378).Str.chars, 2, "0x200D, 0x378 GraphemeBreakTest.txt line #660 Codes: 1 Non-break: 0";
@@ -676,7 +715,9 @@ is Uni.new(0x1F466, 0x1F1E6).Str.chars, 2, "0x1F466, 0x1F1E6 GraphemeBreakTest.t
 is Uni.new(0x1F466, 0x308, 0x1F1E6).Str.chars, 2, "0x1F466, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #729 Codes: 2 Non-break: 1";
 is Uni.new(0x1F466, 0x261D).Str.chars, 2, "0x1F466, 0x261D GraphemeBreakTest.txt line #730 Codes: 1 Non-break: 0";
 is Uni.new(0x1F466, 0x308, 0x261D).Str.chars, 2, "0x1F466, 0x308, 0x261D GraphemeBreakTest.txt line #731 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x1F466, 0x1F3FB).Str.chars, 1, "0x1F466, 0x1F3FB GraphemeBreakTest.txt line #732 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x1F466, 0x308, 0x1F3FB).Str.chars, 1, "0x1F466, 0x308, 0x1F3FB GraphemeBreakTest.txt line #733 Codes: 2 Non-break: 2";
 is Uni.new(0x1F466, 0x200D).Str.chars, 1, "0x1F466, 0x200D GraphemeBreakTest.txt line #734 Codes: 1 Non-break: 1";
 is Uni.new(0x1F466, 0x308, 0x200D).Str.chars, 1, "0x1F466, 0x308, 0x200D GraphemeBreakTest.txt line #735 Codes: 2 Non-break: 2";
@@ -731,18 +772,27 @@ is Uni.new(0x646, 0x200D, 0x20).Str.chars, 2, "0x646, 0x200D, 0x20 GraphemeBreak
 is Uni.new(0x1100, 0x1100).Str.chars, 1, "0x1100, 0x1100 GraphemeBreakTest.txt line #828 Codes: 1 Non-break: 1";
 is Uni.new(0xAC00, 0x11A8, 0x1100).Str.chars, 2, "0xAC00, 0x11A8, 0x1100 GraphemeBreakTest.txt line #829 Codes: 2 Non-break: 1";
 is Uni.new(0xAC01, 0x11A8, 0x1100).Str.chars, 2, "0xAC01, 0x11A8, 0x1100 GraphemeBreakTest.txt line #830 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62).Str.chars, 3, "0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62 GraphemeBreakTest.txt line #831 Codes: 3 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62).Str.chars, 4, "0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62 GraphemeBreakTest.txt line #832 Codes: 4 Non-break: 1";
 is Uni.new(0x61, 0x1F1E6, 0x1F1E7, 0x200D, 0x1F1E8, 0x62).Str.chars, 4, "0x61, 0x1F1E6, 0x1F1E7, 0x200D, 0x1F1E8, 0x62 GraphemeBreakTest.txt line #833 Codes: 5 Non-break: 2";
 is Uni.new(0x61, 0x1F1E6, 0x200D, 0x1F1E7, 0x1F1E8, 0x62).Str.chars, 4, "0x61, 0x1F1E6, 0x200D, 0x1F1E7, 0x1F1E8, 0x62 GraphemeBreakTest.txt line #834 Codes: 5 Non-break: 2";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x1F1E9, 0x62).Str.chars, 4, "0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x1F1E9, 0x62 GraphemeBreakTest.txt line #835 Codes: 5 Non-break: 2";
 is Uni.new(0x61, 0x200D).Str.chars, 1, "0x61, 0x200D GraphemeBreakTest.txt line #836 Codes: 1 Non-break: 1";
 is Uni.new(0x61, 0x308, 0x62).Str.chars, 2, "0x61, 0x308, 0x62 GraphemeBreakTest.txt line #837 Codes: 2 Non-break: 1";
 is Uni.new(0x61, 0x903, 0x62).Str.chars, 2, "0x61, 0x903, 0x62 GraphemeBreakTest.txt line #838 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x61, 0x600, 0x62).Str.chars, 2, "0x61, 0x600, 0x62 GraphemeBreakTest.txt line #839 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x261D, 0x1F3FB, 0x261D).Str.chars, 2, "0x261D, 0x1F3FB, 0x261D GraphemeBreakTest.txt line #840 Codes: 2 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x1F466, 0x1F3FB).Str.chars, 1, "0x1F466, 0x1F3FB GraphemeBreakTest.txt line #841 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x200D, 0x1F466, 0x1F3FB).Str.chars, 1, "0x200D, 0x1F466, 0x1F3FB GraphemeBreakTest.txt line #842 Codes: 2 Non-break: 2";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x200D, 0x2764).Str.chars, 1, "0x200D, 0x2764 GraphemeBreakTest.txt line #843 Codes: 1 Non-break: 1";
+#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
 is Uni.new(0x200D, 0x1F466).Str.chars, 1, "0x200D, 0x1F466 GraphemeBreakTest.txt line #844 Codes: 1 Non-break: 1";
 is Uni.new(0x1F466, 0x1F466).Str.chars, 2, "0x1F466, 0x1F466 GraphemeBreakTest.txt line #845 Codes: 1 Non-break: 0";
