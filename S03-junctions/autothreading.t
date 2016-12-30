@@ -73,7 +73,7 @@ plan 105;
     is($calls_b, 4, 'correct multi-sub called right number of times');
     is($calls_a, 0, 'incorrect multi-sub not called');
     is($calls_c, 0, 'incorrect multi-sub not called');
-    
+
     $calls_a = 0;
     $calls_b = 0;
     $calls_c = 0;
@@ -90,7 +90,7 @@ plan 105;
     is($calls_a, 1, 'correct multi-sub called again right number of times (junction of many types)');
     is($calls_c, 2, 'correct multi-sub called again right number of times (junction of many types)');
     is($calls_b, 0, 'incorrect multi-sub again not called');
-    
+
     $calls_a = 0;
     $calls_b = 0;
     $calls_c = 0;
@@ -125,7 +125,7 @@ plan 105;
     is($obj.calls_b, 4, 'correct multi-method called right number of times');
     is($obj.calls_a, 0, 'incorrect multi-method not called');
     is($obj.calls_c, 0, 'incorrect multi-method not called');
-    
+
     $obj = MMTest.new();
     $obj.mmtest('a' | 1 & 'b');
     is($obj.calls_a, 1, 'correct multi-method called right number of times (junction of many types)');
@@ -212,7 +212,7 @@ plan 105;
     ok !( +$j == 3 ), 'prefix:<+> autothreads (3)';
 }
 
-# this is nothing new, but it's such a cool example for 
+# this is nothing new, but it's such a cool example for
 # autothreading that I want it to be in the test suite nonetheless ;-)
 {
     sub primetest(Int $n) {
