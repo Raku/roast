@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 53;
+plan 59;
 
 # cmp on scalar values
 {
@@ -97,6 +97,57 @@ plan 53;
     is (5^..^10) cmp (6,7,8,9), Same, "(5^..^10) cmp (6,7,8,9),";
     is (5^..10) cmp (5,6,7,8,9,10), More, "(5^..10) cmp (5,6,7,8,9,10),";
     is (5..^10) cmp (5,6,7,8,9,10), Less, "(5..^10) cmp (5,6,7,8,9,10),";
+}
+
+for Rat, FatRat -> \RatT {
+    my $nan  = RatT.new:  0, 0;
+    my $inf  = RatT.new:  1, 0;
+    my $ninf = RatT.new: -1, 0;
+
+    subtest "$nan.perl() (behaves like NaN)" => {
+        plan 10;
+        is-deeply $nan cmp  NaN, Same, "$nan.perl() cmp NaN";
+        is-deeply $nan cmp   42, More, "$nan.perl() cmp 42";
+        is-deeply $nan cmp  -42, More, "$nan.perl() cmp -42";
+        is-deeply $nan cmp  Inf, More, "$nan.perl() cmp Inf";
+        is-deeply $nan cmp -Inf, More, "$nan.perl() cmp -Inf";
+
+        is-deeply  NaN cmp $nan, Same, " NaN cmp $nan.perl()";
+        is-deeply   42 cmp $nan, Less, "  42 cmp $nan.perl()";
+        is-deeply  -42 cmp $nan, Less, " -42 cmp $nan.perl()";
+        is-deeply  Inf cmp $nan, Less, " Inf cmp $nan.perl()";
+        is-deeply -Inf cmp $nan, Less, "-Inf cmp $nan.perl()";
+    }
+
+    subtest "$ninf.perl() (behaves like -Inf)" => {
+        plan 10;
+        is-deeply $ninf cmp  NaN, Less, "$ninf.perl() cmp NaN";
+        is-deeply $ninf cmp   42, Less, "$ninf.perl() cmp 42";
+        is-deeply $ninf cmp  -42, Less, "$ninf.perl() cmp -42";
+        is-deeply $ninf cmp  Inf, Less, "$ninf.perl() cmp Inf";
+        is-deeply $ninf cmp -Inf, Same, "$ninf.perl() cmp -Inf";
+
+        is-deeply  NaN cmp $ninf, More, " NaN cmp $ninf.perl()";
+        is-deeply   42 cmp $ninf, More, "  42 cmp $ninf.perl()";
+        is-deeply  -42 cmp $ninf, More, " -42 cmp $ninf.perl()";
+        is-deeply  Inf cmp $ninf, More, " Inf cmp $ninf.perl()";
+        is-deeply -Inf cmp $ninf, Same, "-Inf cmp $ninf.perl()";
+    }
+
+    subtest "$inf.perl() Rat (behaves like Inf)" => {
+        plan 10;
+        is-deeply $inf cmp  NaN, Less, "$inf.perl() cmp NaN";
+        is-deeply $inf cmp   42, More, "$inf.perl() cmp 42";
+        is-deeply $inf cmp  -42, More, "$inf.perl() cmp -42";
+        is-deeply $inf cmp  Inf, Same, "$inf.perl() cmp Inf";
+        is-deeply $inf cmp -Inf, More, "$inf.perl() cmp -Inf";
+
+        is-deeply  NaN cmp $inf, More, " NaN cmp $inf.perl()";
+        is-deeply   42 cmp $inf, Less, "  42 cmp $inf.perl()";
+        is-deeply  -42 cmp $inf, Less, " -42 cmp $inf.perl()";
+        is-deeply  Inf cmp $inf, Same, " Inf cmp $inf.perl()";
+        is-deeply -Inf cmp $inf, Less, "-Inf cmp $inf.perl()";
+    }
 }
 
 # vim: ft=perl6
