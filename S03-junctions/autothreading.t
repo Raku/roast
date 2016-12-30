@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 105;
+plan 106;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -362,6 +362,31 @@ ok any(1.0,2,'3') ~~ Junction, 'any/Junction smartmatch does not autothread';
 ok Mu !~~ Junction, 'Mu/Junction smartmatch False';
 ok Junction ~~ Junction, 'Junction/Junction smartmatch True';
 ok Junction ~~ Mu, 'Junction/Mu smartmatch True';
+
+# RT#130426
+subtest 'smartmatch against Bool:U' => {
+    plan 16;
+
+    ok   any(42,   True ) ~~ Bool, 'any (true by True Bool)';
+    ok   any(42,   False) ~~ Bool, 'any (true by False Bool)';
+    nok  any(42         ) ~~ Bool, 'any (false)';
+
+    ok  all(False, False) ~~ Bool, 'all (true by True Bool)';
+    ok  all(False, False) ~~ Bool, 'all (true by False Bool)';
+    ok  all(True,  False) ~~ Bool, 'all (true by Mixed Bools)';
+    nok all(42,    "foo") ~~ Bool, 'all (false; no Bools)';
+    nok all(42,    False) ~~ Bool, 'all (false not are Bools)';
+
+    ok  one(42,    True ) ~~ Bool, 'one (true by True Bool)';
+    ok  one(42,    False) ~~ Bool, 'one (true by False Bool)';
+    nok one(42,         ) ~~ Bool, 'one (false, too few)';
+    nok one(True,  False) ~~ Bool, 'one (false, too many)';
+
+    ok  none(42         ) ~~ Bool, 'none (true)';
+    nok none(42,   True ) ~~ Bool, 'none (false by True Bool)';
+    nok none(42,   False) ~~ Bool, 'none (false by False Bool)';
+    nok none(42,   True ) ~~ Bool, 'none (false by True Bool)';
+}
 
 # RT#130099
 subtest 'defined with Junctions autothreads' => {
