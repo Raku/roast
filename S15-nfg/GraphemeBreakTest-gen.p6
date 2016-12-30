@@ -22,13 +22,13 @@ sub MAIN ( Str $GrahemeBreakTest-file ) {
         my $beginning = $<beginning>.trim;
         # Remove the beginning and end, since we always break at start and end of string
         $beginning ~~ s/ ^ .*? ( <:AHex> .* <:AHex> ) .*? $ /$0/;
+        say $beginning;
+        my $num_codes = $beginning.comb(/'×'|'÷'/).elems;
+        say $num_codes;
+        my $no-break = $beginning.comb(/'×'/).elems;
         # Remove all the 'break' symbols, we only care about where *not* to break
-        $beginning ~~ s:g/'÷'//;
-        my $no-break = 0;
+        $beginning ~~ s:g/'÷'|'×'//;
         # Count how many codepoints we are not supposed to break between
-        while $beginning ~~ s/'×'// {
-            $no-break++;
-        }
         $beginning ~~ s:g/' '+/ /;
         my $string;
         my $uni-codes;
@@ -47,9 +47,11 @@ sub MAIN ( Str $GrahemeBreakTest-file ) {
         }
         next if $fail == True;
         $uni-codes ~~ s/ ', ' $ //;
-        my $should-be;
-        $should-be = $string.codes - $no-break;
-        push @array, qq<is Uni.new($uni-codes).Str.chars, $should-be, "GraphemeBreakTest.txt line #$line-no Codes: $string.codes() Non-break: $no-break";>;
+        my $should-be = $num_codes - $no-break + 1;
+        if $num_codes <= 0 {
+            die "Line no $line-no got 0 for number of characters, something is wrong. No-break[$no-break] Codes[$num_codes]";
+        }
+        push @array, qq<is Uni.new($uni-codes).Str.chars, $should-be, "$uni-codes GraphemeBreakTest.txt line #$line-no Codes: $num_codes Non-break: $no-break";>;
     }
     my $file =
     qq:to/END/;
