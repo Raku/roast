@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 546;
+plan 547;
 
 =begin pod
 
@@ -686,6 +686,14 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     throws-like {[-] 'hello'}, X::Str::Numeric, '[-] with single non-numeric argument errors';
     throws-like {[*] 'hello'}, X::Str::Numeric, '[*] with single non-numeric argument errors';
     throws-like {[/] 'hello'}, X::Str::Numeric, '[/] with single non-numeric argument errors';
+}
+
+# RT #128758
+{
+    my class CustomNumify {
+        method Numeric() { 42 };
+    }
+    is ([*] CustomNumify.new), 42, 'one-argument [*] numifies';
 }
 
 # vim: ft=perl6 et
