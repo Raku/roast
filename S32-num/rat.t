@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 835;
+plan 836;
 
 # Basic test functions specific to rational numbers.
 
@@ -342,6 +342,17 @@ subtest '== with 0-denominator Rats' => {
     # Negative/0 == -Inf
     is-deeply  <-2/0> == <-2/0>,  True, '-2/0 == -2/0';
     is-deeply  <-2/0> == <-5/0>,  True, '-2/0 == -5/0';
+}
+
+subtest 'Rational.isNaN' => {
+    plan 6;
+
+    is-deeply  <0/0>.isNaN,  True, ' 0/0';
+    is-deeply  <2/0>.isNaN, False, ' 2/0';
+    is-deeply <-2/0>.isNaN, False, '-2/0';
+    is-deeply  <0/2>.isNaN, False, ' 0/2';
+    is-deeply  <4/5>.isNaN, False, ' 4/5';
+    is-deeply <-4/5>.isNaN, False, '-5/5';
 }
 
 # vim: ft=perl6
