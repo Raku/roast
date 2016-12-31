@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 836;
+plan 837;
 
 # Basic test functions specific to rational numbers.
 
@@ -353,6 +353,28 @@ subtest 'Rational.isNaN' => {
     is-deeply  <0/2>.isNaN, False, ' 0/2';
     is-deeply  <4/5>.isNaN, False, ' 4/5';
     is-deeply <-4/5>.isNaN, False, '-5/5';
+}
+
+subtest '=== with 0-denominator Rats' => {
+    plan 15;
+
+    is-deeply  <0/0> ===  <0/0>,  True, ' 0/0 ===  0/0';
+    is-deeply  <2/0> ===  <2/0>,  True, ' 2/0 ===  2/0';
+    is-deeply <-2/0> === <-2/0>,  True, '-2/0 === -2/0';
+
+    is-deeply  <0/0> ===  <2/0>, False, ' 0/0 ===  2/0';
+    is-deeply  <2/0> ===  <0/0>, False, ' 2/0 ===  0/0';
+    is-deeply  <5/0> ===  <2/0>, False, ' 5/0 ===  2/0';
+    is-deeply  <2/0> ===  <5/0>, False, ' 2/0 ===  5/0';
+    is-deeply <-5/0> === <-2/0>, False, '-5/0 === -2/0';
+    is-deeply <-2/0> === <-5/0>, False, '-2/0 === -5/0';
+
+    is-deeply  <0/0> ===  <2/2>, False, ' 0/0 ===  2/2';
+    is-deeply  <2/2> ===  <0/0>, False, ' 2/2 ===  0/0';
+    is-deeply  <5/2> ===  <2/0>, False, ' 5/2 ===  2/0';
+    is-deeply  <2/0> ===  <5/2>, False, ' 2/0 ===  5/2';
+    is-deeply <-5/2> === <-2/0>, False, '-5/2 === -2/0';
+    is-deeply <-2/0> === <-5/2>, False, '-2/0 === -5/2';
 }
 
 # vim: ft=perl6

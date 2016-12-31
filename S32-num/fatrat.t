@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 284;
+plan 285;
 
 # Basic test functions specific to FatRats.
 
@@ -277,6 +277,29 @@ subtest 'Rational.isNaN' => {
     is-deeply  <0/2>.isNaN, False, ' 0/2';
     is-deeply  <4/5>.isNaN, False, ' 4/5';
     is-deeply <-4/5>.isNaN, False, '-5/5';
+}
+
+subtest '=== with 0-denominator FatRats' => {
+    plan 15;
+    sub postfix:<F> (Rat $_ --> FatRat) { FatRat.new: .numerator, .denominator }
+
+    is-deeply  <0/0>F ===  <0/0>F,  True, ' 0/0 ===  0/0';
+    is-deeply  <2/0>F ===  <2/0>F,  True, ' 2/0 ===  2/0';
+    is-deeply <-2/0>F === <-2/0>F,  True, '-2/0 === -2/0';
+
+    is-deeply  <0/0>F ===  <2/0>F, False, ' 0/0 ===  2/0';
+    is-deeply  <2/0>F ===  <0/0>F, False, ' 2/0 ===  0/0';
+    is-deeply  <5/0>F ===  <2/0>F, False, ' 5/0 ===  2/0';
+    is-deeply  <2/0>F ===  <5/0>F, False, ' 2/0 ===  5/0';
+    is-deeply <-5/0>F === <-2/0>F, False, '-5/0 === -2/0';
+    is-deeply <-2/0>F === <-5/0>F, False, '-2/0 === -5/0';
+
+    is-deeply  <0/0>F ===  <2/2>F, False, ' 0/0 ===  2/2';
+    is-deeply  <2/2>F ===  <0/0>F, False, ' 2/2 ===  0/0';
+    is-deeply  <5/2>F ===  <2/0>F, False, ' 5/2 ===  2/0';
+    is-deeply  <2/0>F ===  <5/2>F, False, ' 2/0 ===  5/2';
+    is-deeply <-5/2>F === <-2/0>F, False, '-5/2 === -2/0';
+    is-deeply <-2/0>F === <-5/2>F, False, '-2/0 === -5/2';
 }
 
 # vim: ft=perl6
