@@ -37,7 +37,7 @@ isa-ok 1R, FatRat, "1R is a FatRat";
 is 1R, 1, "1R == 1";
 isa-ok 1/4R, FatRat, "1/4R is a FatRat";
 is 1/4R, 1/4, "1/4R == 1/4";
- 
+
 # Test basic math
 is(1 / 4R + 1 / 4R, 1/2, "1/4R + 1/4R = 1/2");
 isa-ok(1 / 4R + 1 / 4R, FatRat, "1/4R + 1/4R is a FatRat");
@@ -87,7 +87,7 @@ is((2 / (2 / 3R)).nude, (3, 1), "2 / 2/3R = 3 is simplified internally");
 
 {
     # use numbers that can be exactly represented as floating points
-    # so there's no need to use is-approx 
+    # so there's no need to use is-approx
 
     my $a = 1/2R;
     is ++$a, 3/2, 'prefix:<++> on FatRats';
