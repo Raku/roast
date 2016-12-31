@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 41;
+plan 43;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT, Match.WHAT,         'got right type';
@@ -78,10 +78,16 @@ subtest 'can smartmatch against regexes stored in variables' => {
 }
 
 {
-    # non-str orig
+    # non-str orig, Int
     ok 12345 ~~ /2../, 'sanity';
     is-deeply $/.orig, 12345, 'non-Str orig';
     is-deeply $/.prematch, '1', '.prematch on non-Str';
     is-deeply $/.postmatch, '5', '.postmatch on non-Str';
+
+    # non-str orig, NFD
+    # RT #130458
+    ok "7\x[308]".NFD ~~ /^ \d+ $/, 'sanity';
+    #?rakudo todo '$/.orig on NFD matches'
+    isa-ok $/.orig, NFD, '.orig retains the type (NFD)';
 
 }
