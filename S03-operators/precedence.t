@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 69;
+plan 77;
 
 
 # terms
@@ -21,21 +21,23 @@ plan 69;
 # FIXME how do we test this?
 
 # postfix method
-
-my @a = 1,2,3;
-is(++@a[2], 4, "bare postfix binds tighter than ++");
-is(++@a.[2], 5, "dotted postfix binds tighter than ++");
+{
+    my @a = 1,2,3;
+    is(++@a[2], 4, "bare postfix binds tighter than ++");
+    is(++@a.[2], 5, "dotted postfix binds tighter than ++");
+}
 
 # autoincrement
-
-my $i = 2;
-is(++$i ** 2, 9, "++ bind tighter than **");
-is(--$i ** 2, 4, "-- does too");
+{
+    my $i = 2;
+    is(++$i ** 2, 9, "++ bind tighter than **");
+    is(--$i ** 2, 4, "-- does too");
+}
 
 # exponentiation
 
 is(-2**2, -4, "** bind tighter than unary -");
-isa-ok(~2**4, Str, "~4**4 is a string");
+isa-ok(~2**4, Str, "~2**4 is a string");
 
 # symbolic unary
 
@@ -212,6 +214,25 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 # loose or
 
 # terminator
+
+# superscript exponentiation
+{
+    my $i = 2;
+
+    #?rakudo 2 skip 'superscript exponent associativity RT #130414'
+    is(++$i², 9, "++ bind tighter than superscript exponent");
+    is(--$i², 4, "-- does too");
+
+    #?rakudo todo 'superscript exponent associativity RT #130414'
+    is(2²**3, 256, "mixed exponent does right associative");
+
+    is(-2², -4, "superscript exponent binds tighter than unary -");
+    isa-ok(~2⁴, Str, "~2⁴ is a string");
+
+    is -2² . abs, 4, "on left side . is looser than superscript exponent and left-to-right with unary -";
+    is -2² . abs + 1, 5, "on right side . is tighter than addition";
+    is -2² . abs.Str.ord, "4".ord, "on right side . is tighter than methodcall";
+}
 
 # Contrary to Perl 5 there are no prototypes, and since normal built-ins
 # are not defined as prefix ops, 'uc $a eq $A' actually parses as
