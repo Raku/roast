@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 834;
+plan 835;
 
 # Basic test functions specific to rational numbers.
 
@@ -314,5 +314,34 @@ subtest '0.9999999999999999999999 to string conversions' => {
 # RT#130427
 cmp-ok Rat.Range, '===', -∞^..^∞,
     'Rat.Range is from -inf to inf, excluding end points';
+
+subtest '== with 0-denominator Rats' => {
+    plan 18;
+
+    is-deeply  <0/0> == <42/1>, False, ' 0/0 == 42/1';
+    is-deeply  <4/0> == <42/1>, False, ' 4/0 == 42/1';
+    is-deeply <-4/0> == <42/1>, False, '-4/0 == 42/1';
+    is-deeply <42/1> ==  <0/0>, False, '42/1 ==  0/0';
+    is-deeply <42/1> ==  <4/0>, False, '42/1 ==  4/1';
+    is-deeply <42/1> == <-4/0>, False, '42/1 == -4/1';
+
+    # 0/0 is NaN and NaN != anything else
+    is-deeply  <0/0> ==  <0/0>,  False, ' 0/0 ==  0/0';
+    is-deeply  <0/0> ==  <2/0>,  False, ' 0/0 ==  2/0';
+    is-deeply  <0/0> == <-2/0>,  False, ' 0/0 == -2/0';
+    is-deeply  <2/0> ==  <0/0>,  False, ' 2/0 ==  0/0';
+    is-deeply <-2/0> ==  <0/0>,  False, '-2/0 ==  0/0';
+
+    # Positive/0 == +Inf
+    is-deeply  <2/0> ==  <2/0>,  True, '  2/0 ==  0/0';
+    is-deeply  <2/0> ==  <5/0>,  True,  ' 2/0 ==  5/0';
+    is-deeply  <2/0> == <-2/0>,  False, ' 2/0 == -2/0';
+    is-deeply  <5/0> ==  <2/0>,  True,  ' 5/0 ==  2/0';
+    is-deeply <-2/0> ==  <2/0>,  False, '-2/0 ==  2/0';
+
+    # Negative/0 == -Inf
+    is-deeply  <-2/0> == <-2/0>,  True, '-2/0 == -2/0';
+    is-deeply  <-2/0> == <-5/0>,  True, '-2/0 == -5/0';
+}
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 282;
+plan 283;
 
 # Basic test functions specific to FatRats.
 
@@ -237,5 +237,35 @@ isa-ok 4.8R % 1, FatRat, 'infix:<%> returns FatRat when it can';
 isa-ok 4 % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
 isa-ok 4.8R % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
 isa-ok 4.8R % 1.1, FatRat, 'infix:<%> returns FatRat when it can';
+
+subtest '== with 0-denominator FatRats' => {
+    plan 18;
+    sub postfix:<F> (Rat $_ --> FatRat) { FatRat.new: .numerator, .denominator }
+
+    is-deeply  <0/0>F == <42/1>F, False, ' 0/0 == 42/1';
+    is-deeply  <4/0>F == <42/1>F, False, ' 4/0 == 42/1';
+    is-deeply <-4/0>F == <42/1>F, False, '-4/0 == 42/1';
+    is-deeply <42/1>F ==  <0/0>F, False, '42/1 ==  0/0';
+    is-deeply <42/1>F ==  <4/0>F, False, '42/1 ==  4/1';
+    is-deeply <42/1>F == <-4/0>F, False, '42/1 == -4/1';
+
+    # 0/0 is NaN and NaN != anything else
+    is-deeply  <0/0>F ==  <0/0>F,  False, ' 0/0 ==  0/0';
+    is-deeply  <0/0>F ==  <2/0>F,  False, ' 0/0 ==  2/0';
+    is-deeply  <0/0>F == <-2/0>F,  False, ' 0/0 == -2/0';
+    is-deeply  <2/0>F ==  <0/0>F,  False, ' 2/0 ==  0/0';
+    is-deeply <-2/0>F ==  <0/0>F,  False, '-2/0 ==  0/0';
+
+    # Positive/0 == +Inf
+    is-deeply  <2/0>F ==  <2/0>F,  True, '  2/0 ==  0/0';
+    is-deeply  <2/0>F ==  <5/0>F,  True,  ' 2/0 ==  5/0';
+    is-deeply  <2/0>F == <-2/0>F,  False, ' 2/0 == -2/0';
+    is-deeply  <5/0>F ==  <2/0>F,  True,  ' 5/0 ==  2/0';
+    is-deeply <-2/0>F ==  <2/0>F,  False, '-2/0 ==  2/0';
+
+    # Negative/0 == -Inf
+    is-deeply  <-2/0>F == <-2/0>F,  True, '-2/0 == -2/0';
+    is-deeply  <-2/0>F == <-5/0>F,  True, '-2/0 == -5/0';
+}
 
 # vim: ft=perl6
