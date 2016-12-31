@@ -98,6 +98,7 @@ is(+Range, 0, 'type numification');
         ;
     }
 
+    #?rakudo.jvm 4 todo 'got X::Method::NotFound, RT #130470'
     throws-like { $r.min = 2 }, X::Assignment::RO, "range.min ro";
     throws-like { $r.max = 4 }, X::Assignment::RO, "range.max ro";
     throws-like { $r.excludes-min = True }, X::Assignment::RO,
@@ -108,6 +109,7 @@ is(+Range, 0, 'type numification');
     # RT #125791
     {
         for 0,1 -> $i {
+            #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
             throws-like { (^10).bounds[$i] = 1 }, X::Assignment::RO,
                 typename => / ^ 'Int' | 'value' $ /,
                 "is Range.bounds[$i] ro";

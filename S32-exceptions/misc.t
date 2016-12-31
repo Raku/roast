@@ -342,6 +342,7 @@ throws-like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
             expected => Int, symbol => '$x';
 throws-like 'subset Fu of Mu where * eq "foo"; my Fu $x = "bar";', X::TypeCheck::Assignment;
 
+#?rakudo.jvm 5 todo 'got X::Method::NotFound, RT #130470'
 throws-like 'sub f() { 42 }; f() = 3', X::Assignment::RO;
 throws-like '1.0 = 3', X::Assignment::RO;
 # RT #113534

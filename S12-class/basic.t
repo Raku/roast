@@ -119,6 +119,7 @@ throws-like 'class Romeo::Tango {}; Romeo::Juliet.rt64686', Exception,
              'call to method in undeclared A::B dies after class A::C defined';
 
 # RT #72286
+#?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
 throws-like 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
     X::Assignment::RO, 'self is not writable';
 

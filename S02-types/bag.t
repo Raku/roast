@@ -33,12 +33,14 @@ sub showkv($x) {
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
+    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like { $b<a> = 5 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
     throws-like { $b<a>++ },
       Exception, # no exception type yet
       "Can't increment an element (Bags are immutable)";
+    #?rakudo.jvm 2 todo 'got X::Method::NotFound, RT #130470'
     throws-like { $b.keys = <c d> },
       X::Assignment::RO,
       "Can't assign to .keys";
@@ -191,6 +193,7 @@ sub showkv($x) {
     is %b<b>, 2, 'Single-key subscript (existing element)';
     is %b<santa>, 0, 'Single-key subscript (nonexistent element)';
 
+    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like { %b<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
@@ -483,6 +486,7 @@ sub showkv($x) {
 
 {
     my $b = <a>.Bag;
+    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like { $b<a> = 42 },
       X::Assignment::RO,
       'Make sure we cannot assign on a key';
@@ -491,6 +495,7 @@ sub showkv($x) {
      Exception,   # X::Assignment::RO ???
       'Make sure we cannot assign on a .values alias';
 
+    #?rakudo.jvm 2 todo 'got X::Method::NotFound, RT #130470'
     throws-like { .value = 999 for $b.pairs },
       X::Assignment::RO,
       'Make sure we cannot assign on a .pairs alias';

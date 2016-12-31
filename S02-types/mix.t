@@ -34,12 +34,14 @@ sub showkv($x) {
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
+    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like { $m<a> = 5 },
       X::Assignment::RO,
       "Can't assign to an element (Mixs are immutable)";
     throws-like { $m<a>++ },
       Exception,
       "Can't increment an element (Mixs are immutable)";
+    #?rakudo.jvm 2 todo 'got X::Method::NotFound, RT #130470'
     throws-like { $m.keys = <c d> },
       X::Assignment::RO,
       "Can't assign to .keys";
@@ -193,6 +195,7 @@ sub showkv($x) {
     is %m<b>, 2, 'Single-key subscript (existing element)';
     is %m<santa>, 0, 'Single-key subscript (nonexistent element)';
 
+    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like { %m<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Mixs are immutable)";
@@ -427,6 +430,7 @@ sub showkv($x) {
 
 {
     my $m = <a>.Mix;
+    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like { $m<a> = 42.1 },
       X::Assignment::RO,
       'Make sure we cannot assign on a key';
@@ -435,6 +439,7 @@ sub showkv($x) {
       Exception,  # X::Assignment::RO  ???
       'Make sure we cannot assign on a .values alias';
 
+    #?rakudo.jvm 2 todo 'got X::Method::NotFound, RT #130470'
     throws-like { .value = 999.1 for $m.pairs },
       X::Assignment::RO,
       'Make sure we cannot assign on a .pairs alias';

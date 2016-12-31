@@ -37,6 +37,7 @@ sub showkv($x) {
     isa-ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
+    #?rakudo.jvm 2 todo 'got X::Method::NotFound, RT #130470'
     throws-like { $b.keys = <c d> },
       X::Assignment::RO,
       "Can't assign to .keys";

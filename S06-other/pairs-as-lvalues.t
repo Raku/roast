@@ -5,6 +5,7 @@ plan 5;
 
 # L<S06/Pairs as lvalues/>
 
+#?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
 throws-like 'my $var; (key => $var) = "value"', X::Assignment::RO;
 
 #?rakudo todo "NYI RT #124660"

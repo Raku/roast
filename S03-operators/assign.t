@@ -374,6 +374,7 @@ my @p;
 
 # RT #64818
 {
+    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like q{my $foo = 'foo'; $foo R~= 'foo';},
         X::Assignment::RO,
         'use of R~= operator on a non-container dies';
@@ -880,6 +881,7 @@ sub l () { 1, 2 };
         $cc = 1;
     };
 
+    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like { EVAL 'called pi = 4' }, X::Assignment::RO,
         'correct precedence between sub call and assignment (1)';
     is $cc, 0,
