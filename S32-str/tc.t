@@ -11,7 +11,6 @@ is tc(""),            "",            "empty string";
 is tc("üüüü"),        "Üüüü",        "umlaut";
 is tc("óóóó"),        "Óóóó",        "accented chars";
 # RT #124683
-#?rakudo.jvm 2 todo 'RT #124683'
 is tc('ßß'),          'Ssß',         'sharp s => Ss';
 is tc('ǉ'),           'ǈ',           'lj => Lj (in one character)';
 is 'abc'.tc,          'Abc',         'method form of title case';

@@ -135,15 +135,12 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 
 # L<S04/The do-once loop/"bare block is not a do-once">
 {
-    #?rakudo.jvm todo 'NullPointerException'
     throws-like 'my $i; { $i++; next; $i--; }', X::ControlFlow,
         "bare block can't take 'next'";
 
-    #?rakudo.jvm todo 'NullPointerException'
     throws-like 'my $i; { $i++; last; $i--; }', X::ControlFlow,
         "bare block can't take 'last'";
 
-    #?rakudo.jvm todo 'NullPointerException'
     throws-like 'my $i; { $i++; redo; $i--; }', X::ControlFlow,
         "bare block can't take 'last'";
 }

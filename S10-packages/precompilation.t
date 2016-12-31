@@ -123,7 +123,6 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     --END--
 
     #RT #123276
-    #?rakudo.jvm todo 'got: $[]'
     is-deeply @keys, [<(foo)>], 'RT123276';
 }
 

@@ -110,7 +110,6 @@ plan 12;
 
 {
     # RT #72442
-    #?rakudo.jvm todo 'NullPointerException'
     throws-like '{redo}', X::ControlFlow, 'redo without loop construct dies';
 }
 
