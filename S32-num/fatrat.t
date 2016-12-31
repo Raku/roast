@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 285;
+plan 286;
 
 # Basic test functions specific to FatRats.
 
@@ -301,5 +301,9 @@ subtest '=== with 0-denominator FatRats' => {
     is-deeply <-5/2>F === <-2/0>F, False, '-5/2 === -2/0';
     is-deeply <-2/0>F === <-5/2>F, False, '-2/0 === -5/2';
 }
+
+# RT#130427
+cmp-ok FatRat.Range, '===', -∞..∞,
+    'FatRat.Range is from -inf to inf, including end points';
 
 # vim: ft=perl6

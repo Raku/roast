@@ -312,8 +312,8 @@ subtest '0.9999999999999999999999 to string conversions' => {
 }
 
 # RT#130427
-cmp-ok Rat.Range, '===', -∞^..^∞,
-    'Rat.Range is from -inf to inf, excluding end points';
+cmp-ok Rat.Range, '===', -∞..∞,
+    'Rat.Range is from -inf to inf, including end points';
 
 subtest '== with 0-denominator Rats' => {
     plan 18;
