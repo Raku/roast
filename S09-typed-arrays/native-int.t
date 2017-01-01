@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 160 + @uint * 2;
+plan (@int + @uint) * 160 + @uint * 2 + 1;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -289,3 +289,6 @@ for @uint -> $T {
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     }
 }
+
+# RT #130443
+dies-ok { my int @a = ^Inf }, 'Trying to assign ^Inf to an int array dies';
