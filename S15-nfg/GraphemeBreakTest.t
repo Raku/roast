@@ -1,798 +1,1492 @@
+# Test generated from GraphemeBreakTest.txt Unicode version 9.0.0
 use v6;
 use Test;
 plan 744;
-
-is Uni.new(0x20, 0x20).Str.chars, 2, "0x20, 0x20 GraphemeBreakTest.txt line #24 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x20).Str.chars, 2, "0x20, 0x308, 0x20 GraphemeBreakTest.txt line #25 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0xD).Str.chars, 2, "0x20, 0xD GraphemeBreakTest.txt line #26 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0xD).Str.chars, 2, "0x20, 0x308, 0xD GraphemeBreakTest.txt line #27 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0xA).Str.chars, 2, "0x20, 0xA GraphemeBreakTest.txt line #28 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0xA).Str.chars, 2, "0x20, 0x308, 0xA GraphemeBreakTest.txt line #29 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x1).Str.chars, 2, "0x20, 0x1 GraphemeBreakTest.txt line #30 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x1).Str.chars, 2, "0x20, 0x308, 0x1 GraphemeBreakTest.txt line #31 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x300).Str.chars, 1, "0x20, 0x300 GraphemeBreakTest.txt line #32 Codes: 1 Non-break: 1";
-is Uni.new(0x20, 0x308, 0x300).Str.chars, 1, "0x20, 0x308, 0x300 GraphemeBreakTest.txt line #33 Codes: 2 Non-break: 2";
-is Uni.new(0x20, 0x600).Str.chars, 2, "0x20, 0x600 GraphemeBreakTest.txt line #34 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x600).Str.chars, 2, "0x20, 0x308, 0x600 GraphemeBreakTest.txt line #35 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x903).Str.chars, 1, "0x20, 0x903 GraphemeBreakTest.txt line #36 Codes: 1 Non-break: 1";
-is Uni.new(0x20, 0x308, 0x903).Str.chars, 1, "0x20, 0x308, 0x903 GraphemeBreakTest.txt line #37 Codes: 2 Non-break: 2";
-is Uni.new(0x20, 0x1100).Str.chars, 2, "0x20, 0x1100 GraphemeBreakTest.txt line #38 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x1100).Str.chars, 2, "0x20, 0x308, 0x1100 GraphemeBreakTest.txt line #39 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x1160).Str.chars, 2, "0x20, 0x1160 GraphemeBreakTest.txt line #40 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x1160).Str.chars, 2, "0x20, 0x308, 0x1160 GraphemeBreakTest.txt line #41 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x11A8).Str.chars, 2, "0x20, 0x11A8 GraphemeBreakTest.txt line #42 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x11A8).Str.chars, 2, "0x20, 0x308, 0x11A8 GraphemeBreakTest.txt line #43 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0xAC00).Str.chars, 2, "0x20, 0xAC00 GraphemeBreakTest.txt line #44 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0xAC00).Str.chars, 2, "0x20, 0x308, 0xAC00 GraphemeBreakTest.txt line #45 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0xAC01).Str.chars, 2, "0x20, 0xAC01 GraphemeBreakTest.txt line #46 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0xAC01).Str.chars, 2, "0x20, 0x308, 0xAC01 GraphemeBreakTest.txt line #47 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x1F1E6).Str.chars, 2, "0x20, 0x1F1E6 GraphemeBreakTest.txt line #48 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x1F1E6).Str.chars, 2, "0x20, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #49 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x261D).Str.chars, 2, "0x20, 0x261D GraphemeBreakTest.txt line #50 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x261D).Str.chars, 2, "0x20, 0x308, 0x261D GraphemeBreakTest.txt line #51 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x1F3FB).Str.chars, 2, "0x20, 0x1F3FB GraphemeBreakTest.txt line #52 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x1F3FB).Str.chars, 2, "0x20, 0x308, 0x1F3FB GraphemeBreakTest.txt line #53 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x200D).Str.chars, 1, "0x20, 0x200D GraphemeBreakTest.txt line #54 Codes: 1 Non-break: 1";
-is Uni.new(0x20, 0x308, 0x200D).Str.chars, 1, "0x20, 0x308, 0x200D GraphemeBreakTest.txt line #55 Codes: 2 Non-break: 2";
-is Uni.new(0x20, 0x2764).Str.chars, 2, "0x20, 0x2764 GraphemeBreakTest.txt line #56 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x2764).Str.chars, 2, "0x20, 0x308, 0x2764 GraphemeBreakTest.txt line #57 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x1F466).Str.chars, 2, "0x20, 0x1F466 GraphemeBreakTest.txt line #58 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x1F466).Str.chars, 2, "0x20, 0x308, 0x1F466 GraphemeBreakTest.txt line #59 Codes: 2 Non-break: 1";
-is Uni.new(0x20, 0x378).Str.chars, 2, "0x20, 0x378 GraphemeBreakTest.txt line #60 Codes: 1 Non-break: 0";
-is Uni.new(0x20, 0x308, 0x378).Str.chars, 2, "0x20, 0x308, 0x378 GraphemeBreakTest.txt line #61 Codes: 2 Non-break: 1";
-is Uni.new(0xD, 0x20).Str.chars, 2, "0xD, 0x20 GraphemeBreakTest.txt line #64 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x20).Str.chars, 3, "0xD, 0x308, 0x20 GraphemeBreakTest.txt line #65 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0xD).Str.chars, 2, "0xD, 0xD GraphemeBreakTest.txt line #66 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0xD).Str.chars, 3, "0xD, 0x308, 0xD GraphemeBreakTest.txt line #67 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0xA).Str.chars, 1, "0xD, 0xA GraphemeBreakTest.txt line #68 Codes: 1 Non-break: 1";
-is Uni.new(0xD, 0x308, 0xA).Str.chars, 3, "0xD, 0x308, 0xA GraphemeBreakTest.txt line #69 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x1).Str.chars, 2, "0xD, 0x1 GraphemeBreakTest.txt line #70 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x1).Str.chars, 3, "0xD, 0x308, 0x1 GraphemeBreakTest.txt line #71 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x300).Str.chars, 2, "0xD, 0x300 GraphemeBreakTest.txt line #72 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x300).Str.chars, 2, "0xD, 0x308, 0x300 GraphemeBreakTest.txt line #73 Codes: 2 Non-break: 1";
-is Uni.new(0xD, 0x600).Str.chars, 2, "0xD, 0x600 GraphemeBreakTest.txt line #74 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x600).Str.chars, 3, "0xD, 0x308, 0x600 GraphemeBreakTest.txt line #75 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x903).Str.chars, 2, "0xD, 0x903 GraphemeBreakTest.txt line #76 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x903).Str.chars, 2, "0xD, 0x308, 0x903 GraphemeBreakTest.txt line #77 Codes: 2 Non-break: 1";
-is Uni.new(0xD, 0x1100).Str.chars, 2, "0xD, 0x1100 GraphemeBreakTest.txt line #78 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x1100).Str.chars, 3, "0xD, 0x308, 0x1100 GraphemeBreakTest.txt line #79 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x1160).Str.chars, 2, "0xD, 0x1160 GraphemeBreakTest.txt line #80 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x1160).Str.chars, 3, "0xD, 0x308, 0x1160 GraphemeBreakTest.txt line #81 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x11A8).Str.chars, 2, "0xD, 0x11A8 GraphemeBreakTest.txt line #82 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x11A8).Str.chars, 3, "0xD, 0x308, 0x11A8 GraphemeBreakTest.txt line #83 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0xAC00).Str.chars, 2, "0xD, 0xAC00 GraphemeBreakTest.txt line #84 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0xAC00).Str.chars, 3, "0xD, 0x308, 0xAC00 GraphemeBreakTest.txt line #85 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0xAC01).Str.chars, 2, "0xD, 0xAC01 GraphemeBreakTest.txt line #86 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0xAC01).Str.chars, 3, "0xD, 0x308, 0xAC01 GraphemeBreakTest.txt line #87 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x1F1E6).Str.chars, 2, "0xD, 0x1F1E6 GraphemeBreakTest.txt line #88 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x1F1E6).Str.chars, 3, "0xD, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #89 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x261D).Str.chars, 2, "0xD, 0x261D GraphemeBreakTest.txt line #90 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x261D).Str.chars, 3, "0xD, 0x308, 0x261D GraphemeBreakTest.txt line #91 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x1F3FB).Str.chars, 2, "0xD, 0x1F3FB GraphemeBreakTest.txt line #92 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x1F3FB).Str.chars, 3, "0xD, 0x308, 0x1F3FB GraphemeBreakTest.txt line #93 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x200D).Str.chars, 2, "0xD, 0x200D GraphemeBreakTest.txt line #94 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x200D).Str.chars, 2, "0xD, 0x308, 0x200D GraphemeBreakTest.txt line #95 Codes: 2 Non-break: 1";
-is Uni.new(0xD, 0x2764).Str.chars, 2, "0xD, 0x2764 GraphemeBreakTest.txt line #96 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x2764).Str.chars, 3, "0xD, 0x308, 0x2764 GraphemeBreakTest.txt line #97 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x1F466).Str.chars, 2, "0xD, 0x1F466 GraphemeBreakTest.txt line #98 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x1F466).Str.chars, 3, "0xD, 0x308, 0x1F466 GraphemeBreakTest.txt line #99 Codes: 2 Non-break: 0";
-is Uni.new(0xD, 0x378).Str.chars, 2, "0xD, 0x378 GraphemeBreakTest.txt line #100 Codes: 1 Non-break: 0";
-is Uni.new(0xD, 0x308, 0x378).Str.chars, 3, "0xD, 0x308, 0x378 GraphemeBreakTest.txt line #101 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x20).Str.chars, 2, "0xA, 0x20 GraphemeBreakTest.txt line #104 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x20).Str.chars, 3, "0xA, 0x308, 0x20 GraphemeBreakTest.txt line #105 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0xD).Str.chars, 2, "0xA, 0xD GraphemeBreakTest.txt line #106 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0xD).Str.chars, 3, "0xA, 0x308, 0xD GraphemeBreakTest.txt line #107 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0xA).Str.chars, 2, "0xA, 0xA GraphemeBreakTest.txt line #108 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0xA).Str.chars, 3, "0xA, 0x308, 0xA GraphemeBreakTest.txt line #109 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x1).Str.chars, 2, "0xA, 0x1 GraphemeBreakTest.txt line #110 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x1).Str.chars, 3, "0xA, 0x308, 0x1 GraphemeBreakTest.txt line #111 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x300).Str.chars, 2, "0xA, 0x300 GraphemeBreakTest.txt line #112 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x300).Str.chars, 2, "0xA, 0x308, 0x300 GraphemeBreakTest.txt line #113 Codes: 2 Non-break: 1";
-is Uni.new(0xA, 0x600).Str.chars, 2, "0xA, 0x600 GraphemeBreakTest.txt line #114 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x600).Str.chars, 3, "0xA, 0x308, 0x600 GraphemeBreakTest.txt line #115 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x903).Str.chars, 2, "0xA, 0x903 GraphemeBreakTest.txt line #116 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x903).Str.chars, 2, "0xA, 0x308, 0x903 GraphemeBreakTest.txt line #117 Codes: 2 Non-break: 1";
-is Uni.new(0xA, 0x1100).Str.chars, 2, "0xA, 0x1100 GraphemeBreakTest.txt line #118 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x1100).Str.chars, 3, "0xA, 0x308, 0x1100 GraphemeBreakTest.txt line #119 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x1160).Str.chars, 2, "0xA, 0x1160 GraphemeBreakTest.txt line #120 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x1160).Str.chars, 3, "0xA, 0x308, 0x1160 GraphemeBreakTest.txt line #121 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x11A8).Str.chars, 2, "0xA, 0x11A8 GraphemeBreakTest.txt line #122 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x11A8).Str.chars, 3, "0xA, 0x308, 0x11A8 GraphemeBreakTest.txt line #123 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0xAC00).Str.chars, 2, "0xA, 0xAC00 GraphemeBreakTest.txt line #124 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0xAC00).Str.chars, 3, "0xA, 0x308, 0xAC00 GraphemeBreakTest.txt line #125 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0xAC01).Str.chars, 2, "0xA, 0xAC01 GraphemeBreakTest.txt line #126 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0xAC01).Str.chars, 3, "0xA, 0x308, 0xAC01 GraphemeBreakTest.txt line #127 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x1F1E6).Str.chars, 2, "0xA, 0x1F1E6 GraphemeBreakTest.txt line #128 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x1F1E6).Str.chars, 3, "0xA, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #129 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x261D).Str.chars, 2, "0xA, 0x261D GraphemeBreakTest.txt line #130 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x261D).Str.chars, 3, "0xA, 0x308, 0x261D GraphemeBreakTest.txt line #131 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x1F3FB).Str.chars, 2, "0xA, 0x1F3FB GraphemeBreakTest.txt line #132 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x1F3FB).Str.chars, 3, "0xA, 0x308, 0x1F3FB GraphemeBreakTest.txt line #133 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x200D).Str.chars, 2, "0xA, 0x200D GraphemeBreakTest.txt line #134 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x200D).Str.chars, 2, "0xA, 0x308, 0x200D GraphemeBreakTest.txt line #135 Codes: 2 Non-break: 1";
-is Uni.new(0xA, 0x2764).Str.chars, 2, "0xA, 0x2764 GraphemeBreakTest.txt line #136 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x2764).Str.chars, 3, "0xA, 0x308, 0x2764 GraphemeBreakTest.txt line #137 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x1F466).Str.chars, 2, "0xA, 0x1F466 GraphemeBreakTest.txt line #138 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x1F466).Str.chars, 3, "0xA, 0x308, 0x1F466 GraphemeBreakTest.txt line #139 Codes: 2 Non-break: 0";
-is Uni.new(0xA, 0x378).Str.chars, 2, "0xA, 0x378 GraphemeBreakTest.txt line #140 Codes: 1 Non-break: 0";
-is Uni.new(0xA, 0x308, 0x378).Str.chars, 3, "0xA, 0x308, 0x378 GraphemeBreakTest.txt line #141 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x20).Str.chars, 2, "0x1, 0x20 GraphemeBreakTest.txt line #144 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x20).Str.chars, 3, "0x1, 0x308, 0x20 GraphemeBreakTest.txt line #145 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0xD).Str.chars, 2, "0x1, 0xD GraphemeBreakTest.txt line #146 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0xD).Str.chars, 3, "0x1, 0x308, 0xD GraphemeBreakTest.txt line #147 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0xA).Str.chars, 2, "0x1, 0xA GraphemeBreakTest.txt line #148 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0xA).Str.chars, 3, "0x1, 0x308, 0xA GraphemeBreakTest.txt line #149 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x1).Str.chars, 2, "0x1, 0x1 GraphemeBreakTest.txt line #150 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x1).Str.chars, 3, "0x1, 0x308, 0x1 GraphemeBreakTest.txt line #151 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x300).Str.chars, 2, "0x1, 0x300 GraphemeBreakTest.txt line #152 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x300).Str.chars, 2, "0x1, 0x308, 0x300 GraphemeBreakTest.txt line #153 Codes: 2 Non-break: 1";
-is Uni.new(0x1, 0x600).Str.chars, 2, "0x1, 0x600 GraphemeBreakTest.txt line #154 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x600).Str.chars, 3, "0x1, 0x308, 0x600 GraphemeBreakTest.txt line #155 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x903).Str.chars, 2, "0x1, 0x903 GraphemeBreakTest.txt line #156 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x903).Str.chars, 2, "0x1, 0x308, 0x903 GraphemeBreakTest.txt line #157 Codes: 2 Non-break: 1";
-is Uni.new(0x1, 0x1100).Str.chars, 2, "0x1, 0x1100 GraphemeBreakTest.txt line #158 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x1100).Str.chars, 3, "0x1, 0x308, 0x1100 GraphemeBreakTest.txt line #159 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x1160).Str.chars, 2, "0x1, 0x1160 GraphemeBreakTest.txt line #160 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x1160).Str.chars, 3, "0x1, 0x308, 0x1160 GraphemeBreakTest.txt line #161 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x11A8).Str.chars, 2, "0x1, 0x11A8 GraphemeBreakTest.txt line #162 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x11A8).Str.chars, 3, "0x1, 0x308, 0x11A8 GraphemeBreakTest.txt line #163 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0xAC00).Str.chars, 2, "0x1, 0xAC00 GraphemeBreakTest.txt line #164 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0xAC00).Str.chars, 3, "0x1, 0x308, 0xAC00 GraphemeBreakTest.txt line #165 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0xAC01).Str.chars, 2, "0x1, 0xAC01 GraphemeBreakTest.txt line #166 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0xAC01).Str.chars, 3, "0x1, 0x308, 0xAC01 GraphemeBreakTest.txt line #167 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x1F1E6).Str.chars, 2, "0x1, 0x1F1E6 GraphemeBreakTest.txt line #168 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x1F1E6).Str.chars, 3, "0x1, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #169 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x261D).Str.chars, 2, "0x1, 0x261D GraphemeBreakTest.txt line #170 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x261D).Str.chars, 3, "0x1, 0x308, 0x261D GraphemeBreakTest.txt line #171 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x1F3FB).Str.chars, 2, "0x1, 0x1F3FB GraphemeBreakTest.txt line #172 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x1F3FB).Str.chars, 3, "0x1, 0x308, 0x1F3FB GraphemeBreakTest.txt line #173 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x200D).Str.chars, 2, "0x1, 0x200D GraphemeBreakTest.txt line #174 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x200D).Str.chars, 2, "0x1, 0x308, 0x200D GraphemeBreakTest.txt line #175 Codes: 2 Non-break: 1";
-is Uni.new(0x1, 0x2764).Str.chars, 2, "0x1, 0x2764 GraphemeBreakTest.txt line #176 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x2764).Str.chars, 3, "0x1, 0x308, 0x2764 GraphemeBreakTest.txt line #177 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x1F466).Str.chars, 2, "0x1, 0x1F466 GraphemeBreakTest.txt line #178 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x1F466).Str.chars, 3, "0x1, 0x308, 0x1F466 GraphemeBreakTest.txt line #179 Codes: 2 Non-break: 0";
-is Uni.new(0x1, 0x378).Str.chars, 2, "0x1, 0x378 GraphemeBreakTest.txt line #180 Codes: 1 Non-break: 0";
-is Uni.new(0x1, 0x308, 0x378).Str.chars, 3, "0x1, 0x308, 0x378 GraphemeBreakTest.txt line #181 Codes: 2 Non-break: 0";
-is Uni.new(0x300, 0x20).Str.chars, 2, "0x300, 0x20 GraphemeBreakTest.txt line #184 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x20).Str.chars, 2, "0x300, 0x308, 0x20 GraphemeBreakTest.txt line #185 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0xD).Str.chars, 2, "0x300, 0xD GraphemeBreakTest.txt line #186 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0xD).Str.chars, 2, "0x300, 0x308, 0xD GraphemeBreakTest.txt line #187 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0xA).Str.chars, 2, "0x300, 0xA GraphemeBreakTest.txt line #188 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0xA).Str.chars, 2, "0x300, 0x308, 0xA GraphemeBreakTest.txt line #189 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x1).Str.chars, 2, "0x300, 0x1 GraphemeBreakTest.txt line #190 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x1).Str.chars, 2, "0x300, 0x308, 0x1 GraphemeBreakTest.txt line #191 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x300).Str.chars, 1, "0x300, 0x300 GraphemeBreakTest.txt line #192 Codes: 1 Non-break: 1";
-is Uni.new(0x300, 0x308, 0x300).Str.chars, 1, "0x300, 0x308, 0x300 GraphemeBreakTest.txt line #193 Codes: 2 Non-break: 2";
-is Uni.new(0x300, 0x600).Str.chars, 2, "0x300, 0x600 GraphemeBreakTest.txt line #194 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x600).Str.chars, 2, "0x300, 0x308, 0x600 GraphemeBreakTest.txt line #195 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x903).Str.chars, 1, "0x300, 0x903 GraphemeBreakTest.txt line #196 Codes: 1 Non-break: 1";
-is Uni.new(0x300, 0x308, 0x903).Str.chars, 1, "0x300, 0x308, 0x903 GraphemeBreakTest.txt line #197 Codes: 2 Non-break: 2";
-is Uni.new(0x300, 0x1100).Str.chars, 2, "0x300, 0x1100 GraphemeBreakTest.txt line #198 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x1100).Str.chars, 2, "0x300, 0x308, 0x1100 GraphemeBreakTest.txt line #199 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x1160).Str.chars, 2, "0x300, 0x1160 GraphemeBreakTest.txt line #200 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x1160).Str.chars, 2, "0x300, 0x308, 0x1160 GraphemeBreakTest.txt line #201 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x11A8).Str.chars, 2, "0x300, 0x11A8 GraphemeBreakTest.txt line #202 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x11A8).Str.chars, 2, "0x300, 0x308, 0x11A8 GraphemeBreakTest.txt line #203 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0xAC00).Str.chars, 2, "0x300, 0xAC00 GraphemeBreakTest.txt line #204 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0xAC00).Str.chars, 2, "0x300, 0x308, 0xAC00 GraphemeBreakTest.txt line #205 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0xAC01).Str.chars, 2, "0x300, 0xAC01 GraphemeBreakTest.txt line #206 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0xAC01).Str.chars, 2, "0x300, 0x308, 0xAC01 GraphemeBreakTest.txt line #207 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x1F1E6).Str.chars, 2, "0x300, 0x1F1E6 GraphemeBreakTest.txt line #208 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x1F1E6).Str.chars, 2, "0x300, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #209 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x261D).Str.chars, 2, "0x300, 0x261D GraphemeBreakTest.txt line #210 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x261D).Str.chars, 2, "0x300, 0x308, 0x261D GraphemeBreakTest.txt line #211 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x1F3FB).Str.chars, 2, "0x300, 0x1F3FB GraphemeBreakTest.txt line #212 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x1F3FB).Str.chars, 2, "0x300, 0x308, 0x1F3FB GraphemeBreakTest.txt line #213 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x200D).Str.chars, 1, "0x300, 0x200D GraphemeBreakTest.txt line #214 Codes: 1 Non-break: 1";
-is Uni.new(0x300, 0x308, 0x200D).Str.chars, 1, "0x300, 0x308, 0x200D GraphemeBreakTest.txt line #215 Codes: 2 Non-break: 2";
-is Uni.new(0x300, 0x2764).Str.chars, 2, "0x300, 0x2764 GraphemeBreakTest.txt line #216 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x2764).Str.chars, 2, "0x300, 0x308, 0x2764 GraphemeBreakTest.txt line #217 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x1F466).Str.chars, 2, "0x300, 0x1F466 GraphemeBreakTest.txt line #218 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x1F466).Str.chars, 2, "0x300, 0x308, 0x1F466 GraphemeBreakTest.txt line #219 Codes: 2 Non-break: 1";
-is Uni.new(0x300, 0x378).Str.chars, 2, "0x300, 0x378 GraphemeBreakTest.txt line #220 Codes: 1 Non-break: 0";
-is Uni.new(0x300, 0x308, 0x378).Str.chars, 2, "0x300, 0x308, 0x378 GraphemeBreakTest.txt line #221 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x20).Str.chars, 1, "0x600, 0x20 GraphemeBreakTest.txt line #224 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x20).Str.chars, 2, "0x600, 0x308, 0x20 GraphemeBreakTest.txt line #225 Codes: 2 Non-break: 1";
-is Uni.new(0x600, 0xD).Str.chars, 2, "0x600, 0xD GraphemeBreakTest.txt line #226 Codes: 1 Non-break: 0";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0xD).Str.chars, 2, "0x600, 0x308, 0xD GraphemeBreakTest.txt line #227 Codes: 2 Non-break: 1";
-is Uni.new(0x600, 0xA).Str.chars, 2, "0x600, 0xA GraphemeBreakTest.txt line #228 Codes: 1 Non-break: 0";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0xA).Str.chars, 2, "0x600, 0x308, 0xA GraphemeBreakTest.txt line #229 Codes: 2 Non-break: 1";
-is Uni.new(0x600, 0x1).Str.chars, 2, "0x600, 0x1 GraphemeBreakTest.txt line #230 Codes: 1 Non-break: 0";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x1).Str.chars, 2, "0x600, 0x308, 0x1 GraphemeBreakTest.txt line #231 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x300).Str.chars, 1, "0x600, 0x300 GraphemeBreakTest.txt line #232 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x300).Str.chars, 1, "0x600, 0x308, 0x300 GraphemeBreakTest.txt line #233 Codes: 2 Non-break: 2";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x600).Str.chars, 1, "0x600, 0x600 GraphemeBreakTest.txt line #234 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x600).Str.chars, 2, "0x600, 0x308, 0x600 GraphemeBreakTest.txt line #235 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x903).Str.chars, 1, "0x600, 0x903 GraphemeBreakTest.txt line #236 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x903).Str.chars, 1, "0x600, 0x308, 0x903 GraphemeBreakTest.txt line #237 Codes: 2 Non-break: 2";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x1100).Str.chars, 1, "0x600, 0x1100 GraphemeBreakTest.txt line #238 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x1100).Str.chars, 2, "0x600, 0x308, 0x1100 GraphemeBreakTest.txt line #239 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x1160).Str.chars, 1, "0x600, 0x1160 GraphemeBreakTest.txt line #240 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x1160).Str.chars, 2, "0x600, 0x308, 0x1160 GraphemeBreakTest.txt line #241 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x11A8).Str.chars, 1, "0x600, 0x11A8 GraphemeBreakTest.txt line #242 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x11A8).Str.chars, 2, "0x600, 0x308, 0x11A8 GraphemeBreakTest.txt line #243 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0xAC00).Str.chars, 1, "0x600, 0xAC00 GraphemeBreakTest.txt line #244 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0xAC00).Str.chars, 2, "0x600, 0x308, 0xAC00 GraphemeBreakTest.txt line #245 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0xAC01).Str.chars, 1, "0x600, 0xAC01 GraphemeBreakTest.txt line #246 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0xAC01).Str.chars, 2, "0x600, 0x308, 0xAC01 GraphemeBreakTest.txt line #247 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x1F1E6).Str.chars, 1, "0x600, 0x1F1E6 GraphemeBreakTest.txt line #248 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x1F1E6).Str.chars, 2, "0x600, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #249 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x261D).Str.chars, 1, "0x600, 0x261D GraphemeBreakTest.txt line #250 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x261D).Str.chars, 2, "0x600, 0x308, 0x261D GraphemeBreakTest.txt line #251 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x1F3FB).Str.chars, 1, "0x600, 0x1F3FB GraphemeBreakTest.txt line #252 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x1F3FB).Str.chars, 2, "0x600, 0x308, 0x1F3FB GraphemeBreakTest.txt line #253 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x200D).Str.chars, 1, "0x600, 0x200D GraphemeBreakTest.txt line #254 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x200D).Str.chars, 1, "0x600, 0x308, 0x200D GraphemeBreakTest.txt line #255 Codes: 2 Non-break: 2";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x2764).Str.chars, 1, "0x600, 0x2764 GraphemeBreakTest.txt line #256 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x2764).Str.chars, 2, "0x600, 0x308, 0x2764 GraphemeBreakTest.txt line #257 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x1F466).Str.chars, 1, "0x600, 0x1F466 GraphemeBreakTest.txt line #258 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x1F466).Str.chars, 2, "0x600, 0x308, 0x1F466 GraphemeBreakTest.txt line #259 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x378).Str.chars, 1, "0x600, 0x378 GraphemeBreakTest.txt line #260 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x600, 0x308, 0x378).Str.chars, 2, "0x600, 0x308, 0x378 GraphemeBreakTest.txt line #261 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x20).Str.chars, 2, "0x903, 0x20 GraphemeBreakTest.txt line #264 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x20).Str.chars, 2, "0x903, 0x308, 0x20 GraphemeBreakTest.txt line #265 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0xD).Str.chars, 2, "0x903, 0xD GraphemeBreakTest.txt line #266 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0xD).Str.chars, 2, "0x903, 0x308, 0xD GraphemeBreakTest.txt line #267 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0xA).Str.chars, 2, "0x903, 0xA GraphemeBreakTest.txt line #268 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0xA).Str.chars, 2, "0x903, 0x308, 0xA GraphemeBreakTest.txt line #269 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x1).Str.chars, 2, "0x903, 0x1 GraphemeBreakTest.txt line #270 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x1).Str.chars, 2, "0x903, 0x308, 0x1 GraphemeBreakTest.txt line #271 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x300).Str.chars, 1, "0x903, 0x300 GraphemeBreakTest.txt line #272 Codes: 1 Non-break: 1";
-is Uni.new(0x903, 0x308, 0x300).Str.chars, 1, "0x903, 0x308, 0x300 GraphemeBreakTest.txt line #273 Codes: 2 Non-break: 2";
-is Uni.new(0x903, 0x600).Str.chars, 2, "0x903, 0x600 GraphemeBreakTest.txt line #274 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x600).Str.chars, 2, "0x903, 0x308, 0x600 GraphemeBreakTest.txt line #275 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x903).Str.chars, 1, "0x903, 0x903 GraphemeBreakTest.txt line #276 Codes: 1 Non-break: 1";
-is Uni.new(0x903, 0x308, 0x903).Str.chars, 1, "0x903, 0x308, 0x903 GraphemeBreakTest.txt line #277 Codes: 2 Non-break: 2";
-is Uni.new(0x903, 0x1100).Str.chars, 2, "0x903, 0x1100 GraphemeBreakTest.txt line #278 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x1100).Str.chars, 2, "0x903, 0x308, 0x1100 GraphemeBreakTest.txt line #279 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x1160).Str.chars, 2, "0x903, 0x1160 GraphemeBreakTest.txt line #280 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x1160).Str.chars, 2, "0x903, 0x308, 0x1160 GraphemeBreakTest.txt line #281 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x11A8).Str.chars, 2, "0x903, 0x11A8 GraphemeBreakTest.txt line #282 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x11A8).Str.chars, 2, "0x903, 0x308, 0x11A8 GraphemeBreakTest.txt line #283 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0xAC00).Str.chars, 2, "0x903, 0xAC00 GraphemeBreakTest.txt line #284 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0xAC00).Str.chars, 2, "0x903, 0x308, 0xAC00 GraphemeBreakTest.txt line #285 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0xAC01).Str.chars, 2, "0x903, 0xAC01 GraphemeBreakTest.txt line #286 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0xAC01).Str.chars, 2, "0x903, 0x308, 0xAC01 GraphemeBreakTest.txt line #287 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x1F1E6).Str.chars, 2, "0x903, 0x1F1E6 GraphemeBreakTest.txt line #288 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x1F1E6).Str.chars, 2, "0x903, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #289 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x261D).Str.chars, 2, "0x903, 0x261D GraphemeBreakTest.txt line #290 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x261D).Str.chars, 2, "0x903, 0x308, 0x261D GraphemeBreakTest.txt line #291 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x1F3FB).Str.chars, 2, "0x903, 0x1F3FB GraphemeBreakTest.txt line #292 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x1F3FB).Str.chars, 2, "0x903, 0x308, 0x1F3FB GraphemeBreakTest.txt line #293 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x200D).Str.chars, 1, "0x903, 0x200D GraphemeBreakTest.txt line #294 Codes: 1 Non-break: 1";
-is Uni.new(0x903, 0x308, 0x200D).Str.chars, 1, "0x903, 0x308, 0x200D GraphemeBreakTest.txt line #295 Codes: 2 Non-break: 2";
-is Uni.new(0x903, 0x2764).Str.chars, 2, "0x903, 0x2764 GraphemeBreakTest.txt line #296 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x2764).Str.chars, 2, "0x903, 0x308, 0x2764 GraphemeBreakTest.txt line #297 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x1F466).Str.chars, 2, "0x903, 0x1F466 GraphemeBreakTest.txt line #298 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x1F466).Str.chars, 2, "0x903, 0x308, 0x1F466 GraphemeBreakTest.txt line #299 Codes: 2 Non-break: 1";
-is Uni.new(0x903, 0x378).Str.chars, 2, "0x903, 0x378 GraphemeBreakTest.txt line #300 Codes: 1 Non-break: 0";
-is Uni.new(0x903, 0x308, 0x378).Str.chars, 2, "0x903, 0x308, 0x378 GraphemeBreakTest.txt line #301 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x20).Str.chars, 2, "0x1100, 0x20 GraphemeBreakTest.txt line #304 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x20).Str.chars, 2, "0x1100, 0x308, 0x20 GraphemeBreakTest.txt line #305 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0xD).Str.chars, 2, "0x1100, 0xD GraphemeBreakTest.txt line #306 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0xD).Str.chars, 2, "0x1100, 0x308, 0xD GraphemeBreakTest.txt line #307 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0xA).Str.chars, 2, "0x1100, 0xA GraphemeBreakTest.txt line #308 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0xA).Str.chars, 2, "0x1100, 0x308, 0xA GraphemeBreakTest.txt line #309 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x1).Str.chars, 2, "0x1100, 0x1 GraphemeBreakTest.txt line #310 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x1).Str.chars, 2, "0x1100, 0x308, 0x1 GraphemeBreakTest.txt line #311 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x300).Str.chars, 1, "0x1100, 0x300 GraphemeBreakTest.txt line #312 Codes: 1 Non-break: 1";
-is Uni.new(0x1100, 0x308, 0x300).Str.chars, 1, "0x1100, 0x308, 0x300 GraphemeBreakTest.txt line #313 Codes: 2 Non-break: 2";
-is Uni.new(0x1100, 0x600).Str.chars, 2, "0x1100, 0x600 GraphemeBreakTest.txt line #314 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x600).Str.chars, 2, "0x1100, 0x308, 0x600 GraphemeBreakTest.txt line #315 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x903).Str.chars, 1, "0x1100, 0x903 GraphemeBreakTest.txt line #316 Codes: 1 Non-break: 1";
-is Uni.new(0x1100, 0x308, 0x903).Str.chars, 1, "0x1100, 0x308, 0x903 GraphemeBreakTest.txt line #317 Codes: 2 Non-break: 2";
-is Uni.new(0x1100, 0x1100).Str.chars, 1, "0x1100, 0x1100 GraphemeBreakTest.txt line #318 Codes: 1 Non-break: 1";
-is Uni.new(0x1100, 0x308, 0x1100).Str.chars, 2, "0x1100, 0x308, 0x1100 GraphemeBreakTest.txt line #319 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x1160).Str.chars, 1, "0x1100, 0x1160 GraphemeBreakTest.txt line #320 Codes: 1 Non-break: 1";
-is Uni.new(0x1100, 0x308, 0x1160).Str.chars, 2, "0x1100, 0x308, 0x1160 GraphemeBreakTest.txt line #321 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x11A8).Str.chars, 2, "0x1100, 0x11A8 GraphemeBreakTest.txt line #322 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x11A8).Str.chars, 2, "0x1100, 0x308, 0x11A8 GraphemeBreakTest.txt line #323 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0xAC00).Str.chars, 1, "0x1100, 0xAC00 GraphemeBreakTest.txt line #324 Codes: 1 Non-break: 1";
-is Uni.new(0x1100, 0x308, 0xAC00).Str.chars, 2, "0x1100, 0x308, 0xAC00 GraphemeBreakTest.txt line #325 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0xAC01).Str.chars, 1, "0x1100, 0xAC01 GraphemeBreakTest.txt line #326 Codes: 1 Non-break: 1";
-is Uni.new(0x1100, 0x308, 0xAC01).Str.chars, 2, "0x1100, 0x308, 0xAC01 GraphemeBreakTest.txt line #327 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x1F1E6).Str.chars, 2, "0x1100, 0x1F1E6 GraphemeBreakTest.txt line #328 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x1F1E6).Str.chars, 2, "0x1100, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #329 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x261D).Str.chars, 2, "0x1100, 0x261D GraphemeBreakTest.txt line #330 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x261D).Str.chars, 2, "0x1100, 0x308, 0x261D GraphemeBreakTest.txt line #331 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x1F3FB).Str.chars, 2, "0x1100, 0x1F3FB GraphemeBreakTest.txt line #332 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x1F3FB).Str.chars, 2, "0x1100, 0x308, 0x1F3FB GraphemeBreakTest.txt line #333 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x200D).Str.chars, 1, "0x1100, 0x200D GraphemeBreakTest.txt line #334 Codes: 1 Non-break: 1";
-is Uni.new(0x1100, 0x308, 0x200D).Str.chars, 1, "0x1100, 0x308, 0x200D GraphemeBreakTest.txt line #335 Codes: 2 Non-break: 2";
-is Uni.new(0x1100, 0x2764).Str.chars, 2, "0x1100, 0x2764 GraphemeBreakTest.txt line #336 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x2764).Str.chars, 2, "0x1100, 0x308, 0x2764 GraphemeBreakTest.txt line #337 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x1F466).Str.chars, 2, "0x1100, 0x1F466 GraphemeBreakTest.txt line #338 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x1F466).Str.chars, 2, "0x1100, 0x308, 0x1F466 GraphemeBreakTest.txt line #339 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x378).Str.chars, 2, "0x1100, 0x378 GraphemeBreakTest.txt line #340 Codes: 1 Non-break: 0";
-is Uni.new(0x1100, 0x308, 0x378).Str.chars, 2, "0x1100, 0x308, 0x378 GraphemeBreakTest.txt line #341 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x20).Str.chars, 2, "0x1160, 0x20 GraphemeBreakTest.txt line #344 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x20).Str.chars, 2, "0x1160, 0x308, 0x20 GraphemeBreakTest.txt line #345 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0xD).Str.chars, 2, "0x1160, 0xD GraphemeBreakTest.txt line #346 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0xD).Str.chars, 2, "0x1160, 0x308, 0xD GraphemeBreakTest.txt line #347 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0xA).Str.chars, 2, "0x1160, 0xA GraphemeBreakTest.txt line #348 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0xA).Str.chars, 2, "0x1160, 0x308, 0xA GraphemeBreakTest.txt line #349 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x1).Str.chars, 2, "0x1160, 0x1 GraphemeBreakTest.txt line #350 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x1).Str.chars, 2, "0x1160, 0x308, 0x1 GraphemeBreakTest.txt line #351 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x300).Str.chars, 1, "0x1160, 0x300 GraphemeBreakTest.txt line #352 Codes: 1 Non-break: 1";
-is Uni.new(0x1160, 0x308, 0x300).Str.chars, 1, "0x1160, 0x308, 0x300 GraphemeBreakTest.txt line #353 Codes: 2 Non-break: 2";
-is Uni.new(0x1160, 0x600).Str.chars, 2, "0x1160, 0x600 GraphemeBreakTest.txt line #354 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x600).Str.chars, 2, "0x1160, 0x308, 0x600 GraphemeBreakTest.txt line #355 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x903).Str.chars, 1, "0x1160, 0x903 GraphemeBreakTest.txt line #356 Codes: 1 Non-break: 1";
-is Uni.new(0x1160, 0x308, 0x903).Str.chars, 1, "0x1160, 0x308, 0x903 GraphemeBreakTest.txt line #357 Codes: 2 Non-break: 2";
-is Uni.new(0x1160, 0x1100).Str.chars, 2, "0x1160, 0x1100 GraphemeBreakTest.txt line #358 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x1100).Str.chars, 2, "0x1160, 0x308, 0x1100 GraphemeBreakTest.txt line #359 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x1160).Str.chars, 1, "0x1160, 0x1160 GraphemeBreakTest.txt line #360 Codes: 1 Non-break: 1";
-is Uni.new(0x1160, 0x308, 0x1160).Str.chars, 2, "0x1160, 0x308, 0x1160 GraphemeBreakTest.txt line #361 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x11A8).Str.chars, 1, "0x1160, 0x11A8 GraphemeBreakTest.txt line #362 Codes: 1 Non-break: 1";
-is Uni.new(0x1160, 0x308, 0x11A8).Str.chars, 2, "0x1160, 0x308, 0x11A8 GraphemeBreakTest.txt line #363 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0xAC00).Str.chars, 2, "0x1160, 0xAC00 GraphemeBreakTest.txt line #364 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0xAC00).Str.chars, 2, "0x1160, 0x308, 0xAC00 GraphemeBreakTest.txt line #365 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0xAC01).Str.chars, 2, "0x1160, 0xAC01 GraphemeBreakTest.txt line #366 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0xAC01).Str.chars, 2, "0x1160, 0x308, 0xAC01 GraphemeBreakTest.txt line #367 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x1F1E6).Str.chars, 2, "0x1160, 0x1F1E6 GraphemeBreakTest.txt line #368 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x1F1E6).Str.chars, 2, "0x1160, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #369 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x261D).Str.chars, 2, "0x1160, 0x261D GraphemeBreakTest.txt line #370 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x261D).Str.chars, 2, "0x1160, 0x308, 0x261D GraphemeBreakTest.txt line #371 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x1F3FB).Str.chars, 2, "0x1160, 0x1F3FB GraphemeBreakTest.txt line #372 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x1F3FB).Str.chars, 2, "0x1160, 0x308, 0x1F3FB GraphemeBreakTest.txt line #373 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x200D).Str.chars, 1, "0x1160, 0x200D GraphemeBreakTest.txt line #374 Codes: 1 Non-break: 1";
-is Uni.new(0x1160, 0x308, 0x200D).Str.chars, 1, "0x1160, 0x308, 0x200D GraphemeBreakTest.txt line #375 Codes: 2 Non-break: 2";
-is Uni.new(0x1160, 0x2764).Str.chars, 2, "0x1160, 0x2764 GraphemeBreakTest.txt line #376 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x2764).Str.chars, 2, "0x1160, 0x308, 0x2764 GraphemeBreakTest.txt line #377 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x1F466).Str.chars, 2, "0x1160, 0x1F466 GraphemeBreakTest.txt line #378 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x1F466).Str.chars, 2, "0x1160, 0x308, 0x1F466 GraphemeBreakTest.txt line #379 Codes: 2 Non-break: 1";
-is Uni.new(0x1160, 0x378).Str.chars, 2, "0x1160, 0x378 GraphemeBreakTest.txt line #380 Codes: 1 Non-break: 0";
-is Uni.new(0x1160, 0x308, 0x378).Str.chars, 2, "0x1160, 0x308, 0x378 GraphemeBreakTest.txt line #381 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x20).Str.chars, 2, "0x11A8, 0x20 GraphemeBreakTest.txt line #384 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x20).Str.chars, 2, "0x11A8, 0x308, 0x20 GraphemeBreakTest.txt line #385 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0xD).Str.chars, 2, "0x11A8, 0xD GraphemeBreakTest.txt line #386 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0xD).Str.chars, 2, "0x11A8, 0x308, 0xD GraphemeBreakTest.txt line #387 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0xA).Str.chars, 2, "0x11A8, 0xA GraphemeBreakTest.txt line #388 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0xA).Str.chars, 2, "0x11A8, 0x308, 0xA GraphemeBreakTest.txt line #389 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x1).Str.chars, 2, "0x11A8, 0x1 GraphemeBreakTest.txt line #390 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x1).Str.chars, 2, "0x11A8, 0x308, 0x1 GraphemeBreakTest.txt line #391 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x300).Str.chars, 1, "0x11A8, 0x300 GraphemeBreakTest.txt line #392 Codes: 1 Non-break: 1";
-is Uni.new(0x11A8, 0x308, 0x300).Str.chars, 1, "0x11A8, 0x308, 0x300 GraphemeBreakTest.txt line #393 Codes: 2 Non-break: 2";
-is Uni.new(0x11A8, 0x600).Str.chars, 2, "0x11A8, 0x600 GraphemeBreakTest.txt line #394 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x600).Str.chars, 2, "0x11A8, 0x308, 0x600 GraphemeBreakTest.txt line #395 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x903).Str.chars, 1, "0x11A8, 0x903 GraphemeBreakTest.txt line #396 Codes: 1 Non-break: 1";
-is Uni.new(0x11A8, 0x308, 0x903).Str.chars, 1, "0x11A8, 0x308, 0x903 GraphemeBreakTest.txt line #397 Codes: 2 Non-break: 2";
-is Uni.new(0x11A8, 0x1100).Str.chars, 2, "0x11A8, 0x1100 GraphemeBreakTest.txt line #398 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x1100).Str.chars, 2, "0x11A8, 0x308, 0x1100 GraphemeBreakTest.txt line #399 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x1160).Str.chars, 2, "0x11A8, 0x1160 GraphemeBreakTest.txt line #400 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x1160).Str.chars, 2, "0x11A8, 0x308, 0x1160 GraphemeBreakTest.txt line #401 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x11A8).Str.chars, 1, "0x11A8, 0x11A8 GraphemeBreakTest.txt line #402 Codes: 1 Non-break: 1";
-is Uni.new(0x11A8, 0x308, 0x11A8).Str.chars, 2, "0x11A8, 0x308, 0x11A8 GraphemeBreakTest.txt line #403 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0xAC00).Str.chars, 2, "0x11A8, 0xAC00 GraphemeBreakTest.txt line #404 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0xAC00).Str.chars, 2, "0x11A8, 0x308, 0xAC00 GraphemeBreakTest.txt line #405 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0xAC01).Str.chars, 2, "0x11A8, 0xAC01 GraphemeBreakTest.txt line #406 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0xAC01).Str.chars, 2, "0x11A8, 0x308, 0xAC01 GraphemeBreakTest.txt line #407 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x1F1E6).Str.chars, 2, "0x11A8, 0x1F1E6 GraphemeBreakTest.txt line #408 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x1F1E6).Str.chars, 2, "0x11A8, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #409 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x261D).Str.chars, 2, "0x11A8, 0x261D GraphemeBreakTest.txt line #410 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x261D).Str.chars, 2, "0x11A8, 0x308, 0x261D GraphemeBreakTest.txt line #411 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x1F3FB).Str.chars, 2, "0x11A8, 0x1F3FB GraphemeBreakTest.txt line #412 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x1F3FB).Str.chars, 2, "0x11A8, 0x308, 0x1F3FB GraphemeBreakTest.txt line #413 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x200D).Str.chars, 1, "0x11A8, 0x200D GraphemeBreakTest.txt line #414 Codes: 1 Non-break: 1";
-is Uni.new(0x11A8, 0x308, 0x200D).Str.chars, 1, "0x11A8, 0x308, 0x200D GraphemeBreakTest.txt line #415 Codes: 2 Non-break: 2";
-is Uni.new(0x11A8, 0x2764).Str.chars, 2, "0x11A8, 0x2764 GraphemeBreakTest.txt line #416 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x2764).Str.chars, 2, "0x11A8, 0x308, 0x2764 GraphemeBreakTest.txt line #417 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x1F466).Str.chars, 2, "0x11A8, 0x1F466 GraphemeBreakTest.txt line #418 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x1F466).Str.chars, 2, "0x11A8, 0x308, 0x1F466 GraphemeBreakTest.txt line #419 Codes: 2 Non-break: 1";
-is Uni.new(0x11A8, 0x378).Str.chars, 2, "0x11A8, 0x378 GraphemeBreakTest.txt line #420 Codes: 1 Non-break: 0";
-is Uni.new(0x11A8, 0x308, 0x378).Str.chars, 2, "0x11A8, 0x308, 0x378 GraphemeBreakTest.txt line #421 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x20).Str.chars, 2, "0xAC00, 0x20 GraphemeBreakTest.txt line #424 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x20).Str.chars, 2, "0xAC00, 0x308, 0x20 GraphemeBreakTest.txt line #425 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0xD).Str.chars, 2, "0xAC00, 0xD GraphemeBreakTest.txt line #426 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0xD).Str.chars, 2, "0xAC00, 0x308, 0xD GraphemeBreakTest.txt line #427 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0xA).Str.chars, 2, "0xAC00, 0xA GraphemeBreakTest.txt line #428 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0xA).Str.chars, 2, "0xAC00, 0x308, 0xA GraphemeBreakTest.txt line #429 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x1).Str.chars, 2, "0xAC00, 0x1 GraphemeBreakTest.txt line #430 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x1).Str.chars, 2, "0xAC00, 0x308, 0x1 GraphemeBreakTest.txt line #431 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x300).Str.chars, 1, "0xAC00, 0x300 GraphemeBreakTest.txt line #432 Codes: 1 Non-break: 1";
-is Uni.new(0xAC00, 0x308, 0x300).Str.chars, 1, "0xAC00, 0x308, 0x300 GraphemeBreakTest.txt line #433 Codes: 2 Non-break: 2";
-is Uni.new(0xAC00, 0x600).Str.chars, 2, "0xAC00, 0x600 GraphemeBreakTest.txt line #434 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x600).Str.chars, 2, "0xAC00, 0x308, 0x600 GraphemeBreakTest.txt line #435 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x903).Str.chars, 1, "0xAC00, 0x903 GraphemeBreakTest.txt line #436 Codes: 1 Non-break: 1";
-is Uni.new(0xAC00, 0x308, 0x903).Str.chars, 1, "0xAC00, 0x308, 0x903 GraphemeBreakTest.txt line #437 Codes: 2 Non-break: 2";
-is Uni.new(0xAC00, 0x1100).Str.chars, 2, "0xAC00, 0x1100 GraphemeBreakTest.txt line #438 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x1100).Str.chars, 2, "0xAC00, 0x308, 0x1100 GraphemeBreakTest.txt line #439 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x1160).Str.chars, 1, "0xAC00, 0x1160 GraphemeBreakTest.txt line #440 Codes: 1 Non-break: 1";
-is Uni.new(0xAC00, 0x308, 0x1160).Str.chars, 2, "0xAC00, 0x308, 0x1160 GraphemeBreakTest.txt line #441 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x11A8).Str.chars, 1, "0xAC00, 0x11A8 GraphemeBreakTest.txt line #442 Codes: 1 Non-break: 1";
-is Uni.new(0xAC00, 0x308, 0x11A8).Str.chars, 2, "0xAC00, 0x308, 0x11A8 GraphemeBreakTest.txt line #443 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0xAC00).Str.chars, 2, "0xAC00, 0xAC00 GraphemeBreakTest.txt line #444 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0xAC00).Str.chars, 2, "0xAC00, 0x308, 0xAC00 GraphemeBreakTest.txt line #445 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0xAC01).Str.chars, 2, "0xAC00, 0xAC01 GraphemeBreakTest.txt line #446 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0xAC01).Str.chars, 2, "0xAC00, 0x308, 0xAC01 GraphemeBreakTest.txt line #447 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x1F1E6).Str.chars, 2, "0xAC00, 0x1F1E6 GraphemeBreakTest.txt line #448 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x1F1E6).Str.chars, 2, "0xAC00, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #449 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x261D).Str.chars, 2, "0xAC00, 0x261D GraphemeBreakTest.txt line #450 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x261D).Str.chars, 2, "0xAC00, 0x308, 0x261D GraphemeBreakTest.txt line #451 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x1F3FB).Str.chars, 2, "0xAC00, 0x1F3FB GraphemeBreakTest.txt line #452 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x1F3FB).Str.chars, 2, "0xAC00, 0x308, 0x1F3FB GraphemeBreakTest.txt line #453 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x200D).Str.chars, 1, "0xAC00, 0x200D GraphemeBreakTest.txt line #454 Codes: 1 Non-break: 1";
-is Uni.new(0xAC00, 0x308, 0x200D).Str.chars, 1, "0xAC00, 0x308, 0x200D GraphemeBreakTest.txt line #455 Codes: 2 Non-break: 2";
-is Uni.new(0xAC00, 0x2764).Str.chars, 2, "0xAC00, 0x2764 GraphemeBreakTest.txt line #456 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x2764).Str.chars, 2, "0xAC00, 0x308, 0x2764 GraphemeBreakTest.txt line #457 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x1F466).Str.chars, 2, "0xAC00, 0x1F466 GraphemeBreakTest.txt line #458 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x1F466).Str.chars, 2, "0xAC00, 0x308, 0x1F466 GraphemeBreakTest.txt line #459 Codes: 2 Non-break: 1";
-is Uni.new(0xAC00, 0x378).Str.chars, 2, "0xAC00, 0x378 GraphemeBreakTest.txt line #460 Codes: 1 Non-break: 0";
-is Uni.new(0xAC00, 0x308, 0x378).Str.chars, 2, "0xAC00, 0x308, 0x378 GraphemeBreakTest.txt line #461 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x20).Str.chars, 2, "0xAC01, 0x20 GraphemeBreakTest.txt line #464 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x20).Str.chars, 2, "0xAC01, 0x308, 0x20 GraphemeBreakTest.txt line #465 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0xD).Str.chars, 2, "0xAC01, 0xD GraphemeBreakTest.txt line #466 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0xD).Str.chars, 2, "0xAC01, 0x308, 0xD GraphemeBreakTest.txt line #467 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0xA).Str.chars, 2, "0xAC01, 0xA GraphemeBreakTest.txt line #468 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0xA).Str.chars, 2, "0xAC01, 0x308, 0xA GraphemeBreakTest.txt line #469 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x1).Str.chars, 2, "0xAC01, 0x1 GraphemeBreakTest.txt line #470 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x1).Str.chars, 2, "0xAC01, 0x308, 0x1 GraphemeBreakTest.txt line #471 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x300).Str.chars, 1, "0xAC01, 0x300 GraphemeBreakTest.txt line #472 Codes: 1 Non-break: 1";
-is Uni.new(0xAC01, 0x308, 0x300).Str.chars, 1, "0xAC01, 0x308, 0x300 GraphemeBreakTest.txt line #473 Codes: 2 Non-break: 2";
-is Uni.new(0xAC01, 0x600).Str.chars, 2, "0xAC01, 0x600 GraphemeBreakTest.txt line #474 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x600).Str.chars, 2, "0xAC01, 0x308, 0x600 GraphemeBreakTest.txt line #475 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x903).Str.chars, 1, "0xAC01, 0x903 GraphemeBreakTest.txt line #476 Codes: 1 Non-break: 1";
-is Uni.new(0xAC01, 0x308, 0x903).Str.chars, 1, "0xAC01, 0x308, 0x903 GraphemeBreakTest.txt line #477 Codes: 2 Non-break: 2";
-is Uni.new(0xAC01, 0x1100).Str.chars, 2, "0xAC01, 0x1100 GraphemeBreakTest.txt line #478 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x1100).Str.chars, 2, "0xAC01, 0x308, 0x1100 GraphemeBreakTest.txt line #479 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x1160).Str.chars, 2, "0xAC01, 0x1160 GraphemeBreakTest.txt line #480 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x1160).Str.chars, 2, "0xAC01, 0x308, 0x1160 GraphemeBreakTest.txt line #481 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x11A8).Str.chars, 1, "0xAC01, 0x11A8 GraphemeBreakTest.txt line #482 Codes: 1 Non-break: 1";
-is Uni.new(0xAC01, 0x308, 0x11A8).Str.chars, 2, "0xAC01, 0x308, 0x11A8 GraphemeBreakTest.txt line #483 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0xAC00).Str.chars, 2, "0xAC01, 0xAC00 GraphemeBreakTest.txt line #484 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0xAC00).Str.chars, 2, "0xAC01, 0x308, 0xAC00 GraphemeBreakTest.txt line #485 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0xAC01).Str.chars, 2, "0xAC01, 0xAC01 GraphemeBreakTest.txt line #486 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0xAC01).Str.chars, 2, "0xAC01, 0x308, 0xAC01 GraphemeBreakTest.txt line #487 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x1F1E6).Str.chars, 2, "0xAC01, 0x1F1E6 GraphemeBreakTest.txt line #488 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x1F1E6).Str.chars, 2, "0xAC01, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #489 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x261D).Str.chars, 2, "0xAC01, 0x261D GraphemeBreakTest.txt line #490 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x261D).Str.chars, 2, "0xAC01, 0x308, 0x261D GraphemeBreakTest.txt line #491 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x1F3FB).Str.chars, 2, "0xAC01, 0x1F3FB GraphemeBreakTest.txt line #492 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x1F3FB).Str.chars, 2, "0xAC01, 0x308, 0x1F3FB GraphemeBreakTest.txt line #493 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x200D).Str.chars, 1, "0xAC01, 0x200D GraphemeBreakTest.txt line #494 Codes: 1 Non-break: 1";
-is Uni.new(0xAC01, 0x308, 0x200D).Str.chars, 1, "0xAC01, 0x308, 0x200D GraphemeBreakTest.txt line #495 Codes: 2 Non-break: 2";
-is Uni.new(0xAC01, 0x2764).Str.chars, 2, "0xAC01, 0x2764 GraphemeBreakTest.txt line #496 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x2764).Str.chars, 2, "0xAC01, 0x308, 0x2764 GraphemeBreakTest.txt line #497 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x1F466).Str.chars, 2, "0xAC01, 0x1F466 GraphemeBreakTest.txt line #498 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x1F466).Str.chars, 2, "0xAC01, 0x308, 0x1F466 GraphemeBreakTest.txt line #499 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x378).Str.chars, 2, "0xAC01, 0x378 GraphemeBreakTest.txt line #500 Codes: 1 Non-break: 0";
-is Uni.new(0xAC01, 0x308, 0x378).Str.chars, 2, "0xAC01, 0x308, 0x378 GraphemeBreakTest.txt line #501 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x20).Str.chars, 2, "0x1F1E6, 0x20 GraphemeBreakTest.txt line #504 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x20).Str.chars, 2, "0x1F1E6, 0x308, 0x20 GraphemeBreakTest.txt line #505 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0xD).Str.chars, 2, "0x1F1E6, 0xD GraphemeBreakTest.txt line #506 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0xD).Str.chars, 2, "0x1F1E6, 0x308, 0xD GraphemeBreakTest.txt line #507 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0xA).Str.chars, 2, "0x1F1E6, 0xA GraphemeBreakTest.txt line #508 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0xA).Str.chars, 2, "0x1F1E6, 0x308, 0xA GraphemeBreakTest.txt line #509 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x1).Str.chars, 2, "0x1F1E6, 0x1 GraphemeBreakTest.txt line #510 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x1).Str.chars, 2, "0x1F1E6, 0x308, 0x1 GraphemeBreakTest.txt line #511 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x300).Str.chars, 1, "0x1F1E6, 0x300 GraphemeBreakTest.txt line #512 Codes: 1 Non-break: 1";
-is Uni.new(0x1F1E6, 0x308, 0x300).Str.chars, 1, "0x1F1E6, 0x308, 0x300 GraphemeBreakTest.txt line #513 Codes: 2 Non-break: 2";
-is Uni.new(0x1F1E6, 0x600).Str.chars, 2, "0x1F1E6, 0x600 GraphemeBreakTest.txt line #514 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x600).Str.chars, 2, "0x1F1E6, 0x308, 0x600 GraphemeBreakTest.txt line #515 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x903).Str.chars, 1, "0x1F1E6, 0x903 GraphemeBreakTest.txt line #516 Codes: 1 Non-break: 1";
-is Uni.new(0x1F1E6, 0x308, 0x903).Str.chars, 1, "0x1F1E6, 0x308, 0x903 GraphemeBreakTest.txt line #517 Codes: 2 Non-break: 2";
-is Uni.new(0x1F1E6, 0x1100).Str.chars, 2, "0x1F1E6, 0x1100 GraphemeBreakTest.txt line #518 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x1100).Str.chars, 2, "0x1F1E6, 0x308, 0x1100 GraphemeBreakTest.txt line #519 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x1160).Str.chars, 2, "0x1F1E6, 0x1160 GraphemeBreakTest.txt line #520 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x1160).Str.chars, 2, "0x1F1E6, 0x308, 0x1160 GraphemeBreakTest.txt line #521 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x11A8).Str.chars, 2, "0x1F1E6, 0x11A8 GraphemeBreakTest.txt line #522 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x11A8).Str.chars, 2, "0x1F1E6, 0x308, 0x11A8 GraphemeBreakTest.txt line #523 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0xAC00).Str.chars, 2, "0x1F1E6, 0xAC00 GraphemeBreakTest.txt line #524 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0xAC00).Str.chars, 2, "0x1F1E6, 0x308, 0xAC00 GraphemeBreakTest.txt line #525 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0xAC01).Str.chars, 2, "0x1F1E6, 0xAC01 GraphemeBreakTest.txt line #526 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0xAC01).Str.chars, 2, "0x1F1E6, 0x308, 0xAC01 GraphemeBreakTest.txt line #527 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x1F1E6).Str.chars, 1, "0x1F1E6, 0x1F1E6 GraphemeBreakTest.txt line #528 Codes: 1 Non-break: 1";
-is Uni.new(0x1F1E6, 0x308, 0x1F1E6).Str.chars, 2, "0x1F1E6, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #529 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x261D).Str.chars, 2, "0x1F1E6, 0x261D GraphemeBreakTest.txt line #530 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x261D).Str.chars, 2, "0x1F1E6, 0x308, 0x261D GraphemeBreakTest.txt line #531 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x1F3FB).Str.chars, 2, "0x1F1E6, 0x1F3FB GraphemeBreakTest.txt line #532 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x1F3FB).Str.chars, 2, "0x1F1E6, 0x308, 0x1F3FB GraphemeBreakTest.txt line #533 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x200D).Str.chars, 1, "0x1F1E6, 0x200D GraphemeBreakTest.txt line #534 Codes: 1 Non-break: 1";
-is Uni.new(0x1F1E6, 0x308, 0x200D).Str.chars, 1, "0x1F1E6, 0x308, 0x200D GraphemeBreakTest.txt line #535 Codes: 2 Non-break: 2";
-is Uni.new(0x1F1E6, 0x2764).Str.chars, 2, "0x1F1E6, 0x2764 GraphemeBreakTest.txt line #536 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x2764).Str.chars, 2, "0x1F1E6, 0x308, 0x2764 GraphemeBreakTest.txt line #537 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x1F466).Str.chars, 2, "0x1F1E6, 0x1F466 GraphemeBreakTest.txt line #538 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x1F466).Str.chars, 2, "0x1F1E6, 0x308, 0x1F466 GraphemeBreakTest.txt line #539 Codes: 2 Non-break: 1";
-is Uni.new(0x1F1E6, 0x378).Str.chars, 2, "0x1F1E6, 0x378 GraphemeBreakTest.txt line #540 Codes: 1 Non-break: 0";
-is Uni.new(0x1F1E6, 0x308, 0x378).Str.chars, 2, "0x1F1E6, 0x308, 0x378 GraphemeBreakTest.txt line #541 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x20).Str.chars, 2, "0x261D, 0x20 GraphemeBreakTest.txt line #544 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x20).Str.chars, 2, "0x261D, 0x308, 0x20 GraphemeBreakTest.txt line #545 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0xD).Str.chars, 2, "0x261D, 0xD GraphemeBreakTest.txt line #546 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0xD).Str.chars, 2, "0x261D, 0x308, 0xD GraphemeBreakTest.txt line #547 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0xA).Str.chars, 2, "0x261D, 0xA GraphemeBreakTest.txt line #548 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0xA).Str.chars, 2, "0x261D, 0x308, 0xA GraphemeBreakTest.txt line #549 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x1).Str.chars, 2, "0x261D, 0x1 GraphemeBreakTest.txt line #550 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x1).Str.chars, 2, "0x261D, 0x308, 0x1 GraphemeBreakTest.txt line #551 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x300).Str.chars, 1, "0x261D, 0x300 GraphemeBreakTest.txt line #552 Codes: 1 Non-break: 1";
-is Uni.new(0x261D, 0x308, 0x300).Str.chars, 1, "0x261D, 0x308, 0x300 GraphemeBreakTest.txt line #553 Codes: 2 Non-break: 2";
-is Uni.new(0x261D, 0x600).Str.chars, 2, "0x261D, 0x600 GraphemeBreakTest.txt line #554 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x600).Str.chars, 2, "0x261D, 0x308, 0x600 GraphemeBreakTest.txt line #555 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x903).Str.chars, 1, "0x261D, 0x903 GraphemeBreakTest.txt line #556 Codes: 1 Non-break: 1";
-is Uni.new(0x261D, 0x308, 0x903).Str.chars, 1, "0x261D, 0x308, 0x903 GraphemeBreakTest.txt line #557 Codes: 2 Non-break: 2";
-is Uni.new(0x261D, 0x1100).Str.chars, 2, "0x261D, 0x1100 GraphemeBreakTest.txt line #558 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x1100).Str.chars, 2, "0x261D, 0x308, 0x1100 GraphemeBreakTest.txt line #559 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x1160).Str.chars, 2, "0x261D, 0x1160 GraphemeBreakTest.txt line #560 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x1160).Str.chars, 2, "0x261D, 0x308, 0x1160 GraphemeBreakTest.txt line #561 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x11A8).Str.chars, 2, "0x261D, 0x11A8 GraphemeBreakTest.txt line #562 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x11A8).Str.chars, 2, "0x261D, 0x308, 0x11A8 GraphemeBreakTest.txt line #563 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0xAC00).Str.chars, 2, "0x261D, 0xAC00 GraphemeBreakTest.txt line #564 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0xAC00).Str.chars, 2, "0x261D, 0x308, 0xAC00 GraphemeBreakTest.txt line #565 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0xAC01).Str.chars, 2, "0x261D, 0xAC01 GraphemeBreakTest.txt line #566 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0xAC01).Str.chars, 2, "0x261D, 0x308, 0xAC01 GraphemeBreakTest.txt line #567 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x1F1E6).Str.chars, 2, "0x261D, 0x1F1E6 GraphemeBreakTest.txt line #568 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x1F1E6).Str.chars, 2, "0x261D, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #569 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x261D).Str.chars, 2, "0x261D, 0x261D GraphemeBreakTest.txt line #570 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x261D).Str.chars, 2, "0x261D, 0x308, 0x261D GraphemeBreakTest.txt line #571 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x261D, 0x1F3FB).Str.chars, 1, "0x261D, 0x1F3FB GraphemeBreakTest.txt line #572 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x261D, 0x308, 0x1F3FB).Str.chars, 1, "0x261D, 0x308, 0x1F3FB GraphemeBreakTest.txt line #573 Codes: 2 Non-break: 2";
-is Uni.new(0x261D, 0x200D).Str.chars, 1, "0x261D, 0x200D GraphemeBreakTest.txt line #574 Codes: 1 Non-break: 1";
-is Uni.new(0x261D, 0x308, 0x200D).Str.chars, 1, "0x261D, 0x308, 0x200D GraphemeBreakTest.txt line #575 Codes: 2 Non-break: 2";
-is Uni.new(0x261D, 0x2764).Str.chars, 2, "0x261D, 0x2764 GraphemeBreakTest.txt line #576 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x2764).Str.chars, 2, "0x261D, 0x308, 0x2764 GraphemeBreakTest.txt line #577 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x1F466).Str.chars, 2, "0x261D, 0x1F466 GraphemeBreakTest.txt line #578 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x1F466).Str.chars, 2, "0x261D, 0x308, 0x1F466 GraphemeBreakTest.txt line #579 Codes: 2 Non-break: 1";
-is Uni.new(0x261D, 0x378).Str.chars, 2, "0x261D, 0x378 GraphemeBreakTest.txt line #580 Codes: 1 Non-break: 0";
-is Uni.new(0x261D, 0x308, 0x378).Str.chars, 2, "0x261D, 0x308, 0x378 GraphemeBreakTest.txt line #581 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x20).Str.chars, 2, "0x1F3FB, 0x20 GraphemeBreakTest.txt line #584 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x20).Str.chars, 2, "0x1F3FB, 0x308, 0x20 GraphemeBreakTest.txt line #585 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0xD).Str.chars, 2, "0x1F3FB, 0xD GraphemeBreakTest.txt line #586 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0xD).Str.chars, 2, "0x1F3FB, 0x308, 0xD GraphemeBreakTest.txt line #587 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0xA).Str.chars, 2, "0x1F3FB, 0xA GraphemeBreakTest.txt line #588 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0xA).Str.chars, 2, "0x1F3FB, 0x308, 0xA GraphemeBreakTest.txt line #589 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x1).Str.chars, 2, "0x1F3FB, 0x1 GraphemeBreakTest.txt line #590 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x1).Str.chars, 2, "0x1F3FB, 0x308, 0x1 GraphemeBreakTest.txt line #591 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x300).Str.chars, 1, "0x1F3FB, 0x300 GraphemeBreakTest.txt line #592 Codes: 1 Non-break: 1";
-is Uni.new(0x1F3FB, 0x308, 0x300).Str.chars, 1, "0x1F3FB, 0x308, 0x300 GraphemeBreakTest.txt line #593 Codes: 2 Non-break: 2";
-is Uni.new(0x1F3FB, 0x600).Str.chars, 2, "0x1F3FB, 0x600 GraphemeBreakTest.txt line #594 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x600).Str.chars, 2, "0x1F3FB, 0x308, 0x600 GraphemeBreakTest.txt line #595 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x903).Str.chars, 1, "0x1F3FB, 0x903 GraphemeBreakTest.txt line #596 Codes: 1 Non-break: 1";
-is Uni.new(0x1F3FB, 0x308, 0x903).Str.chars, 1, "0x1F3FB, 0x308, 0x903 GraphemeBreakTest.txt line #597 Codes: 2 Non-break: 2";
-is Uni.new(0x1F3FB, 0x1100).Str.chars, 2, "0x1F3FB, 0x1100 GraphemeBreakTest.txt line #598 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x1100).Str.chars, 2, "0x1F3FB, 0x308, 0x1100 GraphemeBreakTest.txt line #599 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x1160).Str.chars, 2, "0x1F3FB, 0x1160 GraphemeBreakTest.txt line #600 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x1160).Str.chars, 2, "0x1F3FB, 0x308, 0x1160 GraphemeBreakTest.txt line #601 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x11A8).Str.chars, 2, "0x1F3FB, 0x11A8 GraphemeBreakTest.txt line #602 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x11A8).Str.chars, 2, "0x1F3FB, 0x308, 0x11A8 GraphemeBreakTest.txt line #603 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0xAC00).Str.chars, 2, "0x1F3FB, 0xAC00 GraphemeBreakTest.txt line #604 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0xAC00).Str.chars, 2, "0x1F3FB, 0x308, 0xAC00 GraphemeBreakTest.txt line #605 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0xAC01).Str.chars, 2, "0x1F3FB, 0xAC01 GraphemeBreakTest.txt line #606 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0xAC01).Str.chars, 2, "0x1F3FB, 0x308, 0xAC01 GraphemeBreakTest.txt line #607 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x1F1E6).Str.chars, 2, "0x1F3FB, 0x1F1E6 GraphemeBreakTest.txt line #608 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x1F1E6).Str.chars, 2, "0x1F3FB, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #609 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x261D).Str.chars, 2, "0x1F3FB, 0x261D GraphemeBreakTest.txt line #610 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x261D).Str.chars, 2, "0x1F3FB, 0x308, 0x261D GraphemeBreakTest.txt line #611 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x1F3FB).Str.chars, 2, "0x1F3FB, 0x1F3FB GraphemeBreakTest.txt line #612 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x1F3FB).Str.chars, 2, "0x1F3FB, 0x308, 0x1F3FB GraphemeBreakTest.txt line #613 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x200D).Str.chars, 1, "0x1F3FB, 0x200D GraphemeBreakTest.txt line #614 Codes: 1 Non-break: 1";
-is Uni.new(0x1F3FB, 0x308, 0x200D).Str.chars, 1, "0x1F3FB, 0x308, 0x200D GraphemeBreakTest.txt line #615 Codes: 2 Non-break: 2";
-is Uni.new(0x1F3FB, 0x2764).Str.chars, 2, "0x1F3FB, 0x2764 GraphemeBreakTest.txt line #616 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x2764).Str.chars, 2, "0x1F3FB, 0x308, 0x2764 GraphemeBreakTest.txt line #617 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x1F466).Str.chars, 2, "0x1F3FB, 0x1F466 GraphemeBreakTest.txt line #618 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x1F466).Str.chars, 2, "0x1F3FB, 0x308, 0x1F466 GraphemeBreakTest.txt line #619 Codes: 2 Non-break: 1";
-is Uni.new(0x1F3FB, 0x378).Str.chars, 2, "0x1F3FB, 0x378 GraphemeBreakTest.txt line #620 Codes: 1 Non-break: 0";
-is Uni.new(0x1F3FB, 0x308, 0x378).Str.chars, 2, "0x1F3FB, 0x308, 0x378 GraphemeBreakTest.txt line #621 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x20).Str.chars, 2, "0x200D, 0x20 GraphemeBreakTest.txt line #624 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x20).Str.chars, 2, "0x200D, 0x308, 0x20 GraphemeBreakTest.txt line #625 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0xD).Str.chars, 2, "0x200D, 0xD GraphemeBreakTest.txt line #626 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0xD).Str.chars, 2, "0x200D, 0x308, 0xD GraphemeBreakTest.txt line #627 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0xA).Str.chars, 2, "0x200D, 0xA GraphemeBreakTest.txt line #628 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0xA).Str.chars, 2, "0x200D, 0x308, 0xA GraphemeBreakTest.txt line #629 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x1).Str.chars, 2, "0x200D, 0x1 GraphemeBreakTest.txt line #630 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x1).Str.chars, 2, "0x200D, 0x308, 0x1 GraphemeBreakTest.txt line #631 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x300).Str.chars, 1, "0x200D, 0x300 GraphemeBreakTest.txt line #632 Codes: 1 Non-break: 1";
-is Uni.new(0x200D, 0x308, 0x300).Str.chars, 1, "0x200D, 0x308, 0x300 GraphemeBreakTest.txt line #633 Codes: 2 Non-break: 2";
-is Uni.new(0x200D, 0x600).Str.chars, 2, "0x200D, 0x600 GraphemeBreakTest.txt line #634 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x600).Str.chars, 2, "0x200D, 0x308, 0x600 GraphemeBreakTest.txt line #635 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x903).Str.chars, 1, "0x200D, 0x903 GraphemeBreakTest.txt line #636 Codes: 1 Non-break: 1";
-is Uni.new(0x200D, 0x308, 0x903).Str.chars, 1, "0x200D, 0x308, 0x903 GraphemeBreakTest.txt line #637 Codes: 2 Non-break: 2";
-is Uni.new(0x200D, 0x1100).Str.chars, 2, "0x200D, 0x1100 GraphemeBreakTest.txt line #638 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x1100).Str.chars, 2, "0x200D, 0x308, 0x1100 GraphemeBreakTest.txt line #639 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x1160).Str.chars, 2, "0x200D, 0x1160 GraphemeBreakTest.txt line #640 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x1160).Str.chars, 2, "0x200D, 0x308, 0x1160 GraphemeBreakTest.txt line #641 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x11A8).Str.chars, 2, "0x200D, 0x11A8 GraphemeBreakTest.txt line #642 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x11A8).Str.chars, 2, "0x200D, 0x308, 0x11A8 GraphemeBreakTest.txt line #643 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0xAC00).Str.chars, 2, "0x200D, 0xAC00 GraphemeBreakTest.txt line #644 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0xAC00).Str.chars, 2, "0x200D, 0x308, 0xAC00 GraphemeBreakTest.txt line #645 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0xAC01).Str.chars, 2, "0x200D, 0xAC01 GraphemeBreakTest.txt line #646 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0xAC01).Str.chars, 2, "0x200D, 0x308, 0xAC01 GraphemeBreakTest.txt line #647 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x1F1E6).Str.chars, 2, "0x200D, 0x1F1E6 GraphemeBreakTest.txt line #648 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x1F1E6).Str.chars, 2, "0x200D, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #649 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x261D).Str.chars, 2, "0x200D, 0x261D GraphemeBreakTest.txt line #650 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x261D).Str.chars, 2, "0x200D, 0x308, 0x261D GraphemeBreakTest.txt line #651 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x1F3FB).Str.chars, 2, "0x200D, 0x1F3FB GraphemeBreakTest.txt line #652 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x1F3FB).Str.chars, 2, "0x200D, 0x308, 0x1F3FB GraphemeBreakTest.txt line #653 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x200D).Str.chars, 1, "0x200D, 0x200D GraphemeBreakTest.txt line #654 Codes: 1 Non-break: 1";
-is Uni.new(0x200D, 0x308, 0x200D).Str.chars, 1, "0x200D, 0x308, 0x200D GraphemeBreakTest.txt line #655 Codes: 2 Non-break: 2";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x200D, 0x2764).Str.chars, 1, "0x200D, 0x2764 GraphemeBreakTest.txt line #656 Codes: 1 Non-break: 1";
-is Uni.new(0x200D, 0x308, 0x2764).Str.chars, 2, "0x200D, 0x308, 0x2764 GraphemeBreakTest.txt line #657 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x200D, 0x1F466).Str.chars, 1, "0x200D, 0x1F466 GraphemeBreakTest.txt line #658 Codes: 1 Non-break: 1";
-is Uni.new(0x200D, 0x308, 0x1F466).Str.chars, 2, "0x200D, 0x308, 0x1F466 GraphemeBreakTest.txt line #659 Codes: 2 Non-break: 1";
-is Uni.new(0x200D, 0x378).Str.chars, 2, "0x200D, 0x378 GraphemeBreakTest.txt line #660 Codes: 1 Non-break: 0";
-is Uni.new(0x200D, 0x308, 0x378).Str.chars, 2, "0x200D, 0x308, 0x378 GraphemeBreakTest.txt line #661 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x20).Str.chars, 2, "0x2764, 0x20 GraphemeBreakTest.txt line #664 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x20).Str.chars, 2, "0x2764, 0x308, 0x20 GraphemeBreakTest.txt line #665 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0xD).Str.chars, 2, "0x2764, 0xD GraphemeBreakTest.txt line #666 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0xD).Str.chars, 2, "0x2764, 0x308, 0xD GraphemeBreakTest.txt line #667 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0xA).Str.chars, 2, "0x2764, 0xA GraphemeBreakTest.txt line #668 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0xA).Str.chars, 2, "0x2764, 0x308, 0xA GraphemeBreakTest.txt line #669 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x1).Str.chars, 2, "0x2764, 0x1 GraphemeBreakTest.txt line #670 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x1).Str.chars, 2, "0x2764, 0x308, 0x1 GraphemeBreakTest.txt line #671 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x300).Str.chars, 1, "0x2764, 0x300 GraphemeBreakTest.txt line #672 Codes: 1 Non-break: 1";
-is Uni.new(0x2764, 0x308, 0x300).Str.chars, 1, "0x2764, 0x308, 0x300 GraphemeBreakTest.txt line #673 Codes: 2 Non-break: 2";
-is Uni.new(0x2764, 0x600).Str.chars, 2, "0x2764, 0x600 GraphemeBreakTest.txt line #674 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x600).Str.chars, 2, "0x2764, 0x308, 0x600 GraphemeBreakTest.txt line #675 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x903).Str.chars, 1, "0x2764, 0x903 GraphemeBreakTest.txt line #676 Codes: 1 Non-break: 1";
-is Uni.new(0x2764, 0x308, 0x903).Str.chars, 1, "0x2764, 0x308, 0x903 GraphemeBreakTest.txt line #677 Codes: 2 Non-break: 2";
-is Uni.new(0x2764, 0x1100).Str.chars, 2, "0x2764, 0x1100 GraphemeBreakTest.txt line #678 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x1100).Str.chars, 2, "0x2764, 0x308, 0x1100 GraphemeBreakTest.txt line #679 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x1160).Str.chars, 2, "0x2764, 0x1160 GraphemeBreakTest.txt line #680 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x1160).Str.chars, 2, "0x2764, 0x308, 0x1160 GraphemeBreakTest.txt line #681 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x11A8).Str.chars, 2, "0x2764, 0x11A8 GraphemeBreakTest.txt line #682 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x11A8).Str.chars, 2, "0x2764, 0x308, 0x11A8 GraphemeBreakTest.txt line #683 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0xAC00).Str.chars, 2, "0x2764, 0xAC00 GraphemeBreakTest.txt line #684 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0xAC00).Str.chars, 2, "0x2764, 0x308, 0xAC00 GraphemeBreakTest.txt line #685 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0xAC01).Str.chars, 2, "0x2764, 0xAC01 GraphemeBreakTest.txt line #686 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0xAC01).Str.chars, 2, "0x2764, 0x308, 0xAC01 GraphemeBreakTest.txt line #687 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x1F1E6).Str.chars, 2, "0x2764, 0x1F1E6 GraphemeBreakTest.txt line #688 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x1F1E6).Str.chars, 2, "0x2764, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #689 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x261D).Str.chars, 2, "0x2764, 0x261D GraphemeBreakTest.txt line #690 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x261D).Str.chars, 2, "0x2764, 0x308, 0x261D GraphemeBreakTest.txt line #691 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x1F3FB).Str.chars, 2, "0x2764, 0x1F3FB GraphemeBreakTest.txt line #692 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x1F3FB).Str.chars, 2, "0x2764, 0x308, 0x1F3FB GraphemeBreakTest.txt line #693 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x200D).Str.chars, 1, "0x2764, 0x200D GraphemeBreakTest.txt line #694 Codes: 1 Non-break: 1";
-is Uni.new(0x2764, 0x308, 0x200D).Str.chars, 1, "0x2764, 0x308, 0x200D GraphemeBreakTest.txt line #695 Codes: 2 Non-break: 2";
-is Uni.new(0x2764, 0x2764).Str.chars, 2, "0x2764, 0x2764 GraphemeBreakTest.txt line #696 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x2764).Str.chars, 2, "0x2764, 0x308, 0x2764 GraphemeBreakTest.txt line #697 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x1F466).Str.chars, 2, "0x2764, 0x1F466 GraphemeBreakTest.txt line #698 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x1F466).Str.chars, 2, "0x2764, 0x308, 0x1F466 GraphemeBreakTest.txt line #699 Codes: 2 Non-break: 1";
-is Uni.new(0x2764, 0x378).Str.chars, 2, "0x2764, 0x378 GraphemeBreakTest.txt line #700 Codes: 1 Non-break: 0";
-is Uni.new(0x2764, 0x308, 0x378).Str.chars, 2, "0x2764, 0x308, 0x378 GraphemeBreakTest.txt line #701 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x20).Str.chars, 2, "0x1F466, 0x20 GraphemeBreakTest.txt line #704 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x20).Str.chars, 2, "0x1F466, 0x308, 0x20 GraphemeBreakTest.txt line #705 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0xD).Str.chars, 2, "0x1F466, 0xD GraphemeBreakTest.txt line #706 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0xD).Str.chars, 2, "0x1F466, 0x308, 0xD GraphemeBreakTest.txt line #707 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0xA).Str.chars, 2, "0x1F466, 0xA GraphemeBreakTest.txt line #708 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0xA).Str.chars, 2, "0x1F466, 0x308, 0xA GraphemeBreakTest.txt line #709 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x1).Str.chars, 2, "0x1F466, 0x1 GraphemeBreakTest.txt line #710 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x1).Str.chars, 2, "0x1F466, 0x308, 0x1 GraphemeBreakTest.txt line #711 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x300).Str.chars, 1, "0x1F466, 0x300 GraphemeBreakTest.txt line #712 Codes: 1 Non-break: 1";
-is Uni.new(0x1F466, 0x308, 0x300).Str.chars, 1, "0x1F466, 0x308, 0x300 GraphemeBreakTest.txt line #713 Codes: 2 Non-break: 2";
-is Uni.new(0x1F466, 0x600).Str.chars, 2, "0x1F466, 0x600 GraphemeBreakTest.txt line #714 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x600).Str.chars, 2, "0x1F466, 0x308, 0x600 GraphemeBreakTest.txt line #715 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x903).Str.chars, 1, "0x1F466, 0x903 GraphemeBreakTest.txt line #716 Codes: 1 Non-break: 1";
-is Uni.new(0x1F466, 0x308, 0x903).Str.chars, 1, "0x1F466, 0x308, 0x903 GraphemeBreakTest.txt line #717 Codes: 2 Non-break: 2";
-is Uni.new(0x1F466, 0x1100).Str.chars, 2, "0x1F466, 0x1100 GraphemeBreakTest.txt line #718 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x1100).Str.chars, 2, "0x1F466, 0x308, 0x1100 GraphemeBreakTest.txt line #719 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x1160).Str.chars, 2, "0x1F466, 0x1160 GraphemeBreakTest.txt line #720 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x1160).Str.chars, 2, "0x1F466, 0x308, 0x1160 GraphemeBreakTest.txt line #721 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x11A8).Str.chars, 2, "0x1F466, 0x11A8 GraphemeBreakTest.txt line #722 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x11A8).Str.chars, 2, "0x1F466, 0x308, 0x11A8 GraphemeBreakTest.txt line #723 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0xAC00).Str.chars, 2, "0x1F466, 0xAC00 GraphemeBreakTest.txt line #724 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0xAC00).Str.chars, 2, "0x1F466, 0x308, 0xAC00 GraphemeBreakTest.txt line #725 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0xAC01).Str.chars, 2, "0x1F466, 0xAC01 GraphemeBreakTest.txt line #726 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0xAC01).Str.chars, 2, "0x1F466, 0x308, 0xAC01 GraphemeBreakTest.txt line #727 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x1F1E6).Str.chars, 2, "0x1F466, 0x1F1E6 GraphemeBreakTest.txt line #728 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x1F1E6).Str.chars, 2, "0x1F466, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #729 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x261D).Str.chars, 2, "0x1F466, 0x261D GraphemeBreakTest.txt line #730 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x261D).Str.chars, 2, "0x1F466, 0x308, 0x261D GraphemeBreakTest.txt line #731 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x1F466, 0x1F3FB).Str.chars, 1, "0x1F466, 0x1F3FB GraphemeBreakTest.txt line #732 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x1F466, 0x308, 0x1F3FB).Str.chars, 1, "0x1F466, 0x308, 0x1F3FB GraphemeBreakTest.txt line #733 Codes: 2 Non-break: 2";
-is Uni.new(0x1F466, 0x200D).Str.chars, 1, "0x1F466, 0x200D GraphemeBreakTest.txt line #734 Codes: 1 Non-break: 1";
-is Uni.new(0x1F466, 0x308, 0x200D).Str.chars, 1, "0x1F466, 0x308, 0x200D GraphemeBreakTest.txt line #735 Codes: 2 Non-break: 2";
-is Uni.new(0x1F466, 0x2764).Str.chars, 2, "0x1F466, 0x2764 GraphemeBreakTest.txt line #736 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x2764).Str.chars, 2, "0x1F466, 0x308, 0x2764 GraphemeBreakTest.txt line #737 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x1F466).Str.chars, 2, "0x1F466, 0x1F466 GraphemeBreakTest.txt line #738 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x1F466).Str.chars, 2, "0x1F466, 0x308, 0x1F466 GraphemeBreakTest.txt line #739 Codes: 2 Non-break: 1";
-is Uni.new(0x1F466, 0x378).Str.chars, 2, "0x1F466, 0x378 GraphemeBreakTest.txt line #740 Codes: 1 Non-break: 0";
-is Uni.new(0x1F466, 0x308, 0x378).Str.chars, 2, "0x1F466, 0x308, 0x378 GraphemeBreakTest.txt line #741 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x20).Str.chars, 2, "0x378, 0x20 GraphemeBreakTest.txt line #744 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x20).Str.chars, 2, "0x378, 0x308, 0x20 GraphemeBreakTest.txt line #745 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0xD).Str.chars, 2, "0x378, 0xD GraphemeBreakTest.txt line #746 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0xD).Str.chars, 2, "0x378, 0x308, 0xD GraphemeBreakTest.txt line #747 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0xA).Str.chars, 2, "0x378, 0xA GraphemeBreakTest.txt line #748 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0xA).Str.chars, 2, "0x378, 0x308, 0xA GraphemeBreakTest.txt line #749 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x1).Str.chars, 2, "0x378, 0x1 GraphemeBreakTest.txt line #750 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x1).Str.chars, 2, "0x378, 0x308, 0x1 GraphemeBreakTest.txt line #751 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x300).Str.chars, 1, "0x378, 0x300 GraphemeBreakTest.txt line #752 Codes: 1 Non-break: 1";
-is Uni.new(0x378, 0x308, 0x300).Str.chars, 1, "0x378, 0x308, 0x300 GraphemeBreakTest.txt line #753 Codes: 2 Non-break: 2";
-is Uni.new(0x378, 0x600).Str.chars, 2, "0x378, 0x600 GraphemeBreakTest.txt line #754 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x600).Str.chars, 2, "0x378, 0x308, 0x600 GraphemeBreakTest.txt line #755 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x903).Str.chars, 1, "0x378, 0x903 GraphemeBreakTest.txt line #756 Codes: 1 Non-break: 1";
-is Uni.new(0x378, 0x308, 0x903).Str.chars, 1, "0x378, 0x308, 0x903 GraphemeBreakTest.txt line #757 Codes: 2 Non-break: 2";
-is Uni.new(0x378, 0x1100).Str.chars, 2, "0x378, 0x1100 GraphemeBreakTest.txt line #758 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x1100).Str.chars, 2, "0x378, 0x308, 0x1100 GraphemeBreakTest.txt line #759 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x1160).Str.chars, 2, "0x378, 0x1160 GraphemeBreakTest.txt line #760 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x1160).Str.chars, 2, "0x378, 0x308, 0x1160 GraphemeBreakTest.txt line #761 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x11A8).Str.chars, 2, "0x378, 0x11A8 GraphemeBreakTest.txt line #762 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x11A8).Str.chars, 2, "0x378, 0x308, 0x11A8 GraphemeBreakTest.txt line #763 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0xAC00).Str.chars, 2, "0x378, 0xAC00 GraphemeBreakTest.txt line #764 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0xAC00).Str.chars, 2, "0x378, 0x308, 0xAC00 GraphemeBreakTest.txt line #765 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0xAC01).Str.chars, 2, "0x378, 0xAC01 GraphemeBreakTest.txt line #766 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0xAC01).Str.chars, 2, "0x378, 0x308, 0xAC01 GraphemeBreakTest.txt line #767 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x1F1E6).Str.chars, 2, "0x378, 0x1F1E6 GraphemeBreakTest.txt line #768 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x1F1E6).Str.chars, 2, "0x378, 0x308, 0x1F1E6 GraphemeBreakTest.txt line #769 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x261D).Str.chars, 2, "0x378, 0x261D GraphemeBreakTest.txt line #770 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x261D).Str.chars, 2, "0x378, 0x308, 0x261D GraphemeBreakTest.txt line #771 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x1F3FB).Str.chars, 2, "0x378, 0x1F3FB GraphemeBreakTest.txt line #772 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x1F3FB).Str.chars, 2, "0x378, 0x308, 0x1F3FB GraphemeBreakTest.txt line #773 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x200D).Str.chars, 1, "0x378, 0x200D GraphemeBreakTest.txt line #774 Codes: 1 Non-break: 1";
-is Uni.new(0x378, 0x308, 0x200D).Str.chars, 1, "0x378, 0x308, 0x200D GraphemeBreakTest.txt line #775 Codes: 2 Non-break: 2";
-is Uni.new(0x378, 0x2764).Str.chars, 2, "0x378, 0x2764 GraphemeBreakTest.txt line #776 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x2764).Str.chars, 2, "0x378, 0x308, 0x2764 GraphemeBreakTest.txt line #777 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x1F466).Str.chars, 2, "0x378, 0x1F466 GraphemeBreakTest.txt line #778 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x1F466).Str.chars, 2, "0x378, 0x308, 0x1F466 GraphemeBreakTest.txt line #779 Codes: 2 Non-break: 1";
-is Uni.new(0x378, 0x378).Str.chars, 2, "0x378, 0x378 GraphemeBreakTest.txt line #780 Codes: 1 Non-break: 0";
-is Uni.new(0x378, 0x308, 0x378).Str.chars, 2, "0x378, 0x308, 0x378 GraphemeBreakTest.txt line #781 Codes: 2 Non-break: 1";
-is Uni.new(0xD, 0xA, 0x61, 0xA, 0x308).Str.chars, 4, "0xD, 0xA, 0x61, 0xA, 0x308 GraphemeBreakTest.txt line #824 Codes: 4 Non-break: 1";
-is Uni.new(0x61, 0x308).Str.chars, 1, "0x61, 0x308 GraphemeBreakTest.txt line #825 Codes: 1 Non-break: 1";
-is Uni.new(0x20, 0x200D, 0x646).Str.chars, 2, "0x20, 0x200D, 0x646 GraphemeBreakTest.txt line #826 Codes: 2 Non-break: 1";
-is Uni.new(0x646, 0x200D, 0x20).Str.chars, 2, "0x646, 0x200D, 0x20 GraphemeBreakTest.txt line #827 Codes: 2 Non-break: 1";
-is Uni.new(0x1100, 0x1100).Str.chars, 1, "0x1100, 0x1100 GraphemeBreakTest.txt line #828 Codes: 1 Non-break: 1";
-is Uni.new(0xAC00, 0x11A8, 0x1100).Str.chars, 2, "0xAC00, 0x11A8, 0x1100 GraphemeBreakTest.txt line #829 Codes: 2 Non-break: 1";
-is Uni.new(0xAC01, 0x11A8, 0x1100).Str.chars, 2, "0xAC01, 0x11A8, 0x1100 GraphemeBreakTest.txt line #830 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62).Str.chars, 3, "0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62 GraphemeBreakTest.txt line #831 Codes: 3 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62).Str.chars, 4, "0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62 GraphemeBreakTest.txt line #832 Codes: 4 Non-break: 1";
-is Uni.new(0x61, 0x1F1E6, 0x1F1E7, 0x200D, 0x1F1E8, 0x62).Str.chars, 4, "0x61, 0x1F1E6, 0x1F1E7, 0x200D, 0x1F1E8, 0x62 GraphemeBreakTest.txt line #833 Codes: 5 Non-break: 2";
-is Uni.new(0x61, 0x1F1E6, 0x200D, 0x1F1E7, 0x1F1E8, 0x62).Str.chars, 4, "0x61, 0x1F1E6, 0x200D, 0x1F1E7, 0x1F1E8, 0x62 GraphemeBreakTest.txt line #834 Codes: 5 Non-break: 2";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x1F1E9, 0x62).Str.chars, 4, "0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x1F1E9, 0x62 GraphemeBreakTest.txt line #835 Codes: 5 Non-break: 2";
-is Uni.new(0x61, 0x200D).Str.chars, 1, "0x61, 0x200D GraphemeBreakTest.txt line #836 Codes: 1 Non-break: 1";
-is Uni.new(0x61, 0x308, 0x62).Str.chars, 2, "0x61, 0x308, 0x62 GraphemeBreakTest.txt line #837 Codes: 2 Non-break: 1";
-is Uni.new(0x61, 0x903, 0x62).Str.chars, 2, "0x61, 0x903, 0x62 GraphemeBreakTest.txt line #838 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x61, 0x600, 0x62).Str.chars, 2, "0x61, 0x600, 0x62 GraphemeBreakTest.txt line #839 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x261D, 0x1F3FB, 0x261D).Str.chars, 2, "0x261D, 0x1F3FB, 0x261D GraphemeBreakTest.txt line #840 Codes: 2 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x1F466, 0x1F3FB).Str.chars, 1, "0x1F466, 0x1F3FB GraphemeBreakTest.txt line #841 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x200D, 0x1F466, 0x1F3FB).Str.chars, 1, "0x200D, 0x1F466, 0x1F3FB GraphemeBreakTest.txt line #842 Codes: 2 Non-break: 2";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x200D, 0x2764).Str.chars, 1, "0x200D, 0x2764 GraphemeBreakTest.txt line #843 Codes: 1 Non-break: 1";
-#?rakudo.moar todo 'Unicode 9.0 not yet fully implemented in MoarVM'
-is Uni.new(0x200D, 0x1F466).Str.chars, 1, "0x200D, 0x1F466 GraphemeBreakTest.txt line #844 Codes: 1 Non-break: 1";
-is Uni.new(0x1F466, 0x1F466).Str.chars, 2, "0x1F466, 0x1F466 GraphemeBreakTest.txt line #845 Codes: 1 Non-break: 0";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #24 Unicode Version 9.0.0
+is Uni.new(0x20, 0x20).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #25 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x20).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #26 Unicode Version 9.0.0
+is Uni.new(0x20, 0xD).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #27 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0xD).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #28 Unicode Version 9.0.0
+is Uni.new(0x20, 0xA).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #29 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0xA).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #30 Unicode Version 9.0.0
+is Uni.new(0x20, 0x1).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #31 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x1).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #32 Unicode Version 9.0.0
+is Uni.new(0x20, 0x300).Str.chars, 1, "÷ [0.2] SPACE (Other) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #33 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x300).Str.chars, 1, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #34 Unicode Version 9.0.0
+is Uni.new(0x20, 0x600).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #35 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x600).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #36 Unicode Version 9.0.0
+is Uni.new(0x20, 0x903).Str.chars, 1, "÷ [0.2] SPACE (Other) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #37 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x903).Str.chars, 1, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #38 Unicode Version 9.0.0
+is Uni.new(0x20, 0x1100).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #39 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #40 Unicode Version 9.0.0
+is Uni.new(0x20, 0x1160).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #41 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #42 Unicode Version 9.0.0
+is Uni.new(0x20, 0x11A8).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #43 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #44 Unicode Version 9.0.0
+is Uni.new(0x20, 0xAC00).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #45 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #46 Unicode Version 9.0.0
+is Uni.new(0x20, 0xAC01).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #47 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #48 Unicode Version 9.0.0
+is Uni.new(0x20, 0x1F1E6).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #49 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #50 Unicode Version 9.0.0
+is Uni.new(0x20, 0x261D).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #51 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #52 Unicode Version 9.0.0
+is Uni.new(0x20, 0x1F3FB).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #53 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #54 Unicode Version 9.0.0
+is Uni.new(0x20, 0x200D).Str.chars, 1, "÷ [0.2] SPACE (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #55 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #56 Unicode Version 9.0.0
+is Uni.new(0x20, 0x2764).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #57 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #58 Unicode Version 9.0.0
+is Uni.new(0x20, 0x1F466).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #59 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] SPACE (Other) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #60 Unicode Version 9.0.0
+is Uni.new(0x20, 0x378).Str.chars, 2, "÷ [0.2] SPACE (Other) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #61 Unicode Version 9.0.0
+is Uni.new(0x20, 0x308, 0x378).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #64 Unicode Version 9.0.0
+is Uni.new(0xD, 0x20).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #65 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x20).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #66 Unicode Version 9.0.0
+is Uni.new(0xD, 0xD).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #67 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0xD).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) × [3.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #68 Unicode Version 9.0.0
+is Uni.new(0xD, 0xA).Str.chars, 1, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) × [3.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #69 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0xA).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #70 Unicode Version 9.0.0
+is Uni.new(0xD, 0x1).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #71 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x1).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #72 Unicode Version 9.0.0
+is Uni.new(0xD, 0x300).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #73 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x300).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #74 Unicode Version 9.0.0
+is Uni.new(0xD, 0x600).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #75 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x600).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #76 Unicode Version 9.0.0
+is Uni.new(0xD, 0x903).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #77 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x903).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #78 Unicode Version 9.0.0
+is Uni.new(0xD, 0x1100).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #79 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x1100).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #80 Unicode Version 9.0.0
+is Uni.new(0xD, 0x1160).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #81 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x1160).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #82 Unicode Version 9.0.0
+is Uni.new(0xD, 0x11A8).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #83 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x11A8).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #84 Unicode Version 9.0.0
+is Uni.new(0xD, 0xAC00).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #85 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0xAC00).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #86 Unicode Version 9.0.0
+is Uni.new(0xD, 0xAC01).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #87 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0xAC01).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #88 Unicode Version 9.0.0
+is Uni.new(0xD, 0x1F1E6).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #89 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x1F1E6).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #90 Unicode Version 9.0.0
+is Uni.new(0xD, 0x261D).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #91 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x261D).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #92 Unicode Version 9.0.0
+is Uni.new(0xD, 0x1F3FB).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #93 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x1F3FB).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #94 Unicode Version 9.0.0
+is Uni.new(0xD, 0x200D).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #95 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x200D).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #96 Unicode Version 9.0.0
+is Uni.new(0xD, 0x2764).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #97 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x2764).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #98 Unicode Version 9.0.0
+is Uni.new(0xD, 0x1F466).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #99 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x1F466).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #100 Unicode Version 9.0.0
+is Uni.new(0xD, 0x378).Str.chars, 2, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #101 Unicode Version 9.0.0
+is Uni.new(0xD, 0x308, 0x378).Str.chars, 3, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #104 Unicode Version 9.0.0
+is Uni.new(0xA, 0x20).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #105 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x20).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #106 Unicode Version 9.0.0
+is Uni.new(0xA, 0xD).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #107 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0xD).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #108 Unicode Version 9.0.0
+is Uni.new(0xA, 0xA).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #109 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0xA).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #110 Unicode Version 9.0.0
+is Uni.new(0xA, 0x1).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #111 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x1).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #112 Unicode Version 9.0.0
+is Uni.new(0xA, 0x300).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #113 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x300).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #114 Unicode Version 9.0.0
+is Uni.new(0xA, 0x600).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #115 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x600).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #116 Unicode Version 9.0.0
+is Uni.new(0xA, 0x903).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #117 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x903).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #118 Unicode Version 9.0.0
+is Uni.new(0xA, 0x1100).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #119 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x1100).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #120 Unicode Version 9.0.0
+is Uni.new(0xA, 0x1160).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #121 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x1160).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #122 Unicode Version 9.0.0
+is Uni.new(0xA, 0x11A8).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #123 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x11A8).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #124 Unicode Version 9.0.0
+is Uni.new(0xA, 0xAC00).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #125 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0xAC00).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #126 Unicode Version 9.0.0
+is Uni.new(0xA, 0xAC01).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #127 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0xAC01).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #128 Unicode Version 9.0.0
+is Uni.new(0xA, 0x1F1E6).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #129 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x1F1E6).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #130 Unicode Version 9.0.0
+is Uni.new(0xA, 0x261D).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #131 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x261D).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #132 Unicode Version 9.0.0
+is Uni.new(0xA, 0x1F3FB).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #133 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x1F3FB).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #134 Unicode Version 9.0.0
+is Uni.new(0xA, 0x200D).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #135 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x200D).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #136 Unicode Version 9.0.0
+is Uni.new(0xA, 0x2764).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #137 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x2764).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #138 Unicode Version 9.0.0
+is Uni.new(0xA, 0x1F466).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #139 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x1F466).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #140 Unicode Version 9.0.0
+is Uni.new(0xA, 0x378).Str.chars, 2, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #141 Unicode Version 9.0.0
+is Uni.new(0xA, 0x308, 0x378).Str.chars, 3, "÷ [0.2] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #144 Unicode Version 9.0.0
+is Uni.new(0x1, 0x20).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #145 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x20).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #146 Unicode Version 9.0.0
+is Uni.new(0x1, 0xD).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #147 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0xD).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #148 Unicode Version 9.0.0
+is Uni.new(0x1, 0xA).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #149 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0xA).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #150 Unicode Version 9.0.0
+is Uni.new(0x1, 0x1).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #151 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x1).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #152 Unicode Version 9.0.0
+is Uni.new(0x1, 0x300).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #153 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x300).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #154 Unicode Version 9.0.0
+is Uni.new(0x1, 0x600).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #155 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x600).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #156 Unicode Version 9.0.0
+is Uni.new(0x1, 0x903).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #157 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x903).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #158 Unicode Version 9.0.0
+is Uni.new(0x1, 0x1100).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #159 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x1100).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #160 Unicode Version 9.0.0
+is Uni.new(0x1, 0x1160).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #161 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x1160).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #162 Unicode Version 9.0.0
+is Uni.new(0x1, 0x11A8).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #163 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x11A8).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #164 Unicode Version 9.0.0
+is Uni.new(0x1, 0xAC00).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #165 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0xAC00).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #166 Unicode Version 9.0.0
+is Uni.new(0x1, 0xAC01).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #167 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0xAC01).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #168 Unicode Version 9.0.0
+is Uni.new(0x1, 0x1F1E6).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #169 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x1F1E6).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #170 Unicode Version 9.0.0
+is Uni.new(0x1, 0x261D).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #171 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x261D).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #172 Unicode Version 9.0.0
+is Uni.new(0x1, 0x1F3FB).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #173 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x1F3FB).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #174 Unicode Version 9.0.0
+is Uni.new(0x1, 0x200D).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #175 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x200D).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #176 Unicode Version 9.0.0
+is Uni.new(0x1, 0x2764).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #177 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x2764).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #178 Unicode Version 9.0.0
+is Uni.new(0x1, 0x1F466).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #179 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x1F466).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #180 Unicode Version 9.0.0
+is Uni.new(0x1, 0x378).Str.chars, 2, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #181 Unicode Version 9.0.0
+is Uni.new(0x1, 0x308, 0x378).Str.chars, 3, "÷ [0.2] <START OF HEADING> (Control) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #184 Unicode Version 9.0.0
+is Uni.new(0x300, 0x20).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #185 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x20).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #186 Unicode Version 9.0.0
+is Uni.new(0x300, 0xD).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #187 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0xD).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #188 Unicode Version 9.0.0
+is Uni.new(0x300, 0xA).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #189 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0xA).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #190 Unicode Version 9.0.0
+is Uni.new(0x300, 0x1).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #191 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x1).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #192 Unicode Version 9.0.0
+is Uni.new(0x300, 0x300).Str.chars, 1, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #193 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x300).Str.chars, 1, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #194 Unicode Version 9.0.0
+is Uni.new(0x300, 0x600).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #195 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x600).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #196 Unicode Version 9.0.0
+is Uni.new(0x300, 0x903).Str.chars, 1, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #197 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x903).Str.chars, 1, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #198 Unicode Version 9.0.0
+is Uni.new(0x300, 0x1100).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #199 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #200 Unicode Version 9.0.0
+is Uni.new(0x300, 0x1160).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #201 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #202 Unicode Version 9.0.0
+is Uni.new(0x300, 0x11A8).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #203 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #204 Unicode Version 9.0.0
+is Uni.new(0x300, 0xAC00).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #205 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #206 Unicode Version 9.0.0
+is Uni.new(0x300, 0xAC01).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #207 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #208 Unicode Version 9.0.0
+is Uni.new(0x300, 0x1F1E6).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #209 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #210 Unicode Version 9.0.0
+is Uni.new(0x300, 0x261D).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #211 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #212 Unicode Version 9.0.0
+is Uni.new(0x300, 0x1F3FB).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #213 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #214 Unicode Version 9.0.0
+is Uni.new(0x300, 0x200D).Str.chars, 1, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #215 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #216 Unicode Version 9.0.0
+is Uni.new(0x300, 0x2764).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #217 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #218 Unicode Version 9.0.0
+is Uni.new(0x300, 0x1F466).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #219 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #220 Unicode Version 9.0.0
+is Uni.new(0x300, 0x378).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #221 Unicode Version 9.0.0
+is Uni.new(0x300, 0x308, 0x378).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (Extend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #224 Unicode Version 9.0.0
+is Uni.new(0x600, 0x20).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #225 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x20).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #226 Unicode Version 9.0.0
+is Uni.new(0x600, 0xD).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #227 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0xD).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #228 Unicode Version 9.0.0
+is Uni.new(0x600, 0xA).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #229 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0xA).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #230 Unicode Version 9.0.0
+is Uni.new(0x600, 0x1).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #231 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x1).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #232 Unicode Version 9.0.0
+is Uni.new(0x600, 0x300).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #233 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x300).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #234 Unicode Version 9.0.0
+is Uni.new(0x600, 0x600).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #235 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x600).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #236 Unicode Version 9.0.0
+is Uni.new(0x600, 0x903).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #237 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x903).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #238 Unicode Version 9.0.0
+is Uni.new(0x600, 0x1100).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #239 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #240 Unicode Version 9.0.0
+is Uni.new(0x600, 0x1160).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #241 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #242 Unicode Version 9.0.0
+is Uni.new(0x600, 0x11A8).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #243 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #244 Unicode Version 9.0.0
+is Uni.new(0x600, 0xAC00).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #245 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #246 Unicode Version 9.0.0
+is Uni.new(0x600, 0xAC01).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #247 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #248 Unicode Version 9.0.0
+is Uni.new(0x600, 0x1F1E6).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #249 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #250 Unicode Version 9.0.0
+is Uni.new(0x600, 0x261D).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #251 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #252 Unicode Version 9.0.0
+is Uni.new(0x600, 0x1F3FB).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #253 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #254 Unicode Version 9.0.0
+is Uni.new(0x600, 0x200D).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #255 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #256 Unicode Version 9.0.0
+is Uni.new(0x600, 0x2764).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #257 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #258 Unicode Version 9.0.0
+is Uni.new(0x600, 0x1F466).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #259 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #260 Unicode Version 9.0.0
+is Uni.new(0x600, 0x378).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #261 Unicode Version 9.0.0
+is Uni.new(0x600, 0x308, 0x378).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #264 Unicode Version 9.0.0
+is Uni.new(0x903, 0x20).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #265 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x20).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #266 Unicode Version 9.0.0
+is Uni.new(0x903, 0xD).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #267 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0xD).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #268 Unicode Version 9.0.0
+is Uni.new(0x903, 0xA).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #269 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0xA).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #270 Unicode Version 9.0.0
+is Uni.new(0x903, 0x1).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #271 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x1).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #272 Unicode Version 9.0.0
+is Uni.new(0x903, 0x300).Str.chars, 1, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #273 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x300).Str.chars, 1, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #274 Unicode Version 9.0.0
+is Uni.new(0x903, 0x600).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #275 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x600).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #276 Unicode Version 9.0.0
+is Uni.new(0x903, 0x903).Str.chars, 1, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #277 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x903).Str.chars, 1, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #278 Unicode Version 9.0.0
+is Uni.new(0x903, 0x1100).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #279 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #280 Unicode Version 9.0.0
+is Uni.new(0x903, 0x1160).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #281 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #282 Unicode Version 9.0.0
+is Uni.new(0x903, 0x11A8).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #283 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #284 Unicode Version 9.0.0
+is Uni.new(0x903, 0xAC00).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #285 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #286 Unicode Version 9.0.0
+is Uni.new(0x903, 0xAC01).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #287 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #288 Unicode Version 9.0.0
+is Uni.new(0x903, 0x1F1E6).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #289 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #290 Unicode Version 9.0.0
+is Uni.new(0x903, 0x261D).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #291 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #292 Unicode Version 9.0.0
+is Uni.new(0x903, 0x1F3FB).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #293 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #294 Unicode Version 9.0.0
+is Uni.new(0x903, 0x200D).Str.chars, 1, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #295 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #296 Unicode Version 9.0.0
+is Uni.new(0x903, 0x2764).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #297 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #298 Unicode Version 9.0.0
+is Uni.new(0x903, 0x1F466).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #299 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #300 Unicode Version 9.0.0
+is Uni.new(0x903, 0x378).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #301 Unicode Version 9.0.0
+is Uni.new(0x903, 0x308, 0x378).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #304 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x20).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #305 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x20).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #306 Unicode Version 9.0.0
+is Uni.new(0x1100, 0xD).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #307 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0xD).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #308 Unicode Version 9.0.0
+is Uni.new(0x1100, 0xA).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #309 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0xA).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #310 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x1).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #311 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x1).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #312 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x300).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #313 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x300).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #314 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x600).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #315 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x600).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #316 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x903).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #317 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x903).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #318 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x1100).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #319 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #320 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x1160).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #321 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #322 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x11A8).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #323 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #324 Unicode Version 9.0.0
+is Uni.new(0x1100, 0xAC00).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #325 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #326 Unicode Version 9.0.0
+is Uni.new(0x1100, 0xAC01).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #327 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #328 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #329 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #330 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #331 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #332 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #333 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #334 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #335 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #336 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #337 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #338 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #339 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #340 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x378).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #341 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x308, 0x378).Str.chars, 2, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #344 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x20).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #345 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x20).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #346 Unicode Version 9.0.0
+is Uni.new(0x1160, 0xD).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #347 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0xD).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #348 Unicode Version 9.0.0
+is Uni.new(0x1160, 0xA).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #349 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0xA).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #350 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x1).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #351 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x1).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #352 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x300).Str.chars, 1, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #353 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x300).Str.chars, 1, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #354 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x600).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #355 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x600).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #356 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x903).Str.chars, 1, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #357 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x903).Str.chars, 1, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #358 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #359 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [7.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #360 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x1160).Str.chars, 1, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [7.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #361 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [7.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #362 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x11A8).Str.chars, 1, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [7.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #363 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #364 Unicode Version 9.0.0
+is Uni.new(0x1160, 0xAC00).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #365 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #366 Unicode Version 9.0.0
+is Uni.new(0x1160, 0xAC01).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #367 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #368 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #369 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #370 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #371 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #372 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #373 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #374 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #375 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #376 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #377 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #378 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #379 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #380 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x378).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #381 Unicode Version 9.0.0
+is Uni.new(0x1160, 0x308, 0x378).Str.chars, 2, "÷ [0.2] HANGUL JUNGSEONG FILLER (V) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #384 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x20).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #385 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x20).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #386 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0xD).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #387 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0xD).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #388 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0xA).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #389 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0xA).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #390 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x1).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #391 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x1).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #392 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x300).Str.chars, 1, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #393 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x300).Str.chars, 1, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #394 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x600).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #395 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x600).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #396 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x903).Str.chars, 1, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #397 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x903).Str.chars, 1, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #398 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #399 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #400 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x1160).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #401 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [8.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #402 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x11A8).Str.chars, 1, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [8.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #403 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #404 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0xAC00).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #405 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #406 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0xAC01).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #407 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #408 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #409 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #410 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #411 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #412 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #413 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #414 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #415 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #416 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #417 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #418 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #419 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #420 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x378).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #421 Unicode Version 9.0.0
+is Uni.new(0x11A8, 0x308, 0x378).Str.chars, 2, "÷ [0.2] HANGUL JONGSEONG KIYEOK (T) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #424 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x20).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #425 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x20).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #426 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0xD).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #427 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0xD).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #428 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0xA).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #429 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0xA).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #430 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x1).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #431 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x1).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #432 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x300).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #433 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x300).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #434 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x600).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #435 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x600).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #436 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x903).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #437 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x903).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #438 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #439 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [7.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #440 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x1160).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [7.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #441 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [7.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #442 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x11A8).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [7.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #443 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #444 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0xAC00).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #445 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #446 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0xAC01).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #447 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #448 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #449 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #450 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #451 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #452 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #453 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #454 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #455 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #456 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #457 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #458 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #459 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #460 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x378).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #461 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x308, 0x378).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #464 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x20).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #465 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x20).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #466 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0xD).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #467 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0xD).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #468 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0xA).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #469 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0xA).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #470 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x1).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #471 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x1).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #472 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x300).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #473 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x300).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #474 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x600).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #475 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x600).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #476 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x903).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #477 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x903).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #478 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #479 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #480 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x1160).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #481 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [8.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #482 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x11A8).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [8.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #483 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #484 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0xAC00).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #485 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #486 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0xAC01).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #487 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #488 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #489 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #490 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #491 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #492 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #493 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #494 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #495 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #496 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #497 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #498 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #499 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #500 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x378).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #501 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x308, 0x378).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #504 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x20).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #505 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x20).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #506 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0xD).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #507 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0xD).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #508 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0xA).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #509 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0xA).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #510 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x1).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #511 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x1).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #512 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x300).Str.chars, 1, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #513 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x300).Str.chars, 1, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #514 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x600).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #515 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x600).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #516 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x903).Str.chars, 1, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #517 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x903).Str.chars, 1, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #518 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x1100).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #519 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #520 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x1160).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #521 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #522 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x11A8).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #523 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #524 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0xAC00).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #525 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #526 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0xAC01).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #527 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [12.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #528 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x1F1E6).Str.chars, 1, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [12.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #529 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #530 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x261D).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #531 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #532 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x1F3FB).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #533 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #534 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x200D).Str.chars, 1, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #535 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #536 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x2764).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #537 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #538 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x1F466).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #539 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #540 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x378).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #541 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x308, 0x378).Str.chars, 2, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #544 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x20).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #545 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x20).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #546 Unicode Version 9.0.0
+is Uni.new(0x261D, 0xD).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #547 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0xD).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #548 Unicode Version 9.0.0
+is Uni.new(0x261D, 0xA).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #549 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0xA).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #550 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x1).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #551 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x1).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #552 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x300).Str.chars, 1, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #553 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x300).Str.chars, 1, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #554 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x600).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #555 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x600).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #556 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x903).Str.chars, 1, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #557 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x903).Str.chars, 1, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #558 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x1100).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #559 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #560 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x1160).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #561 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #562 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x11A8).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #563 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #564 Unicode Version 9.0.0
+is Uni.new(0x261D, 0xAC00).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #565 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #566 Unicode Version 9.0.0
+is Uni.new(0x261D, 0xAC01).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #567 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #568 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x1F1E6).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #569 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #570 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x261D).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #571 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #572 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x1F3FB).Str.chars, 1, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #573 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x1F3FB).Str.chars, 1, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #574 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x200D).Str.chars, 1, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #575 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #576 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x2764).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #577 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #578 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x1F466).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #579 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #580 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x378).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #581 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x308, 0x378).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #584 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x20).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #585 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x20).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #586 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0xD).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #587 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0xD).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #588 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0xA).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #589 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0xA).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #590 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x1).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #591 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x1).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #592 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x300).Str.chars, 1, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #593 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x300).Str.chars, 1, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #594 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x600).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #595 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x600).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #596 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x903).Str.chars, 1, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #597 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x903).Str.chars, 1, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #598 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x1100).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #599 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #600 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x1160).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #601 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #602 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x11A8).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #603 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #604 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0xAC00).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #605 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #606 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0xAC01).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #607 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #608 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x1F1E6).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #609 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #610 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x261D).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #611 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #612 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x1F3FB).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #613 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #614 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x200D).Str.chars, 1, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #615 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #616 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x2764).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #617 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #618 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x1F466).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #619 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #620 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x378).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #621 Unicode Version 9.0.0
+is Uni.new(0x1F3FB, 0x308, 0x378).Str.chars, 2, "÷ [0.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #624 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x20).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #625 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x20).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #626 Unicode Version 9.0.0
+is Uni.new(0x200D, 0xD).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #627 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0xD).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #628 Unicode Version 9.0.0
+is Uni.new(0x200D, 0xA).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #629 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0xA).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #630 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x1).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #631 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x1).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #632 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x300).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #633 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x300).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #634 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x600).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #635 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x600).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #636 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x903).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #637 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x903).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #638 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x1100).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #639 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #640 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x1160).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #641 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #642 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x11A8).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #643 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #644 Unicode Version 9.0.0
+is Uni.new(0x200D, 0xAC00).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #645 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #646 Unicode Version 9.0.0
+is Uni.new(0x200D, 0xAC01).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #647 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #648 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x1F1E6).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #649 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #650 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x261D).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #651 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #652 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x1F3FB).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #653 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #654 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x200D).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #655 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #656 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x2764).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #657 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #658 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x1F466).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #659 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #660 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x378).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #661 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x308, 0x378).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #664 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x20).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #665 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x20).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #666 Unicode Version 9.0.0
+is Uni.new(0x2764, 0xD).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #667 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0xD).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #668 Unicode Version 9.0.0
+is Uni.new(0x2764, 0xA).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #669 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0xA).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #670 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x1).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #671 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x1).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #672 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x300).Str.chars, 1, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #673 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x300).Str.chars, 1, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #674 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x600).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #675 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x600).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #676 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x903).Str.chars, 1, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #677 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x903).Str.chars, 1, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #678 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x1100).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #679 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #680 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x1160).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #681 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #682 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x11A8).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #683 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #684 Unicode Version 9.0.0
+is Uni.new(0x2764, 0xAC00).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #685 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #686 Unicode Version 9.0.0
+is Uni.new(0x2764, 0xAC01).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #687 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #688 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x1F1E6).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #689 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #690 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x261D).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #691 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #692 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x1F3FB).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #693 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #694 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x200D).Str.chars, 1, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #695 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #696 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x2764).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #697 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #698 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x1F466).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #699 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #700 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x378).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #701 Unicode Version 9.0.0
+is Uni.new(0x2764, 0x308, 0x378).Str.chars, 2, "÷ [0.2] HEAVY BLACK HEART (Glue_After_Zwj) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #704 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x20).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #705 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x20).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #706 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0xD).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #707 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0xD).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #708 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0xA).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #709 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0xA).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #710 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x1).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #711 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x1).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #712 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x300).Str.chars, 1, "÷ [0.2] BOY (EBG) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #713 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x300).Str.chars, 1, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #714 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x600).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #715 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x600).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #716 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x903).Str.chars, 1, "÷ [0.2] BOY (EBG) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #717 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x903).Str.chars, 1, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #718 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x1100).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #719 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #720 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x1160).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #721 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #722 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x11A8).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #723 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #724 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0xAC00).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #725 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #726 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0xAC01).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #727 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #728 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x1F1E6).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #729 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #730 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x261D).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #731 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #732 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x1F3FB).Str.chars, 1, "÷ [0.2] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #733 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x1F3FB).Str.chars, 1, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] BOY (EBG) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #734 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x200D).Str.chars, 1, "÷ [0.2] BOY (EBG) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #735 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #736 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x2764).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #737 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #738 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x1F466).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #739 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #740 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x378).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #741 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x308, 0x378).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #744 Unicode Version 9.0.0
+is Uni.new(0x378, 0x20).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #745 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x20).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #746 Unicode Version 9.0.0
+is Uni.new(0x378, 0xD).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #747 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0xD).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #748 Unicode Version 9.0.0
+is Uni.new(0x378, 0xA).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #749 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0xA).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #750 Unicode Version 9.0.0
+is Uni.new(0x378, 0x1).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #751 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x1).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #752 Unicode Version 9.0.0
+is Uni.new(0x378, 0x300).Str.chars, 1, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #753 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x300).Str.chars, 1, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #754 Unicode Version 9.0.0
+is Uni.new(0x378, 0x600).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #755 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x600).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #756 Unicode Version 9.0.0
+is Uni.new(0x378, 0x903).Str.chars, 1, "÷ [0.2] <reserved-0378> (Other) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #757 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x903).Str.chars, 1, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #758 Unicode Version 9.0.0
+is Uni.new(0x378, 0x1100).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #759 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #760 Unicode Version 9.0.0
+is Uni.new(0x378, 0x1160).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #761 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #762 Unicode Version 9.0.0
+is Uni.new(0x378, 0x11A8).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #763 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #764 Unicode Version 9.0.0
+is Uni.new(0x378, 0xAC00).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #765 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #766 Unicode Version 9.0.0
+is Uni.new(0x378, 0xAC01).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #767 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #768 Unicode Version 9.0.0
+is Uni.new(0x378, 0x1F1E6).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #769 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #770 Unicode Version 9.0.0
+is Uni.new(0x378, 0x261D).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #771 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #772 Unicode Version 9.0.0
+is Uni.new(0x378, 0x1F3FB).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #773 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #774 Unicode Version 9.0.0
+is Uni.new(0x378, 0x200D).Str.chars, 1, "÷ [0.2] <reserved-0378> (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #775 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #776 Unicode Version 9.0.0
+is Uni.new(0x378, 0x2764).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #777 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #778 Unicode Version 9.0.0
+is Uni.new(0x378, 0x1F466).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #779 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <reserved-0378> (Other) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #780 Unicode Version 9.0.0
+is Uni.new(0x378, 0x378).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
+## ÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #781 Unicode Version 9.0.0
+is Uni.new(0x378, 0x308, 0x378).Str.chars, 2, "÷ [0.2] <reserved-0378> (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] <CARRIAGE RETURN (CR)> (CR) × [3.0] <LINE FEED (LF)> (LF) ÷ [4.0] LATIN SMALL LETTER A (Other) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #824 Unicode Version 9.0.0
+is Uni.new(0xD, 0xA, 0x61, 0xA, 0x308).Str.chars, 4, "÷ [0.2] <CARRIAGE RETURN (CR)> (CR) × [3.0] <LINE FEED (LF)> (LF) ÷ [4.0] LATIN SMALL LETTER A (Other) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [4.0] COMBINING DIAERESIS (Extend) ÷ [0.3] | Codes: 5 Non-break: 1";
+## ÷ [0.2] LATIN SMALL LETTER A (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #825 Unicode Version 9.0.0
+is Uni.new(0x61, 0x308).Str.chars, 1, "÷ [0.2] LATIN SMALL LETTER A (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] SPACE (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] ARABIC LETTER NOON (Other) ÷ [0.3] # GraphemeBreakTest.txt line #826 Unicode Version 9.0.0
+is Uni.new(0x20, 0x200D, 0x646).Str.chars, 2, "÷ [0.2] SPACE (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] ARABIC LETTER NOON (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] ARABIC LETTER NOON (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #827 Unicode Version 9.0.0
+is Uni.new(0x646, 0x200D, 0x20).Str.chars, 2, "÷ [0.2] ARABIC LETTER NOON (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #828 Unicode Version 9.0.0
+is Uni.new(0x1100, 0x1100).Str.chars, 1, "÷ [0.2] HANGUL CHOSEONG KIYEOK (L) × [6.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GA (LV) × [7.0] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #829 Unicode Version 9.0.0
+is Uni.new(0xAC00, 0x11A8, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GA (LV) × [7.0] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [8.0] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #830 Unicode Version 9.0.0
+is Uni.new(0xAC01, 0x11A8, 0x1100).Str.chars, 2, "÷ [0.2] HANGUL SYLLABLE GAG (LVT) × [8.0] HANGUL JONGSEONG KIYEOK (T) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [12.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] # GraphemeBreakTest.txt line #831 Unicode Version 9.0.0
+is Uni.new(0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62).Str.chars, 3, "÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [12.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] | Codes: 4 Non-break: 1";
+## ÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] # GraphemeBreakTest.txt line #832 Unicode Version 9.0.0
+is Uni.new(0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x62).Str.chars, 4, "÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] | Codes: 5 Non-break: 1";
+## ÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] # GraphemeBreakTest.txt line #833 Unicode Version 9.0.0
+is Uni.new(0x61, 0x1F1E6, 0x1F1E7, 0x200D, 0x1F1E8, 0x62).Str.chars, 4, "÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] | Codes: 6 Non-break: 2";
+## ÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] # GraphemeBreakTest.txt line #834 Unicode Version 9.0.0
+is Uni.new(0x61, 0x1F1E6, 0x200D, 0x1F1E7, 0x1F1E8, 0x62).Str.chars, 4, "÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] | Codes: 6 Non-break: 2";
+## ÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER D (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] # GraphemeBreakTest.txt line #835 Unicode Version 9.0.0
+is Uni.new(0x61, 0x1F1E6, 0x1F1E7, 0x1F1E8, 0x1F1E9, 0x62).Str.chars, 4, "÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER B (RI) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER C (RI) × [13.0] REGIONAL INDICATOR SYMBOL LETTER D (RI) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] | Codes: 6 Non-break: 2";
+## ÷ [0.2] LATIN SMALL LETTER A (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #836 Unicode Version 9.0.0
+is Uni.new(0x61, 0x200D).Str.chars, 1, "÷ [0.2] LATIN SMALL LETTER A (Other) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] LATIN SMALL LETTER A (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] # GraphemeBreakTest.txt line #837 Unicode Version 9.0.0
+is Uni.new(0x61, 0x308, 0x62).Str.chars, 2, "÷ [0.2] LATIN SMALL LETTER A (Other) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] LATIN SMALL LETTER A (Other) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] # GraphemeBreakTest.txt line #838 Unicode Version 9.0.0
+is Uni.new(0x61, 0x903, 0x62).Str.chars, 2, "÷ [0.2] LATIN SMALL LETTER A (Other) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] LATIN SMALL LETTER B (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) × [9.2] LATIN SMALL LETTER B (Other) ÷ [0.3] # GraphemeBreakTest.txt line #839 Unicode Version 9.0.0
+is Uni.new(0x61, 0x600, 0x62).Str.chars, 2, "÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) × [9.2] LATIN SMALL LETTER B (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #840 Unicode Version 9.0.0
+is Uni.new(0x261D, 0x1F3FB, 0x261D).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
+## ÷ [0.2] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #841 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x1F3FB).Str.chars, 1, "÷ [0.2] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #842 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x1F466, 0x1F3FB).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 2";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #843 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x2764).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #844 Unicode Version 9.0.0
+is Uni.new(0x200D, 0x1F466).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 1";
+## ÷ [0.2] BOY (EBG) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #845 Unicode Version 9.0.0
+is Uni.new(0x1F466, 0x1F466).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
