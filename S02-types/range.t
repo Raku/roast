@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 186;
+plan 187;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -388,6 +388,27 @@ subtest '.rand does not generate value equal to excluded endpoints' => {
         $seen = 1 if $v == 1 or $v == 1+10e-15
     };
     ok $seen == 0, '^..^ range';
+}
+
+subtest 'out of range AT-POS' => {
+    plan 7;
+    throws-like { (^5)[*-9] }, X::OutOfRange, 'effective negative index throws';
+    is-deeply (2..1)[^2], (Nil, Nil),
+        'index larger than range returns Nil (Int range)';
+    is-deeply (2.1..1.1)[^2], (Nil, Nil),
+        'index larger than range returns Nil (Rat range)';
+    is-deeply (2e0..1e0)[^2], (Nil, Nil),
+        'index larger than range returns Nil (Num range)';
+
+    my int $i2 = 2;
+    my int $i5 = 5;
+    is-deeply (2..1)[$i2, $i5], (Nil, Nil),
+        'index larger than range returns Nil (Int range, native int index)';
+    is-deeply (2.1..1.1)[$i2, $i5], (Nil, Nil),
+        'index larger than range returns Nil (Rat range, native int index)';
+    is-deeply (2e0..1e0)[$i2, $i5], (Nil, Nil),
+        'index larger than range returns Nil (Num range, native int index)';
+
 }
 
 # vim:set ft=perl6
