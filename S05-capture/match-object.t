@@ -86,6 +86,7 @@ subtest 'can smartmatch against regexes stored in variables' => {
 
     # non-str orig, NFD
     # RT #130458
+    #?rakudo.jvm 2 skip 'Undeclared name: NFD, RT #130458'
     ok "7\x[308]".NFD ~~ /^ \d+ $/, 'sanity';
     #?rakudo todo '$/.orig on NFD matches'
     isa-ok $/.orig, NFD, '.orig retains the type (NFD)';
