@@ -78,7 +78,6 @@ plan 32;
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
-  #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
   throws-like { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
     X::Assignment::RO,
     "using list slices as lvalues works (2)";
@@ -159,7 +158,6 @@ plan 32;
     isa-ok $rt66304, List, 'List assigned to scalar is-a List';
     is( $rt66304.WHAT.perl, (1, 2, 4).WHAT.perl,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
-    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like { $rt66304[1] = 'ro' },
       X::Assignment::RO,
       'literal List element is immutable';

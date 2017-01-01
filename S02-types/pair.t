@@ -267,7 +267,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   my ($key, $val) = <key val>;
   my $pair        = ($key => $val);
 
-  #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
   throws-like { $pair.key = "KEY" },
     X::Assignment::RO,
     "setting .key dies";
@@ -370,7 +369,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
       'cannot assign a Str to an Int';
 
     $p.freeze;
-    #?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
     throws-like { $p.value = 666 },
       X::Assignment::RO,
       'cannot assign an Int to a frozen';

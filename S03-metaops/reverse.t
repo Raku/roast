@@ -58,7 +58,6 @@ is 4 R- 5 R/ 10, -2, "Rop gets the precedence of op";
 is (9 R... 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
 
 # RT #93350
-#?rakudo.jvm todo 'got X::Method::NotFound, RT #130470'
 throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return value of R~';
 
 {
