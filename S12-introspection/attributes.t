@@ -90,6 +90,7 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
 }
 
 # RT #77070
+#?rakudo.jvm skip 'StackOverflowError, RT #77070'
 {
     # Attributes attributes are sure to actually be BOOTSTRAPATTRs because
     # of bootstrapping

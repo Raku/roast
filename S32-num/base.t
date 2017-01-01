@@ -85,6 +85,7 @@ subtest 'all Reals can accept Whatever for second .base argument' => {
 {
     throws-like { 255.base: 16, -100 }, X::OutOfRange,
         'negative $digits arg throws';
+    #?rakudo.jvm todo 'code does not die, RT#125819'
     throws-like {
         255.base(16, 9999999999999999999999999999999999999999999999999);
     }, Exception, :message{ .contains('repeat count').not },

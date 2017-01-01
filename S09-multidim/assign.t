@@ -78,6 +78,7 @@ dies-ok { my int @a[2;2] = (1, 2), (3, 4), (5, 6) },
     'Cannot assign to many lists at first dimension (native)';
 dies-ok { my int @a[2;2] = (1, 2), (3, 4, 5) },
     'Cannot assign to many items at first dimension (native)';
+#?rakudo.jvm skip 'StackOverflowError'
 throws-like { my int @a[2;2] = (1, 2, 3, 4) }, X::Assignment::ToShaped,
     'Cannot assign flat list of items (native)';
 {
