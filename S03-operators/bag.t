@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 128;
+plan 130;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -65,8 +65,6 @@ isa-ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 sub symmetric-difference($a, $b) {
     ($a (|) $b) (-) ($b (&) $a)
 }
-
-#?rakudo 8 todo "Rakudo update in progress, but not done yet RT #124529"
 
 is showkv($s (^) $b), showkv(symmetric-difference($s, $b)), "Bag symmetric difference with Set is correct";
 isa-ok ($s (^) $b), Bag, "... and it's actually a Bag";
@@ -174,43 +172,39 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     # my $kb = BagHash.new(<blood love love>);
     my @d;
     
-    is showkv([⊎] @d), showkv(∅), "Bag sum reduce works on nothing";
-    is showkv([⊎] $s), showkv($s.Bag), "Bag sum reduce works on one set";
-    is showkv([⊎] $s, $b), showkv({ blood => 3, rhetoric => 1, love => 3 }), "Bag sum reduce works on two sets";
-    is showkv([⊎] $s, $b, $kb), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Bag sum reduce works on three sets";
+    is ([⊎] @d), (∅), "Bag sum reduce works on nothing";
+    is ([⊎] $s), ($s.Bag), "Bag sum reduce works on one set";
+    is ([⊎] $s, $b), %(blood => 3, rhetoric => 1, love => 3).Bag, "Bag sum reduce works on two sets";
+    is ([⊎] $s, $b, $kb), %(blood => 4, rhetoric => 1, love => 5).Bag, "Bag sum reduce works on three sets";
 
-    is showkv([(+)] @d), showkv(∅), "Bag sum reduce works on nothing";
-    is showkv([(+)] $s), showkv($s.Bag), "Bag sum reduce works on one set";
-    is showkv([(+)] $s, $b), showkv({ blood => 3, rhetoric => 1, love => 3 }), "Bag sum reduce works on two sets";
-    is showkv([(+)] $s, $b, $kb), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Bag sum reduce works on three sets";
+    is ([(+)] @d), (∅), "Bag sum reduce works on nothing";
+    is ([(+)] $s), ($s.Bag), "Bag sum reduce works on one set";
+    is ([(+)] set(), $s), ($s.Bag), "Bag sum reduce works on an empty set and a set";
+    is ([(+)] bag(), $s), ($s.Bag), "Bag sum reduce works on an empty bag and a set";
+    is ([(+)] $s, $b), %(blood => 3, rhetoric => 1, love => 3).Bag, "Bag sum reduce works on a set and a bag";
+    is ([(+)] $s, $b, $kb), %(blood => 4, rhetoric => 1, love => 5).Bag, "Bag sum reduce works on a set, a bag, and a baghash";
 
-    is showkv([⊍] @d), showkv(∅), "Bag multiply reduce works on nothing";
-    is showkv([⊍] $s), showkv($s.Bag), "Bag multiply reduce works on one set";
-    is showkv([⊍] $s, $b), showkv({ blood => 2, love => 2 }), "Bag multiply reduce works on two sets";
-    is showkv([⊍] $s, $b, $kb), showkv({ blood => 2, love => 4 }), "Bag multiply reduce works on three sets";
+    is ([⊍] @d), (∅), "Bag multiply reduce works on nothing";
+    is ([⊍] $s), ($s.Bag), "Bag multiply reduce works on one set";
+    is ([⊍] $s, $b), %(blood => 2, love => 2).Bag, "Bag multiply reduce works on two sets";
+    is ([⊍] $s, $b, $kb), %(blood => 2, love => 4).Bag, "Bag multiply reduce works on three sets";
 
-    is showkv([(.)] @d), showkv(∅), "Bag multiply reduce works on nothing";
-    is showkv([(.)] $s), showkv($s.Bag), "Bag multiply reduce works on one set";
-    is showkv([(.)] $s, $b), showkv({ blood => 2, love => 2 }), "Bag multiply reduce works on two sets";
-    is showkv([(.)] $s, $b, $kb), showkv({ blood => 2, love => 4 }), "Bag multiply reduce works on three sets";
+    is ([(.)] @d), (∅), "Bag multiply reduce works on nothing";
+    is ([(.)] $s), ($s.Bag), "Bag multiply reduce works on one set";
+    is ([(.)] $s, $b), %(blood => 2, love => 2).Bag, "Bag multiply reduce works on two sets";
+    is ([(.)] $s, $b, $kb), %(blood => 2, love => 4).Bag, "Bag multiply reduce works on three sets";
 
-    is showkv([(^)] @d), showset(∅), "Bag symmetric difference reduce works on nothing";
-    #?rakudo todo "NYI"
-    is showkv([(^)] $s), showset($s), "Set symmetric difference reduce works on one set";
-    #?rakudo todo "NYI"
-    isa-ok showkv([(^)] $s), Set, "Set symmetric difference reduce works on one set, yields set";
-    #?rakudo todo "NYI"
-    is showkv([(^)] $b), showkv($b), "Bag symmetric difference reduce works on one bag";
-    #?rakudo todo "NYI"
-    isa-ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one bag, yields bag";
-    #?rakudo 4 todo "Wrong answer at the moment"
-    is showkv([(^)] $s, $b), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on a bag and a set";
-    isa-ok showkv([(^)] $s, $b), Bag, "... and produces a Bag";
-    is showkv([(^)] $b, $s), showkv({ blood => 1, love => 1, rhetoric => 1 }), "... and is actually symmetric";
-    isa-ok showkv([(^)] $b, $s), Bag, "... and still produces a Bag that way too";
-    #?rakudo 2 todo "Crashing"
-    is showkv([(^)] $s, $b, $kb), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Bag symmetric difference reduce works on three bags";
-    isa-ok showkv([(^)] $s, $b, $kb), Bag, "Bag symmetric difference reduce works on three bags";
+    is ([(^)] @d), ∅, "Bag symmetric difference reduce works on nothing";
+    is ([(^)] $s), $s, "Set symmetric difference reduce works on one set";
+    isa-ok ([(^)] $s), Set, "Set symmetric difference reduce works on one set, yields set";
+    is ([(^)] $b), $b, "Bag symmetric difference reduce works on one bag";
+    isa-ok ([(^)] $b), Bag, "Bag symmetric difference reduce works on one bag, yields bag";
+    is ([(^)] $s, $b), %(blood => 1, love => 1, rhetoric => 1).Bag, "Bag symmetric difference reduce works on a bag and a set";
+    isa-ok ([(^)] $s, $b), Bag, "... and produces a Bag";
+    is ([(^)] $b, $s), %(blood => 1, love => 1, rhetoric => 1).Bag, "... and is actually symmetric";
+    isa-ok ([(^)] $b, $s), Bag, "... and still produces a Bag that way too";
+    is ([(^)] $s, $ks, $kb), %(blood => 1, love => 1, rhetoric => 1).Bag, "Bag symmetric difference reduce works on three bags";
+    isa-ok ([(^)] $s, $ks, $kb), Bag, "Bag symmetric difference reduce works on three bags";
 }
 
 # vim: ft=perl6
