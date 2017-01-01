@@ -291,4 +291,4 @@ for @uint -> $T {
 }
 
 # RT #130443
-dies-ok { my int @a = ^Inf }, 'Trying to assign ^Inf to an int array dies';
+dies-ok { my int @a = ^Inf; 42 }, 'Trying to assign ^Inf to an int array dies';
