@@ -97,7 +97,6 @@ is "ﬆ".uniprop('Case_Folding'), 'st', "'ﬆ'.uniprop for Case_Folding returns 
 # https://github.com/MoarVM/MoarVM/issues/457
 is "ᄁ".uniprop('Jamo_Short_Name'), 'GG', "uniprop for Jamo_Short_Name works";
 
-#?rakudo.moar todo 'moar returns a string containing the unicode codepoint instead of an integer for Bidi_Mirroring_Glyph'
 # https://github.com/MoarVM/MoarVM/issues/451
 is '('.uniprop('Bidi_Mirroring_Glyph'), ')', "'('.uniprop('Bidi_Mirroring_Glyph') returns ')'";
 #?rakudo.moar 4 todo 'Bidi_Paired_Bracket_Type and Bidi_Paired_Bracket NYI in MoarVM'
@@ -228,7 +227,6 @@ is-deeply 0x202D.uniprop('Bidi_Control'), True, "uniprop for 'Bidi_Control' prop
 is 0x202A.uniprop('Bidi_Class'), 'LRE', "0x202A.uniprop('Bidi_Class') returns LRE";
 is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') returns Hebrew_Letter";
 is "\n".uniprop('Line_Break'), 'LF', ‘"\n".uniprop('Line_Break') return LF’;
-#?rakudo.moar 2 todo "MoarVM does not return correct values for all Line_Break properties"
 is 0x200D.uniprop('Line_Break'), 'ZWJ', ‘uniprop('Line_Break') returns ZWJ for U+200D ZERO WIDTH JOINER’;
 is 0x103D.uniprop('Line_Break'), 'SA', ‘uniprop('Line_Break') returns SA for U+103D MYANMAR CONSONANT SIGN MEDIAL WA’;
 
@@ -276,13 +274,13 @@ is-deeply "🐧".uniprop('Emoji_Modifier'), False, "uniprop for Emoji_Modifier r
 is-deeply 0x2B05.uniprop('Emoji_Presentation'), False, "uniprop for Emoji_Presentation returns False for Emoji's without this property";
 is-deeply 'a'.uniprop('Emoji_Presentation'), False, "uniprop for Emoji_Presentation returns False for non-Emoji's";
 
-#?rakudo.moar 7 todo "Emoji properties NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/453
 is-deeply "🐧".uniprop('Emoji'), True, "uniprop for Emoji returns True for emoji's";
 is-deeply "#".uniprop('Emoji'), True, "uniprop for Emoji returns true for #";
 is-deeply 0x1F3FB.uniprop('Emoji_Modifier'), True, "uniprop for Emoji_Modifier returns True for Emoji Modifiers";
 is-deeply "😂".uniprop('Emoji_Presentation'), True, "uniprop for Emoji_Presentation returns True for visible Emoji codes";
 
+#?rakudo.moar 3 todo "Emoji properties NYI in MoarVM"
 is-deeply 0x1F3FD.uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for Emoji Modifiers";
 is-deeply "🐧".uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for non-modifier Emoji";
 is-deeply "a".uniprop('Emoji_All'), False, "uniprop for Emoji_All returns False for non-Emoji";

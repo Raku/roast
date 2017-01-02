@@ -386,112 +386,78 @@ is Uni.new(0x300, 0x308, 0x378).Str.chars, 2, "÷ [0.2] COMBINING GRAVE ACCENT (
 #?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x20).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #225 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x20).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #226 Unicode Version 9.0.0
 is Uni.new(0x600, 0xD).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 2 Non-break: 0";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] # GraphemeBreakTest.txt line #227 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0xD).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <CARRIAGE RETURN (CR)> (CR) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #228 Unicode Version 9.0.0
 is Uni.new(0x600, 0xA).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 2 Non-break: 0";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] # GraphemeBreakTest.txt line #229 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0xA).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <LINE FEED (LF)> (LF) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #230 Unicode Version 9.0.0
 is Uni.new(0x600, 0x1).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 2 Non-break: 0";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] # GraphemeBreakTest.txt line #231 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [5.0] <START OF HEADING> (Control) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #232 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x300).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] # GraphemeBreakTest.txt line #233 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x300).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] COMBINING GRAVE ACCENT (Extend) ÷ [0.3] | Codes: 3 Non-break: 2";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #234 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x600).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] # GraphemeBreakTest.txt line #235 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x600).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #236 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x903).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] # GraphemeBreakTest.txt line #237 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x903).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.1] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [0.3] | Codes: 3 Non-break: 2";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #238 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x1100).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] # GraphemeBreakTest.txt line #239 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1100).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL CHOSEONG KIYEOK (L) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #240 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x1160).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] # GraphemeBreakTest.txt line #241 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1160).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JUNGSEONG FILLER (V) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #242 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x11A8).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] # GraphemeBreakTest.txt line #243 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x11A8).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL JONGSEONG KIYEOK (T) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #244 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0xAC00).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] # GraphemeBreakTest.txt line #245 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0xAC00).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GA (LV) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #246 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0xAC01).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] # GraphemeBreakTest.txt line #247 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0xAC01).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HANGUL SYLLABLE GAG (LVT) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #248 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x1F1E6).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] # GraphemeBreakTest.txt line #249 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1F1E6).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER A (RI) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #250 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x261D).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #251 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #252 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x1F3FB).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #253 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1F3FB).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #254 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x200D).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #255 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #256 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x2764).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #257 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #258 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x1F466).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #259 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #260 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x378).Str.chars, 1, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.2] <reserved-0378> (Other) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] # GraphemeBreakTest.txt line #261 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x600, 0x308, 0x378).Str.chars, 2, "÷ [0.2] ARABIC NUMBER SIGN (Prepend) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] <reserved-0378> (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] SPACE (Other) ÷ [0.3] # GraphemeBreakTest.txt line #264 Unicode Version 9.0.0
 is Uni.new(0x903, 0x20).Str.chars, 2, "÷ [0.2] DEVANAGARI SIGN VISARGA (SpacingMark) ÷ [999.0] SPACE (Other) ÷ [0.3] | Codes: 2 Non-break: 0";
@@ -1082,7 +1048,6 @@ is Uni.new(0x261D, 0x261D).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Ba
 ## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #571 Unicode Version 9.0.0
 is Uni.new(0x261D, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #572 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x261D, 0x1F3FB).Str.chars, 1, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [9.0] COMBINING DIAERESIS (Extend) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #573 Unicode Version 9.0.0
 #?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
@@ -1249,7 +1214,6 @@ is Uni.new(0x200D, 0x2764).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [1
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #657 Unicode Version 9.0.0
 is Uni.new(0x200D, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #658 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x200D, 0x1F466).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #659 Unicode Version 9.0.0
 is Uni.new(0x200D, 0x308, 0x1F466).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 3 Non-break: 1";
@@ -1390,7 +1354,6 @@ is Uni.new(0x1F466, 0x261D).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] WHITE U
 ## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #731 Unicode Version 9.0.0
 is Uni.new(0x1F466, 0x308, 0x261D).Str.chars, 2, "÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #732 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x1F466, 0x1F3FB).Str.chars, 1, "÷ [0.2] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] BOY (EBG) × [9.0] COMBINING DIAERESIS (Extend) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #733 Unicode Version 9.0.0
 #?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
@@ -1524,19 +1487,15 @@ is Uni.new(0x61, 0x903, 0x62).Str.chars, 2, "÷ [0.2] LATIN SMALL LETTER A (Othe
 #?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x61, 0x600, 0x62).Str.chars, 2, "÷ [0.2] LATIN SMALL LETTER A (Other) ÷ [999.0] ARABIC NUMBER SIGN (Prepend) × [9.2] LATIN SMALL LETTER B (Other) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] # GraphemeBreakTest.txt line #840 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x261D, 0x1F3FB, 0x261D).Str.chars, 2, "÷ [0.2] WHITE UP POINTING INDEX (E_Base) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [999.0] WHITE UP POINTING INDEX (E_Base) ÷ [0.3] | Codes: 3 Non-break: 1";
 ## ÷ [0.2] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #841 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x1F466, 0x1F3FB).Str.chars, 1, "÷ [0.2] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #842 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x200D, 0x1F466, 0x1F3FB).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 2";
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #843 Unicode Version 9.0.0
 #?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x200D, 0x2764).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #844 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x200D, 0x1F466).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] BOY (EBG) ÷ [999.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #845 Unicode Version 9.0.0
 is Uni.new(0x1F466, 0x1F466).Str.chars, 2, "÷ [0.2] BOY (EBG) ÷ [999.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 0";
