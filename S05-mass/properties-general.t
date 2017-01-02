@@ -813,7 +813,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
     is $ascii-chars.comb(/<:ascii>+/).join(""), $ascii-chars, 'ascii chars';
 
     is 'abc' ~~ /<:alpha>+/, 'abc', 'alpha chars';
-#?rakudo.moar TODO "Possible bug in NQP where <:space> does not match, because it checks property VALUES before checking Bool property names"
+#?rakudo.moar todo "Possible bug in NQP where <:space> does not match, because it checks property VALUES before checking Bool property names"
     is '	 	' ~~ /<:space>+/, ' ', 'space chars';
 
     is $latin-chars.comb(/<:cntrl>/)>>.ord.join(","), (flat 0..31, 127..159).join(","), 'cntrl chars';
