@@ -43,7 +43,7 @@ plan 4;
 
 my $test-file = 't/spec/S24-testing/test-data/todo-passed.txt';
 my $cmd = "$*EXECUTABLE $test-file 2>&1";
-ok qqx[$cmd] ~~ /^"1..1" \n "ok 1 - test passes# TODO testing output for passing todo test" \n $ /,
+ok qqx[$cmd] ~~ /^"1..1" \n "ok 1 - test passes" \s* "# TODO testing output for passing todo test" \n $ /,
     "expected output with passing todo test";
 
 # vim: expandtab shiftwidth=4 ft=perl6
