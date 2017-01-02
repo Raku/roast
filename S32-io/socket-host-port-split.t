@@ -1,3 +1,4 @@
+use v6;
 use Test;
 
 # RT #130474
@@ -52,3 +53,5 @@ sub split-host-port(:$uri, :$family) {
             !! die 'Invalid INET family value'} server responded";
     $connection.close;
 }
+
+# vim: ft=perl6
