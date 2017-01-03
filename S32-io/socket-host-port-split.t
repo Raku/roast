@@ -9,7 +9,12 @@ constant HOST_PORT_IPV6 = '[::1]:5016';
 plan 2;
 
 split-host-port :uri(HOST_PORT_IPV4), :family(2);
-split-host-port :uri(HOST_PORT_IPV6), :family(3);
+
+#?rakudo skip 'Hangs on boxes without IPv6 support'
+#?DOES 1
+{
+    split-host-port :uri(HOST_PORT_IPV6), :family(3);
+}
 
 done-testing;
 
