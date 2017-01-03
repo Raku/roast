@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 334;
+plan 335;
 
 my $pod_index = 0;
 
@@ -321,3 +321,14 @@ test-leading($fancy-var.VAR, 'Very fancy!');
 )
 
 is $=pod.elems, $pod_index;
+
+# RT #130208
+eval-lives-ok q:to/CODE/, 'Can put multi-line Pod on a role with a required method';
+    #|{
+    Base role for Antennas
+    }
+    my role Antenna
+    {
+        method connect() {...}
+    }
+    CODE
