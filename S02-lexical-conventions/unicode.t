@@ -126,8 +126,8 @@ lives-ok { EVAL "\{ 1 \} \x2029 \{ 1 \}" },
 
 # L<S02/Bracketing Characters/If a character is already used>
 
-lives-ok { EVAL "q\x298d test \x298e" },
-  "Unicode open-298d maps to close-298e";
+dies-ok { EVAL "q\x298d test \x298e" },
+  "Unicode open-298d does not map to close-298e";
 lives-ok { EVAL "q\x301d test \x301e" },
   "Unicode open-301d maps to close-301e";
 throws-like { EVAL "q\x301d test \x301f" },
@@ -141,4 +141,3 @@ lives-ok { EVAL "q\x2018 \x201a test \x2019" },
   "Alternative open-brakets treat their other alternates as non-special";
 
 # vim: ft=perl6 fileencoding=utf-8
-
