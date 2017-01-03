@@ -145,7 +145,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
 # multiple existing elems
 {
-    #?rakudo.jvm skip 'wrong multi postcircumfix:<[ ]> selected RT #128123'
     is @a[1,2],                  <b c>, "$n multiple elem existing: value";
     is @a[1,2]:k,                (1,2), "$n multiple elem existing: :k";
     is @a[1,2]:k($ok),           (1,2), "$n multiple elem existing: :k(\$ok)";
@@ -230,7 +229,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
 # multiple missing elems
 {
-    #?rakudo.jvm skip 'wrong multi postcircumfix:<[ ]> selected RT #128123'
     is @a[11,12],                 ($T,$T), "$n multiple elem missing: value";
     is @a[11,12]:k,                    (), "$n multiple elem missing: :k";
     is @a[11,12]:k($ok),               (), "$n multiple elem missing: :k(\$ok)";
@@ -316,7 +314,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
 # mixed existing/missing elems
 {
-    #?rakudo.jvm skip 'wrong multi postcircumfix:<[ ]> selected RT #128123'
     is @a[1,12],               ("b",$T), "$n multiple elem mixed: value";
     is @a[1,12]:k,                 (1,), "$n multiple elem mixed: :k";
     is @a[1,12]:k($ok),            (1,), "$n multiple elem mixed: :k(\$ok)";
@@ -460,7 +457,6 @@ for $@n, Any, $@s, Str -> @a, $T {
     my @a;
     @a[$(7,8,9)] = 101;
     is @a.elems, 4, 'container respected in array assign';
-    #?rakudo.jvm skip 'wrong multi postcircumfix:<[ ]> selected RT #128123'
     is @a[$(7,8,9)], 101, 'container respected in array access';
     is @a[$(7,8,9)]:exists, True, 'container respected in array :exists';
     @a[$(7,8,9)]:delete;
