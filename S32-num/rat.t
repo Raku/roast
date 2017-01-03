@@ -230,7 +230,6 @@ ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
 ok 1/2 !=== 1/3, '=== with false outcome';
 
 # http://irclog.perlgeek.de/perl6/2010-02-24#i_2027452
-#?rakudo.jvm 2 skip 'java.lang.ArithmeticException: BigInteger divide by zero RT #128264'
 is (3/0).Num, Inf, "(3/0).Num = +Inf";
 is (-42/0).Num, -Inf, "(-42/0).Num = -Inf";
 
