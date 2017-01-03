@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 90;
+plan 89;
 
 #L<S02/Literals>
 # TODO:
@@ -30,13 +30,6 @@ plan 90;
 }
 
 {
-    my $s = q⦍blah blah blah⦎;
-    is $s, 'blah blah blah',
-        'q-style string with LEFT SQUARE BRACKET WITH TICK IN TOP CORNER and
-RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
-}
-
-{
     my $s = q〝blah blah blah〞;
     is $s, 'blah blah blah',
         'q-style string with REVERSED DOUBLE PRIME QUOTATION MARK and
@@ -44,13 +37,21 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 }
 
 {
+    my $upper-tick = 'q' ~ '⦍' ~ 'abc' ~ '⦐';
+    my $lower-tick = 'q' ~ '⦏' ~ 'abc' ~ '⦎';
+    is EVAL($upper-tick), 'abc', "q-style string with LEFT SQUARE BRACKET WITH TICK IN TOP CORNER and
+    RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+2990E)";
+    is EVAL($lower-tick), 'abc', "q-style string with LEFT SQUARE BRACKET WITH TICK IN TOP CORNER and
+    RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+2990E)";
+}
+{
     my @ps_pe = (
             '(' => ')', '[' => ']', '{' => '}', '༺' => '༻', '༼' => '༽',
             '᚛' => '᚜', '⁅' => '⁆', '⁽' => '⁾', '₍' => '₎', '〈' => '〉',
             '❨' => '❩', '❪' => '❫', '❬' => '❭', '❮' => '❯', '❰' => '❱',
             '❲' => '❳', '❴' => '❵', '⟅' => '⟆', '⟦' => '⟧', '⟨' => '⟩',
             '⟪' => '⟫', '⦃' => '⦄', '⦅' => '⦆', '⦇' => '⦈', '⦉' => '⦊',
-            '⦋' => '⦌', '⦍' => '⦎', '⦏' => '⦐', '⦑' => '⦒', '⦓' => '⦔',
+            '⦋' => '⦌', '⦑' => '⦒', '⦓' => '⦔',
             '⦕' => '⦖', '⦗' => '⦘', '⧘' => '⧙', '⧚' => '⧛', '⧼' => '⧽',
             '〈' => '〉', '《' => '》', '「' => '」', '『' => '』',
             '【' => '】', '〔' => '〕', '〖' => '〗', '〘' => '〙',
