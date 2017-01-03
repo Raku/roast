@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 25;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
 
@@ -130,6 +130,30 @@ class BarNextWithInt is Foo {
     nok $after-nw, 'control does not reach beyond nextwith that has nowhere to go';
     is DeadEnd.ns(1), Nil, 'nextsame with nowhere to defer produces Nil';
     nok $after-ns, 'control does not reach beyond nextsame that has nowhere to go';
+}
+
+# RT #123989
+{
+    my @output;
+	proto foo($) { * }
+    multi foo(Int $foo where * > 0) {
+        push @output, ">0";
+        nextsame;
+    }
+    multi foo(Int $foo where * < 10) {
+        push @output, "<10";
+        nextsame;
+    }
+    multi foo($foo) {
+        push @output, "generic";
+    }
+    foo(1);
+    is @output, ['>0', '<10', 'generic'], 'nextsame + multi + where interact correctly...';
+
+    for ^499 {
+        foo(1);
+    }
+    is @output, [|('>0', '<10', 'generic') xx 500], '...including in a repeated loop';
 }
 
 # vim: ft=perl6
