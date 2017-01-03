@@ -39,10 +39,12 @@ plan 88;
 {
     my $upper-tick = 'q' ~ '⦍' ~ 'abc' ~ '⦐';
     my $lower-tick = 'q' ~ '⦏' ~ 'abc' ~ '⦎';
-    is EVAL($upper-tick), 'abc', "q-style string with LEFT SQUARE BRACKET WITH TICK IN TOP CORNER and
-    RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+2990E)";
-    is EVAL($lower-tick), 'abc', "q-style string with LEFT SQUARE BRACKET WITH TICK IN TOP CORNER and
-    RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+2990E)";
+    is EVAL($upper-tick), 'abc',
+        "q-style string with LEFT SQUARE BRACKET WITH TICK IN TOP CORNER " ~
+        "and RIGHT SQUARE BRACKET WITH TICK IN TOP CORNER(U+298D/U+2990)";
+    is EVAL($lower-tick), 'abc',
+        "q-style string with LEFT SQUARE BRACKET WITH TICK IN BOTTOM CORNER " ~
+        "and RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298F/U+298E)";
 }
 {
     my @ps_pe = (
