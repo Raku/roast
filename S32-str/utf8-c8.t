@@ -5,7 +5,7 @@ use Test;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 46;
+plan 52;
 
 {
     my $test-str;
@@ -116,7 +116,13 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
         Buf.new(61,93,12,110,139,89,42,134,251,165,68,32,104,225,44,112,194,
             178,75,64,243),
         Buf.new(61,185,242,97,170,122,52,182,62,236,186,222,213,63,189,203,241,
-            176,1,149,233);
+            176,1,149,233),
+        Buf.new(61,125,17,108,54,202,12,120,39,225,91,9,125,124,163,24,100,110,
+            156,192,137),
+        Buf.new(61,57,204,118,97,221,164,168,63,30,168,197,108,198,67,28,111,192,
+            161,122,96),
+        Buf.new(61,180,192,142,191,171,181,101,4,238,122,232,11,194,77,144,221,
+            109,108,228,192);
 
     my $test-file = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
     END try unlink $test-file;
