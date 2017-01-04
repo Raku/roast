@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 209;
+plan 210;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -475,6 +475,18 @@ subtest 'SetHash autovivification of non-existent keys' => {
     my SetHash  $sh5;
     is-deeply   ($sh5<as> = 2), Bool::True,  'correct return of assignment';
     is-deeply   $sh5<as>,       Bool::True,  'correct result of assignment';
+}
+
+# RT#127863
+subtest 'cloned SetHash gets its own elements storage' => {
+    plan 2;
+    my $a = SetHash.new: <a b c>;
+    my $b = $a.clone;
+    $a<a>--; $a<b>++; $a<z> = 1;
+    is-deeply $a, SetHash.new-from-pairs("b" => 1, "c" => 1, "z" => 1),
+        'modifying first set works, even after we created its clone';
+    is-deeply $b, SetHash.new(<a b c>),
+        'modifying first set does not affect cloned set';
 }
 
 # vim: ft=perl6
