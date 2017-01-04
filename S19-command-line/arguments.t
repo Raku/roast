@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 3;
+plan 4;
 
 use Test::Util;
 
@@ -46,4 +46,10 @@ use Test::Util;
         err => { .chars < 256 && m/$dir/ && m/directory/ },
     },
     'concise error message when called script is a directory' );
+}
+
+{
+    is run($*EXECUTABLE, '-e', ｢print '“Hello world”'｣, :out).out.slurp-rest,
+        '“Hello world”',
+        'UTF-8 in arguments is decoded correctly';
 }
