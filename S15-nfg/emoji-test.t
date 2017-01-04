@@ -295,460 +295,688 @@ is Uni.new(0x1F47C, 0x1F3FE).Str.chars, 1, "👼🏾 baby angel: medium-dark ski
 ## 1F47C 1F3FF                                ; fully-qualified     # 👼🏿 baby angel: dark skin tone # emoji-test.txt line #187 Emoji version 4.0
 is Uni.new(0x1F47C, 0x1F3FF).Str.chars, 1, "👼🏿 baby angel: dark skin tone";
 ## 1F468 200D 2695 FE0F                       ; fully-qualified     # 👨‍⚕️ man health worker # emoji-test.txt line #190 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👨‍⚕️ man health worker";
 ## 1F468 200D 2695                            ; non-fully-qualified # 👨‍⚕ man health worker # emoji-test.txt line #191 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2695).Str.chars, 1, "👨‍⚕ man health worker";
 ## 1F468 1F3FB 200D 2695 FE0F                 ; fully-qualified     # 👨🏻‍⚕️ man health worker: light skin tone # emoji-test.txt line #192 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👨🏻‍⚕️ man health worker: light skin tone";
 ## 1F468 1F3FB 200D 2695                      ; non-fully-qualified # 👨🏻‍⚕ man health worker: light skin tone # emoji-test.txt line #193 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x2695).Str.chars, 1, "👨🏻‍⚕ man health worker: light skin tone";
 ## 1F468 1F3FC 200D 2695 FE0F                 ; fully-qualified     # 👨🏼‍⚕️ man health worker: medium-light skin tone # emoji-test.txt line #194 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👨🏼‍⚕️ man health worker: medium-light skin tone";
 ## 1F468 1F3FC 200D 2695                      ; non-fully-qualified # 👨🏼‍⚕ man health worker: medium-light skin tone # emoji-test.txt line #195 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x2695).Str.chars, 1, "👨🏼‍⚕ man health worker: medium-light skin tone";
 ## 1F468 1F3FD 200D 2695 FE0F                 ; fully-qualified     # 👨🏽‍⚕️ man health worker: medium skin tone # emoji-test.txt line #196 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👨🏽‍⚕️ man health worker: medium skin tone";
 ## 1F468 1F3FD 200D 2695                      ; non-fully-qualified # 👨🏽‍⚕ man health worker: medium skin tone # emoji-test.txt line #197 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x2695).Str.chars, 1, "👨🏽‍⚕ man health worker: medium skin tone";
 ## 1F468 1F3FE 200D 2695 FE0F                 ; fully-qualified     # 👨🏾‍⚕️ man health worker: medium-dark skin tone # emoji-test.txt line #198 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👨🏾‍⚕️ man health worker: medium-dark skin tone";
 ## 1F468 1F3FE 200D 2695                      ; non-fully-qualified # 👨🏾‍⚕ man health worker: medium-dark skin tone # emoji-test.txt line #199 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x2695).Str.chars, 1, "👨🏾‍⚕ man health worker: medium-dark skin tone";
 ## 1F468 1F3FF 200D 2695 FE0F                 ; fully-qualified     # 👨🏿‍⚕️ man health worker: dark skin tone # emoji-test.txt line #200 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👨🏿‍⚕️ man health worker: dark skin tone";
 ## 1F468 1F3FF 200D 2695                      ; non-fully-qualified # 👨🏿‍⚕ man health worker: dark skin tone # emoji-test.txt line #201 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x2695).Str.chars, 1, "👨🏿‍⚕ man health worker: dark skin tone";
 ## 1F469 200D 2695 FE0F                       ; fully-qualified     # 👩‍⚕️ woman health worker # emoji-test.txt line #202 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👩‍⚕️ woman health worker";
 ## 1F469 200D 2695                            ; non-fully-qualified # 👩‍⚕ woman health worker # emoji-test.txt line #203 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2695).Str.chars, 1, "👩‍⚕ woman health worker";
 ## 1F469 1F3FB 200D 2695 FE0F                 ; fully-qualified     # 👩🏻‍⚕️ woman health worker: light skin tone # emoji-test.txt line #204 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👩🏻‍⚕️ woman health worker: light skin tone";
 ## 1F469 1F3FB 200D 2695                      ; non-fully-qualified # 👩🏻‍⚕ woman health worker: light skin tone # emoji-test.txt line #205 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x2695).Str.chars, 1, "👩🏻‍⚕ woman health worker: light skin tone";
 ## 1F469 1F3FC 200D 2695 FE0F                 ; fully-qualified     # 👩🏼‍⚕️ woman health worker: medium-light skin tone # emoji-test.txt line #206 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👩🏼‍⚕️ woman health worker: medium-light skin tone";
 ## 1F469 1F3FC 200D 2695                      ; non-fully-qualified # 👩🏼‍⚕ woman health worker: medium-light skin tone # emoji-test.txt line #207 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x2695).Str.chars, 1, "👩🏼‍⚕ woman health worker: medium-light skin tone";
 ## 1F469 1F3FD 200D 2695 FE0F                 ; fully-qualified     # 👩🏽‍⚕️ woman health worker: medium skin tone # emoji-test.txt line #208 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👩🏽‍⚕️ woman health worker: medium skin tone";
 ## 1F469 1F3FD 200D 2695                      ; non-fully-qualified # 👩🏽‍⚕ woman health worker: medium skin tone # emoji-test.txt line #209 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x2695).Str.chars, 1, "👩🏽‍⚕ woman health worker: medium skin tone";
 ## 1F469 1F3FE 200D 2695 FE0F                 ; fully-qualified     # 👩🏾‍⚕️ woman health worker: medium-dark skin tone # emoji-test.txt line #210 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👩🏾‍⚕️ woman health worker: medium-dark skin tone";
 ## 1F469 1F3FE 200D 2695                      ; non-fully-qualified # 👩🏾‍⚕ woman health worker: medium-dark skin tone # emoji-test.txt line #211 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x2695).Str.chars, 1, "👩🏾‍⚕ woman health worker: medium-dark skin tone";
 ## 1F469 1F3FF 200D 2695 FE0F                 ; fully-qualified     # 👩🏿‍⚕️ woman health worker: dark skin tone # emoji-test.txt line #212 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x2695, 0xFE0F).Str.chars, 1, "👩🏿‍⚕️ woman health worker: dark skin tone";
 ## 1F469 1F3FF 200D 2695                      ; non-fully-qualified # 👩🏿‍⚕ woman health worker: dark skin tone # emoji-test.txt line #213 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x2695).Str.chars, 1, "👩🏿‍⚕ woman health worker: dark skin tone";
 ## 1F468 200D 1F393                           ; fully-qualified     # 👨‍🎓 man student # emoji-test.txt line #214 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F393).Str.chars, 1, "👨‍🎓 man student";
 ## 1F468 1F3FB 200D 1F393                     ; fully-qualified     # 👨🏻‍🎓 man student: light skin tone # emoji-test.txt line #215 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F393).Str.chars, 1, "👨🏻‍🎓 man student: light skin tone";
 ## 1F468 1F3FC 200D 1F393                     ; fully-qualified     # 👨🏼‍🎓 man student: medium-light skin tone # emoji-test.txt line #216 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F393).Str.chars, 1, "👨🏼‍🎓 man student: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F393                     ; fully-qualified     # 👨🏽‍🎓 man student: medium skin tone # emoji-test.txt line #217 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F393).Str.chars, 1, "👨🏽‍🎓 man student: medium skin tone";
 ## 1F468 1F3FE 200D 1F393                     ; fully-qualified     # 👨🏾‍🎓 man student: medium-dark skin tone # emoji-test.txt line #218 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F393).Str.chars, 1, "👨🏾‍🎓 man student: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F393                     ; fully-qualified     # 👨🏿‍🎓 man student: dark skin tone # emoji-test.txt line #219 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F393).Str.chars, 1, "👨🏿‍🎓 man student: dark skin tone";
 ## 1F469 200D 1F393                           ; fully-qualified     # 👩‍🎓 woman student # emoji-test.txt line #220 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F393).Str.chars, 1, "👩‍🎓 woman student";
 ## 1F469 1F3FB 200D 1F393                     ; fully-qualified     # 👩🏻‍🎓 woman student: light skin tone # emoji-test.txt line #221 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F393).Str.chars, 1, "👩🏻‍🎓 woman student: light skin tone";
 ## 1F469 1F3FC 200D 1F393                     ; fully-qualified     # 👩🏼‍🎓 woman student: medium-light skin tone # emoji-test.txt line #222 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F393).Str.chars, 1, "👩🏼‍🎓 woman student: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F393                     ; fully-qualified     # 👩🏽‍🎓 woman student: medium skin tone # emoji-test.txt line #223 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F393).Str.chars, 1, "👩🏽‍🎓 woman student: medium skin tone";
 ## 1F469 1F3FE 200D 1F393                     ; fully-qualified     # 👩🏾‍🎓 woman student: medium-dark skin tone # emoji-test.txt line #224 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F393).Str.chars, 1, "👩🏾‍🎓 woman student: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F393                     ; fully-qualified     # 👩🏿‍🎓 woman student: dark skin tone # emoji-test.txt line #225 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F393).Str.chars, 1, "👩🏿‍🎓 woman student: dark skin tone";
 ## 1F468 200D 1F3EB                           ; fully-qualified     # 👨‍🏫 man teacher # emoji-test.txt line #226 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F3EB).Str.chars, 1, "👨‍🏫 man teacher";
 ## 1F468 1F3FB 200D 1F3EB                     ; fully-qualified     # 👨🏻‍🏫 man teacher: light skin tone # emoji-test.txt line #227 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F3EB).Str.chars, 1, "👨🏻‍🏫 man teacher: light skin tone";
 ## 1F468 1F3FC 200D 1F3EB                     ; fully-qualified     # 👨🏼‍🏫 man teacher: medium-light skin tone # emoji-test.txt line #228 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F3EB).Str.chars, 1, "👨🏼‍🏫 man teacher: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F3EB                     ; fully-qualified     # 👨🏽‍🏫 man teacher: medium skin tone # emoji-test.txt line #229 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F3EB).Str.chars, 1, "👨🏽‍🏫 man teacher: medium skin tone";
 ## 1F468 1F3FE 200D 1F3EB                     ; fully-qualified     # 👨🏾‍🏫 man teacher: medium-dark skin tone # emoji-test.txt line #230 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F3EB).Str.chars, 1, "👨🏾‍🏫 man teacher: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F3EB                     ; fully-qualified     # 👨🏿‍🏫 man teacher: dark skin tone # emoji-test.txt line #231 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F3EB).Str.chars, 1, "👨🏿‍🏫 man teacher: dark skin tone";
 ## 1F469 200D 1F3EB                           ; fully-qualified     # 👩‍🏫 woman teacher # emoji-test.txt line #232 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F3EB).Str.chars, 1, "👩‍🏫 woman teacher";
 ## 1F469 1F3FB 200D 1F3EB                     ; fully-qualified     # 👩🏻‍🏫 woman teacher: light skin tone # emoji-test.txt line #233 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F3EB).Str.chars, 1, "👩🏻‍🏫 woman teacher: light skin tone";
 ## 1F469 1F3FC 200D 1F3EB                     ; fully-qualified     # 👩🏼‍🏫 woman teacher: medium-light skin tone # emoji-test.txt line #234 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F3EB).Str.chars, 1, "👩🏼‍🏫 woman teacher: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F3EB                     ; fully-qualified     # 👩🏽‍🏫 woman teacher: medium skin tone # emoji-test.txt line #235 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F3EB).Str.chars, 1, "👩🏽‍🏫 woman teacher: medium skin tone";
 ## 1F469 1F3FE 200D 1F3EB                     ; fully-qualified     # 👩🏾‍🏫 woman teacher: medium-dark skin tone # emoji-test.txt line #236 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F3EB).Str.chars, 1, "👩🏾‍🏫 woman teacher: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F3EB                     ; fully-qualified     # 👩🏿‍🏫 woman teacher: dark skin tone # emoji-test.txt line #237 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F3EB).Str.chars, 1, "👩🏿‍🏫 woman teacher: dark skin tone";
 ## 1F468 200D 2696 FE0F                       ; fully-qualified     # 👨‍⚖️ man judge # emoji-test.txt line #238 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👨‍⚖️ man judge";
 ## 1F468 200D 2696                            ; non-fully-qualified # 👨‍⚖ man judge # emoji-test.txt line #239 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2696).Str.chars, 1, "👨‍⚖ man judge";
 ## 1F468 1F3FB 200D 2696 FE0F                 ; fully-qualified     # 👨🏻‍⚖️ man judge: light skin tone # emoji-test.txt line #240 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👨🏻‍⚖️ man judge: light skin tone";
 ## 1F468 1F3FB 200D 2696                      ; non-fully-qualified # 👨🏻‍⚖ man judge: light skin tone # emoji-test.txt line #241 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x2696).Str.chars, 1, "👨🏻‍⚖ man judge: light skin tone";
 ## 1F468 1F3FC 200D 2696 FE0F                 ; fully-qualified     # 👨🏼‍⚖️ man judge: medium-light skin tone # emoji-test.txt line #242 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👨🏼‍⚖️ man judge: medium-light skin tone";
 ## 1F468 1F3FC 200D 2696                      ; non-fully-qualified # 👨🏼‍⚖ man judge: medium-light skin tone # emoji-test.txt line #243 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x2696).Str.chars, 1, "👨🏼‍⚖ man judge: medium-light skin tone";
 ## 1F468 1F3FD 200D 2696 FE0F                 ; fully-qualified     # 👨🏽‍⚖️ man judge: medium skin tone # emoji-test.txt line #244 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👨🏽‍⚖️ man judge: medium skin tone";
 ## 1F468 1F3FD 200D 2696                      ; non-fully-qualified # 👨🏽‍⚖ man judge: medium skin tone # emoji-test.txt line #245 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x2696).Str.chars, 1, "👨🏽‍⚖ man judge: medium skin tone";
 ## 1F468 1F3FE 200D 2696 FE0F                 ; fully-qualified     # 👨🏾‍⚖️ man judge: medium-dark skin tone # emoji-test.txt line #246 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👨🏾‍⚖️ man judge: medium-dark skin tone";
 ## 1F468 1F3FE 200D 2696                      ; non-fully-qualified # 👨🏾‍⚖ man judge: medium-dark skin tone # emoji-test.txt line #247 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x2696).Str.chars, 1, "👨🏾‍⚖ man judge: medium-dark skin tone";
 ## 1F468 1F3FF 200D 2696 FE0F                 ; fully-qualified     # 👨🏿‍⚖️ man judge: dark skin tone # emoji-test.txt line #248 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👨🏿‍⚖️ man judge: dark skin tone";
 ## 1F468 1F3FF 200D 2696                      ; non-fully-qualified # 👨🏿‍⚖ man judge: dark skin tone # emoji-test.txt line #249 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x2696).Str.chars, 1, "👨🏿‍⚖ man judge: dark skin tone";
 ## 1F469 200D 2696 FE0F                       ; fully-qualified     # 👩‍⚖️ woman judge # emoji-test.txt line #250 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👩‍⚖️ woman judge";
 ## 1F469 200D 2696                            ; non-fully-qualified # 👩‍⚖ woman judge # emoji-test.txt line #251 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2696).Str.chars, 1, "👩‍⚖ woman judge";
 ## 1F469 1F3FB 200D 2696 FE0F                 ; fully-qualified     # 👩🏻‍⚖️ woman judge: light skin tone # emoji-test.txt line #252 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👩🏻‍⚖️ woman judge: light skin tone";
 ## 1F469 1F3FB 200D 2696                      ; non-fully-qualified # 👩🏻‍⚖ woman judge: light skin tone # emoji-test.txt line #253 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x2696).Str.chars, 1, "👩🏻‍⚖ woman judge: light skin tone";
 ## 1F469 1F3FC 200D 2696 FE0F                 ; fully-qualified     # 👩🏼‍⚖️ woman judge: medium-light skin tone # emoji-test.txt line #254 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👩🏼‍⚖️ woman judge: medium-light skin tone";
 ## 1F469 1F3FC 200D 2696                      ; non-fully-qualified # 👩🏼‍⚖ woman judge: medium-light skin tone # emoji-test.txt line #255 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x2696).Str.chars, 1, "👩🏼‍⚖ woman judge: medium-light skin tone";
 ## 1F469 1F3FD 200D 2696 FE0F                 ; fully-qualified     # 👩🏽‍⚖️ woman judge: medium skin tone # emoji-test.txt line #256 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👩🏽‍⚖️ woman judge: medium skin tone";
 ## 1F469 1F3FD 200D 2696                      ; non-fully-qualified # 👩🏽‍⚖ woman judge: medium skin tone # emoji-test.txt line #257 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x2696).Str.chars, 1, "👩🏽‍⚖ woman judge: medium skin tone";
 ## 1F469 1F3FE 200D 2696 FE0F                 ; fully-qualified     # 👩🏾‍⚖️ woman judge: medium-dark skin tone # emoji-test.txt line #258 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👩🏾‍⚖️ woman judge: medium-dark skin tone";
 ## 1F469 1F3FE 200D 2696                      ; non-fully-qualified # 👩🏾‍⚖ woman judge: medium-dark skin tone # emoji-test.txt line #259 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x2696).Str.chars, 1, "👩🏾‍⚖ woman judge: medium-dark skin tone";
 ## 1F469 1F3FF 200D 2696 FE0F                 ; fully-qualified     # 👩🏿‍⚖️ woman judge: dark skin tone # emoji-test.txt line #260 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x2696, 0xFE0F).Str.chars, 1, "👩🏿‍⚖️ woman judge: dark skin tone";
 ## 1F469 1F3FF 200D 2696                      ; non-fully-qualified # 👩🏿‍⚖ woman judge: dark skin tone # emoji-test.txt line #261 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x2696).Str.chars, 1, "👩🏿‍⚖ woman judge: dark skin tone";
 ## 1F468 200D 1F33E                           ; fully-qualified     # 👨‍🌾 man farmer # emoji-test.txt line #262 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F33E).Str.chars, 1, "👨‍🌾 man farmer";
 ## 1F468 1F3FB 200D 1F33E                     ; fully-qualified     # 👨🏻‍🌾 man farmer: light skin tone # emoji-test.txt line #263 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F33E).Str.chars, 1, "👨🏻‍🌾 man farmer: light skin tone";
 ## 1F468 1F3FC 200D 1F33E                     ; fully-qualified     # 👨🏼‍🌾 man farmer: medium-light skin tone # emoji-test.txt line #264 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F33E).Str.chars, 1, "👨🏼‍🌾 man farmer: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F33E                     ; fully-qualified     # 👨🏽‍🌾 man farmer: medium skin tone # emoji-test.txt line #265 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F33E).Str.chars, 1, "👨🏽‍🌾 man farmer: medium skin tone";
 ## 1F468 1F3FE 200D 1F33E                     ; fully-qualified     # 👨🏾‍🌾 man farmer: medium-dark skin tone # emoji-test.txt line #266 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F33E).Str.chars, 1, "👨🏾‍🌾 man farmer: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F33E                     ; fully-qualified     # 👨🏿‍🌾 man farmer: dark skin tone # emoji-test.txt line #267 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F33E).Str.chars, 1, "👨🏿‍🌾 man farmer: dark skin tone";
 ## 1F469 200D 1F33E                           ; fully-qualified     # 👩‍🌾 woman farmer # emoji-test.txt line #268 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F33E).Str.chars, 1, "👩‍🌾 woman farmer";
 ## 1F469 1F3FB 200D 1F33E                     ; fully-qualified     # 👩🏻‍🌾 woman farmer: light skin tone # emoji-test.txt line #269 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F33E).Str.chars, 1, "👩🏻‍🌾 woman farmer: light skin tone";
 ## 1F469 1F3FC 200D 1F33E                     ; fully-qualified     # 👩🏼‍🌾 woman farmer: medium-light skin tone # emoji-test.txt line #270 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F33E).Str.chars, 1, "👩🏼‍🌾 woman farmer: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F33E                     ; fully-qualified     # 👩🏽‍🌾 woman farmer: medium skin tone # emoji-test.txt line #271 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F33E).Str.chars, 1, "👩🏽‍🌾 woman farmer: medium skin tone";
 ## 1F469 1F3FE 200D 1F33E                     ; fully-qualified     # 👩🏾‍🌾 woman farmer: medium-dark skin tone # emoji-test.txt line #272 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F33E).Str.chars, 1, "👩🏾‍🌾 woman farmer: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F33E                     ; fully-qualified     # 👩🏿‍🌾 woman farmer: dark skin tone # emoji-test.txt line #273 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F33E).Str.chars, 1, "👩🏿‍🌾 woman farmer: dark skin tone";
 ## 1F468 200D 1F373                           ; fully-qualified     # 👨‍🍳 man cook # emoji-test.txt line #274 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F373).Str.chars, 1, "👨‍🍳 man cook";
 ## 1F468 1F3FB 200D 1F373                     ; fully-qualified     # 👨🏻‍🍳 man cook: light skin tone # emoji-test.txt line #275 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F373).Str.chars, 1, "👨🏻‍🍳 man cook: light skin tone";
 ## 1F468 1F3FC 200D 1F373                     ; fully-qualified     # 👨🏼‍🍳 man cook: medium-light skin tone # emoji-test.txt line #276 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F373).Str.chars, 1, "👨🏼‍🍳 man cook: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F373                     ; fully-qualified     # 👨🏽‍🍳 man cook: medium skin tone # emoji-test.txt line #277 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F373).Str.chars, 1, "👨🏽‍🍳 man cook: medium skin tone";
 ## 1F468 1F3FE 200D 1F373                     ; fully-qualified     # 👨🏾‍🍳 man cook: medium-dark skin tone # emoji-test.txt line #278 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F373).Str.chars, 1, "👨🏾‍🍳 man cook: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F373                     ; fully-qualified     # 👨🏿‍🍳 man cook: dark skin tone # emoji-test.txt line #279 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F373).Str.chars, 1, "👨🏿‍🍳 man cook: dark skin tone";
 ## 1F469 200D 1F373                           ; fully-qualified     # 👩‍🍳 woman cook # emoji-test.txt line #280 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F373).Str.chars, 1, "👩‍🍳 woman cook";
 ## 1F469 1F3FB 200D 1F373                     ; fully-qualified     # 👩🏻‍🍳 woman cook: light skin tone # emoji-test.txt line #281 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F373).Str.chars, 1, "👩🏻‍🍳 woman cook: light skin tone";
 ## 1F469 1F3FC 200D 1F373                     ; fully-qualified     # 👩🏼‍🍳 woman cook: medium-light skin tone # emoji-test.txt line #282 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F373).Str.chars, 1, "👩🏼‍🍳 woman cook: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F373                     ; fully-qualified     # 👩🏽‍🍳 woman cook: medium skin tone # emoji-test.txt line #283 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F373).Str.chars, 1, "👩🏽‍🍳 woman cook: medium skin tone";
 ## 1F469 1F3FE 200D 1F373                     ; fully-qualified     # 👩🏾‍🍳 woman cook: medium-dark skin tone # emoji-test.txt line #284 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F373).Str.chars, 1, "👩🏾‍🍳 woman cook: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F373                     ; fully-qualified     # 👩🏿‍🍳 woman cook: dark skin tone # emoji-test.txt line #285 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F373).Str.chars, 1, "👩🏿‍🍳 woman cook: dark skin tone";
 ## 1F468 200D 1F527                           ; fully-qualified     # 👨‍🔧 man mechanic # emoji-test.txt line #286 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F527).Str.chars, 1, "👨‍🔧 man mechanic";
 ## 1F468 1F3FB 200D 1F527                     ; fully-qualified     # 👨🏻‍🔧 man mechanic: light skin tone # emoji-test.txt line #287 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F527).Str.chars, 1, "👨🏻‍🔧 man mechanic: light skin tone";
 ## 1F468 1F3FC 200D 1F527                     ; fully-qualified     # 👨🏼‍🔧 man mechanic: medium-light skin tone # emoji-test.txt line #288 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F527).Str.chars, 1, "👨🏼‍🔧 man mechanic: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F527                     ; fully-qualified     # 👨🏽‍🔧 man mechanic: medium skin tone # emoji-test.txt line #289 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F527).Str.chars, 1, "👨🏽‍🔧 man mechanic: medium skin tone";
 ## 1F468 1F3FE 200D 1F527                     ; fully-qualified     # 👨🏾‍🔧 man mechanic: medium-dark skin tone # emoji-test.txt line #290 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F527).Str.chars, 1, "👨🏾‍🔧 man mechanic: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F527                     ; fully-qualified     # 👨🏿‍🔧 man mechanic: dark skin tone # emoji-test.txt line #291 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F527).Str.chars, 1, "👨🏿‍🔧 man mechanic: dark skin tone";
 ## 1F469 200D 1F527                           ; fully-qualified     # 👩‍🔧 woman mechanic # emoji-test.txt line #292 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F527).Str.chars, 1, "👩‍🔧 woman mechanic";
 ## 1F469 1F3FB 200D 1F527                     ; fully-qualified     # 👩🏻‍🔧 woman mechanic: light skin tone # emoji-test.txt line #293 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F527).Str.chars, 1, "👩🏻‍🔧 woman mechanic: light skin tone";
 ## 1F469 1F3FC 200D 1F527                     ; fully-qualified     # 👩🏼‍🔧 woman mechanic: medium-light skin tone # emoji-test.txt line #294 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F527).Str.chars, 1, "👩🏼‍🔧 woman mechanic: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F527                     ; fully-qualified     # 👩🏽‍🔧 woman mechanic: medium skin tone # emoji-test.txt line #295 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F527).Str.chars, 1, "👩🏽‍🔧 woman mechanic: medium skin tone";
 ## 1F469 1F3FE 200D 1F527                     ; fully-qualified     # 👩🏾‍🔧 woman mechanic: medium-dark skin tone # emoji-test.txt line #296 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F527).Str.chars, 1, "👩🏾‍🔧 woman mechanic: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F527                     ; fully-qualified     # 👩🏿‍🔧 woman mechanic: dark skin tone # emoji-test.txt line #297 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F527).Str.chars, 1, "👩🏿‍🔧 woman mechanic: dark skin tone";
 ## 1F468 200D 1F3ED                           ; fully-qualified     # 👨‍🏭 man factory worker # emoji-test.txt line #298 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F3ED).Str.chars, 1, "👨‍🏭 man factory worker";
 ## 1F468 1F3FB 200D 1F3ED                     ; fully-qualified     # 👨🏻‍🏭 man factory worker: light skin tone # emoji-test.txt line #299 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F3ED).Str.chars, 1, "👨🏻‍🏭 man factory worker: light skin tone";
 ## 1F468 1F3FC 200D 1F3ED                     ; fully-qualified     # 👨🏼‍🏭 man factory worker: medium-light skin tone # emoji-test.txt line #300 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F3ED).Str.chars, 1, "👨🏼‍🏭 man factory worker: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F3ED                     ; fully-qualified     # 👨🏽‍🏭 man factory worker: medium skin tone # emoji-test.txt line #301 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F3ED).Str.chars, 1, "👨🏽‍🏭 man factory worker: medium skin tone";
 ## 1F468 1F3FE 200D 1F3ED                     ; fully-qualified     # 👨🏾‍🏭 man factory worker: medium-dark skin tone # emoji-test.txt line #302 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F3ED).Str.chars, 1, "👨🏾‍🏭 man factory worker: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F3ED                     ; fully-qualified     # 👨🏿‍🏭 man factory worker: dark skin tone # emoji-test.txt line #303 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F3ED).Str.chars, 1, "👨🏿‍🏭 man factory worker: dark skin tone";
 ## 1F469 200D 1F3ED                           ; fully-qualified     # 👩‍🏭 woman factory worker # emoji-test.txt line #304 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F3ED).Str.chars, 1, "👩‍🏭 woman factory worker";
 ## 1F469 1F3FB 200D 1F3ED                     ; fully-qualified     # 👩🏻‍🏭 woman factory worker: light skin tone # emoji-test.txt line #305 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F3ED).Str.chars, 1, "👩🏻‍🏭 woman factory worker: light skin tone";
 ## 1F469 1F3FC 200D 1F3ED                     ; fully-qualified     # 👩🏼‍🏭 woman factory worker: medium-light skin tone # emoji-test.txt line #306 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F3ED).Str.chars, 1, "👩🏼‍🏭 woman factory worker: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F3ED                     ; fully-qualified     # 👩🏽‍🏭 woman factory worker: medium skin tone # emoji-test.txt line #307 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F3ED).Str.chars, 1, "👩🏽‍🏭 woman factory worker: medium skin tone";
 ## 1F469 1F3FE 200D 1F3ED                     ; fully-qualified     # 👩🏾‍🏭 woman factory worker: medium-dark skin tone # emoji-test.txt line #308 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F3ED).Str.chars, 1, "👩🏾‍🏭 woman factory worker: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F3ED                     ; fully-qualified     # 👩🏿‍🏭 woman factory worker: dark skin tone # emoji-test.txt line #309 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F3ED).Str.chars, 1, "👩🏿‍🏭 woman factory worker: dark skin tone";
 ## 1F468 200D 1F4BC                           ; fully-qualified     # 👨‍💼 man office worker # emoji-test.txt line #310 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F4BC).Str.chars, 1, "👨‍💼 man office worker";
 ## 1F468 1F3FB 200D 1F4BC                     ; fully-qualified     # 👨🏻‍💼 man office worker: light skin tone # emoji-test.txt line #311 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F4BC).Str.chars, 1, "👨🏻‍💼 man office worker: light skin tone";
 ## 1F468 1F3FC 200D 1F4BC                     ; fully-qualified     # 👨🏼‍💼 man office worker: medium-light skin tone # emoji-test.txt line #312 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F4BC).Str.chars, 1, "👨🏼‍💼 man office worker: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F4BC                     ; fully-qualified     # 👨🏽‍💼 man office worker: medium skin tone # emoji-test.txt line #313 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F4BC).Str.chars, 1, "👨🏽‍💼 man office worker: medium skin tone";
 ## 1F468 1F3FE 200D 1F4BC                     ; fully-qualified     # 👨🏾‍💼 man office worker: medium-dark skin tone # emoji-test.txt line #314 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F4BC).Str.chars, 1, "👨🏾‍💼 man office worker: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F4BC                     ; fully-qualified     # 👨🏿‍💼 man office worker: dark skin tone # emoji-test.txt line #315 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F4BC).Str.chars, 1, "👨🏿‍💼 man office worker: dark skin tone";
 ## 1F469 200D 1F4BC                           ; fully-qualified     # 👩‍💼 woman office worker # emoji-test.txt line #316 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F4BC).Str.chars, 1, "👩‍💼 woman office worker";
 ## 1F469 1F3FB 200D 1F4BC                     ; fully-qualified     # 👩🏻‍💼 woman office worker: light skin tone # emoji-test.txt line #317 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F4BC).Str.chars, 1, "👩🏻‍💼 woman office worker: light skin tone";
 ## 1F469 1F3FC 200D 1F4BC                     ; fully-qualified     # 👩🏼‍💼 woman office worker: medium-light skin tone # emoji-test.txt line #318 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F4BC).Str.chars, 1, "👩🏼‍💼 woman office worker: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F4BC                     ; fully-qualified     # 👩🏽‍💼 woman office worker: medium skin tone # emoji-test.txt line #319 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F4BC).Str.chars, 1, "👩🏽‍💼 woman office worker: medium skin tone";
 ## 1F469 1F3FE 200D 1F4BC                     ; fully-qualified     # 👩🏾‍💼 woman office worker: medium-dark skin tone # emoji-test.txt line #320 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F4BC).Str.chars, 1, "👩🏾‍💼 woman office worker: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F4BC                     ; fully-qualified     # 👩🏿‍💼 woman office worker: dark skin tone # emoji-test.txt line #321 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F4BC).Str.chars, 1, "👩🏿‍💼 woman office worker: dark skin tone";
 ## 1F468 200D 1F52C                           ; fully-qualified     # 👨‍🔬 man scientist # emoji-test.txt line #322 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F52C).Str.chars, 1, "👨‍🔬 man scientist";
 ## 1F468 1F3FB 200D 1F52C                     ; fully-qualified     # 👨🏻‍🔬 man scientist: light skin tone # emoji-test.txt line #323 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F52C).Str.chars, 1, "👨🏻‍🔬 man scientist: light skin tone";
 ## 1F468 1F3FC 200D 1F52C                     ; fully-qualified     # 👨🏼‍🔬 man scientist: medium-light skin tone # emoji-test.txt line #324 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F52C).Str.chars, 1, "👨🏼‍🔬 man scientist: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F52C                     ; fully-qualified     # 👨🏽‍🔬 man scientist: medium skin tone # emoji-test.txt line #325 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F52C).Str.chars, 1, "👨🏽‍🔬 man scientist: medium skin tone";
 ## 1F468 1F3FE 200D 1F52C                     ; fully-qualified     # 👨🏾‍🔬 man scientist: medium-dark skin tone # emoji-test.txt line #326 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F52C).Str.chars, 1, "👨🏾‍🔬 man scientist: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F52C                     ; fully-qualified     # 👨🏿‍🔬 man scientist: dark skin tone # emoji-test.txt line #327 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F52C).Str.chars, 1, "👨🏿‍🔬 man scientist: dark skin tone";
 ## 1F469 200D 1F52C                           ; fully-qualified     # 👩‍🔬 woman scientist # emoji-test.txt line #328 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F52C).Str.chars, 1, "👩‍🔬 woman scientist";
 ## 1F469 1F3FB 200D 1F52C                     ; fully-qualified     # 👩🏻‍🔬 woman scientist: light skin tone # emoji-test.txt line #329 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F52C).Str.chars, 1, "👩🏻‍🔬 woman scientist: light skin tone";
 ## 1F469 1F3FC 200D 1F52C                     ; fully-qualified     # 👩🏼‍🔬 woman scientist: medium-light skin tone # emoji-test.txt line #330 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F52C).Str.chars, 1, "👩🏼‍🔬 woman scientist: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F52C                     ; fully-qualified     # 👩🏽‍🔬 woman scientist: medium skin tone # emoji-test.txt line #331 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F52C).Str.chars, 1, "👩🏽‍🔬 woman scientist: medium skin tone";
 ## 1F469 1F3FE 200D 1F52C                     ; fully-qualified     # 👩🏾‍🔬 woman scientist: medium-dark skin tone # emoji-test.txt line #332 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F52C).Str.chars, 1, "👩🏾‍🔬 woman scientist: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F52C                     ; fully-qualified     # 👩🏿‍🔬 woman scientist: dark skin tone # emoji-test.txt line #333 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F52C).Str.chars, 1, "👩🏿‍🔬 woman scientist: dark skin tone";
 ## 1F468 200D 1F4BB                           ; fully-qualified     # 👨‍💻 man technologist # emoji-test.txt line #334 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F4BB).Str.chars, 1, "👨‍💻 man technologist";
 ## 1F468 1F3FB 200D 1F4BB                     ; fully-qualified     # 👨🏻‍💻 man technologist: light skin tone # emoji-test.txt line #335 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F4BB).Str.chars, 1, "👨🏻‍💻 man technologist: light skin tone";
 ## 1F468 1F3FC 200D 1F4BB                     ; fully-qualified     # 👨🏼‍💻 man technologist: medium-light skin tone # emoji-test.txt line #336 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F4BB).Str.chars, 1, "👨🏼‍💻 man technologist: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F4BB                     ; fully-qualified     # 👨🏽‍💻 man technologist: medium skin tone # emoji-test.txt line #337 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F4BB).Str.chars, 1, "👨🏽‍💻 man technologist: medium skin tone";
 ## 1F468 1F3FE 200D 1F4BB                     ; fully-qualified     # 👨🏾‍💻 man technologist: medium-dark skin tone # emoji-test.txt line #338 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F4BB).Str.chars, 1, "👨🏾‍💻 man technologist: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F4BB                     ; fully-qualified     # 👨🏿‍💻 man technologist: dark skin tone # emoji-test.txt line #339 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F4BB).Str.chars, 1, "👨🏿‍💻 man technologist: dark skin tone";
 ## 1F469 200D 1F4BB                           ; fully-qualified     # 👩‍💻 woman technologist # emoji-test.txt line #340 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F4BB).Str.chars, 1, "👩‍💻 woman technologist";
 ## 1F469 1F3FB 200D 1F4BB                     ; fully-qualified     # 👩🏻‍💻 woman technologist: light skin tone # emoji-test.txt line #341 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F4BB).Str.chars, 1, "👩🏻‍💻 woman technologist: light skin tone";
 ## 1F469 1F3FC 200D 1F4BB                     ; fully-qualified     # 👩🏼‍💻 woman technologist: medium-light skin tone # emoji-test.txt line #342 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F4BB).Str.chars, 1, "👩🏼‍💻 woman technologist: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F4BB                     ; fully-qualified     # 👩🏽‍💻 woman technologist: medium skin tone # emoji-test.txt line #343 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F4BB).Str.chars, 1, "👩🏽‍💻 woman technologist: medium skin tone";
 ## 1F469 1F3FE 200D 1F4BB                     ; fully-qualified     # 👩🏾‍💻 woman technologist: medium-dark skin tone # emoji-test.txt line #344 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F4BB).Str.chars, 1, "👩🏾‍💻 woman technologist: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F4BB                     ; fully-qualified     # 👩🏿‍💻 woman technologist: dark skin tone # emoji-test.txt line #345 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F4BB).Str.chars, 1, "👩🏿‍💻 woman technologist: dark skin tone";
 ## 1F468 200D 1F3A4                           ; fully-qualified     # 👨‍🎤 man singer # emoji-test.txt line #346 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F3A4).Str.chars, 1, "👨‍🎤 man singer";
 ## 1F468 1F3FB 200D 1F3A4                     ; fully-qualified     # 👨🏻‍🎤 man singer: light skin tone # emoji-test.txt line #347 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F3A4).Str.chars, 1, "👨🏻‍🎤 man singer: light skin tone";
 ## 1F468 1F3FC 200D 1F3A4                     ; fully-qualified     # 👨🏼‍🎤 man singer: medium-light skin tone # emoji-test.txt line #348 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F3A4).Str.chars, 1, "👨🏼‍🎤 man singer: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F3A4                     ; fully-qualified     # 👨🏽‍🎤 man singer: medium skin tone # emoji-test.txt line #349 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F3A4).Str.chars, 1, "👨🏽‍🎤 man singer: medium skin tone";
 ## 1F468 1F3FE 200D 1F3A4                     ; fully-qualified     # 👨🏾‍🎤 man singer: medium-dark skin tone # emoji-test.txt line #350 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F3A4).Str.chars, 1, "👨🏾‍🎤 man singer: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F3A4                     ; fully-qualified     # 👨🏿‍🎤 man singer: dark skin tone # emoji-test.txt line #351 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F3A4).Str.chars, 1, "👨🏿‍🎤 man singer: dark skin tone";
 ## 1F469 200D 1F3A4                           ; fully-qualified     # 👩‍🎤 woman singer # emoji-test.txt line #352 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F3A4).Str.chars, 1, "👩‍🎤 woman singer";
 ## 1F469 1F3FB 200D 1F3A4                     ; fully-qualified     # 👩🏻‍🎤 woman singer: light skin tone # emoji-test.txt line #353 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F3A4).Str.chars, 1, "👩🏻‍🎤 woman singer: light skin tone";
 ## 1F469 1F3FC 200D 1F3A4                     ; fully-qualified     # 👩🏼‍🎤 woman singer: medium-light skin tone # emoji-test.txt line #354 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F3A4).Str.chars, 1, "👩🏼‍🎤 woman singer: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F3A4                     ; fully-qualified     # 👩🏽‍🎤 woman singer: medium skin tone # emoji-test.txt line #355 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F3A4).Str.chars, 1, "👩🏽‍🎤 woman singer: medium skin tone";
 ## 1F469 1F3FE 200D 1F3A4                     ; fully-qualified     # 👩🏾‍🎤 woman singer: medium-dark skin tone # emoji-test.txt line #356 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F3A4).Str.chars, 1, "👩🏾‍🎤 woman singer: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F3A4                     ; fully-qualified     # 👩🏿‍🎤 woman singer: dark skin tone # emoji-test.txt line #357 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F3A4).Str.chars, 1, "👩🏿‍🎤 woman singer: dark skin tone";
 ## 1F468 200D 1F3A8                           ; fully-qualified     # 👨‍🎨 man artist # emoji-test.txt line #358 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F3A8).Str.chars, 1, "👨‍🎨 man artist";
 ## 1F468 1F3FB 200D 1F3A8                     ; fully-qualified     # 👨🏻‍🎨 man artist: light skin tone # emoji-test.txt line #359 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F3A8).Str.chars, 1, "👨🏻‍🎨 man artist: light skin tone";
 ## 1F468 1F3FC 200D 1F3A8                     ; fully-qualified     # 👨🏼‍🎨 man artist: medium-light skin tone # emoji-test.txt line #360 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F3A8).Str.chars, 1, "👨🏼‍🎨 man artist: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F3A8                     ; fully-qualified     # 👨🏽‍🎨 man artist: medium skin tone # emoji-test.txt line #361 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F3A8).Str.chars, 1, "👨🏽‍🎨 man artist: medium skin tone";
 ## 1F468 1F3FE 200D 1F3A8                     ; fully-qualified     # 👨🏾‍🎨 man artist: medium-dark skin tone # emoji-test.txt line #362 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F3A8).Str.chars, 1, "👨🏾‍🎨 man artist: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F3A8                     ; fully-qualified     # 👨🏿‍🎨 man artist: dark skin tone # emoji-test.txt line #363 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F3A8).Str.chars, 1, "👨🏿‍🎨 man artist: dark skin tone";
 ## 1F469 200D 1F3A8                           ; fully-qualified     # 👩‍🎨 woman artist # emoji-test.txt line #364 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F3A8).Str.chars, 1, "👩‍🎨 woman artist";
 ## 1F469 1F3FB 200D 1F3A8                     ; fully-qualified     # 👩🏻‍🎨 woman artist: light skin tone # emoji-test.txt line #365 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F3A8).Str.chars, 1, "👩🏻‍🎨 woman artist: light skin tone";
 ## 1F469 1F3FC 200D 1F3A8                     ; fully-qualified     # 👩🏼‍🎨 woman artist: medium-light skin tone # emoji-test.txt line #366 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F3A8).Str.chars, 1, "👩🏼‍🎨 woman artist: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F3A8                     ; fully-qualified     # 👩🏽‍🎨 woman artist: medium skin tone # emoji-test.txt line #367 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F3A8).Str.chars, 1, "👩🏽‍🎨 woman artist: medium skin tone";
 ## 1F469 1F3FE 200D 1F3A8                     ; fully-qualified     # 👩🏾‍🎨 woman artist: medium-dark skin tone # emoji-test.txt line #368 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F3A8).Str.chars, 1, "👩🏾‍🎨 woman artist: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F3A8                     ; fully-qualified     # 👩🏿‍🎨 woman artist: dark skin tone # emoji-test.txt line #369 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F3A8).Str.chars, 1, "👩🏿‍🎨 woman artist: dark skin tone";
 ## 1F468 200D 2708 FE0F                       ; fully-qualified     # 👨‍✈️ man pilot # emoji-test.txt line #370 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👨‍✈️ man pilot";
 ## 1F468 200D 2708                            ; non-fully-qualified # 👨‍✈ man pilot # emoji-test.txt line #371 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2708).Str.chars, 1, "👨‍✈ man pilot";
 ## 1F468 1F3FB 200D 2708 FE0F                 ; fully-qualified     # 👨🏻‍✈️ man pilot: light skin tone # emoji-test.txt line #372 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👨🏻‍✈️ man pilot: light skin tone";
 ## 1F468 1F3FB 200D 2708                      ; non-fully-qualified # 👨🏻‍✈ man pilot: light skin tone # emoji-test.txt line #373 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x2708).Str.chars, 1, "👨🏻‍✈ man pilot: light skin tone";
 ## 1F468 1F3FC 200D 2708 FE0F                 ; fully-qualified     # 👨🏼‍✈️ man pilot: medium-light skin tone # emoji-test.txt line #374 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👨🏼‍✈️ man pilot: medium-light skin tone";
 ## 1F468 1F3FC 200D 2708                      ; non-fully-qualified # 👨🏼‍✈ man pilot: medium-light skin tone # emoji-test.txt line #375 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x2708).Str.chars, 1, "👨🏼‍✈ man pilot: medium-light skin tone";
 ## 1F468 1F3FD 200D 2708 FE0F                 ; fully-qualified     # 👨🏽‍✈️ man pilot: medium skin tone # emoji-test.txt line #376 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👨🏽‍✈️ man pilot: medium skin tone";
 ## 1F468 1F3FD 200D 2708                      ; non-fully-qualified # 👨🏽‍✈ man pilot: medium skin tone # emoji-test.txt line #377 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x2708).Str.chars, 1, "👨🏽‍✈ man pilot: medium skin tone";
 ## 1F468 1F3FE 200D 2708 FE0F                 ; fully-qualified     # 👨🏾‍✈️ man pilot: medium-dark skin tone # emoji-test.txt line #378 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👨🏾‍✈️ man pilot: medium-dark skin tone";
 ## 1F468 1F3FE 200D 2708                      ; non-fully-qualified # 👨🏾‍✈ man pilot: medium-dark skin tone # emoji-test.txt line #379 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x2708).Str.chars, 1, "👨🏾‍✈ man pilot: medium-dark skin tone";
 ## 1F468 1F3FF 200D 2708 FE0F                 ; fully-qualified     # 👨🏿‍✈️ man pilot: dark skin tone # emoji-test.txt line #380 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👨🏿‍✈️ man pilot: dark skin tone";
 ## 1F468 1F3FF 200D 2708                      ; non-fully-qualified # 👨🏿‍✈ man pilot: dark skin tone # emoji-test.txt line #381 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x2708).Str.chars, 1, "👨🏿‍✈ man pilot: dark skin tone";
 ## 1F469 200D 2708 FE0F                       ; fully-qualified     # 👩‍✈️ woman pilot # emoji-test.txt line #382 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👩‍✈️ woman pilot";
 ## 1F469 200D 2708                            ; non-fully-qualified # 👩‍✈ woman pilot # emoji-test.txt line #383 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2708).Str.chars, 1, "👩‍✈ woman pilot";
 ## 1F469 1F3FB 200D 2708 FE0F                 ; fully-qualified     # 👩🏻‍✈️ woman pilot: light skin tone # emoji-test.txt line #384 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👩🏻‍✈️ woman pilot: light skin tone";
 ## 1F469 1F3FB 200D 2708                      ; non-fully-qualified # 👩🏻‍✈ woman pilot: light skin tone # emoji-test.txt line #385 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x2708).Str.chars, 1, "👩🏻‍✈ woman pilot: light skin tone";
 ## 1F469 1F3FC 200D 2708 FE0F                 ; fully-qualified     # 👩🏼‍✈️ woman pilot: medium-light skin tone # emoji-test.txt line #386 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👩🏼‍✈️ woman pilot: medium-light skin tone";
 ## 1F469 1F3FC 200D 2708                      ; non-fully-qualified # 👩🏼‍✈ woman pilot: medium-light skin tone # emoji-test.txt line #387 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x2708).Str.chars, 1, "👩🏼‍✈ woman pilot: medium-light skin tone";
 ## 1F469 1F3FD 200D 2708 FE0F                 ; fully-qualified     # 👩🏽‍✈️ woman pilot: medium skin tone # emoji-test.txt line #388 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👩🏽‍✈️ woman pilot: medium skin tone";
 ## 1F469 1F3FD 200D 2708                      ; non-fully-qualified # 👩🏽‍✈ woman pilot: medium skin tone # emoji-test.txt line #389 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x2708).Str.chars, 1, "👩🏽‍✈ woman pilot: medium skin tone";
 ## 1F469 1F3FE 200D 2708 FE0F                 ; fully-qualified     # 👩🏾‍✈️ woman pilot: medium-dark skin tone # emoji-test.txt line #390 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👩🏾‍✈️ woman pilot: medium-dark skin tone";
 ## 1F469 1F3FE 200D 2708                      ; non-fully-qualified # 👩🏾‍✈ woman pilot: medium-dark skin tone # emoji-test.txt line #391 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x2708).Str.chars, 1, "👩🏾‍✈ woman pilot: medium-dark skin tone";
 ## 1F469 1F3FF 200D 2708 FE0F                 ; fully-qualified     # 👩🏿‍✈️ woman pilot: dark skin tone # emoji-test.txt line #392 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x2708, 0xFE0F).Str.chars, 1, "👩🏿‍✈️ woman pilot: dark skin tone";
 ## 1F469 1F3FF 200D 2708                      ; non-fully-qualified # 👩🏿‍✈ woman pilot: dark skin tone # emoji-test.txt line #393 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x2708).Str.chars, 1, "👩🏿‍✈ woman pilot: dark skin tone";
 ## 1F468 200D 1F680                           ; fully-qualified     # 👨‍🚀 man astronaut # emoji-test.txt line #394 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F680).Str.chars, 1, "👨‍🚀 man astronaut";
 ## 1F468 1F3FB 200D 1F680                     ; fully-qualified     # 👨🏻‍🚀 man astronaut: light skin tone # emoji-test.txt line #395 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F680).Str.chars, 1, "👨🏻‍🚀 man astronaut: light skin tone";
 ## 1F468 1F3FC 200D 1F680                     ; fully-qualified     # 👨🏼‍🚀 man astronaut: medium-light skin tone # emoji-test.txt line #396 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F680).Str.chars, 1, "👨🏼‍🚀 man astronaut: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F680                     ; fully-qualified     # 👨🏽‍🚀 man astronaut: medium skin tone # emoji-test.txt line #397 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F680).Str.chars, 1, "👨🏽‍🚀 man astronaut: medium skin tone";
 ## 1F468 1F3FE 200D 1F680                     ; fully-qualified     # 👨🏾‍🚀 man astronaut: medium-dark skin tone # emoji-test.txt line #398 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F680).Str.chars, 1, "👨🏾‍🚀 man astronaut: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F680                     ; fully-qualified     # 👨🏿‍🚀 man astronaut: dark skin tone # emoji-test.txt line #399 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F680).Str.chars, 1, "👨🏿‍🚀 man astronaut: dark skin tone";
 ## 1F469 200D 1F680                           ; fully-qualified     # 👩‍🚀 woman astronaut # emoji-test.txt line #400 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F680).Str.chars, 1, "👩‍🚀 woman astronaut";
 ## 1F469 1F3FB 200D 1F680                     ; fully-qualified     # 👩🏻‍🚀 woman astronaut: light skin tone # emoji-test.txt line #401 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F680).Str.chars, 1, "👩🏻‍🚀 woman astronaut: light skin tone";
 ## 1F469 1F3FC 200D 1F680                     ; fully-qualified     # 👩🏼‍🚀 woman astronaut: medium-light skin tone # emoji-test.txt line #402 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F680).Str.chars, 1, "👩🏼‍🚀 woman astronaut: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F680                     ; fully-qualified     # 👩🏽‍🚀 woman astronaut: medium skin tone # emoji-test.txt line #403 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F680).Str.chars, 1, "👩🏽‍🚀 woman astronaut: medium skin tone";
 ## 1F469 1F3FE 200D 1F680                     ; fully-qualified     # 👩🏾‍🚀 woman astronaut: medium-dark skin tone # emoji-test.txt line #404 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F680).Str.chars, 1, "👩🏾‍🚀 woman astronaut: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F680                     ; fully-qualified     # 👩🏿‍🚀 woman astronaut: dark skin tone # emoji-test.txt line #405 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F680).Str.chars, 1, "👩🏿‍🚀 woman astronaut: dark skin tone";
 ## 1F468 200D 1F692                           ; fully-qualified     # 👨‍🚒 man firefighter # emoji-test.txt line #406 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x1F692).Str.chars, 1, "👨‍🚒 man firefighter";
 ## 1F468 1F3FB 200D 1F692                     ; fully-qualified     # 👨🏻‍🚒 man firefighter: light skin tone # emoji-test.txt line #407 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FB, 0x200D, 0x1F692).Str.chars, 1, "👨🏻‍🚒 man firefighter: light skin tone";
 ## 1F468 1F3FC 200D 1F692                     ; fully-qualified     # 👨🏼‍🚒 man firefighter: medium-light skin tone # emoji-test.txt line #408 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FC, 0x200D, 0x1F692).Str.chars, 1, "👨🏼‍🚒 man firefighter: medium-light skin tone";
 ## 1F468 1F3FD 200D 1F692                     ; fully-qualified     # 👨🏽‍🚒 man firefighter: medium skin tone # emoji-test.txt line #409 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FD, 0x200D, 0x1F692).Str.chars, 1, "👨🏽‍🚒 man firefighter: medium skin tone";
 ## 1F468 1F3FE 200D 1F692                     ; fully-qualified     # 👨🏾‍🚒 man firefighter: medium-dark skin tone # emoji-test.txt line #410 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FE, 0x200D, 0x1F692).Str.chars, 1, "👨🏾‍🚒 man firefighter: medium-dark skin tone";
 ## 1F468 1F3FF 200D 1F692                     ; fully-qualified     # 👨🏿‍🚒 man firefighter: dark skin tone # emoji-test.txt line #411 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x1F3FF, 0x200D, 0x1F692).Str.chars, 1, "👨🏿‍🚒 man firefighter: dark skin tone";
 ## 1F469 200D 1F692                           ; fully-qualified     # 👩‍🚒 woman firefighter # emoji-test.txt line #412 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x1F692).Str.chars, 1, "👩‍🚒 woman firefighter";
 ## 1F469 1F3FB 200D 1F692                     ; fully-qualified     # 👩🏻‍🚒 woman firefighter: light skin tone # emoji-test.txt line #413 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FB, 0x200D, 0x1F692).Str.chars, 1, "👩🏻‍🚒 woman firefighter: light skin tone";
 ## 1F469 1F3FC 200D 1F692                     ; fully-qualified     # 👩🏼‍🚒 woman firefighter: medium-light skin tone # emoji-test.txt line #414 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FC, 0x200D, 0x1F692).Str.chars, 1, "👩🏼‍🚒 woman firefighter: medium-light skin tone";
 ## 1F469 1F3FD 200D 1F692                     ; fully-qualified     # 👩🏽‍🚒 woman firefighter: medium skin tone # emoji-test.txt line #415 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FD, 0x200D, 0x1F692).Str.chars, 1, "👩🏽‍🚒 woman firefighter: medium skin tone";
 ## 1F469 1F3FE 200D 1F692                     ; fully-qualified     # 👩🏾‍🚒 woman firefighter: medium-dark skin tone # emoji-test.txt line #416 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FE, 0x200D, 0x1F692).Str.chars, 1, "👩🏾‍🚒 woman firefighter: medium-dark skin tone";
 ## 1F469 1F3FF 200D 1F692                     ; fully-qualified     # 👩🏿‍🚒 woman firefighter: dark skin tone # emoji-test.txt line #417 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x1F3FF, 0x200D, 0x1F692).Str.chars, 1, "👩🏿‍🚒 woman firefighter: dark skin tone";
 ## 1F46E                                      ; fully-qualified     # 👮 police officer # emoji-test.txt line #418 Emoji version 4.0
 is Uni.new(0x1F46E).Str.chars, 1, "👮 police officer";
@@ -763,52 +991,76 @@ is Uni.new(0x1F46E, 0x1F3FE).Str.chars, 1, "👮🏾 police officer: medium-dark
 ## 1F46E 1F3FF                                ; fully-qualified     # 👮🏿 police officer: dark skin tone # emoji-test.txt line #423 Emoji version 4.0
 is Uni.new(0x1F46E, 0x1F3FF).Str.chars, 1, "👮🏿 police officer: dark skin tone";
 ## 1F46E 200D 2642 FE0F                       ; fully-qualified     # 👮‍♂️ man police officer # emoji-test.txt line #424 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👮‍♂️ man police officer";
 ## 1F46E 200D 2642                            ; non-fully-qualified # 👮‍♂ man police officer # emoji-test.txt line #425 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x200D, 0x2642).Str.chars, 1, "👮‍♂ man police officer";
 ## 1F46E 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 👮🏻‍♂️ man police officer: light skin tone # emoji-test.txt line #426 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👮🏻‍♂️ man police officer: light skin tone";
 ## 1F46E 1F3FB 200D 2642                      ; non-fully-qualified # 👮🏻‍♂ man police officer: light skin tone # emoji-test.txt line #427 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "👮🏻‍♂ man police officer: light skin tone";
 ## 1F46E 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 👮🏼‍♂️ man police officer: medium-light skin tone # emoji-test.txt line #428 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👮🏼‍♂️ man police officer: medium-light skin tone";
 ## 1F46E 1F3FC 200D 2642                      ; non-fully-qualified # 👮🏼‍♂ man police officer: medium-light skin tone # emoji-test.txt line #429 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "👮🏼‍♂ man police officer: medium-light skin tone";
 ## 1F46E 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 👮🏽‍♂️ man police officer: medium skin tone # emoji-test.txt line #430 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👮🏽‍♂️ man police officer: medium skin tone";
 ## 1F46E 1F3FD 200D 2642                      ; non-fully-qualified # 👮🏽‍♂ man police officer: medium skin tone # emoji-test.txt line #431 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "👮🏽‍♂ man police officer: medium skin tone";
 ## 1F46E 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 👮🏾‍♂️ man police officer: medium-dark skin tone # emoji-test.txt line #432 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👮🏾‍♂️ man police officer: medium-dark skin tone";
 ## 1F46E 1F3FE 200D 2642                      ; non-fully-qualified # 👮🏾‍♂ man police officer: medium-dark skin tone # emoji-test.txt line #433 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "👮🏾‍♂ man police officer: medium-dark skin tone";
 ## 1F46E 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 👮🏿‍♂️ man police officer: dark skin tone # emoji-test.txt line #434 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👮🏿‍♂️ man police officer: dark skin tone";
 ## 1F46E 1F3FF 200D 2642                      ; non-fully-qualified # 👮🏿‍♂ man police officer: dark skin tone # emoji-test.txt line #435 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "👮🏿‍♂ man police officer: dark skin tone";
 ## 1F46E 200D 2640 FE0F                       ; fully-qualified     # 👮‍♀️ woman police officer # emoji-test.txt line #436 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👮‍♀️ woman police officer";
 ## 1F46E 200D 2640                            ; non-fully-qualified # 👮‍♀ woman police officer # emoji-test.txt line #437 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x200D, 0x2640).Str.chars, 1, "👮‍♀ woman police officer";
 ## 1F46E 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 👮🏻‍♀️ woman police officer: light skin tone # emoji-test.txt line #438 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👮🏻‍♀️ woman police officer: light skin tone";
 ## 1F46E 1F3FB 200D 2640                      ; non-fully-qualified # 👮🏻‍♀ woman police officer: light skin tone # emoji-test.txt line #439 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "👮🏻‍♀ woman police officer: light skin tone";
 ## 1F46E 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 👮🏼‍♀️ woman police officer: medium-light skin tone # emoji-test.txt line #440 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👮🏼‍♀️ woman police officer: medium-light skin tone";
 ## 1F46E 1F3FC 200D 2640                      ; non-fully-qualified # 👮🏼‍♀ woman police officer: medium-light skin tone # emoji-test.txt line #441 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "👮🏼‍♀ woman police officer: medium-light skin tone";
 ## 1F46E 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 👮🏽‍♀️ woman police officer: medium skin tone # emoji-test.txt line #442 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👮🏽‍♀️ woman police officer: medium skin tone";
 ## 1F46E 1F3FD 200D 2640                      ; non-fully-qualified # 👮🏽‍♀ woman police officer: medium skin tone # emoji-test.txt line #443 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "👮🏽‍♀ woman police officer: medium skin tone";
 ## 1F46E 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 👮🏾‍♀️ woman police officer: medium-dark skin tone # emoji-test.txt line #444 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👮🏾‍♀️ woman police officer: medium-dark skin tone";
 ## 1F46E 1F3FE 200D 2640                      ; non-fully-qualified # 👮🏾‍♀ woman police officer: medium-dark skin tone # emoji-test.txt line #445 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "👮🏾‍♀ woman police officer: medium-dark skin tone";
 ## 1F46E 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 👮🏿‍♀️ woman police officer: dark skin tone # emoji-test.txt line #446 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👮🏿‍♀️ woman police officer: dark skin tone";
 ## 1F46E 1F3FF 200D 2640                      ; non-fully-qualified # 👮🏿‍♀ woman police officer: dark skin tone # emoji-test.txt line #447 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46E, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "👮🏿‍♀ woman police officer: dark skin tone";
 ## 1F575 FE0F                                 ; fully-qualified     # 🕵️ detective # emoji-test.txt line #448 Emoji version 4.0
 is Uni.new(0x1F575, 0xFE0F).Str.chars, 1, "🕵️ detective";
@@ -823,60 +1075,88 @@ is Uni.new(0x1F575, 0x1F3FE).Str.chars, 1, "🕵🏾 detective: medium-dark skin
 ## 1F575 1F3FF                                ; fully-qualified     # 🕵🏿 detective: dark skin tone # emoji-test.txt line #453 Emoji version 4.0
 is Uni.new(0x1F575, 0x1F3FF).Str.chars, 1, "🕵🏿 detective: dark skin tone";
 ## 1F575 FE0F 200D 2642 FE0F                  ; fully-qualified     # 🕵️‍♂️ man detective # emoji-test.txt line #454 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0xFE0F, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🕵️‍♂️ man detective";
 ## 1F575 200D 2642                            ; non-fully-qualified # 🕵‍♂ man detective # emoji-test.txt line #455 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x200D, 0x2642).Str.chars, 1, "🕵‍♂ man detective";
 ## 1F575 FE0F 200D 2642                       ; non-fully-qualified # 🕵️‍♂ man detective # emoji-test.txt line #456 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0xFE0F, 0x200D, 0x2642).Str.chars, 1, "🕵️‍♂ man detective";
 ## 1F575 200D 2642 FE0F                       ; non-fully-qualified # 🕵‍♂️ man detective # emoji-test.txt line #457 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🕵‍♂️ man detective";
 ## 1F575 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🕵🏻‍♂️ man detective: light skin tone # emoji-test.txt line #458 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🕵🏻‍♂️ man detective: light skin tone";
 ## 1F575 1F3FB 200D 2642                      ; non-fully-qualified # 🕵🏻‍♂ man detective: light skin tone # emoji-test.txt line #459 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🕵🏻‍♂ man detective: light skin tone";
 ## 1F575 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🕵🏼‍♂️ man detective: medium-light skin tone # emoji-test.txt line #460 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🕵🏼‍♂️ man detective: medium-light skin tone";
 ## 1F575 1F3FC 200D 2642                      ; non-fully-qualified # 🕵🏼‍♂ man detective: medium-light skin tone # emoji-test.txt line #461 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🕵🏼‍♂ man detective: medium-light skin tone";
 ## 1F575 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🕵🏽‍♂️ man detective: medium skin tone # emoji-test.txt line #462 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🕵🏽‍♂️ man detective: medium skin tone";
 ## 1F575 1F3FD 200D 2642                      ; non-fully-qualified # 🕵🏽‍♂ man detective: medium skin tone # emoji-test.txt line #463 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🕵🏽‍♂ man detective: medium skin tone";
 ## 1F575 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🕵🏾‍♂️ man detective: medium-dark skin tone # emoji-test.txt line #464 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🕵🏾‍♂️ man detective: medium-dark skin tone";
 ## 1F575 1F3FE 200D 2642                      ; non-fully-qualified # 🕵🏾‍♂ man detective: medium-dark skin tone # emoji-test.txt line #465 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🕵🏾‍♂ man detective: medium-dark skin tone";
 ## 1F575 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🕵🏿‍♂️ man detective: dark skin tone # emoji-test.txt line #466 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🕵🏿‍♂️ man detective: dark skin tone";
 ## 1F575 1F3FF 200D 2642                      ; non-fully-qualified # 🕵🏿‍♂ man detective: dark skin tone # emoji-test.txt line #467 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🕵🏿‍♂ man detective: dark skin tone";
 ## 1F575 FE0F 200D 2640 FE0F                  ; fully-qualified     # 🕵️‍♀️ woman detective # emoji-test.txt line #468 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0xFE0F, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🕵️‍♀️ woman detective";
 ## 1F575 200D 2640                            ; non-fully-qualified # 🕵‍♀ woman detective # emoji-test.txt line #469 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x200D, 0x2640).Str.chars, 1, "🕵‍♀ woman detective";
 ## 1F575 FE0F 200D 2640                       ; non-fully-qualified # 🕵️‍♀ woman detective # emoji-test.txt line #470 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0xFE0F, 0x200D, 0x2640).Str.chars, 1, "🕵️‍♀ woman detective";
 ## 1F575 200D 2640 FE0F                       ; non-fully-qualified # 🕵‍♀️ woman detective # emoji-test.txt line #471 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🕵‍♀️ woman detective";
 ## 1F575 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🕵🏻‍♀️ woman detective: light skin tone # emoji-test.txt line #472 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🕵🏻‍♀️ woman detective: light skin tone";
 ## 1F575 1F3FB 200D 2640                      ; non-fully-qualified # 🕵🏻‍♀ woman detective: light skin tone # emoji-test.txt line #473 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🕵🏻‍♀ woman detective: light skin tone";
 ## 1F575 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🕵🏼‍♀️ woman detective: medium-light skin tone # emoji-test.txt line #474 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🕵🏼‍♀️ woman detective: medium-light skin tone";
 ## 1F575 1F3FC 200D 2640                      ; non-fully-qualified # 🕵🏼‍♀ woman detective: medium-light skin tone # emoji-test.txt line #475 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🕵🏼‍♀ woman detective: medium-light skin tone";
 ## 1F575 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🕵🏽‍♀️ woman detective: medium skin tone # emoji-test.txt line #476 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🕵🏽‍♀️ woman detective: medium skin tone";
 ## 1F575 1F3FD 200D 2640                      ; non-fully-qualified # 🕵🏽‍♀ woman detective: medium skin tone # emoji-test.txt line #477 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🕵🏽‍♀ woman detective: medium skin tone";
 ## 1F575 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🕵🏾‍♀️ woman detective: medium-dark skin tone # emoji-test.txt line #478 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🕵🏾‍♀️ woman detective: medium-dark skin tone";
 ## 1F575 1F3FE 200D 2640                      ; non-fully-qualified # 🕵🏾‍♀ woman detective: medium-dark skin tone # emoji-test.txt line #479 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🕵🏾‍♀ woman detective: medium-dark skin tone";
 ## 1F575 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🕵🏿‍♀️ woman detective: dark skin tone # emoji-test.txt line #480 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🕵🏿‍♀️ woman detective: dark skin tone";
 ## 1F575 1F3FF 200D 2640                      ; non-fully-qualified # 🕵🏿‍♀ woman detective: dark skin tone # emoji-test.txt line #481 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F575, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🕵🏿‍♀ woman detective: dark skin tone";
 ## 1F482                                      ; fully-qualified     # 💂 guard # emoji-test.txt line #482 Emoji version 4.0
 is Uni.new(0x1F482).Str.chars, 1, "💂 guard";
@@ -891,52 +1171,76 @@ is Uni.new(0x1F482, 0x1F3FE).Str.chars, 1, "💂🏾 guard: medium-dark skin ton
 ## 1F482 1F3FF                                ; fully-qualified     # 💂🏿 guard: dark skin tone # emoji-test.txt line #487 Emoji version 4.0
 is Uni.new(0x1F482, 0x1F3FF).Str.chars, 1, "💂🏿 guard: dark skin tone";
 ## 1F482 200D 2642 FE0F                       ; fully-qualified     # 💂‍♂️ man guard # emoji-test.txt line #488 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💂‍♂️ man guard";
 ## 1F482 200D 2642                            ; non-fully-qualified # 💂‍♂ man guard # emoji-test.txt line #489 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x200D, 0x2642).Str.chars, 1, "💂‍♂ man guard";
 ## 1F482 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 💂🏻‍♂️ man guard: light skin tone # emoji-test.txt line #490 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💂🏻‍♂️ man guard: light skin tone";
 ## 1F482 1F3FB 200D 2642                      ; non-fully-qualified # 💂🏻‍♂ man guard: light skin tone # emoji-test.txt line #491 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "💂🏻‍♂ man guard: light skin tone";
 ## 1F482 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 💂🏼‍♂️ man guard: medium-light skin tone # emoji-test.txt line #492 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💂🏼‍♂️ man guard: medium-light skin tone";
 ## 1F482 1F3FC 200D 2642                      ; non-fully-qualified # 💂🏼‍♂ man guard: medium-light skin tone # emoji-test.txt line #493 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "💂🏼‍♂ man guard: medium-light skin tone";
 ## 1F482 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 💂🏽‍♂️ man guard: medium skin tone # emoji-test.txt line #494 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💂🏽‍♂️ man guard: medium skin tone";
 ## 1F482 1F3FD 200D 2642                      ; non-fully-qualified # 💂🏽‍♂ man guard: medium skin tone # emoji-test.txt line #495 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "💂🏽‍♂ man guard: medium skin tone";
 ## 1F482 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 💂🏾‍♂️ man guard: medium-dark skin tone # emoji-test.txt line #496 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💂🏾‍♂️ man guard: medium-dark skin tone";
 ## 1F482 1F3FE 200D 2642                      ; non-fully-qualified # 💂🏾‍♂ man guard: medium-dark skin tone # emoji-test.txt line #497 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "💂🏾‍♂ man guard: medium-dark skin tone";
 ## 1F482 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 💂🏿‍♂️ man guard: dark skin tone # emoji-test.txt line #498 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💂🏿‍♂️ man guard: dark skin tone";
 ## 1F482 1F3FF 200D 2642                      ; non-fully-qualified # 💂🏿‍♂ man guard: dark skin tone # emoji-test.txt line #499 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "💂🏿‍♂ man guard: dark skin tone";
 ## 1F482 200D 2640 FE0F                       ; fully-qualified     # 💂‍♀️ woman guard # emoji-test.txt line #500 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💂‍♀️ woman guard";
 ## 1F482 200D 2640                            ; non-fully-qualified # 💂‍♀ woman guard # emoji-test.txt line #501 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x200D, 0x2640).Str.chars, 1, "💂‍♀ woman guard";
 ## 1F482 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 💂🏻‍♀️ woman guard: light skin tone # emoji-test.txt line #502 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💂🏻‍♀️ woman guard: light skin tone";
 ## 1F482 1F3FB 200D 2640                      ; non-fully-qualified # 💂🏻‍♀ woman guard: light skin tone # emoji-test.txt line #503 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "💂🏻‍♀ woman guard: light skin tone";
 ## 1F482 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 💂🏼‍♀️ woman guard: medium-light skin tone # emoji-test.txt line #504 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💂🏼‍♀️ woman guard: medium-light skin tone";
 ## 1F482 1F3FC 200D 2640                      ; non-fully-qualified # 💂🏼‍♀ woman guard: medium-light skin tone # emoji-test.txt line #505 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "💂🏼‍♀ woman guard: medium-light skin tone";
 ## 1F482 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 💂🏽‍♀️ woman guard: medium skin tone # emoji-test.txt line #506 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💂🏽‍♀️ woman guard: medium skin tone";
 ## 1F482 1F3FD 200D 2640                      ; non-fully-qualified # 💂🏽‍♀ woman guard: medium skin tone # emoji-test.txt line #507 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "💂🏽‍♀ woman guard: medium skin tone";
 ## 1F482 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 💂🏾‍♀️ woman guard: medium-dark skin tone # emoji-test.txt line #508 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💂🏾‍♀️ woman guard: medium-dark skin tone";
 ## 1F482 1F3FE 200D 2640                      ; non-fully-qualified # 💂🏾‍♀ woman guard: medium-dark skin tone # emoji-test.txt line #509 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "💂🏾‍♀ woman guard: medium-dark skin tone";
 ## 1F482 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 💂🏿‍♀️ woman guard: dark skin tone # emoji-test.txt line #510 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💂🏿‍♀️ woman guard: dark skin tone";
 ## 1F482 1F3FF 200D 2640                      ; non-fully-qualified # 💂🏿‍♀ woman guard: dark skin tone # emoji-test.txt line #511 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F482, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "💂🏿‍♀ woman guard: dark skin tone";
 ## 1F477                                      ; fully-qualified     # 👷 construction worker # emoji-test.txt line #512 Emoji version 4.0
 is Uni.new(0x1F477).Str.chars, 1, "👷 construction worker";
@@ -951,52 +1255,76 @@ is Uni.new(0x1F477, 0x1F3FE).Str.chars, 1, "👷🏾 construction worker: medium
 ## 1F477 1F3FF                                ; fully-qualified     # 👷🏿 construction worker: dark skin tone # emoji-test.txt line #517 Emoji version 4.0
 is Uni.new(0x1F477, 0x1F3FF).Str.chars, 1, "👷🏿 construction worker: dark skin tone";
 ## 1F477 200D 2642 FE0F                       ; fully-qualified     # 👷‍♂️ man construction worker # emoji-test.txt line #518 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👷‍♂️ man construction worker";
 ## 1F477 200D 2642                            ; non-fully-qualified # 👷‍♂ man construction worker # emoji-test.txt line #519 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x200D, 0x2642).Str.chars, 1, "👷‍♂ man construction worker";
 ## 1F477 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 👷🏻‍♂️ man construction worker: light skin tone # emoji-test.txt line #520 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👷🏻‍♂️ man construction worker: light skin tone";
 ## 1F477 1F3FB 200D 2642                      ; non-fully-qualified # 👷🏻‍♂ man construction worker: light skin tone # emoji-test.txt line #521 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "👷🏻‍♂ man construction worker: light skin tone";
 ## 1F477 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 👷🏼‍♂️ man construction worker: medium-light skin tone # emoji-test.txt line #522 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👷🏼‍♂️ man construction worker: medium-light skin tone";
 ## 1F477 1F3FC 200D 2642                      ; non-fully-qualified # 👷🏼‍♂ man construction worker: medium-light skin tone # emoji-test.txt line #523 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "👷🏼‍♂ man construction worker: medium-light skin tone";
 ## 1F477 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 👷🏽‍♂️ man construction worker: medium skin tone # emoji-test.txt line #524 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👷🏽‍♂️ man construction worker: medium skin tone";
 ## 1F477 1F3FD 200D 2642                      ; non-fully-qualified # 👷🏽‍♂ man construction worker: medium skin tone # emoji-test.txt line #525 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "👷🏽‍♂ man construction worker: medium skin tone";
 ## 1F477 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 👷🏾‍♂️ man construction worker: medium-dark skin tone # emoji-test.txt line #526 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👷🏾‍♂️ man construction worker: medium-dark skin tone";
 ## 1F477 1F3FE 200D 2642                      ; non-fully-qualified # 👷🏾‍♂ man construction worker: medium-dark skin tone # emoji-test.txt line #527 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "👷🏾‍♂ man construction worker: medium-dark skin tone";
 ## 1F477 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 👷🏿‍♂️ man construction worker: dark skin tone # emoji-test.txt line #528 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👷🏿‍♂️ man construction worker: dark skin tone";
 ## 1F477 1F3FF 200D 2642                      ; non-fully-qualified # 👷🏿‍♂ man construction worker: dark skin tone # emoji-test.txt line #529 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "👷🏿‍♂ man construction worker: dark skin tone";
 ## 1F477 200D 2640 FE0F                       ; fully-qualified     # 👷‍♀️ woman construction worker # emoji-test.txt line #530 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👷‍♀️ woman construction worker";
 ## 1F477 200D 2640                            ; non-fully-qualified # 👷‍♀ woman construction worker # emoji-test.txt line #531 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x200D, 0x2640).Str.chars, 1, "👷‍♀ woman construction worker";
 ## 1F477 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 👷🏻‍♀️ woman construction worker: light skin tone # emoji-test.txt line #532 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👷🏻‍♀️ woman construction worker: light skin tone";
 ## 1F477 1F3FB 200D 2640                      ; non-fully-qualified # 👷🏻‍♀ woman construction worker: light skin tone # emoji-test.txt line #533 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "👷🏻‍♀ woman construction worker: light skin tone";
 ## 1F477 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 👷🏼‍♀️ woman construction worker: medium-light skin tone # emoji-test.txt line #534 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👷🏼‍♀️ woman construction worker: medium-light skin tone";
 ## 1F477 1F3FC 200D 2640                      ; non-fully-qualified # 👷🏼‍♀ woman construction worker: medium-light skin tone # emoji-test.txt line #535 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "👷🏼‍♀ woman construction worker: medium-light skin tone";
 ## 1F477 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 👷🏽‍♀️ woman construction worker: medium skin tone # emoji-test.txt line #536 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👷🏽‍♀️ woman construction worker: medium skin tone";
 ## 1F477 1F3FD 200D 2640                      ; non-fully-qualified # 👷🏽‍♀ woman construction worker: medium skin tone # emoji-test.txt line #537 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "👷🏽‍♀ woman construction worker: medium skin tone";
 ## 1F477 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 👷🏾‍♀️ woman construction worker: medium-dark skin tone # emoji-test.txt line #538 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👷🏾‍♀️ woman construction worker: medium-dark skin tone";
 ## 1F477 1F3FE 200D 2640                      ; non-fully-qualified # 👷🏾‍♀ woman construction worker: medium-dark skin tone # emoji-test.txt line #539 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "👷🏾‍♀ woman construction worker: medium-dark skin tone";
 ## 1F477 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 👷🏿‍♀️ woman construction worker: dark skin tone # emoji-test.txt line #540 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👷🏿‍♀️ woman construction worker: dark skin tone";
 ## 1F477 1F3FF 200D 2640                      ; non-fully-qualified # 👷🏿‍♀ woman construction worker: dark skin tone # emoji-test.txt line #541 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F477, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "👷🏿‍♀ woman construction worker: dark skin tone";
 ## 1F473                                      ; fully-qualified     # 👳 person wearing turban # emoji-test.txt line #542 Emoji version 4.0
 is Uni.new(0x1F473).Str.chars, 1, "👳 person wearing turban";
@@ -1011,52 +1339,76 @@ is Uni.new(0x1F473, 0x1F3FE).Str.chars, 1, "👳🏾 person wearing turban: medi
 ## 1F473 1F3FF                                ; fully-qualified     # 👳🏿 person wearing turban: dark skin tone # emoji-test.txt line #547 Emoji version 4.0
 is Uni.new(0x1F473, 0x1F3FF).Str.chars, 1, "👳🏿 person wearing turban: dark skin tone";
 ## 1F473 200D 2642 FE0F                       ; fully-qualified     # 👳‍♂️ man wearing turban # emoji-test.txt line #548 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👳‍♂️ man wearing turban";
 ## 1F473 200D 2642                            ; non-fully-qualified # 👳‍♂ man wearing turban # emoji-test.txt line #549 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x200D, 0x2642).Str.chars, 1, "👳‍♂ man wearing turban";
 ## 1F473 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 👳🏻‍♂️ man wearing turban: light skin tone # emoji-test.txt line #550 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👳🏻‍♂️ man wearing turban: light skin tone";
 ## 1F473 1F3FB 200D 2642                      ; non-fully-qualified # 👳🏻‍♂ man wearing turban: light skin tone # emoji-test.txt line #551 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "👳🏻‍♂ man wearing turban: light skin tone";
 ## 1F473 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 👳🏼‍♂️ man wearing turban: medium-light skin tone # emoji-test.txt line #552 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👳🏼‍♂️ man wearing turban: medium-light skin tone";
 ## 1F473 1F3FC 200D 2642                      ; non-fully-qualified # 👳🏼‍♂ man wearing turban: medium-light skin tone # emoji-test.txt line #553 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "👳🏼‍♂ man wearing turban: medium-light skin tone";
 ## 1F473 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 👳🏽‍♂️ man wearing turban: medium skin tone # emoji-test.txt line #554 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👳🏽‍♂️ man wearing turban: medium skin tone";
 ## 1F473 1F3FD 200D 2642                      ; non-fully-qualified # 👳🏽‍♂ man wearing turban: medium skin tone # emoji-test.txt line #555 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "👳🏽‍♂ man wearing turban: medium skin tone";
 ## 1F473 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 👳🏾‍♂️ man wearing turban: medium-dark skin tone # emoji-test.txt line #556 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👳🏾‍♂️ man wearing turban: medium-dark skin tone";
 ## 1F473 1F3FE 200D 2642                      ; non-fully-qualified # 👳🏾‍♂ man wearing turban: medium-dark skin tone # emoji-test.txt line #557 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "👳🏾‍♂ man wearing turban: medium-dark skin tone";
 ## 1F473 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 👳🏿‍♂️ man wearing turban: dark skin tone # emoji-test.txt line #558 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👳🏿‍♂️ man wearing turban: dark skin tone";
 ## 1F473 1F3FF 200D 2642                      ; non-fully-qualified # 👳🏿‍♂ man wearing turban: dark skin tone # emoji-test.txt line #559 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "👳🏿‍♂ man wearing turban: dark skin tone";
 ## 1F473 200D 2640 FE0F                       ; fully-qualified     # 👳‍♀️ woman wearing turban # emoji-test.txt line #560 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👳‍♀️ woman wearing turban";
 ## 1F473 200D 2640                            ; non-fully-qualified # 👳‍♀ woman wearing turban # emoji-test.txt line #561 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x200D, 0x2640).Str.chars, 1, "👳‍♀ woman wearing turban";
 ## 1F473 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 👳🏻‍♀️ woman wearing turban: light skin tone # emoji-test.txt line #562 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👳🏻‍♀️ woman wearing turban: light skin tone";
 ## 1F473 1F3FB 200D 2640                      ; non-fully-qualified # 👳🏻‍♀ woman wearing turban: light skin tone # emoji-test.txt line #563 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "👳🏻‍♀ woman wearing turban: light skin tone";
 ## 1F473 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 👳🏼‍♀️ woman wearing turban: medium-light skin tone # emoji-test.txt line #564 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👳🏼‍♀️ woman wearing turban: medium-light skin tone";
 ## 1F473 1F3FC 200D 2640                      ; non-fully-qualified # 👳🏼‍♀ woman wearing turban: medium-light skin tone # emoji-test.txt line #565 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "👳🏼‍♀ woman wearing turban: medium-light skin tone";
 ## 1F473 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 👳🏽‍♀️ woman wearing turban: medium skin tone # emoji-test.txt line #566 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👳🏽‍♀️ woman wearing turban: medium skin tone";
 ## 1F473 1F3FD 200D 2640                      ; non-fully-qualified # 👳🏽‍♀ woman wearing turban: medium skin tone # emoji-test.txt line #567 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "👳🏽‍♀ woman wearing turban: medium skin tone";
 ## 1F473 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 👳🏾‍♀️ woman wearing turban: medium-dark skin tone # emoji-test.txt line #568 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👳🏾‍♀️ woman wearing turban: medium-dark skin tone";
 ## 1F473 1F3FE 200D 2640                      ; non-fully-qualified # 👳🏾‍♀ woman wearing turban: medium-dark skin tone # emoji-test.txt line #569 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "👳🏾‍♀ woman wearing turban: medium-dark skin tone";
 ## 1F473 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 👳🏿‍♀️ woman wearing turban: dark skin tone # emoji-test.txt line #570 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👳🏿‍♀️ woman wearing turban: dark skin tone";
 ## 1F473 1F3FF 200D 2640                      ; non-fully-qualified # 👳🏿‍♀ woman wearing turban: dark skin tone # emoji-test.txt line #571 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F473, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "👳🏿‍♀ woman wearing turban: dark skin tone";
 ## 1F471                                      ; fully-qualified     # 👱 blond-haired person # emoji-test.txt line #572 Emoji version 4.0
 is Uni.new(0x1F471).Str.chars, 1, "👱 blond-haired person";
@@ -1071,52 +1423,76 @@ is Uni.new(0x1F471, 0x1F3FE).Str.chars, 1, "👱🏾 blond-haired person: medium
 ## 1F471 1F3FF                                ; fully-qualified     # 👱🏿 blond-haired person: dark skin tone # emoji-test.txt line #577 Emoji version 4.0
 is Uni.new(0x1F471, 0x1F3FF).Str.chars, 1, "👱🏿 blond-haired person: dark skin tone";
 ## 1F471 200D 2642 FE0F                       ; fully-qualified     # 👱‍♂️ blond-haired man # emoji-test.txt line #578 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👱‍♂️ blond-haired man";
 ## 1F471 200D 2642                            ; non-fully-qualified # 👱‍♂ blond-haired man # emoji-test.txt line #579 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x200D, 0x2642).Str.chars, 1, "👱‍♂ blond-haired man";
 ## 1F471 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 👱🏻‍♂️ blond-haired man: light skin tone # emoji-test.txt line #580 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👱🏻‍♂️ blond-haired man: light skin tone";
 ## 1F471 1F3FB 200D 2642                      ; non-fully-qualified # 👱🏻‍♂ blond-haired man: light skin tone # emoji-test.txt line #581 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "👱🏻‍♂ blond-haired man: light skin tone";
 ## 1F471 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 👱🏼‍♂️ blond-haired man: medium-light skin tone # emoji-test.txt line #582 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👱🏼‍♂️ blond-haired man: medium-light skin tone";
 ## 1F471 1F3FC 200D 2642                      ; non-fully-qualified # 👱🏼‍♂ blond-haired man: medium-light skin tone # emoji-test.txt line #583 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "👱🏼‍♂ blond-haired man: medium-light skin tone";
 ## 1F471 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 👱🏽‍♂️ blond-haired man: medium skin tone # emoji-test.txt line #584 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👱🏽‍♂️ blond-haired man: medium skin tone";
 ## 1F471 1F3FD 200D 2642                      ; non-fully-qualified # 👱🏽‍♂ blond-haired man: medium skin tone # emoji-test.txt line #585 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "👱🏽‍♂ blond-haired man: medium skin tone";
 ## 1F471 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 👱🏾‍♂️ blond-haired man: medium-dark skin tone # emoji-test.txt line #586 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👱🏾‍♂️ blond-haired man: medium-dark skin tone";
 ## 1F471 1F3FE 200D 2642                      ; non-fully-qualified # 👱🏾‍♂ blond-haired man: medium-dark skin tone # emoji-test.txt line #587 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "👱🏾‍♂ blond-haired man: medium-dark skin tone";
 ## 1F471 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 👱🏿‍♂️ blond-haired man: dark skin tone # emoji-test.txt line #588 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👱🏿‍♂️ blond-haired man: dark skin tone";
 ## 1F471 1F3FF 200D 2642                      ; non-fully-qualified # 👱🏿‍♂ blond-haired man: dark skin tone # emoji-test.txt line #589 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "👱🏿‍♂ blond-haired man: dark skin tone";
 ## 1F471 200D 2640 FE0F                       ; fully-qualified     # 👱‍♀️ blond-haired woman # emoji-test.txt line #590 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👱‍♀️ blond-haired woman";
 ## 1F471 200D 2640                            ; non-fully-qualified # 👱‍♀ blond-haired woman # emoji-test.txt line #591 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x200D, 0x2640).Str.chars, 1, "👱‍♀ blond-haired woman";
 ## 1F471 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 👱🏻‍♀️ blond-haired woman: light skin tone # emoji-test.txt line #592 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👱🏻‍♀️ blond-haired woman: light skin tone";
 ## 1F471 1F3FB 200D 2640                      ; non-fully-qualified # 👱🏻‍♀ blond-haired woman: light skin tone # emoji-test.txt line #593 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "👱🏻‍♀ blond-haired woman: light skin tone";
 ## 1F471 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 👱🏼‍♀️ blond-haired woman: medium-light skin tone # emoji-test.txt line #594 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👱🏼‍♀️ blond-haired woman: medium-light skin tone";
 ## 1F471 1F3FC 200D 2640                      ; non-fully-qualified # 👱🏼‍♀ blond-haired woman: medium-light skin tone # emoji-test.txt line #595 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "👱🏼‍♀ blond-haired woman: medium-light skin tone";
 ## 1F471 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 👱🏽‍♀️ blond-haired woman: medium skin tone # emoji-test.txt line #596 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👱🏽‍♀️ blond-haired woman: medium skin tone";
 ## 1F471 1F3FD 200D 2640                      ; non-fully-qualified # 👱🏽‍♀ blond-haired woman: medium skin tone # emoji-test.txt line #597 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "👱🏽‍♀ blond-haired woman: medium skin tone";
 ## 1F471 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 👱🏾‍♀️ blond-haired woman: medium-dark skin tone # emoji-test.txt line #598 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👱🏾‍♀️ blond-haired woman: medium-dark skin tone";
 ## 1F471 1F3FE 200D 2640                      ; non-fully-qualified # 👱🏾‍♀ blond-haired woman: medium-dark skin tone # emoji-test.txt line #599 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "👱🏾‍♀ blond-haired woman: medium-dark skin tone";
 ## 1F471 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 👱🏿‍♀️ blond-haired woman: dark skin tone # emoji-test.txt line #600 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👱🏿‍♀️ blond-haired woman: dark skin tone";
 ## 1F471 1F3FF 200D 2640                      ; non-fully-qualified # 👱🏿‍♀ blond-haired woman: dark skin tone # emoji-test.txt line #601 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F471, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "👱🏿‍♀ blond-haired woman: dark skin tone";
 ## 1F385                                      ; fully-qualified     # 🎅 Santa Claus # emoji-test.txt line #602 Emoji version 4.0
 is Uni.new(0x1F385).Str.chars, 1, "🎅 Santa Claus";
@@ -1227,52 +1603,76 @@ is Uni.new(0x1F64D, 0x1F3FE).Str.chars, 1, "🙍🏾 person frowning: medium-dar
 ## 1F64D 1F3FF                                ; fully-qualified     # 🙍🏿 person frowning: dark skin tone # emoji-test.txt line #657 Emoji version 4.0
 is Uni.new(0x1F64D, 0x1F3FF).Str.chars, 1, "🙍🏿 person frowning: dark skin tone";
 ## 1F64D 200D 2642 FE0F                       ; fully-qualified     # 🙍‍♂️ man frowning # emoji-test.txt line #658 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙍‍♂️ man frowning";
 ## 1F64D 200D 2642                            ; non-fully-qualified # 🙍‍♂ man frowning # emoji-test.txt line #659 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x200D, 0x2642).Str.chars, 1, "🙍‍♂ man frowning";
 ## 1F64D 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🙍🏻‍♂️ man frowning: light skin tone # emoji-test.txt line #660 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙍🏻‍♂️ man frowning: light skin tone";
 ## 1F64D 1F3FB 200D 2642                      ; non-fully-qualified # 🙍🏻‍♂ man frowning: light skin tone # emoji-test.txt line #661 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🙍🏻‍♂ man frowning: light skin tone";
 ## 1F64D 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🙍🏼‍♂️ man frowning: medium-light skin tone # emoji-test.txt line #662 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙍🏼‍♂️ man frowning: medium-light skin tone";
 ## 1F64D 1F3FC 200D 2642                      ; non-fully-qualified # 🙍🏼‍♂ man frowning: medium-light skin tone # emoji-test.txt line #663 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🙍🏼‍♂ man frowning: medium-light skin tone";
 ## 1F64D 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🙍🏽‍♂️ man frowning: medium skin tone # emoji-test.txt line #664 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙍🏽‍♂️ man frowning: medium skin tone";
 ## 1F64D 1F3FD 200D 2642                      ; non-fully-qualified # 🙍🏽‍♂ man frowning: medium skin tone # emoji-test.txt line #665 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🙍🏽‍♂ man frowning: medium skin tone";
 ## 1F64D 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🙍🏾‍♂️ man frowning: medium-dark skin tone # emoji-test.txt line #666 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙍🏾‍♂️ man frowning: medium-dark skin tone";
 ## 1F64D 1F3FE 200D 2642                      ; non-fully-qualified # 🙍🏾‍♂ man frowning: medium-dark skin tone # emoji-test.txt line #667 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🙍🏾‍♂ man frowning: medium-dark skin tone";
 ## 1F64D 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🙍🏿‍♂️ man frowning: dark skin tone # emoji-test.txt line #668 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙍🏿‍♂️ man frowning: dark skin tone";
 ## 1F64D 1F3FF 200D 2642                      ; non-fully-qualified # 🙍🏿‍♂ man frowning: dark skin tone # emoji-test.txt line #669 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🙍🏿‍♂ man frowning: dark skin tone";
 ## 1F64D 200D 2640 FE0F                       ; fully-qualified     # 🙍‍♀️ woman frowning # emoji-test.txt line #670 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙍‍♀️ woman frowning";
 ## 1F64D 200D 2640                            ; non-fully-qualified # 🙍‍♀ woman frowning # emoji-test.txt line #671 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x200D, 0x2640).Str.chars, 1, "🙍‍♀ woman frowning";
 ## 1F64D 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🙍🏻‍♀️ woman frowning: light skin tone # emoji-test.txt line #672 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙍🏻‍♀️ woman frowning: light skin tone";
 ## 1F64D 1F3FB 200D 2640                      ; non-fully-qualified # 🙍🏻‍♀ woman frowning: light skin tone # emoji-test.txt line #673 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🙍🏻‍♀ woman frowning: light skin tone";
 ## 1F64D 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🙍🏼‍♀️ woman frowning: medium-light skin tone # emoji-test.txt line #674 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙍🏼‍♀️ woman frowning: medium-light skin tone";
 ## 1F64D 1F3FC 200D 2640                      ; non-fully-qualified # 🙍🏼‍♀ woman frowning: medium-light skin tone # emoji-test.txt line #675 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🙍🏼‍♀ woman frowning: medium-light skin tone";
 ## 1F64D 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🙍🏽‍♀️ woman frowning: medium skin tone # emoji-test.txt line #676 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙍🏽‍♀️ woman frowning: medium skin tone";
 ## 1F64D 1F3FD 200D 2640                      ; non-fully-qualified # 🙍🏽‍♀ woman frowning: medium skin tone # emoji-test.txt line #677 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🙍🏽‍♀ woman frowning: medium skin tone";
 ## 1F64D 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🙍🏾‍♀️ woman frowning: medium-dark skin tone # emoji-test.txt line #678 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙍🏾‍♀️ woman frowning: medium-dark skin tone";
 ## 1F64D 1F3FE 200D 2640                      ; non-fully-qualified # 🙍🏾‍♀ woman frowning: medium-dark skin tone # emoji-test.txt line #679 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🙍🏾‍♀ woman frowning: medium-dark skin tone";
 ## 1F64D 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🙍🏿‍♀️ woman frowning: dark skin tone # emoji-test.txt line #680 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙍🏿‍♀️ woman frowning: dark skin tone";
 ## 1F64D 1F3FF 200D 2640                      ; non-fully-qualified # 🙍🏿‍♀ woman frowning: dark skin tone # emoji-test.txt line #681 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64D, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🙍🏿‍♀ woman frowning: dark skin tone";
 ## 1F64E                                      ; fully-qualified     # 🙎 person pouting # emoji-test.txt line #682 Emoji version 4.0
 is Uni.new(0x1F64E).Str.chars, 1, "🙎 person pouting";
@@ -1287,52 +1687,76 @@ is Uni.new(0x1F64E, 0x1F3FE).Str.chars, 1, "🙎🏾 person pouting: medium-dark
 ## 1F64E 1F3FF                                ; fully-qualified     # 🙎🏿 person pouting: dark skin tone # emoji-test.txt line #687 Emoji version 4.0
 is Uni.new(0x1F64E, 0x1F3FF).Str.chars, 1, "🙎🏿 person pouting: dark skin tone";
 ## 1F64E 200D 2642 FE0F                       ; fully-qualified     # 🙎‍♂️ man pouting # emoji-test.txt line #688 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙎‍♂️ man pouting";
 ## 1F64E 200D 2642                            ; non-fully-qualified # 🙎‍♂ man pouting # emoji-test.txt line #689 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x200D, 0x2642).Str.chars, 1, "🙎‍♂ man pouting";
 ## 1F64E 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🙎🏻‍♂️ man pouting: light skin tone # emoji-test.txt line #690 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙎🏻‍♂️ man pouting: light skin tone";
 ## 1F64E 1F3FB 200D 2642                      ; non-fully-qualified # 🙎🏻‍♂ man pouting: light skin tone # emoji-test.txt line #691 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🙎🏻‍♂ man pouting: light skin tone";
 ## 1F64E 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🙎🏼‍♂️ man pouting: medium-light skin tone # emoji-test.txt line #692 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙎🏼‍♂️ man pouting: medium-light skin tone";
 ## 1F64E 1F3FC 200D 2642                      ; non-fully-qualified # 🙎🏼‍♂ man pouting: medium-light skin tone # emoji-test.txt line #693 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🙎🏼‍♂ man pouting: medium-light skin tone";
 ## 1F64E 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🙎🏽‍♂️ man pouting: medium skin tone # emoji-test.txt line #694 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙎🏽‍♂️ man pouting: medium skin tone";
 ## 1F64E 1F3FD 200D 2642                      ; non-fully-qualified # 🙎🏽‍♂ man pouting: medium skin tone # emoji-test.txt line #695 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🙎🏽‍♂ man pouting: medium skin tone";
 ## 1F64E 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🙎🏾‍♂️ man pouting: medium-dark skin tone # emoji-test.txt line #696 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙎🏾‍♂️ man pouting: medium-dark skin tone";
 ## 1F64E 1F3FE 200D 2642                      ; non-fully-qualified # 🙎🏾‍♂ man pouting: medium-dark skin tone # emoji-test.txt line #697 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🙎🏾‍♂ man pouting: medium-dark skin tone";
 ## 1F64E 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🙎🏿‍♂️ man pouting: dark skin tone # emoji-test.txt line #698 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙎🏿‍♂️ man pouting: dark skin tone";
 ## 1F64E 1F3FF 200D 2642                      ; non-fully-qualified # 🙎🏿‍♂ man pouting: dark skin tone # emoji-test.txt line #699 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🙎🏿‍♂ man pouting: dark skin tone";
 ## 1F64E 200D 2640 FE0F                       ; fully-qualified     # 🙎‍♀️ woman pouting # emoji-test.txt line #700 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙎‍♀️ woman pouting";
 ## 1F64E 200D 2640                            ; non-fully-qualified # 🙎‍♀ woman pouting # emoji-test.txt line #701 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x200D, 0x2640).Str.chars, 1, "🙎‍♀ woman pouting";
 ## 1F64E 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🙎🏻‍♀️ woman pouting: light skin tone # emoji-test.txt line #702 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙎🏻‍♀️ woman pouting: light skin tone";
 ## 1F64E 1F3FB 200D 2640                      ; non-fully-qualified # 🙎🏻‍♀ woman pouting: light skin tone # emoji-test.txt line #703 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🙎🏻‍♀ woman pouting: light skin tone";
 ## 1F64E 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🙎🏼‍♀️ woman pouting: medium-light skin tone # emoji-test.txt line #704 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙎🏼‍♀️ woman pouting: medium-light skin tone";
 ## 1F64E 1F3FC 200D 2640                      ; non-fully-qualified # 🙎🏼‍♀ woman pouting: medium-light skin tone # emoji-test.txt line #705 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🙎🏼‍♀ woman pouting: medium-light skin tone";
 ## 1F64E 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🙎🏽‍♀️ woman pouting: medium skin tone # emoji-test.txt line #706 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙎🏽‍♀️ woman pouting: medium skin tone";
 ## 1F64E 1F3FD 200D 2640                      ; non-fully-qualified # 🙎🏽‍♀ woman pouting: medium skin tone # emoji-test.txt line #707 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🙎🏽‍♀ woman pouting: medium skin tone";
 ## 1F64E 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🙎🏾‍♀️ woman pouting: medium-dark skin tone # emoji-test.txt line #708 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙎🏾‍♀️ woman pouting: medium-dark skin tone";
 ## 1F64E 1F3FE 200D 2640                      ; non-fully-qualified # 🙎🏾‍♀ woman pouting: medium-dark skin tone # emoji-test.txt line #709 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🙎🏾‍♀ woman pouting: medium-dark skin tone";
 ## 1F64E 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🙎🏿‍♀️ woman pouting: dark skin tone # emoji-test.txt line #710 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙎🏿‍♀️ woman pouting: dark skin tone";
 ## 1F64E 1F3FF 200D 2640                      ; non-fully-qualified # 🙎🏿‍♀ woman pouting: dark skin tone # emoji-test.txt line #711 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64E, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🙎🏿‍♀ woman pouting: dark skin tone";
 ## 1F645                                      ; fully-qualified     # 🙅 person gesturing NO # emoji-test.txt line #712 Emoji version 4.0
 is Uni.new(0x1F645).Str.chars, 1, "🙅 person gesturing NO";
@@ -1347,52 +1771,76 @@ is Uni.new(0x1F645, 0x1F3FE).Str.chars, 1, "🙅🏾 person gesturing NO: medium
 ## 1F645 1F3FF                                ; fully-qualified     # 🙅🏿 person gesturing NO: dark skin tone # emoji-test.txt line #717 Emoji version 4.0
 is Uni.new(0x1F645, 0x1F3FF).Str.chars, 1, "🙅🏿 person gesturing NO: dark skin tone";
 ## 1F645 200D 2642 FE0F                       ; fully-qualified     # 🙅‍♂️ man gesturing NO # emoji-test.txt line #718 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙅‍♂️ man gesturing NO";
 ## 1F645 200D 2642                            ; non-fully-qualified # 🙅‍♂ man gesturing NO # emoji-test.txt line #719 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x200D, 0x2642).Str.chars, 1, "🙅‍♂ man gesturing NO";
 ## 1F645 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🙅🏻‍♂️ man gesturing NO: light skin tone # emoji-test.txt line #720 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙅🏻‍♂️ man gesturing NO: light skin tone";
 ## 1F645 1F3FB 200D 2642                      ; non-fully-qualified # 🙅🏻‍♂ man gesturing NO: light skin tone # emoji-test.txt line #721 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🙅🏻‍♂ man gesturing NO: light skin tone";
 ## 1F645 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🙅🏼‍♂️ man gesturing NO: medium-light skin tone # emoji-test.txt line #722 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙅🏼‍♂️ man gesturing NO: medium-light skin tone";
 ## 1F645 1F3FC 200D 2642                      ; non-fully-qualified # 🙅🏼‍♂ man gesturing NO: medium-light skin tone # emoji-test.txt line #723 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🙅🏼‍♂ man gesturing NO: medium-light skin tone";
 ## 1F645 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🙅🏽‍♂️ man gesturing NO: medium skin tone # emoji-test.txt line #724 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙅🏽‍♂️ man gesturing NO: medium skin tone";
 ## 1F645 1F3FD 200D 2642                      ; non-fully-qualified # 🙅🏽‍♂ man gesturing NO: medium skin tone # emoji-test.txt line #725 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🙅🏽‍♂ man gesturing NO: medium skin tone";
 ## 1F645 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🙅🏾‍♂️ man gesturing NO: medium-dark skin tone # emoji-test.txt line #726 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙅🏾‍♂️ man gesturing NO: medium-dark skin tone";
 ## 1F645 1F3FE 200D 2642                      ; non-fully-qualified # 🙅🏾‍♂ man gesturing NO: medium-dark skin tone # emoji-test.txt line #727 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🙅🏾‍♂ man gesturing NO: medium-dark skin tone";
 ## 1F645 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🙅🏿‍♂️ man gesturing NO: dark skin tone # emoji-test.txt line #728 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙅🏿‍♂️ man gesturing NO: dark skin tone";
 ## 1F645 1F3FF 200D 2642                      ; non-fully-qualified # 🙅🏿‍♂ man gesturing NO: dark skin tone # emoji-test.txt line #729 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🙅🏿‍♂ man gesturing NO: dark skin tone";
 ## 1F645 200D 2640 FE0F                       ; fully-qualified     # 🙅‍♀️ woman gesturing NO # emoji-test.txt line #730 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙅‍♀️ woman gesturing NO";
 ## 1F645 200D 2640                            ; non-fully-qualified # 🙅‍♀ woman gesturing NO # emoji-test.txt line #731 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x200D, 0x2640).Str.chars, 1, "🙅‍♀ woman gesturing NO";
 ## 1F645 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🙅🏻‍♀️ woman gesturing NO: light skin tone # emoji-test.txt line #732 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙅🏻‍♀️ woman gesturing NO: light skin tone";
 ## 1F645 1F3FB 200D 2640                      ; non-fully-qualified # 🙅🏻‍♀ woman gesturing NO: light skin tone # emoji-test.txt line #733 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🙅🏻‍♀ woman gesturing NO: light skin tone";
 ## 1F645 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🙅🏼‍♀️ woman gesturing NO: medium-light skin tone # emoji-test.txt line #734 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙅🏼‍♀️ woman gesturing NO: medium-light skin tone";
 ## 1F645 1F3FC 200D 2640                      ; non-fully-qualified # 🙅🏼‍♀ woman gesturing NO: medium-light skin tone # emoji-test.txt line #735 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🙅🏼‍♀ woman gesturing NO: medium-light skin tone";
 ## 1F645 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🙅🏽‍♀️ woman gesturing NO: medium skin tone # emoji-test.txt line #736 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙅🏽‍♀️ woman gesturing NO: medium skin tone";
 ## 1F645 1F3FD 200D 2640                      ; non-fully-qualified # 🙅🏽‍♀ woman gesturing NO: medium skin tone # emoji-test.txt line #737 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🙅🏽‍♀ woman gesturing NO: medium skin tone";
 ## 1F645 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🙅🏾‍♀️ woman gesturing NO: medium-dark skin tone # emoji-test.txt line #738 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙅🏾‍♀️ woman gesturing NO: medium-dark skin tone";
 ## 1F645 1F3FE 200D 2640                      ; non-fully-qualified # 🙅🏾‍♀ woman gesturing NO: medium-dark skin tone # emoji-test.txt line #739 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🙅🏾‍♀ woman gesturing NO: medium-dark skin tone";
 ## 1F645 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🙅🏿‍♀️ woman gesturing NO: dark skin tone # emoji-test.txt line #740 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙅🏿‍♀️ woman gesturing NO: dark skin tone";
 ## 1F645 1F3FF 200D 2640                      ; non-fully-qualified # 🙅🏿‍♀ woman gesturing NO: dark skin tone # emoji-test.txt line #741 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F645, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🙅🏿‍♀ woman gesturing NO: dark skin tone";
 ## 1F646                                      ; fully-qualified     # 🙆 person gesturing OK # emoji-test.txt line #742 Emoji version 4.0
 is Uni.new(0x1F646).Str.chars, 1, "🙆 person gesturing OK";
@@ -1407,52 +1855,76 @@ is Uni.new(0x1F646, 0x1F3FE).Str.chars, 1, "🙆🏾 person gesturing OK: medium
 ## 1F646 1F3FF                                ; fully-qualified     # 🙆🏿 person gesturing OK: dark skin tone # emoji-test.txt line #747 Emoji version 4.0
 is Uni.new(0x1F646, 0x1F3FF).Str.chars, 1, "🙆🏿 person gesturing OK: dark skin tone";
 ## 1F646 200D 2642 FE0F                       ; fully-qualified     # 🙆‍♂️ man gesturing OK # emoji-test.txt line #748 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙆‍♂️ man gesturing OK";
 ## 1F646 200D 2642                            ; non-fully-qualified # 🙆‍♂ man gesturing OK # emoji-test.txt line #749 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x200D, 0x2642).Str.chars, 1, "🙆‍♂ man gesturing OK";
 ## 1F646 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🙆🏻‍♂️ man gesturing OK: light skin tone # emoji-test.txt line #750 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙆🏻‍♂️ man gesturing OK: light skin tone";
 ## 1F646 1F3FB 200D 2642                      ; non-fully-qualified # 🙆🏻‍♂ man gesturing OK: light skin tone # emoji-test.txt line #751 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🙆🏻‍♂ man gesturing OK: light skin tone";
 ## 1F646 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🙆🏼‍♂️ man gesturing OK: medium-light skin tone # emoji-test.txt line #752 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙆🏼‍♂️ man gesturing OK: medium-light skin tone";
 ## 1F646 1F3FC 200D 2642                      ; non-fully-qualified # 🙆🏼‍♂ man gesturing OK: medium-light skin tone # emoji-test.txt line #753 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🙆🏼‍♂ man gesturing OK: medium-light skin tone";
 ## 1F646 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🙆🏽‍♂️ man gesturing OK: medium skin tone # emoji-test.txt line #754 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙆🏽‍♂️ man gesturing OK: medium skin tone";
 ## 1F646 1F3FD 200D 2642                      ; non-fully-qualified # 🙆🏽‍♂ man gesturing OK: medium skin tone # emoji-test.txt line #755 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🙆🏽‍♂ man gesturing OK: medium skin tone";
 ## 1F646 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🙆🏾‍♂️ man gesturing OK: medium-dark skin tone # emoji-test.txt line #756 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙆🏾‍♂️ man gesturing OK: medium-dark skin tone";
 ## 1F646 1F3FE 200D 2642                      ; non-fully-qualified # 🙆🏾‍♂ man gesturing OK: medium-dark skin tone # emoji-test.txt line #757 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🙆🏾‍♂ man gesturing OK: medium-dark skin tone";
 ## 1F646 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🙆🏿‍♂️ man gesturing OK: dark skin tone # emoji-test.txt line #758 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙆🏿‍♂️ man gesturing OK: dark skin tone";
 ## 1F646 1F3FF 200D 2642                      ; non-fully-qualified # 🙆🏿‍♂ man gesturing OK: dark skin tone # emoji-test.txt line #759 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🙆🏿‍♂ man gesturing OK: dark skin tone";
 ## 1F646 200D 2640 FE0F                       ; fully-qualified     # 🙆‍♀️ woman gesturing OK # emoji-test.txt line #760 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙆‍♀️ woman gesturing OK";
 ## 1F646 200D 2640                            ; non-fully-qualified # 🙆‍♀ woman gesturing OK # emoji-test.txt line #761 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x200D, 0x2640).Str.chars, 1, "🙆‍♀ woman gesturing OK";
 ## 1F646 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🙆🏻‍♀️ woman gesturing OK: light skin tone # emoji-test.txt line #762 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙆🏻‍♀️ woman gesturing OK: light skin tone";
 ## 1F646 1F3FB 200D 2640                      ; non-fully-qualified # 🙆🏻‍♀ woman gesturing OK: light skin tone # emoji-test.txt line #763 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🙆🏻‍♀ woman gesturing OK: light skin tone";
 ## 1F646 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🙆🏼‍♀️ woman gesturing OK: medium-light skin tone # emoji-test.txt line #764 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙆🏼‍♀️ woman gesturing OK: medium-light skin tone";
 ## 1F646 1F3FC 200D 2640                      ; non-fully-qualified # 🙆🏼‍♀ woman gesturing OK: medium-light skin tone # emoji-test.txt line #765 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🙆🏼‍♀ woman gesturing OK: medium-light skin tone";
 ## 1F646 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🙆🏽‍♀️ woman gesturing OK: medium skin tone # emoji-test.txt line #766 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙆🏽‍♀️ woman gesturing OK: medium skin tone";
 ## 1F646 1F3FD 200D 2640                      ; non-fully-qualified # 🙆🏽‍♀ woman gesturing OK: medium skin tone # emoji-test.txt line #767 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🙆🏽‍♀ woman gesturing OK: medium skin tone";
 ## 1F646 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🙆🏾‍♀️ woman gesturing OK: medium-dark skin tone # emoji-test.txt line #768 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙆🏾‍♀️ woman gesturing OK: medium-dark skin tone";
 ## 1F646 1F3FE 200D 2640                      ; non-fully-qualified # 🙆🏾‍♀ woman gesturing OK: medium-dark skin tone # emoji-test.txt line #769 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🙆🏾‍♀ woman gesturing OK: medium-dark skin tone";
 ## 1F646 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🙆🏿‍♀️ woman gesturing OK: dark skin tone # emoji-test.txt line #770 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙆🏿‍♀️ woman gesturing OK: dark skin tone";
 ## 1F646 1F3FF 200D 2640                      ; non-fully-qualified # 🙆🏿‍♀ woman gesturing OK: dark skin tone # emoji-test.txt line #771 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F646, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🙆🏿‍♀ woman gesturing OK: dark skin tone";
 ## 1F481                                      ; fully-qualified     # 💁 person tipping hand # emoji-test.txt line #772 Emoji version 4.0
 is Uni.new(0x1F481).Str.chars, 1, "💁 person tipping hand";
@@ -1467,52 +1939,76 @@ is Uni.new(0x1F481, 0x1F3FE).Str.chars, 1, "💁🏾 person tipping hand: medium
 ## 1F481 1F3FF                                ; fully-qualified     # 💁🏿 person tipping hand: dark skin tone # emoji-test.txt line #777 Emoji version 4.0
 is Uni.new(0x1F481, 0x1F3FF).Str.chars, 1, "💁🏿 person tipping hand: dark skin tone";
 ## 1F481 200D 2642 FE0F                       ; fully-qualified     # 💁‍♂️ man tipping hand # emoji-test.txt line #778 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💁‍♂️ man tipping hand";
 ## 1F481 200D 2642                            ; non-fully-qualified # 💁‍♂ man tipping hand # emoji-test.txt line #779 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x200D, 0x2642).Str.chars, 1, "💁‍♂ man tipping hand";
 ## 1F481 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 💁🏻‍♂️ man tipping hand: light skin tone # emoji-test.txt line #780 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💁🏻‍♂️ man tipping hand: light skin tone";
 ## 1F481 1F3FB 200D 2642                      ; non-fully-qualified # 💁🏻‍♂ man tipping hand: light skin tone # emoji-test.txt line #781 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "💁🏻‍♂ man tipping hand: light skin tone";
 ## 1F481 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 💁🏼‍♂️ man tipping hand: medium-light skin tone # emoji-test.txt line #782 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💁🏼‍♂️ man tipping hand: medium-light skin tone";
 ## 1F481 1F3FC 200D 2642                      ; non-fully-qualified # 💁🏼‍♂ man tipping hand: medium-light skin tone # emoji-test.txt line #783 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "💁🏼‍♂ man tipping hand: medium-light skin tone";
 ## 1F481 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 💁🏽‍♂️ man tipping hand: medium skin tone # emoji-test.txt line #784 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💁🏽‍♂️ man tipping hand: medium skin tone";
 ## 1F481 1F3FD 200D 2642                      ; non-fully-qualified # 💁🏽‍♂ man tipping hand: medium skin tone # emoji-test.txt line #785 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "💁🏽‍♂ man tipping hand: medium skin tone";
 ## 1F481 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 💁🏾‍♂️ man tipping hand: medium-dark skin tone # emoji-test.txt line #786 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💁🏾‍♂️ man tipping hand: medium-dark skin tone";
 ## 1F481 1F3FE 200D 2642                      ; non-fully-qualified # 💁🏾‍♂ man tipping hand: medium-dark skin tone # emoji-test.txt line #787 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "💁🏾‍♂ man tipping hand: medium-dark skin tone";
 ## 1F481 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 💁🏿‍♂️ man tipping hand: dark skin tone # emoji-test.txt line #788 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💁🏿‍♂️ man tipping hand: dark skin tone";
 ## 1F481 1F3FF 200D 2642                      ; non-fully-qualified # 💁🏿‍♂ man tipping hand: dark skin tone # emoji-test.txt line #789 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "💁🏿‍♂ man tipping hand: dark skin tone";
 ## 1F481 200D 2640 FE0F                       ; fully-qualified     # 💁‍♀️ woman tipping hand # emoji-test.txt line #790 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💁‍♀️ woman tipping hand";
 ## 1F481 200D 2640                            ; non-fully-qualified # 💁‍♀ woman tipping hand # emoji-test.txt line #791 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x200D, 0x2640).Str.chars, 1, "💁‍♀ woman tipping hand";
 ## 1F481 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 💁🏻‍♀️ woman tipping hand: light skin tone # emoji-test.txt line #792 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💁🏻‍♀️ woman tipping hand: light skin tone";
 ## 1F481 1F3FB 200D 2640                      ; non-fully-qualified # 💁🏻‍♀ woman tipping hand: light skin tone # emoji-test.txt line #793 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "💁🏻‍♀ woman tipping hand: light skin tone";
 ## 1F481 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 💁🏼‍♀️ woman tipping hand: medium-light skin tone # emoji-test.txt line #794 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💁🏼‍♀️ woman tipping hand: medium-light skin tone";
 ## 1F481 1F3FC 200D 2640                      ; non-fully-qualified # 💁🏼‍♀ woman tipping hand: medium-light skin tone # emoji-test.txt line #795 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "💁🏼‍♀ woman tipping hand: medium-light skin tone";
 ## 1F481 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 💁🏽‍♀️ woman tipping hand: medium skin tone # emoji-test.txt line #796 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💁🏽‍♀️ woman tipping hand: medium skin tone";
 ## 1F481 1F3FD 200D 2640                      ; non-fully-qualified # 💁🏽‍♀ woman tipping hand: medium skin tone # emoji-test.txt line #797 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "💁🏽‍♀ woman tipping hand: medium skin tone";
 ## 1F481 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 💁🏾‍♀️ woman tipping hand: medium-dark skin tone # emoji-test.txt line #798 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💁🏾‍♀️ woman tipping hand: medium-dark skin tone";
 ## 1F481 1F3FE 200D 2640                      ; non-fully-qualified # 💁🏾‍♀ woman tipping hand: medium-dark skin tone # emoji-test.txt line #799 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "💁🏾‍♀ woman tipping hand: medium-dark skin tone";
 ## 1F481 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 💁🏿‍♀️ woman tipping hand: dark skin tone # emoji-test.txt line #800 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💁🏿‍♀️ woman tipping hand: dark skin tone";
 ## 1F481 1F3FF 200D 2640                      ; non-fully-qualified # 💁🏿‍♀ woman tipping hand: dark skin tone # emoji-test.txt line #801 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F481, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "💁🏿‍♀ woman tipping hand: dark skin tone";
 ## 1F64B                                      ; fully-qualified     # 🙋 person raising hand # emoji-test.txt line #802 Emoji version 4.0
 is Uni.new(0x1F64B).Str.chars, 1, "🙋 person raising hand";
@@ -1527,52 +2023,76 @@ is Uni.new(0x1F64B, 0x1F3FE).Str.chars, 1, "🙋🏾 person raising hand: medium
 ## 1F64B 1F3FF                                ; fully-qualified     # 🙋🏿 person raising hand: dark skin tone # emoji-test.txt line #807 Emoji version 4.0
 is Uni.new(0x1F64B, 0x1F3FF).Str.chars, 1, "🙋🏿 person raising hand: dark skin tone";
 ## 1F64B 200D 2642 FE0F                       ; fully-qualified     # 🙋‍♂️ man raising hand # emoji-test.txt line #808 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙋‍♂️ man raising hand";
 ## 1F64B 200D 2642                            ; non-fully-qualified # 🙋‍♂ man raising hand # emoji-test.txt line #809 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x200D, 0x2642).Str.chars, 1, "🙋‍♂ man raising hand";
 ## 1F64B 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🙋🏻‍♂️ man raising hand: light skin tone # emoji-test.txt line #810 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙋🏻‍♂️ man raising hand: light skin tone";
 ## 1F64B 1F3FB 200D 2642                      ; non-fully-qualified # 🙋🏻‍♂ man raising hand: light skin tone # emoji-test.txt line #811 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🙋🏻‍♂ man raising hand: light skin tone";
 ## 1F64B 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🙋🏼‍♂️ man raising hand: medium-light skin tone # emoji-test.txt line #812 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙋🏼‍♂️ man raising hand: medium-light skin tone";
 ## 1F64B 1F3FC 200D 2642                      ; non-fully-qualified # 🙋🏼‍♂ man raising hand: medium-light skin tone # emoji-test.txt line #813 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🙋🏼‍♂ man raising hand: medium-light skin tone";
 ## 1F64B 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🙋🏽‍♂️ man raising hand: medium skin tone # emoji-test.txt line #814 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙋🏽‍♂️ man raising hand: medium skin tone";
 ## 1F64B 1F3FD 200D 2642                      ; non-fully-qualified # 🙋🏽‍♂ man raising hand: medium skin tone # emoji-test.txt line #815 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🙋🏽‍♂ man raising hand: medium skin tone";
 ## 1F64B 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🙋🏾‍♂️ man raising hand: medium-dark skin tone # emoji-test.txt line #816 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙋🏾‍♂️ man raising hand: medium-dark skin tone";
 ## 1F64B 1F3FE 200D 2642                      ; non-fully-qualified # 🙋🏾‍♂ man raising hand: medium-dark skin tone # emoji-test.txt line #817 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🙋🏾‍♂ man raising hand: medium-dark skin tone";
 ## 1F64B 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🙋🏿‍♂️ man raising hand: dark skin tone # emoji-test.txt line #818 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙋🏿‍♂️ man raising hand: dark skin tone";
 ## 1F64B 1F3FF 200D 2642                      ; non-fully-qualified # 🙋🏿‍♂ man raising hand: dark skin tone # emoji-test.txt line #819 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🙋🏿‍♂ man raising hand: dark skin tone";
 ## 1F64B 200D 2640 FE0F                       ; fully-qualified     # 🙋‍♀️ woman raising hand # emoji-test.txt line #820 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙋‍♀️ woman raising hand";
 ## 1F64B 200D 2640                            ; non-fully-qualified # 🙋‍♀ woman raising hand # emoji-test.txt line #821 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x200D, 0x2640).Str.chars, 1, "🙋‍♀ woman raising hand";
 ## 1F64B 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🙋🏻‍♀️ woman raising hand: light skin tone # emoji-test.txt line #822 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙋🏻‍♀️ woman raising hand: light skin tone";
 ## 1F64B 1F3FB 200D 2640                      ; non-fully-qualified # 🙋🏻‍♀ woman raising hand: light skin tone # emoji-test.txt line #823 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🙋🏻‍♀ woman raising hand: light skin tone";
 ## 1F64B 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🙋🏼‍♀️ woman raising hand: medium-light skin tone # emoji-test.txt line #824 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙋🏼‍♀️ woman raising hand: medium-light skin tone";
 ## 1F64B 1F3FC 200D 2640                      ; non-fully-qualified # 🙋🏼‍♀ woman raising hand: medium-light skin tone # emoji-test.txt line #825 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🙋🏼‍♀ woman raising hand: medium-light skin tone";
 ## 1F64B 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🙋🏽‍♀️ woman raising hand: medium skin tone # emoji-test.txt line #826 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙋🏽‍♀️ woman raising hand: medium skin tone";
 ## 1F64B 1F3FD 200D 2640                      ; non-fully-qualified # 🙋🏽‍♀ woman raising hand: medium skin tone # emoji-test.txt line #827 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🙋🏽‍♀ woman raising hand: medium skin tone";
 ## 1F64B 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🙋🏾‍♀️ woman raising hand: medium-dark skin tone # emoji-test.txt line #828 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙋🏾‍♀️ woman raising hand: medium-dark skin tone";
 ## 1F64B 1F3FE 200D 2640                      ; non-fully-qualified # 🙋🏾‍♀ woman raising hand: medium-dark skin tone # emoji-test.txt line #829 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🙋🏾‍♀ woman raising hand: medium-dark skin tone";
 ## 1F64B 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🙋🏿‍♀️ woman raising hand: dark skin tone # emoji-test.txt line #830 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙋🏿‍♀️ woman raising hand: dark skin tone";
 ## 1F64B 1F3FF 200D 2640                      ; non-fully-qualified # 🙋🏿‍♀ woman raising hand: dark skin tone # emoji-test.txt line #831 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F64B, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🙋🏿‍♀ woman raising hand: dark skin tone";
 ## 1F647                                      ; fully-qualified     # 🙇 person bowing # emoji-test.txt line #832 Emoji version 4.0
 is Uni.new(0x1F647).Str.chars, 1, "🙇 person bowing";
@@ -1587,52 +2107,76 @@ is Uni.new(0x1F647, 0x1F3FE).Str.chars, 1, "🙇🏾 person bowing: medium-dark 
 ## 1F647 1F3FF                                ; fully-qualified     # 🙇🏿 person bowing: dark skin tone # emoji-test.txt line #837 Emoji version 4.0
 is Uni.new(0x1F647, 0x1F3FF).Str.chars, 1, "🙇🏿 person bowing: dark skin tone";
 ## 1F647 200D 2642 FE0F                       ; fully-qualified     # 🙇‍♂️ man bowing # emoji-test.txt line #838 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙇‍♂️ man bowing";
 ## 1F647 200D 2642                            ; non-fully-qualified # 🙇‍♂ man bowing # emoji-test.txt line #839 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x200D, 0x2642).Str.chars, 1, "🙇‍♂ man bowing";
 ## 1F647 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🙇🏻‍♂️ man bowing: light skin tone # emoji-test.txt line #840 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙇🏻‍♂️ man bowing: light skin tone";
 ## 1F647 1F3FB 200D 2642                      ; non-fully-qualified # 🙇🏻‍♂ man bowing: light skin tone # emoji-test.txt line #841 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🙇🏻‍♂ man bowing: light skin tone";
 ## 1F647 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🙇🏼‍♂️ man bowing: medium-light skin tone # emoji-test.txt line #842 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙇🏼‍♂️ man bowing: medium-light skin tone";
 ## 1F647 1F3FC 200D 2642                      ; non-fully-qualified # 🙇🏼‍♂ man bowing: medium-light skin tone # emoji-test.txt line #843 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🙇🏼‍♂ man bowing: medium-light skin tone";
 ## 1F647 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🙇🏽‍♂️ man bowing: medium skin tone # emoji-test.txt line #844 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙇🏽‍♂️ man bowing: medium skin tone";
 ## 1F647 1F3FD 200D 2642                      ; non-fully-qualified # 🙇🏽‍♂ man bowing: medium skin tone # emoji-test.txt line #845 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🙇🏽‍♂ man bowing: medium skin tone";
 ## 1F647 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🙇🏾‍♂️ man bowing: medium-dark skin tone # emoji-test.txt line #846 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙇🏾‍♂️ man bowing: medium-dark skin tone";
 ## 1F647 1F3FE 200D 2642                      ; non-fully-qualified # 🙇🏾‍♂ man bowing: medium-dark skin tone # emoji-test.txt line #847 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🙇🏾‍♂ man bowing: medium-dark skin tone";
 ## 1F647 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🙇🏿‍♂️ man bowing: dark skin tone # emoji-test.txt line #848 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🙇🏿‍♂️ man bowing: dark skin tone";
 ## 1F647 1F3FF 200D 2642                      ; non-fully-qualified # 🙇🏿‍♂ man bowing: dark skin tone # emoji-test.txt line #849 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🙇🏿‍♂ man bowing: dark skin tone";
 ## 1F647 200D 2640 FE0F                       ; fully-qualified     # 🙇‍♀️ woman bowing # emoji-test.txt line #850 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙇‍♀️ woman bowing";
 ## 1F647 200D 2640                            ; non-fully-qualified # 🙇‍♀ woman bowing # emoji-test.txt line #851 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x200D, 0x2640).Str.chars, 1, "🙇‍♀ woman bowing";
 ## 1F647 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🙇🏻‍♀️ woman bowing: light skin tone # emoji-test.txt line #852 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙇🏻‍♀️ woman bowing: light skin tone";
 ## 1F647 1F3FB 200D 2640                      ; non-fully-qualified # 🙇🏻‍♀ woman bowing: light skin tone # emoji-test.txt line #853 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🙇🏻‍♀ woman bowing: light skin tone";
 ## 1F647 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🙇🏼‍♀️ woman bowing: medium-light skin tone # emoji-test.txt line #854 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙇🏼‍♀️ woman bowing: medium-light skin tone";
 ## 1F647 1F3FC 200D 2640                      ; non-fully-qualified # 🙇🏼‍♀ woman bowing: medium-light skin tone # emoji-test.txt line #855 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🙇🏼‍♀ woman bowing: medium-light skin tone";
 ## 1F647 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🙇🏽‍♀️ woman bowing: medium skin tone # emoji-test.txt line #856 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙇🏽‍♀️ woman bowing: medium skin tone";
 ## 1F647 1F3FD 200D 2640                      ; non-fully-qualified # 🙇🏽‍♀ woman bowing: medium skin tone # emoji-test.txt line #857 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🙇🏽‍♀ woman bowing: medium skin tone";
 ## 1F647 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🙇🏾‍♀️ woman bowing: medium-dark skin tone # emoji-test.txt line #858 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙇🏾‍♀️ woman bowing: medium-dark skin tone";
 ## 1F647 1F3FE 200D 2640                      ; non-fully-qualified # 🙇🏾‍♀ woman bowing: medium-dark skin tone # emoji-test.txt line #859 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🙇🏾‍♀ woman bowing: medium-dark skin tone";
 ## 1F647 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🙇🏿‍♀️ woman bowing: dark skin tone # emoji-test.txt line #860 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🙇🏿‍♀️ woman bowing: dark skin tone";
 ## 1F647 1F3FF 200D 2640                      ; non-fully-qualified # 🙇🏿‍♀ woman bowing: dark skin tone # emoji-test.txt line #861 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F647, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🙇🏿‍♀ woman bowing: dark skin tone";
 ## 1F926                                      ; fully-qualified     # 🤦 person facepalming # emoji-test.txt line #862 Emoji version 4.0
 is Uni.new(0x1F926).Str.chars, 1, "🤦 person facepalming";
@@ -1647,52 +2191,76 @@ is Uni.new(0x1F926, 0x1F3FE).Str.chars, 1, "🤦🏾 person facepalming: medium-
 ## 1F926 1F3FF                                ; fully-qualified     # 🤦🏿 person facepalming: dark skin tone # emoji-test.txt line #867 Emoji version 4.0
 is Uni.new(0x1F926, 0x1F3FF).Str.chars, 1, "🤦🏿 person facepalming: dark skin tone";
 ## 1F926 200D 2642 FE0F                       ; fully-qualified     # 🤦‍♂️ man facepalming # emoji-test.txt line #868 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤦‍♂️ man facepalming";
 ## 1F926 200D 2642                            ; non-fully-qualified # 🤦‍♂ man facepalming # emoji-test.txt line #869 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x200D, 0x2642).Str.chars, 1, "🤦‍♂ man facepalming";
 ## 1F926 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🤦🏻‍♂️ man facepalming: light skin tone # emoji-test.txt line #870 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤦🏻‍♂️ man facepalming: light skin tone";
 ## 1F926 1F3FB 200D 2642                      ; non-fully-qualified # 🤦🏻‍♂ man facepalming: light skin tone # emoji-test.txt line #871 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🤦🏻‍♂ man facepalming: light skin tone";
 ## 1F926 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🤦🏼‍♂️ man facepalming: medium-light skin tone # emoji-test.txt line #872 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤦🏼‍♂️ man facepalming: medium-light skin tone";
 ## 1F926 1F3FC 200D 2642                      ; non-fully-qualified # 🤦🏼‍♂ man facepalming: medium-light skin tone # emoji-test.txt line #873 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🤦🏼‍♂ man facepalming: medium-light skin tone";
 ## 1F926 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🤦🏽‍♂️ man facepalming: medium skin tone # emoji-test.txt line #874 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤦🏽‍♂️ man facepalming: medium skin tone";
 ## 1F926 1F3FD 200D 2642                      ; non-fully-qualified # 🤦🏽‍♂ man facepalming: medium skin tone # emoji-test.txt line #875 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🤦🏽‍♂ man facepalming: medium skin tone";
 ## 1F926 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🤦🏾‍♂️ man facepalming: medium-dark skin tone # emoji-test.txt line #876 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤦🏾‍♂️ man facepalming: medium-dark skin tone";
 ## 1F926 1F3FE 200D 2642                      ; non-fully-qualified # 🤦🏾‍♂ man facepalming: medium-dark skin tone # emoji-test.txt line #877 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🤦🏾‍♂ man facepalming: medium-dark skin tone";
 ## 1F926 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🤦🏿‍♂️ man facepalming: dark skin tone # emoji-test.txt line #878 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤦🏿‍♂️ man facepalming: dark skin tone";
 ## 1F926 1F3FF 200D 2642                      ; non-fully-qualified # 🤦🏿‍♂ man facepalming: dark skin tone # emoji-test.txt line #879 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🤦🏿‍♂ man facepalming: dark skin tone";
 ## 1F926 200D 2640 FE0F                       ; fully-qualified     # 🤦‍♀️ woman facepalming # emoji-test.txt line #880 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤦‍♀️ woman facepalming";
 ## 1F926 200D 2640                            ; non-fully-qualified # 🤦‍♀ woman facepalming # emoji-test.txt line #881 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x200D, 0x2640).Str.chars, 1, "🤦‍♀ woman facepalming";
 ## 1F926 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🤦🏻‍♀️ woman facepalming: light skin tone # emoji-test.txt line #882 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤦🏻‍♀️ woman facepalming: light skin tone";
 ## 1F926 1F3FB 200D 2640                      ; non-fully-qualified # 🤦🏻‍♀ woman facepalming: light skin tone # emoji-test.txt line #883 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🤦🏻‍♀ woman facepalming: light skin tone";
 ## 1F926 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🤦🏼‍♀️ woman facepalming: medium-light skin tone # emoji-test.txt line #884 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤦🏼‍♀️ woman facepalming: medium-light skin tone";
 ## 1F926 1F3FC 200D 2640                      ; non-fully-qualified # 🤦🏼‍♀ woman facepalming: medium-light skin tone # emoji-test.txt line #885 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🤦🏼‍♀ woman facepalming: medium-light skin tone";
 ## 1F926 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🤦🏽‍♀️ woman facepalming: medium skin tone # emoji-test.txt line #886 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤦🏽‍♀️ woman facepalming: medium skin tone";
 ## 1F926 1F3FD 200D 2640                      ; non-fully-qualified # 🤦🏽‍♀ woman facepalming: medium skin tone # emoji-test.txt line #887 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🤦🏽‍♀ woman facepalming: medium skin tone";
 ## 1F926 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🤦🏾‍♀️ woman facepalming: medium-dark skin tone # emoji-test.txt line #888 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤦🏾‍♀️ woman facepalming: medium-dark skin tone";
 ## 1F926 1F3FE 200D 2640                      ; non-fully-qualified # 🤦🏾‍♀ woman facepalming: medium-dark skin tone # emoji-test.txt line #889 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🤦🏾‍♀ woman facepalming: medium-dark skin tone";
 ## 1F926 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🤦🏿‍♀️ woman facepalming: dark skin tone # emoji-test.txt line #890 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤦🏿‍♀️ woman facepalming: dark skin tone";
 ## 1F926 1F3FF 200D 2640                      ; non-fully-qualified # 🤦🏿‍♀ woman facepalming: dark skin tone # emoji-test.txt line #891 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F926, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🤦🏿‍♀ woman facepalming: dark skin tone";
 ## 1F937                                      ; fully-qualified     # 🤷 person shrugging # emoji-test.txt line #892 Emoji version 4.0
 is Uni.new(0x1F937).Str.chars, 1, "🤷 person shrugging";
@@ -1707,52 +2275,76 @@ is Uni.new(0x1F937, 0x1F3FE).Str.chars, 1, "🤷🏾 person shrugging: medium-da
 ## 1F937 1F3FF                                ; fully-qualified     # 🤷🏿 person shrugging: dark skin tone # emoji-test.txt line #897 Emoji version 4.0
 is Uni.new(0x1F937, 0x1F3FF).Str.chars, 1, "🤷🏿 person shrugging: dark skin tone";
 ## 1F937 200D 2642 FE0F                       ; fully-qualified     # 🤷‍♂️ man shrugging # emoji-test.txt line #898 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤷‍♂️ man shrugging";
 ## 1F937 200D 2642                            ; non-fully-qualified # 🤷‍♂ man shrugging # emoji-test.txt line #899 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x200D, 0x2642).Str.chars, 1, "🤷‍♂ man shrugging";
 ## 1F937 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🤷🏻‍♂️ man shrugging: light skin tone # emoji-test.txt line #900 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤷🏻‍♂️ man shrugging: light skin tone";
 ## 1F937 1F3FB 200D 2642                      ; non-fully-qualified # 🤷🏻‍♂ man shrugging: light skin tone # emoji-test.txt line #901 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🤷🏻‍♂ man shrugging: light skin tone";
 ## 1F937 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🤷🏼‍♂️ man shrugging: medium-light skin tone # emoji-test.txt line #902 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤷🏼‍♂️ man shrugging: medium-light skin tone";
 ## 1F937 1F3FC 200D 2642                      ; non-fully-qualified # 🤷🏼‍♂ man shrugging: medium-light skin tone # emoji-test.txt line #903 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🤷🏼‍♂ man shrugging: medium-light skin tone";
 ## 1F937 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🤷🏽‍♂️ man shrugging: medium skin tone # emoji-test.txt line #904 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤷🏽‍♂️ man shrugging: medium skin tone";
 ## 1F937 1F3FD 200D 2642                      ; non-fully-qualified # 🤷🏽‍♂ man shrugging: medium skin tone # emoji-test.txt line #905 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🤷🏽‍♂ man shrugging: medium skin tone";
 ## 1F937 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🤷🏾‍♂️ man shrugging: medium-dark skin tone # emoji-test.txt line #906 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤷🏾‍♂️ man shrugging: medium-dark skin tone";
 ## 1F937 1F3FE 200D 2642                      ; non-fully-qualified # 🤷🏾‍♂ man shrugging: medium-dark skin tone # emoji-test.txt line #907 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🤷🏾‍♂ man shrugging: medium-dark skin tone";
 ## 1F937 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🤷🏿‍♂️ man shrugging: dark skin tone # emoji-test.txt line #908 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤷🏿‍♂️ man shrugging: dark skin tone";
 ## 1F937 1F3FF 200D 2642                      ; non-fully-qualified # 🤷🏿‍♂ man shrugging: dark skin tone # emoji-test.txt line #909 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🤷🏿‍♂ man shrugging: dark skin tone";
 ## 1F937 200D 2640 FE0F                       ; fully-qualified     # 🤷‍♀️ woman shrugging # emoji-test.txt line #910 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤷‍♀️ woman shrugging";
 ## 1F937 200D 2640                            ; non-fully-qualified # 🤷‍♀ woman shrugging # emoji-test.txt line #911 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x200D, 0x2640).Str.chars, 1, "🤷‍♀ woman shrugging";
 ## 1F937 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🤷🏻‍♀️ woman shrugging: light skin tone # emoji-test.txt line #912 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤷🏻‍♀️ woman shrugging: light skin tone";
 ## 1F937 1F3FB 200D 2640                      ; non-fully-qualified # 🤷🏻‍♀ woman shrugging: light skin tone # emoji-test.txt line #913 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🤷🏻‍♀ woman shrugging: light skin tone";
 ## 1F937 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🤷🏼‍♀️ woman shrugging: medium-light skin tone # emoji-test.txt line #914 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤷🏼‍♀️ woman shrugging: medium-light skin tone";
 ## 1F937 1F3FC 200D 2640                      ; non-fully-qualified # 🤷🏼‍♀ woman shrugging: medium-light skin tone # emoji-test.txt line #915 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🤷🏼‍♀ woman shrugging: medium-light skin tone";
 ## 1F937 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🤷🏽‍♀️ woman shrugging: medium skin tone # emoji-test.txt line #916 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤷🏽‍♀️ woman shrugging: medium skin tone";
 ## 1F937 1F3FD 200D 2640                      ; non-fully-qualified # 🤷🏽‍♀ woman shrugging: medium skin tone # emoji-test.txt line #917 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🤷🏽‍♀ woman shrugging: medium skin tone";
 ## 1F937 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🤷🏾‍♀️ woman shrugging: medium-dark skin tone # emoji-test.txt line #918 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤷🏾‍♀️ woman shrugging: medium-dark skin tone";
 ## 1F937 1F3FE 200D 2640                      ; non-fully-qualified # 🤷🏾‍♀ woman shrugging: medium-dark skin tone # emoji-test.txt line #919 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🤷🏾‍♀ woman shrugging: medium-dark skin tone";
 ## 1F937 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🤷🏿‍♀️ woman shrugging: dark skin tone # emoji-test.txt line #920 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤷🏿‍♀️ woman shrugging: dark skin tone";
 ## 1F937 1F3FF 200D 2640                      ; non-fully-qualified # 🤷🏿‍♀ woman shrugging: dark skin tone # emoji-test.txt line #921 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F937, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🤷🏿‍♀ woman shrugging: dark skin tone";
 ## 1F486                                      ; fully-qualified     # 💆 person getting massage # emoji-test.txt line #924 Emoji version 4.0
 is Uni.new(0x1F486).Str.chars, 1, "💆 person getting massage";
@@ -1767,52 +2359,76 @@ is Uni.new(0x1F486, 0x1F3FE).Str.chars, 1, "💆🏾 person getting massage: med
 ## 1F486 1F3FF                                ; fully-qualified     # 💆🏿 person getting massage: dark skin tone # emoji-test.txt line #929 Emoji version 4.0
 is Uni.new(0x1F486, 0x1F3FF).Str.chars, 1, "💆🏿 person getting massage: dark skin tone";
 ## 1F486 200D 2642 FE0F                       ; fully-qualified     # 💆‍♂️ man getting massage # emoji-test.txt line #930 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💆‍♂️ man getting massage";
 ## 1F486 200D 2642                            ; non-fully-qualified # 💆‍♂ man getting massage # emoji-test.txt line #931 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x200D, 0x2642).Str.chars, 1, "💆‍♂ man getting massage";
 ## 1F486 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 💆🏻‍♂️ man getting massage: light skin tone # emoji-test.txt line #932 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💆🏻‍♂️ man getting massage: light skin tone";
 ## 1F486 1F3FB 200D 2642                      ; non-fully-qualified # 💆🏻‍♂ man getting massage: light skin tone # emoji-test.txt line #933 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "💆🏻‍♂ man getting massage: light skin tone";
 ## 1F486 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 💆🏼‍♂️ man getting massage: medium-light skin tone # emoji-test.txt line #934 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💆🏼‍♂️ man getting massage: medium-light skin tone";
 ## 1F486 1F3FC 200D 2642                      ; non-fully-qualified # 💆🏼‍♂ man getting massage: medium-light skin tone # emoji-test.txt line #935 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "💆🏼‍♂ man getting massage: medium-light skin tone";
 ## 1F486 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 💆🏽‍♂️ man getting massage: medium skin tone # emoji-test.txt line #936 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💆🏽‍♂️ man getting massage: medium skin tone";
 ## 1F486 1F3FD 200D 2642                      ; non-fully-qualified # 💆🏽‍♂ man getting massage: medium skin tone # emoji-test.txt line #937 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "💆🏽‍♂ man getting massage: medium skin tone";
 ## 1F486 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 💆🏾‍♂️ man getting massage: medium-dark skin tone # emoji-test.txt line #938 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💆🏾‍♂️ man getting massage: medium-dark skin tone";
 ## 1F486 1F3FE 200D 2642                      ; non-fully-qualified # 💆🏾‍♂ man getting massage: medium-dark skin tone # emoji-test.txt line #939 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "💆🏾‍♂ man getting massage: medium-dark skin tone";
 ## 1F486 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 💆🏿‍♂️ man getting massage: dark skin tone # emoji-test.txt line #940 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💆🏿‍♂️ man getting massage: dark skin tone";
 ## 1F486 1F3FF 200D 2642                      ; non-fully-qualified # 💆🏿‍♂ man getting massage: dark skin tone # emoji-test.txt line #941 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "💆🏿‍♂ man getting massage: dark skin tone";
 ## 1F486 200D 2640 FE0F                       ; fully-qualified     # 💆‍♀️ woman getting massage # emoji-test.txt line #942 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💆‍♀️ woman getting massage";
 ## 1F486 200D 2640                            ; non-fully-qualified # 💆‍♀ woman getting massage # emoji-test.txt line #943 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x200D, 0x2640).Str.chars, 1, "💆‍♀ woman getting massage";
 ## 1F486 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 💆🏻‍♀️ woman getting massage: light skin tone # emoji-test.txt line #944 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💆🏻‍♀️ woman getting massage: light skin tone";
 ## 1F486 1F3FB 200D 2640                      ; non-fully-qualified # 💆🏻‍♀ woman getting massage: light skin tone # emoji-test.txt line #945 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "💆🏻‍♀ woman getting massage: light skin tone";
 ## 1F486 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 💆🏼‍♀️ woman getting massage: medium-light skin tone # emoji-test.txt line #946 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💆🏼‍♀️ woman getting massage: medium-light skin tone";
 ## 1F486 1F3FC 200D 2640                      ; non-fully-qualified # 💆🏼‍♀ woman getting massage: medium-light skin tone # emoji-test.txt line #947 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "💆🏼‍♀ woman getting massage: medium-light skin tone";
 ## 1F486 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 💆🏽‍♀️ woman getting massage: medium skin tone # emoji-test.txt line #948 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💆🏽‍♀️ woman getting massage: medium skin tone";
 ## 1F486 1F3FD 200D 2640                      ; non-fully-qualified # 💆🏽‍♀ woman getting massage: medium skin tone # emoji-test.txt line #949 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "💆🏽‍♀ woman getting massage: medium skin tone";
 ## 1F486 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 💆🏾‍♀️ woman getting massage: medium-dark skin tone # emoji-test.txt line #950 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💆🏾‍♀️ woman getting massage: medium-dark skin tone";
 ## 1F486 1F3FE 200D 2640                      ; non-fully-qualified # 💆🏾‍♀ woman getting massage: medium-dark skin tone # emoji-test.txt line #951 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "💆🏾‍♀ woman getting massage: medium-dark skin tone";
 ## 1F486 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 💆🏿‍♀️ woman getting massage: dark skin tone # emoji-test.txt line #952 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💆🏿‍♀️ woman getting massage: dark skin tone";
 ## 1F486 1F3FF 200D 2640                      ; non-fully-qualified # 💆🏿‍♀ woman getting massage: dark skin tone # emoji-test.txt line #953 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F486, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "💆🏿‍♀ woman getting massage: dark skin tone";
 ## 1F487                                      ; fully-qualified     # 💇 person getting haircut # emoji-test.txt line #954 Emoji version 4.0
 is Uni.new(0x1F487).Str.chars, 1, "💇 person getting haircut";
@@ -1827,52 +2443,76 @@ is Uni.new(0x1F487, 0x1F3FE).Str.chars, 1, "💇🏾 person getting haircut: med
 ## 1F487 1F3FF                                ; fully-qualified     # 💇🏿 person getting haircut: dark skin tone # emoji-test.txt line #959 Emoji version 4.0
 is Uni.new(0x1F487, 0x1F3FF).Str.chars, 1, "💇🏿 person getting haircut: dark skin tone";
 ## 1F487 200D 2642 FE0F                       ; fully-qualified     # 💇‍♂️ man getting haircut # emoji-test.txt line #960 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💇‍♂️ man getting haircut";
 ## 1F487 200D 2642                            ; non-fully-qualified # 💇‍♂ man getting haircut # emoji-test.txt line #961 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x200D, 0x2642).Str.chars, 1, "💇‍♂ man getting haircut";
 ## 1F487 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 💇🏻‍♂️ man getting haircut: light skin tone # emoji-test.txt line #962 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💇🏻‍♂️ man getting haircut: light skin tone";
 ## 1F487 1F3FB 200D 2642                      ; non-fully-qualified # 💇🏻‍♂ man getting haircut: light skin tone # emoji-test.txt line #963 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "💇🏻‍♂ man getting haircut: light skin tone";
 ## 1F487 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 💇🏼‍♂️ man getting haircut: medium-light skin tone # emoji-test.txt line #964 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💇🏼‍♂️ man getting haircut: medium-light skin tone";
 ## 1F487 1F3FC 200D 2642                      ; non-fully-qualified # 💇🏼‍♂ man getting haircut: medium-light skin tone # emoji-test.txt line #965 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "💇🏼‍♂ man getting haircut: medium-light skin tone";
 ## 1F487 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 💇🏽‍♂️ man getting haircut: medium skin tone # emoji-test.txt line #966 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💇🏽‍♂️ man getting haircut: medium skin tone";
 ## 1F487 1F3FD 200D 2642                      ; non-fully-qualified # 💇🏽‍♂ man getting haircut: medium skin tone # emoji-test.txt line #967 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "💇🏽‍♂ man getting haircut: medium skin tone";
 ## 1F487 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 💇🏾‍♂️ man getting haircut: medium-dark skin tone # emoji-test.txt line #968 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💇🏾‍♂️ man getting haircut: medium-dark skin tone";
 ## 1F487 1F3FE 200D 2642                      ; non-fully-qualified # 💇🏾‍♂ man getting haircut: medium-dark skin tone # emoji-test.txt line #969 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "💇🏾‍♂ man getting haircut: medium-dark skin tone";
 ## 1F487 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 💇🏿‍♂️ man getting haircut: dark skin tone # emoji-test.txt line #970 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "💇🏿‍♂️ man getting haircut: dark skin tone";
 ## 1F487 1F3FF 200D 2642                      ; non-fully-qualified # 💇🏿‍♂ man getting haircut: dark skin tone # emoji-test.txt line #971 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "💇🏿‍♂ man getting haircut: dark skin tone";
 ## 1F487 200D 2640 FE0F                       ; fully-qualified     # 💇‍♀️ woman getting haircut # emoji-test.txt line #972 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💇‍♀️ woman getting haircut";
 ## 1F487 200D 2640                            ; non-fully-qualified # 💇‍♀ woman getting haircut # emoji-test.txt line #973 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x200D, 0x2640).Str.chars, 1, "💇‍♀ woman getting haircut";
 ## 1F487 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 💇🏻‍♀️ woman getting haircut: light skin tone # emoji-test.txt line #974 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💇🏻‍♀️ woman getting haircut: light skin tone";
 ## 1F487 1F3FB 200D 2640                      ; non-fully-qualified # 💇🏻‍♀ woman getting haircut: light skin tone # emoji-test.txt line #975 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "💇🏻‍♀ woman getting haircut: light skin tone";
 ## 1F487 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 💇🏼‍♀️ woman getting haircut: medium-light skin tone # emoji-test.txt line #976 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💇🏼‍♀️ woman getting haircut: medium-light skin tone";
 ## 1F487 1F3FC 200D 2640                      ; non-fully-qualified # 💇🏼‍♀ woman getting haircut: medium-light skin tone # emoji-test.txt line #977 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "💇🏼‍♀ woman getting haircut: medium-light skin tone";
 ## 1F487 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 💇🏽‍♀️ woman getting haircut: medium skin tone # emoji-test.txt line #978 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💇🏽‍♀️ woman getting haircut: medium skin tone";
 ## 1F487 1F3FD 200D 2640                      ; non-fully-qualified # 💇🏽‍♀ woman getting haircut: medium skin tone # emoji-test.txt line #979 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "💇🏽‍♀ woman getting haircut: medium skin tone";
 ## 1F487 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 💇🏾‍♀️ woman getting haircut: medium-dark skin tone # emoji-test.txt line #980 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💇🏾‍♀️ woman getting haircut: medium-dark skin tone";
 ## 1F487 1F3FE 200D 2640                      ; non-fully-qualified # 💇🏾‍♀ woman getting haircut: medium-dark skin tone # emoji-test.txt line #981 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "💇🏾‍♀ woman getting haircut: medium-dark skin tone";
 ## 1F487 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 💇🏿‍♀️ woman getting haircut: dark skin tone # emoji-test.txt line #982 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "💇🏿‍♀️ woman getting haircut: dark skin tone";
 ## 1F487 1F3FF 200D 2640                      ; non-fully-qualified # 💇🏿‍♀ woman getting haircut: dark skin tone # emoji-test.txt line #983 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F487, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "💇🏿‍♀ woman getting haircut: dark skin tone";
 ## 1F6B6                                      ; fully-qualified     # 🚶 person walking # emoji-test.txt line #984 Emoji version 4.0
 is Uni.new(0x1F6B6).Str.chars, 1, "🚶 person walking";
@@ -1887,52 +2527,76 @@ is Uni.new(0x1F6B6, 0x1F3FE).Str.chars, 1, "🚶🏾 person walking: medium-dark
 ## 1F6B6 1F3FF                                ; fully-qualified     # 🚶🏿 person walking: dark skin tone # emoji-test.txt line #989 Emoji version 4.0
 is Uni.new(0x1F6B6, 0x1F3FF).Str.chars, 1, "🚶🏿 person walking: dark skin tone";
 ## 1F6B6 200D 2642 FE0F                       ; fully-qualified     # 🚶‍♂️ man walking # emoji-test.txt line #990 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚶‍♂️ man walking";
 ## 1F6B6 200D 2642                            ; non-fully-qualified # 🚶‍♂ man walking # emoji-test.txt line #991 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x200D, 0x2642).Str.chars, 1, "🚶‍♂ man walking";
 ## 1F6B6 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🚶🏻‍♂️ man walking: light skin tone # emoji-test.txt line #992 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚶🏻‍♂️ man walking: light skin tone";
 ## 1F6B6 1F3FB 200D 2642                      ; non-fully-qualified # 🚶🏻‍♂ man walking: light skin tone # emoji-test.txt line #993 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🚶🏻‍♂ man walking: light skin tone";
 ## 1F6B6 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🚶🏼‍♂️ man walking: medium-light skin tone # emoji-test.txt line #994 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚶🏼‍♂️ man walking: medium-light skin tone";
 ## 1F6B6 1F3FC 200D 2642                      ; non-fully-qualified # 🚶🏼‍♂ man walking: medium-light skin tone # emoji-test.txt line #995 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🚶🏼‍♂ man walking: medium-light skin tone";
 ## 1F6B6 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🚶🏽‍♂️ man walking: medium skin tone # emoji-test.txt line #996 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚶🏽‍♂️ man walking: medium skin tone";
 ## 1F6B6 1F3FD 200D 2642                      ; non-fully-qualified # 🚶🏽‍♂ man walking: medium skin tone # emoji-test.txt line #997 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🚶🏽‍♂ man walking: medium skin tone";
 ## 1F6B6 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🚶🏾‍♂️ man walking: medium-dark skin tone # emoji-test.txt line #998 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚶🏾‍♂️ man walking: medium-dark skin tone";
 ## 1F6B6 1F3FE 200D 2642                      ; non-fully-qualified # 🚶🏾‍♂ man walking: medium-dark skin tone # emoji-test.txt line #999 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🚶🏾‍♂ man walking: medium-dark skin tone";
 ## 1F6B6 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🚶🏿‍♂️ man walking: dark skin tone # emoji-test.txt line #1000 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚶🏿‍♂️ man walking: dark skin tone";
 ## 1F6B6 1F3FF 200D 2642                      ; non-fully-qualified # 🚶🏿‍♂ man walking: dark skin tone # emoji-test.txt line #1001 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🚶🏿‍♂ man walking: dark skin tone";
 ## 1F6B6 200D 2640 FE0F                       ; fully-qualified     # 🚶‍♀️ woman walking # emoji-test.txt line #1002 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚶‍♀️ woman walking";
 ## 1F6B6 200D 2640                            ; non-fully-qualified # 🚶‍♀ woman walking # emoji-test.txt line #1003 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x200D, 0x2640).Str.chars, 1, "🚶‍♀ woman walking";
 ## 1F6B6 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🚶🏻‍♀️ woman walking: light skin tone # emoji-test.txt line #1004 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚶🏻‍♀️ woman walking: light skin tone";
 ## 1F6B6 1F3FB 200D 2640                      ; non-fully-qualified # 🚶🏻‍♀ woman walking: light skin tone # emoji-test.txt line #1005 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🚶🏻‍♀ woman walking: light skin tone";
 ## 1F6B6 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🚶🏼‍♀️ woman walking: medium-light skin tone # emoji-test.txt line #1006 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚶🏼‍♀️ woman walking: medium-light skin tone";
 ## 1F6B6 1F3FC 200D 2640                      ; non-fully-qualified # 🚶🏼‍♀ woman walking: medium-light skin tone # emoji-test.txt line #1007 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🚶🏼‍♀ woman walking: medium-light skin tone";
 ## 1F6B6 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🚶🏽‍♀️ woman walking: medium skin tone # emoji-test.txt line #1008 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚶🏽‍♀️ woman walking: medium skin tone";
 ## 1F6B6 1F3FD 200D 2640                      ; non-fully-qualified # 🚶🏽‍♀ woman walking: medium skin tone # emoji-test.txt line #1009 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🚶🏽‍♀ woman walking: medium skin tone";
 ## 1F6B6 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🚶🏾‍♀️ woman walking: medium-dark skin tone # emoji-test.txt line #1010 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚶🏾‍♀️ woman walking: medium-dark skin tone";
 ## 1F6B6 1F3FE 200D 2640                      ; non-fully-qualified # 🚶🏾‍♀ woman walking: medium-dark skin tone # emoji-test.txt line #1011 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🚶🏾‍♀ woman walking: medium-dark skin tone";
 ## 1F6B6 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🚶🏿‍♀️ woman walking: dark skin tone # emoji-test.txt line #1012 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚶🏿‍♀️ woman walking: dark skin tone";
 ## 1F6B6 1F3FF 200D 2640                      ; non-fully-qualified # 🚶🏿‍♀ woman walking: dark skin tone # emoji-test.txt line #1013 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B6, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🚶🏿‍♀ woman walking: dark skin tone";
 ## 1F3C3                                      ; fully-qualified     # 🏃 person running # emoji-test.txt line #1014 Emoji version 4.0
 is Uni.new(0x1F3C3).Str.chars, 1, "🏃 person running";
@@ -1947,52 +2611,76 @@ is Uni.new(0x1F3C3, 0x1F3FE).Str.chars, 1, "🏃🏾 person running: medium-dark
 ## 1F3C3 1F3FF                                ; fully-qualified     # 🏃🏿 person running: dark skin tone # emoji-test.txt line #1019 Emoji version 4.0
 is Uni.new(0x1F3C3, 0x1F3FF).Str.chars, 1, "🏃🏿 person running: dark skin tone";
 ## 1F3C3 200D 2642 FE0F                       ; fully-qualified     # 🏃‍♂️ man running # emoji-test.txt line #1020 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏃‍♂️ man running";
 ## 1F3C3 200D 2642                            ; non-fully-qualified # 🏃‍♂ man running # emoji-test.txt line #1021 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x200D, 0x2642).Str.chars, 1, "🏃‍♂ man running";
 ## 1F3C3 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🏃🏻‍♂️ man running: light skin tone # emoji-test.txt line #1022 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏃🏻‍♂️ man running: light skin tone";
 ## 1F3C3 1F3FB 200D 2642                      ; non-fully-qualified # 🏃🏻‍♂ man running: light skin tone # emoji-test.txt line #1023 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🏃🏻‍♂ man running: light skin tone";
 ## 1F3C3 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🏃🏼‍♂️ man running: medium-light skin tone # emoji-test.txt line #1024 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏃🏼‍♂️ man running: medium-light skin tone";
 ## 1F3C3 1F3FC 200D 2642                      ; non-fully-qualified # 🏃🏼‍♂ man running: medium-light skin tone # emoji-test.txt line #1025 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🏃🏼‍♂ man running: medium-light skin tone";
 ## 1F3C3 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🏃🏽‍♂️ man running: medium skin tone # emoji-test.txt line #1026 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏃🏽‍♂️ man running: medium skin tone";
 ## 1F3C3 1F3FD 200D 2642                      ; non-fully-qualified # 🏃🏽‍♂ man running: medium skin tone # emoji-test.txt line #1027 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🏃🏽‍♂ man running: medium skin tone";
 ## 1F3C3 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🏃🏾‍♂️ man running: medium-dark skin tone # emoji-test.txt line #1028 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏃🏾‍♂️ man running: medium-dark skin tone";
 ## 1F3C3 1F3FE 200D 2642                      ; non-fully-qualified # 🏃🏾‍♂ man running: medium-dark skin tone # emoji-test.txt line #1029 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🏃🏾‍♂ man running: medium-dark skin tone";
 ## 1F3C3 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🏃🏿‍♂️ man running: dark skin tone # emoji-test.txt line #1030 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏃🏿‍♂️ man running: dark skin tone";
 ## 1F3C3 1F3FF 200D 2642                      ; non-fully-qualified # 🏃🏿‍♂ man running: dark skin tone # emoji-test.txt line #1031 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🏃🏿‍♂ man running: dark skin tone";
 ## 1F3C3 200D 2640 FE0F                       ; fully-qualified     # 🏃‍♀️ woman running # emoji-test.txt line #1032 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏃‍♀️ woman running";
 ## 1F3C3 200D 2640                            ; non-fully-qualified # 🏃‍♀ woman running # emoji-test.txt line #1033 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x200D, 0x2640).Str.chars, 1, "🏃‍♀ woman running";
 ## 1F3C3 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🏃🏻‍♀️ woman running: light skin tone # emoji-test.txt line #1034 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏃🏻‍♀️ woman running: light skin tone";
 ## 1F3C3 1F3FB 200D 2640                      ; non-fully-qualified # 🏃🏻‍♀ woman running: light skin tone # emoji-test.txt line #1035 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🏃🏻‍♀ woman running: light skin tone";
 ## 1F3C3 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🏃🏼‍♀️ woman running: medium-light skin tone # emoji-test.txt line #1036 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏃🏼‍♀️ woman running: medium-light skin tone";
 ## 1F3C3 1F3FC 200D 2640                      ; non-fully-qualified # 🏃🏼‍♀ woman running: medium-light skin tone # emoji-test.txt line #1037 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🏃🏼‍♀ woman running: medium-light skin tone";
 ## 1F3C3 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🏃🏽‍♀️ woman running: medium skin tone # emoji-test.txt line #1038 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏃🏽‍♀️ woman running: medium skin tone";
 ## 1F3C3 1F3FD 200D 2640                      ; non-fully-qualified # 🏃🏽‍♀ woman running: medium skin tone # emoji-test.txt line #1039 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🏃🏽‍♀ woman running: medium skin tone";
 ## 1F3C3 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🏃🏾‍♀️ woman running: medium-dark skin tone # emoji-test.txt line #1040 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏃🏾‍♀️ woman running: medium-dark skin tone";
 ## 1F3C3 1F3FE 200D 2640                      ; non-fully-qualified # 🏃🏾‍♀ woman running: medium-dark skin tone # emoji-test.txt line #1041 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🏃🏾‍♀ woman running: medium-dark skin tone";
 ## 1F3C3 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🏃🏿‍♀️ woman running: dark skin tone # emoji-test.txt line #1042 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏃🏿‍♀️ woman running: dark skin tone";
 ## 1F3C3 1F3FF 200D 2640                      ; non-fully-qualified # 🏃🏿‍♀ woman running: dark skin tone # emoji-test.txt line #1043 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C3, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🏃🏿‍♀ woman running: dark skin tone";
 ## 1F483                                      ; fully-qualified     # 💃 woman dancing # emoji-test.txt line #1044 Emoji version 4.0
 is Uni.new(0x1F483).Str.chars, 1, "💃 woman dancing";
@@ -2021,24 +2709,33 @@ is Uni.new(0x1F57A, 0x1F3FF).Str.chars, 1, "🕺🏿 man dancing: dark skin tone
 ## 1F46F                                      ; fully-qualified     # 👯 people with bunny ears partying # emoji-test.txt line #1056 Emoji version 4.0
 is Uni.new(0x1F46F).Str.chars, 1, "👯 people with bunny ears partying";
 ## 1F46F 200D 2642 FE0F                       ; fully-qualified     # 👯‍♂️ men with bunny ears partying # emoji-test.txt line #1057 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46F, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "👯‍♂️ men with bunny ears partying";
 ## 1F46F 200D 2642                            ; non-fully-qualified # 👯‍♂ men with bunny ears partying # emoji-test.txt line #1058 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46F, 0x200D, 0x2642).Str.chars, 1, "👯‍♂ men with bunny ears partying";
 ## 1F46F 200D 2640 FE0F                       ; fully-qualified     # 👯‍♀️ women with bunny ears partying # emoji-test.txt line #1059 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46F, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "👯‍♀️ women with bunny ears partying";
 ## 1F46F 200D 2640                            ; non-fully-qualified # 👯‍♀ women with bunny ears partying # emoji-test.txt line #1060 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F46F, 0x200D, 0x2640).Str.chars, 1, "👯‍♀ women with bunny ears partying";
 ## 1F574 FE0F                                 ; fully-qualified     # 🕴️ man in business suit levitating # emoji-test.txt line #1061 Emoji version 4.0
 is Uni.new(0x1F574, 0xFE0F).Str.chars, 1, "🕴️ man in business suit levitating";
 ## 1F574 1F3FB                                ; fully-qualified     # 🕴🏻 man in business suit levitating: light skin tone # emoji-test.txt line #1062 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F574, 0x1F3FB).Str.chars, 1, "🕴🏻 man in business suit levitating: light skin tone";
 ## 1F574 1F3FC                                ; fully-qualified     # 🕴🏼 man in business suit levitating: medium-light skin tone # emoji-test.txt line #1063 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F574, 0x1F3FC).Str.chars, 1, "🕴🏼 man in business suit levitating: medium-light skin tone";
 ## 1F574 1F3FD                                ; fully-qualified     # 🕴🏽 man in business suit levitating: medium skin tone # emoji-test.txt line #1064 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F574, 0x1F3FD).Str.chars, 1, "🕴🏽 man in business suit levitating: medium skin tone";
 ## 1F574 1F3FE                                ; fully-qualified     # 🕴🏾 man in business suit levitating: medium-dark skin tone # emoji-test.txt line #1065 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F574, 0x1F3FE).Str.chars, 1, "🕴🏾 man in business suit levitating: medium-dark skin tone";
 ## 1F574 1F3FF                                ; fully-qualified     # 🕴🏿 man in business suit levitating: dark skin tone # emoji-test.txt line #1066 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F574, 0x1F3FF).Str.chars, 1, "🕴🏿 man in business suit levitating: dark skin tone";
 ## 1F5E3 FE0F                                 ; fully-qualified     # 🗣️ speaking head # emoji-test.txt line #1067 Emoji version 4.0
 is Uni.new(0x1F5E3, 0xFE0F).Str.chars, 1, "🗣️ speaking head";
@@ -2051,96 +2748,139 @@ is Uni.new(0x1F93A).Str.chars, 1, "🤺 person fencing";
 ## 1F3C7                                      ; fully-qualified     # 🏇 horse racing # emoji-test.txt line #1073 Emoji version 4.0
 is Uni.new(0x1F3C7).Str.chars, 1, "🏇 horse racing";
 ## 1F3C7 1F3FB                                ; fully-qualified     # 🏇🏻 horse racing: light skin tone # emoji-test.txt line #1074 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C7, 0x1F3FB).Str.chars, 1, "🏇🏻 horse racing: light skin tone";
 ## 1F3C7 1F3FC                                ; fully-qualified     # 🏇🏼 horse racing: medium-light skin tone # emoji-test.txt line #1075 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C7, 0x1F3FC).Str.chars, 1, "🏇🏼 horse racing: medium-light skin tone";
 ## 1F3C7 1F3FD                                ; fully-qualified     # 🏇🏽 horse racing: medium skin tone # emoji-test.txt line #1076 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C7, 0x1F3FD).Str.chars, 1, "🏇🏽 horse racing: medium skin tone";
 ## 1F3C7 1F3FE                                ; fully-qualified     # 🏇🏾 horse racing: medium-dark skin tone # emoji-test.txt line #1077 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C7, 0x1F3FE).Str.chars, 1, "🏇🏾 horse racing: medium-dark skin tone";
 ## 1F3C7 1F3FF                                ; fully-qualified     # 🏇🏿 horse racing: dark skin tone # emoji-test.txt line #1078 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C7, 0x1F3FF).Str.chars, 1, "🏇🏿 horse racing: dark skin tone";
 ## 26F7 FE0F                                  ; fully-qualified     # ⛷️ skier # emoji-test.txt line #1079 Emoji version 4.0
 is Uni.new(0x26F7, 0xFE0F).Str.chars, 1, "⛷️ skier";
 ## 1F3C2                                      ; fully-qualified     # 🏂 snowboarder # emoji-test.txt line #1080 Emoji version 4.0
 is Uni.new(0x1F3C2).Str.chars, 1, "🏂 snowboarder";
 ## 1F3C2 1F3FB                                ; fully-qualified     # 🏂🏻 snowboarder: light skin tone # emoji-test.txt line #1081 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C2, 0x1F3FB).Str.chars, 1, "🏂🏻 snowboarder: light skin tone";
 ## 1F3C2 1F3FC                                ; fully-qualified     # 🏂🏼 snowboarder: medium-light skin tone # emoji-test.txt line #1082 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C2, 0x1F3FC).Str.chars, 1, "🏂🏼 snowboarder: medium-light skin tone";
 ## 1F3C2 1F3FD                                ; fully-qualified     # 🏂🏽 snowboarder: medium skin tone # emoji-test.txt line #1083 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C2, 0x1F3FD).Str.chars, 1, "🏂🏽 snowboarder: medium skin tone";
 ## 1F3C2 1F3FE                                ; fully-qualified     # 🏂🏾 snowboarder: medium-dark skin tone # emoji-test.txt line #1084 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C2, 0x1F3FE).Str.chars, 1, "🏂🏾 snowboarder: medium-dark skin tone";
 ## 1F3C2 1F3FF                                ; fully-qualified     # 🏂🏿 snowboarder: dark skin tone # emoji-test.txt line #1085 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C2, 0x1F3FF).Str.chars, 1, "🏂🏿 snowboarder: dark skin tone";
 ## 1F3CC FE0F                                 ; fully-qualified     # 🏌️ person golfing # emoji-test.txt line #1086 Emoji version 4.0
 is Uni.new(0x1F3CC, 0xFE0F).Str.chars, 1, "🏌️ person golfing";
 ## 1F3CC 1F3FB                                ; fully-qualified     # 🏌🏻 person golfing: light skin tone # emoji-test.txt line #1087 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FB).Str.chars, 1, "🏌🏻 person golfing: light skin tone";
 ## 1F3CC 1F3FC                                ; fully-qualified     # 🏌🏼 person golfing: medium-light skin tone # emoji-test.txt line #1088 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FC).Str.chars, 1, "🏌🏼 person golfing: medium-light skin tone";
 ## 1F3CC 1F3FD                                ; fully-qualified     # 🏌🏽 person golfing: medium skin tone # emoji-test.txt line #1089 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FD).Str.chars, 1, "🏌🏽 person golfing: medium skin tone";
 ## 1F3CC 1F3FE                                ; fully-qualified     # 🏌🏾 person golfing: medium-dark skin tone # emoji-test.txt line #1090 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FE).Str.chars, 1, "🏌🏾 person golfing: medium-dark skin tone";
 ## 1F3CC 1F3FF                                ; fully-qualified     # 🏌🏿 person golfing: dark skin tone # emoji-test.txt line #1091 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FF).Str.chars, 1, "🏌🏿 person golfing: dark skin tone";
 ## 1F3CC FE0F 200D 2642 FE0F                  ; fully-qualified     # 🏌️‍♂️ man golfing # emoji-test.txt line #1092 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0xFE0F, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏌️‍♂️ man golfing";
 ## 1F3CC 200D 2642                            ; non-fully-qualified # 🏌‍♂ man golfing # emoji-test.txt line #1093 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x200D, 0x2642).Str.chars, 1, "🏌‍♂ man golfing";
 ## 1F3CC FE0F 200D 2642                       ; non-fully-qualified # 🏌️‍♂ man golfing # emoji-test.txt line #1094 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0xFE0F, 0x200D, 0x2642).Str.chars, 1, "🏌️‍♂ man golfing";
 ## 1F3CC 200D 2642 FE0F                       ; non-fully-qualified # 🏌‍♂️ man golfing # emoji-test.txt line #1095 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏌‍♂️ man golfing";
 ## 1F3CC 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🏌🏻‍♂️ man golfing: light skin tone # emoji-test.txt line #1096 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏌🏻‍♂️ man golfing: light skin tone";
 ## 1F3CC 1F3FB 200D 2642                      ; non-fully-qualified # 🏌🏻‍♂ man golfing: light skin tone # emoji-test.txt line #1097 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🏌🏻‍♂ man golfing: light skin tone";
 ## 1F3CC 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🏌🏼‍♂️ man golfing: medium-light skin tone # emoji-test.txt line #1098 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏌🏼‍♂️ man golfing: medium-light skin tone";
 ## 1F3CC 1F3FC 200D 2642                      ; non-fully-qualified # 🏌🏼‍♂ man golfing: medium-light skin tone # emoji-test.txt line #1099 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🏌🏼‍♂ man golfing: medium-light skin tone";
 ## 1F3CC 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🏌🏽‍♂️ man golfing: medium skin tone # emoji-test.txt line #1100 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏌🏽‍♂️ man golfing: medium skin tone";
 ## 1F3CC 1F3FD 200D 2642                      ; non-fully-qualified # 🏌🏽‍♂ man golfing: medium skin tone # emoji-test.txt line #1101 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🏌🏽‍♂ man golfing: medium skin tone";
 ## 1F3CC 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🏌🏾‍♂️ man golfing: medium-dark skin tone # emoji-test.txt line #1102 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏌🏾‍♂️ man golfing: medium-dark skin tone";
 ## 1F3CC 1F3FE 200D 2642                      ; non-fully-qualified # 🏌🏾‍♂ man golfing: medium-dark skin tone # emoji-test.txt line #1103 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🏌🏾‍♂ man golfing: medium-dark skin tone";
 ## 1F3CC 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🏌🏿‍♂️ man golfing: dark skin tone # emoji-test.txt line #1104 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏌🏿‍♂️ man golfing: dark skin tone";
 ## 1F3CC 1F3FF 200D 2642                      ; non-fully-qualified # 🏌🏿‍♂ man golfing: dark skin tone # emoji-test.txt line #1105 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🏌🏿‍♂ man golfing: dark skin tone";
 ## 1F3CC FE0F 200D 2640 FE0F                  ; fully-qualified     # 🏌️‍♀️ woman golfing # emoji-test.txt line #1106 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0xFE0F, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏌️‍♀️ woman golfing";
 ## 1F3CC 200D 2640                            ; non-fully-qualified # 🏌‍♀ woman golfing # emoji-test.txt line #1107 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x200D, 0x2640).Str.chars, 1, "🏌‍♀ woman golfing";
 ## 1F3CC FE0F 200D 2640                       ; non-fully-qualified # 🏌️‍♀ woman golfing # emoji-test.txt line #1108 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0xFE0F, 0x200D, 0x2640).Str.chars, 1, "🏌️‍♀ woman golfing";
 ## 1F3CC 200D 2640 FE0F                       ; non-fully-qualified # 🏌‍♀️ woman golfing # emoji-test.txt line #1109 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏌‍♀️ woman golfing";
 ## 1F3CC 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🏌🏻‍♀️ woman golfing: light skin tone # emoji-test.txt line #1110 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏌🏻‍♀️ woman golfing: light skin tone";
 ## 1F3CC 1F3FB 200D 2640                      ; non-fully-qualified # 🏌🏻‍♀ woman golfing: light skin tone # emoji-test.txt line #1111 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🏌🏻‍♀ woman golfing: light skin tone";
 ## 1F3CC 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🏌🏼‍♀️ woman golfing: medium-light skin tone # emoji-test.txt line #1112 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏌🏼‍♀️ woman golfing: medium-light skin tone";
 ## 1F3CC 1F3FC 200D 2640                      ; non-fully-qualified # 🏌🏼‍♀ woman golfing: medium-light skin tone # emoji-test.txt line #1113 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🏌🏼‍♀ woman golfing: medium-light skin tone";
 ## 1F3CC 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🏌🏽‍♀️ woman golfing: medium skin tone # emoji-test.txt line #1114 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏌🏽‍♀️ woman golfing: medium skin tone";
 ## 1F3CC 1F3FD 200D 2640                      ; non-fully-qualified # 🏌🏽‍♀ woman golfing: medium skin tone # emoji-test.txt line #1115 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🏌🏽‍♀ woman golfing: medium skin tone";
 ## 1F3CC 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🏌🏾‍♀️ woman golfing: medium-dark skin tone # emoji-test.txt line #1116 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏌🏾‍♀️ woman golfing: medium-dark skin tone";
 ## 1F3CC 1F3FE 200D 2640                      ; non-fully-qualified # 🏌🏾‍♀ woman golfing: medium-dark skin tone # emoji-test.txt line #1117 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🏌🏾‍♀ woman golfing: medium-dark skin tone";
 ## 1F3CC 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🏌🏿‍♀️ woman golfing: dark skin tone # emoji-test.txt line #1118 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏌🏿‍♀️ woman golfing: dark skin tone";
 ## 1F3CC 1F3FF 200D 2640                      ; non-fully-qualified # 🏌🏿‍♀ woman golfing: dark skin tone # emoji-test.txt line #1119 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CC, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🏌🏿‍♀ woman golfing: dark skin tone";
 ## 1F3C4                                      ; fully-qualified     # 🏄 person surfing # emoji-test.txt line #1120 Emoji version 4.0
 is Uni.new(0x1F3C4).Str.chars, 1, "🏄 person surfing";
@@ -2155,52 +2895,76 @@ is Uni.new(0x1F3C4, 0x1F3FE).Str.chars, 1, "🏄🏾 person surfing: medium-dark
 ## 1F3C4 1F3FF                                ; fully-qualified     # 🏄🏿 person surfing: dark skin tone # emoji-test.txt line #1125 Emoji version 4.0
 is Uni.new(0x1F3C4, 0x1F3FF).Str.chars, 1, "🏄🏿 person surfing: dark skin tone";
 ## 1F3C4 200D 2642 FE0F                       ; fully-qualified     # 🏄‍♂️ man surfing # emoji-test.txt line #1126 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏄‍♂️ man surfing";
 ## 1F3C4 200D 2642                            ; non-fully-qualified # 🏄‍♂ man surfing # emoji-test.txt line #1127 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x200D, 0x2642).Str.chars, 1, "🏄‍♂ man surfing";
 ## 1F3C4 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🏄🏻‍♂️ man surfing: light skin tone # emoji-test.txt line #1128 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏄🏻‍♂️ man surfing: light skin tone";
 ## 1F3C4 1F3FB 200D 2642                      ; non-fully-qualified # 🏄🏻‍♂ man surfing: light skin tone # emoji-test.txt line #1129 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🏄🏻‍♂ man surfing: light skin tone";
 ## 1F3C4 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🏄🏼‍♂️ man surfing: medium-light skin tone # emoji-test.txt line #1130 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏄🏼‍♂️ man surfing: medium-light skin tone";
 ## 1F3C4 1F3FC 200D 2642                      ; non-fully-qualified # 🏄🏼‍♂ man surfing: medium-light skin tone # emoji-test.txt line #1131 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🏄🏼‍♂ man surfing: medium-light skin tone";
 ## 1F3C4 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🏄🏽‍♂️ man surfing: medium skin tone # emoji-test.txt line #1132 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏄🏽‍♂️ man surfing: medium skin tone";
 ## 1F3C4 1F3FD 200D 2642                      ; non-fully-qualified # 🏄🏽‍♂ man surfing: medium skin tone # emoji-test.txt line #1133 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🏄🏽‍♂ man surfing: medium skin tone";
 ## 1F3C4 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🏄🏾‍♂️ man surfing: medium-dark skin tone # emoji-test.txt line #1134 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏄🏾‍♂️ man surfing: medium-dark skin tone";
 ## 1F3C4 1F3FE 200D 2642                      ; non-fully-qualified # 🏄🏾‍♂ man surfing: medium-dark skin tone # emoji-test.txt line #1135 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🏄🏾‍♂ man surfing: medium-dark skin tone";
 ## 1F3C4 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🏄🏿‍♂️ man surfing: dark skin tone # emoji-test.txt line #1136 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏄🏿‍♂️ man surfing: dark skin tone";
 ## 1F3C4 1F3FF 200D 2642                      ; non-fully-qualified # 🏄🏿‍♂ man surfing: dark skin tone # emoji-test.txt line #1137 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🏄🏿‍♂ man surfing: dark skin tone";
 ## 1F3C4 200D 2640 FE0F                       ; fully-qualified     # 🏄‍♀️ woman surfing # emoji-test.txt line #1138 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏄‍♀️ woman surfing";
 ## 1F3C4 200D 2640                            ; non-fully-qualified # 🏄‍♀ woman surfing # emoji-test.txt line #1139 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x200D, 0x2640).Str.chars, 1, "🏄‍♀ woman surfing";
 ## 1F3C4 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🏄🏻‍♀️ woman surfing: light skin tone # emoji-test.txt line #1140 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏄🏻‍♀️ woman surfing: light skin tone";
 ## 1F3C4 1F3FB 200D 2640                      ; non-fully-qualified # 🏄🏻‍♀ woman surfing: light skin tone # emoji-test.txt line #1141 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🏄🏻‍♀ woman surfing: light skin tone";
 ## 1F3C4 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🏄🏼‍♀️ woman surfing: medium-light skin tone # emoji-test.txt line #1142 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏄🏼‍♀️ woman surfing: medium-light skin tone";
 ## 1F3C4 1F3FC 200D 2640                      ; non-fully-qualified # 🏄🏼‍♀ woman surfing: medium-light skin tone # emoji-test.txt line #1143 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🏄🏼‍♀ woman surfing: medium-light skin tone";
 ## 1F3C4 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🏄🏽‍♀️ woman surfing: medium skin tone # emoji-test.txt line #1144 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏄🏽‍♀️ woman surfing: medium skin tone";
 ## 1F3C4 1F3FD 200D 2640                      ; non-fully-qualified # 🏄🏽‍♀ woman surfing: medium skin tone # emoji-test.txt line #1145 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🏄🏽‍♀ woman surfing: medium skin tone";
 ## 1F3C4 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🏄🏾‍♀️ woman surfing: medium-dark skin tone # emoji-test.txt line #1146 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏄🏾‍♀️ woman surfing: medium-dark skin tone";
 ## 1F3C4 1F3FE 200D 2640                      ; non-fully-qualified # 🏄🏾‍♀ woman surfing: medium-dark skin tone # emoji-test.txt line #1147 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🏄🏾‍♀ woman surfing: medium-dark skin tone";
 ## 1F3C4 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🏄🏿‍♀️ woman surfing: dark skin tone # emoji-test.txt line #1148 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏄🏿‍♀️ woman surfing: dark skin tone";
 ## 1F3C4 1F3FF 200D 2640                      ; non-fully-qualified # 🏄🏿‍♀ woman surfing: dark skin tone # emoji-test.txt line #1149 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3C4, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🏄🏿‍♀ woman surfing: dark skin tone";
 ## 1F6A3                                      ; fully-qualified     # 🚣 person rowing boat # emoji-test.txt line #1150 Emoji version 4.0
 is Uni.new(0x1F6A3).Str.chars, 1, "🚣 person rowing boat";
@@ -2215,52 +2979,76 @@ is Uni.new(0x1F6A3, 0x1F3FE).Str.chars, 1, "🚣🏾 person rowing boat: medium-
 ## 1F6A3 1F3FF                                ; fully-qualified     # 🚣🏿 person rowing boat: dark skin tone # emoji-test.txt line #1155 Emoji version 4.0
 is Uni.new(0x1F6A3, 0x1F3FF).Str.chars, 1, "🚣🏿 person rowing boat: dark skin tone";
 ## 1F6A3 200D 2642 FE0F                       ; fully-qualified     # 🚣‍♂️ man rowing boat # emoji-test.txt line #1156 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚣‍♂️ man rowing boat";
 ## 1F6A3 200D 2642                            ; non-fully-qualified # 🚣‍♂ man rowing boat # emoji-test.txt line #1157 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x200D, 0x2642).Str.chars, 1, "🚣‍♂ man rowing boat";
 ## 1F6A3 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🚣🏻‍♂️ man rowing boat: light skin tone # emoji-test.txt line #1158 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚣🏻‍♂️ man rowing boat: light skin tone";
 ## 1F6A3 1F3FB 200D 2642                      ; non-fully-qualified # 🚣🏻‍♂ man rowing boat: light skin tone # emoji-test.txt line #1159 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🚣🏻‍♂ man rowing boat: light skin tone";
 ## 1F6A3 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🚣🏼‍♂️ man rowing boat: medium-light skin tone # emoji-test.txt line #1160 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚣🏼‍♂️ man rowing boat: medium-light skin tone";
 ## 1F6A3 1F3FC 200D 2642                      ; non-fully-qualified # 🚣🏼‍♂ man rowing boat: medium-light skin tone # emoji-test.txt line #1161 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🚣🏼‍♂ man rowing boat: medium-light skin tone";
 ## 1F6A3 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🚣🏽‍♂️ man rowing boat: medium skin tone # emoji-test.txt line #1162 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚣🏽‍♂️ man rowing boat: medium skin tone";
 ## 1F6A3 1F3FD 200D 2642                      ; non-fully-qualified # 🚣🏽‍♂ man rowing boat: medium skin tone # emoji-test.txt line #1163 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🚣🏽‍♂ man rowing boat: medium skin tone";
 ## 1F6A3 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🚣🏾‍♂️ man rowing boat: medium-dark skin tone # emoji-test.txt line #1164 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚣🏾‍♂️ man rowing boat: medium-dark skin tone";
 ## 1F6A3 1F3FE 200D 2642                      ; non-fully-qualified # 🚣🏾‍♂ man rowing boat: medium-dark skin tone # emoji-test.txt line #1165 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🚣🏾‍♂ man rowing boat: medium-dark skin tone";
 ## 1F6A3 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🚣🏿‍♂️ man rowing boat: dark skin tone # emoji-test.txt line #1166 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚣🏿‍♂️ man rowing boat: dark skin tone";
 ## 1F6A3 1F3FF 200D 2642                      ; non-fully-qualified # 🚣🏿‍♂ man rowing boat: dark skin tone # emoji-test.txt line #1167 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🚣🏿‍♂ man rowing boat: dark skin tone";
 ## 1F6A3 200D 2640 FE0F                       ; fully-qualified     # 🚣‍♀️ woman rowing boat # emoji-test.txt line #1168 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚣‍♀️ woman rowing boat";
 ## 1F6A3 200D 2640                            ; non-fully-qualified # 🚣‍♀ woman rowing boat # emoji-test.txt line #1169 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x200D, 0x2640).Str.chars, 1, "🚣‍♀ woman rowing boat";
 ## 1F6A3 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🚣🏻‍♀️ woman rowing boat: light skin tone # emoji-test.txt line #1170 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚣🏻‍♀️ woman rowing boat: light skin tone";
 ## 1F6A3 1F3FB 200D 2640                      ; non-fully-qualified # 🚣🏻‍♀ woman rowing boat: light skin tone # emoji-test.txt line #1171 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🚣🏻‍♀ woman rowing boat: light skin tone";
 ## 1F6A3 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🚣🏼‍♀️ woman rowing boat: medium-light skin tone # emoji-test.txt line #1172 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚣🏼‍♀️ woman rowing boat: medium-light skin tone";
 ## 1F6A3 1F3FC 200D 2640                      ; non-fully-qualified # 🚣🏼‍♀ woman rowing boat: medium-light skin tone # emoji-test.txt line #1173 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🚣🏼‍♀ woman rowing boat: medium-light skin tone";
 ## 1F6A3 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🚣🏽‍♀️ woman rowing boat: medium skin tone # emoji-test.txt line #1174 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚣🏽‍♀️ woman rowing boat: medium skin tone";
 ## 1F6A3 1F3FD 200D 2640                      ; non-fully-qualified # 🚣🏽‍♀ woman rowing boat: medium skin tone # emoji-test.txt line #1175 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🚣🏽‍♀ woman rowing boat: medium skin tone";
 ## 1F6A3 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🚣🏾‍♀️ woman rowing boat: medium-dark skin tone # emoji-test.txt line #1176 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚣🏾‍♀️ woman rowing boat: medium-dark skin tone";
 ## 1F6A3 1F3FE 200D 2640                      ; non-fully-qualified # 🚣🏾‍♀ woman rowing boat: medium-dark skin tone # emoji-test.txt line #1177 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🚣🏾‍♀ woman rowing boat: medium-dark skin tone";
 ## 1F6A3 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🚣🏿‍♀️ woman rowing boat: dark skin tone # emoji-test.txt line #1178 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚣🏿‍♀️ woman rowing boat: dark skin tone";
 ## 1F6A3 1F3FF 200D 2640                      ; non-fully-qualified # 🚣🏿‍♀ woman rowing boat: dark skin tone # emoji-test.txt line #1179 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6A3, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🚣🏿‍♀ woman rowing boat: dark skin tone";
 ## 1F3CA                                      ; fully-qualified     # 🏊 person swimming # emoji-test.txt line #1180 Emoji version 4.0
 is Uni.new(0x1F3CA).Str.chars, 1, "🏊 person swimming";
@@ -2275,52 +3063,76 @@ is Uni.new(0x1F3CA, 0x1F3FE).Str.chars, 1, "🏊🏾 person swimming: medium-dar
 ## 1F3CA 1F3FF                                ; fully-qualified     # 🏊🏿 person swimming: dark skin tone # emoji-test.txt line #1185 Emoji version 4.0
 is Uni.new(0x1F3CA, 0x1F3FF).Str.chars, 1, "🏊🏿 person swimming: dark skin tone";
 ## 1F3CA 200D 2642 FE0F                       ; fully-qualified     # 🏊‍♂️ man swimming # emoji-test.txt line #1186 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏊‍♂️ man swimming";
 ## 1F3CA 200D 2642                            ; non-fully-qualified # 🏊‍♂ man swimming # emoji-test.txt line #1187 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x200D, 0x2642).Str.chars, 1, "🏊‍♂ man swimming";
 ## 1F3CA 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🏊🏻‍♂️ man swimming: light skin tone # emoji-test.txt line #1188 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏊🏻‍♂️ man swimming: light skin tone";
 ## 1F3CA 1F3FB 200D 2642                      ; non-fully-qualified # 🏊🏻‍♂ man swimming: light skin tone # emoji-test.txt line #1189 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🏊🏻‍♂ man swimming: light skin tone";
 ## 1F3CA 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🏊🏼‍♂️ man swimming: medium-light skin tone # emoji-test.txt line #1190 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏊🏼‍♂️ man swimming: medium-light skin tone";
 ## 1F3CA 1F3FC 200D 2642                      ; non-fully-qualified # 🏊🏼‍♂ man swimming: medium-light skin tone # emoji-test.txt line #1191 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🏊🏼‍♂ man swimming: medium-light skin tone";
 ## 1F3CA 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🏊🏽‍♂️ man swimming: medium skin tone # emoji-test.txt line #1192 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏊🏽‍♂️ man swimming: medium skin tone";
 ## 1F3CA 1F3FD 200D 2642                      ; non-fully-qualified # 🏊🏽‍♂ man swimming: medium skin tone # emoji-test.txt line #1193 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🏊🏽‍♂ man swimming: medium skin tone";
 ## 1F3CA 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🏊🏾‍♂️ man swimming: medium-dark skin tone # emoji-test.txt line #1194 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏊🏾‍♂️ man swimming: medium-dark skin tone";
 ## 1F3CA 1F3FE 200D 2642                      ; non-fully-qualified # 🏊🏾‍♂ man swimming: medium-dark skin tone # emoji-test.txt line #1195 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🏊🏾‍♂ man swimming: medium-dark skin tone";
 ## 1F3CA 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🏊🏿‍♂️ man swimming: dark skin tone # emoji-test.txt line #1196 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏊🏿‍♂️ man swimming: dark skin tone";
 ## 1F3CA 1F3FF 200D 2642                      ; non-fully-qualified # 🏊🏿‍♂ man swimming: dark skin tone # emoji-test.txt line #1197 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🏊🏿‍♂ man swimming: dark skin tone";
 ## 1F3CA 200D 2640 FE0F                       ; fully-qualified     # 🏊‍♀️ woman swimming # emoji-test.txt line #1198 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏊‍♀️ woman swimming";
 ## 1F3CA 200D 2640                            ; non-fully-qualified # 🏊‍♀ woman swimming # emoji-test.txt line #1199 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x200D, 0x2640).Str.chars, 1, "🏊‍♀ woman swimming";
 ## 1F3CA 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🏊🏻‍♀️ woman swimming: light skin tone # emoji-test.txt line #1200 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏊🏻‍♀️ woman swimming: light skin tone";
 ## 1F3CA 1F3FB 200D 2640                      ; non-fully-qualified # 🏊🏻‍♀ woman swimming: light skin tone # emoji-test.txt line #1201 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🏊🏻‍♀ woman swimming: light skin tone";
 ## 1F3CA 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🏊🏼‍♀️ woman swimming: medium-light skin tone # emoji-test.txt line #1202 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏊🏼‍♀️ woman swimming: medium-light skin tone";
 ## 1F3CA 1F3FC 200D 2640                      ; non-fully-qualified # 🏊🏼‍♀ woman swimming: medium-light skin tone # emoji-test.txt line #1203 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🏊🏼‍♀ woman swimming: medium-light skin tone";
 ## 1F3CA 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🏊🏽‍♀️ woman swimming: medium skin tone # emoji-test.txt line #1204 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏊🏽‍♀️ woman swimming: medium skin tone";
 ## 1F3CA 1F3FD 200D 2640                      ; non-fully-qualified # 🏊🏽‍♀ woman swimming: medium skin tone # emoji-test.txt line #1205 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🏊🏽‍♀ woman swimming: medium skin tone";
 ## 1F3CA 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🏊🏾‍♀️ woman swimming: medium-dark skin tone # emoji-test.txt line #1206 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏊🏾‍♀️ woman swimming: medium-dark skin tone";
 ## 1F3CA 1F3FE 200D 2640                      ; non-fully-qualified # 🏊🏾‍♀ woman swimming: medium-dark skin tone # emoji-test.txt line #1207 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🏊🏾‍♀ woman swimming: medium-dark skin tone";
 ## 1F3CA 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🏊🏿‍♀️ woman swimming: dark skin tone # emoji-test.txt line #1208 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏊🏿‍♀️ woman swimming: dark skin tone";
 ## 1F3CA 1F3FF 200D 2640                      ; non-fully-qualified # 🏊🏿‍♀ woman swimming: dark skin tone # emoji-test.txt line #1209 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CA, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🏊🏿‍♀ woman swimming: dark skin tone";
 ## 26F9 FE0F                                  ; fully-qualified     # ⛹️ person bouncing ball # emoji-test.txt line #1210 Emoji version 4.0
 is Uni.new(0x26F9, 0xFE0F).Str.chars, 1, "⛹️ person bouncing ball";
@@ -2335,60 +3147,88 @@ is Uni.new(0x26F9, 0x1F3FE).Str.chars, 1, "⛹🏾 person bouncing ball: medium-
 ## 26F9 1F3FF                                 ; fully-qualified     # ⛹🏿 person bouncing ball: dark skin tone # emoji-test.txt line #1215 Emoji version 4.0
 is Uni.new(0x26F9, 0x1F3FF).Str.chars, 1, "⛹🏿 person bouncing ball: dark skin tone";
 ## 26F9 FE0F 200D 2642 FE0F                   ; fully-qualified     # ⛹️‍♂️ man bouncing ball # emoji-test.txt line #1216 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0xFE0F, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "⛹️‍♂️ man bouncing ball";
 ## 26F9 200D 2642                             ; non-fully-qualified # ⛹‍♂ man bouncing ball # emoji-test.txt line #1217 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x200D, 0x2642).Str.chars, 1, "⛹‍♂ man bouncing ball";
 ## 26F9 FE0F 200D 2642                        ; non-fully-qualified # ⛹️‍♂ man bouncing ball # emoji-test.txt line #1218 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0xFE0F, 0x200D, 0x2642).Str.chars, 1, "⛹️‍♂ man bouncing ball";
 ## 26F9 200D 2642 FE0F                        ; non-fully-qualified # ⛹‍♂️ man bouncing ball # emoji-test.txt line #1219 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "⛹‍♂️ man bouncing ball";
 ## 26F9 1F3FB 200D 2642 FE0F                  ; fully-qualified     # ⛹🏻‍♂️ man bouncing ball: light skin tone # emoji-test.txt line #1220 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "⛹🏻‍♂️ man bouncing ball: light skin tone";
 ## 26F9 1F3FB 200D 2642                       ; non-fully-qualified # ⛹🏻‍♂ man bouncing ball: light skin tone # emoji-test.txt line #1221 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "⛹🏻‍♂ man bouncing ball: light skin tone";
 ## 26F9 1F3FC 200D 2642 FE0F                  ; fully-qualified     # ⛹🏼‍♂️ man bouncing ball: medium-light skin tone # emoji-test.txt line #1222 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "⛹🏼‍♂️ man bouncing ball: medium-light skin tone";
 ## 26F9 1F3FC 200D 2642                       ; non-fully-qualified # ⛹🏼‍♂ man bouncing ball: medium-light skin tone # emoji-test.txt line #1223 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "⛹🏼‍♂ man bouncing ball: medium-light skin tone";
 ## 26F9 1F3FD 200D 2642 FE0F                  ; fully-qualified     # ⛹🏽‍♂️ man bouncing ball: medium skin tone # emoji-test.txt line #1224 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "⛹🏽‍♂️ man bouncing ball: medium skin tone";
 ## 26F9 1F3FD 200D 2642                       ; non-fully-qualified # ⛹🏽‍♂ man bouncing ball: medium skin tone # emoji-test.txt line #1225 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "⛹🏽‍♂ man bouncing ball: medium skin tone";
 ## 26F9 1F3FE 200D 2642 FE0F                  ; fully-qualified     # ⛹🏾‍♂️ man bouncing ball: medium-dark skin tone # emoji-test.txt line #1226 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "⛹🏾‍♂️ man bouncing ball: medium-dark skin tone";
 ## 26F9 1F3FE 200D 2642                       ; non-fully-qualified # ⛹🏾‍♂ man bouncing ball: medium-dark skin tone # emoji-test.txt line #1227 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "⛹🏾‍♂ man bouncing ball: medium-dark skin tone";
 ## 26F9 1F3FF 200D 2642 FE0F                  ; fully-qualified     # ⛹🏿‍♂️ man bouncing ball: dark skin tone # emoji-test.txt line #1228 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "⛹🏿‍♂️ man bouncing ball: dark skin tone";
 ## 26F9 1F3FF 200D 2642                       ; non-fully-qualified # ⛹🏿‍♂ man bouncing ball: dark skin tone # emoji-test.txt line #1229 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "⛹🏿‍♂ man bouncing ball: dark skin tone";
 ## 26F9 FE0F 200D 2640 FE0F                   ; fully-qualified     # ⛹️‍♀️ woman bouncing ball # emoji-test.txt line #1230 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0xFE0F, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "⛹️‍♀️ woman bouncing ball";
 ## 26F9 200D 2640                             ; non-fully-qualified # ⛹‍♀ woman bouncing ball # emoji-test.txt line #1231 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x200D, 0x2640).Str.chars, 1, "⛹‍♀ woman bouncing ball";
 ## 26F9 FE0F 200D 2640                        ; non-fully-qualified # ⛹️‍♀ woman bouncing ball # emoji-test.txt line #1232 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0xFE0F, 0x200D, 0x2640).Str.chars, 1, "⛹️‍♀ woman bouncing ball";
 ## 26F9 200D 2640 FE0F                        ; non-fully-qualified # ⛹‍♀️ woman bouncing ball # emoji-test.txt line #1233 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "⛹‍♀️ woman bouncing ball";
 ## 26F9 1F3FB 200D 2640 FE0F                  ; fully-qualified     # ⛹🏻‍♀️ woman bouncing ball: light skin tone # emoji-test.txt line #1234 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "⛹🏻‍♀️ woman bouncing ball: light skin tone";
 ## 26F9 1F3FB 200D 2640                       ; non-fully-qualified # ⛹🏻‍♀ woman bouncing ball: light skin tone # emoji-test.txt line #1235 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "⛹🏻‍♀ woman bouncing ball: light skin tone";
 ## 26F9 1F3FC 200D 2640 FE0F                  ; fully-qualified     # ⛹🏼‍♀️ woman bouncing ball: medium-light skin tone # emoji-test.txt line #1236 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "⛹🏼‍♀️ woman bouncing ball: medium-light skin tone";
 ## 26F9 1F3FC 200D 2640                       ; non-fully-qualified # ⛹🏼‍♀ woman bouncing ball: medium-light skin tone # emoji-test.txt line #1237 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "⛹🏼‍♀ woman bouncing ball: medium-light skin tone";
 ## 26F9 1F3FD 200D 2640 FE0F                  ; fully-qualified     # ⛹🏽‍♀️ woman bouncing ball: medium skin tone # emoji-test.txt line #1238 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "⛹🏽‍♀️ woman bouncing ball: medium skin tone";
 ## 26F9 1F3FD 200D 2640                       ; non-fully-qualified # ⛹🏽‍♀ woman bouncing ball: medium skin tone # emoji-test.txt line #1239 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "⛹🏽‍♀ woman bouncing ball: medium skin tone";
 ## 26F9 1F3FE 200D 2640 FE0F                  ; fully-qualified     # ⛹🏾‍♀️ woman bouncing ball: medium-dark skin tone # emoji-test.txt line #1240 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "⛹🏾‍♀️ woman bouncing ball: medium-dark skin tone";
 ## 26F9 1F3FE 200D 2640                       ; non-fully-qualified # ⛹🏾‍♀ woman bouncing ball: medium-dark skin tone # emoji-test.txt line #1241 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "⛹🏾‍♀ woman bouncing ball: medium-dark skin tone";
 ## 26F9 1F3FF 200D 2640 FE0F                  ; fully-qualified     # ⛹🏿‍♀️ woman bouncing ball: dark skin tone # emoji-test.txt line #1242 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "⛹🏿‍♀️ woman bouncing ball: dark skin tone";
 ## 26F9 1F3FF 200D 2640                       ; non-fully-qualified # ⛹🏿‍♀ woman bouncing ball: dark skin tone # emoji-test.txt line #1243 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x26F9, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "⛹🏿‍♀ woman bouncing ball: dark skin tone";
 ## 1F3CB FE0F                                 ; fully-qualified     # 🏋️ person lifting weights # emoji-test.txt line #1244 Emoji version 4.0
 is Uni.new(0x1F3CB, 0xFE0F).Str.chars, 1, "🏋️ person lifting weights";
@@ -2403,60 +3243,88 @@ is Uni.new(0x1F3CB, 0x1F3FE).Str.chars, 1, "🏋🏾 person lifting weights: med
 ## 1F3CB 1F3FF                                ; fully-qualified     # 🏋🏿 person lifting weights: dark skin tone # emoji-test.txt line #1249 Emoji version 4.0
 is Uni.new(0x1F3CB, 0x1F3FF).Str.chars, 1, "🏋🏿 person lifting weights: dark skin tone";
 ## 1F3CB FE0F 200D 2642 FE0F                  ; fully-qualified     # 🏋️‍♂️ man lifting weights # emoji-test.txt line #1250 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0xFE0F, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏋️‍♂️ man lifting weights";
 ## 1F3CB 200D 2642                            ; non-fully-qualified # 🏋‍♂ man lifting weights # emoji-test.txt line #1251 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x200D, 0x2642).Str.chars, 1, "🏋‍♂ man lifting weights";
 ## 1F3CB FE0F 200D 2642                       ; non-fully-qualified # 🏋️‍♂ man lifting weights # emoji-test.txt line #1252 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0xFE0F, 0x200D, 0x2642).Str.chars, 1, "🏋️‍♂ man lifting weights";
 ## 1F3CB 200D 2642 FE0F                       ; non-fully-qualified # 🏋‍♂️ man lifting weights # emoji-test.txt line #1253 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏋‍♂️ man lifting weights";
 ## 1F3CB 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🏋🏻‍♂️ man lifting weights: light skin tone # emoji-test.txt line #1254 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏋🏻‍♂️ man lifting weights: light skin tone";
 ## 1F3CB 1F3FB 200D 2642                      ; non-fully-qualified # 🏋🏻‍♂ man lifting weights: light skin tone # emoji-test.txt line #1255 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🏋🏻‍♂ man lifting weights: light skin tone";
 ## 1F3CB 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🏋🏼‍♂️ man lifting weights: medium-light skin tone # emoji-test.txt line #1256 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏋🏼‍♂️ man lifting weights: medium-light skin tone";
 ## 1F3CB 1F3FC 200D 2642                      ; non-fully-qualified # 🏋🏼‍♂ man lifting weights: medium-light skin tone # emoji-test.txt line #1257 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🏋🏼‍♂ man lifting weights: medium-light skin tone";
 ## 1F3CB 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🏋🏽‍♂️ man lifting weights: medium skin tone # emoji-test.txt line #1258 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏋🏽‍♂️ man lifting weights: medium skin tone";
 ## 1F3CB 1F3FD 200D 2642                      ; non-fully-qualified # 🏋🏽‍♂ man lifting weights: medium skin tone # emoji-test.txt line #1259 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🏋🏽‍♂ man lifting weights: medium skin tone";
 ## 1F3CB 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🏋🏾‍♂️ man lifting weights: medium-dark skin tone # emoji-test.txt line #1260 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏋🏾‍♂️ man lifting weights: medium-dark skin tone";
 ## 1F3CB 1F3FE 200D 2642                      ; non-fully-qualified # 🏋🏾‍♂ man lifting weights: medium-dark skin tone # emoji-test.txt line #1261 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🏋🏾‍♂ man lifting weights: medium-dark skin tone";
 ## 1F3CB 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🏋🏿‍♂️ man lifting weights: dark skin tone # emoji-test.txt line #1262 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🏋🏿‍♂️ man lifting weights: dark skin tone";
 ## 1F3CB 1F3FF 200D 2642                      ; non-fully-qualified # 🏋🏿‍♂ man lifting weights: dark skin tone # emoji-test.txt line #1263 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🏋🏿‍♂ man lifting weights: dark skin tone";
 ## 1F3CB FE0F 200D 2640 FE0F                  ; fully-qualified     # 🏋️‍♀️ woman lifting weights # emoji-test.txt line #1264 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0xFE0F, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏋️‍♀️ woman lifting weights";
 ## 1F3CB 200D 2640                            ; non-fully-qualified # 🏋‍♀ woman lifting weights # emoji-test.txt line #1265 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x200D, 0x2640).Str.chars, 1, "🏋‍♀ woman lifting weights";
 ## 1F3CB FE0F 200D 2640                       ; non-fully-qualified # 🏋️‍♀ woman lifting weights # emoji-test.txt line #1266 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0xFE0F, 0x200D, 0x2640).Str.chars, 1, "🏋️‍♀ woman lifting weights";
 ## 1F3CB 200D 2640 FE0F                       ; non-fully-qualified # 🏋‍♀️ woman lifting weights # emoji-test.txt line #1267 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏋‍♀️ woman lifting weights";
 ## 1F3CB 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🏋🏻‍♀️ woman lifting weights: light skin tone # emoji-test.txt line #1268 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏋🏻‍♀️ woman lifting weights: light skin tone";
 ## 1F3CB 1F3FB 200D 2640                      ; non-fully-qualified # 🏋🏻‍♀ woman lifting weights: light skin tone # emoji-test.txt line #1269 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🏋🏻‍♀ woman lifting weights: light skin tone";
 ## 1F3CB 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🏋🏼‍♀️ woman lifting weights: medium-light skin tone # emoji-test.txt line #1270 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏋🏼‍♀️ woman lifting weights: medium-light skin tone";
 ## 1F3CB 1F3FC 200D 2640                      ; non-fully-qualified # 🏋🏼‍♀ woman lifting weights: medium-light skin tone # emoji-test.txt line #1271 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🏋🏼‍♀ woman lifting weights: medium-light skin tone";
 ## 1F3CB 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🏋🏽‍♀️ woman lifting weights: medium skin tone # emoji-test.txt line #1272 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏋🏽‍♀️ woman lifting weights: medium skin tone";
 ## 1F3CB 1F3FD 200D 2640                      ; non-fully-qualified # 🏋🏽‍♀ woman lifting weights: medium skin tone # emoji-test.txt line #1273 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🏋🏽‍♀ woman lifting weights: medium skin tone";
 ## 1F3CB 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🏋🏾‍♀️ woman lifting weights: medium-dark skin tone # emoji-test.txt line #1274 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏋🏾‍♀️ woman lifting weights: medium-dark skin tone";
 ## 1F3CB 1F3FE 200D 2640                      ; non-fully-qualified # 🏋🏾‍♀ woman lifting weights: medium-dark skin tone # emoji-test.txt line #1275 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🏋🏾‍♀ woman lifting weights: medium-dark skin tone";
 ## 1F3CB 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🏋🏿‍♀️ woman lifting weights: dark skin tone # emoji-test.txt line #1276 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🏋🏿‍♀️ woman lifting weights: dark skin tone";
 ## 1F3CB 1F3FF 200D 2640                      ; non-fully-qualified # 🏋🏿‍♀ woman lifting weights: dark skin tone # emoji-test.txt line #1277 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3CB, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🏋🏿‍♀ woman lifting weights: dark skin tone";
 ## 1F6B4                                      ; fully-qualified     # 🚴 person biking # emoji-test.txt line #1278 Emoji version 4.0
 is Uni.new(0x1F6B4).Str.chars, 1, "🚴 person biking";
@@ -2471,52 +3339,76 @@ is Uni.new(0x1F6B4, 0x1F3FE).Str.chars, 1, "🚴🏾 person biking: medium-dark 
 ## 1F6B4 1F3FF                                ; fully-qualified     # 🚴🏿 person biking: dark skin tone # emoji-test.txt line #1283 Emoji version 4.0
 is Uni.new(0x1F6B4, 0x1F3FF).Str.chars, 1, "🚴🏿 person biking: dark skin tone";
 ## 1F6B4 200D 2642 FE0F                       ; fully-qualified     # 🚴‍♂️ man biking # emoji-test.txt line #1284 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚴‍♂️ man biking";
 ## 1F6B4 200D 2642                            ; non-fully-qualified # 🚴‍♂ man biking # emoji-test.txt line #1285 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x200D, 0x2642).Str.chars, 1, "🚴‍♂ man biking";
 ## 1F6B4 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🚴🏻‍♂️ man biking: light skin tone # emoji-test.txt line #1286 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚴🏻‍♂️ man biking: light skin tone";
 ## 1F6B4 1F3FB 200D 2642                      ; non-fully-qualified # 🚴🏻‍♂ man biking: light skin tone # emoji-test.txt line #1287 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🚴🏻‍♂ man biking: light skin tone";
 ## 1F6B4 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🚴🏼‍♂️ man biking: medium-light skin tone # emoji-test.txt line #1288 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚴🏼‍♂️ man biking: medium-light skin tone";
 ## 1F6B4 1F3FC 200D 2642                      ; non-fully-qualified # 🚴🏼‍♂ man biking: medium-light skin tone # emoji-test.txt line #1289 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🚴🏼‍♂ man biking: medium-light skin tone";
 ## 1F6B4 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🚴🏽‍♂️ man biking: medium skin tone # emoji-test.txt line #1290 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚴🏽‍♂️ man biking: medium skin tone";
 ## 1F6B4 1F3FD 200D 2642                      ; non-fully-qualified # 🚴🏽‍♂ man biking: medium skin tone # emoji-test.txt line #1291 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🚴🏽‍♂ man biking: medium skin tone";
 ## 1F6B4 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🚴🏾‍♂️ man biking: medium-dark skin tone # emoji-test.txt line #1292 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚴🏾‍♂️ man biking: medium-dark skin tone";
 ## 1F6B4 1F3FE 200D 2642                      ; non-fully-qualified # 🚴🏾‍♂ man biking: medium-dark skin tone # emoji-test.txt line #1293 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🚴🏾‍♂ man biking: medium-dark skin tone";
 ## 1F6B4 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🚴🏿‍♂️ man biking: dark skin tone # emoji-test.txt line #1294 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚴🏿‍♂️ man biking: dark skin tone";
 ## 1F6B4 1F3FF 200D 2642                      ; non-fully-qualified # 🚴🏿‍♂ man biking: dark skin tone # emoji-test.txt line #1295 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🚴🏿‍♂ man biking: dark skin tone";
 ## 1F6B4 200D 2640 FE0F                       ; fully-qualified     # 🚴‍♀️ woman biking # emoji-test.txt line #1296 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚴‍♀️ woman biking";
 ## 1F6B4 200D 2640                            ; non-fully-qualified # 🚴‍♀ woman biking # emoji-test.txt line #1297 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x200D, 0x2640).Str.chars, 1, "🚴‍♀ woman biking";
 ## 1F6B4 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🚴🏻‍♀️ woman biking: light skin tone # emoji-test.txt line #1298 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚴🏻‍♀️ woman biking: light skin tone";
 ## 1F6B4 1F3FB 200D 2640                      ; non-fully-qualified # 🚴🏻‍♀ woman biking: light skin tone # emoji-test.txt line #1299 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🚴🏻‍♀ woman biking: light skin tone";
 ## 1F6B4 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🚴🏼‍♀️ woman biking: medium-light skin tone # emoji-test.txt line #1300 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚴🏼‍♀️ woman biking: medium-light skin tone";
 ## 1F6B4 1F3FC 200D 2640                      ; non-fully-qualified # 🚴🏼‍♀ woman biking: medium-light skin tone # emoji-test.txt line #1301 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🚴🏼‍♀ woman biking: medium-light skin tone";
 ## 1F6B4 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🚴🏽‍♀️ woman biking: medium skin tone # emoji-test.txt line #1302 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚴🏽‍♀️ woman biking: medium skin tone";
 ## 1F6B4 1F3FD 200D 2640                      ; non-fully-qualified # 🚴🏽‍♀ woman biking: medium skin tone # emoji-test.txt line #1303 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🚴🏽‍♀ woman biking: medium skin tone";
 ## 1F6B4 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🚴🏾‍♀️ woman biking: medium-dark skin tone # emoji-test.txt line #1304 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚴🏾‍♀️ woman biking: medium-dark skin tone";
 ## 1F6B4 1F3FE 200D 2640                      ; non-fully-qualified # 🚴🏾‍♀ woman biking: medium-dark skin tone # emoji-test.txt line #1305 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🚴🏾‍♀ woman biking: medium-dark skin tone";
 ## 1F6B4 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🚴🏿‍♀️ woman biking: dark skin tone # emoji-test.txt line #1306 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚴🏿‍♀️ woman biking: dark skin tone";
 ## 1F6B4 1F3FF 200D 2640                      ; non-fully-qualified # 🚴🏿‍♀ woman biking: dark skin tone # emoji-test.txt line #1307 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B4, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🚴🏿‍♀ woman biking: dark skin tone";
 ## 1F6B5                                      ; fully-qualified     # 🚵 person mountain biking # emoji-test.txt line #1308 Emoji version 4.0
 is Uni.new(0x1F6B5).Str.chars, 1, "🚵 person mountain biking";
@@ -2531,52 +3423,76 @@ is Uni.new(0x1F6B5, 0x1F3FE).Str.chars, 1, "🚵🏾 person mountain biking: med
 ## 1F6B5 1F3FF                                ; fully-qualified     # 🚵🏿 person mountain biking: dark skin tone # emoji-test.txt line #1313 Emoji version 4.0
 is Uni.new(0x1F6B5, 0x1F3FF).Str.chars, 1, "🚵🏿 person mountain biking: dark skin tone";
 ## 1F6B5 200D 2642 FE0F                       ; fully-qualified     # 🚵‍♂️ man mountain biking # emoji-test.txt line #1314 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚵‍♂️ man mountain biking";
 ## 1F6B5 200D 2642                            ; non-fully-qualified # 🚵‍♂ man mountain biking # emoji-test.txt line #1315 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x200D, 0x2642).Str.chars, 1, "🚵‍♂ man mountain biking";
 ## 1F6B5 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🚵🏻‍♂️ man mountain biking: light skin tone # emoji-test.txt line #1316 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚵🏻‍♂️ man mountain biking: light skin tone";
 ## 1F6B5 1F3FB 200D 2642                      ; non-fully-qualified # 🚵🏻‍♂ man mountain biking: light skin tone # emoji-test.txt line #1317 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🚵🏻‍♂ man mountain biking: light skin tone";
 ## 1F6B5 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🚵🏼‍♂️ man mountain biking: medium-light skin tone # emoji-test.txt line #1318 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚵🏼‍♂️ man mountain biking: medium-light skin tone";
 ## 1F6B5 1F3FC 200D 2642                      ; non-fully-qualified # 🚵🏼‍♂ man mountain biking: medium-light skin tone # emoji-test.txt line #1319 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🚵🏼‍♂ man mountain biking: medium-light skin tone";
 ## 1F6B5 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🚵🏽‍♂️ man mountain biking: medium skin tone # emoji-test.txt line #1320 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚵🏽‍♂️ man mountain biking: medium skin tone";
 ## 1F6B5 1F3FD 200D 2642                      ; non-fully-qualified # 🚵🏽‍♂ man mountain biking: medium skin tone # emoji-test.txt line #1321 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🚵🏽‍♂ man mountain biking: medium skin tone";
 ## 1F6B5 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🚵🏾‍♂️ man mountain biking: medium-dark skin tone # emoji-test.txt line #1322 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚵🏾‍♂️ man mountain biking: medium-dark skin tone";
 ## 1F6B5 1F3FE 200D 2642                      ; non-fully-qualified # 🚵🏾‍♂ man mountain biking: medium-dark skin tone # emoji-test.txt line #1323 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🚵🏾‍♂ man mountain biking: medium-dark skin tone";
 ## 1F6B5 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🚵🏿‍♂️ man mountain biking: dark skin tone # emoji-test.txt line #1324 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🚵🏿‍♂️ man mountain biking: dark skin tone";
 ## 1F6B5 1F3FF 200D 2642                      ; non-fully-qualified # 🚵🏿‍♂ man mountain biking: dark skin tone # emoji-test.txt line #1325 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🚵🏿‍♂ man mountain biking: dark skin tone";
 ## 1F6B5 200D 2640 FE0F                       ; fully-qualified     # 🚵‍♀️ woman mountain biking # emoji-test.txt line #1326 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚵‍♀️ woman mountain biking";
 ## 1F6B5 200D 2640                            ; non-fully-qualified # 🚵‍♀ woman mountain biking # emoji-test.txt line #1327 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x200D, 0x2640).Str.chars, 1, "🚵‍♀ woman mountain biking";
 ## 1F6B5 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🚵🏻‍♀️ woman mountain biking: light skin tone # emoji-test.txt line #1328 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚵🏻‍♀️ woman mountain biking: light skin tone";
 ## 1F6B5 1F3FB 200D 2640                      ; non-fully-qualified # 🚵🏻‍♀ woman mountain biking: light skin tone # emoji-test.txt line #1329 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🚵🏻‍♀ woman mountain biking: light skin tone";
 ## 1F6B5 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🚵🏼‍♀️ woman mountain biking: medium-light skin tone # emoji-test.txt line #1330 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚵🏼‍♀️ woman mountain biking: medium-light skin tone";
 ## 1F6B5 1F3FC 200D 2640                      ; non-fully-qualified # 🚵🏼‍♀ woman mountain biking: medium-light skin tone # emoji-test.txt line #1331 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🚵🏼‍♀ woman mountain biking: medium-light skin tone";
 ## 1F6B5 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🚵🏽‍♀️ woman mountain biking: medium skin tone # emoji-test.txt line #1332 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚵🏽‍♀️ woman mountain biking: medium skin tone";
 ## 1F6B5 1F3FD 200D 2640                      ; non-fully-qualified # 🚵🏽‍♀ woman mountain biking: medium skin tone # emoji-test.txt line #1333 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🚵🏽‍♀ woman mountain biking: medium skin tone";
 ## 1F6B5 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🚵🏾‍♀️ woman mountain biking: medium-dark skin tone # emoji-test.txt line #1334 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚵🏾‍♀️ woman mountain biking: medium-dark skin tone";
 ## 1F6B5 1F3FE 200D 2640                      ; non-fully-qualified # 🚵🏾‍♀ woman mountain biking: medium-dark skin tone # emoji-test.txt line #1335 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🚵🏾‍♀ woman mountain biking: medium-dark skin tone";
 ## 1F6B5 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🚵🏿‍♀️ woman mountain biking: dark skin tone # emoji-test.txt line #1336 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🚵🏿‍♀️ woman mountain biking: dark skin tone";
 ## 1F6B5 1F3FF 200D 2640                      ; non-fully-qualified # 🚵🏿‍♀ woman mountain biking: dark skin tone # emoji-test.txt line #1337 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6B5, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🚵🏿‍♀ woman mountain biking: dark skin tone";
 ## 1F3CE FE0F                                 ; fully-qualified     # 🏎️ racing car # emoji-test.txt line #1338 Emoji version 4.0
 is Uni.new(0x1F3CE, 0xFE0F).Str.chars, 1, "🏎️ racing car";
@@ -2595,62 +3511,90 @@ is Uni.new(0x1F938, 0x1F3FE).Str.chars, 1, "🤸🏾 person cartwheeling: medium
 ## 1F938 1F3FF                                ; fully-qualified     # 🤸🏿 person cartwheeling: dark skin tone # emoji-test.txt line #1345 Emoji version 4.0
 is Uni.new(0x1F938, 0x1F3FF).Str.chars, 1, "🤸🏿 person cartwheeling: dark skin tone";
 ## 1F938 200D 2642 FE0F                       ; fully-qualified     # 🤸‍♂️ man cartwheeling # emoji-test.txt line #1346 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤸‍♂️ man cartwheeling";
 ## 1F938 200D 2642                            ; non-fully-qualified # 🤸‍♂ man cartwheeling # emoji-test.txt line #1347 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x200D, 0x2642).Str.chars, 1, "🤸‍♂ man cartwheeling";
 ## 1F938 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🤸🏻‍♂️ man cartwheeling: light skin tone # emoji-test.txt line #1348 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤸🏻‍♂️ man cartwheeling: light skin tone";
 ## 1F938 1F3FB 200D 2642                      ; non-fully-qualified # 🤸🏻‍♂ man cartwheeling: light skin tone # emoji-test.txt line #1349 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🤸🏻‍♂ man cartwheeling: light skin tone";
 ## 1F938 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🤸🏼‍♂️ man cartwheeling: medium-light skin tone # emoji-test.txt line #1350 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤸🏼‍♂️ man cartwheeling: medium-light skin tone";
 ## 1F938 1F3FC 200D 2642                      ; non-fully-qualified # 🤸🏼‍♂ man cartwheeling: medium-light skin tone # emoji-test.txt line #1351 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🤸🏼‍♂ man cartwheeling: medium-light skin tone";
 ## 1F938 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🤸🏽‍♂️ man cartwheeling: medium skin tone # emoji-test.txt line #1352 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤸🏽‍♂️ man cartwheeling: medium skin tone";
 ## 1F938 1F3FD 200D 2642                      ; non-fully-qualified # 🤸🏽‍♂ man cartwheeling: medium skin tone # emoji-test.txt line #1353 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🤸🏽‍♂ man cartwheeling: medium skin tone";
 ## 1F938 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🤸🏾‍♂️ man cartwheeling: medium-dark skin tone # emoji-test.txt line #1354 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤸🏾‍♂️ man cartwheeling: medium-dark skin tone";
 ## 1F938 1F3FE 200D 2642                      ; non-fully-qualified # 🤸🏾‍♂ man cartwheeling: medium-dark skin tone # emoji-test.txt line #1355 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🤸🏾‍♂ man cartwheeling: medium-dark skin tone";
 ## 1F938 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🤸🏿‍♂️ man cartwheeling: dark skin tone # emoji-test.txt line #1356 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤸🏿‍♂️ man cartwheeling: dark skin tone";
 ## 1F938 1F3FF 200D 2642                      ; non-fully-qualified # 🤸🏿‍♂ man cartwheeling: dark skin tone # emoji-test.txt line #1357 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🤸🏿‍♂ man cartwheeling: dark skin tone";
 ## 1F938 200D 2640 FE0F                       ; fully-qualified     # 🤸‍♀️ woman cartwheeling # emoji-test.txt line #1358 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤸‍♀️ woman cartwheeling";
 ## 1F938 200D 2640                            ; non-fully-qualified # 🤸‍♀ woman cartwheeling # emoji-test.txt line #1359 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x200D, 0x2640).Str.chars, 1, "🤸‍♀ woman cartwheeling";
 ## 1F938 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🤸🏻‍♀️ woman cartwheeling: light skin tone # emoji-test.txt line #1360 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤸🏻‍♀️ woman cartwheeling: light skin tone";
 ## 1F938 1F3FB 200D 2640                      ; non-fully-qualified # 🤸🏻‍♀ woman cartwheeling: light skin tone # emoji-test.txt line #1361 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🤸🏻‍♀ woman cartwheeling: light skin tone";
 ## 1F938 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🤸🏼‍♀️ woman cartwheeling: medium-light skin tone # emoji-test.txt line #1362 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤸🏼‍♀️ woman cartwheeling: medium-light skin tone";
 ## 1F938 1F3FC 200D 2640                      ; non-fully-qualified # 🤸🏼‍♀ woman cartwheeling: medium-light skin tone # emoji-test.txt line #1363 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🤸🏼‍♀ woman cartwheeling: medium-light skin tone";
 ## 1F938 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🤸🏽‍♀️ woman cartwheeling: medium skin tone # emoji-test.txt line #1364 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤸🏽‍♀️ woman cartwheeling: medium skin tone";
 ## 1F938 1F3FD 200D 2640                      ; non-fully-qualified # 🤸🏽‍♀ woman cartwheeling: medium skin tone # emoji-test.txt line #1365 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🤸🏽‍♀ woman cartwheeling: medium skin tone";
 ## 1F938 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🤸🏾‍♀️ woman cartwheeling: medium-dark skin tone # emoji-test.txt line #1366 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤸🏾‍♀️ woman cartwheeling: medium-dark skin tone";
 ## 1F938 1F3FE 200D 2640                      ; non-fully-qualified # 🤸🏾‍♀ woman cartwheeling: medium-dark skin tone # emoji-test.txt line #1367 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🤸🏾‍♀ woman cartwheeling: medium-dark skin tone";
 ## 1F938 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🤸🏿‍♀️ woman cartwheeling: dark skin tone # emoji-test.txt line #1368 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤸🏿‍♀️ woman cartwheeling: dark skin tone";
 ## 1F938 1F3FF 200D 2640                      ; non-fully-qualified # 🤸🏿‍♀ woman cartwheeling: dark skin tone # emoji-test.txt line #1369 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F938, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🤸🏿‍♀ woman cartwheeling: dark skin tone";
 ## 1F93C                                      ; fully-qualified     # 🤼 people wrestling # emoji-test.txt line #1370 Emoji version 4.0
 is Uni.new(0x1F93C).Str.chars, 1, "🤼 people wrestling";
 ## 1F93C 200D 2642 FE0F                       ; fully-qualified     # 🤼‍♂️ men wrestling # emoji-test.txt line #1371 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93C, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤼‍♂️ men wrestling";
 ## 1F93C 200D 2642                            ; non-fully-qualified # 🤼‍♂ men wrestling # emoji-test.txt line #1372 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93C, 0x200D, 0x2642).Str.chars, 1, "🤼‍♂ men wrestling";
 ## 1F93C 200D 2640 FE0F                       ; fully-qualified     # 🤼‍♀️ women wrestling # emoji-test.txt line #1373 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93C, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤼‍♀️ women wrestling";
 ## 1F93C 200D 2640                            ; non-fully-qualified # 🤼‍♀ women wrestling # emoji-test.txt line #1374 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93C, 0x200D, 0x2640).Str.chars, 1, "🤼‍♀ women wrestling";
 ## 1F93D                                      ; fully-qualified     # 🤽 person playing water polo # emoji-test.txt line #1375 Emoji version 4.0
 is Uni.new(0x1F93D).Str.chars, 1, "🤽 person playing water polo";
@@ -2665,52 +3609,76 @@ is Uni.new(0x1F93D, 0x1F3FE).Str.chars, 1, "🤽🏾 person playing water polo: 
 ## 1F93D 1F3FF                                ; fully-qualified     # 🤽🏿 person playing water polo: dark skin tone # emoji-test.txt line #1380 Emoji version 4.0
 is Uni.new(0x1F93D, 0x1F3FF).Str.chars, 1, "🤽🏿 person playing water polo: dark skin tone";
 ## 1F93D 200D 2642 FE0F                       ; fully-qualified     # 🤽‍♂️ man playing water polo # emoji-test.txt line #1381 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤽‍♂️ man playing water polo";
 ## 1F93D 200D 2642                            ; non-fully-qualified # 🤽‍♂ man playing water polo # emoji-test.txt line #1382 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x200D, 0x2642).Str.chars, 1, "🤽‍♂ man playing water polo";
 ## 1F93D 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🤽🏻‍♂️ man playing water polo: light skin tone # emoji-test.txt line #1383 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤽🏻‍♂️ man playing water polo: light skin tone";
 ## 1F93D 1F3FB 200D 2642                      ; non-fully-qualified # 🤽🏻‍♂ man playing water polo: light skin tone # emoji-test.txt line #1384 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🤽🏻‍♂ man playing water polo: light skin tone";
 ## 1F93D 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🤽🏼‍♂️ man playing water polo: medium-light skin tone # emoji-test.txt line #1385 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤽🏼‍♂️ man playing water polo: medium-light skin tone";
 ## 1F93D 1F3FC 200D 2642                      ; non-fully-qualified # 🤽🏼‍♂ man playing water polo: medium-light skin tone # emoji-test.txt line #1386 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🤽🏼‍♂ man playing water polo: medium-light skin tone";
 ## 1F93D 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🤽🏽‍♂️ man playing water polo: medium skin tone # emoji-test.txt line #1387 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤽🏽‍♂️ man playing water polo: medium skin tone";
 ## 1F93D 1F3FD 200D 2642                      ; non-fully-qualified # 🤽🏽‍♂ man playing water polo: medium skin tone # emoji-test.txt line #1388 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🤽🏽‍♂ man playing water polo: medium skin tone";
 ## 1F93D 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🤽🏾‍♂️ man playing water polo: medium-dark skin tone # emoji-test.txt line #1389 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤽🏾‍♂️ man playing water polo: medium-dark skin tone";
 ## 1F93D 1F3FE 200D 2642                      ; non-fully-qualified # 🤽🏾‍♂ man playing water polo: medium-dark skin tone # emoji-test.txt line #1390 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🤽🏾‍♂ man playing water polo: medium-dark skin tone";
 ## 1F93D 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🤽🏿‍♂️ man playing water polo: dark skin tone # emoji-test.txt line #1391 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤽🏿‍♂️ man playing water polo: dark skin tone";
 ## 1F93D 1F3FF 200D 2642                      ; non-fully-qualified # 🤽🏿‍♂ man playing water polo: dark skin tone # emoji-test.txt line #1392 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🤽🏿‍♂ man playing water polo: dark skin tone";
 ## 1F93D 200D 2640 FE0F                       ; fully-qualified     # 🤽‍♀️ woman playing water polo # emoji-test.txt line #1393 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤽‍♀️ woman playing water polo";
 ## 1F93D 200D 2640                            ; non-fully-qualified # 🤽‍♀ woman playing water polo # emoji-test.txt line #1394 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x200D, 0x2640).Str.chars, 1, "🤽‍♀ woman playing water polo";
 ## 1F93D 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🤽🏻‍♀️ woman playing water polo: light skin tone # emoji-test.txt line #1395 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤽🏻‍♀️ woman playing water polo: light skin tone";
 ## 1F93D 1F3FB 200D 2640                      ; non-fully-qualified # 🤽🏻‍♀ woman playing water polo: light skin tone # emoji-test.txt line #1396 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🤽🏻‍♀ woman playing water polo: light skin tone";
 ## 1F93D 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🤽🏼‍♀️ woman playing water polo: medium-light skin tone # emoji-test.txt line #1397 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤽🏼‍♀️ woman playing water polo: medium-light skin tone";
 ## 1F93D 1F3FC 200D 2640                      ; non-fully-qualified # 🤽🏼‍♀ woman playing water polo: medium-light skin tone # emoji-test.txt line #1398 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🤽🏼‍♀ woman playing water polo: medium-light skin tone";
 ## 1F93D 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🤽🏽‍♀️ woman playing water polo: medium skin tone # emoji-test.txt line #1399 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤽🏽‍♀️ woman playing water polo: medium skin tone";
 ## 1F93D 1F3FD 200D 2640                      ; non-fully-qualified # 🤽🏽‍♀ woman playing water polo: medium skin tone # emoji-test.txt line #1400 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🤽🏽‍♀ woman playing water polo: medium skin tone";
 ## 1F93D 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🤽🏾‍♀️ woman playing water polo: medium-dark skin tone # emoji-test.txt line #1401 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤽🏾‍♀️ woman playing water polo: medium-dark skin tone";
 ## 1F93D 1F3FE 200D 2640                      ; non-fully-qualified # 🤽🏾‍♀ woman playing water polo: medium-dark skin tone # emoji-test.txt line #1402 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🤽🏾‍♀ woman playing water polo: medium-dark skin tone";
 ## 1F93D 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🤽🏿‍♀️ woman playing water polo: dark skin tone # emoji-test.txt line #1403 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤽🏿‍♀️ woman playing water polo: dark skin tone";
 ## 1F93D 1F3FF 200D 2640                      ; non-fully-qualified # 🤽🏿‍♀ woman playing water polo: dark skin tone # emoji-test.txt line #1404 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93D, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🤽🏿‍♀ woman playing water polo: dark skin tone";
 ## 1F93E                                      ; fully-qualified     # 🤾 person playing handball # emoji-test.txt line #1405 Emoji version 4.0
 is Uni.new(0x1F93E).Str.chars, 1, "🤾 person playing handball";
@@ -2725,52 +3693,76 @@ is Uni.new(0x1F93E, 0x1F3FE).Str.chars, 1, "🤾🏾 person playing handball: me
 ## 1F93E 1F3FF                                ; fully-qualified     # 🤾🏿 person playing handball: dark skin tone # emoji-test.txt line #1410 Emoji version 4.0
 is Uni.new(0x1F93E, 0x1F3FF).Str.chars, 1, "🤾🏿 person playing handball: dark skin tone";
 ## 1F93E 200D 2642 FE0F                       ; fully-qualified     # 🤾‍♂️ man playing handball # emoji-test.txt line #1411 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤾‍♂️ man playing handball";
 ## 1F93E 200D 2642                            ; non-fully-qualified # 🤾‍♂ man playing handball # emoji-test.txt line #1412 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x200D, 0x2642).Str.chars, 1, "🤾‍♂ man playing handball";
 ## 1F93E 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🤾🏻‍♂️ man playing handball: light skin tone # emoji-test.txt line #1413 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤾🏻‍♂️ man playing handball: light skin tone";
 ## 1F93E 1F3FB 200D 2642                      ; non-fully-qualified # 🤾🏻‍♂ man playing handball: light skin tone # emoji-test.txt line #1414 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🤾🏻‍♂ man playing handball: light skin tone";
 ## 1F93E 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🤾🏼‍♂️ man playing handball: medium-light skin tone # emoji-test.txt line #1415 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤾🏼‍♂️ man playing handball: medium-light skin tone";
 ## 1F93E 1F3FC 200D 2642                      ; non-fully-qualified # 🤾🏼‍♂ man playing handball: medium-light skin tone # emoji-test.txt line #1416 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🤾🏼‍♂ man playing handball: medium-light skin tone";
 ## 1F93E 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🤾🏽‍♂️ man playing handball: medium skin tone # emoji-test.txt line #1417 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤾🏽‍♂️ man playing handball: medium skin tone";
 ## 1F93E 1F3FD 200D 2642                      ; non-fully-qualified # 🤾🏽‍♂ man playing handball: medium skin tone # emoji-test.txt line #1418 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🤾🏽‍♂ man playing handball: medium skin tone";
 ## 1F93E 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🤾🏾‍♂️ man playing handball: medium-dark skin tone # emoji-test.txt line #1419 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤾🏾‍♂️ man playing handball: medium-dark skin tone";
 ## 1F93E 1F3FE 200D 2642                      ; non-fully-qualified # 🤾🏾‍♂ man playing handball: medium-dark skin tone # emoji-test.txt line #1420 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🤾🏾‍♂ man playing handball: medium-dark skin tone";
 ## 1F93E 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🤾🏿‍♂️ man playing handball: dark skin tone # emoji-test.txt line #1421 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤾🏿‍♂️ man playing handball: dark skin tone";
 ## 1F93E 1F3FF 200D 2642                      ; non-fully-qualified # 🤾🏿‍♂ man playing handball: dark skin tone # emoji-test.txt line #1422 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🤾🏿‍♂ man playing handball: dark skin tone";
 ## 1F93E 200D 2640 FE0F                       ; fully-qualified     # 🤾‍♀️ woman playing handball # emoji-test.txt line #1423 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤾‍♀️ woman playing handball";
 ## 1F93E 200D 2640                            ; non-fully-qualified # 🤾‍♀ woman playing handball # emoji-test.txt line #1424 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x200D, 0x2640).Str.chars, 1, "🤾‍♀ woman playing handball";
 ## 1F93E 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🤾🏻‍♀️ woman playing handball: light skin tone # emoji-test.txt line #1425 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤾🏻‍♀️ woman playing handball: light skin tone";
 ## 1F93E 1F3FB 200D 2640                      ; non-fully-qualified # 🤾🏻‍♀ woman playing handball: light skin tone # emoji-test.txt line #1426 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🤾🏻‍♀ woman playing handball: light skin tone";
 ## 1F93E 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🤾🏼‍♀️ woman playing handball: medium-light skin tone # emoji-test.txt line #1427 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤾🏼‍♀️ woman playing handball: medium-light skin tone";
 ## 1F93E 1F3FC 200D 2640                      ; non-fully-qualified # 🤾🏼‍♀ woman playing handball: medium-light skin tone # emoji-test.txt line #1428 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🤾🏼‍♀ woman playing handball: medium-light skin tone";
 ## 1F93E 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🤾🏽‍♀️ woman playing handball: medium skin tone # emoji-test.txt line #1429 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤾🏽‍♀️ woman playing handball: medium skin tone";
 ## 1F93E 1F3FD 200D 2640                      ; non-fully-qualified # 🤾🏽‍♀ woman playing handball: medium skin tone # emoji-test.txt line #1430 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🤾🏽‍♀ woman playing handball: medium skin tone";
 ## 1F93E 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🤾🏾‍♀️ woman playing handball: medium-dark skin tone # emoji-test.txt line #1431 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤾🏾‍♀️ woman playing handball: medium-dark skin tone";
 ## 1F93E 1F3FE 200D 2640                      ; non-fully-qualified # 🤾🏾‍♀ woman playing handball: medium-dark skin tone # emoji-test.txt line #1432 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🤾🏾‍♀ woman playing handball: medium-dark skin tone";
 ## 1F93E 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🤾🏿‍♀️ woman playing handball: dark skin tone # emoji-test.txt line #1433 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤾🏿‍♀️ woman playing handball: dark skin tone";
 ## 1F93E 1F3FF 200D 2640                      ; non-fully-qualified # 🤾🏿‍♀ woman playing handball: dark skin tone # emoji-test.txt line #1434 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F93E, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🤾🏿‍♀ woman playing handball: dark skin tone";
 ## 1F939                                      ; fully-qualified     # 🤹 person juggling # emoji-test.txt line #1435 Emoji version 4.0
 is Uni.new(0x1F939).Str.chars, 1, "🤹 person juggling";
@@ -2785,52 +3777,76 @@ is Uni.new(0x1F939, 0x1F3FE).Str.chars, 1, "🤹🏾 person juggling: medium-dar
 ## 1F939 1F3FF                                ; fully-qualified     # 🤹🏿 person juggling: dark skin tone # emoji-test.txt line #1440 Emoji version 4.0
 is Uni.new(0x1F939, 0x1F3FF).Str.chars, 1, "🤹🏿 person juggling: dark skin tone";
 ## 1F939 200D 2642 FE0F                       ; fully-qualified     # 🤹‍♂️ man juggling # emoji-test.txt line #1441 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤹‍♂️ man juggling";
 ## 1F939 200D 2642                            ; non-fully-qualified # 🤹‍♂ man juggling # emoji-test.txt line #1442 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x200D, 0x2642).Str.chars, 1, "🤹‍♂ man juggling";
 ## 1F939 1F3FB 200D 2642 FE0F                 ; fully-qualified     # 🤹🏻‍♂️ man juggling: light skin tone # emoji-test.txt line #1443 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FB, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤹🏻‍♂️ man juggling: light skin tone";
 ## 1F939 1F3FB 200D 2642                      ; non-fully-qualified # 🤹🏻‍♂ man juggling: light skin tone # emoji-test.txt line #1444 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FB, 0x200D, 0x2642).Str.chars, 1, "🤹🏻‍♂ man juggling: light skin tone";
 ## 1F939 1F3FC 200D 2642 FE0F                 ; fully-qualified     # 🤹🏼‍♂️ man juggling: medium-light skin tone # emoji-test.txt line #1445 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FC, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤹🏼‍♂️ man juggling: medium-light skin tone";
 ## 1F939 1F3FC 200D 2642                      ; non-fully-qualified # 🤹🏼‍♂ man juggling: medium-light skin tone # emoji-test.txt line #1446 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FC, 0x200D, 0x2642).Str.chars, 1, "🤹🏼‍♂ man juggling: medium-light skin tone";
 ## 1F939 1F3FD 200D 2642 FE0F                 ; fully-qualified     # 🤹🏽‍♂️ man juggling: medium skin tone # emoji-test.txt line #1447 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FD, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤹🏽‍♂️ man juggling: medium skin tone";
 ## 1F939 1F3FD 200D 2642                      ; non-fully-qualified # 🤹🏽‍♂ man juggling: medium skin tone # emoji-test.txt line #1448 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FD, 0x200D, 0x2642).Str.chars, 1, "🤹🏽‍♂ man juggling: medium skin tone";
 ## 1F939 1F3FE 200D 2642 FE0F                 ; fully-qualified     # 🤹🏾‍♂️ man juggling: medium-dark skin tone # emoji-test.txt line #1449 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FE, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤹🏾‍♂️ man juggling: medium-dark skin tone";
 ## 1F939 1F3FE 200D 2642                      ; non-fully-qualified # 🤹🏾‍♂ man juggling: medium-dark skin tone # emoji-test.txt line #1450 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FE, 0x200D, 0x2642).Str.chars, 1, "🤹🏾‍♂ man juggling: medium-dark skin tone";
 ## 1F939 1F3FF 200D 2642 FE0F                 ; fully-qualified     # 🤹🏿‍♂️ man juggling: dark skin tone # emoji-test.txt line #1451 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FF, 0x200D, 0x2642, 0xFE0F).Str.chars, 1, "🤹🏿‍♂️ man juggling: dark skin tone";
 ## 1F939 1F3FF 200D 2642                      ; non-fully-qualified # 🤹🏿‍♂ man juggling: dark skin tone # emoji-test.txt line #1452 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FF, 0x200D, 0x2642).Str.chars, 1, "🤹🏿‍♂ man juggling: dark skin tone";
 ## 1F939 200D 2640 FE0F                       ; fully-qualified     # 🤹‍♀️ woman juggling # emoji-test.txt line #1453 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤹‍♀️ woman juggling";
 ## 1F939 200D 2640                            ; non-fully-qualified # 🤹‍♀ woman juggling # emoji-test.txt line #1454 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x200D, 0x2640).Str.chars, 1, "🤹‍♀ woman juggling";
 ## 1F939 1F3FB 200D 2640 FE0F                 ; fully-qualified     # 🤹🏻‍♀️ woman juggling: light skin tone # emoji-test.txt line #1455 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FB, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤹🏻‍♀️ woman juggling: light skin tone";
 ## 1F939 1F3FB 200D 2640                      ; non-fully-qualified # 🤹🏻‍♀ woman juggling: light skin tone # emoji-test.txt line #1456 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FB, 0x200D, 0x2640).Str.chars, 1, "🤹🏻‍♀ woman juggling: light skin tone";
 ## 1F939 1F3FC 200D 2640 FE0F                 ; fully-qualified     # 🤹🏼‍♀️ woman juggling: medium-light skin tone # emoji-test.txt line #1457 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FC, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤹🏼‍♀️ woman juggling: medium-light skin tone";
 ## 1F939 1F3FC 200D 2640                      ; non-fully-qualified # 🤹🏼‍♀ woman juggling: medium-light skin tone # emoji-test.txt line #1458 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FC, 0x200D, 0x2640).Str.chars, 1, "🤹🏼‍♀ woman juggling: medium-light skin tone";
 ## 1F939 1F3FD 200D 2640 FE0F                 ; fully-qualified     # 🤹🏽‍♀️ woman juggling: medium skin tone # emoji-test.txt line #1459 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FD, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤹🏽‍♀️ woman juggling: medium skin tone";
 ## 1F939 1F3FD 200D 2640                      ; non-fully-qualified # 🤹🏽‍♀ woman juggling: medium skin tone # emoji-test.txt line #1460 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FD, 0x200D, 0x2640).Str.chars, 1, "🤹🏽‍♀ woman juggling: medium skin tone";
 ## 1F939 1F3FE 200D 2640 FE0F                 ; fully-qualified     # 🤹🏾‍♀️ woman juggling: medium-dark skin tone # emoji-test.txt line #1461 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FE, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤹🏾‍♀️ woman juggling: medium-dark skin tone";
 ## 1F939 1F3FE 200D 2640                      ; non-fully-qualified # 🤹🏾‍♀ woman juggling: medium-dark skin tone # emoji-test.txt line #1462 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FE, 0x200D, 0x2640).Str.chars, 1, "🤹🏾‍♀ woman juggling: medium-dark skin tone";
 ## 1F939 1F3FF 200D 2640 FE0F                 ; fully-qualified     # 🤹🏿‍♀️ woman juggling: dark skin tone # emoji-test.txt line #1463 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FF, 0x200D, 0x2640, 0xFE0F).Str.chars, 1, "🤹🏿‍♀️ woman juggling: dark skin tone";
 ## 1F939 1F3FF 200D 2640                      ; non-fully-qualified # 🤹🏿‍♀ woman juggling: dark skin tone # emoji-test.txt line #1464 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F939, 0x1F3FF, 0x200D, 0x2640).Str.chars, 1, "🤹🏿‍♀ woman juggling: dark skin tone";
 ## 1F46B                                      ; fully-qualified     # 👫 man and woman holding hands # emoji-test.txt line #1467 Emoji version 4.0
 is Uni.new(0x1F46B).Str.chars, 1, "👫 man and woman holding hands";
@@ -2841,30 +3857,42 @@ is Uni.new(0x1F46D).Str.chars, 1, "👭 two women holding hands";
 ## 1F48F                                      ; fully-qualified     # 💏 kiss # emoji-test.txt line #1470 Emoji version 4.0
 is Uni.new(0x1F48F).Str.chars, 1, "💏 kiss";
 ## 1F469 200D 2764 FE0F 200D 1F48B 200D 1F468 ; fully-qualified     # 👩‍❤️‍💋‍👨 kiss: woman, man # emoji-test.txt line #1471 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2764, 0xFE0F, 0x200D, 0x1F48B, 0x200D, 0x1F468).Str.chars, 1, "👩‍❤️‍💋‍👨 kiss: woman, man";
 ## 1F469 200D 2764 200D 1F48B 200D 1F468      ; non-fully-qualified # 👩‍❤‍💋‍👨 kiss: woman, man # emoji-test.txt line #1472 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2764, 0x200D, 0x1F48B, 0x200D, 0x1F468).Str.chars, 1, "👩‍❤‍💋‍👨 kiss: woman, man";
 ## 1F468 200D 2764 FE0F 200D 1F48B 200D 1F468 ; fully-qualified     # 👨‍❤️‍💋‍👨 kiss: man, man # emoji-test.txt line #1473 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2764, 0xFE0F, 0x200D, 0x1F48B, 0x200D, 0x1F468).Str.chars, 1, "👨‍❤️‍💋‍👨 kiss: man, man";
 ## 1F468 200D 2764 200D 1F48B 200D 1F468      ; non-fully-qualified # 👨‍❤‍💋‍👨 kiss: man, man # emoji-test.txt line #1474 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2764, 0x200D, 0x1F48B, 0x200D, 0x1F468).Str.chars, 1, "👨‍❤‍💋‍👨 kiss: man, man";
 ## 1F469 200D 2764 FE0F 200D 1F48B 200D 1F469 ; fully-qualified     # 👩‍❤️‍💋‍👩 kiss: woman, woman # emoji-test.txt line #1475 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2764, 0xFE0F, 0x200D, 0x1F48B, 0x200D, 0x1F469).Str.chars, 1, "👩‍❤️‍💋‍👩 kiss: woman, woman";
 ## 1F469 200D 2764 200D 1F48B 200D 1F469      ; non-fully-qualified # 👩‍❤‍💋‍👩 kiss: woman, woman # emoji-test.txt line #1476 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2764, 0x200D, 0x1F48B, 0x200D, 0x1F469).Str.chars, 1, "👩‍❤‍💋‍👩 kiss: woman, woman";
 ## 1F491                                      ; fully-qualified     # 💑 couple with heart # emoji-test.txt line #1477 Emoji version 4.0
 is Uni.new(0x1F491).Str.chars, 1, "💑 couple with heart";
 ## 1F469 200D 2764 FE0F 200D 1F468            ; fully-qualified     # 👩‍❤️‍👨 couple with heart: woman, man # emoji-test.txt line #1478 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2764, 0xFE0F, 0x200D, 0x1F468).Str.chars, 1, "👩‍❤️‍👨 couple with heart: woman, man";
 ## 1F469 200D 2764 200D 1F468                 ; non-fully-qualified # 👩‍❤‍👨 couple with heart: woman, man # emoji-test.txt line #1479 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2764, 0x200D, 0x1F468).Str.chars, 1, "👩‍❤‍👨 couple with heart: woman, man";
 ## 1F468 200D 2764 FE0F 200D 1F468            ; fully-qualified     # 👨‍❤️‍👨 couple with heart: man, man # emoji-test.txt line #1480 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2764, 0xFE0F, 0x200D, 0x1F468).Str.chars, 1, "👨‍❤️‍👨 couple with heart: man, man";
 ## 1F468 200D 2764 200D 1F468                 ; non-fully-qualified # 👨‍❤‍👨 couple with heart: man, man # emoji-test.txt line #1481 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F468, 0x200D, 0x2764, 0x200D, 0x1F468).Str.chars, 1, "👨‍❤‍👨 couple with heart: man, man";
 ## 1F469 200D 2764 FE0F 200D 1F469            ; fully-qualified     # 👩‍❤️‍👩 couple with heart: woman, woman # emoji-test.txt line #1482 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2764, 0xFE0F, 0x200D, 0x1F469).Str.chars, 1, "👩‍❤️‍👩 couple with heart: woman, woman";
 ## 1F469 200D 2764 200D 1F469                 ; non-fully-qualified # 👩‍❤‍👩 couple with heart: woman, woman # emoji-test.txt line #1483 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F469, 0x200D, 0x2764, 0x200D, 0x1F469).Str.chars, 1, "👩‍❤‍👩 couple with heart: woman, woman";
 ## 1F46A                                      ; fully-qualified     # 👪 family # emoji-test.txt line #1484 Emoji version 4.0
 is Uni.new(0x1F46A).Str.chars, 1, "👪 family";
@@ -3311,12 +4339,16 @@ is Uni.new(0x1F440).Str.chars, 1, "👀 eyes";
 ## 1F441 FE0F                                 ; fully-qualified     # 👁️ eye # emoji-test.txt line #1707 Emoji version 4.0
 is Uni.new(0x1F441, 0xFE0F).Str.chars, 1, "👁️ eye";
 ## 1F441 FE0F 200D 1F5E8 FE0F                 ; fully-qualified     # 👁️‍🗨️ eye in speech bubble # emoji-test.txt line #1708 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F441, 0xFE0F, 0x200D, 0x1F5E8, 0xFE0F).Str.chars, 1, "👁️‍🗨️ eye in speech bubble";
 ## 1F441 200D 1F5E8                           ; non-fully-qualified # 👁‍🗨 eye in speech bubble # emoji-test.txt line #1709 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F441, 0x200D, 0x1F5E8).Str.chars, 1, "👁‍🗨 eye in speech bubble";
 ## 1F441 FE0F 200D 1F5E8                      ; non-fully-qualified # 👁️‍🗨 eye in speech bubble # emoji-test.txt line #1710 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F441, 0xFE0F, 0x200D, 0x1F5E8).Str.chars, 1, "👁️‍🗨 eye in speech bubble";
 ## 1F441 200D 1F5E8 FE0F                      ; non-fully-qualified # 👁‍🗨️ eye in speech bubble # emoji-test.txt line #1711 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F441, 0x200D, 0x1F5E8, 0xFE0F).Str.chars, 1, "👁‍🗨️ eye in speech bubble";
 ## 1F445                                      ; fully-qualified     # 👅 tongue # emoji-test.txt line #1712 Emoji version 4.0
 is Uni.new(0x1F445).Str.chars, 1, "👅 tongue";
@@ -4083,14 +5115,19 @@ is Uni.new(0x1F6AA).Str.chars, 1, "🚪 door";
 ## 1F6CC                                      ; fully-qualified     # 🛌 person in bed # emoji-test.txt line #2160 Emoji version 4.0
 is Uni.new(0x1F6CC).Str.chars, 1, "🛌 person in bed";
 ## 1F6CC 1F3FB                                ; fully-qualified     # 🛌🏻 person in bed: light skin tone # emoji-test.txt line #2161 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6CC, 0x1F3FB).Str.chars, 1, "🛌🏻 person in bed: light skin tone";
 ## 1F6CC 1F3FC                                ; fully-qualified     # 🛌🏼 person in bed: medium-light skin tone # emoji-test.txt line #2162 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6CC, 0x1F3FC).Str.chars, 1, "🛌🏼 person in bed: medium-light skin tone";
 ## 1F6CC 1F3FD                                ; fully-qualified     # 🛌🏽 person in bed: medium skin tone # emoji-test.txt line #2163 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6CC, 0x1F3FD).Str.chars, 1, "🛌🏽 person in bed: medium skin tone";
 ## 1F6CC 1F3FE                                ; fully-qualified     # 🛌🏾 person in bed: medium-dark skin tone # emoji-test.txt line #2164 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6CC, 0x1F3FE).Str.chars, 1, "🛌🏾 person in bed: medium-dark skin tone";
 ## 1F6CC 1F3FF                                ; fully-qualified     # 🛌🏿 person in bed: dark skin tone # emoji-test.txt line #2165 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F6CC, 0x1F3FF).Str.chars, 1, "🛌🏿 person in bed: dark skin tone";
 ## 1F6CF FE0F                                 ; fully-qualified     # 🛏️ bed # emoji-test.txt line #2166 Emoji version 4.0
 is Uni.new(0x1F6CF, 0xFE0F).Str.chars, 1, "🛏️ bed";
@@ -5127,8 +6164,10 @@ is Uni.new(0x1F3F4).Str.chars, 1, "🏴 black flag";
 ## 1F3F3 FE0F                                 ; fully-qualified     # 🏳️ white flag # emoji-test.txt line #2766 Emoji version 4.0
 is Uni.new(0x1F3F3, 0xFE0F).Str.chars, 1, "🏳️ white flag";
 ## 1F3F3 FE0F 200D 1F308                      ; fully-qualified     # 🏳️‍🌈 rainbow flag # emoji-test.txt line #2767 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3F3, 0xFE0F, 0x200D, 0x1F308).Str.chars, 1, "🏳️‍🌈 rainbow flag";
 ## 1F3F3 200D 1F308                           ; non-fully-qualified # 🏳‍🌈 rainbow flag # emoji-test.txt line #2768 Emoji version 4.0
+#?rakudo.moar todo 'All of Unicode Emoji NYI in MoarVM'
 is Uni.new(0x1F3F3, 0x200D, 0x1F308).Str.chars, 1, "🏳‍🌈 rainbow flag";
 ## 1F1E6 1F1E8                                ; fully-qualified     # 🇦🇨 Ascension Island # emoji-test.txt line #2771 Emoji version 4.0
 is Uni.new(0x1F1E6, 0x1F1E8).Str.chars, 1, "🇦🇨 Ascension Island";
