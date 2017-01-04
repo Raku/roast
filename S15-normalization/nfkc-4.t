@@ -1,11 +1,14 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
+# Generated from Unicode version 9.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC1FF).NFKC.list ~~ (0xC1FF,), 'C1FF -> C1FF';
+ok Uni.new(0xC200).NFKC.list ~~ (0xC200,), 'C200 -> C200';
 ok Uni.new(0xC201).NFKC.list ~~ (0xC201,), 'C201 -> C201';
 ok Uni.new(0xC202).NFKC.list ~~ (0xC202,), 'C202 -> C202';
 ok Uni.new(0xC203).NFKC.list ~~ (0xC203,), 'C203 -> C203';
@@ -2004,5 +2007,3 @@ ok Uni.new(0xC9CB).NFKC.list ~~ (0xC9CB,), 'C9CB -> C9CB';
 ok Uni.new(0xC9CC).NFKC.list ~~ (0xC9CC,), 'C9CC -> C9CC';
 ok Uni.new(0xC9CD).NFKC.list ~~ (0xC9CD,), 'C9CD -> C9CD';
 ok Uni.new(0xC9CE).NFKC.list ~~ (0xC9CE,), 'C9CE -> C9CE';
-ok Uni.new(0xC9CF).NFKC.list ~~ (0xC9CF,), 'C9CF -> C9CF';
-ok Uni.new(0xC9D0).NFKC.list ~~ (0xC9D0,), 'C9D0 -> C9D0';
