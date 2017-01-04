@@ -21,8 +21,8 @@ sub MAIN(Str $unidata-normalization-tests) {
 
 sub write-test-files($template, $method, @source, @expected) {
     for ^ceiling(@source / MAX_TESTS_PER_FILE) -> $n {
-        my @file-source = @source[$n * MAX_TESTS_PER_FILE ..^ ($n + 1) * MAX_TESTS_PER_FILE];
-        my @file-expected = @expected[$n * MAX_TESTS_PER_FILE ..^ ($n + 1) * MAX_TESTS_PER_FILE];
+        my @file-source = @source[lazy $n * MAX_TESTS_PER_FILE ..^ ($n + 1) * MAX_TESTS_PER_FILE];
+        my @file-expected = @expected[lazy $n * MAX_TESTS_PER_FILE ..^ ($n + 1) * MAX_TESTS_PER_FILE];
         write-test-file($template ~ "-$n.t", $method, @file-source, @file-expected);
     }
     write-sanity-test-file($template ~ "-sanity.t", $method, @source, @expected);
@@ -40,7 +40,7 @@ use Test;
 plan @source.elems();
 HEADER
 
-        for @source Z @expected -> $s, $e {
+        for flat @source Z @expected -> $s, $e {
             .say: "ok Uni.new(&hexy($s)).$method.list ~~ (&hexy($e),), '$s -> $e';";
         }
 
@@ -65,7 +65,7 @@ use Test;
 plan {NUM_SANITY_TESTS};
 HEADER
 
-        for @source Z @expected -> $s, $e {
+        for flat @source Z @expected -> $s, $e {
             if $s eq $e {
                 next if $generated-since-last-ident < SANITY_IDENTITY_RATIO;
                 $generated-since-last-ident -= SANITY_IDENTITY_RATIO;
