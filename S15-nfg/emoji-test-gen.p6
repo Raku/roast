@@ -42,7 +42,7 @@ sub MAIN ( Str $EmojiTest-file ) {
         $uni-codes ~~ s/ ', ' $ //;
 
         push @array, "## $line # emoji-test.txt line #$line-no Emoji version $emoji-version";
-        push @array, qq<is Uni.new($uni-codes).Str.chars, 1, "$comment";>;
+        push @array, qq<is Uni.new($uni-codes).Str.chars, 1, "Codes: ⟅$uni-codes⟆ $comment";>;
         $test-count++;
     }
     my $file =
