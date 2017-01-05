@@ -49,6 +49,7 @@ use Test::Util;
 }
 
 {
+    #?rakudo todo 'https://github.com/MoarVM/MoarVM/issues/482'
     is run($*EXECUTABLE, '-e', ｢print '“Hello world”'｣, :out).out.slurp-rest,
         '“Hello world”',
         'UTF-8 in arguments is decoded correctly';
