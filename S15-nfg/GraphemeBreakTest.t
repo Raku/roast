@@ -1209,7 +1209,6 @@ is Uni.new(0x200D, 0x200D).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] # GraphemeBreakTest.txt line #655 Unicode Version 9.0.0
 is Uni.new(0x200D, 0x308, 0x200D).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) × [9.0] ZERO WIDTH JOINER (ZWJ) ÷ [0.3] | Codes: 3 Non-break: 2";
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #656 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x200D, 0x2764).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #657 Unicode Version 9.0.0
 is Uni.new(0x200D, 0x308, 0x2764).Str.chars, 2, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [9.0] COMBINING DIAERESIS (Extend) ÷ [999.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 3 Non-break: 1";
@@ -1493,7 +1492,6 @@ is Uni.new(0x1F466, 0x1F3FB).Str.chars, 1, "÷ [0.2] BOY (EBG) × [10.0] EMOJI M
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] # GraphemeBreakTest.txt line #842 Unicode Version 9.0.0
 is Uni.new(0x200D, 0x1F466, 0x1F3FB).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) × [10.0] EMOJI MODIFIER FITZPATRICK TYPE-1-2 (E_Modifier) ÷ [0.3] | Codes: 3 Non-break: 2";
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] # GraphemeBreakTest.txt line #843 Unicode Version 9.0.0
-#?rakudo.moar todo 'Not all of Unicode 9.0 implemented in MoarVM'
 is Uni.new(0x200D, 0x2764).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] HEAVY BLACK HEART (Glue_After_Zwj) ÷ [0.3] | Codes: 2 Non-break: 1";
 ## ÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] # GraphemeBreakTest.txt line #844 Unicode Version 9.0.0
 is Uni.new(0x200D, 0x1F466).Str.chars, 1, "÷ [0.2] ZERO WIDTH JOINER (ZWJ) × [11.0] BOY (EBG) ÷ [0.3] | Codes: 2 Non-break: 1";
