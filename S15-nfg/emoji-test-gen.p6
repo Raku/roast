@@ -30,20 +30,23 @@ sub MAIN ( Str $EmojiTest-file ) {
         my $term = $beginning.split(';')[0];
         my $string;
         my $uni-codes;
-        my $fail= False;
+        my $fail = False;
+        my $ord-count = 0;
         for $term.split(' ') -> $thing is copy {
             next if $thing eq '';
             my $number = $thing.parse-base(16);
             $string ~= $thing.parse-base(16).chr;
             $uni-codes ~= "0x$thing.parse-base(16).base(16), ";
+            $ord-count++;
             CATCH {$fail = True; last; }
         }
         next if $fail == True;
         $uni-codes ~~ s/ ', ' $ //;
-
-        push @array, "## $line # emoji-test.txt line #$line-no Emoji version $emoji-version";
-        push @array, qq<is Uni.new($uni-codes).Str.chars, 1, "Codes: ⟅$uni-codes⟆ $comment";>;
-        $test-count++;
+        if $ord-count > 1 {
+            push @array, "## $line # emoji-test.txt line #$line-no Emoji version $emoji-version";
+            push @array, qq<is Uni.new($uni-codes).Str.chars, 1, "Codes: ⟅$uni-codes⟆ $comment";>;
+            $test-count++;
+        }
     }
     my $file =
     qq:to/END/;
