@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 740;
+plan 742;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -223,6 +223,9 @@ ok ('abc def ghi' ~~ /<alpha> [ \- <alpha> ]?/) && matchcheck($/, q/mob<alpha> 0
 
 #### [(.)$0]+				bookkeeper	y			backreference
 ok 'bookkeeper' ~~ /[ (.) $0 ]+/, 'backreference';
+
+#### [(.)$٠]+				bookkeeper	y			backreference
+ok 'bookkeeper' ~~ /[ (.) $٠ ]+/, 'Nd digit backreference';
 
 #### (\w+) <+ws> $0				hello hello	y			backreference at end of string
 ok 'hello hello' ~~ /(\w+) <+ws> $0/, 'backreference at end of string';
@@ -2317,6 +2320,9 @@ throws-like '/{{/', X::Comp::Group, 'unterminated closure';
 
 #### \1		abcdef		/reserved/			back references
 throws-like '/\1/', Exception, 'back references';
+
+#### \۳		abcdef		/reserved/			back references
+throws-like '/\۳/', Exception, 'Nd digit back references';
 
 #### \x[		abcdef		/Missing close bracket/		unterminated \x[..]
 throws-like '/\x[/', Exception, 'unterminated \x[..]';

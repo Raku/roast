@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 426;
+plan 427;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -27,6 +27,9 @@ throws-like '"a" . "b"', X::Obsolete, replacement => '~';
 throws-like 's/a/b/i', X::Obsolete;
 # RT #112470
 throws-like 'my $a; ${a} = 5', X::Obsolete;
+
+#?rakudo todo 'Nd in special variables'
+throws-like '${۳}', X::Obsolete;
 
 throws-like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws-like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
