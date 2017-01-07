@@ -21,12 +21,11 @@ subtest 'SeekFromBeginning' => {
     $fh.seek: 20, SeekFromBeginning;
     is-deeply $fh.read(5).decode, 'ABCDE', 'two successive seeks';
 
-    # TODO XXX Currently throws just past beginning; Should it fail on both?
-    # throws-like { $fh.seek: -300, SeekFromBeginning }, Exception,
-    #     'seeking past beginning throws';
-    #
-    # throws-like { $fh.seek:  300, SeekFromBeginning }, Exception,
-    #     'seeking past end throws';
+    $fh.seek:  300, SeekFromBeginning;
+    is $fh.tell, 300, 'seeking past end';
+
+    throws-like { $fh.seek: -300, SeekFromBeginning }, Exception,
+        'seeking past beginning throws';
 }
 
 subtest 'SeekFromCurrent' => {
@@ -51,14 +50,12 @@ subtest 'SeekFromCurrent' => {
     $fh.seek: -10, SeekFromCurrent;
     is-deeply $fh.read(5).decode, 'abcde', 'two successive seeks (neg, neg)';
 
-    # TODO XXX Currently throws just past beginning; Should it fail on both?
-    # throws-like { $fh.seek: -300, SeekFromCurrent }, Exception,
-    #     'seeking past beginning throws';
+    $fh.seek:    0, SeekFromBeginning;
+    $fh.seek:  300, SeekFromCurrent;
+    is $fh.tell, 300, 'seeking past end';
 
-    # throws-like {
-    #     $fh.seek:    0, SeekFromBeginning;
-    #     $fh.seek:  300, SeekFromCurrent;
-    # }, Exception, 'seeking past end throws';
+    throws-like { $fh.seek: -3000, SeekFromCurrent }, Exception,
+        'seeking past beginning throws';
 }
 
 subtest 'SeekFromEnd' => {
@@ -73,12 +70,11 @@ subtest 'SeekFromEnd' => {
     $fh.seek: -10, SeekFromEnd;
     is-deeply $fh.read(5).decode, 'ABCDE', 'two successive seeks';
 
-    # TODO XXX Currently throws just past beginning; Should it fail on both?
-    # throws-like { $fh.seek: -300, SeekFromEnd }, Exception,
-    #     'seeking past beginning throws';
+    $fh.seek:  300, SeekFromEnd;
+    is $fh.tell, 330, 'seeking past end';
 
-    # throws-like { $fh.seek:  300, SeekFromEnd }, Exception,
-    #     'seeking past end throws';
+    throws-like { $fh.seek: -300, SeekFromEnd }, Exception,
+        'seeking past beginning throws';
 }
 
 # vim: ft=perl6
