@@ -111,7 +111,7 @@ In cases where the current working directory makes a difference, the tests
 assume that the working directory is the root of the test suite, so that the
 relative path to itself is `t/spec/S\d\d-$section/$filename`.
 
-## Environment Variables
+## Environmental Variables
 
 - **ROAST_TIMING_SCALE**
 
