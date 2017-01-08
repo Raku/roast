@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 742;
+plan 743;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -2067,6 +2067,8 @@ ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
 
     #### a**:!2..4		baaabbb		y	three "a" characters (explicit greed)
     ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
+
+    ok 'aaa' ~~ /a**۳/, 'Unicode Nd digits work';
 }
 
 # RT #112450
