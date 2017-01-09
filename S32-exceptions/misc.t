@@ -28,7 +28,6 @@ throws-like 's/a/b/i', X::Obsolete;
 # RT #112470
 throws-like 'my $a; ${a} = 5', X::Obsolete;
 
-#?rakudo todo 'Nd in special variables'
 throws-like '${۳}', X::Obsolete;
 
 throws-like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
