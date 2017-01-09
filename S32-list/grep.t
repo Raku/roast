@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 42;
+plan 44;
 
 my @list = (1 .. 10);
 
@@ -73,6 +73,18 @@ my @list = (1 .. 10);
     # RT #130365
     is (^Inf).grep({last if $_ > 5; True}).eager.join, '012345',
         'last in grep on infinite list';
+    # RT #130529
+    {
+        my $retries = 0;
+        is (1..5).grep({
+            if $_ == 3 {
+                $retries++;
+                redo unless $retries == 3
+            };
+            $_
+        }).join('|'), '1|2|3|4|5', 'redo works in grep (1)';
+        is $retries, 3, 'redo works in grep (2)';
+    }
 }
 
 # since the test argument to .grep is a Matcher, we can also
