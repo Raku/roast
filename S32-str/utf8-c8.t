@@ -5,7 +5,7 @@ use Test;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 52;
+plan 54;
 
 {
     my $test-str;
@@ -162,4 +162,17 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
         $fh.close;
         is $ok, 10000, 'Can read lines correctly using utf8-c8';
     }
+}
+
+# MoarVM #482
+{
+    is Buf.new('“'.encode('utf8')).decode('utf8-c8'), '“',
+        'Valid and NFC UTF-8 comes out fine (string case)';
+
+    my $test-file = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
+    END try unlink $test-file;
+    spurt $test-file, '“';
+    my $fh = open $test-file, :enc<utf8-c8>;
+    is $fh.slurp-rest, '“', 'Valid and NFC UTF-8 comes out fine (file case)';
+    $fh.close;
 }
