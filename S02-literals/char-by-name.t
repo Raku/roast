@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 10;
 
 # XXX [TODO] more tests in other Unicode charset.
 
