@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 # XXX [TODO] more tests in other Unicode charset.
 
@@ -25,5 +25,6 @@ is "\c[LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT]", "\x[0041,0300]", 'lette
 
 ok "\c[LATIN SMALL LETTER A WITH DIAERESIS,COMBINING CEDILLA]" ~~ /\w/,
    'RT #64918 (some strings throw "Malformed UTF-8 string" errors';
-
+#?rakudo skip 'RT #130542 \c[BELL] returns the U+0007 control code not U+1F514 BELL'
+is "\c[BELL]", "🔔", '\c[BELL] returns 🔔, BELL symbol not the control character';
 # vim: ft=perl6
