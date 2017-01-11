@@ -814,7 +814,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
 
     is 'abc' ~~ /<:alpha>+/, 'abc', 'alpha chars';
 #?rakudo.moar todo "RT #130483 Regex Unicode properties check values before checking property names"
-    is '	 	' ~~ /<:space>+/, ' ', 'space chars';  # RT #130483
+    is "\t \t" ~~ /<:space>+/, ' ', 'space chars';  # RT #130483
 
     is $latin-chars.comb(/<:cntrl>/)>>.ord.join(","), (flat 0..31, 127..159).join(","), 'cntrl chars';
 
