@@ -187,6 +187,7 @@ is-deeply &[Z+]((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ar
 }
 
 # RT #126522
+#?rakudo.jvm todo 'RT #130532'
 is ($(1, 2) Z <a b c>), (($(1, 2), 'a'),),
     'Z respects itemization of arguments (1)';
 is (<a b c> Z $(1, 2)), (('a', $(1, 2)),),
