@@ -23,6 +23,7 @@ is "\c[LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT]", "\x[0041,0300]", 'lette
 
 ok "\c[LATIN SMALL LETTER A WITH DIAERESIS,COMBINING CEDILLA]" ~~ /\w/,
    'RT #64918 (some strings throw "Malformed UTF-8 string" errors';
+#?rakudo.jvm todo "RT #130542 BELL resolves to U+0007"
 is "\c[BELL]", "🔔", '\c[BELL] returns 🔔, BELL symbol not the control character'; # RT #130542
 
 #?rakudo.jvm skip "rakudo.jvm does not yet support Emoji Sequences"
