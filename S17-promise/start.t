@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 57;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -208,3 +208,17 @@ lives-ok {
         }
     }
 }, 'Access of hash declared in start block with repeat string outside of it does not crash';
+
+# Covers mis-compilation of //=, ||=, and &&= that caused threading issues.
+lives-ok {
+    sub foo() { my $b = False; my $c; $c //= do { $b = True }; $b }
+    await do for ^4 { start for ^1000 { die unless foo } }
+}, '//= compilation not vulnerable to multiple threads';
+lives-ok {
+    sub foo() { my $b = False; my $c; $c ||= do { $b = True }; $b }
+    await do for ^4 { start for ^1000 { die unless foo } }
+}, '||= compilation not vulnerable to multiple threads';
+lives-ok {
+    sub foo() { my $b = False; my $c = True; $c &&= do { $b = True }; $b }
+    await do for ^4 { start for ^1000 { die unless foo } }
+}, '&&= compilation not vulnerable to multiple threads';
