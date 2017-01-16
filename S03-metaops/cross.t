@@ -75,9 +75,8 @@ is (1,2 Xcmp 3,2,0), (Order::Less, Order::Less, Order::More, Order::Less, Order:
 # L<S03/Cross operators/underlying operator non-associating>
 # test belongs to block 'L<S03/Cross operators/list concatenating form when used like this>'
 # TODO change to specific exception once the code dies
-#?rakudo todo 'code does not die'
 throws-like '<1 2> Xcmp <1 2> Xcmp <1 2>', Exception,
-    'non-associating ops cannot be cross-ops';
+    'non-associating ops cannot be cross-ops with more than one op chained';
 
 # let's have some fun with X..., comparison ops and junctions:
 
