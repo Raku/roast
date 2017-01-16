@@ -26,9 +26,10 @@ plan 152;
 
 ## Miscellaneous Properties [5/19]
 # Unicode_1_Name, Name, Jamo_Short_Name, ISO_Comment, Bidi_Mirroring_Glyph
-## Binary [33/60]
-#  ASCII_Hex_Digit, Hex_Digit, Dash, Case_Ignorable, Soft_Dotted, Quotation_Mark, Math
-#  Grapheme_Extend, Hyphen, Extender, Grapheme_Base, Join_Control, Grapheme_Link
+## Binary [38/60]
+#  ASCII_Hex_Digit, Hex_Digit, Dash, Diacritic, Default_Ignorable_Code_Point, ID_Start
+#  IDS_Binary_Operator, IDS_Trinary_Operator, Case_Ignorable, Soft_Dotted, Quotation_Mark,
+#  Math, Grapheme_Extend, Hyphen, Extender, Grapheme_Base, Join_Control, Grapheme_Link
 #  Deprecated, White_Space, Ideographic, Radical, Alphabetic, Bidi_Mirrored, Variation_Selector
 #  ID_Continue, Sentence_Terminal, Changes_When_NFKC_Casefolded, Full_Composition_Exclusion
 #  Cased, Changes_When_Casefolded, Changes_When_Casemapped, Changes_When_Lowercased
@@ -155,6 +156,21 @@ is-deeply 'ᖤ'.uniprop('Grapheme_Link'), False, "uniprop for Grapheme_Link retu
 
 is-deeply 'ๆ'.uniprop('Extender'), True, "uniprop for Extender property returns True for codepoints with this property";
 is-deeply 'a'.uniprop('Extender'), False, "uniprop for Extender property returns False for codepoints without this property";
+
+is-deeply 0x2FF2.uniprop('IDS_Trinary_Operator'), True, "uniprop for IDS_Trinary_Operator returns True for codepoints with this property";
+is-deeply '⇒'.uniprop('IDS_Trinary_Operator'), False, "uniprop for IDS_Trinary_Operator returns False for codepoints without this property";
+
+is-deeply 0x2FF0.uniprop('IDS_Binary_Operator'), True, "uniprop for IDS_Binary_Operator returns True for codepoints with this property";
+is-deeply 'ϣ'.uniprop('IDS_Binary_Operator'), False, "uniprop for IDS_Binary_Operator returns False for codepoints without this property";
+
+is-deeply 'Ϳ'.uniprop('ID_Start'), True, "uniprop for ID_Start property returns True for codepoints with this property";
+is-deeply '̴'.uniprop('ID_Start'), False "uniprop for ID_Start property returns False for codepoints without this property";
+
+is-deeply '؜'.uniprop('Default_Ignorable_Code_Point'), True, "uniprop for Default_Ignorable_Code_Point returns True for codepoints with this property";
+is-deeply 'ē'.uniprop('Default_Ignorable_Code_Point'), False, "uniprop for Default_Ignorable_Code_Point returns False for codepoints without this property";
+
+is-deeply '^'.uniprop('Diacritic'), True, "uniprop for Diacritic property returns True for codepoints with this property";
+is-deeply 'Ê'.uniprop('Diacritic'), False, "uniprop for Diacritic property returns False for codepoints without this property";
 
 is-deeply 0x200D.uniprop('Join_Control'), True, "uniprop for Join_Control property returns True for U+200D";
 is-deeply 0x200C.uniprop('Join_Control'), True, "uniprop for Join_Control property returns True for U+200C";
