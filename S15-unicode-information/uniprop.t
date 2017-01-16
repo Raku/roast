@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 152;
+plan 162;
 #?niecza 152 skip "uniprop NYI"
 
 #use unicode :v(6.3);
@@ -164,7 +164,7 @@ is-deeply 0x2FF0.uniprop('IDS_Binary_Operator'), True, "uniprop for IDS_Binary_O
 is-deeply 'ϣ'.uniprop('IDS_Binary_Operator'), False, "uniprop for IDS_Binary_Operator returns False for codepoints without this property";
 
 is-deeply 'Ϳ'.uniprop('ID_Start'), True, "uniprop for ID_Start property returns True for codepoints with this property";
-is-deeply '̴'.uniprop('ID_Start'), False "uniprop for ID_Start property returns False for codepoints without this property";
+is-deeply ''̴'.uniprop('ID_Start'), False, "uniprop for ID_Start property returns False for codepoints without this property";
 
 is-deeply '؜'.uniprop('Default_Ignorable_Code_Point'), True, "uniprop for Default_Ignorable_Code_Point returns True for codepoints with this property";
 is-deeply 'ē'.uniprop('Default_Ignorable_Code_Point'), False, "uniprop for Default_Ignorable_Code_Point returns False for codepoints without this property";
