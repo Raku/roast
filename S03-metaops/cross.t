@@ -124,7 +124,7 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
 
 # RT #112602
 {
-    is (1..* X* 1..*)[^3], (1, 2, 3), 'cross handles lazy lists';
+    is (1 X* 1..*)[^3], (1, 2, 3), 'cross handles lazy lists';
 }
 
 {
