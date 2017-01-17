@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 110;
+plan 115;
 
 sub test($range,$min,$max,$exmin,$exmax,$inf,$elems,$perl) {
     subtest {
@@ -38,6 +38,12 @@ test  "a"..^"g",  'a',   'g', False,  True, False,   6,   '"a"..^"g"';
 test  "a"^.."g",  'a',   'g',  True, False, False,   6,   '"a"^.."g"';
 test "a"^..^"g",  'a',   'g',  True,  True, False,   5,  '"a"^..^"g"';
 test   "g".."a",  'g',   'a', False, False, False,   0,    '"g".."a"';
+
+test   '!'..'&',  '!',   '&', False, False, False,   6,  '"!".."\\&"';
+test  '!'..^'&',  '!',   '&', False,  True, False,   5, '"!"..^"\\&"';
+test  '!'^..'&',  '!',   '&',  True, False, False,   5, '"!"^.."\\&"';
+test '!'^..^'&',  '!',   '&',  True,  True, False,   4,'"!"^..^"\\&"';
+test   '&'..'!',  '&',   '!', False, False, False,   0,  '"\\&".."!"';
 
 test         ^5,    0,     5, False,  True, False,   5,          "^5";
 test       ^5.5,    0,   5.5, False,  True, False,   6,     "0..^5.5";
