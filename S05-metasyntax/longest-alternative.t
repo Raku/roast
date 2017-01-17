@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 56;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -454,6 +454,9 @@ my $str = 'a' x 7;
         'sequential alternation first branch involved in longest alternative (2)';
     is ~('food' ~~ / 'foo' | ('food' <!> || 'doof')/), 'foo',
         'sequential alternation first branch failure after LTM tries next best option';
+    # related RT #130562
+    is ~('food' ~~ / 'foo' | ['doof' || 'food']/), 'foo',
+        'sequential alternation branches after first not involved in LTM';
 }
 
 # RT #126573
