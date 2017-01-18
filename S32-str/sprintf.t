@@ -279,10 +279,9 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
         'sprintf complains about unsupported directives';
 }
 
-# RT #129088
+# RT #129088  RT #130509
 {
     throws-like { sprintf 'D6.2', 'foo' }, X::Str::Sprintf::Directives::Count,
-        backtrace => /^ [ <!after 'panic'> . ]+ $/,
     'Invalid formats do not spill internal details';
 }
 
