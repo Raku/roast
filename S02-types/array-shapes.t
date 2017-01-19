@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 29;
 
 # L<S09/Fixed-size arrays>
 
@@ -115,3 +115,7 @@ subtest '.List on uninited shaped array' => {
     lives-ok { @result = @a.List }, 'does not die';
     is-deeply @result, [Any xx 4],  'gives correct results';
 }
+
+# RT #130510
+eval-lives-ok ｢my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>)｣,
+    '@c[some shape] accepts a .new: :shape(same shape)...';
