@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 8;
+plan 9;
 
 # L<S32::Containers/"Array"/"=item ">
 
@@ -25,5 +25,9 @@ is(+$array_obj, 3, 'Finding the length functions properly.');
     is-deeply circumfix:<[ ]>(), $[], 'circumfix:<[ ]>() creates Array';
     is-deeply [],                $[], '[ ] creates Array';
 }
+
+# RT #130583
+eval-lives-ok ｢(1,2,3).Array[0]++｣,
+    'array elements get writable containers';
 
 # vim: ft=perl6
