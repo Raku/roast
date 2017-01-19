@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 27;
+plan 28;
 
 # L<S09/Fixed-size arrays>
 
@@ -104,4 +104,14 @@ plan 27;
         X::IllegalDimensionInShape;
     throws-like 'my @a[-9223372036854775808,-2]',
         X::IllegalDimensionInShape;
+}
+
+# RT #130513
+subtest '.List on uninited shaped array' => {
+    plan 2;
+
+    my @a[2;2];
+    my @result;
+    lives-ok { @result = @a.List }, 'does not die';
+    is-deeply @result, [Any xx 4],  'gives correct results';
 }
