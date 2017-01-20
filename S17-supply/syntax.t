@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 68;
+plan 70;
 
 {
     my $s = supply {
@@ -512,5 +512,16 @@ lives-ok {
         }
     }
 }, 'No races/crashes around interval that emits done (used to SEGV and various errors)';
+
+lives-ok {
+    my $times-triggered;
+    react {
+        whenever Supply.from-list(^10) {
+            next if $_ %% 2;
+            $times-triggered++;
+        }
+    }
+    is $times-triggered, 5, "skipping every even number in ^10 with 'next' gives us 5";
+}, 'calling "next" inside a whenever block will not die.';
 
 # vim: ft=perl6 expandtab sw=4
