@@ -274,8 +274,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         plan 8;
         cmp-ok -(my num $), '===', NaN, '- uninitialized';
         cmp-ok −(my num $), '===', NaN, '− uninitialized';
-        is-deeply -(my num $ = 0e0  ), (my num $ = 0e0  ), '- zero';
-        is-deeply −(my num $ = 0e0  ), (my num $ = 0e0  ), '− zero';
+        is-deeply -(my num $ = 0e0  ), (my num $ = -0e0 ), '- zero';
+        is-deeply −(my num $ = 0e0  ), (my num $ = -0e0 ), '− zero';
         is-deeply -(my num $ = 42e0 ), (my num $ = -42e0), '- positive';
         is-deeply −(my num $ = 42e0 ), (my num $ = -42e0), '− positive';
         is-deeply -(my num $ = -42e0), (my num $ = 42e0 ), '- negative';
@@ -332,12 +332,12 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok $nn * $nu, '===', NaN, 'negative * uninit';
 
         is-deeply $nz * $np, (my num $ = 0e0  ), 'zero * positive';
-        is-deeply $nz * $nn, (my num $ = 0e0  ), 'zero * negative';
+        is-deeply $nz * $nn, (my num $ = -0e0 ), 'zero * negative';
         is-deeply $nz * $nz, (my num $ = 0e0  ), 'zero * zero';
         is-deeply $np * $nn, (my num $ = -16e0), 'positive * negative';
         is-deeply $np * $nz, (my num $ = 0e0  ), 'positive * zero';
         is-deeply $np * $np, (my num $ = 16e0 ), 'positive * positive';
-        is-deeply $nn * $nz, (my num $ = 0e0  ), 'negative * zero';
+        is-deeply $nn * $nz, (my num $ = -0e0 ), 'negative * zero';
         is-deeply $nn * $np, (my num $ = -16e0), 'negative * positive';
         is-deeply $nn * $nn, (my num $ = 16e0 ), 'negative * negative';
     }
