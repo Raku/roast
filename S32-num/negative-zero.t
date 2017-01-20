@@ -2,7 +2,7 @@ use v6;
 use lib <t/spec/packages>;
 use Test;
 use Test::Util;
-plan 11;
+plan 14;
 
 =begin pod
 
@@ -124,4 +124,13 @@ subtest 'Stringification of Complex handles signed zeros' => {
     is-deeply <-0+0i>.Str,  '-0+0i',   '<-0+0i>.Str';
     is-deeply <+0-0i>.Str,   '0-0i',   '<+0-0i>.Str';
     is-deeply <+0+0i>.Str,   '0+0i',   '<+0+0i>.Str';
+}
+
+{ # https://irclog.perlgeek.de/perl6/2017-01-20#i_13959538
+    my $a =  0e0;
+    my $b = -0e0;
+    is-deeply $a  eqv $b,   False, '-0e0 eqv 0e0 when stored in variables';
+    is-deeply 0e0 eqv -0e0, False, '-0e0 eqv 0e0 when using literals';
+    is-deeply (my num $ = 0e0) eqv (my num $ = -0e0), False,
+        '-0e0 eqv 0e0 when using native nums';
 }
