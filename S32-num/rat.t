@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 837;
+plan 838;
 
 # Basic test functions specific to rational numbers.
 
@@ -375,5 +375,8 @@ subtest '=== with 0-denominator Rats' => {
     is-deeply <-5/2> === <-2/0>, False, '-5/2 === -2/0';
     is-deeply <-2/0> === <-5/2>, False, '-2/0 === -5/2';
 }
+
+# RT #130606
+eval-lives-ok ｢5 cmp <.5>｣, 'Real cmp RatStr does not crash';
 
 # vim: ft=perl6
