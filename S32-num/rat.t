@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 838;
+plan 839;
 
 # Basic test functions specific to rational numbers.
 
@@ -378,5 +378,12 @@ subtest '=== with 0-denominator Rats' => {
 
 # RT #130606
 eval-lives-ok ｢5 cmp <.5>｣, 'Real cmp RatStr does not crash';
+
+{ # https://irclog.perlgeek.de/perl6-dev/2017-01-20#i_13961843
+    my class Foo does Rational[Int,Int] {};
+    my class Bar is Foo {};
+    lives-ok { Bar.new: 42, 42 },
+        'subclass of class that does Rational can be instantiated';
+}
 
 # vim: ft=perl6
