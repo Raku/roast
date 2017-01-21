@@ -1,5 +1,7 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
 my @endings =
   "\n"               => "LF",
@@ -12,7 +14,7 @@ my @endings =
 ## adjusted plan to allow fine grained fudging for rakudo.jvm
 #plan @endings * (1 + 3 * ( (3 * 5) + 6));
 my $extra_tests_jvm_fudging = 2 * 3 * ( 3 * ( 6 + 2 ) );
-plan 2 + @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
+plan 3 + @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -258,6 +260,16 @@ unlink $filename; # cleanup
     $file.spurt: join "\n", <a b c>;
     is-deeply $file.lines(2000), ('a', 'b', 'c'),
         'we stop when data ends, even if limit has not been reached yet';
+    unlink $file;
+}
+
+{
+    # https://irclog.perlgeek.de/perl6-dev/2017-01-21#i_13962764
+    my $file = 't/spec/S16-io/lines.testing'.IO;
+    $file.spurt: join "\n", <a b c>;
+    is_run 'lines; lines', :args[$file], {
+        :out(''), :err(''), :0status,
+    }, 'calling lines() after exhausting previous input does not crash';
     unlink $file;
 }
 
