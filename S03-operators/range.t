@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 125;
+plan 129;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
 
@@ -58,6 +58,12 @@ is ['a'^..^'b'], [], "double-exclusive string range (^..^) can produce null rang
 is ['b'^..^'a'], [], "double-exclusive string auto-rev range (^..^) can produce null range";
 is ['a' ^..^ 'a'], [], "double-exclusive range (x ^..^ x) where x is a char";
 is ('a'..'z').list.join(' '), 'a b c d e f g h i j k l m n o p q r s t u v w x y z', '"a".."z"';
+
+# RT #130554
+is ['!'^..'&'], ['"'..'&'], "bottom-exclusive non-alphanumeric string range (^..) works";
+is ['!'..^'&'], ['!'..'%'], "top-exclusive non-alphanumeric string range (..^) works";
+is ['!'^..^'&'], ['"'..'%'], "double-exclusive non-alphanumeric string range (^..^) works";
+is ['%'^..^'&'], [], "double-exclusive non-alphanumeric string range (^..^) can produce null range";
 
 is 1.5 ~~ 1^..^2, Bool::True, "lazy evaluation of the range operator";
 
