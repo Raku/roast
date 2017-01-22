@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 161;
+plan 171;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -289,6 +289,20 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is_run ｢print sprintf 'pass'｣, {
         :out<pass>, :err(''), :0status
     }, 'sprintf($format) does not issue spurious warnings';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2017-01-22#i_13966753
+    is sprintf( '%.3d', [42]),   '042', '%.3d';
+    is sprintf('%2.4d', [42]),  '0042', '%2.4d';
+    is sprintf('%5.3d', [42]), '  042', '%5.3d';
+    is sprintf( '%.0d', [42]),    '42', '%.0d (non-zero number)';
+    is sprintf( '%.0d', [ 0]),      '', '%.0d (number is zero)' ;
+
+    is sprintf( '%.*d', [3, 42]),   '042', '%.*d';
+    is sprintf('%2.*d', [4, 42]),  '0042', '%2.*d';
+    is sprintf('%5.*d', [3, 42]), '  042', '%5.*d';
+    is sprintf( '%.*d', [0, 42]),    '42', '%.*d (non-zero number)';
+    is sprintf( '%.*d', [0,  0]),      '', '%.*d (number is zero)';
 }
 
 # vim: ft=perl6
