@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 57;
+plan 58;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -190,5 +190,8 @@ is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
 warns-like { 'x' x Int }, *.contains('uninitialized' & 'numeric'),
     'using an unitialized value in repeat count throws';
 
+# RT #130619
+is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
+    'empty slip with xx * works';
 
 # vim: ft=perl6
