@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 39;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -198,6 +198,12 @@ throws-like q[
         RT129830.^attributes[1].type.gist,
         '(Associative[Str])',
         '.gist works on attribute types (2)';
-    }
+}
+
+{
+    my class Foo::Bar {};
+    lives-ok { my class { has Foo::Bar $a .= new } },
+	   '.= ables to initialize attributes with types that has `::` in name';
+}
 
 # vim: ft=perl6 expandtab sw=4
