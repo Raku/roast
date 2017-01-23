@@ -151,16 +151,16 @@ throws-like q[
     is-deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Array from 2-nd element to end' );
 
     class AB {
-        has @.x; 
-        method aa { 
-            my @y=1,2,3; 
+        has @.x;
+        method aa {
+            my @y=1,2,3;
             is-deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Plain array in the method' );
             is-deeply( [@.x], [ 1, 2, 3 ], 'Array from 2-nd element to end+1 in the method' );
             is-deeply( [@.x[1 ..^ +@.x]], [ 2, 3 ], 'Array from 2-nd element to end in the method' );
         }
     };
 
-    my AB $y.=new(:x(1,2,3)); 
+    my AB $y.=new(:x(1,2,3));
     $y.aa;
 
 }
