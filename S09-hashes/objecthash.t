@@ -83,8 +83,8 @@ plan 36;
 
 # RT #125352
 {
-    is (my %h).list.perl, '()', 'empty hash listifies to "()"';
-    is (my %h{Any}).list.perl, '()', 'empty object hash listifies to "()"';
+    is (my %h).list.elems, 0, 'empty hash listifies to empty list';
+    is (my %h{Any}).list.elems, 0, 'empty object hash listifies to empty list';
 }
 
 # RT #118031
