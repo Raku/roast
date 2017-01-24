@@ -115,7 +115,7 @@ You can also run the `fudge` program manually. This command will fudge and run
 `prove` on a specific file:
 
     ./fudge --keep-exit-code rakudo S05-metasyntax/angle-brackets.t &&
-    prove6 -eperl6 S05-metasyntax/angle-brackets.rakudo
+    prove -eperl6 S05-metasyntax/angle-brackets.rakudo
 
 ## Environmental Variables
 
