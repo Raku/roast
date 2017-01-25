@@ -7,7 +7,7 @@ plan 4 * 7;
 
 sub t(&iterator, $desc, *@expected) {
     subtest {
-        plan 14;
+        plan 17;
         {
             my @a;
             my $i = iterator();
@@ -67,6 +67,18 @@ sub t(&iterator, $desc, *@expected) {
         {
             is iterator().skip-at-least-pull-one(@expected-1), @expected[*-1],
               "$desc: skip-at-least-pull-one last";
+        }
+
+        {
+            my $iterator = iterator();
+            $iterator.can('count-only')
+              ?? is( $iterator.count-only, +@expected, "$desc: count-only" )
+              !! pass( "$desc: doesn't support count-only" );
+            $iterator.can('bool-only')
+              ?? ok( $iterator.bool-only, "$desc: bool-only" )
+              !! pass( "$desc: doesn't support bool-only" );
+            $iterator.push-all(my @a);
+            is @a, @expected, "$desc: count/bool-only didn't pull";
         }
     }, "tests for $desc";
 }
