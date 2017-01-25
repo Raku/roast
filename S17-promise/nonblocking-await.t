@@ -1,7 +1,7 @@
 use v6.d.PREVIEW;
 use Test;
 
-plan 5;
+plan 11;
 
 # Limit scheduler to just 4 real threads, so we'll clearly be needing the
 # non-blocking await support for these to pass.
@@ -54,4 +54,72 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     ok [==](flat Planned, @proms>>.status), 'await of multiple Promises suspends until all ready';
     $p.keep;
     is ([+] await @proms), 5050, 'Hundred of await on time/manual Promise completes corectly';
+}
+
+{
+    my $p = Promise.new;
+    my @proms = (1..100).map: {
+        start {
+            await Promise.in(0.1), $p;
+            $_
+        }
+    };
+    sleep 0.15;
+    ok [==](flat Planned, @proms>>.status), 'await of multiple Promises suspends until all ready';
+    $p.break('bust');
+    throws-like { await @proms }, X::AdHoc, message => 'bust',
+        'Multiple await also conveys errors correctly';
+}
+
+{
+    my @proms = (1..100).map: -> $i {
+        start {
+            await supply { whenever Supply.interval(0.001 * $i) { emit $i; done } }
+        }
+    };
+    is ([+] await @proms), 5050, 'Hundred of outstanding awaits on supplies works';
+}
+
+{
+    my @proms = (1..100).map: -> $i {
+        start {
+            await supply {
+                whenever Supply.interval(0.001 * $i) {
+                    $i > 50
+                        ?? die 'strewth'
+                        !! done
+                }
+            }
+        }
+    };
+    throws-like { await @proms }, Exception, message => 'strewth',
+        'Hundred of outstanding awaits on supplies that die works';
+}
+
+{
+    my $c = Channel.new;
+    my @proms = (1..100).map: -> $i {
+        start {
+            await($c) + await($c)
+        }
+    };
+    for 1..200 {
+        $c.send($_);
+    }
+    is ([+] await @proms), 20100, 'Hundred of outstanding awaits on channels works';
+}
+
+{
+    my $c = Channel.new;
+    my @proms = (1..100).map: -> $i {
+        start {
+            await($c) + await($c)
+        }
+    };
+    for 1..100 {
+        $c.send($_);
+    }
+    $c.close;
+    throws-like { await @proms }, X::Channel::ReceiveOnClosed,
+        'Hundred of outstanding awaits on channels that gets closed works';
 }
