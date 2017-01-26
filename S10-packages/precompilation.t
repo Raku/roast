@@ -218,7 +218,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     my $trigger-file = 't/spec/packages/RT128156/Two.pm6'.IO;
     $trigger-file.IO.spurt($trigger-file.slurp);
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT128156::One>));
-    ok $comp-unit.handle.globalish-package.WHO<RT128156>.WHO<One Two Three>:exists.all,
+    ok $comp-unit.handle.globalish-package<RT128156>.WHO<One Two Three>:exists.all,
        'GLOBAL symbols exist after re-precompiled';
 
     # Run another test where a source file is change after precompilation.
