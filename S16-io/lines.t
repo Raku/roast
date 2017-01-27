@@ -14,7 +14,7 @@ my @endings =
 ## adjusted plan to allow fine grained fudging for rakudo.jvm
 #plan @endings * (1 + 3 * ( (3 * 5) + 6));
 my $extra_tests_jvm_fudging = 2 * 3 * ( 3 * ( 6 + 2 ) );
-plan 4 + @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
+plan 5 + @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -276,6 +276,14 @@ unlink $filename; # cleanup
 { # https://irclog.perlgeek.de/perl6-dev/2017-01-27#i_13996365
     lives-ok { .pull-one xx 1000 given $*PROGRAM.IO.lines.iterator },
         '.lines does not crash when attempting to .pull-one on closed handle';
+}
+
+{ # https://github.com/rakudo/rakudo/commit/cfae23a567
+    my class Foo is IO::Handle {};
+    my $fh = Foo.new(:path($*PROGRAM.IO));
+    $fh.open;
+    lives-ok { .pull-one xx 10000 given $fh.lines.iterator },
+        '.lines does not crash on subclasses of IO::Handle';
 }
 
 # vim: ft=perl6
