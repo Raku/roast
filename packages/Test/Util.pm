@@ -42,7 +42,7 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
 
     # The test may have executed, but if so, the results couldn't be collected.
     if %got<test_died> {
-        return skip 1, 'test died: ' ~ %got<test_died>;
+        return skip 'test died: ' ~ %got<test_died>, 1;
     }
 
     my $ok = ?1;
@@ -70,7 +70,7 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
     }
 
     if $tests_aggregated == 0 {
-        return skip 1, 'nothing tested';
+        return skip 'nothing tested', 1;
     }
 
     ok ?$ok, $name;
