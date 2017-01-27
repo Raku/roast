@@ -102,7 +102,6 @@ for
     t( { $l.values.iterator },    "$case.values", @pairs.map: { .value } );
     t( { $l.pairs.iterator },     "$case.pairs", @pairs );
     t( { $l.antipairs.iterator }, "$case.antipairs", @pairs.map: { .antipair });
-#    t( { $l.invert.iterator },    "$case.invert", @pairs.map: { .antipair });
 }
 
 #vim: ft=perl6
