@@ -11,66 +11,84 @@ use Test;
 # values from the iterator.
 sub iterator-ok(&iterator, $desc, *@expected) is export {
     subtest {
-        plan 17;
+        plan 24;
         {
             my @a;
-            my $i = iterator();
-            until (my $pulled := $i.pull-one) =:= IterationEnd {
+            my $iterator = iterator();
+            until (my $pulled := $iterator.pull-one) =:= IterationEnd {
                 @a.push($pulled)
             }
             is @a, @expected, "$desc: pull-one until exhausted";
         }
 
         {
-            my $i = iterator();
-            Nil until $i.push-exactly(my @a,3) =:= IterationEnd;
+            my $iterator = iterator();
+            Nil until $iterator.push-exactly(my @a,3) =:= IterationEnd;
             is @a, @expected, "$desc: push-exactly until exhausted";
+            is $iterator.pull-one, IterationEnd,
+              "$desc: is iterator exhausted after a loop with push-exactly";
         }
 
         {
-            my $i = iterator();
-            Nil until $i.push-at-least(my @a,3) =:= IterationEnd;
+            my $iterator = iterator();
+            Nil until $iterator.push-at-least(my @a,3) =:= IterationEnd;
             is @a, @expected, "$desc: push-at-least until exhausted";
+            is $iterator.pull-one, IterationEnd,
+              "$desc: is iterator exhausted after a loop with push-at-least";
         }
 
         {
-            is iterator().push-all(my @a), IterationEnd,
+            my $iterator = iterator();
+            is $iterator.push-all(my @a), IterationEnd,
               "$desc: does push-all return IterationEnd";
             is @a, @expected, "$desc: push-all";
+            is $iterator.pull-one, IterationEnd,
+              "$desc: is iterator exhausted after a push-all";
         }
 
         {
-            is iterator().push-until-lazy(my @a), IterationEnd,
+            my $iterator = iterator();
+            is $iterator.push-until-lazy(my @a), IterationEnd,
               "$desc: does push-until-lazy return IterationEnd";
             is @a, @expected, "$desc: push-until-lazy";
+            is $iterator.pull-one, IterationEnd,
+              "$desc: is iterator exhausted after a push-until-lazy";
         }
 
         {
-            is iterator().sink-all, IterationEnd,
+            my $iterator = iterator();
+            is $iterator.sink-all, IterationEnd,
               "$desc: does sink-all return IterationEnd";
+            is $iterator.pull-one, IterationEnd,
+              "$desc: is iterator exhausted after a sink-all";
         }
 
         {
-            my $i = iterator();
+            my $iterator = iterator();
             my $meen = 0;
-            $meen++ while $i.skip-one;
+            $meen++ while $iterator.skip-one;
             is $meen, +@expected, "$desc: skip-one until exhausted";
-            is $i.pull-one, IterationEnd, "$desc: did skip-one exhaust?";
+            is $iterator.pull-one, IterationEnd, "$desc: did skip-one exhaust?";
+            is $iterator.pull-one, IterationEnd,
+              "$desc: is iterator exhausted after a loop with skip-one";
         }
 
         {
-            my $i = iterator();
-            ok $i.skip-at-least(@expected - 1),
+            my $iterator = iterator();
+            ok $iterator.skip-at-least(@expected - 1),
               "$desc: skip-at-least except last";
-            is $i.pull-one, @expected[* - 1],
+            is $iterator.pull-one, @expected[* - 1],
               "$desc: skip-at-least check last value";
-            is $i.pull-one, IterationEnd,
+            is $iterator.pull-one, IterationEnd,
               "$desc: did skip-at-least after pull-one exhaust?";
         }
 
         {
-            is iterator().skip-at-least-pull-one(@expected-1), @expected[*-1],
+            my $iterator = iterator();
+            is $iterator.skip-at-least-pull-one(@expected-1), @expected[*-1],
               "$desc: skip-at-least-pull-one last";
+            is $iterator.pull-one, IterationEnd,
+              "$desc: is iterator exhausted after skip-at-least-pull-one?";
         }
 
         {
