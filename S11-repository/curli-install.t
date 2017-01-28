@@ -42,7 +42,7 @@ is $cu.short-name, 'Foo', '$*REPO.need returned correct CompUnit';
 
 isa-ok ::('Foo'), Failure, 'symbol Foo is unknown after loading it';
 
-GLOBALish.WHO.merge-symbols($cu.handle.globalish-package.WHO);
+GLOBALish.WHO.merge-symbols($cu.handle.globalish-package);
 
 ok ::('Foo') !~~ Failure, 'symbol Foo is known after merging global symbols';
 
