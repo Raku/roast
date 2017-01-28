@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 30;
 
 =begin pod
 
@@ -185,6 +185,29 @@ Testing operator overloading subroutines
     constant $sym = "°";
     sub infix:[$sym] { "$^a$^b" };
     is 5 ° 5, "55", 'can define and use operator with a sigiled constant as symbol';
+}
+
+{
+    throws-like ｢sub meow:<bar> {}｣, X::Syntax::Extension::Category,
+        'defining custom op in non-exitent category throws';
+
+    subtest ':sym<> colonpair on subroutine names is reserved' => {
+        plan 6;
+        #?rakudo 2 todo 'a 6.c-errata test demands these throw X::Syntax::Extension::Category'
+        throws-like 'sub meow:sym<bar> {}', X::Syntax::Reserved, ':sym<...>';
+        throws-like 'sub meow:sym«bar» {}', X::Syntax::Reserved, ':sym«...»';
+        throws-like 'sub meow:foo<bar>:sym<bar> {}', X::Syntax::Reserved,
+            ':foo<bar>:sym<...>';
+        throws-like 'sub meow:foo<bar>:sym«bar» {}', X::Syntax::Reserved,
+            ':foo<bar>:sym«...»';
+        throws-like 'sub meow:sym<bar>:foo<bar> {}', X::Syntax::Reserved,
+            ':sym<...>:foo<bar>';
+        throws-like 'sub meow:sym«bar»:foo<bar> {}', X::Syntax::Reserved,
+            ':sym«...»:foo<bar>';
+    }
+
+    eval-lives-ok ｢sub meow:foo<bar> {42}; meow:foo<bar>() == 42 or die｣,
+        'can use colon-name extended sub name';
 }
 
 # vim: ft=perl6
