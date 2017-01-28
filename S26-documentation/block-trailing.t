@@ -1,19 +1,22 @@
 use v6;
 use Test;
-plan 334;
+plan 52;
 
 my $pod_index = 0;
 
+#?DOES 1
 sub test-trailing($thing, $value) {
-    is $thing.WHY.?contents, $value, $value  ~ ' - contents';
-    is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
-    is $thing.WHY.?trailing, $value, $value ~ ' - trailing';
-    ok !$thing.WHY.?leading.defined, $value ~ ' - no leading';
-    is ~$thing.WHY, $value, $value ~ ' - stringifies correctly';
+    subtest $thing.^name, {
+        is $thing.WHY.?contents, $value, $value  ~ ' - contents';
+        is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
+        is $thing.WHY.?trailing, $value, $value ~ ' - trailing';
+        ok !$thing.WHY.?leading.defined, $value ~ ' - no leading';
+        is ~$thing.WHY, $value, $value ~ ' - stringifies correctly';
 
-    is $=pod[$pod_index].?WHEREFORE.^name, $thing.^name, "\$=pod $value - WHEREFORE";
-    is ~$=pod[$pod_index], $value, "\$=pod $value";
-    $pod_index++;
+        is $=pod[$pod_index].?WHEREFORE.^name, $thing.^name, "\$=pod $value - WHEREFORE";
+        is ~$=pod[$pod_index], $value, "\$=pod $value";
+        $pod_index++;
+    }
 }
 
 class Simple {
@@ -84,6 +87,7 @@ class Sheep {
     my $roar-method = Sheep.^find_method('roar');
     test-trailing(Sheep, 'a sheep');
     test-trailing($wool-attr, 'usually white');
+    #?rakudo todo "pod attributes"
     test-trailing($sound-attr, 'usually quiet');
     test-trailing($roar-method, 'not too scary');
 }
@@ -297,7 +301,7 @@ subset EvenNum of Num where { $^n % 2 == 0 };
 
 test-trailing(EvenNum, 'Even');
 
-skip 'declaration comments are NYI on constants', 7;
+skip 'declaration comments are NYI on constants', 1;
 #`(
 constant $pi = 3.14159;
 #={A cool constant}
@@ -305,7 +309,7 @@ constant $pi = 3.14159;
 test-trailing($pi.VAR, 'A cool constant');
 )
 
-skip 'declaration comments are NYI on variables', 7;
+skip 'declaration comments are NYI on variables', 1;
 #`(
 our $fancy-var = 17;
 #={Very fancy!}
