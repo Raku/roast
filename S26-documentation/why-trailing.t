@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 348;
+plan 355;
 
 my $pod_index = 0;
 
@@ -64,6 +64,7 @@ test-trailing(&panther, 'pink');
 class Sheep {
 #= a sheep
     has $.wool; #= usually white
+    has $.sound is rw = "baa"; #= usually quiet
 
     method roar { 'roar!' }
     #= not too scary
@@ -71,9 +72,11 @@ class Sheep {
 
 {
     my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
+    my $sound-attr = Sheep.^attributes.grep({ .name eq '$!sound' })[0];
     my $roar-method = Sheep.^lookup('roar');
     test-trailing(Sheep, 'a sheep');
     test-trailing($wool-attr, 'usually white');
+    test-trailing($sound-attr, 'usually quiet');
     test-trailing($roar-method, 'not too scary');
 }
 
@@ -137,7 +140,7 @@ sub so-many-params(
 {
     my @params = &so-many-params.signature.params;
     test-trailing(@params[0], 'first param');
-    ok !@params[1].WHY.defined, 'the second parameter has no comments' 
+    ok !@params[1].WHY.defined, 'the second parameter has no comments'
         or diag(@params[1].WHY.contents);
 }
 
