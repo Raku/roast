@@ -273,8 +273,8 @@ is ' '.uniprop('Canonical_Combining_Class'), 'Not_Reordered', "uniprop for Canon
 
 #?rakudo.moar 2 todo "East_Asian_Width NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/454
-is "↉".uniprop('East_Asian_Width'), 'A', "uniprop for ↉ returns A for East_Asian_Width";
-is "]".uniprop('East_Asian_Width'), 'Na', "uniprop for ] returns Na for East_Asian_Width";
+is "↉".uniprop('East_Asian_Width'), 'Ambiguous', "uniprop for ↉ returns A for East_Asian_Width";
+is "]".uniprop('East_Asian_Width'), 'Narrow', "uniprop for ] returns Na for East_Asian_Width";
 is '읔'.uniprop('Hangul_Syllable_Type'), 'LVT', "uniprop for Hangul_Syllable_Type works";
 is "a".uniprop('Grapheme_Cluster_Break'), 'Other', "uniprop for Grapheme_Cluster_Break returns Other for normal codepoints";
 is "\n".uniprop('Grapheme_Cluster_Break'), 'LF', "uniprop for Grapheme_Cluster_Break returns LF for newline codepoint";
