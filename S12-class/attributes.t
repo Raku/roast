@@ -200,6 +200,7 @@ throws-like q[
         '.gist works on attribute types (2)';
 }
 
+# RT #126975
 {
     my class Foo::Bar {};
     lives-ok { my class { has Foo::Bar $a .= new } },
