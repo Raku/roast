@@ -19,7 +19,6 @@ sub get_dmd5 {
 }
 
 {
-    #?rakudo skip "Importing functions NYI"
     is( md5_hex('test'), '098f6bcd4621d373cade4e832627b4f6', 'perl5 function exported' );
 }
 
