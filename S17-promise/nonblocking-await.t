@@ -26,6 +26,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
                 !! await(conc-fib($n - 2)) + await(conc-fib($n - 1))
         }
     }
+    #?rakudo.jvm skip 'hangs on JVM'
     throws-like { await(conc-fib(15)) }, Exception,
         message => "oopsy",
         'Deep Promise tree conveys exception up to the top';
@@ -77,6 +78,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
             await supply { whenever Supply.interval(0.001 * $i) { emit $i; done } }
         }
     };
+    #?rakudo.jvm skip 'hangs on JVM'
     is ([+] await @proms), 5050, 'Hundred of outstanding awaits on supplies works';
 }
 
@@ -92,6 +94,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
             }
         }
     };
+    #?rakudo.jvm skip 'hangs on JVM'
     throws-like { await @proms }, Exception, message => 'strewth',
         'Hundred of outstanding awaits on supplies that die works';
 }
@@ -106,6 +109,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     for 1..200 {
         $c.send($_);
     }
+    #?rakudo.jvm skip 'hangs on JVM'
     is ([+] await @proms), 20100, 'Hundred of outstanding awaits on channels works';
 }
 
@@ -120,6 +124,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
         $c.send($_);
     }
     $c.close;
+    #?rakudo.jvm skip 'hangs on JVM'
     throws-like { await @proms }, X::Channel::ReceiveOnClosed,
         'Hundred of outstanding awaits on channels that gets closed works';
 }

@@ -274,6 +274,7 @@ unlink $filename; # cleanup
 }
 
 { # https://irclog.perlgeek.de/perl6-dev/2017-01-27#i_13996365
+    #?rakudo.jvm todo 'readlinefh requires an object with the IOHandle REPR'
     lives-ok { .pull-one xx 1000 given $*PROGRAM.IO.lines.iterator },
         '.lines does not crash when attempting to .pull-one on closed handle';
 }

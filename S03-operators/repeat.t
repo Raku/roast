@@ -65,6 +65,7 @@ is('str' x Int, '', 'x with Int type object');
     );
 }
 # RT #128035
+#?rakudo.jvm skip 'OutOfMemoryError: Java heap space'
 {
     my $a;
     lives-ok({ $a = 'a' x 1073741824 }, 'repeat count equal to the NQP limit works');
