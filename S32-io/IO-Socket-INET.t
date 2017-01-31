@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 50;
+plan 51;
 
 diag "{elapsed} starting tests";
 my $elapsed;
@@ -22,7 +22,7 @@ my $host = '127.0.0.1';   # or 'localhost' may be friendlier
 # To find an free port, list the ports currently in use.
 my ( @ports, $netstat_cmd, $netstat_pat, $received, $expected );
 given $*DISTRO.name {
-    when any 'linux', 'Linux' {
+    when any 'linux', 'Linux', 'ubuntu' {
         $netstat_cmd = "netstat --tcp --all --numeric";
         $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ };
     }
@@ -61,7 +61,7 @@ if $port >= 65535 {
 diag "{elapsed} Testing on port $port";
 
 
-if $*DISTRO.name eq any <linux Linux darwin solaris mswin32 macosx> { # please add more valid OS names
+if $*DISTRO.name eq any <linux Linux ubuntu darwin solaris mswin32 macosx> { # please add more valid OS names
 
     my $is-win;
     $is-win = True if $*DISTRO.name eq 'mswin32';
@@ -214,6 +214,10 @@ if $*DISTRO.name eq any <linux Linux darwin solaris mswin32 macosx> { # please a
     $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
     is $received, $expected, "{elapsed} echo server and client";
     nok $elapsed > $toolong, "finished in time #1";
+
+    # MoarVM #234
+    eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :port($_), :host("127.0.0.1") ); CATCH {next}; next }',
+                  'Surviving without SEGV due to incorrect socket connect/close handling';
 }
 else {
     skip "OS '{$*DISTRO.name}' shell support not confirmed", 1;
