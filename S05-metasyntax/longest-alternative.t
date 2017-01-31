@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 56;
+plan 58;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -465,5 +465,22 @@ ok "\r\n" ~~ /[";"|"\r\n"]/, '\r\n grapheme in an alternation matches correctly'
 # RT #122951
 #?rakudo todo 'negative lookahead does not LTM properly, RT #122951'
 is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM properly';
+
+# RT #130637
+{
+    my grammar Foo {
+        token TOP {
+            'z' | :i <[0..9]> ** 4
+        }
+    }
+    ok Foo.parse('2603'), 'LTM with :i, <[0..9]>, and repetition works';
+}
+{
+    grammar Oops {
+        token TOP { <?> | 'a' ** 1..2 'b' }
+    }
+    ok Oops.parse('ab'),
+        'LTM with quantifier ** 1..2 followed by something else matches correctly';
+}
 
 # vim: ft=perl6 et
