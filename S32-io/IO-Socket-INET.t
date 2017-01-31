@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 50;
+plan 51;
 
 diag "{elapsed} starting tests";
 my $elapsed;
@@ -214,6 +214,10 @@ if $*DISTRO.name eq any <linux Linux ubuntu darwin solaris mswin32 macosx> { # p
     $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
     is $received, $expected, "{elapsed} echo server and client";
     nok $elapsed > $toolong, "finished in time #1";
+
+    # MoarVM #234
+    eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :port($_), :host("127.0.0.1") ); CATCH {next}; next }',
+                  'Surviving without SEGV due to incorrect socket connect/close handling';
 }
 else {
     skip "OS '{$*DISTRO.name}' shell support not confirmed", 1;
