@@ -331,15 +331,15 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     sub d { "++ on uint$^n overflows to 0 in sink context" }
     my uint8  $uint8  = 0xff;
     $uint8++;
-    #?rakudo todo "uint8 increment in sink context doesn't work"
+    #?rakudo.jvm todo "uint8 increment in sink context doesn't work"
     is($uint8,  0, d 8);
     my uint16 $uint16 = 0xffff;
     $uint16++;
-    #?rakudo todo "uint16 increment in sink context doesn't work"
+    #?rakudo.jvm todo "uint16 increment in sink context doesn't work"
     is($uint16, 0, d 16);
     my uint32 $uint32 = 0xffffffff;
     $uint32++;
-    #?rakudo todo "uint32 increment in sink context doesn't work"
+    #?rakudo.jvm todo "uint32 increment in sink context doesn't work"
     is($uint32, 0, d 32);
     my uint64 $uint64 = 0xffffffffffffffff;
     $uint64++;
