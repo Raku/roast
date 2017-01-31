@@ -22,7 +22,7 @@ my $host = '127.0.0.1';   # or 'localhost' may be friendlier
 # To find an free port, list the ports currently in use.
 my ( @ports, $netstat_cmd, $netstat_pat, $received, $expected );
 given $*DISTRO.name {
-    when any 'linux', 'Linux', 'ubuntu' {
+    when any <linux Linux ubuntu debian> {
         $netstat_cmd = "netstat --tcp --all --numeric";
         $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ };
     }
@@ -61,7 +61,7 @@ if $port >= 65535 {
 diag "{elapsed} Testing on port $port";
 
 
-if $*DISTRO.name eq any <linux Linux ubuntu darwin solaris mswin32 macosx> { # please add more valid OS names
+if $*DISTRO.name eq any <linux Linux ubuntu debian darwin solaris mswin32 macosx> { # please add more valid OS names
 
     my $is-win;
     $is-win = True if $*DISTRO.name eq 'mswin32';
