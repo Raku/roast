@@ -1,7 +1,7 @@
 use v6.d.PREVIEW;
 use Test;
 
-plan 11;
+plan 19;
 
 # Limit scheduler to just 4 real threads, so we'll clearly be needing the
 # non-blocking await support for these to pass.
@@ -127,4 +127,53 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     #?rakudo.jvm skip 'hangs on JVM'
     throws-like { await @proms }, X::Channel::ReceiveOnClosed,
         'Hundred of outstanding awaits on channels that gets closed works';
+}
+
+{
+    sub death-bar() {
+        die "golly!";
+    }
+    sub foo() {
+        start { death-bar() }
+    }
+
+    {
+        sub waiting-for-it() {
+            await foo()
+        }
+        waiting-for-it;
+        CATCH {
+            default {
+                ok .does(X::Await::Died),
+                    'Exception from awaiting broken Promise does X::Await::Died';
+                like .gist, /'golly!'/,
+                    'Exception contains original exception message';
+                like .gist, /'death-bar'/,
+                    'Exception contains stack location where Promise code died';
+                like .gist, /'waiting-for-it'/,
+                    'Exception contains stack location where we awaited';
+            }
+        }
+    }
+
+    {
+        my $p = Promise.new;
+        $p.keep(42);
+        sub waiting-for-them() {
+            await $p, foo();
+        }
+        waiting-for-them;
+        CATCH {
+            default {
+                ok .does(X::Await::Died),
+                    'Exception from awaiting many things, where on dies, does X::Await::Died';
+                like .gist, /'golly!'/,
+                    'Exception contains original exception message';
+                like .gist, /'death-bar'/,
+                    'Exception contains stack location where Promise code died';
+                like .gist, /'waiting-for-them'/,
+                    'Exception contains stack location where we awaited';
+            }
+        }
+    }
 }
