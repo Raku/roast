@@ -1,7 +1,7 @@
 use v6.d.PREVIEW;
 use Test;
 
-plan 1;
+plan 5;
 
 {
     # Start 100 workers that do a `react`. This will, if `react` blocks,
@@ -29,4 +29,35 @@ plan 1;
 
     # Should now get all values sent.
     is [+](($c.receive xx 100)), 200, 'start react { ... } is non-blocking';
+}
+
+{
+    sub death() {
+        die "goodbye!"
+    }
+    sub i-will-die() {
+        supply {
+            whenever Supply.interval(0.001) {
+                death()
+            }
+        }
+    }
+    sub i-will-react() {
+        react {
+            whenever i-will-die() { }
+        }
+    }
+    i-will-react();
+    CATCH {
+        default {
+            ok .does(X::React::Died),
+                'An exception from a react that dies does X::React::Died';
+            like .gist, /'goodbye!'/,
+                'Exception report contains original message';
+            like .gist, /'death'/,
+                'Exception report contains original location';
+            like .gist, /'i-will-react'/,
+                'Exception report contains react location';
+        }
+    }
 }
