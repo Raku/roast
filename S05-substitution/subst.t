@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 185;
+plan 186;
 
 # L<S05/Substitution/>
 
@@ -632,5 +632,9 @@ throws-like { "".subst }, X::Multi::NoMatch, '.subst with no arguments throws';
 # RT #130289
 is-deeply (S:g/FAIL// with 'foo'), 'foo',
     'S:g/// returns original string on failure to match';
+
+# RT #130355
+is-deeply (eager <a b c>.map: {S/a/x/}), <x b c>,
+    'S/// can be used in map (does not reuse a container)';
 
 # vim: ft=perl6
