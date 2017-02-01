@@ -14,5 +14,4 @@ nok $tracker, 'andthen thunks';
 my $ = 'some arg' andthen -> $x { is $x, 'some arg', 'andthen passes on arguments' };
 
 # RT #127822
-#?rakudo todo 'RT 127822'
 is (S/a/A/ andthen S/b/B/ given "ab"), "AB", 'andthen with two S///';
