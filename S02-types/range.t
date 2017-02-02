@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 187;
+plan 188;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -406,7 +406,21 @@ subtest 'out of range AT-POS' => {
         'index larger than range returns Nil (Rat range, native int index)';
     is-deeply (2e0..1e0)[$i2, $i5], (Nil, Nil),
         'index larger than range returns Nil (Num range, native int index)';
+}
 
+subtest 'Complex smartmatch against Range' => {
+    my @false = [i, 1..10], [i, -2e300.Int..2e300.Int], [i, -2e300.Int..2e300.Int],
+        [<0+0i>, 1..10], [i, 'a'..Inf], [i, 'a'..'z'];
+    my @true  = [<0+0i>, -1..10], [<42+0i>, 10..50],
+        [<42+0.0000000000000001i>, 40..50], [<42+0i>, 10e0..50e0];
+
+    plan @false + @true;
+    for @false -> $t {
+        is-deeply ($t[0] ~~ $t[1]), False, "{$t[0].perl} ~~ {$t[1].perl}";
+    }
+    for @true -> $t {
+        is-deeply ($t[0] ~~ $t[1]), True,  "{$t[0].perl} ~~ {$t[1].perl}";
+    }
 }
 
 # vim:set ft=perl6
