@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 179;
+plan 199;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -254,6 +254,36 @@ is-deeply -∞   =~=    ∞, Bool::False, '-∞ =~=  ∞ gives False';
     is-deeply infix:<before>(),   Bool::True, '    no arg `before` gives True';
     is-deeply infix:<after>(42),  Bool::True, 'single arg `after`  gives True';
     is-deeply infix:<after>(),    Bool::True, '    no arg `after`  gives True';
+}
+
+{
+    is-deeply (-3 before  3), True,  'Real `before` Real (True)';
+    is-deeply ( 3 before -3), False, 'Real `before` Real (False)';
+    is-deeply ( 3 after  -3), True,  'Real `after`  Real (True)';
+    is-deeply (-3 after   3), False, 'Real `after   Real (False)';
+
+    is-deeply (<1+0i> before <2+0i>), True,  'Complex `before` Complex (True)';
+    is-deeply (<2+0i> before <1+0i>), False, 'Complex `before` Complex (False)';
+    is-deeply (<2+0i> after  <1+0i>), True,  'Complex `after`  Complex (True)';
+    is-deeply (<1+0i> after  <2+0i>), False, 'Complex `after   Complex (False)';
+
+    is-deeply (2 before  <3+0i>), True,  'Real `before` Complex (True)';
+    is-deeply (3 before  <3+0i>), False, 'Real `before` Complex (False)';
+    is-deeply (<-3+0i> before 3), True,  'Complex `before` Real (True)';
+    is-deeply (<42+0i> before 3), False, 'Complex `before` Real (False)';
+    is-deeply (42 after  <3+0i>), True,  'Real `after` Complex (True)';
+    is-deeply (-3 after  <3+0i>), False, 'Real `after` Complex (False)';
+    is-deeply (<42+0i> after  3), True,  'Complex `after` Real (True)';
+    is-deeply (<-3+0i> after  3), False, 'Complex `after` Real (False)';
+
+    throws-like ｢42 before i｣, X::Numeric::Real,
+        'Real `before` Complex (needing impossible conversion to Real)';
+    throws-like ｢i before 42｣, X::Numeric::Real,
+        'Complex `before` Real (needing impossible conversion to Real)';
+    throws-like ｢42 after i｣, X::Numeric::Real,
+        'Real `after` Complex (needing impossible conversion to Real)';
+    throws-like ｢i after 42｣, X::Numeric::Real,
+        'Complex `after` Real (needing impossible conversion to Real)';
 }
 
 # vim: ft=perl6
