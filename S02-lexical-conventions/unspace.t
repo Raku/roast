@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 88;
+plan 89;
 
 # L<S02/"Unspaces"/This is known as the "unspace">
 
@@ -323,5 +323,7 @@ ok '#' ~~ /\#/, 'Unspace restriction in regex does not apply to \#';
 #?rakudo todo 'RT 128462'
 eval-lives-ok 'my \term = 42; say term\   .Str; term == 42 or die;',
     'unspace with method calls detached from sigiless terms works';
+
+is 'a'.parse-base\   \   (16), 10, 'unspace can recurse'
 
 # vim: ft=perl6
