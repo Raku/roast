@@ -324,6 +324,6 @@ ok '#' ~~ /\#/, 'Unspace restriction in regex does not apply to \#';
 eval-lives-ok 'my \term = 42; say term\   .Str; term == 42 or die;',
     'unspace with method calls detached from sigiless terms works';
 
-is 'a'.parse-base\   \   (16), 10, 'unspace can recurse'
+is 'a'.parse-base\   \   (16), 10, 'unspace can recurse';
 
 # vim: ft=perl6
