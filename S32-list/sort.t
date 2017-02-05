@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 33;
+plan 34;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -218,5 +218,8 @@ plan 33;
 
 # RT #126921
 is (<2 1 3>   .sort).^name, 'Seq', 'detached .sort returns a List';
+
+# RT #126859
+is (*.sort)(<2 3 1>).^name, 'Seq', 'auto-primed *.sort returns a Seq';
 
 # vim: ft=perl6
