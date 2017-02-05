@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::IO/IO::FileTests>
 
-plan 34;
+plan 35;
 
 my $existing-file = "tempfile-file-tests";
 my $non-existent-file = "non-existent-file-tests";
@@ -63,6 +63,8 @@ isa-ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
     throws-like { $non-existent-file.IO.s }, X::IO::DoesNotExist;
     nok $non-existent-file.IO ~~ :s, 'Is not a normal file';
     isa-ok $non-existent-file.IO ~~ :s, Bool, '~~ :!s returns Bool';
+    ##folder size
+    lives-ok { ".".IO.s }, "Can get the size of a directory without dying";
 }
 
 # clean up
