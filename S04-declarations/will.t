@@ -7,7 +7,7 @@ BEGIN plan 20;
 # L<S04/Phasers>
 
 my $begin;
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 {
     BEGIN $begin ~= "a";
     my $b will begin { $begin ~= "b" };
@@ -19,7 +19,7 @@ my $begin;
 }
 
 my $init;
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 {
     #?rakudo todo 'will init NYI'
     is $init, "abc", 'all init blocks in order';
@@ -29,7 +29,7 @@ my $init;
 }
 
 my $same1;
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 #?rakudo skip 'declared variable not visible in block yet RT #125061'
 {
     my $x  will begin { $same1 ~= "a" if $_ === $x }
@@ -39,7 +39,7 @@ my $same1;
 }
 
 my $block;
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 {
     my $d  will pre    { $block ~= "a" };
     my $dd will enter  { $block ~= "b" };
@@ -50,12 +50,12 @@ my $block;
     my $eeee will undo { $block ~= "f" }; # should not fire
     1; # successful exit
 }
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 #?rakudo todo "will post NYI RT #125062"
 is $block, "abecd", 'all block blocks set variable';
 
 my $same2;
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 #?rakudo skip 'declared variable not visible in block yet RT #125063'
 {
     my $d  will pre    { $same2 ~= "a" if $_ === $d; 1 };
@@ -67,12 +67,12 @@ my $same2;
     my $eeee will undo { $same2 ~= "f" if $_ === $eeee }; # should not fire
     1; # successful exit
 }
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 #?rakudo todo 'declared variable not visible in block yet RT #125064'
 is $same2, "abecd", 'all block blocks get $_';
 
 my $for;
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 {
     my @is = <a aeb aebeb>;
     for ^3 {
@@ -85,11 +85,11 @@ my $for;
         Nil; # failure exit
     }
 }
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 is $for, "aebebebc", 'all for blocks set variable';
 
 my $same3;
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 #?rakudo skip 'declared variable not visible in block yet RT #125066'
 {
     my @is = <a aeb aebeb>;
@@ -103,11 +103,11 @@ my $same3;
         Nil; # failure exit
     }
 }
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 #?rakudo todo 'declared variable not visible in block yet RT #125067'
 is $same3, "aebebebc", 'all for blocks get $_';
 
-#?niezca skip "will variable trait NYI"
+#?niecza skip "will variable trait NYI"
 {
     my $seen = 42;
     dies-ok {EVAL 'my $a will foo { $seen = 1 }'}, 'unknown will trait';
