@@ -15,7 +15,7 @@ Unicode 5.2.
 
 =end pod
 
-plan 607;
+plan 608;
 
 # L           Letter
 
