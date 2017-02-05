@@ -60,7 +60,6 @@ sub wanted {
                 (?:\d+\s+)?         # optional count
                 (\w+)               # 4) verb
         /x ) {
-            die $File::Find::name if $4 eq 'a';
             my $impl_fudge_i = {
                 implementation => $1,
                 compiler => $2,
