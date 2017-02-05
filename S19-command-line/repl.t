@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 12;
+plan 13;
 
 # Sanity check that the repl is working at all.
 my $cmd = $*DISTRO.is-win
@@ -122,4 +122,12 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
         :err(''),
         :out(/'rt127631-pass'/),
     'loop controls do not exit the REPL';
+}
+
+# RT #130719
+{
+    is_run_repl join("\n", 'Mu', ''),
+        :err(''),
+        :out{.contains('failed').not},
+    ｢REPL can handle `Mu` as line's return value｣;
 }
