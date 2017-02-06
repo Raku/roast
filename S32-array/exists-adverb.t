@@ -56,13 +56,13 @@ sub gen_array { (1..10).list }
     is-deeply @a[1,2,10]:exists,   (True, True, False),  "Test exists TTF";
     is-deeply (@a[]:exists), True xx 10,            "Test non-exists T[]";
     is-deeply (@a[*]:exists), True xx 10,           "Test non-exists T[*]";
-    #?niezca 3 todo "adverbial pairs only used as True"
+    #?niecza 3 todo "adverbial pairs only used as True"
     is-deeply @a[1,2, 4]:!exists,  (False,False,False),  "Test non-exists FFF";
     is-deeply @a[1,2,10]:!exists,  (False,False,True),   "Test non-exists FFT";
     is-deeply (@a[]:!exists), False xx 10,          "Test non-exists F[]";
     is-deeply (@a[*]:!exists), False xx 10,         "Test non-exists F[*]";
 
-    #?niezca 6 todo "no combined adverbial pairs"
+    #?niecza 6 todo "no combined adverbial pairs"
     is-deeply @a[1,2, 4]:exists:kv,
       (1,True,2,True,4,True),                     "Test exists:kv TTT";
     is-deeply @a[1,2,10]:exists:kv,
@@ -76,7 +76,7 @@ sub gen_array { (1..10).list }
     is-deeply @a[1,2,10]:!exists:!kv,
       (1,False,2,False,10,True),                  "Test !exists:kv FFT";
 
-    #?niezca 6 todo "no combined adverbial pairs"
+    #?niecza 6 todo "no combined adverbial pairs"
     is-deeply @a[1,2, 4]:exists:p,
       (1=>True,2=>True,4=>True),                  "Test exists:p TTT";
     is-deeply @a[1,2,10]:exists:p,
@@ -90,13 +90,13 @@ sub gen_array { (1..10).list }
     is-deeply @a[1,2,10]:!exists:!p,
       (1=>False,2=>False,10=>True),               "Test !exists:!p FFT";
 
-    #?niezca 6 todo "no combined adverbial pairs"
+    #?niecza 6 todo "no combined adverbial pairs"
     dies-ok { @a[1]:exists:k },    "Test exists:k,   invalid combo";
     dies-ok { @a[1]:exists:!k },   "Test exists:!k,  invalid combo";
     dies-ok { @a[1]:!exists:k },   "Test !exists:k,  invalid combo";
     dies-ok { @a[1]:!exists:!k },  "Test !exists:!k, invalid combo";
 
-    #?niezca 6 todo "no combined adverbial pairs"
+    #?niecza 6 todo "no combined adverbial pairs"
     dies-ok { @a[1]:exists:v },    "Test exists:v,   invalid combo";
     dies-ok { @a[1]:exists:!v },   "Test exists:!v,  invalid combo";
     dies-ok { @a[1]:!exists:v },   "Test !exists:v,  invalid combo";

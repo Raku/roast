@@ -49,13 +49,13 @@ sub gen_hash {
     is-deeply %h<c d X>:exists,  (True, True, False),  "Test exists TTF";
     is-deeply %h{}:exists,       (True  xx 26).List, "Test exists T{}";
     is-deeply %h{*}:exists,      (True  xx 26).List, 'Test exists T{*}';
-    #?niezca 3 todo "adverbial pairs only used as True"
+    #?niecza 3 todo "adverbial pairs only used as True"
     is-deeply %h<c d e>:!exists, (False,False,False),  "Test non-exists FFF";
     is-deeply %h<c d X>:!exists, (False,False,True),   "Test non-exists FFT";
     is-deeply %h{}:!exists,      (False xx 26).List, "Test non-exists F{}";
     is-deeply %h{*}:!exists,     (False xx 26).List, 'Test non-exists F{*}';
 
-    #?niezca 6 todo "no combined adverbial pairs"
+    #?niecza 6 todo "no combined adverbial pairs"
     is-deeply %h<c d e>:exists:kv,
       ("c",True,"d",True,"e",True),                     "Test exists:kv TTT";
     is-deeply %h<c d X>:exists:kv,
@@ -69,7 +69,7 @@ sub gen_hash {
     is-deeply %h<c d X>:!exists:!kv,
       ("c",False,"d",False,"X",True),                   "Test exists:kv FFT";
 
-    #?niezca 6 todo "no combined adverbial pairs"
+    #?niecza 6 todo "no combined adverbial pairs"
     is-deeply %h<c d e>:exists:p,
       (c=>True,d=>True,e=>True),                     "Test exists:p TTT";
     is-deeply %h<c d X>:exists:p,
@@ -83,13 +83,13 @@ sub gen_hash {
     is-deeply %h<c d X>:!exists:!p,
       (c=>False,d=>False,X=>True),                   "Test exists:p FFT";
 
-    #?niezca 6 todo "no combined adverbial pairs"
+    #?niecza 6 todo "no combined adverbial pairs"
     dies-ok { %h<c>:exists:k },    "Test exists:k,   invalid combo";
     dies-ok { %h<c>:exists:!k },   "Test exists:!k,  invalid combo";
     dies-ok { %h<c>:!exists:k },   "Test !exists:k,  invalid combo";
     dies-ok { %h<c>:!exists:!k },  "Test !exists:!k, invalid combo";
 
-    #?niezca 6 todo "no combined adverbial pairs"
+    #?niecza 6 todo "no combined adverbial pairs"
     dies-ok { %h<c>:exists:v },    "Test exists:v,   invalid combo";
     dies-ok { %h<c>:exists:!v },   "Test exists:!v,  invalid combo";
     dies-ok { %h<c>:!exists:v },   "Test !exists:v,  invalid combo";
