@@ -21,7 +21,7 @@ todo('NYI'); is 2-2, 0;
 todo('NYI'); is 3*4, 12;
 
 #?impl-1.backend todo 'NYI'
-is +1, 1;
+todo('NYI'); is +1, 1;
 
 say "# FUDGED!";
 exit(1);

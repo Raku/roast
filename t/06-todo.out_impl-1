@@ -1,7 +1,9 @@
+use v6;
 use Test;
-plan 1;
 
-use lib 't/spec/packages';
+plan 2;
+
+use lib <packages ../packages t/spec/packages>;
 
 use Test::Util;
 
@@ -17,7 +19,7 @@ todo('nom regression'); is_run 'sub MAIN(:$x) { print $x }',
     {
         out => "23",
     },
-    :args['--x', '23'],
+    :args['-x=23'],
     'option with spacey value';
 
 say "# FUDGED!";

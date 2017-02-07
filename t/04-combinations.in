@@ -1,4 +1,6 @@
+use v6;
 use Test;
+
 plan 10;
 
 #?DOES 2
@@ -9,7 +11,7 @@ sub same-type ($x, $y) {
 
 #?v6.0.5+ 4
 #?impl 2 skip 'NYI'
-is "Life, the Universe, and Everything".WHY, 42;
+is "Life, the Universe and Everything".WHY, 42;
 is 42.WHAT, Int, 'some reason';
 #?impl todo 'NYI'
 {
