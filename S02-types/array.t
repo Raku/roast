@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 102;
+plan 103;
 
 #L<S02/Mutable types/Array>
 
@@ -389,6 +389,13 @@ my @array2 = ("test", 1, Mu);
 { # coverage; 2016-09-21
     my $x = Array;
     cmp-ok $x.flat,  '===', $x, 'Array:U.flat is identity';
+}
+
+# https://github.com/rakudo/rakudo/commit/51b0aba8e8
+subtest '.flat propagates .is-lazy' => {
+    plan 2;
+    is-deeply (42 xx *).flat.is-lazy, True,  'method, True';
+    is-deeply (42 xx 1).flat.is-lazy, False, 'method, False';
 }
 
 # vim: ft=perl6
