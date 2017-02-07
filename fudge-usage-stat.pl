@@ -46,18 +46,22 @@ sub wanted {
     open(my $test_fh, $_) or
         die "Could not open file to grep for fudges - $_: $!";
     while (<$test_fh>) {
-        next unless /^\s*#\?(?!DOES)/i; # remove 'v' later
+        next unless m&^
+            (?!\#!(/|\s*http://))    # don't match shell shebang 
+            \s*\#[?!]
+            (?!DOES)                # ignore DOES directives for now
+        &xi;
 
         if ( /^\s*#\?(v6\S*)/ ) {
             $fudge_version{ $1 }++;
         }
-        elsif ( /^ \s*\#\?
+        elsif ( /^ \s*\#[?!]
                 (                   # 1) implementation
                   ([^.\s]*)         # 2) implementation - compiler
-                  (?:\.(\S*))?      # 3) implementation - backend
+                  (?:\.(\S*))?      # 3) impl - backend or other components
                 )
                 \s+
-                (?:\d+\s+)?         # optional count
+                (?:\d+\s*)?         # optional count
                 (\w+)               # 4) verb
         /x ) {
             my $impl_fudge_i = {
@@ -66,12 +70,14 @@ sub wanted {
                 backend => $3,
                 verb => $4
             };
-            warn "Unknown compiler and implementation: $1"
+            warn "Unknown compiler and implementation",
+                " from $File::Find::name line $.: $1\n"
                 if ( $2 !~ /^nie(zc|cz|z)a?|rakudo|mildew|kp6$/ );
             push @fudge_impl, $impl_fudge_i;
         }
         else {
-            warn "Unrecognized fudge directive: $_";
+            warn 'Unrecognized fudge directive',
+                " from $File::Find::name line $.: $_";
         }
     }
 }
