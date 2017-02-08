@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan 18;
 
 #L<S03/Smart matching/Range Range subset range>
 {
@@ -25,8 +25,6 @@ plan 19;
     is-deeply 2..3 ~~ 2^..^3,   False, 'inclusive vs exclusive both ends';
     is-deeply 2^..^3 ~~ 2^..^3, True,  'exclusive vs exclusive both ends';
 }
-
-is-deeply '2'..'3' ~~ 0..10,    True, "Can smart match string Range's which hold numbers and Ranges which are numbers";
 is-deeply 1..Inf ~~ -1/0..1/0,  True, "Can smart match Range's 1..Inf and -1/0..1/0";
 is-deeply 1..Inf ~~  1/0, True, "Can smart match Range 1..Inf and 1/0";
 #?rakudo todo "Can't smart match two Ranges with numbers on left side and strings on right"
