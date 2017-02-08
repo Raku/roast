@@ -10,27 +10,28 @@ plan 19;
     # (though this is only true to a first approximation, as
     # those .min and .max values might be excluded)
 
-    ok  (2..3 ~~ 1..4),     'proper inclusion +';
-    ok !(1..4 ~~ 2..3),     'proper inclusion -';
-    ok  (2..4 ~~ 1..4),     'inclusive vs inclusive right end';
-    ok  (2..^4 ~~ 1..4),    'exclusive vs inclusive right end';
-    ok !(2..4 ~~ 1..^4),    'inclusive vs exclusive right end';
-    ok  (2..^4 ~~ 1..^4),   'exclusive vs exclusive right end';
-    ok  (2..3 ~~ 2..4),     'inclusive vs inclusive left end';
-    ok  (2^..3 ~~ 2..4),    'exclusive vs inclusive left end';
-    ok !(2..3 ~~ 2^..4),    'inclusive vs exclusive left end';
-    ok  (2^..3 ~~ 2^..4),   'exclusive vs exclusive left end';
-    ok  (2..3 ~~ 2..3),     'inclusive vs inclusive both ends';
-    ok  (2^..^3 ~~ 2..3),   'exclusive vs inclusive both ends';
-    ok !(2..3 ~~ 2^..^3),   'inclusive vs exclusive both ends';
-    ok  (2^..^3 ~~ 2^..^3), 'exclusive vs exclusive both ends';
+    is-deeply 2..3 ~~ 1..4,     True,  'proper inclusion +';
+    is-deeply 1..4 ~~ 2..3,     False, 'proper inclusion -';
+    is-deeply 2..4 ~~ 1..4,     True,  'inclusive vs inclusive right end';
+    is-deeply 2..^4 ~~ 1..4,    True,  'exclusive vs inclusive right end';
+    is-deeply 2..4 ~~ 1..^4,    False, 'inclusive vs exclusive right end';
+    is-deeply 2..^4 ~~ 1..^4,   True,  'exclusive vs exclusive right end';
+    is-deeply 2..3 ~~ 2..4,     True,  'inclusive vs inclusive left end';
+    is-deeply 2^..3 ~~ 2..4,    True,  'exclusive vs inclusive left end';
+    is-deeply 2..3 ~~ 2^..4,    False, 'inclusive vs exclusive left end';
+    is-deeply 2^..3 ~~ 2^..4,   True,  'exclusive vs exclusive left end';
+    is-deeply 2..3 ~~ 2..3,     True,  'inclusive vs inclusive both ends';
+    is-deeply 2^..^3 ~~ 2..3,   True,  'exclusive vs inclusive both ends';
+    is-deeply 2..3 ~~ 2^..^3,   False, 'inclusive vs exclusive both ends';
+    is-deeply 2^..^3 ~~ 2^..^3, True,  'exclusive vs exclusive both ends';
 }
 
-ok '2'..'3' ~~ 0..10, "Can smart match string Range's which hold numbers and Ranges which are numbers";
-ok 1..Inf ~~ -1/0..1/0, "Can smart match Range's 1..Inf and -1/0..1/0";
-ok 1..Inf ~~  1/0, "Can smart match Range 1..Inf and 1/0";
+is-deeply '2'..'3' ~~ 0..10,    True, "Can smart match string Range's which hold numbers and Ranges which are numbers";
+is-deeply 1..Inf ~~ -1/0..1/0,  True, "Can smart match Range's 1..Inf and -1/0..1/0";
+is-deeply 1..Inf ~~  1/0, True, "Can smart match Range 1..Inf and 1/0";
 #?rakudo todo "Can't smart match two Ranges with numbers on left side and strings on right"
-ok '0'..'3' ~~ 0..9, "Can smart match string Range's with strings on left and numbers on right";
-ok '0'..'9' ~~ 0..3 , "Can smart match string Range's with numbers on left and strings on right";
+# RT 30745
+is-deeply '0'..'3' ~~ 0..9,     True, "Can smart match string Range's with strings on left and numbers on right";
+is-deeply '0'..'9' ~~ 0..3,     True, "Can smart match string Range's with numbers on left and strings on right";
 
 # vim: ft=perl6
