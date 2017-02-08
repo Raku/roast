@@ -2,7 +2,7 @@ use v6;
 use lib <t/spec/packages>;
 use Test;
 use Test::Util;
-plan 14;
+plan 20;
 
 =begin pod
 
@@ -133,4 +133,14 @@ subtest 'Stringification of Complex handles signed zeros' => {
     is-deeply 0e0 eqv -0e0, False, '-0e0 eqv 0e0 when using literals';
     is-deeply (my num $ = 0e0) eqv (my num $ = -0e0), False,
         '-0e0 eqv 0e0 when using native nums';
+}
+
+{ # https://github.com/MoarVM/MoarVM/pull/526
+    is-deeply abs(       $ = -0e0),  0e0, 'abs(-0e0) == 0e0 when stored in variables [sub]';
+    is-deeply abs(           -0e0),  0e0, 'abs(-0e0) == 0e0 when using literals [sub]';
+    is-deeply abs(my num $ = -0e0),  0e0, 'abs(-0e0) == 0e0 when using native nums [sub]';
+
+    is-deeply (       $ = -0e0).abs, 0e0, 'abs(-0e0) == 0e0 when stored in variables [method]';
+    is-deeply (           -0e0).abs, 0e0, 'abs(-0e0) == 0e0 when using literals [method]';
+    is-deeply (my num $ = -0e0).abs, 0e0, 'abs(-0e0) == 0e0 when using native nums [method]';
 }
