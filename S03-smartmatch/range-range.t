@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 17;
+plan 20;
 
 #L<S03/Smart matching/Range Range subset range>
 {
@@ -24,6 +24,12 @@ plan 17;
     is-deeply 2^..^3 ~~ 2..3,   True,  'exclusive vs inclusive both ends';
     is-deeply 2..3 ~~ 2^..^3,   False, 'inclusive vs exclusive both ends';
     is-deeply 2^..^3 ~~ 2^..^3, True,  'exclusive vs exclusive both ends';
+}
+
+{
+    is-deeply 1..Inf ~~ 1/0, True,  '1..Inf ~~ 1/0';
+    is-deeply 2..4   ~~ 3,   True,  '2..4   ~~ 3';
+    is-deeply 5..6   ~~ 5,   False, '5..6   ~~ 5';
 }
 
 skip 'cannot handle string ranges yet RT#130745', 3;
