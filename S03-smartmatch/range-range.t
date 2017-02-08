@@ -32,8 +32,6 @@ plan 20;
     is-deeply 5..6   ~~ 5,   False, '5..6   ~~ 5';
 }
 
-skip 'cannot handle string ranges yet RT#130745', 3;
-sub { # <-- can't figure out why the fudger hangs, so I wrapped it in a sub
 subtest 'smartmatch against numeric range' => {
     constant fr2 = FatRat.new: 2, 1;
     constant fr3 = FatRat.new: 3, 1;
@@ -56,9 +54,9 @@ subtest 'smartmatch against numeric range' => {
 }
 
 subtest 'smartmatch of string ranges' => {
-    my @true  = ['a'..'z', 'b'..'c'], ['aa'..'bb',  'a'..'z' ],
+    my @true  = ['b'..'c', 'a'..'z'], ['aa'..'bb',  'a'..'z' ],
                 ['♥'..'♦', '♥'..'♦'], ['♥0'..'♦3', '♥0'..'♦3'];
-    my @false = ['b'..'c', 'a'..'z'], ['aa'..'bb',  'b'..'z' ],
+    my @false = ['a'..'z', 'b'..'c'], ['aa'..'bb',  'b'..'z' ],
                 ['♤'..'♦', '♥'..'♦'], ['♤0'..'♦3', '♥0'..'♦3'];
     plan @true + @false;
 
@@ -80,8 +78,7 @@ subtest 'smartmatch numeric range against string range [numeric strings]' => {
                     0e0..10, fr0..fr10, 0.0..10e0, 0e0..10.0, 0e0..10/1;
     constant @false = 0..30,   0..fr30,   0..30e0,   0..30.0,   0..30/1,
                     0e0..30, fr0..fr30, 0.0..30e0, 0e0..30.0, 0e0..30/1;
-    constant @variants = '0'..3,   '0'..3.0, '0'..3e0, '0'..fr3,
-                           0..'3', 0.0..'3', 0e0..'3', fr0..'3';
+    constant @variants = '0'..3,   '0'..3.0, '0'..3e0, '0'..fr3;
     constant $plan = @variants * (@true + @false);
 
     for @variants -> $r {
@@ -89,7 +86,5 @@ subtest 'smartmatch numeric range against string range [numeric strings]' => {
         is-deeply $_ ~~ $r, False, "{.perl} ~~ {$r.perl}" for @false;
     }
 }
-
-} # <-- end of skip fudge wrapper
 
 # vim: ft=perl6
