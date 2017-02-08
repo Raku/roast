@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 15;
+plan 19;
 
 #L<S03/Smart matching/Range Range subset range>
 {
@@ -27,5 +27,10 @@ plan 15;
 }
 
 ok '2'..'3' ~~ 0..10, "Can smart match string Range's which hold numbers and Ranges which are numbers";
+ok 1..Inf ~~ -1/0..1/0, "Can smart match Range's 1..Inf and -1/0..1/0";
+ok 1..Inf ~~  1/0, "Can smart match Range 1..Inf and 1/0";
+#?rakudo todo "Can't smart match two Ranges with numbers on left side and strings on right"
+ok '0'..'3' ~~ 0..9, "Can smart match string Range's with strings on left and numbers on right";
+ok '0'..'9' ~~ 0..3 , "Can smart match string Range's with numbers on left and strings on right";
 
 # vim: ft=perl6
