@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan 15;
 
 #L<S03/Smart matching/Range Range subset range>
 {
@@ -25,5 +25,7 @@ plan 14;
     ok !(2..3 ~~ 2^..^3),   'inclusive vs exclusive both ends';
     ok  (2^..^3 ~~ 2^..^3), 'exclusive vs exclusive both ends';
 }
+
+ok '2'..'3' ~~ 0..10, "Can smart match string Range's which hold numbers and Ranges which are numbers";
 
 # vim: ft=perl6
