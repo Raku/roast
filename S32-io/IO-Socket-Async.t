@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 16;
 
 my $hostname = 'localhost';
 my $port = 5000;
@@ -207,4 +207,16 @@ $echoTap.close;
     my $t2 = $badServer.tap(quit => { $failed.keep });
     await Promise.anyof($failed, Promise.in(5));
     ok $failed, 'Address already in use results in a quit';
+}
+
+{
+    my $t = IO::Socket::Async.listen("localhost", 5007).tap: -> $conn { };
+    my $conn = await IO::Socket::Async.connect("localhost", 5007);
+    lives-ok { for ^5 { $conn.close; sleep 0.05; } },
+        'Multiple close of an IO::Socket::Async silently coped with';
+    dies-ok { await $conn.write("42".encode("ascii")) },
+        'Write of a socket after close dies in catachable way when awaited';
+    is $conn.Supply.list, (),
+        'Read Supply on a closed socket is immediately done';
+    $t.close
 }
