@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan 20;
 
 #L<S03/Smart matching/Any Num numeric equality>
 {
@@ -28,6 +28,14 @@ plan 19;
     ok  (3+0i  ~~ 3.Num),       'Complex ~~ Num (+)';
     nok (3+1i  ~~ 3.Num),       'Complex ~~ Num (-)';
     nok (4+0i  ~~ 3.Num),       'Complex ~~ Num (-)';
+}
+
+subtest 'Str ~~ Num' => {
+    plan 4;
+    is-deeply 'NaN' ~~  NaN, True,  ｢'NaN' ~~  NaN｣;
+    is-deeply 'NaN' ~~ 42e0, False, ｢'NaN' ~~ 42e0｣;
+    is-deeply 'x'   ~~ 42e0, False, ｢'x'   ~~ 42e0｣;
+    is-deeply '42'  ~~ 42e0, True,  ｢'42'  ~~ 42e0｣;
 }
 
 # vim: ft=perl6
