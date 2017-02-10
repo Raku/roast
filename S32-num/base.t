@@ -106,8 +106,6 @@ subtest 'all Reals can accept Whatever for second .base argument' => {
     }, Exception, :message{ .contains('repeat count').not },
     'huge digits arg does not throw weird error';
 }
-#rakudo.moar skip "RT 130753 Gives divide by zero error when trying to .base a fractional num of base 1"
-# RT 130753
-{
-    throws-like 1.1.base(1), X::OutOfRange, "Throws like X::OutOfRange for base 1";
-}
+
+# RT#130753
+throws-like { 1.1.base(1) }, X::OutOfRange, "Throws like X::OutOfRange for base 1";
