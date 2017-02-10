@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -43,3 +43,7 @@ subtest 'non-Int numerals as arguments to rotor get coersed to Int' => {
 
 # RT #130283
 is-deeply ().rotor(1), ().Seq, '.rotor on empty list gives empty Seq';
+
+# RT #130725
+is-deeply (gather do for ^2 { "x".take }).rotor(3, :partial).eager, (<x x>,),
+    ".rotor(:partial) works with gather/take";
