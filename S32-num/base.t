@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 62;
 
 # Int
 {
@@ -17,7 +17,8 @@ plan 60;
     is (-12).base(16), '-C',    '(-12).base(16)';
     is 121.base(11,3), '100.000', 'Integer digits are 0s';
     is 121.base(11,0), '100',   'Integer with 0 digits fraction leaves off radix point';
-    isa-ok 1.base(10, -1), Failure, "negative digits arg fails";
+    throws-like 1.base(10, -1), X::OutOfRange, "X::OutOfRange negative digits arg fails";
+    throws-like 1.base(-1),     X::OutOfRange, "X::OutOfRange negative base fails";
 }
 # Int with Str argument
 {
@@ -105,4 +106,9 @@ subtest 'all Reals can accept Whatever for second .base argument' => {
         255.base(16, 9999999999999999999999999999999999999999999999999);
     }, Exception, :message{ .contains('repeat count').not },
     'huge digits arg does not throw weird error';
+}
+#rakudo.moar skip "RT 130753 Gives divide by zero error when trying to .base a fractional num of base 1"
+# RT 130753
+{
+    throws-like 1.1.base(1), X::OutOfRange, "Throws like X::OutOfRange for base 1";
 }
