@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 69;
+plan 71;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -14,6 +14,9 @@ is (5, 7, 8).Str, '5 7 8', '.Str on a List';
 is ().perl, '()', '.perl on empty List';
 #?niecza todo '.item.perl on empty List gives Match.ast shorthand'
 is ().item.perl, '$( )', '.item.perl on empty List';
+is-deeply ().item, ().item.perl.EVAL, 'can roundtrip ().item';
+cmp-ok ().item.VAR, '===', ().item.perl.EVAL.VAR,
+    '().item .perl.EVAL roundtrip preserves itemization';
 
 # L<S02/Quoting forms/Elsewhere it is equivalent to a parenthesized list of strings>
 
