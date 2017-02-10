@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 61;
 
 # Int
 {
