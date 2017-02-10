@@ -13,7 +13,7 @@ is (5, 7, 8).Str, '5 7 8', '.Str on a List';
 # .perl
 is ().perl, '()', '.perl on empty List';
 #?niecza todo '.item.perl on empty List gives Match.ast shorthand'
-is ().item.perl, '$()', '.item.perl on empty List';
+is ().item.perl, '$( )', '.item.perl on empty List';
 
 # L<S02/Quoting forms/Elsewhere it is equivalent to a parenthesized list of strings>
 
