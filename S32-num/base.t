@@ -1,12 +1,11 @@
 use v6;
 use Test;
 
-plan 62;
+plan 60;
 
 # Int
 {
     is  0.base(8),  '0',        '0.base(something)';
-    is 10.base(1), '1111111111', '10.base(1)';
     # RT #112872
     is  0.base(2),  '0',        '0.base(2)';
     is 42.base(10), '42',       '42.base(10)';
@@ -23,7 +22,6 @@ plan 62;
 # Int with Str argument
 {
     is  0.base('8'),  '0',        '0.base(something)';
-    is 10.base('1'), '1111111111', '10.base(1)';
     # RT #112872
     is  0.base('2'),  '0',        '0.base(2)';
     is 42.base('10'), '42',       '42.base(10)';
@@ -34,7 +32,8 @@ plan 62;
     is (-12).base('16'), '-C',    '(-12).base(16)';
     is 121.base('11',3), '100.000', 'Integer digits are 0s';
     is 121.base('11',0), '100',   'Integer with 0 digits fraction leaves off radix point';
-    isa-ok 1.base('10', -1), Failure, "negative digits arg fails";
+    throws-like 1.base('10', -1), X::OutOfRange, "X::OutOfRange negative digits arg fails";
+    throws-like 1.base('-1'),     X::OutOfRange, "X::OutOfRange negative base fails";
 }
 # Rat
 # RT #112900

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55 * 2 + 1;
+plan 55 * 2;
 
 constant $fancy-nums       = '໕໖໗۶۷៤៥１２３';
 constant $fancy-nums-value = 5676745123;
@@ -20,6 +20,7 @@ for &parse-base, Str.^lookup('parse-base') -> &pb {
 
     is-deeply pb('1111', $_), +":{$_}<1111>", "1111 in base-$_" ~ $t
         for 2..36;
+
     is-approx pb($all-chars, 36), $all-chars-result,
         'full character set' ~ $t;
 
@@ -46,8 +47,8 @@ for &parse-base, Str.^lookup('parse-base') -> &pb {
         X::Syntax::Number::RadixOutOfRange, radix => 42,
     'too large radix throws' ~ $t;
 
-    throws-like { pb "Perl6", -1 },
-        X::Syntax::Number::RadixOutOfRange, radix => -1,
+    throws-like { pb "Perl6", 1 },
+        X::Syntax::Number::RadixOutOfRange, radix => 1,
     'too small radix throws' ~ $t;
 
     throws-like { pb "###", 20     }, X::Str::Numeric,
@@ -74,6 +75,5 @@ for &parse-base, Str.^lookup('parse-base') -> &pb {
         reason => /'base-9'/, :2pos, :source<1.x>,
     'invalid char in first position of fractional part, base 9' ~ $t;
 }
-is-deeply '1111'.parse-base(1), 4, "parse-base 1111 in base-1 is 4";
 
 # vim: ft=perl6
