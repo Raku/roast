@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 839;
+plan 840;
 
 # Basic test functions specific to rational numbers.
 
@@ -385,5 +385,9 @@ eval-lives-ok ｢5 cmp <.5>｣, 'Real cmp RatStr does not crash';
     lives-ok { Bar.new: 42, 42 },
         'subclass of class that does Rational can be instantiated';
 }
+
+# https://github.com/rakudo/rakudo/commit/79553d0fc3
+is-deeply (<1/2> + <3/2>).ceiling, 2,
+    '.ceiling is right for unreduced whole Rats, like <4/2>';
 
 # vim: ft=perl6
