@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 840;
+plan 841;
 
 # Basic test functions specific to rational numbers.
 
@@ -389,5 +389,14 @@ eval-lives-ok ｢5 cmp <.5>｣, 'Real cmp RatStr does not crash';
 # https://github.com/rakudo/rakudo/commit/79553d0fc3
 is-deeply (<1/2> + <3/2>).ceiling, 2,
     '.ceiling is right for unreduced whole Rats, like <4/2>';
+
+# https://github.com/rakudo/rakudo/commit/aac9efcbda
+subtest '.norm returns reduced Rat' => {
+    plan 2;
+    given (2/3 + 1/3).norm {
+        is-deeply .denominator, 1, 'denominator got reduced';
+        is-deeply .numerator, 1, 'numerator got reduced';
+    }
+}
 
 # vim: ft=perl6

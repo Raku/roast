@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 287;
+plan 288;
 
 # Basic test functions specific to FatRats.
 
@@ -309,5 +309,14 @@ cmp-ok FatRat.Range, '===', -∞..∞,
 # https://github.com/rakudo/rakudo/commit/79553d0fc3
 is-deeply (FatRat.new(1, 2) + <3/2>).ceiling, 2,
     '.ceiling is right for unreduced whole FatRats, like <4/2>';
+
+# https://github.com/rakudo/rakudo/commit/aac9efcbda
+subtest '.norm returns reduced FatRat' => {
+    plan 2;
+    given (FatRat.new(2,3) + 1/3).norm {
+        is-deeply .denominator, 1, 'denominator got reduced';
+        is-deeply .numerator, 1, 'numerator got reduced';
+    }
+}
 
 # vim: ft=perl6
