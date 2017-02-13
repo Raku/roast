@@ -46,6 +46,9 @@ print join(' ',
         if ( $_ !~ m/\.$platform$/ ) {
             my $cmd = "$^X \"$fudge\" @opts $platform $_";
             chomp( $pick = `$cmd` );
+            if ($?) {
+                exit($? == -1 or $? & 127 ? $? : $? >> 8);
+            }
         }
         defined $pick ? $pick : ();
     } @ARGV
