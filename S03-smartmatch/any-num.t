@@ -34,6 +34,7 @@ subtest 'Str ~~ Num' => {
     plan 4;
     is-deeply 'NaN' ~~  NaN, True,  ｢'NaN' ~~  NaN｣;
     is-deeply 'NaN' ~~ 42e0, False, ｢'NaN' ~~ 42e0｣;
+    #?rakudo.jvm skip 'Failure from "x".Numeric is handled wrongly in is-deeply, RT #130775'
     is-deeply 'x'   ~~ 42e0, False, ｢'x'   ~~ 42e0｣;
     is-deeply '42'  ~~ 42e0, True,  ｢'42'  ~~ 42e0｣;
 }

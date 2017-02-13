@@ -116,7 +116,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
-#?rakudo.jvm todo '$foo is not "$()", but Failure'
+#?rakudo.jvm todo '$foo is not "$()", but Failure; RT #130775'
 for oops,Slip -> $with, $expected {
     my $foo is default(Nil) = do with $with {
         $_;
@@ -142,7 +142,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
-#?rakudo.jvm todo '$foo is not "$()", but Failure'
+#?rakudo.jvm todo '$foo is not "$()", but Failure; RT #130775'
 for oops,Slip -> $with, $expected {
     my $foo is default(Nil) = do with $with -> $pos {
         $pos;
@@ -169,7 +169,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
-#?rakudo.jvm todo '$foo is not a Failure, but "$()"'
+#?rakudo.jvm todo '$foo is not a Failure, but "$()"; RT #130775'
 for oops,Failure -> $without, $expected {
     my $foo is default(Nil) = do
     without $without {
@@ -197,7 +197,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
-#?rakudo.jvm todo '$foo is not a Failure, but "$()"'
+#?rakudo.jvm todo '$foo is not a Failure, but "$()"; RT #130775'
 for oops,Failure -> $without, $expected {
     my $foo is default(Nil) = do
     without $without -> $pos {
@@ -266,7 +266,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
-#?rakudo.jvm skip 'Failure from oops is thrown'
+#?rakudo.jvm skip 'Failure from oops is thrown; RT #130775'
 {
     for
           0,oops,Failure
