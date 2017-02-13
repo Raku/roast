@@ -15,6 +15,7 @@ is ().perl, '()', '.perl on empty List';
 #?niecza todo '.item.perl on empty List gives Match.ast shorthand'
 is ().item.perl, '$( )', '.item.perl on empty List';
 is-deeply ().item, ().item.perl.EVAL, 'can roundtrip ().item';
+#?rakudo.jvm skip 'dies with t/harness5'
 cmp-ok ().item.VAR, '===', ().item.perl.EVAL.VAR,
     '().item .perl.EVAL roundtrip preserves itemization';
 
