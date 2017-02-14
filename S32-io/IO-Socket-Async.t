@@ -209,6 +209,7 @@ $echoTap.close;
     ok $failed, 'Address already in use results in a quit';
 }
 
+#?rakudo.jvm skip 'dies/hangs on JVM, sometimes'
 {
     my $t = IO::Socket::Async.listen("localhost", 5007).tap: -> $conn { };
     my $conn = await IO::Socket::Async.connect("localhost", 5007);
