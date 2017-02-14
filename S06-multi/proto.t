@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 27;
 
 # Test for proto definitions
 class A { }
@@ -143,5 +143,9 @@ throws-like 'bar(41)', Exception, 'impossible dispatch failed (anon cap)';
         proto f(Int $x) {*}; multi f($) { 'default' }; f 'foo'
     ], X::TypeCheck::Argument, 'proto signature is checked, not just that of the candidates';
 }
+
+# https://irclog.perlgeek.de/perl6/2017-02-13#i_14093827
+throws-like ｢my &x; sub x {}｣, X::Redeclaration,
+    'my &x; sub x {} throws useful error';
 
 # vim: ft=perl6
