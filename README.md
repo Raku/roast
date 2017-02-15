@@ -111,11 +111,13 @@ In cases where the current working directory makes a difference, the tests
 assume that the working directory is the root of the test suite, so that the
 relative path to itself is `t/spec/S\d\d-$section/$filename`.
 
-You can also run the `fudge` program manually. This command will fudge and run
-`prove` on a specific file:
+To fudge and run `prove` on a specific file:
 
-    ./fudge --keep-exit-code rakudo S05-metasyntax/angle-brackets.t &&
-    prove -eperl6 S05-metasyntax/angle-brackets.rakudo
+    ./fudgeandrun S05-metasyntax/angle-brackets.t
+    
+`fudgeandrun` does not assume any particular implementation but guesses by running
+`perl6` to look at special variables like `$*PERL`.  See `fudgeandrun` usage to
+specify a different implementation and other options.
 
 ## Environmental Variables
 
