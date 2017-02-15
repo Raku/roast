@@ -46,9 +46,8 @@ my Str $bar;
     throws-like 'my int $alpha = Nil', Exception, 'native int type cannot be undefined';
     lives-ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval-lives-ok('my num $alpha = 1e0',    'Has native type num');
-    #?rakudo.jvm todo "nigh"
-    #?rakudo.moar todo "nigh"
     # RT #121518
+    #?rakudo todo "nigh, RT #121518"
     eval-lives-ok('my num $alpha = Nil', 'native num type can be undefined');
     lives-ok({my Num $beta = Nil},      'object Num type can be undefined');
     # RT #93982

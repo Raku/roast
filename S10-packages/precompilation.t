@@ -169,8 +169,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
       "precomp of native array parameterization intern test (b)";
     ok $output-path-b.IO.e, "did we create a $output-path-b";
 
-    #?rakudo.jvm todo 'no 6model parametrics interning yet'
-    #?rakudo.moar todo 'no 6model parametrics interning yet'
+    #?rakudo todo 'no 6model parametrics interning yet'
     is_run
       "use $module-name-a;
        use $module-name-b;
