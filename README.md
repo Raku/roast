@@ -111,8 +111,7 @@ In cases where the current working directory makes a difference, the tests
 assume that the working directory is the root of the test suite, so that the
 relative path to itself is `t/spec/S\d\d-$section/$filename`.
 
-You can also run the `fudge` program manually. To fudge and run `prove` on a
-specific file:
+To fudge and run `prove` on a specific file:
 
     ./fudgeandrun S05-metasyntax/angle-brackets.t
     
