@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 57;
+plan 58;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -222,3 +222,13 @@ lives-ok {
     sub foo() { my $b = False; my $c = True; $c &&= do { $b = True }; $b }
     await do for ^4 { start for ^1000 { die unless foo } }
 }, '&&= compilation not vulnerable to multiple threads';
+
+# Covers a SEGV in parallel grammars; it was in NFA caching, thus why we need
+# to EVAL the grammar so it is a fresh one with a fresh cache each time. Covers
+# RT #128833.
+lives-ok {
+    for ^100 {
+        my \g = EVAL 'grammar { token TOP { <a> | <b> }; token a { \d | \s }; token b { a | b } }';
+        await (start g.parse('b')) xx 8
+    }
+}, 'No crash when doing parallel parsing of grammars on first time';
