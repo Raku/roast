@@ -1,0 +1,170 @@
+#! /usr/bin/env perl
+use strict;
+use warnings;
+
+######################################################################
+# Fudge a test and run the fudged result.
+#
+# Historically, this was part of the Rakudo development repository
+# and it will check for local perl6 and fudge(all?) executables first
+# and give them priority over executables on path.
+######################################################################
+
+use Getopt::Long;
+use List::Util qw(first);
+use File::Spec::Functions qw(canonpath splitpath catfile);
+use Cwd 'cwd';
+
+GetOptions(
+    'impl=s'        =>      \my $impl_p,
+    'backend=s'     =>      \my $backend,
+    'impl-cmd=s'    =>      \my $impl_cmd,
+    'version=s'     =>      \my $version,
+    'quiet'         =>      \my $opt_q,
+    'six|6'         =>      \my $opt_6,
+);
+
+unless (@ARGV) {
+    die <<"USAGE";
+Usage: $0 [options] testfilename ...
+
+    Options:
+    --impl=implemention
+        Default extracted from perl6 \$*PERL and \$*VM variables.
+        implementation may be just name or compiler.backend like rakudo.jvm
+
+    --backend=(moar|jvm|other)
+        specify implementation as
+        compiler from \$*PERL.compiler.name suffixed by ".\$backend"
+
+    --impl-cmd
+        Specify command other than "perl6" to run implementation
+        rakudo is grandfathered to "perl6-m" for rakudo.moar and
+        "perl6-j" for rakudo.jvm
+
+    --version
+        version like v6.0.0+ for fudging
+
+    --quiet
+        By default fudged tests are run with "prove -v". This option
+        turns off the "-v"
+
+    --six|6
+        Runs fudged tests with perl6 instead of prove.
+
+USAGE
+}
+
+# decide between local and PATH perl
+my $p6 = catfile('.', 'perl6');
+$p6 = 'perl6' unless -x $p6;
+
+# implementation and compiler
+my $impl;
+if ($impl_p) {
+    $impl = lc $impl_p;
+}
+else {
+    # windows / cross platform needs -e "" with EVAL and \c[DOLLAR SIGN]
+    $impl = `$p6 -e "EVAL qq/say \\c[DOLLAR SIGN]*PERL.compiler.name, '.', \\c[DOLLAR SIGN]*VM.name/" 2>&1`;
+    die capture_error($p6, $impl) if $?;
+    chomp($impl);
+}
+my ($compiler, $impl_backend) = $impl =~ /([^.]*)(?:\.(.*))?/;
+
+if ($backend) {
+    $backend = lc $backend;
+    if (not $impl_p or $impl_p eq $compiler) {
+        $impl = "$compiler.$backend";
+    }
+    else {
+        die "Confused by backend from both --impl and --backend"
+    }
+    warn "Unsupported backed '$backend'. Known backends: jvm, moar\n"
+        if $backend !~ /^(?:jvm|moar)$/;
+}
+
+my @OPTS = (
+    '--keep-exit-code',
+    $version ? "--version=$version" : (),
+    $impl
+);
+
+my @already_fudged; # test directories may also have already fudged files
+
+for (my $i = 0; $i < @ARGV; $i++) {
+    if (! -e $ARGV[ $i ]) { # invoking from rakudo/impl repository ?
+        my $spec = canonpath("t/spec/$ARGV[ $i ]");
+        $ARGV[ $i ] = $spec if -e $spec;
+    }
+
+    die "fudging does not handle directories like $ARGV[ $i ]\n",
+        "    try shell glob ('*')\n" if -d $ARGV[ $i ];
+
+    my $back = $backend || $impl_backend || ''; # '' matches trailing dot '.'
+    if ($ARGV[$i] =~ /(?:\.(?:\Q$compiler\E|\Q$back\E|rakudo|jvm|moar))+$/) {
+        push @already_fudged, splice @ARGV, $i--, 1;
+    }
+}
+
+@already_fudged = grep { # ignore files we will generate with fudge
+    my $fudged = $_;
+    not first { /\.t$/ and $fudged eq substr($_, 0, -1) . $impl } @ARGV
+} @already_fudged;
+
+# look for fudge in spec checkout, then root of roast repo, then PATH
+my ($fudger) = first { -e }
+    canonpath('t/spec/fudgeall'), catfile('.', 'fudgeall');
+$fudger //= 'fudgeall';
+my $nt = `$^X $fudger @OPTS @ARGV 2>&1`;
+die capture_error($fudger, $nt) if $?;
+
+# uninstalled rakudo doesn't know how to find Test.pm
+# ... or any other modules
+my $pwd = cwd();
+$ENV{PERL6LIB}="$pwd/lib";
+
+if ($impl_cmd) {
+    $impl_cmd = qq/"$impl_cmd"/ if $impl_cmd =~ /\s/;
+}
+else {
+    $impl_cmd = $p6;
+
+    # grandfather -m and -j for rakudo backend - not rakudo use --impl-cmd
+    $impl_cmd .= '-j' if ( ($backend // '') eq 'jvm' and $impl =~ /\.moar/ );
+    $impl_cmd .= '-m' if ( ($backend // '') eq 'moar' and $impl =~ /\.jvm/ );
+}
+
+if ($opt_6) {
+    system($impl_cmd, split(' ', $nt), @already_fudged);
+}
+else {
+    system( 'prove', ($opt_q ? () : '-v'), "-e$impl_cmd",
+            split(' ', $nt), @already_fudged
+    );
+}
+die capture_error($opt_6 ? $impl_cmd : "prove '-e$impl_cmd'", $!) if $?;
+
+my $already_fudge_warn = "Some files were already fudged" if @already_fudged;
+$already_fudge_warn .= " and were run after other tests"
+    if @already_fudged and @ARGV;
+warn "\n$already_fudge_warn\n\n" if $already_fudge_warn;
+
+######################################################################
+# We shell out for some commands and usually don't expect errors,
+# but if there is an error would like helpful message
+######################################################################
+sub capture_error {
+    my ($cmd, $output) = @_;
+    my $rc  =   $? == -1    ?   -1
+            :   $? & 127    ?   'signal ' . $? & 127
+            :   $? >> 8;
+    my $err = $! || $output if $?; # undef warn unless $? - wy were we called?
+
+    return <<"EO_ERR"
+Could not run $cmd
+    System rc: $rc
+    error: $err
+EO_ERR
+}
+

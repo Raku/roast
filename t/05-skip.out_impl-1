@@ -1,3 +1,6 @@
+use v6;
+use Test;
+
 plan 4;
 
 #?impl-1 2 skip 'NYI'

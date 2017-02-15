@@ -1,4 +1,6 @@
+use v6;
 use Test;
+
 plan 3;
 
 sub same-type ($x, $y) {
