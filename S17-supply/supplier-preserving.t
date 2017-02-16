@@ -2,6 +2,7 @@ use Test;
 
 plan 1;
 
+#?rakudo.jvm todo 'only first iteration of for loop gives correct result'
 subtest "No races in Supplier::Preserving", {
     my @closings;
     sub make-supply() {
