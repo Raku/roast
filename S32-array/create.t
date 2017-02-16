@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 12;
 
 # L<S32::Containers/"Array"/"=item ">
 
@@ -61,6 +61,8 @@ eval-lives-ok ｢(1,2,3).Array[0]++｣,
         @a.append: 42, 72;
         is-deeply +@a, 1+@b, 'adding items to original does not affect clone';
     }
+
+    is-deeply Array.clone, Array, 'Array:U clone gives an Array:U';
 }
 
 # vim: ft=perl6
