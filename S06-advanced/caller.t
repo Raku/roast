@@ -9,7 +9,6 @@ plan 22;
 # caller.subname
 sub a_sub { b_sub() }
 sub b_sub { try { caller.subname } }
-#?niecza todo "try interferes with caller counting"
 is ~a_sub(), "a_sub", "caller.sub works";
 
 # caller.file
@@ -33,7 +32,6 @@ class B { method try_it_caller_B { &Main::try_it_caller_caller(@_) } }
 sub chain { B.try_it_caller_B(@_) }
 
 # basic tests of caller object
-#?niecza skip "NYI"
 {
     chain({ WHAT(caller()).gist }, "Control::Caller()", "caller object type");
     chain({ caller().package }, "Main", "caller package");
@@ -45,7 +43,6 @@ sub chain { B.try_it_caller_B(@_) }
 }
 
 # select by code type
-#?niecza skip "NYI"
 {
     chain({ caller(Any).subname },    "&Main::try_it_caller", "code type - Any");
     chain({ caller("Any").subname },  "&Main::try_it_caller", "code type - Any (string)");

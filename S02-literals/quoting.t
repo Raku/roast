@@ -219,7 +219,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(~@q2, 'FOO "gorch BAR"', "long form output is the same as the short");
 };
 
-#?niecza todo
 { # qq:ww, interpolating L<S02/Literals/double angles do interpolate>
   # L<S02/Forcing item context/"implicit split" "shell-like fashion">
     my (@q1, @q2, @q3, @q4) = ();
@@ -254,7 +253,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is <<a $rt65654 z>>.flat.elems, 4, 'interpolate variable with spaces (Texas)';
 }
 
-#?niecza todo
 {
     #L<S02/Forcing item context/"relationship" "single quotes" "double angles">
     my ($x, $y) = <a b>;
@@ -273,13 +271,11 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q1[3], "BAR", '$bar was interpolated');
 
     @q2 = «$foo "$gorch" '$bar'»;
-    #?niecza 3 todo
     is(+@q2, 3, "3 elements in sub quoted «» list");
     is(@q2[1], $gorch, 'second element is both parts of $gorch, interpolated');
     is(@q2[2], '$bar', 'single quoted $bar was not interpolated');
 };
 
-#?niecza todo
 {
     my $gorch = "foo bar";
     my @q := «a b c "$foo" f g $gorch m n '$bar' x y z»;
@@ -307,21 +303,17 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 {
   # <<:Pair>>
     my @q = <<:p(1)>>;
-    #?niecza todo
     is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - simple");
 
     @q = <<:p(1) junk>>;
-    #?niecza todo
     is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - with some junk");
     is(@q[1], 'junk', "pair inside <<>>-quotes - junk preserved");
 
     @q = <<:def>>;
-    #?niecza todo
     is(@q[0].perl, (:def).perl, ":pair in <<>>-quotes with no explicit value");
 
     @q = "(EVAL failed)";
     try { EVAL '@q = <<:p<moose>>>;' };
-    #?niecza todo
     is(@q[0].perl, (p => "moose").perl, ":pair<anglequoted>");
 };
 
@@ -406,7 +398,6 @@ Hello, World
     ok qq:x/echo hello $world/ ~~ /^'hello world'\n$/, 'Testing qq:x operator';
 }
 
-#?niecza todo ':x'
 {
     my $output = $*DISTRO.is-win
         ?? q:x/echo hello& echo world/
@@ -415,7 +406,6 @@ Hello, World
     is @two_lines, ["hello", "world"], 'testing q:x assigned to array';
 }
 
-#?niecza todo ':x'
 {
     my $hello = 'howdy';
     my $sep = $*DISTRO.is-win ?? '&' !! ';';
@@ -426,7 +416,6 @@ Hello, World
 
 # L<S02/Adverbs on quotes/"Interpolate % vars">
 # q:h
-#?niecza todo
 {
     my %t = (a => "perl", b => "rocks");
     my $s;
@@ -435,7 +424,6 @@ Hello, World
 }
 
 # q:f
-#?niecza skip '& escape'
 {
     my sub f { "hello" };
     my $t = q:f /&f(), world/;
@@ -480,7 +468,6 @@ Hello, World
 }
 
 # shorthands:
-#?niecza skip '& escape, zen slices'
 {
     my $alpha = 'foo';
     my $beta  = 'bar';
@@ -561,10 +548,8 @@ throws-like { EVAL q["@a<"] },
 is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpolation';
 
 #115272
-#?niecza todo "Weird quoting issue"
 is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
 
-#?niecza todo
 {
     $_ = 'abc';
     /a./;

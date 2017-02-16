@@ -42,7 +42,6 @@ throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
     'named parameter of undeclared attribute dies';
 
 # RT #72082
-#?niecza todo
 {
     try { EVAL 'sub rt72082(@a, $b) {}; rt72082(5)' }
     my $error = ~$!;

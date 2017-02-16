@@ -17,7 +17,6 @@ plan 7;
     ok $ra.VAR.of =:= Mu, 'make sure any value can be stored';
 } #3
 
-#?niecza skip "cannot roundtrip scalars with constrained values"
 # array with constrained values
 {
     my Int $a = 1;

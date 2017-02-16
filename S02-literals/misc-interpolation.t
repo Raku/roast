@@ -23,15 +23,12 @@ sub func_w_args($x,$y) { return "[$x][$y]" }
 is("Hello $world", 'Hello World', 'double quoted string interpolation works');
 is("@list[]\ 3 4", '1 2 3 4', 'double quoted list interpolation works');
 is("@list 3 4", '@list 3 4', 'array without empty square brackets does not interpolate');
-#?niecza todo 'No value for parameter \$index in postcircumfix:<{ }>'
 is("%hash{}", "1\t2", 'hash interpolation works');
 is("%hash", '%hash', 'hash interpolation does not work if not followed by {}');
-#?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("Wont you take me to &func()", 'Wont you take me to func-y town', 'closure interpolation');
 is("2 + 2 = { 2+2 }", '2 + 2 = 4', 'double quoted closure interpolation works');
 
 
-#?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("&func() is where I live", 'func-y town is where I live', "make sure function interpolation doesn't eat all trailing whitespace");
 is("$number {$number}", '1 1', 'number inside and outside closure works');
 is("$number {my $number=2}", '1 2', 'local version of number in closure works');
@@ -49,7 +46,6 @@ is("&func. () is where I live", '&func. () is where I live', '"&func. ()" should
 is("$world.", 'World.', '"$world." should not interpolate');
 is("$world!", 'World!', '"$world!" should not interpolate');
 
-#?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("&func_w_args("foo","bar"))", '[foo][bar])', '"&func_w_args(...)" should interpolate');
 
 # L<S02/Method calls/"In order to interpolate the result of a method call">

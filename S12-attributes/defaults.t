@@ -81,7 +81,6 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
     is $got_a_str, 1, "get_a_str now called twice";
 }
 
-#?niecza skip "'self' used where no object is available"
 {
     class Towel {
         has $.self_in_code = { self.echo };
@@ -94,7 +93,6 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
     is $towel.self_in_code()(), "echo", "self is the object being initialized";
 }
 
-#?niecza skip "'self' used where no object is available"
 {
     class Cake {
         has $.a = "echo";

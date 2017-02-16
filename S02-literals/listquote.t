@@ -10,13 +10,11 @@ my $s = join 'a', <x y z>;
 is($s, "xayaz", 'list context <list>');
 
 #?rakudo todo 'meta operators RT #124558'
-#?niecza skip '|<<'
 {
 my $s = join |<< <a x y z>;
 is($s, "xayaz", 'listop |<< <list>');
 }
 
-#?niecza skip "Preceding context expects a term, but found infix , instead"
 ok( [1,2,3].join<abc> ~~ Failure , '.join<abc> parses and fails');
 
 my @y = try { ({:a<d>, :b(2)}<a b c>) };

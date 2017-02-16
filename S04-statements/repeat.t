@@ -103,7 +103,6 @@ plan 21;
 }
 
 # RT #69178
-#?niecza skip 'No value in ANON available for parameter $a'
 {
     my $b = 1;
     my $tracker;
@@ -125,7 +124,6 @@ plan 21;
 }
 
 # RT #114432
-#?niecza skip "throws-like"
 #?DOES 3
 {
     throws-like 'repeat { "but I myself" }', X::Syntax::Missing, what => '"while" or "until"';

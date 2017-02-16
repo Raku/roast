@@ -37,7 +37,6 @@ plan 61;
 }
 # Rat
 # RT #112900
-#?niecza skip "Rat.base NYI"
 {
     is (1/10000000000).base(3),
        '0.0000000000000000000010',   # is the trailing zero correct?

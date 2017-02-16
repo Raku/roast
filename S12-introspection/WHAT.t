@@ -35,12 +35,10 @@ my class H is Hash  {};
     ok $a.WHAT    === A,   'A.new default is A';
     ok $a[0].WHAT === Any, 'A.new[0] default is Any';
     my $h = H.new;
-    #?niecza todo
     ok $h.WHAT    === H,   'H.new default is Hash';
     ok $h<a>.WHAT === Any, 'H.new<a> default is Any';
 } #4
 
-#?niecza skip "no typed support"
 {
     my Int $a;
     ok $a.WHAT    === Int,        'Int $a default is Int';
@@ -52,7 +50,6 @@ my class H is Hash  {};
     ok %a<a>.WHAT === Int,        'Int %a<a> default is Int';
 } #5
 
-#?niecza skip "no typed support"
 {
     my $a of Int;
     ok $a.WHAT    === Int,        '$a of Int default is Int';
@@ -64,21 +61,18 @@ my class H is Hash  {};
     ok %a<a>.WHAT === Int,        '%a<a> of Int default is Int';
 } #5
 
-#?niecza skip "no typed support"
 {
     my Int %a{Str};
     ok %a.WHAT    === Hash[Int,Str], 'Int %a{Str} default is Hash[Int,Str]';
     ok %a<a>.WHAT === Int,           'Int %a{Str}<a> default is Int';
 } #2
 
-#?niecza skip "no typed support"
 {
     my %a{Str} of Int;
     ok %a.WHAT    === Hash[Int,Str], '%a{Str} of Int default is Hash[Int,Str]';
     ok %a<a>.WHAT === Int,           '%a{Str}<a> of Int default is Int';
 } #2
 
-#?niecza skip "no typed support"
 {
     my $a = Array[Int].new;
     ok $a.WHAT    === Array[Int], 'Array[Int].new default is Array';
@@ -90,7 +84,6 @@ my class H is Hash  {};
     ok $h<a>.WHAT === Int,        'Hash[Int].new<a> default is Int';
 } #4
 
-#?niecza skip "no typed support"
 {
     my $a = A[Int].new;
     ok $a.WHAT    === A[Int], 'A[Int].new default is A[Int]';
@@ -102,7 +95,6 @@ my class H is Hash  {};
     ok $h<a>.WHAT === Int,    'H[Int].new<a> default is Int';
 } #4
 
-#?niecza skip "no typed support"
 {
     my $h = H[Int,Str].new;
     ok $h.WHAT    === H[Int,Str], 'H[Int,Str].new default is H[Int,Str]';

@@ -42,7 +42,6 @@ nok $non-existent-file.IO ~~ :f, 'Is not a normal file';
 isa-ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
 
 ##is empty
-#?niecza skip 'Unable to resolve method s in class IO'
 {
     nok $zero-length-file.IO.s, 'Is empty';
     isa-ok $zero-length-file.IO.s, Int, '.s returns Int';

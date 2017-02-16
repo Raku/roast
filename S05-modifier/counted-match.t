@@ -49,7 +49,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 # 
 
 # more interesting variations of :nth(...)
-#?niecza skip 'hangs'
 {
     my @match = $data.match(/fo+/, :nth(2, 3)).list;
     is +@match, 2, 'nth(list) is ok';
@@ -64,14 +63,12 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     is @match, <foo fooo foooo fooooo foooooo>, 'nth(infinite range) matched correctly';
 }
 
-#?niecza skip 'hangs'
 {
     my @match = $data.match(/fo+/, :nth(2, 4 ... *)).list;
     is +@match, 3, 'nth(infinite series) is ok';
     is @match, <foo foooo foooooo>, 'nth(infinite sequence) matched correctly';
 }
 
-#?niecza skip 'Excess arguments to CORE Cool.match'
 {
     is 'abecidofug'.match(/<[aeiou]>./, :nth(1,3,5), :x(2)).join('|'),
         'ab|id', ':x and :nth';
@@ -87,7 +84,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 }
 
 # test that non-monotonic items in :nth lists are ignored
-#?niecza todo
 {
     throws-like '"abacadaeaf".match(/a./, :nth(2, 1, 4)).join', Exception,
         'non-monotonic items in :nth throw';

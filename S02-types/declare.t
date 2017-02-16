@@ -36,7 +36,6 @@ plan 70;
 }
 
 #?rakudo skip 'Bit NYI RT #124458'
-#?niecza skip 'Bit NYI'
 {
  my Bit $namcu =1;
  isa-ok($namcu,Bit);
@@ -81,7 +80,6 @@ plan 70;
  isa-ok($brodi, Hash);
 }
 
-#?niecza skip "Buf NYI"
 {
  my Buf $nacpoi;
  ok($nacpoi ~~ Buf);
@@ -132,14 +130,12 @@ plan 70;
 # Type mismatch in assignment; expected something matching type Complex but got something of type Num()
 
 #?rakudo skip 'complex NYI RT #124463'
-#?niecza skip 'complex NYI'
 {
  my complex $namcu =1.3;
  isa-ok($namcu,complex);
 }
 
 #?rakudo skip 'rat NYI RT #124464'
-#?niecza skip 'rat NYI'
 
 {
  my rat $namcu = 7 / 4;
@@ -147,14 +143,12 @@ plan 70;
 }
 
 #?rakudo skip 'bit NYI RT #124465'
-#?niecza skip 'bit NYI'
 {
  my bit $namcu =1;
  isa-ok($namcu,bit);
 }
 
 #?rakudo skip 'buf NYI RT #124466'
-#?niecza skip 'buf NYI'
 {
  my buf $nacpoi;
  isa-ok($nacpoi, buf);
@@ -165,7 +159,6 @@ plan 70;
 # Keyhash SetHash BagHash Pair Mapping IO Routine Sub Method
 # Submethod Macro Match Package Module Class Role Grammar Any
 
-#?niecza skip 'No value for parameter $l in infix:<===>'
 {
  my Nil $ci;
  ok($ci === Nil);
@@ -181,13 +174,11 @@ plan 70;
  ok($mu ~~ Mu  );
 }
 
-#?niecza skip 'Failure NYI'
 {
  my Failure $xa;
  isa-ok($xa,Failure  );
 }
 
-#?niecza skip 'Exception NYI'
 {
  my Exception $ze;
  isa-ok($ze,Exception  );
@@ -213,7 +204,6 @@ plan 70;
  isa-ok($papa,Capture  );
 }
 
-#?niecza skip 'Blob NYI'
 {
  my Blob $pare;
  ok($pare ~~ Blob);
@@ -224,25 +214,21 @@ plan 70;
  isa-ok($paci,Instant  );
 }
 
-#?niecza skip 'Duration NYI'
 {
  my Duration $pavo;
  isa-ok($pavo,Duration  );
 }
 
-#?niecza skip 'QuantHash NYI'
 {
  my QuantHash $pamu;
  ok($pamu ~~ QuantHash, 'The object does QuantHash' );
 }
 
-#?niecza skip 'SetHash'
 {
  my SetHash $paxa;
  isa-ok($paxa,SetHash  );
 }
 
-#?niecza skip 'BagHash'
 {
  my BagHash $paze;
  isa-ok($paze,BagHash  );
@@ -299,7 +285,6 @@ plan 70;
  isa-ok($revo, Submethod );
 }
 
-#?niecza skip 'Macro NYI'
 {
  my Macro $remu;
  isa-ok($remu,Macro  );
@@ -331,7 +316,6 @@ plan 70;
 }
 
 #?rakudo skip 'Matcher isa NYI RT #124470'
-#?niecza skip 'Matcher NYI'
 {
   my Matcher $mapti;
   isa-ok($mapti, Matcher);
@@ -356,14 +340,12 @@ plan 70;
 }
 
 #?rakudo skip 'Ordering NYI RT #124477'
-#?niecza skip 'Ordering NYI'
 {
   my Ordering $foo;
   isa-ok($foo,Ordering);
 }
 
 #?rakudo skip 'KeyExtractor NYI RT #124478'
-#?niecza skip 'KeyExtractor NYI'
 {
   my KeyExtractor $ckiku;
   isa-ok($ckiku, KeyExtractor);
@@ -372,20 +354,17 @@ plan 70;
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
 #?rakudo skip 'Comparator NYI RT #124479'
-#?niecza skip 'Comparator NYI'
 {
   my Comparator $bar;
   isa-ok($bar,Comparator);
 }
 
 #?rakudo skip 'OrderingPair NYI RT #124480'
-#?niecza skip 'OrderingPair NYI'
 {
   my OrderingPair $foop;
   isa-ok($foop,OrderingPair);
 }
 
-#?niecza skip 'HyperWhatever NYI'
 {
   my HyperWhatever $baz;
   isa-ok($baz,HyperWhatever);
@@ -393,19 +372,16 @@ plan 70;
 
 # utf8 utf16 utf32
 
-#?niecza skip 'utf8 NYI'
 {
   my utf8 $ubi;
   isa-ok($ubi,utf8);
 }
 
-#?niecza skip 'utf16 NYI'
 {
   my utf16 $upaxa;
   isa-ok($upaxa,utf16);
 }
 
-#?niecza skip 'utf32 NYI'
 {
   my utf32 $ucire;
   isa-ok($ucire,utf32);
@@ -422,7 +398,6 @@ plan 70;
 # buf8 buf16 buf32 buf64 
 
 #?rakudo skip 'num16  NYI RT #124481'
-#?niecza skip 'num16 NYI'
 {
   my num16 $namcupaxa;
   isa-ok($namcupaxa,num16);
@@ -437,13 +412,11 @@ plan 70;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
 #RT #75896
-#?niecza skip 'Coercive declarations NYI'
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');
 }
 
-#?niecza skip 'Coercive declarations NYI'
 {
   my Array of Array of Int @box;
   ok(1,'Array of Array of Int @box');

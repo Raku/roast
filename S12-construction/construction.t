@@ -65,7 +65,6 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
 }	
 
 # RT #64116
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 {
     class RT64116 { has %.env is rw };
 
@@ -87,7 +86,6 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
     is MonkeyNew.new().x, 'called', 'monkey-typed .new() method is called';
 }
 
-#?niecza skip "Malformed has (int NYI, I think)"
 {
     class NativeInt {
         has int $.attr;

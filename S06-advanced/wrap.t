@@ -182,7 +182,6 @@ try {
 }
 
 # RT #66658
-#?niecza skip "undefined undefined"
 {
     sub meet(  $person ) { return "meet $person"  }
     sub greet( $person ) { return "greet $person" }

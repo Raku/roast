@@ -22,15 +22,11 @@ plan 45;
   ok( ?(42   ?| 42   == True),  '?| works');
   ok( ?(42   ?| 41   == True),  '?| works');
 
-  #?niecza skip 'No value for parameter $b in CORE infix:<?|>'
   ok( ?(infix:<?|>(True) == True), '?| works with one argument');
-  #?niecza skip 'No value for parameter $a in CORE infix:<?|>'
   ok( ?(infix:<?|>() == False), '?| works with no arguments');
 
   isa-ok (42 ?| 41), Bool, '?| yields a Bool';
-  #?niecza skip 'No value for parameter $b in CORE infix:<?|>'
   isa-ok infix:<?|>(True), Bool, '?| with one argument yields a Bool';
-  #?niecza skip 'No value for parameter $a in CORE infix:<?|>'
   isa-ok infix:<?|>(), Bool, '?| with no arguments yields a Bool';
 
 }
@@ -49,15 +45,11 @@ plan 45;
   ok( ?(3  ?& 13     == True),  '?& works');
   ok( ?(13 ?& 3      == True),  '?& works');
 
-  #?niecza skip 'No value for parameter $b in CORE infix:<?&>'
   ok( ?(infix:<?&>(False) == False), '?& works with one argument');
-  #?niecza skip 'No value for parameter $a in CORE infix:<?&>'
   ok( ?(infix:<?&>() == True), '?& works with no arguments');
 
   isa-ok (42 ?& 41), Bool, '?& yields a Bool';
-  #?niecza skip 'No value for parameter $b in CORE infix:<?&>'
   isa-ok infix:<?&>(True), Bool, '?& with one argument yields a Bool';
-  #?niecza skip 'No value for parameter $a in CORE infix:<?&>'
   isa-ok infix:<?&>(), Bool, '?& with no arguments yields a Bool';
 }
 
@@ -72,18 +64,13 @@ plan 45;
   ok( ?(Any  ?^ 1    == True),  '?^ works');
   ok( ?(-1   ?^ Any  == True),  '?^ works');
   ok( ?(42   ?^ 42   == False), '?^ works');
-  #?niecza todo
   ok( ?(42   ?^ 41   == False),  '?^ works');
  
-  #?niecza skip 'No value for parameter $b in CORE infix:<?^>'
   ok( ?(infix:<?^>(True) == True), '?^ works with one argument');
-  #?niecza skip 'No value for parameter $a in CORE infix:<?^>'
   ok( ?(infix:<?^>() == False), '?^ works with no arguments');
 
   isa-ok (42 ?^ 41), Bool, '?^ yields a Bool';
-  #?niecza skip 'No value for parameter $b in CORE infix:<?^>'
   isa-ok infix:<?^>(True), Bool, '?^ with one argument yields a Bool';
-  #?niecza skip 'No value for parameter $a in CORE infix:<?^>'
   isa-ok infix:<?^>(), Bool, '?^ with no arguments yields a Bool';
 }
 

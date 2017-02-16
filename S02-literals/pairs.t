@@ -66,7 +66,6 @@ sub f2 (:$a!) { WHAT($a) }
     isa-ok f2(:a(42)),      Int, "':a(42)' is a named";
     isa-ok f2(:a),          Bool,"':a' is a named";
 
-    #?niecza skip "Action method escape:sym<&> not yet implemented"
     isa-ok(&f2.(:a),        Bool, "in '\&f2.(:a)', ':a' is a named");
     isa-ok $f2(:a),         Bool, "in '\$f2(:a)', ':a' is a named";
     isa-ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";

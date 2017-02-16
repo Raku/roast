@@ -5,14 +5,10 @@ plan 26;
 
 # L<S03/Meta operators/Nesting of metaoperators/Any infix function may be referred to as a noun either by the normal long form or a short form>
 
-#?niecza skip 'undeclared name [+]'
 ok &infix:<+>  === &[+],  'long and short form are the same (+)';
-#?niecza skip 'undeclared name [==]'
 ok &infix:<==> === &[==], 'long and short form are the same (==)';
-#?niecza skip 'undeclared name [<=>]'
 is sort( &[<=>], <5 3 2 1 4> ), <1 2 3 4 5>, 'sort works using &[<=>]';
 
-#?niecza skip 'undeclared name [+]'
 is &[+](1, 2), 3, '&[+] as a function';
 is 1 [+] 2, 3, '[+] as an infix';   #OK Useless
 

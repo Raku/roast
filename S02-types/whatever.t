@@ -28,9 +28,7 @@ ok *.abs ~~ Code, '*.abs is of type Code';
 isa-ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
 isa-ok 1..*, Range, '1..* is a Range, not a Code';
-#?niecza skip 'Cannot use value like WhateverCode as a number'
 isa-ok 1..*-1, WhateverCode, '1..*-1 is a WhateverCode';
-#?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Range'
 isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
 {
@@ -55,7 +53,6 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 }
 
 # RT #64566
-#?niecza skip 'hangs'
 {
     my @a = 1 .. 4;
     is @a[1..*], 2..4, '@a[1..*] skips first element, stops at last';
@@ -115,7 +112,6 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is $c(3, 0, -10), 3, 'that can work with three different arguments';
 }
 
-#?niecza skip 'hangs'
 is (0,0,0,0,0,0) >>+>> (Slip(1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 {
@@ -236,7 +232,6 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     is $f(0), -5, 'Whatever-currying with R- (3)';
 
     dies-ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
-    #?niecza skip 'Undeclared routine'
     #?rakudo skip 'currying plus R meta op RT #124486'
     dies-ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
 }

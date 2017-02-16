@@ -16,7 +16,6 @@ my @list = ('a');
 
 for @list -> $letter { is( $letter , 'a', 'can bind to variable in pointy') }
 
-#?niecza skip 'infinite loop'
 {
     # -> { ... } introduces a sig of (), so this code dies with "Too many positionals passed"
     throws-like { EVAL q[for @list -> { return 1 unless $_ eq 'a' }] }, Exception,
@@ -66,13 +65,11 @@ for @list -> $letter {
      # Inner subs get a new $_, not the OUTER::<$_>
      $_ = 1;
      sub foo {
-         #?niecza todo
          ok !defined($_), '$_ starts undefined';
          $_ = 2;
          is $_, 2,  'now $_ is 2';
      }
      foo();
-     #?niecza todo
      is $_, 1, 'outer $_ is unchanged'
 }
 

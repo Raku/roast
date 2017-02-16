@@ -46,14 +46,12 @@ class Bar is Foo {
     is(@o.map({.count}), (6..11), 'parallel dispatch using @o».?doit works');
     @o>>.?doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o>>.?doit works');
-    #?niecza skip "=== Nil NYI"
     is (@o».?not_here).map({ $_ === Nil }).join(", "), @o.map({ True }).join(", "),
        '$obj».?nonexistingmethod returns a list of Nil';
     is (@o».?count).join(", "), @o.map({.count}).join(", "),
        '$obj».?existingmethod returns a list of the return values';
 }
 
-#?niecza skip 'NYI dottyop form'
 {
     my @o = (5..10).map({Bar.new(count => $_)});
     is(@o.map({.count}), (5..10), 'object sanity test');
@@ -104,7 +102,6 @@ class Bar is Foo {
     is (@a».?"$method"(3)).join(", "), (3, 6, 9).join(", "), '... indirect';
 
     #?rakudo 4 todo 'is-deeply does not think map results are the same as list on LHS'
-    #?niecza 4 skip 'NYI dottyop form'
     is-deeply @a».+mul(2), ([2, 4], [4, 8], [6, 12]),
               'return value of @a».+method is a list of lists';
     is-deeply @a».+"$method"(2), ([2, 4], [4, 8], [6, 12]),
@@ -117,7 +114,6 @@ class Bar is Foo {
 }
 
 # test postcircumfix parallel dispatch
-#?niecza skip 'Cannot use hash access on an object of type Pair'
 {
     is (a => 1, a => 2)>>.<a>, '1 2',   # METHOD TO SUB CASUALTY
         '>>.<a>';

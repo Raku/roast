@@ -26,7 +26,6 @@ sub MAIN($a, $b, *@c) {
 ok( @*ARGS == 5, '@*ARGS has correct elements');
 
 # RT #114354
-#?niecza todo
 lives-ok { require HasMain }, 'MAIN in a module did not get executed';
 
 # RT #126029

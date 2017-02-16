@@ -20,7 +20,6 @@ is "-17".abs, 17, '"-17".abs == 17';
 is NotComplex.new.abs, $magic.abs, 'NotComplex.new.abs == $magic.abs';
 
 is "3".conj, 3, '"3".conj == 3';
-#?niecza todo
 is NotComplex.new.conj, $magic.conj, 'NotComplex.new.conj == $magic.conj';
 
 is-approx "3".exp, 3.exp, '"3".exp == 3.exp';
@@ -43,7 +42,6 @@ is-approx NotComplex.new.log10, $magic.log10, 'NotComplex.new.log10 == $magic.lo
 is-approx "17".sqrt, 17.sqrt, '"17".sqrt == 17.sqrt';
 is-approx NotComplex.new.sqrt, $magic.sqrt, 'NotComplex.new.sqrt == $magic.sqrt';
 
-#?niecza skip 'roots NYI'
 #?DOES 8
 {
     my @found-roots = "17".roots("4");
@@ -61,7 +59,6 @@ is-approx NotComplex.new.sqrt, $magic.sqrt, 'NotComplex.new.sqrt == $magic.sqrt'
     }
 }
 
-#?niecza skip 'coercion would discard nonzero imaginary part'
 #?DOES 2
 {
 is-approx "17"i, 17i, '"17"i == 17i';
@@ -69,7 +66,6 @@ is-approx (NotComplex.new)i, $magic\i, '(NotComplex.new)i == $magic\i';
 }
 
 #?rakudo skip 'angle conversion RT #124816'
-#?niecza skip 'angle conversion'
 #?DOES 4
 {
 is-approx "17".to-radians(Degrees), 17.to-radians(Degrees),

@@ -98,7 +98,6 @@ is("I\xcaJ".trans('I..J' => 'i..j'), "i\xcaj");
 is("\x12c\x190".trans("\x12c" => "\x190"), "\x190\x190");
 
 # should these be combined?
-#?niecza todo
 is($b.trans('A..H..Z' => 'a..h..z'), $a,
     'ambiguous ranges combined');
 
@@ -117,7 +116,6 @@ is("hello".trans("l" => ""), "heo", "can replace with empty string");
 
 # complement, squeeze/squash, delete
 
-#?niecza 2 skip 'trans flags NYI'
 is('bookkeeper'.trans(:s, 'a..z' => 'a..z'), 'bokeper',
     ':s flag (squash)');
 
@@ -127,7 +125,6 @@ is('bookkeeper'.trans(:d, 'ok' => ''), 'beeper',
 is('ABC123DEF456GHI'.trans('A..Z' => 'x'), 'xxx123xxx456xxx',
     'no flags');
 
-#?niecza 4 skip 'trans flags NYI'
 is('ABC123DEF456GHI'.trans(:c, 'A..Z' => 'x'),'ABCxxxDEFxxxGHI',
     '... with :c');
 
@@ -143,7 +140,6 @@ is('ABC111DEF222GHI'.trans(:c, :d, 'A..Z' => ''),'ABCDEFGHI',
 is('Good&Plenty'.trans('len' => 'x'), 'Good&Pxxxty',
     'no flags');
 
-#?niecza 5 skip 'trans flags NYI'
 is('Good&Plenty'.trans(:s, 'len' => 'x',), 'Good&Pxty',
     'squashing depends on replacement repeat, not searchlist repeat');
 
@@ -188,7 +184,6 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     );
 };
 
-#?niecza skip 'closures and regexes'
 {
     # closures and regexes!
     is(
@@ -207,7 +202,6 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     );
 }
 
-#?niecza skip 'Action method quote:tr NYI'
 {
     #?rakudo skip 'feed operator NYI'
     is(EVAL('"abc".trans(<== "a" => "A")'), "Abc",
@@ -260,11 +254,9 @@ is 'aa'.trans(/^a/ => 'b'), 'ba', 'trans with anchored regex';
 is 'aa'.trans(/ <after a> ./ => 'b'), 'ab', 'trans with look-around regex';
 
 # RT #83674
-#?niecza todo 'Not sure what is supposed to be going on here'
 lives-ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); }, 'trans works with Cool signature';
 
 # RT #83766
-#?niecza 2 skip "Nominal type check failed for scalar store; got Int, needed Str or subtype"
 is((1, 2)>>.trans((1..26) => (14..26,1..13)), <14 15>, '.trans with a pair of lists using postfix hypermetaoperator works');
 is ("!$_!" for (1, 2)>>.trans((1..26) => (14..26,1..13))), <!14! !15!>, "same with explicit for";
 

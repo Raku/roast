@@ -19,7 +19,6 @@ if 1 {
     is ~$/, 'a', '... and can use the match var';
 }
 
-#?niecza todo
 ok defined($/), '$/ is a dynamic lexical, so it is set outside that block.';
 
 my $loop = 1;
@@ -53,7 +52,6 @@ my $discarded = do {
     ok $count, 'Can match in the condition of a while loop';
     is $match, 'b', '... and can use $/ in the block';
     #?rakudo todo 'Assignment to matched string affects earlier match objects'
-    #?niecza todo
     is "$/",   'b', '... and can use $/ outside the block';
 }
 

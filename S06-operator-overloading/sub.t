@@ -117,7 +117,6 @@ Testing operator overloading subroutines
             $foo.bar = 'software';
             $val = $foo + $foo;
         }, '... class methods work for class';
-        #?niecza todo '... basic infix operator overloading worked'
         is($val, 'software software', '... basic infix operator overloading worked');
     }
 
@@ -130,9 +129,7 @@ Testing operator overloading subroutines
 
         my @foo = ($obj, $obj, $obj);
         my $res;
-        #?niecza todo "stringification didn't die"
         lives-ok { $res = ~<<@foo }, "stringification didn't die";
-        #?niecza todo "... worked in array stringification"
         is $res, "pugs pugs pugs", "stringification overloading worked in array stringification";
     }
 

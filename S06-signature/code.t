@@ -31,7 +31,6 @@ dies-ok { EVAL 'tester2(not_returns_a_sub)' },
 is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
 
 # RT #68578
-#?niecza todo
 {
     sub rt68578( Callable &x ) {}   #OK not used
     dies-ok { rt68578({ 'block' }) },
@@ -44,7 +43,6 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
     sub foo(&foo = &foo) {
         $tracker = &foo
     };
-    #?niecza todo
     #?rakudo todo 'RT #67932'
     lives-ok { foo },
         'can call a sub with a code object defaulting to something of its own name';

@@ -21,19 +21,15 @@ is IO::Path.new(:dirname</foo>, :basename<bar.txt>).cleanup, $path.cleanup,
 is $path.volume,          '', 'volume';
 is $path.dirname,     '/foo', 'dirname';
 is $path.basename, 'bar.txt', 'basename';
-#?niecza 2 skip '.parent NYI'
 is $path.parent,    '/foo',    'parent';
 is $path.parent.parent, '/',   'parent of parent';
-#?niecza 2 skip '.is-absolute, .is-relative NYI'
 is $path.is-absolute, True,    'is-absolute';
 is $path.is-relative, False,   'is-relative';
 
 isa-ok $path.path, Str,      'IO::Path.path returns Str';
-#?niecza skip 'IO::Handle still called IO'
 isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 
 # Try to guess from context that the correct backend is loaded:
-#?niecza skip 'is-absolute NYI'
 #?DOES 2
 {
   if $*DISTRO.name eq any <win32 mswin32 os2 dos symbian netware> {

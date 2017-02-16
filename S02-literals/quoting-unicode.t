@@ -9,7 +9,6 @@ plan 89;
 # * arrays in «»
 
 #L<S02/C<Q> Forms/halfwidth corner brackets>
-#?niecza skip 'Parse failure'
 {
 
     my $s = ｢this is a string\n｣;

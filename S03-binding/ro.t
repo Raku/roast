@@ -32,13 +32,9 @@ plan 11;
 
     @x ::= @y;
     is @x.join('|'), 'd|e', '::= on arrays';
-    #?niecza todo
     dies-ok { @x := <3 4 foo> }, '... make RO';
-    #?niecza todo
     is @x.join('|'), 'd|e', 'value unchanged';
-    #?niecza todo
     lives-ok { @x[2] = 'k' }, 'can still assign to items of RO array';
-    #?niecza todo
     is @x.join(''), 'd|e|k', 'assignment relly worked';
 }
 

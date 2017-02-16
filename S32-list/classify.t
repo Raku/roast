@@ -44,7 +44,6 @@ plan 40;
 } #4*6
 
 #?rakudo skip 'Cannot use bind operator with this LHS RT #124751'
-#?niecza skip 'Cannot use bind operator with this LHS'
 {
     my @list = (1, 2, 3, 4);
     my (@even,@odd);
@@ -76,7 +75,6 @@ plan 40;
     is-deeply "A".classify( {$_} ), (my %{Any} = A => ["A"]), "classify single string";
 } #2
 
-#?niecza todo 'feature'
 {
     is-deeply( classify( {.comb}, flat 100 .. 119, 104, 119 ),
       (my %{Any} =

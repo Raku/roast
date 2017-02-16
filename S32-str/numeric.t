@@ -13,7 +13,6 @@ sub check($str, $expected_type, $expected_number, $desc?) {
 #?DOES 1
 sub f($str) {
     my $num = +$str;
-    #?niecza todo 'Failure'
     ok !$num.defined, "+{$str.perl} fails";
 }
 
@@ -63,7 +62,6 @@ f     '0xaf-';
     check '-:1_0<4_2>', Int,    -42;
     check ':36<aZ>',    Int,    395;
     check ':2<11>',     Int,      3;
-    #?niecza 6 todo 'Failure'
     f     ':2<2>';
     f     ':37<8>';
     f     ':10<8_>';

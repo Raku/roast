@@ -25,7 +25,6 @@ ok $existing-file2.IO.e, 'sanity check 2';
 nok $non-existent-file.IO.e, "sanity check 2";
 
 # method .IO.move
-#?niecza skip 'Unable to resolve method s in class IO'
 {
     my $dest1a = "tempfile-move-dest1a";
     my $dest1b = "tempfile-move-dest1b";
@@ -51,7 +50,6 @@ nok $non-existent-file.IO.e, "sanity check 2";
 }
 
 # sub move()
-#?niecza skip 'Unable to resolve method s in class IO'
 {
     my $dest2a = "tempfile-move-dest2a";
     my $dest2b = "tempfile-move-dest2b";

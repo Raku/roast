@@ -8,7 +8,6 @@ plan 40;
 
 # L<S15/Numeric Value>
 
-#?niecza 40 skip "unival NYI"
 is unival(""), Nil, "unival an empty string yields Nil";
 is univals(""), (), "univals an empty string yields an empty list";
 is "".unival, Nil, "''.unival yields Nil";

@@ -16,17 +16,13 @@ is(foo(42), "one", "multi sub with parameter list");
 # multi sub without signature
 multi sub bar { "empty" }
 multi sub bar($a) { "one" }    #OK not used
-#?niecza skip 'No candidates for dispatch to &bar'
 is(bar(), "empty", "multi sub with no signature");
-#?niecza skip 'Ambiguous dispatch for &bar'
 is(bar(42), "one", "multi sub with parameter list");
 
 # multi without a routine type
 multi baz { "empty" }
 multi baz($a) { "one" }    #OK not used
-#?niecza skip 'No candidates for dispatch to &baz'
 is(baz(), "empty", "multi with no signature");
-#?niecza skip 'Ambiguous dispatch for &baz'
 is(baz(42), "one", "multi with parameter list");
 
 # multi without a routine type with signature
@@ -49,19 +45,15 @@ multi bar(T $a;; S $b) { 2 }    #OK not used
 my $lived = 0;
 try { foo(S,S); $lived = 1 }
 is($lived, 0, "dispatch tied as expected");
-#?niecza skip 'Ambiguous dispatch for &bar'
 is(bar(S,S), 1, "not tied as only first type in the dispatch");
 
 # not allowed to declare anonymous routines with only, multi or proto.
-#?niecza todo
 throws-like 'only sub {}', X::Anon::Multi, 'anonymous only sub is an error';
 throws-like 'multi sub {}', X::Anon::Multi, 'anonymous multi sub is an error';
 throws-like 'proto sub {}', X::Anon::Multi, 'anonymous proto sub is an error';
-#?niecza todo
 throws-like 'only {}', X::Anon::Multi, 'anonymous only is an error';
 throws-like 'multi {}', X::Anon::Multi, 'anonymous multi is an error';
 throws-like 'proto {}', X::Anon::Multi, 'anonymous proto is an error';
-#?niecza todo
 throws-like 'class A { only method {} }', X::Anon::Multi,
     'anonymous only method is an error';
 throws-like 'class B { multi method {} }', X::Anon::Multi,
@@ -70,7 +62,6 @@ throws-like 'class C { proto method {} }', X::Anon::Multi,
     'anonymous proto method is an error';
 
 ok(&foo ~~ Callable, 'a multi does Callable');
-#?niecza todo
 ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
 # note - example in ticket [perl #58948] a bit more elaborate
@@ -163,7 +154,6 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 }
 
 # RT #68528
-#?niecza skip 'Ambiguous call to &rt68528'
 {
     multi rt68528(:$a!, *%_) { return "first"  };
     multi rt68528(:$b,  *%_) { return "second" };

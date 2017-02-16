@@ -20,7 +20,6 @@ is "a\c[NO-BREAK SPACE]bc d".words, <a bc d>, 'words on string with (U+00A0 NO-B
 is "ä bc d".words, <ä bc d>, 'words on string with non-ASCII letter';
 
 #?rakudo.jvm 2 todo 'NFG on JVM RT #124739'
-#?niecza 2 todo 'charspec'
 is "a\c[COMBINING DIAERESIS] bc d".words, ("ä", "bc", "d"), 'words on string with grapheme precomposed';
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
     ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "bc", "d"),
@@ -32,7 +31,6 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
 }
 
 # RT #120517
-#?niecza todo 'extra .list on the lhs'
 {
     my $RT120517 = "FOO";
     is qq:ww/$RT120517 "BAR BAZ"/.perl, qq:ww/FOO "BAR BAZ"/.perl, "interpolated variable .perl's like a literal"

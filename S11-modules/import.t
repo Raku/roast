@@ -89,7 +89,6 @@ plan 17;
         'can import the same thing twice';   ## the first import at line 2 ;)
 }
 
-#?niecza skip 'is export not available for variables'
 {
     module G {
         our $gee is export = 42;

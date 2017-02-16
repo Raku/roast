@@ -174,7 +174,6 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
-#?niecza todo ":radix() NYI"
 {
     is(:8('0b1110'),   0b1110,  ':8(0b1110) overrides from default octal');
     is(:8(':2<1110>'), 0b1110,  ':8(:2<1110>) overrides from default octal');
@@ -225,13 +224,11 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 {
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
     #?rakudo skip "Really?!"
-    #?niecza skip "WTF?"
     is( :2«1.1*:2<10>**:2<10>»,    6, 'Powers of two in <<>> works');
 }
 
 # Tests for the :x[ <list> ] notations
 # L<S02/General radices/"Alternately you can use a list of values">
-#?niecza skip ":radix[] NYI"
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
     is( :100[3,'.',14,16],     3.1416,         'Decimal point in list works' );

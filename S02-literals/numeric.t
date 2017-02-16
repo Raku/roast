@@ -103,7 +103,6 @@ is-approx 3.14159265358979323846264338327950288419716939937510e0,
 }
 
 # RT #70600
-#?niecza todo 'exactly rounded Str->Num without FatRat'
 ok 0e999999999999999 == 0, '0e999999999999 equals zero';
 
 # We are not afraid of unicode

@@ -16,13 +16,11 @@ plan 40;
 
         $r = "boing";
         #?rakudo todo 'NYI'
-        #?niecza todo
         is($str, "boing ding", "assignment to reference modifies original");
         is($r, "boing", '$r is consistent');
 
         my $o = substr-rw($str, 3, 2);
         #?rakudo 3 todo 'NYI'
-        #?niecza 3 todo
         is($o, "ng", "other ref to other lvalue");
         $r = "foo";
         is($str, "foo ding", "lvalue ref size varies but still works");

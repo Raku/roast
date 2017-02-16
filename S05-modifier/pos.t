@@ -44,7 +44,6 @@ for ("abcdef") {
     ok($/.to == 9, 'Insensitive recontinued match pos');
 }
 
-#?niecza skip ':i'
 {
     my $str = "abcabcabc";
     my @x = $str ~~ m:i:g:p/abc/;
@@ -55,7 +54,6 @@ for ("abcdef") {
     ok ($str !~~ m:i:p/abc/, 'no more match, string exhausted');
 }
 
-#?niecza skip ':i'
 {
     my $str = "abcabcabc";
     my @x = ?($str ~~ m:p:i:g/abc/);

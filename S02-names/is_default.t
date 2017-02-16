@@ -5,7 +5,6 @@ plan 110;
 
 # L<S02/Variables Containing Undefined Values>
 
-#?niecza skip "is default NYI"
 # not specifically typed
 {
     my $a is default(42);
@@ -52,7 +51,6 @@ plan 110;
     is $obj.y, 42, 'is default on attributes applies to all in a list';
 }
 
-#?niecza skip "Int is default NYI"
 # typed
 {
     my Int $a is default(42);
@@ -72,7 +70,6 @@ plan 110;
     is $b.VAR.default, 42, 'is the default set correctly for Int $b';
 } #11
 
-#?niecza skip "is default NYI"
 # not specifically typed
 {
     my @a is default(42);
@@ -103,7 +100,6 @@ plan 110;
     ok @d.VAR.default === Nil, 'is the default set correctly for @d';
 } #19
 
-#?niecza skip "Int is default NYI"
 # typed
 {
     my Int @a is default(42);
@@ -123,7 +119,6 @@ plan 110;
     is @b.VAR.default, 42, 'is the default set correctly for Int @b';
 } #12
 
-#?niecza skip "is default NYI"
 # not specifically typed
 {
     my %a is default(42);
@@ -154,7 +149,6 @@ plan 110;
     ok %d.VAR.default === Nil, 'is the default set correctly for %d';
 } #19
 
-#?niecza skip "Int is default NYI"
 # typed
 {
     my Int %a is default(42);
@@ -174,7 +168,6 @@ plan 110;
     is %b.VAR.default, 42, 'is the default set correctly for Int %b';
 } #12
 
-#?niecza skip "is default NYI"
 # type mismatches in setting default
 {
     throws-like 'my Int $a is default("foo")',
@@ -203,7 +196,6 @@ plan 110;
       got      => Nil;
 } #6
 
-#?niecza skip "is default NYI"
 # native types
 {
     #?rakudo.jvm todo "RT #126519"

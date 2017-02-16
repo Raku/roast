@@ -45,7 +45,6 @@ plan 47;
 
 # Overloading by setting the appropriate code variable using symbolic
 # dereferentiation
-#?niecza skip 'Cannot use hash access on an object of type Array'
 {
   my &infix:<times>;
   BEGIN {
@@ -63,20 +62,17 @@ plan 47;
   is &infix:<z>(2, 3), 5, "accessing a userdefined operator using its subroutine name";
 
   #?rakudo skip 'undeclared name'
-  #?niecza skip 'Undeclared routine'
   is ~(&infix:<»+«>([1,2,3],[4,5,6])), "5 7 9", "accessing a hyperoperator using its subroutine name";
 }
 
 # Overriding infix:<;>
 #?rakudo todo 'infix:<;> RT #124981'
-#?niecza todo
 {
     my proto infix:<;> ($a, $b) { $a + $b }
     is $(3 ; 2), 5  # XXX correct?
 }
 
 # here is one that co-erces a MyClass into a Str and a Num.
-#?niecza skip 'import NYI'
 {
     class OtherClass {
       has $.x is rw;
@@ -148,7 +144,6 @@ plan 47;
       "Non-associative should not parsed when used chainly.";
 }
 
-#?niecza skip "roles NYI"
 {
     role A { has $.v }
     multi sub infix:<==>(A $a, A $b) { $a.v == $b.v }
@@ -181,7 +176,6 @@ plan 47;
 
 # test that multis with other arity don't interfere with existing ones
 # used to be RT #65640
-#?niecza skip 'No matching candidates to dispatch for &infix:<+>'
 {
     multi sub infix:<+>() { 42 };
     ok 5 + 5 == 10, "New multis don't disturb old ones";
@@ -193,7 +187,6 @@ plan 47;
     is EVAL('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
        'very specific infix:<,>';
     #?rakudo todo 'RT #65638'
-    #?niecza todo
     is EVAL('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
     is EVAL('multi sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
     is EVAL('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
@@ -229,7 +222,6 @@ plan 47;
 }
 
 # RT #74104
-#?niecza skip 'No matching candidates to dispatch for &infix:<+>'
 {
     class RT74104 {}
     multi sub infix:<+>(RT74104 $, RT74104 $) { -1 }

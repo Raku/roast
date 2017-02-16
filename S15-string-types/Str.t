@@ -6,7 +6,6 @@ plan 4;
 
 is "ẛ̣".WHAT, Str, "Strings are of type Str by default.";
 #?rakudo 1 skip ':nfg adverb NYI RT #124991'
-#?niecza 1 skip ':nfg adverb NYI'
 is qq:nfg/ẛ̣/.WHAT, Str, ":nfg adverb on quoteforms results in Str.";
 
 #?rakudo.jvm todo "NFG on JVM RT #124992"

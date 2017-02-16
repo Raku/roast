@@ -29,7 +29,6 @@ plan 17;
   my @array  = <1 2 3 4 5 6 7 8 9>;
   my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * 9;
 
-  #?niecza skip 'n-ary reduce'
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
 }
 
@@ -40,7 +39,6 @@ plan 17;
 
   sub infix:<leftly> { $^a + $^b * $^c }
 
-  #?niecza skip 'n-ary reduce'
   is ([leftly] @array), $result, "n-ary reduce() works";
 }
 
@@ -50,7 +48,6 @@ plan 17;
   my $result = 1 + 2 * (3 + 4 * (5 + 6 * (7 + 8 * 9)));
   sub rightly is assoc<right> { $^a + $^b * $^c }
 
-  #?niecza skip 'n-ary reduce'
   is (@array.reduce: &rightly).gist, $result.gist, "right assoc n-ary reduce() works";
 }
 
@@ -59,7 +56,6 @@ plan 17;
   my $result = 1 + 2 * (3 + 4 * (5 + 6 * (7 + 8 * 9)));
   sub infix:<rightly> is assoc<right> { $^a + $^b * $^c }
 
-  #?niecza skip 'n-ary reduce'
   is ([rightly] @array).gist, $result.gist, "right assoc n-ary reduce() works";
 }
 

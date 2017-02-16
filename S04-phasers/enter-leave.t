@@ -83,7 +83,6 @@ plan 30;
 }
 
 # normal closure:
-#?niecza skip 'leave'
 #?rakudo skip 'leave NYI RT #124960'
 {
     is EVAL(q{
@@ -108,7 +107,6 @@ plan 30;
     is $str, '(x)', 'die calls LEAVE blocks';
 }
 
-#?niecza 2 skip 'dubious: noauto'
 {
     my $str;
     try {
@@ -180,7 +178,6 @@ plan 30;
 }
 
 # RT #121530
-#?niecza todo '@!'
 {
     my $str;
     try {

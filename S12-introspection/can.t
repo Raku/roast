@@ -14,7 +14,6 @@ plan 29;
 
 lives-ok { Str.can("split") },   "method can on built-in Str works";
 ok "foo".can("split"),           "methd can on built-in Str gives correct result if method found";
-#?niecza todo '.can returns something Positional'
 ok "foo".can("split") ~~ Positional, '.can returns  something Positional';
 ok !"foo".can("hazcheezburger"), "methd can on built-in Str gives correct result if method not found";
 ok "bar".^can("split"),          "calling ^can also works";
@@ -36,13 +35,10 @@ ok Dog.can("bark"),            "method can on custom class gives correct result 
 ok !Dog.can("w00f"),           "method can on custom class gives correct result if method not found (on proto)";
 
 my $meth = $dog.can("bark");
-#?niecza skip 'No match'
 is $meth[0]($dog), "bow", "the result for can contains an invokable, giving us the sub (on instance)";
 $meth = Dog.can("bark");
-#?niecza skip 'No match'
 is $meth[0](Dog), "bow",  "the result for can contains an invokable, giving us the sub (on proto)";
 
-#?niecza skip 'No match'
 {
     my $iters = 0;
     my $found = "";
@@ -54,7 +50,6 @@ is $meth[0](Dog), "bow",  "the result for can contains an invokable, giving us t
     is $found, "bow", "got right method called (on instance)";
 }
 
-#?niecza skip 'No match'
 {
     my $iters = 0;
     my $found = "";
@@ -73,7 +68,6 @@ class Puppy is Dog {
 }
 my $pup = Puppy.new();
 
-#?niecza skip 'No match'
 {
     my $iters = 0;
     my $found = "";
@@ -85,7 +79,6 @@ my $pup = Puppy.new();
     is $found, "yapbow", "subclass got right methods called (on instance)";
 }
 
-#?niecza skip 'No match'
 {
     my $iters = 0;
     my $found = "";
@@ -98,10 +91,8 @@ my $pup = Puppy.new();
 }
 
 # RT #76584
-#?niecza todo
 ok Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
 
-#?niecza skip "No match"
 {
     # RT #76882
     my class A {

@@ -37,7 +37,6 @@ use Test::Util;
     ok $caught, 'Stringifying Any warns';
 }
 
-#?niecza todo
 is_run 'use v6; warn; say "alive"',
     {
         status => 0,
@@ -63,7 +62,6 @@ is_run 'use v6; try {warn("OH NOEZ") }; say "alive"',
     },
     'try does not suppress warnings';
 
-#?niecza todo 'quietly NYI'
 is_run 'use v6; quietly {warn("OH NOEZ") }; say "alive"',
     {
         status => 0,

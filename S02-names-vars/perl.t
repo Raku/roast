@@ -21,7 +21,6 @@ my @tests = (
     'שלום',
 
     ?1, ?0,
-    #?niecza emit # Autoloading NYI
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # Captures containing scalars
@@ -67,7 +66,6 @@ my @tests = (
     my $foo = { a => 42 }; $foo<b> = $foo;
     is $foo<b><b><b><a>, 42, "basic recursive hashref";
 
-    #?niecza skip 'hanging test'
     ok $foo.perl,
         ".perl worked correctly on a recursive hashref";
 }
@@ -80,7 +78,6 @@ my @tests = (
 
     is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashref recursive structure";
 
-    #?niecza skip 'hanging test'
     ok $foo.perl,
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
 }
@@ -132,7 +129,6 @@ my @tests = (
 
 
 # RT #61918
-#?niecza skip ">>>Stub code executed"
 {
     class RT61918 {
         has $.inst is rw;
@@ -182,7 +178,6 @@ my @tests = (
     class RT67790 {}
     lives-ok { RT67790.HOW.perl }, 'can .perl on .HOW';
     #?rakudo skip 'RT #67790'
-    #?niecza skip '>>>Stub code executed'
     ok EVAL(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
 }
 
@@ -206,7 +201,6 @@ my @tests = (
 }
 
 # Buf
-#?niecza skip 'Unhandled exception'
 {
     my Blob $a = "asdf".encode();
     is EVAL($a.perl).decode("utf8"), "asdf";

@@ -27,7 +27,6 @@ my @list = (1 ... 10);
 }
 
 #?rakudo skip "adverbial block RT #124765"
-#?niecza skip 'No value for parameter Mu $filter in CORE Any.first'
 {
     my $result = @list.first():{ ($^a == 4) };
     ok($result ~~ Int, "first():<block> returns an Int");
@@ -73,7 +72,6 @@ my @list = (1 ... 10);
 }
 
 # RT #118141
-#?niecza skip 'https://github.com/sorear/niecza/issues/183'
 {
     isa-ok (first * > 20, @list), Nil, "first() returns Nil when no values match";
     isa-ok @list.first(* < 0 ), Nil, ".first returns Nil when no values match"

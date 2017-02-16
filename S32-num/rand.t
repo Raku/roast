@@ -67,7 +67,6 @@ lives-ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 #?rakudo skip 'Test is too slow; srand call incorrect RT #124812'
-#?niecza skip 'Test is too slow'
 # Similar code under Perl 5 runs in < 15s.
 {
     srand;
@@ -111,7 +110,6 @@ lives-ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 # RT #113968
-#?niecza skip "throws-like"
 #?DOES 4
 {
     throws-like 'rand()', X::Obsolete;

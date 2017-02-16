@@ -31,7 +31,6 @@ isa-ok($anon_block, Block);
 is($anon_block(), 1, '{} <anon block> works');
 
 # RT #64844
-#?niecza skip "Exception NYI"
 {
     EVAL '$anon_block( 1 )';
     #?rakudo todo 'Parrot support for zero-arg subs?'
@@ -140,7 +139,6 @@ isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
         'call via (sub (&x) { &x() }).( &s ) works for sub';
 }
 
-#?niecza skip 'No candidates for dispatch to mone'
 {
     proto mone(|) { * }
     multi mone { 'one' }

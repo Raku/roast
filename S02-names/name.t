@@ -3,7 +3,6 @@ use Test;
 
 plan 24;
 
-#?niecza skip "$a.VAR.name NYI"
 # not specifically typed
 {
     my $a;
@@ -12,7 +11,6 @@ plan 24;
     is $a.VAR.name, '$a', "initialized untyped variable should have name";
 } #2
 
-#?niecza skip "Int $a.VAR.name NYI"
 # typed
 {
     my Int $a;
@@ -21,7 +19,6 @@ plan 24;
     is $a.VAR.name, '$a', "initialized typed variable should have name";
 } #2
 
-#?niecza skip "@a.VAR.name NYI"
 # not specifically typed
 {
     my @a;
@@ -30,7 +27,6 @@ plan 24;
     is @a.VAR.name, '@a', "initialized untyped array should have name";
 } #2
 
-#?niecza skip "Int @a.VAR.name NYI"
 # typed
 {
     my Int @a;
@@ -39,7 +35,6 @@ plan 24;
     is @a.VAR.name, '@a', "initialized typed array should have name";
 } #2
 
-#?niecza skip "%a.VAR.name NYI"
 # not specifically typed
 {
     my %a;
@@ -48,7 +43,6 @@ plan 24;
     is %a.VAR.name, '%a', "initialized untyped hash should have name";
 } #2
 
-#?niecza skip "Int %a.VAR.name NYI"
 # typed
 {
     my Int %a;
@@ -57,7 +51,6 @@ plan 24;
     is %a.VAR.name, '%a', "initialized typed hash should have name";
 } #2
 
-#?niecza skip "&a.VAR.name NYI"
 # not specifically typed
 {
     my &a;
@@ -66,7 +59,6 @@ plan 24;
     is &a.VAR.name, '&a', "initialized untyped sub should have name";
 } #2
 
-#?niecza skip "Int &a.VAR.name NYI"
 # typed
 {
     my Int &a;

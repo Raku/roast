@@ -217,13 +217,11 @@ is sprintf('%10s', "☃" x 3), '       ☃☃☃', 'multi-byte characters are co
 is sprintf("%x %x", 301281685344656640, 301281685344656669), '42e5e18b84c9d00 42e5e18b84c9d1d',   'RT #118601';
 is sprintf("%d", 42**20),                                    '291733167875766667063796853374976', 'RT #118253';
 is map({chars sprintf "[%18s]\n", "ಠ" x $_ }, 0..6),         [21, 21, 21, 21, 21, 21, 21],        'RT #117547';
-#?niecza skip 'Date NYI'
 is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01',                'RT #114760';
 
 # RT #116280
 {
     is sprintf('%12.5f',  NaN), '         NaN', 'RT #116280';
-    #?niecza 2 todo "https://github.com/sorear/niecza/issues/181"
     is sprintf('%12.5f',  Inf), '         Inf', 'RT #116280';
     is sprintf('%12.5f', -Inf), '        -Inf', 'RT #116280';
 
@@ -240,7 +238,6 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 }
 
 # RT #106594, #62316, #74610
-#?niecza skip 'dubious test - should be testing exception type, not string. Niecza does respond with an appropriate, but differently worded string'
 {
     throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count, 'RT #106594, #62316, #74610';
 }
@@ -255,7 +252,6 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 
 # found by japhb
 {
-    #?niecza todo 'buggy'
     is sprintf("%.0f", 1.969), "2",     '%.0f of 1.969 should be 2';
     is sprintf("%.1f", 1.969), "2.0",   '%.1f of 1.969 should be 2.0';
     is sprintf("%.2f", 1.969), "1.97",  '%.2f of 1.969 should be 1.97';

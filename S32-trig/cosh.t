@@ -86,7 +86,6 @@ for @coshes -> $angle
     is-approx($zp2.cosh, $sz2, "Complex.cosh - $zp2");
 }
 
-#?niecza skip "Inf results wrong"
 {
     is(cosh(Inf), Inf, "cosh(Inf) -");
     is(cosh(-Inf), Inf, "cosh(-Inf) -");

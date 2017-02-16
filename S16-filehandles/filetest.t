@@ -16,7 +16,6 @@ plan 44;
 # L<S03/Changes to Perl 5 operators/The filetest operators are gone.>
 # old: L<S16/Filehandles, files, and directories/A file test, where X is one of the letters listed below.>
 
-#?niecza todo
 dies-ok { 't' ~~ :d }, 'file test from before spec revision 27503 is error';
 
 # Basic tests
@@ -58,7 +57,6 @@ ok not 'doesnotexist.t'.IO ~~ :w, "~~:w returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :x, "~~:x returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
 
-#?niecza skip ".s NYI"
 ok($*PROGRAM.IO.s > 42,   "~~:s returns size on existent files");
 
 nok "doesnotexist.t".IO ~~ :s, "~~:s returns false on non-existent files";
@@ -69,11 +67,9 @@ nok "t".IO ~~ :z,              "~~:z returns false on directories";
 
 my $fh = open("empty_file", :w);
 close $fh;
-#?niecza todo
 ok "empty_file".IO ~~ :z,      "~~:z returns true for an empty file";
 unlink "empty_file";
 
-#?niecza skip "Asynchronous programming NYI exception generated"
 {
     if $*DISTRO.is-win {
       skip "~~:M/~~:C/~~:A not working on Win32 yet", 9

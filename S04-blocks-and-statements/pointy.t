@@ -66,7 +66,6 @@ my $s = -> {
 };
 dies-ok $s, 'pointy with block control exceptions';
 #?rakudo todo 'pointy blocks and last/redo RT #124973'
-#?niecza todo
 is $n, 10, "pointy control exceptions ran";
 
 # L<S06/""Pointy blocks""/will return from the innermost enclosing sub or method>
@@ -74,7 +73,6 @@ my $str = '';
 
 sub outer {
     my $s = -> {
-        #?niecza todo 'Unable to resolve method name in class Sub'
         is(&?ROUTINE.name, 'outer', 'pointy still sees outer\'s &?ROUTINE');
 
         $str ~= 'inner';
@@ -109,7 +107,6 @@ lives-ok {my $x = -> {}; my $y = $x(); },
 # L<S02/Undefined types/default block parameter type>
 # this means that junctions don't autothread over pointy blocks
 
-#?niecza skip 'Could not find non-existent sub junction'
 {
     my @a = any(3, 4);
     my $ok = 0;

@@ -132,7 +132,6 @@ ok("\c[ZERO WIDTH NON-JOINER]" ~~ m/^<:JoinControl>$/, q{Match <:JoinControl>} )
 ok(!( "\c[ZERO WIDTH NON-JOINER]" ~~ m/^<:!JoinControl>$/ ), q{Don't match negated <JoinControl>} );
 ok(!( "\c[ZERO WIDTH NON-JOINER]" ~~ m/^<-:JoinControl>$/ ), q{Don't match inverted <JoinControl>} );
 ok(!( "\c[BENGALI LETTER DDHA]"  ~~ m/^<:JoinControl>$/ ), q{Don't match unrelated <JoinControl>} );
-#?niecza todo
 ok("\c[BENGALI LETTER DDHA]"  ~~ m/^<:!JoinControl>$/, q{Match unrelated negated <JoinControl>} );
 ok("\c[BENGALI LETTER DDHA]"  ~~ m/^<-:JoinControl>$/, q{Match unrelated inverted <JoinControl>} );
 ok("\c[BENGALI LETTER DDHA]\n\c[ZERO WIDTH NON-JOINER]" ~~ m/<:JoinControl>/, q{Match unanchored <JoinControl>} );
@@ -154,11 +153,9 @@ ok("\x[857B]\x[857B]\c[THAI CHARACTER SARA E]" ~~ m/<:LogicalOrderException>/, q
 # NoncharacterCodePoint
 
 ok(!( "\c[LATIN LETTER REVERSED GLOTTAL STOP WITH STROKE]"  ~~ m/^<:NoncharacterCodePoint>$/ ), q{Don't match unrelated <NoncharacterCodePoint>} );
-#?niecza todo
 ok("\c[LATIN LETTER REVERSED GLOTTAL STOP WITH STROKE]"  ~~ m/^<:!NoncharacterCodePoint>$/, q{Match unrelated negated <NoncharacterCodePoint>} );
 ok("\c[LATIN LETTER REVERSED GLOTTAL STOP WITH STROKE]"  ~~ m/^<-:NoncharacterCodePoint>$/, q{Match unrelated inverted <NoncharacterCodePoint>} );
 ok(!( "\c[ARABIC-INDIC DIGIT ZERO]" ~~ m/^<:NoncharacterCodePoint>$/ ), q{Don't match related <NoncharacterCodePoint>} );
-#?niecza todo
 ok("\c[ARABIC-INDIC DIGIT ZERO]" ~~ m/^<:!NoncharacterCodePoint>$/, q{Match related negated <NoncharacterCodePoint>} );
 ok("\c[ARABIC-INDIC DIGIT ZERO]" ~~ m/^<-:NoncharacterCodePoint>$/, q{Match related inverted <NoncharacterCodePoint>} );
 
@@ -244,7 +241,6 @@ ok("\c[CJK RADICAL REPEAT]" ~~ m/^<:Radical>$/, q{Match <:Radical>} );
 ok(!( "\c[CJK RADICAL REPEAT]" ~~ m/^<:!Radical>$/ ), q{Don't match negated <Radical>} );
 ok(!( "\c[CJK RADICAL REPEAT]" ~~ m/^<-:Radical>$/ ), q{Don't match inverted <Radical>} );
 ok(!( "\c[HANGUL JONGSEONG CHIEUCH]"  ~~ m/^<:Radical>$/ ), q{Don't match unrelated <Radical>} );
-#?niecza todo
 ok("\c[HANGUL JONGSEONG CHIEUCH]"  ~~ m/^<:!Radical>$/, q{Match unrelated negated <Radical>} );
 ok("\c[HANGUL JONGSEONG CHIEUCH]"  ~~ m/^<-:Radical>$/, q{Match unrelated inverted <Radical>} );
 ok("\c[HANGUL JONGSEONG CHIEUCH]\c[CJK RADICAL REPEAT]" ~~ m/<:Radical>/, q{Match unanchored <Radical>} );
@@ -259,7 +255,6 @@ ok(!( "\x[ADEF]"  ~~ m/^<:SoftDotted>$/ ), q{Don't match unrelated <SoftDotted>}
 ok("\x[ADEF]"  ~~ m/^<:!SoftDotted>$/, q{Match unrelated negated <SoftDotted>} );
 ok("\x[ADEF]"  ~~ m/^<-:SoftDotted>$/, q{Match unrelated inverted <SoftDotted>} );
 ok(!( "\c[DOLLAR SIGN]" ~~ m/^<:SoftDotted>$/ ), q{Don't match related <SoftDotted>} );
-#?niecza todo
 ok("\c[DOLLAR SIGN]" ~~ m/^<:!SoftDotted>$/, q{Match related negated <SoftDotted>} );
 ok("\c[DOLLAR SIGN]" ~~ m/^<-:SoftDotted>$/, q{Match related inverted <SoftDotted>} );
 ok("\x[ADEF]\c[DOLLAR SIGN]\c[LATIN SMALL LETTER I]" ~~ m/<:SoftDotted>/, q{Match unanchored <SoftDotted>} );
@@ -281,7 +276,6 @@ ok("\x[3C9D]\c[EXCLAMATION MARK]" ~~ m/<:TerminalPunctuation>/, q{Match unanchor
 ok("\x[7896]" ~~ m/^<:UnifiedIdeograph>$/, q{Match <:UnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<:!UnifiedIdeograph>$/ ), q{Don't match negated <UnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<-:UnifiedIdeograph>$/ ), q{Don't match inverted <UnifiedIdeograph>} );
-#?niecza 3 todo
 ok(!( "\x[4DFF]"  ~~ m/^<:UnifiedIdeograph>$/ ), q{Don't match unrelated <UnifiedIdeograph>} );
 ok("\x[4DFF]"  ~~ m/^<:!UnifiedIdeograph>$/, q{Match unrelated negated <UnifiedIdeograph>} );
 ok("\x[4DFF]"  ~~ m/^<-:UnifiedIdeograph>$/, q{Match unrelated inverted <UnifiedIdeograph>} );
@@ -393,21 +387,18 @@ ok("\x[D7A4]\x[C99D]" ~~ m/<:Assigned>/, q<Match unanchored (Any non-Cn characte
 
 
 #?rakudo.jvm todo 'isUnassigned NYI RT #124883'
-#?niecza 3 todo
 ok("\x[110E9]" ~~ m/^<:Unassigned>$/, q<Match (Synonym for \p{Cn})> );
 ok(!( "\x[110E9]" ~~ m/^<:!Unassigned>$/ ), q<Don't match negated (Synonym for \p{Cn})> );
 ok(!( "\x[110E9]" ~~ m/^<-:Unassigned>$/ ), q<Don't match inverted (Synonym for \p{Cn})> );
 ok(!( "\c[RIGHT OUTER JOIN]"  ~~ m/^<:Unassigned>$/ ), q<Don't match unrelated (Synonym for \p{Cn})> );
 ok("\c[RIGHT OUTER JOIN]"  ~~ m/^<:!Unassigned>$/, q<Match unrelated negated (Synonym for \p{Cn})> );
 ok("\c[RIGHT OUTER JOIN]"  ~~ m/^<-:Unassigned>$/, q<Match unrelated inverted (Synonym for \p{Cn})> );
-#?niecza todo
 ok("\c[RIGHT OUTER JOIN]\x[110E9]" ~~ m/<:Unassigned>/, q<Match unanchored (Synonym for \p{Cn})> );
 
 # Common          # Codepoint not explicitly assigned to a script
 
 
 #?rakudo.jvm 10 skip 'isCommon NYI RT #124884'
-#?niecza 3 todo
 ok("\c[ELECTRIC LIGHT BULB]" ~~ m/^<:Common>$/, q{Match (Codepoint not explicitly assigned to a script)} );
 ok(!( "\c[ELECTRIC LIGHT BULB]" ~~ m/^<:!Common>$/ ), q{Don't match negated (Codepoint not explicitly assigned to a script)} );
 ok(!( "\c[ELECTRIC LIGHT BULB]" ~~ m/^<-:Common>$/ ), q{Don't match inverted (Codepoint not explicitly assigned to a script)} );
@@ -417,7 +408,6 @@ ok("\c[KANNADA SIGN ANUSVARA]"  ~~ m/^<-:Common>$/, q{Match unrelated inverted (
 ok(!( "\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<:Common>$/ ), q{Don't match related (Codepoint not explicitly assigned to a script)} );
 ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<:!Common>$/, q{Match related negated (Codepoint not explicitly assigned to a script)} );
 ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<-:Common>$/, q{Match related inverted (Codepoint not explicitly assigned to a script)} );
-#?niecza todo
 ok("\c[KANNADA SIGN ANUSVARA]\c[KHMER VOWEL INHERENT AQ]\c[ELECTRIC LIGHT BULB]" ~~ m/<:Common>/, q{Match unanchored (Codepoint not explicitly assigned to a script)} );
 
 # TODO: missing properties which are broken up to Perl 5.10 e.g.

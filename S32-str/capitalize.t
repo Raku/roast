@@ -9,7 +9,6 @@ plan 17;
 is wordcase(""),             "",               "wordcase('') works";
 is wordcase("puGS Is cOOl!"), "Pugs Is Cool!", "wordcase('...') works";
 is "puGS Is cOOl!".wordcase,  "Pugs Is Cool!", "'...'.wordcase works";
-#?niecza 2 todo "wordcase somewhat stupid right now"
 is "don't sit under the apple tree".wordcase, "Don't Sit Under The Apple Tree", "wordcase works properly with apostrophes";
 is "tir-na nog'th".wordcase, "Tir-na Nog'th", "wordcase works properly with apostrophes and dashes";
 
@@ -32,7 +31,6 @@ is "ab cD Ef".wordcase,      "Ab Cd Ef",       "works on ordinary string";
 is wordcase("äöü abcä"), "Äöü Abcä", "wordcase() works on non-ASCII chars";#
 
 #?rakudo.jvm 2 todo 'NFG on JVM RT #124741'
-#?niecza 2 todo 'charspec'
 is wordcase("a\c[COMBINING DIAERESIS]üö abcä"), "Äüö Abcä", 'wordcase on string with grapheme precomposed';
 is wordcase("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",

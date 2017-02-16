@@ -48,7 +48,6 @@ is showkv($b ∩ $m), "blood:1 love:1", "Bag intersection with Mix works";
 isa-ok ($b ∩ $m), Mix, "... and it's actually a Mix";
 is showkv($b ∩ $mh), "blood:1 love:1", "Bag intersection with MixHash works";
 isa-ok ($b ∩ $mh), Mix, "... and it's actually a Mix";
-#?niecza todo 'Right now this works as $mh ∩ glag ∩ green ∩ blood.  Test may be wrong'
 is showkv($mh ∩ <glad green blood>), "blood:1", "MixHash intersection with array of strings works";
 isa-ok ($mh ∩ <glad green blood>), Mix, "... and it's actually a Mix";
 
@@ -56,7 +55,6 @@ is showkv($b (&) $m), "blood:1 love:1", "Bag intersection with Mix works (texas)
 isa-ok ($b (&) $m), Mix, "... and it's actually a Mix";
 is showkv($b (&) $mh), "blood:1 love:1", "Bag intersection with MixHash works (texas)";
 isa-ok ($b (&) $mh), Mix, "... and it's actually a Mix";
-#?niecza todo 'Right now this works as $mh ∩ glag ∩ green ∩ blood.  Test may be wrong?'
 is showkv($mh (&) <glad green blood>), "blood:1", "MixHash intersection with array of strings works (texas)";
 isa-ok ($mh (&) <glad green blood>), Mix, "... and it's actually a Mix";
 
@@ -71,10 +69,8 @@ isa-ok ($b (^) $m), Mix, "... and it's actually a Mix";
 is ($m (^) $b), symmetric-difference($b, $m), "Bag symmetric difference with Mix is correct";
 isa-ok ($m (^) $b), Mix, "... and it's actually a Mix";
 
-#?niecza todo "Test is wrong, implementation is wrong"
 is ($b (^) $mh), symmetric-difference($b, $mh), "MixHash symmetric difference with Bag is correct";
 isa-ok ($b (^) $mh), Mix, "... and it's actually a Mix";
-#?niecza todo "Test is wrong, implementation is wrong"
 is ($mh (^) $b), symmetric-difference($b, $mh), "Bag symmetric difference with MixHash is correct";
 isa-ok ($mh (^) $b), Mix, "... and it's actually a Mix";
 
@@ -132,7 +128,6 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     ok $m ≼ $mh, "Our Mix is a msubset of our MixHash";
     ok $m ≼ $m, "Our Mix is a msubset of itself";
     ok $mh ≼ $mh, "Our MixHash is a msubset of itself";
-    #?niecza 4 skip '(<+) NYI - https://github.com/sorear/niecza/issues/178'
     nok $mh (<+) $m, "Our MixHash is not a msubset of our Mix (texas)";
     ok $m (<+) $mh, "Our Mix is a msubset of our MixHash (texas)";
     ok $m (<+) $m, "Our Mix is a msubset of itself (texas)";
@@ -148,7 +143,6 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     nok $m ≽ $mh, "Our Mix is not a msuperset of our MixHash";
     ok $m ≽ $m, "Our mix is a msuperset of itself";
     ok $mh ≽ $mh, "Our keymix is a msuperset of itself";
-    #?niecza 4 skip '(>+) NYI - https://github.com/sorear/niecza/issues/178'
     ok $mh (>+) $m, "Our MixHash is a msuperset of our Mix (Texas)";
     nok $m (>+) $mh, "Our Mix is not a msuperset of our MixHash (Texas)";
     ok $m (>+) $m, "Our Mix is a msuperset of itself (Texas)";

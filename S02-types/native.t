@@ -93,7 +93,6 @@ plan 92;
 }
 
 # RT #102416
-#?niecza skip 'Malformed my'
 {
     my int $x;
     ($x) = (5);

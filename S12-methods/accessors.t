@@ -54,9 +54,7 @@ is $a.test-hash-a,   2, '%.a contextualizes as hash';
     my $o = Child.new(x => 42);
     $o.Parent::x = 5;
     is $o.parent-x, 5, 'parent attribute is separate from child attribute of the same name (parent)';
-    #?niecza todo
     is $o.child-x, 42, 'parent attribute is separate from child attribute of the same name (child)';
-    #?niecza todo
     is $o.x, 42, '.accessor returns that of the child';
 
 }

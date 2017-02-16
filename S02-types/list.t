@@ -12,7 +12,6 @@ is (5, 7, 8).Str, '5 7 8', '.Str on a List';
 
 # .perl
 is ().perl, '()', '.perl on empty List';
-#?niecza todo '.item.perl on empty List gives Match.ast shorthand'
 is ().item.perl, '$( )', '.item.perl on empty List';
 is-deeply ().item, ().item.perl.EVAL, 'can roundtrip ().item';
 #?rakudo.jvm skip 'dies with t/harness5'
@@ -26,7 +25,6 @@ is +<5 7 8>, 3, 'prefix:<+> on an angle bracket List';
 is ~<5 7 8>, '5 7 8', 'prefix:<~> on an angle bracket List';
 is <5 7 8>.Str, '5 7 8', '.Str on an angle bracket List';
 
-#?niecza 3 skip ".List NYI"
 isa-ok (5, 7, 8).List, List, '.List returns a list';
 is (5, 7, 8).List, [5,7,8], '.List contains the right items';
 is (5, 7, 8).List.elems, 3, '.List contains the right number of elements';

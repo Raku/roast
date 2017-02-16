@@ -143,7 +143,6 @@ throws-like '$pt.test(1)',
     is $str, 'yx', 'failing POST runs LEAVE but not more POSTs';
 }
 
-#?niecza skip 'unspecced'
 {
     my $str;
     try {
@@ -153,7 +152,6 @@ throws-like '$pt.test(1)',
     ok $str ~~ /foo/, 'POST runs on exception, with correct $!';
 }
 
-#?niecza skip 'unspecced'
 #?rakudo todo 'POST and exceptions RT #124961'
 {
     my $str;
@@ -165,7 +163,6 @@ throws-like '$pt.test(1)',
     is $str, 'ayeno', 'POST has undefined $! on no exception';
 }
 
-#?niecza skip 'unspecced'
 #?rakudo.moar todo "POST and exceptions RT #124961"
 #?rakudo.jvm skip "POST and exceptions RT #124961"
 {

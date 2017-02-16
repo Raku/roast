@@ -8,7 +8,6 @@ plan 224;
 
 # L<S15/Binary Category Check>
 
-#?niecza 223 skip "unimatch NYI"
 is unimatch("",'Nd'), Nil, "unimatch an empty string yields Nil";
 is "".unimatch('Nd'), Nil, "''.unimatch yields Nil";
 throws-like "unimatch Str", X::Multi::NoMatch, 'cannot call unimatch with a Str';

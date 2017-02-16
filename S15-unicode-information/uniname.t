@@ -20,11 +20,9 @@ throws-like "uniname Int", X::Multi::NoMatch, 'cannot call uniname with a Int';
 throws-like "Int.uniname", X::Multi::NoMatch, 'cannot call uniname with a Int';
 
 # method forms
-#?niecza 2 skip "uniname NYI"
 is 0x30.uniname, "DIGIT ZERO",  "method uniname returns a name";
 is "0".uniname,  "DIGIT ZERO",  "method uniname works in string form";
 
-#?niecza 24 skip "uniname NYI"
 
 is uniname(0x30), "DIGIT ZERO",  "uniname returns a name";
 is uniname("0"),  "DIGIT ZERO",  "uniname works in string form";

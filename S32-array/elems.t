@@ -20,7 +20,6 @@ plan 11;
   is @a.elems, 3, ".elems works on initialized arrays";
 }
 
-#?niecza todo
 {
   my $a;
   is $a.elems, 1, ".elems does works on arbitrary scalars";

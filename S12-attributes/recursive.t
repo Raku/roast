@@ -44,7 +44,6 @@ Test attributes with recursively typed attributes
 }
 
 #L<S12/Invocants/current lexically-determined class ::?CLASS>
-#?niecza skip 'A type must be provided ???'
 {
     class C {
         has ::?CLASS $.attr is rw;
@@ -80,11 +79,9 @@ Test attributes with recursively typed attributes
     }
 
     my $z1 = Z.new;
-    #?niecza todo "https://github.com/sorear/niecza/issues/183"
     isa-ok $z1.a[0], Z, "check type-object";
     lives-ok { $z1.a[0] = Z.new }, 'can assign';
     isa-ok $z1.a[0], Z;
-    #?niecza todo "https://github.com/sorear/niecza/issues/183"
     isa-ok $z1.h<k>, Z, "check type-object";
     lives-ok { $z1.h<k> = Z.new }, 'can assign';
     isa-ok $z1.h<k>, Z;

@@ -5,7 +5,6 @@ use experimental :cached;
 
 plan 38;
 
-#?niecza skip "is cached NYI"
 {
     my @seen;
     sub fib(Int $x) is cached {
@@ -20,7 +19,6 @@ plan 38;
     is @seen, (9,8,7,6,5,4,3,2,1,0,10), 'did we call them all (3)';
 } #6
 
-#?niecza skip "is cached NYI"
 {
     my @seen;
     sub duh ( :$foo = 'duh', :$bar = 'doh' ) is cached {
@@ -45,7 +43,6 @@ plan 38;
     is @seen, <duh doh foo doh duh bar foo bar>, 'did we run (8)';
 } #16
 
-#?niecza skip "is cached NYI"
 {
     my @seen;
     sub noflat (@a) is cached {
@@ -66,7 +63,6 @@ plan 38;
     is @seen, [<foo bar foo bar baz>], 'did we run (4)';
 } #8
 
-#?niecza skip "is cached NYI"
 {
     my @int;
     my @str;

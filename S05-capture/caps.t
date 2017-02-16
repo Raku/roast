@@ -61,7 +61,6 @@ ok 'a;b,c,' ~~ m/(<.alpha>) +%% (<.punct>)/, 'Regex matches';
 is ca($/.caps),     '0:a|1:;|0:b|1:,|0:c|1:,',      '.caps on %% separator';
 is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
 
-#?niecza skip 'conjunctive regex terms - nyi'
 {
     ok 'a' ~~ m/a && <alpha>/, 'Regex matches';
     is ca($/.caps),     'alpha:a',  '.caps && - first term';

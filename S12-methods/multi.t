@@ -40,7 +40,6 @@ is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispa
 
 #?rakudo todo 'RT #66006'
 try { EVAL '$foo.baz()' };
-#?niecza todo 'This test is pretty dubious IMO'
 ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
 
 class Foo2 {
@@ -59,15 +58,12 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 # RT #67024
 {
     try { EVAL 'class RT67024 { method a(){0}; method a($x){1} }' };
-    #?niecza skip 'Exception NYI'
     ok  $!  ~~ Exception, 'redefinition of non-multi method (RT #67024)';
-    #?niecza todo 'depends on previous test'
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
 }
 
 # RT #69192
 #?rakudo skip 'unknown bug RT #124848'
-#?niecza skip 'NYI dottyop form .*'
 {
     role R5 {
         multi method rt69192()       { push @.order, 'empty' }
@@ -100,7 +96,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     }
 }
 
-#?niecza skip 'ambiguous'
 {
     role RoleS {
         multi method d( Str $x ) { 'string' }   #OK not used

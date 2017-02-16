@@ -91,7 +91,6 @@ is (4, 2, 1, 2, 4 ... 16).join(', '), '4, 2, 1, 2, 4, 8, 16', 'geometric sequenc
 
 is (False, &prefix:<!> ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, &prefix:<!> ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
-#?niecza skip '&[] NYI'
 is (1,2,&[+] ... 8).join(', ') , "1, 2, 3, 5, 8" , "Using &[+] works";
 is (False, { !$_ } ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
@@ -134,7 +133,6 @@ is (1, 2 ... 0).[lazy ^3], (), 'No more: limit value is on the wrong side';
 ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
 # RT #75316
-#?niecza skip 'Typed exceptions NYI'
 throws-like { 1 ... () },
      X::Cannot::Empty,
      'RT #75698 - empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
@@ -248,7 +246,6 @@ throws-like '1, 2, 3, ... 5', Exception, 'comma before sequence operator is caug
 is ~(1...^*).[^10], '1 2 3 4 5 6 7 8 9 10', 'RT #73268';
 
 # RT #76046
-#?niecza skip '&[] NYI'
 is (1, 1, &[+] ... *).[^10], '1 1 2 3 5 8 13 21 34 55', 'use &[+] on infix:<...> series';
 
 # see http://irclog.perlgeek.de/perl6/2012-05-30#i_5659147 ff.

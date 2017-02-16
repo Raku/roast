@@ -76,7 +76,6 @@ dies-ok {$o."b"() },  'can not call private method via quotes from outside';   #
 
     is $b.public1, 24, '"my method private" can be called as self!private';
     is $b.public2, 18, 'can call role shared private methods';
-    #?niecza todo 'role private methods - spec?'
     throws-like { $b.public3() }, X::Method::NotFound, 
         typename => { m/'B'/ }, method => { m/'role_private'/ }; #'can not call role private methods scoped with my';
 }
@@ -94,7 +93,6 @@ dies-ok {$o."b"() },  'can not call private method via quotes from outside';   #
 }
 
 #RT #115308
-#?niecza skip "throws-like NYI"
 #?DOES 2
 throws-like '$_!X::a', X::Method::Private::Permission;
 

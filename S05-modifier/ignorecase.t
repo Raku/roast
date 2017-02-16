@@ -42,9 +42,7 @@ ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 
 # The German ß (&szlig;) maps to uppercase SS:
 #?rakudo 2 todo 'ignorecase and SS/&szlig; RT #121377'
-#?niecza todo
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
-#?niecza todo
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
 
@@ -55,7 +53,6 @@ ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 {
     my $matcher = 'aA';
     nok 'aa' ~~ /   $matcher/, 'interpolation: no match without :i';
-    #?niecza todo
      ok 'aa' ~~ /:i $matcher/, 'interpolation: match with :i';
 }
 
@@ -78,7 +75,6 @@ ok 'A4' ~~ /:i a[3|4|5] | b[3|4] /, 'alternation sanity';
 
 # RT #77410
 {
-    #?niecza todo "NYI"
     ok  "m" ~~ /:i <[M]>/, "ignore case of character classes";
     nok "m" ~~ /<[M]>/,    "ignore case of character classes";
     nok "n" ~~ /:i <[M]>/, "ignore case of character classes";

@@ -5,7 +5,6 @@ use Test;
 
 plan 44;
 
-#?niecza todo
 {
   my %hash;
   %hash<a>;
@@ -32,7 +31,6 @@ plan 44;
 # Autovification by push, unshift, etc.
 # XXX I understand that @array[0].push(...) should autovivify an Array
 # in @array[0], but is that also true for a normal scalar?
-#?niecza skip 'Unable to resolve method push in class Any'
 {
   my $arrayref;
 
@@ -41,7 +39,6 @@ plan 44;
   isa-ok $arrayref, Array, 'autovivified to Array';
 }
 
-#?niecza skip 'Unable to resolve method unshift in class Any'
 {
   my $arrayref;
 
@@ -51,7 +48,6 @@ plan 44;
 
 # Autovification by push, unshift, etc. of an array/hash element
 # L<S09/Autovivification/"push, unshift, .[]">
-#?niecza skip 'Unable to resolve method push in class Any'
 {
   my @array;
 
@@ -60,7 +56,6 @@ plan 44;
 }
 
 #RT #84000
-#?niecza skip 'Unable to resolve method push in class Any'
 {
   my %hash;
 
@@ -77,7 +72,6 @@ plan 44;
 
   $hashref<key> = 23;
   is $hashref<key>,  23, "hash element assignment worked";
-  #?niecza skip 'No value for parameter \$other in CORE Any.isa'
   #?rakudo skip 'isa multi variant'
   ok $hashref.isa !~~ Hash, "uninitialized variable was autovivified to a hash (1)";
 }

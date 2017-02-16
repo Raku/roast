@@ -61,14 +61,12 @@ plan 30;
     is $a, "<hello>", 'iterating one variable element works';
 }
 
-#?niecza todo "closure for"
 {
     my $a = 0;
     { $a++ } for 1..3;
     is $a, 3, 'the closure was called';
 }
 
-#?niecza todo "closure for"
 {
     my $a = 0;
     -> $i { $a += $i } for 1..3;

@@ -13,7 +13,6 @@ is "\c[RIGHT WHITE CORNER BRACKET]", "』", '\c[RIGHT WHITE CORNER BRACKET]';
 is "\c[FULLWIDTH RIGHT PARENTHESIS]", "）", '\c[FULLWIDTH RIGHT PARENTHESIS]';
 is "\c[LEFT DOUBLE ANGLE BRACKET]", "《", '\c[LEFT DOUBLE ANGLE BRACKET]';
 
-#?niecza skip 'Unrecognized character name LINE FEED'
 is("\c[LINE FEED]", "\c10", '\c[LINE FEED] works');
 is("\c[LF]", "\c10", '\c[LF] works');
 

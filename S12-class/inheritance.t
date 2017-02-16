@@ -124,7 +124,6 @@ eval-lives-ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
 {
     class DirectMu is Mu { };
     ok DirectMu !~~ Any, 'class inheriting from Mu is not Any';
-    #?niecza skip 'Unable to resolve method parents in class ClassHOW'
     ok !( any(DirectMu.^parents).gist eq '(Any)'), 'and Any does not appear in the list of parents either';
 }
 
@@ -166,7 +165,6 @@ throws-like 'class RT64642 is ::Nowhere {}', X::Inheritance::UnknownParent,
 }
 
 # RT #75376
-#?niecza skip "Pathed definitions require our scope"
 {
     my class RT75376::A { };
     lives-ok { our class RT75376::B is RT75376::A { } },

@@ -74,9 +74,7 @@ plan 87;
   my @a = (1,2,3);
   my @b = (1,2,3);
 
-  #?niecza todo
   ok  (\@a === \@a), "=== on array references (1)";
-  #?niecza todo
   ok  (\@b === \@b), "=== on array references (2)";
   ok !(\@a === \@b), "=== on array references (3)";
   isa-ok (\@a === \@a), Bool, "=== on array references (4)";
@@ -116,7 +114,6 @@ plan 87;
 
   ok  ($a === $a), "=== on scalar references (2-1)";
   ok  ($b === $b), "=== on scalar references (2-2)";
-  #?niecza todo
   ok  ($a === $b), "=== on scalar references (2-3)";
   isa-ok ($a === $a), Bool, "=== on scalar references (2-4)";
 }

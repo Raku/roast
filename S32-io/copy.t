@@ -24,7 +24,6 @@ ok $zero-length-file.IO.e, 'It exists';
 nok $non-existent-file.IO.e, "It doesn't";
 
 # method .IO.copy
-#?niecza skip 'Unable to resolve method s in class IO'
 {
     my $existing-file-mtgt     = "tempfile-copy-mtgt";
     my $non-existent-file-mtgt = "non-existent-copy-mtgt";
@@ -55,7 +54,6 @@ nok $non-existent-file.IO.e, "It doesn't";
 }
 
 # sub copy()
-#?niecza skip 'Unable to resolve method s in class IO'
 {
     my $existing-file-stgt     = "tempfile-copy-stgt";
     my $non-existent-file-stgt = "non-existent-copy-stgt";

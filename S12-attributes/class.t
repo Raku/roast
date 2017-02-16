@@ -65,7 +65,6 @@ dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
 }
 
 # RT #57336
-#?niecza skip 'Exception'
 {
     # TODO: Test that the exceptions thrown here are the right ones
     #       and not the result of some other bug.
@@ -103,7 +102,6 @@ dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
         'no Null PMC access when doing //= on an undefined attribute and then calling it';
 }
 
-#?niecza skip "Two definitions of method b"
 {
     class A {
         has $.b = 1;

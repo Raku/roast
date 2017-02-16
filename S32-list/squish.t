@@ -10,7 +10,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
 =end description
 
-#?niecza skip 'NYI'
 {
     my @array = <a b b c d e f f a>;
     is-deeply @array.squish,  <a b c d e f a>,
@@ -29,33 +28,28 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       'slurpy subroutine form of squish works';
 } #1
 
-#?niecza skip 'NYI'
 {
     is 42.squish, 42,    ".squish can work on scalars";
     is (42,).squish, 42, ".squish can work on one-elem arrays";
 } #2
 
-#?niecza skip 'NYI'
 {
     my class A { method Str { '' } };
     is (A.new, A.new).squish.elems, 2, 'squish has === semantics for objects';
 } #1
 
-#?niecza skip 'NYI'
 {
     my @list = 1, "1";
     my @squish = squish(@list);
     is @squish, @list, "squish has === semantics for containers";
 } #1
 
-#?niecza skip 'NYI'
 {
     my \a := squish( 1..Inf );
     ok a.is-lazy, 'squish knows itself to be lazy';
     is a[3], 4, '... can access elements from lazy iterator';
 } #1
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e f f a>;
     my $as    = *.substr: 0,1;
@@ -69,7 +63,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "final result with :as in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @rt124204 = ('', '', Any, Any);
     is-deeply @rt124204.squish(:as(-> $x {$x})), ('', Any),
@@ -82,7 +75,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "method form of squish with :with does not needlessly stringify";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @rt124205 = <a a>;
 
@@ -103,7 +95,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a aa b bb c d e f f a>;
     my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
@@ -117,7 +108,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "final result with :with in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a aa b bb c d e f f a>;
     my $as    = *.substr(0,1).ord;
@@ -133,7 +123,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 } #4
 
 
-#?niecza skip 'NYI'
 {
     my @a;
     my $as = { @a.push($_); $_ };
@@ -185,7 +174,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
         ':with callbacks called minimumish number of times (:as, fragged)';
 }
 
-#?niecza skip 'NYI'
 {
     my @array = ({:a<1>}, {:a<1>}, {:b<1>});
     my $with  = &[eqv];

@@ -23,9 +23,7 @@ is 1e0 ** $big-e,   1, "1e0 ** $big-e == 1";
 isa-ok 1e0 ** $big-e, Num, "1e0 ** $big-e is a Num";
 is (-1) ** $big-e,  1, "-1 ** $big-e == 1";
 is (-1) ** $big-o, -1, "-1 ** $big-o == -1";
-#?niecza skip "Slow and wrong"
 throws-like { EVAL qq[  2 ** $big-e]  }, $xno, " 2 ** $big-e";
-#?niecza 2 skip "Slow and wrong"
 throws-like { EVAL qq[(-2) ** $big-e] }, $xno, "-2 ** $big-e";
 throws-like { EVAL qq[(-2) ** $big-o] }, $xno, "-2 ** $big-o";
 
@@ -34,7 +32,6 @@ is(4 ** (1/2), 2, "4 ** (1/2) == 2 ");
 is(4 ** (-1/2), 0.5, "4 ** (-1/2) == 1/2 ");
 is((-2) ** 2, 4, "-2 ** 2 = 4");
 
-#?niecza todo '#87'
 is(1 ** Inf, 1, '1**Inf=1');
 is(0 ** Inf, 0, '0**Inf=0');
 is(Inf ** 2, Inf, 'Inf**2 = Inf');
@@ -46,7 +43,6 @@ is(0 ** NaN, NaN, "0**NaN=NaN");
 
 # Not at all sure the next two cases are correct!
 
-#?niecza 2 todo 'complex NaN stringy'
 #?rakudo 2 todo 'wrong results for "NaN" used with "**" RT #124800'
 is(NaN ** 1i, NaN, "NaN**1i=NaN");
 is(1i ** NaN, NaN, "1i**NaN=NaN");
@@ -134,9 +130,7 @@ is 1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, 1, "1e0⁴⁵⁵³⁵
 isa-ok 1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, Num, "1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ is a Num";
 is (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴, 1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ == 1";
 is (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, -1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == -1";
-#?niecza skip "Slow and wrong"
 throws-like { EVAL qq[2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵] }, $xno, "2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws";
-#?niecza 2 skip "Slow and wrong"
 throws-like { EVAL qq[(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴] }, $xno, "(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ throws";
 throws-like { EVAL qq[(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵] }, $xno, "(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws";
 

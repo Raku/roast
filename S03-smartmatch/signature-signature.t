@@ -31,7 +31,6 @@ plan 23;
     }
 
     #?rakudo skip "Parametric types"
-    #?niecza skip "Parametric types"
     # Can't deal with parameters.
     ok (:(::T $x, T $y) R~~ :(Str $y, Str $z)), "Parametric types";
 

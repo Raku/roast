@@ -56,7 +56,6 @@ my @all-nodes = gather traverse-tree-inorder($tree);
 
 is @all-nodes, ["c", "b", "d", "a", "e"], 'In order tree traversal with gather/take';
 
-#?niecza skip 'hangs'
 {
     my @natural-numbers = 0 .. Inf;
     is @natural-numbers[7], 7, 'natural numbers';

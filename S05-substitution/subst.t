@@ -30,7 +30,6 @@ is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure to delay
 is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #116224
-#?niecza skip "Cannot assign to \$/"
 {
     $/ = ('-');   #  parens to avoid looking like a P5 irs directive
     is 'a'.subst("a","b"), 'b', '"a".subst("a", "b") is "b"';
@@ -134,7 +133,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :p(2)';
 
     # :p and :g
-    #?niecza todo
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(0), :g),
        'x x x x x x x x',
        '.subst with :p(0) and :g';
@@ -143,7 +141,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        'a b c d e f g h',
        '.subst with :p(1) and :g';
 
-    #?niecza todo
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(2), :g),
        'a x x x x x x x',
        '.subst with :p(2) and :g';
@@ -177,7 +174,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :c(2) and :g';
 
     # :c and :nth(3, 4)
-    #?niecza 3 todo ":nth(3, 4) NYI"
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :nth(3, 4)),
        'a b x x e f g h',
        '.subst with :c(0) and :nth(3, 4)';
@@ -211,7 +207,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
-#?niecza skip "Action method quote:ss not yet implemented"
 # also RT #126679
 {
     dies-ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
@@ -371,7 +366,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 #L<S05/Substitution/Any scalar assignment operator may be used>
-#?niecza skip 's[...] op= RHS'
 {
     given 'a 2 3' -> $_ is copy {
         ok (s[\d] += 5), 's[...] += 5 returns True';
@@ -383,7 +377,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
 }
 
-#?niecza skip 's:g[...] ='
 {
     multi sub infix:<fromplus>(Match $a, Int $b) {
         $a.from + $b
@@ -409,7 +402,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # Test for :samecase
-#?niecza skip ":samecase NYI"
 {
     is 'The foo and the bar'.subst('the', 'that', :samecase), 'The foo and that bar', '.substr and :samecase (1)';
     is 'The foo and the bar'.subst('the', 'That', :samecase), 'The foo and that bar', '.substr and :samecase (2)';
@@ -423,7 +415,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'The foo and the bar'.subst(/:i the/, {$str++}, :g, :samecase), 'Thau foo and thav bar', '.substr and :g and :samecase, worked with block replacement';
 }
 
-#?niecza skip "Regex modifiers ii and samecase NYI"
 {
     $_ = 'foObar';
     s:ii/oo/au/;
@@ -436,7 +427,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #66816
-#?niecza todo
 {
     my $str = "a\nbc\nd";
     is $str.subst(/^^/, '# ', :g), "# a\n# bc\n# d",
@@ -444,7 +434,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 {
-    #?niecza todo "Niecza works when it shouldn't?"
     throws-like q[ $_ = "abc"; my $i = 1; s:i($i)/a/b/ ], X::Value::Dynamic,
         'Value of :i must be known at compile time';
     #?rakudo todo 'be smarter about constant detection'
@@ -468,7 +457,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #83552
-#?niecza skip 'Unable to resolve method postcircumfix:<( )> in type Any'
 #?DOES 3
 {
     $_ = "foo"; s[f] = 'bar';

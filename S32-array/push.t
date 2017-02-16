@@ -173,7 +173,6 @@ plan 52;
 }
 
 # RT #119061
-#?niecza todo "https://github.com/sorear/niecza/issues/184"
 {
     my Int @a;
     throws-like '@a.push: "a"', X::TypeCheck,

@@ -37,7 +37,6 @@ plan 12;
     is $child-counter, 1, "Called Child's BUILD method once";
     is $calls, 'Parent | Child', 
         'submethods were called in right order (Parent first)';
-    #?niecza todo "Worrisome"
     is $gather, 'Parent(a): (7) | Child(a, b): (7, 5)', 
         'submethods were called with the correct arguments';
 }
@@ -97,7 +96,6 @@ plan 12;
 }
 
 #?rakudo todo 'method BUILD should warn RT #124642'
-#?niecza todo
 {
     is_run
         'class Foo { method BUILD() { ... } }',

@@ -64,7 +64,6 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 
 =end pod
 
-#?niecza todo
 {
     my sub foo ($n, *%h) { };   #OK not used
     ## NOTE: *NOT* sub foo ($n, *%h, *@a)
@@ -124,7 +123,6 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 }
 
 #### "trait" version
-#?niecza skip 'Unhandled trait required'
 {
     my sub foo(:$n is required, *%h, *@a) { };   #OK not used
     diag('Testing with named arguments (named param is required) (trait version)');
@@ -146,7 +144,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
 # L<S06/List parameters/Slurpy scalar parameters capture what would otherwise be the first elements of the variadic array:>
 
-#?niecza todo '*$f slurps everything up'
 {
     sub first(*$f, *$s, *@r) { return $f };   #OK not used
     sub second(*$f, *$s, *@r) { return $s };   #OK not used

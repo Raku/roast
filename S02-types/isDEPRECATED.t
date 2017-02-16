@@ -11,7 +11,6 @@ plan 21;
 my $line;
 
 # just a sub
-#?niecza skip 'is DEPRECATED NYI'
 {
     my $a;
     my $awith;
@@ -43,7 +42,6 @@ TEXT
 } #4
 
 # class with auto/inherited new()
-#?niecza skip 'is DEPRECATED NYI'
 {
     class A     is DEPRECATED                  { };
     class Awith is DEPRECATED("'Fnorkle.new'") { };
@@ -73,7 +71,6 @@ TEXT
 } #2
 
 # class with explicit new()
-#?niecza skip 'is DEPRECATED NYI'
 {
     my $B;
     my $Bwith;
@@ -107,7 +104,6 @@ TEXT
 } #4
 
 # method in class
-#?niecza skip 'is DEPRECATED NYI'
 {
     my $C;
     my $Cwith;
@@ -139,7 +135,6 @@ TEXT
 } #4
 
 # class with auto-generated public attribute
-#?niecza skip 'is DEPRECATED NYI'
 {
     class D     { has $.foo is DEPRECATED          };
     class Dwith { has $.foo is DEPRECATED("'bar'") };
@@ -169,7 +164,6 @@ TEXT
 } #2
 
 # class with private attribute and homemade accessor
-#?niecza skip 'is DEPRECATED NYI'
 {
     my $E;
     my $Ewith;
