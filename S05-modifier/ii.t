@@ -3,8 +3,6 @@ use Test;
 
 plan 23;
 
-#?kp6 emit skip-rest("unimpl");
-
 #L<S05/Modifiers/"The :ii">
 
 #    target,      substution,   result
