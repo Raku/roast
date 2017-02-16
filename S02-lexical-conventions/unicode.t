@@ -81,7 +81,6 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # Unicode placeholder variables
-#?mildew skip 'placeholders are NIY'
 {
     is
         ~(< foostraße barstraße fakestraße >.map: { tc $^straßenname }),
@@ -90,7 +89,6 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # Unicode methods and attributes
-#?mildew skip 'classes are NIY'
 {
     class A {
         has $!möp = 'pugs';
@@ -101,7 +99,6 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
     is A.new().äöü(), "Pugs", "Unicode methods and attributes";
 }
 
-#?mildew skip 'slurpy named positionals are NIY'
 {
     sub f(*%x) { %x<ä> };
     is f(ä => 3), 3, 'non-ASCII named arguments';

@@ -45,7 +45,6 @@ plan 32;
 }
 
 
-#?mildew skip 1
 # L<S04/The C<for> statement/It is also possible to write>
 # while ... -> $x {...}
 {
@@ -57,7 +56,6 @@ plan 32;
   is $str, '54321', 'while ... -> $x {...} worked (1)';
 }
 
-#?mildew skip 1
 {
   my @array = 0..5;
   my $str = "";
@@ -67,7 +65,6 @@ plan 32;
   is $str, '54321', 'while ... -> $x {...} worked (2)';
 }
 
-#?mildew skip 1
 # L<S04/Statement parsing/keywords require whitespace>
 {
     throws-like 'my $i = 1; while($i < 5) { $i++; }', X::Comp::Group,
