@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 #?niecza todo "cannot roundtrip hashes"
 # simple hash
@@ -41,5 +41,12 @@ plan 13;
 
 is-deeply (my %h{Int}).perl.EVAL.perl, '(my Any %{Int})',
     'can roundtrip .perl.EVAL for parametarized hash with no keys in it';
+
+{
+    my %h;
+    %h = :42a, :b(%h);
+    is-deeply %h.perl.EVAL<b><b><b><a>, 42,
+        'can .perl.EVAL roundtrip a circular hash';
+}
 
 #vim: ft=perl6
