@@ -350,7 +350,6 @@ my @exception = <
   X::Syntax::Variable::BadType
   X::Syntax::Variable::ConflictingTypes
   X::Syntax::Variable::IndirectDeclaration
-  X::Syntax::Variable::Initializer
   X::Syntax::Variable::Match
   X::Syntax::Variable::MissingInitializer
   X::Syntax::Variable::Numeric
