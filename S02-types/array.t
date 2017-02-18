@@ -392,10 +392,13 @@ my @array2 = ("test", 1, Mu);
 }
 
 # https://github.com/rakudo/rakudo/commit/51b0aba8e8
-subtest '.flat propagates .is-lazy' => {
-    plan 2;
+subtest 'flat propagates .is-lazy' => {
+    plan 4;
     is-deeply (42 xx *).flat.is-lazy, True,  'method, True';
     is-deeply (42 xx 1).flat.is-lazy, False, 'method, False';
+
+    is-deeply flat(42 xx *) .is-lazy, True,  'sub, True';
+    is-deeply flat(42 xx 1) .is-lazy, False, 'sub, False';
 }
 
 # vim: ft=perl6
