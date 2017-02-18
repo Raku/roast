@@ -41,7 +41,6 @@ for statement as possible
     is($b, '012345', 'for 0 .. 5 -> {} works');
 }
 
-#?niecza skip 'slice context'
 {
     my $str;
     my @a = 1..3;
@@ -387,7 +386,6 @@ throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitesp
 }
 
 # RT #63994
-#?niecza 2 todo 'NYI'
 {
   my $str = '';
   for 1..5 -> $x, $y? {
@@ -553,7 +551,6 @@ lives-ok {
 
 # RT #74060
 # more list comprehension
-#?niecza todo "https://github.com/sorear/niecza/issues/180"
 {
     my @s = ($_ * 2 if $_ ** 2 > 3 for 0 .. 5);
     is ~@s, '4 6 8 10', 'Can use statement-modifying "for" in list comprehension';
@@ -568,7 +565,6 @@ lives-ok {
 }
 
 # RT #113026
-#?niecza todo 'array iterator does not track a growing array'
 {
     my @rt113026 = 1 .. 10;
     my $iter = 0;

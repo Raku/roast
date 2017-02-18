@@ -24,7 +24,6 @@ is @list.grep( { ($_ % 2) }, :k ), (0,2,4,6,8).list.item,
 }
 
 #?rakudo skip "adverbial block RT #124759"
-#?niecza skip 'NYI'
 {
     my @result = @list.grep():{ ($_ % 2) }, :k;
     is(+@result, 5, 'we got a list back');
@@ -36,7 +35,6 @@ is @list.grep( { ($_ % 2) }, :k ), (0,2,4,6,8).list.item,
 }
 
 #?rakudo skip "adverbial block RT #124760"
-#?niecza skip 'NYI'
 {
     my @result = @list.grep :{ ($_ % 2) }, :k;
     is(+@result, 5, 'we got a list back');
@@ -48,7 +46,6 @@ is @list.grep( { ($_ % 2) }, :k ), (0,2,4,6,8).list.item,
 }
 
 #?rakudo todo "closure as non-final argument RT #124761"
-#?niecza skip 'Invocant handling is NYI'
 {
     my @result = grep { ($_ % 2) }: @list, :k;
     is(+@result, 5, 'we got a list back');

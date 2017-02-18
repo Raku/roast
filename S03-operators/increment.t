@@ -17,7 +17,6 @@ Verify that autoincrement/autodecrement work properly.
     my $a = Mu;
     is($a++, 0, 'Mu++ == 0');
 
-    #?niecza todo '#88'
     $a = Mu;
     is $a--, 0 , 'postincrement (& decrement) returns 0 the first time';
 
@@ -118,7 +117,6 @@ is($moo, 0, "var was not touched");
 }
 
 # RT #74912
-#?niecza todo 'Works fine in niecza...'
 #?rakudo.jvm todo "RT #126531"
 throws-like 'my $x = 0; ++++$x', X::Multi::NoMatch,
     'can not double-increment, because the return value is not a container';

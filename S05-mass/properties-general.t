@@ -156,7 +156,6 @@ ok("\x[FFFF]\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/<:OtherLetter>/, q{Match unanc
 
 #?rakudo.moar 3 todo "No [Lr] property defined RT #124860"
 #?rakudo.jvm  10 skip "RT #124500"
-#?niecza 10 skip "No [Lr] property defined"
 ok("\c[LATIN CAPITAL LETTER A]" ~~ m/^<:Lr>$/, q{Match (Alias for "Ll", "Lu", and "Lt".)} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<:!Lr>$/ ), q{Don't match negated (Alias for "Ll", "Lu", and "Lt".)} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<-:Lr>$/ ), q{Don't match inverted (Alias for "Ll", "Lu", and "Lt".)} );

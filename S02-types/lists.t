@@ -105,7 +105,6 @@ plan 32;
 
 # Lists as lvalues to swap, this time we use binding instead of assignment
 #?rakudo 2 skip 'list binding RT #124494'
-#?niecza 2 skip 'Cannot use bind operator with this LHS'
 {
   my $foo = 42;
   my $bar = 23;
@@ -129,7 +128,6 @@ plan 32;
     "using lists as lvalues in a binding operation to swap three variables works";
 }
 
-#?niecza skip 'Cannot use value like Capture as a number'
 {
   my @array    = (1,2,3);
   my $capture = \(@array);
@@ -164,7 +162,6 @@ plan 32;
     is $rt66304, (1, 2, 4), 'List is not changed by attempted assignment';
 }
 
-#?niecza skip 'Excess arguments to CORE List.new'
 {
     my $x = List.new('bacon');
     my $y = $x.Str;
@@ -174,7 +171,6 @@ plan 32;
 }
 
 # RT #112216
-#?niecza skip 'loops'
 is 'foo'[2..*].elems, 0, 'can range-index a Str with infinite range';
 
 # vim: ft=perl6

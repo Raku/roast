@@ -14,7 +14,6 @@ ok(PROCESS::<$PROGRAM> ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']pro
 # paths until the FileSpec hack is working - Stevan
 # changed junction hack in test 2 to regex for Rakudo fudged filename - mberends
 
-#?niecza todo
 lives-ok { my $*PROGRAM-NAME = "coldfusion" }, '$*PROGRAM-NAME is assignable';
 
 # RT #113078

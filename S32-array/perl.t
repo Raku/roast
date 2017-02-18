@@ -3,7 +3,6 @@ use Test;
 
 plan 8;
 
-#?niecza todo "cannot roundtrip arrays"
 # simple array
 {
     my @a = 1,2;
@@ -14,7 +13,6 @@ plan 8;
     ok $ra.of =:= Mu, 'make sure any value can be stored';
 } #3
 
-#?niecza skip "cannot roundtrip arrays with constrained values"
 # array with constrained values
 {
     my Int @a = 1,2;

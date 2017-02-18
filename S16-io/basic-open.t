@@ -14,7 +14,6 @@ sub test_lines(@lines) {
        'Retrieved last line';
 }
 
-#?niecza skip 'TextReader.eof NYI'
 {
     my $fh = open('t/spec/S16-io/test-data');
     my $count = 0;

@@ -50,10 +50,8 @@ my $expected = 'Hello from subprocess';
 is %*ENV<PUGS_ROCKS>, $expected,'%*ENV is rw';
 
 %*ENV<PUGS_ROCKS>:delete;
-#?niecza todo ":delete"
 ok(%*ENV<PUGS_ROCKS>:!exists, 'We can remove keys from %*ENV');
 
-#?niecza todo ":!exists"
 ok %*ENV<does_not_exist>:!exists, "exists() returns false on a not defined env var";
 
 # %ENV must not be imported by default
@@ -62,7 +60,6 @@ throws-like { EVAL "%ENV" },
   '%ENV not visible by default';
 
 #?rakudo skip 'import fails, ENV not available: RT #122339'
-#?niecza skip 'Action method statement_control:import not yet implemented'
 {
     # It must be importable
     import PROCESS <%ENV>;
@@ -83,7 +80,6 @@ throws-like { EVAL "%ENV" },
 
 }
 
-#?niecza skip "Cannot call is_run; none of these signatures match"
 {
     %*ENV<abc> = 'def';
     is_run 'print %*ENV<abc>',

@@ -63,10 +63,8 @@ is(@a, @e, "list was reversed");
 {
     my @a = "foo";
     my @b = @a.reverse;
-    #?niecza skip "Iterable NYI"
     ok(@a.reverse ~~ Iterable, '.reverse returns an Iterable');
     my $b = @a.reverse;
-    #?niecza skip "Iterable NYI"
     ok($b ~~ Iterable, '.reverse assigned to a scalar is Iterable');
     is(@b[0], "foo", 'our list is reversed properly');
     is($b, "foo", 'in scalar context it is still a list');

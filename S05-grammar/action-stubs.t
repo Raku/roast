@@ -132,7 +132,6 @@ is $action.calls, 'ab', '... and in the right order';
     class MethodMake {
         method TOP($m) { $m.make('x') }
     }
-    #?niecza skip 'Match.make'
     is Grammar::Trivial.parse('a', actions => MethodMake).ast,
         'x', 'can use Match.make';
 }

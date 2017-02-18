@@ -88,7 +88,6 @@ plan 28;
     is-deeply(%got, %expected, 'method with named sub mapper using gather');
 }
 
-#?niecza todo 'feature'
 {
     is-deeply( categorize( { map { [$_+0, $_+10] }, .comb }, 100,104,112,119 ),
       (my %{Any} =

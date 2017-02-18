@@ -65,7 +65,6 @@ test      *..^*, -Inf,   Inf, False,  True,  True, Inf,  "-Inf..^Inf";
 test     *^..^*, -Inf,   Inf,  True,  True,  True, Inf, "-Inf^..^Inf";
 
 # some range constructions are invalid
-#?niecza skip "No exceptions"
 {
     throws-like          '10 .. ^20', X::Range::InvalidArg, got => ^20;
     throws-like          '^10 .. 20', X::Range::InvalidArg, got => ^10;

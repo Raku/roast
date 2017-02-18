@@ -29,7 +29,6 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 
 # GERMAN SHARP S ("ß") should uc() to "SS", per SpecialCasing.txt
 # RT #121377
-#?niecza todo 'German language weirdness'
 is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
 {

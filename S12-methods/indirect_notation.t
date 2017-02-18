@@ -19,7 +19,6 @@ class T1 {
     ok( $o, "Still alive after new" );
 
     is( $o.a(), 'test', "The direct object notation call without arguments" );
-    #?niecza 2 skip 'Invocant handling is NYI'
     is( (a $o:), 'test', "The indirect object notation call without arguments without ()" );
     is( a($o:), 'test', "The indirect object notation call without arguments with ()" );
 }
@@ -39,7 +38,6 @@ class T2 {
     ok( $o, "Still alive after new" );
     my $seed = 1000.rand;
     is( $o.a( $seed ), $seed, "The direct object notation call with argument" );
-    #?niecza 2 skip 'Invocant handling is NYI'
     is( (a $o: $seed), $seed, "The indirect object notation call with argument without ()" );
     is( a($o: $seed), $seed, "The indirect object notation call with argument with ()" );
 
@@ -47,7 +45,6 @@ class T2 {
     throws-like '$name $o: $seed', X::Syntax::Confused,
         'Indirect object notation and indirect method calls cannot be combined';
 
-    #?niecza 2 skip 'Invocant handling is NYI'
     is  (b $o: 21, 21), 42, "The indirect object notation call with multiple arguments without ()";
     is  b($o: 21, 21), 42, "The indirect object notation call with multiple arguments with ()";
 }
@@ -76,7 +73,6 @@ is EVAL('abs -42:'), 42, 'indirect object notation with colon at EOF works';
 
 # L<S12/Fancy method calls/"$obj.@candidates(1,2,3)">
 #?rakudo skip '.@foo not yet working RT #124844'
-#?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Array'
 {
     class T3 {
         has $.x;
@@ -108,7 +104,6 @@ is EVAL('abs -42:'), 42, 'indirect object notation with colon at EOF works';
 dies-ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use of quotes
 
 #?rakudo skip '.*, .+ and .? with @foo RT #124845'
-#?niecza skip 'Two definitions found for symbol ::GLOBAL::T4::&m, etc'
 {
     class T4 {
         has $.called = 0;

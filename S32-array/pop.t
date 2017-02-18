@@ -38,7 +38,6 @@ plan 37;
 
         is(+@pop, 0, 'we have no more element in the array');
         ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
-        #?niecza skip 'undeclared name Failure'
         ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
     }
 } #13
@@ -60,7 +59,6 @@ plan 37;
 
     is(+@pop, 0, 'we have no more element in the array');
     ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
-    #?niecza skip 'undeclared name Failure'
     ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
 } #11
 
@@ -68,7 +66,6 @@ plan 37;
 {
     is([1, 2, 3].pop, 3, 'this will return 3');
     ok(!defined([].pop), 'this will return undefined');
-    #?niecza skip 'undeclared name Failure'
     ok( [].pop ~~ Failure, '[].pop is a Failure' );
 } #3
 
@@ -76,7 +73,6 @@ plan 37;
 {
     my @pop;
     ok(!defined(@pop.pop()), 'pop on an un-initialized array returns undefined');
-    #?niecza skip 'undeclared name Failure'
     ok( @pop.pop() ~~ Failure, 'pop off uninitialized array is a Failure' );
 }
 
@@ -93,7 +89,6 @@ plan 37;
     throws-like 'pop(@pop) = 3', Exception, 'Cannot assign to a readonly variable or a value';
 } #6
 
-#?niecza     skip "may run forever"
 {
     my @push = 1 .. Inf;
     throws-like 'pop @push', X::Cannot::Lazy, 'cannot pop from a lazy list';

@@ -32,7 +32,6 @@ my Str $bar;
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
 
-#?niecza skip 'Trait of not available on variables'
 {
     my $baz of Int;
     throws-like q[$baz = 'xyz'], X::TypeCheck::Assignment, 'of Int restricts to integers';
@@ -40,7 +39,6 @@ my Str $bar;
 }
 
 # L<S02/Variables Containing Undefined Values/Variables with native types do not support undefinedness>
-#?niecza skip 'native types (noauto)'
 {
     eval-lives-ok('my int $alpha = 1',    'Has native type int');
     throws-like 'my int $alpha = Nil', Exception, 'native int type cannot be undefined';
@@ -124,18 +122,14 @@ throws-like q[my Num $n; $n = $*PID\i], X::TypeCheck::Assignment, 'Num does not 
     my sub returntype4 (Bool $pass --> Str) { return $pass ?? 'ok' !! -1}
 
     is(returntype1(Bool::True), 'ok', 'good return value works (returns)');
-    #?niecza todo 'retrun value type checking NYI'
     throws-like 'returntype1(Bool::False)', X::TypeCheck::Return, 'bad return value dies (returns)';
     is(returntype2(Bool::True), 42, 'good return value works (of)');
-    #?niecza todo 'retrun value type checking NYI'
     throws-like 'returntype2(Bool::False)', X::TypeCheck::Return, 'bad return value dies (of)';
 
     is(returntype3(Bool::True), True, 'good return value works (my Type sub)');
-    #?niecza todo 'retrun value type checking NYI'
     throws-like 'returntype3(Bool::False)', X::TypeCheck::Return, 'bad return value dies (my Type sub)';
 
     is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
-    #?niecza todo 'retrun value type checking NYI'
     throws-like 'returntype4(Bool::False)', X::TypeCheck::Return, 'bad return value dies (-->)';
 }
 
@@ -147,18 +141,14 @@ throws-like q[my Num $n; $n = $*PID\i], X::TypeCheck::Assignment, 'Num does not 
     my sub returntype4 (Bool $pass --> Str) { $pass ?? 'ok' !! -1}
 
     is(returntype1(Bool::True), 'ok', 'good implicit return value works (returns)');
-    #?niecza todo 'retrun value type checking NYI'
     throws-like 'returntype1(Bool::False)', X::TypeCheck::Return, 'bad implicit return value dies (returns)';
     is(returntype2(Bool::True), 42, 'good implicit return value works (of)');
-    #?niecza todo 'retrun value type checking NYI'
     throws-like 'returntype2(Bool::False)', X::TypeCheck::Return, 'bad implicit return value dies (of)';
 
     is(returntype3(Bool::True), True, 'good implicit return value works (my Type sub)');
-    #?niecza todo 'retrun value type checking NYI'
     throws-like 'returntype3(Bool::False)', X::TypeCheck::Return, 'bad implicit return value dies (my Type sub)';
 
     is(returntype4(Bool::True), 'ok', 'good implicit return value works (-->)');
-    #?niecza todo 'retrun value type checking NYI'
     throws-like 'returntype4(Bool::False)', X::TypeCheck::Return, 'bad implicit return value dies (-->)';
 }
 

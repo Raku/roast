@@ -29,7 +29,6 @@ plan 22;
 {
     my %h;
     my $b := %h<a><b>;
-    #?niecza todo "https://github.com/sorear/niecza/issues/176"
     is %h.keys.elems, 0, 'binding does not immediately autovivify';
     ok $b === Any, '... to an undefined value';
     $b = 42;
@@ -47,7 +46,6 @@ plan 22;
 {
     my %h;
     foo(%h<a><b>);
-    #?niecza todo "https://github.com/sorear/niecza/issues/176"
     is %h.keys.elems, 0, 'in rw arguments does not autovivify';
     foo(%h<a><b>,42);
     is %h.keys.elems, 1, 'storing from within the sub does autovivify';
@@ -66,7 +64,6 @@ sub foo ($baz is rw, $assign? ) { $baz = $assign if $assign }
 sub bar ($baz is readonly) { }
 
 # RT #77038
-#?niecza skip "Unable to resolve method push in type Any"
 {
     my %h;
     push    %h<s-push><a>, 1, 2;

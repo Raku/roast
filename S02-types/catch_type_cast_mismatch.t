@@ -20,7 +20,6 @@ cmp-ok $ref, '===', $ref[0], 'So [0] returns itself';
 {
     $ref = [ 42 ];
     isa-ok($ref, Array);
-    #?niecza skip "Failure NYI"
     throws-like { EVAL '$ref<0>' }, Exception, 'Accessing array as hash fails';
 }
 

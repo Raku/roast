@@ -53,7 +53,6 @@ sub showkv($x) {
     is ~$m<a b>, "5 1", 'Multiple-element access';
     is ~$m<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
-    #?niecza skip '.total NYI'
     is $m.total, 8, '.total gives sum of values';
     is +$m, 8, '+$mix gives sum of values';
 }
@@ -102,14 +101,12 @@ sub showkv($x) {
 {
     my $m = mix 'a', False, 2, 'a', False, False;
     my @ks = $m.keys;
-    #?niecza 3 skip "Non-Str keys NYI"
     is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
     is $m{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
-#?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %s = mix <a b o p a p o o>;
     is-deeply %s, { :2a, :1b, :2p, :3o }, 'flattens under single arg rule';
@@ -144,7 +141,6 @@ sub showkv($x) {
     my $m = mix { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
     isa-ok $m, Mix, '&Mix.new given a Hash produces a Mix';
     is +$m, 4, "... with four elements";
-    #?niecza todo "Non-string mix elements NYI"
     is +$m.grep(Pair), 4, "... which are all Pairs";
 }
 
@@ -292,7 +288,6 @@ sub showkv($x) {
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(*)[^100] (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(*)[^100] (2)';
 
-    #?niecza skip '.total NYI'
     is $m.total, 3, '.roll should not change Mix';
 }
 
@@ -308,7 +303,6 @@ sub showkv($x) {
       if !ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     diag "Found {+@a.grep(* eq 'b')} b's"
       if !ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
-    #?niecza skip '.total NYI'
     is $m.total, 1, '.roll should not change Mix';
 }
 
@@ -323,7 +317,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Mix/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $m = mix <a b b c c c>;
     throws-like { $m.grab },
@@ -333,7 +326,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Mix/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $m = mix <a b b c c c>;
     throws-like { $m.grabpairs },
@@ -345,7 +337,6 @@ sub showkv($x) {
     my $m1 = Mix.new(( mix <a b c> ), <c c c d d d d>);
     is +$m1, 2, "Two elements";
     my $inner-mix = $m1.keys.first(Mix);
-    #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a Mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
     my $inner-list = $m1.keys.first(List);
@@ -356,7 +347,6 @@ sub showkv($x) {
     $m1 = Mix.new($m, <c d>);
     is +$m1, 2, "Two elements";
     $inner-mix = $m1.keys.first(Mix);
-    #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
     $inner-list = $m1.keys.first(List);
@@ -380,7 +370,6 @@ sub showkv($x) {
        "Method .Mix works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $m1 = (a => 1.1, b => 2.2, c => 3.3, d => 4.4).Mix;
     is $m1.total, 11, '.total gives sum of values (non-empty) 11';

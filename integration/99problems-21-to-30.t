@@ -40,7 +40,6 @@ plan 15;
     
     # of course the following is wrong, but it also confuses test output!
     #ok all(@rand) ~~ none(@letters), '... and they should be in the letters';
-    #?niecza todo 'unknown'
     ok ?(@rand (<=) @letters), '... and they should be in the letters';
     
     @rand = <a b c d e f g h>.pick(3);
@@ -122,7 +121,6 @@ sub combination($n, @xs) {
     }
 }
 
-#?niecza skip 'hangs'
 {
     
     is combination(3, (1..5)).perl,
@@ -138,7 +136,6 @@ sub combination($n, @xs) {
      [3, 4, 5]).perl, "combinations work.";
 }
 
-#?niecza skip 'hangs'
 {
     # P27 (**) Group the elements of a set into disjoint subsets.
     # 
@@ -224,7 +221,6 @@ sub combination($n, @xs) {
     my @expected= [<o>],[<d e>],[<d e>],[<m n>],[<a b c>],[<f g h>],[<i j k l>];
     
     my @sorted=@input.sort: { +$_ };
-    #?niecza todo 'sort order incorrect.'
     is @expected, 
        @sorted,
        "We should be able to sort a list of lists according to length of sublists";
@@ -233,7 +229,6 @@ sub combination($n, @xs) {
     # same frequency of length the ordering is unspecified, so this should be ok
 }
 
-#?niecza skip 'Unable to resolve method push in class Any'
 {
     my @input= [<a b c>],[<d e>],[<f g h>],[<d e>],[<i j k l>],[<m n>],[<o>];
     my @expected= [<i j k l>],[<o>],[<a b c>],[<f g h>],[<d e>],[<d e>],[<m n>];

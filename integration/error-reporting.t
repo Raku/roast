@@ -78,7 +78,6 @@ is_run 'say 0080982',
     }, 'use of leading zero causes warning about octal';
 
 # RT #76986
-#?niecza todo
 is_run 'my $ = 2; my $ = 3; say q[alive]',
     {
         status  => 0,
@@ -99,7 +98,6 @@ is_run 'sub mysub {
     }, 'warning reports correct line number and subroutine';
 
 # RT #77736
-#?niecza todo
 is_run 'die "foo"; END { say "end run" }',
     {
         status => * != 0,
@@ -115,13 +113,11 @@ is_run 'die "foo"; END { say "end run" }',
              (1 + 2) = 3; # line 3
         ';
 
-    #?niecza skip "Unable to resolve method backtrace in type Str"
     ok ?( $!.backtrace.any.line == 3),
         'correct line number reported for assignment to non-variable';
 }
 
 # RT #103034
-#?niecza skip 'sub ucfirst($thing) is export(:DEFAULT) blows up'
 #?DOES 3
 {
     use lib 't/spec/packages';

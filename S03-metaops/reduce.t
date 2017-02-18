@@ -45,7 +45,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     nok ([>]  4, 2, 3, 1), "[>] works (2)";
     ok  ([==] 4, 4, 4),    "[==] works (1)";
     nok ([==] 4, 5, 4),    "[==] works (2)";
-    #?niecza 2 skip 'this is parsed as ![=], not good'
     ok  ([!=] 4, 5, 6),    "[!=] works (1)";
     nok ([!=] 4, 4, 4),    "[!=] works (2)";
 }
@@ -87,7 +86,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     is ~ ([\>]  4, 2, 3, 1).map({+$_}), "1 1 0 0", "[\\>] works (2)";
     is ~ ([\==]  4, 4, 4).map({+$_}),   "1 1 1",   "[\\==] works (1)";
     is ~ ([\==]  4, 5, 4).map({+$_}),   "1 0 0",   "[\\==] works (2)";
-    #?niecza 2 todo 'this is parsed as ![=], not good'
     is ~ ([\!=]  4, 5, 6).map({+$_}),   "1 1 1",   "[\\!=] works (1)";
     is ~ ([\!=]  4, 5, 5).map({+$_}),   "1 1 0",   "[\\!=] works (2)";
     is (~ [\**]  1, 2, 3),   "3 8 1",   "[\\**] (right assoc) works (1)";
@@ -97,18 +95,15 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 # RT #76110
 {
     is ~([\+] [\+] 1 xx 5), '1 3 6 10 15', 'two nested [\+]';
-    #?niecza todo 'unary [] does not context yet'
     is ([+] 0, [1, 2, 3, 4]), 4,  '[+] does not flatten []-arrays';
 }
 
-#?niecza skip '[macro]'
 {
   my @array = (Mu, Mu, 3, Mu, 5);
   is ([//]  @array), 3, "[//] works";
   is ([orelse] @array), 3, "[orelse] works";
 }
 
-#?niecza skip '[macro]'
 {
   my @array = (Mu, Mu, 0, 3, Mu, 5);
   is ([||] @array), 3, "[||] works";
@@ -119,7 +114,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (~ [\||] 0, 0, 3, 4, 5), "0 0 3 3 3", "[\\||] works";
 }
 
-#?niecza skip '[macro]'
 {
   my @array = (Mu, Mu, 0, 3, Mu, 5);
   my @array1 = (2, 3, 4);
@@ -161,7 +155,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     my $count = 0;
     $count++ for [,] @array;
     #?rakudo todo 'item context'
-    #?niecza todo 'huh?'
     is $count, 1, '[,] returns a single Array';
     ok ([,] @array) ~~ Positional, '[,] returns something Positional';
 }
@@ -169,7 +162,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 # Following two tests taken verbatim from former t/operators/reduce.t
 lives-ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
 
-#?niecza todo 'These are hyperop tests!'
 lives-ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # Check that user defined infix ops work with [...], too.
@@ -203,11 +195,9 @@ is( ~([\*] 42), "42", "[\*] 42 returns (42)");
 is( ([~] 'towel'), 'towel', "[~] 'towel' returns 'towel'");
 is( ([~] 'washcloth'), 'washcloth', "[~] 'washcloth' returns 'washcloth'");
 is( ([\~] 'towel'), 'towel', "[\~] 'towel' returns 'towel'");
-#?niecza skip 'Iterable'
 ok( ([\~] 'towel') ~~ Iterable, "[\~] 'towel' returns something Iterable");
 is( ([<] 42), Bool::True, "[<] 42 returns true");
 is( ~([\<] 42), ~True, "[\<] 42 returns '1'");
-#?niecza skip 'Iterable'
 ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
 is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 
@@ -219,12 +209,10 @@ ok !([\*] 1..5).is-lazy, "triangle reduce knows if it's lazy";
 is( ([max]()), -Inf, '[max]() returns -Inf');
 is( ([min]()),  Inf, '[min]() returns -Inf');
 
-#?niecza 2 todo ""
 is( ([max] Any, Any, 2), 2, '[max] Any, Any, 2 returns 2');
 is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 
 # RT #65164 implement [^^]
-#?niecza skip '^^'
 {
     is ([^^] 0, 42), 42, '[^^] works (one of two true)';
     is ([^^] 42, 0), 42, '[^^] works (one of two true)';
@@ -317,7 +305,6 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     }
 }
 
-#?niecza skip '^^'
 {
     is ([\^^] False, 0, 5, '', False, 16, 0, Any, "hello", False).gist,
        '(False 0 5 5 5 Nil Nil Nil Nil Nil)',
@@ -328,7 +315,6 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 }
 
 # RT #57976 implement orelse
-#?niecza skip 'huh?  these are macros'
 {
 
     is (join ', ', [\//] Any, 0, 1),
@@ -371,7 +357,6 @@ ok ([+]) == 0, 'argumentless [+] parses';
 }
 
 # RT #67064
-#?niecza skip "reduce is not supposed to flatten?"
 {
     is(([X~] <a b>, <a b>, <a b>), <aaa aab aba abb baa bab bba bbb>, 'reduce with X');
 }

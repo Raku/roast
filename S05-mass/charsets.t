@@ -6,7 +6,6 @@ use Test;
 
 plan 17;
 
-#?niecza skip 'Tests not completing under niecza'
 {
     my $latin-chars = [~] chr(0)..chr(0xFF);
 

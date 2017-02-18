@@ -154,7 +154,6 @@ plan 34;
 }
 
 
-#?niecza todo "Niecza's sort is not stable"
 {
     is (<P e r l 6>.sort: { 0; }).join, 'Perl6',
     'sort with arity 0 closure is stable';
@@ -188,7 +187,6 @@ plan 34;
 }
 
 # RT #68112
-#?niecza skip "determine behavior of 0-arity methods passed to sort"
 {
     sub foo () { 0 }   #OK not used
     throws-like { EVAL '(1..10).sort(&foo)' }, Exception,
@@ -203,7 +201,6 @@ plan 34;
 
     my @sorted;
 
-    #?niecza todo 'Is this test actually testing for correct behavior?'
     lives-ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
 }

@@ -28,7 +28,6 @@ plan 9;
         my $answer = 1;
         my @x = 41, (42 without $answer), 43;
         my @z = 41, 43;
-        #?niecza todo "empty list as element not flattened - https://github.com/sorear/niecza/issues/180"
         is @x, @z, "without expr on true cond";
 }
 

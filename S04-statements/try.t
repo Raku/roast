@@ -14,7 +14,6 @@ plan 40;
 };
 
 # try should return Nil if an exception was caught
-#?niecza skip "=== and Nil NYI"
 {
     ok (try { die 'foo' }) === Nil, 'try returns Nil when exception was caught';
     ok (try { die 'foo'; CATCH { default { } } }) === Nil, '... even when there was a CATCH block';
@@ -105,7 +104,6 @@ plan 40;
     is $catches, 1, 'CATCH does not catch exceptions thrown within it';
 }
 
-#?niecza '.resume does not actually resume'
 {
     my $resumed = 0;
     try {
@@ -133,7 +131,6 @@ plan 40;
     is $str, 'ABfoo', 'block including if structure and printing $/ ok';
 }
 
-#?niecza skip 'new exception stuff'
 {
     class MyPayload {
         method Str() { 'something exceptional' }

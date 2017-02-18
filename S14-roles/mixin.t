@@ -11,9 +11,7 @@ my $x = C1.new();
 $x does R1;
 is $x.test,     42,         'method from a role can be mixed in';
 is $x.?test,    42,         '.? form of call works on a mixed-in role';
-#?niecza skip 'NYI dottyop form .+'
 is $x.+test,    42,         '.+ form of call works on a mixed-in role';
-#?niecza skip 'NYI dottyop form .*'
 is $x.*test,    42,         '.* form of call works on a mixed-in role';
 
 
@@ -61,7 +59,6 @@ is $y.test,     42,         'method from other role was OK too';
     is $x.b,        2,          'mixining in two roles one after the other';
 }
 
-#?niecza skip 'Trait does not available on variables'
 {
     my @array does R1;
     is @array.test, 42,         'mixing in a role at the point of declaration works';
@@ -96,7 +93,6 @@ is $y.test,     42,         'method from other role was OK too';
 }
 
 # RT #69654
-#?niecza skip 'Unable to resolve method methods in class ClassHOW'
 {
     role ProvidesFoo { method foo { } }
     class NoFoo { };
@@ -149,7 +145,6 @@ is (class { } but role { method answer() { 42 } }).answer, 42,
 lives-ok {(True but role {}).gist}, 'can mix into True';
 
 # RT #73990
-#?niecza skip "Can only provide exactly one initial value to a mixin"
 {
     my $tracker = '';
     for 1..3 {

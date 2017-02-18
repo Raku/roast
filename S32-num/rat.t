@@ -12,9 +12,7 @@ isa-ok(1 / 4, Rat, "/ makes a Rat");
 isa-ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
 isa-ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
-#?niecza skip 'No value for parameter $n in CORE Rat.new'
 isa-ok( Rat.new, Rat, 'Rat.new is Rat' );
-#?niecza skip 'No value for parameter $n in CORE Rat.new'
 isa-ok( EVAL(Rat.new.perl), Rat, 'EVAL Rat.new.perl is Rat' );
 isa-ok( EVAL(Rat.new(1, 3).perl), Rat, 'EVAL Rat.new(1, 3).perl is Rat' );
 is( (EVAL Rat.new(1, 3).perl), 1/3, 'EVAL Rat.new(1, 3).perl is 1/3' );
@@ -41,11 +39,8 @@ is(Rat.new(2, 4).nude, (1, 2), "Reduce to simplest form in constructor");
 is(Rat.new(39, 33).nude, (13, 11), "Reduce to simplest form in constructor");
 is(Rat.new(0, 33).nude, (0, 1), "Reduce to simplest form in constructor");
 is(Rat.new(1451234131, 60).nude, (1451234131, 60), "Reduce huge number to simplest form in constructor");
-#?niecza skip 'Unable to resolve method nude in class Num'
 is(Rat.new(1141234123, 0).nude, (1141234123, 0), "Huge over zero stays huge over zero");
-#?niecza skip 'Unable to resolve method nude in class Num'
 is(Rat.new(-7, 0).nude, (-7, 0), "Negative seven over zero stays negative seven over zero");
-#?niecza todo
 is(Rat.new(0, 0).nude, (0,0), "Zero over zero stays zero over zero");
 
 # Test basic math
@@ -148,18 +143,14 @@ is-approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
 # there are a few division by zero tests in S03-operator/div.t
 
-#?niecza todo
 is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 {
-    #?niecza todo
     is Inf.Rat, Inf, "Inf.Rat == Inf";
-    #?niecza todo
     is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
     # RT #74648
     #?rakudo skip 'RT #74648'
-    #?niecza todo
     isa-ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
 }
 
@@ -233,7 +224,6 @@ ok 1/2 !=== 1/3, '=== with false outcome';
 is (3/0).Num, Inf, "(3/0).Num = +Inf";
 is (-42/0).Num, -Inf, "(-42/0).Num = -Inf";
 
-#?niecza skip 'No value for parameter $n in CORE Rat.new'
 ok Rat.new() == 0, 'Rat.new() is 0';
 
 {

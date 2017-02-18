@@ -69,7 +69,6 @@ sub iis(Mu $a, Mu $b, $descr) {
   is ~"1",       "1", "~ context forcer works (3)";
   is ~"0",       "0", "~ context forcer works (4)";
   is ~"",         "", "~ context forcer works (5)";
-  #?niecza todo 'https://github.com/sorear/niecza/issues/179'
   dies-ok { ~Mu },    "~ context forcer works (6)";
   is ~"Inf",   "Inf", "~ context forcer works (7)";
   is ~"-Inf", "-Inf", "~ context forcer works (8)";
@@ -83,7 +82,6 @@ sub eval_elsewhere($code){ EVAL($code) }
 
 # L<S02/Context/numeric "+">
 # numeric (+) context
-#?niecza skip "Failure NYI"
 {
     my $a = '2 is my favorite number';
     isa-ok(+$a, Failure, 'trailing chars cause failure');
@@ -94,7 +92,6 @@ sub eval_elsewhere($code){ EVAL($code) }
 
 # L<S03/Symbolic unary precedence/"prefix:<->">
 #?rakudo skip 'failure modes of Str.Numeric RT #124540'
-#?niecza skip "Failure NYI"
 {
     my $a = '2 is my favorite number';
     isa-ok(-$a, Failure, 'trailing chars cause failure');
@@ -108,17 +105,14 @@ sub eval_elsewhere($code){ EVAL($code) }
 # string context
 {
     my $a = 10.500000;
-    #?niecza skip "Stringy NYI"
     ok(~$a ~~ Stringy, 'it is forced into a Str');
     is(~$a, '10.5', 'forced into string context');
 
     my $b = -100;
-    #?niecza skip "Stringy NYI"
     ok(~$b ~~ Stringy, 'it is forced into a Str');
     is(~$b, '-100', 'forced into string context');
 
     my $c = -100.1010;
-    #?niecza skip "Stringy NYI"
     ok(~$c ~~ Stringy, 'it is forced into a Str');
     is(~$c, '-100.101', 'forced into string context');
 }
@@ -144,7 +138,6 @@ sub eval_elsewhere($code){ EVAL($code) }
     ok(?$d, 'it is forced into boolean context');
 }
 
-#?niecza skip 'Trait dynamic not available on variables'
 {
     my $arrayref is dynamic = list(1,2,3);
     my $boo is dynamic = 37;
@@ -171,7 +164,6 @@ sub eval_elsewhere($code){ EVAL($code) }
     ok(!(!$d), 'it is forced into boolean context');
 
 }
-#?niecza skip 'Trait context not available on variables'
 {
     my $arrayref is dynamic = list(1,2,3);
 
@@ -199,7 +191,6 @@ sub eval_elsewhere($code){ EVAL($code) }
     is @total[8], 888, "total[8] is 888";
 }
 
-#?niecza skip 'Unmatched key in Hash.LISTSTORE'
 {
     ok %() ~~ Hash, '%() returns a Hash';
     is +%(), 0, '%() is an empty Hash';

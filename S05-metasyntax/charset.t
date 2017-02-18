@@ -40,7 +40,6 @@ ok(  "abc" ~~ m/<[\w]-[\n]>/,  'Difference set match 1');
 ok(!("abc" ~~ m/<[\w]-[\N]>/), 'Difference set match 2');
 is(("abc123" ~~ m/<[\w]-[a\d]>+/), 'bc', 'Difference set match 3');
 is(("abc123" ~~ m/<[\w]-[1\D]>+/), '23', 'Difference set match 4');
-#?niecza todo 'gives c123?'
 is(("abc123def" ~~ m/<[\w]-[\D\n]>+/), '123', 'Difference set match 5');
 is(("abc123def" ~~ m/<[\w]-[\D\h]>+/), '123', 'Difference set match 6');
 is(("abc" ~~ /<-["\\\t\n]>+/), 'abc', 'Difference set match 7');
@@ -69,7 +68,6 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 # RT #67122
 ok "\x[FFEF]" ~~ /<[\x0..\xFFEF]>/, 'large \\x char spec';
 
-#?niecza todo
 throws-like "'RT #71702' ~~ /<[d..b]>? RT/", Exception,
     'reverse range in charset is lethal (RT #71702)';
 

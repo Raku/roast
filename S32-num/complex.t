@@ -47,7 +47,6 @@ is-approx( (EVAL (1+0i).perl), 1, 'EVAL (1+0i).perl is 1' );
 isa-ok( EVAL((3i).perl), Complex, 'EVAL (3i).perl is Complex' );
 is-approx( (EVAL (3i).perl), 3i, 'EVAL (3i).perl is 3i' );
 
-#?niecza skip "NYI"
 {
     ok (1+0i).Real ~~ Real, "(1+0i).Real is a Real";
     is (1+0i).Real, 1, "(1+0i).Real is 1";

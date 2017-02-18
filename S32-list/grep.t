@@ -24,7 +24,6 @@ my @list = (1 .. 10);
 }
 
 #?rakudo skip "adverbial block RT #124755"
-#?niecza skip 'No value for parameter Mu $sm in Any.grep'
 {
     my @result = @list.grep():{ ($_ % 2) };
     is(+@result, 5, 'we got a list back');
@@ -36,7 +35,6 @@ my @list = (1 .. 10);
 }
 
 #?rakudo skip "adverbial block RT #124756"
-#?niecza skip 'No value for parameter Mu $sm in Any.grep'
 {
     my @result = @list.grep :{ ($_ % 2) };
     is(+@result, 5, 'we got a list back');
@@ -98,7 +96,6 @@ my @list = (1 .. 10);
 }
 
 # RT #71544
-#?niecza skip 'No value for parameter $b in ANON'
 {
     my @in = ( 1, 1, 2, 3, 4, 4 );
 

@@ -18,7 +18,6 @@ for
 
 # get key and value from the pair as many ways as possible
 
-#?niecza 2 skip 'Invocant handling is NYI'
     is(key($pair:), 'foo', 'got the right key($pair:)');
     is(value($pair:), 'bar', 'got the right value($pair:)');
 
@@ -152,7 +151,6 @@ sub test3 (%h){
     for %h.pairs -> $pair {
         isa-ok($pair,Pair);
         isa-ok($pair[0], Pair, 'sub test3: $pair[0] is $pair');
-        #?niecza skip "Failure NYI"
         ok $pair[1] ~~ Failure, 'sub test3: $pair[1] is failure';
     }
 }
@@ -271,12 +269,10 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     X::Assignment::RO,
     "setting .key dies";
   is $pair.key,         "key",   "attempt to set .key doesn't change the key";
-  #?niecza todo "setting .key changes original val!"
   is $key,              "key",   "attempt to set .key does not change the original var either";
 
   lives-ok { $pair.value = "VAL" }, "setting .value does not die";
   is $pair.value,          "VAL",   "setting .value actually changes the value";
-  #?niecza todo "setting .key changes original val!"
   is $val,                 "VAL",   "setting .value does change the original var as it was itemized";
 }
 
@@ -298,7 +294,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     ok($pair eqv (hash => %hash), ':%foo syntax works');
 }
 
-#?niecza skip "eqv NYI for Pair"
 {
     my sub code {return 42}
     my $pair = (:&code);

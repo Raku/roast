@@ -45,7 +45,6 @@ plan 43;
     dies-ok { %s<a> = 1 }, "Can't assign wrongly typed value to typed hash element (of Int)";
 } #4
 
-#?niecza skip "doesn't know about key constraints"
 {
     my %h{Int};
     is %h.of,    Any, "check the value constraint";

@@ -86,7 +86,6 @@ for @sines -> $angle
     is-approx($zp2.cotanh, $sz2, "Complex.cotanh - $zp2");
 }
 
-#?niecza skip "Inf results wrong"
 {
     is(cotanh(Inf), 1, "cotanh(Inf) -");
     is(cotanh(-Inf), -1, "cotanh(-Inf) -");

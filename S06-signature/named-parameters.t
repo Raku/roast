@@ -86,7 +86,6 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
    "When we explicitly specify, we get our value");
 
 # L<S06/Named arguments/multiple same-named arguments>
-#?niecza skip 'multiple same-named arguments NYI' 
 #?rakudo skip 'multiple same-named arguments NYI RT #124921'
 {
     sub named_array(:@x) { +«@x }
@@ -98,7 +97,6 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
 
 # L<S06/Named arguments/Pairs intended as positional arguments>
 #?rakudo skip 'multiple same-named arguments NYI RT #124921'
-#?niecza skip 'multiple same-named arguments NYI'
 {
     sub named_array2(@x, :y) { (+«@x, 42, +«@y) }
     # +«(:x) is (0, 1)
@@ -129,7 +127,6 @@ sub mandatory (:$param!) {
 is(mandatory(param => 5) , 5, "named mandatory parameter is returned");
 dies-ok {EVAL 'mandatory()' },  "not specifying a mandatory parameter fails";
 
-#?niecza skip "Unhandled trait required"
 {
     sub mandatory_by_trait (:$param is required) {
         return $param;
@@ -221,7 +218,6 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
 
 # L<S06/Parameters and arguments/"A signature containing a name collision">
 
-#?niecza 2 todo "sub params with the same name"
 throws-like 'sub rt68086( $a, $a ) { }', X::Redeclaration, 'two sub params with the same name';
 
 throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
@@ -266,7 +262,6 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
 
 # RT #67558
 {
-    #?niecza todo "Renaming a parameter to an existing positional should fail"
     throws-like q[sub a(:$x, :foo($x) = $x) { $x }], X::Redeclaration,
         'Cannot rename a parameter to an already existing positional';
     sub a(:$x, :foo($y) = $x) { $y };
@@ -293,7 +288,6 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     dies-ok { quoted_named( "x" => 5 ) }, 'quoted pair key => positional parameter';
 }
 
-#?niecza skip "Abbreviated named parameter must have a name"
 {
     sub named_empty(:$) {
         42

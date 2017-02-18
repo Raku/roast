@@ -316,7 +316,6 @@ ok '' !~~ /<!>/, '<!> fails (empty string)';
     ok '' !~~ /<[]>/, '<[]> fails like <!> (empty string)';
 }
 
-#?niecza 3 skip '<at>'
  ok 'abc' ~~ /^<at(0)>/, 'basic <at>';
 nok 'abc' ~~ /^<at(1)>/, '^<at(1)> fails';
  ok 'abc' ~~ /<at(1)>/, '<at(1)> searches until it matches';

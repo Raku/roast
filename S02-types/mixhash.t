@@ -49,7 +49,6 @@ sub showkv($x) {
     is ~$m<a b>, "5 1", 'Multiple-element access';
     is ~$m<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
-    #?niecza skip '.total NYI'
     is $m.total, 8, '.total gives sum of values';
     is $m.elems, 3, '.total gives sum of values';
     is +$m, 8, '+$mix gives sum of values';
@@ -71,7 +70,6 @@ sub showkv($x) {
     is $m<a>, 42, "... and the decrement happens";
     lives-ok { $m<carter>-- }, "Can -- an element with value 1";
     nok $m<carter>:exists, "... and it goes away";
-    #?niecza todo
     lives-ok { $m<farve>-- }, "Can -- an element that doesn't exist";
     ok $m<farve>:exists, "... and everything is still okay";
 }
@@ -119,7 +117,6 @@ sub showkv($x) {
 {
     my $m = MixHash.new('a', False, 2, 'a', False, False);
     my @ks = $m.keys;
-    #?niecza 3 skip "Non-Str keys NYI"
     is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -148,7 +145,6 @@ sub showkv($x) {
     my $m = MixHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 }.hash);
     isa-ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
     is +$m, 4, "... with four elements";
-    #?niecza todo "Non-string mix elements NYI"
     is +$m.grep(Pair), 4, "... which are all Pairs";
 }
 
@@ -277,7 +273,6 @@ sub showkv($x) {
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(*)[^100] (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(*)[^100] (2)';
 
-    #?niecza skip '.total NYI'
     is $m.total, 3, '.roll should not change MixHash';
     is $m.elems, 2, '.roll should not change MixHash';
 }
@@ -294,7 +289,6 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
-    #?niecza skip '.total NYI'
     is $m.total, 1, '.roll should not change MixHash';
     is $m.elems, 3, '.roll should not change MixHash';
 }
@@ -310,7 +304,6 @@ sub showkv($x) {
 
 # L<S32::Containers/MixHash/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $m = <a b b c c c>.MixHash;
     throws-like { $m.grab },
@@ -321,7 +314,6 @@ sub showkv($x) {
 
 # L<S32::Containers/MixHash/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $m = MixHash.new("a", "b", "b");
 
@@ -337,7 +329,6 @@ sub showkv($x) {
     is $m.elems, 0, '.grabpairs *should* change MixHash';
 }
 
-#?niecza skip '.grabpairs NYI'
 {
     my $m = (a=>1.1,b=>2.2,c=>3.3,d=>4.4,e=>5.5,f=>6.6,g=>7.7,h=>8.8).MixHash;
     my @a = $m.grabpairs: *;
@@ -351,7 +342,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
     nok %h<b>:exists, '"b", initialized to zero, does not exist';
@@ -362,7 +352,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
 
@@ -376,7 +365,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, c => 1;
 
@@ -394,7 +382,6 @@ sub showkv($x) {
     is %h<a>, 0, 'item removed again is still zero';
 }
 
-#?niecza skip "Trait name not available on variables"
 {
     my %h of MixHash;
     ok %h.of.perl eq 'MixHash', 'is the hash really a MixHash';
@@ -420,7 +407,6 @@ sub showkv($x) {
        "Method .MixHash works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $m1 = (a => 1.1, b => 2.2, c => 3.3, d => 4.4).MixHash;
     is $m1.total, 11, '.total gives sum of values (non-empty) 11';

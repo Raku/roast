@@ -20,7 +20,6 @@ plan 49;
 } #7
 
 # typed scalar
-#?niecza skip "doesn't know typed stuff"
 {
     my Int $a = 1;
     is ($a = Nil), Int, "assigning Nil to Int should work";
@@ -28,7 +27,6 @@ plan 49;
 } #2
 
 # typed array
-#?niecza skip "doesn't know typed stuff"
 {
     my Int @a = 1, Empty, 3;
     #?rakudo todo ".clone doesn't copy typedness"
@@ -47,7 +45,6 @@ plan 49;
 } #11
 
 # typed hash
-#?niecza skip "doesn't know typed stuff"
 {
     my Int %a = a => 1, Empty, c => 3;
     #?rakudo todo ".clone doesn't copy typedness"

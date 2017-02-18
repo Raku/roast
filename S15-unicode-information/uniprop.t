@@ -3,7 +3,6 @@ use v6;
 use Test;
 
 plan 164;
-#?niecza 164 skip "uniprop NYI"
 
 #use unicode :v(6.3);
 

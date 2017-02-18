@@ -16,7 +16,6 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 
 # L<S12/"Types and Subtypes">
 
-#?niecza skip '$n has already been used as a non-placeholder in the surrounding block'
 {
     my $abs = '
     multi sub my_abs (Int $n where { $^n >= 0 }){ $n }
@@ -74,7 +73,6 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 }
 
 # The same, but lexically
-#?niecza skip 'Pathed definitions require our scope'
 {
     my subset Int::Even of Int where { $^num % 2 == 0 }
     ok my Int::Even $c = 6;
@@ -175,7 +173,6 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     ok C1.new(a => 42) ~~ SC1,   'subtypes based on classes work';
 }
 
-#?niecza skip 'Object reference not set to an instance of an object'
 {
     role R1 { };
     subset SR1 of R1 where 1;
@@ -197,13 +194,11 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     class RT65700 {
         has Small $.small;
     }
-    #?niecza todo
     dies-ok { RT65700.new( small => 20 ) }, 'subset type is enforced as attribute in new() (1)';
     lives-ok { RT65700.new( small => 2 ) }, 'subset type enforced as attribute in new() (2)';
 
     my subset Teeny of Int where { $^n < 10 }
     class T { has Teeny $.teeny }
-    #?niecza todo
     dies-ok { T.new( teeny => 20 ) }, 'my subset type is enforced as attribute in new() (1)';
     lives-ok { T.new( teeny => 2 ) }, 'my subset type enforced as attribute in new() (2)';
 }
@@ -248,7 +243,6 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     is $*call2, 1, 'level two subset checked (should succeed)';
 }
 
-#?niecza skip 'Object reference not set to an instance of an object'
 {
     role R { };
     subset S of R;
@@ -274,7 +268,6 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 }
 
 # RT #71820
-#?niecza todo
 {
     subset Interesting of Int where * > 10;
     class AI { has Interesting $.x };
@@ -292,7 +285,6 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 }
 
 # RT #72948
-#?niecza skip "Exceptions not supported"
 {
     try { EVAL 'sub foo($x where { $x == $y }, $y) { }' };
     isa-ok $!, X::Undeclared, 'subset in signature cannot use non-predeclared variable';

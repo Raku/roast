@@ -31,7 +31,6 @@ Testing lvalue-returning subroutines
   my $var = 42;
   my $notlvalue = sub () { $var };
 
-  #?niecza 2 todo 'rw checking'
   dies-ok { $notlvalue() = 23 },
     "assigning to non-rw subrefs should die";
   is $var, 42,
@@ -56,7 +55,6 @@ Testing lvalue-returning subroutines
   # S6 says that lvalue subroutines are marked out by 'is rw'
   sub notlvalue { $var; } # without rw
 
-  #?niecza 2 todo 'rw checking'
   dies-ok { notlvalue() = 5 },
     "assigning to non-rw subs should die";
   is $var, 42,

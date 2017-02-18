@@ -40,11 +40,9 @@ lives-ok { EVAL 'my $x = 3; END { $x * $x }' },
     'outer lexicals are visible in END { ... } blocks';
 
 my $a = 0;
-#?niecza todo
 lives-ok { EVAL 'my $x = 3; END { $a = $x * $x };' },
     'and those from EVAL as well';
 
-#?niecza todo
 is_run( 'use MONKEY-SEE-NO-EVAL; my $a = 2; EVAL q[my $x = 3; END { $a = $x * $x; print $a }]; print $a, ":"',
     {
         out => '2:9',

@@ -108,7 +108,6 @@ is (<a b> X <c d> X < e f>).flat.join(','),
     'a,c,e,a,c,f,a,d,e,a,d,f,b,c,e,b,c,f,b,d,e,b,d,f',
     'cross works with three lists';
 
-#?niecza todo
 is ($[1,2] X~ <a b>), '1 2a 1 2b', '$[] does not flatten';
 
 is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',

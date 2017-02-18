@@ -18,7 +18,6 @@ plan 70;
     sub foo0 { "OH NOES" };
     constant foo0 = 5;
     is foo0,   5,         'bare constant wins against sub of the same name';
-    #?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Int'
     is foo0(), 'OH NOES', '... but parens always indicate a sub call';
 }
 
@@ -43,11 +42,9 @@ plan 70;
     {
         constant foo2 = 42;
     }
-    #?niecza todo
     eval-lives-ok 'foo2 == 42', 'constants are our scoped';
 }
 
-#?niecza skip 'Lexical foo3 is not a package (?)'
 {
     constant foo3 = 42;
     #?rakudo todo 'constants as type constraints'
@@ -88,7 +85,6 @@ plan 70;
 }
 
 #?rakudo todo 'COMPILING RT #125054'
-#?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
 
@@ -110,7 +106,6 @@ plan 70;
 }
 
 #?rakudo todo 'COMPILING RT #125054'
-#?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
 
@@ -132,7 +127,6 @@ plan 70;
 }
 
 #?rakudo todo 'COMPILING RT #125054'
-#?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
 
@@ -224,7 +218,6 @@ plan 70;
     constant timecheck = $foo;
     $ok++ if timecheck == 23;
 
-    #?niecza todo
     ok $ok, "the initializing values for constants are evaluated at compile-time";
 }
 
@@ -276,7 +269,6 @@ plan 70;
     is A.new.z, 6, 'Can use outer constants in a class';
 }
 
-#?niecza skip "Undeclared name: 'G::c'"
 {
     enum F::B <c d e>;
     my constant G = F::B;
@@ -287,7 +279,6 @@ plan 70;
     ok Yak === F::B::c, 'can use "constant" to alias an enum value';
 }
 
-#?niecza skip "Cannot use bind operator with this LHS"
 {
     constant fib := 0, 1, *+* ... *;
     is fib[100], 354224848179261915075, 'can have a constant using a sequence and index it';

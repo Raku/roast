@@ -61,7 +61,6 @@ plan 51;
 }
 
 # L<S02/"Embedded Comments"/"no space" between "#" and bracket>
-#?niecza skip 'Opening bracket is required for #` comment'
 {
 
     throws-like { EVAL "3 * #` (invalid comment) 2" },
@@ -117,7 +116,6 @@ plan 51;
 # comments can be nested
 # NB: Not really--brackets can be nested, but the outer comment has No Clue whether the
 # inner brackets belong to comments or not; it's just counting them regardless of their position.
-#?niecza skip 'Possible runaway string'
 {
     is 3, #`(
             comment
@@ -158,7 +156,6 @@ plan 51;
 }
 
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
-#?niecza skip 'Excess arguments to CORE eval'
 {
     throws-like { EVAL '$a = #`\  (comment) 32' },
       X::Undeclared,
@@ -180,7 +177,6 @@ plan 51;
 }
 
 # L<S02/Single-line Comments/"single-line comments">
-#?niecza todo
 {
     # RT #70752
     lives-ok { EVAL "#=======\n#=======\nuse v6;" }, 
@@ -221,7 +217,6 @@ is $outerVal, 11, 'Single paragraph Pod parses to whitespace in code';
 
 }} }, 'Single paragraph Pod eval throws no error';
 
-#?niecza todo
 lives-ok { EVAL q{{
 
 my $outerVal = EVAL(

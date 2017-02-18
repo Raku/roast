@@ -28,7 +28,6 @@ plan 47;
   is $var,      "f", "basic binding of an array element (3)";
 }
 
-#?niecza skip ":delete"
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -164,7 +163,6 @@ plan 47;
   splice @array, 1, 1, ();
   # $var unchanged, but assigning to $var doesn't modify @array any
   # longer; similarily, changing @array[1] doesn't modify $var now
-  #?niecza todo "binding of array elements works with splice (2)"
   is $var,    "e",    "binding of array elements works with splice (2)";
   is ~@array, "a c",  "binding of array elements works with splice (3)";
 
@@ -225,7 +223,6 @@ plan 47;
 }
 
 # RT #61566
-#?niecza todo
 {
     throws-like 'my @rt61566 := 1',
         X::TypeCheck::Binding,

@@ -14,7 +14,6 @@ plan 20;
     ok  ('1.2' ~~ 1.2),         '$thing ~~ Rat does numeric comparison';
     ok  ('1.2' ~~ 1.2.Num),     '$thing ~~ Num does numeric comparison';
 
-    #?niecza 3 skip 'Nominal type check failed for #1'
     ok  !(Mu ~~ 0),              'Mu ~~ 0';
     ok  !(Mu ~~ 'foo'),          'Mu ~~ 0';
     ok  !(Mu ~~ 2.3),            'Mu ~~ $other_number';

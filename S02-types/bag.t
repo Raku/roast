@@ -97,14 +97,12 @@ sub showkv($x) {
 {
     my $b = bag 'a', False, 2, 'a', False, False;
     my @ks = $b.keys;
-    #?niecza 3 skip "Non-Str keys NYI"
     is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
     is $b{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
-#?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %s = bag <a b o p a p o o>;
     is-deeply %s, { :2a, :1b, :3o, :2p }, 'single arg rule rules';
@@ -140,7 +138,6 @@ sub showkv($x) {
     my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
     isa-ok $b, Bag, '&Bag.new given a Hash produces a Bag';
     is +$b, 4, "... with four elements";
-    #?niecza todo "Non-string bag elements NYI"
     is +$b.grep(Pair), 4, "... which are all Pairs";
 }
 
@@ -161,14 +158,12 @@ sub showkv($x) {
     is +$b, 1, "... with one element";
 }
 
-#?niecza skip 'SetHash'
 {
     my $b = bag SetHash.new(<foo bar foo bar baz foo>);
     isa-ok $b, Bag, '&Bag.new given a SetHash produces a Bag';
     is +$b, 1, "... with one element";
 }
 
-#?niecza skip 'BagHash'
 {
     my $b = bag BagHash.new(<foo bar foo bar baz foo>);
     isa-ok $b, Bag, '&Bag.new given a BagHash produces a Bag';
@@ -335,7 +330,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Bag/pickpairs>
 
-#?niecza skip ".pickpairs NYI"
 {
     my $b = Bag.new("a", "b", "b");
 
@@ -357,7 +351,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Bag/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $b = bag <a b b c c c>;
     throws-like { $b.grab },
@@ -367,7 +360,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Bag/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $b = bag <a b b c c c>;
     throws-like { $b.grabpairs },
@@ -379,7 +371,6 @@ sub showkv($x) {
     my $b1 = Bag.new( (bag <a b c>) , <c c c d d d d>);
     is +$b1, 2, "Two elements";
     my $inner-bag = $b1.keys.first(Bag);
-    #?niecza 2 todo 'Bag in Bag does not work correctly yet'
     isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a Bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
     my $inner-list = $b1.keys.first(List);
@@ -390,7 +381,6 @@ sub showkv($x) {
     $b1 = Bag.new($b, <c d>);
     is +$b1, 2, "Two elements";
     $inner-bag = $b1.keys.first(Bag);
-    #?niecza 2 todo 'Bag in Bag does not work correctly yet'
     isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
     $inner-list = $b1.keys.first(List);
@@ -414,7 +404,6 @@ sub showkv($x) {
        "Method .Bag works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $b1 = <a b b c c c d d d d>.Bag;
     is $b1.total, 10, '.total gives sum of values (non-empty 10)';

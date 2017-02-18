@@ -19,12 +19,9 @@ plan 100;
     is $ro_call, 1, 'read-only multi was called';
 
     my $x = 99;
-    #?niecza skip 'Ambiguous dispatch for &uno_mas'
     is uno_mas( $x ), 100, 'multi works with variable';
-    #?niecza todo
     #?rakudo todo 'Calls wrong candidate'
     is $x, 100, 'variable was modified';
-    #?niecza todo
     #?rakudo todo 'Calls wrong candidate'
     is $rw_call, 1, 'read-write multi was called';
 }
@@ -147,7 +144,6 @@ is(foo(B.new), 3, 'dispatch on class worked');
 is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 
 #?rakudo skip "redeclaration of routine 'bar' RT #118069"
-#?niecza skip "Illegal redeclaration of routine 'bar'"
 {
     # Test that proto makes all further subs in the scope also be multi.
     proto bar(|c()) { "proto" }
@@ -171,7 +167,6 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     }
 
     #?rakudo todo 'operator protos'
-    #?niecza todo
     is ([+] 1,2,3), 12, "[+] overloaded by proto definition";
 }
 
@@ -181,7 +176,6 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     is (moose 3), 4, "proto definition of prefix:<moose> works";
 }
 
-#?niecza skip '>>>Stub code executed'
 {
     proto prefix:<elk> (|c($arg)) { * }
     multi prefix:<elk> (|c($arg)) { $arg + 1 }
@@ -201,7 +195,6 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
 }
 
 # RT #111454
-#?niecza skip "System.NullReferenceException: Object reference not set to an instance of an object"
 {
     my package Cont {
         our proto sub ainer(|c($)) {*}
@@ -210,7 +203,6 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     is Cont::ainer(21), 42, 'our proto can be accessed from the ouside';
 }
 
-#?niecza skip 'Unhandled exception: Cannot use value like Block as a number'
 {
     my proto f(|c($)) {
         2 * {*} + 5
@@ -246,7 +238,6 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
 }
 
 # RT #116164
-#?niecza todo
 {
     throws-like q[
         proto f(|c(Int $x)) {*}; multi f(|c($)) { 'default' }; f 'foo'
@@ -355,7 +346,6 @@ multi bar(|c(T $a;; S $b)) { 2 }    #OK not used
 my $lived = 0;
 try { foo(S,S); $lived = 1 }
 is($lived, 0, "dispatch tied as expected");
-#?niecza skip 'Ambiguous dispatch for &bar'
 is(bar(S,S), 1, "not tied as only first type in the dispatch");
 
 # note - example in ticket [perl #58948] a bit more elaborate
@@ -441,7 +431,6 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 }
 
 # RT #68528
-#?niecza skip 'Ambiguous call to &rt68528'
 {
     multi rt68528(|c(:$a!, *%_)) { return "first"  };
     multi rt68528(|c(:$b,  *%_)) { return "second" };

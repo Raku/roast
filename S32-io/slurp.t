@@ -44,7 +44,6 @@ is slurp($empty-path), '', "empty files yield empty string";
     is slurp($test-path), $test-contents, "function passed a path works";
 }
 
-#?niecza skip ":bin option for slurp fails"
 {
     my $binary-slurp;
     ok ($binary-slurp = slurp $test-path, :bin), ":bin option runs";
@@ -52,7 +51,6 @@ is slurp($empty-path), '', "empty files yield empty string";
     is $binary-slurp, $test-contents.encode, "binary slurp returns correct content";
 }
 
-#?niecza skip ":enc option for slurp fails"
 {
     lives-ok { slurp($test-path, :enc('utf8')) }, "slurp :enc - encoding functions";
     is slurp($test-path, :enc('utf8')), $test-contents, "utf8 looks normal";

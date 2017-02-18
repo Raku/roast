@@ -25,7 +25,6 @@ plan 9;
         my @y = 41, (!$answer ?? 42 !! Slip.new()), 43;
         my @z = 41, 43;
         is @y, @z, "sanity check";
-        #?niecza todo "empty list as element not flattened - https://github.com/sorear/niecza/issues/180"
         is @x, @y, "unless expr on true cond";
 }
 

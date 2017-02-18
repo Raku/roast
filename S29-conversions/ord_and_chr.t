@@ -149,10 +149,8 @@ is (65..75).chrs, 'ABCDEFGHIJK', "there's a .chrs method";
 is ('ABCDEFGHIJK').ords.chrs, 'ABCDEFGHIJK', "ords > chrs round-trips correctly";
 is (65..75).chrs.ords, '65 66 67 68 69 70 71 72 73 74 75', "chrs > ords round-trips correctly";
 
-#?niecza skip "multi-arg variants of chr not in place yet"
 is chrs(104, 101, 108, 108, 111), 'hello', 'chrs works with a list of ints';
 
-#?niecza 5 skip "chr handling of invalid code-points"
 #?rakudo todo 'chr surrogate RT #124834'
 dies-ok {chr(0xD800)}, "chr of surrogate";
 lives-ok {chr(0x2FFFE)}, "chr of noncharacter";
@@ -169,7 +167,6 @@ is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
 
 {
     #?rakudo.jvm todo 'NFG on JVM'
-    #?niecza todo
     is "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord, 550, '.ord gives first NFC codepoint (1)';
     is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]".ord, 550, '.ord gives first NFC codepoint (2)';
 }

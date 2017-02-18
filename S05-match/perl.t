@@ -16,10 +16,8 @@ grammar ExprT1 {
 my $m = ExprT1.parse('2 + 4');
 ok $m, 'Regex matches (1)';
 lives-ok { $m.perl }, '$/.perl lives (with named captures';
-#?niecza skip 'No value for parameter $a in is-deeply'
 #?rakudo todo 'RT #125293 - .perl does not roundtrip as expected'
 is-deeply EVAL($m.perl), $m, '... and it reproduces the right thing (1)';
-#?niecza todo 'empty result'
 #?rakudo skip 'RT #125293 - .perl does not roundtrip as expected - operator is null'
 is ~EVAL($m.perl).<operator>, '+', ' right result (2)';
 
@@ -30,7 +28,6 @@ lives-ok { $/.perl }, 'lives on quantified named captures';
 
 # RT #64874
 #?rakudo skip '<foo::bar> RT #124745'
-#?niecza skip 'Cannot dispatch to a method on GLOBAL::Perl6::Grammar'
 {
     my $code_str = 'say <OH HAI>';
     $code_str ~~ /<Perl6::Grammar::TOP>/;

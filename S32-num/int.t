@@ -77,7 +77,6 @@ ok 42.Bool, "42.Bool is true";
 isa-ok 42.Bool, Bool, "42.Bool is Bool";
 
 is('-1.999'.Int, -1, "int('-1.999') is -1");
-#?niecza 3 skip "0x, 0d, and 0o NYI"
 is('0x123'.Int, 0x123, "int('0x123') is 0x123");
 is('0d456'.Int, 0d456, "int('0d456') is 0d456");
 throws-like q['0o678'.Int], X::Str::Numeric,

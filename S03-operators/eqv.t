@@ -33,7 +33,6 @@ plan 55;
   ok !($a eqv $b), "eqv on value types (2-3)";
 }
 
-#?niecza skip 'Cannot use value like Capture as a number'
 {
   my @a = (1,2,3);
   my @b = (1,2,3);
@@ -46,7 +45,6 @@ plan 55;
   ok \@a eqv \@b, '\@array of two bound arrays are eqv';
 }
 
-#?niecza skip 'Cannot use value like Capture as a number'
 {
   my $a = \3;
   my $b = \3;
@@ -58,7 +56,6 @@ plan 55;
   ok (\$a !eqv \$b), "eqv on scalar references (1-4)";
 }
 
-#?niecza skip 'Cannot use value like Block as a number'
 {
   my $a = { 3 };
   my $b = { 3 };
@@ -72,14 +69,12 @@ plan 55;
   nok ($a eqv { 5 }), 'eqv on sub references (1-4)';
 }
 
-#?niecza skip 'Cannot use value like Sub as a number'
 {
   ok  (&say eqv &say), "eqv on sub references (2-1)";
   ok  (&map eqv &map), "eqv on sub references (2-2)";
   ok !(&say eqv &map), "eqv on sub references (2-3)";
 }
 
-#?niecza skip 'Cannot use value like Capture as a number'
 {
   my $num = 3; my $a   = \$num;
   my $b   = \$num;
@@ -102,7 +97,6 @@ plan 55;
   ok !({a => 1} eqv {a => 1, b => 2}), 'hashes: different number of pairs';
 }
 
-#?niecza skip 'Cannot use value like Capture as a number'
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
   # XXX the following seems bogus nowadays
@@ -147,7 +141,6 @@ plan 55;
 
 # RT #75322 - Rakudo used to be confused when lists began with ()
 {
-    #?niecza todo
     nok ((), "x") eqv ((), 9), 'list starting with () - 1';
     nok ((), (), 1) eqv ((), 9), 'list starting with () - 1';
     nok ((), (), (), 1) eqv ((), (), ""), 'list starting with () - 1';

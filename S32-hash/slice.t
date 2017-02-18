@@ -30,7 +30,6 @@ plan 31;
     is(%hash{@slice[0,1]}, (4,6), "slice from array slice, part 2");
 }
 
-#?niecza skip 'Excess arguments to CORE List.new, used 1 of 3 positionals'
 {   my %hash;
 
     %hash{(1,2)} = "one", "two";
@@ -46,7 +45,6 @@ plan 31;
         "assigning a slice using keys from GatherIterator";
 }
 
-#?niecza todo 'Writing to readonly scalar'
 {
     my %hash = :a(1), :b(2), :c(3), :d(4);
     my @slice := %hash<b c>;
@@ -77,7 +75,6 @@ Quoting Larry:
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
 
     try { %hash<a b> := <FOO BAR> };
-    #?niecza 2 todo
     is %hash<a>, "FOO", "binding hash slices works (1-1)";
     is %hash<b>, "BAR", "binding hash slices works (1-2)";
 }
@@ -86,7 +83,6 @@ Quoting Larry:
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
 
     try { %hash<a b> := <FOO> };
-    #?niecza 2 todo
     is %hash<a>, "FOO",    "binding hash slices works (2-1)";
     ok !defined(%hash<b>), "binding hash slices works (2-2)";
 }
@@ -97,14 +93,12 @@ Quoting Larry:
 
     try { %hash<a b> := ($foo, $bar) };
     #?rakudo 2 todo 'binding on hash elements unimplemented'
-    #?niecza 2 todo
     is %hash<a>, "FOO", "binding hash slices works (3-1)";
     is %hash<b>, "BAR", "binding hash slices works (3-2)";
 
     $foo = "BB";
     $bar = "CC";
     #?rakudo 2 todo 'binding on hash elements unimplemented'
-    #?niecza 2 todo
     is %hash<a>, "BB", "binding hash slices works (3-3)";
     is %hash<b>, "CC", "binding hash slices works (3-4)";
 
@@ -114,7 +108,6 @@ Quoting Larry:
     is %hash<b>, "CCC", "binding hash slices works (3-6)";
 
     #?rakudo 2 todo 'binding on hash elements unimplemented'
-    #?niecza 2 todo
     is $foo,     "BBB", "binding hash slices works (3-7)";
     is $bar,     "CCC", "binding hash slices works (3-8)";
 }

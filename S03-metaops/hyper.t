@@ -548,7 +548,6 @@ my @e;
 
 =end todo_unspecced
 
-#?niecza skip 'does not work; recurses into hash'
 #?DOES 2
 { # hyper dereferencing
     my @array = (
@@ -841,7 +840,6 @@ my @e;
 }
 
 # test non-UTF-8 input
-#?niecza skip 'nonsensical test'
 #?rakudo skip 'EVAL(Buf) RT #122256'
 #?DOES 1
 {

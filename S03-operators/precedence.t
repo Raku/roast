@@ -257,7 +257,6 @@ throws-like '1, 2 Z 3, 4 X 5, 6',
     X::Syntax::NonListAssociative,
     'list associativity only works between identical operators';
 
-#?niecza skip 'assigning to readonly value'
 {
     # Check a 3 != 3 vs 3 !=3 parsing issue that can cropped up in Rakudo.
     # Needs careful following of STD to get it right. :-)

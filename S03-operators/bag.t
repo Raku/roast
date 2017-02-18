@@ -48,7 +48,6 @@ is showkv($s ∩ $b), "blood:1 love:1", "Set intersection with Bag works";
 isa-ok ($s ∩ $b), Bag, "... and it's actually a Bag";
 is showkv($s ∩ $kb), "blood:1 love:1", "Set intersection with BagHash works";
 isa-ok ($s ∩ $kb), Bag, "... and it's actually a Bag";
-#?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong'
 is showkv($kb ∩ <glad green blood>), "blood:1", "BagHash intersection with array of strings works";
 isa-ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
 
@@ -56,7 +55,6 @@ is showkv($s (&) $b), "blood:1 love:1", "Set intersection with Bag works (texas)
 isa-ok ($s (&) $b), Bag, "... and it's actually a Bag";
 is showkv($s (&) $kb), "blood:1 love:1", "Set intersection with BagHash works (texas)";
 isa-ok ($s (&) $kb), Bag, "... and it's actually a Bag";
-#?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong?'
 is showkv($kb (&) <glad green blood>), "blood:1", "BagHash intersection with array of strings works (texas)";
 isa-ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
@@ -71,10 +69,8 @@ isa-ok ($s (^) $b), Bag, "... and it's actually a Bag";
 is showkv($b (^) $s), showkv(symmetric-difference($s, $b)), "Set symmetric difference with Bag is correct";
 isa-ok ($b (^) $s), Bag, "... and it's actually a Bag";
 
-#?niecza todo "Test is wrong, implementation is wrong"
 is showkv($s (^) $kb), showkv(symmetric-difference($s, $kb)), "BagHash symmetric difference with Set is correct";
 isa-ok ($s (^) $kb), Bag, "... and it's actually a Bag";
-#?niecza todo "Test is wrong, implementation is wrong"
 is showkv($kb (^) $s), showkv(symmetric-difference($s, $kb)), "Set symmetric difference with BagHash is correct";
 isa-ok ($kb (^) $s), Bag, "... and it's actually a Bag";
 
@@ -145,7 +141,6 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     nok $b ≼ $kb, "Our bag is not a msubset of our keybag";
     ok $b ≼ $b, "Our bag is a msubset of itself";
     ok $kb ≼ $kb, "Our keybag is a msubset of itself";
-    #?niecza 4 skip '(<+) NYI - https://github.com/sorear/niecza/issues/178'
     ok $kb (<+) $b, "Our keybag is a msubset of our bag (texas)";
     nok $b (<+) $kb, "Our bag is not a msubset of our keybag (texas)";
     ok $b (<+) $b, "Our bag is a msubset of itself (texas)";
@@ -158,7 +153,6 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     ok $b ≽ $kb, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $b, "Our bag is a msuperset of itself";
     ok $kb ≽ $kb, "Our keybag is a msuperset of itself";
-    #?niecza 4 skip '(>+) NYI - https://github.com/sorear/niecza/issues/178'
     nok $kb (>+) $b, "Our keybag is not a msuperset of our bag";
     ok $b (>+) $kb, "Our bag is a msuperset of our keybag";
     ok $b (>+) $b, "Our bag is a msuperset of itself";

@@ -43,7 +43,6 @@ plan 38;
   is (-7 +^ -6),( 3), "logical XOR of two negative Int is twos complement";
 
   # string
-  #?niecza 6 skip 'string bitops'
   is( 'a' ~& 'A',         'A',       'string bitwise ~& of "a" and "A"' );
   is( 'a' ~| 'b',         'c',       'string bitwise ~| of "a" and "b"' );
   is( 'a' ~^ 'B',         '#',       'string bitwise ~^ of "a" and "B"' );
@@ -56,13 +55,11 @@ plan 38;
   my $bar = "z" x 75;
   my $zap = "A" x 75;
 
-  #?niecza 3 skip 'string bitops'
   is( $foo ~& $bar, '@' x 75,        'long string bitwise ~&, truncates' );
   is( $foo ~| $bar, '{' x 75 ~ $zap, 'long string bitwise ~|, no truncation' );
   is( $foo ~^ $bar, ';' x 75 ~ $zap, 'long string bitwise ~^, no truncation' );
 
   # "interesting" tests from a long time back...
-  #?niecza 2 skip 'string bitops'
   is( "ok \xFF\xFF\n" ~& "ok 19\n", "ok 19\n", 'stringwise ~&, arbitrary string' );
   is( "ok 20\n" ~| "ok \0\0\n", "ok 20\n",     'stringwise ~|, arbitrary string' );
 

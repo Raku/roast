@@ -6,7 +6,6 @@ plan 32;
 # L<S13/"Type Casting"/"method CALL-ME(**@slice) {...}">
 # basic tests to see if the methods overload correctly.
 
-#?niecza skip 'No value for parameter $capture in TypeCastSub.postcircumfix:<( )>'
 {
     my multi testsub ($a,$b) {   #OK not used
         return 1;

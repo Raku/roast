@@ -24,7 +24,6 @@ ok($foo ~~ Foo, '... smartmatch our $foo to the Foo class');
 # override the behaviour without playing with the metamodel via traits
 ok($foo.isa(Foo), '.isa(Foo)');
 ok($foo.isa(::Foo), '.isa(::Foo)');
-#?niecza todo
 ok($foo.isa("Foo"), '.isa("Foo")');
 ok(!$foo.isa("Bar"), '!.isa("Bar")');
 
@@ -99,7 +98,6 @@ ok(One::Two.new, 'created One::Two after One::Two::Three');
 dies-ok { EVAL 'class One::Two { }' }, 'cannot redeclare an existing class';
 eval-lives-ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT #62898';
 
-#?niecza skip "Methods must be used in some kind of package"
 {
     class A61354_1 {
         EVAL('method x { "OH HAI" }')
@@ -110,7 +108,6 @@ eval-lives-ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {
 # RT #67784
 {
     class class {}
-    #?niecza todo
     isa-ok( class.new, 'class' );
 }
 
@@ -134,7 +131,6 @@ eval-lives-ok 'class Test1 { class A {};}; class Test2 {class A {};};',
 
 # RT #72916
 {
-    #?niecza todo 'Exception: Unable to resolve method add_method in type ClassHOW'
     eval-lives-ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',
           'add_method returns a Method object';
 }

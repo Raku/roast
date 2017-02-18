@@ -4,7 +4,6 @@ use Test;
 plan 16;
 
 #?rakudo skip 'macros RT #124978'
-#?niecza skip 'Unhandled exception: Malformed block at (eval) line 1'
 {
     use experimental :macros;
     my $var = 0;

@@ -12,7 +12,6 @@ my $t1 = $c1.new();
 ok(defined($t1),     'instantiated the class');
 ok($t1 ~~ $c1,       'isa check works');
 #?rakudo todo 'Anonymous class stringification (?) RT #125045'
-#?niecza todo
 is($c1.WHAT().gist, '()',  '.WHAT.gist stringifies to ()');
 
 # Anonymous classes with methods.
@@ -64,7 +63,6 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     lives-ok { $i1 = rt64888() }, 'can get anonymous class instance once';
     lives-ok { $i2 = rt64888() }, 'can get anonymous class instance twice';
 
-    #?niecza todo
     is ~$i1, 'RT #64888', 'anonymous class stringified works';
     is +$i1, 64888, 'anonymous class numified works';
 }

@@ -6,7 +6,6 @@ plan 44;
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
 #?rakudo skip 'hangs RT #125049'
-#?niecza skip 'Two definitions found for symbol ::GLOBAL::&infix:<cmp> (etc)'
 {
     class Alternating {
         has Int $.val;
@@ -53,7 +52,6 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 # # L<S03/List infix precedence/doesn't terminate with a simple>
 # the tricky termination test
 
-#?niecza skip 'munch NYI'
 {
     ok ('A' ... 'ZZ')[lazy ^1000].elems < 1000, "'A' ... 'ZZ' does not go on forever";
 
@@ -70,7 +68,6 @@ is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
 
 # be sure the test works as specced even for user classes
 #?rakudo skip 'lifting comparison ops RT #125050'
-#?niecza skip 'Two definitions found for symbol ::GLOBAL::&infix:<cmp> (etc)'
 {
     class Periodic {
         has Int $.val;

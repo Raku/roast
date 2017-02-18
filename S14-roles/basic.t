@@ -148,7 +148,6 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
 }
 
 # RT #116226
-#?niecza skip "Unable to resolve method x in type AccessesAttr"
 {
     my role AccessesAttr {
         method meth() {

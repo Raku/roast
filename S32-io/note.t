@@ -40,7 +40,6 @@ is_run( 'my $a = <stringify args>; note $a',
         },
         'note an array reference' );
 
-#?niecza todo 'Str.note NYI'
 is_run( '"method form".note',
         {
             status => 0,

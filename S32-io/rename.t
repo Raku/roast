@@ -25,7 +25,6 @@ ok $existing-file2.IO.e, 'sanity check 2';
 nok $non-existent-file.IO.e, "sanity check 2";
 
 # method .IO.rename
-#?niecza skip 'Unable to resolve method s in class IO'
 {
     my $dest1a = "tempfile-rename-dest1a";
     my $dest1b = "tempfile-rename-dest1b";
@@ -51,7 +50,6 @@ nok $non-existent-file.IO.e, "sanity check 2";
 }
 
 # sub rename()
-#?niecza skip 'Unable to resolve method s in class IO'
 {
     my $dest2a = "tempfile-rename-dest2a";
     my $dest2b = "tempfile-rename-dest2b";

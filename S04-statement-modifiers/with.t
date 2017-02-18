@@ -119,7 +119,6 @@ plan 35;
 	my @y = 41, ($answer andthen 42), 43;
 	my @z = 41, 43;
 	is @y, @z, "sanity check";
-        #?niecza todo "empty list as element not flattened - https://github.com/sorear/niecza/issues/180"
 	is @x, @y, "with expr on false cond"; 
 }
 
@@ -132,7 +131,6 @@ plan 35;
 	my @z = 41, 43;
 
 	is @y, @z, "sanity check";
-        #?niecza todo "empty list as element not flattened - https://github.com/sorear/niecza/issues/180"
 	is @x, @y, "with expr on false cond"; 
 }
 

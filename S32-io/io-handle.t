@@ -7,7 +7,6 @@ my $path = "io-handle-testfile";
 
 ##
 # Test that we flush when we go out of scope
-#?niecza skip "Unable to resolve method open in type IO"
 {
     {
         my $fh = $path.IO.open(:w);
@@ -17,7 +16,6 @@ my $path = "io-handle-testfile";
 }
 
 # RT #78454
-#?niecza skip "Unable to resolve method open in type IO"
 {
     $path.IO.open(:w).print("24");
     is slurp($path), "24", "buffer is flushed when IO goes out of scope";

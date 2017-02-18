@@ -7,14 +7,12 @@ use Test::Util;
 plan 32;
 
 # this used to segfault in rakudo
-#?niecza skip 'todo'
 is_run(
        'try { die 42 }; my $x = $!.WHAT; say $x',
        { status => 0, out => -> $o {  $o.chars > 2 }},
        'Can stringify $!.WHAT without segfault',
 );
 
-#?niecza skip 'todo'
 is_run(
        'try { die 42; CATCH { when * { say $!.WHAT } }; };',
        { status => 0, out => -> $o { $o.chars > 2 }},
@@ -54,11 +52,9 @@ throws-like { EVAL 'time(1, 2, 3)' },
   'time() with arguments dies';
 
 # RT #76996
-#?niecza todo
 lives-ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
 
 # RT #76946
-#?niecza skip 'todo'
 lives-ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-internal exception';
 
 # RT #90522

@@ -29,7 +29,6 @@ ok("zzzzzz{$var}zzzzzz" ~~ m/$var/, 'Nested scalar interpolation');
 ok(!( "aaaaab" ~~ m/$var/ ), 'Rulish scalar interpolation');
 
 ok(!('a0' ~~ m/$aref[0]/), 'Array ref stringifies before matching'); #OK
-#?niecza todo
 ok('a b ab c0' ~~ m/$aref[0]/, 'Array ref stringifies before matching'); #OK
 ok('a0' ~~ m/@$aref[0]/, 'Array deref ignores 0');                 #OK
 ok('bx0' ~~ m/@$aref.[0]/, 'Array deref ignores dot 0');           #OK
@@ -50,7 +49,6 @@ ok(!( "abcad" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
 is("abc" ~~ m/ @var /,     'ab', 'Array using implicit junctive semantics');
 is("abc" ~~ m/ | @var /,   'ab', 'Array using explicit junctive semantics');
-#?niecza todo "sequential semantics NYI"
 is("abc" ~~ m/ || @var /,  'a',  'Array using explicit sequential semantics');
 
 # contextializer $( )

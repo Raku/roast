@@ -36,7 +36,6 @@ is (1..1), [1,], 'got the right array';
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
 is ('a'..'a'), "a", 'got the right stationary string';
 
-#?niecza skip 'Unable to resolve method reverse in class Range'
 {
     my $x = 0;
     $x++ for (1..4).reverse;
@@ -83,7 +82,6 @@ is(+(10..9), 0, 'numification');
 is(+(1.2..4), 3, 'numification');
 is(+(1..^3.3), 3, 'numification');
 is(+(2.3..3.1), 1, 'numification');
-#?niecza skip 'Attempted to access slot $!min of type object for Range'
 is(+Range, 0, 'type numification');
 
 # immutability

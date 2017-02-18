@@ -12,7 +12,6 @@ class CoercionTest {
 
 my $o = CoercionTest.new();
 
-#?niecza todo 'Stringy'
 is ~$o, 'foo', 'method Stringy takes care of correct stringification';
 ok +$o == 1.2, 'method Numeric takes care of correct numification';
 
@@ -30,7 +29,6 @@ ok +$o == 1.2, 'method Numeric takes care of correct numification';
     }
     is RT69378str.new.a, 'RT #69378', 'call to RT69378str.new properly initializes $.a';
     is RT69378str.new.Str, 'RT #69378', 'call to .Str works on "class is Str"';
-    #?niecza 2 skip 'coercion syntax'
     is Str(RT69378str.new), 'RT #69378', 'Str(...) coercion syntax calls our .Str too';
     # RT #72834
     ok Int() == 0, 'Int()';
@@ -39,7 +37,6 @@ ok +$o == 1.2, 'method Numeric takes care of correct numification';
 is 1.Str.Str, "1", ".Str can be called on Str";
 is "hello".Str, "hello", ".Str can be called on Str";
 
-#?niecza skip "this test makes not much sense: noauto"
 {
     # Not sure how to set the derived Str portion to a value, but that would be an
     # additional useful test here.

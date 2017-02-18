@@ -30,7 +30,6 @@ throws-like { for "a b c".split(/\s/) -> $foo { $foo = $foo; } },
 
 # used to be RT #55962
 
-#?niecza todo 'Suspect test'
 {
     my @foo = 'AB'.split('');
     @foo[1]++;
@@ -58,7 +57,6 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT #76564, RT #7
 # RT #67852
 {
     lives-ok { 'normal'.trans() }, 'can .trans() on normal string';
-    #?niecza todo 'Buffer bitops NYI' 
     lives-ok { ('bit' ~& 'wise').trans() }, 'can .trans() on bitwise result';
 }
 

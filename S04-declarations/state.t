@@ -130,7 +130,6 @@ plan 41;
 }
 
 # state() inside regular expressions
-#?niecza skip ':Perl5'
 #?DOES 1
 {
     my $str = "abc";
@@ -178,7 +177,6 @@ plan 41;
     my $func = { state $x = $i++; $x };
     my ($a, $b) = $func.clone, $func.clone; 
     is $a(), 0, 'state was initialized correctly for clone 1';
-    #?niecza todo
     is $b(), 1, 'state was initialized correctly for clone 2';
     is $a(), 0, 'state between clones is independent';
 }

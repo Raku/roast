@@ -32,7 +32,6 @@ is($c.get(), 42, 'can auto-increment an attribute');
     is($wa.get, 99, 'has with no twigil creates alias');
 }
 
-#?niecza skip 'Unhandled parameter twigil !'
 {
     class ManyTest {
         has ($a, $b);
@@ -92,7 +91,6 @@ $bar.bar[2] = 300;
 is($bar.bar[2], 300,       'array attribute initialized/works');
 
 # RT #73808
-#?niecza skip 'Unhandled parameter twigil !'
 {
     class RT73808 {
         has ($!a, $!b);
@@ -116,7 +114,6 @@ throws-like q[
 ], X::Syntax::NoSelf, 'no attr access for sub inside class';
 
 # RT #74850
-#?niecza skip "Unhandled exception: Unable to resolve method ctxzyg in type Method"
 {
     class A { };
     class B { has A $.foo .= new };
@@ -132,7 +129,6 @@ throws-like q[
 }
 
 #RT #114234
-#?niecza skip '$b declared but not used. FIXME later.'
 {
     eval-lives-ok q{
         my class A { state $b; }

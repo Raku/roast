@@ -68,16 +68,12 @@ plan 31;
 # L<S06/Anonymous hashes vs blocks/So you may use sub or hash or pair to disambiguate:>
 {
     my $hash_a = { a => 1, b => 2 };
-    #?niecza todo
     isa-ok $hash_a, "Hash";
     my $hash_b = { a => 1, "b", 2 };
-    #?niecza todo
     isa-ok $hash_b, "Hash";
     my $hash_c = hash('a', 1, "b", 2);
-    #?niecza todo
     isa-ok $hash_c, "Hash";
     my $hash_d = hash 'a', 1, "b", 2;
-    #?niecza todo
     isa-ok $hash_d, "Hash";
 }
 

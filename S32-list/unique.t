@@ -29,7 +29,6 @@ This test tests the C<unique> builtin.
 } #1
 
 # With a userspecified criterion
-#?niecza skip "with NYI"
 {
     my @array = <a b d A c b>;
     # Semantics w/o junctions
@@ -78,7 +77,6 @@ This test tests the C<unique> builtin.
     is-deeply( @a, [<a b c d>], '.= unique in sink context works on @a' );
 } #2
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
     my $as    = *.substr: 0,1;
@@ -92,7 +90,6 @@ This test tests the C<unique> builtin.
       "final result with :as in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
     my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
@@ -106,7 +103,6 @@ This test tests the C<unique> builtin.
       "final result with :with in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
     my $as    = *.substr(0,1).ord;
@@ -121,7 +117,6 @@ This test tests the C<unique> builtin.
       "final result with :as in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = ({:a<1>}, {:b<1>}, {:a<1>});
     my $with  = &[eqv];

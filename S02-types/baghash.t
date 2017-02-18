@@ -68,7 +68,6 @@ sub showkv($x) {
     is $b<a>, 42, "... and the decrement happens";
     lives-ok { $b<carter>-- }, "Can -- an element with value 1";
     nok $b<carter>:exists, "... and it goes away";
-    #?niecza todo
     is $b<farve>--, 0, "Can -- an element that doesn't exist";
     nok $b<farve>:exists, "... but it doesn't create it";
 }
@@ -116,7 +115,6 @@ sub showkv($x) {
 {
     my $b = BagHash.new('a', False, 2, 'a', False, False);
     my @ks = $b.keys;
-    #?niecza 3 skip "Non-Str keys NYI"
     is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -144,7 +142,6 @@ sub showkv($x) {
     my $b = BagHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 }.hash);
     isa-ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
     is +$b, 4, "... with four elements";
-    #?niecza todo "Non-string bag elements NYI"
     is +$b.grep(Pair), 4, "... which are all Pairs";
 }
 
@@ -318,7 +315,6 @@ sub showkv($x) {
 
 # L<S32::Containers/BagHash/pickpairs>
 
-#?niecza skip '.pickpairs NYI'
 {
     my $b = BagHash.new("a", "b", "b");
 
@@ -341,7 +337,6 @@ sub showkv($x) {
 
 # L<S32::Containers/BagHash/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $b = BagHash.new("a", "b", "b");
 
@@ -356,7 +351,6 @@ sub showkv($x) {
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 
-#?niecza skip '.grab NYI'
 {
     my $b = BagHash.new("a", "b", "b");
     my @a = $b.grab: *;
@@ -367,7 +361,6 @@ sub showkv($x) {
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 
-#?niecza skip '.grab NYI'
 {
     my $b = {"a" => 100000000000, "b" => 1}.BagHash;
 
@@ -384,7 +377,6 @@ sub showkv($x) {
 
 # L<S32::Containers/BagHash/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $b = BagHash.new("a", "b", "b");
 
@@ -400,7 +392,6 @@ sub showkv($x) {
     is $b.elems, 0, '.grabpairs *should* change BagHash';
 }
 
-#?niecza skip '.grabpairs NYI'
 {
     my $b = BagHash.new(<a a b b c c d d e e f f g g h h>);
     my @a = $b.grabpairs: *;
@@ -414,7 +405,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
     nok %h<b>:exists, '"b", initialized to zero, does not exist';
@@ -425,7 +415,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
 
@@ -439,7 +428,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, c => 1;
 
@@ -457,7 +445,6 @@ sub showkv($x) {
     is %h<a>, 0, 'item removed again is still zero';
 }
 
-#?niecza skip "Trait name not available on variables"
 {
     my %h of BagHash;
     ok %h.of.perl eq 'BagHash', 'is the hash really a BagHash';
@@ -483,7 +470,6 @@ sub showkv($x) {
        "Method .BagHash works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $b1 = <a b b c c c d d d d>.BagHash;
     is $b1.total, 10, '.total gives sum of values (non-empty) 10';

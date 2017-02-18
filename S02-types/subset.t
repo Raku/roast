@@ -21,7 +21,6 @@ throws-like 'my Even $x = 3', X::TypeCheck::Assignment,
     "Can't assign value that violates type constraint via subset";
 
 # RT # 69518'
-#?niecza todo
 throws-like 'Even.new', Exception, 'Cannot instantiate a subtype';
 
 {
@@ -106,7 +105,6 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
 }
 
 # RT #67256
-#?niecza skip "Exception NYI"
 {
     subset RT67256 of Int where { $^i > 0 }
     my RT67256 $rt67256;
@@ -127,7 +125,6 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
 }
 
 # RT #74234
-#?niecza todo
 {
     subset RT74234 of Mu;
     my RT74234 $rt74234 = 23;
@@ -162,7 +159,6 @@ lives-ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 
 # RT #65308
-#?niecza skip 'Methods must be used in some kind of package'
 {
     subset FooStr of Str where /^foo/;
     my multi method uc(FooStr $self:) { return "OH HAI" }; #OK not used

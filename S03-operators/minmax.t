@@ -71,7 +71,6 @@ This test min/max functions in their operator form. To see them tested in their 
 
 #array vs. scalar
 #?rakudo skip "Annoying test that we haven't done the obvious yet unspecced, fails because we have indeed done the obvious RT #124539"
-#?niecza todo
 {
     #NYS- Not Yet Specced. C<isnt>'d only so those sneaky programmers can't get away with coding
     #what `makes sense' and `probably will be anyway' :) --lue
@@ -87,12 +86,9 @@ This test min/max functions in their operator form. To see them tested in their 
     # Reals, and cmp can compare two objects of the same type.  Otherwise it is only
     # required to be consistent, not to have a particular result. --colomon
 
-    #?niecza todo
     is 2 min Any, 2, '2 min Any';
-    #?niecza todo
     is Any min 2, 2, 'Any min 2';
     is 2 max Any, 2, '2 max Any';
-    #?niecza todo
     is Any max 2, 2, 'Any max 2';
 }
 

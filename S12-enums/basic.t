@@ -22,7 +22,6 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 }
 
 #?rakudo skip 'Cannot convert string to number RT #124832'
-#?niecza skip 'enummish but'
 {
     my $x = 'Today' but Day::Mon;
     ok $x.does(Day),      'Can test with .does() for enum type';
@@ -69,10 +68,8 @@ enum JustOne <Thing>;
     ok JustOne::Thing == 0, 'Pair of one element works.';
 }
 
-#?niecza skip "Pair must have at least one value"
 lives-ok { enum Empty < > }, "empty enum can be constructed";
 
-#?niecza todo "Pair must have at least one value"
 eval-lives-ok 'enum Empty2 ()', 'empty enum with () can be constructed';
 
 enum Color <white gray black>;
@@ -86,7 +83,6 @@ dies-ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 {
     my sub white { 'sub' };
     ok white == 0, 'short name of the enum without parenthesis is an enum';
-    #?niecza skip 'nonworking'
     is white(), 'sub', 'short name with parenthesis is a sub';
 }
 

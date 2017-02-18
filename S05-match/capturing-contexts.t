@@ -18,7 +18,6 @@ plan 60;
 
 {
   my $match = 'xyz' ~~ / abc /;
-  #?niecza skip 'No value for parameter $obj in isa-ok'
   isa-ok( $/, Nil, 'Failed match returns Nil' );
 }
 
@@ -43,7 +42,6 @@ plan 60;
 }
 
 # RT #62530
-#?niecza skip 'rule declaration outside of grammar'
 {
   augment class Match { method keys () {return %(self).keys }; };
   my rule a {H};
@@ -88,13 +86,11 @@ plan 60;
     # undefined captures should fail to match
     # note the use of $1 (and not $0)
     # This is similar to a test in S05-interpolation/regex-in-variable.t
-    #?niecza todo 'undefined capture does not match'
     nok 'aa' ~~ /(.)$1/, 'undefined capture does not match';
 
     # This looks superfluous as there is a test for warning when interpolating
     # undefined into a regex in S05-interpolation/regex-in-variable.t
     #?rakudo todo 'RT #70007'
-    #?niecza todo 'eek'
     is_run( q{'aa' ~~ /(.)$1/},
         {
             status => 0,
@@ -108,7 +104,6 @@ plan 60;
 {
     $_ = 'RT #66252';
     m/(R.)/;
-    #?niecza todo 'Match object in $/ after match in void context'
     isa-ok $/, 'Match', 'Match object in $/ after match in void context';
     is $/, 'RT', 'Matched as intended in void context';
 }
