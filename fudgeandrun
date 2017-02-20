@@ -143,12 +143,16 @@ else {
             split(' ', $nt), @already_fudged
     );
 }
-die capture_error($opt_6 ? $impl_cmd : "prove '-e$impl_cmd'", $!) if $?;
+die capture_error($opt_6 ? $impl_cmd : "prove '-e$impl_cmd'", $!)
+    if $? and $? != 256; #  256 - rc of 1 from perl6 or prove
+my $exit_rc = $? == 256 ? 1 : 0 ;
 
 my $already_fudge_warn = "Some files were already fudged" if @already_fudged;
 $already_fudge_warn .= " and were run after other tests"
     if @already_fudged and @ARGV;
 warn "\n$already_fudge_warn\n\n" if $already_fudge_warn;
+
+exit $exit_rc;
 
 ######################################################################
 # We shell out for some commands and usually don't expect errors,
