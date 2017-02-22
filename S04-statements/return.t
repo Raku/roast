@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 20;
+plan 22;
 
 # Is there a better reference for the spec for how return return works? 
 # There is "return function" but that's a more advanced feature.
@@ -93,5 +93,14 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     sub b { (1|2|3).return }  # don't auto-thread on return
     isa-ok b, Junction;
 }
+
+# RT #130825
+throws-like Q[sub { INIT return }],
+    X::ControlFlow::Return,
+    'INIT return handled correctly';
+throws-like Q[sub {CHECK return;}],
+    X::Comp::BeginTime,
+    exception => X::ControlFlow::Return,
+    'CHECK return handled correctly';
 
 # vim: ft=perl6
