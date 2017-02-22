@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 79;
+plan 80;
 
 # L<S32::Str/Str/=item comb>
 
@@ -152,5 +152,8 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 #?rakudo.jvm skip 'ordbaseat NYI'
 eval-lives-ok ｢"hello".comb(/:m <[o]>/)｣,
     '.comb(/:m <[o]>/) construct does not die';
+
+# https://github.com/rakudo/rakudo/commit/a08e953018
+is-deeply 1337.comb(2), ('13', '37'), 'Cool.comb(Int)';
 
 # vim: ft=perl6
