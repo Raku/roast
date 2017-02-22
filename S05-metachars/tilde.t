@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 30;
 
 # L<S05/New metacharacters/"The ~ operator is a helper for matching
 # nested subrules with a specific terminator">
@@ -68,5 +68,9 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
 # RT #72440
 ok "(f)oo" ~~ /^ \( ~ \) foo $/, 'Only take single atom after goal (1)';
 nok "(fo)o" ~~ /^ \( ~ \) foo $/, 'Only take single atom after goal (2)';
+
+# RT #130812
+throws-like '/ ‘[’ ~? ‘]’/', X::Syntax::Regex::SolitaryQuantifier,
+    'Correct error when quantifier placed after ~ metachar';
 
 # vim: ft=perl6
