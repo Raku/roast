@@ -143,7 +143,6 @@ else {
             split(' ', $nt), @already_fudged
     );
 }
-die capture_error($opt_6 ? $impl_cmd : "prove '-e$impl_cmd'", $!) if $?;
 
 my $already_fudge_warn = "Some files were already fudged" if @already_fudged;
 $already_fudge_warn .= " and were run after other tests"
