@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 49;
+plan 50;
 
 ##############################################################
 ####
@@ -88,5 +88,9 @@ is_run( 'print lines[0]',
 # RT #130430
 is-deeply "a\nb\nc".lines(2000), ('a', 'b', 'c'),
     'we stop when data ends, even if limit has not been reached yet';
+
+# https://github.com/rakudo/rakudo/commit/742573724c
+dies-ok { 42.lines: |<bunch of incorrect args> },
+    'no infinite loop when given wrong args to Cool.lines';
 
 # vim: ft=perl6

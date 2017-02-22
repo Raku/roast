@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 17;
 
 # L<S32::Str/Str/=item words>
 
@@ -50,5 +50,9 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
     my @other-words = try words($str, *);
     is +@other-words, 3, 'words($str, *)';
 }
+
+# https://github.com/rakudo/rakudo/commit/742573724c
+dies-ok { 42.words: |<bunch of incorrect args> },
+    'no infinite loop when given wrong args to Cool.words';
 
 # vim: ft=perl6
