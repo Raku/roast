@@ -9,7 +9,7 @@ plan 5;
     my class Foo does Baggy {}
     my $b = Foo.new: <a a b>;
     is $b.WHICH, "Foo|Str|a(2) Str|b(1)", '.WHICH';
-    is-deeply $b.invert,  (2 => "a", 1 => "b"), '.invert';
+    is-deeply $b.invert.sort(*.key).list, (1 => "b", 2 => "a"), '.invert';
     is-deeply $b.SetHash, SetHash.new(<a b>),   '.SetHash';
 }
 
