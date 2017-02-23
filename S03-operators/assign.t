@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 294;
+plan 299;
 
 
 # tests various assignment styles
@@ -237,6 +237,9 @@ my @p;
     is($a,(3,4), "... and second");
     is(@p[0][0],3, "or= operator parses as list assignment 3");
     is(@p[0][1],4, "or= operator parses as list assignment 4");
+
+    my $thunky = 0; 1 or= $thunky++;
+    is-deeply $thunky, 0, 'or= thunks RHS';
 }
 
 {
@@ -310,6 +313,9 @@ my @p;
     ok(@p[0][1]:!exists, "and= operator parses as list assignment 4");
     my $x = True; $x and= False;
     is($x, False, "and= operator with True and False");
+
+    my $thunky = 0; 0 and= $thunky++;
+    is-deeply $thunky, 0, 'and= thunks RHS';
 }
 
 {
@@ -951,6 +957,17 @@ sub l () { 1, 2 };
     my @a;
     @a[^2] = 42,43;
     is @a, [42,43], '@a[^2] on empty array vivifies the slots and assignment works';
+}
+
+{
+    my $thunky1 = 0; Int andthen= $thunky1++;
+    is-deeply $thunky1, 0, 'andthen= thunks RHS';
+
+    my $thunky2 = 0; 42 notandthen= $thunky2++;
+    is-deeply $thunky2, 0, 'notandthen= thunks RHS';
+
+    my $thunky3 = 0; 42 orelse= $thunky3++;
+    is-deeply $thunky3, 0, 'orelse= thunks RHS';
 }
 
 # vim: ft=perl6
