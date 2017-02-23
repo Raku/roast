@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 32;
+plan 33;
 
 use Test::Util;
 
@@ -219,6 +219,12 @@ throws-like 'role R-RT130211 { method overload-this(){...} };
     :message{ .contains('R-RT130211') and .contains('C-RT130211') },
 'all roles with unimplemented method shown in error';
 
+
+# RT #130712
+throws-like 'sub infix:<$>() return Nil {}',
+    X::AdHoc,
+    :message{ .contains("'returns'") },
+    'typing "return" instead of "returns" gives a fixing hint';
 
 # RT #129800
 subtest 'X::Multi::NoMatch correct shows named arguments' => {
