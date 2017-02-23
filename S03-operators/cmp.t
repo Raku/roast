@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 60;
 
 # cmp on scalar values
 {
@@ -148,6 +148,25 @@ for Rat, FatRat -> \RatT {
         is-deeply  Inf cmp $inf, Same, " Inf cmp $inf.perl()";
         is-deeply -Inf cmp $inf, Less, "-Inf cmp $inf.perl()";
     }
+}
+
+subtest 'no precision loss in infix:<cmp> with Rational and Ints' => {
+    plan 8;
+    constant  r4 = 4.999999999999999999;
+    constant  r5 = 5.0;
+    constant fr4 = r4.FatRat;
+    constant fr5 = r5.FatRat;
+
+    is-deeply  r4 cmp   5, Less,    'Rat cmp Int';
+    is-deeply   5 cmp  r4, More,    'Int cmp Rat';
+    is-deeply  r5 cmp  r4, More,    'Rat cmp Rat';
+
+    is-deeply fr4 cmp   5, Less, 'FatRat cmp Int';
+    is-deeply   5 cmp fr4, More, 'Int    cmp FatRat';
+    is-deeply fr5 cmp fr4, More, 'FatRat cmp FatRat';
+
+    is-deeply fr4 cmp  r5, Less, 'FatRat cmp Rat';
+    is-deeply  r5 cmp fr4, More, 'Rat    cmp FatRat';
 }
 
 # vim: ft=perl6
