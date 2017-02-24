@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 39;
 
 =begin description
 
@@ -156,5 +156,8 @@ This test tests the C<unique> builtin.
 } # 1
 
 is ((1,2,3),(1,2),(1,2)).unique(:with({$^a eqv $^b})), "1 2 3 1 2", ".unique doesn't flatten";
+
+# RT#130852
+eval-lives-ok ｢Scalar.unique｣, 'no SEGV with Scalar.unique';
 
 # vim: ft=perl6
