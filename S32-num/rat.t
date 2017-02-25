@@ -404,10 +404,10 @@ subtest '.Rat/.FatRat coercers' => {
     }
 
     quietly {
-        isa-ok Nil.Rat,     Rat,    'Nil.Rat.^isa';
-        cmp-ok Nil.Rat,    '==', 0, 'Nil.Rat is zero';
+        isa-ok Nil.Rat,    Rat,     'Nil.Rat   .^isa';
         isa-ok Nil.FatRat, FatRat,  'Nil.FatRat.^isa';
         cmp-ok Nil.FatRat, '==', 0, 'Nil.FatRat is zero';
+        cmp-ok Nil.Rat,    '==', 0, 'Nil.Rat    is zero';
     }
 }
 
