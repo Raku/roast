@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 6;
 
 # Tests of the Baggy role
 
@@ -34,5 +34,16 @@ plan 5;
             'modifying first mix works, even after we created its clone';
         is-deeply $b, MixHash.new(<a b c>),
             'modifying first mix does not affect cloned mix';
+    }
+}
+
+subtest 'Baggy:U forwards methods to Mu where appropriate' => {
+    plan 5;
+    given Mix {
+        is-deeply .Bool,  False, '.Bool';
+        is-deeply .so,    False, '.so';
+        is-deeply .not,   True,  '.not';
+        is-deeply .hash,  {},    '.hash';
+        is-deeply .elems, 1,     '.elems';
     }
 }
