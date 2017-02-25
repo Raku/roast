@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 51;
+plan 53;
 
 # L<S14/Run-time Mixins/>
 
@@ -228,5 +228,17 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
     is (5 but Foo::Bar).^name, 'Int+{Foo::Bar}', 
         "mixing in a role from a deeper namespace doesn't clobber the targets shortname";
 }
+
+# https://irclog.perlgeek.de/perl6/2017-02-25#i_14165034
+{
+    role R { multi method foo( :$a!, ) {$a};
+             multi method foo( :$b!, ) {$b + 10}
+           };
+    class C does R {}
+
+    is C.foo( :a(2) ), 2, 'multi-dispatch mixin sanity';
+    is C.foo( :b(3) ), 13, 'multi-dispatch mixin sanity';
+}
+
 
 # vim: syn=perl6
