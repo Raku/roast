@@ -231,10 +231,10 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
 
 # https://irclog.perlgeek.de/perl6/2017-02-25#i_14165034
 {
-    role R { multi method foo( :$a!, ) {$a};
+    my role R { multi method foo( :$a!, ) {$a};
              multi method foo( :$b!, ) {$b + 10}
            };
-    class C does R {}
+    my class C does R {}
 
     is C.foo( :a(2) ), 2, 'multi-dispatch mixin sanity';
     is C.foo( :b(3) ), 13, 'multi-dispatch mixin sanity';
