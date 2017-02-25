@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 841;
+plan 842;
 
 # Basic test functions specific to rational numbers.
 
@@ -386,6 +386,28 @@ subtest '.norm returns reduced Rat' => {
     given (2/3 + 1/3).norm {
         is-deeply .denominator, 1, 'denominator got reduced';
         is-deeply .numerator, 1, 'numerator got reduced';
+    }
+}
+
+subtest '.Rat/.FatRat coercers' => {
+    my @values =
+        42, <42>, 42e0, <42e0>, 42.0, <42.0>, <42+0i>, < 42+0i>,
+        FatRat.new(42, 1), "42", "42e0", "42.0", "42+0i", [^42], [^42].Seq,
+        ^42, ^42 .kv.Map, Duration.new(42), Instant.from-posix(32), "42".IO,
+        '42' ~~ /.+/, StrDistance.new(:before<a> :after('b' x 42));
+
+    plan 4 + 2*@values;
+
+    for @values {
+        is-deeply .Rat,    <42/1>,            "{.^name}.Rat";
+        is-deeply .FatRat, FatRat.new(42, 1), "{.^name}.FatRat";
+    }
+
+    quietly {
+        isa-ok Nil.Rat,     Rat,    'Nil.Rat.^isa';
+        cmp-ok Nil.Rat,    '==', 0, 'Nil.Rat is zero';
+        isa-ok Nil.FatRat, FatRat,  'Nil.FatRat.^isa';
+        cmp-ok Nil.FatRat, '==', 0, 'Nil.FatRat is zero';
     }
 }
 
