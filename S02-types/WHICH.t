@@ -60,6 +60,7 @@ my @normal = <
   IO::Spec::QNX
   IO::Spec::Unix
   IO::Spec::Win32
+  IO::Special
   Instant
   Int
   IntAttrRef
