@@ -486,7 +486,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     dies-ok  {$o.h<a> = 'b'  },            'Type enforced (hash, insertion)';
     dies-ok  {$o.h.push: (g => 'f') },     'Type enforced (hash, push)';
     dies-ok  {$o.h<blubb><bla> = 3 },      'No autovivification (typed hash)';
-    #?rakudo todo 'huh?'
     is $o.h<a b c d>, (1, 2, 3, 4),   'hash still unchanged';
 }
 
