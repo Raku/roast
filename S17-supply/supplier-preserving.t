@@ -4,7 +4,7 @@ plan 1;
 
 #?rakudo.jvm todo 'only first iteration of for loop gives correct result'
 subtest "No races in Supplier::Preserving", {
-    my @closings;
+    my $closings = Channel.new;;
     sub make-supply() {
         my $s = Supplier::Preserving.new;
         my $done = False;
@@ -13,7 +13,7 @@ subtest "No races in Supplier::Preserving", {
                 $s.emit: ++$
             }
         }
-        $s.Supply.on-close({ push @closings, 'x'; $done = True })
+        $s.Supply.on-close({ $closings.send('x'); $done = True })
     }
 
     for ^10 {
@@ -28,5 +28,6 @@ subtest "No races in Supplier::Preserving", {
         is @received, [1,2,3,4,5], "Received expected messages ($_)";
     }
 
-    is @closings.join, 'xxxxxxxxxx', 'Close called as expected';
+    $closings.close;
+    is $closings.list.join, 'xxxxxxxxxx', 'Close called as expected';
 }
