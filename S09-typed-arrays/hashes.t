@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 43;
+plan 44;
 
 # L<S09/Typed arrays>
 
@@ -88,6 +88,39 @@ plan 43;
 
     is-deeply set(%h.invert), set(42 => "a", 72 => "b", Pair.new: $o, Foo),
         '.invert on typed Hash';
+}
+
+# RT#130870
+subtest 'self-referential top-level hash assignment' => {
+    plan 4;
+
+    subtest '= self, other' => {
+        plan 2;
+        my %h1 = :1a; my %h2 = :2b;
+        is-deeply (%h1 = %h1, %h2), %(:1a, :2b), 'result of assignment';
+        is-deeply  %h1,             %(:1a, :2b), 'value in original hash';
+    }
+
+    subtest '= self, self' => {
+        plan 2;
+        my %h1 = :1a;
+        is-deeply (%h1 = %h1, %h1), %(:1a), 'result of assignment';
+        is-deeply  %h1,             %(:1a), 'value in original hash';
+    }
+
+    subtest '= self, other - clashing keys' => {
+        plan 2;
+        my %h1 = :1a, :2b; my %h2 = :4b, :3c;
+        is-deeply (%h1 = %h1, %h2), %(:1a, :4b, :3c), 'result of assignment';
+        is-deeply  %h1,             %(:1a, :4b, :3c), 'value in original hash';
+    }
+
+    subtest '= other, self - clashing keys' => {
+        plan 2;
+        my %h1 = :1a, :2b; my %h2 = :4b, :3c;
+        is-deeply (%h1 = %h2, %h1), %(:1a, :2b, :3c), 'result of assignment';
+        is-deeply  %h1,             %(:1a, :2b, :3c), 'value in original hash';
+    }
 }
 
 # vim: ft=perl6
