@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 34;
+plan 35;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -218,5 +218,9 @@ is (<2 1 3>   .sort).^name, 'Seq', 'detached .sort returns a List';
 
 # RT #126859
 is (*.sort)(<2 3 1>).^name, 'Seq', 'auto-primed *.sort returns a Seq';
+
+# RT #130866
+eval-lives-ok ｢.elems, .sort with @｣,
+    '.sort on reified empty array does not crash';
 
 # vim: ft=perl6
