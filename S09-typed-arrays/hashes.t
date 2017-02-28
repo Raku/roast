@@ -24,15 +24,15 @@ plan 43;
                         '... and the hashes are the same afterwards';
 
     lives-ok { my Int %s = :a(3) }, 'can initialize typed hash';
-    my Str %s = :a<b>;
+    my Str %s = :y<b>;
     dies-ok { %h = %s }, "Can't assign Str hash to Int hash";
-    ok %h<a>:!exists,  'Make sure we did not create an empty container';
+    ok %h<y>:!exists,  'Make sure we did not create an empty container';
     dies-ok { %h = :a<b> }, "Can't assign literal Str hash to Int hash";
-    ok %h<a>:!exists,  'Make sure we did not create an empty container';
+    ok %h<y>:!exists,  'Make sure we did not create an empty container';
     dies-ok { %h<a> = 'foo' }, "Can't assign to hash item";
-    ok %h<a>:!exists,  'Make sure we did not create an empty container';
+    ok %h<y>:!exists,  'Make sure we did not create an empty container';
     dies-ok { %h{'a', 'b'} = <c d> }, "prevent mismatched hash slice";
-    ok %h<a>:!exists,  'Make sure we did not create an empty container';
+    ok %h<y>:!exists,  'Make sure we did not create an empty container';
     dies-ok { %h<z><t> = 3 }, 'Type constraint prevents autovivification';
     ok %h<z>:!exists,  'Make sure autovivication did not happen';
 } #16
