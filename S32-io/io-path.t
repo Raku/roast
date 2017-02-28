@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 22;
 
 # L<S32::IO/IO::Path>
 
@@ -62,4 +62,17 @@ throws-like { IO::Path.new: 'foo', 'bar' }, X::Multi::NoMatch,
 {
     is IO::Handle.new(:path('-')).path.gist, '"-".IO', '"-" as the path of an IO::Handle gists correctly';
     is '-'.IO.gist, '"-".IO', '"-".IO gists correctly';
+}
+
+# RT #130889
+{
+    my $file = ("S32-io-path-RT-130889-test" ~ rand);
+    LEAVE $file.IO.unlink;
+
+    my $p1 = $file.IO;
+    is-deeply $p1.e, False, 'temporary test file does not exist';
+
+    my $p2 = $file.IO.spurt: "test";
+    is-deeply $p1.e, True,
+        '.e detects change on filesystem and returns True now';
 }
