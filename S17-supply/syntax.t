@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 70;
+plan 71;
 
 {
     my $s = supply {
@@ -523,5 +523,35 @@ lives-ok {
     }
     is $times-triggered, 5, "skipping every even number in ^10 with 'next' gives us 5";
 }, 'calling "next" inside a whenever block will not die.';
+
+subtest 'next in whenever' => {
+    plan 4;
+
+    my @res1;
+    react { whenever supply { .emit for ^10 } { next if $_ > 3; @res1.push: $_ } }
+    is-deeply @res1, [0, 1, 2, 3], 'skip elements at the end';
+
+    my @res2;
+    react { whenever supply { .emit for ^10 } { next if $_ < 6; @res2.push: $_ } }
+    is-deeply @res2, [6, 7, 8, 9], 'skip elements at the start';
+
+    my @res3;
+    react { whenever supply { .emit for ^10 } {
+        next unless 3 < $_ < 6; @res3.push: $_
+    }}
+    is-deeply @res3, [4, 5], 'skip elements in the middle';
+
+    my @res4;
+    react {
+        whenever supply { .emit for ^10     } {
+            next if $_ > 4;   @res4.push: $_;
+        }
+        whenever supply { .emit for ^100+5 } {
+            next if $_ < 103; @res4.push: $_;
+        }
+    }
+    is-deeply @res4.sort, (0, 1, 2, 3, 4,  103, 104).sort,
+        'works when used in two whenevers';
+}
 
 # vim: ft=perl6 expandtab sw=4
