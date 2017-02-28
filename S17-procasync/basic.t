@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 35;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -115,3 +115,12 @@ $pc.stdout.tap(-> $v { $is-tapped = $v eq ''; });
 await $pc.start;
 
 is $is-tapped, False, "Process that doesn't output anything will not emit";
+
+# RT #130788
+{
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*OUT.write(Blob.new(65, 66, 67, 13, 10))');
+    my $result = '';
+    $proc.stdout.tap({ $result ~= $_ });
+    await $proc.start;
+    is $result, "ABC\n", '\r\n is translated in character mode to \n';
+}
