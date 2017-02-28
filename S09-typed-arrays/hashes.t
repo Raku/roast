@@ -30,7 +30,7 @@ plan 37;
     dies-ok { %h<a> = 'foo' }, "Can't assign to hash item";
     dies-ok { %h{'a', 'b'} = <c d> }, "prevent mismatched hash slice";
     dies-ok { %h<z><t> = 3 }, 'Type constraint prevents autovivification';
-    ok %h<a>:!exists,  'Make sure autovivication did not happen';
+    ok %h<z>:!exists,  'Make sure autovivication did not happen';
 } #16
 
 {
