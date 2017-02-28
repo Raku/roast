@@ -43,9 +43,9 @@ plan 5;
         return $sorted.receive;
     }
 
-    my @test_data = < p e r l s i x >;
+    my @test_data = < p e r l >;
 
     for ^4 {
-        is bogosort_concurrent(@test_data), [<e i l p r s x>], "Correct answer ($_)";
+        is bogosort_concurrent(@test_data), [<e l p r>], "Correct answer ($_)";
     }
 }
