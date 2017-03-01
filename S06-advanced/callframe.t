@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 19;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -62,5 +62,8 @@ lives-ok {
     my $g;
     for ^200 { next if $_ < 199; $g = callframe.gist }
 }, 'No crash when using callframe.gist in a hot loop';
+
+# https://github.com/rakudo/rakudo/commit/9a74cd0e51
+lives-ok { callframe(1).annotations }, '.annotations does not crash';
 
 # vim: ft=perl6
