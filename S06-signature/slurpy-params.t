@@ -5,7 +5,7 @@ use Test::Util;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 86;
+plan 87;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -306,5 +306,9 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
     doesn't-hang '{ say @_.gist }(1..Inf)', :out(/'[...]'/),
         '.gist on @_ containing lazy list correctly thinks it is lazy';
 }
+
+# RT #129175
+doesn't-hang ｢-> *@a { @a.is-lazy.say }(1…∞)｣, :out(/True/),
+    'slurpy positional param does not hang when given infinite lists';
 
 # vim: ft=perl6
