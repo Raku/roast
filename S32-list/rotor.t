@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -47,3 +47,8 @@ is-deeply ().rotor(1), ().Seq, '.rotor on empty list gives empty Seq';
 # RT #130725
 is-deeply (gather do for ^2 { "x".take }).rotor(3, :partial).eager, (<x x>,),
     ".rotor(:partial) works with gather/take";
+
+# RT #129175
+is-deeply <a b c d e f>.rotor(1...*),
+    (("a",), ("b", "c"), ("d", "e", "f")).Seq,
+    '.rotor does not hang when given infinite iterable as cycle';
