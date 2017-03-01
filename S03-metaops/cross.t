@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 77;
+plan 78;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -255,5 +255,9 @@ is (<a b c> X~ $(1, 2)), ('a1 2', 'b1 2', 'c1 2'),
 
 # RT #127749
 is (for ^2 { [+] (^5 X ^5) }), (50, 50), 'No bogus constant-folding of X';
+
+# RT #130566
+is-deeply ([lazy 1..3] X 4..5)[^2], ((1, 4), (1, 5)),
+    'X works with lazy RHS';
 
 # vim: ft=perl6 et
