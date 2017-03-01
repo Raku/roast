@@ -176,8 +176,8 @@ subtest 'Seq eqv List' => {
             (1, 2).Seq => (),       (1…∞) => (1…∞).List,   (1…∞).List => (1…∞);
 
     plan +@tests;
-    cmp-ok .key, &[!eqv], .value,
-        "{.key.^name}({.key}) !eqv {.value.^name}({.value})"
+    is-deeply (.key eqv .value), False,
+        "{.key.^name}({.key}) not eqv {.value.^name}({.value})"
     for @tests;
 }
 
