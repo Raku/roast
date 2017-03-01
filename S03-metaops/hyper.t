@@ -432,7 +432,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».produce(&[+]).gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".produce is nodal";
     is [[2, 3], [4, [5, 6]]]».reduce(&[+]).gist, "[[2 3] [4 [5 6]]]", ".reduce is nodal";
     is [[2, 3], [4, [5, 6]]]».repeated.gist, "(() ())", ".repeated is nodal";
-    is [[2, 3], [4, [5, 6]]]».reverse.gist, "([3 2] [[5 6] 4])", ".reverse is nodal";
+    is [[2, 3], [4, [5, 6]]]».reverse.gist, "((3 2) ([5 6] 4))", ".reverse is nodal";
     is [[2, 3], [4, [5, 6]]]».roll(*).gist, "((...) (...))", ".roll is nodal";
     is [[2, 3], [4, [5, 6]]]».rotate(1).gist, "([3 2] [[5 6] 4])", ".rotate is nodal";
     is [[2, 3], [4, [5, 6]]]».rotor(2).gist, "(((2 3)) ((4 [5 6])))", ".rotor is nodal";
@@ -444,7 +444,7 @@ my @e;
     #?rakudo.jvm todo "RT #126527"
     is [[2, 3], [4, [5, 6]]]».squish.gist, "((2 3) (4 [5 6]))", ".squish is nodal";
     is [[2, 3], [4, [5, 6]]]».Supply.elems, 2, ".Supply is nodal";
-    is [[2, 3], [4, [5, 6]]]».tree(*.reverse,*.reverse).gist, "((3 2) ([6 5] 4))", ".tree is nodal";
+    is [[2, 3], [4, [5, 6]]]».tree(*.reverse,*.reverse).gist, "((3 2) ((6 5) 4))", ".tree is nodal";
     is ((2, 3), (2,3), (4, (5, (6, 7), (6, 7)), (5, (6, 7), (6, 7))))».unique(:with(&[eqv])).gist, "((2 3) (2 3) (4 (5 (6 7) (6 7))))", ".unique is nodal";
     is [[2, 3], [4, [5, 6]]]».values.gist, "((2 3) (4 [5 6]))", ".values is nodal";
 
