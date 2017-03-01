@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 82;
+plan 80;
 
 # Object array
 {
@@ -66,9 +66,7 @@ plan 82;
     my @one-dim := Array.new(:shape(4));
     @one-dim = 1..4;
     is @one-dim.reverse, [4,3,2,1], 'can reverse a 1-dim fixed size array';
-    is @one-dim.reverse.shape, (4,), 'reverse on fixed-dim array retains shape';
     is @one-dim.rotate(-1), [4,1,2,3], 'can rotate a 1-dim fixed size array';
-    is @one-dim.rotate(-1).shape, (4,), 'rotate a 1-dim fixed size array retains shape';
 }
 
 # Native array
