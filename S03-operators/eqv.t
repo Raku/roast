@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 56;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -169,6 +169,16 @@ subtest 'Setty eqv Setty' => {
     nok set( 42 ) eqv set(<42>), 'Int    does not eqv IntStr';
     nok set('42') eqv set(<42>), 'Str    does not eqv IntStr';
     ok  set(<42>) eqv set(<42>), 'IntStr does     eqv IntStr';
+}
+
+subtest 'Seq eqv List' => {
+    my @tests = ().Seq => (),  (1, 2).Seq => (1, 2),           ().Seq => (1, 2),
+            (1, 2).Seq => (),       (1…∞) => (1…∞).List,   (1…∞).List => (1…∞);
+
+    plan +@tests;
+    cmp-ok .key, &[!eqv], .value,
+        "{.key.^name}({.key}) !eqv {.value.^name}({.value})"
+    for @tests;
 }
 
 # vim: ft=perl6
