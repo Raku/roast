@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 29;
+plan 31;
 
 # L<S09/Fixed-size arrays>
 
@@ -119,3 +119,14 @@ subtest '.List on uninited shaped array' => {
 # RT #130510
 eval-lives-ok ｢my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>)｣,
     '@c[some shape] accepts a .new: :shape(same shape)...';
+
+# RT #130440
+{
+    my @a[1;1]; for @a.pairs -> $p { $p.value = 42 };
+    is-deeply @a[0;0], 42,
+        '@shaped-array.pairs provides with writable container in .value';
+
+    my @b[1]; for @b.values <-> $a { $a = 42 };
+    is-deeply @b[0], 42,
+        '@shaped-array.values provides with writable containers';
+}
