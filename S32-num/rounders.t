@@ -46,52 +46,47 @@ is( (-Inf).truncate, -Inf, '(-Inf).truncate is -Inf');
 my %tests =
     ( ceiling => [ [ 1.5, 2 ], [ 2, 2 ], [ 1.4999, 2 ],
          [ -0.1, 0 ], [ -1, -1 ], [ -5.9, -5 ],
-         [ -0.5, 0 ], [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ],
-         [ "2.Num", 2 ] ],
+         [ -0.5, 0 ], [ -0.499.Num, 0 ], [ -5.499.Num, -5 ],
+         [ 2.Num, 2 ] ],
       floor => [ [ 1.5, 1 ], [ 2, 2 ], [ 1.4999, 1 ],
          [ -0.1, -1 ], [ -1, -1 ], [ -5.9, -6 ],
-         [ -0.5, -1 ], [ "-0.499.Num", -1 ], [ "-5.499.Num", -6 ],
-         [ "2.Num", 2 ]  ],
+         [ -0.5, -1 ], [ -0.499.Num, -1 ], [ -5.499.Num, -6 ],
+         [ 2.Num, 2 ]  ],
       round => [ [ 1.5, 2 ], [ 2, 2 ], [ 1.4999, 1 ],
          [ -0.1, 0 ], [ -1, -1 ], [ -5.9, -6 ],
-         [ -0.5, 0 ], [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ],
-         [ "2.Num", 2 ]  ],
+         [ -0.5, 0 ], [ -0.499.Num, 0 ], [ -5.499.Num, -5 ],
+         [ 2.Num, 2 ]  ],
       truncate => [ [ 1.5, 1 ], [ 2, 2 ], [ 1.4999, 1 ],
          [ -0.1, 0 ], [ -1, -1 ], [ -5.9, -5 ],
-         [ -0.5, 0 ], [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ],
-         [ "2.Num", 2 ]  ],
+         [ -0.5, 0 ], [ -0.499.Num, 0 ], [ -5.499.Num, -5 ],
+         [ 2.Num, 2 ]  ],
     );
 
-for %tests.keys.sort -> $type {
+my @testkeys = %tests.keys.sort;
+
+for @testkeys -> $type {
     my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
     for @subtests -> $test {
-        my $code = "{$type}({$test[0]})";
-        my $res = EVAL($code);
+        my $code = "$type\($test[0]\)";
+        my &sub-in-question = &::($type);
+        my $res = sub-in-question($test[0]);
 
-        if ($!) {
-            flunk("failed to parse $code ($!)");
-        } else {
-            ok($res == $test[1], "$code == {$test[1]}");
-        }
+        ok($res == $test[1], "$code == {$test[1]}");
     }
 }
 
-for %tests.keys.sort -> $type {
+for @testkeys -> $type {
     my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
     for @subtests -> $test {
         my $code = "({$test[0]}).{$type}";
-        my $res = EVAL($code);
+        my $res = $test[0]."$type"();
 
-        if ($!) {
-            flunk("failed to parse $code ($!)");
-        } else {
-            ok($res == $test[1], "$code == {$test[1]}");
-        }
+        ok($res == $test[1], "$code == {$test[1]}");
     }
 }
 
-for %tests.keys.sort -> $t {
-    isa-ok EVAL("{$t}(1.1)"), Int, "rounder $t returns an Int";
+for @testkeys -> $t {
+    isa-ok &::($t)(1.1), Int, "rounder $t returns an Int";
 }
 
 # MoarVM Issue #157
