@@ -17,16 +17,16 @@ plan 27;
 
 my $staticname;
 BEGIN try EVAL '$staticname = Test';
-#?rakudo todo 'creation of stub package symbol NYI RT #125083'
 is $staticname.gist, '(Test)', "require Test installs stub Test package at compile time";
 
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
-lives-ok { require "t/spec/S11-modules/InnerModule.pm"; },
-         'can load InnerModule from a path at run time';
+lives-ok {
+    require "t/spec/S11-modules/InnerModule.pm";
+    is ::('InnerModule').WHO<EXPORT>.WHO<DEFAULT>.WHO<&bar>(), 'Inner::bar', "can introspect EXPORT of require'd package";
+    is ::('InnerModule').WHO<&oursub>(),"Inner::oursub","can call our-sub from required module";
+}, 'can load InnerModule from a path at run time';
 
-is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', "can introspect EXPORT of require'd package";
-is GLOBAL::InnerModule::<&oursub>(),"Inner::oursub","can call our-sub from required module";
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
 
@@ -59,10 +59,11 @@ PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:prefix<t/spec/packages
 # Next line is for final test.
 GLOBAL::<$x> = 'still here';
 
-lives-ok { require Fancy::Utilities; },
-         'can load Fancy::Utilities at run time';
-is Fancy::Utilities::lolgreet('me'),
-   'O HAI ME', 'can call our-sub from required module';
+lives-ok {
+    require Fancy::Utilities;
+    is Fancy::Utilities::lolgreet('me'),
+       'O HAI ME', 'can call our-sub from required module';
+}, 'can load Fancy::Utilities at run time';
 
 # L<S11/"Runtime Importation"/"It is also possible to specify the module name indirectly by string">
 lives-ok { my $name = 'A'; require ::($name) }, 'can require with variable name';
@@ -96,6 +97,7 @@ lives-ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm"; },
 throws-like { require Fancy::Utilities <&aint-there> },
 X::Import::MissingSymbols,'throws correct exception';
 
+#?rakudo skip 'import require at compile time RT #127538'
 eval-lives-ok q|BEGIN require Fancy::Utilities;|, 'require works at BEGIN';
 
 #?rakudo skip 'import require at compile time RT #127538'
