@@ -3,8 +3,8 @@ use Test;
 plan 47;
 
 {
-    sub infix:<×> ($a, $b) { $a * $b }
-    is(5 × 3, 15, "infix Unicode operator");
+    sub infix:<×> ($a, $b) { $a + $b }
+    is(5 × 3, 8, "infix Unicode operator (actual overloading)");
 }
 
 {
