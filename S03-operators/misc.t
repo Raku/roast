@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 44;
+plan 55;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -145,6 +145,23 @@ is (2 Z 3), @z, 'joining of single items';
 
     #?rakudo.jvm skip 'Bogus term'
     is 2 ÷ 3, ⅔, "we have infix DIVISION SIGN";
+
+    ok   4 ≤ 23, 'we have infix LESS-THAN OR EQUAL TO';
+    ok  16 ≥  8, 'we have infix GREATER-THAN OR EQUAL TO';
+    ok  15 ≠ 42, 'we have infix NOT EQUAL TO';
+
+    nok  4 ≥ 23, 'we have infix LESS-THAN OR EQUAL TO (not always True)';
+    nok 16 ≤  8, 'we have infix GREATER-THAN OR EQUAL TO (not always True)';
+    nok 42 ≠ 42, 'we have infix NOT EQUAL TO (not always True)';
+
+    ok -5 ≤ -4 ≤ -3, 'unicode op chaining';
+    ok  5 ≥  4 ≥  3, 'unicode op chaining';
+    ok -3 ≠ -4 ≠  1, 'unicode op chaining';
+
+    ok  4 < 8 ≤ 15 <= 16 != 23 ≠ 42 == 42 ≠ 23 != 16 >= 15 ≥ 8 > 4,
+        'unicode ops chain with texas ones';
+    nok 4 < 8 ≤ 15 <= 16 != 23 ≠ 42 == 42 ≠ 23 != 16 >= 15 ≥ ∞ > 4,
+        'unicode ops chain with texas ones (not always True)';
 }
 
 # vim: ft=perl6
