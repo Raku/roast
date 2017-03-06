@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 71;
+plan 72;
 
 {
     my $s = supply {
@@ -327,6 +327,13 @@ plan 71;
         }
     }
     is $i, 2, 'react/whenever with supply that immediately emits values works';
+}
+
+# RT #128717
+{
+    my $i = 0;
+    react whenever Supply.interval: 0.01 { done() if $_ == 3; $i++ }
+    is $i, 3, 'blockless react/whenever works';
 }
 
 {
