@@ -6,7 +6,7 @@ use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
                                   &nok &throws-like &eval-lives-ok &ok>);
-plan 27;
+plan 32;
 
 # RT #126100
 {
@@ -117,5 +117,20 @@ nok ::('&bar'),"bar didn't leak";
     nok ::('Cool::Utils') ~~ Failure,'Cool::Utils has been merged';
     is $res,::('Cool::Utils'), 'Cool::Utils was returned';
 }
+
+{
+    require Cool::Utils;
+    {
+        require Cool::Beans;
+        require Cool::Cat;
+        require Cool::Cat::Goes::Splat;
+        for <Utils Beans Cat>.kv -> $i,$sym {
+            ok Cool::{$sym}:exists,'{$i+1}. multiple requires with top level package already defined';
+        }
+        is Cool::Cat.new.meow,'meow','class in required package';
+        is Cool::Cat::Goes::<Splat>.new.meow,'splat',"class in long required package name";
+    }
+}
+
 
 # vim: ft=perl6
