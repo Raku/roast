@@ -14,7 +14,7 @@ my @endings =
 ## adjusted plan to allow fine grained fudging for rakudo.jvm
 #plan @endings * (1 + 3 * ( (3 * 5) + 6));
 my $extra_tests_jvm_fudging = 2 * 3 * ( 3 * ( 6 + 2 ) );
-plan 4 + @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
+plan 4 + @endings * (1 + 3 * ( 5 + 6)) + $extra_tests_jvm_fudging;
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -28,27 +28,23 @@ for @endings -> (:key($eol), :value($EOL)) {
     for (), '', :chomp, '', :!chomp, $eol -> $chomp, $end {
         my $status = "{$chomp.gist} / $EOL";
 
-        for (), True, :close, False, :!close, True -> $closing, $open {
-            my $handle = open($filename, :nl-in($eol), |$chomp);
-            isa-ok $handle, IO::Handle;
+        my $handle = open($filename, :nl-in($eol), |$chomp);
+        isa-ok $handle, IO::Handle;
 
-            my $status = OUTER::<$status> ~ " / {$open ?? 'open' !! 'close'}";
-
-            my $first;
-            for $handle.lines(|$closing) -> $line {
-                #?rakudo.jvm skip 'test will be run below with fine grained fudging'
-                is $line,"@text[0]$end[0]", "read first line: $status";
-                $first = $line;
-                last;
-            }
-
-            my @lines = $first, |$handle.lines(|$closing);
+        my $first;
+        for $handle.lines -> $line {
             #?rakudo.jvm skip 'test will be run below with fine grained fudging'
-            is @lines.join, @text.join($end[0]), "rest of file: $status";
-
-            is $handle.opened, $open, "handle still open: $status";
-            ok $handle.close, "closed handle: $status";
+            is $line,"@text[0]$end[0]", "read first line: $status";
+            $first = $line;
+            last;
         }
+
+        my @lines = $first, |$handle.lines;
+        #?rakudo.jvm skip 'test will be run below with fine grained fudging'
+        is @lines.join, @text.join($end[0]), "rest of file: $status";
+
+        ok $handle.opened, "handle still open";
+        ok $handle.close, "closed handle";
 
         # slicing
         my $handle = open($filename, :nl-in($eol), |$chomp);
