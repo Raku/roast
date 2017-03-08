@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 18;
 
 # L<S05/Substitution/>
 
@@ -31,9 +31,8 @@ is $m<x>, 'f',              'match object indexes as a hash';
 is $m[0], 'oo',             'match object indexes as an array';
 
 # RT #130953
-subtest 'ligatures + case-insensitive match' => {
-    plan 5;
-    #?rakudo 5 todo 'RT130953'
+#?rakudo 5 todo 'RT130953'
+{
     is-deeply (for 1..10 { 'ﬆ' x $_ ~ 'T' ~~ m:i/T/ })».Str,
         ('T' xx 10), 'can ~~ m:i/T/';
 
