@@ -176,7 +176,7 @@ is chrs("104", "101", "108", "108", "111"), 'hello', 'chrs works with a list of 
 # RT #130913
 subtest 'chr with large codepoints throws useful error' => {
     my @tests = 'chr 2⁶³-1',   '(2⁶³-1).chr', 'chr 2⁶³',
-                '(2⁶³-1).chr', 'chr 2¹⁰⁰',    '(2¹⁰⁰).chr';
+                '2⁶³.chr',     'chr 2¹⁰⁰',    '(2¹⁰⁰).chr';
     plan +@tests;
     throws-like $_, Exception, .perl for @tests;
 }
