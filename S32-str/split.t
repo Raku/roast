@@ -534,5 +534,6 @@ subtest '.split works on Cool same as it works on Str' => {
     is-deeply 4.split(/<<|>>/, :skip-empty), ('4',),     ':skip-empty; Regex';
     is-deeply 12345.split(('2', /4/)), ("1", "3", "5"),  '@needles form';
 }
+
 # RT #130904
 is-deeply "A-B C".split([" ", "-"]), ("A", "B", "C").Seq, "Split with alternates completes and doesn't give an exception";
