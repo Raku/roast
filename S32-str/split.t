@@ -4,7 +4,7 @@ use Test;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 61;
+plan 62;
 
 # Legend:
 # r   result
@@ -537,3 +537,12 @@ subtest '.split works on Cool same as it works on Str' => {
 
 # RT #130904
 is-deeply "A-B C".split([" ", "-"]), ("A", "B", "C").Seq, "Split with alternates completes and doesn't give an exception";
+
+# RT #130955
+subtest 'split skip-empty skips all empty chunks' => {
+    my @tests = '' => ';', '' => '', '' => rx/^/, '' => /$/, ';' => ';';
+    plan +@tests;
+    cmp-ok .key.split(.value, :skip-empty), '==', 0,
+        "{.key}.split({.value.perl}, :skip-empty)"
+    for @tests;
+}
