@@ -16,6 +16,7 @@ for &parse-names, Str.^lookup('parse-names') -> &pn {
     is-deeply &pn(' BELL  , BLACK HEART SUIT  '), "\c[BELL]♥",
         "two chars with whitespace around $t";
 
+    #?rakudo.jvm 5 skip 'chr codepoint cannot be negative'
     throws-like &pn('   BELL,   '           ), X::Str::InvalidCharName,
         'trailing comma';
     throws-like &pn('   ,BELL   '           ), X::Str::InvalidCharName,
