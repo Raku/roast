@@ -6,7 +6,7 @@ use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
                                   &nok &throws-like &eval-lives-ok &ok>);
-plan 32;
+plan 33;
 
 # RT #126100
 {
@@ -69,9 +69,10 @@ lives-ok {
 lives-ok { my $name = 'A'; require ::($name) }, 'can require with variable name';
 
 {
-    require ::('Fancy::Utilities');
+    my $res = (require ::('Fancy::Utilities'));
     is ::('Fancy::Utilities')::('&lolgreet')('tester'), "O HAI TESTER",
-       'can call subroutines in a module by name';
+    'can call subroutines in a module by name';
+    ok $res ~~ ::('Fancy::Utilities'),'package returned from Fancy::Utilities matches the indirect lookup';
 }
 
 # L<S11/"Runtime Importation"/"Importing via require also installs names into the current lexical scope">
@@ -119,17 +120,17 @@ nok ::('&bar'),"bar didn't leak";
 }
 
 {
-    require Cool::Utils;
-    {
-        require Cool::Beans;
-        require Cool::Cat;
-        require Cool::Cat::Goes::Splat;
-        for <Utils Beans Cat>.kv -> $i,$sym {
-            ok Cool::{$sym}:exists,'{$i+1}. multiple requires with top level package already defined';
-        }
-        is Cool::Cat.new.meow,'meow','class in required package';
-        is Cool::Cat::Goes::<Splat>.new.meow,'splat',"class in long required package name";
-    }
+     require Cool::Utils;
+     {
+         require Cool::Beans;
+         require Cool::Cat;
+         require Cool::Cat::Goes::Splat;
+         for <Utils Beans Cat>.kv -> $i,$sym {
+             ok Cool::{$sym}:exists,"{$i+1}. multiple requires with top level package already defined";
+         }
+         is ::("Cool::Cat").new.meow,'meow','class in required package';
+         is ::("Cool::Cat::Goes::Splat").new.meow,'splat',"class in long required package name";
+     }
 }
 
 
