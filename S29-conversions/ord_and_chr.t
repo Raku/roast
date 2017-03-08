@@ -123,7 +123,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 54 + @maps;
+plan 55 + @maps;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -172,5 +172,13 @@ is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
 }
 
 is chrs("104", "101", "108", "108", "111"), 'hello', 'chrs works with a list of numifiable strings';
+
+# RT #130913
+subtest 'chr with large codepoints throws useful error' => {
+    my @tests = 'chr 2⁶³-1',   '(2⁶³-1).chr', 'chr 2⁶³',
+                '(2⁶³-1).chr', 'chr 2¹⁰⁰',    '(2¹⁰⁰).chr';
+    plan +@tests;
+    throws-like $_, Exception, .perl for @tests;
+}
 
 #vim: ft=perl6
