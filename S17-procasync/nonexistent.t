@@ -1,11 +1,17 @@
 use Test;
 
-plan 3;
+plan 5;
 
 my $prog = Proc::Async.new(:w, 'does-not-exist-cabbage-mooncake-unicycle');
+my $stdout = $prog.stdout;
+my $stderr = $prog.stderr;
 my $promise = $prog.start;
 dies-ok { await $prog.write(Buf.new(12, 42)) },
     'Writing to an async process that does not exist breaks the retunred Promise';
+dies-ok { react { whenever $stdout { } } },
+    'Trying to tap STDOUT of an async process that does not exist signals failure';
+dies-ok { react { whenever $stderr { } } },
+    'Trying to tap STDERR of an async process that does not exist signals failure';
 lives-ok { $prog.close-stdin },
     'Closing stdin of an async process that does not exist is harmless';
 dies-ok { await $promise },
