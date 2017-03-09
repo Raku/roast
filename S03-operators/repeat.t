@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 60;
+plan 62;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -200,5 +200,14 @@ warns-like { 'x' x Int }, *.contains('uninitialized' & 'numeric'),
 # RT #130619
 is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
     'empty slip with xx * works';
+
+# RT #127971,130924
+{
+    #?rakudo 2 todo "creating too large strings dies RT #127971,130924"
+    dies-ok { my $a = "a" x 2**30; my $b = "b" x 2**30; my $c = $a ~ $b; my $d = $b ~ $a; my $e = $c ~ $d; },
+        'concatenating strings with `~` that would create a too large result dies';
+    dies-ok { (('a' x 1000000) x 1000000) },
+        'repeating strings with `x` that would create a too large result dies';
+}
 
 # vim: ft=perl6
