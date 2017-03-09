@@ -308,6 +308,7 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
 }
 
 # RT #129175
+#?rakudo.jvm skip 'Proc::Async NYI RT #129175'
 doesn't-hang ｢-> *@a { @a.is-lazy.say }(1…∞)｣, :out(/True/),
     'slurpy positional param does not hang when given infinite lists';
 
