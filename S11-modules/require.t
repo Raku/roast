@@ -128,8 +128,8 @@ nok ::('&bar'),"bar didn't leak";
          for <Utils Beans Cat>.kv -> $i,$sym {
              ok Cool::{$sym}:exists,"{$i+1}. multiple requires with top level package already defined";
          }
-         is ::("Cool::Cat").new.meow,'meow','class in required package';
-         is ::("Cool::Cat::Goes::Splat").new.meow,'splat',"class in long required package name";
+         is Cool::Cat.new.meow,'meow','class in required package';
+         is Cool::Cat::Goes::Splat.new.meow,'splat',"class in long required package name";
      }
 }
 
