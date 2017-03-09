@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 14;
 
 =begin pod
 
@@ -53,6 +53,14 @@ class C {
     ok(C::D ~~ Grammar,            'C::D is a grammar');
     ok('aaa' ~~ /<C::D::test>/,    'could call rule in nested grammar');
     ok(!('bbb' ~~ /<C::D::test>/), 'rule in nested grammar behaves correctly');
+}
+
+{
+    class X::Y::Z { };
+    my \x = X::Y;
+    class X::Y { method real { "yep" }};
+    is x.new.real,"yep","assigning stub that is later defined as a class";
+
 }
 
 # vim: ft=perl6
