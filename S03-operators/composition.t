@@ -27,8 +27,9 @@ is ({ [+] @_ } o *.map(* * 2))(1..10), 110, "can compose functions that pass mul
 # RT #130891
 {
     subtest 'infix:<∘> preserves .count and .arity of RHS' => {
-        plan 4;
-        my &one = sub { $^a.uc } ∘ sub { "$^a:$^b" };
+        plan 5;
+        my &one = sub ($a --> Str) { $a.uc } ∘ sub { "$^a:$^b" };
+        is-deeply &one.of, Str, ｢composition copies LHS's return type｣;
         is-deeply <a b c d e f g h>.map(&one).List,
             ("A:B", "C:D", "E:F", "G:H"),
             'can 2-at-a-time map with a composed routine';
@@ -47,8 +48,9 @@ is ({ [+] @_ } o *.map(* * 2))(1..10), 110, "can compose functions that pass mul
     }
 
     subtest 'infix:<o> preserves .count and .arity of RHS' => {
-        plan 4;
-        my &one = sub { $^a.uc } o sub { "$^a:$^b" };
+        plan 5;
+        my &one = sub ($a --> Str) { $a.uc } o sub { "$^a:$^b" };
+        is-deeply &one.of, Str, ｢composition copies LHS's return type｣;
         is-deeply <a b c d e f g h>.map(&one).List,
             ("A:B", "C:D", "E:F", "G:H"),
             'can 2-at-a-time map with a composed routine';
