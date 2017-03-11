@@ -22,36 +22,40 @@ plan 9 * @inttypes + 3;
 for @inttypes -> $type {
     my ($minval,$maxval) = ::($type).Range.int-bounds;
 
-if $type eq "uint64" {
-#?rakudo todo 'getting -1 instead of 18446744073709551615'
-    is EVAL("my $type \$var = $maxval; \$var"), $maxval,
-      "$type can be $maxval";
-} else {
-    is EVAL("my $type \$var = $maxval; \$var"), $maxval,
-      "$type can be $maxval";
-}
+    if $type eq "uint64" {
+        #?rakudo todo 'getting -1 instead of 18446744073709551615'
+        is EVAL("my $type \$var = $maxval; \$var"), $maxval,
+          "$type can be $maxval";
+    } else {
+        is EVAL("my $type \$var = $maxval; \$var"), $maxval,
+          "$type can be $maxval";
+    }
+
     is EVAL("my $type \$var = $minval; \$var"), $minval,
       "$type can be $minval";
 
-if $type eq "uint64" {
-#?rakudo.moar 2 skip 'Cannot unbox 65 bit wide bigint into native integer'
-    is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
-      "$type overflows to $minval";
-#?rakudo.jvm 1 todo "expected: '18446744073709551615' got: '-1'"
-    is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
-      "$type underflows to $maxval";
-} elsif $type eq 'int64' {
-    is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
-      "$type overflows to $minval";
-    is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
-      "$type underflows to $maxval";
-} else {
-#?rakudo.jvm todo 'wrong overflow'
-    is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
-      "$type overflows to $minval";
-#?rakudo.jvm todo 'wrong underflow'
-    is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
-      "$type underflows to $maxval";
+    if $type eq "uint64" {
+        #?rakudo.moar 2 skip 'Cannot unbox 65 bit wide bigint into native integer'
+        is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
+          "$type overflows to $minval";
+
+        #?rakudo.jvm 1 todo "expected: '18446744073709551615' got: '-1'"
+        is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
+          "$type underflows to $maxval";
+    } elsif $type eq 'int64' {
+        is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
+          "$type overflows to $minval";
+
+        is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
+          "$type underflows to $maxval";
+    } else {
+        #?rakudo.jvm todo 'wrong overflow'
+        is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
+          "$type overflows to $minval";
+
+        #?rakudo.jvm todo 'wrong underflow'
+        is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
+          "$type underflows to $maxval";
 }
 
     throws-like { EVAL "my $type \$var = 'foo'" },
@@ -82,4 +86,4 @@ if $type eq "uint64" {
     is $overlap.u8,      135,  "uint8 in union is unsigned";
 }
 
-# vim: ft=perl6
+# vim: ft=perl6 expandtab sw=4
