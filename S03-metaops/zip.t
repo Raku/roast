@@ -129,8 +129,10 @@ is-deeply &[Z+]((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ar
     ($side-effect++,) Zxx 0;
     is $side-effect, 0, "Zxx thunks left side properly";
     ($side-effect++,) Zxx 1;
+#?rakudo todo 'RT #130980'
     is $side-effect, 1, "Zxx thunk runs when needed";
     ($side-effect++,) Zxx 9;
+#?rakudo todo 'RT #130980'
     is $side-effect, 10, "Zxx thunk runs repeatedly when needed";
 }
 {
