@@ -126,8 +126,10 @@ nok ::('&bar'),"bar didn't leak";
          require Cool::Cat;
          require Cool::Cat::Goes::Splat;
          for <Utils Beans Cat>.kv -> $i,$sym {
+             #?rakudo.jvm todo 'only test for Cool::Cat passes in this loop'
              ok Cool::{$sym}:exists,"{$i+1}. multiple requires with top level package already defined";
          }
+         #?rakudo.jvm 2 skip 'You cannot create an instance of this type'
          is Cool::Cat.new.meow,'meow','class in required package';
          is Cool::Cat::Goes::Splat.new.meow,'splat',"class in long required package name";
      }

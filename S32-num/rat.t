@@ -389,6 +389,7 @@ subtest '.norm returns reduced Rat' => {
     }
 }
 
+#?rakudo.jvm skip 'Type check failed in binding to "nu"; expected Int but got Str ("42.0")'
 subtest '.Rat/.FatRat coercers' => {
     my @values =
         42, <42>, 42e0, <42e0>, 42.0, <42.0>, <42+0i>, < 42+0i>,
