@@ -72,9 +72,10 @@ is($moo, 0, "var was not touched");
 # all of those can be detected at compile time
 {
     throws-like ' 4++ ', X::Multi::NoMatch, "can't postincrement a literal number";
-    #?rakudo.jvm 3 todo "RT #126531"
+    #?rakudo.jvm todo "RT #126531"
     throws-like ' ++4 ', X::Multi::NoMatch, "can't preincrement a literal number";
     throws-like ' 4-- ', X::Multi::NoMatch, "can't postdecrement a literal number";
+    #?rakudo.jvm todo "RT #126531"
     throws-like ' --4 ', X::Multi::NoMatch, "can't predecrement a literal number";
     throws-like ' "x"++ ', X::Multi::NoMatch, "can't postincrement a literal string";
     throws-like ' ++"x" ', X::Multi::NoMatch, "can't preincrement a literal string";
@@ -117,6 +118,7 @@ is($moo, 0, "var was not touched");
 }
 
 # RT #74912
+#?rakudo.jvm todo "RT #126531"
 throws-like 'my $x = 0; ++++$x', X::Multi::NoMatch,
     'can not double-increment, because the return value is not a container';
 
