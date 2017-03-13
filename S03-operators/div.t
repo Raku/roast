@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 isa-ok 10 div 0   , Failure, "10 div 0 softfails";
 isa-ok 10 / 0     , Rat, "10 / 0 is a Rat.";
@@ -13,6 +13,8 @@ isa-ok 1e0 / (0/1), Failure, "1e0 / (0/1) softfails";
 # RT #112678
 {
     is -8 div 3, -3, '$x div $y should give same result as floor($x/$y)';
+    my int $rt112678 = -8;
+    is $rt112678 div 3, -3, 'div works with negative native';
 }
 
 { # RT #130686
