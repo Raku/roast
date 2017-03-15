@@ -245,5 +245,5 @@ subtest 'using a null string to access a hash does not segfault' => {
 }
 
 # RT #128985
-is (^1000 .grep: -> $n {([+] ^$n .grep: -> $m {$m and $n %% $m}) == $n }), (0,),
+is (^1000 .grep: -> $n {([+] ^$n .grep: -> $m {$m and $n %% $m}) == $n }), (0, 6, 28, 496),
     'No SEGV/crash on reduction in grep using %%';
