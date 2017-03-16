@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 188;
+plan 189;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -419,6 +419,15 @@ subtest 'Complex smartmatch against Range' => {
     for @true -> $t {
         is-deeply ($t[0] ~~ $t[1]), True,  "{$t[0].perl} ~~ {$t[1].perl}";
     }
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2017-03-16#i_14277938
+subtest 'no .int-bounds for Infs and NaN as Range endpoints' => {
+    my @ranges =  NaN.. NaN,  NaN..1, 1..NaN,   NaN..Inf,  NaN..-Inf,
+                 -Inf..-Inf, -Inf..1, 1..-Inf, -Inf..NaN, -Inf.. Inf,
+                  Inf.. Inf,  Inf..1, 1.. Inf,  Inf..NaN,  Inf.. Inf;
+    plan +@ranges;
+    throws-like { .int-bounds }, Exception, "{.perl} throws" for @ranges;
 }
 
 # vim:set ft=perl6
