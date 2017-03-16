@@ -14,7 +14,7 @@ Tests of Buf/Blob roles
 
 { # coverage; 2016-09-26
 
-like Blob.new(<1 2 3>).WHICH, /^ 'Blob'/, ‘.WHICH indicates it's a Blob’;
+like ~Blob.new(<1 2 3>).WHICH, /^ 'Blob'/, ‘.WHICH indicates it's a Blob’;
 is-deeply Blob.new(array[int].new: 1, 2, 3), Blob.new(1,2,3),
     'can construct a Blob from native int array';
 
