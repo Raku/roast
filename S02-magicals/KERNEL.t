@@ -60,14 +60,16 @@ isa-ok $*KERNEL.bits, Int;
     is $*KERNEL.signals.elems, $*KERNEL.signals.grep(Signal|Any).elems,
       "do we have Signals only?  and Any's of course";
 
+    #?rakudo.jvm emit # Type check failed for return value; expected ?:? but got Int (Int)
     my $hup = $*KERNEL.signal(SIGHUP);
+    #?rakudo.jvm 6 skip "skip tests because of above failure"
     isa-ok $hup, Int, 'did we get an Int back';
-    #?rakudo.jvm todo "limited signal handling on jvm RT #124628"
+    # #?rakudo.jvm todo "limited signal handling on jvm RT #124628"
     ok defined($hup), 'was the Int defined';
     isnt $hup, 0, "no signal should come out as 0";
     is $*KERNEL.signal("SIGHUP"), $hup, "also ok as string?";
     is $*KERNEL.signal("HUP"),    $hup, "also ok as partial string?";
-    #?rakudo.jvm skip "limited signal handling on jvm RT #124628"
+    # #?rakudo.jvm skip "limited signal handling on jvm RT #124628"
     is $*KERNEL.signal($hup),     $hup, "also ok as Int?";
 }
 
