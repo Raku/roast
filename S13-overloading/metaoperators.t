@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 #L<S06/Operator overloading>
 
@@ -45,6 +45,18 @@ is ~(('OMG','BBQ') <<wtf>> ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '<<...>> hyper
 # RT #130998
 {
     is([+](^20 .grep: *.is-prime), 77, "can we use &infix:<.> as argument for []");
+}
+
+# RT #130610
+{
+    is-deeply(
+        [\,](<a b>, <c d>, <e f>), $(
+            ($("a", "b"),),
+            ($("a", "b"), $("c", "d")),
+            ($("a", "b"), $("c", "d"), $("e", "f"))
+        ),
+        "Triangular reduce with &infix:<,> and a list of lists shouldn't flatern"
+    )
 }
 
 # vim: ft=perl6
