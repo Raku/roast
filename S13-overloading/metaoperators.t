@@ -48,15 +48,7 @@ is ~(('OMG','BBQ') <<wtf>> ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '<<...>> hyper
 }
 
 # RT #130610
-{
-    is-deeply(
-        [\,](<a b>, <c d>, <e f>), (
-            ($("a", "b"),                         ),
-            ($("a", "b"), $("c", "d")             ),
-            ($("a", "b"), $("c", "d"), $("e", "f"))
-        ).Seq,
-        "Triangular reduce with &infix:<,> and a list of lists doesn't flatten"
-    )
-}
+is ([\,] <a b>, <c d>, <e f>)».join('|').join('-'), "a b-a b|c d-a b|c d|e f",
+    "Triangular reduce with &infix:<,> and a list of lists doesn't flatten"
 
 # vim: ft=perl6
