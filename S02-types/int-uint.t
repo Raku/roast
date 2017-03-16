@@ -17,7 +17,7 @@ unless @inttypes {
     exit;
 }
 
-plan 9 * @inttypes + 3;
+plan 11 * @inttypes + 3;
 
 for @inttypes -> $type {
     my ($minval,$maxval) = ::($type).Range.int-bounds;
@@ -35,28 +35,45 @@ for @inttypes -> $type {
       "$type can be $minval";
 
     if $type eq "uint64" {
-        #?rakudo.moar 2 skip 'Cannot unbox 65 bit wide bigint into native integer'
-        is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
+        is EVAL("my $type \$var = $maxval; \$var++; \$var"), $minval,
           "$type overflows to $minval";
+    } elsif $type eq "int64" {
+        is EVAL("my $type \$var = $maxval; \$var++; \$var"), $minval,
+          "$type overflows to $minval";
+    } else {
+        #?rakudo.jvm todo 'max overflow to min'
+        is EVAL("my $type \$var = $maxval; \$var++; \$var"), $minval,
+          "$type overflows to $minval";
+    }
 
-        #?rakudo.jvm 1 todo "expected: '18446744073709551615' got: '-1'"
-        is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
+    if $type eq "uint64" {
+        #?rakudo todo 'getting -1 instead of 0'
+        is EVAL("my $type \$var = $minval; \$var--; \$var"), $maxval,
           "$type underflows to $maxval";
-    } elsif $type eq 'int64' {
-        is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
-          "$type overflows to $minval";
-
-        is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
+    } elsif $type eq "int64" {
+        is EVAL("my $type \$var = $minval; \$var--; \$var"), $maxval,
           "$type underflows to $maxval";
     } else {
-        #?rakudo.jvm todo 'wrong overflow'
-        is EVAL("my $type \$var = {$maxval+1}; \$var"), $minval,
-          "$type overflows to $minval";
-
-        #?rakudo.jvm todo 'wrong underflow'
-        is EVAL("my $type \$var = {$minval-1}; \$var"), $maxval,
+        #?rakudo.jvm todo 'underflow to max'
+        is EVAL("my $type \$var = $minval; \$var--; \$var"), $maxval,
           "$type underflows to $maxval";
-}
+    }
+
+    if $type eq "uint64" {
+        #?rakudo.jvm todo 'setting to more than max'
+        throws-like { EVAL "my $type \$var = {$maxval+1}" },
+          Exception,
+          "setting $type to more than $maxval throws";
+    } else {
+        #?rakudo todo 'setting more than max throws'
+        throws-like { EVAL "my $type \$var = {$maxval+1}" },
+          Exception,
+          "setting $type to more than $maxval throws";
+    }
+    #?rakudo todo 'setting less than min throws'
+    throws-like { EVAL "my $type \$var = {$minval-1}" },
+      Exception,
+      "setting $type to less than $minval throws";
 
     throws-like { EVAL "my $type \$var = 'foo'" },
       Exception,
