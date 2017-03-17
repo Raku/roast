@@ -1,7 +1,7 @@
 use v6.c;
 use Test;
 
-plan 80;
+plan 78;
 
 # Object array
 {
