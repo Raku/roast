@@ -426,8 +426,12 @@ subtest 'no .int-bounds for Infs and NaN as Range endpoints' => {
     my @ranges =  NaN.. NaN,  NaN..1, 1..NaN,   NaN..Inf,  NaN..-Inf,
                  -Inf..-Inf, -Inf..1, 1..-Inf, -Inf..NaN, -Inf.. Inf,
                   Inf.. Inf,  Inf..1, 1.. Inf,  Inf..NaN,  Inf.. Inf;
-    plan +@ranges;
+    plan 1 + @ranges;
     throws-like { .int-bounds }, Exception, "{.perl} throws" for @ranges;
+
+    # https://github.com/rakudo/rakudo/commit/16ef21c162
+    is-deeply (0..5.5).int-bounds, (0, 5),
+        'we can get int-bounds from non-int range with `0` end-point';
 }
 
 # vim:set ft=perl6
