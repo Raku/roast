@@ -312,7 +312,7 @@ subtest 'Array.splice callable args' => {
     constant @tests =
         [ [|'hello world'.comb], 11, 5 ],
         [ [|'deadbeaf'.comb], 8, 2 ],
-        [ [|'I ❤️ Perl 6'.comb], 10, 6 ],
+        [ [|'I H Perl 6'.comb], 10, 6 ],
         ;
 
     plan 4 * @tests;
