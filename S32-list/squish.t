@@ -190,9 +190,7 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 # RT #121434
 {
     my $a = <a b b c>;
-    #?rakudo.jvm emit # hangs because squish gives back infinite list with Mu.new
     $a .= squish;
-    #?rakudo.jvm todo 'fails due to above failure'
     is-deeply( $a, <a b c>, '.= squish in sink context works on $a' );
     my @a = <a b b c>;
     @a .= squish;
