@@ -3,7 +3,7 @@ use v6.c;
 use lib '.';
 use MONKEY-SEE-NO-EVAL;
 
-my $required-Test = (require Test <&plan &is &lives-ok &skip &todo>);
+my $required-Test = (require Test <&plan &is &lives-ok &throws-like &todo>);
 
 plan 17;
 
@@ -16,20 +16,21 @@ plan 17;
 
 my $staticname;
 BEGIN try EVAL '$staticname = Test';
-#?rakudo todo 'creation of stub package symbol NYI RT #125083'
 is $staticname.gist, '(Test)', "require Test installs stub Test package at compile time";
 
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
-lives-ok { require "t/spec/S11-modules/InnerModule.pm"; },
-         'can load InnerModule from a path at run time';
-is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
+lives-ok {
+    require "t/spec/S11-modules/InnerModule.pm";
+    is ::('InnerModule').WHO<EXPORT>.WHO<DEFAULT>.WHO<&bar>(), 'Inner::bar', "can introspect EXPORT of require'd package";
+}, 'can load InnerModule from a path at run time';
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
 
-lives-ok { require $name '&bar'; },
-         'can load InnerModule from a variable at run time';
-is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
+lives-ok {
+    require $name '&bar';
+    is bar(), 'Inner::bar', 'can call our-sub from required module';
+}, 'can load InnerModule from a variable at run time';
 
 # L<S11/"Runtime Importation"/"To specify both a module name and a filename, use a colonpair">
 {
@@ -38,11 +39,9 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 }
 
 #RT #118407
-#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux RT #118407"
-{ 
-    require InnerModule:file($name) <quux>;
-    is quux(), 'Inner::quux', "can import quux without ampersand (&quux)";
-}
+throws-like { require InnerModule:file($name) <quux> },
+    X::Import::MissingSymbols,
+'&-less import of sub does not produce `Null PMC access` error';
 
 # no need to do that at compile time, since require() really is run time
 PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:prefix<t/spec/packages>, :next-repo($*REPO));
@@ -50,10 +49,11 @@ PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:prefix<t/spec/packages
 # Next line is for final test.
 GLOBAL::<$x> = 'still here';
 
-lives-ok { require Fancy::Utilities; },
-         'can load Fancy::Utilities at run time';
-is Fancy::Utilities::lolgreet('me'),
-   'O HAI ME', 'can call our-sub from required module';
+lives-ok {
+    require Fancy::Utilities;
+    is Fancy::Utilities::lolgreet('me'),
+       'O HAI ME', 'can call our-sub from required module';
+}, 'can load Fancy::Utilities at run time';
 
 # L<S11/"Runtime Importation"/"It is also possible to specify the module name indirectly by string">
 lives-ok { my $name = 'A'; require ::($name) }, 'can require with variable name';
