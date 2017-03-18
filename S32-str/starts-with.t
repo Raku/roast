@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 9;
 
 # L<S32::Str/Str/=item starts-with>
 
@@ -17,3 +17,7 @@ ok $i.starts-with(34),    "342 starting with 34";
 ok $i.starts-with(342),   "342 starting with 342";
 nok $i.starts-with(43),   "342 not starting with 43";
 nok $i.starts-with(3428), "342 not starting with 3428";
+
+try { 42.starts-with: Str }; pass "Cool.starts-with with wrong args does not hang";
+
+# vim: ft=perl6

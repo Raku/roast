@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item rindex">
 
-plan 45;
+plan 46;
 
 # Type of return value
 isa-ok('abc'.rindex('b'), Int);
@@ -86,5 +86,7 @@ throws-like 'rindex("xxyxx", "y", -1)', X::OutOfRange, 'rindex with negative sta
           "method does $pos fails";
     }
 }
+
+try { 42.rindex: Str }; pass "Cool.rindex with wrong args does not hang";
 
 # vim: ft=perl6

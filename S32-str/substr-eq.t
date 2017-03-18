@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S32::Str/Str/=item substr-eq>
 
@@ -21,3 +21,7 @@ nok $i.substr-eq(43,1),    "342 not equal to 43,1";
 nok $i.substr-eq(7342,0),  "342 not equal to 7342,0";
 nok $i.substr-eq(342,-42), "342 not equal to 342,-42";
 nok $i.substr-eq(342,999), "342 not equal to 342,999";
+
+try { 42.substr-eq: Str, 0 }; pass "Cool.substr-eq with wrong args does not hang";
+#
+# vim: ft=perl6
