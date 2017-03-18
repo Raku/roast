@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 37;
 
 {
     my $capture = \(1,2,3);
@@ -184,6 +184,19 @@ throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture 
         42 => 0,        ([1, 2]) => 1, ({:a(42)}) => 2,
         ([3, 4]) => "x", 72 => "a",    ({:a(42)}) => "y",
     ), '.antipairs returns correct result';
+}
+
+# RT #128977 and #130954
+{
+	my $c1 = \(42);
+	is $c1.WHICH, "Capture|(Int|42)";
+
+	my $a = 42;
+	my $c2 = \($a);
+	like $c2.WHICH, /'Capture|(Scalar|' \d+ ')'/;
+
+	cmp-ok $c1, &[eqv], $c2;
+	cmp-ok $c1, {$^a !=== $^b}, $c2;
 }
 
 # vim: ft=perl6
