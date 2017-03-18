@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item index">
 
-plan 46;
+plan 47;
 
 # Type of return value
 isa-ok('abc'.index('b'), Int);
@@ -93,5 +93,7 @@ throws-like 'index("xxy", "y", -1)', X::OutOfRange, 'index with negative start p
           "method does $pos fails";
     }
 }
+
+try { 42.index: Str }; pass "Cool.index with wrong args does not hang";
 
 # vim: ft=perl6

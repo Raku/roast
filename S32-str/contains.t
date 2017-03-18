@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 # L<S32::Str/Str/=item contains>
 
@@ -32,3 +32,7 @@ ok $i.contains(34,"0"),    "pos 0, 342 contains 34";
 ok $i.contains(342,"0"),   "pos 0, 342 contains 342";
 nok $i.contains(43,"0"),   "pos 0, 342 does not contain 43";
 nok $i.contains(3428,"0"), "pos 0, 342 does not contain 3428";
+
+try { 42.contains: Str }; pass "Cool.contains with wrong args does not hang";
+#
+# vim: ft=perl6

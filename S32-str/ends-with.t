@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 9;
 
 # L<S32::Str/Str/=item ends-with>
 
@@ -17,3 +17,7 @@ ok $i.ends-with(42),    "342 ending with 42";
 ok $i.ends-with(342),   "342 ending with 342";
 nok $i.ends-with(43),   "342 not ending with 43";
 nok $i.ends-with(7342), "342 not ending with 7342";
+
+try { 42.ends-with: Str }; pass "Cool.ends-with with wrong args does not hang";
+#
+# vim: ft=perl6

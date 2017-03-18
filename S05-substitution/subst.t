@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 186;
+plan 187;
 
 # L<S05/Substitution/>
 
@@ -624,5 +624,7 @@ is-deeply (S:g/FAIL// with 'foo'), 'foo',
 # RT #130355
 is-deeply (eager <a b c>.map: {S/a/x/}), <x b c>,
     'S/// can be used in map (does not reuse a container)';
+
+try { ($ = 42).subst-mutate: Str, Str }; pass "Cool.subst-mutate with wrong args does not hang";
 
 # vim: ft=perl6
