@@ -236,7 +236,7 @@ try {
     &multi-to-wrap.wrap({
         2 * callsame;
     });
-    #?rakudo.jvm    todo "?"
+    #?rakudo.jvm todo "still returns 10, RT #77474"
     is multi-to-wrap(5), 20, 'can wrap a multi';
 }
 
