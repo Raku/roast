@@ -181,10 +181,8 @@ is-deeply &[X+]((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&[X+] can autoge
     (($side-effect++,),) Xxx 0;
     is $side-effect, 0, "Xxx thunks left side properly";
     (($side-effect++,),) Xxx 1;
-#?rakudo todo 'RT #130980'
     is $side-effect, 1, "Xxx thunk runs when needed";
     (($side-effect++,),) Xxx 9;
-#?rakudo todo 'RT #130980'
     is $side-effect, 10, "Xxx thunk runs repeatedly when needed";
 }
 {
