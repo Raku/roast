@@ -14,7 +14,7 @@ my @endings =
 ## adjusted plan to allow fine grained fudging for rakudo.jvm
 #plan @endings * (1 + 3 * ( (3 * 5) + 6));
 my $extra_tests_jvm_fudging = 2 * 3 * ( 3 * ( 6 + 2 ) );
-plan 4 + @endings * (1 + 3 * ( 5 + 6)) + $extra_tests_jvm_fudging;
+plan 5 + @endings * (1 + 3 * ( 5 + 6)) + $extra_tests_jvm_fudging;
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -275,5 +275,9 @@ lives-ok {
     # list, which is where the bug hid
     .lines.rotor(:partial, 1 + .lines.elems).eager with $*PROGRAM.IO
 }, '.lines does not crash with partial .rotor';
+
+
+is-deeply run(:out, $*EXECUTABLE, '-e', ｢.say for ^3｣).out.lines(*).List,
+          ("0", "1", "2"), 'can use Whatever as limit to IO::Pipe.lines';
 
 # vim: ft=perl6
