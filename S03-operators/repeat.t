@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 62;
+plan 63;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -70,6 +70,9 @@ is('str' x Int, '', 'x with Int type object');
     my $a;
     lives-ok({ $a = 'a' x 1073741824 }, 'repeat count equal to the NQP limit works');
     is($a.chars, 1073741824, 'correct result for count equal to the NQP limit');
+
+    #?rakudo todo 'repeat count goes negative instead of throwing'
+    throws-like({ $a = 'a' x 9999999999999999999 }, Exception, 'too large repeat count throws instead of going negative');
 }
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
