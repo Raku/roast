@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 58;
+plan 60;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -260,6 +260,15 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 {
     ok Any.map({ Slip }) ~~ :(Slip:U),
         'only defined Slips are treated specially';
+}
+
+{ # https://github.com/rakudo/rakudo/commit/86dc997cc2
+    my @a = ^3 .map: -> \x --> Int { x };
+    is-deeply @a, [0, 1, 2], 'non-slippy-non-phaser map push-all works';
+
+    my $i = 0;
+    (^3 .map: -> \x --> Int { $i++ }).sink;
+    is-deeply $i, 3, 'non-slippy-non-phaser map sink-all works';
 }
 
 # vim: ft=perl6
