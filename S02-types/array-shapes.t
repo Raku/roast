@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 31;
+plan 34;
 
 # L<S09/Fixed-size arrays>
 
@@ -129,4 +129,13 @@ eval-lives-ok ｢my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>)｣,
     my @b[1]; for @b.values <-> $a { $a = 42 };
     is-deeply @b[0], 42,
         '@shaped-array.values provides with writable containers';
+}
+
+# https://irclog.perlgeek.de/perl6/2017-03-20#i_14297219
+{
+    # Z= for shape filling
+    my int @a[2;3] Z= 0..5;
+    is +@a, 2, 'Z= shape filling';
+    is @a[0;1], 1, 'Z= shape filling';
+    is @a[1;2], 5, 'Z= shape filling';
 }
