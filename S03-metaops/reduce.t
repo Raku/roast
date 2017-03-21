@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 547;
+plan 556;
 
 =begin pod
 
@@ -679,6 +679,55 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
         method Numeric() { 42 };
     }
     is ([*] CustomNumify.new), 42, 'one-argument [*] numifies';
+}
+
+# RT #131009
+{
+    cmp-ok [\X~](<a b c>),
+        &infix:<eqv>,
+        ((("a",).Seq, ("ab",).Seq, ("abc",).Seq)).Seq,
+        "Triangle reduce X~ 1 lists"
+    ;
+    cmp-ok [\X~](<a b c>, <1 2 3>),
+        &infix:<eqv>,
+        ((("abc",).Seq, (<a1 a2 a3 b1 b2 b3 c1 c2 c3>).Seq)).Seq,
+        "Triangle reduce X~ 2 lists"
+    ;
+    cmp-ok [\X~](<a b c>, <1 2 3>, <x y z>),
+        &infix:<eqv>,
+        ((
+            ("abc",).Seq,
+            (<a1 a2 a3 b1 b2 b3 c1 c2 c3>).Seq,
+            (<a1x a1y a1z a2x a2y a2z a3x a3y a3z
+              b1x b1y b1z b2x b2y b2z b3x b3y b3z
+              c1x c1y c1z c2x c2y c2z c3x c3y c3z>).Seq,
+        )).Seq,
+        "Triangle reduce X~ 3 lists"
+    ;
+
+    cmp-ok [\Z~](<a b c>),
+        &infix:<eqv>,
+        ((("a",).Seq, ("ab",).Seq, ("abc",).Seq)).Seq,
+        "Triangle reduce Z~ 1 lists"
+    ;
+    cmp-ok [\Z~](<a b c>, <1 2 3>),
+        &infix:<eqv>,
+        ((("abc",).Seq, (<a1 b2 c3>).Seq)).Seq,
+        "Triangle reduce Z~ 2 lists"
+    ;
+    cmp-ok [\Z~](<a b c>, <1 2 3>, <x y z>),
+        &infix:<eqv>,
+        ((
+            ("abc",).Seq,
+            (<a1 b2 c3>).Seq,
+            (<a1x b2y c3z>).Seq,
+        )).Seq,
+        "Triangle reduce Z~ 3 lists"
+    ;
+
+    is-deeply [\minmax]((1, 2, 3))                              , (1..1, 1..2, 1..3).Seq    , "Triangle reduce minmax";
+    is-deeply [\minmax]((1, 2, 3), (-1, -2, -3))                , (1..3, -3..3).Seq         , "Triangle reduce minmax";
+    is-deeply [\minmax]((1, 2, 3), (-1, -2, -3), (1, 10, 100))  , (1..3, -3..3, -3..100).Seq, "Triangle reduce minmax";
 }
 
 # vim: ft=perl6 et
