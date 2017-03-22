@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 187;
+plan 188;
 
 # L<S05/Substitution/>
 
@@ -626,5 +626,66 @@ is-deeply (eager <a b c>.map: {S/a/x/}), <x b c>,
     'S/// can be used in map (does not reuse a container)';
 
 try { ($ = 42).subst-mutate: Str, Str }; pass "Cool.subst-mutate with wrong args does not hang";
+
+# https://irclog.perlgeek.de/perl6-dev/2017-03-22#i_14308172
+subtest 'List/Match result adverb handling' => {
+    # Check that we can handle a bunch of adverb combinations that
+    # can result in either a Match or a List of Matches in $/
+    plan 3;
+
+    subtest ':2nd:g' => {
+        subtest 'S///' => {
+            plan 3;
+            is-deeply (S:2nd:g/./Z/ with 'abc'), 'aZc', 'return value';
+            isa-ok    $/,                        Match, '$/ is Match';
+            is-deeply $/.Str,                    'b',   '$/.Str';
+        }
+        subtest 's///' => {
+            plan 4;
+            my $v = 'abc';
+            my $r = $v ~~ s:2nd:g/./Z/;
+            is-deeply $v,        'aZc', 'result';
+            cmp-ok    $r, '===', $/,    'return value';
+            isa-ok    $/,        Match, '$/ is Match';
+            is-deeply $/.Str,    'b',   '$/.Str';
+        }
+    }
+
+    subtest ':x(1..3)' => {
+        subtest 'S///' => {
+            plan 3;
+            is-deeply (S:x(1..3)/./Z/ with 'abcd'), 'ZZZd', 'return value';
+            isa-ok    $/,                           List,    '$/ is List';
+            is-deeply $/».Str,                      <a b c>, '$/».Str';
+        }
+        subtest 's///' => {
+            plan 4;
+            my $v = 'abcd';
+            my $r = $v ~~ s:x(1..3):g/./Z/;
+            is-deeply $v,        'ZZZd',  'result';
+            cmp-ok    $r, '===', $/,      'return value';
+            isa-ok    $/,        List,    '$/ is List';
+            is-deeply $/».Str,   <a b c>, '$/».Str';
+        }
+    }
+
+    subtest ':th(1, 3)' => {
+        subtest 'S///' => {
+            plan 3;
+            is-deeply (S:th(1, 3)/./Z/ with 'abcd'), 'ZbZd', 'return value';
+            isa-ok    $/,                           List,    '$/ is List';
+            is-deeply $/».Str,                      <a c>,   '$/».Str';
+        }
+        subtest 's///' => {
+            plan 4;
+            my $v = 'abcd';
+            my $r = $v ~~ s:th(1, 3):g/./Z/;
+            is-deeply $v,        'ZbZd', 'result';
+            cmp-ok    $r, '===', $/,     'return value';
+            isa-ok    $/,        List,   '$/ is List';
+            is-deeply $/».Str,   <a c>,  '$/».Str';
+        }
+    }
+}
 
 # vim: ft=perl6
