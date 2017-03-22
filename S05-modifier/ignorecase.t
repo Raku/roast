@@ -85,7 +85,7 @@ ok 'A4' ~~ /:i a[3|4|5] | b[3|4] /, 'alternation sanity';
 #?rakudo.jvm 1 todo "ligatures is the needle of case insensensitive regex don't work on JVM"
 ok 'ﬆ' ~~ /:i st/, ":i haystack 'ﬆ' needle 'st'";
 #?rakudo 10 todo "ligatures is the needle of case insensensitive regex don't work"
-    for ^10 {
+    for 1..10 {
         my $haystack = ('a'..'z').pick($_).join ~ 'ﬆ';
         ok $haystack ~~ /:i st/, ":i haystack: '$haystack' needle: 'st'";
     }
