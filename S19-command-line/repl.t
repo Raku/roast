@@ -94,7 +94,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
     # If the REPL evaluates all of the previously-entered code on each
     # entered line of code, then we'll have more than just two 'say' print
     # outs. So we check the output each output happens just once
-    my $code = join "\n", map { "say 'testing-repl-$_';"}, <one two>;
+    my $code = <one two>.map({ "say 'testing-repl-$_';"}).join("\n");
     is_run_repl "$code\n",
         :err(''),
         :out({
@@ -109,7 +109,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
     my $code = 'sub x() returns Array of Int { return my @x of Int = 1,2,3 };'
         ~ "x().WHAT.say\n";
 
-    is_run_repl "$code" x 10,
+    is_run_repl $code x 10,
         :err(''),
         :out({ not $^o.contains: '[Int][Int]' }),
     'no bizzare types returned from redeclared "returns an `of` Array" sub';
@@ -118,7 +118,7 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 # RT #127631
 {
 
-    is_run_repl join("\n", |<last next redo>, 'say "rt127631-pass"', ''),
+    is_run_repl join("\n", <last next redo>, 'say "rt127631-pass"', ''),
         :err(''),
         :out(/'rt127631-pass'/),
     'loop controls do not exit the REPL';
