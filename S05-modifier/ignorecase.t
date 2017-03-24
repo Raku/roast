@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 38;
 
 =begin description
 
@@ -80,15 +80,19 @@ ok 'A4' ~~ /:i a[3|4|5] | b[3|4] /, 'alternation sanity';
     nok "m" ~~ /<[M]>/,    "ignore case of character classes";
     nok "n" ~~ /:i <[M]>/, "ignore case of character classes";
 }
+
 # RT #126793
 {
 #?rakudo.jvm 1 todo "ligatures don't casefold on JVM"
 ok 'ﬆ' ~~ /:i st/, ":i haystack 'ﬆ' needle 'st'";
-#?rakudo 10 todo "ligatures in the haystack of case insensensitive regex don't work"
+#?rakudo 1 todo "ligatures in the haystack of case insensensitive regex don't work"
     for 1..10 {
         my $haystack = ('a'..'z').pick($_).join ~ 'ﬆ';
         ok $haystack ~~ /:i st/, ":i haystack: '$haystack' needle: 'st'";
     }
 }
+
+nok (88.chr ~ 875.chr ~ 8413.chr) ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
+ok (88.chr ~ 875.chr ~ 8413.chr ~ 'x') ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
