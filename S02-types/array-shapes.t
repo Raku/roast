@@ -132,6 +132,7 @@ eval-lives-ok ｢my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>)｣,
 }
 
 # https://irclog.perlgeek.de/perl6/2017-03-20#i_14297219
+#?rakudo.jvm skip 'Cannot modify an immutable Int'
 {
     # Z= for shape filling
     my int @a[2;3] Z= 0..5;

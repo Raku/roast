@@ -346,6 +346,7 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
 }
 
 # RT #127813
+#?rakudo.jvm todo 'Expected a native int argument for $a; works standalone, probably wrong multi selected'
 {
     subtest 'using native types as named parameters', {
         eval-lives-ok '-> int    :$x { $x == 1   or die }(:x( 1 ))', 'int   ';
