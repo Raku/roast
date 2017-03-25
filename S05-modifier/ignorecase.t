@@ -91,8 +91,11 @@ ok 'ﬆ' ~~ /:i st/, ":i haystack 'ﬆ' needle 'st'";
         ok $haystack ~~ /:i st/, ":i haystack: '$haystack' needle: 'st'";
     }
 }
-
-nok (88.chr ~ 875.chr ~ 8413.chr) ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
-ok (88.chr ~ 875.chr ~ 8413.chr ~ 'x') ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
+# The below test attaches codepoints which combine with the X, so it should not
+# match. When the 'x' is added on the end, and is its own grapheme, then it should
+# match
+#?rakudo.jvm 1 todo "NFG NYI on JVM"
+nok ('X' ~ 875.chr ~ 8413.chr) ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
+ok  ('X' ~ 875.chr ~ 8413.chr ~ 'x') ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
