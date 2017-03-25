@@ -380,7 +380,7 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 # RT #128860
 {
     throws-like { (1,2,3).invert },
-	X::TypeCheck::Binding, got => Int, expected => Pair,
+	X::TypeCheck, got => Int, expected => Pair,
 	"List.invert maps via a required Pair binding";
 }
 
