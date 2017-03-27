@@ -158,7 +158,7 @@ plan 92;
 }
 
 # https://github.com/MoarVM/MoarVM/issues/393
-#?rakudo.moar todo 'the values get accidentally sign-extended'
+#?rakudo.moar skip 'the values get accidentally sign-extended'
 {
     is class :: { has uint8  $.x; }.new( x => 2** 8-1 ).x, 2**8 -1, 'uint8 attributes don\'t get sign-extended';
     is class :: { has uint16 $.x; }.new( x => 2**16-1 ).x, 2**16-1, 'uint16 attributes don\'t get sign-extended';
