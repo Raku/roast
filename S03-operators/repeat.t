@@ -71,7 +71,6 @@ is('str' x Int, '', 'x with Int type object');
     lives-ok({ $a = 'a' x 1073741824 }, 'repeat count equal to the NQP limit works');
     is($a.chars, 1073741824, 'correct result for count equal to the NQP limit');
 
-    #?rakudo todo 'repeat count goes negative instead of throwing'
     throws-like({ $a = 'a' x 9999999999999999999 }, Exception, 'too large repeat count throws instead of going negative');
 }
 
