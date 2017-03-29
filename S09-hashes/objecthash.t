@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 37;
+plan 54;
 
 {
     class A { method Str() { 'foo' } };
@@ -106,6 +106,34 @@ plan 37;
     %hash{"quux" but $r2} = 11;
 
     is %hash.keys>>.foo.sort, (5, 7), 'Can use mixin objects as keys';
+}
+
+{
+    my %a = 1 => {2 => {3 => 42}};
+
+    is-deeply %a{1;2}:exists,         True;
+    is-deeply %a{1;2;3}:exists,       True;
+    is-deeply %a{1;2;3;4}:exists,     False;
+
+    is-deeply %a{-99;2;3}:exists,     False;
+    is-deeply %a{1;-99;3}:exists,     False;
+    is-deeply %a{1;2;-99}:exists,     False;
+
+    is-deeply %a{1,1;2;3}:exists,     (True, True);
+    is-deeply %a{1;2,2;3}:exists,     (True, True);
+    is-deeply %a{1;2;3,3}:exists,     (True, True);
+
+    is-deeply %a{1,-99;2;3}:exists,   (True, False);
+    is-deeply %a{1;2,-99;3}:exists,   (True, False);
+    is-deeply %a{1;2;3,-99}:exists,   (True, False);
+
+    is-deeply %a{1,1;2,2;3}:exists,   (True, True, True, True);
+    is-deeply %a{1,1;2;3,3}:exists,   (True, True, True, True);
+    is-deeply %a{1;2,2;3,3}:exists,   (True, True, True, True);
+
+    is-deeply %a{1,1;2,2;3,3}:exists, (True, True, True, True, True, True, True, True);
+
+    is-deeply %a{1;1..3}:exists,      (False, True, False);
 }
 
 #vim: ft=perl6
