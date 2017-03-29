@@ -87,7 +87,10 @@ ok 'A4' ~~ /:i a[3|4|5] | b[3|4] /, 'alternation sanity';
 ok 'ﬆ' ~~ /:i st/, ":i haystack 'ﬆ' needle 'st'";
 #?rakudo 1 todo "ligatures in the haystack of case insensensitive regex don't work"
     for 1..10 {
-        my $haystack = ('a'..'z').pick($_).join ~ 'ﬆ';
+        my $haystack;
+        repeat {
+            $haystack = ('a'..'z').pick($_).join ~ 'ﬆ';
+        }  while $haystack.contains('st');
         ok $haystack ~~ /:i st/, ":i haystack: '$haystack' needle: 'st'";
     }
 }
