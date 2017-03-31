@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 23;
 
 # L<S32::IO/IO::Path>
 
@@ -75,4 +75,29 @@ throws-like { IO::Path.new: 'foo', 'bar' }, X::Multi::NoMatch,
     my $p2 = $file.IO.spurt: "test";
     is-deeply $p1.e, True,
         '.e detects change on filesystem and returns True now';
+}
+
+subtest 'IO::Path.ACCEPTS' => { # coverage 2017-03-31 (IO grant)
+    my @true = "foo"     => "foo".IO.absolute, "/foo" => "/../foo",
+               "////foo" => "////.././/foo",        4 => 4;
+    .append: .map: {[.key] => [.value] } with @true; # Make some more Cools
+
+    my @false = "a" => "b", "/a" => "/b", 4 => 5,
+                "non-existent-blarg/../foo" => "foo";
+    .append: .map: { [.key] => [.value] } with @false; # Make some more Cools
+    plan 4 * (@true + @false);
+
+    for @true -> \t {
+        is-deeply t.key      ~~ t.value.IO, True,  "{t.key  }    ~~ {t.value}.IO";
+        is-deeply t.value    ~~ t.key  .IO, True,  "{t.value}    ~~ {t.key  }.IO";
+        is-deeply t.key.IO   ~~ t.value.IO, True,  "{t.key  }.IO ~~ {t.value}.IO";
+        is-deeply t.value.IO ~~ t.key  .IO, True,  "{t.value}.IO ~~ {t.key  }.IO";
+    }
+
+    for @false -> \t {
+        is-deeply t.key      ~~ t.value.IO, False, "{t.key  }    ~~ {t.value}.IO";
+        is-deeply t.value    ~~ t.key  .IO, False, "{t.value}    ~~ {t.key  }.IO";
+        is-deeply t.key.IO   ~~ t.value.IO, False, "{t.key  }.IO ~~ {t.value}.IO";
+        is-deeply t.value.IO ~~ t.key  .IO, False, "{t.value}.IO ~~ {t.key  }.IO";
+    }
 }
