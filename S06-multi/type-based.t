@@ -16,7 +16,7 @@ multi foo (Regex $bar) { "Regex " ~ gist(WHAT( $bar )) } # since Rule's don't st
 multi foo (Sub $bar)   { "Sub " ~ $bar() }
 multi foo (@bar) { "Positional " ~ join(', ', @bar) }
 multi foo (%bar)  { "Associative " ~ join(', ', %bar.keys.sort) }
-multi foo (IO $fh)     { "IO" }   #OK not used
+multi foo (Numeric $fh)     { "Numeric" }
 #?niecza emit # foo (Inf) NYI
 multi foo (Inf)        { "Inf" }
 #?niecza emit # foo (5) NYI
@@ -39,8 +39,7 @@ is(foo(@array), 'Positional foo, bar, baz', 'dispatched to the Positional sub');
 my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
 is(foo(%hash), 'Associative bar, baz, foo', 'dispatched to the Associative sub');
 
-#?niecza skip '$*ERR is apparently not IO'
-is(foo($*ERR), 'IO', 'dispatched to the IO sub');
+is(foo(i), 'Numeric', 'dispatched to the Numeric sub');
 
 #?niecza 2 skip 'We turned these off because of a niecza bug'
 is foo(Inf), 'Inf', 'dispatched to the Inf sub';
