@@ -156,11 +156,17 @@ subtest '&indir does not affect $*CWD outside of its block' => {
 }
 
 {
-    my int $failures = [+] await flat ^1000 .map: {
-        (start indir :!d, 'foo',    { $*CWD ~~ 'foo'.IO ?? 1 !! 0 }),
-         start indir :!d, 'foo'.IO, { $*CWD ~~ 'foo'.IO ?? 1 !! 0 }
+    my $correct-CWD = 'foo'.IO;
+    my int $failures;
+    $failures += [+] await flat ^1000 .map: {
+        my $*CWD = $_;
+        my $prom =  start indir :!d, $correct-CWD, {
+            my $res = $*CWD !~~ $correct-CWD; $*CWD = 42; $res
+        }
+        $failures++ unless $*CWD eq $_;
+        $prom
     }
-    cmp-ok $failures, '==', 0, 'number of failures due to race conditions';
+    cmp-ok $failures, '==', 0, 'failures due to race conditions';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
