@@ -202,7 +202,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi x(@a, @b where { @a.elems == @b.elems }) { 1 }
     multi x(@a, @b)                                { 2 }   #OK not used
     is x([1,2],[3,4]), 1, 'where-clause that uses multiple params (1)';
-    is x([1],[2,3,4]), 2, 'where-clause that uses multiple params (1)'; 
+    is x([1],[2,3,4]), 2, 'where-clause that uses multiple params (1)';
 }
 
 {
