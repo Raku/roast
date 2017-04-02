@@ -235,9 +235,13 @@ multi doesn't-warn (&code, Str $desc) is export {
 }
 
 sub make-rand-path (--> IO::Path:D) {
-    $*TMPDIR.child:
-        ('perl6_spectest', ((try callframe(3).code.name)||''), rand, time).join
-        .subst: :g, /\W/, '_';
+    $*TMPDIR.child: (
+        'perl6_roast_',
+        $*PROGRAM.basename, '_line',
+        ((try callframe(3).code.line)||''), '_',
+        rand,
+        time,
+    ).join.subst: :g, /\W/, '_';
 }
 my @FILES-FOR-make-temp-file;
 my @DIRS-FOR-make-temp-dir;
