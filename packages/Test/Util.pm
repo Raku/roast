@@ -234,6 +234,32 @@ multi doesn't-warn (&code, Str $desc) is export {
     nok $did-warn, $desc;
 }
 
+sub make-rand-path (--> IO::Path:D) {
+    $*TMPDIR.child:
+        ('perl6_spectest', ((try callframe(3).code.name)||''), rand, time).join
+        .subst: :g, /\W/, '_';
+}
+my @FILES-FOR-make-temp-file;
+my @DIRS-FOR-make-temp-dir;
+END {
+    unlink @FILES-FOR-make-temp-file;
+    rmdir  @DIRS-FOR-make-temp-dir;
+}
+sub make-temp-file
+    (:$content where Any:U|Blob|Cool, Int :$chmod --> IO::Path:D) is export
+{
+    @FILES-FOR-make-temp-file.push: my \p = make-rand-path;
+    with   $chmod   { p.spurt: $content // ''; p.chmod: $_ }
+    orwith $content { p.spurt: $_ }
+    p
+}
+sub make-temp-dir (Int :$chmod --> IO::Path:D) is export {
+    @DIRS-FOR-make-temp-dir.push: my \p = make-rand-path;
+    p.mkdir;
+    p.chmod: $_ with $chmod;
+    p
+}
+
 =begin pod
 
 =head1 NAME
@@ -417,6 +443,23 @@ to do the test..
 B<NOTE: currently this sub won't catch COMPILE TIME warnings!>
 
 Tests whether the code warns, passing the test if it doesn't.
+
+=head2  make-temp-file(:$content, :$chmod)
+
+    sub make-temp-file(:$content where Blob|Cool, Int :$chmod --> IO::Path:D)
+
+Creates a semi-random path in C<$*TMPDIR>, optionally setting C<$chmod> and
+spurting C<$content> into it. If C<$chmod> is set, but C<$content> isn't,
+spurts an empty string. Automatically deletes the file with C<END> phaser.
+
+=head2 make-temp-dir(:$chmod)
+
+    sub make-temp-dir (Int :$chmod --> IO::Path:D)
+
+Creates a semi-randomly named directory in C<$*TMPDIR>, optionally setting
+C<$chmod>, and returns an C<IO::Path> pointing to it. Automatically
+C<rmdir>s it with C<END> phaser. It's your responsibility to ensure the
+directory is empty at that time.
 
 =end pod
 
