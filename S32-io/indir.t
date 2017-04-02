@@ -3,7 +3,7 @@ use lib <lib t/spec/packages/>;
 use Test;
 use Test::Util;
 
-# plan 4;
+plan 74;
 
 sub test-indir ($desc, $in-path, |args) {
     temp $*CWD = my $out-path = make-temp-dir;
@@ -163,4 +163,4 @@ subtest '&indir does not affect $*CWD outside of its block' => {
     cmp-ok $failures, '==', 0, 'number of failures due to race conditions';
 }
 
-done-testing;
+# vim: expandtab shiftwidth=4 ft=perl6
