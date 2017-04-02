@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 43;
+plan 44;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT, Match.WHAT,         'got right type';
@@ -91,4 +91,31 @@ subtest 'can smartmatch against regexes stored in variables' => {
     #?rakudo todo '$/.orig on NFD matches'
     isa-ok $/.orig, NFD, '.orig retains the type (NFD)';
 
+}
+
+# https://github.com/rakudo/rakudo/commit/a62b221a80
+subtest '$/ is set when matching in a loop' => {
+    plan 10;
+
+    for "a" { my $rx = rx/./; if $_ ~~ $rx {
+        is ~$/, 'a', '&infix:<~~>'
+    }}
+    for "a" { if .match: /./      { is ~$/, 'a', 'Str.match' }}
+    for 4   { if .match: /./      { is ~$/, '4', 'Cool.match' }}
+    for "a" { if .subst: /./, 'x' { is ~$/, 'a', 'Str.subst' }}
+    for 4   { if .subst: /./, 'x' { is ~$/, '4', 'Cool.subst' }}
+    for $="a" { if .subst-mutate: /./, 'x' { is ~$/, 'a', 'Str.subst-mutate'  }}
+    for $=4   { if .subst-mutate: /./, 'x' { is ~$/, '4', 'Cool.subst-mutate' }}
+
+    my grammar Foo { token TOP { . } }
+    for "a" { if Foo.parse: $_ { is ~$/, 'a', 'Grammar.parse' }}
+    for "a" { if Foo.subparse: $_ { is ~$/, 'a', 'Grammar.subparse' }}
+
+    with $*TMPDIR.child: ($*PROGRAM, rand, now).join.subst(:g, /\W/, '-') {
+        LEAVE .unlink;
+        .spurt: 'a';
+        for "a" -> $ { if grammar { token TOP { . } }.parsefile: $_ {
+            is ~$/, 'a', 'Grammar.parse-file'
+        }}
+    }
 }
