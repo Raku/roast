@@ -257,7 +257,7 @@ sub make-temp-file
     orwith $content { p.spurt: $_ }
     p
 }
-sub make-temp-dir (Int :$chmod --> IO::Path:D) is export {
+sub make-temp-dir (Int $chmod? --> IO::Path:D) is export {
     @DIRS-FOR-make-temp-dir.push: my \p = make-rand-path;
     p.mkdir;
     p.chmod: $_ with $chmod;
@@ -456,9 +456,9 @@ Creates a semi-random path in C<$*TMPDIR>, optionally setting C<$chmod> and
 spurting C<$content> into it. If C<$chmod> is set, but C<$content> isn't,
 spurts an empty string. Automatically deletes the file with C<END> phaser.
 
-=head2 make-temp-dir(:$chmod)
+=head2 make-temp-dir($chmod?)
 
-    sub make-temp-dir (Int :$chmod --> IO::Path:D)
+    sub make-temp-dir (Int $chmod? --> IO::Path:D)
 
 Creates a semi-randomly named directory in C<$*TMPDIR>, optionally setting
 C<$chmod>, and returns an C<IO::Path> pointing to it. Automatically
