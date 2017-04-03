@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 23;
+plan 26;
 
 # L<S32::IO/IO::Path>
 
@@ -100,4 +100,12 @@ subtest 'IO::Path.ACCEPTS' => { # coverage 2017-03-31 (IO grant)
         is-deeply t.key.IO   ~~ t.value.IO, False, "{t.key  }.IO ~~ {t.value}.IO";
         is-deeply t.value.IO ~~ t.key  .IO, False, "{t.value}.IO ~~ {t.key  }.IO";
     }
+}
+
+{ # .Str tests
+    is-deeply '.'.IO.Str, '.', 'Str does not include CWD [relative path]';
+    is-deeply '/'.IO.Str, '/', 'Str does not include CWD [absolute path]';
+    is-deeply IO::Path.new(
+        :volume<foo:>, :dirname<bar>, :basename<ber>, :SPEC(IO::Spec::Win32.new)
+    ).Str, 'foo:\bar\ber', 'Str does not include CWD [mulit-part .new()]'
 }
