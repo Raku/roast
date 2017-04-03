@@ -235,7 +235,7 @@ multi doesn't-warn (&code, Str $desc) is export {
 }
 
 sub make-rand-path (--> IO::Path:D) {
-    $*TMPDIR.child: (
+    $*TMPDIR.resolve.child: (
         'perl6_roast_',
         $*PROGRAM.basename, '_line',
         ((try callframe(3).code.line)||''), '_',
