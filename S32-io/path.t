@@ -1,11 +1,8 @@
 use v6;
 use Test;
 
-plan 4;
+plan 1;
+ok 1;
 
-isa-ok qp{foo}, IO::Path, 'qp{foo} creates a IO::Path object.';
-isa-ok qp{/foo}, IO::Path, 'qp{/foo} creates a IO::Path object.';
-isa-ok qp{foo/bar}, IO::Path, 'qp{foo/bar} creates a IO::Path object.';
-isa-ok qp{/foo/bar}, IO::Path, 'qp{/foo/bar} creates a IO::Path object.';
 
 # vim: ft=perl6
