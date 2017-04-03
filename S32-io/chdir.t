@@ -1,9 +1,11 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
 # L<S32::IO/Functions/chdir>
 
-plan 10;
+plan 8;
 
 throws-like ' chdir() ', Exception, 'Cannot call chdir without an argument';
 
@@ -30,18 +32,6 @@ else {
     ok chdir( "$subdir" ), 'chdir gave a true value';
     is $*CWD.cleanup, "$cwd$sep$subdir".IO.cleanup,
        "Current directory is '$subdir' subfolder (relative)";
-}
-
-my $no_subdir = 'lol does not exist';
-if $no_subdir.IO ~~ :d {
-    skip "subdir '$no_subdir' does exist, actually.", 2;
-}
-else {
-    #?rakudo 2 skip 'spec non-conformance due to missing sink context'
-    lives-ok { chdir("$no_subdir") },
-             'chdir to a non-existent does not by default throw an exception';
-    ok !chdir("$no_subdir"),
-       'change to non-existent directory gives a false value';
 }
 
 # vim: ft=perl6
