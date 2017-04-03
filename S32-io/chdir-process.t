@@ -26,14 +26,18 @@ subtest '&*chdir to non-existent directory' => {
     cmp-ok $*CWD, '~~', $before, '$*CWD remains unchanged on failure';
 }
 
+sub same-paths ($expected, $given, $desc) {
+    cmp-ok $expected.resolve, '~~', $given.resolve, $desc;
+}
+
 {
     temp $*CWD;
-    cmp-ok &*chdir($*TMPDIR), '~~', $*TMPDIR, '&*chdir returns new $*CWD';
-    cmp-ok $*CWD,             '~~', $*TMPDIR, '&*chdir updates $*CWD';
-    cmp-ok sys-cwd(),         '~~', $*TMPDIR, '&*chdir updates process dir';
-    cmp-ok &*chdir($*HOME),   '~~', $*HOME,   '&*chdir returns new $*CWD [2]';
-    cmp-ok $*CWD,             '~~', $*HOME,   '&*chdir updates $*CWD [2]';
-    cmp-ok sys-cwd(),         '~~', $*HOME,   '&*chdir updates process dir [2]';
+    same-paths &*chdir($*TMPDIR), $*TMPDIR, '&*chdir returns new $*CWD';
+    same-paths $*CWD,             $*TMPDIR, '&*chdir updates $*CWD';
+    same-paths sys-cwd(),         $*TMPDIR, '&*chdir updates process dir';
+    same-paths &*chdir($*HOME),   $*HOME,   '&*chdir returns new $*CWD [2]';
+    same-paths $*CWD,             $*HOME,   '&*chdir updates $*CWD [2]';
+    same-paths sys-cwd(),         $*HOME,   '&*chdir updates process dir [2]';
 }
 
 # vim: ft=perl6
