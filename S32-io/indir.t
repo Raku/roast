@@ -59,8 +59,8 @@ sub test-indir-fails ($desc, $why, $in-path, |args) {
     }
 }
 
-test-indir-fails (make-temp-dir() ~ '-non-existent').IO,
-    'non-existent path', 'path does not exist';
+test-indir-fails 'non-existent path', 'path does not exist',
+    (make-temp-dir() ~ '-non-existent').IO;
 
 test-indir :!d, 'chmod 0o777', make-temp-file :chmod<0o777>;
 test-indir :!d, 'chmod 0o666', make-temp-file :chmod<0o666>;
