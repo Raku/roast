@@ -38,7 +38,7 @@ sub test-indir ($desc, $in-path, |args) {
 }
 
 sub test-indir-fails ($desc, $why, $in-path, |args) {
-    subtest "\&indir(\$path, {args ?? args.perl !! '…'})" => {
+    subtest "\&indir(\$path, {args ?? args.perl !! '…'}), $desc" => {
         my @in-paths = $in-path ~~ Str ?? ($in-path, $in-path.IO)
             !! ($in-path.absolute, $in-path.relative, $in-path.Str);
         plan +@in-paths;
