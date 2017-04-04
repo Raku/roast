@@ -10,7 +10,7 @@ Tests for precedence of self defined operators
 
 # L<S06/Subroutine traits/"relative to an existing">
 
-plan 15;
+plan 16;
 
 do {
     sub prefix:<!> (Int $x) is tighter(&infix:<**>) {
@@ -112,5 +112,11 @@ do {
     dies-ok( { EVAL '4 !' },  "Whitespace not allowed before user-defined postfix");
 }
 
+# RT#131099
+lives-ok {
+    sub postfix:<♥> ($) is equiv(&[orelse]) {};
+    42♥;
+    &postfix:<♥>.prec<assoc> and die "Must not have assoc set!";
+}, '`is equiv` does not copy .prec<assoc>';
 
 # vim: ft=perl6
