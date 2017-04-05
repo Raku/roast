@@ -17,7 +17,7 @@ sub all-basic(Callable $handle) {
     my Blob $buf = "hello world".encode("utf-8");
     my $txt = "42";
 
-    spurt $handle(), $buf; 
+    spurt $handle(), $buf;
     is slurp($path, :bin), $buf, "spurting Buf ok";
 
     spurt $handle(), $txt;
@@ -33,7 +33,7 @@ sub all-basic(Callable $handle) {
     spurt $handle(), $txt;
     spurt $handle(), $txt, :append;
     is slurp($path), ($txt ~ $txt), "spurting txt with append";
-    
+
     unlink $path;
 
     lives-ok { spurt $handle(), $buf, :createonly }, "createonly creates file with Buf";
@@ -89,12 +89,12 @@ sub all-basic(Callable $handle) {
     my Blob $buf = "meow".encode("ASCII");
     $path.IO.spurt($buf);
     is slurp($path, :bin), $buf, "IO::Handle binary slurp";
-    
+
     dies-ok { $path.IO.spurt("nope", :createonly) }, "IO::Handle :createonly dies";
     unlink $path;
     lives-ok { $path.IO.spurt("yes", :createonly) }, "IO::Handle :createonly lives";
     ok $path.IO.e, "IO::Handle :createonly created a file";
-    
+
     # Append
     {
         my $io = $path.IO;
