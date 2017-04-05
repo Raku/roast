@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
-plan 36;
+plan 60;
 
 # L<S32::IO/Functions/spurt>
 
@@ -137,5 +139,78 @@ if $path.IO.e {
 
         .spurt: 'something';
         is .e, True, 'for non-existent file after spurting, .e says it exists';
+    }
+}
+
+{ # 2017 IO Grant
+    sub test-spurt ($file, $data, $expected = $data, :$senc, :$meth, |args) {
+        my &SPURT = $meth ?? IO::Path.^lookup('spurt') !! &spurt;
+        subtest "spurt {$data.^name} {args.perl} {$senc if $senc}" => {
+            plan 2;
+            my $form = "[{&SPURT.^name.lc} form]";
+
+            ok SPURT($file, $data, |args),  "spurt is successful $form";
+            is-deeply |(
+                $expected ~~ Blob
+                    ?? ($file.slurp(:bin), (Buf[uint8].new: $expected))
+                    !! ($file.slurp(:enc($senc || args<enc> || 'utf8')),
+                        $expected)
+            ), "wrote correct data $form";
+        }
+    }
+
+    sub test-spurt-fails ($file, $data, $expected = $data, :$meth, |args) {
+        my &SPURT = $meth ?? IO::Path.^lookup('spurt') !! &spurt;
+
+        subtest "spurt {$data.^name} {args.perl} fails" => {
+            plan 1;
+            my $form = "[{&SPURT.^name.lc} form]";
+
+            my $res = SPURT($file, $data, |args);
+            isa-ok $res, Failure, 'failed spurt returns a Failure';
+            $res.so; # handle Failure
+        }
+    }
+
+    constant $str = "I ♥ Perl 6";
+    constant $bin = $str.encode;
+
+    test-spurt make-temp-file(), $str;
+    test-spurt make-temp-file(), $str, :meth;
+    test-spurt make-temp-file(), $bin;
+    test-spurt make-temp-file(), $bin, :meth;
+
+    with make-temp-file() {
+        with .open(:w) { .print: "Hi!"; .close }
+        test-spurt-fails $_, $str, :createonly;
+        test-spurt-fails $_, $str, :createonly, :meth;
+        test-spurt-fails $_, $bin, :createonly;
+        test-spurt-fails $_, $bin, :createonly, :meth;
+
+        test-spurt $_, $str, "Hi!" ~ $str,     :append;
+        test-spurt $_, $str, "Hi!" ~ $str x 2, :append, :meth;
+        test-spurt $_, $bin, "Hi!" ~ $str x 3, :append;
+        test-spurt $_, $bin, "Hi!" ~ $str x 4, :append, :meth;
+    }
+
+    constant $lstr = Buf.new(200).decode('Latin-1');
+    constant $lbin = Buf.new(200);
+
+    test-spurt make-temp-file(), $lstr, :enc<Latin-1>;
+    test-spurt make-temp-file(), $lstr, :enc<Latin-1>, :meth;
+    test-spurt make-temp-file(), $lbin;
+    test-spurt make-temp-file(), $lbin, :meth;
+
+    with make-temp-file() {
+        with .open(:w) { .print: "Hi!"; .close }
+        test-spurt-fails $_, $lstr, :enc<Latin-1>, :createonly;
+        test-spurt-fails $_, $lstr, :enc<Latin-1>, :createonly, :meth;
+        test-spurt-fails $_, $lbin, :createonly;
+        test-spurt-fails $_, $lbin, :createonly, :meth;
+
+        test-spurt $_, $lstr, "Hi!" ~ $lstr,     :append, :enc<Latin-1>;
+        test-spurt $_, $lstr, "Hi!" ~ $lstr x 2, :append, :enc<Latin-1>, :meth;
+        test-spurt $_, $lbin, "Hi!" ~ $lstr x 3, :append, :senc<Latin-1>;
+        test-spurt $_, $lbin, "Hi!" ~ $lstr x 4, :append, :senc<Latin-1>, :meth;
     }
 }
