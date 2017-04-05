@@ -5,13 +5,10 @@ use Test::Util;
 
 # Tests of &*chdir (the process-chdir-changing version)
 
+plan :skip-all<Cannot test without $*TMPDIR and $*HOME set to readable dirs>
+    unless $*TMPDIR ~~ :d & :r and $*HOME ~~ :d & :r;
+
 plan 7;
-
-unless $*TMPDIR ~~ :d & :r and $*HOME ~~ :d & :r {
-    skip-rest 'Cannot test without $*TPMDIR and $*HOME set to readable dirs';
-    exit;
-}
-
 my &sys-cwd = $*DISTRO.is-win ?? {qx`echo %cd%`.chomp.IO} !! {qx`pwd`.chomp.IO};
 
 subtest '&*chdir to non-existent directory' => {
