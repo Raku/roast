@@ -334,4 +334,10 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
 # RT #127408
 throws-like '*(42)', X::Method::NotFound, typename => 'Whatever';
 
+# RT #131106
+{
+    my $foo = "foo";
+    ok $foo ~~ (* =:= $foo), 'Code.ACCEPTS preserves container';
+}
+
 # vim: ft=perl6
