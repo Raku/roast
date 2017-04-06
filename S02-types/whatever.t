@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 110;
+plan 111;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -333,5 +333,11 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
 
 # RT #127408
 throws-like '*(42)', X::Method::NotFound, typename => 'Whatever';
+
+# RT #131106
+{
+    my $foo = "foo";
+    ok $foo ~~ (* =:= $foo), 'Code.ACCEPTS preserves container';
+}
 
 # vim: ft=perl6
