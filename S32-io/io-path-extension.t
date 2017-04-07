@@ -151,7 +151,7 @@ my @tests = gather {
         [ 'foo.txt.tar.gz',     \('doc', :parts(0..3)), pIO 'foo.doc'     ],
         [ 'foo.txt.tar.gz.ace', \('doc', :parts(0..3)), pIO 'foo.txt.doc' ],
 
-        [ '.',                  \('doc', :parts(0..3)), pIO '..doc'       ],
+        [ '.',                  \('doc', :parts(0..3)), pIO '.doc'        ],
         [ '.txt',               \('doc', :parts(0..3)), pIO '.doc'        ],
         [ '.tar.gz',            \('doc', :parts(0..3)), pIO '.doc'        ],
         [ '.txt.tar.gz',        \('doc', :parts(0..3)), pIO '.doc'        ],
