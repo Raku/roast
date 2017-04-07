@@ -165,6 +165,10 @@ my @tests = gather {
         [ 'a.b.c',              \(       :parts(2**65)  ), ''             ],
         [ 'a.b.c',              \('doc', :parts(2**64-1)), pIO 'a.b.c'    ],
         [ 'a.b.c',              \('doc', :parts(2**65)  ), pIO 'a.b.c'    ],
+
+        # Empty-string extension
+        [ 'a.', \(     ),     ''      ],
+        [ 'a.', \('doc'), pIO 'a.doc' ],
 }
 
 plan 2 + @tests;
