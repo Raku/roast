@@ -135,7 +135,7 @@ nok ::('&bar'),"bar didn't leak";
      }
 }
 
-#?rakudo todo 'RT #131112'
+# RT #131112
 lives-ok {require ::("t::spec::S11-modules::SetConst") }, "require class with set constant";
 
 # vim: ft=perl6
