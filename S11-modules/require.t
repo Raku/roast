@@ -6,7 +6,7 @@ use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
                                   &nok &throws-like &eval-lives-ok &ok>);
-plan 33;
+plan 34;
 
 # RT #126100
 {
@@ -135,5 +135,7 @@ nok ::('&bar'),"bar didn't leak";
      }
 }
 
+#?rakudo todo 'RT #131112'
+lives-ok {require ::("t::spec::S11-modules::SetConst") }, "require class with set constant";
 
 # vim: ft=perl6
