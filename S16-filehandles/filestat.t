@@ -10,7 +10,7 @@ This test tests various file stat methods.
 
 =end pod
 
-plan 10;
+plan 11;
 
 # time stat tests (modify/change/access)
 {
@@ -37,10 +37,12 @@ plan 10;
     my $fh1 = open $tmpfile1, :w orelse die "Could not open $tmpfile1 for writing";
     $fh1.print("example content");
     $fh1.close;
+    $ = $tmpfile1.IO.slurp; # read from file to update accessed time
 
     ok ($original1_modified < $tmpfile1.IO.modified), 'IO.modified should be updated when file content changes';
     ok ($original1_changed  < $tmpfile1.IO.changed),  'IO.changed should be updated when file content changes';
-   
+    cmp-ok $original1_accessed, '<', $tmpfile1.IO.accessed, 'IO.accessed should be updated when file content changes';
+
     # opening for read
     $fh1 = open $tmpfile1, :r orelse die "Could not open $tmpfile1 for reading";
     $fh1.close;
