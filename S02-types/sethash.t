@@ -469,14 +469,19 @@ subtest 'SetHash autovivification of non-existent keys' => {
 
 # RT#127863
 subtest 'cloned SetHash gets its own elements storage' => {
-    plan 2;
+    plan 4;
     my $a = SetHash.new: <a b c>;
     my $b = $a.clone;
     $a<a>--; $a<b>++; $a<z> = 1;
-    is-deeply $a, SetHash.new-from-pairs("b" => 1, "c" => 1, "z" => 1),
+    is-deeply $a, SetHash.new(<b c z>),
         'modifying first set works, even after we created its clone';
     is-deeply $b, SetHash.new(<a b c>),
         'modifying first set does not affect cloned set';
+    $b<b>--; $b<d>++;
+    is-deeply $b, SetHash.new(<a c d>),
+        'modifying second is possible';
+    is-deeply $a, SetHash.new(<b c z>),
+        'modifying second does not affect the first';
 }
 
 # vim: ft=perl6
