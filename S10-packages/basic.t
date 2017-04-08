@@ -5,7 +5,7 @@ use v6;
 use lib 't/spec/packages';
 use Test;
 
-plan 81;
+plan 82;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -313,6 +313,12 @@ throws-like q[
         '.WHO of nested subset definition gists to long name';
     is Digestive::Chocolate.WHO.Str, 'Digestive::Chocolate',
         '.WHO of nested subset definition stringifies to long name';
+}
+
+# RT #131076
+{
+    eval-lives-ok '{ my @z; my $x = *²; for $x(42), $x(50) { push @z, $_ } }',
+        "loop that isn't Perl 5 is not identified as such";
 }
 
 # vim: ft=perl6
