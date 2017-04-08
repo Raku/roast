@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 29;
+plan 30;
 
 {
     my $p = Promise.new;
@@ -72,4 +72,14 @@ plan 29;
     $p.break("OH NOES");
     try await $p;
     is $!.message, "OH NOES", "Promise broken with string form of .break conveys correct message";
+}
+
+{
+    class X::Test is Exception {
+        has $.message
+    }
+    my $p = Promise.new;
+    $p.break(X::Test.new(message => "oh crumbs"));
+    try await start { await $p };
+    like $!.gist, /crumbs/, 'Message not lost in nested await where inner one fails';
 }
