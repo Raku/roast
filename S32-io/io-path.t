@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
-plan 26;
+plan 27;
 
 # L<S32::IO/IO::Path>
 
@@ -108,4 +110,22 @@ subtest 'IO::Path.ACCEPTS' => { # coverage 2017-03-31 (IO grant)
     is-deeply IO::Path.new(
         :volume<foo:>, :dirname<bar>, :basename<ber>, :SPEC(IO::Spec::Win32.new)
     ).Str, 'foo:\bar\ber', 'Str does not include CWD [mulit-part .new()]'
+}
+
+subtest '.concat-with' => {
+    plan 4 * my @tests = gather for 'bar', '../bar', '../../bar', '.', '..' {
+        take %(:orig</foo/>, :with($_), :res("/foo/$_"));
+        take %(:orig<foo/>,  :with($_), :res("foo/$_"));
+    }
+
+    sub is-path ($got, $expected, $desc) {
+        cmp-ok $got.resolve, '~~', $expected.resolve, $desc
+    }
+
+    for @tests -> (:$orig, :$with, :$res) {
+        for IO::Path::Unix, IO::Path::Win32, IO::Path::Cygwin, IO::Path::QNX {
+            is-path .new($orig).concat-with($with), .new($res),
+                "$orig concat-with $with => $res {.gist}";
+        }
+    }
 }
