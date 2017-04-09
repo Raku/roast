@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 102;
+plan 115;
 my $cygwin = IO::Spec::Cygwin;
 
 my @canonpath =
@@ -19,6 +19,26 @@ my @canonpath =
 	'c:a\\.\\b',              'c:a/b';
 for @canonpath -> $in, $out {
 	is $cygwin.canonpath($in), $out, "canonpath: '$in' -> '$out'";
+}
+
+my %canonpath-parent = (
+	"foo/bar/.."         => "foo",
+	"foo/bar/baz/../.."  => "foo",
+	"/foo/.."            => "/",
+	"foo/.."             => '.',
+	"foo/../bar/../baz"  => "baz",
+	"foo/../../bar"      => "../bar",
+	"../../.."           => "../../..",
+	"/../../.."          => "/",
+	"/foo/../.."         => "/",
+	"0"                  => "0",
+    ''                   => '',
+	"//../..usr/bin/../foo/.///ef"   => "//../..usr/foo/ef",
+	'///../../..//./././a//b/.././c/././' => '/a/c',
+);
+for %canonpath-parent.kv -> $get, $want {
+	is $cygwin.canonpath( $get , :parent ), $want,
+		"canonpath(:parent): '$get' -> '$want'";
 }
 
 my @splitdir =
