@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 209;
+plan 210;
 my $win32 = IO::Spec::Win32;
 
 my @canonpath =
@@ -299,4 +299,16 @@ else {
 	is $*SPEC.devnull, 'nul', 'devnull is nul';
 	is $*SPEC.rootdir, '\\',  'rootdir is "\\"';
 	ok {.IO.d && .IO.w}.($*SPEC.tmpdir), "tmpdir: {$*SPEC.tmpdir} is a writable directory";
+}
+
+subtest '.basename' => {
+    my @tests = '' => '', '.' => '.', '/' => '', 'foo/' => '', '/.' => '.',
+        'foo/.' => '.', 'foo/..' => '..', 'foo/...' => '...',
+        'bar/♥foo' => '♥foo', '♥foo' => '♥foo', '♥foo/..' => '..',
+		'//server/share' => 'share', '//server/share/' => '';
+
+    plan +@tests;
+    for @tests -> (:key($in), :value($out)) {
+        is-deeply IO::Spec::Win32.basename($in), $out, $in;
+    }
 }
