@@ -5,7 +5,7 @@ use Test;
 plan 209;
 my $win32 = IO::Spec::Win32;
 
-my @canonpath = 
+my @canonpath =
 	'',               '',
 	'a:',             'A:',
 	'A:f',            'A:f',
@@ -27,7 +27,7 @@ my @canonpath =
 for @canonpath -> $in, $out {
 	is $win32.canonpath($in), $out, "canonpath: '$in' -> '$out'";
 }
-my @canonpath-parent = 
+my @canonpath-parent =
 	"foo\\bar\\..",          "foo",
 	"foo/bar/baz/../..",     "foo",
 	"/foo/..",               "\\",
@@ -40,7 +40,7 @@ my @canonpath-parent =
 	"/foo/../..",            "\\",
 	"C:\\..\\foo",           "C:\\foo",
 	"C:..",                  "C:..",
-	"\\\\server\\share\\..", "\\\\server\\share", 
+	"\\\\server\\share\\..", "\\\\server\\share",
 	"0",                     "0",
 	"/..//..usr/bin/../foo/.///ef", "\\..usr\\foo\\ef",
 ;
@@ -51,7 +51,7 @@ for @canonpath-parent -> $in, $out {
 diag "Warning expected here:";
 is $win32.canonpath( Any, :parent ), '', "canonpath: Any -> ''";
 
-my @splitdir = 
+my @splitdir =
 	'',              '',
 	'\\d1/d2\\d3/',  ',d1,d2,d3,',
 	'd1/d2\\d3/',    'd1,d2,d3,',
@@ -63,7 +63,7 @@ for @splitdir -> $in, $out {
 }
 
 is $win32.catdir(),                        '', "No argument returns empty string";
-my @catdir = 
+my @catdir =
 	('/').item,                     '\\',
 	('/', '../').item,              '\\',
 	('/', '..\\').item,             '\\',
@@ -94,7 +94,7 @@ for @catdir -> $in, $out {
 	is $win32.catdir(|$in), $out, "catdir: {$in.perl} -> '$out'";
 }
 
-my @splitpath = 
+my @splitpath =
 	'file',                            ',,file',
 	'\\d1/d2\\d3/',                    ',\\d1/d2\\d3/,',
 	'd1/d2\\d3/',                      ',d1/d2\\d3/,',
@@ -123,7 +123,7 @@ for @splitpath -> $in, $out {
 	is $win32.splitpath(|$in).join(','), $out, "splitpath: {$in.perl} -> '$out'"
 }
 
-my @catpath = 
+my @catpath =
 	('','','file').item,                            'file',
 	('','\\d1/d2\\d3/','').item,                    '\\d1/d2\\d3/',
 	('','d1/d2\\d3/','').item,                      'd1/d2\\d3/',
@@ -150,7 +150,7 @@ for @catpath -> $in, $out {
 }
 
 diag "split tests";
-my @split = 
+my @split =
         '\\',                               ',\\,\\',
         '.',                               ',.,.',
 	'file',                            ',.,file',
@@ -180,7 +180,7 @@ for @split -> $in, $out {
 }
 
 diag "join tests";
-my @join = 
+my @join =
 	('','\\','\\').item,                            '\\',
 	('','/','\\').item,                             '/',
 	('','\\','/').item,                             '\\',
@@ -223,7 +223,7 @@ nok $win32.is-absolute( "." ), 'is-absolute: nok "."';
 nok $win32.is-absolute( "C:" ), 'is-absolute: nok "C:"';
 nok $win32.is-absolute( "C:dir\\file.txt" ), 'is-absolute: nok "C:dir\\file.txt"';
 
-my @catfile = 
+my @catfile =
 	('a','b','c').item,        'a\\b\\c',
 	('a','b','.\\c').item,      'a\\b\\c' ,
 	('.\\a','b','c').item,      'a\\b\\c' ,
@@ -236,7 +236,7 @@ for @catfile -> $in, $out {
 	is $win32.catfile(|$in), $out, "catfile: {$in.perl} -> '$out'"
 }
 
-my @abs2rel = 
+my @abs2rel =
 	('/t1/t2/t3','/t1/t2/t3').item,     '.',
 	('/t1/t2/t4','/t1/t2/t3').item,     '..\\t4',
 	('/t1/t2','/t1/t2/t3').item,        '..',
@@ -267,7 +267,7 @@ my @abs2rel =
     }
 }
 
-my @rel2abs = 
+my @rel2abs =
 	$('temp','C:/'),                       'C:\\temp',
 	$('temp','C:/a'),                      'C:\\a\\temp',
 	$('temp','C:/a/'),                     'C:\\a\\temp',
