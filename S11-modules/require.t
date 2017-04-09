@@ -136,6 +136,7 @@ nok ::('&bar'),"bar didn't leak";
 }
 
 # RT #131112
+#?rakudo.jvm skip 'makes eval-server unhappy (all following test files die), RT #131112'
 lives-ok {require ::("t::spec::S11-modules::SetConst") }, "require class with set constant";
 
 # vim: ft=perl6
