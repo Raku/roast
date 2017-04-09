@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 130;
+plan 131;
 
 my $Unix := IO::Spec::Unix;
 
@@ -194,4 +194,15 @@ else {
 	isa-ok $*SPEC, IO::Spec::Unix, "unix: loads correct module";
 	is $*SPEC.rel2abs( $*SPEC.curdir ), $*CWD, "rel2abs: \$*CWD test";
 	ok {.IO.d && .IO.w}.( $*SPEC.tmpdir ), "tmpdir: {$*SPEC.tmpdir} is a writable directory";
+}
+
+subtest '.basename' => {
+    my @tests = '' => '', '.' => '.', '/' => '', 'foo/' => '', '/.' => '.',
+        'foo/.' => '.', 'foo/..' => '..', 'foo/...' => '...',
+        'bar/♥foo' => '♥foo', '♥foo' => '♥foo', '♥foo/..' => '..';
+
+    plan +@tests;
+    for @tests -> (:key($in), :value($out)) {
+        is-deeply IO::Spec::Unix.basename($in), $out, $in;
+    }
 }
