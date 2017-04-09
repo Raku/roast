@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 207;
+plan 208;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -522,6 +522,12 @@ subtest '.hash does not cause keys to be stringified' => {
 {
     throws-like { my Bag $b; $b<as> = 2 }, Exception,
         'autovivification of of Bag:U complains about immutability';
+}
+
+{
+   is {'red' => 200000000000000000019}.Bag.<red>,
+      200000000000000000019,
+      'value can be larger than a native int';
 }
 
 # vim: ft=perl6
