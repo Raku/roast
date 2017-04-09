@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 48;
 
 class C {
     has int $.int-ro = 1;
@@ -121,3 +121,24 @@ class MV {
 }
 is MV.new(start => 42).start, 42, 'uint64 native attribute accessor works';
 is MV.new(start => 4).s, 5, 'uint64 native attribute use in method works';
+
+# RT #131122
+{
+    my class C1 {
+        has uint8 $.ff;
+    }
+    my $c = C1.new(ff => 255);
+#?rakudo todo 'RT #131122'
+    is $c.ff, 255, 'large unsigned ints';
+
+    my class C2 is repr('CStruct') {
+        has uint8 $.ff is rw;
+    }
+
+    my $c2 = C2.new;
+    $c2.ff = 100;
+    is $c2.ff, 100, 'unsigned int sanity';
+    $c2.ff = 200;
+#?rakudo todo 'RT #131122'
+    is $c2.ff, 200, 'large unsigned ints';
+}
