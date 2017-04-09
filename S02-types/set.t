@@ -357,7 +357,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is $s, set(5), 'can metaop set assign like: (|)=';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet RT #124489'
+# RT #124489'
 {
     isnt 'a Str|b Str|c'.Set.WHICH, <a b c>.Set.WHICH,
       'Faulty .WHICH creation';
