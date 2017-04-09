@@ -292,7 +292,7 @@ is $win32.updir,   '..',  'updir is ".."';
 
 
 if $*DISTRO.name !~~ any(<mswin32 netware symbian os2 dos>) {
-	skip-rest 'Win32ish on-platform tests'
+	skip 'Win32ish on-platform tests', 3;
 }
 else {
 	# double check a couple of things to see if IO::Spec loaded correctly
