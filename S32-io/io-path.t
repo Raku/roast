@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 27;
+plan 28;
 
 # L<S32::IO/IO::Path>
 
@@ -128,4 +128,31 @@ subtest '.concat-with' => {
                 "$orig concat-with $with => $res {.gist}";
         }
     }
+}
+
+subtest '.resolve' => {
+    plan 4;
+
+    my $root = make-temp-dir;
+    sub p { $root.concat-with: $^path }
+    .&p.mkdir for 'level1a', 'level1b/level2a', 'level1c/level2b/level3a';
+
+    is-deeply p('level1a/../not-there').resolve.absolute,
+              p('not-there').absolute,
+        ".resolve() cleans up paths it can't resolve";
+
+    fails-like { p('level1a/../not-there').resolve(:completely) },
+        X::IO::Resolve, '.resolve(:completely) fails with X::IO::Resolve';
+
+    is-deeply
+        p('level1a/../level1b/level2a/../../level1c/level2b/'
+            ~ '../level2b/level3a').resolve.absolute,
+        p('level1c/level2b/level3a').absolute,
+        ".resolve() cleans up paths it can resolve";
+
+    is-deeply
+        p('level1a/../level1b/level2a/../../level1c/level2b/'
+            ~ '../level2b/level3a').resolve(:completely).absolute,
+        p('level1c/level2b/level3a').absolute,
+        ".resolve(:completely) cleans up paths it can resolve";
 }
