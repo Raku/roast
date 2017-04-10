@@ -7,6 +7,10 @@ plan 27;
 
 # L<S32::IO/IO::Path>
 
+sub is-path ($got, $expected, $desc) {
+    cmp-ok $got.resolve, '~~', $expected.resolve, $desc
+}
+
 my $path = '/foo/bar.txt'.IO;
 isa-ok $path, IO::Path, "Str.IO returns an IO::Path";
 is IO::Path.new('/foo/bar.txt'), $path,
@@ -116,10 +120,6 @@ subtest '.concat-with' => {
     plan 4 * my @tests = gather for 'bar', '../bar', '../../bar', '.', '..' {
         take %(:orig</foo/>, :with($_), :res("/foo/$_"));
         take %(:orig<foo/>,  :with($_), :res("foo/$_"));
-    }
-
-    sub is-path ($got, $expected, $desc) {
-        cmp-ok $got.resolve, '~~', $expected.resolve, $desc
     }
 
     for @tests -> (:$orig, :$with, :$res) {
