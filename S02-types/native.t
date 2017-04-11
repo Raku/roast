@@ -367,7 +367,7 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
 }
 
 {
-    dies-ok { sub (int $x) { dd $x }(99999999999999999999) }, 'a too large argument for a native parameter should throw';
+    dies-ok { sub (int $x) { say $x }(99999999999999999999) }, 'a too large argument for a native parameter should throw';
 }
 
 # vim: ft=perl6
