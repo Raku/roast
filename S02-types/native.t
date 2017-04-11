@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 92;
+plan 93;
 
 {
     my int $x;
@@ -364,6 +364,10 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
         eval-lives-ok '-> uint64 :$x { $x == 1   or die }(:x( 1 ))', 'uint64';
         eval-lives-ok '-> num64  :$x { $x == 1e0 or die }(:x(1e0))', 'num64 ';
     }
+}
+
+{
+    dies-ok { sub (int $x) { dd $x }(99999999999999999999) }, 'a too large argument for a native parameter should throw';
 }
 
 # vim: ft=perl6
