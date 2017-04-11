@@ -152,7 +152,7 @@ is $readme-lines, $readme-lines2, 'lines() defaults to $*ARGFILES';
 
 {
     my %h = @a.pairs.invert;
-    is-deeply (item %h), {red => 0, yellow => 1, blue => 2}, 'my %h = @a.pairs».invert;';
+    is-deeply (item %h), {red => 0, yellow => 1, blue => 2}, 'my %h = @a.pairs.invert;';
 }
 
 # Swap two variables
