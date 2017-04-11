@@ -27,9 +27,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     {
-        my $handle = open($filename);
+        my $handle = open($filename, :bin);
         #?rakudo.jvm todo 'RT #128041'
-        tap-ok $handle.Supply(:size(1),:bin),
+        tap-ok $handle.Supply(:size(1)),
           [<a b c d e>.map: { Buf[uint8].new(ord $_) }],
           :!live,
           "we can get bytes from a supply";
