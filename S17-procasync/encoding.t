@@ -26,7 +26,7 @@ plan 13;
 }
 
 {
-    my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'print $*IN.slurp-rest(:bin).bytes',
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*IN.encoding: "bin"; print $*IN.slurp.bytes',
         :w, :enc('latin-1'));
     my $bytes = '';
     $proc.stdout.tap({ $bytes ~= $_ });
@@ -38,7 +38,7 @@ plan 13;
 }
 
 for <put say> -> $meth {
-    my $proc = Proc::Async.new($*EXECUTABLE, '-e', '.say for $*IN.slurp-rest(:bin).subbuf(0, 2).list',
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*IN.encoding: "bin"; .say for $*IN.slurp.subbuf(0, 2).list',
         :w, :enc('latin-1'));
     my $got = '';
     $proc.stdout.tap({ $got ~= $_ });

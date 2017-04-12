@@ -40,8 +40,8 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
     #?rakudo 2 skip 'Result differs on OSX'
     subtest {
         plan 2;
-        is   $proc.err.slurp-rest, '', 'stderr is correct';
-        like $proc.out.slurp-rest, /"To exit type 'exit' or '^D'\n> "/,
+        is   $proc.err.slurp, '', 'stderr is correct';
+        like $proc.out.slurp, /"To exit type 'exit' or '^D'\n> "/,
             'stdout is correct';
     }, 'Pressing CTRL+D in REPL produces correct output on exit';
 }

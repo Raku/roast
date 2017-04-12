@@ -10,7 +10,7 @@ my $suffix = '.txt';
 sub execute-test ( :$function, :$line ) {
     my $full-path = $dir ~ $prefix ~ $function ~ $suffix;
     my $proc = run($*EXECUTABLE, $full-path, :!out, :err);
-    like $proc.err.slurp-rest,
+    like $proc.err.slurp,
         /'Failed test ' (\N* \n \N*)? 'at ' $full-path ' line ' $line/,
         "failing test with $function reports correct line number $line";
 }

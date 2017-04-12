@@ -58,7 +58,7 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
     my $p = run :out, :err, $*EXECUTABLE, '-It/spec/packages', '-e',
         'use RT126302; say "RT126302-OK"';
 
-    like   $p.out.slurp-rest, /'RT126302-OK'/, 'packages compile successfully'; unlike $p.err.slurp-rest, /'src/Perl6/World.nqp'/,
+    like   $p.out.slurp, /'RT126302-OK'/, 'packages compile successfully'; unlike $p.err.slurp, /'src/Perl6/World.nqp'/,
         'no Perl6/World.nqp in warning';
 }
 

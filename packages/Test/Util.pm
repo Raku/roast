@@ -151,7 +151,7 @@ sub is_run_repl ($code, $desc, :$out, :$err) is export {
     subtest {
         plan +($out, $err).grep: *.defined;
         with $out {
-            my $output    = $proc.out.slurp-rest;
+            my $output    = $proc.out.slurp;
             my $test-name = 'stdout is correct';
             when Str      { is      $output, $_, $test-name; }
             when Regex    { like    $output, $_, $test-name; }
@@ -161,7 +161,7 @@ sub is_run_repl ($code, $desc, :$out, :$err) is export {
         }
 
         with $err {
-            my $output    = $proc.err.slurp-rest;
+            my $output    = $proc.err.slurp;
             my $test-name = 'stderr is correct';
             when Str      { is      $output, $_, $test-name; }
             when Regex    { like    $output, $_, $test-name; }

@@ -246,7 +246,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
              .say for MY::.keys.grep(/Needed|Top/).sort;
              ';
         #?rakudo.jvm todo 'ContextRef representation does not implement elems, RT #128156'
-        is $output.out.slurp-rest,"Top1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
+        is $output.out.slurp,"Top1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
     }
 }
 
@@ -262,7 +262,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
              need RT128156::Top1;
              print Top1.version-of-needed;
              ';
-        is $output.out.slurp-rest, $i, "$i. change in source file of dependency detected";
+        is $output.out.slurp, $i, "$i. change in source file of dependency detected";
         $trigger-file.spurt($old-content);
     }
 }

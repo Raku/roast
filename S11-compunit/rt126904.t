@@ -8,6 +8,6 @@ my $proc = run $*EXECUTABLE, '-I', 't/spec/packages/RT126904/lib', '-e',
   :err;
 
 #?rakudo.jvm todo 'Missing serialize function for REPR ContextRef'
-is($proc.err.slurp-rest, '', "compilation errors");
+is($proc.err.slurp, '', "compilation errors");
 
 # vim: ft=perl6

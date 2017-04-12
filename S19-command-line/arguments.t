@@ -50,7 +50,7 @@ use Test::Util;
 
 {
     # MoarVM #482
-    is run($*EXECUTABLE, '-e', ｢print '“Hello world”'｣, :out).out.slurp-rest,
+    is run($*EXECUTABLE, '-e', ｢print '“Hello world”'｣, :out).out.slurp,
         '“Hello world”',
         'UTF-8 in arguments is decoded correctly';
 }

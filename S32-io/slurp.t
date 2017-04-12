@@ -36,7 +36,7 @@ is slurp($empty-path), '', "empty files yield empty string";
 
 {
     my $fh = open $test-path, :r;
-    is $fh.slurp-rest, $test-contents, "method form .slurp-rest works";
+    is $fh.slurp, $test-contents, "method form .slurp works";
     $fh.close;
 }
 

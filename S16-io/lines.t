@@ -244,7 +244,7 @@ for @endings -> (:key($eol), :value($EOL)) {
 # RT #127370
 {
     try shell(:out, :err, $*EXECUTABLE ~ ’ -pe '' /proc/$$/statm‘)
-        .out.slurp-rest;
+        .out.slurp;
     pass 'Attempting to read lines in from `/proc/$$/statm` does not hang';
 }
 

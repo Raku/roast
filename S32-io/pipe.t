@@ -36,7 +36,7 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
     my $sh = shell("$*EXECUTABLE -e \".say for reverse lines\"", :in, :out);
     $sh.in.say: "foo\nbar\nbaz";
     $sh.in.close;
-    is $sh.out.slurp-rest, "baz\nbar\nfoo\n", 'Can talk to subprocess bidirectional';
+    is $sh.out.slurp, "baz\nbar\nfoo\n", 'Can talk to subprocess bidirectional';
 }
 
 {
@@ -44,8 +44,8 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
     $sh1.in.say: "foo\nbar\nbaz";
     $sh1.in.close;
     my $sh2 = run($*EXECUTABLE, '-e', 'my @l = lines; .say for @l; note @l.elems', :in($sh1.out), :out, :err);
-    is $sh2.out.slurp-rest, "baz\nbar\nfoo\n", 'Can capture stdout and stderr, and chain stdin';
-    is $sh2.err.slurp-rest, "3\n",           'Can capture stdout and stderr, and chain stdin';
+    is $sh2.out.slurp, "baz\nbar\nfoo\n", 'Can capture stdout and stderr, and chain stdin';
+    is $sh2.err.slurp, "3\n",           'Can capture stdout and stderr, and chain stdin';
 }
 
 # RT #125796

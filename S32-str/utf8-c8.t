@@ -133,7 +133,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
 
         spurt $test-file, $buf, :bin;
         my $fh = open $test-file, :enc<utf8-c8>;
-        my $from-file = $fh.slurp-rest;
+        my $from-file = $fh.slurp;
         $fh.close;
         is-deeply Buf.new($from-file.encode('utf8-c8').list), $buf,
             "Also round-trips correct from a file [Buf #{$i+1}]";
@@ -173,6 +173,6 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
     END try unlink $test-file;
     spurt $test-file, '“';
     my $fh = open $test-file, :enc<utf8-c8>;
-    is $fh.slurp-rest, '“', 'Valid and NFC UTF-8 comes out fine (file case)';
+    is $fh.slurp, '“', 'Valid and NFC UTF-8 comes out fine (file case)';
     $fh.close;
 }

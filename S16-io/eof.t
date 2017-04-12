@@ -29,7 +29,7 @@ my $tmpfile = "eof-test-" ~ nonce();
         }
     }
     my $fh = $files[0].open;
-    $fh.slurp-rest;
+    $fh.slurp;
 
     ok $fh.eof, '/proc file EOF was reached';
     $fh.close;
