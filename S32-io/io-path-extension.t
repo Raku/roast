@@ -4,8 +4,7 @@ use Test;
 # Tests of IO::Path.extension
 
 my @tests = gather {
-    constant $joiner
-    = "\c[BUTTERFLY]\c[SMILING CAT FACE WITH HEART-SHAPED EYES]";
+    constant $joiner = "\c[BLACK HEART SUIT]\c[ROMAN NUMERAL TEN]";
     sub prefix:<pIO> ($p) is looser(&[~]) { $p.IO }
     for ['foo', 'foo.txt.tar.gz'.IO], ['', '.txt.tar.gz'.IO] -> ($pre, $path) {
         %( :$path, :args(.key), :expected(.value) ).take for
