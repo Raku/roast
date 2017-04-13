@@ -159,6 +159,7 @@ if $path.IO.e {
         }
     }
 
+    #?DOES 1
     sub test-spurt-fails ($file, $data, $expected = $data, :$meth, |args) {
         my &SPURT = $meth ?? IO::Path.^lookup('spurt') !! &spurt;
 
@@ -177,6 +178,7 @@ if $path.IO.e {
 
     test-spurt make-temp-file(), $str;
     test-spurt make-temp-file(), $str, :meth;
+    #?rakudo.jvm 2 todo '[io grant] expected: Buf[uint8].new(200); got: Buf[uint8].new(200); maybe caused by RT #128041'
     test-spurt make-temp-file(), $bin;
     test-spurt make-temp-file(), $bin, :meth;
 
@@ -198,6 +200,7 @@ if $path.IO.e {
 
     test-spurt make-temp-file(), $lstr, :enc<Latin-1>;
     test-spurt make-temp-file(), $lstr, :enc<Latin-1>, :meth;
+    #?rakudo.jvm 2 todo '[io grant] expected: Buf[uint8].new(200); got: Buf[uint8].new(200); maybe caused by RT #128041'
     test-spurt make-temp-file(), $lbin;
     test-spurt make-temp-file(), $lbin, :meth;
 

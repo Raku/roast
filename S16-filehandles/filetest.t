@@ -136,6 +136,8 @@ unlink "empty_file";
     unlink $target;
 }
 
+#?rakudo.jvm skip '[io grant] NoSuchFileException for open(:create)'
+#?DOES 4
 {
     my $f = make-temp-file;
     fails-like { $f.z }, X::IO::DoesNotExist, '.z fails for non-existent files';
