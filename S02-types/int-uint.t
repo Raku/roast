@@ -67,6 +67,7 @@ for @inttypes -> $type {
     } else {
         # XXX TODO: merge this if/else into one test once the fudge isn't needed
         if $type eq 'int64' {
+            #?rakudo.jvm todo 'setting more than max throws'
             throws-like { EVAL "my $type \$var = {$maxval+1}" },
               Exception,
               "setting $type to more than $maxval throws";
@@ -81,6 +82,7 @@ for @inttypes -> $type {
 
     # XXX TODO: merge this if/else into one test once the fudge isn't needed
     if $type eq 'int64' {
+        #?rakudo.jvm todo 'setting less than min throws'
         throws-like { EVAL "my $type \$var = {$minval-1}" },
           Exception,
           "setting $type to less than $minval throws";

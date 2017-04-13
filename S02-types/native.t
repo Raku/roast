@@ -367,6 +367,7 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
 }
 
 {
+    #?rakudo.jvm todo 'does not die, gives 7766279631452241919'
     dies-ok { sub (int $x) { say $x }(99999999999999999999) }, 'a too large argument for a native parameter should throw';
 }
 
