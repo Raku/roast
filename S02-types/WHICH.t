@@ -28,7 +28,6 @@ my @normal = <
   Complex
   ComplexStr
   Cool
-  Cursor
   Date
   DateTime
   Deprecation
