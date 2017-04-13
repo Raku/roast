@@ -251,27 +251,6 @@ LEAVE unlink PATH;
     $fh.close;
 }
 
-# test :ra mode
-#?rakudo.jvm skip '[io grant] IllegalArgumentException: READ + APPEND not allowed'
-{   unlink PATH;
-    my $fh;
-
-    $fh = open PATH, :ra;
-    ok defined($fh), 'can open non-existent file in :ra mode';
-    $fh.print('onions are tasty');
-    $fh.close;
-
-    $fh = open PATH, :ra;
-    ok defined($fh), 'can open existing file in :ra mode';
-    $fh.print('cats say meow');
-
-    $fh.seek(0, SeekFromBeginning);
-    is $fh.lines.join, 'onions are tastycats say meow',
-        'can read in :append mode and it appends to existing data';
-
-    $fh.close;
-}
-
 # test :create mode
 #?rakudo.jvm skip "[io grant] NoSuchFileException: t-32-io-open.tmp'"
 {   unlink PATH;
