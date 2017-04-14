@@ -118,14 +118,13 @@ throws-like 'sub opt($a = 1, $b) { }', X::Parameter::WrongOrder,
 }
 
 # RT #79288
-## TODO: implement typed exception and check for that one instead of Exception
 {
-    throws-like { EVAL q[ sub foo($x? is rw) {} ] }, Exception,
-        message => "Cannot use 'is rw' on an optional parameter",
+    throws-like ｢sub foo($x? is rw) {}｣, X::Trait::Invalid,
+        :type('is'), :subtype('rw'),
         'making an "is rw" parameter optional dies with adequate error message';
 
-    throws-like { EVAL q[ sub foo($x is rw = 42) {} ] }, Exception,
-        message => "Cannot use 'is rw' on an optional parameter",
+    throws-like ｢sub foo($x is rw = 42) {}｣, X::Trait::Invalid,
+        :type('is'), :subtype('rw'),
         'making an "is rw" parameter optional dies with adequate error message';
 }
 
