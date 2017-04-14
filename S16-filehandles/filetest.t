@@ -125,9 +125,8 @@ unlink "empty_file";
 
 # RT #129162
 {
-    my $target = make-temp-file;
+    my $target = make-temp-file :content<foo>;
     my $link   = make-temp-file;
-    $target.open(:w).close; # `touch` the target
 
     try $target.symlink: $link;
     if $! {
