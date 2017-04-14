@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 28;
+plan 29;
 
 # L<S32::IO/IO::Path>
 
@@ -155,4 +155,23 @@ subtest '.resolve' => {
             ~ '../level2b/level3a').resolve(:completely).absolute,
         p('level1c/level2b/level3a').absolute,
         ".resolve(:completely) cleans up paths it can resolve";
+}
+
+subtest '.link' => {
+    plan 2 * 5; # $n tests for method and sub forms
+    for IO::Path.^lookup('link'), &link -> &l {
+        my $target = make-temp-file;
+        my $link   = make-temp-file;
+        fails-like { l($target, $link) }, X::IO::Link, :$target, :name($link),
+            'fail when target does not exist';
+
+        $target.spurt: 'foo';
+        is-deeply l($target, $link),   True, 'can create links';
+        is-deeply ($link ~~ :e & :!l), True,
+            'created link filetests True for .e and False for .l';
+        is-deeply $link.slurp, 'foo', 'slurping from a link gives right data';
+
+        fails-like { l($target, $link) }, X::IO::Link, :$target, :name($link),
+            'fail when link already exists';
+    }
 }
