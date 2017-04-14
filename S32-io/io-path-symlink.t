@@ -26,7 +26,7 @@ for IO::Path.^lookup('symlink'), &symlink -> &sl {
     is-deeply ($link ~~ :e & :l), True, 'created link filetests for .e and .l';
     is-deeply $link.slurp, 'foo', 'slurping from a link gives right data';
 
-    throws-like { sl($target, $link) }, X::IO::Symlink, :$target, :name($link),
+    fails-like { sl($target, $link) }, X::IO::Symlink, :$target, :name($link),
         'fail when link already exists';
 }
 
