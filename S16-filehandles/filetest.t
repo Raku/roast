@@ -125,15 +125,20 @@ unlink "empty_file";
 
 # RT #129162
 {
-    my $name = "symlink-test-source";
-    my $target = "symlink-test-target";
-    my $src = open($name, :w);
-    $src.close;
-    symlink($target, $name);
-    unlink $name;
+    my $target = make-temp-file;
+    my $link   = make-temp-file;
+    $target.open(:w).close; # `touch` the target
 
-    ok $target.IO.l, "Broken symlink exists";
-    unlink $target;
+    try $target.symlink: $link;
+    if $! {
+        $*DISTRO.is-win # XXX TODO can we make some "sudo tests" roast category?
+        ?? skip ".symlink on Windows needs escalated privileges: $!.message()"
+        !! flunk "received exception when trying to .symlink: $!"
+    }
+    else {
+        unlink $target; # break symlink by deleting the target
+        is-deeply $link.IO.l, True, '.l on broken symlinks gives True';
+    }
 }
 
 #?rakudo.jvm skip '[io grant] NoSuchFileException for open(:create)'
