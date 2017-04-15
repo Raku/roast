@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 shell_captures_out_ok '',               '',    0, 'Child succeeds but does not print anything';
 shell_captures_out_ok 'say 42',         '42',  0, 'Child succeeds and prints something';
@@ -58,5 +58,6 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
 with run(:out, $*EXECUTABLE, '-e', '').out {
     is-deeply .IO,   IO::Path, '.IO   returns an IO::Path type object';
     is-deeply .path, IO::Path, '.path returns an IO::Path type object';
+    quietly is-deeply .Str, '', '.Str is empty string';
     .close;
 }

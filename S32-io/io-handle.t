@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 13;
 
 my $path = "io-handle-testfile";
 
@@ -41,4 +41,20 @@ CATCH {
 if $path.IO.e {
     say "Warn: '$path shouldn't exist";
     unlink $path;
+}
+
+with IO::Handle.new(:path('foo')) {
+    isa-ok    .path,     IO::Path, '.path turns Str :path to IO::Path';
+    is-deeply .path.Str, 'foo',    '.path has right value (Str :path)';
+    isa-ok      .IO,     IO::Path, '.IO turns Str :path to IO::Path';
+    is-deeply   .IO.Str, 'foo',    '.IO has right value (Str :path)';
+    is-deeply      .Str, 'foo',    '.Str returns Str :path as Str';
+}
+
+with IO::Handle.new(:path('foo'.IO)) {
+    isa-ok    .path,     IO::Path, '.path keeps IO::Path :path as IO::Path';
+    is-deeply .path.Str, 'foo',    '.path has right value (IO::Path :path)';
+    isa-ok      .IO,     IO::Path, '.IO keeps IO::Path :path as IO::Path';
+    is-deeply   .IO.Str, 'foo',    '.IO has right value (IO::Path :path)';
+    is-deeply      .Str, 'foo',    '.Str returns IO::Path :path as Str';
 }
