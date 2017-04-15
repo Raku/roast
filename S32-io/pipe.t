@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 16;
 
 shell_captures_out_ok '',               '',    0, 'Child succeeds but does not print anything';
 shell_captures_out_ok 'say 42',         '42',  0, 'Child succeeds and prints something';
@@ -53,4 +53,10 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
     my $p     = shell "$*EXECUTABLE -e \"say 42 for ^10\"", :out;
     my @lines = $p.out.lines;
     ok all(@lines) eq '42', 'There is no empty line due to no EOF for pipes';
+}
+
+with run(:out, $*EXECUTABLE, '-e', '').out {
+    is-deeply .IO,   IO::Path, '.IO   returns an IO::Path type object';
+    is-deeply .path, IO::Path, '.path returns an IO::Path type object';
+    .close;
 }
