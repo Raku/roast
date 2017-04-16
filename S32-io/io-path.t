@@ -181,6 +181,8 @@ subtest '.link' => {
 }
 
 subtest '.child-secure' => {
+    plan 10;
+
     my $parent = make-temp-dir;
     my $non-resolving-parent = make-temp-file.child('bar');
 
@@ -211,4 +213,7 @@ subtest '.child-secure' => {
 
     fails-like { $parent.child-secure('foo/../../bar') }, X::IO::NotAChild,
         'resolved parent fails (given path is not a child, via child + ../)';
+
+    fails-like { $parent.child-secure("../\x[308]") }, X::IO::NotAChild,
+        'resolved parent fails (given path is not a child, via combiners)';
 }
