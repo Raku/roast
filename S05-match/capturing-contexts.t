@@ -5,7 +5,7 @@ use MONKEY-TYPING;
 
 use Test;
 use Test::Util;
-plan 60;
+plan 63;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -249,5 +249,13 @@ plan 60;
     lives-ok
         { "a b" ~~ /(\w) \s (\w)/; my $a = $١ },
         'Unicode digit match variables work';
+}
+
+{
+    is-deeply ('foo'.match(/bar/)).Bool, False,
+        '.Bool on failed Match returns False';
+    is-deeply ('foo'.match(/foo/)).Bool, True,
+        '.Bool on succesful Match returns True';
+    is-deeply Match.Bool, False, '.Bool on Match:U is False';
 }
 # vim: ft=perl6
