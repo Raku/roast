@@ -131,7 +131,7 @@ subtest '.concat-with' => {
 }
 
 subtest '.resolve' => {
-    plan 4;
+    plan 5;
 
     my $root = make-temp-dir;
     sub p { $root.concat-with: $^path }
@@ -141,7 +141,7 @@ subtest '.resolve' => {
               p('not-there').absolute,
         ".resolve() cleans up paths it can't resolve";
 
-    fails-like { p('level1a/../not-there').resolve(:completely) },
+    fails-like { p('level1a/../not-there/foo').resolve(:completely) },
         X::IO::Resolve, '.resolve(:completely) fails with X::IO::Resolve';
 
     is-deeply
@@ -155,6 +155,10 @@ subtest '.resolve' => {
             ~ '../level2b/level3a').resolve(:completely).absolute,
         p('level1c/level2b/level3a').absolute,
         ".resolve(:completely) cleans up paths it can resolve";
+
+    is-deeply p('level1a/../not-there').resolve(:completely).absolute,
+              p('not-there').absolute,
+        '.resolve(:completely) succeeds even when last part does not exist';
 }
 
 subtest '.link' => {
