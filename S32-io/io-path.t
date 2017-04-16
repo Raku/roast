@@ -116,7 +116,7 @@ subtest 'IO::Path.ACCEPTS' => { # coverage 2017-03-31 (IO grant)
     ).Str, 'foo:\bar\ber', 'Str does not include CWD [mulit-part .new()]'
 }
 
-subtest '.concat-with' => {
+subtest '.add' => {
     plan 4 * my @tests = gather for 'bar', '../bar', '../../bar', '.', '..' {
         take %(:orig</foo/>, :with($_), :res("/foo/$_"));
         take %(:orig<foo/>,  :with($_), :res("foo/$_"));
@@ -124,8 +124,8 @@ subtest '.concat-with' => {
 
     for @tests -> (:$orig, :$with, :$res) {
         for IO::Path::Unix, IO::Path::Win32, IO::Path::Cygwin, IO::Path::QNX {
-            is-path .new($orig).concat-with($with), .new($res),
-                "$orig concat-with $with => $res {.gist}";
+            is-path .new($orig).add($with), .new($res),
+                "$orig add $with => $res {.gist}";
         }
     }
 }
@@ -134,7 +134,7 @@ subtest '.resolve' => {
     plan 5;
 
     my $root = make-temp-dir;
-    sub p { $root.concat-with: $^path }
+    sub p { $root.add: $^path }
     .&p.mkdir for 'level1a', 'level1b/level2a', 'level1c/level2b/level3a';
 
     is-deeply p('level1a/../not-there').resolve.absolute,
