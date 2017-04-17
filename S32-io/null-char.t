@@ -17,7 +17,6 @@ plan 6*@nuls;
         throws-like { chdir $nul          }, X::IO::Null, "&chdir $d";
         throws-like { $nul.IO             }, X::IO::Null, ".IO $d";
         throws-like { IO::Path.new: $nul  }, X::IO::Null, "IO::Path.new $d";
-        #?rakudo todo 'wait until 6.d to swap .child to .child-secure'
         throws-like { $*CWD.child: $nul   }, X::IO::Null, ".child $d";
     }
 }
