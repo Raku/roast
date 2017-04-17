@@ -180,40 +180,44 @@ subtest '.link' => {
     }
 }
 
-subtest '.child-secure' => {
+#?rakudo todo 'wait until 6.d to swap .child to .child-secure'
+#?DOES 1
+{
+subtest 'secureness of .child' => {
     plan 10;
 
     my $parent = make-temp-dir;
     my $non-resolving-parent = make-temp-file.child('bar');
 
-    fails-like { $non-resolving-parent.child-secure('../foo') }, X::IO::Resolve,
+    fails-like { $non-resolving-parent.child('../foo') }, X::IO::Resolve,
         'non-resolving parent fails (given path is non-child)';
 
-    fails-like { $non-resolving-parent.child-secure('foo') }, X::IO::Resolve,
+    fails-like { $non-resolving-parent.child('foo') }, X::IO::Resolve,
         'non-resolving parent fails (given path is child)';
 
-    fails-like { $parent.child-secure('foo/bar') }, X::IO::Resolve,
+    fails-like { $parent.child('foo/bar') }, X::IO::Resolve,
         'resolving parent fails (given path is a child, but not resolving)';
 
-    fails-like { $parent.child-secure('../foo') }, X::IO::NotAChild,
+    fails-like { $parent.child('../foo') }, X::IO::NotAChild,
         'resolved parent fails (given path is not a child)';
 
-    is-path $parent.child-secure('foo'), $parent.child('foo'),
+    is-path $parent.child('foo'), $parent.child('foo'),
         'resolved parent with resolving, non-existent child';
 
-    $parent.child-secure('foo').mkdir;
-    is-path $parent.child-secure('foo'), $parent.child('foo'),
+    $parent.child('foo').mkdir;
+    is-path $parent.child('foo'), $parent.child('foo'),
         'resolved parent with resolving, existent child';
 
-    is-path $parent.child-secure('foo/bar'), $parent.child('foo/bar'),
+    is-path $parent.child('foo/bar'), $parent.child('foo/bar'),
         'resolved parent with resolving, existent child in a subdir';
 
-    is-path $parent.child-secure('foo/../bar'), $parent.child('bar'),
+    is-path $parent.child('foo/../bar'), $parent.child('bar'),
         'resolved parent with resolving, non-existent child, with ../';
 
-    fails-like { $parent.child-secure('foo/../../bar') }, X::IO::NotAChild,
+    fails-like { $parent.child('foo/../../bar') }, X::IO::NotAChild,
         'resolved parent fails (given path is not a child, via child + ../)';
 
-    fails-like { $parent.child-secure("../\x[308]") }, X::IO::NotAChild,
+    fails-like { $parent.child("../\x[308]") }, X::IO::NotAChild,
         'resolved parent fails (given path is not a child, via combiners)';
+}
 }
