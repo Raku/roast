@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 30;
+plan 31;
 
 # L<S32::IO/IO::Path>
 
@@ -220,4 +220,23 @@ subtest 'secureness of .child' => {
     fails-like { $parent.child("../\x[308]") }, X::IO::NotAChild,
         'resolved parent fails (given path is not a child, via combiners)';
 }
+}
+
+subtest '.sibling' => {
+    my @path-types = IO::Path, IO::Path::Cygwin, IO::Path::QNX, IO::Path::Unix,
+        IO::Path::Win32;
+    my @tests = 'foo' => 'bar', '/foo' => '/bar', '../foo' => '../bar',
+        'C:/foo' => 'C:/bar', 'C:/foo/../meow' => 'C:/foo/../bar',
+        '/' => '/bar', './' => 'bar', '/foo/' => '/bar', '/foo/.' => '/foo/bar';
+    plan 1 + @tests * @path-types;
+
+    for @tests -> (:key($start-path), :value($res-path)) {
+        for @path-types -> $Path {
+            is-path $Path.new($start-path).sibling('bar'), $Path.new($res-path),
+                "$Path.perl() with $start-path.perl()";
+        }
+    }
+
+    is-path IO::Path::Win32.new('C:/').sibling('bar'),
+        IO::Path::Win32.new('C:/bar'), '"C:/" with IO::Path::Win32';
 }
