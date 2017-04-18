@@ -85,6 +85,7 @@ ok 'A4' ~~ /:i a[3|4|5] | b[3|4] /, 'alternation sanity';
 {
 #?rakudo.jvm 1 todo "ligatures don't casefold on JVM"
 ok 'ﬆ' ~~ /:i st/, ":i haystack 'ﬆ' needle 'st'";
+    #?rakudo.jvm 1 todo "ligatures in the haystack of case insensensitive regex don't work"
     for 1..10 {
         my $haystack;
         repeat {
