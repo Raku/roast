@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 32;
+plan 33;
 
 # this used to segfault in rakudo
 is_run(
@@ -247,3 +247,7 @@ subtest 'using a null string to access a hash does not segfault' => {
 # RT #128985
 is (^1000 .grep: -> $n {([+] ^$n .grep: -> $m {$m and $n %% $m}) == $n }), (0, 6, 28, 496),
     'No SEGV/crash on reduction in grep using %%';
+
+# https://irclog.perlgeek.de/perl6/2017-04-18#i_14443061
+is_run ｢class Foo {}; $ = new Foo:｣, {:out(''), :err(''), :0status },
+    'new Foo: calling form does not produce unwanted output';
