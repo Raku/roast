@@ -7,6 +7,7 @@ use Test::Util;
 my $SLEEP = 1 * (%*ENV<ROAST_TIMING_SCALE> || 1);
 plan 28;
 
+#?DOES 1
 sub test-lock (
     Capture :$args1, Str :$args2 = '', :$fails-to-lock,
     :$open-for-write, :$blocks-write, :$fails-write,
@@ -127,6 +128,7 @@ test-lock :open-for-read,  :fails-to-lock, args1 => \(:!shared);
 test-lock :open-for-read,  :fails-to-lock, args1 => \(:!shared,  :non-blocking);
 test-lock :open-for-read,  :fails-to-lock, args1 => \(:!shared, :!non-blocking);
 
+#?rakudo.jvm 6 skip 'Could not obtain blocking, shared lock: NonWritableChannelException'
 test-lock :open-for-read,  :blocks-write, args1 => \(:shared);
 test-lock :open-for-read,  :blocks-write, args1 => \(:shared,  :non-blocking);
 test-lock :open-for-read,  :blocks-write, args1 => \(:shared, :!non-blocking);
@@ -138,6 +140,7 @@ test-lock :open-for-read,  :fails-write, args2 => ':non-blocking',
 test-lock :open-for-read,  :fails-write, args2 => ':non-blocking',
     args1 => \(:shared, :!non-blocking);
 
+#?rakudo.jvm 3 todo '[io grant] expected Failure, bot Bool'
 test-lock :open-for-write, :fails-to-lock, args1 => \(:shared);
 test-lock :open-for-write, :fails-to-lock, args1 => \(:shared,  :non-blocking);
 test-lock :open-for-write, :fails-to-lock, args1 => \(:shared, :!non-blocking);
@@ -155,6 +158,7 @@ test-lock :open-for-write, :blocks-write, :blocks-read,
 test-lock :open-for-write, :blocks-write, :blocks-read,
     args1 => \(:!shared, :!non-blocking);
 
+#?rakudo.jvm 5 skip '[io grant] hangs'
 test-lock :open-for-write, :fails-write, :fails-read,
     args2 => ':non-blocking', args1 => \();
 test-lock :open-for-write, :fails-write, :fails-read,
