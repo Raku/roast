@@ -13,7 +13,7 @@ grammar MyGrammar {
 }
 ok MyGrammar.parse("37 + 10 - 5 = 42"), "parsed";
 
-my %timing = get-timing();
+my %t = get-timing();
 
-ok %timing<MyGrammar><num><calls>, "num calls recorded";
-ok %timing<MyGrammar><num><time> ~~ Real:D, "time recorded";
+ok %t<MyGrammar><num><calls>, "num calls recorded";
+ok %t<MyGrammar><num><time> ~~ Real:D, "time recorded";
