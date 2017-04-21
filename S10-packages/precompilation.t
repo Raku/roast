@@ -255,9 +255,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     my $trigger-file = 't/spec/packages/RT128156/Needed.pm6'.IO;
     for 1..2 -> $i {
         my $old-content = $trigger-file.slurp;
-        sleep 2;
         $trigger-file.spurt('class Needed { method version() { ' ~ $i ~ ' } }');
-        sleep 2;
         my $output = run $*EXECUTABLE,:out,'-I','t/spec/packages','-e','
              need RT128156::Top1;
              print Top1.version-of-needed;
