@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 94;
+plan 95;
 
 =begin pod
 
@@ -313,6 +313,22 @@ character classes), and those are referenced at the correct spot.
    is('abc'   ~~ /abc>>/,   'abc', 'right word boundary (string end)');
    is('abc!'  ~~ /abc>>/,   'abc', 'right word boundary (\W character)');
    is('!abc!' ~~ /<<abc>>/, 'abc', 'both word boundaries (\W character)');
+}
+
+# RT #131187
+{
+    grammar Parser {
+        token TOP { <matcher>+ }
+        proto token matcher { * }
+        token matcher:sym<[]> { '[' <( <-[\]]>+ )> ']' }
+        token matcher:sym<lit> { <-[/*?[]>+ }
+    }
+    class RuleCompiler {
+        # Empty action was needed to trigger the bug.
+        method matcher:sym<[]>($/) { }
+    }
+    is Parser.parse('[AB].txt', :actions(RuleCompiler))<matcher>[1], '.txt',
+        'Interaction of quantifier, <(, )>, and action method ok';
 }
 
 # vim: ft=perl6
