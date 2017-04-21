@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 14;
+plan 15;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -43,5 +43,21 @@ is dir('t').[0].dirname, $*CWD ~ 't', 'dir("t") returns paths with .dirname of "
 is_run 'dir | say', {
     err => rx/'Argument' .* 'say' .* 'use .say'/,
 }, '`dir | say` has useful error message';
+
+{
+    my $dir = make-temp-dir;
+    $dir.add('foo.txt').open(:w).close;
+    my $dir-str = $dir.absolute;
+
+    my $tested = False;
+    @ = dir $dir, :CWD($dir), :test{
+        when 'foo.txt' {
+            is-deeply $*CWD.absolute, $dir-str,
+                '$*CWD is set right inside dir(:test)';
+            $tested = True;
+        }
+    };
+    $tested or flunk 'expected a dir $*CWD test but it never ran';
+}
 
 # vim: ft=perl6
