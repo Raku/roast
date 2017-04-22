@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 91;
 
 =begin description
 
@@ -100,5 +100,24 @@ ok 'ﬆ' ~~ /:i st/, ":i haystack 'ﬆ' needle 'st'";
 #?rakudo.jvm 1 todo "NFG NYI on JVM"
 nok ('X' ~ 875.chr ~ 8413.chr) ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
 ok  ('X' ~ 875.chr ~ 8413.chr ~ 'x') ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
-
+#?rakudo.moar 53 todo "MVM indexic bug"
+# If the beginning of the needle matches towards the end of the haystack,
+# it can return a partial match, when it hasn't traversed the needle fully
+nok "aaaaaaaabcd" ~~ m:i/abcd111111/, "case insensitive regex will not return a match beyond the haystack end";
+for 'a'..'z' -> $a {
+  my $s;
+  my $s1;
+  my $tag;
+  for 'a'..'z' {
+    next if $a eq $_;
+    my $left = "$a";
+    my $right = "$_$a";
+    $tag ~= "$left <-> $right, ";
+    my $e = qq«("$left" ~~ m:i/$right/) ?? '$_' !! '_'»;
+    $s ~= $e.EVAL;
+    $s1 ~= ($left ~~ m:i/$right/) ?? '$_' !! '_';
+  }
+  is $s, '_' x 25, "× = a-z; × ~~ m:i/×$a/; EVAL";
+  is $s1, '_' x 25, "× = a-z; × ~~ m:i/×$a/;";
+}
 # vim: syn=perl6 sw=4 ts=4 expandtab
