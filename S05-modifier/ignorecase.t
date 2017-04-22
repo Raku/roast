@@ -100,7 +100,6 @@ ok 'ﬆ' ~~ /:i st/, ":i haystack 'ﬆ' needle 'st'";
 #?rakudo.jvm 1 todo "NFG NYI on JVM"
 nok ('X' ~ 875.chr ~ 8413.chr) ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
 ok  ('X' ~ 875.chr ~ 8413.chr ~ 'x') ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
-#?rakudo.moar 53 todo "MVM indexic bug"
 # If the beginning of the needle matches towards the end of the haystack,
 # it can return a partial match, when it hasn't traversed the needle fully
 nok "aaaaaaaabcd" ~~ m:i/abcd111111/, "case insensitive regex will not return a match beyond the haystack end";
