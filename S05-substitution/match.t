@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 19;
 
 # L<S05/Substitution/>
 
@@ -47,5 +47,8 @@ is $m[0], 'oo',             'match object indexes as an array';
     is-deeply (for 1..10 { ('ﬆ' x $_ ~ 'T').subst: /:i T/, 'Z' })».Str,
         (for 1..10 { 'ﬆ' x $_ ~ 'Z' }), 'can .subst: /:i T/, "Z"';
 }
+
+throws-like { "".match: Nil }, X::Multi::NoMatch,
+    '.match with Nil matcher does not hang';
 
 # vim: ft=perl6
