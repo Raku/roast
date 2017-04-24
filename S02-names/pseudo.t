@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 144;
+plan 153;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -339,6 +339,30 @@ plan 144;
     if 1 {
         is $CALLER::y, 93, 'CALLER:: works in inline blocks';
         is $::($caller)::y, 93, '::("CALLER") works in inline blocks';
+    }
+}
+
+# CALLERS
+{
+    sub f1($f) { my $x is dynamic = 90; $f() } #OK
+    sub f2($f) { my $x is dynamic = 91; f1($f) } #OK
+    my $callers = 'CALLERS';
+
+    is f1({ $CALLERS::x }), 90, '$CALLERS:: works';
+    is f1({ CALLERS::.<$x> }), 90, 'CALLERS::.{} works';
+    is f1({ $::($callers)::x }), 90, '::("CALLERS") works';
+
+    is f2({ $CALLERS::CALLERS::x }), 91, 'CALLERS::CALLERS:: works';
+    is f2({ $::($callers)::($callers)::x }), 91, 'indirect CALLERS::CALLERS works';
+
+    my $*foo = 92;
+    is f2({ CALLERS::<$*foo> }), 92, 'CALLERS::<$*foo> works';
+    is f2({ ::($callers)::('$*foo') }), 92, '::("CALLERS")::<$*foo> works';
+
+    my $y is dynamic = 93; #OK
+    if 1 {
+        is $CALLERS::y, 93, 'CALLERS:: works in inline blocks';
+        is $::($callers)::y, 93, '::("CALLERS") works in inline blocks';
     }
 }
 
