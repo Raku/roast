@@ -320,7 +320,7 @@ plan 144;
 
 # CALLER - assumes MY:: has taken care of most access testing
 {
-    sub f1($f) { my $x is dynamic = 90; $f() } #OK
+    sub f1($f) { my $x is dynamic = 90; my $*bar = 93; $f() } #OK
     sub f2($f) { my $x is dynamic = 91; f1($f) } #OK
     my $caller = 'CALLER';
 
@@ -332,10 +332,8 @@ plan 144;
     is f2({ $::($caller)::($caller)::x }), 91, 'indirect CALLER::CALLER works';
 
     my $*foo = 92;
-    #?rakudo todo 'not entirely sure these make sense...'
-    is f2({ CALLER::<$*foo> }), 92, 'CALLER::<$*foo> works';
-    #?rakudo  todo 'RT #126523'
-    is f2({ ::($caller)::('$*foo') }), 92, '::("CALLER")::<$*foo> works';
+    is f1({ CALLER::<$*bar> }), 93, 'CALLER::<$*bar> works';
+    is f1({ ::($caller)::('$*bar') }), 93, '::("CALLER")::<$*bar> works';
 
     my $y is dynamic = 93; #OK
     if 1 {
