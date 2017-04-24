@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 my $path = "io-handle-testfile";
 
@@ -58,3 +58,6 @@ with IO::Handle.new(:path('foo'.IO)) {
     is-deeply   .IO.Str, 'foo',    '.IO has right value (IO::Path :path)';
     is-deeply      .Str, 'foo',    '.Str returns IO::Path :path as Str';
 }
+
+ok run(:err, $*EXECUTABLE, <blah blah blah>).err.slurp(:close),
+    'can non-explosively .slurp(:close) a pipe with failed Proc';
