@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 1 + 4 + 4;
+plan 10;
 
 my $filename = 't/spec/S16-io/words.testing';
 my @text  = <<zero " one" " two " "   three   " "four\n">>;
@@ -44,5 +46,14 @@ $elems = $filename.IO.words.elems;
 is $elems, +@clean, "IO count-only";
 
 unlink $filename; # cleanup
+
+{
+    $*ARGFILES = IO::ArgFiles.new: :args[
+        make-temp-file(:content<foo bar>), make-temp-file(:content<meow moo>),
+        make-temp-file(:content<I ♥ Perl 6>),
+    ];
+    is-deeply words(), <foo bar meow moo I ♥ Perl 6>».Str.Seq,
+        'words() without args uses $*ARGFILES';
+}
 
 # vim: ft=perl6
