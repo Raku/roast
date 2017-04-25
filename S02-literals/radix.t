@@ -1,7 +1,9 @@
 use v6;
 use Test;
 
-plan 156;
+plan 157;
+
+is 0xffffffff, '4294967295', '0xffffffff is turned into a big number on 32bit rakudos';
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
