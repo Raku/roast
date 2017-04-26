@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 4;
+plan 5;
 
 use Test::Util;
 
@@ -54,3 +54,9 @@ use Test::Util;
         '“Hello world”',
         'UTF-8 in arguments is decoded correctly';
 }
+
+
+# RT#127925
+is_run ｢@*ARGS.head.print｣, :args[<yağmur>],
+    { :err(''), :out<yağmur>, :0status },
+    'printed chars match input';
