@@ -22,7 +22,7 @@ plan 11;
 
 {
   my $a;
-  is $a.elems, 1, ".elems does works on arbitrary scalars";
+  is $a.elems, 1, ".elems works on arbitrary scalars";
 }
 
 {
