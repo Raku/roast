@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 32;
+plan 33;
 
 use Test::Util;
 
@@ -253,5 +253,9 @@ subtest 'composition errors do not crash when printing (RT129906)' => {
 throws-like { await start die 'test' }, Exception,
 	backtrace => *.is-runtime.so,
 'broken promise exception backtrace knows it is runtime';
+
+# RT#130979
+is_run "\n" x 1336 ~ 'use x $;', {err => /1337/},
+    'bad `use` gives line number in error message';
 
 # vim: ft=perl6
