@@ -56,12 +56,10 @@ is(try_eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "OGHAM SPACE MARK");
 
-#?rakudo.js skip 'EN QUAD support broken due to mixup of unicode handling during cross-compiling'
 is(try_eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "EN QUAD");
 
-#?rakudo.js skip 'EM QUAD support broken due to mixup of unicode handling during cross-compiling'
 is(try_eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "EM QUAD");
@@ -142,9 +140,7 @@ is(try_eval('foo\ .lc'), 'a', 'long dot with SPACE');
 is(try_eval('foo\.lc'), 'a', 'long dot with NEXT LINE (NEL)');
 is(try_eval('foo\ .lc'), 'a', 'long dot with NO-BREAK SPACE');
 is(try_eval('foo\ .lc'), 'a', 'long dot with OGHAM SPACE MARK');
-#?rakudo.js skip 'EN QUAD support broken due to mixup of unicode handling during cross-compiling'
 is(try_eval('foo\ .lc'), 'a', 'long dot with EN QUAD');
-#?rakudo.js skip 'EM QUAD support broken due to mixup of unicode handling during cross-compiling'
 is(try_eval('foo\ .lc'), 'a', 'long dot with EM QUAD');
 is(try_eval('foo\ .lc'), 'a', 'long dot with EN SPACE');
 is(try_eval('foo\ .lc'), 'a', 'long dot with EM SPACE');
