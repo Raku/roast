@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 31;
+plan 35;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -81,6 +81,17 @@ is opt_array1(), 0, "optional array not passed is empty";
 is opt_array2(), 0, "optional array not passed is empty (copy)";
 is opt_hash1(),  0, "optional hash not passed is empty";
 is opt_hash2(),  0, "optional hash not passed is empty (copy)";
+
+# RT #118555
+{
+    sub opt_array(Int @foo?) { @foo.push(42); @foo };
+    is-deeply opt_array(),                  Array[Int].new(42),    'can assign to an optional typed array not passed';
+    is-deeply opt_array(Array[Int].new(1)), Array[Int].new(1, 42), 'can assign to an optional typed array that is passed';
+
+    sub opt_hash(Int %foo?) { %foo<bar> = 42; %foo };
+    is-deeply opt_hash(),                   (my Int % = :bar(42)),          'can assign to an optional typed hash not passed';
+    is-deeply opt_hash(my Int % = :baz(1)), (my Int % = :baz(1), :bar(42)), 'can assign to an optional typed hash that is passed';
+}
 
 # RT #71110
 throws-like 'sub opt($a = 1, $b) { }', X::Parameter::WrongOrder,
