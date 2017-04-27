@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 103;
+plan 4 * 19 + 105;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -386,5 +386,11 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
 # https://irclog.perlgeek.de/perl6-dev/2017-01-23#i_13971002
 is-deeply (:42a)<foo>, Nil, 'accessing non-existent key on a Pair returns Nil';
+
+{
+    my $p = :foo<bar>;
+    cmp-ok   $p.Pair, '===', $p,   '.Pair on Pair:D is identity';
+    cmp-ok Pair.Pair, '===', Pair, '.Pair on Pair:U is identity';
+}
 
 # vim: ft=perl6
