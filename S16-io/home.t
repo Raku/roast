@@ -18,6 +18,7 @@ if $*DISTRO.is-win {
         BEGIN %*ENV<HOME>:delete;
         BEGIN %*ENV<HOMEDRIVE HOMEPATH> = ('C:', ｢\foobar｣);
         die unless $*HOME.absolute eq ｢C:\foobar｣.IO.absolute;
+        $*HOME = 42; # can still assign to it
     ｣, {:out(''), :err(''), :0status },
     '$*HOME is HOMEDRIVE+HOMEPATH when HOME env is unset on Windows';
 }
@@ -26,6 +27,7 @@ else {
         BEGIN %*ENV<HOME>:delete;
         BEGIN %*ENV<HOMEDRIVE HOMEPATH> = ('C:', ｢\foobar｣);
         die unless $*HOME === Nil;
+        $*HOME = 42; # can still assign to it
     ｣, {:out(''), :err(''), :0status },
     '$*HOME is Nil even when HOMEDRIVE+HOMEPATH are set on non-Windows dists';
 }
@@ -34,11 +36,13 @@ is_run ｢
     BEGIN %*ENV<HOMEDRIVE HOMEPATH>:delete;
     BEGIN %*ENV<HOME> = ｢C:\foobar｣;
     die unless $*HOME.absolute eq ｢C:\foobar｣.IO.absolute;
+    $*HOME = 42; # can still assign to it
 ｣, {:out(''), :err(''), :0status }, '$*HOME is HOME when HOME env is set';
 
 is_run ｢
     BEGIN %*ENV<HOME HOMEDRIVE HOMEPATH>:delete;
-    die unless $*HOME === Nil
+    die unless $*HOME === Nil;
+    $*HOME = 42; # can still assign to it
 ｣, {:out(''), :err(''), :0status }, '$*HOME is Nil when env is unset';
 
 {
