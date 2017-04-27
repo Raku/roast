@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 28;
 
 # Undeterminate Math results
 # see L<"http://mathworld.wolfram.com/Indeterminate.html">
@@ -33,9 +33,6 @@ ok (NaN)i ~~ NaN + 1i, "(NaN)i ~~ NaN + 1i";
 ok NaN + 1i ~~ (NaN)i, "NaN + 1i ~~ (NaN)i";
 
 ok truncate(NaN) ~~ NaN, 'truncate(NaN) ~~ NaN';
-
-#?rakudo skip 'RT #83446'
-ok (my Int $rt83446 = NaN) ~~ NaN, 'NaN fits in Int';
 
 #RT #103500
 is NaN.perl, 'NaN', 'NaN perlification ok';
