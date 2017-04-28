@@ -107,7 +107,7 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
     is @log, ("A 0","B 0","A 1","B 1"), 'Chained Seq slice assignment is lazy';
 
     @n = 0,1;
-    # (NYI need to cache in sub eagerize when reifying for elems)    
+    # (NYI need to cache in sub eagerize when reifying for elems)
     { eager @n.map(-> $v is rw {$v})[*-2,*-1] = <a b>.sort, <a b>, 'WhateverCode in Seq slice assignment'; CATCH { default { $_.defined } } };
 #?rakudo todo 'Cannot assign immutable'
     is @n, <a b>, 'WhateverCode in Seq slice assignment';
