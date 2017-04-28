@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 37;
 
 my @result = 1,2,3;
 
@@ -143,10 +143,19 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
     is $count, 10, '&afterward is called after each call to &body.';
 }
 
-
 # RT#131222
 with (1, 2).Seq {
     .cache; # Cache the seq
     is .perl, (1, 2).Seq.perl,
         '.perl on cached Seq does not think it was consumed';
+}
+
+subtest 'Seq.Capture' => {
+    plan 2;
+    is-deeply (1, 2, <a b c>).Seq.Capture, (1, 2, <a b c>).Capture,
+        '.Capture returns a Capture of the List of the Seq';
+
+    -> ($k, $v) {
+        is-deeply ($k, $v), (1, 2), 'can unpack a Seq';
+    }( (1, 2).Seq );
 }
