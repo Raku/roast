@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 16;
+plan 17;
 
 sub create-temporary-file ($name = '') {
     my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ $name ~ '-' ~ time;
@@ -167,5 +167,9 @@ is_run ｢.put for $*ARGFILES.lines: 1000｣, "a\nb\nc", {
     :err(''),
     :0status,
 }, '.lines stops when data ends, even if limit has not been reached yet';
+
+# https://github.com/rakudo/rakudo/commit/4b8fd4a4f9
+is_run ｢run(:in, $*EXECUTABLE, '-e', 'get').in.close｣,
+    {:out(''), :err(''), :0status}, 'no crash when ^D with get(ARGFILES)';
 
 $tmp-file-name.IO.unlink;
