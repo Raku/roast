@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 10;
 
 is (1 andthen 2), 2, 'andthen basics';
 is (1 andthen 2 andthen 3), 3, 'andthen chained';
@@ -15,3 +15,11 @@ my $ = 'some arg' andthen -> $x { is $x, 'some arg', 'andthen passes on argument
 
 # RT #127822
 is (S/a/A/ andthen S/b/B/ given "ab"), "AB", 'andthen with two S///';
+
+subtest 'Empty in args to andthen does not disappear' => {
+    plan 3;
+    my $r := do 42 with Empty;
+    is-deeply $r,                         Empty, 'postfix `with`';
+    is-deeply infix:<andthen>(Empty, 42), Empty, 'sub call';
+    is-deeply (Empty andthen 42),         Empty, 'op';
+}
