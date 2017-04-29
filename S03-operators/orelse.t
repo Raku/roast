@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 is (1 orelse 2), 1, 'orelse basics';
 is (1 orelse 2 orelse 3), 1, 'orelse chained';
@@ -28,3 +28,7 @@ nok $tracker, 'orelse thunks';
 # RT #130034
 is-deeply (Str andthen .uc orelse "foo"), 'foo',
     'orelse can be chained after andthen';
+
+# RT #130798
+is-deeply (Nil andthen 'foo' orelse Nil orelse 'bar'), 'bar',
+    'chain: andthen + orelse + orelse';
