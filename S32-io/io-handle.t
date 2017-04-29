@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 14;
+plan 15;
 
 my $path = "io-handle-testfile";
 
@@ -61,3 +63,8 @@ with IO::Handle.new(:path('foo'.IO)) {
 
 ok run(:err, $*EXECUTABLE, <blah blah blah>).err.slurp(:close),
     'can non-explosively .slurp(:close) a pipe with failed Proc';
+
+with make-temp-file.IO.open(:w) {
+    .close;
+    lives-ok { .close }, 'can call .close an already-closed handle';
+}
