@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 37;
 
 # L<S12/Attribute default values/The value on the right is evaluated at object build time>
 
@@ -102,6 +102,16 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
     my Cake $cake .= new;
 
     is $cake.self_in_code, "echo", "self is the object being initialized";
+}
+
+# RT #131181
+{
+    is (42 but role { has int $.x = 100 }).x, 100,
+        'Native int default in mixed in role works';
+    is (42 but role { has num $.x = 10e0 }).x, 10e0,
+        'Native num default in mixed in role works';
+    is (42 but role { has str $.x = 'zmrzlina' }).x, 'zmrzlina',
+        'Native str default in mixed in role works';
 }
 
 # vim: ft=perl6
