@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 31;
+plan 32;
 
 # L<S32::IO/IO::Path>
 
@@ -240,4 +240,17 @@ subtest '.sibling' => {
 
     is-path IO::Path::Win32.new('C:/').sibling('bar'),
         IO::Path::Win32.new('C:/bar'), '"C:/" with IO::Path::Win32';
+}
+
+subtest '.gist escapes backslashes' => {
+    plan 2 * @Path-Types;
+
+    for @Path-Types -> $Type {
+        my $p = $Type.new: ｢foo\bar\ber｣;
+        is $p.gist.perl.EVAL, $p.gist, "relative path ($Type.perl())";
+
+        $p = $Type.new: $p.absolute;
+        $p.is-absolute; # set internal `is-absolute` attr, if impl uses one
+        is $p.gist.perl.EVAL, $p.gist, "absolute path ($Type.perl())";
+    }
 }
