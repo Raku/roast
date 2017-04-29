@@ -7,6 +7,9 @@ plan 31;
 
 # L<S32::IO/IO::Path>
 
+constant @Path-Types
+= IO::Path, IO::Path::Cygwin, IO::Path::QNX, IO::Path::Unix, IO::Path::Win32;
+
 sub is-path ($got, $expected, $desc) {
     cmp-ok $got.resolve, '~~', $expected.resolve, $desc
 }
@@ -223,15 +226,13 @@ subtest 'secureness of .child' => {
 }
 
 subtest '.sibling' => {
-    my @path-types = IO::Path, IO::Path::Cygwin, IO::Path::QNX, IO::Path::Unix,
-        IO::Path::Win32;
     my @tests = 'foo' => 'bar', '/foo' => '/bar', '../foo' => '../bar',
         'C:/foo' => 'C:/bar', 'C:/foo/../meow' => 'C:/foo/../bar',
         '/' => '/bar', './' => 'bar', '/foo/' => '/bar', '/foo/.' => '/foo/bar';
-    plan 1 + @tests * @path-types;
+    plan 1 + @tests * @Path-Types;
 
     for @tests -> (:key($start-path), :value($res-path)) {
-        for @path-types -> $Path {
+        for @Path-Types -> $Path {
             is-path $Path.new($start-path).sibling('bar'), $Path.new($res-path),
                 "$Path.perl() with $start-path.perl()";
         }
