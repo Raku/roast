@@ -17,6 +17,7 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
             ok $proc.out ~~ IO::Pipe, 'shell/run(:out).out is an IO::Pipe';
             my $lines = $proc.out.lines.join('');
             my $ps    = $proc.out.close;
+            cmp-ok $ps, '===', $proc, ".close on pipe returns pipe's Proc";
             if $exitcode {
                 nok $ps,                    'shell/run(:out) returns something falsish on failure';
                 is $ps.exitcode, $exitcode, "Proc::Status.exitcode is $exitcode";
