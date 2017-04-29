@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 is (1 orelse 2), 1, 'orelse basics';
 is (1 orelse 2 orelse 3), 1, 'orelse chained';
@@ -36,3 +36,6 @@ is-deeply (Nil andthen 'foo' orelse Nil orelse 'bar'), 'bar',
 # https://irclog.perlgeek.de/perl6-dev/2017-04-29#i_14507232
 cmp-ok infix:<orelse>( %(:42a, :72b) ), 'eqv', :42a.Pair | :72b.Pair,
     '1-arg Hash is broken down into Pairs, like +@foo slurpy does it';
+
+is-deeply infix:<orelse>([Int, 42]), (Int orelse 42),
+    '1-arg Iterable gets flattened (like +@foo slurpy)';

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 3;
+plan 4;
 
 {
     my $x = 0;
@@ -22,3 +22,6 @@ subtest 'Empty in args to notandthen does not disappear' => {
     is-deeply (Empty notandthen 42),           42, 'op';
     is-deeply ((Int andthen 1) notandthen 42), 42, 'taking return of andthen';
 }
+
+is-deeply infix:<notandthen>([Int, 42]), (Int notandthen 42),
+    '1-arg Iterable gets flattened (like +@foo slurpy)';

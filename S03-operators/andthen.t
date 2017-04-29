@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 12;
 
 is (1 andthen 2), 2, 'andthen basics';
 is (1 andthen 2 andthen 3), 3, 'andthen chained';
@@ -27,3 +27,6 @@ subtest 'Empty in args to andthen does not disappear' => {
 # https://irclog.perlgeek.de/perl6-dev/2017-04-29#i_14507232
 cmp-ok infix:<andthen>( %(:42a, :72b) ), 'eqv', :42a.Pair | :72b.Pair,
     '1-arg Hash is broken down into Pairs, like +@foo slurpy does it';
+
+is-deeply infix:<andthen>([42, 70]), (42 andthen 70),
+    '1-arg Iterable gets flattened (like +@foo slurpy)';
