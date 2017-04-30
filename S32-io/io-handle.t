@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 15;
+plan 16;
 
 my $path = "io-handle-testfile";
 
@@ -67,4 +67,9 @@ ok run(:err, $*EXECUTABLE, <blah blah blah>).err.slurp(:close),
 with make-temp-file.IO.open(:w) {
     .close;
     lives-ok { .close }, 'can call .close an already-closed handle';
+}
+
+with make-temp-file.IO.open(:w) {
+    .DESTROY;
+    is-deeply .opened, False, '.DESTROY closes handles';
 }
