@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 210;
+plan 211;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -482,6 +482,15 @@ subtest 'cloned SetHash gets its own elements storage' => {
         'modifying second is possible';
     is-deeply $a, SetHash.new(<b c z>),
         'modifying second does not affect the first';
+}
+
+# RT 130240
+{
+    my SetHash $set = SetHash.new;
+    my $i = 1001;
+    $set{$i} = True;
+    $i++;
+    ok $set{1001}, "SetHash retains object, not container";
 }
 
 # vim: ft=perl6
