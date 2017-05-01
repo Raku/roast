@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 32;
+plan 30;
 
 # L<S32::IO/IO::Path>
 
@@ -56,9 +56,37 @@ isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 }
 
 # RT #126935
-{
-    cmp-ok .IO.perl.EVAL, 'eqv', .IO, "{.perl} roundtrips .perl.EVAL"
-        for q/\x[308]foo|ba"'\''r/, "/foo|\\bar", "/foo\tbar";
+# RT #131185
+subtest '.perl.EVAL rountrips' => {
+    my @tests = gather {
+        .IO.take for q/\x[308]foo|ba"'\''r/, "/foo|\\bar", "/foo\tbar";
+        # use spec that is NOT the default for the OS
+        ($*DISTRO.is-win ?? IO::Path::Unix !! IO::Path::Win32)
+          .new('.', :CWD<foo>).take;
+
+        for @Path-Types {
+            .take;
+            with .new('/foo', :CWD<bar>) {
+                .is-absolute; # set internal `is-absolute` flag, if any
+                .take
+            }
+        }
+    }
+    plan +@tests;
+    for @tests {
+        if .DEFINITE {
+            subtest "using {.perl}" => {
+                plan 4;
+                is-deeply .IO.perl.EVAL,      .IO,      'new eqv old';
+                is-deeply .IO.perl.EVAL.path, .IO.path, 'same .path';
+                is-deeply .IO.perl.EVAL.CWD,  .IO.CWD,  'same .CWD';
+                is-deeply .IO.perl.EVAL.SPEC, .IO.SPEC, 'same .SPEC';
+            }
+        }
+        else {
+            is-deeply .IO.perl.EVAL, .IO, "new eqv old using {.perl}";
+        }
+    }
 }
 
 # RT #127989
