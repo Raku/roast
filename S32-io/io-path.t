@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 31;
+plan 32;
 
 # L<S32::IO/IO::Path>
 
@@ -57,10 +57,8 @@ isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 
 # RT #126935
 {
-    my $perl = "/foo|\\bar".IO.perl;
-    is $perl.EVAL.perl, $perl, "does $perl roundtrip?";
-    my $tab = "/foo\tbar".IO.perl;
-    is $tab.EVAL.perl, $tab, "does $tab roundtrip?";
+    cmp-ok .IO.perl.EVAL, 'eqv', .IO, "{.perl} roundtrips .perl.EVAL"
+        for q/\x[308]foo|ba"'\''r/, "/foo|\\bar", "/foo\tbar";
 }
 
 # RT #127989
