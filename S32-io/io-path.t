@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 30;
+plan 31;
 
 # L<S32::IO/IO::Path>
 
@@ -72,6 +72,7 @@ subtest '.perl.EVAL rountrips' => {
             }
         }
     }
+
     plan +@tests;
     for @tests {
         if .DEFINITE {
@@ -266,4 +267,9 @@ subtest '.sibling' => {
 
     is-path IO::Path::Win32.new('C:/').sibling('bar'),
         IO::Path::Win32.new('C:/bar'), '"C:/" with IO::Path::Win32';
+}
+
+subtest '.IO on :U gives right class' => {
+    plan +@Path-Types;
+    cmp-ok $_, '===', .IO, .perl for @Path-Types;
 }
