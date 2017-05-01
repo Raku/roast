@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 105;
+plan 106;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -240,4 +240,26 @@ subtest 'cmp with allomorphs' => {
     for @more -> (:key($a), :value($b)) {
         is-deeply $a cmp $b, More, "$a.perl() cmp $b.perl()"
     }
+}
+
+subtest 'test eqv for weird allomorphs' => {
+    plan 8;
+
+    is-deeply IntStr    .new(42,    "x") eqv IntStr    .new(72,    "x"),
+        False, 'Int (same Str part)';
+    is-deeply RatStr    .new(42.0,  "x") eqv RatStr    .new(72.0,  "x"),
+        False, 'Rat (same Str part)';
+    is-deeply NumStr    .new(42e0,  "x") eqv NumStr    .new(72e0,  "x"),
+        False, 'Num (same Str part)';
+    is-deeply ComplexStr.new(42+0i, "x") eqv ComplexStr.new(72+0i, "x"),
+        False, 'Complex (same Str part)';
+
+    is-deeply IntStr    .new(42,    "x") eqv IntStr    .new(42,    "a"),
+        False, 'Int (same Numeric part)';
+    is-deeply RatStr    .new(42.0,  "x") eqv RatStr    .new(42.0,  "a"),
+        False, 'Rat (same Numeric part)';
+    is-deeply NumStr    .new(42e0,  "x") eqv NumStr    .new(42e0,  "a"),
+        False, 'Num (same Numeric part)';
+    is-deeply ComplexStr.new(42+0i, "x") eqv ComplexStr.new(42+0i, "a"),
+        False, 'Complex (same Numeric part)';
 }
