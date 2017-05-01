@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 103;
+plan 105;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -208,4 +208,36 @@ subtest 'U+2212 parses correctly in compound literals' => {
     is-deeply <−5−1i>, -5-1i, '<−5−1i> is a literal Complex';
     is-deeply <−5+1i>, -5+1i, '<−5+1i> is a literal Complex';
     is-deeply <−1/2>,   -0.5, '<−1/2> is a literal Rat';
+}
+
+# https://irclog.perlgeek.de/perl6/2017-05-01#i_14514985
+subtest 'eqv with allomorphs' => {
+    my @tests = [X] <1 1.0 1e0 1+0i> xx 2;
+    plan +@tests;
+    for @tests -> ($a, $b) {
+        $a.^name eq $b.^name
+            ?? is-deeply $a eqv $b, True,  "$a.perl() eqv $b.perl()"
+            !! is-deeply $a eqv $b, False, "$a.perl() eqv $b.perl()"
+    }
+}
+
+# https://irclog.perlgeek.de/perl6/2017-05-01#i_14514985
+subtest 'cmp with allomorphs' => {
+    my @same = <1  1.0  1e0  1+0i  1+1i>;
+    my @less =  <1>    => <2>, <1>    => <2.0>, <1>    => <2e0>, <1>    => <2+0i>,
+                <1.0>  => <2>, <1.0>  => <2.0>, <1.0>  => <2e0>, <1.0>  => <2+0i>,
+                <1e0>  => <2>, <1e0>  => <2.0>, <1e0>  => <2e0>, <1e0>  => <2+0i>,
+                <1+0i> => <2>, <1+0i> => <2.0>, <1+0i> => <2e0>, <1+0i> => <2+0i>;
+    my @more = @less.map: { .value => .key };
+    plan @same + @less + @more;
+
+    is-deeply $_ cmp $_, Same,  "{.perl} cmp {.perl}" for @same;
+
+    for @less -> (:key($a), :value($b)) {
+        is-deeply $a cmp $b, Less, "$a.perl() cmp $b.perl()"
+    }
+
+    for @more -> (:key($a), :value($b)) {
+        is-deeply $a cmp $b, More, "$a.perl() cmp $b.perl()"
+    }
 }
