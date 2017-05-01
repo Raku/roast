@@ -538,13 +538,13 @@ sub showkv($x) {
     $b<a> = 42;
     is $b<a>, 42, 'did we set an Int value';
     throws-like { $b<a> = "foo" },
-      X::Str::Numeric, # X::TypeCheck::Assignment ???
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a key';
 
     $_ = 666 for $b.values;
     is $b<a>, 666, 'did we set an Int value from a .values alias';
     throws-like { $_ = "foo" for $b.values },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .values alias';
 
     .value = 999 for $b.pairs;

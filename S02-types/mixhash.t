@@ -462,13 +462,13 @@ sub showkv($x) {
     $m<a> = 42.1;
     is $m<a>, 42.1, 'did we set a Real value';
     throws-like { $m<a> = "foo" },
-      X::Str::Numeric, # X::TypeCheck::Assignment ???
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a key';
 
     $_ = 666.1 for $m.values;
     is $m<a>, 666.1, 'did we set a Real value from a .values alias';
     throws-like { $_ = "foo" for $m.values },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .values alias';
 
     .value = 999.1 for $m.pairs;
