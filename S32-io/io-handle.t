@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 16;
+plan 17;
 
 my $path = "io-handle-testfile";
 
@@ -72,4 +72,11 @@ with make-temp-file.IO.open(:w) {
 with make-temp-file.IO.open(:w) {
     .DESTROY;
     is-deeply .opened, False, '.DESTROY closes handles';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2017-05-01#i_14512345
+    my $fh := make-temp-file(:content("a\nb\nc")).IO.open;
+    my @res;
+    for $fh { @res.push: $_ }
+    is-deeply @res, [$fh], '`for IO::Handle` {...} iterates over 1 handle';
 }
