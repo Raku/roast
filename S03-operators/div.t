@@ -17,7 +17,10 @@ isa-ok 1e0 / (0/1), Failure, "1e0 / (0/1) softfails";
     is $rt112678 div 3, -3, 'div works with negative native';
 }
 
-{ # RT #130686
+if $?BITS >= 64 { # RT #130686
     is-deeply (my int $ = 10000000000000000) div 4, 2500000000000000,
-        'large `int` values do not overflow prematurely'
+        'large `int` values do not overflow prematurely';
+}
+else {
+    skip "this test doesn't make sense 32bit platforms";
 }
