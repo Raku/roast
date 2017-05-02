@@ -542,7 +542,7 @@ sub showkv($x) {
     for $b.kv -> \k, \v { v = 22 };
     is $b<a>, 22, 'did we set an Int value from a .kv alias';
     throws-like { for $b.kv -> \k, \v { v = "foo" } },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .kv alias';
 }
 
