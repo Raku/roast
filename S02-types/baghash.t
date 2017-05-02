@@ -550,7 +550,7 @@ sub showkv($x) {
     .value = 999 for $b.pairs;
     is $b<a>, 999, 'did we set an Int value from a .pairs alias';
     throws-like { .value = "foo" for $b.pairs },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .pairs alias';
 
     for $b.kv -> \k, \v { v = 22 };
