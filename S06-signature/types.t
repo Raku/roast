@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 18;
+plan 19;
 
 sub f($x) returns Int { return $x };
 
@@ -39,12 +39,30 @@ dies-ok  { g('m') },    'type check forbids bad implicit return';
 
 # RT #126124
 {
-    throws-like { sub f(Mu:D $a) {}; f(Int) }, Exception,
-        message => /'instance of type Mu' .+ 'type object'/,
-        'type shown in the exception message is the right one';
-    throws-like { sub f(Mu:U $a) {}; f(123) }, Exception,
-        message => /'object of type Mu' .+ 'object instance'/,
-        'type shown in the exception message is the right one';
+    throws-like { sub f(Mu:D $a) {}; f(Int) }, X::Parameter::InvalidConcreteness,
+        expected           => 'Mu',
+        got                => 'Int',
+        param              => '$a',
+		routine            => 'f',
+        should-be-concrete => 'True',
+        param-is-invocant  => 'False',
+        'expected and got types in the exception are the correct ones';
+    throws-like { sub f(Mu:U $a) {}; f(123) }, X::Parameter::InvalidConcreteness,
+        expected           => 'Mu',
+        got                => 'Int',
+        param              => '$a',
+		routine            => 'f',
+        should-be-concrete => 'False',
+        param-is-invocant  => 'False',
+        'expected and got types in the exception are the correct ones';
+    throws-like { UInt.abs }, X::Parameter::InvalidConcreteness,
+        expected           => 'Int',
+        got                => 'UInt',
+        param              => '<anon>',
+		routine            => 'abs',
+        should-be-concrete => 'True',
+        param-is-invocant  => 'True',
+        'expected and got types in the exception are the correct ones';
 }
 
 # RT #129279
