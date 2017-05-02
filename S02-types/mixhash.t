@@ -462,7 +462,7 @@ sub showkv($x) {
     .value = 999.1 for $m.pairs;
     is $m<a>, 999.1, 'did we set a Real value from a .pairs alias';
     throws-like { .value = "foo" for $m.pairs },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .pairs alias';
 
     for $m.kv -> \k, \v { v = 22.1 };
