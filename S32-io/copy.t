@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 41;
+plan 42;
 
 my $existing-file     = "tempfile-copy";
 my $non-existent-file = "non-existent-copy";
@@ -87,5 +89,13 @@ nok $non-existent-file.IO.e, "It doesn't";
 # clean up
 ok unlink($existing-file), 'file has been removed';
 ok unlink($zero-length-file), 'file has been removed';
+
+# RT#131242
+subtest 'copying when target and source are same file' => {
+    plan 2;
+    my $file = make-temp-file :content<foo>;
+    fails-like { $file.copy: $file }, X::IO::Copy, 'copying fails';
+    is-deeply $file.slurp, 'foo', 'file contents are untouched';
+}
 
 # vim: ft=perl6
