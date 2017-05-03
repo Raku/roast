@@ -9,7 +9,7 @@ Pop tests
 
 =end description
 
-plan 37;
+plan 38;
 
 { # pop() elements into variables
     my @pop = (-1, 1, 2, 3, 4);
@@ -103,6 +103,29 @@ plan 37;
     #?rakudo todo 'RT #111720'
     is $rt111720.keys.[0].join("-"), '1-2',
         'reading first key in sink context does not influence later code';
+}
+
+# RT #131245
+subtest 'no gost elements after pop/shift' => {
+    my @a = <a b c>;
+    @a.pop;
+    @a[3] = 42;
+    is-deeply @a, ['a', 'b', Any, 42], '.pop';
+
+    @a = <a b c>;
+    @a.shift;
+    @a[3] = 42;
+    is-deeply @a, ['b', 'c', Any, 42], '.shift';
+
+    my @a = <a b c>;
+    pop @a;
+    @a[3] = 42;
+    is-deeply @a, ['a', 'b', Any, 42], '&pop';
+
+    @a = <a b c>;
+    shift @a;
+    @a[3] = 42;
+    is-deeply @a, ['b', 'c', Any, 42], '&shift';
 }
 
 # vim: ft=perl6
