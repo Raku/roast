@@ -128,7 +128,7 @@ is MV.new(start => 4).s, 5, 'uint64 native attribute use in method works';
         has uint8 $.ff;
     }
     my $c = C1.new(ff => 255);
-#?rakudo todo 'RT #131122'
+#?rakudo.moar todo 'RT #131122'
     is $c.ff, 255, 'large unsigned ints';
 
     my class C2 is repr('CStruct') {
