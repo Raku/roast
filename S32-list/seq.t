@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 37;
+plan 38;
 
 my @result = 1,2,3;
 
@@ -159,3 +159,60 @@ subtest 'Seq.Capture' => {
         is-deeply ($k, $v), (1, 2), 'can unpack a Seq';
     }( (1, 2).Seq );
 }
+
+# https://irclog.perlgeek.de/perl6-dev/2017-05-03#i_14524925
+subtest 'methods on cached Seqs' => {
+    plan 2;
+
+    subtest 'methods work fine when Seq *is* cached' => {
+        plan 11;
+
+        my $s = (1, 2, 3).Seq;
+        $s.cache;
+        cmp-ok $s, 'eqv', $s, 'infix:<eqv>';
+        does-ok $s.iterator,   Iterator,      '.iterator';
+        is-deeply $s.Slip,    (1, 2, 3).Slip, '.Slip';
+        is-deeply $s.join,    '123',          '.join';
+        is-deeply $s.List,    (1, 2, 3),      '.List';
+        is-deeply $s.list,    (1, 2, 3),      '.list';
+        is-deeply $s.eager,   (1, 2, 3),      '.eager';
+        is-deeply $s.Array,   [1, 2, 3],      '.Array';
+        is-deeply $s.is-lazy, False,          '.is-lazy (when not lazy)';
+
+        my $s-lazy = lazy gather { .take for 1, 2, 3 };
+        $s-lazy.cache;
+        is-deeply $s-lazy.is-lazy, True, '.is-lazy';
+
+        my $pulled = False;
+        my $s-sink = Seq.new: class :: does Iterator {
+            method pull-one { $pulled = True; IterationEnd }
+        }.new;
+        $s-sink.cache;
+        $s-sink.sink; # sink the Seq
+        ok not $pulled, '.sinking a cached Seq does not pull from iterator';
+    }
+
+    subtest 'methods still throw when Seq is NOT cached' => {
+        plan 12;
+
+        my $s = (1, 2, 3).Seq;
+        $s.sink; # consume the Seq
+        throws-like { cmp-ok $s, 'eqv', $s }, X::Seq::Consumed, 'infix:<eqv>';
+        throws-like { $s."$_"() }, X::Seq::Consumed, ".$_"
+            for <iterator  Slip  join  List  list  eager  Array  is-lazy>;
+
+        my $s-lazy = lazy gather { .take for 1, 2, 3 };
+        $s-lazy.sink; # consume the Seq;
+        throws-like { $s-lazy.is-lazy }, X::Seq::Consumed,
+          '.is-lazy (when lazy)';
+
+        my $pulled = False;
+        my $s-sink = Seq.new: class :: does Iterator {
+            method pull-one { $pulled = True; IterationEnd }
+        }.new;
+        $s-sink.sink; # sink the Seq
+        ok $pulled, '.sinking uncached Seq pulls from iterator';
+        lives-ok { $s-sink.sink }, '.sinking again does not throw';
+    }
+}
+
