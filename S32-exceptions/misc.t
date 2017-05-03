@@ -736,8 +736,10 @@ ok X::AdHoc.new.gist ~~ m:i/explain/,
     "X::AdHoc.new.gist mentions the word 'explain'";
 
 for <fail die throw rethrow resumable resume> -> $meth {
-    throws-like 'X::NYI.' ~ $meth, Exception,
-        message => rx/equire.*instance.*type\sobject/;
+    throws-like 'X::NYI.' ~ $meth, X::Parameter::InvalidConcreteness,
+        should-be-concrete => 'True',
+        param-is-invocant  => 'True',
+        routine            => $meth;
 }
 
 # RT #125642
