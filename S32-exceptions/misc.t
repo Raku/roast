@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 389;
+plan 388;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -735,7 +735,7 @@ ok Exception.new.Str.chars, "Exception.new.Str produces some default text";
 ok X::AdHoc.new.gist ~~ m:i/explain/,
     "X::AdHoc.new.gist mentions the word 'explain'";
 
-for <fail die throw rethrow resumable resume> -> $meth {
+for <fail die throw rethrow resume> -> $meth {
     throws-like 'X::NYI.' ~ $meth, X::Parameter::InvalidConcreteness,
         should-be-concrete => 'True',
         param-is-invocant  => 'True',
