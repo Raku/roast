@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 30;
 
 # L<S32::Containers/Array/rotate>
 
@@ -56,6 +56,19 @@ plan 29;
     my @a = <a b c d e>;
     is ~@a.rotate('2'), 'c d e a b', '.rotate("2")';
     is ~@a.rotate(2.5), 'c d e a b', '.rotate(2.5)';
+}
+
+# https://github.com/rakudo/rakudo/commit/f4cbdb64bc
+subtest '.rotate can be used on empty List' => {
+    plan 8;
+    is-deeply ()          .rotate,     (),           'List (1)';
+    is-deeply ()          .rotate(-1), (),           'List (-1)';
+    is-deeply []          .rotate,     [],           'Array (1)';
+    is-deeply []          .rotate(-1), [],           'Array (-1)';
+    is-deeply ().Slip     .rotate,     ().Slip,      'Slip (1)';
+    is-deeply ().Slip     .rotate(-1), ().Slip,      'Slip (-1)';
+    is-deeply ().Seq.cache.rotate,     ().Seq.cache, ‘Seq's cache (1)’;
+    is-deeply ().Seq.cache.rotate(-1), ().Seq.cache, ‘Seq's cache (-1)’;
 }
 
 # vim: ft=perl6
