@@ -12,7 +12,6 @@ given (Failure.new()) {
 }
 
 {
-  # "use fatal" is not standard, so we don't have to disable it here
   my $was_after_fail  = 0;
   my $was_before_fail = 0;
   my $sub = sub { $was_before_fail++; my $exception = fail 42; $was_after_fail++ };    #OK not used
