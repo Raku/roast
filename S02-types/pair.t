@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 105;
+plan 4 * 19 + 106;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -391,6 +391,25 @@ is-deeply (:42a)<foo>, Nil, 'accessing non-existent key on a Pair returns Nil';
     my $p = :foo<bar>;
     cmp-ok   $p.Pair, '===', $p,   '.Pair on Pair:D is identity';
     cmp-ok Pair.Pair, '===', Pair, '.Pair on Pair:U is identity';
+}
+
+subtest 'Pair.ACCEPTS' => {
+    my @true = <a a a z>.Bag, <a a a z>.BagHash, <a a a z z>.Mix,
+        <a a a z z>.MixHash, %(:3a, :5z), Map.new((:3a, :5z)), :3a.Pair, :3z.Pair;
+    my @false = <a z>.Bag, <a z>.BagHash, <a z>.Set, <a z>.SetHash,
+        <a z>.Mix, <a z>.MixHash, %(:a, :z), Map.new((:a, :z)), :a.Pair, :z.Pair;
+    plan 6 + @true + @false;
+    my $p = :3a;
+    is-deeply $p.ACCEPTS($_), True,  "{.perl} (True)"  for @true;
+    is-deeply $p.ACCEPTS($_), False, "{.perl} (False)" for @false;
+    is-deeply :a.Pair.ACCEPTS(<a z>.Set    ), True, 'Set (True)';
+    is-deeply :a.Pair.ACCEPTS(<a z>.SetHash), True, 'SetHash (True)';
+
+    class Foo { method foo { 42 }; method bar { False } }
+    is-deeply :42foo.ACCEPTS(Foo), True,  'custom class (True, 1)';
+    is-deeply :foo  .ACCEPTS(Foo), True,  'custom class (True, 2)';
+    is-deeply :!bar .ACCEPTS(Foo), True,  'custom class (True, 3)';
+    is-deeply :bar  .ACCEPTS(Foo), False, 'custom class (False)';
 }
 
 # vim: ft=perl6
