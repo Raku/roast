@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 # Tests of the Baggy role
 
@@ -46,4 +46,12 @@ subtest 'Baggy:U forwards methods to Mu where appropriate' => {
         is-deeply .hash,  {},    '.hash';
         is-deeply .elems, 1,     '.elems';
     }
+}
+
+# https://rt.perl.org/Ticket/Display.html?id=131270
+subtest '.pick/.roll/.grab reject NaN count' => {
+    plan 3;
+    throws-like { ^5 .BagHash.pick: NaN }, X::Invalid::ComputedValue, '.pick';
+    throws-like { ^5 .BagHash.roll: NaN }, X::Invalid::ComputedValue, '.roll';
+    throws-like { ^5 .BagHash.grab: NaN }, X::Invalid::ComputedValue, '.grab';
 }
