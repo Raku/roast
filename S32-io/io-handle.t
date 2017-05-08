@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 17;
+plan 18;
 
 my $path = "io-handle-testfile";
 
@@ -79,4 +79,23 @@ with make-temp-file.IO.open(:w) {
     my @res;
     for $fh { @res.push: $_ }
     is-deeply @res, [$fh], '`for IO::Handle` {...} iterates over 1 handle';
+}
+
+# https://github.com/rakudo/rakudo/commit/973338a6b7
+subtest 'iterator-producing read methods not affected by internal chunking' => {
+    plan 10;
+    my $n = 10 + ($*DEFAULT-READ-ELEMS // 65536);
+    with make-temp-file :content("a" x $n) {
+        is +.lines,                         1, '.lines on IO::Path';
+        is +.words,                         1, '.words on IO::Path';
+        is +.comb(/.+/),                    1, '.comb(Regex) on IO::Path';
+        is +.comb($n),                      1, '.comb(Int) on IO::Path';
+        is +.split(/.+/, :skip-empty),      0, '.split on IO::Path';
+
+        is +.open.lines,                    1, '.lines on IO::Handle';
+        is +.open.words,                    1, '.words on IO::Handle';
+        is +.open.comb(/.+/),               1, '.comb(Regex) on IO::Handle';
+        is +.open.comb($n),                 1, '.comb(Int) on IO::Handle';
+        is +.open.split(/.+/, :skip-empty), 0, '.split on IO::Handle';
+    }
 }
