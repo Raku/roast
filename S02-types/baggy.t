@@ -51,7 +51,7 @@ subtest 'Baggy:U forwards methods to Mu where appropriate' => {
 # https://rt.perl.org/Ticket/Display.html?id=131270
 subtest '.pick/.roll/.grab reject NaN count' => {
     plan 3;
-    throws-like { ^5 .BagHash.pick: NaN }, X::Invalid::ComputedValue, '.pick';
-    throws-like { ^5 .BagHash.roll: NaN }, X::Invalid::ComputedValue, '.roll';
-    throws-like { ^5 .BagHash.grab: NaN }, X::Invalid::ComputedValue, '.grab';
+    throws-like { ^5 .BagHash.pick: NaN }, Exception, '.pick';
+    throws-like { ^5 .BagHash.roll: NaN }, Exception, '.roll';
+    throws-like { ^5 .BagHash.grab: NaN }, Exception, '.grab';
 }
