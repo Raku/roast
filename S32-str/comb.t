@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 80;
+plan 81;
 
 # L<S32::Str/Str/=item comb>
 
@@ -155,5 +155,34 @@ eval-lives-ok ｢"hello".comb(/:m <[o]>/)｣,
 
 # https://github.com/rakudo/rakudo/commit/a08e953018
 is-deeply 1337.comb(2), ('13', '37'), 'Cool.comb(Int)';
+
+subtest 'edge-case combers' => {
+    my @tests = gather {
+        .take for
+            ("abc", <a b c>.Seq, "",  ),
+            ("abc", <a b c>.Seq, "", ∞),
+            ("abc", <a b c>.Seq, "", 4),
+            ("abc", <a b  >.Seq, "", 2),
+
+            ("",         ().Seq, "",  ),
+            ("",         ().Seq, "", ∞),
+            ("",         ().Seq, "", 4),
+            ("",         ().Seq, "", 2),
+
+            ("abc", <a b c>.Seq, 0,   ),
+            ("abc", <a b c>.Seq, 0,  ∞),
+            ("abc", <a b c>.Seq, 0,  4),
+            ("abc", <a b  >.Seq, 0,  2),
+
+            ("",         ().Seq, 0,   ),
+            ("",         ().Seq, 0,  ∞),
+            ("",         ().Seq, 0,  4),
+            ("",         ().Seq, 0,  2),
+    }
+    plan +@tests;
+    for @tests -> ($str, $expected, |args) {
+        is-deeply $str.comb(|args), $expected, "$str.perl() with {args.perl}";
+    }
+}
 
 # vim: ft=perl6
