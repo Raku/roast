@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 556;
+plan 558;
 
 =begin pod
 
@@ -163,6 +163,15 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 lives-ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
 
 lives-ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
+
+# RT #122475
+{
+    my @a = $(1, 2, 3);
+    my @b = [>>+<<] @a;
+    is-deeply @b, @a, 'reduce metaop of hyper metaop works with only one element';
+    #?rakudo.moar todo 'reduce metaop of hyper metaop works with zero elements'
+    eval-lives-ok q|my @a; [>>+<<] @a|, 'reduce metaop of hyper metaop works with zero elements';
+}
 
 # Check that user defined infix ops work with [...], too.
 {
