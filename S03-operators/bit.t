@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 38;
+plan 39;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -134,5 +134,22 @@ plan 38;
 # More variations on 19 and 22
 #if ("ok \xFF\x{FF}\n" ~& "ok 41\n" eq "ok 41\n") { say "ok 19" } else { say "not ok 19" }
 #if ("ok \x{FF}\xFF\n" ~& "ok 42\n" eq "ok 42\n") { say "ok 20" } else { say "not ok 20" }
+
+# RT#126942
+# RT#131278
+subtest '+> bit shift of negative numbers' => {
+    my @p = 1, 2, 4, 10, 30, 31, 32, 33, 40, 60, 63, 64, 65, 100, 500, 1000;
+    my @n = 1, 3, 4, 10, 15, 50, 75, 100, 500, 751, 1000;
+    plan 2 + @p*@n;
+
+    cmp-ok -0x8000000000000000 +> 32, '===', -2147483648,
+        '-0x8000000000000000 shifted by 32';
+    cmp-ok -12 +> 32, '===', -1, '-12 shifted by 32';
+    for @p -> $p {
+        for @n -> $n {
+            cmp-ok -15**$n +> $p, '===', -15**$n div 2**$p, "-15**$n +> $p"
+        }
+    }
+}
 
 # vim: ft=perl6
