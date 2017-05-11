@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 114;
+plan 116;
 
 # construction
 {
@@ -250,3 +250,8 @@ subtest 'all Date constructors throw on invalid dates' => {
             X::OutOfRange, 'both';
     }
 }
+
+is Date.today.clone(:formatter{'test is good'}).Str, 'test is good',
+    'Date.clone can take a formatter';
+is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
+    'Date.clone without formatter uses default formatter';
