@@ -12,6 +12,12 @@ are under SPDX-License-Identifier: Unicode-DFS-2016
 See 3rdparty/Unicode/LICENSE for full text of license.
 From GraphemeBreakTest.txt Unicode 9.0
 
+=USAGE
+If you run the script with --only=900,888 it will run only the line numbers
+supplied as a commas seperated list of line numbers. Using --debug will give
+additional debug info. Can supply datafile manually with --file=filename.txt
+but that should not be required.
+
     # Default Grapheme Break Test
     #
     # Format:
@@ -127,14 +133,8 @@ sub process-line (Str:D $line, @fail, :@only!) {
     }
     is-deeply $list<ord-array>.elems, $list<string>.chars, "Line $line-no: [C] right num of chars | {$list<string>.uninames.perl}" or @fail.push($line-no);
     for ^$list<ord-array>.elems -> $elem {
-        if $fudge-b {
-            # 6th index of fudge string <=> 5th string index (6th character)
-            if %fudged-tests{$line-no}.chars < $elem {
-                #don't check
-            }
-            else {
-                todo "[$elem] grapheme line $line-no todo" if %fudged-tests{$line-no}.any eq $elem;
-            }
+        if $fudge-b and %fudged-tests{$line-no}.any eq $elem {
+            todo "[$elem] grapheme line $line-no todo";
         }
         is-deeply $list<string>.substr($elem, 1).ords.flat, $list<ord-array>[$elem].flat, "Line $line-no: grapheme [$elem] has correct codepoints" or @fail.push($line-no);
     }
