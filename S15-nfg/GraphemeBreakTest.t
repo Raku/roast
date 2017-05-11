@@ -3,32 +3,39 @@ my $location = "3rdparty/Unicode/9.0.0/ucd/auxiliary/GraphemeBreakTest.txt";
 $location = "t/spec/$location".IO.e ?? "t/spec/$location" !! $location;
 our $DEBUG;
 use Test;
+=begin pod
+=NAME Unicode GraphemeBreakTest
 
-# Unicode Data files in 3rdparty/Unicode/ and the snippet of commented code below
-# are under SPDX-License-Identifier: Unicode-DFS-2016
-# See 3rdparty/Unicode/LICENSE for full text of license.
-# From GraphemeBreakTest.txt Unicode 9.0
+=DESCRIPTION
+Unicode Data files in 3rdparty/Unicode/ and the snippet of commented code below
+are under SPDX-License-Identifier: Unicode-DFS-2016
+See 3rdparty/Unicode/LICENSE for full text of license.
+From GraphemeBreakTest.txt Unicode 9.0
 
-# Default Grapheme Break Test
-#
-# Format:
-# <string> (# <comment>)? 
-#  <string> contains hex Unicode code points, with 
-#	÷ wherever there is a break opportunity, and 
-#	× wherever there is not.
-#  <comment> the format can change, but currently it shows:
-#	- the sample character name
-#	- (x) the Grapheme_Cluster_Break property value for the sample character
-#	- [x] the rule that determines whether there is a break or not
+    # Default Grapheme Break Test
+    #
+    # Format:
+    # <string> (# <comment>)?
+    #  <string> contains hex Unicode code points, with
+    #	÷ wherever there is a break opportunity, and
+    #	× wherever there is not.
+    #  <comment> the format can change, but currently it shows:
+    #	- the sample character name
+    #	- (x) the Grapheme_Cluster_Break property value for the sample character
+    #	- [x] the rule that determines whether there is a break or not
 
-## XXX HOW TO FUDGE XXX
-# The keys of the hash below are line numbers of the unicode test document.
-# values are either set to ALL or set to one or more of C,0,1,2,3,4..
-# Example:
+=head1 HOW TO FUDGE
+=para The keys of the hash below are line numbers of the unicode test document.
+values are either set to ALL or set to one or more of C,0,1,2,3,4..
 
-# not ok 2384 - Line 835: grapheme [1] has correct codepoints
+=para B<Example>:
 
-# You can add 835 => ['1'] to the hash and it will fudge that line for you
+=item3 C<not ok 2384 - Line 835: grapheme [1] has correct codepoints>
+
+=para You can add 835 => ['1'] to the hash and it will fudge that line for you
+
+=end pod
+
 constant %fudged-tests = {
     224 => ['ALL'],
     442 => [0],
