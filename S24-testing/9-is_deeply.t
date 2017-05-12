@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 1;
+plan 2;
 
 subtest 'is-deeply with Seqs does not claim `Seq.new-consumed` expected/got' => {
     plan 4;
@@ -23,3 +23,11 @@ subtest 'is-deeply with Seqs does not claim `Seq.new-consumed` expected/got' => 
     ), '`expected` Seq, failing';
 }
 
+subtest 'Junctions do not cause multiple tests to run' => {
+    plan 2;
+    is-deeply any(1, 2, 3), none(4, 5, 6), 'passing test';
+    is_run ｢use Test; is-deeply 2, none(1, 2, 3)｣, %(
+        :err{ $^s.contains: 'none' }
+        :out{ $^s.contains: 'not ok' }
+    ), 'failing test';
+}
