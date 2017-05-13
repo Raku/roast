@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 131;
+plan 132;
 
 my $Unix := IO::Spec::Unix;
 
@@ -204,5 +204,16 @@ subtest '.basename' => {
     plan +@tests;
     for @tests -> (:key($in), :value($out)) {
         is-deeply IO::Spec::Unix.basename($in), $out, $in;
+    }
+}
+
+subtest '.extension' => {
+    my @tests = '' => '', '.' => '', '/.' => '', 'foo.bar/ber' => 'bar/ber',
+        '.tar' => 'tar', 'foo.tar' => 'tar', 'foo.tar.gz' => 'gz',
+        '.tar.gz' => 'gz', 'I ♥ Perl 6' => '', 'I ♥ Perl 6.♥' => '♥';
+
+    plan +@tests;
+    for @tests -> (:key($in), :value($out)) {
+        is-deeply IO::Spec::Unix.extension($in), $out, $in;
     }
 }
