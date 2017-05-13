@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 15;
+plan 16;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -58,6 +58,15 @@ is_run 'dir | say', {
         }
     };
     $tested or flunk 'expected a dir $*CWD test but it never ran';
+}
+
+subtest "dir-created IO::Paths' absoluteness controlled by invocant" => {
+    plan 2;
+    my @files = '.'.IO.dir;
+    cmp-ok +@files, '==', +@files.grep({not .is-absolute}), 'relative invocant';
+
+    @files = '.'.IO.absolute.IO.dir;
+    cmp-ok +@files, '==', +@files.grep({    .is-absolute}), 'absolute invocant';
 }
 
 # vim: ft=perl6
