@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 18;
+plan 19;
 
 my $path = "io-handle-testfile";
 
@@ -99,3 +99,5 @@ subtest 'iterator-producing read methods not affected by internal chunking' => {
         is +.open.split(/.+/, :skip-empty), 0, '.split on IO::Handle';
     }
 }
+
+is-deeply IO::Handle.new.encoding, 'utf8', 'unopened handle has utf8 encoding';
