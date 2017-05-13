@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 19;
+plan 20;
 
 my $path = "io-handle-testfile";
 
@@ -101,3 +101,16 @@ subtest 'iterator-producing read methods not affected by internal chunking' => {
 }
 
 is-deeply IO::Handle.new.encoding, 'utf8', 'unopened handle has utf8 encoding';
+
+subtest '.flush' => {
+    # XXX TODO: it doesn't appear we're buffering anything at the moment;
+    # when/if we start doing so, ensure these tests cover all the cases
+    plan 2;
+    my $file = make-temp-file;
+    my $fh will leave {.close} = $file.open: :w;
+    $fh.print: 'foo';
+    $fh.flush;
+    is-deeply $file.slurp, 'foo', 'content was flushed';
+    fails-like { IO::Handle.new.flush }, X::IO::Flush,
+        'fails with correct exception';
+}
