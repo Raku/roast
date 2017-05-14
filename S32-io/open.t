@@ -217,7 +217,7 @@ LEAVE unlink PATH;
     my $mode = ':append';
     my $fh;
 
-    isa-ok open(PATH, :append), Failure,
+    isa-ok (my $ will leave {.so} = open(PATH, :append)), Failure,
         "opening non-existent file in $mode mode fails";
 
     # create and fill file with data
