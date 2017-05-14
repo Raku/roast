@@ -127,11 +127,33 @@ subtest '.t returns True for TTY' => {
     }
 }
 
-subtest 'can set .nl-in attribute on unopened handle' => {
-    plan 4;
-    my $fh = IO::Handle.new;
-    is-deeply ($fh.nl-in = '42'),    '42',    'return value (Str)';
-    is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
-    is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
-    is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
+subtest '.nl-in attribute' => {
+    plan 3;
+    subtest 'unopened handle' => {
+        plan 4;
+        my $fh = IO::Handle.new;
+        is-deeply ($fh.nl-in = '42'),    '42',    'return value (Str)';
+        is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
+        is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
+        is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
+    }
+
+    subtest 'opened handle' => {
+        plan 4;
+        my $fh = make-temp-file(:content<foo>).open;
+        is-deeply ($fh.nl-in = '42'),    '42',    'return value (Str)';
+        is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
+        is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
+        is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
+    }
+
+    subtest 'opened, then closed handle' => {
+        plan 4;
+        my $fh = make-temp-file(:content<foo>).open;
+        $fh.close;
+        is-deeply ($fh.nl-in = '42'),    '42',    'return value (Str)';
+        is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
+        is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
+        is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
+    }
 }
