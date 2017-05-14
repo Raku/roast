@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 31;
+plan 32;
 
 # L<S32::IO/IO::Path>
 
@@ -272,4 +272,19 @@ subtest '.sibling' => {
 subtest '.IO on :U gives right class' => {
     plan +@Path-Types;
     cmp-ok $_, '===', .IO, .perl for @Path-Types;
+}
+
+subtest '.gist' => {
+    my @tests = flat map { @Path-Types.map: *.new: $_ }, flat map {$_, "/$_"},
+        'foo', '-', 'bar/ber', 'foo/bar/ber.txt', 'I ♥ Perl 6';
+    plan +@tests;
+
+    { # make $*CWD different from what it was when we made the paths
+        temp $*CWD = make-temp-dir;
+
+        for @tests {
+            my $gist = .is-absolute ?? .absolute !!.path;
+            like .gist, /$gist/, $_;
+        }
+    }
 }
