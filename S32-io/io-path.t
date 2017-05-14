@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 32;
+plan 33;
 
 # L<S32::IO/IO::Path>
 
@@ -287,4 +287,9 @@ subtest '.gist' => {
             like .gist, /$gist/, $_;
         }
     }
+}
+
+subtest 'combiners on "/" do not interfere with absolute path detection' => {
+    plan +@Path-Types;
+    is-deeply .is-absolute, True, .perl for @Path-Types.map: *.new: "/\x[308]";
 }

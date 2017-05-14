@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 132;
+plan 133;
 
 my $Unix := IO::Spec::Unix;
 
@@ -217,3 +217,6 @@ subtest '.extension' => {
         is-deeply IO::Spec::Unix.extension($in), $out, $in;
     }
 }
+
+is-deeply IO::Spec::Unix.is-absolute("/\x[308]"), True,
+    'combiners on "/" do not interfere with absolute path detection';

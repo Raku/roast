@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 28;
+plan 29;
 
 my $SPEC := IO::Spec::QNX;
 my %canonpath = (
@@ -44,3 +44,6 @@ for %canonpath-parent.kv -> $get, $want {
 }
 quietly is $SPEC.canonpath( Any , :parent ), '',
     "canonpath(:parent): Any -> ''";
+
+is-deeply IO::Spec::QNX.is-absolute("/\x[308]"), True,
+    'combiners on "/" do not interfere with absolute path detection';

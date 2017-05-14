@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 210;
+plan 211;
 my $win32 = IO::Spec::Win32;
 
 my @canonpath =
@@ -312,3 +312,6 @@ subtest '.basename' => {
         is-deeply IO::Spec::Win32.basename($in), $out, $in;
     }
 }
+
+is-deeply IO::Spec::Win32.is-absolute("/\x[308]"), True,
+    'combiners on "/" do not interfere with absolute path detection';

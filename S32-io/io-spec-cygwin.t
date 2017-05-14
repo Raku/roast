@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 115;
+plan 116;
 my $cygwin = IO::Spec::Cygwin;
 
 my @canonpath =
@@ -184,10 +184,13 @@ is $cygwin.updir,   '..',  'updir is ".."';
 
 
 if $*DISTRO.name !~~ any(<cygwin>) {
-	skip-rest 'cygwin on-platform tests'
+	skip 'cygwin on-platform tests', 2
 }
 else {
 	# double check a couple of things to see if IO::Spec loaded correctly
 	is IO::Spec.rootdir, '\\',  'IO::Spec loads Cygwin';
 	ok {.IO.d && .IO.w}.(IO::Spec.tmpdir), "tmpdir: {IO::Spec.tmpdir} is a writable directory";
 }
+
+is-deeply IO::Spec::Cygwin.is-absolute("/\x[308]"), True,
+    'combiners on "/" do not interfere with absolute path detection';
