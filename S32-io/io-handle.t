@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 22;
+plan 23;
 
 my $path = "io-handle-testfile";
 
@@ -155,5 +155,36 @@ subtest '.nl-in attribute' => {
         is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
         is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
         is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
+    }
+}
+
+subtest '.encoding attribute' => {
+    plan 3;
+    subtest 'unopened handle' => {
+        plan 4;
+        my $fh = IO::Handle.new;
+        is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
+        is-deeply  $fh.encoding,           'ascii', 'attribute got set';
+        is-deeply ($fh.encoding('bin')),   'bin',   'return value (bin)';
+        is-deeply  $fh.encoding,           'bin',   'attribute got set (bin)';
+    }
+
+    subtest 'opened handle' => {
+        plan 4;
+        my $fh = make-temp-file(:content<foo>).open;
+        is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
+        is-deeply  $fh.encoding,           'ascii', 'attribute got set';
+        is-deeply ($fh.encoding('bin')),   'bin',   'return value (bin)';
+        is-deeply  $fh.encoding,           'bin',   'attribute got set (bin)';
+    }
+
+    subtest 'opened, then closed handle' => {
+        plan 4;
+        my $fh = make-temp-file(:content<foo>).open;
+        $fh.close;
+        is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
+        is-deeply  $fh.encoding,           'ascii', 'attribute got set';
+        is-deeply ($fh.encoding('bin')),   'bin',   'return value (bin)';
+        is-deeply  $fh.encoding,           'bin',   'attribute got set (bin)';
     }
 }
