@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 62;
+plan 63;
 
 my \PATH = 't-S32-io-open.tmp';
 my \PATH-RX = rx/'t-S32-io-open.tmp'/;
@@ -343,6 +345,39 @@ LEAVE unlink PATH;
         is-deeply .nl-in,    'a',          'can set $!nl-in to Str with open';
         is-deeply .encoding, 'iso-8859-1', 'can set $!encoding with ';
     }
+}
+
+subtest '.open uses attributes by default' => {
+    plan 8;
+    my $content = "1foo2\nfoo3";
+    my $path = make-temp-file :$content;
+    my $fh = IO::Handle.new: :$path,
+        :nl-in<foo>, :nl-out<meow>, :encoding<bin>, :!chomp;
+    $fh .= open: :rw;
+    is-deeply $fh.nl-in,    'foo',  '.nl-in remains same after open';
+    is-deeply $fh.nl-out,   'meow', '.nl-out remains same after open';
+    is-deeply $fh.encoding, 'bin',  '.encoding remains same after open';
+    is-deeply $fh.chomp,    False, '.chomp remains same after open';
+
+    is-deeply $fh.slurp, Buf[uint8].new($content.encode),
+        '.encoding is respected';
+    $fh.close;
+
+    # XXX TODO 6.d: we have an inconsistency between, say, .encoding and .nl-in
+    # the former takes new value as an arg, but the latter returns a Proxy and
+    # can be assigned to
+    $fh.encoding('utf8');
+    $fh .= open: :rw;
+    is-deeply $fh.lines.join, $content, '.chomp is respected';
+
+    $fh.say: "hello world";
+    $fh.close;
+    is-deeply $path.slurp, $content ~ "hello worldmeow", '.nl-out is respected';
+
+    $fh.chomp = True; # set chomp back on to test .nl-in;
+    $fh .= open: :rw;
+    is-deeply $fh.lines.join, "12\n3hello worldmeow", '.nl-in is respected';
+    $fh.close;
 }
 
 # vim: ft=perl6
