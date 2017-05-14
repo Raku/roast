@@ -276,7 +276,7 @@ subtest '.IO on :U gives right class' => {
 
 subtest '.gist' => {
     my @tests = flat map { @Path-Types.map: *.new: $_ }, flat map {$_, "/$_"},
-        'foo', '-', 'bar/ber', 'foo/bar/ber.txt', 'I ♥ Perl 6';
+        'foo', '-', 'bar/ber', ｢foo/bar\ber.txt｣, 'I ♥ Perl 6';
     plan +@tests;
 
     { # make $*CWD different from what it was when we made the paths
