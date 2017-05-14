@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 20;
+plan 21;
 
 my $path = "io-handle-testfile";
 
@@ -113,4 +113,15 @@ subtest '.flush' => {
     is-deeply $file.slurp, 'foo', 'content was flushed';
     fails-like { IO::Handle.new.flush }, X::IO::Flush,
         'fails with correct exception';
+}
+
+subtest '.t returns True for TTY' => {
+    plan 1;
+    my $tt = shell :out, :err, 'tty';
+    if $tt and my $path = $tt.out.slurp(:close).trim {
+        is-deeply $path.IO.open.t, True, '.t on a TTY handle'
+    }
+    else {
+        skip 'could not figure out how to get a TTY handle'
+    }
 }
