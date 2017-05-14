@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 21;
+plan 22;
 
 my $path = "io-handle-testfile";
 
@@ -125,4 +125,13 @@ subtest '.t returns True for TTY' => {
     else {
         skip 'could not figure out how to get a TTY handle'
     }
+}
+
+subtest 'can set .nl-in attribute on unopened handle' => {
+    plan 4;
+    my $fh = IO::Handle.new;
+    is-deeply ($fh.nl-in = '42'),    '42',    'return value (Str)';
+    is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
+    is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
+    is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
 }
