@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 36;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -36,6 +36,7 @@ throws-like { $pc.write(Buf.new(0)) }, X::Proc::Async::OpenForWriting, :method<w
 throws-like { $pc.stdout.tap(&say)  }, X::Proc::Async::TapBeforeSpawn, :handle<stdout>;
 
 my $ps = await $pm;
+cmp-ok $pc.ready.status, '~~', Kept, "was ready kept after succesful execution";
 isa-ok $ps, Proc;
 ok $ps, 'was execution successful';
 is $ps.?exitcode, 0, 'is the status ok';
