@@ -1,6 +1,6 @@
 use Test;
 
-plan 5;
+plan 7;
 
 my $prog = Proc::Async.new(:w, 'does-not-exist-cabbage-mooncake-unicycle');
 my $stdout = $prog.stdout;
@@ -14,5 +14,9 @@ dies-ok { react { whenever $stderr { } } },
     'Trying to tap STDERR of an async process that does not exist signals failure';
 lives-ok { $prog.close-stdin },
     'Closing stdin of an async process that does not exist is harmless';
+dies-ok { await $prog.ready },
+    'Ready promise for a process that does not exist is broken';
 dies-ok { await $promise },
     'Promise for a process that does not exist is broken';
+
+does-ok $prog.ready.cause, X::OS;

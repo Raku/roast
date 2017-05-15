@@ -8,7 +8,7 @@ try {
 }
 
 my @signals = SIGINT;
-plan @signals * 9;
+plan @signals * 10;
 
 my $program = 'async-kill-tester';
 
@@ -39,6 +39,8 @@ say 'Done';
     isa-ok $pm, Promise;
 
     sleep 1;
+
+    cmp-ok $pc.ready.status, '~~', Kept, "ready Promise should be Kept by now";
 
     # give it a little time
     $pc.print("1\n");
