@@ -328,7 +328,7 @@ subtest '.path' => {
     plan 8;
 
     temp %*ENV;
-    constant $path-in  = 'foo;bar;C:/ber/;;;;;m♥eow';
+    constant $path-in  = 'foo;bar;"C:/ber"""""""""""""""""""/";;;;;m♥eow';
     constant $path-out = <. foo  bar  C:/ber/  m♥eow>.Seq;
     constant $empt-out = ('.',).Seq;
     $path-out.cache;
