@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 33;
+plan 34;
 
 # L<S32::IO/IO::Path>
 
@@ -292,4 +292,49 @@ subtest '.gist' => {
 subtest 'combiners on "/" do not interfere with absolute path detection' => {
     plan +@Path-Types;
     is-deeply .is-absolute, True, .perl for @Path-Types.map: *.new: "/\x[308]";
+}
+
+subtest '.parts attribute' => {
+    plan 5 + 6*@Path-Types;
+
+    sub check-parts($in, $desc, *%parts) {
+        subtest 'parts match' => {
+            plan 1 + %parts;
+            is-deeply $in.WHAT, Map, 'parts is a Map';
+            is-deeply $in{$_}, %parts{$_}, "$_ is correct" for %parts.keys;
+        }
+    }
+
+    for @Path-Types {
+        check-parts .new('foo').parts, "foo {.perl}",
+            :basename<foo>, :dirname<.>, :volume('');
+
+        check-parts .new('./foo').parts, "./foo {.perl}",
+            :basename<foo>, :dirname<.>, :volume('');
+
+        check-parts .new('bar/foo').parts, "bar/foo {.perl}",
+            :basename<foo>, :dirname<bar>, :volume('');
+
+        check-parts .new('/bar/foo').parts, "/bar/foo {.perl}",
+            :basename<foo>, :dirname</bar>, :volume('');
+
+        my $p = .new('/').parts;
+        check-parts $p, "/ {.perl}", :dirname</>, :volume('');
+        cmp-ok $p<basename>, 'eq', <\ />.any, "/ {.perl} (basename)";
+    }
+
+    check-parts IO::Path::Win32.new('C:foo').parts, "C:foo",
+        :basename<foo>,:dirname<.>,:volume<C:>;
+
+    check-parts IO::Path::Win32.new('C:./foo').parts, "C:./foo",
+        :basename<foo>,:dirname<.>,:volume<C:>;
+
+    check-parts IO::Path::Win32.new('C:bar/foo').parts, "C:bar/foo",
+        :basename<foo>,:dirname<bar>,:volume<C:>;
+
+    check-parts IO::Path::Win32.new('C:/bar/foo').parts, "C:/bar/foo",
+        :basename<foo>,:dirname</bar>,:volume<C:>;
+
+    check-parts IO::Path::Win32.new('C:/').parts, "C:/",
+        :basename(｢\｣),:dirname</>,:volume<C:>;
 }
