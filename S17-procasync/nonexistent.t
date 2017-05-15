@@ -19,4 +19,4 @@ dies-ok { await $prog.ready },
 dies-ok { await $promise },
     'Promise for a process that does not exist is broken';
 
-does-ok $prog.ready.cause, X::OS;
+does-ok $prog.ready.cause, X::OS, '.ready.cause';
