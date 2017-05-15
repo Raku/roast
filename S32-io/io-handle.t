@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 23;
+plan 24;
 
 my $path = "io-handle-testfile";
 
@@ -186,5 +186,19 @@ subtest '.encoding attribute' => {
         is-deeply  $fh.encoding,           'ascii', 'attribute got set';
         is-deeply ($fh.encoding('bin')),   'bin',   'return value (bin)';
         is-deeply  $fh.encoding,           'bin',   'attribute got set (bin)';
+    }
+}
+
+subtest '.perl.EVAL roundtrips' => {
+    plan 7;
+
+    my $orig = IO::Handle.new: :path("foo".IO), :!chomp, :nl-in[<I ♥ Perl 6>],
+        :nl-out<foo>, :encoding<ascii>;
+
+    is-deeply IO::Handle.perl.EVAL, IO::Handle, 'type object';
+    given $orig.perl.EVAL -> $evaled {
+        is-deeply $evaled, $orig, 'instance';
+        is-deeply $evaled."$_"(), $orig."$_"(), $_
+            for <path  chomp  nl-in  nl-out  encoding>;
     }
 }
