@@ -161,7 +161,7 @@ subtest '.add' => {
 }
 
 subtest '.resolve' => {
-    plan 5;
+    plan 6 + @Path-Types;
 
     my $root = make-temp-dir;
     sub p { $root.add: $^path }
@@ -189,6 +189,13 @@ subtest '.resolve' => {
     is-deeply p('level1a/../not-there').resolve(:completely).absolute,
               p('not-there').absolute,
         '.resolve(:completely) succeeds even when last part does not exist';
+
+    for IO::Path.new('foo', :SPEC(IO::Spec::Win32)),
+      |@Path-Types.map(*.new: 'foo')
+    {
+        is-deeply .resolve.CWD, .SPEC.dir-sep,
+            ".resolve sets CWD to SPEC's dir-sep for {.perl}"
+    }
 }
 
 subtest '.link' => {
