@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 212;
+plan 213;
 my $win32 = IO::Spec::Win32;
 
 my @canonpath =
@@ -322,4 +322,35 @@ subtest '.absolute with paths that have combiners on slashses' => {
         is-deeply IO::Path::Win32.new(:volume<C:>, :$basename).absolute,
         "C:$basename", $basename.perl;
     }
+}
+
+subtest '.path' => {
+    plan 8;
+
+    temp %*ENV;
+    constant $path-in  = 'foo;bar;C:/ber/;;;;;m♥eow';
+    constant $path-out = <. foo  bar  C:/ber/  m♥eow>.Seq;
+    constant $empt-out = ('.',).Seq;
+    $path-out.cache;
+
+    %*ENV<Path PATH>:delete;
+    is-deeply IO::Spec::Win32.path, $empt-out, 'env unset';
+
+    %*ENV<Path> = '';
+    is-deeply IO::Spec::Win32.path, $empt-out, 'Path set to empty str';
+    %*ENV<PATH> = '';
+    is-deeply IO::Spec::Win32.path, $empt-out, 'Path and PATH set to empty str';
+    %*ENV<Path>:delete;
+    is-deeply IO::Spec::Win32.path, $empt-out, 'PATH set to empty str';
+
+    %*ENV<PATH> = $path-in;
+    is-deeply IO::Spec::Win32.path, $path-out, 'PATH set to path';
+    %*ENV<Path> = 'blah;blah;blah';
+    is-deeply IO::Spec::Win32.path, $path-out, 'PATH overrides Path';
+    %*ENV<PATH> = '';
+    is-deeply IO::Spec::Win32.path, $empt-out,
+        'PATH overrides Path even when set to empty string';
+    %*ENV<PATH>:delete;
+    %*ENV<Path> = $path-in;
+    is-deeply IO::Spec::Win32.path, $path-out, 'Path set to path';
 }
