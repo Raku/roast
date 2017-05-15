@@ -80,10 +80,9 @@ nok $Unix.is-absolute( '..' ),  'is-absolute: nok ".."';
 my $path = %*ENV<PATH>;
 %*ENV<PATH> = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:';
 my @want         = </usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/games .>;
-is $Unix.path, @want, 'path';
+is-deeply $Unix.path, @want.Seq, 'path';
 %*ENV<PATH> = '';
-my @empty;
-is $Unix.path, @empty, 'no path';
+is-deeply $Unix.path, ().Seq, 'no path';
 %*ENV<PATH> = $path;
 
 my %splitpath = (
