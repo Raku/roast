@@ -187,14 +187,14 @@ subtest "\$limit arg (IO::Path method)" => { plan 5;
 
 # we spin up another perl6 and do 1500 x 2 .words calls; if the handle
 # isn't closed; we can expect some errors to show up in the output
-is_run ｢my @words; with ｣ ~ $file.perl ~ ｢ {
+is_run ｢my $i = 0; my @words; with ｣ ~ $file.perl ~ ｢ {
         loop {
-            last if $++ > 1500;
+            last if ++$i > 1500;
             @words.append: .words;
-            @words.append: .words(2)
+            @words.append: .words(2);
         }
-    } ｣,
-    {:err(''), :out(''), :0status},
+    }; print "all ok $i"｣,
+    {:err(''), :out('all ok 1501'), :0status},
 'heuristic for testing whether handle is closed';
 
 {
