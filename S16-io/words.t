@@ -1,7 +1,7 @@
 use v6.c;
 use Test;
 
-plan 1 + 4 + 4;
+plan 9;
 
 my $filename = 't/spec/S16-io/words.testing';
 my @text  = <<zero " one" " two " "   three   " "four\n">>;
