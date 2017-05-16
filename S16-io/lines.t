@@ -14,7 +14,7 @@ my @endings =
 ## adjusted plan to allow fine grained fudging for rakudo.jvm
 #plan @endings * (1 + 3 * ( (3 * 5) + 6));
 my $extra_tests_jvm_fudging = 2 * 3 * ( 3 * ( 6 + 2 ) );
-plan 6 + @endings * (1 + 3 * ( 5 + 6)) + $extra_tests_jvm_fudging;
+plan 7 + @endings * (1 + 3 * ( 5 + 6)) + $extra_tests_jvm_fudging;
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -284,4 +284,37 @@ lives-ok {
         'can sink-all IO::Pipe.lines';
 }
 
+# https://github.com/rakudo/rakudo/commit/bf399380c1
+subtest '$limit works right with any combination of args' => {
+    plan 5;
+    my $file = make-temp-file :content("foo\nbar\nber");
+    my $exp = ('foo', 'bar').Seq;
+    is-deeply $file.lines(2), $exp, 'IO::Path.lines($limit)';
+    subtest 'IO::Handle.lines($limit)' => { plan 2;
+        with $file.open {
+            is-deeply .lines(2), $exp, 'right lines';
+            is-deeply .opened, True, 'left handle opened';
+            .close;
+        }
+    }
+    subtest 'IO::Handle.lines($limit, :close)' => { plan 2;
+        with $file.open {
+            is-deeply .lines(2, :close), $exp, 'right lines';
+            is-deeply .opened, False, 'closed handle';
+        }
+    }
+    subtest '&lines($fh, $limit)' => { plan 2;
+        with $file.open {
+            is-deeply lines($_, 2), $exp, 'right lines';
+            is-deeply .opened, True, 'left handle opened';
+            .close;
+        }
+    }
+    subtest '&lines($fh, $limit, :close)' => { plan 2;
+        with $file.open {
+            is-deeply lines($_, 2, :close), $exp, 'right lines';
+            is-deeply .opened, False, 'closed handle';
+        }
+    }
+}
 # vim: ft=perl6
