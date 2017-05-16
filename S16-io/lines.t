@@ -14,7 +14,7 @@ my @endings =
 ## adjusted plan to allow fine grained fudging for rakudo.jvm
 #plan @endings * (1 + 3 * ( (3 * 5) + 6));
 my $extra_tests_jvm_fudging = 2 * 3 * ( 3 * ( 6 + 2 ) );
-plan 7 + @endings * (1 + 3 * ( 5 + 6)) + $extra_tests_jvm_fudging;
+plan 8 + @endings * (1 + 3 * ( 5 + 6)) + $extra_tests_jvm_fudging;
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -317,4 +317,21 @@ subtest '$limit works right with any combination of args' => {
         }
     }
 }
+
+{
+    my $file = make-temp-file :content("foo\nbar\nber\nmeow\nPerl 6");
+    # we spin up another perl6 and do 1500 x 2 .lines calls; if the handle
+    # isn't closed; we can expect some errors to show up in the output
+    is_run ｢my $i = 0; my @lines; with ｣ ~ $file.perl ~ ｢ {
+            use fatal;
+            loop {
+                last if ++$i > 1500;
+                @lines.append: .lines;
+                @lines.append: .lines(2);
+            }
+        }; print "all ok $i"｣,
+        {:err(''), :out('all ok 1501'), :0status},
+    'heuristic for testing whether handle is closed';
+}
+
 # vim: ft=perl6
