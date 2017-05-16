@@ -47,10 +47,10 @@ for @endings -> (:key($eol), :value($EOL)) {
         ok $handle.close, "closed handle";
 
         # slicing
-        my $handle = open($filename, :nl-in($eol), |$chomp);
+        $handle = open($filename, :nl-in($eol), |$chomp);
         isa-ok $handle, IO::Handle;
 
-        my @lines = $handle.lines[1,2];
+        @lines = $handle.lines[1,2];
         #?rakudo.jvm skip 'test will be run below with fine grained fudging'
         is @lines.join, @text[1,2].join($end[0]) ~ $end[0],
           "handle 1,2: $status";
@@ -323,7 +323,6 @@ subtest '$limit works right with any combination of args' => {
     # we spin up another perl6 and do 1500 x 2 .lines calls; if the handle
     # isn't closed; we can expect some errors to show up in the output
     is_run ｢my $i = 0; my @lines; with ｣ ~ $file.perl ~ ｢ {
-            use fatal;
             loop {
                 last if ++$i > 1500;
                 @lines.append: .lines;
