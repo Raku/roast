@@ -20,6 +20,38 @@ sub is-deeply-junction (
     is-deeply junction-guts($got), junction-guts($expected), $desc;
 }
 
+multi sub is-eqv(Seq:D $got, Seq:D $expected, Str:D $desc) is export {
+    $got.cache; $expected.cache;
+    _is-eqv $got, $expected, $desc;
+}
+multi sub is-eqv(Seq:D $got, Mu $expected, Str:D $desc) is export {
+    $got.cache;
+    _is-eqv $got, $expected, $desc;
+}
+multi sub is-eqv(Mu $got, Seq:D $expected, Str:D $desc) is export {
+    $expected.cache;
+    _is-eqv $got, $expected, $desc;
+}
+multi sub is-eqv(Mu $got, Mu $expected, Str:D $desc) is export {
+    _is-eqv $got, $expected, $desc;
+}
+sub _is-eqv (Mu $got, Mu $expected, Str:D $desc) {
+    # test inside a sub so we handle Failures
+    sub test-eqv (Mu $got, Mu $expected) { $got eqv $expected }
+
+    my $test = test-eqv $got, $expected;
+    my $ok = ok ?$test, $desc;
+    if !$test {
+        my $got_perl      = try { $got.perl };
+        my $expected_perl = try { $expected.perl };
+        if $got_perl.defined && $expected_perl.defined {
+            diag "expected: $expected_perl\n"
+                ~ "     got: $got_perl";
+        }
+    }
+    $ok
+}
+
 proto sub is_run(|) is export { * }
 
 # No input, no test name
@@ -303,6 +335,18 @@ This module is for test code that would be useful
 across Perl 6 implementations.
 
 =head1 FUNCTIONS
+
+=head2 is-eqv (Mu $got, Mu $expected, Str:D $description)
+
+Compare two items using `eqv` semantics. Basically this is the same
+as L<is-deeply|https://docs.perl6.org/language/testing#index-entry-is-deeply-is-deeply%28%24value%2C_%24expected%2C_%24description%3F%29>
+except without the C<Seq>-converted-to-C<List> issue, so you can
+compare C<Seq> with a C<List> and the test will fail (while
+C<is-deeply> would succeed if the elements are the same).
+
+Can test only C<Any> arguments,
+with C<Mu>s only accepted to handle C<Junctions>.
+
 
 =head2 is_run( Str $code, Str $input?, %wanted, Str $name?, :@args, :@compiler-args )
 
