@@ -267,7 +267,11 @@ multi doesn't-warn (&code, Str $desc) is export {
 }
 
 sub make-rand-path (--> IO::Path:D) {
-    $*TMPDIR.resolve.child: (
+    my $p = $*TMPDIR;
+    # XXX TODO .resolve is broken on Windows in Rakudo; .resolve for all OSes
+    # when it is fixed
+    $p .= resolve unless $*DISTRO.is-win;
+    $p.resolve.child: (
         'perl6_roast_',
         $*PROGRAM.basename, '_line',
         ((try callframe(3).code.line)||''), '_',
