@@ -359,6 +359,7 @@ subtest '.open uses attributes by default' => {
     is-deeply $fh.encoding, 'bin',  '.encoding remains same after open';
     is-deeply $fh.chomp,    False, '.chomp remains same after open';
 
+    #?rakudo.jvm todo 'problem with Buf[uint8], probably related to RT #128041'
     is-deeply $fh.slurp, Buf[uint8].new($content.encode),
         '.encoding is respected';
     $fh.close;
@@ -376,6 +377,7 @@ subtest '.open uses attributes by default' => {
 
     $fh.chomp = True; # set chomp back on to test .nl-in;
     $fh .= open: :rw;
+    #?rakudo.jvm todo 'got: "1foo2\nfoo3hello worldmeow"'
     is-deeply $fh.lines.join, "12\n3hello worldmeow", '.nl-in is respected';
     $fh.close;
 }

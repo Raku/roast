@@ -316,9 +316,10 @@ subtest '.basename' => {
 is-deeply IO::Spec::Win32.is-absolute("/\x[308]"), True,
     'combiners on "/" do not interfere with absolute path detection';
 
-subtest '.absolute with paths that have combiners on slashses' => {
+subtest '.absolute with paths that have combiners on slashes' => {
     plan 2;
     for "/\x[308]", "\\\x[308]" -> $basename {
+        #?rakudo.jvm todo '[io grant] expected: expected: "C:/̈" got: "C:\\̈"'
         is-deeply IO::Path::Win32.new(:volume<C:>, :$basename).absolute,
         "C:$basename", $basename.perl;
     }

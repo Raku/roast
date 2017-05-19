@@ -181,6 +181,7 @@ subtest 'edge-case combers' => {
     }
     plan +@tests;
     for @tests -> ($str, $expected, |args) {
+        #?rakudo.jvm skip 'Type check failed in binding to parameter "$pattern"; expected Regex but got Str ("")'
         is-deeply $str.comb(|args), $expected, "$str.perl() with {args.perl}";
     }
 }

@@ -169,7 +169,7 @@ lives-ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
     my @a = $(1, 2, 3);
     my @b = [>>+<<] @a;
     is-deeply @b, @a, 'reduce metaop of hyper metaop works with only one element';
-    #?rakudo.moar todo 'reduce metaop of hyper metaop works with zero elements'
+    #?rakudo todo 'reduce metaop of hyper metaop works with zero elements'
     eval-lives-ok q|my @a; [>>+<<] @a|, 'reduce metaop of hyper metaop works with zero elements';
 }
 

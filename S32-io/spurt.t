@@ -226,6 +226,7 @@ subtest 'IO::Handle spurt' => { # 2017 IO Grant; IO::Handle.spurt
     ok $fh.spurt( Buf.new: 200), 'can spurt a Blob [method]';
     ok spurt($fh, Buf.new: 200), 'can spurt a Blob [sub]';
     $fh.close;
+    #?rakudo.jvm todo 'problem with Buf[uint8], probably related to RT #128041'
     is-deeply $file.slurp(:bin), Buf[uint8].new(200, 200),
         'Blob spurted contents look right';
 
