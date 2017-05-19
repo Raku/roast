@@ -793,6 +793,7 @@ ok X::AdHoc.new.gist ~~ m:i/explain/,
     "X::AdHoc.new.gist mentions the word 'explain'";
 
 for <fail die throw rethrow resume> -> $meth {
+    #?rakudo.jvm todo 'no typed exception X::Parameter::InvalidConcreteness, yet'
     throws-like 'X::NYI.' ~ $meth, X::Parameter::InvalidConcreteness,
         should-be-concrete => 'True',
         param-is-invocant  => 'True',

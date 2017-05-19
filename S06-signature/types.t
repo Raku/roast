@@ -38,6 +38,7 @@ dies-ok  { g('m') },    'type check forbids bad implicit return';
 }
 
 # RT #126124
+#?rakudo.jvm todo 'no typed exception X::Parameter::InvalidConcreteness, yet'
 {
     throws-like { sub f(Mu:D $a) {}; f(Int) }, X::Parameter::InvalidConcreteness,
         expected           => 'Mu',
