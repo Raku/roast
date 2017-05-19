@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 30;
+plan 31;
 
 {
     my $p = Promise.new;
@@ -82,4 +82,20 @@ plan 30;
     $p.break(X::Test.new(message => "oh crumbs"));
     try await start { await $p };
     like $!.gist, /crumbs/, 'Message not lost in nested await where inner one fails';
+}
+
+subtest 'subclasses create subclassed Promises' => {
+    plan 7;
+    my class Meows is Promise {};
+
+    my $p = Meows.start: { sleep .5 };
+    isa-ok $p,           Meows, '.start';
+    isa-ok $p.then({;}), Meows, '.then (when waiting)';
+    await $p;
+    isa-ok $p.then({;}), Meows, '.then (when original already completed)';
+
+    isa-ok Meows.in(1),           Meows, '.in';
+    isa-ok Meows.at(now + 1),     Meows, '.at';
+    isa-ok Meows.anyof(start {}), Meows, '.anyof';
+    isa-ok Meows.allof(start {}), Meows, '.anyof';
 }
