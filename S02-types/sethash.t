@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 220;
+plan 221;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -542,6 +542,12 @@ subtest 'cloned SetHash gets its own elements storage' => {
     for $sh.pairs { .value = 0; .value = 1 }
     is $sh, "a",
       'Can use $_ from .pairs to restore items in SetHash';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2017-05-20#i_14611351
+    my $s = <a b b c c c>.SetHash;
+    $_ = -1 for $s.values;
+    is-deeply $s, ().SetHash, 'assigning negatives to .value deletes item';
 }
 
 # vim: ft=perl6
