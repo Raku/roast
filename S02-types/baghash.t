@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 265;
+plan 274;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -604,6 +604,45 @@ subtest 'BagHash autovivification of non-existent keys' => {
     my BagHash  $bh5;
     is-deeply   ($bh5<as> = 2), 2, 'correct return of assignment';
     is-deeply   $bh5<as>,       2, 'correct result of assignment';
+}
+
+{
+    my $bh = <a a a>.BagHash;
+    for $bh.values { $_-- }
+    is $bh, "a(2)",
+      'Can use $_ from .values to remove occurrences from BagHash';
+    for $bh.values { $_ = 42 }
+    is $bh, "a(42)",
+      'Can use $_ from .values to set number occurrences in BagHash';
+    for $bh.values { $_ = 0 }
+    is $bh, "",
+      'Can use $_ from .values to remove items from BagHash';
+}
+
+{
+    my $bh = <a a a>.BagHash;
+    for $bh.kv -> \k, \v { v-- }
+    is $bh, "a(2)",
+      'Can use value from .kv to remove occurrences from BagHash';
+    for $bh.kv -> \k, \v { v = 42 }
+    is $bh, "a(42)",
+      'Can use value from .kv to set number occurrences in BagHash';
+    for $bh.kv -> \k, \v { v = 0 }
+    is $bh, "",
+      'Can use $_ from .kv to remove items from BagHash';
+}
+
+{
+    my $bh = <a a a>.BagHash;
+    for $bh.pairs { .value-- }
+    is $bh, "a(2)",
+      'Can use value from .pairs to remove occurrences from BagHash';
+    for $bh.pairs { .value = 42 }
+    is $bh, "a(42)",
+      'Can use value from .pairs to set number occurrences in BagHash';
+    for $bh.pairs { .value = 0 }
+    is $bh, "",
+      'Can use $_ from .pairs to remove items from BagHash';
 }
 
 # vim: ft=perl6
