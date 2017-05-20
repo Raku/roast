@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 39;
+plan 40;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -154,6 +154,18 @@ subtest '+> bit shift' => {
             cmp-ok  15**$n +> $p, '===',  15**$n div 2**$p, "15**$n +> $p"
         }
     }
+}
+
+
+# RT#131306
+subtest 'combination of bit ops in loop keeps giving good result' => {
+    plan 2;
+
+    sub rotr(uint32 $n, uint32 $b) { $n +> $b +| $n +< (32 - $b) };
+    my $first = rotr 1652322944, 18;
+    my $iterated; for ^2000 { $iterated = rotr 1652322944, 18 };
+    is-deeply $first,    27071659120799, 'first iteration';
+    is-deeply $iterated, 27071659120799, '2000th iteration';
 }
 
 # vim: ft=perl6
