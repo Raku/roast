@@ -542,6 +542,7 @@ subtest 'MixHash autovivification of non-existent keys' => {
     is-deeply $a  ∪  $b, $r, 'negative weights remain with  ∪  operator';
     is-deeply $a (|) $b, $r, 'negative weights remain with (|) operator';
 }
+
 {
     my $mh = <a a a>.MixHash;
     for $mh.values { $_-- }

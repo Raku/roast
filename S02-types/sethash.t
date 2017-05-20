@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 211;
+plan 220;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -491,6 +491,57 @@ subtest 'cloned SetHash gets its own elements storage' => {
     $set{$i} = True;
     $i++;
     ok $set{1001}, "SetHash retains object, not container";
+}
+
+{
+    my $sh = <a>.SetHash;
+    for $sh.values { $_-- }
+    is $sh, "",
+      'Can use $_ from .values to remove items from SetHash (1)';
+
+    $sh = <a>.SetHash;
+    for $sh.values { $_ = 0 }
+    is $sh, "",
+      'Can use $_ from .values to remove items from SetHash (2)';
+
+    $sh = <a>.SetHash;
+    for $sh.values { $_ = 0; $_ = 1 }
+    is $sh, "a",
+      'Can use $_ from .values to restore items in SetHash';
+}
+
+{
+    my $sh = <a>.SetHash;
+    for $sh.kv -> \k, \v { v-- }
+    is $sh, "",
+      'Can use value from .kv to remove items from SetHash (1)';
+
+    $sh = <a>.SetHash;
+    for $sh.kv -> \k, \v { v = 0 }
+    is $sh, "",
+      'Can use value from .kv to remove items from SetHash (2)';
+
+    $sh = <a>.SetHash;
+    for $sh.kv -> \k, \v { v = 0; v = 1 }
+    is $sh, "a",
+      'Can use value from .kv to restore items in SetHash';
+}
+
+{
+    my $sh = <a>.SetHash;
+    for $sh.pairs { .value-- }
+    is $sh, "",
+      'Can use $_ from .pairs to remove items from SetHash (1)';
+
+    $sh = <a>.SetHash;
+    for $sh.pairs { .value = 0 }
+    is $sh, "",
+      'Can use $_ from .pairs to remove items from SetHash (2)';
+
+    $sh = <a>.SetHash;
+    for $sh.pairs { .value = 0; .value = 1 }
+    is $sh, "a",
+      'Can use $_ from .pairs to restore items in SetHash';
 }
 
 # vim: ft=perl6
