@@ -119,7 +119,8 @@ subtest '.flush' => {
 subtest '.t returns True for TTY' => {
     plan 1;
     my $tt = shell :out, :err, 'tty';
-    if $tt and my $path = $tt.out.slurp(:close).trim {
+    if $tt and (my $path = $tt.out.slurp(:close).trim)
+      and $path ne 'not a tty' {
         my $fh will leave {.close} = $path.IO.open;
         is-deeply $fh.t, True, '.t on a TTY handle'
     }
