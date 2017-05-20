@@ -545,9 +545,11 @@ subtest 'cloned SetHash gets its own elements storage' => {
 }
 
 { # https://irclog.perlgeek.de/perl6-dev/2017-05-20#i_14611351
+  # https://irclog.perlgeek.de/perl6-dev/2017-05-20#i_14611927
     my $s = <a b b c c c>.SetHash;
     $_ = -1 for $s.values;
-    is-deeply $s, ().SetHash, 'assigning negatives to .value deletes item';
+    is-deeply $s, <a b b c c c>.SetHash,
+        'assigning negatives to .value does not remove the items from SetHash';
 }
 
 # vim: ft=perl6
