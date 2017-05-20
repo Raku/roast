@@ -165,11 +165,12 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     }
 
     # Try to delete all the temp files written.  If any survive, die.
-    my @files = map { "$fnbase.$_" }, <code in out err>;
+    my @files = map { "$fnbase.$_".IO }, <code in out err>;
     for @files -> $f {
-        try unlink $f;
-        if $f.IO ~~ :e {
-            die "Can't unlink '$f'";
+        unlink $f;
+        if $f.e {
+            sleep 3;
+            $f.unlink or die "Can't unlink '$f': $!";
         }
     }
 
