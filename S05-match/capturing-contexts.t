@@ -5,7 +5,7 @@ use MONKEY-TYPING;
 
 use Test;
 use Test::Util;
-plan 63;
+plan 64;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -258,4 +258,38 @@ plan 63;
         '.Bool on succesful Match returns True';
     is-deeply Match.Bool, False, '.Bool on Match:U is False';
 }
+
+subtest 'capture markers work correctly' => {
+    plan 12;
+
+    constant $s = '1234567890foobarMEOW';
+    is-deeply ~($s ~~ /foo <(bar  /), 'bar', '1';
+    is-deeply ~($s ~~ /foo )>bar  /), 'foo', '2';
+    is-deeply ~($s ~~ /fo<(oba)>r /), 'oba', '3';
+
+    is-deeply ~($s ~~ /<:lower>**3 <(<:lower>+   /), 'bar', '4';
+    is-deeply ~($s ~~ /<:lower>**3 )> .+         /), 'foo', '5';
+    is-deeply ~($s ~~ /<:lower>**2 <( .**3 )> .+ /), 'oba', '6';
+
+    my $r = my grammar {
+        token TOP { <foo><bar><ber> }
+        token foo { 12345 <( 67890 }
+        token bar { foo   )> bar   }
+        token ber { M <(EO)>  W    }
+    }.parse: $s;
+    is-deeply ~$r<foo>, '67890', '<foo> (grammar 1)';
+    is-deeply ~$r<bar>, 'foo',   '<bar> (grammar 1)';
+    is-deeply ~$r<ber>, 'EO',    '<ber> (grammar 1)';
+
+    my $r2 = my grammar {
+        token TOP { <foo><bar><ber> }
+        token foo { \d**5 <( \d+ }
+        token bar { <:lower>**3 )> <:lower>+ }
+        token ber { <:upper> <(.**2)> .+  }
+    }.parse: $s;
+    is-deeply ~$r2<foo>, '67890', '<foo> (grammar 2)';
+    is-deeply ~$r2<bar>, 'foo',   '<bar> (grammar 2)';
+    is-deeply ~$r2<ber>, 'EO',    '<ber> (grammar 2)';
+}
+
 # vim: ft=perl6
