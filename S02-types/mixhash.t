@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 236;
+plan 245;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -541,6 +541,44 @@ subtest 'MixHash autovivification of non-existent keys' => {
     my $r = (:a(-10), :b(-20), :c(-10), :d(10)).Mix;
     is-deeply $a  ∪  $b, $r, 'negative weights remain with  ∪  operator';
     is-deeply $a (|) $b, $r, 'negative weights remain with (|) operator';
+}
+{
+    my $mh = <a a a>.MixHash;
+    for $mh.values { $_-- }
+    is $mh, "a(2)",
+      'Can use $_ from .values to remove occurrences from MixHash';
+    for $mh.values { $_ = 42 }
+    is $mh, "a(42)",
+      'Can use $_ from .values to set number occurrences in MixHash';
+    for $mh.values { $_ = 0 }
+    is $mh, "",
+      'Can use $_ from .values to remove items from MixHash';
+}
+
+{
+    my $mh = <a a a>.MixHash;
+    for $mh.kv -> \k, \v { v-- }
+    is $mh, "a(2)",
+      'Can use value from .kv to remove occurrences from MixHash';
+    for $mh.kv -> \k, \v { v = 42 }
+    is $mh, "a(42)",
+      'Can use value from .kv to set number occurrences in MixHash';
+    for $mh.kv -> \k, \v { v = 0 }
+    is $mh, "",
+      'Can use $_ from .kv to remove items from MixHash';
+}
+
+{
+    my $mh = <a a a>.MixHash;
+    for $mh.pairs { .value-- }
+    is $mh, "a(2)",
+      'Can use value from .pairs to remove occurrences from MixHash';
+    for $mh.pairs { .value = 42 }
+    is $mh, "a(42)",
+      'Can use value from .pairs to set number occurrences in MixHash';
+    for $mh.pairs { .value = 0 }
+    is $mh, "",
+      'Can use $_ from .pairs to remove items from MixHash';
 }
 
 # vim: ft=perl6
