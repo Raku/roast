@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 221;
+plan 229;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -250,6 +250,22 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
     is $s.total, 3, '.roll should not change the SetHash';
     is $s.elems, 3, '.roll should not change the SetHash';
+}
+
+# empty SetHash handling of .roll
+{
+    is-deeply ().SetHash.roll, Nil,            '().SetHash.roll -> Nil';
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf'
+    -> $p, $t {
+        is-deeply ().SetHash.roll($p), ().Seq, "().SetHash.roll($t) -> ().Seq"
+    }
+    dies-ok { ().SetHash.roll(NaN) }, '().SetHash.roll(NaN) should die';
 }
 
 # L<S32::Containers/SetHash/pick>

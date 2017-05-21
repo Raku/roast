@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 181;
+plan 189;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -239,6 +239,22 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is +@a, 100, '.roll(100) returns 100 items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
     is $s.total, 3, '.roll should not change Set';
+}
+
+# empty set handling of .roll
+{
+    is-deeply set().roll, Nil,         'empty set.roll -> Nil';
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf'
+    -> $p, $t {
+        is-deeply set().roll($p), ().Seq, "empty set.roll($t) -> ().Seq"
+    }
+    dies-ok { set().roll(NaN) }, 'empty set.roll(NaN) should die';
 }
 
 # L<S32::Containers/Set/pick>
