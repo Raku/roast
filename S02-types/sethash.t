@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 229;
+plan 237;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -294,6 +294,22 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
     is $s.total, 3, '.pick should not change the SetHash';
     is $s.elems, 3, '.pick should not change the SetHash';
+}
+
+# empty SetHash handling of .pick
+{
+    is-deeply ().SetHash.pick, Nil,            '().SetHash.pick -> Nil';
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf'
+    -> $p, $t {
+        is-deeply ().SetHash.pick($p), ().Seq, "().SetHash.pick($t) -> ().Seq"
+    }
+    dies-ok { ().SetHash.pick(NaN) }, '().SetHash.pick(NaN) should die';
 }
 
 # L<S32::Containers/SetHash/grab>

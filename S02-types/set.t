@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 189;
+plan 197;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -281,6 +281,22 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     ok @a.grep(* eq 'b').elems <= 1, '.pick(2) returned at most one "b"';
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
     is $s.total, 3, '.pick should not change Set';
+}
+
+# empty set handling of .pick
+{
+    is-deeply set().pick, Nil,         'empty set.pick -> Nil';
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf'
+    -> $p, $t {
+        is-deeply set().pick($p), ().Seq, "empty set.rpick($t) -> ().Seq"
+    }
+    dies-ok { set().pick(NaN) }, 'empty set.pick(NaN) should die';
 }
 
 # L<S32::Containers/Set/grab>
