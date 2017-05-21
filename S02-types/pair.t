@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 106;
+plan 4 * 19 + 107;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -411,5 +411,9 @@ subtest 'Pair.ACCEPTS' => {
     is-deeply :!bar .ACCEPTS(Foo), True,  'custom class (True, 3)';
     is-deeply :bar  .ACCEPTS(Foo), False, 'custom class (False)';
 }
+
+# RT#131339
+throws-like { Pair.new: <foo bar ber meow>, <meows>, 42 }, X::Multi::NoMatch,
+    'Pair.new with wrong args does not go to Mu.new';
 
 # vim: ft=perl6
