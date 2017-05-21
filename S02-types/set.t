@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 197;
+plan 204;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -294,7 +294,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
       -1,   '-1',
       -Inf, '-Inf'
     -> $p, $t {
-        is-deeply set().pick($p), ().Seq, "empty set.rpick($t) -> ().Seq"
+        is-deeply set().pick($p), ().Seq, "empty set.pick($t) -> ().Seq"
     }
     dies-ok { set().pick(NaN) }, 'empty set.pick(NaN) should die';
 }
@@ -304,6 +304,18 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 {
     my $s = set <a b c>;
     dies-ok { $s.grab }, 'cannot call .grab on a Set';
+
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf',
+      NaN,  'NaN'
+    -> $p, $t {
+        dies-ok { $s.grab($p) }, "cannot call .grab($t) on a Set"
+    }
 }
 
 # L<S32::Containers/Set/grabpairs>
