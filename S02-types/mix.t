@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 199;
+plan 201;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -486,6 +486,11 @@ subtest '.hash does not cause keys to be stringified' => {
     my $r = (:a(-10), :b(-20), :c(-10), :d(10)).Mix;
     is-deeply $a  ∪  $b, $r, 'negative weights remain with  ∪  operator';
     is-deeply $a (|) $b, $r, 'negative weights remain with (|) operator';
+}
+
+{
+    ok Mix.new =:= mix(), 'Mix.new returns the empty mix';
+    ok ().Mix  =:= mix(), '().Mix returns the empty mix';
 }
 
 # vim: ft=perl6
