@@ -81,9 +81,9 @@ is_run '$*OUT.say: \'o\' ~ "k\n"',
     },
     '$*OUT.say: list';
 
-is_run 'my @array = \'o\', \'k\', \'k\'; $*OUT.print: @array',
+is_run 'my @array = <o k k>; $*OUT.print: @array',
     {
-        out => "okk",
+        out => "o k k",
     },
     '$*OUT.print: Array';
 
