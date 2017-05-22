@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 204;
+plan 206;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -462,6 +462,11 @@ subtest '.hash does not cause keys to be stringified' => {
     is-deeply set(42).Mix, Mix.new(42), '.Mix on set gives correct Mix';
     is-deeply set(42).MixHash, MixHash.new(42),
         '.MixHash on set gives correct MixHash';
+}
+
+{
+    ok Set.new =:= set(), 'Set.new returns the empty set';
+    ok ().Set  =:= set(), '().Set returns the empty set';
 }
 
 # vim: ft=perl6
