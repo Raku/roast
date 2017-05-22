@@ -1,228 +1,262 @@
 use v6;
 use Test;
 
-plan 51;
+plan 24;
 
-diag "{elapsed} starting tests";
-my $elapsed;
-sub elapsed {
-    state $last = time;
-    LEAVE $last = time;
-    return "[{ $elapsed = time - $last }s]";
+# test 2 does echo protocol - Internet RFC 862
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+        my $received = $client.recv();
+        $client.print( $received );
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        my $expected = [~] flat '0'..'9', 'a'..'z';
+
+        $^client.print( $expected );
+        my $received = $client.recv();
+        $^client.close();
+
+        is $received, $expected, "echo server and client";
+    };
+
+# test 3 does discard protocol - Internet RFC 863
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+        my $received = $client.recv();
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        $^client.print( [~] flat '0'..'9', 'a'..'z' );
+        my $received = $client.recv();
+        $^client.close();
+
+        nok $received, "discard server and client";
+    };
+
+# test 4 tests recv with a parameter
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+        # Also sends two 3 byte unicode characters
+        $client.print(join '',  '0'..'9', 'a'..'z',
+        chr(0xA001),  chr(0xA002) );
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        my $received;
+
+        is $^client.recv(7), '0123456', "received first 7 characters";
+        is $^client.recv(3), '789', "received next 3 characters";
+        is $^client.recv(26), ([~] 'a' .. 'z'), "remaining 26 were buffered";
+
+        # Multibyte characters
+        # RT #115862
+        $received = $^client.recv(1);
+        is $received, chr(0xA001), "received {chr 0xA001}";
+        is $received.chars, 1, "... which is 1 character";
+
+        $received = $^client.recv(1);
+        is $received.chars, 1, "received another character";
+        # RT #115862
+        is $received, chr(0xA002), "combined the bytes form {chr 0xA002}";
+
+        $^client.close();
+    };
+
+# test 5 tests get()
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+
+        # default line separator
+        use newline :lf;
+        $client.print("'Twas brillig, and the slithy toves\n");
+        $client.print("Did gyre and gimble in the wabe;\n");
+        # custom line separator: \r\n
+        $client.print("All mimsy were the borogoves,\r\n");
+        # another custom separator: .
+        $client.print("And the mome raths outgrabe.");
+        # separator not at the end of the sent data: !
+        $client.print("O frabjous day! Callooh! Callay!");
+
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        my $received;
+
+        is $^client.get(), "'Twas brillig, and the slithy toves",
+          "get() with default separator";
+        is $^client.get(), 'Did gyre and gimble in the wabe;',
+          "default separator";
+
+        $received = $^client.get();
+        is $received, 'All mimsy were the borogoves,',
+          "\\r\\n separator";
+        # RT #109306
+        is $received.encode('ascii').elems, 29,
+          "\\r was not left behind on the string";
+
+        $^client.nl-in = '.';
+        is $^client.get(), 'And the mome raths outgrabe',
+          ". as a separator";
+
+        $^client.nl-in = '!';
+        is $^client.get(), 'O frabjous day',
+          "! separator not at end of string";
+
+        is $^client.get(), ' Callooh',
+          "Multiple separators not at end of string";
+        is $^client.get(), ' Callay',
+          "! separator at end of string";
+
+        $^client.close();
+    };
+
+# RT #116288, test 6 tests read with a parameter
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+
+        for ^4 {
+            $client.print( $_ x 4096 );
+        }
+
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        my $received = $^client.read( 4096 * 4 );
+
+        is $received[0].chr, '0', "received first character";
+        is $received[*-1].chr, '3', "received last character";
+        is $received.bytes, 4096 * 4, "total amount";
+
+        $^client.close();
+    };
+
+# for test 7 and 8
+my $file = $*PROGRAM-NAME.IO.dirname.IO.add("socket-test.bin");
+my Buf $binary = slurp( $file, bin => True );
+
+# test 7 tests recv with binary data
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+
+        $client.write( $binary );
+
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        my $received = $^client.read( $binary.elems );
+
+        is $received, $binary, "successful read binary data";
+
+        $^client.close();
+    };
+
+# test 8 tests recv with binary data.
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+
+        $client.write( $binary );
+
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        my Buf $received = Buf.new;
+        my Buf $chunk;
+
+        # will read in 4 chunks
+        # in binary mode it will return a Buf, not Str
+        while $chunk = $^client.recv( $binary.elems div 4, bin => True ) {
+            $received ~= $chunk;
+        }
+
+        is $received, $binary, "successful received binary data";
+
+        $^client.close();
+    };
+
+# test 9 tests one-byte .read calls
+# When .read is called, it grabs a chunk of data and caches what we don't
+# immediately use. This is testing for a moarbug where that cache would get
+# wiped out
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+
+        $client.print( 'xxxx' );
+
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        my $received = $^client.read( 1 );
+        $received ~= $^client.read( 1 );
+        $received ~= $^client.read( 1 );
+        $received ~= $^client.read( 1 );
+
+        is $received, 'xxxx'.encode('ISO-8859-1'), "test moar cache by reading per byte";
+
+        $^client.close();
+    };
+
+# MoarVM #234
+eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :port($_), :host("127.0.0.1") ); CATCH {next}; next }',
+              'Surviving without SEGV due to incorrect socket connect/close handling';
+
+sub do-test(Block $b-server, Block $b-client) {
+    my $sync   = Channel.new;
+    my $thread = Thread.new(
+        code => {
+            my $server = IO::Socket::INET.new(:localhost<localhost>, :localport(0), :listen);
+
+            $sync.send($server.localport);
+
+            $b-server($server);
+        }
+    );
+
+    $thread.run;
+    my $client = IO::Socket::INET.new(:host<localhost>, :port($sync.receive));
+    $b-client($client);
+    $thread.finish;
 }
-my $toolong = 60;
-
-# L<S32::IO/IO::Socket::INET>
-
-# Testing socket must solve 2 problems: find an unused port to bind to,
-# and fork a client process before the server is blocked in accept().
-
-my $host = '127.0.0.1';   # or 'localhost' may be friendlier
-
-# To find an free port, list the ports currently in use.
-my ( @ports, $netstat_cmd, $netstat_pat, $received, $expected );
-given $*DISTRO.name {
-    when any <linux Linux ubuntu debian> {
-        $netstat_cmd = "netstat --tcp --all --numeric";
-        $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ };
-    }
-    when any 'darwin', 'macosx' {
-        $netstat_cmd = "netstat -f inet -p tcp -a -n";
-        $netstat_pat = rx{ [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ };
-    }
-    when 'solaris' {
-        $netstat_cmd = "netstat -an -P tcp -f inet";
-        $netstat_pat = rx{ [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ }; # same as darwin
-    }
-    when 'mswin32' {
-        $netstat_cmd = "netstat -n";
-        $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ }; # same as linux
-    }
-    default {
-        skip-rest('Operating system not yet supported');
-        exit 0;
-    }
-    # TODO: other operating systems; *BSD etc.	 
-}
-$received = qqx{$netstat_cmd};                    # refactor into 1 line after
-if $received ~~ $netstat_pat { @ports = $/.list; }  # development complete
-                         # was @ports = $/[]      in Rakudo/alpha
-                         #     @ports = $/[0] also now in master
-#warn @ports.elems ~ " PORTS=" ~ @ports;
-
-# sequentially search for the first unused port
-my $port = 1024;
-while $port < 65535 && $port==any(@ports) { $port++; }
-if $port >= 65535 {
-    diag "no free port; aborting";
-    skip-rest 'No port free - cannot test';
-    exit 0;
-}
-diag "{elapsed} Testing on port $port";
-
-
-if $*DISTRO.name eq any <linux Linux ubuntu debian darwin solaris mswin32 macosx> { # please add more valid OS names
-
-    my $is-win;
-    $is-win = True if $*DISTRO.name eq 'mswin32';
-    my $runner = $is-win
-        ?? "SET PERL6_BINARY={$*EXECUTABLE-NAME.IO.absolute} &&"
-        !! "PERL6_BINARY={$*EXECUTABLE-NAME.IO.absolute}";
-
-    # test 2 does echo protocol - Internet RFC 862
-    if $is-win {
-        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 2 $port};
-    } else {
-        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 2 $port};
-    }
-    #warn "TEST 2 $received";
-    $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
-    is $received, $expected, "{elapsed} echo server and client";
-    nok $elapsed > $toolong, "finished in time #1";
-
-    # test 3 does discard protocol - Internet RFC 863
-    if $is-win {
-        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 3 $port};
-    } else {
-        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 3 $port};
-    }
-    #warn "TEST 3 $received";
-    $expected = "discard '' received\n";
-    is $received, $expected, "{elapsed} discard server and client";
-    nok $elapsed > $toolong, "finished in time #2";
-
-    # test 4 tests recv with a parameter
-    if $is-win {
-        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 4 $port};
-    } else {
-        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 4 $port};
-    }
-    $expected = $received.split("\n");
-    my $i = 0;
-    is $expected[$i++], '0123456', "{elapsed} received first 7 characters";
-    nok $elapsed > $toolong, "finished in time #3";
-    is $expected[$i++], '789', "{elapsed} received next 3 characters";
-    nok $elapsed > $toolong, "finished in time #4";
-    is $expected[$i++], 'abcdefghijklmnopqrstuvwxyz', "{elapsed} remaining 26 were buffered";
-    nok $elapsed > $toolong, "finished in time #5";
-    # Multibyte characters
-    # RT #115862
-    is $expected[$i], chr(0xA001), "{elapsed} received {chr 0xA001}";
-    nok $elapsed > $toolong, "finished in time #6";
-    $i++;
-    is $expected[$i++], 1, "{elapsed} ... which is 1 character";
-    nok $elapsed > $toolong, "finished in time #7";
-    is $expected[$i++], 1, "{elapsed} received another character";
-    nok $elapsed > $toolong, "finished in time #8";
-    # RT #115862
-    is $expected[$i], chr(0xA002), "{elapsed} combined the bytes form {chr 0xA002}";
-    nok $elapsed > $toolong, "finished in time #9";
-    $i++;
-
-    # test 5 tests get()
-    if $is-win {
-        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 5 $port};
-    } else {
-        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 5 $port};
-    }
-    $expected = $received.split("\n");
-    $i = 0;
-    is $expected[$i++], "'Twas brillig, and the slithy toves",
-      "{elapsed} get() with default separator";
-    nok $elapsed > $toolong, "finished in time #10";
-    is $expected[$i++], 'Did gyre and gimble in the wabe;',
-      "{elapsed} default separator";
-    nok $elapsed > $toolong, "finished in time #11";
-    is $expected[$i++], 'All mimsy were the borogoves,',
-      "{elapsed} \\r\\n separator";
-    # RT #109306
-    is $expected[$i++], 29,
-      "{elapsed} \\r was not left behind on the string";
-    nok $elapsed > $toolong, "finished in time #12";
-    is $expected[$i++], 'And the mome raths outgrabe',
-      "{elapsed} . as a separator";
-    nok $elapsed > $toolong, "finished in time #13";
-    is $expected[$i++], 'O frabjous day',
-      "{elapsed} ! separator not at end of string";
-    nok $elapsed > $toolong, "finished in time #14";
-    is $expected[$i++], ' Callooh',
-      "{elapsed} Multiple separators not at end of string";
-    nok $elapsed > $toolong, "finished in time #15";
-    is $expected[$i++], ' Callay',
-      "{elapsed} ! separator at end of string";
-
-    # RT #116288, test 6 tests read with a parameter
-    if $is-win {
-        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 6 $port};
-    } else {
-        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 6 $port};
-    }
-    $expected = $received.split("\n");
-    $i = 0;
-    is $expected[$i++], '0', "{elapsed} received first character";
-    nok $elapsed > $toolong, "finished in time #16";
-    is $expected[$i++], '3', "{elapsed} received last character";
-    nok $elapsed > $toolong, "finished in time #17";
-    is $expected[$i++], 4096 * 4, "{elapsed} total amount ";
-    nok $elapsed > $toolong, "finished in time #18";
-
-    # test 7 tests recv with binary data
-    if $is-win {
-        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 7 $port};
-    } else {
-        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 7 $port};
-    }
-    $expected = $received.split("\n");
-    is $expected[0], 'OK-7', "{elapsed} successful read binary data";
-    nok $elapsed > $toolong, "finished in time #19";
-
-    # test 8 tests recv with binary data.
-    if $is-win {
-        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 8 $port};
-    } else {
-        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 8 $port};
-    }
-    $expected = $received.split("\n");
-    is $expected[0], 'OK-8', "{elapsed} successful received binary data";
-    nok $elapsed > $toolong, "finished in time #20";
-
-    # test 9 tests one-byte .read calls
-    # When .read is called, it grabs a chunk of data and caches what we don't
-    # immediately use. This is testing for a moarbug where that cache would get
-    # wiped out
-    if $is-win {
-        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 9 $port};
-    } else {
-        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 9 $port};
-    }
-    $expected = $received.split("\n");
-    $i = 0;
-    is $expected[$i++], 'x', "{elapsed} received first character";
-    nok $elapsed > $toolong, "finished in time #21";
-    is $expected[$i++], 'x', "{elapsed} received last character";
-    nok $elapsed > $toolong, "finished in time #22";
-    is $expected[$i++], 4, "{elapsed} total amount ";
-    nok $elapsed > $toolong, "finished in time #23";
-
-    # test 10 does echo protocol - Internet RFC 862 - with listen/connect methods
-    if $is-win {
-        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 10 $port};
-    } else {
-        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 10 $port};
-    }
-    #warn "TEST 10 $received";
-    $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
-    is $received, $expected, "{elapsed} echo server and client";
-    nok $elapsed > $toolong, "finished in time #1";
-
-    # MoarVM #234
-    eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :port($_), :host("127.0.0.1") ); CATCH {next}; next }',
-                  'Surviving without SEGV due to incorrect socket connect/close handling';
-}
-else {
-    skip "OS '{$*DISTRO.name}' shell support not confirmed", 1;
-}
-
 
 =begin pod
 
