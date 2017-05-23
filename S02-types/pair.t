@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 109;
+plan 4 * 19 + 106;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -319,12 +319,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     is (a => 3).antipair.key, 3, 'Pair.antipair.key';
     isa-ok (a => 3).antipair.key, Int, 'Pair.antipair.key type';
     is (a => 3).antipair.value, 'a', 'Pair.antipair.value';
-}
-
-{
-    is (a => 3).invert[0].key, 3, 'Pair.invert.key';
-    isa-ok (a => 3).invert[0].key, Int, 'Pair.invert.key type';
-    is (a => 3).invert[0].value, 'a', 'Pair.invert.value';
 }
 
 {
