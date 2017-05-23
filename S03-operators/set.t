@@ -27,7 +27,7 @@ for &infix:<∈>, "∈", &infix:<(elem)>, "(elem)" -> &op, $name {
 
 # Is not an element of
 
-for &infix:<∉>, "∈", &infix:<!(elem)>, "!(elem)" -> &op, $name {
+for &infix:<∉>, "∉", &infix:<!(elem)>, "!(elem)" -> &op, $name {
     for
       "marmoset", $s,
       "marmoset", $sh,
