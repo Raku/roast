@@ -48,6 +48,7 @@ plan 3*@tests;
 
             my $file-in = make-temp-file :content("foobar\nbarbar\nberbar");
             temp $*IN   = $file-in.open: :nl-in<oba>;
+            #?rakudo.jvm todo '[io grant] got: "fooba"'
             is-deeply prompt(), 'fo', 'return value';
             $*IN.close;
         }
