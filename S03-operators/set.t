@@ -4,7 +4,7 @@ use Test;
 plan 292;
 
 sub showset($s) { $s.keys.sort.join(' ') }
-sub showkv($x) { $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ') }
+sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
 
 my $s = set <I'm afraid it isn't your day>;
 my $sh = SetHash.new(<I'm afraid it is>); # Tom Stoppard
