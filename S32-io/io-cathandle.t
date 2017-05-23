@@ -7,6 +7,14 @@ plan 40;
 
 # Tests for IO::CatHandle class
 
+sub make-files (*@content) {
+    my @ret = @content.map: -> $content { make-temp-file :$content }
+
+    # Create a random mix of IO::Paths and IO::Handles
+    @ret[$_] .= open for @ret.keys.pick: */3;
+    @ret
+}
+
 subtest '@.handles attribute' => {
     plan 42;
 }
@@ -73,7 +81,13 @@ subtest 'IO method' => {
 }
 
 subtest 'lines method' => {
-    plan 42;
+    plan 3;
+    my $exp = ('a'..'z').list.Seq;
+    sub files { make-files ('a'..'z').rotor(6, :partial)».join: "\n" }
+
+    is-deeply IO::CatHandle.new(files).lines,      $exp,         'no arg';
+    is-deeply IO::CatHandle.new(files).lines(500), $exp,         '$limit 500';
+    is-deeply IO::CatHandle.new(files).lines(5),   $exp.head(5), '$limit 5';
 }
 
 subtest 'lock method' => {
@@ -88,7 +102,7 @@ subtest 'new method' => {
     plan 3;
     isa-ok IO::CatHandle.new, IO::CatHandle, '.new';
 
-    my $fh = my class Foo :: is IO::CatHandle {}.new;
+    my $fh = my class Foo is IO::CatHandle {}.new;
     isa-ok $fh, Foo,           '.new of subclass returns subclass';
     isa-ok $fh, IO::CatHandle, 'instantiated subclass is a CatHandle';
 }
