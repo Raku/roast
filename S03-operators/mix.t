@@ -4,10 +4,7 @@ use Test;
 plan 135;
 
 sub showset($b) { $b.keys.sort.join(' ') }
-
-sub showkv($x) {
-    $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
-}
+sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
 
 # "We're more of the love, blood, and rhetoric school. Well, we can do you blood
 # and love without the rhetoric, and we can do you blood and rhetoric without
