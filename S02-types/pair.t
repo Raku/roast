@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 108;
+plan 4 * 19 + 109;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -417,6 +417,47 @@ subtest 'Pair.ACCEPTS' => {
         'Pair.new with wrong positional args does not go to Mu.new';
     throws-like { Pair.new: :42a                            }, X::Multi::NoMatch,
         'Pair.new with wrong named args does not go to Mu.new';
+}
+
+
+subtest 'Pair.invert' => {
+    my @tests = [ a  => 42, (42 => 'a',).Seq ], [ 42 => 70, (70 => 42, ).Seq ],
+        [ foo => (bar => meow => 42), ((bar => meow => 42) => 'foo',).Seq    ],
+        [ # .invert expands Iterables
+            <a b c> => <d e f>,
+            (:d(<a b c>), :e(<a b c>), :f(<a b c>)).Seq,
+        ],;
+
+    plan 3 + @tests;
+    is-deeply .[0].invert, .[1], .[0].perl for @tests;
+
+
+    # Hashes are also Iterables, but don't guarantee order here:
+    is-deeply (%(<a b c d>) => %(<e f g h>)).invert.sort,
+      (:e<f> => %(<a b c d>), :g<h> => %(<a b c d>)).Seq.sort,
+      (%(<a b c d>) => %(<e f g h>)).perl;
+
+    subtest '(Any) => (Mu)' => {
+        plan 4;
+        given ((Any) => (Mu)).invert {
+            .cache;
+            isa-ok $_, Seq,      "return's type";
+            is-deeply .elems, 1, "return's number of elements";
+            is .[0].key,   Mu,   '.key';
+            is .[0].value, Any,  '.value';
+        }
+    }
+
+    subtest '(Mu) => (Any)' => {
+        plan 4;
+        given ((Mu) => (Any)).invert {
+            .cache;
+            isa-ok $_, Seq,      "return's type";
+            is-deeply .elems, 1, "return's number of elements";
+            is .[0].key,   Any,  '.key';
+            is .[0].value, Mu,   '.value';
+        }
+    }
 }
 
 # vim: ft=perl6
