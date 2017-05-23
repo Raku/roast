@@ -1,13 +1,11 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 plan 3;
 
-constant PATH = 't-S32-io-seek-t.tmp';
-LEAVE unlink PATH;
-
-sink my $fh = open PATH, :rw, :bin, :enc<ASCII>;
-$fh.print: '1234567890abcdefghijABCDEFGHIJ';
+my $fh = make-temp-file(:content<1234567890abcdefghijABCDEFGHIJ>).open: :bin;
 
 #?rakudo.jvm skip "Method 'sink' not found for invocant of class 'BOOTIO'"
 #?DOES 1
