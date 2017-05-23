@@ -13,59 +13,59 @@ my $kb = BagHash.new(<Come, take your bread with joy, and your wine with a glad 
 
 # Is an element of
 
-ok "afraid" ∈ $s, "afraid is an element of Set";
-ok "afraid" ∈ $ks, "afraid is an element of SetHash";
-ok "earthly" ∈ $b, "earthly is an element of Bag";
-ok "your" ∈ $kb, "heaven is an element of BagHash";
-ok "d" ∈ <a b c d e>, "d is an element of a b c d e";
-
-ok "afraid" (elem) $s, "afraid is an element of Set (texas)";
-ok "afraid" (elem) $ks, "afraid is an element of SetHash (texas)";
-ok "earthly" (elem) $b, "earthly is an element of Bag (texas)";
-ok "your" (elem) $kb, "heaven is an element of BagHash (texas)";
-ok "d" (elem) <a b c d e>, "d is an element of a b c d e (texas)";
+for &infix:<∈>, "∈", &infix:<(elem)>, "(elem)" -> &op, $name {
+    for
+      "afraid",  $s,
+      "afraid",  $ks,
+      "earthly", $b,
+      "your",    $kb,
+      "d",       <a b c d e>
+    -> $left, $right {
+        ok op($left,$right), "$left is $name of $right.^name()";
+    }
+}
 
 # Is not an element of
 
-ok "marmoset" ∉ $s, "marmoset is not an element of Set";
-ok "marmoset" ∉ $ks, "marmoset is not an element of SetHash";
-ok "marmoset" ∉ $b, "marmoset is not an element of Bag";
-ok "marmoset" ∉ $kb, "marmoset is not an element of BagHash";
-ok "marmoset" ∉ <a b c d e>, "marmoset is not an element of a b c d e";
-
-ok "hogwash" !(elem) $s, "hogwash is not an element of Set (texas)";
-ok "hogwash" !(elem) $ks, "hogwash is not an element of SetHash (texas)";
-ok "hogwash" !(elem) $b, "hogwash is not an element of Bag (texas)";
-ok "hogwash" !(elem) $kb, "hogwash is not an element of BagHash (texas)";
-ok "hogwash" !(elem) <a b c d e>, "hogwash is not an element of a b c d e (texas)";
+for &infix:<∉>, "∈", &infix:<!(elem)>, "!(elem)" -> &op, $name {
+    for
+      "marmoset", $s,
+      "marmoset", $ks,
+      "marmoset", $b,
+      "marmoset", $kb,
+      "marmoset", <a b c d e>
+    -> $left, $right {
+        ok op($left,$right), "$left is $name of $right.^name()";
+    }
+}
 
 # Contains
 
-ok $s ∋ "afraid", "afraid is contained by Set";
-ok $ks ∋ "afraid", "afraid is contained by SetHash";
-ok $b ∋ "earthly", "earthly is contained by Bag";
-ok $kb ∋ "your", "heaven is contained by BagHash";
-ok <a b c d e> ∋ "d", "d is contained by a b c d e";
-
-ok $s (cont) "afraid", "afraid is contained by Set";
-ok $ks (cont) "afraid", "afraid is contained by SetHash";
-ok $b (cont) "earthly", "earthly is contained by Bag";
-ok $kb (cont) "your", "heaven is contained by BagHash";
-ok <a b c d e> (cont) "d", "d is contained by a b c d e";
+for &infix:<∋>, "∋", &infix:<(cont)>, "(cont)" -> &op, $name {
+    for
+      $s,          "afraid",
+      $ks,         "afraid",
+      $b,          "earthly",
+      $kb,         "your",
+      <a b c d e>, "d"
+    -> $left, $right {
+        ok op($left,$right), "$left.^name() $name $right";
+    }
+}
 
 # Does not contain
 
-ok $s ∌ "marmoset", "marmoset is not contained by Set";
-ok $ks ∌ "marmoset", "marmoset is not contained by SetHash";
-ok $b ∌ "marmoset", "marmoset is not contained by Bag";
-ok $kb ∌ "marmoset", "marmoset is not contained by BagHash";
-ok <a b c d e> ∌ "marmoset", "marmoset is not contained by a b c d e";
-
-ok $s !(cont) "marmoset", "marmoset is not contained by Set";
-ok $ks !(cont) "marmoset", "marmoset is not contained by SetHash";
-ok $b !(cont) "marmoset", "marmoset is not contained by Bag";
-ok $kb !(cont) "marmoset", "marmoset is not contained by BagHash";
-ok <a b c d e> !(cont) "marmoset", "marmoset is not contained by a b c d e";
+for &infix:<∌>, "∌", &infix:<!(cont)>, "!(cont)" -> &op, $name {
+    for
+      $s,          "marmoset",
+      $ks,         "marmoset",
+      $b,          "marmoset",
+      $kb,         "marmoset",
+      <a b c d e>, "marmoset"
+    -> $left, $right {
+        ok op($left,$right), "$left.^name() $name $right";
+    }
+}
 
 # Union
 
