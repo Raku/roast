@@ -12,7 +12,18 @@ my $map  = (effective => 42, factual => 666).Map;
 my $hash = (global => 77, happiness => 999).Hash;
 my $objh = Hash[Any,Any].new((ideas => 56, jocular => 13));
 my $list = <the quick brown fox>;
-my $elem = 10;
+my @elem =
+  "afraid",  $s,
+  "afraid",  $sh,
+  "earthly", $b,
+  "your",    $bh,
+  "before",  $m,
+  "dosage",  $mh,
+  "factual", $map,
+  "global",  $hash,
+  "ideas",   $objh,
+  "quick",   $list,
+;
 
 # Things we need to check for not being an element of
 # Note that we check the modifiable things twice: once being initialized
@@ -32,25 +43,14 @@ my @notelem =
   $list, List.new,           # Iterable
 ;
 
-plan 2 * 2 * ($elem + @notelem) + 2 * 2 * @notelem;
+plan 2 * (2 * @elem/2 + 2 * @notelem) + 2 * (2 * @elem/2 + 2 * @notelem);
 
 # is an element of / contains
 for
   &infix:<∈>,      "∈",      &infix:<∋>,      "∋",
   &infix:<(elem)>, "(elem)", &infix:<(cont)>, "(cont)"
 -> &op, $name, &rop, $rname {
-    for
-      "afraid",  $s,
-      "afraid",  $sh,
-      "earthly", $b,
-      "your",    $bh,
-      "before",  $m,
-      "dosage",  $mh,
-      "factual", $map,
-      "global",  $hash,
-      "ideas",   $objh,
-      "quick",   $list
-    -> $left, $right {
+    for @elem -> $left, $right {
         ok op($left,$right),  "$left is $name of $right.^name()";
         ok rop($right,$left), "$right.^name() $rname $left";
     }
@@ -65,6 +65,10 @@ for
   &infix:<∉>,       "∉",       &infix:<∌>,      "∌",
   &infix:<!(elem)>, "!(elem)", &infix:<!(cont)>, "!(cont)"
 -> &op, $name, &rop, $rname {
+    for @elem -> $left, $right {
+        nok op($left,$right),  "$left is NOT $name of $right.^name()";
+        nok rop($right,$left), "$right.^name() NOT $rname $left";
+    }
     for @notelem -> $right {
         ok op("marmoset",$right),  "marmoset is $name of $right.^name()";
         ok rop($right,"marmoset"), "$right.^name() $rname marmoset";
