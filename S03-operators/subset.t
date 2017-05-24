@@ -13,6 +13,8 @@ my $hash = (global => 77, 999 => "happiness").Hash;
 my $objh = Hash[Any,Any].new((ideas => 56, 13 => "jocular"));
 my $list = <the quick brown fox>;
 my @sse =
+
+# simple cases that where left should be subset of right
   <d c e>.Set,             $s,
   <E D C>.Set,             $sh,
   <c b c>.Bag,             $b,
@@ -25,6 +27,19 @@ my @sse =
   "global",                $hash,
   "ideas",                 $objh,
   "quick",                 $list,
+
+# more specific cases where left should be subset of right
+  <a b>.Set,      <a b b c>.Bag,    # .Bag -> .Set
+  <a b b>.Bag,    <a b c>.Set,      # .Bag -> .Set
+  <a b>.Set,      <a b b c>.Mix,    # .Mix -> .Set
+  <a b b>.Mix,    <a b c>.Set,      # .Mix -> .Set
+  <a b>.Bag,      <a b b c>.Mix,    # .Bag -> .Mix
+  <a b>.Mix,      <a b b c>.Bag,    # .Bag -> .Mix
+
+# negatives in Mix less than non-existing
+  (a => -1).Mix,  bag(),
+  (a => -1).Mix,  mix(),
+  (a => -2).Mix,  (a => -1).Mix,
 ;
 
 # Things we need to check for not being a subset of.  Uses a Set with
