@@ -1,6 +1,14 @@
 use v6;
 use Test;
 
+# This test file tests the following set operators:
+#   (<=)  is a subset of (Texas)
+#   ⊆     is a subset of
+#   ⊈     is NOT a subset of
+#   (>=)  is a superset of (Texas)
+#   ⊇     is a superset of
+#   ⊉     is NOT a superset of
+
 # things we need to check being a subset of
 my $s    = <a b c d e>.Set;
 my $sh   = <A B C D E>.SetHash;
@@ -75,7 +83,7 @@ my @notsse =
   $list, List.new,
 ;
 
-plan 2 * (2 * @sse/2 + 4 * @notsse) + 2 * (2 * @sse/2 + 4 * @notsse);
+plan 2 * (2 * @sse/2 + 4 * @notsse) + (2 * @sse/2 + 4 * @notsse);
 
 my $marmoset = <marmoset>.Set;
 
@@ -114,8 +122,7 @@ for
 
 # is not a subset of / is not a superset of
 for
-  &infix:<⊈>,       "⊈",     &infix:<⊉>,      "⊉",
-  &infix:<<!(<=)>>, "!(<=)", &infix:<<!(>=)>>, "!(>=)"
+  &infix:<⊈>, "⊈", &infix:<⊉>, "⊉"
 -> &op, $name, &rop, $rname {
     for @sse -> $left, $right {
         is-deeply op($left,$right), False,
