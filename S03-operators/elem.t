@@ -1,6 +1,14 @@
 use v6;
 use Test;
 
+# This test file tests the following set operators:
+#   (elem)  is an element of (Texas)
+#   ∈       is an element of
+#   ∉       is NOT an element of
+#   (cont)  contains (Texas)
+#   ∋       contains
+#   ∌       does NOT contain
+
 # things we need to check being an element of
 my $s    = set <I'm afraid it isn't your day>;
 my $sh   = SetHash.new(<I'm afraid it is>); # Tom Stoppard  # hl '
@@ -62,7 +70,7 @@ my @notelem =
   List.new,
 ;
 
-plan 2 * (2 * @elem/2 + 2 * @notelem) + 2 * (2 * @elem/2 + 2 * @notelem);
+plan 2 * (2 * @elem/2 + 2 * @notelem) + (2 * @elem/2 + 2 * @notelem);
 
 # is an element of / contains
 for
@@ -92,8 +100,7 @@ for
 
 # is not an element of / does not contain
 for
-  &infix:<∉>,       "∉",       &infix:<∌>,      "∌",
-  &infix:<!(elem)>, "!(elem)", &infix:<!(cont)>, "!(cont)"
+  &infix:<∉>, "∉", &infix:<∌>, "∌"
 -> &op, $name, &rop, $rname {
     for @elem -> $left, $right {
         is-deeply op($left,$right), False,
