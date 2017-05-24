@@ -89,13 +89,43 @@ subtest 'IO method' => {
 }
 
 subtest 'lines method' => {
-    plan 3;
+    plan 13;
     my $exp = ('a'..'z').list.Seq;
     sub files { make-files ('a'..'z').rotor(6, :partial)».join: "\n" }
 
     is-deeply IO::CatHandle.new(files).lines,      $exp,         'no arg';
     is-deeply IO::CatHandle.new(files).lines(500), $exp,         '$limit 500';
     is-deeply IO::CatHandle.new(files).lines(5),   $exp.head(5), '$limit 5';
+
+    my @files = files;
+    is-deeply IO::CatHandle.new(@files).lines(0), $exp.head(0),
+        '$limit 0 (return value)';
+    is-deeply @files.grep(IO::Handle).grep(*.opened.not).elems, 0,
+        '$limit 0 (all opened handles remained open)';
+
+    @files = files;
+    is-deeply IO::CatHandle.new(@files).lines(:close), $exp,
+        ':close arg (return value)';
+    is-deeply @files.grep(IO::Handle).grep(*.opened).elems, 0,
+        ':close arg (all opened handles got closed)';
+
+    @files = files;
+    is-deeply IO::CatHandle.new(@files).lines(500, :close), $exp,
+        '$limit 500, :close arg (return value)';
+    is-deeply @files.grep(IO::Handle).grep(*.opened).elems, 0,
+        '$limit 500, :close arg (all opened handles got closed)';
+
+    @files = files;
+    is-deeply IO::CatHandle.new(@files).lines(5, :close), $exp.head(5),
+        '$limit 5, :close arg (return value)';
+    is-deeply @files.grep(IO::Handle).grep(*.opened).elems, 0,
+        '$limit 5, :close arg (all opened handles got closed)';
+
+    @files = files;
+    is-deeply IO::CatHandle.new(@files).lines(0, :close), $exp.head(0),
+        '$limit 0, :close arg (return value)';
+    is-deeply @files.grep(IO::Handle).grep(*.opened).elems, 0,
+        '$limit 0, :close arg (all opened handles got closed)';
 }
 
 subtest 'lock method' => {
