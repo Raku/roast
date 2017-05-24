@@ -1,8 +1,9 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 842;
+plan 843;
 
 # Basic test functions specific to rational numbers.
 
@@ -410,6 +411,22 @@ subtest '.Rat/.FatRat coercers' => {
         cmp-ok Nil.FatRat, '==', 0, 'Nil.FatRat is zero';
         cmp-ok Nil.Rat,    '==', 0, 'Nil.Rat    is zero';
     }
+}
+
+subtest 'Rational.Int on zero-denominator rats' => {
+    plan 9;
+    fails-like { (-1/0).Int }, X::Numeric::DivideByZero, '-1/0 (.Int method)';
+    fails-like { ( 0/0).Int }, X::Numeric::DivideByZero,  '0/0 (.Int method)';
+    fails-like { ( 1/0).Int }, X::Numeric::DivideByZero,  '1/0 (.Int method)';
+
+    fails-like { Int(-1/0) }, X::Numeric::DivideByZero, '-1/0 (Int() coercer)';
+    fails-like { Int( 0/0) }, X::Numeric::DivideByZero,  '0/0 (Int() coercer)';
+    fails-like { Int( 1/0) }, X::Numeric::DivideByZero,  '1/0 (Int() coercer)';
+
+    sub t ( Int() \x ) { return x }
+    fails-like { t -1/0 }, X::Numeric::DivideByZero, '-1/0 (signature coercer)';
+    fails-like { t  0/0 }, X::Numeric::DivideByZero,  '0/0 (signature coercer)';
+    fails-like { t  1/0 }, X::Numeric::DivideByZero,  '1/0 (signature coercer)';
 }
 
 # vim: ft=perl6
