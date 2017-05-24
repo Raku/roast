@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 38;
 
 {
     my $capture = \(1,2,3);
@@ -197,6 +197,18 @@ throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture 
 
 	cmp-ok $c1, &[eqv], $c2;
 	cmp-ok $c1, {$^a !=== $^b}, $c2;
+}
+
+# RT#131351
+subtest 'non-Str-key Pairs in List' => {
+    plan 3;
+    quietly is-deeply (Mu => Any,).Capture, \(:Mu(Any)), '(Mu => Any,)';
+    is-deeply (class {method Str {'foo'}} => 42,).Capture,
+        \(:foo(42)), '( custom class => 432,)';
+
+    # use a Hash as a proxy in expected, 'cause we don't know the sort order
+    is-deeply (<10> => <20>, 30 => 40, 1.5 => 1.5).Capture,
+        %('10' => <20>, '30' => 40, '1.5' => 1.5).Capture, 'numerics and allomorphs';
 }
 
 # vim: ft=perl6
