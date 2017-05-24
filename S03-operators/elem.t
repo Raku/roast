@@ -75,7 +75,7 @@ for
     }
     for @notelem {
         if $_ ~~ Pair {
-            is-deeply op(.key,.value), False,
+            is-deeply op(.value,.key), False,
               "$_.value() is NOT $name of $_.key.^name()";
             is-deeply rop(.key,.value), False,
               "$_.key.^name() NOT $rname $_.value()";
@@ -103,7 +103,7 @@ for
     }
     for @notelem {
         if $_ ~~ Pair {
-            is-deeply op(.key,.value), True,
+            is-deeply op(.value,.key), True,
               "$_.value() is NOT $name of $_.key.^name()";
             is-deeply rop(.key,.value), True,
               "$_.key.^name() NOT $rname $_.value()";
