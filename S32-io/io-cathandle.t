@@ -41,7 +41,15 @@ subtest '$.encoding attribute' => {
 
 
 subtest 'close method' => {
-    plan 42;
+    plan 3;
+
+    my @files = make-files 'a'..'z';
+    my $cat = IO::CatHandle.new: @files;
+    cmp-ok @files.grep(IO::Handle).grep(*.opened).elems, '>', 0,
+        'we have some IO::Handles that are open before calling .close';
+    is-deeply $cat.close, True, '.close returns True';
+    is-deeply @files.grep(IO::Handle).grep(*.opened).elems, 0,
+        'all of original IO::Handles got closed';
 }
 
 subtest 'comb method' => {
