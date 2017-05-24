@@ -60,7 +60,7 @@ my @notsse =
   $list, List.new,
 ;
 
-plan 2 * (2 * @sse/2 + 2 * @notsse) + 2 * (2 * @sse/2 + 2 * @notsse);
+plan 2 * (2 * @sse/2 + 4 * @notsse) + 2 * (2 * @sse/2 + 4 * @notsse);
 
 my $marmoset = <marmoset>.Set;
 
@@ -82,6 +82,7 @@ for
             is-deeply rop(.key,.value), False,
               "$_.key.^name() NOT $rname $_.value()";
         }
+
         # assume $marmoset
         else {
             is-deeply op($marmoset,$_), False,
@@ -89,6 +90,10 @@ for
             is-deeply rop($_,$marmoset), False,
               "$_.^name() NOT $rname marmoset";
         }
+
+        # identity check
+        is-deeply op($_,$_),  True, "$_.^name() $name same";
+        is-deeply rop($_,$_), True, "$_.^name() $rname same";
     }
 }
 
@@ -110,6 +115,7 @@ for
             is-deeply rop(.key,.value), True,
               "$_.key.^name() NOT $rname $_.value()";
         }
+
         # assume $marmoset
         else {
             is-deeply op($marmoset,$_), True,
@@ -117,6 +123,10 @@ for
             is-deeply rop($_,$marmoset), True,
               "$_.^name() NOT $rname marmoset";
         }
+
+        # identity check
+        is-deeply op($_,$_),  False, "$_.^name() NOT $name same";
+        is-deeply rop($_,$_), False, "$_.^name() NOT $rname same";
     }
 }
 
