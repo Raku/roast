@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 35;
+plan 34;
 
 # Tests for IO::CatHandle class
 
@@ -209,10 +209,6 @@ subtest 'seek method' => {
 }
 
 subtest 'slurp method' => {
-    plan 0;
-}
-
-subtest 'slurp-rest method' => {
     plan 0;
 }
 
