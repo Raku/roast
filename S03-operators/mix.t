@@ -148,32 +148,24 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
 
 {
 
-    my $b     = mix "e" => 1.1;
-    my $bub   = mix "n" => 2.2, "e" => 2.2, "d" => 2.2;
-    my $buper = mix "n" => 2.2, "e" => 4.4, "d" => 2.2, "y" => 2.2;
+    my $b     = (e => 1.1).Mix;
+    my $bub   = (n => 2.2, e => 2.2, d => 2.2).Mix;
+    my $buper = (n => 2.2, e => 4.4, d => 2.2, y => 2.2).Mix;
 
-    #?rakudo todo 'submix behavior still under discussion'
     ok $b ⊂ $bub, "⊂ - {$b.gist} is a strict submix of {$bub.gist}";
     ok $bub ⊄ $buper, "⊄ - {$bub.gist} is not a strict submix of {$buper.gist}";
-    #?rakudo todo 'submix behavior still under discussion'
     ok $bub ⊆ $buper, "⊆ - {$bub.gist} is a submix of {$buper.gist}";
     ok $buper ⊈ $bub, "⊈ - {$buper.gist} is not a submix of {$bub.gist}";
-    #?rakudo todo 'submix behavior still under discussion'
     ok $bub ⊃ $b, "⊃ - {$bub.gist} is a strict supermix of {$b.gist}";
     ok $buper ⊅ $bub, "⊅ - {$buper.gist} is not a strict supermix of {$bub.gist}";
-    #?rakudo todo 'submix behavior still under discussion'
     ok $buper ⊇ $bub, "⊇ - {$buper.gist} is a supermix of {$bub.gist}"; 
     ok $bub ⊉ $buper, "⊉ - {$bub.gist} is not a supermix of {$buper.gist}";
-    #?rakudo todo 'submix behavior still under discussion'
     ok $b (<) $bub, "(<) - {$b.gist} is a strict submix of {$bub.gist} (texas)";
     ok $bub !(<) $buper, "!(<) - {$bub.gist} is not a strict submix of {$buper.gist} (texas)";
-    #?rakudo todo 'submix behavior still under discussion'
     ok $bub (>) $b, "(>) - {$bub.gist} is a strict supermix of {$b.gist} (texas)";
     ok $buper !(>) $bub, "!(>) - {$buper.gist} is not a strict supermix of {$bub.gist}";
-    #?rakudo todo 'submix behavior still under discussion'
     ok $bub (<=) $buper, "(<=) - {$bub.gist} submix {$buper.gist} (texas)";
     ok $buper !(<=) $bub, "!(<=) - {$buper.gist} is not a submix of {$bub.gist} (texas)";
-    #?rakudo todo 'submix behavior still under discussion'
     ok $buper (>=) $bub, "(>=) - {$buper.gist} is a supermix of {$bub.gist} (texas)"; 
     ok $bub !(>=) $buper, "!(>=) - {$bub.gist} is not a supermix of {$buper.gist} (texas)";
 }
