@@ -351,12 +351,13 @@ subtest '.open uses attributes by default' => {
     my $content = "1foo2\nfoo3";
     my $path = make-temp-file :$content;
     my $fh = IO::Handle.new: :$path,
-        :nl-in<foo>, :nl-out<meow>, :encoding<bin>, :!chomp;
+        :nl-in<foo>, :nl-out<meow>, :bin, :!chomp;
     $fh .= open: :rw;
-    is-deeply $fh.nl-in,    'foo',  '.nl-in remains same after open';
-    is-deeply $fh.nl-out,   'meow', '.nl-out remains same after open';
-    is-deeply $fh.encoding, 'bin',  '.encoding remains same after open';
-    is-deeply $fh.chomp,    False, '.chomp remains same after open';
+    is-deeply $fh.nl-in,    'foo',        '.nl-in remains same after open';
+    is-deeply $fh.nl-out,   'meow',       '.nl-out remains same after open';
+    #?rakudo todo 'Un-todo after IO::Handle encoding refactor merge'
+    is-deeply $fh.encoding, Nil,          '.encoding is Nil due to :bin';
+    is-deeply $fh.chomp,    False,        '.chomp remains same after open';
 
     #?rakudo.jvm todo 'problem with Buf[uint8], probably related to RT #128041'
     is-deeply $fh.slurp, Buf[uint8].new($content.encode),
