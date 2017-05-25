@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 135;
+plan 126;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -154,20 +154,11 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
 
     ok $b ⊂ $bub, "⊂ - {$b.gist} is a strict submix of {$bub.gist}";
     ok $bub ⊄ $buper, "⊄ - {$bub.gist} is not a strict submix of {$buper.gist}";
-    ok $bub ⊆ $buper, "⊆ - {$bub.gist} is a submix of {$buper.gist}";
-    ok $buper ⊈ $bub, "⊈ - {$buper.gist} is not a submix of {$bub.gist}";
     ok $bub ⊃ $b, "⊃ - {$bub.gist} is a strict supermix of {$b.gist}";
-    ok $buper ⊅ $bub, "⊅ - {$buper.gist} is not a strict supermix of {$bub.gist}";
-    ok $buper ⊇ $bub, "⊇ - {$buper.gist} is a supermix of {$bub.gist}"; 
-    ok $bub ⊉ $buper, "⊉ - {$bub.gist} is not a supermix of {$buper.gist}";
     ok $b (<) $bub, "(<) - {$b.gist} is a strict submix of {$bub.gist} (texas)";
     ok $bub !(<) $buper, "!(<) - {$bub.gist} is not a strict submix of {$buper.gist} (texas)";
     ok $bub (>) $b, "(>) - {$bub.gist} is a strict supermix of {$b.gist} (texas)";
     ok $buper !(>) $bub, "!(>) - {$buper.gist} is not a strict supermix of {$bub.gist}";
-    ok $bub (<=) $buper, "(<=) - {$bub.gist} submix {$buper.gist} (texas)";
-    ok $buper !(<=) $bub, "!(<=) - {$buper.gist} is not a submix of {$bub.gist} (texas)";
-    ok $buper (>=) $bub, "(>=) - {$buper.gist} is a supermix of {$bub.gist} (texas)"; 
-    ok $bub !(>=) $buper, "!(>=) - {$bub.gist} is not a supermix of {$buper.gist} (texas)";
 }
 
 {
