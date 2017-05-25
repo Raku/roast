@@ -88,7 +88,30 @@ subtest 'get method' => {
 }
 
 subtest 'getc method' => {
-    plan 0;
+    plan 4;
+    {
+        my $cat = IO::CatHandle.new:
+            make-files ('a'..'z').rotor(6, :partial)».join;
+        my @res; @res.push($_) while ($_ = $cat.getc).DEFINITE;
+        is-deeply @res,     ['a'..'z'], '.getc on handle-path mix';
+        is-deeply $cat.getc, Nil,       '.getc on exhausted cat handle';
+        is-deeply [$cat.getc xx 10], [Nil xx 10],
+            '.getc on exhausted cat handle continues giving Nil';
+    }
+    {
+        my $fh1 = make-temp-file
+            content => "a\x[308]\x[308]\x[308]\n\x[308]\x[308]\n\x[308]c";
+        # start file with a combiner to test it doesn't get combined with
+        # previous file's content
+        my $fh2 = make-temp-file content => "\x[308]a♥b\x[308]♥c♥";
+        my $cat = IO::CatHandle.new: $fh1, $fh2;
+        my @res; @res.push($_) while ($_ = $cat.getc).DEFINITE;
+        #?rakudo.moar todo 'RT 131365'
+        is-deeply @res, [
+            "a\x[308]\x[308]\x[308]", "\n", "\x[308]\x[308]", "\n",
+            "\x[308]", "c", "\x[308]", "a", "♥", "b\x[308]", "♥", "c", "♥"
+        ], '.getc on text with combiners';
+    }
 }
 
 subtest 'gist method' => {
