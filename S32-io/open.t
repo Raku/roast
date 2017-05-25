@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 63;
+plan 62;
 
 my \PATH = 't-S32-io-open.tmp';
 my \PATH-RX = rx/'t-S32-io-open.tmp'/;
@@ -329,12 +329,11 @@ LEAVE unlink PATH;
 # test attribute setting
 {   unlink PATH;
 
-    with open PATH, :w, :bin, :enc<e>, :!chomp, :nl-in[<a b>], :nl-out<meow> {
+    with open PATH, :w, :!chomp, :nl-in[<a b>], :nl-out<meow> {
         LEAVE .close;
         is-deeply .chomp,    False,   'can set $!chomp to False with open';
         is-deeply .nl-in,    [<a b>], 'can set $!nl-in to Array with open';
         is-deeply .nl-out,   'meow',  'can set $!nl-out with open';
-        is-deeply .encoding, 'bin',   ':bin overrides :enc';
     }
 
     with IO::Handle.new(:path(PATH.IO), :!chomp)
