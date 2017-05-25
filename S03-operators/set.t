@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 252;
+plan 204;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -76,72 +76,7 @@ is showset(<a b> (^) <b c> (^) <a d> (^) <a e>), showset(set <c d e>), "Set symm
 
 # symmetric difference with Bag moved to bag.t
 
-# is subset of
-
-ok <your day> ⊆ $s, "'Your day' is subset of Set";
-ok $s ⊆ $s, "Set is subset of itself";
-ok $s ⊆ <I'm afraid it isn't your day old chum>, "Set is subset of string";
-
-ok ($sh (-) set <is>) ⊆ $sh, "Set is subset of SetHash";
-ok $sh ⊆ $sh, "SetHash is subset of itself";
-ok $sh ⊆ <I'm afraid it is my day>, "SetHash is subset of string";
-
-nok $s ⊆ $b, "Set is not a subset of Bag";
-ok $b ⊆ $b, "Bag is subset of itself";
-nok $b ⊆ $s, "Bag is not a subset of Set";
-
-nok $s ⊆ $bh, "Set is not a subset of BagHash";
-ok $bh ⊆ $bh, "BagHash is subset of itself";
-nok $bh ⊆ $s, "BagHash is not a subset of Set";
-
-ok <your day> (<=) $s, "'Your day' is subset of Set";
-ok $s (<=) $s, "Set is subset of itself";
-ok $s (<=) <I'm afraid it isn't your day old chum>, "Set is subset of string";
-
-ok ($sh (-) set <is>) (<=) $sh, "Set is subset of SetHash (texas)";
-ok $sh (<=) $sh, "SetHash is subset of itself (texas)";
-ok $sh (<=) <I'm afraid it is my day>, "SetHash is subset of string (texas)";
-
-nok $s (<=) $b, "Set is not a subset of Bag (texas)";
-ok $b (<=) $b, "Bag is subset of itself (texas)";
-nok $b (<=) $s, "Bag is not a subset of Set (texas)";
-
-nok $s (<=) $bh, "Set is not a subset of BagHash (texas)";
-ok $bh (<=) $bh, "BagHash is subset of itself (texas)";
-nok $bh (<=) $s, "BagHash is not a subset of Set (texas)";
-
-# is not a subset of
-nok <your day> ⊈ $s, "'Your day' is subset of Set";
-nok $s ⊈ $s, "Set is subset of itself";
-nok $s ⊈ <I'm afraid it isn't your day old chum>, "Set is subset of string";
-
-nok ($sh (-) set <is>) ⊈ $sh, "Set is subset of SetHash";
-nok $sh ⊈ $sh, "SetHash is subset of itself";
-nok $sh ⊈ <I'm afraid it is my day>, "SetHash is subset of string";
-
-ok $s ⊈ $b, "Set is not a subset of Bag";
-nok $b ⊈ $b, "Bag is subset of itself";
-ok $b ⊈ $s, "Bag is not a subset of Set";
-
-ok $s ⊈ $bh, "Set is not a subset of BagHash";
-nok $bh ⊈ $bh, "BagHash is subset of itself";
-ok $bh ⊈ $s, "BagHash is not a subset of Set";
-
-nok <your day> !(<=) $s, "'Your day' is subset of Set (texas)";
-nok $s !(<=) $s, "Set is subset of itself (texas)";
-nok $s !(<=) <I'm afraid it isn't your day old chum>, "Set is subset of string (texas)";
-
-nok ($sh (-) set <is>) !(<=) $sh, "Set is subset of SetHash (texas)";
-nok $sh !(<=) $sh, "SetHash is subset of itself (texas)";
-nok $sh !(<=) <I'm afraid it is my day>, "SetHash is subset of string (texas)";
-
-ok $s !(<=) $b, "Set is not a subset of Bag (texas)";
-nok $b !(<=) $b, "Bag is subset of itself (texas)";
-ok $b !(<=) $s, "Bag is not a subset of Set (texas)";
-
-ok $s !(<=) $bh, "Set is not a subset of BagHash (texas)";
-nok $bh !(<=) $bh, "BagHash is subset of itself (texas)";
-ok $bh !(<=) $s, "BagHash is not a subset of Set (texas)";
+# is subset of moved to subset.t
 
 # is proper subset of
 
