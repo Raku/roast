@@ -15,10 +15,6 @@ sub make-files (*@content) {
     @ret
 }
 
-subtest '@.handles attribute' => {
-    plan 42;
-}
-
 subtest '$.path attribute' => {
     plan 42;
 }
