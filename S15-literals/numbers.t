@@ -61,8 +61,7 @@ throws-like "say 0oⅦ55", X::Syntax::Confused, "Numerals in category 'Nl' can't
     # RT #119339
     is_run 'say 069', {
         err => /'Potential difficulties:'
-            .* "Leading 0 is not allowed. For octals, use '0o' prefix,"
-            .* 'but note that 69 is not a valid octal number'
+            .* "Leading 0" .+ '0o'
         /,
         out => "69\n",
         status => 0,
@@ -70,8 +69,7 @@ throws-like "say 0oⅦ55", X::Syntax::Confused, "Numerals in category 'Nl' can't
 
     is_run 'say 067', {
         err => /'Potential difficulties:'
-            .* 'Leading 0 does not indicate octal in Perl 6.'
-            .* 'Please use 0o67 if you mean that.'
+            .* 'Leading 0' .+ '0o67'
         /,
         out => "67\n",
         status => 0,
