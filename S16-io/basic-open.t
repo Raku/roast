@@ -64,6 +64,6 @@ throws-like { open("this-surely-won't-exist", :r) }, Exception,
 
 # RT #126598
 is-deeply make-temp-file(content => "\n").open.get, "",
-    '.get returns last empty';
+    '.get returns last empty line';
 
 # vim: ft=perl6
