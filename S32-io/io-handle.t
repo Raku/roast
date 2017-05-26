@@ -101,8 +101,8 @@ subtest 'iterator-producing read methods not affected by internal chunking' => {
     }
 }
 
-is-deeply IO::Handle.new.encoding, Nil,
-    'unopened handle does not have set encoding';
+is-deeply IO::Handle.new.encoding, 'utf8',
+    'instantiated handle defaults to utf8 encoding';
 
 subtest '.flush' => {
     # XXX TODO: it doesn't appear we're buffering anything at the moment;
