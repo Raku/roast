@@ -86,11 +86,12 @@ my @notsse =
   $objh,
   Hash[Any,Any].new,
   do { my %o := :{ a => 42 }; %o<a>:delete; %o },
-  $list, List.new,
+  $list,
+  List.new,
 
   (a => -1).Mix => set(), # set forces set semantics
-  (a => 1).Mix  => bag(), # positives in Mix with bag not subset
-  (a => 1).Mix  => mix(), # positives in Mix with mix not subset
+  (a =>  1).Mix => bag(), # positives in Mix with bag not subset
+  (a =>  1).Mix => mix(), # positives in Mix with mix not subset
   (a => -1).Mix => (a => -2).Mix,  # right hand more negative
 
 # non-empties not subset of empties
