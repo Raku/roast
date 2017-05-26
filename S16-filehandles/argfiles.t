@@ -53,15 +53,18 @@ $output = Test::Util::run('.say for lines()', :args($tmp-file-name xx 3));
 # RT #126494
 is-deeply @lines, [|<one two three> xx 3], 'lines() using $*ARGFILES, works for more than one file';
 
-$output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n");
-@lines  = lines($output);
+#?rakudo.jvm skip 'hangs'
+{
+    $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n");
+    @lines  = lines($output);
 
-is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if no files are in @*ARGS';
+    is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if no files are in @*ARGS';
 
-$output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n", :args(['-']));
-@lines  = lines($output);
+    $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n", :args(['-']));
+    @lines  = lines($output);
 
-is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if - is in @*ARGS';
+    is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if - is in @*ARGS';
+}
 
 $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n", :@args);
 @lines  = lines($output);
@@ -81,7 +84,6 @@ is-deeply @lines, [<one two three>], 'Changing @*ARGS before calling things on $
 
 # RT #123888
 $output = Test::Util::run('$*IN.nl-in = "+"; say get() eq "A";', "A+B+C+");
-#?rakudo.jvm todo 'RT #123888'
 is $output, "True\n", 'Can change $*IN.nl-in and it has effect';
 
 { # https://github.com/rakudo/rakudo/commit/bd4236359c9150e4490d86275b3c2629b6466566
@@ -162,6 +164,7 @@ subtest ':bin and :enc get passed through in slurp' => {
 }
 
 # RT #130430
+#?rakudo.jvm todo 'appends newlines after expected output'
 is_run ｢.put for $*ARGFILES.lines: 1000｣, "a\nb\nc", {
     :out("a\nb\nc\n"),
     :err(''),
