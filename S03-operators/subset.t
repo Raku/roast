@@ -47,7 +47,13 @@ my @sse =
 # negatives in Mix less than non-existing
   (a => -1).Mix,  bag(),
   (a => -1).Mix,  mix(),
+  (a => -1).Mix,  (a => -1).Mix,
   (a => -2).Mix,  (a => -1).Mix,
+
+# empties always subset of not-empties
+  set(),          <a>.Set,
+  bag(),          <a>.Bag,
+  mix(),          <a>.Mix,
 ;
 
 # Things we need to check for not being a subset of.  Uses a Set with
@@ -68,7 +74,7 @@ my @notsse =
   BagHash.new,
   do { (my $a = <a>.BagHash)<a> = 0; $a },
   $m,
-  mix,
+  mix(),
   $mh,
   MixHash.new,
   do { (my $a = <a>.MixHash)<a> = 0; $a },
@@ -81,6 +87,17 @@ my @notsse =
   Hash[Any,Any].new,
   do { my %o := :{ a => 42 }; %o<a>:delete; %o },
   $list, List.new,
+
+  (a => -1).Mix => set(), # set forces set semantics
+  (a => 1).Mix  => bag(), # positives in Mix with bag not subset
+  (a => 1).Mix  => mix(), # positives in Mix with mix not subset
+  (a => -1).Mix => (a => -2).Mix,  # right hand more negative
+
+# non-empties not subset of empties
+  <a>.Set => set(),
+  <a>.Bag => bag(),
+  <a>.Mix => mix(),
+  mix() => (a=>-1).Mix, # empty not subset because of negative weight
 ;
 
 plan 2 * (2 * @sse/2 + 4 * @notsse) + (2 * @sse/2 + 4 * @notsse);
@@ -100,9 +117,9 @@ for
     }
     for @notsse {
         if $_ ~~ Pair {
-            is-deeply op(.value,.key), False,
+            is-deeply op(.key,.value), False,
               "$_.value() is NOT $name of $_.key.^name()";
-            is-deeply rop(.key,.value), False,
+            is-deeply rop(.value,.key), False,
               "$_.key.^name() NOT $rname $_.value()";
         }
 
@@ -132,9 +149,9 @@ for
     }
     for @notsse {
         if $_ ~~ Pair {
-            is-deeply op(.value,.key), True,
+            is-deeply op(.key,.value), True,
               "$_.value() is NOT $name of $_.key.^name()";
-            is-deeply rop(.key,.value), True,
+            is-deeply rop(.value,.key), True,
               "$_.key.^name() NOT $rname $_.value()";
         }
 
