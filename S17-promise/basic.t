@@ -61,10 +61,8 @@ plan 31;
 }
 
 # RT #129753
-{
-    throws-like { Promise.new ~~ Planned }, Exception,
-        'smartmatching Promise against an Enum does not hang';
-}
+is-deeply Promise.new ~~ Planned, False,
+    'smartmatching Promise against an Enum does not hang';
 
 # RT #130064
 {
