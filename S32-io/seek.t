@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 3;
+plan 4;
 
 my $fh = make-temp-file(:content<1234567890abcdefghijABCDEFGHIJ>).open: :bin;
 
@@ -85,6 +85,47 @@ my $fh = make-temp-file(:content<1234567890abcdefghijABCDEFGHIJ>).open: :bin;
         throws-like { $fh.seek: -300, SeekFromEnd }, Exception,
             'seeking past beginning throws';
     }
+}
+
+#?rakudo.jvm skip "Method 'sink' not found for invocant of class 'BOOTIO'"
+#?DOES 1
+{
+# RT #131376
+subtest '.seek on non-binary handle' => {
+    plan 3;
+
+    subtest 'SeekFromCurrent' => { plan 4;
+        my $fh will leave {.close}
+        = make-temp-file(content => [~] 'a'..'z').open;
+        is-deeply $fh.read(4), Buf[uint8].new(97, 98, 99, 100), '1';
+        $fh.seek: 1, SeekFromCurrent;
+        is-deeply $fh.read(4), Buf[uint8].new(102, 103, 104, 105), '2';
+        $fh.seek: -7, SeekFromCurrent;
+        is-deeply $fh.read(5), Buf[uint8].new(99,100,101,102,103), '3';
+        $fh.seek: 1000, SeekFromCurrent;
+        is-deeply $fh.read(5), Buf[uint8].new(), '4';
+    }
+
+    subtest 'SeekFromBeginning' => { plan 3;
+        my $fh will leave {.close}
+        = make-temp-file(content => [~] 'a'..'z').open;
+        is-deeply $fh.read(4), Buf[uint8].new(97, 98, 99, 100), '1';
+        $fh.seek: 1, SeekFromBeginning;
+        is-deeply $fh.read(4), Buf[uint8].new(98, 99, 100, 101), '2';
+        $fh.seek: 1000, SeekFromBeginning;
+        is-deeply $fh.read(5), Buf[uint8].new(), '3';
+    }
+
+    subtest 'SeekFromEnd' => { plan 3;
+        my $fh will leave {.close}
+        = make-temp-file(content => [~] 'a'..'z').open;
+        is-deeply $fh.read(4), Buf[uint8].new(97, 98, 99, 100), '1';
+        $fh.seek: -10, SeekFromEnd;
+        is-deeply $fh.read(5), Buf[uint8].new(113,114,115,116,117), '2';
+        $fh.seek: 1000, SeekFromEnd;
+        is-deeply $fh.read(10), Buf[uint8].new(), '3';
+    }
+}
 }
 
 # vim: ft=perl6
