@@ -535,7 +535,10 @@ subtest 'cloned SetHash gets its own elements storage' => {
     for $sh.values { $_ = 0 }
     is $sh, "",
       'Can use $_ from .values to remove items from SetHash (2)';
+}
 
+#?rakudo.moar skip 'this behavior upsets uthash, https://github.com/MoarVM/MoarVM/issues/603'
+{
     $sh = <a>.SetHash;
     for $sh.values { $_ = 0; $_ = 1 }
     is $sh, "a",
@@ -552,7 +555,10 @@ subtest 'cloned SetHash gets its own elements storage' => {
     for $sh.kv -> \k, \v { v = 0 }
     is $sh, "",
       'Can use value from .kv to remove items from SetHash (2)';
+}
 
+#?rakudo.moar skip 'this behavior upsets uthash, https://github.com/MoarVM/MoarVM/issues/603'
+{
     $sh = <a>.SetHash;
     for $sh.kv -> \k, \v { v = 0; v = 1 }
     is $sh, "a",
@@ -569,7 +575,10 @@ subtest 'cloned SetHash gets its own elements storage' => {
     for $sh.pairs { .value = 0 }
     is $sh, "",
       'Can use $_ from .pairs to remove items from SetHash (2)';
+}
 
+#?rakudo.moar skip 'this behavior upsets uthash, https://github.com/MoarVM/MoarVM/issues/603'
+{
     $sh = <a>.SetHash;
     for $sh.pairs { .value = 0; .value = 1 }
     is $sh, "a",
