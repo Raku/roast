@@ -101,7 +101,8 @@ subtest 'iterator-producing read methods not affected by internal chunking' => {
     }
 }
 
-is-deeply IO::Handle.new.encoding, 'utf8', 'unopened handle has utf8 encoding';
+is-deeply IO::Handle.new.encoding, Nil,
+    'unopened handle does not have set encoding';
 
 subtest '.flush' => {
     # XXX TODO: it doesn't appear we're buffering anything at the moment;
@@ -167,8 +168,8 @@ subtest '.encoding attribute' => {
         my $fh = IO::Handle.new;
         is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
         is-deeply  $fh.encoding,           'ascii', 'attribute got set';
-        is-deeply ($fh.encoding('bin')),   'bin',   'return value (bin)';
-        is-deeply  $fh.encoding,           'bin',   'attribute got set (bin)';
+        is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
+        is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
     }
 
     subtest 'opened handle' => {
@@ -177,8 +178,8 @@ subtest '.encoding attribute' => {
         #?rakudo.jvm 2 skip '[io grant] StackOverflowError'
         is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
         is-deeply  $fh.encoding,           'ascii', 'attribute got set';
-        is-deeply ($fh.encoding('bin')),   'bin',   'return value (bin)';
-        is-deeply  $fh.encoding,           'bin',   'attribute got set (bin)';
+        is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
+        is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
     }
 
     subtest 'opened, then closed handle' => {
@@ -187,8 +188,8 @@ subtest '.encoding attribute' => {
         $fh.close;
         is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
         is-deeply  $fh.encoding,           'ascii', 'attribute got set';
-        is-deeply ($fh.encoding('bin')),   'bin',   'return value (bin)';
-        is-deeply  $fh.encoding,           'bin',   'attribute got set (bin)';
+        is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
+        is-deeply  $fh.encoding,           Nil,     'attribute got set (Nil)';
     }
 }
 
