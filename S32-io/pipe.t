@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 18;
 
 shell_captures_out_ok '',               '',    0, 'Child succeeds but does not print anything';
 shell_captures_out_ok 'say 42',         '42',  0, 'Child succeeds and prints something';
@@ -62,3 +62,13 @@ with run(:out, $*EXECUTABLE, '-e', '').out {
     quietly is-deeply .Str, '', '.Str is empty string';
     .close;
 }
+
+lives-ok {
+    my $p = run :bin, :out, :err, :in, $*EXECUTABLE, '-e',
+        'my $v = $*IN.get; note $v; say $v';
+    $p.in.write: "42\n".encode;
+    $p.in.flush;
+    $p.in.close;
+    $p.out.slurp(:close);
+    $p.err.slurp(:close);
+}, 'bin pipes in Proc do not crash on open';
