@@ -207,7 +207,21 @@ subtest 'getc method' => {
 }
 
 subtest 'gist method' => {
-    plan 0;
+    plan 5;
+    is-deeply IO::CatHandle    .gist, '(CatHandle)', 'type object';
+    is-deeply IO::CatHandle.new.gist,  'IO::CatHandle(closed)',
+        'instantiated with no handles';
+
+    my @files = make-files <foo bar>;
+    my @paths = map *.IO, @files;
+    my $cat = IO::CatHandle.new: @files;
+    is-deeply $cat.gist, "IO::CatHandle(opened on @paths[0].gist())",
+        'opened, first handle';
+    $cat.read: 4;
+    is-deeply $cat.gist, "IO::CatHandle(opened on @paths[1].gist())",
+        'opened, second handle';
+    $cat.read: 4;
+    is-deeply $cat.gist, 'IO::CatHandle(closed)', 'after exhausting handles';
 }
 
 subtest 'IO method' => {
@@ -299,11 +313,35 @@ subtest 'nl-in method' => {
 }
 
 subtest 'open method' => {
-    plan 0;
+    plan 4;
+
+    my $cat = IO::CatHandle.new;
+    is-deeply $cat.open, $cat, 'after instantiation (no handles)';
+
+    $cat = IO::CatHandle.new: make-files <foo bar>;
+    is-deeply $cat.open, $cat, 'after instantiation';
+
+    $cat.read: 4;
+    is-deeply $cat.open, $cat, 'second handle';
+
+    $cat.read: 4000;
+    is-deeply $cat.open, $cat, 'after exhausting all handles';
 }
 
 subtest 'opened method' => {
-    plan 0;
+    plan 4;
+
+    my $cat = IO::CatHandle.new;
+    is-deeply $cat.opened, False, 'after instantiation (no handles)';
+
+    $cat = IO::CatHandle.new: make-files <foo bar>;
+    is-deeply $cat.opened, True, 'after instantiation';
+
+    $cat.read: 4;
+    is-deeply $cat.opened, True, 'second handle';
+
+    $cat.read: 4000;
+    is-deeply $cat.opened, False, 'after exhausting all handles';
 }
 
 subtest 'path method' => {
@@ -401,7 +439,21 @@ subtest 'split method' => {
 }
 
 subtest 'Str method' => {
-    plan 0;
+    plan 4;
+
+    my @files = make-files <foo bar ber>;
+    my @paths = map *.IO, @files;
+    my $cat = IO::CatHandle.new: @files;
+    is-deeply $cat.Str, @paths[0].Str, '1';
+    $cat.read: 4;
+    is-deeply $cat.Str, @paths[1].Str, '2';
+    $cat.read: 4;
+    is-deeply $cat.Str, @paths[2].Str, '3';
+
+    # Don't spec the exact content of .Str on closed handle
+    # (Rakudo tests in own test suite):
+    $cat.read: 1000;
+    isa-ok $cat.Str, Str, '4';
 }
 
 subtest 'Supply method' => {
