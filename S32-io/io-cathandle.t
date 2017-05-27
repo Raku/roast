@@ -49,7 +49,13 @@ subtest 'close method' => {
 }
 
 subtest 'comb method' => {
-    plan 0;
+    sub cat { IO::CatHandle.new: make-files 'fo♥', 'b♥r', 'meow' }
+    my $str = 'fo♥b♥rmeow';
+    my @tests = \(), \(''), \('♥'), \('♥', 2), \(0), \(1), \(5), \(1000),
+        \(2, 3), \(/../), \(/../, 2), \(/<:alpha>/, 3);
+    plan +@tests;
+
+    is-deeply cat.comb(|$_), $str.comb(|$_), .perl for @tests;
 }
 
 subtest 'DESTROY method' => {
@@ -232,7 +238,17 @@ subtest 'slurp method' => {
 }
 
 subtest 'split method' => {
-    plan 0;
+    sub cat { IO::CatHandle.new: make-files 'fo♥', 'b♥r', 'meow' }
+    my $str = 'fo♥b♥rmeow';
+    my @tests = \(''), \('♥'), \('♥', 2), \(0), \(1), \(5), \(1000),
+        \(2, 3), \(/../), \(/../, 2), \(/<:alpha>/, 3),
+        \('', :skip-empty), \('♥', :k), \('♥', :v), \(0, :kv), \(1, :p),
+        \(5, :skip-empty, :k), \(1000, :skip-empty, :v),
+        \(2, 3, :skip-empty, :kv), \(/../, :skip-empty, :p),
+        \(/../, 2, :skip-empty, :p), \(/<:alpha>/, 3, :skip-empty, :kv);
+    plan +@tests;
+
+    is-deeply cat.split(|$_), $str.split(|$_), .perl for @tests;
 }
 
 subtest 'Str method' => {
