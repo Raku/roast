@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 31;
+plan 29;
 
 # Tests for IO::CatHandle class
 
@@ -21,10 +21,6 @@ sub make-files (*@content) {
     @ret
 }
 
-subtest '$.path attribute' => {
-    plan 0;
-}
-
 subtest '$.chomp attribute' => {
     plan 0;
 }
@@ -32,15 +28,6 @@ subtest '$.chomp attribute' => {
 subtest '$.nl-in attribute' => {
     plan 0;
 }
-
-subtest '$.nl-out attribute' => {
-    plan 0;
-}
-
-subtest '$.encoding attribute' => {
-    plan 0;
-}
-
 
 subtest 'close method' => {
     plan 3;
