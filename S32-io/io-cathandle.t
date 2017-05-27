@@ -203,7 +203,23 @@ subtest 'path method' => {
 }
 
 subtest 'read method' => {
-    plan 0;
+    plan 2;
+    subtest 'binary cat' => { plan 4;
+        my $cat = IO::CatHandle.new: :bin, make-files Blob.new(1, 2, 3),
+            Blob.new(4, 5), Blob.new(6, 7, 8), Blob.new(9, 10, 11, 12, 13, 14);
+        is-deeply $cat.read(4),    buf8.new(1, 2, 3, 4),         '1';
+        is-deeply $cat.read(5),    buf8.new(5, 6, 7, 8, 9),      '2';
+        is-deeply $cat.read(5000), buf8.new(10, 11, 12, 13, 14), '3';
+        is-deeply $cat.read(500),  buf8.new,                     '4';
+    }
+    subtest 'non-binary cat' => { plan 4;
+        my $cat = IO::CatHandle.new: make-files Blob.new(1, 2, 3),
+            Blob.new(4, 5), Blob.new(6, 7, 8), Blob.new(9, 10, 11, 12, 13, 14);
+        is-deeply $cat.read(4),    buf8.new(1, 2, 3, 4),         '1';
+        is-deeply $cat.read(5),    buf8.new(5, 6, 7, 8, 9),      '2';
+        is-deeply $cat.read(5000), buf8.new(10, 11, 12, 13, 14), '3';
+        is-deeply $cat.read(500),  buf8.new,                     '4';
+    }
 }
 
 subtest 'readchars method' => {
