@@ -14,7 +14,7 @@ sub make-files (*@content) {
     }
 
     # Create a random mix of IO::Paths and IO::Handles
-    @ret[$_] .= open for @ret.keys.pick: */3;
+    @ret[$_] .= open for @ret.keys.pick: [max] 1, @ret/3;
     @ret
 }
 
