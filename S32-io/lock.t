@@ -24,7 +24,7 @@ sub test-lock (
         quietly plan $fails-to-lock
             ?? 1
             !! (!$blocks-read and !$fails-read) + $blocks-write + $fails-write
-                + $blocks-read + $fails-read;
+                + $blocks-read + $fails-read + 1;
 
         if $fails-to-lock {
             # XXX TODO: is it meant to be this way for Windows?
@@ -118,6 +118,10 @@ sub test-lock (
         }
 
         $fh.unlock;
+        with $file.open(:w) {
+            ok .lock, '.unlock removes lock';
+            .unlock;
+        }
     }
 }
 
