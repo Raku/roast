@@ -286,7 +286,58 @@ subtest 'Str method' => {
 }
 
 subtest 'Supply method' => {
-    plan 0;
+    plan 5;
+    my @pieces = 'fo♥', 'b♥r', '', 'meow';
+    my $str = [~] @pieces;
+    sub cat-supply (
+        Capture \cat-args    = \(),
+        Capture \supply-args = \(),
+        @bits = @pieces,
+    ) {
+        my @res;
+        my IO::CatHandle $cat .= new: |cat-args, make-files @bits;
+        react whenever $cat.Supply: |supply-args { @res.push: $_ }
+        @res;
+    }
+
+    subtest 'binary cat' => { plan 4;
+        is-deeply cat-supply(\(:bin)), [buf8.new: $str.encode], 'no args';
+        is-deeply cat-supply(\(:bin), \(:2size)), [
+            $str.encode.batch(2).map: {buf8.new: $_}
+        ], 'size 2';
+        is-deeply cat-supply(\(:bin), \(:5size)), [
+            $str.encode.batch(5).map: {buf8.new: $_}
+        ], 'size 5';
+        is-deeply cat-supply(\(:bin), \(:1000size)), [buf8.new: $str.encode],
+          'size 1000';
+    }
+    subtest 'non-binary cat, utf8' => { plan 4;
+        #?rakudo.moar 4 todo 'readchars reads wrong num of chars RT131383'
+        is-deeply cat-supply,                    [$str],         'no args';
+        is-deeply cat-supply(\(), \(:2size)),    [$str.comb: 2], 'size 2';
+        is-deeply cat-supply(\(), \(:5size)),    [$str.comb: 5], 'size 5';
+        is-deeply cat-supply(\(), \(:1000size)), [$str],         'size 1000';
+    }
+    subtest 'non-binary cat, utf8-c8' => { plan 4;
+        my \c = \(:encoding<utf8-c8>);
+        my @bits = buf8.new(200), buf8.new(200, 200), buf8.new(200, 42, 70);
+        my $str = ([~] @bits).decode: 'utf8-c8';
+        #?rakudo.moar 4 todo 'readchars reads wrong num of chars RT131383'
+        is-deeply cat-supply(c, \(         ), @bits), [$str],        'no args';
+        is-deeply cat-supply(c, \(:2size   ), @bits), [$str.comb: 2], 'size 2';
+        is-deeply cat-supply(c, \(:5size   ), @bits), [$str.comb: 5], 'size 5';
+        is-deeply cat-supply(c, \(:1000size), @bits), [$str],      'size 1000';
+    }
+
+    {
+        my IO::CatHandle $cat .= new: make-files @pieces;
+        $cat.slurp;
+        my @res;
+        react whenever $cat.Supply { @res.push: $_ }
+        is-deeply @res, [], 'supply on exhausted cat is empty';
+        react whenever $cat.Supply { @res.push: $_ }
+        is-deeply @res, [], 'supply on exhausted cat is empty (second call)';
+    }
 }
 
 subtest 't method' => {
