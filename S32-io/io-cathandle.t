@@ -89,7 +89,68 @@ subtest 'encoding method' => {
 }
 
 subtest 'eof method' => {
-    plan 0;
+    plan 8;
+
+    is-deeply IO::CatHandle.new      .eof, True, 'no handles from start';
+    is-deeply IO::CatHandle.new(:bin).eof, True, 'no handles from start (bin)';
+
+    subtest 'with 1 handle' => { plan 2;
+        with IO::CatHandle.new(make-files 'foo') {
+            is-deeply .eof, False, 'before exhausting handle';
+            .readchars: 3;
+            is-deeply .eof, True,  'after exhausting handle';
+        }
+    }
+    subtest 'with 1 handle (bin)' => { plan 2;
+        with IO::CatHandle.new(:bin, make-files 'foo') {
+            is-deeply .eof, False, 'before exhausting handle';
+            .read: 3;
+            is-deeply .eof, True,  'after exhausting handle';
+        }
+    }
+    subtest 'with 2 handles' => { plan 5;
+        with IO::CatHandle.new(make-files <foo bar>) {
+            is-deeply .eof, False, 'before exhausting handles';
+            .readchars: 3;
+            is-deeply .eof, False,  'after exhausting first handle';
+            .readchars: 1;
+            is-deeply .eof, False,  'read a bit of second handle';
+            .readchars: 2;
+            is-deeply .eof, True,   'after exhausting all handles';
+            .readchars: 1000;
+            is-deeply .eof, True,   'after read after exhaustion';
+        }
+    }
+    subtest 'with 2 handles (bin)' => { plan 5;
+        with IO::CatHandle.new(:bin, make-files <foo bar>) {
+            is-deeply .eof, False, 'before exhausting handles';
+            .read: 3;
+            is-deeply .eof, False,  'after exhausting first handle';
+            .read: 1;
+            is-deeply .eof, False,  'read a bit of second handle';
+            .read: 2;
+            is-deeply .eof, True,   'after exhausting all handles';
+            .read: 1000;
+            is-deeply .eof, True,   'after read after exhaustion';
+        }
+    }
+
+    # Note: in these tests we're are supposed to get True eof all the time,
+    # since the files have no content in them:
+    subtest 'with 3 handles to empty files' => { plan 2;
+        with IO::CatHandle.new(make-files '', '', '') {
+            is-deeply .eof, True, 'before reads';
+            .slurp;
+            is-deeply .eof, True, 'after reads';
+        }
+    }
+    subtest 'with 3 handles to empty files (bin)' => { plan 2;
+        with IO::CatHandle.new(:bin, make-files '', '', '') {
+            is-deeply .eof, True, 'before reads';
+            .slurp;
+            is-deeply .eof, True, 'after reads';
+        }
+    }
 }
 
 subtest 'flush method' => {
