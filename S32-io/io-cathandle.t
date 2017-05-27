@@ -8,7 +8,10 @@ plan 34;
 # Tests for IO::CatHandle class
 
 sub make-files (*@content) {
-    my @ret = @content.map: -> $content { make-temp-file :$content }
+    my @ret = @content.map: {
+        when IO::Handle { $_ }
+        make-temp-file content => $_
+    }
 
     # Create a random mix of IO::Paths and IO::Handles
     @ret[$_] .= open for @ret.keys.pick: */3;
@@ -208,7 +211,18 @@ subtest 'gist method' => {
 }
 
 subtest 'IO method' => {
-    plan 0;
+    plan 4;
+
+    my @files = make-files <foo bar ber>;
+    my @paths = map *.IO, @files;
+    my $cat = IO::CatHandle.new: @files;
+    is-deeply $cat.IO, @paths[0], '1';
+    $cat.read: 4;
+    is-deeply $cat.IO, @paths[1], '2';
+    $cat.read: 4;
+    is-deeply $cat.IO, @paths[2], '3';
+    $cat.read: 1000;
+    is-deeply $cat.IO, Nil, '4';
 }
 
 subtest 'lines method' => {
@@ -256,7 +270,18 @@ subtest 'lock method' => {
 }
 
 subtest 'native-descriptor method' => {
-    plan 0;
+    plan 5;
+    my @handles = map { make-temp-file(:content($_)).open }, <foo bar ber>;
+    my $cat = IO::CatHandle.new: @handles, make-temp-file :content<meow>;
+    is-deeply $cat.native-descriptor, @handles[0].native-descriptor, '1';
+    $cat.read: 4;
+    is-deeply $cat.native-descriptor, @handles[1].native-descriptor, '2';
+    $cat.read: 4;
+    is-deeply $cat.native-descriptor, @handles[2].native-descriptor, '3';
+    $cat.read: 4;
+    isa-ok $cat.native-descriptor, Int;
+    $cat.read: 10000;
+    is-deeply $cat.native-descriptor, Nil, 'after exhausting handles';
 }
 
 subtest 'new method' => {
@@ -282,7 +307,18 @@ subtest 'opened method' => {
 }
 
 subtest 'path method' => {
-    plan 0;
+    plan 4;
+
+    my @files = make-files <foo bar ber>;
+    my @paths = map *.IO, @files;
+    my $cat = IO::CatHandle.new: @files;
+    is-deeply $cat.IO, @paths[0], '1';
+    $cat.read: 4;
+    is-deeply $cat.IO, @paths[1], '2';
+    $cat.read: 4;
+    is-deeply $cat.IO, @paths[2], '3';
+    $cat.read: 1000;
+    is-deeply $cat.IO, Nil, '4';
 }
 
 subtest 'read method' => {
@@ -424,7 +460,27 @@ subtest 'Supply method' => {
 }
 
 subtest 't method' => {
-    plan 0;
+    plan 4;
+    my $tty = do {
+        my $tt = shell :out, :err, 'tty';
+        if $tt and (my $path = $tt.out.slurp(:close).trim)
+          and $path ne 'not a tty' {
+            $path.IO.open;
+        }
+        else {
+            make-temp-file(:content<foo>).open
+        }
+    }
+
+    my $cat = IO::CatHandle.new: make-files 'foo', $tty, 'bar';
+    is-deeply $cat.t, False,  '1';
+    $cat.next-handle;
+    is-deeply $cat.t, $tty.t, '2';
+    $cat.next-handle;
+    is-deeply $cat.t, False,  '3';
+    $cat.next-handle;
+    is-deeply $cat.t, False,  'after exhausting handles';
+    $cat.close;
 }
 
 subtest 'tell method' => {
