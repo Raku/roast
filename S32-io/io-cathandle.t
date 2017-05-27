@@ -63,7 +63,29 @@ subtest 'DESTROY method' => {
 }
 
 subtest 'encoding method' => {
-    plan 0;
+    plan 4;
+    is-deeply IO::CatHandle.new.encoding, 'utf8', 'default';
+    is-deeply IO::CatHandle.new(:encoding<utf8-c8>).encoding, 'utf8-c8',
+      'can change via .new';
+
+    subtest 'can change via .encoding while iterating through handles' => {
+        plan 3;
+
+        $_ = IO::CatHandle.new: make-files 'foo', '♥', Buf.new: 200;
+        .encoding: 'ascii';
+        is-deeply .readchars(3), 'foo', 'ascii';
+        .encoding: 'utf8';
+        is-deeply .readchars(1), '♥', 'utf8';
+        .encoding: 'utf8-c8';
+        is-deeply .readchars(1), Buf.new(200).decode('utf8-c8'), 'utf8-c8';
+        .close;
+    }
+
+    with IO::CatHandle.new {
+        .encoding: 'utf8-c8';
+        is-deeply .encoding, 'utf8-c8',
+            'can change via .encoding when no @handles are left';
+    }
 }
 
 subtest 'eof method' => {
