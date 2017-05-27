@@ -15,6 +15,9 @@ sub make-files (*@content) {
 
     # Create a random mix of IO::Paths and IO::Handles
     @ret[$_] .= open for @ret.keys.pick: [max] 1, @ret/3;
+
+    # Make some of the items Str objects
+    @ret[$_] .= IO .= absolute for @ret.keys.pick: [max] 1, @ret/3;
     @ret
 }
 
