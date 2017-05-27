@@ -209,7 +209,26 @@ subtest 'seek method' => {
 }
 
 subtest 'slurp method' => {
-    plan 0;
+    plan 4;
+    my @data = "ab\ncd♥\n", "I ♥ Perl 6", "", "foos";
+    sub files { make-files @data }
+
+    is-deeply IO::CatHandle.new(files).slurp, @data.join, 'non-binary';
+    is-deeply IO::CatHandle.new(files, :bin).slurp,
+        Buf[uint8].new(@data.join.encode), 'binary';
+
+    is-deeply IO::CatHandle.new(
+        :encoding<utf8-c8>, files, make-temp-file content => Buf.new: 200, 200
+    ).slurp,
+          Blob[uint8].new(@data.join.encode).decode('utf8-c8')
+        ~ Blob[uint8].new(200, 200         ).decode('utf8-c8'),
+        ':enc parameter works';
+
+    #?rakudo todo 'malformed 1-char slurp returns empty string RT#131379'
+    # RT #131379
+    throws-like {
+      IO::CatHandle.new(files, make-temp-file content => Buf.new: 200).slurp
+    }, Exception, 'file containing single non-valid-UTF8 byte throws in utf8 slurp';
 }
 
 subtest 'split method' => {
