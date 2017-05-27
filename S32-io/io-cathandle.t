@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 34;
+plan 31;
 
 # Tests for IO::CatHandle class
 
@@ -282,9 +282,11 @@ subtest 'lines method' => {
         '$limit 0, :close arg (all opened handles got closed)';
 }
 
-subtest 'lock method' => {
-    plan 0;
-}
+# subtest 'lock method' => {
+#
+#    This method is tested in S32-io/lock.t
+#
+# }
 
 subtest 'native-descriptor method' => {
     plan 5;
@@ -400,8 +402,56 @@ subtest 'readchars method' => {
     is-deeply $cat.readchars,      '',            '7';
 }
 
-subtest 'seek method' => {
-    plan 0;
+subtest 'seek method and tell method' => {
+    plan 5;
+
+    is-deeply IO::CatHandle.new.seek, Nil, '.seek on zero-handle cat';
+    is-deeply IO::CatHandle.new.tell, Nil, '.tell on zero-handle cat';
+
+    subtest 'SeekFromBeginning' => { plan 3;
+        my $cat = IO::CatHandle.new: :bin, make-files <foo bar ber meow>;
+
+        $cat.seek: 1, SeekFromBeginning;
+        is-deeply $cat.read(3).decode, 'oob', 'first handle';
+
+        $cat.seek: 1000, SeekFromBeginning;
+        is-deeply $cat.read(4).decode, 'berm',
+            "seeking past handle's end does not switch handles";
+
+        throws-like { $cat.seek: -3, SeekFromBeginning }, Exception,
+            'seeking earlier than beginning of active handle throws';
+    }
+
+    subtest 'SeekFromCurrent' => { plan 4;
+        my $cat = IO::CatHandle.new: :bin, make-files <foo bar ber meow>;
+
+        $cat.seek: 1, SeekFromCurrent;
+        is-deeply $cat.read(3).decode, 'oob', 'first handle';
+
+        $cat.seek: -1, SeekFromCurrent;
+        is-deeply $cat.read(4).decode, 'barb', 'first handle';
+
+        $cat.seek: 1000, SeekFromCurrent;
+        is-deeply $cat.read(3).decode, 'meo',
+            "seeking past handle's end does not switch handles";
+
+        throws-like { $cat.seek: -5, SeekFromCurrent }, Exception,
+            'seeking earlier than beginning of active handle throws';
+    }
+
+    subtest 'SeekFromEnd' => { plan 3;
+        my $cat = IO::CatHandle.new: :bin, make-files <foo bar ber meow>;
+
+        $cat.seek: -1, SeekFromEnd;
+        is-deeply $cat.read(3).decode, 'oba', 'first handle';
+
+        $cat.seek: 1000, SeekFromEnd;
+        is-deeply $cat.read(4).decode, 'berm',
+            "seeking past handle's end does not switch handles";
+
+        throws-like { $cat.seek: -5, SeekFromEnd }, Exception,
+            'seeking earlier than beginning of active handle throws';
+    }
 }
 
 subtest 'slurp method' => {
@@ -538,13 +588,11 @@ subtest 't method' => {
     $cat.close;
 }
 
-subtest 'tell method' => {
-    plan 0;
-}
-
-subtest 'unlock method' => {
-    plan 0;
-}
+# subtest 'lock method' => {
+#
+#    This method is tested in S32-io/lock.t
+#
+# }
 
 subtest 'words method' => {
     plan 13;

@@ -5,20 +5,21 @@ use Test::Util;
 
 # Tests for IO::Handle.lock/.unlock methods
 my $SLEEP = 1 * (%*ENV<ROAST_TIMING_SCALE> || 1);
-plan 28;
+plan 29;
 
 #?DOES 1
 sub test-lock (
     Capture :$args1, Str :$args2 = '', :$fails-to-lock,
     :$open-for-write, :$blocks-write, :$fails-write,
     :$open-for-read,  :$blocks-read,  :$fails-read,
+    :$fh is copy, :$file is copy, :$no-close,
 ){
-    my $file = make-temp-file :content<test>;
-    my $fh;
-    $fh = $file.IO.open(:r) if $open-for-read;
-    $fh = $file.IO.open(:w) if $open-for-write;
-    $fh.DEFINITE or die 'Provide :open-for-read or :open-for-write to test';
-    LEAVE $fh.close;
+    $file = make-temp-file :content<test> unless $file;
+    $fh = $file.IO.open(:r) if not $fh and $open-for-read;
+    $fh = $file.IO.open(:w) if not $fh and $open-for-write;
+    $fh.DEFINITE
+        or die 'Provide :open-for-read, :open-for-write, or :fh to test';
+    LEAVE $fh.close unless $no-close;
 
     subtest "$args1.perl(), $args2.perl()" => sub {
         quietly plan $fails-to-lock
@@ -197,6 +198,33 @@ test-lock :open-for-write, :fails-write, :fails-read,
     }, 'we get the shared lock after exclusive lock is unlocked';
 }
 
+subtest 'IO::CatHandle' => {
+    plan 13;
+
+    is-deeply IO::CatHandle.new.lock,   Nil, '.lock on zero-handle cat handle';
+    is-deeply IO::CatHandle.new.unlock, Nil,
+        '.unlock on zero-handle cat handle';
+
+    my $cat = IO::CatHandle.new:
+        make-temp-file(:content<foo>).absolute,
+        make-temp-file(:content<bar>),
+        make-temp-file(:content<ber>).open;
+
+    for ^3 {
+      test-lock :fh($cat), :file($cat.path), :fails-to-lock, :no-close,
+          args1 => \();
+      test-lock :fh($cat), :file($cat.path), :blocks-write,  :no-close,
+          args1 => \(:shared);
+      test-lock :fh($cat), :file($cat.path),  :no-close,
+          args2 => ':non-blocking',
+          args1 => \(:shared, :non-blocking);
+
+      $cat.next-handle;
+    }
+
+    is-deeply $cat.lock,   Nil, '.lock on exhausted cat handle';
+    is-deeply $cat.unlock, Nil, '.unlock on exhausted cat handle';
+}
 
 
 # vim: expandtab shiftwidth=4 ft=perl6
