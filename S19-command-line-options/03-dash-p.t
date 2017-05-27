@@ -24,6 +24,7 @@ switch, and wraps the whole script in
 
 # L<S19/Reference/"Act like sed.">
 
+#?rakudo.jvm skip 'hangs'
 is_run(
     '1',      # program
     "foo\n",  # input
@@ -34,6 +35,7 @@ is_run(
     :compiler-args['-p'],
 );
 
+#?rakudo.jvm skip 'hangs'
 is_run(
     's:g/o/a/',     # program
     "foo\nbar\n",   # input
