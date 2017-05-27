@@ -79,10 +79,10 @@ subtest 'get method' => {
     }
     {
         my $fh1 = make-temp-file(content => "a\nb\nc").open: :!chomp;
-        my $fh2 = make-temp-file(content => "a♥b♥c♥" ).open: :nl-in<♥>;
-        my $cat = IO::CatHandle.new: $fh1, $fh2;
+        my $fh2 = make-temp-file(content => "a♥b♥c♥" ).open: :nl-in[<a b ♥>];
+        my $cat = IO::CatHandle.new: $fh1, $fh2, :!chomp, :nl-in["\n", "♥"];
         my @res; @res.push($_) while ($_ = $cat.get).DEFINITE;
-        is-deeply @res, ["a\n", "b\n", "c", "a", "b", "c"],
+        is-deeply @res, ["a\n", "b\n", "c", "a♥", "b♥", "c♥"],
             '.get with handles set to different chomp/nl-in attributes';
     }
 }
