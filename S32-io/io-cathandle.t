@@ -223,7 +223,21 @@ subtest 'read method' => {
 }
 
 subtest 'readchars method' => {
-    plan 0;
+    plan 8;
+
+    throws-like { IO::CatHandle.new(:bin, make-files 'foo').readchars },
+        X::IO::BinaryMode, 'binary cat';
+
+    my $cat = IO::CatHandle.new:
+        make-files "a♥b\ncd♥\n", "I ♥ Perl 6", "", "foos";
+
+    is-deeply $cat.readchars(4),   "a♥b\n",       '1';
+    is-deeply $cat.readchars(10),  "cd♥\nI ♥ Pe", '2';
+    is-deeply $cat.readchars(6),   'rl 6fo',      '3';
+    is-deeply $cat.readchars,      'os',          '4';
+    is-deeply $cat.readchars(100), '',            '5';
+    is-deeply $cat.readchars(200), '',            '6';
+    is-deeply $cat.readchars,      '',            '7';
 }
 
 subtest 'seek method' => {
