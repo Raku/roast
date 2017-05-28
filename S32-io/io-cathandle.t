@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 26;
+plan 27;
 
 # Tests for IO::CatHandle class
 
@@ -323,6 +323,30 @@ subtest 'new method' => {
     my $fh = my class Foo is IO::CatHandle {}.new: make-files 'foo';
     isa-ok $fh, Foo,           '.new of subclass returns subclass';
     isa-ok $fh, IO::CatHandle, 'instantiated subclass is a CatHandle';
+}
+
+subtest 'next-handle method' => {
+    plan 11;
+
+    my $i = 0;
+    my $cat = IO::CatHandle.new: :on-switch{ $i++ }, make-files <a b c d e f g>;
+
+    # note .readchars below does not switch to next handle. Even though we
+    # reached eof on a currrent handle, we didn't yet ask for more stuff to
+    # cause the a handle to switch.
+    isa-ok    $cat.next-handle,  IO::Handle, '1';
+    is-deeply $cat.readchars(1), 'b',        '2';
+    isa-ok    $cat.next-handle,  IO::Handle, '3';
+    isa-ok    $cat.next-handle,  IO::Handle, '4';
+    is-deeply $cat.readchars(1), 'd',        '5';
+    isa-ok    $cat.next-handle,  IO::Handle, '6';
+    isa-ok    $cat.next-handle,  IO::Handle, '7';
+    isa-ok    $cat.next-handle,  IO::Handle, '8';
+    is-deeply $cat.next-handle,  Nil,        '9';
+    is-deeply $cat.next-handle,  Nil,        '10';
+
+    # 8 explicit calls above + 1 more during .new
+    is-deeply $i, 9, '.next-handle causes .on-switch callable to be called';
 }
 
 subtest 'on-switch method' => {
