@@ -125,7 +125,7 @@ subtest '.seek on non-binary handle' => {
         $fh.seek: 1000, SeekFromEnd;
         is-deeply $fh.read(10), Buf[uint8].new(), '3';
     }
-}
+ }
 }
 
 # vim: ft=perl6
