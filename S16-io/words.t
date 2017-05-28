@@ -198,10 +198,9 @@ is_run ｢my $i = 0; my @words; with ｣ ~ $file.perl ~ ｢ {
 'heuristic for testing whether handle is closed';
 
 {
-    $*ARGFILES = IO::ArgFiles.new: :args[
+    $*ARGFILES = IO::ArgFiles.new:
         make-temp-file(:content<foo bar>), make-temp-file(:content<meow moo>),
-        make-temp-file(:content<I ♥ Perl 6>),
-    ];
+        make-temp-file(:content<I ♥ Perl 6>);
     is-deeply words(), <foo bar meow moo I ♥ Perl 6>».Str.Seq,
         'words() without args uses $*ARGFILES';
 }
