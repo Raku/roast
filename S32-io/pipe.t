@@ -33,7 +33,7 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
     }
 }
 
-#?rakudo.jvm skip 'hangs'
+#?rakudo.jvm skip 'hangs, RT #131393'
 {
     my $sh = shell("$*EXECUTABLE -e \".say for reverse lines\"", :in, :out);
     $sh.in.say: "foo\nbar\nbaz";
@@ -41,7 +41,7 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
     is $sh.out.slurp, "baz\nbar\nfoo\n", 'Can talk to subprocess bidirectional';
 }
 
-#?rakudo.jvm skip 'hangs'
+#?rakudo.jvm skip 'hangs, RT #131393'
 {
     my $sh1 = run($*EXECUTABLE, '-e', 'say join "\n", reverse lines', :in, :out);
     $sh1.in.say: "foo\nbar\nbaz";
