@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 25;
+plan 26;
 
 # Tests for IO::CatHandle class
 
@@ -323,6 +323,102 @@ subtest 'new method' => {
     my $fh = my class Foo is IO::CatHandle {}.new: make-files 'foo';
     isa-ok $fh, Foo,           '.new of subclass returns subclass';
     isa-ok $fh, IO::CatHandle, 'instantiated subclass is a CatHandle';
+}
+
+subtest 'on-switch method' => {
+    plan 10;
+
+    {
+        my $ln;
+        my $dir = make-temp-dir;
+        (my $f1 = $dir.add: 'f1').spurt: "a\nb\nc";
+        (my $f2 = $dir.add: 'f2').spurt: "d\ne\n";
+        (my $f3 = $dir.add: 'f3').spurt: "f\ng\nh\ni";
+        my $cat = IO::CatHandle.new: :on-switch(-> { $ln = 1 }), $f1, $f2, $f3;
+
+        my $res = gather for $cat.lines {
+            take $_ => [$ln++, $cat.path.basename]
+        }
+        is-deeply $res, (
+            "a" => [1, 'f1'], "b" => [2, 'f1'], "c" => [3, 'f1'],
+            "d" => [1, 'f2'], "e" => [2, 'f2'],
+            "f" => [1, 'f3'], "g" => [2, 'f3'], "h" => [3, 'f3'],
+            "i" => [4, 'f3'],
+        ).Seq, "can count files' line numbers (.count 0)"
+    }
+
+    {
+        my $cat = IO::CatHandle.new: :on-switch{
+            $_ and .seek: 1, SeekFromBeginning;
+        }, make-files <foo bar ber>;
+        is-deeply $cat.lines, <oo ar er>.Seq, '.count 1';
+    }
+
+    {
+        my @stuff;
+        my $cat = IO::CatHandle.new: :on-switch(-> $new, $old {
+            $new and $new.seek: 1, SeekFromBeginning;
+            $old and @stuff.push: $old.open.slurp: :close;
+        }), make-files <foo bar ber>;
+        is-deeply $cat.lines, < oo  ar  er>.Seq, '.count 2 (first arg)';
+        is-deeply @stuff,    [<foo bar ber>],    '.count 2 (second arg)';
+    }
+
+    {
+        my @stuff;
+        my $cat = IO::CatHandle.new: :on-switch({
+            my ($new, $old) := @_; # bind to unpack and check we only got 2 args
+            $new and $new.seek: 1, SeekFromBeginning;
+            $old and @stuff.push: $old.open.slurp: :close;
+        }), make-files <foo bar ber>;
+        is-deeply $cat.lines, < oo  ar  er>.Seq, '.count Inf (first arg)';
+        is-deeply @stuff,    [<foo bar ber>],    '.count Inf (second arg)';
+    }
+
+    subtest 'can change .on-switch by assigning to attribute' => {
+        plan 5;
+
+        my $cat = IO::CatHandle.new: make-files <foo bar ber moo>;
+        my @res;
+        $cat.on-switch = { @res.push: 'here' };
+        $cat.read: 4;
+        is-deeply @res, ['here'], 'first change';
+
+        $cat.on-switch = -> $ { @res.push: 'there' };
+        $cat.read: 4;
+        is-deeply @res, [<here there>], 'second change';
+
+        $cat.on-switch = -> $, $ { @res.push: 'meows' };
+        $cat.read: 4;
+        is-deeply @res, [<here there meows>], 'third change';
+
+        $cat.on-switch = { $ = @_; @res.push: 'moos' };
+        $cat.read: 4;
+        is-deeply @res, [<here there meows moos>], 'fourth change';
+        $cat.close;
+
+        @res = ();
+        $cat = IO::CatHandle.new: :on-switch{ @res.push: 'bars' },
+            make-files <foo bar>;
+        $cat.on-switch = { @res.push: '♥' }
+        $cat.read: 4;
+        is-deeply @res, [<bars ♥>],
+            'can change attribute after setting it via .new';
+    }
+
+    {
+        my $i = 0;
+        my $first;
+        my $last;
+        IO::CatHandle.new(on-switch => -> \active, \old {
+              $first := old unless $++;
+              $last  := active if ++$ == 6;
+              $i++;
+          }, make-files <a b c d e>).slurp;
+        is-deeply $i, 6, 'on-switch gets called $handles + 1 number of times';
+        is-deeply $first, Nil, 'second arg on first iteration is Nil';
+        is-deeply $last,  Nil, 'first arg on last iteration is Nil';
+    }
 }
 
 subtest 'open method' => {
