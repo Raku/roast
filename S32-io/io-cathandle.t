@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 29;
+plan 27;
 
 # Tests for IO::CatHandle class
 
@@ -21,12 +21,26 @@ sub make-files (*@content) {
     @ret
 }
 
-subtest '$.chomp attribute' => {
-    plan 0;
-}
+subtest 'chomp method and nl-in method' => {
+    plan 4;
 
-subtest '$.nl-in attribute' => {
-    plan 0;
+    my $cat = IO::CatHandle.new:
+        make-files "0\n1\r\n2Z\n3V4", '', "5\nZ6\r\n♥7♥";
+    (my $lines = $cat.lines).cache;
+
+    is-deeply $lines[^2], ("0", "1"), 'default';
+
+    $cat.chomp = False;
+    $cat.nl-in = [<Z V>];
+    is-deeply $lines[2, 3], ("2Z", "\n3V"), 'changed';
+
+    is-deeply $lines[4, 5], ("4", "5\nZ"), 'attributes get set on next handles';
+
+    $cat.chomp = True;
+    $cat.nl-in = '♥';
+    is-deeply $lines[6, 7], ("6\n", "7"), 'can set .nl-in to a string';
+
+    $cat.close;
 }
 
 subtest 'close method' => {
