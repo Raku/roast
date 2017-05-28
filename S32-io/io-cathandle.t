@@ -44,7 +44,7 @@ subtest 'chomp method and nl-in method' => {
 }
 
 subtest 'close method' => {
-    plan 3;
+    plan 4;
 
     my @files = make-files 'a'..'z';
     my $cat = IO::CatHandle.new: @files;
@@ -53,6 +53,9 @@ subtest 'close method' => {
     is-deeply $cat.close, True, '.close returns True';
     is-deeply @files.grep(IO::Handle).grep(*.opened).elems, 0,
         'all of original IO::Handles got closed';
+
+    is-deeply $cat.slurp, Nil,
+        'all the handles get removed and active handle is niled';
 }
 
 subtest 'comb method' => {
