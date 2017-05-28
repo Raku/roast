@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 27;
+plan 25;
 
 # Tests for IO::CatHandle class
 
@@ -175,10 +175,6 @@ subtest 'eof method' => {
     }
 }
 
-subtest 'flush method' => {
-    plan 0;
-}
-
 subtest 'get method' => {
     plan 3;
     {
@@ -327,10 +323,6 @@ subtest 'new method' => {
     my $fh = my class Foo is IO::CatHandle {}.new: make-files 'foo';
     isa-ok $fh, Foo,           '.new of subclass returns subclass';
     isa-ok $fh, IO::CatHandle, 'instantiated subclass is a CatHandle';
-}
-
-subtest 'nl-in method' => {
-    plan 0;
 }
 
 subtest 'open method' => {
