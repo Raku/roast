@@ -69,7 +69,19 @@ subtest 'comb method' => {
 }
 
 subtest 'DESTROY method' => {
-    plan 0;
+    plan 3;
+
+    my @files = make-files 'a'..'z';
+    my $cat = IO::CatHandle.new: @files;
+    cmp-ok @files.grep(IO::Handle).grep(*.opened).elems, '>', 0,
+        'we have some IO::Handles that are open before calling .DESTROY';
+
+    $cat.DESTROY;
+    is-deeply @files.grep(IO::Handle).grep(*.opened).elems, 0,
+        'all of original IO::Handles got closed';
+
+    is-deeply $cat.slurp, Nil,
+        'all the handles get removed and active handle is niled';
 }
 
 subtest 'encoding method' => {
