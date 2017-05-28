@@ -261,7 +261,6 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     $fh = open($filename, :w);
     lives-ok { $fh.encoding('windows-1252') }, "Set windows-1252 out encoding";
     lives-ok { $fh.print("a¢€‚ƒ„…†‡ˆ‰Š‹ŒŽ") }, "windows-1252 chars to fh";
-#?rakudo.jvm todo 'java.nio.charset.UnmappableCharacterException RT #125075'
     lives-ok { $fh.print("") },"windows-1252 unmapped chars to fh";
     lives-ok { $fh.encoding('ISO-8859-1') }, "reset output fh encoding";
     lives-ok { $fh.print("a¢ÿ") }, "iso-8859-1 chars to fh";
@@ -288,7 +287,6 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     lives-ok { $fh.encoding('ISO-8859-1') }, "reset input fh encoding";
     $s = '';
     lives-ok { $s ~= $fh.getc for 1..3; }, "iso-8859-1 chars from fh";
-#?rakudo.jvm todo 'will fail due to above failures RT #125081'
     is $s, 'a¢ÿ', "correct iso-8859-1 chars from fh";
     lives-ok { $s = $fh.getc }, "iso-8859-1 unmapped char from fh";
 

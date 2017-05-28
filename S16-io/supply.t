@@ -18,7 +18,6 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     {
         my $handle = open($filename);
-        #?rakudo.jvm todo 'got: $["ab", "cd", "e"]'
         tap-ok $handle.Supply(:size(1)),
           [<a b c d e>],
           :!live,
