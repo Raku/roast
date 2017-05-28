@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 27;
+plan 28;
 
 # Tests for IO::CatHandle class
 
@@ -490,6 +490,33 @@ subtest 'path method' => {
     is-deeply $cat.IO, @paths[2], '3';
     $cat.read: 1000;
     is-deeply $cat.IO, Nil, '4';
+}
+
+subtest 'perl method' => {
+    plan 8;
+
+    is-deeply IO::CatHandle    .perl.EVAL, IO::CatHandle,     'type object';
+    is-deeply IO::CatHandle.new.perl.EVAL, IO::CatHandle.new, 'no args';
+
+    my $cat = IO::CatHandle.new: make-files <a b c>;
+    is-deeply $cat.perl.EVAL, $cat, 'just handles';
+
+    $cat = IO::CatHandle.new: :bin, make-files <a b c>;
+    is-deeply $cat.perl.EVAL, $cat, ':bin';
+
+    $cat = IO::CatHandle.new: :encoding<utf8-c8>, make-files <a b c>;
+    is-deeply $cat.perl.EVAL, $cat, ':encoding';
+
+    $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>,
+        make-files <a b c>;
+    is-deeply $cat.perl.EVAL, $cat, ':encoding + :nl-in';
+
+    $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>, :!chomp,
+        make-files <a b c>;
+    is-deeply $cat.perl.EVAL, $cat, ':encoding + :nl-in + :!chomp';
+
+    $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>, :!chomp;
+    is-deeply $cat.perl.EVAL, $cat, ':encoding, :nl-in, :!chomp and no handles';
 }
 
 subtest 'read method' => {
