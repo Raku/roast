@@ -56,8 +56,8 @@ USAGE
 }
 
 # decide between local and PATH perl
-my $p6 = catfile('.', 'perl6');
-$p6 = 'perl6' unless -x $p6;
+my ($p6) = grep -x, map catfile('.', $_), qw/perl6  perl6-m  perl6-j/;
+$p6 = 'perl6' unless $p6;
 
 # implementation and compiler
 my $impl;
@@ -166,4 +166,3 @@ Could not run $cmd
     error: $err
 EO_ERR
 }
-

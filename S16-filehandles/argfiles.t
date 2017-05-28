@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 17;
+plan 16;
 
 sub create-temporary-file ($name = '') {
     my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ $name ~ '-' ~ time;
@@ -103,64 +103,6 @@ subtest '.lines accepts all Numerics as limit' => {
         );
         is-deeply @lines, [<one two three one two>], "{$limit.^name} limit";
     }
-}
-
-subtest ':bin and :enc get passed through in slurp' => {
-    my ($file-bin, $fh-bin) = create-temporary-file 'bin';
-    $fh-bin.print: "\x[10]\x[20]\x[30]";
-    $fh-bin.close;
-
-    my ($file-enc, $fh-enc) = create-temporary-file 'enc';
-    $fh-enc.write: Buf[uint8].new: 174; # char ® in Latin-1
-    $fh-enc.close;
-
-    is_run ｢say slurp :bin｣, :args[$file-bin], {
-        :out("Buf[uint8]:0x<10 20 30>\n"),
-        :err(''),
-        :0status,
-    }, 'slurp(:bin), 1 file';
-
-    is_run ｢say slurp :bin｣, :args[$file-bin, $file-bin], {
-        :out("Buf[uint8]:0x<10 20 30 10 20 30>\n"),
-        :err(''),
-        :0status,
-    }, 'slurp(:bin), 2 files';
-
-    is_run ｢$*ARGFILES.lines(0); say slurp :bin｣, :args[$file-bin], {
-        :out("Buf[uint8]:0x<10 20 30>\n"),
-        :err(''),
-        :0status,
-    }, 'slurp(:bin), $*ARGFILES filehandle already opened';
-
-    is_run ｢say slurp :bin｣, "\x[10]\x[20]\x[30]", {
-        :out("Buf[uint8]:0x<10 20 30>\n"),
-        :err(''),
-        :0status,
-    }, 'slurp(:bin), STDIN';
-
-    is_run ｢say slurp :enc<Latin-1>｣, :args[$file-enc], {
-        :out("®\n"),
-        :err(''),
-        :0status,
-    }, 'slurp(:enc<Latin-1>), 1 file';
-
-    is_run ｢say slurp :enc<Latin-1>｣, :args[$file-enc, $file-enc], {
-        :out("®®\n"),
-        :err(''),
-        :0status,
-    }, 'slurp(:enc<Latin-1>), 2 files';
-
-    is_run ｢$*ARGFILES.lines(0); say slurp :enc<Latin-1>｣, :args[$file-enc], {
-        :out("®\n"),
-        :err(''),
-        :0status,
-    }, 'slurp(:enc<Latin-1>), $*ARGFILES filehandle already opened';
-
-    is_run ｢say slurp :enc<Latin-1>｣, "\x[AE]", {
-        :out("\x[c2]\x[ae]\n"), # is_run sends input in UTF-8
-        :err(''),
-        :0status,
-    }, 'slurp(:enc<Latin-1>), STDIN';
 }
 
 # RT #130430
