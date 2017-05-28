@@ -350,7 +350,7 @@ subtest 'next-handle method' => {
 }
 
 subtest 'on-switch method' => {
-    plan 10;
+    plan 11;
 
     {
         my $ln;
@@ -442,6 +442,16 @@ subtest 'on-switch method' => {
         is-deeply $i, 6, 'on-switch gets called $handles + 1 number of times';
         is-deeply $first, Nil, 'second arg on first iteration is Nil';
         is-deeply $last,  Nil, 'first arg on last iteration is Nil';
+    }
+
+    {
+        my $args;
+        my $cat = IO::CatHandle.new: on-switch => -> \a, \b { $args = (a, b) },
+            make-files <a b c>;
+        $cat.slurp;
+        $cat.next-handle;
+        is-deeply $args, (Nil, Nil),
+            '.on-switch an iteration after handle exhaustion has Nil args'
     }
 }
 
