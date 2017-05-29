@@ -211,7 +211,6 @@ subtest '.say method' => {
 
     my $file = make-temp-file;
     sub test-output (Capture \in, Str:D \out, Str :$nl-out) {
-        $file.open(:w).close; # clear file
         with $nl-out {
             with $file.open(:w, :$nl-out) { .say: |in; .close }
             is-deeply $file.slurp, out ~ $nl-out,
