@@ -57,7 +57,7 @@ is slurp($empty-path), '', "empty files yield empty string";
     #mojibake time
     is slurp($test-path, enc=>'iso-8859-1'),
      "0123456789ABCDEFGé¢¨, èè, ããº", "iso-8859-1 makes mojibake correctly";
-    
+
 }
 
 
