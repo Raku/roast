@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 37;
+plan 38;
 
 # L<S32::IO/IO::Path>
 
@@ -398,4 +398,43 @@ subtest '.path attribute' => {
         is-deeply $path2.path, $str-path2, '.path of $path.IO';
         is-deeply $path3.path, $str-path3, '.path of .new(from parts)';
     }
+}
+
+subtest '.Numeric and related methods' => {
+    plan 25;
+    my $p = make-temp-file;
+    is-deeply    $p.add('3.5' ).Numeric, 3.5,  'Rat (.Numeric)';
+    is-deeply    $p.add('3e5' ).Numeric, 3e5,  'Num (.Numeric)';
+    is-deeply    $p.add('305' ).Numeric, 305,  'Int (.Numeric)';
+    is-deeply    $p.add('1+1i').Numeric, 1+1i, 'Complex (.Numeric)';
+    fails-like { $p.add('mew' ).Numeric }, X::Str::Numeric,
+        'non-numeric  (.Numeric)';
+
+    # The following should fall out out of IO::Path being Cool and can be
+    # handled via .Numeric method, without requiring individual impls:
+
+    is-deeply    $p.add('3.5' ).Rat, 3.5,   'Rat (.Rat)';
+    is-deeply    $p.add('3e1' ).Rat, 30.0,  'Num (.Rat)';
+    is-deeply    $p.add('305' ).Rat, 305.0, 'Int (.Rat)';
+    is-deeply    $p.add('3+0i').Rat, 3.0,   'Complex (.Rat)';
+    fails-like { $p.add('mew' ).Rat }, X::Str::Numeric, 'non-numeric (.Rat)';
+
+    is-deeply    $p.add('3.5' ).Num, 35e-1, 'Rat (.Num)';
+    is-deeply    $p.add('3e1' ).Num, 30e0,  'Num (.Num)';
+    is-deeply    $p.add('305' ).Num, 305e0, 'Int (.Num)';
+    is-deeply    $p.add('3+0i').Num, 3e0,   'Complex (.Num)';
+    fails-like { $p.add('mew' ).Num }, X::Str::Numeric, 'non-numeric (.Num)';
+
+    is-deeply    $p.add('3.5' ).Int, 3,   'Rat (.Int)';
+    is-deeply    $p.add('3e1' ).Int, 30,  'Num (.Int)';
+    is-deeply    $p.add('305' ).Int, 305, 'Int (.Int)';
+    is-deeply    $p.add('3+0i').Int, 3,   'Complex (.Int)';
+    fails-like { $p.add('mew' ).Int }, X::Str::Numeric, 'non-numeric (.Int)';
+
+    is-deeply    $p.add('3.5' ).FatRat, 3.5   .FatRat, 'Rat (.FatRat)';
+    is-deeply    $p.add('3e1' ).FatRat, 3e1   .FatRat, 'Num (.FatRat)';
+    is-deeply    $p.add('305' ).FatRat, 305   .FatRat, 'Int (.FatRat)';
+    is-deeply    $p.add('3+0i').FatRat, <3+0i>.FatRat, 'Complex (.FatRat)';
+    fails-like { $p.add('mew' ).FatRat }, X::Str::Numeric,
+        'non-numeric (.FatRat)';
 }
