@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 35;
+plan 37;
 
 # L<S32::IO/IO::Path>
 
@@ -360,4 +360,42 @@ subtest '.SPEC attribute' => {
 
     throws-like { '.'.IO.SPEC = my class :: is IO::Spec {} }, X::Assignment::RO,
         'cannot change .SPEC by assignment';
+}
+
+subtest '.CWD attribute' => {
+    plan 5;
+    temp $*CWD = make-temp-dir;
+
+    # It is by design that .CWD returns stringified IO::Path
+    is-deeply IO::Path.new('.').CWD, $*CWD.Str, '.new defaults to $*CWD';
+    is-deeply '.'.IO           .CWD, $*CWD.Str, '.IO  defaults to $*CWD';
+
+    my $cwd = make-temp-dir;
+    is-deeply IO::Path.new('.', :CWD($cwd)).CWD, $cwd.Str,
+        '.new accepts :CWD param';
+    is-deeply '.'.IO(:CWD($cwd)).CWD, $*CWD.Str, '.IO ignores :CWD param';
+
+    throws-like { '.'.IO.CWD = make-temp-dir.Str }, X::Assignment::RO,
+        'cannot change .CWD by assignment';
+}
+
+subtest '.path attribute' => {
+    plan 3;
+    my $str-path1 = make-temp-dir.absolute ~ '/foo.txt';
+    my $path1     = IO::Path.new: $str-path1;
+
+    my $str-path2 = $str-path1;
+    my $path2     = $str-path1.IO;
+
+    my $str-path3 = IO::Spec::Win32.join: 'foo', 'bar', 'ber';
+    my $path3     = IO::Path.new: :volume<foo> :dirname<bar> :basename<ber>
+                                  :SPEC(IO::Spec::Win32);
+
+    # we change dirs because unlike .absolute/.relative, .path is
+    # not affected by directory changes
+    indir make-temp-dir, {
+        is-deeply $path1.path, $str-path1, '.path of .new($path)';
+        is-deeply $path2.path, $str-path2, '.path of $path.IO';
+        is-deeply $path3.path, $str-path3, '.path of .new(from parts)';
+    }
 }
