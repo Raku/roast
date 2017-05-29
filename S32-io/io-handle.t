@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 25;
+plan 26;
 
 my $path = "io-handle-testfile";
 
@@ -235,4 +235,28 @@ subtest '.say method' => {
           )
         ), '((Mu) (Foo) I ♥ Perl 6 1 2 [3 5 (foos)] {meow => bar} bar => 42)';
     }
+}
+
+subtest '.print-nl method' => {
+    plan 4;
+
+    my $file = make-temp-file;
+    with $file.open: :w { .print-nl; .close }
+    is-deeply $file.slurp, "\n", 'defaults';
+
+    with $file.open: :w, :nl-out<♥> { .print-nl; .close }
+    is-deeply $file.slurp, "♥", ':nl-out set to ♥';
+
+    with IO::Handle.new(:nl-out("foo\n\n\nbar"), :path($file)).open: :w {
+        .print-nl; .close
+    }
+    is-deeply $file.slurp, "foo\n\n\nbar", ':nl-out set to a string (via .new)';
+
+    with IO::Handle.new: :nl-out<foo>, :path($file) {
+        .open: :w;                  .print-nl; .close;
+        .open: :a, :nl-out<bar>;    .print-nl; .close;
+        .open: :a; .nl-out = 'ber'; .print-nl; .close;
+    }
+    is-deeply $file.slurp, "foobarber",
+        ':nl-out set via .new, then via .open, then via attribute assignment';
 }
