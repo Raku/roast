@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 17;
+plan 18;
 
 # older: L<S16/"Unfiled"/"=item IO.slurp">
 # old: L<S32::IO/IO::FileNode/slurp>
@@ -76,6 +78,39 @@ unlink $empty-path;
 CATCH {
     unlink $test-path;
     unlink $empty-path;
+}
+
+subtest '&slurp(IO::Handle)' => {
+    plan 9;
+
+    sub f (\c) { make-temp-file content => c }
+    is_run 'print slurp', {:0status, :err(''), :out('foobarber')}, :args[
+        'foo'.&f.absolute, 'bar'.&f.absolute, 'ber'.&f.absolute,
+    ], 'slurp() uses $*ARGFILES';
+
+    is_run '$*ARGFILES.encoding: Nil; say slurp', {
+        :0status, :err(''),
+        :out('Buf[uint8]:0x<66 6f 6f 62 61 72 62 65 72>\qq[\n]')
+    }, :args[
+        'foo'.&f.absolute, 'bar'.&f.absolute, 'ber'.&f.absolute,
+    ], 'slurp() uses $*ARGFILES (binary mode)';
+
+    is-deeply slurp('foo'.&f.open), 'foo', 'slurp($fh)';
+    is-deeply slurp('foo'.&f.open: :bin), Buf[uint8].new(102,111,111),
+        'slurp($fh, :bin)';
+    is-deeply slurp(buf8.new(200).&f.open: :enc<utf8-c8>),
+        buf8.new(200).decode('utf8-c8'), 'slurp($fh, :enc<utf8-c8>)';
+
+    with 'foo'.&f.open {
+        is-deeply .&slurp, 'foo', '$fh.&slurp';
+        is-deeply .opened, True, 'without :close, handle stays open';
+        .close;
+    }
+
+    with 'foo'.&f.open {
+        is-deeply .&slurp(:close), 'foo', '$fh.&slurp(:close)';
+        is-deeply .opened, False, 'with :close, handle is closed';
+    }
 }
 
 # vim: ft=perl6
