@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 34;
+plan 35;
 
 # L<S32::IO/IO::Path>
 
@@ -344,4 +344,20 @@ subtest '.parts attribute' => {
 
     check-parts IO::Path::Win32.new('C:/').parts, "C:/",
         :basename(｢\｣),:dirname</>,:volume<C:>;
+}
+
+subtest '.SPEC attribute' => {
+    plan 5;
+    temp $*SPEC = my class Meow is IO::Spec {}
+
+    is-deeply IO::Path.new('.').SPEC, $*SPEC, '.new defaults to $*SPEC';
+    is-deeply '.'.IO                .SPEC, $*SPEC, '.IO  defaults to $*SPEC';
+
+    my class Foos is IO::Spec {}
+    is-deeply IO::Path.new('.', :SPEC(Foos)).SPEC, Foos,
+        '.new accepts :SPEC param';
+    is-deeply '.'.IO(:SPEC(Foos)).SPEC, $*SPEC, '.IO ignores :SPEC param';
+
+    throws-like { '.'.IO.SPEC = my class :: is IO::Spec {} }, X::Assignment::RO,
+        'cannot change .SPEC by assignment';
 }
