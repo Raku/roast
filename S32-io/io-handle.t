@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 24;
+plan 25;
 
 my $path = "io-handle-testfile";
 
@@ -203,5 +203,36 @@ subtest '.perl.EVAL roundtrips' => {
         is-deeply $evaled, $orig, 'instance';
         is-deeply $evaled."$_"(), $orig."$_"(), $_
             for <path  chomp  nl-in  nl-out  encoding>;
+    }
+}
+
+subtest '.say method' => {
+    plan 5*5;
+
+    my $file = make-temp-file;
+    sub test-output (Capture \in, Str:D \out, Str :$nl-out) {
+        $file.open(:w).close; # clear file
+        with $nl-out {
+            with $file.open(:w, :$nl-out) { .say: |in; .close }
+            is-deeply $file.slurp, out ~ $nl-out,
+                in.perl ~ ' :nl-out(' ~ $nl-out.perl ~ ')';
+        }
+        else {
+            with $file.open(:w) { .say: |in; .close }
+            is-deeply $file.slurp, out ~ "\n", in.perl;
+        }
+    }
+
+    for Str, '', 'foos', '♥', "\n" -> $nl-out {
+        test-output :$nl-out, \(       ), "";
+        test-output :$nl-out, \('foo'  ), "foo";
+        test-output :$nl-out, \(<a b c>), "(a b c)";
+        test-output :$nl-out, \(1, 2, 3), "123";
+        test-output :$nl-out, \(
+          (
+            Mu, my class Foo { }, my class { method gist { 'I ♥ Perl 6' } },
+            1, 2, [3, 5, ('foos',).Seq], %(<meow bar>), :42bar.Pair
+          )
+        ), '((Mu) (Foo) I ♥ Perl 6 1 2 [3 5 (foos)] {meow => bar} bar => 42)';
     }
 }
