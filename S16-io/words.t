@@ -197,6 +197,7 @@ is_run ｢my $i = 0; my @words; with ｣ ~ $file.perl ~ ｢ {
     {:err(''), :out('all ok 1501'), :0status},
 'heuristic for testing whether handle is closed';
 
+#?rakudo.jvm skip 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
 {
     $*ARGFILES = IO::ArgFiles.new:
         make-temp-file(:content<foo bar>), make-temp-file(:content<meow moo>),

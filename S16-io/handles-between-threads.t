@@ -40,6 +40,7 @@ is_run('await start { say $*IN.get.uc for ^3 }',
         Q:s"$cat $temp-file | $*EXECUTABLE -e $quote await start { say get().uc } $quote",
         :out);
     #?rakudo.moar todo 'RT #124005'
+    #?rakudo.jvm todo 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
     is $proc.out.get, "FOO", 'reading from $*IN from another thread works (pipe)';
     so $proc.out.close;
 }

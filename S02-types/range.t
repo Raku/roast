@@ -104,6 +104,7 @@ is(+Range, 0, 'type numification');
         "range.excludes-max ro";
 
     # RT #125791
+    #?rakudo.jvm todo 'wrong error message, cmp. Rakudo commit 0c16bb2b01'
     {
         for 0,1 -> $i {
             throws-like { (^10).bounds[$i] = 1 }, X::Assignment::RO,

@@ -211,6 +211,7 @@ subtest 'IO::CatHandle' => {
         make-temp-file(:content<ber>).open;
 
     for ^3 {
+      #?rakudo.jvm 3 skip '[io grant] Could not obtain blocking, shared lock: NonWritableChannelException'
       test-lock :fh($cat), :file($cat.path), :fails-to-lock, :no-close,
           args1 => \();
       test-lock :fh($cat), :file($cat.path), :blocks-write,  :no-close,

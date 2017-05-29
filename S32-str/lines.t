@@ -69,6 +69,7 @@ is "a\nb\nc\n".lines(:count), 3, 'Str.lines(:count)';
 
 
 # RT #115136
+#?rakudo.jvm todo 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
 is_run( 'print lines[0]',
         "abcd\nefgh\nijkl\n",
         { out => "abcd", err => '', status => 0 },
