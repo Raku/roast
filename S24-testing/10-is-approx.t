@@ -74,12 +74,14 @@ subtest 'abs-tol + rel-tol version + optional description', {
     is-approx 1e0, 1e1, :abs-tol<9>,    :rel-tol<.9>;
     is-approx 1e2, 1e3, :abs-tol<900>,  :rel-tol<.9>;
     is-approx 1e3, 1e5, :abs-tol<99e3>, :rel-tol<.99>;
+    #?rakudo.jvm todo 'expected approximately: 1.5, got: 1'
     is-approx   1, 1.5, :abs-tol<1>,    :rel-tol<.4>;
 
     is-approx   0,   0, :abs-tol<9>,    :rel-tol<.9>,  'test desc one';
     is-approx 1e0, 1e1, :abs-tol<9>,    :rel-tol<.9>,  'test desc one';
     is-approx 1e2, 1e3, :abs-tol<900>,  :rel-tol<.9>,  'test desc two';
     is-approx 1e3, 1e5, :abs-tol<99e3>, :rel-tol<.99>, 'test desc three';
+    #?rakudo.jvm todo 'expected approximately: 1.5, got: 1'
     is-approx   1, 1.5, :abs-tol<1>,    :rel-tol<.4>,  'test desc four';
 
     check-fail {is-approx 1, 10, :abs-tol<5>,  :rel-tol<.9>; };
@@ -111,15 +113,19 @@ subtest 'abs tol is correctly calculated', {
 }
 
 subtest 'rel tol is correctly calculated', {
+    #?rakudo.jvm todo 'wrong by factor 10'
     is-approx 1, 10, :rel-tol<.9>;
     check-fail { is-approx 1, 10 + 1e-10, :rel-tol<.9> };
 
+    #?rakudo.jvm todo 'wrong by factor 10'
     is-approx 10, 1, :rel-tol<.9>;
     check-fail { is-approx 10 + 1e-10, 1, :rel-tol<.9> };
 
+    #?rakudo.jvm todo 'wrong by factor 10'
     is-approx -1, -10, :rel-tol<.9>;
     check-fail { is-approx -1, -10 - 1e-10, :rel-tol<.9> };
 
+    #?rakudo.jvm todo 'wrong by factor 10'
     is-approx 10, 1, :rel-tol<.9>;
     check-fail { is-approx -10 - 1e-10, -1, :rel-tol<.9> };
 }

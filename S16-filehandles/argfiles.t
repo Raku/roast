@@ -30,6 +30,7 @@ is $output, "one\n", 'get() should read from $*ARGFILES, which reads from files 
 
 $output = Test::Util::run('say get()', "foo\nbar\nbaz\n");
 
+#?rakudo.jvm todo 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
 is $output, "foo\n", 'get($*ARGFILES) reads from $*IN if no files are in @*ARGS';
 
 $output = Test::Util::run('while get() -> $line { say $line }', :@args);
@@ -84,6 +85,7 @@ is-deeply @lines, [<one two three>], 'Changing @*ARGS before calling things on $
 
 # RT #123888
 $output = Test::Util::run('$*IN.nl-in = "+"; say get() eq "A";', "A+B+C+");
+#?rakudo.jvm todo 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
 is $output, "True\n", 'Can change $*IN.nl-in and it has effect';
 
 { # https://github.com/rakudo/rakudo/commit/bd4236359c9150e4490d86275b3c2629b6466566
@@ -114,6 +116,7 @@ is_run ｢.put for $*ARGFILES.lines: 1000｣, "a\nb\nc", {
 }, '.lines stops when data ends, even if limit has not been reached yet';
 
 # https://github.com/rakudo/rakudo/commit/4b8fd4a4f9
+#?rakudo.jvm todo 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
 is_run ｢run(:in, $*EXECUTABLE, '-e', 'get').in.close｣,
     {:out(''), :err(''), :0status}, 'no crash when ^D with get(ARGFILES)';
 

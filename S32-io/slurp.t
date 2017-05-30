@@ -96,8 +96,10 @@ subtest '&slurp(IO::Handle)' => {
     ], 'slurp() uses $*ARGFILES (binary mode)';
 
     is-deeply slurp('foo'.&f.open), 'foo', 'slurp($fh)';
+    #?rakudo.jvm todo 'problem with equivalence of Buf objects, RT #128041'
     is-deeply slurp('foo'.&f.open: :bin), Buf[uint8].new(102,111,111),
         'slurp($fh, :bin)';
+    #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
     is-deeply slurp(buf8.new(200).&f.open: :enc<utf8-c8>),
         buf8.new(200).decode('utf8-c8'), 'slurp($fh, :enc<utf8-c8>)';
 

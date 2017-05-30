@@ -38,6 +38,7 @@ subtest 'chomp method and nl-in method' => {
 
     $cat.chomp = True;
     $cat.nl-in = '♥';
+    #?rakudo.jvm todo 'got: $("6\r\n", "7")'
     is-deeply $lines[6, 7], ("6\n", "7"), 'can set .nl-in to a string';
 
     $cat.close;
@@ -65,6 +66,8 @@ subtest 'comb method' => {
         \(2, 3), \(/../), \(/../, 2), \(/<:alpha>/, 3);
     plan +@tests;
 
+    #?rakudo.jvm skip 'Type check failed in binding to parameter $size; expected Int but got Str ("")'
+    #?DOES 12
     is-deeply cat.comb(|$_), $str.comb(|$_), .perl for @tests;
 }
 
@@ -98,11 +101,14 @@ subtest 'encoding method' => {
         is-deeply .readchars(3), 'foo', 'ascii';
         .encoding: 'utf8';
         is-deeply .readchars(1), '♥', 'utf8';
+        #?rakudo.jvm emit ## Unsupported VM encoding 'utf8-c8'
         .encoding: 'utf8-c8';
+        #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
         is-deeply .readchars(1), Buf.new(200).decode('utf8-c8'), 'utf8-c8';
         .close;
     }
 
+    #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
     with IO::CatHandle.new {
         .encoding: 'utf8-c8';
         is-deeply .encoding, 'utf8-c8',
@@ -213,7 +219,7 @@ subtest 'getc method' => {
         my $fh2 = make-temp-file content => "\x[308]a♥b\x[308]♥c♥";
         my $cat = IO::CatHandle.new: $fh1, $fh2;
         my @res; @res.push($_) while ($_ = $cat.getc).DEFINITE;
-        #?rakudo.moar todo 'RT 131365'
+        #?rakudo todo 'RT 131365'
         is-deeply @res, [
             "a\x[308]\x[308]\x[308]", "\n", "\x[308]\x[308]", "\n",
             "\x[308]", "c", "\x[308]", "a", "♥", "b\x[308]", "♥", "c", "♥"
@@ -349,7 +355,11 @@ subtest 'next-handle method' => {
     is-deeply $i, 9, '.next-handle causes .on-switch callable to be called';
 }
 
-subtest 'on-switch method' => {
+## please note: I had to add an block around subtest in order to fudge for jvm
+#?rakudo.jvm skip "Method 'sink' not found for invocant of class 'BOOTIO'"
+#?DOES 1
+{
+ subtest 'on-switch method' => {
     plan 11;
 
     {
@@ -453,6 +463,7 @@ subtest 'on-switch method' => {
         is-deeply $args, (Nil, Nil),
             '.on-switch an iteration after handle exhaustion has Nil args'
     }
+ }
 }
 
 subtest 'open method' => {
@@ -514,18 +525,24 @@ subtest 'perl method' => {
     $cat = IO::CatHandle.new: :bin, make-files <a b c>;
     is-deeply $cat.perl.EVAL, $cat, ':bin';
 
+    #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
     $cat = IO::CatHandle.new: :encoding<utf8-c8>, make-files <a b c>;
+    #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
     is-deeply $cat.perl.EVAL, $cat, ':encoding';
 
-    $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>,
-        make-files <a b c>;
+    #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
+    $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>, make-files <a b c>;
+    #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
     is-deeply $cat.perl.EVAL, $cat, ':encoding + :nl-in';
 
-    $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>, :!chomp,
-        make-files <a b c>;
+    #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
+    $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>, :!chomp, make-files <a b c>;
+    #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
     is-deeply $cat.perl.EVAL, $cat, ':encoding + :nl-in + :!chomp';
 
+    #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
     $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>, :!chomp;
+    #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
     is-deeply $cat.perl.EVAL, $cat, ':encoding, :nl-in, :!chomp and no handles';
 }
 
@@ -625,9 +642,11 @@ subtest 'slurp method' => {
     sub files { make-files @data }
 
     is-deeply IO::CatHandle.new(files).slurp, @data.join, 'non-binary';
+    #?rakudo.jvm todo 'problem with equivalence of Buf objects, RT #128041'
     is-deeply IO::CatHandle.new(files, :bin).slurp,
         Buf[uint8].new(@data.join.encode), 'binary';
 
+    #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
     is-deeply IO::CatHandle.new(
         :encoding<utf8-c8>, files, make-temp-file content => Buf.new: 200, 200
     ).slurp,
@@ -710,8 +729,10 @@ subtest 'Supply method' => {
     subtest 'non-binary cat, utf8-c8' => { plan 4;
         my \c = \(:encoding<utf8-c8>);
         my @bits = buf8.new(200), buf8.new(200, 200), buf8.new(200, 42, 70);
+        #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
         my $str = ([~] @bits).decode: 'utf8-c8';
         #?rakudo.moar 4 todo 'readchars reads wrong num of chars RT131383'
+        #?rakudo.jvm 4 skip "Unsupported VM encoding 'utf8-c8'"
         is-deeply cat-supply(c, \(         ), @bits), [$str],        'no args';
         is-deeply cat-supply(c, \(:2size   ), @bits), [$str.comb: 2], 'size 2';
         is-deeply cat-supply(c, \(:5size   ), @bits), [$str.comb: 5], 'size 5';
