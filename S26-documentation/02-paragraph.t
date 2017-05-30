@@ -1,6 +1,8 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
-plan 27;
+use Test::Util;
+plan 28;
 my $r;
 
 =for foo
@@ -111,3 +113,13 @@ is $r.contents[3].contents, "Which, as we all know...",
 is $r.contents[4].name, 'bar';
 is $r.contents[4].contents[0].contents, "Turn into Jelly Beans!",
    '...Albi, the Racist Dragon';
+
+
+# RT#131400
+is_run Q:to/♥♥♥/, :compiler-args['--doc=Text'],
+    =for pod
+    =for nested
+    =for para :nested(1)
+    E<a;b>E<a;b;c>
+    ♥♥♥
+{:err(''), :out("ababc\n"), :0status}, 'nested paras do not crash/warn';
