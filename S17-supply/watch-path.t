@@ -31,7 +31,7 @@ sub macosx (:$io-path) {
     plan 22;
     my $s = (
         $io-path ?? '.'.IO.watch !! IO::Notification.watch-path: '.'
-    ).grep({.path eq $filename}).unique;
+    ).grep({.path.IO.basename eq $filename}).unique;
     ok $s ~~ Supply, 'Did we get a Supply?';
 
     my @seen;
