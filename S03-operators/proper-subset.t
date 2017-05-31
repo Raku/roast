@@ -100,14 +100,16 @@ my @notpss =
   mix() => (a => -1).Mix, # not a proper subset because of negative weight
 ;
 
-plan 2 * (2 * @pss/2 + 4 * @notpss) + (2 * @pss/2 + 4 * @notpss);
+plan 4 * (2 * @pss/2 + 4 * @notpss) + 2 * (2 * @pss/2 + 4 * @notpss);
 
 my $marmoset = <marmoset>.Set;
 
 # is subset of / superset of
 for
-  &infix:<⊂>,     "⊂",   &infix:<⊃>,     "⊃",
-  &infix:<<(<)>>, "(<)", &infix:<<(>)>>, "(>)"
+  &infix:<⊂>,         "⊂", &infix:<⊃>,         "⊃",
+  &infix:<<(<)>>,   "(<)", &infix:<<(>)>>,   "(>)",
+  &infix:<R⊃>,       "R⊃", &infix:<R⊂>,       "R⊂",
+  &infix:<<R(>)>>, "R(>)", &infix:<<R(<)>>, "R(<)"
 -> &op, $name, &rop, $rname {
     for @pss -> $left, $right {
         is-deeply op($left,$right), True,
@@ -139,7 +141,8 @@ for
 
 # is not a subset of / is not a superset of
 for
-  &infix:<⊄>, "⊈", &infix:<⊅>, "⊅"
+  &infix:<⊄>,   "⊈", &infix:<⊅>,   "⊅",
+  &infix:<R⊅>, "R⊅", &infix:<R⊄>, "R⊈"
 -> &op, $name, &rop, $rname {
     for @pss -> $left, $right {
         is-deeply op($left,$right), False,
