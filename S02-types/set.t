@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 206;
+plan 210;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -467,6 +467,17 @@ subtest '.hash does not cause keys to be stringified' => {
 {
     ok Set.new =:= set(), 'Set.new returns the empty set';
     ok ().Set  =:= set(), '().Set returns the empty set';
+}
+
+{
+    is-deeply { a => 42, b => 666 }.Set, <a b>.Set,
+      'coercion of Map to Set 1';
+    is-deeply { a => 42, b => 0   }.Set, <a>.Set,
+      'coercion of Map to Set 2';
+    is-deeply :{ 42 => "a", 666 => "b" }.Set, (42,666).Set,
+      'coercion of object Hash to Set 1';
+    is-deeply :{ 42 => "a", 666 => "" }.Set,   42.Set,
+      'coercion of object Hash to Set 2';
 }
 
 # vim: ft=perl6
