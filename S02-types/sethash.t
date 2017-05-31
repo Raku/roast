@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 237;
+plan 241;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -591,6 +591,17 @@ subtest 'cloned SetHash gets its own elements storage' => {
     $_ = -1 for $s.values;
     is-deeply $s, <a b b c c c>.SetHash,
         'assigning negatives to .value does not remove the items from SetHash';
+}
+
+{
+    is-deeply { a => 42, b => 666 }.SetHash, <a b>.SetHash,
+      'coercion of Map to SetHash 1';
+    is-deeply { a => 42, b => 0   }.SetHash, <a>.SetHash,
+      'coercion of Map to SetHash 2';
+    is-deeply :{ 42 => "a", 666 => "b" }.SetHash, (42,666).SetHash,
+      'coercion of object Hash to SetHash 1';
+    is-deeply :{ 42 => "a", 666 => "" }.SetHash,   42.SetHash,
+      'coercion of object Hash to SetHash 2';
 }
 
 # vim: ft=perl6
