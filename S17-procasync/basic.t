@@ -126,7 +126,7 @@ is $is-tapped, False, "Process that doesn't output anything will not emit";
     is $result, "ABC\n", '\r\n is translated in character mode to \n';
 }
 
-# Note: it's crutical for the test below that the first positional
+# Note: it's crucial for the test below that the first positional
 # argument is a list of items. Do not refactor it out!
 with Proc::Async.new: :out, ($*EXECUTABLE, '-e'), 'say "pass"' {
     my $res = '';
