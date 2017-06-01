@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 86;
+plan 87;
 
 use Test::Util;
 
@@ -265,6 +265,15 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     subset Int::Positive of Int where { $_ > 0 };
     sub f(Int::Positive $a) { $a * $a };
     dies-ok { EVAL('f(-2)') }, 'Cannot violate Int::Positive constraint';
+}
+
+# RT #131381
+{
+    subset PInt of Int where { $_ > 0 };
+    my PInt @a = 2, 3;
+    sub f(PInt @a) { 1; }
+    #? rakudo todo 'Parameterized subs do not take Array of subset types'
+    lives-ok { f(@a) }, 'Array of subset type as parameter to function';
 }
 
 # RT #71820
