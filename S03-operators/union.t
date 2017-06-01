@@ -11,6 +11,8 @@ my $ebh  = do { my $bh = <a>.BagHash; $bh<a>:delete; $bh };
 my $emh  = do { my $mh = <a>.MixHash; $mh<a>:delete; $mh };
 
 my @triplets =
+
+  # result should be a Set
   set(),                        set(),             set(),
   SetHash.new,                  SetHash.new,       set(),
   $esh,                         $esh,              set(),
@@ -21,9 +23,7 @@ my @triplets =
   <a b>.Set,                    <c d>.Set,         <a b c d>.Set,
   <a b>.SetHash,                <c d>.SetHash,     <a b c d>.Set,
 
-  <a b>.Set,                    <a b b>.Bag,       <a b b>.Bag,
-  <a b>.SetHash,                <a b b>.BagHash,   <a b b>.Bag,
-
+  # result should be a Bag
   bag(),                        bag(),             bag(),
   BagHash.new,                  BagHash.new,       bag(),
   $ebh,                         $ebh,              bag(),
@@ -34,9 +34,7 @@ my @triplets =
   <a b b>.Bag,                  <c d>.Bag,         <a b b c d>.Bag,
   <a b b>.BagHash,              <c d>.BagHash,     <a b b c d>.Bag,
 
-  <a b>.Bag,                    <a b b>.Mix,       <a b b>.Mix,
-  <a b>.BagHash,                <a b b>.MixHash,   <a b b>.Mix,
-
+  # result should be a Mix
   mix(),                        mix(),             mix(),
   MixHash.new,                  MixHash.new,       mix(),
   $emh,                         $emh,              mix(),
@@ -46,6 +44,21 @@ my @triplets =
   (a=>pi,b=>tau).MixHash,       <a b>.MixHash,     (a=>pi,b=>tau).Mix,
   (a=>pi,b=>tau).Mix,           <c d>.Mix,         (a=>pi,b=>tau,c=>1,d=>1).Mix,
   (a=>pi,b=>tau).MixHash,       <c d>.MixHash,     (a=>pi,b=>tau,c=>1,d=>1).Mix,
+
+  # coercions
+  <a b>.Set,                    <a b b>.Bag,       <a b b>.Bag,
+  <a b>.SetHash,                <a b b>.BagHash,   <a b b>.Bag,
+
+  <a b>.Bag,                    <a b b>.Mix,       <a b b>.Mix,
+  <a b>.BagHash,                <a b b>.MixHash,   <a b b>.Mix,
+
+  <a b c>,                      <c d e>,           <a b c d e>.Set,
+  {:42a,:0b},                   {:c,:42d},         <a c d>.Set,
+  :{42=>"a",666=>""},           :{55=>"c",66=>1},  (42,55,66).Set,
+  :{42=>"a",666=>""},           {:c,:42d},         (42,"c","d").Set,
+  {:42a,:0b},                   <c d e>,           <a c d e>.Set,
+  :{42=>"a",666=>""},           <a b c>,           (42,"a","b","c").Set,
+  42,                           666,               (42,666).Set,
 ;
 
 plan 4 * (2 * @triplets/3);
