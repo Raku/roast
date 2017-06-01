@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 37;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -124,4 +124,13 @@ is $is-tapped, False, "Process that doesn't output anything will not emit";
     $proc.stdout.tap({ $result ~= $_ });
     await $proc.start;
     is $result, "ABC\n", '\r\n is translated in character mode to \n';
+}
+
+# Note: it's crutical for the test below that the first positional
+# argument is a list of items. Do not refactor it out!
+with Proc::Async.new: :out, ($*EXECUTABLE, '-e'), 'say "pass"' {
+    my $res = '';
+    .stdout.tap: { $res ~= $_ }
+    await .start;
+    is-deeply $res, "pass\n", '.new slurps all args, including command';
 }
