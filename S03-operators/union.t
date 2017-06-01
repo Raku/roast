@@ -53,6 +53,7 @@ my @triplets =
   <a b>.BagHash,                <a b b>.MixHash,   <a b b>.Mix,
 
   <a b c>,                      <c d e>,           <a b c d e>.Set,
+  (:42a,:0b),                   (:c,:42d,"e"),     <a c d e>.Set,
   {:42a,:0b},                   {:c,:42d},         <a c d>.Set,
   :{42=>"a",666=>""},           :{55=>"c",66=>1},  (42,55,66).Set,
   :{42=>"a",666=>""},           {:c,:42d},         (42,"c","d").Set,
