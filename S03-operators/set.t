@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 48;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -11,22 +11,7 @@ my $sh = SetHash.new(<I'm afraid it is>); # Tom Stoppard
 my $b = bag <Whoever remains for long here in this earthly life will enjoy and endure more than enough>; # Seamus Heaney
 my $bh = BagHash.new(<Come, take your bread with joy, and your wine with a glad heart>); # Ecclesiastes 9:7
 
-# Union
-
-is showset($s ∪ $s), showset($s), "Set union with itself yields self";
-isa-ok ($s ∪ $s), Set, "... and it's actually a Set";
-is showset($sh ∪ $sh), showset($sh), "SetHash union with itself yields self (as Set)";
-isa-ok ($sh ∪ $sh), Set, "... and it's actually a Set";
-
-is showset($s ∪ $sh), showset(set <I'm afraid it is isn't your day>), "Set union with SetHash works";
-isa-ok ($s ∪ $sh), Set, "... and it's actually a Set";
-is showset($sh ∪ <blue green>), showset(set <I'm afraid it is blue green>), "SetHash union with array of strings works";
-isa-ok ($sh ∪ <blue green>), Set, "... and it's actually a Set";
-
-is showset($s (|) $sh), showset(set <I'm afraid it is isn't your day>), "Set union with SetHash works (texas)";
-isa-ok ($s (|) $sh), Set, "... and it's actually a Set (texas)";
-is showset($sh (|) <blue green>), showset(set <I'm afraid it is blue green>), "SetHash union with array of strings works (texas)";
-isa-ok ($sh (|) <blue green>), Set, "... and it's actually a Set (texas)";
+# Union tests moved to union.t
 
 # Intersection
 
