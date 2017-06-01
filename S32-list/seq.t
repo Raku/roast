@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 39;
 
 my @result = 1,2,3;
 
@@ -216,3 +216,6 @@ subtest 'methods on cached Seqs' => {
     }
 }
 
+is-deeply .perl.EVAL.flat, .flat,
+    'Seq.perl roundtrips containerized Seqs correctly'
+with (1, $((2, 3).Seq));
