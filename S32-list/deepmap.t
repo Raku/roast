@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 8;
 
 =begin description
 
@@ -26,5 +26,9 @@ This test tests C<deepmap>.
         is-deeply $in.deepmap(-*), $expected, "deepmap preserves structure";
     }
 }
+
+# https://irclog.perlgeek.de/perl6/2017-06-01#i_14672468
+lives-ok { Array».gist; deepmap *.self, Array },
+    'hypering or deepmapping an Iterable type object does not hang';
 
 # vim: ft=perl6
