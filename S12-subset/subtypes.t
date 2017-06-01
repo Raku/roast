@@ -267,6 +267,14 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     dies-ok { EVAL('f(-2)') }, 'Cannot violate Int::Positive constraint';
 }
 
+# RT #131381
+{
+    subset PInt of Int where { $_ > 0 };
+    my PInt @a = 2, 3;
+    sub f(PInt @a) { 1; }
+    lives-ok { f(@a) }, 'Array of subset type as parameter to function';
+}
+
 # RT #71820
 {
     subset Interesting of Int where * > 10;
