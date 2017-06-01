@@ -220,6 +220,12 @@ throws-like 'role R-RT130211 { method overload-this(){...} };
 'all roles with unimplemented method shown in error';
 
 
+# RT #130712
+throws-like 'sub infix:<$>() return Nil {}',
+    X::AdHoc,
+    :message{ .contains("'returns'") },
+    'typing "return" instead of "returns" gives a fixing hint';
+
 # RT #129800
 subtest 'X::Multi::NoMatch correct shows named arguments' => {
     my class RT129800 { multi method foo ($) {} }
