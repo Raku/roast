@@ -238,8 +238,8 @@ multi doesn't-hang (
         plan 1 + ( $did-not-hang ?? ($out, $err).grep(*.defined) !! 0 );
         ok $did-not-hang, 'program did not hang';
         if $did-not-hang {
-            like $stdout, $out, 'STDOUT matches' if $out.defined;
-            like $stderr, $err, 'STDERR matches' if $err.defined;
+            cmp-ok $stdout, '~~', $out, 'STDOUT' if $out.defined;
+            cmp-ok $stderr, '~~', $err, 'STDERR' if $err.defined;
         }
     };
 }
@@ -463,15 +463,17 @@ B<By default> not specified.
 
 =head3 C<:out>
 
-B<Optional>. Takes a C<Regex> that will be used to match against program's
-STDOUT. If the program doesn't finish before C<:wait> seconds, no attempt
-to check STDOUT will be made. B<By default> not specified.
+B<Optional>. Takes a C<.defined> object that will be smartmatched against
+C<Str> containing program's STDOUT. If the program doesn't finish before
+C<:wait> seconds, no attempt to check STDOUT will be made. B<By default>
+not specified.
 
 =head3 C<:err>
 
-B<Optional>. Takes a C<Regex> that will be used to match against program's
-STDERR. If the program doesn't finish before C<:wait> seconds, no attempt
-to check STDERR will be made. B<By default> not specified.
+B<Optional>. Takes a C<.defined> object that will be smartmatched against
+C<Str> containing program's STDERR. If the program doesn't finish before
+C<:wait> seconds, no attempt to check STDERR will be made. B<By default>
+not specified.
 
 =head2 get_out( Str $code, Str $input?, :@args )
 
