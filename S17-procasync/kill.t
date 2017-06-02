@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 # ignore SIGPIPE from writing to a child process
 try {
@@ -8,7 +9,7 @@ try {
 }
 
 my @signals = SIGINT;
-plan @signals * 10;
+plan 1 + @signals * 10;
 
 my $program = 'async-kill-tester';
 
@@ -58,6 +59,24 @@ say 'Done';
     #?rakudo skip 'RT #126425 - order of operations for Proc::Async is nondeterminstic'
     is $stdout, "Started\n$signal\n", 'did we get STDOUT';
 }
+
+# RT #131479
+doesn't-hang ｢
+        await ^4 .map: -> $n {
+            start {
+                with Proc::Async.new: $*EXECUTABLE, "-e", "sleep" -> $p {
+                    start {
+                        await $p.ready;
+                        $n == 3 ?? $p.kill !! $p.kill: (SIGTERM, 'TERM', SIGTERM.value)[$n]
+                    }
+                    await $p.start
+                }
+            }
+        }
+        print 'All done!'
+    ｣,   :out('All done!'), :err(''), :10wait,
+'.kill kills when multi-procs kill in multi-promises';
+
 
 END {
     unlink $program;
