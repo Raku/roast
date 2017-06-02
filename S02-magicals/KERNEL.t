@@ -74,6 +74,7 @@ isa-ok $*KERNEL.bits, Int;
     is $*KERNEL.signal($hup),     $hup, "also ok as Int?";
 }
 
+# https://github.com/rakudo/rakudo/commit/01d948d2d2
 is_run ｢print $*KERNEL.signal: 'SIGHUP';｣, {out => /^\d+$/},
     '.signal: Str:D works with un-initialized $*KERNEL.signals';
 
