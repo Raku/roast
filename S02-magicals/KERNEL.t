@@ -1,8 +1,9 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 40;
+plan 41;
 
 # $?KERNEL.name is the kernel we were compiled in.
 #?rakudo skip 'unimpl $?KERNEL RT #124624'
@@ -72,5 +73,8 @@ isa-ok $*KERNEL.bits, Int;
     # #?rakudo.jvm skip "limited signal handling on jvm RT #124628"
     is $*KERNEL.signal($hup),     $hup, "also ok as Int?";
 }
+
+is_run ｢print $*KERNEL.signal: 'SIGHUP';｣, {out => /^\d+$/},
+    '.signal: Str:D works with un-initialized $*KERNEL.signals';
 
 # vim: ft=perl6
