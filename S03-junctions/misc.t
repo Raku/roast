@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 145;
+plan 146;
 
 =begin pod
 
@@ -516,6 +516,13 @@ subtest 'Junction.new does not crash with empty, but touched array' => {
 
     my @a; $ = +@a;
     lives-ok { Junction.new($_, @a).perl }, $_ for <all none any one>;
+}
+
+# https://github.com/rakudo/rakudo/commit/61ecfd51172b0e3cf20dc2
+subtest "Junction.new does not use Mu.new's candidates" => {
+    plan 2;
+    throws-like { Junction.new: 42      }, X::Multi::NoMatch, 'positional';
+    throws-like { Junction.new: :42meow }, X::Multi::NoMatch, 'named';
 }
 
 # vim: ft=perl6
