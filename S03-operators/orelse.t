@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 16;
 
 is (1 orelse 2), 1, 'orelse basics';
 is (1 orelse 2 orelse 3), 1, 'orelse chained';
@@ -39,3 +39,15 @@ cmp-ok infix:<orelse>( %(:42a, :72b) ), 'eqv', :42a.Pair | :72b.Pair,
 
 is-deeply infix:<orelse>([Int, 42]), (Int orelse 42),
     '1-arg Iterable gets flattened (like +@foo slurpy)';
+
+{
+    my $calls = 0;
+    my class Foo { method defined { $calls++; False } };
+    sub meow { $^a };
+    Foo orelse meow $_;
+    is-deeply $calls, 1, ':U orelse call $_ calls .defined only once';
+
+    $calls = 0;
+    Foo orelse .&meow;
+    is-deeply $calls, 1, ':U orelse .&call calls .defined only once';
+}
