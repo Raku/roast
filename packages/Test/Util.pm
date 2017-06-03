@@ -272,7 +272,7 @@ sub make-rand-path (--> IO::Path:D) {
     # XXX TODO .resolve is broken on Windows in Rakudo; .resolve for all OSes
     # when it is fixed
     $p .= resolve unless $*DISTRO.is-win;
-    $p.resolve.child: (
+    $p.child: (
         'perl6_roast_',
         $*PROGRAM.basename, '_line',
         ((try callframe(3).code.line)||''), '_',
