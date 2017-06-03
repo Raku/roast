@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 4;
+plan 6;
 
 {
     my $x = 0;
@@ -25,3 +25,15 @@ subtest 'Empty in args to notandthen does not disappear' => {
 
 is-deeply infix:<notandthen>([Int, 42]), (Int notandthen 42),
     '1-arg Iterable gets flattened (like +@foo slurpy)';
+
+{
+    my $calls = 0;
+    my class Foo { method defined { $calls++; False } };
+    sub meow { $^a };
+    Foo andthen meow $_;
+    is-deeply $calls, 1, 'notandthen does not call .defined on last arg (1)';
+
+    $calls = 0;
+    Foo andthen .&meow;
+    is-deeply $calls, 1, 'notandthen does not call .defined on last arg (2)';
+}

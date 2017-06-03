@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 14;
 
 is (1 andthen 2), 2, 'andthen basics';
 is (1 andthen 2 andthen 3), 3, 'andthen chained';
@@ -30,3 +30,15 @@ cmp-ok infix:<andthen>( %(:42a, :72b) ), 'eqv', :42a.Pair | :72b.Pair,
 
 is-deeply infix:<andthen>([42, 70]), (42 andthen 70),
     '1-arg Iterable gets flattened (like +@foo slurpy)';
+
+{
+    my $calls = 0;
+    my class Foo { method defined { $calls++; True } };
+    sub meow { $^a };
+    Foo andthen meow $_;
+    is-deeply $calls, 1, 'andthen does not call .defined on last arg (1)';
+
+    $calls = 0;
+    Foo andthen .&meow;
+    is-deeply $calls, 1, 'andthen does not call .defined on last arg (2)';
+}

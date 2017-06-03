@@ -45,9 +45,9 @@ is-deeply infix:<orelse>([Int, 42]), (Int orelse 42),
     my class Foo { method defined { $calls++; False } };
     sub meow { $^a };
     Foo orelse meow $_;
-    is-deeply $calls, 1, ':U orelse call $_ calls .defined only once';
+    is-deeply $calls, 1, 'orelse does not call .defined on last arg (1)';
 
     $calls = 0;
     Foo orelse .&meow;
-    is-deeply $calls, 1, ':U orelse .&call calls .defined only once';
+    is-deeply $calls, 1, 'orelse does not call .defined on last arg (1)';
 }
