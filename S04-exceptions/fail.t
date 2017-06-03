@@ -1,8 +1,9 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 32;
+plan 34;
 
 # L<S04/Exceptions/The fail function>
 
@@ -148,5 +149,16 @@ s1();
 # https://irclog.perlgeek.de/perl6/2016-12-08#i_13706422
 throws-like { sink Failure.new }, Exception,
     'sink statement prefix explodes Failures';
+
+{
+    my class X::Meow::Meow is Exception {}
+    sub foo { fail X::Meow::Meow.new }
+    sub bar { foo() orelse fail $_ }
+    sub baz { foo() orelse .&fail  }
+    fails-like { bar }, X::Meow::Meow,
+        'fail(Failure:D) re-arms handled Failures';
+    fails-like { baz }, X::Meow::Meow,
+        'Failure:D.&fail re-arms handled Failures';
+}
 
 # vim: ft=perl6
