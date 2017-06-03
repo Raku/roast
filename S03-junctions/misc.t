@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 144;
+plan 145;
 
 =begin pod
 
@@ -508,6 +508,14 @@ subtest 'Junction.new' => { # coverage; 2016-10-11
     is-deeply Junction.new([^3], :type<one> ).perl, ^3  .one.perl, 'one';
     is-deeply Junction.new([^3], :type<any> ).perl, ^3  .any.perl, 'any';
     is-deeply Junction.new([^3], :type<none>).perl, ^3 .none.perl, 'none';
+}
+
+# https://github.com/rakudo/rakudo/commit/aa3684218b1f668b6a6e41da
+subtest 'Junction.new does not crash with empty, but touched array' => {
+    plan 4;
+
+    my @a; $ = +@a;
+    lives-ok { Junction.new($_, @a).perl }, $_ for <all none any one>;
 }
 
 # vim: ft=perl6
