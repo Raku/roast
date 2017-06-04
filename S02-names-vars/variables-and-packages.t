@@ -106,20 +106,18 @@ plan 38;
 }
 
 {
-  #?rakudo todo 'nom regression: RT #122346'
-  nok foo().defined, "get variable not yet declared using a sub (1)";
-  is foo(), 1, "get variable not yet declared using a sub (2)";
-  is foo(), 2, "get variable not yet declared using a sub (3)";
+  is-deeply foo(), 0, "get variable not yet declared using a sub (1)";
+  is-deeply foo(), 1, "get variable not yet declared using a sub (2)";
+  is-deeply foo(), 2, "get variable not yet declared using a sub (3)";
 
   my $a;
   sub foo { $a++ }
 }
 
 {
-  #?rakudo todo 'nom regression: RT #122346'
-  nok bar().defined, "runtime part of my not yet executed (1)";
-  is bar(), 1, "runtime part of my not yet executed (2)";
-  is bar(), 2, "runtime part of my not yet executed (3)";
+  is-deeply bar(), 0, "runtime part of my not yet executed (1)";
+  is-deeply bar(), 1, "runtime part of my not yet executed (2)";
+  is-deeply bar(), 2, "runtime part of my not yet executed (3)";
 
   my $a = 3;
   sub bar { $a++ }
@@ -149,10 +147,9 @@ plan 38;
   my $a;
   sub rmbl { $a++ }
 
-  #?rakudo todo 'nom regression: RT #122346'
-  nok rmbl().defined, "var captured by sub is the right var (1)";
+  is-deeply rmbl(), 0, "var captured by sub is the right var (1)";
   $a++;
-  is rmbl(), 2, "var captured by sub is the right var (2)";
+  is-deeply rmbl(), 2, "var captured by sub is the right var (2)";
 }
 
 {
