@@ -401,7 +401,7 @@ subtest '.open with "-" as path uses $*IN/$*OUT' => {
     }
 }
 
-subtest '.open with "-" as path can opens closed $*IN/$*OUT' => {
+subtest '.open with "-" as path can open closed $*IN/$*OUT' => {
     plan 3;
     subtest 'STDOUT' => { plan 4;
         temp $*OUT = IO::Handle.new: :path(make-temp-file);
