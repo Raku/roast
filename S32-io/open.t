@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 62;
+plan 63;
 
 my \PATH = 't-S32-io-open.tmp';
 my \PATH-RX = rx/'t-S32-io-open.tmp'/;
@@ -380,6 +380,25 @@ subtest '.open uses attributes by default' => {
     #?rakudo.jvm todo 'got: "1foo2\nfoo3hello worldmeow"'
     is-deeply $fh.lines.join, "12\n3hello worldmeow", '.nl-in is respected';
     $fh.close;
+}
+
+# RT #131503
+subtest '.open with "-" as path uses STDIN/STDOUT' => {
+    plan 2;
+    subtest 'STDOUT' => { plan 3;
+        temp $*OUT = make-temp-file.open: :w;
+        is-deeply '-'.IO.open(:bin, :w), $*OUT, 'returned handle is STDOUT';
+        is-deeply $*OUT.encoding, Nil, 'set binary mode';
+        '-'.IO.open: :enc<utf8-c8>, :w;
+        is-deeply $*OUT.encoding, 'utf8-c8', 'changed encoding';
+    }
+    subtest 'STDIN' => { plan 3;
+        temp $*IN = make-temp-file(:content<meows>).open;
+        is-deeply '-'.IO.open(:bin), $*IN, 'returned handle is STDIN';
+        is-deeply $*IN.encoding, Nil, 'set binary mode';
+        '-'.IO.open: :enc<utf8-c8>;
+        is-deeply $*IN.encoding, 'utf8-c8', 'changed encoding';
+    }
 }
 
 # vim: ft=perl6

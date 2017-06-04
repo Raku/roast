@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 18;
+plan 19;
 
 # older: L<S16/"Unfiled"/"=item IO.slurp">
 # old: L<S32::IO/IO::FileNode/slurp>
@@ -114,5 +114,9 @@ subtest '&slurp(IO::Handle)' => {
         is-deeply .opened, False, 'with :close, handle is closed';
     }
 }
+
+# RT #131503
+is_run ｢'-'.IO.slurp.print｣, 'meows', {:out<meows>, :err(''), :0status},
+    'can .slurp from "-".IO path';
 
 # vim: ft=perl6
