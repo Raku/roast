@@ -3,7 +3,7 @@ use Test;
 
 # Tests of IO::Special class
 
-plan 42;
+plan 45;
 
 for [$*OUT.path, 'STDOUT'], [$*ERR.path, 'STDERR'], [$*IN.path, 'STDIN']
     -> ($_, $name)
@@ -25,6 +25,11 @@ for [$*OUT.path, 'STDOUT'], [$*ERR.path, 'STDERR'], [$*IN.path, 'STDIN']
 
     is-deeply .r, $name eq 'STDIN', desc '.r';
     is-deeply .w, $name ne 'STDIN', desc '.w';
+}
+
+for <IN OUT ERR> -> $stream {
+    is-deeply .perl.EVAL, $_, ".perl for $stream"
+        with IO::Special.new: "<STD$stream>";
 }
 
 # vim: ft=perl6
