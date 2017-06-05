@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 106;
+plan 107;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -262,4 +262,76 @@ subtest 'test eqv for weird allomorphs' => {
         False, 'Num (same Numeric part)';
     is-deeply ComplexStr.new(42+0i, "x") eqv ComplexStr.new(42+0i, "a"),
         False, 'Complex (same Numeric part)';
+}
+
+subtest '.ACCEPTS' => {
+    my @true = gather {
+        my class IntFoo { method Numeric { 3    }; method Str { '3'    } }
+        my class RatFoo { method Numeric { 3.0  }; method Str { '3.0'  } }
+        my class NumFoo { method Numeric { 3e0  }; method Str { '3e0'  } }
+        my class ComFoo { method Numeric { 3+5i }; method Str { '3+5i' } }
+
+        take <0>       => $_ for      '0', 0, 0.0, 0e0, 0+0i;
+        take <000>     => $_ for    '000', 0, 0.0, 0e0, 0+0i;
+        take <3>       => $_ for      '3', 3, 3.0, 3e0, 3+0i, IntFoo.new;
+
+        take <0.0>     => $_ for    '0.0', 0, 0.0, 0e0, 0+0i;
+        take <000.0>   => $_ for  '000.0', 0, 0.0, 0e0, 0+0i;
+        take <3.0>     => $_ for    '3.0', 3, 3.0, 3e0, 3+0i, RatFoo.new;
+
+        take <0e0>     => $_ for    '0e0', 0, 0.0, 0e0, 0+0i;
+        take <000e0>   => $_ for  '000e0', 0, 0.0, 0e0, 0+0i;
+        take <3e0>     => $_ for    '3e0', 3, 3.0, 3e0, 3+0i, NumFoo.new;
+
+        take < 0+0i>   => $_ for   '0+0i', 0, 0.0, 0e0, 0+0i;
+        take < 0.0+0i> => $_ for '0.0+0i', 0, 0.0, 0e0, 0+0i;
+        take < 3+5i>   => $_ for   '3+5i', 3+5i, 3.0+5i, 3e0+5i, ComFoo.new;
+
+        for <0>, <000>, <0.0>, <0e0>, < 0+0i> -> \al {
+            take $_ => al
+            for <0>, <000>, <0.0>, <000.0>, <0e0>, <000e0>, < 0+0i>, < 0.0+0i>,
+              IntStr.new(0,   'meow'), RatStr    .new(0.0,  'meow'),
+              NumStr.new(0e0, 'meow'), ComplexStr.new(0+0i, 'meow');
+        }
+
+        for <3>, <003>, <3.0>, <3e0>, < 3+0i> -> \al {
+            take $_ => al
+            for <3>, <003>, <3.0>, <003.0>, <3e0>, <003e0>, < 3+0i>, < 3.0+0i>,
+              IntStr.new(3,   'meow'), RatStr    .new(3.0,  'meow'),
+              NumStr.new(3e0, 'meow'), ComplexStr.new(3+0i, 'meow');
+        }
+
+        take < 3+5i> => $_ for < 3.0+5i>, < 3e0+5i>;
+    }
+
+    my @false = gather {
+        my class IntFoo { method Numeric { 42    }; method Str { '3'    } }
+        my class RatFoo { method Numeric { 42.0  }; method Str { '3.0'  } }
+        my class NumFoo { method Numeric { 42e0  }; method Str { '3e0'  } }
+        my class ComFoo { method Numeric { 42+5i }; method Str { '3+5i' } }
+
+        take <0>       => $_ for '', '00',  '0.0',  '0e0',  '0+0i', 'meows';
+        take <3>       => $_ for     '03',  '3.0',  '3e0',  '3+0i', IntFoo.new;
+
+        take <0.0>     => $_ for '',  '0', '00.0',  '0e0',  '0+0i', 'meows';
+        take <3.0>     => $_ for      '3', '03.0',  '3e0',  '3+0i', RatFoo.new;
+
+        take <0e0>     => $_ for '',  '0',  '0.0', '00e0',  '0+0i', 'meows';
+        take <3e0>     => $_ for      '3',  '3.0', '03e0',  '3+0i', RatFoo.new;
+
+        take < 0+0i>   => $_ for '',  '0',  '0.0',  '0e0', '00+0i', 'meows';
+        take < 3+5i>   => $_ for      '3',  '3.0',  '3e0', '03+5i', ComFoo.new;
+    }
+
+    plan @true + @false;
+
+    for @true -> (:key($allo), :value($thing)) {
+        is-deeply $allo.ACCEPTS($thing), True,
+            "{$allo.perl}.ACCEPTS({$thing.perl})"
+    }
+
+    for @false -> (:key($allo), :value($thing)) {
+        is-deeply $allo.ACCEPTS($thing), False,
+            "{$allo.perl}.ACCEPTS({$thing.perl})"
+    }
 }
