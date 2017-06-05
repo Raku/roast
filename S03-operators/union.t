@@ -64,7 +64,7 @@ my @triplets =
 
 plan 4 * (2 * @triplets/3);
 
-# is an element of / contains
+# union
 for
   &infix:<∪>,       "∪",
   &infix:<(|)>,   "(|)",
