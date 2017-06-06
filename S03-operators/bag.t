@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 130;
+plan 102;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -17,43 +17,9 @@ my $ks = SetHash.new(<blood rhetoric>);
 my $b = bag <blood blood rhetoric love love>;
 my $kb = BagHash.new(<blood love love>);
 
-# Bag Union
+# Bag Union tests moved to union.t
 
-is showkv($b ∪ $b), showkv($b), "Bag union with itself yields self";
-isa-ok ($b ∪ $b), Bag, "... and it's actually a Bag";
-is showkv($kb ∪ $kb), showkv($kb), "BagHash union with itself yields (as Bag)";
-isa-ok ($kb ∪ $kb), Bag, "... and it's actually a Bag";
-
-is showkv($s ∪ $b), "blood:2 love:2 rhetoric:1", "Set union with Bag works";
-isa-ok ($s ∪ $b), Bag, "... and it's actually a Bag";
-is showkv($s ∪ $kb), "blood:1 love:2", "Set union with BagHash works";
-isa-ok ($s ∪ $kb), Bag, "... and it's actually a Bag";
-
-is showkv($s (|) $b), "blood:2 love:2 rhetoric:1", "Set union with Bag works (texas)";
-isa-ok ($s (|) $b), Bag, "... and it's actually a Bag";
-is showkv($s (|) $kb), "blood:1 love:2", "Set union with BagHash works (texas)";
-isa-ok ($s (|) $kb), Bag, "... and it's actually a Bag";
-
-# Bag Intersection
-
-is showkv($b ∩ $b), showkv($b), "Bag intersection with itself yields self (as Bag)";
-isa-ok ($b ∩ $b), Bag, "... and it's actually a Bag";
-is showkv($kb ∩ $kb), showkv($kb), "BagHash intersection with itself yields self (as Bag)";
-isa-ok ($kb ∩ $kb), Bag, "... and it's actually a Bag";
-
-is showkv($s ∩ $b), "blood:1 love:1", "Set intersection with Bag works";
-isa-ok ($s ∩ $b), Bag, "... and it's actually a Bag";
-is showkv($s ∩ $kb), "blood:1 love:1", "Set intersection with BagHash works";
-isa-ok ($s ∩ $kb), Bag, "... and it's actually a Bag";
-is showkv($kb ∩ <glad green blood>), "blood:1", "BagHash intersection with array of strings works";
-isa-ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
-
-is showkv($s (&) $b), "blood:1 love:1", "Set intersection with Bag works (texas)";
-isa-ok ($s (&) $b), Bag, "... and it's actually a Bag";
-is showkv($s (&) $kb), "blood:1 love:1", "Set intersection with BagHash works (texas)";
-isa-ok ($s (&) $kb), Bag, "... and it's actually a Bag";
-is showkv($kb (&) <glad green blood>), "blood:1", "BagHash intersection with array of strings works (texas)";
-isa-ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
+# Bag Intersection tests moved to intersection.t
 
 # symmetric difference
 

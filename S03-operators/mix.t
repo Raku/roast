@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 126;
+plan 98;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -17,43 +17,9 @@ my $bh = BagHash.new(<blood rhetoric>);
 my $m = ("blood" => 1.1, "rhetoric" => 1, "love" => 1.2).Mix;
 my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3);
 
-# Mix Union
+# Mix Union tests moved to union.t
 
-is showkv($m ∪ $m), showkv($m), "Mix union with itself yields self";
-isa-ok ($m ∪ $m), Mix, "... and it's actually a Mix";
-is showkv($mh ∪ $mh), showkv($mh), "MixHash union with itself yields (as Mix)";
-isa-ok ($mh ∪ $mh), Mix, "... and it's actually a Mix";
-
-is showkv($b ∪ $m), "blood:1.1 love:1.2 rhetoric:1", "Bag union with Mix works";
-isa-ok ($b ∪ $m), Mix, "... and it's actually a Mix";
-is showkv($b ∪ $mh), "blood:1.1 love:1.3", "Bag union with MixHash works";
-isa-ok ($b ∪ $mh), Mix, "... and it's actually a Mix";
-
-is showkv($b (|) $m), "blood:1.1 love:1.2 rhetoric:1", "Bag union with Mix works (texas)";
-isa-ok ($b (|) $m), Mix, "... and it's actually a Mix";
-is showkv($b (|) $mh), "blood:1.1 love:1.3", "Bag union with MixHash works (texas)";
-isa-ok ($b (|) $mh), Mix, "... and it's actually a Mix";
-
-# Mix Intersection
-
-is showkv($m ∩ $m), showkv($m), "Mix intersection with itself yields self (as Mix)";
-isa-ok ($m ∩ $m), Mix, "... and it's actually a Mix";
-is showkv($mh ∩ $mh), showkv($mh), "MixHash intersection with itself yields self (as Mix)";
-isa-ok ($mh ∩ $mh), Mix, "... and it's actually a Mix";
-
-is showkv($b ∩ $m), "blood:1 love:1", "Bag intersection with Mix works";
-isa-ok ($b ∩ $m), Mix, "... and it's actually a Mix";
-is showkv($b ∩ $mh), "blood:1 love:1", "Bag intersection with MixHash works";
-isa-ok ($b ∩ $mh), Mix, "... and it's actually a Mix";
-is showkv($mh ∩ <glad green blood>), "blood:1", "MixHash intersection with array of strings works";
-isa-ok ($mh ∩ <glad green blood>), Mix, "... and it's actually a Mix";
-
-is showkv($b (&) $m), "blood:1 love:1", "Bag intersection with Mix works (texas)";
-isa-ok ($b (&) $m), Mix, "... and it's actually a Mix";
-is showkv($b (&) $mh), "blood:1 love:1", "Bag intersection with MixHash works (texas)";
-isa-ok ($b (&) $mh), Mix, "... and it's actually a Mix";
-is showkv($mh (&) <glad green blood>), "blood:1", "MixHash intersection with array of strings works (texas)";
-isa-ok ($mh (&) <glad green blood>), Mix, "... and it's actually a Mix";
+# Mix Intersection tests moved to intersection.t
 
 # symmetric difference
 

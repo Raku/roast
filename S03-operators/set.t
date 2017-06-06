@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 48;
+plan 40;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -13,17 +13,7 @@ my $bh = BagHash.new(<Come, take your bread with joy, and your wine with a glad 
 
 # Union tests moved to union.t
 
-# Intersection
-
-is showset($s ∩ $s), showset($s), "Set intersection with itself yields self";
-isa-ok ($s ∩ $s), Set, "... and it's actually a Set";
-is showset($sh ∩ $sh), showset($sh), "SetHash intersection with itself yields self (as Set)";
-isa-ok ($sh ∩ $sh), Set, "... and it's actually a Set";
-is showset($s ∩ $sh), showset(set <I'm afraid it>), "Set intersection with SetHash works";
-isa-ok ($s ∩ $sh), Set, "... and it's actually a Set";
-
-is showset($s (&) $sh), showset(set <I'm afraid it>), "Set intersection with SetHash works (texas)";
-isa-ok ($s (&) $sh), Set, "... and it's actually a Set (texas)";
+# Intersection tests moved to intersection.t
 
 # set subtraction
 
