@@ -58,9 +58,13 @@ my @triplets =
   <a b>.Bag,                    <a b b>.Mix,       <a b>.Mix,
   <a b>.BagHash,                <a b b>.MixHash,   <a b>.Mix,
 
+  <a b c>.Set,                  <a b c d>,         <a b c>.Set,
+  <a b c>.Bag,                  <a b c d>,         <a b c>.Bag,
+  <a b c>.Mix,                  <a b c d>,         <a b c>.Mix,
+
   <a b c>,                      <c d e>,           <c>.Set,
   (:42a,:0b),                   (:c,:42d,"e"),     set(),
-#  (:42a,:0b),                   (:a,:42d,"e"),     <a>.Set,
+  (:42a,:0b),                   (:a,:42d,"e"),     <a>.Set,
   {:42a,:0b},                   {:a,:c,:42d},      <a>.Set,
   :{42=>"a",666=>""},           :{55=>"c",66=>1},  set(),
   :{42=>"a",666=>""},           :{55=>"c",666=>1}, set(),
@@ -68,9 +72,9 @@ my @triplets =
   :{42=>"a",666=>""},           {:c,:42d},         set(),
   :{a=>42,666=>""},             {:a,:42d},         <a>.Set,
   {:42a,:0b},                   <c d e>,           set(),
-#  {:42a,:0b},                   <a d e>,           <a>.Set,
+  {:42a,:0b},                   <a d e>,           <a>.Set,
   :{42=>"a",666=>""},           <a b c>,           set(),
-#  :{a=>42,666=>""},             <a b c>,           <a>.Set,
+  :{a=>42,666=>""},             <a b c>,           <a>.Set,
   42,                           666,               set(),
 ;
 
