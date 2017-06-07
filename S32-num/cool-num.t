@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 43;
+plan 45;
 
 =begin pod
 
@@ -89,7 +89,10 @@ is "17".sign, 1, '"17".sign == 1';
 is "-17".sign, -1, '"-17".sign == -1';
 is "0".sign, 0, '"0".sign == 0';
 
-is-approx "17".cis, 17.cis, '"17".cis == 17.cis';
+is-approx "17".cis,   17.cis, '"17".cis == 17.cis';
+is-approx <4+2i>.cis, <-0.0884610445653817-0.102422080056674i>, '<4+2i>.cis';
+is-approx i.cis,      <0.367879441171442+0i>,                   'i.cis';
+
 is-approx "17".unpolar("42"), 17.unpolar(42), '"17".unpolar("42") == 17.unpolar(42)';
 
 # vim: ft=perl6
