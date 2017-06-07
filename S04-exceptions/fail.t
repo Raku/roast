@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 34;
+plan 35;
 
 # L<S04/Exceptions/The fail function>
 
@@ -159,6 +159,18 @@ throws-like { sink Failure.new }, Exception,
         'fail(Failure:D) re-arms handled Failures';
     fails-like { baz }, X::Meow::Meow,
         'Failure:D.&fail re-arms handled Failures';
+}
+
+# https://github.com/rakudo/rakudo/commit/0a100825dd
+subtest 'Failure.self' => {
+    plan 2;
+    my class X::Meow is Exception { method message { 'meow' } }.new;
+    sub failer { fail X::Meow.new }
+
+    throws-like { $ = failer.self }, X::Meow, 'unhandled exceptions explode';
+
+    so my $f = failer;
+    is-deeply $f, $f.self, 'handled exceptions are passed through as is';
 }
 
 # vim: ft=perl6
