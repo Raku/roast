@@ -135,7 +135,7 @@ is(+Range, 0, 'type numification');
     is($inf.min, -Inf, 'bottom end of *..* is -Inf (1)');
     is($inf.max, Inf, 'top end of *..* is Inf (1)');
 
-    is($inf.elems, Inf, 'testing number of elements');
+    throws-like $inf.elems, X::Cannot::Lazy, :action<.elems>;
 
     ok(42  ~~ $inf, 'positive integer matches *..*');
     ok(.2  ~~ $inf, 'positive non-int matches *..*');

@@ -14,10 +14,14 @@ sub test($range,$min,$max,$exmin,$exmax,$inf,$elems,$perl) {
         is $range.excludes-min, $exmin, "$range.gist().excludes-min is $exmin";
         is $range.excludes-max, $exmax, "$range.gist().excludes-max is $exmax";
         is $range.infinite,       $inf, "$range.gist().infinite is $inf";
-        is $range.elems,        $elems, "$range.gist().elems is $elems";
         is $range.perl,          $perl, "$range.gist().perl is $perl";
 
-        unless $elems == Inf {
+        if $elems == Inf {
+            throws-like $range.elems, X::Cannot::Lazy, :action<.elems>;
+        }
+        else {
+            is $range.elems, $elems, "$range.gist().elems is $elems";
+
             my int $i;
             $i = $i + 1 for Seq.new($range.iterator); # simulate for ^10
             is $i, $elems, "for $range.gist() runs $elems times";
