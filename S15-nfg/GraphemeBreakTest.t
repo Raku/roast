@@ -1,6 +1,8 @@
 use v6;
-my $location = "3rdparty/Unicode/9.0.0/ucd/auxiliary/GraphemeBreakTest.txt";
-$location = "t/spec/$location".IO.e ?? "t/spec/$location" !! $location;
+my IO::Path $repo-dir      = "3rdparty/Unicode/9.0.0/ucd/auxiliary/GraphemeBreakTest.txt".IO;
+my IO::Path $rakudo-subdir = "t/spec".IO;
+my IO::Path $rakudo-dir    = $rakudo-subdir.child($repo-dir);
+my Str:D    $location      = $rakudo-dir.e ?? $rakudo-dir.Str !! $repo-dir.Str;
 our $DEBUG;
 use Test;
 =begin pod
@@ -55,7 +57,7 @@ constant %fudged-tests = {
     837 => ['0'],
     839 => ['C', '1'],
 };
-sub MAIN (Str:D :$file? = $location, Str :$only?, Bool:D :$debug = False) {
+sub MAIN (Str:D :$file = $location, Str :$only, Bool:D :$debug = False) {
     $DEBUG = $debug;
     my @only = $only ?? $only.split([',', ' ']) !! Empty;
     die "Can't find file at ", $file.IO.absolute unless $file.IO.f;
