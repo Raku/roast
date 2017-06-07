@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 210;
+plan 212;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -533,6 +533,11 @@ subtest '.hash does not cause keys to be stringified' => {
 {
     ok Bag.new =:= bag(), 'Bag.new returns the empty bag';
     ok ().Bag  =:= bag(), '().Bag returns the empty bag';
+}
+
+{
+    throws-like { ^Inf .Bag }, X::Cannot::Lazy, :what<Bag>;
+    throws-like { Bag.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<Bag>;
 }
 
 # vim: ft=perl6

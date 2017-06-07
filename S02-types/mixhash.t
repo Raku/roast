@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 245;
+plan 247;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -580,6 +580,11 @@ subtest 'MixHash autovivification of non-existent keys' => {
     for $mh.pairs { .value = 0 }
     is $mh, "",
       'Can use $_ from .pairs to remove items from MixHash';
+}
+
+{
+    throws-like { ^Inf .MixHash }, X::Cannot::Lazy, :what<MixHash>;
+    throws-like { MixHash.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<MixHash>;
 }
 
 # vim: ft=perl6

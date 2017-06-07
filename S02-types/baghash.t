@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 274;
+plan 276;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -643,6 +643,11 @@ subtest 'BagHash autovivification of non-existent keys' => {
     for $bh.pairs { .value = 0 }
     is $bh, "",
       'Can use $_ from .pairs to remove items from BagHash';
+}
+
+{
+    throws-like { ^Inf .BagHash }, X::Cannot::Lazy, :what<BagHash>;
+    throws-like { BagHash.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<BagHash>;
 }
 
 # vim: ft=perl6

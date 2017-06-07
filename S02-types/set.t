@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 210;
+plan 212;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -478,6 +478,11 @@ subtest '.hash does not cause keys to be stringified' => {
       'coercion of object Hash to Set 1';
     is-deeply :{ 42 => "a", 666 => "" }.Set,   42.Set,
       'coercion of object Hash to Set 2';
+}
+
+{
+    throws-like { ^Inf .Set }, X::Cannot::Lazy, :what<Set>;
+    throws-like { Set.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<Set>;
 }
 
 # vim: ft=perl6
