@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 203;
+plan 213;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -496,6 +496,13 @@ subtest '.hash does not cause keys to be stringified' => {
 {
     throws-like { ^Inf .Mix }, X::Cannot::Lazy, :what<Mix>;
     throws-like { Mix.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<Mix>;
+
+    for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
+      dies-ok { $pair.Mix },
+        "($pair.perl()).Mix died";
+      dies-ok { Mix.new-from-pairs($pair) },
+        "Mix.new-from-pairs( ($pair.perl()) ) died";
+    }
 }
 
 # vim: ft=perl6
