@@ -3,7 +3,7 @@ use lib <lib t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 75;
+plan 77;
 
 sub test-indir ($desc, $in-path, |args) {
     temp $*CWD = my $out-path = make-temp-dir;
@@ -171,5 +171,28 @@ subtest '&indir does not affect $*CWD outside of its block' => {
     }
     cmp-ok $failures, '==', 0, 'failures due to race conditions';
 }
+
+subtest 'indir sets $*CWD to absoluted path' => {
+    plan 3;
+
+    temp $*CWD = make-temp-dir;
+    'foo/bar/ber'.IO.mkdir;
+    is-deeply (indir 'foo', { indir 'bar', { dir } }).head.Str, 'ber',
+        'indirs can be nested';
+
+    indir 'foo', {
+        is-deeply $*CWD.is-absolute, True,
+          '$*CWD inside indir is absolute (Str argument)';
+    }
+
+    indir 'foo'.IO, {
+        is-deeply $*CWD.is-absolute, True,
+          '$*CWD inside indir is absolute (IO::Path argument)';
+    }
+}
+
+is_run ｢indir '.', {;}; print 'ok'｣,
+    {:out<ok>, :err(''), :0status},
+    'indir does not generate spurious warnings';
 
 # vim: expandtab shiftwidth=4 ft=perl6
