@@ -100,7 +100,7 @@ eval-lives-ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
         'two different packages should be two different Baz';
 
     eval-lives-ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
-        'two different packages should be two different EHomeE';        
+        'two different packages should be two different EHomeE';
 }
 
 # making test below todo causes trouble right now ...
@@ -134,7 +134,7 @@ our $outer_package = 19;
 # change tests to match likely error (top of file) when they pass (RT #64204)
 {
     try { EVAL 'my $x = ::P' };
-    ok  ~$! !~~ /<&fairly_conclusive_platform_error>/, 
+    ok  ~$! !~~ /<&fairly_conclusive_platform_error>/,
         'simple package case that should not blow platform';
 
     try { EVAL 'A::B' };
@@ -142,7 +142,7 @@ our $outer_package = 19;
         'another simple package case that should not blow platform';
 }
 
-eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
+eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
               'map works in a module (RT #64606)';
 
 {
