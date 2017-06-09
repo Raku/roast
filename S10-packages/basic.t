@@ -4,8 +4,9 @@ use v6;
 
 use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
-plan 82;
+plan 83;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -319,6 +320,17 @@ throws-like q[
 {
     eval-lives-ok '{ my @z; my $x = *²; for $x(42), $x(50) { push @z, $_ } }',
         "loop that isn't Perl 5 is not identified as such";
+}
+
+# RT #131540
+subtest '`use lib` accepts IO::Path objects' => {
+    plan 2;
+
+    is_run ｢use lib 't/spec/packages'.IO; use Test::Util｣,
+        {:out(''), :err(''), :0status}, 'single object';
+
+    is_run ｢use lib ('.', '.'.IO, 't/spec/packages'.IO); use Test::Util｣,
+        {:out(''), :err(''), :0status}, 'a mixed list of IO::Path and Str';
 }
 
 # vim: ft=perl6
