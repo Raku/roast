@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 97;
+plan 98;
 
 # Real **
 is(0 ** 0,    1, "0 ** 0 ==  1");
@@ -151,5 +151,20 @@ is_run ｢start { sleep 2; say ‘pass’; exit }; EVAL ‘say 1.0000001 ** (10 
 'raising a Rat to largish power does not throw';
 throws-like { EVAL qq[say 1.0000001 ** (10 ** 90000)] }, 
     $xno, "raising a Rat to a very large number throws";
+
+# RT#126732
+subtest 'power ops with uncommon No chars as terms work' => {
+    my @nos = <⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ⅟ 𑁓 ౸ ㆒ 𐌣 >;
+    plan 5*@nos;
+    for @nos -> $no {
+        my $v = unival $no;
+        is-deeply .EVAL, $v**12, with "$no¹²";
+        is-deeply .EVAL, $v**12  with "$no⁺¹²";
+        is-deeply .EVAL, $v**-12 with "$no⁻¹²";
+        is-deeply "$no¯¹²".EVAL, $v**-12, "$no¯¹² (macron)";
+
+        is-deeply .EVAL, 2**$v**2, $_ with "2**$no²";
+    }
+}
 
 # vim: ft=perl6
