@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 426;
+plan 427;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -958,6 +958,13 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
         CATCH { default { } }
     }
     nok $warned, 'No warning when producing error for "my $!a"';
+}
+
+# RT #131492
+{
+    throws-like q| my \foo = Callable but role :: { } |,
+        X::Method::NotFound,
+	'X::Method::NotFound does not die with "X::Method::NotFound exception produced no message"';
 }
 
 # vim: ft=perl6
