@@ -4,7 +4,7 @@ use Test;
 
 plan 5;
 
-dies-ok { Supply.list }, 'can not be called as a class method';
+is-deeply Supply.list, (Supply,).Seq, 'can list a Supply type object';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
