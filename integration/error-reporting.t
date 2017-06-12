@@ -167,7 +167,7 @@ ok $b1 === $b2, "Backtrace does not change on additional .backtrace";
         }, 'Error for obsolete syntax contains line number';
 }
 
-is_run q:b/sub s1 {\nsub s2 {\nfail("foo")\n}\ns2() }\nmy $a = s1();\nsay $a/, 
+is_run q:b/sub s1 {\nsub s2 {\nfail("foo")\n}\ns2() }\nmy $a = s1();\nsay $a/, {
             err => rx/sub\ss2.*sub\ss1.*thrown/
         }, "Thrown Failure outputs dual backtraces";
 
