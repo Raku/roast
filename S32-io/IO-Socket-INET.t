@@ -242,8 +242,8 @@ eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :port($_), :host("127.0.0.1") )
 
 sub do-test(Block $b-server, Block $b-client) {
     my $sync   = Channel.new;
-    my $thread = Thread.new(
-        code => {
+    my $thread = Thread.start(
+        {
             my $server = IO::Socket::INET.new(:localhost<localhost>, :localport(0), :listen);
 
             $sync.send($server.localport);
@@ -252,7 +252,6 @@ sub do-test(Block $b-server, Block $b-client) {
         }
     );
 
-    $thread.run;
     my $client = IO::Socket::INET.new(:host<localhost>, :port($sync.receive));
     $b-client($client);
     $thread.finish;
