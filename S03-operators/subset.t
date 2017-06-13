@@ -54,6 +54,24 @@ my @sse =
   set(),          <a>.Set,
   bag(),          <a>.Bag,
   mix(),          <a>.Mix,
+
+# coercions of Maps
+  {},             {},
+  {},             {a=>0},
+  {a=>0},         {},
+  {a=>1},         {a=>1},
+  {},             :{},
+  {},             :{a=>0},
+  {a=>0},         :{},
+  {a=>1},         :{a=>1},
+  :{},            {},
+  :{},            {a=>0},
+  :{a=>0},        {},
+  :{a=>1},        {a=>1},
+  :{},            :{},
+  :{},            :{a=>0},
+  :{a=>0},        :{},
+  :{a=>1},        :{a=>1},
 ;
 
 # Things we need to check for not being a subset of.  Uses a Set with
@@ -99,6 +117,10 @@ my @notsse =
   <a>.Bag => bag(),
   <a>.Mix => mix(),
   mix() => (a=>-1).Mix, # empty not subset because of negative weight
+
+# coercions of Maps
+  {a => 1} => {},
+  {a => 1} => {a => 0},
 ;
 
 plan 4 * (2 * @sse/2 + 4 * @notsse) + 2 * (2 * @sse/2 + 4 * @notsse);
