@@ -8,7 +8,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there.
 
-plan 36;
+plan 37;
 
 my $res;
 
@@ -128,6 +128,19 @@ isnt run("dir", "t"), BEGIN { run("dir", "t") }, 'run() is affected by chdir()';
     }
 
     is-deeply $res, 'Testing42', 'run sets $cwd and $env';
+}
+
+subtest '.out/.err proc pipes on failed command' => {
+    plan 4;
+
+    throws-like { run(:out, "meooooooows").out.close }, X::Proc::Unsuccessful,
+        '.out.close Proc explodes when sunk';
+    throws-like { run(:err, "meooooooows").err.close }, X::Proc::Unsuccessful,
+        '.err.close Proc explodes when sunk';
+    is-deeply run(:out, "meooooooows").out.slurp(:close), '',
+        '.out.slurp is empty';
+    is-deeply run(:err, "meooooooows").err.slurp(:close), '',
+        '.err.slurp is empty';
 }
 
 # vim: ft=perl6
