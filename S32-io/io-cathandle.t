@@ -547,7 +547,7 @@ subtest 'perl method' => {
 }
 
 subtest 'read method' => {
-    plan 2;
+    plan 3;
     subtest 'binary cat' => { plan 4;
         my $cat = IO::CatHandle.new: :bin, make-files Blob.new(1, 2, 3),
             Blob.new(4, 5), Blob.new(6, 7, 8), Blob.new(9, 10, 11, 12, 13, 14);
@@ -564,6 +564,11 @@ subtest 'read method' => {
         is-deeply $cat.read(5000), buf8.new(10, 11, 12, 13, 14), '3';
         is-deeply $cat.read(500),  buf8.new,                     '4';
     }
+
+    # https://irclog.perlgeek.de/perl6-dev/2017-06-13#i_14728193
+    is-deeply IO::CatHandle.new(make-temp-file(:content<foo>)).read,
+        buf8.new('foo'.encode),
+    'IO::CatHandle.read has some reasonable size default value';
 }
 
 subtest 'readchars method' => {
