@@ -16,7 +16,7 @@ I/O tests
 
 =end pod
 
-plan 113;
+plan 114;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -352,5 +352,8 @@ subtest '.printf()' => {
     throws-like { $*OUT.printf: '%d %d', 42 },
         X::Str::Sprintf::Directives::Count, 'args do not match format';
 }
+
+is-deeply make-temp-file(:content<foo>).IO.open.read, buf8.new('foo'.encode),
+    'IO::Handle.read has some reasonable size default value';
 
 # vim: ft=perl6
