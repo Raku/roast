@@ -8,7 +8,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there.
 
-plan 35;
+plan 36;
 
 my $res;
 
@@ -112,5 +112,22 @@ my $cwd;
 BEGIN { $cwd = $*DISTRO.is-win ?? 'cd' !! 'pwd' };
 ok((qqx{$cwd} ne BEGIN qqx{$cwd}), 'qqx{} is affected by chdir()');
 isnt run("dir", "t"), BEGIN { run("dir", "t") }, 'run() is affected by chdir()';
+
+# https://irclog.perlgeek.de/perl6-dev/2017-06-13#i_14727506
+{
+    my $d = make-temp-dir;
+    $d.add('blah').spurt: 'Testing';
+
+    temp %*ENV<PATH> = $*CWD.absolute ~ "/install/bin:%*ENV<PATH>";
+    my $res = do with run(
+        :out, :err, :cwd($d.absolute), :env{ :42FOOMEOW, |%*ENV },
+        $*EXECUTABLE.subst(/^"./"/, ""),
+        '-e', ｢'blah'.IO.slurp.print; %*ENV<FOOMEOW>.print｣
+    ) {
+        .out.slurp(:close) ~ .err.slurp(:close)
+    }
+
+    is-deeply $res, 'Testing42', 'run sets $cwd and $env';
+}
 
 # vim: ft=perl6
