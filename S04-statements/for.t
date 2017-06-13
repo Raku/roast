@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 102;
+plan 103;
 
 =begin description
 
@@ -701,6 +701,51 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 {
     my class Sinker { method sink() { take "Blub" } }
     is (gather for ^5 { Sinker.new(); }).gist, "(Blub Blub Blub Blub Blub)", "for loop properly sinks final statement method call";
+}
+
+# RT #131567
+subtest 'next with label works inside list comprehended for loops' => {
+    # We have several of these cases because some implementations chose
+    # to branch handling of these special cases for perf reasons.
+
+    plan 4;
+    {
+        my @ans;
+        @ = (MEOW: for ^10 {
+            eager MOO: for "a".."c" -> $n {
+                next MEOW if $_ %% 2;
+                next MOO  if $_ %% 3;
+                @ans.push: "$_$n"
+            }
+        });
+        is-deeply @ans, [<1a 1b 1c 5a 5b 5c 7a 7b 7c>],
+            'just a for with Range';
+    }
+
+    {
+        my @ans;
+        @ = (MEOW: for ^10 -> $_ --> List {
+            eager MOO: for "a".."c" -> $n --> Array {
+                next MEOW if $_ %% 2;
+                next MOO  if $_ %% 3;
+                @ans.push: "$_$n"
+            }
+        });
+        is-deeply @ans, [<1a 1b 1c 5a 5b 5c 7a 7b 7c>],
+            '1 at a time, no phasers, non slippy';
+    }
+
+    {
+        my @ans;
+        @ = (MEOW: for ^6 -> $, $a --> Array { next MEOW if $a == 1; @ans.push: $a });
+        is-deeply @ans, [3, 5], 'two at a time, no phasers, non slippy';
+    }
+
+    {
+        my @ans;
+        FOO: for ^10 -> $_ --> Array { next FOO if $_ %% 2; @ans.push: $_ }
+        is-deeply @ans, [1, 3, 5, 7, 9]
+    }
 }
 
 # vim: ft=perl6
