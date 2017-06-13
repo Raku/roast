@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 257;
+plan 259;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -592,6 +592,14 @@ subtest 'MixHash autovivification of non-existent keys' => {
       dies-ok { MixHash.new-from-pairs($pair) },
         "MixHash.new-from-pairs( ($pair.perl()) ) died";
     }
+}
+
+# RT #131561
+{
+    is-deeply (a => -1, a => 1).MixHash,      MixHash.new,
+      'final value 0 disappears in MixHash (1)';
+    is-deeply (a => -1, a => 1, "b").MixHash, MixHash.new("b"),
+      'final value 0 disappears in MixHash (2)';
 }
 
 # vim: ft=perl6

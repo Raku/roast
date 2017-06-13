@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 213;
+plan 215;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -503,6 +503,14 @@ subtest '.hash does not cause keys to be stringified' => {
       dies-ok { Mix.new-from-pairs($pair) },
         "Mix.new-from-pairs( ($pair.perl()) ) died";
     }
+}
+
+# RT #131561
+{
+    is-deeply (a => -1, a => 1).Mix,      mix(),
+      'final value 0 disappears in Mix for empty mix';
+    is-deeply (a => -1, a => 1, "b").Mix, Mix.new("b"),
+      'final value 0 disappears in Mix';
 }
 
 # vim: ft=perl6
