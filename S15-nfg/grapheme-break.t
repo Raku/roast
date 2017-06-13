@@ -794,13 +794,13 @@ is Uni.new(0x0061, 0x1F1E6, 0x0062).Str.chars, 3, '÷ [0.2] LATIN SMALL LETTER A
 
 is Uni.new(0x1F1F7, 0x1F1FA).Str.chars, 1, '÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER R (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER U (Regional_Indicator) ÷ [0.3]';
 
-is Uni.new(0x1F1F7, 0x1F1FA, 0x1F1F8).Str.chars, 1, '÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER R (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER U (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER S (Regional_Indicator) ÷ [0.3]';
+is Uni.new(0x1F1F7, 0x1F1FA, 0x1F1F8).Str.chars, 2, '÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER R (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER U (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER S (Regional_Indicator) ÷ [0.3]';
 
-is Uni.new(0x1F1F7, 0x1F1FA, 0x1F1F8, 0x1F1EA).Str.chars, 1, '÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER R (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER U (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER S (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER E (Regional_Indicator) ÷ [0.3]';
+is Uni.new(0x1F1F7, 0x1F1FA, 0x1F1F8, 0x1F1EA).Str.chars, 2, '÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER R (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER U (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER S (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER E (Regional_Indicator) ÷ [0.3]';
 
 is Uni.new(0x1F1F7, 0x1F1FA, 0x200B, 0x1F1F8, 0x1F1EA).Str.chars, 3, '÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER R (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER U (Regional_Indicator) ÷ [5.0] ZERO WIDTH SPACE (Control) ÷ [4.0] REGIONAL INDICATOR SYMBOL LETTER S (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER E (Regional_Indicator) ÷ [0.3]';
 
-is Uni.new(0x1F1E6, 0x1F1E7, 0x1F1E8).Str.chars, 1, '÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER B (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER C (Regional_Indicator) ÷ [0.3]';
+is Uni.new(0x1F1E6, 0x1F1E7, 0x1F1E8).Str.chars, 2, '÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER B (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER C (Regional_Indicator) ÷ [0.3]';
 
 is Uni.new(0x1F1E6, 0x200D, 0x1F1E7, 0x1F1E8).Str.chars, 2, '÷ [0.2] REGIONAL INDICATOR SYMBOL LETTER A (Regional_Indicator) × [9.0] ZERO WIDTH JOINER (Extend) ÷ [999.0] REGIONAL INDICATOR SYMBOL LETTER B (Regional_Indicator) × [8.1] REGIONAL INDICATOR SYMBOL LETTER C (Regional_Indicator) ÷ [0.3]';
 
@@ -809,4 +809,3 @@ is Uni.new(0x1F1E6, 0x1F1E7, 0x200D, 0x1F1E8).Str.chars, 2, '÷ [0.2] REGIONAL I
 is Uni.new(0x0020, 0x200D, 0x0646).Str.chars, 2, '÷ [0.2] SPACE (Other) × [9.0] ZERO WIDTH JOINER (Extend) ÷ [999.0] ARABIC LETTER NOON (Other) ÷ [0.3]';
 
 is Uni.new(0x0646, 0x200D, 0x0020).Str.chars, 2, '÷ [0.2] ARABIC LETTER NOON (Other) × [9.0] ZERO WIDTH JOINER (Extend) ÷ [999.0] SPACE (Other) ÷ [0.3]';
-
