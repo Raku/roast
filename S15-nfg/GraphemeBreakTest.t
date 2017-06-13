@@ -45,18 +45,15 @@ values are either set to ALL or set to one or more of C,0,1,2,3,4..
 =end pod
 
 constant %fudged-tests = {
-    224 => ['ALL'],
-    442 => [0],
     573 => ['ALL'],
     733 => ['ALL'],
-    825 => ['0'],
-    829 => [0],
-    831 => ['ALL'],
-    832 => ['C', '1', '2', '3'],
-    835 => ['C', '1', '2', '3'],
-    837 => ['0'],
-    839 => ['C', '1'],
 };
+constant @lines-with-normalization = (
+    442 => [ 0, ],
+    825 => [ 0, ],
+    829 => [ 0, ],
+    837 => [ 0, ],
+);
 sub MAIN (Str:D :$file = $location, Str :$only, Bool:D :$debug = False) {
     $DEBUG = $debug;
     my @only = $only ?? $only.split([',', ' ']) !! Empty;
@@ -138,6 +135,19 @@ sub process-line (Str:D $line, @fail, :@only!) {
         if $fudge-b and %fudged-tests{$line-no}.any eq $elem {
             todo "[$elem] grapheme line $line-no todo";
         }
-        is-deeply $list<string>.substr($elem, 1).ords.flat, $list<ord-array>[$elem].flat, "Line $line-no: grapheme [$elem] has correct codepoints" or @fail.push($line-no);
+        my Array $expected;
+        {
+            $expected = $list<ord-array>[$elem].flat.Array;
+            if $line-no eq @lines-with-normalization».key.any {
+                my $pair = @lines-with-normalization.first({.key eq $line-no});
+                if $pair.value.any eqv $elem {
+                    $expected = $expected.chrs.ords.flat.Array;
+                }
+            }
+            if $expected.chrs.ords.Array !eqv $expected {
+                die "codepoints change under normalization. manually check and add an exception or fix the script\nline no $line-no: elem $elem: ", $expected.chrs.ords.Array, ' - ', $expected;
+            }
+        }
+        is-deeply $list<string>.substr($elem, 1).ords.flat.Array, $expected, "Line $line-no: grapheme [$elem] has correct codepoints" or @fail.push($line-no);
     }
 }
