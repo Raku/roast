@@ -53,6 +53,16 @@ my @pss =
   set(),          <a>.Set,
   bag(),          <a>.Bag,
   mix(),          <a>.Mix,
+
+# various Map coercions that should be ok
+  {},             {a=>1},
+  {a=>0},         {a=>1},
+  {},             :{a=>1},
+  {a=>0},         :{a=>1},
+  :{},            {a=>1},
+  :{a=>0},        {a=>1},
+  :{},            :{a=>1},
+  :{a=>0},        :{a=>1},
 ;
 
 # Things we need to check for not being a proper subset of.  Uses a Set with
@@ -98,6 +108,16 @@ my @notpss =
   <a>.Bag => bag(),
   <a>.Mix => mix(),
   mix() => (a => -1).Mix, # not a proper subset because of negative weight
+
+# various Map coercions that shouldn't be ok
+  {},        {},
+  {a=>0},    {},
+  {},        :{},
+  {a=>0},    :{},
+  :{},       {},
+  :{a=>0},   {},
+  :{},       :{},
+  :{a=>0},   :{},
 ;
 
 plan 4 * (2 * @pss/2 + 4 * @notpss) + 2 * (2 * @pss/2 + 4 * @notpss);
