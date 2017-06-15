@@ -1,4 +1,5 @@
 sub MAIN(Str $grapheme-break-test-file) {
+    die "Some wrong tests were removed and this generator script is broken. Don't run it in 6.c-errata or it will re-generate the broken tests";
     my constant TEST_FILE = 't/spec/S15-nfg/grapheme-break.t';
 
     my class TestCase {
