@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 106;
+plan 4 * 19 + 107;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -452,6 +452,16 @@ subtest 'Pair.invert' => {
             is .[0].value, Mu,   '.value';
         }
     }
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2017-06-15#i_14734597
+subtest 'Pair.perl with type objects' => {
+  plan 5;
+  cmp-ok Pair.new('foo', Bool).perl.EVAL, &[!eqv], :!foo.Pair,
+      'roundtrip of Bool:U .value does not eqv :!foo';
+
+  is-deeply .perl.EVAL, $_, .perl for Pair.new(Str, Str),
+      Pair.new(Rat, Num), Pair.new(Bool, Bool), Pair.new(Numeric, Numeric)
 }
 
 # vim: ft=perl6
