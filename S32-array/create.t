@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 13;
 
 # L<S32::Containers/"Array"/"=item ">
 
@@ -63,6 +63,26 @@ eval-lives-ok ｢(1,2,3).Array[0]++｣,
     }
 
     is-deeply Array.clone, Array, 'Array:U clone gives an Array:U';
+}
+
+subtest 'Array.append with multiple Iterables' => {
+    plan 4;
+
+    my @b = 1, 2, 3;
+    my @c := (4, 5, 6);
+    my %d = :42a;
+
+    my @res1;
+    is-deeply @res1.append(@b, @c, %d), [1, 2, 3, 4, 5, 6, :42a],
+        '.append flattens all Iterables (return value)';
+    is-deeply @res1, [1, 2, 3, 4, 5, 6, :42a],
+        '.append flattens all Iterables (result)';
+
+    my @res2;
+    is-deeply @res2.append([@b, 2], [1, @c], [3, %d]), [@b, 2, 1, @c, 3, %d],
+        '.append leaves containerized Iterables intact (return value)';
+    is-deeply @res2, [@b, 2, 1, @c, 3, %d],
+        '.append leaves containerized Iterables intact (result)';
 }
 
 # vim: ft=perl6
