@@ -1,6 +1,8 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
-plan 189;
+use Test::Util;
+plan 191;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -645,6 +647,20 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
             ”b b“ ”b b“ ”b b” „b b“ „b b” ｢b b｣ ｢b b｣>,
         ('a', 'a', |('b b' xx 16)),
     'fancy quotes in qww work just like regular quotes';
+}
+
+{
+    my $code = 'qx♥' ~ $*EXECUTABLE ~ (
+        $*DISTRO.is-win ?? ｢ -e "note 42"♥｣ !! ｢ -e 'note 42'♥｣);
+    is_run $code, {:err("42\n"), :out(''), :0status},
+        'qx passes STDERR through';
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2017-06-16#i_14744333
+{
+    diag 'The following test might STDERR about unfound command';
+    lives-ok { qx/the-cake-is-a-lie-badfsadsadsadasdsadasdsadsadasdsadas/ },
+      'qx// with a non-existent command does not die';
 }
 
 # vim: ft=perl6
