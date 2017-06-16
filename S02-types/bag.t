@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 222;
+plan 223;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -538,6 +538,7 @@ subtest '.hash does not cause keys to be stringified' => {
 {
     throws-like { ^Inf .Bag }, X::Cannot::Lazy, :what<Bag>;
     throws-like { Bag.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<Bag>;
+    throws-like { Bag.new(^Inf) }, X::Cannot::Lazy, :what<Bag>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
       dies-ok { $pair.Bag },

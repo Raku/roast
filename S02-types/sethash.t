@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 243;
+plan 244;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -607,6 +607,7 @@ subtest 'cloned SetHash gets its own elements storage' => {
 {
     throws-like { ^Inf .SetHash }, X::Cannot::Lazy, :what<SetHash>;
     throws-like { SetHash.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<SetHash>;
+    throws-like { SetHash.new(^Inf) }, X::Cannot::Lazy, :what<SetHash>;
 }
 
 # vim: ft=perl6

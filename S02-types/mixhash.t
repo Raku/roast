@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 259;
+plan 260;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -585,6 +585,7 @@ subtest 'MixHash autovivification of non-existent keys' => {
 {
     throws-like { ^Inf .MixHash }, X::Cannot::Lazy, :what<MixHash>;
     throws-like { MixHash.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<MixHash>;
+    throws-like { MixHash.new(^Inf) }, X::Cannot::Lazy, :what<MixHash>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
       dies-ok { $pair.MixHash },

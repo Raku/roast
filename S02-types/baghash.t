@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 286;
+plan 287;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -648,6 +648,7 @@ subtest 'BagHash autovivification of non-existent keys' => {
 {
     throws-like { ^Inf .BagHash }, X::Cannot::Lazy, :what<BagHash>;
     throws-like { BagHash.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<BagHash>;
+    throws-like { BagHash.new(^Inf) }, X::Cannot::Lazy, :what<BagHash>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
       dies-ok { $pair.BagHash },
