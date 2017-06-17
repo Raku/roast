@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 188;
+plan 189;
 
 # L<S05/Substitution/>
 
@@ -686,6 +686,17 @@ subtest 'List/Match result adverb handling' => {
             is-deeply $/».Str,   <a c>,  '$/».Str';
         }
     }
+}
+
+subtest '.subst(Str:D, Str:D)' => {
+    plan 6;
+    is-deeply 'abc'.subst('a',  'zo'),  'zobc',   'replace with longer';
+    is-deeply 'abc'.subst('ab',  'z'),  'zc',     'replace with shorter';
+    is-deeply 'abc'.subst('ab',  'xy'), 'xyc',    'replace with samelength';
+
+    is-deeply 'a♥bc'.subst('♥',  'zo'), 'azobc',  'replace with longer (2)';
+    is-deeply 'a♥bc'.subst('♥b',  'z'), 'azc',    'replace with shorter (2)';
+    is-deeply 'a♥bc'.subst('a♥', '♦z'), '♦zbc',   'replace with samelength (2)';
 }
 
 # vim: ft=perl6
