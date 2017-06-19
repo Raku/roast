@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 103;
+plan 104;
 
 =begin description
 
@@ -746,6 +746,13 @@ subtest 'next with label works inside list comprehended for loops' => {
         FOO: for ^10 -> $_ --> Array { next FOO if $_ %% 2; @ans.push: $_ }
         is-deeply @ans, [1, 3, 5, 7, 9]
     }
+}
+
+# RT #131593
+{
+    my $i = 0;
+    sub foo($?) { ^2 .map: { $i++ } }; for 1 { .&foo() };
+    is $i, 2, 'for statement modifier sinks its content';
 }
 
 # vim: ft=perl6
