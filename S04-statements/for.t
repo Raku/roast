@@ -752,7 +752,7 @@ subtest 'next with label works inside list comprehended for loops' => {
 {
     my $i = 0;
     sub foo($?) { ^2 .map: { $i++ } }; for 1 { .&foo() };
-    is $i, 2, 'for statement modifier sinks its content';
+    is $i, 2, 'for statement sinks its content';
 }
 
 # vim: ft=perl6
