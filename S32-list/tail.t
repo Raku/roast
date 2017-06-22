@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 =begin description
 
@@ -68,5 +68,37 @@ This test tests the C<tail> builtin.
     my $range = ^0;
     is $range.tail(5).List, (), "Range.tail works if empty";
 } #3
+
+subtest 'tail makes use .count-only when it is implemented' => {
+    plan 4;
+
+    my $pulled = 0;
+    sub make-seq ($i = 0) {
+        Seq.new: class :: does Iterator {
+            has $!i;
+            has $!pulled;
+            method !SET-SELF (\pulled, $!i) { $!pulled := pulled; self    }
+            method new       (\pulled, \i) { self.bless!SET-SELF: pulled, i }
+            method pull-one {
+                $!pulled++;
+                ++$!i ≤ 10 ?? $!i !! IterationEnd
+            }
+            method skip-one { ++$!i ≤ 10 ?? True !! False }
+            method count-only { 0 max 10 - $!i }
+        }.new: $pulled, $i
+    }
+
+    is-deeply make-seq.tail, 10, 'correct tail value';
+    is-deeply $pulled,        1, 'we called .pull-one just once';
+
+    $pulled = 0;
+    is-deeply make-seq(11).tail, Nil,
+        'correct tail value (when Seq got no values)';
+
+    # Spec note: it's not a mistake to pull one time when the .count-only is
+    # zero; it's simply pointless. So you should aim for a 0 in this test,
+    # but 1 will get you a pass as well.
+    is-deeply $pulled, 0|1, 'we did not pull (or pulled just one';
+}
 
 # vim: ft=perl6
