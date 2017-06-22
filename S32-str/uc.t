@@ -29,7 +29,6 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 
 # GERMAN SHARP S ("ß") should uc() to "SS", per SpecialCasing.txt
 # RT #121377
-#?niecza todo 'German language weirdness'
 is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
 {
@@ -55,12 +54,12 @@ is ~(0.lc),         ~0, '.lc on Int';
 # precomposed uppercase. That is, NFC is sufficient for the lowercase to
 # be an NFG string, but on uppercasing there's no way to represent it in
 # NFC and so we need to produce a synthetic.
-#?rakudo.jvm skip 'NFG'
 {
     my $s = "\c[GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS]";
     is $s.uc, "\c[GREEK CAPITAL LETTER IOTA]\c[COMBINING DIAERESIS]\c[COMBINING ACUTE ACCENT]",
         "Correct uppercasing of char with no precomposed upper";
-   is $s.uc.chars, 1, "Char with no precomposed upper gets NFG'd so upper is one grapheme";
+    #?rakudo.jvm todo 'got 3'
+    is $s.uc.chars, 1, "Char with no precomposed upper gets NFG'd so upper is one grapheme";
 }
 
 # vim: ft=perl6

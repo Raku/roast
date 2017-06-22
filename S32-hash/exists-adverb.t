@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 48;
 
 # L<S02/Names and Variables/:exists>
 
@@ -33,7 +33,6 @@ sub gen_hash {
     ok     %h<b>:exists,       "Test for exists single key";
     ok   !(%h<X>:exists),      "Test for non-exists single key";
 
-    #?niecza  8 todo "adverbial pairs only used as True"
     ok !(%h<c>:!exists),       "Test non-exists with ! single key c";
     ok   %h<X>:!exists,        "Test non-exists with ! single key X";
     ok !(%h<c>:exists(0)),     "Test non-exists with (0) single key c";
@@ -49,13 +48,11 @@ sub gen_hash {
     is-deeply %h<c d X>:exists,  (True, True, False),  "Test exists TTF";
     is-deeply %h{}:exists,       (True  xx 26).List, "Test exists T{}";
     is-deeply %h{*}:exists,      (True  xx 26).List, 'Test exists T{*}';
-    #?niezca 3 todo "adverbial pairs only used as True"
     is-deeply %h<c d e>:!exists, (False,False,False),  "Test non-exists FFF";
     is-deeply %h<c d X>:!exists, (False,False,True),   "Test non-exists FFT";
     is-deeply %h{}:!exists,      (False xx 26).List, "Test non-exists F{}";
     is-deeply %h{*}:!exists,     (False xx 26).List, 'Test non-exists F{*}';
 
-    #?niezca 6 todo "no combined adverbial pairs"
     is-deeply %h<c d e>:exists:kv,
       ("c",True,"d",True,"e",True),                     "Test exists:kv TTT";
     is-deeply %h<c d X>:exists:kv,
@@ -69,7 +66,6 @@ sub gen_hash {
     is-deeply %h<c d X>:!exists:!kv,
       ("c",False,"d",False,"X",True),                   "Test exists:kv FFT";
 
-    #?niezca 6 todo "no combined adverbial pairs"
     is-deeply %h<c d e>:exists:p,
       (c=>True,d=>True,e=>True),                     "Test exists:p TTT";
     is-deeply %h<c d X>:exists:p,
@@ -83,19 +79,20 @@ sub gen_hash {
     is-deeply %h<c d X>:!exists:!p,
       (c=>False,d=>False,X=>True),                   "Test exists:p FFT";
 
-    #?niezca 6 todo "no combined adverbial pairs"
     dies-ok { %h<c>:exists:k },    "Test exists:k,   invalid combo";
     dies-ok { %h<c>:exists:!k },   "Test exists:!k,  invalid combo";
     dies-ok { %h<c>:!exists:k },   "Test !exists:k,  invalid combo";
     dies-ok { %h<c>:!exists:!k },  "Test !exists:!k, invalid combo";
 
-    #?niezca 6 todo "no combined adverbial pairs"
     dies-ok { %h<c>:exists:v },    "Test exists:v,   invalid combo";
     dies-ok { %h<c>:exists:!v },   "Test exists:!v,  invalid combo";
     dies-ok { %h<c>:!exists:v },   "Test !exists:v,  invalid combo";
     dies-ok { %h<c>:!exists:!v },  "Test !exists:!v, invalid combo";
 
     is %h.elems, 26, "should not have changed hash";
+
+    my %multi-dim := { 1 => { 2 => { 3 => 42 } } };
+    isa-ok %multi-dim{1;2;3}:exists, Bool, "Bool test for literal multi dim key;"
 } #46
 
 # RT #122497

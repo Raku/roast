@@ -14,7 +14,7 @@ plan 20;
 {
     # test with implicit $_
     my $f2 = { .sqrt };
-    is_approx $f2(4), 2, 'Block with implicit $_ has one formal parameter';
+    is-approx $f2(4), 2, 'Block with implicit $_ has one formal parameter';
 }
 
 {
@@ -37,9 +37,7 @@ plan 20;
     dies-ok({ (-> { "Boo!" }).(42) },     '-> {} is arity 0');
     dies-ok({ (-> { $_ }).(42) },         'Even when we use $_>');
 
-    #?niecza todo
     is((-> { $_ }).(),      'Ack!',       '$_ is lexical here');
-    #?niecza todo
     is(-> $a { $_ }.(42),   'Ack!',       'Even with parameters');
     is(-> $_ { $_ }.(42),   42,           'But not when the parameter is $_');
 

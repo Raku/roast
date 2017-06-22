@@ -140,7 +140,7 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 
     throws-like 'my $i; { $i++; last; $i--; }', X::ControlFlow,
         "bare block can't take 'last'";
-    
+
     throws-like 'my $i; { $i++; redo; $i--; }', X::ControlFlow,
         "bare block can't take 'last'";
 }

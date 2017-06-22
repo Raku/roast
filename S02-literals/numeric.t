@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 67;
 
 isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
@@ -13,7 +13,7 @@ does-ok 1.Num, Real, '1.Num does Real';
 
 # L<S02/Rational literals/Rational literals are indicated>
 
-is_approx <1/2>, 0.5, '<1/2> Rat literal';
+is-approx <1/2>, 0.5, '<1/2> Rat literal';
 isa-ok <1/2>, Rat, '<1/2> produces a Rat';
 does-ok <1/2>, Numeric, '<1/2> does Numeric';
 does-ok <1/2>, Real, '<1/2> does Real';
@@ -60,16 +60,28 @@ is <-3.5-2.5i>, -3.5 - 2.5i, '-<3.5-2.5i> produces correct value';
 is  <+3.1e10+2.9e10i>,    3.1e10  +  2.9e10i,  '<3.1e10+2.9e10i> produces correct value';
 is  <+3.1e+11+2.9e+11i>,  3.1e11  +  2.9e11i,  '<+3.1e+11+2.9e+11i> produces correct value';
 is  <-3.1e+12-2.9e+12i>, -3.1e+12 + -2.9e+12i, '<-3.1e+12-2.9e+12i> produces correct value';
-is_approx  <-3.1e-23-2.9e-23i>.re, -3.1e-23, '<-3.1e-23-2.9e-23i> produces correct real value';
-is_approx  <-3.1e-23-2.9e-23i>.im, -2.9e-23, '<-3.1e-23-2.9e-23i> produces correct imaginary value';
-is_approx   <3.1e-99+2.9e-99i>.re,  3.1e-99, '<3.1e-99+2.9e-99i> produces correct real value';
-is_approx   <3.1e-99+2.9e-99i>.im,  2.9e-99, '<3.1e-99+2.9e-99i> produces correct imaginary value';
+is-approx  <-3.1e-23-2.9e-23i>.re, -3.1e-23, '<-3.1e-23-2.9e-23i> produces correct real value';
+is-approx  <-3.1e-23-2.9e-23i>.im, -2.9e-23, '<-3.1e-23-2.9e-23i> produces correct imaginary value';
+is-approx   <3.1e-99+2.9e-99i>.re,  3.1e-99, '<3.1e-99+2.9e-99i> produces correct real value';
+is-approx   <3.1e-99+2.9e-99i>.im,  2.9e-99, '<3.1e-99+2.9e-99i> produces correct imaginary value';
 
 is  <NaN+Inf\i>,   NaN + Inf\i, '<NaN+Inf\i> produces correct value';
 is  <NaN-Inf\i>,   NaN - Inf\i, '<NaN-Inf\i> produces correct value';
 
+{ # RT #129915
+    isa-ok <0--Inf\i>, Str, '0--Inf\i is a Str';
+    isa-ok <0++Inf\i>, Str, '0++Inf\i is a Str';
+    isa-ok <0+-Inf\i>, Str, '0+-Inf\i is a Str';
+    isa-ok <0-+Inf\i>, Str, '0-+Inf\i is a Str';
+
+    isa-ok <--Inf-1i>, Str, '--Inf-1i is a Str';
+    isa-ok <++Inf-1i>, Str, '++Inf-1i is a Str';
+    isa-ok <+-Inf-1i>, Str, '+-Inf-1i is a Str';
+    isa-ok <-+Inf-1i>, Str, '-+Inf-1i is a Str';
+}
+
 # RT #74640
-is_approx 3.14159265358979323846264338327950288419716939937510e0,
+is-approx 3.14159265358979323846264338327950288419716939937510e0,
           3.141592, 'very long Num literals';
 
 # RT #73236
@@ -91,18 +103,20 @@ is_approx 3.14159265358979323846264338327950288419716939937510e0,
 }
 
 # RT #70600
-#?niecza todo 'exactly rounded Str->Num without FatRat'
 ok 0e999999999999999 == 0, '0e999999999999 equals zero';
 
 # We are not afraid of unicode
 {
     #?rakudo.jvm skip 'is not a valid number'
+    #?rakudo.js skip 'unsupported unicode stuff'
     is ۵۵, 55, "We can handle Unicode digits";
     #?rakudo.jvm 3 skip 'bogus term'
+    #?rakudo.js 3 skip 'unsupported unicode stuff'
     is ⅷ , 8, "We can handle Unicode non-digit numerics";
     is ⅔, 2/3, "We can handle vulgar fractions";
     is 𒑡  × 𒑒, 2/3, "We can multiply cuneiform :-)";
     #?rakudo.jvm skip 'Prefix - requires an argument, but no valid term found'
+    #?rakudo.js skip 'unsupported unicode stuff'
     ok -𝑒 ** −π\i ≅ 1, "We can write 1 in funny ways too";
     is ∞, Inf, "yeah, we do that too...";
 }

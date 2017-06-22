@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 42;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
@@ -52,7 +52,6 @@ is($val2, 42, '... cloned object has proper attr value');
 }
 
 # RT #88254
-#?niecza todo "Exception: Representation P6cursor does not support cloning"
 {
     my ($p, $q);
     $p = 'a' ~~ /$<foo>='a'/;
@@ -79,7 +78,6 @@ is($val2, 42, '... cloned object has proper attr value');
     my $a1 = ArrTest.new(:array<a b>);
     my $a2 = $a1.clone(:array<c d>);
     is-deeply $a1.array, ['a', 'b'], 'original object has its original array';
-    #?rakudo.jvm todo 'cloned object has @.array as List instead of Array RT #125577'
     is-deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array (1)';
     is $a2.array[0], 'c', 'cloned object has the newly-provided array (2)';
     is $a2.array[1], 'd', 'cloned object has the newly-provided array (3)';
@@ -87,7 +85,6 @@ is($val2, 42, '... cloned object has proper attr value');
     my $b1 = HshTest.new(hash=> 'a' => 'b' );
     my $b2 = $b1.clone(hash=> 'c' => 'd' );
     is-deeply $b1.hash, {'a' => 'b'}, 'original object has its original hash';
-    #?rakudo.jvm todo 'cloned object has @.hash as Pair instead of Hash RT #125577'
     is-deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash (1)';
     is $b2.hash.elems, 1, 'cloned object has the newly-provided hash (2)';
     is $b2.hash<c>, 'd', 'cloned object has the newly-provided hash (3)';
@@ -151,6 +148,14 @@ lives-ok { Int.clone }, 'cloning a type object does not explode';
     my @b = @a.clone;
     @a.push: 44;
     is @b, <42>, '.clone on array @a works as expected';
+}
+
+# RT #127704
+{
+    my %h1 = a => 1;
+    my %h2 := %h1.clone;
+    %h2<b> = 2;
+    is-deeply %h1, { a => 1 }, 'Hash.clone detangles the hashes';
 }
 
 # vim: ft=perl6

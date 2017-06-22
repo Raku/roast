@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 39;
 
 #L<S03/Autoincrement precedence>
 
@@ -17,7 +17,6 @@ Verify that autoincrement/autodecrement work properly.
     my $a = Mu;
     is($a++, 0, 'Mu++ == 0');
 
-    #?niecza todo '#88'
     $a = Mu;
     is $a--, 0 , 'postincrement (& decrement) returns 0 the first time';
 
@@ -29,7 +28,7 @@ Verify that autoincrement/autodecrement work properly.
 
 my %a = ('a' => 1);
 %a{"a"}++;
-is(%a{'a'}, 2, "hash key"); 
+is(%a{'a'}, 2, "hash key");
 
 
 my %b = ('b' => 1);
@@ -39,12 +38,12 @@ is(%b{$var}, 2, "hash key via var");
 
 my @a = (1);
 @a[0]++;
-is(@a[0], 2, "array elem"); 
+is(@a[0], 2, "array elem");
 
 my @b = (1);
 my $moo = 0;
 @b[$moo]++;
-is(@b[$moo], 2, "array elem via var"); 
+is(@b[$moo], 2, "array elem via var");
 is($moo, 0, "var was not touched");
 
 # Test that the expression to increment will only be evaluated once.
@@ -72,10 +71,11 @@ is($moo, 0, "var was not touched");
 # test incrementing literals
 # all of those can be detected at compile time
 {
+    #?rakudo.jvm 2 todo "RT #126531"
     throws-like ' 4++ ', X::Multi::NoMatch, "can't postincrement a literal number";
-    #?rakudo.jvm 3 todo "RT #126531"
     throws-like ' ++4 ', X::Multi::NoMatch, "can't preincrement a literal number";
     throws-like ' 4-- ', X::Multi::NoMatch, "can't postdecrement a literal number";
+    #?rakudo.jvm todo "RT #126531"
     throws-like ' --4 ', X::Multi::NoMatch, "can't predecrement a literal number";
     throws-like ' "x"++ ', X::Multi::NoMatch, "can't postincrement a literal string";
     throws-like ' ++"x" ', X::Multi::NoMatch, "can't preincrement a literal string";
@@ -118,7 +118,6 @@ is($moo, 0, "var was not touched");
 }
 
 # RT #74912
-#?niecza todo 'Works fine in niecza...'
 #?rakudo.jvm todo "RT #126531"
 throws-like 'my $x = 0; ++++$x', X::Multi::NoMatch,
     'can not double-increment, because the return value is not a container';
@@ -129,6 +128,12 @@ throws-like 'my $x = 0; ++++$x', X::Multi::NoMatch,
     is my $j.++, 0, '.++ is allowed on declarator';
     is $j, 1, '...and actually increments variable';
     is my $k.defined, False, 'method is allowed on declarator';
+}
+
+{ # coverage; 2016-09-19
+    my $i;
+    is --$i, -1, 'prefix:<--> on Any:U returns -1';
+    is   $i, -1, 'prefix:<--> on Any:U makes it -1';
 }
 
 # vim: ft=perl6

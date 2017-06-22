@@ -19,7 +19,7 @@ sub test-comb($text,@result,|c) {
         is @got, @result, 'did we get expected result in for loop';
 
         is open($filename).comb(|c,:close).elems, +@result, 'elems ok';
-    }, "testing '$text.substr(^4)' with {c.list[0].^name}";
+    }, "testing '$text.substr(^4)' with {c.perl}";
 }
 
 # standard text file
@@ -82,6 +82,7 @@ for "x",/x/ -> $sep {
 for "", /./ -> $sep {
     my $text  = "abcde";
     my @clean = <a b c d e>;
+    #?rakudo.jvm skip 'Type check failed in binding to parameter "$size"; expected Int but got Str ("")'
     test-comb($text,@clean,$sep);
 }
 
@@ -96,6 +97,7 @@ for /.c./ -> $sep {
 for "" -> $sep {
     my $text  = "";
     my @clean;
+    #?rakudo.jvm skip 'Type check failed in binding to parameter "$size"; expected Int but got Str ("")'
     test-comb($text,@clean,$sep);
 }
 
@@ -117,7 +119,6 @@ for 5, 10, 100000 -> $sep {
 for 100000 -> $sep {
     my $text  = "defgh" x 100000;
     my @clean = ("defgh" x 20000) xx 5;
-    #?rakudo.jvm todo 'wrong number of elements returned and wrongly separated'
     test-comb($text,@clean,$sep);
 }
 

@@ -1,5 +1,7 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
 my @endings =
   "\n"               => "LF",
@@ -9,10 +11,7 @@ my @endings =
   ("\n","\r\n","\r") => "multi",
 ;
 
-## adjusted plan to allow fine grained fudging for rakudo.jvm
-#plan @endings * (1 + 3 * ( (3 * 5) + 6));
-my $extra_tests_jvm_fudging = 2 * 3 * ( 3 * ( 6 + 2 ) );
-plan @endings * (1 + 3 * ( (3 * 5) + 6)) + $extra_tests_jvm_fudging;
+plan 8 + @endings * (1 + 3 * ( 5 + 6));
 
 my $filename = 't/spec/S16-io/lines.testing';
 my @text = <zero one two three four>;
@@ -26,34 +25,27 @@ for @endings -> (:key($eol), :value($EOL)) {
     for (), '', :chomp, '', :!chomp, $eol -> $chomp, $end {
         my $status = "{$chomp.gist} / $EOL";
 
-        for (), True, :close, False, :!close, True -> $closing, $open {
-            my $handle = open($filename, :nl-in($eol), |$chomp);
-            isa-ok $handle, IO::Handle;
-
-            my $status = OUTER::<$status> ~ " / {$open ?? 'open' !! 'close'}";
-
-            my $first;
-            for $handle.lines(|$closing) -> $line {
-                #?rakudo.jvm skip 'test will be run below with fine grained fudging'
-                is $line,"@text[0]$end[0]", "read first line: $status";
-                $first = $line;
-                last;
-            }
-
-            my @lines = $first, |$handle.lines(|$closing);
-            #?rakudo.jvm skip 'test will be run below with fine grained fudging'
-            is @lines.join, @text.join($end[0]), "rest of file: $status";
-
-            is $handle.opened, $open, "handle still open: $status";
-            ok $handle.close, "closed handle: $status";
-        }
-
-        # slicing
         my $handle = open($filename, :nl-in($eol), |$chomp);
         isa-ok $handle, IO::Handle;
 
-        my @lines = $handle.lines[1,2];
-        #?rakudo.jvm skip 'test will be run below with fine grained fudging'
+        my $first;
+        for $handle.lines -> $line {
+            is $line,"@text[0]$end[0]", "read first line: $status";
+            $first = $line;
+            last;
+        }
+
+        my @lines = $first, |$handle.lines;
+        is @lines.join, @text.join($end[0]), "rest of file: $status";
+
+        ok $handle.opened, "handle still open";
+        ok $handle.close, "closed handle";
+
+        # slicing
+        $handle = open($filename, :nl-in($eol), |$chomp);
+        isa-ok $handle, IO::Handle;
+
+        @lines = $handle.lines[1,2];
         is @lines.join, @text[1,2].join($end[0]) ~ $end[0],
           "handle 1,2: $status";
 
@@ -62,7 +54,6 @@ for @endings -> (:key($eol), :value($EOL)) {
         $handle.close;
 
         # slicing on IO::Path
-        #?rakudo.jvm skip 'test will be run below with fine grained fudging'
         is $filename.IO.lines(:nl-in($eol), |$chomp)[1,2,*-1][^2].join($end[0]),
           @text[1,2].map({ $_ ~ $end[0] }).join($end[0]),
           "path 1,2: $status";
@@ -77,172 +68,96 @@ for @endings -> (:key($eol), :value($EOL)) {
     }
 }
 
-## run those tests that are skipped above for rakudo.jvm
-## note: all tests below are skipped for rakudo.moar since they already run above
-##
-## TODO once the tests below pass on rakudo.jvm
-## * remove the two top level blocks below (keep unlink at end of file)
-## * unfudge tests in first 'for' loop
-## * adjust plan accordingly
-
-## the following tests pass on rakudo.jvm
-{
-    my @endings_jvm_passing =
-      "\n"               => "LF",
-      "\r\n"             => "CRLF",
-      ("\n","\r\n","\r") => "multi",
-    ;
-
-    for @endings_jvm_passing -> (:key($eol), :value($EOL)) {
-        unlink $filename;  # make sure spurt will work
-
-        my $text = @text.join($eol[0]);
-        $filename.IO.spurt($text);
-
-        for (), '', :chomp, '', :!chomp, $eol -> $chomp, $end {
-            my $status = "{$chomp.gist} / $EOL";
-
-            for (), True, :close, False, :!close, True -> $closing, $open {
-                my $handle = open($filename, :nl-in($eol), |$chomp);
-
-                my $status = OUTER::<$status> ~ " / {$open ?? 'open' !! 'close'}";
-
-                my $first;
-                for $handle.lines(|$closing) -> $line {
-                    #?rakudo.moar skip 'tests are already executed above'
-                    is $line,"@text[0]$end[0]", "read first line: $status";
-                    $first = $line;
-                    last;
-                }
-
-                my @lines = $first, |$handle.lines(|$closing);
-                #?rakudo.moar skip 'tests are already executed above'
-                is @lines.join, @text.join($end[0]), "rest of file: $status";
-
-                $handle.close;
-            }
-
-            # slicing
-            my $handle = open($filename, :nl-in($eol), |$chomp);
-
-            my @lines = $handle.lines[1,2];
-            #?rakudo.moar skip 'tests are already executed above'
-            is @lines.join, @text[1,2].join($end[0]) ~ $end[0],
-              "handle 1,2: $status";
-
-            $handle.close;
-
-            # slicing on IO::Path
-            #?rakudo.moar skip 'tests are already executed above'
-            is $filename.IO.lines(:nl-in($eol), |$chomp)[1,2,*-1][^2].join($end[0]),
-              @text[1,2].map({ $_ ~ $end[0] }).join($end[0]),
-              "path 1,2: $status";
-        }
-    }
-}
-
-## some of the following tests need to be fudged for rakudo.jvm
-{
-    my @endings_jvm_fudging =
-      "\r"               => "CR",
-      ";"                => "semi-colon",
-      ":\n:"             => "colons",
-    ;
-
-    for @endings_jvm_fudging -> (:key($eol), :value($EOL)) {
-        unlink $filename;  # make sure spurt will work
-
-        my $text = @text.join($eol[0]);
-        $filename.IO.spurt($text);
-
-        ## the following tests pass on rakudo.jvm
-        for :!chomp, $eol -> $chomp, $end {
-            my $status = "{$chomp.gist} / $EOL";
-
-            for (), True, :close, False, :!close, True -> $closing, $open {
-                my $handle = open($filename, :nl-in($eol), |$chomp);
-
-                my $status = OUTER::<$status> ~ " / {$open ?? 'open' !! 'close'}";
-
-                my $first;
-                for $handle.lines(|$closing) -> $line {
-                    #?rakudo.moar skip 'tests are already executed above'
-                    is $line,"@text[0]$end[0]", "read first line: $status";
-                    $first = $line;
-                    last;
-                }
-
-                my @lines = $first, |$handle.lines(|$closing);
-                #?rakudo.moar skip 'tests are already executed above'
-                is @lines.join, @text.join($end[0]), "rest of file: $status";
-
-                $handle.close;
-            }
-
-            # slicing
-            my $handle = open($filename, :nl-in($eol), |$chomp);
-
-            my @lines = $handle.lines[1,2];
-            #?rakudo.moar skip 'tests are already executed above'
-            is @lines.join, @text[1,2].join($end[0]) ~ $end[0],
-              "handle 1,2: $status";
-
-            $handle.close;
-
-            # slicing on IO::Path
-            #?rakudo.moar skip 'tests are already executed above'
-            is $filename.IO.lines(:nl-in($eol), |$chomp)[1,2,*-1][^2].join($end[0]),
-              @text[1,2].map({ $_ ~ $end[0] }).join($end[0]),
-              "path 1,2: $status";
-        }
-
-        ## the following tests do not yet pass on rakudo.jvm
-        for (), '', :chomp, ''  -> $chomp, $end {
-            my $status = "{$chomp.gist} / $EOL";
-
-            for (), True, :close, False, :!close, True -> $closing, $open {
-                my $handle = open($filename, :nl-in($eol), |$chomp);
-
-                my $status = OUTER::<$status> ~ " / {$open ?? 'open' !! 'close'}";
-
-                my $first;
-                for $handle.lines(|$closing) -> $line {
-                    #?rakudo.moar skip 'tests are already executed above'
-                    #?rakudo.jvm todo ':nl-in and :chomp not working yet'
-                    is $line,"@text[0]$end[0]", "read first line: $status";
-                    $first = $line;
-                    last;
-                }
-
-                my @lines = $first, |$handle.lines(|$closing);
-                #?rakudo.moar skip 'tests are already executed above'
-                #?rakudo.jvm todo ':nl-in and :chomp not working yet'
-                is @lines.join, @text.join($end[0]), "rest of file: $status";
-
-                $handle.close;
-            }
-
-            # slicing
-            my $handle = open($filename, :nl-in($eol), |$chomp);
-
-            my @lines = $handle.lines[1,2];
-            #?rakudo.moar skip 'tests are already executed above'
-            #?rakudo.jvm todo ':nl-in and :chomp not working yet'
-            is @lines.join, @text[1,2].join($end[0]) ~ $end[0],
-              "handle 1,2: $status";
-
-            $handle.close;
-
-            # slicing on IO::Path
-            #?rakudo.moar skip 'tests are already executed above'
-            #?rakudo.jvm todo ':nl-in and :chomp not working yet'
-            is $filename.IO.lines(:nl-in($eol), |$chomp)[1,2,*-1][^2].join($end[0]),
-              @text[1,2].map({ $_ ~ $end[0] }).join($end[0]),
-              "path 1,2: $status";
-        }
-    }
-}
-
 unlink $filename; # cleanup
+
+# RT #127370
+{
+    try shell(:out, :err, $*EXECUTABLE ~ ’ -pe '' /proc/$$/statm‘)
+        .out.slurp;
+    pass 'Attempting to read lines in from `/proc/$$/statm` does not hang';
+}
+
+{
+    # RT #130430
+    my $file = 't/spec/S16-io/lines.testing'.IO;
+    $file.spurt: join "\n", <a b c>;
+    is-deeply $file.lines(2000), ('a', 'b', 'c'),
+        'we stop when data ends, even if limit has not been reached yet';
+    unlink $file;
+}
+
+{
+    # https://irclog.perlgeek.de/perl6-dev/2017-01-21#i_13962764
+    my $file = 't/spec/S16-io/lines.testing'.IO;
+    $file.spurt: join "\n", <a b c>;
+    is_run 'lines; lines', :args[$file], {
+        :out(''), :err(''), :0status,
+    }, 'calling lines() after exhausting previous input does not crash';
+    unlink $file;
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2017-01-27#i_13996365
+lives-ok {
+    # we set the batch to 1+els, to ensure we get a partial
+    # list, which is where the bug hid
+    .lines.rotor(:partial, 1 + .lines.elems).eager with $*PROGRAM.IO
+}, '.lines does not crash with partial .rotor';
+
+{ # https://github.com/rakudo/rakudo/commit/0c6281518e
+    is-deeply run(:out, $*EXECUTABLE, '-e', ｢.say for ^3｣).out.lines(*).List,
+              ("0", "1", "2"), 'can use Whatever as limit to IO::Pipe.lines';
+
+    lives-ok { run(:out, $*EXECUTABLE, "-e", "1.say").out.lines.sink },
+        'can sink-all IO::Pipe.lines';
+}
+
+# https://github.com/rakudo/rakudo/commit/bf399380c1
+subtest '$limit works right with any combination of args' => {
+    plan 5;
+    my $file = make-temp-file :content("foo\nbar\nber");
+    my $exp = ('foo', 'bar').Seq;
+    is-deeply $file.lines(2), $exp, 'IO::Path.lines($limit)';
+    subtest 'IO::Handle.lines($limit)' => { plan 2;
+        with $file.open {
+            is-deeply .lines(2), $exp, 'right lines';
+            is-deeply .opened, True, 'left handle opened';
+            .close;
+        }
+    }
+    subtest 'IO::Handle.lines($limit, :close)' => { plan 2;
+        with $file.open {
+            is-deeply .lines(2, :close), $exp, 'right lines';
+            is-deeply .opened, False, 'closed handle';
+        }
+    }
+    subtest '&lines($fh, $limit)' => { plan 2;
+        with $file.open {
+            is-deeply lines($_, 2), $exp, 'right lines';
+            is-deeply .opened, True, 'left handle opened';
+            .close;
+        }
+    }
+    subtest '&lines($fh, $limit, :close)' => { plan 2;
+        with $file.open {
+            is-deeply lines($_, 2, :close), $exp, 'right lines';
+            is-deeply .opened, False, 'closed handle';
+        }
+    }
+}
+
+{
+    my $file = make-temp-file :content("foo\nbar\nber\nmeow\nPerl 6");
+    # we spin up another perl6 and do 1500 x 2 .lines calls; if the handle
+    # isn't closed; we can expect some errors to show up in the output
+    is_run ｢my $i = 0; my @lines; with ｣ ~ $file.perl ~ ｢ {
+            loop {
+                last if ++$i > 1500;
+                @lines.append: .lines;
+                @lines.append: .lines(2);
+            }
+        }; print "all ok $i"｣,
+        {:err(''), :out('all ok 1501'), :0status},
+    'heuristic for testing whether handle is closed';
+}
 
 # vim: ft=perl6

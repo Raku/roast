@@ -1,8 +1,9 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 31;
+plan 35;
 
 # L<S04/Exceptions/The fail function>
 
@@ -12,7 +13,6 @@ given (Failure.new()) {
 }
 
 {
-  # "use fatal" is not standard, so we don't have to disable it here
   my $was_after_fail  = 0;
   my $was_before_fail = 0;
   my $sub = sub { $was_before_fail++; my $exception = fail 42; $was_after_fail++ };    #OK not used
@@ -144,6 +144,33 @@ s1();
     ok $died ~~ Exception, 'fail outside of routine just behaves like die (1)';
     is ~$died, 'oops', 'fail outside of routine just behaves like die (2)';
     nok $here, 'fail outside of routine just behaves like die (3)';
+}
+
+# https://irclog.perlgeek.de/perl6/2016-12-08#i_13706422
+throws-like { sink Failure.new }, Exception,
+    'sink statement prefix explodes Failures';
+
+{
+    my class X::Meow::Meow is Exception {}
+    sub foo { fail X::Meow::Meow.new }
+    sub bar { foo() orelse fail $_ }
+    sub baz { foo() orelse .&fail  }
+    fails-like { bar }, X::Meow::Meow,
+        'fail(Failure:D) re-arms handled Failures';
+    fails-like { baz }, X::Meow::Meow,
+        'Failure:D.&fail re-arms handled Failures';
+}
+
+# https://github.com/rakudo/rakudo/commit/0a100825dd
+subtest 'Failure.self' => {
+    plan 2;
+    my class X::Meow is Exception { method message { 'meow' } }.new;
+    sub failer { fail X::Meow.new }
+
+    throws-like { $ = failer.self }, X::Meow, 'unhandled exceptions explode';
+
+    so my $f = failer;
+    is-deeply $f, $f.self, 'handled exceptions are passed through as is';
 }
 
 # vim: ft=perl6

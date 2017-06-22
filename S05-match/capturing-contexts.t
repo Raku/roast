@@ -5,7 +5,7 @@ use MONKEY-TYPING;
 
 use Test;
 use Test::Util;
-plan 56;
+plan 64;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -18,7 +18,6 @@ plan 56;
 
 {
   my $match = 'xyz' ~~ / abc /;
-  #?niecza skip 'No value for parameter $obj in isa-ok'
   isa-ok( $/, Nil, 'Failed match returns Nil' );
 }
 
@@ -43,7 +42,6 @@ plan 56;
 }
 
 # RT #62530
-#?niecza skip 'rule declaration outside of grammar'
 {
   augment class Match { method keys () {return %(self).keys }; };
   my rule a {H};
@@ -88,13 +86,11 @@ plan 56;
     # undefined captures should fail to match
     # note the use of $1 (and not $0)
     # This is similar to a test in S05-interpolation/regex-in-variable.t
-    #?niecza todo 'undefined capture does not match'
     nok 'aa' ~~ /(.)$1/, 'undefined capture does not match';
 
     # This looks superfluous as there is a test for warning when interpolating
     # undefined into a regex in S05-interpolation/regex-in-variable.t
     #?rakudo todo 'RT #70007'
-    #?niecza todo 'eek'
     is_run( q{'aa' ~~ /(.)$1/},
         {
             status => 0,
@@ -108,7 +104,6 @@ plan 56;
 {
     $_ = 'RT #66252';
     m/(R.)/;
-    #?niecza todo 'Match object in $/ after match in void context'
     isa-ok $/, 'Match', 'Match object in $/ after match in void context';
     is $/, 'RT', 'Matched as intended in void context';
 }
@@ -222,6 +217,79 @@ plan 56;
     my $m = "abcde" ~~ / (a | b | bc | cde)+»/;
     is $m[0].elems, 3, 'LTM alternation does not capture the wrong stuff when backtracking (1)';
     is join(" ", $m[0]), 'a b cde', 'LTM alternation does not capture the wrong stuff when backtracking (2)';
+}
+
+# RT #127701
+{
+    subtest 'postfix operators do not interfere with interpolation of $/[0]', {
+        plan 3;
+        '5x3' ~~ /(.)x(.)/;
+
+        #?rakudo 3 todo 'RT 127701'
+        is "$/[0]--", '5--', 'postfix --';
+        is "$/[0]++", '5++', 'postfix ++';
+
+        my sub postfix:<foo> { 42 }
+        is "$/[0]foo", '5foo', 'custom postfix `foo`';
+    }
+}
+
+# RT #127075
+{
+    lives-ok
+        { grammar { token TOP { <número>+ }; token número {<< \d+ >>} } },
+        'non-ascii tokens in a grammar work';
+    lives-ok
+        { "abc 123" ~~ /$<número>=\d+/ },
+        'non-ascii token in a subcapture work';
+}
+
+# RT #129279
+{
+    lives-ok
+        { "a b" ~~ /(\w) \s (\w)/; my $a = $١ },
+        'Unicode digit match variables work';
+}
+
+{
+    is-deeply ('foo'.match(/bar/)).Bool, False,
+        '.Bool on failed Match returns False';
+    is-deeply ('foo'.match(/foo/)).Bool, True,
+        '.Bool on succesful Match returns True';
+    is-deeply Match.Bool, False, '.Bool on Match:U is False';
+}
+
+subtest 'capture markers work correctly' => {
+    plan 12;
+
+    constant $s = '1234567890foobarMEOW';
+    is-deeply ~($s ~~ /foo <(bar  /), 'bar', '1';
+    is-deeply ~($s ~~ /foo )>bar  /), 'foo', '2';
+    is-deeply ~($s ~~ /fo<(oba)>r /), 'oba', '3';
+
+    is-deeply ~($s ~~ /<:lower>**3 <(<:lower>+   /), 'bar', '4';
+    is-deeply ~($s ~~ /<:lower>**3 )> .+         /), 'foo', '5';
+    is-deeply ~($s ~~ /<:lower>**2 <( .**3 )> .+ /), 'oba', '6';
+
+    my $r = my grammar {
+        token TOP { <foo><bar><ber> }
+        token foo { 12345 <( 67890 }
+        token bar { foo   )> bar   }
+        token ber { M <(EO)>  W    }
+    }.parse: $s;
+    is-deeply ~$r<foo>, '67890', '<foo> (grammar 1)';
+    is-deeply ~$r<bar>, 'foo',   '<bar> (grammar 1)';
+    is-deeply ~$r<ber>, 'EO',    '<ber> (grammar 1)';
+
+    my $r2 = my grammar {
+        token TOP { <foo><bar><ber> }
+        token foo { \d**5 <( \d+ }
+        token bar { <:lower>**3 )> <:lower>+ }
+        token ber { <:upper> <(.**2)> .+  }
+    }.parse: $s;
+    is-deeply ~$r2<foo>, '67890', '<foo> (grammar 2)';
+    is-deeply ~$r2<bar>, 'foo',   '<bar> (grammar 2)';
+    is-deeply ~$r2<ber>, 'EO',    '<ber> (grammar 2)';
 }
 
 # vim: ft=perl6

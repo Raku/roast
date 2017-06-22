@@ -50,17 +50,13 @@ plan 12;
         # wait our turn
         await @promises[$_];
 
-        # help prevent timing jitter from mattering
-        # by giving the thread that was blocking us
-        # a head start
-        sleep 0.01;
-
         # allow the next lower one to proceed
         @promises[$_ - 1].keep;
 
         $_; # <==
     });
-    is @result, (5, 4, 3, 2, 1), "test that race + map does not worry about order";
+    # @result should nearly be in reversed order, so sort it for the test
+    is @result.sort(), (1, 2, 3, 4, 5), "test that race + map in reverse returns correct values";
 }
 
 #?rakudo todo 'hyper and race cause lists to become empty RT #126597'
@@ -83,17 +79,13 @@ plan 12;
         # wait our turn
         await @promises[$_];
 
-        # help prevent timing jitter from mattering
-        # by giving the thread that was blocking us
-        # a head start
-        sleep 0.01;
-
         # allow the next lower one to proceed
         @promises[$_ - 1].keep;
 
         True; # <==
     });
-    is @result, (5, 4, 3, 2, 1), "test that race + grep does not worry about order";
+    # @result should nearly be in reversed order, so sort it for the test
+    is @result.sort(), (1, 2, 3, 4, 5), "test that race + grep in reverse returns correct values";
 }
 
 # RT #127191

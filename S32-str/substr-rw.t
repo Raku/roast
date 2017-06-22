@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 {
     my $str = "gorch ding";
@@ -16,13 +16,11 @@ plan 39;
 
         $r = "boing";
         #?rakudo todo 'NYI'
-        #?niecza todo
         is($str, "boing ding", "assignment to reference modifies original");
         is($r, "boing", '$r is consistent');
 
         my $o = substr-rw($str, 3, 2);
         #?rakudo 3 todo 'NYI'
-        #?niecza 3 todo
         is($o, "ng", "other ref to other lvalue");
         $r = "foo";
         is($str, "foo ding", "lvalue ref size varies but still works");
@@ -150,6 +148,13 @@ plan 39;
     my $s = 'foobar';
     $s.substr-rw(3, 3) = 1;
     is $s, 'foo1', 'assigning a non-string coerces';
+}
+
+# RT #127782
+{
+    my $s = '.' x 4 ~ 'a';
+    $s.substr-rw(1,1) = '';
+    is $s, '...a', '.substr-rw on a string constructed with `x` operator';
 }
 
 # vim: ft=perl6

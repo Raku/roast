@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
 =begin pod
 
@@ -10,13 +11,12 @@ This test tests the various filetest operators.
 
 =end pod
 
-plan 43;
+plan 128;
 
 # L<S32::IO/IO::FSNode/=item IO ~~ :X>
 # L<S03/Changes to Perl 5 operators/The filetest operators are gone.>
 # old: L<S16/Filehandles, files, and directories/A file test, where X is one of the letters listed below.>
 
-#?niecza todo
 dies-ok { 't' ~~ :d }, 'file test from before spec revision 27503 is error';
 
 # Basic tests
@@ -58,7 +58,6 @@ ok not 'doesnotexist.t'.IO ~~ :w, "~~:w returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :x, "~~:x returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
 
-#?niecza skip ".s NYI"
 ok($*PROGRAM.IO.s > 42,   "~~:s returns size on existent files");
 
 nok "doesnotexist.t".IO ~~ :s, "~~:s returns false on non-existent files";
@@ -69,11 +68,9 @@ nok "t".IO ~~ :z,              "~~:z returns false on directories";
 
 my $fh = open("empty_file", :w);
 close $fh;
-#?niecza todo
 ok "empty_file".IO ~~ :z,      "~~:z returns true for an empty file";
 unlink "empty_file";
 
-#?niecza skip "Asynchronous programming NYI exception generated"
 {
     if $*DISTRO.is-win {
       skip "~~:M/~~:C/~~:A not working on Win32 yet", 9
@@ -124,6 +121,115 @@ unlink "empty_file";
             'can :l-test against non-existing file and live';
         nok $file.IO ~~ :l, '~~:l returns false on non-existent files';
     }
+}
+
+# RT #129162
+{
+    my $target = make-temp-file :content<foo>;
+    my $link   = make-temp-file;
+
+    try $target.symlink: $link;
+    if $! {
+        $*DISTRO.is-win # XXX TODO can we make some "sudo tests" roast category?
+        ?? skip ".symlink on Windows needs escalated privileges: $!.message()"
+        !! flunk "received exception when trying to .symlink: $!"
+    }
+    else {
+        unlink $target; # break symlink by deleting the target
+        is-deeply $link.IO.l, True, '.l on broken symlinks gives True';
+    }
+}
+
+#?rakudo.jvm skip '[io grant] NoSuchFileException for open(:create)'
+#?DOES 4
+{
+    my $f = make-temp-file;
+    fails-like { $f.z }, X::IO::DoesNotExist, '.z fails for non-existent files';
+
+    $f.open(:create).close; # `touch` the file
+    is-deeply $f.z, True, '.z returns True for empty files';
+
+    $f.spurt: 'test data';
+    is-deeply $f.z, False, '.z return False for non-empty files';
+
+    isa-ok make-temp-dir.z, Bool, '.z can be called on directories';
+}
+
+{
+    sub filetest ($file, $test, $res, $chmod) {
+        $file.chmod: $chmod;
+        my $mod = "with 0{$chmod.base(8)} mode";
+        with $test {
+            when 'r' {
+                is-deeply $file.r,         $res, ".r is $res $mod";
+                is-deeply ($file ~~ :r),   $res, "~~ :r is $res $mod";
+            }
+            when 'w' {
+                is-deeply $file.w,         $res, ".w is $res $mod";
+                is-deeply ($file ~~ :w),   $res, "~~ :w is $res $mod";
+            }
+            when 'x' {
+                is-deeply $file.x,         $res, ".x is $res $mod";
+                is-deeply ($file ~~ :x),   $res, "~~ :x is $res $mod";
+            }
+            when 'rw' {
+                is-deeply $file.rw,        $res, ".rw is $res $mod";
+                is-deeply ($file ~~ :rw),  $res, "~~ :rw is $res $mod";
+            }
+            when 'rwx' {
+                is-deeply $file.rwx,       $res, ".rwx is $res $mod";
+                is-deeply ($file ~~ :rwx), $res, "~~ :rwx is $res $mod";
+            }
+        }
+    }
+
+    my $f = make-temp-file;
+    $f.spurt: 'test data';
+
+    filetest $f, 'r',   True,   0o777;
+    filetest $f, 'r',   True,   0o666;
+    filetest $f, 'r',   True,   0o555;
+    filetest $f, 'r',   True,   0o444;
+    filetest $f, 'r',   False,  0o333;
+    filetest $f, 'r',   False,  0o222;
+    filetest $f, 'r',   False,  0o111;
+    filetest $f, 'r',   False,  0o000;
+
+    filetest $f, 'w',   True,   0o777;
+    filetest $f, 'w',   True,   0o666;
+    filetest $f, 'w',   False,  0o555;
+    filetest $f, 'w',   False,  0o444;
+    filetest $f, 'w',   True,   0o333;
+    filetest $f, 'w',   True,   0o222;
+    filetest $f, 'w',   False,  0o111;
+    filetest $f, 'w',   False,  0o000;
+
+    filetest $f, 'x',   True,   0o777;
+    filetest $f, 'x',   False,  0o666;
+    filetest $f, 'x',   True,   0o555;
+    filetest $f, 'x',   False,  0o444;
+    filetest $f, 'x',   True,   0o333;
+    filetest $f, 'x',   False,  0o222;
+    filetest $f, 'x',   True,   0o111;
+    filetest $f, 'x',   False,  0o000;
+
+    filetest $f, 'rw',  True,   0o777;
+    filetest $f, 'rw',  True,   0o666;
+    filetest $f, 'rw',  False,  0o555;
+    filetest $f, 'rw',  False,  0o444;
+    filetest $f, 'rw',  False,  0o333;
+    filetest $f, 'rw',  False,  0o222;
+    filetest $f, 'rw',  False,  0o111;
+    filetest $f, 'rw',  False,  0o000;
+
+    filetest $f, 'rwx', True,   0o777;
+    filetest $f, 'rwx', False,  0o666;
+    filetest $f, 'rwx', False,  0o555;
+    filetest $f, 'rwx', False,  0o444;
+    filetest $f, 'rwx', False,  0o333;
+    filetest $f, 'rwx', False,  0o222;
+    filetest $f, 'rwx', False,  0o111;
+    filetest $f, 'rwx', False,  0o000;
 }
 
 # vim: ft=perl6

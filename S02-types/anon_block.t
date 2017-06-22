@@ -31,7 +31,6 @@ isa-ok($anon_block, Block);
 is($anon_block(), 1, '{} <anon block> works');
 
 # RT #64844
-#?niecza skip "Exception NYI"
 {
     EVAL '$anon_block( 1 )';
     #?rakudo todo 'Parrot support for zero-arg subs?'
@@ -120,7 +119,6 @@ is($one_c, 1, '... two blocks ({}; {};) semicolon after both,.. first block does
 is($two_c, 2, '... and second block does too');
 
 sub f { { 3 } }
-#?rakudo.jvm 3 todo "? RT #124493"
 is(f(), 3, 'bare blocks immediately runs even as the last statement');
 is((sub { { 3 } }).(), 3, 'ditto for anonymous subs');
 is((sub { { { 3 } } }).(), 3, 'ditto, even if nested');
@@ -141,7 +139,6 @@ isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
         'call via (sub (&x) { &x() }).( &s ) works for sub';
 }
 
-#?niecza skip 'No candidates for dispatch to mone'
 {
     proto mone(|) { * }
     multi mone { 'one' }

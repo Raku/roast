@@ -21,7 +21,6 @@ ok day.perl, 'enum.perl returned a value';
 
 #?DOES 12
 sub test_stuff($x) {
-  #?niecza skip 'No candidates for dispatch to infix:<does>'
   does-ok $x, day::Tue,    "basic enum mixing worked ($x-2)";
   is $x.day, 2,            "automatically created accessor worked ($x)";
   is day::Tue, 2,          "enum provided a correct mapping ($x)";
@@ -29,9 +28,7 @@ sub test_stuff($x) {
   ok $x ~~ Tue,            "smartmatch worked correctly ($x-2)";
   ok $x ~~ day::Tue,       "smartmatch worked correctly ($x-3)";
   ok $x !~~  Wed,          "smartmatch worked correctly ($x-4)";
-  #?niecza skip 'No candidates for dispatch to infix:<does>'
   ok $x.does(Tue),         ".does worked correctly ($x-1)";
-  #?niecza skip 'No candidates for dispatch to infix:<does>'
   does-ok $x, day,         ".does worked correctly ($x-2)";
   ok $x.Tue,               ".Tue() worked correctly ($x)";
   ok $x.Tue.WHAT === day,  '$obj.Tue.WHAT returns the proper type object';
@@ -43,7 +40,6 @@ sub test_stuff($x) {
   my $x = 1;
   is $x, 1, "basic sanity (1)";
   # L<S12/Enumerations/on the right side of a but or does.>
-  #?niecza skip 'No candidates for dispatch to infix:<does>'
   ok $x does day(Tue), "basic enum mixing worked (1-1)";
   test_stuff($x);
 }
@@ -106,7 +102,6 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 
 # RT #71196
 {
-    #?niecza skip 'Two terms in a row'
     eval-lives-ok 'enum X is export <A B C>', 'marking enum export does not die';
 }
 

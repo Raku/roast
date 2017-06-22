@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 =begin desc
 
@@ -108,7 +108,7 @@ lives-ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
         };
         $lived = 1;
     }
-    
+
     ok(!$lived, "did not live past uncaught throw");
     ok(!$naughty, "did not get caught by wrong handler");
     ok(WHAT($!).gist, '$! is an object');
@@ -254,5 +254,9 @@ throws-like 'try { CATCH { ~$! }; die }', X::AdHoc, "doesn't segfault";
 # RT #124191
 lives-ok { for ^1000 { die Exception.new; CATCH { default {} } } },
     'Hot-path optimization does not break exception handling';
+
+# RT #120498
+lives-ok { loop { CATCH { default { say 'hi' } }; last if $++ > 100 } },
+    'CATCH in a loop lives';
 
 # vim: ft=perl6

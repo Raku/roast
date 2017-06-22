@@ -1,8 +1,9 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 157;
+plan 171;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -216,13 +217,11 @@ is sprintf('%10s', "☃" x 3), '       ☃☃☃', 'multi-byte characters are co
 is sprintf("%x %x", 301281685344656640, 301281685344656669), '42e5e18b84c9d00 42e5e18b84c9d1d',   'RT #118601';
 is sprintf("%d", 42**20),                                    '291733167875766667063796853374976', 'RT #118253';
 is map({chars sprintf "[%18s]\n", "ಠ" x $_ }, 0..6),         [21, 21, 21, 21, 21, 21, 21],        'RT #117547';
-#?niecza skip 'Date NYI'
 is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01',                'RT #114760';
 
 # RT #116280
 {
     is sprintf('%12.5f',  NaN), '         NaN', 'RT #116280';
-    #?niecza 2 todo "https://github.com/sorear/niecza/issues/181"
     is sprintf('%12.5f',  Inf), '         Inf', 'RT #116280';
     is sprintf('%12.5f', -Inf), '        -Inf', 'RT #116280';
 
@@ -239,23 +238,20 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 }
 
 # RT #106594, #62316, #74610
-#?niecza skip 'dubious test - should be testing exception type, not string. Niecza does respond with an appropriate, but differently worded string'
 {
-    try sprintf("%d-%s", 42);
-    is $!, 'Your printf-style directives specify 2 arguments, but 1 argument was supplied', 'RT #106594, #62316, #74610';
+    throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count, 'RT #106594, #62316, #74610';
 }
 
 # RT #122907
 # TODO: write a better test once there is a typed exception
 {
-    throws-like { sprintf "%d" }, Exception,
+    throws-like { sprintf "%d" }, X::Str::Sprintf::Directives::Count,
         message => 'Your printf-style directives specify 1 argument, but no argument was supplied',
         "adequate error when sprintf %d directive doesn't find a corresponding argument";
 }
 
 # found by japhb
 {
-    #?niecza todo 'buggy'
     is sprintf("%.0f", 1.969), "2",     '%.0f of 1.969 should be 2';
     is sprintf("%.1f", 1.969), "2.0",   '%.1f of 1.969 should be 2.0';
     is sprintf("%.2f", 1.969), "1.97",  '%.2f of 1.969 should be 1.97';
@@ -267,6 +263,42 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf('%.50f', 1.115),
         '1.11500000000000000000000000000000000000000000000000',
         '%.50f of 1.115 is correct';
+}
+
+{
+    throws-like { sprintf "%d", 0^1 }, X::Str::Sprintf::Directives::BadType, :type('Junction'),
+        "sprintf complains about types that can't be displayed as the directive specifies";
+}
+
+{
+    throws-like { sprintf "%q", 0 }, X::Str::Sprintf::Directives::Unsupported,
+        'sprintf complains about unsupported directives';
+}
+
+# RT #129088  RT #130509
+{
+    throws-like { sprintf 'D6.2', 'foo' }, X::Str::Sprintf::Directives::Count,
+    'Invalid formats do not spill internal details';
+}
+
+{ # https://irclog.perlgeek.de/perl6/2016-11-28#i_13640361
+    is_run ｢print sprintf 'pass'｣, {
+        :out<pass>, :err(''), :0status
+    }, 'sprintf($format) does not issue spurious warnings';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2017-01-22#i_13966753
+    is sprintf( '%.3d', [42]),   '042', '%.3d';
+    is sprintf('%2.4d', [42]),  '0042', '%2.4d';
+    is sprintf('%5.3d', [42]), '  042', '%5.3d';
+    is sprintf( '%.0d', [42]),    '42', '%.0d (non-zero number)';
+    is sprintf( '%.0d', [ 0]),      '', '%.0d (number is zero)' ;
+
+    is sprintf( '%.*d', [3, 42]),   '042', '%.*d';
+    is sprintf('%2.*d', [4, 42]),  '0042', '%2.*d';
+    is sprintf('%5.*d', [3, 42]), '  042', '%5.*d';
+    is sprintf( '%.*d', [0, 42]),    '42', '%.*d (non-zero number)';
+    is sprintf( '%.*d', [0,  0]),      '', '%.*d (number is zero)';
 }
 
 # vim: ft=perl6

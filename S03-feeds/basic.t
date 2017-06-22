@@ -113,12 +113,10 @@ plan 23;
 }
 
 # feed and Inf
-#?nieza skip "unhandled exception
 {
-  lives-ok { my @a <== 0..Inf }
+  dies-ok { my @a <== 0..Inf }
 }
 
-#?nieza skip "Unhandled exception"
 {
   my $call-count = 0;
   my @a <== gather for 1..10 -> $i { $call-count++; take $i };

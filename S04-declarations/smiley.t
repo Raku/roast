@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 63;
 
 my Int:D $j = 256;
 MY::<$j> = 111;
@@ -21,6 +21,7 @@ is { my Int:_ $a       }(),   Int, 'can Int:_ be on its own';
 is { my Int:_ $a = Int }(),   Int, 'can Int:_ take an Int:U';
 is { my Int:_ $a = 42  }(),    42, 'can Int:_ take an Int:D';
 
+#?rakudo.jvm todo "got '?.?' RT #128031"
 is { my Int:U $a       }(), Int:U, 'can Int:U be on its own';
 is { my Int:U $a = Int }(),   Int, 'can Int:U take an Int:U';
 throws-like { my Int:U $a = 42 }, 
@@ -45,6 +46,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
     is { my Int:_ $a = Int }(),   Int, 'with :_, can Int:_ take an Int:U';
     is { my Int:_ $a = 42  }(),    42, 'with :_, can Int:_ take an Int:D';
 
+    #?rakudo.jvm todo "got '?.?' RT #128031"
     is { my Int:U $a       }(), Int:U, 'with :_, can Int:U be on its own';
     is { my Int:U $a = Int }(),   Int, 'with :_, can Int:U take an Int:U';
     throws-like { my Int:U $a = 42 }, 
@@ -62,6 +64,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
 
 {
     use variables :U;
+    #?rakudo.jvm todo "got '?.?' RT #128031"
     is { my Int   $a       }(), Int:U, 'with :U, can Int   be on its own';
     is { my Int   $a = Int }(),   Int, 'with :U, can Int   take an Int:U';
     throws-like { my Int   $a = 42 }, 
@@ -72,6 +75,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
     is { my Int:_ $a = Int }(),   Int, 'with :U, can Int:_ take an Int:U';
     is { my Int:_ $a = 42  }(),    42, 'with :U, can Int:_ take an Int:D';
 
+    #?rakudo.jvm todo "got '?.?' RT #128031"
     is { my Int:U $a       }(), Int:U, 'with :U, can Int:U be on its own';
     is { my Int:U $a = Int }(),   Int, 'with :U, can Int:U take an Int:U';
     throws-like { my Int:U $a = 42 }, 
@@ -102,6 +106,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
     is { my Int:_ $a = Int }(),   Int, 'with :D, can Int:_ take an Int:U';
     is { my Int:_ $a = 42  }(),    42, 'with :D, can Int:_ take an Int:D';
 
+    #?rakudo.jvm todo "got '?.?' RT #128031"
     is { my Int:U $a       }(), Int:U, 'with :D, can Int:U be on its own';
     is { my Int:U $a = Int }(),   Int, 'with :D, can Int:U take an Int:U';
     throws-like { my Int:U $a = 42 }, 
@@ -154,6 +159,22 @@ throws-like 'use variables :foo',
     throws-like { @array[0] = Int },
         X::TypeCheck::Assignment,
         symbol => '@array', 'type check happens for Int:D array';
+}
+
+# RT #127958
+#?rakudo.jvm todo 'code does not die, RT #127958'
+{
+    # At the time of writing these thrown at runtime. Though they
+    # could/should be thrown at compile time in the future so EVAL is used.
+    # See ticket for discussion.
+    throws-like { EVAL q|my Int:D $x = Nil| },
+    X::TypeCheck::Assignment,'Int:D $x = Nil; throws a typecheck';
+
+    throws-like { EVAL q|my Int:D @x = Nil| },
+    X::TypeCheck::Assignment,'Int:D @x = Nil; throws a typecheck';
+
+    throws-like { EVAL q|my Int:D %x = foo => Nil| },
+    X::TypeCheck::Assignment,'Int:D %x = foo => Nil; throws a typecheck';
 }
 
 # vim: ft=perl6

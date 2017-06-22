@@ -63,7 +63,6 @@ plan 31;
 }
 
 #?rakudo skip 'RT #61844'
-#?niecza skip 'hangs'
 {
     eval-lives-ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
     is EVAL('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';

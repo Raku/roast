@@ -151,7 +151,6 @@ plan 25;
         'We should be able to duplicate the elements of a list';
 }
 
-#?niecza skip 'Feed ops NYI'
 {    
     my @result = EVAL '<a b c c d> ==> map { ($_ xx 2).Slip }';
     is @result, <a a b b c c c c d d>,
@@ -188,7 +187,6 @@ plan 25;
     sub drop2(@list, Int $nth) {
         return map { @list[$_] if ($_+1) % $nth }, ^@list;
     }
-    #?niecza todo "https://github.com/sorear/niecza/issues/180"
     is drop2(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements based on if returning ()';
     
@@ -203,19 +201,16 @@ plan 25;
     sub drop4(@list, Int $nth) {
         ((@list[$_] if ($_+1) % $nth) for ^@list)
     }
-    #?niecza todo
     is drop4(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using (statement if) for';
     
     sub drop5(@list, Int $nth) {
         (@list[$_] if ($_+1) % $nth for ^@list)
     }
-    #?niecza todo
     is drop5(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using list comprehension';
 }
 
-#?niecza todo "Get Capture, not array"
 {
     # P17 (*) Split a list into two parts; the length of the first part is given.
     # 

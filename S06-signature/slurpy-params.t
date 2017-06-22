@@ -1,9 +1,11 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 85;
+plan 87;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -62,7 +64,6 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 
 =end pod
 
-#?niecza todo
 {
     my sub foo ($n, *%h) { };   #OK not used
     ## NOTE: *NOT* sub foo ($n, *%h, *@a)
@@ -122,7 +123,6 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 }
 
 #### "trait" version
-#?niecza skip 'Unhandled trait required'
 {
     my sub foo(:$n is required, *%h, *@a) { };   #OK not used
     diag('Testing with named arguments (named param is required) (trait version)');
@@ -144,7 +144,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
 # L<S06/List parameters/Slurpy scalar parameters capture what would otherwise be the first elements of the variadic array:>
 
-#?niecza todo '*$f slurps everything up'
 {
     sub first(*$f, *$s, *@r) { return $f };   #OK not used
     sub second(*$f, *$s, *@r) { return $s };   #OK not used
@@ -237,7 +236,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
 {
     sub f(+a) { a };
     ok f((1,2,3).grep({$_})).WHAT === Seq, "+args passes through Seq unscathed";
-    #?rakudo.jvm skip 'RT #126493'
     is-deeply f((1,2,3).grep({$_})),(1,2,3), "+args passes through Seq unscathed";
 
     my @result;
@@ -300,5 +298,15 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
     is -> *@a { @a[+0] }.([5]), 5,
         'slurpy array can be indexed if index contains prefix:<+>';
 }
+
+# RT #128201
+#?rakudo.jvm skip 'Proc::Async NYI RT #126524 / RT #128201'
+doesn't-hang '{ say @_.gist }(1..Inf)', :out(/'[...]'/),
+    '.gist on @_ containing lazy list correctly thinks it is lazy';
+
+# RT #129175
+#?rakudo.jvm skip 'Proc::Async NYI RT #129175'
+doesn't-hang ｢-> *@a { @a.is-lazy.say }(1…∞)｣, :out(/True/),
+    'slurpy positional param does not hang when given infinite lists';
 
 # vim: ft=perl6

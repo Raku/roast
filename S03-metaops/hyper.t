@@ -1,8 +1,11 @@
 use v6;
 
-use Test;
+use lib "t/spec/packages";
 
-plan 402;
+use Test;
+use Test::Util;
+
+plan 403;
 
 =begin pod
 
@@ -394,11 +397,11 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».Array.gist, "([2 3] [4 [5 6]])", ".Array is nodal";
     is [[2, 3], [4, [5, 6]]]».BagHash».keys».sort.gist, "((2 3) (4 [5 6]))", ".BagHash is nodal";
     is [[2, 3], [4, [5, 6]]]».Bag».keys».sort.gist, "((2 3) (4 [5 6]))", ".Bag is nodal";
-    is [[2, 3], [4, [5, 6]]]».categorize(*.[0]).gist, "(2 => [2], 3 => [3] 4 => [4], 5 => [[5 6]])", ".categorize is nodal";
-    is [[2, 3], [4, [5, 6]]]».classify(*.[0]).gist, "(2 => [2], 3 => [3] 4 => [4], 5 => [[5 6]])", ".classify is nodal";
+    is [[2, 3], [4, [5, 6]]]».categorize(*.[0]).gist, '({2 => [2], 3 => [3]} {4 => [4], 5 => [[5 6]]})', ".categorize is nodal";
+    is [[2, 3], [4, [5, 6]]]».classify(*.[0]).gist, '({2 => [2], 3 => [3]} {4 => [4], 5 => [[5 6]]})', ".classify is nodal";
     is [[2, 3], [4, [5, 6]]]».combinations.gist, "((() (2) (3) (2 3)) (() (4) ([5 6]) (4 [5 6])))", ".combinations is nodal";
     is [[2, 3], [4, [5, 6]]]».deepmap(*+1).gist, "([3 4] [5 [6 7]])", ".deepmap is nodal";
-    is [[2, 3], [4, [5, 6]]]».duckmap(*+1).gist, "((3 4) (5 3))", ".duckmap is nodal";
+    is [[2, 3], [4, [5, 6]]]».duckmap(*+1).gist, "([3 4] [5 3])", ".duckmap is nodal";
     is [[2, 3], [4, [5, 6]]]».eager.gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".eager is nodal";
     is [[2, 3], [4, [5, 6]]]».elems.gist, "(2 2)", ".elems is nodal";
     is [[2, 3], [4, [5, 6]]]».end.gist, "(1 1)", ".end is nodal";
@@ -406,10 +409,10 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».flat.gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".flat is nodal";
     is [[2, 3], [4, [5, 6]]]».flatmap(*+1).gist, "((3 4) (5 3))", ".flatmap is nodal";
     is [[2, 3], [4, [5, 6]]]».grep(* > 2).gist, "((3) (4))", ".grep is nodal";
-    is [[2, 3], [4, [5, 6]]]».hash.gist, "(2 => 3 4 => [5 6])", ".hash is nodal";
-    is [[2, 3], [4, [5, 6]]]».Hash.gist, "(2 => 3 4 => [5 6])", ".Hash is nodal";
+    is [[2, 3], [4, [5, 6]]]».hash.gist, '({2 => 3} {4 => [5 6]})', ".hash is nodal";
+    is [[2, 3], [4, [5, 6]]]».Hash.gist, '({2 => 3} {4 => [5 6]})', ".Hash is nodal";
     is [[2, 3], [4, [5, 6]]]».join(":").gist, "(2:3 4:5 6)", ".join is nodal";
-    is [[2, 3], [4, [5, 6]]]».keys.gist, "(0..1 0..1)", ".keys is nodal";
+    is [[2, 3], [4, [5, 6]]]».keys.gist, "((0 1) (0 1))", ".keys is nodal";
     is [[2, 3], [4, [5, 6]]]».kv.gist, "((0 2 1 3) (0 4 1 [5 6]))", ".kv is nodal";
     is [[2, 3], [4, [5, 6]]]».list.gist, "([2 3] [4 [5 6]])", ".list is nodal";
     is [[2, 3], [4, [5, 6]]]».List.gist, "((2 3) (4 [5 6]))", ".List is nodal";
@@ -431,7 +434,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».produce(&[+]).gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".produce is nodal";
     is [[2, 3], [4, [5, 6]]]».reduce(&[+]).gist, "[[2 3] [4 [5 6]]]", ".reduce is nodal";
     is [[2, 3], [4, [5, 6]]]».repeated.gist, "(() ())", ".repeated is nodal";
-    is [[2, 3], [4, [5, 6]]]».reverse.gist, "([3 2] [[5 6] 4])", ".reverse is nodal";
+    is [[2, 3], [4, [5, 6]]]».reverse.gist, "((3 2) ([5 6] 4))", ".reverse is nodal";
     is [[2, 3], [4, [5, 6]]]».roll(*).gist, "((...) (...))", ".roll is nodal";
     is [[2, 3], [4, [5, 6]]]».rotate(1).gist, "([3 2] [[5 6] 4])", ".rotate is nodal";
     is [[2, 3], [4, [5, 6]]]».rotor(2).gist, "(((2 3)) ((4 [5 6])))", ".rotor is nodal";
@@ -440,10 +443,9 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».Set».keys».sort.gist, "((2 3) (4 [5 6]))", ".Set is nodal";
     is [[2, 3], [4, [5, 6]]]».Slip.gist, "((2 3) (4 [5 6]))", ".Slip is nodal";
     is [[2, 3], [4, [5, 6]]]».sort.gist, "((2 3) (4 [5 6]))", ".sort is nodal";
-    #?rakudo.jvm todo "RT #126527"
     is [[2, 3], [4, [5, 6]]]».squish.gist, "((2 3) (4 [5 6]))", ".squish is nodal";
     is [[2, 3], [4, [5, 6]]]».Supply.elems, 2, ".Supply is nodal";
-    is [[2, 3], [4, [5, 6]]]».tree(*.reverse,*.reverse).gist, "((3 2) ([6 5] 4))", ".tree is nodal";
+    is [[2, 3], [4, [5, 6]]]».tree(*.reverse,*.reverse).gist, "((3 2) ((6 5) 4))", ".tree is nodal";
     is ((2, 3), (2,3), (4, (5, (6, 7), (6, 7)), (5, (6, 7), (6, 7))))».unique(:with(&[eqv])).gist, "((2 3) (2 3) (4 (5 (6 7) (6 7))))", ".unique is nodal";
     is [[2, 3], [4, [5, 6]]]».values.gist, "((2 3) (4 [5 6]))", ".values is nodal";
 
@@ -546,7 +548,6 @@ my @e;
 
 =end todo_unspecced
 
-#?niecza skip 'does not work; recurses into hash'
 #?DOES 2
 { # hyper dereferencing
     my @array = (
@@ -839,7 +840,6 @@ my @e;
 }
 
 # test non-UTF-8 input
-#?niecza skip 'nonsensical test'
 #?rakudo skip 'EVAL(Buf) RT #122256'
 #?DOES 1
 {
@@ -1045,5 +1045,15 @@ is-deeply &[«+»]((1,2),(4,5,6)), (5, 7, 7), "Hyper <<>> can autogen with &[]";
 my &post = &postfix:<»i>;
 is post((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen with &";
 is &postfix:<»i>((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen without &";
+
+# RT #118223
+{
+    # shouldn't warn about unitialized values of type Any in Numeric context
+    is_run(
+        q{ my %l = foo => 1, bar => 2; my %r = bar => 3, baz => 4; say %l >>+<< %r },
+        { out => qq[\{bar => 5, baz => 4, foo => 1\}\n], err => '' },
+        "union hyperoperator on a hash shouldn't warn about missing keys"
+    );
+}
 
 # vim: ft=perl6

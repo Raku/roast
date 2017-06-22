@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
+use Test::Util;
 use Test;
 
-plan 192;
+plan 216;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -51,7 +53,6 @@ sub showkv($x) {
     is ~$m<a b>, "5 1", 'Multiple-element access';
     is ~$m<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
-    #?niecza skip '.total NYI'
     is $m.total, 8, '.total gives sum of values';
     is +$m, 8, '+$mix gives sum of values';
 }
@@ -100,14 +101,12 @@ sub showkv($x) {
 {
     my $m = mix 'a', False, 2, 'a', False, False;
     my @ks = $m.keys;
-    #?niecza 3 skip "Non-Str keys NYI"
     is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
     is $m{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
-#?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %s = mix <a b o p a p o o>;
     is-deeply %s, { :2a, :1b, :2p, :3o }, 'flattens under single arg rule';
@@ -142,7 +141,6 @@ sub showkv($x) {
     my $m = mix { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
     isa-ok $m, Mix, '&Mix.new given a Hash produces a Mix';
     is +$m, 4, "... with four elements";
-    #?niecza todo "Non-string mix elements NYI"
     is +$m.grep(Pair), 4, "... which are all Pairs";
 }
 
@@ -207,7 +205,7 @@ sub showkv($x) {
     my $m = { foo => 10.1, bar => 1.2, baz => 2.3}.Mix;
     is $m.total, 13.6, 'is the total calculated correctly';
 
-    # .list is just the keys, as per TimToady: 
+    # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $m.list.elems, 3, ".list returns 3 things";
     is $m.list.grep(Pair).elems, 3, "... all of which are Pairs";
@@ -276,7 +274,7 @@ sub showkv($x) {
     ok $m.roll(2) ~~ Iterable, ".roll(2) gives you an Iterable";
     is +$m.roll(0), 0, ".roll(0) returns 0 results";
     is +$m.roll(1), 1, ".roll(1) returns 1 result";
-    
+
     my @a = $m.roll(2);
     is +@a, 2, '.roll(2) returns the right number of items';
     is @a.grep(* eq 'a').elems + @a.grep(* eq 'b').elems, 2, '.roll(2) returned "a"s and "b"s';
@@ -290,7 +288,6 @@ sub showkv($x) {
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(*)[^100] (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(*)[^100] (2)';
 
-    #?niecza skip '.total NYI'
     is $m.total, 3, '.roll should not change Mix';
 }
 
@@ -306,7 +303,6 @@ sub showkv($x) {
       if !ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     diag "Found {+@a.grep(* eq 'b')} b's"
       if !ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
-    #?niecza skip '.total NYI'
     is $m.total, 1, '.roll should not change Mix';
 }
 
@@ -321,7 +317,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Mix/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $m = mix <a b b c c c>;
     throws-like { $m.grab },
@@ -331,7 +326,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Mix/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $m = mix <a b b c c c>;
     throws-like { $m.grabpairs },
@@ -343,7 +337,6 @@ sub showkv($x) {
     my $m1 = Mix.new(( mix <a b c> ), <c c c d d d d>);
     is +$m1, 2, "Two elements";
     my $inner-mix = $m1.keys.first(Mix);
-    #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a Mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
     my $inner-list = $m1.keys.first(List);
@@ -354,10 +347,9 @@ sub showkv($x) {
     $m1 = Mix.new($m, <c d>);
     is +$m1, 2, "Two elements";
     $inner-mix = $m1.keys.first(Mix);
-    #?niecza 2 todo 'Mix in Mix does not work correctly yet'
     isa-ok $inner-mix, Mix, "One of the mix's elements is indeed a mix!";
     is showkv($inner-mix), "a:1 b:1 c:1", "With the proper elements";
-    my $inner-list = $m1.keys.first(List);
+    $inner-list = $m1.keys.first(List);
     isa-ok $inner-list, List, "One of the mix's elements is indeed a List!";
     is $inner-list, <c d>, "With the proper elements";
 }
@@ -378,7 +370,6 @@ sub showkv($x) {
        "Method .Mix works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $m1 = (a => 1.1, b => 2.2, c => 3.3, d => 4.4).Mix;
     is $m1.total, 11, '.total gives sum of values (non-empty) 11';
@@ -419,7 +410,7 @@ sub showkv($x) {
 
 #?rakudo todo 'we have not secured .WHICH creation yet RT #124496'
 {
-    isnt 'a(1) Str|b(1) Str|c'.Mix.WHICH, <a b c>.Mix.WHICH, 
+    isnt 'a(1) Str|b(1) Str|c'.Mix.WHICH, <a b c>.Mix.WHICH,
       'Faulty .WHICH creation';
 }
 
@@ -460,6 +451,67 @@ sub showkv($x) {
     for $m.antipairs -> \p { %h3{p.value} = p.key }
     is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
     throws-like { for $m.kxxv -> \k { say k } }, Exception, 'cannot call kxxv';
+}
+
+# RT #128806
+subtest '.hash does not cause keys to be stringified' => {
+    plan 3;
+    is Mix.new($(<a b>)).hash.keys[0][0], 'a', 'Mix.new';
+    is ($(<a b>),).Mix.hash.keys[0][0],   'a', '.Mix';
+    is mix($(<a b>)).hash.keys[0][0],     'a', 'mix()';
+}
+
+{ # coverage; 2016-10-13
+    my $m = Mix.new-from-pairs: 'sugar' => .2, 'flour' => 2.7,
+        'sugar' => 1.1, 'cyanide' => 0;
+
+    is-deeply $m.Bag, Bag.new(<sugar flour flour>), '.Bag coercer';
+    is-deeply $m.BagHash, BagHash.new(<sugar flour flour>),
+        '.BagHash coercer';
+
+    my $code = ｢my $m = Mix.new-from-pairs('a' => -20, 'b' => 1.5);｣
+        ~ ｢$m.Bag.say; $m.BagHash.say｣;
+    is_run $code, { :err(''), :out("bag(b)\nBagHash.new(b)\n"), :0status },
+        'negative Mix weights removed from Bag coercion without warnings';
+}
+
+{
+    throws-like { my Mix $m; $m<as> = 2 }, Exception,
+        'autovivification of of Mix:U complains about immutability';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2016-11-07#i_13528982
+    my $a = (:a(-10), :b(-30)                 ).Mix;
+    my $b = (         :b(-20), :c(-10), :d(10)).Mix;
+    my $r = (:a(-10), :b(-20), :c(-10), :d(10)).Mix;
+    is-deeply $a  ∪  $b, $r, 'negative weights remain with  ∪  operator';
+    is-deeply $a (|) $b, $r, 'negative weights remain with (|) operator';
+}
+
+{
+    ok Mix.new =:= mix(), 'Mix.new returns the empty mix';
+    ok ().Mix  =:= mix(), '().Mix returns the empty mix';
+}
+
+{
+    throws-like { ^Inf .Mix }, X::Cannot::Lazy, :what<Mix>;
+    throws-like { Mix.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<Mix>;
+    throws-like { Mix.new(^Inf) }, X::Cannot::Lazy, :what<Mix>;
+
+    for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
+      dies-ok { $pair.Mix },
+        "($pair.perl()).Mix died";
+      dies-ok { Mix.new-from-pairs($pair) },
+        "Mix.new-from-pairs( ($pair.perl()) ) died";
+    }
+}
+
+# RT #131561
+{
+    is-deeply (a => -1, a => 1).Mix,      mix(),
+      'final value 0 disappears in Mix for empty mix';
+    is-deeply (a => -1, a => 1, "b").Mix, Mix.new("b"),
+      'final value 0 disappears in Mix';
 }
 
 # vim: ft=perl6

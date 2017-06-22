@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 43;
 
 my sub vtest($cmp, *@v) {
     my $x = shift @v;
@@ -52,3 +52,18 @@ vtest Order::More, @sorted.reverse;
 
 # RT #116016
 is v12.3.4 cmp Version.new("12.3.4"), Order::Same, 'can parse literal versions where major version is more than one digit';
+
+{
+    # RT #128408
+    is (v6   cmp v2), Order::More, 'v6   is newer than v2 [literals]';
+    is (v6.c cmp v2), Order::More, 'v6.c is newer than v2 [literals]';
+    is (v6.d cmp v2), Order::More, 'v6.d is newer than v2 [literals]';
+    is (v6.* cmp v2), Order::More, 'v6.* is newer than v2 [literals]';
+
+    is (Version.new('6')   cmp v2), Order::More, 'v6   is newer than v2 [Version.new]';
+    is (Version.new('6.*') cmp v2), Order::More, 'v6.* is newer than v2 [Version.new]';
+
+    my $future-versions-ok = True;
+    (Version.new("6.$_") cmp v2) ~~ Order::More or $future-versions-ok = False for 'c' .. 'zz';
+    ok $future-versions-ok, 'v6. is newer than v2 for c..zz [Version.new]';
+}

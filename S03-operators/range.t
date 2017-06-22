@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 125;
+plan 129;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
 #doc-roast 'operators','&infix:«..»','Range object constructor'
@@ -20,7 +20,6 @@ is ~("a".."z"), "a b c d e f g h i j k l m n o p q r s t u v w x y z", "(..) wor
 is ~("A".."Z"), "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", "(..) works on char range ending in Z";
 is ~("Y".."AB"), "",     "(..) works on carried chars (3)";
 
-#?niecza 4 skip 'Spec under design here'
 is ~('Y'..'d'), 'Y Z [ \ ] ^ _ ` a b c d',  '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
 is ~('Y'..'_'), 'Y Z [ \ ] ^ _', '(..) works on letter .. non-letter (1)';
@@ -59,6 +58,12 @@ is ['a'^..^'b'], [], "double-exclusive string range (^..^) can produce null rang
 is ['b'^..^'a'], [], "double-exclusive string auto-rev range (^..^) can produce null range";
 is ['a' ^..^ 'a'], [], "double-exclusive range (x ^..^ x) where x is a char";
 is ('a'..'z').list.join(' '), 'a b c d e f g h i j k l m n o p q r s t u v w x y z', '"a".."z"';
+
+# RT #130554
+is ['!'^..'&'], ['"'..'&'], "bottom-exclusive non-alphanumeric string range (^..) works";
+is ['!'..^'&'], ['!'..'%'], "top-exclusive non-alphanumeric string range (..^) works";
+is ['!'^..^'&'], ['"'..'%'], "double-exclusive non-alphanumeric string range (^..^) works";
+is ['%'^..^'&'], [], "double-exclusive non-alphanumeric string range (^..^) can produce null range";
 
 is 1.5 ~~ 1^..^2, Bool::True, "lazy evaluation of the range operator";
 
@@ -119,7 +124,6 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
 # Range.new coerces its arguments to numeric context if needed
 # RT #58018
 # RT #76950
-#?niecza skip "Unhandled exception: cannot increment a value of type Array"
 {
     my @three = (1, 1, 1);
     my @one = 1;
@@ -167,7 +171,6 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
              'can make range from match vars';
     is $range.min, 1, 'range starts at one';
     is $range.max, 3, 'range ends at three';
-    #?niecza 2 skip 'cannot increment a value of type Match'
     lives-ok { "$range" }, 'can stringify range';
     is ~$range, "1 2 3", 'range is correct';
 }
@@ -176,7 +179,6 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
 {
     ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
     isa-ok $0..$1, Range, '$0..$1 constructs a Range';
-    #?niecza skip 'cannot increment a value of type Match'
     is ($0..$1).join('|'), '1|2|3', 'range from $0..$1';
 }
 
@@ -205,7 +207,6 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
 # L<S03/Nonchaining binary precedence/it is illegal to use a Range as
 # implicitly numeric>
 
-#?niecza todo 'forbid Ranges as Range endpoints'
 {
     ok !defined(try { 0 .. ^10 }), '0 .. ^10 is illegal';
 }

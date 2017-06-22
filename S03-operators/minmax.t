@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 39;
 
 # L<S03/Tight or precedence/Minimum and maximum>
 # L<S03/Tight or precedence/"any value of any type may be compared with +Inf
@@ -71,7 +71,6 @@ This test min/max functions in their operator form. To see them tested in their 
 
 #array vs. scalar
 #?rakudo skip "Annoying test that we haven't done the obvious yet unspecced, fails because we have indeed done the obvious RT #124539"
-#?niecza todo
 {
     #NYS- Not Yet Specced. C<isnt>'d only so those sneaky programmers can't get away with coding
     #what `makes sense' and `probably will be anyway' :) --lue
@@ -83,15 +82,54 @@ This test min/max functions in their operator form. To see them tested in their 
 # RT #61836
 # RT #77868
 {
-    # I am very suspicious of the following tests.  As I understand it, cmp can compare 
-    # Reals, and cmp can compare two objects of the same type.  Otherwise it is only 
+    # I am very suspicious of the following tests.  As I understand it, cmp can compare
+    # Reals, and cmp can compare two objects of the same type.  Otherwise it is only
     # required to be consistent, not to have a particular result. --colomon
 
-    #?niecza todo
     is 2 min Any, 2, '2 min Any';
-    #?niecza todo
     is Any min 2, 2, 'Any min 2';
     is 2 max Any, 2, '2 max Any';
-    #?niecza todo
     is Any max 2, 2, 'Any max 2';
+}
+
+
+# RT #125334
+# RT #128573
+{
+    my $message = /'Cannot convert string to number: base-10'
+        .* 'number must begin with valid digits'/;
+
+    throws-like "min +'a', +'a'", X::Str::Numeric, :$message,
+        'min with two Failures throws';
+    throws-like "max +'a', +'a'", X::Str::Numeric, :$message,
+        'max with two Failures throws';
+
+    throws-like "min +'a'      ", X::Str::Numeric, :$message,
+        'min with one Failure throws';
+    throws-like "max +'a'      ", X::Str::Numeric, :$message,
+        'max with one Failure throws';
+
+    throws-like "Failure.new.min", Exception, '.min on Failure throws';
+    throws-like "Failure.new.max", Exception, '.max on Failure throws';
+    throws-like "Failure.new.min: &infix:<cmp>", Exception,
+        '.min with :&by on Failure throws';
+    throws-like "Failure.new.max: &infix:<cmp>", Exception,
+        '.max with :&by on Failure throws';
+}
+
+# RT #128780
+{
+    subtest 'min/max operations on Hashes' => {
+        plan 8;
+
+        my &by = *.value;
+        is-deeply { :2b, :1c, :3a }.max,        "c" => 1, '.max()';
+        is-deeply { :2b, :1c, :3a }.min,        "a" => 3, '.min()';
+        is-deeply { :2b, :1c, :3a }.max(&by),   "a" => 3, '.max(*.value)';
+        is-deeply { :2b, :1c, :3a }.min(&by),   "c" => 1, '.min(*.value)';
+        is-deeply max({ :2b, :1c, :3a }),       "c" => 1, '&max()';
+        is-deeply min({ :2b, :1c, :3a }),       "a" => 3, '&min()';
+        is-deeply max({ :2b, :1c, :3a }, :&by), "a" => 3, '&max(:by(*.value))';
+        is-deeply min({ :2b, :1c, :3a }, :&by), "c" => 1, '&min(:by(*.value))';
+    }
 }

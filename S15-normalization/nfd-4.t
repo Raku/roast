@@ -1,11 +1,14 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
+# Generated from Unicode version 9.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC1FF).NFD.list ~~ (0x1109, 0x116D, 0x11AA,), 'C1FF -> 1109 116D 11AA';
+ok Uni.new(0xC200).NFD.list ~~ (0x1109, 0x116D, 0x11AB,), 'C200 -> 1109 116D 11AB';
 ok Uni.new(0xC201).NFD.list ~~ (0x1109, 0x116D, 0x11AC,), 'C201 -> 1109 116D 11AC';
 ok Uni.new(0xC202).NFD.list ~~ (0x1109, 0x116D, 0x11AD,), 'C202 -> 1109 116D 11AD';
 ok Uni.new(0xC203).NFD.list ~~ (0x1109, 0x116D, 0x11AE,), 'C203 -> 1109 116D 11AE';
@@ -2004,5 +2007,3 @@ ok Uni.new(0xC9CB).NFD.list ~~ (0x110C, 0x1175, 0x11B2,), 'C9CB -> 110C 1175 11B
 ok Uni.new(0xC9CC).NFD.list ~~ (0x110C, 0x1175, 0x11B3,), 'C9CC -> 110C 1175 11B3';
 ok Uni.new(0xC9CD).NFD.list ~~ (0x110C, 0x1175, 0x11B4,), 'C9CD -> 110C 1175 11B4';
 ok Uni.new(0xC9CE).NFD.list ~~ (0x110C, 0x1175, 0x11B5,), 'C9CE -> 110C 1175 11B5';
-ok Uni.new(0xC9CF).NFD.list ~~ (0x110C, 0x1175, 0x11B6,), 'C9CF -> 110C 1175 11B6';
-ok Uni.new(0xC9D0).NFD.list ~~ (0x110C, 0x1175, 0x11B7,), 'C9D0 -> 110C 1175 11B7';

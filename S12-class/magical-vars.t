@@ -86,7 +86,7 @@ class SimpleClass does Bar {}
     "::?CLASS in classes works";
   ok SimpleClass.new.get_class_pvar === ::SimpleClass,
     "::?CLASS in roles works";
-  ok SimpleClass.new.get_role_pvar === ::Bar,
+  is SimpleClass.new.get_role_pvar.^name, ::Bar.^name,
     "::?ROLE in roles works";
 }
 

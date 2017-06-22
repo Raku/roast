@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 390;
+plan 427;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -27,6 +27,8 @@ throws-like '"a" . "b"', X::Obsolete, replacement => '~';
 throws-like 's/a/b/i', X::Obsolete;
 # RT #112470
 throws-like 'my $a; ${a} = 5', X::Obsolete;
+
+throws-like '${۳}', X::Obsolete;
 
 throws-like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws-like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
@@ -73,6 +75,11 @@ throws-like 'sub f(--> List) returns Str { }', X::Redeclaration;
 throws-like 'my Int sub f(--> Str) { }', X::Redeclaration;
 # RT #115356
 throws-like 'my class F { }; role F { }', X::Redeclaration, symbol => 'F';
+# RT #129968
+throws-like 'class AAAA { class B {} }; use MONKEY; augment class AAAA { class B { } }',
+    X::Redeclaration, symbol => 'B';
+throws-like 'class AAAAA { class B::C {} }; use MONKEY; augment class AAAAA { class B::C { } }',
+    X::Redeclaration, symbol => 'B::C';
 
 throws-like 'my class A { my @a; @a!List::foo() }',
     X::Method::Private::Permission,
@@ -188,9 +195,19 @@ throws-like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filen
 for <
   $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
   $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
-  $* $" $$ $& $` $' $| $? $]
-  $: $= $^ $~ @- @+ %- %+ %!
+  $* $" $$ $; $& $` $' $, $. $\ $| $? $@ $]
+  $: $= $% $^ $~ @- @+ %- %+ %!
 > {
+    throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
+}
+
+#?rakudo todo 'awesome error message is not printed because these are parsed differently'
+for qw{ $( $) $< $> $/ $[ $- $+ } {
+    throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
+}
+
+#?rakudo todo 'good error message, but not the one that we are expecting'
+for '$#' {
     throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
@@ -292,6 +309,8 @@ throws-like 'my class Priv { method x { self!foo } }; Priv.x',
                       private   => { $_ === True };
 # RT #77582
 throws-like 'my %h; %h.nosuchmethods', X::Method::NotFound, typename => 'Hash';
+# RT #129772
+throws-like 'sub (int $i) { $i() }(42)', X::Method::NotFound;
 
 throws-like '1.List::join', X::Method::InvalidQualifier,
             method         => 'join',
@@ -355,6 +374,7 @@ throws-like '<a b> »+« <c>', X::HyperOp::NonDWIM,
             left-elems => 2, right-elems => 1,
             operator => { .name eq 'infix:<+>' };
 
+#?rakudo.jvm skip 'UnwindException'
 throws-like 'my sub f() { gather { return } }; ~f()', X::ControlFlow::Return;
 
 throws-like 'DateTime.new("2012/04")', X::Temporal::InvalidFormat,
@@ -453,7 +473,7 @@ if $emits_suggestions {
     {
         try EVAL('Ecxeption.new("wrong!")');
         ok $! ~~ X::Undeclared::Symbols, "Ecxeption.new throws X::Undeclared::Symbols";
-        is $!.type_suggestion<Ecxeption>, ["Exception"], 'Exception is a suggestion';
+        is $!.type_suggestion<Ecxeption>.grep("Exception"), ["Exception"], 'Exception is a suggestion';
     }
 
     throws-like 'sub greet($name) { say "hello, $nam" }', X::Undeclared, suggestions => '$name';
@@ -504,20 +524,20 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
     {
         my $code = q[ sub foo($x) { }; foo; ];
         throws-like $code, X::TypeCheck::Argument,
-            signature => rx/ '($x)' /, 
+            signature => rx/ '($x)' /,
             objname   => { m/foo/ };
     }
 
     {
         my $code = q[ sub foo(Str) { }; foo 42; ];
-        throws-like $code, X::TypeCheck::Argument, 
-            signature => rx/ '(Str)' /, 
+        throws-like $code, X::TypeCheck::Argument,
+            signature => rx/ '(Str)' /,
             arguments => { .[0] eq "Int" };
     }
 
     {
         my $code = q[ sub foo(Int $x, Str $y) { }; foo "not", 42; ];
-        throws-like $code, X::TypeCheck::Argument, 
+        throws-like $code, X::TypeCheck::Argument,
             arguments => { .[0] ~ .[1] eq "StrInt" },
             signature => rx/ '(Int $x, Str $y)' /;
     }
@@ -528,9 +548,9 @@ throws-like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assu
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
 
 # RT #66776
-throws-like 'for 1,2,3, { say 3 }', X::Comp::Group, 
+throws-like 'for 1,2,3, { say 3 }', X::Comp::Group,
     sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].message ~~ /^Expression/ },
-    panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ }; 
+    panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
 # RT #66776
 throws-like 'CATCH { when X::Y {} }', X::Comp::Group,
@@ -538,7 +558,7 @@ throws-like 'CATCH { when X::Y {} }', X::Comp::Group,
     panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
 # RT #75230
-throws-like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
+throws-like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused,
     reason => { m/'Missing semicolon'/ },
     pre => { m/'1 if 2 if'/ },
     post => { m/'3 { say 3 }'/ };
@@ -548,7 +568,7 @@ throws-like '/\ X/', X::Syntax::Regex::Unspace,
     message => { m/'No unspace allowed in regex' .+ '(\' \')' .+ '\x20'/ }, char => { m/' '/ };
 
 # RT #77380
-throws-like '/m ** 1..-1/', X::Comp::Group, 
+throws-like '/m ** 1..-1/', X::Comp::Group,
     panic => { .payload ~~ m!'Unable to parse regex; couldn\'t find final \'/\''! },
     sorrows => { .[0] => { $_ ~~ X::Syntax::Regex::MalformedRange } and .[1] => { $_ ~~ X::Syntax::Regex::UnrecognizedMetachar } };
 
@@ -621,6 +641,41 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 # RT #123584
 {
     is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
+}
+
+# RT #127062
+{
+    is_run 'my @a = -1, 2, -3; print [+] (.abs + .abs for @a)',
+        {
+            status => 0,
+            out    => '12',
+            err    => ''
+        },
+        'no warning about Useless use of "+" in sink context';
+}
+
+# RT #128770
+{
+    is_run q|print ($_ with 'foo')|,
+        {
+            status => 0,
+            out    => "foo",
+            err    => ''
+        },
+        'no warning about "Useless use" with say ($_ with "foo")';
+}
+
+# RT #128766
+{
+    is_run q|sub infix:<↑>($a, $b) is assoc<right> {$a ** $b};
+             sub infix:<↑↑>($a, $b) is assoc<right> { [↑] $a xx $b };
+             print 3↑↑3|,
+        {
+            status => 0,
+            out => "7625597484987",
+            err => '',
+        },
+        'no warning about "Useless use" with "onearg form of reduce"';
 }
 
 # RT #114430
@@ -737,9 +792,12 @@ ok Exception.new.Str.chars, "Exception.new.Str produces some default text";
 ok X::AdHoc.new.gist ~~ m:i/explain/,
     "X::AdHoc.new.gist mentions the word 'explain'";
 
-for <fail die throw rethrow resumable resume> -> $meth {
-    throws-like 'X::NYI.' ~ $meth, Exception,
-        message => rx/equire.*instance.*type\sobject/;
+for <fail die throw rethrow resume> -> $meth {
+    #?rakudo.jvm todo 'no typed exception X::Parameter::InvalidConcreteness, yet'
+    throws-like 'X::NYI.' ~ $meth, X::Parameter::InvalidConcreteness,
+        should-be-concrete => 'True',
+        param-is-invocant  => 'True',
+        routine            => $meth;
 }
 
 # RT #125642
@@ -833,5 +891,80 @@ throws-like 'constant foo = bar', X::Undeclared::Symbols;
 
 # RT #126888
 throws-like '(1,2)[0] := 3', X::Bind;
+
+# RT #128581
+throws-like Q/my Array[Numerix] $x;/, X::Undeclared::Symbols, gist => /Numerix/;
+
+# RT #129290
+throws-like 'for 1, 2 { my $p = {};', X::Syntax::Missing, what => 'block';
+
+# RT #129306
+#?rakudo.jvm todo 'dies with X::AdHoc -- __P6opaque__77@3dc2adf9 in sub-signature of parameter @array'
+throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
+    X::TypeCheck::Binding, got => IntStr, expected => Positional;
+
+# NOTE: the number of blocks (2) below is important; otherwise
+# the $bt.list.elems will give the wrong number
+{ # coverage; 2016-09-22
+    {
+        my sub foo { fail }();
+        CATCH { default {
+            my $bt = .backtrace;
+            is-deeply $bt.flat, $bt.list, '.flat on Backtrace returns .list';
+            is $bt.list.elems, 4, 'we correctly have 2 elements in .list';
+            is $bt.list[0].code.name, 'foo', '.list contains correct items';
+        }}
+    }
+
+    {
+        my sub bar { die }();
+        CATCH { default {
+            my $bt = .backtrace;
+            is $bt.concise, (
+                $bt.grep({ !.is-hidden && .is-routine && !.is-setting })
+                // "\n"
+            ).join,
+            '.concise output includes only non-hidden, non-setting routines';
+
+            is $bt.summary, (
+                $bt.grep({ !.is-hidden && (.is-routine || !.is-setting)})
+                // "\n"
+            ).join,
+            '.summary output includes only non-hidden items that are either '
+                ~ 'routines or non-setting items';
+        }}
+    }
+}
+
+{ # RT #129334
+    my sub bar { X::AdHoc.new.throw }();
+    CATCH { default {
+        my $bt = .backtrace;
+        is $bt.list.elems, 4, 'expecting 4 frames in the backtrace';
+        is-deeply $bt.map({
+            isa-ok $^b, Backtrace::Frame,
+                 '.map arg (item #' ~ $++ ~ ') is a Backtrace::Frame';
+            $^b;
+        }), $bt.list, '.map operates correctly';
+    }}
+}
+
+# RT #129921
+{
+    my $warned;
+    {
+        EVAL 'my $!a';
+        CONTROL { when CX::Warn { $warned = True; .resume } }
+        CATCH { default { } }
+    }
+    nok $warned, 'No warning when producing error for "my $!a"';
+}
+
+# RT #131492
+{
+    throws-like q| my \foo = Callable but role :: { } |,
+        X::Method::NotFound,
+	'X::Method::NotFound does not die with "X::Method::NotFound exception produced no message"';
+}
 
 # vim: ft=perl6

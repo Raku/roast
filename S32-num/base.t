@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 44;
+plan 61;
 
 # Int
 {
@@ -16,13 +16,27 @@ plan 44;
     is (-12).base(16), '-C',    '(-12).base(16)';
     is 121.base(11,3), '100.000', 'Integer digits are 0s';
     is 121.base(11,0), '100',   'Integer with 0 digits fraction leaves off radix point';
-
-    isa-ok 1.base(10, -1), Failure, "negative digits arg fails";
+    throws-like 1.base(10, -1), X::OutOfRange, "X::OutOfRange negative digits arg fails";
+    throws-like 1.base(-1),     X::OutOfRange, "X::OutOfRange negative base fails";
 }
-
+# Int with Str argument
+{
+    is  0.base('8'),  '0',        '0.base(something)';
+    # RT #112872
+    is  0.base('2'),  '0',        '0.base(2)';
+    is 42.base('10'), '42',       '42.base(10)';
+    is 42.base('16'), '2A',       '42.base(16)';
+    is 42.base('2') , '101010',   '42.base(2)';
+    is 35.base('36'), 'Z',        '35.base(36)';
+    is 36.base('36'), '10',       '36.base(36)';
+    is (-12).base('16'), '-C',    '(-12).base(16)';
+    is 121.base('11',3), '100.000', 'Integer digits are 0s';
+    is 121.base('11',0), '100',   'Integer with 0 digits fraction leaves off radix point';
+    throws-like 1.base('10', -1), X::OutOfRange, "X::OutOfRange negative digits arg fails";
+    throws-like 1.base('-1'),     X::OutOfRange, "X::OutOfRange negative base fails";
+}
 # Rat
 # RT #112900
-#?niecza skip "Rat.base NYI"
 {
     is (1/10000000000).base(3),
        '0.0000000000000000000010',   # is the trailing zero correct?
@@ -72,3 +86,25 @@ plan 44;
 
     isa-ok 1.5e0.base(10, -1), Failure, "negative digits arg fails";
 }
+
+subtest 'all Reals can accept Whatever for second .base argument' => {
+    my @reals = 255, 255e0, <255/1>, FatRat.new(255, 1),
+        Duration.new(255), Instant.from-posix(245); # 10 extra TAI - UTC seconds
+
+    plan +@reals;
+    is-deeply .base(16, *), 'FF', .^name for @reals;
+}
+
+# RT#125819
+{
+    throws-like { 255.base: 16, -100 }, X::OutOfRange,
+        'negative $digits arg throws';
+    #?rakudo.jvm todo 'code does not die, RT#125819'
+    throws-like {
+        255.base(16, 9999999999999999999999999999999999999999999999999);
+    }, Exception, :message{ .contains('repeat count').not },
+    'huge digits arg does not throw weird error';
+}
+
+# RT#130753
+throws-like { 1.1.base(1) }, X::OutOfRange, "Throws like X::OutOfRange for base 1";

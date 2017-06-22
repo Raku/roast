@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 38;
 
 =begin pod
 
@@ -56,7 +56,7 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
 {
     @attrs = C.^attributes(:tree);
     is +@attrs, 2,                  'attribute introspection with :tree gives right number of elements';
-    is @attrs[0].name, '$!c',       'first element is attribute desriptor';
+    is @attrs[0].name, '$!c',       'first element is attribute descriptor';
     ok @attrs[1] ~~ Array,          'second element is array';
     is @attrs[1][0].name, '$!b',    'can look into second element array to find next attribute';
     is @attrs[1][1][0].name, '$!a', 'can look deeper to find attribute beyond that';
@@ -70,6 +70,45 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     lives-ok { $attr.set_value($x, 'new') }, 'can set_value';
     is $x.a, 'new', 'set_value worked';
 
+}
+
+{ # coverage; 2016-09-21
+    like Attribute.new(:name('test-name'), :type(Int), :package('Foo')).gist,
+        /'Int' .* 'test-name' | 'test-name' .* 'Int'/,
+    '.gist of an Attribute includes name and type';
+}
+
+# RT #127059
+{
+    class RT127059 {
+        has Str @.rt127059;
+    }
+    is RT127059.^attributes[0].name, '@!rt127059',
+        'introspection of name of typed array attribute works';
+    is RT127059.^attributes[0].type.gist, '(Positional[Str])',
+        'introspection of type of typed array attribute works (using gist)';
+}
+
+# RT #77070
+#?rakudo.jvm skip 'StackOverflowError, RT #77070'
+{
+    # Attributes attributes are sure to actually be BOOTSTRAPATTRs because
+    # of bootstrapping
+    my $a = Attribute.^attributes[0];
+    like $a.gist, /^ <ident>+ \s '$!' <ident>+ $/, '.gist of a BOOTSTRAPATTR is the type and name';
+    like $a.Str,  /^ '$!' <ident>+ $/,             '.Str of a BOOTSTRAPATTR is the name';
+    is   $a.perl, 'BOOTSTRAPATTR.new',             '.perl of a BOOTSTRAPATTR is the class name ~ ".new"';
+}
+
+# RT #131174
+{
+    # shape introspection
+    my class RT131174 {
+        has @.a[2];
+    }
+    is RT131174.new(:a[1, 2]).a.shape.gist, '(2)', 'shape of stantiated attribute';
+#?rakudo todo 'RT #131174'
+    is RT131174.^attributes[0].container.shape.gist, '(2)', 'attribute container shape';
 }
 
 # vim: ft=perl6

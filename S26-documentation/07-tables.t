@@ -1,7 +1,8 @@
 use v6;
 use Test;
-plan 38;
 my $r;
+
+plan 42;
 
 =begin table
         The Shoveller   Eddie Stevens     King Arthur's singing shovel
@@ -61,7 +62,7 @@ is $r.contents[1].join('|'), "Human|2|Pizza";
 is $r.contents[2].join('|'), "Shark|0|Fish";
 
 =table
-        Superhero     | Secret          | 
+        Superhero     | Secret          |
                       | Identity        | Superpower
         ==============|=================|================================
         The Shoveller | Eddie Stevens   | King Arthur's singing shovel
@@ -110,20 +111,26 @@ is $r.contents[3].join('|'),
 
 $r = $=pod[6];
 is $r.contents.elems, 3;
-is $r.contents[0].join(','), 'X,O,';
+is $r.contents[0].join(','), 'X,O,',
+    'ensure trailing whitespace counts as a cell (WARNING: this test will'
+    ~ ' fail if you modified this file and your editor auto-stripped'
+    ~ ' trailing whitespace)';
 is $r.contents[1].join(','), ',X,O';
 is $r.contents[2].join(','), ',,X';
 
 =table
-    X   O     
+    X   O    
    ===========
-        X   O 
+        X   O
    ===========
-            X 
+            X
 
 $r = $=pod[7];
 is $r.contents.elems, 3;
-is $r.contents[0].join(','), 'X,O,';
+is $r.contents[0].join(','), 'X,O,',
+    'ensure trailing whitespace counts as a cell (WARNING: this test will'
+    ~ ' fail if you modified this file and your editor auto-stripped'
+    ~ ' trailing whitespace)';
 is $r.contents[1].join(','), ',X,O';
 is $r.contents[2].join(','), ',,X';
 
@@ -136,3 +143,22 @@ bar
 
 $r = $=pod[8];
 is $r.contents.elems, 2;
+
+# test for issue #129862
+# uneven rows
+
+# NOTE: This test may need to change after planned table pod fixes are
+# made because this is a malformed table and the user should be warned
+# of that fact.
+
+=begin table
+a | b | c
+l | m | n
+x | y
+=end table
+
+$r = $=pod[9];
+is $r.contents.elems, 3;
+is $r.contents[0].join(','), 'a,b,c';
+is $r.contents[1].join(','), 'l,m,n';
+is $r.contents[2].join(','), 'x,y';

@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 38;
+plan 40;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -50,7 +50,6 @@ plan 38;
 
   # string
   #doc-roast 'operators','bitwise strings'
-  #?niecza 6 skip 'string bitops'
   is( 'a' ~& 'A',         'A',       'string bitwise ~& of "a" and "A"' );
   is( 'a' ~| 'b',         'c',       'string bitwise ~| of "a" and "b"' );
   is( 'a' ~^ 'B',         '#',       'string bitwise ~^ of "a" and "B"' );
@@ -63,13 +62,11 @@ plan 38;
   my $bar = "z" x 75;
   my $zap = "A" x 75;
 
-  #?niecza 3 skip 'string bitops'
   is( $foo ~& $bar, '@' x 75,        'long string bitwise ~&, truncates' );
   is( $foo ~| $bar, '{' x 75 ~ $zap, 'long string bitwise ~|, no truncation' );
   is( $foo ~^ $bar, ';' x 75 ~ $zap, 'long string bitwise ~^, no truncation' );
 
   # "interesting" tests from a long time back...
-  #?niecza 2 skip 'string bitops'
   is( "ok \xFF\xFF\n" ~& "ok 19\n", "ok 19\n", 'stringwise ~&, arbitrary string' );
   is( "ok 20\n" ~| "ok \0\0\n", "ok 20\n",     'stringwise ~|, arbitrary string' );
 
@@ -148,5 +145,38 @@ plan 38;
 # More variations on 19 and 22
 #if ("ok \xFF\x{FF}\n" ~& "ok 41\n" eq "ok 41\n") { say "ok 19" } else { say "not ok 19" }
 #if ("ok \x{FF}\xFF\n" ~& "ok 42\n" eq "ok 42\n") { say "ok 20" } else { say "not ok 20" }
+
+# RT#126942
+# RT#131278
+subtest '+> bit shift' => {
+    my @p = 1, 2, 4, 10, 30, 31, 32, 33, 40, 60, 63, 64, 65, 100, 500, 1000;
+    my @n = 1, 3, 4, 10, 15, 50, 75, 100, 500, 751, 1000;
+    plan 4 + 2*@p*@n;
+
+    cmp-ok -0x8000000000000000 +> 32, '===', -2147483648,
+        '-0x8000000000000000 shifted by 32';
+    cmp-ok 0x8000000000000000 +> 32, '===', 2147483648,
+        '0x8000000000000000 shifted by 32';
+    cmp-ok -12 +> 32, '===', -1, '-12 shifted by 32';
+    cmp-ok  12 +> 32, '===',  0, '12 shifted by 32';
+    for @p -> $p {
+        for @n -> $n {
+            cmp-ok -15**$n +> $p, '===', -15**$n div 2**$p, "-15**$n +> $p";
+            cmp-ok  15**$n +> $p, '===',  15**$n div 2**$p, "15**$n +> $p"
+        }
+    }
+}
+
+
+# RT#131306
+subtest 'combination of bit ops in loop keeps giving good result' => {
+    plan 2;
+
+    sub rotr(uint32 $n, uint32 $b) { $n +> $b +| $n +< (32 - $b) };
+    my $first = rotr 1652322944, 18;
+    my $iterated; for ^2000 { $iterated = rotr 1652322944, 18 };
+    is-deeply $first,    27071659120799, 'first iteration';
+    is-deeply $iterated, 27071659120799, '2000th iteration';
+}
 
 # vim: ft=perl6

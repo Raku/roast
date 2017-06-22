@@ -16,7 +16,6 @@ isa-ok($list_sub, List, '&list() creates a list assignable to a scalar.');
 is($list_sub, (1, 2, 3), 'The &list() function created a list.');
 is(+$list_sub, 3, 'Finding the length of the list works as expected.');
 
-#?niecza skip 'Excess arguments to List.new, used 1 of 4 positionals'
 {
 my $list_obj = List.new(4, 5, 6);
 isa-ok($list_obj, List, 'Creating a new list object with new works.');

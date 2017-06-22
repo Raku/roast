@@ -38,6 +38,7 @@ for 1 .. 100
     $foo = Foo.new();
 }
 
+#?rakudo 4 todo ''
 ok( $in_destructor, '... only when object goes away everywhere'               );
 is( +@destructor_order, 2, '... only as many as available DESTROY submethods' );
 is(  @destructor_order[0], 'Child',  'Child DESTROY should fire first'        );

@@ -58,8 +58,7 @@ sub foo($z, :$bar, :$baz) {
 sub foo2($z, :$bar, :$baz) {
     is $z, 'zzz', 'positional arg';
     ok $bar, 'adverb 1';
-#?rakudo.jvm todo 'adverb stacking'
-#?rakudo.moar todo 'adverb stacking'
+    #?rakudo todo 'adverb stacking'
     ok $baz, 'adverb 2';
 }
 {

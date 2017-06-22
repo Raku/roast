@@ -87,7 +87,6 @@ for <first second> {
 
     nok $was_in_once.defined, 'once {} has not run yet';
     is $sub(), 23, 'once {} block set our variable (2)';
-    #?niecza todo
     is $sub(), 23, 'the returned value of once {} still there';
     is $was_in_once, 1, 'our once {} block was invoked exactly once';
 }

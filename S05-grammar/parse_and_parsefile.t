@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 # tests .parse and .parsefile methods on a grammar
 
@@ -18,14 +18,12 @@ dies-ok({ Bar.parse("abc123xyz") }, "dies if no TOP rule");
 my $fh = open("parse_and_parsefile_test", :w);
 $fh.say("abc\n123\nxyz");
 $fh.close();
-#?niecza skip 'Unable to resolve method parsefile in class Foo'
 nok(Foo.parsefile("parse_and_parsefile_test"), ".parsefile method invokes TOP rule, no match");
 unlink("parse_and_parsefile_test");
 
 $fh = open("parse_and_parsefile_test", :w);
 $fh.say("123");
 $fh.close();
-#?niecza skip 'Unable to resolve method parsefile in class Foo'
 is(~Baz.parsefile("parse_and_parsefile_test"), "123\n",  ".parsefile method invokes TOP rule, match");
 dies-ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
 dies-ok({ Foo.parsefile("non_existent_file") },        "dies if file not found");
@@ -79,6 +77,12 @@ throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar
         }
     }
     is RT111768.parse("aaaa;", :rule<e>).ast, ';;;;a', "Recursive .ast calls work";
+}
+
+# RT #130081
+{
+    my grammar G { regex TOP { ‘a’ || ‘abc’ } };
+    is G.parse(‘abc’), 'abc', 'A regex TOP will be backtracked into to get a long enough match';
 }
 
 # vim: ft=perl6 expandtab sw=4

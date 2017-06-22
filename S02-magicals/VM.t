@@ -5,6 +5,7 @@ use Test;
 plan 32;
 
 #?rakudo.moar   skip 'VM.properties does not exist RT #124606'
+#?rakudo.js   skip 'I have no information how it is supposed to work'
 {
     #?rakudo skip 'unimpl $?VM'
     ok $?VM.properties,     "We have properties";

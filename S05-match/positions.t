@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/pos.t.
 
 =end pod
 
-plan 10;
+plan 12;
 
 my $str = "abrAcadAbbra";
 
@@ -26,5 +26,11 @@ ok($/.from == 0,          'Full match pos is 0');
 ok($/<Aa>.from == 3,      'Subrule match pos is 3');
 
 is ('abc' ~~ /\d+/), Nil, 'Failed match returns Nil';
+
+{ # coverage; 2016-10-11
+    'abc123def' ~~ m:g/\d/;
+    is-deeply $/.from, 3, 'List.from';
+    is-deeply $/.to,   6, 'List.to';
+}
 
 # vim: ft=perl6

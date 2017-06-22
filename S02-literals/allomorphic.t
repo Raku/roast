@@ -1,11 +1,13 @@
 # S02-literals/allomorphic.t --- Tests for the various allmorphic types, and val() processing
 
 use v6;
+use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 99;
+plan 107;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -182,4 +184,154 @@ lives-ok {val("foo")}, "val() exists";
     dies-ok { want-num(val('42')) }, 'val("42") cannot be passed to native num parameter';
     lives-ok { want-str(val('42')) }, 'val("42") can be passed to native str parameter';
     lives-ok { want-str(val('4e2')) }, 'val("4e2") can be passed to native str parameter';
+}
+
+# Environment variables produce allomorphic types, too.
+{
+    %*ENV<FOO> = '42';
+    is_run 'print %*ENV<FOO>.^name', { status => 0, out => 'IntStr', err => '' },
+        'int/string "42" is an IntStr when passed via ENV';
+
+    # This test would break without allomorphs because the string "0" is trueish.
+    %*ENV<FOO> = '0';
+    is_run 'print so %*ENV<FOO>', { status => 0, out => 'False', err => '' },
+        'int/string "0" is falsish when passed via ENV';
+}
+
+# https://irclog.perlgeek.de/perl6/2016-11-21#i_13606506
+is-deeply ~<2>, '2', 'prefix:<~> coerces allomorphs to Str';
+
+subtest 'U+2212 parses correctly in compound literals' => {
+    plan 4;
+
+    is-deeply <5−1i>,   5-1i, '<5−1i> is a literal Complex';
+    is-deeply <−5−1i>, -5-1i, '<−5−1i> is a literal Complex';
+    is-deeply <−5+1i>, -5+1i, '<−5+1i> is a literal Complex';
+    is-deeply <−1/2>,   -0.5, '<−1/2> is a literal Rat';
+}
+
+# https://irclog.perlgeek.de/perl6/2017-05-01#i_14514985
+subtest 'eqv with allomorphs' => {
+    my @tests = [X] <1 1.0 1e0 1+0i> xx 2;
+    plan +@tests;
+    for @tests -> ($a, $b) {
+        $a.^name eq $b.^name
+            ?? is-deeply $a eqv $b, True,  "$a.perl() eqv $b.perl()"
+            !! is-deeply $a eqv $b, False, "$a.perl() eqv $b.perl()"
+    }
+}
+
+# https://irclog.perlgeek.de/perl6/2017-05-01#i_14514985
+subtest 'cmp with allomorphs' => {
+    my @same = <1  1.0  1e0  1+0i  1+1i>;
+    my @less =  <1>    => <2>, <1>    => <2.0>, <1>    => <2e0>, <1>    => <2+0i>,
+                <1.0>  => <2>, <1.0>  => <2.0>, <1.0>  => <2e0>, <1.0>  => <2+0i>,
+                <1e0>  => <2>, <1e0>  => <2.0>, <1e0>  => <2e0>, <1e0>  => <2+0i>,
+                <1+0i> => <2>, <1+0i> => <2.0>, <1+0i> => <2e0>, <1+0i> => <2+0i>;
+    my @more = @less.map: { .value => .key };
+    plan @same + @less + @more;
+
+    is-deeply $_ cmp $_, Same,  "{.perl} cmp {.perl}" for @same;
+
+    for @less -> (:key($a), :value($b)) {
+        is-deeply $a cmp $b, Less, "$a.perl() cmp $b.perl()"
+    }
+
+    for @more -> (:key($a), :value($b)) {
+        is-deeply $a cmp $b, More, "$a.perl() cmp $b.perl()"
+    }
+}
+
+subtest 'test eqv for weird allomorphs' => {
+    plan 8;
+
+    is-deeply IntStr    .new(42,    "x") eqv IntStr    .new(72,    "x"),
+        False, 'Int (same Str part)';
+    is-deeply RatStr    .new(42.0,  "x") eqv RatStr    .new(72.0,  "x"),
+        False, 'Rat (same Str part)';
+    is-deeply NumStr    .new(42e0,  "x") eqv NumStr    .new(72e0,  "x"),
+        False, 'Num (same Str part)';
+    is-deeply ComplexStr.new(42+0i, "x") eqv ComplexStr.new(72+0i, "x"),
+        False, 'Complex (same Str part)';
+
+    is-deeply IntStr    .new(42,    "x") eqv IntStr    .new(42,    "a"),
+        False, 'Int (same Numeric part)';
+    is-deeply RatStr    .new(42.0,  "x") eqv RatStr    .new(42.0,  "a"),
+        False, 'Rat (same Numeric part)';
+    is-deeply NumStr    .new(42e0,  "x") eqv NumStr    .new(42e0,  "a"),
+        False, 'Num (same Numeric part)';
+    is-deeply ComplexStr.new(42+0i, "x") eqv ComplexStr.new(42+0i, "a"),
+        False, 'Complex (same Numeric part)';
+}
+
+subtest '.ACCEPTS' => {
+    my @true = gather {
+        my class IntFoo { method Numeric { 3    }; method Str { '3'    } }
+        my class RatFoo { method Numeric { 3.0  }; method Str { '3.0'  } }
+        my class NumFoo { method Numeric { 3e0  }; method Str { '3e0'  } }
+        my class ComFoo { method Numeric { 3+5i }; method Str { '3+5i' } }
+
+        take <0>       => $_ for      '0', 0, 0.0, 0e0, 0+0i;
+        take <000>     => $_ for    '000', 0, 0.0, 0e0, 0+0i;
+        take <3>       => $_ for      '3', 3, 3.0, 3e0, 3+0i, IntFoo.new;
+
+        take <0.0>     => $_ for    '0.0', 0, 0.0, 0e0, 0+0i;
+        take <000.0>   => $_ for  '000.0', 0, 0.0, 0e0, 0+0i;
+        take <3.0>     => $_ for    '3.0', 3, 3.0, 3e0, 3+0i, RatFoo.new;
+
+        take <0e0>     => $_ for    '0e0', 0, 0.0, 0e0, 0+0i;
+        take <000e0>   => $_ for  '000e0', 0, 0.0, 0e0, 0+0i;
+        take <3e0>     => $_ for    '3e0', 3, 3.0, 3e0, 3+0i, NumFoo.new;
+
+        take < 0+0i>   => $_ for   '0+0i', 0, 0.0, 0e0, 0+0i;
+        take < 0.0+0i> => $_ for '0.0+0i', 0, 0.0, 0e0, 0+0i;
+        take < 3+5i>   => $_ for   '3+5i', 3+5i, 3.0+5i, 3e0+5i, ComFoo.new;
+
+        for <0>, <000>, <0.0>, <0e0>, < 0+0i> -> \al {
+            take $_ => al
+            for <0>, <000>, <0.0>, <000.0>, <0e0>, <000e0>, < 0+0i>, < 0.0+0i>,
+              IntStr.new(0,   'meow'), RatStr    .new(0.0,  'meow'),
+              NumStr.new(0e0, 'meow'), ComplexStr.new(0+0i, 'meow');
+        }
+
+        for <3>, <003>, <3.0>, <3e0>, < 3+0i> -> \al {
+            take $_ => al
+            for <3>, <003>, <3.0>, <003.0>, <3e0>, <003e0>, < 3+0i>, < 3.0+0i>,
+              IntStr.new(3,   'meow'), RatStr    .new(3.0,  'meow'),
+              NumStr.new(3e0, 'meow'), ComplexStr.new(3+0i, 'meow');
+        }
+
+        take < 3+5i> => $_ for < 3.0+5i>, < 3e0+5i>;
+    }
+
+    my @false = gather {
+        my class IntFoo { method Numeric { 42    }; method Str { '3'    } }
+        my class RatFoo { method Numeric { 42.0  }; method Str { '3.0'  } }
+        my class NumFoo { method Numeric { 42e0  }; method Str { '3e0'  } }
+        my class ComFoo { method Numeric { 42+5i }; method Str { '3+5i' } }
+
+        take <0>       => $_ for '', '00',  '0.0',  '0e0',  '0+0i', 'meows';
+        take <3>       => $_ for     '03',  '3.0',  '3e0',  '3+0i', IntFoo.new;
+
+        take <0.0>     => $_ for '',  '0', '00.0',  '0e0',  '0+0i', 'meows';
+        take <3.0>     => $_ for      '3', '03.0',  '3e0',  '3+0i', RatFoo.new;
+
+        take <0e0>     => $_ for '',  '0',  '0.0', '00e0',  '0+0i', 'meows';
+        take <3e0>     => $_ for      '3',  '3.0', '03e0',  '3+0i', RatFoo.new;
+
+        take < 0+0i>   => $_ for '',  '0',  '0.0',  '0e0', '00+0i', 'meows';
+        take < 3+5i>   => $_ for      '3',  '3.0',  '3e0', '03+5i', ComFoo.new;
+    }
+
+    plan @true + @false;
+
+    for @true -> (:key($allo), :value($thing)) {
+        is-deeply $allo.ACCEPTS($thing), True,
+            "{$allo.perl}.ACCEPTS({$thing.perl})"
+    }
+
+    for @false -> (:key($allo), :value($thing)) {
+        is-deeply $allo.ACCEPTS($thing), False,
+            "{$allo.perl}.ACCEPTS({$thing.perl})"
+    }
 }

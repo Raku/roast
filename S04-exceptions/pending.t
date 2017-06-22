@@ -27,7 +27,7 @@ sub fail_it { fail $^a }
 
     ok all(@fails) ~~ Failure, '@fails is full of fail';
     ok $! !~~ Exception, 'fails do not enter $!';
-    #?rakudo 11 skip '$!.pending'
+    #?rakudo 1 todo '$!.pending'
     is +($!.pending.grep( ! *.handled )), 4,
        '$!.pending has three unhandled exceptions';
 

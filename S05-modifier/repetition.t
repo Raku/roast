@@ -5,11 +5,9 @@ plan 12;
 
 #L<S05/Modifiers/"If followed by an x, it means repetition.">
 
-#?rakudo.jvm skip 'RT #124279'
 ok('abab' ~~ m:2x/ab/,  ':2x (repetition) modifier (+)');
 nok('ab'  ~~ m:2x/ab/, ':2x (repetition) modifier (-)');
 
-#?rakudo.jvm skip 'RT #124279'
 ok('abab' ~~ m:x(2)/ab/, ':2x (repetition) modifier (+)');
 nok('ab'  ~~ m:x(2)/ab/, ':2x (repetition) modifier (-)');
 
@@ -18,7 +16,6 @@ nok('ab'  ~~ m:x(2)/ab/, ':2x (repetition) modifier (-)');
     nok  'abc'.match(rx/ab/, :x(2)), ':x(2) with .match method (-)';
 
     ok 'ababc'.match(rx/./, :x(3)), ':x(3) with .match method (bool)';
-    #?rakudo.jvm skip 'RT #124279'
     is 'ababc'.match(rx/./, :x(3)).join('|'), 'a|b|a', ':x(3) with .match method (result)';
 }
 

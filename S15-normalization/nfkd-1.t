@@ -1,11 +1,14 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
+# Generated from Unicode version 9.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0x3297).NFKD.list ~~ (0x795D,), '3297 -> 795D';
+ok Uni.new(0x3298).NFKD.list ~~ (0x52B4,), '3298 -> 52B4';
 ok Uni.new(0x3299).NFKD.list ~~ (0x79D8,), '3299 -> 79D8';
 ok Uni.new(0x329A).NFKD.list ~~ (0x7537,), '329A -> 7537';
 ok Uni.new(0x329B).NFKD.list ~~ (0x5973,), '329B -> 5973';
@@ -2004,5 +2007,3 @@ ok Uni.new(0xB25B).NFKD.list ~~ (0x1102, 0x1171, 0x11AA,), 'B25B -> 1102 1171 11
 ok Uni.new(0xB25C).NFKD.list ~~ (0x1102, 0x1171, 0x11AB,), 'B25C -> 1102 1171 11AB';
 ok Uni.new(0xB25D).NFKD.list ~~ (0x1102, 0x1171, 0x11AC,), 'B25D -> 1102 1171 11AC';
 ok Uni.new(0xB25E).NFKD.list ~~ (0x1102, 0x1171, 0x11AD,), 'B25E -> 1102 1171 11AD';
-ok Uni.new(0xB25F).NFKD.list ~~ (0x1102, 0x1171, 0x11AE,), 'B25F -> 1102 1171 11AE';
-ok Uni.new(0xB260).NFKD.list ~~ (0x1102, 0x1171, 0x11AF,), 'B260 -> 1102 1171 11AF';

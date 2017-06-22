@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 282;
+plan 288;
 
 # Basic test functions specific to FatRats.
 
@@ -15,7 +15,7 @@ isa-ok( 1.Num.FatRat, FatRat, "cast of Num makes a FatRat");
 isa-ok(1 / 4, Rat, "/ makes a Rat");
 
 isa-ok( EVAL(FatRat.new(1, 3).perl), FatRat, 'EVAL FatRat.new(1, 3).perl is FatRat' );
-is_approx (EVAL FatRat.new(1, 3).perl), 1/3, 'EVAL FatRat.new(1, 3).perl is 1/3';
+is-approx (EVAL FatRat.new(1, 3).perl), 1/3, 'EVAL FatRat.new(1, 3).perl is 1/3';
 
 # Test ~
 is(~(FatRat.new(1,4)), ~(0.25e0), "FatRats stringify properly");
@@ -37,7 +37,7 @@ isa-ok 1R, FatRat, "1R is a FatRat";
 is 1R, 1, "1R == 1";
 isa-ok 1/4R, FatRat, "1/4R is a FatRat";
 is 1/4R, 1/4, "1/4R == 1/4";
- 
+
 # Test basic math
 is(1 / 4R + 1 / 4R, 1/2, "1/4R + 1/4R = 1/2");
 isa-ok(1 / 4R + 1 / 4R, FatRat, "1/4R + 1/4R is a FatRat");
@@ -87,7 +87,7 @@ is((2 / (2 / 3R)).nude, (3, 1), "2 / 2/3R = 3 is simplified internally");
 
 {
     # use numbers that can be exactly represented as floating points
-    # so there's no need to use is_approx 
+    # so there's no need to use is-approx
 
     my $a = 1/2R;
     is ++$a, 3/2, 'prefix:<++> on FatRats';
@@ -110,55 +110,55 @@ is((2 / (2 / 3R)).nude, (3, 1), "2 / 2/3R = 3 is simplified internally");
 
 for -1/4R, 2/7R, 65/8R / 10**100 -> $a {
     for -7, 0, 1, 5 -> $b {
-        is_approx($a + $b, $a.Num + $b.Num, "FatRat + Int works ($a, $b)");
-        is_approx($b + $a, $b.Num + $a.Num, "Int + FatRat works ($a, $b)");
-        is_approx($a - $b, $a.Num - $b.Num, "FatRat - Int works ($a, $b)");
-        is_approx($b - $a, $b.Num - $a.Num, "Int - FatRat works ($a, $b)");
-        is_approx($a * $b, $a.Num * $b.Num, "FatRat * Int works ($a, $b)");
-        is_approx($b * $a, $b.Num * $a.Num, "Int * FatRat works ($a, $b)");
-        is_approx($a / $b, $a.Num / $b.Num, "FatRat / Int works ($a, $b)") if $b != 0;
-        is_approx($b / $a, $b.Num / $a.Num, "Int / FatRat works ($a, $b)");
+        is-approx($a + $b, $a.Num + $b.Num, "FatRat + Int works ($a, $b)");
+        is-approx($b + $a, $b.Num + $a.Num, "Int + FatRat works ($a, $b)");
+        is-approx($a - $b, $a.Num - $b.Num, "FatRat - Int works ($a, $b)");
+        is-approx($b - $a, $b.Num - $a.Num, "Int - FatRat works ($a, $b)");
+        is-approx($a * $b, $a.Num * $b.Num, "FatRat * Int works ($a, $b)");
+        is-approx($b * $a, $b.Num * $a.Num, "Int * FatRat works ($a, $b)");
+        is-approx($a / $b, $a.Num / $b.Num, "FatRat / Int works ($a, $b)") if $b != 0;
+        is-approx($b / $a, $b.Num / $a.Num, "Int / FatRat works ($a, $b)");
     }
 
     for (1R/2**256, -4/5R) -> $b {
-        is_approx($a + $b, $a.Num + $b.Num, "FatRat + FatRat works ($a, $b)");
-        is_approx($b + $a, $b.Num + $a.Num, "FatRat + FatRat works ($a, $b)");
-        is_approx($a - $b, $a.Num - $b.Num, "FatRat - FatRat works ($a, $b)");
-        is_approx($b - $a, $b.Num - $a.Num, "FatRat - FatRat works ($a, $b)");
-        is_approx($a * $b, $a.Num * $b.Num, "FatRat * FatRat works ($a, $b)");
-        is_approx($b * $a, $b.Num * $a.Num, "FatRat * FatRat works ($a, $b)");
-        is_approx($a / $b, $a.Num / $b.Num, "FatRat / FatRat works ($a, $b)");
-        is_approx($b / $a, $b.Num / $a.Num, "FatRat / FatRat works ($a, $b)");
+        is-approx($a + $b, $a.Num + $b.Num, "FatRat + FatRat works ($a, $b)");
+        is-approx($b + $a, $b.Num + $a.Num, "FatRat + FatRat works ($a, $b)");
+        is-approx($a - $b, $a.Num - $b.Num, "FatRat - FatRat works ($a, $b)");
+        is-approx($b - $a, $b.Num - $a.Num, "FatRat - FatRat works ($a, $b)");
+        is-approx($a * $b, $a.Num * $b.Num, "FatRat * FatRat works ($a, $b)");
+        is-approx($b * $a, $b.Num * $a.Num, "FatRat * FatRat works ($a, $b)");
+        is-approx($a / $b, $a.Num / $b.Num, "FatRat / FatRat works ($a, $b)");
+        is-approx($b / $a, $b.Num / $a.Num, "FatRat / FatRat works ($a, $b)");
     }
 
     my $neg = -$a;
     isa-ok($neg, FatRat, "prefix<-> geneFatRates a FatRat on $a");
-    is_approx($neg, -($a.Num), "prefix<-> geneFatRates the correct number for $a");
+    is-approx($neg, -($a.Num), "prefix<-> geneFatRates the correct number for $a");
 }
 
 # (note that trig on Rats is tested extensively in S32-trig but not trig on FatRats.  yet.)
 
-is_approx sin(5.0e0), sin(10/2R), 'sin(FatRat) works';
+is-approx sin(5.0e0), sin(10/2R), 'sin(FatRat) works';
 
 # Quick test of some basic mixed type math
 
-is_approx (1 / 2R) + 3.5e0, 4.0, "1/2R + 3.5 = 4.0";
-is_approx 3.5e0 + (1 / 2R), 4.0, "3.5 + 1/2R = 4.0";
-is_approx (1 / 2R) - 3.5e0, -3.0, "1/2R - 3.5 = -3.0";
-is_approx 3.5e0 - (1 / 2R), 3.0, "3.5 - 1/2R = 3.0";
-is_approx (1 / 3R) * 6.6e0, 2.2, "1/3R * 6.6 = 2.2";
-is_approx 6.6e0 * (1 / 3R), 2.2, "6.6 * 1/3R = 2.2";
-is_approx (1 / 3R) / 2.0e0, 1 / 6, "1/3R / 2.0 = 1/6";
-is_approx 2.0e0 / (1 / 3R), 6.0, "2.0 / 1/3R = 6.0";
+is-approx (1 / 2R) + 3.5e0, 4.0, "1/2R + 3.5 = 4.0";
+is-approx 3.5e0 + (1 / 2R), 4.0, "3.5 + 1/2R = 4.0";
+is-approx (1 / 2R) - 3.5e0, -3.0, "1/2R - 3.5 = -3.0";
+is-approx 3.5e0 - (1 / 2R), 3.0, "3.5 - 1/2R = 3.0";
+is-approx (1 / 3R) * 6.6e0, 2.2, "1/3R * 6.6 = 2.2";
+is-approx 6.6e0 * (1 / 3R), 2.2, "6.6 * 1/3R = 2.2";
+is-approx (1 / 3R) / 2.0e0, 1 / 6, "1/3R / 2.0 = 1/6";
+is-approx 2.0e0 / (1 / 3R), 6.0, "2.0 / 1/3R = 6.0";
 
-is_approx (1 / 2R) + 3.5e0 + 1i, 4.0 + 1i, "1/2R + 3.5 + 1i = 4.0 + 1i";
-is_approx (3.5e0 + 1i) + (1 / 2R), 4.0 + 1i, "(3.5 + 1i) + 1/2R = 4.0 + 1i";
-is_approx (1 / 2R) - (3.5e0 + 1i), -3.0 - 1i, "1/2R - (3.5 + 1i) = -3.0 - 1i";
-is_approx (3.5e0 + 1i) - (1 / 2R), 3.0 + 1i, "(3.5 + 1i) - 1/2R = 3.0 + 1i";
-is_approx (1 / 3R) * (6.6e0 + 1i), 2.2 + (1i/3), "1/3R * (6.6 + 1i) = 2.2 + (1/3)i";
-is_approx (6.6e0 + 1i) * (1 / 3R), 2.2 + (1i/3), "(6.6 + 1i) * 1/3R = 2.2 + (1/3)i";
-is_approx (1 / 3R) / 2.0i, 1 / (6.0i), "1/3R / 2.0i = 1/(6i)";
-is_approx 2.0i / (1 / 3R), 6.0i, "2.0i / 1/3R = 6.0i";
+is-approx (1 / 2R) + 3.5e0 + 1i, 4.0 + 1i, "1/2R + 3.5 + 1i = 4.0 + 1i";
+is-approx (3.5e0 + 1i) + (1 / 2R), 4.0 + 1i, "(3.5 + 1i) + 1/2R = 4.0 + 1i";
+is-approx (1 / 2R) - (3.5e0 + 1i), -3.0 - 1i, "1/2R - (3.5 + 1i) = -3.0 - 1i";
+is-approx (3.5e0 + 1i) - (1 / 2R), 3.0 + 1i, "(3.5 + 1i) - 1/2R = 3.0 + 1i";
+is-approx (1 / 3R) * (6.6e0 + 1i), 2.2 + (1i/3), "1/3R * (6.6 + 1i) = 2.2 + (1/3)i";
+is-approx (6.6e0 + 1i) * (1 / 3R), 2.2 + (1i/3), "(6.6 + 1i) * 1/3R = 2.2 + (1/3)i";
+is-approx (1 / 3R) / 2.0i, 1 / (6.0i), "1/3R / 2.0i = 1/(6i)";
+is-approx 2.0i / (1 / 3R), 6.0i, "2.0i / 1/3R = 6.0i";
 
 # # Cast from Num uses an epsilon value.
 # -- Off because we need to figure out the right way to do this
@@ -237,5 +237,86 @@ isa-ok 4.8R % 1, FatRat, 'infix:<%> returns FatRat when it can';
 isa-ok 4 % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
 isa-ok 4.8R % 1.1R, FatRat, 'infix:<%> returns FatRat when it can';
 isa-ok 4.8R % 1.1, FatRat, 'infix:<%> returns FatRat when it can';
+
+subtest '== with 0-denominator FatRats' => {
+    plan 18;
+    sub postfix:<F> (Rat $_ --> FatRat) { FatRat.new: .numerator, .denominator }
+
+    is-deeply  <0/0>F == <42/1>F, False, ' 0/0 == 42/1';
+    is-deeply  <4/0>F == <42/1>F, False, ' 4/0 == 42/1';
+    is-deeply <-4/0>F == <42/1>F, False, '-4/0 == 42/1';
+    is-deeply <42/1>F ==  <0/0>F, False, '42/1 ==  0/0';
+    is-deeply <42/1>F ==  <4/0>F, False, '42/1 ==  4/1';
+    is-deeply <42/1>F == <-4/0>F, False, '42/1 == -4/1';
+
+    # 0/0 is NaN and NaN != anything else
+    is-deeply  <0/0>F ==  <0/0>F,  False, ' 0/0 ==  0/0';
+    is-deeply  <0/0>F ==  <2/0>F,  False, ' 0/0 ==  2/0';
+    is-deeply  <0/0>F == <-2/0>F,  False, ' 0/0 == -2/0';
+    is-deeply  <2/0>F ==  <0/0>F,  False, ' 2/0 ==  0/0';
+    is-deeply <-2/0>F ==  <0/0>F,  False, '-2/0 ==  0/0';
+
+    # Positive/0 == +Inf
+    is-deeply  <2/0>F ==  <2/0>F,  True, '  2/0 ==  0/0';
+    is-deeply  <2/0>F ==  <5/0>F,  True,  ' 2/0 ==  5/0';
+    is-deeply  <2/0>F == <-2/0>F,  False, ' 2/0 == -2/0';
+    is-deeply  <5/0>F ==  <2/0>F,  True,  ' 5/0 ==  2/0';
+    is-deeply <-2/0>F ==  <2/0>F,  False, '-2/0 ==  2/0';
+
+    # Negative/0 == -Inf
+    is-deeply  <-2/0>F == <-2/0>F,  True, '-2/0 == -2/0';
+    is-deeply  <-2/0>F == <-5/0>F,  True, '-2/0 == -5/0';
+}
+
+subtest 'Rational.isNaN' => {
+    plan 6;
+
+    is-deeply  <0/0>.isNaN,  True, ' 0/0';
+    is-deeply  <2/0>.isNaN, False, ' 2/0';
+    is-deeply <-2/0>.isNaN, False, '-2/0';
+    is-deeply  <0/2>.isNaN, False, ' 0/2';
+    is-deeply  <4/5>.isNaN, False, ' 4/5';
+    is-deeply <-4/5>.isNaN, False, '-5/5';
+}
+
+subtest '=== with 0-denominator FatRats' => {
+    plan 15;
+    sub postfix:<F> (Rat $_ --> FatRat) { FatRat.new: .numerator, .denominator }
+
+    is-deeply  <0/0>F ===  <0/0>F,  True, ' 0/0 ===  0/0';
+    is-deeply  <2/0>F ===  <2/0>F,  True, ' 2/0 ===  2/0';
+    is-deeply <-2/0>F === <-2/0>F,  True, '-2/0 === -2/0';
+
+    is-deeply  <0/0>F ===  <2/0>F, False, ' 0/0 ===  2/0';
+    is-deeply  <2/0>F ===  <0/0>F, False, ' 2/0 ===  0/0';
+    is-deeply  <5/0>F ===  <2/0>F, False, ' 5/0 ===  2/0';
+    is-deeply  <2/0>F ===  <5/0>F, False, ' 2/0 ===  5/0';
+    is-deeply <-5/0>F === <-2/0>F, False, '-5/0 === -2/0';
+    is-deeply <-2/0>F === <-5/0>F, False, '-2/0 === -5/0';
+
+    is-deeply  <0/0>F ===  <2/2>F, False, ' 0/0 ===  2/2';
+    is-deeply  <2/2>F ===  <0/0>F, False, ' 2/2 ===  0/0';
+    is-deeply  <5/2>F ===  <2/0>F, False, ' 5/2 ===  2/0';
+    is-deeply  <2/0>F ===  <5/2>F, False, ' 2/0 ===  5/2';
+    is-deeply <-5/2>F === <-2/0>F, False, '-5/2 === -2/0';
+    is-deeply <-2/0>F === <-5/2>F, False, '-2/0 === -5/2';
+}
+
+# RT#130427
+cmp-ok FatRat.Range, '===', -∞..∞,
+    'FatRat.Range is from -inf to inf, including end points';
+
+# https://github.com/rakudo/rakudo/commit/79553d0fc3
+is-deeply (FatRat.new(1, 2) + <3/2>).ceiling, 2,
+    '.ceiling is right for unreduced whole FatRats, like <4/2>';
+
+# https://github.com/rakudo/rakudo/commit/aac9efcbda
+subtest '.norm returns reduced FatRat' => {
+    plan 2;
+    given (FatRat.new(2,3) + 1/3).norm {
+        is-deeply .denominator, 1, 'denominator got reduced';
+        is-deeply .numerator, 1, 'numerator got reduced';
+    }
+}
 
 # vim: ft=perl6

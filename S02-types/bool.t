@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 53;
+plan 67;
 
 #L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
@@ -101,4 +101,35 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     ok True ~~ Int, "True ~~ Int";
     ok Bool ~~ Int, "Bool ~~ Int";
 }
+
+# RT #127019
+{
+    is Bool::True.Int, 1, 'Bool::True coerced to Int returns 1';
+    is Bool::False.Int, 0, 'Bool::False coerced to Int return 0';
+
+    my Bool $b = True;
+    is $b.Int, 1, 'Bool typed scalar coerces to Int';
+}
+
+{ # coverage; 2016-09-25
+    is-deeply     ?Bool, Bool::False, '?Bool:U returns False';
+    is-deeply (so Bool), Bool::False, 'so Bool:U returns False';
+    is infix:<^^>(
+        Any, sub { pass 'sub{} operand of ^^ op gets called'; 42 },
+    ), 42, '^^ operator with sub {} right operand works correctly';
+
+    is infix:<//>(
+        Any, sub { pass 'sub{} operand of // op gets called'; 42 },
+    ), 42, '// operator with sub {} right operand works correctly';
+    is infix:<xor>(
+        Any, sub { pass 'sub{} operand of xor op gets called'; 42 },
+    ), 42, 'xor operator with sub {} right operand works correctly';
+
+    is infix:<and>(42), 42,         'infix:<and> with 1 arg returns the arg';
+    is infix:<and>(  ), Bool::True, 'infix:<and> with no args returns True';
+}
+
+# RT #130867
+is-deeply quietly { Bool.Str }, '', 'Bool:U stringifies to empty string';
+
 # vim: ft=perl6

@@ -1,5 +1,7 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 plan 12;
 
@@ -14,7 +16,6 @@ sub test_lines(@lines) {
        'Retrieved last line';
 }
 
-#?niecza skip 'TextReader.eof NYI'
 {
     my $fh = open('t/spec/S16-io/test-data');
     my $count = 0;
@@ -62,11 +63,7 @@ throws-like { open("this-surely-won't-exist", :r) }, Exception,
 }
 
 # RT #126598
-#?rakudo todo 'end of file flag is set too early'
-{
-    spurt("empty-line","\n");
-    is open("empty-line").get, "", 'last empty line should be returned';
-    unlink "empty-line";
-}
+is-deeply make-temp-file(content => "\n").open.get, "",
+    '.get returns last empty line';
 
 # vim: ft=perl6

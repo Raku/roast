@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 87;
+plan 89;
 
 # L<S02/"Unspaces"/This is known as the "unspace">
 
@@ -205,7 +205,6 @@ throws-like { EVAL 'sub f { 3 } sub g { 3 }' },
     is((baz { @^x }\ , 1, 2, 3), (1, 2, 3), 'unspace then comma following arg block');
 }
 
-#?niecza skip "Invocant handling is NYI"
 {
     augment class Block {
         method xyzzy(Code $x: *@y) { $x.(@y) }
@@ -287,7 +286,6 @@ throws-like { EVAL 'sub f { 3 } sub g { 3 }' },
     is($n, 2, 'check $n');
 
     # L<S02/"Bracketing Characters"/"U+301D codepoint has two closing alternatives">
-    #?niecza skip 'Unable to resolve method id in class Str'
     is((foo\#`〝 comment 〞.lc), 'a', 'unspace with U+301D/U+301E comment');
     throws-like { EVAL 'foo\#`〝 comment 〟.id' },
       X::Comp,
@@ -318,5 +316,12 @@ is "foo"\ \ .perl, "foo".perl, 'two unspace in a row before . for method call';
 
 # \# okay within a regex
 ok '#' ~~ /\#/, 'Unspace restriction in regex does not apply to \#';
+
+# RT #128462
+#?rakudo todo 'RT 128462'
+eval-lives-ok 'my \term = 42; say term\   .Str; term == 42 or die;',
+    'unspace with method calls detached from sigiless terms works';
+
+is 'a'.parse-base\   \   (16), 10, 'unspace can recurse';
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 37;
+plan 44;
 
 # L<S09/Typed arrays>
 
@@ -11,7 +11,7 @@ plan 37;
 {
     my Int %h;
     is %h.of,    Int, 'my Int %h declares a Hash of Int';
-    is %h.keyof, Any, 'my Int %h declares a Hash with Any keys';
+    is %h.keyof.^name, 'Str(Any)', 'my Int %h declares a Hash with Str(Any) keys';
     lives-ok { %h = (a => 3, b => 7) }, 'can assign Ints to an Hash of Int';
     lives-ok { %h<foo> = 8           }, 'can assign Int to hash slot';
     lives-ok { %h{'c', 'd' } = (3, 4) }, 'can assign to slice of typed hash';
@@ -24,13 +24,17 @@ plan 37;
                         '... and the hashes are the same afterwards';
 
     lives-ok { my Int %s = :a(3) }, 'can initialize typed hash';
-    my Str %s = :a<b>;
+    my Str %s = :y<b>;
     dies-ok { %h = %s }, "Can't assign Str hash to Int hash";
+    ok %h<y>:!exists,  'Make sure we did not create an empty container';
     dies-ok { %h = :a<b> }, "Can't assign literal Str hash to Int hash";
+    ok %h<y>:!exists,  'Make sure we did not create an empty container';
     dies-ok { %h<a> = 'foo' }, "Can't assign to hash item";
+    ok %h<y>:!exists,  'Make sure we did not create an empty container';
     dies-ok { %h{'a', 'b'} = <c d> }, "prevent mismatched hash slice";
+    ok %h<y>:!exists,  'Make sure we did not create an empty container';
     dies-ok { %h<z><t> = 3 }, 'Type constraint prevents autovivification';
-    ok %h<a>:!exists,  'Make sure autovivication did not happen';
+    ok %h<z>:!exists,  'Make sure autovivication did not happen';
 } #16
 
 {
@@ -41,7 +45,6 @@ plan 37;
     dies-ok { %s<a> = 1 }, "Can't assign wrongly typed value to typed hash element (of Int)";
 } #4
 
-#?niecza skip "doesn't know about key constraints"
 {
     my %h{Int};
     is %h.of,    Any, "check the value constraint";
@@ -74,6 +77,50 @@ plan 37;
     ok %bound ~~ Hash[Int, Int], 'Binding clone of a typed hash "preserves" type';
     my %assigned = %h.clone;
     nok %assigned ~~ Hash[Int, Int], 'Assigning from clone of a typed hash copies values, but not type';
+}
+
+{ # coverage; 2016-10-04
+    my class Foo {};
+    my $o = Foo.new;
+    my %h{Any} = :42a, :72b, Foo, $o;
+    is-deeply set(%h.antipairs), set(42 => "a", 72 => "b", Pair.new: $o, Foo),
+        '.antipairs on typed Hash';
+
+    is-deeply set(%h.invert), set(42 => "a", 72 => "b", Pair.new: $o, Foo),
+        '.invert on typed Hash';
+}
+
+# RT#130870
+subtest 'self-referential top-level hash assignment' => {
+    plan 4;
+
+    subtest '= self, other' => {
+        plan 2;
+        my %h1 = :1a; my %h2 = :2b;
+        is-deeply (%h1 = %h1, %h2), %(:1a, :2b), 'result of assignment';
+        is-deeply  %h1,             %(:1a, :2b), 'value in original hash';
+    }
+
+    subtest '= self, self' => {
+        plan 2;
+        my %h1 = :1a;
+        is-deeply (%h1 = %h1, %h1), %(:1a), 'result of assignment';
+        is-deeply  %h1,             %(:1a), 'value in original hash';
+    }
+
+    subtest '= self, other - clashing keys' => {
+        plan 2;
+        my %h1 = :1a, :2b; my %h2 = :4b, :3c;
+        is-deeply (%h1 = %h1, %h2), %(:1a, :4b, :3c), 'result of assignment';
+        is-deeply  %h1,             %(:1a, :4b, :3c), 'value in original hash';
+    }
+
+    subtest '= other, self - clashing keys' => {
+        plan 2;
+        my %h1 = :1a, :2b; my %h2 = :4b, :3c;
+        is-deeply (%h1 = %h2, %h1), %(:1a, :2b, :3c), 'result of assignment';
+        is-deeply  %h1,             %(:1a, :2b, :3c), 'value in original hash';
+    }
 }
 
 # vim: ft=perl6

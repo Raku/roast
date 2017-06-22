@@ -8,7 +8,6 @@ plan 5;
     ok(("bar" !~~ "foo"),   "bar ne foo)");
     ok  (4 ~~ '4'),         'string equality';
     ok !(4 !~~ '4'),        'negated string equality';
-    #?niecza skip 'Mu as argument'
     ok  !(Mu ~~ ''),         'Mu !~~ ""';
 }
 

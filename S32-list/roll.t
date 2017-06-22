@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 49;
+plan 51;
 
 use Test::Util;
 
@@ -19,7 +19,6 @@ This test tests the C<roll> builtin. See S32::Containers#roll.
 my @array = <a b c d>;
 ok ?(@array.roll eq any <a b c d>), "roll works on arrays";
 
-#?niecza skip '.roll on empty list'
 ok ().roll === Nil, '.roll on the empty list is Nil';
 
 my @arr = <z z z>;
@@ -86,7 +85,7 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
 # ranges + roll
 {
     ok 1 <= (1..1_000_000).roll() <= 1_000_000, 'no argument roll works';
-    
+
     my \matches = (1..1_000_000).roll(*);
     ok (so 1 <= all(matches[^100]) <= 1_000_000), 'the first 100 elems are in range';
 }
@@ -144,6 +143,23 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
     is Same.roll(1), Same, 'one roll on Enum is sane';
     is Less.roll(4), (Less,Less,Less,Less), 'too many roll on Enum is sane';
     is More.roll(0), (), 'zero roll on Enum is sane';
+}
+
+# RT #126664
+{
+    is-deeply (1.1 .. 3.1).roll(1000).Set, set(2.1, 1.1, 3.1),
+        'roll on Range uses .succ';
+    subtest 'rand on ranges is implemented' => {
+        plan 2;
+        my ($n, $from, $to) = (1000, 0.1, 0.100001);
+        my @res = ($from .. $to).rand xx $n;
+        is @res.grep($from <= * <= $to).elems, $n,
+            'all generated numbers are in range';
+
+        # Look for a bit less than exact number, since there's a small chance
+        # for some of them to be the same and we don't want the test to flap
+        cmp-ok @res.Set.elems, '>=', $n-$n/10, 'generated elements vary';
+    }
 }
 
 # vim: ft=perl6

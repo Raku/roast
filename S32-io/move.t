@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 29;
+plan 30;
 
 my $existing-file1 = "tempfile-move1";
 my $existing-file2 = "tempfile-move2";
@@ -25,7 +27,6 @@ ok $existing-file2.IO.e, 'sanity check 2';
 nok $non-existent-file.IO.e, "sanity check 2";
 
 # method .IO.move
-#?niecza skip 'Unable to resolve method s in class IO'
 {
     my $dest1a = "tempfile-move-dest1a";
     my $dest1b = "tempfile-move-dest1b";
@@ -51,7 +52,6 @@ nok $non-existent-file.IO.e, "sanity check 2";
 }
 
 # sub move()
-#?niecza skip 'Unable to resolve method s in class IO'
 {
     my $dest2a = "tempfile-move-dest2a";
     my $dest2b = "tempfile-move-dest2b";
@@ -79,5 +79,13 @@ nok $non-existent-file.IO.e, "sanity check 2";
 # clean up
 ok unlink($existing-file1), 'clean-up 3';
 ok unlink($existing-file2), 'clean-up 4';
+
+# RT#131242
+subtest 'moving when target and source are same file' => {
+    plan 2;
+    my $file = make-temp-file :content<foo>;
+    fails-like { $file.move: $file }, X::IO::Move, 'moving fails';
+    is-deeply $file.slurp, 'foo', 'file contents are untouched';
+}
 
 # vim: ft=perl6

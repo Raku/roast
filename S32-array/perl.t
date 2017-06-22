@@ -1,9 +1,8 @@
 use v6;
 use Test;
 
-plan 6;
+plan 8;
 
-#?niecza todo "cannot roundtrip arrays"
 # simple array
 {
     my @a = 1,2;
@@ -14,7 +13,6 @@ plan 6;
     ok $ra.of =:= Mu, 'make sure any value can be stored';
 } #3
 
-#?niecza skip "cannot roundtrip arrays with constrained values"
 # array with constrained values
 {
     my Int @a = 1,2;
@@ -24,5 +22,18 @@ plan 6;
     is-deeply $ra, @a, 'can we roundtrip array constrained values';
     ok $ra.of =:= Int, 'make sure roundtripped values are Int';
 } #3
+
+{
+    my @a;
+    @a = 42, @a;
+    is-deeply @a.perl.EVAL[1][1][1][0], 42,
+        'can .perl.EVAL roundtrip a circular array';
+
+    my %h; my @b;
+    %h = :b(%h), :c(@b);
+    @b = %h, @b, 42;
+    is-deeply @b.perl.EVAL[1][1][0]<b><b><c>[2], 42,
+        'can .perl.EVAL roundtrip a circular array within a circular hash';
+}
 
 #vim: ft=perl6

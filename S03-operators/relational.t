@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 159;
+plan 179;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -92,6 +92,12 @@ is('b' gt 'c', Bool::False, 'gt false');
 is('b' le 'a', Bool::False, 'le false');
 is('b' ge 'c', Bool::False, 'ge false');
 
+# RT #127272
+is ('a' xx 1000).map(+('a' le *)).index(0), Nil, 'le is ok over many iterations';
+is ('a' xx 1000).map(+('a' ge *)).index(0), Nil, 'ge is ok over many iterations';
+is ('b' xx 1000).map(+('a' lt *)).index(0), Nil, 'lt is ok over many iterations';
+is ('a' xx 1000).map(+('b' gt *)).index(0), Nil, 'gt is ok over many iterations';
+
 ## Multiway comparisons (RFC 025)
 # L<S03/"Chained comparisons">
 
@@ -131,9 +137,9 @@ is(0 ~~ 0 !~~ 0, 0 ~~ 0 && 0 !~~ 0, "chained smartmatch ~~ !~~ false");
 is(0 ~~ 0 !~~ 1, 0 ~~ 0 && 0 !~~ 1, "chained smartmatch ~~ !~~ true");
 is("a" lt "foo" ~~ "foo" ge "bar", "a" lt "foo" && "foo" ~~ "foo" && "foo" ge "bar", "chained mixed ~~ and ge");
 
-is(0 ~~ 0 ~~ /0/, True, "chained smartmatch ~~ ~~ with regex true");
-is(0 ~~ 0 ~~ /1/, False, "chained smartmatch ~~ ~~ with regex false");
-is(0 == 0 ~~ /0/, True, "chained smartmatch == ~~ with regex");
+ok( 0 ~~ 0 ~~ /0/, "chained smartmatch ~~ ~~ with regex true");
+nok(0 ~~ 0 ~~ /1/, "chained smartmatch ~~ ~~ with regex false");
+ok( 0 == 0 ~~ /0/, "chained smartmatch == ~~ with regex");
 is(0 == 0 ~~ (* == 0), 0 ~~ 0 && 0 ~~ (* == 0), "chained smartmatch == ~~ with closure");
 {
     my $a = my $b = my $c = "pink";
@@ -197,10 +203,19 @@ is(2.4 <=> 7, Order::Less, 'Rat <=> Int');
 
 ok exp(i * pi) =~= -1, "=~= does approximate equality";
 ok exp(i * pi) ≅ -1, "≅ does approximate equality";
- 
+
 is sqrt((-1).Complex) ≅ 0+1i, True, "can use approximate on Complex with negligible real";
 is sqrt((-1).Complex) ≅ 0+2i, False, "can use approximate on Complex with non-negligible real";
 is sqrt((-1).Complex) ≅ 0+(1+1e-17)i, True, "can use approximate on Complex";
+
+is-deeply  ∞    ≅     ∞, Bool::True,  ' ∞  ≅   ∞ gives True';
+is-deeply -∞    ≅    -∞, Bool::True,  '-∞  ≅  -∞ gives True';
+is-deeply  ∞   =~=    ∞, Bool::True,  ' ∞ =~=  ∞ gives True';
+is-deeply -∞   =~=   -∞, Bool::True,  '-∞ =~= -∞ gives True';
+is-deeply  ∞    ≅    -∞, Bool::False, ' ∞  ≅  -∞ gives False';
+is-deeply -∞    ≅     ∞, Bool::False, '-∞  ≅   ∞ gives False';
+is-deeply  ∞   =~=   -∞, Bool::False, ' ∞ =~= -∞ gives False';
+is-deeply -∞   =~=    ∞, Bool::False, '-∞ =~=  ∞ gives False';
 
 {
     my $*TOLERANCE = 0.1;
@@ -227,6 +242,18 @@ is sqrt((-1).Complex) ≅ 0+(1+1e-17)i, True, "can use approximate on Complex";
     nok 0.00120 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (more More)';
     nok 0.00080 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (more Less)';
 
+    # RT#128421
+    nok  100 =~= -100, '=~= correctly handles pos=~=neg comparison';
+    nok -100 =~=  100, '=~= correctly handles pos=~=neg comparison (reversed)';
+    nok  100  ≅  -100, '≅ correctly handles pos≅neg comparison';
+    nok -100  ≅   100, '≅ correctly handles pos≅neg comparison (reversed)';
+}
+
+{ # coverage; 2016-09-19
+    is-deeply infix:<before>(42), Bool::True, 'single arg `before` gives True';
+    is-deeply infix:<before>(),   Bool::True, '    no arg `before` gives True';
+    is-deeply infix:<after>(42),  Bool::True, 'single arg `after`  gives True';
+    is-deeply infix:<after>(),    Bool::True, '    no arg `after`  gives True';
 }
 
 # vim: ft=perl6

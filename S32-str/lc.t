@@ -33,7 +33,6 @@ is("ÁÉÍÖÜÓŰŐÚ".lc, "áéíöüóűőú", ".lc on Hungarian vowels");
 # "The Greek letter Σ has two different lowercase forms: "ς" in word-final
 # position and "σ" elsewhere."
 
-#?niecza 3 todo 'advanced Unicode wizardry'
 is 'ΣΣΣ'.lc, 'σσς', 'lower-casing of greek Sigma respects word-final special case (EOS)';
 is 'ΣΣΣ.'.lc, 'σσς.', 'lower-casing of greek Sigma respects word-final special case (.)';
 is 'ΣΣΣ '.lc, 'σσς ', 'lower-casing of greek Sigma respects word-final special case (ws)';

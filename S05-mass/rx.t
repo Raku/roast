@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 740;
+plan 743;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -35,12 +35,10 @@ ok 'verify' ~~ /[ if    not | ify ]/, 'control';
 
 #### [ if :: not | ify ]	verify		n	inside a group
 #?rakudo skip ':: NYI RT #124889'
-#?niecza todo ':: issues'
 ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
 
 ####   if :: not | ify	verify		n	the default all group
 #?rakudo skip ':: NYI RT #124890'
-#?niecza todo ':: issues'
 ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
 
 #### [ if :  not | ify ]	verify		y	simple backtrack still works
@@ -56,7 +54,6 @@ ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
 
 #### [ when ::: ever ] | whence	whence	n	full backtrack failure
 #?rakudo skip '::: NYI RT #124892'
-#?niecza todo '::: issue'
 ok 'whence' !~~ /[ when ::: ever ] | whence/, 'full backtrack failure';
 
 #### ab::cd | gh::ij		xyabghij	y	group cut at top
@@ -65,7 +62,6 @@ ok 'xyabghij' ~~ /ab::cd | gh::ij/, 'group cut at top';
 
 #### ab:::cd | gh:::ij	xyabghij	n	rule cut at top
 #?rakudo skip ':: NYI RT #124894'
-#?niecza todo '::: issue'
 ok 'xyabghij' !~~ /ab:::cd | gh:::ij/, 'rule cut at top';
 
 #### [ab::cd | gh::ij]	xyabghij	y	group cut in group
@@ -74,12 +70,10 @@ ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 
 #### [ab:::cd | gh:::ij]	xyabghij	n	rule cut in group
 #?rakudo skip '::: NYI RT #124896'
-#?niecza todo '::: issue'
 ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 
 #### [ ab | abc ]: de	xyzabcde	n	no backtrack into group
 #?rakudo todo 'RT #121307'
-#?niecza todo ''
 ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 
 #### ( ab | abc ): de	xyzabcde	n	no backtrack into subpattern
@@ -87,7 +81,6 @@ ok 'xyzabcde' !~~ /( ab || abc ): de/, 'no backtrack into subpattern';
 
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
 #?rakudo todo '<commit> NYI RT #124897'
-#?niecza todo ''
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
 #L<S05/Modifiers/"The new :r or :ratchet modifier">
@@ -224,6 +217,9 @@ ok ('abc def ghi' ~~ /<alpha> [ \- <alpha> ]?/) && matchcheck($/, q/mob<alpha> 0
 #### [(.)$0]+				bookkeeper	y			backreference
 ok 'bookkeeper' ~~ /[ (.) $0 ]+/, 'backreference';
 
+#### [(.)$٠]+				bookkeeper	y			backreference
+ok 'bookkeeper' ~~ /[ (.) $٠ ]+/, 'Nd digit backreference';
+
 #### (\w+) <+ws> $0				hello hello	y			backreference at end of string
 ok 'hello hello' ~~ /(\w+) <+ws> $0/, 'backreference at end of string';
 
@@ -304,14 +300,12 @@ ok 'axxxef' !~~ /<[b..d]>/, 'character range';
 ok 'abcdef' ~~ /<-[b..d]>/, 'negated character range';
 
 #### <- [b..d]>		abcdef		y	negated allows ws
-#?niecza skip "space between - and [ ] is a problem?"
 ok 'abcdef' ~~ /<- [b..d]>/, 'negated allows ws';
 
 #### <-[b..d]>		bbccdd		n	negated character range
 ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 
 #### <-[d..b]>		dies
-#?niecza todo ""
 throws-like '/<-[d..b]>/', Exception, 'illegal character range';
 
 ok '-' ~~ /<[-]>/, 'unescaped hyphen is fine on its own';
@@ -508,11 +502,9 @@ ok 'dbcb' !~~ /<!after <[cd]>>b/, 'lookbehind <!after>';
 ok 'dbaacb' ~~ /<!after <[cd]>><[ab]>/, 'lookbehind <!after>';
 
 #### <!after c|d>b		dbcb		n				lookbehind <!after>
-#?niecza skip "Unsuppored elements in after list"
 ok 'dbcb' !~~ /<!after c|d>b/, 'lookbehind <!after>';
 
 #### <!after c|d><[ab]>	dbaacb		y				lookbehind <!after>
-#?niecza skip "Unsuppored elements in after list"
 ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
 
 #### <!after cd><[ab]>	cbaccb		y				lookbehind <!after>
@@ -520,11 +512,9 @@ ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 
 #### $ <after ^a>		a		y				lookbehind <after>
 #?rakudo todo 'anchors and after RT #124898'
-#?niecza skip "Unsuppored elements in after list"
 ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
 
 #### <after x+>y		axxbxxyc	y				lookbehind <after>
-#?niecza skip "Unsuppored elements in after list"
 ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading + may also">
@@ -794,7 +784,6 @@ throws-like '/|/', X::Syntax::Regex::NullRegex, 'alternation (|) - null both arg
 ok '|' ~~ /\|/, 'alternation (|) - literal must be escaped';
 
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
-#?niecza todo ''
 ok 'c' ~~ /<[a..d]> & <[b..e]>/, 'conjunction (&)';
 
 #### <[a..d]> & <[d..e]>	c		n	conjunction (&)
@@ -822,7 +811,6 @@ ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 throws-like '/b&/', X::Syntax::Regex::NullRegex, 'conjunction (&) - null right arg illegal';
 
 #### &b			bcd		/rule error/	conjunction (&) - null left arg legal
-#?niecza todo ''
 eval-lives-ok '/&b/', 'conjunction (&) - null left arg legal';
 
 #### &			bcd		/rule error/	conjunction (&) - null both args illegal
@@ -1217,30 +1205,24 @@ ok 'aBCDef' ~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 ok 'abc-ef' !~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 
 #### :i(0) bcd		abcdef	y	ignorecase, repetition (:i(0))
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abcdef' ~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
 
 #### :i(0) bcd		abCdef	n	ignorecase, repetition (:i(0))
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abCdef' !~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
 
 #### :i(1) bcd		abcdef	y	ignorecase, repetition (:i(1))
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abcdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :i(1) bcd		abCdef	y	ignorecase, repetition (:i(1))
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abCdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :i(1) bcd		aBxDef	n	ignorecase, repetition (:i(1))
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'aBxDef' !~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :0i bcd			abcdef	y	ignorecase, repetition (:0i)
 ok 'abcdef' ~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
 
 #### :0i bcd			abCdef	n	ignorecase, repetition (:0i)
-#?niecza todo ""
 ok 'abCdef' !~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
 
 #### :1i bcd			abcdef	y	ignorecase, repetition (:1i)
@@ -1283,23 +1265,18 @@ ok 'AbCDeF' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 ok 'AbcdeF' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEf		y	ignorecase, lexical (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbCdEf' ~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeff	y	ignorecase, lexical (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AabbCcddEeff' ~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEF		n	ignorecase, lexical (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbCdEF' !~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeFf	n	ignorecase, lexical (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AabbCcddEeFf' !~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbcdeF' ~~ /:i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i ab [:!i cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
@@ -1312,43 +1289,33 @@ ok 'AbcdeF' ~~ /:i ab [:0i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 ok 'abCDef' ~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbCDeF	n	ignorecase, lexical repetition (:i)
-#?niecza todo ""
 ok 'AbCDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
-#?niecza todo ""
 ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:i(0) cd ] ef	abcdef	y	ignorecase, lexical repetition (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abcdef' ~~ /:0i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
-#?niecza todo ""
 ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:1i cd ] ef	AbCdeF	y	ignorecase, lexical repetition (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbCdeF' ~~ /:i(1) ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbcdeF' ~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:i(0) cd ] ef	AbcDeF	n	ignorecase, lexical repetition (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbcDeF' !~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(2) ab [:i(999) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'ABCDEF' ~~ /:i(2) ab [:i(999) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :1i ab [:i(1) cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'ABCDEF' ~~ /:1i ab [:i(1) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef		abcDeF	n	ignorecase, lexical repetition (:i)
-#?niecza todo ""
 ok 'abcDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :2i ab [:999i cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
@@ -1361,7 +1328,6 @@ ok 'abCDef' ~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
 ok 'aBCDef' !~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
 
 #### :1ignorecase ab [:ignorecase(1) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:ignorecase)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'ABCDEF' ~~ /:1ignorecase ab [:ignorecase(1) cd ] ef/, 'ignorecase, lexical repetition (:ignorecase)';
 
 #### :s bcd			a bcdef		y	sigspace (:s)
@@ -1413,14 +1379,12 @@ ok 'a b c def' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 ok 'ab c d ef' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 
 #### :s(1) b c [:s(0) d e f ]	a b c def	y	sigspace, lexical repetition (:s)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'a b c def' ~~ /:s(1) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s b c [:!s d e f ]	a b c def	y	sigspace, lexical repetition (:s)
 ok 'a b c def' ~~ /:s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s(0) b c [:s(1) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'a b c def' !~~ /:s(0) b c [:s(1) d e f ]/, 'sigspace, lexical repetition (:s)';
 
 # todo :pge<feature>
@@ -1428,7 +1392,6 @@ ok 'a b c def' !~~ /:s(0) b c [:s(1) d e f ]/, 'sigspace, lexical repetition (:s
 ok 'a b c def' !~~ /:!s b c [:s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s(0) b c [:s(0) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'a b c def' !~~ /:s(0) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)';
 
 # todo :pge<feature>
@@ -1485,14 +1448,12 @@ ok 'foobar' !~~ /:s foo '-'? bar/, 'basic ws non-match';
 
 #### :s()foo '-'? bar		foo - bar	n	basic ws match
 #?rakudo skip ':s() RT #124899'
-#?niecza skip "Action method mod_arg not yet implemented"
 ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
 
 #### :s[]foo '-'? bar		foo - bar	y	basic ws match
 ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 
 #### :s<?wb>foo '-'? bar		foo - bar	y	basic ws match with boundary modifier separation
-#?niecza skip "Unable to resolve method wb in class Cursor"
 ok 'foo - bar' ~~ /:s<?wb>foo '-'? bar/, 'basic ws match with boundary modifier separation';
 
 #### :s::foo '-'? bar			foo - bar	y	basic ws match with backtrack no-op modifier separation
@@ -1509,7 +1470,6 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 
 
 #### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
 #?rakudo todo 'parse error RT #124903'
-#?niecza skip 'Autoloading NYI'
 ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
@@ -2064,6 +2024,9 @@ ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
 
     #### a**:!2..4		baaabbb		y	three "a" characters (explicit greed)
     ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
+
+    #?rakudo.jvm skip "'۳' is not a valid number"
+    ok 'aaa' ~~ /a**۳/, 'Unicode Nd digits work';
 }
 
 # RT #112450
@@ -2112,7 +2075,6 @@ ok ('2+3 ab2' ~~ /<ident>/) && matchcheck($/, q/mob<ident>: <ab2 @ 4>/), 'captur
 
 #### <name>			ab::cd::x3::42	/mob<name>: <ab::cd::x3 @ 0>/	capturing builtin <name>
 #?rakudo skip 'regex <name> RT #124904'
-#?niecza skip "Unable to resolve method name in class Cursor"
 ok ('ab::cd::x3::42' ~~ /<name>/) && matchcheck($/, q/mob<name>: <ab::cd::x3 @ 0>/), 'capturing builtin <name>';
 
 
@@ -2121,10 +2083,8 @@ ok '2+3 ab2' ~~ /<.ident>/, 'non-capturing builtin <.ident>';
 
 #### <.name>			ab::cd::x3::42	y	non-capturing builtin <.name>
 #?rakudo skip 'regex <name> RT #124905'
-#?niecza skip "Unable to resolve method name in class Cursor"
 ok 'ab::cd::x3::42' ~~ /<.name>/, 'non-capturing builtin <.name>';
 
-#?niecza 12 skip "Unable to resolve method wb in class Cursor"
 
 #### <?wb>def		abc\ndef\n-==\nghi	y	word boundary \W\w
 ok "abc\ndef\n-==\ngh" ~~ /<?wb>def/, 'word boundary \W\w';
@@ -2233,7 +2193,6 @@ ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~
 #### <+blank>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+blank>+
 ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>+/) && matchcheck($/, q/mob: <\t @ 0>/), '<+blank>+';
 
-#?niecza 3 todo "Unable to resolve method cntrl in class Cursor"
 
 #### <cntrl>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<cntrl>: <\t @ 0>/		<cntrl>
 ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<cntrl>/) && matchcheck($/, q/mob<cntrl>: <\t @ 0>/), '<cntrl>';
@@ -2271,7 +2230,6 @@ ok 'ident_1' ~~ /<+alnum+[_]>/, 'union of character classes';
 ok 'aaa-bbb' ~~ /<+[ab]+[\-]>+/, 'enumerated character classes';
 
 #### <+  [ a  b ]+[\-]>+		aaa-bbb		y	whitespace is ignored within square brackets and after the initial +
-#?niecza skip "+  [ ] fails"
 ok 'aaa-bbb' ~~ /<+  [ a  b ]+[\-]>+/, 'whitespace is ignored within square brackets and after the initial +';
 
 #### <+[ab]+[\-]>+	-ab-				y	enumerated character classes variant
@@ -2290,7 +2248,6 @@ ok 'ccdd' ~~ /<-[ab]+[cd]>+/, 'enumerated character classes variant';
 ok 'caad' !~~ /^<-[ab]+[cd]>+$/, 'enumerated character classes variant';
 
 #### <-  [ a  b ]+[cd]>+	ccdd			y	whitespace is ignored within square brackets and after the initial -
-#?niecza skip "+  [ ] fails"
 ok 'ccdd' ~~ /<-  [ a  b ]+[cd]>+/, 'whitespace is ignored within square brackets and after the initial -';
 
 #### ^<-upper>dent	ident_1				y	inverted character class
@@ -2303,7 +2260,6 @@ ok 'Ident_1' !~~ /^<-upper>dent/, 'inverted character class';
 ok 'abc' ~~ /<+alpha-[Jj]>+/, 'character class with no j';
 
 #### <+ alpha - [ Jj ]>	abc			y	character class with no j with ws
-#?niecza skip "Unable to resolve method alpha in class Cursor"
 ok 'abc' ~~ /<+ alpha - [ Jj ]>/, 'character class with no j with ws';
 
 #### ^<+alpha-[Jj]>+$	aJc			n	character class with no j fail
@@ -2317,6 +2273,9 @@ throws-like '/{{/', X::Comp::Group, 'unterminated closure';
 
 #### \1		abcdef		/reserved/			back references
 throws-like '/\1/', Exception, 'back references';
+
+#### \۳		abcdef		/reserved/			back references
+throws-like '/\۳/', Exception, 'Nd digit back references';
 
 #### \x[		abcdef		/Missing close bracket/		unterminated \x[..]
 throws-like '/\x[/', Exception, 'unterminated \x[..]';
@@ -2392,7 +2351,6 @@ throws-like '/  /', X::Syntax::Regex::NullRegex, 'ws null pattern';
 throws-like '"b" ~~ /b| /', X::Syntax::Regex::NullRegex, 'null pattern after alternation';
 
 # RT #71702
-#?niecza todo 'allows them'
 throws-like '"foo" ~~ /<[d..b]>? foo/', Exception, 'no reversed char ranges';
 
 # vim: ft=perl6 sw=4 expandtab

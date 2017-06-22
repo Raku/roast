@@ -10,7 +10,7 @@ Tests assigning default values to variables of type code in sub definitions.
 
 # L<S06/Optional parameters/Default values can be calculated at run-time>
 
-plan 9;
+plan 11;
 
 sub doubler($x) { return 2 * $x }
 
@@ -68,6 +68,13 @@ ok((MyPack::val_v), "default sub called in package namespace");
         ok $r ~~ Regex, 'rx{foo} works as a default';
     }
     foo();
+}
+
+{
+    throws-like 'sub foo(|a = 1) { ... }', X::Parameter::Default,
+        "reject default values for slurpy (|) parameters";
+    throws-like 'sub foo(*@a = 1) { ... }', X::Parameter::Default,
+        "reject default values for slurpy (*) parameters";
 }
 
 # vim: ft=perl6

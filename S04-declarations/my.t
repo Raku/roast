@@ -218,7 +218,6 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
 
     {
         my $a;
-        #?niecza 2 todo 'still fails?'
         lives-ok { EVAL 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }' };
         ok $a, 'unreached declaration in effect at block start';
     }
@@ -274,7 +273,6 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
         my $a = 42;
         our sub access_lexical_a() { $a }
     }
-    #?niecza todo 'NYI'
     is  &OUR::access_lexical_a(), 42,
         'can call our-sub that accesses a lexical after the block was run';
 
@@ -288,7 +286,6 @@ eval-lives-ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
 
 #RT #72814
 {
-    #?niecza skip 'a not predeclared'
     lives-ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
 }
 
@@ -329,7 +326,6 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 
 # RT #114202
 # # check that anonymous variables don't overshare.
-#?niecza skip 'parsefail'
 {
     my @ = 1, 2, 3;
     my % = a => 1, b => 2, c => 3;

@@ -12,11 +12,9 @@ throws-like 'my enum B (a => 1, b => "bar")', Exception,
              'mixed type enums are forbidden';
 
 #?rakudo todo 'NYI RT #124833'
-#?niecza todo
 eval-lives-ok 'my Cool enum C (a => 1, b => "bar")',
              '... unless that type covers both enum value types';
 
-#?niecza todo
 throws-like 'my Str enum D (a => 1)', Exception,
              'violating an explicit type constraint dies';
 

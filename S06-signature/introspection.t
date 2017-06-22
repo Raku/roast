@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 use Test::Idempotence;
-plan 129;
+plan 133;
 
 # L<S06/Signature Introspection>
 
@@ -33,7 +33,6 @@ sub j(*@i) {
     is j(@l>>.named),    '0 0 1', '... one named';
 }
 
-#?niecza skip "Unhandled trait rwt"
 {
     sub b(:x($a)! is rw, :$y is raw, :$z is copy) { };   #OK not used
     my @l = &b.signature.params;
@@ -53,7 +52,6 @@ sub j(*@i) {
 {
     sub d(*@pos, *%named) { };   #OK not used
     my @l = &d.signature.params;
-    #?niecza todo
     is j(@l>>.named),    '0 1', '.named for slurpies';
     is j(@l>>.slurpy),   '1 1', '.slurpy';
     is ~(@l>>.name),     '@pos %named', '.name for slurpies';
@@ -68,7 +66,6 @@ sub j(*@i) {
     is :(:a(:b($a))).perl, :(:b($a)).perl, '... and .perl abbreviates separated name/named_name';
 }
 
-#?niecza skip "Parameter separator ;  NYI"
 {
     sub e($x = 3; $y = { 2 + $x }) { };   #OK not used
     my @l = &e.signature.params>>.default;
@@ -79,7 +76,6 @@ sub j(*@i) {
     is @l[1].().(), 5, 'closure as default value captured outer default value';
 }
 
-#?niecza skip "Unable to resolve method constraints in class Parameter"
 {
     sub f(Int $x where { $_ % 2 == 0 }) { };   #OK not used
     my $p = &f.signature.params[0];
@@ -95,13 +91,11 @@ sub j(*@i) {
 }
 
 # RT #70720
-#?niecza skip "Action method fakesignature not yet implemented"
 {
     is :(3).params[0].constraints, 3, ':(3) contains the 3';
     ok :(3).params[0].type === Int,   ':(3) has a parameter of type Int';
 }
 
-#?niecza skip "GLOBAL::T does not name any package"
 {
     sub h(::T $x, T $y) { };   #OK not used
     my @l = &h.signature.params;
@@ -112,12 +106,10 @@ sub j(*@i) {
 {
     sub i(%h ($a, $b)) { };   #OK not used
     my $s = &i.signature.perl;
-    #?niecza 2 todo
     ok $s ~~ /'$a' >> /, '.perl on a nested signature contains variables of the subsignature (1)';
     ok $s ~~ /'$b' >> /, '.perl on a nested signature contains variables of the subsignature (2)';
 }
 
-#?niecza skip "Action method fakesignature not yet implemented"
 {
     my $x;
     ok :(|x).params[0].capture, 'prefix | makes .capture true';
@@ -128,7 +120,6 @@ sub j(*@i) {
 }
 
 # RT #69492
-#?niecza skip "Abbreviated named parameter must have a name"
 {
     sub foo(:$) {};
     ok &foo.signature.perl ~~ / ':($)' /, '.perl of a signature with anonymous named parameter';
@@ -138,7 +129,6 @@ sub j(*@i) {
 {
     sub xyz(|c) {};
     is &xyz.signature.params[0].name,       'c' , '.name of |c is "c"';
-    #?niecza todo "Does this test make sense?"
     is &xyz.signature.params[0].positional, False, '.positional on Capture param is False';
     is &xyz.signature.params[0].capture,    True , '.capture on Capture param is True';
     is &xyz.signature.params[0].named,      False, '.named on Capture param is True';
@@ -174,7 +164,6 @@ sub j(*@i) {
     is-perl-idempotent(:(Int @a = [2, 3], Int :@b = [2,3]), Nil, { '= { ... }' => '= [2,3]' }, :eqv);
     is-perl-idempotent(:(Int %a = :a(2), Int :%b = :a(2)), Nil, { '= { ... }' => '= {:a(2)}' }, :eqv);
     is-perl-idempotent(:(Sub &a = &say, Sub :&b = &say), Nil, { '= { ... }' => '= &say' },:eqv);
-    is-perl-idempotent(:(|a ($a) = 2), :eqv);
     is-perl-idempotent(:(@a ($a) = [2]), :eqv);
     is-perl-idempotent(:(%a (:a($b)) = {:a(2)}, %b (:c(:d($e))) = {:c(2)}), :eqv);
 
@@ -206,7 +195,6 @@ sub j(*@i) {
     is-perl-idempotent(:(Int @ = [2, 3], Int :a(@) = [2,3]), Nil, { '= { ... }' => '= [2,3]' }, :eqv);
     is-perl-idempotent(:(Int % = :a(2), Int :a(%) = :a(2)), Nil, { '= { ... }' => '= {:a(2)}' }, :eqv);
     is-perl-idempotent(:(Sub & = &say, Sub :a(&) = &say), Nil, { '= { ... }' => '= &say' },:eqv);
-    is-perl-idempotent(:(| ($a) = 2), :eqv);
     is-perl-idempotent(:(@ ($a) = [2]), :eqv);
     is-perl-idempotent(:(% (:a($)) = {:a(2)}, % (:c(:d($))) = {:c(2)}), :eqv);
     is-perl-idempotent(:($ is raw, & is raw, % is raw, | is raw), :eqv);
@@ -248,5 +236,24 @@ is $rolesig, ':($a, $b, ::?CLASS $c)', ".perl of a sigature that has ::?CLASS";
     is &rt125482.signature.perl, ':($a;; $b)',
         '";;" in signature stringifies correctly using .perl';
 }
+
+# RT #128392
+{
+    is :(Callable $a).perl, ':(Callable $a)',
+        'Callable in signature stringifies correctly using .perl';
+    is :(Callable $a).gist, '(Callable $a)',
+        'Callable in signature stringifies correctly using .gist';
+
+
+    is :(Callable).perl, ':(Callable $)', 'perl on :(Callable)';
+    is :(Array of Callable).perl, ':(Array[Callable] $)',
+        '.perl on :(Array of Callable)';
+    is :(Hash of Callable).perl, ':(Hash[Callable] $)',
+        '.perl on :(Hash of Callable)';
+}
+
+# https://github.com/rakudo/rakudo/commit/219f527d4a
+is-deeply sub ($,$,$,$){}.signature.gist, '($, $, $, $)',
+    '.gist does not strip typeless anon sigils';
 
 # vim: ft=perl6

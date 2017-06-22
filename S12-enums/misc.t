@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 18;
 
 {
     class EnumClass     { enum C <a b c> }
@@ -39,12 +39,10 @@ plan 17;
     sub OK { 'sub OK' };
     is OK,    'OK',     'enum key wins in case of conflict';
     is +OK,   0,        'enum key wins in case of conflict (numeric)';
-    #?niecza skip 'No value for parameter $key in CORE CommonEnum.postcircumfix:<( )>'
     is OK(),  'sub OK', 'but () is still a function call';
     is FAIL,  'FAIL',   'non-conflicting enum key';
     is +FAIL, 1,        'non-conflicting enum key (numeric)';
     # RT #112202
-    #?niecza todo
     lives-ok { OK.^methods }, 'can call .^methods on an enum';
 }
 
@@ -70,6 +68,12 @@ plan 17;
     enum Stuff (@stuff);
     is (A,B,C), (A,B,C), "can declare enums using constant lists";
     is (+A,+B,+C), (0,1,2), "and they get the right values";
+}
+
+# RT#129160
+{
+    enum RT<R T>;
+    ok R.ACCEPTS(RT), 'enum member ACCEPTS the enum type object';
 }
 
 # vim: ft=perl6

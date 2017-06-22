@@ -1,10 +1,17 @@
 use v6;
 use Test;
 
-plan 2;
+plan 3;
 
 my $hostname = 'localhost';
 my $port = 5001;
+
+{
+    my $sock = IO::Socket::Async.bind-udp($hostname, $port);
+    dies-ok { IO::Socket::Async.bind-udp($hostname, $port) },
+        'Error on trying to re-use port with UDP bind';
+    $sock.close;
+}
 
 # Promise used to check listener received the correct data.
 my $rec-prom;

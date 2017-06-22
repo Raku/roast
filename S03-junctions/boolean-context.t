@@ -76,10 +76,8 @@ ok do if 2 & 2 & 2 == 3 { 0 } else { 1 };
     sub infix:<|>(*@a) { $foo++; any(|@a) };
     sub infix:<&>(*@a) { $foo++; all(|@a) };
     ok do if 1 | 2 | 3 | 4 == 3 { 1 } else { 0 }, "4x local sub shadows | and &";
-    #?niecza todo "Difficulties overloading | and &"
     is $foo, 1;
     ok do if 1 & 2 & 3 & 4 == 3 { 0 } else { 1 };
-    #?niecza todo "Difficulties overloading | and &"
     is $foo, 2;
 }
 

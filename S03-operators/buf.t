@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 105;
+plan 133;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -33,10 +33,8 @@ is  $a cmp $a, Order::Same, 'cmp (same)';
 is  $a cmp $b, Order::Less, 'cmp (smaller)';
 is  $b cmp $a, Order::More, 'cmp (larger)';
 
-#?rakudo.jvm skip 'RT #126530'
 ok $a ~ $b eq Buf.new(1, 2, 3, 1, 2, 3, 4), '~ and eq work on bufs';
 
-#?rakudo.jvm skip 'RT #126530'
 is-deeply Buf.new(1, 2, 3) ~ Buf.new(4, 5), Buf.new(1, 2, 3, 4, 5), '~ concatenates';
 nok Buf.new(), 'empty Buf is false';
 ok  Buf.new(1), 'non-empty Buf is true';
@@ -192,6 +190,90 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
     is $c.elems, 0, "did Buf.new on empty array work";
 }
 
-# RT#127642
+# RT #127642
 ok Blob eqv Blob, 'Blob eqv Blob lives, works';
 nok Buf eqv Blob, 'Buf eqv Blob lives, works';
+
+{
+    for Blob, Buf -> $T {
+        my $t = $T.^name;
+
+        my $a = $T.allocate(10);
+        is $a.elems, 10, "did we allocate a $t of 10 elements";
+        is $a.join, "0000000000", "was the $t initialized correctly";
+
+        if $T === Blob {
+            throws-like { $a.reallocate(12) }, Exception,
+              "we cannot reallocate a Blob";
+        }
+        else {
+            $a.reallocate(12);
+            is $a.elems, 12, "did we reallocate the $t to 12 elements";
+            is $a.join, "000000000000", "was the $t changed correctly";
+        }
+
+        my $b = $T.allocate(10, 42);
+        is $b.elems, 10, "did we allocate a $t to 10 elements";
+        is $b.join, "42424242424242424242", "was the $t initialized correctly";
+
+        if $T === Buf {
+            $b.reallocate(13);
+            is $b.elems, 13, "did we reallocate the $t to 13 elements";
+            is $b.join, "42424242424242424242000", "was the $t changed correctly";
+        }
+
+        my $c = $T.allocate(10, (1,2,3));
+        is $c.elems, 10, "did we allocate a $t to 10 elements";
+        is $c.join, "1231231231", "was te $t initialized correctly";
+
+        if $T === Buf {
+            $c.reallocate(4);
+            is $c.elems, 4, "did we reallocate the $t to 4 elements";
+            is $c.join, "1231", "was the $t changed correctly";
+        }
+    }
+}
+
+# RT #126529
+{
+    my Blob $a = "a".encode;
+    my Blob $b = "b".encode;
+    $a ~= $b;
+    is $a, utf8.new(97,98), 'infix:<~> with Blob does not die';
+}
+
+# RT #128655
+{
+    is Blob.new((my int $i = 10) +& 0xFF).perl,'Blob.new(10)',
+      'check infix +& int/Int';
+    is Blob.new((my int $i = 10) +| 0xFF).perl,'Blob.new(255)',
+      'check infix +| int/Int';
+    is Blob.new((my int $i = 10) +^ 0xFF).perl,'Blob.new(245)',
+      'check infix +^ int/Int';
+    is Blob.new((my int $i = 10) +< 1).perl,'Blob.new(20)',
+      'check infix +< int/Int';
+    is Blob.new((my int $i = 10) +> 1).perl,'Blob.new(5)',
+      'check infix +> int/Int';
+    is Blob.new(+^(my int $i = 10)).perl,'Blob.new(245)',
+      'check prefix +^ int';
+}
+
+{ # coverage; 2016-09-26
+    subtest 'Blob:D le Blob:D' => {
+        plan 4;
+
+        is (Buf.new(<1 2 4>) le Buf.new(<1 2 4>)), True;
+        is (Buf.new(<1 2>)   le Buf.new(<1 2 4>)), True;
+        is (Buf.new(<1 2 4>) le Buf.new(<1 2 5>)), True;
+        is (Buf.new(<1 2 4>) le Buf.new(<1 2 3>)), False;
+    }
+
+    subtest 'Blob:D ge Blob:D' => {
+        plan 4;
+
+        is (Buf.new(<1 2 4>) ge Buf.new(<1 2 4>)), True;
+        is (Buf.new(<1 2>)   ge Buf.new(<1 2 4>)), False;
+        is (Buf.new(<1 2 4>) ge Buf.new(<1 2 5>)), False;
+        is (Buf.new(<1 2 4>) ge Buf.new(<1 2 3>)), True;
+    }
+}

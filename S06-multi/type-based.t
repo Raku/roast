@@ -16,10 +16,8 @@ multi foo (Regex $bar) { "Regex " ~ gist(WHAT( $bar )) } # since Rule's don't st
 multi foo (Sub $bar)   { "Sub " ~ $bar() }
 multi foo (@bar) { "Positional " ~ join(', ', @bar) }
 multi foo (%bar)  { "Associative " ~ join(', ', %bar.keys.sort) }
-multi foo (IO $fh)     { "IO" }   #OK not used
-#?niecza emit # foo (Inf) NYI
+multi foo (Numeric $n) { "Numeric" }
 multi foo (Inf)        { "Inf" }
-#?niecza emit # foo (5) NYI
 multi foo (NaN)        { "NaN" }
 
 is foo(5), 'Constant', 'dispatched to the constant sub';
@@ -39,10 +37,8 @@ is(foo(@array), 'Positional foo, bar, baz', 'dispatched to the Positional sub');
 my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
 is(foo(%hash), 'Associative bar, baz, foo', 'dispatched to the Associative sub');
 
-#?niecza skip '$*ERR is apparently not IO'
-is(foo($*ERR), 'IO', 'dispatched to the IO sub');
+is(foo(i), 'Numeric', 'dispatched to the Numeric sub');
 
-#?niecza 2 skip 'We turned these off because of a niecza bug'
 is foo(Inf), 'Inf', 'dispatched to the Inf sub';
 is foo(NaN), 'NaN', 'dispatched to the NaN sub';
 
@@ -64,7 +60,6 @@ is(mmd(), 1, 'Slurpy MMD to nullary');
 is(mmd(1,2,3), 2, 'Slurpy MMD to listop via args');
 is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
-#?niecza skip 'two or more Anys error'
 {
     my %h = (:a<b>, :c<d>);
     multi sub sigil-t (&code) { 'Callable'      }   #OK not used
@@ -78,7 +73,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 }
 
-#?niecza skip 'GLOBAL::T does not name any package'
 {
 
     class Scissor { }
@@ -133,7 +127,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is f2(3),               1, 'arity-based dispatch to ($)';
     is f2('foo', f2(3)),    2, 'arity-based dispatch to ($, $)';
     is f2('foo', 4, 8),     3, 'arity-based dispatch to ($, $, $)';
-    #?niecza skip 'Ambiguous dispatch for &f2'
     is f2('foo', 4, <a b>), '3+', 'arity-based dispatch to ($, $, @)';
 }
 
@@ -145,7 +138,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 }
 
 # multi dispatch on typed containers
-#?niecza skip 'Ambiguous dispatch for &f4'
 {
     multi f4 (Int @a )  { 'Array of Int' }   #OK not used
     multi f4 (Str @a )  { 'Array of Str' }   #OK not used
@@ -187,7 +179,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 # make sure that multi sub dispatch also works if the sub is defined
 # in a class (was a Rakudo regression)
 # RT #65674
-#?niecza skip 'Two definitions found for symbol ::GLOBAL::A::&a'
 {
     throws-like q[
         class RT65674 {
@@ -211,10 +202,9 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi x(@a, @b where { @a.elems == @b.elems }) { 1 }
     multi x(@a, @b)                                { 2 }   #OK not used
     is x([1,2],[3,4]), 1, 'where-clause that uses multiple params (1)';
-    is x([1],[2,3,4]), 2, 'where-clause that uses multiple params (1)'; 
+    is x([1],[2,3,4]), 2, 'where-clause that uses multiple params (1)';
 }
 
-#?niecza skip 'GLOBAL::T does not name any package'
 {
     multi y(::T $x, T $y) { 1 }   #OK not used
     multi y($x, $y)       { 2 }   #OK not used
@@ -222,12 +212,12 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is y(1, 2.5), 2, 'generics in multis (-)';
 }
 
-#?niecza skip 'no native types yet'
 {
     # This once wrongly reported a multi-dispatch circularity.
     multi rt107638(int $a) { 'ok' }      #OK not used
     multi rt107638(Str $a where 1) { }   #OK not used
-    ok rt107638(1), 'native types and where clauses do not cause spurious circularities';
+    throws-like { rt107638(1) }, X::Multi::NoMatch,
+        'native types and where clauses do not cause spurious circularities';
 }
 
 # Coercion types introduce two candidates

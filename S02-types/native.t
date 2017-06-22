@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 87;
+plan 93;
 
 {
     my int $x;
@@ -44,7 +44,7 @@ plan 87;
     is f($Str), 'Str', 'can identify non-native type with multi dispatch (Str)';
 
     is $int * $Int, 12, 'can do math with mixed native/boxed ints';
-    is_approx $num * $Num, 30e0, 'can do math with mixed native/boxed nums';
+    is-approx $num * $Num, 30e0, 'can do math with mixed native/boxed nums';
     is $str ~ $Str, '78', 'can concatenate native and boxed strings';
 }
 
@@ -93,7 +93,6 @@ plan 87;
 }
 
 # RT #102416
-#?niecza skip 'Malformed my'
 {
     my int $x;
     ($x) = (5);
@@ -156,6 +155,16 @@ plan 87;
     $alias := $n32;
     $alias = 4e0;
     is $n32, 4e0, 'Bound alias to num32 native works';
+}
+
+# https://github.com/MoarVM/MoarVM/issues/393
+#?rakudo.moar skip 'the values get accidentally sign-extended'
+{
+    is class :: { has uint8  $.x; }.new( x => 2** 8-1 ).x, 2**8 -1, 'uint8 attributes don\'t get sign-extended';
+    is class :: { has uint16 $.x; }.new( x => 2**16-1 ).x, 2**16-1, 'uint16 attributes don\'t get sign-extended';
+    is class :: { has uint32 $.x; }.new( x => 2**32-1 ).x, 2**32-1, 'uint32 attributes don\'t get sign-extended';
+    #?rakudo.jvm todo 'the value gets sign-extended'
+    is class :: { has uint64 $.x; }.new( x => 2**64-1 ).x, 2**64-1, 'uint64 attributes don\'t get sign-extended';
 }
 
 # RT #121071
@@ -244,7 +253,7 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     }
     n64(4e2);
     n32(4e2);
-    
+
     sub i64(int64 $i) {
         is $i, 42, 'called int64 sub successfully';
     }
@@ -321,19 +330,45 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     sub d { "++ on uint$^n overflows to 0 in sink context" }
     my uint8  $uint8  = 0xff;
     $uint8++;
-    #?rakudo todo "uint8 increment in sink context doesn't work"
+    #?rakudo.jvm todo "uint8 increment in sink context doesn't work"
     is($uint8,  0, d 8);
     my uint16 $uint16 = 0xffff;
     $uint16++;
-    #?rakudo todo "uint16 increment in sink context doesn't work"
+    #?rakudo.jvm todo "uint16 increment in sink context doesn't work"
     is($uint16, 0, d 16);
     my uint32 $uint32 = 0xffffffff;
     $uint32++;
-    #?rakudo todo "uint32 increment in sink context doesn't work"
+    #?rakudo.jvm todo "uint32 increment in sink context doesn't work"
     is($uint32, 0, d 32);
     my uint64 $uint64 = 0xffffffffffffffff;
     $uint64++;
     is($uint64, 0, d 64);
+}
+
+# RT #127813
+#?rakudo.jvm todo 'Expected a native int argument for $a; works standalone, probably wrong multi selected'
+{
+    subtest 'using native types as named parameters', {
+        eval-lives-ok '-> int    :$x { $x == 1   or die }(:x( 1 ))', 'int   ';
+        eval-lives-ok '-> int8   :$x { $x == 1   or die }(:x( 1 ))', 'int8  ';
+        eval-lives-ok '-> int16  :$x { $x == 1   or die }(:x( 1 ))', 'int16 ';
+        eval-lives-ok '-> int32  :$x { $x == 1   or die }(:x( 1 ))', 'int32 ';
+        eval-lives-ok '-> uint   :$x { $x == 1   or die }(:x( 1 ))', 'uint  ';
+        eval-lives-ok '-> uint8  :$x { $x == 1   or die }(:x( 1 ))', 'uint8 ';
+        eval-lives-ok '-> uint16 :$x { $x == 1   or die }(:x( 1 ))', 'uint16';
+        eval-lives-ok '-> uint32 :$x { $x == 1   or die }(:x( 1 ))', 'uint32';
+        eval-lives-ok '-> num    :$x { $x == 1e0 or die }(:x(1e0))', 'num   ';
+        eval-lives-ok '-> num32  :$x { $x == 1e0 or die }(:x(1e0))', 'num32 ';
+
+        eval-lives-ok '-> int64  :$x { $x == 1   or die }(:x( 1 ))', 'int64 ';
+        eval-lives-ok '-> uint64 :$x { $x == 1   or die }(:x( 1 ))', 'uint64';
+        eval-lives-ok '-> num64  :$x { $x == 1e0 or die }(:x(1e0))', 'num64 ';
+    }
+}
+
+{
+    #?rakudo.jvm todo 'does not die, gives 7766279631452241919'
+    dies-ok { sub (int $x) { say $x }(99999999999999999999) }, 'a too large argument for a native parameter should throw';
 }
 
 # vim: ft=perl6

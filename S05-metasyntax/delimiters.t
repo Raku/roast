@@ -8,7 +8,6 @@ plan 21;
 my @delims = < ^ ° ! " § $ % @ € & / = ? ` * + ~ ; , . | >;
 my %todo;
 
-#?niecza emit %todo = < ? 1 * 1 + 1 ~ 1 >;
 
 for @delims -> $d {
     my $ok  = try { EVAL("my \$x = 'abc'; \$x ~~ m{$d}b{$d}") };

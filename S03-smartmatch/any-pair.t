@@ -26,9 +26,7 @@ plan 10;
     # not explicitly specced, but implied by the spec and decreed 
     # by TimToady: non-existing method or attribute dies:
     # http://irclog.perlgeek.de/perl6/2009-07-06#i_1293199
-    #?niecza todo
     dies-ok {$o ~~ :e(Mu)},  '$obj ~~ Pair, nonexistent, dies (1)';
-    #?niecza todo
     dies-ok {$o ~~ :e(5)},      '$obj ~~ Pair, nonexistent, dies (2)';
 }
 

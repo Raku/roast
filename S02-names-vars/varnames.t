@@ -14,10 +14,8 @@ lives-ok { EVAL 'my $/' },
 dies-ok { EVAL '$/ = "foo"' },
   'S05: Perl 6\'s $/ variable may not be assigned to directly.';
 
-#?niecza todo
 lives-ok { EVAL 'my proto $!' },
   '$! can be declared again if proto is used though';
-#?niecza todo
 lives-ok { EVAL 'my proto $/' },
   'as can $/';
 

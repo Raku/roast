@@ -11,12 +11,10 @@ sub check ($a, $b, $ls, $rs) {
 
     is $a +<  $b, $ls, "got expected value for shl $a by $b";
 
-    #?niecza skip 'shift by negative bit count'
     is $a +< -$b, $rs, "got expected value for shl $a by -$b";
 
     is $a +>  $b, $rs, "got expected value for shr $a by $b";
 
-    #?niecza skip 'shift by negative bit count'
     is $a +> -$b, $ls, "got expected value for shr $a by -$b";
 }
 

@@ -1,15 +1,17 @@
 use v6;
+use lib <t/spec/packages>;
 
 use Test;
+use Test::Util;
 
-plan 88;
+plan 92;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
         my $s = Supplier.new;
-    
+
         my @vals;
         my $saw_done;
         my $tap = $s.Supply.tap( -> $val { @vals.push($val) },
@@ -138,6 +140,25 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         is @emitted, [], 'First tapping did quit on the supply, so no more emits';
 
         $t1.close;
+    }
+
+    # RT #126379
+    {
+        is_run q[Supply.interval(1).tap(-> { say 'hi' }); sleep 3;], {
+            status => 1,
+            err => /
+                'Unhandled exception in code scheduled on thread' .+
+                'Too many positionals' .+ 'expected 0 arguments but got 1'
+            /
+        }, '.tap block with incorrect signature must fail';
+    }
+
+    # RT #128968
+    subtest 'can use .emit as a method' => {
+        plan 3;
+        react { whenever supply { .emit for "foo", 42, .5 } {
+            pass "can .emit {.^name} ($_)";
+        }}
     }
 }
 

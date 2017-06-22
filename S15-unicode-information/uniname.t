@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 # Unicode version pragma not needed here, as names cannot change.
 
@@ -20,23 +20,21 @@ throws-like "uniname Int", X::Multi::NoMatch, 'cannot call uniname with a Int';
 throws-like "Int.uniname", X::Multi::NoMatch, 'cannot call uniname with a Int';
 
 # method forms
-#?niecza 2 skip "uniname NYI"
 is 0x30.uniname, "DIGIT ZERO",  "method uniname returns a name";
 is "0".uniname,  "DIGIT ZERO",  "method uniname works in string form";
 
-#?niecza 24 skip "uniname NYI"
 
 is uniname(0x30), "DIGIT ZERO",  "uniname returns a name";
 is uniname("0"),  "DIGIT ZERO",  "uniname works in string form";
 is uniname("नि"), uniname("न"), "string version of uniname converts to NFG strings to NFC";
 
 is uniname("A"),        "LATIN CAPITAL LETTER A", "uniname() returns current Unicode name for graphic character.";
-#?rakudo todo "RT #122470"
-is uniname("\0"),       "<control-0000>",         "uniname() returns codepoint label for control character without a current name.";
+#?rakudo.jvm todo "RT #122470"
+is uniname("\0"),       "<control-0000>",         "uniname() returns codepoint label for control character without a current name."; # RT #122470
 is uniname("¶"),        "PILCROW SIGN",           "uniname() on character with current & Unicode 1 name returns current name.";
 is uniname("\x[2028]"), "LINE SEPARATOR",         "uniname() returns current Unicode name for formatting character.";
-#?rakudo todo "RT #122471"
-is uniname("\x[80]"),   "<control-0080>",         "uniname() returns codepoint label for control character without any name.";
+#?rakudo.jvm todo "RT #122471"
+is uniname("\x[80]"),   "<control-0080>",         "uniname() returns codepoint label for control character without any name."; # RT #122471
 
 #?rakudo 5 skip ":one NYI RT #125069"
 is uniname("A", :one),        "<graphic-0041>", "uniname(:one) returns non-standard codepoint label for graphic character without Unicode 1 name.";
@@ -68,3 +66,6 @@ is uniname(0x210000), '<unassigned>', "uniname too high returns <unassigned> (2)
 #?rakudo.jvm 2 skip "Method 'NFC' not found for invocant of class 'Str' RT #124500"
 is uninames("AB"), ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";
 is "AB".uninames, ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";
+
+#?rakudo.jvm skip "No Unicode 9 yet"
+is uniname("🦋"), "BUTTERFLY", "Can resolve Unicode 9 character name";

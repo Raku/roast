@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item indices">
 
-plan 24;
+plan 31;
 
 # Type of return value
 isa-ok 'abc'.indices('b')[0], Int;
@@ -34,5 +34,14 @@ is indices("uuúuúuùù", "úuù"), (4,), "Accented chars sub";
 is indices("Ümlaut", "Ü"),     (0,), "Umlaut sub";
 is "uuúuúuùù".indices("úuù"),  (4,), "Accented chars meth";
 is "Ümlaut".indices("Ü"),      (0,), "Umlaut meth";
+
+is "blablabla".indices("b", 2),   (3, 6),    "Str, Str, Int";
+is "blablabla".indices("b", 2.0), (3, 6),    "Str, Str, Rat";
+is "42424242".indices(4, 2),      (2, 4, 6), "Str, Int, Int";
+is "42424242".indices(4, 2.0),    (2, 4, 6), "Str, Int, Rat";
+is 42424242.indices(4, 2),        (2, 4, 6), "Int, Int, Int";
+is 42424242.indices(4, 2.0),      (2, 4, 6), "Int, Int, Rat";
+
+try { 42.indices: Str }; pass "Cool.indices with wrong args does not hang";
 
 # vim: ft=perl6

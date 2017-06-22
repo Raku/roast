@@ -72,7 +72,6 @@ ok 'a , b ,c' ~~ /:s^ <alpha> +% \, $/, 'same, but with leading spaces';
 ok ('a b,c,d' ~~ token { \w \s \w+ % \, }), 'can combine % with backslash character classes';
 
 # RT #119513
-#?niecza 2 todo 'underscore in quantifier numeral'
 {
     ok ("a" x 1_0 ~~ /a ** 1_0/, 'underscore in quantifier numeral (1)' );
     ok ( "a_0" !~~ /a ** 1_0/, 'underscore in quantifier numeral (2)' );

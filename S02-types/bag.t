@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 205;
+plan 223;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -97,14 +97,12 @@ sub showkv($x) {
 {
     my $b = bag 'a', False, 2, 'a', False, False;
     my @ks = $b.keys;
-    #?niecza 3 skip "Non-Str keys NYI"
     is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
     is $b{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
-#?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %s = bag <a b o p a p o o>;
     is-deeply %s, { :2a, :1b, :3o, :2p }, 'single arg rule rules';
@@ -140,7 +138,6 @@ sub showkv($x) {
     my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
     isa-ok $b, Bag, '&Bag.new given a Hash produces a Bag';
     is +$b, 4, "... with four elements";
-    #?niecza todo "Non-string bag elements NYI"
     is +$b.grep(Pair), 4, "... which are all Pairs";
 }
 
@@ -161,14 +158,12 @@ sub showkv($x) {
     is +$b, 1, "... with one element";
 }
 
-#?niecza skip 'SetHash'
 {
     my $b = bag SetHash.new(<foo bar foo bar baz foo>);
     isa-ok $b, Bag, '&Bag.new given a SetHash produces a Bag';
     is +$b, 1, "... with one element";
 }
 
-#?niecza skip 'BagHash'
 {
     my $b = bag BagHash.new(<foo bar foo bar baz foo>);
     isa-ok $b, Bag, '&Bag.new given a BagHash produces a Bag';
@@ -206,7 +201,7 @@ sub showkv($x) {
 {
     my $b = { foo => 10, bar => 1, baz => 2}.Bag;
 
-    # .list is just the keys, as per TimToady: 
+    # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $b.list.elems, 3, ".list returns 3 things";
     is $b.list.grep(Pair).elems, 3, "... all of which are Pairs";
@@ -335,7 +330,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Bag/pickpairs>
 
-#?niecza skip ".pickpairs NYI"
 {
     my $b = Bag.new("a", "b", "b");
 
@@ -357,7 +351,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Bag/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $b = bag <a b b c c c>;
     throws-like { $b.grab },
@@ -367,7 +360,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Bag/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $b = bag <a b b c c c>;
     throws-like { $b.grabpairs },
@@ -379,7 +371,6 @@ sub showkv($x) {
     my $b1 = Bag.new( (bag <a b c>) , <c c c d d d d>);
     is +$b1, 2, "Two elements";
     my $inner-bag = $b1.keys.first(Bag);
-    #?niecza 2 todo 'Bag in Bag does not work correctly yet'
     isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a Bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
     my $inner-list = $b1.keys.first(List);
@@ -390,7 +381,6 @@ sub showkv($x) {
     $b1 = Bag.new($b, <c d>);
     is +$b1, 2, "Two elements";
     $inner-bag = $b1.keys.first(Bag);
-    #?niecza 2 todo 'Bag in Bag does not work correctly yet'
     isa-ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
     is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
     $inner-list = $b1.keys.first(List);
@@ -403,18 +393,17 @@ sub showkv($x) {
     is showkv(42.Bag), "42:1", "Method .Bag works on Int-2";
     isa-ok "blue".Bag, Bag, "Method .Bag works on Str-1";
     is showkv("blue".Bag), "blue:1", "Method .Bag works on Str-2";
-    my @a = <Now the cross-handed set was the Paradise way>;
+    my @a = <now the cross-handed set was the paradise way>;
     isa-ok @a.Bag, Bag, "Method .Bag works on Array-1";
-    is showkv(@a.Bag), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .Bag works on Array-2";
+    is showkv(@a.Bag), "cross-handed:1 now:1 paradise:1 set:1 the:2 was:1 way:1", "Method .Bag works on Array-2";
     my %x = "a" => 1, "b" => 2;
     isa-ok %x.Bag, Bag, "Method .Bag works on Hash-1";
     is showkv(%x.Bag), "a:1 b:2", "Method .Bag works on Hash-2";
     isa-ok (@a, %x).Bag, Bag, "Method .Bag works on List-1";
-    is showkv((@a, %x).Bag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
+    is showkv((@a, %x).Bag), "a:1 b:2 cross-handed:1 now:1 paradise:1 set:1 the:2 was:1 way:1",
        "Method .Bag works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $b1 = <a b b c c c d d d d>.Bag;
     is $b1.total, 10, '.total gives sum of values (non-empty 10)';
@@ -520,6 +509,43 @@ sub showkv($x) {
     my %h4;
     for $b.kxxv -> \k { %h4{k}++ }
     is %h4.sort, (:1a, :2b, :3c, :4d), 'did we see all the kxxv';
+}
+
+# RT #128806
+subtest '.hash does not cause keys to be stringified' => {
+    plan 3;
+    is Bag.new($(<a b>)).hash.keys[0][0], 'a', 'Bag.new';
+    is ($(<a b>),).Bag.hash.keys[0][0],   'a', '.Bag';
+    is bag($(<a b>)).hash.keys[0][0],     'a', 'bag()';
+}
+
+{
+    throws-like { my Bag $b; $b<as> = 2 }, Exception,
+        'autovivification of of Bag:U complains about immutability';
+}
+
+{
+   is {'red' => 200000000000000000019}.Bag.<red>,
+      200000000000000000019,
+      'value can be larger than a native int';
+}
+
+{
+    ok Bag.new =:= bag(), 'Bag.new returns the empty bag';
+    ok ().Bag  =:= bag(), '().Bag returns the empty bag';
+}
+
+{
+    throws-like { ^Inf .Bag }, X::Cannot::Lazy, :what<Bag>;
+    throws-like { Bag.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<Bag>;
+    throws-like { Bag.new(^Inf) }, X::Cannot::Lazy, :what<Bag>;
+
+    for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
+      dies-ok { $pair.Bag },
+        "($pair.perl()).Bag died";
+      dies-ok { Bag.new-from-pairs($pair) },
+        "Bag.new-from-pairs( ($pair.perl()) ) died";
+    }
 }
 
 # vim: ft=perl6

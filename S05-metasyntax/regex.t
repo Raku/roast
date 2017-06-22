@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 47;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -32,7 +32,7 @@ lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 # Note for RT - change to $_ ~~ /oo/ to fudge ok
 {
     $_ = "foo";
-    my $mat_tern = /oo/ ?? "yes" !! "no"; 
+    my $mat_tern = /oo/ ?? "yes" !! "no";
     is($/, 'oo', 'matching should set match');
 }
 
@@ -71,7 +71,6 @@ lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 }
 
 # we'll just check that this syntax is valid for now
-#?niecza todo 'invalid syntax'
 {
     eval-lives-ok('token foo {bar}', 'token foo {...} is valid');
     eval-lives-ok('regex baz {qux}', 'regex foo {...} is valid');
@@ -102,14 +101,12 @@ isa-ok rx/\;/, Regex,       'escaped ";" in rx// works';
 ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
 # RT #64668
-#?niecza skip 'Exception NYI'
 {
     try { EVAL '"RT #64668" ~~ /<nosuchrule>/' };
     ok  $!  ~~ Exception, 'use of missing named rule dies';
     ok "$!" ~~ /nosuchrule/, 'error message mentions the missing rule';
 }
 
-#?niecza todo 'invalid syntax'
 eval-lives-ok '/<[..b]>/', '/<[..b]>/ lives';
 
 # RT #118985
@@ -149,5 +146,13 @@ throws-like 'Regex.new.perl', Exception, '"Regex.new.perl dies but does not segf
 # RT #77524
 ok 'a' ~~ /a:/, '/a:/ is a valid pattern and matches a';
 ok 'a' ~~ /a: /, '/a: / is a valid pattern and matches a';
+
+{ # RT #128986
+    throws-like '/\b/', X::Obsolete, 'bare \b is no longer supported';
+    throws-like '/\B/', X::Obsolete, 'bare \B is no longer supported';
+    ok "\b" ~~ /"\b"/, '\b still works when quoted';
+    ok "\b" ~~ /<[\b]>/, '\b still works in character class';
+    is ("a\bc" ~~ m:g/<[\B]>/).join, 'ac', '\B still works in character class';
+}
 
 # vim: ft=perl6

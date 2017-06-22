@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 27;
+plan 64;
 
 my \PATH = 't-S32-io-open.tmp';
 my \PATH-RX = rx/'t-S32-io-open.tmp'/;
@@ -41,8 +43,10 @@ LEAVE unlink PATH;
 
     $fh = open PATH, :mode<wo>;
     ok defined($fh), 'can open existing file in mode wo';
-
     throws-like '$fh.get', Exception, 'cannot read from file in mode wo';
+
+    throws-like { open PATH, :mode<meows> }, Exception, :message(/meows/),
+        'using an invalid mode throws';
 
     $fh.close;
 }
@@ -166,6 +170,268 @@ LEAVE unlink PATH;
         'cannot write to file in default mode';
 
     $fh.close;
+}
+
+# test :r  mode
+{   unlink PATH;
+    my $fh;
+
+    isa-ok open(PATH, :r), Failure,
+        'opening non-existent file in :r mode fails';
+
+    # fill file with data
+    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
+
+    $fh = open PATH, :r;
+    ok defined($fh), 'can open existing file in :r mode';
+    is $fh.lines.join, 'onions are tasty', 'can read from file in :r mode';
+    throws-like '$fh.print("42")', Exception, 'cannot write to file in :r mode';
+
+    $fh.close;
+}
+
+# test :a  mode
+{   unlink PATH;
+    my $fh;
+
+    $fh = open PATH, :a;
+    ok defined($fh), 'can open non-existent file in :a mode';
+    $fh.print('onions are tasty');
+    $fh.close;
+
+    $fh = open PATH, :a;
+    ok defined($fh), 'can open existing file in :a mode';
+    $fh.print('cats say meow');
+
+    throws-like { $fh.get }, Exception, 'trying to read in :a mode throws';
+    $fh.close;
+
+    $fh = open PATH, :r;
+    is $fh.lines.join, 'onions are tastycats say meow',
+        ':a mode appends to existing data';
+
+    $fh.close;
+}
+
+# test :append mode
+#?rakudo.jvm skip '[io grant] IllegalArgumentException: READ + APPEND not allowed'
+{   unlink PATH;
+    my $mode = ':append';
+    my $fh;
+
+    isa-ok (my $ will leave {.so} = open(PATH, :append)), Failure,
+        "opening non-existent file in $mode mode fails";
+
+    # create and fill file with data
+    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
+
+    $fh = open PATH, :append;
+    is $fh.lines.join, 'onions are tasty', "$mode can read from existing files";
+    throws-like { $fh.say: 'foo' }, Exception,
+        "trying to write in $mode mode throws";
+    $fh.close;
+}
+
+# test :append, :create mode
+#?rakudo.jvm skip '[io grant] IllegalArgumentException: READ + APPEND not allowed'
+{   unlink PATH;
+    my $mode = ':append, :create';
+    my $fh;
+
+    $fh = open PATH, :append, :create;
+    ok defined($fh), "can open non-existent file in $mode mode";
+    ok PATH.IO.e, "$mode mode creates non-existent files";
+    $fh.close;
+
+    # create and fill file with data
+    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
+
+    $fh = open PATH, :append, :create;
+    is $fh.lines.join, 'onions are tasty', "$mode can read from existing files";
+    throws-like { $fh.say: 'foo' }, Exception,
+        "trying to write in $mode mode throws";
+    $fh.close;
+}
+
+# test :ra mode
+#?rakudo.jvm skip '[io grant] IllegalArgumentException: READ + APPEND not allowed'
+{   unlink PATH;
+    my $fh;
+
+    $fh = open PATH, :ra;
+    ok defined($fh), 'can open non-existent file in :ra mode';
+    $fh.print('onions are tasty');
+    $fh.close;
+
+    $fh = open PATH, :ra;
+    ok defined($fh), 'can open existing file in :ra mode';
+    $fh.print('cats say meow');
+
+    $fh.seek(0, SeekFromBeginning);
+    is $fh.lines.join, 'onions are tastycats say meow',
+        'can read in :append mode and it appends to existing data';
+
+    $fh.close;
+}
+
+# test :create mode
+#?rakudo.jvm skip "[io grant] NoSuchFileException: t-32-io-open.tmp'"
+{   unlink PATH;
+    my $fh;
+
+    $fh = open PATH, :create;
+    ok defined($fh), 'can open non-existent file in :create mode';
+    throws-like { $fh.say: 'foo' }, Exception,
+        'trying to write in :create mode throws';
+
+    is $fh.lines.join, '', 'file starts out empty when using :create';
+    $fh.close;
+
+    # fill file with data
+    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
+
+    $fh = open PATH, :create;
+    is $fh.lines.join, 'onions are tasty',
+        ':create mode does not truncate existing files';
+
+    $fh.close;
+}
+
+# test :truncate :create mode
+#?rakudo.jvm skip "[io grant] NoSuchFileException: t-32-io-open.tmp"
+{   unlink PATH;
+    my $mode = ':truncate, :create';
+    my $fh;
+
+    $fh = open PATH, :truncate, :create;
+    ok defined($fh), "can open non-existent file in $mode mode";
+    ok PATH.IO.e, "$mode mode creates non-existent files";
+    $fh.close;
+
+    # create and fill file with data
+    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
+
+    $fh = open PATH, :truncate, :create;
+    is $fh.lines.join, '', "$mode mode truncates existing files";
+
+    throws-like { $fh.say: 'foo' }, Exception,
+        "trying to write in $mode mode throws";
+
+    $fh.close;
+}
+
+# test :exclusive mode
+{   unlink PATH;
+    isa-ok open(PATH, :exclusive), Failure,
+        "opening non-existent file in :exclusive mode fails";
+}
+
+# test attribute setting
+{   unlink PATH;
+
+    with open PATH, :w, :!chomp, :nl-in[<a b>], :nl-out<meow> {
+        LEAVE .close;
+        is-deeply .chomp,    False,   'can set $!chomp to False with open';
+        is-deeply .nl-in,    [<a b>], 'can set $!nl-in to Array with open';
+        is-deeply .nl-out,   'meow',  'can set $!nl-out with open';
+    }
+
+    with IO::Handle.new(:path(PATH.IO), :!chomp)
+        .open: :w, :enc<iso-8859-1>, :chomp, :nl-in('a')
+    {
+        LEAVE .close;
+        is-deeply .chomp,    True,         'can set $!chomp to True with open';
+        is-deeply .nl-in,    'a',          'can set $!nl-in to Str with open';
+        is-deeply .encoding, 'iso-8859-1', 'can set $!encoding with ';
+    }
+}
+
+subtest '.open uses attributes by default' => {
+    plan 8;
+    my $content = "1foo2\nfoo3";
+    my $path = make-temp-file :$content;
+    my $fh = IO::Handle.new: :$path,
+        :nl-in<foo>, :nl-out<meow>, :bin, :!chomp;
+    $fh .= open: :rw;
+    is-deeply $fh.nl-in,    'foo',        '.nl-in remains same after open';
+    is-deeply $fh.nl-out,   'meow',       '.nl-out remains same after open';
+    #?rakudo todo 'Un-todo after IO::Handle encoding refactor merge'
+    is-deeply $fh.encoding, Nil,          '.encoding is Nil due to :bin';
+    is-deeply $fh.chomp,    False,        '.chomp remains same after open';
+
+    #?rakudo.jvm todo 'problem with Buf[uint8], probably related to RT #128041'
+    is-deeply $fh.slurp, Buf[uint8].new($content.encode),
+        '.encoding is respected';
+    $fh.close;
+
+    # XXX TODO 6.d: we have an inconsistency between, say, .encoding and .nl-in
+    # the former takes new value as an arg, but the latter returns a Proxy and
+    # can be assigned to
+    $fh.encoding('utf8');
+    $fh .= open: :rw;
+    is-deeply $fh.lines.join, $content, '.chomp is respected';
+
+    $fh.say: "hello world";
+    $fh.close;
+    is-deeply $path.slurp, $content ~ "hello worldmeow", '.nl-out is respected';
+
+    $fh.chomp = True; # set chomp back on to test .nl-in;
+    $fh .= open: :rw;
+    #?rakudo.jvm todo 'got: "1foo2\nfoo3hello worldmeow"'
+    is-deeply $fh.lines.join, "12\n3hello worldmeow", '.nl-in is respected';
+    $fh.close;
+}
+
+# RT #131503
+subtest '.open with "-" as path uses $*IN/$*OUT' => {
+    plan 2;
+    subtest 'STDOUT' => { plan 3;
+        temp $*OUT = make-temp-file.open: :w;
+        is-deeply '-'.IO.open(:bin, :w), $*OUT, 'returned handle is STDOUT';
+        is-deeply $*OUT.encoding, Nil, 'set binary mode';
+        '-'.IO.open: :enc<utf8-c8>, :w;
+        is-deeply $*OUT.encoding, 'utf8-c8', 'changed encoding';
+    }
+    subtest 'STDIN' => { plan 3;
+        temp $*IN = make-temp-file(:content<meows>).open;
+        is-deeply '-'.IO.open(:bin), $*IN, 'returned handle is STDIN';
+        is-deeply $*IN.encoding, Nil, 'set binary mode';
+        '-'.IO.open: :enc<utf8-c8>;
+        is-deeply $*IN.encoding, 'utf8-c8', 'changed encoding';
+    }
+}
+
+subtest '.open with "-" as path can open closed $*IN/$*OUT' => {
+    plan 3;
+    subtest 'STDOUT' => { plan 4;
+        temp $*OUT = IO::Handle.new: :path(make-temp-file);
+        is-deeply '-'.IO.open(:bin, :w), $*OUT, 'returned handle is STDOUT';
+        is-deeply $*OUT.opened,   True, '$*OUT is now opened';
+        is-deeply $*OUT.encoding, Nil, 'set binary mode';
+        '-'.IO.open: :enc<utf8-c8>, :w;
+        is-deeply $*OUT.encoding, 'utf8-c8', 'changed encoding';
+    }
+    subtest 'STDIN' => { plan 4;
+        temp $*IN = IO::Handle.new: :path(make-temp-file :content<meows>);
+        is-deeply '-'.IO.open(:bin), $*IN, 'returned handle is STDIN';
+        is-deeply $*IN.opened,   True, '$*IN is now opened';
+        is-deeply $*IN.encoding, Nil,  'set binary mode';
+        '-'.IO.open: :enc<utf8-c8>;
+        is-deeply $*IN.encoding, 'utf8-c8', 'changed encoding';
+    }
+
+    is_run ｢
+        $*IN  = IO::Handle.new: :path('-'.IO);
+        $*OUT = IO::Handle.new: :path('-'.IO);
+        my $w = '-'.IO.open: :w;
+        my $r = '-'.IO.open;
+        $r.get.say;
+        $*IN.slurp(:close).say;
+        $w.put: 'meow $w';
+        $*OUT.put: 'meow $*OUT';
+    ｣, "foo\nbar\nber", {
+        :out("foo\nbar\nber\nmeow \$w\nmeow \$*OUT\n"), :err(''), :0status
+    }, ｢can use unopened handle with path '-'.IO｣;
 }
 
 # vim: ft=perl6

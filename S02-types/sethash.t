@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 205;
+plan 244;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -41,7 +41,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
     is $s.elems, 3, '.elems gives number of keys';
     is +$s, 3, '+$set gives number of keys';
-    
+
     $s<baz> = True;
     lives-ok { $s<baz> = True }, 'can set an item to True';
     is showset($s), 'a b baz foo', '...and it adds it to the SetHash';
@@ -52,11 +52,11 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($s), 'a b foo', 'and it removes it';
     lives-ok { $s<baz> = False }, 'can set an item which does not exist to False';
     is showset($s), 'a b foo', '... and it is not added to the set';
-    
+
     lives-ok { $s<foo> = False }, 'can set an item to False';
     is $s.elems, 2, '... and an item is gone';
     is showset($s), 'a b', '... and the right one is gone';
-    
+
     lives-ok { $s<foo>++ }, 'can ++ an item';
     is showset($s), 'a b foo', '++ on an item reinstates it';
     lives-ok { $s<foo>++ }, 'can ++ an item';
@@ -153,7 +153,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $b = SetHash.new({ foo => 10, bar => 17, baz => 42 }.hash);
     isa-ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
     is +$b, 3, '... with three elements';
-    #?niecza todo "Non-string keys NYI"
     is +$b.keys.grep(Pair), 3, '... which are all Pairs';
 }
 
@@ -249,9 +248,24 @@ sub showset($s) { $s.keys.sort.join(' ') }
     @a = $s.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
-    #?niecza skip '.total NYI'
     is $s.total, 3, '.roll should not change the SetHash';
     is $s.elems, 3, '.roll should not change the SetHash';
+}
+
+# empty SetHash handling of .roll
+{
+    is-deeply ().SetHash.roll, Nil,            '().SetHash.roll -> Nil';
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf'
+    -> $p, $t {
+        is-deeply ().SetHash.roll($p), ().Seq, "().SetHash.roll($t) -> ().Seq"
+    }
+    dies-ok { ().SetHash.roll(NaN) }, '().SetHash.roll(NaN) should die';
 }
 
 # L<S32::Containers/SetHash/pick>
@@ -262,7 +276,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is @a.sort.join, 'abcdefgh', 'SetHash.pick(*) gets all elements';
     isnt @a.join, 'abcdefgh', 'SetHash.pick(*) returns elements in a random order';
       # There's only a 1/40_320 chance of that test failing by chance alone.
-    #?niecza skip '.total NYI'
     is $s.total, 8, '.pick should not change the SetHash';
     is $s.elems, 8, '.pick should not change the SetHash';
 }
@@ -279,14 +292,28 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok @a.grep(* eq 'a').elems <= 1, '.pick(2) returned at most one "a"';
     ok @a.grep(* eq 'b').elems <= 1, '.pick(2) returned at most one "b"';
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
-    #?niecza skip '.total NYI'
     is $s.total, 3, '.pick should not change the SetHash';
     is $s.elems, 3, '.pick should not change the SetHash';
 }
 
+# empty SetHash handling of .pick
+{
+    is-deeply ().SetHash.pick, Nil,            '().SetHash.pick -> Nil';
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf'
+    -> $p, $t {
+        is-deeply ().SetHash.pick($p), ().Seq, "().SetHash.pick($t) -> ().Seq"
+    }
+    dies-ok { ().SetHash.pick(NaN) }, '().SetHash.pick(NaN) should die';
+}
+
 # L<S32::Containers/SetHash/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $s = SetHash.new(<a b c d e f g h>);
     my @a = $s.grab: *;
@@ -297,7 +324,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.elems, 0, '.grab *should* change the SetHash';
 }
 
-#?niecza skip '.grab NYI'
 {
     my $s = SetHash.new(<a b c>);
 
@@ -318,7 +344,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # L<S32::Containers/SetHash/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $s = SetHash.new(<a b c d e f g h>);
     my @a = $s.grabpairs: *;
@@ -331,7 +356,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.elems, 0, '.grabpairs *should* change the SetHash';
 }
 
-#?niecza skip '.grabpairs NYI'
 {
     my $s = SetHash.new(<a b c>);
 
@@ -353,7 +377,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "is SetHash doesn't work yet"
 {
     my %h is SetHash = a => True, b => False, c => True;
     is +%h.elems, 2, 'Inititalization worked';
@@ -391,7 +414,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset((@a, %x).SetHash), "Now Paradise a b cross-handed set the was way", "Method .SetHash works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $s = <a b b c c c d d d d>.SetHash;
     is $s.total, 4, '.total gives sum of values (non-empty)';
@@ -436,6 +458,156 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     isa-ok SetHash(42).Hash.keys[0], Int, "make sure SetHash.Hash returns objects";
+}
+
+subtest '.hash does not cause keys to be stringified' => {
+    plan 2;
+    is SetHash.new($(<a b>)).hash.keys[0][0], 'a', 'SetHash.new';
+    is ($(<a b>),).SetHash.hash.keys[0][0],   'a', '.SetHash';
+}
+
+{   # coverage; 2016-09-18
+    my $sh = SetHash.new: <a b b c c c>;
+    is-deeply $sh.antipairs.sort(*.value),
+        (Bool::True => "a", Bool::True => "b", Bool::True => "c"),
+        '.antipairs produces correct result';
+
+    is-deeply $sh.SetHash, $sh, '.SetHash returns self';
+}
+
+subtest 'SetHash autovivification of non-existent keys' => {
+    # Sets' values are just True/False, so all of the following operations
+    # simply control existence of a key
+    my SetHash  $sh1;
+    is-deeply   $sh1<poinc>++,  Bool::False, 'correct return of postfix ++';
+    is-deeply   $sh1<poinc>,    Bool::True,  'correct result of postfix ++';
+
+    my SetHash  $sh2;
+    is-deeply   $sh2<podec>--,  Bool::False, 'correct return of postfix --';
+    is-deeply   $sh2<podec>,    Bool::False, 'correct result of postfix --';
+
+    my SetHash  $sh3;
+    is-deeply ++$sh3<princ>,    Bool::True,  'correct return of prefix ++';
+    is-deeply   $sh3<princ>,    Bool::True,  'correct result of prefix ++';
+
+    my SetHash  $sh4;
+    is-deeply --$sh4<prdec>,    Bool::False, 'correct return of prefix --';
+    is-deeply   $sh4<prdec>,    Bool::False, 'correct result of prefix --';
+
+    my SetHash  $sh5;
+    is-deeply   ($sh5<as> = 2), Bool::True,  'correct return of assignment';
+    is-deeply   $sh5<as>,       Bool::True,  'correct result of assignment';
+}
+
+# RT#127863
+subtest 'cloned SetHash gets its own elements storage' => {
+    plan 4;
+    my $a = SetHash.new: <a b c>;
+    my $b = $a.clone;
+    $a<a>--; $a<b>++; $a<z> = 1;
+    is-deeply $a, SetHash.new(<b c z>),
+        'modifying first set works, even after we created its clone';
+    is-deeply $b, SetHash.new(<a b c>),
+        'modifying first set does not affect cloned set';
+    $b<b>--; $b<d>++;
+    is-deeply $b, SetHash.new(<a c d>),
+        'modifying second is possible';
+    is-deeply $a, SetHash.new(<b c z>),
+        'modifying second does not affect the first';
+}
+
+# RT 130240
+{
+    my SetHash $set = SetHash.new;
+    my $i = 1001;
+    $set{$i} = True;
+    $i++;
+    ok $set{1001}, "SetHash retains object, not container";
+}
+
+{
+    my $sh = <a>.SetHash;
+    for $sh.values { $_-- }
+    is $sh, "",
+      'Can use $_ from .values to remove items from SetHash (1)';
+
+    $sh = <a>.SetHash;
+    for $sh.values { $_ = 0 }
+    is $sh, "",
+      'Can use $_ from .values to remove items from SetHash (2)';
+}
+
+#?rakudo.moar skip 'this behavior upsets uthash, https://github.com/MoarVM/MoarVM/issues/603'
+{
+    my $sh = <a>.SetHash;
+    for $sh.values { $_ = 0; $_ = 1 }
+    is $sh, "a",
+      'Can use $_ from .values to restore items in SetHash';
+}
+
+{
+    my $sh = <a>.SetHash;
+    for $sh.kv -> \k, \v { v-- }
+    is $sh, "",
+      'Can use value from .kv to remove items from SetHash (1)';
+
+    $sh = <a>.SetHash;
+    for $sh.kv -> \k, \v { v = 0 }
+    is $sh, "",
+      'Can use value from .kv to remove items from SetHash (2)';
+}
+
+#?rakudo.moar skip 'this behavior upsets uthash, https://github.com/MoarVM/MoarVM/issues/603'
+{
+    my $sh = <a>.SetHash;
+    for $sh.kv -> \k, \v { v = 0; v = 1 }
+    is $sh, "a",
+      'Can use value from .kv to restore items in SetHash';
+}
+
+{
+    my $sh = <a>.SetHash;
+    for $sh.pairs { .value-- }
+    is $sh, "",
+      'Can use $_ from .pairs to remove items from SetHash (1)';
+
+    $sh = <a>.SetHash;
+    for $sh.pairs { .value = 0 }
+    is $sh, "",
+      'Can use $_ from .pairs to remove items from SetHash (2)';
+}
+
+#?rakudo.moar skip 'this behavior upsets uthash, https://github.com/MoarVM/MoarVM/issues/603'
+{
+    my $sh = <a>.SetHash;
+    for $sh.pairs { .value = 0; .value = 1 }
+    is $sh, "a",
+      'Can use $_ from .pairs to restore items in SetHash';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2017-05-20#i_14611351
+  # https://irclog.perlgeek.de/perl6-dev/2017-05-20#i_14611927
+    my $s = <a b b c c c>.SetHash;
+    $_ = -1 for $s.values;
+    is-deeply $s, <a b b c c c>.SetHash,
+        'assigning negatives to .value does not remove the items from SetHash';
+}
+
+{
+    is-deeply { a => 42, b => 666 }.SetHash, <a b>.SetHash,
+      'coercion of Map to SetHash 1';
+    is-deeply { a => 42, b => 0   }.SetHash, <a>.SetHash,
+      'coercion of Map to SetHash 2';
+    is-deeply :{ 42 => "a", 666 => "b" }.SetHash, (42,666).SetHash,
+      'coercion of object Hash to SetHash 1';
+    is-deeply :{ 42 => "a", 666 => "" }.SetHash,   42.SetHash,
+      'coercion of object Hash to SetHash 2';
+}
+
+{
+    throws-like { ^Inf .SetHash }, X::Cannot::Lazy, :what<SetHash>;
+    throws-like { SetHash.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<SetHash>;
+    throws-like { SetHash.new(^Inf) }, X::Cannot::Lazy, :what<SetHash>;
 }
 
 # vim: ft=perl6

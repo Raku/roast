@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 18;
 
 =begin description
 
@@ -34,6 +34,14 @@ is('fooäàaáâåbar' ~~ m:m/<[a..b]>+/, 'äàaáâåba', 'Ignoremark with rang
 # RT #116256
 {
     ok("ü" ~~ /:ignoremark 'u'/, 'Ignoremark with subrule');
+}
+
+# RT #130465
+{
+    ok qq["\c[COMBINING TILDE]"] ~~ / ^ :ignoremark '"'/,
+        'Ignoremark on quoted double-quote';
+    ok qq["\c[COMBINING TILDE]"] ~~ / ^ :ignoremark \"/,
+        'Ignoremark on backslashed double-quote';
 }
 
 # vim: syn=perl6 sw=4 ts=4 expandtab

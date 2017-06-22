@@ -6,7 +6,7 @@ my class ProfiledGrammarHOW is Metamodel::GrammarHOW {
 
     method find_method($obj, $name) {
         my $meth := callsame;
-        substr($name, 0, 1) eq '!' || $name eq any(<parse CREATE Bool defined MATCH perl BUILD DESTROY>) ??
+        substr($name, 0, 1) eq '!' || $name eq any(<parse CREATE Bool defined MATCH perl name BUILD TWEAK DESTROY new bless BUILDALL sink>) ??
             $meth !!
             -> $c, |args {
                 my $grammar = $obj.WHAT.perl;
@@ -14,7 +14,7 @@ my class ProfiledGrammarHOW is Metamodel::GrammarHOW {
                 %timing{$grammar}{$meth.name} //= {};       # Vivify method hash
                 my %t := %timing{$grammar}{$meth.name};
                 my $start = now;                            # get start time
-                my $result := $meth($obj, |args);           # Call original method
+                my $result := $meth($c, |args);           # Call original method
                 %t<time> += now - $start;                   # accumulate execution time
                 %t<calls>++;
                 $result

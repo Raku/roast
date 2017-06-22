@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 36;
+plan 37;
 
 # make sure we have a controlled environment here
 my $*SPEC = IO::Spec::Unix;
@@ -66,3 +66,7 @@ is $numfile.succ.succ, "foo/file03.txt", "succ x 2";
 is $numfile.pred,      "foo/file00.txt", "pred basic";
 is IO::Path::Unix.new("foo/()").succ, "foo/()", "succ only effects basename";
 is IO::Path::Unix.new("foo/()").succ, "foo/()", "pred only effects basename";
+
+# RT#128840
+isnt IO::Path::Unix.new("-a").absolute, '',
+    '.absolute on paths starting with `-` does not produce empty string';

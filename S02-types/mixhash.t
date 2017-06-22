@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
+use Test::Util;
 use Test;
 
-plan 229;
+plan 260;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -31,7 +33,7 @@ sub showkv($x) {
     is ([+] $m.values), 8, "Values returns the correct sum";
     ok ?$m, "Bool returns True if there is something in the MixHash";
     nok ?MixHash.new(), "Bool returns False if there is nothing in the MixHash";
-    
+
     my $hash;
     lives-ok { $hash = $m.hash }, ".hash doesn't die";
     isa-ok $hash, Hash, "...and it returned a Hash";
@@ -47,7 +49,6 @@ sub showkv($x) {
     is ~$m<a b>, "5 1", 'Multiple-element access';
     is ~$m<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
-    #?niecza skip '.total NYI'
     is $m.total, 8, '.total gives sum of values';
     is $m.elems, 3, '.total gives sum of values';
     is +$m, 8, '+$mix gives sum of values';
@@ -60,7 +61,7 @@ sub showkv($x) {
     nok $m<spiderman>:exists, "... and that didn't create the element";
     lives-ok { $m<brady> = 0 }, "Can assign zero to a existing element";
     nok $m<brady>:exists, "... and it goes away";
-    
+
     lives-ok { $m<a>++ }, "Can ++ an existing element";
     is $m<a>, 43, "... and the increment happens";
     lives-ok { $m<carter>++ }, "Can ++ a new element";
@@ -69,7 +70,6 @@ sub showkv($x) {
     is $m<a>, 42, "... and the decrement happens";
     lives-ok { $m<carter>-- }, "Can -- an element with value 1";
     nok $m<carter>:exists, "... and it goes away";
-    #?niecza todo
     lives-ok { $m<farve>-- }, "Can -- an element that doesn't exist";
     ok $m<farve>:exists, "... and everything is still okay";
 }
@@ -117,7 +117,6 @@ sub showkv($x) {
 {
     my $m = MixHash.new('a', False, 2, 'a', False, False);
     my @ks = $m.keys;
-    #?niecza 3 skip "Non-Str keys NYI"
     is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -146,7 +145,6 @@ sub showkv($x) {
     my $m = MixHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 }.hash);
     isa-ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
     is +$m, 4, "... with four elements";
-    #?niecza todo "Non-string mix elements NYI"
     is +$m.grep(Pair), 4, "... which are all Pairs";
 }
 
@@ -191,7 +189,7 @@ sub showkv($x) {
     is $m.total, 13.6, 'make sure .total is ok';
     is $m.elems, 3, 'make sure .elems is ok';
 
-    # .list is just the keys, as per TimToady: 
+    # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $m.list.elems, 3, ".list returns 3 things";
     is $m.list.grep(Pair).elems, 3, "... all of which are Pairs";
@@ -275,7 +273,6 @@ sub showkv($x) {
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(*)[^100] (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(*)[^100] (2)';
 
-    #?niecza skip '.total NYI'
     is $m.total, 3, '.roll should not change MixHash';
     is $m.elems, 2, '.roll should not change MixHash';
 }
@@ -292,7 +289,6 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
-    #?niecza skip '.total NYI'
     is $m.total, 1, '.roll should not change MixHash';
     is $m.elems, 3, '.roll should not change MixHash';
 }
@@ -308,7 +304,6 @@ sub showkv($x) {
 
 # L<S32::Containers/MixHash/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $m = <a b b c c c>.MixHash;
     throws-like { $m.grab },
@@ -319,7 +314,6 @@ sub showkv($x) {
 
 # L<S32::Containers/MixHash/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $m = MixHash.new("a", "b", "b");
 
@@ -335,7 +329,6 @@ sub showkv($x) {
     is $m.elems, 0, '.grabpairs *should* change MixHash';
 }
 
-#?niecza skip '.grabpairs NYI'
 {
     my $m = (a=>1.1,b=>2.2,c=>3.3,d=>4.4,e=>5.5,f=>6.6,g=>7.7,h=>8.8).MixHash;
     my @a = $m.grabpairs: *;
@@ -349,7 +342,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
     nok %h<b>:exists, '"b", initialized to zero, does not exist';
@@ -360,7 +352,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
 
@@ -374,7 +365,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is MixHash = a => 1, c => 1;
 
@@ -392,7 +382,6 @@ sub showkv($x) {
     is %h<a>, 0, 'item removed again is still zero';
 }
 
-#?niecza skip "Trait name not available on variables"
 {
     my %h of MixHash;
     ok %h.of.perl eq 'MixHash', 'is the hash really a MixHash';
@@ -418,7 +407,6 @@ sub showkv($x) {
        "Method .MixHash works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $m1 = (a => 1.1, b => 2.2, c => 3.3, d => 4.4).MixHash;
     is $m1.total, 11, '.total gives sum of values (non-empty) 11';
@@ -462,25 +450,25 @@ sub showkv($x) {
     $m<a> = 42.1;
     is $m<a>, 42.1, 'did we set a Real value';
     throws-like { $m<a> = "foo" },
-      X::Str::Numeric, # X::TypeCheck::Assignment ???
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a key';
 
     $_ = 666.1 for $m.values;
     is $m<a>, 666.1, 'did we set a Real value from a .values alias';
     throws-like { $_ = "foo" for $m.values },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .values alias';
 
     .value = 999.1 for $m.pairs;
     is $m<a>, 999.1, 'did we set a Real value from a .pairs alias';
     throws-like { .value = "foo" for $m.pairs },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .pairs alias';
 
     for $m.kv -> \k, \v { v = 22.1 };
     is $m<a>, 22.1, 'did we set a Real value from a .kv alias';
     throws-like { for $m.kv -> \k, \v { v = "foo" } },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .kv alias';
 }
 
@@ -502,6 +490,117 @@ sub showkv($x) {
     for $m.antipairs -> \p { %h3{p.value} = p.key }
     is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
     throws-like { for $m.kxxv -> \k { say k } }, Exception, 'cannot call kxxv';
+}
+
+# RT #128806
+subtest '.hash does not cause keys to be stringified' => {
+    plan 2;
+    is MixHash.new($(<a b>)).hash.keys[0][0], 'a', 'MixHash.new';
+    is ($(<a b>),).MixHash.hash.keys[0][0],   'a', '.MixHash';
+}
+
+{ # coverage; 2016-10-13
+    my $mh = MixHash.new-from-pairs: 'sugar' => .2, 'flour' => 2.7,
+        'sugar' => 1.1, 'cyanide' => 0;
+
+    is-deeply $mh.Bag, Bag.new(<sugar flour flour>), '.Bag coercer';
+    is-deeply $mh.BagHash, BagHash.new(<sugar flour flour>),
+        '.BagHash coercer';
+
+    my $code = ｢my $m = Mix.new-from-pairs('a' => -20, 'b' => 1.5);｣
+        ~ ｢$m.Bag.say; $m.BagHash.say｣;
+    is_run $code, { :err(''), :out("bag(b)\nBagHash.new(b)\n"), :0status },
+        'negative MixHash weights removed from Bag coercion without warnings';
+}
+
+subtest 'MixHash autovivification of non-existent keys' => {
+    my MixHash  $mh1;
+    is-deeply   $mh1<poinc>++,  0, 'correct return of postfix ++';
+    is-deeply   $mh1<poinc>,    1, 'correct result of postfix ++';
+
+    my MixHash  $mh2;
+    is-deeply   $mh2<podec>--,  0, 'correct return of postfix --';
+    is-deeply   $mh2<podec>,   -1, 'correct result of postfix --';
+
+    my MixHash  $mh3;
+    is-deeply ++$mh3<princ>,    1, 'correct return of prefix ++';
+    is-deeply   $mh3<princ>,    1, 'correct result of prefix ++';
+
+    my MixHash  $mh4;
+    is-deeply --$mh4<prdec>,   -1, 'correct return of prefix --';
+    is-deeply   $mh4<prdec>,   -1, 'correct result of prefix --';
+
+    my MixHash  $mh5;
+    is-deeply   ($mh5<as> = 2), 2, 'correct return of assignment';
+    is-deeply   $mh5<as>,       2, 'correct result of assignment';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2016-11-07#i_13528982
+    my $a = (:a(-10), :b(-30)                 ).MixHash;
+    my $b = (         :b(-20), :c(-10), :d(10)).MixHash;
+    my $r = (:a(-10), :b(-20), :c(-10), :d(10)).Mix;
+    is-deeply $a  ∪  $b, $r, 'negative weights remain with  ∪  operator';
+    is-deeply $a (|) $b, $r, 'negative weights remain with (|) operator';
+}
+
+{
+    my $mh = <a a a>.MixHash;
+    for $mh.values { $_-- }
+    is $mh, "a(2)",
+      'Can use $_ from .values to remove occurrences from MixHash';
+    for $mh.values { $_ = 42 }
+    is $mh, "a(42)",
+      'Can use $_ from .values to set number occurrences in MixHash';
+    for $mh.values { $_ = 0 }
+    is $mh, "",
+      'Can use $_ from .values to remove items from MixHash';
+}
+
+{
+    my $mh = <a a a>.MixHash;
+    for $mh.kv -> \k, \v { v-- }
+    is $mh, "a(2)",
+      'Can use value from .kv to remove occurrences from MixHash';
+    for $mh.kv -> \k, \v { v = 42 }
+    is $mh, "a(42)",
+      'Can use value from .kv to set number occurrences in MixHash';
+    for $mh.kv -> \k, \v { v = 0 }
+    is $mh, "",
+      'Can use $_ from .kv to remove items from MixHash';
+}
+
+{
+    my $mh = <a a a>.MixHash;
+    for $mh.pairs { .value-- }
+    is $mh, "a(2)",
+      'Can use value from .pairs to remove occurrences from MixHash';
+    for $mh.pairs { .value = 42 }
+    is $mh, "a(42)",
+      'Can use value from .pairs to set number occurrences in MixHash';
+    for $mh.pairs { .value = 0 }
+    is $mh, "",
+      'Can use $_ from .pairs to remove items from MixHash';
+}
+
+{
+    throws-like { ^Inf .MixHash }, X::Cannot::Lazy, :what<MixHash>;
+    throws-like { MixHash.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<MixHash>;
+    throws-like { MixHash.new(^Inf) }, X::Cannot::Lazy, :what<MixHash>;
+
+    for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
+      dies-ok { $pair.MixHash },
+        "($pair.perl()).MixHash died";
+      dies-ok { MixHash.new-from-pairs($pair) },
+        "MixHash.new-from-pairs( ($pair.perl()) ) died";
+    }
+}
+
+# RT #131561
+{
+    is-deeply (a => -1, a => 1).MixHash,      MixHash.new,
+      'final value 0 disappears in MixHash (1)';
+    is-deeply (a => -1, a => 1, "b").MixHash, MixHash.new("b"),
+      'final value 0 disappears in MixHash (2)';
 }
 
 # vim: ft=perl6

@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 50) + 3 + 1 + 1 + 2 + 1;
+plan (@testing/2 * 54) + 15;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -132,11 +132,16 @@ for @testing -> @a, $T {
     submeth-ok (),     (0,1), (),    (), 'remove 1 past end';
     submeth-ok (), (0,1,1,2), (), (1,2), 'remove 1 past end + push';
     submeth-ok (), (0,*,1,2), (), (1,2), 'remove whatever past end + push';
+    submeth-ok (1, 2, 3), (*, *), (), (1, 2, 3), 'two *, no list';
+    submeth-ok (1, 2, 3), (*, *, 4, 5, 6), (), (^6+1), 'two * with a given list';
 
-    # test some SINKs
-    submeth-ok (1..10),     \(:SINK),  Nil,      (), 'whole SINK';
-    submeth-ok (1..12), \(0,1,:SINK),  Nil, (2..12), 'simple 1 elem SINK';
-    submeth-ok (1..10),  \(10,:SINK),  Nil, (1..10), 'none rest SINK';
+    # Callables
+    my sub s-offset { ($^a / 2).Int }; my sub s-size   { $^a - 1 }
+    submeth-ok (1, 2, 3, 4), (&s-offset, *),           (3, 4), (1, 2),        '.splice(Callable, Whatever)';
+    submeth-ok (1, 2, 3, 4), (&s-offset, *, 42),       (3, 4), (1, 2, 42),    '.splice(Callable, Whatever, List)';
+    submeth-ok (1, 2, 3, 4), (2, &s-size, 42),         (3,),   (1, 2, 42, 4), '.splice(Int, Callable, List)';
+    submeth-ok (1, 2, 3, 4), (&s-offset, 1, 42),       (3,),   (1, 2, 42, 4), '.splice(Callable, Int, List)';
+    submeth-ok (1, 2, 3, 4), (&s-offset, &s-size, 42), (3,),   (1, 2, 42, 4), '.splice(Callable, Callable, List)';
 
     # make sure we initialize with properly typed values
     @a = $toNum ?? (^10).map(*.Num) !! ^10;
@@ -230,5 +235,96 @@ for @testing -> @a, $T {
     @l.splice( 5, *, "borrowed", "blue");
     is @l.join(" "), "1 2 3 4 5 borrowed blue", "Whatever splice"
 } #1
+
+# RT #128736
+{
+    subtest 'splice can extend an array' => {
+        my @a;
+        @a.splice: 0, 0, 42;
+        is-deeply @a, [42     ], 'method on empty array';
+
+        @a.splice: 1, 0, 'y';
+        is-deeply @a, [42, 'y'], 'method on array with elements';
+
+        my @b;
+        splice @b, 0, 0, 42;
+        is-deeply @b, [42     ], 'sub with empty array';
+
+        splice @b, 1, 0, 'y';
+        is-deeply @b, [42, 'y'], 'sub with array with elements';
+    }
+}
+
+# RT #129773
+{
+    throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
+        '.splice(offset, array) throws';
+    throws-like { [].splice: 0e0, 0 }, X::Multi::NoMatch,
+        '.splice(wrong type offset...) throws';
+    lives-ok { [].splice: *, {42;}       }, 'splice(Whatever, Callable) lives';
+    lives-ok { [].splice: *, {42;}, [42] }, 'splice(Whatever, Callable, @a) lives';
+}
+
+subtest 'Array.splice' => { # coverage; 2016-10-01
+    constant @tests = # Args | Return | Result
+        [ \(                 ), [1,2,3], []            ],
+        [ \( *               ), [ ],     [1,2,3]       ],
+        [ \( *,   *          ), [ ],     [1,2,3]       ],
+        [ \( *,   *,  [4,5,6]), [ ],     [1,2,3,4,5,6] ],
+        [ \( *,   2          ), [ ],     [1,2,3]       ],
+        [ \( *,   2,  [4,5,6]), [ ],     [1,2,3,4,5,6] ],
+        [ \( *,  {2}         ), [ ],     [1,2,3]       ],
+        [ \( *,  {2}, [4,5,6]), [ ],     [1,2,3,4,5,6] ],
+        [ \( *,   *,   4,5,6 ), [ ],     [1,2,3,4,5,6] ],
+        [ \( *,   2,   4,5,6 ), [ ],     [1,2,3,4,5,6] ],
+        [ \( *,  {2},  4,5,6 ), [ ],     [1,2,3,4,5,6] ],
+        [ \({2}              ), [3],     [1,2]         ],
+        [ \({2},  *          ), [3],     [1,2]         ],
+        [ \({2},  *,  [4,5,6]), [3],     [1,2,4,5,6]   ],
+        [ \({2},  1          ), [3],     [1,2]         ],
+        [ \({2},  1,  [4,5,6]), [3],     [1,2,4,5,6]   ],
+        [ \({2}, {1}         ), [3],     [1,2]         ],
+        [ \({2}, {1}, [4,5,6]), [3],     [1,2,4,5,6]   ],
+        [ \({2},  *,   4,5,6 ), [3],     [1,2,4,5,6]   ],
+        [ \({2},  1,   4,5,6 ), [3],     [1,2,4,5,6]   ],
+        [ \({2}, {1},  4,5,6 ), [3],     [1,2,4,5,6]   ],
+        [ \( 2               ), [3],     [1,2]         ],
+        [ \( 2,   *          ), [3],     [1,2]         ],
+        [ \( 2,   *,  [4,5,6]), [3],     [1,2,4,5,6]   ],
+        [ \( 2,   1          ), [3],     [1,2]         ],
+        [ \( 2,   1,  [4,5,6]), [3],     [1,2,4,5,6]   ],
+        [ \( 2,  {1}         ), [3],     [1,2]         ],
+        [ \( 2,  {1}, [4,5,6]), [3],     [1,2,4,5,6]   ],
+        [ \( 2,   *,   4,5,6 ), [3],     [1,2,4,5,6]   ],
+        [ \( 2,   1,   4,5,6 ), [3],     [1,2,4,5,6]   ],
+        [ \( 2,  {1},  4,5,6 ), [3],     [1,2,4,5,6]   ],
+    ;
+
+    plan 2*@tests;
+    for @tests -> $t {
+        my @a = 1, 2, 3;
+        is-deeply @a.splice(|$t[0]), $t[1], "return correct for $t[0].gist()";
+        is-deeply @a,                $t[2], "result correct for $t[0].gist()";
+    }
+}
+
+subtest 'Array.splice callable args' => {
+    constant @tests =
+        [ [|'hello world'.comb], 11, 5 ],
+        [ [|'deadbeaf'.comb], 8, 2 ],
+        [ [|'I H Perl 6'.comb], 10, 6 ],
+        ;
+
+    plan 4 * @tests;
+    for @tests -> $t {
+        my @a = |$t[0];
+        @a.splice: { is $^a, $t[1], 'arg is correct for start'; $t[2] },
+                   { is $^a, $t[1]-$t[2], 'arg is correct for offset' };
+
+        my @b = |$t[0];
+        splice(@b, { is $^a, $t[1], 'arg is correct for start'; $t[2] },
+                   { is $^a, $t[1]-$t[2], 'arg is correct for offset' });
+    }
+}
 
 # vim: ft=perl6

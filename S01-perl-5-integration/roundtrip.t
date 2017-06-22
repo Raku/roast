@@ -37,7 +37,6 @@ my %hash = (foo => 'bar', hate => 'software');
     is-deeply([$foo.keys].sort, [%hash.keys].sort);
 }
 
-#?niecza skip 'VAR undeclared'
 {
     is-deeply([%hash.keys].sort, [$keys_p5($%hash)].sort);
 }

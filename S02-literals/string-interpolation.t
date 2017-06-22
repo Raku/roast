@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 
 use Test;
 use Test::Util;
-plan 16;
+plan 40;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
@@ -77,6 +77,68 @@ line 4
         err    => '',
     },
     'interpolation at edge of quoteword items does not cancel out inter-item space';
+}
+
+# RT #129257
+{
+    is "%%one @@two &&three rt%%one@@two&&three rt%% one@@ two&& three@@",
+       ｢%%one @@two &&three rt%%one@@two&&three rt%% one@@ two&& three@@｣,
+       'bracketless %%, @@, and && do not attempt to interpolate any variables';
+
+    is "@%one @&two @&%three @%&four %@one %&two %&@three %@&four &@one &%two &%@three &@%four",
+       ｢@%one @&two @&%three @%&four %@one %&two %&@three %@&four &@one &%two &%@three &@%four｣,
+       'and various mixtures do not attempt to interpolate any variables';
+
+    my $x = 'DX';
+    is "%%$x @@$x &&$x",
+       ｢%%DX @@DX &&DX｣,
+       'bracketless %%, @@, and && do not suppress following scalar interpolation';
+
+    is "@%$x @&$x @&%$x @%&$x %@$x %&$x %&@$x %@&$x &@$x &%$x &%@$x &@%$x",
+       ｢@%DX @&DX @&%DX @%&DX %@DX %&DX %&@DX %@&DX &@DX &%DX &%@DX &@%DX｣,
+       'and various mixtures do not supress subsequent scalar interpolation';
+
+    is "%%@@&&@%@&@&%@%&%@%&%&@%@&&@&%&%@&@%$x",
+       ｢%%@@&&@%@&@&%@%&%@%&%&@%@&&@&%&%@&@%DX｣,
+       'and it really does not matter how many there are before the $';
+
+    throws-like '"@$whoopsies[]"', X::Undeclared, symbol => '$whoopsies';
+    throws-like '"%$whoopsies{}"', X::Undeclared, symbol => '$whoopsies';
+    throws-like '"&$whoopsies()"', X::Undeclared, symbol => '$whoopsies';
+
+    throws-like '"@@whoopsies[]"', X::Undeclared, symbol => '@whoopsies';
+    throws-like '"%@whoopsies{}"', X::Undeclared, symbol => '@whoopsies';
+    throws-like '"&@whoopsies()"', X::Undeclared, symbol => '@whoopsies';
+
+    throws-like '"@%whoopsies[]"', X::Undeclared, symbol => '%whoopsies';
+    throws-like '"%%whoopsies{}"', X::Undeclared, symbol => '%whoopsies';
+    throws-like '"&%whoopsies()"', X::Undeclared, symbol => '%whoopsies';
+
+    throws-like '"@&whoopsies[]"', X::Undeclared::Symbols;
+    throws-like '"%&whoopsies{}"', X::Undeclared::Symbols;
+    throws-like '"&&whoopsies()"', X::Undeclared::Symbols;
+
+    # make sure existing refs don't fail
+
+    my $aref = ['value'];
+    my $href = {:value};
+    my $cref = {42};
+
+    throws-like '"$$aref $$aref[] $$whoopsies[]"', X::Undeclared, symbol => '$whoopsies';
+    throws-like '"@$aref @$aref[] @$whoopsies[]"', X::Undeclared, symbol => '$whoopsies';
+    throws-like '"%$href %$href{} %$whoopsies{}"', X::Undeclared, symbol => '$whoopsies';
+    throws-like '"&$cref &$cref() &$whoopsies()"', X::Undeclared, symbol => '$whoopsies';
+
+    # make sure existing objects don't fail
+
+    my @arry = 42;
+    my %hash = :foo;
+    my &code = &exp;
+
+    throws-like '"$@arry $@arry[] $@whoopsies[]"', X::Undeclared, symbol => '@whoopsies';
+    throws-like '"$%hash $%hash{} $%whoopsies{}"', X::Undeclared, symbol => '%whoopsies';
+    throws-like '"$&code $&code() $&whoopsies()"', X::Undeclared::Symbols;
+
 }
 
 # vim: ft=perl6

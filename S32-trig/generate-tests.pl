@@ -171,7 +171,7 @@ class TrigFunction
                 my $desired-result = $.desired-result-code;
 
                 # Num.$.function_name tests -- very thorough
-                is_approx($angle.key().$.function_name, $desired-result, 
+                is-approx($angle.key().$.function_name, $desired-result, 
                           "Num.$.function_name - {$angle.key()}");
 
                 # Complex.$.function_name tests -- also very thorough
@@ -182,9 +182,9 @@ class TrigFunction
                 my Complex $zp2 = $angle.key + 2.0i;
                 my Complex $sz2 = $.complex_check($zp2);
                 
-                is_approx($zp0.$.function_name, $sz0, "Complex.$.function_name - $zp0");
-                is_approx($zp1.$.function_name, $sz1, "Complex.$.function_name - $zp1");
-                is_approx($zp2.$.function_name, $sz2, "Complex.$.function_name - $zp2");
+                is-approx($zp0.$.function_name, $sz0, "Complex.$.function_name - $zp0");
+                is-approx($zp1.$.function_name, $sz1, "Complex.$.function_name - $zp1");
+                is-approx($zp2.$.function_name, $sz2, "Complex.$.function_name - $zp2");
             }
             
             $.inf_fudge
@@ -215,10 +215,10 @@ class TrigFunction
             $file.say: "    \# $type tests";
             
             unless $type eq "Num" || $type eq "Complex" {
-                $file.say: ForwardTest('    is_approx($typed-angle.$fun, $desired-result, "$type.$fun - $angle");', 
+                $file.say: ForwardTest('    is-approx($typed-angle.$fun, $desired-result, "$type.$fun - $angle");', 
                                         $angle_list.shift, $fun, $type, $.desired-result-code);
             }
-            $file.say: ForwardTest('    is_approx($fun($typed-angle), $desired-result, "$fun($type) - $angle");', 
+            $file.say: ForwardTest('    is-approx($fun($typed-angle), $desired-result, "$fun($type) - $angle");', 
                                     $angle_list.shift, $fun, $type, $.desired-result-code);
             
             $file.say: '}';
@@ -238,12 +238,12 @@ class TrigFunction
                 my $desired-result = $.desired-result-code;
 
                 # Num.$.inverted_function_name tests -- thorough
-                is_approx($desired-result.Num.$.inverted_function_name.$.function_name, $desired-result, 
+                is-approx($desired-result.Num.$.inverted_function_name.$.function_name, $desired-result, 
                           "Num.$.inverted_function_name - {$angle.key()}");
                 
                 # Num.$.inverted_function_name(Complex) tests -- thorough
                 for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-                    is_approx($z.$.inverted_function_name.$.function_name, $z, 
+                    is-approx($z.$.inverted_function_name.$.function_name, $z, 
                               "Complex.$.inverted_function_name - $z");
                 }
             }
@@ -269,11 +269,11 @@ class TrigFunction
             $file.say: '{';
             $file.say: "    # $type tests";
             unless $type eq "Num" || $type eq "Complex" {
-                $file.say: InverseTest('    is_approx(($typed-result).$fun, $angle, "$type.$fun - $angle");', 
+                $file.say: InverseTest('    is-approx(($typed-result).$fun, $angle, "$type.$fun - $angle");', 
                                         $angle_list.shift, $inv, $type, $.desired-result-code);
             }
 
-            $file.say: InverseTest('    is_approx($fun($typed-result), $angle, "$fun($type) - $angle");', 
+            $file.say: InverseTest('    is-approx($fun($typed-result), $angle, "$fun($type) - $angle");', 
                                     $angle_list.shift, $inv, $type, $.desired-result-code);
 
 
@@ -425,18 +425,18 @@ for @sines -> $angle
 	my $desired-result = sin($angle.key()) / cos($angle.key());
 
     # Num.atan2 tests
-    is_approx($desired-result.Num.atan2.tan, $desired-result, 
+    is-approx($desired-result.Num.atan2.tan, $desired-result, 
               "Num.atan2() - {$angle.key()}");
-    is_approx($desired-result.Num.atan2(1.Num).tan, $desired-result, 
+    is-approx($desired-result.Num.atan2(1.Num).tan, $desired-result, 
               "Num.atan2(1.Num) - {$angle.key()}");
 }
 
 # check that the proper quadrant is returned
 
-is_approx(atan2(4, 4), pi / 4, "atan2(4, 4) is pi / 4");
-is_approx(atan2(-4, 4), -pi / 4, "atan2(-4, 4) is -pi / 4");
-is_approx(atan2(4, -4), 3 * pi / 4, "atan2(4, -4) is 3pi / 4");
-is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
+is-approx(atan2(4, 4), pi / 4, "atan2(4, 4) is pi / 4");
+is-approx(atan2(-4, 4), -pi / 4, "atan2(-4, 4) is -pi / 4");
+is-approx(atan2(4, -4), 3 * pi / 4, "atan2(4, -4) is 3pi / 4");
+is-approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
 ];
 
 my @values = (-100, -10, -1, -.1, .1, 1, 10, 100);
@@ -455,11 +455,11 @@ for <Num Rat Int Str DifferentReal FatRat> -> $type1 {
     $file.say: "    # $type1 tests";
     
     unless $type1 eq "Num" {
-        $file.say: Atan2Test('    is_approx($type1-value.atan2, $desired-result, "$type1.atan2");', 
+        $file.say: Atan2Test('    is-approx($type1-value.atan2, $desired-result, "$type1.atan2");', 
                              filter-type(@values, $type1).pick, $type1);
     }
 
-    $file.say: Atan2Test('    is_approx(atan2($type1-value), $desired-result, "atan2($type1)");', 
+    $file.say: Atan2Test('    is-approx(atan2($type1-value), $desired-result, "atan2($type1)");', 
                          filter-type(@values, $type1).pick, $type1);
 
     $file.say: "}";
@@ -469,9 +469,9 @@ for <Num Rat Int Str DifferentReal FatRat> -> $type1 {
         $file.say: '{';
         $file.say: "    # $type1 vs $type2 tests";
         
-        $file.say: Atan2Test('    is_approx($type1-value.atan2($type2-value), $desired-result, "$type1.atan2($type2)");', 
+        $file.say: Atan2Test('    is-approx($type1-value.atan2($type2-value), $desired-result, "$type1.atan2($type2)");', 
                              filter-type(@values, $type1).pick, filter-type(@values, $type2).pick, $type1, $type2);
-        $file.say: Atan2Test('    is_approx(atan2($type1-value, $type2-value), $desired-result, "atan2($type1, $type2)");', 
+        $file.say: Atan2Test('    is-approx(atan2($type1-value, $type2-value), $desired-result, "atan2($type1, $type2)");', 
                              filter-type(@values, $type1).pick, filter-type(@values, $type2).pick, $type1, $type2);
         $file.say: "}";
         $file.say: "";

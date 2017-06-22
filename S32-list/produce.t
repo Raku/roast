@@ -10,7 +10,6 @@ This test tests the C<produce> builtin.
 
 plan 25;
 
-#?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
 {
     is-deeply (produce *+*, 1..10), +«<1 3 6 10 15 21 28 36 45 55>, "produce listop works on a range (+)";
     is-deeply (1..10).produce(*+*), +«<1 3 6 10 15 21 28 36 45 55>, "produce method works on a range (+)";
@@ -18,9 +17,7 @@ plan 25;
 }
 
 {
-    #?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
     is-deeply (produce &[*], 1..5), +«<1 2 6 24 120>, "produce listop works on a range (*)";
-    #?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
     is-deeply (1..5).produce(&[*]), +«<1 2 6 24 120>, "produce method works on a range (*)";
     is-deeply (1..5).produce(&[*]), [\*](1..5), "produce method is identical to triangle reduce (*)";
     is-deeply (2..4).produce(&[**]), [\**](2..4), "produce method is identical to triangle reduce (**)";
@@ -79,7 +76,7 @@ plan 25;
     push @reftypes, $hash ~~ Hash;
     $hash.{$key};
   }
-  is((produce(&foo, flat $hash, <a b c>)).gist, '(a => b => c => 42 b => c => 42 c => 42 42)', 'produce(&foo) (foo ~~ .{}) works three levels deep');
+  is((produce(&foo, flat $hash, <a b c>)).gist, '({a => {b => {c => 42}}} {b => {c => 42}} {c => 42} 42)', 'produce(&foo) (foo ~~ .{}) works three levels deep');
   ok ([&&] @reftypes), "All the types were hashes";
 }
 

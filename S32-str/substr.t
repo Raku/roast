@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 56;
+plan 59;
 
 # L<S32::Str/Str/=item substr>
 
@@ -44,7 +44,6 @@ plan 56;
     my $str = join '', 0x10426.chr, 0x10427.chr;
     #?rakudo.jvm todo 'codepoints greater than 0xFFFF RT #124692'
     is $str.codes, 2, "Sanity check string";
-    #?niecza 2 todo "substr bug"
     #?rakudo.jvm 2 skip 'java.nio.charset.MalformedInputException RT #124692'
     is substr($str, 0, 1), 0x10426.chr, "Taking first char of Deseret string";
     is substr($str, 1, 1), 0x10427.chr, "Taking second char of Deseret string";
@@ -96,13 +95,11 @@ plan 56;
 }
 
 # RT #76682
-#?niecza skip "'Failure' used at line 244"
 {
     isa-ok "foo".substr(4), Failure, 'substr with start beyond end of string is Failure';
 }
 
 # RT #115086
-#?niecza todo
 {
     is "abcd".substr(2, Inf), 'cd', 'substr to Inf';
 }
@@ -113,10 +110,24 @@ plan 56;
 }
 
 # RT #123602
-#?rakudo.moar todo 'RT #123602'
 {
     is ("0" x 3 ~ "1").substr(2), '01',
         'substr on a string built with infix:<x> works';
+}
+
+# RT #128039
+{
+    throws-like { 'foo'.substr(5) }, X::OutOfRange,
+        :message(/'Start argument to substr' .+ 'should be in 0..3' .+ '*-5'/);
+    throws-like { ''.substr(1000) }, X::OutOfRange,
+        :message(/'should be in 0..0' .+ '*-1000'/);
+}
+
+
+# RT #128038
+{
+    is "".substr(5).handled, False,
+        'Failure in .substr does not get incorrectly handled';
 }
 
 # vim: ft=perl6

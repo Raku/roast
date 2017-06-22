@@ -1,9 +1,11 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 # L<S29/Context/"=item sleep">
 
-plan 22;
+plan 23;
 
 my $seconds = 3;
 my $nil is default(Nil);
@@ -15,19 +17,16 @@ my $b;
     $nil = sleep $seconds;
     my $diff = now - $start;
 
-    #?niecza todo "NYI"
     ok $nil === Nil , 'sleep() always returns Nil';
 
     ok $diff >= $seconds - 1 , 'we actually slept at some seconds';
     ok $diff <= $seconds + 5 , '... but not too long';
 
-    #?niecza 2 skip "NYI"
     $nil = 1;
     lives-ok { $nil = sleep(-1) }, "silently ignores negative times";
     ok $nil === Nil , 'sleep() always returns Nil';
 } #5
 
-#?niecza skip "NYI"
 {
     diag "sleep-timer() for $seconds seconds";
     my $then = now;
@@ -50,7 +49,6 @@ my $b;
     is $left, 0, 'no time left to wait either';
 } #6
 
-#?niecza skip "NYI"
 {
     diag "sleep-until() for $seconds seconds";
     my $then  = now;
@@ -72,11 +70,17 @@ my $b;
     nok sleep-until($then + $seconds), 'should not actually sleep again';
 } #4
 
-#?niecza todo "NYI"
 {
     diag "checking infinite waiting times";
     isa-ok EVAL('$b={sleep(Inf)}'),       Block, 'sleep(Inf) compiles';
     isa-ok EVAL('$b={sleep(*)}'),         Block, 'sleep(*) compiles';
 } #2
+
+
+{ # RT#130170
+    is_run ｢start { sleep 3; exit }; sleep 9999999999999999999; say "Fail"｣, {
+        :out(''), :err(''), :0status
+    }, 'huge values to sleep() work';
+}
 
 # vim: ft=perl6

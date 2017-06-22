@@ -122,12 +122,10 @@ for %hash.kv -> $key, $value {
 {
     my $pair = (a => my $ = 42);
 
-    #?niecza todo 'aliases should be rw'
     lives-ok { for $pair.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases to items returned by $pair.kv should be rw (1)';
 
-    #?niecza todo 'aliases should be rw'
     is $pair.value, 142, 'aliases returned by $pair.kv should be rw (2)';
 }
 

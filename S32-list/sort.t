@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 30;
+plan 35;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -154,7 +154,6 @@ plan 30;
 }
 
 
-#?niecza todo "Niecza's sort is not stable"
 {
     is (<P e r l 6>.sort: { 0; }).join, 'Perl6',
     'sort with arity 0 closure is stable';
@@ -183,13 +182,11 @@ plan 30;
 
 # RT #67010
 {
-    my @list = 1, 2, Code;
-    lives-ok { @list.sort: { $^a cmp $^b } },
-        'sort by class name';
+    my @list = 1, 2, Code, True;
+    quietly lives-ok { @list.sort: { $^a cmp $^b } }, 'sort by class name';
 }
 
 # RT #68112
-#?niecza skip "determine behavior of 0-arity methods passed to sort"
 {
     sub foo () { 0 }   #OK not used
     throws-like { EVAL '(1..10).sort(&foo)' }, Exception,
@@ -204,9 +201,26 @@ plan 30;
 
     my @sorted;
 
-    #?niecza todo 'Is this test actually testing for correct behavior?'
     lives-ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
 }
+
+# RT #128779
+{
+    my &code-method = *.sort;
+    my &code-sub    =  &sort;
+    is code-method(<y z x>).^name, 'Seq', '.sort stored in a sub returns a List';
+    is code-sub(   <y z x>).^name, 'Seq', '&sort stored in a sub returns a List';
+}
+
+# RT #126921
+is (<2 1 3>   .sort).^name, 'Seq', 'detached .sort returns a List';
+
+# RT #126859
+is (*.sort)(<2 3 1>).^name, 'Seq', 'auto-primed *.sort returns a Seq';
+
+# RT #130866
+eval-lives-ok ｢.elems, .sort with @｣,
+    '.sort on reified empty array does not crash';
 
 # vim: ft=perl6

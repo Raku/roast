@@ -1,6 +1,7 @@
 use v6;
+use nqp;
 use Test;
-plan 23;
+plan 24;
 
 # L<S29/Context/"=item EVAL">
 
@@ -56,7 +57,6 @@ dies-ok({EVAL {; 42} }, 'block EVAL is gone');
 }
 
 #?rakudo skip 'EVAL(Buf) RT #122256'
-#?niecza skip 'Unable to resolve method encode in class Str'
 {
     is EVAL("'møp'".encode('UTF-8')), 'møp', 'EVAL(Buf)';
     is "'møp'".encode('UTF-8').EVAL, 'møp', 'Buf.EVAL';
@@ -80,7 +80,6 @@ dies-ok({EVAL {; 42} }, 'block EVAL is gone');
 }
 
 # RT #112472
-#?niecza todo "No :lang argument yet..."
 {
     try EVAL(:lang<rt112472>, '1');
     ok "$!" ~~ / 'rt112472' /, 'EVAL in bogus language mentions the language';
@@ -88,11 +87,9 @@ dies-ok({EVAL {; 42} }, 'block EVAL is gone');
 
 # RT #115344
 my $rt115344 = 115344;
-#?niecza skip 'method form of EVAL does not see outer lexicals'
 is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
 
 # RT #115774
-#?niecza skip "int NYI"
 {
     my int $a; EVAL('');
     ok(1, "presence of low level types doesn't cause EVAL error")
@@ -103,6 +100,14 @@ is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
     my \a = rand;
     lives-ok { EVAL 'a' }, 'Can EVAL with a sigilless var';
     is EVAL('a'), a, 'EVAL with sigilless var gives correct result';
+}
+
+# RT #128457
+{
+    is
+        nqp::atkey(CompUnit::Loader.load-source(q<package Qux { BEGIN EVAL q<>; };>.encode).unit, q<$?PACKAGE>).^name,
+        "GLOBAL",
+        "EVAL's package does not leak to the surrounding compilation unit";
 }
 
 # vim: ft=perl6

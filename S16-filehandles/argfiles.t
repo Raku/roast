@@ -5,10 +5,10 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 12;
+plan 16;
 
-sub create-temporary-file {
-    my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
+sub create-temporary-file ($name = '') {
+    my $filename = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ $name ~ '-' ~ time;
     return $filename, open($filename, :w);
 }
 
@@ -30,6 +30,7 @@ is $output, "one\n", 'get() should read from $*ARGFILES, which reads from files 
 
 $output = Test::Util::run('say get()', "foo\nbar\nbaz\n");
 
+#?rakudo.jvm todo 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
 is $output, "foo\n", 'get($*ARGFILES) reads from $*IN if no files are in @*ARGS';
 
 $output = Test::Util::run('while get() -> $line { say $line }', :@args);
@@ -53,15 +54,18 @@ $output = Test::Util::run('.say for lines()', :args($tmp-file-name xx 3));
 # RT #126494
 is-deeply @lines, [|<one two three> xx 3], 'lines() using $*ARGFILES, works for more than one file';
 
-$output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n");
-@lines  = lines($output);
+#?rakudo.jvm skip 'hangs, RT #131393'
+{
+    $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n");
+    @lines  = lines($output);
 
-is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if no files are in @*ARGS';
+    is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if no files are in @*ARGS';
 
-$output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n", :args(['-']));
-@lines  = lines($output);
+    $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n", :args(['-']));
+    @lines  = lines($output);
 
-is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if - is in @*ARGS';
+    is-deeply @lines, [<foo bar baz>], 'lines($*ARGFILES) reads from $*IN if - is in @*ARGS';
+}
 
 $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n", :@args);
 @lines  = lines($output);
@@ -81,7 +85,39 @@ is-deeply @lines, [<one two three>], 'Changing @*ARGS before calling things on $
 
 # RT #123888
 $output = Test::Util::run('$*IN.nl-in = "+"; say get() eq "A";', "A+B+C+");
-#?rakudo.jvm todo 'RT #123888'
+#?rakudo.jvm todo 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
 is $output, "True\n", 'Can change $*IN.nl-in and it has effect';
+
+{ # https://github.com/rakudo/rakudo/commit/bd4236359c9150e4490d86275b3c2629b6466566
+    my @lines = lines Test::Util::run(
+        ｢@*ARGS = '｣ ~ $tmp-file-name ~ ｢' xx 2; .say for $*ARGFILES.lines(5)｣
+    );
+    is-deeply @lines, [<one two three one two>], '.lines with limit works across files';
+}
+
+subtest '.lines accepts all Numerics as limit' => {
+    my @stuff = 5, 5/1, 5e0, 5+0i, <5>, < 5/1>, <5e0>, < 5+0i>;
+    plan +@stuff;
+    for @stuff -> $limit {
+        my @lines = lines Test::Util::run(
+            ｢@*ARGS = '｣ ~ $tmp-file-name
+                ~ ｢' xx 2; .say for $*ARGFILES.lines: ｣ ~ $limit.perl
+        );
+        is-deeply @lines, [<one two three one two>], "{$limit.^name} limit";
+    }
+}
+
+# RT #130430
+#?rakudo.jvm todo 'appends newlines after expected output'
+is_run ｢.put for $*ARGFILES.lines: 1000｣, "a\nb\nc", {
+    :out("a\nb\nc\n"),
+    :err(''),
+    :0status,
+}, '.lines stops when data ends, even if limit has not been reached yet';
+
+# https://github.com/rakudo/rakudo/commit/4b8fd4a4f9
+#?rakudo.jvm todo 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
+is_run ｢run(:in, $*EXECUTABLE, '-e', 'get').in.close｣,
+    {:out(''), :err(''), :0status}, 'no crash when ^D with get(ARGFILES)';
 
 $tmp-file-name.IO.unlink;

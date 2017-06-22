@@ -17,7 +17,6 @@ grammar Grammar::Foo {
 is( try { Grammar::Foo.parse( 'so', :rule<so> ) }, 'so',
   "don't let a Mu based action method fail the parse" );
 
-#?niecza skip 'Cannot dispatch to a method on Foo because it is not inherited or done by Cursor'
 is(~('foo' ~~ /^<Grammar::Foo::foo>$/), 'foo', 'got right match (foo)');
 ok Grammar::Foo.parse('foo'), 'got the right match through .parse TOP';
 ok Grammar::Foo.parse('foo', :rule<foo>), 'got the right match through .parse foo';
@@ -32,7 +31,6 @@ isa-ok Grammar::Foo, Grammar, 'grammar isa Grammar';
 isa-ok Grammar::Bar, Grammar, 'inherited grammar still isa Grammar';
 isa-ok Grammar::Bar, Grammar::Foo, 'child isa parent';
 
-#?niecza 4 skip 'Cannot dispatch to a method on Bar because it is not inherited or done by Cursor'
 is(~('bar' ~~ /^<Grammar::Bar::bar>$/), 'bar', 'got right match (bar)');
 is(~('foo' ~~ /^<Grammar::Bar::foo>$/), 'foo', 'got right match (foo)');
 is(~('foo' ~~ /^<Grammar::Bar::any>$/), 'foo', 'got right match (any)');
@@ -50,7 +48,6 @@ grammar Grammar::Baz is Grammar::Bar {
     token any { <foo> | <bar> | <baz> };
 };
 
-#?niecza 6 skip 'Cannot dispatch to a method on Baz because it is not inherited or done by Cursor'
 is(~('baz' ~~ /^<Grammar::Baz::baz>$/), 'baz', 'got right match');
 is(~('foo' ~~ /^<Grammar::Baz::foo>$/), 'foo', 'got right match');
 is(~('bar' ~~ /^<Grammar::Baz::bar>$/), 'bar', 'got right match');
@@ -70,7 +67,6 @@ nok Grammar::Baz.parse('boo', :rule<any>), 'No match for bad input (any)';
     class A { };
     grammar B is A { };
     #?rakudo todo 'automatic Grammar superclass'
-    #?niecza todo 'automatic Grammar superclass'
     isa-ok B, Grammar, 'A grammar isa Grammar, even if inherting from a class';
 
 }

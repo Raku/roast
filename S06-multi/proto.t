@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 27;
 
 # Test for proto definitions
 class A { }
@@ -22,7 +22,6 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     }
 
     #?rakudo todo 'operator protos'
-    #?niecza todo
     is ([+] 1,2,3), 12, "[+] overloaded by proto definition";
 }
 
@@ -32,7 +31,6 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     is (moose 3), 4, "proto definition of prefix:<moose> works";
 }
 
-#?niecza skip '>>>Stub code executed'
 {
     proto prefix:<elk> ($arg) { * }
     multi prefix:<elk> ($arg) { $arg + 1 }
@@ -82,7 +80,6 @@ throws-like 'bar(41)', Exception, 'impossible dispatch failed (anon cap)';
 }
 
 # RT #111454
-#?niecza skip "System.NullReferenceException: Object reference not set to an instance of an object"
 {
     my package Cont {
         our proto sub ainer($) {*}
@@ -91,7 +88,6 @@ throws-like 'bar(41)', Exception, 'impossible dispatch failed (anon cap)';
     is Cont::ainer(21), 42, 'our proto can be accessed from the ouside';
 }
 
-#?niecza skip 'Unhandled exception: Cannot use value like Block as a number'
 {
     my proto f($) {
         2 * {*} + 5
@@ -137,11 +133,14 @@ throws-like 'bar(41)', Exception, 'impossible dispatch failed (anon cap)';
 }
 
 # RT #116164
-#?niecza todo
 {
     throws-like q[
         proto f(Int $x) {*}; multi f($) { 'default' }; f 'foo'
     ], X::TypeCheck::Argument, 'proto signature is checked, not just that of the candidates';
 }
+
+# https://irclog.perlgeek.de/perl6/2017-02-13#i_14093827
+throws-like ｢my &x; sub x {}｣, X::Redeclaration,
+    'my &x; sub x {} throws useful error';
 
 # vim: ft=perl6

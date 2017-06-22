@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 100;
+plan 103;
 
 #L<S02/Mutable types/Array>
 
@@ -146,7 +146,6 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?rakudo skip "multi-dim arrays NYI RT #124508"
-#?niecza skip "multi-dim arrays NYI"
 {
 # declare a multidimension array
     throws-like { EVAL 'my @multidim[0..3; 0..1]' },
@@ -163,7 +162,6 @@ my @array2 = ("test", 1, Mu);
     my Int @array;
     lives-ok { @array[0] = 23 },
       "stuffing Ints in an Int array works";
-    #?niecza todo "type constraints"
     throws-like { @array[1] = $*ERR },
       X::TypeCheck::Assignment,
       "stuffing IO in an Int array does not work";
@@ -176,7 +174,6 @@ my @array2 = ("test", 1, Mu);
     is @array12[*-1],'e', "indexing from the end [*-1]";
 
     # end index range
-    #?niecza skip "WhateverCode/.. interaction"
     is ~@array12[*-4 .. *-2], 'a b c', "end indices [*-4 .. *-2]";
 
     # end index as lvalue
@@ -185,7 +182,6 @@ my @array2 = ("test", 1, Mu);
     is ~@array12,'a b c d', "assignment to end index correctly alters the array";
 }
 
-#?niecza skip "*/.. interaction"
 {
     my @array13 = ('a', 'b', 'c', 'd');
     # end index range as lvalue
@@ -205,7 +201,6 @@ my @array2 = ("test", 1, Mu);
 }
 
 # RT #76676
-#?niecza todo
 {
     is ~<a b>.[^*], 'a b', 'Infinite range subscript as rvalues clip to existing elems';
     is ~<a b>.[lazy ^10], 'a b', 'Lazy range subscript as rvalues clip to existing elems';
@@ -259,7 +254,6 @@ my @array2 = ("test", 1, Mu);
     X::Obsolete,
     message => 'Unsupported use of a negative -2 subscript to index from the end; in Perl 6 please use a function such as *-2',
     "readonly accessing [-2] of normal array throws X::Obsolete and is fatal";
-  #?niecza todo '@arr[-1] returns undef'
   throws-like { @arr[ $minus_one ] },
     X::OutOfRange,
     "indirectly accessing [-1] through a variable throws X::OutOfRange";
@@ -285,7 +279,6 @@ my @array2 = ("test", 1, Mu);
     is 1[0], 1, '.[0] is identity operation for scalars (Int)';
     is 'abc'[0], 'abc', '.[0] is identity operation for scalars (Str)';
     nok 'abc'[1].defined, '.[1] on a scalar is not defined';
-    #?niecza skip "Failure NYI"
     isa-ok 1[1],  Failure, 'indexing a scalar with other than 0 returns a Failure';
     throws-like { Mu.[0] },
       X::Multi::NoMatch,
@@ -293,7 +286,6 @@ my @array2 = ("test", 1, Mu);
 }
 
 #RT #77072
-#?niecza skip "Zen slices"
 {
     my @a = <1 2 3>;
     is @a[*], <1 2 3> , 'using * to access all array elements works';
@@ -316,7 +308,7 @@ my @array2 = ("test", 1, Mu);
         $_++ if $_;
     }
     is ~@a, '0 2 3', "modifier form of 'if' within 'for' loop works";
-    
+
     my @b = 0, 1, 2;
     for @b {
         if $_ {
@@ -336,20 +328,17 @@ my @array2 = ("test", 1, Mu);
 }
 
 # RT #79270
-#?niecza skip 'Cannot use value like WhateverCode as a number'
 {
     my @a = <a b c>;
     @a[0 ..^ *-1] >>~=>> "x";
     is @a.join(','), 'ax,bx,c', '0..^ *-1 works as an array index';
 }
 
-#?niecza skip 'coercion syntax'
 {
     is Array(1,2,3).WHAT.gist, '(Array)', 'Array(...) makes an Array';
     ok Array(1,2,3) eqv [1,2,3],          'Array(1,2,3) makes correct array';
 }
 
-#?niecza skip "throws-like"
 #?rakudo todo "regression to AdHoc exception RT #124509"
 {
     throws-like { EVAL 'my @a = 1..*; @a[Inf] = "dog"' },
@@ -375,6 +364,30 @@ my @array2 = ("test", 1, Mu);
     my @b;
     @b[9] = 10;
     is @b.sum, 10, 'handle sparse arrays correctly';
+}
+
+# RT#128005
+{
+    my %foo;
+    %foo<bar>[*-0] = 42;
+
+    is-deeply %foo<bar>, [42],
+        '[*-0] index references correct element when autovivifying';
+}
+
+{ # coverage; 2016-09-21
+    my $x = Array;
+    cmp-ok $x.flat,  '===', $x, 'Array:U.flat is identity';
+}
+
+# https://github.com/rakudo/rakudo/commit/51b0aba8e8
+subtest 'flat propagates .is-lazy' => {
+    plan 4;
+    is-deeply (42 xx *).flat.is-lazy, True,  'method, True';
+    is-deeply (42 xx 1).flat.is-lazy, False, 'method, False';
+
+    is-deeply flat(42 xx *) .is-lazy, True,  'sub, True';
+    is-deeply flat(42 xx 1) .is-lazy, False, 'sub, False';
 }
 
 # vim: ft=perl6

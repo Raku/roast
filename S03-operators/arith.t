@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 157;
+plan 158;
 
 my $five = abs(-5);
 
@@ -149,7 +149,7 @@ tryeq -2 * 3, -6;
 tryeq 3 * -3, -9;
 tryeq -4 * -3, 12;
 
-{   
+{
     # 2147483647 is prime. bah.
     
     tryeq 46339 * 46341, 0x7ffea80f;
@@ -199,20 +199,29 @@ tryeq -5.5 / -2, 2.75;
 
 is 2**2, 4;
 is 2.2**2, 4.84;
-is_approx 2**2.2,   4.59479341;
-is_approx 2.2**2.2, 5.66669577;
+is-approx 2**2.2,   4.59479341;
+is-approx 2.2**2.2, 5.66669577;
 is 1**0, 1;
 is 1**1, 1;
 isnt 2**3**4, 4096, "** is right associative";
+
+# RT #125811
+#?rakudo.moar 1 skip 'overflow exception is not thrown on OSX RT #127500'
+{
+    throws-like { 2 ** 99999999999999999999999999999999999 },
+        X::Numeric::Overflow,
+        :message(/'Numeric overflow'/),
+    'extremely large exponents must throw numeric overflow';
+}
 
 # test associativity
 is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 
 {
-    is_approx(-1, (0 + 1i)**2, "i^2 == -1");
+    is-approx(-1, (0 + 1i)**2, "i^2 == -1");
 
-    is_approx(-1, (0.7071067811865476 + -0.7071067811865475i)**4, "sqrt(-i)**4 ==-1" );
-    is_approx(1i, (-1+0i)**0.5, '(-1+0i)**0.5 == i ');
+    is-approx(-1, (0.7071067811865476 + -0.7071067811865475i)**4, "sqrt(-i)**4 ==-1" );
+    is-approx(1i, (-1+0i)**0.5, '(-1+0i)**0.5 == i ');
 }
 
 {
@@ -260,7 +269,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
         ## cmp. http://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=49240
         is 1**Inf, 1, "1**Inf returns 1";
     }
-    else {  
+    else {
         is 1**Inf, 1, "1**Inf returns 1";
     }
 
@@ -399,7 +408,7 @@ All uses of a zero modulus or divisor should 'die', and the
     my role orig-string[$o] { method Str() { $o.Str } };
     my $a = 7 but orig-string['7'];
     is ($a - 3).Str, '4',
-        'infix:<-> produces a proper Int, even if some of the types invovled have mixins';
+        'infix:<-> produces a proper Int, even if some of the types involved have mixins';
 }
 
 # RT #122053

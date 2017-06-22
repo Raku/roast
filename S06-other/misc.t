@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 16;
 
 #not really much of a test (no links to the spec either). Please improve, I only wrote what was required! --lue
 
@@ -50,3 +50,32 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
         'no Segfault when creating a Sub object with .bless and trying to say it';
     throws-like 'Sub(0)', Exception, 'no Segfault when trying to invoke the Sub type object';
 }
+
+# RT #129780
+{
+    throws-like
+        { EVAL q|sub foo($a where {* < 5 or $a > 9}) { dd $a }| },
+        X::Syntax::Malformed,
+        'where clause with only one *, but two expressions',
+        message => /Malformed \s double \s closure/;
+
+    throws-like
+        { EVAL q|sub foo($a where {* < 5 or * > 9}) { dd $a }| },
+        X::Syntax::Malformed,
+        'where clause with two *s and two expressions (with an or)',
+        message => /Malformed \s double \s closure/;
+
+    throws-like
+        { EVAL q|sub foo($a where {* < 5 and * > 9}) { dd $a }| },
+        X::Syntax::Malformed,
+        'where clause with two *s and two expressions (with an and)',
+        message => /Malformed \s double \s closure/;
+
+    throws-like
+        { EVAL q|sub foo($a where {* < 5 and * > 9 and *.char == 2}) { dd $a }| },
+        X::Syntax::Malformed,
+        'where clause with three *s and three expressions',
+        message => /Malformed \s double \s closure/;
+}
+
+# vim: ft=perl6 expandtab sw=4

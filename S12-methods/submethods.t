@@ -68,7 +68,6 @@ Basic submethod tests. See L<S12/"Submethods">
 # See thread "Roles and BUILD" on p6l
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/21277">
 #?rakudo skip 'outer lexicals in roles RT #124850'
-#?niecza todo
 {
   my $was_in_a1_build = 0;
   my $was_in_a2_build = 0;
@@ -96,7 +95,6 @@ Basic submethod tests. See L<S12/"Submethods">
   is $was_in_b2_build, 0, "roles' BUILD submethods were not yet called (2)";
 
   $B does (RoleB1, RoleB2);
-  #?niecza 2 todo
   is $was_in_b1_build, 1, "roles' BUILD submethods were called now (1)";
   is $was_in_b2_build, 1, "roles' BUILD submethods were called now (2)";
 };

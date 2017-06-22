@@ -3,7 +3,7 @@ use Test;
 
 # Nil may be a type now.  Required?
 
-plan 52;
+plan 65;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -101,7 +101,6 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     ok f4(Nil) === Nil, 'can use Nil as a default (nil-triggered)';
 }
 
-#?niecza todo '$/!_ does not default to Nil'
 {
     ok $/ === Nil, '$/ is by default Nil';
     ok $! === Nil, '$! is by default Nil';
@@ -130,6 +129,28 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     ok niltest<foo><bar><A> === Nil, "hash access on Nil gives Nil again II";
 
     ok niltest.foo.bar.<bar>.[12].[99].<foo> === Nil, ".<> and .[] works properly, too";
+}
+
+{ # coverage; 2016-10-14
+    throws-like { Nil.BIND-POS   }, Exception, '.BIND-POS throws';
+    throws-like { Nil.BIND-KEY   }, Exception, '.BIND-KEY throws';
+    throws-like { Nil.ASSIGN-POS }, Exception, '.ASSIGN-POS throws';
+    throws-like { Nil.ASSIGN-KEY }, Exception, '.ASSIGN-KEY throws';
+    throws-like { Nil.STORE      }, Exception, '.STORE throws';
+    throws-like { Nil.push       }, Exception, '.push throws';
+    throws-like { Nil.append     }, Exception, '.append throws';
+    throws-like { Nil.unshift    }, Exception, '.unshift throws';
+    throws-like { Nil.prepend    }, Exception, '.prepend throws';
+
+    {
+        CONTROL { when CX::Warn { pass 'Nil.ords warns'; .resume; } }
+        is-deeply Nil.ords, ().Seq, 'Nil.ords gives an empty Seq';
+    }
+
+    {
+        CONTROL { when CX::Warn { pass 'Nil.chrs warns'; .resume; } }
+        is-deeply Nil.chrs, "\0", 'Nil.chrs gives a null byte';
+    }
 }
 
 # vim: ft=perl6

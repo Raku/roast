@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 38;
 
 =begin description
 
@@ -29,7 +29,6 @@ This test tests the C<repeated> builtin.
 } #1
 
 # With a userspecified criterion
-#?niecza skip "NYI"
 {
     my @array = <b a b d A c>;
     # Semantics w/o junctions
@@ -68,14 +67,12 @@ This test tests the C<repeated> builtin.
 {
     my $a = <a b c b d c>;
     $a .= repeated;
-    #?rakudo.jvm skip 'This Seq has already been iterated, and its values consumed'
     is-deeply( $a.List, <b c>, '.= repeated in sink context works on $a' );
     my @a = <a b c b d c>;
     @a .= repeated;
     is-deeply( @a, [<b c>], '.= repeated in sink context works on @a' );
 } #2
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d ee b bbbb e b b f b>;
     my $as    = *.substr: 0,1;
@@ -89,7 +86,6 @@ This test tests the C<repeated> builtin.
       "final result with :as in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb e b b f b>;
     my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
@@ -103,7 +99,6 @@ This test tests the C<repeated> builtin.
       "final result with :with in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb e b b f b>;
     my $as    = *.substr(0,1).ord;
@@ -118,7 +113,6 @@ This test tests the C<repeated> builtin.
       "final result with :as in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = ({:a<1>}, {:b<1>}, {:a<1>});
     my $with  = &[eqv];
@@ -132,11 +126,26 @@ This test tests the C<repeated> builtin.
       "final result with [eqv] and objects in place";
 } #4
 
+# :with and :as
+{
+    my @array = ({:a<1>}, {:B<1>}, {:A<1>}, {:b<1>});
+    my $as = &lc;
+    my $with  = &[eqv];
+    is-deeply @array.repeated(:$as, :$with).List,  ({:A<1>}, {:b<1>}),
+      "method form of repeated with :as and :with and objects works";
+    is-deeply repeated(@array, :$as, :$with).List, ({:A<1>}, {:b<1>}),
+      "subroutine form of repeated with :as and :with and objects works";
+    is-deeply @array .= repeated(:$as, :$with), [{:A<1>}, {:b<1>}],
+      "inplace form of repeated with :as and :with and objects works";
+    is-deeply @array, [{:A<1>}, {:b<1>}],
+      "final result with :as and :with and objects in place";
+} #4
+
 {
     my %a;
     %a<foo> = <a b c b c>;
     %a<foo>.=repeated;
-    #?rakudo.jvm skip 'This Seq has already been iterated, and its values consumed'
+    #?rakudo.jvm skip 'This Seq has already been iterated, RT #128720'
     is-deeply %a<foo>.List, <b c>,
       "\%a<foo> not clobbered by .=repeated";
 } # 1

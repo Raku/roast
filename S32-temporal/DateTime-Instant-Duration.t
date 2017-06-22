@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 61;
 
 =begin pod
 
@@ -56,7 +56,7 @@ is +(DateTime.new('1985-03-14T13:28:22').Instant - dti),
     my $b = dtp(2005,  1,  1,    2, 22, 13.4);
     my $expected-diff = 60 - 8.5 + 2*60 + 2*60*60 + 22*60 + 13.4;
     is +($b.Instant() - $a.Instant), $expected-diff, 'Instant subtraction (ugly case)';
-    
+
     $a .= clone(timezone => 35*60 - 5);
     $b .= clone(timezone => 3*60*60);
     is +($a.Instant() - $b.Instant), 0.1, 'Instant subtraction (time zones)';
@@ -77,7 +77,7 @@ is +(DateTime.new('1985-03-14T13:28:22').Instant - dti),
     $a .= clone(year => 1973);
     $b .= clone(year => 2008);
     is +($b.Instant() - $a.Instant), 1_104_451_227, 'Instant subtraction (thirty-year span)';
-      # I got this figure by adding 22 (the number of leap seconds 
+      # I got this figure by adding 22 (the number of leap seconds
       # between the two moments) to the difference of POSIX
       # times.
 }
@@ -130,6 +130,29 @@ for 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1449755609 {
     my $i = Instant.from-posix($_);
     is $i.to-posix[0], $_, "Round-tripping Instant.[from|to]-posix ($_)";
     is $i.DateTime.Instant, $i, "Round-tripping Instant.DateTime ($_)";
+}
+
+{ # coverage; 2016-10-03
+    is-deeply Duration.new(4e0).narrow, 4,   'Duration.narrow (Int)';
+    is-deeply Duration.new(4.5).narrow, 4.5, 'Duration.narrow (Rat)';
+    is-deeply .perl.EVAL, $_, 'Duration.perl roundtrips' given Duration.new: 4;
+
+    subtest 'infix:<->(Duration, Real)' => {
+        plan 9;
+        constant $d = Duration.new: 4.5;
+        is-deeply $d - (-1),   Duration.new(5.5),   '-1';
+        is-deeply $d - 1,      Duration.new(3.5),   '1';
+        is-deeply $d - 100,    Duration.new(-95.5), '100';
+        is-deeply $d - (-1e0), Duration.new(5.5),   '-1e0';
+        is-deeply $d - 1e0,    Duration.new(3.5),   '1e0';
+        is-deeply $d - 1e2,    Duration.new(-95.5), '1e2';
+        is-deeply $d - (-1.5), Duration.new(6),     '-1.5';
+        is-deeply $d - 1.5,    Duration.new(3),     '1.5';
+        is-deeply $d - 100.5,  Duration.new(-96),   '1.5';
+    }
+
+    is-deeply now.Date, DateTime.now(:timezone(0)).Date, 'Instant.Date';
+    throws-like { Instant.Date }, Exception, 'Instant:U.Date throws';
 }
 
 # vim: ft=perl6

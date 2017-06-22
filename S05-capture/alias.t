@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 30;
+plan 32;
 
 # L<S05/Named scalar aliasing to subpatterns/If a named scalar alias is applied>
 
@@ -64,5 +64,13 @@ ok("foobar" ~~ m/$42=. (..) (...) /, 'Capture starting at non-zero');
 is(~$42, 'f',   'Capture starting at non-zero, explicit');
 is(~$43, 'oo',  'Capture starting at non-zero, incremented once');
 is(~$44, 'bar', 'Capture starting at non-zero, incremented twice');
+
+# RT #129249
+{
+    my %what = foo => 42, bar => 43;
+    my $m = 'foo3bar4' ~~ /$<cat>=@(%what.keys)  4/;
+    is $m, 'bar4', 'Correct match of $<cat>=@(...) construct';
+    is $m<cat>,'bar', 'Correct capture of $<cat>=@(...) construct';
+}
 
 # vim: ft=perl6

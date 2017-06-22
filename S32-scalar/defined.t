@@ -134,7 +134,6 @@ ok defined(%a{"a"}),        "defined on a hash with parens (1)";
 ok !defined(%a{"b"}),       "defined on a hash with parens (2)";
 
 # RT #76448
-#?rakudo.jvm todo 'got (Int) instead of (Bool)'
 ok defined('a' => 5) ~~ Bool, 'defined is a listop, not a prefix op';
 ok &defined, '&defined is available';
 

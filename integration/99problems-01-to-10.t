@@ -129,7 +129,6 @@ plan 22;
         ($x ne $previous ?? ($previous = $x) !! ()).Slip;
     }
     my @compressed = map &compress, <a a a a b c c a a d e e e e>;
-    #?niecza todo
     is-deeply @compressed, [<a b c a d e>], 'We should be able to compress lists';
 }
 

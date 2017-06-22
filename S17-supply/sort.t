@@ -6,7 +6,7 @@ use Test::Tap;
 
 plan 7;
 
-dies-ok { Supply.sort }, 'can not be called as a class method';
+is-deeply Supply.sort, (Supply,).Seq, 'can sort a Supply type object';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 60;
 
 sub showkh($h) {
     $h.keys.sort.map({ $^k ~ ':' ~ $h{$k} }).join(' ')
@@ -170,6 +170,23 @@ sub showkh($h) {
     is +@a, 30, '.grab(30) yields 30 items';
     ok 1 < @a.grep(* eq 'a') < 30, '.grab (1)';
     ok @a.grep(* eq 'a') < @a.grep(* eq 'b'), '.grab (2)';
+}
+
+subtest 'QuantHash.Capture' => {
+    plan 7;
+
+    is-deeply class :: does QuantHash {
+        method Hash { %(:42a, :72b) }
+    }.new.Capture, %(:42a, :72b).Capture, 'custom QuantHash';
+
+    is-deeply <a b>.Set.Capture,     %(:a, :b).Capture, 'Set';
+    is-deeply <a b>.SetHash.Capture, %(:a, :b).Capture, 'SetHash';
+
+    is-deeply %(:42a, :72b).Bag.Capture,     %(:42a, :72b).Capture, 'Bag';
+    is-deeply %(:42a, :72b).BagHash.Capture, %(:42a, :72b).Capture, 'BagHash';
+
+    is-deeply %(:42a, :b(-72)).Mix.Capture,     %(:42a, :b(-72)).Capture, 'Mix';
+    is-deeply %(:42a, :b(-72)).MixHash.Capture, %(:42a, :b(-72)).Capture, 'MixHash';
 }
 
 # vim: ft=perl6

@@ -38,7 +38,6 @@ my @tests = (
     my $foo = [ 42 ]; $foo[1] = $foo;
     is $foo[1][1][1][0], 42, "basic recursive arrayref";
 
-    #?niecza skip 'hanging test'
     ok $foo.perl,
         ".perl doesn't hang on a recursive arrayref";
     #?rakudo.jvm skip 'RT #126518'
@@ -63,7 +62,6 @@ my @tests = (
 {
     my @list = (1, 2);
     append @list, EVAL (3, 4).perl;
-    #?niecza todo
     is +@list, 4, 'EVAL(@list.perl) gives a list, not a scalar';
 
     @list = (1,2);

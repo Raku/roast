@@ -18,8 +18,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list(1..5).map( {[$_]} ),
       [[1],[2],[3],[4],[5]], "On demand publish with arrays will not flatten them";
 
-    tap-ok Supply.from-list( [1,2],[3,4,5] ).map( {.reverse} ),
-      [[2, 1], [5, 4, 3]], "Same if we get lists";
+    tap-ok Supply.from-list( [1,2],[3,4,5] ).map( {.reverse.Str} ),
+      ["2 1", "5 4 3"], "Same if we get lists";
 }
 
 # vim: ft=perl6 expandtab sw=4

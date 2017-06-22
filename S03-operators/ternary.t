@@ -4,7 +4,7 @@ use Test;
 
 #Ternary operator ?? !!
 
-plan 27;
+plan 28;
 #L<S03/Changes to Perl 5 operators/"The ? : conditional operator becomes ?? !!">
 
 my $str1 = "aaa";
@@ -123,6 +123,18 @@ throws-like { EVAL '1 ?? 2' },
     throws-like { EVAL '1 ?? rt123115 !! 3' },
         X::Syntax::ConditionalOperator::SecondPartGobbled,
         'typed exception when listop gobbles the !! of conditional operator';
+}
+
+# RT #129080
+subtest 'fiddly meta error indicates what operator is used' => {
+    my @ops = <Z R X S>;
+    plan +@ops;
+
+    for @ops -> $op {
+        throws-like "1 $op?? 2 !! 3", X::Syntax::CannotMeta,
+            message => /['args of'|'with'] \s+ '??'/,
+        "$op operator";
+    }
 }
 
 # vim: ft=perl6

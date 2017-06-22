@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 14;
 
 is (1, 2, (3, 4)).tree.elems, 3, 'basic sanity (1)';
 is (1, 2, (3, 4)).tree.join('|'), '1|2|3 4', 'basic sanity (2)';
@@ -23,4 +23,26 @@ is (1, ((2, 3),  (4, 5))).tree(*.join('-'), *.join('+'), *.join('|')),
     my $t = '';
     $t ~= "|$_" for (<a b c> Z <X Y Z>).tree[];
     is $t, "|a X|b Y|c Z", '(list of lists).tree';
+}
+
+{ # coverage; 2016-09-18
+    my $i = 42;
+    my @i = 1, 2;
+    subtest '... returns self' => {
+        plan 7;
+        cmp-ok @i.tree(0),  '===', @i, '.tree(0) on Iterable';
+        cmp-ok $i.tree,     '===', $i, '.tree    on non-Iterable';
+        cmp-ok $i.tree(1),  '===', $i, '.tree(1) on non-Iterable';
+        cmp-ok $i.tree(0),  '===', $i, '.tree(0) on non-Iterable';
+        cmp-ok $i.tree(*),  '===', $i, '.tree(*) on non-Iterable';
+        cmp-ok $i.tree([{;}]),  '===', $i, '.tree([&first]) on non-Iterable';
+        cmp-ok $i.tree([{;}, 1, 2, 3]),  '===', $i,
+            '.tree([&first, *@rest]) on non-Iterable';
+    }
+    is-deeply @i.tree(*), @i.tree, '.tree(*) returns self.tree';
+
+    is @i.tree([{
+        cmp-ok $^arg, '===', @i, '.tree([&first]) calls first(self)';
+        42;
+    }]), 42, '.tree([&first]) returns result of first(self)';
 }

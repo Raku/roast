@@ -123,7 +123,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 53 + @maps;
+plan 55 + @maps;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -149,15 +149,13 @@ is (65..75).chrs, 'ABCDEFGHIJK', "there's a .chrs method";
 is ('ABCDEFGHIJK').ords.chrs, 'ABCDEFGHIJK', "ords > chrs round-trips correctly";
 is (65..75).chrs.ords, '65 66 67 68 69 70 71 72 73 74 75', "chrs > ords round-trips correctly";
 
-#?niecza skip "multi-arg variants of chr not in place yet"
 is chrs(104, 101, 108, 108, 111), 'hello', 'chrs works with a list of ints';
 
-#?niecza 5 skip "chr handling of invalid code-points"
 #?rakudo todo 'chr surrogate RT #124834'
 dies-ok {chr(0xD800)}, "chr of surrogate";
 lives-ok {chr(0x2FFFE)}, "chr of noncharacter";
 lives-ok {chr(0x2FFFF)}, "chr of noncharacter";
-#?rakudo.moar todo 'chr max RT #124837'
+#?rakudo.moar todo 'chr max RT #130914'
 dies-ok {chr(0x10FFFF+1)}, "chr out of range (max)";
 dies-ok {chr(-1)}, "chr out of range (negative)";
 
@@ -169,9 +167,18 @@ is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
 
 {
     #?rakudo.jvm todo 'NFG on JVM'
-    #?niecza todo
     is "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord, 550, '.ord gives first NFC codepoint (1)';
     is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]".ord, 550, '.ord gives first NFC codepoint (2)';
+}
+
+is chrs("104", "101", "108", "108", "111"), 'hello', 'chrs works with a list of numifiable strings';
+
+# RT #130913
+subtest 'chr with large codepoints throws useful error' => {
+    my @tests = 'chr 2⁶³-1',   '(2⁶³-1).chr', 'chr 2⁶³',
+                '2⁶³.chr',     'chr 2¹⁰⁰',    '(2¹⁰⁰).chr';
+    plan +@tests;
+    throws-like $_, Exception, .perl for @tests;
 }
 
 #vim: ft=perl6

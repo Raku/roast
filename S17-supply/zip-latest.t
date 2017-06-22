@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 12;
+plan 13;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -91,6 +91,24 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     throws-like( { Supply.zip-latest(42) },
       X::Supply::Combinator, combinator => 'zip-latest' );
+}
+
+# RT #128694
+#?rakudo.jvm skip 'RT #128694 hangs on JVM'
+{
+	my $source = Supply.interval(0.5);
+	my $heartbeat = Supply.interval(0.3);
+	my $s = supply {
+		my @collected;
+		whenever $source.zip-latest($heartbeat) {
+			 @collected.push: 'WHENEVER';
+			 if @collected == 10 {
+				 emit @collected;
+				 done;
+			 }
+		}
+	}
+	is await($s.Promise), 'WHENEVER' xx 10, 'No hang when using zip-latest on two intervals';
 }
 
 # vim: ft=perl6 expandtab sw=4

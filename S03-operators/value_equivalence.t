@@ -5,16 +5,16 @@ use Test;
 =begin pod
 
 C<===> and C<eqv> are 2 distinct operators, where C<===> tests value
-equivalence for immutable types and reference equivalence for 
+equivalence for immutable types and reference equivalence for
 mutable types, and C<eqv> tests value equivalence for snapshots of mutable
-types.  So C<(1,2) === (1,2)> returns true but C<[1,2] === [1,2]> returns 
+types.  So C<(1,2) === (1,2)> returns true but C<[1,2] === [1,2]> returns
 false, and C<[1,2] eqv [1,2]> returns true.
 
 =end pod
 
 # L<S03/"Chaining binary precedence" /Value identity>
 
-plan 85;
+plan 87;
 
 # === on values
 {
@@ -74,9 +74,7 @@ plan 85;
   my @a = (1,2,3);
   my @b = (1,2,3);
 
-  #?niecza todo
   ok  (\@a === \@a), "=== on array references (1)";
-  #?niecza todo
   ok  (\@b === \@b), "=== on array references (2)";
   ok !(\@a === \@b), "=== on array references (3)";
   isa-ok (\@a === \@a), Bool, "=== on array references (4)";
@@ -116,7 +114,6 @@ plan 85;
 
   ok  ($a === $a), "=== on scalar references (2-1)";
   ok  ($b === $b), "=== on scalar references (2-2)";
-  #?niecza todo
   ok  ($a === $b), "=== on scalar references (2-3)";
   isa-ok ($a === $a), Bool, "=== on scalar references (2-4)";
 }
@@ -191,7 +188,6 @@ isa-ok  1|2 === 1, Junction,  '=== does autothread (2)';
         my role A { };
         "x" but A;
     };
-    #?rakudo todo '.WHICH based on type names'
     nok $a === $b, 'two lexical roles come out as different when compared with ===';
 }
 
@@ -200,6 +196,11 @@ isa-ok  1|2 === 1, Junction,  '=== does autothread (2)';
     nok 1e1 === 1e1 but role { }, '=== on Num correctly demands exact type match';
     nok 1/2 === 1/2 but role { }, '=== on Rat correctly demands exact type match';
     nok 1i === 1i but role { },   '=== on Complex correctly demands exact type match';
+}
+
+{ # coverage; 2016-09-19
+    is-deeply infix:<===>(42),    Bool::True, 'single arg === gives True';
+    is-deeply infix:<===>(),      Bool::True, '    no arg === gives True';
 }
 
 # vim: ft=perl6

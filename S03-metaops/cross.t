@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 75;
+plan 79;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -75,9 +75,8 @@ is (1,2 Xcmp 3,2,0), (Order::Less, Order::Less, Order::More, Order::Less, Order:
 # L<S03/Cross operators/underlying operator non-associating>
 # test belongs to block 'L<S03/Cross operators/list concatenating form when used like this>'
 # TODO change to specific exception once the code dies
-#?rakudo todo 'code does not die'
 throws-like '<1 2> Xcmp <1 2> Xcmp <1 2>', Exception,
-    'non-associating ops cannot be cross-ops';
+    'non-associating ops cannot be cross-ops with more than one op chained';
 
 # let's have some fun with X..., comparison ops and junctions:
 
@@ -109,7 +108,6 @@ is (<a b> X <c d> X < e f>).flat.join(','),
     'a,c,e,a,c,f,a,d,e,a,d,f,b,c,e,b,c,f,b,d,e,b,d,f',
     'cross works with three lists';
 
-#?niecza todo
 is ($[1,2] X~ <a b>), '1 2a 1 2b', '$[] does not flatten';
 
 is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
@@ -124,7 +122,7 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
 
 # RT #112602
 {
-    is (1..* X* 1..*)[^3], (1, 2, 3), 'cross handles lazy lists';
+    is (1 X* 1..*)[^3], (1, 2, 3), 'cross handles lazy lists';
 }
 
 {
@@ -169,7 +167,6 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
 throws-like '3 X. foo', X::Syntax::CannotMeta, "X. is too fiddly";
 throws-like '3 X. "foo"', X::Obsolete, "X. can't do P5 concat";
 
-#?rakudo.jvm 3 skip 'RT #126493'
 is-deeply &infix:<X+>((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&infix:<X+> can autogen";
 is-deeply infix:<X+>((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "infix:<X+> can autogen";
 is-deeply &[X+]((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&[X+] can autogen";
@@ -244,5 +241,28 @@ is ($(1, 2) X~ <a b c>), ('1 2a', '1 2b', '1 2c'),
     'X meta-op respects itemization of arguments (1)';
 is (<a b c> X~ $(1, 2)), ('a1 2', 'b1 2', 'c1 2'),
     'X meta-op respects itemization of arguments (2)';
+
+# RT #78188
+{
+    subtest '&infix: works with metaoperators regardless of combination', {
+        plan 4;
+        isa-ok &infix:<Xxx>,     Block, '&infix:<Xxx>     exists';
+        isa-ok &infix:<ZXxx>,    Block, '&infix:<ZXxx>    exists';
+        isa-ok &infix:<XXXXXxx>, Block, '&infix:<XXXXXxx> exists';
+        isa-ok &infix:<XZX~>,    Block, '&infix:<XZX~>    exists';
+    }
+}
+
+# RT #127749
+is (for ^2 { [+] (^5 X ^5) }), (50, 50), 'No bogus constant-folding of X';
+
+# RT #130566
+is-deeply ([lazy 1..3] X 4..5)[^2], ((1, 4), (1, 5)),
+    'X works with lazy RHS';
+
+# RT #131395
+lives-ok { @ = (1,2) X, (); @ = (1,2) X () },
+    'cross with empty List on RHS does not crash';
+
 
 # vim: ft=perl6 et

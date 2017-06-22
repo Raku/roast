@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 28;
+plan 29;
 
 my $data = "f fo foo fooo foooo fooooo foooooo";
 
@@ -18,7 +18,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
     #RT #125815
     throws-like '$data.match(/fo+/, :nth(0))', Exception, message => rx/nth/;
-    #?rakudo.jvm 2 todo 'RT #125815'
     throws-like '$data.match(/fo+/, :nth(-1))', Exception, message => rx/nth/;
     throws-like '$data.match(/fo+/, :nth(-2))', Exception, message => rx/nth/;
 
@@ -50,8 +49,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 # 
 
 # more interesting variations of :nth(...)
-#?niecza skip 'hangs'
-#?rakudo.jvm skip 'RT #124279'
 {
     my @match = $data.match(/fo+/, :nth(2, 3)).list;
     is +@match, 2, 'nth(list) is ok';
@@ -66,16 +63,12 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     is @match, <foo fooo foooo fooooo foooooo>, 'nth(infinite range) matched correctly';
 }
 
-#?rakudo todo 'RT #125026'
-#?niecza skip 'hangs'
 {
     my @match = $data.match(/fo+/, :nth(2, 4 ... *)).list;
     is +@match, 3, 'nth(infinite series) is ok';
     is @match, <foo foooo foooooo>, 'nth(infinite sequence) matched correctly';
 }
 
-#?rakudo.jvm skip 'RT #124279'
-#?niecza skip 'Excess arguments to CORE Cool.match'
 {
     is 'abecidofug'.match(/<[aeiou]>./, :nth(1,3,5), :x(2)).join('|'),
         'ab|id', ':x and :nth';
@@ -91,20 +84,19 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 }
 
 # test that non-monotonic items in :nth lists are ignored
-#?niecza todo
-#?rakudo.jvm skip 'RT #124279'
 {
-    is 'abacadaeaf'.match(/a./, :nth(2, 1, 4)).join(', '),
-        'ac, ae', 'non-monotonic items in :nth are ignored';
-    is 'abacadaeaf'.match(/a./, :nth(2, -1, 4)).join(', '),
-        'ac, ae', 'negative non-monotonic items in :nth are ignored';
-    is 'abacadaeaf'.match(/a./, :nth(2, 0, 4)).join(', '),
-        'ac, ae', 'zero non-monotonic items in :nth are ignored';
+    throws-like '"abacadaeaf".match(/a./, :nth(2, 1, 4)).join', Exception,
+        'non-monotonic items in :nth throw';
+    throws-like '"abacadaeaf".match(/a./, :nth(2, -1, 4)).join', Exception,
+        'negative non-monotonic items throw';
+    throws-like '"abacadaeaf".match(/a./, :nth(2, 0, 4)).join', Exception,
+        'zero non-monotonic items throw';
 }
 
 # RT #77408
 {
-    dies-ok { "a" ~~ m:nth(Mu)/a/ }, ':nth does not accept Mu param';
+    ok "aa" ~~ m:nth(1|2)/a/, ':nth accepts Junctions';
+    ok $/ ~~ Junction, 'and its result is a Junction';
 }
 
 # vim: ft=perl6

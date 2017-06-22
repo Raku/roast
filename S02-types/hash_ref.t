@@ -68,21 +68,17 @@ plan 31;
 # L<S06/Anonymous hashes vs blocks/So you may use sub or hash or pair to disambiguate:>
 {
     my $hash_a = { a => 1, b => 2 };
-    #?niecza todo
     isa-ok $hash_a, "Hash";
     my $hash_b = { a => 1, "b", 2 };
-    #?niecza todo
     isa-ok $hash_b, "Hash";
     my $hash_c = hash('a', 1, "b", 2);
-    #?niecza todo
     isa-ok $hash_c, "Hash";
     my $hash_d = hash 'a', 1, "b", 2;
-    #?niecza todo
     isa-ok $hash_d, "Hash";
 }
 
 # infinity HoHoHoH...
-#?rakudo.jvm skip 'RT #126518'
+#?rakudo.jvm skip 'used to work before 2016-09-17; maybe wrong multi selected: "Too many positionals passed; expected 2 arguments but got 3"'
 {
     my %hash = (val => 42);
     %hash<ref> = %hash;

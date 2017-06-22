@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 268;
+plan 283;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -44,7 +44,7 @@ sub test-gmtime( Int $t is copy ) {
     }
     $mday = $t + 1;
     return ($sec, $min, $hour, $mday, $mon + 1, $year + 1900, $wday + 1);
-}        #   0     1      2      3       4          5             6 
+}        #   0     1      2      3       4          5             6
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/C<time>>
@@ -273,7 +273,7 @@ dies-ok { ds('2012-12-22T07:02:00+7:') }, 'single digit hour, trailing colon';
         formatter => { ~($^x.hour) });
     is ~$dt2, ~(($dt1.hour + 22) % 24), 'DateTime.now with time zone and formatter';
 
-    is_approx(DateTime.now.Instant, now,
+    is-approx(DateTime.now.Instant, now,
         'DateTime.now agrees with now pseudo-constant');
 }
 
@@ -606,10 +606,10 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     }, '.later does not try to create an impossible datetime';
 }
 
-# RT #121990 Smartmatch against a Date 
+# RT #121990 Smartmatch against a Date
 {
-    my $now = DateTime.now; 
-    my $today = Date.today; 
+    my $now = DateTime.now;
+    my $today = Date.today;
     my $not-now = ds('1971-10-28T10:45:00');
 
     ok $now ~~ $today, "positive smartmatch against a Date";
@@ -688,4 +688,142 @@ is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
         is $fdt.second,  7, "is second in FooDateTime ok";
         is $fdt.foo,    42, "is foo in FooDateTime ok";
     }
+}
+
+# RT #128545
+subtest 'synthetics not allowed in date formats' => {
+    throws-like { DateTime.new: "20\x[308]16-07-05T00:00:00+01:00" },
+        X::Temporal::InvalidFormat, 'DateTime.new (+01:00 format)';
+
+    throws-like { DateTime.new: "2016-07-05T00:0\x[308]0:00Z" },
+        X::Temporal::InvalidFormat, 'DateTime.new (Z format)';
+}
+
+{ # coverage; 2019-10-03
+    subtest 'DateTime.offset-in-hours' => {
+        plan 9;
+
+        my $d = '2016-10-03T20:20:20';
+        is DateTime.new($d ~ '+00:00').offset-in-hours,  0,      'UTC';
+        is DateTime.new($d ~ '+01:00').offset-in-hours,  1,      '+1';
+        is DateTime.new($d ~ '-01:00').offset-in-hours, -1,      '-1';
+        is DateTime.new($d ~ '+04:30').offset-in-hours,  4.5,    '+4:30';
+        is DateTime.new($d ~ '-04:30').offset-in-hours, -4.5,    '-4:30';
+        is DateTime.new($d ~ '+04:05').offset-in-hours,  4+1/12, '+4:05';
+        is DateTime.new($d ~ '-04:05').offset-in-hours, -4-1/12, '-4:05';
+        is DateTime.new($d ~ '+42:30').offset-in-hours,  42.5,   '+42:30';
+        is DateTime.new($d ~ '-42:30').offset-in-hours, -42.5,   '-42:30';
+    }
+
+    subtest 'DateTime <=> DateTime' => {
+        plan 16;
+
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Same,
+            'Same (same offsets)';
+        is  DateTime.new('1986-02-22T21:22:22+21:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Same,
+            'Same (LHS has smaller offset)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T21:22:22+21:22'), Order::Same,
+            'Same (RHS has smaller offset)';
+        is  DateTime.new('1986-02-24T22:22:22+48:22') <=>
+            DateTime.new('1986-02-20T22:22:22-47:38'), Order::Same,
+            'Same (multi-day difference in offsets)';
+
+        is  DateTime.new('1985-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different years)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1985-02-22T22:22:22+22:22'), Order::More,
+            'More (different years)';
+
+        is  DateTime.new('1986-01-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different months)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-01-22T22:22:22+22:22'), Order::More,
+            'More (different months)';
+
+        is  DateTime.new('1986-02-21T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different days)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-21T22:22:22+22:22'), Order::More,
+            'More (different days)';
+
+        is  DateTime.new('1986-02-22T21:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different hours)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T21:22:22+22:22'), Order::More,
+            'More (different hours)';
+
+        is  DateTime.new('1986-02-22T22:21:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different minutes)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:21:22+22:22'), Order::More,
+            'More (different minutes)';
+
+        is  DateTime.new('1986-02-22T22:22:21+22:22') <=>
+            DateTime.new('1986-02-22T22:22:22+22:22'), Order::Less,
+            'Less (different seconds)';
+        is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
+            DateTime.new('1986-02-22T22:22:21+22:22'), Order::More,
+            'More (different seconds)';
+    }
+}
+
+{
+    my $dt = DateTime.now;
+    subtest 'DateTime:D.Date returns correct date' => {
+        plan 4;
+
+        cmp-ok    $dt.Date, '~~', Date:D,    '.Date returns Date:D';
+        is-deeply $dt.Date.year,  $dt.year,  '.year is right';
+        is-deeply $dt.Date.month, $dt.month, '.month is right';
+        is-deeply $dt.Date.day,   $dt.day,   '.day is right';
+    }
+    is-deeply DateTime.Date,     Date, 'DateTime:U.Date returns Date:U';
+    is-deeply DateTime.DateTime, DateTime, 'DateTime:U.DateTime returns self';
+    is-deeply      $dt.DateTime, $dt,     'DateTime:D.DateTime returns self';
+}
+
+subtest '.hh-mm-ss' => {
+    plan 5;
+
+    is-deeply Date.today.DateTime.hh-mm-ss, '00:00:00', 'Date -> DateTime';
+    is-deeply DateTime.new('2006-01-01T00:00:00Z').earlier(:1second).hh-mm-ss,
+              '23:59:60', 'leap second';
+
+    my $d = DateTime.new(4242);
+    is-deeply $d.hh-mm-ss, '01:10:42', 'posix 4242';
+    is-deeply $d.later(:13hours).hh-mm-ss, '14:10:42', '13 hours later';
+    is-deeply $d.earlier(:50hours).hh-mm-ss, '23:10:42', '50 hours earlier';
+}
+
+# https://github.com/rakudo/rakudo/commit/9eed2768d4751b4585bbd335016ca0d9ef
+throws-like { DateTime.new: :2016year, 42 }, Exception,
+    'unexpected named arg with positional arg to .new throws';
+
+{ # https://github.com/rakudo/rakudo/commit/6b850babd5
+    constant $dt1 = DateTime.new: :2017year, :11month, :15day, :18hour,
+        :36minute, :second(17.25), :timezone(-5*3600);
+    constant $dt2 = DateTime.new: :2015year, :12month, :25day, :3hour,
+        :6minute,  :second(7.77),  :timezone(14*3600);
+    constant $dur = Duration.new: 59826610.48;
+
+    is-deeply $dt1 - $dt2, $dur, 'DateTime - DateTime = Duration';
+    is-deeply $dt1 - $dur, $dt2.in-timezone($dt1.timezone),
+        'DateTime - Duration = DateTime';
+
+    is-deeply $dt1 − $dt2, $dur, 'DateTime − DateTime = Duration(U+2212 minus)';
+    is-deeply $dt1 − $dur, $dt2.in-timezone($dt1.timezone),
+        'DateTime − Duration = DateTime(U+2212 minus)';
+
+    is-deeply $dt2 + $dur, $dt1.in-timezone($dt2.timezone),
+        'DateTime + Duration = DateTime';
+    is-deeply $dur + $dt2, $dt1.in-timezone($dt2.timezone),
+        'Duration + DateTime = DateTime';
 }

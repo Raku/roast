@@ -1,13 +1,13 @@
 use v6;
 use Test;
 
-plan 11;
+plan 13;
 
 # Covers RT #126315 (which wanted the right thing of recv) and RT #116288
 # (difference between recv and read semantics).
 
 my $hostname = 'localhost';
-my $port = 5000;
+my $port = 5002;
 
 my ($send-rest, $client);
 
@@ -52,6 +52,13 @@ is $client.recv(20, :bin).decode('ascii'), 'first thing',
 $send-rest.keep(True);
 is $client.recv(2, :bin).decode('ascii'), 'an',
     'recv argument serves as upper limit (bytes)';
+$client.close;
+
+$send-rest = Promise.new;
+$client = IO::Socket::INET.new(:host("$hostname:$port"));
+is $client.recv(Inf), 'first thing', 'recv with Inf works (chars 1)';
+$send-rest.keep(True);
+is $client.recv(Inf), 'another thing', 'recv with Inf works (chars 2)';
 $client.close;
 
 $send-rest = Promise.new;

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 26;
 
 =begin description
 
@@ -52,9 +52,9 @@ Basic C<pairs> tests, see S32::Containers.
     "pairs() on 2-elem hash, 1-depth joined");
   is( $hash_of_1_pair.pairs.sort.join( ',' ), "a\tb",
     "pairs() on 1-elem hash, 1-depth joined");
-  is( $hash_of_2_pairs.pairs.sort.map({ .key~'='~.value }).join( ',' ), 'a=b,c=d', 
+  is( $hash_of_2_pairs.pairs.sort.map({ .key~'='~.value }).join( ',' ), 'a=b,c=d',
     "pairs() on 2-elem hash, 2-depth joined" );
-  is( try { $hash_of_1_pair.pairs.sort.map({ .key~'='~.value }).join( ',' ) }, 'a=b', 
+  is( try { $hash_of_1_pair.pairs.sort.map({ .key~'='~.value }).join( ',' ) }, 'a=b',
     "pairs() on 1-elem hash, 2-depth joined" );
 }
 
@@ -87,6 +87,11 @@ Basic C<pairs> tests, see S32::Containers.
     is %rt117935<a>:p(0), (a => 1), ':p(0) with existing key returns pair';
     is %rt117935<b>:p, (), ':p with non-existing key returns empty list';
     is %rt117935<b>:p(0), (b => Any), ':p(0) with non-existing key returns pair';
+}
+
+{ # coverage; 2016-09-19
+    my @a = ^10;
+    is-deeply pairs(@a), @a.pairs, 'pairs() gives same result as .pairs';
 }
 
 # vim: ft=perl6

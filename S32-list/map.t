@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 58;
+plan 60;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -20,7 +20,6 @@ my @list = (1 .. 5);
 }
 
 #?rakudo skip "adverbial block RT #124752"
-#?niecza skip 'No value for parameter $func in Any.map'
 {
     my @result = @list.map():{ $_ * 2 };
     is(+@result, 5, 'adverbial block: we got a list back');
@@ -34,7 +33,6 @@ my @list = (1 .. 5);
 }
 
 #?rakudo skip "closure as non-final argument RT #124753"
-#?niecza skip "Invocant handling is NYI"
 {
     my @result = map { $_ * 2 }: @list;
     is(+@result, 5, 'we got a list back');
@@ -77,11 +75,9 @@ my @list = (1 .. 5);
   # XXX GLR find hang-proof a way to test that map of 
   # 0-arity and Inf-arity (proto-less multi) does not hang.
   is ~(1,2,3,4).map({ $^a + $^b             }), "3 7", "map() works with 2-ary functions";
-  #?niecza skip 'No value for parameter $b in ANON'
   #?rakudo skip "Too few positionals passed; expected 3 arguments but got 1; RT #125146"
   is ~(1,2,3,4).map({ $^a + $^b + $^c       }), "6 4", "map() works with 3-ary functions";
   is ~(1,2,3,4).map({ $^a + $^b + $^c + $^d }), "10",  "map() works with 4-ary functions";
-  #?niecza skip 'No value for parameter $e in ANON'
   #?rakudo skip "Too few positionals passed; expected 5 arguments but got 4; RT #125146"
   is ~(1,2,3,4).map({ $^a+$^b+$^c+$^d+$^e   }), "10",  "map() works with 5-ary functions";
 }
@@ -118,7 +114,6 @@ should be equivalent to
   is(+@b, 3, "should be 3 elements");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
-  #?niecza todo
   is(+@c, 3, "should be 6 elements (bare block)");
 
   is map({("v"=>$_, "d" => $_*2).Slip}, @a).elems, 6, 'flattens with .Slip';
@@ -240,7 +235,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 }
 
 # RT #112596
-#?niecza todo "https://github.com/sorear/niecza/issues/182"
 # also RT #125207
 {
     my @a = map &sprintf.assuming("%x"), 9..12;
@@ -251,7 +245,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 {
     is [foo => (1,2,3).map: {$_}].[0].value.join(":"), '1:2:3',
         'map on list in array does not lose content';
-    #?rakudo.jvm skip 'This Seq has already been iterated, and its values consumed'
     is {foo => (1,2,3).map: {$_}}<foo>.join(":"), '1:2:3',
         'map on list in hash does not lose content';
 }
@@ -267,6 +260,15 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 {
     ok Any.map({ Slip }) ~~ :(Slip:U),
         'only defined Slips are treated specially';
+}
+
+{ # https://github.com/rakudo/rakudo/commit/86dc997cc2
+    my @a = ^3 .map: -> \x --> Int { x };
+    is-deeply @a, [0, 1, 2], 'non-slippy-non-phaser map push-all works';
+
+    my $i = 0;
+    (^3 .map: -> \x --> Int { $i++ }).sink;
+    is-deeply $i, 3, 'non-slippy-non-phaser map sink-all works';
 }
 
 # vim: ft=perl6

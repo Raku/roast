@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 31;
 
 # check the subroutine with the closest matching signature is called
 #
@@ -83,6 +83,32 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
     multi optname(:$bar) { 'optional named' }
     is optname(), 'optional named',
         'optional named param in a multi still makes candidate narrower';
+}
+
+# RT #128522
+{
+    my ($m1, $m2, $m3);
+
+    multi sub pkgname-pkgver-pkgrel(%txninfo, :@checks! where *.elems == 1) {
+        $m1 = True;
+        pkgname-pkgver-pkgrel(%txninfo, :checks(|@checks, %txninfo<pkgver>:exists));
+    }
+
+    multi sub pkgname-pkgver-pkgrel(%txninfo, :@checks! where *.elems == 2) {
+        $m2 = True;
+        pkgname-pkgver-pkgrel(%txninfo, :checks(|@checks, %txninfo<pkgrel>:exists));
+    }
+
+    multi sub pkgname-pkgver-pkgrel(%txninfo, :@checks! where *.elems == 3) {
+        $m3 = True;
+        @checks;
+    }
+
+    my %txninfo = :pkgname<name>, :pkgver<1.0>, :pkgrel(1);
+    pkgname-pkgver-pkgrel(%txninfo, :checks[%txninfo<pkgname>:exists]);
+    ok $m1, "Correctly reached first multi";
+    ok $m2, "Correctly reached second multi";
+    ok $m3, "Correctly reached third multi";
 }
 
 # vim: ft=perl6

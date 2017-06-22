@@ -5,7 +5,14 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 47;
+plan 50;
+
+##############################################################
+####
+#### XXX TODO .lines does not take an $eager param so these
+#### tests needs to stop testing using it
+####
+##############################################################
 
 for False, True -> $eager {
     is "a\nb\n\nc".lines(:$eager).join('|'),
@@ -62,9 +69,29 @@ is "a\nb\nc\n".lines(:count), 3, 'Str.lines(:count)';
 
 
 # RT #115136
+#?rakudo.jvm todo 'Type check failed in binding to parameter $bin; expected Bool but got Int (0)'
 is_run( 'print lines[0]',
         "abcd\nefgh\nijkl\n",
         { out => "abcd", err => '', status => 0 },
-        'lines returns things in lines' );                  
+        'lines returns things in lines' );
+
+# RT #126270 [BUG] Something fishy with lines() and looping over two items at a time in Rakudo
+{
+    my $expected = "A, then B\nC, then D\n";
+    my $result;
+
+    # This used to fail, saying "Too few positionals passed; expected 2 arguments but got 0"
+    for "A\nB\nC\nD".lines() -> $x, $y { $result ~= "$x, then $y\n" }
+
+    is $result, $expected, 'lines iterates correctly with for block taking two arguments at a time';
+}
+
+# RT #130430
+is-deeply "a\nb\nc".lines(2000), ('a', 'b', 'c'),
+    'we stop when data ends, even if limit has not been reached yet';
+
+# https://github.com/rakudo/rakudo/commit/742573724c
+dies-ok { 42.lines: |<bunch of incorrect args> },
+    'no infinite loop when given wrong args to Cool.lines';
 
 # vim: ft=perl6

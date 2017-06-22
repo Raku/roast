@@ -1,23 +1,31 @@
 use Test;
 
-plan 4;
+plan 5;
 
 {
     my $a = List;
-    dies-ok { $a[0] := 1; }, X::Bind, "can't bind into an undefined list";
+    #?rakudo todo 'wrong exception'
+    throws-like { $a[0] := 1; }, X::Bind, "can't bind into an undefined list";
 }
 
 {
     my $a = Int;
-    dies-ok { $a[0] := 1; }, X::Bind, "Can't bind into an undefined Int";
+    #?rakudo todo 'wrong exception'
+    throws-like { $a[0] := 1; }, X::Bind, "Can't bind into an undefined Int";
 }
 
 {
     my $a = 10;
-    dies-ok { $a[0] := 1; }, X::Bind, "Can't bind into a defined Int, either";
+    throws-like { $a[0] := 1; }, X::Bind, "Can't bind into a defined Int, either";
 }
 
 {
     my $a = "Hi";
-    dies-ok { $a[0] := 1; }, X::Bind, "Can't bind into a defined Str";
+    throws-like { $a[0] := 1; }, X::Bind, "Can't bind into a defined Str";
+}
+
+# RT #128755
+{
+    my $list = (1,2,3);
+    throws-like { $list[1] := 4 }, X::Bind, "Can't bind into a List item";
 }

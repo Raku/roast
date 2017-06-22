@@ -75,7 +75,6 @@ lives-ok { my C $x; },          'can use role as a type constraint on a variable
 dies-ok { my C $x = 42 },       'type-check enforced';
 dies-ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
 lives-ok {my C $x = DoesC.new },'type-check passes for class doing role';
-#?rakudo.jvm todo 'Type check failed in assignment to $x; expected C but got Int'
 lives-ok { my C $x = 42 but C },'type-check passes when role mixed in';
 
 class HasC {
@@ -149,7 +148,6 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
 }
 
 # RT #116226
-#?niecza skip "Unable to resolve method x in type AccessesAttr"
 {
     my role AccessesAttr {
         method meth() {

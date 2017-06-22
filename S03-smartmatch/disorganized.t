@@ -11,13 +11,13 @@ This tests the smartmatch operator, defined in L<S03/"Smart matching">
 sub eval_elsewhere($code){ EVAL($code) }
 
 #L<S03/Smart matching/Any undef undefined not .defined>
-{ 
-    ok("foo" ~~ .defined, "foo is ~~ .defined");
+{
+    is-deeply("foo" ~~ .defined, True, "foo is ~~ .defined");
     nok "foo" !~~ .defined,   'not foo !~~ .defined';
     nok((Mu ~~ .defined), "Mu is not .defined");
 }
 
-# TODO: 
+# TODO:
 # Set   Set
 # Hash  Set
 # Any   Set
@@ -28,12 +28,12 @@ sub eval_elsewhere($code){ EVAL($code) }
 # Regex tests are in spec/S05-*
 
 #L<S03/"Smart matching"/in range>
-{ 
+{
     # more range tests in t/spec/S03-operators/range.t
-    ok((5 ~~ 1 .. 10), "5 is in 1 .. 10");
-    ok(!(10 ~~ 1 .. 5), "10 is not in 1 .. 5");
-    ok(!(1 ~~ 5 .. 10), "1 is not i n 5 .. 10");
-    ok(!(5 ~~ 5 ^..^ 10), "5 is not in 5 .. 10, exclusive");
+    is-deeply((5 ~~ 1 .. 10), True, "5 is in 1 .. 10");
+    is-deeply(!(10 ~~ 1 .. 5), True, "10 is not in 1 .. 5");
+    is-deeply(!(1 ~~ 5 .. 10), True, "1 is not i n 5 .. 10");
+    is-deeply(!(5 ~~ 5 ^..^ 10), True, "5 is not in 5 .. 10, exclusive");
 };
 
 # TODO:
@@ -42,7 +42,7 @@ sub eval_elsewhere($code){ EVAL($code) }
 # Capture   Signature
 # Any       Signature
 
-# Signature Capture  
+# Signature Capture
 
 # reviewed by moritz on 2009-07-07 up to here.
 
@@ -63,8 +63,8 @@ caught that case.
         $result = all(@x) ~~ { $_ < 21 };
         $parsed = 1;
     };
-    ok $parsed, 'C<all(@x) ~~ { ... }> parses';
-    ok ?$result, 'C<all(@x) ~~ { ... } when true for all';
+    is-deeply $parsed, 1, 'C<all(@x) ~~ { ... }> parses';
+    is-deeply ?$result, True, 'C<all(@x) ~~ { ... } when true for all';
 
     $result = 0;
     try {

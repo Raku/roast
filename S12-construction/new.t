@@ -20,7 +20,6 @@ is $o.x, 2, '... worked for the parent';
 
 # RT #76490
 #?rakudo 3 skip 'parent attributes in initialization RT #76490'
-#?niecza 3 todo
 lives-ok { $o = Child.new( :y(4), Parent{ :x<5> }) }, 
          'can instantiate class with explicit specification of parent attrib';
 
@@ -31,7 +30,6 @@ class GrandChild is Child {
 }
 
 #?rakudo 6 skip 'parent attributes in initialization RT #76490'
-#?niecza 6 todo
 lives-ok { $o = GrandChild.new( Child{ :y(4) }, Parent{ :x<5> }) },
          'can instantiate class with explicit specification of parent attrib (many parents)';
 is $o.y, 4, '... worked for the class Child';
@@ -56,7 +54,6 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     }
     # TODO: check the error message, not just the timing.
     #?rakudo todo "nested package handling does't quite get this one right"
-    #?niecza todo
     dies-ok { RT71706::Artie.new }, 'die trying to instantiate missing class';
 }
 
@@ -77,7 +74,6 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     is $x.y, 'k', '... got the right attribute (2)';
 }
 
-#?niecza skip "Cannot call new; none of these signatures match"
 {
     my class MultiNewFromMu {
         has $.x;
@@ -107,9 +103,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
         [2, "geegaw"],
         'multi-constructor class alternate (positional) constructor';
 
-    #?niecza emit # fails 
     my RT68756 $bar .= new(:a1(3), :a2<yoohoo>);
-    #?niecza skip 'Without previous line, this is a disaster'
     is-deeply [ $bar.a1, $bar.a2 ],
         [3, "yoohoo"],
         'multi-constructor class alternate default named constructor';
@@ -126,13 +120,11 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 }
 
 # RT #100780
-#?niecza skip 'dies more thoroughly than okay'
 {
     dies-ok { X.new }, 'RT #100780'
 }
 
 # RT #74300
-#?niecza skip 'No candidates for dispatch to new'
 {
     class RT74300 {
         has $.foo;

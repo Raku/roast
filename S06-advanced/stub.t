@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-BEGIN plan 10;
+BEGIN plan 13;
 
 # L<S06/Stub declarations>
 
@@ -42,5 +42,9 @@ BEGIN throws-like 'sub foo;', X::UnitScope::Invalid,
     supersede sub hail {8}
     is(hail(), 8, 'redefining non-stub subroutine with supersede');
 }
+
+lives-ok { sub {...} }, 'not execued stub code is fine';
+dies-ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
+dies-ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 
 # vim: ft=perl6

@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 3;
+plan 5;
 
 use Test::Util;
 
@@ -47,3 +47,16 @@ use Test::Util;
     },
     'concise error message when called script is a directory' );
 }
+
+{
+    # MoarVM #482
+    is run($*EXECUTABLE, '-e', ｢print '“Hello world”'｣, :out).out.slurp,
+        '“Hello world”',
+        'UTF-8 in arguments is decoded correctly';
+}
+
+
+# RT#127925
+is_run ｢@*ARGS.head.print｣, :args[<yağmur>],
+    { :err(''), :out<yağmur>, :0status },
+    'printed chars match input';

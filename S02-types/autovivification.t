@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 22;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
 {
@@ -29,7 +29,6 @@ plan 25;
 {
     my %h;
     my $b := %h<a><b>;
-    #?niecza todo "https://github.com/sorear/niecza/issues/176"
     is %h.keys.elems, 0, 'binding does not immediately autovivify';
     ok $b === Any, '... to an undefined value';
     $b = 42;
@@ -47,7 +46,6 @@ plan 25;
 {
     my %h;
     foo(%h<a><b>);
-    #?niecza todo "https://github.com/sorear/niecza/issues/176"
     is %h.keys.elems, 0, 'in rw arguments does not autovivify';
     foo(%h<a><b>,42);
     is %h.keys.elems, 1, 'storing from within the sub does autovivify';
@@ -66,18 +64,36 @@ sub foo ($baz is rw, $assign? ) { $baz = $assign if $assign }
 sub bar ($baz is readonly) { }
 
 # RT #77038
-#?niecza skip "Unable to resolve method push in type Any"
 {
     my %h;
-    push %h<a>, 4, 2;
-    is %h<a>.join, '42', 'can autovivify in sub form of push';
-    unshift %h<b>, 5, 3;
-    is %h<b>.join, '53', 'can autovivify in sub form of unshift';
-    %h<c><d>.push( 7, 8 );
-    is %h<c><d>.join, '78', 'can autovivify in method form of push';
-    %h<e><f>.unshift( 9, 10 );
-    is %h<e><f>.join, '910', 'can autovivify in method form of unshift';
-    is %h.keys.elems, 4, 'successfully autovivified lower level';
+    push    %h<s-push><a>, 1, 2;
+    unshift %h<s-unsh><b>, 3, 4;
+    append  %h<s-appe><c>, 5, 6;
+    prepend %h<s-prep><d>, 7, 8;
+            %h<m-push><1>.push:    <a b c>;
+            %h<m-unsh><2>.unshift: <d e f>;
+            %h<m-appe><3>.append:  <g h i>;
+            %h<m-prep><4>.prepend: <j k l>;
+
+    is %h.keys.elems, 8, 'successfully autovivified lower level';
+
+    subtest 'can autovivify in...' => {
+        plan 2;
+        subtest '...sub form of...' => {
+            plan 4;
+            is-deeply %h<s-push><a>, [  1,  2  ], 'push';
+            is-deeply %h<s-unsh><b>, [  3,  4  ], 'unshift';
+            is-deeply %h<s-appe><c>, [  5,  6  ], 'append';
+            is-deeply %h<s-prep><d>, [  7,  8  ], 'prepend';
+        }
+        subtest '...method form of...' => {
+            plan 4;
+            is-deeply %h<m-push><1>, [ <a b c>,], 'push';
+            is-deeply %h<m-unsh><2>, [ <d e f>,], 'unshift';
+            is-deeply %h<m-appe><3>, [|<g h i> ], 'append';
+            is-deeply %h<m-prep><4>, [|<j k l> ], 'prepend';
+        }
+    }
 }
 
 {

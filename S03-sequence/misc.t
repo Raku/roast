@@ -5,7 +5,6 @@ plan 30;
 is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it being confused for closure";
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
-#?niecza skip 'Nominal type check failed in binding Int $n in f; got Str, needed Int'
 {
     sub f (Int $n) { $n > 3 ?? 'liftoff!' !! $n + 1 }
     is (1, &f ... Str)[^5].join(' '), '1 2 3 4 liftoff!',
@@ -40,7 +39,6 @@ throws-like '(1, 2, ... 3)[2]', Exception, 'yada operator not confused for seque
 is (1 ... 5 ... 10).join(' '),
     '1 2 3 4 5 6 7 8 9 10',
     'simple chained finite arithmetic sequence';
-#?niecza skip 'Slicel lists are NYI'
 is infix:<...>(1; 5; 10).join(' '),
     '1 2 3 4 5 6 7 8 9 10',
     "simple chained finite arithmetic sequence (with 'infix:<...>')";
@@ -50,14 +48,12 @@ is (1 ... 5, 10 ... 25, 50 ... 150).join(' '),
 is (1 ... 4, 8, 16 ... 64, 63, 62 ... 58).join(' '),
     '1 2 3 4 8 16 32 64 63 62 61 60 59 58',
     'chained finite numeric sequence';
-#?niecza skip 'Slicel lists are NYI'
 is infix:<...>(1;   4, 8, 16;   64, 63, 62;   58).join(' '),
     '1 2 3 4 8 16 32 64 63 62 61 60 59 58',
     "chained finite numeric sequence (with 'infix:<...>')";
 is (1/4, 1/2, 1 ... 8, 9 ... *)[^10].join(' '),
     '0.25 0.5 1 2 4 8 9 10 11 12',
     'chained infinite numeric sequence';
-#?niecza skip 'Slicel lists are NYI'
 is infix:<...>(1/4, 1/2, 1;   8, 9;   *)[^10].join(' '),
     '0.25 0.5 1 2 4 8 9 10 11 12',
     "chained infinite numeric sequence (with 'infix:<...>')";
@@ -75,11 +71,9 @@ is (1, 4, 7 ... 16, 16 ... *)[^8].join(' '),
 #     '0 2 4 6 11 14 17 18 19 20',
 #     'chained arithmetic sequence with exclusion';
 
-#?niecza skip 'Cannot use value like Block as a number'
 is (1, *+1  ... { $_ >= 4 }, 5, *+10  ... { $_ >= 24 }, 35, *+100 ... { $_ > 400 }).join(' '),
     '1 2 3 4 5 15 25 35 135 235 335 435',
     'chained sequence with closures (1)';
-#?niecza skip 'Unable to resolve method chars in class Block'
 is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.chars >= 5 }).join(' '),
     '1 3 7 15 31 36 41 46 a az azz azzz azzzz',
     'chained sequence with closures (2)';

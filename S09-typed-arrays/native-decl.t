@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 14;
 
 {
     my int @is;
@@ -35,4 +35,13 @@ plan 10;
     is @ns.elems, 10, 'Can initialize a num array at declaration (1)';
     is @ns[0], 1e0, 'Can initialize a num array at declaration (2)';
     is @ns[9], 10e0, 'Can initialize a num array at declaration (3)';
+}
+
+{
+    my str @strs = 'a', 'b', 'c';
+    ok @strs ~~ array[str], 'my str @a gives array[str]';
+    is @strs.elems, 3, 'array[str].elems';
+    @strs.push('x');
+    is @strs.elems, 4, 'array[str].push';
+    is @strs.join('|'), 'a|b|c|x', 'array[str].join';
 }

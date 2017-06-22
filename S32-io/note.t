@@ -4,9 +4,17 @@ use lib 't/spec/packages';
 
 use Test;
 use Test::Util;
-plan 6;
+plan 7;
 
 # L<S32::IO/Functions/note>
+
+is_run( 'note',
+        {
+            status => 0,
+            out    => '',
+            err    => "Noted\n",
+        },
+        'no-arg form of note' );
 
 is_run( 'note "basic form"',
         {
@@ -40,7 +48,6 @@ is_run( 'my $a = <stringify args>; note $a',
         },
         'note an array reference' );
 
-#?niecza todo 'Str.note NYI'
 is_run( '"method form".note',
         {
             status => 0,

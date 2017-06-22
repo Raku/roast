@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 39;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -32,7 +32,6 @@ is($c.get(), 42, 'can auto-increment an attribute');
     is($wa.get, 99, 'has with no twigil creates alias');
 }
 
-#?niecza skip 'Unhandled parameter twigil !'
 {
     class ManyTest {
         has ($a, $b);
@@ -92,7 +91,6 @@ $bar.bar[2] = 300;
 is($bar.bar[2], 300,       'array attribute initialized/works');
 
 # RT #73808
-#?niecza skip 'Unhandled parameter twigil !'
 {
     class RT73808 {
         has ($!a, $!b);
@@ -116,7 +114,6 @@ throws-like q[
 ], X::Syntax::NoSelf, 'no attr access for sub inside class';
 
 # RT #74850
-#?niecza skip "Unhandled exception: Unable to resolve method ctxzyg in type Method"
 {
     class A { };
     class B { has A $.foo .= new };
@@ -132,7 +129,6 @@ throws-like q[
 }
 
 #RT #114234
-#?niecza skip '$b declared but not used. FIXME later.'
 {
     eval-lives-ok q{
         my class A { state $b; }
@@ -151,16 +147,16 @@ throws-like q[
     is-deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Array from 2-nd element to end' );
 
     class AB {
-        has @.x; 
-        method aa { 
-            my @y=1,2,3; 
+        has @.x;
+        method aa {
+            my @y=1,2,3;
             is-deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Plain array in the method' );
             is-deeply( [@.x], [ 1, 2, 3 ], 'Array from 2-nd element to end+1 in the method' );
             is-deeply( [@.x[1 ..^ +@.x]], [ 2, 3 ], 'Array from 2-nd element to end in the method' );
         }
     };
 
-    my AB $y.=new(:x(1,2,3)); 
+    my AB $y.=new(:x(1,2,3));
     $y.aa;
 
 }
@@ -187,4 +183,24 @@ throws-like q[
     throws-like '$foo.a = 1,"b"', Exception, 'typed array attribute (2)';
 }
 
-# vim: ft=perl6
+# RT #129830
+{
+    class RT129830 { has Int @.array; has Str %.hash };
+    is
+        RT129830.^attributes[0].type.gist,
+        '(Positional[Int])',
+        '.gist works on attribute types (1)';
+    is
+        RT129830.^attributes[1].type.gist,
+        '(Associative[Str])',
+        '.gist works on attribute types (2)';
+}
+
+# RT #126975
+{
+    my class Foo::Bar {};
+    lives-ok { my class { has Foo::Bar $a .= new } },
+	   '.= ables to initialize attributes with types that has `::` in name';
+}
+
+# vim: ft=perl6 expandtab sw=4

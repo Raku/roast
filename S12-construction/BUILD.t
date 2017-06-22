@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 10;
+plan 12;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -37,7 +37,6 @@ plan 10;
     is $child-counter, 1, "Called Child's BUILD method once";
     is $calls, 'Parent | Child', 
         'submethods were called in right order (Parent first)';
-    #?niecza todo "Worrisome"
     is $gather, 'Parent(a): (7) | Child(a, b): (7, 5)', 
         'submethods were called with the correct arguments';
 }
@@ -97,7 +96,6 @@ plan 10;
 }
 
 #?rakudo todo 'method BUILD should warn RT #124642'
-#?niecza todo
 {
     is_run
         'class Foo { method BUILD() { ... } }',
@@ -116,6 +114,15 @@ plan 10;
     lives-ok {
         role A { has $!a; submethod BUILD(:$!a) {}}; class B does A {}; B.new
     }, 'BUILD provided by role can use attributes in signature';
+}
+
+# RT #128393
+{
+    class Foo {
+        submethod BUILD { fail "noway" }
+    }
+    dies-ok { Foo.new }, "Foo.new dies when sunk";
+    ok Foo.new // "ok", "Foo.new can be caught as a Failure";
 }
 
 # vim: ft=perl6

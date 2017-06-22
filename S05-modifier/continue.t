@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 #L<S05/Modifiers/"The :c">
 
@@ -45,6 +45,11 @@ my $string = "1a2a3a";
     is(~$m, '2a', "match second 'a'");
     $m = $string.match(/.a/, :continue(4));
     is(~$m, '3a', "match third 'a'");
+}
+
+{
+    for 42 { "foo".match(/foo/) };
+    is $/, 'foo', 'is $/ set correctly in a for loop';
 }
 
 # vim: syn=perl6 sw=4 ts=4 expandtab

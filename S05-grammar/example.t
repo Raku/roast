@@ -1,7 +1,9 @@
 use v6;
+use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
-plan 7;
+plan 11;
 
 =pod calling a rule a grammar with arguments
 
@@ -56,8 +58,38 @@ is($content ~~ m/<title>/, '<title>Exactly</title>', 'match token');
 
 # XXX this can't work this way
 # 'schedule' is a rule (non-backtracking) so the implicit <.ws> will always
-# match zero characters. 
+# match zero characters.
 #?rakudo skip 'Method "speaker" not found for invocant of class "Cursor" RT #124795'
 is($content ~~ m/<schedule>/, $content, 'match rule');
+
+# RT #127945
+{
+    #?rakudo 2 todo 'RT 127945'
+    my $result;
+    lives-ok {
+        $result = grammar { token TOP { <return> }; token return { .+ }; }.parse("all-good");
+    }, '<return> inside grammar must reference token `return`, not &return';
+    is ~$result, 'all-good', 'token `return` parses things correctly';
+}
+
+# RT #124219
+{
+    my $code = ‘grammar Bug { token term { a }; token TOP { <term> % \n } }’
+        ~ ‘Bug.parse( 'a' );’;
+
+    is_run $code, { :out(''), :err(/'token TOP { <term>'/), :status },
+        '`quantifier with %` error includes the token it appears in';
+}
+
+# RT #81136
+{
+    grammar rt81136 {
+        token a { a }
+        token b { b }
+        token TOP { <a><b><before $<b>> }
+    }
+    is rt81136.parse('abc'), Nil,
+        'lookbehind that should not match does not match';
+}
 
 # vim: ft=perl6

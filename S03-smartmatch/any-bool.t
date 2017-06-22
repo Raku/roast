@@ -7,17 +7,17 @@ plan 8;
 {
     sub is-true() { True };
     sub is-false() { False };
-    ok   0  ~~ is-true(),      '~~ non-syntactic True';
-    ok  'a' ~~ is-true(),      '~~ non-syntactic True';
-    nok  0  ~~ is-false(),     '~~ non-syntactic True';
-    nok 'a' ~~ is-false(),     '~~ non-syntactic True';
+    is-deeply   0  ~~ is-true(), True,      '~~ non-syntactic True';
+    is-deeply  'a' ~~ is-true(), True,      '~~ non-syntactic True';
+    is-deeply  0  ~~ is-false(), False,     '~~ non-syntactic True';
+    is-deeply 'a' ~~ is-false(), False,     '~~ non-syntactic True';
 }
 
 {
-    nok  0   ~~ .so,           'boolean truth';
-    ok   'a' ~~ .so,           'boolean truth';
-    ok   0   ~~ .not,          'boolean truth';
-    nok  'a' ~~ .not,          'boolean truth';
+    is-deeply  0   ~~ .so, False,           'boolean truth';
+    is-deeply   'a' ~~ .so, True,           'boolean truth';
+    is-deeply   0   ~~ .not, True,          'boolean truth';
+    is-deeply  'a' ~~ .not, False,          'boolean truth';
 }
 
 # vim: ft=perl6

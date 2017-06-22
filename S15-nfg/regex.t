@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 # Tests with 6 codepoints (4 in NFC), which are 2 NFG characters.
 # LATIN CAPITAL LETTER D, COMBINING DOT BELOW, COMBINING DOT ABOVE,
@@ -23,8 +23,8 @@ plan 12;
     nok $x ~~ /<[Dd]>/, 'Do not have accidents involving enumerated char class and base char';
     nok $x ~~ /<[\x1E0C\x1E0D]>/, 'Do not have accidents involving enumerated char class and NFC';
     nok $x ~~ /<[D..d]>/, 'Do not have accidents involving range char class and base char';
-    #?rakudo todo 'charrange bugginess with synthetics'
-    nok $x ~~ /<[\x1E0C..\x1E0D]>/, 'Do not have accidents involving range char class and NFC';
+    nok $x ~~ /   <[\x1E0C..\x1E0D]>/, 'Do not have accidents involving range char class and NFC';
+    nok $x ~~ /:i <[\x1E0C..\x1E0D]>/, 'Do not have accidents involving range char class and NFC under :i';
 
     # Character properties work on the base character.
     ok $x ~~ /^<:Lu><:Ll>$/, 'Can use Unicode properties on grapheme';

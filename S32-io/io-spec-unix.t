@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 130;
+plan 133;
 
 my $Unix := IO::Spec::Unix;
 
@@ -80,10 +80,9 @@ nok $Unix.is-absolute( '..' ),  'is-absolute: nok ".."';
 my $path = %*ENV<PATH>;
 %*ENV<PATH> = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:';
 my @want         = </usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/games .>;
-is $Unix.path, @want, 'path';
+is-deeply $Unix.path, @want.Seq, 'path';
 %*ENV<PATH> = '';
-my @empty;
-is $Unix.path, @empty, 'no path';
+is-deeply $Unix.path, ().Seq, 'no path';
 %*ENV<PATH> = $path;
 
 my %splitpath = (
@@ -195,3 +194,28 @@ else {
 	is $*SPEC.rel2abs( $*SPEC.curdir ), $*CWD, "rel2abs: \$*CWD test";
 	ok {.IO.d && .IO.w}.( $*SPEC.tmpdir ), "tmpdir: {$*SPEC.tmpdir} is a writable directory";
 }
+
+subtest '.basename' => {
+    my @tests = '' => '', '.' => '.', '/' => '', 'foo/' => '', '/.' => '.',
+        'foo/.' => '.', 'foo/..' => '..', 'foo/...' => '...',
+        'bar/♥foo' => '♥foo', '♥foo' => '♥foo', '♥foo/..' => '..';
+
+    plan +@tests;
+    for @tests -> (:key($in), :value($out)) {
+        is-deeply IO::Spec::Unix.basename($in), $out, $in;
+    }
+}
+
+subtest '.extension' => {
+    my @tests = '' => '', '.' => '', '/.' => '', 'foo.bar/ber' => 'bar/ber',
+        '.tar' => 'tar', 'foo.tar' => 'tar', 'foo.tar.gz' => 'gz',
+        '.tar.gz' => 'gz', 'I ♥ Perl 6' => '', 'I ♥ Perl 6.♥' => '♥';
+
+    plan +@tests;
+    for @tests -> (:key($in), :value($out)) {
+        is-deeply IO::Spec::Unix.extension($in), $out, $in;
+    }
+}
+
+is-deeply IO::Spec::Unix.is-absolute("/\x[308]"), True,
+    'combiners on "/" do not interfere with absolute path detection';

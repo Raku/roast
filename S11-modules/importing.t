@@ -4,7 +4,7 @@ use lib '.', 't/spec/packages';
 
 use Test;
 
-plan 16;
+plan 17;
 
 # L<S11/"Compile-time Importation"/>
 
@@ -44,6 +44,12 @@ dies-ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
     lives-ok { TestImportInClass.doit() },
              "can instantiate class that's loaded from inside another class";
 
+}
+
+{
+    lives-ok {
+        use t::spec::packages::S11-modules::ExportsEnumDate;
+    }
 }
 
 # RT #125846

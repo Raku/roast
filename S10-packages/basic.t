@@ -4,8 +4,9 @@ use v6;
 
 use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
-plan 81;
+plan 83;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -22,14 +23,12 @@ package Simple {
 
 is Simple::Bar.new.baz, 'hi', 'class test';
 
-#?niecza skip 'AlsoEmpty undeclared (ie no autovivification, I guess)'
 {
     is AlsoEmpty.gist, '(AlsoEmpty)',
         'autovivification(?) for nested packages'
 }
 
 # RT #65404
-#?niecza todo
 {
     lives-ok {ThisEmpty.perl ne "tbd"}, 'test for working .perl method'
 }
@@ -53,7 +52,6 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 # more sophisticated variants of test exist elsewhere - but seems basic ...
 #?rakudo skip 'RT #59484'
-#?niecza skip 'Unable to find lexical $?PACKAGE in pkg'
 {
     is  EVAL('package Simp2 {sub pkg { $?PACKAGE }}; Simp2::pkg'),
         'Simp2', 'access to $?PACKAGE variable'
@@ -61,7 +59,6 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 {
     lives-ok {Simple::Bar.new.WHO}, 'some WHO implementation';
-    #?niecza todo
     is ~(Simple::Bar.new.WHO), 'Simple::Bar',
         'WHO implementation with longname';
 }
@@ -74,7 +71,6 @@ eval-lives-ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
         'since role is in package should not need package name';
 }
 
-#?niecza skip 'Exception not defined'
 {
     my $x;
 
@@ -105,7 +101,7 @@ eval-lives-ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
         'two different packages should be two different Baz';
 
     eval-lives-ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
-        'two different packages should be two different EHomeE';        
+        'two different packages should be two different EHomeE';
 }
 
 # making test below todo causes trouble right now ...
@@ -114,7 +110,6 @@ eval-lives-ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
         'call of method defined in package';
 }
 
-#?niecza todo
 {
     eval-lives-ok 'package DoMap {my @a = map { $_ }, (1, 2, 3)}',
         'map in package';
@@ -140,16 +135,15 @@ our $outer_package = 19;
 # change tests to match likely error (top of file) when they pass (RT #64204)
 {
     try { EVAL 'my $x = ::P' };
-    ok  ~$! !~~ /<&fairly_conclusive_platform_error>/, 
+    ok  ~$! !~~ /<&fairly_conclusive_platform_error>/,
         'simple package case that should not blow platform';
 
     try { EVAL 'A::B' };
-    #?niecza todo
     ok  ~$! ~~ /<&likely_perl6_not_found_err>/,
         'another simple package case that should not blow platform';
 }
 
-eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
+eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
               'map works in a module (RT #64606)';
 
 {
@@ -186,7 +180,6 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     eval-lives-ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
-#?niecza skip 'Export tags NYI'
 {
     eval-lives-ok 'use LoadFromInsideAModule',
         'can "use" a class inside a module';
@@ -201,7 +194,6 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 }
 
 # also checks RT #73740
-#?niecza skip 'Unable to locate module PM6 in @path'
 {
     eval-lives-ok 'use PM6', 'can load a module ending in .pm6';
     is EVAL('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
@@ -225,7 +217,6 @@ throws-like 'module RT80856 is not_RT80856 {}', X::Inheritance::UnknownParent,
 
 
 # RT #98856
-#?niecza todo
 eval-lives-ok q[
     package NewFoo { }
     class   NewFoo { }
@@ -240,7 +231,6 @@ throws-like q[
 ], X::UnitScope::TooLate, 'Too late for semicolon form';
 
 # RT #74592
-#?niecza skip 'Nominal type check failed in binding $l in infix:<===>; got My74592, needed Any'
 {
     my $p = my package My74592 { };
     ok $p === My74592, 'return value of "my" package declaration';
@@ -254,6 +244,7 @@ throws-like q[
     use lib 't/spec/packages';
     use Bar;
     use Baz;
+    use Foo;
     is Foo.foo, 'foo', 'can use two packages that both use the same third package'
 }
 
@@ -323,6 +314,23 @@ throws-like q[
         '.WHO of nested subset definition gists to long name';
     is Digestive::Chocolate.WHO.Str, 'Digestive::Chocolate',
         '.WHO of nested subset definition stringifies to long name';
+}
+
+# RT #131076
+{
+    eval-lives-ok '{ my @z; my $x = *²; for $x(42), $x(50) { push @z, $_ } }',
+        "loop that isn't Perl 5 is not identified as such";
+}
+
+# RT #131540
+subtest '`use lib` accepts IO::Path objects' => {
+    plan 2;
+
+    is_run ｢use lib 't/spec/packages'.IO; use Test::Util｣,
+        {:out(''), :err(''), :0status}, 'single object';
+
+    is_run ｢use lib ('.', '.'.IO, 't/spec/packages'.IO); use Test::Util｣,
+        {:out(''), :err(''), :0status}, 'a mixed list of IO::Path and Str';
 }
 
 # vim: ft=perl6

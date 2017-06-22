@@ -17,16 +17,13 @@ plan 3;
 }
 
 # RT #69314
-#?niecza todo
 {
-    sub rt69314($n) { 
-        if $n { 
-            callsame;
-        }
-    }; 
-    
-    lives-ok {rt69314(1)}, 'Calling callsame directly from a sub works';
-
+    # NOTE: do NOT eval this code using Test.pm6's routines as then we would
+    # depend on whether or not those routines are implemented as multies
+    my $desc = 'callsame without dispatcher in scope dies';
+    EVAL ｢sub rt69314($n) { if $n { callsame; } }(1)｣;
+    flunk $desc;
+    CATCH { default { isa-ok $_, X::NoDispatcher, $desc } }
 }
 
 # vim: ft=perl6

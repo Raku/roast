@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 38;
 
 {
     my $capture = \(1,2,3);
@@ -177,5 +177,38 @@ lives-ok { (1..*).Capture.perl }, '.perl of Capture formed from Range does not e
 # RT #123581
 throws-like '(1..*).list.Capture', X::Cannot::Lazy, :action('create a Capture from');
 throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture from');
+
+{ # coverage; 2016-09-26
+    is-deeply \(42, [1, 2], %(:42a), :72a, :x[3, 4], :y{:42a}).antipairs,
+    (
+        42 => 0,        ([1, 2]) => 1, ({:a(42)}) => 2,
+        ([3, 4]) => "x", 72 => "a",    ({:a(42)}) => "y",
+    ), '.antipairs returns correct result';
+}
+
+# RT #128977 and #130954
+{
+	my $c1 = \(42);
+	is $c1.WHICH, "Capture|(Int|42)";
+
+	my $a = 42;
+	my $c2 = \($a);
+	like $c2.WHICH, /'Capture|(Scalar|' \d+ ')'/;
+
+	cmp-ok $c1, &[eqv], $c2;
+	cmp-ok $c1, {$^a !=== $^b}, $c2;
+}
+
+# RT#131351
+subtest 'non-Str-key Pairs in List' => {
+    plan 3;
+    quietly is-deeply (Mu => Any,).Capture, \(:Mu(Any)), '(Mu => Any,)';
+    is-deeply (class {method Str {'foo'}} => 42,).Capture,
+        \(:foo(42)), '( custom class => 432,)';
+
+    # use a Hash as a proxy in expected, 'cause we don't know the sort order
+    is-deeply (<10> => <20>, 30 => 40, 1.5 => 1.5).Capture,
+        %('10' => <20>, '30' => 40, '1.5' => 1.5).Capture, 'numerics and allomorphs';
+}
 
 # vim: ft=perl6

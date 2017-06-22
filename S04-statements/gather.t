@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 38;
 
 # L<S04/The C<gather> statement prefix/>
 
@@ -201,6 +201,7 @@ plan 36;
 }
 
 # tests for the S04-control.pod document
+#?rakudo.jvm skip 'UnwindException RT #124279'
 {
     my @list = 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 6, 6;
     my @uniq = gather for @list {
@@ -211,7 +212,6 @@ plan 36;
     is @uniq, (1, 2, 3, 4, 5, 6), "first example in S04-control.pod works";
 }
 
-#?niecza skip 'Cannot use bind operator with this LHS'
 {
     my @y;
     my @x = gather for 1..2 {            # flat context for list of lists
@@ -222,7 +222,6 @@ plan 36;
     is @y, ($(1, 10), $(2, 20)), "take in item context doesn't flatten";
 }
 
-#?niecza skip 'Cannot use bind operator with this LHS'
 {
     my \c := (gather for 1..2 {
         take $_, $_ * 10;
@@ -276,6 +275,22 @@ plan 36;
     my $l = gather { take-rw my $ = 1 };
     lives-ok { $l.AT-POS(0) = 42 }, 'AT-POS on gather Seq with take-rw value lives';
     is $l.AT-POS(0), 42, 'AT-POS on gather Seq with take-rw value works';
+}
+
+{
+    my @spot = [rand xx 10] xx 10;
+    my @neighbors;
+    for ^10 X ^10 -> ($i, $j) {
+        @neighbors[$i][$j] = eager gather for
+                [-1,-1],[+0,-1],[+1,-1],
+                [-1,+0],        [+1,+0],
+                [-1,+1],[+0,+1],[+1,+1]
+        {
+            take-rw @spot[$i + .[0]][$j + .[1]] // next;
+        }
+    }
+    ok @neighbors[1][1][0] === @spot[0][0], 'Got the value equality expected from take-rw';
+    ok @neighbors[1][1][0] =:= @spot[0][0], 'Got the reference equality expected from take-rw';
 }
 
 # vim: ft=perl6

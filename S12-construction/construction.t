@@ -11,7 +11,7 @@ class OwnConstr {
     my $in_own = 0;
     method own() {
         $in_own++;
-        return self.bless(self.CREATE(), :x(42));
+        self.bless(:x(42));
     }
     method in_own {
         $in_own;
@@ -20,7 +20,7 @@ class OwnConstr {
 ok OwnConstr.new ~~ OwnConstr, "basic class instantiation";
 is OwnConstr.new.x, 13,        "basic attribute access";
 # As usual, is instead of todo_is to suppress unexpected succeedings
-is OwnConstr.in_own, 0,                   "own constructor was not called";
+is OwnConstr.in_own, 0,        "own constructor was not called";
 
 ok OwnConstr.own ~~ OwnConstr, "own construction instantiated its class";
 is OwnConstr.own.x, 42,        "attribute was set from our constructor";
@@ -65,7 +65,6 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
 }	
 
 # RT #64116
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 {
     class RT64116 { has %.env is rw };
 
@@ -87,7 +86,6 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
     is MonkeyNew.new().x, 'called', 'monkey-typed .new() method is called';
 }
 
-#?niecza skip "Malformed has (int NYI, I think)"
 {
     class NativeInt {
         has int $.attr;

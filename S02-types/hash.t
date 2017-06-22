@@ -60,7 +60,6 @@ does-ok %hash5, Hash, '%hash5 does Hash';
     is(@slice2[1], 1, '%hash<> slice was successful');
 }
 
-#?niecza todo
 {
     my @slice3 = %hash5<>.sort(*.value);
     is(+@slice3, 3, 'empty slice got all hash pairs');
@@ -193,7 +192,6 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 }
 
 # test for RT #62730
-#?niecza todo
 lives-ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #71022
@@ -301,7 +299,6 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 }
 
 # RT #77922
-#?niecza skip "Excess arguments to Hash.new, unused named a"
 {
     my $h = Hash.new(a => 3);
     $h<a> = 5;
@@ -309,7 +306,6 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 }
 
 # RT #77598
-#?niecza skip "Unsupported use of [-1] subscript to access from end of array"
 {
     isa-ok {}[*-1], Failure, 'array-indexing a hash with a negative index is Failure';
 }

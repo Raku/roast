@@ -8,7 +8,7 @@ This tests the &?ROUTINE magical value
 
 =end comment
 
-plan 10;
+plan 11;
 
 # L<S06/The C<&?ROUTINE> object>
 # L<S02/Names/Which routine am I in>
@@ -38,7 +38,6 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
     is $variable, &baz, '&?ROUTINE is correct inside a rule';
 }
 
-#?rakudo.jvm skip 'RT #126517'
 {
     my @collected;
     sub foo($a) {
@@ -53,7 +52,6 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
     is @collected.join(''), 'aaaa', 'Correct closure semantics with &?ROUTINE';
 }
 
-#?rakudo.jvm skip 'RT #126517'
 {
     my @collected;
     sub foo($a) {
@@ -69,6 +67,20 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
     my $r2 = foo('b');
     is $r1(4), 24, 'Correct result using &?ROUTINE in nested closure';
     is @collected.join(''), 'aaaa', 'Correct closure semantics with &?ROUTINE in nested closure';
+}
+
+# RT #130761
+
+{
+    sub f() {
+        sub g() {
+            if True {
+                return &?ROUTINE.name;
+            }
+        }
+    }
+    #?rakudo todo 'RT #130761'
+    is f()(), 'g', 'Inner blocks are transparent to &?ROUTINE (RT#130761)';
 }
 
 # vim: ft=perl6

@@ -26,14 +26,13 @@ is $tenth.WHAT.gist, '(Rat)', 'Rat WHAT';
 
 is (0, 1/10 ... 1).gist, '(0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1)', 'rational series';
 is ((1/3 + 1/6) * 2).gist, '1';
-#?rakudo.jvm todo 'got (Int) instead of (Bool)'
 is (1/10 + 1/10 + 1/10 == 0.3).gist, 'True', '(\o/)';
 
 my $pi = 3.14e0;
 my $earth-mass = 5.97e24;  # kg
 is $earth-mass.WHAT.gist, '(Num)'; 
 
-is_approx (0, 1e-1 ... 2)[11], 1.1, 'missed the 1';
+is-approx (0, 1e-1 ... 2)[11], 1.1, 'missed the 1';
 #?rakudo.jvm todo "jvm rounding quirks"
 is (0, 1e-1 ... * >= 1).gist, '(0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1.1)', '(oops)';
 is (1e0/10 + 1/10 + 1/10 == 0.3).gist, 'False', '(awww!)';
@@ -46,7 +45,7 @@ is (1e0/10 + 1/10 + 1/10 == 0.3).gist, 'False', '(awww!)';
 }
 
 is (i * i).gist, '-1+0i', 'complex number';
-is_approx e ** (i * pi) + 1, 0, 'complex equation';
+is-approx e ** (i * pi) + 1, 0, 'complex equation';
 
 my $googol = EVAL( "1" ~ "0" x 100 );
 is $googol.gist, '1' ~ '0' x 100, 'googol';

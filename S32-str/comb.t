@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 78;
+plan 81;
 
 # L<S32::Str/Str/=item comb>
 
@@ -17,7 +17,6 @@ is "a\nb".comb, ('a', "\n", 'b'), 'comb on string with \n';
 is "äbcd".comb, <ä b c d>, 'comb on string with non-ASCII letter';
 
 #?rakudo.jvm 2 todo 'NFG on JVM RT #124737'
-#?niecza 2 todo 'charspec'
 is "a\c[COMBINING DIAERESIS]b".comb, ("ä", "b",), 'comb on string with grapheme precomposed';
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
     ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "b", ),
@@ -27,9 +26,8 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
 {
     my Str $hair = "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng";
     is $hair.comb(/\d+/), <3 3 4 3 0 3 3 1 1 1>, 'no limit returns all matches';
-    is $hair.comb(/\d+/, -10), (), 'negative limit returns no matches';
-    is $hair.comb(/\d+/, 0), (), 'limit of 0 returns no matches';
-    #?rakudo.jvm 2 skip "RT #124279 - UnwindException"
+    is $hair.comb(/\d+/, -10).elems, 0, 'negative limit returns no matches';
+    is $hair.comb(/\d+/, 0).elems, 0, 'limit of 0 returns no matches';
     is $hair.comb(/\d+/, 1), <3>, 'limit of 1 returns 1 match';
     is $hair.comb(/\d+/, 3), <3 3 4>, 'limit of 3 returns 3 matches';
     is $hair.comb(/\d+/, 1000000000), <3 3 4 3 0 3 3 1 1 1>, 'limit of 1 billion returns all matches quickly'; }
@@ -48,7 +46,6 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
         'match for any *a* words';
 }
 
-#?rakudo.jvm skip "RT #124279 - UnwindException"
 is "a ab bc ad ba".comb(/\S*a\S*/, 2), <a ab>, 'matcher and limit';
 
 is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
@@ -58,7 +55,6 @@ ok("forty-two".comb() ~~ Iterable, '.comb() returns something Positional' );
 # comb a list
 
 #?rakudo skip 'cannot call match, no signature matches RT #124738'
-#?niecza skip ':Perl5'
 is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
      'comb a list';
 
@@ -83,7 +79,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 }
 
 # RT #66340
-#?niecza skip 'Huh?'
 {
     my $expected_reason = rx:s/none of these signatures match/;
 
@@ -96,20 +91,19 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 
 {
     is comb( /./ , "abcd"), <a b c d>, 'Subroutine form default limit';
-    #?rakudo.jvm skip "RT #124279 - UnwindException"
     is comb(/./ , "abcd" , 2 ), <a b>, 'Subroutine form with supplied limit';
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng"), <3 3 4 3 0 3 3 1 1 1>, 'Subroutine form with no limit returns all matches';
-    #?rakudo.jvm skip "RT #124279 - UnwindException"
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng" , 2), <3 3>, 'Subroutine form with limit';
 }
 
 # RT #123760
 {
+    #?rakudo.jvm 6 skip 'weird error, looks like wrong multi is used, RT #128580'
     is comb("o","ooo"), <o o o>, "comb(Str,Str)";
     is "qqq".comb("q"), <q q q>, "Str.comb(Str)";
-    is "asdf".comb("z"), (), "Str.comb(Str) with no match"; 
-    is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on"), <on on>, "Str.comb - partial match"; 
-    is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on", 1), <on>, "Str.comb - partial match with a limit"; 
+    is "asdf".comb("z"), (), "Str.comb(Str) with no match";
+    is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on"), <on on>, "Str.comb - partial match";
+    is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on", 1), <on>, "Str.comb - partial match with a limit";
     is 3.14159265358979323.comb("3"), 3 xx 4 , "Cool.comb";
     is 3.14159265358979323.comb("3", 2), 3 xx 2 , "Cool.comb with a limit";
 }
@@ -151,6 +145,44 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
         test( "foobarbaz",  1, <f o o b a r b a z>, $times );
         test( "foobarbaz",  0, <f o o b a r b a z>, $times );
         test( "foobarbaz", -1, <f o o b a r b a z>, $times );
+    }
+}
+
+# RT #127215
+#?rakudo.jvm skip 'ordbaseat NYI'
+eval-lives-ok ｢"hello".comb(/:m <[o]>/)｣,
+    '.comb(/:m <[o]>/) construct does not die';
+
+# https://github.com/rakudo/rakudo/commit/a08e953018
+is-deeply 1337.comb(2), ('13', '37'), 'Cool.comb(Int)';
+
+subtest 'edge-case combers' => {
+    my @tests = gather {
+        .take for
+            ("abc", <a b c>.Seq, "",  ),
+            ("abc", <a b c>.Seq, "", ∞),
+            ("abc", <a b c>.Seq, "", 4),
+            ("abc", <a b  >.Seq, "", 2),
+
+            ("",         ().Seq, "",  ),
+            ("",         ().Seq, "", ∞),
+            ("",         ().Seq, "", 4),
+            ("",         ().Seq, "", 2),
+
+            ("abc", <a b c>.Seq, 0,   ),
+            ("abc", <a b c>.Seq, 0,  ∞),
+            ("abc", <a b c>.Seq, 0,  4),
+            ("abc", <a b  >.Seq, 0,  2),
+
+            ("",         ().Seq, 0,   ),
+            ("",         ().Seq, 0,  ∞),
+            ("",         ().Seq, 0,  4),
+            ("",         ().Seq, 0,  2),
+    }
+    plan +@tests;
+    for @tests -> ($str, $expected, |args) {
+        #?rakudo.jvm skip 'Type check failed in binding to parameter "$pattern"; expected Regex but got Str ("")'
+        is-deeply $str.comb(|args), $expected, "$str.perl() with {args.perl}";
     }
 }
 

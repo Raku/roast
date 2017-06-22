@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 79;
+plan 87;
 
 use Test::Util;
 
@@ -16,7 +16,6 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 
 # L<S12/"Types and Subtypes">
 
-#?niecza skip '$n has already been used as a non-placeholder in the surrounding block'
 {
     my $abs = '
     multi sub my_abs (Int $n where { $^n >= 0 }){ $n }
@@ -74,7 +73,6 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 }
 
 # The same, but lexically
-#?niecza skip 'Pathed definitions require our scope'
 {
     my subset Int::Even of Int where { $^num % 2 == 0 }
     ok my Int::Even $c = 6;
@@ -99,9 +97,18 @@ Tests subtypes, specifically in the context of multimethod dispatch.
   dies-ok { $d = 7 },            'negative test also works';
   is $d,                   10,   'variable kept previous value';
 
-  
+
   $multiple_of = 6;
   dies-ok { my Num::Multiple $e = 10 }, "changed subtype definition worked";
+}
+
+# Subsets with custom error messages
+{
+    my subset Even of Int where { $^num %% 2 or fail "$num is not even" };
+    throws-like {
+        my Even $e = 1;
+    }, Exception, :message("1 is not even"),
+    'custom subset errors can be created with fail()';
 }
 
 # Rakudo had a bug where 'where /regex/' failed
@@ -166,13 +173,11 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     ok C1.new(a => 42) ~~ SC1,   'subtypes based on classes work';
 }
 
-#?niecza skip 'Object reference not set to an instance of an object'
 {
-    role R1 { }; 
+    role R1 { };
     subset SR1 of R1 where 1;
     ok !(1 ~~ SR1), 'subtypes based on roles work';
     my $x = 1 but R1;
-    #?rakudo.jvm todo 'mixin of role does not work correctly'
     ok $x ~~ SR1,   'subtypes based on roles work';
 }
 
@@ -189,13 +194,11 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     class RT65700 {
         has Small $.small;
     }
-    #?niecza todo
     dies-ok { RT65700.new( small => 20 ) }, 'subset type is enforced as attribute in new() (1)';
     lives-ok { RT65700.new( small => 2 ) }, 'subset type enforced as attribute in new() (2)';
 
     my subset Teeny of Int where { $^n < 10 }
     class T { has Teeny $.teeny }
-    #?niecza todo
     dies-ok { T.new( teeny => 20 ) }, 'my subset type is enforced as attribute in new() (1)';
     lives-ok { T.new( teeny => 2 ) }, 'my subset type enforced as attribute in new() (2)';
 }
@@ -240,7 +243,6 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     is $*call2, 1, 'level two subset checked (should succeed)';
 }
 
-#?niecza skip 'Object reference not set to an instance of an object'
 {
     role R { };
     subset S of R;
@@ -265,8 +267,16 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     dies-ok { EVAL('f(-2)') }, 'Cannot violate Int::Positive constraint';
 }
 
+# RT #131381
+{
+    subset PInt of Int where { $_ > 0 };
+    my PInt @a = 2, 3;
+    sub f(PInt @a) { 1; }
+    #?rakudo todo 'Parameterized subs do not take Array of subset types'
+    lives-ok { f(@a) }, 'Array of subset type as parameter to function';
+}
+
 # RT #71820
-#?niecza todo
 {
     subset Interesting of Int where * > 10;
     class AI { has Interesting $.x };
@@ -284,7 +294,6 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 }
 
 # RT #72948
-#?niecza skip "Exceptions not supported"
 {
     try { EVAL 'sub foo($x where { $x == $y }, $y) { }' };
     isa-ok $!, X::Undeclared, 'subset in signature cannot use non-predeclared variable';
@@ -310,6 +319,37 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
         err    => '',
     },
     'code runs without error (and does not mention "Obsolete"!)';
+}
+
+# RT #127394
+{
+    my subset JJ where { !.defined || $_ > 2 };
+
+    dies-ok { -> JJ:D $a { }(Int) }, 'ASubType:D dies if passed type object';
+    dies-ok { -> JJ:D $a { }(2) }, 'ASubType:D dies if passed non-matching concrete value';
+    is (-> JJ:D $a { 'yup' }(3)), 'yup', 'ASubType:D passes if passed matching concrete value';
+}
+
+# RT #127367
+subtest 'multi with :D subset dispatches correctly' => {
+    my @results;
+    lives-ok {
+        subset T127367 of List where *[0] eqv 1;
+        class R127367 {
+            multi method f(T127367:D $xs) { @results.push('T:D'); self.f(42) }
+            multi method f(Any:D $xs) { @results.push: $xs }
+        }
+        R127367.f([1, 2]);
+        R127367.f([2, 2]);
+    }, 'dispatch does not die';
+    is-deeply @results, ['T:D', 42, [2, 2]], 'dispatch happened in right order';
+}
+
+# RT #129430
+{
+    sub f(|c where { c.elems == 1 }) {}
+    lives-ok { f(42) }, 'where constraint on |c parameter works';
+    dies-ok { f() }, 'where constraint on |c parameter is enforced';
 }
 
 # vim: ft=perl6

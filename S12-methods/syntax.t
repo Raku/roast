@@ -22,7 +22,6 @@ is .doit\ (),   'empty',        'method call with unspace';
 is (.doit: 1, 2, 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit: 1, 2, 3, 4), 'a:1|b:2!3!4',  'list op with colon, slurpy';
 #?rakudo 3 skip 'switch-from-paren-to-listop form RT #124852'
-#?niecza 3 skip 'Interaction between semiargs and args is not understood'
 is (.doit(1): 2, 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit(1, 2): 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit\  (1, 2): 3), 'a:1|b:2!3',    'list op with colon, unspace';
@@ -30,7 +29,6 @@ is (.doit\  (1, 2): 3), 'a:1|b:2!3',    'list op with colon, unspace';
 # L<S12/Fancy method calls/"if any term in a list is a bare closure">
 is (1..8).grep({ $_ % 2 }).map({ $_ - 1 }).join('|'), '0|2|4|6',
    'sanity check, should give same result as the next two tests';
-#?niecza skip 'Excess arguments to Any.map, used 2 of 4 positionals'
 # RT #67700
 {
     is ((1..8).map:{ "$^x$^y" }.assuming: 'x').join('|'), 'x1|x2|x3|x4|x5|x6|x7|x8',

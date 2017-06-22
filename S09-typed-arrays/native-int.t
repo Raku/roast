@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 136 + @uint * 2;
+plan (@int + @uint) * 160 + @uint * 2 + 1;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -140,43 +140,75 @@ for flat @int,@uint -> $T {
       "Cannot push non-int/Int to $t array";
     throws-like { @arr[0] := my $a }, Exception,
       message => 'Cannot bind to a natively typed array',
-      "Cannot push non-int/Int to $t array";
+      "Cannot bind to $t array";
     throws-like { @arr[0]:delete }, Exception,
       message => 'Cannot delete from a natively typed array',
-      "Cannot push non-int/Int to $t array";
+      "Cannot delete from $t array";
 
-    is (@arr.push(101, 105)), (42,101,105), "can push multiple to $t array";
+    is (@arr.push(101, 105)), (42,101,105),
+      "can push multiple to $t array";
     is @arr.elems, 3, "push multiple to $t array works (1)";
     is @arr[1], 101,  "push multiple to $t array works (2)";
     is @arr[2], 105,  "push multiple to $t array works (3)";
     throws-like { @arr.push('omg', 'wtf') }, Exception,
-      message => 'This type cannot unbox to a native integer',
       "Cannot push non-int/Int to $t array (multiple push)";
 
-    is @arr.pop, 105, "pop from $t array works (1)";
-    is @arr.elems, 2, "pop from $t array works (2)";
+    is @arr.append(66), (42,101,105,66), "can append to $t array";
+    is @arr.elems, 4, "append to $t array works (1)";
+    is @arr[3], 66,  "append to $t array works (2)";
+    throws-like { @arr.append('it real good') }, Exception,
+      "Cannot append non-int/Int to $t array";
 
-    is (@arr.unshift(1)), (1,42,101), "can unshift to $t array";
-    is @arr.elems, 3, "unshift to $t array works (1)";
+    is (@arr.append(21,25)), (42,101,105,66,21,25),
+      "can append multiple to $t array";
+    is @arr.elems, 6, "append multiple to $t array works (1)";
+    is @arr[4], 21,  "append multiple to $t array works (2)";
+    is @arr[5], 25,  "append multiple to $t array works (3)";
+    throws-like { @arr.append('omg', 'wtf') }, Exception,
+      "Cannot append non-int/Int to $t array (multiple append)";
+
+    is @arr.pop, 25, "pop from $t array works (1)";
+    is @arr.elems, 5, "pop from $t array works (2)";
+
+    is (@arr.unshift(1)), (1,42,101,105,66,21),
+      "can unshift to $t array";
+    is @arr.elems, 6, "unshift to $t array works (1)";
     is @arr[0],  1,   "unshift to $t array works (2)";
     is @arr[1], 42,   "unshift to $t array works (3)";
     # RT #125123
-    throws-like { @arr.unshift('part of the day not working') }, X::TypeCheck,
-      got => Str,
+    throws-like { @arr.unshift('part of the day not working') }, Exception,
       "Cannot unshift non-int/Int to $t array";
 
-    is (@arr.unshift(3,2)), (3,2,1,42,101),"can unshift multiple to $t array";
-    is @arr.elems, 5, "unshift multiple to $t array works (1)";
+    is (@arr.unshift(3,2)), (3,2,1,42,101,105,66,21),
+      "can unshift multiple to $t array";
+    is @arr.elems, 8, "unshift multiple to $t array works (1)";
     is @arr[0],  3,   "unshift multiple to $t array works (2)";
     is @arr[1],  2,   "unshift multiple to $t array works (3)";
     is @arr[2],  1,   "unshift multiple to $t array works (4)";
     is @arr[3], 42,   "unshift multiple to $t array works (5)";
     throws-like { @arr.unshift('wtf', 'bbq') }, Exception,
-      message => 'This type cannot unbox to a native integer',
       "Cannot unshift non-int/Int to $t array (multiple unshift)";
 
-    is @arr.shift, 3, "shift from $t array works (1)";
-    is @arr.elems, 4, "shift from $t array works (2)";
+    is (@arr.prepend(4)), (4,3,2,1,42,101,105,66,21),
+      "can prepend to $t array";
+    is @arr.elems, 9, "prepend to $t array works (1)";
+    is @arr[0], 4,    "prepend to $t array works (2)";
+    is @arr[1], 3,    "prepend to $t array works (3)";
+    throws-like { @arr.prepend('part of the day not working') }, Exception,
+      "Cannot prepend non-int/Int to $t array";
+
+    is (@arr.prepend(6,5)), (6,5,4,3,2,1,42,101,105,66,21),
+      "can prepend multiple to $t array";
+    is @arr.elems, 11, "unshift multiple to $t array works (1)";
+    is @arr[0], 6, "prepend multiple to $t array works (2)";
+    is @arr[1], 5, "prepend multiple to $t array works (3)";
+    is @arr[2], 4, "prepend multiple to $t array works (4)";
+    is @arr[3], 3, "prepend multiple to $t array works (5)";
+    throws-like { @arr.prepend('wtf', 'bbq') }, Exception,
+      "Cannot prepend non-int/Int to $t array (multiple unshift)";
+
+    is @arr.shift,  6, "shift from $t array works (1)";
+    is @arr.elems, 10, "shift from $t array works (2)";
 
     is (@arr = 1..10), (1..10).List, "can initialize $t from Range";
     my @replaced = @arr.splice(3, 2, 98, 99, 100);
@@ -200,9 +232,20 @@ for flat @int,@uint -> $T {
     @arr = 39, 3;
     is ftest(|@arr), 42, "Flattening $t array in call works";
 
+    @arr = ^5;
+    is @arr.join(":"), "0:1:2:3:4", "does join a $t array";
+
+    @arr = ();
+    @arr[4] = 22;
+    #?rakudo todo 'RT #127756'
+    is @arr.join(":"), "0:0:0:0:22", "does emptying a $t array really empty";
+
+    my @holes := array[$T].new;
+    @holes[4] = 22;
+    is @holes.join(":"), "0:0:0:0:22", "does join handle holes in a $t array";
+
     # Interaction of native int arrays and untyped arrays.
     my @native := array[$T].new(1..10);
-
     my @untyped = @native;
     is @untyped.elems, 10, "List-assigning $t array to untyped works (1)";
     is @untyped[0], 1, "List-assigning $t array to untyped works (2)";
@@ -224,7 +267,6 @@ for flat @int,@uint -> $T {
 
     @untyped2.push('C-C-C-C-Combo Breaker!');
     throws-like { @native2 = @untyped2 }, Exception,
-      message => 'This type cannot unbox to a native integer',
       "List-assigning incompatible untyped array to $t array dies";
 }
 
@@ -247,3 +289,6 @@ for @uint -> $T {
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     }
 }
+
+# RT #130443
+dies-ok { my int @a = ^Inf; 42 }, 'Trying to assign ^Inf to an int array dies';

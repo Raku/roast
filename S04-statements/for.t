@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 98;
+plan 104;
 
 =begin description
 
@@ -41,7 +41,6 @@ for statement as possible
     is($b, '012345', 'for 0 .. 5 -> {} works');
 }
 
-#?niecza skip 'slice context'
 {
     my $str;
     my @a = 1..3;
@@ -387,7 +386,6 @@ throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitesp
 }
 
 # RT #63994
-#?niecza 2 todo 'NYI'
 {
   my $str = '';
   for 1..5 -> $x, $y? {
@@ -466,15 +464,13 @@ throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitesp
 
 {
     is (for ^2 { 41; 42 }), (42,42), "for loop value is list of iter values";
-#?rakudo.jvm todo 'gives Any instead of ()'
     is (for ^5 { 41; next if $_ == 2; $_; }).flat, (0,1,3,4),
                 "for loop with value-less next flattens out nexted iterations";
 
-#?rakudo todo 'Rakudo still uses Nil here RT #124568'
+# see RT #124568
     my $l = (for ^5 { 41; next if $_ == 2; $_; });
-    is $l[2].perl, "()", "for loop iteration with value-less 'next' gives ()";
+    is $l[2].perl, 3, "for loop iteration with value-less 'next' gives Empty";
 
-#?rakudo.jvm todo 'gives "" instead of "0 1"'
     is (for ^5 { 41; last if $_ == 2; $_; }).flat, (0,1),
                 "for loop with value-less last flattens out last iteration";
 
@@ -555,14 +551,20 @@ lives-ok {
 
 # RT #74060
 # more list comprehension
-#?niecza todo "https://github.com/sorear/niecza/issues/180"
 {
     my @s = ($_ * 2 if $_ ** 2 > 3 for 0 .. 5);
     is ~@s, '4 6 8 10', 'Can use statement-modifying "for" in list comprehension';
 }
 
+# RT #123506
+{
+    my \rt123506a = ($_ for ^1);
+    is ~rt123506a, '0', 'assigning list comprehension to sigilless works (1)';
+    my \rt123506b = ($_ for ^2);
+    is ~rt123506b, '0 1', 'assigning list comprehension to sigilless works (2)';
+}
+
 # RT #113026
-#?niecza todo 'array iterator does not track a growing array'
 {
     my @rt113026 = 1 .. 10;
     my $iter = 0;
@@ -684,6 +686,73 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 {
     sub foo { my $s; (for 1..3 { $s += $_ }) }
     is foo(), (6, 6, 6), 'for loops do not decontainerize';
+}
+
+# RT #128054
+{
+    my $out = '';
+    quietly $out ~= ("{$_}") for <aa bb>;
+    #?rakudo todo 'RT 128054'
+    is $out, 'aabb',
+        'topic of for loop has correct value in ("{$_}") construct';
+}
+
+# RT #123072
+{
+    my class Sinker { method sink() { take "Blub" } }
+    is (gather for ^5 { Sinker.new(); }).gist, "(Blub Blub Blub Blub Blub)", "for loop properly sinks final statement method call";
+}
+
+# RT #131567
+subtest 'next with label works inside list comprehended for loops' => {
+    # We have several of these cases because some implementations chose
+    # to branch handling of these special cases for perf reasons.
+
+    plan 4;
+    {
+        my @ans;
+        @ = (MEOW: for ^10 {
+            eager MOO: for "a".."c" -> $n {
+                next MEOW if $_ %% 2;
+                next MOO  if $_ %% 3;
+                @ans.push: "$_$n"
+            }
+        });
+        is-deeply @ans, [<1a 1b 1c 5a 5b 5c 7a 7b 7c>],
+            'just a for with Range';
+    }
+
+    {
+        my @ans;
+        @ = (MEOW: for ^10 -> $_ --> List {
+            eager MOO: for "a".."c" -> $n --> Array {
+                next MEOW if $_ %% 2;
+                next MOO  if $_ %% 3;
+                @ans.push: "$_$n"
+            }
+        });
+        is-deeply @ans, [<1a 1b 1c 5a 5b 5c 7a 7b 7c>],
+            '1 at a time, no phasers, non slippy';
+    }
+
+    {
+        my @ans;
+        @ = (MEOW: for ^6 -> $, $a --> Array { next MEOW if $a == 1; @ans.push: $a });
+        is-deeply @ans, [3, 5], 'two at a time, no phasers, non slippy';
+    }
+
+    {
+        my @ans;
+        FOO: for ^10 -> $_ --> Array { next FOO if $_ %% 2; @ans.push: $_ }
+        is-deeply @ans, [1, 3, 5, 7, 9]
+    }
+}
+
+# RT #131593
+{
+    my $i = 0;
+    sub foo($?) { ^2 .map: { $i++ } }; for 1 { .&foo() };
+    is $i, 2, 'for statement sinks its content';
 }
 
 # vim: ft=perl6

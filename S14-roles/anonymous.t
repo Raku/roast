@@ -34,10 +34,8 @@ plan 13;
 
   my $a = {:x};
   is $a, {:x}, "basic sanity";
-  #?niecza todo 'This is being misinterpreted as an initial value'
   lives-ok {$a does role_generator("hi")}, "role generating function mixin";
   is $a, {:x}, "still basic sanity";
-  #?niecza skip 'roles are run once and only capture the protopad'
   is $a.cool, "hi", "role generating function gave us an attribute";
 }
 

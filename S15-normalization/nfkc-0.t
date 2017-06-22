@@ -1,6 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
+# Generated from Unicode version 9.0.0.
 
 use Test;
 
@@ -29,6 +30,8 @@ ok Uni.new(0x0045, 0x0304, 0x0300).NFKC.list ~~ (0x1E14,), '0045 0304 0300 -> 1E
 ok Uni.new(0x0045, 0x0300, 0x0304).NFKC.list ~~ (0x00C8, 0x0304,), '0045 0300 0304 -> 00C8 0304';
 ok Uni.new(0x05B8, 0x05B9, 0x05B1, 0x0591, 0x05C3, 0x05B0, 0x05AC, 0x059F).NFKC.list ~~ (0x05B1, 0x05B8, 0x05B9, 0x0591, 0x05C3, 0x05B0, 0x05AC, 0x059F,), '05B8 05B9 05B1 0591 05C3 05B0 05AC 059F -> 05B1 05B8 05B9 0591 05C3 05B0 05AC 059F';
 ok Uni.new(0x0592, 0x05B7, 0x05BC, 0x05A5, 0x05B0, 0x05C0, 0x05C4, 0x05AD).NFKC.list ~~ (0x05B0, 0x05B7, 0x05BC, 0x05A5, 0x0592, 0x05C0, 0x05AD, 0x05C4,), '0592 05B7 05BC 05A5 05B0 05C0 05C4 05AD -> 05B0 05B7 05BC 05A5 0592 05C0 05AD 05C4';
+ok Uni.new(0x1100, 0xAC00, 0x11A8).NFKC.list ~~ (0x1100, 0xAC01,), '1100 AC00 11A8 -> 1100 AC01';
+ok Uni.new(0x1100, 0xAC00, 0x11A8, 0x11A8).NFKC.list ~~ (0x1100, 0xAC01, 0x11A8,), '1100 AC00 11A8 11A8 -> 1100 AC01 11A8';
 ok Uni.new(0x00A0).NFKC.list ~~ (0x0020,), '00A0 -> 0020';
 ok Uni.new(0x00A8).NFKC.list ~~ (0x0020, 0x0308,), '00A8 -> 0020 0308';
 ok Uni.new(0x00AA).NFKC.list ~~ (0x0061,), '00AA -> 0061';
@@ -2004,5 +2007,3 @@ ok Uni.new(0x3293).NFKC.list ~~ (0x793E,), '3293 -> 793E';
 ok Uni.new(0x3294).NFKC.list ~~ (0x540D,), '3294 -> 540D';
 ok Uni.new(0x3295).NFKC.list ~~ (0x7279,), '3295 -> 7279';
 ok Uni.new(0x3296).NFKC.list ~~ (0x8CA1,), '3296 -> 8CA1';
-ok Uni.new(0x3297).NFKC.list ~~ (0x795D,), '3297 -> 795D';
-ok Uni.new(0x3298).NFKC.list ~~ (0x52B4,), '3298 -> 52B4';

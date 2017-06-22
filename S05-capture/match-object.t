@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 25;
+plan 44;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT, Match.WHAT,         'got right type';
@@ -22,9 +22,27 @@ is $/.values.elems,   0,        '.values (empty)';
 is $/.pairs.elems,    0,        '.pairs (empty)';
 is $/.kv.elems,       0,        '.kv (empty)';
 
+
+# prematch and postmatch for zero-width matches,
+# which was broken in rakudo until https://github.com/rakudo/rakudo/commit/c04b8b5cc9
+
+ok 'abc def' ~~ />>/, 'sanity 1';
+is $/.from, 3, 'sanity 2';
+is $/.prematch, 'abc', '.prematch for zero-width matches';
+is $/.postmatch, ' def', '.postmatch for zero-width matches';
+isa-ok $/.prematch,  Str, '.prematch produces a Str';
+isa-ok $/.postmatch, Str, '.postmatch produces a Str';
+
 nok 'abde' ~~ /\d/,             'no match';
 nok $/.Bool,                    'failed match is False';
 is  $/.Str,          '',        'false match stringifies to empty string';
+
+# Equality checks
+is ('hey' ~~ /(.+)/) === ('foo' ~~ /(.+)/), False, '=== of different match objects';
+is ('foo' ~~ /(.+)/) === ('foo' ~~ /(.+)/), False, '=== of different but similar match objects';
+is $_ === $_, True, '=== of one and the same match object' with 'foo' ~~ /(.+)/;
+is ('hey' ~~ /(.+)/) eqv ('foo' ~~ /(.+)/), False, 'eqv of different match objects';
+is ('foo' ~~ /(.+)/) eqv ('foo' ~~ /(.+)/), True, 'eqv of different but similar match objects';
 
 # RT #76998, cmp. http://perl6advent.wordpress.com/2013/12/17/
 {
@@ -47,4 +65,57 @@ ok defined($c.pos),             '.pos';
 
     "RT77146" ~~ /(RT)<RT77146_rx>/;
     is $/.keys, (0, "RT77146_rx"), "\$/.keys returns both positional and associative captures";
+}
+
+# https://github.com/rakudo/rakudo/commit/5ac593e
+subtest 'can smartmatch against regexes stored in variables' => {
+    plan 2;
+
+    my $re = rx/a/;
+    my $res = 'a' ~~ $re;
+    isa-ok $res, Match, 'return value is a Match object';
+    is $res, "a", 'return value contains right result';
+}
+
+{
+    # non-str orig, Int
+    ok 12345 ~~ /2../, 'sanity';
+    is-deeply $/.orig, 12345, 'non-Str orig';
+    is-deeply $/.prematch, '1', '.prematch on non-Str';
+    is-deeply $/.postmatch, '5', '.postmatch on non-Str';
+
+    # non-str orig, NFD
+    # RT #130458
+    #?rakudo.jvm 2 skip 'Undeclared name: NFD, RT #130458'
+    ok "7\x[308]".NFD ~~ /^ \d+ $/, 'sanity';
+    #?rakudo todo '$/.orig on NFD matches'
+    isa-ok $/.orig, NFD, '.orig retains the type (NFD)';
+
+}
+
+# https://github.com/rakudo/rakudo/commit/a62b221a80
+subtest '$/ is set when matching in a loop' => {
+    plan 10;
+
+    for "a" { my $rx = rx/./; if $_ ~~ $rx {
+        is ~$/, 'a', '&infix:<~~>'
+    }}
+    for "a" { if .match: /./      { is ~$/, 'a', 'Str.match' }}
+    for 4   { if .match: /./      { is ~$/, '4', 'Cool.match' }}
+    for "a" { if .subst: /./, 'x' { is ~$/, 'a', 'Str.subst' }}
+    for 4   { if .subst: /./, 'x' { is ~$/, '4', 'Cool.subst' }}
+    for $="a" { if .subst-mutate: /./, 'x' { is ~$/, 'a', 'Str.subst-mutate'  }}
+    for $=4   { if .subst-mutate: /./, 'x' { is ~$/, '4', 'Cool.subst-mutate' }}
+
+    my grammar Foo { token TOP { . } }
+    for "a" { if Foo.parse: $_ { is ~$/, 'a', 'Grammar.parse' }}
+    for "a" { if Foo.subparse: $_ { is ~$/, 'a', 'Grammar.subparse' }}
+
+    with $*TMPDIR.child: ($*PROGRAM, rand, now).join.subst(:g, /\W/, '-') {
+        LEAVE .unlink;
+        .spurt: 'a';
+        for "a" -> $ { if grammar { token TOP { . } }.parsefile: $_ {
+            is ~$/, 'a', 'Grammar.parse-file'
+        }}
+    }
 }

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 13;
 
 #L<S06/Operator overloading>
 
@@ -41,5 +41,14 @@ is ~(('OMG','BBQ') <<wtf>> ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '<<...>> hyper
     sub foo ($a, $b) { $a * $b };
     is (2 [&foo] 3 [&foo] 4), 24, "can we use a sub as an infix op between []";
 }
+
+# RT #130998
+{
+    is([+](^20 .grep: *.is-prime), 77, "can we use &infix:<.> as argument for []");
+}
+
+# RT #130610
+is ([\,] <a b>, <c d>, <e f>)».join('|').join('-'), "a b-a b|c d-a b|c d|e f",
+    "Triangular reduce with &infix:<,> and a list of lists doesn't flatten"
 
 # vim: ft=perl6

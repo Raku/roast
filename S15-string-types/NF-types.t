@@ -9,7 +9,6 @@ plan 10;
 ## NFC
 
 #?rakudo 1 skip 'NFC type NYI RT #124995'
-#?niecza 1 skip 'NFC type NYI'
 {
     is q:nfc"ẛ̣".WHAT, NFC, ":nfc adverb on quoteforms produces NFC string type.";
     is "ẛ̣".NFC.WHAT, NFC, "Str literal can be converted to NFC.";
@@ -28,7 +27,6 @@ plan 10;
 ## NFD
 
 #?rakudo 1 skip 'NFD type NYI RT #124996'
-#?niecza 1 skip 'NFD type NYI'
 {
     is q:nfd"ẛ̣".WHAT, NFD, ":nfd adverb on quoteforms produces NFD string type.";
     is "ẛ̣".NFD.WHAT, NFD, "Str literal can be converted to NFD.";

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 57;
+plan 316;
 
 =begin description
 
@@ -18,7 +18,6 @@ L<"http://groups.google.com/group/perl.perl6.language/tree/browse_frm/thread/24e
 
 my @array = <a b c d>;
 ok ?(@array.pick eq any <a b c d>), "pick works on arrays";
-#?niecza skip '().pick === Nil'
 ok ().pick === Nil, '.pick on the empty list is Nil';
 
 my @arr = <z z z>;
@@ -167,6 +166,14 @@ nok ([==] (^2**64).roll(10).map(* +& 15)), 'Range.pick has enough entropy';
     is More.pick(*), More, 'all pick on Enum is sane';
     is Less.pick(4), Less, 'too many pick on Enum is sane';
     is More.pick(0), (), 'zero pick on Enum is sane';
+}
+
+# RT #109586
+{
+    my $v = 2;
+    for (1..259) {
+        is ([+|] ((^$v).pick for ^200)), $v - 1, "$v.base(16) .pick hits all bits"; $v +<= 1;
+    }
 }
 
 # vim: ft=perl6

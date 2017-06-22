@@ -1,11 +1,14 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
+# Generated from Unicode version 9.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0x3297).NFC.list ~~ (0x3297,), '3297 -> 3297';
+ok Uni.new(0x3298).NFC.list ~~ (0x3298,), '3298 -> 3298';
 ok Uni.new(0x3299).NFC.list ~~ (0x3299,), '3299 -> 3299';
 ok Uni.new(0x329A).NFC.list ~~ (0x329A,), '329A -> 329A';
 ok Uni.new(0x329B).NFC.list ~~ (0x329B,), '329B -> 329B';
@@ -2004,5 +2007,3 @@ ok Uni.new(0xB25B).NFC.list ~~ (0xB25B,), 'B25B -> B25B';
 ok Uni.new(0xB25C).NFC.list ~~ (0xB25C,), 'B25C -> B25C';
 ok Uni.new(0xB25D).NFC.list ~~ (0xB25D,), 'B25D -> B25D';
 ok Uni.new(0xB25E).NFC.list ~~ (0xB25E,), 'B25E -> B25E';
-ok Uni.new(0xB25F).NFC.list ~~ (0xB25F,), 'B25F -> B25F';
-ok Uni.new(0xB260).NFC.list ~~ (0xB260,), 'B260 -> B260';

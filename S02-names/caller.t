@@ -84,7 +84,6 @@ plan 15;
   }
 
   my $abs = 23;
-  #?niecza todo 'strictness'
   nok (try bar()) eq 'success',
     'vars not declared "is dynamic" are not accessible via $CALLER::';
 } #1

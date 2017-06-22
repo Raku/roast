@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 21;
 
 class Ap {
     has $.s;
@@ -40,5 +40,51 @@ throws-like 'my class C { has $.x; submethod BUILD(:$.x) {} }',
 
 throws-like 'sub optimal($.x) { }', X::Syntax::NoSelf, variable => '$.x';
 throws-like 'sub optimal($!x) { }', X::Syntax::NoSelf, variable => '$!x';
+
+# RT #129278
+#?DOES 2
+{
+    my class C {
+        has int $!i;
+        method xi($!i) {}
+        method yi() { $!i }
+
+        has num $!n;
+        method xn($!n) {}
+        method yn() { $!n }
+    }
+    my $o = C.new;
+    $o.xi: 42;
+    $o.xn: 1.5e0;
+    is $o.yi, 42, 'Can use attributive binding on a native attribute (int, positional)';
+    is $o.yn, 1.5e0, 'Can use attributive binding on a native attribute (num, positional)';
+}
+#?DOES 2
+{
+    my class C {
+        has int $!i;
+        method xi(:$!i) {}
+        method yi() { $!i }
+
+        has num $!n;
+        method xn(:$!n) {}
+        method yn() { $!n }
+    }
+    my $o = C.new;
+    $o.xi: i => 69;
+    $o.xn: n => 2.5e0;
+    is $o.yi, 69, 'Can use attributive binding on a native attribute (int, named)';
+    is $o.yn, 2.5e0, 'Can use attributive binding on a native attribute (num, named)';
+}
+
+{
+    my class C {
+        has $.foo;
+        method bar($bar) {
+            with $bar -> $!foo { self }
+        }
+    }
+    is C.new.bar("foo").foo, "foo", 'any Signature binds attributively to the next self in the outer chain';
+}
 
 # vim: ft=perl6

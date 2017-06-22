@@ -35,6 +35,7 @@ await $promise;
 is $done, $times, 'did we receive all?';
 
 # RT #127629
+#?rakudo.jvm skip 'hangs (sometimes) RT #127947'
 {
     my $r = Supplier.new;
     my $s = $r.Supply;

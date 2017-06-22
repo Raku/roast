@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 31;
+plan 35;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -82,6 +82,19 @@ is opt_array2(), 0, "optional array not passed is empty (copy)";
 is opt_hash1(),  0, "optional hash not passed is empty";
 is opt_hash2(),  0, "optional hash not passed is empty (copy)";
 
+# RT #118555
+{
+    sub opt_array(Int @foo?) { @foo.push(42); @foo };
+    #?rakudo.jvm skip 'Type check failed in binding to parameter "@foo"; expected Positional[Int] but got Array ($[])'
+    is-deeply opt_array(),                  Array[Int].new(42),    'can assign to an optional typed array not passed';
+    is-deeply opt_array(Array[Int].new(1)), Array[Int].new(1, 42), 'can assign to an optional typed array that is passed';
+
+    sub opt_hash(Int %foo?) { %foo<bar> = 42; %foo };
+    #?rakudo.jvm skip 'Type check failed in binding to parameter "%foo"; expected Associative[Int] but got Hash (${})'
+    is-deeply opt_hash(),                   (my Int % = :bar(42)),          'can assign to an optional typed hash not passed';
+    is-deeply opt_hash(my Int % = :baz(1)), (my Int % = :baz(1), :bar(42)), 'can assign to an optional typed hash that is passed';
+}
+
 # RT #71110
 throws-like 'sub opt($a = 1, $b) { }', X::Parameter::WrongOrder,
     'Cannot put required parameter after optional parameters';
@@ -118,14 +131,13 @@ throws-like 'sub opt($a = 1, $b) { }', X::Parameter::WrongOrder,
 }
 
 # RT #79288
-## TODO: implement typed exception and check for that one instead of Exception
 {
-    throws-like { EVAL q[ sub foo($x? is rw) {} ] }, Exception,
-        message => "Cannot use 'is rw' on an optional parameter",
+    throws-like ｢sub foo($x? is rw) {}｣, X::Trait::Invalid,
+        :type('is'), :subtype('rw'),
         'making an "is rw" parameter optional dies with adequate error message';
 
-    throws-like { EVAL q[ sub foo($x is rw = 42) {} ] }, Exception,
-        message => "Cannot use 'is rw' on an optional parameter",
+    throws-like ｢sub foo($x is rw = 42) {}｣, X::Trait::Invalid,
+        :type('is'), :subtype('rw'),
         'making an "is rw" parameter optional dies with adequate error message';
 }
 

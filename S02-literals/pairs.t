@@ -23,7 +23,7 @@ use Test;
 #   S02 lists ':a' as being equivlaent to a => 1, so
 #   the type of the value of that pair is Int, not Bool
 
-plan 76;
+plan 77;
 
 sub f1n (:$a) { $a.WHAT.gist }
 sub f1p ( $a) { $a.WHAT.gist }
@@ -66,7 +66,6 @@ sub f2 (:$a!) { WHAT($a) }
     isa-ok f2(:a(42)),      Int, "':a(42)' is a named";
     isa-ok f2(:a),          Bool,"':a' is a named";
 
-    #?niecza skip "Action method escape:sym<&> not yet implemented"
     isa-ok(&f2.(:a),        Bool, "in '\&f2.(:a)', ':a' is a named");
     isa-ok $f2(:a),         Bool, "in '\$f2(:a)', ':a' is a named";
     isa-ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";
@@ -174,5 +173,9 @@ sub f9 (:$bar!) { WHAT($bar) }
         is EVAL("($_ => 1).key"), $_, "Pair with '$_' as key" 
     }
 }
+
+# RT #128821
+throws-like ":7\x[308]a", X::Syntax::Malformed,
+    'synthetic numerals in colon pairs in :42foo format throw';
 
 # vim: ft=perl6

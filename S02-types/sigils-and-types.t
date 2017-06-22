@@ -27,7 +27,6 @@ ok $scalar ~~ Any, 'value contained in a $var does Mu';
 does-ok EVAL('List'), Positional, "List does Positional";
 does-ok EVAL('Array'), Positional, "Array does Positional";
 does-ok EVAL('Range'), Positional, "Range does Positional";
-#?niecza skip 'Undeclared name Buf'
 does-ok EVAL('Buf'), Positional, "Buf does Positional";
 #?rakudo todo "Capture does Positional RT #124484"
 does-ok EVAL('Capture'), Positional, "Capture does Positional";
@@ -37,11 +36,9 @@ does-ok %hash, Associative, 'uninitialized %var does Associative';
 %hash = a => 1;
 does-ok %hash, Associative, 'value in %var does Associative';
 
-#?niecza todo
 does-ok EVAL('Pair'), Associative, "Pair does Associative";
 does-ok EVAL('Set'), Associative, "Set does Associative";
 does-ok EVAL('Bag'), Associative, "Bag does Associative";
-#?niecza skip 'Undeclared name QuantHash'
 does-ok EVAL('QuantHash'), Associative, "QuantHash does Associative";
 #?rakudo todo "Capture does Associative RT #124485"
 does-ok EVAL('Capture'), Associative, "Capture does Associative";
@@ -50,7 +47,6 @@ does-ok EVAL('Capture'), Associative, "Capture does Associative";
 sub foo {}
 does-ok &foo, Callable, 'a Sub does Callable';
 
-#?niecza skip 'Methods must be used in some kind of package'
 {
     my method meth {}
     does-ok &meth, Callable, 'a Method does Callable';
@@ -62,7 +58,6 @@ proto pro {}
 does-ok &pro, Callable, 'a proto does Callable';
 
 # &token, &rule return a Method?
-#?niecza skip 'Methods must be used in some kind of package'
 {
     my token bar {<?>}
     does-ok &bar, Callable, 'a token does Callable';

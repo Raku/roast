@@ -5,7 +5,7 @@ use Test;
 use Test::Tap;
 use Test::Util;
 
-plan 4;
+plan 8;
 
 dies-ok { Supplier.new.Supply.interval(1) }, 'can not be called as an instance method';
 
@@ -33,5 +33,29 @@ is_run(
        { status => * != 0, err => /"uh-oh"/},
        'Exception thrown in a timer and unhandled terminates program',
 );
+
+# RT #128469
+{
+    my $code = 'react { whenever Supply.interval: .01 { done } };'
+            ~ ' say "Did not hang"';
+
+    for ^3 {
+        #?rakudo.jvm skip 'Proc::Async NYI RT #126524'
+        doesn't-hang \($*EXECUTABLE, '-e', $code), :out(/'Did not hang'/),
+            'done() on first iteration of Supply.interval does not hang';
+    }
+}
+
+# RT #130168
+{
+    my @a;
+    react {
+        whenever Supply.interval(.0001) {
+            push @a, $_;
+            done if $_ == 5
+        }
+    }
+    is @a, [0..5], "Timer with very short interval fires multiple times";
+}
 
 # vim: ft=perl6 expandtab sw=4

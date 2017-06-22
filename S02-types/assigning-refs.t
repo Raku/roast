@@ -36,7 +36,6 @@ plan 18;
   my %hash;
   try { %hash = ($hashref,) };
 
-  #?niecza todo
   is +%hash, 0, '%hash = ($hashref,) does not flatten the hashref';
 }
 
@@ -45,7 +44,6 @@ plan 18;
   my %hash;
   try { %hash = ($hashref,) };
 
-  #?niecza todo
   is +%hash, 0, '%hash = ($hashref,) does not flatten the hashref';
 }
 
@@ -54,7 +52,6 @@ plan 18;
   my %hash;
   try { %hash = $hashref };
 
-  #?niecza todo
   is +%hash, 3, '%hash = $hashref works due to single argument rule';
 }
 

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 168;
+plan 189;
 
 #?DOES 2
 sub check($str, $expected_type, $expected_number, $desc?) {
@@ -13,11 +13,12 @@ sub check($str, $expected_type, $expected_number, $desc?) {
 #?DOES 1
 sub f($str) {
     my $num = +$str;
-    #?niecza todo 'Failure'
     ok !$num.defined, "+{$str.perl} fails";
 }
 
 check '',           Int,      0;
+check ' ',          Int,      0; # RT128543
+check '   ',        Int,      0;
 check '123',        Int,    123;
 check ' 123',       Int,    123;
 check '0000123',    Int,    123;
@@ -61,7 +62,6 @@ f     '0xaf-';
     check '-:1_0<4_2>', Int,    -42;
     check ':36<aZ>',    Int,    395;
     check ':2<11>',     Int,      3;
-    #?niecza 6 todo 'Failure'
     f     ':2<2>';
     f     ':37<8>';
     f     ':10<8_>';
@@ -106,21 +106,27 @@ f     '3/2.0';
 
 check '123e0',      Num,    123;
 check '-123e0',     Num,   -123;
+check '−123e0',     Num,   -123; # U+2212 minus
 check '+123e0',     Num,    123;
 check '+123.0e0',   Num,    123;
 check '+123.0_1e2', Num,  12301;
 check '+123.0_1e0_2', Num,  12301;
 check '123e-0',     Num,    123;
 check '-123e+0',    Num,   -123;
+check '−123e+0',    Num,   -123; # U+2212 minus
 check '123E0',      Num,    123;
 check '1_2_3E0_0',  Num,    123;
 check '-123E0',     Num,   -123;
+check '−123E0',     Num,   -123; # U+2212 minus
 check '+123E0',     Num,    123;
 check '123E-0',     Num,    123;
+check '123E−0',     Num,    123; # U+2212 minus
 check '-123E+0',    Num,   -123;
 check '-123E+0_1',  Num,  -1230;
 check '1230E-1',    Num,    123;
+check '1230E−1',    Num,    123; # U+2212 minus
 check '-12E+1',     Num,   -120;
+check '−12E+1',     Num,   -120; # U+2212 minus
 f      '120e';
 f      '120e2_';
 
@@ -153,4 +159,51 @@ f      '3+Infi';
     is +Str.new, 0, 'RT #100778'
 }
 
-# vim: ft=perl6 
+# RT #128542
+throws-like Q|"34\x[308]5".Int|, X::Str::Numeric,
+    '.Int on strings with numerics with combining characters throws';
+
+# RT #130450
+{
+    my $n;
+    lives-ok { $n = 'a'.Int; 'notafailure' }, '"a".Int lives...';
+    isa-ok $n, Failure, '"a".Int produces a failure';
+    dies-ok { $n * 2 }, 'cannot do math with a Failure';
+}
+
+subtest 'can handle − (U+2212) minus as regular minus' => {
+    plan 4;
+    is-deeply +'−42', -42, 'Int';
+    is-deeply +'−42.72', -42.72, 'Rat';
+    subtest 'Num (minus in...)' => {
+        plan 3;
+        is-deeply +'−42e0',   -42e0,   'base';
+        is-deeply +'42e−10',   42e-10, 'exponent';
+        is-deeply +'−42e−10', -42e-10, 'both base and exponent';
+    }
+    subtest 'Complex' => {
+        plan 4;
+
+        #?rakudo 2 skip 'cannot handle lone i yet'
+        is-deeply +'−i',     -i, 'lone i';
+        is-deeply +'−10i', -10i, 'number with i';
+
+        subtest 'numberless i (minus in ...)' => {
+            plan 3;
+
+            #?rakudo 3 skip 'cannot handle lone i yet'
+            is-deeply +'−10-i', -10-i, 'real';
+            is-deeply +'10−i',   10-i, 'imaginary';
+            is-deeply +'−10−i', -10-i, 'both real and imaginary';
+        }
+
+        subtest 'i with number (minus in ...)' => {
+            plan 3;
+            is-deeply +'−10-10i', -10-10i, 'real';
+            is-deeply +'10−10i',   10-10i, 'imaginary';
+            is-deeply +'−10−10i', -10-10i, 'both real and imaginary';
+        }
+    }
+}
+
+# vim: ft=perl6

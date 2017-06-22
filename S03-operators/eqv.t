@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 56;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -33,7 +33,6 @@ plan 54;
   ok !($a eqv $b), "eqv on value types (2-3)";
 }
 
-#?niecza skip 'Cannot use value like Capture as a number'
 {
   my @a = (1,2,3);
   my @b = (1,2,3);
@@ -46,7 +45,6 @@ plan 54;
   ok \@a eqv \@b, '\@array of two bound arrays are eqv';
 }
 
-#?niecza skip 'Cannot use value like Capture as a number'
 {
   my $a = \3;
   my $b = \3;
@@ -58,7 +56,6 @@ plan 54;
   ok (\$a !eqv \$b), "eqv on scalar references (1-4)";
 }
 
-#?niecza skip 'Cannot use value like Block as a number'
 {
   my $a = { 3 };
   my $b = { 3 };
@@ -72,14 +69,12 @@ plan 54;
   nok ($a eqv { 5 }), 'eqv on sub references (1-4)';
 }
 
-#?niecza skip 'Cannot use value like Sub as a number'
 {
   ok  (&say eqv &say), "eqv on sub references (2-1)";
   ok  (&map eqv &map), "eqv on sub references (2-2)";
   ok !(&say eqv &map), "eqv on sub references (2-3)";
 }
 
-#?niecza skip 'Cannot use value like Capture as a number'
 {
   my $num = 3; my $a   = \$num;
   my $b   = \$num;
@@ -102,7 +97,6 @@ plan 54;
   ok !({a => 1} eqv {a => 1, b => 2}), 'hashes: different number of pairs';
 }
 
-#?niecza skip 'Cannot use value like Capture as a number'
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
   # XXX the following seems bogus nowadays
@@ -147,7 +141,6 @@ plan 54;
 
 # RT #75322 - Rakudo used to be confused when lists began with ()
 {
-    #?niecza todo
     nok ((), "x") eqv ((), 9), 'list starting with () - 1';
     nok ((), (), 1) eqv ((), 9), 'list starting with () - 1';
     nok ((), (), (), 1) eqv ((), (), ""), 'list starting with () - 1';
@@ -159,6 +152,33 @@ plan 54;
 {
     nok 4 eqv 4.0, "Values should be eqv only if they are the same type";
     nok 4 eqv '4', 'Str vs. Int';
+}
+
+subtest 'Setty eqv Setty' => {
+    plan 8;
+
+    my $a = ["arr"];
+    ok Set.new(1, "a", Cool, $a) eqv Set.new(1, "a", Cool, $a),
+        'identical Sets eqv each other';
+    ok SetHash.new(1, "a", Cool, $a) eqv SetHash.new(1, "a", Cool, $a),
+        'identical SetHashes eqv each other';
+    nok Set.new(42) eqv SetHash.new(42), 'Set does not eqv SetHash';
+
+    nok set(<42>) eqv set( 42 ), 'IntStr does not eqv Int';
+    nok set(<42>) eqv set('42'), 'IntStr does not eqv Str';
+    nok set( 42 ) eqv set(<42>), 'Int    does not eqv IntStr';
+    nok set('42') eqv set(<42>), 'Str    does not eqv IntStr';
+    ok  set(<42>) eqv set(<42>), 'IntStr does     eqv IntStr';
+}
+
+subtest 'Seq eqv List' => {
+    my @tests = ().Seq => (),  (1, 2).Seq => (1, 2),           ().Seq => (1, 2),
+            (1, 2).Seq => (),       (1…∞) => (1…∞).List,   (1…∞).List => (1…∞);
+
+    plan +@tests;
+    is-deeply (.key eqv .value), False,
+        "{.key.^name}({.key}) not eqv {.value.^name}({.value})"
+    for @tests;
 }
 
 # vim: ft=perl6

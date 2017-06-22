@@ -9,7 +9,6 @@ plan 89;
 # * arrays in «»
 
 #L<S02/C<Q> Forms/halfwidth corner brackets>
-#?niecza skip 'Parse failure'
 {
 
     my $s = ｢this is a string\n｣;
@@ -30,13 +29,6 @@ plan 89;
 }
 
 {
-    my $s = q⦍blah blah blah⦎;
-    is $s, 'blah blah blah',
-        'q-style string with LEFT SQUARE BRACKET WITH TICK IN TOP CORNER and
-RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
-}
-
-{
     my $s = q〝blah blah blah〞;
     is $s, 'blah blah blah',
         'q-style string with REVERSED DOUBLE PRIME QUOTATION MARK and
@@ -44,13 +36,23 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 }
 
 {
+    my $upper-tick = 'q' ~ '⦍' ~ 'abc' ~ '⦐';
+    my $lower-tick = 'q' ~ '⦏' ~ 'abc' ~ '⦎';
+    is EVAL($upper-tick), 'abc',
+        "q-style string with LEFT SQUARE BRACKET WITH TICK IN TOP CORNER " ~
+        "and RIGHT SQUARE BRACKET WITH TICK IN TOP CORNER(U+298D/U+2990)";
+    is EVAL($lower-tick), 'abc',
+        "q-style string with LEFT SQUARE BRACKET WITH TICK IN BOTTOM CORNER " ~
+        "and RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298F/U+298E)";
+}
+{
     my @ps_pe = (
             '(' => ')', '[' => ']', '{' => '}', '༺' => '༻', '༼' => '༽',
             '᚛' => '᚜', '⁅' => '⁆', '⁽' => '⁾', '₍' => '₎', '〈' => '〉',
             '❨' => '❩', '❪' => '❫', '❬' => '❭', '❮' => '❯', '❰' => '❱',
             '❲' => '❳', '❴' => '❵', '⟅' => '⟆', '⟦' => '⟧', '⟨' => '⟩',
             '⟪' => '⟫', '⦃' => '⦄', '⦅' => '⦆', '⦇' => '⦈', '⦉' => '⦊',
-            '⦋' => '⦌', '⦍' => '⦎', '⦏' => '⦐', '⦑' => '⦒', '⦓' => '⦔',
+            '⦋' => '⦌', '⦑' => '⦒', '⦓' => '⦔',
             '⦕' => '⦖', '⦗' => '⦘', '⧘' => '⧙', '⧚' => '⧛', '⧼' => '⧽',
             '〈' => '〉', '《' => '》', '「' => '」', '『' => '』',
             '【' => '】', '〔' => '〕', '〖' => '〗', '〘' => '〙',
@@ -59,6 +61,7 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
             '︿' => '﹀', '﹁' => '﹂', '﹃' => '﹄', '﹇' => '﹈',
             '﹙' => '﹚', '﹛' => '﹜', '﹝' => '﹞', '（' => '）',
             '［' => '］', '｛' => '｝', '｟' => '｠', '｢' => '｣',
+            '⸨' => '⸩',
             );
     for @ps_pe {
         next if .key eq '('; # skip '(' => ')' because q() is a sub call
@@ -92,40 +95,40 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
       "Can't quote a regex with a snowman and comet (U+2603 and U+2604)";
 }
 
-# smart quotes
+# curly quotes
 {
-    is ‘"Beth's Cafe"’, “"Beth's Cafe"”, "smart “” quotes are accepted and not confused with ASCII quotes";
+    is ‘"Beth's Cafe"’, “"Beth's Cafe"”, "curly “” quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL '“phooey"' },
 	X::Comp,
-	"Can't mix smart quote with ASCII quote";
-    is ‘"Beth's Cafe"’, „"Beth's Cafe"”, "smart „” quotes are accepted and not confused with ASCII quotes";
+	"Can't mix curly quote with ASCII quote";
+    is ‘"Beth's Cafe"’, „"Beth's Cafe"”, "curly „” quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL '“phooey"' },
 	X::Comp,
-	"Can't mix smart quote with ASCII quote";
-    is ‘"Beth's Cafe"’, „"Beth's Cafe"“, "smart „“ quotes are accepted and not confused with ASCII quotes";
+	"Can't mix curly quote with ASCII quote";
+    is ‘"Beth's Cafe"’, „"Beth's Cafe"“, "curly „“ quotes are accepted and not confused with ASCII quotes";
 
-    is ‘"Beth's Cafe"’, ‘"Beth's Cafe"’, "smart ‘’ quotes are accepted and not confused with ASCII quotes";
+    is ‘"Beth's Cafe"’, ‘"Beth's Cafe"’, "curly ‘’ quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL "‘phooey'" },
 	X::Comp,
-	"Can't mix smart quote with ASCII quote";
-    is ‘"Beth's Cafe"’, ‚"Beth's Cafe"’, "smart ‚’ quotes are accepted and not confused with ASCII quotes";
+	"Can't mix curly quote with ASCII quote";
+    is ‘"Beth's Cafe"’, ‚"Beth's Cafe"’, "curly ‚’ quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL "‚phooey'" },
 	X::Comp,
-	"Can't mix smart quote with ASCII quote";
-    is ‘"Beth's Cafe"’, ‚"Beth's Cafe"‘, "smart ‚‘ quotes are accepted and not confused with ASCII quotes";
+	"Can't mix curly quote with ASCII quote";
+    is ‘"Beth's Cafe"’, ‚"Beth's Cafe"‘, "curly ‚‘ quotes are accepted and not confused with ASCII quotes";
 
     # Allow Swedish, Finnish, Serbian, and Macedonian quotes
 
-    is ‘"Beth's Cafe"’, ”"Beth's Cafe"”, "smart ”” quotes are accepted and not confused with ASCII quotes";
+    is ‘"Beth's Cafe"’, ”"Beth's Cafe"”, "curly ”” quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL '”phooey"' },
 	X::Comp,
-	"Can't mix smart quote with ASCII quote";
-    is ‘"Beth's Cafe"’, ”"Beth's Cafe"“, "smart ”“ quotes are accepted and not confused with ASCII quotes";
+	"Can't mix curly quote with ASCII quote";
+    is ‘"Beth's Cafe"’, ”"Beth's Cafe"“, "curly ”“ quotes are accepted and not confused with ASCII quotes";
 
-    is ‘"Beth's Cafe"’, ’"Beth's Cafe"’, "smart ’’ quotes are accepted and not confused with ASCII quotes";
+    is ‘"Beth's Cafe"’, ’"Beth's Cafe"’, "curly ’’ quotes are accepted and not confused with ASCII quotes";
     throws-like { EVAL "’phooey'" },
 	X::Comp,
-	"Can't mix smart quote with ASCII quote";
-    is ‘"Beth's Cafe"’, ’"Beth's Cafe"‘, "smart ’‘ quotes are accepted and not confused with ASCII quotes";
+	"Can't mix curly quote with ASCII quote";
+    is ‘"Beth's Cafe"’, ’"Beth's Cafe"‘, "curly ’‘ quotes are accepted and not confused with ASCII quotes";
 }
 # vim: ft=perl6

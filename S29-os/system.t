@@ -6,9 +6,9 @@ use Test;
 use Test::Util;
 
 # L<S29/"OS"/"=item run">
-# system is renamed to run, so link there. 
+# system is renamed to run, so link there.
 
-plan 20;
+plan 37;
 
 my $res;
 
@@ -16,11 +16,15 @@ $res = run($*EXECUTABLE,'-e', '');
 ok($res,"run() to an existing program does not die (and returns something true)");
 isa-ok($res, Proc, 'run() returns a Proc');
 is($res.exitcode, 0, 'run() exit code when successful is zero');
+is($res.signal, 0, 'run() signal after completion is zero');
+is-deeply($res.command, [$*EXECUTABLE, '-e', ''], 'Proc returned from .run has correct command');
 
 $res = shell("$*EXECUTABLE -e \"\"");
 ok($res, "shell() to an existing program does not die (and returns something true)");
 isa-ok($res, Proc, 'shell() returns a Proc');
 is($res.exitcode, 0, 'shell() exit code when successful is zero');
+is($res.signal, 0, 'shell() signal after completion is zero');
+is($res.command, "$*EXECUTABLE -e \"\"", 'Proc returned from shell() has correct command');
 
 $res = run("program_that_does_not_exist_ignore_this_error_please.exe");
 ok(!$res, "run() to a nonexisting program does not die (and returns something false)");
@@ -72,11 +76,71 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
     is $rt115390, 5050, 'no crash with run() in loop; run() not in sink context';
 }
 
+# RT #128594
+{
+    for ^10 {
+        # NOTE: THIS TEST HANGS ON OSX; double check before unfudging
+        #?rakudo.moar skip 'RT 128594'
+        #?rakudo.jvm todo 'IOException "no such file" RT 128594'
+        is_run q{run("non-existent-program-RT128594", :merge).out.slurp},
+            { status => 0 },
+        ":merge with run on non-existent program does not crash [attempt $_]";
+    }
+}
+
+# RT #128398
+#?rakudo.jvm skip 'Proc::Async NYI RT #126524'
+{
+    my $p = Proc::Async.new: :w, $*EXECUTABLE, "-ne",
+        Q!last if /2/; .say; LAST { say "test worked" }!;
+
+    my $stdout = '';
+    $p.stdout.tap: { $stdout ~= $^a };
+    my $prom = $p.start;
+    await $p.write: "1\n2\n3\n4\n".encode;
+    await $prom;
+
+    #?rakudo.moar todo 'RT 128398'
+    is $stdout, "1\ntest worked\n",
+        'LAST phaser gets triggered when using -n command line switch';
+}
+
 # all these tests feel like bogus, what are we testing here???
+# note: is_run fails after these tests because we are no longer in the right dir
 chdir "t";
 my $cwd;
 BEGIN { $cwd = $*DISTRO.is-win ?? 'cd' !! 'pwd' };
 ok((qqx{$cwd} ne BEGIN qqx{$cwd}), 'qqx{} is affected by chdir()');
 isnt run("dir", "t"), BEGIN { run("dir", "t") }, 'run() is affected by chdir()';
+
+# https://irclog.perlgeek.de/perl6-dev/2017-06-13#i_14727506
+{
+    my $d = make-temp-dir;
+    $d.add('blah').spurt: 'Testing';
+
+    temp %*ENV<PATH> = $*CWD.absolute ~ "/install/bin:%*ENV<PATH>";
+    my $res = do with run(
+        :out, :err, :cwd($d.absolute), :env{ :42FOOMEOW, |%*ENV },
+        $*EXECUTABLE.subst(/^"./"/, ""),
+        '-e', ｢'blah'.IO.slurp.print; %*ENV<FOOMEOW>.print｣
+    ) {
+        .out.slurp(:close) ~ .err.slurp(:close)
+    }
+
+    is-deeply $res, 'Testing42', 'run sets $cwd and $env';
+}
+
+subtest '.out/.err proc pipes on failed command' => {
+    plan 4;
+
+    throws-like { run(:out, "meooooooows").out.close }, X::Proc::Unsuccessful,
+        '.out.close Proc explodes when sunk';
+    throws-like { run(:err, "meooooooows").err.close }, X::Proc::Unsuccessful,
+        '.err.close Proc explodes when sunk';
+    is-deeply run(:out, "meooooooows").out.slurp(:close), '',
+        '.out.slurp is empty';
+    is-deeply run(:err, "meooooooows").err.slurp(:close), '',
+        '.err.slurp is empty';
+}
 
 # vim: ft=perl6

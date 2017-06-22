@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 10;
+plan 12;
 
 =begin desc
 
@@ -63,6 +63,18 @@ is_run( 'next; CONTROL { }',
     { warn 'ing'; CONTROL { when CX::Warn { $ok = 1; $msg = .message; } } }
     ok $ok, "warn causes CX::Warn control exception";
     is $msg, 'ing', "CX::Warn carries the message we warned with";
+}
+
+{
+    my $ok = 0;
+    { emit 1; CONTROL { when CX::Emit { $ok = 1; } } }
+    ok $ok, "emit causes CX::Emit control exception";
+}
+
+{
+    my $ok = 0;
+    { done; CONTROL { when CX::Done { $ok = 1; } } }
+    ok $ok, "done causes CX::Done control exception";
 }
 
 # RT #125339

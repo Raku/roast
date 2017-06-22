@@ -26,12 +26,10 @@ lives-ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 {
     dies-ok {EVAL('/ a+ + /')}, 'Cannot parse regex a+ +';
     #?rakudo todo 'RT #74832'
-    #?niecza todo
     ok "$!" ~~ /:i quantif/, 'error message mentions quantif{y,ier}';
 }
 
 # RT #77110, #77386
-#?niecza skip "throws-like"
 #?DOES 3
 {
     throws-like '$_ = "0"; s/-/1/', X::Syntax::Regex::UnrecognizedMetachar, metachar => '-';

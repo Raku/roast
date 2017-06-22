@@ -41,7 +41,6 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
 
 # Binding and $CALLER::
 #XXX This can pass bogusly (was doing for Rakudo for a while).
-#?niecza skip 'CALLER::'
 {
   sub bar {
     return $CALLER::a eq $CALLER::b;
@@ -58,7 +57,6 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
 
 # Binding to swap
 #?rakudo skip 'list binding: RT #122369'
-#?niecza skip 'list binding'
 {
   my $a = "a";
   my $b = "b";
@@ -73,7 +71,6 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
 
 # More tests for binding a list
 #?rakudo skip 'list binding: RT #122369'
-#?niecza skip 'list binding'
 {
   my $a = "a";
   my $b = "b";
@@ -98,12 +95,10 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
   $b($val);
   is $a, 42, "bound readonly sub param was bound correctly (1)";
   $val++;
-  #?niecza todo "difference of interpretation on ro binding"
   is $a, 42, "bound readonly sub param was bound correctly (2) (no change)";
 
   dies-ok { $a = 23 },
     "bound readonly sub param remains readonly (1)";
-  #?niecza todo "difference of interpretation on ro binding"
   is $a, 42,
     "bound readonly sub param remains readonly (2)";
   is $val, 43,
@@ -127,7 +122,6 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
 
 # := actually takes subroutine parameter list
 #?rakudo skip 'list binding: RT #122369'
-#?niecza skip 'list binding'
 {
   my $a;
   :(:$a) := (:a<foo>);

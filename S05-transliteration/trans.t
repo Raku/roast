@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
 =begin pod
 
@@ -10,7 +11,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 62;
+plan 65;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -54,16 +55,16 @@ is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&lt;', '&gt;', '&amp;'] =>
     [' ',      '<',    '>',    '&'     ])),
     " <>&","The array version can map one characters to one-or-more characters");
 
-is(" <>&".trans( ([' ',      '<',    '>',    '&'    ] => 
+is(" <>&".trans( ([' ',      '<',    '>',    '&'    ] =>
                   ['&nbsp;', '&lt;', '&gt;', '&amp;' ])),
                   "&nbsp;&lt;&gt;&amp;",
     "The array version can map one-or-more characters to one-or-more characters");
-    
+
 is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&nbsp;&lt;', '&lt;', '&gt;', '&amp;'] =>
                                  [' ',      'AB',         '<',    '>',    '&'    ])),
                                 "AB>&",
     "The array version can map one characters to one-or-more characters, using leftmost longest match");
-    
+
 is("Whfg nabgure Crey unpxre".trans('a'..'z' => ['n'..'z','a'..'m'], 'A'..'Z' => ['N'..'Z','A'..'M']),
     "Just another Perl hacker",
     "Ranges can be grouped");
@@ -97,7 +98,6 @@ is("I\xcaJ".trans('I..J' => 'i..j'), "i\xcaj");
 is("\x12c\x190".trans("\x12c" => "\x190"), "\x190\x190");
 
 # should these be combined?
-#?niecza todo
 is($b.trans('A..H..Z' => 'a..h..z'), $a,
     'ambiguous ranges combined');
 
@@ -116,17 +116,15 @@ is("hello".trans("l" => ""), "heo", "can replace with empty string");
 
 # complement, squeeze/squash, delete
 
-#?niecza 2 skip 'trans flags NYI'
 is('bookkeeper'.trans(:s, 'a..z' => 'a..z'), 'bokeper',
     ':s flag (squash)');
 
 is('bookkeeper'.trans(:d, 'ok' => ''), 'beeper',
     ':d flag (delete)');
-    
+
 is('ABC123DEF456GHI'.trans('A..Z' => 'x'), 'xxx123xxx456xxx',
     'no flags');
 
-#?niecza 4 skip 'trans flags NYI'
 is('ABC123DEF456GHI'.trans(:c, 'A..Z' => 'x'),'ABCxxxDEFxxxGHI',
     '... with :c');
 
@@ -142,7 +140,6 @@ is('ABC111DEF222GHI'.trans(:c, :d, 'A..Z' => ''),'ABCDEFGHI',
 is('Good&Plenty'.trans('len' => 'x'), 'Good&Pxxxty',
     'no flags');
 
-#?niecza 5 skip 'trans flags NYI'
 is('Good&Plenty'.trans(:s, 'len' => 'x',), 'Good&Pxty',
     'squashing depends on replacement repeat, not searchlist repeat');
 
@@ -160,7 +157,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, (['&nbsp;', '&gt;'] =>
     ['???',      'AB'])),
     '&nbsp;????????????&gt;???????????????',
     'fence-post issue (make sure to replace end bits as well)');
-   
+
 is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     ['???'])),
     '&nbsp;???&gt;&amp;',
@@ -187,7 +184,6 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     );
 };
 
-#?niecza skip 'closures and regexes'
 {
     # closures and regexes!
     is(
@@ -206,13 +202,12 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     );
 }
 
-#?niecza skip 'Action method quote:tr NYI'
 {
     #?rakudo skip 'feed operator NYI'
     is(EVAL('"abc".trans(<== "a" => "A")'), "Abc",
         "you're allowed to leave off the (...) named arg parens when you use <==");
 
-    # Make sure the tr/// version works, too.  
+    # Make sure the tr/// version works, too.
 
     $_ = "ABC";
     tr/ABC/abc/;
@@ -243,7 +238,7 @@ throws-like '$_ = "axbycz"; y/abc/def/', X::Obsolete, 'y/// does not exist any l
 is('aaaaabbbbb'.trans(['aaa', 'aa', 'bb', 'bbb'] => ['1', '2', '3', '4']),
    '1243',
    'longest constant token preferred, regardless of declaration order');
-  
+
 is('foobar'.trans(/\w+/ => 'correct', /foo/ => 'RONG'), 'correct',
    'longest regex token preferred, regardless of declaration order');
 
@@ -259,12 +254,32 @@ is 'aa'.trans(/^a/ => 'b'), 'ba', 'trans with anchored regex';
 is 'aa'.trans(/ <after a> ./ => 'b'), 'ab', 'trans with look-around regex';
 
 # RT #83674
-#?niecza todo 'Not sure what is supposed to be going on here'
 lives-ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); }, 'trans works with Cool signature';
 
 # RT #83766
-#?niecza 2 skip "Nominal type check failed for scalar store; got Int, needed Str or subtype"
 is((1, 2)>>.trans((1..26) => (14..26,1..13)), <14 15>, '.trans with a pair of lists using postfix hypermetaoperator works');
 is ("!$_!" for (1, 2)>>.trans((1..26) => (14..26,1..13))), <!14! !15!>, "same with explicit for";
+
+{
+    my $f = "foo";
+    ok $f ~~ tr/o/u/ eq 'fuu', 'StrDistance stringifies to $!after'
+}
+
+# RT #129258
+subtest 'Adverbs on Cool.trans work the same as on Str.trans' => {
+    is-deeply 912381237    .trans(['7'..'9'] => '0',      :complement),
+        '900080007',                                      ':complement';
+    is-deeply 912381237    .trans(      '23' => '',       :delete),
+        '91817',                                          ':delete';
+    is-deeply 9991123881237.trans(  '7'..'9' => '4'..'6', :squash),
+        '6112351234',                                     ':squash';
+    is-deeply 9991123881237.trans(  '7'..'9' => '0',      :complement, :squash),
+        '99908807',                                      ':complement, :squash';
+}
+
+# https://irclog.perlgeek.de/perl6/2016-12-06#i_13692293
+is_run ｢print '@x'.trans: (/\@/ => '-',), :c｣, {
+    :out('@-'), :err(''),
+}, '.trans with complement regex pair does not produce spurious warnings';
 
 # vim: ft=perl6

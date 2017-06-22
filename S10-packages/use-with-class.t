@@ -7,9 +7,9 @@ use Test;
 
 # L<S11/Compile-time Importation>
 
-plan 9;
+plan 11;
 
-# test that 'use' imports class names defined in importet packages
+# test that 'use' imports class names defined in imported packages
 
 use t::spec::packages::UseTest;
 
@@ -51,6 +51,15 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 {
     use Foo;
     lives-ok { class Bar { } }, 'declaring a class after use-ing a module (RT #73910)'
+}
+
+# RT #126302
+{
+    my $p = run :out, :err, $*EXECUTABLE, '-It/spec/packages', '-e',
+        'use RT126302; say "RT126302-OK"';
+
+    like   $p.out.slurp, /'RT126302-OK'/, 'packages compile successfully'; unlike $p.err.slurp, /'src/Perl6/World.nqp'/,
+        'no Perl6/World.nqp in warning';
 }
 
 # vim: ft=perl6

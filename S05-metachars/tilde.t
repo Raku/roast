@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 30;
 
 # L<S05/New metacharacters/"The ~ operator is a helper for matching
 # nested subrules with a specific terminator">
@@ -15,7 +15,6 @@ ok 'ab)d'  !~~ m/<&t1>/, '~ and constant atoms (missing opening bracket)';
 ok '(a)d'  !~~ m/<&t1>/, '~ and constant atoms (wrong content)';
 # this shouldn't throw an exception. See here:
 # http://irclog.perlgeek.de/perl6/2009-01-08#i_816425
-#?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
 
 {
@@ -28,11 +27,8 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok '(aa)'   ~~ m/^ <&recursive> $/, 'recursive "(aa)"';
     ok '(a(a))' ~~ m/^ <&recursive> $/, 'recursive "(a(a))"';
     ok '(()())' ~~ m/^ <&recursive> $/, 'recursive "(()())"';
-    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '('     !~~ m/^ <&recursive> $/, '"(" is not matched';
-    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '(()'   !~~ m/^ <&recursive> $/, '"(()" is not matched';
-    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '())'   !~~ m/^ <&recursive> $/, '"())" is not matched';
     ok 'a()'   !~~ m/^ <&recursive> $/, '"a()" is not matched';
 }
@@ -46,23 +42,18 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok '(aa)'   ~~ m/^ <&m1> $/, 'mutually recursive "(aa)"';
     ok '(a(a))' ~~ m/^ <&m1> $/, 'mutually recursive "(a(a))"';
     ok '(()())' ~~ m/^ <&m1> $/, 'mutually recursive "(()())"';
-    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '('     !~~ m/^ <&m1> $/, '"(" is not matched';
-    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '(()'   !~~ m/^ <&m1> $/, '"(()" is not matched';
-    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '())'   !~~ m/^ <&m1> $/, '"())" is not matched';
     ok 'a()'   !~~ m/^ <&m1> $/, '"a()" is not matched';
 }
 
-#?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 {
     my regex even_a { ['a' ~ 'a' <&even_a> ]? };
     ok 'aaaa' ~~ m/^ <&even_a> $ /, 'backtracking into tilde rule (1)';
     ok 'aaa' !~~ m/^ <&even_a> $ /, 'backtracking into tilde rule (2)';
 }
 
-#?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 {
     my regex even_b { 'a' ~ 'a' <&even_b>? };
     ok 'aaaa' ~~ m/^ <&even_b> $/, 'tilde regex backtracks to find its goal';
@@ -77,5 +68,9 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
 # RT #72440
 ok "(f)oo" ~~ /^ \( ~ \) foo $/, 'Only take single atom after goal (1)';
 nok "(fo)o" ~~ /^ \( ~ \) foo $/, 'Only take single atom after goal (2)';
+
+# RT #130812
+throws-like '/ ‘[’ ~? ‘]’/', X::Syntax::Regex::SolitaryQuantifier,
+    'Correct error when quantifier placed after ~ metachar';
 
 # vim: ft=perl6

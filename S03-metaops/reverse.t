@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 67;
+plan 68;
 
 =begin pod
 
@@ -11,7 +11,7 @@ This test tests the C<R...> reverse metaoperator.
 
 =end pod
 
-# Try mulitple versions of Rcmp, as it is one of the more
+# Try multiple versions of Rcmp, as it is one of the more
 # more useful reversed ops, and if it works, probably
 # most of the others will work as well.
 
@@ -170,5 +170,8 @@ sub infix:<op> ($a,$b) { $a - $b }
     is &infix:<Rop>(2,3), 9, "Meta reverse Rop can autogen with user-defined op";
 }
 is &infix:<Rop>(2,3), 1, "Meta reverse Rop autogen with user-overridden op stays local to block";
+
+# RT #128703
+is (1 R, 2 R, 3 R, 4), (4, 3, 2, 1), 'List associative operators and R interact OK';
 
 # vim: ft=perl6

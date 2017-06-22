@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 177;
+plan 213;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -82,7 +82,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $s = set 2, 'a', False;
     my @ks = $s.keys;
-    #?niecza 3 todo
     is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -117,7 +116,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $b = set { foo => 10, bar => 17, baz => 42 }.hash;
     isa-ok $b, Set, '&Set.new given a Hash produces a Set';
     is +$b, 3, "... with three elements";
-    #?niecza todo "Losing type in Set"
     is +$b.grep(Pair), 3, "... all of which are Pairs";
 }
 
@@ -138,14 +136,12 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$b, 1, "... with one element";
 }
 
-#?niecza skip 'SetHash'
 {
     my $b = set SetHash.new(<foo bar foo bar baz foo>);
     isa-ok $b, Set, '&Set.new given a SetHash produces a Set';
     is +$b, 1, "... with one element";
 }
 
-#?niecza skip 'BagHash'
 {
     my $b = set BagHash.new(<foo bar foo bar baz foo>);
     isa-ok $b, Set, '&Set.new given a SetHash produces a Set';
@@ -164,7 +160,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.list.grep(Pair).elems, 3, "... all of which are Pairs";
     isa-ok $s.pairs.elems, 3, ".pairs returns 3 things";
     is $s.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
-    #?niecza 2 todo
     is $s.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $s.pairs.grep({ .value ~~ Bool }).elems, 3, "... and the values of which are Bool";
 }
@@ -212,7 +207,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 # L<S03/Hyper operators/'unordered type'>
-#?niecza skip "Hypers not yet Set compatible"
 #?rakudo skip "Hypers not yet Set compatible RT #124487"
 {
     is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';
@@ -227,7 +221,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     throws-like { [1, 2] «+» set(3, 4) }, Exception, 'Set «+» Array is illegal';
 }
 
-#?niecza skip "Hypers not yet Set compatible"
 dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # L<S32::Containers/Set/roll>
@@ -245,8 +238,23 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     @a = $s.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
-    #?niecza skip '.total NYI'
     is $s.total, 3, '.roll should not change Set';
+}
+
+# empty set handling of .roll
+{
+    is-deeply set().roll, Nil,         'empty set.roll -> Nil';
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf'
+    -> $p, $t {
+        is-deeply set().roll($p), ().Seq, "empty set.roll($t) -> ().Seq"
+    }
+    dies-ok { set().roll(NaN) }, 'empty set.roll(NaN) should die';
 }
 
 # L<S32::Containers/Set/pick>
@@ -257,7 +265,6 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is @a.sort.join, 'abcdefgh', 'Set.pick(*) gets all elements';
     isnt @a.join, 'abcdefgh', 'Set.pick(*) returns elements in a random order';
       # There's only a 1/40_320 chance of that test failing by chance alone.
-    #?niecza skip '.total NYI'
     is $s.total, 8, '.pick should not change Set';
 }
 
@@ -273,21 +280,46 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     ok @a.grep(* eq 'a').elems <= 1, '.pick(2) returned at most one "a"';
     ok @a.grep(* eq 'b').elems <= 1, '.pick(2) returned at most one "b"';
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
-    #?niecza skip '.total NYI'
     is $s.total, 3, '.pick should not change Set';
+}
+
+# empty set handling of .pick
+{
+    is-deeply set().pick, Nil,         'empty set.pick -> Nil';
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf'
+    -> $p, $t {
+        is-deeply set().pick($p), ().Seq, "empty set.pick($t) -> ().Seq"
+    }
+    dies-ok { set().pick(NaN) }, 'empty set.pick(NaN) should die';
 }
 
 # L<S32::Containers/Set/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $s = set <a b c>;
     dies-ok { $s.grab }, 'cannot call .grab on a Set';
+
+    for
+      1,    '1',
+      *-1,  '*-1',
+      *,    '*',
+      Inf,  'Inf',
+      -1,   '-1',
+      -Inf, '-Inf',
+      NaN,  'NaN'
+    -> $p, $t {
+        dies-ok { $s.grab($p) }, "cannot call .grab($t) on a Set"
+    }
 }
 
 # L<S32::Containers/Set/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $s = set <a b c>;
     dies-ok { $s.grabpairs }, 'cannot call .grabpairs on a Set';
@@ -298,7 +330,6 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     my $s1 = Set.new(( set <a b c> ), <c d>);
     is +$s1, 2, "Two elements";
     my $inner-set = $s1.keys.first(Set);
-    #?niecza 2 todo 'Set in Set does not work correctly yet'
     isa-ok $inner-set, Set, "One of the set's elements is indeed a Set!";
     is showset($inner-set), "a b c", "With the proper elements";
     my $inner-list = $s1.keys.first(List);
@@ -309,10 +340,9 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     $s1 = Set.new($s, <c d>);
     is +$s1, 2, "Two elements";
     $inner-set = $s1.keys.first(Set);
-    #?niecza 2 todo 'Set in Set does not work correctly yet'
     isa-ok $inner-set, Set, "One of the set's elements is indeed a set!";
     is showset($inner-set), "a b c", "With the proper elements";
-    my $inner-list = $s1.keys.first(List);
+    $inner-list = $s1.keys.first(List);
     isa-ok $inner-list, List, "One of the set's elements is indeed a List!";
     is $inner-list, <c d>, "With the proper elements";
 }
@@ -332,7 +362,6 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is showset((@a, %x).Set), "Now Paradise a b cross-handed set the was way", "Method .Set works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $s = <a b b c c c d d d d>.Set;
     is $s.total, 4, '.total gives sum of values (non-empty)';
@@ -372,7 +401,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is $s, set(5), 'can metaop set assign like: (|)=';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet RT #124489'
+# RT #124489'
 {
     isnt 'a Str|b Str|c'.Set.WHICH, <a b c>.Set.WHICH,
       'Faulty .WHICH creation';
@@ -414,6 +443,47 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 {
     isa-ok set(42).Hash.keys[0], Int, "make sure set.Hash returns objects";
+}
+
+# RT #127402
+subtest '.hash does not cause keys to be stringified' => {
+    plan 3;
+    is Set.new($(<a b>)).hash.keys[0][0], 'a', 'Set.new';
+    is ($(<a b>),).Set.hash.keys[0][0],   'a', '.Set';
+    is set($(<a b>),).hash.keys[0][0],    'a', 'set()';
+}
+
+{
+    throws-like { my Set $s; $s<as> = 2 }, Exception,
+        'autovivification of of Set:U complains about immutability';
+}
+
+{
+    is-deeply set(42).Mix, Mix.new(42), '.Mix on set gives correct Mix';
+    is-deeply set(42).MixHash, MixHash.new(42),
+        '.MixHash on set gives correct MixHash';
+}
+
+{
+    ok Set.new =:= set(), 'Set.new returns the empty set';
+    ok ().Set  =:= set(), '().Set returns the empty set';
+}
+
+{
+    is-deeply { a => 42, b => 666 }.Set, <a b>.Set,
+      'coercion of Map to Set 1';
+    is-deeply { a => 42, b => 0   }.Set, <a>.Set,
+      'coercion of Map to Set 2';
+    is-deeply :{ 42 => "a", 666 => "b" }.Set, (42,666).Set,
+      'coercion of object Hash to Set 1';
+    is-deeply :{ 42 => "a", 666 => "" }.Set,   42.Set,
+      'coercion of object Hash to Set 2';
+}
+
+{
+    throws-like { ^Inf .Set }, X::Cannot::Lazy, :what<Set>;
+    throws-like { Set.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<Set>;
+    throws-like { Set.new(^Inf) }, X::Cannot::Lazy, :what<Set>;
 }
 
 # vim: ft=perl6

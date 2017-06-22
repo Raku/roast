@@ -1,8 +1,9 @@
 use v6;
-
+use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
-plan 179;
+plan 189;
 
 # L<S05/Substitution/>
 
@@ -29,7 +30,6 @@ is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure to delay
 is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #116224
-#?niecza skip "Cannot assign to \$/"
 {
     $/ = ('-');   #  parens to avoid looking like a P5 irs directive
     is 'a'.subst("a","b"), 'b', '"a".subst("a", "b") is "b"';
@@ -53,7 +53,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     is 'a b c d'.subst(/\w/, 'x', :g),      'x x x x', '.subst and :g';
     is 'a b c d'.subst(/\w/, 'x', :global), 'x x x x', '.subst and :global';
-    #?rakudo.jvm 7 skip 'RT #124279'
     is 'a b c d'.subst(/\w/, 'x', :x(0)),   'a b c d', '.subst and :x(0)';
     is 'a b c d'.subst(/\w/, 'x', :x(1)),   'x b c d', '.subst and :x(1)';
     is 'a b c d'.subst(/\w/, 'x', :x(2)),   'x x c d', '.subst and :x(2)';
@@ -71,7 +70,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     # string pattern versions
     is 'a a a a'.subst('a', 'x', :g),      'x x x x', '.subst (str pattern) and :g';
     is 'a a a a'.subst('a', 'x', :x(0)),   'a a a a', '.subst (str pattern) and :x(0)';
-    #?rakudo.jvm 6 skip 'RT #124279'
     is 'a a a a'.subst('a', 'x', :x(1)),   'x a a a', '.subst (str pattern) and :x(1)';
     is 'a a a a'.subst('a', 'x', :x(2)),   'x x a a', '.subst (str pattern) and :x(2)';
     is 'a a a a'.subst('a', 'x', :x(3)),   'x x x a', '.subst (str pattern) and :x(3)';
@@ -97,7 +95,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a b c d'.subst(/\w/, 'x', :nth(5)), 'a b c d', '.subst and :nth(5)';
 
     # string pattern versions
-    #?rakudo.jvm todo 'Code does not die'
     throws-like '"a a a a".subst("a", "x", :nth(0))', Exception, message => rx/nth/; # RT #125815
     is 'a a a a'.subst('a', 'x', :nth(1)), 'x a a a', '.subst (str pattern) and :nth(1)';
     is 'a a a a'.subst('a', 'x', :nth(2)), 'a x a a', '.subst (str pattern) and :nth(2)';
@@ -107,7 +104,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # combining :nth with :x
-#?rakudo.jvm skip 'RT #124279'
 {
     is 'a b c d e f g h'.subst(/\w/, 'x', :nth(1,2,3,4), :x(3)),
        'x x x d e f g h',
@@ -117,8 +113,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        'a x c x e f g h',
        '.subst with :nth(2,4,6,8) and :x(2)';
 
-    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(2, 4, 1, 6), :x(3)),
-       'a x c x e x g h',
+    throws-like '"a b c d e f g h".subst(/\w/, "x", :nth(2, 4, 1, 6), :x(3))',
+       Exception,
        '.subst with :nth(2) and :x(3)';
 }
 
@@ -135,9 +131,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(2)),
        'a x c d e f g h',
        '.subst with :p(2)';
-       
+
     # :p and :g
-    #?niecza todo 
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(0), :g),
        'x x x x x x x x',
        '.subst with :p(0) and :g';
@@ -146,7 +141,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        'a b c d e f g h',
        '.subst with :p(1) and :g';
 
-    #?niecza todo 
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(2), :g),
        'a x x x x x x x',
        '.subst with :p(2) and :g';
@@ -165,7 +159,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(2)),
        'a x c d e f g h',
        '.subst with :c(2)';
-       
+
     # :c and :g
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :g),
        'x x x x x x x x',
@@ -180,16 +174,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :c(2) and :g';
 
     # :c and :nth(3, 4)
-    #?niecza 3 todo ":nth(3, 4) NYI"
-    #?rakudo.jvm 3 skip 'RT #124279'
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :nth(3, 4)),
        'a b x x e f g h',
        '.subst with :c(0) and :nth(3, 4)';
-    
+
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(1), :nth(3, 4)),
        'a b c x x f g h',
        '.subst with :c(1) and :nth(3, 4)';
-    
+
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(2), :nth(3, 4)),
        'a b c x x f g h',
        '.subst with :c(2) and :nth(3, 4)';
@@ -215,7 +207,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
-#?niecza skip "Action method quote:ss not yet implemented"
 # also RT #126679
 {
     dies-ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
@@ -322,7 +313,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $_, 'aa bb cc', 's:g[...] and captures work together well';
 }
 
-#?rakudo.jvm skip 'RT #124279'
 {
     my $x = 'ABCD';
     $x ~~ s:x(2)/<.alpha>/x/;
@@ -357,7 +347,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # s///
-#?rakudo.jvm skip 'RT #124279'
 {
     my $x = 'ooooo';
     $x ~~ s:x(2):nth(1,3)/o/A/;
@@ -369,7 +358,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #83484
-# s// with other separators 
+# s// with other separators
 {
     my $x = 'abcde';
     $x ~~ s!bc!zz!;
@@ -377,7 +366,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 #L<S05/Substitution/Any scalar assignment operator may be used>
-#?niecza skip 's[...] op= RHS'
 {
     given 'a 2 3' -> $_ is copy {
         ok (s[\d] += 5), 's[...] += 5 returns True';
@@ -389,7 +377,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
 }
 
-#?niecza skip 's:g[...] ='
 {
     multi sub infix:<fromplus>(Match $a, Int $b) {
         $a.from + $b
@@ -415,7 +402,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # Test for :samecase
-#?niecza skip ":samecase NYI"
 {
     is 'The foo and the bar'.subst('the', 'that', :samecase), 'The foo and that bar', '.substr and :samecase (1)';
     is 'The foo and the bar'.subst('the', 'That', :samecase), 'The foo and that bar', '.substr and :samecase (2)';
@@ -429,7 +415,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'The foo and the bar'.subst(/:i the/, {$str++}, :g, :samecase), 'Thau foo and thav bar', '.substr and :g and :samecase, worked with block replacement';
 }
 
-#?niecza skip "Regex modifiers ii and samecase NYI"
 {
     $_ = 'foObar';
     s:ii/oo/au/;
@@ -442,7 +427,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #66816
-#?niecza todo
 {
     my $str = "a\nbc\nd";
     is $str.subst(/^^/, '# ', :g), "# a\n# bc\n# d",
@@ -450,7 +434,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 {
-    #?niecza todo "Niecza works when it shouldn't?"
     throws-like q[ $_ = "abc"; my $i = 1; s:i($i)/a/b/ ], X::Value::Dynamic,
         'Value of :i must be known at compile time';
     #?rakudo todo 'be smarter about constant detection'
@@ -469,12 +452,11 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     class SubstInsideMethod {
         method ro($_ ) { s/c// }
     }
-    
+
     dies-ok { SubstInsideMethod.new.ro('ccc') }, '(sanely) dies when trying to s/// a read-only variable';
 }
 
 # RT #83552
-#?niecza skip 'Unable to resolve method postcircumfix:<( )> in type Any'
 #?DOES 3
 {
     $_ = "foo"; s[f] = 'bar';
@@ -503,7 +485,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 {
-    my $_ = 42; 
+    $_ = 42;
     my $match = s/\d+/xxx/;
     isa-ok $match, Match, 's/// returns a Match object on non-strings';
     is $_, 'xxx', 's/// can modify a container that contains a non-string';
@@ -511,7 +493,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #123597
 {
-    my $_ = 0; s{^(\d+)$} = sprintf "%3d -", $_;
+    $_ = 0; s{^(\d+)$} = sprintf "%3d -", $_;
     is $_, "  0 -", 's{}="" can modify a container that contains a non-string';
 }
 
@@ -564,6 +546,157 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
     $_ = "foo";
     is S:g[(o)] = $0.uc, "fOO", "non-mutating global substitution assignment works ($0)";
+}
+
+# RT #128809
+{
+    is_run 'await ^30 .map: { start { S/.+/{$/.chars.print}/ given "abc"; } }', {
+        :err(''), :out('3' x 30)
+    }, 'code in replacement part of s/// has correct scoping';
+}
+
+#?rakudo.jvm skip 'at least one of the sub-tests leads to an UnwindException'
+#?DOES 1
+{ # coverage; 2016-09-27
+    subtest 'Cool.subst-mutate works same as on .Str' => {
+        my @tests = # args | returned stringified Match objects | result
+        [ \('', ''), '', "aabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('', '', :g),    ('' xx 20), "aabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('', '', :global), ('' xx 20), "aabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('a', ''), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('a', '', :g), ('a', 'a'), "bbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('a', '', :global), ('a', 'a'), "bbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('b', ''), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('b', '', :g), ('b', 'b'), "aab\x[308]b\x[308]cc \t  xz \t  y",  ],
+        [ \('b', '', :global), ('b', 'b'), "aab\x[308]b\x[308]cc \t  xz \t  y",  ],
+        [ \(/<[abc]>/, ''), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :g), ('a', 'a', 'b', 'b', 'c', 'c' ), "b\x[308]b\x[308] \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :global), ('a', 'a', 'b', 'b', 'c', 'c' ), "b\x[308]b\x[308] \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :1st), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :st{1;}), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :2nd), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :nd{2;}), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :3rd), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :rd{3;}), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :4th), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :th{4;}), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :5nth), 'c', "aabbb\x[308]b\x[308]c \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :nth{5;}), 'c', "aabbb\x[308]b\x[308]c \t  xz \t  y", ],
+        [ \(/<[abc]>/, '', :5x), ('a', 'a', 'b', 'b', 'c'), "b\x[308]b\x[308]c \t  xz \t  y", ],      # RT # 129596
+        [ \(/<[abc]>/, '', :x(1..5)), ('a', 'a', 'b', 'b', 'c'), "b\x[308]b\x[308]c \t  xz \t  y", ], # RT # 129596
+        [ \(/<[cz]> \s+ <[xy]>/, 'Z P', :ss), "c \t  x", "aabbb\x[308]b\x[308]cZ \t  Pz \t  y", ],
+        [ \(/<[cz]> \s+ <[xy]>/, 'Z P', :ss, :global), ( "c \t  x", "z \t  y" ), "aabbb\x[308]b\x[308]cZ \t  PZ \t  P", ],
+        [ \('a', 'Z', :ii), 'a', "zabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \('a', 'Z', :ii, :global), ( 'a', 'a' ), "zzbbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[b]+[b\x[308]]>/, 'Z', :mm), 'b', "aaZbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[b]+[b\x[308]]>/, 'Z', :mm, :global), ( 'b', 'b', "b\x[308]", "b\x[308]" ), "aaZZZ\x[308]Z\x[308]cc \t  xz \t  y", ],
+        [ \(/<[b]+[b\x[308]]>/, 'Z', :ii, :mm), 'b', "aazbb\x[308]b\x[308]cc \t  xz \t  y", ],
+        [ \(/<[b]+[b\x[308]]>/, 'Z', :ii, :mm, :global), ( 'b', 'b', "b\x[308]", "b\x[308]" ), "aazzz\x[308]z\x[308]cc \t  xz \t  y", ],
+        ;
+
+        plan 2*@tests;
+        for @tests -> $t {
+            # use IO::Path as our Cool object
+            my $obj = "aabbb\x[308]b\x[308]cc \t  xz \t  y".IO;
+            my $ret = $obj.subst-mutate(|$t[0]);
+            is-deeply ( $ret ~~ Iterable ?? $ret».Str !! $ret.Str ), $t[1],
+                "correct return value when using $t[0].gist()";
+            is-deeply $obj, $t[2], "correct modification when using $t[0].gist()";
+        }
+    }
+}
+
+{ # RT #129374
+    throws-like { "".subst: /\w/, "", :x(my class SomeInvalidXParam {}.new) },
+        X::Str::Match::x, 'giving .subst invalid args throws';
+
+    throws-like { ($ = "").subst-mutate: /\w/, "", :x(my class SomeInvalidXParam {}.new) },
+        X::Str::Match::x, 'giving .subst-mutate invalid args throws';
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2016-11-26#i_13630780
+throws-like { "".subst }, X::Multi::NoMatch, '.subst with no arguments throws';
+
+# RT #130289
+is-deeply (S:g/FAIL// with 'foo'), 'foo',
+    'S:g/// returns original string on failure to match';
+
+# RT #130355
+is-deeply (eager <a b c>.map: {S/a/x/}), <x b c>,
+    'S/// can be used in map (does not reuse a container)';
+
+try { ($ = 42).subst-mutate: Str, Str }; pass "Cool.subst-mutate with wrong args does not hang";
+
+# https://irclog.perlgeek.de/perl6-dev/2017-03-22#i_14308172
+subtest 'List/Match result adverb handling' => {
+    # Check that we can handle a bunch of adverb combinations that
+    # can result in either a Match or a List of Matches in $/
+    plan 3;
+
+    subtest ':2nd:g' => {
+        subtest 'S///' => {
+            plan 3;
+            is-deeply (S:2nd:g/./Z/ with 'abc'), 'aZc', 'return value';
+            isa-ok    $/,                        Match, '$/ is Match';
+            is-deeply $/.Str,                    'b',   '$/.Str';
+        }
+        subtest 's///' => {
+            plan 4;
+            my $v = 'abc';
+            my $r = $v ~~ s:2nd:g/./Z/;
+            is-deeply $v,        'aZc', 'result';
+            cmp-ok    $r, '===', $/,    'return value';
+            isa-ok    $/,        Match, '$/ is Match';
+            is-deeply $/.Str,    'b',   '$/.Str';
+        }
+    }
+
+    subtest ':x(1..3)' => {
+        subtest 'S///' => {
+            plan 3;
+            is-deeply (S:x(1..3)/./Z/ with 'abcd'), 'ZZZd', 'return value';
+            isa-ok    $/,                           List,    '$/ is List';
+            is-deeply $/».Str,                      <a b c>, '$/».Str';
+        }
+        subtest 's///' => {
+            plan 4;
+            my $v = 'abcd';
+            my $r = $v ~~ s:x(1..3):g/./Z/;
+            is-deeply $v,        'ZZZd',  'result';
+            cmp-ok    $r, '===', $/,      'return value';
+            isa-ok    $/,        List,    '$/ is List';
+            is-deeply $/».Str,   <a b c>, '$/».Str';
+        }
+    }
+
+    subtest ':th(1, 3)' => {
+        subtest 'S///' => {
+            plan 3;
+            is-deeply (S:th(1, 3)/./Z/ with 'abcd'), 'ZbZd', 'return value';
+            isa-ok    $/,                           List,    '$/ is List';
+            is-deeply $/».Str,                      <a c>,   '$/».Str';
+        }
+        subtest 's///' => {
+            plan 4;
+            my $v = 'abcd';
+            my $r = $v ~~ s:th(1, 3):g/./Z/;
+            is-deeply $v,        'ZbZd', 'result';
+            cmp-ok    $r, '===', $/,     'return value';
+            isa-ok    $/,        List,   '$/ is List';
+            is-deeply $/».Str,   <a c>,  '$/».Str';
+        }
+    }
+}
+
+subtest '.subst(Str:D, Str:D)' => {
+    plan 6;
+    is-deeply 'abc'.subst('a',  'zo'),  'zobc',   'replace with longer';
+    is-deeply 'abc'.subst('ab',  'z'),  'zc',     'replace with shorter';
+    is-deeply 'abc'.subst('ab',  'xy'), 'xyc',    'replace with samelength';
+
+    is-deeply 'a♥bc'.subst('♥',  'zo'), 'azobc',  'replace with longer (2)';
+    is-deeply 'a♥bc'.subst('♥b',  'z'), 'azc',    'replace with shorter (2)';
+    is-deeply 'a♥bc'.subst('a♥', '♦z'), '♦zbc',   'replace with samelength (2)';
 }
 
 # vim: ft=perl6

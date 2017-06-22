@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # L<S32::Str/Str/"=item split">
-plan 29;
+plan 30;
 
 =begin description
 
@@ -39,13 +39,13 @@ split_test '1234'.split('X'),          @(<1234>),  'Non-matching string returns 
 split_test 'abcb'.split(/b/),   ('a', 'c', ''), 'trailing matches leave an empty string';
 
 # Limit tests
-#?niecza skip '0 or negative does not return empty list'
 {
 split_test 'theXbigXbang'.split(/X/, -1), (), 'Negative limit returns empty List';
 split_test @('theXbigXbang'.split(/X/, 0)),  (), 'Zero limit returns empty List';
 }
 split_test 'ab1cd12ef'.split(/\d+/, 1), @(<ab1cd12ef>), 'Limit of 1 returns a 1 element List (with identical string)';
 split_test '102030405'.split(0, 3),  <1 2 30405>, 'Split on an Integer with limit parameter works';
+#?DOES 1
 split_test(
     '<tag>soup</tag>'.split(/\<\/?.*?\>/, 3),
     ('','soup',''),
@@ -82,9 +82,7 @@ split_test 'ab34d5z'.split(/<.before \d>/), <ab 3 4d 5z>, 'split with zero-width
 # As per Larry, ''.split('') is the empty list
 # http://www.nntp.perl.org/group/perl.perl6.language/2008/09/msg29730.html
 
-#?niecza todo 'returning 2 element list'
 ok (''.split('')).elems == 0, q{''.split('') returns empty list};
-#?niecza todo 'returning 2 element list'
 ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
 # split with :v should return capture
@@ -110,6 +108,13 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
     ok $rt112868.split('').elems > 0, q<.split('') does something>;
     is $rt112868.split(''), $rt112868.split(/''/),
        q<.split('') does the same thing as .split(/''/) (RT #112868)>;
+}
+
+# RT #128034
+subtest 'split with NaN limit throws (RT #128034)', {
+    throws-like { split 'o',        'o', NaN }, X::TypeCheck;
+    throws-like { split /o/,        'o', NaN }, X::TypeCheck;
+    throws-like { split @(1, 2, 3), 'o', NaN }, X::TypeCheck;
 }
 
 # vim: ft=perl6

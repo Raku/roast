@@ -1,7 +1,9 @@
 use v6;
 use Test;
 
-plan 154;
+plan 157;
+
+is 0xffffffff, '4294967295', '0xffffffff is turned into a big number on 32bit rakudos';
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -125,20 +127,20 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 # It seems odd that the numbers on the inside on the <> would be a mix of
 # bases. Maybe I've misread the paragraph -- brian
 {
-    is_approx(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
+    is-approx(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
         'Powers outside same as powers inside');
 
-    is_approx(:16<dead_beef> * 16**0, :16<dead_beef*16**0>,
+    is-approx(:16<dead_beef> * 16**0, :16<dead_beef*16**0>,
         'Zero powers inside');
 
     #?rakudo skip "RT #123862 - negative radix"
-    is_approx(:16<dead_beef> * 16**-1, :16<dead_beef*16**-1>,
-        'Negative powers inside');    
+    is-approx(:16<dead_beef> * 16**-1, :16<dead_beef*16**-1>,
+        'Negative powers inside');
 }
 
 # L<S02/General radices/"Any radix may include a fractional part">
 
-is_approx(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / 65536.0, 'Fractional base 16 works' );
+is-approx(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / 65536.0, 'Fractional base 16 works' );
 
 
 # L<S02/General radices/":8<177777>">
@@ -174,7 +176,6 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
-#?niecza todo ":radix() NYI"
 {
     is(:8('0b1110'),   0b1110,  ':8(0b1110) overrides from default octal');
     is(:8(':2<1110>'), 0b1110,  ':8(:2<1110>) overrides from default octal');
@@ -225,13 +226,11 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 {
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
     #?rakudo skip "Really?!"
-    #?niecza skip "WTF?"
     is( :2«1.1*:2<10>**:2<10>»,    6, 'Powers of two in <<>> works');
 }
 
 # Tests for the :x[ <list> ] notations
 # L<S02/General radices/"Alternately you can use a list of values">
-#?niecza skip ":radix[] NYI"
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
     is( :100[3,'.',14,16],     3.1416,         'Decimal point in list works' );
@@ -285,6 +284,41 @@ for 2..36 {
 {
     throws-like { EVAL ':2()' }, X::Numeric::Confused, ':2() is Confused';
     throws-like { EVAL ':2' }, X::Syntax::Malformed, ':2 is Malformed';
+}
+
+# RT #129279
+#?rakudo.jvm skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
+#?rakudo.js skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
+lives-ok { :۳<12> }, 'Unicode digit radix bases work';
+
+# RT #128804
+subtest 'sane errors on failures to parse rad numbers' => {
+    plan 12;
+
+    throws-like ｢:3<a11>｣, X::Str::Numeric, :0pos,
+        'whole part only, start';
+    throws-like ｢:3<1a1>｣, X::Str::Numeric, :1pos,
+        'whole part only, middle';
+    throws-like ｢:3<11a>｣, X::Str::Numeric, :2pos,
+        'whole part only, end';
+    throws-like ｢:3<a11.111>｣, X::Str::Numeric, :0pos,
+        'with fractional part, error in whole part, start';
+    throws-like ｢:3<1a1.111>｣, X::Str::Numeric, :1pos,
+        'with fractional part, error in whole part, middle';
+    throws-like ｢:3<11a.111>｣, X::Str::Numeric, :2pos,
+        'with fractional part, error in whole part, end';
+    throws-like ｢:3<111.a11>｣, X::Str::Numeric, :4pos,
+        'with fractional part, error in fractional part, start';
+    throws-like ｢:3<111.1a1>｣, X::Str::Numeric, :5pos,
+        'with fractional part, error in fractional part, middle';
+    throws-like ｢:3<111.11a>｣, X::Str::Numeric, :6pos,
+        'with fractional part, error in fractional part, end';
+    throws-like ｢:3<a11.a11>｣, X::Str::Numeric, :0pos,
+        'with fractional part, error in both parts, start';
+    throws-like ｢:3<1a1.1a1>｣, X::Str::Numeric, :1pos,
+        'with fractional part, error in both parts, middle';
+    throws-like ｢:3<11a.1a1>｣, X::Str::Numeric, :2pos,
+        'with fractional part, error in both parts, end';
 }
 
 # vim: ft=perl6

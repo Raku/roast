@@ -58,7 +58,6 @@ sub make-string(@a) {
 }
 
 # Results taken from Perl 5
-#?niecza todo "Not sure if this test is correct or not"
 {
   my @array = <a b c>;
   is ~(@array[2, *-1]:delete), "c ",
@@ -107,6 +106,7 @@ sub make-string(@a) {
     is ~( map { 1 }, @array ), '1 1', 'map @array works after init';
     @array[0]:delete;
     lives-ok { @array.perl }, '@array.perl lives after delete';
+    #?rakudo.jvm todo 'NullPointerException RT #128320'
     lives-ok { map { 1 }, @array }, 'map @array lives after delete';
 }
 

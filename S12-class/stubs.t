@@ -3,7 +3,7 @@ use Test;
 
 # L<S12/Classes/You can predeclare a stub class>
 
-plan 10;
+plan 8;
 
 eval-lives-ok q[ class StubA { ... }; class StubA { method foo { } }; ],
               'Can stub a class, and later on declare it';
@@ -12,16 +12,9 @@ eval-lives-ok q[ role StubB { ... }; role StubB { method foo { } }; ],
 eval-lives-ok q[ module StubC { ... }; module StubC { sub foo { } }; ],
               'Can stub a module, and later on declare it';
 
-#?niecza todo 'broken in nom-derived stub model'
 #?rakudo todo 'nom regression RT #125044'
 eval-lives-ok q[ package StubD { ... }; class StubD { method foo { } }; ],
               'Can stub a package, and later on implement it as a class';
-
-# not quite class stubs, but I don't know where else to put the tests...
-
-lives-ok { sub {...} }, 'not execued stub code is fine';
-dies-ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
-dies-ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 
 throws-like q[my class StubbedButNotDeclared { ... }], X::Package::Stubbed,
     'stubbing a class but not providing a definition dies';
@@ -35,6 +28,26 @@ throws-like q[my class StubbedButNotDeclared { ... }], X::Package::Stubbed,
         X::Inheritance::NotComposed,
         child-name  => 'B',
         parent-name => 'A';
+}
+
+# RT #129270
+subtest "all forms of yadas work to stub classes" => {
+    plan 2;
+    subtest "lives when stubbed, then defined" => {
+        plan 4;
+        eval-lives-ok ｢my class Foo { …   }; my class Foo {}｣, '…';
+        eval-lives-ok ｢my class Foo { ... }; my class Foo {}｣, '...';
+        eval-lives-ok ｢my class Foo { !!! }; my class Foo {}｣, '!!!';
+        eval-lives-ok ｢my class Foo { ??? }; my class Foo {}｣, '???';
+    }
+
+    subtest "throws when stubbed, and never defined" => {
+        plan 4;
+        throws-like ｢my class Foo { …   }｣, X::Package::Stubbed, '…';
+        throws-like ｢my class Foo { ... }｣, X::Package::Stubbed, '...';
+        throws-like ｢my class Foo { !!! }｣, X::Package::Stubbed, '!!!';
+        throws-like ｢my class Foo { ??? }｣, X::Package::Stubbed, '???';
+    }
 }
 
 # vim: ft=perl6

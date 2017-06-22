@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 81;
+plan 84;
 
 # L<S09/Typed arrays/>
 
@@ -60,7 +60,7 @@ plan 81;
     dies-ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies-ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
-    dies-ok { @x[0, 2] = 2, 3}, 
+    dies-ok { @x[0, 2] = 2, 3},
             'can not assign values of wrong type to a slice';
     lives-ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
@@ -73,7 +73,7 @@ plan 81;
     dies-ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies-ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
-    dies-ok { @x[0, 2] = 2, 3}, 
+    dies-ok { @x[0, 2] = 2, 3},
             'can not assign values of wrong type to a slice';
     lives-ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
@@ -257,6 +257,30 @@ plan 81;
     @a[4]++;
     is @a.gist, '[(Int) (Int) (Int) (Int) 1]',
         '.gist on typed array shows real type objects';
+}
+
+# RT #126134
+{
+    sub rt126134 (Int @a) { pass '@a of Foo accepted by sub (Foo @a)' };
+    my @a of Int;
+    rt126134 @a;
+}
+
+# RT #126136
+{
+    {
+        my @a of Int;
+        my @b;
+        is @b.WHAT.perl, 'Array',
+            'using `of` does not affect arrays defined later';
+    }
+
+    {
+        my @a of Int;
+        my @b of Str;
+        is @b.WHAT.perl, 'Array[Str]',
+            'using `of` does not affect arrays with `of` defined later';
+    }
 }
 
 # vim: ft=perl6

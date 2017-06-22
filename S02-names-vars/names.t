@@ -9,7 +9,6 @@ plan 149;
 # L<S02/Names/>
 # syn r14552
 
-#?niecza skip 'Undeclared name: Terrain::'
 {
     my $mountain = 'Hill';
     $Terrain::mountain  = 108;
@@ -29,18 +28,15 @@ plan 149;
 {
     my $bear = 2.16;
     is($bear,       2.16, 'simple variable lookup');
-    #?niecza skip 'Object reference not set to an instance of an object'
     #?rakudo skip 'this kind of lookup NYI RT #125659'
     is($::{'bear'}, 2.16, 'variable lookup using $::{\'foo\'}');
     is(::{'$bear'}, 2.16, 'variable lookup using ::{\'$foo\'}');
-    #?niecza skip 'Object reference not set to an instance of an object'
     #?rakudo skip 'this kind of lookup NYI RT #125659'
     is($::<bear>,   2.16, 'variable lookup using $::<foo>');
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');
 }
 
 #?rakudo skip '::{ } package lookup NYI RT #124638'
-#?niecza skip 'Postconstraints, and shapes on variable declarators NYI'
 {
     my $::<!@#$> =  2.22;
     is($::{'!@#$'}, 2.22, 'variable lookup using $::{\'symbols\'}');
@@ -70,7 +66,6 @@ is-deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
       'dies when calling non-existent sub in existing package';
     # RT #74520
     class TestA { };
-    #?niecza todo
     throws-like 'TestA::frobnosticate(3, :foo)',
       Exception,
       'calling non-existing function in foreign class dies';;
@@ -143,7 +138,6 @@ throws-like {
 }
 
 # RT #75646
-#?rakudo.jvm skip 'RT #75646'
 {
     throws-like 'my ::foo $x, say $x', Exception,
         'no Null PMC access when printing a variable typed as ::foo ';

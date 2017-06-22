@@ -193,7 +193,6 @@ plan 76;
 
 
 # RT #119061
-#?niecza todo "https://github.com/sorear/niecza/issues/184"
 {
     my Int @a;
     throws-like '@a.unshift: "a"', X::TypeCheck,

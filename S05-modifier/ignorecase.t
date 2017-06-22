@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 91;
 
 =begin description
 
@@ -41,10 +41,9 @@ ok "hello"  ~~ m:ignorecase/Hello/,        "match with :ignorecase (direct)";
 ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 
 # The German ß (&szlig;) maps to uppercase SS:
-#?rakudo 2 todo 'ignorecase and SS/&szlig; RT #121377'
-#?niecza todo
+#?rakudo.jvm 2 todo 'ignorecase and SS/&szlig; RT #121377'
+# RT #121377'
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
-#?niecza todo
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
 
@@ -55,7 +54,6 @@ ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 {
     my $matcher = 'aA';
     nok 'aa' ~~ /   $matcher/, 'interpolation: no match without :i';
-    #?niecza todo
      ok 'aa' ~~ /:i $matcher/, 'interpolation: match with :i';
 }
 
@@ -78,10 +76,47 @@ ok 'A4' ~~ /:i a[3|4|5] | b[3|4] /, 'alternation sanity';
 
 # RT #77410
 {
-    #?niecza todo "NYI"
     ok  "m" ~~ /:i <[M]>/, "ignore case of character classes";
     nok "m" ~~ /<[M]>/,    "ignore case of character classes";
     nok "n" ~~ /:i <[M]>/, "ignore case of character classes";
 }
 
+# RT #126793
+{
+#?rakudo.jvm 1 todo "ligatures don't casefold on JVM"
+ok 'ﬆ' ~~ /:i st/, ":i haystack 'ﬆ' needle 'st'";
+    #?rakudo.jvm 1 todo "ligatures in the haystack of case insensensitive regex don't work"
+    for 1..10 {
+        my $haystack;
+        repeat {
+            $haystack = ('a'..'z').pick($_).join ~ 'ﬆ';
+        }  while $haystack.contains('st');
+        ok $haystack ~~ /:i st/, ":i haystack: '$haystack' needle: 'st'";
+    }
+}
+# The below test attaches codepoints which combine with the X, so it should not
+# match. When the 'x' is added on the end, and is its own grapheme, then it should
+# match
+#?rakudo.jvm 1 todo "NFG NYI on JVM"
+nok ('X' ~ 875.chr ~ 8413.chr) ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
+ok  ('X' ~ 875.chr ~ 8413.chr ~ 'x') ~~ /:i x /, 'case insensitive regex works for haystacks which have synthetic graphemes';
+# If the beginning of the needle matches towards the end of the haystack,
+# it can return a partial match, when it hasn't traversed the needle fully
+nok "aaaaaaaabcd" ~~ m:i/abcd111111/, "case insensitive regex will not return a match beyond the haystack end";
+for 'a'..'z' -> $a {
+  my $s;
+  my $s1;
+  my $tag;
+  for 'a'..'z' {
+    next if $a eq $_;
+    my $left = "$a";
+    my $right = "$_$a";
+    $tag ~= "$left <-> $right, ";
+    my $e = qq«("$left" ~~ m:i/$right/) ?? '$_' !! '_'»;
+    $s ~= $e.EVAL;
+    $s1 ~= ($left ~~ m:i/$right/) ?? '$_' !! '_';
+  }
+  is $s, '_' x 25, "× = a-z; × ~~ m:i/×$a/; EVAL";
+  is $s1, '_' x 25, "× = a-z; × ~~ m:i/×$a/;";
+}
 # vim: syn=perl6 sw=4 ts=4 expandtab

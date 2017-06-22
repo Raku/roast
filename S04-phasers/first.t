@@ -5,7 +5,6 @@ use Test;
 plan 7;
 
 # L<S04/Phasers/FIRST "at loop initialization time">
-#?rakudo.jvm todo 'RT #126701'
 {
     my $str = '';
     for 1..2 {
@@ -24,7 +23,6 @@ plan 7;
 }
 
 # L<S04/Phasers/can occur multiple times>
-#?rakudo.jvm todo 'RT #126701'
 {
     my $str = '';
     for 1..2 {
@@ -36,7 +34,6 @@ plan 7;
 }
 
 # L<S04/Phasers/FIRST "at loop initialization time" "before any ENTER">
-#?rakudo.jvm todo 'RT #126701'
 {
     my $str = '';
     for 1..2 {
@@ -74,7 +71,6 @@ plan 7;
         FIRST { $str ~= 'Here'; last }
         $str ~= $_;
     }
-    #?rakudo.jvm todo "got '123' instead of 'Here'"
     is $str, 'Here', 'last in FIRST in for loop works';
 }
 

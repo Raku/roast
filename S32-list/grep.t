@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 37;
+plan 44;
 
 my @list = (1 .. 10);
 
@@ -24,7 +24,6 @@ my @list = (1 .. 10);
 }
 
 #?rakudo skip "adverbial block RT #124755"
-#?niecza skip 'No value for parameter Mu $sm in Any.grep'
 {
     my @result = @list.grep():{ ($_ % 2) };
     is(+@result, 5, 'we got a list back');
@@ -36,7 +35,6 @@ my @list = (1 .. 10);
 }
 
 #?rakudo skip "adverbial block RT #124756"
-#?niecza skip 'No value for parameter Mu $sm in Any.grep'
 {
     my @result = @list.grep :{ ($_ % 2) };
     is(+@result, 5, 'we got a list back');
@@ -70,6 +68,21 @@ my @list = (1 .. 10);
        '2|4', 'last works in grep';
     is (1..12).grep({next if $_ % 5 == 0; $_ % 2 == 0}).join('|'),
        '2|4|6|8|12', 'next works in grep';
+    # RT #130365
+    is (^Inf).grep({last if $_ > 5; True}).eager.join, '012345',
+        'last in grep on infinite list';
+    # RT #130529
+    {
+        my $retries = 0;
+        is (1..5).grep({
+            if $_ == 3 {
+                $retries++;
+                redo unless $retries == 3
+            };
+            $_
+        }).join('|'), '1|2|3|4|5', 'redo works in grep (1)';
+        is $retries, 3, 'redo works in grep (2)';
+    }
 }
 
 # since the test argument to .grep is a Matcher, we can also
@@ -83,7 +96,6 @@ my @list = (1 .. 10);
 }
 
 # RT #71544
-#?niecza skip 'No value for parameter $b in ANON'
 {
     my @in = ( 1, 1, 2, 3, 4, 4 );
 
@@ -118,6 +130,7 @@ my @list = (1 .. 10);
 
 # Bool handling
 {
+    temp $_ = 42;
     throws-like { grep $_ == 1, 1,2,3 }, X::Match::Bool;
     throws-like { (1,2,3).grep: $_== 1 }, X::Match::Bool;
     is grep( Bool,True,False,Int ), (True,False), 'can we match on Bool as type';
@@ -130,6 +143,28 @@ my @list = (1 .. 10);
     @a.grep(* %% 2).>>++;
     is @a, <1 3 3 5 5 7 7 9 9 11>,
         'grep is rw-like, can chain it to modify elements of grepped list/array';
+}
+
+# RT #128773
+{
+    is (^∞).grep(*.is-prime).is-lazy, True, '.grep propagates .is-lazy';
+    is (grep *.is-prime, ^∞).is-lazy, True, 'grep() propagates .is-lazy';
+}
+
+# grep with an unexpected adverb
+{
+    throws-like(
+        { @list.grep(Mu, :asdf) },
+        X::Adverb,
+        message => q{Unexpected adverb 'asdf' passed to grep on @list},
+        'grep on an instance with an unexpected adverb'
+    );
+    throws-like(
+        { List.grep(Mu, :asdf) },
+        X::Adverb,
+        message => q{Unexpected adverb 'asdf' passed to grep on List},
+        'grep on a type object with an unexpected adverb'
+    );
 }
 
 # vim: ft=perl6

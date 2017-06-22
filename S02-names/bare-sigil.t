@@ -7,7 +7,6 @@ plan 11;
 
 lives-ok { my $ }, 'basic bare sigil $';
 lives-ok { my @ }, 'basic bare sigil @';
-#?niecza skip 'bare sigil % generates postcircumfix:<()> exception'
 lives-ok { my % }, 'basic bare sigil %';
 
 is (my $ = "foo"), "foo", 'initialized bare sigil scalar $';
@@ -16,7 +15,6 @@ ok (my % = baz => "luhrman"), 'initialized bare sigil hash %';
 
 # RT #116521
 # 'state' with anonymous scalars works more like 'my' in Rakudo
-#?niecza skip "++(state \$) yields (3, 3, 3) instead of (1, 2, 3)"
 {
     sub f { ++state $ ; }
     is (f, f, f), (1, 2, 3), "anonymous 'state' bare sigil scalar retains state";

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 10;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -36,5 +36,10 @@ is &?ROUTINE.name, "MAIN", "...and we're actually in MAIN now";
     throws-like { EVAL 'multi sub MAIN;' },
         X::UnitScope::Invalid, what => "sub"
 }
+
+# RT #127785
+@*ARGS = '2';
+eval-lives-ok 'sub MAIN($x where { $x > 1 }); 1', 'Can have where in sub MAIN(...);';
+eval-lives-ok 'unit sub MAIN($x where { $x > 1 }); 1', 'Can have where in unit sub MAIN(...);';
 
 # vim: ft=perl6

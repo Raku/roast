@@ -57,19 +57,13 @@ my $p5hash = $p5ha($%hash);
 
 my $rethash = $p5hash.hash;
 my @keys = %hash.keys.sort;
-my @p5keys;
-try {
-    @p5keys = $p5hash.my_keys; # this doesn't even pass lives-ok ??
-    @p5keys .= sort;
-};
+my @p5keys = $p5hash.my_keys;
+@p5keys .= sort;
 
 is("{ @keys }", "{ @p5keys }");
 
 ok($p5hash.store(9, 'e'), 'can store');
-#?rakudo todo "doesn't work yet due to copying of hashes RT #124647"
-{
-    is(%hash{9}, 'e', 'store result');
-}
+is(%hash{9}, 'e', 'store result');
 
 is($p5hash.fetch(5), 'a', 'fetch result');
 is($p5hash.my_exists(5), +(%hash<5>:exists), 'exists');

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 72;
 
 {
     my $s = supply {
@@ -329,6 +329,13 @@ plan 60;
     is $i, 2, 'react/whenever with supply that immediately emits values works';
 }
 
+# RT #128717
+{
+    my $i = 0;
+    react whenever Supply.interval: 0.01 { done() if $_ == 3; $i++ }
+    is $i, 3, 'blockless react/whenever works';
+}
+
 {
     my $trigger1 = Supplier.new;
     my $trigger2 = Supplier.new;
@@ -439,6 +446,119 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
     $closed = False;
     $t2.close;
     nok $closed, 'CLOSE phasers do not run twice (normal termination then .close)';
+}
+
+{
+    sub foo($a) {
+        supply {
+            whenever Supply.from-list() {
+                LAST emit $a;
+            }
+        }
+    }
+    is await(foo(42)), 42, 'LAST in whenever triggered without iterations sees correct outer (1)';
+    #?rakudo.jvm todo "got: '42'"
+    is await(foo(69)), 69, 'LAST in whenever triggered without iterations sees correct outer (2)';
+}
+
+lives-ok {
+    react {
+        whenever Supply.from-list(gather { die }) {
+            QUIT { default { } }
+        }
+    }
+}, 'QUIT properly handles exception even when dieing synchronously with the .tap';
+
+{
+    sub foo($a) {
+        supply {
+            whenever Supply.from-list(gather { die }) {
+                QUIT {
+                   default {
+                       emit $a;
+                   }
+               }
+            }
+        }
+    }
+    is await(foo(42)), 42, 'QUIT in whenever triggered without iterations sees correct outer (1)';
+    #?rakudo.jvm todo "got: '42'"
+    is await(foo(69)), 69, 'QUIT in whenever triggered without iterations sees correct outer (2)';
+}
+
+# RT #128991
+lives-ok {
+    for ^5 {
+        my $p = Promise.new;
+        my $s = supply {
+            whenever Supply.interval(.001) {
+                done if $++ > 50;
+            }
+        }
+        $s.tap(done => { $p.keep(True) }); # Will die if keeping twice
+        await $p;
+    }
+}, 'Never get done message twice from a supply';
+lives-ok {
+    for ^5 {
+        react {
+            whenever Supply.interval(.001) {
+                done if $++ > 50;
+            }
+        }
+    }
+}, 'No react guts crash in case that once spat out two done messages either'; 
+
+lives-ok {
+    my $s = supply { whenever Supply.interval(0.001) { done } }
+    await do for ^4 {
+        start {
+            for ^500 {
+                react { whenever $s { } }
+            }
+        }
+    }
+}, 'No races/crashes around interval that emits done (used to SEGV and various errors)';
+
+lives-ok {
+    my $times-triggered;
+    react {
+        whenever Supply.from-list(^10) {
+            next if $_ %% 2;
+            $times-triggered++;
+        }
+    }
+    is $times-triggered, 5, "skipping every even number in ^10 with 'next' gives us 5";
+}, 'calling "next" inside a whenever block will not die.';
+
+subtest 'next in whenever' => {
+    plan 4;
+
+    my @res1;
+    react { whenever supply { .emit for ^10 } { next if $_ > 3; @res1.push: $_ } }
+    is-deeply @res1, [0, 1, 2, 3], 'skip elements at the end';
+
+    my @res2;
+    react { whenever supply { .emit for ^10 } { next if $_ < 6; @res2.push: $_ } }
+    is-deeply @res2, [6, 7, 8, 9], 'skip elements at the start';
+
+    my @res3;
+    react { whenever supply { .emit for ^10 } {
+        next unless 3 < $_ < 6; @res3.push: $_
+    }}
+    is-deeply @res3, [4, 5], 'skip elements in the middle';
+
+    my @res4;
+    react {
+        whenever supply { .emit for ^10     } {
+            next if $_ > 4;   @res4.push: $_;
+        }
+        whenever supply { .emit for ^100+5 } {
+            next if $_ < 103; @res4.push: $_;
+        }
+    }
+    is-deeply @res4.sort, (0, 1, 2, 3, 4,  103, 104).sort,
+        'works when used in two whenevers';
 }
 
 # vim: ft=perl6 expandtab sw=4

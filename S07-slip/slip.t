@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 23;
 
 is (1, |(2,3), 4).gist, '(1 2 3 4)', "simple | middle";
 is (|(2,3), 4).gist, '(2 3 4)', "simple | left";
@@ -40,4 +40,10 @@ is (1, slip flat (2,3)).gist, '(1 2 3)', "slip flat listops right";
 
     my \d = 0, |[\+] 1..*;
     is d[100000], 5000050000, "prefix:<|> works with one-arg long lazy";
+}
+
+{
+    my $slip = slip <a b c>;
+    is-deeply [$slip.perl.EVAL], [$slip],
+        'can .perl.EVAL roundtrip an itemized slip';
 }

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 20;
 
 =begin description
 
@@ -39,4 +39,12 @@ is('fooäàAÁâåbar' ~~ m:m:i/<[a..b]>+/, 'äàAÁâåba', 'range in character
     is m:i:m/$x/, Nil, "interpolation longer than topic doesn't blow up";
 }
 
+# RT #128875
+{
+    my @strings = "All hell is breaking loose", "Āll hell is breakinġ loose";
+    for @strings {
+        is-deeply $_ ~~ m:i:m/"All is fine, I am sure of it"/, False, 'RT128875 :i:m combined matches whole string when a single character match is found';
+        is-deeply ('word' ~ $_) ~~ m:i:m/"All is fine, I am sure of it"/, False, 'RT128875 :i:m combined matches whole string when a single character match is found';
+    }
+}
 # vim: syn=perl6 sw=4 ts=4 expandtab

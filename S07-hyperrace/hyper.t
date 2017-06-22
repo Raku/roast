@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -33,10 +33,7 @@ plan 12;
 
 #?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
-    # hyper + grep done in reverse
-
-    # This test only makes sense if the race version
-    # produces them in the exact opposite order.
+    # hyper + map done in reverse
 
     my @promises;
     for 0..4 {
@@ -54,26 +51,18 @@ plan 12;
         # wait our turn
         await @promises[$_];
 
-        # help prevent timing jitter from mattering
-        # by giving the thread that was blocking us
-        # a head start
-        sleep 0.01;
-
         # allow the next lower one to proceed
         @promises[$_ - 1].keep;
 
         $_; # <==
     });
 
-    is @result, (1, 2, 3, 4, 5), "test that hyper + map returns values in the right order";
+    is @result, (1, 2, 3, 4, 5), "test that hyper + map done in reverse returns values in the right order";
 }
 
 #?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     # hyper + grep done in reverse
-
-    # this test only makes sense if the race version
-    # produces them in the exact opposite order
 
     my @promises;
     for 0..4 {
@@ -91,18 +80,13 @@ plan 12;
         # wait our turn
         await @promises[$_];
 
-        # help prevent timing jitter from mattering
-        # by giving the thread that was blocking us
-        # a head start
-        sleep 0.01;
-
         # allow the next lower one to proceed
         @promises[$_ - 1].keep;
 
         True; # <==
     });
 
-    is @result, (1, 2, 3, 4, 5), "test that hyper + grep keeps values in the right order";
+    is @result, (1, 2, 3, 4, 5), "test that hyper + grep done in reverse keeps values in the right order";
 }
 
 # RT #127191
@@ -114,4 +98,10 @@ plan 12;
               "cannot have a $name of $value for hyper";
         }
     }
+}
+
+# RT #127099
+{
+    my @res = ^1000 .hyper.map: *+0;
+    is-deeply @res, [@res.sort], '.hyper preserves order';
 }

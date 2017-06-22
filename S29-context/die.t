@@ -47,7 +47,6 @@ is ({ try { if 1 { die } else { die } }; 42 }()), 42, "die in if";
 my sub die_in_return () { return die };
 is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
 
-#?niecza skip 'test needs rewriting, EVAL does not catch exceptions'
 {
     my $msg = 'RT #67374';
     try { die $msg };

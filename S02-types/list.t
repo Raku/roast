@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
-plan 65;
+plan 71;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -10,8 +12,11 @@ is (5, 7, 8).Str, '5 7 8', '.Str on a List';
 
 # .perl
 is ().perl, '()', '.perl on empty List';
-#?niecza todo '.item.perl on empty List gives Match.ast shorthand'
-is ().item.perl, '$()', '.item.perl on empty List';
+is ().item.perl, '$( )', '.item.perl on empty List';
+is-deeply ().item, ().item.perl.EVAL, 'can roundtrip ().item';
+#?rakudo.jvm skip 'dies with t/harness5'
+cmp-ok ().item.VAR, '===', ().item.perl.EVAL.VAR,
+    '().item .perl.EVAL roundtrip preserves itemization';
 
 # L<S02/Quoting forms/Elsewhere it is equivalent to a parenthesized list of strings>
 
@@ -20,7 +25,6 @@ is +<5 7 8>, 3, 'prefix:<+> on an angle bracket List';
 is ~<5 7 8>, '5 7 8', 'prefix:<~> on an angle bracket List';
 is <5 7 8>.Str, '5 7 8', '.Str on an angle bracket List';
 
-#?niecza 3 skip ".List NYI"
 isa-ok (5, 7, 8).List, List, '.List returns a list';
 is (5, 7, 8).List, [5,7,8], '.List contains the right items';
 is (5, 7, 8).List.elems, 3, '.List contains the right number of elements';
@@ -128,6 +132,35 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     throws-like { <a b c d>.sum }, X::Str::Numeric,
       reason => "base-10 number must begin with valid digits or '.'",
       'fail if they are non-numeric strings';
+}
+
+# RT#129044
+{
+    is (a => 2).first(/a/), (a => 2), "first with a Regexp object";
+    is (a => 2).grep(/a/), (a => 2), "grep with a Regexp object";
+}
+
+subtest '.sum can handle Junctions' => {
+    # http://www.perlmonks.org/?node_id=1176379
+    plan 7;
+    constant @a = (2, 3|4, 5, 6|7);
+    my $sum = @a.sum;
+    #?rakudo.jvm 2 skip 'Type check failed in assignment to $st; expected Mu but got List ($(any(16, 17), any(17...)'
+    is-deeply-junction  sum(@a), $sum, 'sum() produces same thing as .sum';
+    is-deeply-junction ([+] @a), $sum, '[+] produces same thing as .sum';
+    cmp-ok $sum,  '==', 2+3+5+6, 'sum is correct (1)';
+    cmp-ok $sum,  '==', 2+4+5+6, 'sum is correct (2)';
+    cmp-ok $sum,  '==', 2+3+5+7, 'sum is correct (3)';
+    cmp-ok $sum,  '==', 2+4+5+7, 'sum is correct (4)';
+    ok     $sum   !==        42, 'sum is correct (6)';
+}
+
+#?rakudo.jvm skip 'RT #130160 works when run standalone, maybe wrong multi selected'
+{ # RT#130160
+    my @a := <a b c>[0..2, 0..2].flat.cache;
+    @a.Bool;
+    @a.elems;
+    is-deeply @a, <a b c a b c>, '.flat does not skip inner iterables';
 }
 
 # vim: ft=perl6

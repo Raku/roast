@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 179;
+plan 189;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -19,7 +19,7 @@ is (1..^5).perl, '1..^5', ".perl ..^";
 is (1^..^5).perl, '1^..^5', ".perl ^..^";
 
 my @r = $r;
-is @r, [1, 2, 3, 4, 5], 'got the right array';
+is @r.perl, "[1..5,]", 'got the right array';
 
 # Range of Str
 
@@ -28,15 +28,14 @@ isa-ok $r, Range;
 # XXX unspecced: exact value of Range.perl
 is $r.perl, '"a".."c"', 'canonical representation';
 @r = $r;
-is @r, [< a b c >], 'got the right array';
+is @r.perl, '["a".."c",]', 'got the right array';
 
 # Stationary ranges
 is (1..1).perl, '1..1', "stationary num .perl ..";
 is (1..1), [1,], 'got the right array';
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
-is ('a'..'a'), [< a >], 'got the right array';
+is ('a'..'a'), "a", 'got the right stationary string';
 
-#?niecza skip 'Unable to resolve method reverse in class Range'
 {
     my $x = 0;
     $x++ for (1..4).reverse;
@@ -83,7 +82,6 @@ is(+(10..9), 0, 'numification');
 is(+(1.2..4), 3, 'numification');
 is(+(1..^3.3), 3, 'numification');
 is(+(2.3..3.1), 1, 'numification');
-#?niecza skip 'Attempted to access slot $!min of type object for Range'
 is(+Range, 0, 'type numification');
 
 # immutability
@@ -96,6 +94,23 @@ is(+Range, 0, 'type numification');
           typename => 'Range',
           "range is immutable ($method)",
         ;
+    }
+
+    throws-like { $r.min = 2 }, X::Assignment::RO, "range.min ro";
+    throws-like { $r.max = 4 }, X::Assignment::RO, "range.max ro";
+    throws-like { $r.excludes-min = True }, X::Assignment::RO,
+        "range.excludes-min ro";
+    throws-like { $r.excludes-max = True }, X::Assignment::RO,
+        "range.excludes-max ro";
+
+    # RT #125791
+    #?rakudo.jvm todo 'wrong error message, cmp. Rakudo commit 0c16bb2b01'
+    {
+        for 0,1 -> $i {
+            throws-like { (^10).bounds[$i] = 1 }, X::Assignment::RO,
+                typename => / ^ 'Int' | 'value' $ /,
+                "is Range.bounds[$i] ro";
+        }
     }
 
     my $s = 1..5;
@@ -135,7 +150,7 @@ is(+Range, 0, 'type numification');
     is($inf.min, -Inf, 'bottom end of *..* is -Inf (1)');
     is($inf.max, Inf, 'top end of *..* is Inf (1)');
 
-    is($inf.elems, Inf, 'testing number of elements');
+    throws-like $inf.elems, X::Cannot::Lazy, :action<.elems>;
 
     ok(42  ~~ $inf, 'positive integer matches *..*');
     ok(.2  ~~ $inf, 'positive non-int matches *..*');
@@ -308,15 +323,6 @@ lives-ok({"\0".."~"}, "low ascii range completes");
     is ($r / 2).gist, '0.5^..^5.0', "can scale a ^..^ range down";
 }
 
-# RT #125791
-{
-    for 0,1 -> $i {
-        throws-like { (^10).bounds[$i] = 1 }, X::Assignment::RO,
-          typename => / ^ 'Int' | 'value' $ /,
-          "is Range.bounds[$i] ro";
-    }
-}
-
 {
     sub test($range,$min,$max,$minbound,$maxbound) {
         subtest {
@@ -352,6 +358,81 @@ lives-ok({"\0".."~"}, "low ascii range completes");
     is (-Inf..Inf).minmax,    '-Inf Inf', "simple Range.minmax on Nums";
     is (^10).minmax,          '0 9',      "Range.minmax on Ints with exclusion";
     dies-ok { ^Inf .minmax },  "cannot have exclusions for minmax otherwise";
+}
+
+# RT #126990
+is-deeply Int.Range, -Inf^..^Inf, 'Int.range is -Inf^..^Inf';
+
+# RT #128887
+is-deeply (eager (^10+5)/2), (2.5, 3.5, 4.5, 5.5, 6.5),
+    'Rat range constructed with Range ops does not explode';
+
+# RT #129104
+subtest '.rand does not generate value equal to excluded endpoints' => {
+    plan 3;
+
+    my $seen = 0;
+    for ^10000 { $seen = 1 if (1..^(1+10e-15)).rand == 1+10e-15 };
+    ok $seen == 0, '..^ range';
+
+    $seen = 0;
+    for ^10000 { $seen = 1 if (1^..(1+10e-15)).rand == 1 };
+    ok $seen == 0, '^.. range';
+
+    $seen = 0;
+    for ^10000 {
+        my $v = (1^..^(1+10e-15)).rand;
+        $seen = 1 if $v == 1 or $v == 1+10e-15
+    };
+    ok $seen == 0, '^..^ range';
+}
+
+subtest 'out of range AT-POS' => {
+    plan 7;
+    throws-like { (^5)[*-9] }, X::OutOfRange, 'effective negative index throws';
+    is-deeply (2..1)[^2], (Nil, Nil),
+        'index larger than range returns Nil (Int range)';
+    is-deeply (2.1..1.1)[^2], (Nil, Nil),
+        'index larger than range returns Nil (Rat range)';
+    is-deeply (2e0..1e0)[^2], (Nil, Nil),
+        'index larger than range returns Nil (Num range)';
+
+    my int $i2 = 2;
+    my int $i5 = 5;
+    is-deeply (2..1)[$i2, $i5], (Nil, Nil),
+        'index larger than range returns Nil (Int range, native int index)';
+    is-deeply (2.1..1.1)[$i2, $i5], (Nil, Nil),
+        'index larger than range returns Nil (Rat range, native int index)';
+    is-deeply (2e0..1e0)[$i2, $i5], (Nil, Nil),
+        'index larger than range returns Nil (Num range, native int index)';
+}
+
+subtest 'Complex smartmatch against Range' => {
+    my @false = [i, 1..10], [i, -2e300.Int..2e300.Int], [i, -2e300.Int..2e300.Int],
+        [<0+0i>, 1..10], [i, 'a'..Inf], [i, 'a'..'z'];
+    my @true  = [<0+0i>, -1..10], [<42+0i>, 10..50],
+        [<42+0.0000000000000001i>, 40..50], [<42+0i>, 10e0..50e0];
+
+    plan @false + @true;
+    for @false -> $t {
+        is-deeply ($t[0] ~~ $t[1]), False, "{$t[0].perl} ~~ {$t[1].perl}";
+    }
+    for @true -> $t {
+        is-deeply ($t[0] ~~ $t[1]), True,  "{$t[0].perl} ~~ {$t[1].perl}";
+    }
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2017-03-16#i_14277938
+subtest 'no .int-bounds for Infs and NaN as Range endpoints' => {
+    my @ranges =  NaN.. NaN,  NaN..1, 1..NaN,   NaN..Inf,  NaN..-Inf,
+                 -Inf..-Inf, -Inf..1, 1..-Inf, -Inf..NaN, -Inf.. Inf,
+                  Inf.. Inf,  Inf..1, 1.. Inf,  Inf..NaN,  Inf.. Inf;
+    plan 1 + @ranges;
+    throws-like { .int-bounds }, Exception, "{.perl} throws" for @ranges;
+
+    # https://github.com/rakudo/rakudo/commit/16ef21c162
+    is-deeply (0..5.5).int-bounds, (0, 5),
+        'we can get int-bounds from non-int range with `0` end-point';
 }
 
 # vim:set ft=perl6

@@ -4,7 +4,7 @@ use Test;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 58;
+plan 62;
 
 # Legend:
 # r   result
@@ -151,6 +151,7 @@ test( "abcde","",3,"empty string",
   <a bcde>,      # rlpse
 );
 
+#?DOES 1
 test( "abcd",/./,3,"any character",
   <<"" "" "" "" "">>,                           # r
   <<"" a "" b "" c "" d "">>,                   # rv
@@ -175,6 +176,7 @@ test( "abcd",/./,3,"any character",
   (0=>"a",0=>"b","cd"),       # rlpse
 );
 
+#?DOES 3
 test( "aaaa",$_,3,"only chars matching $_.perl()",
   <<"" "" "" "" "">>,                           # r
   <<"" a "" a "" a "" a "">>,                   # rv
@@ -199,7 +201,6 @@ test( "aaaa",$_,3,"only chars matching $_.perl()",
   (0=>"a",0=>"a","aa"),       # rlpse
 ) for "a", /a/, rx:Perl5/a/;
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 7
 test( "foo bar baz",$_,2,$_,
   <foo bar baz>,                     # r
@@ -225,7 +226,6 @@ test( "foo bar baz",$_,2,$_,
   ("foo",0=>" ","bar baz"), # rlpse
 ) for " ", / " " /, / \s /, / \s+ /, rx:Perl5/ /, rx:Perl5/\s/, rx:Perl5/\s+/;
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 2
 test( "thisisit",$_,2,$_,
   <thi i it>,                     # r
@@ -251,6 +251,7 @@ test( "thisisit",$_,2,$_,
   ("thi",0=>"s","isit"), # rlpse
 ) for "s", /s/;
 
+#?DOES 2
 test( "|foo|bar|baz|zoo",$_,3,$_,
   <<"" foo bar baz zoo>>,                                   # r
   <<"" | foo | bar | baz | zoo>>,                           # rv
@@ -275,7 +276,6 @@ test( "|foo|bar|baz|zoo",$_,3,$_,
   (0=>"|","foo",0=>"|","bar|baz|zoo"),    # rlpse
 ) for "|", / \| /;
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 3
 test( "foo|bar|baz|zoo|",$_,2,$_,
   <<foo bar baz zoo "">>,                                   # r
@@ -301,7 +301,6 @@ test( "foo|bar|baz|zoo|",$_,2,$_,
   ("foo",0=>"|","bar|baz|zoo|"), # rlpse
 ) for "|", / \| /, rx:Perl5/\|/;
 
-#?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 7
 test( "comma, separated, values",$_,2,$_,
   <comma separated values>,                       # r
@@ -336,6 +335,7 @@ test("","",2,"empty string", |(() xx 20));
 test("","foo",2,"empty string", |(() xx 20));
 test("zzzzz","a",2,"no match",|(("zzzzz",) xx 20));
 
+#?DOES 1
 test( "hello world",<a e i o u>,3,<a e i o u>,
   <<h ll " w" rld>>,                          # r
   <<h e ll o " w" o rld>>,                    # rv
@@ -360,6 +360,7 @@ test( "hello world",<a e i o u>,3,<a e i o u>,
   ("h",1=>"e","ll",3=>"o"," world"), # rlpse
 );
 
+#?DOES 2
 test( "hello world",$_,3,$_,
   <<h ll " w" rld>>,                          # r
   <<h e ll o " w" o rld>>,                    # rv
@@ -401,6 +402,7 @@ test( "hello world",$_,3,$_,
     is @a[3][1], " ", "Fourth capture worked";
 }
 
+#?DOES 2
 # RT #63066
 test( "hello-world",$_,3,$_,
   <<"" hello - world "">>,                             # r
@@ -428,6 +430,7 @@ test( "hello-world",$_,3,$_,
 
 # RT #63066
 my $p = 0=>"";
+#?DOES 1
 test( "-a-b-c-",/<.ws>/,4,/<.ws>/,
   <<"" - a - b - c - "">>,                                         # r
   <<"" "" - "" a "" - "" b "" - "" c "" - "" "">>,                 # rv
@@ -453,6 +456,7 @@ test( "-a-b-c-",/<.ws>/,4,/<.ws>/,
 );
 
 # RT #63066
+#?DOES 1
 test( "-a-b-c-",/<.wb>/,4,/<.wb>/,
   <- a - b - c ->,                                 # r
   <<- "" a "" - "" b "" - "" c "" ->>,             # rv
@@ -485,7 +489,6 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
    q{"a.b".split(/\./)};
 
 #?rakudo skip 'No such method null for invocant of type Cursor RT #124685'
-#?niecza skip 'Unable to resolve method null in class Cursor'
 {
     is "abcd".split(/<null>/).join(','), <a b c d>.join(','),
        q{"abcd".split(/<null>/)};()
@@ -503,3 +506,43 @@ is "aaaaabbbbb".split(<aaa aa bb bbb>,:v), " aaa  aa  bbb  bb ",
   "test overlapping needles";
 
 # vim: ft=perl6
+
+# RT #128481
+{
+    # .List is to check it's not a BOOTArray (which doesn't have p6 method resolution)
+    is *.split("-").("a-b-c").List,<a b c>,'*.split result is HLLized';
+}
+
+# RT #129242
+subtest '.split works on Cool same as it works on Str' => {
+    plan 11;
+
+    my $m = Match.new(
+        ast => Any,    list => (), hash => Map.new(()),
+        orig => "123", to => 2,    from => 1,
+    );
+
+    is-deeply 123.split('2', :v),  ('1', '2',      '3'), ':v; Cool';
+    is-deeply 123.split(/2/, :v),  ('1', $m,       '3'), ':v; Regex';
+    is-deeply 123.split('2', :kv), ('1', 0, '2',   '3'), ':kv; Cool';
+    is-deeply 123.split(/2/, :kv), ('1', 0, $m,    '3'), ':kv; Regex';
+    is-deeply 123.split('2', :p),  ('1', 0 => '2', '3'), ':p; Cool';
+    is-deeply 123.split(/2/, :p),  ('1', 0 => $m,  '3'), ':p; Regex';
+    is-deeply 123.split('2', :k),  ('1', 0,        '3'), ':k; Cool';
+    is-deeply 123.split(/2/, :k),  ('1', 0,        '3'), ':k; Regex';
+    is-deeply 4.split('',      :skip-empty), ('4',),     ':skip-empty; Cool';
+    is-deeply 4.split(/<<|>>/, :skip-empty), ('4',),     ':skip-empty; Regex';
+    is-deeply 12345.split(('2', /4/)), ("1", "3", "5"),  '@needles form';
+}
+
+# RT #130904
+is-deeply "A-B C".split([" ", "-"]), ("A", "B", "C").Seq, "Split with alternates completes and doesn't give an exception";
+
+# RT #130955
+subtest 'split skip-empty skips all empty chunks' => {
+    my @tests = '' => ';', '' => '', '' => rx/^/, '' => /$/, ';' => ';';
+    plan +@tests;
+    cmp-ok .key.split(.value, :skip-empty), '==', 0,
+        "{.key}.split({.value.perl}, :skip-empty)"
+    for @tests;
+}

@@ -56,7 +56,9 @@ is
     2,
     "evaluation";
 
-#?rakudo 2 skip 'VOWEL SIGNs in identifiers; RT #122340'
+#RT #122340
+#?rakudo.jvm 2 skip 'Bogus postfix RT #122340'
+#?rakudo.js 2 skip 'Bogus postfix RT #122340'
 lives-ok { my $पहला = 1; }, "hindi declaration";
 is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल($दूसरा) }), 4, "evaluation");
 
@@ -80,7 +82,6 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # Unicode placeholder variables
-#?mildew skip 'placeholders are NIY'
 {
     is
         ~(< foostraße barstraße fakestraße >.map: { tc $^straßenname }),
@@ -89,7 +90,6 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # Unicode methods and attributes
-#?mildew skip 'classes are NIY'
 {
     class A {
         has $!möp = 'pugs';
@@ -100,7 +100,6 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
     is A.new().äöü(), "Pugs", "Unicode methods and attributes";
 }
 
-#?mildew skip 'slurpy named positionals are NIY'
 {
     sub f(*%x) { %x<ä> };
     is f(ä => 3), 3, 'non-ASCII named arguments';
@@ -126,8 +125,8 @@ lives-ok { EVAL "\{ 1 \} \x2029 \{ 1 \}" },
 
 # L<S02/Bracketing Characters/If a character is already used>
 
-lives-ok { EVAL "q\x298d test \x298e" },
-  "Unicode open-298d maps to close-298e";
+dies-ok { EVAL "q\x298d test \x298e" },
+  "Unicode open-298d does not map to close-298e";
 lives-ok { EVAL "q\x301d test \x301e" },
   "Unicode open-301d maps to close-301e";
 throws-like { EVAL "q\x301d test \x301f" },
@@ -141,4 +140,3 @@ lives-ok { EVAL "q\x2018 \x201a test \x2019" },
   "Alternative open-brakets treat their other alternates as non-special";
 
 # vim: ft=perl6 fileencoding=utf-8
-

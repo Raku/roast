@@ -117,11 +117,9 @@ is ~LTM.subparse('aaa', :rule('cap1')),    'aaa',    'Positional captures do not
 is ~LTM.subparse('aaa', :rule('cap2')),    'aaa',    'Named captures do not terminate LTM';
 is ~LTM.subparse('aaa', :rule('ass1')),    'aaa',    '<?{...}> does not terminate LTM';
 is ~LTM.subparse('aaa', :rule('ass2')),    'aaa',    '<!{...}> does not terminate LTM';
-#?niecza todo '#89'
 is ~LTM.subparse('aaa', :rule('block')),   'aa',     'However, code blocks do terminate LTM';
 
 # RT #120146
-#?niecza skip "Action method assertion:sym<...> not yet implemented"
 {
     grammar G {
 

@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item samemark">
 
-plan 8;
+plan 9;
 
 #?rakudo.jvm 8 skip 'samemark NYI'
 is(samemark('zoo', 'ŏôō'), 'z̆ôō', 'samemark as a function works');
@@ -17,5 +17,11 @@ is('ẓo⃥o⃝'.samemark('ŏôō'), 'z̆ôō', 'samemark changes to new accent
 
 is('tëxt'.samemark('thiș is longer'), 'texț', 'samemark with longer base string');
 is('zoö'.samemark('ŏô'), 'z̆ôô', 'samemark with longer source string');
+
+# RT #128615 RT #128662
+{
+    #?rakudo.jvm skip 'samemark NYI'
+    is "foo".samemark(""), "foo", 'samemark "": nothing to be done';
+}
 
 # vim: ft=perl6

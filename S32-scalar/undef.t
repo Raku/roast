@@ -41,7 +41,6 @@ ok(!defined(Mu), "Mu is not defined");
 
     $a += 1;
     ok(defined($a), "initialized var is defined");
-    #?niecza todo
     is_run( 'my $a; $a += 1', { err => '', out => '', status => 0 },
             'increment of undefined variable does not warn' );
 
@@ -89,13 +88,10 @@ ok(!defined(Mu), "Mu is not defined");
 
     undefine(@ary);
 #?rakudo todo 'definedness of array RT #124563'
-#?niecza todo 'definedness of array'
     ok(!defined(@ary), "undefine array");
 
-    #?niecza emit #
     undefine(%hash);
 #?rakudo todo 'definedness of hash RT #124564'
-#?niecza todo 'definedness of hash'
     ok(!defined(%hash), "undefine hash");
 
     @ary = (1);
@@ -105,7 +101,6 @@ ok(!defined(Mu), "Mu is not defined");
 }
 
 #?rakudo skip 'access to &your_sub RT #124565'
-#?niecza skip 'huh?'
 {
     sub a_sub { "møøse" }
 
@@ -162,7 +157,6 @@ Perl6-specific tests
 
 =end pod
 
-#?niecza skip 'fun with undefine'
 {
     # aggregate references
 
@@ -185,7 +179,6 @@ Perl6-specific tests
     is(+$hash_r.keys, 0, "dangling hash reference");
 }
 
-#?niecza skip 'push does not vivify'
 {
     my Array $an_ary;
     ok(!defined($an_ary), "my Array");
@@ -224,7 +217,6 @@ Perl6-specific tests
 
 # - unmatched alternative should bind to undef
 #?rakudo skip 'Cannot use bind operator with this left-hand side RT #124566'
-#?niecza skip 'unspeclike use of %MY::'
 #?DOES 10
 {
     my ($num, $alpha);
@@ -307,7 +299,6 @@ is(2 * (Any), 0, '2 * Any');
 is-deeply([(Any) xx 2], [Any, Any], 'Any xx 2');
 is((Any) * (Any), 0, 'Any * Any');
 
-#?niecza todo 'dubious'
 lives-ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
 
 {

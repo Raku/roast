@@ -151,8 +151,8 @@ is $readme-lines, $readme-lines2, 'lines() defaults to $*ARGFILES';
 }
 
 {
-    my %h = @a.pairs».invert;
-    is-deeply (item %h), {red => 0, yellow => 1, blue => 2}, 'my %h = @a.pairs».invert;';
+    my %h = @a.pairs.invert;
+    is-deeply (item %h), {red => 0, yellow => 1, blue => 2}, 'my %h = @a.pairs.invert;';
 }
 
 # Swap two variables
@@ -219,12 +219,14 @@ ok 3 <= $z <= 7, '(3..7).pick'
     or diag "z: $z";
 
 # Count by 3 in an infinite loop
+#?rakudo.jvm skip 'UnwindException, RT #130687'
+{
+    my @s = gather for 3, * + 3 ... * -> $n { last if $n > 21; take $n };
+    is-deeply [@s], [3, 6, 9, 12, 15, 18, 21], 'for 3, * + 3 ... * -> $n {...}';
 
-my @s = gather for 3, * + 3 ... * -> $n { last if $n > 21; take $n };
-is-deeply [@s], [3, 6, 9, 12, 15, 18, 21], 'for 3, * + 3 ... * -> $n {...}';
-
-@s = gather for 3, 6, 9 ... * -> $n { last if $n > 21; take $n };
-is-deeply [@s], [3, 6, 9, 12, 15, 18, 21], 'for 3, 6, 9 ... * -> $n {...}';
+    @s = gather for 3, 6, 9 ... * -> $n { last if $n > 21; take $n };
+    is-deeply [@s], [3, 6, 9, 12, 15, 18, 21], 'for 3, 6, 9 ... * -> $n {...}';
+}
 
 # Loop over a range, excluding the start and end points
 

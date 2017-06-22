@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 34;
+plan 35;
 
 sub single-dim(@a[3]) { }
 lives-ok { single-dim(Array.new(:shape(3))) }, '[3] shape constraint accepts matcing array';
@@ -49,3 +49,4 @@ dies-ok { dependent(4, Array.new(:shape(3))) }, 'can use earlier parameters in s
 dies-ok { dependent(4, Array.new()) }, 'can use earlier parameters in shape specification (4)';
 dies-ok { dependent(4, Array.new(:shape(4,3))) }, 'can use earlier parameters in shape specification (5)';
 
+is (my @a[Bool]).shape.perl, "(2,)", "can have an Enum as a shape definition";

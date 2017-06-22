@@ -24,7 +24,6 @@ my $sub6 = "f fo foo fooo foooo fooooo bar";
 
 #RT #125815
 throws-like '$data ~~ m:nth(0)/fo+/', Exception, message => rx/nth/;
-#?rakudo.jvm 2 todo 'RT #125815'
 throws-like '$data ~~ m:nth(-1)/fo+/', Exception, message => rx/nth/;
 throws-like '$data ~~ m:nth(-Inf)/fo+/', Exception, message => rx/nth/;
 
@@ -57,8 +56,6 @@ for (1..6) -> $N {
 }
 
 # more interesting variations of :nth(...)
-#?niecza skip 'm:g'
-#?rakudo.jvm skip 'RT #124279'
 {
     ok($data ~~ m:nth(2,3):global/(fo+)/, 'nth(list) is ok');
     is(@(), <foo fooo>, 'nth(list) matched correctly');
@@ -162,13 +159,10 @@ ok(!( $data ~~ m:7th/fo+/ ), 'No match 7th');
     my $try = $data;
 
 #RT #125815
-    #?rakudo.jvm todo 'RT #125815'
     throws-like '$try ~~ s:0th{fo+}=q{bar}', Exception, message => rx/nth/;
     is($try, $data, 'No change to data for 0th');
-    #?rakudo.jvm todo 'RT #125815'
     throws-like '$try ~~ s:th(-1){fo+}=q{bar}', Exception, message => rx/nth/;
     is($try, $data, 'No change to data for :th(-1)');
-    #?rakudo.jvm todo 'RT #125815'
     throws-like '$try ~~ s:th(-Inf){fo+}=q{bar}', Exception, message => rx/nth/;
     is($try, $data, 'No change to data for :th(-Inf)');
 
@@ -216,7 +210,6 @@ is($/, 'foo', 'Matched value for 3th « <ident>');
 # :nth and *-N
 
 is("ABCDE" ~~ m:nth(*)/\w/, "E", "Can match with * index");
-#?rakudo.jvm todo "got: 'False', expected: 'D'"
 is("ABCDE" ~~ m:nth(*-1)/\w/, "D", "Can match with *-1 index");
 
 $data = "f fo foo fooo foooo fooooo foooooo";
@@ -229,7 +222,6 @@ $sub6 = "f bar bar bar bar bar bar";
 
 # :Nx...
 
-#?rakudo.jvm skip 'RT #124279'
 {
     my $try = $data;
     ok(!( $try ~~ s:0x{fo+}=q{bar} ), "Can't substitute 0x" );
@@ -260,7 +252,6 @@ $sub6 = "f bar bar bar bar bar bar";
     is($try, $sub6, 'substituted 6x correctly');
 
     $try = $data;
-    #?niecza todo "https://github.com/sorear/niecza/issues/186"
     nok($try ~~ s:7x{fo+}=q{bar}, 'substitute 7x');
     is($try, $data, 'did not substitute 7x');
 }

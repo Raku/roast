@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 17;
+plan 19;
 
 # older: L<S16/"Unfiled"/"=item IO.slurp">
 # old: L<S32::IO/IO::FileNode/slurp>
@@ -36,7 +38,7 @@ is slurp($empty-path), '', "empty files yield empty string";
 
 {
     my $fh = open $test-path, :r;
-    is $fh.slurp-rest, $test-contents, "method form .slurp-rest works";
+    is $fh.slurp, $test-contents, "method form .slurp works";
     $fh.close;
 }
 
@@ -44,7 +46,6 @@ is slurp($empty-path), '', "empty files yield empty string";
     is slurp($test-path), $test-contents, "function passed a path works";
 }
 
-#?niecza skip ":bin option for slurp fails"
 {
     my $binary-slurp;
     ok ($binary-slurp = slurp $test-path, :bin), ":bin option runs";
@@ -52,14 +53,13 @@ is slurp($empty-path), '', "empty files yield empty string";
     is $binary-slurp, $test-contents.encode, "binary slurp returns correct content";
 }
 
-#?niecza skip ":enc option for slurp fails"
 {
     lives-ok { slurp($test-path, :enc('utf8')) }, "slurp :enc - encoding functions";
     is slurp($test-path, :enc('utf8')), $test-contents, "utf8 looks normal";
     #mojibake time
     is slurp($test-path, enc=>'iso-8859-1'),
      "0123456789ABCDEFGé¢¨, èè, ããº", "iso-8859-1 makes mojibake correctly";
-    
+
 }
 
 
@@ -79,5 +79,44 @@ CATCH {
     unlink $test-path;
     unlink $empty-path;
 }
+
+subtest '&slurp(IO::Handle)' => {
+    plan 9;
+
+    sub f (\c) { make-temp-file content => c }
+    is_run 'print slurp', {:0status, :err(''), :out('foobarber')}, :args[
+        'foo'.&f.absolute, 'bar'.&f.absolute, 'ber'.&f.absolute,
+    ], 'slurp() uses $*ARGFILES';
+
+    is_run '$*ARGFILES.encoding: Nil; say slurp', {
+        :0status, :err(''),
+        :out('Buf[uint8]:0x<66 6f 6f 62 61 72 62 65 72>\qq[\n]')
+    }, :args[
+        'foo'.&f.absolute, 'bar'.&f.absolute, 'ber'.&f.absolute,
+    ], 'slurp() uses $*ARGFILES (binary mode)';
+
+    is-deeply slurp('foo'.&f.open), 'foo', 'slurp($fh)';
+    #?rakudo.jvm todo 'problem with equivalence of Buf objects, RT #128041'
+    is-deeply slurp('foo'.&f.open: :bin), Buf[uint8].new(102,111,111),
+        'slurp($fh, :bin)';
+    #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
+    is-deeply slurp(buf8.new(200).&f.open: :enc<utf8-c8>),
+        buf8.new(200).decode('utf8-c8'), 'slurp($fh, :enc<utf8-c8>)';
+
+    with 'foo'.&f.open {
+        is-deeply .&slurp, 'foo', '$fh.&slurp';
+        is-deeply .opened, True, 'without :close, handle stays open';
+        .close;
+    }
+
+    with 'foo'.&f.open {
+        is-deeply .&slurp(:close), 'foo', '$fh.&slurp(:close)';
+        is-deeply .opened, False, 'with :close, handle is closed';
+    }
+}
+
+# RT #131503
+is_run ｢'-'.IO.slurp.print｣, 'meows', {:out<meows>, :err(''), :0status},
+    'can .slurp from "-".IO path';
 
 # vim: ft=perl6

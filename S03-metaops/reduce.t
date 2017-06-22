@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 542;
+plan 558;
 
 =begin pod
 
@@ -45,7 +45,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     nok ([>]  4, 2, 3, 1), "[>] works (2)";
     ok  ([==] 4, 4, 4),    "[==] works (1)";
     nok ([==] 4, 5, 4),    "[==] works (2)";
-    #?niecza 2 skip 'this is parsed as ![=], not good'
     ok  ([!=] 4, 5, 6),    "[!=] works (1)";
     nok ([!=] 4, 4, 4),    "[!=] works (2)";
 }
@@ -87,7 +86,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     is ~ ([\>]  4, 2, 3, 1).map({+$_}), "1 1 0 0", "[\\>] works (2)";
     is ~ ([\==]  4, 4, 4).map({+$_}),   "1 1 1",   "[\\==] works (1)";
     is ~ ([\==]  4, 5, 4).map({+$_}),   "1 0 0",   "[\\==] works (2)";
-    #?niecza 2 todo 'this is parsed as ![=], not good'
     is ~ ([\!=]  4, 5, 6).map({+$_}),   "1 1 1",   "[\\!=] works (1)";
     is ~ ([\!=]  4, 5, 5).map({+$_}),   "1 1 0",   "[\\!=] works (2)";
     is (~ [\**]  1, 2, 3),   "3 8 1",   "[\\**] (right assoc) works (1)";
@@ -97,18 +95,15 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 # RT #76110
 {
     is ~([\+] [\+] 1 xx 5), '1 3 6 10 15', 'two nested [\+]';
-    #?niecza todo 'unary [] does not context yet'
     is ([+] 0, [1, 2, 3, 4]), 4,  '[+] does not flatten []-arrays';
 }
 
-#?niecza skip '[macro]'
 {
   my @array = (Mu, Mu, 3, Mu, 5);
   is ([//]  @array), 3, "[//] works";
   is ([orelse] @array), 3, "[orelse] works";
 }
 
-#?niecza skip '[macro]'
 {
   my @array = (Mu, Mu, 0, 3, Mu, 5);
   is ([||] @array), 3, "[||] works";
@@ -119,7 +114,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (~ [\||] 0, 0, 3, 4, 5), "0 0 3 3 3", "[\\||] works";
 }
 
-#?niecza skip '[macro]'
 {
   my @array = (Mu, Mu, 0, 3, Mu, 5);
   my @array1 = (2, 3, 4);
@@ -161,7 +155,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     my $count = 0;
     $count++ for [,] @array;
     #?rakudo todo 'item context'
-    #?niecza todo 'huh?'
     is $count, 1, '[,] returns a single Array';
     ok ([,] @array) ~~ Positional, '[,] returns something Positional';
 }
@@ -169,8 +162,16 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 # Following two tests taken verbatim from former t/operators/reduce.t
 lives-ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
 
-#?niecza todo 'These are hyperop tests!'
 lives-ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
+
+# RT #122475
+{
+    my @a = $(1, 2, 3);
+    my @b = [>>+<<] @a;
+    is-deeply @b, @a, 'reduce metaop of hyper metaop works with only one element';
+    #?rakudo todo 'reduce metaop of hyper metaop works with zero elements'
+    eval-lives-ok q|my @a; [>>+<<] @a|, 'reduce metaop of hyper metaop works with zero elements';
+}
 
 # Check that user defined infix ops work with [...], too.
 {
@@ -203,11 +204,9 @@ is( ~([\*] 42), "42", "[\*] 42 returns (42)");
 is( ([~] 'towel'), 'towel', "[~] 'towel' returns 'towel'");
 is( ([~] 'washcloth'), 'washcloth', "[~] 'washcloth' returns 'washcloth'");
 is( ([\~] 'towel'), 'towel', "[\~] 'towel' returns 'towel'");
-#?niecza skip 'Iterable'
 ok( ([\~] 'towel') ~~ Iterable, "[\~] 'towel' returns something Iterable");
 is( ([<] 42), Bool::True, "[<] 42 returns true");
 is( ~([\<] 42), ~True, "[\<] 42 returns '1'");
-#?niecza skip 'Iterable'
 ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
 is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 
@@ -219,12 +218,10 @@ ok !([\*] 1..5).is-lazy, "triangle reduce knows if it's lazy";
 is( ([max]()), -Inf, '[max]() returns -Inf');
 is( ([min]()),  Inf, '[min]() returns -Inf');
 
-#?niecza 2 todo ""
 is( ([max] Any, Any, 2), 2, '[max] Any, Any, 2 returns 2');
 is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 
 # RT #65164 implement [^^]
-#?niecza skip '^^'
 {
     is ([^^] 0, 42), 42, '[^^] works (one of two true)';
     is ([^^] 42, 0), 42, '[^^] works (one of two true)';
@@ -317,7 +314,6 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     }
 }
 
-#?niecza skip '^^'
 {
     is ([\^^] False, 0, 5, '', False, 16, 0, Any, "hello", False).gist,
        '(False 0 5 5 5 Nil Nil Nil Nil Nil)',
@@ -328,13 +324,11 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 }
 
 # RT #57976 implement orelse
-#?niecza skip 'huh?  these are macros'
 {
 
     is (join ', ', [\//] Any, 0, 1),
        (join ', ',       Any, 0, 0),
        '[\orelse]';
-    #?rakudo.jvm skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     is (join ', ', [\orelse] Any, 0, 1),
        (join ', ',           Any, 0, 0),
        '[\orelse]';
@@ -372,7 +366,6 @@ ok ([+]) == 0, 'argumentless [+] parses';
 }
 
 # RT #67064
-#?niecza skip "reduce is not supposed to flatten?"
 {
     is(([X~] <a b>, <a b>, <a b>), <aaa aab aba abb baa bab bba bbb>, 'reduce with X');
 }
@@ -489,28 +482,24 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is ([^^] 0, 0, $side-effect++), 0, "[^^] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
-    is ([andthen] Int, ++$side-effect).perl, 'slip()', "[andthen] produces correct result without thunk";
+    is ([andthen] Int, ++$side-effect).perl, 'Empty', "[andthen] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([andthen] 1, ++$side-effect), 1, "[andthen] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
-    is ([andthen] 1,1,1,Any,++$side-effect).perl, 'slip()', "[andthen] on long list produces correct result without thunk";
+    is ([andthen] 1,1,1,Any,++$side-effect).perl, 'Empty', "[andthen] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([andthen] 1,1,1,1,++$side-effect), 1, "[andthen] on long list produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([orelse] 2, ++$side-effect), 2, "[orelse] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([orelse] Cool, ++$side-effect), 1, "[orelse] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([orelse] Nil,Int,Num,2,++$side-effect), 2, "[orelse] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
@@ -590,7 +579,6 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is $side-effect, 1, "and does have a side effect";
 
     $side-effect = 0;
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply ([\xor] 1, 1, ++$side-effect), (1,Nil,Nil), "[\\xor] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
 
@@ -599,7 +587,6 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is $side-effect, 1, "and does have a side effect";
 
     $side-effect = 0;
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply ([\xor] 0, 1, ++$side-effect), (0,1,Nil), "[\\xor] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
@@ -608,7 +595,6 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is $side-effect, 1, "and does have a side effect";
 
     $side-effect = 0;
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply ([\^^] 1, 1, ++$side-effect), (1,Nil,Nil), "[\\^^] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
 
@@ -617,7 +603,6 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is $side-effect, 1, "and does have a side effect";
 
     $side-effect = 0;
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply ([\^^] 0, 1, ++$side-effect), (0,1,Nil), "[\\^^] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
@@ -625,21 +610,18 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is ([\^^] 0, 0, $side-effect++), '0 0 0', "[\\^^] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([\andthen] Int, ++$side-effect).gist, '((Int))', "[\\andthen] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([\andthen] 1, ++$side-effect), '1 1', "[\\andthen] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([\andthen] 1,1,1,Any,++$side-effect).gist, '(1 1 1 (Any))', "[\\andthen] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([\andthen] 1,1,1,1,++$side-effect), '1 1 1 1 1', "[\\andthen] on long list produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     $side-effect = 0;
     is ([\orelse] 2, ++$side-effect).gist, '(2 2)', "[\\orelse] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
@@ -647,7 +629,6 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is $side-effect, 1, "and does have a side effect";
 
     $side-effect = 0;
-    #?rakudo.jvm 4 skip "RT #126899 - Method 'orig'1 not found for invocant of class 'QAST::Op'"
     is ([\orelse] Nil,Int,Num,2,++$side-effect).gist, '((Any) (Int) (Num) 2 2)', "[\\orelse] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([\orelse] Nil,Failure,Cool,Complex,++$side-effect).gist, '((Any) (Failure) (Cool) (Complex) 1)', "[\\orelse] on long list produces correct result with thunk";
@@ -657,6 +638,7 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
 
 {
     is ([&&] |0), 0, "slipped args work with reduce";
+    #?rakudo.jvm skip 'RT #129153 Type check failed in binding to &b; expected Callable but got Int (2)'
     is ([&&] 1,|(2,3,4)), 4, "slipped args work with reduce";
 }
 
@@ -690,6 +672,71 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is ([?@x]),[ ?@x ], "parses [?@x] right";
     is ([~@x]),[ ~@x ], "parses [~@x] right";
 
+}
+
+# RT #128757
+{
+    throws-like {[+] 'hello'}, X::Str::Numeric, '[+] with single non-numeric argument errors';
+    throws-like {[-] 'hello'}, X::Str::Numeric, '[-] with single non-numeric argument errors';
+    throws-like {[*] 'hello'}, X::Str::Numeric, '[*] with single non-numeric argument errors';
+    throws-like {[/] 'hello'}, X::Str::Numeric, '[/] with single non-numeric argument errors';
+}
+
+# RT #128758
+{
+    my class CustomNumify {
+        method Numeric() { 42 };
+    }
+    is ([*] CustomNumify.new), 42, 'one-argument [*] numifies';
+}
+
+# RT #131009
+{
+    cmp-ok [\X~](<a b c>),
+        &infix:<eqv>,
+        ((("a",).Seq, ("ab",).Seq, ("abc",).Seq)).Seq,
+        "Triangle reduce X~ 1 lists"
+    ;
+    cmp-ok [\X~](<a b c>, <1 2 3>),
+        &infix:<eqv>,
+        ((("abc",).Seq, (<a1 a2 a3 b1 b2 b3 c1 c2 c3>).Seq)).Seq,
+        "Triangle reduce X~ 2 lists"
+    ;
+    cmp-ok [\X~](<a b c>, <1 2 3>, <x y z>),
+        &infix:<eqv>,
+        ((
+            ("abc",).Seq,
+            (<a1 a2 a3 b1 b2 b3 c1 c2 c3>).Seq,
+            (<a1x a1y a1z a2x a2y a2z a3x a3y a3z
+              b1x b1y b1z b2x b2y b2z b3x b3y b3z
+              c1x c1y c1z c2x c2y c2z c3x c3y c3z>).Seq,
+        )).Seq,
+        "Triangle reduce X~ 3 lists"
+    ;
+
+    cmp-ok [\Z~](<a b c>),
+        &infix:<eqv>,
+        ((("a",).Seq, ("ab",).Seq, ("abc",).Seq)).Seq,
+        "Triangle reduce Z~ 1 lists"
+    ;
+    cmp-ok [\Z~](<a b c>, <1 2 3>),
+        &infix:<eqv>,
+        ((("abc",).Seq, (<a1 b2 c3>).Seq)).Seq,
+        "Triangle reduce Z~ 2 lists"
+    ;
+    cmp-ok [\Z~](<a b c>, <1 2 3>, <x y z>),
+        &infix:<eqv>,
+        ((
+            ("abc",).Seq,
+            (<a1 b2 c3>).Seq,
+            (<a1x b2y c3z>).Seq,
+        )).Seq,
+        "Triangle reduce Z~ 3 lists"
+    ;
+
+    is-deeply [\minmax]((1, 2, 3))                              , (1..1, 1..2, 1..3).Seq    , "Triangle reduce minmax";
+    is-deeply [\minmax]((1, 2, 3), (-1, -2, -3))                , (1..3, -3..3).Seq         , "Triangle reduce minmax";
+    is-deeply [\minmax]((1, 2, 3), (-1, -2, -3), (1, 10, 100))  , (1..3, -3..3, -3..100).Seq, "Triangle reduce minmax";
 }
 
 # vim: ft=perl6 et

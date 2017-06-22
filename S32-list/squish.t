@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 62;
 
 =begin description
 
@@ -10,10 +10,8 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
 =end description
 
-#?niecza skip 'NYI'
 {
     my @array = <a b b c d e f f a>;
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish,  <a b c d e f a>,
       "method form of squish works";
     is-deeply squish(@array), <a b c d e f a>,
@@ -30,38 +28,31 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       'slurpy subroutine form of squish works';
 } #1
 
-#?niecza skip 'NYI'
 {
     is 42.squish, 42,    ".squish can work on scalars";
     is (42,).squish, 42, ".squish can work on one-elem arrays";
 } #2
 
-#?niecza skip 'NYI'
 {
     my class A { method Str { '' } };
-    #?rakudo.jvm skip 'hangs because squish gives back infinite list with Mu.new'
     is (A.new, A.new).squish.elems, 2, 'squish has === semantics for objects';
 } #1
 
-#?niecza skip 'NYI'
 {
     my @list = 1, "1";
     my @squish = squish(@list);
     is @squish, @list, "squish has === semantics for containers";
 } #1
 
-#?niecza skip 'NYI'
 {
     my \a := squish( 1..Inf );
     ok a.is-lazy, 'squish knows itself to be lazy';
     is a[3], 4, '... can access elements from lazy iterator';
 } #1
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e f f a>;
     my $as    = *.substr: 0,1;
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish(:$as),  <a b c d e f a>,
       "method form of squish with :as works";
     is-deeply squish(@array,:$as), <a b c d e f a>,
@@ -72,8 +63,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "final result with :as in place";
 } #4
 
-#?niecza skip 'NYI'
-#?rakudo.jvm skip 'RT #126493 - expected Positional but got Seq'
 {
     my @rt124204 = ('', '', Any, Any);
     is-deeply @rt124204.squish(:as(-> $x {$x})), ('', Any),
@@ -86,7 +75,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "method form of squish with :with does not needlessly stringify";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @rt124205 = <a a>;
 
@@ -99,7 +87,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
     my @rt124205_b = '', '', |<b b B B>;
 
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @rt124205_b.squish(:with(*.Str eq *.Str)), ('', 'b', 'B'),
       "method form of squish with :with preserves the first element even if it stringifies to ''";
 
@@ -108,11 +95,9 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a aa b bb c d e f f a>;
     my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish(:$with),  <a b c d e f a>,
       "method form of squish with :with works";
     is-deeply squish(@array,:$with), <a b c d e f a>,
@@ -123,12 +108,10 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "final result with :with in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a aa b bb c d e f f a>;
     my $as    = *.substr(0,1).ord;
     my $with  = &[==];
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish(:$as, :$with),  <a b c d e f a>,
       "method form of squish with :as and :with works";
     is-deeply squish(@array,:$as, :$with), <a b c d e f a>,
@@ -139,11 +122,61 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "final result with :as and :with in place";
 } #4
 
-#?niecza skip 'NYI'
+
+{
+    my @a;
+    my $as = { @a.push($_); $_ };
+    my @w;
+    my $with = { @w.push("$^a $^b"); $^a + 1 == $^b };
+    is (1,2,3,2,1,0).squish(:$as,:$with), (1,2,1,0),
+        'Order of :with operands, and first one of each run (:as)';
+    is bag(@a), bag(1,2,3,2,1,0), ':as callbacks called once per element';
+    is bag(@w), bag("1 2","2 3","3 2","2 1","1 0"),
+        ':with callbacks called minimumish number of times (:as)';
+    @w = ();
+    is (1,2,3,2,1,0).squish(:$with), (1,2,1,0),
+        'Order of :with operands, and first one of each run';
+    is bag(@w), bag("1 2","2 3","3 2","2 1","1 0"),
+        ':with callbacks called minimumish number of times.';
+    @a = (); @w = ();
+    is (1).squish(:$with, :$as), (1),
+        'Single element list with :as and :with';
+    ok so all((@a.elems,@w.elems) Z< 2, 1),
+        'at most one :as and no :with callbacks with single element list';
+    @a = (); @w = ();
+    is (1).squish(:$with), (1),
+        'Single element list with :with';
+    is @w, [], "No callbacks with single element list";
+    @w = ();
+    my $i = (1,2,3,2,1,0).squish(:$as,:$with).iterator;
+    is $i.pull-one, 1, '.pull-one with :with and :as';
+    ok so all((@a.elems,@w.elems) Z< 2, 1),
+        '.pull-one called at most one :as and no :with on first pull';
+    is $i.pull-one, 2, 'second .pull-one with :with and :as';
+    ok so all((@a.elems,@w.elems) Z== 4, 3),
+        'second .pull-one called 4 :as and three :with';
+    my @c;
+    $i.push-all(@c);
+    is @c, (1,0), 'push-all after a couple pull-ones works (:as)';
+    is bag(@a), bag(1,2,3,2,1,0), ':as callbacks called once per element (fragged)';
+    is bag(@w), bag("1 2","2 3","3 2","2 1","1 0"),
+        ':with callbacks called minimumish number of times (:as, fragged)';
+    @w = ();
+    $i = (1,2,3,2,1,0).squish(:$with).iterator;
+    is $i.pull-one, 1, '.pull-one with :with';
+    nok @w.elems, 'no :with called on first pull';
+    is $i.pull-one, 2, 'second .pull-one with :with';
+    ok @w.elems == 3, 'second .pull-one called three :with';
+    @c = ();
+    $i.push-all(@c);
+    is @c, (1,0), 'push-all after a couple pull-ones works';
+    is bag(@w), bag("1 2","2 3","3 2","2 1","1 0"),
+        ':with callbacks called minimumish number of times (:as, fragged)';
+}
+
 {
     my @array = ({:a<1>}, {:a<1>}, {:b<1>});
     my $with  = &[eqv];
-    #?rakudo.jvm 2 skip 'RT #126493 - expected Positional but got Seq'
     is-deeply @array.squish(:$with),  ({:a<1>}, {:b<1>}),
       "method form of squish with [eqv] and objects works";
     is-deeply squish(@array,:$with), ({:a<1>}, {:b<1>}),
@@ -157,9 +190,7 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 # RT #121434
 {
     my $a = <a b b c>;
-    #?rakudo.jvm emit # hangs because squish gives back infinite list with Mu.new
     $a .= squish;
-    #?rakudo.jvm todo 'fails due to above failure'
     is-deeply( $a, <a b c>, '.= squish in sink context works on $a' );
     my @a = <a b b c>;
     @a .= squish;

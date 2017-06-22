@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 19;
 
 shell_captures_out_ok '',               '',    0, 'Child succeeds but does not print anything';
 shell_captures_out_ok 'say 42',         '42',  0, 'Child succeeds and prints something';
@@ -17,6 +17,7 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
             ok $proc.out ~~ IO::Pipe, 'shell/run(:out).out is an IO::Pipe';
             my $lines = $proc.out.lines.join('');
             my $ps    = $proc.out.close;
+            cmp-ok $ps, '===', $proc, ".close on pipe returns pipe's Proc";
             if $exitcode {
                 nok $ps,                    'shell/run(:out) returns something falsish on failure';
                 is $ps.exitcode, $exitcode, "Proc::Status.exitcode is $exitcode";
@@ -32,20 +33,22 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
     }
 }
 
+#?rakudo.jvm skip 'hangs, RT #131393'
 {
     my $sh = shell("$*EXECUTABLE -e \".say for reverse lines\"", :in, :out);
     $sh.in.say: "foo\nbar\nbaz";
     $sh.in.close;
-    is $sh.out.slurp-rest, "baz\nbar\nfoo\n", 'Can talk to subprocess bidirectional';
+    is $sh.out.slurp, "baz\nbar\nfoo\n", 'Can talk to subprocess bidirectional';
 }
 
+#?rakudo.jvm skip 'hangs, RT #131393'
 {
     my $sh1 = run($*EXECUTABLE, '-e', 'say join "\n", reverse lines', :in, :out);
     $sh1.in.say: "foo\nbar\nbaz";
     $sh1.in.close;
     my $sh2 = run($*EXECUTABLE, '-e', 'my @l = lines; .say for @l; note @l.elems', :in($sh1.out), :out, :err);
-    is $sh2.out.slurp-rest, "baz\nbar\nfoo\n", 'Can capture stdout and stderr, and chain stdin';
-    is $sh2.err.slurp-rest, "3\n",           'Can capture stdout and stderr, and chain stdin';
+    is $sh2.out.slurp, "baz\nbar\nfoo\n", 'Can capture stdout and stderr, and chain stdin';
+    is $sh2.err.slurp, "3\n",           'Can capture stdout and stderr, and chain stdin';
 }
 
 # RT #125796
@@ -54,3 +57,23 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
     my @lines = $p.out.lines;
     ok all(@lines) eq '42', 'There is no empty line due to no EOF for pipes';
 }
+
+with run(:out, $*EXECUTABLE, '-e', '') -> $proc {
+    with $proc.out {
+        is-deeply .IO,   IO::Path,  '.IO   returns an IO::Path type object';
+        is-deeply .path, IO::Path,  '.path returns an IO::Path type object';
+        is-deeply .proc, $proc,     ".proc returns pipe's Proc object";
+        quietly is-deeply .Str, '', '.Str is empty string';
+        .close;
+    }
+}
+
+lives-ok {
+    my $p = run :bin, :out, :err, :in, $*EXECUTABLE, '-e',
+        'my $v = $*IN.get; note $v; say $v';
+    $p.in.write: "42\n".encode;
+    $p.in.flush;
+    $p.in.close;
+    $p.out.slurp(:close);
+    $p.err.slurp(:close);
+}, 'bin pipes in Proc do not crash on open';

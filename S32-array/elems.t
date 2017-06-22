@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 # L<S32::Containers/"Array"/=item "elems">
-plan 11;
+plan 12;
 
 {
   my @a;
@@ -20,10 +20,9 @@ plan 11;
   is @a.elems, 3, ".elems works on initialized arrays";
 }
 
-#?niecza todo
 {
   my $a;
-  is $a.elems, 1, ".elems does works on arbitrary scalars";
+  is $a.elems, 1, ".elems works on arbitrary scalars";
 }
 
 {
@@ -57,5 +56,9 @@ plan 11;
 {
   is (elems ([1,2,3,4],)), 1, "elems ([1,2,3,4],) should return 1";
 }
+
+# RT#125576
+eval-dies-ok 'my Int @a = 1..Inf; @a[*-1]',
+     'Attempting to view last element of Int Array with Inf in it dies';
 
 # vim: ft=perl6

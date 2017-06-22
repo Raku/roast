@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 91;
+plan 95;
 
 =begin pod
 
@@ -45,7 +45,6 @@ character classes), and those are referenced at the correct spot.
 
 # so if the first character is a left parenthesis, it really is a call
 #?rakudo skip '<test()> NYI RT #124519'
-#?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $pass = 0;
     my sub test (Int $a = 1) {$pass += $a}
@@ -54,7 +53,6 @@ character classes), and those are referenced at the correct spot.
 }
 
 #?rakudo skip '<test()> NYI RT #124520'
-#?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $pass = 0;
     my sub test (Int $a) {$pass += $a}
@@ -104,7 +102,6 @@ character classes), and those are referenced at the correct spot.
 # If the first character after the identifier is whitespace, the subsequent
 # text (following any whitespace) is passed as a regex
 #?rakudo skip 'angle quotes in regexes RT #124521'
-#?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $is_regex = 0;
     my sub test ($a) {$is_regex++ if $a ~~ Regex}
@@ -120,7 +117,6 @@ character classes), and those are referenced at the correct spot.
 # If the first character is a colon followed by whitespace the
 # rest of the text is taken as a list of arguments to the method
 #?rakudo skip 'colon arguments NYI RT #124522'
-#?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $called_ok = 0;
     my sub test ($a, $b) {$called_ok++ if $a && $b}
@@ -145,7 +141,6 @@ character classes), and those are referenced at the correct spot.
 
 # If the dot is not followed by an identifier, it is parsed as
 # a "dotty" postfix of some type, such as an indirect method call
-#?niecza todo '<.$foo> syntax placeholder'
 {
     # placeholder test for <.$foo>
     lives-ok({
@@ -199,7 +194,6 @@ character classes), and those are referenced at the correct spot.
 
 # A leading & interpolates the return value of a subroutine call as a regex.
 #?rakudo skip '<&foo()> NYI RT #124523'
-#?niecza skip 'Anonymous submatch returned a Str instead of a Cursor, violating the submatch protocol'
 {
     my sub foo {return '<alpha>'}
     ok('abcdef' ~~ /<&foo()>/, 'subroutine call interpolation');
@@ -215,7 +209,6 @@ character classes), and those are referenced at the correct spot.
     is($counter, 1, 'code inside string was executed');
 
     'def' ~~ /<$subrule>/;
-    #?niecza todo "string value was cached"
     #?rakudo todo '<$subrule> NYI RT #124524'
     is($counter, 1, 'string value was cached');
 }
@@ -256,7 +249,6 @@ character classes), and those are referenced at the correct spot.
 
 # The <...>, <???>, and <!!!> special tokens have the same "not-defined-yet"
 # meanings within regexes that the bare elipses have in ordinary code
-#?niecza skip 'Action method assertion:sym<???> not yet implemented'
 {
     throws-like '"foo" ~~ /<...>/', Exception, '<...> dies in regex match';
     # XXX: Should be warns_ok, but we don't have that yet
@@ -268,7 +260,6 @@ character classes), and those are referenced at the correct spot.
 # A leading * indicates that the following pattern allows a partial match.
 # It always succeeds after matching as many characters as possible.
 #?rakudo skip '<*literal> RT #124525'
-#?niecza skip 'Action method assertion:sym<*> not yet implemented'
 {
     is(''    ~~ /^ <*xyz> $ /, '',    'partial match (0)');
     is('x'   ~~ /^ <*xyz> $ /, 'x',   'partial match (1a)');
@@ -286,7 +277,6 @@ character classes), and those are referenced at the correct spot.
 
 # A leading ~~ indicates a recursive call back into some or all of the
 # current rule. An optional argument indicates which subpattern to re-use
-#?niecza skip 'Action method assertion:sym<~~>'
 {
     ok('1.2.' ~~ /\d+\. <~~> | <?>/, 'recursive regex using whole pattern');
     #?rakudo skip '<~~ ... >'
@@ -304,9 +294,15 @@ character classes), and those are referenced at the correct spot.
     ok(!('foo123' ~~ /foo <(\d+)> bar/), 'non-matching <(...)>');
 
     is('foo123bar' ~~ /foo <( bar || ....../, 'foo123', '<( in backtracking');
-    #?niecza todo
     is('foo123bar' ~~ /foo <( 123 <( bar/, 'bar', 'multiple <(');
     is('foo123bar' ~~ /foo <( 123 [ <( xyz ]?/, '123', 'multiple <( backtracking');
+}
+
+# RT #129969
+{
+    is('abc xbc'.comb(/a<(bc)>/), 'bc', '.comb works well with <( )> (1)');
+    is('abc def abc'.comb(/a<(bc)>/), 'bc bc', '.comb works well with <( )> (2)');
+    is('abc'.match(/a<(bc)>/, :as(Str)), 'bc', '.match :as(Str) works with <( )>');
 }
 
 # A « or << token indicates a left word boundary.
@@ -317,6 +313,22 @@ character classes), and those are referenced at the correct spot.
    is('abc'   ~~ /abc>>/,   'abc', 'right word boundary (string end)');
    is('abc!'  ~~ /abc>>/,   'abc', 'right word boundary (\W character)');
    is('!abc!' ~~ /<<abc>>/, 'abc', 'both word boundaries (\W character)');
+}
+
+# RT #131187
+{
+    grammar Parser {
+        token TOP { <matcher>+ }
+        proto token matcher { * }
+        token matcher:sym<[]> { '[' <( <-[\]]>+ )> ']' }
+        token matcher:sym<lit> { <-[/*?[]>+ }
+    }
+    class RuleCompiler {
+        # Empty action was needed to trigger the bug.
+        method matcher:sym<[]>($/) { }
+    }
+    is Parser.parse('[AB].txt', :actions(RuleCompiler))<matcher>[1], '.txt',
+        'Interaction of quantifier, <(, )>, and action method ok';
 }
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -61,14 +61,12 @@ plan 30;
     is $a, "<hello>", 'iterating one variable element works';
 }
 
-#?niecza todo "closure for"
 {
     my $a = 0;
     { $a++ } for 1..3;
     is $a, 3, 'the closure was called';
 }
 
-#?niecza todo "closure for"
 {
     my $a = 0;
     -> $i { $a += $i } for 1..3;
@@ -167,6 +165,13 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
 {
     sub foo { my $s; ($s += $_ for 1..3) }
     is foo(), (6, 6, 6), 'for loops do not decontainerize';
+}
+
+# RT #131593
+{
+    my $i = 0;
+    sub foo($?) { ^2 .map: { $i++ } }; .&foo() for 1;
+    is $i, 2, 'for statement modifier sinks its content';
 }
 
 # vim: ft=perl6

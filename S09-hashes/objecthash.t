@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 54;
 
 #doc-roast 'hash','Any-typed hash access'
 {
@@ -85,8 +85,8 @@ plan 36;
 
 # RT #125352
 {
-    is (my %h).list.perl, '()', 'empty hash listifies to "()"';
-    is (my %h{Any}).list.perl, '()', 'empty object hash listifies to "()"';
+    is (my %h).list.elems, 0, 'empty hash listifies to empty list';
+    is (my %h{Any}).list.elems, 0, 'empty object hash listifies to empty list';
 }
 
 # RT #118031
@@ -97,6 +97,45 @@ plan 36;
 
     my %j:=%h.new;
     is %h.WHAT, %j.WHAT, "Clone of an object hash instance is an object hash";
+}
+
+# RT #111498
+{
+    my $r1 = role { method foo() { 5 } };
+    my $r2 = role { method foo() { 7 } };
+    my %hash{Any};
+    %hash{"quux" but $r1} = 9;
+    %hash{"quux" but $r2} = 11;
+
+    is %hash.keys>>.foo.sort, (5, 7), 'Can use mixin objects as keys';
+}
+
+{
+    my %a = 1 => {2 => {3 => 42}};
+
+    is-deeply %a{1;2}:exists,         True;
+    is-deeply %a{1;2;3}:exists,       True;
+    is-deeply %a{1;2;3;4}:exists,     False;
+
+    is-deeply %a{-99;2;3}:exists,     False;
+    is-deeply %a{1;-99;3}:exists,     False;
+    is-deeply %a{1;2;-99}:exists,     False;
+
+    is-deeply %a{1,1;2;3}:exists,     (True, True);
+    is-deeply %a{1;2,2;3}:exists,     (True, True);
+    is-deeply %a{1;2;3,3}:exists,     (True, True);
+
+    is-deeply %a{1,-99;2;3}:exists,   (True, False);
+    is-deeply %a{1;2,-99;3}:exists,   (True, False);
+    is-deeply %a{1;2;3,-99}:exists,   (True, False);
+
+    is-deeply %a{1,1;2,2;3}:exists,   (True, True, True, True);
+    is-deeply %a{1,1;2;3,3}:exists,   (True, True, True, True);
+    is-deeply %a{1;2,2;3,3}:exists,   (True, True, True, True);
+
+    is-deeply %a{1,1;2,2;3,3}:exists, (True, True, True, True, True, True, True, True);
+
+    is-deeply %a{1;1..3}:exists,      (False, True, False);
 }
 
 #vim: ft=perl6

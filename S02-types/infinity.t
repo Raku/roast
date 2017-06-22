@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 21;
 
 # L<S02/"Infinity and C<NaN>" /Perl 6 by default makes standard IEEE floating point concepts visible>
 
@@ -40,14 +40,47 @@ plan 13;
 #     ~Inf eq ~Inf   # true
 
 ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
-#?rakudo 3 todo 'Int conversion of NaN and Inf RT #124453'
-ok NaN.Int === NaN,         'Inf.Int === Int';
-ok Inf.Int === Inf,         'Inf.Int === Int';
-ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
+
+# RT #124453
+{
+    throws-like {    Inf.Int }, Exception, :message(/'Cannot coerce Inf to an Int'/),
+        'attempting to convert Inf to Int throws';
+
+    throws-like { (-Inf).Int }, Exception, :message(/'Cannot coerce -Inf to an Int'/),
+        'attempting to convert Inf to Int throws';
+
+    throws-like {      ∞.Int }, Exception, :message(/'Cannot coerce Inf to an Int'/),
+        'attempting to convert ∞ to Int throws';
+
+    throws-like {   (-∞).Int }, Exception, :message(/'Cannot coerce -Inf to an Int'/),
+        'attempting to convert -∞ to Int throws';
+
+    throws-like {    NaN.Int }, Exception, :message(/'Cannot coerce NaN to an Int'/),
+        'attempting to convert NaN to Int throws';
+}
 
 # RT #70730
 {
     ok ( rand * Inf ) === Inf, 'multiply rand by Inf without maximum recursion depth exceeded';
+}
+
+{
+    #RT #126990
+    throws-like { my Int $x = Inf }, X::TypeCheck::Assignment,
+        message => /'expected Int but got Num (Inf)'/,
+    "trying to assign Inf to Int gives a helpful error";
+
+    my Num $x = Inf;
+    is $x, Inf, 'assigning Inf to Num works without errors';
+}
+
+{ # RT #129915
+    is-deeply -Inf², -Inf, '-Inf² follows mathematical order of operations';
+    is-deeply -∞², -Inf, '-∞² follows mathematical order of operations';
+    is-deeply −Inf², -Inf,
+        '−Inf² follows mathematical order of operations (U+2212 minus)';
+    is-deeply −∞², -Inf,
+        '−∞² follows mathematical order of operations (U+2212 minus)';
 }
 
 # vim: ft=perl6

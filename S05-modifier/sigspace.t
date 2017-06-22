@@ -9,7 +9,7 @@ Perl6::Rules, version 0.3 (12 Apr 2004), file t/word.t.
 
 =end pod
 
-plan 16;
+plan 18;
 
 ok(!( "abc  def" ~~ m/abc  def/ ), 'Literal space nonmatch' );
 ok(   "abcdef"   ~~ m/abc  def/, 'Nonspace match' );
@@ -23,6 +23,8 @@ ok 'abc def'     ~~ m/:s abc def/,  'inline :s (+)';
 ok 'zabc def'   ~~  m/:s'abc' def/, "inline :s (+)";
 ok 'zabc def'   ~~ m/:s abc def/,   "inline :s doesn't imply <.ws> immediately (-)";
 
+ok 'zabc def  '   ~~ m/:s abc def  /,   "inline :s (sigspace)'s trailing whitespace is significant";
+is '  a'          ~~ m:s/       a/, 'a', "m:s/  / starting whitespace between delimiters is not significant.";
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
 

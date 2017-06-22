@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 {
     my $i = 0;
@@ -45,7 +45,6 @@ plan 31;
 }
 
 
-#?mildew skip 1
 # L<S04/The C<for> statement/It is also possible to write>
 # while ... -> $x {...}
 {
@@ -57,7 +56,6 @@ plan 31;
   is $str, '54321', 'while ... -> $x {...} worked (1)';
 }
 
-#?mildew skip 1
 {
   my @array = 0..5;
   my $str = "";
@@ -67,7 +65,6 @@ plan 31;
   is $str, '54321', 'while ... -> $x {...} worked (2)';
 }
 
-#?mildew skip 1
 # L<S04/Statement parsing/keywords require whitespace>
 {
     throws-like 'my $i = 1; while($i < 5) { $i++; }', X::Comp::Group,
@@ -160,8 +157,15 @@ lives-ok { EVAL 'while 0 { my $_ }' }, 'Can declare $_ in a loop body';
 
 # RT #127069
 {
-    is { loop (my int $i = 0; $i < 10; $i++) { +$i } }(), '0 1 2 3 4 5 6 7 8 9', "can return ints from loop at end of immediate block";
-    is { loop (my Int $i = 0; $i < 10; $i++) { +$i } }(), '0 1 2 3 4 5 6 7 8 9', "can return Ints from loop at end of immediate block";
+    is { (loop (my int $i = 0; $i < 10; $i++) { +$i }) }(), '0 1 2 3 4 5 6 7 8 9', "can return ints from loop at end of immediate block";
+    is { (loop (my Int $i = 0; $i < 10; $i++) { +$i }) }(), '0 1 2 3 4 5 6 7 8 9', "can return Ints from loop at end of immediate block";
+}
+
+# RT #128830
+{
+    throws-like 'while (0){}', X::Syntax::Missing,
+        message => /'whitespace' .* 'before curlies' .* 'hash subscript'/,
+    'lack of whitespace in while (0){} suggests misparse as hash subscript';
 }
 
 # vim: ft=perl6

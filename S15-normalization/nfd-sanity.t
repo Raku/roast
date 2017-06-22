@@ -1,6 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
+# Generated from Unicode version 9.0.0.
 
 use Test;
 
@@ -28,6 +29,9 @@ ok Uni.new(0x1E14, 0x0304).NFD.list ~~ (0x0045, 0x0304, 0x0300, 0x0304,), '1E14 
 ok Uni.new(0x0045, 0x0304, 0x0300).NFD.list ~~ (0x0045, 0x0304, 0x0300,), '0045 0304 0300 -> 0045 0304 0300';
 ok Uni.new(0x05B8, 0x05B9, 0x05B1, 0x0591, 0x05C3, 0x05B0, 0x05AC, 0x059F).NFD.list ~~ (0x05B1, 0x05B8, 0x05B9, 0x0591, 0x05C3, 0x05B0, 0x05AC, 0x059F,), '05B8 05B9 05B1 0591 05C3 05B0 05AC 059F -> 05B1 05B8 05B9 0591 05C3 05B0 05AC 059F';
 ok Uni.new(0x0592, 0x05B7, 0x05BC, 0x05A5, 0x05B0, 0x05C0, 0x05C4, 0x05AD).NFD.list ~~ (0x05B0, 0x05B7, 0x05BC, 0x05A5, 0x0592, 0x05C0, 0x05AD, 0x05C4,), '0592 05B7 05BC 05A5 05B0 05C0 05C4 05AD -> 05B0 05B7 05BC 05A5 0592 05C0 05AD 05C4';
+ok Uni.new(0x1100, 0xAC00, 0x11A8).NFD.list ~~ (0x1100, 0x1100, 0x1161, 0x11A8,), '1100 AC00 11A8 -> 1100 1100 1161 11A8';
+ok Uni.new(0x1100, 0xAC00, 0x11A8, 0x11A8).NFD.list ~~ (0x1100, 0x1100, 0x1161, 0x11A8, 0x11A8,), '1100 AC00 11A8 11A8 -> 1100 1100 1161 11A8 11A8';
+ok Uni.new(0x00A0).NFD.list ~~ (0x00A0,), '00A0 -> 00A0';
 ok Uni.new(0x00C0).NFD.list ~~ (0x0041, 0x0300,), '00C0 -> 0041 0300';
 ok Uni.new(0x00C1).NFD.list ~~ (0x0041, 0x0301,), '00C1 -> 0041 0301';
 ok Uni.new(0x00C2).NFD.list ~~ (0x0041, 0x0302,), '00C2 -> 0041 0302';
@@ -503,6 +507,3 @@ ok Uni.new(0x1B0C).NFD.list ~~ (0x1B0B, 0x1B35,), '1B0C -> 1B0B 1B35';
 ok Uni.new(0x1B0E).NFD.list ~~ (0x1B0D, 0x1B35,), '1B0E -> 1B0D 1B35';
 ok Uni.new(0x1B12).NFD.list ~~ (0x1B11, 0x1B35,), '1B12 -> 1B11 1B35';
 ok Uni.new(0x1B3B).NFD.list ~~ (0x1B3A, 0x1B35,), '1B3B -> 1B3A 1B35';
-ok Uni.new(0x1B3D).NFD.list ~~ (0x1B3C, 0x1B35,), '1B3D -> 1B3C 1B35';
-ok Uni.new(0x1B40).NFD.list ~~ (0x1B3E, 0x1B35,), '1B40 -> 1B3E 1B35';
-ok Uni.new(0x1B41).NFD.list ~~ (0x1B3F, 0x1B35,), '1B41 -> 1B3F 1B35';

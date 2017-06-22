@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 39;
+plan 51;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -30,6 +30,7 @@ my @keys = Test::Util::run( q:to"--END--").lines;
     .say for Example::.keys.sort;
     --END--
 
+#?rakudo.jvm todo 'got: $["B", "C"]'
 is-deeply @keys, [<A B C>], 'Diamond relationship';
 
 my @precompiled2 = Test::Util::run( q:to"--END--").lines;
@@ -57,10 +58,10 @@ my @keys2 = Test::Util::run( q:to"--END--").lines;
     .say for Example2::.keys.sort;
     --END--
 
-is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all different';
+#?rakudo.jvm todo 'got: $["C", "K"]'
+is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
-#?rakudo.jvm skip 'RT #122896'
-#?rakudo.moar skip 'RT #122896'
+#?rakudo.moar todo 'RT #122896'
 {
     is_run
       'use lib "t/spec/packages";
@@ -91,6 +92,12 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
     ok $comp-unit.precompiled, 'precomp curried role compose';
 }
 
+#RT #126878
+{
+    my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT126878::Precomp>));
+    ok !$comp-unit.precompiled, '"need" survives "no precompilation"';
+}
+
 #RT #123276
 {
     my @precompiled = Test::Util::run( q:to"--END--").lines;
@@ -115,9 +122,8 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
         say RT123276::B::C1.^methods
     --END--
 
-    #?rakudo.jvm todo 'RT #123276'
-    #?rakudo.moar todo 'RT #123276'
-    is-deeply @keys, [<foo>], 'RT123276';
+    #RT #123276
+    is-deeply @keys, [<(foo)>], 'RT123276';
 }
 
 #RT #124162
@@ -163,8 +169,7 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
       "precomp of native array parameterization intern test (b)";
     ok $output-path-b.IO.e, "did we create a $output-path-b";
 
-    #?rakudo.jvm todo 'no 6model parametrics interning yet'
-    #?rakudo.moar todo 'no 6model parametrics interning yet'
+    #?rakudo todo 'no 6model parametrics interning yet'
     is_run
       "use $module-name-a;
        use $module-name-b;
@@ -190,4 +195,103 @@ is-deeply @keys2, [<C D E F H K N P R S>], 'Twisty maze of dependencies, all dif
 {
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT125245>));
     ok $comp-unit.precompiled, 'precomp of assignment to variable using subset type';
+}
+
+# RT #127176
+{
+    is_run '',
+       {
+         out    => '',
+         err    => { not $_ ~~ / ( "SORRY!" .*) ** 2 / },
+         status => { $_ != 0 },
+       },
+       :compiler-args['-I', 't/spec/packages', '-M', 'RT127176'],
+       'no duplicate compilation error';
+}
+
+# RT #128156
+{
+    # precompile it in a different process
+    run $*EXECUTABLE,'-I','t/spec/packages','-e','use RT128156::One;';
+    # trigger recompilation
+    my $trigger-file = 't/spec/packages/RT128156/Two.pm6'.IO;
+    $trigger-file.IO.spurt($trigger-file.slurp);
+    my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT128156::One>));
+    ok $comp-unit.handle.globalish-package<RT128156>.WHO<One Two Three>:exists.all,
+       'GLOBAL symbols exist after re-precompiled';
+
+    # Run another test where a source file is change after precompilation.
+    # The dependency layout is: A -> B -> C -> D
+    #                            `-> C -> D
+    my $before    = run $*EXECUTABLE,'-I','t/spec/packages/RT128156','-M','A','-e','';
+    $trigger-file = 't/spec/packages/RT128156/C.pm6'.IO;
+    $trigger-file.IO.spurt($trigger-file.slurp);
+    my $after     = run $*EXECUTABLE,'-I','t/spec/packages/RT128156','-M','A','-e','';
+    is $before.status, 0, 'Can precompile modules before touching source file';
+    is $after.status,  0, 'Can precompile modules after touching source file';
+}
+
+# RT #128156 (another)
+{
+    # Test file content actually changing (so that the precomp SHA changes)
+    run $*EXECUTABLE,'-I','t/spec/packages','-e','need RT128156::Top1; need RT128156::Top2;';
+    my $trigger-file = 't/spec/packages/RT128156/Needed.pm6';
+    for 1..2 -> $i {
+        # Alternates putting a '#' at the end of a file
+        my $new-content = $trigger-file.IO.slurp.subst(/$/,"#").subst(/"##"$/,"");
+        $trigger-file.IO.spurt($new-content);
+        my $output = run $*EXECUTABLE,:out,'-I','t/spec/packages','-e','
+             need RT128156::Top1;
+             need RT128156::Top2;
+             .say for MY::.keys.grep(/Needed|Top/).sort;
+             ';
+        is $output.out.slurp,"Top1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
+    }
+}
+
+{
+    run $*EXECUTABLE,'-I','t/spec/packages','-e','need RT128156::Top1;';
+    my $trigger-file = 't/spec/packages/RT128156/Needed.pm6'.IO;
+    for 1..2 -> $i {
+        my $old-content = $trigger-file.slurp;
+        $trigger-file.spurt('class Needed { method version() { ' ~ $i ~ ' } }');
+        my $output = run $*EXECUTABLE,:out,'-I','t/spec/packages','-e','
+             need RT128156::Top1;
+             print Top1.version-of-needed;
+             ';
+        is $output.out.slurp, $i, "$i. change in source file of dependency detected";
+        $trigger-file.spurt($old-content);
+    }
+}
+
+# RT #112626
+{
+    # Run the test twice, so the first time precompiles the modules
+    #?rakudo.jvm todo "Invalid typename 'RT112626::Class1' in parameter declaration"
+    for ^2 {
+        is_run ｢use RT112626::Conflict; say 'pass'｣, {:out("pass\n"), :err('')},
+            :compiler-args['-I', 't/spec/packages'],
+        "roles in precompiled modules recognize type names (run $_)";
+    }
+}
+
+# RT #129266
+subtest 'precompiled module constants get updated on change' => {
+    plan 2;
+
+    constant $module = 't/spec/packages/RT129266/Foo.pm6'.IO;
+    constant $module-content = $module.slurp;
+    LEAVE $module.spurt: $module-content;
+
+    is_run ｢use RT129266::Bar; say var() eq '«VALUE»' ?? 'pass' !! 'fail'｣,
+        :compiler-args['-I', 't/spec/packages'],
+        {:out("pass\n"), :err('')},
+    "original content has correct value";
+
+    $module.spurt: $module-content.subst: '«VALUE»', '«NEW»';
+
+    is_run ｢use RT129266::Bar; say var() eq '«NEW»' ?? 'pass' !! 'fail'｣,
+        :compiler-args['-I', 't/spec/packages'],
+        {:out("pass\n"), :err('')},
+    "modified content has updated";
 }

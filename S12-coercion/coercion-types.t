@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 18;
+plan 21;
 
 # coercion types in parameter lists
 {
@@ -90,5 +90,12 @@ class NastyChild is Parent { };
     is Co.erce((1, 2)), 'Array', 'coercion on method param';
     isa-ok Co.invocant, SubCo, 'Can coerce invocant to subclass';
 }
+
+# RT #127841
+is Int:U.gist, '(Int:U)', '.gist on coercion types';
+#?rakudo.jvm skip "Proc::Async NYI RT #126524"
+is Proc::Async:U.gist, '(Async:U)', '.gist on coercion types uses shortname';
+
+is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
 
 # vim: ft=perl6

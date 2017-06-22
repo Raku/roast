@@ -47,7 +47,6 @@ plan 46;
   ok(!(2 != 2),      "!= false");
 }
 
-#?niecza skip 'No value for parameter $r in CORE infix:<==>'
 {
     ok &infix:<==>(False), "&infix:<==> with one argument is correct";
     ok &infix:<==>(),      "&infix:<==> with no arguments is correct";

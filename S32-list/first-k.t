@@ -27,7 +27,6 @@ my @list = (1 ... 10);
 }
 
 #?rakudo skip "adverbial block RT #124758"
-#?niecza skip 'No value for parameter Mu $filter in CORE Any.first'
 {
     my $result = @list.first():{ $^a == 4 }, :k;
     ok($result ~~ Int, "first():<block> returns an Int");

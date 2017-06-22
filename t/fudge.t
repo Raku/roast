@@ -3,12 +3,13 @@
 use strict;
 use warnings;
 
-use Test::More tests => 11;
+use Test::More tests => 12;
 
 sub is_fudged_ok($$$$);
 
 is_fudged_ok '01-implname', 'impl-1', 'v6.0.0', 'test for fudging for implementation names';
 is_fudged_ok '01-implname', 'impl-2', 'v6.0.0', 'test for fudging for implementation names';
+is_fudged_ok '01-implname', 'impl-1.backend', 'v6.0.0', 'test for fudging for implementation names';
 
 # we just call the implementation 'v6.0.0' here to have the test file have this name in it.
 is_fudged_ok '02-version',  'v6.0.0', 'v6.0.0', 'test fudging if Perl 6 version (mis)matches';

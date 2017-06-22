@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 100;
+plan 116;
 
 # construction
 {
@@ -48,7 +48,7 @@ is ~Date.new(:year(2010), :month(3), :day(5)), '2010-03-05',
 
     is $d.day-of-week,             1, 'Day of week';
 
-    #is $d.is-leap-year,      Bool::True, 'leap year';
+    is $d.is-leap-year,   Bool::True, 'leap year';
     is $d.days-in-month,          29, 'days in month';
 }
 
@@ -184,3 +184,74 @@ is Date.new('2015-12-29',:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
         is $fd.foo,    42, "is foo in FooDate ok";
     }
 }
+
+# RT #128545
+throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
+    'synthetics are rejected in constructor string';
+
+{ # coverage; 2016-09-28
+    subtest 'can create Date from Instant' => {
+        constant $i = Instant.from-posix: 1234567890;
+
+        is Date.new($i).Str, '2009-02-13', 'Instant only';
+        is Date.new($i, :formatter{ "It is {.year}" }).Str, 'It is 2009',
+            'Instant, with a custom formatter';
+    }
+
+    is-deeply Date.new('2016-09-28').perl.EVAL,
+              Date.new('2016-09-28'), 'can roundtrip .perl output';
+
+    is-deeply (62 + Date.new: '2016-11-10'), Date.new('2017-01-11'),
+        'can Int + Date to increment date by Int days';
+}
+
+# RT #129799
+{
+    is-deeply Date.new("2016-10-03").IO, "2016-10-03".IO, '.IO on Date';
+    is-deeply DateTime.new("2016-10-03T22:23:24Z").IO,
+        "2016-10-03T22:23:24Z".IO, '.IO on DateTime';
+
+    throws-like { Date    .IO }, Exception, ".IO on Date:U throws";
+    throws-like { DateTime.IO }, Exception, ".IO on DateTime:U throws";
+}
+
+{
+    my $date = Date.today;
+    is-deeply $date.DateTime.Date, $date, 'can roundtrip Date via DateTime';
+    is-deeply Date.DateTime, DateTime,    'Date:U.DateTime returns DateTime:U';
+    is-deeply Date.Date,     Date,        'Date:U.Date returns self';
+    is-deeply $date.Date,    $date,       'Date:D.Date returns self';
+}
+
+# RT #130313
+subtest 'all Date constructors throw on invalid dates' => {
+    plan 3;
+    subtest '.new($year, $month, $day)' => {
+        plan 3;
+        throws-like { Date.new: 2015, 12, 42 }, X::OutOfRange, 'day';
+        throws-like { Date.new: 2015, 42, 25 }, X::OutOfRange, 'month';
+        throws-like { Date.new: 2015, 42, 42 }, X::OutOfRange, 'day + month';
+    }
+
+    subtest '.new(Str $date)' => {
+        plan 3;
+        throws-like { Date.new: '2015-12-42' }, X::OutOfRange, 'day';
+        throws-like { Date.new: '2015-42-25' }, X::OutOfRange, 'month';
+        throws-like { Date.new: '2015-42-42' }, X::OutOfRange, 'both';
+    }
+
+    subtest '.new(:$year, :$month, :$day)' => {
+        plan 3;
+        throws-like { Date.new: :year(2015), :month(12), :day(42) },
+            X::OutOfRange, 'day';
+        throws-like { Date.new: :year(2015), :month(42), :day(25) },
+            X::OutOfRange, 'month';
+        throws-like { Date.new: :year(2015), :month(42), :day(42) },
+            X::OutOfRange, 'both';
+    }
+}
+
+is Date.today.clone(:formatter{'test is good'}).Str, 'test is good',
+    'Date.clone can take a formatter';
+is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
+    'Date.clone without formatter uses default formatter';

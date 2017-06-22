@@ -3,7 +3,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan  28;
+plan 30;
 
 use Test::Util;
 
@@ -108,7 +108,6 @@ is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
 # (discussion starts at http://irclog.perlgeek.de/perl6/2011-10-17#i_4578353 )
 
 #?rakudo todo 'nom regression RT #124664'
-#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:$x) { print $x }',
     {
         out => "23",
@@ -117,7 +116,6 @@ is_run 'sub MAIN(:$x) { print $x }',
     'option with spacey value';
 
 #?rakudo todo 'nom regression RT #124665'
-#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }',
     {
         out => "23",
@@ -126,7 +124,6 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     'long option with spacey value';
 
 #?rakudo todo 'nom regression RT #124666'
-#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     {
         out => "23",
@@ -135,7 +132,6 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     'named alias (inner name) with spacey value';
 
 #?rakudo todo 'nom regression RT #124667'
-#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     {
         out => "23",
@@ -144,7 +140,6 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     'named alias (outer name) with spacey value';
 
 #?rakudo todo 'nom regression RT #124668'
-#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }',
     {
         out => "23",
@@ -175,7 +170,6 @@ is_run 'sub MAIN() { print 42 }',
     'superfluous options trigger usage message';
 
 # RT #115744
-#?niecza todo
 is_run 'sub MAIN($arg) { print $arg }',
     {
         out => "--23"
@@ -183,7 +177,6 @@ is_run 'sub MAIN($arg) { print $arg }',
     :args['--', '--23'],
     'Stopping option processing';
 
-#?niecza todo
 is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     {
         out => 'True-option'
@@ -192,7 +185,6 @@ is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     'Boolean argument with --';
 
 #?rakudo todo 'NYI RT #124669'
-#?niecza todo
 is_run 'sub MAIN(:@foo) { print @foo }',
     {
         out => "bar"
@@ -200,7 +192,6 @@ is_run 'sub MAIN(:@foo) { print @foo }',
     :args['--foo=bar'],
     'single occurence for named array param';
 
-#?niecza todo
 is_run 'sub MAIN(:@foo) { print @foo }',
     {
         out => "bar baz"
@@ -208,7 +199,6 @@ is_run 'sub MAIN(:@foo) { print @foo }',
     :args['--foo=bar', '--foo=baz'],
     'multiple occurence for named array param';
 
-#?niecza todo
 is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" }',
     {
         out => "Scalar"
@@ -217,7 +207,6 @@ is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" 
     'correctly select Scalar candidate from Scalar and Array candidates.';
 
 #?rakudo todo 'NYI RT #124670'
-#?niecza todo
 is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" }',
     {
         out => "Array"
@@ -233,3 +222,15 @@ is_run 'sub MAIN (Str $value) { print "String $value" }',
     },
     :args[10],
     'passing an integer matches MAIN(Str)';
+
+# RT #127977
+is_run 'sub MAIN(*@arg where { False }) { }; sub USAGE { print "USAGE called" }',
+    {
+        out => 'USAGE called',
+        err => '',
+    },
+    "failed constraint check doesn't leak internal exception out to the user";
+
+# RT #127621
+is_run 'sub MAIN($, *%) { }', { err => '', }, :args['--help'],
+    'use of anon slurpy hash does not cause a crash';

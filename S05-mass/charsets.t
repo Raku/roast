@@ -6,7 +6,6 @@ use Test;
 
 plan 17;
 
-#?niecza skip 'Tests not completing under niecza'
 {
     my $latin-chars = [~] chr(0)..chr(0xFF);
 
@@ -27,17 +26,15 @@ plan 17;
     #?rakudo.jvm todo 'Unicode 6.3 -- lower characters'
     is $latin-chars.comb(/<lower>/).join, "abcdefghijklmnopqrstuvwxyzµßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'lower chars';
 
-    #++ FLAPPERS on jvm/parrot
+    #++ FLAPPERS on jvm
     # unicode 6.1 reclassifies § and ¶ as punctuation characters, so actual results may vary depending
     # on unicode version bundled with jdk, icu etc.
 
-    # failing on parrot 6.8.0/icu 4.4.1/unicode 5.2
-    #?rakudo.jvm todo 'Unicode 6.1 -- punct characters'
-    is $latin-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, 'punct chars';
+    # failing on Java < 8 (requires unicode 6.1)
+    is $latin-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, 'punct chars since unicode 6.1';
 
-    # problematic on on parrot 6.8.0/icu 4.4.1/unicode 5.2
-    #?rakudo.jvm todo 'Unicode 6.1 -- :Punctuation characters'
-    is $latin-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, ':Punctuation chars';
+    # failing on Java < 8 (requires unicode 6.1)
+    is $latin-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, ':Punctuation chars since unicode 6.1';
     #-- FLAPPERS
 
     is $latin-chars.comb(/<upper>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ", 'upper chars';

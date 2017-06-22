@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 104;
+plan 106;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -73,7 +73,7 @@ plan 104;
     is($calls_b, 4, 'correct multi-sub called right number of times');
     is($calls_a, 0, 'incorrect multi-sub not called');
     is($calls_c, 0, 'incorrect multi-sub not called');
-    
+
     $calls_a = 0;
     $calls_b = 0;
     $calls_c = 0;
@@ -90,7 +90,7 @@ plan 104;
     is($calls_a, 1, 'correct multi-sub called again right number of times (junction of many types)');
     is($calls_c, 2, 'correct multi-sub called again right number of times (junction of many types)');
     is($calls_b, 0, 'incorrect multi-sub again not called');
-    
+
     $calls_a = 0;
     $calls_b = 0;
     $calls_c = 0;
@@ -125,7 +125,7 @@ plan 104;
     is($obj.calls_b, 4, 'correct multi-method called right number of times');
     is($obj.calls_a, 0, 'incorrect multi-method not called');
     is($obj.calls_c, 0, 'incorrect multi-method not called');
-    
+
     $obj = MMTest.new();
     $obj.mmtest('a' | 1 & 'b');
     is($obj.calls_a, 1, 'correct multi-method called right number of times (junction of many types)');
@@ -212,7 +212,7 @@ plan 104;
     ok !( +$j == 3 ), 'prefix:<+> autothreads (3)';
 }
 
-# this is nothing new, but it's such a cool example for 
+# this is nothing new, but it's such a cool example for
 # autothreading that I want it to be in the test suite nonetheless ;-)
 {
     sub primetest(Int $n) {
@@ -277,7 +277,6 @@ plan 104;
     }
     is $c, 3, 'do not autothread over blocks by default';
 }
-#?niecza skip 'interferes hard with inlining'
 {
     my $c = 0;
     for 1|2, 3|4, 5|6 -> Any $x {
@@ -290,7 +289,6 @@ plan 104;
 # L<S03/Junctive operators/Use of negative operators with junctions>
 {
     my Mu $x = 'a' ne ('a'|'b'|'c');
-    #?rakudo.jvm todo 'got (Int) instead of (Bool)'
     ok $x ~~ Bool, 'infix:<ne> collapses the junction (1)';
     ok $x !~~ Junction, 'infix:<ne> collapses the junction (2)';
     nok $x, '... and the result is False';
@@ -363,5 +361,80 @@ ok any(1.0,2,'3') ~~ Junction, 'any/Junction smartmatch does not autothread';
 ok Mu !~~ Junction, 'Mu/Junction smartmatch False';
 ok Junction ~~ Junction, 'Junction/Junction smartmatch True';
 ok Junction ~~ Mu, 'Junction/Mu smartmatch True';
+
+# RT#130426
+subtest 'smartmatch against Bool:U' => {
+    plan 16;
+
+    ok   any(42,   True ) ~~ Bool, 'any (true by True Bool)';
+    ok   any(42,   False) ~~ Bool, 'any (true by False Bool)';
+    nok  any(42         ) ~~ Bool, 'any (false)';
+
+    ok  all(False, False) ~~ Bool, 'all (true by True Bool)';
+    ok  all(False, False) ~~ Bool, 'all (true by False Bool)';
+    ok  all(True,  False) ~~ Bool, 'all (true by Mixed Bools)';
+    nok all(42,    "foo") ~~ Bool, 'all (false; no Bools)';
+    nok all(42,    False) ~~ Bool, 'all (false not are Bools)';
+
+    ok  one(42,    True ) ~~ Bool, 'one (true by True Bool)';
+    ok  one(42,    False) ~~ Bool, 'one (true by False Bool)';
+    nok one(42,         ) ~~ Bool, 'one (false, too few)';
+    nok one(True,  False) ~~ Bool, 'one (false, too many)';
+
+    ok  none(42         ) ~~ Bool, 'none (true)';
+    nok none(42,   True ) ~~ Bool, 'none (false by True Bool)';
+    nok none(42,   False) ~~ Bool, 'none (false by False Bool)';
+    nok none(42,   True ) ~~ Bool, 'none (false by True Bool)';
+}
+
+# RT#130099
+subtest 'defined with Junctions autothreads' => {
+    plan 2;
+    constant $f = Failure.new;
+
+    subtest 'defined() as a sub' => {
+        plan 14;
+
+        is-deeply defined(any  Str,  42), Bool::True,  'any() -> True';
+        is-deeply defined(any  Str, Int), Bool::False, 'any() -> False';
+        is-deeply defined(any $f),        Bool::False, 'any(Failure) -> false';
+
+        is-deeply defined(none Str, Int), Bool::True,  'none() -> True';
+        is-deeply defined(none $f),       Bool::True,  'none(Failure) -> True';
+        is-deeply defined(none Str,  42), Bool::False, 'none() -> False';
+
+        is-deeply defined(all  "x",  42), Bool::True,  'all() -> True';
+        is-deeply defined(all  Str, Int), Bool::False, 'all() -> False (1)';
+        is-deeply defined(all  Str,  42), Bool::False, 'all() -> False (2)';
+        is-deeply defined(all  $f,  $f),  Bool::False, 'all(Failure) -> False (3)';
+
+        is-deeply defined(one  Str,  42), Bool::True,  'one() -> True';
+        is-deeply defined(one  Str, Int), Bool::False, 'one() -> False (1)';
+        is-deeply defined(one  "x",  42), Bool::False, 'one() -> False (2)';
+        is-deeply defined(one  Str, $f),  Bool::False, 'one(Failure) -> False (3)';
+    }
+
+    subtest 'defined() as a method' => {
+        plan 14;
+
+        is-deeply any( Str,  42).defined, Bool::True,  'any() -> True';
+        is-deeply any( Str, Int).defined, Bool::False, 'any() -> False';
+        is-deeply any( $f      ).defined, Bool::False, 'any(Failure) -> false';
+
+        is-deeply none(Str, Int).defined, Bool::True,  'none() -> True';
+        is-deeply none($f      ).defined, Bool::True,  'none(Failure) -> True';
+        is-deeply none(Str,  42).defined, Bool::False, 'none() -> False';
+
+        is-deeply all( "x",  42).defined, Bool::True,  'all() -> True';
+        is-deeply all( Str, Int).defined, Bool::False, 'all() -> False (1)';
+        is-deeply all( Str,  42).defined, Bool::False, 'all() -> False (2)';
+        is-deeply all( $f,   $f).defined, Bool::False, 'all(Failure) -> False (3)';
+
+        is-deeply one( Str,  42).defined, Bool::True,  'one() -> True';
+        is-deeply one( Str, Int).defined, Bool::False, 'one() -> False (1)';
+        is-deeply one( "x",  42).defined, Bool::False, 'one() -> False (2)';
+        is-deeply one( Str,  $f).defined, Bool::False, 'one(Failure) -> False (3)';
+    }
+}
 
 # vim: ft=perl6

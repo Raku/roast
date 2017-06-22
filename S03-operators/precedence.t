@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 64;
+plan 77;
 
 
 # terms
@@ -21,21 +21,23 @@ plan 64;
 # FIXME how do we test this?
 
 # postfix method
-
-my @a = 1,2,3;
-is(++@a[2], 4, "bare postfix binds tighter than ++");
-is(++@a.[2], 5, "dotted postfix binds tighter than ++");
+{
+    my @a = 1,2,3;
+    is(++@a[2], 4, "bare postfix binds tighter than ++");
+    is(++@a.[2], 5, "dotted postfix binds tighter than ++");
+}
 
 # autoincrement
-
-my $i = 2;
-is(++$i ** 2, 9, "++ bind tighter than **");
-is(--$i ** 2, 4, "-- does too");
+{
+    my $i = 2;
+    is(++$i ** 2, 9, "++ bind tighter than **");
+    is(--$i ** 2, 4, "-- does too");
+}
 
 # exponentiation
 
 is(-2**2, -4, "** bind tighter than unary -");
-isa-ok(~2**4, Str, "~4**4 is a string");
+isa-ok(~2**4, Str, "~2**4 is a string");
 
 # symbolic unary
 
@@ -81,10 +83,10 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
 { # test that | and ^ are on the same level but parsefail
     throws-like 'my Mu $a = (1 | 2 ^ 3)',
-        X::Syntax::NonAssociative,
+        X::Syntax::NonListAssociative,
         '| and ^ may not associate';
     throws-like 'my Mu $a = (1 ^ 2 | 3)',
-        X::Syntax::NonAssociative,
+        X::Syntax::NonListAssociative,
         '^ and | may not associate';
 };
 
@@ -98,6 +100,18 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
 
 ok(0 < 2 <=> 1 < 2, "0 < 2 <=> 1 < 2 means 0 < 1 < 2");
+
+# structural infix
+
+is (1 | 3 <=> 2).gist, 'any(Less, More)', '<=> binds looser than |';
+is (1 == 3 <=> 2).gist, 'True', '<=> binds tighter than ==';
+throws-like '1 .. 2 .. 3',
+    X::Syntax::NonAssociative,
+    'identical .. is not associative';
+throws-like '1 <=> 2 leg 3',
+    X::Syntax::NonAssociative,
+    '<=> and leg are not associative';
+
 
 # chaining
 
@@ -164,10 +178,10 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 # RT #77848
 {
     throws-like '4 X+> 1...2',
-         X::Syntax::NonAssociative,
+         X::Syntax::NonListAssociative,
         'X+> must not associate with ...';
     throws-like q['08:12:23'.split(':') Z* 60 X** reverse ^3],
-        X::Syntax::NonAssociative,
+        X::Syntax::NonListAssociative,
         'Z* and X** are non associative';
 }
 
@@ -191,7 +205,7 @@ is(@c, [1,2,3], "@ = binds looser than ,");
     }
 
     # these are two tests per line, actually
-    # we should have a better way that doesn't just result in 
+    # we should have a better way that doesn't just result in
     # a wrong plan if gone wrong.
     isfive(5) and isfive(5);
     isfive 5  and isfive 5;
@@ -200,6 +214,25 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 # loose or
 
 # terminator
+
+# superscript exponentiation
+{
+    my $i = 2;
+
+    #?rakudo 2 skip 'superscript exponent associativity RT #130414'
+    is(++$i², 9, "++ bind tighter than superscript exponent");
+    is(--$i², 4, "-- does too");
+
+    #?rakudo todo 'superscript exponent associativity RT #130414'
+    is(2²**3, 256, "mixed exponent does right associative");
+
+    is(-2², -4, "superscript exponent binds tighter than unary -");
+    isa-ok(~2⁴, Str, "~2⁴ is a string");
+
+    is -2² . abs, 4, "on left side . is looser than superscript exponent and left-to-right with unary -";
+    is -2² . abs + 1, 5, "on right side . is tighter than addition";
+    is -2² . abs.Str.ord, "4".ord, "on right side . is tighter than methodcall";
+}
 
 # Contrary to Perl 5 there are no prototypes, and since normal built-ins
 # are not defined as prefix ops, 'uc $a eq $A' actually parses as
@@ -221,10 +254,9 @@ ok ((1 => 2 => 3).value ~~ Pair), '=> is right-assoc (2)';
 # L<S03/Operator precedence/only works between identical operators>
 
 throws-like '1, 2 Z 3, 4 X 5, 6',
-    X::Syntax::NonAssociative,
+    X::Syntax::NonListAssociative,
     'list associativity only works between identical operators';
 
-#?niecza skip 'assigning to readonly value'
 {
     # Check a 3 != 3 vs 3 !=3 parsing issue that can cropped up in Rakudo.
     # Needs careful following of STD to get it right. :-)
@@ -260,5 +292,16 @@ throws-like '1, 2 Z 3, 4 X 5, 6',
 throws-like 'my $lizmat = 42; ++$lizmat++',
     X::Syntax::NonAssociative,
     'prefix/postfix ++ are not associative';
+
+# RT #128042
+{
+    module RT128042 {
+        multi infix:<§>($,$) is tighter(&[+]) is export {0};
+    };
+    import RT128042;
+
+    #?rakudo todo 'RT 128042'
+    is (1 + 2 § 3), 1, 'exported multi has correct precedence';
+}
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 14;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -104,5 +104,8 @@ eval-lives-ok q[
     try EVAL 'class ::F { ... }; class F is ::F';
     ok ~$! ~~ / 'cannot inherit from itself' /, "used to crash rakudo";
 }
+
+eval-lives-ok 'class A { class B {} }; use MONKEY; augment class A { augment class B { } }',
+    'Augmenting a nested package lives';
 
 # vim: ft=perl6

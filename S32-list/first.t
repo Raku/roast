@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 28;
+plan 31;
 
 my @list = (1 ... 10);
 
@@ -27,7 +27,6 @@ my @list = (1 ... 10);
 }
 
 #?rakudo skip "adverbial block RT #124765"
-#?niecza skip 'No value for parameter Mu $filter in CORE Any.first'
 {
     my $result = @list.first():{ ($^a == 4) };
     ok($result ~~ Int, "first():<block> returns an Int");
@@ -73,7 +72,6 @@ my @list = (1 ... 10);
 }
 
 # RT #118141
-#?niecza skip 'https://github.com/sorear/niecza/issues/183'
 {
     isa-ok (first * > 20, @list), Nil, "first() returns Nil when no values match";
     isa-ok @list.first(* < 0 ), Nil, ".first returns Nil when no values match"
@@ -93,6 +91,68 @@ my @list = (1 ... 10);
     @a.first(* %% 2).++;
     is @a, <1 3 3 4 5 6 7 8 9 10>,
         'first is rw-like, can chain it to modify one element of grepped list/array';
+}
+
+subtest 'Junctions work correctly as a matcher in .first' => {
+    plan 2;
+    subtest 'method form' => {
+        plan 6;
+        is <a b c d e>.first(<c e>.any),    'c', 'matcher only (1)';
+        is <a b c d e>.first(<e d>.any),    'd', 'matcher only (2)';
+        is <a b c d e>.first(<c e>.any, :k), 2,  'with :k (1)';
+        is <a b c d e>.first(<b d>.any, :k), 1,  'with :k (2)';
+        is-deeply <a b c d e>.first(<c e>.any, :kv), (2, 'c'), 'with :kv (1)';
+        is-deeply <a b c d e>.first(<a d>.any, :kv), (0, 'a'), 'with :kv (2)';
+    }
+    subtest 'sub form' => {
+        plan 6;
+        is first(<c e>.any, <a b c d e>),    'c', 'matcher only (1)';
+        is first(<e d>.any, <a b c d e>),    'd', 'matcher only (2)';
+        is first(<c e>.any, :k, <a b c d e>), 2,  'with :k (1)';
+        is first(<b d>.any, :k, <a b c d e>), 1,  'with :k (2)';
+        is-deeply first(<c e>.any, :kv, <a b c d e>), (2, 'c'), 'with :kv (1)';
+        is-deeply first(<a d>.any, :kv, <a b c d e>), (0, 'a'), 'with :kv (2)';
+    }
+}
+
+# https://irclog.perlgeek.de/perl6/2016-12-08#i_13705826
+subtest '.first works on correctly when called on Numerics' => {
+    plan 12;
+    is-deeply 3.first,               3,      'no args';
+    is-deeply 3.first(/3/),          3,      'Regex matcher';
+    is-deeply 3.first(2|3),          3,      'Junction matcher';
+    is-deeply 3.first(3, :k),        0,      ':k';
+    is-deeply 3.first(3, :p),        0 => 3, ':p';
+    is-deeply 3.first(3, :kv),       (0, 3), ':kv';
+
+    is-deeply 3.first(:end),         3,      ':end, no args';
+    is-deeply 3.first(:end, /3/),    3,      ':end, Regex matcher';
+    is-deeply 3.first(:end, 2|3),    3,      ':end, Junction matcher';
+    is-deeply 3.first(:end, 3, :k),  0,      ':end, :k';
+    is-deeply 3.first(:end, 3, :p),  0 => 3, ':end, :p';
+    is-deeply 3.first(:end, 3, :kv), (0, 3), ':end, :kv';
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2016-12-08#i_13706306
+subtest 'adverbs work on .first without matcher' => {
+    plan 14;
+    constant $l = <a b c>;
+
+    is-deeply $l.first,      'a',      'no args';
+    is-deeply $l.first(:k ), 0,        ':k';
+    is-deeply $l.first(:kv), (0, 'a'), ':kv';
+    is-deeply $l.first(:p ), 0 => 'a', ':p';
+    throws-like { $l.first(:k, :kv) }, X::Adverb, ':k + :kv throws';
+    throws-like { $l.first(:k, :p ) }, X::Adverb, ':k + :p throws';
+    throws-like { $l.first(:p, :kv) }, X::Adverb, ':P + :kv throws';
+
+    is-deeply $l.first(:end     ), 'c',      ':end, no args';
+    is-deeply $l.first(:end, :k ), 2,        ':end, :k';
+    is-deeply $l.first(:end, :kv), (2, 'c'), ':end, :kv';
+    is-deeply $l.first(:end, :p ), 2 => 'c', ':end, :p';
+    throws-like { $l.first(:end, :k, :kv) }, X::Adverb, ':end, :k + :kv throws';
+    throws-like { $l.first(:end, :k, :p ) }, X::Adverb, ':end, :k + :p throws';
+    throws-like { $l.first(:end, :p, :kv) }, X::Adverb, ':end, :P + :kv throws';
 }
 
 #vim: ft=perl6

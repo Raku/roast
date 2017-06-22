@@ -4,17 +4,15 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 21;
+plan 33;
 
 # this used to segfault in rakudo
-#?niecza skip 'todo'
 is_run(
        'try { die 42 }; my $x = $!.WHAT; say $x',
        { status => 0, out => -> $o {  $o.chars > 2 }},
        'Can stringify $!.WHAT without segfault',
 );
 
-#?niecza skip 'todo'
 is_run(
        'try { die 42; CATCH { when * { say $!.WHAT } }; };',
        { status => 0, out => -> $o { $o.chars > 2 }},
@@ -54,11 +52,9 @@ throws-like { EVAL 'time(1, 2, 3)' },
   'time() with arguments dies';
 
 # RT #76996
-#?niecza todo
 lives-ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
 
 # RT #76946
-#?niecza skip 'todo'
 lives-ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-internal exception';
 
 # RT #90522
@@ -87,11 +83,11 @@ lives-ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
 {
     lives-ok { EVAL 'class A {
         has %!x;
-    
+
         method m {
             sub foo {
             }
-    
+
             %!x<bar> = 42;
         }
     }' }, "still able to parse statement after sub decl ending in newline";
@@ -176,3 +172,82 @@ throws-like { EVAL '&&::{}[];;' },
     throws-like { "::a".EVAL }, X::NoSuchSymbol, symbol => "a",
       "test throwing for ::a";
 }
+
+# RT #127748
+{
+    is_run(q:to/SEGV/, { out => "360360\n" }, 'Correct result instead of SEGV');
+        my $a = 14;
+        while (True) {
+            my $z = (2..13).first(-> $x { !($a %% $x) });
+            last if (!$z);
+            $a += 14
+        }
+        say $a
+        SEGV
+}
+
+# RT #127878
+
+sub decode_utf8c {
+    my @ints = 103, 248, 111, 217, 210, 97;
+    my $b = Buf.new(@ints);
+    my Str $u=$b.decode("utf8-c8");
+    $u.=subst("a","b");
+}
+#?rakudo.jvm todo "Unknown encoding 'utf8-c8' RT #127878"
+lives-ok &decode_utf8c, 'RT #127878: Can decode and work with interesting byte sequences';
+
+# RT #128368
+sub bar() { foo; return 6 }
+sub foo() { return 42 }
+my $a = 0;
+$a += bar for ^158;  # 157 iterations works fine
+
+is $a, 158 * 6, 'SPESH inline works correctly after 158 iterations';
+
+# RT #127473
+eval-lives-ok '(;)', '(;) does not explode the compiler';
+eval-lives-ok '(;;)', '(;;) does not explode the compiler';
+eval-lives-ok '[;]', '[;] does not explode the compiler';
+eval-lives-ok '[;0]', '[;0] does not explode the compiler';
+
+# RT #127208
+#?rakudo skip 'RT127208'
+#?DOES 1
+{
+    subtest 'accessing Seq from multiple threads does not segfault' => {
+        my $code = Q:to/CODE_END/;
+            my @primes = grep { .is-prime }, 1 .. *;
+            my @p = gather for 4000, 5, 100, 2000 -> $n {
+                take start { @primes[$n] }
+            }
+            .say for await @p;
+            CODE_END
+
+        is_run($code, { :status(1|0) }, 'no segfaults') for ^20;
+    }
+}
+
+# RT #114672
+throws-like ｢class A114672 {}; class B114672 is A114672 { has $!x = 5; ｣
+    ~ ｢our method foo(A114672:) { say $!x } }; &B::foo(A.new)｣,
+    Exception,
+'no segfault';
+
+subtest 'using a null string to access a hash does not segfault' => {
+    my $code = Q:to/CODE_END/;
+        class HasNativeStr { has str $.attr }
+        my %h;
+        %h{HasNativeStr.new().attr} = 1;
+        CODE_END
+
+    is_run($code, { :status(1|0) }, 'no segfault')
+}
+
+# RT #128985
+is (^1000 .grep: -> $n {([+] ^$n .grep: -> $m {$m and $n %% $m}) == $n }), (0, 6, 28, 496),
+    'No SEGV/crash on reduction in grep using %%';
+
+# https://irclog.perlgeek.de/perl6/2017-04-18#i_14443061
+is_run ｢class Foo {}; $ = new Foo:｣, {:out(''), :err(''), :0status },
+    'new Foo: calling form does not produce unwanted output';

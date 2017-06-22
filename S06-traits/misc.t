@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 =begin description
 
@@ -97,5 +97,11 @@ lives-ok { boom(42) }, "can modify a copy";
     ok "$!" ~~ /trait/,    'error message mentions trait';
     ok "$!" ~~ /nonesuch/, 'error message mentions the name of the trait';
 }
+
+throws-like
+    { sub a($b) { $b = 1 }; a(2); CATCH {} },
+    X::AdHoc,
+    message => /'($b)'/,
+    'error message when assigning to a readonly variable includes the variable name';
 
 # vim: ft=perl6

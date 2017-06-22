@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 98;
+plan 99;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -303,7 +303,6 @@ lives-ok({ foo_hash_ref()<foo> },
 # return should desugar to &?ROUTINE.leave, where &?ROUTINE is lexically scoped
 #    to mean the current "official" subroutine or method.
 
-#?niecza todo
 {
   sub userdefinedcontrol3 (&block) { block(); return 36 }
   sub userdefinedcontrol2 (&block) { userdefinedcontrol3(&block); return 24 }
@@ -330,7 +329,6 @@ class Foo {
   }
 }
 
-#?niecza 3 todo
 is Foo.new.officialmeth(), 42,
     "return correctly from official method only";
 is Foo.new.officialsubmeth(), 43,
@@ -339,7 +337,6 @@ is Foo::official(), 44,
     "return correctly from official sub only";
 
 # RT #75118
-#?niecza skip "Excess arguments to return, unused named c"
 {
     sub named() {
         return 1, 2, :c(3);
@@ -350,14 +347,12 @@ is Foo::official(), 44,
 }
 
 # RT #61732
-#?niecza todo
 {
     sub rt61732_c { 1; CATCH {} }
     #?rakudo todo 'RT #61732'
     is rt61732_c(), 1, 'sub with empty catch block returns value before block';
 }
 
-#?niecza todo
 {
     sub rt61732_d { 1;; }
     is rt61732_d(), 1, 'get right value from sub with double ;';
@@ -379,7 +374,6 @@ is Foo::official(), 44,
 }
 
 # RT #61126
-#?niecza skip "eager NYI"
 {
     sub bar61126($code) { $code() }; sub foo61126 { bar61126 { return 1 }; return 2; };
     is foo61126, 1;
@@ -402,4 +396,8 @@ is Foo::official(), 44,
     dies-ok { return-Int(42.0) }, "Can't return 42.0 through Int typecheck";
     dies-ok { return-Int(Cool) }, "Can't return Cool through Int typecheck";
 }
+
+# RT #129827
+is sub { 42.return }(), 42, "Sub doing 42.return works";
+
 # vim: ft=perl6

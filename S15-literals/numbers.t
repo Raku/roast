@@ -1,9 +1,11 @@
 use v6;
+use lib <t/spec/packages>;
 # S15-literals/numbers.t --- test Unicode (namely non-ASCII) numerals
 
 use Test;
+use Test::Util;
 
-plan 46;
+plan 49;
 
 # basic test of literals
 #?rakudo.jvm 2 skip "is not a valid number"
@@ -55,6 +57,24 @@ is 0o᠗᠕᠕, 493, "Non-ASCII octal literals work";
 is 0o᠗5᠕, 493, "Octal literals with a mixture of scripts work";
 throws-like "say 0o7₅₅", X::Syntax::Confused, "Numerals in category 'No' can't be used in octal literals";
 throws-like "say 0oⅦ55", X::Syntax::Confused, "Numerals in category 'Nl' can't be used in octal literals";
+{
+    # RT #119339
+    is_run 'say 069', {
+        err => /'Potential difficulties:'
+            .* "Leading 0" .+ '0o'
+        /,
+        out => "69\n",
+        status => 0,
+    }, 'prefix 0 on invalid octal warns';
+
+    is_run 'say 067', {
+        err => /'Potential difficulties:'
+            .* 'Leading 0' .+ '0o67'
+        /,
+        out => "67\n",
+        status => 0,
+    }, 'prefix 0 on valid octal warns';
+}
 
 # hexadecimal
 is 0x42, 66, "ASCII hexadecimal literals work";
@@ -85,3 +105,12 @@ throws-like "say :36<αω>", X::Syntax::Malformed, "Scripts without Hex_Digit ch
 is :36<utf១៦>, 51760986, "Nd numerals can be used in general radix numbers";
 throws-like "say :36<utfⅧ>", X::Syntax::Malformed, "Nl numerals are not allowed in general radix numbers";
 throws-like "say :36<utf㉜>", X::Syntax::Malformed, "No numerals are not allowed in general radix numbers";
+
+{
+    # RT #127866
+    throws-like { "௰".Int }, X::Str::Numeric,
+        message => / 'Cannot convert string to number: base-10'
+            .* 'number must begin with valid digits'
+        /,
+    'converting string with "No" characters to numeric is not supported';
+}

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 110;
+plan 115;
 
 sub test($range,$min,$max,$exmin,$exmax,$inf,$elems,$perl) {
     subtest {
@@ -14,10 +14,14 @@ sub test($range,$min,$max,$exmin,$exmax,$inf,$elems,$perl) {
         is $range.excludes-min, $exmin, "$range.gist().excludes-min is $exmin";
         is $range.excludes-max, $exmax, "$range.gist().excludes-max is $exmax";
         is $range.infinite,       $inf, "$range.gist().infinite is $inf";
-        is $range.elems,        $elems, "$range.gist().elems is $elems";
         is $range.perl,          $perl, "$range.gist().perl is $perl";
 
-        unless $elems == Inf {
+        if $elems == Inf {
+            throws-like $range.elems, X::Cannot::Lazy, :action<.elems>;
+        }
+        else {
+            is $range.elems, $elems, "$range.gist().elems is $elems";
+
             my int $i;
             $i = $i + 1 for Seq.new($range.iterator); # simulate for ^10
             is $i, $elems, "for $range.gist() runs $elems times";
@@ -39,6 +43,12 @@ test  "a"^.."g",  'a',   'g',  True, False, False,   6,   '"a"^.."g"';
 test "a"^..^"g",  'a',   'g',  True,  True, False,   5,  '"a"^..^"g"';
 test   "g".."a",  'g',   'a', False, False, False,   0,    '"g".."a"';
 
+test   '!'..'&',  '!',   '&', False, False, False,   6,  '"!".."\\&"';
+test  '!'..^'&',  '!',   '&', False,  True, False,   5, '"!"..^"\\&"';
+test  '!'^..'&',  '!',   '&',  True, False, False,   5, '"!"^.."\\&"';
+test '!'^..^'&',  '!',   '&',  True,  True, False,   4,'"!"^..^"\\&"';
+test   '&'..'!',  '&',   '!', False, False, False,   0,  '"\\&".."!"';
+
 test         ^5,    0,     5, False,  True, False,   5,          "^5";
 test       ^5.5,    0,   5.5, False,  True, False,   6,     "0..^5.5";
 test     ^5.5e0,    0, 5.5e0, False,  True, False,   6,   "0..^5.5e0";
@@ -59,7 +69,6 @@ test      *..^*, -Inf,   Inf, False,  True,  True, Inf,  "-Inf..^Inf";
 test     *^..^*, -Inf,   Inf,  True,  True,  True, Inf, "-Inf^..^Inf";
 
 # some range constructions are invalid
-#?niecza skip "No exceptions"
 {
     throws-like          '10 .. ^20', X::Range::InvalidArg, got => ^20;
     throws-like          '^10 .. 20', X::Range::InvalidArg, got => ^10;

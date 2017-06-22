@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 101;
+plan 4 * 19 + 107;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -18,7 +18,6 @@ for
 
 # get key and value from the pair as many ways as possible
 
-#?niecza 2 skip 'Invocant handling is NYI'
     is(key($pair:), 'foo', 'got the right key($pair:)');
     is(value($pair:), 'bar', 'got the right value($pair:)');
 
@@ -152,7 +151,6 @@ sub test3 (%h){
     for %h.pairs -> $pair {
         isa-ok($pair,Pair);
         isa-ok($pair[0], Pair, 'sub test3: $pair[0] is $pair');
-        #?niecza skip "Failure NYI"
         ok $pair[1] ~~ Failure, 'sub test3: $pair[1] is failure';
     }
 }
@@ -271,12 +269,10 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     X::Assignment::RO,
     "setting .key dies";
   is $pair.key,         "key",   "attempt to set .key doesn't change the key";
-  #?niecza todo "setting .key changes original val!"
   is $key,              "key",   "attempt to set .key does not change the original var either";
 
   lives-ok { $pair.value = "VAL" }, "setting .value does not die";
   is $pair.value,          "VAL",   "setting .value actually changes the value";
-  #?niecza todo "setting .key changes original val!"
   is $val,                 "VAL",   "setting .value does change the original var as it was itemized";
 }
 
@@ -298,7 +294,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     ok($pair eqv (hash => %hash), ':%foo syntax works');
 }
 
-#?niecza skip "eqv NYI for Pair"
 {
     my sub code {return 42}
     my $pair = (:&code);
@@ -324,12 +319,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     is (a => 3).antipair.key, 3, 'Pair.antipair.key';
     isa-ok (a => 3).antipair.key, Int, 'Pair.antipair.key type';
     is (a => 3).antipair.value, 'a', 'Pair.antipair.value';
-}
-
-{
-    is (a => 3).invert[0].key, 3, 'Pair.invert.key';
-    isa-ok (a => 3).invert[0].key, Int, 'Pair.invert.key type';
-    is (a => 3).invert[0].value, 'a', 'Pair.invert.value';
 }
 
 {
@@ -377,11 +366,102 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
 # RT #126369
 {
-    my $x = 42;
-    $x = :$x;
-    #?rakudo.moar todo 'RT #126369'
-    #?rakudo.jvm todo 'RT #126369'
-    is-deeply $x, 'x' => 42, 'pair assignment';
+    my $y = 42;
+    $y := :$y;
+    is-deeply $y, 'y' => 42, 'pair binding';
+}
+
+# RT #128860
+{
+    throws-like { (1,2,3).invert },
+	X::TypeCheck, got => Int, expected => Pair,
+	"List.invert maps via a required Pair binding";
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2017-01-23#i_13971002
+is-deeply (:42a)<foo>, Nil, 'accessing non-existent key on a Pair returns Nil';
+
+{
+    my $p = :foo<bar>;
+    cmp-ok   $p.Pair, '===', $p,   '.Pair on Pair:D is identity';
+    cmp-ok Pair.Pair, '===', Pair, '.Pair on Pair:U is identity';
+}
+
+subtest 'Pair.ACCEPTS' => {
+    my @true = <a a a z>.Bag, <a a a z>.BagHash, <a a a z z>.Mix,
+        <a a a z z>.MixHash, %(:3a, :5z), Map.new((:3a, :5z)), :3a.Pair, :3z.Pair;
+    my @false = <a z>.Bag, <a z>.BagHash, <a z>.Set, <a z>.SetHash,
+        <a z>.Mix, <a z>.MixHash, %(:a, :z), Map.new((:a, :z)), :a.Pair, :z.Pair;
+    plan 6 + @true + @false;
+    my $p = :3a;
+    is-deeply $p.ACCEPTS($_), True,  "{.perl} (True)"  for @true;
+    is-deeply $p.ACCEPTS($_), False, "{.perl} (False)" for @false;
+    is-deeply :a.Pair.ACCEPTS(<a z>.Set    ), True, 'Set (True)';
+    is-deeply :a.Pair.ACCEPTS(<a z>.SetHash), True, 'SetHash (True)';
+
+    class Foo { method foo { 42 }; method bar { False } }
+    is-deeply :42foo.ACCEPTS(Foo), True,  'custom class (True, 1)';
+    is-deeply :foo  .ACCEPTS(Foo), True,  'custom class (True, 2)';
+    is-deeply :!bar .ACCEPTS(Foo), True,  'custom class (True, 3)';
+    is-deeply :bar  .ACCEPTS(Foo), False, 'custom class (False)';
+}
+
+{ # RT#131339
+    throws-like { Pair.new: <foo bar ber meow>, <meows>, 42 }, X::Multi::NoMatch,
+        'Pair.new with wrong positional args does not go to Mu.new';
+    throws-like { Pair.new: :42a                            }, X::Multi::NoMatch,
+        'Pair.new with wrong named args does not go to Mu.new';
+}
+
+
+subtest 'Pair.invert' => {
+    my @tests = [ a  => 42, (42 => 'a',).Seq ], [ 42 => 70, (70 => 42, ).Seq ],
+        [ foo => (bar => meow => 42), ((bar => meow => 42) => 'foo',).Seq    ],
+        [ # .invert expands Iterables
+            <a b c> => <d e f>,
+            (:d(<a b c>), :e(<a b c>), :f(<a b c>)).Seq,
+        ],;
+
+    plan 3 + @tests;
+    is-deeply .[0].invert, .[1], .[0].perl for @tests;
+
+
+    # Hashes are also Iterables, but don't guarantee order here:
+    is-deeply (%(<a b c d>) => %(<e f g h>)).invert.sort,
+      (:e<f> => %(<a b c d>), :g<h> => %(<a b c d>)).Seq.sort,
+      (%(<a b c d>) => %(<e f g h>)).perl;
+
+    subtest '(Any) => (Mu)' => {
+        plan 4;
+        given ((Any) => (Mu)).invert {
+            .cache;
+            isa-ok $_, Seq,      "return's type";
+            is-deeply .elems, 1, "return's number of elements";
+            is .[0].key,   Mu,   '.key';
+            is .[0].value, Any,  '.value';
+        }
+    }
+
+    subtest '(Mu) => (Any)' => {
+        plan 4;
+        given ((Mu) => (Any)).invert {
+            .cache;
+            isa-ok $_, Seq,      "return's type";
+            is-deeply .elems, 1, "return's number of elements";
+            is .[0].key,   Any,  '.key';
+            is .[0].value, Mu,   '.value';
+        }
+    }
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2017-06-15#i_14734597
+subtest 'Pair.perl with type objects' => {
+  plan 5;
+  cmp-ok Pair.new('foo', Bool).perl.EVAL, &[!eqv], :!foo.Pair,
+      'roundtrip of Bool:U .value does not eqv :!foo';
+
+  is-deeply .perl.EVAL, $_, .perl for Pair.new(Str, Str),
+      Pair.new(Rat, Num), Pair.new(Bool, Bool), Pair.new(Numeric, Numeric)
 }
 
 # vim: ft=perl6

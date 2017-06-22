@@ -1,14 +1,34 @@
+#############################################################################
+#####
+##### WARNING: the first subtest in this file relies on the name of this file
+#####          and the line number of the block it's testing. If changing
+#####          any of those, please adjust the test accordingly.
+#####
+#############################################################################
+
 use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 =begin description
 
 Test pointy sub behaviour described in S06
 
 =end description
+
+
+subtest 'if this test fails, check the block in test file was not moved' => {
+    ### DO NOT MOVE the block of this test, because the line number will be wrong
+    plan 3;
+    my $block = -> { }
+    #?rakudo.jvm 3 todo 'rakudo-j reports line -1 and file "unknown"'
+    is $block.line, 25, 'correct .line';
+    ok $block.file.IO.basename.starts-with("pointy."),  'correct .file';
+    is $block.file.IO.absolute(), $?FILE.IO.absolute(), '.file matches $?FILE';
+}
+
 
 # L<S06/""Pointy blocks""/"parameter list of a pointy block does not require
 # parentheses">
@@ -46,7 +66,6 @@ my $s = -> {
 };
 dies-ok $s, 'pointy with block control exceptions';
 #?rakudo todo 'pointy blocks and last/redo RT #124973'
-#?niecza todo
 is $n, 10, "pointy control exceptions ran";
 
 # L<S06/""Pointy blocks""/will return from the innermost enclosing sub or method>
@@ -54,7 +73,6 @@ my $str = '';
 
 sub outer {
     my $s = -> {
-        #?niecza todo 'Unable to resolve method name in class Sub'
         is(&?ROUTINE.name, 'outer', 'pointy still sees outer\'s &?ROUTINE');
 
         $str ~= 'inner';
@@ -89,7 +107,6 @@ lives-ok {my $x = -> {}; my $y = $x(); },
 # L<S02/Undefined types/default block parameter type>
 # this means that junctions don't autothread over pointy blocks
 
-#?niecza skip 'Could not find non-existent sub junction'
 {
     my @a = any(3, 4);
     my $ok = 0;

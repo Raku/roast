@@ -1,3 +1,6 @@
+use v6;
+use Test;
+
 plan 8;
 
 is 2**2, 4;
@@ -6,7 +9,7 @@ skip('Version v6.0.0 required', 1); # { is 2+2, 4;
 #  }
 #?v6.0.5+ 'GH issue #xyz'
 skip('GH issue #xyz', 2);# {
-#     is "Life, the Universe, and Everything".WHY, 42;
+#     is "Life, the Universe and Everything".WHY, 42;
 #     is 42.WHAT, Int, 'some reason';
 # }
 #?v6.0.0..v6.0.2 2

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 98;
+plan 101;
 
 #L<S03/Autoincrement precedence>
 
@@ -93,7 +93,7 @@ is($b, -(++$a), 'test oder of predecrement in -(++$a)');
     is 4063328477 % 65535, 27407;
     is 4063328477 % 4063328476, 1;
     is 4063328477 % 2031664238, 1;
-    
+
     is 2031664238 % 4063328477, 2031664238;
 
     # These should trigger wrapping on 32 bit IVs and UVs
@@ -156,7 +156,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 # Believe it or not, this one overflows on 32-bit Rakduo as of 3/8/2010.
 {
     # RT #73262
-    is_approx 7**(-1), 0.14285714285714, '7**(-1) works';
+    is-approx 7**(-1), 0.14285714285714, '7**(-1) works';
 }
 
 {
@@ -166,7 +166,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
     my $n = 1127;
     my $float = ($n % 1000) * 167772160.0;
     tryeq_sloppy $float, 21307064320;
-  
+
     # On a 32 bit machine, if the i_multiply op is used, you will probably get
     # -167772160. It's actually undefined behaviour, so anything may happen.
     my $int = ($n % 1000) * 167772160;
@@ -204,36 +204,36 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
     is 65535 * -65537, -4294967295;
     is -65535 * 65537, -4294967295;
     is -65535 * -65537, 4294967295;
-    
+
     # check with 0x10001 and 0xFFFF
     is 65537 * 65535, 4294967295;
     is 65537 * -65535, -4294967295;
     is -65537 * 65535, -4294967295;
     is -65537 * -65535, 4294967295;
-    
+
     # These should all be dones as NVs
     is 65537 * 65537, 4295098369;
     is 65537 * -65537, -4295098369;
     is -65537 * 65537, -4295098369;
     is -65537 * -65537, 4295098369;
-    
+
     # will overflow an IV (in 32-bit)
     is 46340 * 46342, 0x80001218;
     is 46340 * -46342, -0x80001218;
     is -46340 * 46342, -0x80001218;
     is -46340 * -46342, 0x80001218;
-    
+
     is 46342 * 46340, 0x80001218;
     is 46342 * -46340, -0x80001218;
     is -46342 * 46340, -0x80001218;
     is -46342 * -46340, 0x80001218;
-    
+
     # will overflow a positive IV (in 32-bit)
     is 65536 * 32768, 0x80000000;
     is 65536 * -32768, -0x80000000;
     is -65536 * 32768, -0x80000000;
     is -65536 * -32768, 0x80000000;
-    
+
     is 32768 * 65536, 0x80000000;
     is 32768 * -65536, -0x80000000;
     is -32768 * 65536, -0x80000000;
@@ -250,10 +250,10 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
     is(:8<37777777777>, 0xffff_ffff, 'got the correct int value from oct 3777777777');
     is +":16<DeAdBeEf>", 0xDEADBEEF, "radix 16 notation works";
     is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / 65536.0, "fractional base 16 works";
-    
+
     is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
     is( :2<1.1*10**10>,        15_000_000_000, 'Power of ten in <> works');
-    
+
 }
 
 # RT #77016
@@ -262,5 +262,15 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
         'can construct Rat (or similar) with big denominator';
 }
 
+# RT #125938
+throws-like '2**10000000000', X::Numeric::Overflow,
+    'attempting to raise to a huge power throws';
+
+throws-like '2**-10000000000', X::Numeric::Underflow,
+    'attempting to raise to a huge negative power throws';
+
+# RT #130369
+throws-like '2**-999999', X::Numeric::Underflow,
+    'attempting to raise to a large negative power throws';
 
 # vim: ft=perl6

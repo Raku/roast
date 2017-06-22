@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 260;
+plan 287;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -68,7 +68,6 @@ sub showkv($x) {
     is $b<a>, 42, "... and the decrement happens";
     lives-ok { $b<carter>-- }, "Can -- an element with value 1";
     nok $b<carter>:exists, "... and it goes away";
-    #?niecza todo
     is $b<farve>--, 0, "Can -- an element that doesn't exist";
     nok $b<farve>:exists, "... but it doesn't create it";
 }
@@ -116,7 +115,6 @@ sub showkv($x) {
 {
     my $b = BagHash.new('a', False, 2, 'a', False, False);
     my @ks = $b.keys;
-    #?niecza 3 skip "Non-Str keys NYI"
     is @ks.grep({ .WHAT === Int })[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -144,7 +142,6 @@ sub showkv($x) {
     my $b = BagHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 }.hash);
     isa-ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
     is +$b, 4, "... with four elements";
-    #?niecza todo "Non-string bag elements NYI"
     is +$b.grep(Pair), 4, "... which are all Pairs";
 }
 
@@ -187,7 +184,7 @@ sub showkv($x) {
 {
     my $b = { foo => 10, bar => 1, baz => 2}.BagHash;
 
-    # .list is just the keys, as per TimToady: 
+    # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa-ok $b.list.elems, 3, ".list returns 3 things";
     is $b.list.grep(Pair).elems, 3, "... all of which are Pairs";
@@ -318,7 +315,6 @@ sub showkv($x) {
 
 # L<S32::Containers/BagHash/pickpairs>
 
-#?niecza skip '.pickpairs NYI'
 {
     my $b = BagHash.new("a", "b", "b");
 
@@ -341,7 +337,6 @@ sub showkv($x) {
 
 # L<S32::Containers/BagHash/grab>
 
-#?niecza skip '.grab NYI'
 {
     my $b = BagHash.new("a", "b", "b");
 
@@ -356,7 +351,6 @@ sub showkv($x) {
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 
-#?niecza skip '.grab NYI'
 {
     my $b = BagHash.new("a", "b", "b");
     my @a = $b.grab: *;
@@ -367,7 +361,6 @@ sub showkv($x) {
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 
-#?niecza skip '.grab NYI'
 {
     my $b = {"a" => 100000000000, "b" => 1}.BagHash;
 
@@ -384,7 +377,6 @@ sub showkv($x) {
 
 # L<S32::Containers/BagHash/grabpairs>
 
-#?niecza skip '.grabpairs NYI'
 {
     my $b = BagHash.new("a", "b", "b");
 
@@ -400,7 +392,6 @@ sub showkv($x) {
     is $b.elems, 0, '.grabpairs *should* change BagHash';
 }
 
-#?niecza skip '.grabpairs NYI'
 {
     my $b = BagHash.new(<a a b b c c d d e e f f g g h h>);
     my @a = $b.grabpairs: *;
@@ -414,7 +405,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
     nok %h<b>:exists, '"b", initialized to zero, does not exist';
@@ -425,7 +415,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
 
@@ -439,7 +428,6 @@ sub showkv($x) {
 }
 
 #?rakudo skip "'is TypeObject' NYI RT #124490"
-#?niecza skip "Trait name not available on variables"
 {
     my %h is BagHash = a => 1, c => 1;
 
@@ -457,7 +445,6 @@ sub showkv($x) {
     is %h<a>, 0, 'item removed again is still zero';
 }
 
-#?niecza skip "Trait name not available on variables"
 {
     my %h of BagHash;
     ok %h.of.perl eq 'BagHash', 'is the hash really a BagHash';
@@ -483,7 +470,6 @@ sub showkv($x) {
        "Method .BagHash works on List-2";
 }
 
-#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $b1 = <a b b c c c d d d d>.BagHash;
     is $b1.total, 10, '.total gives sum of values (non-empty) 10';
@@ -538,25 +524,25 @@ sub showkv($x) {
     $b<a> = 42;
     is $b<a>, 42, 'did we set an Int value';
     throws-like { $b<a> = "foo" },
-      X::Str::Numeric, # X::TypeCheck::Assignment ???
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a key';
 
     $_ = 666 for $b.values;
     is $b<a>, 666, 'did we set an Int value from a .values alias';
     throws-like { $_ = "foo" for $b.values },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .values alias';
 
     .value = 999 for $b.pairs;
     is $b<a>, 999, 'did we set an Int value from a .pairs alias';
     throws-like { .value = "foo" for $b.pairs },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .pairs alias';
 
     for $b.kv -> \k, \v { v = 22 };
     is $b<a>, 22, 'did we set an Int value from a .kv alias';
     throws-like { for $b.kv -> \k, \v { v = "foo" } },
-      X::TypeCheck::Assignment,
+      X::Str::Numeric,
       'Make sure we cannot assign Str on a .kv alias';
 }
 
@@ -580,6 +566,96 @@ sub showkv($x) {
     my %h4;
     for $b.kxxv -> \k { %h4{k}++ }
     is %h4.sort, (:1a, :2b, :3c, :4d), 'did we see all the kxxv';
+}
+
+# RT #128806
+subtest '.hash does not cause keys to be stringified' => {
+    plan 2;
+    is BagHash.new($(<a b>)).hash.keys[0][0], 'a', 'BagHash.new';
+    is ($(<a b>),).BagHash.hash.keys[0][0],   'a', '.BagHash';
+}
+
+{ # coverage; 2016-09-23
+    my $bh = BagHash.new: <a a b>;
+    cmp-ok $bh.BagHash, '===', $bh, '.BagHash is identity';
+    isa-ok $bh.Mix, Mix, '.Mix returns a Mix';
+    is-deeply $bh.Mix, Mix.new(<a a b>), '.Mix values are correct';
+}
+
+subtest 'BagHash autovivification of non-existent keys' => {
+    my BagHash  $bh1;
+    is-deeply   $bh1<poinc>++,  0, 'correct return of postfix ++';
+    is-deeply   $bh1<poinc>,    1, 'correct result of postfix ++';
+
+    my BagHash  $bh2;
+    is-deeply   $bh2<podec>--,  0, 'correct return of postfix --';
+    # Bags don't have negatives, so 0 is the expected result:
+    is-deeply   $bh2<podec>,    0, 'correct result of postfix --';
+
+    my BagHash  $bh3;
+    is-deeply ++$bh3<princ>,    1, 'correct return of prefix ++';
+    is-deeply   $bh3<princ>,    1, 'correct result of prefix ++';
+
+    my BagHash  $bh4;
+    # Bags don't have negatives, so 0 is the expected result:
+    is-deeply --$bh4<prdec>,    0, 'correct return of prefix --';
+    is-deeply   $bh4<prdec>,    0, 'correct result of prefix --';
+
+    my BagHash  $bh5;
+    is-deeply   ($bh5<as> = 2), 2, 'correct return of assignment';
+    is-deeply   $bh5<as>,       2, 'correct result of assignment';
+}
+
+{
+    my $bh = <a a a>.BagHash;
+    for $bh.values { $_-- }
+    is $bh, "a(2)",
+      'Can use $_ from .values to remove occurrences from BagHash';
+    for $bh.values { $_ = 42 }
+    is $bh, "a(42)",
+      'Can use $_ from .values to set number occurrences in BagHash';
+    for $bh.values { $_ = 0 }
+    is $bh, "",
+      'Can use $_ from .values to remove items from BagHash';
+}
+
+{
+    my $bh = <a a a>.BagHash;
+    for $bh.kv -> \k, \v { v-- }
+    is $bh, "a(2)",
+      'Can use value from .kv to remove occurrences from BagHash';
+    for $bh.kv -> \k, \v { v = 42 }
+    is $bh, "a(42)",
+      'Can use value from .kv to set number occurrences in BagHash';
+    for $bh.kv -> \k, \v { v = 0 }
+    is $bh, "",
+      'Can use $_ from .kv to remove items from BagHash';
+}
+
+{
+    my $bh = <a a a>.BagHash;
+    for $bh.pairs { .value-- }
+    is $bh, "a(2)",
+      'Can use value from .pairs to remove occurrences from BagHash';
+    for $bh.pairs { .value = 42 }
+    is $bh, "a(42)",
+      'Can use value from .pairs to set number occurrences in BagHash';
+    for $bh.pairs { .value = 0 }
+    is $bh, "",
+      'Can use $_ from .pairs to remove items from BagHash';
+}
+
+{
+    throws-like { ^Inf .BagHash }, X::Cannot::Lazy, :what<BagHash>;
+    throws-like { BagHash.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<BagHash>;
+    throws-like { BagHash.new(^Inf) }, X::Cannot::Lazy, :what<BagHash>;
+
+    for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
+      dies-ok { $pair.BagHash },
+        "($pair.perl()).BagHash died";
+      dies-ok { BagHash.new-from-pairs($pair) },
+        "BagHash.new-from-pairs( ($pair.perl()) ) died";
+    }
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 24;
+plan 25;
 
 my $c = { when 1 { 'one' }; when 2 { 'two!' }; default { 'many' } };
 is $c(1), 'one', 'when works in a circumfix:<{ }> (1)';
@@ -78,3 +78,8 @@ is $nest(3), 'huge', 'nested when in a sub works (3)';
     .++ for do given 1 { default { $a } };
     is $a, 42, 'default does not strip Scalar containers';
 }
+
+# RT#120498
+lives-ok { while $++ < 2 { when 'hi' { } } }, '`when` in a loop lives';
+
+# vim: ft=perl6

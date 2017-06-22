@@ -1,21 +1,31 @@
 use v6;
-
 use Test;
 
-=begin desc
+plan 4;
 
-Signature binding outside of routine calls
-RT #82946
+# RT #82946
+subtest 'signature binding outside of routine calls' => {
+    plan 2;
 
-=end desc 
+    my ($f, $o, @a);
+    @a = 2, 3, 4;
+    :($f, $o, $) := @a;
 
-plan 2;
+    is $f, 2, 'f eq 2 after binding';
+    is $o, 3, 'o eq 3 after binding';
+};
 
-my ($f, $o, @a); 
-@a = 2, 3, 4; 
-:($f, $o, $) := @a; 
+# RT #127444
+subtest 'smartmatch on signatures with literal strings' => {
+    plan 2;
+    is :("foo") ~~ :("bar"), False, 'two differing literal strings';
+    is :(Str)   ~~ :("foo"), False, 'type object and a literal string';
+}
 
-is $f, 2, 'f eq 2 after binding';
-is $o, 3, 'o eq 3 after binding';
+# RT #128783
+lives-ok { EVAL ’:($:)‘ }, ’signature marker is allowed in bare signature‘;
+
+# RT #128795
+lives-ok { :(*%)~~ :() }, 'smartmatch with no slurpy on right side';
 
 # vim: ft=perl6

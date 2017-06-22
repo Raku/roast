@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 50;
+plan 53;
 
 # L<S14/Run-time Mixins/>
 
@@ -11,9 +11,7 @@ my $x = C1.new();
 $x does R1;
 is $x.test,     42,         'method from a role can be mixed in';
 is $x.?test,    42,         '.? form of call works on a mixed-in role';
-#?niecza skip 'NYI dottyop form .+'
 is $x.+test,    42,         '.+ form of call works on a mixed-in role';
-#?niecza skip 'NYI dottyop form .*'
 is $x.*test,    42,         '.* form of call works on a mixed-in role';
 
 
@@ -61,7 +59,6 @@ is $y.test,     42,         'method from other role was OK too';
     is $x.b,        2,          'mixining in two roles one after the other';
 }
 
-#?niecza skip 'Trait does not available on variables'
 {
     my @array does R1;
     is @array.test, 42,         'mixing in a role at the point of declaration works';
@@ -96,7 +93,6 @@ is $y.test,     42,         'method from other role was OK too';
 }
 
 # RT #69654
-#?niecza skip 'Unable to resolve method methods in class ClassHOW'
 {
     role ProvidesFoo { method foo { } }
     class NoFoo { };
@@ -120,7 +116,6 @@ is $y.test,     42,         'method from other role was OK too';
 {
     my $a = 0 but True;
     is +$a, 0, 'RT #100782 1/2';
-    #?rakudo.jvm todo 'RT #100782'
     is ?$a, Bool::True, 'RT #100782 2/2';
 }
 
@@ -150,7 +145,6 @@ is (class { } but role { method answer() { 42 } }).answer, 42,
 lives-ok {(True but role {}).gist}, 'can mix into True';
 
 # RT #73990
-#?niecza skip "Can only provide exactly one initial value to a mixin"
 {
     my $tracker = '';
     for 1..3 {
@@ -202,7 +196,6 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
     my $x;
     lives-ok { $x = True but (1, "x") }, 'but with (1, "2") on RHS works';
     is $x.Int, 1, 'but with (1, "x") provides a .Int method returning 1';
-    #?rakudo.jvm todo "got '1' instead of 'x'"
     is $x.Str, "x", 'but with (1, "x") provides a .Str method returning "x"';
 }
 throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /resolved/ },
@@ -228,5 +221,24 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
     my $sm = Any but role { submethod Bool { True } }
     is $sm || 42, $sm, 'submethod Bool in mixin is used';
 }
+
+# RT #127916
+{
+    role Foo::Bar { };
+    is (5 but Foo::Bar).^name, 'Int+{Foo::Bar}', 
+        "mixing in a role from a deeper namespace doesn't clobber the targets shortname";
+}
+
+# https://irclog.perlgeek.de/perl6/2017-02-25#i_14165034
+{
+    my role R { multi method foo( :$a!, ) {$a};
+             multi method foo( :$b!, ) {$b + 10}
+           };
+    my class C does R {}
+
+    is C.foo( :a(2) ), 2, 'multi-dispatch mixin sanity';
+    is C.foo( :b(3) ), 13, 'multi-dispatch mixin sanity';
+}
+
 
 # vim: syn=perl6

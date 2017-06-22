@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 39;
 
 my @result = 1,2,3;
 
@@ -107,7 +107,7 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
     is @log, ("A 0","B 0","A 1","B 1"), 'Chained Seq slice assignment is lazy';
 
     @n = 0,1;
-    # (NYI need to cache in sub eagerize when reifying for elems)    
+    # (NYI need to cache in sub eagerize when reifying for elems)
     { eager @n.map(-> $v is rw {$v})[*-2,*-1] = <a b>.sort, <a b>, 'WhateverCode in Seq slice assignment'; CATCH { default { $_.defined } } };
 #?rakudo todo 'Cannot assign immutable'
     is @n, <a b>, 'WhateverCode in Seq slice assignment';
@@ -126,3 +126,96 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
     throws-like { roundtripped.list }, X::Seq::Consumed,
         '.perl on an iterated sequence faithfully reproduces such a sequence';
 }
+
+{
+    my $a = Seq.from-loop({ 1 });
+    isa-ok $a, Seq, 'from-loop(&body) returns a Seq';
+    ok $a.is-lazy, 'the Seq object is lazy';
+
+    $a = Seq.from-loop({ 1 }, { state $count = 0; $count++ < 10 });
+    isa-ok $a, Seq, 'from-loop(&body, &condition) returns a Seq';
+    is $a, (1) xx 10, 'from-loop(&body, &condition) terminates calling &body if &condition returns False';
+
+    my $count = 0;
+    $a = Seq.from-loop({ 1 }, { $count < 10 }, { $count++ });
+    isa-ok $a, Seq, 'from-loop(&body, &condition, &afterward) returns a Seq';
+    is $a, (1) xx 10, 'from-loop(&body, &condition, &afterward) terminates calling &body if &condition returns False';
+    is $count, 10, '&afterward is called after each call to &body.';
+}
+
+# RT#131222
+with (1, 2).Seq {
+    .cache; # Cache the seq
+    is .perl, (1, 2).Seq.perl,
+        '.perl on cached Seq does not think it was consumed';
+}
+
+subtest 'Seq.Capture' => {
+    plan 2;
+    is-deeply (1, 2, <a b c>).Seq.Capture, (1, 2, <a b c>).Capture,
+        '.Capture returns a Capture of the List of the Seq';
+
+    -> ($k, $v) {
+        is-deeply ($k, $v), (1, 2), 'can unpack a Seq';
+    }( (1, 2).Seq );
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2017-05-03#i_14524925
+subtest 'methods on cached Seqs' => {
+    plan 2;
+
+    subtest 'methods work fine when Seq *is* cached' => {
+        plan 11;
+
+        my $s = (1, 2, 3).Seq;
+        $s.cache;
+        cmp-ok $s, 'eqv', $s, 'infix:<eqv>';
+        does-ok $s.iterator,   Iterator,      '.iterator';
+        is-deeply $s.Slip,    (1, 2, 3).Slip, '.Slip';
+        is-deeply $s.join,    '123',          '.join';
+        is-deeply $s.List,    (1, 2, 3),      '.List';
+        is-deeply $s.list,    (1, 2, 3),      '.list';
+        is-deeply $s.eager,   (1, 2, 3),      '.eager';
+        is-deeply $s.Array,   [1, 2, 3],      '.Array';
+        is-deeply $s.is-lazy, False,          '.is-lazy (when not lazy)';
+
+        my $s-lazy = lazy gather { .take for 1, 2, 3 };
+        $s-lazy.cache;
+        is-deeply $s-lazy.is-lazy, True, '.is-lazy';
+
+        my $pulled = False;
+        my $s-sink = Seq.new: class :: does Iterator {
+            method pull-one { $pulled = True; IterationEnd }
+        }.new;
+        $s-sink.cache;
+        $s-sink.sink; # sink the Seq
+        ok not $pulled, '.sinking a cached Seq does not pull from iterator';
+    }
+
+    subtest 'methods still throw when Seq is NOT cached' => {
+        plan 12;
+
+        my $s = (1, 2, 3).Seq;
+        $s.sink; # consume the Seq
+        throws-like { cmp-ok $s, 'eqv', $s }, X::Seq::Consumed, 'infix:<eqv>';
+        throws-like { $s."$_"() }, X::Seq::Consumed, ".$_"
+            for <iterator  Slip  join  List  list  eager  Array  is-lazy>;
+
+        my $s-lazy = lazy gather { .take for 1, 2, 3 };
+        $s-lazy.sink; # consume the Seq;
+        throws-like { $s-lazy.is-lazy }, X::Seq::Consumed,
+          '.is-lazy (when lazy)';
+
+        my $pulled = False;
+        my $s-sink = Seq.new: class :: does Iterator {
+            method pull-one { $pulled = True; IterationEnd }
+        }.new;
+        $s-sink.sink; # sink the Seq
+        ok $pulled, '.sinking uncached Seq pulls from iterator';
+        lives-ok { $s-sink.sink }, '.sinking again does not throw';
+    }
+}
+
+is-deeply .perl.EVAL.flat, .flat,
+    'Seq.perl roundtrips containerized Seqs correctly'
+with (1, $((2, 3).Seq));

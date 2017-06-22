@@ -12,7 +12,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 52;
+plan 53;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -89,7 +89,6 @@ ok("!!!!e!!!!!" ~~ m/@var/, 'Nested array match (e)');
 is("foo123bar" ~~ /@( rx/\d+/ )/, '123', 'Match from correct position');
 
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
-#?niecza skip 'Cannot cast from source type to destination type.'
 ok(!( "abca!" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
 ok("a+bb+ca+b" ~~ /^@foo+$/, 'Multiple array non-compiling');
@@ -98,11 +97,12 @@ ok(!("aaaabbbbbcaaab" ~~ /^@foo+$/), 'Multiple array non-compiling');
 ok("aaaabbbbbcaaab" ~~ /^<@foo>+$/, 'Multiple array compiling');
 
 # L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
+#?rakudo 2 todo "we are not checking for %hashes yet"
+throws-like  '/%var/', Exception, 'cannot interpolate hashes into regexes';
 throws-like 'm/%var/', Exception, 'cannot interpolate hashes into regexes';
 
 # L<S05/Variable (non-)interpolation/If $var is undefined>
 # This is similar to a test in S05-match/capturing-contexts.t
-#?niecza skip 'Object reference not set to an instance of an object'
 {
     my $u;
     ok 'a' !~~ /$u/, 'undefined variable does not match';
@@ -119,7 +119,6 @@ throws-like 'm/%var/', Exception, 'cannot interpolate hashes into regexes';
 }
 
 # RT #122253
-#?niecza skip "Representation P6cursor does not support attributes"
 {
     throws-like { EVAL 'my class InterpolationTest { has $!a; method m() { /$!a/ } }' },
         X::Attribute::Regex, :symbol<$!a>,

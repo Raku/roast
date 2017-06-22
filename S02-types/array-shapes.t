@@ -1,10 +1,9 @@
 use v6;
 use Test;
-plan 24;
+plan 34;
 
 # L<S09/Fixed-size arrays>
 
-#?rakudo skip 'array shapes NYI RT #124502'
 {
     my @arr[*];
     @arr[42] = "foo";
@@ -95,4 +94,49 @@ plan 24;
     throws-like 'push @arr, 4.2',
       X::IllegalOnFixedDimensionArray,
       operation => 'push';
+}
+
+# RT 126800
+{
+    throws-like 'my @a[0]',
+        X::IllegalDimensionInShape;
+    throws-like 'my @a[-9999999999999999]',
+        X::IllegalDimensionInShape;
+    throws-like 'my @a[-9223372036854775808,-2]',
+        X::IllegalDimensionInShape;
+}
+
+# RT #130513
+subtest '.List on uninited shaped array' => {
+    plan 2;
+
+    my @a[2;2];
+    my @result;
+    lives-ok { @result = @a.List }, 'does not die';
+    is-deeply @result, [Any xx 4],  'gives correct results';
+}
+
+# RT #130510
+eval-lives-ok ｢my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>)｣,
+    '@c[some shape] accepts a .new: :shape(same shape)...';
+
+# RT #130440
+{
+    my @a[1;1]; for @a.pairs -> $p { $p.value = 42 };
+    is-deeply @a[0;0], 42,
+        '@shaped-array.pairs provides with writable container in .value';
+
+    my @b[1]; for @b.values <-> $a { $a = 42 };
+    is-deeply @b[0], 42,
+        '@shaped-array.values provides with writable containers';
+}
+
+# https://irclog.perlgeek.de/perl6/2017-03-20#i_14297219
+#?rakudo.jvm skip 'Cannot modify an immutable Int'
+{
+    # Z= for shape filling
+    my int @a[2;3] Z= 0..5;
+    is +@a, 2, 'Z= shape filling';
+    is @a[0;1], 1, 'Z= shape filling';
+    is @a[1;2], 5, 'Z= shape filling';
 }

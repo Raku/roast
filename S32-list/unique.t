@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 39;
 
 =begin description
 
@@ -29,7 +29,6 @@ This test tests the C<unique> builtin.
 } #1
 
 # With a userspecified criterion
-#?niecza skip "with NYI"
 {
     my @array = <a b d A c b>;
     # Semantics w/o junctions
@@ -72,14 +71,12 @@ This test tests the C<unique> builtin.
 {
     my $a = <a b c b d>;
     $a .= unique;
-    #?rakudo.jvm skip 'This Seq has already been iterated, and its values consumed'
     is-deeply( $a.List, <a b c d>, '.= unique in sink context works on $a' );
     my @a = <a b c b d>;
     @a .= unique;
     is-deeply( @a, [<a b c d>], '.= unique in sink context works on @a' );
 } #2
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
     my $as    = *.substr: 0,1;
@@ -93,7 +90,6 @@ This test tests the C<unique> builtin.
       "final result with :as in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
     my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
@@ -107,7 +103,6 @@ This test tests the C<unique> builtin.
       "final result with :with in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
     my $as    = *.substr(0,1).ord;
@@ -122,7 +117,6 @@ This test tests the C<unique> builtin.
       "final result with :as in place";
 } #4
 
-#?niecza skip 'NYI'
 {
     my @array = ({:a<1>}, {:b<1>}, {:a<1>});
     my $with  = &[eqv];
@@ -136,16 +130,34 @@ This test tests the C<unique> builtin.
       "final result with [eqv] and objects in place";
 } #4
 
+# :with and :as
+{
+    my @array = ({:a<1>}, {:b<1>}, {:A<1>});
+    my $as = &lc;
+    my $with = &[eqv];
+    is-deeply @array.unique(:$as, :$with).List,  ({:a<1>}, {:b<1>}),
+      "method form of unique with :as and :with and objects works";
+    is-deeply unique(@array, :$as, :$with).List, ({:a<1>}, {:b<1>}),
+      "subroutine form of unique with :as and :with and objects works";
+    is-deeply @array .= unique(:$as, :$with), [{:a<1>}, {:b<1>}],
+      "inplace form of unique with :as and :with and objects works";
+    is-deeply @array, [{:a<1>}, {:b<1>}],
+      "final result with :as and :with and objects in place";
+} #4
+
 # RT #121434
 {
     my %a;
     %a<foo> = <a b c>;
     %a<foo>.=unique;
-    #?rakudo.jvm skip 'This Seq has already been iterated, and its values consumed'
+    #?rakudo.jvm skip 'This Seq has already been iterated, RT #128720'
     is-deeply %a<foo>.List, <a b c>,
       "\%a<foo> not clobbered by .=unique";
 } # 1
 
 is ((1,2,3),(1,2),(1,2)).unique(:with({$^a eqv $^b})), "1 2 3 1 2", ".unique doesn't flatten";
+
+# RT#130852
+eval-lives-ok ｢Scalar.unique｣, 'no SEGV with Scalar.unique';
 
 # vim: ft=perl6

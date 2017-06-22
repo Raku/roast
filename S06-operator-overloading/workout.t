@@ -37,7 +37,7 @@ multi sub infix:<T**>(Vector $a, $b) { Vector.new($a.coords >>**>> $b); }
 multi sub infix:<⋅>(Vector $a, Vector $b) { [+]($a.coords »*« $b.coords); }
 multi sub infix:<dot>(Vector $a, Vector $b) { [+]($a.coords >>*<< $b.coords); }
 
-### note the is_approx from Test.pm doesn't lift infix:<-> and abs,
+### note the is-approx from Test.pm doesn't lift infix:<-> and abs,
 # so we can't expect it work with class Vector. Thus we re-make one that does
 # the custom ops
 
@@ -52,8 +52,8 @@ sub ia($got, $expected, $descr =  "$got is approximately $expected") {
     ?$test;
 }
 
-# a few Vector sanity tests, verifying we can use is_approx for Vectors
-# Note that this assumes that is_approx (1) lifts its operators (See S04)
+# a few Vector sanity tests, verifying we can use is-approx for Vectors
+# Note that this assumes that is-approx (1) lifts its operators (See S04)
 # and (2) uses the method form of abs(), or lifts abs() too.
 # Needs more discussion and spec coverage.
 {

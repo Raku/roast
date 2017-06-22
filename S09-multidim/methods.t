@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 82;
+plan 80;
 
 # Object array
 {
@@ -21,7 +21,6 @@ plan 82;
     throws-like { @arr.prepend(1) }, X::IllegalOnFixedDimensionArray, operation => 'prepend';
     throws-like { @arr.shift() }, X::IllegalOnFixedDimensionArray, operation => 'shift';
     throws-like { @arr.splice(1) }, X::IllegalOnFixedDimensionArray, operation => 'splice';
-    throws-like { @arr.plan(1) }, X::IllegalOnFixedDimensionArray, operation => 'plan';
     throws-like { @arr.reverse }, X::IllegalOnFixedDimensionArray, operation => 'reverse';
     throws-like { @arr.rotate(1) }, X::IllegalOnFixedDimensionArray, operation => 'rotate';
     
@@ -67,9 +66,7 @@ plan 82;
     my @one-dim := Array.new(:shape(4));
     @one-dim = 1..4;
     is @one-dim.reverse, [4,3,2,1], 'can reverse a 1-dim fixed size array';
-    is @one-dim.reverse.shape, (4,), 'reverse on fixed-dim array retains shape';
     is @one-dim.rotate(-1), [4,1,2,3], 'can rotate a 1-dim fixed size array';
-    is @one-dim.rotate(-1).shape, (4,), 'rotate a 1-dim fixed size array retains shape';
 }
 
 # Native array
@@ -90,7 +87,6 @@ plan 82;
     throws-like { @arr.prepend(1) }, X::IllegalOnFixedDimensionArray, operation => 'prepend';
     throws-like { @arr.shift() }, X::IllegalOnFixedDimensionArray, operation => 'shift';
     throws-like { @arr.splice(1) }, X::IllegalOnFixedDimensionArray, operation => 'splice';
-    throws-like { @arr.plan(1) }, X::IllegalOnFixedDimensionArray, operation => 'plan';
     throws-like { @arr.reverse }, X::IllegalOnFixedDimensionArray, operation => 'reverse';
     throws-like { @arr.rotate(1) }, X::IllegalOnFixedDimensionArray, operation => 'rotate';
     
@@ -133,4 +129,12 @@ plan 82;
     is @arr.gist, '[[42 43] [44 45]]', '.gist represents structure (native)';
     is @arr.perl, 'array[int].new(:shape(2, 2), [42, 43], [44, 45])',
         '.perl retains structure (native)';
+}
+
+{
+    my @a[5] = ^5;
+    @a = @a.rotate;
+    is @a, "1 2 3 4 0", 'can we assign after a .rotate?';
+    @a = @a.reverse;
+    is @a, "0 4 3 2 1", 'can we assign after a .reverse?';
 }

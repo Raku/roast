@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 14;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -27,3 +27,28 @@ r((1 => 1, 3 => -1), :partial, 'a|c d e|e|g h');
 
 is (1..*).rotor((1..*))[^4].join('|'),
    '1|2 3|4 5 6|7 8 9 10', '.rotor on infinite list';
+
+# RT #127437
+throws-like { <a b c>.rotor: 1 => -2 }, X::OutOfRange,
+    ’using negative gap that lands past the list's head throws‘;
+
+# RT #127424
+subtest 'non-Int numerals as arguments to rotor get coersed to Int' => {
+    plan 4;
+    is-deeply (^9 .rotor: 2.5       ), (^9 .rotor: 2         ), 'one-arg';
+    is-deeply (^9 .rotor: 2.5 => 1  ), (^9 .rotor: 2.5 => 1  ), 'pair(Rat,Int)';
+    is-deeply (^9 .rotor: 2   => 2.5), (^9 .rotor: 2   => 2.5), 'pair(Int,Rat)';
+    is-deeply (^9 .rotor: 2.5 => 2.5), (^9 .rotor: 2.5 => 2.5), 'pair(Rat,Rat)';
+}
+
+# RT #130283
+is-deeply ().rotor(1), ().Seq, '.rotor on empty list gives empty Seq';
+
+# RT #130725
+is-deeply (gather do for ^2 { "x".take }).rotor(3, :partial).eager, (<x x>,),
+    ".rotor(:partial) works with gather/take";
+
+# RT #129175
+is-deeply <a b c d e f>.rotor(1...*),
+    (("a",), ("b", "c"), ("d", "e", "f")).Seq,
+    '.rotor does not hang when given infinite iterable as cycle';

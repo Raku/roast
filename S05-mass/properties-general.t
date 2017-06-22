@@ -6,7 +6,7 @@ use Test;
 This file was originally derived from the perl5 CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/properties_slow_to_compile.t.
 
-XXX needs more clarification on the case of the rules, 
+XXX needs more clarification on the case of the rules,
 ie letter vs. Letter vs isLetter
 
 U+FFFE and U+FFFF are guaranteed noncharacters.  A previous version of
@@ -15,7 +15,7 @@ Unicode 5.2.
 
 =end pod
 
-plan 606;
+plan 608;
 
 # L           Letter
 
@@ -155,8 +155,7 @@ ok("\x[FFFF]\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/<:OtherLetter>/, q{Match unanc
 
 
 #?rakudo.moar 3 todo "No [Lr] property defined RT #124860"
-#?rakudo.jvm  10 skip "RT #124500" 
-#?niecza 10 skip "No [Lr] property defined"
+#?rakudo.jvm  10 skip "RT #124500"
 ok("\c[LATIN CAPITAL LETTER A]" ~~ m/^<:Lr>$/, q{Match (Alias for "Ll", "Lu", and "Lt".)} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<:!Lr>$/ ), q{Don't match negated (Alias for "Ll", "Lu", and "Lt".)} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<-:Lr>$/ ), q{Don't match inverted (Alias for "Ll", "Lu", and "Lt".)} );
@@ -791,7 +790,7 @@ ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Forma
 # http://www.unicode.org/review/pr-176.html Public Review Issue #176: Properties of Two Khmer Characters
 # Closed 2010-11-08. The two characters will be changed from format characters to ignorable non-spacing
 # marks for Unicode 6.1, so that their properties match more closely the desired collation behavior. UCA
-# 6.1 will also be updated to make the characters ignorable for collation. 
+# 6.1 will also be updated to make the characters ignorable for collation.
 {
     ok("\c[SYRIAC ABBREVIATION MARK]"     ~~ m/^<:Format>$/,    q{Match <:Format>} );
     ok(!( "\c[SYRIAC ABBREVIATION MARK]"  ~~ m/^<:!Format>$/ ), q{Don't match negated <Format>} );
@@ -813,8 +812,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
     is $ascii-chars.comb(/<:ascii>+/).join(""), $ascii-chars, 'ascii chars';
 
     is 'abc' ~~ /<:alpha>+/, 'abc', 'alpha chars';
-
-    is '	 	' ~~ /<:space>+/, ' ', 'space chars';
+    is "\t \t" ~~ /<:space>+/, ' ', 'space chars';  # RT #130483
 
     is $latin-chars.comb(/<:cntrl>/)>>.ord.join(","), (flat 0..31, 127..159).join(","), 'cntrl chars';
 
@@ -823,5 +821,10 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
 
     is '-./:' ~~ /<:punct>+/, '-./:', 'punct chars';
 }
+
+is '  ' ~~ m/<:White_Space>+/, '  ', '<:White_Space> matches space in regex';
+#?rakudo.moar todo "<alpha> doesn't match alphabetics which are not Letters"
+# https://github.com/MoarVM/MoarVM/issues/521
+is 'Ⓐ' ~~ m/<alpha>/, 'Ⓐ', '<alpha> matches alphabetics which are not Letters';
 
 # vim: ft=perl6

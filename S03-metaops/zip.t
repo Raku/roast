@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 75;
+plan 76;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -29,27 +29,21 @@ is (1 Z* 3), (3), 'zip-product works with scalar both sides';
 # L<S03/"Hyper operators"/is assumed to be infinitely extensible>
 
 {
-#?niecza todo
 is (<a b c d> Z 'x', 'z', *), <a x b z c z d z>, 'non-meta zip extends right argument ending with *';
-#?niecza todo
 is (1, 2, 3, * Z 10, 20, 30, 40, 50),
     (1, 10, 2, 20, 3, 30, 3, 40, 3, 50), 'non-meta zip extends left argument ending with *';
-#?niecza skip 'Unable to resolve method munch in class List'
 is (2, 10, * Z 3, 4, 5, *).[^5],
     (2, 3, 10, 4, 10, 5, 10, 5, 10, 5),
     'non-meta zip extends two arguments ending with *';
-#?niecza todo
 is (<a b c d> Z~ 'x', 'z', *), <ax bz cz dz>, 'zip-concat extends right argument ending with *';
 }
 
-#?niecza skip 'Cannot use value like Whatever as a number'
 {
 is (1, 2, 3, * Z+ 10, 20, 30, 40, 50), (11, 22, 33, 43, 53), 'zip-plus extends left argument ending with *';
 is (2, 10, * Z* 3, 4, 5, *).[^5],
     (6, 40, 50, 50, 50), 'zip-product extends two arguments ending with *';
 }
 
-#?niecza todo
 {
     is join(',', [Z+] (1, 2), (20, 10), (100, 200)),
        '121,212', '[Z+] with three lists';
@@ -120,7 +114,6 @@ is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
 throws-like '3 Z. foo', X::Syntax::CannotMeta, "Z. is too fiddly";
 throws-like '3 Z. "foo"', X::Obsolete, "Z. can't do P5 concat";
 
-#?rakudo.jvm 4 skip 'RT #126493'
 is-deeply &infix:<Z+>((1,2,3),(4,5,6)), (5, 7, 9), "Meta zip can autogen";
 is-deeply &infix:<Z+>((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ary)";
 is-deeply infix:<Z+>((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ary) without &";
@@ -196,5 +189,7 @@ is ($(1, 2) Z~ <a b c>), ('1 2a',),
     'Z meta-op respects itemization of arguments (1)';
 is (<a b c> Z~ $(1, 2)), ('a1 2',),
     'Z meta-op respects itemization of arguments (2)';
+
+is-deeply infix:<Z>(), ().Seq, 'artity-0 Z returns a Seq';
 
 # vim: ft=perl6

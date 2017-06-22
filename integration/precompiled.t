@@ -36,7 +36,6 @@ precomp_loads_is '[ $(array[uint8].new(1)), $(array[uint8].new(1)) ]', [1,1],
 # RT #123679
 precomp_loads_ok(['role Bar { has Str $.my-str handles <lines words> }','class Foo does Bar { }; my $io = Foo.new(:my-str<OHAI>);'], "precompiled role with handles trait on attribute");
 
-#?rakudo todo 'RT #124324 Missing or wrong version of dependency'
 precomp_loads_is 'BEGIN { EVAL "43" }', 43, "precompiled EVAL in BEGIN";
 
 

@@ -1,8 +1,7 @@
 use v6;
 use Test;
 
-#?niecza emit plan 12; #
-plan 15;
+plan 19;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -16,20 +15,15 @@ sub f() {
     ok callframe().file ~~ /« callframe »/, '.file';
 
     #?rakudo skip 'Unable to resolve method inline in type CallFrame'
-    #?niecza skip 'Unable to resolve method inline in type CallFrame'
     nok callframe().inline, 'explicitly entered block (.inline)';
 
     # Note:  According to S02, these should probably fail unless
     # $x is marked 'is dynamic'.  We allow it for now since there's
     # still some uncertainty in the spec in S06, though.
-    #?niecza skip 'Unable to resolve method my in type CallFrame'
     is callframe(1).my.<$x>, 42, 'can access outer lexicals via .my';
-    #?niecza emit #
     callframe(1).my.<$x> = 23;
 
-    #?niecza skip 'Unable to resolve method my in type CallFrame'
     is callframe(1).my.<$y>, 353, 'can access outer lexicals via .my';
-    #?niecza emit #
     dies-ok { callframe(1).my.<$y> = 768 }, 'cannot mutate without is dynamic';;
 
     lower();
@@ -47,13 +41,29 @@ my $y = 353;
 
 f();
 
-#?niecza todo 'needs .my'
 is $x,  23, '$x successfully modified';
 is $y, 353, '$y not modified';
 
 # RT #77752
-#?rakudo.jvm skip 'NullPointerException RT #77752'
+#?rakudo.jvm skip 'ContextRef representation does not implement elems RT #77752'
 ok callframe.perl.starts-with("CallFrame.new("), 'CallFrame.perl works';
 ok callframe.gist.starts-with($*PROGRAM-NAME),   'CallFrame.gist works';
+
+# RT #127479
+#?rakudo.jvm todo 'ContextRef representation does not implement elems RT #127479'
+lives-ok { sub{callframe.perl}() }, '.perl on callframe in a sub does not crash';
+
+lives-ok {
+    sub foo() { callframe(1).file.ends-with('x') }
+    for ^300 { foo() }
+}, 'No crash when using callframe(1).file many times in a loop';
+
+lives-ok {
+    my $g;
+    for ^200 { next if $_ < 199; $g = callframe.gist }
+}, 'No crash when using callframe.gist in a hot loop';
+
+# https://github.com/rakudo/rakudo/commit/9a74cd0e51
+lives-ok { callframe(1).annotations }, '.annotations does not crash';
 
 # vim: ft=perl6

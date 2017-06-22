@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 28;
 
 # Undeterminate Math results
 # see L<"http://mathworld.wolfram.com/Indeterminate.html">
@@ -34,14 +34,36 @@ ok NaN + 1i ~~ (NaN)i, "NaN + 1i ~~ (NaN)i";
 
 ok truncate(NaN) ~~ NaN, 'truncate(NaN) ~~ NaN';
 
-#?rakudo skip 'RT #83446'
-#?niecza skip 'Nominal type check failed for scalar store; got Num, needed Int or subtype'
-ok (my Int $rt83446 = NaN) ~~ NaN, 'NaN fits in Int';
-
 #RT #103500
 is NaN.perl, 'NaN', 'NaN perlification ok';
 
 #RT #83622
 ok NaN===NaN, "NaN value identity";
+ok (my num $ = NaN) === (my num $ = NaN), "NaN value identity (native num)";
+
+{
+    #RT #126990
+    throws-like { my Int $x = NaN }, X::TypeCheck::Assignment,
+        message => /'expected Int but got Num (NaN)'/,
+    "trying to assign NaN to Int gives a helpful error";
+
+    my Num $x = NaN;
+    is $x, NaN, 'assigning NaN to Num works without errors';
+}
+
+{ # RT #129002
+    my $mynan = my class MyNum is Num {}.new(NaN);
+    is-deeply $mynan == NaN,  False, 'sublcass of NaN !== NaN';
+    is-deeply $mynan === NaN, False, 'sublcass of NaN !=== NaN';
+}
+
+{ # https://irclog.perlgeek.de/perl6/2017-01-20#i_13959538
+    my $a = NaN;
+    my $b = NaN;
+    is-deeply $a eqv $b,   True, 'NaN eqv NaN when stored in variables';
+    is-deeply NaN eqv NaN, True, 'NaN eqv NaN when using literals';
+    is-deeply (my num $ = NaN) eqv (my num $ = NaN), True,
+        'NaN eqv NaN when using native nums';
+}
 
 # vim: ft=perl6

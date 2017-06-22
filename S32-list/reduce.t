@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 =begin description
 
@@ -11,7 +12,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 15;
+plan 17;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -28,7 +29,6 @@ plan 15;
   my @array  = <1 2 3 4 5 6 7 8 9>;
   my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * 9;
 
-  #?niecza skip 'n-ary reduce'
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
 }
 
@@ -37,9 +37,8 @@ plan 15;
   my @array  = <1 2 3 4 5 6 7 8 9>;
   my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * 9;
 
-  sub infix:<leftly> { $^a + $^b * $^c } 
+  sub infix:<leftly> { $^a + $^b * $^c }
 
-  #?niecza skip 'n-ary reduce'
   is ([leftly] @array), $result, "n-ary reduce() works";
 }
 
@@ -49,7 +48,6 @@ plan 15;
   my $result = 1 + 2 * (3 + 4 * (5 + 6 * (7 + 8 * 9)));
   sub rightly is assoc<right> { $^a + $^b * $^c }
 
-  #?niecza skip 'n-ary reduce'
   is (@array.reduce: &rightly).gist, $result.gist, "right assoc n-ary reduce() works";
 }
 
@@ -58,7 +56,6 @@ plan 15;
   my $result = 1 + 2 * (3 + 4 * (5 + 6 * (7 + 8 * 9)));
   sub infix:<rightly> is assoc<right> { $^a + $^b * $^c }
 
-  #?niecza skip 'n-ary reduce'
   is ([rightly] @array).gist, $result.gist, "right assoc n-ary reduce() works";
 }
 
@@ -81,6 +78,7 @@ plan 15;
 }
 
 is( (1).list.reduce({$^a * $^b}), 1, "Reduce of one element list produces correct result");
+is-deeply(reduce(&infix:<+>, 72), 72, "reduce with one item returns that item");
 
 eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
 
@@ -94,6 +92,12 @@ eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
     multi a (Str $a, Str $b) { [+$a, +$b] };
     multi a (Array $a,$b where "+") { [+] @($a) };  #OK not used
     is ("1", "2", "+").reduce(&a), 3, 'reduce and multi subs';
+}
+
+{
+    doesn't-warn {
+        (^10).reduce(sub f ($a, $b) is assoc<right> {"Tuple $a ($b)"})
+    }, 'no warnings when setting associativity on the reduce &with';
 }
 
 # vim: ft=perl6

@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
 =begin description
 
@@ -8,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 38;
+plan 63;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -18,9 +19,60 @@ is(1 x 5, '11111', 'number repeat operator works on number and creates string');
 is('' x 6, '', 'repeating an empty string creates an empty string');
 is('a' x 0, '', 'repeating zero times produces an empty string');
 is('a' x -1, '', 'repeating negative times produces an empty string');
-is 'a' x 2.2, 'aa', 'repeating with a fractional number coerces to Int';
+is('a' x 2.2, 'aa', 'repeating with a fractional number coerces to Int');
 # RT #114670
-is 'str' x Int, '', 'x with Int type object';
+is('str' x Int, '', 'x with Int type object');
+# RT #125628
+{
+    throws-like(
+        { 'a' x -NaN },
+        Exception,
+        message => 'Cannot coerce NaN to an Int',
+        'repeating with -NaN fails'
+    );
+    throws-like(
+        { 'a' x NaN },
+        Exception,
+        message => 'Cannot coerce NaN to an Int',
+        'repeating with NaN fails'
+    );
+    throws-like(
+        { 'a' x -Inf },
+        Exception,
+        message => 'Cannot coerce -Inf to an Int',
+        'repeating with -Inf fails'
+    );
+    isa-ok('a' x Inf, Failure, 'repeating with Inf is a Failure');
+    isa-ok('a' x *, WhateverCode, 'repeating with * is a WhateverCode');
+
+    throws-like(
+        { 'a' xx -NaN },
+        Exception,
+        message => 'Cannot coerce NaN to an Int',
+        'list repeating with -NaN fails'
+    );
+    throws-like(
+        { 'a' xx NaN },
+        Exception,
+        message => 'Cannot coerce NaN to an Int',
+        'list repeating with NaN fails'
+    );
+    throws-like(
+        { 'a' xx -Inf },
+        Exception,
+        message => 'Cannot coerce -Inf to an Int',
+        'list repeating with -Inf fails'
+    );
+}
+# RT #128035
+#?rakudo.jvm skip 'OutOfMemoryError: Java heap space'
+{
+    my $a;
+    lives-ok({ $a = 'a' x 1073741824 }, 'repeat count equal to the NQP limit works');
+    is($a.chars, 1073741824, 'correct result for count equal to the NQP limit');
+
+    throws-like({ $a = 'a' x 9999999999999999999 }, Exception, 'too large repeat count throws instead of going negative');
+}
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
 my @foo = 'x' xx 10;
@@ -108,5 +160,55 @@ is ((2, 4, 6) xx *)[^2], ((2, 4, 6), (2, 4, 6)),
     'xx * retains structure with list on LHS';
 is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
     'xx * retains structure with Seq on LHS';
+
+{
+    # RT #128382
+    my $is-sunk = 0;
+    my class A { method sink() { $is-sunk++ } };
+    my @a = A.new xx 10;
+    is $is-sunk, 0, 'xx does not sink';
+}
+
+{ # coverage; 2016-10-11
+    throws-like { infix:<xx>() }, Exception, 'xx with no args throws';
+    is-deeply infix:<xx>(2), 2, 'xx with single arg is identity';
+
+    is-deeply infix:<xx>({$++;}, *)[^200],  (|^200).Seq,
+        '(& xx *) works as & xx Inf';
+    is-deeply infix:<xx>({$++;}, Inf)[^20], (|^20).Seq,
+        '(& xx Inf) works as & xx Inf';
+    is-deeply infix:<xx>({$++;}, 4e0)[^4],  (|^4).Seq,
+        '(& xx Num) works as & xx Int';
+}
+
+# RT 129899
+{
+    throws-like { 'a' x 'b' }, X::Str::Numeric, 'x does not silence failures';
+    is-deeply 'a' x Int, '', 'type objects get interpreted as 0 iterations';
+}
+
+# RT #130288
+{
+    throws-like ｢rand xx '123aaa'｣, X::Str::Numeric,
+        'Failures in RHS of xx explode (callable LHS)';
+    throws-like ｢42   xx '123aaa'｣, X::Str::Numeric,
+        'Failures in RHS of xx explode (Int LHS)';
+}
+
+# RT #130281
+warns-like { 'x' x Int }, *.contains('uninitialized' & 'numeric'),
+    'using an unitialized value in repeat count throws';
+
+# RT #130619
+is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
+    'empty slip with xx * works';
+
+# RT #127971,130924
+{
+    dies-ok { my $a = "a" x 2**30; my $b = "b" x 2**30; my $c = $a ~ $b; my $d = $b ~ $a; my $e = $c ~ $d; },
+        'concatenating strings with `~` that would create a too large result dies';
+    dies-ok { (('a' x 1000000) x 1000000) },
+        'repeating strings with `x` that would create a too large result dies';
+}
 
 # vim: ft=perl6

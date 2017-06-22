@@ -11,6 +11,7 @@ is class { has Int:_ $.a       }.new.a,   Int, 'can Int:_ be on its own';
 is class { has Int:_ $.a = Int }.new.a,   Int, 'can Int:_ take an Int:U';
 is class { has Int:_ $.a = 42  }.new.a,    42, 'can Int:_ take an Int:D';
 
+#?rakudo.jvm todo "got '?.?' RT #128031"
 is class { has Int:U $.a       }.new.a, Int:U, 'can Int:U be on its own';
 is class { has Int:U $.a = Int }.new.a,   Int, 'can Int:U take an Int:U';
 throws-like { class { has Int:U $.a = 42 }.new.a }, 
@@ -35,6 +36,7 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
     is class { has Int:_ $.a = Int }.new.a,   Int, 'with :_, can Int:_ take an Int:U';
     is class { has Int:_ $.a = 42  }.new.a,    42, 'with :_, can Int:_ take an Int:D';
 
+    #?rakudo.jvm todo "got '?.?' RT #128031"
     is class { has Int:U $.a       }.new.a, Int:U, 'with :_, can Int:U be on its own';
     is class { has Int:U $.a = Int }.new.a,   Int, 'with :_, can Int:U take an Int:U';
     throws-like { class { has Int:U $.a = 42 }.new }, 
@@ -52,6 +54,7 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
 
 {
     use attributes :U;
+    #?rakudo.jvm todo "got '?.?' RT #128031"
     is class { has Int   $.a       }.new.a, Int:U, 'with :U, can Int   be on its own';
     is class { has Int   $.a = Int }.new.a,   Int, 'with :U, can Int   take an Int:U';
     throws-like { class { has Int $a = 42 }.new }, 
@@ -62,6 +65,7 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
     is class { has Int:_ $.a = Int }.new.a,   Int, 'with :U, can Int:_ take an Int:U';
     is class { has Int:_ $.a = 42  }.new.a,    42, 'with :U, can Int:_ take an Int:D';
 
+    #?rakudo.jvm todo "got '?.?' RT #128031"
     is class { has Int:U $.a       }.new.a, Int:U, 'with :U, can Int:U be on its own';
     is class { has Int:U $.a = Int }.new.a,   Int, 'with :U, can Int:U take an Int:U';
     throws-like { class { has Int:U $.a = 42 }.new }, 
@@ -91,6 +95,7 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
     is class { has Int:_ $.a = Int }.new.a,   Int, 'with :D, can Int:_ take an Int:U';
     is class { has Int:_ $.a =  42 }.new.a,    42, 'with :D, can Int:_ take an Int:D';
 
+    #?rakudo.jvm todo "got '?.?' RT #128031"
     is class { has Int:U $.a       }.new.a, Int:U, 'with :D, can Int:U be on its own';
     is class { has Int:U $.a = Int }.new.a,   Int, 'with :D, can Int:U take an Int:U';
     throws-like { class { has Int:U $.a = 42 }.new }, 
