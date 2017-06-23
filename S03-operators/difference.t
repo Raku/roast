@@ -46,21 +46,21 @@ my @triplets =
   (a=>pi,b=>tau).MixHash,       mix(),         (a=>pi,b=>tau).Mix,
   (a=>pi,b=>tau).Mix,           <a b>.Mix,     (a=>(pi-1),b=>(tau-1)).Mix,
   (a=>pi,b=>tau).MixHash,       <a b>.MixHash, (a=>(pi-1),b=>(tau-1)).Mix,
-#  (a=>pi,b=>tau).Mix,           <c d>.Mix,     (a=>pi,b=>tau,c=>-1,d=>-1).Mix,
-#  (a=>pi,b=>tau).Mix,           <b c>.Mix,     (a=>pi,b=>(tau-1),c=>-1).Mix,
-#  (a=>pi,b=>tau).MixHash,       <c d>.MixHash, (a=>pi,b=>tau,c=>-1,d=>-1).Mix,
-#  (a=>pi,b=>tau).MixHash,       <b c>.MixHash, (a=>pi,b=>(tau-1),c=>-1).Mix,
+  (a=>pi,b=>tau).Mix,           <c d>.Mix,     (a=>pi,b=>tau,c=>-1,d=>-1).Mix,
+  (a=>pi,b=>tau).Mix,           <b c>.Mix,     (a=>pi,b=>(tau-1),c=>-1).Mix,
+  (a=>pi,b=>tau).MixHash,       <c d>.MixHash, (a=>pi,b=>tau,c=>-1,d=>-1).Mix,
+  (a=>pi,b=>tau).MixHash,       <b c>.MixHash, (a=>pi,b=>(tau-1),c=>-1).Mix,
 
   # coercions
   <a b>.Set,                    <a b b>.Bag,       bag(),
   <a b>.SetHash,                <a b b>.BagHash,   bag(),
 
-#  <a b>.Bag,                    <a b b>.Mix,       (b=>-1).Mix,
-#  <a b>.BagHash,                <a b b>.MixHash,   (b=>-1).Mix,
+  <a b>.Bag,                    <a b b>.Mix,       (b=>-1).Mix,
+  <a b>.BagHash,                <a b b>.MixHash,   (b=>-1).Mix,
 
   <a b c>.Set,                  <a b c d>,         set(),
   <a b c>.Bag,                  <a b c d>,         bag(),
-#  <a b c>.Mix,                  <a b c d>,         (d=>-1).Mix,
+  <a b c>.Mix,                  <a b c d>,         (d=>-1).Mix,
 
   <a b c>,                      <c d e>,           <a b>.Set,
   (:42a,:0b),                   (:c,:42d,"e"),     <a>.Set,
