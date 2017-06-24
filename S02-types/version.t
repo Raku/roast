@@ -13,7 +13,7 @@ my sub vtest($cmp, *@v) {
 }
 
 # From S03
-vtest Order::Same, 
+vtest Order::Same,
     < 1.2.1alpha1.0
       1.2.1alpha1
       1.2.1.alpha1
