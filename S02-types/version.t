@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
-plan 43;
+plan 44;
 
 my sub vtest($cmp, *@v) {
     my $x = shift @v;
@@ -67,3 +69,7 @@ is v12.3.4 cmp Version.new("12.3.4"), Order::Same, 'can parse literal versions w
     (Version.new("6.$_") cmp v2) ~~ Order::More or $future-versions-ok = False for 'c' .. 'zz';
     ok $future-versions-ok, 'v6. is newer than v2 for c..zz [Version.new]';
 }
+
+# https://irclog.perlgeek.de/perl6/2017-06-24#i_14781849
+is_run ｢use v6c; print "OK";｣, {:out('OK'), :err(''), :0status},
+    'can use `v6c` version literal (no dot) when specifying Perl 6 version';
