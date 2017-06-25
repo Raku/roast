@@ -54,13 +54,56 @@ my @triplets =
   # coercions
   <a b>.Set,                    <a b b>.Bag,       bag(),
   <a b>.SetHash,                <a b b>.BagHash,   bag(),
+  <a b b>.Bag,                  <a b>.Set,         <b>.Bag,
+  <a b b>.BagHash,              <a b>.SetHash,     <b>.Bag,
+
+  <a b>.Set,                    <a b b>.Mix,       (b=>-1).Mix,
+  <a b>.SetHash,                <a b b>.MixHash,   (b=>-1).Mix,
+  <a b b>.Mix,                  <a b>.Set,         <b>.Mix,
+  <a b b>.MixHash,              <a b>.SetHash,     <b>.Mix,
+
+  <a b>.Set,                    (b=>-1).Mix,       <a b b>.Mix,
+  <a b>.SetHash,                (b=>-1).MixHash,   <a b b>.Mix,
+  (b=>-1).Mix,                  <a b>.Set,         (a=>-1,b=>-2).Mix,
+  (b=>-1).MixHash,              <a b>.SetHash,     (a=>-1,b=>-2).Mix,
 
   <a b>.Bag,                    <a b b>.Mix,       (b=>-1).Mix,
   <a b>.BagHash,                <a b b>.MixHash,   (b=>-1).Mix,
+  <a b>.Mix,                    <a b b>.Bag,       (b=>-1).Mix,
+  <a b>.MixHash,                <a b b>.BagHash,   (b=>-1).Mix,
+
+  <a b>.Bag,                    (b=>-1).Mix,       <a b b>.Mix,
+  <a b>.BagHash,                (b=>-1).MixHash,   <a b b>.Mix,
+  (b=>-1).Mix,                  <a b b>.Bag,       (a=>-1,b=>-3).Mix,
+  (b=>-1).MixHash,              <a b b>.BagHash,   (a=>-1,b=>-3).Mix,
+
+  <a b c>.Set,                  {:42a,:0b},        <b c>.Set,
+  <a b c>.SetHash,              {:42a,:0b},        <b c>.Set,
+  <a b b c>.Bag,                {:42a,:0b},        <b b c>.Bag,
+  <a b b c>.BagHash,            {:42a,:0b},        <b b c>.Bag,
+  <a b b c>.Mix,                {:42a,:0b},        (a=>-41,:2b,:1c).Mix,
+  <a b b c>.MixHash,            {:42a,:0b},        (a=>-41,:2b,:1c).Mix,
+
+  {:42a,:0b},                   <a b c>.Set,       set(),
+  {:42a,:0b},                   <a b c>.SetHash,   set(),
+  {:42a,:0b},                   <a b b c>.Bag,     (:41a).Bag,
+  {:42a,:0b},                   <a b b c>.BagHash, (:41a).Bag,
+  {:42a,:0b},                   <a b b c>.Mix,     (:41a,b=>-2,c=>-1).Mix,
+  {:42a,:0b},                   <a b b c>.MixHash, (:41a,b=>-2,c=>-1).Mix,
 
   <a b c>.Set,                  <a b c d>,         set(),
-  <a b c>.Bag,                  <a b c d>,         bag(),
-  <a b c>.Mix,                  <a b c d>,         (d=>-1).Mix,
+  <a b c>.SetHash,              <a b c d>,         set(),
+  <a b b c>.Bag,                <a b c d>,         <b>.Bag,
+  <a b b c>.BagHash,            <a b c d>,         <b>.Bag,
+  <a b b c>.Mix,                <a b c d>,         (b=>1,d=>-1).Mix,
+  <a b b c>.MixHash,            <a b c d>,         (b=>1,d=>-1).Mix,
+
+  <a b c d>,                    <a b c e>.Set,     <d>.Set,
+  <a b c d>,                    <a b c e>.SetHash, <d>.Set,
+  <a b c d>,                    <a b c e>.Bag,     <d>.Bag,
+  <a b c d>,                    <a b c e>.BagHash, <d>.Bag,
+  <a b c d>,                    <a b c e>.Mix,     (d=>1,e=>-1).Mix,
+  <a b c d>,                    <a b c e>.MixHash, (d=>1,e=>-1).Mix,
 
   <a b c>,                      <c d e>,           <a b>.Set,
   (:42a,:0b),                   (:c,:42d,"e"),     <a>.Set,
@@ -86,6 +129,7 @@ for
   &infix:<(-)>, "(-)"
 -> &op, $name {
     for @triplets -> $left, $right, $result {
+#exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
     }
@@ -96,6 +140,7 @@ for
   &infix:<R(-)>, "R(-)"
 -> &op, $name {
     for @triplets -> $left, $right, $result {
+#exit dd $left, $right, $result unless
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
     }
