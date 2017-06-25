@@ -81,8 +81,8 @@ my @triplets =
   <a b c>.SetHash,              {:42a,:0b},        <b c>.Set,
   <a b b c>.Bag,                {:42a,:0b},        <b b c>.Bag,
   <a b b c>.BagHash,            {:42a,:0b},        <b b c>.Bag,
-  <a b b c>.Mix,                {:42a,:0b},        (a=>-41,:2b,:1c).Mix,
-  <a b b c>.MixHash,            {:42a,:0b},        (a=>-41,:2b,:1c).Mix,
+  <a b b c>.Mix,                {:42a,:0b},        <b b c>.Mix,
+  <a b b c>.MixHash,            {:42a,:0b},        <b b c>.Mix,
 
   {:42a,:0b},                   <a b c>.Set,       set(),
   {:42a,:0b},                   <a b c>.SetHash,   set(),
@@ -106,7 +106,8 @@ my @triplets =
   <a b c d>,                    <a b c e>.MixHash, (d=>1,e=>-1).Mix,
 
   <a b c>,                      <c d e>,           <a b>.Set,
-  (:42a,:0b),                   (:c,:42d,"e"),     <a>.Set,
+  (:42a,:0b,:c),                (:c,:42d,"e"),     <a>.Set,
+  (:b,:c,:42d,"e"),             (:42a,:0b,:c),     <b d e>.Set,
   (:42a,:0b),                   (:a,:42d,"e"),     set(),
   {:42a,:0b},                   {:a,:c,:42d},      set(),
   :{42=>"a",666=>""},           :{55=>"c",66=>1},  42.Set,
