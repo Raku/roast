@@ -10,6 +10,8 @@ my $esh  = do { my $sh = <a>.SetHash; $sh<a>:delete; $sh };
 my $ebh  = do { my $bh = <a>.BagHash; $bh<a>:delete; $bh };
 my $emh  = do { my $mh = <a>.MixHash; $mh<a>:delete; $mh };
 
+my @types = Set, SetHash, Bag, BagHash, Mix, MixHash;
+
 my @triplets =
 
   # result should be a Set
@@ -122,7 +124,7 @@ my @triplets =
   42,                           666,               42.Set,
 ;
 
-plan 2 * (2 * @triplets/3);
+plan 2 * (2 * @triplets/3) + @types * 2;
 
 # difference
 for
@@ -145,6 +147,13 @@ for
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
     }
+}
+
+for @types -> \qh {
+    throws-like { qh.new (-) ^Inf }, X::Cannot::Lazy,
+      "Cannot {qh.perl}.new (-) lazy list";
+    throws-like { qh.new(<a b c>) (-) ^Inf }, X::Cannot::Lazy,
+      "Cannot {qh.perl}.new(<a b c>) (-) lazy list";
 }
 
 # vim: ft=perl6
