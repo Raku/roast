@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 26;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -15,25 +15,7 @@ my $bh = BagHash.new(<Come, take your bread with joy, and your wine with a glad 
 
 # Intersection tests moved to intersection.t
 
-# set subtraction
-
-is showset($s (-) $s), showset(∅), "Set subtracted from Set is correct";
-isa-ok ($s (-) $s), Set, "... and it's actually a Set";
-
-is showset($s (-) $sh), showset(set <isn't your day>), "SetHash subtracted from Set is correct";
-isa-ok ($s (-) $sh), Set, "... and it's actually a Set";
-is showset($sh (-) $s), showset(set <is>), "Set subtracted from SetHash is correct";
-isa-ok ($sh (-) $s), Set, "... and it's actually a Set";
-
-is showkv($b (-) $s), showkv($b), "Set subtracted from Bag is correct";
-isa-ok ($b (-) $s), Bag, "... and it's actually a Bag";
-is showset($s (-) $b), showset($s), "Bag subtracted from Set is correct";
-isa-ok ($s (-) $b), Bag, "... and it's actually a Bag";
-
-is showset($s (-) $bh), showset(set <I'm afraid it isn't day>), "BagHash subtracted from Set is correct";
-isa-ok ($s (-) $bh), Bag, "... and it's actually a Bag";
-is showkv($bh (-) $s), showkv(<Come, take your bread with joy, and wine with a glad heart>.Bag), "Set subtracted from BagHash is correct";
-isa-ok ($bh (-) $s), Bag, "... and it's actually a Bag";
+# set subtraction moved to difference.t
 
 # symmetric difference
 
