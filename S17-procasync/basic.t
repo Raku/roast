@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 43;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -34,6 +34,7 @@ throws-like { $pc.say("foo")        }, X::Proc::Async::OpenForWriting, :method<s
 throws-like { $pc.write(Buf.new(0)) }, X::Proc::Async::OpenForWriting, :method<write>;
 
 throws-like { $pc.stdout.tap(&say)  }, X::Proc::Async::TapBeforeSpawn, :handle<stdout>;
+throws-like { $pc.stderr.tap(&say)  }, X::Proc::Async::TapBeforeSpawn, :handle<stderr>;
 
 my $ps = await $pm;
 cmp-ok $pc.ready.status, '~~', Kept, "was ready kept after succesful execution";
@@ -134,3 +135,26 @@ with Proc::Async.new: :out, ($*EXECUTABLE, '-e'), 'say "pass"' {
     await .start;
     is-deeply $res, "pass\n", '.new slurps all args, including command';
 }
+
+# Merged stdout/stderr (buffering means we should not over-commit on the exact
+# ordering of output), at least not unless we find a way to more robustly do so.
+{
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say "boo"; note "boo";');
+    my $merged = '';
+    $proc.Supply.tap({ $merged ~= $_ });
+    await $proc.start;
+    is $merged, "boo\nboo\n", '.Supply gives merged stdout/stderr';
+}
+
+throws-like { my $proc = Proc::Async.new($*EXECUTABLE); $ = $proc.Supply; $= $proc.stdout },
+    X::Proc::Async::SupplyOrStd,
+    'Cannot do .stdout after .Supply';
+throws-like { my $proc = Proc::Async.new($*EXECUTABLE); $ = $proc.Supply; $= $proc.stderr },
+    X::Proc::Async::SupplyOrStd,
+    'Cannot do .stderr after .Supply';
+throws-like { my $proc = Proc::Async.new($*EXECUTABLE); $= $proc.stdout; $ = $proc.Supply },
+    X::Proc::Async::SupplyOrStd,
+    'Cannot do .Supply after stdout';
+throws-like { my $proc = Proc::Async.new($*EXECUTABLE); $= $proc.stderr; $ = $proc.Supply },
+    X::Proc::Async::SupplyOrStd,
+    'Cannot do .Supply after stderr';
