@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 17;
 
 {
     my $stdin-file = 'bind-handles-in-' ~ $*PID;
@@ -87,4 +87,54 @@ plan 11;
     throws-like { $proc.bind-stderr($*OUT); $ = $proc.Supply },
         X::Proc::Async::BindOrUse, handle => 'stderr',
         'Cannot bind-stderr then get merged stream';
+}
+
+{
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
+    my $stdout = $proc.stdout(:bin);
+    my $stderr = $proc.stderr(:bin);
+    my $exit = $proc.start;
+    ok await($stdout.native-descriptor) > 0, 'Can asynchronously get stdout descriptor (:bin)';
+    ok await($stderr.native-descriptor) > 0, 'Can asynchronously get stderr descriptor (:bin)';
+    await $exit;
+}
+
+{
+    my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
+    my $stdout = $proc.stdout;
+    my $stderr = $proc.stderr;
+    my $exit = $proc.start;
+    ok await($stdout.native-descriptor) > 0, 'Can asynchronously get stdout descriptor';
+    ok await($stderr.native-descriptor) > 0, 'Can asynchronously get stderr descriptor';
+    await $exit;
+}
+
+{
+    my $proc1 = Proc::Async.new($*EXECUTABLE, '-e', 'say "plumbed together"');
+    my $proc2 = Proc::Async.new($*EXECUTABLE, '-e', '$*IN.get.uc.say');
+    $proc2.bind-stdin($proc1.stdout);
+    react {
+        my $output = '';
+        whenever $proc2.stdout {
+            $output ~= $_;
+        }
+        whenever Promise.allof($proc1.start, $proc2.start) {
+            is $output.trim, 'PLUMBED TOGETHER', 'Can chain async processes together (stdout)';
+        }
+    }
+}
+
+{
+    my $proc1 = Proc::Async.new($*EXECUTABLE, '-e', 'note "plumbed together err"');
+    my $proc2 = Proc::Async.new($*EXECUTABLE, '-e', '$*IN.get.uc.say');
+    $proc2.bind-stdin($proc1.stderr);
+    react {
+        my $output = '';
+        whenever $proc2.stdout {
+            $output ~= $_;
+        }
+        whenever Promise.allof($proc1.start, $proc2.start) {
+            is $output.trim, 'PLUMBED TOGETHER ERR', 'Can chain async processes together (stderr)';
+        }
+    }
 }
