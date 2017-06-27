@@ -68,8 +68,8 @@ my @triplets =
   <a b>.Bag,                    <a b b>.Mix,       <a a b b b>.Mix,
   <a b>.BagHash,                <a b b>.MixHash,   <a a b b b>.Mix,
 
-#  <a b>.Bag,                    (b=>-1).Mix,       <a>.Mix,
-#  <a b>.BagHash,                (b=>-1).MixHash,   <a>.Mix,
+  <a b>.Bag,                    (b=>-1).Mix,       <a>.Mix,
+  <a b>.BagHash,                (b=>-1).MixHash,   <a>.Mix,
 
   <a b c>.Set,                  {:42a,:0b},        (:43a,:1b,:1c).Bag,
   <a b c>.SetHash,              {:42a,:0b},        (:43a,:1b,:1c).Bag,
@@ -104,10 +104,10 @@ for
   &infix:<(+)>, "(+)"
 -> &op, $name {
     for @triplets -> $left, $right, $result {
-exit dd $left, $right, $result unless
+#exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
-exit dd $right, $left, $result unless
+#exit dd $right, $left, $result unless
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
     }
@@ -118,10 +118,10 @@ for
   &infix:<R(+)>, "R(+)"
 -> &op, $name {
     for @triplets -> $left, $right, $result {
-exit dd $right, $left, $result unless
+#exit dd $right, $left, $result unless
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
-exit dd $left, $right, $result unless
+#exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
     }
