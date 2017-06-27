@@ -44,6 +44,8 @@ my @triplets =
   mix(),                        mix(),         mix(),
   MixHash.new,                  MixHash.new,   mix(),
   $emh,                         $emh,          mix(),
+  mix(),                        <a b>.Mix,     (a=>-1,b=>-1).Mix,
+  MixHash.new,                  <a b>.MixHash, (a=>-1,b=>-1).Mix,
   (a=>pi,b=>tau).Mix,           mix(),         (a=>pi,b=>tau).Mix,
   (a=>pi,b=>tau).MixHash,       mix(),         (a=>pi,b=>tau).Mix,
   (a=>pi,b=>tau).Mix,           <a b>.Mix,     (a=>(pi-1),b=>(tau-1)).Mix,
