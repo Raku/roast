@@ -7,7 +7,7 @@ use Test::Util;
 
 plan 8;
 
-## If this test file is fudged, then MAIN never executes because 
+## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
 ## This definition prevents that insertion from having any effect.  :-)
 sub exit { }
