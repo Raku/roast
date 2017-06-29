@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 8;
+plan 9;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -50,6 +50,30 @@ subtest 'MAIN can take type-constrain using Enums' => {
     is_run $code, :args[<--pos-hand=Scissors Rock>], { :out<pass>, :err('') }, 'positional + named works';
     is_run $code, :args[<Hand>                    ], { :out{not .contains: 'pass'}, :err(/'=<Hand>'/) },
         'name of enum itself is not valid and usage message prints the name of the enum';
+}
+
+subtest '%*SUB-MAIN-OPTS<named-anywhere> allows named even after positionals', {
+    plan 3;
+
+    is_run ｢
+        sub MAIN ($a, $b, :$c, :$d) { print "fail" }
+        sub USAGE { print "pass" }
+    ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err('')},
+    'no opts set does not allow named args anywhere';
+
+    is_run ｢
+        %*SUB-MAIN-OPTS<named-anywhere> = False;
+        sub MAIN ($a, $b, :$c, :$d) { print "fail" }
+        sub USAGE { print "pass" }
+    ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err('')},
+    '<named-anywhere> set to false does not allow named args anywhere';
+
+    is_run ｢
+        %*SUB-MAIN-OPTS<named-anywhere> = True;
+        sub MAIN ($a, $b, :$c, :$d) { print "pass" }
+        sub USAGE { print "fail" }
+    ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err(''), :0status},
+    '<named-anywhere> set to true allows named args anywhere';
 }
 
 # vim: ft=perl6
