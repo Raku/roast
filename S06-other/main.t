@@ -52,8 +52,13 @@ subtest 'MAIN can take type-constrain using Enums' => {
         'name of enum itself is not valid and usage message prints the name of the enum';
 }
 
-subtest '%*SUB-MAIN-OPTS<named-anywhere> allows named even after positionals', {
-    plan 3;
+subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
+    plan 4;
+
+    is_run ｢
+        %*SUB-MAIN-OPTS<named-anywhere> === False and print "pass"
+    ｣, {:out<pass>, :err('')},
+    'by default, %*SUB-MAIN-OPTS<named-anywhere> exists and is set to False';
 
     is_run ｢
         sub MAIN ($a, $b, :$c, :$d) { print "fail" }
