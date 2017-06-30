@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 102;
+plan 78;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -66,34 +66,7 @@ isa-ok ($ks (.) $b), Bag, "... and it's actually a Bag (texas)";
 is showkv($kb (.) $b), "blood:2 love:4", "Bag multiplication (BagHash / Bag) works (texas)";
 isa-ok ($kb (.) $b), Bag, "... and it's actually a Bag";
 
-# Bag addition
-
-is showkv($s ⊎ $s), "blood:2 love:2", "Bag addition with itself yields twice self";
-isa-ok ($s ⊎ $s), Bag, "... and it's actually a Bag";
-is showkv($ks ⊎ $ks), "blood:2 rhetoric:2", "Bag addition with itself yields twice self";
-isa-ok ($ks ⊎ $ks), Bag, "... and it's actually a Bag";
-is showkv($b ⊎ $b), "blood:4 love:4 rhetoric:2", "Bag addition with itself yields twice self";
-isa-ok ($b ⊎ $b), Bag, "... and it's actually a Bag";
-is showkv($kb ⊎ $kb), "blood:2 love:4", "Bag addition with itself yields twice self";
-isa-ok ($kb ⊎ $kb), Bag, "... and it's actually a Bag";
-
-is showkv($s ⊎ $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / SetHash) works";
-isa-ok ($s ⊎ $ks), Bag, "... and it's actually a Bag";
-is showkv($s ⊎ $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works";
-isa-ok ($s ⊎ $b), Bag, "... and it's actually a Bag";
-is showkv($ks ⊎ $b), "blood:3 love:2 rhetoric:2", "Bag addition (SetHash / Bag) works";
-isa-ok ($ks ⊎ $b), Bag, "... and it's actually a Bag";
-is showkv($kb ⊎ $b), "blood:3 love:4 rhetoric:1", "Bag addition (BagHash / Bag) works";
-isa-ok ($kb ⊎ $b), Bag, "... and it's actually a Bag";
-
-is showkv($s (+) $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / SetHash) works (texas)";
-isa-ok ($s (+) $ks), Bag, "... and it's actually a Bag (texas)";
-is showkv($s (+) $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works (texas)";
-isa-ok ($s (+) $b), Bag, "... and it's actually a Bag (texas)";
-is showkv($ks (+) $b), "blood:3 love:2 rhetoric:2", "Bag addition (SetHash / Bag) works (texas)";
-isa-ok ($ks (+) $b), Bag, "... and it's actually a Bag (texas)";
-is showkv($kb (+) $b), "blood:3 love:4 rhetoric:1", "Bag addition (BagHash / Bag) works (texas)";
-isa-ok ($kb (+) $b), Bag, "... and it's actually a Bag";
+# Bag addition tests moved to addition.t
 
 # for https://rt.perl.org/Ticket/Display.html?id=122810
 ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - I mean bag - with 50k elems and lives";

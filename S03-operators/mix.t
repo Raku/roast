@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 98;
+plan 82;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -58,26 +58,7 @@ isa-ok ($bh (.) $m), Mix, "... and it's actually a Mix (texas)";
 is showkv($mh (.) $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works (texas)";
 isa-ok ($mh (.) $m), Mix, "... and it's actually a Mix";
 
-# Mix addition
-
-is showkv($m ⊎ $m), "blood:2.2 love:2.4 rhetoric:2", "Mix addition with itself yields twice self";
-isa-ok ($m ⊎ $m), Mix, "... and it's actually a Mix";
-is showkv($mh ⊎ $mh), "blood:2.2 love:2.6", "Mix addition with itself yields twice self";
-isa-ok ($mh ⊎ $mh), Mix, "... and it's actually a Mix";
-
-is showkv($b ⊎ $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works";
-isa-ok ($b ⊎ $m), Mix, "... and it's actually a Mix";
-is showkv($bh ⊎ $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works";
-isa-ok ($bh ⊎ $m), Mix, "... and it's actually a Mix";
-is showkv($mh ⊎ $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works";
-isa-ok ($mh ⊎ $m), Mix, "... and it's actually a Mix";
-
-is showkv($b (+) $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works (texas)";
-isa-ok ($b (+) $m), Mix, "... and it's actually a Mix (texas)";
-is showkv($bh (+) $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works (texas)";
-isa-ok ($bh (+) $m), Mix, "... and it's actually a Mix (texas)";
-is showkv($mh (+) $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works (texas)";
-isa-ok ($mh (+) $m), Mix, "... and it's actually a Mix";
+# Mix addition tests moved to addition.t
 
 # for https://rt.perl.org/Ticket/Display.html?id=122810
 ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - I mean mix - with 50k elems and lives";
