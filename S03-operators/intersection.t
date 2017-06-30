@@ -123,12 +123,10 @@ for
 }
 
 for @types -> \qh {
-pass;
-#    throws-like { qh.new (&) ^Inf }, X::Cannot::Lazy,
-#      "Cannot {qh.perl}.new (&) lazy list";
-pass;
-#    throws-like { qh.new(<a b c>) (&) ^Inf }, X::Cannot::Lazy,
-#      "Cannot {qh.perl}.new(<a b c>) (&) lazy list";
+    throws-like { qh.new (&) ^Inf }, X::Cannot::Lazy,
+      "Cannot {qh.perl}.new (&) lazy list";
+    throws-like { qh.new(<a b c>) (&) ^Inf }, X::Cannot::Lazy,
+      "Cannot {qh.perl}.new(<a b c>) (&) lazy list";
 }
 
 # vim: ft=perl6
