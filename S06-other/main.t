@@ -53,12 +53,7 @@ subtest 'MAIN can take type-constrain using Enums' => {
 }
 
 subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
-    plan 4;
-
-    is_run ｢
-        (my %*SUB-MAIN-OPTS)<named-anywhere> or print "pass"
-    ｣, {:out<pass>, :err('')},
-    'by default, %*SUB-MAIN-OPTS<named-anywhere> exists and is set to False';
+    plan 3;
 
     is_run ｢
         sub MAIN ($a, $b, :$c, :$d) { print "fail" }
