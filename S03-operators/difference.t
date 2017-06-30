@@ -12,6 +12,20 @@ my $emh  = do { my $mh = <a>.MixHash; $mh<a>:delete; $mh };
 
 my @types = Set, SetHash, Bag, BagHash, Mix, MixHash;
 
+# single parameter, result
+my @pairs =
+  <a b c>.Set,        <a b c>.Set,
+  <a b c>.SetHash,    <a b c>.Set,
+  <a b c>.Bag,        <a b c>.Bag,
+  <a b c>.BagHash,    <a b c>.Bag,
+  <a b c>.Mix,        <a b c>.Mix,
+  <a b c>.MixHash,    <a b c>.Mix,
+  <a b c>,            <a b c>.Set,
+  {:42a,:0b},         <a>.Set,
+  :{:42a,:0b},        <a>.Set,
+  42,                 42.Set,
+;
+
 my @triplets =
 
   # result should be a Set
@@ -126,13 +140,22 @@ my @triplets =
   42,                           666,               42.Set,
 ;
 
-plan 2 * (2 * @triplets/3) + @types * 2;
+plan 2 * (2 * (1 + @pairs/2 + @triplets/3)) + @types * 2;
 
 # difference
 for
   &infix:<∖>,     "∖",
   &infix:<(-)>, "(-)"
 -> &op, $name {
+
+    is-deeply op(), set(), "does $name\() return set()";
+
+    for @pairs -> $parameter, $result {
+#exit dd $parameters, $result unless
+        is-deeply op($parameter.item), $result,
+          "infix:<$name>(|$parameter.gist())";
+    }
+
     for @triplets -> $left, $right, $result {
 #exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
@@ -144,6 +167,15 @@ for
   &infix:<R∖>,     "R∖",
   &infix:<R(-)>, "R(-)"
 -> &op, $name {
+
+    is-deeply op(), set(), "does $name\() return set()";
+
+    for @pairs -> $parameter, $result {
+#exit dd $parameters, $result unless
+        is-deeply op($parameter.item), $result,
+          "infix:<$name>(|$parameter.gist())";
+    }
+
     for @triplets -> $left, $right, $result {
 #exit dd $left, $right, $result unless
         is-deeply op($right,$left), $result,
