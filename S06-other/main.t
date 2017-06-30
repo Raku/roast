@@ -56,7 +56,7 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
     plan 4;
 
     is_run ｢
-        %*SUB-MAIN-OPTS<named-anywhere> === False and print "pass"
+        (my %*SUB-MAIN-OPTS)<named-anywhere> or print "pass"
     ｣, {:out<pass>, :err('')},
     'by default, %*SUB-MAIN-OPTS<named-anywhere> exists and is set to False';
 
@@ -67,14 +67,14 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
     'no opts set does not allow named args anywhere';
 
     is_run ｢
-        %*SUB-MAIN-OPTS<named-anywhere> = False;
+        (my %*SUB-MAIN-OPTS)<named-anywhere> = False;
         sub MAIN ($a, $b, :$c, :$d) { print "fail" }
         sub USAGE { print "pass" }
     ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err('')},
     '<named-anywhere> set to false does not allow named args anywhere';
 
     is_run ｢
-        %*SUB-MAIN-OPTS<named-anywhere> = True;
+        (my %*SUB-MAIN-OPTS)<named-anywhere> = True;
         sub MAIN ($a, $b, :$c, :$d) { print "pass" }
         sub USAGE { print "fail" }
     ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err(''), :0status},
