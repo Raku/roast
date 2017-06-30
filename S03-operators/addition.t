@@ -86,10 +86,12 @@ my @triplets =
   <a b b c>.MixHash,            <a b c d>,         <a a b b b c c d>.Mix,
 
   <a b c>,                      <c d e>,           <a b c c d e>.Bag,
-  (:42a,:0b,:c),                (:c,:42d,"e"),     (:42a,:2c,:42d,:1e).Bag,
+  (:42a,:0b,:c),                (:4c,:42d,"e"),    (:42a,:5c,:42d,:1e).Bag,
+  (:2a,:40a,:0b,:c),            (:4c,:42d,"e"),    (:42a,:5c,:42d,:1e).Bag,
   (:b,:c,:42d,"e"),             (:42a,:0b,:c),     (:42a,:1b,:2c,:42d,:1e).Bag,
   (:42a,:0b),                   (:a,:42d,"e"),     (:43a,:42d,:1e).Bag,
   {:42a,:0b},                   {:a,:c,:42d},      (:43a,:1c,:42d).Bag,
+  :{:42a,:0b},                  {:a,:c,:42d},      (:43a,:1c,:42d).Bag,
   {:42a,:0b},                   <c d e>,           (:42a,:1c,:1d,:1e).Bag,
   {:42a,:0b},                   <a d e>,           (:43a,:1d,:1e).Bag,
   42,                           42,                (42 => 2).Bag,
