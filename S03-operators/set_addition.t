@@ -124,9 +124,9 @@ for
     is-deeply op(), bag(), "does $name\() return bag()";
 
     for @pairs -> $parameter, $result {
-#exit dd $parameters, $result unless
+#exit dd $parameter, $result unless
         is-deeply op($parameter.item), $result,
-          "infix:<$name>(|$parameter.gist())";
+          "infix:<$name>($parameter.gist())";
     }
 
     for @triplets -> $left, $right, $result {
@@ -147,9 +147,9 @@ for
     is-deeply op(), bag(), "does $name\() return bag()";
 
     for @pairs -> $parameter, $result {
-#exit dd $parameters, $result unless
+#exit dd $parameter, $result unless
         is-deeply op($parameter.item), $result,
-          "infix:<$name>(|$parameter.gist())";
+          "infix:<$name>($parameter.gist())";
     }
 
     for @triplets -> $left, $right, $result {
