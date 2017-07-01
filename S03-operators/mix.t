@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 82;
+plan 66;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -17,9 +17,9 @@ my $bh = BagHash.new(<blood rhetoric>);
 my $m = ("blood" => 1.1, "rhetoric" => 1, "love" => 1.2).Mix;
 my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3);
 
-# Mix Union tests moved to union.t
+# Mix Union tests moved to set_union.t
 
-# Mix Intersection tests moved to intersection.t
+# Mix Intersection tests moved to set_intersection.t
 
 # symmetric difference
 
@@ -37,28 +37,9 @@ isa-ok ($b (^) $mh), Mix, "... and it's actually a Mix";
 is ($mh (^) $b), symmetric-difference($b, $mh), "Bag symmetric difference with MixHash is correct";
 isa-ok ($mh (^) $b), Mix, "... and it's actually a Mix";
 
-# Mix multiplication
+# Mix multiplication tests moved to set_multiply.t
 
-is showkv($m ⊍ $m), "blood:1.21 love:1.44 rhetoric:1", "Mix multiplication with itself yields self squared";
-isa-ok ($m ⊍ $m), Mix, "... and it's actually a Mix";
-is showkv($mh ⊍ $mh), "blood:1.21 love:1.69", "MixHash multiplication with itself yields self squared";
-isa-ok ($mh ⊍ $mh), Mix, "... and it's actually a Mix";
-
-is showkv($b ⊍ $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works";
-isa-ok ($b ⊍ $m), Mix, "... and it's actually a Mix";
-is showkv($bh ⊍ $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works";
-isa-ok ($bh ⊍ $m), Mix, "... and it's actually a Mix";
-is showkv($mh ⊍ $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works";
-isa-ok ($mh ⊍ $m), Mix, "... and it's actually a Mix";
-
-is showkv($b (.) $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works (texas)";
-isa-ok ($b (.) $m), Mix, "... and it's actually a Mix (texas)";
-is showkv($bh (.) $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works (texas)";
-isa-ok ($bh (.) $m), Mix, "... and it's actually a Mix (texas)";
-is showkv($mh (.) $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works (texas)";
-isa-ok ($mh (.) $m), Mix, "... and it's actually a Mix";
-
-# Mix addition tests moved to addition.t
+# Mix addition tests moved to set_addition.t
 
 # for https://rt.perl.org/Ticket/Display.html?id=122810
 ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - I mean mix - with 50k elems and lives";

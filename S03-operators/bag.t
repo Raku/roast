@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 78;
+plan 54;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -17,9 +17,9 @@ my $ks = SetHash.new(<blood rhetoric>);
 my $b = bag <blood blood rhetoric love love>;
 my $kb = BagHash.new(<blood love love>);
 
-# Bag Union tests moved to union.t
+# Bag Union tests moved to set_union.t
 
-# Bag Intersection tests moved to intersection.t
+# Bag Intersection tests moved to set_intersection.t
 
 # symmetric difference
 
@@ -37,36 +37,9 @@ isa-ok ($s (^) $kb), Bag, "... and it's actually a Bag";
 is showkv($kb (^) $s), showkv(symmetric-difference($s, $kb)), "Set symmetric difference with BagHash is correct";
 isa-ok ($kb (^) $s), Bag, "... and it's actually a Bag";
 
-# Bag multiplication
+# Bag multiplication tests moved to set_multiply.t
 
-is showkv($s ⊍ $s), "blood:1 love:1", "Bag multiplication with itself yields self squared";
-isa-ok ($s ⊍ $s), Bag, "... and it's actually a Bag";
-is showkv($ks ⊍ $ks), "blood:1 rhetoric:1", "Bag multiplication with itself yields self squared";
-isa-ok ($ks ⊍ $ks), Bag, "... and it's actually a Bag";
-is showkv($b ⊍ $b), "blood:4 love:4 rhetoric:1", "Bag multiplication with itself yields self squared";
-isa-ok ($b ⊍ $b), Bag, "... and it's actually a Bag";
-is showkv($kb ⊍ $kb), "blood:1 love:4", "Bag multiplication with itself yields self squared";
-isa-ok ($kb ⊍ $kb), Bag, "... and it's actually a Bag";
-
-is showkv($s ⊍ $ks), "blood:1", "Bag multiplication (Set / SetHash) works";
-isa-ok ($s ⊍ $ks), Bag, "... and it's actually a Bag";
-is showkv($s ⊍ $b), "blood:2 love:2", "Bag multiplication (Set / Bag) works";
-isa-ok ($s ⊍ $b), Bag, "... and it's actually a Bag";
-is showkv($ks ⊍ $b), "blood:2 rhetoric:1", "Bag multiplication (SetHash / Bag) works";
-isa-ok ($ks ⊍ $b), Bag, "... and it's actually a Bag";
-is showkv($kb ⊍ $b), "blood:2 love:4", "Bag multiplication (BagHash / Bag) works";
-isa-ok ($kb ⊍ $b), Bag, "... and it's actually a Bag";
-
-is showkv($s (.) $ks), "blood:1", "Bag multiplication (Set / SetHash) works (texas)";
-isa-ok ($s (.) $ks), Bag, "... and it's actually a Bag (texas)";
-is showkv($s (.) $b), "blood:2 love:2", "Bag multiplication (Set / Bag) works (texas)";
-isa-ok ($s (.) $b), Bag, "... and it's actually a Bag (texas)";
-is showkv($ks (.) $b), "blood:2 rhetoric:1", "Bag multiplication (SetHash / Bag) works (texas)";
-isa-ok ($ks (.) $b), Bag, "... and it's actually a Bag (texas)";
-is showkv($kb (.) $b), "blood:2 love:4", "Bag multiplication (BagHash / Bag) works (texas)";
-isa-ok ($kb (.) $b), Bag, "... and it's actually a Bag";
-
-# Bag addition tests moved to addition.t
+# Bag addition tests moved to set_addition.t
 
 # for https://rt.perl.org/Ticket/Display.html?id=122810
 ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - I mean bag - with 50k elems and lives";
