@@ -130,7 +130,7 @@ for
     }
 
     for @triplets -> $left, $right, $result {
-exit dd $left, $right, $result unless
+#exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
 #exit dd $right, $left, $result unless
