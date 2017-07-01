@@ -74,11 +74,11 @@ my @triplets =
   <a b>.Set,                    <a b b>.Bag,       <a b b>.Bag,
   <a b>.SetHash,                <a b b>.BagHash,   <a b b>.Bag,
 
-#  <a b>.Set,                    <a b b>.Mix,       <a b b>.Mix,
-#  <a b>.SetHash,                <a b b>.MixHash,   <a b b>.Mix,
+  <a b>.Set,                    <a b b>.Mix,       <a b b>.Mix,
+  <a b>.SetHash,                <a b b>.MixHash,   <a b b>.Mix,
 
-#  <a b>.Set,                    (b=>-1).Mix,       (b=>-1).Mix,
-#  <a b>.SetHash,                (b=>-1).MixHash,   (b=>-1).Mix,
+  <a b>.Set,                    (b=>-1).Mix,       (b=>-1).Mix,
+  <a b>.SetHash,                (b=>-1).MixHash,   (b=>-1).Mix,
 
   <a b>.Bag,                    <a b b>.Mix,       <a b b>.Mix,
   <a b>.BagHash,                <a b b>.MixHash,   <a b b>.Mix,
@@ -90,15 +90,15 @@ my @triplets =
   <a b c>.SetHash,              {:42a,:0b},        (:42a).Bag,
   <a b b c>.Bag,                {:42a,:0b},        (:42a).Bag,
   <a b b c>.BagHash,            {:42a,:0b},        (:42a).Bag,
-#  <a b b c>.Mix,                {:42a,:0b},        (:42a).Mix,
-#  <a b b c>.MixHash,            {:42a,:0b},        (:42a).Mix,
+  <a b b c>.Mix,                {:42a,:0b},        (:42a).Mix,
+  <a b b c>.MixHash,            {:42a,:0b},        (:42a).Mix,
 
   <a b c>.Set,                  <a b c d>,         <a b c>.Bag,
   <a b c>.SetHash,              <a b c d>,         <a b c>.Bag,
   <a b b c>.Bag,                <a b c d>,         <a b b c>.Bag,
   <a b b c>.BagHash,            <a b c d>,         <a b b c>.Bag,
-#  <a b b c>.Mix,                <a b c d>,         <a b b c>.Mix,
-#  <a b b c>.MixHash,            <a b c d>,         <a b b c>.Mix,
+  <a b b c>.Mix,                <a b c d>,         <a b b c>.Mix,
+  <a b b c>.MixHash,            <a b c d>,         <a b b c>.Mix,
 
   <a b c>,                      <c d e>,           <c>.Bag,
   (:42a,:0b,:c),                (:4c,:42d,"e"),    (:4c).Bag,
