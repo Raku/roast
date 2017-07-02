@@ -28,9 +28,7 @@ my @sse =
   <c b c>.Bag,             $b,
   <B B C>.BagHash,         $bh,
   (about => e).Mix,        $m,
-  (minus => -e).Mix,       $m,
   (dosage => tau).MixHash, $mh,
-  (minus => -1).MixHash,   $mh,
   "factual",               $map,
   "global",                $hash,
   "ideas",                 $objh,
@@ -44,11 +42,11 @@ my @sse =
   <a b>.Bag,      <a b b c>.Mix,    # .Bag -> .Mix
   <a b>.Mix,      <a b b c>.Bag,    # .Bag -> .Mix
 
-# negatives in Mix less than non-existing
-  (a => -1).Mix,  bag(),
-  (a => -1).Mix,  mix(),
-  (a => -1).Mix,  (a => -1).Mix,
-  (a => -2).Mix,  (a => -1).Mix,
+# negatives in Mix
+  (a => -1).Mix,  (a => -1).Mix,  # value not important
+  (a => -2).Mix,  (a => -1).Mix,  # value not important
+  (a => -1).Mix,  (a => -2).Mix,  # value not important
+  mix(),          (a => -1).Mix,  # value not important
 
 # empties always subset of not-empties
   set(),          <a>.Set,
@@ -107,16 +105,17 @@ my @notsse =
   $list,
   List.new,
 
-  (a => -1).Mix => set(), # set forces set semantics
-  (a =>  1).Mix => bag(), # positives in Mix with bag not subset
-  (a =>  1).Mix => mix(), # positives in Mix with mix not subset
-  (a => -1).Mix => (a => -2).Mix,  # right hand more negative
+  (a =>  1).Mix => set(), # a not on right
+  (a => -1).Mix => set(), # a not on right
+  (a =>  1).Mix => bag(), # a not on right
+  (a => -1).Mix => bag(), # a not on right
+  (a =>  1).Mix => mix(), # a not on right
+  (a => -1).Mix => mix(), # a not on right
 
 # non-empties not subset of empties
   <a>.Set => set(),
   <a>.Bag => bag(),
   <a>.Mix => mix(),
-  mix() => (a=>-1).Mix, # empty not subset because of negative weight
 
 # coercions of Maps
   {a => 1} => {},
@@ -135,23 +134,29 @@ for
   &infix:<<R(>=)>>, "(R>=)", &infix:<<R(<=)>>, "(R<=)"
 -> &op, $name, &rop, $rname {
     for @sse -> $left, $right {
+#exit dd $left, $name, $right, True unless
         is-deeply op($left,$right), True,
           "$left is $name of $right.^name()";
+#exit dd $right, $rname, $left, True unless
         is-deeply rop($right,$left), True,
           "$right.^name() $rname $left";
     }
     for @notsse {
         if $_ ~~ Pair {
+#exit dd .key, $name, .value, False unless
             is-deeply op(.key,.value), False,
               "$_.value() is NOT $name of $_.key.^name()";
+#exit dd .value, $rname, .key, False unless
             is-deeply rop(.value,.key), False,
               "$_.key.^name() NOT $rname $_.value()";
         }
 
         # assume $marmoset
         else {
+#exit dd $marmoset, $name, $_, False unless
             is-deeply op($marmoset,$_), False,
               "marmoset is NOT $name of $_.^name()";
+#exit dd $_, $name, $marmoset, False unless
             is-deeply rop($_,$marmoset), False,
               "$_.^name() NOT $rname marmoset";
         }
@@ -168,23 +173,29 @@ for
   &infix:<R⊉>, "R⊉", &infix:<R⊈>, "R⊈"
 -> &op, $name, &rop, $rname {
     for @sse -> $left, $right {
+#exit dd $left, $name, $right, False unless
         is-deeply op($left,$right), False,
           "$left is NOT $name of $right.^name()";
+#exit dd $right, $rname, $left, False unless
         is-deeply rop($right,$left), False,
           "$right.^name() NOT $rname $left";
     }
     for @notsse {
         if $_ ~~ Pair {
+#exit dd .key, $name, .value, True unless
             is-deeply op(.key,.value), True,
               "$_.value() is NOT $name of $_.key.^name()";
+#exit dd .value, $rname, .key, True unless
             is-deeply rop(.value,.key), True,
               "$_.key.^name() NOT $rname $_.value()";
         }
 
         # assume $marmoset
         else {
+#exit dd $marmoset, $name, $_, True unless
             is-deeply op($marmoset,$_), True,
               "marmoset is NOT $name of $_.^name()";
+#exit dd $_, $name, $marmoset, True unless
             is-deeply rop($_,$marmoset), True,
               "$_.^name() NOT $rname marmoset";
         }
