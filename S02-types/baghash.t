@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 289;
+plan 290;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -300,6 +300,8 @@ sub showkv($x) {
 
     @a = $b.pick(-2.5);
     is +@a, 0, '.pick(<negative number>) does not return any items';
+
+    lives-ok { @a = $b.pick(2.5) }, ".pick int-ifies arg"; # RT #131272
 }
 
 {
