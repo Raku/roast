@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 287;
+plan 289;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -297,6 +297,9 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
     is $b.total, 3, '.pick should not change BagHash';
     is $b.elems, 2, '.pick should not change BagHash';
+
+    @a = $b.pick(-2.5);
+    is +@a, 0, '.pick(<negative number>) does not return any items';
 }
 
 {
@@ -333,6 +336,9 @@ sub showkv($x) {
     is @a.grep(* eq "a\t1").elems, 1, '.pickpairs(*) (1)';
     is @a.grep(* eq "b\t2").elems, 1, '.pickpairs(*) (2)';
     is $b.total, 3, '.pickpairs should not change Bag';
+
+    @a = $b.pickpairs(-2.5);
+    is +@a, 0, '.pickpairs(<negative number>) does not return any items';
 }
 
 # L<S32::Containers/BagHash/grab>
