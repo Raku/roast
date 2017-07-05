@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 225;
+plan 226;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -316,6 +316,8 @@ sub showkv($x) {
 
     @a = $b.pick(-2.5);
     is +@a, 0, '.pick(<negative number>) does not return any items';
+
+    lives-ok { @a = $b.pick(2.5) }, ".pick int-ifies arg"; # RT #131272
 }
 
 {
