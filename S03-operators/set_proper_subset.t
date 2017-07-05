@@ -28,7 +28,9 @@ my @pss =
   <c b c>.Bag,             $b,
   <B C C>.BagHash,         $bh,
   (about => e).Mix,        $m,
+  (minus => -e).Mix,       $m,
   (dosage => tau).MixHash, $mh,
+  (minus => -1).MixHash,   $mh,
   "factual",               $map,
   "global",                $hash,
   "ideas",                 $objh,
@@ -42,8 +44,10 @@ my @pss =
   <a b>.Bag,      <a a b b c>.Mix,  # .Bag -> .Mix
   <a b>.Mix,      <a a b b c>.Bag,  # .Bag -> .Mix
 
-# negatives in Mix
-  mix(),          (a => -1).Mix,    # weight not important
+# negatives in Mix less than non-existing
+  (a => -1).Mix,  bag(),
+  (a => -1).Mix,  mix(),
+  (a => -2).Mix,  (a => -1).Mix,
 
 # empties always proper subset of not-empties
   set(),          <a>.Set,
@@ -94,17 +98,16 @@ my @notpss =
   $list,
   List.new,
 
-  (a =>  1).Mix => set(), # a not on right
-  (a => -1).Mix => set(), # a not on right
-  (a =>  1).Mix => bag(), # a not on right
-  (a => -1).Mix => bag(), # a not on right
-  (a =>  1).Mix => mix(), # a not on right
-  (a => -1).Mix => mix(), # a not on right
+  (a => -1).Mix => set(), # set forces set semantics
+  (a => 1).Mix  => bag(), # positives in Mix with bag not proper subset
+  (a => 1).Mix  => mix(), # positives in Mix with mix not proper subset
+  (a => -1).Mix => (a => -2).Mix,  # right hand more negative
 
 # non-empties never subset of empties
   <a>.Set => set(),
   <a>.Bag => bag(),
   <a>.Mix => mix(),
+  mix() => (a => -1).Mix, # not a proper subset because of negative weight
 
 # various Map coercions that shouldn't be ok
   {},        {},
@@ -129,29 +132,23 @@ for
   &infix:<<R(>)>>, "R(>)", &infix:<<R(<)>>, "R(<)"
 -> &op, $name, &rop, $rname {
     for @pss -> $left, $right {
-#exit dd $left, $name, $right, True unless
         is-deeply op($left,$right), True,
           "$left is $name of $right.^name()";
-#exit dd $right, $rname, $left, True unless
         is-deeply rop($right,$left), True,
           "$right.^name() $rname $left";
     }
     for @notpss {
         if $_ ~~ Pair {
-#exit dd .key, $name, .value, False unless
             is-deeply op(.key,.value), False,
               "$_.value() is NOT $name of $_.key.^name()";
-#exit dd .value, $rname, .key, False unless
             is-deeply rop(.value,.key), False,
               "$_.key.^name() NOT $rname $_.value()";
         }
 
         # assume $marmoset
         else {
-#exit dd $marmoset, $name, $_, False unless
             is-deeply op($marmoset,$_), False,
               "marmoset is NOT $name of $_.^name()";
-#exit dd $_, $name, $marmoset, False unless
             is-deeply rop($_,$marmoset), False,
               "$_.^name() NOT $rname marmoset";
         }
@@ -168,29 +165,23 @@ for
   &infix:<R⊅>, "R⊅", &infix:<R⊄>, "R⊈"
 -> &op, $name, &rop, $rname {
     for @pss -> $left, $right {
-#exit dd $left, $name, $right, False unless
         is-deeply op($left,$right), False,
           "$left is NOT $name of $right.^name()";
-#exit dd $right, $rname, $left, False unless
         is-deeply rop($right,$left), False,
           "$right.^name() NOT $rname $left";
     }
     for @notpss {
         if $_ ~~ Pair {
-#exit dd .key, $name, .value, True unless
             is-deeply op(.key,.value), True,
               "$_.value() is NOT $name of $_.key.^name()";
-#exit dd .value, $rname, .key, True unless
             is-deeply rop(.value,.key), True,
               "$_.key.^name() NOT $rname $_.value()";
         }
 
         # assume $marmoset
         else {
-#exit dd $marmoset, $name, $_, True unless
             is-deeply op($marmoset,$_), True,
               "marmoset is NOT $name of $_.^name()";
-#exit dd $_, $name, $marmoset, True unless
             is-deeply rop($_,$marmoset), True,
               "$_.^name() NOT $rname marmoset";
         }
