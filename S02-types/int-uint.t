@@ -17,7 +17,7 @@ unless @inttypes {
     exit;
 }
 
-plan 11 * @inttypes + 3;
+plan 11 * @inttypes + 4;
 
 for @inttypes -> $type {
     my ($minval,$maxval) = ::($type).Range.int-bounds;
@@ -120,6 +120,11 @@ for @inttypes -> $type {
     #?rakudo 2 todo 'uint behaves like signed int in CUnion'
     is $overlap.u16,   54919, "uint16 in union is unsigned";
     is $overlap.u8,      135,  "uint8 in union is unsigned";
+}
+
+# RT #131529
+{
+    is byte.Range.int-bounds, (0, 255), "byte.Range works";
 }
 
 # vim: ft=perl6 expandtab sw=4
