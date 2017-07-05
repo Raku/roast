@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 # Tests of the Baggy role
 
@@ -55,3 +55,14 @@ subtest '.pick/.roll/.grab reject NaN count' => {
     throws-like { ^5 .BagHash.roll: NaN }, Exception, '.roll';
     throws-like { ^5 .BagHash.grab: NaN }, Exception, '.grab';
 }
+
+# RT 131386
+subtest 'can access key of empty list coerced to type' => {
+    my @tests = <Set SetHash  Bag BagHash  Mix MixHash  Map Hash>;
+    plan +@tests;
+    for @tests {
+        lives-ok { my %x := ()."$_"(); %x<a> }, $_
+    }
+}
+
+# vim: ft=perl6
