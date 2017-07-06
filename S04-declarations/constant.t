@@ -1,7 +1,8 @@
 use v6;
 
 use Test;
-plan 70;
+use lib 't/spec/packages';
+plan 72;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -375,6 +376,12 @@ throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
 
     is "A" ☄ 5, "AAAAA", "Operator multi defined on comet works using comet";
     is "B" ☃ 4, "BBBB", "Operator multi defined on comet works using snowman";
+}
+
+{
+    use ExportConstant;
+    is &constant-sub(), 'win', 'Can call an exported constant sub';
+    ok "foo" ~~ $constant-regex, 'Can match a exported constant regex';
 }
 
 # vim: ft=perl6
