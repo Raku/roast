@@ -8,7 +8,7 @@ plan 8;
 { # coverage; 2016-09-23
     my class Foo does Baggy {}
     my $b = Foo.new: <a a b>;
-    is $b.WHICH, "Foo|Str|a(2) Str|b(1)", '.WHICH';
+    ok $b.WHICH.Str.starts-with("Foo|"), '.WHICH';
     is-deeply $b.invert.sort(*.key).list, (1 => "b", 2 => "a"), '.invert';
     is-deeply $b.SetHash, SetHash.new(<a b>),   '.SetHash';
 }
