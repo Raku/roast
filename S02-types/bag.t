@@ -454,11 +454,11 @@ sub showkv($x) {
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet RT #124454'
-{
-        isnt 'a(1) Str|b(1) Str|c'.Bag.WHICH, <a b c>.Bag.WHICH,
-          'Faulty .WHICH creation';
-}
+# RT #124454
+isnt
+  '91D95D6EDD0F0C61D02A2989781C5AEB10832C94'.Bag.WHICH,
+  <a b c>.Bag.WHICH,
+  'Faulty .WHICH creation';
 
 # RT #117915
 {
