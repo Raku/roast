@@ -408,11 +408,11 @@ sub showkv($x) {
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet RT #124496'
-{
-    isnt 'a(1) Str|b(1) Str|c'.Mix.WHICH, <a b c>.Mix.WHICH,
-      'Faulty .WHICH creation';
-}
+# RT #124454
+isnt
+  '91D95D6EDD0F0C61D02A2989781C5AEB10832C94'.Mix.WHICH,
+  <a b c>.Mix.WHICH,
+  'Faulty .WHICH creation';
 
 {
     my $m = <a>.Mix;
