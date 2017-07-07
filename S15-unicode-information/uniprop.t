@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 164;
+plan 165;
 
 #use unicode :v(6.3);
 
@@ -301,5 +301,8 @@ is-deeply "😂".uniprop('Emoji_Presentation'), True, "uniprop for Emoji_Present
 is-deeply 0x1F3FD.uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for Emoji Modifiers";
 is-deeply "🐧".uniprop('Emoji_All'), True, "uniprop for Emoji_All returns True for non-modifier Emoji";
 is-deeply "a".uniprop('Emoji_All'), False, "uniprop for Emoji_All returns False for non-Emoji";
+
+#?rakudo.moar 1 todo "MoarVM Issue 566"
+lives-ok( { 0x99999999.uniprop }, 'Lives when requesting a very high codepoint.');
 
 # vim: ft=perl6 expandtab sw=4
