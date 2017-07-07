@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan 22;
 
 # coercion types in parameter lists
 {
@@ -97,5 +97,11 @@ is Int:U.gist, '(Int:U)', '.gist on coercion types';
 is Proc::Async:U.gist, '(Async:U)', '.gist on coercion types uses shortname';
 
 is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
+
+# RT #131611
+{
+    my \a = -42;
+    is Int(a), -42, "Sigilless variable does not confuse coercion type parsing";
+}
 
 # vim: ft=perl6
