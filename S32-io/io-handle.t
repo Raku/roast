@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 26;
+plan 27;
 
 my $path = "io-handle-testfile";
 
@@ -258,4 +258,15 @@ subtest '.print-nl method' => {
     }
     is-deeply $file.slurp, "foobarber",
         ':nl-out set via .new, then via .open, then via attribute assignment';
+}
+
+# RT #131384
+{
+    my $file = make-temp-file;
+    given $file.IO {
+        .spurt: "fo♥o";
+        my $fh = .open(:enc<ascii>);
+        dies-ok { $fh.slurp.encode }, 'ASCII decode/encode dies with a catchable exception';
+        $fh.close;
+    }
 }
