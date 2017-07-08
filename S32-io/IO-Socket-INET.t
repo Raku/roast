@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 24;
+plan 26;
 
 # test 2 does echo protocol - Internet RFC 862
 do-test
@@ -127,6 +127,38 @@ do-test
           "Multiple separators not at end of string";
         is $^client.get(), ' Callay',
           "! separator at end of string";
+
+        $^client.close();
+    };
+
+# don't explode when an nl-in is set before the first get()
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+
+        # default line separator
+        use newline :lf;
+        $client.print("All mimsy were the borogoves,\r\n");
+        $client.print("And the mome raths outgrabe.\r\n");
+
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        my $received;
+
+        $^client.nl-in = "\r\n";
+
+        $received = $^client.get();
+        is $received, 'All mimsy were the borogoves,',
+          "first get after creation came after first set of nl-in";
+
+        $received = $^client.get();
+        is $received, 'And the mome raths outgrabe.',
+          "another get for good measure.";
 
         $^client.close();
     };
