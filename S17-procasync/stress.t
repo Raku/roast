@@ -1,4 +1,5 @@
 use v6;
+use lib <packages/>;
 use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
@@ -8,7 +9,7 @@ plan 12;
 # RT #125515
 #?rakudo.jvm skip 'Proc::Async NYI RT #126524'
 {
-    constant $read-file = "t/spec/packages/README".IO;
+    constant $read-file = "t/spec/packages/README".IO.f ?? "t/spec/packages/README".IO !! "packages/README".IO;
     $read-file.IO.r or bail-out "Missing $read-file that is needed to run a test";
 
     my @got;
