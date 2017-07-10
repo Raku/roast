@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 67;
+plan 68;
 
 #L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
@@ -131,5 +131,8 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 # RT #130867
 is-deeply quietly { Bool.Str }, '', 'Bool:U stringifies to empty string';
+
+# https://irclog.perlgeek.de/perl6-dev/2017-07-10#i_14852407
+is-deeply (((my int $ = 0) < 1) || 3), True, 'construct returns Bool, not Int';
 
 # vim: ft=perl6
