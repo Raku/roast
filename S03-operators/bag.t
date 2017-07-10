@@ -106,7 +106,7 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     isa-ok ([(^)] $s, $b), Bag, "... and produces a Bag";
     is showkv([(^)] $b, $s), 'blood:1 love:1 rhetoric:1', "... and is actually symmetric";
     isa-ok ([(^)] $b, $s), Bag, "... and still produces a Bag that way too";
-    is showkv([(^)] $s, $ks, $kb), 'blood:1 love:1 rhetoric:1', "Bag symmetric difference reduce works on three bags";
+    is showkv([(^)] $s, $ks, $kb), 'love:1 rhetoric:1', "Bag symmetric difference reduce works on three bags";
     isa-ok ([(^)] $s, $ks, $kb), Bag, "Bag symmetric difference reduce works on three bags";
 }
 

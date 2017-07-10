@@ -130,7 +130,7 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     isa-ok ([(^)] $b, $m), Mix, "... and produces a Mix";
     is ([(^)] $m, $b), %(blood => 0.1, love => 0.2, :rhetoric).Mix, "... and is actually symmetric";
     isa-ok ([(^)] $m, $b), Mix, "... and still produces a Mix that way too";
-    is ([(^)] $b, $m, $mh), (blood => 1, love => 1.1, :rhetoric).Mix, "Mix symmetric difference reduce works on three mixes";
+    is ([(^)] $b, $m, $mh), (love => 0.1, :rhetoric).Mix, "Mix symmetric difference reduce works on three mixes";
     isa-ok ([(^)] $b, $m, $mh), Mix, "Mix symmetric difference reduce works on three mixes produces a Mix";
 }
 
