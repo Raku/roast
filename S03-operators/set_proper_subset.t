@@ -37,6 +37,7 @@ my @pss =
   "quick",                 $list,
 
 # more specific cases where left should be proper subset of right
+  <a b>.Bag,      <a b c>.Bag,      # https://irclog.perlgeek.de/perl6/2017-07-10#i_14851116
   <a b>.Set,      <a b b c>.Bag,    # .Bag -> .Set
   <a b b>.Bag,    <a b c>.Set,      # .Bag -> .Set
   <a b>.Set,      <a a b b c>.Mix,  # .Mix -> .Set
