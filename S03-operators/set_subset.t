@@ -135,23 +135,29 @@ for
   &infix:<<R(>=)>>, "(R>=)", &infix:<<R(<=)>>, "(R<=)"
 -> &op, $name, &rop, $rname {
     for @sse -> $left, $right {
+#exit dd $left, $right, $name, True unless
         is-deeply op($left,$right), True,
           "$left is $name of $right.^name()";
+#exit dd $right, $left, $rname, True unless
         is-deeply rop($right,$left), True,
           "$right.^name() $rname $left";
     }
     for @notsse {
         if $_ ~~ Pair {
+#exit dd $.key, .value, $name, False unless
             is-deeply op(.key,.value), False,
               "$_.value() is NOT $name of $_.key.^name()";
+#exit dd $.value, .key, $rname, False unless
             is-deeply rop(.value,.key), False,
               "$_.key.^name() NOT $rname $_.value()";
         }
 
         # assume $marmoset
         else {
+#exit dd $marmoset, $_, $name, False unless
             is-deeply op($marmoset,$_), False,
               "marmoset is NOT $name of $_.^name()";
+#exit dd $_, $marmoset, $rname, False unless
             is-deeply rop($_,$marmoset), False,
               "$_.^name() NOT $rname marmoset";
         }
