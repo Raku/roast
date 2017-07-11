@@ -167,23 +167,29 @@ for
   &infix:<R⊅>, "R⊅", &infix:<R⊄>, "R⊈"
 -> &op, $name, &rop, $rname {
     for @pss -> $left, $right {
+#exit dd $left, $right, $name, False unless
         is-deeply op($left,$right), False,
           "$left is NOT $name of $right.^name()";
+#exit dd $right, $left, $rname, False unless
         is-deeply rop($right,$left), False,
           "$right.^name() NOT $rname $left";
     }
     for @notpss {
         if $_ ~~ Pair {
+#exit dd $.key, .value, $name, True unless
             is-deeply op(.key,.value), True,
               "$_.value() is NOT $name of $_.key.^name()";
+#exit dd $.value, .key, $rname, True unless
             is-deeply rop(.value,.key), True,
               "$_.key.^name() NOT $rname $_.value()";
         }
 
         # assume $marmoset
         else {
+#exit dd $marmoset, $_, $name, True unless
             is-deeply op($marmoset,$_), True,
               "marmoset is NOT $name of $_.^name()";
+#exit dd $_, $marmoset, $rname, True unless
             is-deeply rop($_,$marmoset), True,
               "$_.^name() NOT $rname marmoset";
         }
