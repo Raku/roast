@@ -143,10 +143,10 @@ for
     }
     for @notpss {
         if $_ ~~ Pair {
-#exit dd $.key, .value, $name, False unless
+#exit dd .key, .value, $name, False unless
             is-deeply op(.key,.value), False,
               "$_.value() is NOT $name of $_.key.^name()";
-#exit dd $.value, .key, $rname, False unless
+#exit dd .value, .key, $rname, False unless
             is-deeply rop(.value,.key), False,
               "$_.key.^name() NOT $rname $_.value()";
         }
@@ -182,10 +182,10 @@ for
     }
     for @notpss {
         if $_ ~~ Pair {
-#exit dd $.key, .value, $name, True unless
+#exit dd .key, .value, $name, True unless
             is-deeply op(.key,.value), True,
               "$_.value() is NOT $name of $_.key.^name()";
-#exit dd $.value, .key, $rname, True unless
+#exit dd .value, .key, $rname, True unless
             is-deeply rop(.value,.key), True,
               "$_.key.^name() NOT $rname $_.value()";
         }
