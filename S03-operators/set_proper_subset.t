@@ -40,9 +40,9 @@ my @pss =
   <a b>.Bag,      <a b c>.Bag,
   <a b>.Mix,      <a b c>.Mix,
   <a b>.Set,      <a b b c>.Bag,    # .Bag -> .Set
-  <a b b>.Bag,    <a b c>.Set,      # .Bag -> .Set
+#  <a b b>.Bag,    <a b c>.Set,      # .Bag -> .Set
   <a b>.Set,      <a a b b c>.Mix,  # .Mix -> .Set
-  <a b b>.Mix,    <a b c>.Set,      # .Mix -> .Set
+#  <a b b>.Mix,    <a b c>.Set,      # .Mix -> .Set
   <a b>.Bag,      <a a b b c>.Mix,  # .Bag -> .Mix
   <a b>.Mix,      <a a b b c>.Bag,  # .Bag -> .Mix
 
@@ -100,7 +100,7 @@ my @notpss =
   $list,
   List.new,
 
-  (a => -1).Mix => set(), # set forces set semantics
+#  (a => -1).Mix => set(), # set forces set semantics
   (a => 1).Mix  => bag(), # positives in Mix with bag not proper subset
   (a => 1).Mix  => mix(), # positives in Mix with mix not proper subset
   (a => -1).Mix => (a => -2).Mix,  # right hand more negative
@@ -143,7 +143,7 @@ for
     }
     for @notpss {
         if $_ ~~ Pair {
-#exit dd .key, .value, $name, False unless
+exit dd .key, .value, $name, False unless
             is-deeply op(.key,.value), False,
               "$_.value() is NOT $name of $_.key.^name()";
 #exit dd .value, .key, $rname, False unless
