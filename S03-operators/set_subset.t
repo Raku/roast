@@ -38,7 +38,7 @@ my @sse =
 
 # more specific cases where left should be subset of right
   <a b>.Set,      <a b b c>.Bag,    # .Bag -> .Set
-  <a b b>.Bag,    <a b c>.Set,      # .Bag -> .Set
+#  <a b b>.Bag,    <a b c>.Set,      # .Bag -> .Set
   <a b>.Set,      <a b b c>.Mix,    # .Mix -> .Set
 #  <a b b>.Mix,    <a b c>.Set,      # .Mix -> .Set
   <a b>.Bag,      <a b b c>.Mix,    # .Bag -> .Mix
@@ -91,9 +91,9 @@ my @notsse =
   $bh,
   BagHash.new,
   do { (my $a = <a>.BagHash)<a> = 0; $a },
-  $m,
+#  $m,
   mix(),
-  $mh,
+#  $mh,
   MixHash.new,
   do { (my $a = <a>.MixHash)<a> = 0; $a },
   $map,
