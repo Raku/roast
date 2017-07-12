@@ -79,8 +79,6 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 # RT #128594
 {
     for ^10 {
-        # NOTE: THIS TEST HANGS ON OSX; double check before unfudging
-        #?rakudo.moar skip 'RT 128594'
         #?rakudo.jvm todo 'IOException "no such file" RT 128594'
         is_run q{run("non-existent-program-RT128594", :merge).out.slurp},
             { status => 0 },
