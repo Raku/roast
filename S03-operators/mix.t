@@ -170,7 +170,7 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     my $buper = ("n" => 2.2, "e" => 4.4, "d" => 2.2, "y" => 2.2).Mix;
 
     ok $b ⊂ $bub, "⊂ - {$b.gist} is a strict submix of {$bub.gist}";
-    ok $bub ⊄ $buper, "⊄ - {$bub.gist} is not a strict submix of {$buper.gist}";
+    nok $bub ⊄ $buper, "⊄ - {$bub.gist} is not a strict submix of {$buper.gist}";
     ok $bub ⊆ $buper, "⊆ - {$bub.gist} is a submix of {$buper.gist}";
     ok $buper ⊈ $bub, "⊈ - {$buper.gist} is not a submix of {$bub.gist}";
     ok $bub ⊃ $b, "⊃ - {$bub.gist} is a strict supermix of {$b.gist}";
@@ -178,9 +178,9 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     ok $buper ⊇ $bub, "⊇ - {$buper.gist} is a supermix of {$bub.gist}";
     ok $bub ⊉ $buper, "⊉ - {$bub.gist} is not a supermix of {$buper.gist}";
     ok $b (<) $bub, "(<) - {$b.gist} is a strict submix of {$bub.gist} (texas)";
-    ok $bub !(<) $buper, "!(<) - {$bub.gist} is not a strict submix of {$buper.gist} (texas)";
+    nok $bub !(<) $buper, "!(<) - {$bub.gist} is a strict submix of {$buper.gist} (texas)";
     ok $bub (>) $b, "(>) - {$bub.gist} is a strict supermix of {$b.gist} (texas)";
-    ok $buper !(>) $bub, "!(>) - {$buper.gist} is not a strict supermix of {$bub.gist}";
+    nok $buper !(>) $bub, "!(>) - {$buper.gist} is a strict supermix of {$bub.gist}";
     ok $bub (<=) $buper, "(<=) - {$bub.gist} submix {$buper.gist} (texas)";
     ok $buper !(<=) $bub, "!(<=) - {$buper.gist} is not a submix of {$bub.gist} (texas)";
     ok $buper (>=) $bub, "(>=) - {$buper.gist} is a supermix of {$bub.gist} (texas)";
