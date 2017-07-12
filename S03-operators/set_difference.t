@@ -5,10 +5,10 @@ use Test;
 #   (-)     set difference (Texas)
 #   ∖       set difference
 
-# special case empties (with an empty internal hash)
-my $esh  = do { my $sh = <a>.SetHash; $sh<a>:delete; $sh };
-my $ebh  = do { my $bh = <a>.BagHash; $bh<a>:delete; $bh };
-my $emh  = do { my $mh = <a>.MixHash; $mh<a>:delete; $mh };
+# Empty mutables that have the internal hash allocated
+(my $esh = <a>.SetHash)<a>:delete;
+(my $ebh = <a>.BagHash)<a>:delete;
+(my $emh = <a>.MixHash)<a>:delete;
 
 my @types = Set, SetHash, Bag, BagHash, Mix, MixHash;
 
@@ -20,10 +20,14 @@ my @pairs =
   <a b c>.BagHash,    <a b c>.Bag,
   <a b c>.Mix,        <a b c>.Mix,
   <a b c>.MixHash,    <a b c>.Mix,
-  <a b c>,            <a b c>.Set,
+  {:42a},             <a>.Set,
   {:42a,:0b},         <a>.Set,
+  :{:42a},            <a>.Set,
   :{:42a,:0b},        <a>.Set,
+  <a b c>,            <a b c>.Set,
+  ("a","b",:0c),      <a b>.Set,
   42,                 42.Set,
+  :0b,                set(),
 ;
 
 my @triplets =
@@ -144,8 +148,8 @@ plan 2 * (2 * (1 + @pairs/2 + @triplets/3)) + @types * 2;
 
 # difference
 for
-  &infix:<∖>,     "∖",
-  &infix:<(-)>, "(-)"
+  &infix:<(-)>, "(-)",
+  &infix:<∖>,     "∖"
 -> &op, $name {
 
     is-deeply op(), set(), "does $name\() return set()";
@@ -164,8 +168,8 @@ for
 }
 
 for
-  &infix:<R∖>,     "R∖",
-  &infix:<R(-)>, "R(-)"
+  &infix:<R(-)>, "R(-)",
+  &infix:<R∖>,     "R∖"
 -> &op, $name {
 
     is-deeply op(), set(), "does $name\() return set()";
