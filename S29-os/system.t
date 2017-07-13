@@ -125,16 +125,16 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 
 # https://irclog.perlgeek.de/perl6-dev/2017-06-13#i_14727506
 {
-    my $d = make-temp-dir;
-    $d.add('blah').spurt: 'Testing';
+    my $new-cwd = make-temp-dir;
+    $new-cwd.add('blah').spurt: 'Testing';
 
     my $env = %*ENV andthen {
         .<FOOMEOW> = 42;
-        .<PATH>    = join(':', $*CWD.add('install/bin').absolute, %*ENV<PATH>);
+        .<PATH> = join(':', $*EXECUTABLE.parent, %*ENV<PATH>);
     }
 
-    my $proc = run(:out, :!err, :cwd($d.absolute), :$env,
-        $*EXECUTABLE.absolute, '-e', 'q|blah|.IO.slurp.print; %*ENV<FOOMEOW>.print;'
+    my $proc = run(:out, :!err, :cwd($new-cwd.absolute), :$env,
+        $*EXECUTABLE.basename, '-e', 'q|blah|.IO.slurp.print; %*ENV<FOOMEOW>.print;'
     );
 
     my $output = $proc.out.slurp(:close).join;
