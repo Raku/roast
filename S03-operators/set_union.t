@@ -82,7 +82,7 @@ my @triplets =
   42,                           666,               (42,666).Set,
 ;
 
-plan 4 * (1 + 2 * @pairs/2 + 3 * @triplets/3) + 2 * @types;
+plan 4 * (1 + 3 * @types + 2 * @pairs/2 + 3 * @triplets/3);
 
 # union
 for
@@ -93,6 +93,15 @@ for
 -> &op, $name {
 
     is-deeply op(), set(), "does $name\() return set()";
+
+    for @types -> \qh {
+        is-deeply op(qh.new,qh.new,qh.new), ::(qh.^name.substr(0,3)).new,
+          "Sequence of empty {qh.^name} is the empty {qh.^name.substr(0,3)}";
+        throws-like { op(qh.new,^Inf) }, X::Cannot::Lazy,
+          "Cannot {qh.perl}.new (|) lazy list";
+        throws-like { op(qh.new(<a b c>),^Inf) }, X::Cannot::Lazy,
+          "Cannot {qh.perl}.new(<a b c>) (|) lazy list";
+    }
 
     for @pairs -> $parameter, $result {
 #exit dd $parameter, $result unless
@@ -114,13 +123,6 @@ for
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
     }
-}
-
-for @types -> \qh {
-    throws-like { qh.new (|) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new (|) lazy list";
-    throws-like { qh.new(<a b c>) (|) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new(<a b c>) (|) lazy list";
 }
 
 # vim: ft=perl6
