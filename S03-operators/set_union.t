@@ -10,6 +10,7 @@ use Test;
 (my $ebh = <a>.BagHash)<a>:delete;
 (my $emh = <a>.MixHash)<a>:delete;
 
+# QuantHash types
 my @types = Set, SetHash, Bag, BagHash, Mix, MixHash;
 
 # single parameter, result
@@ -30,6 +31,7 @@ my @pairs =
   :0b,                set(),
 ;
 
+# two parameters, result
 my @triplets =
 
   # result should be a Set
@@ -82,7 +84,35 @@ my @triplets =
   42,                           666,               (42,666).Set,
 ;
 
-plan 4 * (1 + 3 * @types + 2 * @pairs/2 + 3 * @triplets/3);
+# List with 3 parameters, result
+my @quads =
+  [<a b c>.Set, <c d e>.Set, <e f g>.Set],         <a b c d e f g>.Set,
+  [<a b c>.Bag, <c d e>.Bag, <e f g>.Bag],         <a b c d e f g>.Bag,
+  [<a b c>.Mix, <c d e>.Mix, <e f g>.Mix],         <a b c d e f g>.Mix,
+  [<a b c>.Set, <c d e>.Set, <e f g>.Bag],         <a b c d e f g>.Bag,
+  [<a b c>.Set, <c d e>.Set, <e f g>.Mix],         <a b c d e f g>.Mix,
+  [<a b c>.Set, <c d e>.Bag, <e f g>.Mix],         <a b c d e f g>.Mix,
+
+  [<a b c>, <c d e>, <e f g>],                     <a b c d e f g>.Set,
+  [<a b c>, <c d e>, <e f g>.Set],                 <a b c d e f g>.Set,
+  [<a b c>, <c d e>, <e f g>.Bag],                 <a b c d e f g>.Bag,
+  [<a b c>, <c d e>, <e f g>.Mix],                 <a b c d e f g>.Mix,
+  [<a b c>, <c d e>.Bag, <e f g>.Mix],             <a b c d e f g>.Mix,
+
+  [{:a,:b,:c}, {:c,:d,:e}, {:e,:f,:g}],            <a b c d e f g>.Set,
+  [{:a,:b,:c}, {:c,:d,:e}, <e f g>.Set],           <a b c d e f g>.Set,
+  [{:a,:b,:c}, {:c,:d,:e}, <e f g>.Bag],           <a b c d e f g>.Bag,
+  [{:a,:b,:c}, {:c,:d,:e}, <e f g>.Mix],           <a b c d e f g>.Mix,
+
+  [{:a,:b,:c}, <c d e>, {:e,:f,:g}],               <a b c d e f g>.Set,
+  [{:a,:b,:c}, <c d e>, <e f g>.Set],              <a b c d e f g>.Set,
+  [{:a,:b,:c}, <c d e>, <e f g>.Bag],              <a b c d e f g>.Bag,
+  [{:a,:b,:c}, <c d e>, <e f g>.Mix],              <a b c d e f g>.Mix,
+
+  <a b c>,                                         <a b c>.Set,
+;
+
+plan 4 * (1 + 3 * @types + 2 * @pairs/2 + 3 * @triplets/3 + 6 * @quads/2);
 
 # union
 for
@@ -122,6 +152,14 @@ for
 #exit dd $right, $left, $result unless
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
+    }
+
+    for @quads -> @params, $result {
+        for @params.permutations -> @mixed {
+#exit dd @mixed, $result unless
+            is-deeply op(|@mixed), $result,
+              "[$name] @mixed>>.gist()";
+        }
     }
 }
 
