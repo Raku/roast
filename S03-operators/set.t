@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan 20;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -17,15 +17,7 @@ my $bh = BagHash.new(<Come, take your bread with joy, and your wine with a glad 
 
 # set subtraction moved to difference.t
 
-# symmetric difference
-
-is showset($s (^) $s), showset(∅), "Set symmetric difference with Set is correct";
-isa-ok ($s (^) $s), Set, "... and it's actually a Set";
-
-is showset($s (^) $sh), showset(set <is isn't your day>), "SetHash symmetric difference with Set is correct";
-isa-ok ($s (^) $sh), Set, "... and it's actually a Set";
-is showset($sh (^) $s), showset(set <is isn't your day>), "Set symmetric difference with SetHash is correct";
-isa-ok ($sh (^) $s), Set, "... and it's actually a Set";
+# symmetric difference moved to set_symmetric_difference.t
 
 # RT #122882
 is showset($s (^) $s (^) $s), showset(∅), "Set symmetric difference with 3+ args (RT #122882)";

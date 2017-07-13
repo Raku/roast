@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 66;
+plan 58;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -21,21 +21,7 @@ my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3);
 
 # Mix Intersection tests moved to set_intersection.t
 
-# symmetric difference
-
-sub symmetric-difference($a, $m) {
-    ($a (|) $m) (-) ($m (&) $a)
-}
-
-is ($b (^) $m), symmetric-difference($b, $m), "Mix symmetric difference with Bag is correct";
-isa-ok ($b (^) $m), Mix, "... and it's actually a Mix";
-is ($m (^) $b), symmetric-difference($b, $m), "Bag symmetric difference with Mix is correct";
-isa-ok ($m (^) $b), Mix, "... and it's actually a Mix";
-
-is ($b (^) $mh), symmetric-difference($b, $mh), "MixHash symmetric difference with Bag is correct";
-isa-ok ($b (^) $mh), Mix, "... and it's actually a Mix";
-is ($mh (^) $b), symmetric-difference($b, $mh), "Bag symmetric difference with MixHash is correct";
-isa-ok ($mh (^) $b), Mix, "... and it's actually a Mix";
+# symmetric difference tests moved to set_symmetric_difference.t
 
 # Mix multiplication tests moved to set_multiply.t
 

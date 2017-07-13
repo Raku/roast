@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 46;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -21,21 +21,7 @@ my $kb = BagHash.new(<blood love love>);
 
 # Bag Intersection tests moved to set_intersection.t
 
-# symmetric difference
-
-sub symmetric-difference($a, $b) {
-    ($a (|) $b) (-) ($b (&) $a)
-}
-
-is showkv($s (^) $b), showkv(symmetric-difference($s, $b)), "Bag symmetric difference with Set is correct";
-isa-ok ($s (^) $b), Bag, "... and it's actually a Bag";
-is showkv($b (^) $s), showkv(symmetric-difference($s, $b)), "Set symmetric difference with Bag is correct";
-isa-ok ($b (^) $s), Bag, "... and it's actually a Bag";
-
-is showkv($s (^) $kb), showkv(symmetric-difference($s, $kb)), "BagHash symmetric difference with Set is correct";
-isa-ok ($s (^) $kb), Bag, "... and it's actually a Bag";
-is showkv($kb (^) $s), showkv(symmetric-difference($s, $kb)), "Set symmetric difference with BagHash is correct";
-isa-ok ($kb (^) $s), Bag, "... and it's actually a Bag";
+# symmetric difference moved to set_symmetric_difference.t
 
 # Bag multiplication tests moved to set_multiply.t
 
