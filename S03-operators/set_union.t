@@ -82,7 +82,7 @@ my @triplets =
   42,                           666,               (42,666).Set,
 ;
 
-plan 4 * (1 + @pairs/2 + 2 * @triplets/3) + 2 * @types;
+plan 4 * (1 + 2 * @pairs/2 + 3 * @triplets/3) + 2 * @types;
 
 # union
 for
@@ -98,12 +98,18 @@ for
 #exit dd $parameter, $result unless
         is-deeply op($parameter.item), $result,
           "infix:<$name>(|$parameter.gist())";
+#exit dd $parameter xx 3, $result unless
+        is-deeply op($parameter,$parameter,$parameter), $result,
+          "infix:<$name>($parameter.gist() xx 3)";
     }
 
     for @triplets -> $left, $right, $result {
 #exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
+#exit dd $left, $left, $right, $result unless
+        is-deeply op($left,$right), $result,
+          "[$name] $left.gist(), $left.gist(), $right.gist()";
 #exit dd $right, $left, $result unless
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
