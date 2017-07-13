@@ -134,7 +134,40 @@ my @triplets =
   42,                           666,               (42,666).Set,
 ;
 
-plan 2 * (1 + 3 * @types + @pairs/2 + 2 * @triplets/3);
+# List with 3 parameters, result
+my @quads =
+  [<a b c>.Set, <c d e>.Set, <e f g>.Set],         <a b d f g>.Set,
+  [<a b c>.Bag, <c d e>.Bag, <e f g>.Bag],         <a b d f g>.Bag,
+  [<a b c>.Mix, <c d e>.Mix, <e f g>.Mix],         <a b d f g>.Mix,
+  [<a b c>.Set, <c d e>.Set, <e f g>.Bag],         <a b d f g>.Bag,
+  [<a b c>.Set, <c d e>.Set, <e f g>.Mix],         <a b d f g>.Mix,
+  [<a b c>.Set, <c d e>.Bag, <e f g>.Mix],         <a b d f g>.Mix,
+
+  [<a b c>, <c d e>, <e f g>],                     <a b d f g>.Set,
+  [<a b c>, <c d e>, <e f g>.Set],                 <a b d f g>.Set,
+  [<a b c>, <c d e>, <e f g>.Bag],                 <a b d f g>.Bag,
+  [<a b c>, <c d e>, <e f g>.Mix],                 <a b d f g>.Mix,
+  [<a b c>, <c d e>.Bag, <e f g>.Mix],             <a b d f g>.Mix,
+
+  [{:a,:b,:c}, {:c,:d,:e}, {:e,:f,:g}],            <a b d f g>.Set,
+  [{:a,:b,:c}, {:c,:d,:e}, <e f g>.Set],           <a b d f g>.Set,
+  [{:a,:b,:c}, {:c,:d,:e}, <e f g>.Bag],           <a b d f g>.Bag,
+  [{:a,:b,:c}, {:c,:d,:e}, <e f g>.Mix],           <a b d f g>.Mix,
+
+  [{:a,:b,:c}, <c d e>, {:e,:f,:g}],               <a b d f g>.Set,
+  [{:a,:b,:c}, <c d e>, <e f g>.Set],              <a b d f g>.Set,
+  [{:a,:b,:c}, <c d e>, <e f g>.Bag],              <a b d f g>.Bag,
+  [{:a,:b,:c}, <c d e>, <e f g>.Mix],              <a b d f g>.Mix,
+
+  [(:42a).Bag, (:7a).Bag, (:43a).Bag],             <a>.Bag,
+  [(:42a).Bag, bag(), (:43a).Bag],                 <a>.Bag,
+  [(a=>-42).Mix, <a>.Mix, (:42a).Mix],             (:41a).Mix,
+#  [(a=>-42).Mix, mix(), (:42a).Mix],               (:42a).Mix,
+
+  <a b c>,                                         <a b c>.Set,
+;
+
+plan 2 * (1 + 3 * @types + @pairs/2 + 2 * @triplets/3 + 6 * @quads/2);
 
 # symmetric difference
 for
@@ -166,6 +199,14 @@ for
 #exit dd $right, $left, $result unless
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
+    }
+
+    for @quads -> @params, $result {
+        for @params.permutations -> @mixed {
+exit dd @mixed, $result unless
+            is-deeply op(|@mixed), $result,
+              "[$name] @mixed>>.gist()";
+        }
     }
 }
 
