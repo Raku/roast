@@ -104,28 +104,42 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 }
 
 # all these tests feel like bogus, what are we testing here???
-# note: is_run fails after these tests because we are no longer in the right dir
-chdir "t";
-my $cwd;
-BEGIN { $cwd = $*DISTRO.is-win ?? 'cd' !! 'pwd' };
-ok((qqx{$cwd} ne BEGIN qqx{$cwd}), 'qqx{} is affected by chdir()');
-isnt run("dir", "t"), BEGIN { run("dir", "t") }, 'run() is affected by chdir()';
+{
+    my $cwd = $*CWD;
+    LEAVE chdir $cwd;
+
+    my $cwd-cmd = $*DISTRO.is-win ?? 'cd'  !! 'pwd';
+    my $dir-cmd = $*DISTRO.is-win ?? 'dir' !! 'ls';
+
+    my $qqx-cwd-before = qqx{$cwd-cmd};
+    my $run-dir-before = run($dir-cmd, 't', :!out, :!err).exitcode;
+
+    chdir 't';
+
+    my $qqx-cwd-after = qqx{$cwd-cmd};
+    my $run-dir-after = run($dir-cmd, 't', :!out, :!err).exitcode;
+
+    isnt $qqx-cwd-before, $qqx-cwd-after, 'qqx{} is affected by chdir()';
+    isnt $run-dir-before, $run-dir-after, 'run() is affected by chdir()';
+}
 
 # https://irclog.perlgeek.de/perl6-dev/2017-06-13#i_14727506
 {
     my $d = make-temp-dir;
     $d.add('blah').spurt: 'Testing';
 
-    temp %*ENV<PATH> = $*CWD.absolute ~ "/install/bin:%*ENV<PATH>";
-    my $res = do with run(
-        :out, :err, :cwd($d.absolute), :env{ :42FOOMEOW, |%*ENV },
-        $*EXECUTABLE.subst(/^"./"/, ""),
-        '-e', ｢'blah'.IO.slurp.print; %*ENV<FOOMEOW>.print｣
-    ) {
-        .out.slurp(:close) ~ .err.slurp(:close)
+    my $env = %*ENV andthen {
+        .<FOOMEOW> = 42;
+        .<PATH>    = join(':', $*CWD.add('install/bin').absolute, %*ENV<PATH>);
     }
 
-    is-deeply $res, 'Testing42', 'run sets $cwd and $env';
+    my $proc = run(:out, :!err, :cwd($d.absolute), :$env,
+        $*EXECUTABLE.absolute, '-e', 'q|blah|.IO.slurp.print; %*ENV<FOOMEOW>.print;'
+    );
+
+    my $output = $proc.out.slurp(:close).join;
+
+    is $output, 'Testing42', 'run sets $cwd and $env';
 }
 
 subtest '.out/.err proc pipes on failed command' => {
