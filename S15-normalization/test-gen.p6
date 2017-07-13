@@ -41,11 +41,26 @@ use v6;
 
 use Test;
 
-plan @source.elems();
+plan {$method eq 'NFC' ?? @source.elems * 2 !! @source.elems};
 HEADER
-
+        if $method eq 'NFC' {
+            .say('my @list; my @result;');
+        }
         for flat @source Z @expected -> $s, $e {
             .say: "ok Uni.new(&hexy($s)).$method.list ~~ (&hexy($e),), '$s -> $e';";
+            if $method eq 'NFC' {
+                my @list = hexy-unjoined($s);
+                my $list-joined = @list.join(', ');
+                my $result-joined = &hexy($e);
+                .say("\@list = $list-joined; \@result = $result-joined; ");
+                .say((
+                    "ok all(((Uni.new("
+                    ~ '@list[0..($_ - 1)]'
+                    ~ ') ~ Uni.new('
+                    ~ '@list[$_..*]'
+                ~ ")).$method.list ~~ \@result " ~ "for 1..(\@list-1))), '$s -> $e CONCAT';"
+                ));
+            }
         }
 
         .close;
@@ -89,5 +104,8 @@ HEADER
 }
 
 sub hexy($codes) {
-    $codes.split(' ').map('0x' ~ *).join(', ')
+    hexy-unjoined($codes).join(', ')
+}
+sub hexy-unjoined($codes) {
+    $codes.split(' ').map('0x' ~ *);
 }
