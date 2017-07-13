@@ -5,10 +5,30 @@ use Test;
 #   (|)     union (Texas)
 #   ∪       union
 
-# special case empties (with an empty internal hash)
-my $esh  = do { my $sh = <a>.SetHash; $sh<a>:delete; $sh };
-my $ebh  = do { my $bh = <a>.BagHash; $bh<a>:delete; $bh };
-my $emh  = do { my $mh = <a>.MixHash; $mh<a>:delete; $mh };
+# Empty mutables that have the internal hash allocated
+(my $esh = <a>.SetHash)<a>:delete;
+(my $ebh = <a>.BagHash)<a>:delete;
+(my $emh = <a>.MixHash)<a>:delete;
+
+my @types = Set, SetHash, Bag, BagHash, Mix, MixHash;
+
+# single parameter, result
+my @pairs =
+  <a b c>.Set,        <a b c>.Set,
+  <a b c>.SetHash,    <a b c>.Set,
+  <a b c>.Bag,        <a b c>.Bag,
+  <a b c>.BagHash,    <a b c>.Bag,
+  <a b c>.Mix,        <a b c>.Mix,
+  <a b c>.MixHash,    <a b c>.Mix,
+  {:42a},             <a>.Set,
+  {:42a,:0b},         <a>.Set,
+  :{:42a},            <a>.Set,
+  :{:42a,:0b},        <a>.Set,
+  <a b c>,            <a b c>.Set,
+  ("a","b",:0c),      <a b>.Set,
+  42,                 42.Set,
+  :0b,                set(),
+;
 
 my @triplets =
 
@@ -62,7 +82,7 @@ my @triplets =
   42,                           666,               (42,666).Set,
 ;
 
-plan 4 * (2 * @triplets/3);
+plan 4 * (1 + @pairs/2 + 2 * @triplets/3) + 2 * @types;
 
 # union
 for
@@ -71,12 +91,30 @@ for
   &infix:<R∪>,     "R∪",
   &infix:<R(|)>, "R(|)"
 -> &op, $name {
+
+    is-deeply op(), set(), "does $name\() return set()";
+
+    for @pairs -> $parameter, $result {
+#exit dd $parameter, $result unless
+        is-deeply op($parameter.item), $result,
+          "infix:<$name>(|$parameter.gist())";
+    }
+
     for @triplets -> $left, $right, $result {
+#exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
+#exit dd $right, $left, $result unless
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
     }
+}
+
+for @types -> \qh {
+    throws-like { qh.new (|) ^Inf }, X::Cannot::Lazy,
+      "Cannot {qh.perl}.new (|) lazy list";
+    throws-like { qh.new(<a b c>) (|) ^Inf }, X::Cannot::Lazy,
+      "Cannot {qh.perl}.new(<a b c>) (|) lazy list";
 }
 
 # vim: ft=perl6
