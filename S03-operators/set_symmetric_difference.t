@@ -136,7 +136,7 @@ my @triplets =
 
 plan 2 * (1 + @pairs/2 + 2 * @triplets/3) + @types * 2;
 
-# symmetrc difference
+# symmetric difference
 for
   &infix:<(^)>, "(^)",
   &infix:<⊖>,     "⊖"
@@ -162,9 +162,9 @@ for
 
 for @types -> \qh {
     throws-like { qh.new (^) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new (-) lazy list";
+      "Cannot {qh.perl}.new (^) lazy list";
     throws-like { qh.new(<a b c>) (^) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new(<a b c>) (-) lazy list";
+      "Cannot {qh.perl}.new(<a b c>) (^) lazy list";
 }
 
 # vim: ft=perl6
