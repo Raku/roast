@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 843;
+plan 844;
 
 # Basic test functions specific to rational numbers.
 
@@ -428,5 +428,9 @@ subtest 'Rational.Int on zero-denominator rats' => {
     fails-like { t  0/0 }, X::Numeric::DivideByZero,  '0/0 (signature coercer)';
     fails-like { t  1/0 }, X::Numeric::DivideByZero,  '1/0 (signature coercer)';
 }
+
+# RT#130845
+is-deeply (4.99999999999999999999999999999999999999999999 ~~ 0..^5), True,
+    'literal with denominator > 64bit does not aquire f.p. noise';
 
 # vim: ft=perl6
