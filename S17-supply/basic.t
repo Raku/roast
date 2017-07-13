@@ -4,7 +4,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 92;
+plan 94;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -159,6 +159,35 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         react { whenever supply { .emit for "foo", 42, .5 } {
             pass "can .emit {.^name} ($_)";
         }}
+    }
+
+    # RT #130919
+    subtest 'call done/quit on all taps' => {
+        plan 2;
+
+        {
+            my $supplier = Supplier.new;
+            my $supply   = $supplier.Supply;
+
+            my @done;
+            $supply.tap: done => { @done.push(1) }
+            $supply.tap: done => { @done.push(1) }
+            $supplier.done;
+
+            is +@done, 2, 'All done callbacks were called';
+        }
+
+        {
+            my $supplier = Supplier.new;
+            my $supply   = $supplier.Supply;
+
+            my @quit;
+            $supply.tap: quit => { @quit.push($_) }
+            $supply.tap: quit => { @quit.push($_) }
+            $supplier.quit(1);
+
+            is +@quit, 2, 'All quit callbacks were called';
+        }
     }
 }
 
