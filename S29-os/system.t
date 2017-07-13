@@ -8,7 +8,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there.
 
-plan 37;
+plan 36;
 
 my $res;
 
@@ -104,27 +104,35 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 }
 
 # all these tests feel like bogus, what are we testing here???
-{
+subtest '&chdir changes the directory processes are spawned in' => {
+    plan 2;
+
     my $cwd = $*CWD;
     LEAVE chdir $cwd;
 
-    my $cwd-cmd = $*DISTRO.is-win ?? 'cd'  !! 'pwd';
-    my $dir-cmd = $*DISTRO.is-win ?? 'dir' !! 'ls';
+    my $env = %*ENV andthen {
+        .<PATH> = join(':', $*EXECUTABLE.parent, %*ENV<PATH>);
+    }
 
-    my $qqx-cwd-before = qqx{$cwd-cmd};
-    my $run-dir-before = run($dir-cmd, 't', :!out, :!err).exitcode;
+    my $qqx-cmd = "{$*EXECUTABLE.basename} -e '{q|$*CWD.absolute.print|}'";
+    my @run-cmd = $*EXECUTABLE.basename, '-e', '$*CWD.absolute.print';
+
+    my $qqx-cwd-before = qqx{$qqx-cmd.split(' ')};
+    my $run-dir-before = run(@run-cmd, :out).out.slurp(:close);
 
     chdir 't';
 
-    my $qqx-cwd-after = qqx{$cwd-cmd};
-    my $run-dir-after = run($dir-cmd, 't', :!out, :!err).exitcode;
+    my $qqx-cwd-after = qqx{$qqx-cmd.split(' ')};
+    my $run-dir-after = run(@run-cmd, :out).out.slurp(:close);
 
     isnt $qqx-cwd-before, $qqx-cwd-after, 'qqx{} is affected by chdir()';
     isnt $run-dir-before, $run-dir-after, 'run() is affected by chdir()';
 }
 
 # https://irclog.perlgeek.de/perl6-dev/2017-06-13#i_14727506
-{
+subtest ':cwd(...) changes the directory processes are spawned in' => {
+    plan 1;
+
     my $new-cwd = make-temp-dir;
     $new-cwd.add('blah').spurt: 'Testing';
 
