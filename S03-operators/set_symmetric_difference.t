@@ -164,7 +164,12 @@ my @quads =
   [(:42a).Bag, (:7a).Bag, (:43a).Bag],             <a>.Bag,
   [(:42a).Bag, bag(), (:43a).Bag],                 <a>.Bag,
   [(a=>-42).Mix, <a>.Mix, (:42a).Mix],             (:41a).Mix,
-#  [(a=>-42).Mix, mix(), (:42a).Mix],               (:42a).Mix,
+  [(a=>-42).Mix, set(), (:42a).Mix],               (:42a).Mix,
+  [(a=>-42).Mix, bag(), (:42a).Mix],               (:42a).Mix,
+  [(a=>-42).Mix, mix(), (:42a).Mix],               (:42a).Mix,
+  [(a=>-42).Mix, <b>.Set, (:42a).Bag],             (:42a,:b).Mix,
+  [(a=>-42).Mix, <b>.Bag, (:42a).Bag],             (:42a,:b).Mix,
+  [(a=>-42).Mix, <b>.Mix, (:42a).Bag],             (:42a,:b).Mix,
 
   <a b c>,                                         <a b c>.Set,
 ;
@@ -205,7 +210,7 @@ for
 
     for @quads -> @params, $result {
         for @params.permutations -> @mixed {
-exit dd @mixed, $result unless
+#exit dd @mixed, $result unless
             is-deeply op(|@mixed), $result,
               "[$name] @mixed>>.gist()";
         }
