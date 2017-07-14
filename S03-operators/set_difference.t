@@ -145,7 +145,45 @@ my @triplets =
   42,                           666,               42.Set,
 ;
 
-plan 2 * (1 + @pairs/2 + @triplets/3) + @types * 2;
+# List with 3 parameters, result
+my @quads =
+  [<a b c>.Set, <c d e>.Set, <e f>.Set],       <a b>.Set,
+  [<a b c>.Bag, <c d e>.Bag, <e f>.Bag],       <a b>.Bag,
+  [<a b c>.Mix, <c d e>.Mix, <e f>.Mix],       (:a,:b,d=>-1,e=>-2,f=>-1).Mix,
+  [<a b c>.Set, <c d e>.Set, <e f>.Bag],       <a b>.Bag,
+  [<a b c>.Set, <c d e>.Set, <e f>.Mix],       (:a,:b,d=>-1,e=>-2,f=>-1).Mix,
+  [<a b c>.Set, <c d e>.Bag, <e f>.Mix],       (:a,:b,d=>-1,e=>-2,f=>-1).Mix,
+
+  [<a b c>, <c d e>, <e f>],                   <a b>.Set,
+  [<a b c>, <c d e>, <e f>.Set],               <a b>.Set,
+  [<a b c>, <c d e>, <e f>.Bag],               <a b>.Bag,
+  [<a b c>, <c d e>, <e f>.Mix],               (:a,:b,d=>-1,e=>-2,f=>-1).Mix,
+  [<a b c>, <c d e>.Bag, <e f>.Mix],           (:a,:b,d=>-1,e=>-2,f=>-1).Mix,
+
+  [{:a,:b,:c}, {:c,:d,:e}, {:e,:f}],           <a b>.Set,
+  [{:a,:b,:c}, {:c,:d,:e}, <e f>.Set],         <a b>.Set,
+  [{:a,:b,:c}, {:c,:d,:e}, <e f>.Bag],         <a b>.Bag,
+  [{:a,:b,:c}, {:c,:d,:e}, <e f>.Mix],         (:a,:b,d=>-1,e=>-2,f=>-1).Mix,
+
+  [{:a,:b,:c}, <c d e>, {:e,:f}],              <a b>.Set,
+  [{:a,:b,:c}, <c d e>, <e f>.Set],            <a b>.Set,
+  [{:a,:b,:c}, <c d e>, <e f>.Bag],            <a b>.Bag,
+  [{:a,:b,:c}, <c d e>, <e f>.Mix],            (:a,:b,d=>-1,e=>-2,f=>-1).Mix,
+
+  [(:42a).Bag, (:7a).Bag, (:41a).Bag],         bag(),
+  [(:42a).Bag, bag(), (:41a).Bag],             <a>.Bag,
+  [(a=>-42).Mix, <a>.Mix, (:42a).Mix],         (a=>-85).Mix,
+  [(a=>-42).Mix, set(), (:42a).Mix],           (a=>-84).Mix,
+  [(a=>-42).Mix, bag(), (:42a).Mix],           (a=>-84).Mix,
+  [(a=>-42).Mix, mix(), (:42a).Mix],           (a=>-84).Mix,
+  [(a=>-42).Mix, <b>.Set, (a=>-42).Mix],       (b=>-1).Mix,
+  [(a=>-42).Mix, <b>.Bag, (a=>-42).Mix],       (b=>-1).Mix,
+  [(a=>-42).Mix, <b>.Mix, (a=>-42).Mix],       (b=>-1).Mix,
+
+  <a b c>,                                     <a>.Set,
+;
+
+plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2);
 
 # difference
 for
@@ -154,6 +192,15 @@ for
 -> &op, $name {
 
     is-deeply op(), set(), "does $name\() return set()";
+
+    for @types -> \qh {
+        is-deeply op(qh.new,qh.new,qh.new), ::(qh.^name.substr(0,3)).new,
+          "Sequence of empty {qh.^name} is the empty {qh.^name.substr(0,3)}";
+        throws-like { op(qh.new,^Inf) }, X::Cannot::Lazy,
+          "Cannot {qh.perl}.new (|) lazy list";
+        throws-like { op(qh.new(<a b c>),^Inf) }, X::Cannot::Lazy,
+          "Cannot {qh.perl}.new(<a b c>) (|) lazy list";
+    }
 
     for @pairs -> $parameter, $result {
 #exit dd $parameters, $result unless
@@ -166,13 +213,12 @@ for
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
     }
-}
 
-for @types -> \qh {
-    throws-like { qh.new (-) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new (-) lazy list";
-    throws-like { qh.new(<a b c>) (-) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new(<a b c>) (-) lazy list";
+    for @quads -> @params, $result {
+exit dd @params, $result unless
+        is-deeply op(|@params), $result,
+          "[$name] @params>>.gist()";
+    }
 }
 
 # vim: ft=perl6
