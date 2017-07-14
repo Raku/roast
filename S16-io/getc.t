@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 2;
+plan 3;
 
 # L<S32::IO/IO/"getc">
 
@@ -24,6 +24,16 @@ my $tmpfile = "temp-test" ~ nonce();
 
 {
     dies-ok { open('t').getc }, 'getc on a directory fails';
+}
+
+# RT #131365
+with $tmpfile.IO {
+    .spurt: "a♥c";
+    with .open {
+        is-deeply (.getc xx 4).list, ("a", "♥", "c", Nil),
+            'Correct behavior near end of file';
+        .close;
+    }
 }
 
 END { unlink $tmpfile }
