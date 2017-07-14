@@ -25,7 +25,7 @@ my $tmpfile = "temp-test" ~ nonce();
 }
 
 # RT #131383
-with '/tmp/foo70'.IO {
+with $tmpfile.IO {
     .spurt: "a♥c";
     with .open {
         is-deeply (.readchars(1) xx 4).list, ("a", "♥", "c", ""),
@@ -33,7 +33,7 @@ with '/tmp/foo70'.IO {
         .close;
     }
 }
-with '/tmp/foo70'.IO {
+with $tmpfile.IO {
     .spurt: "fo♥";
     with .open {
         is .readchars(2), "fo", 'readchars works near the end of the file (2)';
