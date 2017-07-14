@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 10;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -46,16 +46,6 @@ my $bh = BagHash.new(<Come, take your bread with joy, and your wine with a glad 
     is showset([(|)] $a), showset($a), "Union reduce works on one set (texas)";
     is showset([(|)] $a, $b), showset(set($a.keys, $b.keys)), "Union reduce works on two sets (texas)";
     is showset([(|)] $a, $b, $c), showset(set($a.keys, $b.keys, $c.values)), "Union reduce works on three sets (texas)";
-
-    is showset([∩] @d), showset(∅), "Intersection reduce works on nothing";
-    is showset([∩] $a), showset($a), "Intersection reduce works on one set";
-    is showset([∩] $a, $b), showset(set("Apollo")), "Intersection reduce works on two sets";
-    is showset([∩] $a, $b, $c), showset(set("Apollo")), "Intersection reduce works on three sets";
-
-    is showset([(&)] @d), showset(∅), "Intersection reduce works on nothing (texas)";
-    is showset([(&)] $a), showset($a), "Intersection reduce works on one set (texas)";
-    is showset([(&)] $a, $b), showset(set("Apollo")), "Intersection reduce works on two sets (texas)";
-    is showset([(&)] $a, $b, $c), showset(set("Apollo")), "Intersection reduce works on three sets (texas)";
 }
 
 # RT #117997
