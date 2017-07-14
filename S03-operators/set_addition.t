@@ -5,10 +5,10 @@ use Test;
 #   (+)     baggy addition (Texas)
 #   ⊎       baggy addition
 
-# special case empties (with an empty internal hash)
-my $esh  = do { my $sh = <a>.SetHash; $sh<a>:delete; $sh };
-my $ebh  = do { my $bh = <a>.BagHash; $bh<a>:delete; $bh };
-my $emh  = do { my $mh = <a>.MixHash; $mh<a>:delete; $mh };
+# Empty mutables that have the internal hash allocated
+(my $esh = <a>.SetHash)<a>:delete;
+(my $ebh = <a>.BagHash)<a>:delete;
+(my $emh = <a>.MixHash)<a>:delete;
 
 my @types = Set, SetHash, Bag, BagHash, Mix, MixHash;
 
@@ -113,7 +113,45 @@ my @triplets =
   42,                           666,               (42,666).Bag,
 ;
 
-plan 2 * (1 + @pairs/2 + 2 * @triplets/3) + @types * 2;
+# List with 3 parameters, result
+my @quads =
+  [<a b c>.Set, <c d e>.Set, <d e f>.Set],         <a b c c d d e e f>.Bag,
+  [<a b c>.Bag, <c d e>.Bag, <d e f>.Bag],         <a b c c d d e e f>.Bag,
+  [<a b c>.Mix, <c d e>.Mix, <d e f>.Mix],         <a b c c d d e e f>.Mix,
+  [<a b c>.Set, <c d e>.Set, <d e f>.Bag],         <a b c c d d e e f>.Bag,
+  [<a b c>.Set, <c d e>.Set, <d e f>.Mix],         <a b c c d d e e f>.Mix,
+  [<a b c>.Set, <c d e>.Bag, <d e f>.Mix],         <a b c c d d e e f>.Mix,
+
+  [<a b c>, <c d e>, <d e f>],                     <a b c c d d e e f>.Bag,
+  [<a b c>, <c d e>, <d e f>.Set],                 <a b c c d d e e f>.Bag,
+  [<a b c>, <c d e>, <d e f>.Bag],                 <a b c c d d e e f>.Bag,
+  [<a b c>, <c d e>, <d e f>.Mix],                 <a b c c d d e e f>.Mix,
+  [<a b c>, <c d e>.Bag, <d e f>.Mix],             <a b c c d d e e f>.Mix,
+
+  [{:a,:b,:c}, {:b,:c,:d}, {:c,:d,:e}],            <a b b c c c d d e>.Bag,
+  [{:a,:b,:c}, {:b,:c,:d}, <c d e>.Set],           <a b b c c c d d e>.Bag,
+  [{:a,:b,:c}, {:b,:c,:d}, <c d e>.Bag],           <a b b c c c d d e>.Bag,
+  [{:a,:b,:c}, {:b,:c,:d}, <c d e>.Mix],           <a b b c c c d d e>.Mix,
+
+  [{:a,:b,:c}, <b c d>, {:c,:d,:e}],               <a b b c c c d d e>.Bag,
+  [{:a,:b,:c}, <b c d>, <c d e>.Set],              <a b b c c c d d e>.Bag,
+  [{:a,:b,:c}, <b c d>, <c d e>.Bag],              <a b b c c c d d e>.Bag,
+  [{:a,:b,:c}, <b c d>, <c d e>.Mix],              <a b b c c c d d e>.Mix,
+
+  [(:2a).Bag, (:7a).Bag, (:3a).Bag],               (:12a).Bag,
+  [(:20a).Bag, bag(), (:22a).Bag],                 (:42a).Bag,
+  [(a=>-21).Mix, <a>.Mix, (:2a).Mix],              (a=>-18).Mix,
+  [(a=>-42).Mix, set(), (:42a).Mix],               mix(),
+  [(a=>-42).Mix, bag(), (:42a).Mix],               mix(),
+  [(a=>-42).Mix, mix(), (:42a).Mix],               mix(),
+  [(a=>-42).Mix, <b>.Set, (:42a).Bag],             <b>.Mix,
+  [(a=>-42).Mix, <b>.Bag, (:42a).Bag],             <b>.Mix,
+  [(a=>-42).Mix, <b>.Mix, (:42a).Bag],             <b>.Mix,
+
+  <a b c>,                                         <a b c>.Bag,
+;
+
+plan 2 * (1 + 3 * @types + @pairs/2 + 2 * @triplets/3 + 6 * @quads/2);
 
 # addition
 for
@@ -122,6 +160,17 @@ for
 -> &op, $name {
 
     is-deeply op(), bag(), "does $name\() return bag()";
+
+    for @types -> \qh {
+        is-deeply
+          op(qh.new,qh.new,qh.new),
+          (qh.^name.starts-with("Set") ?? Bag !! ::(qh.^name.substr(0,3))).new,
+          "Sequence of empty {qh.^name} is the empty {qh.^name.substr(0,3)}";
+        throws-like { op(qh.new,^Inf) }, X::Cannot::Lazy,
+          "Cannot {qh.perl}.new $name lazy list";
+        throws-like { op(qh.new(<a b c>),^Inf) }, X::Cannot::Lazy,
+          "Cannot {qh.perl}.new(<a b c>) $name lazy list";
+    }
 
     for @pairs -> $parameter, $result {
 #exit dd $parameter, $result unless
@@ -137,13 +186,14 @@ for
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
     }
-}
 
-for @types -> \qh {
-    throws-like { qh.new (-) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new (-) lazy list";
-    throws-like { qh.new(<a b c>) (-) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new(<a b c>) (-) lazy list";
+    for @quads -> @params, $result {
+        for @params.permutations -> @mixed {
+exit dd @mixed, $result unless
+            is-deeply op(|@mixed), $result,
+              "[$name] @mixed>>.gist()";
+        }
+    }
 }
 
 # vim: ft=perl6
