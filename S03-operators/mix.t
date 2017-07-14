@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 58;
+plan 45;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -79,21 +79,6 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     my @d;
     # XXX: without this initialization, the test harness breaks on 196
     my $tm = %(blood => 2.1, love => 2.2, rhetoric => 1).Mix;
-
-    is ([⊎] @d), ∅, "Mix sum reduce works on nothing";
-    is ([⊎] $b), $b.Mix, "Mix sum reduce works on one bag";
-    is ([⊎] $b, $m), %(blood => 2.1, love => 2.2, rhetoric => 1).Mix, "Mix sum reduce works on a bag and a mix";
-    is ([⊎] $b, $m, $mh), %(blood => 3.2, love => 3.5, rhetoric => 1).Mix, "Mix sum reduce works on a bag, a mix, and a mixhash";
-    is ([⊎] $mh, $m, $b), %(blood => 3.2, love => 3.5, rhetoric => 1).Mix, "Mix sum reduce works on a bag, a mix, and a mixhash and order doesn't matter";
-
-    is ([(+)] @d), ∅, "Mix sum reduce works on nothing (Texas)";
-    is ([(+)] $m), $m, "Mix sum reduce works on one set (Texas)";
-    is ([(+)] bag(), $m), $m, "Mix sum reduce with an empty bag should be the value of the mix (Texas)";
-    is ([(+)] $m, bag()), $m, "Mix sum reduce with an empty bag should be the value of the mix and is symmetric (Texas)";
-    is ([(+)] $b, $m), %(blood => 2.1, love => 2.2, rhetoric => 1).Mix, "Mix sum reduce works on bag and mix sets (Texas)";
-    is ([(+)] $m, $b), %(blood => 2.1, love => 2.2, rhetoric => 1).Mix, "Mix sum reduce works on bag and mix and is symmetric (Texas)";
-    is ([(+)] $b, $m, $mh), %(blood => 3.2, love => 3.5, rhetoric => 1).Mix, "Mix sum reduce works on a bag, a mix, and a mixhash (Texas)";
-    is ([(+)] $mh, $m, $b), %(blood => 3.2, love => 3.5, rhetoric => 1).Mix, "Mix sum reduce works on a bag, a mix, and a mixhash and order doesn't matter (Texas)";
 
     is ([⊍] @d), ∅, "Mix multiply reduce works on nothing";
     is ([⊍] $b), $b.Mix, "Mix multiply reduce works on one set";
