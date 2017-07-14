@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 5;
+plan 6;
 
 use Test::Util;
 
@@ -60,3 +60,8 @@ use Test::Util;
 is_run ｢@*ARGS.head.print｣, :args[<yağmur>],
     { :err(''), :out<yağmur>, :0status },
     'printed chars match input';
+
+# RT #130760
+is_run(Str, :args['--nosucharg=foo', 'foo.p6'],
+    { out => '' },
+    'Unknown options do not spit warnings to stdout');
