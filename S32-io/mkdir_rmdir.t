@@ -1,60 +1,54 @@
 use v6;
-use Test;
 
-plan 9;
+use lib 't/spec/packages';
+
+use Test;
+use Test::Util;
+
+plan 7;
 
 # Tests for IO::Path.mkdir and IO::Path.rmdir
 #
 # See also S16-filehandles/mkdir_rmdir.t
 # L<S32::IO/IO::Path>
 
-#?rakudo skip "mkdir rmdir NYI RT #124788"
 {
-    my $d = testdir();
-    $d.mkdir;
-    ok $d.e, "$d exists";
-    ok $d.d, "$d is a directory";
-
-    $d.rmdir;
-    ok !$d.e, "$d was removed";
+    my $dir = make-temp-dir;
+    ok $dir.e, "$dir exists";
+    ok $dir.d, "$dir is a directory";
 }
 
 # rmdir soft-fails when dir doesn't exist.
-#?rakudo skip "rmdir NYI RT #124789"
-#?DOES 1
 {
-    my $err = testdir().path.rmdir;
-    isa_fatal_ok $err, X::IO::Rmdir;
+    my $dir = make-temp-dir;
+    $dir.rmdir;
+    throws-like { $dir.rmdir }, X::IO::Rmdir;
 }
 
 # rmdir soft-fail when dir contains files.
-#?rakudo skip "mkdir rmdir NYI RT #124790"
 {
-    my $dir = testdir();
-    $dir.mkdir;
+    my $dir = make-temp-dir;
     spurt "$dir/file", "hello world";
-    my $err = $dir.rmdir;
-    isa_fatal_ok $err, X::IO::Rmdir;
-
-    unlink "$dir/file";
-    $dir.rmdir;
+    throws-like { $dir.rmdir }, X::IO::Rmdir;
 }
 
 # mkdir in a dir that doesn't exist
 #?rakudo skip "mkdir NYI RT #124791"
 {
-    my $dir = testdir().child(testdir());
-    my $err = $dir.mkdir;
-    isa_fatal_ok $err, X::IO::Mkdir;
+    # XXX: mkdir creates nested directories if they don't exist,
+    # so does this test make sense anymore?
+    my $dir = make-temp-dir;
+    $dir.rmdir;
+    throws-like { $dir.child('foo').mkdir }, X::IO::Mkdir;
 }
 
 # mkdir a dir that already exists
 #?rakudo skip "mkdir NYI RT #124792"
 {
-    my $dir = testdir();
-    $dir.mkdir;
-    my $err = $dir.mkdir;
-    isa_fatal_ok $err, X::IO::Mkdir;
+    # XXX: mkdir returns True (pre 2017.05) or the IO::Path itself
+    # when dir already exists, so does this test make sense?
+    my $dir = make-temp-dir;
+    throws-like { $dir.mkdir }, X::IO::Mkdir;
 }
 
 # RT #126976
@@ -86,24 +80,4 @@ subtest {
     }
 }, '"/".IO.mkdir must not segfault';
 
-sub testdir {
-    my $testdir = "testdir-" ~ 1000000.rand.floor;
-    die if $testdir.path.e;
-    END try { $testdir.path.rmdir; 1; }
-    $testdir.path;
-}
-
-sub isa_fatal_ok($e, $wanted) {
-    $e ~~ "blow up";
-    CATCH {
-        when $wanted {
-            ok True, "Got expected " ~ $wanted.perl;
-            return;
-        }
-        default {
-            ok False, "Got wrong error";
-            return;
-        }
-    };
-    ok False, "No exception, expected " ~ $wanted.perl;
-}
+# vim: ft=perl6
