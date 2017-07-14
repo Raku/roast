@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 17;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -52,26 +52,6 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     ok $b (>+) $kb, "Our bag is a msuperset of our keybag";
     ok $b (>+) $b, "Our bag is a msuperset of itself";
     ok $kb (>+) $kb, "Our keybag is a msuperset of itself";
-}
-
-{
-    # my $s = set <blood love>;
-    # my $ks = SetHash.new(<blood rhetoric>);
-    # my $b = bag <blood blood rhetoric love love>;
-    # my $kb = BagHash.new(<blood love love>);
-    my @d;
-    
-    is showkv([(^)] @d), '', "Bag symmetric difference reduce works on nothing";
-    is showkv([(^)] $s), showkv($s), "Set symmetric difference reduce works on one set";
-    isa-ok ([(^)] $s), Set, "Set symmetric difference reduce works on one set, yields set";
-    is showkv([(^)] $b), showkv($b), "Bag symmetric difference reduce works on one bag";
-    isa-ok ([(^)] $b), Bag, "Bag symmetric difference reduce works on one bag, yields bag";
-    is showkv([(^)] $s, $b), 'blood:1 love:1 rhetoric:1', "Bag symmetric difference reduce works on a bag and a set";
-    isa-ok ([(^)] $s, $b), Bag, "... and produces a Bag";
-    is showkv([(^)] $b, $s), 'blood:1 love:1 rhetoric:1', "... and is actually symmetric";
-    isa-ok ([(^)] $b, $s), Bag, "... and still produces a Bag that way too";
-    is showkv([(^)] $s, $ks, $kb), 'love:1 rhetoric:1', "Bag symmetric difference reduce works on three bags";
-    isa-ok ([(^)] $s, $ks, $kb), Bag, "Bag symmetric difference reduce works on three bags";
 }
 
 # vim: ft=perl6

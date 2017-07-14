@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 24;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -73,22 +73,6 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     nok $bub !(<) $buper, "!(<) - {$bub.gist} is a strict submix of {$buper.gist} (texas)";
     ok $bub (>) $b, "(>) - {$bub.gist} is a strict supermix of {$b.gist} (texas)";
     nok $buper !(>) $bub, "!(>) - {$buper.gist} is a strict supermix of {$bub.gist}";
-}
-
-{
-    my @d;
-    # XXX: without this initialization, the test harness breaks on 196
-    my $tm = %(blood => 2.1, love => 2.2, rhetoric => 1).Mix;
-
-    is ([(^)] @d), ∅, "Mix symmetric difference reduce works on nothing";
-    is ([(^)] $m), $m, "Mix symmetric difference reduce works on one mix";
-    isa-ok ([(^)] $m), Mix, "Mix symmetric difference reduce works on one mix, yields mix";
-    is ([(^)] $b, $m), %(blood => 0.1, love => 0.2, :rhetoric).Mix, "Mix symmetric difference reduce works on a mix and a bag";
-    isa-ok ([(^)] $b, $m), Mix, "... and produces a Mix";
-    is ([(^)] $m, $b), %(blood => 0.1, love => 0.2, :rhetoric).Mix, "... and is actually symmetric";
-    isa-ok ([(^)] $m, $b), Mix, "... and still produces a Mix that way too";
-    is ([(^)] $b, $m, $mh), (love => 0.1, :rhetoric).Mix, "Mix symmetric difference reduce works on three mixes";
-    isa-ok ([(^)] $b, $m, $mh), Mix, "Mix symmetric difference reduce works on three mixes produces a Mix";
 }
 
 # vim: ft=perl6
