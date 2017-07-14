@@ -30,6 +30,7 @@ my @pairs =
   :0b,                set(),
 ;
 
+# two parameters, result
 my @triplets =
 
   # result should be a Set
@@ -144,7 +145,7 @@ my @triplets =
   42,                           666,               42.Set,
 ;
 
-plan 2 * (2 * (1 + @pairs/2 + @triplets/3)) + @types * 2;
+plan 2 * (1 + @pairs/2 + @triplets/3) + @types * 2;
 
 # difference
 for
@@ -164,26 +165,6 @@ for
 #exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
-    }
-}
-
-for
-  &infix:<R(-)>, "R(-)",
-  &infix:<R∖>,     "R∖"
--> &op, $name {
-
-    is-deeply op(), set(), "does $name\() return set()";
-
-    for @pairs -> $parameter, $result {
-#exit dd $parameters, $result unless
-        is-deeply op($parameter.item), $result,
-          "infix:<$name>(|$parameter.gist())";
-    }
-
-    for @triplets -> $left, $right, $result {
-#exit dd $left, $right, $result unless
-        is-deeply op($right,$left), $result,
-          "$right.gist() $name $left.gist()";
     }
 }
 

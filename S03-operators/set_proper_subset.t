@@ -347,14 +347,12 @@ my @nok =
   <a>.BagHash,             <a>.Mix,
 ;
 
-plan 4 * (2 * @identities + @ok + @nok) + 2 * (2 * @identities + @ok + @nok);
+plan 2 * (2 * @identities + @ok + @nok) + 1 * (2 * @identities + @ok + @nok);
 
 # is proper subset of / proper superset of
 for
   &infix:<<(<)>>,   "(<)", &infix:<<(>)>>,   "(>)",
-  &infix:<⊂>,         "⊂", &infix:<⊃>,         "⊃",
-  &infix:<<R(>)>>, "R(>)", &infix:<<R(<)>>, "R(<)",
-  &infix:<R⊃>,       "R⊃", &infix:<R⊂>,       "R⊂"
+  &infix:<⊂>,         "⊂", &infix:<⊃>,         "⊃"
 -> &op, $name, &rop, $rname {
 
     for @identities -> $ident {
@@ -385,8 +383,7 @@ for
 
 # is not a proper subset of / is not a proper superset of
 for
-  &infix:<⊄>,   "⊈", &infix:<⊅>,   "⊅",
-  &infix:<R⊅>, "R⊅", &infix:<R⊄>, "R⊈"
+  &infix:<⊄>,   "⊈", &infix:<⊅>,   "⊅"
 -> &op, $name, &rop, $rname {
 
     for @identities -> $ident {

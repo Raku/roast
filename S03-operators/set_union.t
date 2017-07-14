@@ -112,14 +112,12 @@ my @quads =
   <a b c>,                                         <a b c>.Set,
 ;
 
-plan 4 * (1 + 3 * @types + 2 * @pairs/2 + 3 * @triplets/3 + 6 * @quads/2);
+plan 2 * (1 + 3 * @types + 2 * @pairs/2 + 3 * @triplets/3 + 6 * @quads/2);
 
 # union
 for
   &infix:<∪>,       "∪",
-  &infix:<(|)>,   "(|)",
-  &infix:<R∪>,     "R∪",
-  &infix:<R(|)>, "R(|)"
+  &infix:<(|)>,   "(|)"
 -> &op, $name {
 
     is-deeply op(), set(), "does $name\() return set()";

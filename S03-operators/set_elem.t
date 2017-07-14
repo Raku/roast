@@ -70,14 +70,12 @@ my @notelem =
   List.new,
 ;
 
-plan 4 * (2 * @elem/2 + 2 * @notelem) + 2 * (2 * @elem/2 + 2 * @notelem);
+plan 2 * (2 * @elem/2 + 2 * @notelem) + 1 * (2 * @elem/2 + 2 * @notelem);
 
 # is an element of / contains
 for
-  &infix:<∈>,             "∈", &infix:<∋>,             "∋",
   &infix:<(elem)>,   "(elem)", &infix:<(cont)>,   "(cont)",
-  &infix:<R∋>,           "R∋", &infix:<R∈>,           "R∈",
-  &infix:<R(cont)>, "R(cont)", &infix:<R(elem)>, "R(elem)"
+  &infix:<∈>,             "∈", &infix:<∋>,             "∋"
 -> &op, $name, &rop, $rname {
     for @elem -> $left, $right {
         is-deeply op($left,$right),  True, "$left is $name of $right.^name()";
@@ -102,8 +100,7 @@ for
 
 # is not an element of / does not contain
 for
-  &infix:<∉>,   "∉", &infix:<∌>,   "∌",
-  &infix:<R∌>, "R∌", &infix:<R∉>, "R∉"
+  &infix:<∉>,   "∉", &infix:<∌>,   "∌"
 -> &op, $name, &rop, $rname {
     for @elem -> $left, $right {
         is-deeply op($left,$right), False,

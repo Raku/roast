@@ -133,14 +133,12 @@ my @quads =
   <a b c>,                                         set()
 ;
 
-plan 4 * (1 + 3 * @types + @pairs/2 + 2 * @triplets/3 + 6 * @quads/2);
+plan 2 * (1 + 3 * @types + @pairs/2 + 2 * @triplets/3 + 6 * @quads/2);
 
 # intersection
 for
-  &infix:<∩>,       "∩",
   &infix:<(&)>,   "(&)",
-  &infix:<R∩>,     "R∩",
-  &infix:<R(&)>, "R(&)"
+  &infix:<∩>,       "∩"
 -> &op, $name {
 
     is-deeply op(), set(), "does $name\() return set()";
@@ -171,7 +169,7 @@ for
 
     for @quads -> @params, $result {
         for @params.permutations -> @mixed {
-exit dd @mixed, $result unless
+#exit dd @mixed, $result unless
             is-deeply op(|@mixed), $result,
               "[$name] @mixed>>.gist()";
         }

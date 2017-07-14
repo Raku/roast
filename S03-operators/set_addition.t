@@ -113,12 +113,12 @@ my @triplets =
   42,                           666,               (42,666).Bag,
 ;
 
-plan 2 * (2 * (1 + @pairs/2 + 2 * @triplets/3)) + @types * 2;
+plan 2 * (1 + @pairs/2 + 2 * @triplets/3) + @types * 2;
 
 # addition
 for
-  &infix:<⊎>,     "⊎",
-  &infix:<(+)>, "(+)"
+  &infix:<(+)>, "(+)",
+  &infix:<⊎>,     "⊎"
 -> &op, $name {
 
     is-deeply op(), bag(), "does $name\() return bag()";
@@ -136,29 +136,6 @@ for
 #exit dd $right, $left, $result unless
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
-    }
-}
-
-for
-  &infix:<R⊎>,     "R⊎",
-  &infix:<R(+)>, "R(+)"
--> &op, $name {
-
-    is-deeply op(), bag(), "does $name\() return bag()";
-
-    for @pairs -> $parameter, $result {
-#exit dd $parameter, $result unless
-        is-deeply op($parameter.item), $result,
-          "infix:<$name>($parameter.gist())";
-    }
-
-    for @triplets -> $left, $right, $result {
-#exit dd $right, $left, $result unless
-        is-deeply op($right,$left), $result,
-          "$right.gist() $name $left.gist()";
-#exit dd $left, $right, $result unless
-        is-deeply op($left,$right), $result,
-          "$left.gist() $name $right.gist()";
     }
 }
 

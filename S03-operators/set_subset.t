@@ -343,14 +343,12 @@ my @nok =
   <a a>.Bag,               <a>.MixHash,
 ;
 
-plan 4 * (2 * @identities + @ok + @nok) + 2 * (2 * @identities + @ok + @nok);
+plan 2 * (2 * @identities + @ok + @nok) + 1 * (2 * @identities + @ok + @nok);
 
 # is subset of / superset of
 for
   &infix:<<(<=)>>,   "(<=)", &infix:<<(>=)>>,  "(>=)",
-  &infix:<⊆>,           "⊆", &infix:<⊇>,       "⊇",
-  &infix:<<R(>=)>>, "(R>=)", &infix:<<R(<=)>>, "(R<=)",
-  &infix:<R⊇>,         "R⊇", &infix:<R⊆>,      "R⊆"
+  &infix:<⊆>,           "⊆", &infix:<⊇>,       "⊇"
 -> &op, $name, &rop, $rname {
 
     for @identities -> $ident {
@@ -381,8 +379,7 @@ for
 
 # is not a subset of / is not a superset of
 for
-  &infix:<⊈>,   "⊈", &infix:<⊉>,   "⊉",
-  &infix:<R⊉>, "R⊉", &infix:<R⊈>, "R⊈"
+  &infix:<⊈>,   "⊈", &infix:<⊉>,   "⊉"
 -> &op, $name, &rop, $rname {
 
     for @identities -> $ident {
