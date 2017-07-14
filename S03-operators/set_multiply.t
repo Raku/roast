@@ -167,9 +167,9 @@ for
           (qh.^name.starts-with("Set") ?? Bag !! ::(qh.^name.substr(0,3))).new,
           "Sequence of empty {qh.^name} is the empty {qh.^name.substr(0,3)}";
         throws-like { op(qh.new,^Inf) }, X::Cannot::Lazy,
-          "Cannot {qh.perl}.new (|) lazy list";
+          "Cannot {qh.perl}.new $name lazy list";
         throws-like { op(qh.new(<a b c>),^Inf) }, X::Cannot::Lazy,
-          "Cannot {qh.perl}.new(<a b c>) (|) lazy list";
+          "Cannot {qh.perl}.new(<a b c>) $name lazy list";
     }
 
     for @pairs -> $parameter, $result {
