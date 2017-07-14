@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 8;
 # L<S06/"Parameter traits"/"=item is rw">
 
 
@@ -42,5 +42,8 @@ plan 7;
 }
 
 # for ... -> ... is rw {...} already tested for in t/statements/for.t.
+
+# RT #131673
+throws-like { sub ($ is rw) {}(42) }, X::Parameter::RW
 
 # vim: ft=perl6
