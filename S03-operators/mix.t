@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 45;
+plan 33;
 
 sub showset($b) { $b.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -79,20 +79,6 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     my @d;
     # XXX: without this initialization, the test harness breaks on 196
     my $tm = %(blood => 2.1, love => 2.2, rhetoric => 1).Mix;
-
-    is ([⊍] @d), ∅, "Mix multiply reduce works on nothing";
-    is ([⊍] $b), $b.Mix, "Mix multiply reduce works on one set";
-    is ([⊍] $b, $m), %( blood => 1.1, love => 1.2 ).Mix, "Mix multiply reduce works on two sets";
-    is ([⊍] $m, $b), %( blood => 1.1, love => 1.2 ).Mix, "Mix multiply reduce works on a bag and a mix and is symmetric";
-    is ([⊍] $b, $m, $mh), %( blood => 1.21, love => 1.56 ).Mix, "Mix multiply reduce works on a bag, a mix, and a mixhash";
-    is ([⊍] $m, $b, $mh), %( blood => 1.21, love => 1.56 ).Mix, "Mix multiply reduce works on a bag, a mix, and a mixhash and order doesn't matter";
-
-    is ([(.)] @d), ∅, "Mix multiply reduce works on nothing (Texas)";
-    is ([(.)] $b), $b.Mix, "Mix multiply reduce works on one set (Texas)";
-    is ([(.)] $b, $m), %( blood => 1.1, love => 1.2 ).Mix, "Mix multiply reduce works on a bag and a mix (Texas)";
-    is ([(.)] $m, $b), %( blood => 1.1, love => 1.2 ).Mix, "Mix multiply reduce works on a bag and a mix and is symmetric (Texas)";
-    is ([(.)] $b, $m, $mh), %( blood => 1.21, love => 1.56 ).Mix, "Mix multiply reduce works on a bag, a mix, and a mixhash (Texas)";
-    is ([(.)] $m, $b, $mh), %( blood => 1.21, love => 1.56 ).Mix, "Mix multiply reduce works on a bag, a mix, and a mixhash and order doesn't matter (Texas)";
 
     is ([(^)] @d), ∅, "Mix symmetric difference reduce works on nothing";
     is ([(^)] $m), $m, "Mix symmetric difference reduce works on one mix";

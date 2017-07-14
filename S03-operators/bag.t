@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 28;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 sub showkv($x) { $x.sort.map({ .key ~ ':' ~ .value }).join(' ') }
@@ -61,16 +61,6 @@ ok bag(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     # my $kb = BagHash.new(<blood love love>);
     my @d;
     
-    is showkv([⊍] @d), '', "Bag multiply reduce works on nothing";
-    is showkv([⊍] $s), showkv($s.Bag), "Bag multiply reduce works on one set";
-    is showkv([⊍] $s, $b), 'blood:2 love:2', "Bag multiply reduce works on two sets";
-    is showkv([⊍] $s, $b, $kb), 'blood:2 love:4', "Bag multiply reduce works on three sets";
-
-    is showkv([(.)] @d), '', "Bag multiply reduce works on nothing";
-    is showkv([(.)] $s), showkv($s.Bag), "Bag multiply reduce works on one set";
-    is showkv([(.)] $s, $b), 'blood:2 love:2', "Bag multiply reduce works on two sets";
-    is showkv([(.)] $s, $b, $kb), 'blood:2 love:4', "Bag multiply reduce works on three sets";
-
     is showkv([(^)] @d), '', "Bag symmetric difference reduce works on nothing";
     is showkv([(^)] $s), showkv($s), "Set symmetric difference reduce works on one set";
     isa-ok ([(^)] $s), Set, "Set symmetric difference reduce works on one set, yields set";
