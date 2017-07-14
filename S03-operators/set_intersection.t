@@ -5,10 +5,10 @@ use Test;
 #   (&)     intersection (Texas)
 #   ∩       intersection
 
-# special case empties (with an empty internal hash)
-my $esh  = do { my $sh = <a>.SetHash; $sh<a>:delete; $sh };
-my $ebh  = do { my $bh = <a>.BagHash; $bh<a>:delete; $bh };
-my $emh  = do { my $mh = <a>.MixHash; $mh<a>:delete; $mh };
+# Empty mutables that have the internal hash allocated
+(my $esh = <a>.SetHash)<a>:delete;
+(my $ebh = <a>.BagHash)<a>:delete;
+(my $emh = <a>.MixHash)<a>:delete;
 
 my @types = Set, SetHash, Bag, BagHash, Mix, MixHash;
 
@@ -26,6 +26,7 @@ my @pairs =
   42,                 42.Set,
 ;
 
+# two parameters, result
 my @triplets =
 
   # result should be a Set
@@ -94,7 +95,45 @@ my @triplets =
   42,                           666,               set(),
 ;
 
-plan 4 * (1 + @pairs/2 + 2 * @triplets/3) + 2 * @types;
+# List with 3 parameters, result
+my @quads =
+  [<a b c>.Set, <b c d>.Set, <c d e>.Set],         <c>.Set,
+  [<a b c>.Bag, <b c d>.Bag, <c d e>.Bag],         <c>.Bag,
+  [<a b c>.Mix, <b c d>.Mix, <c d e>.Mix],         <c>.Mix,
+  [<a b c>.Set, <b c d>.Set, <c d e>.Bag],         <c>.Bag,
+  [<a b c>.Set, <b c d>.Set, <c d e>.Mix],         <c>.Mix,
+  [<a b c>.Set, <b c d>.Bag, <c d e>.Mix],         <c>.Mix,
+
+  [<a b c>, <b c d>, <c d e>],                     <c>.Set,
+  [<a b c>, <b c d>, <c d e>.Set],                 <c>.Set,
+  [<a b c>, <b c d>, <c d e>.Bag],                 <c>.Bag,
+  [<a b c>, <b c d>, <c d e>.Mix],                 <c>.Mix,
+  [<a b c>, <b c d>.Bag, <c d e>.Mix],             <c>.Mix,
+
+  [{:a,:b,:c}, {:b,:c,:d}, {:c,:d,:e}],            <c>.Set,
+  [{:a,:b,:c}, {:b,:c,:d}, <c d e>.Set],           <c>.Set,
+  [{:a,:b,:c}, {:b,:c,:d}, <c d e>.Bag],           <c>.Bag,
+  [{:a,:b,:c}, {:b,:c,:d}, <c d e>.Mix],           <c>.Mix,
+
+  [{:a,:b,:c}, <b c d>, {:c,:d,:e}],               <c>.Set,
+  [{:a,:b,:c}, <b c d>, <c d e>.Set],              <c>.Set,
+  [{:a,:b,:c}, <b c d>, <c d e>.Bag],              <c>.Bag,
+  [{:a,:b,:c}, <b c d>, <c d e>.Mix],              <c>.Mix,
+
+  [(:42a).Bag, (:7a).Bag, (:43a).Bag],             (:7a).Bag,
+  [(:42a).Bag, bag(), (:43a).Bag],                 bag(),
+  [(a=>-42).Mix, <a>.Mix, (:42a).Mix],             (a=>-42).Mix,
+  [(a=>-42).Mix, set(), (:42a).Mix],               mix(),
+  [(a=>-42).Mix, bag(), (:42a).Mix],               mix(),
+  [(a=>-42).Mix, mix(), (:42a).Mix],               mix(),
+  [(a=>-42).Mix, <b>.Set, (:42a).Bag],             mix(),
+  [(a=>-42).Mix, <b>.Bag, (:42a).Bag],             mix(),
+  [(a=>-42).Mix, <b>.Mix, (:42a).Bag],             mix(),
+
+  <a b c>,                                         set()
+;
+
+plan 4 * (1 + 3 * @types + @pairs/2 + 2 * @triplets/3 + 6 * @quads/2);
 
 # intersection
 for
@@ -105,6 +144,15 @@ for
 -> &op, $name {
 
     is-deeply op(), set(), "does $name\() return set()";
+
+    for @types -> \qh {         
+        is-deeply op(qh.new,qh.new,qh.new), ::(qh.^name.substr(0,3)).new,
+          "Sequence of empty {qh.^name} is the empty {qh.^name.substr(0,3)}";
+        throws-like { op(qh.new,^Inf) }, X::Cannot::Lazy,
+          "Cannot {qh.perl}.new (|) lazy list";    
+        throws-like { op(qh.new(<a b c>),^Inf) }, X::Cannot::Lazy,
+          "Cannot {qh.perl}.new(<a b c>) (|) lazy list";
+    }
 
     for @pairs -> $parameter, $result {
 #exit dd $parameters, $result unless
@@ -120,13 +168,14 @@ for
         is-deeply op($right,$left), $result,
           "$right.gist() $name $left.gist()";
     }
-}
 
-for @types -> \qh {
-    throws-like { qh.new (&) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new (&) lazy list";
-    throws-like { qh.new(<a b c>) (&) ^Inf }, X::Cannot::Lazy,
-      "Cannot {qh.perl}.new(<a b c>) (&) lazy list";
+    for @quads -> @params, $result {
+        for @params.permutations -> @mixed {
+exit dd @mixed, $result unless
+            is-deeply op(|@mixed), $result,
+              "[$name] @mixed>>.gist()";
+        }
+    }
 }
 
 # vim: ft=perl6
