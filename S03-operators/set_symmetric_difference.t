@@ -30,6 +30,7 @@ my @pairs =
   :0b,                set(),
 ;
 
+# two parameters, result
 my @triplets =
 
   # result should be a Set
