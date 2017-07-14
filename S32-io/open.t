@@ -155,7 +155,8 @@ LEAVE unlink PATH;
 {   unlink PATH;
     my $fh;
 
-    ok open(PATH) ~~ Failure, 'opening nonexistent file in default mode fails';
+    fails-like { open PATH }, Exception,
+        'opening nonexistent file in default mode fails';
 
     $fh = open PATH, :w;
     $fh.print('onions are tasty');
@@ -176,7 +177,7 @@ LEAVE unlink PATH;
 {   unlink PATH;
     my $fh;
 
-    isa-ok open(PATH, :r), Failure,
+    fails-like { open PATH, :r }, Exception,
         'opening non-existent file in :r mode fails';
 
     # fill file with data
@@ -219,7 +220,7 @@ LEAVE unlink PATH;
     my $mode = ':append';
     my $fh;
 
-    isa-ok (my $ will leave {.so} = open(PATH, :append)), Failure,
+    fails-like { open PATH, :append }, Exception,
         "opening non-existent file in $mode mode fails";
 
     # create and fill file with data
@@ -322,7 +323,7 @@ LEAVE unlink PATH;
 
 # test :exclusive mode
 {   unlink PATH;
-    isa-ok open(PATH, :exclusive), Failure,
+    fails-like { open PATH, :exclusive }, Exception,
         "opening non-existent file in :exclusive mode fails";
 }
 
