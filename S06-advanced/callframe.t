@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 20;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -65,5 +65,19 @@ lives-ok {
 
 # https://github.com/rakudo/rakudo/commit/9a74cd0e51
 lives-ok { callframe(1).annotations }, '.annotations does not crash';
+
+# https://github.com/MoarVM/MoarVM/issues/562
+lives-ok
+    {
+        for ^Inf {
+            if callframe($_) -> $c {
+                $ = $c.code ?? $c.code.name !! "?"
+            }
+            else {
+                last
+            }
+        }
+    },
+    "Exploring call frames until no code object does not crash";
 
 # vim: ft=perl6
