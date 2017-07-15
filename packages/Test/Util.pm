@@ -149,10 +149,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
         $clobber( "$fnbase.in", $input );
         $clobber( "$fnbase.code", $code ) if defined $code;
 
-        my $perl6 = ~$*EXECUTABLE;
-        my $cmd = $perl6 ~~ m:i/niecza/ ?? "mono $perl6 " !! "$perl6 ";
-        $perl6 ~~ s{^perl6} = './perl6';
-        $cmd = $perl6 ~ ' ';
+        my $cmd = $*EXECUTABLE ~ ' ';
         $cmd ~= @compiler-args.join(' ') ~ ' ' if @compiler-args;
         $cmd ~= $fnbase ~ '.code'  if $code.defined;
         $cmd ~= " @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err";
