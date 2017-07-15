@@ -1,4 +1,3 @@
-#!/usr/bin/env perl6
 use Test;
 # The script examples in the .txt of this project are taken from wikipedia.org and
 # are licensed under the CC 3.0 Share Alike license
