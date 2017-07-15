@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 46;
 
 # C<=:=> is only for containers, not values
 
@@ -133,6 +133,12 @@ class TestObj { has $!a }
     ok (1 =:= '1') ~~ Failure, 'misuse of =:= is failure (literals)';
     ok (1 =:= 2) ~~ Failure, 'misuse of =:= is failure (!=)';
     ok (1 =:= 1) ~~ Failure, 'misuse of =:= is failure (even when ==)';
+}
+
+# RT #127951
+{
+  my $a = 42; 
+  is $a =:= $a || $a.WHAT =:= $a.WHAT, True, '$a =:= $a || $a.WHAT =:= $a.WHAT returns True not an Int';
 }
 
 # vim: ft=perl6
