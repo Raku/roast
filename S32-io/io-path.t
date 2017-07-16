@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 38;
+plan 39;
 
 # L<S32::IO/IO::Path>
 
@@ -437,4 +437,14 @@ subtest '.Numeric and related methods' => {
     is-deeply    $p.add('3+0i').FatRat, <3+0i>.FatRat, 'Complex (.FatRat)';
     fails-like { $p.add('mew' ).FatRat }, X::Str::Numeric,
         'non-numeric (.FatRat)';
+}
+
+subtest 'Ensure <0> can be used to make an IO::Path' => {
+    my @nums = <0>, <0.0>, <0e0>, < 0/1>, < 0+0i>;
+    plan @nums * (1 + @Path-Types);
+
+    for @nums -> $num {
+        lives-ok { .new: $num }, "$num.perl() with {.perl}" for @Path-Types;
+        lives-ok {    $num.IO }, "$num.perl() with .IO coercer";
+    }
 }
