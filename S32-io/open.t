@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 64;
+plan 65;
 
 my \PATH = 't-S32-io-open.tmp';
 my \PATH-RX = rx/'t-S32-io-open.tmp'/;
@@ -433,6 +433,15 @@ subtest '.open with "-" as path can open closed $*IN/$*OUT' => {
     ｣, "foo\nbar\nber", {
         :out("foo\nbar\nber\nmeow \$w\nmeow \$*OUT\n"), :err(''), :0status
     }, ｢can use unopened handle with path '-'.IO｣;
+}
+
+# RT #131755
+subtest '.DESTROY does not close standard handles' => {
+    plan 3;
+    for $*IN, $*OUT, $*ERR {
+        .DESTROY;
+        is-deeply .opened, True, .perl;
+    }
 }
 
 # vim: ft=perl6
