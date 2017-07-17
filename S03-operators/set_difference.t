@@ -181,6 +181,8 @@ my @quads =
   [(a=>-42).Mix, <b>.Mix, (a=>-42).Mix],       (b=>-1).Mix,
 
   <a b c>,                                     <a>.Set,
+
+  [<a>.Set,<a>.Set,<a>.Set,(a=>-2).Mix],       <a>.Mix,
 ;
 
 plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2);
@@ -215,7 +217,7 @@ for
     }
 
     for @quads -> @params, $result {
-exit dd @params, $result unless
+#exit dd @params, $result unless
         is-deeply op(|@params), $result,
           "[$name] @params>>.gist()";
     }
