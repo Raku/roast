@@ -421,20 +421,18 @@ subtest '.open with "-" as path can open closed $*IN/$*OUT' => {
         is-deeply $*IN.encoding, 'utf8-c8', 'changed encoding';
     }
 
-    #skip 'RT#131755'
-    skip 'RT#131755', 1;
-    # is_run ｢
-    #     $*IN  = IO::Handle.new: :path('-'.IO);
-    #     $*OUT = IO::Handle.new: :path('-'.IO);
-    #     my $w = '-'.IO.open: :w;
-    #     my $r = '-'.IO.open;
-    #     $r.get.say;
-    #     $*IN.slurp(:close).say;
-    #     $w.put: 'meow $w';
-    #     $*OUT.put: 'meow $*OUT';
-    # ｣, "foo\nbar\nber", {
-    #     :out("foo\nbar\nber\nmeow \$w\nmeow \$*OUT\n"), :err(''), :0status
-    # }, ｢can use unopened handle with path '-'.IO｣;
+    is_run ｢
+        $*IN  = IO::Handle.new: :path('-'.IO);
+        $*OUT = IO::Handle.new: :path('-'.IO);
+        my $w = '-'.IO.open: :w;
+        my $r = '-'.IO.open;
+        $r.get.say;
+        $*IN.slurp(:close).say;
+        $w.put: 'meow $w';
+        $*OUT.put: 'meow $*OUT';
+    ｣, "foo\nbar\nber", {
+        :out("foo\nbar\nber\nmeow \$w\nmeow \$*OUT\n"), :err(''), :0status
+    }, ｢can use unopened handle with path '-'.IO｣;
 }
 
 # vim: ft=perl6
