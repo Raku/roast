@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 290;
+plan 291;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -664,6 +664,17 @@ subtest 'BagHash autovivification of non-existent keys' => {
       dies-ok { BagHash.new-from-pairs($pair) },
         "BagHash.new-from-pairs( ($pair.perl()) ) died";
     }
+}
+
+# RT #130366
+subtest 'elements with weight zero are removed' => {
+    plan 3;
+    my $b = <a b b c d e f>.BagHash; $_-- for $b.values;
+    is-deeply $b, ("b"=>1).BagHash, 'weight decrement';
+    $b = <a b b c d e f>.BagHash; .value-- for $b.pairs;
+    is-deeply $b, ("b"=>1).BagHash, 'Pair value decrement';
+    $b = <a b b c d e f>.BagHash; $_= 0 for $b.values;
+    is $b, ().BagHash, 'weight set to zero';
 }
 
 # vim: ft=perl6
