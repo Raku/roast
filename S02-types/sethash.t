@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 244;
+plan 245;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -608,6 +608,17 @@ subtest 'cloned SetHash gets its own elements storage' => {
     throws-like { ^Inf .SetHash }, X::Cannot::Lazy, :what<SetHash>;
     throws-like { SetHash.new-from-pairs(^Inf) }, X::Cannot::Lazy, :what<SetHash>;
     throws-like { SetHash.new(^Inf) }, X::Cannot::Lazy, :what<SetHash>;
+}
+
+# RT #130366
+subtest 'elements with weight zero are removed' => {
+    plan 3;
+    my $b = <a b b c d e f>.SetHash; $_-- for $b.values;
+    is $b, SetHash.new, 'weight decrement';
+    $b = <a b b c d e f>.SetHash; .value-- for $b.pairs;
+    is $b, SetHash.new, 'Pair value decrement';
+    $b = <a b b c d e f>.SetHash; $_= 0 for $b.values;
+    is $b, ().SetHash, 'weight set to zero';
 }
 
 # vim: ft=perl6

@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 260;
+plan 261;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -601,6 +601,17 @@ subtest 'MixHash autovivification of non-existent keys' => {
       'final value 0 disappears in MixHash (1)';
     is-deeply (a => -1, a => 1, "b").MixHash, MixHash.new("b"),
       'final value 0 disappears in MixHash (2)';
+}
+
+# RT #130366
+subtest 'elements with weight zero are removed' => {
+    plan 3;
+    my $b = <a b b c d e f>.MixHash; $_-- for $b.values;
+    is-deeply $b, ("b"=>1).MixHash, 'weight decrement';
+    $b = <a b b c d e f>.MixHash; .value-- for $b.pairs;
+    is-deeply $b, ("b"=>1).MixHash, 'Pair value decrement';
+    $b = <a b b c d e f>.MixHash; $_= 0 for $b.values;
+    is $b, ().MixHash, 'weight set to zero';
 }
 
 # vim: ft=perl6
