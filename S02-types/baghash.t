@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 291;
+plan 292;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -675,6 +675,15 @@ subtest 'elements with weight zero are removed' => {
     is-deeply $b, ("b"=>1).BagHash, 'Pair value decrement';
     $b = <a b b c d e f>.BagHash; $_= 0 for $b.values;
     is $b, ().BagHash, 'weight set to zero';
+}
+
+# RT #131241 (zero case covered by RT #131241)
+subtest "elements with negative weights are removed" => {
+    plan 2;
+    my $b = <a b b c d e f>.BagHash; $_ = -1 for $b.values;
+    is $b, ().BagHash, 'weight < 0 removes element';
+    $b = <a b b c d e f>.BagHash; .value = -1 for $b.pairs;
+    is $b, ().BagHash, 'Pair value < 0 removes element';
 }
 
 # vim: ft=perl6

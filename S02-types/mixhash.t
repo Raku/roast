@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 261;
+plan 262;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -612,6 +612,15 @@ subtest 'elements with weight zero are removed' => {
     is-deeply $b, ("b"=>1).MixHash, 'Pair value decrement';
     $b = <a b b c d e f>.MixHash; $_= 0 for $b.values;
     is $b, ().MixHash, 'weight set to zero';
+}
+
+# RT #131241 (zero case covered by RT #130366)
+subtest "elements with negative weights are allowed in MixHashes" => {
+    plan 2;
+    my $b = <a b b c>.MixHash; $_ = -1 for $b.values;
+    is-deeply $b, ("b"=>-1,"a"=>-1,"c"=>-1).MixHash, 'negative weights are ok';
+    $b = <a b b c>.MixHash; .value = -1.5 for $b.pairs;
+    is-deeply $b, ("b"=>-1.5,"a"=>-1.5,"c"=>-1.5).MixHash, 'negative Pair values are ok';
 }
 
 # vim: ft=perl6

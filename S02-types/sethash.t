@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 245;
+plan 246;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -619,6 +619,15 @@ subtest 'elements with weight zero are removed' => {
     is $b, SetHash.new, 'Pair value decrement';
     $b = <a b b c d e f>.SetHash; $_= 0 for $b.values;
     is $b, ().SetHash, 'weight set to zero';
+}
+
+# RT #131241 (zero case covered by RT #130366)
+subtest "elements with negative weights are allowed in SetHashes" => {
+    plan 2;
+    my $b = <a b b c>.SetHash; $_ = -1 for $b.values;
+    is-deeply $b, ("b","a","c").SetHash, 'negative weight => True => element present';
+    $b = <a b b c>.SetHash; .value = -1.5 for $b.pairs;
+    is-deeply $b, ("b","a","c").SetHash, 'negative Pair value => True => element present';
 }
 
 # vim: ft=perl6
