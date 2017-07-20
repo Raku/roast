@@ -508,8 +508,8 @@ subtest '.hash does not cause keys to be stringified' => {
         '.BagHash coercer';
 
     my $code = ｢my $m = Mix.new-from-pairs('a' => -20, 'b' => 1.5);｣
-        ~ ｢$m.Bag.say; $m.BagHash.say｣;
-    is_run $code, { :err(''), :out("bag(b)\nBagHash.new(b)\n"), :0status },
+        ~ ｢my $a = $m.Bag; my $b = $m.BagHash｣;
+    is_run $code, { :err(''), :out(""), :0status },
         'negative MixHash weights removed from Bag coercion without warnings';
 }
 
