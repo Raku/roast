@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 15;
 
 my $a = "\x0044";
 my $b = "\x0307";
@@ -32,3 +32,7 @@ is-deeply "\xfad7" ~ "\n", "\xfad7\n", '\xfad7 ~ \n is ok';
 
 #
 is-deeply "a\r" ~ "\na", "a\r\na", 'a\r ~ \na is ok';
+
+is-deeply ("\c[COMBINING ACUTE ACCENT]" x 3 ~ 'a').ords, (769,769, 769, 97), "Concat works with combining repeated characters";
+is-deeply ('a' ~ "\c[COMBINING ACUTE ACCENT]" x 3).ords, (225, 769, 769), "Concat works with combining repeated characters";
+is-deeply ('a' x 2 ~ "\c[COMBINING ACUTE ACCENT]" x 3).ords, (97, 225, 769, 769), "Concat works with combining repeated characters";
