@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 87;
+plan 88;
 
 use Test::Util;
 
@@ -351,5 +351,12 @@ subtest 'multi with :D subset dispatches correctly' => {
     lives-ok { f(42) }, 'where constraint on |c parameter works';
     dies-ok { f() }, 'where constraint on |c parameter is enforced';
 }
+
+# RT #126642
+{
+    multi f(UInt:D $) { "ok" };
+    lives-ok { f(42); }, "UInt:D parameter doesn't fail in a multi";
+}
+
 
 # vim: ft=perl6
