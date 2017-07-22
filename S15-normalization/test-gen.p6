@@ -32,8 +32,9 @@ sub write-test-files($template, $method, @source, @expected) {
 }
 
 sub write-test-file($target, $method, @source, @expected) {
+    my $NFC-concat-tests;
     given open($target, :w) {
-        .say: qq:to/HEADER/;
+        my $header = qq:to/HEADER/;
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
@@ -41,10 +42,12 @@ use v6;
 
 use Test;
 
-plan {$method eq 'NFC' ?? @source.elems * 2 !! @source.elems};
+plan {@source.elems};
 HEADER
+    .say: $header;
         if $method eq 'NFC' {
-            .say('my @list; my @result;');
+            $NFC-concat-tests ~= $header ~ "\n";
+            $NFC-concat-tests ~= 'my @list; my @result;' ~ "\n";
         }
         for flat @source Z @expected -> $s, $e {
             .say: "ok Uni.new(&hexy($s)).$method.list ~~ (&hexy($e),), '$s -> $e';";
@@ -52,18 +55,23 @@ HEADER
                 my @list = hexy-unjoined($s);
                 my $list-joined = @list.join(', ');
                 my $result-joined = &hexy($e);
-                .say("\@list = $list-joined; \@result = $result-joined; ");
-                .say((
+                $NFC-concat-tests ~= "\@list = $list-joined; \@result = $result-joined; \n";
+                $NFC-concat-tests ~= (
                     "ok all(((Uni.new("
                     ~ '@list[0..($_ - 1)]'
                     ~ ') ~ Uni.new('
                     ~ '@list[$_..*]'
-                ~ ")).$method.list ~~ \@result " ~ "for 1..(\@list-1))), '$s -> $e CONCAT';"
-                ));
+                ~ ")).$method.list ~~ \@result " ~ "for 1..(\@list-1))), '$s -> $e CONCAT';\n"
+                );
             }
         }
 
         .close;
+    }
+    if $method eq 'NFC' {
+        my $NFC-concat-target = $target.subst(/'nfc'(<[\S]-[/]>+'.t')/, {"nfc-concat$0"});
+        $NFC-concat-target.IO.spurt($NFC-concat-tests);
+        say "Wrote $NFC-concat-target";
     }
 
     say "Wrote $target";
