@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -52,3 +52,8 @@ is-deeply (gather do for ^2 { "x".take }).rotor(3, :partial).eager, (<x x>,),
 is-deeply <a b c d e f>.rotor(1...*),
     (("a",), ("b", "c"), ("d", "e", "f")).Seq,
     '.rotor does not hang when given infinite iterable as cycle';
+
+# RT #131018
+is-deeply <a b c d e f>.rotor(2 => -2, 1),
+    (("a", "b"), ("a",), ("b", "c"), ("b",), ("c", "d"), ("c",), ("d", "e"), ("d",), ("e", "f"), ("e",)),
+    ".rotor works as expected with negative gap";
