@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 133;
+plan 141;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -51,6 +51,33 @@ throws-like { Buf.new(1).subbuf(-1, 1) }, X::OutOfRange,
   got   => -1,
   range => "0..1",
   "throw on negative range";
+
+my $buf = Buf.new();
+$buf.subbuf-rw(0,0) = Buf.new();
+is-deeply $buf, Buf.new(), 'subbuf-rw empty source and destination';
+
+$buf.subbuf-rw(0,0) = Buf.new(4,8);
+is-deeply $buf, Buf.new(4,8), 'subbuf-rw empty destination';
+
+$buf.subbuf-rw(1,0) = Buf.new(6);
+is-deeply $buf, Buf.new(4,6,8), 'subbuf-rw insert';
+
+$buf.subbuf-rw(0,0) = Buf.new();
+$buf.subbuf-rw(1,0) = Buf.new();
+$buf.subbuf-rw(2,0) = Buf.new();
+is-deeply $buf, Buf.new(4,6,8), 'subbuf-rw zero-length source';
+
+$buf.subbuf-rw(0,0) = Buf.new(2);
+is-deeply $buf, Buf.new(2,4,6,8), 'subbuf-rw prepend';
+
+$buf.subbuf-rw(1,2) = Buf.new(10,11);
+is-deeply $buf, Buf.new(2,10,11,8), 'subbuf-rw replace';
+
+$buf.subbuf-rw(4,0) = Buf.new(20,21);
+is-deeply $buf, Buf.new(2,10,11,8,20,21), 'subbuf-rw append';
+
+subbuf-rw($buf, 4,2) = Buf.new(30,31);
+is-deeply $buf, Buf.new(2,10,11,8,30,31), 'sub subbuf-rw($buf)';
 
 # Throw on out of bounds
 throws-like { Buf.new(0xFF).subbuf(2, 1) }, X::OutOfRange,
