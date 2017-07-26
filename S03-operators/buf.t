@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 141;
+plan 142;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -75,6 +75,7 @@ is-deeply $buf, Buf.new(2,10,11,8), 'subbuf-rw replace';
 
 $buf.subbuf-rw(4,0) = Buf.new(20,21);
 is-deeply $buf, Buf.new(2,10,11,8,20,21), 'subbuf-rw append';
+is-deeply $buf.subbuf-rw(1,3), Buf.new(10,11,8),'subbuf-rw fetch';
 
 subbuf-rw($buf, 4,2) = Buf.new(30,31);
 is-deeply $buf, Buf.new(2,10,11,8,30,31), 'sub subbuf-rw($buf)';
