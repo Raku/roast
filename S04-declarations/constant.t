@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 use lib 't/spec/packages';
-plan 75;
+plan 72;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -382,10 +382,6 @@ throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     use ExportConstant;
     is &constant-sub(), 'win', 'Can call an exported constant sub';
     ok "foo" ~~ $constant-regex, 'Can match a exported constant regex';
-
-    is &constant-sub-with-call(), 'WIN', 'Can call an exported constant sub which make a call';
-    is-deeply @const-map, <FOO BAR BAZ>, 'Exported constant assigned to map {...}';
-    ok 'foo' ~~ $const-regex-block, 'Can match a exported constant regex with a block';
 }
 
 # vim: ft=perl6
