@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 31;
+plan 32;
 
 {   my @array = (3,7,9,11);
 
@@ -101,6 +101,13 @@ plan 31;
     my $b = Buf.new(0, 0);
     $b[0, 1] = 2, 3;
     is-deeply $b, Buf.new(2, 3), 'can assign to a Buf slice';
+}
+
+# RT #131827
+{
+    my %h;
+    %h<a> = ('1','3','4');
+    is-deeply %h<a>[*], ('1', '3', '4'), '* is considered as a Range';
 }
 
 # vim: ft=perl6
