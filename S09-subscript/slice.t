@@ -107,7 +107,7 @@ plan 32;
 {
     my %h;
     %h<a> = ('1','3','4');
-    is-deeply %h<a>[*], ('1', '3', '4'), '* is considered as a Range';
+    is-deeply %h<a>[*], ('1', '3', '4'), '[*] slice returns all elements of a list of hash value';
 }
 
 # vim: ft=perl6
