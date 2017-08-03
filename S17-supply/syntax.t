@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 72;
+plan 73;
 
 {
     my $s = supply {
@@ -559,6 +559,24 @@ subtest 'next in whenever' => {
     }
     is-deeply @res4.sort, (0, 1, 2, 3, 4,  103, 104).sort,
         'works when used in two whenevers';
+}
+
+# Golf of a react block with a TCP server, which failed to close taps of
+# incoming data on the connection.
+{
+    my $closed = 0;
+    my $sod = Supply.on-demand:
+        -> $s { start { $s.emit(42); $s.done; } },
+        closing => { $closed++ };
+    react {
+        whenever Supply.interval(0.01) {
+            whenever $sod { }
+        }
+        whenever Promise.in(1) {
+            done
+        }
+    }
+    ok $closed, 'Supply is closed by Supply block after it sends done';
 }
 
 # vim: ft=perl6 expandtab sw=4
