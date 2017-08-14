@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 20;
 
 =begin description
 
@@ -43,5 +43,8 @@ is('fooäàaáâåbar' ~~ m:m/<[a..b]>+/, 'äàaáâåba', 'Ignoremark with rang
     ok qq["\c[COMBINING TILDE]"] ~~ / ^ :ignoremark \"/,
         'Ignoremark on backslashed double-quote';
 }
-
+#
+# Ensure that synthetics also properly can match the base character
+is "\c[LATIN SMALL LETTER J WITH CARON, COMBINING DOT BELOW]" ~~ /:m:i j /, 'ǰ̣', "Synthetics with decomposable base characters properly work with ignoremark";
+ok qq{"\c[ZERO WIDTH JOINER]a"} ~~ / (:ignoremark ^ '"' ) /, "Synthetics properly can be matched with ignoremark";
 # vim: syn=perl6 sw=4 ts=4 expandtab
