@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 4;
+plan 5;
 
 # RT #117235
 {
@@ -27,4 +27,16 @@ plan 4;
     my @results = gather for 1..1 { ^10 .map: *.take }
 
     is @results, "0 1 2 3 4 5 6 7 8 9", "map inside sunk 'for' runs as sunk";
+}
+
+{
+    my $sunk = False;
+    my sub wrap_in_scalar() is rw {
+        my $var = class { method sink { $sunk = True } }.new;
+        $var;
+    }
+
+    wrap_in_scalar();
+
+    is $sunk, False, "we don't sink things that are wrapped in a container";
 }
