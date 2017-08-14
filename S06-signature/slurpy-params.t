@@ -56,7 +56,7 @@ whatever( 'a', 'b', 'c', 'd' );
 
 =head1 List parameter test
 
-These tests are the testing for "List paameters" section of Synopsis 06
+These tests are the testing for "List parameters" section of Synopsis 06
 
 You might also be interested in the thread Calling positionals by name in
 presence of a slurpy hash" on p6l started by Ingo
