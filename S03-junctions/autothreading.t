@@ -333,7 +333,7 @@ plan 104;
     # into:
     #     all( any( tp("dog", 1, 10), tp("dog", 2, 10),
     #          any( tp("dog", 1, 20), tp("dog", 2, 20)))
-    is $res.Str, q{all(any("dog 1 10", "dog 2 10"), any("dog 1 20", "dog 2 20"))}, "an & junction right of a | junction will be autothreaded first";
+    is $res.perl, q{all(any("dog 1 10", "dog 2 10"), any("dog 1 20", "dog 2 20"))}, "an & junction right of a | junction will be autothreaded first";
 
     $res = tp("foo"&"bar", 1|2, 0);
     # should turn into:
@@ -343,7 +343,7 @@ plan 104;
     # into:
     #     all( any( tp("foo", 1, 0), tp("foo", 2, 0)),
     #          any( tp("bar", 1, 0), tp("bar", 2, 0)))
-    is $res.Str, q{all(any("foo 1 0", "foo 2 0"), any("bar 1 0", "bar 2 0"))}, "an & junction left of a | junction will be autothreaded first";
+    is $res.perl, q{all(any("foo 1 0", "foo 2 0"), any("bar 1 0", "bar 2 0"))}, "an & junction left of a | junction will be autothreaded first";
 }
 
 ok all(1,2,3) ~~ Mu, 'all/Mu smartmatch True';
