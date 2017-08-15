@@ -30,18 +30,18 @@ plan 13;
 }
 
 {
-    my @a;
+    my $a = [];
     my @p = (^10).pick(*).map: {
         start {
             sleep 2 * $_;
-            cas @a, -> @current { my @ = flat @current, OUTER::<$_> };
+            cas $a, -> @current { my @ = flat @current, OUTER::<$_> };
         }
     };
     my $all = Promise.allof(@p);
     isa-ok $all, Promise, 'allof gives a Promise';
     my $b = $all.result;  # block
     isa-ok $b, Bool, 'get a bool of the result';
-    is ~@a, "0 1 2 3 4 5 6 7 8 9", 'got the right order';
+    is ~$a, "0 1 2 3 4 5 6 7 8 9", 'got the right order';
 }
 
 # RT #122802
