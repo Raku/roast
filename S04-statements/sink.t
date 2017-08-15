@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 7;
 
 # RT #117235
 {
@@ -39,4 +39,40 @@ plan 5;
     wrap_in_scalar();
 
     is $sunk, False, "we don't sink things that are wrapped in a container";
+}
+
+{
+    my $sunk = False;
+    (class {
+      method STORE(*@args) {
+      }
+
+      method foo() {
+          self;
+      }
+
+      method sink() {
+          $sunk = True;
+      }
+    }.new).=foo;
+
+    is $sunk, False, "we don't sink the result of thing().=method-name";
+}
+
+{
+    my $sunk = False;
+    (class {
+      method STORE(*@args) {
+      }
+
+      method foo() {
+          self;
+      }
+
+      method sink() {
+          $sunk = True;
+      }
+    }.new) .= foo;
+
+    is $sunk, False, "we don't sink the result of thing() .= method-name";
 }
