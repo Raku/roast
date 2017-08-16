@@ -2,7 +2,7 @@ use Test;
 plan 27;
 
 # Full memory barrier sanity check.
-lives-ok { Atomic.full-barrier() },
+lives-ok { full-barrier() },
     'Doing a full memory barrier lives';
 
 # Atomic Scalar fetch/assign sanity check.
