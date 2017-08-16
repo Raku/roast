@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 56;
+plan 112;
 
 # N.B.:  relational ops are in relational.t
 
@@ -54,6 +54,32 @@ is-deeply('a' leg 1,       Order::More, 'leg is in string context');
 is-deeply("a" leg "a\0",   Order::Less, 'a leg a\0 is less');
 is-deeply("a\0" leg "a\0", Order::Same, 'a\0 leg a\0 is same');
 is-deeply("a\0" leg "a",   Order::More, 'a\0 leg a is more');
+sub make-str (Int:D $Int, Str:D $char) {
+    "{'a' x $Int}{$char}{'a' x 10 - $Int}";
+}
+for 1..10 -> $i {
+    my $a = 'a' x $i;
+    my $b = 'a' x ($i - 1);
+    # Test same string but different in length
+    is-deeply $a cmp $b, More, “"$a" cmp "$b" is More”;
+    # Test reversed term returns opposite result
+    is-deeply $b  cmp $a, Less, “"$b" cmp "$a" is Less”;
+    # Same string of various lengths but last grapheme is different
+    is-deeply $a ~ 'b' cmp $a ~ 'a', More, “"$a" ~ 'b' cmp "{$a ~ 'a'}" is More”;
+    $a = make-str($i, 'b');
+    $b = make-str($i, 'a');
+    # Same length string but different character is in various locations
+    is-deeply $a cmp $b, More, “'$a' cmp '$b' is More”;
+    $a = make-str($i, '`');
+    # Same as previous test, but the different character is a lower codepoint than
+    # the other ones in the string instead of higher
+    is-deeply $a cmp $b, Less, “'$a' cmp '$b' is Less”;
+}
+
+# empty string compare
+is-deeply  '' leg '' , Order::Same, "Two empty strings cmp as Same";
+is-deeply  '' leg 'a', Order::Less, "'' cmp 'a' is Less";
+is-deeply 'a' leg '' , Order::More, "'a' cmp '' is More";
 
 # cmp comparison
 is-deeply('a' cmp 'a',     Order::Same, 'a cmp a is same');
@@ -66,6 +92,11 @@ is-deeply('a' cmp 1,       Order::More, '"a" cmp 1 is more'); # unspecced P5 beh
 is-deeply("a" cmp "a\0",   Order::Less, 'a cmp a\0 is less');
 is-deeply("a\0" cmp "a\0", Order::Same, 'a\0 cmp a\0 is same');
 is-deeply("a\0" cmp "a",   Order::More, 'a\0 cmp a is more');
+
+# empty string compare
+is-deeply  '' cmp '' , Order::Same, "Two empty strings cmp as Same";
+is-deeply  '' cmp 'a', Order::Less, "'' cmp 'a' is Less";
+is-deeply 'a' cmp '' , Order::More, "'a' cmp '' is More";
 
 # Test that synthetics compare properly
 is-deeply "\c[BOY, ZWNJ]" cmp  "\c[BOY, ZWJ]", Order::Less, "Synthetic codepoints compare properly";
