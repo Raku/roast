@@ -88,7 +88,7 @@ is($content ~~ m/<schedule>/, $content, 'match rule');
         token b { b }
         token TOP { <a><b><before $<b>> }
     }
-    is rt81136.parse('abc'), Nil,
+    nok rt81136.parse('abc'),
         'lookbehind that should not match does not match';
 }
 
