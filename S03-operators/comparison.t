@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 53;
+plan 56;
 
 # N.B.:  relational ops are in relational.t
 
@@ -66,6 +66,13 @@ is('a' cmp 1,       Order::More, '"a" cmp 1 is more'); # unspecced P5 behavior
 is("a" cmp "a\0",   Order::Less, 'a cmp a\0 is less');
 is("a\0" cmp "a\0", Order::Same, 'a\0 cmp a\0 is same');
 is("a\0" cmp "a",   Order::More, 'a\0 cmp a is more');
+
+# Test that synthetics compare properly
+is-deeply "\c[BOY, ZWNJ]" cmp  "\c[BOY, ZWJ]", Order::Less, "Synthetic codepoints compare properly";
+is-deeply "\c[BOY, ZWJ]"  cmp "\c[BOY, ZWNJ]", Order::More, "Synthetic codepoints compare properly";
+# Test that synthetics containing the same starter characters but different in length compare with
+# the longer one as More than the shorter one
+is-deeply "\c[BOY, ZWJ, ZWJ]"  cmp "\c[BOY, ZWJ]", Order::More, "Synthetic codepoints compare properly";
 
 # compare numerically with non-numeric
 {
