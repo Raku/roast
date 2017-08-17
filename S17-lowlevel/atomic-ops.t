@@ -49,9 +49,9 @@ plan 28;
 {
     my atomicint $test-cont = 10;
     is $test-cont⚛++, 10, 'postfix ⚛++ returns value before incrementing';
-    is ⚛++$test-cont, 12, 'prefix ⚛++ returns value after incremenitng';
+    is ++⚛$test-cont, 12, 'prefix ⚛++ returns value after incremenitng';
     is $test-cont⚛--, 12, 'postfix ⚛-- returns value before decrementing';
-    is ⚛--$test-cont, 10, 'prefix ⚛-- returns value after decremenitng';
+    is --⚛$test-cont, 10, 'prefix ⚛-- returns value after decremenitng';
     is ($test-cont ⚛+= 10), 20, '⚛+= returns value after addition';
 }
 
