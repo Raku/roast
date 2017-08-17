@@ -1,5 +1,5 @@
 use Test;
-plan 27;
+plan 33;
 
 # Full memory barrier sanity check.
 lives-ok { full-barrier() },
@@ -59,6 +59,17 @@ lives-ok { full-barrier() },
     start { atomic-assign($set, 1) };
     until atomic-fetch($set) { }
     pass "No hang due to incorrect lifting of atomic int fetch out of loop";
+}
+
+# Return values of atomic int math subs.
+{
+    my atomicint $test-cont = 10;
+    is atomic-inc($test-cont), 10, 'atomic-inc returns value before incrementing (1)';
+    is atomic-inc($test-cont), 11, 'atomic-inc returns value before incrementing (1)';
+    is atomic-dec($test-cont), 12, 'atomic-dec returns value before decrementing (1)';
+    is atomic-dec($test-cont), 11, 'atomic-dec returns value before decrementing (2)';
+    is atomic-add($test-cont, 10), 10, 'atomic-add returns value before adding (1)';
+    is atomic-add($test-cont, 10), 20, 'atomic-add returns value before adding (2)';
 }
 
 # Atomic integer increment (lexical)
