@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 99;
+plan 100;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -315,6 +315,14 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     is np(:assoc<left>, |{:assoc<list>}), 'list', 'rightmost named argument wins (2)';
     is snp(|{:assoc<list>}, :assoc<left>), 'left', 'rightmost named argument wins (3)';
     is snp(:assoc<left>, |{:assoc<list>}), 'list', 'rightmost named argument wins (4)';
+}
+
+# RT #131857
+{
+    sub foo(:color(:$colour)) { $colour + 1 };
+    my $s;
+    for ^1000000 { $s += foo(:color($_)) }
+    is $s, [+](1..1000000), 'Hot looping making call with aliased named parameter works';
 }
 
 # vim: ft=perl6
