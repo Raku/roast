@@ -2,7 +2,7 @@ use v6;
 use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
-plan 34;
+plan 23;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -218,56 +218,3 @@ is_run "my \$x = q:to/END/;\ny\n END", {
     :out(''),
     :err{ not .contains('Actions.nqp') }
 }, 'heredoc trimming warnings do not reference guts';
-
-#?rakudo skip 'RT not yet assigned
-{
-
-    # Don't change the space in front of any of these, or you'll change the test!
-
-    my @q1 = q:to/END/;
-    line one
-        line two
-    END
-    is   no-r(@q1[0]), "line one\n\tline two\n",   'Heredoc preceded by 4 spaces, but contains tab. Should contain tab.';
-    isnt no-r(@q1[0]), "line one\n    line two\n", 'Heredoc preceded by 4 spaces, but contains tab. Should not contain 4 preceding spaces at line two.';
-
-    # Same exact heredoc body, except it is moved to the right one space
-    my @q2 = q:to/END/;
-     line one
-        line two
-     END
-     is no-r(@q2[0]),   "line one\n\tline two\n",  'Heredoc preceded by 5 spaces, but contains tab. Should contain tab.';
-     isnt no-r(@q2[0]), "line one\n   line two\n", 'Heredoc preceded by 5 spaces, but contains tab. Should not contain 3 preceding spaces at line two.';
-
-    # Same heredoc body as the first, except moved to the right two spaces
-    my @q3 = q:to/END/;
-      line one
-        line two
-      END
-    is no-r(@q3[0]),   "line one\n\tline two\n", 'Heredoc preceded by 6 spaces, but contains tab. Should contain tab.';
-    isnt no-r(@q3[0]), "line one\n  line two\n", 'Heredoc preceded by 6 spaces, but contains tab. Should not contain 2 preceding spaces at line two.';
-
-    # Same heredoc body as the first, except moved to the right three spaces
-    my @q4 = q:to/END/;
-       line one
-        line two
-       END
-    is no-r(@q4[0]),   "line one\n\tline two\n", 'Heredoc preceded by 7 spaces, but contains tab. Should contain tab.';
-    isnt no-r(@q4[0]), "line one\n line two\n",  'Heredoc preceded by 7 spaces, but contains tab. Should not contain 1 preceding space at line two.';
-
-    # ONLY TEST THAT PASSES
-    # Same heredoc body as the first, except moved to the right four spaces
-    my @q5 = q:to/END/;
-        line one
-                line two
-        END
-    is no-r(@q5[0]),   "line one\n\tline two\n", 'Heredoc preceded by 8 spaces, but contains tab. Should contain tab.';
-
-    # Same heredoc body as the first, except moved to the right five spaces
-    my @q6 = q:to/END/;
-         line one
-                line two
-         END
-    is   no-r(@q6[0]), "line one\n\tline two\n",      'Heredoc preceded by 9 spaces, but contains tab. Second line should start with tab.';
-    isnt no-r(@q6[0]), "line one\n       line two\n", 'Heredoc preceded by 9 spaces, but contains tab. Second line should not start with 7 spaces.';
-}
