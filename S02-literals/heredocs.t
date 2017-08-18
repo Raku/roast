@@ -223,50 +223,56 @@ is_run "my \$x = q:to/END/;\ny\n END", {
 {
     # Don't change the space in front of any of these, or you'll change the test!
 
+    # 4 spaces are present between the beginning of the line and the heredoc body
     my @q1 = q:to/END/;
     line one
     	line two
     END
-    is   no-r(@q1[0]), "line one\n\tline two\n",   'Heredoc preceded by 4 spaces, but contains tab. Should contain tab.';
-    isnt no-r(@q1[0]), "line one\n    line two\n", 'Heredoc preceded by 4 spaces, but contains tab. Should not contain 4 preceding spaces at line two.';
+    is   no-r(@q1[0]), "line one\n\tline two\n",   'trim 4 spaces, leave leading tab in line two';
+    isnt no-r(@q1[0]), "line one\n    line two\n", 'should not contain 4 leading spaces at line two.';
 
     # Same exact heredoc body, except it is moved to the right one space
+    # 5 spaces are present between the beginning of the line and the heredoc body
     my @q2 = q:to/END/;
      line one
      	line two
      END
-     is no-r(@q2[0]),   "line one\n\tline two\n",  'Heredoc preceded by 5 spaces, but contains tab. Should contain tab.';
-     isnt no-r(@q2[0]), "line one\n   line two\n", 'Heredoc preceded by 5 spaces, but contains tab. Should not contain 3 preceding spaces at line two.';
+     is no-r(@q2[0]),   "line one\n\tline two\n",  'trim 5 spaces, leave leading tab in line two';
+     isnt no-r(@q2[0]), "line one\n   line two\n", 'should not contain 3 leading spaces in line two.';
 
     # Same heredoc body as the first, except moved to the right two spaces
+    # 6 spaces are present between the beginning of the line and the heredoc body
     my @q3 = q:to/END/;
       line one
       	line two
       END
-    is no-r(@q3[0]),   "line one\n\tline two\n", 'Heredoc preceded by 6 spaces, but contains tab. Should contain tab.';
-    isnt no-r(@q3[0]), "line one\n  line two\n", 'Heredoc preceded by 6 spaces, but contains tab. Should not contain 2 preceding spaces at line two.';
+    is no-r(@q3[0]),   "line one\n\tline two\n", 'trim 6 spaces, leave leading tab in line two';
+    isnt no-r(@q3[0]), "line one\n  line two\n", 'should not contain 2 leading spaces in line two';
 
     # Same heredoc body as the first, except moved to the right three spaces
+    # 7 spaces are present between the beginning of the line and the heredoc body
     my @q4 = q:to/END/;
        line one
        	line two
        END
-    is no-r(@q4[0]),   "line one\n\tline two\n", 'Heredoc preceded by 7 spaces, but contains tab. Should contain tab.';
-    isnt no-r(@q4[0]), "line one\n line two\n",  'Heredoc preceded by 7 spaces, but contains tab. Should not contain 1 preceding space at line two.';
+    is no-r(@q4[0]),   "line one\n\tline two\n", 'trim 7 leading spaces, leave leading tab in line two';
+    isnt no-r(@q4[0]), "line one\n line two\n",  'should not contain 1 leading space in line two';
 
     # ONLY TEST THAT PASSES
     # Same heredoc body as the first, except moved to the right four spaces
+    # 8 spaces are present between the beginning of the line and the heredoc body
     my @q5 = q:to/END/;
         line one
         	line two
         END
-    is no-r(@q5[0]),   "line one\n\tline two\n", 'Heredoc preceded by 8 spaces, but contains tab. Should contain tab.';
+    is no-r(@q5[0]),   "line one\n\tline two\n", 'trim 8 leading spaces, leave leading tab in line two';
 
     # Same heredoc body as the first, except moved to the right five spaces
+    # 9 spaces are present between the beginning of the line and the heredoc body
     my @q6 = q:to/END/;
          line one
          	line two
          END
-    is   no-r(@q6[0]), "line one\n\tline two\n",      'Heredoc preceded by 9 spaces, but contains tab. Second line should start with tab.';
-    isnt no-r(@q6[0]), "line one\n       line two\n", 'Heredoc preceded by 9 spaces, but contains tab. Second line should not start with 7 spaces.';
+    is   no-r(@q6[0]), "line one\n\tline two\n",      'trim 9 leading spaces, leave leading tab in line two';
+    isnt no-r(@q6[0]), "line one\n       line two\n", 'should not contain 7 leading spaces in line two';
 }
