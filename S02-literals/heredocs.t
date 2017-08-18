@@ -219,7 +219,7 @@ is_run "my \$x = q:to/END/;\ny\n END", {
     :err{ not .contains('Actions.nqp') }
 }, 'heredoc trimming warnings do not reference guts';
 
-#?rakudo skip 'RT not yet assigned'
+#?rakudo skip 'RT #131927'
 {
     # Don't change the space in front of any of these, or you'll change the test!
 
