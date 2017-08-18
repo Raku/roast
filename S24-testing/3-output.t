@@ -7,7 +7,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 5;
+plan 6;
 
 # RT #115024
 {
@@ -56,5 +56,16 @@ is_run ｢
     { :err(''), :0status,  :out("1..2\nok 1 - foo\n# bar\n    ok 1 - mass\n"
         ~ "    # bass\n    # miss\n    # biss\n    1..1\nok 2 - meow\n") },
 'descriptions with newlines get escaped from TAP with `#` at start of line';
+
+# https://irclog.perlgeek.de/perl6/2017-08-18#i_15038473
+is_run ｢
+        use Test;
+        plan 2;
+        skip "meow # moo", 1;
+        skip 1;
+    ｣,
+    { :err(''), :0status,  :out("1..2\nok 1 - # SKIP meow  \\# moo"
+        ~ "\nok 2 - # SKIP 1\n") },
+'skip() escapes `#` but not the `#` of SKIP marker itself';
 
 # vim: expandtab shiftwidth=4 ft=perl6
