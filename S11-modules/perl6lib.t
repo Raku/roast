@@ -13,4 +13,4 @@ is_run 'BEGIN { BEGIN { q{S11modulesPerl6LibTest.pm6}.IO.spurt(q{package { say q
     status => * != 0,
 }, 'RT 130883 is fixed';
 
-unlink "Test.pm6";
+unlink "S11modulesPerl6LibTest.pm6";
