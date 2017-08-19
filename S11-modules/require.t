@@ -1,6 +1,6 @@
 use v6;
 
-use lib ".", $?FILE.IO.parent.child("lib").Str;
+use lib $?FILE.IO.parent.parent, $?FILE.IO.parent.child("lib").Str;
 
 use MONKEY-SEE-NO-EVAL;
 
@@ -11,7 +11,7 @@ plan 34;
 # RT #126100
 {
     is $required-Test.gist, '(Test)', "successful require PACKAGE returns PACKAGE";
-    is (require "t/spec/S11-modules/InnerModule.pm"), "t/spec/S11-modules/InnerModule.pm",
+    is (require "S11-modules/InnerModule.pm"), "S11-modules/InnerModule.pm",
         "successful require STRING returns STRING";
 }
 
@@ -22,13 +22,13 @@ is $staticname.gist, '(Test)', "require Test installs stub Test package at compi
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
 lives-ok {
-    require "t/spec/S11-modules/InnerModule.pm";
+    require "S11-modules/InnerModule.pm";
     is ::('InnerModule').WHO<EXPORT>.WHO<DEFAULT>.WHO<&bar>(), 'Inner::bar', "can introspect EXPORT of require'd package";
     is ::('InnerModule').WHO<&oursub>(),"Inner::oursub","can call our-sub from required module";
 }, 'can load InnerModule from a path at run time';
 
 
-my $name = 't/spec/S11-modules/InnerModule.pm';
+my $name = 'S11-modules/InnerModule.pm';
 
 # RT #125084
 {
@@ -38,7 +38,7 @@ my $name = 't/spec/S11-modules/InnerModule.pm';
 
 # RT #127233
 {
-    require t::spec::S11-modules::NoModule <&bar>;
+    require S11-modules::NoModule <&bar>;
     is bar(),'NoModule::bar','can import symbol not inside module';
 }
 
@@ -105,7 +105,7 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
 nok ::('&bar'),"bar didn't leak";
 
 {
-        require "t/spec/S11-modules/GlobalOuter.pm";
+        require "S11-modules/GlobalOuter.pm";
         nok ::('GlobalOuter') ~~ Failure, "got outer symbol";
         ok  ::('GlobalOuter').load, "call method that causes a require";
         ok ::('GlobalInner') ~~ Failure, "Did not find inner symbol";
@@ -137,6 +137,6 @@ nok ::('&bar'),"bar didn't leak";
 
 # RT #131112
 #?rakudo.jvm skip 'makes eval-server unhappy (all following test files die), RT #131112'
-lives-ok {require ::("t::spec::S11-modules::SetConst") }, "require class with set constant";
+lives-ok {require ::("S11-modules::SetConst") }, "require class with set constant";
 
 # vim: ft=perl6
