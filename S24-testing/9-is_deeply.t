@@ -12,14 +12,17 @@ subtest 'is-deeply with Seqs does not claim `Seq.new-consumed` expected/got' => 
     is_run ｢use Test; is-deeply (1, 2).Seq, (1, 3).Seq｣, %(
         :err{ not $^s.contains: 'Seq.new-consumed' }
         :out{ not $^s.contains: 'Seq.new-consumed' }
+        :status(1)
     ), 'two Seqs, failing';
     is_run ｢use Test; is-deeply (1, 2).Seq, [1, 3]｣, %(
         :err{ not $^s.contains: 'Seq.new-consumed' }
         :out{ not $^s.contains: 'Seq.new-consumed' }
+        :status(1)
     ), '`got` Seq, failing';
     is_run ｢use Test; is-deeply [1, 2], (1, 3).Seq｣, %(
         :err{ not $^s.contains: 'Seq.new-consumed' }
         :out{ not $^s.contains: 'Seq.new-consumed' }
+        :status(1)
     ), '`expected` Seq, failing';
 }
 
@@ -29,6 +32,7 @@ subtest 'Junctions do not cause multiple tests to run' => {
     is_run ｢use Test; is-deeply 2, none(1, 2, 3)｣, %(
         :err{ $^s.contains: 'none' }
         :out{ $^s.contains: 'not ok' }
+        :status(1)
     ), 'failing test';
 }
 
@@ -36,7 +40,7 @@ subtest 'can test Seq type objects' => {
     plan 3;
     is-deeply Seq, Seq, 'Seq, Seq';
     is_run ｢use Test; is-deeply Seq, 42｣,
-        {:out(*.contains: 'not ok')}, 'Seq, 42';
+        {:out(*.contains: 'not ok'), :status(1)}, 'Seq, 42';
     is_run ｢use Test; is-deeply 42, Seq｣,
-        {:out(*.contains: 'not ok')}, '42, Seq';
+        {:out(*.contains: 'not ok'), :status(1)}, '42, Seq';
 }

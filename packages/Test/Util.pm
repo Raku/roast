@@ -80,6 +80,9 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
     my $ok = ?1;
     my $tests_aggregated = 0;
     my @diag_q;
+    %expected<status> = 0 if
+        not %expected<status>:exists
+        and (not %expected<err>:exists or %expected<err> ~~ Str and %expected<err> eq '');
 
     # We check each of the attributes and pass the test only if all are good.
     for <status out err> -> $attr {
