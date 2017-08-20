@@ -64,12 +64,18 @@ lives-ok { full-barrier() },
 # Return values of atomic int math subs.
 {
     my atomicint $test-cont = 10;
-    is atomic-inc($test-cont), 10, 'atomic-inc returns value before incrementing (1)';
-    is atomic-inc($test-cont), 11, 'atomic-inc returns value before incrementing (1)';
-    is atomic-dec($test-cont), 12, 'atomic-dec returns value before decrementing (1)';
-    is atomic-dec($test-cont), 11, 'atomic-dec returns value before decrementing (2)';
-    is atomic-add($test-cont, 10), 10, 'atomic-add returns value before adding (1)';
-    is atomic-add($test-cont, 10), 20, 'atomic-add returns value before adding (2)';
+    is atomic-postfix-inc($test-cont), 10,
+      'atomic-postfix-inc returns value before incrementing (1)';
+    is atomic-postfix-inc($test-cont), 11,
+      'atomic-postfix-inc returns value before incrementing (1)';
+    is atomic-postfix-dec($test-cont), 12,
+      'atomic-postfix-dec returns value before decrementing (1)';
+    is atomic-postfix-dec($test-cont), 11,
+      'atomic-postfix-dec returns value before decrementing (2)';
+    is atomic-postfix-add($test-cont, 10), 10,
+      'atomic-postfix-add returns value before adding (1)';
+    is atomic-postfix-add($test-cont, 10), 20,
+      'atomic-postfix-add returns value before adding (2)';
 }
 
 # Atomic integer increment (lexical)
@@ -77,7 +83,7 @@ for 1..4 -> $attempt {
     my atomicint $i = 0;
     await start {
         for ^20000 {
-            atomic-inc($i);
+            atomic-prefix-inc($i);
         }
     } xx 4;
     is atomic-fetch($i), 4 * 20000, "Atomic increment of lexical works ($attempt)"; 
@@ -88,7 +94,7 @@ for 1..4 -> $attempt {
     my atomicint $i = 100000;
     await start {
         for ^20000 {
-            atomic-dec($i);
+            atomic-prefix-dec($i);
         }
     } xx 4;
     is atomic-fetch($i), 100000 - 4 * 20000, "Atomic decrement of lexical works ($attempt)"; 
@@ -99,7 +105,7 @@ for 1..4 -> $attempt {
     my atomicint $i = 100000;
     await start {
         for ^20000 {
-            atomic-add($i, 4);
+            atomic-prefix-add($i, 4);
         }
     } xx 4;
     is atomic-fetch($i), 100000 + 4 * 4 * 20000, "Atomic add of lexical works ($attempt)"; 
