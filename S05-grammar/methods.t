@@ -18,7 +18,7 @@ my $x = 0;
 grammar WithOuterLex {
     regex TOP { x { $x = 42 } }
 }
-try WithOuterLex.parse('xxx');
+WithOuterLex.parse('xxx');
 is $x, 42, 'regex in a grammar can see outer lexicals';
 
 grammar WithAttrib {
