@@ -1,6 +1,6 @@
 use v6;
-use lib <t/spec/packages/>;
 use Test;
+use lib ('t/spec/packages'.IO.e ?? 't/spec/packages' !! 'packages');
 use Test::Util;
 
 =begin description
@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 63;
+plan 65;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -211,4 +211,11 @@ is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
         'repeating strings with `x` that would create a too large result dies';
 }
 
+## Ensure that when the repeat operator is used, a normalized string is created
+# RT #131801
+#?rakudo.jvm 3 todo "NFG or normalization not supported on JVM"
+{
+    is-deeply (0x0F75.chr x 2), "\x[0F75,0F75]", "Repeat operator keeps text normalized (normalization + canonical combining class reordering)";
+    is-deeply (0x0F75.chr x 2).ords, (0xF71, 0xF71, 0xF74, 0xF74), "Repeat operator keeps text normalized (normalization + canonical combining class reordering)";
+}
 # vim: ft=perl6
