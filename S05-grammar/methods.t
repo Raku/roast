@@ -39,5 +39,5 @@ isa-ok WithAttrib.new.sep, Str, 'empty attribute intilized to Str';
 {
     grammar D { our token doo { doo }; };
     ok 'doo' ~~ &D::doo,        'our token as rhs of smartmatch';
-    ok 'doo' ~~ / <&D::doo> /, 'our token in regey assertion';
+    ok 'doo' ~~ / <&D::doo> /, 'our token in regex assertion';
 }
