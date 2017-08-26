@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/lookaround.t.
 
 =end pod
 
-plan 10;
+plan 14;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/The special named assertions include:>
 
@@ -23,5 +23,13 @@ ok(!( "abcdef" ~~ m/abc <before d <.ws> f>/ ), 'Lookahead failure');
 ok(!( "abcd f" ~~ m/abc <!before d <.ws> f>/ ), 'Negative lookahead failure');
 ok("abcdef" ~~ m/abc <!before d <.ws> f> (.)/, 'Negative lookahead');
 is(~$0, 'd', 'Verify negative lookahead');
+
+# RT #131964
+
+#?rakudo 4 todo 'RT #131964'
+is ('abc' ~~ /<?after ^^>/).from, 0, '^^ in <?after ...>';
+is ('abc' ~~ /<?after ^>/).from,  0, '^ in <?after ...>';
+is ('abc' ~~ /<?after $$>/).from, 3, '$$ in <?after ...>';
+is ('abc' ~~ /<?after $>/).from,  3, '$ in <?after ...>';
 
 # vim: ft=perl6
