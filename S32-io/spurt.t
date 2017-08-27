@@ -222,6 +222,7 @@ subtest 'IO::Handle spurt' => { # 2017 IO Grant; IO::Handle.spurt
     plan 12;
 
     my $file = make-temp-file;
+    {
     my $fh = $file.open: :w, :bin;
     ok $fh.spurt( Buf.new: 200), 'can spurt a Blob [method]';
     ok spurt($fh, Buf.new: 200), 'can spurt a Blob [sub]';
@@ -229,7 +230,8 @@ subtest 'IO::Handle spurt' => { # 2017 IO Grant; IO::Handle.spurt
     #?rakudo.jvm todo 'problem with Buf[uint8], probably related to RT #128041'
     is-deeply $file.slurp(:bin), Buf[uint8].new(200, 200),
         'Blob spurted contents look right';
-
+    }
+    {
     my $fh = $file.open(:w, :enc<Latin-1>);
     ok $fh.spurt(Buf.new(200).decode: 'Latin-1'),
         'can spurt a Str in non-default encoding [method]';
@@ -239,7 +241,8 @@ subtest 'IO::Handle spurt' => { # 2017 IO Grant; IO::Handle.spurt
     is-deeply $file.slurp(:enc<Latin-1>),
         Buf[uint8].new(200, 200).decode('Latin-1'),
         'non-default encoded Str spurted contents look right';
-
+    }
+    {
     my $fh = $file.open: :w;
     ok $fh.spurt("I ♥ Perl 6"),
         'can spurt a Str in default encoding [method]';
@@ -248,7 +251,8 @@ subtest 'IO::Handle spurt' => { # 2017 IO Grant; IO::Handle.spurt
     $fh.close;
     is-deeply $file.slurp, "I ♥ Perl 6" x 2,
         'default encoded Str spurted contents look right';
-
+    }
+    {
     my $fh = $file.open: :a;
     ok $fh.spurt("I ♥ Perl 6"),
         'spurt appends when handle is in append mode [method]';
@@ -257,4 +261,5 @@ subtest 'IO::Handle spurt' => { # 2017 IO Grant; IO::Handle.spurt
     $fh.close;
     is-deeply $file.slurp, "I ♥ Perl 6" x 4,
         'appended spurt contents look right';
+    }
 }
