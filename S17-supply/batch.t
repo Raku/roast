@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 11;
+plan 9;
 
 dies-ok { Supply.batch(1000) }, 'can not be called as a class method';
 
@@ -12,7 +12,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     tap-ok Supply.from-list(1..14).batch(:elems(5)),
-      [[1..5],[6..10],[11..14]],
+      [(1,2,3,4,5),(6,7,8,9,10),(11,12,13,14)],
       "we can batch by number of elements";
 
     {
@@ -22,7 +22,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         sleep $seconds - now % $seconds; # wait until next $sleep second period
         my $base = time div $seconds;
         tap-ok $b,
-          [[$base xx 10],[$base+1 xx 10]],
+          [($base xx 10).List,($base+1 xx 10).List],
           "we can batch by time",
           :timeout(3 * $seconds),
           :after-tap( {
@@ -43,8 +43,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         sleep $seconds - now % $seconds; # wait until next $sleep second period
         my $base = time div $seconds;
         tap-ok $b,
-          [[$base   xx $elems],[$base   xx $rest],
-           [$base+1 xx $elems],[$base+1 xx $rest]],
+          [($base   xx $elems).List,($base   xx $rest).List,
+           ($base+1 xx $elems).List,($base+1 xx $rest).List],
           "we can batch by time and elems",
           :timeout(3 * $seconds),
           :after-tap( {
@@ -58,8 +58,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     {
         my $f = Supply.from-list(1..10);
         my $b = $f.batch(:elems(1)),
-        ok $f === $b, "batch by 1 is a noop";
-        tap-ok $b, [1..10], "noop batch";
+        tap-ok $b, [ (1..10)>>.List ], "batch by 1 creates 1 element lists";
     }
 }
 
