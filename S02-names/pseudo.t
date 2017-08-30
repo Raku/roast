@@ -233,7 +233,6 @@ plan 153;
     { our $x60 = 60; }
     package A61 {
         is $GLOBAL::x60, 60, '$GLOBAL:: works';
-        #?rakudo  todo 'RT #126523'
         is ::("GLOBAL")::('$x60'), 60, '::("GLOBAL") works';
         is GLOBAL::.<$x60>, 60, 'GLOBAL::.{} works';
     }
