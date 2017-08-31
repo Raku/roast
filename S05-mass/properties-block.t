@@ -732,7 +732,7 @@ ok(!( "\x[0D00]" ~~ m/^<-:InMalayalam>$/ ), q{Don't match inverted <InMalayalam>
 ok(!( "\x[3457]"  ~~ m/^<:InMalayalam>$/ ), q{Don't match unrelated <InMalayalam>} );
 ok("\x[3457]"  ~~ m/^<:!InMalayalam>$/, q{Match unrelated negated <InMalayalam>} );
 ok("\x[3457]"  ~~ m/^<-:InMalayalam>$/, q{Match unrelated inverted <InMalayalam>} );
-ok("\x[3457]\x[0D00]" ~~ m/<:InMalayalam>/, q{Match unanchored <InMalayalam>} );
+ok("\x[0D01]\x[0D00]" ~~ m/<:InMalayalam>/, q{Match unanchored <InMalayalam>} );
 
 # InMathematicalAlphanumericSymbols
 
