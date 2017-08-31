@@ -6,7 +6,7 @@ use Test;
 This file was originally derived from the perl5 CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/properties_slow_to_compile.t.
 
-XXX needs more clarification on the case of the rules, 
+XXX needs more clarification on the case of the rules,
 ie letter vs. Letter vs isLetter
 
 =end pod
@@ -732,7 +732,7 @@ ok(!( "\x[0D00]" ~~ m/^<-:InMalayalam>$/ ), q{Don't match inverted <InMalayalam>
 ok(!( "\x[3457]"  ~~ m/^<:InMalayalam>$/ ), q{Don't match unrelated <InMalayalam>} );
 ok("\x[3457]"  ~~ m/^<:!InMalayalam>$/, q{Match unrelated negated <InMalayalam>} );
 ok("\x[3457]"  ~~ m/^<-:InMalayalam>$/, q{Match unrelated inverted <InMalayalam>} );
-ok("\x[3457]\x[0D00]" ~~ m/<:InMalayalam>/, q{Match unanchored <InMalayalam>} );
+ok("\x[0D01]\x[0D00]" ~~ m/<:InMalayalam>/, q{Match unanchored <InMalayalam>} );
 
 # InMathematicalAlphanumericSymbols
 
