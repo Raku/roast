@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 427;
+plan 431;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -571,6 +571,22 @@ throws-like '/\ X/', X::Syntax::Regex::Unspace,
 throws-like '/m ** 1..-1/', X::Comp::Group,
     panic => { .payload ~~ m!'Unable to parse regex; couldn\'t find final \'/\''! },
     sorrows => { .[0] => { $_ ~~ X::Syntax::Regex::MalformedRange } and .[1] => { $_ ~~ X::Syntax::Regex::UnrecognizedMetachar } };
+
+# RT #130528 Obey S05 explicit error syntax despite injection of stopper
+throws-like 'multi sub postcircumfix:«⟨  ⟩»($foo, $a) { $a.say }; my $a; $a⟨5;', X::Comp::FailGoal,
+   dba => "postcircumfix:sym<⟨ ⟩>",
+   goal => "'⟩'";
+throws-like 'multi sub circumfix:«⟨  ⟩»($foo, $a) { $a.say }; ⟨5;', X::Comp::FailGoal,
+   dba => "circumfix:sym<⟨ ⟩>",
+   goal => "'⟩'";
+throws-like '„foo', X::Comp::FailGoal,
+   dba => "low curly double quotes",
+   goal => "<[”“]>"; # While this may shackle us to an implementation detail,
+                     # We need a test that ensures the '' normally comes from
+                     # the rx code, except maybe in the above finagle cases.
+throws-like '[1,2', X::Comp::FailGoal,
+   dba => "array composer",
+   goal => "']'";    # Normal literal-in-regex case.
 
 # RT #122502
 throws-like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
