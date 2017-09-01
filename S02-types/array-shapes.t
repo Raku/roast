@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 34;
+plan 37;
 
 # L<S09/Fixed-size arrays>
 
@@ -129,6 +129,14 @@ eval-lives-ok ｢my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>)｣,
     my @b[1]; for @b.values <-> $a { $a = 42 };
     is-deeply @b[0], 42,
         '@shaped-array.values provides with writable containers';
+}
+
+# RT #130451
+{
+    my @array[8];
+    is-deeply ($_ for @array), (Any for 1..8), "For statement across simple uninitialized shaped array";
+    is-deeply (for @array { $_ }), (Any for 1..8), "For loop across simple uninitialized shaped array";
+    is-deeply (@array.map: {$_}), (Any for 1..8), ".map of simple uninitialized shaped array";
 }
 
 # https://irclog.perlgeek.de/perl6/2017-03-20#i_14297219
