@@ -63,7 +63,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 }
 
 # RT #69192
-#?rakudo skip 'unknown bug RT #124848'
+# RT #124848'
 {
     role R5 {
         multi method rt69192()       { push @.order, 'empty' }
@@ -76,21 +76,21 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
     {
         my RT69192 $bot .= new();
-        ($bot does R5) does R6;
+        $bot does (R5, R6);
         $bot.*rt69192;
         is $bot.order, <empty>, 'multi method called once on empty signature';
     }
 
     {
         my RT69192 $bot .= new();
-        ($bot does R5) does R6;
+        $bot does (R5, R6);
         $bot.*rt69192('RT #69192');
         is $bot.order, <Str>, 'multi method called once on Str signature';
     }
 
     {
         my RT69192 $bot .= new();
-        ($bot does R5) does R6;
+        $bot does (R5, R6);
         $bot.*rt69192( 69192 );
         is $bot.order, <Numeric>, 'multi method called once on Numeric signature';
     }
