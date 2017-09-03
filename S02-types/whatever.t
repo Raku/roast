@@ -232,7 +232,6 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     is $f(0), -5, 'Whatever-currying with R- (3)';
 
     dies-ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
-    #?rakudo skip 'currying plus R meta op RT #124486'
     dies-ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
 }
 
