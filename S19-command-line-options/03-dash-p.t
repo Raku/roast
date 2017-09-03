@@ -6,7 +6,7 @@ use Test;
 
 use Test::Util;
 
-plan 2;
+plan 3;
 
 =begin pod
 
@@ -45,3 +45,16 @@ is_run(
     '-p works in combination with s:g///',
     :compiler-args['-p'],
 );
+
+# RT #124247
+#?rakudo.jvm skip 'hangs, RT #131393'
+is_run(
+    's[(\d)] = "{$0 * 10}"',      # program
+    "5 breads and 2 fishes\n",  # input
+    {
+        out => "50 breads and 2 fishes\n",   # expected
+    },
+    '-p -e using $0 in {} in "" in rhs in assign to s[] form subst',
+    :compiler-args['-p'],
+);
+
