@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 27;
+plan 28;
 
 my $path = "io-handle-testfile";
 
@@ -268,5 +268,14 @@ subtest '.print-nl method' => {
         my $fh = .open(:enc<ascii>);
         dies-ok { $fh.slurp.encode }, 'ASCII decode/encode dies with a catchable exception';
         $fh.close;
+    }
+}
+
+# RT #131961
+{
+    my $file = make-temp-file;
+    given $file.IO {
+        .spurt: "a" x (2**20 - 1) ~ "«";
+        lives-ok { for .lines { } }, 'No spurious malformed UTF-8 error';
     }
 }
