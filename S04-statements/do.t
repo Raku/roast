@@ -35,18 +35,17 @@ eval-lives-ok 'my $i = 1; do { $i++ } if $i;',
     $x = do if !$a { $b } else { $c };
     is $x, 'c', "prefixing 'if' statement with 'do' (else)";
 }
-	
+
 =begin comment
-	If the final statement is a conditional which does not execute 
-	any branch, the return value is undefined in item context and () 
-	in list context.
+	If the final statement is a conditional which does not execute
+	any branch, the return value is undefined in item context and
+	and an empty Slip in list context.
 =end comment
 {
 	my $x = do if 0 { 1 } elsif 0 { 2 };
 	ok !$x.defined, 'when if does not execute any branch, return undefined';
-	$x = (42, do if 0 { 1 } elsif 0 { 2 }, 42);
-#?rakudo todo 'Rakudo still uses Nil here RT #124572'
-	is $x[1], (), 'when if does not execute any branch, returns ()';
+	$x = (42, do if 0 { 1 } elsif 0 { 2 }, 43);
+	is $x[1], 43, 'when if does not execute any branch, returns empty Slip';
 }
 
 {
