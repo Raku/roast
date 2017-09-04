@@ -7,7 +7,10 @@ use Test;
 # start {...}), Channels and Supplies.  Thank you!
 #-------------------------------------------------------------------------------
 
-plan 25;
+plan 29;
+
+ok   Thread.is-initial-thread, 'Are we running in initial thread? (1)';
+ok $*THREAD.is-initial-thread, 'Are we running in initial thread? (2)';
 
 {
     my $t = Thread.start({ 1 });
@@ -17,6 +20,8 @@ plan 25;
 
 {
     my $t = Thread.start({
+        nok   Thread.is-initial-thread, 'Are we running on another thread? (1)';
+        nok $*THREAD.is-initial-thread, 'Are we running on another thread? (2)';
         pass "Code in thread ran";
     });
     $t.finish;
