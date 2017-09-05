@@ -45,11 +45,11 @@ eval-lives-ok 'my $i = 1; do { $i++ } if $i;',
 	my $x = do if 0 { 1 } elsif 0 { 2 };
 	ok !$x.defined, 'when if does not execute any branch, return undefined';
 	# Use now() as something that is reliably not constant-folded
-	$x = do if +now == +now - 15 { 1 } elsif +now == +now - 15 { 2 };
+	$x = do if +now == +now + 15 { 1 } elsif +now == +now + 15 { 2 };
 	ok !$x.defined, 'when if does not execute any branch, return undefined (unfolded)';
 	$x = (42, do if 0 { 1 } elsif 0 { 2 }, 43);
 	is $x[1], 43, 'when if does not execute any branch, returns empty Slip';
-	$x = (44, do if +now == +now - 15 { 1 } elsif +now == +now - 15 { 2 }, 45);
+	$x = (44, do if +now == +now + 15 { 1 } elsif +now == +now + 15 { 2 }, 45);
 	is-deeply $x, $(44,45), 'when if does not execute any branch, returns empty Slip (unfolded)';
 }
 
