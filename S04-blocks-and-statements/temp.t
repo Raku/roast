@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 43;
 
 # L<S04/The Relationship of Blocks and Declarations/function has been renamed>
 {
@@ -226,5 +226,8 @@ plan 42;
   recursive(10);
   is($value, 0, 'recursive function properly resets value');
 }
+
+throws-like { temp $*foo = 42 }, X::Dynamic::NotFound,
+    'Useful error conveyed when trying to temp a non-existing dynamic';
 
 # vim: ft=perl6
