@@ -4,7 +4,7 @@ use Test;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 44;
+plan 46;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT, Match.WHAT,         'got right type';
@@ -21,6 +21,11 @@ is $/.keys.elems,     0,        '.keys (empty)';
 is $/.values.elems,   0,        '.values (empty)';
 is $/.pairs.elems,    0,        '.pairs (empty)';
 is $/.kv.elems,       0,        '.kv (empty)';
+
+'1200' ~~ /\d+/;
+is $/.Int, 1200, '.Int with small value';
+'12000000000000000000000000000000000000' ~~ /\d+/;
+is $/.Int, 12000000000000000000000000000000000000, '.Int with big value';
 
 
 # prematch and postmatch for zero-width matches,
