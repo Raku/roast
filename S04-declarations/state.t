@@ -133,14 +133,14 @@ plan 41;
 #?DOES 1
 {
     my $str = "abc";
-
     my $re  = {
-        $str ~~ s:Perl5/^(.)/{ state $++; }/;
+        state $a = 0;
+        $str ~~ s:Perl5/^(.)/{ $a++ }/;
     };
     $re();
     $re();
     $re();
-    is $str, "2bc", "state() inside regular expressions works";
+    is $str, "2bc", "state() variable referenced from regex replacement part works";
 }
 
 # state() inside subs, chained declaration
