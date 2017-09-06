@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 112;
+plan 61;
 
 # L<S32::Numeric/Complex/"=item gist">
 
@@ -38,18 +38,19 @@ lives-ok { ~Complex }, '~Complex does not die';
 lives-ok { Complex.Str }, 'Complex.Str does not die';
 
 # L<S32::Numeric/Rat/"=item gist">
-
-#?DOES 4
+#?DOES 1
 sub Rat_str_test($value, $str_nucleus, $str, $perl = $str) {
-    is ~$value, $str, "~<$str_nucleus>";
-    is $value.Str, $str, "<$str_nucleus>.Str";
-    is $value.gist, $str, "<$str_nucleus>.gist";
-    is $value.perl, $perl, "<$str_nucleus>.perl";
-    
-    # FatRat tests
-    is ~$value.FatRat, $str, "~<$str_nucleus>.FatRat";
-    is $value.FatRat.Str, $str, "<$str_nucleus>.FatRat.Str";
-    is $value.FatRat.gist, $str, "<$str_nucleus>.FatRat.gist";
+    subtest "Rat Stringification ($value)" => {
+        is ~$value, $str, "~<$str_nucleus>";
+        is $value.Str, $str, "<$str_nucleus>.Str";
+        is $value.gist, $str, "<$str_nucleus>.gist";
+        is $value.perl, $perl, "<$str_nucleus>.perl";
+
+        # FatRat tests
+        is ~$value.FatRat, $str, "~<$str_nucleus>.FatRat";
+        is $value.FatRat.Str, $str, "<$str_nucleus>.FatRat.Str";
+        is $value.FatRat.gist, $str, "<$str_nucleus>.FatRat.gist";
+    }
 }
 
 # basic format test
@@ -66,7 +67,7 @@ Rat_str_test 555555555555555555555555555555555555555555555/5,
              '111111111111111111111111111111111111111111111',
              '111111111111111111111111111111111111111111111.0';
 # Bignum sanity
-#?rakudo skip 'big stuff RT #124796'
+#?rakudo todo 'big stuff RT #124796'
 Rat_str_test (4.5 ** 60), 
              '1797010299914431210413179829509605039731475627537851106401/1152921504606846976',
              '1558657976916843360832062017400788597510.058834953945635510598466400011830046423710882663726806640625';
