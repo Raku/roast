@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 58;
+plan 59;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -232,3 +232,19 @@ lives-ok {
         await (start g.parse('b')) xx 8
     }
 }, 'No crash when doing parallel parsing of grammars on first time';
+
+# RT #131985
+{
+	my $wrong = False;
+	await((1 .. 5).map: -> $tid {
+	   start {
+		  for (1 .. 100) -> $index {
+			 my $s-tid   = "{$tid}";
+			 my $s-index = "{$index}";
+			 $wrong = True unless $tid ~~ $s-tid;
+			 $wrong = True unless $index ~~ $s-index;
+		  }
+	   }
+	});
+    nok $wrong, 'No data races on closure interpolation in strings';
+}
