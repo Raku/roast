@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 42;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -275,5 +275,9 @@ eval-lives-ok 'state $x; $x', 'state outside control structure';
     is foo(), 1, 'anonymous state variable (1)';
     is foo(), 1, 'anonymous state variable (2)';
 }
+
+# RT #130855
+lives-ok { sub foo () {$ = 42}; for ^2000000 { $ = foo } },
+    'Intensive use of state variable in inline-friendly sub does not hit problems';
 
 # vim: ft=perl6
