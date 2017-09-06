@@ -51,7 +51,7 @@ nok @arr.is-lazy,  "$t array with values is not lazy";
 
 is (@arr[10] = "z"), "z", "Can assign non-contiguously to $t array";
 #?rakudo skip "non-existing str elements return null_s"
-is @arr[  9],  "", "Elems before non-contiguous assign are "" on $t array";
+is @arr[  9],  "", "Elems before non-contiguous assign are \"\" on $t array";
 is @arr[ 10], "z", "Non-contiguous assignment works on $t array";
 is @arr[*-1], "z", "Can also get last element on $t array";
 
