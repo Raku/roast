@@ -66,7 +66,9 @@ if ($impl_p) {
 }
 else {
     # windows / cross platform needs -e "" with EVAL and \c[DOLLAR SIGN]
-    $impl = `$p6 -e "EVAL qq/say \\c[DOLLAR SIGN]*PERL.compiler.name, '.', \\c[DOLLAR SIGN]*VM.name/" 2>&1`;
+    ($impl) = `$p6 -e "EVAL qq/say \\c[DOLLAR SIGN]*PERL.compiler.name, '.', \\c[DOLLAR SIGN]*VM.name/" 2>&1`
+    =~ /\A([^\n]+)/;
+
     die capture_error($p6, $impl) if $?;
     chomp($impl);
 }
