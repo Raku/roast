@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 65;
+plan 60;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -63,15 +63,6 @@ is('str' x Int, '', 'x with Int type object');
         message => 'Cannot coerce -Inf to an Int',
         'list repeating with -Inf fails'
     );
-}
-# RT #128035
-#?rakudo.jvm skip 'OutOfMemoryError: Java heap space'
-{
-    my $a;
-    lives-ok({ $a = 'a' x 1073741824 }, 'repeat count equal to the NQP limit works');
-    is($a.chars, 1073741824, 'correct result for count equal to the NQP limit');
-
-    throws-like({ $a = 'a' x 9999999999999999999 }, Exception, 'too large repeat count throws instead of going negative');
 }
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
@@ -202,14 +193,6 @@ warns-like { 'x' x Int }, *.contains('uninitialized' & 'numeric'),
 # RT #130619
 is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
     'empty slip with xx * works';
-
-# RT #127971,130924
-{
-    dies-ok { my $a = "a" x 2**30; my $b = "b" x 2**30; my $c = $a ~ $b; my $d = $b ~ $a; my $e = $c ~ $d; },
-        'concatenating strings with `~` that would create a too large result dies';
-    dies-ok { (('a' x 1000000) x 1000000) },
-        'repeating strings with `x` that would create a too large result dies';
-}
 
 ## Ensure that when the repeat operator is used, a normalized string is created
 # RT #131801
