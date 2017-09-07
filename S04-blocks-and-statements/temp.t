@@ -89,7 +89,7 @@ plan 43;
   {
     temp %hash<z> = 42;
   }
-  #?rakudo 2 skip 'RT #126447'
+  #?rakudo 2 todo 'RT #126447'
   ok not %hash<z>:exists, "temp() removed previously non-existent key";
   is %hash.elems, 3, "temp() restored hash has correct .elems";
 }
