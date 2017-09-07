@@ -23,15 +23,15 @@ is_run $Die-On ~ 'use Test; plan 3; ok 1; ok 0; ok 1;', {
     :255status,
 }, 'test failures with PERL6_TEST_DIE_ON_FAIL set die';
 
-is_run $Die-On ~ 'use Test; plan 2; todo "foo"; ok 0; ok 0, "test-ok"', {
+is_run $Die-On ~ 'use Test; plan 2; todo "foo"; ok 0; ok 1, "test-ok"', {
     :out(/'test-ok'/),
-    :1status,
+    :0status,
 }, 'PERL6_TEST_DIE_ON_FAIL does not exit on failed TODO tests';
 
 # RT #129192
 is_run $Die-On ~ 'use Test; plan 1; is "x", "test-ok"', {
     :err(/'test-ok'/),
-    :1status,
+    :255status,
 }, 'test failure diagnostics show up when PERL6_TEST_DIE_ON_FAIL is used';
 
 is_run $Die-On ~ 'use Test; plan 1; todo "foo"; subtest "bar", { plan 2; '
