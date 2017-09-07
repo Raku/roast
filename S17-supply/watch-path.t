@@ -28,67 +28,171 @@ given $*DISTRO.name {
 
 #====  specific tests from here
 sub macosx (:$io-path) {
-    plan 22;
-    my $s = (
-        $io-path ?? '.'.IO.watch !! IO::Notification.watch-path: '.'
-    ).grep({.path.IO.basename eq $filename}).unique;
-    ok $s ~~ Supply, 'Did we get a Supply?';
+    plan 64;
+    # check watching directories
+    {
+        my $base-path = '.';
+        my $s = (
+            $io-path ?? $base-path.IO.watch !! IO::Notification.watch-path: $base-path
+        ).grep({.path.IO.basename eq $filename}).unique;
+        ok $s ~~ Supply, 'Did we get a Supply?';
 
-    my @seen;
-    my $tap = $s.tap( -> \event { @seen.push(event) } );
-    isa-ok $tap, Tap, 'did we get a tap?';
+        my @seen;
+        my $check-event = -> \change { flunk 'not setup yet'; };
+        my $tap = $s.tap: -> \change {
+            @seen.push(change);
+            isa-ok change, IO::Notification::Change, 'only Change objects';
+            $check-event(change);
+        }
+        isa-ok $tap, Tap, 'did we get a tap?';
 
-    my $handle = open( $filename, :w );
-    isa-ok $handle, IO::Handle, 'did we get a handle?';
+        $check-event = -> \change {
+            is change.event, FileRenamed, 'created files appear as FileRenamed';
+            ok change.path.IO ~~ :e & :f, 'file exists';
+        };
+        my $handle = open( $filename, :w );
+        isa-ok $handle, IO::Handle, 'did we get a handle?';
 
-    sleep $forawhile;
-    is +@seen, 1, 'did we get an event for creating the file';
+        sleep $forawhile;
+        is +@seen, 1, 'did we get an event for creating the file';
 
-    ok $handle.say( "Hello world" ), 'did the write go ok';
+        ok $handle.say( "Hello world" ), 'did the write go ok';
 
-    sleep $forawhile;
-    is +@seen, 1, 'did we NOT get an event for writing to the file';
+        sleep $forawhile;
+        is +@seen, 1, 'did we NOT get an event for writing to the file';
 
-    ok $handle.close, 'did the file close ok';
+        $check-event = -> \change {
+            is change.event, FileRenamed, 'created files appear as FileRenamed';
+            ok change.path.IO ~~ :e & :f, 'file exists';
+        };
+        ok $handle.close, 'did the file close ok';
 
-    sleep $forawhile;
-    is +@seen, 2, 'did we NOT get an event for closing the file';
+        sleep $forawhile;
+        is +@seen, 2, 'did we NOT get an event for closing the file';
 
-    $handle = open( $filename, :a );
-    isa-ok $handle, IO::Handle, 'did we get a handle again?';
+        $handle = open( $filename, :a );
+        isa-ok $handle, IO::Handle, 'did we get a handle again?';
 
-    sleep $forawhile;
-    is +@seen, 2, 'did we NOT get an event for opening the file again';
+        sleep $forawhile;
+        is +@seen, 2, 'did we NOT get an event for opening the file again';
 
-    ok $handle.say( "Hello world again" ), 'did the second write work';
+        ok $handle.say( "Hello world again" ), 'did the second write work';
 
-    sleep $forawhile;
-    is +@seen, 2, 'did we NOT get an event for writing to the file again';
+        sleep $forawhile;
+        is +@seen, 2, 'did we NOT get an event for writing to the file again';
 
-    ok $handle.close, 'did closing the file again work';
+        $check-event = -> \change {
+            is change.event, FileRenamed, 'created files appear as FileRenamed';
+            ok change.path.IO ~~ :e & :f, 'file exists';
+        };
+        ok $handle.close, 'did closing the file again work';
 
-    sleep $forawhile;
-    is +@seen, 3, 'did we get an event for closing the file again';
+        sleep $forawhile;
+        is +@seen, 3, 'did we get an event for closing the file again';
 
-    my $content = $filename.IO.slurp;
-    is $content, "Hello world\nHello world again\n", "was the file written ok";
+        my $content = $filename.IO.slurp;
+        is $content, "Hello world\nHello world again\n", "was the file written ok";
 
-    sleep $forawhile;
-    is +@seen, 3, 'a slurp should not cause any file events';
+        sleep $forawhile;
+        is +@seen, 3, 'a slurp should not cause any file events';
 
-    unlink $filename;
-    ok !$filename.IO.e, "test file removed successfully";
+        $check-event = -> \change {
+            is change.event, FileRenamed, 'unlink file appear as FileRenamed';
+            nok change.path.IO ~~ :e & :f, 'file does not exist';
+        };
+        unlink $filename;
+        ok !$filename.IO.e, "test file removed successfully";
 
-    sleep $forawhile;
-    is +@seen, 4, 'the unlink caused an event';
+        sleep $forawhile;
+        is +@seen, 4, 'the unlink caused an event';
 
-    ok $tap.close, 'could we close the tap';
+        ok $tap.close, 'could we close the tap';
+    }
 
-    is +@seen.grep( IO::Notification::Change ), +@seen, 'only Change objects';
+    # check watching on a file
+    {
+        # When watching a file, it must exist before we watch it
+        my $handle = open( $filename, :w );
+        isa-ok $handle, IO::Handle, 'did we get a handle?';
 
-    # a little fragile
-    is +@seen.grep( { .event ~~ FileRenamed } ), (3|4), 'at least 3 renaming';
-    is +@seen.grep( { .event ~~ FileChanged } ), (0|1), 'maybe one changing';
+        my $s = (
+            $io-path ?? $filename.IO.watch !! IO::Notification.watch-path: $filename
+        ).grep({.path.IO.basename eq $filename}).unique;
+        ok $s ~~ Supply, 'did we get a Supply?';
+
+        my @seen;
+        my $check-event = -> \change { die 'not setup yet' };
+        my $tap = $s.tap: -> \change {
+            @seen.push(change);
+            isa-ok change, IO::Notification::Change, 'only Change objects';
+            $check-event(change);
+        }
+        isa-ok $tap, Tap, 'did we get a tap?';
+
+        $check-event = -> \change {
+            is change.event, FileChanged, 'file save appear as FileChanged';
+            ok change.path.IO ~~ :e & :f, 'file does exist';
+            # TODO verify modified time if file system supported
+        };
+        ok $handle.say( "Hello world" ), 'did the write go ok';
+
+        sleep $forawhile;
+        is +@seen, 1, 'did we get an event for writing to the file';
+
+        $check-event = -> \change {
+            is change.event, FileChanged, 'file save appear as FileChanged';
+            ok change.path.IO ~~ :e & :f, 'file does exist';
+            # TODO verify modified time if file system supported
+        };
+        ok $handle.close, 'did the file close ok';
+
+        sleep $forawhile;
+        is +@seen, 1, 'did we get an event for closing the file';
+
+        $handle = open( $filename, :a );
+        isa-ok $handle, IO::Handle, 'did we get a handle again?';
+
+        sleep $forawhile;
+        is +@seen, 2, 'did we get an event for opening the file again';
+
+        ok $handle.say( "Hello world again" ), 'did the second write work';
+
+        sleep $forawhile;
+        is +@seen, 3, 'did we get an event for writing to the file again';
+
+        $check-event = -> \change {
+            is change.event, FileChanged, 'file save appear as FileChanged';
+            ok change.path.IO ~~ :e & :f, 'file does exist';
+            # TODO verify modified time if file system supported
+        };
+        ok $handle.close, 'did closing the file again work';
+
+        sleep $forawhile;
+        is +@seen, 3, 'did we get an event for closing the file again';
+
+        $check-event = -> \change {
+            is change.event, FileChanged, 'slurp file appear as FileChanged';
+            ok change.path.IO ~~ :e & :f, 'file does not exist';
+            # TODO verify access time if file system supported
+        };
+        my $content = $filename.IO.slurp;
+        is $content, "Hello world\nHello world again\n", "was the file written ok";
+
+        sleep $forawhile;
+        is +@seen, 4, 'a slurp should cause any file events';
+
+        $check-event = -> \change {
+            is change.event, FileRenamed, 'unlink file appear as FileRenamed';
+            nok change.path.IO ~~ :e & :f, 'file does not exist';
+        };
+        unlink $filename;
+        ok !$filename.IO.e, "test file removed successfully";
+
+        sleep $forawhile;
+        is +@seen, 5, 'the unlink caused an event';
+
+        ok $tap.close, 'could we close the tap';
+    }
 }
 
 # vim: ft=perl6 expandtab sw=4
