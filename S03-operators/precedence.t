@@ -143,8 +143,6 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 
 # item assignment
 
-# XXX this should be a todo, not a skip, but that
-# messes up the rest of the file, somehow :(
 {
     my $c = 1, 2, 3;
     is($c, 1, '$ = binds tighter than ,');
