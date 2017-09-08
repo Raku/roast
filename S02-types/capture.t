@@ -179,7 +179,8 @@ throws-like '(1..*).list.Capture', X::Cannot::Lazy, :action('create a Capture fr
 throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture from');
 
 { # coverage; 2016-09-26
-    is-deeply \(42, [1, 2], %(:42a), :72a, :x[3, 4], :y{:42a}).antipairs,
+    my $antipairs = \(42, [1, 2], %(:42a), :72a, :x[3, 4], :y{:42a}).antipairs;
+    is-deeply ($antipairs[0..2], $antipairs[3..*].sort).flat,
     (
         42 => 0,        ([1, 2]) => 1, ({:a(42)}) => 2,
         ([3, 4]) => "x", 72 => "a",    ({:a(42)}) => "y",
