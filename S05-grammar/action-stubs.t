@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 27;
 
 # L<S05/Grammars/optionally pass an actions object>
 
@@ -28,8 +28,11 @@ class An::Action1 {
 
 ok A::Test::Grammar.parse('alpha beta'), 'basic sanity: .parse works';
 my $action = An::Action1.new();
-lives-ok { A::Test::Grammar.parse('alpha beta', :actions($action)) },
+my $match;
+lives-ok { $match = A::Test::Grammar.parse('alpha beta', :actions($action)) },
         'parse with :action (and no make) lives';
+ok $match, 'Successfully parsed input string';
+ok $match.actions === $action, 'Match.actions';
 is $action.in-a, 1, 'first action has been called';
 is $action.in-b, 1, 'second action has been called';
 is $action.calls, 'ab', '... and in the right order';
