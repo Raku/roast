@@ -6,7 +6,7 @@ use Test;
 
 # L<S02/Lists>
 
-plan 32;
+plan 29;
 
 # Indexing lists
 
@@ -101,31 +101,6 @@ plan 32;
   ($foo, $bar, $baz) = ($baz, $foo, $bar);
   ok $foo == 3 && $bar == 1 && $baz == 2,
     "using lists as lvalues to swap three variables works";
-}
-
-# Lists as lvalues to swap, this time we use binding instead of assignment
-#?rakudo 2 skip 'list binding RT #124494'
-{
-  my $foo = 42;
-  my $bar = 23;
-
-  ($foo, $bar) := ($bar, $foo);
-  ok $foo == 23 && $bar == 42,
-    "using lists as lvalues in a binding operation to swap two variables works";
-
-  $foo = "some_new_value";
-  is $foo, "some_new_value",
-    "the vars didn't lose the readwrite-ness";
-}
-
-{
-  my $foo = 1;
-  my $bar = 2;
-  my $baz = 3;
-
-  ($foo, $bar, $baz) := ($baz, $foo, $bar);
-  ok $foo == 3 && $bar == 1 && $baz == 2,
-    "using lists as lvalues in a binding operation to swap three variables works";
 }
 
 {
