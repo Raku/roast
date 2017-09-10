@@ -150,7 +150,6 @@ This test tests the C<unique> builtin.
     my %a;
     %a<foo> = <a b c>;
     %a<foo>.=unique;
-    #?rakudo.jvm skip 'This Seq has already been iterated, RT #128720'
     is-deeply %a<foo>.List, <a b c>,
       "\%a<foo> not clobbered by .=unique";
 } # 1
