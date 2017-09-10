@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 # simple hash
 {
@@ -44,6 +44,13 @@ is-deeply (my %h{Int}).perl.EVAL.perl, '(my Any %{Int})',
     %h = :42a, :b(%h);
     is-deeply %h.perl.EVAL<b><b><b><a>, 42,
         'can .perl.EVAL roundtrip a circular hash';
+}
+
+# RT #120656
+{
+    my %b = ^512;
+    my %c = EVAL(%b.perl);
+    is %c.elems, 256, 'Can create large hash with "=>", RT #120656'
 }
 
 #vim: ft=perl6
