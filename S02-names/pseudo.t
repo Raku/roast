@@ -434,7 +434,6 @@ my $x110 = 110; #OK
 # PARENT - NYI in any compiler
 
 # RT #123154
-#?rakudo.jvm skip 'RT #123154'
 {
     my $x = 'really unlikely value';
     ok MY::.values.grep({ ($_ // '') eq 'really unlikely value' }),
