@@ -157,7 +157,6 @@ my @tests = (
 }
 
 # RT #123048
-#?rakudo.jvm todo 'RT #123048'
 {
     my $a = 0.219947518065601987e0;
     is $a.perl, EVAL($a.perl).perl,
