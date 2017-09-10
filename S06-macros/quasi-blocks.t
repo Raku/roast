@@ -86,8 +86,7 @@ plan 14;
     is $result, "I'm cupid!", "lexical lookup from quasi to macro works";
 }
 
-#?rakudo.jvm skip "Method 'succ' not found RT #124967"
-#?rakudo.moar skip "No such method 'STORE' for invocant of type 'Mu' RT #124968"
+#?rakudo skip "Cannot resolve caller prefix:<++>(Mu) RT #124968"
 {
     my $counter = 0;
 
