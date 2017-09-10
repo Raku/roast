@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 153;
+plan 154;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -444,5 +444,11 @@ my $x110 = 110; #OK
             'OUTER::.values actually produces values';
     }
 }
+
+# RT #129092
+{
+    lives-ok { my @keys = CORE::.keys }, 'calling CORE::.keys lives';
+}
+
 
 # vim: ft=perl6
