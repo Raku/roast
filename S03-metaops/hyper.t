@@ -456,7 +456,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».unshift((42,43)).gist, "([(42 43) 2 3] [(42 43) 4 [5 6]])", ".unshift is nodal";
     is [[2, 3], [4, [5, 6]]]».shift.gist, "(2 4)", ".shift is nodal";
     is [[2, 3], [4, [5, 6]]]».prepend((42,43)).gist, "([42 43 2 3] [42 43 4 [5 6]])", ".prepend is nodal";
-#?rakudo skip "doesn't seem to see the nodal"
+#?rakudo todo "doesn't seem to see the nodal"
     is [[2, 3], [4, [5, 6]]]».splice(0,1).gist, "", ".splice is nodal";
 
 # XXX What about these?

@@ -209,10 +209,6 @@ multi sub isnt_approx_array(@got, @expected, $desc) {
 
 my @vectors = ($v1, $v2, $v1 + $v2, $v1 - $v2, $v2 - $v1);
 
-# Bad news error: the next four tests can all be made to work, just not at the same time.
-# If you delete the skip line, the [T+] test works but the [-] test returns the "Can't get 
-# Num from Vector" error.  If you include skip line, the [-] test works.  Help?
-
 ia(([+] @vectors), (2 T* $v1) + (2 T* $v2), "[+] of vectors == 2 * (v1 + v2)");
 ia(([T+] @vectors), (2 T* $v1) + (2 T* $v2), "[T+] of vectors == 2 * (v1 + v2)");
 ia(([-] @vectors), -2 T* $v2, "[-] of vectors == -2 * v2");

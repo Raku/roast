@@ -21,7 +21,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     ok Mon + Tue == Wed, 'Can do arithmetics with Pair values';
 }
 
-#?rakudo skip 'Cannot convert string to number RT #124832'
+#?rakudo todo 'Cannot convert string to number RT #124832'
 {
     my $x = 'Today' but Day::Mon;
     ok $x.does(Day),      'Can test with .does() for enum type';

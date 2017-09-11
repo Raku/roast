@@ -64,8 +64,6 @@ plan 44;
 }
 
 # Simple hash autovivification
-# Actually, that first test passes, but I can't figure out how to skip just
-# the next two.
 {
   my $hashref;
   ok $hashref !~~ Hash, "uninitialized variable is not a Hash (1)";

@@ -61,7 +61,6 @@ plan 47;
   my &infix:<z> := { $^a + $^b };
   is &infix:<z>(2, 3), 5, "accessing a userdefined operator using its subroutine name";
 
-  #?rakudo skip 'undeclared name'
   is ~(&infix:<»+«>([1,2,3],[4,5,6])), "5 7 9", "accessing a hyperoperator using its subroutine name";
 }
 

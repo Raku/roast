@@ -45,13 +45,14 @@ plan 18;
     throws-like 'testit(&teststrint)', Exception,  'code dies with invalid signature (4)';
 }
 
-#?rakudo skip 'subsignatures dont factor into multi candidates yet RT #124935'
 {
     multi sub t1 (&code:(Int)) { 'Int' };   #OK not used
     multi sub t1 (&code:(Str)) { 'Str' };   #OK not used
     multi sub t1 (&code:(Str --> Bool)) { 'Str --> Bool' };   #OK not used
     multi sub t1 (&code:(Any, Any)) { 'Two' };   #OK not used
 
+    # Note that using &code:($,$) instead of &code:(Any, Any) makes this next test work
+    #?rakudo skip 'subsignatures dont factor into multi candidates yet RT #124935'
     is t1(-> $a, $b { }), 'Two',   #OK not used
        'Multi dispatch based on closure parameter syntax (1)';
     is t1(-> Int $a { }), 'Int',   #OK not used
