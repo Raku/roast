@@ -3,7 +3,7 @@ use Test;
 
 # L<S12/Classes/You can predeclare a stub class>
 
-plan 8;
+plan 9;
 
 eval-lives-ok q[ class StubA { ... }; class StubA { method foo { } }; ],
               'Can stub a class, and later on declare it';
@@ -18,6 +18,12 @@ eval-lives-ok q[ package StubD { ... }; class StubD { method foo { } }; ],
 
 throws-like q[my class StubbedButNotDeclared { ... }], X::Package::Stubbed,
     'stubbing a class but not providing a definition dies';
+
+throws-like
+    { EVAL 'class A { ... }; say A.WHAT' },
+    X::Package::Stubbed,
+    "X::Package::Stubbed should not show line number",
+    gist => "The following packages were stubbed but not defined:\n    A";
 
 # RT #81060
 {
