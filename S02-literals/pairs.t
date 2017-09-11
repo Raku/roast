@@ -1,6 +1,7 @@
 use v6;
 
 use Test;
+use Test::Idempotence;
 
 # L<S02/Adverbial Pair forms/"There is now a generalized adverbial form of Pair">
 
@@ -23,7 +24,7 @@ use Test;
 #   S02 lists ':a' as being equivlaent to a => 1, so
 #   the type of the value of that pair is Int, not Bool
 
-plan 77;
+plan 82;
 
 sub f1n (:$a) { $a.WHAT.gist }
 sub f1p ( $a) { $a.WHAT.gist }
@@ -177,5 +178,12 @@ sub f9 (:$bar!) { WHAT($bar) }
 # RT #128821
 throws-like ":7\x[308]a", X::Syntax::Malformed,
     'synthetic numerals in colon pairs in :42foo format throw';
+
+# RT #129008
+is-perl-idempotent(((Int) => 42));
+is-perl-idempotent(((Pair) => 42), ".perl of (Pair) => 42 is idempotent"); # .gist WAT?
+is-perl-idempotent(((Num) => 42));
+is-perl-idempotent(((Str) => 42));
+is-perl-idempotent((:a(Bool)));
 
 # vim: ft=perl6
