@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 43;
 
 =begin description
 
@@ -66,4 +66,16 @@ is('fooäàaáâåbar' ~~ m:m/<[a..b]>+/, 'äàaáâåba', 'Ignoremark with rang
 # Ensure that synthetics also properly can match the base character
 is "\c[LATIN SMALL LETTER J WITH CARON, COMBINING DOT BELOW]" ~~ /:m:i j /, 'ǰ̣', "Synthetics with decomposable base characters properly work with ignoremark";
 ok qq{"\c[ZERO WIDTH JOINER]a"} ~~ / (:ignoremark ^ '"' ) /, "Synthetics properly can be matched with ignoremark";
+is “{"\c[ARABIC NUMBER SIGN]" x 3}a” ~~ /:m a/, “{"\c[ARABIC NUMBER SIGN]" x 3}a”, "Igoremark supports Prepend";
+my Int:D $val = 0;
+for ^ 10 {
+    my Str:D $str =  "\c[arabic number sign]" x $_ ~ 'a';
+    $val++ if "\c[arabic number sign]" x $_ ~ 'a' ~~ /:m a/ eq $str;
+}
+ok $val == 10, "Ignoremark supports 0..9 prepend marks";
+is "\c[ARABIC NUMBER SIGN]" ~~ /:m "\c[ARABIC NUMBER SIGN]" /, "\c[ARABIC NUMBER SIGN]", "Ignoremark can match degenerate Prepend";
+is "\c[SYRIAC ABBREVIATION MARK, ARABIC NUMBER SIGN]" ~~ /:m "\c[SYRIAC ABBREVIATION MARK]" /, "\c[SYRIAC ABBREVIATION MARK, ARABIC NUMBER SIGN]", "Ignoremark matches the first codepoint for all Prepend degenerates";
+nok "\c[SYRIAC ABBREVIATION MARK, ARABIC NUMBER SIGN]" ~~ /:m "\c[ARABIC NUMBER SIGN]" /, "Ignoremark does not match the second codepoint for all Prepend degenerates";
+nok "\c[SYRIAC ABBREVIATION MARK, COMBINING CARON]" ~~ /:m "\c[COMBINING CARON]" /, "Ignoremark doesn't match second codepoint for Prepend+Extend degenerate";
+is "\c[SYRIAC ABBREVIATION MARK, COMBINING CARON]" ~~ /:m "\c[SYRIAC ABBREVIATION MARK]" /, "\c[SYRIAC ABBREVIATION MARK, COMBINING CARON]", "Ignoremark matches the first codepoint for all Prepend+Extend degenerates";
 # vim: syn=perl6 sw=4 ts=4 expandtab
