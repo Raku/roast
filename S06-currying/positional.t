@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Assuming;
 
-plan 227;
+plan 229;
 
 is-primed-sig(sub () { }, :(), );
 is-primed-sig(sub ($a) { }, :(), 1);
@@ -253,3 +253,8 @@ is-primed-call(&testsubproto, \(43), $["Int + 43"], 42);
 is-primed-call(&testsubproto, \(44), $["Str + 44"], "a Str");
 is-primed-call(&atan2, \(2), $[atan2(1,2)],1);
 is-primed-call(&atan2, \(1), $[atan2(1,2)],*,2);
+
+# RT#126332
+is-primed-call(&substr, \(0,2), $[substr("hello world", 0, 2)], "hello world");
+is-primed-call(sub (*@x) { @x.perl }, \("c","d","e"), $[sub (*@x) { @x.perl }("a","b","c","d","e")], "a", "b");
+
