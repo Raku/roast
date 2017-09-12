@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 41;
 
 # Unicode version pragma not needed here, as names cannot change.
 
@@ -69,3 +69,5 @@ is "AB".uninames, ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uniname
 
 #?rakudo.jvm skip "No Unicode 9 yet"
 is uniname("🦋"), "BUTTERFLY", "Can resolve Unicode 9 character name";
+
+is-deeply 0xD4DB.uniname, "Hangul Syllable PWILH", "Supports composed Hangul Syllable names";
