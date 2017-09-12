@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 52;
+plan 72;
 
 # LATIN CAPITAL LETTER D, COMBINING DOT BELOW, COMBINING DOT ABOVE
 {
@@ -96,4 +96,15 @@ plan 52;
     is $x.fc.chars, 2, 'fc gives us two chars';
     isnt $x.fc, $x, 'fc gives identity';
     is $x.fc.NFD.list, (0x0066, 0x0323, 0x0066), 'fc gives correct NFD';
+}
+
+{
+    my $Prepend = "\c[ARABIC NUMBER SIGN]";
+    my $Extend  = "\c[COMBINING CARON]";
+    for ^10 {
+        my $lower = "{$Prepend x $_}á{$Extend x (9 - $_)}";
+        my $upper = "{$Prepend x $_}Á{$Extend x (9 - $_)}";
+        is-deeply $lower.uc, $upper, "Prepend + á + Extend casechange is correct: .uc: (Prepend x $_ ~ 'á' ~ Extend x {9 - $_}).uc";
+        is-deeply $upper.lc, $lower, "Prepend + Á + Extend casechange is correct: .lc: (Prepend x $_ ~ 'á' ~ Extend x {9 - $_}).lc";
+    }
 }
