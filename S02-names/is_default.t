@@ -41,10 +41,10 @@ plan 110;
     is $a, 42, 'is default() works on a group of variables too (1)';
     is $b, 42, 'is default() works on a group of variables too (2)';
 }
-#?rakudo skip 'is default on attributes'
+
 {
     my class A {
-        has ($.x, $.y) is default(23);
+        has ($.x, $.y) is default(42);
     }
     my $obj = A.new(x => 5);
     is $obj.x, 5, 'is default on attributes: basic sanity';
