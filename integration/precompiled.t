@@ -19,7 +19,7 @@ use Test::Compile;
 # CompUnit or CompUnitRepo or are just too complex for Test::Compile
 # A few of the tests in there could eventually be moved here, probably.
 
-plan 7;
+plan 9;
 
 loads_ok '42', "loads_ok is working";
 precomp_loads_ok '42', "precomp_loads_ok is working";
@@ -38,4 +38,7 @@ precomp_loads_ok(['role Bar { has Str $.my-str handles <lines words> }','class F
 
 precomp_loads_is 'BEGIN { EVAL "43" }', 43, "precompiled EVAL in BEGIN";
 
+# RT #129856
+loads_ok ['package Pod { class Ber {} }', 'Pod::Ber.new;'], 'a class in Pod namespace';
+precomp_loads_ok ['package IO { class Ber {} }', 'IO::Ber.new;'], 'a class in IO namespace (precompiled)';
 
