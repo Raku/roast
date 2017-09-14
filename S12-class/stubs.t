@@ -1,9 +1,13 @@
 use v6;
+
+use lib 't/spec/packages';
+
 use Test;
+use Test::Util;
 
 # L<S12/Classes/You can predeclare a stub class>
 
-plan 8;
+plan 9;
 
 eval-lives-ok q[ class StubA { ... }; class StubA { method foo { } }; ],
               'Can stub a class, and later on declare it';
@@ -48,6 +52,12 @@ subtest "all forms of yadas work to stub classes" => {
         throws-like ｢my class Foo { !!! }｣, X::Package::Stubbed, '!!!';
         throws-like ｢my class Foo { ??? }｣, X::Package::Stubbed, '???';
     }
+}
+
+# RT #126426
+{
+    is_run ｢class X::B { ... }; X::B.new.a.print; class X::B { has $.a = 42}｣, 
+        { :out<42>, :err('') }, 'Can stub a class in a core namespace';
 }
 
 # vim: ft=perl6
