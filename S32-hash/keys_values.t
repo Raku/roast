@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 23;
 
 =begin pod
 
@@ -41,3 +41,16 @@ is($pair.values.elems,  1,  'we have one value');
 
 }
 #vim: ft=perl6
+
+# RT #131962
+{
+    is (4 => Mu).kv.list.perl, (4,Mu).perl, ".kv on pair with Mu in value";
+    is ((Mu) => 4).kv.list.perl, (Mu, 4).perl, ".kv on pair with Mu in key";
+    is ((Mu) => Mu).kv.list.perl, (Mu, Mu).perl, ".kv on pair with Mu in key and value";
+    is (4 => Mu).keys.list.perl, (4,).perl, ".keys on pair with Mu in value";
+    is ((Mu) => 4).keys.list.perl, (Mu,).perl, ".keys on pair with Mu in key";
+    is ((Mu) => Mu).keys.list.perl, (Mu,).perl, ".keys on pair with Mu in key and value";
+    is (4 => Mu).values.list.perl, (Mu,).perl, ".values on pair with Mu in value";
+    is ((Mu) => 4).values.list.perl, (4,).perl, ".values on pair with Mu in key";
+    is ((Mu) => Mu).values.list.perl, (Mu,).perl, ".values on pair with Mu in key and value";
+}
