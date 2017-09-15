@@ -351,7 +351,7 @@ throws-like '*(42)', X::Method::NotFound, typename => 'Whatever';
 #?rakudo todo 'useless use corner case RT #130773'
 is_run "my &f = EVAL '*+*'", { err => '' }, '*+* does not warn from inside EVAL';
 
-#?rakudo todo 'useless use corner case RT #130502'
+#?rakudo todo 'useless use corner case RT #131502'
 is_run '-> +@foo { @foo.head.(41) }(* == 42)', { err => '' }, 'no warning when WhateverCode passed as arg and invoked';
 
 #?rakudo todo '&combinations whatever handling RT #131846'
