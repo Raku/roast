@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 74;
+plan 75;
 
 {
     my $s = supply {
@@ -596,5 +596,12 @@ lives-ok {
 		await $p1,$p2;
 	}
 }, 'No hang or crash using react to consume channels';
+
+# RT #128717
+{
+    my $i = 0;
+    react whenever Supply.from-list(1..5) { $i += $_ }
+    is $i, 15, 'react without block works';
+}
 
 # vim: ft=perl6 expandtab sw=4
