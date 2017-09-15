@@ -1,7 +1,11 @@
 use v6;
-use Test;
 
-plan 111;
+use lib 't/spec/packages';
+
+use Test;
+use Test::Util;
+
+plan 117;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -337,6 +341,33 @@ throws-like '*(42)', X::Method::NotFound, typename => 'Whatever';
 {
     my $foo = "foo";
     ok $foo ~~ (* =:= $foo), 'Code.ACCEPTS preserves container';
+}
+
+# RT #126540
+{
+    nok (* !~~ Int)(1), 'Whatever-currying !~~';
+}
+
+#?rakudo todo 'useless use corner case RT #130773'
+is_run "my &f = EVAL '*+*'", { err => '' }, '*+* does not warn from inside EVAL';
+
+#?rakudo todo 'useless use corner case RT #130502'
+is_run '-> +@foo { @foo.head.(41) }(* == 42)', { err => '' }, 'no warning when WhateverCode passed as arg and invoked';
+
+#?rakudo todo '&combinations whatever handling RT #131846'
+is-deeply try { (1,2,3).combinations(2..*) }, ((1, 2), (1, 3), (2, 3), (1, 2, 3)), "combinations(2..*)";
+
+#?rakudo todo 'closure/scoping of outer parameter with rx RT #131409'
+{
+    my @match-rx = <foo fie>.map( -> $r { * ~~ /<$r>/ } );
+    my @matches = (for <fee foo fie fum> -> $f { @match-rx.grep({$_($f)}).map({~$/}).list } );
+    is-deeply @matches, [(), ("foo",), ("fie",), ()], 'outer parameter in rx in WhateverCode in closure';
+}
+
+#?rakudo todo 'closure/scoping of topic when calling Whatevercode RT #126984'
+{
+    my sub foo($x) { (* ~ $x)($_) given $x };
+    is foo(1) ~ foo(2), '1122', 'topic refreshed in immediate invocation of WhateverCode';
 }
 
 # vim: ft=perl6
