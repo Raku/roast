@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 51;
+plan 53;
 
 =begin description
 
@@ -196,6 +196,20 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
     my role R:ver<0.1>:auth<ority> {}
     is R.^ver, v0.1, '.^ver on role works';
     is R.^auth, 'ority', '.^auth on role works';
+}
+
+# RT #132097
+{
+    role Rule {
+        has Int $.number;
+        has $.foo = $!number;
+    }
+    class Wolfram does Rule {
+        has Rule $.r .= new(:$!number);
+    }
+    my $obj = Wolfram.new: number => 30;
+    is $obj.number,   30, ‘attribute value was set correctly’;
+    is $obj.r.number, 30, ‘deeper attribute value was set correctly’;
 }
 
 # vim: ft=perl6
