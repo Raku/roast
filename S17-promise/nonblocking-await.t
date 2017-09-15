@@ -1,7 +1,7 @@
 use v6.d.PREVIEW;
 use Test;
 
-plan 25;
+plan 27;
 
 # Limit scheduler to just 4 real threads, so we'll clearly be needing the
 # non-blocking await support for these to pass.
@@ -247,4 +247,20 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     ok @responses == 20, 'Got 20 responses from async socket server that does non-blocking await';
     is @responses[0], 'is this thing on?', 'First response correct';
     ok [eq](@responses), 'Rest of responses also correct';
+}
+
+# RT #132091
+{
+    my @foo = do {
+	    await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
+		      start { do for ^2 { my uint64 @ = 1, 2; }.Slip };
+    }
+    is @foo.elems, 4, "slips awaited over get flattened out";
+}
+await start {
+    my @foo = do {
+	    await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
+		      start { do for ^2 { my uint64 @ = 1, 2; }.Slip };
+    }
+    is @foo.elems, 4, "slips awaited over get flattened out";
 }
