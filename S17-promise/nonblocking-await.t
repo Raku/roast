@@ -1,7 +1,7 @@
 use v6.d.PREVIEW;
 use Test;
 
-plan 19;
+plan 25;
 
 # Limit scheduler to just 4 real threads, so we'll clearly be needing the
 # non-blocking await support for these to pass.
@@ -178,4 +178,73 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
             }
         }
     }
+}
+
+# Should not attempt non-blocking await when a lock is held.
+{
+    # Try to create good chance of resume on a different thread.
+    my $l = Lock.new;
+    my $p1 = start {
+        sleep 0.5;
+    }
+    my $p2 = start {
+        $l.protect: {
+            sleep 0.1;
+            await $p1;
+        }
+    }
+    my @ps = start { } xx 20;
+    lives-ok { await $p1, $p2, @ps },
+        'No error due to trying to do non-blocking await when lock held';
+}
+{
+    # Same test as above except without .protect
+    my $l = Lock.new;
+    my $p1 = start {
+        sleep 0.5;
+    }
+    my $p2 = start {
+        $l.lock();
+        sleep 0.1;
+        await $p1;
+        $l.unlock();
+    }
+    my @ps = start { } xx 20;
+    lives-ok { await $p1, $p2, @ps },
+        'No error due to trying to do non-blocking await when lock held';
+}
+
+# RT #130692
+{
+    my $kill = Promise.new;
+    my $started = Promise.new;
+    my $ok = start react {
+        whenever IO::Socket::Async.listen('localhost', 3333) -> $conn {
+            whenever $conn.Supply(:bin) -> $buf {
+                await $conn.write: $buf;
+                $conn.close;
+            }
+        }
+        whenever $kill { done }
+        $started.keep;
+    }
+
+    await $started;
+    my @responses;
+    for ^20 {
+        react {
+            whenever IO::Socket::Async.connect('localhost', 3333) -> $client {
+                await $client.write('is this thing on?'.encode('ascii'));
+                whenever $client.Supply(:bin) {
+                    push @responses, .decode('ascii');
+                    $client.close;
+                }
+            }
+        }
+    }
+    $kill.keep;
+    lives-ok { await $ok }, 'Server survived';
+    ok @responses == 20, 'Got 20 responses from async socket server that does non-blocking await';
+    is @responses[0], 'is this thing on?', 'First response correct';
+    ok [eq](@responses), 'Rest of responses also correct';
 }
