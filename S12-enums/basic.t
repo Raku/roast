@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 42;
+plan 44;
 
 # Very basic enum tests
 
@@ -156,6 +156,41 @@ subtest 'dynamically created lists can be used to define an enum' => {
         is-deeply foo-cover.Int, 0, 'first element';
         is-deeply bar-cover.Int, 1, 'second element';
     }
+}
+
+subtest '.pred/.succ' => {
+    plan 10;
+
+    sub is-enum-named ($enum, $wanted, $desc) { is $enum.pair.key, $wanted, $desc }
+    my enum PredSuccTester (A => 1, B => 2, C => 2, D => 3, E => 3);
+
+    A.pred.&is-enum-named: A, '.pred on first element, returns first element';
+    B.pred.&is-enum-named: A, '.pred on second element, returns first element';
+    C.pred.&is-enum-named: B, '.pred on 3rd element, returns 2nd element, even if values are same';
+    E.pred.&is-enum-named: D, '.pred on last element, returns previous, even if values are same';
+
+    A.succ.&is-enum-named: B, '.succ on first element, returns second element';
+    B.succ.&is-enum-named: C, '.succ second element, returns third one, even if values are same';
+    D.succ.&is-enum-named: E, '.succ 4th element, returns 5th element, even if values are same';
+    E.succ.&is-enum-named: E, '.succ last element, returns last element';
+
+    my enum Lonely < Z >;
+    Z.pred.&is-enum-named: Z, '.pred on enum with 1 value works';
+    Z.succ.&is-enum-named: Z, '.pred on enum with 1 value works';
+}
+
+# RT #132093
+subtest '=== on same different enums with same values' => {
+    plan 6;
+    my enum WHICHTester (A => 1, B => 2, C => 2);
+
+    cmp-ok A, &[!===], B, 'different enums; different values => different';
+    cmp-ok B, &[!===], C, 'different enums; same values => different';
+    cmp-ok WHICHTester, &[!===], A, 'type object vs. instance => different';
+
+    cmp-ok B, &[===],  B, 'same enums => same (1)';
+    cmp-ok C, &[===],  C, 'same enums => same (2)';
+    cmp-ok WHICHTester, &[===], WHICHTester, 'type object vs. type object => same';
 }
 
 # vim: ft=perl6
