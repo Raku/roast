@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 73;
+plan 74;
 
 {
     my $s = supply {
@@ -578,5 +578,23 @@ subtest 'next in whenever' => {
     }
     ok $closed, 'Supply is closed by Supply block after it sends done';
 }
+
+# RT #126842
+lives-ok {
+	for ^500 {
+		my $channel = Channel.new;
+		my $p1 = start {
+			react {
+				whenever $channel {
+				}
+			}
+		}
+		my $p2 = start {
+			$channel.send($_) for (1..10);
+			$channel.close;
+		}
+		await $p1,$p2;
+	}
+}, 'No hang or crash using react to consume channels';
 
 # vim: ft=perl6 expandtab sw=4
