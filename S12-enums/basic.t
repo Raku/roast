@@ -176,7 +176,7 @@ subtest '.pred/.succ' => {
 
     my enum Lonely < Z >;
     Z.pred.&is-enum-named: Z, '.pred on enum with 1 value works';
-    Z.succ.&is-enum-named: Z, '.pred on enum with 1 value works';
+    Z.succ.&is-enum-named: Z, '.succ on enum with 1 value works';
 }
 
 # RT #132093
