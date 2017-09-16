@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 113;
+plan 114;
 
 =begin pod
 
@@ -31,6 +31,7 @@ test_rand_range(11);
 # L<S32::Numeric/Real/"=item srand">
 
 lives-ok { srand(1) }, 'srand(1) lives and parses';
+lives-ok { srand }, 'srand has default value';
 
 {
     my sub repeat_rand ($seed) {
