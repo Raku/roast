@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 44;
+plan 48;
 
 =begin description
 
@@ -199,5 +199,19 @@ my $a = 1;
 # RT #126018
 lives-ok { EVAL 'my class A { has $.integer where * > 0; method meth { 1 / $!integer } }' },
     'subset constraint in attribute does not blow up optimizer dispatch analysis';
+
+# RT #132073
+{
+    my subset S-Int of Int;
+    my subset S-Str of Str;
+    ok S-Int.isa(Int), 'isa type';
+    nok S-Int.isa(Str), 'isa type';
+    nok S-Int.isa(S-Str), 'isa subset';
+
+    # isa on a superset - not yet handled
+    #?rakudo todo "RT #132073"
+    my subset S2 of S-Int;
+    ok S2.isa(S-Int), 'isa subset';
+}
 
 # vim: ft=perl6
