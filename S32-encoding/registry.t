@@ -45,7 +45,7 @@ throws-like { Encoding::Registry.find('utf-29') },
 
     my class TestEncoding3 does Encoding {
         method name() { 'utf-17' }
-        method alternative-names() { 'prime-enc' }
+        method alternative-names() { ('prime-enc',) }
         method encoder() { die "NYI" }
         method decoder() { die "NYI" }
     }
