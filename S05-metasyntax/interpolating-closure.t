@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 7;
+plan 10;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/unambiguously calls a routine instead>
 
@@ -37,5 +37,12 @@ is $/.Str, 'abc', '... gives the right match';
 
 # RT #125973
 is 't' ~~ /<{'a'...'z'}>/, 't', 'sequence in a closure interpolates ok';
+
+# RT #111474
+is '123' ~~ / :my $a=2; <{ '$a' }> /, '2', 'scoping of variable in regex generated from <{}> metasyntax';
+is '123' ~~ / :my $a=2; <{ '$' ~ 'a' }> /, '2', 'stage of variable in regex generated from <{}> metasyntax';
+# Were $a to be interpolated before '', we'd get something like 'rx/2/' or 'rx[2]'
+# which would either not parse as a regex or would include the 'rx' literally.
+is '123' ~~ / :my $a=rx[2]; <{ '$a' }> /, '2', 'stage of variable in regex generated from <{}> metasyntax (2)';
 
 # vim: ft=perl6
