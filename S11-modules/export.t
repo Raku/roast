@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 41;
+plan 56;
 
 # L<S11/"Exportation"/>
 
@@ -171,3 +171,25 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
 }
 
 # vim: ft=perl6
+
+# RT #129215
+{
+    use RT129215;
+    ok str_d("foo"), 'Str:D istype across module seam';
+    ok str_u(Str), 'Str:D istype across module seam';
+    ok str_u(Str:U), 'Str:D istype across module seam';
+    ok array_str(Array[Str].new("A","B")), 'Array[Str] istype across module seam';
+    ok hash_str(Hash[Str].new({ak => "ak"})), 'Hash[Str] istype across module seam';
+    ok hash_hash_str(Hash[Hash[Str]].new({akk => { ak => "ak" }})), 'Hash[Hash[Str]] istype across module seam';
+
+#?rakudo 3 todo 'Containers parameterized with define type fail istype RT#129215'
+    ok array_str_d(Array[Str:D].new("A","B")), 'Array[Str:D] istype across module seam';
+    ok hash_str_d(Hash[Str:D].new({ak => "ak"})), 'Hash[Str:D] istype across module seam';
+    ok hash_hash_str_d(Hash[Hash[Str:D]].new({akk => { ak => "ak" }})), 'Hash[Hash[Str:D]] istype across module seam';
+    ok array_str_u(Array[Str:U].new(Str,Str)), 'Array[Str:U] istype across module seam (Str)';
+    ok hash_str_u(Hash[Str:U].new({ak => Str})), 'Hash[Str:U] istype across module seam (Str)';
+    ok hash_hash_str_u(Hash[Hash[Str:U]].new({akk => { ak => Str }})), 'Hash[Hash[Str:U]] istype across module seam (Str)';
+    ok array_str_u(Array[Str:U].new(Str:U,Str:U)), 'Array[Str:U] istype across module seam';
+    ok hash_str_u(Hash[Str:U].new({ak => Str:U})), 'Hash[Str:U] istype across module seam';
+    ok hash_hash_str_u(Hash[Hash[Str:U]].new({akk => { ak => Str:U }})), 'Hash[Hash[Str:U]] istype across module seam';
+}
