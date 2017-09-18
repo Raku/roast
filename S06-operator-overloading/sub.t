@@ -47,8 +47,7 @@ Testing operator overloading subroutines
 
 # [NOTE]
 # pmichaud ruled that prefix:<;> and postfix:<;> shouldn't be defined by
-# the synopses:
-#   http://colabti.de/irclogger/irclogger_log/perl6?date=2006-07-29,Sat&sel=189#l299
+# the synopses: https://irclog.perlgeek.de/perl6/2006-07-29#i_-200213
 # so we won't test them here.
 
 # Overriding prefix:<if>
@@ -61,7 +60,7 @@ Testing operator overloading subroutines
 
 # [NOTE]
 # pmichaud ruled that infix<if> is incorrect:
-#   http://colabti.de/irclogger/irclogger_log/perl6?date=2006-07-29,Sat&sel=183#l292
+#   https://irclog.perlgeek.de/perl6/2006-07-29#i_-200221
 # so we won't test it here either.
 
 # great.  Now, what about those silent auto-conversion operators a la:

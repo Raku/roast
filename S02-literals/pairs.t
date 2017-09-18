@@ -8,8 +8,8 @@ use Test::Idempotence;
 # L<S02/Adverbial Pair forms/"There is now a generalized adverbial form of Pair">
 
 # See thread "Demagicalizing pair" on p6l started by Luke Palmer,
-# L<"http://article.gmane.org/gmane.comp.lang.perl.perl6.language/4778/"> and
-# L<"http://colabti.de/irclogger/irclogger_log/perl6?date=2005-10-09,Sun&sel=528#l830">.
+# L<"https://www.mail-archive.com/perl6-language@perl.org/msg21472.html"> and
+# L<"https://irclog.perlgeek.de/perl6/2005-10-09">.
 # Also see L<"http://www.nntp.perl.org/group/perl.perl6.language/23532">.
 
 # To summarize:
@@ -23,10 +23,10 @@ use Test::Idempotence;
 #   foo($pair);      # pair passed positionally
 #   foo(|$pair);     # named
 #
-#   S02 lists ':a' as being equivlaent to a => 1, so
-#   the type of the value of that pair is Int, not Bool
+#   S02 lists ':a' as being equivlaent to a => True, so
+#   the type of the value of that pair is Bool, not Int
 
-plan 82;
+plan 83;
 
 sub f1n (:$a) { $a.WHAT.gist }
 sub f1p ( $a) { $a.WHAT.gist }
@@ -187,5 +187,8 @@ is-perl-idempotent(((Pair) => 42), ".perl of (Pair) => 42 is idempotent"); # .gi
 is-perl-idempotent(((Num) => 42));
 is-perl-idempotent(((Str) => 42));
 is-perl-idempotent((:a(Bool)));
+
+# RT #126890
+is-perl-idempotent(((Nil) => 42));
 
 # vim: ft=perl6

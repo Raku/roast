@@ -207,8 +207,7 @@ plan 47;
 }
 
 # Binding @array := $arrayref.
-# See
-# http://colabti.de/irclogger/irclogger_log/perl6?date=2005-11-06,Sun&sel=388#l564
+# See https://irclog.perlgeek.de/perl6/2005-11-06#i_-424364
 # and consider the magic behind parameter binding (which is really normal
 # binding).
 {
