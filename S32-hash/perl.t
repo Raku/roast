@@ -1,7 +1,11 @@
 use v6;
-use Test;
 
-plan 15;
+use lib 't/spec/packages';
+
+use Test;
+use Test::Idempotence;
+
+plan 51;
 
 # simple hash
 {
@@ -51,6 +55,23 @@ is-deeply (my %h{Int}).perl.EVAL.perl, '(my Any %{Int})',
     my %b = ^512;
     my %c = EVAL(%b.perl);
     is %c.elems, 256, 'Can create large hash with "=>", RT #120656'
+}
+
+# RT#132119
+{
+    for Hash.new, Hash.new(k => "v"),
+        Hash[Any].new, Hash[Any].new(k => "v"),
+        Hash[Int].new, Hash[Any].new(k => 1),
+        Hash[Any,Any].new, Hash[Any,Any].new(k => "v"),
+	Hash[Int,Int].new, Hash[Int,Int].new(1 => 2),
+	:{ }, :{k => "v"} -> \h {
+        my $a = h;
+        is-perl-idempotent $a, "{$a.perl}.perl is idempotent";
+	my $scalarperl = $a.perl;
+	$a := h;
+	nok $scalarperl eq $a.perl, "Hash in Scalar and deconted Hash perlify differently ({$a.keyof.perl},{$a.of.perl})";
+	is-perl-idempotent $a, "{$a.perl}.perl is idempotent";
+    }
 }
 
 #vim: ft=perl6
