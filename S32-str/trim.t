@@ -4,7 +4,7 @@ use Test;
 
 # L<S32::Str/Str/=item trim>
 
-plan 39;
+plan 37;
 
 =begin pod
 
@@ -144,10 +144,15 @@ Basic tests for the trim() builtin
     is $/.trim, 'ab', 'Match.trim';
 }
 
-{
-    my $c = 42;
-    ok trim($c) eqv $c.trim, 'trim subroutine works with number';
-    ok trim-leading($c) eqv $c.trim-leading, 'trim-leading subroutine works with number';
-    ok trim-trailing($c) eqv $c.trim-trailing, 'trim-trailing subroutine works with number';
+subtest 'trim routines on Cool' => {
+    plan 6;
+    my $p = ' foo '.IO;
+    is-deeply trim($p),           'foo',  '&trim works with Cool instance';
+    is-deeply trim-leading($p),   'foo ', '&trim-leading works with Cool instance';
+    is-deeply trim-trailing($p), ' foo',  '&trim-trailing works with Cool instance';
+
+    is-deeply $p.trim,            'foo',  '.trim works with Cool instance';
+    is-deeply $p.trim-leading,    'foo ', '.trim-leading works with Cool instance';
+    is-deeply $p.trim-trailing,  ' foo',  '.trim-trailing works with Cool instance';
 }
 # vim: ft=perl6
