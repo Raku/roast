@@ -26,7 +26,7 @@ use Test::Idempotence;
 #   S02 lists ':a' as being equivlaent to a => 1, so
 #   the type of the value of that pair is Int, not Bool
 
-plan 82;
+plan 83;
 
 sub f1n (:$a) { $a.WHAT.gist }
 sub f1p ( $a) { $a.WHAT.gist }
@@ -187,5 +187,8 @@ is-perl-idempotent(((Pair) => 42), ".perl of (Pair) => 42 is idempotent"); # .gi
 is-perl-idempotent(((Num) => 42));
 is-perl-idempotent(((Str) => 42));
 is-perl-idempotent((:a(Bool)));
+
+# RT #126890
+is-perl-idempotent(((Nil) => 42));
 
 # vim: ft=perl6
