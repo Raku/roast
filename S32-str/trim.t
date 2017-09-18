@@ -4,7 +4,7 @@ use Test;
 
 # L<S32::Str/Str/=item trim>
 
-plan 36;
+plan 39;
 
 =begin pod
 
@@ -144,4 +144,10 @@ Basic tests for the trim() builtin
     is $/.trim, 'ab', 'Match.trim';
 }
 
+{
+    my $c = Cool.new;
+    ok trim($c) eqv $c.trim, 'trim on Cool instance';
+    ok trim-leading($c) eqv $c.trim-leading, 'trim-leading on Cool instance';
+    ok trim-trailing($c) eqv $c.trim-trailing, 'trim-trailing on Cool instance';
+}
 # vim: ft=perl6
