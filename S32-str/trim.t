@@ -145,9 +145,9 @@ Basic tests for the trim() builtin
 }
 
 {
-    my $c = Cool.new;
-    ok trim($c) eqv $c.trim, 'trim on Cool instance';
-    ok trim-leading($c) eqv $c.trim-leading, 'trim-leading on Cool instance';
-    ok trim-trailing($c) eqv $c.trim-trailing, 'trim-trailing on Cool instance';
+    my $c = 42;
+    ok trim($c) eqv $c.trim, 'trim subroutine works with number';
+    ok trim-leading($c) eqv $c.trim-leading, 'trim-leading subroutine works with number';
+    ok trim-trailing($c) eqv $c.trim-trailing, 'trim-trailing subroutine works with number';
 }
 # vim: ft=perl6
