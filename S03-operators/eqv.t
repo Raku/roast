@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 56;
+plan 57;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -179,6 +179,26 @@ subtest 'Seq eqv List' => {
     is-deeply (.key eqv .value), False,
         "{.key.^name}({.key}) not eqv {.value.^name}({.value})"
     for @tests;
+}
+
+subtest 'Throws/lives in lazy cases' => {
+    plan 6;
+
+    # Note that `eqv` *can* compare lazy iterables when the answer
+    # doesn't require iterating over them. These cases do NOT throw:
+    #   1. Only one of the arguments is lazy
+    #   2. Both arguments are lazy, but are of different type
+
+    throws-like { (1…∞)       eqv (1…∞)       }, X::Cannot::Lazy, :action<eqv>,
+        'both lazy, same types (Seqs)';
+    throws-like { (1…∞).List  eqv (1…∞).List  }, X::Cannot::Lazy, :action<eqv>,
+        'both lazy, same types (Lists)';
+    throws-like { (1…∞).Array eqv (1…∞).Array }, X::Cannot::Lazy, :action<eqv>,
+        'both lazy, same types (Arrays)';
+
+    lives-ok    { (1…∞) eqv (1…∞).List }, 'both lazy, different types';
+    lives-ok    { (1…∞) eqv (1…3)      }, 'same types, only one lazy';
+    lives-ok    { (1…∞) eqv (1,3)      }, 'different types, only one lazy';
 }
 
 # vim: ft=perl6
