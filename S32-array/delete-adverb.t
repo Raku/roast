@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 218;
+plan 219;
 
 # L<S02/Names and Variables/:delete>
 
@@ -370,4 +370,15 @@ sub gen_array { (1..10).list }
     @a[3] = 3;
     is @a[2], Int, 'properly nulled even at end of array';
 } #2
+
+# RT #131790
+subtest ':delete on lazy Arrays' => {
+    plan 2;
+    my @a is default(99) = 1...*;
+    @a[2]:delete;
+
+    is @a[2]:exists, False, 'delete element on lazy Arrays succesfully';
+    ok @a[2] == 99, 'deleted element replaced with default value';
+}
+
 # vim: ft=perl6
