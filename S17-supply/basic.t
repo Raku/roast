@@ -2,7 +2,7 @@ use v6.c;
 
 use Test;
 
-plan 88;
+plan 72;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -75,23 +75,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         ok $done, 'done callback fires';
         nok $quit, 'quit callback does not fire';
 
+        # RT #123477
         $p.emit(46);
         is @emitted, [42, 44], 'no further events after done';
-
-        $t1.close;
-    }
-
-    # RT #123477
-    {
-        my (@emitted, $done, $quit);
-        my $t1 = $s1.tap({@emitted.push($_)}, done => {$done++}, quit => {$quit++});
-
-        is @emitted, [], 'Right after second tapping, nothing emitted';
-        nok $done, 'Right after second tapping, no done';
-        nok $quit, 'Right after second tapping, no quit';
-
-        $p.emit(42);
-        is @emitted, [], 'First tapping did done on the supply, so no more emits';
 
         $t1.close;
     }
@@ -120,22 +106,9 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         nok $done, 'done callback does not fire';
         ok $quit, 'quit callback fires';
 
+        # RT #123477
         $p.emit(46);
         is @emitted, [42, 44], 'no further events after quit';
-
-        $t1.close;
-    }
-
-    {
-        my (@emitted, $done, $quit);
-        my $t1 = $s2.tap({@emitted.push($_)}, done => {$done++}, quit => {$quit++});
-
-        is @emitted, [], 'Right after second tapping, nothing emitted (second supply)';
-        nok $done, 'Right after second tapping, no done (second supply)';
-        nok $quit, 'Right after second tapping, no quit (second supply)';
-
-        $p.emit(42);
-        is @emitted, [], 'First tapping did quit on the supply, so no more emits';
 
         $t1.close;
     }
