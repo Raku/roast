@@ -167,7 +167,7 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
 }
 
 subtest 'Int.new' => { # coverage; 2016-10-05
-    plan 8;
+    plan 11;
 
     isnt 2.WHERE, Int.new(2).WHERE,
         'returns a new object (not a cached constant)';
@@ -175,6 +175,27 @@ subtest 'Int.new' => { # coverage; 2016-10-05
    for '42', 42e0, 420/10, 42, ^42, (|^42,), [|^42] -> $n {
         is-deeply Int.new($n), 42,
            "Can use $n.^name() to construct an Int from";
+    }
+
+    is-deeply Int.new, 0, 'no args default to 0';
+
+    throws-like { Int.new: <a b c>, 42, 'meow', 'wrong', 'args' },
+        X::Multi::NoMatch,
+    'does not incorrectly say that .new can only take named args';
+
+    # RT#132128
+    subtest '.new of subclass of Int' => {
+        plan 3*
+        my @tests = no-arg => \(),              Int => \( 42 ),
+                    int    => \(my int $ = 42), Str => \('42');
+
+        my class Foo is Int {};
+        for @tests -> (:key($what), :value($args)) {
+            my Foo $x;
+            lives-ok { $x = Foo.new: |$args }, "lives ($what)";
+            isa-ok $x, Foo,                    "returns subclass ($what)";
+            cmp-ok $x, '==', $args[0]//0,      "right numeric value ($what)";
+        }
     }
 }
 
