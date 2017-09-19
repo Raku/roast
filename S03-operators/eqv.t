@@ -182,7 +182,7 @@ subtest 'Seq eqv List' => {
 }
 
 subtest 'Throws/lives in lazy cases' => {
-    plan 6;
+    plan 8;
 
     # Note that `eqv` *can* compare lazy iterables when the answer
     # doesn't require iterating over them. These cases do NOT throw:
@@ -197,8 +197,11 @@ subtest 'Throws/lives in lazy cases' => {
         'both lazy, same types (Arrays)';
 
     lives-ok    { (1…∞) eqv (1…∞).List }, 'both lazy, different types';
-    lives-ok    { (1…∞) eqv (1…3)      }, 'same types, only one lazy';
     lives-ok    { (1…∞) eqv (1,3)      }, 'different types, only one lazy';
+
+    lives-ok    { (1…∞)       eqv (1…3)       }, 'Seqs, only one lazy';
+    lives-ok    { (1…∞).List  eqv (1…3).List  }, 'Lists, only one lazy';
+    lives-ok    { (1…∞).Array eqv (1…3).Array }, 'Arrays, only one lazy';
 }
 
 # vim: ft=perl6
