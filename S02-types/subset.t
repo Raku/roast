@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 48;
+plan 49;
 
 =begin description
 
@@ -209,9 +209,8 @@ lives-ok { EVAL 'my class A { has $.integer where * > 0; method meth { 1 / $!int
     nok S-Int.isa(S-Str), 'isa subset';
 
     # isa on a superset - not yet handled
-    #?rakudo todo "RT #132073"
-    my subset S2 of S-Int;
-    ok S2.isa(S-Int), 'isa subset';
+    my subset SI2 of S-Int;
+    ok SI2.isa(S-Int), 'isa subset';
 }
 
 # vim: ft=perl6
