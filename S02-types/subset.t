@@ -211,6 +211,10 @@ lives-ok { EVAL 'my class A { has $.integer where * > 0; method meth { 1 / $!int
     # isa on a superset - not yet handled
     my subset SI2 of S-Int;
     ok SI2.isa(S-Int), 'isa subset';
+    my subset S of Int;
+    my subset S3 of S;
+    my subset S2 of S;
+    nok S2.isa(S3), 'exclusive subsets';
 }
 
 # vim: ft=perl6
