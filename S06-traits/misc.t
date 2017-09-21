@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 23;
 
 =begin description
 
@@ -54,6 +54,13 @@ throws-like { mods_param_rw_enforces($[1,2]) },
 
 lives-ok  { mods_param_rw($foo) }, 'pass by "is rw" doesn\'t die';
 is($foo, 2, 'pass by reference works');
+
+# RT #129812
+multi sub param_rw_ro ($x is rw) { "fee $x" }
+multi sub param_rw_ro ($x) { "foo $x" }
+$foo = "fie";
+is param_rw_ro($foo), "fee fie", 'trait "is rw" used to narrow multi-dispatch';
+is param_rw_ro("fum"), "foo fum", 'trait "is rw" used to narrow multi-dispatch (converse)';
 
 #icopy
 $foo=1;
