@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 26;
 
 my $hostname = 'localhost';
 my $port = 5000;
@@ -197,6 +197,26 @@ $echoTap.close;
     $latin1Client.print("Öl\n");
     is await($received), "Öl,3\n", 'Latin-1 client socket correctly encodes';
     $byteCountTap.close;
+}
+
+# RT#132135
+for '127.0.0.1', '::1' -> $host {
+    my $port = 5001;
+    diag("host=$host");
+
+    my $s = IO::Socket::Async.listen($host, $port);
+    my $s_conn; my $s_tap = $s.tap({ $s_conn = $_ });
+    my $c_conn = await IO::Socket::Async.connect($host, $port);
+
+    is(($s_conn, $c_conn).map({ |(.peer-host, .socket-host) }).unique,
+      $host, '*-host accessors are right');
+
+    is($c_conn.peer-port, $port, "client's peer-port is right");
+    is($s_conn.socket-port, $port, "server's socket-port is right");
+    cmp-ok($c_conn.socket-port, '>', 1024, "client's socket-port seems right");
+    cmp-ok($s_conn.peer-port, '>', 1024, "server's peer-port seems right");
+
+    $c_conn.close(); $s_tap.close();
 }
 
 {
