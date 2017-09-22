@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 12;
+plan 14;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -123,6 +123,19 @@ plan 12;
     }
     dies-ok { Foo.new }, "Foo.new dies when sunk";
     ok Foo.new // "ok", "Foo.new can be caught as a Failure";
+}
+
+# RT #104980
+{
+    class rt104980 {
+        has str $.x;
+        has int8 $.y;
+        method BUILD(:$!x, :$!y) { }
+    };
+    my str $s = 'foo';
+    my int8 $i = 42;
+    is-deeply rt104980.new(:x<foo>,:y(42)).x, $s, "BUILD with a native typed attribute (str)";
+    is-deeply rt104980.new(:x<foo>,:y(42)).y, $i, "BUILD with a native typed attribute (int8)";
 }
 
 # vim: ft=perl6
