@@ -7,7 +7,7 @@ use Test::Util;
 
 plan 1;
 
-subtest 'Circular dependency are detected and reported' => {
+subtest 'circular dependencies are detected and reported' => {
     plan 2;
 
     my $dir = make-temp-dir;
