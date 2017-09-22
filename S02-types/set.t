@@ -71,10 +71,12 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa-ok {a => 2, b => 4, c => 0}.Set, Set, '{a => 2, b => 4, c => 0}.Set makes a Set';
     is showset({a => 2, b => 4, c => 0}.Set), 'a b', '{a => 2, b => 4, c => 0}.Set makes the set a b';
 
+    # RT #130976
     is-deeply (:a, :!b, :3c, :0d, :e<meow>, :f(''), 'g').Set,
         set('a', 'c', 'e', 'g'),
     '.Set on List of Pairs treats Pair.value as weight';
 
+    # RT #130976
     is-deeply {:a, :!b, :3c, :0d, :e<meow>, :f('')}.Set,
         set('a', 'c', 'e'),
     '.Set on Hash of Pairs treats Pair.value as weight';

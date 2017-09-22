@@ -7,6 +7,7 @@ use Test::Util;
 
 plan 1;
 
+# RT #126688
 subtest 'circular dependencies are detected and reported' => {
     plan 2;
 
