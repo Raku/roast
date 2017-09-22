@@ -12,7 +12,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 53;
+plan 54;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -53,6 +53,10 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 
     # RT #100232
     throws-like { my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/ }, X::SecurityPolicy, "particular garbage-in recognized as being garbage (see RT)";
+
+    # RT #131079
+    my $rt131079 = '<::(say "ZOWNED")>';
+    throws-like { 'a' ~~ /<$rt131079>/ }, X::SecurityPolicy, "dynamic lookups are restricted rx syntax";
 
     # because it broke these:
     {
