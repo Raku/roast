@@ -205,8 +205,11 @@ for '127.0.0.1', '::1' -> $host {
     diag("host=$host");
 
     my $s = IO::Socket::Async.listen($host, $port);
-    my $s_conn; my $s_tap = $s.tap({ $s_conn = $_ });
+
+    my $s_conn_promise = Promise.new;
+    my $s_tap = $s.tap({ $s_conn_promise.keep($_) });
     my $c_conn = await IO::Socket::Async.connect($host, $port);
+    my $s_conn = await $s_conn_promise;
 
     is(($s_conn, $c_conn).map({ |(.peer-host, .socket-host) }).unique,
       $host, '*-host accessors are right');
