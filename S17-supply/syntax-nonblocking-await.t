@@ -1,7 +1,7 @@
 use v6.d.PREVIEW;
 use Test;
 
-plan 5;
+plan 9;
 
 {
     # Start 100 workers that do a `react`. This will, if `react` blocks,
@@ -61,3 +61,13 @@ plan 5;
         }
     }
 }
+
+lives-ok { await start react { await Promise.in(0.1) } },
+    'An await in the mainline of a react on the threadpool works';
+lives-ok { await start react { await Promise.in(0.1), Promise.in(0.1) } },
+    'An await of two things in the mainline of a react on the threadpool works';
+
+lives-ok { my $s = supply { await Promise.in(0.1) }; react whenever $s { } },
+    'An await in a supply tapped by a react lives';
+lives-ok { my $s = supply { await Promise.in(0.1), Promise.in(0.2) }; react whenever $s { } },
+    'An await of two things in a supply tapped by a react lives';
