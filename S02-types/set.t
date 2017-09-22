@@ -68,8 +68,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset(["a", "b", "c", "a"].Set), 'a b c', "[a b c a].Set makes the set a b c";
     is showset([a => 3, b => 0, 'c', 'a'].Set), 'a c', "[a => 3, b => 0, 'c', 'a'].Set makes the set a c";
 
-    isa-ok {a => 2, b => 4, c => 0}.Set, Set, "{a => 2, b => 4, c => 0}.Set makes a Set";
-    is showset({a => 2, b => 4, c => 0}.Set), 'a b', "{a => 2, b => 4, c => 0}.Set makes the set a b";
+    isa-ok {a => 2, b => 4, c => 0}.Set, Set, '{a => 2, b => 4, c => 0}.Set makes a Set';
+    is showset({a => 2, b => 4, c => 0}.Set), 'a b', '{a => 2, b => 4, c => 0}.Set makes the set a b';
 }
 
 {
