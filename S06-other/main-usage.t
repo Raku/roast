@@ -3,7 +3,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 30;
+plan 31;
 
 use Test::Util;
 
@@ -131,3 +131,30 @@ is_run 'sub MAIN(*@arg where { False }) { }; sub USAGE { print "USAGE called" }'
 # RT #127621
 is_run 'sub MAIN($, *%) { }', { err => '', }, :args['--help'],
     'use of anon slurpy hash does not cause a crash';
+
+subtest '$*USAGE tests' => {
+    # Original speculations had $?USAGE, but later we realized generating
+    # it at compile time is not worth the price, so it was changed to be
+    # a run time variable instead:
+    # https://irclog.perlgeek.de/perl6-dev/2017-09-23#i_15206569
+    plan 4;
+
+    is_run ｢sub MAIN($meow, :$moo) {}; sub USAGE { $*USAGE.uc.say }｣,
+        {:out(/MEOW/ & /MOO/), :err(''), :0status },
+    'default $*USAGE is available inside `sub USAGE`';
+
+    is_run ｢sub MAIN($meow, :$moo) {$*USAGE.uc.say; $meow.say; $moo.say}｣,
+        :args<--moo=31337  42>,
+        {:out(/MEOW/ & /MOO/ & /42/ & /31337/), :err(''), :0status },
+    'default $*USAGE is available inside `sub MAIN`';
+
+    is_run ｢sub MAIN { try $*USAGE = "meow"; $! and "PASS".print }｣,
+        {:out<PASS>, :err(''), :0status },
+    'trying to assign to $*USAGE inside sub MAIN throws';
+
+    is_run ｢
+        sub MAIN ($foo) {}
+        sub USAGE { try $*USAGE = "meow"; $! and "PASS".print }
+    ｣, {:out<PASS>, :err(''), :0status },
+    'trying to assign to $*USAGE inside sub MAIN throws';
+}
