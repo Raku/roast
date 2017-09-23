@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 36;
 
 # L<S02/Immutable types/'term now'>
 
@@ -49,6 +49,11 @@ throws-like { Instant.new(123) }, X::Cannot::New, 'Instant.new is illegal';
         is $i.perl.EVAL, $i, 'Instant round trips properly';
     }
 }
+
+# RT #132006
+isa-ok now.Instant, Instant, "Instant.Instant";
+ok (Instant.Instant ~~ Instant:U), "Instant.Instant (undefined)";
+ok (now.Instant ~~ Instant:D), "Instant.Instant (defined)";
 
 # See S32-temporal/DateTime-Instant-Duration.t for more.
 
