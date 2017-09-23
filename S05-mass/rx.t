@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 743;
+plan 755;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -2123,6 +2123,45 @@ ok "abc\ndef\n-==\nghi" ~~ /a<!wb>/, '\w\w nonword boundary';
 
 #### \-<!wb>			abc\ndef\n-==\nghi	y	\W\W nonword boundary
 ok "abc\ndef\n-==\nghi" ~~ /\-<!wb>/, '\W\W nonword boundary';
+
+
+#### de<?ww>        abc\ndef\n-==\nghi	y	\w\w within word 1
+ok "abc\ndef\n-==\nghi" ~~ /de<?ww>/, '\w\w within word 1';
+
+#### <?ww>ef		abc\ndef\n-==\nghi	y	\w\w within word 2
+ok "abc\ndef\n-==\nghi" ~~ /<?ww>ef/, '\w\w within word 2';
+
+#### <?ww>gh		abc\ndef\n-==\nghi	n	within word \W\w
+ok "abc\ndef\n-==\nghi" !~~ /<?ww>gh/, 'within word \W\w';
+
+#### bc<?ww>		abc\ndef\n-==\nghi	n	within word \w\W
+ok "abc\ndef\n-==\nghi" !~~ /bc<?ww>/, 'within word \w\W';
+
+#### <?ww>ab		abc\ndef\n-==\nghi	n	BOS within word
+ok "abc\ndef\n-==\nghi" !~~ /<?ww>ab/, 'BOS within word';
+
+#### hi<?ww>		abc\ndef\n-==\nghi	n	EOS within word
+ok "abc\ndef\n-==\nghi" !~~ /hi<?ww>/, 'EOS within word';
+
+# L<S05/Extensible metasyntax (C<< <...> >>)/"A leading ! indicates">
+
+#### de<!ww>        abc\ndef\n-==\nghi	n	\w\w not within word 1
+ok "abc\ndef\n-==\nghi" !~~ /de<!ww>/, '\w\w not within word 1';
+
+#### <!ww>ef		abc\ndef\n-==\nghi	n	\w\w not within word 2
+ok "abc\ndef\n-==\nghi" !~~ /<!ww>ef/, '\w\w not within word 2';
+
+#### <!ww>gh		abc\ndef\n-==\nghi	y	not within word \W\w
+ok "abc\ndef\n-==\nghi" ~~ /<!ww>gh/, 'not within word \W\w';
+
+#### bc<!ww>		abc\ndef\n-==\nghi	y	not within word \w\W
+ok "abc\ndef\n-==\nghi" ~~ /bc<!ww>/, 'not within word \w\W';
+
+#### <!ww>ab		abc\ndef\n-==\nghi	y	BOS not within word
+ok "abc\ndef\n-==\nghi" ~~ /<!ww>ab/, 'BOS not within word';
+
+#### hi<!ww>		abc\ndef\n-==\nghi	y	EOS not within word
+ok "abc\ndef\n-==\nghi" ~~ /hi<!ww>/, 'EOS not within word';
 
 
 #### <upper>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<upper>: <A @ 45>/		<upper>
