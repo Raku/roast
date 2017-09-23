@@ -45,7 +45,7 @@ class NastyChild is Parent { };
     sub f1(Str:D(Cool:D) $x) { $x }
     sub f2(Str(Cool:D)   $x) { $x; }
 
-    #?rakudo skip 'fails for wrong reason RT #126433'
+    #?rakudo todo 'fails for wrong reason RT #126433'
     throws-like { EVAL 'f1(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected\sCool\:D/;
     throws-like { EVAL 'f2(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected\sCool\:D/;
     #?rakudo skip 'dies RT #126433'
