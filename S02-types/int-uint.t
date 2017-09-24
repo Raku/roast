@@ -3,9 +3,9 @@ use Test;
 
 # L<S09/Sized types/Sized low-level types are named most generally by appending the number of bits to a generic low-level type name>
 
-my @inttypes = <1 2 4 8 16 32 64>.map({
-  |("int$_","uint$_")
-}).grep: {
+my @inttypes = <int uint> X~ <1 2 4 8 16 32 64>;
+push @inttypes, "byte";
+@inttypes .= grep: {
     use MONKEY-SEE-NO-EVAL;
     try EVAL "my $_ \$var = 1; \$var"
 };
