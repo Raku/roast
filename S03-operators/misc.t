@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 55;
+plan 73;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -162,6 +162,34 @@ is (2 Z 3), @z, 'joining of single items';
         'unicode ops chain with texas ones';
     nok 4 < 8 ≤ 15 <= 16 != 23 ≠ 42 == 42 ≠ 23 != 16 >= 15 ≥ ∞ > 4,
         'unicode ops chain with texas ones (not always True)';
+
+
+    ok  Date.today  .later(:day) ≥ Date.today.earlier(:day), 'Date ≥ Date (true)';
+    nok Date.today.earlier(:day) ≥ Date.today  .later(:day), 'Date ≥ Date (false)';
+    ok  Date.today.earlier(:day) ≤ Date.today  .later(:day), 'Date ≤ Date (true)';
+    nok Date.today  .later(:day) ≤ Date.today.earlier(:day), 'Date ≤ Date (false)';
+    ok  Date.today.earlier(:day) ≠ Date.today  .later(:day), 'Date ≠ Date (true)';
+    nok Date.new('2015-12-25')   ≠ Date.new('2015-12-25'),   'Date ≠ Date (false)';
+
+    ok  DateTime.now  .later(:day) ≥ DateTime.now.earlier(:day),
+        'DateTime ≥ DateTime (true)';
+    nok DateTime.now.earlier(:day) ≥ DateTime.now  .later(:day),
+        'DateTime ≥ DateTime (false)';
+    ok  DateTime.now.earlier(:day) ≤ DateTime.now  .later(:day),
+        'DateTime ≤ DateTime (true)';
+    nok DateTime.now  .later(:day) ≤ DateTime.now.earlier(:day),
+        'DateTime ≤ DateTime (false)';
+    ok  DateTime.now.earlier(:day) ≠ DateTime.now  .later(:day),
+        'DateTime ≠ DateTime (true)';
+    nok DateTime.new(:2017year)    ≠ DateTime.new(:2017year),
+        'DateTime ≠ DateTime (false)';
+
+    ok  v42 ≥ v10, 'Version ≥ Version (true)';
+    nok v10 ≥ v42, 'Version ≥ Version (false)';
+    ok  v10 ≤ v42, 'Version ≤ Version (true)';
+    nok v42 ≤ v10, 'Version ≤ Version (false)';
+    ok  v42 ≠ v10, 'Version ≠ Version (true)';
+    nok v42 ≠ v42, 'Version ≠ Version (false)';
 }
 
 # vim: ft=perl6
