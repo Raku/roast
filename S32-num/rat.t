@@ -445,7 +445,7 @@ subtest '.^roles on Rationals does not hang' => {
 }
 
 subtest 'custom parametarization of Rational' => {
-    # Prametartion with no args defaults to `Int` for both args
+    # Parametarization with no args defaults to `Int` for both args
     # If only one arg is given, the type of the second arg is the same as the first
     plan 12;
 
