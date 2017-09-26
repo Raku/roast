@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 844;
+plan 845;
 
 # Basic test functions specific to rational numbers.
 
@@ -432,5 +432,16 @@ subtest 'Rational.Int on zero-denominator rats' => {
 # RT#130845
 is-deeply (4.99999999999999999999999999999999999999999999 ~~ 0..^5), True,
     'literal with denominator > 64bit does not aquire f.p. noise';
+
+# https://github.com/rakudo/rakudo/commit/0961abe8ff
+subtest '.^roles on Rationals does not hang' => {
+    plan 3;
+    does-ok   42.2.^roles.grep(Rational).head, Rational, 'Rat:D';
+    does-ok FatRat.^roles.grep(Rational).head, Rational, 'FatRat:U';
+
+    my class Irrational does Rational[UInt, Int] {};
+    does-ok Irrational.new.^roles.grep(Rational).head, Rational[UInt, Int],
+        'custom class :D';
+}
 
 # vim: ft=perl6
