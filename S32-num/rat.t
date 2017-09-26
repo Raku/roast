@@ -462,7 +462,7 @@ subtest 'custom parametarization of Rational' => {
     isa-ok FakeRatII.new(-1, -1), FakeRatII, '[Int,  Int]; 2 Ints';
 
     constant E = X::TypeCheck;
-    throws-like { FakeRat  .new: 1e0, 1   }, E, 'no parametarization; Num, Int';
+    throws-like { FakeRat  .new: 1e0,   1 }, E, 'no parametarization; Num, Int';
     throws-like { FakeRat  .new: 1e0, 1e0 }, E, 'no parametarization; 2 Nums';
     throws-like { FakeRat  .new:   1, 1e0 }, E, 'no parametarization; Int, Num';
     throws-like { FakeRatU .new:  -1,   1 }, E, '[UInt]; Int, UInt';
