@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 32;
+plan 33;
 
 {   my @array = (3,7,9,11);
 
@@ -110,4 +110,15 @@ plan 32;
     is-deeply %h<a>[*], ('1', '3', '4'), '[*] slice returns all elements of a list of hash value';
 }
 
+# RT #127573
+subtest 'lazy range as Array index' => {
+    plan 4;
+    my @a = 1,2,3,4,5;
+    @a[1]:delete;
+
+    ok @a[0..*].elems == @a.elems, 'Inf upper bound works as array index';
+    ok @a[*..4].elems == @a.elems, '-Inf lower bound works as array index';
+    ok @a[*..0].elems == 1, '*..0 produce 1 element array';
+    ok @a[1..*].elems == 4, '1..* produce 4 elementd';
+}
 # vim: ft=perl6
