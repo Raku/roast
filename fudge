@@ -209,6 +209,10 @@ sub fudgeblock {
             my $args = $3;
             my $cmd = $4;
             my $applies = 0;
+
+            # Guard against false match with shebang line.  See roast RT #268
+            next if $sense eq '!' && ! scalar m/\b(DOES|skip|emit|todo|eval|try)\b/ ;
+
             if ($name =~ /^v\d/) {  # Perl 6 language version
                 my $num = $args =~ s/(\d+)\s*// ? $1 : 1;
                 $cmd    = 'skip';
