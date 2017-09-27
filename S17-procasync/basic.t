@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 44;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -158,3 +158,16 @@ throws-like { my $proc = Proc::Async.new($*EXECUTABLE); $= $proc.stdout; $ = $pr
 throws-like { my $proc = Proc::Async.new($*EXECUTABLE); $= $proc.stderr; $ = $proc.Supply },
     X::Proc::Async::SupplyOrStd,
     'Cannot do .Supply after stderr';
+
+subtest '.new accepts command + args via a single Iterable arg' => {
+    plan 3;
+    with Proc::Async.new: «"$*EXECUTABLE" -e "print 'test passed'"» {
+        my $stdout = ''; my $stderr = '';
+        .stdout.tap: {$stdout ~= $_};
+        .stderr.tap: {$stderr ~= $_};
+        my $proc = await .start;
+        is-deeply $stdout, 'test passed', 'stdout is good';
+        is-deeply $stderr, '',            'stderr is empty';
+        cmp-ok $proc.exitcode, '==', 0,   'exit code successful';
+    }
+}
