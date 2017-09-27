@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 78;
+plan 81;
 
 {
     my $s = supply {
@@ -632,6 +632,35 @@ lives-ok {
     ok $ran-done, 'done block in source supply was run';
     is @pre-emit, ['x','x','x','x','x'],
         'supply block loop did not run ahead of consumer';
+}
+{
+    my $pre-emits = 0;
+    my $post-emits = 0;
+    sub make-supply() {
+        supply {
+            loop {
+                $pre-emits++;
+                emit(++$);
+                $post-emits++;
+            }
+        }
+    }
+
+    my $s2 = make-supply;
+    my @received;
+    react {
+        whenever $s2 -> $n {
+            push @received, $n;
+            done if $n >= 5;
+        }
+    }
+
+    is @received, [1,2,3,4,5],
+        'whenever tapping infinitely emitting synchronous supply terminates';
+    is $pre-emits, 6,
+        'supply block loop is terminated on emit to dead consumer (1)';
+    is $post-emits, 5,
+        'supply block loop is terminated on emit to dead consumer (2)';
 }
 
 # vim: ft=perl6 expandtab sw=4
