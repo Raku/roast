@@ -5,7 +5,7 @@ use Test;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 54;
+plan 56;
 
 {
     my $test-str;
@@ -175,4 +175,22 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
     my $fh = open $test-file, :enc<utf8-c8>;
     is $fh.slurp, '“', 'Valid and NFC UTF-8 comes out fine (file case)';
     $fh.close;
+}
+
+# MoarVM #664
+# UTF8-C8 string changes under concatenation/substr
+{
+    my @ints = 103, 248, 111, 217, 210, 97;
+    my $b = Buf.new(@ints);
+    my Str $u = $b.decode("utf8-c8");
+    is-deeply $u.chars, $u.subst("a", "a").chars, "UTF8-C8 retains the same number of ‘chars’ after .subst operation";
+}
+# Can encode surrogates and codepoints above 0x10FFFF
+# ( 0 <= cp && cp <= 0x10FFFF)
+#    && (cp < 0xD800 || 0xDFFF < cp); /*
+{
+    my @ints = 0x10FFFF, 0x10FFFE, 0x12FFFF, 0xD800, 0xDFFF;
+    my $b = Buf.new(@ints);
+    my Str $u;
+    lives-ok { $u = $b.decode('utf8-c8') }, "lives-ok when decoding Unicode Surrogates and values higher than 0x10FFFF";
 }
