@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 75;
+plan 78;
 
 {
     my $s = supply {
@@ -602,6 +602,36 @@ lives-ok {
     my $i = 0;
     react whenever Supply.from-list(1..5) { $i += $_ }
     is $i, 15, 'react without block works';
+}
+
+# RT #130716
+{
+    my @pre-emit;
+    my $ran-done = True;
+    sub make-supply() {
+        supply {
+            until my $done {
+                @pre-emit.push('x');
+                emit(++$);
+            }
+            CLOSE { $ran-done = True; $done = True }
+        }
+    }
+
+    my $s2 = make-supply;
+    my @received;
+    react {
+        whenever $s2 -> $n {
+            push @received, $n;
+            done if $n >= 5;
+        }
+    }
+
+    is @received, [1,2,3,4,5],
+        'whenever tapping supply that syncrhonously emits sees values';
+    ok $ran-done, 'done block in source supply was run';
+    is @pre-emit, ['x','x','x','x','x'],
+        'supply block loop did not run ahead of consumer';
 }
 
 # vim: ft=perl6 expandtab sw=4
