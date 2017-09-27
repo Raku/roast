@@ -113,7 +113,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
         use lib 't/spec/packages';
         use RT123276::B::C1;
         use RT123276::B::C2;
-        say RT123276::B::C1.^methods
+        say RT123276::B::C1.^methods.grep(*.name ne 'BUILDALL')
     --END--
 
     #?rakudo.jvm todo 'RT #123276'
