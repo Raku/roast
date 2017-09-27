@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 48;
 
 # Unicode version pragma not needed here, as names cannot change.
 
@@ -71,3 +71,32 @@ is "AB".uninames, ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uniname
 is uniname("🦋"), "BUTTERFLY", "Can resolve Unicode 9 character name";
 
 is-deeply 0xD4DB.uniname, "Hangul Syllable PWILH", "Supports composed Hangul Syllable names";
+is-deeply 0x4FFE.uniname, "<CJK Ideograph-4FFE>", "U+4FFE is <CJK Ideograph-4FFE>";
+# Tests all noncharacters as well as makes sure the codepoints before and after those ranges are not
+# erronerously set as noncharacters
+subtest "Noncharacters" => {
+    plan 98;
+    for 0xFDD0..0xFDEF {
+        ok $_.uniname.starts-with('<noncharacter'), 'nonchar';
+    }
+        nok (0xFDD0 -1).uniname.starts-with('<noncharacter'), "codepoint below U+FDD0 is not a noncharacter";
+        nok (0xFDEF +1).uniname.starts-with('<noncharacter'), "codepoint after U+FDEF is not a noncharacter";
+    my Int:D $up = 0x10000;
+    my Int:D $value = $up;
+    while $value <= 0x10FFFF {
+        my Int:D $val = 0xFFFD + $value;
+        nok ($val).uniname.starts-with('<noncharacter'), "U+$val.base(16) is a not a noncharacter";
+        $val++;
+        ok ($val).uniname.starts-with('<noncharacter'), "U+$val.base(16) is a noncharacter";
+        $val++;
+        ok ($val).uniname.starts-with('<noncharacter'), "U+$val.base(16) is a noncharacter";
+        $val++;
+        nok ($val).uniname.starts-with('<noncharacter'), "U+$val.base(16) is a not a noncharacter";
+        $value += $up;
+    }
+}
+is-deeply 0x10FFFF.uniname, "<noncharacter-10FFFF>", "0x10FFFF is <noncharacter-10FFFF>";
+is-deeply 0x10FFFF.uniname, "<noncharacter-10FFFF>", "0x10FFFF is <noncharacter-10FFFF>";
+is-deeply 0x110000.uniname, "<unassigned>", "Codepoints higher than 0x10FFFF return <unassigned>";
+is-deeply 0x150000.uniname, "<unassigned>", "Codepoints higher than 0x10FFFF return <unassigned>";
+is-deeply (-0x20).uniname, "<illegal>", "Codepoints lower than 0x0 return <illegal>";
