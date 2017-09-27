@@ -1,2 +1,5 @@
 # This branch contains 6.c language specification and any applicable errata
+#
+# Some implementations use this file to select which test files to run, e.g.:
+# https://github.com/rakudo/rakudo/blob/nom/docs/roast-spectest.data-versioning.md
 6.c
