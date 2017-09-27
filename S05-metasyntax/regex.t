@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 47;
+plan 48;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -154,5 +154,66 @@ ok 'a' ~~ /a: /, '/a: / is a valid pattern and matches a';
     ok "\b" ~~ /<[\b]>/, '\b still works in character class';
     is ("a\bc" ~~ m:g/<[\B]>/).join, 'ac', '\B still works in character class';
 }
+
+#?DOES 1
+sub temp-range-test { # adding a sub to work around fudger not fudging subtests
+subtest 'Range quantifier' => {
+    plan 2;
+
+    #?DOES 1
+    sub is-len (UInt $len, Range $range, :$frugal) {
+        $frugal ?? cmp-ok "xxxxx".match(/x **? {$range}/).chars,
+                    '==', $len, "$range.perl() matches $len chars (frugal)"
+                !! cmp-ok "xxxxx".match(/x **  {$range}/).chars,
+                    '==', $len, "$range.perl() matches $len chars (greedy)";
+    }
+
+    #?DOES 1
+    sub is-no-match (Range $range, :$frugal) {
+        $frugal ?? cmp-ok "xxxxx".match(/x **? {$range}/),
+                    '===', Nil, "$range.perl() does not match (frugal)"
+                !! cmp-ok "xxxxx".match(/x **  {$range}/).chars,
+                    '===', Nil, "$range.perl() does not match (greedy)";
+    }
+
+    subtest 'greedy' => {
+        plan 11;
+
+        is-len 3,     1 .. 3;       is-len 2,     1 ..^3;
+        is-len 2,     1^..^3;       is-len 2,    -∞^..^3;
+        is-len 3,    -∞^..3;        is-len 5,     1^..^∞;
+        is-len 5,     1^..∞;        is-len 5,    -∞^..^∞;
+        is-len 1,      1..1;        is-len 1,    1.7..2.2;
+        is-len 1,  1.7e0..2.0e0;    is-len 2, 1.7e0^..^3.0e0;
+        is-len 5,      5..^∞;
+
+        is-no-match  1..0;          is-no-match  2..1;
+        is-no-match  2..-1;         is-no-match 2^..^1;
+        is-no-match 5^..∞;          is-no-match 5^..^∞;
+
+        throws-like { '' ~~ /x ** {"x".."y"}/ }, Exception, 'string range';
+    }
+
+    subtest 'frugal' => {
+        plan 11;
+
+        is-len 3,     1 .. 3,    :frugal;    is-len 2,     1 ..^3,     :frugal;
+        is-len 2,     1^..^3,    :frugal;    is-len 2,    -∞^..^3,     :frugal;
+        is-len 3,    -∞^..3,     :frugal;    is-len 5,     1^..^∞,     :frugal;
+        is-len 5,     1^..∞,     :frugal;    is-len 5,    -∞^..^∞,     :frugal;
+        is-len 1,      1..1,     :frugal;    is-len 1,    1.7..2.2,    :frugal;
+        is-len 1,  1.7e0..2.0e0, :frugal;    is-len 2, 1.7e0^..^3.0e0, :frugal;
+        is-len 5,      5..^∞,    :frugal;
+
+        is-no-match  1..0,       :frugal;    is-no-match  2..1,        :frugal;
+        is-no-match  2..-1,      :frugal;    is-no-match 2^..^1,       :frugal;
+        is-no-match 5^..∞,       :frugal;    is-no-match 5^..^∞,       :frugal;
+
+        throws-like { '' ~~ /x **? {"x".."y"}/ }, Exception, 'string range';
+    }
+}
+}
+#?rakudo todo 'range quantifier in regexes'
+temp-range-test();
 
 # vim: ft=perl6
