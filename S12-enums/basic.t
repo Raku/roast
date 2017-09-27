@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 44;
+plan 45;
 
 # Very basic enum tests
 
@@ -192,5 +192,8 @@ subtest '=== on same different enums with same values' => {
     cmp-ok C, &[===],  C, 'same enums => same (2)';
     cmp-ok WHICHTester, &[===], WHICHTester, 'type object vs. type object => same';
 }
+
+# RT #132039
+cmp-ok Bool.enums.WHAT, '===', Map, 'Bool.enums returns a Map, not a Hash';
 
 # vim: ft=perl6
