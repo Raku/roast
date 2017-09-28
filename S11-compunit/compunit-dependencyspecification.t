@@ -3,8 +3,8 @@ use Test;
 
 plan 6;
 
-throws-like { CompUnit::DependencySpecification.new }, X::Attribute::Required,
-throws-like { CompUnit::DependencySpecification.new(:short-name(1)) }, X::TypeCheck::Assignment;
+dies-ok { CompUnit::DependencySpecification.new };
+dies-ok { CompUnit::DependencySpecification.new(:short-name(1)) };
 ok my $ds = CompUnit::DependencySpecification.new(:short-name<Foo>);
 is $ds.version-matcher, True;
 is $ds.auth-matcher, True;
