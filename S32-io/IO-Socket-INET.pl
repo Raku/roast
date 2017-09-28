@@ -5,7 +5,7 @@
 # can be removed after stability of tests has been confirmed
 # on multiple operating systems.
 
-use v6;
+use v6.c;
 
 constant PF_INET     = 2; # these should move into a file,
 constant SOCK_STREAM = 1; # but what name and directory?

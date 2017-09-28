@@ -45,7 +45,7 @@ is $_, 'True' for @precompiled2;
 
 # RT #123272
 my @keys2 = Test::Util::run( q:to"--END--").lines;
-    use v6;
+    use v6.c;
     use lib 't/spec/packages';
     use Example2::T;
 
