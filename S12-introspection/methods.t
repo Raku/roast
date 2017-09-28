@@ -160,7 +160,7 @@ is @methods[0].name, 'bar', 'methods call found public method in subclass (with 
 
 {
     class Foo { has $.bar; has $.baz; has $.antler }; 
-    is Foo.^methods.join(","), "bar,baz,antler", "order of ^methods consistent";
+    is Foo.^methods[0,1,2].join(","), "bar,baz,antler", "order of ^methods consistent";
 }
 
 # vim: ft=perl6
