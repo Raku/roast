@@ -12,7 +12,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 53;
+plan 63;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -54,6 +54,22 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
     # RT #100232
     throws-like { my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/ }, X::SecurityPolicy, "particular garbage-in recognized as being garbage (see RT)";
 
+    # RT #131079
+    my $rt131079 = '<::(say "ZOWNED")>';
+    throws-like { 'a' ~~ /<$rt131079>/ }, X::SecurityPolicy, "dynamic lookups are restricted regex syntax";
+    $rt131079 = '<IO::(say "ZOWNED")>';
+    # XXX these next 3 tests can tighten to X::SecurityPolicy later, currently X::NYI;
+    throws-like { 'a' ~~ /<$rt131079>/ }, Exception, "dynamic longname lookups are restricted regex syntax";
+    $rt131079 = '<::IO::(say "ZOWNED")>';
+    throws-like { 'a' ~~ /<$rt131079>/ }, Exception, "dynamic longname lookups are restricted regex syntax (::)";
+    $rt131079 = '<::(say "ZOWNED")::File>';
+    throws-like { 'a' ~~ /<$rt131079>/ }, Exception, "dynamic longname lookups are restricted regex syntax (2)";
+    # XXX This currently an X::Syntax::Reserved until spec clarified, but dynamics should still die.
+    $rt131079 = '<::(say "ZOWNED")=bar>';
+    throws-like { 'a' ~~ /<$rt131079>/ }, Exception, "dynamic regex aliases fail somehow";
+    $rt131079 = '<::IO::(say "ZOWNED")=bar>';
+    throws-like { 'a' ~~ /<$rt131079>/ }, X::Syntax::Regex::Alias::LongName, "dynamic regex longname aliases fail specifically";
+
     # because it broke these:
     {
 	ok "foo" ~~ /<{' o ** 2 '}>/, 'returns true';
@@ -76,6 +92,16 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
     throws-like { 'a' ~~ /<{' <alpha(say q/gotcha/)> '}>/ }, X::SecurityPolicy, "should handle this too";
     throws-like { 'a' ~~ /<{' "$x:(say "busted")"    '}>/ }, X::SecurityPolicy, "should handle this too";
 }
+
+# Check some cases that should also die in unrestricted code
+throws-like { EVAL '"a" ~~ /<::IO::File=bar>/ '}, X::Syntax::Regex::Alias::LongName, "longname aliases fail specifically (unrestricted ::)";
+# Currently an X::Syntax::Reserved ... but should always die with longname.
+throws-like { EVAL '"a" ~~ /<::IO::("File")=bar>/ '}, X::Syntax::Regex::Alias::LongName, "dynamic longname aliases fail specifically (unrestricted ::)";
+# Check a couple cases that should also die in unrestricted code
+throws-like { EVAL '"a" ~~ /<IO::File=bar>/ '}, X::Syntax::Regex::Alias::LongName, "longname aliases fail specifically (unrestricted)";
+# Currently an X::Syntax::Reserved ... but should always die with longname.
+throws-like { EVAL '"a" ~~ /<IO::("File")=bar>/ '}, X::Syntax::Regex::Alias::LongName, "dynamic longname aliases fail specifically (unrestricted)";
+
 
 # Arrays
 
