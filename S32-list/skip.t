@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 =begin description
 
@@ -67,5 +67,48 @@ This test tests the C<skip> builtin.
     my $range = ^0;
     is $range.skip(5).List, (), "Range.skip works if empty";
 } #3
+
+# RT #132109
+subtest '.skip-all and .push-all on slipping slippy iterators' => {
+    # Some implementations implemented specific iterators to be used
+    # in certain cases, such as a .map() that returns a Slip. It was found
+    # under certain conditions such iterators may contain a bug and miss
+    # some elements. This subtest covers the discovered flaws.
+    # The iterator names mentioned in test descriptions merely reflect
+    # the names used in the implementation where the flaws were discovered
+    # and not anything all implementations must name their iterators as.
+
+    plan +my @tests =
+        IterateOneWithoutPhasers => |*,
+        IterateOneWithPhasers    => {NEXT $++; |$_},
+        IterateTwoWithoutPhasers => -> $a, $b {|(|$a, |$b)},
+        IterateMoreWithPhasers   => -> $a, $b {NEXT $++; |(|$a, |$b)};
+
+    my class TimesIterator does Iterator {
+        has $!times;
+        method !SET-SELF (\times) { $!times := times; self }
+        method new       (\times) { self.bless!SET-SELF: times }
+        method pull-one {
+            $_ < 3 and .return given $!times++;
+            IterationEnd
+        }
+    };
+
+    for @tests -> (:key($name), :value(&block)) {
+        subtest $name => {
+            plan 2;
+
+            my $times = 0;
+            .sink given (Seq.new(TimesIterator.new: $times), <a b c>)
+                .map(&block).skip;
+            is $times, 4, 'sink-all sinks all the values';
+
+            given (<a b c>, <d e>).map(&block).skip {
+                .elems; # reifies
+                is .join, 'bcde', 'push-all pushes all the values';
+            }
+        }
+    }
+}
 
 # vim: ft=perl6
