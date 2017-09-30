@@ -85,8 +85,8 @@ isa-ok 'B' ∋ $s1, Bool, 'set ∋ result type';
 isa-ok 'B' (cont) $s1, Bool, 'set (cont) result type';
 isa-ok 'B' ∌ $s1, Bool, 'set ∌ result type';
 
-my @set-and-bag-ops = 
-    # Operation                  Unicode         Texas              Type
+my @set-and-bag-ops =
+    # Operation                  Unicode         ASCII              Type
     # ---------                  -------         ---------------    ----
     ['union',                    &infix:«∪»,     &infix:«(|)»,      [Set,Bag]],
     ['intersection',             &infix:«∩»,     &infix:«(&)»,      [Set,Bag]],
@@ -110,27 +110,27 @@ my @set-and-bag-ops =
 ;
 
 for @set-and-bag-ops {
-    my ($operation, $unicode-op, $texas-op, $result-type) = @$_;
+    my ($operation, $unicode-op, $ASCII-op, $result-type) = @$_;
 
     if $unicode-op.defined {
         my $result = $unicode-op($s1, $s2);
         ok $result-type.grep({$result.isa($_)}), "{$unicode-op.name} return type";
     }
 
-    if $texas-op.defined {
-        my $result = $texas-op($s1, $s2);
-        ok $result-type.grep({$result.isa($_)}), "{$texas-op.name} return type";
+    if $ASCII-op.defined {
+        my $result = $ASCII-op($s1, $s2);
+        ok $result-type.grep({$result.isa($_)}), "{$ASCII-op.name} return type";
     }
 
 }
 
 my $a = bag <a a a b b c>;
 my $b = bag <a b b b>;
- 
+
 is-deeply $a (|) $b, {"a" => 3, "b" => 3, "c" => 1}.Bag, '$a (|) $b';
- 
+
 is-deeply $a (&) $b, {"a" => 1, "b" => 2}.Bag, '$a (&) $b';
- 
+
 is-deeply $a (+) $b, {"a" => 4, "b" => 5, "c" => 1}.Bag, '$a (+) $b';
- 
+
 is-deeply $a (.) $b, {"a" => 3, "b" => 6}.Bag, '$a (.) $b';

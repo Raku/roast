@@ -227,33 +227,33 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     my (@q1, @q2, @q3, @q4) = ();
     @q1 = qq:ww/$foo "gorch $bar"/;
     @q2 = «$foo "gorch $bar"»; # french
-    @q3 = <<$foo "gorch $bar">>; # texas
+    @q3 = <<$foo "gorch $bar">>; # ASCII
     @q4 = qq:quotewords/$foo "gorch $bar"/; # long
 
     is(+@q1, 2, 'qq:ww// correct number of elements');
     is(+@q2, 2, 'french double angle');
-    is(+@q3, 2, 'texas double angle');
+    is(+@q3, 2, 'ASCII double angle');
     is(+@q4, 2, 'long form');
 
     is(~@q1, 'FOO gorch BAR', "explicit quote word interpolates");
     is(~@q2, 'FOO gorch BAR', "output is the same as french");
 
     # L<S02/Adverbs on quotes/"the built-in «...» quoter automatically does interpolation equivalent to qq:ww/.../">
-    is(~@q3, 'FOO gorch BAR', ", texas quotes");
+    is(~@q3, 'FOO gorch BAR', ", ASCII quotes");
     is(~@q4, 'FOO gorch BAR', ", and long form");
 }
 
 {
     is (try EVAL "« one #`[[[comment]]] two »"), "one two", "«» handles embedded comments";
     is (try EVAL "« one #`«comment» two »"), "one two", "«» handles embedded comments containing french quotes";
-    is (try EVAL "<< one #`<<comment>> two >>"), "one two", "<<>> handles embedded comments containing texas quotes";
+    is (try EVAL "<< one #`<<comment>> two >>"), "one two", "<<>> handles embedded comments containing ASCII quotes";
     is (try EVAL "« one #comment\n two »"), "one two", "«» handles line-end comments";
 }
 
 {
     my $rt65654 = 'two words';
     is «a $rt65654 z».flat.elems,   4, 'interpolate variable with spaces (French)';
-    is <<a $rt65654 z>>.flat.elems, 4, 'interpolate variable with spaces (Texas)';
+    is <<a $rt65654 z>>.flat.elems, 4, 'interpolate variable with spaces (ASCII)';
 }
 
 {
@@ -342,7 +342,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is($hi, "hi", 'q<<hi>> is "hi"');
 }
 
-is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<texas>> quotes (RT #66888)' );
+is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<ASCII>> quotes (RT #66888)' );
 
 # L<S02/Adverbs on quotes/"for user-defined quotes">
 # q:to
@@ -551,7 +551,7 @@ throws-like { EVAL q["@a<"] },
 is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpolation';
 
 #115272
-is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
+is <<<\>'n'>>.join('|'), '<>|n', 'ASCII quotes edge case';
 
 {
     $_ = 'abc';

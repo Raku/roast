@@ -159,9 +159,9 @@ is (2 Z 3), @z, 'joining of single items';
     ok -3 ≠ -4 ≠  1, 'unicode op chaining';
 
     ok  4 < 8 ≤ 15 <= 16 != 23 ≠ 42 == 42 ≠ 23 != 16 >= 15 ≥ 8 > 4,
-        'unicode ops chain with texas ones';
+        'unicode ops chain with ASCII ones';
     nok 4 < 8 ≤ 15 <= 16 != 23 ≠ 42 == 42 ≠ 23 != 16 >= 15 ≥ ∞ > 4,
-        'unicode ops chain with texas ones (not always True)';
+        'unicode ops chain with ASCII ones (not always True)';
 
 
     ok  Date.today  .later(:day) ≥ Date.today.earlier(:day), 'Date ≥ Date (true)';
