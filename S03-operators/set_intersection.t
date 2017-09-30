@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # This test file tests the following set operators:
-#   (&)     intersection (Texas)
+#   (&)     intersection (ASCII)
 #   ∩       intersection
 
 # Empty mutables that have the internal hash allocated
@@ -143,11 +143,11 @@ for
 
     is-deeply op(), set(), "does $name\() return set()";
 
-    for @types -> \qh {         
+    for @types -> \qh {
         is-deeply op(qh.new,qh.new,qh.new), ::(qh.^name.substr(0,3)).new,
           "Sequence of empty {qh.^name} is the empty {qh.^name.substr(0,3)}";
         throws-like { op(qh.new,^Inf) }, X::Cannot::Lazy,
-          "Cannot {qh.perl}.new $name lazy list";    
+          "Cannot {qh.perl}.new $name lazy list";
         throws-like { op(qh.new(<a b c>),^Inf) }, X::Cannot::Lazy,
           "Cannot {qh.perl}.new(<a b c>) $name lazy list";
     }

@@ -2,9 +2,9 @@ use v6;
 use Test;
 
 # This test file tests the following set operators:
-#   (<+)    precedes (Texas)
+#   (<+)    precedes (ASCII)
 #   ≼       precedes
-#   (>+)    succeeds (Texas)
+#   (>+)    succeeds (ASCII)
 #   ≽       succeeds
 
 plan 32;
@@ -24,10 +24,10 @@ my $kb = BagHash.new(<blood love love>);
     nok $b ≼ $kb, "Our bag is not a msubset of our keybag";
     ok $b ≼ $b, "Our bag is a msubset of itself";
     ok $kb ≼ $kb, "Our keybag is a msubset of itself";
-    ok $kb (<+) $b, "Our keybag is a msubset of our bag (texas)";
-    nok $b (<+) $kb, "Our bag is not a msubset of our keybag (texas)";
-    ok $b (<+) $b, "Our bag is a msubset of itself (texas)";
-    ok $kb (<+) $kb, "Our keybag is a msubset of itself (texas)";
+    ok $kb (<+) $b, "Our keybag is a msubset of our bag (ASCII)";
+    nok $b (<+) $kb, "Our bag is not a msubset of our keybag (ASCII)";
+    ok $b (<+) $b, "Our bag is a msubset of itself (ASCII)";
+    ok $kb (<+) $kb, "Our keybag is a msubset of itself (ASCII)";
 }
 
 # msuperset
@@ -54,10 +54,10 @@ my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3);
     ok $m ≼ $mh, "Our Mix is a msubset of our MixHash";
     ok $m ≼ $m, "Our Mix is a msubset of itself";
     ok $mh ≼ $mh, "Our MixHash is a msubset of itself";
-    nok $mh (<+) $m, "Our MixHash is not a msubset of our Mix (texas)";
-    ok $m (<+) $mh, "Our Mix is a msubset of our MixHash (texas)";
-    ok $m (<+) $m, "Our Mix is a msubset of itself (texas)";
-    ok $mh (<+) $mh, "Our MixHash is a msubset of itself (texas)";
+    nok $mh (<+) $m, "Our MixHash is not a msubset of our Mix (ASCII)";
+    ok $m (<+) $mh, "Our Mix is a msubset of our MixHash (ASCII)";
+    ok $m (<+) $m, "Our Mix is a msubset of itself (ASCII)";
+    ok $mh (<+) $mh, "Our MixHash is a msubset of itself (ASCII)";
 }
 
 # msuperset
@@ -69,10 +69,10 @@ my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3);
     nok $m ≽ $mh, "Our Mix is not a msuperset of our MixHash";
     ok $m ≽ $m, "Our mix is a msuperset of itself";
     ok $mh ≽ $mh, "Our keymix is a msuperset of itself";
-    ok $mh (>+) $m, "Our MixHash is a msuperset of our Mix (Texas)";
-    nok $m (>+) $mh, "Our Mix is not a msuperset of our MixHash (Texas)";
-    ok $m (>+) $m, "Our Mix is a msuperset of itself (Texas)";
-    ok $mh (>+) $mh, "Our MixHash is a msuperset of itself (Texas)";
+    ok $mh (>+) $m, "Our MixHash is a msuperset of our Mix (ASCII)";
+    nok $m (>+) $mh, "Our Mix is not a msuperset of our MixHash (ASCII)";
+    ok $m (>+) $m, "Our Mix is a msuperset of itself (ASCII)";
+    ok $mh (>+) $mh, "Our MixHash is a msuperset of itself (ASCII)";
 }
 
 # vim: ft=perl6

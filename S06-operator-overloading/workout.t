@@ -18,7 +18,7 @@ class Vector {
     multi method Num() { die "Can't get Num from Vector"; }
 }
 
-# operators prefixed by T used the Texas version of their internal operators
+# operators prefixed by T used the ASCII version of their internal operators
 
 multi sub infix:<+>(Vector $a, Vector $b) { Vector.new($a.coords »+« $b.coords); }
 multi sub infix:<T+>(Vector $a, Vector $b) { Vector.new($a.coords >>+<< $b.coords); }
@@ -94,7 +94,7 @@ ia($v1 / (2/3), Vector.new(-3/4, 3, 17*3), "Scalar division correct");
 ia($v1 ** 2, Vector.new(1/4, 4, 34*34), "Scalar power correct");
 ia($v1 ⋅ $v2, -1/2 + 2/5 + 34 * 0.3, "⋅ product correct");
 
-# Texas versions of basic operations
+# ASCII versions of basic operations
 ia($v1 T+ $v2, $v1 + $v2, "T Addition correct");
 ia($v1 T- $v2, $v1 - $v2, "T Subtraction correct");
 ia(T-$v1, Vector.new(1/2, -2, -34), "T Negation correct");

@@ -104,7 +104,7 @@ plan 54;
     is-deeply quietly { −class {} }, 0, 'prefix, Custom class';
 
     # Note: the tests below use U+2212 minus for expected and check against
-    # texas minus version
+    # ASCII minus version
     is-deeply −42, -42, 'prefix, Int';
     is-deeply −42.0, -42.0, 'prefix, Rat';
     is-deeply −42e0, -42e0, 'prefix, Num';

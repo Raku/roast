@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # This test file tests the following set operators:
-#   (^)     set symmetric difference (Texas)
+#   (^)     set symmetric difference (ASCII)
 #   ⊖       set symmetric difference
 
 # Empty mutables that have the internal hash allocated
