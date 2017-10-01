@@ -161,4 +161,14 @@ skip('skip this test for now');
 skip('skip 3 more tests for now', 3);
 skip-rest('skipping the rest');
 
+#######################################################################
+#######################################################################
+#
+# WARNING: do not add new tests below. The test above does "skip-rest",
+#         so any tests you add will be skipped. Add them *above* the
+#         "skip" chunk of tests instead.
+#
+#######################################################################
+#######################################################################
+
 # vim: expandtab shiftwidth=4 ft=perl6
