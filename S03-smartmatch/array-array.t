@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 68;
+plan 69;
 
 #L<S03/Smart matching/arrays are comparable>
 {
@@ -91,6 +91,16 @@ plan 68;
 {
     eval-lives-ok '["a","b","c"] ~~ [**, "b", "c"]', "Str and Whatever (1)";
     eval-lives-ok '[1,2,3] ~~ [**, "b", "c"]', "Str and Whatever (2)";
+}
+
+subtest '~~ with lazy iterables never throws' => {
+    plan 4;
+    is-deeply [1...*] ~~ (1...*), False, 'lazy ~~ lazy is False';
+    is-deeply [1, 2 ] ~~ [1...*], False, 'non-lazy ~~ lazy is False';
+    is-deeply [1...*] ~~ [1, 2 ], False, 'lazy ~~ non-lazy is False';
+
+    my $iter := [1...*];
+    is-deeply $iter ~~ $iter, True, 'lazy ~~ lazy is True when same object';
 }
 
 # vim: ft=perl6
