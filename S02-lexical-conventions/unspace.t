@@ -4,10 +4,9 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 89;
+plan 108;
 
 # L<S02/"Unspaces"/This is known as the "unspace">
-
 
 ok(4\       .sqrt == 2, 'unspace with numbers');
 is(4\#`(quux).sqrt, 2, 'unspace with comments');
@@ -317,10 +316,40 @@ is "foo"\ \ .perl, "foo".perl, 'two unspace in a row before . for method call';
 # \# okay within a regex
 ok '#' ~~ /\#/, 'Unspace restriction in regex does not apply to \#';
 
+# bareword calls and postcircumfix
+is abs\ (42), 42, "bareword call with unspace";
+is abs\(42), 42, "bareword call with degenerate unspace";
+class A { our sub foo ($a) { $a }; our @a = 1,2; our %a = :a,:b(2); };
+is A::foo\ (42), 42, "bare longname call with unspace";
+is A::foo\(42), 42, "bare longname call with degenerate unspace";
+is @A::a\ [1], 2, "longname array subscript with unspace";
+is @A::a\[1], 2, "longname array subscript with degenerate unspace";
+is %A::a\ {"b"}, 2, "longname hash subscript with unspace";
+is %A::a\{"b"}, 2, "longname hash subscript with degenerate unspace";
+is %A::a\ <b>, 2, "longname pointy hash subscript with unspace";
+is %A::a\<b>, 2, "longname pointy hash subscript with degenerate unspace";
+is IO::Path\ .^name, "IO::Path", "bare longname metamethod call with unspace";
+is IO::Path\.^name, "IO::Path", "bare longname metamethod call with degenerate unspace";
+
+# sigilless variables/constants
 # RT #128462
-#?rakudo todo 'RT 128462'
+# XXX alter this first test not to say in errata.
 eval-lives-ok 'my \term = 42; say term\   .Str; term == 42 or die;',
     'unspace with method calls detached from sigiless terms works';
+eval-lives-ok 'my \term = [1,2]; my $v = term\   [1]; $v == 2 or die;',
+    'unspace with array subscript detached from sigiless terms works';
+eval-lives-ok 'my \term = {:a(1),:b(2)}; my $v = term\   {"b"}; $v == 2 or die;',
+    'unspace with hash subscript detached from sigiless terms works';
+eval-lives-ok 'my \term = {:a(1),:b(2)}; my $v = term\   <b>; $v == 2 or die;',
+    'unspace with pointy hash subscript detached from sigiless terms works';
+eval-lives-ok 'my \term = 42; my $v = term\.Str; $v == 42 or die;',
+    'degenerate unspace with method calls detached from sigiless terms works';
+eval-lives-ok 'my \term = [1,2]; my $v = term\[1]; $v == 2 or die;',
+    'degenerate unspace with array subscript detached from sigiless terms works';
+eval-lives-ok 'my \term = {:a(1),:b(2)}; my $v = term\{"b"}; $v == 2 or die;',
+    'degenerate unspace with hash subscript detached from sigiless terms works';
+eval-lives-ok 'my \term = {:a(1),:b(2)}; my $v = term\<b>; $v == 2 or die;',
+    'degenerate unspace with pointy hash subscript detached from sigiless terms works';
 
 is 'a'.parse-base\   \   (16), 10, 'unspace can recurse';
 
