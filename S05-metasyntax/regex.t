@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
-plan 48;
+plan 49;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -266,5 +268,9 @@ subtest '`**` quantifier' => {
           X::Syntax::Regex::QuantifierValue, :empty-range,
     'block-less empty range throws (greedy)';
 }
+
+is_run ｢(try "" ~~ /. ** {NaN}/) for ^1000; print 'pass'｣,
+    {:out('pass'), :err(''), :0status},
+'wrong value for `**` quantifier does not leave behind unhandled Failures';
 
 # vim: ft=perl6
