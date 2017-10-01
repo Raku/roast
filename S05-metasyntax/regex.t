@@ -155,65 +155,116 @@ ok 'a' ~~ /a: /, '/a: / is a valid pattern and matches a';
     is ("a\bc" ~~ m:g/<[\B]>/).join, 'ac', '\B still works in character class';
 }
 
-#?DOES 1
-sub temp-range-test { # adding a sub to work around fudger not fudging subtests
-subtest 'Range quantifier' => {
-    plan 2;
+# RT #130911
+# RT #130127
+# RT #130125
+# RT #130124
+subtest '`**` quantifier' => {
+    plan 6;
 
     #?DOES 1
-    sub is-len (UInt $len, Range $range, :$frugal) {
-        $frugal ?? cmp-ok "xxxxx".match(/x **? {$range}/).chars,
-                    '==', $len, "$range.perl() matches $len chars (frugal)"
-                !! cmp-ok "xxxxx".match(/x **  {$range}/).chars,
-                    '==', $len, "$range.perl() matches $len chars (greedy)";
+    sub is-len (UInt $len, $quant) {
+        $*frugal ?? cmp-ok "xxxxx".match(/x **? {$quant}/).chars,
+                    '==', $len, "$quant.perl() matches $len chars (frugal)"
+                 !! cmp-ok "xxxxx".match(/x **  {$quant}/).chars,
+                    '==', $len, "$quant.perl() matches $len chars (greedy)";
     }
 
     #?DOES 1
-    sub is-no-match (Range $range, :$frugal) {
-        $frugal ?? cmp-ok "xxxxx".match(/x **? {$range}/),
-                    '===', Nil, "$range.perl() does not match (frugal)"
-                !! cmp-ok "xxxxx".match(/x **  {$range}/).chars,
-                    '===', Nil, "$range.perl() does not match (greedy)";
+    sub is-no-match ($quant) {
+        $*frugal ?? cmp-ok "xxxxx".match(/x **? {$quant}/),
+                    '===', Nil, "$quant.perl() does not match (frugal)"
+                 !! cmp-ok "xxxxx".match(/x **  {$quant}/),
+                    '===', Nil, "$quant.perl() does not match (greedy)";
+    }
+
+    #?DOES 1
+    sub does-match-throw ($quant, |c) {
+        $*frugal ?? throws-like { "xxxxx".match(/x **? {$quant}/) },
+                    X::Syntax::Regex::QuantifierValue, |c,
+                    "$quant.perl() throws (frugal)"
+                 !! throws-like { "xxxxx".match(/x **  {$quant}/) },
+                    X::Syntax::Regex::QuantifierValue, |c,
+                    "$quant.perl() throws (greedy)";
     }
 
     subtest 'greedy' => {
-        plan 11;
+        plan 28;
 
-        is-len 3,     1 .. 3;       is-len 2,     1 ..^3;
-        is-len 2,     1^..^3;       is-len 2,    -∞^..^3;
-        is-len 3,    -∞^..3;        is-len 5,     1^..^∞;
-        is-len 5,     1^..∞;        is-len 5,    -∞^..^∞;
-        is-len 1,      1..1;        is-len 1,    1.7..2.2;
-        is-len 1,  1.7e0..2.0e0;    is-len 2, 1.7e0^..^3.0e0;
-        is-len 5,      5..^∞;
+        is-len 3,     1 .. 3;          is-len 2,     1 ..^3;
+        is-len 2,     1^..^3;          is-len 2,    -∞^..^3;
+        is-len 0,    -∞^..^-∞;         is-len 0,    -4^..^-3;
+        is-len 3,    -∞^..3;           is-len 5,     1^..^∞;
+        is-len 5,     1^..∞;           is-len 5,    -∞^..^∞;
+        is-len 1,      1..1;           is-len 2,    1.7..2.2;
+        is-len 2,  1.7e0..2.0e0;       is-len 2, 1.7e0^..^3.0e0;
+        is-len 5,      5..^∞;          is-len 0,    -10..-5;
 
-        is-no-match  1..0;          is-no-match  2..1;
-        is-no-match  2..-1;         is-no-match 2^..^1;
-        is-no-match 5^..∞;          is-no-match 5^..^∞;
+        is-len 3, 3;                   is-len 0, -5;
+        is-len 0, -∞;
 
-        throws-like { '' ~~ /x ** {"x".."y"}/ }, Exception, 'string range';
+        is-no-match  10..20;           is-no-match  10..^20;
+        is-no-match 10^..20;           is-no-match 10^..^20;
+        is-no-match  10..∞;            is-no-match  10..^∞;
+        is-no-match 10^..∞;            is-no-match 10^..^∞;
+        is-no-match 10;
     }
 
     subtest 'frugal' => {
-        plan 11;
+        plan 28;
 
-        is-len 3,     1 .. 3,    :frugal;    is-len 2,     1 ..^3,     :frugal;
-        is-len 2,     1^..^3,    :frugal;    is-len 2,    -∞^..^3,     :frugal;
-        is-len 3,    -∞^..3,     :frugal;    is-len 5,     1^..^∞,     :frugal;
-        is-len 5,     1^..∞,     :frugal;    is-len 5,    -∞^..^∞,     :frugal;
-        is-len 1,      1..1,     :frugal;    is-len 1,    1.7..2.2,    :frugal;
-        is-len 1,  1.7e0..2.0e0, :frugal;    is-len 2, 1.7e0^..^3.0e0, :frugal;
-        is-len 5,      5..^∞,    :frugal;
+        my $*frugal = 1;
+        is-len 1,     1 .. 3;          is-len 1,     1 ..^3;
+        is-len 2,     1^..^3;          is-len 0,    -∞^..^3;
+        is-len 0,    -∞^..^-∞;         is-len 0,    -4^..^-3;
+        is-len 0,    -∞^..3;           is-len 2,     1^..^∞;
+        is-len 2,     1^..∞;           is-len 0,    -∞^..^∞;
+        is-len 1,      1..1;           is-len 1,    1.7..2.2;
+        is-len 1,  1.7e0..2.0e0;       is-len 2, 1.7e0^..^3.0e0;
+        is-len 5,      5..^∞;          is-len 0,    -10..-5;
 
-        is-no-match  1..0,       :frugal;    is-no-match  2..1,        :frugal;
-        is-no-match  2..-1,      :frugal;    is-no-match 2^..^1,       :frugal;
-        is-no-match 5^..∞,       :frugal;    is-no-match 5^..^∞,       :frugal;
+        is-len 3, 3;                   is-len 0, -5;
+        is-len 0, -∞;
 
-        throws-like { '' ~~ /x **? {"x".."y"}/ }, Exception, 'string range';
+        is-no-match  10..20;           is-no-match  10..^20;
+        is-no-match 10^..20;           is-no-match 10^..^20;
+        is-no-match  10..∞;            is-no-match  10..^∞;
+        is-no-match 10^..∞;            is-no-match 10^..^∞;
+        is-no-match 10;
     }
+
+
+    for :!frugal, :frugal -> (:key($), :value($*frugal)) {
+        subtest $*frugal ?? 'frugal' !! 'greedy' => {
+            plan 14;
+
+            does-match-throw "x".."y",     :non-numeric-range;
+            does-match-throw  42..NaN,     :non-numeric-range;
+            does-match-throw NaN..42,      :non-numeric-range;
+            does-match-throw <0/0>..<0/0>, :non-numeric-range;
+
+            does-match-throw 5..4,         :empty-range;
+            does-match-throw 4^..^5,       :empty-range;
+            does-match-throw 4^..4,        :empty-range;
+            does-match-throw 5..^5,        :empty-range;
+
+            does-match-throw Inf..<1/0>,   :inf;
+            does-match-throw Inf,          :inf;
+            does-match-throw <1/0>,        :inf;
+
+            does-match-throw <0/0>,        :non-numeric;
+            does-match-throw "meow",       :non-numeric;
+            does-match-throw NaN,          :non-numeric;
+        }
+    }
+
+    throws-like ｢"xxxxx" ~~ /x **? 2..1/｣,
+          X::Syntax::Regex::QuantifierValue, :empty-range,
+    'block-less empty range throws (frugal)';
+
+    throws-like ｢"xxxxx" ~~ /x **  2..1/｣,
+          X::Syntax::Regex::QuantifierValue, :empty-range,
+    'block-less empty range throws (greedy)';
 }
-}
-#?rakudo todo 'range quantifier in regexes'
-temp-range-test();
 
 # vim: ft=perl6
