@@ -8,8 +8,20 @@ use Test::Util;
 plan :skip-all<Cannot test without $*TMPDIR and $*HOME set to readable dirs>
     unless $*TMPDIR ~~ :d & :r and $*HOME ~~ :d & :r;
 
-plan 7;
+plan 8;
 my &sys-cwd = $*DISTRO.is-win ?? {qx`echo %cd%`.chomp.IO} !! {qx`pwd`.chomp.IO};
+
+subtest '&*chdir into IO::Path respects its :CWD attribute' => {
+    plan 1;
+
+    my $where = make-temp-dir;
+    ($where.add('one').mkdir).add('pass1').spurt: 'pass1';
+    my $to = IO::Path.new: ".", :CWD($where.add: 'one');
+
+    is_run '&*chdir(\qq[$to.perl()]); .say for dir',
+        {:out(/pass1/), :err(''), :0status},
+    'found expected file';
+}
 
 subtest '&*chdir to non-existent directory' => {
     plan 3;

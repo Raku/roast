@@ -5,7 +5,7 @@ use Test::Util;
 
 # L<S32::IO/Functions/chdir>
 
-plan 81;
+plan 82;
 
 throws-like ' chdir() ', Exception, 'Cannot call chdir without an argument';
 
@@ -138,5 +138,22 @@ test-chdir-fails :r:w:x, 'chmod 0o333', 'permissions', make-temp-dir 0o333;
 test-chdir-fails :r:w:x, 'chmod 0o222', 'permissions', make-temp-dir 0o222;
 test-chdir-fails :r:w:x, 'chmod 0o111', 'permissions', make-temp-dir 0o111;
 test-chdir-fails :r:w:x, 'chmod 0o000', 'permissions', make-temp-dir 0o000;
+
+subtest 'chdir into IO::Path respects its :CWD attribute' => {
+    plan 1;
+
+    my $where = make-temp-dir;
+    ($where.add('one').mkdir).add('pass1').spurt: 'pass1';
+    my $to = IO::Path.new: ".", :CWD($where.add: 'one');
+
+    temp $*CWD;
+    chdir $where;
+    {
+        plan 1;
+        temp $*CWD;
+        chdir $to;
+        ok dir.grep('pass1').so, 'found expected file';
+    }
+}
 
 # vim: ft=perl6
