@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 98;
+plan 99;
 
 # Real **
 is(0 ** 0,    1, "0 ** 0 ==  1");
@@ -48,6 +48,8 @@ is(NaN ** 1i, NaN, "NaN**1i=NaN");
 is(1i ** NaN, NaN, "1i**NaN=NaN");
 # RT #124450
 is(NaN ** 0, 1, "NaN**0=1");
+# RT #129894
+is(1 ** NaN, 1, '1**NaN=1');
 
 is(NaN ** NaN, NaN, "NaN**NaN=NaN");
 is(Inf ** NaN, NaN, "Inf**NaN=NaN");
