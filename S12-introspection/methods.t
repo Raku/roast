@@ -118,7 +118,8 @@ class PT2 is PT1 {
     method bar() { }
 }
 
-@methods = PT2.^methods(:all); # (all since we want at least one more)
+# (all since we want at least one more)
+@methods = PT2.^methods(:all).grep(*.name ne 'BUILDALL');
 is @methods[0].name, 'bar',    'methods call found public method in subclass';
 is @methods[1].name, 'foo',    'methods call found public method in superclass (so no privates)';
 ok @methods[2].name ne '!pm1', 'methods call did not find private method in superclass';
@@ -132,7 +133,7 @@ ok @methods[2].name ne '!pm1', 'methods call did not find private method in supe
                                 'methods call with :private found private method in superclass';
 }
 
-@methods = PT2.^methods(:local);
+@methods = PT2.^methods(:local).grep(*.name ne 'BUILDALL');
 is +@methods, 1,            'methods call without :private omits private methods (with :local)';
 is @methods[0].name, 'bar', 'methods call found public method in subclass (with :local)';
 
