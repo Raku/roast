@@ -30,13 +30,13 @@ class D is B is C {
 
 my (@methods, $meth1, $meth2);
 
-@methods = C.^methods(:local);
+@methods = C.^methods(:local).grep(*.name ne 'BUILDALL');
 is +@methods, 0, 'class C has no local methods (proto)';
 
-@methods = C.new().^methods(:local);
+@methods = C.new().^methods(:local).grep(*.name ne 'BUILDALL');
 is +@methods, 0, 'class C has no local methods (instance)';
 
-@methods = B.^methods(:local);
+@methods = B.^methods(:local).grep(*.name ne 'BUILDALL');
 is +@methods, 1, 'class B has one local methods (proto)';
 is @methods[0].name(), 'foo', 'method name can be found';
 ok @methods[0].signature.perl ~~ /'$param'/, 'method signature contains $param';
@@ -44,7 +44,7 @@ is @methods[0].returns.gist, Num.gist, 'method returns a Num (from .returns)';
 is @methods[0].of.gist, Num.gist, 'method returns a Num (from .of)';
 ok !@methods[0].is_dispatcher, 'method is not a dispatcher';
 
-@methods = B.new().^methods(:local);
+@methods = B.new().^methods(:local).grep(*.name ne 'BUILDALL');
 is +@methods, 1, 'class B has one local methods (instance)';
 is @methods[0].name(), 'foo', 'method name can be found';
 ok @methods[0].signature.perl ~~ /'$param'/, 'method signature contains $param';
@@ -52,7 +52,7 @@ is @methods[0].returns.gist, Num.gist, 'method returns a Num (from .returns)';
 is @methods[0].of.gist, Num.gist, 'method returns a Num (from .of)';
 ok !@methods[0].is_dispatcher, 'method is not a dispatcher';
 
-@methods = A.^methods(:local);
+@methods = A.^methods(:local).grep(*.name ne 'BUILDALL');
 is +@methods, 2, 'class A has two local methods (one only + one multi with two variants)';
 my ($num_dispatchers, $num_onlys);
 for @methods -> $meth {
@@ -67,7 +67,7 @@ for @methods -> $meth {
 is $num_onlys, 1, 'class A has one only method';
 is $num_dispatchers, 1, 'class A has one dispatcher method';
 
-@methods = D.^methods();
+@methods = D.^methods().grep(*.name ne 'BUILDALL');
 ok +@methods == 5, 'got all methods in hierarchy but NOT those from Any/Mu';
 ok @methods[0].name eq 'foo' && @methods[1].name eq 'bar' ||
    @methods[0].name eq 'bar' && @methods[1].name eq 'foo',
