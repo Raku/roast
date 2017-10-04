@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 61;
+plan 63;
 
 # Int
 {
@@ -108,3 +108,9 @@ subtest 'all Reals can accept Whatever for second .base argument' => {
 
 # RT#130753
 throws-like { 1.1.base(1) }, X::OutOfRange, "Throws like X::OutOfRange for base 1";
+
+# RT #125818
+throws-like 'Inf.base: 16', X::Numeric::CannotConvert,
+    'Inf.base throws useful error';
+throws-like 'NaN.base: 16', X::Numeric::CannotConvert,
+    'NaN.base throws useful error';
