@@ -4,7 +4,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 12;
+plan 22;
 
 # RT #125515
 #?rakudo.jvm skip 'Proc::Async NYI RT #126524'
@@ -50,4 +50,16 @@ for ^10 {
         --END--
     #?rakudo.jvm skip 'Proc::Async NYI RT #126524'
     is_run $code, { status => 0 }, "No race/crash in concurrent setup of Proc::Async objects ($_)";
+}
+
+# RT #122709
+for 1..10 {
+    my $code = q:to/CODE/;
+        my $waiter = $*DISTRO.is-win
+            ?? Proc::Async.new(<< cmd "/c" echo Hello >>).start
+            !! Proc::Async.new(<< echo Hello >>).start;
+        await start { await $waiter }
+        CODE
+    is_run $code, { status => 0 },
+        'No hang with await start { await $proc-promise } construct ' ~ "($_)";
 }
