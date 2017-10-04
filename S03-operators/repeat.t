@@ -26,20 +26,17 @@ is('str' x Int, '', 'x with Int type object');
 {
     throws-like(
         { 'a' x -NaN },
-        Exception,
-        message => 'Cannot coerce NaN to an Int',
+        X::Numeric::CannotConvert,
         'repeating with -NaN fails'
     );
     throws-like(
         { 'a' x NaN },
-        Exception,
-        message => 'Cannot coerce NaN to an Int',
+        X::Numeric::CannotConvert,
         'repeating with NaN fails'
     );
     throws-like(
         { 'a' x -Inf },
-        Exception,
-        message => 'Cannot coerce -Inf to an Int',
+        X::Numeric::CannotConvert,
         'repeating with -Inf fails'
     );
     isa-ok('a' x Inf, Failure, 'repeating with Inf is a Failure');
@@ -47,20 +44,17 @@ is('str' x Int, '', 'x with Int type object');
 
     throws-like(
         { 'a' xx -NaN },
-        Exception,
-        message => 'Cannot coerce NaN to an Int',
+        X::Numeric::CannotConvert,
         'list repeating with -NaN fails'
     );
     throws-like(
         { 'a' xx NaN },
-        Exception,
-        message => 'Cannot coerce NaN to an Int',
+        X::Numeric::CannotConvert,
         'list repeating with NaN fails'
     );
     throws-like(
         { 'a' xx -Inf },
-        Exception,
-        message => 'Cannot coerce -Inf to an Int',
+        X::Numeric::CannotConvert,
         'list repeating with -Inf fails'
     );
 }
