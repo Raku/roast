@@ -10,7 +10,7 @@ plan 8;
 {
     is_run( 'END exit(5)',
         {
-            status => 5 +< 8, ## exit status 5 shifted right by 8 bits
+            status => 5,
             out    => '',
             err    => '',
         },
