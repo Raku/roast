@@ -38,7 +38,6 @@ is Blob.new(<1 2 3>).Int,     3, '.Int gives  number of elements';
 throws-like { Blob.new.chars }, X::Buf::AsStr, :method<chars>,
     'attempting to call .chars throws';
 
-is  Blob.new(<1 2 3>).gist, 'Blob:0x<01 02 03>', 'gist gives useful value';
 is-deeply Blob.new(<1 2 3>).reverse, Blob.new(<3 2 1>),
     '.reverse gives reversed Blob';
 
@@ -171,6 +170,23 @@ subtest 'arity-1 infix:<~> works on Blobs' => {
     constant $b = Buf.new: <42 72 13>;
     is-deeply infix:<~>($b), $b, 'arity-1 infix:<~> is unity';
     is-deeply ([~] [$b]),    $b, '[~] works with array with 1 blob';
+}
+
+subtest '.gist shows only first 100 els' => {
+    plan 5;
+    sub make-gist ($blob, $extras = []) {
+        'Blob:0x<' ~ (|$blob».fmt('%02x'), |$extras) ~ '>'
+    }
+
+    is  Blob.new(<1 2 3>).gist, 'Blob:0x<01 02 03>', 'gist gives useful value';
+    is-deeply Blob.new(|$_).gist, make-gist([1..100]), '100 els'
+        with (1..100).list;
+    is-deeply Blob.new(|$_).gist, make-gist([1..100], '...'), '101 els'
+        with (1..101).list;
+    is-deeply Blob.new(|$_).gist, make-gist([1..100], '...'), '102 els'
+        with (1..102).list;
+    is-deeply Blob.new(|$_).gist, make-gist([1..100], '...'), '1000 els'
+        with (1..1000).list;
 }
 
 # vim: ft=perl6
