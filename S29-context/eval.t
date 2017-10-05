@@ -58,9 +58,10 @@ dies-ok({EVAL {; 42} }, 'block EVAL is gone');
        'EVAL works inside instance methods, with outer lexicals';
 }
 
-#?rakudo skip 'EVAL(Buf) RT #122256'
+# RT #122256
 {
     is EVAL("'møp'".encode('UTF-8')), 'møp', 'EVAL(Buf)';
+#?rakudo skip 'RT #122256'
     is "'møp'".encode('UTF-8').EVAL, 'møp', 'Buf.EVAL';
 }
 
