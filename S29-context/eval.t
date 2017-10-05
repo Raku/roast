@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages>;
 use nqp;
 use Test;
-plan 24;
+use Test::Util;
+plan 25;
 
 # L<S29/Context/"=item EVAL">
 
@@ -108,6 +110,28 @@ is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
         nqp::atkey(CompUnit::Loader.load-source(q<package Qux { BEGIN EVAL q<>; };>.encode).unit, q<$?PACKAGE>).^name,
         "GLOBAL",
         "EVAL's package does not leak to the surrounding compilation unit";
+}
+
+subtest 'EVAL(Buf)' => {
+    plan 2;
+    is_run 'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode',
+        {:out('I ® U'), :err(''), :0status}, 'utf8 Buf';
+
+    subtest '--encoding=iso-8859-1 + iso-8859-1 buf' => {
+        plan 3;
+        # The $result Buf was obtained by running:
+        # perl6 -e '"foo".IO.spurt: q|print "I ® U"|, :enc<iso-8859-1>' |
+        #   perl6 -e 'run(:out, «perl6 --encoding=iso-8859-1 foo»).out.slurp-rest(:bin).perl.say'
+
+        my $result = Buf[uint8].new(73,32,194,174,32,85);
+        given run :out, :err, $*EXECUTABLE, '--encoding=iso-8859-1', '-e',
+            'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode: "iso-8859-1"'
+        {
+            is-deeply .out.slurp-rest(:bin), $result, 'STDOUT has right data';
+            is-deeply .err.slurp, '',      'STDERR is empty';
+            is-deeply .exitcode,  0,       'exitcode is correct';
+        }
+    }
 }
 
 # vim: ft=perl6
