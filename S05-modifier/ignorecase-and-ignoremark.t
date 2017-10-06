@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 24;
 
 =begin description
 
@@ -43,8 +43,11 @@ is('fooäàAÁâåbar' ~~ m:m:i/<[a..b]>+/, 'äàAÁâåba', 'range in character
 {
     my @strings = "All hell is breaking loose", "Āll hell is breakinġ loose";
     for @strings {
+        my $var = "All is fine, I am sure of it";
         is-deeply $_ ~~ m:i:m/"All is fine, I am sure of it"/, False, 'RT128875 :i:m combined matches whole string when a single character match is found';
+        is-deeply $_ ~~ m:i:m/$var/, False, 'RT128875 :i:m combined matches whole string when a single character match is found';
         is-deeply ('word' ~ $_) ~~ m:i:m/"All is fine, I am sure of it"/, False, 'RT128875 :i:m combined matches whole string when a single character match is found';
+        is-deeply ('word' ~ $_) ~~ m:i:m/$var/, False, 'RT128875 :i:m combined matches whole string when a single character match is found';
     }
 }
 # vim: syn=perl6 sw=4 ts=4 expandtab
