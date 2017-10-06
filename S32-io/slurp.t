@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 19;
+plan 20;
 
 # older: L<S16/"Unfiled"/"=item IO.slurp">
 # old: L<S32::IO/IO::FileNode/slurp>
@@ -118,5 +118,40 @@ subtest '&slurp(IO::Handle)' => {
 # RT #131503
 is_run ｢'-'.IO.slurp.print｣, 'meows', {:out<meows>, :err(''), :0status},
     'can .slurp from "-".IO path';
+
+subtest ':bin arg to IO::Handle.slurp method' => {
+    plan 5;
+
+    my $content = Buf[uint8].new: "meow\nI ® U".encode;
+    my $path = make-temp-file :$content;
+
+    my $fh = $path.open;
+    is-deeply $fh.slurp(:bin), $content, 'fresh handle';
+    $fh.close;
+
+    $fh = $path.open: :bin;
+    is-deeply $fh.slurp(:bin), $content, 'fresh bin handle';
+    $fh.close;
+
+    ($fh = $path.open).get;
+    is-deeply $fh.slurp(:bin), Buf[uint8].new("I ® U".encode), 'after .get';
+    $fh.close;
+
+    my $I-like-big-bufs-and-I-cannot-lie
+    = Buf[uint8].new: ("®" x 0x100010).encode;
+    $path.spurt: "I ® U\n".encode ~ $I-like-big-bufs-and-I-cannot-lie;
+    ($fh = $path.open).get;
+    is-deeply $fh.slurp(:bin),
+        $I-like-big-bufs-and-I-cannot-lie,
+        'after .get on large data file';
+    $fh.close;
+
+    $fh = $path.open: :bin;
+    $fh.read: 6; # 6 bytes of "I ® U" portion
+    is-deeply $fh.slurp(:bin),
+        Buf[uint8].new("\n".encode ~ $I-like-big-bufs-and-I-cannot-lie),
+        'after .read on large data file with bin handle';
+    $fh.close;
+}
 
 # vim: ft=perl6
