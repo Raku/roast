@@ -38,6 +38,16 @@ dies-ok {
     is EVAL(f2(:a(4))).<a>, 4,  '... with a sane return value';
 }
 
+# RT #126951
+{
+    sub f(*%h) { %h.keys };
+    
+    my %typedhash := :{ a => 1, b => 2 }; 
+    
+    is-deeply f(|%typedhash).List, <a b>,
+        'Can interpolate typed hashes into slurpy named parameters';
+}
+
 # RT #113804
 is join('|', |(1..5)), '1|2|3|4|5', 'can interpolate ranges into arglists';
 
