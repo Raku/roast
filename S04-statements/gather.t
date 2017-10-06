@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 39;
 
 # L<S04/The C<gather> statement prefix/>
 
@@ -291,6 +291,14 @@ plan 38;
     }
     ok @neighbors[1][1][0] === @spot[0][0], 'Got the value equality expected from take-rw';
     ok @neighbors[1][1][0] =:= @spot[0][0], 'Got the reference equality expected from take-rw';
+}
+
+# RT #127672
+{
+    my @result = gather {
+        'abc' ~~ m:g/. { take 'X' }/;
+    }
+    is @result.elems, 3, 'take inside m:g runs the expected number of times';
 }
 
 # vim: ft=perl6
