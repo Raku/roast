@@ -16,7 +16,7 @@ class A {
     has Str $.a = "dnes je horuci a potrebujem pivo";
 }
 class B is A {
-    has Int $!b = 42;
+    has Int $!b = $*FOO // 42;  # forces code closure
 }
 class C is B {
     has $.c is rw
@@ -42,8 +42,8 @@ is @attrs[1].build().(C, $_), 42,
 is @attrs[2].name,         '$!a',   'third attribute had correct name';
 is @attrs[2].type.gist,    '(Str)', 'third attribute had correct type';
 is @attrs[2].has_accessor, True,    'third attribute has an accessor';
-ok @attrs[2].build ~~ Code,         'third attribute has build block';
-is @attrs[2].build().(C, $_), "dnes je horuci a potrebujem pivo",
+ok @attrs[2].build ~~ Str,          'third attribute has build valuek';
+is @attrs[2].build,        "dnes je horuci a potrebujem pivo",
                                     'third attribute build block gives expected value';
 ok !@attrs[2].rw,                   'third attribute is not rw';
 ok @attrs[2].readonly,              'third attribute is readonly';
