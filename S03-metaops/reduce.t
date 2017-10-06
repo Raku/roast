@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 558;
+plan 559;
 
 =begin pod
 
@@ -147,6 +147,9 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (try {$list.value.key}),   2, "[=>] works (2)";
   is (try {$list.value.value}), 3, "[=>] works (3)";
 }
+
+# RT #130906
+is-deeply ([=>] (1, 2).Seq), (1 => 2), "[=>] works on Seq";
 
 {
     my @array = <5 -3 7 0 1 -9>;
