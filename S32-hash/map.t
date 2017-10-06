@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 11;
 
 {
     my %hash = :foo, :42bar;
@@ -28,6 +28,24 @@ plan 10;
     is-deeply $map{42e0}, 'foo', 'Map{} with non-Str key gives right results';
 
     is-deeply $map.clone, $map, 'Map.clone is identity';
+}
+
+subtest 'Map.gist shows only first 100 els' => {
+    plan 4;
+    sub make-gist ($map, $extras = []) {
+        'Map.new((' ~ (
+            |Map.new(|$map).sort.head(100).map(*.gist), |$extras
+        ).join(', ') ~ '))'
+    }
+
+    is-deeply Map.new($_).gist, make-gist($_), '100 els'
+        with (1..200).list;
+    is-deeply Map.new($_).gist, make-gist($_, '...'), '101 els'
+        with (1..202).list;
+    is-deeply Map.new($_).gist, make-gist($_, '...'), '102 els'
+        with (1..204).list;
+    is-deeply Map.new($_).gist, make-gist($_, '...'), '1000 els'
+        with (1..2000).list;
 }
 
 # vim: ft=perl6
