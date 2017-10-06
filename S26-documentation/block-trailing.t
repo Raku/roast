@@ -87,7 +87,6 @@ class Sheep {
     my $roar-method = Sheep.^find_method('roar');
     test-trailing(Sheep, 'a sheep');
     test-trailing($wool-attr, 'usually white');
-    #?rakudo todo "pod attributes"
     test-trailing($sound-attr, 'usually quiet');
     test-trailing($roar-method, 'not too scary');
 }
