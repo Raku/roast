@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 14;
 
 #L<S05/New metacharacters/"As with the disjunctions | and ||">
 
@@ -32,6 +32,17 @@ plan 10;
 
     ok $str ~~ m/ ||@list /;
     is ~$/,  'xx', 'first ||@list alternative matches';
+}
+
+
+# L<S05/Backtracking control>
+
+# RT #130117 and #131973
+{
+    is 'ab' ~~ / [ab || a ] b /,       'ab', 'backtrack into ||';
+    is 'ab' ~~ / [ab || a ]: b /,      Nil,  'don\'t backtrack into [ || ]:';
+    is 'ab' ~~ / :r [ab || a ] b /,    Nil,  'don\'t backtrack into || under :r';
+    is 'ab' ~~ / :r [ab || a ]:! b /,  'ab', 'backtrack into [ || ]:! despite :r';
 }
 
 # vim: ft=perl6
