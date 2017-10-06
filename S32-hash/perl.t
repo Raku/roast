@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Idempotence;
 
-plan 51;
+plan 52;
 
 # simple hash
 {
@@ -73,5 +73,8 @@ is-deeply (my %h{Int}).perl.EVAL.perl, '(my Any %{Int})',
 	is-perl-idempotent $a, "{$a.perl}.perl is idempotent";
     }
 }
+
+is (($ = Map.new: (:42a, :70b, :20c)).perl.EVAL,).flat.elems, 1,
+    "Map.perl preserves Map's scalar containeration";
 
 #vim: ft=perl6
