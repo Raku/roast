@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 58;
+plan 62;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -474,6 +474,17 @@ is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM pr
     }
     ok Oops.parse('ab'),
         'LTM with quantifier ** 1..2 followed by something else matches correctly';
+}
+
+
+# L<S05/Backtracking control>
+
+# RT #131973
+{
+    is 'ab' ~~ / [ab | a ] b /,       'ab', 'backtrack into |';
+    is 'ab' ~~ / [ab | a ]: b /,      Nil,  'don\'t backtrack into [ | ]:';
+    is 'ab' ~~ / :r [ab | a ] b /,    Nil,  'don\'t backtrack into | under :r';
+    is 'ab' ~~ / :r [ab | a ]:! b /,  'ab', 'backtrack into [ | ]:! despite :r';
 }
 
 # vim: ft=perl6 et
