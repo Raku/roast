@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 208;
+plan 207;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -393,10 +393,6 @@ plan 208;
       X::Comp::Trait::NotOnNative,
       type    => 'is',
       subtype => 'default';
-
-    #?rakudo.moar todo 'native int default(*) is NYI'
-    lives-ok { EVAL 'my int $a is default(*)' },
-      'the default(*) trait on natives';
 } #4
 
 # RT #126104
