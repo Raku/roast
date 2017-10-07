@@ -1,8 +1,9 @@
 use v6;
 
 use Test;
+use Test::Util;
 
-plan 129;
+plan 177;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
 
@@ -262,6 +263,17 @@ throws-like '1..2..3', X::Syntax::NonAssociative, '.. is not associative';
     ## cmp. https://github.com/rakudo/rakudo/commit/c5e7a7783d
     isa-ok { *.perl for ^2 }, Block,
         'range optimizer is protected from cases with no block';
+}
+
+# RT #127279
+my @opvariants = «.. ^.. ..^ ^..^ ' R..' ' R^..' ' R..^' ' R^..^'»;
+for @opvariants {
+    throws-like "\{ use fatal; |4$_ 5 }", X::Worry::Precedence::Range, "$_ warns on common flattening mistake";
+    throws-like "\{ use fatal; |4$_ 5 }", X::Worry::Precedence::Range, "$_ warns on common stringification mistake";
+    eval-lives-ok "\{ use fatal; |(4$_ 5) }", "$_ doesn't warn on parenthesized flattening (range)";
+    eval-lives-ok "\{ use fatal; (|4)$_ 5 }", "$_ doesn't warn on parenthesized flattening (endpoint)";
+    eval-lives-ok "\{ use fatal; ~(4$_ 5) }", "$_ doesn't warn on parenthesized stringification (range)";
+    eval-lives-ok "\{ use fatal; (~4)$_ 5 }", "$_ doesn't warn on parenthesized stringification (endpoint)";
 }
 
 # vim: ft=perl6
