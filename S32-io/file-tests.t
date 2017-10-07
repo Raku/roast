@@ -62,7 +62,7 @@ subtest ".d" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.d, 'Non-existant file is also not a directory';
-        throws-like { %tempfiles<non-existing>.IO.d }, X::IO::DoesNotExist;
+        fails-like { %tempfiles<non-existing>.IO.d }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :d, 'Non-existant file is also not a directory';
         isa-ok %tempfiles<non-existing>.IO ~~ :d, Bool, '~~ :d returns Bool';
     }
@@ -77,7 +77,7 @@ subtest ".f" => {
     ok %tempfiles<existing>.IO ~~ :f, 'Is normal file';
     isa-ok %tempfiles<existing>.IO ~~ :f, Bool, '~~ :f returns Bool';
     nok %tempfiles<non-existing>.IO.f, 'Is not a normal file';
-    throws-like { %tempfiles<non-existing>.IO.f }, X::IO::DoesNotExist;
+    fails-like { %tempfiles<non-existing>.IO.f }, X::IO::DoesNotExist;
     nok %tempfiles<non-existing>.IO ~~ :f, 'Is not a normal file';
     isa-ok %tempfiles<non-existing>.IO ~~ :f, Bool, '~~ :!f returns Bool';
 }
@@ -90,7 +90,7 @@ subtest ".s" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.s, 'Size on non-existent file';
-        throws-like { %tempfiles<non-existing>.IO.s }, X::IO::DoesNotExist;
+        fails-like { %tempfiles<non-existing>.IO.s }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :s, 'Is not a normal file';
         isa-ok %tempfiles<non-existing>.IO ~~ :s, Bool, '~~ :!s returns Bool';
     }
@@ -143,7 +143,7 @@ subtest ".l" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.l, 'Non-existant file is also not a symlink';
-        throws-like { %tempfiles<non-existing>.IO.l }, X::IO::DoesNotExist;
+        fails-like { %tempfiles<non-existing>.IO.l }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :l, 'Non-existant file is also not a symlink';
         isa-ok %tempfiles<non-existing>.IO ~~ :l, Bool, '~~ :l returns Bool';
     }
@@ -174,7 +174,7 @@ subtest ".r" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.r, 'Non-existing file is not readable';
-        throws-like { %tempfiles<non-existing>.IO.r }, X::IO::DoesNotExist;
+        fails-like { %tempfiles<non-existing>.IO.r }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :r, 'Non-existing file is not readable';
         isa-ok %tempfiles<non-existing>.IO ~~ :r, Bool, '~~ :r returns Bool';
     }
@@ -232,7 +232,7 @@ subtest ".w" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.w, 'Non-existing file is not writable';
-        throws-like { %tempfiles<non-existing>.IO.w }, X::IO::DoesNotExist;
+        fails-like { %tempfiles<non-existing>.IO.w }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :w, 'Non-existing file is not writable';
         isa-ok %tempfiles<non-existing>.IO ~~ :w, Bool, '~~ :r returns Bool';
     }
@@ -290,7 +290,7 @@ subtest ".rw" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.rw, 'Non-existing file is not readable and writable';
-        throws-like { %tempfiles<non-existing>.IO.rw }, X::IO::DoesNotExist;
+        fails-like { %tempfiles<non-existing>.IO.rw }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :rw, 'Non-existing file is not readbale and writable';
         isa-ok %tempfiles<non-existing>.IO ~~ :rw, Bool, '~~ :r returns Bool';
     }
@@ -348,7 +348,7 @@ subtest ".x" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.x, 'Non-existing file is not executable';
-        throws-like { %tempfiles<non-existing>.IO.x }, X::IO::DoesNotExist;
+        fails-like { %tempfiles<non-existing>.IO.x }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :x, 'Non-existing file is not executable';
         isa-ok %tempfiles<non-existing>.IO ~~ :x, Bool, '~~ :r returns Bool';
     }
@@ -406,7 +406,7 @@ subtest ".rwx" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.rwx, 'Non-existing file is not readable, writable and executable';
-        throws-like { %tempfiles<non-existing>.IO.rwx }, X::IO::DoesNotExist;
+        fails-like { %tempfiles<non-existing>.IO.rwx }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :rwx, 'Non-existing file is not readable, writable and executable';
         isa-ok %tempfiles<non-existing>.IO ~~ :rwx, Bool, '~~ :rwx returns Bool';
     }
@@ -464,7 +464,7 @@ subtest ".z" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.z, 'Non-existing file returns false on .z';
-        throws-like { %tempfiles<non-existing>.IO.z }, X::IO::DoesNotExist;
+        fails-like { %tempfiles<non-existing>.IO.z }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :z, 'Non-existing file returns false on :z';
         isa-ok %tempfiles<non-existing>.IO ~~ :z, Bool, '~~ :z returns Bool';
     }
