@@ -3,11 +3,13 @@ use Test;
 
 # L<S32::IO/IO::FileTests>
 
-plan 6;
+plan 7;
 
 my $existing-file = "tempfile-file-tests";
 my $non-existent-file = "non-existent-file-tests";
 my $zero-length-file = "tempfile-zero-length-file-tests";
+my $symlink-to-existing-file = "symlink-existing";
+my $symlink-to-non-existent-file = "symlink-nonexisting";
 
 { # write the file first
     my $fh = open($existing-file, :w);
@@ -18,6 +20,14 @@ my $zero-length-file = "tempfile-zero-length-file-tests";
 { # write the file first
     my $fh = open($zero-length-file, :w);
     $fh.close();
+}
+
+{ # Create a symlink to an existing file
+    symlink($existing-file, $symlink-to-existing-file);
+}
+
+{ # Create a symlink to a non-existent file
+    symlink($non-existent-file, $symlink-to-non-existent-file);
 }
 
 #Str methods
@@ -99,8 +109,50 @@ subtest ".s" => {
     lives-ok { ".".IO.s }, "Can get the size of a directory without dying";
 }
 
+subtest ".l" => {
+    plan 4;
+
+    subtest "Existing file" => {
+        plan 4;
+
+        nok $existing-file.IO.l, 'Existing file is not a symlink';
+        isa-ok $existing-file.IO.l, Bool, '.l returns Bool';
+        nok $existing-file.IO ~~ :l, 'Existing file is not a symlink';
+        isa-ok $existing-file.IO ~~ :l, Bool, '~~ :l returns Bool';
+    }
+
+    subtest "Non-existent file" => {
+        plan 4;
+
+        nok $non-existent-file.IO.l, 'Non-existant file is also not a symlink';
+        isa-ok $non-existent-file.IO.l, Bool, '.l returns Bool';
+        nok $non-existent-file.IO ~~ :l, 'Non-existant file is also not a symlink';
+        isa-ok $non-existent-file.IO ~~ :l, Bool, '~~ :l returns Bool';
+    }
+
+    subtest "Symlink to existing file" => {
+        plan 4;
+
+        ok $symlink-to-existing-file.IO.l, 'Existing file is a symlink';
+        isa-ok $symlink-to-existing-file.IO.l, Bool, '.l returns Bool';
+        ok $symlink-to-existing-file.IO ~~ :l, 'Existing file is a symlink';
+        isa-ok $symlink-to-existing-file.IO ~~ :l, Bool, '~~ :l returns Bool';
+    }
+
+    subtest "Symlink to non-existant file" => {
+        plan 4;
+
+        ok $symlink-to-non-existent-file.IO.l, 'Symlink to non-existant file';
+        isa-ok $symlink-to-non-existent-file.IO.l, Bool, '.l returns Bool';
+        ok $symlink-to-non-existent-file.IO ~~ :l, 'Symlink to non-existant file';
+        isa-ok $symlink-to-non-existent-file.IO ~~ :l, Bool, '~~ :l returns Bool';
+    }
+}
+
 # clean up
 ok unlink($existing-file), 'file has been removed';
 ok unlink($zero-length-file), 'file has been removed';
+ok unlink($symlink-to-existing-file), 'symlink has been removed';
+ok unlink($symlink-to-non-existent-file), 'symlink has been removed';
 
 # vim: ft=perl6
