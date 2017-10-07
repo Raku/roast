@@ -442,9 +442,14 @@ subtest ".rwx" => {
 
 # clean up
 subtest "Cleanup" => {
-    plan %tempfiles.elems;
+    my @cleanup = (
+        "symlink-existing",
+        "symlink-non-existing",
+    );
 
-    for %tempfiles.keys -> $file {
+    plan @cleanup.elems;
+
+    for @cleanup -> $file {
         ok unlink(%tempfiles{$file}), "Testfile $file has been removed";
     }
 }
