@@ -1,33 +1,27 @@
-use v6;
+#! /usr/bin/env perl6
+
+use v6.c;
+use lib <t/spec/packages/>;
+
 use Test;
+use Test::Util;
 
 # L<S32::IO/IO::FileTests>
 
 plan 11;
 
 my %tempfiles =
-    existing => "tempfile-file-tests",
+    existing => make-temp-file(:content("0123456789A")),
     non-existing => "non-existent-file-tests",
-    zero => "tempfile-zero-length-file-tests",
+    zero => make-temp-file,
     symlink-existing => "symlink-existing",
     symlink-non-existing => "symlink-nonexisting",
-    r => "tempfile-perms-r",
-    w => "tempfile-perms-w",
-    x => "tempfile-perms-x",
-    rw => "tempfile-perms-rw",
-    rwx => "tempfile-perms-rwx",
+    r => make-temp-file(:chmod(0o444)),
+    w => make-temp-file(:chmod(0o222)),
+    x => make-temp-file(:chmod(0o111)),
+    rw => make-temp-file(:chmod(0o666)),
+    rwx => make-temp-file(:chmod(0o777)),
     ;
-
-{ # write the file first
-    my $fh = open(%tempfiles<existing>, :w);
-    $fh.print: "0123456789A";
-    $fh.close();
-}
-
-{ # write the file first
-    my $fh = open(%tempfiles<zero>, :w);
-    $fh.close();
-}
 
 { # Create a symlink to an existing file
     symlink(%tempfiles<existing>, %tempfiles<symlink-existing>);
@@ -35,31 +29,6 @@ my %tempfiles =
 
 { # Create a symlink to a non-existent file
     symlink(%tempfiles<non-existing>, %tempfiles<symlink-non-existing>);
-}
-
-{ # Create a file with r--
-    spurt(%tempfiles<r>, "");
-    chmod(0o444, %tempfiles<r>);
-}
-
-{ # Create a file with -w-
-    spurt(%tempfiles<w>, "");
-    chmod(0o222, %tempfiles<w>);
-}
-
-{ # Create a file with --x
-    spurt(%tempfiles<x>, "");
-    chmod(0o111, %tempfiles<x>);
-}
-
-{ # Create a file with rw-
-    spurt(%tempfiles<rw>, "");
-    chmod(0o666, %tempfiles<rw>);
-}
-
-{ # Create a file with rwx
-    spurt(%tempfiles<rwx>, "");
-    chmod(0o777, %tempfiles<rwx>);
 }
 
 #Str methods
