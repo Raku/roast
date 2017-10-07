@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 60;
+plan 61;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -194,5 +194,12 @@ is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
 {
     is-deeply (0x0F75.chr x 2), "\x[0F75,0F75]", "Repeat operator keeps text normalized (normalization + canonical combining class reordering)";
     is-deeply (0x0F75.chr x 2).ords, (0xF71, 0xF71, 0xF74, 0xF74), "Repeat operator keeps text normalized (normalization + canonical combining class reordering)";
+}
+
+# RT #121327
+{
+    my @result = gather { for ^2 { my @b = 1 xx 4; take (@b.shift xx 2) xx 2 } }
+    is-deeply @result.map(*.list).list, (((1, 1), (1, 1)), ((1, 1), (1, 1))),
+        'Nested xx in for-loop';
 }
 # vim: ft=perl6
