@@ -146,7 +146,6 @@ my $IS = _register_functions(  # regex with test functions used in roast
     # from Test::Util
     qw(
       is_run            is-run
-      is_run_repl
       doesn't-hang
       doesn't-warn
       warns-like

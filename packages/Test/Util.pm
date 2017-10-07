@@ -177,34 +177,6 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-sub is_run_repl ($code, $desc, :$out, :$err) is export {
-    my $proc = &CORE::run( $*EXECUTABLE, :in, :out, :err );
-    $proc.in.print: $code;
-    $proc.in.close;
-    subtest {
-        plan +($out, $err).grep: *.defined;
-        with $out {
-            my $output    = $proc.out.slurp;
-            my $test-name = 'stdout is correct';
-            when Str      { is      $output, $_, $test-name; }
-            when Regex    { like    $output, $_, $test-name; }
-            when Callable { ok   $_($output),    $test-name; }
-
-            die "Don't know how to handle :out of type $_.^name()";
-        }
-
-        with $err {
-            my $output    = $proc.err.slurp;
-            my $test-name = 'stderr is correct';
-            when Str      { is      $output, $_, $test-name; }
-            when Regex    { like    $output, $_, $test-name; }
-            when Callable { ok   $_($output),    $test-name; }
-
-            die "Don't know how to handle :err of type $_.^name()";
-        }
-    }, $desc;
-}
-
 multi doesn't-hang (Str $args, $desc, :$in, :$wait = 1.5, :$out, :$err)
 is export {
     doesn't-hang \($*EXECUTABLE, '-e', $args), $desc,
@@ -398,27 +370,6 @@ is_run() will skip() (but it will still execute the code not being tested).
 
 is_run() depends on get_out(), which might die.  In that case, it dies
 also (this error is not trapped).
-
-=head2 is_run_repl ($code, $desc, :$out, :$err)
-
-    is_run_repl "say 42\nexit\n", :err(''), :out(/"42\n"/),
-        'say 42 works fine';
-
-Fires up the REPL and enters the given C<$code>. Be sure to send correct
-newlines, as you would press ENTER key when using the REPL manually.
-
-The C<:$out> and C<:$err> named arguments are optional and corresponding
-tests are only run when the arguments are specified. They test REPL's STDOUT
-and STDERR respectively. Can take Str, Regex, or Callable, which respectively
-causes the test to use C<is>, C<like>, or execute the Callable with the output
-as the given argument and use C<ok> on its output.
-
-Will close STDIN (equivalent to sending CTRL+D in REPL) after sending the
-input, so you do not have to send explicit C<exit\n>
-
-B<NOTE:>
-STDOUT will generally contain all the messages displayed by the REPL at the
-start.
 
 =head2 doesn't-hang ( ... )
 
