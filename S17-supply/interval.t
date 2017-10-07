@@ -40,7 +40,7 @@ is_run(
             ~ ' say "Did not hang"';
 
     for ^3 {
-        #?rakudo.jvm skip "NoSuchMethodError: org.perl6.nqp.runtime.IOOps.killprocasync in sub doesn't-hang"
+        #?rakudo.jvm skip "killprocasync NYI -- used in sub doesn't-hang"
         doesn't-hang \($*EXECUTABLE, '-e', $code), :out(/'Did not hang'/),
             'done() on first iteration of Supply.interval does not hang';
     }
