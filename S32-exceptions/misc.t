@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 431;
+plan 432;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -981,6 +981,15 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
     throws-like q| my \foo = Callable but role :: { } |,
         X::Method::NotFound,
 	'X::Method::NotFound does not die with "X::Method::NotFound exception produced no message"';
+}
+
+# RT #123926
+{
+    throws-like q|enum E <Foo Bar>; sub x(Floo) {}|,
+        X::Parameter::InvalidType,
+        typename    => 'Floo',
+        suggestions => ['Foo'],
+        'enum values are suggested for misspellings'
 }
 
 # vim: ft=perl6
