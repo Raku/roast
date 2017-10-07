@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::IO/IO::FileTests>
 
-plan 8;
+plan 9;
 
 my %tempfiles =
     existing => "tempfile-file-tests",
@@ -254,18 +254,18 @@ subtest ".w" => {
     subtest "File with r--" => {
         plan 4;
 
-        ok %tempfiles<r>.IO.w, 'File with r-- is writable';
+        nok %tempfiles<r>.IO.w, 'File with r-- is not writable';
         isa-ok %tempfiles<r>.IO.w, Bool, '.w returns Bool';
-        ok %tempfiles<r>.IO ~~ :w, 'File with r-- is writable';
+        nok %tempfiles<r>.IO ~~ :w, 'File with r-- is not writable';
         isa-ok %tempfiles<r>.IO ~~ :w, Bool, '~~ :r returns Bool';
     }
 
     subtest "File with -w-" => {
         plan 4;
 
-        nok %tempfiles<w>.IO.w, 'File with -w- is not writable';
+        ok %tempfiles<w>.IO.w, 'File with -w- is writable';
         isa-ok %tempfiles<w>.IO.w, Bool, '.w returns Bool';
-        nok %tempfiles<w>.IO ~~ :w, 'File with -w- is not writable';
+        ok %tempfiles<w>.IO ~~ :w, 'File with -w- is writable';
         isa-ok %tempfiles<w>.IO ~~ :w, Bool, '~~ :r returns Bool';
     }
 
@@ -294,6 +294,64 @@ subtest ".w" => {
         isa-ok %tempfiles<rwx>.IO.w, Bool, '.w returns Bool';
         ok %tempfiles<rwx>.IO ~~ :w, 'File with rwx is writable';
         isa-ok %tempfiles<rwx>.IO ~~ :w, Bool, '~~ :r returns Bool';
+    }
+}
+
+subtest ".x" => {
+    plan 6;
+
+    subtest "Non-existing file" => {
+        plan 4;
+
+        nok %tempfiles<non-existing>.IO.x, 'Non-existing file is not executable';
+        throws-like { %tempfiles<non-existing>.IO.x }, X::IO::DoesNotExist;
+        nok %tempfiles<non-existing>.IO ~~ :x, 'Non-existing file is not executable';
+        isa-ok %tempfiles<non-existing>.IO ~~ :x, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with r--" => {
+        plan 4;
+
+        nok %tempfiles<r>.IO.x, 'File with r-- is not executable';
+        isa-ok %tempfiles<r>.IO.x, Bool, '.w returns Bool';
+        nok %tempfiles<r>.IO ~~ :x, 'File with r-- is not executable';
+        isa-ok %tempfiles<r>.IO ~~ :x, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with -w-" => {
+        plan 4;
+
+        nok %tempfiles<w>.IO.x, 'File with -w- is not executable';
+        isa-ok %tempfiles<w>.IO.x, Bool, '.w returns Bool';
+        nok %tempfiles<w>.IO ~~ :x, 'File with -w- is not executable';
+        isa-ok %tempfiles<w>.IO ~~ :x, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with --x" => {
+        plan 4;
+
+        ok %tempfiles<x>.IO.x, 'File with --x is executable';
+        isa-ok %tempfiles<x>.IO.x, Bool, '.w returns Bool';
+        ok %tempfiles<x>.IO ~~ :x, 'File with --x is executable';
+        isa-ok %tempfiles<x>.IO ~~ :x, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with rw-" => {
+        plan 4;
+
+        nok %tempfiles<rw>.IO.x, 'File with rw- is not executable';
+        isa-ok %tempfiles<rw>.IO.x, Bool, '.w returns Bool';
+        nok %tempfiles<rw>.IO ~~ :x, 'File with rw- is not executable';
+        isa-ok %tempfiles<rw>.IO ~~ :x, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with rwx" => {
+        plan 4;
+
+        ok %tempfiles<rwx>.IO.x, 'File with rwx is executable';
+        isa-ok %tempfiles<rwx>.IO.x, Bool, '.w returns Bool';
+        ok %tempfiles<rwx>.IO ~~ :x, 'File with rwx is executable';
+        isa-ok %tempfiles<rwx>.IO ~~ :x, Bool, '~~ :r returns Bool';
     }
 }
 
