@@ -3,7 +3,7 @@ use v6;
 # Test various forms of comments
 
 use Test;
-plan 51;
+plan 50;
 
 # L<S02/"Embedded Comments"/"Embedded comments"
 #  "#" plus any bracket>
@@ -57,7 +57,6 @@ plan 51;
     is(55 #`⦓ pano ⦔   +89, 144, 'embedded comment with #⦓`⦔');
     is(144 #`⦕ papa ⦖   +233, 377, 'embedded comment with #`⦕⦖');
     is(377 #`『 pare 』   +610, 987, 'embedded comment with #`『』');
-    is(610 #`﴾ paci ﴿   +987, 1597, 'embedded comment with #`﴾﴿');
 }
 
 # L<S02/"Embedded Comments"/"no space" between "#" and bracket>
