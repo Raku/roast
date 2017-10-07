@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::IO/IO::FileTests>
 
-plan 6;
+plan 7;
 
 my %tempfiles =
     existing => "tempfile-file-tests",
@@ -178,6 +178,64 @@ subtest ".l" => {
         isa-ok %tempfiles<symlink-non-existing>.IO.l, Bool, '.l returns Bool';
         ok %tempfiles<symlink-non-existing>.IO ~~ :l, 'Symlink to non-existant file';
         isa-ok %tempfiles<symlink-non-existing>.IO ~~ :l, Bool, '~~ :l returns Bool';
+    }
+}
+
+subtest ".r" => {
+    plan 6;
+
+    subtest "Non-existing file" => {
+        plan 4;
+
+        nok %tempfiles<non-existing>.IO.r, 'Non-existing file is not readable';
+        throws-like { %tempfiles<non-existing>.IO.r }, X::IO::DoesNotExist;
+        nok %tempfiles<non-existing>.IO ~~ :r, 'Non-existing file is not readable';
+        isa-ok %tempfiles<non-existing>.IO ~~ :r, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with r--" => {
+        plan 4;
+
+        ok %tempfiles<r>.IO.r, 'File with r-- is readable';
+        isa-ok %tempfiles<r>.IO.r, Bool, '.r returns Bool';
+        ok %tempfiles<r>.IO ~~ :r, 'File with r-- is readable';
+        isa-ok %tempfiles<r>.IO ~~ :r, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with -w-" => {
+        plan 4;
+
+        nok %tempfiles<w>.IO.r, 'File with -w- is not readable';
+        isa-ok %tempfiles<w>.IO.r, Bool, '.r returns Bool';
+        nok %tempfiles<w>.IO ~~ :r, 'File with -w- is not readable';
+        isa-ok %tempfiles<w>.IO ~~ :r, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with --x" => {
+        plan 4;
+
+        nok %tempfiles<x>.IO.r, 'File with --x is not readable';
+        isa-ok %tempfiles<x>.IO.r, Bool, '.r returns Bool';
+        nok %tempfiles<x>.IO ~~ :r, 'File with --x is not readable';
+        isa-ok %tempfiles<x>.IO ~~ :r, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with rw-" => {
+        plan 4;
+
+        ok %tempfiles<rw>.IO.r, 'File with rw- is readable';
+        isa-ok %tempfiles<rw>.IO.r, Bool, '.r returns Bool';
+        ok %tempfiles<rw>.IO ~~ :r, 'File with rw- is readable';
+        isa-ok %tempfiles<rw>.IO ~~ :r, Bool, '~~ :r returns Bool';
+    }
+
+    subtest "File with rwx" => {
+        plan 4;
+
+        ok %tempfiles<rwx>.IO.r, 'File with rwx is readable';
+        isa-ok %tempfiles<rwx>.IO.r, Bool, '.r returns Bool';
+        ok %tempfiles<rwx>.IO ~~ :r, 'File with rwx is readable';
+        isa-ok %tempfiles<rwx>.IO ~~ :r, Bool, '~~ :r returns Bool';
     }
 }
 
