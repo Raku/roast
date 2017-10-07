@@ -93,7 +93,7 @@ subtest ".d" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.d, 'Non-existant file is also not a directory';
-        isa-ok %tempfiles<non-existing>.IO.d, Bool, '.d returns Bool';
+        throws-like { %tempfiles<non-existing>.IO.d }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :d, 'Non-existant file is also not a directory';
         isa-ok %tempfiles<non-existing>.IO ~~ :d, Bool, '~~ :d returns Bool';
     }
@@ -157,7 +157,7 @@ subtest ".l" => {
         plan 4;
 
         nok %tempfiles<non-existing>.IO.l, 'Non-existant file is also not a symlink';
-        isa-ok %tempfiles<non-existing>.IO.l, Bool, '.l returns Bool';
+        throws-like { %tempfiles<non-existing>.IO.l }, X::IO::DoesNotExist;
         nok %tempfiles<non-existing>.IO ~~ :l, 'Non-existant file is also not a symlink';
         isa-ok %tempfiles<non-existing>.IO ~~ :l, Bool, '~~ :l returns Bool';
     }
