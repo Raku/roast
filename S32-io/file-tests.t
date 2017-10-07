@@ -3,31 +3,63 @@ use Test;
 
 # L<S32::IO/IO::FileTests>
 
-plan 7;
+plan 6;
 
-my $existing-file = "tempfile-file-tests";
-my $non-existent-file = "non-existent-file-tests";
-my $zero-length-file = "tempfile-zero-length-file-tests";
-my $symlink-to-existing-file = "symlink-existing";
-my $symlink-to-non-existent-file = "symlink-nonexisting";
+my %tempfiles =
+    existing => "tempfile-file-tests",
+    non-existing => "non-existent-file-tests",
+    zero => "tempfile-zero-length-file-tests",
+    symlink-existing => "symlink-existing",
+    symlink-non-existing => "symlink-nonexisting",
+    r => "tempfile-perms-r",
+    w => "tempfile-perms-w",
+    x => "tempfile-perms-x",
+    rw => "tempfile-perms-rw",
+    rwx => "tempfile-perms-rwx",
+    ;
 
 { # write the file first
-    my $fh = open($existing-file, :w);
+    my $fh = open(%tempfiles<existing>, :w);
     $fh.print: "0123456789A";
     $fh.close();
 }
 
 { # write the file first
-    my $fh = open($zero-length-file, :w);
+    my $fh = open(%tempfiles<zero>, :w);
     $fh.close();
 }
 
 { # Create a symlink to an existing file
-    symlink($existing-file, $symlink-to-existing-file);
+    symlink(%tempfiles<existing>, %tempfiles<symlink-existing>);
 }
 
 { # Create a symlink to a non-existent file
-    symlink($non-existent-file, $symlink-to-non-existent-file);
+    symlink(%tempfiles<non-existing>, %tempfiles<symlink-non-existing>);
+}
+
+{ # Create a file with r--
+    spurt(%tempfiles<r>, "");
+    chmod(0o444, %tempfiles<r>);
+}
+
+{ # Create a file with -w-
+    spurt(%tempfiles<w>, "");
+    chmod(0o222, %tempfiles<w>);
+}
+
+{ # Create a file with --x
+    spurt(%tempfiles<x>, "");
+    chmod(0o111, %tempfiles<x>);
+}
+
+{ # Create a file with rw-
+    spurt(%tempfiles<rw>, "");
+    chmod(0o666, %tempfiles<rw>);
+}
+
+{ # Create a file with rwx
+    spurt(%tempfiles<rwx>, "");
+    chmod(0o777, %tempfiles<rwx>);
 }
 
 #Str methods
@@ -35,14 +67,14 @@ my $symlink-to-non-existent-file = "symlink-nonexisting";
 subtest ".e" => {
     plan 8;
 
-    ok $existing-file.IO.e, 'It exists';
-    isa-ok $existing-file.IO.e, Bool, '.e returns Bool';
-    ok $existing-file.IO ~~ :e, 'It exists';
-    isa-ok $existing-file.IO ~~ :e, Bool, '~~ :e returns Bool';
-    nok $non-existent-file.IO.e, "It doesn't";
-    isa-ok $non-existent-file.IO.e, Bool, '.e returns Bool';
-    nok $non-existent-file.IO ~~ :e, "It doesn't";
-    isa-ok $non-existent-file.IO ~~ :e, Bool, '~~ :e returns Bool';
+    ok %tempfiles<existing>.IO.e, 'It exists';
+    isa-ok %tempfiles<existing>.IO.e, Bool, '.e returns Bool';
+    ok %tempfiles<existing>.IO ~~ :e, 'It exists';
+    isa-ok %tempfiles<existing>.IO ~~ :e, Bool, '~~ :e returns Bool';
+    nok %tempfiles<non-existing>.IO.e, "It doesn't";
+    isa-ok %tempfiles<non-existing>.IO.e, Bool, '.e returns Bool';
+    nok %tempfiles<non-existing>.IO ~~ :e, "It doesn't";
+    isa-ok %tempfiles<non-existing>.IO ~~ :e, Bool, '~~ :e returns Bool';
 }
 
 subtest ".d" => {
@@ -51,19 +83,19 @@ subtest ".d" => {
     subtest "Existing file" => {
         plan 4;
 
-        nok $existing-file.IO.d, 'Existing file is not a directory';
-        isa-ok $existing-file.IO.d, Bool, '.d returns Bool';
-        nok $existing-file.IO ~~ :d, 'Existing file is not a directory';
-        isa-ok $existing-file.IO ~~ :d, Bool, '~~ :d returns Bool';
+        nok %tempfiles<existing>.IO.d, 'Existing file is not a directory';
+        isa-ok %tempfiles<existing>.IO.d, Bool, '.d returns Bool';
+        nok %tempfiles<existing>.IO ~~ :d, 'Existing file is not a directory';
+        isa-ok %tempfiles<existing>.IO ~~ :d, Bool, '~~ :d returns Bool';
     }
 
     subtest "Non-existent file" => {
         plan 4;
 
-        nok $non-existent-file.IO.d, 'Non-existant file is also not a directory';
-        isa-ok $non-existent-file.IO.d, Bool, '.d returns Bool';
-        nok $non-existent-file.IO ~~ :d, 'Non-existant file is also not a directory';
-        isa-ok $non-existent-file.IO ~~ :d, Bool, '~~ :d returns Bool';
+        nok %tempfiles<non-existing>.IO.d, 'Non-existant file is also not a directory';
+        isa-ok %tempfiles<non-existing>.IO.d, Bool, '.d returns Bool';
+        nok %tempfiles<non-existing>.IO ~~ :d, 'Non-existant file is also not a directory';
+        isa-ok %tempfiles<non-existing>.IO ~~ :d, Bool, '~~ :d returns Bool';
     }
 }
 
@@ -71,39 +103,39 @@ subtest ".d" => {
 subtest ".f" => {
     plan 8;
 
-    ok $existing-file.IO.f, 'Is normal file';
-    isa-ok $existing-file.IO.f, Bool, '.f returns Bool';
-    ok $existing-file.IO ~~ :f, 'Is normal file';
-    isa-ok $existing-file.IO ~~ :f, Bool, '~~ :f returns Bool';
-    nok $non-existent-file.IO.f, 'Is not a normal file';
-    throws-like { $non-existent-file.IO.f }, X::IO::DoesNotExist;
-    nok $non-existent-file.IO ~~ :f, 'Is not a normal file';
-    isa-ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
+    ok %tempfiles<existing>.IO.f, 'Is normal file';
+    isa-ok %tempfiles<existing>.IO.f, Bool, '.f returns Bool';
+    ok %tempfiles<existing>.IO ~~ :f, 'Is normal file';
+    isa-ok %tempfiles<existing>.IO ~~ :f, Bool, '~~ :f returns Bool';
+    nok %tempfiles<non-existing>.IO.f, 'Is not a normal file';
+    throws-like { %tempfiles<non-existing>.IO.f }, X::IO::DoesNotExist;
+    nok %tempfiles<non-existing>.IO ~~ :f, 'Is not a normal file';
+    isa-ok %tempfiles<non-existing>.IO ~~ :f, Bool, '~~ :!f returns Bool';
 }
 
 ##is empty
 subtest ".s" => {
     plan 17;
 
-    nok $zero-length-file.IO.s, 'Is empty';
-    isa-ok $zero-length-file.IO.s, Int, '.s returns Int';
-    ok $zero-length-file.IO ~~ :!s, 'Is empty';
-    isa-ok $zero-length-file.IO ~~ :!s, Bool, '~~ :!s returns Bool';
-    ok $existing-file.IO.s, 'Is not';
-    isa-ok $existing-file.IO.s, Int, '.s returns Int';
-    ok $existing-file.IO ~~ :s, 'Is not';
-    isa-ok $existing-file.IO ~~ :s, Bool, '~~ :s returns Bool';
+    nok %tempfiles<zero>.IO.s, 'Is empty';
+    isa-ok %tempfiles<zero>.IO.s, Int, '.s returns Int';
+    ok %tempfiles<zero>.IO ~~ :!s, 'Is empty';
+    isa-ok %tempfiles<zero>.IO ~~ :!s, Bool, '~~ :!s returns Bool';
+    ok %tempfiles<existing>.IO.s, 'Is not';
+    isa-ok %tempfiles<existing>.IO.s, Int, '.s returns Int';
+    ok %tempfiles<existing>.IO ~~ :s, 'Is not';
+    isa-ok %tempfiles<existing>.IO ~~ :s, Bool, '~~ :s returns Bool';
 
     ##file size
-    is $zero-length-file.IO.s, 0, 'No size';
-    isa-ok $zero-length-file.IO.s, Int, '.s returns Int';
-    is $existing-file.IO.s, 11, 'size of file';
-    isa-ok $existing-file.IO.s, Int, '.s returns Int';
+    is %tempfiles<zero>.IO.s, 0, 'No size';
+    isa-ok %tempfiles<zero>.IO.s, Int, '.s returns Int';
+    is %tempfiles<existing>.IO.s, 11, 'size of file';
+    isa-ok %tempfiles<existing>.IO.s, Int, '.s returns Int';
 
-    nok $non-existent-file.IO.s, 'Size on non-existent file';
-    throws-like { $non-existent-file.IO.s }, X::IO::DoesNotExist;
-    nok $non-existent-file.IO ~~ :s, 'Is not a normal file';
-    isa-ok $non-existent-file.IO ~~ :s, Bool, '~~ :!s returns Bool';
+    nok %tempfiles<non-existing>.IO.s, 'Size on non-existent file';
+    throws-like { %tempfiles<non-existing>.IO.s }, X::IO::DoesNotExist;
+    nok %tempfiles<non-existing>.IO ~~ :s, 'Is not a normal file';
+    isa-ok %tempfiles<non-existing>.IO ~~ :s, Bool, '~~ :!s returns Bool';
 
     ##folder size
     lives-ok { ".".IO.s }, "Can get the size of a directory without dying";
@@ -115,44 +147,47 @@ subtest ".l" => {
     subtest "Existing file" => {
         plan 4;
 
-        nok $existing-file.IO.l, 'Existing file is not a symlink';
-        isa-ok $existing-file.IO.l, Bool, '.l returns Bool';
-        nok $existing-file.IO ~~ :l, 'Existing file is not a symlink';
-        isa-ok $existing-file.IO ~~ :l, Bool, '~~ :l returns Bool';
+        nok %tempfiles<existing>.IO.l, 'Existing file is not a symlink';
+        isa-ok %tempfiles<existing>.IO.l, Bool, '.l returns Bool';
+        nok %tempfiles<existing>.IO ~~ :l, 'Existing file is not a symlink';
+        isa-ok %tempfiles<existing>.IO ~~ :l, Bool, '~~ :l returns Bool';
     }
 
     subtest "Non-existent file" => {
         plan 4;
 
-        nok $non-existent-file.IO.l, 'Non-existant file is also not a symlink';
-        isa-ok $non-existent-file.IO.l, Bool, '.l returns Bool';
-        nok $non-existent-file.IO ~~ :l, 'Non-existant file is also not a symlink';
-        isa-ok $non-existent-file.IO ~~ :l, Bool, '~~ :l returns Bool';
+        nok %tempfiles<non-existing>.IO.l, 'Non-existant file is also not a symlink';
+        isa-ok %tempfiles<non-existing>.IO.l, Bool, '.l returns Bool';
+        nok %tempfiles<non-existing>.IO ~~ :l, 'Non-existant file is also not a symlink';
+        isa-ok %tempfiles<non-existing>.IO ~~ :l, Bool, '~~ :l returns Bool';
     }
 
     subtest "Symlink to existing file" => {
         plan 4;
 
-        ok $symlink-to-existing-file.IO.l, 'Existing file is a symlink';
-        isa-ok $symlink-to-existing-file.IO.l, Bool, '.l returns Bool';
-        ok $symlink-to-existing-file.IO ~~ :l, 'Existing file is a symlink';
-        isa-ok $symlink-to-existing-file.IO ~~ :l, Bool, '~~ :l returns Bool';
+        ok %tempfiles<symlink-existing>.IO.l, 'Existing file is a symlink';
+        isa-ok %tempfiles<symlink-existing>.IO.l, Bool, '.l returns Bool';
+        ok %tempfiles<symlink-existing>.IO ~~ :l, 'Existing file is a symlink';
+        isa-ok %tempfiles<symlink-existing>.IO ~~ :l, Bool, '~~ :l returns Bool';
     }
 
     subtest "Symlink to non-existant file" => {
         plan 4;
 
-        ok $symlink-to-non-existent-file.IO.l, 'Symlink to non-existant file';
-        isa-ok $symlink-to-non-existent-file.IO.l, Bool, '.l returns Bool';
-        ok $symlink-to-non-existent-file.IO ~~ :l, 'Symlink to non-existant file';
-        isa-ok $symlink-to-non-existent-file.IO ~~ :l, Bool, '~~ :l returns Bool';
+        ok %tempfiles<symlink-non-existing>.IO.l, 'Symlink to non-existant file';
+        isa-ok %tempfiles<symlink-non-existing>.IO.l, Bool, '.l returns Bool';
+        ok %tempfiles<symlink-non-existing>.IO ~~ :l, 'Symlink to non-existant file';
+        isa-ok %tempfiles<symlink-non-existing>.IO ~~ :l, Bool, '~~ :l returns Bool';
     }
 }
 
 # clean up
-ok unlink($existing-file), 'file has been removed';
-ok unlink($zero-length-file), 'file has been removed';
-ok unlink($symlink-to-existing-file), 'symlink has been removed';
-ok unlink($symlink-to-non-existent-file), 'symlink has been removed';
+subtest "Cleanup" => {
+    plan %tempfiles.elems;
+
+    for %tempfiles.keys -> $file {
+        ok unlink(%tempfiles{$file}), "Testfile $file has been removed";
+    }
+}
 
 # vim: ft=perl6
