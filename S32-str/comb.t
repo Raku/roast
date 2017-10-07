@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 81;
+plan 82;
 
 # L<S32::Str/Str/=item comb>
 
@@ -185,5 +185,10 @@ subtest 'edge-case combers' => {
         is-deeply $str.comb(|args), $expected, "$str.perl() with {args.perl}";
     }
 }
+
+# RT #130186
+is (gather 'abc'.comb(/. { take $/.Str } <!> /)).join(','),
+    'a,b,c',
+    '$/ inside comb';
 
 # vim: ft=perl6
