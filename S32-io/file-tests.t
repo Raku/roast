@@ -8,7 +8,7 @@ use Test::Util;
 
 # L<S32::IO/IO::FileTests>
 
-plan 15;
+plan 16;
 
 my %tempfiles =
     existing => make-temp-file(:content("0123456789A")),
@@ -533,6 +533,34 @@ subtest ".changed" => {
         plan 1;
 
         isa-ok %tempfiles<existing>.IO.changed, (Instant), '.changed returns Instant';
+    }
+}
+
+subtest ".mode" => {
+    my %tests =
+        r => 0o444,
+        w => 0o222,
+        x => 0o111,
+        rw => 0o666,
+        rwx => 0o777,
+        ;
+
+    plan (1 + %tests.elems);
+
+    subtest "Non-existing file" => {
+        plan 1;
+        fails-like { %tempfiles<non-existing>.IO.mode}, X::IO::DoesNotExist;
+    }
+
+    for %tests.keys -> $mode {
+        subtest $mode => {
+            plan 3;
+
+            isa-ok %tempfiles{$mode}.IO.mode, IntStr, ".mode returns IntStr";
+
+            is %tempfiles{$mode}.IO.mode, "0%o".sprintf(%tests{$mode}), ".mode returns correct value";
+            is %tempfiles{$mode}.IO.mode.Int, %tests{$mode}, ".mode.Int returns correct value";
+        }
     }
 }
 
