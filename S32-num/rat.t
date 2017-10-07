@@ -292,13 +292,15 @@ isa-ok( $!.numerator, 42, "got the answer rather than 420");
 
 # RT#126016
 subtest '0.9999999999999999999999 to string conversions' => {
-    plan 3;
+    plan 4;
 
     constant r = 0.9999999999999999999999;
     is-deeply r.Str, '1', '.Str rounds off correctly';
     is-deeply r.perl, '<9999999999999999999999/10000000000000000000000>',
         '.perl gives accurate result';
     is-deeply r.perl.EVAL, r, '.perl.EVAL roundtrips';
+    # RT #126101
+    nok 0.99999999999999999999999 > 1, '0.99999... not rounded to larger than 1';
 }
 
 # RT#130427
