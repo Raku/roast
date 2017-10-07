@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::IO/IO::FileTests>
 
-plan 35;
+plan 5;
 
 my $existing-file = "tempfile-file-tests";
 my $non-existent-file = "non-existent-file-tests";
@@ -22,27 +22,37 @@ my $zero-length-file = "tempfile-zero-length-file-tests";
 
 #Str methods
 ##existence
-ok $existing-file.IO.e, 'It exists';
-isa-ok $existing-file.IO.e, Bool, '.e returns Bool';
-ok $existing-file.IO ~~ :e, 'It exists';
-isa-ok $existing-file.IO ~~ :e, Bool, '~~ :e returns Bool';
-nok $non-existent-file.IO.e, "It doesn't";
-isa-ok $non-existent-file.IO.e, Bool, '.e returns Bool';
-nok $non-existent-file.IO ~~ :e, "It doesn't";
-isa-ok $non-existent-file.IO ~~ :e, Bool, '~~ :e returns Bool';
+subtest ".e" => {
+    plan 8;
+
+    ok $existing-file.IO.e, 'It exists';
+    isa-ok $existing-file.IO.e, Bool, '.e returns Bool';
+    ok $existing-file.IO ~~ :e, 'It exists';
+    isa-ok $existing-file.IO ~~ :e, Bool, '~~ :e returns Bool';
+    nok $non-existent-file.IO.e, "It doesn't";
+    isa-ok $non-existent-file.IO.e, Bool, '.e returns Bool';
+    nok $non-existent-file.IO ~~ :e, "It doesn't";
+    isa-ok $non-existent-file.IO ~~ :e, Bool, '~~ :e returns Bool';
+}
 
 ##is normal file
-ok $existing-file.IO.f, 'Is normal file';
-isa-ok $existing-file.IO.f, Bool, '.f returns Bool';
-ok $existing-file.IO ~~ :f, 'Is normal file';
-isa-ok $existing-file.IO ~~ :f, Bool, '~~ :f returns Bool';
-nok $non-existent-file.IO.f, 'Is not a normal file';
-throws-like { $non-existent-file.IO.f }, X::IO::DoesNotExist;
-nok $non-existent-file.IO ~~ :f, 'Is not a normal file';
-isa-ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
+subtest ".f" => {
+    plan 8;
+
+    ok $existing-file.IO.f, 'Is normal file';
+    isa-ok $existing-file.IO.f, Bool, '.f returns Bool';
+    ok $existing-file.IO ~~ :f, 'Is normal file';
+    isa-ok $existing-file.IO ~~ :f, Bool, '~~ :f returns Bool';
+    nok $non-existent-file.IO.f, 'Is not a normal file';
+    throws-like { $non-existent-file.IO.f }, X::IO::DoesNotExist;
+    nok $non-existent-file.IO ~~ :f, 'Is not a normal file';
+    isa-ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
+}
 
 ##is empty
-{
+subtest ".s" => {
+    plan 17;
+
     nok $zero-length-file.IO.s, 'Is empty';
     isa-ok $zero-length-file.IO.s, Int, '.s returns Int';
     ok $zero-length-file.IO ~~ :!s, 'Is empty';
@@ -62,6 +72,7 @@ isa-ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
     throws-like { $non-existent-file.IO.s }, X::IO::DoesNotExist;
     nok $non-existent-file.IO ~~ :s, 'Is not a normal file';
     isa-ok $non-existent-file.IO ~~ :s, Bool, '~~ :!s returns Bool';
+
     ##folder size
     lives-ok { ".".IO.s }, "Can get the size of a directory without dying";
 }
