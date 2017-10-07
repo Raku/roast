@@ -97,7 +97,6 @@ class NastyChild is Parent { };
 
 # RT #127841
 is Int:U.gist, '(Int:U)', '.gist on coercion types';
-#?rakudo.jvm skip "Proc::Async NYI RT #126524"
 is Proc::Async:U.gist, '(Async:U)', '.gist on coercion types uses shortname';
 
 is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';

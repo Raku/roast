@@ -448,9 +448,9 @@ for @concurrent -> $class {
 
 for @moar -> $class {
     my $short = $class.split('::')[* - 1];
-    #?rakudo.jvm 4    skip 'NYI on jvm - RT #126524 / RT #124500'
     nok %seen-which{::($class).WHICH}++,    "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
+    #?rakudo.jvm 2    skip 'NFC NYI on jvm - RT #124500'
     is ::($class).perl,             $class, "$class.perl returns self";
     is ::($class).gist,         "($short)", "$class.gist returns self";
 }

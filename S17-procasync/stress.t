@@ -7,7 +7,6 @@ use Test::Util;
 plan 22;
 
 # RT #125515
-#?rakudo.jvm skip 'Proc::Async NYI RT #126524'
 {
     constant $read-file = "t/spec/packages/README".IO.f ?? "t/spec/packages/README".IO !! "packages/README".IO;
     $read-file.IO.r or bail-out "Missing $read-file that is needed to run a test";
@@ -48,7 +47,6 @@ for ^10 {
 		}
 		sleep 0.2;
         --END--
-    #?rakudo.jvm skip 'Proc::Async NYI RT #126524'
     is_run $code, { status => 0 }, "No race/crash in concurrent setup of Proc::Async objects ($_)";
 }
 

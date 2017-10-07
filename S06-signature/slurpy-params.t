@@ -300,7 +300,7 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
 }
 
 # RT #128201
-#?rakudo.jvm skip 'Proc::Async NYI RT #126524 / RT #128201'
+#?rakudo.jvm skip "NoSuchMethodError: org.perl6.nqp.runtime.IOOps.killprocasync in sub doesn't-hang"
 doesn't-hang '{ say @_.gist }(1..Inf)', :out(/'[...]'/),
     '.gist on @_ containing lazy list correctly thinks it is lazy';
 
