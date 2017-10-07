@@ -13,7 +13,7 @@ plan 11;
 my %tempfiles =
     existing => make-temp-file(:content("0123456789A")),
     non-existing => "non-existent-file-tests",
-    zero => make-temp-file,
+    zero => make-temp-file(:content()),
     symlink-existing => "symlink-existing",
     symlink-non-existing => "symlink-nonexisting",
     r => make-temp-file(:chmod(0o444)),
@@ -84,27 +84,44 @@ subtest ".f" => {
 
 ##is empty
 subtest ".s" => {
-    plan 17;
+    plan 5;
 
-    nok %tempfiles<zero>.IO.s, 'Is empty';
-    isa-ok %tempfiles<zero>.IO.s, Int, '.s returns Int';
-    ok %tempfiles<zero>.IO ~~ :!s, 'Is empty';
-    isa-ok %tempfiles<zero>.IO ~~ :!s, Bool, '~~ :!s returns Bool';
-    ok %tempfiles<existing>.IO.s, 'Is not';
-    isa-ok %tempfiles<existing>.IO.s, Int, '.s returns Int';
-    ok %tempfiles<existing>.IO ~~ :s, 'Is not';
-    isa-ok %tempfiles<existing>.IO ~~ :s, Bool, '~~ :s returns Bool';
+    subtest "Non-existing file" => {
+        plan 4;
 
-    ##file size
-    is %tempfiles<zero>.IO.s, 0, 'No size';
-    isa-ok %tempfiles<zero>.IO.s, Int, '.s returns Int';
-    is %tempfiles<existing>.IO.s, 11, 'size of file';
-    isa-ok %tempfiles<existing>.IO.s, Int, '.s returns Int';
+        nok %tempfiles<non-existing>.IO.s, 'Size on non-existent file';
+        throws-like { %tempfiles<non-existing>.IO.s }, X::IO::DoesNotExist;
+        nok %tempfiles<non-existing>.IO ~~ :s, 'Is not a normal file';
+        isa-ok %tempfiles<non-existing>.IO ~~ :s, Bool, '~~ :!s returns Bool';
+    }
 
-    nok %tempfiles<non-existing>.IO.s, 'Size on non-existent file';
-    throws-like { %tempfiles<non-existing>.IO.s }, X::IO::DoesNotExist;
-    nok %tempfiles<non-existing>.IO ~~ :s, 'Is not a normal file';
-    isa-ok %tempfiles<non-existing>.IO ~~ :s, Bool, '~~ :!s returns Bool';
+    subtest "Existing file with content" => {
+        plan 4;
+
+        ok %tempfiles<existing>.IO.s, 'Is not';
+        isa-ok %tempfiles<existing>.IO.s, Int, '.s returns Int';
+        ok %tempfiles<existing>.IO ~~ :s, 'Is not';
+        isa-ok %tempfiles<existing>.IO ~~ :s, Bool, '~~ :s returns Bool';
+    }
+
+    subtest "Existing file with zero-length" => {
+        plan 4;
+
+        nok %tempfiles<zero>.IO.s, 'Is empty';
+        isa-ok %tempfiles<zero>.IO.s, Int, '.s returns Int';
+        ok %tempfiles<zero>.IO ~~ :!s, 'Is empty';
+        isa-ok %tempfiles<zero>.IO ~~ :!s, Bool, '~~ :!s returns Bool';
+    }
+
+    subtest "Get filesize" => {
+        plan 4;
+
+        is %tempfiles<zero>.IO.s, 0, 'No size';
+        isa-ok %tempfiles<zero>.IO.s, Int, '.s returns Int';
+
+        is %tempfiles<existing>.IO.s, 11, 'size of file';
+        isa-ok %tempfiles<existing>.IO.s, Int, '.s returns Int';
+    }
 
     ##folder size
     lives-ok { ".".IO.s }, "Can get the size of a directory without dying";
