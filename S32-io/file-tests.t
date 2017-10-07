@@ -8,7 +8,7 @@ use Test::Util;
 
 # L<S32::IO/IO::FileTests>
 
-plan 11;
+plan 12;
 
 my %tempfiles =
     existing => make-temp-file(:content("0123456789A")),
@@ -454,6 +454,37 @@ subtest ".rwx" => {
         isa-ok %tempfiles<rwx>.IO.rwx, Bool, '.rwx returns Bool';
         ok %tempfiles<rwx>.IO ~~ :rwx, 'File with rwx is readable, writable and executable';
         isa-ok %tempfiles<rwx>.IO ~~ :rwx, Bool, '~~ :rwx returns Bool';
+    }
+}
+
+subtest ".z" => {
+    plan 3;
+
+    subtest "Non-existing file" => {
+        plan 4;
+
+        nok %tempfiles<non-existing>.IO.z, 'Non-existing file returns false on .z';
+        throws-like { %tempfiles<non-existing>.IO.z }, X::IO::DoesNotExist;
+        nok %tempfiles<non-existing>.IO ~~ :z, 'Non-existing file returns false on :z';
+        isa-ok %tempfiles<non-existing>.IO ~~ :z, Bool, '~~ :z returns Bool';
+    }
+
+    subtest "Existing file with zero-length content" => {
+        plan 4;
+
+        nok %tempfiles<existing>.IO.z, 'Existing file with non-zero-length content returns false on .z';
+        isa-ok %tempfiles<existing>.IO.z, Bool, '.z returns Bool';
+        nok %tempfiles<existing>.IO ~~ :z, 'Existing file with non-zero-length content returns false on :z';
+        isa-ok %tempfiles<existing>.IO ~~ :z, Bool, '~~ :z returns Bool';
+    }
+
+    subtest "Existing file with none-zero-length content" => {
+        plan 4;
+
+        ok %tempfiles<zero>.IO.z, 'Existing file with zero-length content returns true on .z';
+        isa-ok %tempfiles<zero>.IO.z, Bool, '.z returns Bool';
+        ok %tempfiles<zero>.IO ~~ :z, 'Existing file with zero-length content returns true on :z';
+        isa-ok %tempfiles<zero>.IO ~~ :z, Bool, '~~ :z returns Bool';
     }
 }
 
