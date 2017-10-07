@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::IO/IO::FileTests>
 
-plan 5;
+plan 6;
 
 my $existing-file = "tempfile-file-tests";
 my $non-existent-file = "non-existent-file-tests";
@@ -33,6 +33,28 @@ subtest ".e" => {
     isa-ok $non-existent-file.IO.e, Bool, '.e returns Bool';
     nok $non-existent-file.IO ~~ :e, "It doesn't";
     isa-ok $non-existent-file.IO ~~ :e, Bool, '~~ :e returns Bool';
+}
+
+subtest ".d" => {
+    plan 2;
+
+    subtest "Existing file" => {
+        plan 4;
+
+        nok $existing-file.IO.d, 'Existing file is not a directory';
+        isa-ok $existing-file.IO.d, Bool, '.d returns Bool';
+        nok $existing-file.IO ~~ :d, 'Existing file is not a directory';
+        isa-ok $existing-file.IO ~~ :d, Bool, '~~ :d returns Bool';
+    }
+
+    subtest "Non-existent file" => {
+        plan 4;
+
+        nok $non-existent-file.IO.d, 'Non-existant file is also not a directory';
+        isa-ok $non-existent-file.IO.d, Bool, '.d returns Bool';
+        nok $non-existent-file.IO ~~ :d, 'Non-existant file is also not a directory';
+        isa-ok $non-existent-file.IO ~~ :d, Bool, '~~ :d returns Bool';
+    }
 }
 
 ##is normal file
