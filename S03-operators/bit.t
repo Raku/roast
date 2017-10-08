@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 40;
+plan 54;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
