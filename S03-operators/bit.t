@@ -137,12 +137,13 @@ plan 54;
 
 # RT#125466 - bitwise shift consistency on int
 {
-  my $int_min = -9223372036854775808; # int.Range.min for 64bit
-  my $int_max = 9223372036854775807;  # int.Range.max for 64bit
+  my int $int_min = -9223372036854775808; # int.Range.min for 64bit
+  my int $int_max = 9223372036854775807;  # int.Range.max for 64bit
 
   is($int_min +> 16, -140737488355328);
   is($int_min +> 32, -2147483648);
   is($int_min +> 63, -1);
+  #?rakudo todo "Clarification needed RT#125466"
   is($int_min +> 64, -1);
   is($int_min +> -32, -39614081257132168796771975168);
   is($int_min +> -64, -170141183460469231731687303715884105728);
@@ -150,9 +151,11 @@ plan 54;
   is($int_max +> 16, 140737488355327);
   is($int_max +> 32, 2147483647);
   is($int_max +> 63, 0);
+  #?rakudo todo "Clarification needed RT#125466"
   is($int_max +> 64, 0);
   is($int_max +> -2, 36893488147419103228);
   is($int_max +> -32, 39614081257132168792477007872);
+  #?rakudo todo "Clarification needed RT#125466"
   is($int_max +< 2, 36893488147419103228);
   is($int_max +< -2, 2305843009213693951);
 }
