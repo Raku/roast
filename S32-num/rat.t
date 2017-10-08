@@ -286,6 +286,13 @@ is 241025348275725.3352.Rat.norm.nude, (301281685344656669, 1250), "Rat.Rat yiel
 #RT #112822
 is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish Rats';
 
+# RT#125215
+{
+    isa-ok((10 ** -1).WHAT, Rat);
+    isa-ok((9.0 ** -1).WHAT, Rat);
+    isa-ok((9.0 ** 0.5).WHAT, Num);
+}
+
 #RT #126391
 try {say 42/(.1+.2-.3)};
 isa-ok( $!.numerator, 42, "got the answer rather than 420");
