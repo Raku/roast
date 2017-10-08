@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 846;
+plan 849;
 
 # Basic test functions specific to rational numbers.
 
