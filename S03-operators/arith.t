@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 158;
+plan 161;
 
 my $five = abs(-5);
 
@@ -147,7 +147,7 @@ tryeq -4 * -3, 12;
 
 {
     # 2147483647 is prime. bah.
-    
+
     tryeq 46339 * 46341, 0x7ffea80f;
     tryeq 46339 * -46341, -0x7ffea80f;
     tryeq -46339 * 46341, -0x7ffea80f;
@@ -402,5 +402,12 @@ isa-ok 4.8 / 1, Rat, 'infix:</> returns Rat when it can';
 isa-ok 4.8 % 1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
+
+# RT #132083 - Broken math
+{
+    is(-0x7FFFFFFF - 1 == -2147483648, True);
+    is(-0x7FFFFFFF - 1 == -18446744071562067968 , False);
+    is((-0x7FFFFFFF - 1).base(16), -80000000);
+}
 
 # vim: ft=perl6
