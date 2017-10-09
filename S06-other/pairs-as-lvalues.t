@@ -11,7 +11,7 @@ throws-like 'my $var; (key => $var) = "value"', X::Assignment::RO;
 {
     my ($a, $b);
     $b = 'b';
-    :(:$a) := $b;
+    :(:$a) := \(:a($b));
     is $a, 'b', 'can bind to single pair';
     ok $a =:= $b, 'variables are bound together (?)';
 }
