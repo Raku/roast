@@ -7,7 +7,6 @@ plan 5;
 
 throws-like 'my $var; (key => $var) = "value"', X::Assignment::RO;
 
-#?rakudo todo "NYI RT #124660"
 {
     my ($a, $b);
     $b = 'b';
