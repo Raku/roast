@@ -1,8 +1,8 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
-
-plan 38;
+use Test::Util;
+plan 43;
 
 {
     my $capture = \(1,2,3);
@@ -210,6 +210,137 @@ subtest 'non-Str-key Pairs in List' => {
     # use a Hash as a proxy in expected, 'cause we don't know the sort order
     is-deeply (<10> => <20>, 30 => 40, 1.5 => 1.5).Capture,
         %('10' => <20>, '30' => 40, '1.5' => 1.5).Capture, 'numerics and allomorphs';
+}
+
+is-deeply .Capture, $_, 'Capture.Capture returns self',
+    with do { my $a = 42; my $b := 70; (\($a, :$b)).Capture };
+
+is-deeply .Capture, $_, 'Match.Capture returns self',
+    with 'x'.match: /./;
+
+subtest 'types whose .Capture throws' => {
+    # https://irclog.perlgeek.de/perl6/2017-03-07#i_14221839
+    plan 14;
+    throws-like  { True  .Capture }, X::Cannot::Capture, 'Bool';
+    throws-like  { 'x'   .Capture }, X::Cannot::Capture, 'Str';
+    throws-like  { 42    .Capture }, X::Cannot::Capture, 'Int';
+
+    throws-like  { 42e0  .Capture }, X::Cannot::Capture, 'Num';
+    throws-like  { <42>  .Capture }, X::Cannot::Capture, 'IntStr';
+    throws-like  { <42e0>.Capture }, X::Cannot::Capture, 'NumStr';
+
+    throws-like  { -> $a, :$b {}.Capture }, X::Cannot::Capture, 'Callable';
+    throws-like  { ((*)).Capture }, X::Cannot::Capture, 'Whatever';
+    throws-like  { ((**)).Capture }, X::Cannot::Capture, 'HyperWhatever';
+
+    throws-like  { ((*.so)).Capture }, X::Cannot::Capture, 'WhateverCode';
+    throws-like  { :(\SELF: $a, :$b).Capture }, X::Cannot::Capture, 'Signature';
+    throws-like  { (v42).Capture }, X::Cannot::Capture, 'Version';
+    throws-like  { rx/./.Capture }, X::Cannot::Capture, 'Regex';
+
+    subtest 'Failure' => {
+        plan 3;
+
+        throws-like { Failure.Capture }, X::Cannot::Capture, ':U';
+        throws-like {
+            given Failure.new { .so; .Capture }
+        }, X::Cannot::Capture, 'handled';
+
+        my class X::Meows is Exception {}
+        throws-like { sub { X::Meows.new.fail }().Capture }, X::Meows,
+            'unhandled';
+    }
+}
+
+subtest 'types whose .Capture behaves like List.Capture' => {
+    # Pair contents become nameds; rest become positionals;
+    plan 18;
+
+    is-deeply Blob.new(1, 2, 42).Capture, \(1, 2, 42), 'Blob';
+    is-deeply Buf .new(1, 2, 42).Capture, \(1, 2, 42), 'Buf';
+    is-deeply utf8.new(1, 2, 42).Capture, \(1, 2, 42), 'utf8';
+
+
+    with Channel.new -> $c {
+        $c.send: $_ for |<a b c>, :42z;
+        $c.close;
+        is-deeply $c.Capture, \('a', 'b', 'c', :42z), 'Channel';
+    }
+
+    is-deeply .Capture, \('a', 'b', 'c', :42z), 'Supply'
+        with supply { .emit for |<a b c>, :42z };
+
+    is-deeply (42, :42a).Seq.Capture, \(42, :42a), 'Seq';
+    is-deeply (42, :42a)    .Capture, \(42, :42a), 'List';
+    is-deeply [42, :42a]    .Capture, \(42, :42a), 'Array';
+    is-deeply Slip.new(42, :42a.Pair).Capture, \(42, :42a), 'Slip';
+
+    is-deeply Map.new((:42a)).Capture, \(:42a), 'Map';
+    is-deeply {:42a}.Capture, \(:42a), 'Hash';
+
+    # Expected to stringify non-Str keys
+    is-deeply :{42 => 70, <70> => 100, a => 42}.Capture,
+        ("42" => 70, "70" => 100, :42a).Capture, 'Object Hash';
+
+    # Expected to stringify non-Str keys
+    is-deeply set(42, <70>).Capture,
+        ("42" => True, "70" => True).Capture, 'Set';
+    is-deeply SetHash.new(42, <70>).Capture,
+        ("42" => True, "70" => True).Capture, 'SetHash';
+
+    # Expected to stringify non-Str keys
+    is-deeply bag('a', 'a',  'b', 42, <70>, <70>).Capture,
+        (:2a, :1b, "42" => 1, "70" => 2).Capture, 'Bag';
+    is-deeply BagHash.new('a', 'a',  'b', 42, <70>, <70>).Capture,
+        (:2a, :1b, "42" => 1, "70" => 2).Capture, 'BagHash';
+
+    # Expected to stringify non-Str keys
+    is-deeply mix('a', 'a',  'b', 42, <70>, <70>).Capture,
+        (:2a, :1b, "42" => 1, "70" => 2).Capture, 'Bag';
+    is-deeply MixHash.new('a', 'a',  'b', 42, <70>, <70>).Capture,
+        (:2a, :1b, "42" => 1, "70" => 2).Capture, 'BagHash';
+}
+
+subtest 'types whose .Capture behaves like Mu.Capture' => {
+    # Here we specifically test only the contents we know about, in case
+    # in the future we add more attributes to these objects...
+    plan 17;
+    sub has-nameds (\what, %wanted, Str:D $desc = what.^name) {
+        subtest "$desc.Capture has named argument..." => {
+            plan +%wanted;
+            my %has = what.Capture.Hash;
+            is-deeply %has{.key}, .value, .key for %wanted;
+        }
+    }
+
+    (1..^Inf).&has-nameds:
+      %(:1min, :max(Inf), :excludes-max, :!excludes-min, :!is-int);
+
+            <42+1i>.&has-nameds: %(:re(42e0), :im(1e0));
+          < 42+1i >.&has-nameds: %(:re(42e0), :im(1e0));
+              <1/2>.&has-nameds: %(:1numerator, :2denominator);
+            < 1/2 >.&has-nameds: %(:1numerator, :2denominator);
+    FatRat.new(1,2).&has-nameds: %(:1numerator, :2denominator);
+
+    do { try +'x'; $! }.&has-nameds: %(:source<x>);
+    :42foo.&has-nameds: %(:key<foo>, :42value), 'Pair';
+
+    DateTime.new(|$_).&has-nameds: $_ with %(:2015year, :12month, :25day);
+        Date.new(|$_).&has-nameds: $_ with %(:2015year, :12month, :25day);
+
+    Duration.new(42).&has-nameds: %(:tai(42.0));
+
+    DateTime.new(:2015year).Instant.&has-nameds: %(:tai(1420070435.0));
+
+    (start {sleep .5}).&has-nameds: %(:status(PromiseStatus::Planned));
+    .&has-nameds: %(:path(.path), :CWD(.CWD)) with make-temp-file;
+    .&has-nameds: %(:command(.command), :exitcode(.exitcode), :signal(.signal))
+        with run «"$*EXECUTABLE" -e ' '»;
+
+    with %(:chomp, :encoding("utf8"), :nl-out("\n")) {
+        make-temp-file.open(:w).&has-nameds: $_;
+        IO::CatHandle.new(make-temp-file :content<foo>).&has-nameds: $_;
+    }
 }
 
 # vim: ft=perl6
