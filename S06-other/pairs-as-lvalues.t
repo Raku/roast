@@ -7,12 +7,11 @@ plan 5;
 
 throws-like 'my $var; (key => $var) = "value"', X::Assignment::RO;
 
-#?rakudo.moar todo "NYI RT #124660"
 #?rakudo.jvm skip "Flattening named argument must have VMHash REPR RT #124661"
 {
     my ($a, $b);
     $b = 'b';
-    :(:$a) := $b;
+    :(:$a is raw) := \(:a($b));
     is $a, 'b', 'can bind to single pair';
     ok $a =:= $b, 'variables are bound together (?)';
 }
