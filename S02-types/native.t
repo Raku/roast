@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 93;
+plan 94;
 
 {
     my int $x;
@@ -373,4 +373,8 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     dies-ok { sub (int $x) { say $x }(99999999999999999999) }, 'a too large argument for a native parameter should throw';
 }
 
+# RT #127973
+{
+    eval-lives-ok 'my str $a = "a" x 2**32-1', 'native strings can be as large as regular strings';
+}
 # vim: ft=perl6
