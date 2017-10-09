@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 117;
+plan 118;
 
 # L<S32::Numeric/Numeric/"=item expmod">
 
@@ -21,3 +21,13 @@ is 2988348162058574136915891421498819466320163312926952423791023078876139.expmod
         2351399303373464486466122544523690094744975233415544072992656881240319,
         10 ** 40),
    1527229998585248450016808958343740453059, "Rosettacode example is correct";
+
+# RT #130713
+subtest '.expmod with negative powers does not hang' => {
+    plan 3;
+    is-deeply  42.expmod(-1,1),   0, '-1, 1';
+    is-deeply  42.expmod(-42,42), 0, '-42, 42';
+
+    #?rakudo skip 'hangs RT#130713'
+    is-deeply  42.expmod(-1,7),   0, '-1. 7';
+}
