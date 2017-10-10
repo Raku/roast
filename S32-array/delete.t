@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 33;
 
 =begin description
 
@@ -128,6 +128,49 @@ sub make-string(@a) {
     @array[2]:delete;
     @array[3] = 4;
     is @array[2], Any, 'deletion of trailing item followed by add item beyond does not resurrect deleted item';
+}
+
+# RT #131783
+subtest '.Slip and .List on Arrays with holes' => {
+    plan 4;
+
+    my @default-default = <a b c>;
+    @default-default[1]:delete;
+    @default-default[5] = 70;
+
+    my @custom-default is default(42) = <a b c>;
+    @custom-default[1]:delete;
+    @custom-default[5] = 70;
+
+    subtest '.List with default `is default` converts holes to Nil' => {
+        plan 4;
+        my @list := @default-default.List;
+        is-deeply @list[0,2,5], ('a', 'c', 70), 'actual values are correct';
+        ok @list[$_] =:= Nil, "index $_ has a Nil" for 1, 3, 4;
+    }
+
+    # The .List keeps the default as Nil, whereas .Slip uses the `is default` value
+    subtest '.List with custom `is default` still converts holes to Nil' => {
+        plan 4;
+        my @list := @custom-default.List;
+        is-deeply @list[0,2,5], ('a', 'c', 70), 'actual values are correct';
+        ok @list[$_] =:= Nil, "index $_ has a Nil" for 1, 3, 4;
+    }
+
+    subtest '.Slip with default `is default` converts holes to Any' => {
+        plan 4;
+        my @list := @default-default.Slip;
+        is-deeply @list[0,2,5], ('a', 'c', 70), 'actual values are correct';
+        cmp-ok @list[$_], '===', Any, "index $_ has an Any" for 1, 3, 4;
+    }
+
+    # The .List keeps the default as Nil, whereas .Slip uses the `is default` value
+    subtest '.Slip with custom `is default` converts holes to default' => {
+        plan 4;
+        my @list := @custom-default.Slip;
+        is-deeply @list[0,2,5], ('a', 'c', 70), 'actual values are correct';
+        cmp-ok @list[$_], '==', 42, "index $_ has a default value" for 1, 3, 4;
+    }
 }
 
 # TODO More exclusive bounds checks
