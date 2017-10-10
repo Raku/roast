@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 34;
 
 =begin description
 
@@ -171,6 +171,14 @@ subtest '.Slip and .List on Arrays with holes' => {
         is-deeply @list[0,2,5], ('a', 'c', 70), 'actual values are correct';
         cmp-ok @list[$_], '==', 42, "index $_ has a default value" for 1, 3, 4;
     }
+}
+
+# RT #132261
+{
+    (my @a = <a b c>)[1]:delete;
+    @a[5] = 70;
+    my @b is default(42) = @a.List;
+    is-deeply @b, ["a", 42, "c", 42, 42, 70], 'Array.List fills holes with Nils';
 }
 
 # TODO More exclusive bounds checks
