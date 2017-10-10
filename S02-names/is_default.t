@@ -401,8 +401,19 @@ lives-ok { EVAL 'class Any3 { has Any $!a is default(3) }' }, 'Default value tha
 
 # RT #126110
 lives-ok { EVAL 'my $a is default(Mu); 1' }, 'Mu as a default value on an unconstrained Scalar works';
-#?rakudo todo "'is default(Mu)' parses badly when used on an attribute (RT #132082)"
-lives-ok { EVAL 'class NoneMu { has $!a is default(Mu); 1 }' }, 'Mu as a default value on an unconstrained Scalar attribute works';
+
+# RT #132082
+subtest 'can use `Mu` as default for attributes' => {
+    plan 3;
+
+    my class CowSays { has $.a is default(Mu); has $.b is default(Mu) is rw }
+    cmp-ok CowSays.new.a.WHAT, '=:=', Mu, 'defaults to default value on instantiation';
+    cmp-ok CowSays.new(:42a).a, '==', 42, 'constructor sets the value';
+    with CowSays.new: :42b {
+        .b = Nil;
+        cmp-ok .b.WHAT, '=:=', Mu, 'assigning Nil restores Mu default';
+    }
+}
 
 # RT #126115
 lives-ok { EVAL 'my $a is default(Failure.new); 1' }, 'Failure.new as a default value on an unconstrained Scalar works';
