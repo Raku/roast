@@ -195,10 +195,10 @@ subtest 'methods on cached Seqs' => {
     subtest 'methods still throw when Seq is NOT cached' => {
         plan 12;
 
-        my $s = (1, 2, 3).Seq;
-        $s.sink; # consume the Seq
-        throws-like { cmp-ok $s, 'eqv', $s }, X::Seq::Consumed, 'infix:<eqv>';
-        throws-like { $s."$_"() }, X::Seq::Consumed, ".$_"
+        (my $s1 = (1, 2, 3).Seq).sink; # consume the Seq
+        (my $s2 = (3, 4, 5).Seq).sink; # consume the Seq
+        throws-like { cmp-ok $s1, 'eqv', $s2 }, X::Seq::Consumed, 'infix:<eqv>';
+        throws-like { $s1."$_"() }, X::Seq::Consumed, ".$_"
             for <iterator  Slip  join  List  list  eager  Array  is-lazy>;
 
         my $s-lazy = lazy gather { .take for 1, 2, 3 };
