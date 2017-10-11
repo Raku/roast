@@ -137,19 +137,18 @@ else {
     $impl_cmd .= '-m' if ( ($backend // '') eq 'moar' and $impl =~ /\.jvm/ );
 }
 
-if ($opt_6) {
-    system($impl_cmd, split(' ', $nt), @already_fudged);
-}
-else {
-    system( 'prove', ($opt_q ? () : '-v'), "-e$impl_cmd",
-            split(' ', $nt), @already_fudged
-    );
-}
+my $exit_code = (
+    $opt_6 ? system($impl_cmd, split(' ', $nt), @already_fudged)
+           : system( 'prove', ($opt_q ? () : '-v'), "-e$impl_cmd",
+            split(' ', $nt), @already_fudged)
+) >> 8;
 
 my $already_fudge_warn = "Some files were already fudged" if @already_fudged;
 $already_fudge_warn .= " and were run after other tests"
     if @already_fudged and @ARGV;
 warn "\n$already_fudge_warn\n\n" if $already_fudge_warn;
+
+exit $exit_code;
 
 ######################################################################
 # We shell out for some commands and usually don't expect errors,
