@@ -1,7 +1,7 @@
 # May need review for v6.d. [6.d-REVIEW]
 use experimental :collation;
 use Test;
-plan 14;
+plan 15;
 {
     my $*COLLATION = Collation.new;
     $*COLLATION.set(:!tertiary, :!quaternary);
@@ -59,4 +59,11 @@ subtest {
     $*COLLATION.set(secondary => -1, tertiary => -1);
     is-deeply <a á A Á ó ø 1 z t ṫ>.collate, <1 Á á A a ø ó ṫ t z>, '!secondary, !tertiary; <a á A Á ó ø 1 z t ṫ>.collate';
 }
+
+{ # RT #132216
+    (my $*COLLATION = Collation.new).set: :!tertiary, :!quaternary;
+    is-deeply "a" coll "A", Same,
+      ':!tertiary, :!quaternary collation puts "a" and "A" as Same';
+}
+
 # TODO add test with "\c[woman facepalming]", "\c[man facepalming]"
