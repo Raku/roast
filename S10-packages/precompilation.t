@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 51;
+plan 53;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 my $precomp-ext    := $*VM.precomp-ext;
@@ -295,3 +295,18 @@ subtest 'precompiled module constants get updated on change' => {
         {:out("pass\n"), :err('')},
     "modified content has updated";
 }
+
+# RT#131924
+with make-temp-dir() -> $dir {
+    $dir.add('Simple131924.pm6').spurt: ｢
+        unit class Simple131924; sub buggy-str is export { “: {‘’}\n\r” ~ “\n\r” }
+    ｣;
+
+    for ^2 { # do two runs: 1 x without pre-existing precomp + 1 x with
+        is_run 'use lib \qq[$dir.absolute().perl()]; use Simple131924; '
+	    ~ 'print buggy-str() eq “: \n\r\n\r”',
+	{:out<True>, :err(''), :0status},
+	'no funny business with precompiled string strands (\qq[$_])';
+    }
+}
+
