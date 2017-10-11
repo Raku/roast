@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 16;
+plan 17;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -67,6 +67,25 @@ subtest "dir-created IO::Paths' absoluteness controlled by invocant" => {
 
     @files = '.'.IO.absolute.IO.dir;
     cmp-ok +@files, '==', +@files.grep({    .is-absolute}), 'absolute invocant';
+}
+
+with make-temp-dir() -> $dir {
+    $dir.add("$_$_$_").spurt("") for "a".."z";
+
+    ## Read the folder from multiple threads, and sanity-check each IO::Path.
+    ## The sanity check should never fail, but at some point it does.
+    is_run q:to/♥/,
+        await do for ^20 {
+            start {
+                for \qq[$dir.perl()].dir -> $path {
+                    die "FAILED!" if $path.absolute ne $path.Str
+                }
+            }
+        }
+        print 'pass';
+    ♥
+    {:out<pass>, :err(''), :0status},
+    'dir() does not produce wrong results under concurrent load';
 }
 
 # vim: ft=perl6
