@@ -1,9 +1,9 @@
 use v6;
-
-use lib '.';
-
+use lib <.  t/spec/packages/>;
 use Test;
-plan 11;
+use Test::Util;
+
+plan 12;
 
 throws-like { EVAL 'use t::spec::S12-meta::InvalidDirective;' },
     X::EXPORTHOW::InvalidDirective, directive => 'BBQ';
@@ -60,3 +60,20 @@ throws-like { EVAL 'use t::spec::S12-meta::DeclareBad;' },
         digimon augmon  { }
     }, 'multiple DECLAREs work';
 }
+
+subtest 'export of SUPERSEDE::class' => {
+    plan 1;
+    with make-temp-dir() {
+        .add("Suptest132236.pm").spurt: ｢
+            my package EXPORTHOW {
+                class SUPERSEDE::class is Metamodel::ClassHOW {
+                    has $.foo;
+                }
+            }
+        ｣;
+        is_run ｢use Suptest132236; class Bar {}; print "pass"｣,
+            :compiler-args['-I', .absolute], {:out('pass'), :err(''), :0status},
+        'import works';
+    }
+}
+
