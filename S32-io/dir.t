@@ -15,8 +15,12 @@ ok (@files = dir()), "dir() runs in cwd()";
 ok @files>>.relative.grep('t/'), 'current directory contains a t/ dir';
 ok @files.grep(*.basename eq 't'), 'current directory contains a t/ dir';
 isa-ok @files[0], IO::Path, 'dir() returns IO::Path objects';
-#?rakudo todo 'dirname is not yet absolute RT #124786'
-is @files[0].dirname, $*CWD, 'dir() returns IO::Path object in the current directory';
+
+with make-temp-dir() {
+    (my $wanted = .add: 'foo').spurt: '';
+    is-deeply .dir.head.resolve.absolute, $wanted.resolve.absolute,
+        'dir() returns IO::Path objects properly resolving to the found paths';
+}
 
 nok @files>>.relative.grep('.'|'..'), '"." and ".." are not returned';
 is +dir(:test).grep(*.basename eq '.'|'..'), 2, "... unless you override :test";
