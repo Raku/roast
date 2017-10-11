@@ -1,4 +1,4 @@
-# May need review for 6.d. [6.d-REVIEW]
+# May need review for v6.d. [6.d-REVIEW]
 use experimental :collation;
 use Test;
 plan 14;
