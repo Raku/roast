@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 61;
+plan 64;
 
 =begin pod
 
@@ -154,5 +154,12 @@ for 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1449755609 {
     is-deeply now.Date, DateTime.now(:timezone(0)).Date, 'Instant.Date';
     throws-like { Instant.Date }, Exception, 'Instant:U.Date throws';
 }
+
+throws-like { $ = Duration.new: "meow" }, X::Str::Numeric,
+    'Duration.new with wrong-typed arg throws';
+
+# RT #127341
+does-ok Duration.new(Inf).tai, Rational, 'Duration.new(Inf) works';
+does-ok Duration.new(NaN).tai, Rational, 'Duration.new(NaN) works';
 
 # vim: ft=perl6
