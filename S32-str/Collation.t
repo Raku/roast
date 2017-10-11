@@ -40,7 +40,6 @@ subtest {
 {
     my $*COLLATION = Collation.new;
     $*COLLATION.set(:primary(0), :secondary(0), :tertiary(0), :quaternary(0));
-    say $*COLLATION;
     my @a = <a A o b C c z Z>;
     is @a, @a.collate, "collation 0 for everything doesn't sort at all";
 }
