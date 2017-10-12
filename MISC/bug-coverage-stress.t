@@ -36,7 +36,7 @@ with Proc::Async.new: $*EXECUTABLE, '-e',
     my $out = ''; $proc.Supply.tap: { $out ~= $_ };
     my $p = $proc.start;
     await $proc.ready;
-    Promise.in(1*(%*ENV<ROAST_TIMING_SCALE>//1)).then: {$proc.kill: SIGINT}; # give it a chance to boot up, then kill it
+    Promise.in(%*ENV<ROAST_TIMING_SCALE>//1).then: {$proc.kill: SIGINT}; # give it a chance to boot up, then kill it
     await $p;
     is-deeply $out, 'pass', 'Supply.merge on signals does not crash';
 }
