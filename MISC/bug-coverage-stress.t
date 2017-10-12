@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 1;
+plan 2;
 
 # RT #132042
 doesn't-hang ｢
@@ -27,5 +27,18 @@ doesn't-hang ｢
     }
     print 'pass';
 ｣, :5wait, :out<pass>, 'no deadlock while acquiring mutex';
+
+
+# RT #132016
+with Proc::Async.new: $*EXECUTABLE, '-e',
+    ｢react whenever signal(SIGTERM).merge(signal SIGINT) { print ‘pass’; exit 0 }｣
+-> $proc {
+    my $out = ''; $proc.Supply.tap: { $out ~= $_ };
+    my $p = $proc.start;
+    await $proc.ready;
+    Promise.in(1*(%*ENV<ROAST_TIMING_SCALE>//1)).then: {$proc.kill: SIGINT}; # give it a chance to boot up, then kill it
+    await $p;
+    is-deeply $out, 'pass', 'Supply.merge on signals does not crash';
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
