@@ -4,7 +4,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 22;
+plan 23;
 
 # RT #125515
 {
@@ -60,4 +60,23 @@ for 1..10 {
         CODE
     is_run $code, { status => 0 },
         'No hang with await start { await $proc-promise } construct ' ~ "($_)";
+}
+
+# We need something that's pretty fast to run; trying to use $*EXECUTABLE instead failed
+# to repro the bug this is covering (bug present in 2017 commit ce12e480316
+# RT #131763
+if run :!out, :!err, «echo test» {
+  doesn't-hang ｢
+      for ^100 {
+          my $proc = Proc::Async.new: «echo test»;
+          react {
+              whenever $proc       { }
+              whenever $proc.start { }
+          }
+      }
+      print 'pass';
+  ｣, :5wait, :out<pass>, ".Supply on multiple Proc::Async's does not deadlock";
+}
+else {
+    skip 'Need `echo` for this test'
 }
