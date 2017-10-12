@@ -9,6 +9,7 @@ use Test::Util;
 
 plan 1;
 
+# RT #132042
 doesn't-hang ｢
     my $fh = ｣ ~ make-temp-file.perl ~ ｢.open: :w;
     await ^20 .map: -> $t {
