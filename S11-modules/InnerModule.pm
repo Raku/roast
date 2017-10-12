@@ -1,5 +1,5 @@
 unit module InnerModule;
-use v6;
+use v6.c;
 
 sub foo is export(:DEFAULT) {'Inner::foo'}
 sub bar is export {'Inner::bar'}

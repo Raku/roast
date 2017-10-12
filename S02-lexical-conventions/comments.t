@@ -182,7 +182,7 @@ plan 50;
 #?niecza todo
 {
     # RT #70752
-    lives-ok { EVAL "#=======\n#=======\nuse v6;" }, 
+    lives-ok { EVAL "#=======\n#=======\nuse v6.c;" }, 
       "pragma use after single line comments";
 }
 

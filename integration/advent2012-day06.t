@@ -6,7 +6,7 @@ use Test::Util;
 plan 2;
 
 my $main = q:to"END-MAIN";
-    use v6;
+    use v6.c;
     use lib 'lib';
 
     # the main functionality of the script
