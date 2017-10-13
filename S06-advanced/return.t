@@ -13,9 +13,9 @@ See also t/blocks/return.t, which overlaps in scope.
 
 # NOTE: the smart link above actually doesn't go to a good
 # reference for the spec for 'return', but I couldn't find
-# one either. 
+# one either.
 
-plan 99;
+plan 100;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -399,5 +399,9 @@ is Foo::official(), 44,
 
 # RT #129827
 is sub { 42.return }(), 42, "Sub doing 42.return works";
+
+# RT #122345
+is-deeply sub { sub foo($x = return 42) { 70 }; say foo }(), 42,
+    'can return from parameter defaults';
 
 # vim: ft=perl6
