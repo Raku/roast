@@ -3,7 +3,7 @@ use lib <t/spec/packages packages>;
 use Test;
 use Test::Util;
 
-plan 65;
+plan 66;
 
 my \PATH = 't-S32-io-open.tmp';
 my \PATH-RX = rx/'t-S32-io-open.tmp'/;
@@ -443,5 +443,10 @@ subtest '.DESTROY does not close standard handles' => {
         is-deeply .opened, True, .perl;
     }
 }
+
+# RT #125813
+throws-like ｢('a' x 10000).IO.open｣, Exception,
+    :message{not /:i  'Malformed' .* 'UTF-8'/},
+'.open error does not incorrectly complain about malformed UTF-8';
 
 # vim: ft=perl6
