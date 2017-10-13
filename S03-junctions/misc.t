@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 147;
+plan 146;
 
 =begin pod
 
@@ -501,10 +501,6 @@ throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
     is-deeply %h, %(0 => [42], 1 => [42]), 'Junctions with autovivification';
 }
 
-# RT #131490
-throws-like { Junction.new }, X::Multi::NoMatch,
-    'Junction.new with wrong arguments throws useful error';
-
 subtest 'Junction.new' => { # coverage; 2016-10-11
     plan 4;
 
@@ -522,11 +518,12 @@ subtest 'Junction.new does not crash with empty, but touched array' => {
     lives-ok { Junction.new($_, @a).perl }, $_ for <all none any one>;
 }
 
-# https://github.com/rakudo/rakudo/commit/61ecfd51172b0e3cf20dc2
+# RT #131490
 subtest "Junction.new does not use Mu.new's candidates" => {
-    plan 2;
+    plan 3;
     throws-like { Junction.new: 42      }, X::Multi::NoMatch, 'positional';
     throws-like { Junction.new: :42meow }, X::Multi::NoMatch, 'named';
+    throws-like { Junction.new          }, X::Multi::NoMatch, 'no args';
 }
 
 # vim: ft=perl6
