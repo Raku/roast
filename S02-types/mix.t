@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 216;
+plan 218;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -512,6 +512,12 @@ subtest '.hash does not cause keys to be stringified' => {
       'final value 0 disappears in Mix for empty mix';
     is-deeply (a => -1, a => 1, "b").Mix, Mix.new("b"),
       'final value 0 disappears in Mix';
+}
+
+# RT #131855
+{
+    is-deeply (a => ½).Mix    .roll, 'a', 'Mix.roll with fractional weights';
+    is-deeply (a => ½).MixHash.roll, 'a', 'MixHash.roll with fractional weights';
 }
 
 # vim: ft=perl6
