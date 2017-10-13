@@ -446,7 +446,7 @@ subtest '.DESTROY does not close standard handles' => {
 
 # RT #125813
 throws-like ｢('a' x 10000).IO.open｣, Exception,
-    :message{not /:i  'Malformed' .* 'UTF-8'/},
+    :message{not /:i  'Malformed UTF-8'/},
 '.open error does not incorrectly complain about malformed UTF-8';
 
 # vim: ft=perl6
