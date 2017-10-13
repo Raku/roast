@@ -502,9 +502,8 @@ throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
 }
 
 # RT #131490
-{
-    throws-like { Junction.new }, X::Multi::NoMatch, 'Junction.new with no arguments';
-}
+throws-like { Junction.new }, X::Multi::NoMatch,
+    'Junction.new with wrong arguments throws useful error';
 
 subtest 'Junction.new' => { # coverage; 2016-10-11
     plan 4;
