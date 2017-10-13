@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 292;
+plan 293;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -685,5 +685,9 @@ subtest "elements with negative weights are removed" => {
     $b = <a b b c d e f>.BagHash; .value = -1 for $b.pairs;
     is $b, ().BagHash, 'Pair value < 0 removes element';
 }
+
+# RT #132279
+is-deeply ('foo' => 10000000000000000000).BagHash.grab(1), ('foo',),
+    'can .grab() a BagHash key with weight larger than 64 bits';
 
 # vim: ft=perl6
