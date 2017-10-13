@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 20;
+plan 21;
 
 #L<S03/Smart matching/Any Num numeric equality>
 {
@@ -37,5 +37,8 @@ subtest 'Str ~~ Num' => {
     is-deeply 'x'   ~~ 42e0, False, ｢'x'   ~~ 42e0｣;
     is-deeply '42'  ~~ 42e0, True,  ｢'42'  ~~ 42e0｣;
 }
+
+# RT #126927
+ok num64 ~~ Num, 'can smartmatch num64 against Num';
 
 # vim: ft=perl6
