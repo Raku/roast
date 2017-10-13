@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 190;
+plan 191;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -439,6 +439,22 @@ subtest 'no .int-bounds for Infs and NaN as Range endpoints' => {
     try Range.new: 'meow', 'meow', 'meow', :meow, 'meow';
     cmp-ok $!, '!~~', X::Constructor::Positional,
         'Range.new with wrong args does not claim it takes only named args';
+}
+
+# RT #125336
+subtest 'no floating point drifts in degenerate Ranges' => {
+    plan 3;
+    (NaN..NaN).map: {
+        next unless $++ > 1050;
+        is-deeply $_, NaN, 'NaN..NaN range keeps producing NaN ad infinitum';
+        last;
+    }
+    (-Inf..0).map: {
+        next unless $++ > 1050;
+        is-deeply $_, -Inf, '-Inf..Inf range keeps producing -Inf ad infinitum';
+        last;
+    }
+    is-deeply (Inf..0).elems, 0, 'Inf..0 Range has zero elems'
 }
 
 # vim:set ft=perl6
