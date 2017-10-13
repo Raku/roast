@@ -9,21 +9,17 @@ try {
 }
 
 my @signals = SIGINT;
-plan 2 + @signals * 10;
-
-my $program = 'async-kill-tester';
+plan 2 + @signals * 8;
 
 for @signals -> $signal {
-    my $source = "
-signal($signal).act: \{ .say; exit \};
+    my $program = (make-temp-file content => q:to/END/).absolute;
+        signal(\qq[$signal]).act: { .say; exit };
 
-say 'Started';
-my \$ = get();
-my \$ = get();
-say 'Done';
-";
-    ok $program.IO.spurt($source),   'could we write the tester';
-    is $program.IO.s, $source.chars, 'did the tester arrive ok';
+        say 'Started';
+        my $ = get();
+        my $ = get();
+        say 'Done';
+        END
 
     my $pc = Proc::Async.new( $*EXECUTABLE, $program, :w );
     isa-ok $pc, Proc::Async;
@@ -87,6 +83,3 @@ subtest 'can rapid-kill our Proc::Async without hanging' => {
     pass 'did not hang';
 }
 
-END {
-    unlink $program;
-}
