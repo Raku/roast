@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 2;
+plan 3;
 
 # RT #132042
 doesn't-hang ｢
@@ -39,6 +39,26 @@ with Proc::Async.new: $*EXECUTABLE, '-e',
     Promise.in(%*ENV<ROAST_TIMING_SCALE>//1).then: {$proc.kill: SIGINT}; # give it a chance to boot up, then kill it
     await $p;
     is-deeply $out, 'pass', 'Supply.merge on signals does not crash';
+}
+
+# RT #129845
+with make-temp-dir() -> $dir {
+    $dir.add("$_$_$_").spurt("") for "a".."z";
+
+    ## Read the folder from multiple threads, and sanity-check each IO::Path.
+    ## The sanity check should never fail, but at some point it does.
+    is_run q:to/♥/,
+        await do for ^200 {
+            start {
+                for \qq[$dir.perl()].dir -> $path {
+                    die "FAILED!" if $path.absolute ne $path.Str
+                }
+            }
+        }
+        print 'pass';
+    ♥
+    {:out<pass>, :err(''), :0status},
+    'dir() does not produce wrong results under concurrent load';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
