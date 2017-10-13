@@ -9,7 +9,7 @@ try {
 }
 
 my @signals = SIGINT;
-plan 1 + @signals * 10;
+plan 2 + @signals * 10;
 
 my $program = 'async-kill-tester';
 
@@ -77,6 +77,15 @@ doesn't-hang ｢
     ｣,   :out('All done!'), :err(''), :10wait,
 '.kill kills when multi-procs kill in multi-promises';
 
+# RT #125653
+subtest 'can rapid-kill our Proc::Async without hanging' => {
+    plan 1;
+    my $proc = Proc::Async.new: $*EXECUTABLE, "-e", "sleep 1";
+    my $prom = $proc.start;
+    $proc.kill;
+    await $prom;       
+    pass 'did not hang';
+}
 
 END {
     unlink $program;
