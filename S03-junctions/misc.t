@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 146;
+plan 147;
 
 =begin pod
 
@@ -499,6 +499,11 @@ throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
     my %h;
     %h{ any ^2 }.push: 42;
     is-deeply %h, %(0 => [42], 1 => [42]), 'Junctions with autovivification';
+}
+
+# RT #131490
+{
+    throws-like { Junction.new }, X::Multi::NoMatch, 'Junction.new with no arguments';
 }
 
 subtest 'Junction.new' => { # coverage; 2016-10-11
