@@ -177,20 +177,15 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-# jvm backend needs more time to run child process
-my $doesn't-hang-wait = $*VM.name eq 'jvm' ?? 10 !! 1.5;
-
-multi doesn't-hang (
-    Str $args, $desc = 'code does not hang',
-    :$in, :$wait = $doesn't-hang-wait, :$out, :$err,
-) is export {
+multi doesn't-hang (Str $args, $desc, :$in, :$wait = 1.5, :$out, :$err)
+is export {
     doesn't-hang \($*EXECUTABLE, '-e', $args), $desc,
         :$in, :$wait, :$out, :$err;
 }
 
 multi doesn't-hang (
     Capture $args, $desc = 'code does not hang',
-    :$in, :$wait = $doesn't-hang-wait, :$out, :$err,
+    :$in, :$wait = 1.5, :$out, :$err,
 ) is export {
     my $prog = Proc::Async.new: |$args;
     my ($stdout, $stderr) = '', '';
@@ -410,7 +405,7 @@ C<'code does not hang'>
 =head3 C<:wait>
 
 B<Optional.> Specifies the amount of time in seconds to wait for the
-executed program to finish. B<Defaults to:> C<1.5> (on jvm backend C<10>)
+executed program to finish. B<Defaults to:> C<1.5>
 
 =head3 C<:in>
 
