@@ -6,6 +6,7 @@ plan 8;
 
 dies-ok { Supply.start({...}) }, 'can not be called as a class method';
 
+#?rakudo.jvm skip 'hangs after "did we get a tap?"'
 {
     my $master = Supplier.new;
     my @promises = Promise.new xx 3;

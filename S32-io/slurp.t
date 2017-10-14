@@ -119,7 +119,10 @@ subtest '&slurp(IO::Handle)' => {
 is_run ｢'-'.IO.slurp.print｣, 'meows', {:out<meows>, :err(''), :0status},
     'can .slurp from "-".IO path';
 
-subtest ':bin arg to IO::Handle.slurp method' => {
+#?rakudo.jvm skip 'floods stderr, IO::Handle.slurp(:bin)'
+#?DOES 1
+{
+  subtest ':bin arg to IO::Handle.slurp method' => {
     plan 5;
 
     my $content = Buf[uint8].new: "meow\nI ® U".encode;
@@ -152,6 +155,7 @@ subtest ':bin arg to IO::Handle.slurp method' => {
         Buf[uint8].new("\n".encode ~ $I-like-big-bufs-and-I-cannot-lie),
         'after .read on large data file with bin handle';
     $fh.close;
+  }
 }
 
 # vim: ft=perl6

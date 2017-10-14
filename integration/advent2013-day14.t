@@ -77,6 +77,7 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
 
 # Channels
 
+#?rakudo.jvm skip 'hangs'
 {
     {
         my @files = qw<config1.ini config2.ini>;

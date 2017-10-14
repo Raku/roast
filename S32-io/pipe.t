@@ -68,7 +68,9 @@ with run(:out, $*EXECUTABLE, '-e', '') -> $proc {
     }
 }
 
-lives-ok {
+#?rakudo.jvm skip 'hangs'
+{
+  lives-ok {
     my $p = run :bin, :out, :err, :in, $*EXECUTABLE, '-e',
         'my $v = $*IN.get; note $v; say $v';
     $p.in.write: "42\n".encode;
@@ -76,4 +78,5 @@ lives-ok {
     $p.in.close;
     $p.out.slurp(:close);
     $p.err.slurp(:close);
-}, 'bin pipes in Proc do not crash on open';
+  }, 'bin pipes in Proc do not crash on open';
+}

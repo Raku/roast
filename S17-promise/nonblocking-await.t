@@ -215,6 +215,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
 }
 
 # RT #130692
+#?rakudo.jvm skip 'UnwindException'
 {
     my $kill = Promise.new;
     my $started = Promise.new;
@@ -250,6 +251,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
 }
 
 # RT #132091
+#?rakudo.jvm skip 'NullPointerException'
 {
     my @foo = do {
 	    await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
@@ -257,10 +259,13 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     }
     is @foo.elems, 4, "slips awaited over get flattened out";
 }
-await start {
+#?rakudo.jvm skip 'UnwindException'
+{
+  await start {
     my @foo = do {
 	    await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
 		      start { do for ^2 { my uint64 @ = 1, 2; }.Slip };
     }
     is @foo.elems, 4, "slips awaited over get flattened out";
+  }
 }

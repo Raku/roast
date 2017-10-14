@@ -336,6 +336,7 @@ plan 81;
     is $i, 3, 'blockless react/whenever works';
 }
 
+#?rakudo.jvm skip 'hangs'
 {
     my $trigger1 = Supplier.new;
     my $trigger2 = Supplier.new;
@@ -373,6 +374,7 @@ throws-like 'emit 42', X::ControlFlow, illegal => 'emit';
 throws-like 'done', X::ControlFlow, illegal => 'done';
 
 # whenever with channel
+#?rakudo.jvm skip 'UnwindException'
 {
     my $c = Channel.new;
     start {
@@ -389,6 +391,7 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
 }
 
 # multiple whenevers with channels
+#?rakudo.jvm skip 'hangs'
 {
     my $c1 = Channel.new;
     my $c2 = Channel.new;
@@ -461,6 +464,7 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
     is await(foo(69)), 69, 'LAST in whenever triggered without iterations sees correct outer (2)';
 }
 
+#?rakudo.jvm skip 'UnwindException'
 lives-ok {
     react {
         whenever Supply.from-list(gather { die }) {
@@ -469,6 +473,7 @@ lives-ok {
     }
 }, 'QUIT properly handles exception even when dieing synchronously with the .tap';
 
+#?rakudo.jvm skip 'UnwindException'
 {
     sub foo($a) {
         supply {
@@ -509,6 +514,7 @@ lives-ok {
     }
 }, 'No react guts crash in case that once spat out two done messages either'; 
 
+#?rakudo.jvm skip 'hangs'
 lives-ok {
     my $s = supply { whenever Supply.interval(0.001) { done } }
     await do for ^4 {
@@ -531,7 +537,9 @@ lives-ok {
     is $times-triggered, 5, "skipping every even number in ^10 with 'next' gives us 5";
 }, 'calling "next" inside a whenever block will not die.';
 
-subtest 'next in whenever' => {
+#?rakudo.jvm skip 'UnwindException'
+{
+  subtest 'next in whenever' => {
     plan 4;
 
     my @res1;
@@ -559,6 +567,7 @@ subtest 'next in whenever' => {
     }
     is-deeply @res4.sort, (0, 1, 2, 3, 4,  103, 104).sort,
         'works when used in two whenevers';
+  }
 }
 
 # Golf of a react block with a TCP server, which failed to close taps of
@@ -605,6 +614,7 @@ lives-ok {
 }
 
 # RT #130716
+#?rakudo.jvm skip 'done without supply or react'
 {
     my @pre-emit;
     my $ran-done = True;
