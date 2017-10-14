@@ -183,6 +183,9 @@ is export {
         :$in, :$wait, :$out, :$err;
 }
 
+# TODO XXX: for some reason shoving this variable inside the routine and
+# using `state` instead of `my` results in it having value 0
+my $VM-time-scale-multiplier = $*VM.name eq 'jvm' ?? 20/3 !! 1;
 multi doesn't-hang (
     Capture $args, $desc = 'code does not hang',
     :$in, :$wait = 1.5, :$out, :$err,
@@ -197,8 +200,9 @@ multi doesn't-hang (
     # await returns and we follow the path that assumes the code we ran hung.
     my $promise = $prog.start;
     await $prog.write: $in.encode if $in.defined;
-    await Promise.anyof: Promise.in($wait * (%*ENV<ROAST_TIMING_SCALE>//1)),
-                         $promise;
+    await Promise.anyof: Promise.in(
+        $wait * $VM-time-scale-multiplier * (%*ENV<ROAST_TIMING_SCALE>//1)
+    ), $promise;
 
     my $did-not-hang = False;
     given $promise.status {
@@ -405,7 +409,9 @@ C<'code does not hang'>
 =head3 C<:wait>
 
 B<Optional.> Specifies the amount of time in seconds to wait for the
-executed program to finish. B<Defaults to:> C<1.5>
+executed program to finish. B<Defaults to:> C<1.5>; on JVM backend, an
+additional multipler of C<20/3> is used as currently that backend takes
+longer to start procs.
 
 =head3 C<:in>
 
