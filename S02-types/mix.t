@@ -515,6 +515,7 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 # RT #131855
+#?rakudo.jvm skip 'parsing issue (unicode related)'
 {
     is-deeply (a => ½).Mix    .roll, 'a', 'Mix.roll with fractional weights';
     is-deeply (a => ½).MixHash.roll, 'a', 'MixHash.roll with fractional weights';
