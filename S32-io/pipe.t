@@ -41,9 +41,9 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
 
 {
     my $sh1 = run($*EXECUTABLE, '-e', 'say join "\n", reverse lines', :in, :out);
+    my $sh2 = run($*EXECUTABLE, '-e', 'my @l = lines; .say for @l; note @l.elems', :in($sh1.out), :out, :err);
     $sh1.in.say: "foo\nbar\nbaz";
     $sh1.in.close;
-    my $sh2 = run($*EXECUTABLE, '-e', 'my @l = lines; .say for @l; note @l.elems', :in($sh1.out), :out, :err);
     is $sh2.out.slurp-rest, "baz\nbar\nfoo\n", 'Can capture stdout and stderr, and chain stdin';
     is $sh2.err.slurp-rest, "3\n",           'Can capture stdout and stderr, and chain stdin';
 }
