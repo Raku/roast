@@ -189,7 +189,7 @@ for
 
     for @quads -> @params, $result {
         for @params.permutations -> @mixed {
-exit dd @mixed, $result unless
+#exit dd @mixed, $result unless
             is-deeply op(|@mixed), $result,
               "[$name] @mixed>>.gist()";
         }
