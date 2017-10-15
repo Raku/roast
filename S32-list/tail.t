@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 26;
 
 =begin description
 
@@ -100,5 +100,8 @@ subtest 'tail makes use .count-only when it is implemented' => {
     # but 1 will get you a pass as well.
     is-deeply $pulled, 0|1, 'we did not pull (or pulled just one';
 }
+
+# RT #130285
+is-deeply (4,5,6,7).tail(-2**100), (), 'can use ints over 64-bit in .tail';
 
 # vim: ft=perl6
