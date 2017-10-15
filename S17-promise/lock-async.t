@@ -1,6 +1,6 @@
 use Test;
 
-plan 39;
+plan 37;
 
 throws-like { Lock::Async.new.unlock },
     X::Lock::Async::NotLocked,
@@ -62,31 +62,3 @@ throws-like { Lock::Async.new.unlock },
     is $acquire-after.status, Kept, 'Locking the now-free lock again works';
     lives-ok { $lock.unlock() }, 'And can unlock it again';
 }
-
-{
-    my $target = 0;;
-    my $target-lock = Lock::Async.new;
-    await start {
-        for ^10000 -> $i {
-            $target-lock.protect: {
-                $target += $i;
-            }
-        }
-    } xx 4;
-    is $target, 4 * [+](^10000), 'Lock provides mutual exclusion (1)';
-}
-
-{
-    my @target;
-    my $target-lock = Lock::Async.new;
-    await start {
-        for ^10000 -> $i {
-            $target-lock.protect: {
-                push @target, $i;
-            }
-        }
-    } xx 4;
-    is [+](@target), 4 * [+](^10000), 'Lock provides mutual exclusion (2)';
-}
-
-done-testing;
