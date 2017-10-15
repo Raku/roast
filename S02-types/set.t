@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 217;
+plan 218;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -504,6 +504,28 @@ subtest '.hash does not cause keys to be stringified' => {
     throws-like 'set<a b c>;', X::Syntax::Confused,
         'set listop called without arguments dies (2)',
         message => { m/'Use of non-subscript brackets after "set" where postfix is expected'/ };
+}
+
+# RT #131300
+subtest 'set ops do not hang with Setty/Baggy/Mixie type objects' => {
+    my @ops := «
+        ∈  (elem)  ∉  !(elem)  ∋  (cont)  ∌  !(cont)  ⊆  (<=)  ⊈  !(<=)
+        ⊂  (<)  ⊄  !(<)  ⊇  (>=)  ⊉  !(>=)  ⊃  (>)  ⊅  !(>)
+        ∪  (|)  ∩  (&)  ∖  (-)  ⊖  (^)  ⊍  (.)  ⊎  (+)
+    »;
+
+    my @types := Set, SetHash, Bag, BagHash, Mix, MixHash;
+    plan @ops × @types;
+
+    my %SKIPS := set «∩  (&)  ⊍  (.)  ∖  (-)»;
+
+    for @types -> $type {
+        for @ops {
+            %SKIPS{$_}
+                ?? skip "$type.perl(): $_ op hangs or is broken RT#131300"
+                !! eval-lives-ok "\$ = 1 $_ $type.perl()", "$type.perl() $_";
+        }
+    }
 }
 
 # vim: ft=perl6
