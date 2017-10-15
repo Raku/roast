@@ -24,17 +24,6 @@ plan 24;
     is @got.unique.elems, 1, 'Proc::Async consistently reads data';
 }
 
-# RT #129291
-{
-    if $*DISTRO.is-win {
-        skip 1, 'not sure how to test input redirection on Windows';
-    } else {
-        lives-ok
-            { for ^400 { my $p = run(:out, :bin, 'ls'); run(:in($p.out), 'true') } },
-            "run()ning two procs and passing the :out of one to the :in of the other doesn't segfault";
-    }
-}
-
 # RT #129834
 for ^10 {
     my $code = q:to'--END--';

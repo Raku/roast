@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 3;
+plan 4;
 
 # RT #132042
 doesn't-hang ｢
@@ -63,6 +63,20 @@ with make-temp-dir() -> $dir {
     ♥
     {:out<pass>, :err(''), :0status},
     'dir() does not produce wrong results under concurrent load';
+}
+
+# RT #129291
+# "invalid free" bug is present on Rakudo 2016.07. Running something with
+# slower startup, like $*EXECUTABLE, does not exercise the bug, so we use `echo`
+if run :!out, :!err, «echo 42» {
+    for ^50 {
+        my $p = run :out, :bin, «echo 42»;
+        run :in($p.out), :!out, :!err, «echo 42»;
+    }
+    pass "no issues when piping one Proc's STDOUT to another's STDIN";
+}
+else {
+    skip 'need `echo` to run this test';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
