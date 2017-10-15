@@ -4,7 +4,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 23;
+plan 24;
 
 # RT #125515
 {
@@ -79,4 +79,27 @@ if run :!out, :!err, «echo test» {
 }
 else {
     skip 'Need `echo` for this test'
+}
+
+# RT #130107
+# Here, we start a proc that rapidly produces output. Theoretically,
+# using $*EXECUTABLE here should be possible, but currently in rakudo it
+# produces output too slowly to trigger the bug (bug is present in 2016.10
+# rakudo release). So we use `perl` here for that.
+if run :!out, :!err, «perl -e 'print 42'» {
+    is_run ｢
+        react {
+            my $null = $*SPEC.devnull.&open: :w;
+            my $find = Proc::Async.new: 'perl', '-e',
+                'print "x" x 1000 for 1..2000';
+            whenever $find.stdout(:bin) -> $line {
+                QUIT { say .^name, .Str; }
+                $null.print: $line.decode('utf8-c8');
+            }
+            whenever $find.start { print 'pass'; done }
+        }
+    ｣, {:out<pass>, :err(''), :0status}, 'no "unknown errors" on reads';
+}
+else {
+    skip 'need `perl` to run this test';
 }
