@@ -8,7 +8,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there.
 
-plan 36;
+plan 37;
 
 my $res;
 
@@ -161,6 +161,14 @@ subtest '.out/.err proc pipes on failed command' => {
         '.out.slurp is empty';
     is-deeply run(:err, "meooooooows").err.slurp(:close), '',
         '.err.slurp is empty';
+}
+
+subtest 'all Proc pipes return Proc on .close' => {
+    plan 3;
+    my $p = run :in, :out, :err, «$*EXECUTABLE -e 'exit 42'»;
+    cmp-ok $p.in .close, '===', $p, 'in';
+    cmp-ok $p.out.close, '===', $p, 'out';
+    cmp-ok $p.err.close, '===', $p, 'err';
 }
 
 # vim: ft=perl6
