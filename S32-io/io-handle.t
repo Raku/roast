@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 27;
+plan 28;
 
 my $path = "io-handle-testfile";
 
@@ -269,4 +269,14 @@ subtest '.print-nl method' => {
         .spurt: "a" x (2**20 - 1) ~ "«";
         lives-ok { for .lines { } }, 'No spurious malformed UTF-8 error';
     }
+}
+
+# RT #132030
+subtest 'opened filehandles get closed on exit automatically' => {
+    plan 2;
+    my $path = make-temp-file;
+    is_run $path.perl ~ ｢.open(:w, :5000buffer).print: 'pass'; print 'pass'｣,
+        {:out<pass>, :err(''), :0status}, 'written into a file without closing';
+
+    is-deeply $path.slurp, 'pass', 'file has all the content we wrote into it';
 }
