@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 =begin description
 
@@ -66,5 +66,9 @@ This test tests the C<head> builtin.
     my $range = ^0;
     is $range.head(5).List, (), "Range.head works if empty";
 } #3
+
+# RT #130285
+is-deeply (4,5,6).head(-999999999999999999999999999), (),
+    '.head works correctly with large negative Ints';
 
 # vim: ft=perl6
