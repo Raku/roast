@@ -190,9 +190,9 @@ is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
 
 ## Ensure that when the repeat operator is used, a normalized string is created
 # RT #131801
-#?rakudo.jvm 2 todo "NFG or normalization not supported on JVM"
 {
     is-deeply (0x0F75.chr x 2), "\x[0F75,0F75]", "Repeat operator keeps text normalized (normalization + canonical combining class reordering)";
+    #?rakudo.jvm todo "NFG or normalization not supported on JVM"
     is-deeply (0x0F75.chr x 2).ords, (0xF71, 0xF71, 0xF74, 0xF74), "Repeat operator keeps text normalized (normalization + canonical combining class reordering)";
 }
 

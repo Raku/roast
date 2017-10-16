@@ -72,7 +72,6 @@ plan 12;
     );
 }
 
-#?rakudo.jvm skip "control exception without handler, RT #126490"
 {
     my $tracker="err"; 
     $tracker = 0; 

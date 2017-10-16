@@ -19,7 +19,6 @@ plan 6;
     is $t, 'A1B1A1A2', 'labeled while loops with redo and last'
 }
 
-#?rakudo.jvm skip "control exception without handler, RT #126490"
 {
     my $i = 0;
     my $t = '';
@@ -33,7 +32,6 @@ plan 6;
     is($t, 'ABAB', 'redoing outer for loop');
 }
 
-#?rakudo.jvm todo "redo of outer labels broken, related to RT #126490"
 {
     my $i = 0;
     my $t = '';
@@ -50,7 +48,6 @@ plan 6;
     is($t, 'A1BCBCA2BC', 'redoing outer for loop');
 }
 
-#?rakudo.jvm todo "redo of outer labels broken, related to RT #126490"
 {
     my $i = 0;
     my $t = '';

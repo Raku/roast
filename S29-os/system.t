@@ -79,7 +79,6 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 # RT #128594
 {
     for ^10 {
-        #?rakudo.jvm todo 'IOException "no such file" RT 128594'
         is_run q{run("non-existent-program-RT128594", :merge).out.slurp},
             { status => 0 },
         ":merge with run on non-existent program does not crash [attempt $_]";
@@ -87,7 +86,7 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 }
 
 # RT #128398
-#?rakudo.jvm skip 'Type check failed in binding to parameter $!bin; expected Bool but got Int (0)'
+#?rakudo.jvm skip 'hangs'
 {
     my $p = Proc::Async.new: :w, $*EXECUTABLE, "-ne",
         Q!last if /2/; .say; LAST { say "test worked" }!;
