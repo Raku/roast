@@ -42,6 +42,7 @@ with Proc::Async.new: $*EXECUTABLE, '-e',
         ($*VM.name eq 'jvm' ?? 20/3 !! 1) * (%*ENV<ROAST_TIMING_SCALE>//1)
     ).then: {$proc.kill: SIGINT}; # give it a chance to boot up, then kill it
     await $p;
+    #?rakudo.jvm todo 'Died with the exception: Cannot unbox a type object'
     is-deeply $out, 'pass', 'Supply.merge on signals does not crash';
 }
 
@@ -68,15 +69,18 @@ with make-temp-dir() -> $dir {
 # RT #129291
 # "invalid free" bug is present on Rakudo 2016.07. Running something with
 # slower startup, like $*EXECUTABLE, does not exercise the bug, so we use `echo`
-if run :!out, :!err, «echo 42» {
+#?rakudo.jvm skip 'hangs'
+{
+  if run :!out, :!err, «echo 42» {
     for ^50 {
         my $p = run :out, :bin, «echo 42»;
         run :in($p.out), :!out, :!err, «echo 42»;
     }
     pass "no issues when piping one Proc's STDOUT to another's STDIN";
-}
-else {
+  }
+  else {
     skip 'need `echo` to run this test';
+  }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

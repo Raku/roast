@@ -166,7 +166,10 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
         'Nil assigned to is default()ed UInt gives default values';
 }
 
-subtest 'Int.new' => { # coverage; 2016-10-05
+#?rakudo.jvm skip 'Attribute $!value couldnt be boxed'
+#?DOES 1
+{
+  subtest 'Int.new' => { # coverage; 2016-10-05
     plan 11;
 
     isnt 2.WHERE, Int.new(2).WHERE,
@@ -197,6 +200,7 @@ subtest 'Int.new' => { # coverage; 2016-10-05
             cmp-ok $x, '==', $args[0]//0,      "right numeric value ($what)";
         }
     }
+  }
 }
 
 { # coverage; 2016-10-05

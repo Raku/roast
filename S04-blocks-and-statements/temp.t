@@ -159,6 +159,7 @@ plan 43;
 # Following are OO tests, but I think they fit better in var/temp.t than in
 # oo/.
 # L<S06/Temporization/temp invokes its argument's .TEMP method.>
+#?rakudo.jvm skip 'Attribute $!value couldnt be boxed'
 {
   my $was_in_own_temp_handler = 0;
 

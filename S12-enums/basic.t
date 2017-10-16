@@ -117,6 +117,7 @@ dies-ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 }
 
 # RT #72696
+#?rakudo.jvm skip 'Type check failed in assignment to $!alias; expected Mu but got Str ("b")'
 {
     enum S1 <a b c>;
     enum S2 <b c d>;

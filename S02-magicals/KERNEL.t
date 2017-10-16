@@ -75,6 +75,7 @@ isa-ok $*KERNEL.bits, Int;
 }
 
 # https://github.com/rakudo/rakudo/commit/01d948d2d2
+#?rakudo.jvm todo 'signal SIGHUP not supported'
 is_run ｢print $*KERNEL.signal: 'SIGHUP';｣, {out => /^\d+$/},
     '.signal: Str:D works with un-initialized $*KERNEL.signals';
 

@@ -155,7 +155,10 @@ throws-like { EVAL qq[say 1.0000001 ** (10 ** 90000)] },
     $xno, "raising a Rat to a very large number throws";
 
 # RT#126732
-subtest 'power ops with uncommon No chars as terms work' => {
+#?rakudo.jvm skip 'unival NYI'
+#?DOES 1
+{
+  subtest 'power ops with uncommon No chars as terms work' => {
     my @nos = <⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ⅟ 𑁓 ౸ ㆒ 𐌣 >;
     plan 5*@nos;
     for @nos -> $no {
@@ -167,6 +170,7 @@ subtest 'power ops with uncommon No chars as terms work' => {
 
         is-deeply .EVAL, 2**$v**2, $_ with "2**$no²";
     }
+  }
 }
 
 # vim: ft=perl6
