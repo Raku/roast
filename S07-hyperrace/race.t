@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 35;
+plan 37;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -155,4 +155,10 @@ is (^100 .race.elems), 100, '.race.elems works';
     my atomicint $i = 0;
     (^10000).race.map: { $i⚛++ }
     is $i, 10000, 'race map in sink context iterates';
+}
+
+{
+    isa-ok (^1000).race.map(*+1).hyper, HyperSeq, 'Can switch from race to hyper mode';
+    is (^1000).race.map(*+1).hyper.map(*+2).list.sort, (3..1002).list,
+        'Switching from race to hyper mode does not break results';
 }
