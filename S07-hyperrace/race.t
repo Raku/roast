@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 37;
+plan 39;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -161,4 +161,10 @@ is (^100 .race.elems), 100, '.race.elems works';
     isa-ok (^1000).race.map(*+1).hyper, HyperSeq, 'Can switch from race to hyper mode';
     is (^1000).race.map(*+1).hyper.map(*+2).list.sort, (3..1002).list,
         'Switching from race to hyper mode does not break results';
+}
+
+{
+    isa-ok (^1000).race.map(*+1).Seq, Seq, 'Can switch from race to sequential Seq';
+    is (^1000).race.map(*+1).Seq.map(*+2).list.sort, (3..1002).list,
+        'Switching from race to sequential Seq does not break results';
 }
