@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 45;
+plan 46;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -171,3 +171,9 @@ is ([+] (1..100).hyper.grep(* != 22)), 5028,
 is ([+] (1..100).grep(* != 22).hyper), 5028,
     'Correct result for [+] (1..100).grep(* != 22).hyper';
 is (^100 .hyper.elems), 100, '.hyper.elems works';
+
+{
+    my atomicint $i = 0;
+    (^10000).hyper.map: { $i⚛++ }
+    is $i, 10000, 'hyper map in sink context iterates';
+}

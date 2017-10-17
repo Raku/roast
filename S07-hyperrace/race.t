@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 34;
+plan 35;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -150,3 +150,9 @@ is ([+] (1..100).race.grep(* != 22)), 5028,
 is ([+] (1..100).grep(* != 22).race), 5028,
     'Correct result for [+] (1..100).grep(* != 22).race';
 is (^100 .race.elems), 100, '.race.elems works';
+
+{
+    my atomicint $i = 0;
+    (^10000).race.map: { $i⚛++ }
+    is $i, 10000, 'race map in sink context iterates';
+}
