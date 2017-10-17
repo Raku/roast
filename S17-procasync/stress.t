@@ -4,7 +4,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 24;
+plan 23;
 
 # RT #125515
 {
