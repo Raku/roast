@@ -508,18 +508,45 @@ subtest '.hash does not cause keys to be stringified' => {
 
 # RT #131300
 subtest 'set ops do not hang with Setty/Baggy/Mixy type objects' => {
-    my @ops := «
-        ∈  (elem)  ∉  !(elem)  ∋  (cont)  ∌  !(cont)  ⊆  (<=)  ⊈  !(<=)
-        ⊂  (<)  ⊄  !(<)  ⊇  (>=)  ⊉  !(>=)  ⊃  (>)  ⊅  !(>)
-        ∪  (|)  ∩  (&)  ∖  (-)  ⊖  (^)  ⊍  (.)  ⊎  (+)
-    »;
+    my @ops =
+      &infix:<<∈>>,      '∈',
+      &infix:<<(elem)>>, '(elem)',
+      &infix:<<∉>>,      '∉',
+      &infix:<<∋>>,      '∋',
+      &infix:<<(cont)>>, '(cont)',
+      &infix:<<∌>>,      '∌',
+      &infix:<<⊆>>,      '⊆',
+      &infix:<<(<=)>>,   '(<=)',
+      &infix:<<⊈>>,      '⊈',
+      &infix:<<⊂>>,      '⊂',
+      &infix:<<(<)>>,    '(<)',
+      &infix:<<⊄>>,      '⊄',
+      &infix:<<⊇>>,      '⊇',
+      &infix:<<(>=)>>,   '(>=)',
+      &infix:<<⊉>>,      '⊉',
+      &infix:<<⊃>>,      '⊃',
+      &infix:<<(>)>>,    '(>)',
+      &infix:<<⊅>>,      '⊅',
+      &infix:<<∪>>,      '∪',
+      &infix:<<(|)>>,    '(|)',
+      &infix:<<∩>>,      '∩',
+      &infix:<<(&)>>,    '(&)',
+      &infix:<<∖>>,      '∖ ',
+      &infix:<<(-)>>,    '(-)',
+      &infix:<<⊖>>,      '⊖',
+      &infix:<<(^)>>,    '(^)',
+      &infix:<<⊍>>,      '⊍',
+      &infix:<<(.)>>,    '(.)',
+      &infix:<<⊎>>,      '⊎',
+      &infix:<<(+)>>,    '(+)',
+    ;
 
     my @types := Set, SetHash, Bag, BagHash, Mix, MixHash;
-    plan @ops × @types;
+    plan @ops ÷ 2 × @types;
 
     for @types -> $type {
-        for @ops {
-            eval-lives-ok "\$ = 1 $_ $type.perl()", "$type.perl() $_";
+        for @ops -> &op, $name {
+            lives-ok { op($ = 1, $type) }, "$type.perl() $name";
         }
     }
 }
