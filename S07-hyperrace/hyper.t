@@ -19,19 +19,16 @@ plan 13;
     is @result, <AA BB CC DD EE FF GG>, "two-stage map over some strings";
 }
 
-#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     my @result = (50..100).list.hyper.grep({ $_ %% 10 });
     is @result, (50, 60, 70, 80, 90, 100), "hyper + grep";
 }
 
-#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     my @result = (^100).list.hyper.grep({ $_.is-prime }).map({ $_ * $_ });
     is @result, (4, 9, 25, 49, 121, 169, 289, 361, 529, 841, 961, 1369, 1681, 1849, 2209, 2809, 3481, 3721, 4489, 5041, 5329, 6241, 6889, 7921, 9409), "hyper + grep + map";
 }
 
-#?rakudo.moar todo 'hyper and race cause lists to become empty RT #126597'
 #?rakudo.jvm skip 'hangs'
 {
     # hyper + map done in reverse
@@ -61,7 +58,6 @@ plan 13;
     is @result, (1, 2, 3, 4, 5), "test that hyper + map done in reverse returns values in the right order";
 }
 
-#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     # hyper + grep done in reverse
 
