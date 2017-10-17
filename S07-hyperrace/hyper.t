@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 41;
+plan 45;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -162,3 +162,12 @@ dies-ok { sink (1..1000).hyper.grep: { die } },
     }
     is $got, 3, 'for <a b c>.hyper { } actually iterates';
 }
+
+# RT #130576
+is ([+] (1..100).hyper), 5050,
+    'Correct result for [+] (1..100).hyper';
+is ([+] (1..100).hyper.grep(* != 22)), 5028,
+    'Correct result for [+] (1..100).hyper.grep(* != 22)';
+is ([+] (1..100).grep(* != 22).hyper), 5028,
+    'Correct result for [+] (1..100).grep(* != 22).hyper';
+is (^100 .hyper.elems), 100, '.hyper.elems works';

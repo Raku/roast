@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 30;
+plan 34;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -141,3 +141,12 @@ dies-ok { sink (1..1000).race.grep: { die } },
     }
     is $got, 3, 'for <a b c>.race { } actually iterates';
 }
+
+# RT #130576
+is ([+] (1..100).race), 5050,
+    'Correct result for [+] (1..100).race';
+is ([+] (1..100).race.grep(* != 22)), 5028,
+    'Correct result for [+] (1..100).race.grep(* != 22)';
+is ([+] (1..100).grep(* != 22).race), 5028,
+    'Correct result for [+] (1..100).grep(* != 22).race';
+is (^100 .race.elems), 100, '.race.elems works';
