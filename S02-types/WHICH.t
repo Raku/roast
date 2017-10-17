@@ -43,7 +43,6 @@ my @normal = <
   HyperConfiguration
   HyperSeq
   HyperWhatever
-  HyperWorkBuffer
   IO::ArgFiles
   IO::Handle
   IO::Notification
