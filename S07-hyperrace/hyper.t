@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 39;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -132,3 +132,17 @@ plan 33;
             '.hyper.map({.fmt(...)}) on a Buf slice works';
     }
 }
+
+# RT #129234
+dies-ok { for (1..1).hyper { die } },
+    "Exception thrown in hyper for is not lost (1..1)"; 
+dies-ok { for (1..1000).hyper { die } },
+    "Exception thrown in hyper for is not lost (1..1000)"; 
+dies-ok { sink (1..1).hyper.map: { die } },
+    "Exception thrown in hyper map is not lost (1..1)"; 
+dies-ok { sink (1..1000).hyper.map: { die } },
+    "Exception thrown in hyper map is not lost (1..1000)"; 
+dies-ok { sink (1..1).hyper.grep: { die } },
+    "Exception thrown in hyper grep is not lost (1..1)"; 
+dies-ok { sink (1..1000).hyper.grep: { die } },
+    "Exception thrown in hyper grep is not lost (1..1000)"; 

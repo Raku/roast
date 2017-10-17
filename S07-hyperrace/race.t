@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 28;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -111,3 +111,17 @@ plan 22;
         is @x.sort, [^10], ".race(:1batch) with sleepy mapper works (try $i)";
     }
 }
+
+# RT #129234
+dies-ok { for (1..1).race { die } },
+    "Exception thrown in race for is not lost (1..1)"; 
+dies-ok { for (1..1000).race { die } },
+    "Exception thrown in race for is not lost (1..1000)"; 
+dies-ok { sink (1..1).race.map: { die } },
+    "Exception thrown in race map is not lost (1..1)"; 
+dies-ok { sink (1..1000).race.map: { die } },
+    "Exception thrown in race map is not lost (1..1000)"; 
+dies-ok { sink (1..1).race.grep: { die } },
+    "Exception thrown in race grep is not lost (1..1)"; 
+dies-ok { sink (1..1000).race.grep: { die } },
+    "Exception thrown in race grep is not lost (1..1000)"; 
