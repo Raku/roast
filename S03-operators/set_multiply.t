@@ -153,7 +153,7 @@ my @quads =
 
 plan 2 * (1 + 3 * @types + @pairs/2 + 2 * @triplets/3 + 6 * @quads/2);
 
-# addition
+# multiplication
 for
   &infix:<(.)>, "(.)",
   &infix:<⊍>,     "⊍"
