@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 22;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -94,5 +94,20 @@ plan 12;
               :method<race>, :$name, :$value,
               "cannot have a $name of $value for hyper";
         }
+    }
+}
+
+# RT #127452
+{
+    for ^5 -> $i {
+        my @x = ^10;
+        my @y = @x.race(:3batch, :5degree).map: { sleep rand / 100; $_ + 1 };
+        is @y.sort, [1..10], ".race(:3batch, :5degree) with sleepy mapper works (try $i)";
+    }
+}
+{
+    for ^5 -> $i {
+        my @x = (^10).race(:1batch).map: { sleep rand / 20; $_ };
+        is @x.sort, [^10], ".race(:1batch) with sleepy mapper works (try $i)";
     }
 }

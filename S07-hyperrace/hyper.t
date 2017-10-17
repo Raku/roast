@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 33;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -101,4 +101,34 @@ plan 13;
 {
     my @res = ^1000 .hyper.map: *+0;
     is-deeply @res, [@res.sort], '.hyper preserves order';
+}
+
+# RT #127452
+{
+    for ^5 -> $i {
+        my @x = ^10;
+        my @y = @x.hyper(:3batch, :5degree).map: { sleep rand / 100; $_ + 1 };
+        is @y, [1..10], ".hyper(:3batch, :5degree) with sleepy mapper works (try $i)";
+    }
+}
+{
+    for ^5 -> $i {
+        my @x = (^10).hyper(:1batch).map: { sleep rand / 20; $_ };
+        is @x, [^10], ".hyper(:1batch) with sleepy mapper works (try $i)";
+    }
+}
+{
+    my @a = 1, 3, 2, 9, 0, |( 1 .. 100 );
+    for ^5 -> $i {
+        my $a = @a.hyper.map: * + 1;
+        is $a.list, (2, 4, 3, 10, 1, |( 2 .. 101 )),
+            "Correct result of .hyper.map(*+1).list (try $i)";
+    }
+}
+{
+    my $b = Blob.new((^128).pick xx 1000);
+    for ^5 {
+        is $b[8..906].hyper.map({.fmt("%20x")}).list, $b[8..906].map({.fmt("%20x")}).list,
+            '.hyper.map({.fmt(...)}) on a Buf slice works';
+    }
 }
