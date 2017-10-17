@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 40;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -146,3 +146,10 @@ dies-ok { sink (1..1).hyper.grep: { die } },
     "Exception thrown in hyper grep is not lost (1..1)"; 
 dies-ok { sink (1..1000).hyper.grep: { die } },
     "Exception thrown in hyper grep is not lost (1..1000)"; 
+
+# RT #128084
+{
+    multi sub f ($a) { $a**2 }
+    is (^10).hyper.map(&f).list, (0, 1, 4, 9, 16, 25, 36, 49, 64, 81),
+        "hyper map with a multi sub works";
+}

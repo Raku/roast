@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 29;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -125,3 +125,10 @@ dies-ok { sink (1..1).race.grep: { die } },
     "Exception thrown in race grep is not lost (1..1)"; 
 dies-ok { sink (1..1000).race.grep: { die } },
     "Exception thrown in race grep is not lost (1..1000)"; 
+
+# RT #128084
+{
+    multi sub f ($a) { $a**2 }
+    is (^10).race.map(&f).list.sort, (0, 1, 4, 9, 16, 25, 36, 49, 64, 81),
+        "race map with a multi sub works";
+}
