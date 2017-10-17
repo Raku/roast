@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 50;
+plan 51;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -189,3 +189,5 @@ is (^100 .hyper.elems), 100, '.hyper.elems works';
     is (^1000).hyper.map(*+1).Seq.map(*+2).list, (3..1002).list,
         'Switching from hyper to sequential Seq does not break results or disorder';
 }
+
+is (^1000).hyper.is-lazy, False, 'is-lazy on HyperSeq returns False';

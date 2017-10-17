@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 40;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -168,3 +168,5 @@ is (^100 .race.elems), 100, '.race.elems works';
     is (^1000).race.map(*+1).Seq.map(*+2).list.sort, (3..1002).list,
         'Switching from race to sequential Seq does not break results';
 }
+
+is (^1000).race.is-lazy, False, 'is-lazy on RaceSeq returns False';
