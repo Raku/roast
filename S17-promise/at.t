@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
-plan 3;
+plan 4;
 
 # RT #123520
 # This test comes first in the file so it's the first to start any threads;
@@ -23,3 +25,7 @@ plan 3;
     is $p.result, True, "Promise.at result is True";
     ok now - $start >= 1, "Promise.at took long enough";
 }
+
+is_run ｢await Promise.at(now - 1000).then: {print 'pass'}｣,
+    {:out<pass>, :err(''), :0status},
+'.at with negative value works and does not warn';

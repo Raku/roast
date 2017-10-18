@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 4;
 
 # RT #123520
 # This test comes first in the file so it's the first to start any threads;
@@ -22,4 +22,9 @@ plan 3;
     my $p = Promise.in(1);
     is $p.result, True, "Promise.in result is True";
     ok now - $start >= 1, "Promise.in took long enough";
+}
+
+subtest 'Promise.in with negative value works' => {
+    plan 1;
+    await Promise.in(-rand).then: { pass ".then'ed code ran" }
 }

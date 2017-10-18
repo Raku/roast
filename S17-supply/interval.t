@@ -5,7 +5,7 @@ use Test;
 use Test::Tap;
 use Test::Util;
 
-plan 8;
+plan 9;
 
 dies-ok { Supplier.new.Supply.interval(1) }, 'can not be called as an instance method';
 
@@ -48,6 +48,9 @@ is_run(
 
 # RT #130168
 {
+    # treat too-small values as minimum timer resolution (e.g. 0.001 seconds)
+    # emitting optional warning in such cases is allowed
+    CONTROL { when CX::Warn { .resume } }
     my @a;
     react {
         whenever Supply.interval(.0001) {
@@ -55,7 +58,21 @@ is_run(
             done if $_ == 5
         }
     }
-    is @a, [0..5], "Timer with very short interval fires multiple times";
+    is-deeply @a, [0..5], "Timer with very short interval fires multiple times";
+}
+
+{
+    # treat negatives/zeros as minimum timer resolution (e.g. 0.001 seconds)
+    # emitting optional warning in such cases is allowed
+    CONTROL { when CX::Warn { .resume } }
+    my @a;
+    react {
+        whenever Supply.interval(-100) {
+            push @a, $_;
+            done if $_ == 5
+        }
+    }
+    is-deeply @a, [0..5], "Timer with very short interval fires multiple times";
 }
 
 # vim: ft=perl6 expandtab sw=4
