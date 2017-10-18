@@ -220,7 +220,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     my $kill = Promise.new;
     my $started = Promise.new;
     my $ok = start react {
-        whenever IO::Socket::Async.listen('localhost', 3333) -> $conn {
+        whenever IO::Socket::Async.listen('localhost', 4893) -> $conn {
             whenever $conn.Supply(:bin) -> $buf {
                 await $conn.write: $buf;
                 $conn.close;
@@ -234,7 +234,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     my @responses;
     for ^20 {
         react {
-            whenever IO::Socket::Async.connect('localhost', 3333) -> $client {
+            whenever IO::Socket::Async.connect('localhost', 4893) -> $client {
                 await $client.write('is this thing on?'.encode('ascii'));
                 whenever $client.Supply(:bin) {
                     push @responses, .decode('ascii');
