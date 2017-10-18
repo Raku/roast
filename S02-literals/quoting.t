@@ -652,7 +652,7 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
 }
 
 {
-    is_run 'qx/' ~ $*EXECUTABLE ~  ' -e 42.note/',
+    is_run 'qx=' ~ $*EXECUTABLE ~  ' -e 42.note=',
         {:err("42\n"), :out(''), :0status}, 'qx passes STDERR through';
 }
 
