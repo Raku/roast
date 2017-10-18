@@ -393,6 +393,7 @@ Hello, World
 
 {
     # 一 means "One" in Chinese.
+    $*DISTRO.is-win and q:x/chcp 65001/; # set utf8 on cmd.exe
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
 
@@ -651,10 +652,8 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
 }
 
 {
-    my $code = 'qx♥' ~ $*EXECUTABLE ~ (
-        $*DISTRO.is-win ?? ｢ -e "note 42"♥｣ !! ｢ -e 'note 42'♥｣);
-    is_run $code, {:err("42\n"), :out(''), :0status},
-        'qx passes STDERR through';
+    is_run 'qx/' ~ $*EXECUTABLE ~  ' -e 42.note/',
+        {:err("42\n"), :out(''), :0status}, 'qx passes STDERR through';
 }
 
 # https://irclog.perlgeek.de/perl6-dev/2017-06-16#i_14744333
