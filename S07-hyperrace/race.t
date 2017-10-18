@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 40;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -19,13 +19,11 @@ plan 12;
     is @result.sort, <AA BB CC DD EE FF GG>, "two-stage map over some strings";
 }
 
-#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     my @result = (50..100).list.race.grep({ $_ %% 10 });
     is @result.sort, (50, 60, 70, 80, 90, 100), "race + grep";
 }
 
-#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     my @result = (^100).list.race.grep({ $_.is-prime }).map({ $_ * $_ });
     is @result.sort, (4, 9, 25, 49, 121, 169, 289, 361, 529, 841, 961, 1369, 1681, 1849, 2209, 2809, 3481, 3721, 4489, 5041, 5329, 6241, 6889, 7921, 9409), "race + grep + map";
@@ -60,7 +58,6 @@ plan 12;
     is @result.sort(), (1, 2, 3, 4, 5), "test that race + map in reverse returns correct values";
 }
 
-#?rakudo todo 'hyper and race cause lists to become empty RT #126597'
 {
     # race + grep done in reverse
 
@@ -99,3 +96,77 @@ plan 12;
         }
     }
 }
+
+# RT #127452
+{
+    for ^5 -> $i {
+        my @x = ^10;
+        my @y = @x.race(:3batch, :5degree).map: { sleep rand / 100; $_ + 1 };
+        is @y.sort, [1..10], ".race(:3batch, :5degree) with sleepy mapper works (try $i)";
+    }
+}
+{
+    for ^5 -> $i {
+        my @x = (^10).race(:1batch).map: { sleep rand / 20; $_ };
+        is @x.sort, [^10], ".race(:1batch) with sleepy mapper works (try $i)";
+    }
+}
+
+# RT #129234
+dies-ok { for (1..1).race { die } },
+    "Exception thrown in race for is not lost (1..1)"; 
+dies-ok { for (1..1000).race { die } },
+    "Exception thrown in race for is not lost (1..1000)"; 
+dies-ok { sink (1..1).race.map: { die } },
+    "Exception thrown in race map is not lost (1..1)"; 
+dies-ok { sink (1..1000).race.map: { die } },
+    "Exception thrown in race map is not lost (1..1000)"; 
+dies-ok { sink (1..1).race.grep: { die } },
+    "Exception thrown in race grep is not lost (1..1)"; 
+dies-ok { sink (1..1000).race.grep: { die } },
+    "Exception thrown in race grep is not lost (1..1000)"; 
+
+# RT #128084
+{
+    multi sub f ($a) { $a**2 }
+    is (^10).race.map(&f).list.sort, (0, 1, 4, 9, 16, 25, 36, 49, 64, 81),
+        "race map with a multi sub works";
+}
+
+# RT #131865
+{
+    my atomicint $got = 0;
+    for <a b c>.race {
+        $got⚛++
+    }
+    is $got, 3, 'for <a b c>.race { } actually iterates';
+}
+
+# RT #130576
+is ([+] (1..100).race), 5050,
+    'Correct result for [+] (1..100).race';
+is ([+] (1..100).race.grep(* != 22)), 5028,
+    'Correct result for [+] (1..100).race.grep(* != 22)';
+is ([+] (1..100).grep(* != 22).race), 5028,
+    'Correct result for [+] (1..100).grep(* != 22).race';
+is (^100 .race.elems), 100, '.race.elems works';
+
+{
+    my atomicint $i = 0;
+    (^10000).race.map: { $i⚛++ }
+    is $i, 10000, 'race map in sink context iterates';
+}
+
+{
+    isa-ok (^1000).race.map(*+1).hyper, HyperSeq, 'Can switch from race to hyper mode';
+    is (^1000).race.map(*+1).hyper.map(*+2).list.sort, (3..1002).list,
+        'Switching from race to hyper mode does not break results';
+}
+
+{
+    isa-ok (^1000).race.map(*+1).Seq, Seq, 'Can switch from race to sequential Seq';
+    is (^1000).race.map(*+1).Seq.map(*+2).list.sort, (3..1002).list,
+        'Switching from race to sequential Seq does not break results';
+}
+
+is (^1000).race.is-lazy, False, 'is-lazy on RaceSeq returns False';
