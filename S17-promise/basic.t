@@ -116,3 +116,31 @@ subtest 'subclasses create subclassed Promises' => {
     isa-ok Meows.anyof(start {}), Meows, '.anyof';
     isa-ok Meows.allof(start {}), Meows, '.anyof';
 }
+
+subtest '.kept and .broken constructor methods' => {
+    plan 12;
+    my $kp = Promise.kept;
+
+    is $kp.status, Kept, "Newly kept Promise has Kept status";
+    ok $kp.result eqv True, "Promises kept without a value are kept with 'True'";
+
+    my $bp = Promise.broken;
+
+    is $bp.status, Broken, "Newly broken Promise has Broken status";
+    throws-like { $bp.result }, X::AdHoc, payload => "Died", "Promises broken without a value have 'Died' in an X::AdHoc as the cause (via .result)";
+    isa-ok $bp.cause, X::AdHoc, "Promises broken without a value have an X::AdHoc as the cause (via .result)";
+    ok $bp.cause.payload eqv "Died", "Promises broken without a value have 'Died' as exception payload (via .result)";
+
+
+    my $kpv = Promise.kept("kittens");
+
+    is $kpv.status, Kept, "Newly kept Promise has Kept status";
+    ok $kpv.result eqv "kittens", "Promises kept with a value is kept with the value";
+
+    my $bpv = Promise.broken("glass");
+
+    is $bpv.status, Broken, "Newly broken Promise has Broken status";
+    throws-like { $bpv.result }, X::AdHoc, payload => "glass", "Promises broken with a value have the value in an X::AdHoc as the cause (via .result)";
+    isa-ok $bpv.cause, X::AdHoc, "Promises broken with a value have an X::AdHoc as the cause (via .result)";
+    ok $bpv.cause.payload eqv "glass", "Promises broken without a value have the value as exception payload (via .result)";
+}
