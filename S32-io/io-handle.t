@@ -275,7 +275,7 @@ subtest '.print-nl method' => {
 subtest 'opened filehandles get closed on exit automatically' => {
     plan 2;
     my $path = make-temp-file;
-    is_run $path.perl ~ ｢.open(:w, :5000buffer).print: 'pass'; print 'pass'｣,
+    is_run $path.perl ~ ｢.open(:w, :5000out-buffer).print: 'pass'; print 'pass'｣,
         {:out<pass>, :err(''), :0status}, 'written into a file without closing';
 
     is-deeply $path.slurp, 'pass', 'file has all the content we wrote into it';
