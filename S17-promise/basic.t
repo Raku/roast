@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 31;
+plan 41;
 
 {
     my $p = Promise.new;
@@ -28,6 +28,15 @@ plan 31;
 
 {
     my $p = Promise.new;
+    $p.keep();
+    is $p.status, Kept, "Kept Promise without a value has Kept status";
+    ok $p.Bool, "Kept Promise has a result";
+    ok ?$p, "Kept Promise is true";
+    ok $p.result eqv True, "Default keep value is True.";
+}
+
+{
+    my $p = Promise.new;
     $p.break("glass");
     is $p.status, Broken, "Broken Promise has Broken status";
     ok $p.Bool, "Broken Promise has a result";
@@ -38,6 +47,16 @@ plan 31;
     
     dies-ok { $p.keep("eating") }, "Cannot keep a Broken Promise";
     dies-ok { $p.break("bad") }, "Cannot re-break a Broken Promise";
+}
+
+{
+    my $p = Promise.new;
+    $p.break();
+    is $p.status, Broken, "Broken Promise without a value has Broken status";
+    ok $p.Bool, "Broken Promise has a result";
+    ok ?$p, "Broken Promise is true";
+    isa-ok $p.cause, Exception, "cause returns an exception";
+    is $p.cause.message, "Died", "Default exception message is 'Died'";
 }
 
 { # RT #124190
