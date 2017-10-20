@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 104;
+plan 107;
 
 =begin description
 
@@ -753,6 +753,15 @@ subtest 'next with label works inside list comprehended for loops' => {
     my $i = 0;
     sub foo($?) { ^2 .map: { $i++ } }; for 1 { .&foo() };
     is $i, 2, 'for statement sinks its content';
+}
+
+{
+    my $loops = 0;
+    my @values = lazy for ^10 { $loops++; $_ }
+    is $loops, 0, 'Lazy for loop does not execution until asked for values';
+    is @values[^5], (0, 1, 2, 3, 4),
+        'Lazy for loop produces correct values on demand';
+    is $loops, 5, 'Lazy for loop does no more work than required';
 }
 
 # vim: ft=perl6
