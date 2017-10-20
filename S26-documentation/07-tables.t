@@ -12,6 +12,7 @@ plan 42;
 =end table
 
 $r = $=pod[0];
+# tests 1-6:
 isa-ok $r, Pod::Block::Table;
 is $r.contents.elems, 4;
 is $r.contents[0].join('|'),
@@ -30,6 +31,7 @@ is $r.contents[3].join('|'),
     Everything else     57
 
 $r = $=pod[1];
+# tests 7-11:
 is $r.contents.elems, 4;
 is $r.contents[0].join('|'), "Constants|1";
 is $r.contents[1].join('|'), "Variables|10";
@@ -42,6 +44,7 @@ is $r.contents[3].join('|'), "Everything else|57";
     elephant | elephants
 
 $r = $=pod[2];
+# tests 12-15:
 is $r.contents.elems, 3;
 is $r.contents[0].join('|'), "mouse|mice";
 is $r.contents[1].join('|'), "horse|horses";
@@ -55,6 +58,7 @@ is $r.contents[2].join('|'), "elephant|elephants";
     Shark  +   0  +    Fish
 
 $r = $=pod[3];
+# tests 16-20:
 is $r.headers.join('|'), "Animal|Legs|Eats";
 is $r.contents.elems, 3;
 is $r.contents[0].join('|'), "Zebra|4|Cookies";
@@ -68,6 +72,7 @@ is $r.contents[2].join('|'), "Shark|0|Fish";
         The Shoveller | Eddie Stevens   | King Arthur's singing shovel
 
 $r = $=pod[4];
+# tests 21-23:
 is $r.headers.join('|'), "Superhero|Secret Identity|Superpower";
 is $r.contents.elems, 1;
 is $r.contents[0].join('|'),
@@ -91,6 +96,7 @@ is $r.contents[0].join('|'),
 =end table
 
 $r = $=pod[5];
+# tests 24-29:
 is $r.headers.join('|'), "Superhero|Secret Identity|Superpower";
 is $r.contents.elems, 4;
 is $r.contents[0].join('|'),
@@ -103,29 +109,35 @@ is $r.contents[3].join('|'),
    "The Bowler|Carol Pinnsler|Haunted bowling ball";
 
 =table
-    X | O |
-   ---+---+---
-      | X | O
-   ---+---+---
-      |   | X
+    X | O |    
+   ---+---+--- 
+      | X | O  
+   ---+---+--- 
+      |   | X  
+
 
 $r = $=pod[6];
+# tests 30-33:
 is $r.contents.elems, 3;
+my $s1 := $r.contents[0].join(',');
 is $r.contents[0].join(','), 'X,O,',
-    'ensure trailing whitespace counts as a cell (WARNING: this test will'
-    ~ ' fail if you modified this file and your editor auto-stripped'
-    ~ ' trailing whitespace)';
-is $r.contents[1].join(','), ',X,O';
-is $r.contents[2].join(','), ',,X';
+    "got '$s1'; ensure trailing whitespace counts as a cell (WARNING: this test will"
+    ~ " fail if you modified this file and your editor auto-stripped"
+    ~ " trailing whitespace)";
+my $s2 := $r.contents[1].join(',');
+is $r.contents[1].join(','), ',X,O', "got '$s2'";
+my $s3 := $r.contents[1].join(',');
+is $r.contents[2].join(','), ',,X', "got '$s3'";
 
 =table
-    X   O    
+    X   O     
    ===========
-        X   O
+        X   O 
    ===========
-            X
+            X 
 
 $r = $=pod[7];
+# tests 34-37:
 is $r.contents.elems, 3;
 is $r.contents[0].join(','), 'X,O,',
     'ensure trailing whitespace counts as a cell (WARNING: this test will'
@@ -142,6 +154,7 @@ bar
 =end table
 
 $r = $=pod[8];
+# test 38:
 is $r.contents.elems, 2;
 
 # test for issue #129862
@@ -158,6 +171,7 @@ x | y
 =end table
 
 $r = $=pod[9];
+# test 39-42:
 is $r.contents.elems, 3;
 is $r.contents[0].join(','), 'a,b,c';
 is $r.contents[1].join(','), 'l,m,n';
