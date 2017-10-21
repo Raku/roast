@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 plan 59;
 
@@ -125,9 +126,7 @@ plan 59;
 
 
 # RT #128038
-{
-    is "".substr(5).handled, False,
-        'Failure in .substr does not get incorrectly handled';
-}
+fails-like { "".substr: 5 }, X::OutOfRange,
+    'Failure in .substr does not get incorrectly handled';
 
 # vim: ft=perl6
