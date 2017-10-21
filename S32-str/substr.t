@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 60;
+plan 61;
 
 # L<S32::Str/Str/=item substr>
 
@@ -131,5 +131,9 @@ fails-like { "".substr: 5 }, X::OutOfRange,
 
 # RT #122789
 lives-ok { BEGIN "a".subst: /a/, "b" }, '.subst in BEGIN does not die';
+
+# RT #126721
+throws-like { $/ := "Uhoh"; put "Foo".subst: /Foo/, {$/} }, X::Assignment::RO,
+    '.subst complains when it cannot write to $/';
 
 # vim: ft=perl6
