@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 6;
 
 # See "=begin DATA" at the end of file.
 
@@ -55,5 +55,11 @@ plan 5;
 =begin DATA
 hello, world!
 =end DATA
+
+# RT #132339
+is-deeply $=pod.grep(*.name eq 'SEE-ALSO').head.contents.head.contents.head,
+    'foo132339',
+    'custom named paras with `-` in identifiers works';
+=SEE-ALSO foo132339
 
 # vim: ft=perl6
