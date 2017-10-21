@@ -101,9 +101,9 @@ is $action.calls, 'ab', '... and in the right order';
         }
     }
     class TestActions {
-        method TOP($/) {
+        method TOP($_) {
             "a\nb".subst(/\n+/, '', :g);
-            make 123;
+            .make: 123;
         }
     }
 
