@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 73;
+plan 74;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -191,5 +191,8 @@ is (2 Z 3), @z, 'joining of single items';
     ok  v42 ≠ v10, 'Version ≠ Version (true)';
     nok v42 ≠ v42, 'Version ≠ Version (false)';
 }
+
+# RT #132346
+is-deeply (0 ≠ 0 | 1 or 42), 42, 'Junctions with ≠ works like for negated ops';
 
 # vim: ft=perl6
