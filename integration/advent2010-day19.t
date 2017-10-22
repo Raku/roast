@@ -17,7 +17,7 @@ plan 6;
 
 {
     my $value = True but False;
-#?rakudo todo "RT #121940 - should be 'True'"
-    is $value, True, 'True but False';
+    # see RT #121940 - 'but False' is less magical than the blog post assumed
+    is ~$value, 'False', 'True but False';
     is ?$value, False, 'True but False';
 }
