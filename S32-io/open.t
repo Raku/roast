@@ -384,7 +384,10 @@ subtest '.open uses attributes by default' => {
 }
 
 # RT #131503
-subtest '.open with "-" as path uses $*IN/$*OUT' => {
+#?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
+#?DOES 1
+{
+  subtest '.open with "-" as path uses $*IN/$*OUT' => {
     plan 2;
     subtest 'STDOUT' => { plan 3;
         temp $*OUT = make-temp-file.open: :w;
@@ -400,9 +403,13 @@ subtest '.open with "-" as path uses $*IN/$*OUT' => {
         '-'.IO.open: :enc<utf8-c8>;
         is-deeply $*IN.encoding, 'utf8-c8', 'changed encoding';
     }
+  }
 }
 
-subtest '.open with "-" as path can open closed $*IN/$*OUT' => {
+#?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
+#?DOES 1
+{
+  subtest '.open with "-" as path can open closed $*IN/$*OUT' => {
     plan 3;
     subtest 'STDOUT' => { plan 4;
         temp $*OUT = IO::Handle.new: :path(make-temp-file);
@@ -433,6 +440,7 @@ subtest '.open with "-" as path can open closed $*IN/$*OUT' => {
     ｣, "foo\nbar\nber", {
         :out("foo\nbar\nber\nmeow \$w\nmeow \$*OUT\n"), :err(''), :0status
     }, ｢can use unopened handle with path '-'.IO｣;
+  }
 }
 
 # RT #131755

@@ -23,11 +23,15 @@ is 2988348162058574136915891421498819466320163312926952423791023078876139.expmod
    1527229998585248450016808958343740453059, "Rosettacode example is correct";
 
 # RT #130713
-subtest '.expmod with negative powers does not hang' => {
+#?rakudo.jvm skip 'java.lang.ArithmeticException: BigInteger not invertible.'
+#?DOES 1
+{
+  subtest '.expmod with negative powers does not hang' => {
     plan 3;
     is-deeply  42.expmod(-1,1),   0, '-1, 1';
     is-deeply  42.expmod(-42,42), 0, '-42, 42';
 
     #?rakudo skip 'hangs RT#130713'
     is-deeply  42.expmod(-1,7),   0, '-1. 7';
+  }
 }
