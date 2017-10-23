@@ -300,12 +300,10 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
 }
 
 # RT #128201
-#?rakudo.jvm skip "killprocasync NYI -- used in sub doesn't-hang"
 doesn't-hang '{ say @_.gist }(1..Inf)', :out(/'[...]'/),
     '.gist on @_ containing lazy list correctly thinks it is lazy';
 
 # RT #129175
-#?rakudo.jvm skip "killprocasync NYI -- used in sub doesn't-hang"
 doesn't-hang ｢-> *@a { @a.is-lazy.say }(1…∞)｣, :out(/True/),
     'slurpy positional param does not hang when given infinite lists';
 
