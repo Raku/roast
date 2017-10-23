@@ -172,8 +172,24 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
   subtest 'Int.new' => { # coverage; 2016-10-05
     plan 11;
 
-    isnt 2.WHERE, Int.new(2).WHERE,
-        'returns a new object (not a cached constant)';
+    subtest 'returns a new object (not a cached constant)' => {
+        plan 3;
+        {
+            my int $orig = 2; my $new := Int.new: $orig;
+            $new does my role Meows {};
+            is-deeply $orig.^name, 'Int', 'Int.new: int';
+        }
+        {
+            my $orig := 2; my $new := Int.new: $orig;
+            $new does my role Meows {};
+            is-deeply $orig.^name, 'Int', 'Int.new: Int';
+        }
+        {
+            my $orig := 2; my $new := Int.new: "2";
+            $new does my role Meows {};
+            is-deeply $orig.^name, 'Int', 'Int.new: Str';
+        }
+    }
 
    for '42', 42e0, 420/10, 42, ^42, (|^42,), [|^42] -> $n {
         is-deeply Int.new($n), 42,
