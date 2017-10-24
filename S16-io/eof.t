@@ -50,7 +50,9 @@ run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
     # bug with Proc or something where sent STDIN ends up on our STDOUT.
     # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
     # 'cause MacOS's `script` really wants it or something
-    :out{ .ends-with: "False\nmeow\n\nTrue\n" or diag "Got STDOUT: {.perl}" },
-    '.eof on TTY STDIN works right';
+    :out{ .ends-with: "False\nmeow\n\nTrue\n" or do {
+        diag "Got STDOUT: {.perl}";
+        False;
+    }}, '.eof on TTY STDIN works right';
 
 # vim: ft=perl6
