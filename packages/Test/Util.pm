@@ -307,17 +307,13 @@ sub run-with-tty (
 
     subtest $desc => {
         $path.IO.spurt: $code;
-        if shell :in, :out, :err, $script -> $_ {
+        given shell :in, :out, :err, $script {
             plan 3;
             # on MacOS, `script` really wants the ending newline...
             .in.spurt: "$in\n", :close;
             cmp-ok .out.slurp(:close), '~~', $out,    'STDOUT';
             cmp-ok .err.slurp(:close), '~~', $err,    'STDERR';
             cmp-ok .exitcode,  '~~', $status, 'exit code';
-        }
-        else {
-            plan 1;
-            flunk "Failed to run command; exitcode: $^proc.exitcode()";
         }
     }
 }

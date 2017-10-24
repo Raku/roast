@@ -1,10 +1,15 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
-plan 2;
+use Test::Util;
+
+plan 3;
 
 sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
 
 my $tmpfile = "eof-test-" ~ nonce();
+END unlink $tmpfile;
+
 {
   my $fh = open($tmpfile, :w) or die qq/Failed to open "$tmpfile": $!/;
   $fh.print: "EOF_TESTING\n\n";
@@ -39,6 +44,15 @@ my $tmpfile = "eof-test-" ~ nonce();
   }
 }
 
-END { unlink $tmpfile }
+# RT # 132349
+run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
+    # Here we use .ends-width because (currently) there's some sort of
+    # bug with Proc or something where sent STDIN ends up on our STDOUT.
+    # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
+    # 'cause MacOS's `script` really wants it or something
+    :out{ .ends-with: "False\nmeow\n\nTrue\n" or do {
+        diag "Got STDOUT: {.perl}";
+        False;
+    }}, '.eof on TTY STDIN works right';
 
 # vim: ft=perl6
