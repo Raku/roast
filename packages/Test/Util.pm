@@ -294,6 +294,34 @@ sub fails-like (&test, $ex-type, $reason?, *%matcher) is export {
     }
 }
 
+sub run-with-tty (
+    $code, $desc, :$in = '', :$status = 0, :$out = '', :$err = ''
+) is export {
+    state $path = make-temp-file.absolute;
+    # on MacOS, `script` doesn't take the command via `c` arg
+    state $script = shell(:!out, :!err, 'script -qc ""')
+        ?? “script -qc '"$*EXECUTABLE" "$path"'”
+        !! shell(:!out, :!err, “script -q /dev/null "$*EXECUTABLE" -e ""”)
+            ?? “script -q /dev/null "$*EXECUTABLE" "$path"”
+            !! do { skip "need `script` command to run test: $desc"; return }
+
+    subtest $desc => {
+        $path.IO.spurt: $code;
+        if shell :in, :out, :err, $script -> $_ {
+            plan 3;
+            # on MacOS, `script` really wants the ending newline...
+            .in.spurt: "$in\n", :close;
+            cmp-ok .out.slurp(:close), '~~', $out,    'STDOUT';
+            cmp-ok .err.slurp(:close), '~~', $err,    'STDERR';
+            cmp-ok .exitcode,  '~~', $status, 'exit code';
+        }
+        else {
+            plan 1;
+            flunk "Failed to run command; exitcode: $^proc.exitcode()";
+        }
+    }
+}
+
 =begin pod
 
 =head1 NAME
@@ -499,6 +527,21 @@ Like C<throws-like> but checks the code C<fail>s (as opposed to C<throw>ing).
 Executes C<&test> and uses C<Test.pm>'s C<isa-ok> to check the return value is a
 C<Failure>, then uses C<Test.pm>'s <throws-like> to check that C<Failure>
 throws the correct exception when sunk.
+
+=head2 run-with-tty
+
+    sub run-with-tty (
+        $code, $desc, :$in = '', :$status = 0, :$out = '', :$err = ''
+    )
+
+Puts C<$code> into a file, and runs it with C<$*EXECUTABLE> using C<`script`>
+command line utility, if available, or skips the tests if not. Appends C<\n> to
+C<$in> (MacOS's C<`script`> seems to require it), and sends it to the program.
+Then performs three smartmatch tests against C<$status> (exitcode), C<$out>
+(slurped STDOUT content) and C<$err> (slurped STDERR content).
+
+At the time of this writing, on MacOS's STDOUT seems to be prefixed with
+STDIN and C<^D\b\b> chars after it when running Rakudo compiler.
 
 =end pod
 
