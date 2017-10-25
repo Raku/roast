@@ -109,11 +109,11 @@ is $r.contents[3].join('|'),
    "The Bowler|Carol Pinnsler|Haunted bowling ball";
 
 =table
-    X | O |    
-   ---+---+--- 
-      | X | O  
-   ---+---+--- 
-      |   | X  
+    X | O |     
+   ---+---+---
+      | X | O
+   ---+---+---
+      |   | X
 
 
 $r = $=pod[6];
@@ -130,11 +130,11 @@ my $s3 := $r.contents[1].join(',');
 is $r.contents[2].join(','), ',,X', "got '$s3'";
 
 =table
-    X   O     
+    X   O      
    ===========
-        X   O 
+        X   O
    ===========
-            X 
+            X
 
 $r = $=pod[7];
 # tests 34-37:
@@ -162,8 +162,8 @@ is $r.contents.elems, 2;
 
 # NOTE: This test may need to change after planned table pod fixes are
 # made because this is a malformed table and the user should be warned
-# of that fact.
-
+# of that fact.  But the table can also be fixed automatically which
+# is the planned fix.
 =begin table
 a | b | c
 l | m | n
@@ -171,8 +171,8 @@ x | y
 =end table
 
 $r = $=pod[9];
-# test 39-42:
+# tests 39-42:
 is $r.contents.elems, 3;
 is $r.contents[0].join(','), 'a,b,c';
 is $r.contents[1].join(','), 'l,m,n';
-is $r.contents[2].join(','), 'x,y';
+is $r.contents[2].join(','), 'x,y';   # should change to "x,y," after a planned fix
