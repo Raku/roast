@@ -299,8 +299,8 @@ sub run-with-tty (
 ) is export {
     state $path = make-temp-file.absolute;
     # on MacOS, `script` doesn't take the command via `c` arg
-    state $script = shell(:!out, :!err, 'script -qc ""')
-        ?? “script -qc '"$*EXECUTABLE" "$path"'”
+    state $script = shell(:!out, :!err, 'script -t/dev/null -qc "" /dev/null')
+        ?? “script -t/dev/null -qc '"$*EXECUTABLE" "$path"' /dev/null”
         !! shell(:!out, :!err, “script -q /dev/null "$*EXECUTABLE" -e ""”)
             ?? “script -q /dev/null "$*EXECUTABLE" "$path"”
             !! do { skip "need `script` command to run test: $desc"; return }
@@ -538,6 +538,10 @@ Then performs three smartmatch tests against C<$status> (exitcode), C<$out>
 
 At the time of this writing, on MacOS's STDOUT seems to be prefixed with
 STDIN and C<^D\b\b> chars after it when running Rakudo compiler.
+
+Note that some variations of C<script> command might be passing C/dev/null>
+as first argument to your code. This is due to current implementation of
+this test routine trying to ignore the generation of timing file.
 
 =end pod
 
