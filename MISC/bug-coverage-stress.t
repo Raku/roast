@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 4;
+plan 5;
 
 # RT #132042
 doesn't-hang ｢
@@ -82,5 +82,21 @@ with make-temp-dir() -> $dir {
     skip 'need `echo` to run this test';
   }
 }
+
+# https://github.com/tokuhirom/p6-WebSocket/issues/15#issuecomment-339120879
+# RT #132343
+is_run ｢
+    start react whenever IO::Socket::Async.listen: '127.0.0.1', 15555 {
+        supply {
+            whenever $_ {
+                print 'pass';
+                exit;
+            }
+        }.list
+    }
+    sleep .2;
+    .print: "x\n" with IO::Socket::INET.new: :host<127.0.0.1>, :15555port;
+    sleep 2;
+｣, {:out<pass>, :err(''), :0status}, 'supply inside sock does not hang';
 
 # vim: expandtab shiftwidth=4 ft=perl6
