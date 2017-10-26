@@ -2,5 +2,5 @@
 # additional proposals that *might* make it into the next language version.
 #
 # Some implementations use this file to select which test files to run, e.g.:
-# https://github.com/rakudo/rakudo/blob/nom/docs/roast-spectest.data-versioning.md
+# https://github.com/rakudo/rakudo/blob/master/docs/roast-spectest.data-versioning.md
 6.d-proposals
