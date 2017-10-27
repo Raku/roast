@@ -14,7 +14,7 @@ as a conforming Perl 6 implementation.
 ## Introduction
 
 Please consider this test suite to be the bleeding edge of Perl 6
-development. New tests, tests for experimental new features, etc.,
+development. New tests, tests for proposed new features, etc.,
 will live on this 'master' branch. Once a specification is cut, a branch
 will be created for that version of the spec, e.g., `6.c` for Christmas.
 
