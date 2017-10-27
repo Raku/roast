@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 22;
+plan 24;
 
 # Is there a better reference for the spec for how return return works? 
 # There is "return function" but that's a more advanced feature.
@@ -102,5 +102,12 @@ throws-like Q[sub {CHECK return;}],
     X::Comp::BeginTime,
     exception => X::ControlFlow::Return,
     'CHECK return handled correctly';
+
+# https://github.com/rakudo/rakudo/issues/1216
+throws-like ｢sub { eager sub { ^1 .map: { return } }() }()｣,
+    X::ControlFlow::Return, :out-of-dynamic-scope{.so},
+   'X::ControlFlow::Return tells when return is outside of dyn scope';
+throws-like ｢return｣, X::ControlFlow::Return, :out-of-dynamic-scope{.not},
+   'bare return does not set $.out-of-dynamic-scope';
 
 # vim: ft=perl6
