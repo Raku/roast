@@ -1,7 +1,9 @@
 use v6;
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
-plan 6;
+plan 7;
 
 #L<S06/Operator overloading>
 
@@ -49,5 +51,10 @@ plan 6;
     }
     is B.new(x => 'a').('b'), 'ab', 'can overload invoke';
 }
+
+# RT #132262
+is_run ｢$ = ""; sub postfix:<♥> ($) { "pass" }; print "{ 5♥ }"｣,
+    {:out<pass>, :err(''), :0status},
+'quote lang cache does not interfere with newly defined ops';
 
 # vim: ft=perl6
