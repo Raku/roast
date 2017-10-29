@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 403;
+plan 405;
 
 =begin pod
 
@@ -1054,6 +1054,103 @@ is &postfix:<»i>((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen 
         { out => qq[\{bar => 5, baz => 4, foo => 1\}\n], err => '' },
         "union hyperoperator on a hash shouldn't warn about missing keys"
     );
+}
+
+# RT #130721
+subtest 'method call variants respect nodality' => {
+    plan 20;
+
+    my @a := <a b>, <c d e>;
+    my $var = ().^lookup: 'elems';
+
+    is-deeply @a».elems,      (2, 3), '».';
+    is-deeply @a»."elems"(),  (2, 3), '».""()';
+    is-deeply @a».&elems,     (2, 3), '».&';
+    is-deeply @a».$var,       (2, 3), '».$';
+    is-deeply @a».Any::elems, (2, 3), '».::';
+    # With ».:: dispatch, nodality is controled by the method being nodal, but
+    # only if List type .^can that method.
+
+    is-deeply @a».?elems,      (2, 3), '».?';
+    is-deeply @a».?"elems"(),  (2, 3), '».?""()';
+    is-deeply @a».?&elems,     (2, 3), '».?&';
+    is-deeply @a».?$var,       (2, 3), '».?$';
+    is-deeply @a».?Any::elems, (2, 3), '».?::';
+
+    is-deeply @a».+elems,      ((2, 2), (3, 3)), '».+';
+    is-deeply @a».+"elems"(),  ((2, 2), (3, 3)), '».+""()';
+    is-deeply @a».+&elems,     ((2,  ), (3,  )), '».+&';
+    is-deeply @a».+$var,       ((2,  ), (3,  )), '».+$';
+    is-deeply @a».+Any::elems, ((2,  ), (3,  )), '».+::';
+
+    is-deeply @a».*elems,      ((2, 2), (3, 3)), '».*';
+    is-deeply @a».*"elems"(),  ((2, 2), (3, 3)), '».*""()';
+    is-deeply @a».*&elems,     ((2,  ), (3,  )), '».*&';
+    is-deeply @a».*$var,       ((2,  ), (3,  )), '».*$';
+    is-deeply @a».*Any::elems, ((2,  ), (3,  )), '».*::';
+}
+
+subtest 'hyper method calls string/var method names' => {
+    plan 8;
+
+    subtest '».""() evaluates given value only once' => {
+        plan 2;
+        my atomicint $runs = 0;
+        is-deeply (<a b>, <c d e>)»."{$runs⚛++; "elems"}"(), (2, 3),
+            'right result';
+        is $runs, 1, 'producing method name ran only once';
+    }
+    subtest '».?""() evaluates given value only once' => {
+        plan 2;
+        my atomicint $runs = 0;
+        is-deeply (<a b>, <c d e>)».?"{$runs⚛++; "elems"}"(), (2, 3),
+            'right result';
+        is $runs, 1, 'producing method name ran only once';
+    }
+    subtest '».+""() evaluates given value only once' => {
+        plan 2;
+        my atomicint $runs = 0;
+        is-deeply (<a b>, <c d e>)».+"{$runs⚛++; "elems"}"(), ((2, 2), (3, 3)),
+            'right result';
+        is $runs, 1, 'producing method name ran only once';
+    }
+    subtest '».*""() evaluates given value only once' => {
+        plan 2;
+        my atomicint $runs = 0;
+        is-deeply (<a b>, <c d e>)».*"{$runs⚛++; "elems"}"(), ((2, 2), (3, 3)),
+            'right result';
+        is $runs, 1, 'producing method name ran only once';
+    }
+
+    {
+        my atomicint $runs = 0;
+        sub elems is nodal { $runs⚛++; $^thing.elems }
+
+        subtest '».& sub calls' => {
+            plan 2;
+            is-deeply (<a b>, <c d e>)».&elems, (2, 3), 'right result';
+            is $runs, 2, 'sub ran expected number of times';
+            $runs = 0;
+        }
+        subtest '».?& sub calls' => {
+            plan 2;
+            is-deeply (<a b>, <c d e>)».?&elems, (2, 3), 'right result';
+            is $runs, 2, 'sub ran expected number of times';
+            $runs = 0;
+        }
+        subtest '».+& sub calls' => {
+            plan 2;
+            is-deeply (<a b>, <c d e>)».+&elems, ((2,), (3,)), 'right result';
+            is $runs, 2, 'sub ran expected number of times';
+            $runs = 0;
+        }
+        subtest '».*& sub calls' => {
+            plan 2;
+            is-deeply (<a b>, <c d e>)».*&elems, ((2,), (3,)), 'right result';
+            is $runs, 2, 'sub ran expected number of times';
+            $runs = 0;
+        }
+    }
 }
 
 # vim: ft=perl6
