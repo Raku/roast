@@ -354,7 +354,7 @@ is_run "my &f = EVAL '*+*'", { err => '' }, '*+* does not warn from inside EVAL'
 #?rakudo todo 'useless use corner case RT #131502'
 is_run '-> +@foo { @foo.head.(41) }(* == 42)', { err => '' }, 'no warning when WhateverCode passed as arg and invoked';
 
-#?rakudo todo '&combinations whatever handling RT #131846'
+# RT #131846
 is-deeply try { (1,2,3).combinations(2..*) }, ((1, 2), (1, 3), (2, 3), (1, 2, 3)), "combinations(2..*)";
 
 #?rakudo todo 'closure/scoping of outer parameter with rx RT #131409'
