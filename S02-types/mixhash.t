@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test::Util;
 use Test;
 
-plan 262;
+plan 271;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -621,6 +621,21 @@ subtest "elements with negative weights are allowed in MixHashes" => {
     is-deeply $b, ("b"=>-1,"a"=>-1,"c"=>-1).MixHash, 'negative weights are ok';
     $b = <a b b c>.MixHash; .value = -1.5 for $b.pairs;
     is-deeply $b, ("b"=>-1.5,"a"=>-1.5,"c"=>-1.5).MixHash, 'negative Pair values are ok';
+}
+
+# RT #132352, RT #132353
+{
+    my %h is MixHash = <a b b c c c d d d d>;
+    is %h.elems, 4, 'did we get right number of elements';
+    is %h<a>, 1, 'do we get 1 for a';
+    is %h<e>, 0, 'do we get 0 value for e';
+    is %h.^name, 'MixHash', 'is the %h really a BagHash';
+    %h = <e e e e e f g>;
+    is %h.elems, 3, 'did we get right number of elements after re-init';
+    is %h<e>:delete, 5, 'did we get 5 by removing e';
+    is %h.elems, 2, 'did we get right number of elements after :delete';
+    lives-ok { %h<f> = 0 }, 'can delete from MixHash by assignment';
+    is %h.elems, 1, 'did we get right number of elements assignment';
 }
 
 # vim: ft=perl6

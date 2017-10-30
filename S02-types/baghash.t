@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 293;
+plan 302;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -689,5 +689,20 @@ subtest "elements with negative weights are removed" => {
 # RT #132279
 is-deeply ('foo' => 10000000000000000000).BagHash.grab(1), ('foo',),
     'can .grab() a BagHash key with weight larger than 64 bits';
+
+# RT #132352, RT #132353
+{
+    my %h is BagHash = <a b b c c c d d d d>;
+    is %h.elems, 4, 'did we get right number of elements';
+    is %h<a>, 1, 'do we get 1 for a';
+    is %h<e>, 0, 'do we get 0 value for e';
+    is %h.^name, 'BagHash', 'is the %h really a BagHash';
+    %h = <e e e e e f g>;
+    is %h.elems, 3, 'did we get right number of elements after re-init';
+    is %h<e>:delete, 5, 'did we get 5 by removing e';
+    is %h.elems, 2, 'did we get right number of elements after :delete';
+    lives-ok { %h<f> = 0 }, 'can delete from BagHash by assignment';
+    is %h.elems, 1, 'did we get right number of elements assignment';
+}
 
 # vim: ft=perl6

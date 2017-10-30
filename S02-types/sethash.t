@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 246;
+plan 255;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -628,6 +628,21 @@ subtest "elements with negative weights are allowed in SetHashes" => {
     is-deeply $b, ("b","a","c").SetHash, 'negative weight => True => element present';
     $b = <a b b c>.SetHash; .value = -1.5 for $b.pairs;
     is-deeply $b, ("b","a","c").SetHash, 'negative Pair value => True => element present';
+}
+
+# RT #132352, RT #132353
+{
+    my %h is SetHash = <a b c d>;
+    is %h.elems, 4, 'did we get right number of elements';
+    ok %h<a>, 'do we get a truthy value for a';
+    nok %h<e>, 'do we get a falsy value for e';
+    is %h.^name, 'SetHash', 'is the %h really a SetHash';
+    %h = <e f g>;
+    is %h.elems, 3, 'did we get right number of elements after re-init';
+    ok %h<e>:delete, 'did we get a truthy value by removing e';
+    is %h.elems, 2, 'did we get right number of elements after :delete';
+    lives-ok { %h<f> = False }, 'can delete from SetHash by assignment';
+    is %h.elems, 1, 'did we get right number of elements assignment';
 }
 
 # vim: ft=perl6
