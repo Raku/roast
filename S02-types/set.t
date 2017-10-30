@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 218;
+plan 225;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -549,6 +549,18 @@ subtest 'set ops do not hang with Setty/Baggy/Mixy type objects' => {
             lives-ok { op($ = 1, $type) }, "$type.perl() $name";
         }
     }
+}
+
+# RT #132352, RT #132353
+{
+    my %h is Set = <a b c d>;
+    is %h.elems, 4, 'did we get right number of elements';
+    ok %h<a>, 'do we get a truthy value for a';
+    nok %h<e>, 'do we get a falsy value for e';
+    is %h.^name, 'Set', 'is the %h really a Set';
+    dies-ok { %h = <e f g> }, 'cannot re-initialize Set';
+    dies-ok { %h<a>:delete }, 'cannot :delete from Set';
+    dies-ok { %h<a> = False }, 'cannot delete from Set by assignment';
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 226;
+plan 233;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -554,6 +554,18 @@ subtest '.hash does not cause keys to be stringified' => {
       dies-ok { Bag.new-from-pairs($pair) },
         "Bag.new-from-pairs( ($pair.perl()) ) died";
     }
+}
+
+# RT #132352, RT #132353
+{
+    my %h is Bag = <a b b c c c d d d d>;
+    is %h.elems, 4, 'did we get right number of elements';
+    is %h<a>, 1, 'do we get 1 for a';
+    is %h<e>, 0, 'do we get 0 for e';
+    is %h.^name, 'Bag', 'is the %h really a Bag';
+    dies-ok { %h = <e f g> }, 'cannot re-initialize Bag';
+    dies-ok { %h<a>:delete }, 'cannot :delete from Bag';
+    dies-ok { %h<a> = False }, 'cannot delete from Bag by assignment';
 }
 
 # vim: ft=perl6
