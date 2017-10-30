@@ -475,7 +475,7 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    ok Set.new =:= set(), 'Set.new returns the empty set';
+    nok Set.new =:= set(), 'Set.new returns a new empty set';
     ok ().Set  =:= set(), '().Set returns the empty set';
 }
 

@@ -539,7 +539,7 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    ok Bag.new =:= bag(), 'Bag.new returns the empty bag';
+    nok Bag.new =:= bag(), 'Bag.new returns a new empty bag';
     ok ().Bag  =:= bag(), '().Bag returns the empty bag';
 }
 

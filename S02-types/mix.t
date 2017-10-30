@@ -489,7 +489,7 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    ok Mix.new =:= mix(), 'Mix.new returns the empty mix';
+    nok Mix.new =:= mix(), 'Mix.new returns a new empty mix';
     ok ().Mix  =:= mix(), '().Mix returns the empty mix';
 }
 
