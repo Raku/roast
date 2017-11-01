@@ -158,6 +158,8 @@ subtest 'Basic recommendation manager queries' => {
                 my $repo = CompUnit::RepositoryRegistry.repository-for-spec("inst#" ~ make-temp-dir().child('my-repo').absolute);
                 my $cu-depspec = CompUnit::DependencySpecification.new(:short-name<XXX>);
 
+                is $repo.candidates($cu-depspec).elems, 0;
+                nok $repo.resolve($cu-depspec);
                 ok $repo.install($dist);
                 is $repo.candidates($cu-depspec).elems, 1;
                 ok $repo.resolve($cu-depspec);
