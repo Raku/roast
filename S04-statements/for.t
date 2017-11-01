@@ -704,7 +704,10 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 }
 
 # RT #131567
-subtest 'next with label works inside list comprehended for loops' => {
+#?rakudo.jvm skip 'labeled next without loop construct'
+#?DOES 1
+{
+  subtest 'next with label works inside list comprehended for loops' => {
     # We have several of these cases because some implementations chose
     # to branch handling of these special cases for perf reasons.
 
@@ -746,6 +749,7 @@ subtest 'next with label works inside list comprehended for loops' => {
         FOO: for ^10 -> $_ --> Array { next FOO if $_ %% 2; @ans.push: $_ }
         is-deeply @ans, [1, 3, 5, 7, 9]
     }
+  }
 }
 
 # RT #131593

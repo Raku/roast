@@ -134,6 +134,7 @@ dies-ok { sink (1..1000).race.grep: { die } },
 }
 
 # RT #131865
+#?rakudo.jvm skip 'atomicint NYI'
 {
     my atomicint $got = 0;
     for <a b c>.race {
@@ -151,6 +152,7 @@ is ([+] (1..100).grep(* != 22).race), 5028,
     'Correct result for [+] (1..100).grep(* != 22).race';
 is (^100 .race.elems), 100, '.race.elems works';
 
+#?rakudo.jvm skip 'atomicint NYI'
 {
     my atomicint $i = 0;
     (^10000).race.map: { $i⚛++ }

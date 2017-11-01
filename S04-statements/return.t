@@ -104,6 +104,7 @@ throws-like Q[sub {CHECK return;}],
     'CHECK return handled correctly';
 
 # https://github.com/rakudo/rakudo/issues/1216
+#?rakudo.jvm skip 'UnwindException'
 throws-like ｢sub { eager sub { ^1 .map: { return } }() }()｣,
     X::ControlFlow::Return, :out-of-dynamic-scope{.so},
    'X::ControlFlow::Return tells when return is outside of dyn scope';

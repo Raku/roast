@@ -1090,7 +1090,10 @@ subtest 'method call variants respect nodality' => {
     is-deeply @a».*Any::elems, ((2,  ), (3,  )), '».*::';
 }
 
-subtest 'hyper method calls string/var method names' => {
+#?rakudo.jvm skip 'atomicint NYI'
+#?DOES 1
+{
+  subtest 'hyper method calls string/var method names' => {
     plan 8;
 
     subtest '».""() evaluates given value only once' => {
@@ -1151,6 +1154,7 @@ subtest 'hyper method calls string/var method names' => {
             $runs = 0;
         }
     }
+  }
 }
 
 # vim: ft=perl6

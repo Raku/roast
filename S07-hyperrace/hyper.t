@@ -155,6 +155,7 @@ dies-ok { sink (1..1000).hyper.grep: { die } },
 }
 
 # RT #131865
+#?rakudo.jvm skip 'atomicint NYI'
 {
     my atomicint $got = 0;
     for <a b c>.hyper {
@@ -172,6 +173,7 @@ is ([+] (1..100).grep(* != 22).hyper), 5028,
     'Correct result for [+] (1..100).grep(* != 22).hyper';
 is (^100 .hyper.elems), 100, '.hyper.elems works';
 
+#?rakudo.jvm skip 'atomicint NYI'
 {
     my atomicint $i = 0;
     (^10000).hyper.map: { $i⚛++ }

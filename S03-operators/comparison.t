@@ -99,10 +99,13 @@ is-deeply  '' cmp 'a', Order::Less, "'' cmp 'a' is Less";
 is-deeply 'a' cmp '' , Order::More, "'a' cmp '' is More";
 
 # Test that synthetics compare properly
+#?rakudo.jvm skip 'Unrecognized character name [ZWNJ]'
 is-deeply "\c[BOY, ZWNJ]" cmp  "\c[BOY, ZWJ]", Order::Less, "Synthetic codepoints compare properly";
+#?rakudo.jvm skip 'Unrecognized character name [ZWJ]'
 is-deeply "\c[BOY, ZWJ]"  cmp "\c[BOY, ZWNJ]", Order::More, "Synthetic codepoints compare properly";
 # Test that synthetics containing the same starter characters but different in length compare with
 # the longer one as More than the shorter one
+#?rakudo.jvm skip 'Unrecognized character name [ZWJ]'
 is-deeply "\c[BOY, ZWJ, ZWJ]"  cmp "\c[BOY, ZWJ]", Order::More, "Synthetic codepoints compare properly";
 
 # compare numerically with non-numeric
