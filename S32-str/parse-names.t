@@ -6,7 +6,7 @@ plan 10 * 2;
 for &parse-names, Str.^lookup('parse-names') -> &pn {
     my $t = " ({&pn.^name.lc} form)";
 
-    is-deeply &pn(''), '', "empty tring $t";
+    is-deeply &pn(''), '', "empty string $t";
 
     is-deeply &pn(   'BELL'   ), "\c[BELL]", "one char $t";
     is-deeply &pn('   BELL   '), "\c[BELL]",
