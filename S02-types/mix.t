@@ -192,7 +192,6 @@ sub showkv($x) {
     throws-like { %m<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Mixs are immutable)";
-    #?rakudo.jvm    todo "?"
     throws-like { %m = mix <a b> },
       X::Assignment::RO,
       "Can't assign to a %var implemented by Mix";

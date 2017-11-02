@@ -189,7 +189,6 @@ sub showkv($x) {
     throws-like { %b<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
-    #?rakudo.jvm    todo "?"
     throws-like { %b = bag <a b> },
       X::Assignment::RO,
       "Can't assign to a %var implemented by Bag";
