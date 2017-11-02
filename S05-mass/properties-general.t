@@ -15,7 +15,7 @@ Unicode 5.2.
 
 =end pod
 
-plan 608;
+plan 610;
 
 # L           Letter
 
@@ -724,14 +724,16 @@ ok("\x[345B]\c[EXCLAMATION MARK]\c[PARAGRAPH SEPARATOR]" ~~ m/<:ParagraphSeparat
 
 # C           Other
 
-
+# RT124863
 ok("\x[FFFE]" ~~ m/^<:C>$/, q{Match <C> (Other)} );
-ok(!( "\x[FFFE]" ~~ m/^<:!C>$/ ), q{Don't match negated <C> (Other)} );
-ok(!( "\x[FFFE]" ~~ m/^<-:C>$/ ), q{Don't match inverted <C> (Other)} );
-ok(!( "\x[6A3F]"  ~~ m/^<:C>$/ ), q{Don't match unrelated <C> (Other)} );
-ok("\x[6A3F]"  ~~ m/^<:!C>$/, q{Match unrelated negated <C> (Other)} );
-ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
-ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
+ok(!( "\x[FFFE]" ~~ m/^<:!C>$/ ), q{Don't match negated <:C> (Other)} );
+ok(!( "\x[FFFE]" ~~ m/^<-:C>$/ ), q{Don't match inverted <:C> (Other)} );
+ok(!( "\x[6A3F]"  ~~ m/^<:C>$/ ), q{Don't match unrelated <:C> (Other)} );
+ok("\x[6A3F]"  ~~ m/^<:!C>$/, q{Match unrelated negated <:C> (Other)} );
+ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <:C> (Other)} );
+ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <:C> (Other)} );
+ok "\x[FFFE]" ~~ /<:Cn>/, "Match unanchored <:Cn> for noncharacters";
+ok "\x[1FFFE]" ~~ /<:Cn>/, "Match unanchored <:Cn> for noncharacters";
 
 # http://www.unicode.org/charts/PDF/Unicode-6.1/U61-A640.pdf
 # U+A679 was added in uniode 6.1 as: Combining mark for Old Cyrillic

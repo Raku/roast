@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 165;
+plan 167;
 
 #use unicode :v(6.3);
 
@@ -305,4 +305,6 @@ is-deeply "a".uniprop('Emoji_All'), False, "uniprop for Emoji_All returns False 
 # MoarVM Issue 566
 lives-ok( { 0x99999999.uniprop }, 'Lives when requesting a very high codepoint.');
 
+is-deeply 0xFFFF.uniprop, "Cn", 'General Category for noncharacters return Cn';
+is-deeply 0xFFFE.uniprop, "Cn", 'General Category for noncharacters return Cn';
 # vim: ft=perl6 expandtab sw=4
