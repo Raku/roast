@@ -62,6 +62,7 @@ with make-temp-file.IO.open(:w) {
 
 with make-temp-file.IO.open(:w) {
     .DESTROY;
+    #?rakudo.jvm todo 'requires nqp::filenofh to work'
     is-deeply .opened, False, '.DESTROY closes handles';
 }
 
@@ -257,6 +258,7 @@ subtest '.print-nl method' => {
     given $file.IO {
         .spurt: "fo♥o";
         my $fh = .open(:enc<ascii>);
+        #?rakudo.jvm todo 'does not die'
         dies-ok { $fh.slurp.encode }, 'ASCII decode/encode dies with a catchable exception';
         $fh.close;
     }
@@ -267,6 +269,7 @@ subtest '.print-nl method' => {
     my $file = make-temp-file;
     given $file.IO {
         .spurt: "a" x (2**20 - 1) ~ "«";
+        #?rakudo.jvm todo 'OutOfMemoryError: Java heap space'
         lives-ok { for .lines { } }, 'No spurious malformed UTF-8 error';
     }
 }
