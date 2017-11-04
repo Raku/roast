@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 5;
+plan 3;
 
 sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
 
@@ -54,27 +54,5 @@ run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
         diag "Got STDOUT: {.perl}";
         False;
     }}, '.eof on TTY STDIN works right';
-
-# https://github.com/MoarVM/MoarVM/commit/2f0672f74523c6ddfe8a216728b
-run-with-tty ｢$*IN.read: 10000000; say $*IN.eof｣, :in<meow>,
-    # Here we use .ends-width because (currently) there's some sort of
-    # bug with Proc or something where sent STDIN ends up on our STDOUT.
-    # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
-    # 'cause MacOS's `script` really wants it or something
-    :out{ .ends-with: "True\n" or do {
-        diag "Got STDOUT: {.perl}";
-        False;
-    }}, '.eof on TTY STDIN is set right after we try to read too much';
-
-run-with-tty ｢$*IN.read: 1; say $*IN.eof; $*IN.read: 100000; say $*IN.eof｣,
-    :in<meow>,
-    # Here we use .ends-width because (currently) there's some sort of
-    # bug with Proc or something where sent STDIN ends up on our STDOUT.
-    # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
-    # 'cause MacOS's `script` really wants it or something
-    :out{ .ends-with: "False\nTrue\n" or do {
-        diag "Got STDOUT: {.perl}";
-        False;
-    }}, '.eof on TTY STDIN is set only after we actually exhausted it';
 
 # vim: ft=perl6
