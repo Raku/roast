@@ -74,9 +74,9 @@ isa-ok $write-promise, Promise, '.write returned a promise';
 await $write-promise;
 my $print-promise = $pc.print(' 6');
 isa-ok $print-promise, Promise, '.print returned a promise';
+await $print-promise;
 
 is $start-promise.status, Planned, 'external program still running (stdin still open)';
-
 $pc.close-stdin;
 
 #?rakudo 3 skip 'returns Nil (flapping tests) RT #125047'
