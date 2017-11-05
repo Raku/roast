@@ -212,7 +212,10 @@ multi doesn't-hang (
 
     subtest $desc, {
         plan 1 + ( $did-not-hang ?? ($out, $err).grep(*.defined) !! 0 );
-        ok $did-not-hang, 'program did not hang';
+        ok $did-not-hang, 'program did not hang'
+          or diag "\nHang in doesn't-hang() test detected by heuristic.\n"
+            ~ "You can set \%*ENV<ROAST_TIMING_SCALE> to a value higher than 1\n"
+            ~ "to make it wait longer.\n";
         if $did-not-hang {
             cmp-ok $stdout, '~~', $out, 'STDOUT' if $out.defined;
             cmp-ok $stderr, '~~', $err, 'STDERR' if $err.defined;
