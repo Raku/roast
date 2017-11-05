@@ -45,7 +45,10 @@ END unlink $tmpfile;
 }
 
 # RT # 132349
-run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
+#?rakudo.jvm skip 'hangs'
+#?DOES 1
+{
+  run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
     # Here we use .ends-width because (currently) there's some sort of
     # bug with Proc or something where sent STDIN ends up on our STDOUT.
     # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
@@ -54,5 +57,6 @@ run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
         diag "Got STDOUT: {.perl}";
         False;
     }}, '.eof on TTY STDIN works right';
+}
 
 # vim: ft=perl6
