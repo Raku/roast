@@ -188,7 +188,7 @@ is export {
 my $VM-time-scale-multiplier = $*VM.name eq 'jvm' ?? 20/3 !! 1;
 multi doesn't-hang (
     Capture $args, $desc = 'code does not hang',
-    :$in, :$wait = 1.5, :$out, :$err,
+    :$in, :$wait = 5, :$out, :$err,
 ) is export {
     my $prog = Proc::Async.new: |$args;
     my ($stdout, $stderr) = '', '';
@@ -433,7 +433,7 @@ C<'code does not hang'>
 =head3 C<:wait>
 
 B<Optional.> Specifies the amount of time in seconds to wait for the
-executed program to finish. B<Defaults to:> C<1.5>; on JVM backend, an
+executed program to finish. B<Defaults to:> C<5>; on JVM backend, an
 additional multipler of C<20/3> is used as currently that backend takes
 longer to start procs.
 
