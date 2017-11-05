@@ -13,5 +13,5 @@ isa-ok $*INIT-INSTANT, Instant, "   ... and is-a type Instant";
 
 # Check that $*INIT-INSTANT refers to an instant that occurred
 # within the second before our manually sampled init time
-is-approx $*INIT-INSTANT, $manual-init-time, :abs-tol(2),
+is-approx $*INIT-INSTANT, $manual-init-time, :abs-tol(5),
                             "   ... of approximately correct value";

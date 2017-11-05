@@ -177,7 +177,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-multi doesn't-hang (Str $args, $desc, :$in, :$wait = 1.5, :$out, :$err)
+multi doesn't-hang (Str $args, $desc, :$in, :$wait = 5, :$out, :$err)
 is export {
     doesn't-hang \($*EXECUTABLE, '-e', $args), $desc,
         :$in, :$wait, :$out, :$err;
