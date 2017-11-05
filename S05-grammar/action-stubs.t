@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 27;
 
 # L<S05/Grammars/optionally pass an actions object>
 
@@ -113,13 +113,6 @@ is $action.calls, 'ab', '... and in the right order';
     isa-ok ActionsTestGrammar.parse('a', :actions(
         class { method TOP($/) { make { a => 1 } } }
     )).ast, Hash, 'Can make() a Hash';
-
-    throws-like {
-        grammar { token TOP { .+ } }.parse("x", :actions(class {
-            method TOP ($/) { "x".subst: /x/, "y" }
-        }))
-    }, Exception, :message{.contains: '$/'},
-    'subst in actions method that already uses $/ complains about it';
 }
 
 # Test for a Rakudo bug revealed by 5ce8fcfe5 that (given the
