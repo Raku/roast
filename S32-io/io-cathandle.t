@@ -698,7 +698,10 @@ subtest 'Str method' => {
     isa-ok $cat.Str, Str, '4';
 }
 
-subtest 'Supply method' => {
+#?rakudo.jvm skip 'UnwindException'
+#?DOES 1
+{
+  subtest 'Supply method' => {
     plan 5;
     my @pieces = 'fo♥', 'b♥r', '', 'meow';
     my $str = [~] @pieces;
@@ -753,6 +756,7 @@ subtest 'Supply method' => {
         react whenever $cat.Supply { @res.push: $_ }
         is-deeply @res, [], 'supply on exhausted cat is empty (second call)';
     }
+  }
 }
 
 subtest 't method' => {
