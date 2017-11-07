@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 81;
+plan 82;
 
 {
     my $s = supply {
@@ -450,6 +450,29 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
     $t2.close;
     nok $closed, 'CLOSE phasers do not run twice (normal termination then .close)';
 }
+
+# https://github.com/rakudo/rakudo/issues/1230
+{
+    my atomicint $total = 0;
+
+    sub test-close($val) {
+        supply {
+            whenever Supply.interval(0.01) { }
+            CLOSE {
+                $total ⚛+= $val;
+            }
+        }
+    }
+
+   await do for ^4 {
+        start for ^1000 {
+            test-close($_).tap.close;
+        }
+    }
+
+    is $total, 4 * (^1000).sum, 'CLOSE phaser sees correct outer scope';
+}
+
 
 {
     sub foo($a) {
