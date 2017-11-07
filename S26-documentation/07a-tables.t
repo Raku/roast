@@ -4,7 +4,7 @@ use Test;
 my ($r, $p, $hdrs, @rows);
 $p = -1; # starting index for pod number
 
-plan 33;
+plan 37;
 
 # includes tests for fixes for RT bugs:
 #   124403 - incorrect table parse:
@@ -88,6 +88,7 @@ is $r.contents[1].elems, 3;
 is $r.contents[2].elems, 3;
 
 # test fix for RT #132341
+# also tests fix for RT #129862
 =table
     X   O
    ===========
@@ -106,6 +107,7 @@ is $r.contents[1].elems, 3;
 is $r.contents[2].elems, 3;
 
 # test fix for RT #132348 (allow inline Z comments)
+# also tests fix for RT #129862
 =begin table
 a | b | c
 l | m | n
@@ -116,3 +118,23 @@ is $r.contents.elems, 3;
 is $r.contents[0].join(','), 'a,b,c';
 is $r.contents[1].join(','), 'l,m,n';
 is $r.contents[2].join(','), 'x,y,';
+
+# a single column table, no headers
+=begin table
+a
+=end table
+
+$r = $=pod[++$p];
+is $r.headers.elems, 0;
+is $r.contents.elems, 1;
+
+# a single column table, with header
+=begin table
+b
+-
+a
+=end table
+
+$r = $=pod[++$p];
+is $r.headers.elems, 1;
+is $r.contents.elems, 1;
