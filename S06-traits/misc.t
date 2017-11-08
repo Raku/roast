@@ -62,7 +62,7 @@ $foo = "fie";
 is param_rw_ro($foo), "fee fie", 'trait "is rw" used to narrow multi-dispatch';
 is param_rw_ro("fum"), "foo fum", 'trait "is rw" used to narrow multi-dispatch (converse)';
 
-#icopy
+# is copy
 $foo=1;
 sub mods_param_copy ($x is copy) {$x++;}
 lives-ok { mods_param_copy($foo) }, 'is copy';
