@@ -452,6 +452,7 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
 }
 
 # https://github.com/rakudo/rakudo/issues/1230
+#?rakudo.jvm skip 'atomicint NYI'
 {
     my atomicint $total = 0;
 
