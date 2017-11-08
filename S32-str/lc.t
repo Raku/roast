@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 19;
 
 # L<S32::Str/Str/lc>
 
@@ -39,5 +39,11 @@ is 'ΣΣΣ '.lc, 'σσς ', 'lower-casing of greek Sigma respects word-final spe
 is 'Σ'.lc, 'σ', 'final sigma does not apply if string is only an uppercase sigma';
 is 'The Σ is a Sigma'.lc, 'the σ is a sigma', 'final sigma does not apply if only letter in word (ws)';
 is 'Sigma looks like Σ.'.lc, 'sigma looks like σ.', 'final sigma does not apply if only letter in word (.)';
+
+# RT132020
+# This test makes sure .lc works properly even when a GCB=Prepend codepoint comes in front of it.
+{
+    is-deeply "\c[arabic number sign]A".lc, "\c[arabic number sign]a", "Uppercasing works even with prepend codepoints";
+}
 
 # vim: ft=perl6

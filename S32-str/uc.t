@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 # L<S32::Str/"Str"/=item uc>
 
@@ -60,6 +60,11 @@ is ~(0.lc),         ~0, '.lc on Int';
         "Correct uppercasing of char with no precomposed upper";
     #?rakudo.jvm todo 'got 3'
     is $s.uc.chars, 1, "Char with no precomposed upper gets NFG'd so upper is one grapheme";
+}
+# RT132020
+# This test makes sure .uc works properly even when a GCB=Prepend codepoint comes in front of it.
+{
+    is-deeply "\c[arabic number sign]a".uc, "\c[arabic number sign]A", "Uppercasing works even with prepend codepoints";
 }
 
 # vim: ft=perl6
