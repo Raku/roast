@@ -92,7 +92,7 @@ is sprintf('% +2b',  9),          "+1001", '%b; size; flag space+plus; size not 
 is sprintf('% +10b', -9),    "     -1001", '%b; size; flag space+plus; negative int';
 is sprintf('% +2b',  -9),         "-1001", '%b; size; flag space+plus; size not needed; negative int';
 #?rakudo todo '"%b" with flags "plus" and "space" and positive argument not correct RT #124709'
-is sprintf('%+ 10b', 9),     " 1001     ", '%b; size; flag plus+space; positive int';
+is sprintf('%+ 10b', 9),     "     +1001", '%b; size; flag plus+space; positive int';
 ## flags plus and hash can be combined
 is sprintf('%#+10b', 9),     "   +0b1001", '%b; size; flag hash+plus; positive int';
 is sprintf('%#+2b',  9),        "+0b1001", '%b; size; flag hash+plus; size not needed; positive int';
