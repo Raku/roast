@@ -22,6 +22,7 @@ plan 34;
     is-deeply (:&a), (a => &a), ":&a works";
     is-deeply (:42nd), (nd => 42), "Basic numeric adverb works";
     #?rakudo.jvm todo 'RT #128306'
+    #?rakudo.js todo 'unimplemented unicody thing'
     is-deeply (:๔߂nd), (nd => 42), "Unicode numeric adverb works"; # RT #128306
     throws-like { EVAL ':69th($_)' },
       X::Comp,
