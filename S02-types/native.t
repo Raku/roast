@@ -169,14 +169,16 @@ plan 94;
     is class :: { has uint64 $.x; }.new( x => 2**64-1 ).x, 2**64-1, 'uint64 attributes don\'t get sign-extended';
 }
 
-# RT #121071
-{
+if $?BITS >= 64 { # RT #121071
     my int $low  = 10**15;
     my int $high = 2**60 - 1;
     is $low, 1_000_000_000_000_000,
         'int does not get confused with goldilocks number (low)';
     is $high, 1_152_921_504_606_846_975,
         'int does not get confused with goldilocks number (high)';
+}
+else {
+    skip "this test doesn't make sense on 32bit platforms";
 }
 
 # RT #123789 (ensure we die, not SEGV)
