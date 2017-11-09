@@ -164,6 +164,7 @@ throws-like '$pt.test(1)',
 }
 
 #?rakudo.moar todo "POST and exceptions RT #124961"
+#?rakudo.js todo "POST and exceptions RT #124961"
 #?rakudo.jvm skip "POST and exceptions RT #124961"
 {
     try {
