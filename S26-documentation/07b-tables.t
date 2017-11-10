@@ -3,7 +3,7 @@ use Test;
 
 plan 4;
 
-# test for the two designed fatal table failures
+# test for the three designed fatal table failures
 
 # empty tables should cause an exception
 my $table1 = qq:to/HERE/;
