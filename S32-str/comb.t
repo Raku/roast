@@ -54,8 +54,7 @@ ok("forty-two".comb() ~~ Iterable, '.comb() returns something Positional' );
 
 # comb a list
 
-#?rakudo skip 'cannot call match, no signature matches RT #124738'
-is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
+is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
      'comb a list';
 
 # needed: comb a filehandle
