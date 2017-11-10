@@ -136,7 +136,7 @@ plan 54;
 #if ("ok \x{FF}\xFF\n" ~& "ok 42\n" eq "ok 42\n") { say "ok 20" } else { say "not ok 20" }
 
 # RT#125466 - bitwise shift consistency on int
-{
+if $?BITS >= 64 {
   my int $int_min = -9223372036854775808; # int.Range.min for 64bit
   my int $int_max = 9223372036854775807;  # int.Range.max for 64bit
 
@@ -158,6 +158,9 @@ plan 54;
   #?rakudo skip "Clarification needed RT#125466"
   is($int_max +< 2, 36893488147419103228);
   is($int_max +< -2, 2305843009213693951);
+}
+else {
+    skip("this test doesn't make sense 32bit platforms", 14);
 }
 
 # RT#126942
