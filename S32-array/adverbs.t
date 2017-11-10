@@ -53,7 +53,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[1]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[1]:zorp', Exception; # caught by MMD
     throws-like '@a[1]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -81,7 +80,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[@b]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[@b]:zippo', Exception;  # caught by MMD
     throws-like '@a[@b]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -109,7 +107,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[11]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[11]:kabam', Exception;  # caught by MMD
     throws-like '@a[11]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -137,7 +134,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[@B]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[@B]:zlonk', Exception;  # caught by MMD
     throws-like '@a[@B]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -165,7 +161,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[1,2]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[1,2]:dirgo', Exception;  # caught by MMD
     throws-like '@a[1,2]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -193,7 +188,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[@bc]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[@bc]:fnarg', Exception;  # caught by MMD
     throws-like '@a[@bc]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -221,7 +215,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[1..2]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[1..2]:fnarg', Exception;  # caught by MMD
     throws-like '@a[1..2]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -249,7 +242,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[11,12]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[11,12]:zniknop', Exception;  # caught by MMD
     throws-like '@a[11,12]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -277,7 +269,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[@BC]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[@BC]:lotne', Exception;  # caught by MMD
     throws-like '@a[@BC]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -306,7 +297,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[11..12]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[11..12]:bolton', Exception;  # caught by MMD
     throws-like '@a[11..12]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -334,7 +324,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[1,12]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[1,12]:notlob', Exception;  # caught by MMD
     throws-like '@a[1,12]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
@@ -362,7 +351,6 @@ for $@n, Any, $@s, Str -> @a, $T {
 
     throws-like '@a[@bC]:k:v', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo.moar skip 'does not die reliably, not reproducable alas, cmp RT #126823'
     throws-like '@a[@bC]:cheese', Exception;  # caught by MMD
     throws-like '@a[@bC]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
