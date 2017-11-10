@@ -57,9 +57,8 @@ ok("forty-two".comb() ~~ Iterable, '.comb() returns something Positional' );
 
 # comb a list
 
-#?rakudo skip 'cannot call match, no signature matches RT #124738'
 #?niecza skip ':Perl5'
-is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
+is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
      'comb a list';
 
 # needed: comb a filehandle
@@ -107,9 +106,9 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 {
     is comb("o","ooo"), <o o o>, "comb(Str,Str)";
     is "qqq".comb("q"), <q q q>, "Str.comb(Str)";
-    is "asdf".comb("z"), (), "Str.comb(Str) with no match"; 
-    is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on"), <on on>, "Str.comb - partial match"; 
-    is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on", 1), <on>, "Str.comb - partial match with a limit"; 
+    is "asdf".comb("z"), (), "Str.comb(Str) with no match";
+    is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on"), <on on>, "Str.comb - partial match";
+    is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on", 1), <on>, "Str.comb - partial match with a limit";
     is 3.14159265358979323.comb("3"), 3 xx 4 , "Cool.comb";
     is 3.14159265358979323.comb("3", 2), 3 xx 2 , "Cool.comb with a limit";
 }
