@@ -377,6 +377,7 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
 
 # RT #127973
 {
+    #?rakudo.jvm todo 'repeat count (4294967295) cannot be greater than max allowed number of graphemes 2147483647'
     eval-lives-ok 'my str $a = "a" x 2**32-1', 'native strings can be as large as regular strings';
 }
 # vim: ft=perl6

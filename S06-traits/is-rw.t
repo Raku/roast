@@ -44,6 +44,7 @@ plan 8;
 # for ... -> ... is rw {...} already tested for in t/statements/for.t.
 
 # RT #131673
-throws-like { sub ($ is rw) {}(42) }, X::Parameter::RW
+#?rakudo.jvm todo 'RT #131673'
+throws-like { sub ($ is rw) {}(42) }, X::Parameter::RW;
 
 # vim: ft=perl6

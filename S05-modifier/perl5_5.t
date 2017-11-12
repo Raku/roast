@@ -22,8 +22,10 @@ is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){6,7}(.)/ && $0), "e", 're_tests 615/1 (799)')
 #?rakudo.jvm todo "nigh RT #125021"
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){6,7}?(.)/ && $0), "e", 're_tests 617/1 (801)');
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){5,6}(.)/ && $0), "e", 're_tests 619/1 (803)');
+#?rakudo.jvm todo 'gives "d"'
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){5,6}?(.)/ && $0), "b", 're_tests 621/1 (805)');
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){5,7}(.)/ && $0), "e", 're_tests 623/1 (807)');
+#?rakudo.jvm todo 'gives "d"'
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){5,7}?(.)/ && $0), "b", 're_tests 625/1 (809)');
 is(("AB" ~~ rx:P5/^(.+)?B/ && $0), "A", 're_tests 627/1 (811)');
 is(("." ~~ rx:P5/^([^a-z])|(\^)$/ && $0), ".", 're_tests 629/1 (813)');

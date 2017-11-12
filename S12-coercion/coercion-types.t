@@ -47,6 +47,7 @@ class NastyChild is Parent { };
 
     #?rakudo todo 'fails for wrong reason RT #126433'
     throws-like { EVAL 'f1(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected\sCool\:D/;
+    #?rakudo.jvm todo 'error message says "expected ?:? but got Cool(Cool)"'
     throws-like { EVAL 'f2(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected\sCool\:D/;
     #?rakudo skip 'dies RT #126433'
     isa-ok f1(23), Str, 'Definedness check + coercion (1)';
