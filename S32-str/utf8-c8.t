@@ -195,7 +195,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
     lives-ok { $u = $b.decode('utf8-c8') }, "lives-ok when decoding Unicode Surrogates and values higher than 0x10FFFF";
 }
 {
-#?rakudo.moar 3 todo "utf8-c8 codepoints combine with other codepointsZ"
+#?rakudo.moar 2 todo "utf8-c8 codepoints combine with other codepointsZ"
     ok ('L' ~ Buf.new(255).decode(<utf8-c8>)) ~~ /L/, "Regex still matches when utf8-c8 graphemes are adjacent";
     ok (Buf.new(255).decode(<utf8-c8>) ~ 'L' ~ Buf.new(255).decode(<utf8-c8>)) ~~ /L/, "Regex still matches when utf8-c8 graphemes are adjacent";
     ok (Buf.new(255).decode(<utf8-c8>) ~ 'L' ) ~~ /L/, "Regex still matches when utf8-c8 graphemes are adjacent";
