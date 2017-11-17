@@ -245,18 +245,18 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 
     $_ = "Ä\nb\tć D";
-    #?rakudo.jvm 2 skip '"ordbaseat NYI" RT #125753'
+    #?rakudo.jvm 2 todo 'RT #125753'
     ok s:ss:ii:mm/a ḇ?   c D/w x y z/, 'successful s:ss:ii:mm substitution returns truthy';
     is $_, "Ẅ\nx\tý Z", 's:ss:ii:mm/.../.../ preserves whitespace, case, and marks';
 
     $_ = "a\nḇ\tĆ d";
-    #?rakudo.jvm 2 skip '"ordbaseat NYI" RT #125753'
+    #?rakudo.jvm 2 todo 'RT #125753'
     ok ss:i:m/Å b C d/w x y z/, 'successful ss substitution returns truthy';
     # RT #120526
     is $_, "w\nx̱\tý z", 'ss/.../.../ preserves whitespace';
 
     $_ = "Å\nḇ\tć d";
-    #?rakudo.jvm 2 skip '"ordbaseat NYI" RT #125753'
+    #?rakudo.jvm 2 todo 'RT #125753'
     ok s:s:ii:mm/a  B+  c   D/w x y z/, 'successful s:s substitution returns truthy';
     is $_, "W̊ x̱ ý z", 's:s/.../.../ does not preserve whitespace but preserves case and marks';
 

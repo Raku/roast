@@ -10,7 +10,7 @@ Testing the C<:mm> or C<:samemark> modifier - as always, need more tests
 
 =end description
 
-#?rakudo.jvm skip 'ordbaseat NYI'
+#?rakudo.jvm todo 'got äaä'
 {
     my $s = 'äaä';
     ok $s ~~ s:mm/aaa/ooo/, ':mm implies :m';
@@ -18,21 +18,21 @@ Testing the C<:mm> or C<:samemark> modifier - as always, need more tests
        ':mm transported mark information from source to destination';
 }
 
-#?rakudo.jvm skip 'ordbaseat NYI'
+#?rakudo.jvm skip 'samemark NYI'
 {
     my $s = 'äa';
     ok $s ~~ s:mm/a+/oooo/, ':mm works with quantified atoms';
     is $s, 'öooo', ':mm transported mark information to longer substitution string';
 }
 
-#?rakudo.jvm skip 'ordbaseat NYI'
+#?rakudo.jvm skip 'samemark NYI'
 {
     my $s = 'aa⃨';
     ok $s ~~ s:mm/a+/oooo/, ':mm works with quantified atoms';
     is $s, 'oo⃨o⃨o⃨', ':mm transported mark information to longer substitution string';
 }
 
-#?rakudo.jvm skip 'ordbaseat NYI'
+#?rakudo.jvm todo 'got aääa öoöö'
 {
     my $s = 'aääa öoöö';
     ok $s ~~ s:mm:s/a+ o+/OOOOO UUU/, 'combined :mm and :s match';
