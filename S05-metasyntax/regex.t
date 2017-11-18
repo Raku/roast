@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 49;
+plan 50;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -272,5 +272,8 @@ subtest '`**` quantifier' => {
 is_run ｢(try "" ~~ /. ** {NaN}/) for ^1000; print 'pass'｣,
     {:out('pass'), :err(''), :0status},
 'wrong value for `**` quantifier does not leave behind unhandled Failures';
+
+# RT #125021
+is ~("ddd" ~~ / [ x | d ] **? 2..3 /), "dd", 'frugal match with alternation';
 
 # vim: ft=perl6
