@@ -1,6 +1,6 @@
 use Test;
 
-plan 14;
+plan 15;
 
 ok Encoding::Registry.find('utf8') ~~ Encoding, 'Can find built-in utf8 encoding';
 ok Encoding::Registry.find('utf-8') ~~ Encoding, 'Can find built-in utf-8 encoding';
@@ -52,4 +52,14 @@ throws-like { Encoding::Registry.find('utf-29') },
     throws-like { Encoding::Registry.register(TestEncoding3) },
         X::Encoding::AlreadyRegistered, name => 'prime-enc',
         'Cannot register an encoding with an overlapping alternative name';
+}
+
+{
+    my class NoAlternativeNamesEncoding does Encoding {
+        method name() { "this-encoding-not-taken" }
+        method encoder() { die "NYI" }
+        method decoder() { die "NYI" }
+    }
+    lives-ok { Encoding::Registry.register(NoAlternativeNamesEncoding) },
+        "Encodings with no alternative names method can be registered";
 }
