@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 105;
+plan 108;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -159,23 +159,20 @@ is(EVAL('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y #OK'), 2, '2nd m
     is($f, 5, "two lexicals declared in scope is noop");
 }
 
-# RT #121807
-throws-like 'my %h is default(%h<foo>)',
-    X::Syntax::Variable::Initializer, name => '%h';
-
 # RT #125371
-throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
+eval-lives-ok ‘my $a :=   $a; say $a’, ‘Self-referential assignment does not segfault’;
+eval-lives-ok ‘my $a := $::a; say $a’, ‘Self-referential assignment does not segfault’;
+
+# Other self-referential tests
+is EVAL(‘my @loop =  42, @loop;  @loop[1][1][1][0]’), 42, ‘Self-referential array’;
+is EVAL(‘my $loop = (42, $loop); $loop[1][1][1][0]’), 42, ‘Self-referential list’;
+ok EVAL(‘my %loop = 42 => %loop; %loop<42><42><42> === %loop’), ‘Self-referential hash’;
+ok EVAL(‘my $loop = 42 => $loop, $loop<42><42><42> === $loop’), ‘Self-referential pair’;
 
 # RT #125371
 {
     my $py = 0 && try { my $py = 42; $py.bla() };
     is $py, 0, 'initializing a variable using a try block containing same name works';
-}
-
-# RT #87034
-{
-    throws-like 'my @foo := 1..3, (@foo Z+ 100)',
-        X::Syntax::Variable::Initializer, name => '@foo';
 }
 
 # interaction of my and EVAL
