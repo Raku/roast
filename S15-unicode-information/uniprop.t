@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 167;
+plan 196;
 
 #use unicode :v(6.3);
 
@@ -307,4 +307,34 @@ lives-ok( { 0x99999999.uniprop }, 'Lives when requesting a very high codepoint.'
 
 is-deeply 0xFFFF.uniprop, "Cn", 'General Category for noncharacters return Cn';
 is-deeply 0xFFFE.uniprop, "Cn", 'General Category for noncharacters return Cn';
+
+is-deeply 'A'.uniprop, "Lu", "ASCII uppercase return Lu";
+is-deeply 'a'.uniprop, "Ll", "ASCII lowercase returns Ll";
+is-deeply 'ǅ'.uniprop, "Lt",  "General Category 'Lt'";
+is-deeply 0x02B0.uniprop, "Lm", "General Category 'Lm'";
+is-deeply 0x05D0.uniprop, "Lo", "General Category 'Lo'";
+is-deeply 0x0610.uniprop, "Mn", "General Category 'Mn'";
+is-deeply 0x1ABE.uniprop, "Me", "General Category 'Me'";
+is-deeply 0x1B04.uniprop, "Mc", "General Category 'Mc'";
+is-deeply 0x1B50.uniprop, "Nd", "General Category 'Nd'";
+is-deeply 0x2160.uniprop, "Nl", "General Category 'Nl'";
+is-deeply 0x2189.uniprop, "No", "General Category 'No'";
+is-deeply 0x3000.uniprop, "Zs", "General Category 'Zs'";
+is-deeply 0x2028.uniprop, "Zl", "General Category 'Zl'";
+is-deeply 0x2029.uniprop, "Zp", "General Category 'Zp'";
+is-deeply 0x0000.uniprop, "Cc", "General Category 'Cc'";
+is-deeply 0x00AD.uniprop, "Cf", "General Category 'Cf'";
+is-deeply 0xE000.uniprop, "Co", "General Category 'Co'";
+is-deeply 0xD800.uniprop, "Cs", "General Category 'Cs'";
+is-deeply 0xFE31.uniprop, "Pd", "General Category 'Pd'";
+is-deeply 0xFE35.uniprop, "Ps", "General Category 'Ps'";
+is-deeply 0xFE36.uniprop, "Pe", "General Category 'Pe'";
+is-deeply 0xFE4D.uniprop, "Pc", "General Category 'Pc'";
+is-deeply 0xFE45.uniprop, "Po", "General Category 'Po'";
+is-deeply 0xFF0B.uniprop, "Sm", "General Category 'Sm'";
+is-deeply 0xFFE0.uniprop, "Sc", "General Category 'Sc'";
+is-deeply 0xFFE3.uniprop, "Sk", "General Category 'Sk'";
+is-deeply 0xFFE4.uniprop, "So", "General Category 'So'";
+is-deeply 0x00AB.uniprop, "Pi", "General Category 'Pi'";
+is-deeply 0x00B6.uniprop, "Po", "General Category 'Po'";
 # vim: ft=perl6 expandtab sw=4
