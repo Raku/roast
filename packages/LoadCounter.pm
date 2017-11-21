@@ -1,6 +1,6 @@
 use v6;
 
-unit module t::packages::LoadCounter;
+unit module LoadCounter;
 
 $Main::loaded++;
 

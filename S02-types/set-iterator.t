@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 use Test::Iterator;
 
 plan 2 * 6;

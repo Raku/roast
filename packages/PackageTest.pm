@@ -1,35 +1,37 @@
 use v6;
-unit package t::spec::packages::PackageTest;
 
-sub ns  { "t::spec::packages::PackageTest" }
+package PackageTest {
 
-sub pkg { $?PACKAGE }
+    our sub ns  { "PackageTest" }
 
-sub test_export is export { "party island" }
+    our sub pkg { $?PACKAGE }
 
-sub get_our_pkg {
-    Our::Package::pkg();
-}
+    sub test_export is export { "party island" }
 
-our package Our::Package {
+    our package Our::Package {
 
-    sub pkg { $?PACKAGE }
+        our sub pkg { $?PACKAGE }
 
-}
+    }
 
-sub cant_see_pkg {
-    return My::Package::pkg();
-}
 
-{
-    sub my_pkg {
+    our sub get_our_pkg {
+        Our::Package::pkg();
+    }
+
+    sub cant_see_pkg {
         return My::Package::pkg();
     }
 
-    my package My::Package {
-        sub pkg { $?PACKAGE }
+    {
+        my package My::Package {
+            our sub pkg { $?PACKAGE }
+        }
+
+        our sub my_pkg {
+            return My::Package::pkg();
+        }
     }
 
+    sub dummy_sub_with_params($arg1, $arg2) is export { "[$arg1] [$arg2]" }
 }
-
-sub dummy_sub_with_params($arg1, $arg2) is export { "[$arg1] [$arg2]" }

@@ -145,7 +145,7 @@ is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 ## : Fallback semantics in S12 suggest that since no matching multi method is
 ## : found, subs are tried - that is, the expression is interpreted as
 ## :    join('str', 'other_str')
-## : yielding 'other_str'. t/spec/S32::Containers-list/join.t disagrees, and wants the
+## : yielding 'other_str'. S32::Containers-list/join.t disagrees, and wants the
 ## : result to be 'str'.
 ##
 ## I want the result to be 'str'.

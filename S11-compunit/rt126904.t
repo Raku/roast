@@ -3,7 +3,9 @@ use Test;
 
 plan 1;
 
-my $proc = run $*EXECUTABLE, '-I', 't/spec/packages/RT126904/lib', '-e',
+my $lib-path = $?FILE.IO.parent(2).add('packages/RT126904/lib').absolute;
+
+my $proc = run $*EXECUTABLE, '-I', $lib-path, '-e',
   'use Woohoo::Foo::Bar; use Woohoo::Foo::Baz; my Woohoo::Foo::Bar $bar;',
   :err;
 

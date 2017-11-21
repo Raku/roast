@@ -1,6 +1,6 @@
 # http://perl6advent.wordpress.com/2011/12/23/day-23-idiomatic-perl-6/
 use v6;
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 use Test::Util;

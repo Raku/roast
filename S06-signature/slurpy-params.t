@@ -1,5 +1,5 @@
 use v6;
-use lib <t/spec/packages>;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
@@ -49,7 +49,7 @@ sub whatever {
 
 whatever( 'a', 'b', 'c', 'd' );
 
-# use to be t/spec/S06-signature/slurpy-params-2.t
+# use to be S06-signature/slurpy-params-2.t
 
 
 =begin pod

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-use lib ('t/spec/packages'.IO.e ?? 't/spec/packages' !! 'packages');
+use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 
 =begin description

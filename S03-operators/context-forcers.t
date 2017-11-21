@@ -1,5 +1,5 @@
 use v6;
-use lib <t/spec/packages/>;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
@@ -176,7 +176,7 @@ subtest 'numeric context' => {
 }
 
 # int context
-# tested in t/spec/S32-num/int.t
+# tested in S32-num/int.t
 
 {
     my $x = [0, 100, 280, 33, 400, 5665];

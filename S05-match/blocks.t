@@ -81,7 +81,7 @@ my $discarded = do {
 }
 
 # TODO: repeat ... until, gather/take, lambdas, if/unless statement modifiers
-# TODO: move to t/spec/integration/
+# TODO: move to integration/
 
 # test that a regex in an `if' matches against $_, not boolifies
 

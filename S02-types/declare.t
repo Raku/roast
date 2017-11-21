@@ -390,7 +390,7 @@ plan 70;
 # L<S09/Sized types/>
 # int in1 int2 int4 int8 int16 in32 int64
 # uint uin1 uint2 uint4 uint8 uint16 uint32 uint64
-# t/spec/S02-builtin_data_types/int-uint.t already has these covered
+# S02-builtin_data_types/int-uint.t already has these covered
 
 # L<S09/Sized types/"num16">
 # num16 num32 num64 num128

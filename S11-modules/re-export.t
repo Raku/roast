@@ -1,7 +1,9 @@
 use v6;
 use Test;
 
-plan 8;
+use lib $?FILE.IO.parent(2).add("packages").add("S11-modules");
+
+plan 3;
 
 # L<S11/"Compile-time Importation"/"In the absence of a specific scoping specified by the caller">
 

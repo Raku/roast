@@ -1,7 +1,7 @@
 use v6;
 # L<S11/"Exportation"/>
 
-unit module t::spec::packages::S11-modules::Foo;
+unit module packages::S11-modules::Foo;
 sub foo is export(:DEFAULT)          { 'Foo::foo' }  #  :DEFAULT, :ALL
 sub bar is export(:DEFAULT, :others) { 'Foo::bar' }  #  :DEFAULT, :ALL, :others
 sub baz is export(:MANDATORY)        { 'Foo::baz' }  #  (always exported)
