@@ -1,7 +1,5 @@
 use v6;
 
-use lib <ext/Test>; # Hack if we're run from make smoke
-
 use Test;
 
 plan 60;
@@ -112,7 +110,8 @@ cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', :desc('... testing gt on two
 
 ## use-ok
 
-use-ok('t::use_ok_test');
+use lib $?FILE.IO.parent;
+use-ok('use_ok_test');
 
 # Need to do a test loading a package that is not there,
 # and see that the load fails. Gracefully. :)

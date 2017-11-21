@@ -1,5 +1,5 @@
 use v6;
-use lib <t/spec/packages>;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
@@ -17,7 +17,7 @@ sub test_lines(@lines) {
 }
 
 {
-    my $fh = open('t/spec/S16-io/test-data');
+    my $fh = open($?FILE.IO.parent.child('test-data'));
     my $count = 0;
     while !$fh.eof {
         my $x = $fh.get;
@@ -28,7 +28,7 @@ sub test_lines(@lines) {
 
 # test that we can interate over $fh.lines
 {
-    my $fh =  open('t/spec/S16-io/test-data');
+    my $fh =  open($?FILE.IO.parent.child('test-data'));
 
     ok defined($fh), 'Could open test file';
     my @lines;
@@ -40,7 +40,7 @@ sub test_lines(@lines) {
 
 # test that we can get all items in list context:
 {
-    my $fh =  open('t/spec/S16-io/test-data');
+    my $fh =  open($?FILE.IO.parent.child('test-data'));
     ok defined($fh), 'Could open test file (again)';
     my @lines = $fh.lines;
     test_lines(@lines);

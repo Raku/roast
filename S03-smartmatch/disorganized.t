@@ -25,11 +25,11 @@ sub eval_elsewhere($code){ EVAL($code) }
 # Set   Hash
 # Any   Hash
 
-# Regex tests are in spec/S05-*
+# Regex tests are in S05-*
 
 #L<S03/"Smart matching"/in range>
 {
-    # more range tests in t/spec/S03-operators/range.t
+    # more range tests in S03-operators/range.t
     is-deeply((5 ~~ 1 .. 10), True, "5 is in 1 .. 10");
     is-deeply(!(10 ~~ 1 .. 5), True, "10 is not in 1 .. 5");
     is-deeply(!(1 ~~ 5 .. 10), True, "1 is not i n 5 .. 10");

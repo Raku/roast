@@ -1,6 +1,6 @@
 use Test;
 
-use lib '.';
+use lib $?FILE.IO.parent, $?FILE.IO.parent(2).add("packages");
 
 plan 4;
 
@@ -18,7 +18,7 @@ plan 4;
 
 # RT #125135
 {
-    use t::spec::S12-meta::TestHOW;
+    use TestHOW;
 
     class TestClass {
         method one {}

@@ -3,7 +3,7 @@ use Test;
 
 plan 25;
 
-my $filename = 't/spec/S16-io/comb.testing';
+my $filename = $?FILE.IO.parent.child('comb.testing');
 
 #?DOES 1
 sub test-comb($text,@result,|c) {

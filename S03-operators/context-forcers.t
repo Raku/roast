@@ -172,7 +172,7 @@ sub eval_elsewhere($code){ EVAL($code) }
 }
 
 # int context
-# tested in t/spec/S32-num/int.t
+# tested in S32-num/int.t
 
 {
     my $x = [0, 100, 280, 33, 400, 5665];

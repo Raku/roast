@@ -1,6 +1,6 @@
 use v6;
-my IO::Path $repo-dir      = "3rdparty/Unicode/9.0.0/ucd/auxiliary/GraphemeBreakTest.txt".IO;
-my IO::Path $rakudo-subdir = "t/spec".IO;
+my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/9.0.0/ucd/auxiliary/GraphemeBreakTest.txt");
+my IO::Path $rakudo-subdir = $?FILE.IO.parent(2);
 my IO::Path $rakudo-dir    = $rakudo-subdir.child($repo-dir);
 my Str:D    $location      = $rakudo-dir.e ?? $rakudo-dir.Str !! $repo-dir.Str;
 our $DEBUG;

@@ -1,10 +1,10 @@
 use v6;
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 use Test::Tap;
 
-my $filename = 't/spec/S16-io/supply.testing';
+my $filename = $?FILE.IO.parent.child('supply.testing');
 
 plan 7;
 

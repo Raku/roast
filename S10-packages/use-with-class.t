@@ -1,7 +1,7 @@
 use v6;
 use MONKEY-TYPING;
 
-use lib '.', 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 
@@ -11,7 +11,7 @@ plan 11;
 
 # test that 'use' imports class names defined in imported packages
 
-use t::spec::packages::UseTest;
+use UseTest;
 
 ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 
@@ -55,11 +55,13 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 
 # RT #126302
 {
-    my $p = run :out, :err, $*EXECUTABLE, '-It/spec/packages', '-e',
+    my $package-lib-prefix = $?FILE.IO.parent(2).add("packages").absolute;
+
+    my $p = run :out, :err, $*EXECUTABLE, '-I', $package-lib-prefix, '-e',
         'use RT126302; say "RT126302-OK"';
 
-    like   $p.out.slurp, /'RT126302-OK'/, 'packages compile successfully'; unlike $p.err.slurp, /'src/Perl6/World.nqp'/,
-        'no Perl6/World.nqp in warning';
+    like   $p.out.slurp(:close), /'RT126302-OK'/, 'packages compile successfully';
+    unlike $p.err.slurp(:close), /'src/Perl6/World.nqp'/, 'no Perl6/World.nqp in warning';
 }
 
 # vim: ft=perl6

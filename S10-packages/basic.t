@@ -2,7 +2,7 @@ use v6;
 
 # L<S10/Packages>
 
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
@@ -147,7 +147,7 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
               'map works in a module (RT #64606)';
 
 {
-    use lib 't/spec/packages';
+    use lib $?FILE.IO.parent(2).add("packages");
     use ArrayInit;
     my $first_call = array_init();
     is array_init(), $first_call,
@@ -241,7 +241,7 @@ throws-like q[
 
 # RT #121253
 {
-    use lib 't/spec/packages';
+    use lib $?FILE.IO.parent(2).add("packages");
     use Bar;
     use Baz;
     use Foo;
@@ -255,14 +255,14 @@ throws-like q[
 
 # RT #76606
 {
-    use lib 't/spec/packages';
+    use lib $?FILE.IO.parent(2).add("packages");
     lives-ok { use RT76606 },
         'autovivification works with nested "use" directives (import from two nested files)';
 }
 
 # RT #120561
 {
-    lives-ok { use lib "$?FILE.IO.dirname()/t/spec/packages" },
+    lives-ok { use lib "." },
         'no Null PMC access with "use lib $double_quoted_string"';
 }
 
@@ -325,11 +325,11 @@ throws-like q[
 # RT #131540
 subtest '`use lib` accepts IO::Path objects' => {
     plan 2;
-
-    is_run ｢use lib 't/spec/packages'.IO; use Test::Util｣,
+    constant $path = $?FILE.IO.parent(2).add('packages').absolute;
+    is_run "use lib '{$path}'.IO; use Test::Util",
         {:out(''), :err(''), :0status}, 'single object';
 
-    is_run ｢use lib ('.', '.'.IO, 't/spec/packages'.IO); use Test::Util｣,
+    is_run "use lib '$path', '{$path}'.IO; use Test::Util",
         {:out(''), :err(''), :0status}, 'a mixed list of IO::Path and Str';
 }
 

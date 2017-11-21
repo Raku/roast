@@ -1,5 +1,5 @@
 use v6;
-use lib <t/spec/packages/>;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
@@ -13,7 +13,7 @@ my @endings =
 
 plan 8 + @endings * (1 + 3 * ( 5 + 6));
 
-my $filename = 't/spec/S16-io/lines.testing';
+my $filename = $?FILE.IO.parent.child('lines.testing');
 my @text = <zero one two three four>;
 
 for @endings -> (:key($eol), :value($EOL)) {
@@ -79,7 +79,7 @@ unlink $filename; # cleanup
 
 {
     # RT #130430
-    my $file = 't/spec/S16-io/lines.testing'.IO;
+    my $file = $?FILE.IO.parent.child('lines.testing');
     $file.spurt: join "\n", <a b c>;
     is-deeply $file.lines(2000), ('a', 'b', 'c'),
         'we stop when data ends, even if limit has not been reached yet';
@@ -88,7 +88,7 @@ unlink $filename; # cleanup
 
 {
     # https://irclog.perlgeek.de/perl6-dev/2017-01-21#i_13962764
-    my $file = 't/spec/S16-io/lines.testing'.IO;
+    my $file = $?FILE.IO.parent.child('lines.testing');
     $file.spurt: join "\n", <a b c>;
     is_run 'lines; lines', :args[$file], {
         :out(''), :err(''), :0status,

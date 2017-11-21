@@ -1,14 +1,12 @@
 use v6;
 
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 
 plan 2;
 
 # L<S12/Classes/"class or type name using">
-
-# TODO: move that to t/spec/ as well
 
 # Testing class literals
 use  Foo;
