@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 74;
+plan 75;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -194,5 +194,19 @@ is (2 Z 3), @z, 'joining of single items';
 
 # RT #132346
 is-deeply (0 ≠ 0 | 1 or 42), 42, 'Junctions with ≠ works like for negated ops';
+
+subtest 'does works with non-roles' => {
+    plan 3;
+
+    my $o = my class Foo { method Str { 'original' } }.new;
+    is $o.Str, 'original', 'original value';
+
+    $o does 'modded';
+    is $o.Str, 'modded', '`does` with Str overrode Str method';
+
+    my $mod = my class Bars {}.new;
+    $o does $mod;
+    is-deeply $o.Bars, $mod, '`does` a custom class adds method from .^name';
+}
 
 # vim: ft=perl6
