@@ -168,7 +168,7 @@ my @quads =
   [{:a,:b,:c}, <c d e>, {:e,:f}],              <a b>.Set,
   [{:a,:b,:c}, <c d e>, <e f>.Set],            <a b>.Set,
   [{:a,:b,:c}, <c d e>, <e f>.Bag],            <a b>.Bag,
-  [{:a,:b,:c}, <c d e>, <e f>.Mix],            (:a,:b,d=>-1,e=>-2,f=>-1).Mix,
+  [{:a<a>,:b<b>,:c<c>}, <c d e>, <e f>.Mix],   (:a,:b,d=>-1,e=>-2,f=>-1).Mix,
 
   [(:42a).Bag, (:7a).Bag, (:41a).Bag],         bag(),
   [(:42a).Bag, bag(), (:41a).Bag],             <a>.Bag,
@@ -205,7 +205,7 @@ for
     }
 
     for @pairs -> $parameter, $result {
-#exit dd $parameters, $result unless
+#exit dd $parameter, $result unless
         is-deeply op($parameter.item), $result,
           "infix:<$name>(|$parameter.gist())";
     }
