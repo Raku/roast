@@ -1,5 +1,5 @@
 use v6;
-use lib <t/spec/packages>;
+use lib $?FILE.IO.parent(2).add("packages");
 # S15-literals/numbers.t --- test Unicode (namely non-ASCII) numerals
 
 use Test;

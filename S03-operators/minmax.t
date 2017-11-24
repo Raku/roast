@@ -11,7 +11,7 @@ plan 39;
 
 =begin description
 
-This test min/max functions in their operator form. To see them tested in their other forms, see C<t/spec/S32-list/minmax.t>
+This test min/max functions in their operator form. To see them tested in their other forms, see C<S32-list/minmax.t>
 
 =end description
 

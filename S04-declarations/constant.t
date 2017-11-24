@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 plan 72;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">

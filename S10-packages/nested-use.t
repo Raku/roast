@@ -1,6 +1,6 @@
 use v6;
 
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 
@@ -19,30 +19,33 @@ lives-ok {
     require FooBar;
 }, '... we can require FooBar (which requires Bar (which requires Foo))';
 
-my $foobar = ::FooBar.new();
-
 {
-    my $val;
-    lives-ok {
-        $val = $foobar.foobar()
-    }, '... the FooBar::foobar method resolved';
-    is($val, 'foobar', '... the FooBar::foobar method resolved');
-}
+    require FooBar;
+    my $foobar = ::('FooBar').new();
 
-{
-    my $val;
-    lives-ok {
-        $val = $foobar.bar()
-    }, '... the Bar::bar method resolved';
-    is($val, 'bar', '... the Bar::bar method resolved');
-}
+    {
+        my $val;
+        lives-ok {
+            $val = $foobar.foobar()
+        }, '... the FooBar::foobar method resolved';
+        is($val, 'foobar', '... the FooBar::foobar method resolved');
+    }
 
-{
-    my $val;
-    lives-ok {
-        $val = $foobar.foo()
-    }, '... the Foo::foo method resolved';
-    is($val, 'foo', '... the Foo::foo method resolved');
+    {
+        my $val;
+        lives-ok {
+            $val = $foobar.bar()
+        }, '... the Bar::bar method resolved';
+        is($val, 'bar', '... the Bar::bar method resolved');
+    }
+
+    {
+        my $val;
+        lives-ok {
+            $val = $foobar.foo()
+        }, '... the Foo::foo method resolved';
+        is($val, 'foo', '... the Foo::foo method resolved');
+    }
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 # http://perl6advent.wordpress.com/2009/12/12/day-12-modules-and-exporting/
 
 use v6;
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 

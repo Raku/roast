@@ -1,5 +1,5 @@
 use v6;
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
@@ -10,9 +10,10 @@ my $precomp-ext    := $*VM.precomp-ext;
 my $precomp-target := $*VM.precomp-target;
 my @precomp-paths;
 
-my @precompiled = Test::Util::run( q:to"--END--").lines;
-    use lib 't/spec/packages';
+BEGIN my $lib-path = $?FILE.IO.parent(2).IO;
+my $package-lib-prefix = $lib-path.add('packages').absolute;
 
+my @precompiled = Test::Util::run( "use lib <{$package-lib-prefix}>;\n" ~ q:to"--END--").lines;
     for <C A B> {
         my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name("Example::$_")));
         say $comp-unit.precompiled;
@@ -22,8 +23,7 @@ is @precompiled.elems, 3;
 is $_, 'True' for @precompiled;
 
 # RT #122773
-my @keys = Test::Util::run( q:to"--END--").lines;
-    use lib 't/spec/packages';
+my @keys = Test::Util::run( "use lib <{$package-lib-prefix}>;\n" ~ q:to"--END--").lines;
     use Example::A;
     use Example::B;
 
@@ -33,9 +33,7 @@ my @keys = Test::Util::run( q:to"--END--").lines;
 #?rakudo.jvm todo 'got: $["B", "C"]'
 is-deeply @keys, [<A B C>], 'Diamond relationship';
 
-my @precompiled2 = Test::Util::run( q:to"--END--").lines;
-    use lib 't/spec/packages';
-
+my @precompiled2 = Test::Util::run( "use lib <{$package-lib-prefix}>;\n" ~ q:to"--END--").lines;
     for <T P D N S B G K C E F H R A U> {
         my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name("Example2::$_")));
         say $comp-unit.precompiled;
@@ -45,9 +43,8 @@ is @precompiled2.elems, 15;
 is $_, 'True' for @precompiled2;
 
 # RT #123272
-my @keys2 = Test::Util::run( q:to"--END--").lines;
+my @keys2 = Test::Util::run( "use lib <{$package-lib-prefix}>;\n" ~ q:to"--END--").lines;
     use v6;
-    use lib 't/spec/packages';
     use Example2::T;
 
     use Example2::G;
@@ -64,8 +61,8 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 #?rakudo.moar todo 'RT #122896'
 {
     is_run
-      'use lib "t/spec/packages";
-       use Example::C;
+      "use lib <{$package-lib-prefix}>;\n" ~
+      'use Example::C;
        f();',
        { err => '',
          out => '',
@@ -100,9 +97,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
 #RT #123276
 {
-    my @precompiled = Test::Util::run( q:to"--END--").lines;
-        use lib 't/spec/packages';
-
+    my @precompiled = Test::Util::run( "use lib <{$package-lib-prefix}>;\n" ~ q:to"--END--").lines;
         my $name = 'RT123276';
 
         for "{$name}", "{$name}::B::C1", "{$name}::B::C2" -> $module-name {
@@ -115,12 +110,11 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     is @precompiled.elems, 3, "tried to precompile all 3 modules";
     is $_, 'True' for @precompiled;
 
-    my @keys = Test::Util::run( q:to"--END--").lines;
-        use lib 't/spec/packages';
+    my @keys = Test::Util::run( "use lib <{$package-lib-prefix}>;\n" ~ q:to"--END--").lines;
         use RT123276::B::C1;
         use RT123276::B::C2;
         say RT123276::B::C1.^methods.grep( *.name ne "BUILDALL" )
-    --END--
+        --END--
 
     #RT #123276
     is-deeply @keys, [<(foo)>], 'RT123276';
@@ -134,7 +128,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
 {
     my $module-name-a = 'InternArrayA';
-    my $output-path-a = "t/spec/packages/" ~ $module-name-a ~ '.pm.' ~ $precomp-ext;
+    my $output-path-a = $lib-path.child("packages/" ~ $module-name-a ~ '.pm.' ~ $precomp-ext);
     unlink $output-path-a; # don't care if failed
     is_run
       'my constant VALUE = array[uint32].new;
@@ -147,11 +141,12 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
         '--target', $precomp-target,
         '--output', $output-path-a,
       ],
+
       "precomp of native array parameterization intern test (a)";
     ok $output-path-a.IO.e, "did we create a $output-path-a";
 
     my $module-name-b = 'InternArrayB';
-    my $output-path-b = "t/spec/packages/" ~ $module-name-b ~ '.pm.' ~ $precomp-ext;
+    my $output-path-b = $lib-path.child("packages/" ~ $module-name-b ~ '.pm.' ~ $precomp-ext);
 
     unlink $output-path-b; # don't care if failed
 
@@ -178,7 +173,8 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
         out    => "True",
         status => 0,
       },
-      :compiler-args['-I', 't/spec/packages'],
+      :compiler-args['-I', $package-lib-prefix],
+
       'precompile load of both and identity check passed';
 
     unlink $_ for $output-path-a, $output-path-b; # don't care if failed
@@ -205,16 +201,16 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
          err    => { not $_ ~~ / ( "SORRY!" .*) ** 2 / },
          status => { $_ != 0 },
        },
-       :compiler-args['-I', 't/spec/packages', '-M', 'RT127176'],
+       :compiler-args['-I', $package-lib-prefix, '-M', 'RT127176'],
        'no duplicate compilation error';
 }
 
 # RT #128156
 {
     # precompile it in a different process
-    run $*EXECUTABLE,'-I','t/spec/packages','-e','use RT128156::One;';
+    run $*EXECUTABLE, '-I', $package-lib-prefix, '-e', 'use RT128156::One;';
     # trigger recompilation
-    my $trigger-file = 't/spec/packages/RT128156/Two.pm6'.IO;
+    my $trigger-file = $lib-path.add('packages/RT128156/Two.pm6');
     $trigger-file.IO.spurt($trigger-file.slurp);
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT128156::One>));
     ok $comp-unit.handle.globalish-package<RT128156>.WHO<One Two Three>:exists.all,
@@ -223,10 +219,10 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     # Run another test where a source file is change after precompilation.
     # The dependency layout is: A -> B -> C -> D
     #                            `-> C -> D
-    my $before    = run $*EXECUTABLE,'-I','t/spec/packages/RT128156','-M','A','-e','';
-    $trigger-file = 't/spec/packages/RT128156/C.pm6'.IO;
-    $trigger-file.IO.spurt($trigger-file.slurp);
-    my $after     = run $*EXECUTABLE,'-I','t/spec/packages/RT128156','-M','A','-e','';
+    my $before    = run $*EXECUTABLE, '-I', $lib-path.add('packages/RT128156').absolute, '-M', 'A', '-e', '';
+    $trigger-file = $lib-path.child('packages/RT128156/C.pm6');
+    $trigger-file.spurt($trigger-file.slurp);
+    my $after     = run $*EXECUTABLE,'-I', $lib-path.add('packages/RT128156').absolute,'-M','A','-e','';
     is $before.status, 0, 'Can precompile modules before touching source file';
     is $after.status,  0, 'Can precompile modules after touching source file';
 }
@@ -234,13 +230,13 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 # RT #128156 (another)
 {
     # Test file content actually changing (so that the precomp SHA changes)
-    run $*EXECUTABLE,'-I','t/spec/packages','-e','need RT128156::Top1; need RT128156::Top2;';
-    my $trigger-file = 't/spec/packages/RT128156/Needed.pm6';
+    run $*EXECUTABLE, '-I', $package-lib-prefix , '-e', 'need RT128156::Top1; need RT128156::Top2;';
+    my $trigger-file = $lib-path.add('packages/RT128156/Needed.pm6');
     for 1..2 -> $i {
         # Alternates putting a '#' at the end of a file
         my $new-content = $trigger-file.IO.slurp.subst(/$/,"#").subst(/"##"$/,"");
-        $trigger-file.IO.spurt($new-content);
-        my $output = run $*EXECUTABLE,:out,'-I','t/spec/packages','-e','
+        $trigger-file.spurt($new-content);
+        my $output = run :out, $*EXECUTABLE, '-I', $package-lib-prefix, '-e','
              need RT128156::Top1;
              need RT128156::Top2;
              .say for MY::.keys.grep(/Needed|Top/).sort;
@@ -250,12 +246,12 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 }
 
 {
-    run $*EXECUTABLE,'-I','t/spec/packages','-e','need RT128156::Top1;';
-    my $trigger-file = 't/spec/packages/RT128156/Needed.pm6'.IO;
+    run $*EXECUTABLE,'-I', $package-lib-prefix,'-e','need RT128156::Top1;';
+    my $trigger-file = $lib-path.add('packages/RT128156/Needed.pm6');
     for 1..2 -> $i {
         my $old-content = $trigger-file.slurp;
         $trigger-file.spurt('class Needed { method version() { ' ~ $i ~ ' } }');
-        my $output = run $*EXECUTABLE,:out,'-I','t/spec/packages','-e','
+        my $output = run :out, $*EXECUTABLE, '-I', $package-lib-prefix, '-e','
              need RT128156::Top1;
              print Top1.version-of-needed;
              ';
@@ -270,7 +266,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     #?rakudo.jvm todo "Invalid typename 'RT112626::Class1' in parameter declaration"
     for ^2 {
         is_run ｢use RT112626::Conflict; say 'pass'｣, {:out("pass\n"), :err('')},
-            :compiler-args['-I', 't/spec/packages'],
+            :compiler-args['-I', $package-lib-prefix],
         "roles in precompiled modules recognize type names (run $_)";
     }
 }
@@ -279,19 +275,19 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 subtest 'precompiled module constants get updated on change' => {
     plan 2;
 
-    constant $module = 't/spec/packages/RT129266/Foo.pm6'.IO;
+    constant $module = $lib-path.child('packages/RT129266/Foo.pm6');
     constant $module-content = $module.slurp;
     LEAVE $module.spurt: $module-content;
 
     is_run ｢use RT129266::Bar; say var() eq '«VALUE»' ?? 'pass' !! 'fail'｣,
-        :compiler-args['-I', 't/spec/packages'],
+        :compiler-args['-I', $package-lib-prefix],
         {:out("pass\n"), :err('')},
     "original content has correct value";
 
     $module.spurt: $module-content.subst: '«VALUE»', '«NEW»';
 
     is_run ｢use RT129266::Bar; say var() eq '«NEW»' ?? 'pass' !! 'fail'｣,
-        :compiler-args['-I', 't/spec/packages'],
+        :compiler-args['-I', $package-lib-prefix],
         {:out("pass\n"), :err('')},
     "modified content has updated";
 }
@@ -303,10 +299,9 @@ with make-temp-dir() -> $dir {
     ｣;
 
     for ^2 { # do two runs: 1 x without pre-existing precomp + 1 x with
-        is_run 'use lib \qq[$dir.absolute().perl()]; use Simple131924; '
-	    ~ 'print buggy-str() eq “: \n\r\n\r”',
-	{:out<True>, :err(''), :0status},
-	'no funny business with precompiled string strands (\qq[$_])';
+        is_run 'use lib \qq[$dir.absolute().perl()]; use Simple131924; print buggy-str() eq “: \n\r\n\r”',
+             {:out<True>, :err(''), :0status},
+	     'no funny business with precompiled string strands (\qq[$_])';
     }
 }
 

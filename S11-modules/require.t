@@ -1,6 +1,6 @@
 use v6;
 
-use lib $?FILE.IO.parent.parent, $?FILE.IO.parent.child("lib").Str;
+use lib $?FILE.IO.parent(2), $?FILE.IO.parent.add("lib");
 
 use MONKEY-SEE-NO-EVAL;
 
@@ -39,7 +39,8 @@ my $name = 'S11-modules/InnerModule.pm';
 # RT #127233
 {
     require S11-modules::NoModule <&bar>;
-    is bar(),'NoModule::bar','can import symbol not inside module';
+    my $result = bar();
+    is $ = bar(),'NoModule::bar','can import symbol not inside module';
 }
 
 # L<S11/"Runtime Importation"/"To specify both a module name and a filename, use a colonpair">
@@ -54,7 +55,8 @@ throws-like { require InnerModule:file($name) <quux> },
 '&-less import of sub does not produce `Null PMC access` error';
 
 # no need to do that at compile time, since require() really is run time
-PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:prefix<t/spec/packages>, :next-repo($*REPO));
+PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:next-repo($*REPO),
+    :prefix($?FILE.IO.parent(2).child('packages').relative));
 
 # Next line is for final test.
 GLOBAL::<$x> = 'still here';
@@ -86,7 +88,7 @@ is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 
 # tests the combination of chdir+require
 my $cwd = $*CWD;
-lives-ok { chdir "t/spec/packages"; require "Foo.pm"; },
+lives-ok { chdir $?FILE.IO.parent(2).child('packages'); require "Foo.pm"; },
          'can change directory and require a module';
 chdir $cwd;
 

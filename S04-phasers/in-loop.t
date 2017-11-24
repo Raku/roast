@@ -7,8 +7,8 @@ plan 11;
 # TODO, based on synopsis 4:
 #
 # * KEEP, UNDO, PRE, POST, CONTROL
-#   CATCH is tested in t/spec/S04-statements/try.t
-#                  and t/spec/S04-exception-handlers/catch.t
+#   CATCH is tested in S04-statements/try.t
+#                  and S04-exception-handlers/catch.t
 #
 # * $var will undo, etc
 #
