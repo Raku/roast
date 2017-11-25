@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 10;
+plan 11;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
@@ -44,7 +44,24 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
     throws-like( { Supply.zip(42) },
       X::Supply::Combinator, combinator => 'zip' );
-
 }
+
+subtest {
+    my $*SCHEDULER = ThreadPoolScheduler.new;
+    react {
+        whenever Promise.in(1) {
+            flunk "zip timed out";
+            done;
+        }
+        whenever Supply.zip: Supply.from-list(^2), Supply.interval: .01 -> $l {
+            if $l eqv ((0, 0) | (1, 1)) {
+                pass "zip is ok"
+            } else {
+                flunk "invalid value: $l"
+            }
+            LAST { done }
+        }
+    }
+}, "zip will be done when any supply become done"
 
 # vim: ft=perl6 expandtab sw=4
