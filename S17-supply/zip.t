@@ -49,7 +49,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 subtest {
     my $*SCHEDULER = ThreadPoolScheduler.new;
     react {
-        whenever Promise.in(1) {
+        whenever Promise.in(5) {
             flunk "zip timed out";
             done;
         }
