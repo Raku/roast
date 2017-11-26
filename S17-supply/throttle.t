@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 17;
+plan 18;
 
 dies-ok { Supply.throttle(1,1) }, 'can not be called as a class method';
 
@@ -96,5 +96,19 @@ diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
         last;
     }
 }
+
+subtest {
+    react {
+        whenever Supply.from-list(^4).throttle(4, .1) {
+            is $_, $++, "throttle isnt done yet";
+            LAST { done }
+        }
+        whenever Promise.in(10) {
+            flunk "throttle timed out";
+            done
+        }
+    }
+
+}, "Supply.throttle(\$, \$second) should become done when the source supply become done";
 
 # vim: ft=perl6 expandtab sw=4
