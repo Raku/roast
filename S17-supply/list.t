@@ -14,8 +14,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     is-deeply @a, [2..6], "Supply.list works in for";
     my @b = Supply.from-list(42..50).list;
     is-deeply @b, [42..50], "Supply.list can be stored in array";
-    isa-ok Supply.from-list(2..6)   .Seq, Seq, "Supply.Seq should return a Seq";
-    isa-ok Supply.from-list(42..50) .Seq, Seq, "Supply.Seq should return a Seq";
+    isa-ok Supply.from-list(2..6)   .list, List, "Supply.list should return a List";
+    isa-ok Supply.from-list(42..50) .list, List, "Supply.list should return a List";
 }
 
 # vim: ft=perl6 expandtab sw=4
