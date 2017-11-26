@@ -55,7 +55,6 @@ plan 34;
     #?rakudo 2 todo ":@<...> and :%<...> broken needs RT"
     is-deeply (:@<fie>), (fie => @<fie>), 'Adverb with @< twigil works';
     is-deeply (:%<foe>), (foe => %<foe>), 'Adverb with %< twigil works';
-    #?rakudo.jvm 3 skip "Type check failed; expected 'Any' but got 'Mu'"
     is-deeply (:$~MAIN), (MAIN => $~MAIN), 'Adverb with $~ twigil works';
     is-deeply (:@~MAIN), (MAIN => @~MAIN), 'Adverb with @~ twigil works';
     is-deeply (:%~MAIN), (MAIN => %~MAIN), 'Adverb with %~ twigil works';

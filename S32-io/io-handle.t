@@ -51,7 +51,6 @@ with IO::Handle.new(:path('foo'.IO)) {
     is-deeply      .Str, 'foo',    '.Str returns IO::Path :path as Str';
 }
 
-#?rakudo.jvm skip 'The spawned command (perl6-j) exited unsuccessfully (exit code: 1)'
 ok run(:err, $*EXECUTABLE, <blah blah blah>).err.slurp(:close),
     'can non-explosively .slurp(:close) a pipe with failed Proc';
 
@@ -166,7 +165,6 @@ subtest '.encoding attribute' => {
     subtest 'opened handle' => {
         plan 4;
         my $fh = make-temp-file(:content<foo>).open;
-        #?rakudo.jvm 2 skip '[io grant] StackOverflowError'
         is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
         is-deeply  $fh.encoding,           'ascii', 'attribute got set';
         is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';

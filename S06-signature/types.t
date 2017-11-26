@@ -150,7 +150,7 @@ subtest 'numeric literals as type constraints' => {
         eval-lives-ok ｢sub f( tau){}( τ)｣, 'bare, tau';
     }
     subtest '𝑒' => {
-        #?rakudo.jvm 2 skip '𝑒 does not work on JVM'
+        #?rakudo.jvm 2 todo '𝑒 does not work on JVM'
         eval-lives-ok ｢sub f( 𝑒){}( 𝑒)｣, 'bare, 𝑒';
         eval-lives-ok ｢sub f( e){}( 𝑒)｣, 'bare, e';
     }

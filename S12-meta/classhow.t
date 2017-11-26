@@ -5,7 +5,6 @@ use lib '.';
 plan 4;
 
 # RT #128516
-#?rakudo.jvm skip 'StackOverflowError, RT #128516'
 {
     my class Foo {
         has $.a = Metamodel::ClassHOW.new_type(name => "Bar");

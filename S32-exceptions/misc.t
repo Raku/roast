@@ -769,7 +769,6 @@ throws-like 'my grammar G { our token foo { OMG }; our token foo { WTF } }', X::
 throws-like 'use fatal; +("\b" x 10)', X::Str::Numeric, source-indicator => /'\b'/;
 
 # RT #125574
-#?rakudo.jvm skip 'Error while compiling, type X::TooLateForREPR'
 throws-like 'my class A { ... }; my class A is repr("Uninstantiable") { }', X::TooLateForREPR;
 
 # RT #114274

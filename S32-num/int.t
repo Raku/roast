@@ -166,10 +166,7 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
         'Nil assigned to is default()ed UInt gives default values';
 }
 
-#?rakudo.jvm skip 'Attribute $!value couldnt be boxed'
-#?DOES 1
-{
-  subtest 'Int.new' => { # coverage; 2016-10-05
+subtest 'Int.new' => { # coverage; 2016-10-05
     plan 11;
 
     subtest 'returns a new object (not a cached constant)' => {
@@ -216,7 +213,6 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
             cmp-ok $x, '==', $args[0]//0,      "right numeric value ($what)";
         }
     }
-  }
 }
 
 { # coverage; 2016-10-05
