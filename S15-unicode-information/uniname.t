@@ -68,7 +68,9 @@ is "AB".uninames, ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uniname
 #?rakudo.jvm skip "No Unicode 9 yet"
 is uniname("🦋"), "BUTTERFLY", "Can resolve Unicode 9 character name";
 
+#?rakudo.jvm todo "HANGUL SYLLABLES D4DB"
 is-deeply 0xD4DB.uniname, "Hangul Syllable PWILH", "Supports composed Hangul Syllable names";
+#?rakudo.jvm todo "CJK UNIFIED IDEOGRAPHS 4FFE"
 is-deeply 0x4FFE.uniname, "<CJK Ideograph-4FFE>", "U+4FFE is <CJK Ideograph-4FFE>";
 # Tests all noncharacters as well as makes sure the codepoints before and after those ranges are not
 # erronerously set as noncharacters
