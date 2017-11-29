@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 196;
+plan 198;
 
 #use unicode :v(6.3);
 
@@ -112,6 +112,7 @@ is "½".uniprop('Numeric_Value'), 0.5, "'½'.uniprop('Numeric_Value') returns th
 is "a".uniprop('Numeric_Value'), NaN, "'a'.uniprop('Numeric_Value') returns NaN";
 is '1'.uniprop('Numeric_Type'), 'Decimal', "uniprop for Numeric_Type returns 'Decimal' for decimal numbers";
 is 'a'.uniprop('Numeric_Type'), 'None', "uniprop for Numeric_Type returns 'None' for non-numbers";
+is  0x00B2.uniprop('Numeric_Type'), 'Digit', "uniprop for Numeric_Type returns 'Digit' for ones with this property";
 
 ## Binary Properties
 is-deeply '0'.uniprop('Alphabetic'), False, "'0'.uniprop('Alphabetic') returns a False";
@@ -244,6 +245,7 @@ is 0xFB1F.uniprop('Word_Break'), 'Hebrew_Letter', "0xFB1F.uniprop('Word_Break') 
 is "\n".uniprop('Line_Break'), 'LF', ‘"\n".uniprop('Line_Break') return LF’;
 is 0x200D.uniprop('Line_Break'), 'ZWJ', ‘uniprop('Line_Break') returns ZWJ for U+200D ZERO WIDTH JOINER’;
 is 0x103D.uniprop('Line_Break'), 'SA', ‘uniprop('Line_Break') returns SA for U+103D MYANMAR CONSONANT SIGN MEDIAL WA’;
+is 0xFFFF.uniprop('Line_Break'), 'XX', "uniprop('Line_Break') returns XX for noncharacters";
 
 is 'Ö'.uniprop('Decomposition_Type'), 'Canonical', 'uniprop for Decomposition_Type returns Canonical for Canonical value codes';
 #?rakudo.moar 3 todo "MoarVM returns N/M/Y instead of their full names"

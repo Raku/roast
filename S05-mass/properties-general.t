@@ -15,7 +15,7 @@ Unicode 5.2.
 
 =end pod
 
-plan 610;
+plan 614;
 
 # L           Letter
 
@@ -51,7 +51,7 @@ ok(!( "\x[C767]" ~~ m/^<:Lu>$/ ), q{Don't match related <Lu> (UppercaseLetter)} 
 ok("\x[C767]" ~~ m/^<:!Lu>$/, q{Match related negated <Lu> (UppercaseLetter)} );
 ok("\x[C767]" ~~ m/^<-:Lu>$/, q{Match related inverted <Lu> (UppercaseLetter)} );
 ok("\x[C767]\x[C767]\c[LATIN CAPITAL LETTER A]" ~~ m/<:Lu>/, q{Match unanchored <Lu> (UppercaseLetter)} );
-
+ok("A" ~~ /<:LC>/, "Match letter 'Letter Uppercase' (LU)");
 ok("\c[LATIN CAPITAL LETTER A]" ~~ m/^<:UppercaseLetter>$/, q{Match <:UppercaseLetter>} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<:!UppercaseLetter>$/ ), q{Don't match negated <UppercaseLetter>} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<-:UppercaseLetter>$/ ), q{Don't match inverted <UppercaseLetter>} );
@@ -829,4 +829,7 @@ is '  ' ~~ m/<:White_Space>+/, '  ', '<:White_Space> matches space in regex';
 # https://github.com/MoarVM/MoarVM/issues/521
 is 'Ⓐ' ~~ m/<alpha>/, 'Ⓐ', '<alpha> matches alphabetics which are not Letters';
 
+is 0x00B2.chr ~~ /<:Digit>/, 0x00B2.chr, "Digit matches Numeric_Type=Digit";
+nok "a" ~~ /<:Digit>/, "Digit doesn't match normal letters";
+nok "9" ~~ /<:Digit>/, "Digit doesn't match things with property value Decimal";
 # vim: ft=perl6
