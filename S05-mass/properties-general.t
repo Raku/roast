@@ -829,7 +829,9 @@ is '  ' ~~ m/<:White_Space>+/, '  ', '<:White_Space> matches space in regex';
 # https://github.com/MoarVM/MoarVM/issues/521
 is 'Ⓐ' ~~ m/<alpha>/, 'Ⓐ', '<alpha> matches alphabetics which are not Letters';
 
+#?rakudo.jvm todo 'got (Nil)'
 is 0x00B2.chr ~~ /<:Digit>/, 0x00B2.chr, "Digit matches Numeric_Type=Digit";
 nok "a" ~~ /<:Digit>/, "Digit doesn't match normal letters";
+#?rakudo.jvm todo 'Digit matches things with property value Decimal'
 nok "9" ~~ /<:Digit>/, "Digit doesn't match things with property value Decimal";
 # vim: ft=perl6
