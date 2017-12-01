@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 19;
 
 # TODO, based on synopsis 4:
 #
@@ -146,19 +146,57 @@ plan 13;
 }
 
 # RT #125488
-# make sure NEXT/LAST sees outer $_ in for loop
 {
   {
-    my @a = [[], []];
-    for @a { NEXT .push(42) }
-    is @a, [[42], [42]], 'NEXT can see outer $_';
+    my @a = [];
+    for ^10 { NEXT @a.push($_) }
+    is @a, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 'NEXT can see outer $_';
   }
 
   {
-    my @a = [[], []];
-    for @a { LAST .push(42) }
-    is @a, [[], [42]], 'LAST can see outer $_';
+    my @a = [];
+    for ^10 { LAST @a.push($_) }
+    is @a, [9], 'LAST can see outer $_';
   }
+
+  {
+    my @a = [];
+    for ^10 { POST @a.push($_); 42 }
+    is @a, [42, 42, 42, 42, 42, 42, 42, 42, 42, 42], 'POST should not see outer $_';
+  }
+
+  #?rakudo todo "KEEP should not see outer $_"
+  {
+    my @a = [];
+    for ^10 { KEEP @a.push($_); 42 }
+    is @a, [42, 42, 42, 42, 42, 42, 42, 42, 42, 42], 'KEEP should not see outer $_';
+  }
+
+  # to prevent regressions from happening
+  {
+    my @a = [];
+    for ^10 { FIRST @a.push($_) }
+    is @a, [0], 'LAST can see outer $_';
+  }
+
+  {
+    my @a = [];
+    for ^10 { LEAVE @a.push($_) }
+    is @a, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 'LEAVE can see outer $_';
+  }
+
+  {
+    my @a = [];
+    for ^10 { PRE @a.push($_) }
+    is @a, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 'PRE can see outer $_';
+  }
+
+  {
+    my @a = [];
+    for ^10 { UNDO @a.push($_) }
+    is @a, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 'UNDO can see outer $_';
+  }
+
 }
 
 # vim: ft=perl6
