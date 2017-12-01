@@ -32,7 +32,6 @@ is(("abc" ~~ rx:P5/(abc)?(abc)+/ && $0), Nil, 're_tests 1236/1 (1444)');
 is(("abc" ~~ rx:P5/(abc)?(abc)+/ && $1), "abc", 're_tests 1236/2 (1445)');
 ok((not ("a\nb\n" ~~ rx:P5/(?m)b\s^/)), 're_tests 1238  (1448)');
 ok(("a" ~~ rx:P5/\ba/), 're_tests 1239  (1449)');
-#?rakudo skip 'Quantifier quantifies nothing RT #125027'
 is(("ab" ~~ rx:P5/^(a(??{"(?!)"})|(a)(?{1}))b/ && $1), "a", 're_tests 1241/2 (1451)');
 ok((not ("AbCd" ~~ rx:P5/ab(?i)cd/)), 're_tests 1242  (1452)');
 #?rakudo 3 todo "test file needs review RT #125028"
