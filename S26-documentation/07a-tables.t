@@ -4,7 +4,7 @@ use Test;
 my ($r, $p, $hdrs, @rows);
 $p = -1; # starting index for pod number
 
-plan 53;
+plan 61;
 
 # includes tests for fixes for RT bugs:
 #   124403 - incorrect table parse:
@@ -142,7 +142,7 @@ is $r.contents.elems, 1;
 # test fix for rakudo repo issue #1282:
 # need to handle table cells with char column separators as data
 # example table from <https://docs.perl6.org/language/regexes>
-# WITHOUT the escaped characters (results in an extra, unwanted, incorrect column
+# WITHOUT the escaped characters (results in an extra, unwanted, incorrect column)
 =begin table
 
     Operator  |  Meaning
@@ -166,6 +166,32 @@ is @rows[1], "|,set union,";
 is @rows[2], "&,set intersection,";
 is @rows[3], "-,set difference (first minus second),";
 is @rows[4], "^,symmetric set intersection / XOR,";
+
+# WITHOUT the escaped characters and without the non-breaking spaces
+# (results in the desired table)
+=begin table
+
+    Operator  |  Meaning
+    ==========+=========
+    +       |  set union
+    |       |  set union
+    &       |  set intersection
+    -       |  set difference (first minus second)
+    ^       |  symmetric set intersection / XOR
+
+=end table
+
+$r = $=pod[++$p];
+is $r.headers.elems, 2;
+$hdrs = $r.headers.join(',');
+is $hdrs, "Operator,Meaning";
+is $r.contents.elems, 5;
+@rows = $r.contents>>.join(',');
+is @rows[0], "+,set union";
+is @rows[1], "|,set union";
+is @rows[2], "&,set intersection";
+is @rows[3], "-,set difference (first minus second)";
+is @rows[4], "^,symmetric set intersection / XOR";
 
 # WITH the escaped characters (results in the desired table)
 =begin table
