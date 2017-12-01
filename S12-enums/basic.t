@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 45;
+plan 47;
 
 # Very basic enum tests
 
@@ -193,7 +193,15 @@ subtest '=== on same different enums with same values' => {
     cmp-ok WHICHTester, &[===], WHICHTester, 'type object vs. type object => same';
 }
 
-# RT #132039
 cmp-ok Bool.enums.WHAT, '===', Map, 'Bool.enums returns a Map, not a Hash';
+
+# RT #116719
+{
+  lives-ok {
+    enum RT116719 (<red green purple> Z=> 1,2,4);
+    is RT116719.enums, Map.new((green => 2, purple => 4, red => 1)),
+      'build enum using Z=> operator properly';
+  }, 'can build enum using Z=> operator';
+}
 
 # vim: ft=perl6
