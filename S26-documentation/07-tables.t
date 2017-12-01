@@ -3,7 +3,7 @@ use Test;
 my $r;
 my $p = 0; # use as an index for the pod chunks
 
-plan 34;
+plan 36;
 
 =begin table
         The Shoveller   Eddie Stevens     King Arthur's singing shovel
@@ -117,7 +117,8 @@ is $r.contents[0].join(','), 'X,O,';
 is $r.contents[1].join(','), ',X,O';
 is $r.contents[2].join(','), ',,X';
 
-=begin table
+# this also tests fix for RT #126740 caption attribute missing
+=begin table :caption("FooBar")
 
 foo
 bar
@@ -126,3 +127,5 @@ bar
 
 $r = $=pod[$p++];
 is $r.contents.elems, 2;
+is $r.caption, "FooBar";
+is $r.caption, 'FooBar';
