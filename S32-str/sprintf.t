@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 171;
+plan 172;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -299,6 +299,12 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf('%5.*d', [3, 42]), '  042', '%5.*d';
     is sprintf( '%.*d', [0, 42]),    '42', '%.*d (non-zero number)';
     is sprintf( '%.*d', [0,  0]),      '', '%.*d (number is zero)';
+}
+
+# RT #123979
+{
+    is sprintf('%064b', -100), '-' ~ ('0' x 56) ~ '1100100',
+        '%064b format works with negatives';
 }
 
 # vim: ft=perl6
