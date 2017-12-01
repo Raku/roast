@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 13;
 
 # TODO, based on synopsis 4:
 #
@@ -65,7 +65,7 @@ plan 11;
         NEXT  { $str ~= "($i N2)"   }
     }
 
-    is $str, 
+    is $str,
 "(1 F1)(1 F2)(1 E1)(1 E2)(1 a)" ~ "(1 N2)(1 N1)" ~  "(1 Lv2)(1 Lv1)" ~
             "(2 E1)(2 E2)(2 a)(2 b)(2 N2)(2 N1)" ~  "(2 Lv2)(2 Lv1)" ~
             "(3 E1)(3 E2)(3 a)" ~ "(3 N2)(3 N1)" ~  "(3 Lv2)(3 Lv1)" ~
@@ -143,6 +143,22 @@ plan 11;
     #?rakudo.jvm todo "got '2 2 3 2 2 3 2 2 3 3'"
     is @last, [1, 1, 2, 1, 1, 2, 1, 1, 2, 3],
         'LAST in loop works fine with recursion';
+}
+
+# RT #125488
+# make sure NEXT/LAST sees outer $_ in for loop
+{
+  {
+    my @a = [[], []];
+    for @a { NEXT .push(42) }
+    is @a, [[42], [42]], 'NEXT can see outer $_';
+  }
+
+  {
+    my @a = [[], []];
+    for @a { LAST .push(42) }
+    is @a, [[], [42]], 'LAST can see outer $_';
+  }
 }
 
 # vim: ft=perl6
