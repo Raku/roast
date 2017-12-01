@@ -193,6 +193,7 @@ subtest '=== on same different enums with same values' => {
     cmp-ok WHICHTester, &[===], WHICHTester, 'type object vs. type object => same';
 }
 
+# RT #132039
 cmp-ok Bool.enums.WHAT, '===', Map, 'Bool.enums returns a Map, not a Hash';
 
 # RT #116719
