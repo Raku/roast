@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 13;
 
 # TODO, based on synopsis 4:
 #
@@ -146,7 +146,7 @@ plan 14;
 }
 
 # RT #125488
-# make sure NEXT/LAST/POST sees outer $_ in for loop
+# make sure NEXT/LAST sees outer $_ in for loop
 {
   {
     my @a = [[], []];
@@ -158,13 +158,6 @@ plan 14;
     my @a = [[], []];
     for @a { LAST .push(42) }
     is @a, [[], [42]], 'LAST can see outer $_';
-  }
-
-  #?rakudo todo "POST sees outer $_ in for loop RT #125488"
-  {
-    my @a = [[], []];
-    for @a { POST .push(42) }
-    is @a, [[42], [42]], 'POST can see outer $_';
   }
 }
 
