@@ -1,10 +1,10 @@
 use v6;
 use Test;
 
-plan 105;
+plan 106;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
-# lexically scoped declarations are visible"> 
+# lexically scoped declarations are visible">
 {
 
     throws-like '$foo; my $foo = 42', X::Undeclared, 'my() variable not yet visible prior to declaration';
@@ -81,7 +81,7 @@ my $d = 1;
     is($d, 1, '$d is still the outer $d');
     { # create another new lexical scope
         my $d = 2;
-        is($d, 2, '$d is now the lexical (inner) $d');    
+        is($d, 2, '$d is now the lexical (inner) $d');
     }
 }
 is($d, 1, '$d has not changed');
@@ -89,7 +89,7 @@ is($d, 1, '$d has not changed');
 # EVAL() introduces new lexical scope
 is( EVAL('
 my $d = 1;
-{ 
+{
     my $d = 3 #OK not used
 };
 $d;
@@ -186,13 +186,13 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
         EVAL $str;
     }
     my $x = 4; #OK not used
-    is eval_elsewhere('$x + 1'), 5, 
+    is eval_elsewhere('$x + 1'), 5,
        'EVAL() knows the pad where it is launched from';
 
     ok eval_elsewhere('!$y.defined'),
        '... but initialization of variables might still happen afterwards';
 
-    # don't remove this line, or EVAL() will complain about 
+    # don't remove this line, or EVAL() will complain about
     # $y not being declared
     my $y = 4; #OK not used
 }
@@ -304,7 +304,7 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
               'can declare a variable inside a sub call';
 
 # RT #77112
-# check that the presence of routines is checked before run time 
+# check that the presence of routines is checked before run time
 {
     my $bad = 0;
     dies-ok { EVAL '$bad = 1; no_such_routine()' },
@@ -380,6 +380,12 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     }
     isnt $exception, 'NullPointerException',
         'no NullPointerException (and no segfault either)';
+}
+
+# RT #126125
+subtest 'report Malformed my correctly' => {
+    throws-like q[my Any :D $a], X::Syntax::Malformed;
+    throws-like q[my Any ^:D $a], X::Syntax::Malformed;
 }
 
 # vim: ft=perl6
