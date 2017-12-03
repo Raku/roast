@@ -225,7 +225,7 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
 # RT #127916
 {
     role Foo::Bar { };
-    is (5 but Foo::Bar).^name, 'Int+{Foo::Bar}', 
+    is (5 but Foo::Bar).^name, 'Int+{Foo::Bar}',
         "mixing in a role from a deeper namespace doesn't clobber the targets shortname";
 }
 
@@ -240,5 +240,20 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
     is C.foo( :b(3) ), 13, 'multi-dispatch mixin sanity';
 }
 
+# RT #126099
+#   part 1
+subtest 'can mixin Block with True' => {
+  my $b = Block but True;
+  lives-ok { $b.WHICH };
+  ok $b ~~ Block;
+  is so $b, True;
+}
+#   part 2
+subtest 'can mixin Code with True' => {
+  my $b = Code but True;
+  lives-ok { $b.WHICH };
+  ok $b ~~ Code;
+  is so $b, True;
+}
 
 # vim: syn=perl6
