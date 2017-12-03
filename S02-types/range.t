@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 191;
+plan 189;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -103,15 +103,9 @@ is(+Range, 0, 'type numification');
     throws-like { $r.excludes-max = True }, X::Assignment::RO,
         "range.excludes-max ro";
 
-    # RT #125791
-    #?rakudo.jvm todo 'wrong error message, cmp. Rakudo commit 0c16bb2b01'
-    {
-        for 0,1 -> $i {
-            throws-like { (^10).bounds[$i] = 1 }, X::Assignment::RO,
-                typename => / ^ 'Int' | 'value' $ /,
-                "is Range.bounds[$i] ro";
-        }
-    }
+
+    # There was a test about 'cannot assign to a element of an immutable List'
+    # Now it was merged into NO.55 test in S02-types/list.t
 
     my $s = 1..5;
     is $r, $s, 'range has not changed';
