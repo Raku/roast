@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 71;
+plan 74;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';

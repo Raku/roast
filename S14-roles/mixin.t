@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 53;
+plan 55;
 
 # L<S14/Run-time Mixins/>
 
