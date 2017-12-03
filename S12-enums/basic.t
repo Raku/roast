@@ -21,7 +21,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     ok Mon + Tue == Wed, 'Can do arithmetics with Pair values';
 }
 
-#?rakudo todo rakudo#1296 'butting issue on Str and Enum'
+#?rakudo todo 'rakudo#1296 butting issue on Str and Enum'
 {
     # this is originally about RT #124832, but issue goes different.
     my $x = 'Today' but Day::Mon;
