@@ -162,4 +162,16 @@ subtest '.sum can handle Junctions' => {
     is-deeply @a, <a b c a b c>, '.flat does not skip inner iterables';
 }
 
+# RT #125964
+{
+  my $a = (1, 2, 3);
+  throws-like { $a[42] = 21 }, X::Assignment::RO,
+    value => $a,
+    'cannot assign to a element of an immutable List';
+
+  my $b = [1, 2, 3];
+  lives-ok { $b[5] = 21 };
+  is $b[0, 1, 2, 5], [1, 2, 3, 21], 'can assign to a List element if it is a container';
+}
+
 # vim: ft=perl6
