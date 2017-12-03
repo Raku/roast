@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 74;
+plan 75;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -169,9 +169,14 @@ subtest '.sum can handle Junctions' => {
     value => $a,
     'cannot assign to a element of an immutable List';
 
-  my $b = [1, 2, 3];
-  lives-ok { $b[5] = 21 };
-  is $b[0, 1, 2, 5], [1, 2, 3, 21], 'can assign to a List element if it is a container';
+  my $b = (^10);
+  throws-like { $b[1] = 21 }, X::Assignment::RO,
+    value => $b,
+    'cannot assign to a element of an immutable Range';
+
+  my $c = [1, 2, 3];
+  lives-ok { $c[5] = 21 };
+  is $c[0, 1, 2, 5], [1, 2, 3, 21], 'can assign to a List element if it is a container';
 }
 
 # vim: ft=perl6
