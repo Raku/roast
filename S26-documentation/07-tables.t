@@ -3,7 +3,7 @@ use Test;
 my $r;
 my $p = 0; # use as an index for the pod chunks
 
-plan 36;
+plan 39;
 
 =begin table
         The Shoveller   Eddie Stevens     King Arthur's singing shovel
@@ -117,15 +117,18 @@ is $r.contents[0].join(','), 'X,O,';
 is $r.contents[1].join(','), ',X,O';
 is $r.contents[2].join(','), ',,X';
 
-# this also tests fix for RT #126740 caption attribute missing
-=begin table :caption("FooBar")
-
+# this file also tests fixes for:
+#   RT #126740 - Pod::Block::Table node caption property is not populated properly
+#   RT #126742 - config items should not include quotes for string values
+#   RT #130477 - Pod config parses colopairs but simply stringifies whatever it matched
+=begin table :caption("Foo") :foo('meow') :bar<meow> :ber(Q|foos|) :var(join "\n", <a b c>)
 foo
-bar
-
 =end table
 
 $r = $=pod[$p++];
-is $r.contents.elems, 2;
-is $r.caption, "FooBar";
-is $r.caption, 'FooBar';
+is $r.contents.elems, 1;
+is $r.caption, "Foo";
+is $r.config<foo>, "meow";
+is $r.config<bar>, "meow";
+is $r.config<ber>, "foos";
+is $r.config<var>, "join \"\\n\", <a b c>";
