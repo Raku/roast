@@ -151,22 +151,20 @@ ok("\x[FFFF]"  ~~ m/^<:!OtherLetter>$/, q{Match unrelated negated <OtherLetter>}
 ok("\x[FFFF]"  ~~ m/^<-:OtherLetter>$/, q{Match unrelated inverted <OtherLetter>} );
 ok("\x[FFFF]\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/<:OtherLetter>/, q{Match unanchored <OtherLetter>} );
 
-# Lr             # Alias for "Ll", "Lu", and "Lt".
+# LC             # Alias for "Ll", "Lu", and "Lt".
 
 
-#?rakudo.moar 3 todo "No [Lr] property defined RT #124860"
 #?rakudo.jvm  10 skip "RT #124500"
-ok("\c[LATIN CAPITAL LETTER A]" ~~ m/^<:Lr>$/, q{Match (Alias for "Ll", "Lu", and "Lt".)} );
-ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<:!Lr>$/ ), q{Don't match negated (Alias for "Ll", "Lu", and "Lt".)} );
-ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<-:Lr>$/ ), q{Don't match inverted (Alias for "Ll", "Lu", and "Lt".)} );
-ok(!( "\x[87B5]"  ~~ m/^<:Lr>$/ ), q{Don't match unrelated (Alias for "Ll", "Lu", and "Lt".)} );
-ok("\x[87B5]"  ~~ m/^<:!Lr>$/, q{Match unrelated negated (Alias for "Ll", "Lu", and "Lt".)} );
-ok("\x[87B5]"  ~~ m/^<-:Lr>$/, q{Match unrelated inverted (Alias for "Ll", "Lu", and "Lt".)} );
-ok(!( "\x[87B5]" ~~ m/^<:Lr>$/ ), q{Don't match related (Alias for "Ll", "Lu", and "Lt".)} );
-ok("\x[87B5]" ~~ m/^<:!Lr>$/, q{Match related negated (Alias for "Ll", "Lu", and "Lt".)} );
-ok("\x[87B5]" ~~ m/^<-:Lr>$/, q{Match related inverted (Alias for "Ll", "Lu", and "Lt".)} );
-#?rakudo todo "No [Lr] property defined RT #124860"
-ok("\x[87B5]\x[87B5]\c[LATIN CAPITAL LETTER A]" ~~ m/<:Lr>/, q{Match unanchored (Alias for "Ll", "Lu", and "Lt".)} );
+ok("\c[LATIN CAPITAL LETTER A]" ~~ m/^<:LC>$/, q{Match (Alias for "Ll", "Lu", and "Lt".)} );
+ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<:!LC>$/ ), q{Don't match negated (Alias for "Ll", "Lu", and "Lt".)} );
+ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<-:LC>$/ ), q{Don't match inverted (Alias for "Ll", "Lu", and "Lt".)} );
+ok(!( "\x[87B5]"  ~~ m/^<:LC>$/ ), q{Don't match unrelated (Alias for "Ll", "Lu", and "Lt".)} );
+ok("\x[87B5]"  ~~ m/^<:!LC>$/, q{Match unrelated negated (Alias for "Ll", "Lu", and "Lt".)} );
+ok("\x[87B5]"  ~~ m/^<-:LC>$/, q{Match unrelated inverted (Alias for "Ll", "Lu", and "Lt".)} );
+ok(!( "\x[87B5]" ~~ m/^<:LC>$/ ), q{Don't match related (Alias for "Ll", "Lu", and "Lt".)} );
+ok("\x[87B5]" ~~ m/^<:!LC>$/, q{Match related negated (Alias for "Ll", "Lu", and "Lt".)} );
+ok("\x[87B5]" ~~ m/^<-:LC>$/, q{Match related inverted (Alias for "Ll", "Lu", and "Lt".)} );
+ok("\x[87B5]\x[87B5]\c[LATIN CAPITAL LETTER A]" ~~ m/<:LC>/, q{Match unanchored (Alias for "Ll", "Lu", and "Lt".)} );
 
 
 # M           Mark
