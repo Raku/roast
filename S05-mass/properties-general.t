@@ -809,7 +809,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
 {
     my $ascii-chars = [~] chr(0)..chr(0x7F);
     my $latin-chars = [~] chr(0)..chr(0xFF);
-    is $ascii-chars.comb(/<:ascii>+/).join(""), $ascii-chars, 'ascii chars';
+    is $ascii-chars.comb(/<:InASCII>+/).join(""), $ascii-chars, 'ascii chars';
 
     is 'abc' ~~ /<:alpha>+/, 'abc', 'alpha chars';
     is "\t \t" ~~ /<:space>+/, ' ', 'space chars';  # RT #130483
