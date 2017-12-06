@@ -809,6 +809,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
 {
     my $ascii-chars = [~] chr(0)..chr(0x7F);
     my $latin-chars = [~] chr(0)..chr(0xFF);
+    #?rakudo.jvm skip 'PatternSyntaxException: Unknown character block name {ASCII}'
     is $ascii-chars.comb(/<:InASCII>+/).join(""), $ascii-chars, 'ascii chars';
 
     is 'abc' ~~ /<:alpha>+/, 'abc', 'alpha chars';
