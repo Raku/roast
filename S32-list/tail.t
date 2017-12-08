@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 =begin description
 
@@ -103,5 +103,8 @@ subtest 'tail makes use .count-only when it is implemented' => {
 
 # RT #130285
 is-deeply (4,5,6,7).tail(-2**100), (), 'can use ints over 64-bit in .tail';
+
+# RT #132543
+is-deeply <a b c>.tail(2).tail, 'c', 'can .tail a .tail';
 
 # vim: ft=perl6
