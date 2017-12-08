@@ -15,7 +15,7 @@ Unicode 5.2.
 
 =end pod
 
-plan 614;
+plan 615;
 
 # L           Letter
 
@@ -828,9 +828,10 @@ is '  ' ~~ m/<:White_Space>+/, '  ', '<:White_Space> matches space in regex';
 # https://github.com/MoarVM/MoarVM/issues/521
 is 'Ⓐ' ~~ m/<alpha>/, 'Ⓐ', '<alpha> matches alphabetics which are not Letters';
 
-#?rakudo.jvm 3 skip 'Unicode property pairs NYI'
+#?rakudo.jvm 4 skip 'Unicode property pairs NYI'
 is 0x00B2.chr ~~ /<:Numeric_Type<Digit>>/, 0x00B2.chr, "Digit matches Numeric_Type=Digit";
 nok "a" ~~ /<:Numeric_Type<Digit>>/, "Digit doesn't match normal letters";
+is "a" ~~ /<:Numeric_Type<None>>/, "a", "None matches normal letter";
 nok "9" ~~ /<:Numeric_Type<Digit>>/, "Digit doesn't match things with property value Decimal";
 
 # vim: ft=perl6
