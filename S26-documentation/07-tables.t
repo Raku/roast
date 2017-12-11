@@ -3,7 +3,7 @@ use Test;
 my $r;
 my $p = 0; # use as an index for the pod chunks
 
-plan 36;
+plan 37;
 
 =begin table
         The Shoveller   Eddie Stevens     King Arthur's singing shovel
@@ -123,6 +123,7 @@ is $r.contents[2].join(','), ',,X';
 # pairs so any tests for other config keys in a single table are usually the same as testing
 # multiple tables, each for one caption test.
 =begin table :caption<foo> :bar(0)
+=            :baz(2.3)
 
 foo
 bar
@@ -132,4 +133,5 @@ bar
 $r = $=pod[$p++];
 is $r.contents.elems, 2;
 is $r.caption, "foo";
-is $r.caption<bar>, "0";
+is $r.config<bar>, "0";
+is $r.config<baz>, "2.3";
