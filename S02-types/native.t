@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 94;
+plan 95;
 
 {
     my int $x;
@@ -380,4 +380,24 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     #?rakudo.jvm todo 'repeat count (4294967295) cannot be greater than max allowed number of graphemes 2147483647'
     eval-lives-ok 'my str $a = "a" x 2**32-1', 'native strings can be as large as regular strings';
 }
+
+# RT #124083
+subtest 'meta-assign op with native nums' => {
+    plan 2;
+
+    is-approx do {
+        my num32 @arr = 1.1e0, 1.2e0, 1.3e0;
+        my num32 $s = 0e0;
+        for @arr { $s += $_ }
+        $s
+    }, 3.6, 'meta-assing into inited num';
+
+    is-deeply do {
+        my num32 @arr = 1.1e0, 1.2e0, 1.3e0;
+        my num32 $s;
+        for @arr { $s += $_ }
+        $s
+    }, NaN, 'meta-assing into UN-inited num';
+}
+
 # vim: ft=perl6
