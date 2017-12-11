@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 26;
 
 =begin description
 
@@ -108,6 +108,49 @@ subtest '.skip-all and .push-all on slipping slippy iterators' => {
                 is .join, 'bcde', 'push-all pushes all the values';
             }
         }
+    }
+}
+
+# RT #132184
+subtest 'Seq.skip does not leave original Seq consumable' => {
+    plan 4;
+
+    subtest 'uncached, .skip()' => {
+        plan 2;
+        my $s := (1, 2, 3).Seq;
+        my $skipped := $s.skip;
+
+        throws-like { @$s }, X::Seq::Consumed, 'original got consumed';
+        is-deeply @$skipped, (2, 3), 'skipped has right content';
+    }
+
+    subtest 'uncached, .skip(n)' => {
+        plan 2;
+        my $s := (1, 2, 3).Seq;
+        my $skipped := $s.skip: 2;
+
+        throws-like { @$s }, X::Seq::Consumed, 'original got consumed';
+        is-deeply @$skipped, (3,), 'skipped has right content';
+    }
+
+    subtest 'cached, .skip()' => {
+        plan 2;
+        my $s := (1, 2, 3).Seq;
+        $s.cache;
+        my $skipped := $s.skip;
+
+        is-deeply @$s,       (1, 2, 3), 'original gives all values';
+        is-deeply @$skipped, (2, 3),    'skipped has right content';
+    }
+
+    subtest 'cached, .skip(n)' => {
+        plan 2;
+        my $s := (1, 2, 3).Seq;
+        $s.cache;
+        my $skipped := $s.skip: 2;
+
+        is-deeply @$s,       (1, 2, 3), 'original gives all values';
+        is-deeply @$skipped, (3,),      'skipped has right content';
     }
 }
 
