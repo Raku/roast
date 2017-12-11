@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 {
     sub prefix:<X> ($thing) { return "ROUGHLY$thing"; };
@@ -48,4 +48,31 @@ plan 9;
     my sub prefix:<->($thing) { return "CROSS$thing"; };
     is(-"fish", "CROSSfish",
         'prefix operator overloading for existing operator');
+}
+
+# RT #123216
+subtest 'coverage for crashes in certain operator setups' => {
+    plan 2;
+
+    is-deeply do {
+        sub postfix:<_post_l_>($a) is assoc<left> is equiv(&prefix:<+>) {
+            "<$a>"
+        }
+        sub prefix:<_pre_l_>  ($a) is assoc<left> is equiv(&prefix:<+>) {
+            "($a)"
+        }
+        (_pre_l_ 'a')_post_l_
+    }, '<(a)>', '(1)';
+
+    is-deeply do {
+        sub infix:«MYPLUS»(*@a) is assoc('list') {
+            [+] @a;
+        }
+
+        sub prefix:«MYMINUS»($a) is looser(&infix:<MYPLUS>) {
+            -$a;
+        }
+
+        (MYMINUS 1 MYPLUS 2 MYPLUS 3)
+    }, -6, '(2)';
 }
