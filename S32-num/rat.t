@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 849;
+plan 850;
 
 # Basic test functions specific to rational numbers.
 
@@ -479,5 +479,8 @@ subtest 'custom parametarization of Rational' => {
     throws-like { FakeRatIU.new:   1,  -1 }, E, '[Int,  UInt]; UInt, Int';
     throws-like { FakeRatII.new: 1e0, 1e0 }, E, '[Int,  Int]; 2 Nums';
 }
+
+# RT # 126103
+is-deeply <3147483648/1>.Int, 3147483648, 'numerators over 32 bits work';
 
 # vim: ft=perl6
