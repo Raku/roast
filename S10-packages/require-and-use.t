@@ -5,7 +5,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 1;
+plan 2;
 
 # RT #126688
 subtest 'circular dependencies are detected and reported' => {
@@ -19,5 +19,9 @@ subtest 'circular dependencies are detected and reported' => {
         { :out(''), :err(/:i «circular»/), :status(*.so) },
     "`use` $_" for 'first run', 'second run (precompiled)';
 }
+
+# RT #132249
+throws-like ｢use lib ‘’｣, X::LibEmpty,
+    'use lib with empty string throws a useful error';
 
 # vim: ft=perl6
