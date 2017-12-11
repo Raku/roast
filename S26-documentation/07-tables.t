@@ -3,7 +3,7 @@ use Test;
 my $r;
 my $p = 0; # use as an index for the pod chunks
 
-plan 35;
+plan 36;
 
 =begin table
         The Shoveller   Eddie Stevens     King Arthur's singing shovel
@@ -119,7 +119,10 @@ is $r.contents[2].join(','), ',,X';
 
 # test for:
 #   RT #126740 - Pod::Block::Table node caption property is not populated properly
-=begin table :caption<foo>
+# Note that the caption property is just one of the table's %config key/value
+# pairs so any tests for other config keys in a single table are usually the same as testing
+# multiple tables, each for one caption test.
+=begin table :caption<foo> :bar(0)
 
 foo
 bar
@@ -129,3 +132,4 @@ bar
 $r = $=pod[$p++];
 is $r.contents.elems, 2;
 is $r.caption, "foo";
+is $r.caption<bar>, "0";
