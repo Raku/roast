@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 75;
+plan 76;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -177,6 +177,18 @@ subtest '.sum can handle Junctions' => {
   my $c = [1, 2, 3];
   lives-ok { $c[5] = 21 };
   is $c[0, 1, 2, 5], [1, 2, 3, 21], 'can assign to a List element if it is a container';
+}
+
+# https://github.com/rakudo/rakudo/issues/1260
+subtest 'List.new does not create unwanted containers' => {
+    plan 4;
+    my $l := List.new: 1, 2, my $ = 3;
+
+    is-deeply $l, (1, 2, 3), 'right values';
+    throws-like { $l[0] = 42 }, X::Assignment::RO,
+        'no containers were created';
+    lives-ok { $l[2] = 42 }, 'passed containers get preserved';
+    is-deeply $l[2], 42, 'value assigneed to passed container is right';
 }
 
 # vim: ft=perl6
