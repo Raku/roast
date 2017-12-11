@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 50;
+plan 51;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -275,5 +275,9 @@ is_run ｢(try "" ~~ /. ** {NaN}/) for ^1000; print 'pass'｣,
 
 # RT #125021
 is ~("ddd" ~~ / [ x | d ] **? 2..3 /), "dd", 'frugal match with alternation';
+
+# RT #126972
+is_run ｢/a/; print "pass"｣, {:out<pass>, :err(''), :0status},
+    '/a/ in sink context in in uppermost scope does not explode';
 
 # vim: ft=perl6
