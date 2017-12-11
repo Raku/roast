@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 35;
+plan 36;
 
 # L<S04/Exceptions/The fail function>
 
@@ -172,5 +172,9 @@ subtest 'Failure.self' => {
     so my $f = failer;
     is-deeply $f, $f.self, 'handled exceptions are passed through as is';
 }
+
+# RT #124434
+is_run ｢Failure.new(Exception.new); Nil｣, {:out(""), :err(*), :1status},
+    'Failure.new(Exception.new) does not segfault';
 
 # vim: ft=perl6
