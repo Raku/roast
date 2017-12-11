@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 106;
+plan 107;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible">
@@ -386,6 +386,16 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 subtest 'report Malformed my correctly' => {
     throws-like q[my Any :D $a], X::Syntax::Malformed;
     throws-like q[my Any ^:D $a], X::Syntax::Malformed;
+}
+
+# RT #126123
+subtest 'dies on conflicting type constraints' => {
+    plan 2;
+
+    throws-like ｢my Int $a of Str｣, X::Syntax::Variable::ConflictingTypes,
+        'Type + of Type';
+    throws-like ｢my Int $a of Str is default("z") of Rat｣, X::Comp::Group,
+        'Type + of Type + is default';
 }
 
 # vim: ft=perl6
