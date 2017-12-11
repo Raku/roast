@@ -3,7 +3,7 @@ use Test;
 my $r;
 my $p = 0; # use as an index for the pod chunks
 
-plan 34;
+plan 35;
 
 =begin table
         The Shoveller   Eddie Stevens     King Arthur's singing shovel
@@ -117,7 +117,9 @@ is $r.contents[0].join(','), 'X,O,';
 is $r.contents[1].join(','), ',X,O';
 is $r.contents[2].join(','), ',,X';
 
-=begin table
+# test for:
+#   RT #126740 - Pod::Block::Table node caption property is not populated properly
+=begin table :caption<foo>
 
 foo
 bar
@@ -126,3 +128,4 @@ bar
 
 $r = $=pod[$p++];
 is $r.contents.elems, 2;
+is $r.caption, "foo";
