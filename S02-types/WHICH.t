@@ -412,7 +412,7 @@ my @moar = <
   X::Proc::Async::TapBeforeSpawn
 >;
 
-plan 6 + 4 * ( @normal + @exception + @concurrent + @moar );
+plan 7 + 4 * ( @normal + @exception + @concurrent + @moar );
 
 my %seen-which;
 
@@ -464,3 +464,12 @@ subtest 'ObjAt.perl gives distinct results for different objects' => {
 
 # RT #130271
 ok Bag.new.clone.WHICH.defined, 'cloned Bag does not lose WHICH';
+
+# RT #126099
+subtest 'Mixins to Code:U objects do not cause crash on .WHICH' => {
+    plan +my @tests = Method, Submethod, Sub, Block, Code, Whatever;
+
+    for @tests -> \T {
+        isa-ok (T but True).WHICH, ObjAt, T.^name;
+    }
+}
