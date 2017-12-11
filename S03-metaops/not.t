@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 46;
+plan 47;
 
 =begin pod
 
@@ -70,5 +70,28 @@ is &infix:<!%%>(3,2), True, "Meta not can autogen (!%%)";
 is &infix:<![!%%]>(3,2), False, "Meta not can autogen (![!%%])";
 is infix:<!===>(1,2), True, "Meta not can autogen (!===) without &";
 is &[!===](1,2), True, "Meta not can autogen (!===) with &[]";
+
+# RT #125575
+subtest 'chaining of !before/!after' => {
+    plan 12;
+
+    is-deeply ("a" !after  "b" !after  "c"), True,  '!after/!after (Str)';
+    is-deeply ("a" !before "b" !before "c"), False, '!before/!before (Str)';
+
+    #?rakudo 4 skip 'Should this work? https://github.com/rakudo/rakudo/issues/1304'
+    is-deeply ("a" !before "b" !after  "c"), False, '!before/!after (Str) (1)';
+    is-deeply ("a" !after  "b" !before "c"), False, '!after/!before (Str) (1)';
+    is-deeply ("c" !before "a" !after  "b"), True,  '!before/!after (Str) (2)';
+    is-deeply ("a" !after  "c" !before "b"), False, '!after/!before (Str) (2)';
+
+    is-deeply (1 !after  2 !after  3), True,  '!after/!after (Int)';
+    is-deeply (1 !before 2 !before 3), False, '!before/!before (Int)';
+
+    #?rakudo 4 skip 'Should this work? https://github.com/rakudo/rakudo/issues/1304'
+    is-deeply (1 !before 2 !after  3), False, '!before/!after (Int) (1)';
+    is-deeply (1 !after  2 !before 3), False, '!after/!before (Int) (1)';
+    is-deeply (3 !before 1 !after  2), True,  '!before/!after (Int) (2)';
+    is-deeply (1 !after  3 !before 2), False, '!after/!before (Int) (2)';
+}
 
 # vim: ft=perl6
