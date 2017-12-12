@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 208;
+plan 209;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -442,6 +442,31 @@ subtest 'is default() respects type constraint' => {
             X::TypeCheck::Assignment, 'of is default()';
         throws-like ｢class { has Int $.a is default("foo") }｣,
             X::TypeCheck::Assignment, 'Type $ is default()';
+    }
+}
+
+# RT #126107
+subtest 'default `is default()` gets adjusted to type constraint' => {
+    plan 2;
+    subtest 'variable' => {
+        plan 3;
+        my Int $a;
+        is-deeply $a, Int, 'uninitialized read';
+        $a = 3;
+        is-deeply $a, 3, 'set a value';
+        $a = Nil;
+        is-deeply $a, Int, 'setting to Nil restores correct default';
+    }
+
+    subtest 'attribute' => {
+        plan 4;
+        my $o := class { has Int $.a is rw; has Num $.b }.new;
+        is-deeply $o.a, Int, 'uninitialized read (rw attr)';
+        is-deeply $o.b, Num, 'uninitialized read (ro attr)';
+        $o.a = 3;
+        is-deeply $o.a, 3, 'set a value';
+        $o.a = Nil;
+        is-deeply $o.a, Int, 'setting to Nil restores correct default';
     }
 }
 
