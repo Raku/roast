@@ -416,7 +416,9 @@ subtest 'can use `Mu` as default for attributes' => {
 }
 
 # RT #126115
-lives-ok { EVAL 'my $a is default(Failure.new); 1' }, 'Failure.new as a default value on an unconstrained Scalar works';
-lives-ok { EVAL 'class NoneFailure { has $!a is default(Failure.new); 1}' }, 'Failure.new as a default value on an unconstrained Scalar attribute works';
+eval-lives-ok 'my $a is default(Failure.new); 1',
+    'Failure.new as a default value on an unconstrained Scalar works';
+eval-lives-ok 'class NoneFailure { has $!a is default(Failure.new); 1}',
+    'Failure.new as a default value on an unconstrained Scalar attribute works';
 
 # vim: ft=perl6
