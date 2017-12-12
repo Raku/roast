@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Item assignment precedence>
 
-plan 47;
+plan 48;
 
 # Binding of array elements.
 # See thread "Binding of array elements" on p6l started by Ingo Blechschmidt:
@@ -227,5 +227,10 @@ plan 47;
         X::TypeCheck::Binding,
         'can only bind Positional stuff to @a';
 }
+
+# RT #118397
+throws-like { sub foo { fail }; my @a := foo },
+    X::TypeCheck::Binding, :got(Failure),
+'binding Failure to Array throws useful error';
 
 # vim: ft=perl6
