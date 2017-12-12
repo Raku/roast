@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 207;
+plan 208;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -420,5 +420,29 @@ eval-lives-ok 'my $a is default(Failure.new); 1',
     'Failure.new as a default value on an unconstrained Scalar works';
 eval-lives-ok 'class NoneFailure { has $!a is default(Failure.new); 1}',
     'Failure.new as a default value on an unconstrained Scalar attribute works';
+
+# RT #126107
+subtest 'is default() respects type constraint' => {
+    plan 2;
+    subtest 'variable' => {
+        plan 3;
+        throws-like ｢my $a is default("foo") of Int｣,
+            X::Parameter::Default::TypeCheck, 'is default() + of';
+        throws-like ｢my $a of Int is default("foo")｣,
+            X::Parameter::Default::TypeCheck, 'of is default()';
+        throws-like ｢my Int $a is default("foo")｣,
+            X::Parameter::Default::TypeCheck, 'Type $ is default()';
+    }
+
+    subtest 'attribute' => {
+        plan 3;
+        throws-like ｢class { has $.a is default("foo") of Int }｣,
+            X::TypeCheck::Assignment, 'is default() + of';
+        throws-like ｢class { has $.a of Int is default("foo") }｣,
+            X::TypeCheck::Assignment, 'of is default()';
+        throws-like ｢class { has Int $.a is default("foo") }｣,
+            X::TypeCheck::Assignment, 'Type $ is default()';
+    }
+}
 
 # vim: ft=perl6
