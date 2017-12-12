@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 41;
 
 {
     my @result = <a b c d e f g>.race.map({ $_.uc });
@@ -114,17 +114,17 @@ plan 40;
 
 # RT #129234
 dies-ok { for (1..1).race { die } },
-    "Exception thrown in race for is not lost (1..1)"; 
+    "Exception thrown in race for is not lost (1..1)";
 dies-ok { for (1..1000).race { die } },
-    "Exception thrown in race for is not lost (1..1000)"; 
+    "Exception thrown in race for is not lost (1..1000)";
 dies-ok { sink (1..1).race.map: { die } },
-    "Exception thrown in race map is not lost (1..1)"; 
+    "Exception thrown in race map is not lost (1..1)";
 dies-ok { sink (1..1000).race.map: { die } },
-    "Exception thrown in race map is not lost (1..1000)"; 
+    "Exception thrown in race map is not lost (1..1000)";
 dies-ok { sink (1..1).race.grep: { die } },
-    "Exception thrown in race grep is not lost (1..1)"; 
+    "Exception thrown in race grep is not lost (1..1)";
 dies-ok { sink (1..1000).race.grep: { die } },
-    "Exception thrown in race grep is not lost (1..1000)"; 
+    "Exception thrown in race grep is not lost (1..1000)";
 
 # RT #128084
 {
@@ -172,3 +172,5 @@ is (^100 .race.elems), 100, '.race.elems works';
 }
 
 is (^1000).race.is-lazy, False, 'is-lazy on RaceSeq returns False';
+
+is-deeply (^3).race.Numeric, 3, '.Numeric on RaceSeq';

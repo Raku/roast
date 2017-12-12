@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 51;
+plan 52;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -135,17 +135,17 @@ plan 51;
 
 # RT #129234
 dies-ok { for (1..1).hyper { die } },
-    "Exception thrown in hyper for is not lost (1..1)"; 
+    "Exception thrown in hyper for is not lost (1..1)";
 dies-ok { for (1..1000).hyper { die } },
-    "Exception thrown in hyper for is not lost (1..1000)"; 
+    "Exception thrown in hyper for is not lost (1..1000)";
 dies-ok { sink (1..1).hyper.map: { die } },
-    "Exception thrown in hyper map is not lost (1..1)"; 
+    "Exception thrown in hyper map is not lost (1..1)";
 dies-ok { sink (1..1000).hyper.map: { die } },
-    "Exception thrown in hyper map is not lost (1..1000)"; 
+    "Exception thrown in hyper map is not lost (1..1000)";
 dies-ok { sink (1..1).hyper.grep: { die } },
-    "Exception thrown in hyper grep is not lost (1..1)"; 
+    "Exception thrown in hyper grep is not lost (1..1)";
 dies-ok { sink (1..1000).hyper.grep: { die } },
-    "Exception thrown in hyper grep is not lost (1..1000)"; 
+    "Exception thrown in hyper grep is not lost (1..1000)";
 
 # RT #128084
 {
@@ -193,3 +193,5 @@ is (^100 .hyper.elems), 100, '.hyper.elems works';
 }
 
 is (^1000).hyper.is-lazy, False, 'is-lazy on HyperSeq returns False';
+
+is-deeply (^3).hyper.Numeric, 3, '.Numeric on HyperSeq';
