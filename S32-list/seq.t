@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 40;
 
 my @result = 1,2,3;
 
@@ -219,3 +219,11 @@ subtest 'methods on cached Seqs' => {
 is-deeply .perl.EVAL.flat, .flat,
     'Seq.perl roundtrips containerized Seqs correctly'
 with (1, $((2, 3).Seq));
+
+Seq.new(
+    class :: does Iterator {
+        my $mess = 'Seq.Numeric uses .count-only method, when available';
+        method pull-one   { flunk $mess }
+        method count-only { pass  $mess }
+    }.new
+).Numeric;
