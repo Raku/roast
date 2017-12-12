@@ -223,7 +223,7 @@ with (1, $((2, 3).Seq));
 Seq.new(
     class :: does Iterator {
         my $mess = 'Seq.Numeric uses .count-only method, when available';
-        method pull-one   { flunk $mess }
+        method pull-one   { flunk $mess; IterationEnd }
         method count-only { pass  $mess }
     }.new
 ).Numeric;
