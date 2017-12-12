@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 117;
+plan 118;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -368,6 +368,15 @@ is-deeply try { (1,2,3).combinations(2..*) }, ((1, 2), (1, 3), (2, 3), (1, 2, 3)
 {
     my sub foo($x) { (* ~ $x)($_) given $x };
     is foo(1) ~ foo(2), '1122', 'topic refreshed in immediate invocation of WhateverCode';
+}
+
+{ # RT #126415
+    my @isprime = False, False;
+    is-deeply (
+        for 1 .. 10 -> $i {
+            $i if @isprime[$i] //= so $i %% none 2 ...^ * > $i.sqrt.floor;
+        }
+    ), (2, 3, 5, 7), 'no issues with //= and WhateverCode';
 }
 
 # vim: ft=perl6
