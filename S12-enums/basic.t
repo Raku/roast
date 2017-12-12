@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 48;
+plan 49;
 
 # Very basic enum tests
 
@@ -212,4 +212,14 @@ subtest 'can build enum with built-ins\' names' => {
   eval-lives-ok q[enum RT1234572 <Code>], 'Code';
   eval-lives-ok q[enum RT1234573 <Code> #123457], 'Code';
 }
+
+{ # RT #128017
+    my enum RT128017 ( (('RT128017-' X~ 1..8) Z=> (1, 2, 4 ... 256)) );
+    is-deeply RT128017.enums,  Map.new((
+        "RT128017-1" => 1,"RT128017-2" => 2,"RT128017-3" => 4,
+        "RT128017-4" => 8,"RT128017-5" => 16,"RT128017-6" => 32,
+        "RT128017-7" => 64,"RT128017-8" => 128
+    )), 'enums can be created via Seq of Pairs';
+}
+
 # vim: ft=perl6
