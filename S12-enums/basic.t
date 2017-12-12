@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 51;
+plan 52;
 
 # Very basic enum tests
 
@@ -240,5 +240,9 @@ subtest 'can provide enum values via Pairs' => {
 # RT #130446
 is-deeply do { BEGIN my %h = <a 1 b 2>; my enum Bits (%h); Bits.enums },
     Map.new((:a<1>,:b<2>)), 'can create enum with a Hash';
+
+# https://github.com/rakudo/rakudo/commit/fc52143bee
+is-deeply do { my enum Foos (a => <42>); a.Str }, 'a',
+    '"NumericStringyEnumeration" uses key as .Str value';
 
 # vim: ft=perl6
