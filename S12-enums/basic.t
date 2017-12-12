@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 49;
+plan 50;
 
 # Very basic enum tests
 
@@ -220,6 +220,21 @@ subtest 'can build enum with built-ins\' names' => {
         "RT128017-4" => 8,"RT128017-5" => 16,"RT128017-6" => 32,
         "RT128017-7" => 64,"RT128017-8" => 128
     )), 'enums can be created via Seq of Pairs';
+}
+
+# RT #130041
+subtest 'can provide enum values via Pairs' => {
+    plan 5;
+
+    my enum RT130041 (
+        'RT130041-A' => 42, 'RT130041-B',
+        'RT130041-C' => 22, 'RT130041-D', 'RT130041-E',
+    );
+    is-deeply +RT130041-A, 42, '(1)';
+    is-deeply +RT130041-B, 43, '(2)';
+    is-deeply +RT130041-C, 22, '(3)';
+    is-deeply +RT130041-D, 23, '(4)';
+    is-deeply +RT130041-E, 24, '(5)';
 }
 
 # vim: ft=perl6
