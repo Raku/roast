@@ -64,7 +64,8 @@ nok "doesnotexist.t".IO ~~ :s, "~~:s returns false on non-existent files";
 
 nok $*PROGRAM.IO ~~ :z,   "~~:z returns false on existent files";
 nok "doesnotexist.t".IO ~~ :z, "~~:z returns false on non-existent files";
-nok "t".IO ~~ :z,              "~~:z returns false on directories";
+is "t".IO ~~ :z,  "t".IO.s.not,
+    "~~:z returns inverse boolified size on directories";
 
 my $fh = open("empty_file", :w);
 close $fh;
