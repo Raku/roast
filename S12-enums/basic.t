@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 50;
+plan 51;
 
 # Very basic enum tests
 
@@ -236,5 +236,9 @@ subtest 'can provide enum values via Pairs' => {
     is-deeply +RT130041-D, 23, '(4)';
     is-deeply +RT130041-E, 24, '(5)';
 }
+
+# RT #130446
+is-deeply do { BEGIN my %h = <a 1 b 2>; my enum Bits (%h); Bits.enums },
+    Map.new((:a<1>,:b<2>)), 'can create enum with a Hash';
 
 # vim: ft=perl6
