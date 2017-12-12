@@ -66,8 +66,6 @@ subtest 'comb method' => {
         \(2, 3), \(/../), \(/../, 2), \(/<:alpha>/, 3);
     plan +@tests;
 
-    #?rakudo.jvm skip 'Type check failed in binding to parameter $size; expected Int but got Str ("")'
-    #?DOES 12
     is-deeply cat.comb(|$_), $str.comb(|$_), .perl for @tests;
 }
 

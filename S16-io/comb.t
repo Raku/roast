@@ -82,7 +82,6 @@ for "x",/x/ -> $sep {
 for "", /./ -> $sep {
     my $text  = "abcde";
     my @clean = <a b c d e>;
-    #?rakudo.jvm skip 'Type check failed in binding to parameter "$size"; expected Int but got Str ("")'
     test-comb($text,@clean,$sep);
 }
 
@@ -97,7 +96,6 @@ for /.c./ -> $sep {
 for "" -> $sep {
     my $text  = "";
     my @clean;
-    #?rakudo.jvm skip 'Type check failed in binding to parameter "$size"; expected Int but got Str ("")'
     test-comb($text,@clean,$sep);
 }
 
