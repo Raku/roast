@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 22;
 
 # L<S06/Closure parameters>
 
@@ -64,7 +64,7 @@ plan 18;
     is t1(&takes-str-returns-bool), 'Str --> Bool',
        'Multi dispatch based on closure parameter syntax (4)';
 
-    dies-ok { t1( -> { 3 }) }, 
+    dies-ok { t1( -> { 3 }) },
        'Multi dispatch based on closure parameter syntax (5)';
 }
 
@@ -77,6 +77,25 @@ plan 18;
 # RT #125988
 {
     throws-like 'sub f (Int &b:(--> Bool)) { }', X::Redeclaration, 'only one way of specifying sub-signature return type allowed';
+}
+
+# RT #123116
+{
+    lives-ok {
+        my class Dog {};
+        sub foo(&block (Dog --> Bool)) {
+            pass 'called sub in unpacking Callable signature with whitespace';
+        }
+        foo(sub (Dog $x --> Bool) { $x })
+    }, 'unpacking Callable signature with whitespace';
+
+    lives-ok {
+        my class Dog {};
+        sub foo(&block:(Dog --> Bool)) {
+            pass 'called sub in unpacking Callable signature with colon';
+        }
+        foo(sub (Dog $x --> Bool) { $x })
+    }, 'unpacking Callable signature with colon';
 }
 
 # vim: ft=perl6
