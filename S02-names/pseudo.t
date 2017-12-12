@@ -445,9 +445,7 @@ my $x110 = 110; #OK
 }
 
 # RT #129092
-{
-    lives-ok { my @keys = CORE::.keys }, 'calling CORE::.keys lives';
-}
+lives-ok { my @keys = CORE::.keys }, 'calling CORE::.keys lives';
 
 
 # vim: ft=perl6
