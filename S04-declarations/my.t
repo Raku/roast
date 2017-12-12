@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 107;
+plan 110;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible">
@@ -396,6 +396,39 @@ subtest 'dies on conflicting type constraints' => {
         'Type + of Type';
     throws-like ｢my Int $a of Str is default("z") of Rat｣, X::Comp::Group,
         'Type + of Type + is default';
+}
+
+# RT #124210
+subtest 'can assign to sigil-less variables' => {
+    plan 3;
+    my \a = 1;          is-deeply a, 1,           'simple';
+    my (\b, \c) = 1, 2; is-deeply (b, c), (1, 2), 'complex';
+    my (\d, (\e, (\f, (\g, \h)))) = 1, (2, (3, (4, 5)));
+    #?rakudo skip 'RT131071'
+    is-deeply (d, e, f, g, h), (1, 2, 3, 4, 5),   'complexerastic';
+}
+
+# RT #124210
+subtest 'can bind to sigil-less variables' => {
+    plan 3;
+    my \a := 1;          is-deeply a, 1,           'simple';
+    my (\b, \c) := 1, 2; is-deeply (b, c), (1, 2), 'complex';
+    my (\d, (\e, (\f, (\g, \h)))) := 1, (2, (3, (4, 5)));
+    #?rakudo skip 'RT131071'
+    is-deeply (d, e, f, g, h), (1, 2, 3, 4, 5),   'complexerastic';
+}
+
+# RT #124210
+subtest 'can compile-time bind to sigil-less variables' => {
+    plan 3;
+    #?rakudo 3 skip '::= NYI'
+    ok 1;
+    ok 1;
+    ok 1;
+    # my \a ::= 1;          is-deeply a, 1,           'simple';
+    # my (\b, \c) ::= 1, 2; is-deeply (b, c), (1, 2), 'complex';
+    # my (\d, (\e, (\f, (\g, \h)))) ::= 1, (2, (3, (4, 5)));
+    # is-deeply (d, e, f, g, h), (1, 2, 3, 4, 5),   'complexerastic';
 }
 
 # vim: ft=perl6
