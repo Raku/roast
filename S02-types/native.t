@@ -390,14 +390,14 @@ subtest 'meta-assign op with native nums' => {
         my num32 $s = 0e0;
         for @arr { $s += $_ }
         $s
-    }, 3.6, 'meta-assing into inited num';
+    }, 3.6, 'meta-assigning into inited num';
 
     is-deeply do {
         my num32 @arr = 1.1e0, 1.2e0, 1.3e0;
         my num32 $s;
         for @arr { $s += $_ }
         $s
-    }, NaN, 'meta-assing into UN-inited num';
+    }, NaN, 'meta-assigning into UN-inited num';
 }
 
 # vim: ft=perl6
