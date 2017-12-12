@@ -449,11 +449,16 @@ lives-ok { my @keys = CORE::.keys }, 'calling CORE::.keys lives';
 
 # RT #119521
 subtest 'no guts spillage when going too high up scope in pseudopackages' => {
-    plan 1 + my @packs = <
+    plan 3 + my @packs = <
         DYNAMIC::  OUTER::   CALLER::   UNIT::     MY::   CORE::
         LEXICAL::  OUTERS::  CALLERS::  SETTING::  OUR::
     >;
-    eval-lives-ok ([~] '$', |(@packs.pick xx 100), 'True'), 'mixed';
+
+    eval-lives-ok '$CORE::CALLERS::CORE::True', 'CORE::CALLERS::CORE::...';
+    eval-lives-ok '$CORE::UNIT::True',          'CORE::UNIT::...';
+
+    my $mixed := ([~] '$', |(@packs.pick xx 100), 'True');
+    eval-lives-ok($mixed, 'mixed') or diag "Failing mixed combination: $mixed";
     eval-lives-ok '$' ~ $_ x 100 ~ 'True', $_ for @packs;
 }
 
