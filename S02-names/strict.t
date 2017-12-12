@@ -33,11 +33,12 @@ is $Foo::foo, 42, 'lax declared variable is package scoped';
 
 # RT #125398
 subtest '`no strict` does not cause autovivification container issues' => {
-    plan 3;
+    plan 4;
 
     no strict;
     %h<a> = 42;
     lives-ok { temp %h<b> = 8 },  '`temp` on Hash key';
     lives-ok { let  %h<c> = 9 },  '`let`  on Hash key';
+    lives-ok { %h<d><e> }, 'postcircumfix {} on Hash key'; # RT #125183
     isa-ok %h<non-existent>, Any, 'non-existent keys are `Any`';
 }
