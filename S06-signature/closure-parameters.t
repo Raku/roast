@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 23;
+plan 20;
 
 # L<S06/Closure parameters>
 
@@ -80,43 +80,12 @@ plan 23;
 }
 
 # RT #123116
-{
-    lives-ok {
-        my class Dog {};
-        sub foo(&block (Dog --> Bool)) {
-            pass 'called sub in unpacking Callable signature with whitespace';
-        }
-        foo(sub (Dog $x --> Bool) { $x })
-    }, 'unpacking Callable signature with whitespace';
-
-    lives-ok {
-        my class Dog {};
-        sub foo(&block:(Dog --> Bool)) {
-            pass 'called sub in unpacking Callable signature with colon';
-        }
-        foo(sub (Dog $x --> Bool) { $x })
-    }, 'unpacking Callable signature with colon';
-}
-
-# https://github.com/rakudo/rakudo/commit/c0f99a393b
-subtest "whitespace can be used to unpack Callable's signature" => {
-    plan 6;
-
-    -> &b (42) { pass 'literal only' }(sub (42) {});
-
-    -> &b    (42, Int) { pass 'literal, type' }(sub (42, Int) {});
-
-    -> &b #`(meows)  (42, Int --> Rat) {
-        pass 'literal, type, return'
-    }(sub (42, Int --> Rat) {});
-
-    throws-like { -> &b #`(meows) (42) { }(sub () {}) },
-        X::TypeCheck::Binding::Parameter, 'literal only, typecheck error';
-    throws-like { -> &b    (42, Int) { }(sub () {}) },
-        X::TypeCheck::Binding::Parameter, 'literal, type, typecheck error';
-    throws-like { -> &b (42, Int --> Rat) { }(sub () {}) },
-        X::TypeCheck::Binding::Parameter,
-        'literal, type, return, typecheck error';
-}
+lives-ok {
+    my class Dog {};
+    sub foo(&block:(Dog --> Bool)) {
+        pass 'called sub in unpacking Callable signature with colon';
+    }
+    foo(sub (Dog $x --> Bool) { $x })
+}, 'unpacking Callable signature with colon';
 
 # vim: ft=perl6
