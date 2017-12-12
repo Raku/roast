@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 # Tests of the Baggy role
 
@@ -63,6 +63,13 @@ subtest 'can access key of empty list coerced to type' => {
     for @tests {
         lives-ok { my %x := ()."$_"(); %x<a> }, $_
     }
+}
+
+subtest 'creating setty/baggy types with lazy iterables throws' => {
+    plan +my @tests
+    = ｢set *..*｣,          ｢bag *..*｣,          ｢mix *..*｣,
+      ｢SetHash.new: *..*｣, ｢BagHash.new: *..*｣, ｢MixHash.new: *..*｣;
+    throws-like $_, X::Cannot::Lazy, "$_ throws" for @tests;
 }
 
 # vim: ft=perl6
