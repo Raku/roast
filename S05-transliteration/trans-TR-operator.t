@@ -36,7 +36,6 @@ subtest 'TR:delete///' => { plan 2;
 
 subtest 'TR:c///' => { plan 2;
     with 'meows' {
-        #?rakudo todo 'https://github.com/rakudo/rakudo/issues/1310'
         is-deeply TR:c/ew/E/, 'EeEwE', 'return value';
         is-deeply $_, 'meows', '$_ has original value';
     }
@@ -65,7 +64,7 @@ subtest 'TR:squash///' => { plan 2;
 
 subtest 'TR:d:c///' => { plan 2;
     with 'meeeeooowwweeees' {
-        is-deeply TR:d:c/ewZ//, 'mooos', 'return value';
+        is-deeply TR:d:c/ewZ//, 'eeeewwweeee', 'return value';
         is-deeply $_, 'meeeeooowwweeees', '$_ has original value';
     }
 }
@@ -79,14 +78,14 @@ subtest 'TR:d:s///' => { plan 2;
 
 subtest 'TR:c:s///' => { plan 2;
     with 'meeeeooowwweeees' {
-        is-deeply TR:c:s/ewZ/E/, 'mEoooEs', 'return value';
+        is-deeply TR:c:s/owZ/E/, 'EooowwwE', 'return value';
         is-deeply $_, 'meeeeooowwweeees', '$_ has original value';
     }
 }
 
 subtest 'TR:d:c:s///' => { plan 2;
     with 'meeeeooowwweeees' {
-        is-deeply TR:d:c:s/ewZ//, 'mooos', 'return value';
+        is-deeply TR:d:c:s/ewZ//, 'eeeewwweeee', 'return value';
         is-deeply $_, 'meeeeooowwweeees', '$_ has original value';
     }
 }
