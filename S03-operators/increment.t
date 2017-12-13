@@ -75,7 +75,7 @@ is($moo, 0, "var was not touched");
     throws-like ' 4++ ', X::Multi::NoMatch, "can't postincrement a literal number";
     throws-like ' ++4 ', X::Multi::NoMatch, "can't preincrement a literal number";
     throws-like ' 4-- ', X::Multi::NoMatch, "can't postdecrement a literal number";
-    #?rakudo.jvm todo "RT #126531"
+    #?rakudo.jvm 2 todo "RT #126531"
     throws-like ' --4 ', X::Multi::NoMatch, "can't predecrement a literal number";
     throws-like ' "x"++ ', X::Multi::NoMatch, "can't postincrement a literal string";
     throws-like ' ++"x" ', X::Multi::NoMatch, "can't preincrement a literal string";

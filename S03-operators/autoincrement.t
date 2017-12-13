@@ -271,6 +271,7 @@ throws-like 'my $a; $a++ ++;', Exception, 'parse error for "$a++ ++"';
 };
 
 # RT 126220
+#?rakudo.jvm todo 'Got: X::AdHoc, "Cannot assign to an immutable value"'
 throws-like '++.++', X::Multi::NoMatch,
     '++.++ construct throws a multi no match exception';
 
