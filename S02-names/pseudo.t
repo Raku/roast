@@ -458,7 +458,10 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
     eval-lives-ok '$CORE::UNIT::True',          'CORE::UNIT::...';
 
     my $mixed := ([~] '$', |(@packs.pick xx 100), 'True');
+    #?rakudo.jvm skip 'unknown problem'
     eval-lives-ok($mixed, 'mixed') or diag "Failing mixed combination: $mixed";
+    #?rakudo.jvm skip 'unknown problem'
+    #?DOES 11
     eval-lives-ok '$' ~ $_ x 100 ~ 'True', $_ for @packs;
 }
 

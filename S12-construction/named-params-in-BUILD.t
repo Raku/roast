@@ -20,7 +20,10 @@ is( $obj.v, 'bar',
 isa-ok($obj.v, Str, 'same arg should be of declared type' );
 isa-ok($obj, Foo, 'The object was constructed of the right type');
 
-subtest 'can bind to native type attributes in build methods' => {
+#?rakudo.jvm skip 'Native attributive binding not yet implemented (in submethod BUILD)'
+#?DOES 1
+{
+  subtest 'can bind to native type attributes in build methods' => {
     plan 4;
 
     my class RT127845 {
@@ -38,6 +41,7 @@ subtest 'can bind to native type attributes in build methods' => {
     is-deeply $o.b, 3e-1, 'can bind to native type attributes in signature of BUILD (2)';
     is-deeply $o.y, 6,    'can bind to native type attributes in signature of TWEAK (1)';
     is-deeply $o.a, 2e0,  'can bind to native type attributes in signature of TWEAK (2)';
+  }
 }
 
 # vim: ft=perl6

@@ -399,13 +399,17 @@ subtest 'dies on conflicting type constraints' => {
 }
 
 # RT #124210
-subtest 'can assign to sigil-less variables' => {
+#?rakudo.jvm skip 'ArrayIndexOutOfBoundsException: -1'
+#?DOES 1
+{
+  subtest 'can assign to sigil-less variables' => {
     plan 3;
     my \a = 1;          is-deeply a, 1,           'simple';
     my (\b, \c) = 1, 2; is-deeply (b, c), (1, 2), 'complex';
     my (\d, (\e, (\f, (\g, \h)))) = 1, (2, (3, (4, 5)));
     #?rakudo skip 'RT131071'
     is-deeply (d, e, f, g, h), (1, 2, 3, 4, 5),   'complexerastic';
+  }
 }
 
 # RT #124210
