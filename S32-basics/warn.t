@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 7;
+plan 8;
 
 use Test::Util;
 
@@ -69,5 +69,10 @@ is_run 'use v6; quietly {warn("OH NOEZ") }; say "alive"',
         err => '',
     },
     'quietly suppresses warnings';
+
+# RT #132549
+is_run 'warn <foo-1  foo-2  foo-3>.all', {:out(''), :0status, :err{
+    .contains: <foo-1  foo-2  foo-3>.all
+}}, 'no crashes or hangs with Junctions in warn()';
 
 # vim: ft=perl6

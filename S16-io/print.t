@@ -4,7 +4,7 @@ use Test;
 use Test::Util;
 
 # L<S32::IO/IO/=item print>
-plan 13;
+plan 14;
 
 # Tests for print
 is_run 'print "ok\n"', { out => "ok\n" }, 'basic form of print';
@@ -29,5 +29,24 @@ is_run 'my @array = <o k k>; $*OUT.print: @array', { out => "o k k" },
 
 is_run 'my $a = (\'o\', \'k\', \'k\'); $*OUT.print: $a', { out => "o k k" },
     '$*OUT.print: containerized Array';
+
+# RT #132549
+is_run ｢
+    note   (' note-1 ', ' note-2 ').all;
+    put    (' put-1 ', ' put-2 ').any;
+    print  (' print-1 ', ' print-2 ').none;
+    printf (' printf-1 ', ' printf-2 printf-3 ').one;
+
+    $*OUT.put:    (' me-put-1 ', ' me-put-2 ').any;
+    $*OUT.print:  (' me-print-1 ', ' me-print-2 ').none;
+    $*OUT.printf: (' me-printf-1 ', ' me-printf-2 ', ' me-printf-3 ').one;
+｣, {
+    :out{ .words.sort eq 'me-print-1 me-print-2 me-printf-1 me-printf-2'
+      ~ ' me-printf-3 me-put-1 me-put-2 print-1 print-2 printf-1 printf-2'
+      ~ ' printf-3 put-1 put-2'
+    },
+    :err{ .words.sort eq 'note-1 note-2' },
+    :0status,
+}, 'no hangs or crashes with Junctions in output routines';
 
 # vim: ft=perl6
