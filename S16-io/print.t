@@ -4,7 +4,7 @@ use Test;
 use Test::Util;
 
 # L<S32::IO/IO/=item print>
-plan 14;
+plan 15;
 
 # Tests for print
 is_run 'print "ok\n"', { out => "ok\n" }, 'basic form of print';
@@ -48,5 +48,24 @@ is_run ｢
     :err{ .words.sort eq 'note-1 note-2' },
     :0status,
 }, 'no hangs or crashes with Junctions in output routines';
+
+# RT #132549
+is_run ｢
+    note   (' note-1 ', (' note-2 ').any).all;
+    put    (' put-1 ', (' put-2 ').any).any;
+    print  (' print-1 ', (' print-2 ').any).none;
+    printf (' printf-1 ', (' printf-2 ', ' printf-3 ').any).one;
+
+    $*OUT.put:    (' me-put-1 ', (' me-put-2 ').any).any;
+    $*OUT.print:  (' me-print-1 ', (' me-print-2 ').any).none;
+    $*OUT.printf: (' me-printf-1 ', (' me-printf-2 ', ' me-printf-3 ').any).one;
+｣, {
+    :out{ .words.sort eq 'me-print-1 me-print-2 me-printf-1 me-printf-2'
+      ~ ' me-printf-3 me-put-1 me-put-2 print-1 print-2 printf-1 printf-2'
+      ~ ' printf-3 put-1 put-2'
+    },
+    :err{ .words.sort eq 'note-1 note-2' },
+    :0status,
+}, 'no hangs or crashes with Junctions in output routines (nested Junctions)';
 
 # vim: ft=perl6

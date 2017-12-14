@@ -71,8 +71,11 @@ is_run 'use v6; quietly {warn("OH NOEZ") }; say "alive"',
     'quietly suppresses warnings';
 
 # RT #132549
-is_run 'warn <foo-1  foo-2  foo-3>.all', {:out(''), :0status, :err{
-    .contains: <foo-1  foo-2  foo-3>.all
+is_run ｢
+    warn <foo-1  foo-2  foo-3>.all;
+    warn ('foo-4',  ('foo-5', 'foo-6').any).all
+｣, {:out(''), :0status, :err{
+    .contains: <foo-1  foo-2  foo-3  foo-4  foo-5  foo-6>.all
 }}, 'no crashes or hangs with Junctions in warn()';
 
 # vim: ft=perl6
