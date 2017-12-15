@@ -96,7 +96,7 @@ is_run ｢
                 print 'pass';
                 exit;
             }
-        }.list
+        }.Seq
     }
     sleep .2;
     .print: "x\n" with IO::Socket::INET.new: :host<127.0.0.1>, :15555port;
