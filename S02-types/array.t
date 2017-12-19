@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 104;
+plan 103;
 
 #L<S02/Mutable types/Array>
 
@@ -388,19 +388,6 @@ subtest 'flat propagates .is-lazy' => {
 
     is-deeply flat(42 xx *) .is-lazy, True,  'sub, True';
     is-deeply flat(42 xx 1) .is-lazy, False, 'sub, False';
-}
-
-subtest '.gist shows only first 100 els' => {
-    plan 5;
-    sub make-gist ($a, $extras?) {
-        "[$a" ~ (" $extras" with $extras) ~ ']'
-    }
-
-    is  [<1 2 3>].gist, '[1 2 3]', 'gist gives useful value';
-    is-deeply [1..100] .gist, make-gist([1..100]       ), '100 els';
-    is-deeply [1..101] .gist, make-gist([1..100], '...'), '101 els';
-    is-deeply [1..102] .gist, make-gist([1..100], '...'), '102 els';
-    is-deeply [1..1000].gist, make-gist([1..100], '...'), '1000 els';
 }
 
 # vim: ft=perl6
