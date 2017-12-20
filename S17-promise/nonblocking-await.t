@@ -168,7 +168,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
         CATCH {
             default {
                 ok .does(X::Await::Died),
-                    'Exception from awaiting many things, where on dies, does X::Await::Died';
+                    'Exception from awaiting many things, where one dies, does X::Await::Died';
                 like .gist, /'golly!'/,
                     'Exception contains original exception message';
                 like .gist, /'death-bar'/,
