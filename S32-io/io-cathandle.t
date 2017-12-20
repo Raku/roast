@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 28;
+plan 29;
 
 # Tests for IO::CatHandle class
 
@@ -825,6 +825,30 @@ subtest 'words method' => {
         '$limit 0, :close arg (return value)';
     is-deeply @files.grep(IO::Handle).grep(*.opened).elems, 0,
         '$limit 0, :close arg (all opened handles got closed)';
+}
+
+if $*DISTRO.is-win {
+    skip "Proc/Proc::Async with cmd.exe don't quite work on Windows: RT132258";
+}
+else {
+    # https://github.com/rakudo/rakudo/issues/1313
+    subtest 'IO::CatHandle.read does not switch to another handle too early' => {
+        plan 2;
+
+        my $p := run $*EXECUTABLE, '-e', ｢
+            my $b := buf8.new;
+            $b.append: $*ARGFILES.read: 1000 for ^100;
+            $b.List.put;
+        ｣, :in, :out, :err;
+        $p.in.print: "ab";
+        $p.in.flush;
+        sleep .6; # seems to be needed to ensure first print gets sent right away
+        $p.in.print: "cd";
+        $p.in.close;
+
+        is $p.out.slurp(:close), "97 98 99 100\n", 'got all elements';
+        is $p.err.slurp(:close), '', 'STDERR is empty';
+    }
 }
 
 # vim: ft=perl6 expandtab sw=4
