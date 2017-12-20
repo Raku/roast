@@ -64,7 +64,7 @@ if run :!out, :!err, «echo test» {
           }
       }
       print 'pass';
-  ｣, :5wait, :out<pass>, ".Supply on multiple Proc::Async's does not deadlock";
+  ｣, :25wait, :out<pass>, ".Supply on multiple Proc::Async's does not deadlock";
 }
 else {
     skip 'Need `echo` for this test'
