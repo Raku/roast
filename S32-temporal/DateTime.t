@@ -678,7 +678,8 @@ is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
 {
     role Foo { has @.a = 7, 8, 9 }
     class BarDate is DateTime does Foo {}
-    is BarDate.now.a, [7,8,9], 'did role attributes get initialized ok';
+    is-deeply BarDate.now.a, [7, 8, 9],
+        'did role attributes get initialized ok';
 }
 
 {
