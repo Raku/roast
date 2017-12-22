@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 283;
+plan 285;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -600,6 +600,14 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     is ds('2015-01-20T12:56:34Z').earlier(weeks => 3),
        ds('2014-12-30T12:56:34Z'),
        'subtracting 3 weeks, overflowing to years';
+
+    is ds('2008-12-31T23:59:60Z').earlier(day => 1),
+       ds('2008-12-30T23:59:59Z'),
+       'subtracting a day from a leap second clips';
+
+    is ds('2009-01-01T00:00:00Z').earlier(second => 1),
+       ds('2008-12-31T23:59:60Z'),
+       'subtracting a second from time can land on a leap second';
 
     lives-ok {
         ds('2010-01-31T12:56:34Z').later(month => 1);
