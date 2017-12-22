@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 99;
+plan 97;
 
 # Real **
 is(0 ** 0,    1, "0 ** 0 ==  1");
@@ -13,19 +13,16 @@ is(4 ** 0,    1, "4 **  0 ==  1");
 is(4 ** 1,    4, "4 **  1 ==  4");
 is(4 ** 2,   16, "4 **  2 == 16");
 
-my $big-e = 4553535345364535345634543534;
-my $big-o = 4553535345364535345634543533;
-my $xno = X::Numeric::Overflow;
-
-is 0 ** $big-e,     0, "0 ** $big-e == 0";
-is 1 ** $big-e,     1, "1 ** $big-e == 1";
-is 1e0 ** $big-e,   1, "1e0 ** $big-e == 1";
-isa-ok 1e0 ** $big-e, Num, "1e0 ** $big-e is a Num";
-is (-1) ** $big-e,  1, "-1 ** $big-e == 1";
-is (-1) ** $big-o, -1, "-1 ** $big-o == -1";
-throws-like { EVAL qq[  2 ** $big-e]  }, $xno, " 2 ** $big-e";
-throws-like { EVAL qq[(-2) ** $big-e] }, $xno, "-2 ** $big-e";
-throws-like { EVAL qq[(-2) ** $big-o] }, $xno, "-2 ** $big-o";
+my $large-even = 4553535345364535345634543534;
+my $large-odd  = 4553535345364535345634543533;
+is-deeply      0  ** $large-even,   0, "  0 ** $large-even == 0";
+is-deeply      1  ** $large-even,   1, "  1 ** $large-even == 1";
+is-deeply    1e0  ** $large-even, 1e0, "1e0 ** $large-even == 1";
+is-deeply    (-1) ** $large-even,   1, " -1 ** $large-even == 1";
+is-deeply    (-1) ** $large-odd,   -1, " -1 ** $large-odd  == -1";
+throws-like "  2  ** $large-even", X::Numeric::Overflow, " 2 ** $large-even";
+throws-like "(-2) ** $large-even", X::Numeric::Overflow, "-2 ** $large-even";
+throws-like "(-2) ** $large-odd",  X::Numeric::Overflow, "-2 ** $large-odd";
 
 is(4 ** 0.5,  2, "4 ** .5 ==  2");
 is(4 ** (1/2), 2, "4 ** (1/2) == 2 ");
@@ -126,15 +123,17 @@ is(3¹⁰, *¹⁰(3), "3¹⁰");
 is(3¹³, *¹³(3), "3¹³");
 is((-1)¹²³, *¹²³(-1), "(-1)¹²³");
 
-is 0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, 0, "0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == 0";
-is 1⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, 1, "1⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == 1";
-is 1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, 1, "1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == 1";
-isa-ok 1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, Num, "1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ is a Num";
-is (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴, 1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ == 1";
-is (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, -1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == -1";
-throws-like { EVAL qq[2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵] }, $xno, "2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws";
-throws-like { EVAL qq[(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴] }, $xno, "(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ throws";
-throws-like { EVAL qq[(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵] }, $xno, "(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws";
+is-deeply    0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵,   0, "   0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ ==  0";
+is-deeply    1⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵,   1, "   1⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ ==  1";
+is-deeply  1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, 1e0, " 1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ ==  1";
+is-deeply (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴,   1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ ==  1";
+is-deeply (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵,  -1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == -1";
+throws-like '2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵',    X::Numeric::Overflow,
+    '2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws';
+throws-like '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴', X::Numeric::Overflow,
+    '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ throws';
+throws-like '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵', X::Numeric::Overflow,
+    '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws';
 
 #?rakudo.jvm 6 skip 'parsing issue on JVM: Missing required term after infix'
 is(4 ** ½,  2, "4 ** ½ ==  2");
@@ -151,8 +150,9 @@ is-approx(27 ** -⅔, ⅑, "27 ** -⅔ == ⅑");
 is_run ｢start { sleep 2; say ‘pass’; exit }; EVAL ‘say 1.0000001 ** (10 ** 8)’｣,
     {:out("pass\n"), :err(''), :0status },
 'raising a Rat to largish power does not throw';
-throws-like { EVAL qq[say 1.0000001 ** (10 ** 90000)] }, 
-    $xno, "raising a Rat to a very large number throws";
+
+throws-like 'say 1.0000001 ** (10 ** 90000)',
+    X::Numeric::Overflow, "raising a Rat to a very large number throws";
 
 # RT#126732
 #?rakudo.jvm skip 'unival NYI'
