@@ -152,7 +152,8 @@ lives-ok { EVAL 'while 0 { my $_ }' }, 'Can declare $_ in a loop body';
 # RT #127013
 {
     sub f($x) { my $z; do +$z while ++$z < $x }
-    is f(5), '1 2 3 4', "can return values from loop at end of sub";
+    is-deeply f(5), (1, 2, 3, 4).Seq,
+        'can return values from loop at end of sub';
 }
 
 # RT #127069
