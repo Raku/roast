@@ -240,6 +240,7 @@ subtest 'gist method' => {
     is-deeply $cat.gist, "IO::CatHandle(opened on @paths[1].gist())",
         'opened, second handle';
     $cat.read: 4;
+    #?rakudo.jvm todo 'fails since rakudo commit dc800d8933'
     is-deeply $cat.gist, 'IO::CatHandle(closed)', 'after exhausting handles';
 }
 
@@ -253,6 +254,7 @@ subtest 'IO method' => {
     $cat.read: 4;
     is-deeply $cat.IO, @paths[1], '2';
     $cat.read: 4;
+    #?rakudo.jvm todo 'fails since rakudo commit dc800d8933'
     is-deeply $cat.IO, @paths[2], '3';
     $cat.read: 1000;
     is-deeply $cat.IO, Nil, '4';
@@ -316,6 +318,7 @@ subtest 'native-descriptor method' => {
     $cat.read: 4;
     isa-ok $cat.native-descriptor, Int;
     $cat.read: 10000;
+    #?rakudo.jvm todo 'fails since rakudo commit dc800d8933'
     is-deeply $cat.native-descriptor, Nil, 'after exhausting handles';
 }
 
@@ -493,6 +496,7 @@ subtest 'opened method' => {
     is-deeply $cat.opened, True, 'second handle';
 
     $cat.read: 4000;
+    #?rakudo.jvm todo 'fails since rakudo commit dc800d8933'
     is-deeply $cat.opened, False, 'after exhausting all handles';
 }
 
@@ -506,6 +510,7 @@ subtest 'path method' => {
     $cat.read: 4;
     is-deeply $cat.IO, @paths[1], '2';
     $cat.read: 4;
+    #?rakudo.jvm todo 'fails since rakudo commit dc800d8933'
     is-deeply $cat.IO, @paths[2], '3';
     $cat.read: 1000;
     is-deeply $cat.IO, Nil, '4';
@@ -558,7 +563,9 @@ subtest 'read method' => {
         my $cat = IO::CatHandle.new: make-files Blob.new(1, 2, 3),
             Blob.new(4, 5), Blob.new(6, 7, 8), Blob.new(9, 10, 11, 12, 13, 14);
         is-deeply $cat.read(4),    buf8.new(1, 2, 3, 4),         '1';
+        #?rakudo.jvm todo 'fails since rakudo commit dc800d8933'
         is-deeply $cat.read(5),    buf8.new(5, 6, 7, 8, 9),      '2';
+        #?rakudo.jvm todo 'fails since rakudo commit dc800d8933'
         is-deeply $cat.read(5000), buf8.new(10, 11, 12, 13, 14), '3';
         is-deeply $cat.read(500),  buf8.new,                     '4';
     }
@@ -688,6 +695,7 @@ subtest 'Str method' => {
     $cat.read: 4;
     is-deeply $cat.Str, @paths[1].Str, '2';
     $cat.read: 4;
+    #?rakudo.jvm todo 'fails since rakudo commit dc800d8933'
     is-deeply $cat.Str, @paths[2].Str, '3';
 
     # Don't spec the exact content of .Str on closed handle
@@ -830,9 +838,13 @@ subtest 'words method' => {
 if $*DISTRO.is-win {
     skip "Proc/Proc::Async with cmd.exe don't quite work on Windows: RT132258";
 }
+elsif $*VM.name eq 'jvm' {
+    skip "hangs; Rakudo GH #1313";
+}
 else {
     # https://github.com/rakudo/rakudo/issues/1313
-    subtest 'IO::CatHandle.read does not switch to another handle too early' => {
+    {
+      subtest 'IO::CatHandle.read does not switch to another handle too early' => {
         plan 2;
 
         my $p := run $*EXECUTABLE, '-e', ｢
@@ -848,6 +860,7 @@ else {
 
         is $p.out.slurp(:close), "97 98 99 100\n", 'got all elements';
         is $p.err.slurp(:close), '', 'STDERR is empty';
+      }
     }
 }
 

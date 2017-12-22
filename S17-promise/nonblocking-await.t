@@ -272,6 +272,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
   }
 }
 
+#?rakudo.jvm skip 'atomicint NYI'
 { # https://github.com/rakudo/rakudo/issues/1323
     # Await must be called in sink context here to trigger the covered bug.
     # Gymnastics with atomic ints are just to reduce test runtime; the point

@@ -70,12 +70,14 @@ subtest '.eof works right even when we seek past end and back' => {
     is-deeply $fh.eof, True, "seek'ed past end";
 
     $fh.seek: 1, SeekFromBeginning;
+    #?rakudo.jvm todo 'Rakudo GH #1322 not yet fixed for JVM'
     is-deeply $fh.eof, False, "seek'ed back into the actual contents";
 
     $fh.slurp;
     is-deeply $fh.eof, True, "slurped contents";
 
     $fh.seek: 3, SeekFromBeginning;
+    #?rakudo.jvm todo 'Rakudo GH #1322 not yet fixed for JVM'
     is-deeply $fh.eof, False, "seek'ed back";
 
     $fh.seek: 5, SeekFromEnd;

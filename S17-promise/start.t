@@ -249,6 +249,7 @@ lives-ok {
     nok $wrong, 'No data races on closure interpolation in strings';
 }
 
+#?rakudo.jvm skip 'atomicint NYI'
 { # https://github.com/rakudo/rakudo/issues/1323
     # Await must be called in sink context here to trigger the covered bug.
     # Gymnastics with atomic ints are just to reduce test runtime; the point
