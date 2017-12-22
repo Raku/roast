@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 39;
+plan 41;
 
 # L<S32::Numeric/Numeric/"=item is-prime">
 
@@ -45,7 +45,9 @@ ok  170141183460469231731687303715884105727.is-prime, "1701411834604692317316873
 nok 170141183460469231731687303715884105725.is-prime, "170141183460469231731687303715884105725 is not prime";
 ok 6864797660130609714981900799081393217269435300143305409394463459185543183397656052122559640661454554977296311391480858037121987999716643812574028291115057151.is-prime, "M13 is prime";
 
-ok  is-prime(2.0),   "correct coersion (Rat)";
-ok  is-prime('2.0'), "correct coersion (Str)";
-nok is-prime(2.5),   "decimal numbers are not prime";
-nok is-prime(-2),     "negative numbers are not prime";
+ok  is-prime(2.0),   'correct coersion (Rat)';
+ok  is-prime(2e0),   'correct coersion (Num)';
+ok  is-prime('2.0'), 'correct coersion (Str)';
+nok is-prime(2.5),   'decimal numbers are not prime (Rat)';
+nok is-prime(2e5),   'decimal numbers are not prime (Num)';
+nok is-prime(-2),    'negative numbers are not prime';
