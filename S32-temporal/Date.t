@@ -11,9 +11,9 @@ plan 116;
     lives-ok { Date.new(2010, 1, 1) }, 'List constructor';
     lives-ok { Date.new(:year(2010), :month(1), :day(1)) }, 'named arguments';
     lives-ok { Date.today }, 'Date.today';
-    lives-ok { 
+    lives-ok {
         my $dt = DateTime.new(:year(2010),:month(6), :day(4));
-        Date.new($dt); 
+        Date.new($dt);
     }, 'Date.new from DateTime';
 
     dies-ok { Date.new('malformed') }, 'obviously malformed string';
