@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 432;
+plan 437;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -905,6 +905,13 @@ throws-like 'constant foo = bar', X::Undeclared::Symbols;
 
 # RT #126888
 throws-like '(1,2)[0] := 3', X::Bind;
+# RT #128755
+throws-like { (1,2,3)[1] := 4 }, X::Bind, "can't bind into a List item";
+#?rakudo 2 todo 'wrong exception'
+throws-like { (List)[0]  := 1 }, X::Bind, "can't bind into an undefined list";
+throws-like { (Int)[0]   := 1 }, X::Bind, "can't bind into an undefined Int";
+throws-like { 10[0]      := 1 }, X::Bind, "can't bind into a defined Int";
+throws-like { "Hi"[0]    := 1 }, X::Bind, "can't bind into a defined Str";
 
 # RT #128581
 throws-like Q/my Array[Numerix] $x;/, X::Undeclared::Symbols, gist => /Numerix/;
