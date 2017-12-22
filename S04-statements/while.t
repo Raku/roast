@@ -158,8 +158,12 @@ lives-ok { EVAL 'while 0 { my $_ }' }, 'Can declare $_ in a loop body';
 
 # RT #127069
 {
-    is { (loop (my int $i = 0; $i < 10; $i++) { +$i }) }(), '0 1 2 3 4 5 6 7 8 9', "can return ints from loop at end of immediate block";
-    is { (loop (my Int $i = 0; $i < 10; $i++) { +$i }) }(), '0 1 2 3 4 5 6 7 8 9', "can return Ints from loop at end of immediate block";
+    is-deeply { (loop (my int $i = 0; $i < 10; $i++) { +$i }) }(),
+        (0, 1, 2, 3, 4, 5, 6, 7, 8, 9).Seq,
+        'can return ints from loop at end of immediate block';
+    is-deeply { (loop (my Int $i = 0; $i < 10; $i++) { +$i }) }(),
+        (0, 1, 2, 3, 4, 5, 6, 7, 8, 9).Seq,
+        'can return Ints from loop at end of immediate block';
 }
 
 # RT #128830
