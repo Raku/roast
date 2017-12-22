@@ -6,7 +6,7 @@ use Test::Util;
 
 plan 24;
 
-# Is there a better reference for the spec for how return return works? 
+# Is there a better reference for the spec for how return return works?
 # There is "return function" but that's a more advanced feature.
 #L<S04/"Control Exceptions">
 
