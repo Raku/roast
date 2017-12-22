@@ -44,6 +44,7 @@ my @normal = <
   HyperSeq
   HyperWhatever
   IO::ArgFiles
+  IO::CatHandle
   IO::Handle
   IO::Notification
   IO::Path
