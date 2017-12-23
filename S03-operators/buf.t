@@ -173,7 +173,7 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 {
     for <prepend unshift> -> $what {
         my $a = Buf.new(1, 2, 3);
-        ok $a, '===', $a."$what"(4), "$what returns self";
+        cmp-ok $a, '===', $a."$what"(4), "$what returns self";
         is $a.elems, 4, "Buf .elems correct after $what";
         is-deeply $a[0], 4, "Buf first element correct after $what";
 
