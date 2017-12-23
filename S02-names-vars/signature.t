@@ -11,11 +11,9 @@ plan 13;
 
 {
     ok :($a) ~~ Signature, ':($a) create a Signature object';
-    my ($a) := \3;
+    my ($a) := \(3);
     is $a, 3, 'can bind to one-element signature';
-    throws-like { $a++ },
-      Exception,  # no exception type yet
-      'cannot increment an Int';
+    throws-like { $a++ }, X::Multi::NoMatch, 'cannot increment an Int';
 
     my $b = :();
     ok $b.WHAT === Signature, '.WHAT on :() is Signature';
