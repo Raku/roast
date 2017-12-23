@@ -15,9 +15,7 @@ is-deeply @b[0].Array, @result, 'seq => array works 2';
 
 
 my @expected-searches = <beer masak vacation whisky>;
-my ($y, @searches) = q:to/INPUT/, q:to/SEARCHES/.lines;
-    xxxx
-    INPUT
+my ($y, @searches) = "xxxx\n", q:to/SEARCHES/.lines;
     beer
     masak
     vacation
