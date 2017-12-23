@@ -18,8 +18,10 @@ subtest '.count-only/.bool-only for iterated content' => {
         Buf.new(1, 2, 3).iterator               => [3, 'Buf.iterator'],
         %(:42foo, :70bar, :2meow).keys.iterator => [3, 'Hash.keys.iterator'],
         %(:42foo, :70bar).kv.iterator           => [4, 'Hash.kv.iterator'],
-        combinations(4,1).iterator              => [4, 'Combinations'],
-        permutations(2).iterator                => [2, 'Permutations'],
+        combinations(4,1).iterator              => [4, '&combinations'],
+        permutations(2).iterator                => [2, '&permutations'],
+        4.combinations(1).iterator              => [4, '.combinations'],
+        2.permutations.iterator                 => [2, '.permutations'],
         :42foo.iterator                         => [1, 'Pair.iterator'],
         :42foo.kv.iterator                      => [2, 'Pair.kv.iterator'],
     }
