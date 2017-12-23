@@ -689,15 +689,15 @@ is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
         \(:2016year,:2month,:20day,:21hour,:53minute,:7second)
     -> $datetime {
         my $fdt = FooDateTime.new(|$datetime, foo => 42);
-        isa-ok    $fd, FooDateTime, 'created object is of right type';
-        isa-ok    $fd, DateTime,    'created object is a subclass';
-        is-deeply $fdt.year, 2016,  'is year in FooDateTime ok';
-        is-deeply $fdt.month,   2,  'is month in FooDateTime ok';
-        is-deeply $fdt.day,    20,  'is day in FooDateTime ok';
-        is-deeply $fdt.hour,   21,  'is hour in FooDateTime ok';
-        is-deeply $fdt.minute, 53,  'is minute in FooDateTime ok';
-        is-deeply $fdt.second,  7,  'is second in FooDateTime ok';
-        is-deeply $fdt.foo,    42,  'is foo in FooDateTime ok';
+        isa-ok    $fdt, FooDateTime, 'created object is of right type';
+        isa-ok    $fdt, DateTime,    'created object is a subclass';
+        is-deeply $fdt.year, 2016,   'is year in FooDateTime ok';
+        is-deeply $fdt.month,   2,   'is month in FooDateTime ok';
+        is-deeply $fdt.day,    20,   'is day in FooDateTime ok';
+        is-deeply $fdt.hour,   21,   'is hour in FooDateTime ok';
+        is-deeply $fdt.minute, 53,   'is minute in FooDateTime ok';
+        is-deeply $fdt.second,  7,   'is second in FooDateTime ok';
+        is-deeply $fdt.foo,    42,   'is foo in FooDateTime ok';
     }
 }
 
