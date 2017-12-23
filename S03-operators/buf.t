@@ -140,59 +140,66 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 {
     for <append push> -> $what {
         my $a = Buf.new(1, 2, 3);
-        ok $a === $a."$what"(4), "$what returns self";
+        cmp-ok $a, '===', $a."$what"(42), "$what returns self";
         is $a.elems, 4, "Buf .elems correct after $what";
-        is $a[3], 4, "Buf last element correct after $what";
+        is-deeply $a[3], 42, "Buf last element correct after $what";
 
-        my @items = 5, 6;
-        ok $a === $what eq "push" ?? $a.push(|@items) !! $a.append(@items),
-        "$what returns self";
+        my @items = 51, 68;
+        cmp-ok $a, '===', $what eq "push"
+            ?? $a.push(|@items) !! $a.append(@items), "$what returns self";
 
         is $a.elems, 6, "Buf .elems correct after {$what}ing a list";
-        is $a[4], 5, "Buf penultimate element correct after {$what}ing a list";
-        is $a[5], 6, "Buf last element correct after {$what}ing a list";
+        is-deeply $a[4], 51,
+            "Buf penultimate element correct after {$what}ing a list";
+        is-deeply $a[5], 68, "Buf last element correct after {$what}ing a list";
 
-        ok $a === $a."$what"(7, 8), "$what returns self";
+        cmp-ok $a, '===', $a."$what"(71, 86), "$what returns self";
 
         is $a.elems, 8, "Buf .elems correct after {$what}ing varargs";
-        is $a[6], 7, "Buf penultimate element correct {$what}ing appending varargs";
-        is $a[7], 8, "Buf last element correct after {$what}ing varargs";
+        is-deeply $a[6], 71,
+            "Buf penultimate element correct {$what}ing appending varargs";
+        is-deeply $a[7], 86,
+            "Buf last element correct after {$what}ing varargs";
 
-        ok $a === $what eq 'push' ?? $a.push(|9 xx 1) !! $a.append(9 xx 1),
-          "$what returns self";
+        cmp-ok $a, '===', $what eq 'push'
+            ?? $a.push(|93 xx 1) !! $a.append(93 xx 1), "$what returns self";
 
         is $a.elems, 9, "Buf .elems correct after {$what}ing xx list";
-        is $a[8], 9, "Buf last element correct after {$what}ing xx list";
+        is-deeply $a[8], 93,
+            "Buf last element correct after {$what}ing xx list";
     }
 }
 
 {
     for <prepend unshift> -> $what {
         my $a = Buf.new(1, 2, 3);
-        ok $a === $a."$what"(4), "$what returns self";
+        ok $a, '===', $a."$what"(4), "$what returns self";
         is $a.elems, 4, "Buf .elems correct after $what";
-        is $a[0], 4, "Buf first element correct after $what";
+        is-deeply $a[0], 4, "Buf first element correct after $what";
 
         my @items = 5, 6;
-        ok $a === $what eq 'unshift'
-          ?? $a.unshift(|@items) !! $a.prepend(@items),
-          "$what returns self";
+        cmp-ok $a, '===', $what eq 'unshift'
+            ?? $a.unshift(|@items) !! $a.prepend(@items), "$what returns self";
 
         is $a.elems, 6, "Buf .elems correct after {$what}ing a list";
-        is $a[0], 5, "Buf first element correct after {$what}ing a list";
-        is $a[1], 6, "Buf second element correct after {$what}ing a list";
+        is-deeply $a[0], 5, "Buf first element correct after {$what}ing a list";
+        is-deeply $a[1], 6,
+            "Buf second element correct after {$what}ing a list";
 
-        ok $a === $a."$what"(7, 8), "$what returns self";
+        cmp-ok $a, '===', $a."$what"(7, 8), "$what returns self";
 
         is $a.elems, 8, "Buf .elems correct after {$what}ing varargs";
-        is $a[0], 7, "Buf first element correct {$what}ing appending varargs";
-        is $a[1], 8, "Buf second element correct after {$what}ing varargs";
+        is-deeply $a[0], 7,
+            "Buf first element correct {$what}ing appending varargs";
+        is-deeply $a[1], 8,
+            "Buf second element correct after {$what}ing varargs";
 
-        ok $a === $what eq 'unshift'
-          ?? $a.unshift(|9 xx 1) !! $a.prepend(9 xx 1), "$what returns self";
+        cmp-ok $a, '===', $what eq 'unshift'
+            ?? $a.unshift(|9 xx 1) !! $a.prepend(9 xx 1), "$what returns self";
 
         is $a.elems, 9, "Buf .elems correct after {$what}ing xx list";
-        is $a[0], 9, "Buf first element correct after {$what}ing xx list";
+        is-deeply $a[0], 9,
+            "Buf first element correct after {$what}ing xx list";
     }
 }
 
