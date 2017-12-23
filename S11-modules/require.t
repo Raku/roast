@@ -47,6 +47,7 @@ my $name = 'S11-modules/InnerModule.pm';
     require InnerModule:file($name) <&bar>;
     is bar(), 'Inner::bar', 'can load InnerModule by name and path, with import list';
 }
+nok ::('&bar'), ｢&bar didn't leak to outer scope｣;
 
 #RT #118407
 throws-like { require InnerModule:file($name) <quux> },
@@ -101,8 +102,6 @@ X::Import::MissingSymbols,'throws correct exception';
 eval-lives-ok q|BEGIN require Fancy::Utilities;|, 'require works at BEGIN';
 
 eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import at BEGIN';
-
-nok ::('&bar'),"bar didn't leak";
 
 {
         require "S11-modules/GlobalOuter.pm";
