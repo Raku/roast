@@ -114,13 +114,16 @@ class NoTwigilNatives {
 
 throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
 
-# RT #127548
-class MV {
-    has uint64 $.start;
-    method s { if $!start { 5 } }
+{ # RT #127548
+    my class MV {
+        has uint64 $.start;
+        method s { if $!start { 5 } }
+    }
+    is-deeply MV.new(start => 42).start, 42,
+        'uint64 native attribute accessor works';
+    is-deeply MV.new(start => 4).s, 5,
+        'uint64 native attribute use in method works';
 }
-is MV.new(start => 42).start, 42, 'uint64 native attribute accessor works';
-is MV.new(start => 4).s, 5, 'uint64 native attribute use in method works';
 
 # RT #131122
 {
@@ -129,7 +132,7 @@ is MV.new(start => 4).s, 5, 'uint64 native attribute use in method works';
     }
     my $c = C1.new(ff => 255);
 #?rakudo.moar todo 'RT #131122'
-    is $c.ff, 255, 'large unsigned ints';
+    is-deeply $c.ff, 255, 'large unsigned ints';
 
     my class C2 is repr('CStruct') {
         has uint8 $.ff is rw;
@@ -137,8 +140,8 @@ is MV.new(start => 4).s, 5, 'uint64 native attribute use in method works';
 
     my $c2 = C2.new;
     $c2.ff = 100;
-    is $c2.ff, 100, 'unsigned int sanity';
+    is-deeply $c2.ff, 100, 'unsigned int sanity';
     $c2.ff = 200;
 #?rakudo todo 'RT #131122'
-    is $c2.ff, 200, 'large unsigned ints';
+    is-deeply $c2.ff, 200, 'large unsigned ints';
 }
