@@ -169,8 +169,8 @@ is Date.new('2015-12-29',:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
 
 # RT #127170
 {
-    role Foo { has @.a = 7, 8, 9 }
-    class BarDate is Date does Foo {}
+    my role Foo { has @.a = 7, 8, 9 }
+    my class BarDate is Date does Foo {}
     is-deeply BarDate.today.a, [7, 8, 9],
         'did role attributes get initialized ok';
 }
