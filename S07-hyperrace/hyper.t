@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 52;
+plan 51;
 
 {
     my @result = <a b c d e f g>.hyper.map({ $_.uc });
@@ -30,60 +30,27 @@ plan 52;
 }
 
 #?rakudo.jvm skip 'hangs'
-{
-    # hyper + map done in reverse
+subtest '.hyper + map/grep keeps right order, when completed in reverse' => {
+    plan 2;
 
-    my @promises;
-    for 0..4 {
-        @promises.push(Promise.new);
-    }
-    my $last = Promise.new;
-    @promises.push($last);
-    $last.keep;
+    # We .keep last promise and then inside the hyper .keep previous ones,
+    # so we end up keeping them in reverse
+    (my @promises = ^5 .map: { Promise.new }).tail.keep;
+    dd @promises[0].^name;
+    my @result = ^5 .hyper( degree => 5, batch => 1 ).map: {
+        await @promises[$_];        # wait our turn
+        $_ && @promises[$_-1].keep; # allow the next lower one to proceed
+        $_
+    };
+    is-deeply @result, [0, 1, 2, 3, 4], 'hyper + map';
 
-    #   0       1       2       3       4       5
-    # [ Planned Planned Planned Planned Planned Kept ]
-
-    #                        V===V                            V=V
-    my @result = (1..5).list.hyper( degree => 5, batch => 1 ).map({
-        # wait our turn
-        await @promises[$_];
-
-        # allow the next lower one to proceed
-        @promises[$_ - 1].keep;
-
-        $_; # <==
-    });
-
-    is @result, (1, 2, 3, 4, 5), "test that hyper + map done in reverse returns values in the right order";
-}
-
-{
-    # hyper + grep done in reverse
-
-    my @promises;
-    for 0..4 {
-        @promises.push(Promise.new);
-    }
-    my $last = Promise.new;
-    @promises.push($last);
-    $last.keep;
-
-    #   0       1       2       3       4       5
-    # [ Planned Planned Planned Planned Planned Kept ]
-
-    #                        V===V                            V==V
-    my @result = (1..5).list.hyper( degree => 5, batch => 1 ).grep({
-        # wait our turn
-        await @promises[$_];
-
-        # allow the next lower one to proceed
-        @promises[$_ - 1].keep;
-
-        True; # <==
-    });
-
-    is @result, (1, 2, 3, 4, 5), "test that hyper + grep done in reverse keeps values in the right order";
+    (@promises = ^5 .map: { Promise.new }).tail.keep;
+    @result = ^5 .hyper( degree => 5, batch => 1 ).grep: {
+        await @promises[$_];        # wait our turn
+        $_ && @promises[$_-1].keep; # allow the next lower one to proceed
+        True
+    };
+    is-deeply @result, [0, 1, 2, 3, 4], 'hyper + grep';
 }
 
 # RT #127191
