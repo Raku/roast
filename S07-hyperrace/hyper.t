@@ -1,33 +1,27 @@
 use v6;
 use Test;
 
-plan 51;
+plan 42;
 
-{
-    my @result = <a b c d e f g>.hyper.map({ $_.uc });
-    is @result, <A B C D E F G>, "can hypermap a simple code block";
+is-deeply <a b c d e f g>.hyper.map({ $_.uc }).List,
+    <A B C D E F G>, 'can hypermap a simple code block';
 
-    @result = (^50).list.hyper.map({ $_ * 2 });
-    is @result, (^50).map({$_*2}), "hyper over a big-ish list of Ints";
-}
+is-deeply ^50 .Seq.hyper.map(* × 2).Seq, ^50 .map(* × 2),
+    'hyper over a big-ish list of Ints';
 
-{
-    my @result = (^50).list.hyper.map({ $_ * 2 }).map({ $_ div 2 });
-    is @result, (^50).list, "two-stage map over big-ish Int list";
+is-deeply ^50 .List.hyper.map(* × 2).map(* div 2).List, ^50 .List,
+    'two-stage hyper map over big-ish Int list';
 
-    @result = <a b c d e f g>.list.hyper.map({ $_.uc }).map({ $_ x 2 });
-    is @result, <AA BB CC DD EE FF GG>, "two-stage map over some strings";
-}
+is-deeply <a b c d e f g>.hyper.map(*.uc).map(* x 2).List,
+    <AA BB CC DD EE FF GG>, 'two-stage hyper map over some strings';
 
-{
-    my @result = (50..100).list.hyper.grep({ $_ %% 10 });
-    is @result, (50, 60, 70, 80, 90, 100), "hyper + grep";
-}
+is-deeply (50..100).list.hyper.grep(* %% 10).List, (50, 60, 70, 80, 90, 100),
+    'hyper + grep';
 
-{
-    my @result = (^100).list.hyper.grep({ $_.is-prime }).map({ $_ * $_ });
-    is @result, (4, 9, 25, 49, 121, 169, 289, 361, 529, 841, 961, 1369, 1681, 1849, 2209, 2809, 3481, 3721, 4489, 5041, 5329, 6241, 6889, 7921, 9409), "hyper + grep + map";
-}
+is-deeply ^100 .hyper.grep(*.is-prime).map(*²).List, (
+    4, 9, 25, 49, 121, 169, 289, 361, 529, 841, 961, 1369, 1681, 1849,
+    2209, 2809,  3481, 3721, 4489, 5041, 5329, 6241, 6889, 7921, 9409
+), 'hyper + grep + map';
 
 #?rakudo.jvm skip 'hangs'
 subtest '.hyper + map/grep keeps right order, when completed in reverse' => {
@@ -54,36 +48,31 @@ subtest '.hyper + map/grep keeps right order, when completed in reverse' => {
 }
 
 # RT #127191
-{
-    for <batch degree> -> $name {
-        for (-1,0) -> $value {
-            throws-like { ^10 .hyper(|($name => $value)) }, X::Invalid::Value,
-              :method<hyper>, :$name, :$value,
-              "cannot have a $name of $value for hyper";
-        }
+for <batch degree> -> $name {
+    for (-1,0) -> $value {
+        throws-like { ^10 .hyper(|($name => $value)) }, X::Invalid::Value,
+          :method<hyper>, :$name, :$value,
+          "cannot have a $name of $value for hyper";
     }
 }
 
 # RT #127099
-{
-    my @res = ^1000 .hyper.map: *+0;
-    is-deeply @res, [@res.sort], '.hyper preserves order';
-}
+is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
 
 # RT #127452
-{
-    for ^5 -> $i {
-        my @x = ^10;
-        my @y = @x.hyper(:3batch, :5degree).map: { sleep rand / 100; $_ + 1 };
-        is @y, [1..10], ".hyper(:3batch, :5degree) with sleepy mapper works (try $i)";
-    }
+subtest '.hyper with .map that sleep()s' => {
+    plan 10;
+
+    is-deeply ^10 .hyper(:3batch, :5degree).map({
+            sleep rand / 100; $_ + 1
+        }).Array, [^10 + 1], ".hyper(:3batch, :5degree) [$_]"
+    for ^5;
+
+    is-deeply  ^10 .hyper(:1batch).map({ sleep rand / 20; $_ + 2 }).Array,
+        [^10 + 2], ".hyper(:1batch) [$_]"
+    for ^5;
 }
-{
-    for ^5 -> $i {
-        my @x = (^10).hyper(:1batch).map: { sleep rand / 20; $_ };
-        is @x, [^10], ".hyper(:1batch) with sleepy mapper works (try $i)";
-    }
-}
+
 {
     my @a = 1, 3, 2, 9, 0, |( 1 .. 100 );
     for ^5 -> $i {
@@ -95,8 +84,9 @@ subtest '.hyper + map/grep keeps right order, when completed in reverse' => {
 {
     my $b = Blob.new((^128).pick xx 1000);
     for ^5 {
-        is $b[8..906].hyper.map({.fmt("%20x")}).list, $b[8..906].map({.fmt("%20x")}).list,
-            '.hyper.map({.fmt(...)}) on a Buf slice works';
+        is-deeply $b[8..906].hyper.map({.fmt("%20x")}).Seq,
+                  $b[8..906]      .map({.fmt("%20x")}),
+        '.hyper.map({.fmt(...)}) on a Buf slice works';
     }
 }
 
@@ -117,7 +107,7 @@ dies-ok { sink (1..1000).hyper.grep: { die } },
 # RT #128084
 {
     multi sub f ($a) { $a**2 }
-    is (^10).hyper.map(&f).list, (0, 1, 4, 9, 16, 25, 36, 49, 64, 81),
+    is-deeply (^10).hyper.map(&f).List, (0, 1, 4, 9, 16, 25, 36, 49, 64, 81),
         "hyper map with a multi sub works";
 }
 
@@ -132,13 +122,13 @@ dies-ok { sink (1..1000).hyper.grep: { die } },
 }
 
 # RT #130576
-is ([+] (1..100).hyper), 5050,
+is-deeply ([+] (1..100).hyper), 5050,
     'Correct result for [+] (1..100).hyper';
-is ([+] (1..100).hyper.grep(* != 22)), 5028,
+is-deeply ([+] (1..100).hyper.grep(* != 22)), 5028,
     'Correct result for [+] (1..100).hyper.grep(* != 22)';
-is ([+] (1..100).grep(* != 22).hyper), 5028,
+is-deeply ([+] (1..100).grep(* != 22).hyper), 5028,
     'Correct result for [+] (1..100).grep(* != 22).hyper';
-is (^100 .hyper.elems), 100, '.hyper.elems works';
+is-deeply (^100 .hyper.elems), 100, '.hyper.elems works';
 
 #?rakudo.jvm skip 'atomicint NYI'
 {
@@ -148,17 +138,18 @@ is (^100 .hyper.elems), 100, '.hyper.elems works';
 }
 
 {
-    isa-ok (^1000).hyper.map(*+1).race, RaceSeq, 'Can switch from hyper to race mode';
-    is (^1000).hyper.map(*+1).race.map(*+2).list.sort, (3..1002).list,
+    isa-ok (^1000).hyper.map(*+1).race, RaceSeq,
+        'Can switch from hyper to race mode';
+    is-deeply (^1000).hyper.map(*+1).race.map(*+2).List.sort, (3..1002).Seq,
         'Switching from hyper to race mode does not break results';
 }
 
 {
-    isa-ok (^1000).hyper.map(*+1).Seq, Seq, 'Can switch from hyper to sequential Seq';
-    is (^1000).hyper.map(*+1).Seq.map(*+2).list, (3..1002).list,
-        'Switching from hyper to sequential Seq does not break results or disorder';
+    isa-ok (^1000).hyper.map(*+1).Seq, Seq,
+        'Can switch from hyper to sequential Seq';
+    is-deeply (^1000).hyper.map(*+1).Seq.map(*+2).Seq, (3..1002).Seq,
+        'hyper to sequential Seq switch does not break results or disorder';
 }
 
-is (^1000).hyper.is-lazy, False, 'is-lazy on HyperSeq returns False';
-
+is-deeply (^1000).hyper.is-lazy, False, 'is-lazy on HyperSeq returns False';
 is-deeply (^3).hyper.Numeric, 3, '.Numeric on HyperSeq';
