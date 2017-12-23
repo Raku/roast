@@ -1,12 +1,14 @@
 use v6;
 
-use lib $?FILE.IO.parent.parent, $?FILE.IO.parent.child("lib").Str;
-
+use lib $?FILE.IO.parent.parent, $?FILE.IO.parent.child("lib").Str,
+    't/spec/packages';
+use Test::Util;
 use MONKEY-SEE-NO-EVAL;
 
-my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
+my $required-Test = (require Test <&plan &is &lives-ok &skip &todo &cmp-ok
                                   &nok &throws-like &eval-lives-ok &ok>);
 plan 34;
+
 
 # RT #126100
 {
@@ -104,10 +106,11 @@ eval-lives-ok q|BEGIN require Fancy::Utilities;|, 'require works at BEGIN';
 eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import at BEGIN';
 
 {
-        require "S11-modules/GlobalOuter.pm";
-        nok ::('GlobalOuter') ~~ Failure, "got outer symbol";
-        ok  ::('GlobalOuter').load, "call method that causes a require";
-        ok ::('GlobalInner') ~~ Failure, "Did not find inner symbol";
+    require "S11-modules/GlobalOuter.pm";
+    cmp-ok ::('GlobalOuter'), '!~~', Failure, "got outer symbol";
+    ok     ::('GlobalOuter').load, "call method that causes a require";
+    fails-like { ::('GlobalInner') }, X::NoSuchSymbol,
+        "did not find inner symbol";
 }
 
 # Test that symbols under a core package namespace (Cool::) are merged.
