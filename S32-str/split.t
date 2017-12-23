@@ -505,8 +505,6 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 is-deeply 'aaaaabbbbb'.split(<aaa aa bb bbb>, :v),
     ('', 'aaa', '', 'aa', '', 'bbb', '', 'bb', '').Seq, 'overlapping needles';
 
-# vim: ft=perl6
-
 # RT #128481
 {
     # .List is to check it's not a BOOTArray (which doesn't have p6 method resolution)
@@ -546,3 +544,5 @@ subtest 'split skip-empty skips all empty chunks' => {
         "{.key}.split({.value.perl}, :skip-empty)"
     for @tests;
 }
+
+# vim: ft=perl6
