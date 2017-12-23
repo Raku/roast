@@ -502,8 +502,8 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
       'clashing named parameters';
 }
 
-is "aaaaabbbbb".split(<aaa aa bb bbb>,:v), " aaa  aa  bbb  bb ",
-  "test overlapping needles";
+is-deeply 'aaaaabbbbb'.split(<aaa aa bb bbb>, :v),
+    ('', 'aaa', '', 'aa', '', 'bbb', '', 'bb', '').Seq, 'overlapping needles';
 
 # vim: ft=perl6
 
