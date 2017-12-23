@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 33;
+plan 32;
 
 # this used to segfault in rakudo
 is_run(
@@ -156,16 +156,6 @@ is_run '{;}',
 throws-like { EVAL '&&::{}[];;' },
   X::Undeclared::Symbols,
   "Doesn't die with weird internal error";
-
-#RT #115326
-{
-    is_run('(:::[])',
-    {
-        out => '',
-        err => { m/"No such symbol ':<>'"/ },
-    },
-    'appropriate error message instead of internal compiler error' );
-}
 
 #RT #127504
 {
