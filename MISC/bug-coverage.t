@@ -21,7 +21,7 @@ subtest '.count-only/.bool-only for iterated content' => {
         combinations(4,1).iterator              => [4, '&combinations'],
         permutations(2).iterator                => [2, '&permutations'],
         4.combinations(1).iterator              => [4, '.combinations'],
-        2.permutations.iterator                 => [2, '.permutations'],
+        ^2 .permutations.iterator               => [2, '.permutations'],
         :42foo.iterator                         => [1, 'Pair.iterator'],
         :42foo.kv.iterator                      => [2, 'Pair.kv.iterator'],
     }
