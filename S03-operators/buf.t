@@ -125,13 +125,13 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 {
     my $a = buf8.new(1, 2, 3, 4, 5);
     is $a.bytes, 5, "buf8 .bytes correct";
-    
+
     my $b = buf16.new(1, 2, 3, 4, 5);
     is $b.bytes, 10, "buf16 .bytes correct";
-    
+
     my $c = buf32.new(1, 2, 3, 4, 5);
     is $c.bytes, 20, "buf32 .bytes correct";
-    
+
     my $d = buf64.new(1, 2, 3, 4, 5);
     is $d.bytes, 40, "buf64 .bytes correct";
 }
@@ -208,7 +208,7 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
       'can we use ^10 as specifier';
     is-deeply $b.subbuf(10..20), Buf.new(10..20),
       'can we use 10..20 as specifier';
-} 
+}
 
 {
     my @a;
