@@ -162,7 +162,7 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
             "Buf last element correct after {$what}ing varargs";
 
         cmp-ok $a, '===', $what eq 'push'
-            ?? $a.push(|93 xx 1) !! $a.append(93 xx 1), "$what returns self";
+            ?? $a.push(|(93 xx 1)) !! $a.append(93 xx 1), "$what returns self";
 
         is $a.elems, 9, "Buf .elems correct after {$what}ing xx list";
         is-deeply $a[8], 93,
@@ -195,7 +195,7 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
             "Buf second element correct after {$what}ing varargs";
 
         cmp-ok $a, '===', $what eq 'unshift'
-            ?? $a.unshift(|9 xx 1) !! $a.prepend(9 xx 1), "$what returns self";
+            ?? $a.unshift(|(9 xx 1)) !! $a.prepend(9 xx 1), "$what returns self";
 
         is $a.elems, 9, "Buf .elems correct after {$what}ing xx list";
         is-deeply $a[0], 9,
