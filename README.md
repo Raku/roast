@@ -16,7 +16,9 @@ as a conforming Perl 6 implementation.
 Please consider this test suite to be the bleeding edge of Perl 6
 development. New tests, tests for proposed new features, etc.,
 will live on this 'master' branch. Once a specification is cut, a branch
-will be created for that version of the spec, e.g., `6.c` for Christmas.
+will be created for that version of the spec, e.g., `6.c` for *Christmas*
+language release. If errata becomes available, it will be kept in `-errata`
+branch for that specific language version, e.g. `6.c-errata` for `6.c`.
 
 As they develop, different implementations will certainly be in
 different states of readiness with respect to the test suite, so
