@@ -26,8 +26,6 @@ nok @files>>.relative.grep('.'|'..'), '"." and ".." are not returned';
 is +dir(:test).grep(*.basename eq '.'|'..'), 2, "... unless you override :test";
 nok dir( test=> none('.', '..', 't') ).grep(*.basename eq 't'), "can exclude t/ dir";
 
-# previous tests rewritten to not smartmatch against IO::Local.
-# Niecza also seems to need the ~, alas.
 nok @files.grep(*.basename eq '.'|'..'), '"." and ".." are not returned';
 is +dir(:test).grep(*.basename eq '.'|'..'), 2, "... unless you override :test";
 nok dir( test=> none('.', '..', 't') ).grep(*.basename eq 't'), "can exclude t/ dir";
