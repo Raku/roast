@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 285;
+plan 291;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -676,26 +676,28 @@ is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
 
 # RT #127170
 {
-    role Foo { has @.a = 7, 8, 9 }
-    class BarDate is DateTime does Foo {}
+    my role Foo { has @.a = 7, 8, 9 }
+    my class BarDate is DateTime does Foo {}
     is-deeply BarDate.now.a, [7, 8, 9],
         'did role attributes get initialized ok';
 }
 
 {
-    class FooDateTime is DateTime { has $.foo };
+    my class FooDateTime is DateTime { has $.foo };
     for (2016,2,20,21,53,7),
         '2016-02-20T21:53:07',
         \(:2016year,:2month,:20day,:21hour,:53minute,:7second)
     -> $datetime {
         my $fdt = FooDateTime.new(|$datetime, foo => 42);
-        is $fdt.year, 2016, "is year in FooDateTime ok";
-        is $fdt.month,   2, "is month in FooDateTime ok";
-        is $fdt.day,    20, "is day in FooDateTime ok";
-        is $fdt.hour,   21, "is hour in FooDateTime ok";
-        is $fdt.minute, 53, "is minute in FooDateTime ok";
-        is $fdt.second,  7, "is second in FooDateTime ok";
-        is $fdt.foo,    42, "is foo in FooDateTime ok";
+        isa-ok    $fd, FooDateTime, 'created object is of right type';
+        isa-ok    $fd, DateTime,    'created object is a subclass';
+        is-deeply $fdt.year, 2016,  'is year in FooDateTime ok';
+        is-deeply $fdt.month,   2,  'is month in FooDateTime ok';
+        is-deeply $fdt.day,    20,  'is day in FooDateTime ok';
+        is-deeply $fdt.hour,   21,  'is hour in FooDateTime ok';
+        is-deeply $fdt.minute, 53,  'is minute in FooDateTime ok';
+        is-deeply $fdt.second,  7,  'is second in FooDateTime ok';
+        is-deeply $fdt.foo,    42,  'is foo in FooDateTime ok';
     }
 }
 
