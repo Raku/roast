@@ -30,8 +30,7 @@ nok @files.grep(*.basename eq '.'|'..'), '"." and ".." are not returned';
 is +dir(:test).grep(*.basename eq '.'|'..'), 2, "... unless you override :test";
 nok dir( test=> none('.', '..', 't') ).grep(*.basename eq 't'), "can exclude t/ dir";
 
-#?rakudo todo '$*CWD misses slash at end still RT #124787'
-is dir('t').[0].dirname, $*CWD ~ 't', 'dir("t") returns paths with .dirname of "t"';
+is dir('t').[0].dirname, 't', 'dir("t") returns paths with .dirname of "t"';
 
 # RT #123308
 {
