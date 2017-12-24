@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 # Basic native array tests.
 {
@@ -59,5 +59,30 @@ subtest '.STORE(HLL iterable) does not leave behind previous values' => {
           my \qq[$_] @a = 1e0, 2e0, 3e0; my @b = 1e0, 2e0; @a = @b;
           is-deeply @a.List, (1e0, 2e0), "\qq[$_]"
         ' ;
+    }
+}
+
+# RT #127756
+subtest 'no rogue leftovers when resizing natives' => {
+    plan 4;
+    {
+        my int @a = 1..10; @a = 1..5; @a[50] = 1337;
+        is-deeply @a, array[int].new(|(1..5), |(0 xx 45), 1337),
+            'native int array, large resize, larger than original size';
+    }
+    {
+        my int @a = 1..100; @a = 1..5; @a[50] = 1337;
+        is-deeply @a, array[int].new(|(1..5), |(0 xx 45), 1337),
+            'native int array, large resize, smaller than original size';
+    }
+    {
+        my num @a = 1e0..5e0; @a = 1e0; @a[3] = 1337e0;
+        is-deeply @a, array[num].new(1e0, 0e0, 0e0, 1337e0),
+            'native num array, small resize, smaller than original size';
+    }
+    {
+        my num @a = 1e0..3e0; @a = 1e0; @a[5] = 1337e0;
+        is-deeply @a, array[num].new(1e0, 0e0, 0e0, 0e0, 0e0, 1337e0),
+            'native num array, small resize, larger than original size';
     }
 }
