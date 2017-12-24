@@ -235,7 +235,7 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
 
         my $a = $T.allocate(10);
         is $a.elems, 10, "did we allocate a $t of 10 elements";
-        is $a.join, "0000000000", "was the $t initialized correctly";
+        is-deeply $a.Seq, 0 xx 10, "was the $t initialized correctly";
 
         if $T === Blob {
             throws-like { $a.reallocate(12) }, Exception,
@@ -244,27 +244,29 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
         else {
             $a.reallocate(12);
             is $a.elems, 12, "did we reallocate the $t to 12 elements";
-            is $a.join, "000000000000", "was the $t changed correctly";
+            is-deeply $a.Seq, 0 xx 12, "was the $t changed correctly";
         }
 
         my $b = $T.allocate(10, 42);
         is $b.elems, 10, "did we allocate a $t to 10 elements";
-        is $b.join, "42424242424242424242", "was the $t initialized correctly";
+        is-deeply $b.Seq, 42 xx 10, "was the $t initialized correctly";
 
         if $T === Buf {
             $b.reallocate(13);
             is $b.elems, 13, "did we reallocate the $t to 13 elements";
-            is $b.join, "42424242424242424242000", "was the $t changed correctly";
+            is-deeply $b.Seq, (|(42 xx 10), 0, 0, 0),
+                "was the $t changed correctly";
         }
 
         my $c = $T.allocate(10, (1,2,3));
         is $c.elems, 10, "did we allocate a $t to 10 elements";
-        is $c.join, "1231231231", "was te $t initialized correctly";
+        is-deeply $c.List, (1, 2, 3, 1, 2, 3, 1, 2, 3, 1),
+            "was te $t initialized correctly";
 
         if $T === Buf {
             $c.reallocate(4);
             is $c.elems, 4, "did we reallocate the $t to 4 elements";
-            is $c.join, "1231", "was the $t changed correctly";
+            is-deeply $c.List, (1, 2, 3, 1), "was the $t changed correctly";
         }
     }
 }
