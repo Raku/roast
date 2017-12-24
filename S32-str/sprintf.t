@@ -242,12 +242,8 @@ throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count,
     'no gut spillage in sprintf with wrong arguments';
 
 # RT #122907
-# TODO: write a better test once there is a typed exception
-{
-    throws-like { sprintf "%d" }, X::Str::Sprintf::Directives::Count,
-        message => 'Your printf-style directives specify 1 argument, but no argument was supplied',
-        "adequate error when sprintf %d directive doesn't find a corresponding argument";
-}
+throws-like { sprintf "%d" }, X::Str::Sprintf::Directives::Count,
+    'sprintf %d directive with find a corresponding argument throws';
 
 # found by japhb
 {
