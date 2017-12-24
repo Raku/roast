@@ -139,10 +139,8 @@ for flat @int,@uint -> $T {
       got => Str,
       "Cannot push non-int/Int to $t array";
     throws-like { @arr[0] := my $a }, Exception,
-      message => 'Cannot bind to a natively typed array',
       "Cannot bind to $t array";
     throws-like { @arr[0]:delete }, Exception,
-      message => 'Cannot delete from a natively typed array',
       "Cannot delete from $t array";
 
     is (@arr.push(101, 105)), (42,101,105),
