@@ -5,7 +5,7 @@ plan 108;
 
 {
     my $r = (1..5).iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     is $r.count-only, 5, '$r.count-only works';
     is $r.pull-one, 1, '$r.pull-one == 1 and Range Iterator kept place';
     is $r.pull-one, 2, '$r.pull-one == 2';
@@ -18,7 +18,7 @@ plan 108;
 
 {
     my $r = (-1.5.Num..^3).iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     #?rakudo skip "Method 'count-only' not found for invocant of class"
     is $r.count-only, 5, '$r.count-only works';
     is $r.pull-one, -1.5, '$r.pull-one == -1.5 and Range Iterator kept place';
@@ -32,7 +32,7 @@ plan 108;
 
 {
     my $r = (-1.5..^3).iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     #?rakudo skip "Method 'count-only' not found for invocant of class"
     is $r.count-only, 5, '$r.count-only works';
     is $r.pull-one, -1.5, '$r.pull-one == -1.5 and Range Iterator kept place';
@@ -46,7 +46,7 @@ plan 108;
 
 {
     my $r = (-1.5.Num^..3).iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     #?rakudo skip "Method 'count-only' not found for invocant of class"
     is $r.count-only, 4, '$r.count-only works';
     is $r.pull-one, -.5, '$r.pull-one == -0.5 and Range Iterator kept place';
@@ -59,7 +59,7 @@ plan 108;
 
 {
     my $r = (-1..*).iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     ok $r.is-lazy, '$r.is-lazy works';
     is $r.pull-one, -1, '$r.pull-one == -1 and Range Iterator kept place';
     is $r.pull-one, 0, '$r.pull-one == 0';
@@ -76,7 +76,7 @@ plan 108;
 
 {
     my $r = (-1.5.Num..*).iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     ok $r.is-lazy, '$r.is-lazy works';
     is $r.pull-one, -1.5, '$r.pull-one == -1.5 and Range Iterator kept place';
     is $r.pull-one, -.5, '$r.pull-one == -0.5';
@@ -89,7 +89,7 @@ plan 108;
 
 {
     my $r = (-1.5..*).iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     ok $r.is-lazy, '$r.is-lazy works';
     is $r.pull-one, -1.5, '$r.pull-one == -1.5 and Range Iterator kept place';
     is $r.pull-one, -.5, '$r.pull-one == -0.5';
@@ -106,8 +106,8 @@ plan 108;
     #  were implemented with gather/take, this test would fail.)
     my $r1 = (-1..*).iterator;
     my $r2 = (42..*).iterator;
-    ok $r1 ~~ Iterator, '$r1 is an Iterator';
-    ok $r2 ~~ Iterator, '$r2 is an Iterator';
+    does-ok $r1, Iterator, '$r1 is an Iterator';
+    does-ok $r2, Iterator, '$r2 is an Iterator';
     is $r1.pull-one, -1, '$r1.pull-one == -1';
     is $r2.pull-one, 42, '$r2.pull-one == 42';
     is $r1.pull-one, 0, '$r1.pull-one == 0';
@@ -126,7 +126,7 @@ plan 108;
 
 {
     my $r = ('d'..'g').iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     #?rakudo skip "Method 'count-only' not found for invocant of class"
     is $r.count-only, 4, '$r.count-only works';
     is $r.pull-one, 'd', '$r.pull-one == d and Range Iterator kept place';
@@ -139,7 +139,7 @@ plan 108;
 
 {
     my $r = ('d'..*).iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     ok $r.is-lazy, '$r.is-lazy works';
     is $r.pull-one, 'd', '$r.pull-one == d and Range Iterator kept place';
     is $r.pull-one, 'e', '$r.pull-one == e';
@@ -151,7 +151,7 @@ plan 108;
 
 {
     my $r = (0..'50').iterator;
-    ok $r ~~ Iterator, '$r is an Iterator';
+    does-ok $r, Iterator, '$r is an Iterator';
     is $r.pull-one, 0, '$r.pull-one == 0';
     is $r.pull-one, 1, '$r.pull-one == 1';
     is $r.pull-one, 2, '$r.pull-one == 2';
