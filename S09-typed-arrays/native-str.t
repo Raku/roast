@@ -134,10 +134,8 @@ throws-like { @arr.push(42) }, X::TypeCheck,
   got => Int,
   "Cannot push non-str/Str to $t array";
 throws-like { @arr[0] := my $a }, Exception,
-  message => 'Cannot bind to a natively typed array',
   "Cannot bind to $t array";
-throws-like { @arr[0]:delete }, Exception,
-  message => 'Cannot delete from a natively typed array',
+throws-like { @arr[0]:delete   }, Exception,
   "Cannot delete from $t array";
 
 is (@arr.push("b","c")), ("a","b","c"),
