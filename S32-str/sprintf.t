@@ -238,9 +238,8 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 }
 
 # RT #106594, #62316, #74610
-{
-    throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count, 'RT #106594, #62316, #74610';
-}
+throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count,
+    'no gut spillage in sprintf with wrong arguments';
 
 # RT #122907
 # TODO: write a better test once there is a typed exception
