@@ -64,28 +64,16 @@ throws-like 'sub a(--> Int:foo) { }',
 }
 
 #?rakudo 5 skip 'use parameters is NYI until further notice'
-throws-like 'use parameters',
-  X::Pragma::MustOneOf,
-  name => "parameters",
-  'does use parameters fail';
-throws-like 'no parameters',
-  X::Pragma::CannotWhat,
-  what => "no",
-  name => "parameters",
-  'does no parameters fail';
-throws-like 'use parameters "bar"',
-  X::Pragma::UnknownArg,
-  name => "parameters",
-  arg  => "bar",
-  'does use parameters "bar" fail';
-throws-like 'use parameters :U, :D',
-  X::Pragma::OnlyOne,
-  name => 'parameters',
-  'does use parameters :U, :D fail';
-throws-like 'use parameters :foo',
-  X::InvalidTypeSmiley,
-  name => 'foo',
-  'does use parameters :foo fail';
+throws-like 'use parameters',        X::Pragma::MustOneOf,  :name<parameters>,
+    'use parameters';
+throws-like 'no parameters',         X::Pragma::CannotWhat, :name<parameters>,
+    :what<no>, 'no parameters';
+throws-like 'use parameters "bar"',  X::Pragma::UnknownArg, :name<parameters>,
+    :arg<bar>, 'use parameters "bar"';
+throws-like 'use parameters :U, :D', X::Pragma::OnlyOne,    :name<parameters>,
+    'use parameters :U, :D';
+throws-like 'use parameters :foo',   X::InvalidTypeSmiley,  :name<foo>,
+    'does use parameters :foo fail';
 
 # RT #127841
 is Int:U        .gist, '(Int:U)',   '.gist on :U smileys';
