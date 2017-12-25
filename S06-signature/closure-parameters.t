@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 21;
 
 # L<S06/Closure parameters>
 
@@ -88,4 +88,12 @@ lives-ok {
     foo(sub (Dog $x --> Bool) { $x })
 }, 'unpacking Callable signature with colon';
 
+# https://github.com/rakudo/rakudo/issues/1326
+subtest 'can use signature unpacking with anonymous parameters' => {
+    plan 2;
+    is -> &:(Str), 42 {100}(-> Str $v { $v.uc }, 42), 100,
+        'can call with right signature';
+    throws-like '-> &:(Int) {}({;})', X::TypeCheck::Binding::Parameter,
+        'typcheck correctly fails with wrong arg';
+}
 # vim: ft=perl6
