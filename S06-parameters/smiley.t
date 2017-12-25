@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 35;
+plan 39;
 
 is { sub a(Int $a)   { $a }; a Int }(), Int, 'can Int   take an Int:U';
 is { sub a(Int $a)   { $a }; a 42  }(),  42, 'can Int   take an Int:D';
@@ -86,5 +86,11 @@ throws-like 'use parameters :foo',
   X::InvalidTypeSmiley,
   name => 'foo',
   'does use parameters :foo fail';
+
+# RT #127841
+is Int:U        .gist, '(Int:U)',   '.gist on :U smileys';
+is Proc::Async:U.gist, '(Async:U)', '.gist on :U smileys uses shortname';
+is Int:D        .gist, '(Int:D)',   '.gist on :D smileys';
+is Proc::Async:D.gist, '(Async:D)', '.gist on :D smileys uses shortname';
 
 # vim: ft=perl6
