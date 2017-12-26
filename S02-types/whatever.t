@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 119;
+plan 120;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -381,5 +381,7 @@ is-deeply try { (1,2,3).combinations(2..*) }, ((1, 2), (1, 3), (2, 3), (1, 2, 3)
 
 throws-like { use fatal; "a".map: *.Int }, X::Str::Numeric,
     'WhateverCode curry correctly propagates `use fatal` pragma';
+
+is-deeply Mu ~~ (*), True, 'Mu:U smartmatches as True with Whatever';
 
 # vim: ft=perl6
