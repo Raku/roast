@@ -49,9 +49,40 @@ is-deeply 170141183460469231731687303715884105725.is-prime, False,
 is-deeply 6864797660130609714981900799081393217269435300143305409394463459185543183397656052122559640661454554977296311391480858037121987999716643812574028291115057151.is-prime,
     True, 'M13 is prime';
 
-ok  is-prime(2.0),   'correct coersion (Rat)';
-ok  is-prime(2e0),   'correct coersion (Num)';
-ok  is-prime('2.0'), 'correct coersion (Str)';
-nok is-prime(2.5),   'decimal numbers are not prime (Rat)';
-nok is-prime(2e5),   'decimal numbers are not prime (Num)';
-nok is-prime(-2),    'negative numbers are not prime';
+subtest 'coersion from different types' => {
+    my @prime    := '2.0', 3, <5>,  2.0, <3.0>,  5e0, <2e0>, <3+0i>, <5+0i >,
+        FatRat.new(2,1), FatRat.new(6,2);
+    my @un-prime := '4.0', 6, <8>,  4.0, <6.0>,  8e0, <4e0>, <6+0i>, <8+0i >,
+        '2.1', 2.3, <3.4>,  5.1e0, <2.7e0>, <3.8+0i>, <5.3+0i >, <3.8e0+0i>,
+        <5.3e0+0i >, '-4.0', '−4.0', -6, <-8>,  -4.0, <-6.0>,  -8e0, <-4e0>,
+        <-6+0i>, <-8+0i >, FatRat.new(4,1), FatRat.new(12,2);
+    plan 2*(@prime + @un-prime);
+
+    for @prime {
+        my $desc := "{.perl} {.^name} is prime";
+        is-deeply  is-prime($_), True, "$desc (sub form)";
+        is-deeply .is-prime,     True, "$desc (method form)";
+    }
+    for @un-prime {
+        my $desc := "{.perl} {.^name} is NOT prime";
+        is-deeply  is-prime($_), False, "$desc (sub form)";
+        is-deeply .is-prime,     False, "$desc (method form)";
+    }
+}
+
+subtest 'Complex.is-prime with Complex that cannot be Real throw' => {
+    plan 2*my @tests := <3-3i >, <2+5i>, <-3-3i >, <-2+5i>, <0+31337i>;
+    for @tests {
+        throws-like { .is-prime    }, X::Numeric::Real, "{.perl} (method form)";
+        throws-like {  is-prime $_ }, X::Numeric::Real, "{.perl} (sub form)";
+    }
+}
+
+# Some implementations have lazily-reduced Rational addition, which makes it
+# possible to cause bugs in `.is-prime` impls that test for .denominator == 1
+is-deeply (<3/2> + <3/2>).is-prime, True, 'lazily-reduced Rat (method)';
+is-deeply is-prime(<3/2> + <3/2>),  True, 'lazily-reduced Rat (sub)';
+is-deeply (FatRat.new(3,2) + FatRat.new(3,2)).is-prime, True,
+    'lazily-reduced FatRat (method)';
+is-deeply is-prime(FatRat.new(3,2) + FatRat.new(3,2)),  True,
+    'lazily-reduced FatRat (sub)';
