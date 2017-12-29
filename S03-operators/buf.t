@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 145;
+plan 146;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -219,10 +219,12 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 
 {
     my $b = Buf.new(^100);
-    is-deeply $b.subbuf(10..10), Buf.new(),
-      'empty range (10..10) gives empty buf in subbuf';
-    is-deeply $b.subbuf(10..11), Buf.new(10),
-      'one-element range (10..11) gives a single element buf in subbuf';
+    is-deeply $b.subbuf(10..10), Buf.new(10),
+      'single-element range (10..10) gives a single element buf in subbuf';
+    is-deeply $b.subbuf(10..11), Buf.new(10, 11),
+      'two-element range (10..11) gives two element buf in subbuf';
+    is-deeply $b.subbuf(10..^10), Buf.new(),
+      'empty range (10..^10) gives empty buf in subbuf';
     is-deeply $b.subbuf(10..1), Buf.new(),
       'negative range (10..1) gives an empty buf in subbuf';
 }
