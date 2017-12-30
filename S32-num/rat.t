@@ -144,11 +144,12 @@ is-approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
 # there are a few division by zero tests in S03-operator/div.t
 
-is NaN.Rat, NaN, "NaN.Rat == NaN";
+#?rakudo todo 'NaN.Rat is not a NaN yet'
+ok NaN.Rat.isNaN, "NaN.Rat is a NaN";
 
 {
-    is Inf.Rat, Inf, "Inf.Rat == Inf";
-    is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
+    cmp-ok Inf.Rat, '==', Inf, "Inf.Rat == Inf";
+    cmp-ok (-Inf).Rat, '==', -Inf, "(-Inf).Rat == -Inf";
 
     # RT #74648
     throws-like { Inf.Int / 1 }, X::Numeric::CannotConvert,
