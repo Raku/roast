@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 850;
+plan 849;
 
 # Basic test functions specific to rational numbers.
 
@@ -137,24 +137,82 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
 is-approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
-# SHOULD: Add zero denominator tests
-# Added three constructor tests above.  Unsure about the
-# wisdom of allowing math with zero denominator Rats,
-# so I'm holding off on writing tests for it.
+subtest '±Inf/NaN ⇿ Rat' => {
+    plan 2*19;
+    for <Rat  FatRat> -> $m {
+        cmp-ok    NaN."$m"().Num, '===',  NaN,   "NaN.$m.Num roundtrips";
+        cmp-ok    Inf."$m"().Num, '===',  Inf,   "Inf.$m.Num roundtrips";
+        cmp-ok (-Inf)."$m"().Num, '===', -Inf, "(-Inf.$m.Num roundtrips";
 
-# there are a few division by zero tests in S03-operator/div.t
+        ok NaN."$m"().isNaN, "NaN.$m is a NaN";
+        cmp-ok    Inf."$m"(), '==',  Inf,    "Inf.$m ==  Inf";
+        cmp-ok (-Inf)."$m"(), '==', -Inf, "(-Inf).$m == -Inf";
 
-#?rakudo todo 'NaN.Rat is not a NaN yet'
-ok NaN.Rat.isNaN, "NaN.Rat is a NaN";
+        subtest 'Num ⇾ (zero-denominator Rationals) normalizes numerator' => {
+            plan 6;
+            is-deeply    NaN."$m"().nude,  (0, 0),    "NaN.$m";
+            is-deeply    Inf."$m"().nude,  (1, 0),    "Inf.$m";
+            is-deeply (-Inf)."$m"().nude, (-1, 0), "(-Inf).$m";
 
-{
-    cmp-ok Inf.Rat, '==', Inf, "Inf.Rat == Inf";
-    cmp-ok (-Inf).Rat, '==', -Inf, "(-Inf).Rat == -Inf";
+            is-deeply  <0/0>.Num."$m"().nude,  (0, 0),    "NaN.$m";
+            is-deeply <42/0>.Num."$m"().nude,  (1, 0),    "Inf.$m";
+            is-deeply <-2/0>.Num."$m"().nude, (-1, 0), "(-Inf).$m";
+        }
 
-    # RT #74648
-    throws-like { Inf.Int / 1 }, X::Numeric::CannotConvert,
-        'Inf.Int / 1 throws';
+        throws-like { NaN."$m"().Str }, X::Numeric::DivideByZero,
+               "NaN.$m.Str throws division-by-zero";
+        throws-like { Inf."$m"().Str }, X::Numeric::DivideByZero,
+               "Inf.$m.Str throws division-by-zero";
+        throws-like { (-Inf)."$m"().Str }, X::Numeric::DivideByZero,
+            "(-Inf).$m.Str throws division-by-zero";
+
+        # RT #130171
+        #?rakudo todo 'NaN-y Rationals do not eqv right; R#1353'
+        is-deeply    NaN."$m"().perl.EVAL, ::($m).new(0, 0),
+               "NaN.$m.perl.EVAL roundtrips";
+        is-deeply    Inf."$m"().perl.EVAL, ::($m).new(1, 0),
+               "Inf.$m.perl.EVAL roundtrips";
+        is-deeply (-Inf)."$m"().perl.EVAL, ::($m).new(-1, 0),
+            "(-Inf).$m.perl.EVAL roundtrips";
+
+        # RT #130171
+        #?rakudo 3 todo 'NaN-y Rationals do not eqv right; R#1353'
+        is-deeply    NaN."$m"() * 0, ::($m).new(0, 0),
+               "NaN.$m does not explode when used in Rational math";
+        is-deeply    Inf."$m"() * 0, ::($m).new(0, 0),
+               "Inf.$m does not explode when used in Rational math";
+        is-deeply (-Inf)."$m"() * 0, ::($m).new(0, 0),
+            "(-Inf).$m does not explode when used in Rational math";
+
+        # RT #128857
+        cmp-ok    NaN."$m"(), '~~', ::($m),    "NaN.$m smartmatches with $m";
+        cmp-ok    Inf."$m"(), '~~', ::($m),    "Inf.$m smartmatches with $m";
+        cmp-ok (-Inf)."$m"(), '~~', ::($m), "(-Inf).$m smartmatches with $m";
+    }
 }
+
+subtest 'Zero-denominator Rationals leave numerator at its original value' => {
+    plan 12;
+
+    is-deeply  <0/0>.nude, (0,  0),  'NaN-y Rat literal';
+    is-deeply <42/0>.nude, (42, 0),  'Inf-y Rat literal';
+    is-deeply <-4/0>.nude, (-4, 0), '-Inf-y Rat literal';
+
+    is-deeply  (0/0).nude, (0,  0),  'NaN-y Rat /-calculation';
+    is-deeply (42/0).nude, (42, 0),  'Inf-y Rat /-calculation';
+    is-deeply (-4/0).nude, (-4, 0), '-Inf-y Rat /-calculation';
+
+    is-deeply Rat.new(0,  0).nude, (0,  0),  'NaN-y Rat.new';
+    is-deeply Rat.new(42, 0).nude, (42, 0),  'Inf-y Rat.new';
+    is-deeply Rat.new(-4, 0).nude, (-4, 0), '-Inf-y Rat.new';
+
+    is-deeply FatRat.new(0,  0).nude, (0,  0),  'NaN-y FatRat.new';
+    is-deeply FatRat.new(42, 0).nude, (42, 0),  'Inf-y FatRat.new';
+    is-deeply FatRat.new(-4, 0).nude, (-4, 0), '-Inf-y FatRat.new';
+}
+
+# RT #74648
+throws-like { Inf.Int / 1 }, X::Numeric::CannotConvert, 'Inf.Int / 1 throws';
 
 # Quick test of some basic mixed type math
 
