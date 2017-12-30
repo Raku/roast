@@ -235,6 +235,7 @@ for flat @int,@uint -> $T {
 
     @arr = ();
     @arr[4] = 22;
+    #?rakudo.jvm todo 'RT #127756'
     is @arr.join(":"), "0:0:0:0:22", "does emptying a $t array really empty";
 
     my @holes := array[$T].new;
