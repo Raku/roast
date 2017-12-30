@@ -151,8 +151,8 @@ is NaN.Rat, NaN, "NaN.Rat == NaN";
     is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
     # RT #74648
-    #?rakudo skip 'RT #74648'
-    isa-ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
+    throws-like { Inf.Int / 1 }, X::Numeric::CannotConvert,
+        'Inf.Int / 1 throws';
 }
 
 # Quick test of some basic mixed type math
