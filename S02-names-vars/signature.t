@@ -13,6 +13,7 @@ plan 13;
     isa-ok :($a), Signature, ':($a) create a Signature object';
     my ($a) := \(3);
     is-deeply $a, 3, 'can bind to one-element signature';
+    #?rakudo.jvm todo 'dies with X::AdHoc "Cannot assign to a readonly variable or a value"'
     throws-like { $a++ }, X::Multi::NoMatch, 'cannot increment an Int';
 
     my $b = :();

@@ -190,6 +190,7 @@ subtest '.gist shows only first 100 els' => {
 }
 
 # RT #127756
+#?rakudo.jvm todo 'RT #127756'
 is-deeply Buf.allocate(10, (1,2,3)).reallocate(0).reallocate(5),
     Buf.new(0, 0, 0, 0, 0), 'resized Bufs do not have leftover values';
 
