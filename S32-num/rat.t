@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 850;
+plan 849;
 
 # Basic test functions specific to rational numbers.
 
@@ -187,26 +187,6 @@ subtest '±Inf/NaN ⇿ Rat' => {
         cmp-ok    Inf."$m"(), '~~', ::($m),    "Inf.$m smartmatches with $m";
         cmp-ok (-Inf)."$m"(), '~~', ::($m), "(-Inf).$m smartmatches with $m";
     }
-}
-
-subtest 'Zero-denominator Rationals leave numerator at its original value' => {
-    plan 12;
-
-    is-deeply  <0/0>.nude, (0,  0),  'NaN-y Rat literal';
-    is-deeply <42/0>.nude, (42, 0),  'Inf-y Rat literal';
-    is-deeply <-4/0>.nude, (-4, 0), '-Inf-y Rat literal';
-
-    is-deeply  (0/0).nude, (0,  0),  'NaN-y Rat /-calculation';
-    is-deeply (42/0).nude, (42, 0),  'Inf-y Rat /-calculation';
-    is-deeply (-4/0).nude, (-4, 0), '-Inf-y Rat /-calculation';
-
-    is-deeply Rat.new(0,  0).nude, (0,  0),  'NaN-y Rat.new';
-    is-deeply Rat.new(42, 0).nude, (42, 0),  'Inf-y Rat.new';
-    is-deeply Rat.new(-4, 0).nude, (-4, 0), '-Inf-y Rat.new';
-
-    is-deeply FatRat.new(0,  0).nude, (0,  0),  'NaN-y FatRat.new';
-    is-deeply FatRat.new(42, 0).nude, (42, 0),  'Inf-y FatRat.new';
-    is-deeply FatRat.new(-4, 0).nude, (-4, 0), '-Inf-y FatRat.new';
 }
 
 # RT #74648
