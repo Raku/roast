@@ -648,7 +648,7 @@ throws-like ｢ord.Cool｣, X::Obsolete,
 # RT #123584
 is_run q[$; my $b;], { :0status, :err(/
       ^ "WARNINGS" \N* \n "Useless use of unnamed \$ variable in sink context"
-/)}, "unnamed var in sink context warns"
+/)}, "unnamed var in sink context warns";
 
 # RT #127062
 is_run 'my @a = -1, 2, -3; print [+] (.abs + .abs for @a)',
