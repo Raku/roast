@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 437;
+plan 436;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -211,7 +211,6 @@ for '$#' {
     throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
-throws-like '$#foo', X::Obsolete;
 # RT #122645
 lives-ok { EVAL '$@' }, '$@ is no longer a problem';
 
