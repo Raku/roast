@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 14;
+plan 13;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -118,11 +118,8 @@ plan 14;
 
 # RT #128393
 {
-    class Foo {
-        submethod BUILD { fail "noway" }
-    }
-    dies-ok { Foo.new }, "Foo.new dies when sunk";
-    ok Foo.new // "ok", "Foo.new can be caught as a Failure";
+    my class Foo { submethod BUILD { fail "noway" } }
+    fails-like { Foo.new }, X::AdHoc, :message<noway>, 'fail in BUILD works';
 }
 
 # RT #104980
