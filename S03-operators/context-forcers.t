@@ -228,6 +228,8 @@ sub eval_elsewhere($code){ EVAL($code) }
 }
 
 {
+    # Seq from &list has been double-checked to be correct here:
+    # https://irclog.perlgeek.de/perl6-dev/2017-12-31#i_15636448
     my $l = list 1,2,4...16;
     ok $l.WHAT === Seq, "list listop on Seq is no-op";
     ok $l.gist eq '(1 2 4 8 16)', "list listop doesn't double wrap";
