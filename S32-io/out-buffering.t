@@ -83,7 +83,10 @@ for \(:w), \(:rw), \(:a) -> $open-args {
 }
 
 # RT #131700
-run-with-tty ｢say prompt "FOO"｣, :in<bar>,
+#?rakudo.jvm skip 'hangs, RT #131700'
+#?DOES 1
+{
+  run-with-tty ｢say prompt "FOO"｣, :in<bar>,
     # Here we use .ends-width because (currently) there's some sort of
     # bug with Proc or something where sent STDIN ends up on our STDOUT.
     # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
@@ -92,3 +95,4 @@ run-with-tty ｢say prompt "FOO"｣, :in<bar>,
         diag "Got STDOUT: {.perl}";
         False;
     }}, 'prompt does not hang';
+}
