@@ -683,7 +683,7 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
     cmp-ok    << {21*2} >>, '!~~', Slip,   'Single interpolated block does not return as Slip (<< >>)';
     is-deeply << {21*2} >>, (<42>),        'Single interpolated block correct result (<< >>)';
 
-    is << "$x" >>, '5 6', 'Single interpolated value in dbl quotes, preserves String';
+    is-deeply << "$x" >>, '5 6', 'Single interpolated value in dbl quotes, preserves String';
 
     is-deeply << z$x >>, ( 'z', <5>, <6> ),
         'Literal directly precedes interpolated Scalar, no nested List produced';
