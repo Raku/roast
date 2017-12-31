@@ -88,9 +88,9 @@ subtest 'numeric context' => {
         '+ coersion fails with trailing chars';
     fails-like { +'foo 2' }, X::Str::Numeric,
         '+ coersion fails with leading chars';
-    throws-like { no fatal; $ = -'2 foo' }, X::Str::Numeric,
+    throws-like { no fatal; $ = -'2 foo'; Nil }, X::Str::Numeric,
         '- coersion throws with trailing chars';
-    throws-like { no fatal; $ = -'foo 2' }, X::Str::Numeric,
+    throws-like { no fatal; $ = -'foo 2'; Nil }, X::Str::Numeric,
         '- coersion throws with leading chars';
 
     is-deeply +" \t42",         42, 'leading whitespace is ignored';
