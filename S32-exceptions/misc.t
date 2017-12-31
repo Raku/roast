@@ -196,18 +196,13 @@ for <
   $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
   $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
   $* $" $$ $; $& $` $' $, $. $\ $| $? $@ $]
-  $: $= $% $^ $~ @- @+ %- %+ %!
+  $: $= $% $^ $~ @- @+ %- %+ %! $#
 > {
     throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
 #?rakudo todo 'awesome error message is not printed because these are parsed differently'
 for qw{ $( $) $< $> $/ $[ $- $+ } {
-    throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
-}
-
-#?rakudo todo 'good error message, but not the one that we are expecting'
-for '$#' {
     throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
