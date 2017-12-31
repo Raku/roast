@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 849;
+plan 850;
 
 # Basic test functions specific to rational numbers.
 
@@ -167,7 +167,6 @@ subtest '±Inf/NaN ⇿ Rat' => {
             "(-Inf).$m.Str throws division-by-zero";
 
         # RT #130171
-        #?rakudo todo 'NaN-y Rationals do not eqv right; R#1353'
         is-deeply    NaN."$m"().perl.EVAL, ::($m).new(0, 0),
                "NaN.$m.perl.EVAL roundtrips";
         is-deeply    Inf."$m"().perl.EVAL, ::($m).new(1, 0),
@@ -176,7 +175,6 @@ subtest '±Inf/NaN ⇿ Rat' => {
             "(-Inf).$m.perl.EVAL roundtrips";
 
         # RT #130171
-        #?rakudo 3 todo 'NaN-y Rationals do not eqv right; R#1353'
         is-deeply    NaN."$m"() * 0, ::($m).new(0, 0),
                "NaN.$m does not explode when used in Rational math";
         is-deeply    Inf."$m"() * 0, ::($m).new(0, 0),
@@ -541,5 +539,66 @@ subtest 'custom parametarization of Rational' => {
 
 # RT # 126103
 is-deeply <3147483648/1>.Int, 3147483648, 'numerators over 32 bits work';
+
+# https://github.com/rakudo/rakudo/issues/1353
+subtest 'eqv with zero-denominator Rationals' => {
+    plan 2;
+    sub e-so (\r1, \r2, \desc) { is-deeply r1 eqv r2, True,  desc }
+    sub e-no (\r1, \r2, \desc) { is-deeply r1 eqv r2, False, desc }
+    sub fr (\nu, \de) { FatRat.new: nu, de }
+
+    subtest '±Inf Rationals `eqv` each other, even when numerators differ ' => {
+        plan 20;
+
+        e-no <0/0>, <70/0>,         ' NaN Rat,     Inf Rat';
+        e-no <0/0>, <-7/0>,         ' NaN Rat,    -Inf Rat';
+        e-no <0/0>, fr(0, 0),       ' NaN Rat,     NaN FatRat';
+
+        e-so <42/0>, <70/0>,        ' Inf Rat,     Inf Rat';
+        e-no <42/0>, <-7/0>,        ' Inf Rat,    -Inf Rat';
+        e-no <42/0>, <0/0>,         ' Inf Rat,     NaN Rat';
+        e-no <42/0>, fr(1, 0),      ' Inf Rat,     Inf FatRat';
+
+        e-no <-2/0>, <70/0>,        '-Inf Rat,     Inf Rat';
+        e-so <-2/0>, <-7/0>,        '-Inf Rat,    -Inf Rat';
+        e-no <-2/0>, <0/0>,         '-Inf Rat,     NaN Rat';
+        e-no <-2/0>, fr(-1, 0),     '-Inf Rat,    -Inf FatRat';
+
+        e-no <42/0>, fr(70, 0),     ' Inf Rat,     Inf FatRat';
+        e-no <42/0>, fr(-7, 0),     ' Inf Rat,    -Inf FatRat';
+        e-no <42/0>, fr(0, 0),      ' Inf Rat,     NaN FatRat';
+
+        e-so fr(1, 0),  fr(40, 0),  ' Inf FatRat,  Inf FatRat';
+        e-no fr(1, 0),  <1/0>,      ' Inf FatRat,  Inf Rat';
+        e-so fr(-1, 0), fr(-40, 0), '-Inf FatRat, -Inf FatRat';
+        e-no fr(-1, 0), <-1/0>,     '-Inf FatRat,  Inf Rat';
+        e-no fr(-1, 0), fr(40, 0),  '-Inf FatRat,  Inf FatRat';
+        e-no fr(20, 0), fr(-4, 0),  ' Inf FatRat, -Inf FatRat';
+    }
+
+    subtest 'NaN-y Rationals `eqv` each other, as long as types match' => {
+        plan 16;
+
+        e-so <0/0>,         <0/0>,         'Rat literal, Rat literal';
+        e-so <0/0>,          0/0,          'Rat literal, Rat /-op';
+        e-so <0/0>,         Rat.new(0, 0), 'Rat new,     Rat.new';
+        e-no <0/0>,         fr(0, 0),      'Rat new,     FatRat.new';
+
+        e-so 0/0,           <0/0>,         'Rat /-op,    Rat literal';
+        e-so 0/0,            0/0,          'Rat /-op,    Rat /-op';
+        e-so 0/0,           Rat.new(0, 0), 'Rat /-op,    Rat.new';
+        e-no 0/0,           fr(0, 0),      'Rat /-op,    FatRat.new';
+
+        e-so Rat.new(0, 0), <0/0>,         'Rat.new,     Rat literal';
+        e-so Rat.new(0, 0),  0/0,          'Rat.new,     Rat /-op';
+        e-so Rat.new(0, 0), Rat.new(0, 0), 'Rat.new,     Rat.new';
+        e-no Rat.new(0, 0), fr(0, 0),      'Rat.new,     FatRat.new';
+
+        e-no fr(0, 0), <0/0>,              'FatRat.new,  Rat literal';
+        e-no fr(0, 0),  0/0,               'FatRat.new,  Rat /-op';
+        e-no fr(0, 0), Rat.new(0, 0),      'FatRat.new,  Rat.new';
+        e-so fr(0, 0), fr(0, 0),           'FatRat.new,  FatRat.new';
+    }
+}
 
 # vim: ft=perl6
