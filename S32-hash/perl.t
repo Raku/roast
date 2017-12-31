@@ -14,8 +14,8 @@ plan 52;
       'can we serialize a simple hash';
     my $rh = EVAL(%h.perl);
     is-deeply $rh, $%h, 'can we roundtrip simple hash';
-    is $rh.of.^name, 'Mu',  'make sure any value can be stored';
-    is $rh.keyof.^name, 'Str(Any)', 'make sure keys are Str(Any)';
+    is $rh.of,    Mu,       'make sure any value can be stored';
+    is $rh.keyof, Str(Any), 'make sure keys are Str(Any)';
 } #4
 
 # hash with constrained values
@@ -25,8 +25,8 @@ plan 52;
       'can we serialize a hash with constrained values';
     my $rh = EVAL(%h.perl);
     is-deeply $rh, %h, 'can we roundtrip hash constrained values';
-    is $rh.of, Int, 'make sure roundtripped values are Int';
-    is $rh.keyof.^name, 'Str(Any)', 'make sure roundtripped keys are Str(Any)';
+    is $rh.of,    Int,      'make sure roundtripped values are Int';
+    is $rh.keyof, Str(Any), 'make sure roundtripped keys are Str(Any)';
 } #4
 
 # hash with constrained keys & values
@@ -36,7 +36,7 @@ plan 52;
       'can we serialize a hash with constrained keys & values';
     my $rh = EVAL(%h.perl);
     is-deeply $rh, %h, 'can we roundtrip hash constrained keys & values';
-    is $rh.of, Int, 'make sure roundtripped values are Int';
+    is $rh.of,    Int, 'make sure roundtripped values are Int';
     is $rh.keyof, Str, 'make sure roundtripped keys are Str';
 } #4
 
