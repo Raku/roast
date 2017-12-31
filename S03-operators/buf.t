@@ -284,11 +284,19 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
 }
 
 # RT #126529
-{
+subtest 'infix:<~> works with Blob' => {
+    plan 6;
+
     my Blob $a = "a".encode;
     my Blob $b = "b".encode;
-    $a ~= $b;
-    is $a, utf8.new(97,98), 'infix:<~> with Blob does not die';
+    is-deeply $a ~= $b, 'ab'.encode, 'meta-assign form, return value';
+    is-deeply $a,       'ab'.encode, 'meta-assign form, result';
+
+    is-deeply 'a'.encode ~ 'b'.encode,           'ab'.encode, 'a ~ b';
+    is-deeply infix:<~>('a'.encode, 'b'.encode), 'ab'.encode, 'infix:<~>(a, b)';
+    is-deeply ([~] 'a'.encode),                   'a'.encode, '[~] with 1 blob';
+    is-deeply ([~] 'a'.encode, 'b'.encode, 'c'.encode), 'abc'.encode,
+        '[~] with 3 blobs';
 }
 
 # RT #128655
