@@ -188,12 +188,14 @@ sub decode_utf8c {
 lives-ok &decode_utf8c, 'RT #127878: Can decode and work with interesting byte sequences';
 
 # RT #128368
-sub bar() { foo; return 6 }
-sub foo() { return 42 }
-my $a = 0;
-$a += bar for ^158;  # 157 iterations works fine
+{
+    sub bar() { foo; return 6 }
+    sub foo() { return 42 }
+    my $a = 0;
+    $a += bar for ^158;  # 157 iterations works fine
 
-is $a, 158 * 6, 'SPESH inline works correctly after 158 iterations';
+    is $a, 158 * 6, 'SPESH inline works correctly after 158 iterations';
+}
 
 # RT #127473
 eval-lives-ok '(;)', '(;) does not explode the compiler';
