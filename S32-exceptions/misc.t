@@ -613,23 +613,16 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 }
 
 # RT #113680
-{
-    throws-like { EVAL("use ThisDoesNotExistAtAll ") }, Exception;
-}
+throws-like ｢use ThisDoesNotExistAtAll｣, X::CompUnit::UnsatisfiedDependency;
 
 # RT #116607
-{
-    throws-like { EVAL q[my \foo], }, X::Syntax::Term::MissingInitializer,
-       message => 'Term definition requires an initializer';
-}
+throws-like ｢my \foo｣, X::Syntax::Term::MissingInitializer,
+   message => 'Term definition requires an initializer';
 
 # RT #88748
-{
-    throws-like { EVAL q[given 42 { when SomeUndeclaredType { 1 }; default { 0 } }] },
-        X::Comp::Group,
-        'adequate error message when undeclared type is used in "when" clause',
-        message => { m/SomeUndeclaredType/ };
-}
+throws-like ｢given 42 { when SomeUndeclaredType { 1 }; default { 0 } }｣,
+    X::Comp::Group, :message(/SomeUndeclaredType/),
+'adequate error message when undeclared type is used in "when" clause';
 
 # RT #118067
 {
@@ -649,66 +642,46 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 }
 
 # RT #114014
-{
-    throws-like { EVAL q[ ord.Cool ] }, Exception,
-        'adequate error message when calling bare "ord"';
-}
+throws-like ｢ord.Cool｣, X::Obsolete,
+    'adequate error message when calling bare "ord"';
 
 # RT #123584
-{
-    is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
-}
+is_run q[$; my $b;], { :0status, :err(/
+      ^ "WARNINGS" \N* \n "Useless use of unnamed \$ variable in sink context"
+/)}, "unnamed var in sink context warns"
 
 # RT #127062
-{
-    is_run 'my @a = -1, 2, -3; print [+] (.abs + .abs for @a)',
-        {
-            status => 0,
-            out    => '12',
-            err    => ''
-        },
-        'no warning about Useless use of "+" in sink context';
-}
+is_run 'my @a = -1, 2, -3; print [+] (.abs + .abs for @a)',
+    { :0status, :out<12>, :err('')},
+'no warning about Useless use of "+" in sink context';
 
 # RT #128770
-{
-    is_run q|print ($_ with 'foo')|,
-        {
-            status => 0,
-            out    => "foo",
-            err    => ''
-        },
-        'no warning about "Useless use" with say ($_ with "foo")';
-}
+is_run q|print ($_ with 'foo')|, { :0status, :out<foo>, :err('') },
+    'no warning about "Useless use" with say ($_ with "foo")';
 
 # RT #128766
-{
-    is_run q|sub infix:<↑>($a, $b) is assoc<right> {$a ** $b};
-             sub infix:<↑↑>($a, $b) is assoc<right> { [↑] $a xx $b };
-             print 3↑↑3|,
-        {
-            status => 0,
-            out => "7625597484987",
-            err => '',
-        },
-        'no warning about "Useless use" with "onearg form of reduce"';
-}
+is_run q|sub infix:<↑>($a, $b) is assoc<right> {$a ** $b};
+         sub infix:<↑↑>($a, $b) is assoc<right> { [↑] $a xx $b };
+         print 3↑↑3|,
+    { :0status, :out<7625597484987>, :err('') },
+'no warning about "Useless use" with "onearg form of reduce"';
 
 # RT #114430
-{
-    throws-like { ::('') }, X::NoSuchSymbol,
-        'fail sensibly for empty lookup.';
-}
+throws-like { ::('') }, X::NoSuchSymbol, 'fail sensibly for empty lookup';
 
 # RT #117859
-throws-like 'class RT117859 { trusts Bar }', X::Undeclared, symbol => 'Bar', what => 'Type';
+throws-like 'class RT117859 { trusts Bar }', X::Undeclared,
+    :symbol<Bar>, :what<Type>;
 
 # RT #93988
-throws-like '5.', X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::Number::IllegalDecimal };
+throws-like '5.', X::Comp::Group, sorrows => sub (@s) {
+    @s[0] ~~ X::Syntax::Number::IllegalDecimal
+}
 
 # RT #81502
 throws-like 'BEGIN { ohnoes() }; sub ohnoes() { }', X::Undeclared::Symbols;
-throws-like 'BEGIN { die "oh noes!" }', X::Comp::BeginTime, exception => sub ($e) { $e.message eq 'oh noes!' };
+throws-like 'BEGIN { die "oh noes!" }', X::Comp::BeginTime,
+    exception => sub ($e) { $e.message eq 'oh noes!' };
 
 throws-like q:to/CODE/, X::Comp::BeginTime, exception => X::Multi::NoMatch;
     class Polar {
