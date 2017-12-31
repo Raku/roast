@@ -507,8 +507,9 @@ is-deeply 'aaaaabbbbb'.split(<aaa aa bb bbb>, :v),
 
 # RT #128481
 {
-    # .List is to check it's not a BOOTArray (which doesn't have p6 method resolution)
-    is *.split("-").("a-b-c").List,<a b c>,'*.split result is HLLized';
+    # .List is to check it's not a BOOTArray
+    # (which doesn't have p6 method resolution)
+    is-deeply *.split("-").("a-b-c").List, <a b c>, '*.split result is HLLized';
 }
 
 # RT #129242
