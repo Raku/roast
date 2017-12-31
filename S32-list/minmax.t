@@ -18,7 +18,7 @@ my @array = (5,-3,7,0,1,-9); #NOTICE! The <> don't work like they should, rakudo
 
 # Tests for C<min>:
 is @array.min,  -9, "basic method form of min works";
-is min(@array), -9, 'min(list)'; 
+is min(@array), -9, 'min(list)';
 
 is (@array.min: { $^a <=> $^b }), -9,
   "method form of min with identity comparison block works";
@@ -154,7 +154,7 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
     is ([min] @strings), "Barleycorn!", '[min] works on array of strings';
 
     is @strings.max, "we'll", 'Default .max works on array of strings';
-    is @strings.max(-> $a, $b { $a.chars <=> $b.chars || $a leg $b }), "Barleycorn!", 
+    is @strings.max(-> $a, $b { $a.chars <=> $b.chars || $a leg $b }), "Barleycorn!",
        '.max works with explicit comparator';
     is ([max] @strings), "we'll", '[max] works on array of strings';
 }
