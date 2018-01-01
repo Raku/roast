@@ -35,9 +35,9 @@ is Foo.REPR, 'P6opaque', '.REPR';
 
 subtest { plan 3;
     my module M:ver<1.2.3>:auth<me> {};
-    is M.^name, 'M',     '.name is correct';
-    is M.^ver,  '1.2.3', '.ver is correct';
-    is M.^auth, 'me',    '.auth is correct';
+    is M.^name, 'M',          '.name is correct';
+    is-deeply M.^ver, v1.2.3, '.ver is correct';
+    is M.^auth, 'me',         '.auth is correct';
 }, 'metamethods on a module';
 
 # RT #128579
