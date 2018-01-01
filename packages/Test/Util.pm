@@ -265,6 +265,7 @@ END {
     unlink @FILES-FOR-make-temp-file;
     rmdir  @DIRS-FOR-make-temp-dir;
 }
+sub make-temp-path(|c) is export { make-temp-file |c }
 sub make-temp-file
     (:$content where Any:U|Blob|Cool, Int :$chmod --> IO::Path:D) is export
 {
@@ -509,6 +510,10 @@ Tests whether the code warns, passing the test if it doesn't.
 Creates a semi-random path in C<$*TMPDIR>, optionally setting C<$chmod> and
 spurting C<$content> into it. If C<$chmod> is set, but C<$content> isn't,
 spurts an empty string. Automatically deletes the file with C<END> phaser.
+
+=head2  make-temp-path(:$content, :$chmod)
+
+Alias for C<make-temp-file>
 
 =head2 make-temp-dir($chmod?)
 
