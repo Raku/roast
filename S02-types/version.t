@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 44;
+plan 45;
 
 my sub vtest($cmp, *@v) {
     my $x = shift @v;
@@ -68,6 +68,13 @@ is v12.3.4 cmp Version.new("12.3.4"), Order::Same, 'can parse literal versions w
     my $future-versions-ok = True;
     (Version.new("6.$_") cmp v2) ~~ Order::More or $future-versions-ok = False for 'c' .. 'zz';
     ok $future-versions-ok, 'v6. is newer than v2 for c..zz [Version.new]';
+}
+
+# https://github.com/rakudo/rakudo/commit/72ee58e2f7
+subtest '`eqv` on containerized Version objects' => {
+    plan 2;
+    is-deeply ($ = v1) eqv ($ = v2.2.3), False, 'False result';
+    is-deeply ($ = v3) eqv ($ = v3    ), True, 'True  result';
 }
 
 # https://irclog.perlgeek.de/perl6/2017-06-24#i_14781849
