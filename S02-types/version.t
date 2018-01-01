@@ -74,7 +74,7 @@ is v12.3.4 cmp Version.new("12.3.4"), Order::Same, 'can parse literal versions w
 subtest '`eqv` on containerized Version objects' => {
     plan 2;
     is-deeply ($ = v1) eqv ($ = v2.2.3), False, 'False result';
-    is-deeply ($ = v3) eqv ($ = v3    ), True, 'True  result';
+    is-deeply ($ = v3) eqv ($ = v3    ), True,  'True  result';
 }
 
 # https://irclog.perlgeek.de/perl6/2017-06-24#i_14781849
