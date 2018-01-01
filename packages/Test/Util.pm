@@ -281,6 +281,13 @@ sub make-temp-dir (Int $chmod? --> IO::Path:D) is export {
     p
 }
 
+multi no-fatal-throws-like (Str:D $test, |c) is export {
+    throws-like "no fatal; my \$ = do \{ $test }; Nil", |c;
+}
+multi no-fatal-throws-like (&test, |c) is export {
+    throws-like { no fatal; my $ = do { test }; Nil }, |c;
+}
+
 sub fails-like (
     \test where Callable:D|Str:D, $ex-type, $reason?, *%matcher
 ) is export {
@@ -552,6 +559,12 @@ STDIN and C<^D\b\b> chars after it when running Rakudo compiler.
 Note that some variations of C<script> command might be passing C/dev/null>
 as first argument to your code. This is due to current implementation of
 this test routine trying to ignore the generation of timing file.
+
+=head2 no-fatal-throws-like
+
+Same as Test.pm6's C<throws-like>, except wraps the given code into
+C<no fatal; my $ = do { … }; Nil>. The point of that is if the code merely
+does C<fail()> instead of C<throw()>, then the test will detect that and fail.
 
 =end pod
 
