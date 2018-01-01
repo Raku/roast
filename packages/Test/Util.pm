@@ -280,7 +280,9 @@ sub make-temp-dir (Int $chmod? --> IO::Path:D) is export {
     p
 }
 
-sub fails-like (&test, $ex-type, $reason?, *%matcher) is export {
+sub fails-like (
+    \test where Callable:D|Str:D, $ex-type, $reason?, *%matcher
+) is export {
     subtest $reason => sub {
         plan 2;
         CATCH { default {
@@ -290,7 +292,7 @@ sub fails-like (&test, $ex-type, $reason?, *%matcher) is export {
                 return False;
             }
         }}
-        my $res = test;
+        my $res = test ~~ Callable ?? test.() !! test.EVAL;
         isa-ok $res, Failure, 'code returned a Failure';
         throws-like { $res.sink }, $ex-type,
             'Failure threw when sunk', |%matcher,
