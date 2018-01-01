@@ -199,12 +199,8 @@ isnt 2**3**4, 4096, "** is right associative";
 
 # RT #125811
 #?rakudo.moar 1 skip 'overflow exception is not thrown on OSX RT #127500'
-{
-    throws-like { 2 ** 99999999999999999999999999999999999 },
-        X::Numeric::Overflow,
-        :message(/'Numeric overflow'/),
+throws-like { 2 ** 99999999999999999999999999999999999 }, X::Numeric::Overflow,
     'extremely large exponents must throw numeric overflow';
-}
 
 # test associativity
 is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
