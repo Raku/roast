@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 161;
+plan 159;
 
 my $five = abs(-5);
 
@@ -400,10 +400,11 @@ isa-ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 
 # RT #132083 - Broken math
-{
-    is(-0x7FFFFFFF - 1 == -2147483648, True);
-    is(-0x7FFFFFFF - 1 == -18446744071562067968 , False);
-    is((-0x7FFFFFFF - 1).base(16), -80000000);
+subtest '-0x7FFFFFFF - 1 math weirdness' => {
+    is-deeply -0x7FFFFFFF - 1 == -2147483648, True, '== -2147483648';
+    is-deeply -0x7FFFFFFF - 1 == -18446744071562067968, False,
+        '== -18446744071562067968';
+    is-deeply (-0x7FFFFFFF - 1).base(16), '-80000000', '.base(16)';
 }
 
 # vim: ft=perl6
