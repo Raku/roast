@@ -230,7 +230,6 @@ is @arr.join(":"), "a:b:c:d:e", "does join a $t array";
 
 @arr = ();
 @arr[4] = "z";
-#?rakudo.jvm todo 'RT #127756'
 is @arr.join(":"), "::::z", "does emptying a $t array really empty";
 
 my @holes := array[$T].new;
