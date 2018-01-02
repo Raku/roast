@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 58;
+plan 57;
 
 # L<S32::Str/Str/=item substr>
 
@@ -95,11 +95,6 @@ plan 58;
     is $str.substr(10..*),  "and bar", "substr (substr(Range Inf))";
 }
 
-# RT #76682
-{
-    isa-ok "foo".substr(4), Failure, 'substr with start beyond end of string is Failure';
-}
-
 # RT #115086
 {
     is "abcd".substr(2, Inf), 'cd', 'substr to Inf';
@@ -116,9 +111,15 @@ plan 58;
         'substr on a string built with infix:<x> works';
 }
 
+# RT #76682
 # RT #128038
-fails-like { "".substr: 5 }, X::OutOfRange,
-    'Failure in .substr does not get incorrectly handled';
+subtest '.substr fails when start is beyond end of string' => {
+    plan 4;
+    fails-like { 'foo'.substr: 5    }, X::OutOfRange, '(from) method';
+    fails-like { substr 'foo', 5    }, X::OutOfRange, '(from) sub';
+    fails-like { 'foo'.substr: 5, 3 }, X::OutOfRange, '(from, chars) method';
+    fails-like { substr 'foo', 5, 3 }, X::OutOfRange, '(from, chars) sub';
+}
 
 # RT #122789
 lives-ok { BEGIN "a".subst: /a/, "b" }, '.subst in BEGIN does not die';
