@@ -50,7 +50,7 @@ is_run 'dir | say', {
     my $dir-str = $dir.absolute;
 
     my $tested = False;
-    @ = dir $dir, :CWD($dir), :test{
+    @ = dir IO::Path.new($dir, :CWD($dir)), :test{
         when 'foo.txt' {
             is-deeply $*CWD.absolute, $dir-str,
                 '$*CWD is set right inside dir(:test)';
