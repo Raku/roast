@@ -1,8 +1,9 @@
 use v6;
-
+use lib <t/spec/packages/>;
 use Test;
+use Test::Util;
 
-plan 106;
+plan 103;
 
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
@@ -81,23 +82,26 @@ ok 4.Str ~~ Str, 'Int.Str returns a Str';
 sub eval_elsewhere($code){ EVAL($code) }
 
 # L<S02/Context/numeric "+">
-# numeric (+) context
-{
-    my $a = '2 is my favorite number';
-    isa-ok(+$a, Failure, 'trailing chars cause failure');
+subtest 'numeric context' => {
+    plan 15;
+    fails-like { +'2 foo' }, X::Str::Numeric,
+        '+ coersion fails with trailing chars';
+    fails-like { +'foo 2' }, X::Str::Numeric,
+        '+ coersion fails with leading chars';
+    throws-like { no fatal; $ = -'2 foo'; Nil }, X::Str::Numeric,
+        '- coersion throws with trailing chars';
+    throws-like { no fatal; $ = -'foo 2'; Nil }, X::Str::Numeric,
+        '- coersion throws with leading chars';
 
-    my $b = 'Did you know that, 2 is my favorite number';
-    isa-ok(+$b, Failure, 'it is forced into a Num');
-}
+    is-deeply +" \t42",         42, 'leading whitespace is ignored';
+    is-deeply -"42\t\n",       -42, 'trailing whitespace is ignored';
+    is-deeply +"\t \n42\t\n  ", 42, 'leading + trailing whitespace is ignored';
 
-# L<S03/Symbolic unary precedence/"prefix:<->">
-#?rakudo skip 'failure modes of Str.Numeric RT #124540'
-{
-    my $a = '2 is my favorite number';
-    isa-ok(-$a, Failure, 'trailing chars cause failure');
-
-    my $b = 'Did you know that, 2 is my favorite number';
-    ok(-$b, Failure, 'it is forced into a Num');
+    for 1, 2.0, 3e0, 1+4i {
+        my $str = $_ ~~ Complex ?? .Str !! .perl;
+        is-deeply +$str,  $_, "+ coersion coerces {.^name}";
+        is-deeply -$str, -$_, "- coersion coerces {.^name}";
+    }
 }
 
 # L<S02/Context/string "~">
@@ -228,6 +232,8 @@ sub eval_elsewhere($code){ EVAL($code) }
 }
 
 {
+    # Seq from &list has been double-checked to be correct here:
+    # https://irclog.perlgeek.de/perl6-dev/2017-12-31#i_15636448
     my $l = list 1,2,4...16;
     ok $l.WHAT === Seq, "list listop on Seq is no-op";
     ok $l.gist eq '(1 2 4 8 16)', "list listop doesn't double wrap";

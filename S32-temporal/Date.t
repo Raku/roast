@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 116;
+plan 122;
 
 # construction
 {
@@ -11,9 +11,9 @@ plan 116;
     lives-ok { Date.new(2010, 1, 1) }, 'List constructor';
     lives-ok { Date.new(:year(2010), :month(1), :day(1)) }, 'named arguments';
     lives-ok { Date.today }, 'Date.today';
-    lives-ok { 
+    lives-ok {
         my $dt = DateTime.new(:year(2010),:month(6), :day(4));
-        Date.new($dt); 
+        Date.new($dt);
     }, 'Date.new from DateTime';
 
     dies-ok { Date.new('malformed') }, 'obviously malformed string';
@@ -169,19 +169,22 @@ is Date.new('2015-12-29',:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
 
 # RT #127170
 {
-    role Foo { has @.a = 7, 8, 9 }
-    class BarDate is Date does Foo {}
-    is BarDate.today.a, [7,8,9], 'did role attributes get initialized ok';
+    my role Foo { has @.a = 7, 8, 9 }
+    my class BarDate is Date does Foo {}
+    is-deeply BarDate.today.a, [7, 8, 9],
+        'did role attributes get initialized ok';
 }
 
 {
-    class FooDate is Date { has $.foo };
+    my class FooDate is Date { has $.foo };
     for (2016,2,20), '2016-02-20', \(:2016year,:2month,:20day) -> $date {
         my $fd = FooDate.new(|$date, foo => 42);
-        is $fd.year, 2016, "is year in FooDate ok";
-        is $fd.month,   2, "is month in FooDate ok";
-        is $fd.day,    20, "is day in FooDate ok";
-        is $fd.foo,    42, "is foo in FooDate ok";
+        isa-ok    $fd, FooDate,   'created object is of right type';
+        isa-ok    $fd, Date,      'created object is a subclass';
+        is-deeply $fd.year, 2016, 'is year in FooDate ok';
+        is-deeply $fd.month,   2, 'is month in FooDate ok';
+        is-deeply $fd.day,    20, 'is day in FooDate ok';
+        is-deeply $fd.foo,    42, 'is foo in FooDate ok';
     }
 }
 

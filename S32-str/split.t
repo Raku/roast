@@ -502,15 +502,14 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
       'clashing named parameters';
 }
 
-is "aaaaabbbbb".split(<aaa aa bb bbb>,:v), " aaa  aa  bbb  bb ",
-  "test overlapping needles";
-
-# vim: ft=perl6
+is-deeply 'aaaaabbbbb'.split(<aaa aa bb bbb>, :v),
+    ('', 'aaa', '', 'aa', '', 'bbb', '', 'bb', '').Seq, 'overlapping needles';
 
 # RT #128481
 {
-    # .List is to check it's not a BOOTArray (which doesn't have p6 method resolution)
-    is *.split("-").("a-b-c").List,<a b c>,'*.split result is HLLized';
+    # .List is to check it's not a BOOTArray
+    # (which doesn't have p6 method resolution)
+    is-deeply *.split("-").("a-b-c").List, <a b c>, '*.split result is HLLized';
 }
 
 # RT #129242
@@ -546,3 +545,5 @@ subtest 'split skip-empty skips all empty chunks' => {
         "{.key}.split({.value.perl}, :skip-empty)"
     for @tests;
 }
+
+# vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 283;
+plan 291;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -601,6 +601,14 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
        ds('2014-12-30T12:56:34Z'),
        'subtracting 3 weeks, overflowing to years';
 
+    is ds('2008-12-31T23:59:60Z').earlier(day => 1),
+       ds('2008-12-30T23:59:59Z'),
+       'subtracting a day from a leap second clips';
+
+    is ds('2009-01-01T00:00:00Z').earlier(second => 1),
+       ds('2008-12-31T23:59:60Z'),
+       'subtracting a second from time can land on a leap second';
+
     lives-ok {
         ds('2010-01-31T12:56:34Z').later(month => 1);
     }, '.later does not try to create an impossible datetime';
@@ -668,25 +676,28 @@ is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
 
 # RT #127170
 {
-    role Foo { has @.a = 7, 8, 9 }
-    class BarDate is DateTime does Foo {}
-    is BarDate.now.a, [7,8,9], 'did role attributes get initialized ok';
+    my role Foo { has @.a = 7, 8, 9 }
+    my class BarDate is DateTime does Foo {}
+    is-deeply BarDate.now.a, [7, 8, 9],
+        'did role attributes get initialized ok';
 }
 
 {
-    class FooDateTime is DateTime { has $.foo };
+    my class FooDateTime is DateTime { has $.foo };
     for (2016,2,20,21,53,7),
         '2016-02-20T21:53:07',
         \(:2016year,:2month,:20day,:21hour,:53minute,:7second)
     -> $datetime {
         my $fdt = FooDateTime.new(|$datetime, foo => 42);
-        is $fdt.year, 2016, "is year in FooDateTime ok";
-        is $fdt.month,   2, "is month in FooDateTime ok";
-        is $fdt.day,    20, "is day in FooDateTime ok";
-        is $fdt.hour,   21, "is hour in FooDateTime ok";
-        is $fdt.minute, 53, "is minute in FooDateTime ok";
-        is $fdt.second,  7, "is second in FooDateTime ok";
-        is $fdt.foo,    42, "is foo in FooDateTime ok";
+        isa-ok    $fdt, FooDateTime, 'created object is of right type';
+        isa-ok    $fdt, DateTime,    'created object is a subclass';
+        is-deeply $fdt.year, 2016,   'is year in FooDateTime ok';
+        is-deeply $fdt.month,   2,   'is month in FooDateTime ok';
+        is-deeply $fdt.day,    20,   'is day in FooDateTime ok';
+        is-deeply $fdt.hour,   21,   'is hour in FooDateTime ok';
+        is-deeply $fdt.minute, 53,   'is minute in FooDateTime ok';
+        is-deeply $fdt.second,  7,   'is second in FooDateTime ok';
+        is-deeply $fdt.foo,    42,   'is foo in FooDateTime ok';
     }
 }
 

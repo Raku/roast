@@ -55,7 +55,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 }
 
 {
-    enum roman (i => 1,   v => 5,
+    my enum roman (i => 1,   v => 5,
                 x => 10,  l => 50,
                 c => 100, d => 500,
                 m => 1000);
@@ -64,31 +64,31 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is v.key,  'v',        '.key works on enum with parens';
 }
 
-enum JustOne <Thing>;
+
 {
+    my enum JustOne <Thing>;
     ok JustOne::Thing == 0, 'Pair of one element works.';
 }
 
-lives-ok { enum Empty < > }, "empty enum can be constructed";
+lives-ok { my enum Empty < > }, "empty enum can be constructed";
 
-eval-lives-ok 'enum Empty2 ()', 'empty enum with () can be constructed';
+eval-lives-ok 'my enum Empty2 ()', 'empty enum with () can be constructed';
 
-enum Color <white gray black>;
-my Color $c1 = Color::white;
-ok($c1 == 0, 'can assign enum value to typed variable with long name');
-my Color $c2 = white;
-ok($c2 == 0, 'can assign enum value to typed variable with short name');
-dies-ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
-
-# conflict between subs and enums
 {
-    my sub white { 'sub' };
+    my enum Color <white gray black>;
+    my Color $c1 = Color::white;
+    ok($c1 == 0, 'can assign enum value to typed variable with long name');
+    my Color $c2 = white;
+    ok($c2 == 0, 'can assign enum value to typed variable with short name');
+    dies-ok({ my Color $c3 = "for the fail" },
+        'enum as a type enforces checks');
+
+    # conflict between subs and enums
+    sub white { 'sub' };
     ok white == 0, 'short name of the enum without parenthesis is an enum';
     is white(), 'sub', 'short name with parenthesis is a sub';
-}
 
-# L<S12/The C<.pick> Method/"define a .pick method">
-{
+    # L<S12/The C<.pick> Method/"define a .pick method">
     lives-ok { my Color $k = Color.pick }, 'Color.pick assigns to Color var';
     isa-ok Color.pick, Color.pick.WHAT, 'Color.pick.isa';
 
@@ -98,36 +98,36 @@ dies-ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 }
 
 {
-    enum RT71460::Bug <rt71460 bug71460 ticket71460>;
+    my enum RT71460::Bug <rt71460 bug71460 ticket71460>;
     ok bug71460 == 1, 'enum element of enum with double colons is in namespace';
 }
 
 # RT #77982
 {
-    enum T1 <a b c>;
-    enum T2 <d e f>;
+    my enum T1 <a b c>;
+    my enum T2 <d e f>;
     is T1.enums.keys.sort.join('|'), 'a|b|c', 'enum keys (1)';
     is T2.enums.keys.sort.join('|'), 'd|e|f', 'enum keys (2)';
 }
 
 # RT #75370
 {
-    enum somenum <a b c d e>;
+    my enum somenum <a b c d e>;
     my somenum $temp = d;
     ok $temp eq 'd', "RT #75370 enum name";
 }
 
 # RT #72696
 {
-    enum S1 <a b c>;
-    enum S2 <b c d>;
+    my enum S1 <a b c>;
+    my enum S2 <b c d>;
     throws-like { say b }, X::PoisonedAlias, :alias<b>, :package-type<enum>, :package-name<S2>;
     ok S1::b == 1 && S2::b == 0, 'still can access redeclared enum values via package';
 }
 
 # RT #128138
 {
-    enum Foo <a b>;
+    my enum Foo <a b>;
     isa-ok Foo.enums, Map, '.enums returns a Map';
 }
 
@@ -200,7 +200,7 @@ cmp-ok Bool.enums.WHAT, '===', Map, 'Bool.enums returns a Map, not a Hash';
 # RT #116719
 {
   lives-ok {
-    enum RT116719 (<red green purple> Z=> 1,2,4);
+    my enum RT116719 (<red green purple> Z=> 1,2,4);
     is RT116719.enums, Map.new((green => 2, purple => 4, red => 1)),
       'build enum using Z=> operator properly';
   }, 'can build enum using Z=> operator';

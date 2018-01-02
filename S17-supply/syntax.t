@@ -613,22 +613,25 @@ lives-ok {
 }
 
 # RT #126842
-lives-ok {
-	for ^500 {
-		my $channel = Channel.new;
-		my $p1 = start {
-			react {
-				whenever $channel {
-				}
-			}
-		}
-		my $p2 = start {
-			$channel.send($_) for (1..10);
-			$channel.close;
-		}
-		await $p1,$p2;
-	}
-}, 'No hang or crash using react to consume channels';
+#?rakudo.jvm skip 'RT #126842 hangs since rakudo commit 1a4df4e100'
+{
+  lives-ok {
+    for ^500 {
+        my $channel = Channel.new;
+        my $p1 = start {
+            react {
+                whenever $channel {
+                }
+            }
+        }
+        my $p2 = start {
+            $channel.send($_) for (1..10);
+            $channel.close;
+        }
+        await $p1,$p2;
+    }
+  }, 'No hang or crash using react to consume channels';
+}
 
 # RT #128717
 {

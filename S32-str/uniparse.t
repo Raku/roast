@@ -1,9 +1,16 @@
 use v6;
 use Test;
 
-plan 10 * 2;
+plan 10 * 4;
 
-for &parse-names, Str.^lookup('parse-names') -> &pn {
+# `uniparse` Tests. Note `parse-names` is the original "experimental" name
+# of this routine. It issues deprecation warning in Rakudo in 6.d and will
+# be removed in 6.e. Other implementations may wish to restructure these
+# tests and not implement `parse-names` at all.
+
+for &parse-names, Str.^lookup('parse-names'),
+    &uniparse,    Str.^lookup('uniparse') -> &pn
+{
     my $t = " ({&pn.^name.lc} form)";
 
     is-deeply &pn(''), '', "empty string $t";

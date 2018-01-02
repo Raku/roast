@@ -106,11 +106,6 @@ is :36<utf១៦>, 51760986, "Nd numerals can be used in general radix numbers";
 throws-like "say :36<utfⅧ>", X::Syntax::Malformed, "Nl numerals are not allowed in general radix numbers";
 throws-like "say :36<utf㉜>", X::Syntax::Malformed, "No numerals are not allowed in general radix numbers";
 
-{
-    # RT #127866
-    throws-like { "௰".Int }, X::Str::Numeric,
-        message => / 'Cannot convert string to number: base-10'
-            .* 'number must begin with valid digits'
-        /,
+# RT #127866
+throws-like { "௰".Int }, X::Str::Numeric,
     'converting string with "No" characters to numeric is not supported';
-}

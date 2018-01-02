@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 107;
+plan 110;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -334,4 +334,11 @@ subtest '.ACCEPTS' => {
         is-deeply $allo.ACCEPTS($thing), False,
             "{$allo.perl}.ACCEPTS({$thing.perl})"
     }
+}
+
+# [Issue 1204](https://github.com/rakudo/rakudo/issues/1204)
+{
+    cmp-ok val(<1 2 3>     ), '!~~', Slip, 'val List candidate returns List by default (1)';
+    isa-ok val(<1 2 3>     ), List, 'val List candidate returns List by default (2)';
+    isa-ok val(<1 2 3>.Slip), Slip, 'val List candidate preserves slip-ness if passed Slip';
 }

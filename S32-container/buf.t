@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 # L<S32::Containers/Classes and Roles/"=item Buf">
 
@@ -188,5 +188,9 @@ subtest '.gist shows only first 100 els' => {
     is-deeply Blob.new(|$_).gist, make-gist([1..100], '...'), '1000 els'
         with (1..1000).list;
 }
+
+# RT #127756
+is-deeply Buf.allocate(10, (1,2,3)).reallocate(0).reallocate(5),
+    Buf.new(0, 0, 0, 0, 0), 'resized Bufs do not have leftover values';
 
 # vim: ft=perl6

@@ -134,10 +134,8 @@ throws-like { @arr.push(42) }, X::TypeCheck,
   got => Int,
   "Cannot push non-str/Str to $t array";
 throws-like { @arr[0] := my $a }, Exception,
-  message => 'Cannot bind to a natively typed array',
   "Cannot bind to $t array";
-throws-like { @arr[0]:delete }, Exception,
-  message => 'Cannot delete from a natively typed array',
+throws-like { @arr[0]:delete   }, Exception,
   "Cannot delete from $t array";
 
 is (@arr.push("b","c")), ("a","b","c"),
@@ -232,7 +230,6 @@ is @arr.join(":"), "a:b:c:d:e", "does join a $t array";
 
 @arr = ();
 @arr[4] = "z";
-#?rakudo todo 'RT #127756'
 is @arr.join(":"), "::::z", "does emptying a $t array really empty";
 
 my @holes := array[$T].new;

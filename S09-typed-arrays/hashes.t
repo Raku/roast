@@ -11,7 +11,8 @@ plan 44;
 {
     my Int %h;
     is %h.of,    Int, 'my Int %h declares a Hash of Int';
-    is %h.keyof.^name, 'Str(Any)', 'my Int %h declares a Hash with Str(Any) keys';
+    #?rakudo.jvm todo 'info about parametric type is lost; RT #132673'
+    is %h.keyof, Str(Any), 'my Int %h declares a Hash with Str(Any) keys';
     lives-ok { %h = (a => 3, b => 7) }, 'can assign Ints to an Hash of Int';
     lives-ok { %h<foo> = 8           }, 'can assign Int to hash slot';
     lives-ok { %h{'c', 'd' } = (3, 4) }, 'can assign to slice of typed hash';
@@ -20,7 +21,7 @@ plan 44;
     my Int %g;
     lives-ok { %g = %h }, 'can assign one typed hash to another';
     lives-ok { %h.pairs }, 'can call methods on typed hashes';
-    is %h.pairs.sort.join, %g.pairs.sort.join, 
+    is %h.pairs.sort.join, %g.pairs.sort.join,
                         '... and the hashes are the same afterwards';
 
     lives-ok { my Int %s = :a(3) }, 'can initialize typed hash';

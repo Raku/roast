@@ -44,6 +44,7 @@ my @normal = <
   HyperSeq
   HyperWhatever
   IO::ArgFiles
+  IO::CatHandle
   IO::Handle
   IO::Notification
   IO::Path
@@ -416,42 +417,42 @@ plan 7 + 4 * ( @normal + @exception + @concurrent + @moar );
 
 my %seen-which;
 
-nok %seen-which{Nil.WHICH}++,    "checking Nil.WHICH";
-is Nil.WHICH.WHAT.perl, 'ObjAt', "Nil returns an ObjAt";
-is Nil.perl,              'Nil', "Nil.perl returns 'Nil'";
-is Nil.gist,              'Nil', "Nil.gist returns 'Nil'";
+nok %seen-which{Nil.WHICH}++, "checking Nil.WHICH";
+isa-ok Nil.WHICH, ObjAt,      "Nil returns an ObjAt";
+is Nil.perl,                  'Nil', "Nil.perl returns 'Nil'";
+is Nil.gist,                  'Nil', "Nil.gist returns 'Nil'";
 
 for @normal -> $class {
     my $short = $class.split('::')[* - 1];
-    nok %seen-which{::($class).WHICH}++,    "checking $class.WHICH";
-    is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
-    is ::($class).perl,             $class, "$class.perl returns self";
-    is ::($class).gist,         "($short)", "$class.gist returns self";
+    nok %seen-which{::($class).WHICH}++, "checking $class.WHICH";
+    isa-ok ::($class).WHICH,      ObjAt, "$class returns an ObjAt";
+    is ::($class).perl,          $class, "$class.perl returns self";
+    is ::($class).gist,      "($short)", "$class.gist returns self";
 }
 
 for @exception -> $class {
     my $short = $class.split('::')[* - 1];
-    nok %seen-which{::($class).WHICH}++,    "checking $class.WHICH";
-    is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
-    is ::($class).perl,             $class, "$class.perl returns self";
-    is ::($class).gist,         "($short)", "$class.gist returns self";
+    nok %seen-which{::($class).WHICH}++, "checking $class.WHICH";
+    isa-ok ::($class).WHICH,      ObjAt, "$class returns an ObjAt";
+    is ::($class).perl,          $class, "$class.perl returns self";
+    is ::($class).gist,      "($short)", "$class.gist returns self";
 }
 
 for @concurrent -> $class {
     my $short = $class.split('::')[* - 1];
-    nok %seen-which{::($class).WHICH}++,    "checking $class.WHICH";
-    is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
-    is ::($class).perl,             $class, "$class.perl returns self";
-    is ::($class).gist,         "($short)", "$class.gist returns self";
+    nok %seen-which{::($class).WHICH}++, "checking $class.WHICH";
+    isa-ok ::($class).WHICH,      ObjAt, "$class returns an ObjAt";
+    is ::($class).perl,          $class, "$class.perl returns self";
+    is ::($class).gist,      "($short)", "$class.gist returns self";
 }
 
 for @moar -> $class {
     my $short = $class.split('::')[* - 1];
-    nok %seen-which{::($class).WHICH}++,    "checking $class.WHICH";
-    is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
+    nok %seen-which{::($class).WHICH}++, "checking $class.WHICH";
+    isa-ok ::($class).WHICH,      ObjAt, "$class returns an ObjAt";
     #?rakudo.jvm 2    skip 'NFC NYI on jvm - RT #124500'
-    is ::($class).perl,             $class, "$class.perl returns self";
-    is ::($class).gist,         "($short)", "$class.gist returns self";
+    is ::($class).perl,          $class, "$class.perl returns self";
+    is ::($class).gist,      "($short)", "$class.gist returns self";
 }
 
 # RT #128944
@@ -459,7 +460,7 @@ subtest 'ObjAt.perl gives distinct results for different objects' => {
     my @obj = "rt", 128944, <128944>, rx/^/, NaN, ∞, τ+i, .5, class {}, 'a'|42,
                 sub {}, -> {}, method {}, *, *+5, start {}, supply {};
     plan +@obj;
-    is .WHICH.perl, qq|ObjAt.new("{.WHICH}")|, "object: {.perl}" for @obj;
+    is .WHICH.perl, qq|{.WHICH.^name}.new("{.WHICH}")|, "object: {.perl}" for @obj;
 }
 
 # RT #130271

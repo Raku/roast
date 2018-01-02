@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 plan 39;
 
@@ -96,24 +97,21 @@ This test min/max functions in their operator form. To see them tested in their 
 # RT #125334
 # RT #128573
 {
-    my $message = /'Cannot convert string to number: base-10'
-        .* 'number must begin with valid digits'/;
-
-    throws-like "min +'a', +'a'", X::Str::Numeric, :$message,
+    no-fatal-throws-like "min +'a', +'a'", X::Str::Numeric,
         'min with two Failures throws';
-    throws-like "max +'a', +'a'", X::Str::Numeric, :$message,
+    no-fatal-throws-like "max +'a', +'a'", X::Str::Numeric,
         'max with two Failures throws';
 
-    throws-like "min +'a'      ", X::Str::Numeric, :$message,
+    fails-like "min +'a'      ", X::Str::Numeric,
         'min with one Failure throws';
-    throws-like "max +'a'      ", X::Str::Numeric, :$message,
+    fails-like "max +'a'      ", X::Str::Numeric,
         'max with one Failure throws';
 
-    throws-like "Failure.new.min", Exception, '.min on Failure throws';
-    throws-like "Failure.new.max", Exception, '.max on Failure throws';
-    throws-like "Failure.new.min: &infix:<cmp>", Exception,
+    fails-like "Failure.new.min", Exception, '.min on Failure throws';
+    fails-like "Failure.new.max", Exception, '.max on Failure throws';
+    fails-like "Failure.new.min: &infix:<cmp>", Exception,
         '.min with :&by on Failure throws';
-    throws-like "Failure.new.max: &infix:<cmp>", Exception,
+    fails-like "Failure.new.max: &infix:<cmp>", Exception,
         '.max with :&by on Failure throws';
 }
 

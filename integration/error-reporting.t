@@ -215,8 +215,7 @@ is_run Q[#`{{ my long
 throws-like 'role R-RT130211 { method overload-this(){...} };
              role C-RT130211 { method overload-this(){...} };
              class A does R-RT130211 does C-RT130211 {};',
-    X::Comp::AdHoc,
-    :message{ .contains('R-RT130211') and .contains('C-RT130211') },
+    X::Comp, :message{ .contains('R-RT130211') and .contains('C-RT130211') },
 'all roles with unimplemented method shown in error';
 
 

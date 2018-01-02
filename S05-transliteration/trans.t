@@ -262,7 +262,7 @@ is ("!$_!" for (1, 2)>>.trans((1..26) => (14..26,1..13))), <!14! !15!>, "same wi
 
 {
     my $f = "foo";
-    ok $f ~~ tr/o/u/ eq 'fuu', 'StrDistance stringifies to $!after'
+    is $f ~~ tr/o/u/, 'fuu', 'StrDistance stringifies to $!after';
 }
 
 # RT #129258

@@ -220,7 +220,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     ok $comp-unit.handle.globalish-package<RT128156>.WHO<One Two Three>:exists.all,
        'GLOBAL symbols exist after re-precompiled';
 
-    # Run another test where a source file is change after precompilation.
+    # Run another test where a source file is changed after precompilation.
     # The dependency layout is: A -> B -> C -> D
     #                            `-> C -> D
     my $before    = run $*EXECUTABLE,'-I','t/spec/packages/RT128156','-M','A','-e','';
@@ -309,4 +309,3 @@ with make-temp-dir() -> $dir {
 	'no funny business with precompiled string strands (\qq[$_])';
     }
 }
-

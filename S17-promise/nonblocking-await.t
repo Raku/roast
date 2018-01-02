@@ -1,7 +1,7 @@
 use v6.d.PREVIEW;
 use Test;
 
-plan 27;
+plan 28;
 
 # Limit scheduler to just 4 real threads, so we'll clearly be needing the
 # non-blocking await support for these to pass.
@@ -168,7 +168,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
         CATCH {
             default {
                 ok .does(X::Await::Died),
-                    'Exception from awaiting many things, where on dies, does X::Await::Died';
+                    'Exception from awaiting many things, where one dies, does X::Await::Died';
                 like .gist, /'golly!'/,
                     'Exception contains original exception message';
                 like .gist, /'death-bar'/,
@@ -270,4 +270,17 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     }
     is @foo.elems, 4, "slips awaited over get flattened out";
   }
+}
+
+#?rakudo.jvm skip 'atomicint NYI'
+{ # https://github.com/rakudo/rakudo/issues/1323
+    # Await must be called in sink context here to trigger the covered bug.
+    # Gymnastics with atomic ints are just to reduce test runtime; the point
+    # of the test is that await awaits in this case for all Promises to
+    # complete instead of just returning immediately.
+    # (same test exists in 6.c tests on purpose; to cover Rakudo impl)
+    my atomicint $x;
+    sub p { start { sleep .3; $x⚛++ } }
+    await (((p(), (p(), (p(),))), (p(), p(), p())), (p(), p(), p()));
+    is-deeply $x, 9, '&await awaits in sink context, with nested iterables';
 }

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 142;
+plan 146;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -125,13 +125,13 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 {
     my $a = buf8.new(1, 2, 3, 4, 5);
     is $a.bytes, 5, "buf8 .bytes correct";
-    
+
     my $b = buf16.new(1, 2, 3, 4, 5);
     is $b.bytes, 10, "buf16 .bytes correct";
-    
+
     my $c = buf32.new(1, 2, 3, 4, 5);
     is $c.bytes, 20, "buf32 .bytes correct";
-    
+
     my $d = buf64.new(1, 2, 3, 4, 5);
     is $d.bytes, 40, "buf64 .bytes correct";
 }
@@ -140,59 +140,66 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 {
     for <append push> -> $what {
         my $a = Buf.new(1, 2, 3);
-        ok $a === $a."$what"(4), "$what returns self";
+        cmp-ok $a, '===', $a."$what"(42), "$what returns self";
         is $a.elems, 4, "Buf .elems correct after $what";
-        is $a[3], 4, "Buf last element correct after $what";
+        is-deeply $a[3], 42, "Buf last element correct after $what";
 
-        my @items = 5, 6;
-        ok $a === $what eq "push" ?? $a.push(|@items) !! $a.append(@items),
-        "$what returns self";
+        my @items = 51, 68;
+        cmp-ok $a, '===', $what eq "push"
+            ?? $a.push(|@items) !! $a.append(@items), "$what returns self";
 
         is $a.elems, 6, "Buf .elems correct after {$what}ing a list";
-        is $a[4], 5, "Buf penultimate element correct after {$what}ing a list";
-        is $a[5], 6, "Buf last element correct after {$what}ing a list";
+        is-deeply $a[4], 51,
+            "Buf penultimate element correct after {$what}ing a list";
+        is-deeply $a[5], 68, "Buf last element correct after {$what}ing a list";
 
-        ok $a === $a."$what"(7, 8), "$what returns self";
+        cmp-ok $a, '===', $a."$what"(71, 86), "$what returns self";
 
         is $a.elems, 8, "Buf .elems correct after {$what}ing varargs";
-        is $a[6], 7, "Buf penultimate element correct {$what}ing appending varargs";
-        is $a[7], 8, "Buf last element correct after {$what}ing varargs";
+        is-deeply $a[6], 71,
+            "Buf penultimate element correct {$what}ing appending varargs";
+        is-deeply $a[7], 86,
+            "Buf last element correct after {$what}ing varargs";
 
-        ok $a === $what eq 'push' ?? $a.push(|9 xx 1) !! $a.append(9 xx 1),
-          "$what returns self";
+        cmp-ok $a, '===', $what eq 'push'
+            ?? $a.push(|(93 xx 1)) !! $a.append(93 xx 1), "$what returns self";
 
         is $a.elems, 9, "Buf .elems correct after {$what}ing xx list";
-        is $a[8], 9, "Buf last element correct after {$what}ing xx list";
+        is-deeply $a[8], 93,
+            "Buf last element correct after {$what}ing xx list";
     }
 }
 
 {
     for <prepend unshift> -> $what {
         my $a = Buf.new(1, 2, 3);
-        ok $a === $a."$what"(4), "$what returns self";
+        cmp-ok $a, '===', $a."$what"(4), "$what returns self";
         is $a.elems, 4, "Buf .elems correct after $what";
-        is $a[0], 4, "Buf first element correct after $what";
+        is-deeply $a[0], 4, "Buf first element correct after $what";
 
         my @items = 5, 6;
-        ok $a === $what eq 'unshift'
-          ?? $a.unshift(|@items) !! $a.prepend(@items),
-          "$what returns self";
+        cmp-ok $a, '===', $what eq 'unshift'
+            ?? $a.unshift(|@items) !! $a.prepend(@items), "$what returns self";
 
         is $a.elems, 6, "Buf .elems correct after {$what}ing a list";
-        is $a[0], 5, "Buf first element correct after {$what}ing a list";
-        is $a[1], 6, "Buf second element correct after {$what}ing a list";
+        is-deeply $a[0], 5, "Buf first element correct after {$what}ing a list";
+        is-deeply $a[1], 6,
+            "Buf second element correct after {$what}ing a list";
 
-        ok $a === $a."$what"(7, 8), "$what returns self";
+        cmp-ok $a, '===', $a."$what"(7, 8), "$what returns self";
 
         is $a.elems, 8, "Buf .elems correct after {$what}ing varargs";
-        is $a[0], 7, "Buf first element correct {$what}ing appending varargs";
-        is $a[1], 8, "Buf second element correct after {$what}ing varargs";
+        is-deeply $a[0], 7,
+            "Buf first element correct {$what}ing appending varargs";
+        is-deeply $a[1], 8,
+            "Buf second element correct after {$what}ing varargs";
 
-        ok $a === $what eq 'unshift'
-          ?? $a.unshift(|9 xx 1) !! $a.prepend(9 xx 1), "$what returns self";
+        cmp-ok $a, '===', $what eq 'unshift'
+            ?? $a.unshift(|(9 xx 1)) !! $a.prepend(9 xx 1), "$what returns self";
 
         is $a.elems, 9, "Buf .elems correct after {$what}ing xx list";
-        is $a[0], 9, "Buf first element correct after {$what}ing xx list";
+        is-deeply $a[0], 9,
+            "Buf first element correct after {$what}ing xx list";
     }
 }
 
@@ -208,7 +215,19 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
       'can we use ^10 as specifier';
     is-deeply $b.subbuf(10..20), Buf.new(10..20),
       'can we use 10..20 as specifier';
-} 
+}
+
+{
+    my $b = Buf.new(^100);
+    is-deeply $b.subbuf(10..10), Buf.new(10),
+      'single-element range (10..10) gives a single element buf in subbuf';
+    is-deeply $b.subbuf(10..11), Buf.new(10, 11),
+      'two-element range (10..11) gives two element buf in subbuf';
+    is-deeply $b.subbuf(10..^10), Buf.new(),
+      'empty range (10..^10) gives empty buf in subbuf';
+    is-deeply $b.subbuf(10..1), Buf.new(),
+      'negative range (10..1) gives an empty buf in subbuf';
+}
 
 {
     my @a;
@@ -228,7 +247,7 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
 
         my $a = $T.allocate(10);
         is $a.elems, 10, "did we allocate a $t of 10 elements";
-        is $a.join, "0000000000", "was the $t initialized correctly";
+        is-deeply $a.Seq, 0 xx 10, "was the $t initialized correctly";
 
         if $T === Blob {
             throws-like { $a.reallocate(12) }, Exception,
@@ -237,37 +256,47 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
         else {
             $a.reallocate(12);
             is $a.elems, 12, "did we reallocate the $t to 12 elements";
-            is $a.join, "000000000000", "was the $t changed correctly";
+            is-deeply $a.Seq, 0 xx 12, "was the $t changed correctly";
         }
 
         my $b = $T.allocate(10, 42);
         is $b.elems, 10, "did we allocate a $t to 10 elements";
-        is $b.join, "42424242424242424242", "was the $t initialized correctly";
+        is-deeply $b.Seq, 42 xx 10, "was the $t initialized correctly";
 
         if $T === Buf {
             $b.reallocate(13);
             is $b.elems, 13, "did we reallocate the $t to 13 elements";
-            is $b.join, "42424242424242424242000", "was the $t changed correctly";
+            is-deeply $b.Seq, (|(42 xx 10), 0, 0, 0),
+                "was the $t changed correctly";
         }
 
         my $c = $T.allocate(10, (1,2,3));
         is $c.elems, 10, "did we allocate a $t to 10 elements";
-        is $c.join, "1231231231", "was te $t initialized correctly";
+        is-deeply $c.List, (1, 2, 3, 1, 2, 3, 1, 2, 3, 1),
+            "was te $t initialized correctly";
 
         if $T === Buf {
             $c.reallocate(4);
             is $c.elems, 4, "did we reallocate the $t to 4 elements";
-            is $c.join, "1231", "was the $t changed correctly";
+            is-deeply $c.List, (1, 2, 3, 1), "was the $t changed correctly";
         }
     }
 }
 
 # RT #126529
-{
+subtest 'infix:<~> works with Blob' => {
+    plan 6;
+
     my Blob $a = "a".encode;
     my Blob $b = "b".encode;
-    $a ~= $b;
-    is $a, utf8.new(97,98), 'infix:<~> with Blob does not die';
+    is-deeply $a ~= $b, 'ab'.encode, 'meta-assign form, return value';
+    is-deeply $a,       'ab'.encode, 'meta-assign form, result';
+
+    is-deeply 'a'.encode ~ 'b'.encode,           'ab'.encode, 'a ~ b';
+    is-deeply infix:<~>('a'.encode, 'b'.encode), 'ab'.encode, 'infix:<~>(a, b)';
+    is-deeply ([~] 'a'.encode),                   'a'.encode, '[~] with 1 blob';
+    is-deeply ([~] 'a'.encode, 'b'.encode, 'c'.encode), 'abc'.encode,
+        '[~] with 3 blobs';
 }
 
 # RT #128655

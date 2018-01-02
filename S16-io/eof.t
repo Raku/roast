@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 3;
+plan 4;
 
 sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
 
@@ -57,6 +57,31 @@ END unlink $tmpfile;
         diag "Got STDOUT: {.perl}";
         False;
     }}, '.eof on TTY STDIN works right';
+}
+
+# https://github.com/rakudo/rakudo/issues/1322
+subtest '.eof works right even when we seek past end and back' => {
+    plan 6;
+
+    my $fh will leave {.close} = open make-temp-file :content<meows>;
+    is-deeply $fh.eof, False, 'freshly opened';
+
+    $fh.seek: 1000, SeekFromBeginning;
+    is-deeply $fh.eof, True, "seek'ed past end";
+
+    $fh.seek: 1, SeekFromBeginning;
+    #?rakudo.jvm todo 'Rakudo GH #1322 not yet fixed for JVM'
+    is-deeply $fh.eof, False, "seek'ed back into the actual contents";
+
+    $fh.slurp;
+    is-deeply $fh.eof, True, "slurped contents";
+
+    $fh.seek: 3, SeekFromBeginning;
+    #?rakudo.jvm todo 'Rakudo GH #1322 not yet fixed for JVM'
+    is-deeply $fh.eof, False, "seek'ed back";
+
+    $fh.seek: 5, SeekFromEnd;
+    is-deeply $fh.eof, True, "seek'ed past end again";
 }
 
 # vim: ft=perl6

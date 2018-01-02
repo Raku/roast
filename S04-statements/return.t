@@ -6,7 +6,7 @@ use Test::Util;
 
 plan 24;
 
-# Is there a better reference for the spec for how return return works? 
+# Is there a better reference for the spec for how return return works?
 # There is "return function" but that's a more advanced feature.
 #L<S04/"Control Exceptions">
 
@@ -58,7 +58,7 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     is run($*EXECUTABLE, '-e', 'loop (my $i = 0; $i < 1; $i++) {return 5}; CATCH { default { print .^name } }', :out).out.lines[0],
         'X::ControlFlow::Return',
         'cannot return out of a bare loop';
-    # XXX: Not 100% sure on this one
+
     is run($*EXECUTABLE, '-e', 'do {return 5}; CATCH { default { print .^name } }', :out).out.lines[0],
         'X::ControlFlow::Return',
         'cannot return out of a do block';

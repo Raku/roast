@@ -82,8 +82,8 @@ class Sheep {
 }
 
 {
-    my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
-    my $sound-attr = Sheep.^attributes.grep({ .name eq '$!sound' })[0];
+    my $wool-attr  = Sheep.^attributes.first: *.name eq '$!wool';
+    my $sound-attr = Sheep.^attributes.first: *.name eq '$!sound';
     my $roar-method = Sheep.^find_method('roar');
     test-trailing(Sheep, 'a sheep');
     test-trailing($wool-attr, 'usually white');

@@ -7,8 +7,6 @@ plan 11;
 # test that classes and roles declared in modules get into the correct
 # namespace
 
-# Used to be a Rakudo bug, RT #63956
-
 eval-lives-ok 'use A::A', 'Can load classes from nested modules';
 eval-lives-ok 'use A::A; use A::B; A::B::D ~~ A::B::B or die()',
               '... and the composition worked';

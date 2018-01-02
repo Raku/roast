@@ -116,15 +116,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     }
 
     # RT #126379
-    {
-        is_run q[Supply.interval(1).tap(-> { say 'hi' }); sleep 3;], {
-            status => 1,
-            err => /
-                'Unhandled exception in code scheduled on thread' .+
-                'Too many positionals' .+ 'expected 0 arguments but got 1'
-            /
-        }, '.tap block with incorrect signature must fail';
-    }
+    is_run q[Supply.interval(1).tap(-> { say 'hi' }); sleep 3;], {:1status},
+        '.tap block with incorrect signature must fail';
 
     # RT #128968
     subtest 'can use .emit as a method' => {

@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use lib <packages>;
 use Test;
 use Test::Util;
-plan 191;
+plan 210;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -661,6 +661,45 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
     diag 'The following test might STDERR about unfound command';
     lives-ok { qx/the-cake-is-a-lie-badfsadsadsadasdsadasdsadsadasdsadas/ },
       'qx// with a non-existent command does not die';
+}
+
+# [Issue 1204](https://github.com/rakudo/rakudo/issues/1204)
+{
+    my $x = '5 6';
+    my @a = 'a', 'b';
+
+    cmp-ok    qqww{   $x }, '!~~', Slip,  'Single interpolated Scalar does not return as Slip (qqww)';
+    is-deeply qqww:v{ $x }, ( <5>, <6> ), 'Single interpolated Scalar correct result (qqww:v)';
+    cmp-ok    << $x >>, '!~~', Slip,  'Single interpolated Scalar does not return as Slip (<< >>)';
+    is-deeply << $x >>, ( <5>, <6> ), 'Single interpolated Scalar correct result (<< >>)';
+
+    cmp-ok    qqww{ @a[] }, '!~~', Slip, 'Single interpolated Array does not return as Slip (qqww)';
+    is-deeply qqww{ @a[] }, ('a', 'b'),  'Single interpolated Array correct result (qqww)';
+    cmp-ok    << @a[] >>, '!~~', Slip, 'Single interpolated Array does not return as Slip (<< >>)';
+    is-deeply << @a[] >>, ('a', 'b'),  'Single interpolated Array correct result (<< >>)';
+
+    cmp-ok    qqww{ {21*2} }, '!~~', Slip, 'Single interpolated block does not return as Slip (qqww)';
+    is-deeply qqww:v[ {21*2} ], (<42>),    'Single interpolated block correct result (qqww:v)';
+    cmp-ok    << {21*2} >>, '!~~', Slip,   'Single interpolated block does not return as Slip (<< >>)';
+    is-deeply << {21*2} >>, (<42>),        'Single interpolated block correct result (<< >>)';
+
+    is-deeply << "$x" >>, '5 6', 'Single interpolated value in dbl quotes, preserves String';
+
+    is-deeply << z$x >>, ( 'z', <5>, <6> ),
+        'Literal directly precedes interpolated Scalar, no nested List produced';
+
+    is-deeply << z@a[] >>, ( 'z', 'a', 'b' ),
+        'Literal directly precedes interpolated Array, no nested List produced';
+    is-deeply << @a[]z >>, ( 'a', 'b', 'z' ),
+        'Literal directly follows interpolated Array, no nested List produced';
+
+    is-deeply << z{21*2} >>, ( 'z', <42> ),
+        'Literal directly precedes interpolated block, no nested List produced';
+    is-deeply << {21*2}z >>, ( <42>, 'z' ),
+        'Literal directly follows interpolated block, no nested List produced';
+
+    is-deeply << y{21*2}$x@a[]z >>, ( 'y', <42>, <5>, <6>, 'a', 'b', 'z' ),
+        'Literals directly bookend multiple interpolated, no nested Lists';
 }
 
 # vim: ft=perl6

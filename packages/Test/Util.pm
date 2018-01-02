@@ -265,6 +265,7 @@ END {
     unlink @FILES-FOR-make-temp-file;
     rmdir  @DIRS-FOR-make-temp-dir;
 }
+sub make-temp-path(|c) is export { make-temp-file |c }
 sub make-temp-file
     (:$content where Any:U|Blob|Cool, Int :$chmod --> IO::Path:D) is export
 {
@@ -280,7 +281,16 @@ sub make-temp-dir (Int $chmod? --> IO::Path:D) is export {
     p
 }
 
-sub fails-like (&test, $ex-type, $reason?, *%matcher) is export {
+multi no-fatal-throws-like (Str:D $test, |c) is export {
+    throws-like "no fatal; my \$ = do \{ $test }; Nil", |c;
+}
+multi no-fatal-throws-like (&test, |c) is export {
+    throws-like { no fatal; my $ = do { test }; Nil }, |c;
+}
+
+sub fails-like (
+    \test where Callable:D|Str:D, $ex-type, $reason?, *%matcher
+) is export {
     subtest $reason => sub {
         plan 2;
         CATCH { default {
@@ -290,7 +300,7 @@ sub fails-like (&test, $ex-type, $reason?, *%matcher) is export {
                 return False;
             }
         }}
-        my $res = test;
+        my $res = test ~~ Callable ?? test.() !! test.EVAL;
         isa-ok $res, Failure, 'code returned a Failure';
         throws-like { $res.sink }, $ex-type,
             'Failure threw when sunk', |%matcher,
@@ -508,6 +518,10 @@ Creates a semi-random path in C<$*TMPDIR>, optionally setting C<$chmod> and
 spurting C<$content> into it. If C<$chmod> is set, but C<$content> isn't,
 spurts an empty string. Automatically deletes the file with C<END> phaser.
 
+=head2  make-temp-path(:$content, :$chmod)
+
+Alias for C<make-temp-file>
+
 =head2 make-temp-dir($chmod?)
 
     sub make-temp-dir (Int $chmod? --> IO::Path:D)
@@ -545,6 +559,12 @@ STDIN and C<^D\b\b> chars after it when running Rakudo compiler.
 Note that some variations of C<script> command might be passing C/dev/null>
 as first argument to your code. This is due to current implementation of
 this test routine trying to ignore the generation of timing file.
+
+=head2 no-fatal-throws-like
+
+Same as Test.pm6's C<throws-like>, except wraps the given code into
+C<no fatal; my $ = do { … }; Nil>. The point of that is if the code merely
+does C<fail()> instead of C<throw()>, then the test will detect that and fail.
 
 =end pod
 

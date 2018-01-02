@@ -112,6 +112,7 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
 # RT #128034
 subtest 'split with NaN limit throws (RT #128034)', {
+    plan 3;
     throws-like { split 'o',        'o', NaN }, X::TypeCheck;
     throws-like { split /o/,        'o', NaN }, X::TypeCheck;
     throws-like { split @(1, 2, 3), 'o', NaN }, X::TypeCheck;

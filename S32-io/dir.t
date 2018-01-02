@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 16;
+plan 17;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -26,14 +26,11 @@ nok @files>>.relative.grep('.'|'..'), '"." and ".." are not returned';
 is +dir(:test).grep(*.basename eq '.'|'..'), 2, "... unless you override :test";
 nok dir( test=> none('.', '..', 't') ).grep(*.basename eq 't'), "can exclude t/ dir";
 
-# previous tests rewritten to not smartmatch against IO::Local.
-# Niecza also seems to need the ~, alas.
 nok @files.grep(*.basename eq '.'|'..'), '"." and ".." are not returned';
 is +dir(:test).grep(*.basename eq '.'|'..'), 2, "... unless you override :test";
 nok dir( test=> none('.', '..', 't') ).grep(*.basename eq 't'), "can exclude t/ dir";
 
-#?rakudo todo '$*CWD misses slash at end still RT #124787'
-is dir('t').[0].dirname, $*CWD ~ 't', 'dir("t") returns paths with .dirname of "t"';
+is dir('t').[0].dirname, 't', 'dir("t") returns paths with .dirname of "t"';
 
 # RT #123308
 {
@@ -53,7 +50,7 @@ is_run 'dir | say', {
     my $dir-str = $dir.absolute;
 
     my $tested = False;
-    @ = dir $dir, :CWD($dir), :test{
+    @ = dir IO::Path.new($dir, :CWD($dir)), :test{
         when 'foo.txt' {
             is-deeply $*CWD.absolute, $dir-str,
                 '$*CWD is set right inside dir(:test)';
@@ -70,6 +67,16 @@ subtest "dir-created IO::Paths' absoluteness controlled by invocant" => {
 
     @files = '.'.IO.absolute.IO.dir;
     cmp-ok +@files, '==', +@files.grep({    .is-absolute}), 'absolute invocant';
+}
+
+# RT #132675
+subtest '.dir with relative paths sets right CWD' => {
+    plan 3;
+    (((my $dir := make-temp-dir).add('meow').mkdir).add('foos')).spurt: 'pass';
+    is $dir.dir.head.add('foos').slurp, 'pass', 'right .dir with original path';
+    is $dir.add('meow').dir.head.slurp, 'pass', 'right .dir with .add-ed path';
+    is IO::Path.new('meow', :CWD($dir.absolute)).dir.head.slurp, 'pass',
+        'right .dir with relative path';
 }
 
 # vim: ft=perl6

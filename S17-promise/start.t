@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 60;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -247,4 +247,17 @@ lives-ok {
 	   }
 	});
     nok $wrong, 'No data races on closure interpolation in strings';
+}
+
+#?rakudo.jvm skip 'atomicint NYI'
+{ # https://github.com/rakudo/rakudo/issues/1323
+    # Await must be called in sink context here to trigger the covered bug.
+    # Gymnastics with atomic ints are just to reduce test runtime; the point
+    # of the test is that await awaits in this case for all Promises to
+    # complete instead of just returning immediately.
+    # (same test exists in 6.d tests on purpose; to cover Rakudo impl)
+    my atomicint $x;
+    sub p { start { sleep .3; $x⚛++ } }
+    await (((p(), (p(), (p(),))), (p(), p(), p())), (p(), p(), p()));
+    is-deeply $x, 9, '&await awaits in sink context, with nested iterables';
 }

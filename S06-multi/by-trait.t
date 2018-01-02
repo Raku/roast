@@ -43,7 +43,6 @@ plan 13;
     foo [];
     my $got;
     for ^500 { $got = foo $ = []; }
-    #?rakudo.jvm todo 'expected 1, got 2'
     is $got, 1, 'Optimization respects is rw';
 }
 

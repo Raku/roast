@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 14;
+plan 13;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -14,7 +14,7 @@ plan 14;
     my Str $gather = '';
     my Int $parent-counter = 0;
     my Int $child-counter = 0;
-    
+
     class Parent {
         submethod BUILD (:$a) {
             $parent-counter++;
@@ -35,9 +35,9 @@ plan 14;
 
     is $parent-counter, 1, "Called Parent's BUILD method once";
     is $child-counter, 1, "Called Child's BUILD method once";
-    is $calls, 'Parent | Child', 
+    is $calls, 'Parent | Child',
         'submethods were called in right order (Parent first)';
-    is $gather, 'Parent(a): (7) | Child(a, b): (7, 5)', 
+    is $gather, 'Parent(a): (7) | Child(a, b): (7, 5)',
         'submethods were called with the correct arguments';
 }
 
@@ -46,7 +46,7 @@ plan 14;
 {
     my $initlist = '';
     sub reg($x) { $initlist ~= $x };
-    
+
     class A_Parent1 {
         submethod BUILD() {
             reg('A_Parent1');
@@ -72,9 +72,9 @@ plan 14;
     }
 
     my $x;
-    lives-ok { $x = A_GrandChild.new() }, 
+    lives-ok { $x = A_GrandChild.new() },
         "can call child's methods in parent's BUILD";
-    ok ?($initlist eq 'A_Parent1A_Parent2A_ChildA_GrandChild' 
+    ok ?($initlist eq 'A_Parent1A_Parent2A_ChildA_GrandChild'
                     | 'A_Parent2A_Parent1A_ChildA_GrandChild'),
     'initilized called in the right order (MI)';
 }
@@ -118,11 +118,8 @@ plan 14;
 
 # RT #128393
 {
-    class Foo {
-        submethod BUILD { fail "noway" }
-    }
-    dies-ok { Foo.new }, "Foo.new dies when sunk";
-    ok Foo.new // "ok", "Foo.new can be caught as a Failure";
+    my class Foo { submethod BUILD { fail "noway" } }
+    fails-like { Foo.new }, X::AdHoc, :message<noway>, 'fail in BUILD works';
 }
 
 # RT #104980

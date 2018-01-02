@@ -67,8 +67,8 @@ ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 {
     #RT #126990
     throws-like { my Int $x = Inf }, X::TypeCheck::Assignment,
-        message => /'expected Int but got Num (Inf)'/,
-    "trying to assign Inf to Int gives a helpful error";
+        :got(Inf), :expected(Int),
+    'trying to assign Inf to Int gives a helpful error';
 
     my Num $x = Inf;
     is $x, Inf, 'assigning Inf to Num works without errors';

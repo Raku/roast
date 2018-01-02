@@ -340,11 +340,11 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     $uint16++;
     #?rakudo.jvm todo "uint16 increment in sink context doesn't work"
     is($uint16, 0, d 16);
-    my uint32 $uint32 = 0xffffffff;
+    my uint32 $uint32 = 0xffff_ffff;
     $uint32++;
     #?rakudo.jvm todo "uint32 increment in sink context doesn't work"
     is($uint32, 0, d 32);
-    my uint64 $uint64 = 0xffffffffffffffff;
+    my uint64 $uint64 = 0xffff_ffff_ffff_ffff;
     $uint64++;
     is($uint64, 0, d 64);
 }

@@ -298,7 +298,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
     throws-like '%h{"B".."C"}:k:v', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<k v>);
-    throws-like '%h{"B".."C"}:noshit', Exception; # caught by MMD
+    throws-like '%h{"B".."C"}:nostuff', Exception; # caught by MMD
     throws-like '%h{"B".."C"}:kv:p:zip:zop', X::Adverb,
       :source(%h.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20

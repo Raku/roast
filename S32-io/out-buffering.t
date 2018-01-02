@@ -2,7 +2,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 3;
+plan 4;
 
 sub test-out-buffer (
     Str:D $desc, &test, UInt:D :$buffer = 1000, UInt :$exp-bytes, Capture :$open-args = \(:w)
@@ -80,4 +80,19 @@ for \(:w), \(:rw), \(:a) -> $open-args {
             .flush;
         };
     }
+}
+
+# RT #131700
+#?rakudo.jvm skip 'hangs, RT #131700'
+#?DOES 1
+{
+  run-with-tty ｢say prompt "FOO"｣, :in<bar>,
+    # Here we use .ends-width because (currently) there's some sort of
+    # bug with Proc or something where sent STDIN ends up on our STDOUT.
+    # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
+    # 'cause MacOS's `script` really wants it or something
+    :out{ .contains: "FOO" & "bar" or do {
+        diag "Got STDOUT: {.perl}";
+        False;
+    }}, 'prompt does not hang';
 }
