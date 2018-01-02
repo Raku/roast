@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 16;
+plan 17;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -67,6 +67,16 @@ subtest "dir-created IO::Paths' absoluteness controlled by invocant" => {
 
     @files = '.'.IO.absolute.IO.dir;
     cmp-ok +@files, '==', +@files.grep({    .is-absolute}), 'absolute invocant';
+}
+
+# RT #132675
+subtest '.dir with relative paths sets right CWD' => {
+    plan 3;
+    (((my $dir := make-temp-dir).add('meow').mkdir).add('foos')).spurt: 'pass';
+    is $dir.dir.head.add('foos').slurp, 'pass', 'right .dir with original path';
+    is $dir.add('meow').dir.head.slurp, 'pass', 'right .dir with .add-ed path';
+    is IO::Path.new('meow', :CWD($dir.absolute)).dir.head.slurp, 'pass',
+        'right .dir with relative path';
 }
 
 # vim: ft=perl6
