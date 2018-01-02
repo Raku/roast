@@ -44,8 +44,8 @@ ok (my num $ = NaN) === (my num $ = NaN), "NaN value identity (native num)";
 {
     #RT #126990
     throws-like { my Int $x = NaN }, X::TypeCheck::Assignment,
-        message => /'expected Int but got Num (NaN)'/,
-    "trying to assign NaN to Int gives a helpful error";
+        :got(NaN), :expected(Int),
+    'trying to assign NaN to Int gives a helpful error';
 
     my Num $x = NaN;
     is $x, NaN, 'assigning NaN to Num works without errors';
