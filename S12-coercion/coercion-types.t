@@ -45,7 +45,6 @@ class NastyChild is Parent { };
     sub f1(Str:D(Cool:D) $x) { $x }
     sub f2(Str(Cool:D)   $x) { $x; }
 
-    #?rakudo todo 'fails for wrong reason RT #126433'
     throws-like { EVAL 'f1(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected\sCool\:D/;
     #?rakudo.jvm todo 'error message says "expected ?:? but got Cool(Cool)"'
     throws-like { EVAL 'f2(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected\sCool\:D/;
