@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 68;
+plan 88;
 my ($r, $s);
 
 my $p = 0;
@@ -103,7 +103,9 @@ isa-ok $r, Pod::FormattingCode;
 #   RT #132632 - List and hash configuration value formats are not yet
 #                implemented (NYI)
 
+#====================================================
 #=== strings
+#====================================================
 =begin table :k1<str> :k2('str') :k3("str") :k4["str"] :k5(Q[str])
 foo
 =end table
@@ -123,26 +125,54 @@ is $r.config<k3>, $s, Q|"str"|;
 is $r.config<k4>, $s, Q|"str"|;
 is $r.config<k4>, $s, Q|using a Q/q quote|;
 
-#=== nums and ints
-=begin table :k1<1> :k2(2) :k3[2] :k4(2.3) :k5[2.3]
+#====================================================
+#=== ints
+#====================================================
+
+=begin table :k1<1> :k2(2) :k3[2] :k4[+2000000000] :k5[-2000000000] :k6[+99999999999999999999]
 foo
 =end table
 
 $r = $=pod[$p++];
-say "=== testing string, ints, and nums";
+say "=== testing string and ints";
 isa-ok $r.config<k1>, Str;
 isa-ok $r.config<k2>, Int;
 isa-ok $r.config<k3>, Int;
-isa-ok $r.config<k4>, Num;
-isa-ok $r.config<k5>, Num;
+isa-ok $r.config<k4>, Int;
+isa-ok $r.config<k5>, Int;
+isa-ok $r.config<k6>, Str;
 
 is $r.config<k1>, '1', Q|'1'|;
 is $r.config<k2>, 2, Q|2|;
 is $r.config<k3>, 2, Q|2|;
-is $r.config<k4>, 2.3, Q|2.3|;
-is $r.config<k5>, 2.3, Q|2.3|;
+is $r.config<k4>, 2_000_000_000, Q|+2000000000|;
+is $r.config<k5>, -2_000_000_000, Q|-2000000000|;
+is $r.config<k6>, '+99999999999999999999', Q|+99999999999999999999|;
+#====================================================
+#=== nums
+#====================================================
 
+=begin table :k1(2.3) :k2[-2.3] :k3[+1e4] :k4(3.1e+04) :k5[-3.1E-04]
+foo
+=end table
+
+$r = $=pod[$p++];
+say "=== testing nums";
+isa-ok $r.config<k1>, Num;
+isa-ok $r.config<k2>, Num;
+isa-ok $r.config<k3>, Num;
+isa-ok $r.config<k4>, Num;
+isa-ok $r.config<k5>, Num;
+
+is $r.config<k1>, 2.3, Q|2.3|;
+is $r.config<k2>, -2.3, Q|-2.3|;
+is $r.config<k3>, +1e4, Q|+1e4|;
+is $r.config<k4>, 3.1e+04, Q|3.1e+04|;
+is $r.config<k5>, -3.1E-04, Q|-3.1E-04|;
+
+#====================================================
 #=== bools
+#====================================================
 =begin table :k1 :!k2 :k3(True) :k4[True] :k5(False) :k6[False]
 foo
 =end table
@@ -163,22 +193,9 @@ ok $r.config<k4>, Q|:key[True]|;
 nok $r.config<k5>, Q|:key(False)|;
 nok $r.config<k6>, Q|:key[False]|;
 
-#=== hashes
-say "=== testing hashes";
-=begin table :k1{a => 1, 2 => 'b', c => True, d => 2.3, e => False}
-foo
-=end table
-
-$r = $=pod[$p++];
-isa-ok $r.config<k1>, Hash;
-
-is $r.config<k1><a>, 1, Q|1|;
-is $r.config<k1><2>, 'b', Q|'b'|;
-ok $r.config<k1><c>, Q|True|;
-is $r.config<k1><d>, 2.3, Q|2.3|;
-nok $r.config<k1><e>, Q|False|;
-
+#====================================================
 #=== lists
+#====================================================
 say "=== testing lists";
 =begin table :k1(1, 'b c', 2.3, True, False) :k2[1, 'b c', 2.3, True, False]
 foo
@@ -199,3 +216,48 @@ is $r.config<k2>[1], "b c", Q|'b c'|;
 is $r.config<k2>[2], 2.3, Q|2.3|;
 ok $r.config<k2>[3], Q|True|;
 nok $r.config<k2>[4], Q|False|;
+
+#====================================================
+#=== hashes
+#====================================================
+say "=== testing hashes";
+=begin table :k1{a => 1, 2 => 'b', c => True, d => 2.3, e => False}
+foo
+=end table
+
+$r = $=pod[$p++];
+isa-ok $r.config<k1>, Hash;
+
+is $r.config<k1><a>, 1, Q|1|;
+is $r.config<k1><2>, 'b', Q|'b'|;
+ok $r.config<k1><c>, Q|True|;
+is $r.config<k1><d>, 2.3, Q|2.3|;
+nok $r.config<k1><e>, Q|False|;
+
+#====================================================
+#=== troublesome hashes
+#====================================================
+say "=== testing troublesome hashes";
+=begin table :k1{2 => 'b => ?', c => ",", d => 2.3}
+foo
+=end table
+
+$r = $=pod[$p++];
+isa-ok $r.config<k1>, Hash;
+
+is $r.config<k1><2>, 'b => ?', Q|'b => ?'|;
+is $r.config<k1><c>, ",", Q|","|;
+is $r.config<k1><d>, 2.3, Q|2.3|;
+
+=begin table :k1{2 , 'b => "', d => '"', 4 => "\""}
+foo
+=end table
+
+$r = $=pod[$p++];
+isa-ok $r.config<k1>, Hash;
+
+is $r.config<k1><2>, 'b => "', Q|'b => "'|;
+is $r.config<k1><d>, '"', Q|'"'|;
+is $r.config<k1><4>, "\"", Q|"\""|;
+
+
