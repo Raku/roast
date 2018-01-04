@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 20;
+plan 28;
 
 # coercion types in parameter lists
 {
@@ -101,6 +101,148 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
 {
     my \a = -42;
     is Int(a), -42, "Sigilless variable does not confuse coercion type parsing";
+}
+
+subtest ':D DefiniteHow target (core types)' => {
+    plan 4;
+    is-deeply -> Int:D(Cool)   $x { $x }("42"), 42, 'type';
+    is-deeply -> Int:D(Cool:D) $x { $x }("42"), 42, ':D smiley';
+    is-deeply -> Int:D()       $x { $x }("42"), 42, 'implied Any';
+    is-deeply -> Array:D(List:U) $x { $x }(List), [List,], ':U smiley';
+
+    is-deeply -> Int:D(Cool)   $x { $x }("42"), 42, 'type';
+    is-deeply -> Int:D(Cool:D) $x { $x }("42"), 42, ':D smiley';
+    is-deeply -> Int:D()       $x { $x }("42"), 42, 'implied Any';
+    is-deeply -> Array:D(List:U) $x { $x }(List), [List,], ':U smiley';
+}
+
+subtest ':U DefiniteHow target (core types)' => {
+    plan 3;
+    is-deeply -> Date:U(DateTime)   $x { $x }(DateTime), Date, 'type';
+    is-deeply -> Date:U(DateTime:U) $x { $x }(DateTime), Date, ':U smiley';
+    is-deeply -> Date:U()       $x { $x }(DateTime), Date, 'implied Any';
+}
+
+subtest 'DefiniteHow target, errors' => {
+    plan 4;
+    my \XPIC = X::Parameter::InvalidConcreteness;
+    throws-like ｢-> Date:D(DateTime)   {}(DateTime)｣, XPIC, 'type, bad source';
+    throws-like ｢-> Date:D(DateTime:D) {}(DateTime)｣, XPIC, ':D, bad source';
+    throws-like ｢-> Date:D(DateTime:U) {}(DateTime)｣, XPIC, ':U, bad target';
+    throws-like ｢-> Date:D() {}(DateTime)｣, XPIC, 'implied, bad target';
+}
+
+subtest 'DefiniteHow target, errors, source is already target' => {
+    plan 4;
+    my \XPIC = X::Parameter::InvalidConcreteness;
+    throws-like ｢-> Date:D(DateTime)   {}(Date)｣, XPIC, 'type';
+    throws-like ｢-> Date:D(DateTime:D) {}(Date)｣, XPIC, ':D';
+    throws-like ｢-> Date:D(DateTime:U) {}(Date)｣, XPIC, ':U';
+    throws-like ｢-> Date:D() {}(Date)｣,           XPIC, 'implied';
+}
+
+{
+    my class Target {}
+    my class Source  { method Target { self.DEFINITE ?? Target.new !! Target } }
+    my class SourceU { method Target { self.DEFINITE ?? Target !! Target.new } }
+    my class SubSource  is Source  {}
+    my class SubSourceU is SourceU {}
+
+    subtest ':D DefiniteHow target (arbitrary types; from source)' => {
+        plan 6;
+        is-deeply -> Target:D(Source)   $x { $x }(Source.new), Target.new,
+            'from type';
+        is-deeply -> Target:D(Source:D) $x { $x }(Source.new), Target.new,
+            'from :D smiley';
+        is-deeply -> Target:D(Source:U) $x { $x }(SourceU),    Target.new,
+            'from :U smiley';
+        is-deeply -> Target:D(Any)      $x { $x }(Source.new), Target.new,
+            'from Any';
+        is-deeply -> Target:D(Any:D)    $x { $x }(Source.new), Target.new,
+            'from Any:D';
+        is-deeply -> Target:D()         $x { $x }(Source.new), Target.new,
+            'from implied Any';
+    }
+
+    subtest ':D DefiniteHow target (arbitrary types; from source subclass)' => {
+        plan 6;
+        is-deeply -> Target:D(Source)   $x { $x }(SubSource.new), Target.new,
+            'from type';
+        is-deeply -> Target:D(Source:D) $x { $x }(SubSource.new), Target.new,
+            'from :D smiley';
+        is-deeply -> Target:D(Source:U) $x { $x }(SubSourceU),    Target.new,
+            'from :U smiley';
+        is-deeply -> Target:D(Any)      $x { $x }(SubSource.new), Target.new,
+            'from Any';
+        is-deeply -> Target:D(Any:D)    $x { $x }(SubSource.new), Target.new,
+            'from Any:D';
+        is-deeply -> Target:D()         $x { $x }(SubSource.new), Target.new,
+            'from implied Any';
+    }
+
+    subtest ':D DefiniteHow target (arbitrary types; already target)' => {
+        plan 6;
+        is-deeply -> Target:D(Source)   $x { $x }(Target.new), Target.new,
+            'from type';
+        is-deeply -> Target:D(Source:D) $x { $x }(Target.new), Target.new,
+            'from :D smiley';
+        is-deeply -> Target:D(Source:U) $x { $x }(Target.new), Target.new,
+            'from :U smiley';
+        is-deeply -> Target:D(Any)      $x { $x }(Target.new), Target.new,
+            'from Any';
+        is-deeply -> Target:D(Any:D)    $x { $x }(Target.new), Target.new,
+            'from Any:D';
+        is-deeply -> Target:D()         $x { $x }(Target.new), Target.new,
+            'from implied Any';
+    }
+
+    subtest ':U DefiniteHow target (arbitrary types; from source)' => {
+        plan 6;
+        is-deeply -> Target:U(Source)   $x { $x }(Source),      Target,
+            'from type';
+        is-deeply -> Target:U(Source:D) $x { $x }(SourceU.new), Target,
+            'from :D smiley';
+        is-deeply -> Target:U(Source:U) $x { $x }(Source),      Target,
+            'from :U smiley';
+        is-deeply -> Target:U(Any)      $x { $x }(Source),      Target,
+            'from Any';
+        is-deeply -> Target:U(Any:U)    $x { $x }(Source),      Target,
+            'from Any:U';
+        is-deeply -> Target:U()         $x { $x }(Source),      Target,
+            'from implied Any';
+    }
+
+    subtest ':U DefiniteHow target (arbitrary types; from source subclass)' => {
+        plan 6;
+        is-deeply -> Target:U(Source)   $x { $x }(SubSource),      Target,
+            'from type';
+        is-deeply -> Target:U(Source:D) $x { $x }(SubSourceU.new), Target,
+            'from :D smiley';
+        is-deeply -> Target:U(Source:U) $x { $x }(SubSource),      Target,
+            'from :U smiley';
+        is-deeply -> Target:U(Any)      $x { $x }(SubSource),      Target,
+            'from Any';
+        is-deeply -> Target:U(Any:U)    $x { $x }(SubSource),      Target,
+            'from Any:U';
+        is-deeply -> Target:U()         $x { $x }(SubSource),      Target,
+            'from implied Any';
+    }
+
+    subtest ':U DefiniteHow target (arbitrary types; already target)' => {
+        plan 6;
+        is-deeply -> Target:U(Source)   $x { $x }(Target), Target,
+            'from type';
+        is-deeply -> Target:U(Source:D) $x { $x }(Target), Target,
+            'from :D smiley';
+        is-deeply -> Target:U(Source:U) $x { $x }(Target), Target,
+            'from :U smiley';
+        is-deeply -> Target:U(Any)      $x { $x }(Target), Target,
+            'from Any';
+        is-deeply -> Target:U(Any:D)    $x { $x }(Target), Target,
+            'from Any:D';
+        is-deeply -> Target:U()         $x { $x }(Target), Target,
+            'from implied Any';
+    }
 }
 
 # vim: ft=perl6
