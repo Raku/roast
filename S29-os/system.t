@@ -102,51 +102,61 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
         'LAST phaser gets triggered when using -n command line switch';
 }
 
-# all these tests feel like bogus, what are we testing here???
-subtest '&chdir changes the directory processes are spawned in' => {
-    plan 2;
+subtest "run and shell's :cwd" => {
+    plan 4;
+    my @run-cmd   = $*DISTRO.is-win ?? ('cmd.exe', '/C', 'echo %CD%')
+                                    !! ('/bin/sh', '-c', 'echo $PWD');
+    my $shell-cmd = $*DISTRO.is-win ?? 'echo %CD%'
+                                    !! 'echo $PWD';
 
-    my $cwd = $*CWD;
-    LEAVE chdir $cwd;
+    indir (my $cwd = make-temp-dir.absolute), {
+        (my $p = run @run-cmd, :!err, :out)
+            ?? is $p.out.slurp(:close).trim, $cwd, 'run() defaults to $*CWD'
+            !! skip "could not run @run-cmd[]";
 
-    my $env = %*ENV andthen {
-        .<PATH> = join(':', $*EXECUTABLE.parent, %*ENV<PATH>);
+        (my $s = shell $shell-cmd, :!err, :out)
+            ?? is $s.out.slurp(:close).trim, $cwd, 'shell() defaults to $*CWD'
+            !! skip "could not shell $shell-cmd";
     }
 
-    my $qqx-cmd = "{$*EXECUTABLE.basename} -e '{q|$*CWD.absolute.print|}'";
-    my @run-cmd = $*EXECUTABLE.basename, '-e', '$*CWD.absolute.print';
+    (my $p = run @run-cmd, :!err, :out, :$cwd)
+        ?? is $p.out.slurp(:close).trim, $cwd, 'run() accepts :cwd'
+        !! skip "could not run :cwd, @run-cmd[]";
 
-    my $qqx-cwd-before = qqx{$qqx-cmd.split(' ')};
-    my $run-dir-before = run(@run-cmd, :out).out.slurp(:close);
-
-    chdir 't';
-
-    my $qqx-cwd-after = qqx{$qqx-cmd.split(' ')};
-    my $run-dir-after = run(@run-cmd, :out).out.slurp(:close);
-
-    isnt $qqx-cwd-before, $qqx-cwd-after, 'qqx{} is affected by chdir()';
-    isnt $run-dir-before, $run-dir-after, 'run() is affected by chdir()';
+    (my $s = shell $shell-cmd, :!err, :out, :$cwd)
+        ?? is $s.out.slurp(:close).trim, $cwd, 'shell() accepts :cwd'
+        !! skip "could not shell :cwd, $shell-cmd";
 }
 
-# https://irclog.perlgeek.de/perl6-dev/2017-06-13#i_14727506
-subtest ':cwd(...) changes the directory processes are spawned in' => {
-    plan 1;
+subtest "run and shell's :env" => {
+    plan 4;
 
-    my $new-cwd = make-temp-dir;
-    $new-cwd.add('blah').spurt: 'Testing';
+    my $script    = (make-temp-file :content('%*ENV<PERL6_RUN_SHELL_ENV_TEST>.print')).absolute;
+    my @run-cmd   = $*EXECUTABLE, $script;
+    my $shell-cmd = ~@run-cmd;
+    my $test-str  = 'meows';
 
-    my $env = %*ENV andthen {
-        .<FOOMEOW> = 42;
-        .<PATH> = join(':', $*EXECUTABLE.parent, %*ENV<PATH>);
+    {
+        (my $env := %*ENV.clone)<PERL6_RUN_SHELL_ENV_TEST> = $test-str;
+        (my $p = run @run-cmd, :!err, :out, :$env)
+            ?? is $p.out.slurp(:close).trim, $test-str, 'run() accepts :env'
+            !! skip "could not run :env, @run-cmd[]";
+
+        (my $s = shell $shell-cmd, :!err, :out, :$env)
+            ?? is $s.out.slurp(:close).trim, $test-str, 'shell() accepts :env'
+            !! skip "could not shell :env, $shell-cmd";
     }
 
-    my $proc = run(:out, :!err, :cwd($new-cwd.absolute), :$env,
-        $*EXECUTABLE.basename, '-e', 'q|blah|.IO.slurp.print; %*ENV<FOOMEOW>.print;'
-    );
+    {
+        temp %*ENV<PERL6_RUN_SHELL_ENV_TEST> = $test-str;
+        (my $p = run @run-cmd, :!err, :out)
+            ?? is $p.out.slurp(:close).trim, $test-str, 'run() defaults to %*ENV'
+            !! skip "could not run @run-cmd[]";
 
-    my $output = $proc.out.slurp(:close).join;
-
-    is $output, 'Testing42', 'run sets $cwd and $env';
+        (my $s = shell $shell-cmd, :!err, :out)
+            ?? is $s.out.slurp(:close).trim, $test-str, 'shell() defaults to %*ENV'
+            !! skip "could not shell $shell-cmd";
+    }
 }
 
 subtest '.out/.err proc pipes on failed command' => {
