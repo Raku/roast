@@ -770,8 +770,8 @@ subtest 't method' => {
     my $tty = do {
         my $tt = shell :out, :err, 'tty';
         if $tt and (my $path = $tt.out.slurp(:close).trim)
-          and $path ne 'not a tty' {
-            $path.IO.open;
+          and $path ne 'not a tty' and my $fh = $path.IO.open {
+            $fh
         }
         else {
             make-temp-file(:content<foo>).open

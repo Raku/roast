@@ -111,9 +111,9 @@ subtest '.t returns True for TTY' => {
     plan 1;
     my $tt = shell :out, :err, 'tty';
     if $tt and (my $path = $tt.out.slurp(:close).trim)
-      and $path ne 'not a tty' {
-        my $fh will leave {.close} = $path.IO.open;
-        is-deeply $fh.t, True, '.t on a TTY handle'
+      and $path ne 'not a tty' and my $fh = $path.IO.open {
+        is-deeply $fh.t, True, '.t on a TTY handle';
+        $fh.close;
     }
     else {
         skip 'could not figure out how to get a TTY handle'
