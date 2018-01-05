@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 123;
+plan 125;
 
 # construction
 {
@@ -12,6 +12,8 @@ plan 123;
 
     # RT #127016
     dies-ok { Date.new(Int, 1, 1) }, 'dies when its year is given as an Int type object';
+    lives-ok { Date.new(2010, 12/2, 3) }, 'Date.new(2010, 12/2, 3)';
+    lives-ok { Date.new('2018', '1', '4') }, "Date.new('2018', '1', '4')";
 
     lives-ok { Date.new(:year(2010), :month(1), :day(1)) }, 'named arguments';
     lives-ok { Date.today }, 'Date.today';
