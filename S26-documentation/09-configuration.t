@@ -74,8 +74,8 @@ isa-ok $r, Pod::FormattingCode;
 
 #  Value is...       Specify with...           Or with...            Or with...
 #  ===============   =======================   =================   ===========
-#  List              :key[$e1,$e2,...]         :key($e1,$e2,...)   # NYI
-#  Hash              :key{$k1=>$v1,$k2=>$v2}                       # NYI
+#  List              :key[$e1,$e2,...]         :key($e1,$e2,...)
+#  Hash              :key{$k1=>$v1,$k2=>$v2}
 #  Boolean (true)    :key                      :key(True)
 #  Boolean (false)   :!key                     :key(False)
 #  String            :key<str>                 :key('str')         :key("str")
@@ -259,5 +259,3 @@ isa-ok $r.config<k1>, Hash;
 is $r.config<k1><2>, 'b => "', Q|'b => "'|;
 is $r.config<k1><d>, '"', Q|'"'|;
 is $r.config<k1><4>, "\"", Q|"\""|;
-
-
