@@ -12,7 +12,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 63;
+plan 65;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -125,6 +125,8 @@ ok("aaaabbbbbcaaab" ~~ /^<@foo>+$/, 'Multiple array compiling');
 # L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
 throws-like  '/%var/', X::Syntax::Reserved, 'cannot interpolate hashes into regexes';
 throws-like 'm/%var/', X::Syntax::Reserved, 'cannot interpolate hashes into regexes';
+throws-like 'my $x = { a => 1 }; "a" ~~ m/$x/', X::Syntax::Reserved, 'cannot interpolate hashes into regexes, runtime';
+throws-like 'my $x := { a => 1 }; "a" ~~ m/$x/', X::Syntax::Reserved, 'cannot interpolate hashes into regexes, runtime (binding)';
 
 # L<S05/Variable (non-)interpolation/If $var is undefined>
 # This is similar to a test in S05-match/capturing-contexts.t
