@@ -44,7 +44,7 @@ multi sub client(&code) {
         else {
             $v.break($sr.cause);
         }
-    }); 
+    });
     $p
 }
 
@@ -83,7 +83,7 @@ multi sub client(Blob $message, Blob $second?) {
             }
         });
         my $buf = Buf[uint8].new;
-        $socket.Supply(:bin).act(-> $bytes { 
+        $socket.Supply(:bin).act(-> $bytes {
                 $buf ~= $bytes;
             },
             done => {
