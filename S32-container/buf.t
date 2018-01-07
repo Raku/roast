@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 # L<S32::Containers/Classes and Roles/"=item Buf">
 
@@ -192,5 +192,9 @@ subtest '.gist shows only first 100 els' => {
 # RT #127756
 is-deeply Buf.allocate(10, (1,2,3)).reallocate(0).reallocate(5),
     Buf.new(0, 0, 0, 0, 0), 'resized Bufs do not have leftover values';
+
+# https://github.com/rakudo/rakudo/commit/7ba50d8647
+is-deeply Buf.new(1 xx 2)».join, ("1", "1"),
+    'no explosions when hypering .join over a Blob';
 
 # vim: ft=perl6
