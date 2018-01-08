@@ -134,7 +134,7 @@ constant indiana-pi = 3;
 }
 
 # RT #128964
-#?rakudo.jvm skip 'RT #128964 Type check failed for return value; expected ?(?) but got Int (42)'
+#?rakudo.jvm skip 'RT #128964 Type check failed for return value; expected Str(Any) but got Int (42)'
 #?DOES 1
 {
     subtest 'type coercions work in returns' => {
