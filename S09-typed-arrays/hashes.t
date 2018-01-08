@@ -11,7 +11,7 @@ plan 44;
 {
     my Int %h;
     is %h.of,    Int, 'my Int %h declares a Hash of Int';
-    #?rakudo.jvm todo 'info about parametric type is lost; RT #132673'
+    #?rakudo.jvm todo 'Coercion type Str(Any) returned from .keyof is not the same object as Str(Any) RT #132694'
     is %h.keyof, Str(Any), 'my Int %h declares a Hash with Str(Any) keys';
     lives-ok { %h = (a => 3, b => 7) }, 'can assign Ints to an Hash of Int';
     lives-ok { %h<foo> = 8           }, 'can assign Int to hash slot';
