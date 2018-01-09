@@ -51,7 +51,6 @@ isa-ok 4 !=:= 5, Bool, "4 !=:= 5 is Bool";
 # Tests based on http://irclog.perlgeek.de/perl6/2012-01-24#i_5045770
 # and the next few minutes of log.  --colomon
 throws-like '"a" !!eq "a"', X::Syntax::Confused, 'Doubled prefix:<!> is illegal';
-#?rakudo.jvm 2 skip "Can not invoke object '' probably Rakudo GH #1304"
 ok "a" ![!eq] "a", '![!eq] is legal and works (1)';
 nok "a" ![!eq] "b", '![!eq] is legal and works (2)';
 
@@ -76,7 +75,6 @@ is &[!===](1,2), True, "Meta not can autogen (!===) with &[]";
 subtest 'chaining of !before/!after' => {
     plan 12;
 
-    #?rakudo.jvm 2 skip "Can not invoke object '' probably Rakudo GH #1304"
     is-deeply ("a" !after  "b" !after  "c"), True,  '!after/!after (Str)';
     is-deeply ("a" !before "b" !before "c"), False, '!before/!before (Str)';
 
@@ -86,7 +84,6 @@ subtest 'chaining of !before/!after' => {
     is-deeply ("c" !before "a" !after  "b"), True,  '!before/!after (Str) (2)';
     is-deeply ("a" !after  "c" !before "b"), False, '!after/!before (Str) (2)';
 
-    #?rakudo.jvm 2 skip "Can not invoke object '' probably Rakudo GH #1304"
     is-deeply (1 !after  2 !after  3), True,  '!after/!after (Int)';
     is-deeply (1 !before 2 !before 3), False, '!before/!before (Int)';
 

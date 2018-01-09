@@ -148,9 +148,9 @@ is(0 == 0 ~~ (* == 0), 0 ~~ 0 && 0 ~~ (* == 0), "chained smartmatch == ~~ with c
     is($a ~~ $b ~~ $c, $a ~~ $b && $b ~~ $c, "chained smartmatch ~~ ~~ with variables false");
 }
 
-#?rakudo.jvm 4 skip "Can not invoke object '' probably Rakudo GH #1304"
 is  1 !before 2 !before 3,  1 !before 2 && 2 !before 3,  'chained !before';
 is  1 !after 2 !after 2,  1 !after 2 && 2 !after 2,  'chained !after';
+#?rakudo.jvm 2 todo 'Chainable ops silently fail to be chained when negated R#1304'
 is  3 !> 3 !> 1,  3 !> 3 && 3 !> 1,  'chained !>';
 is  3 !< 3 !< 2,  3 !< 3 && 3 !< 2,  'chained !<';
 
