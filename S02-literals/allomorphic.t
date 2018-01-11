@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 110;
+plan 112;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -341,4 +341,40 @@ subtest '.ACCEPTS' => {
     cmp-ok val(<1 2 3>     ), '!~~', Slip, 'val List candidate returns List by default (1)';
     isa-ok val(<1 2 3>     ), List, 'val List candidate returns List by default (2)';
     isa-ok val(<1 2 3>.Slip), Slip, 'val List candidate preserves slip-ness if passed Slip';
+}
+
+# https://github.com/rakudo/rakudo/issues/1387
+subtest '.succ on allomorphs' => {
+    # math on allomorphs collapses them to standard numerics
+    plan 5*my @tests = <2> => 3, <2e0> => 3e0, <2.1> => 3.1, <2+1i > => <3+1i>;
+
+    for @tests -> (:key($from), :value($to)) {
+        is-deeply $from.succ, $to, '.succ';
+
+        my $post = $from;
+        is-deeply $post++, $from, 'postincrement, return value';
+        is-deeply $post,   $to,   'postincrement, result';
+
+        my $pre = $from;
+        is-deeply ++$pre, $to, 'preincrement, return value';
+        is-deeply   $pre, $to, 'preincrement, result';
+    }
+}
+
+# https://github.com/rakudo/rakudo/issues/1387
+subtest '.pred on allomorphs' => {
+    # math on allomorphs collapses them to standard numerics
+    plan 5*my @tests = <2> => 1, <2e0> => 1e0, <2.1> => 1.1, <2+1i > => <1+1i>;
+
+    for @tests -> (:key($from), :value($to)) {
+        is-deeply $from.pred, $to, '.pred';
+
+        my $post = $from;
+        is-deeply $post--, $from, 'postdecrement, return value';
+        is-deeply $post,   $to,   'postdecrement, result';
+
+        my $pre = $from;
+        is-deeply --$pre, $to, 'predecrement, return value';
+        is-deeply   $pre, $to, 'predecrement, result';
+    }
 }
