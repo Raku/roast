@@ -1,6 +1,7 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
 =begin description
 
@@ -12,7 +13,7 @@ it is closely related to || and && and //.
 
 =end description
 
-plan 83;
+plan 84;
 
 my $accum = '';
 sub f1($s)   { $accum ~= $s; 1 }
@@ -287,6 +288,17 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
     my $x = SomeRole;
     $x //= SomeRole.new;
     ok $x.defined, '//= can cope with role type objects';
+}
+
+# https://github.com/rakudo/rakudo/issues/1389
+subtest 'xor warns when used with bad precedence' => {
+    plan 3;
+    is_run ｢uc 'foo' xor 'bar'｣, {:err{.contains: 'Useless' & 'bar' & none 'foo'}}, '2-arg';
+    is_run ｢uc 'foo' xor 'bar' xor 'ber' xor 'baz'｣,
+        {:err{.contains: <Useless bar ber baz>.all & none 'foo'}}, '4-arg';
+    is_run ｢uc 'foo' xor 'bar'.uc xor 'ber'.uc xor 'baz'｣,
+        {:err{.contains: <Useless baz>.all & <foo bar ber>.none}},
+        '4-arg, with all but last args wanted';
 }
 
 # vim: ft=perl6
