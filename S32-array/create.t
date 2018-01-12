@@ -22,6 +22,7 @@ is(+$array_obj, 3, 'Finding the length functions properly.');
 }
 
 { # coverage; 2016-09-21
+    #?rakudo.jvm skip 'setcodeobj can only be used with a CodeRef'
     is-deeply circumfix:<[ ]>(), $[], 'circumfix:<[ ]>() creates Array';
     is-deeply [],                $[], '[ ] creates Array';
 }
