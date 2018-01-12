@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 299;
+plan 301;
 
 
 # tests various assignment styles
@@ -967,6 +967,12 @@ sub l () { 1, 2 };
 
     my $thunky3 = 0; 42 orelse= $thunky3++;
     is-deeply $thunky3, 0, 'orelse= thunks RHS';
+}
+
+{ # https://irclog.perlgeek.de/perl6-dev/2018-01-12#i_15681388
+    my $a; $a -= 2;
+    is-deeply $a, -2, '-= with :U target gives right result';
+    throws-like ｢my $b; $b %= 2｣, Exception, '%= with :U target throws';
 }
 
 # vim: ft=perl6
