@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 88;
+plan 94;
 my ($r, $s);
 
 my $p = 0;
@@ -128,8 +128,10 @@ is $r.config<k4>, $s, Q|using a Q/q quote|;
 #====================================================
 #=== ints
 #====================================================
-
-=begin table :k1<1> :k2(2) :k3[2] :k4[+2000000000] :k5[-2000000000] :k6[+99999999999999999999]
+#   max val int (int32): +2_147_483_647 <= 10 digits
+#   max val int (int64): +9_223_372_036_854_775_807 <= 19 digits
+# TODO make a dynamic test that changes config test with hardware int bit size
+=begin table :k1<1> :k2(2) :k3[2] :k4[+2000000000] :k5[-2000000000] :k6[+99999999999999999] :k7[-99999999999999999]
 foo
 =end table
 
@@ -140,14 +142,18 @@ isa-ok $r.config<k2>, Int;
 isa-ok $r.config<k3>, Int;
 isa-ok $r.config<k4>, Int;
 isa-ok $r.config<k5>, Int;
-isa-ok $r.config<k6>, Str;
+isa-ok $r.config<k6>, Int;
+isa-ok $r.config<k7>, Int;
 
 is $r.config<k1>, '1', Q|'1'|;
 is $r.config<k2>, 2, Q|2|;
 is $r.config<k3>, 2, Q|2|;
 is $r.config<k4>, 2_000_000_000, Q|+2000000000|;
 is $r.config<k5>, -2_000_000_000, Q|-2000000000|;
-is $r.config<k6>, '+99999999999999999999', Q|+99999999999999999999|;
+# bigints with 18 digits each:
+is $r.config<k6>, +99999999999999999, Q|+99999999999999999|;
+is $r.config<k7>, -99999999999999999, Q|-99999999999999999|;
+
 #====================================================
 #=== nums
 #====================================================
@@ -259,3 +265,19 @@ isa-ok $r.config<k1>, Hash;
 is $r.config<k1><2>, 'b => "', Q|'b => "'|;
 is $r.config<k1><d>, '"', Q|'"'|;
 is $r.config<k1><4>, "\"", Q|"\""|;
+
+#====================================================
+#=== bigints
+#====================================================
+
+# 30 digits
+=begin table :k6[+999999999999999999999999999999] :k7[-999999999999999999999999999999]
+foo
+=end table
+$r = $=pod[$p++];
+say "=== testing string and ints";
+# bigints with 30 digits each:
+isa-ok $r.config<k6>, Int;
+isa-ok $r.config<k7>, Int;
+is $r.config<k6>,  999_999_999_999_999_999_999_999_999_999, Q|+9 ** 30|;
+is $r.config<k7>, -999_999_999_999_999_999_999_999_999_999, Q|-9 ** 30|;
