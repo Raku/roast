@@ -37,7 +37,7 @@ plan 299;
 }
 
 {
-    # swap two elements in the same array 
+    # swap two elements in the same array
     # (moved this from array.t)
     my @a = 1 .. 5;
     @a[0,1] = flat @a[1,0];
@@ -126,10 +126,10 @@ plan 299;
 
     is($a,1,"'\$a' is '1'?: (\$,\$,\$) = 1 .. 3");
     is($b,2,"'\$b' is '2'?: (\$,\$,\$) = 1 .. 3");
-    is($c,3,"'\$c' is '3'?: (\$,\$,\$) = 1 .. 3"); 
+    is($c,3,"'\$c' is '3'?: (\$,\$,\$) = 1 .. 3");
     is(@a,'1 2 3',"'@a' is '1 2 3'?:        @a = 1 .. 3");
     is($s,'1',    "\$s is '1'?:    my (\$s,@a) = 1 .. 3");
-    is(@b,'2 3',  "'@b' is '2 3'?: my (\$s,@a) = 1 .. 3"); 
+    is(@b,'2 3',  "'@b' is '2 3'?: my (\$s,@a) = 1 .. 3");
 }
 
 # RT #74302
@@ -154,7 +154,7 @@ plan 299;
     is(@b[2], 401, "... and third");
 }
 
-{ 
+{
     my @c;
     my @d;
     (@c[1, 2], @c[3], @d) = 100, 200, 300, 400, 500;
@@ -168,7 +168,7 @@ plan 299;
 }
 
 {
-    # chained @array = %hash = list assignment 
+    # chained @array = %hash = list assignment
     my (@a, @b, %h);
     @a = %h = 1,2;
     @b = %h;
@@ -177,14 +177,14 @@ plan 299;
 }
 
 {
-    # chained my $scalar = my %hash = list assignment 
+    # chained my $scalar = my %hash = list assignment
     my $s = my %h = 1,2;
     my $t = %h;
     is($s, $t, 'chained $ = % = list assignment');
 }
 
 {
-    # chained $scalar = %hash = list assignment 
+    # chained $scalar = %hash = list assignment
     my ($s, $t, %h);
     $s = %h = 1,2;  # needs (1,2) to work, why???
     $t = %h;
@@ -296,7 +296,7 @@ my @p;
     is($a, 0, "... and second");
     is(@p[0],0, "&&= operator parses as item assignment 3");
     is(@p[1],11, "&&= operator parses as item assignment 4");
-    my $x = True; $x &&= False; 
+    my $x = True; $x &&= False;
     is($x, False, "&&= operator with True and False");
 }
 
@@ -319,8 +319,8 @@ my @p;
 }
 
 {
-    my $c; 
-    (($c = 3) = 4); 
+    my $c;
+    (($c = 3) = 4);
     is($c, 4, '(($c = 3) = 4) return val should be good as an lval');
 }
 
@@ -868,7 +868,7 @@ sub l () { 1, 2 };
 {
     my %bughunt = 1 => "foo", 2 => "bar", 3 => "foo";
     my %correct = grep { .value ne "bar" }, %bughunt.pairs;
-    %bughunt    = grep { .value ne "bar" }, %bughunt.pairs;  
+    %bughunt    = grep { .value ne "bar" }, %bughunt.pairs;
     is %bughunt, %correct,
        'Assign to hash with the same hash on rhs (RT #77586)';
 }
