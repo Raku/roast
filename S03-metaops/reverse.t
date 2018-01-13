@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 68;
+plan 69;
 
 =begin pod
 
@@ -173,5 +173,15 @@ is &infix:<Rop>(2,3), 1, "Meta reverse Rop autogen with user-overridden op stays
 
 # RT #128703
 is (1 R, 2 R, 3 R, 4), (4, 3, 2, 1), 'List associative operators and R interact OK';
+
+subtest '[R~]=' => {
+    plan 4;
+    my $a;
+    is-deeply $a [R~]= "bar", "bar",    'assign to :U, return value';
+    is-deeply $a,             "bar",    'assign to :U, result';
+
+    is-deeply $a [R~]= "foo", "foobar", 'assign to :D, return value';
+    is-deeply $a,             "foobar", 'assign to :D, result';
+}
 
 # vim: ft=perl6
