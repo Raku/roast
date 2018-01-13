@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 436;
+plan 437;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -840,6 +840,9 @@ throws-like 'my Int $a is default(Nil)',
     is_run q[my $sink; $sink for 1], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on variable and suggests Nil";
     is_run q[() while 0], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on () and suggests Nil";
     is_run q[my @x = gather 43], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '43' / }, "sink warns inside of gather";
+    is_run q[∞; NaN; Inf; -Inf], { status => 0, :err{
+        .contains: «WARNINGS  "Useless use"  ∞  NaN  Inf  -Inf».all
+    }}, "sink warns about special Nums";
 }
 
 # RT #125769
