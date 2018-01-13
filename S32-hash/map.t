@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 13;
 
 {
     my %hash = :foo, :42bar;
@@ -46,6 +46,15 @@ subtest 'Map.gist shows only first 100 els' => {
         with (1..204).list;
     is-deeply Map.new($_).gist, make-gist($_, '...'), '1000 els'
         with (1..2000).list;
+}
+
+# [Github Issue 1261](https://github.com/rakudo/rakudo/issues/1261)
+{
+    my $s  = 21;
+    my $m := Map.new: (foo => 42, bar => $s);
+
+    throws-like { $m<foo> := 10 }, X::Bind, 'Cannot bind at key of immutable Map';
+    throws-like { $m<bar> := 10 }, X::Bind, 'Cannot bind at key of immutable Map, Scalar value';
 }
 
 # vim: ft=perl6

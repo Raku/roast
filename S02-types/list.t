@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 76;
+plan 78;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -189,6 +189,15 @@ subtest 'List.new does not create unwanted containers' => {
         'no containers were created';
     lives-ok { $l[2] = 42 }, 'passed containers get preserved';
     is-deeply $l[2], 42, 'value assigneed to passed container is right';
+}
+
+# [Github Issue 1261](https://github.com/rakudo/rakudo/issues/1261)
+{
+    my $s = 21;
+    my $l = ( 1, 2, $s );
+
+    throws-like { $l[0] := 10 }, X::Bind, 'Cannot bind at pos of immutable List';
+    throws-like { $l[2] := 10 }, X::Bind, 'Cannot bind at pos of immutable List, Scalar at pos';
 }
 
 # vim: ft=perl6
