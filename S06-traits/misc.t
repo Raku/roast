@@ -128,6 +128,8 @@ is_run ｢
 }, :out<pass>}, 'duplicate traits warn';
 
 # RT #132710
+# XXX TODO 6.d REVIEW. Setting traits from multiple multies is undefined
+# and this test may need to be moved to rakudo's test suite. See RT#132710
 eval-lives-ok ｢
     multi infix:<↑> is assoc<right> is tighter(&infix:<**>) { $^n ** $^m }
     multi infix:<↑↑> ($, 0) is assoc<right> is tighter(&infix:<↑>) { 1 }
