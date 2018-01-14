@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 24;
+plan 25;
 
 =begin description
 
@@ -126,4 +126,13 @@ is_run ｢
 ｣, {:err{
     .lc.contains: <duplicate tighter looser equiv rw default readonly raw>.all
 }, :out<pass>}, 'duplicate traits warn';
+
+# RT #132710
+eval-lives-ok ｢
+    multi infix:<↑> is assoc<right> is tighter(&infix:<**>) { $^n ** $^m }
+    multi infix:<↑↑> ($, 0) is assoc<right> is tighter(&infix:<↑>) { 1 }
+    multi infix:<↑↑> is assoc<right> is tighter(&infix:<↑>) { [↑] $^n xx $^m }
+｣, 'no crash when defining multiple routines with tightnes';
+
+
 # vim: ft=perl6
