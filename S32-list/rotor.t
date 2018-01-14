@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -57,3 +57,20 @@ is-deeply <a b c d e f>.rotor(1...*),
 is-deeply <a b c d e f>.rotor(2 => -2, 1),
     (("a", "b"), ("a",), ("b", "c"), ("b",), ("c", "d"), ("c",), ("d", "e"), ("d",), ("e", "f"), ("e",)),
     ".rotor works as expected with negative gap";
+
+# [Github Issue 1397](https://github.com/rakudo/rakudo/issues/1397)
+subtest '.rotor: 2 => -1, :partial obeys Iterator protocol' => {
+    plan 2;
+
+    my $iterends = 0;
+    my $s := Seq.new: class :: does Iterator {
+        method pull-one {
+            return $++ if $++ < 3;
+            $iterends++;
+            IterationEnd
+        }
+    }.new;
+    is-deeply $s.rotor(2 => -1, :partial), ((0, 1), (1, 2), (2,)).Seq,
+        'got right result';
+    is $iterends, 1, 'stopped pulling after receiving IterationEnd';
+}
