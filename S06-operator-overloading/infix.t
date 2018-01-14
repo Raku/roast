@@ -242,14 +242,14 @@ plan 47;
     is 1 c 2, 3, 'assignment to code variable works.';
 }
 
-#?rakudo.jvm 2 skip 'setcodeobj can only be used with a CodeRef'
+#?rakudo.jvm 2 skip 'setcodeobj can only be used with a CodeRef, RT #131305'
 is infix:['+'](2,3), 5, 'can call existing infix via compile-time string lookup';
 is infix:['Z~'](<a b>, <c d>), 'ac bd', 'can call autogen infix via compile-time string lookup';
 
 # RT #68024
 {
     BEGIN my $plus = '+';
-    #?rakudo.jvm 3 skip 'setcodeobj can only be used with a CodeRef'
+    #?rakudo.jvm 3 skip 'setcodeobj can only be used with a CodeRef, RT #131305'
     is &infix:<<$plus>>(3,4), 7, '&infix:<<$foo>> works';
     is &infix:«$plus»(3,4),   7, '&infix:«$foo» works';
     is &infix:[$plus](3,4),   7, '&infix:[$foo] works';
