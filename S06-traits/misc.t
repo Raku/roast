@@ -1,8 +1,9 @@
 use v6;
-
+use lib <t/spec/packages>;
 use Test;
+use Test::Util;
 
-plan 23;
+plan 24;
 
 =begin description
 
@@ -112,4 +113,17 @@ throws-like
     message => /'($b)'/,
     'error message when assigning to a readonly variable includes the variable name';
 
+# RT #132710
+is_run ｢
+    sub foo1 is tighter(&[**]) is tighter(&[**])
+             is looser(&[**])  is looser(&[**])
+             is equiv(&[**])   is equiv(&[**]) {}
+    sub foo2 is rw is rw {}
+    sub foo3 is default is default {}
+    sub foo5 is raw is raw {}
+    -> $ is readonly is readonly {}
+    print 'pass';
+｣, {:err{
+    .lc.contains: <duplicate tighter looser equiv rw default readonly raw>.all
+}, :out<pass>}, 'duplicate traits warn';
 # vim: ft=perl6
