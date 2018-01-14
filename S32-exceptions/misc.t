@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 437;
+plan 438;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -966,5 +966,12 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
         suggestions => ['Foo'],
         'enum values are suggested for misspellings'
 }
+
+is_run ｢
+    my $ = :WorryFoo<>; { no worries; my $ = :WorryBar<> }; my $ = :WorryBer<>;
+    print "pass"
+｣, %(:out<pass>, :err{
+    .contains: 'use :WorryFoo' & 'use :WorryBer' & none 'use :WorryBar'
+}), 'lexical worries pragma disables compiler warnings';
 
 # vim: ft=perl6
