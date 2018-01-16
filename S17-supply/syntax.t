@@ -562,6 +562,7 @@ lives-ok {
 }, 'calling "next" inside a whenever block will not die.';
 
 #?rakudo.jvm skip 'UnwindException'
+#?DOES 1
 {
   subtest 'next in whenever' => {
     plan 4;
