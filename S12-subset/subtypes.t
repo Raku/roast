@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 88;
+plan 89;
 
 use Test::Util;
 
@@ -358,5 +358,96 @@ subtest 'multi with :D subset dispatches correctly' => {
     lives-ok { f(42); }, "UInt:D parameter doesn't fail in a multi";
 }
 
+# https://github.com/rakudo/rakudo/commit/43b9c82945
+subtest '"any" Junction of types in where' => {
+    plan 3;
+    subtest 'routine sig' => {
+        plan 22;
+        my \EXB := X::TypeCheck::Binding::Parameter;
+        my \EXC := X::Parameter::InvalidConcreteness;
+        my &b1 := ->        $x where Int|Num           { ($x//2)² };
+        my &b2 := -> Cool   $x where Int|Num:D         { ($x//2)² };
+        my &b3 := -> Cool:D $x where Int:U|Num:D|Rat:D { ($x//2)² };
+        my &b4 := -> Numeric(Cool) $x where Int:U|Num:D|Rat:D { ($x//2)² };
+
+        throws-like ｢b1 "x"｣,  EXB, 'rejected by where, type';
+        throws-like ｢b1 2.2｣,  EXB, 'rejected by where, type (2)';
+        throws-like ｢b2 2.2｣,  EXB, 'rejected by where, type (3)';
+        throws-like ｢b4 i｣,    EXB, 'rejected by where, type (4)';
+        throws-like ｢b2 Num｣,  EXB, 'rejected by where, definiteness';
+        throws-like ｢b4 Num｣,  EXB, 'rejected by where, definiteness (2)';
+        throws-like ｢b3 42｣,   EXB, 'rejected by where, definiteness (3)';
+        throws-like ｢b2 $*VM｣, EXB, 'rejected by type, type';
+        throws-like ｢b3 Num｣,  EXC, 'rejected by type, definiteness';
+        throws-like ｢b4 Any｣,  EXB, 'rejected by coercer, source type';
+        throws-like ｢b4 "x"｣,  EXB, 'rejected by coercer, target type';
+
+        is-deeply b1(4),     16,   'accepted (1)';
+        is-deeply b1(5e0),   25e0, 'accepted (2)';
+
+        is-deeply b2(4),     16,   'accepted (3)';
+        is-deeply b2(Int),   4,    'accepted (4)';
+        is-deeply b2(5e0),   25e0, 'accepted (5)';
+
+        is-deeply b3(5e0),   25e0, 'accepted (6)';
+        is-deeply b3(5.0),   25.0, 'accepted (7)';
+
+        is-deeply b4("4e0"), 16e0, 'accepted (8)';
+        is-deeply b4("4.0"), 16.0, 'accepted (9)';
+        is-deeply b4(4e0),   16e0, 'accepted (10)';
+        is-deeply b4(4.0),   16.0, 'accepted (11)';
+    }
+
+    subtest 'variables' => {
+        plan 14;
+        my \EXA := X::TypeCheck::Assignment;
+        my        $x1 where Int|Num;
+        my Cool   $x2 where Int|Num:D;
+        my Cool:D $x3 where Int:U|Num:D|Rat:D;
+
+        throws-like { $x1 = "x"  }, EXA, 'rejected by where, type';
+        throws-like { $x1 = 2.2  }, EXA, 'rejected by where, type (2)';
+        throws-like { $x2 = 2.2  }, EXA, 'rejected by where, type (3)';
+        throws-like { $x2 = Num  }, EXA, 'rejected by where, definiteness';
+        throws-like { $x3 = 42   }, EXA, 'rejected by where, definiteness (3)';
+        throws-like { $x2 = $*VM }, EXA, 'rejected by type, type';
+        throws-like { $x3 = Num  }, EXA, 'rejected by type, definiteness';
+
+        is-deeply ($x1 = 4),   4,   'accepted (1)';
+        is-deeply ($x1 = 5e0), 5e0, 'accepted (2)';
+
+        is-deeply ($x2 = 4),   4,   'accepted (3)';
+        is-deeply ($x2 = Int), Int, 'accepted (4)';
+        is-deeply ($x2 = 5e0), 5e0, 'accepted (5)';
+
+        is-deeply ($x3 = 5e0), 5e0, 'accepted (6)';
+        is-deeply ($x3 = 5.0), 5.0, 'accepted (7)';
+    }
+
+    subtest 'subset' => {
+        plan 14;
+        my subset B1           where   Int|Num;
+        my subset B2 of Cool   where   Int|Num:D;
+        my subset B3 of Cool:D where Int:U|Num:D|Rat:D;
+
+        is "x"  ~~ B1, False, 'rejected by where, type';
+        is 2.2  ~~ B1, False, 'rejected by where, type (2)';
+        is 2.2  ~~ B2, False, 'rejected by where, type (3)';
+        is Num  ~~ B2, False, 'rejected by where, definiteness';
+        is 42   ~~ B3, False, 'rejected by where, definiteness (3)';
+        is $*VM ~~ B2, False, 'rejected by type, type';
+        is Num  ~~ B3, False, 'rejected by type, definiteness';
+
+        is 4    ~~ B1, True,  'accepted (1)';
+        is 5e0  ~~ B1, True,  'accepted (2)';
+
+        is 4    ~~ B2, True,  'accepted (3)';
+        is Int  ~~ B2, True,  'accepted (4)';
+        is 5e0  ~~ B2, True,  'accepted (5)';
+
+        is 5e0  ~~ B3, True,  'accepted (6)';
+        is 5.0  ~~ B3, True,  'accepted (7)';
+    }
+}
 
 # vim: ft=perl6
