@@ -85,7 +85,7 @@ subtest 'enums with names of core types do not blow things up unexpectedly' => {
 }
 
 # https://github.com/rakudo/rakudo/issues/1411
--> List:D[Int] \z {
+-> Positional:D[Int] \z {
     is-deeply z, (1, 2, 3),
     'parametarization of a DefiniteHOW does not complain about complex coercers'
 }((1, 2, 3));
