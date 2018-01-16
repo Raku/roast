@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 2;
+plan 3;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 2;
@@ -83,5 +83,11 @@ subtest 'enums with names of core types do not blow things up unexpectedly' => {
     is-deeply foo(42), 42,                'Callable works';
     is-deeply @a,      [<a b c>],         'Array works';
 }
+
+# https://github.com/rakudo/rakudo/issues/1411
+-> List:D[Int] \z {
+    is-deeply z, (1, 2, 3),
+    'parametarization of a DefiniteHOW does not complain about complex coercers'
+}((1, 2, 3));
 
 # vim: expandtab shiftwidth=4 ft=perl6
