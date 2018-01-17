@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 82;
+plan 83;
 
 {
     my $s = supply {
@@ -562,6 +562,7 @@ lives-ok {
 }, 'calling "next" inside a whenever block will not die.';
 
 #?rakudo.jvm skip 'UnwindException'
+#?DOES 1
 {
   subtest 'next in whenever' => {
     plan 4;
@@ -699,5 +700,27 @@ lives-ok {
     is $post-emits, 5,
         'supply block loop is terminated on emit to dead consumer (2)';
 }
+
+# https://github.com/rakudo/rakudo/issues/1410
+lives-ok {
+    my $s = supply {
+        my $b = Supplier::Preserving.new;
+        whenever (1, 2, 3).Supply {
+            when 1 {
+                emit $b.Supply;
+            }
+            when 2 {
+                $b.done;
+            }
+        }
+
+        whenever (1, 2, 3).Supply {}
+    }
+    for ^10 {
+        react whenever $s {
+            start react whenever $_ { LAST done }
+        }
+    }
+}, 'No crash in single-whenever react that does LAST done';
 
 # vim: ft=perl6 expandtab sw=4

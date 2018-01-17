@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 1;
+plan 3;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 2;
@@ -71,5 +71,23 @@ subtest '.count-only/.bool-only for iterated content' => {
         }
     }
 }
+
+# https://github.com/rakudo/rakudo/issues/1407
+subtest 'enums with names of core types do not blow things up unexpectedly' => {
+    plan 3;
+    my enum Foo «:Map<foo> :Positional<ber> :Callable<meow>»;
+    my %h = :42foo, :70bar;
+    my &foo = *.self;
+    my @a = <a b c>;
+    is-deeply %h,      %(:42foo, :70bar), 'Hash works';
+    is-deeply foo(42), 42,                'Callable works';
+    is-deeply @a,      [<a b c>],         'Array works';
+}
+
+# https://github.com/rakudo/rakudo/issues/1411
+-> Positional:D[Int] \z {
+    is-deeply z, (1, 2, 3),
+    'parametarization of a DefiniteHOW does not complain about complex coercers'
+}((1, 2, 3));
 
 # vim: expandtab shiftwidth=4 ft=perl6

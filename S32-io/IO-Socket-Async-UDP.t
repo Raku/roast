@@ -39,7 +39,7 @@ my $rec-prom;
 {
     $rec-prom = Promise.new;
     my $sock = IO::Socket::Async.udp();
-    $sock.write-to($hostname, $port, "Unhelpful Dataloss Protocl".encode('ascii'));
-    is $rec-prom.result, "Unhelpful Dataloss Protocl", "Sent/received data with UDP (write)";
+    $sock.write-to($hostname, $port, "Unhelpful Dataloss Protocol".encode('ascii'));
+    is $rec-prom.result, "Unhelpful Dataloss Protocol", "Sent/received data with UDP (write)";
     $sock.close;
 }

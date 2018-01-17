@@ -4,7 +4,11 @@ use Test;
 # Tests for .toggle method
 plan 4;
 
-subtest 'general' => {
+
+#?rakudo.jvm skip 'toggle hangs on JVM backend'
+#?DOES 1
+{
+  subtest 'general' => {
     plan +my @types := ^10, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9), [^10];
     for @types -> \t {
         subtest t.^name => {
@@ -28,9 +32,13 @@ subtest 'general' => {
                 'multi-callable (:off)';
         }
     }
+  }
 }
 
-subtest 'chaining' => {
+#?rakudo.jvm skip 'toggle hangs on JVM backend'
+#?DOES 1
+{
+  subtest 'chaining' => {
     plan 3;
     is-deeply ^10 .toggle(* < 8).toggle(:off, * > 5), (6, 7).Seq, 'on, off';
     is-deeply ^10 .skip(3).toggle(* < 8).grep(* < 7).toggle(:off, * > 5),
@@ -38,9 +46,13 @@ subtest 'chaining' => {
 
     my $s := ^60; for ^50+10 -> \v { $s := $s.toggle: * < v };
     is-deeply $s.List, ^10 .List, '50-toggle chain';
+  }
 }
 
-subtest 'empty sources' => {
+#?rakudo.jvm skip 'toggle hangs on JVM backend'
+#?DOES 1
+{
+  subtest 'empty sources' => {
     my @tests = $, (), [], Map.new, %(), set(), mix();
     @tests[0] := Empty; # can't just list it normally above; it will vanish
     plan +@tests;
@@ -59,9 +71,13 @@ subtest 'empty sources' => {
                 '1 callable (:off, toggles on later value)';
         }
     }
+  }
 }
 
-subtest 'Non-Iterable objects' => {
+#?rakudo.jvm skip 'toggle hangs on JVM backend'
+#?DOES 1
+{
+  subtest 'Non-Iterable objects' => {
     is-deeply 42.toggle,               42.Seq, 'no args';
     is-deeply 42.toggle(:off),         ().Seq, 'no args (:off)';
     is-deeply 42.toggle(?*),           42.Seq, 'truthy callable';
@@ -69,6 +85,7 @@ subtest 'Non-Iterable objects' => {
     is-deeply 42.toggle(!*),           ().Seq, 'falsy callable';
     is-deeply 42.toggle(?*, !*),       42.Seq, 'multiple callables';
     is-deeply 42.toggle(:off, ?*, !*), 42.Seq, 'multiple callables (:off)';
+  }
 }
 
 # vim: ft=perl6
