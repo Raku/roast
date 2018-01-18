@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 3;
+plan 4;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 2;
@@ -89,5 +89,45 @@ subtest 'enums with names of core types do not blow things up unexpectedly' => {
     is-deeply z, (1, 2, 3),
     'parametarization of a DefiniteHOW does not complain about complex coercers'
 }((1, 2, 3));
+
+# RT #132718
+subtest 'no crashes with native types in `if`/`unless` conditions' => {;
+    plan 2;
+    subtest 'if' => {
+        plan 12;
+        ->        $x { pass 'HLL obj' if $x }(now);
+        -> int8   $x { pass 'int8'    if $x }(2);
+        -> int16  $x { pass 'int16'   if $x }(2);
+        -> int32  $x { pass 'int32'   if $x }(2);
+        -> int64  $x { pass 'int64'   if $x }(2);
+
+        -> uint8  $x { pass 'uint8'  if $x }(2);
+        -> uint16 $x { pass 'uint16' if $x }(2);
+        -> uint32 $x { pass 'uint32' if $x }(2);
+        -> uint64 $x { pass 'uint64' if $x }(2);
+
+        -> num32  $x { pass 'num32'  if $x }(2e0);
+        -> num64  $x { pass 'num64'  if $x }(2e0);
+        -> str    $x { pass 'str'    if $x }('meow');
+    }
+
+    subtest 'unless' => {
+        plan 12;
+        sub (       $x) { return unless $x; pass 'HLL obj' }(now);
+        sub (int8   $x) { return unless $x; pass 'int8'    }(2);
+        sub (int16  $x) { return unless $x; pass 'int16'   }(2);
+        sub (int32  $x) { return unless $x; pass 'int32'   }(2);
+        sub (int64  $x) { return unless $x; pass 'int64'   }(2);
+
+        sub (uint8  $x) { return unless $x; pass 'uint8'   }(2);
+        sub (uint16 $x) { return unless $x; pass 'uint16'  }(2);
+        sub (uint32 $x) { return unless $x; pass 'uint32'  }(2);
+        sub (uint64 $x) { return unless $x; pass 'uint64'  }(2);
+
+        sub (num32  $x) { return unless $x; pass 'num32'   }(2e0);
+        sub (num64  $x) { return unless $x; pass 'num64'   }(2e0);
+        sub (str    $x) { return unless $x; pass 'str'     }('meow');
+    }
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
