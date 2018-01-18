@@ -39,10 +39,10 @@ is $r.config<number>, 42;
   is $r.config<sheep>, False;
 }
 
-#?rakudo todo 'non-string colonpair pod options RT #124281'
-{
-  isa-ok $r.config<feist>, Str;
-}
+
+# RT #124281
+isa-ok $r.config<feist>, Str;
+
 
 =begin pod
 =for DESCRIPTION :title<presentation template>
