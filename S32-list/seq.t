@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 41;
 
 my @result = 1,2,3;
 
@@ -209,6 +209,11 @@ subtest 'methods on cached Seqs' => {
         ok $pulled, '.sinking uncached Seq pulls from iterator';
         lives-ok { $s-sink.sink }, '.sinking again does not throw';
     }
+}
+
+{
+    # GH #1349
+    is-deeply (1..5).map({$_}).skip(*-3), (3, 4, 5), 'skip works with a WhateverCode';
 }
 
 is-deeply .perl.EVAL.flat, .flat,
