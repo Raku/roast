@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 89;
+plan 90;
 
 use Test::Util;
 
@@ -447,6 +447,40 @@ subtest '"any" Junction of types in where' => {
 
         is 5e0  ~~ B3, True,  'accepted (6)';
         is 5.0  ~~ B3, True,  'accepted (7)';
+    }
+}
+
+subtest 'postconstraints on variables in my (...)' => {
+    plan 6;
+
+    my subset Foo where .is-prime;
+    my ($a where 2, $b where Int, \c where "x", Foo $d, "foo")
+    = 2, 4, "x", 7, "foo";
+    is-deeply $a, 2,   'stored $a';
+    is-deeply $b, 4,   'stored $b';
+    is-deeply  c, "x", 'stored b';
+    is-deeply $d, 7,   'stored $d';
+
+    my \XA = X::TypeCheck::Assignment;
+    subtest 'single-arg' => {
+        plan 5;
+        throws-like ｢my ($ where 2)  = 3｣,     XA, 'anon where literal';
+        throws-like ｢my ($a where 2) = 3｣,     XA, 'where literal';
+        throws-like ｢my ($b where Int) = .1｣,  XA, 'where type';
+        throws-like ｢my (\b where "x") = "y"｣, XA, 'sigilless where literal';
+        throws-like ｢my ("foo") = "bar"｣,      XA, 'literal';
+    }
+    subtest 'multi-arg' => {
+        plan 5;
+        throws-like ｢my ($ where 2, $b where Int ) = 3, 4｣,  XA,
+            'anon where literal';
+        throws-like ｢my ($a where 2, $b where Int) = 3, .1｣, XA,
+            'where literal';
+        throws-like ｢my ($a where 2, $b where Int) = 3, .1｣, XA,
+            'where type';
+        throws-like ｢my (\b where "x", "foo") = "y", "foo"｣, XA,
+            'sigilless where literal';
+        throws-like ｢my (\b where "x", "foo") = "x", "bar"｣, XA, 'literal';
     }
 }
 
