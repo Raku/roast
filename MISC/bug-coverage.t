@@ -91,8 +91,8 @@ subtest 'enums with names of core types do not blow things up unexpectedly' => {
 }((1, 2, 3));
 
 # RT #132718
-subtest 'no crashes with native types in `if`/`unless` conditions' => {;
-    plan 2;
+subtest 'no crashes with native types in conditionals' => {;
+    plan 6;
     subtest 'if' => {
         plan 12;
         ->        $x { pass 'HLL obj' if $x }(now);
@@ -127,6 +127,78 @@ subtest 'no crashes with native types in `if`/`unless` conditions' => {;
         sub (num32  $x) { return unless $x; pass 'num32'   }(2e0);
         sub (num64  $x) { return unless $x; pass 'num64'   }(2e0);
         sub (str    $x) { return unless $x; pass 'str'     }('meow');
+    }
+
+    subtest 'repeat while' => {
+        plan 12;
+        sub (       $x) { while $x { pass 'HLL obj'; return } }(now);
+        sub (int8   $x) { while $x { pass 'int8';    return } }(2);
+        sub (int16  $x) { while $x { pass 'int16';   return } }(2);
+        sub (int32  $x) { while $x { pass 'int32';   return } }(2);
+        sub (int64  $x) { while $x { pass 'int64';   return } }(2);
+
+        sub (uint8  $x) { while $x { pass 'uint8';   return } }(2);
+        sub (uint16 $x) { while $x { pass 'uint16';  return } }(2);
+        sub (uint32 $x) { while $x { pass 'uint32';  return } }(2);
+        sub (uint64 $x) { while $x { pass 'uint64';  return } }(2);
+
+        sub (num32  $x) { while $x { pass 'num32';   return } }(2e0);
+        sub (num64  $x) { while $x { pass 'num64';   return } }(2e0);
+        sub (str    $x) { while $x { pass 'str';     return } }('meow');
+    }
+
+    subtest 'repeat until' => {
+        plan 12;
+        sub (       $x) { Nil until $x; pass 'HLL obj' }(now);
+        sub (int8   $x) { Nil until $x; pass 'int8'    }(2);
+        sub (int16  $x) { Nil until $x; pass 'int16'   }(2);
+        sub (int32  $x) { Nil until $x; pass 'int32'   }(2);
+        sub (int64  $x) { Nil until $x; pass 'int64'   }(2);
+
+        sub (uint8  $x) { Nil until $x; pass 'uint8'   }(2);
+        sub (uint16 $x) { Nil until $x; pass 'uint16'  }(2);
+        sub (uint32 $x) { Nil until $x; pass 'uint32'  }(2);
+        sub (uint64 $x) { Nil until $x; pass 'uint64'  }(2);
+
+        sub (num32  $x) { Nil until $x; pass 'num32'   }(2e0);
+        sub (num64  $x) { Nil until $x; pass 'num64'   }(2e0);
+        sub (str    $x) { Nil until $x; pass 'str'     }('meow');
+    }
+
+    subtest 'repeat while' => {
+        plan 12;
+        sub (       $x) { repeat { pass 'HLL obj'; return } while $x }(now);
+        sub (int8   $x) { repeat { pass 'int8';    return } while $x }(2);
+        sub (int16  $x) { repeat { pass 'int16';   return } while $x }(2);
+        sub (int32  $x) { repeat { pass 'int32';   return } while $x }(2);
+        sub (int64  $x) { repeat { pass 'int64';   return } while $x }(2);
+
+        sub (uint8  $x) { repeat { pass 'uint8';   return } while $x }(2);
+        sub (uint16 $x) { repeat { pass 'uint16';  return } while $x }(2);
+        sub (uint32 $x) { repeat { pass 'uint32';  return } while $x }(2);
+        sub (uint64 $x) { repeat { pass 'uint64';  return } while $x }(2);
+
+        sub (num32  $x) { repeat { pass 'num32';   return } while $x }(2e0);
+        sub (num64  $x) { repeat { pass 'num64';   return } while $x }(2e0);
+        sub (str    $x) { repeat { pass 'str';     return } while $x }('meow');
+    }
+
+    subtest 'repeat until' => {
+        plan 12;
+        sub (       $x) { repeat {} until $x; pass 'HLL obj' }(now);
+        sub (int8   $x) { repeat {} until $x; pass 'int8'    }(2);
+        sub (int16  $x) { repeat {} until $x; pass 'int16'   }(2);
+        sub (int32  $x) { repeat {} until $x; pass 'int32'   }(2);
+        sub (int64  $x) { repeat {} until $x; pass 'int64'   }(2);
+
+        sub (uint8  $x) { repeat {} until $x; pass 'uint8'   }(2);
+        sub (uint16 $x) { repeat {} until $x; pass 'uint16'  }(2);
+        sub (uint32 $x) { repeat {} until $x; pass 'uint32'  }(2);
+        sub (uint64 $x) { repeat {} until $x; pass 'uint64'  }(2);
+
+        sub (num32  $x) { repeat {} until $x; pass 'num32'   }(2e0);
+        sub (num64  $x) { repeat {} until $x; pass 'num64'   }(2e0);
+        sub (str    $x) { repeat {} until $x; pass 'str'     }('meow');
     }
 }
 
