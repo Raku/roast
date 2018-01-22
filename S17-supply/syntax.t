@@ -125,7 +125,7 @@ plan 60;
     $trigger.emit('I ate fruit');
     $trigger.emit('The fruit was so tasty');
     $trigger.done();
-    
+
     is @collected.elems, 3, 'whenever loop produced three values';
     is @collected[0], 'I ate bacon', 'First value from loop iteration correct';
     is @collected[1], 'The bacon was so tasty', 'Second value from loop iteration correct';
