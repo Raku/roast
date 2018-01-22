@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 =begin description
 
@@ -152,6 +152,13 @@ subtest 'Seq.skip does not leave original Seq consumable' => {
         is-deeply @$s,       (1, 2, 3), 'original gives all values';
         is-deeply @$skipped, (3,),      'skipped has right content';
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/1384
+subtest 'Any:U.skip works with Callable' => {
+    plan 2;
+    is-deeply Any.skip(*-1),     ().Seq, '*-1';
+    is-deeply Any.skip(*-99999), ().Seq, '*-99999';
 }
 
 # vim: ft=perl6
