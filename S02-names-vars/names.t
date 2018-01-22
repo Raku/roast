@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 149;
+plan 150;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -161,6 +161,12 @@ throws-like {
     ok foo.HOW ~~ Metamodel::ModuleHOW, 'when module and sub foo, bare foo is module type object';
     ok foo().HOW ~~ Metamodel::CoercionHOW, 'when module and sub foo, foo() is coercion type';
     is &foo(), 'OH HAI', 'can get sub using & to disambiguate';
+}
+
+{ # RT #128712
+    constant $i = 42;
+    my $foo:bar«$i» = 'meow';
+    is-deeply $foo:bar«$i», 'meow', 'can use compile-time variables in names';
 }
 
 # vim: ft=perl6
