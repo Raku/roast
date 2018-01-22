@@ -1,7 +1,7 @@
 use v6.c;
 use Test;
 
-plan 60;
+plan 61;
 
 {
     my $s = supply {
@@ -439,6 +439,12 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
     $closed = False;
     $t2.close;
     nok $closed, 'CLOSE phasers do not run twice (normal termination then .close)';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1428
+    sub foo { whenever Promise.in(.1) {
+        pass 'whenever not in lexical scope of react works';
+    }}; react foo
 }
 
 # vim: ft=perl6 expandtab sw=4
