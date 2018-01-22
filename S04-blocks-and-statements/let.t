@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S04/The Relationship of Blocks and Declarations/There is also a let function>
 # L<S04/Definition of Success>
@@ -70,6 +70,17 @@ plan 12;
     }
     my $sink = f(); #OK
     is $x, 5, 'fail() resets let variables';
+}
+
+{ # RT#127291
+    my %h{Pair}; %h{a => 1} = 2;
+    my %c{Pair}; %c{a => 1} = 2;
+    {
+        let %h;
+        %h{a => 1} = 42;
+        Nil
+    }
+    is-deeply %h, %c, 'let works with parametarized Hashes';
 }
 
 # vim: ft=perl6

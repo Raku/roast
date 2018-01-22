@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 44;
 
 # L<S04/The Relationship of Blocks and Declarations/function has been renamed>
 {
@@ -229,5 +229,15 @@ plan 43;
 
 throws-like { temp $*foo = 42 }, X::Dynamic::NotFound,
     'Useful error conveyed when trying to temp a non-existing dynamic';
+
+{ # RT#127291
+    my %h{Pair}; %h{a => 1} = 2;
+    my %c{Pair}; %c{a => 1} = 2;
+    {
+        temp %h;
+        %h{a => 1} = 42;
+    }
+    is-deeply %h, %c, 'temp works with parametarized Hashes';
+}
 
 # vim: ft=perl6
