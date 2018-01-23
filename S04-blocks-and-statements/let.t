@@ -87,7 +87,6 @@ plan 15;
     my @a is default(Nil) = Nil;
     my @c is default(Nil) = Nil;
     { let @a; Nil }
-    #?rakudo todo 'https://github.com/rakudo/rakudo/issues/1432'
     is-deeply @a, @c, '`let` keeps around Nils in Arrays when they exist';
 
     (my %h is default(Nil))<a> = Nil;

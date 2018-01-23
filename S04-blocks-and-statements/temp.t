@@ -244,7 +244,6 @@ throws-like { temp $*foo = 42 }, X::Dynamic::NotFound,
     my @a is default(Nil) = Nil;
     my @c is default(Nil) = Nil;
     { temp @a }
-    #?rakudo todo 'https://github.com/rakudo/rakudo/issues/1432'
     is-deeply @a, @c, '`temp` keeps around Nils in Arrays when they exist';
 
     (my %h is default(Nil))<a> = Nil;
