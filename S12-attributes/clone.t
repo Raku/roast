@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 43;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo {
@@ -156,6 +156,17 @@ lives-ok { Int.clone }, 'cloning a type object does not explode';
     my %h2 := %h1.clone;
     %h2<b> = 2;
     is-deeply %h1, { a => 1 }, 'Hash.clone detangles the hashes';
+}
+
+subtest 'Array/Hash cloning does not lose the descriptor' => {
+    plan 2;
+    (my %h is default(Nil))<foo> = Nil;
+    my %hc := %h.clone;
+    is-deeply %hc<foo bar>, (Nil, Nil), 'Hash';
+
+    my @a is default(Nil) = Nil;
+    my @ac := @a.clone;
+    is-deeply @ac[0, 1], (Nil, Nil), 'Array';
 }
 
 # vim: ft=perl6
