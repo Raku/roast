@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 15;
 
 # L<S04/The Relationship of Blocks and Declarations/There is also a let function>
 # L<S04/Definition of Success>
@@ -81,6 +81,19 @@ plan 13;
         Nil
     }
     is-deeply %h, %c, 'let works with parametarized Hashes';
+}
+
+{
+    my @a is default(Nil) = Nil;
+    my @c is default(Nil) = Nil;
+    { let @a; Nil }
+    #?rakudo todo 'https://github.com/rakudo/rakudo/issues/1432'
+    is-deeply @a, @c, '`let` keeps around Nils in Arrays when they exist';
+
+    (my %h is default(Nil))<a> = Nil;
+    (my %c is default(Nil))<a> = Nil;
+    { let %h; Nil };
+    is-deeply %h, %c, '`let` keeps Nils around in Hashes when they exist';
 }
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 46;
 
 # L<S04/The Relationship of Blocks and Declarations/function has been renamed>
 {
@@ -238,6 +238,19 @@ throws-like { temp $*foo = 42 }, X::Dynamic::NotFound,
         %h{a => 1} = 42;
     }
     is-deeply %h, %c, 'temp works with parametarized Hashes';
+}
+
+{
+    my @a is default(Nil) = Nil;
+    my @c is default(Nil) = Nil;
+    { temp @a }
+    #?rakudo todo 'https://github.com/rakudo/rakudo/issues/1432'
+    is-deeply @a, @c, '`temp` keeps around Nils in Arrays when they exist';
+
+    (my %h is default(Nil))<a> = Nil;
+    (my %c is default(Nil))<a> = Nil;
+    { temp %h };
+    is-deeply %h, %c, '`temp` keeps Nils around in Hashes when they exist';
 }
 
 # vim: ft=perl6
