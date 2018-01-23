@@ -5,8 +5,8 @@ use Test;
 plan 42;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
-class Foo { 
-    has $.attr; 
+class Foo {
+    has $.attr;
     method set_attr ($attr) { $.attr = $attr; }
     method get_attr () { $.attr }
 }
@@ -55,10 +55,10 @@ is($val2, 42, '... cloned object has proper attr value');
 {
     my ($p, $q);
     $p = 'a' ~~ /$<foo>='a'/;
-    
+
     # previously it was timeout on Rakudo
     lives-ok { $q = $p.clone }, 'Match object can be cloned';
-    
+
     is ~$q{'foo'}, 'a', 'cloned Match object retained named capture value';
 }
 
@@ -109,10 +109,10 @@ is($val2, 42, '... cloned object has proper attr value');
 
 # test cloning of custom class objects
 {
-    my class LeObject { 
-        has $.identifier; 
-        has @.arr; 
-        has %.hsh; 
+    my class LeObject {
+        has $.identifier;
+        has @.arr;
+        has %.hsh;
     }
 
     my class LeContainer { has LeObject $.obj; }
@@ -133,7 +133,7 @@ is($val2, 42, '... cloned object has proper attr value');
     # change attributes on contained object should change clones if a new object was not assigned
     is-deeply $cont_clone_same.obj.arr, ['a', 'b', 'c'], 'cloned object has identical value';
     is-deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object sanity test';
-   
+
     $cont.obj.arr = 'j', 'k', 'l';
     is-deeply $cont_clone_same.obj.arr, ['j', 'k', 'l'], 'cloned object has new value';
     is-deeply $cont.obj.arr, ['j', 'k', 'l'], 'original object has new value';
