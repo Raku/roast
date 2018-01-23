@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 233;
+plan 234;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -316,6 +316,8 @@ sub showkv($x) {
     @a = $b.pick(-2.5);
     is +@a, 0, '.pick(<negative number>) does not return any items';
 
+	lives-ok { $b.pick(1).gist },
+		".pick() gives valid result with argument"; # https://github.com/rakudo/rakudo/issues/1438
     lives-ok { @a = $b.pick(2.5) }, ".pick int-ifies arg"; # RT #131272
 }
 
