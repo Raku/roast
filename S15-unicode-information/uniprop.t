@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 198;
+plan 200;
 
 #use unicode :v(6.3);
 
@@ -181,6 +181,8 @@ is-deeply 'a'.uniprop('Deprecated'), False, "uniprop for Depreciated property re
 
 is-deeply ' '.uniprop('White_Space'), True, "uniprop for White_Space property returns True for codes with this property";
 is-deeply 'a'.uniprop('White_Space'), False, "uniprop for White_Space property returns False for codes without this property";
+is-deeply '1'.uniprop('White_Space'), False, "uniprop for White_Space property returns False for '1'";
+is-deeply '1'.uniprop('space'), False, "uniprop for White_Space property returns False for '1'";
 
 is-deeply '〆'.uniprop('Ideographic'), True, "uniprop for Ideographic property returns True for codes with this property";
 is-deeply 'a'.uniprop('Ideographic'), False, "uniprop for Ideographic property returns False for codes without this property";
