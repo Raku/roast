@@ -156,9 +156,10 @@ subtest 'Seq.skip does not leave original Seq consumable' => {
 
 # https://github.com/rakudo/rakudo/issues/1384
 subtest 'Any:U.skip works with Callable' => {
-    plan 2;
-    is-deeply Any.skip(*-1),     ().Seq, '*-1';
-    is-deeply Any.skip(*-99999), ().Seq, '*-99999';
+    plan 3;
+    is-deeply Any.skip(*-0),         ().Seq, '*-1';
+    is-deeply Any.skip(*-1),     (Any,).Seq, '*-1';
+    is-deeply Any.skip(*-99999), (Any,).Seq, '*-99999';
 }
 
 # vim: ft=perl6
