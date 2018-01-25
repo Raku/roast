@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 15;
 
 # L<S04/The Relationship of Blocks and Declarations/There is also a let function>
 # L<S04/Definition of Success>
@@ -70,6 +70,29 @@ plan 12;
     }
     my $sink = f(); #OK
     is $x, 5, 'fail() resets let variables';
+}
+
+{ # RT#127291
+    my %h{Pair}; %h{a => 1} = 2;
+    my %c{Pair}; %c{a => 1} = 2;
+    {
+        let %h;
+        %h{a => 1} = 42;
+        Nil
+    }
+    is-deeply %h, %c, 'let works with parametarized Hashes';
+}
+
+{
+    my @a is default(Nil) = Nil;
+    my @c is default(Nil) = Nil;
+    { let @a; Nil }
+    is-deeply @a, @c, '`let` keeps around Nils in Arrays when they exist';
+
+    (my %h is default(Nil))<a> = Nil;
+    (my %c is default(Nil))<a> = Nil;
+    { let %h; Nil };
+    is-deeply %h, %c, '`let` keeps Nils around in Hashes when they exist';
 }
 
 # vim: ft=perl6

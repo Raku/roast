@@ -204,7 +204,7 @@ LEAVE unlink PATH;
     ok defined($fh), 'can open existing file in :a mode';
     $fh.print('cats say meow');
 
-    throws-like { $fh.get }, Exception, 'trying to read in :a mode throws';
+    throws-like { $fh.slurp }, Exception, 'trying to read in :a mode throws';
     $fh.close;
 
     $fh = open PATH, :r;

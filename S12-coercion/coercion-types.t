@@ -1,6 +1,8 @@
 use v6;
+use lib <t/spec/packages>;
 use Test;
-plan 20;
+use Test::Util;
+plan 21;
 
 # coercion types in parameter lists
 {
@@ -101,4 +103,13 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     is Int(a), -42, "Sigilless variable does not confuse coercion type parsing";
 }
 
+# RT #130479
+is_run ｢
+    class Foo { method Bar {die} }
+    class Bar is Foo {}
+    -> Bar(Foo) $foo?, Bar(Foo) :$bar {
+        say $foo; say $bar;
+    }()
+｣, {:err(''), :out("(Bar)\n(Bar)\n"), :0status},
+    'coercers do not attempt to coerce optional params that were not given';
 # vim: ft=perl6

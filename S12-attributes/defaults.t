@@ -14,7 +14,7 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
 {
     $got_a_num = 0;
     $got_a_str = 0;
-    
+
     class Spaceship {
         has $.num  = get_a_num();
         has $.str  = { get_a_str() };
@@ -22,9 +22,9 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
 
     is $got_a_num, 0, "default should not be called at compile-time";
     is $got_a_str, 0, "default should not be called at compile-time";
-    
+
     my Spaceship $spaceship .= new;
-    
+
     is $got_a_num, 1, "default should be called only once in construction";
     is $spaceship.num,  42, "attribute default worked";
     is $got_a_num, 1, "default should be called only once";
@@ -36,7 +36,7 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
     is $got_a_str, 1, "and now get_a_str has run";
 
     my Spaceship $spaceship2 .= new;
-    
+
     is $got_a_num, 2, "construction of second object also only calls default closure once";
     is $spaceship2.num,  42, "attribute default worked";
     is $got_a_num, 2, "default should be called only once";
@@ -49,7 +49,7 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
 {
     $got_a_num = 0;
     $got_a_str = 0;
-    
+
     class Starship {
         has $.num  = get_a_num();
         has $.str  = { get_a_str() };
@@ -57,9 +57,9 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
 
     is $got_a_num, 0, "default should not be called at compile-time";
     is $got_a_str, 0, "default should not be called at compile-time";
-    
+
     my Starship $starship .= new(num => 10);
-    
+
     is $got_a_num, 0, "default should not be called if value provide";
     is $starship.num,  10, "attribute default worked";
     is $got_a_num, 0, "default should still not be called";
@@ -71,7 +71,7 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
     is $got_a_str, 1, "and now get_a_str has run";
 
     my Starship $starship2 .= new(str => "Niecza");
-    
+
     is $got_a_num, 1, "construction of second object only calls default closure once";
     is $starship2.num,  42, "attribute default worked";
     is $got_a_num, 1, "default should be called only once";

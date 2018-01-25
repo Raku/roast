@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 28;
 
 =begin description
 
@@ -106,5 +106,14 @@ is-deeply (4,5,6,7).tail(-2**100), (), 'can use ints over 64-bit in .tail';
 
 # RT #132543
 is-deeply <a b c>.tail(2).tail, 'c', 'can .tail a .tail';
+
+# https://github.com/rakudo/rakudo/issues/1429
+subtest 'degenerate .tail works' => {
+    plan 4;
+    is-deeply <a b c>.tail(*+10), <a b c>.Seq, 'List (1)';
+    is-deeply <a b c>.tail(*+0 ), <a b c>.Seq, 'List (2)';
+    is-deeply      42.tail(*+10),      42.Seq, 'Int  (1)';
+    is-deeply      42.tail(*+0 ),      42.Seq, 'Int  (2)';
+}
 
 # vim: ft=perl6
