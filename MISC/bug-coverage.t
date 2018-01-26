@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 4;
+plan 5;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 2;
@@ -200,6 +200,65 @@ subtest 'no crashes with native types in conditionals' => {;
         sub (num64  $x) { repeat {} until $x; pass 'num64'   }(2e0);
         sub (str    $x) { repeat {} until $x; pass 'str'     }('meow');
     }
+}
+
+use Test;
+subtest 'thunking closure scoping' => {
+    plan 12;
+
+    # some canary tests to cover regressions when fixing other bugs in subtest
+    is-deeply (42 andthen $_), 42, 'basic andthen';
+    is-deeply gather {
+        for ^2 -> \c { Nil for first { take c; 0 }, ^2; }
+    }, (0, 0, 1, 1).Seq, 'nested `for`s with thunk in statement modifier';
+
+    # https://github.com/rakudo/rakudo/issues/1212
+    is-deeply <a b c>[$_ xx 2], <b b>.Seq, 'xx inside `with`' with 1;
+
+    # RT #130575
+    is-deeply gather {
+        sub itcavuc ($c) { try {take $c} andthen 42 };
+        itcavuc $_ for 2, 4, 6;
+    }, (2, 4, 6).Seq, 'try with block and andthen';
+
+    # RT #132337
+    is-deeply gather {
+        sub foo ($str) { { take $str }() orelse Nil }
+        foo "cc"; foo "dd";
+    }, <cc dd>.Seq, 'block in a sub with orelse';
+
+    # RT #131548
+    is-deeply gather for ^7 {
+        my $x = 1;
+        1 andthen $x.take andthen $x = 2 andthen $x = 3 andthen $x = 4;
+    }, 1 xx 7, 'loop + lexical variable plus chain of andthens';
+
+    # RT #132211
+    is-deeply gather for <a b c> { $^v.uc andthen $v.take orelse .say },
+        <a b c>.Seq, 'loop + andthen + orelse';
+
+    # RT #126569
+    is-deeply gather { (.take xx 10) given 42 }, 42 xx 10,
+        'parentheses + xx + given';
+
+    # RT #128054
+    is-deeply gather { take ("{$_}") for <aa bb> }, <aa bb>.Seq,
+        'postfix for + take + block in a string';
+
+    # RT #126413
+    is-deeply gather { take (* + $_)(32) given 10 }, 42.Seq,
+        'given + whatever code closure execution';
+
+    # RT #126984
+    is-deeply gather {
+        sub foo($x) { (* ~ $x)($_).take given $x }; foo(1); foo(2)
+    }, ("11", "22").Seq, 'sub + given + whatevercode closure execution';
+
+    # RT #132172
+    is-deeply gather { sub {
+        my $ver =.lines.uc with "totally-not-there".IO.open
+            orelse "meow {$_ ~~ Failure}".take and return 42;
+    }() }, 'meow True'.Seq, 'sub with `with` + orelse + block interpolation';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
