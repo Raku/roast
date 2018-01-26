@@ -692,7 +692,6 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 {
     my $out = '';
     quietly $out ~= ("{$_}") for <aa bb>;
-    #?rakudo todo 'RT 128054'
     is $out, 'aabb',
         'topic of for loop has correct value in ("{$_}") construct';
 }

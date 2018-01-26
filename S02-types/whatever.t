@@ -363,7 +363,7 @@ is-deeply try { (1,2,3).combinations(2..*) }, ((1, 2), (1, 3), (2, 3), (1, 2, 3)
     is-deeply @matches, [(), ("foo",), ("fie",), ()], 'outer parameter in rx in WhateverCode in closure';
 }
 
-#?rakudo.moar todo 'closure/scoping of topic when calling Whatevercode RT #126984'
+# RT #126984
 {
     my sub foo($x) { (* ~ $x)($_) given $x };
     is foo(1) ~ foo(2), '1122', 'topic refreshed in immediate invocation of WhateverCode';
