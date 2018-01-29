@@ -625,6 +625,7 @@ is-deeply (S:g/FAIL// with 'foo'), 'foo',
 is-deeply (eager <a b c>.map: {S/a/x/}), <x b c>,
     'S/// can be used in map (does not reuse a container)';
 
+# RT #127135
 try { ($ = 42).subst-mutate: Str, Str }; pass "Cool.subst-mutate with wrong args does not hang";
 
 # https://irclog.perlgeek.de/perl6-dev/2017-03-22#i_14308172
