@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 18;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -74,3 +74,11 @@ subtest '.rotor: 2 => -1, :partial obeys Iterator protocol' => {
         'got right result';
     is $iterends, 1, 'stopped pulling after receiving IterationEnd';
 }
+
+is-deeply <a b c d e f g h>.rotor((1,2,3,*)),
+    (("a",), ("b", "c",), ("d", "e", "f",), ("g", "h",)),
+    '.rotor with Whatever consumes everything';
+
+is-deeply <a b c d e f g h>.rotor((1,2,3,Inf)),
+    (("a",), ("b", "c",), ("d", "e", "f",), ("g", "h",)),
+    '.rotor with Inf consumes everything';
