@@ -135,7 +135,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 # L<S02/C<Q> forms/:qq>
 { # adverb variation
     my @q = ();
-    @q = Q:qq/$foo $bar/;
+    @q = Q:qq/$foo $bar/; #: # https://github.com/perl6/atom-language-perl6/issues/78
     is(+@q, 1, "Q:qq// is singular");
     is(@q[0], "FOO BAR", "blah blah interp");
 };
