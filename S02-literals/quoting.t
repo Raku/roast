@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use lib <packages>;
 use Test;
 use Test::Util;
-plan 210;
+plan 212;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -700,6 +700,54 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
 
     is-deeply << y{21*2}$x@a[]z >>, ( 'y', <42>, <5>, <6>, 'a', 'b', 'z' ),
         'Literals directly bookend multiple interpolated, no nested Lists';
+}
+
+subtest ':b' => {
+    plan 7;
+    is Q:b[\$foo],   '$foo',   'escaping a $';
+    is Q:b[\@foo],   '@foo',   'escaping a @';
+    is Q:b[\%foo],   '%foo',   'escaping a %';
+    is Q:b[\&foo()], '&foo()', 'escaping a &';
+    is Q:b[\{meow}], '{meow}', 'escaping a {...}';
+    is Q:b[\|], '|', 'escaping a \W';
+    throws-like ｢Q:b[\Y]｣, X::Backslash::UnrecognizedSequence,
+        'escaping an unknown \w char throws';
+}
+
+# RT #127226
+subtest ':b and variable combinations' => {
+    plan 22;
+    my $foo = 42;
+    is Q:s:b[$foo],   42,     'scalar (use)';
+    is Q:s:b[\$foo],  '$foo', 'scalar (escape)';
+    is Q:s:b[\\$foo], ｢\42｣,  'scalar (double-slash)';
+
+    my @foo = <a b>;
+    is Q:a:b/@foo/,     '@foo',   'positional, (non-iterpolated)';
+    is Q:a:b/\@foo/,    '@foo',   'positional, (backslashed, non-iterpolated)';
+    is Q:a:b/@foo[]/,   'a b',    'positional, (iterpolated)';
+    is Q:a:b/\@foo[]/,  '@foo[]', 'positional, (backslashed, iterpolated)';
+    is Q:a:b/\\@foo[]/, ｢\a b｣,   'positional, (double-slash, iterpolated)';
+
+    my %foo = :42a, :70b;
+    is Q:h:b/%foo/,     '%foo',           'assoc., (non-iterpolated)';
+    is Q:h:b/\%foo/,    '%foo',           'assoc., (backslashed, non-iterp.)';
+    is Q:h:b/%foo<>/,   "a\t42\nb\t70",   'assoc., (iterpolated)';
+    is Q:h:b/\%foo<>/,  '%foo<>',         'assoc., (backslashed, iterpolated)';
+    is Q:h:b/\\%foo<>/, "\\a\t42\nb\t70", 'assoc., (double-slash, iterpolated)';
+
+    is Q:f:b/&uc/,        '&uc',      'callable, (non-iterpolated)';
+    is Q:f:b/\&uc/,       '&uc',      'callable, (backslashed, non-iterp.)';
+    is Q:f:b/&uc("z")/,   "Z",        'callable, (iterpolated)';
+    is Q:f:b/\&uc("z")/,  '&uc("z")', 'callable, (backslashed, iterpolated)';
+    is Q:f:b/\\&uc("z")/, "\\Z",      'callable, (double-slash, iterpolated)';
+
+    is Q:c:b/{uc "z"}/,   "Z",        'block, (iterpolated)';
+    is Q:c:b/\{uc "z"}/,  '{uc "z"}', 'block, (backslashed, iterpolated)';
+    is Q:c:b/\\{uc "z"}/, "\\Z",      'block, (double-slash, iterpolated)';
+
+    is Q:b:s:h:c/\$foo\@foo[]\%foo<>\&uc("z")\{uc "z"}/,
+      '$foo@foo[]%foo<>&uc("z"){uc "z"}', 'all together';
 }
 
 # vim: ft=perl6
