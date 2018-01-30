@@ -703,12 +703,14 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
 }
 
 subtest ':b' => {
-    plan 7;
+    plan 9;
     is Q:b[\$foo],   '$foo',   'escaping a $';
     is Q:b[\@foo],   '@foo',   'escaping a @';
     is Q:b[\%foo],   '%foo',   'escaping a %';
     is Q:b[\&foo()], '&foo()', 'escaping a &';
     is Q:b[\{meow}], '{meow}', 'escaping a {...}';
+    is Q:b♥\♥♥, '♥', 'escaping a delimiter (unpaired)';
+    is Q:b[\]], ']', 'escaping a delimiter (paired)';
     is Q:b[\|], '|', 'escaping a \W';
     throws-like ｢Q:b[\Y]｣, X::Backslash::UnrecognizedSequence,
         'escaping an unknown \w char throws';
