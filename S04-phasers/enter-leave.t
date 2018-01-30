@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 30;
+plan 31;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -268,6 +268,12 @@ plan 30;
     }
     throws-like { foo() }, X::PhaserExceptions,
         exceptions => sub (@ex) { @ex>>.message ~~ <omg wtf> };
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1455
+    my $res;
+    -> { LEAVE $res := now - ENTER now }();
+    isa-ok $res, Duration, 'using ENTER inside LEAVE does not crash';
 }
 
 # vim: ft=perl6
