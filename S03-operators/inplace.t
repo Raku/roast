@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 31;
+plan 32;
 
 {
     my @a = (1, 2, 3);
@@ -100,6 +100,76 @@ is ~@b, "a b d e z", "inplace sort";
     is $a.="$b"(), 'OH HAI', 'quoted method call (variable) with .= works with parens';
     is $a .= "uc"(), 'OH HAI', 'quoted method call with .= works with parens and whitespace';
     is $a .= "$b"(), 'OH HAI', 'quoted method call (variable) with .= works with parens and whitespace';
+}
+
+# https://github.com/rakudo/rakudo/commit/7fe23136da
+subtest 'coverage for performance optimizations' => {
+    plan 4;
+
+    isa-ok (my class Foo {
+        method STORE ($x) {
+            is-deeply $x, 42, 'called STORE during .= on class instantiation'
+        }
+        method foo { 42 }
+    }.new).=foo, Foo, '.= on a class instantiation';
+
+    subtest 'Scalar' => {
+        plan 11;
+        my $a = 'foo';
+        with $a { .=uc; is $a, 'FOO', '.= with implied $_' }
+
+        sub foo (*@) {}
+        foo $a.=lc, 42;
+        is $a, 'foo', 'embedded in args of routine';
+        foo $a .= uc, 42;
+        is $a, 'FOO', 'embedded in args of routine (spaced)';
+        foo ($a.=lc), 42;
+        is $a, 'foo', 'embedded in args of routine (parenthesized)';
+        foo ($a .= uc), 42;
+        is $a, 'FOO', 'embedded in args of routine (parens + spaces)';
+
+        is $a.=lc,   'foo', 'return value (no space)';
+        is $a .= uc, 'FOO', 'return value (spaced)';
+
+        $a.=lc;
+        is $a, 'foo', 'standard; no space';
+        $a .= uc;
+        is $a, 'FOO', 'standard; spaced';
+
+        ($a = $a.self).=lc;
+        is $a, 'foo', 'statement; no space';
+        ($a = $a.self) .= uc;
+        is $a, 'FOO', 'statement; spaced';
+    }
+
+    subtest 'Array' => {
+        plan 11;
+        my @a = 'foo';
+        with @a { .=uc; is-deeply @a, ['FOO'], '.= with implied $_' }
+
+        sub foo (*@) {}
+        foo @a.=lc, 42;
+        is-deeply @a, ['foo'], 'embedded in args of routine';
+        foo @a .= uc, 42;
+        is-deeply @a, ['FOO'], 'embedded in args of routine (spaced)';
+        foo (@a.=lc), 42;
+        is-deeply @a, ['foo'], 'embedded in args of routine (parenthesized)';
+        foo (@a .= uc), 42;
+        is-deeply @a, ['FOO'], 'embedded in args of routine (parens + spaces)';
+
+        is-deeply @a.=lc,   ['foo'], 'return value (no space)';
+        is-deeply @a .= uc, ['FOO'], 'return value (spaced)';
+
+        @a.=lc;
+        is-deeply @a, ['foo'], 'standard; no space';
+        @a .= uc;
+        is-deeply @a, ['FOO'], 'standard; spaced';
+
+        (@a.self).=lc;
+        is-deeply @a, ['foo'], 'statement; no space';
+        (@a.self) .= uc;
+        is-deeply @a, ['FOO'], 'statement; spaced';
+    }
 }
 
 # vim: ft=perl6
