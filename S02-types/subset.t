@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 49;
+plan 50;
 
 =begin description
 
@@ -215,6 +215,74 @@ lives-ok { EVAL 'my class A { has $.integer where * > 0; method meth { 1 / $!int
     my subset S3 of S;
     my subset S2 of S;
     nok S2.isa(S3), 'exclusive subsets';
+}
+
+# https://github.com/rakudo/rakudo/issues/1457
+subtest 'Junction arguments to `where` parameters' => {
+    plan 6;
+
+    my subset Foo of Mu where Int|Bool;
+    subtest 'implicit Mu, block, literal where' => {
+        plan 4;
+        throws-like ｢-> $ where Int|Bool { }(none True)｣,
+            X::TypeCheck::Binding::Parameter, 'Junction, false';
+        throws-like ｢-> $ where Int|Bool { }(2e0)｣,
+            X::TypeCheck::Binding::Parameter, 'other,    false';
+
+        -> $ where Int|Bool { pass 'Junction, true' }(one True);
+        -> $ where Int|Bool { pass 'other,    true' }(42);
+    }
+    subtest 'subset, block' => {
+        plan 4;
+        throws-like {-> Foo $ { }(none True)},
+            X::TypeCheck::Binding::Parameter, 'Junction, false';
+        throws-like {-> Foo $ { }(2e0)},
+            X::TypeCheck::Binding::Parameter, 'other,    false';
+
+        -> Foo $ { pass 'Junction, true' }(one True);
+        -> Foo $ { pass 'other,    true' }(42);
+    }
+    subtest 'subset, block, literal where' => {
+        plan 4;
+        throws-like {-> Foo $ where Int|Bool { }(all True, 42e0)},
+            X::TypeCheck::Binding::Parameter, 'Junction, false';
+        throws-like {-> Foo $ where Int|Bool { }(2e0)},
+            X::TypeCheck::Binding::Parameter, 'other,    false';
+
+        -> Foo $ where Int|Bool { pass 'Junction, true' }(any True, 42e0);
+        -> Foo $ where Int|Bool { pass 'other,    true' }(42);
+    }
+
+    subtest 'implicit Any, sub, literal where' => {
+        plan 4;
+        throws-like ｢sub ($ where Int|Bool) { }(none 42e0)｣,
+            X::TypeCheck::Binding::Parameter, 'Junction, false';
+        throws-like ｢sub ($ where Int|Bool) { }(2e0)｣,
+            X::TypeCheck::Binding::Parameter, 'other,    false';
+
+        sub ($ where Int|Bool) { pass 'Junction, true' }(none True);
+        sub ($ where Int|Bool) { pass 'other,    true' }(42);
+    }
+    subtest 'subset, sub' => {
+        plan 4;
+        throws-like {sub (Foo $) { }(none True)},
+            X::TypeCheck::Binding::Parameter, 'Junction, false';
+        throws-like {sub (Foo $) { }(2e0)},
+            X::TypeCheck::Binding::Parameter, 'other,    false';
+
+        sub (Foo $) { pass 'Junction, true' }(one True);
+        sub (Foo $) { pass 'other,    true' }(42);
+    }
+    subtest 'subset, sub, literal where' => {
+        plan 4;
+        throws-like {sub (Foo $ where Int|Bool) { }(all True, 42e0)},
+            X::TypeCheck::Binding::Parameter, 'Junction, false';
+        throws-like {sub (Foo $ where Int|Bool) { }(2e0)},
+            X::TypeCheck::Binding::Parameter, 'other,    false';
+
+        sub (Foo $ where Int|Bool) { pass 'Junction, true' }(any True, 42e0);
+        sub (Foo $ where Int|Bool) { pass 'other,    true' }(42);
+    }
 }
 
 # vim: ft=perl6
