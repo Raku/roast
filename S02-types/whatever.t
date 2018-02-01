@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 120;
+plan 121;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -382,5 +382,21 @@ throws-like { use fatal; "a".map: *.Int }, X::Str::Numeric,
     'WhateverCode curry correctly propagates `use fatal` pragma';
 
 is-deeply Mu ~~ (*), True, 'Mu:U smartmatches as True with Whatever';
+
+# https://github.com/rakudo/rakudo/issues/1465
+subtest 'compile time WhateverCode evaluation' => {
+    plan 4;
+    is my class { has $.z is default(42) where * == 42 }.new.z, 42,
+        '`where` clause + is default trait on attribute';
+
+    is (my $a is default(42) where * == 42), 42,
+        '`where` clause + is default on variable';
+
+    is (BEGIN (* == 42)(42)), True,
+        'non-block BEGIN with WhateverCode execution';
+
+    my subset Foo where * == 42;
+    is (my Foo $b is default(42)), 42, 'subset + default on variable';
+}
 
 # vim: ft=perl6
