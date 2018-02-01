@@ -55,7 +55,8 @@ throws-like { EVAL 'time(1, 2, 3)' },
 lives-ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
 
 # RT #76946
-lives-ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-internal exception';
+throws-like ｢Any .= ()｣, Exception, :message{.contains: 'Any'},
+    'typed, non-internal exception';
 
 # RT #90522
 {
