@@ -16,7 +16,7 @@ use Test;
 #
 #   should do.
 
-plan 24;
+plan 25;
 
 my $foo        = 42;
 my $was_inside = 0;
@@ -95,6 +95,19 @@ sub lvalue_test3() {
     #?rakudo todo 'RT#124341 Proxy should not escape return from a non is-rw'
     is      $was_inside,              2, "lvalue_test3() was called (9)";
 
+}
+
+# https://github.com/rakudo/rakudo/issues/1466
+subtest '.perl on Proxied object does not crash' => {
+    plan 4;
+    eval-lives-ok ｢(Proxy.new: :STORE{$^a,$^b}, :FETCH{Int}).VAR.perl｣,
+        'Int fetch value';
+    eval-lives-ok ｢(Proxy.new: :STORE{$^a,$^b}, :FETCH{Nil}).VAR.perl｣,
+        'Nil fetch value';
+    eval-lives-ok ｢(Proxy.new: :STORE{$^a,$^b}, :FETCH{IterationEnd}).VAR.perl｣,
+        'IterationEnd fetch value';
+    eval-lives-ok ｢(Proxy.new: :STORE{$^a,$^b}, :FETCH{42}).VAR.perl｣,
+        '42 (i.e. .DEFINITE) fetch value';
 }
 
 # vim: ft=perl6
