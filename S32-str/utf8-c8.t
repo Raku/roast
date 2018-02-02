@@ -5,7 +5,7 @@ use Test;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 59;
+plan 63;
 
 {
     my $test-str;
@@ -175,6 +175,26 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
     my $fh = open $test-file, :enc<utf8-c8>;
     is $fh.slurp, '“', 'Valid and NFC UTF-8 comes out fine (file case)';
     $fh.close;
+}
+
+# RT#127671
+if $*DISTRO.is-win {
+    skip('Not clear if there is an alternative to this issue on Windows', 4);
+} else {
+    my $test-dir = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
+    mkdir $test-dir;
+    # ↑ normal directory in TMPDIR to hide our scary stuff
+    my $file = ("$test-dir/".encode ~ Buf.new(0x06, 0xAB)).decode('utf8-c8');
+    # ↑ a file with a name that is somewhat weird
+    END { try unlink $file; try rmdir $test-dir }
+    spurt $file, 'hello'; # create the file
+    lives-ok {
+        my @files = $test-dir.IO.dir;
+        is @files.elems, 1, 'dir returns something when encountering malformed utf8 names';
+        my $roundtrip = @files[0].basename.encode('utf8-c8');
+        is-deeply $roundtrip.list, (0x06, 0xAB), 'utf8-c8 name roundtripped through dir';
+        is @files.IO.slurp, 'hello', 'can slurp a file with utf8-c8 name';
+    }, 'dir lives with malformed utf8 names';
 }
 
 # MoarVM #664
