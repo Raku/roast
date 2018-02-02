@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 20;
 
 shell_captures_out_ok '',               '',    0, 'Child succeeds but does not print anything';
 shell_captures_out_ok 'say 42',         '42',  0, 'Child succeeds and prints something';
@@ -79,4 +79,16 @@ with run(:out, $*EXECUTABLE, '-e', '') -> $proc {
     $p.out.slurp(:close);
     $p.err.slurp(:close);
   }, 'bin pipes in Proc do not crash on open';
+}
+
+# RT #129882
+{
+    my $proc = run $*EXECUTABLE, '-e', 'print slurp', :in, :out, :bin;
+    my $input = ('a' x 1_000_000).encode;
+    my $promise = start {
+        $proc.in.write: $input;
+        $proc.in.close;
+    }
+    is $proc.out.slurp(:close, :bin).bytes, 1_000_000, 'large blob can be piped';
+    await $promise;
 }
