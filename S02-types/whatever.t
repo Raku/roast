@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 122;
+plan 123;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -396,6 +396,19 @@ subtest 'compile time WhateverCode evaluation' => {
         'non-block BEGIN with WhateverCode execution';
 
     my subset Foo where * == 42;
+    is (my Foo $b is default(42)), 42, 'subset + default on variable';
+}
+
+# https://github.com/rakudo/rakudo/issues/1465
+subtest 'compile time Junction in `where` thunk evaluation' => {
+    plan 3;
+    is my class { has $.z is default(42) where 42|3 }.new.z, 42,
+        '`where` clause + is default trait on attribute';
+
+    is (my $a is default(42) where 42|3), 42,
+        '`where` clause + is default on variable';
+
+    my subset Foo where 1|42;
     is (my Foo $b is default(42)), 42, 'subset + default on variable';
 }
 
