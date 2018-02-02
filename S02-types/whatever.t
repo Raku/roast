@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 121;
+plan 122;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -397,6 +397,34 @@ subtest 'compile time WhateverCode evaluation' => {
 
     my subset Foo where * == 42;
     is (my Foo $b is default(42)), 42, 'subset + default on variable';
+}
+
+# RT #131409
+subtest 'regex whatever curry' => {
+    plan 11;
+    my @a = <foo bar>.map: { * ~~ /<$_>/ }
+    is @a.head.('foo').so, True, '/<$_>/ curry';
+
+    my @b = <foo bar>.map: { * ~~ /<$_> { pass 'in-regex block' }/ }
+    is @b.head.('foo').so, True, '/<$_>/ curry';
+
+    my @c = <foo bar>.map: { * ~~ /<$_> {
+        pass 'in-regex block';
+        my &z := { pass 'in block inside in-regex block' }
+        z
+    }/ }
+    is @c.head.('foo').so, True, '/<$_>/ curry';
+
+    my @d = <foo bar>.map: { * ~~ /<$_>
+        <?{ pass 'in <?{...}> block'; True}>
+        <!{ pass 'in <!{...}> block'; False}>
+        {
+            pass 'in-regex block';
+            my &z := { pass 'in block inside in-regex block' }
+            z
+        }
+    /}
+    is @d.head.('foo').so, True, '/<$_>/ curry';
 }
 
 # vim: ft=perl6
