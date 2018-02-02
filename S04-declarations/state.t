@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 43;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -279,5 +279,11 @@ eval-lives-ok 'state $x; $x', 'state outside control structure';
 # RT #130855
 lives-ok { sub foo () {$ = 42}; for ^2000000 { $ = foo } },
     'Intensive use of state variable in inline-friendly sub does not hit problems';
+
+# [Github Issue #1341](https://github.com/rakudo/rakudo/issues/1341)
+{
+	my @arr = do loop { state $x = 0; last if ++$x > 2; $x };
+	is-deeply @arr, [1, 2], 'Statevars work in block following "do" statement prefix';
+}
 
 # vim: ft=perl6
