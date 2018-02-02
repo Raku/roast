@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 37;
+plan 38;
 
 # L<S09/Fixed-size arrays>
 
@@ -147,4 +147,11 @@ eval-lives-ok ｢my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>)｣,
     is +@a, 2, 'Z= shape filling';
     is @a[0;1], 1, 'Z= shape filling';
     is @a[1;2], 5, 'Z= shape filling';
+}
+
+
+#?rakudo skip 'R#1297'
+{ # https://github.com/rakudo/rakudo/issues/1297
+    my @matrix[2;2]; @matrix['0'; '0'] = 42;
+    is-deeply @matrix[0;0], 42;
 }
