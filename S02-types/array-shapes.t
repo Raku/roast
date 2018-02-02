@@ -153,5 +153,5 @@ eval-lives-ok ｢my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>)｣,
 #?rakudo skip 'R#1297'
 { # https://github.com/rakudo/rakudo/issues/1297
     my @matrix[2;2]; @matrix['0'; '0'] = 42;
-    is-deeply @matrix[0;0], 42;
+    is-deeply @matrix[0;0], 42, 'Str can be used to index shaped arrays';
 }
