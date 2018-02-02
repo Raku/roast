@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 438;
+plan 439;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -556,6 +556,13 @@ throws-like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused,
     reason => { m/'Missing semicolon'/ },
     pre => { m/'1 if 2'/ },
     post => { m/'3 { say 3 }'/ };
+
+# RT #125674
+#?rakudo todo 'Wrong eject position'
+throws-like 'if True if { };', X::Syntax::Missing,
+    what => 'block',
+    pre => 'if True ',
+    post => 'if { };';
 
 # RT #77522
 throws-like '/\ X/', X::Syntax::Regex::Unspace,
