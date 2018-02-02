@@ -11,9 +11,9 @@ use Test;
 # Quoting Larry:
 #   The intention is that lvalue subs behave in all respects as if they
 #   were variables.  So consider what
-#   
+#
 #       say $nonproxy = 40;
-#   
+#
 #   should do.
 
 plan 24;
