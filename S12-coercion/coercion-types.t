@@ -197,6 +197,8 @@ subtest 'DefiniteHow target, errors, source is already target' => {
             'from Any';
         is-deeply -> Target:D(Any:D)    $x { $x }(Source.new), Target.new,
             'from Any:D';
+
+        # https://github.com/rakudo/rakudo/issues/1361
         is-deeply -> Target:D()         $x { $x }(Source.new), Target.new,
             'from implied Any';
     }
