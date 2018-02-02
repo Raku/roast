@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 6;
+plan 7;
 
 # RT #132042
 doesn't-hang ｢
@@ -130,5 +130,11 @@ given make-temp-dir() {
         {:err(''), :out<pass>, :0status},
     'no serialization crashes with roles and traits';
 }
+
+# https://github.com/rakudo/rakudo/issues/1413
+is_run ｢use RAKUDO1413; print 'pass'｣,
+    :compiler-args[<-Ipackages -It/spec/packages>],
+    {:out<pass>, :err(''), :0status},
+'no crashes with giant enums in packages';
 
 # vim: expandtab shiftwidth=4 ft=perl6
