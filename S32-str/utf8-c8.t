@@ -181,7 +181,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
 if $*DISTRO.is-win {
     skip('Not clear if there is an alternative to this issue on Windows', 4);
 } else {
-    my $test-dir = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
+    my $test-dir = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time ~ '-weird';
     mkdir $test-dir;
     # ↑ normal directory in TMPDIR to hide our scary stuff
     my $file = ("$test-dir/".encode ~ Buf.new(0x06, 0xAB)).decode('utf8-c8');
