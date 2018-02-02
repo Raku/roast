@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 5;
+plan 6;
 
 # RT #132042
 doesn't-hang ｢
@@ -102,5 +102,33 @@ is_run ｢
     .print: "x\n" with IO::Socket::INET.new: :host<127.0.0.1>, :15555port;
     sleep 2;
 ｣, {:out<pass>, :err(''), :0status}, 'supply inside sock does not hang';
+
+# RT #127959
+given make-temp-dir() {
+    .child('myclass.pm6').spurt: ｢
+        unit class myclass;
+        use mytraitmodule;
+
+        has $!bar is mytrait;
+    ｣;
+
+    .child('mytraitmodule.pm6').spurt: ｢
+        unit module mytraitmodule;
+        my role rrHOW {
+            method compose(Mu \type) {
+                type.^add_method('nn', method (Mu:D:) { return 'nn' ; } );
+                callsame;
+            }
+        }
+
+        multi trait_mod:<is>(Attribute:D $attr, :$mytrait! ) is export {
+            $attr.package.HOW does rrHOW;
+        }
+    ｣;
+
+    is_run ｢use myclass; print 'pass'｣, :compiler-args['-I', .absolute],
+        {:err(''), :out<pass>, :0status},
+    'no serialization crashes with roles and traits';
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
