@@ -1,5 +1,7 @@
 use v6;
+use lib 't/spec/packages';
 use Test;
+use Test::Util;
 
 # The UTF-8 Clean 8-bit encoding is used to ensure we can roundtrip any
 # 8-bit octet stream given to us by OSes that don't promise anything about
@@ -169,8 +171,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
     is Buf.new('“'.encode('utf8')).decode('utf8-c8'), '“',
         'Valid and NFC UTF-8 comes out fine (string case)';
 
-    my $test-file = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
-    END try unlink $test-file;
+    my $test-file = make-temp-file;
     spurt $test-file, '“';
     my $fh = open $test-file, :enc<utf8-c8>;
     is $fh.slurp, '“', 'Valid and NFC UTF-8 comes out fine (file case)';
@@ -181,12 +182,11 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
 if $*DISTRO.is-win {
     skip('Not clear if there is an alternative to this issue on Windows', 4);
 } else {
-    my $test-dir = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time ~ '-weird';
-    mkdir $test-dir;
+    my $test-dir = make-temp-dir;
     # ↑ normal directory in TMPDIR to hide our scary stuff
     my $file = ("$test-dir/".encode ~ Buf.new(0x06, 0xAB)).decode('utf8-c8');
     # ↑ a file with a name that is somewhat weird
-    END { try unlink $file; try rmdir $test-dir }
+    LEAVE { try unlink $file }
     spurt $file, 'hello'; # create the file
     lives-ok {
         my @files = $test-dir.IO.dir;
