@@ -8,7 +8,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there.
 
-plan 37;
+plan 38;
 
 my $res;
 
@@ -178,6 +178,13 @@ subtest 'all Proc pipes return Proc on .close' => {
     cmp-ok $p.in .close, '===', $p, 'in';
     cmp-ok $p.out.close, '===', $p, 'out';
     cmp-ok $p.err.close, '===', $p, 'err';
+}
+
+# RT #129296
+subtest 'Proc.encoding is set correctly' => {
+    my $p = run :out, $*EXECUTABLE, '-e', 'print 42';
+    is $p.out.encoding, 'utf8', '.encoding set correctly to utf8';
+    is $p.out.split(0.chr, :skip-empty), (“42”,), '.out is read correctly'
 }
 
 # vim: ft=perl6
