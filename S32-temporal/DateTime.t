@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 291;
+plan 297;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -837,4 +837,17 @@ throws-like { DateTime.new: :2016year, 42 }, Exception,
         'DateTime + Duration = DateTime';
     is-deeply $dur + $dt2, $dt1.in-timezone($dt2.timezone),
         'Duration + DateTime = DateTime';
+}
+
+# comparison operators
+
+{
+    my $dt1 = DateTime.now;
+    my $dt2 = $dt1.later(:1hour); 
+     ok $dt1 <  $dt2, 'DateTime <  DateTime';
+     ok $dt1 <= $dt2, 'DateTime <= DateTime';
+    nok $dt1 == $dt2, 'DateTime == DateTime';
+     ok $dt1 != $dt2, 'DateTime != DateTime';
+    nok $dt1 >  $dt2, 'DateTime >  DateTime';
+    nok $dt1 >= $dt2, 'DateTime >= DateTime';
 }
