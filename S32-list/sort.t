@@ -23,7 +23,7 @@ plan 35;
 {
     # This test used to have NaN in it, but that is nonsensical.
     #                                          --colomon
-    
+
     my @a = (1.1,2,-3.05,0.1,Inf,42,-1e-07,-Inf).sort;
     my @e = (-Inf,-3.05,-1e-07,0.1,1.1,2,42,Inf);
     my @s = sort @a;
