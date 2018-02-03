@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 35;
+plan 36;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -222,5 +222,30 @@ is (*.sort)(<2 3 1>).^name, 'Seq', 'auto-primed *.sort returns a Seq';
 # RT #130866
 eval-lives-ok ｢.elems, .sort with @｣,
     '.sort on reified empty array does not crash';
+
+# https://github.com/rakudo/rakudo/issues/1472
+subtest 'degenerate cases' => {
+    plan 13;
+
+    is-deeply (    ).sort,               (    ).Seq, 'empty, no args';
+    is-deeply (    ).sort(-*),           (    ).Seq, 'empty, 1-arity';
+    is-deeply (    ).sort({$^a < $^b}),  (    ).Seq, 'empty, 2-arity';
+
+    is-deeply (1,  ).sort,               (1,  ).Seq, '1 item, no args';
+    is-deeply (1,  ).sort(-*),           (1,  ).Seq, '1 item, 1-arity';
+    is-deeply (1,  ).sort({$^a < $^b}),  (1,  ).Seq, '1 item, 2-arity';
+
+    is-deeply (2, 1).sort,               (1, 2).Seq, '2-item, no args (1)';
+    is-deeply (1, 2).sort,               (1, 2).Seq, '2-item, no args (2)';
+    is-deeply (1, 2).sort(-*),           (2, 1).Seq, '2-item, 1-arity (1)';
+    is-deeply (2, 1).sort(-*),           (2, 1).Seq, '2-item, 1-arity (2)';
+
+    # True => 1  => swap
+    is-deeply (1, 2).sort({$^a < $^b}),  (2, 1).Seq, '2-item, 2-arity (2)';
+    # False => 0 => leave as is
+    is-deeply (2, 1).sort({$^a < $^b}),  (2, 1).Seq, '2-item, 2-arity (1)';
+    # -1 => leave as is
+    is-deeply (2, 1).sort(-> $, $ {-1}), (2, 1).Seq, '2-item, 2-arity (3)';
+}
 
 # vim: ft=perl6
