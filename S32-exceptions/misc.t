@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 439;
+plan 447;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -980,5 +980,16 @@ is_run ｢
 ｣, %(:out<pass>, :err{
     .contains: 'use :WorryFoo' & 'use :WorryBer' & none 'use :WorryBar'
 }), 'lexical worries pragma disables compiler warnings';
+
+
+# RT #127100
+throws-like 'sub foo (--> Bool Int $x, Int $y) { True }', X::Syntax::Malformed, what => /^'return value'/;
+throws-like 'sub foo (--> Bool Int $x; Int $y) { True }', X::Syntax::Malformed, what => /^'return value'/;
+throws-like 'sub foo (--> Bool Int $x, Int $y)', X::Syntax::Malformed, what => /^'return value'/;
+throws-like 'sub foo (--> Bool Int $x; Int $y)', X::Syntax::Malformed, what => /^'return value'/;
+throws-like 'sub foo (--> Bool, Int $x, Int $y)', X::Syntax::Malformed, what => /^'return value'/;
+throws-like 'sub foo (--> Bool; Int $x; Int $y)', X::Syntax::Malformed, what => /^'return value'/;
+throws-like 'sub foo ($x, --> Bool, Int $y)', X::Syntax::Malformed, what => /^'return value'/;
+throws-like 'sub foo ($x; --> Bool; Int $y)', X::Syntax::Malformed, what => /^'return value'/;
 
 # vim: ft=perl6
