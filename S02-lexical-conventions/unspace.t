@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 108;
+plan 110;
 
 # L<S02/"Unspaces"/This is known as the "unspace">
 
@@ -352,5 +352,13 @@ eval-lives-ok 'my \term = {:a(1),:b(2)}; my $v = term\<b>; $v == 2 or die;',
     'degenerate unspace with pointy hash subscript detached from sigiless terms works';
 
 is 'a'.parse-base\   \   (16), 10, 'unspace can recurse';
+
+# RT #125985
+{
+    eval-lives-ok 'constant nums = 1; my \fizzbuzz = nums\ .map({ $_ });',
+        'unspace combined with map and a constant';
+    eval-lives-ok 'constant nums = 1; constant fizzbuzz = nums\ .map({ $_ })',
+        'unspace combined with map and constants';
+}
 
 # vim: ft=perl6
