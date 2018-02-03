@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 447;
+plan 448;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -991,5 +991,10 @@ throws-like 'sub foo (--> Bool, Int $x, Int $y)', X::Syntax::Malformed, what => 
 throws-like 'sub foo (--> Bool; Int $x; Int $y)', X::Syntax::Malformed, what => /^'return value'/;
 throws-like 'sub foo ($x, --> Bool, Int $y)', X::Syntax::Malformed, what => /^'return value'/;
 throws-like 'sub foo ($x; --> Bool; Int $y)', X::Syntax::Malformed, what => /^'return value'/;
+
+# RT #130261
+throws-like ｢say ‘hello';
+say 42;
+say 50;｣, X::Comp::FailGoal, line => 3, message => /«'line 1'»/;
 
 # vim: ft=perl6
