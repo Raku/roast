@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 52;
+plan 53;
 
 # Very basic enum tests
 
@@ -244,5 +244,12 @@ is-deeply do { BEGIN my %h = <a 1 b 2>; my enum Bits (%h); Bits.enums },
 # https://github.com/rakudo/rakudo/commit/fc52143bee
 is-deeply do { my enum Foos (a => <42>); a.Str }, 'a',
     '"NumericStringyEnumeration" uses key as .Str value';
+
+{ # RT #122929
+    my enum Bug ("foo" => -42, "A", "bar" => 100, "B", :12ber, "C", "D");
+    is-deeply [+foo, +A,  +bar, +B,  +ber, +C, +D],
+              [-42,  -41, 100,  101, 12,   13, 14],
+    'Pair elements in the list given to enum declaration work';
+}
 
 # vim: ft=perl6
