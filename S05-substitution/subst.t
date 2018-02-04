@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 190;
+plan 189;
 
 # L<S05/Substitution/>
 
@@ -699,11 +699,5 @@ subtest '.subst(Str:D, Str:D)' => {
     is-deeply 'a♥bc'.subst('♥b',  'z'), 'azc',    'replace with shorter (2)';
     is-deeply 'a♥bc'.subst('a♥', '♦z'), '♦zbc',   'replace with samelength (2)';
 }
-
-
-# GH#1314
-throws-like ｢'x'.substr: /x/, 'x'｣, Exception,
-            message => /｢did you mean 'subst'｣/,
-            'using substr instead of subst';
 
 # vim: ft=perl6
