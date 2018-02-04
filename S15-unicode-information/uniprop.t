@@ -345,10 +345,11 @@ is-deeply 0x00AB.uniprop, "Pi", "General Category 'Pi'";
 is-deeply 0x00B6.uniprop, "Po", "General Category 'Po'";
 
 # GH#1247
-subtest {
-    for ^5 { # ≈35% fail rate if broken
-        is_run('#򫳞', { status => 0 },
-               'reserved characters in source code do not cause segfaults');
+subtest 'reserved characters in source code do not cause segfaults', {
+    my $antiflap = 5; # 5 – ≈35% fail rate if broken
+    plan $antiflap;
+    for ^$antiflap {
+        is_run('#򫳞', { status => 0 }, 'no segfault');
     }
 }
 
