@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 {
     sub prefix:<X> ($thing) { return "ROUGHLY$thing"; };
@@ -75,4 +75,14 @@ subtest 'coverage for crashes in certain operator setups' => {
     #
     #     (MYMINUS 1 MYPLUS 2 MYPLUS 3)
     # }, -6, '(2)';
+}
+
+# GH #1315
+{
+    class A {}
+    my $x;
+    sub prefix:<++>(A)  { $x = 'foo' }
+    sub postfix:<++>(A) { $x = 'bar' }
+    A++;
+    is $x, 'bar', 'static optimization (if exists) is not too early';
 }
