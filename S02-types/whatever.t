@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 123;
+plan 125;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -438,6 +438,40 @@ subtest 'regex whatever curry' => {
         }
     /}
     is @d.head.('foo').so, True, '/<$_>/ curry';
+}
+
+# RT #128859
+subtest 'chained ops with whatever curry in them' => {
+    plan 6;
+    is-deeply (1 < *+1 < 5)(3), True,  'op curry inside (1)';
+    is-deeply (1 < *+1 < 5)(5), False, 'op curry inside (2)';
+    is-deeply (1 < *+1 < 5)(0), False, 'op curry inside (3)';
+
+    is-deeply (11 < *.flip < 50)(52),   True, 'method curry inside (2)';
+    is-deeply (11 < *.flip < 50)(25),   False, 'method curry inside (1)';
+    is-deeply (11 < *.flip < 50)("01"), False, 'method curry inside (3)';
+}
+
+subtest 'various wild cases' => {
+    plan 10;
+    is-deeply (22 + *.flip + *² + *.flip²)(23, 45, 67), 7855,       '1';
+
+    is-deeply (22 + *.flip < *² + *.flip² < *)(23, 45, 67, 100000), True, '2';
+    is-deeply (22 + *.flip < *² + *.flip² < *)(23, 45, 67, 10),     False, '3';
+    is-deeply (22 + *.flip < *² + *.flip² < *)(233333, 45, 67, 100000),
+      False, '4';
+
+    my $a = 42;
+    my $b = sub (Whatever) { 100 };
+    is-deeply (* + $a + $b(*) + *.flip + *.flip²)(5,17,13), 1179, '5';
+    is-deeply (* + $a + $b(*) < *.flip + *.flip² < 2000)(5,17,13), True,  '6';
+
+    is-deeply (* + $a > $b(*) + *.flip + *.flip² > 2000)(50,17,13), False, '7';
+    $a = 100000;
+    is-deeply (* + $a > $b(*) + *.flip + *.flip² < 2000)(50,17,13), True, '8';
+    $b = sub (|) { 4200 };
+    is-deeply (* + $a > $b(*) + *.flip + *.flip² < 2000)(50,17,13), False, '9';
+    is-deeply (* + $a > $b(*) + *.flip + *.flip² > 2000)(50,17,13), True,  '9';
 }
 
 # vim: ft=perl6
