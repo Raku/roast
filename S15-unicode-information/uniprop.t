@@ -1,8 +1,10 @@
 use v6;
 
+use lib <t/spec/packages packages>;
 use Test;
+use Test::Util;
 
-plan 200;
+plan 201;
 
 #use unicode :v(6.3);
 
@@ -341,4 +343,13 @@ is-deeply 0xFFE3.uniprop, "Sk", "General Category 'Sk'";
 is-deeply 0xFFE4.uniprop, "So", "General Category 'So'";
 is-deeply 0x00AB.uniprop, "Pi", "General Category 'Pi'";
 is-deeply 0x00B6.uniprop, "Po", "General Category 'Po'";
+
+# GH#1247
+subtest {
+    for ^5 { # ≈35% fail rate if broken
+        is_run('#򫳞', { status => 0 },
+               'reserved characters in source code do not cause segfaults');
+    }
+}
+
 # vim: ft=perl6 expandtab sw=4
