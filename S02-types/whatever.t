@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 125;
+plan 126;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -472,6 +472,11 @@ subtest 'various wild cases' => {
     $b = sub (|) { 4200 };
     is-deeply (* + $a > $b(*) + *.flip + *.flip² < 2000)(50,17,13), False, '9';
     is-deeply (* + $a > $b(*) + *.flip + *.flip² > 2000)(50,17,13), True,  '9';
+}
+
+{ # RT #130859
+    sub f { my $x = ++$; (*.[* - $x])(<a b c>) }
+    is-deeply [f, f, f], [<c b a>], 'postfix curry with another curry inside';
 }
 
 # vim: ft=perl6
