@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 44;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -284,6 +284,13 @@ lives-ok { sub foo () {$ = 42}; for ^2000000 { $ = foo } },
 {
 	my @arr = do loop { state $x = 0; last if ++$x > 2; $x };
 	is-deeply @arr, [1, 2], 'Statevars work in block following "do" statement prefix';
+}
+
+# RT #129114
+{
+    my @arr = ();
+    for ^2 { for ^2 { @arr.push( "{ (state $a)++ }") } };
+    is-deeply @arr, ["0", "0", "0", "0"], 'Statevar uses the correct scope';
 }
 
 # vim: ft=perl6
