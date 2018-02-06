@@ -42,6 +42,7 @@ plan 11;
 {
     sub prefix:["\c[MINUS-OR-PLUS SIGN]"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \c[MINUS-OR-PLUS SIGN])';
+    # " # https://github.com/perl6/atom-language-perl6/issues/81
 }
 
 {
