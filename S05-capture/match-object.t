@@ -59,9 +59,7 @@ is ('foo' ~~ /(.+)/) eqv ('foo' ~~ /(.+)/), True, 'eqv of different but similar 
 
 my $c;
 ok 'abc' ~~ /.{ $c = $¢ }/,     'current match state';
-#?rakudo todo 'Type of $¢ is Any instead of Cursor - RT #124998'
 is $c.WHAT, Cursor.WHAT,        'got right type';
-#?rakudo skip "No such method pos for invocant of type Any RT #124999"
 ok defined($c.pos),             '.pos';
 
 # RT #77146
