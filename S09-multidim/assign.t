@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 59;
 
 lives-ok { my @a[3] = 1, 2, 3 },
     'Can assign exact number of elements to fixed size array';
@@ -111,3 +111,14 @@ lives-ok { my int @nx[2;2] = (0, 1), (2, 3); my @x[2;2] = @nx },
     'Can assign native shaped to non-native shaped';
 lives-ok { my @x[2;2] = (0, 1), (2, 3); my int @nx[2;2] = @x },
     'Can assign non-native shaped to native shaped';
+
+# RT #126703
+{
+    lives-ok { my Str @a[3;3] = <a b c>, <d e f>, <g h i> },
+        'Can assign list of lists that matches shape of typed 2-dim array';
+    my Str @b[2;2] = <a b>, <c d>;
+    is @b[0;0], 'a', 'Assignment to typed 2-dim array works (1)';
+    is @b[0;1], 'b', 'Assignment to typed 2-dim array works (2)';
+    is @b[1;0], 'c', 'Assignment to typed 2-dim array works (3)';
+    is @b[1;1], 'd', 'Assignment to typed 2-dim array works (4)';
+}
