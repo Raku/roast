@@ -5,7 +5,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 126;
+plan 127;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -478,5 +478,9 @@ subtest 'various wild cases' => {
     sub f { my $x = ++$; (*.[* - $x])(<a b c>) }
     is-deeply [f, f, f], [<c b a>], 'postfix curry with another curry inside';
 }
+
+# https://github.com/rakudo/rakudo/issues/1487
+is-deeply (*.match(/.+/).flip)(42), "24",
+    'curry + regex + method call does not crash';
 
 # vim: ft=perl6
