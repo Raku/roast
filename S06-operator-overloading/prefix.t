@@ -80,6 +80,9 @@ subtest 'coverage for crashes in certain operator setups' => {
 
 # https://github.com/rakudo/rakudo/issues/1315
 # https://github.com/rakudo/rakudo/issues/1477
+# XXX 6.d REVIEW: the non-optimizing custom stuff might not be spec material:
+# https://irclog.perlgeek.de/perl6-dev/2018-02-07#i_15786958
+# and with extra comments on https://github.com/rakudo/rakudo/issues/1477#issuecomment-363644261
 subtest 'postfix-to-prefix-inc-dec opt does not rewrite custom ops' => {
     plan 5;
     subtest 'custom classes' => {
