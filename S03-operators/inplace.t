@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 32;
+plan 33;
 
 {
     my @a = (1, 2, 3);
@@ -170,6 +170,29 @@ subtest 'coverage for performance optimizations' => {
         (@a.self) .= uc;
         is-deeply @a, ['FOO'], 'statement; spaced';
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/1485
+subtest '.= works with fake-infix adverb named args' => {
+    plan 4;
+    my Pair $p .= new :key<foo> :value<bar>;
+    is-deeply $p, :foo<bar>.Pair, 'my ... .= new args';
+
+    my $p2;
+    ($p2 = $p.self.antipair.antipair).=new :key<foo> :value<bar>;
+    is-deeply $p2, :foo<bar>.Pair, '($ ... method chain).=new args';
+
+    my class Foo {
+        has $.z;
+        method foos  { self }
+        method meows { $!z = 42; self }
+    }
+    my Foo $o .= new;
+    is-deeply $o, Foo.new, 'my ... .= new no args';
+
+    my $o2;
+    ($o2 = $o.self.foos.foos).=meows;
+    is-deeply $o2, Foo.new(:42z), '($ ... method chain).=new no args';
 }
 
 # vim: ft=perl6
