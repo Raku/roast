@@ -1001,4 +1001,8 @@ throws-like ｢say ‘hello';
 say 42;
 say 50;｣, X::Comp::FailGoal, line => 3, message => /«'line 1'»/;
 
+# https://github.com/rakudo/rakudo/issues/1476
+throws-like ｢*+42:foo｣, X::Syntax::Adverb, :what{.so},
+    'error in Whatever closure with adverb mentions what cannot be adverbed';
+
 # vim: ft=perl6
