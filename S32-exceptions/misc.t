@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 449;
+plan 450;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
