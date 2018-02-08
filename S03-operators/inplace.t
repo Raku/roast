@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 33;
+plan 34;
 
 {
     my @a = (1, 2, 3);
@@ -193,6 +193,44 @@ subtest '.= works with fake-infix adverb named args' => {
     my $o2;
     ($o2 = $o.self.foos.foos).=meows;
     is-deeply $o2, Foo.new(:42z), '($ ... method chain).=new no args';
+}
+
+# https://github.com/rakudo/rakudo/issues/1461
+subtest '.= works to init sigilles vars' => {
+    plan 16;
+    my class Foo { has $.foo; has $.bar };
+
+    my \foo1 .= new;
+    is foo1, Mu.new, 'typeless var inits with Mu (.new, no args)';
+    throws-like { foo1 = 42 }, X::Assignment::RO, '...assigning to it throws';
+
+    my \foo2 .= new: :42foo;
+    is foo2, Mu.new, 'typeless var inits with Mu (.new, args)';
+    throws-like { foo2 = 42 }, X::Assignment::RO, '...assigning to it throws';
+
+    my \foo3 .= new :42foo;
+    is foo3, Mu.new, 'typeless var inits with Mu (.new, fake-infix adverbs)';
+    throws-like { foo3 = 42 }, X::Assignment::RO, '...assigning to it throws';
+
+    quietly my \foo4 .= Numeric;
+    is-deeply foo4, 0, 'typeless var inits with Mu (.Numeric)';
+    throws-like { foo4 = 42 }, X::Assignment::RO, '...assigning to it throws';
+
+    my Int \foo5 .= new;
+    is-deeply foo5, 0, 'typed (.new, no args)';
+    throws-like { foo5 = 42 }, X::Assignment::RO, '...assigning to it throws';
+
+    my Int \foo6 .= new: 42;
+    is-deeply foo6, 42, 'typed (.new, pos args)';
+    throws-like { foo6 = 42 }, X::Assignment::RO, '...assigning to it throws';
+
+    my Foo \foo7 .= new: :42foo, :70bar;
+    is-deeply foo7, Foo.new(:42foo, :70bar), 'typed (.new, named args)';
+    throws-like { foo7 = 42 }, X::Assignment::RO, '...assigning to it throws';
+
+    my Foo \foo8 .= new :42foo :70bar;
+    is-deeply foo8, Foo.new(:42foo, :70bar), 'typed (.new, fake-infix adverbs)';
+    throws-like { foo8 = 42 }, X::Assignment::RO, '...assigning to it throws';
 }
 
 # vim: ft=perl6
