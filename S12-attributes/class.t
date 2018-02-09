@@ -19,7 +19,7 @@ plan 23;
 class Foo {
     our $.bar = 23;
     our $.yada = 13;
-} 
+}
 
 my $test = 0;
 ok ($test = Foo.bar), 'accessors for class attributes work';
