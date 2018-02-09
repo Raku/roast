@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 32;
+plan 33;
 
 {   my @array = (3,7,9,11);
 
@@ -108,6 +108,23 @@ plan 32;
     my %h;
     %h<a> = ('1','3','4');
     is-deeply %h<a>[*], ('1', '3', '4'), '[*] slice returns all elements of a list of hash value';
+}
+
+# https://github.com/rakudo/rakudo/issues/1320
+subtest 'no "drift" when re-using lazy iterable for indexing' => {
+    plan 3;
+    my @a = <a b>;
+    my @idx := (0…*).cache;
+    is-deeply gather {@a[@idx].take xx 10}, @a.List xx 10,
+        'more indexes than els';
+
+    my @idx2 := (lazy 1,).cache;
+    is-deeply gather {@a[@idx2].take xx 10}, (@a[1],) xx 10,
+        'fewer indexes than els';
+
+    my @idx3 := 0, 1, 2, |(lazy 3, 4), 5, 6;
+    is-deeply <a b>[@idx3], <a b>,
+        'lazy iterable with iterator starting non-lazy';
 }
 
 # vim: ft=perl6
