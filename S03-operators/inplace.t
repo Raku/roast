@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 34;
+plan 35;
 
 {
     my @a = (1, 2, 3);
@@ -232,5 +232,9 @@ subtest '.= works to init sigilles vars' => {
     is-deeply foo8, Foo.new(:42foo, :70bar), 'typed (.new, fake-infix adverbs)';
     throws-like { foo8 = 42 }, X::Assignment::RO, '...assigning to it throws';
 }
+
+# https://github.com/rakudo/rakudo/commit/562edfc50a
+is-deeply class Foo { has Array[Numeric] $.foo .= new: 1, 2, 3 }.new.foo,
+  Array[Numeric].new(1, 2, 3), 'Foo[Bar] type constraint with .= on attributes';
 
 # vim: ft=perl6
