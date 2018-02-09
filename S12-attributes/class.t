@@ -14,7 +14,7 @@ Class Attributes
 #L<S12/Class attributes/"Class attributes are declared">
 #L<S12/Class methods/Such a metaclass method is always delegated>
 
-plan 23;
+plan 24;
 
 class Foo {
     our $.bar = 23;
@@ -140,5 +140,30 @@ is_run(
     { err => -> $o { $o ~~ /:i useless/ && $o ~~ /:i accessor/ } },
     'useless my $.a accessor method generation error contains useful enough hints'
 );
+
+# RT #130748
+subtest 'attribute access from where clauses' => {
+    plan 7;
+    throws-like ｢my class RT130748a { has $.a; has $.b where $!a }｣,
+        X::Syntax::NoSelf, 'where, thunk, attr only';
+    throws-like ｢my class RT130748b { has $.a; has $.b where * > $!a }｣,
+        X::Syntax::NoSelf, 'where, whatevercode';
+    throws-like ｢my class RT130748c { has $.a; has $.b where {$!a}｣,
+        X::Syntax::NoSelf, 'where, block';
+
+    my class RT130748d {
+        has $.a = 42;
+        has $.b where *.so = $!a+1;
+        method z-thunk ($x where  $!a ) { pass 'where in method param, thunk' }
+        method z-block ($x where {$!a}) { pass 'where in method param, block' }
+        method z-whatever ($x where *+$!a) {
+            pass 'where in method param, whatevercode'
+        }
+    }
+    is-deeply RT130748d.new.b, 43, 'can still use attr in default values';
+    RT130748d.new.z-thunk:    42;
+    RT130748d.new.z-block:    42;
+    RT130748d.new.z-whatever: 42;
+}
 
 # vim: ft=perl6
