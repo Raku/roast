@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 51;
+plan 52;
 
 use Test::Util;
 
@@ -160,6 +160,17 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
         # for some of them to be the same and we don't want the test to flap
         cmp-ok @res.Set.elems, '>=', $n-$n/10, 'generated elements vary';
     }
+}
+
+# RT #132246
+subtest '.pick on object Hashes' => {
+    plan 2;
+    my %obj{Any} = question => 42;
+    is-deeply %obj.pick, %obj.pairs.pick, 'single-Pair Hash';
+
+    my %h := :{ :42foo, (True) => False, 42e0 => ½ };
+    is-deeply gather { %h.pick.take xx 300 }.unique.sort,
+        (:42foo, (True) => False, 42e0 => ½).sort, 'many Pairs';
 }
 
 # vim: ft=perl6

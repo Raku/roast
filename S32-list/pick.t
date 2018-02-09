@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 316;
+plan 317;
 
 =begin description
 
@@ -175,5 +175,17 @@ nok ([==] (^2**64).roll(10).map(* +& 15)), 'Range.pick has enough entropy';
         is ([+|] ((^$v).pick for ^200)), $v - 1, "$v.base(16) .pick hits all bits"; $v +<= 1;
     }
 }
+
+# RT #132246
+subtest '.pick on object Hashes' => {
+    plan 2;
+    my %obj{Any} = question => 42;
+    is-deeply %obj.pick, %obj.pairs.pick, 'single-Pair Hash';
+
+    my %h := :{ :42foo, (True) => False, 42e0 => ½ };
+    is-deeply gather { %h.pick.take xx 300 }.unique.sort,
+        (:42foo, (True) => False, 42e0 => ½).sort, 'many Pairs';
+}
+
 
 # vim: ft=perl6
