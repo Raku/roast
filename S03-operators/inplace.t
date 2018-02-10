@@ -234,7 +234,10 @@ subtest '.= works to init sigilles vars' => {
 }
 
 # https://github.com/rakudo/rakudo/commit/562edfc50a
-is-deeply class Foo { has Array[Numeric] $.foo .= new: 1, 2, 3 }.new.foo,
-  Array[Numeric].new(1, 2, 3), 'Foo[Bar] type constraint with .= on attributes';
+{
+    is-deeply my class Foo { has Array[Numeric] $.foo .= new: 1, 2, 3 }.new.foo,
+        Array[Numeric].new(1, 2, 3),
+        'Foo[Bar] type constraint with .= on attributes';
+}
 
 # vim: ft=perl6
