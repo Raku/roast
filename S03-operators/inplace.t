@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 37;
+plan 38;
 
 {
     my @a = (1, 2, 3);
@@ -284,6 +284,47 @@ subtest 'various weird cases of .= calls' => {
         is-deeply $b, 1, 'called block in `do` only once';
         is-deeply $c, 1, 'called block in string only once';
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/1504
+subtest 'constants' => {
+    plan 4;
+
+    subtest 'default type constraint' => {
+        plan 2;
+        my constant foo1 .= new;
+        ok foo1.DEFINITE, 'instantiated an object';
+        is foo1.WHAT, Mu, 'default type is Mu';
+    }
+
+    my Int constant foo2 .= new: 42;
+    is-deeply foo2, 42, 'basic type constraint';
+
+    subtest 'class with `::` in name' => {
+        plan 4;
+        my class Foo::Bar::Ber {
+            has $.a; has $.b; has $.c;
+            method new ($a?, :$b, :$c) { self.bless: :$a, :$b, :$c }
+        }
+
+        my Foo::Bar::Ber constant foo3 .= new;
+        is-deeply foo3, Foo::Bar::Ber.new, 'no args';
+
+        my Foo::Bar::Ber constant foo4 .= new: 10, :20b, :30c;
+        is-deeply foo4, Foo::Bar::Ber.new(10, :20b, :30c), 'pos + named args';
+
+        ok 1;
+        # my Foo::Bar::Ber constant foo5 .= new :20b :30c;
+        # is-deeply foo5, Foo::Bar::Ber.new(:20b, :30c), 'fake-infix adverbs';
+
+        ok 1;
+        # my Foo::Bar::Ber constant foo6 .= new(10) :20b :30c;
+        # is-deeply foo6, Foo::Bar::Ber.new(10, :20b, :30c),
+            # 'pos arg + fake-infix adverbs';
+    }
+
+    my Array[Numeric] constant foo7 .=new: 1, 2, 3;
+    is-deeply foo7, Array[Numeric].new(1, 2, 3), 'parametarized type';
 }
 
 # vim: ft=perl6
