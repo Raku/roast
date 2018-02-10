@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 35;
+plan 36;
 
 {
     my @a = (1, 2, 3);
@@ -238,6 +238,29 @@ subtest '.= works to init sigilles vars' => {
     is-deeply my class Foo { has Array[Numeric] $.foo .= new: 1, 2, 3 }.new.foo,
         Array[Numeric].new(1, 2, 3),
         'Foo[Bar] type constraint with .= on attributes';
+}
+
+# https://github.com/rakudo/rakudo/issues/1506
+subtest '.= inside andthen and relatives' => {
+    plan 4;
+
+    my Int $x1;
+    $x1 notandthen .=new;
+    is-deeply $x1, 0, 'no-arg, single notandthen';
+
+    my Int $x2; $x2 notandthen .=self :42moews :100foos notandthen .=new: 42;
+    is-deeply $x2, 42, 'fake-infix args + pos args, chained notandthen';
+
+    my Int $x3;
+    $x3 orelse .=new andthen .=new: 43;
+    is-deeply $x3, 43, 'orelse, andthen chain';
+
+    my class Meow { has $.a; has $.b; method zzu { self.WHAT }; }
+    my Meow $x4;
+    $x4 orelse .=new :42a :70b andthen .=new
+      andthen .=new: :100b andthen .=new: :10a, :20b;
+
+    is-deeply $x4, Meow.new(:10a, :20b), 'chain of different ops';
 }
 
 # vim: ft=perl6
