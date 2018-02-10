@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 36;
+plan 37;
 
 {
     my @a = (1, 2, 3);
@@ -261,6 +261,29 @@ subtest '.= inside andthen and relatives' => {
       andthen .=new: :100b andthen .=new: :10a, :20b;
 
     is-deeply $x4, Meow.new(:10a, :20b), 'chain of different ops';
+}
+
+subtest 'various weird cases of .= calls' => {
+    plan 2;
+
+    subtest 'nested calls with method name as string in one of them' => {
+        plan 2;
+        my $c = 0;
+        (my Int $x .=new).="{$c++; "new"}"(42);
+        is-deeply $x, 42, 'right value in .=ed var';
+        is-deeply $c, 1, 'called block in string only once';
+    }
+
+    subtest 'nested calls with method name as string and do block' => {
+        plan 3;
+        my $c = 0;
+        my $b = 0;
+        my Int $x;
+        do { $b++; ($x .=new) }.="{$c++; "new"}"(42);
+        is-deeply $x, 42, 'right value in .=ed var';
+        is-deeply $b, 1, 'called block in `do` only once';
+        is-deeply $c, 1, 'called block in string only once';
+    }
 }
 
 # vim: ft=perl6
