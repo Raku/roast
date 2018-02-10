@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 36;
+plan 37;
 
 # L<S04/Exceptions/The fail function>
 
@@ -176,5 +176,11 @@ subtest 'Failure.self' => {
 # RT #124434
 is_run ｢Failure.new(Exception.new); Nil｣, {:out(""), :err(*), :1status},
     'Failure.new(Exception.new) does not segfault';
+
+# RT #131496
+without Failure.new {
+    is-deeply .perl.EVAL.handled, True,
+      'Failure:D.perl.EVAL roundtrips `handled` flag';
+}
 
 # vim: ft=perl6
