@@ -35,10 +35,10 @@ plan 37;
     my $c =         42; $c .= WHAT;
     my $d =      42.23; $d .= WHAT;
     my @e = <a b c d>;  @e .= WHAT;
-    isa-ok($b,    Str,   "inplace WHAT of a Str");
-    isa-ok($c,    Int,   "inplace WHAT of a Num");
-    isa-ok($d,    Rat,   "inplace WHAT of a Rat");
-    isa-ok(@e[0], Array, "inplace WHAT of an Array");
+    is $b,    Str,   "inplace WHAT of a Str";
+    is $c,    Int,   "inplace WHAT of a Num";
+    is $d,    Rat,   "inplace WHAT of a Rat";
+    is e[0], Array, "inplace WHAT of an Array";
 }
 
 my $f = "lowercase"; $f .= uc;
