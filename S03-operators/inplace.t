@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 35;
+plan 37;
 
 {
     my @a = (1, 2, 3);
@@ -35,10 +35,10 @@ plan 35;
     my $c =         42; $c .= WHAT;
     my $d =      42.23; $d .= WHAT;
     my @e = <a b c d>;  @e .= WHAT;
-    isa-ok($b,    Str,   "inplace WHAT of a Str");
-    isa-ok($c,    Int,   "inplace WHAT of a Num");
-    isa-ok($d,    Rat,   "inplace WHAT of a Rat");
-    isa-ok(@e[0], Array, "inplace WHAT of an Array");
+    is $b,    Str,   "inplace WHAT of a Str";
+    is $c,    Int,   "inplace WHAT of a Num";
+    is $d,    Rat,   "inplace WHAT of a Rat";
+    is e[0], Array, "inplace WHAT of an Array";
 }
 
 my $f = "lowercase"; $f .= uc;
@@ -234,7 +234,56 @@ subtest '.= works to init sigilles vars' => {
 }
 
 # https://github.com/rakudo/rakudo/commit/562edfc50a
-is-deeply class Foo { has Array[Numeric] $.foo .= new: 1, 2, 3 }.new.foo,
-  Array[Numeric].new(1, 2, 3), 'Foo[Bar] type constraint with .= on attributes';
+{
+    is-deeply my class Foo { has Array[Numeric] $.foo .= new: 1, 2, 3 }.new.foo,
+        Array[Numeric].new(1, 2, 3),
+        'Foo[Bar] type constraint with .= on attributes';
+}
+
+# https://github.com/rakudo/rakudo/issues/1506
+subtest '.= inside andthen and relatives' => {
+    plan 4;
+
+    my Int $x1;
+    $x1 notandthen .=new;
+    is-deeply $x1, 0, 'no-arg, single notandthen';
+
+    my Int $x2; $x2 notandthen .=self :42moews :100foos notandthen .=new: 42;
+    is-deeply $x2, 42, 'fake-infix args + pos args, chained notandthen';
+
+    my Int $x3;
+    $x3 orelse .=new andthen .=new: 43;
+    is-deeply $x3, 43, 'orelse, andthen chain';
+
+    my class Meow { has $.a; has $.b; method zzu { self.WHAT }; }
+    my Meow $x4;
+    $x4 orelse .=new :42a :70b andthen .=new
+      andthen .=new: :100b andthen .=new: :10a, :20b;
+
+    is-deeply $x4, Meow.new(:10a, :20b), 'chain of different ops';
+}
+
+subtest 'various weird cases of .= calls' => {
+    plan 2;
+
+    subtest 'nested calls with method name as string in one of them' => {
+        plan 2;
+        my $c = 0;
+        (my Int $x .=new).="{$c++; "new"}"(42);
+        is-deeply $x, 42, 'right value in .=ed var';
+        is-deeply $c, 1, 'called block in string only once';
+    }
+
+    subtest 'nested calls with method name as string and do block' => {
+        plan 3;
+        my $c = 0;
+        my $b = 0;
+        my Int $x;
+        do { $b++; ($x .=new) }.="{$c++; "new"}"(42);
+        is-deeply $x, 42, 'right value in .=ed var';
+        is-deeply $b, 1, 'called block in `do` only once';
+        is-deeply $c, 1, 'called block in string only once';
+    }
+}
 
 # vim: ft=perl6
