@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 29;
 
 =begin description
 
@@ -115,5 +115,16 @@ subtest 'degenerate .tail works' => {
     is-deeply      42.tail(*+10),      42.Seq, 'Int  (1)';
     is-deeply      42.tail(*+0 ),      42.Seq, 'Int  (2)';
 }
+
+# RT #131617
+is-deeply Seq.new(class :: does Iterator {
+    has @!stuff = <a b c>;
+    has Bool:D $!ended = False;
+    method pull-one {
+        $!ended and die;
+        @!stuff and return @!stuff.shift;
+        $!ended = True;
+        IterationEnd
+    } }.new), <a b c>.Seq, '.tail(Callable) does not violate Iterator protocol';
 
 # vim: ft=perl6
