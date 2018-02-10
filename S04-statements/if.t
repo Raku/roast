@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 44;
 
 =begin kwid
 
@@ -146,8 +146,7 @@ if Mu { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     is $got, '', 'else -> $c { } binding previous if';
 }
 # Sing it again.  This time with slurpy.
-#?rakudo todo 'RT#105872'
-{
+{ # RT #105872
     my ($got, $a_val, $b_val);
     my sub testa { $a_val };
     my sub testb { $b_val };
@@ -217,6 +216,59 @@ throws-like 'if($x > 1) {}', X::Comp::Group, 'keyword needs at least one whitesp
     my @a = 0, 1, 2;
     for @a { if $_ { $_++ } };
     is ~@a, '0 2 3', '"if" does not break lexical aliasing of $_'
+}
+
+# RT #105872
+subtest 'slurpy parameters on block' => {
+    plan 2;
+    subtest 'if' => {
+        plan 10;
+        if 1, (2, (3, $(4, 5))) {
+            is-deeply @_, [1, 2, 3, $(4, 5)], '@_'
+        }
+        if 1, (2, (3, $(4, 5))) -> *@a {
+            is-deeply @a, [1, 2, 3, $(4, 5)], '*@'
+        }
+        if 1, (2, (3, $(4, 5))) -> **@a {
+            is-deeply @a, [(1, (2, (3, $(4, 5)))),], '**@ (1)'
+        }
+        if 42     -> **@a { is-deeply @a, [42],        '**@ (2)' }
+        if 42, 42 -> **@a { is-deeply @a, [(42, 42),], '**@ (3)' }
+
+        if 1, (2, (3, $(4, 5))) -> +@a {
+            is-deeply @a, [1, (2, (3, $(4, 5)))], '+@ (1)'
+        }
+        if (1, 2), (3, 4) -> +@a {
+            is-deeply @a, [(1, 2), (3, 4)], '+@ (2)'
+        }
+        if 1, 2   -> +@a { is-deeply @a, [1, 2],   '+@ (3)' }
+        if 42     -> +@a { is-deeply @a, [42],     '+@ (4)' }
+        if 42, 42 -> +@a { is-deeply @a, [42, 42], '+@ (5)' }
+    }
+    subtest 'elsif' => {
+        plan 10;
+        if 0 {} elsif 1, (2, (3, $(4, 5))) {
+            is-deeply @_, [1, 2, 3, $(4, 5)], '@_'
+        }
+        if 0 {} elsif 1, (2, (3, $(4, 5))) -> *@a {
+            is-deeply @a, [1, 2, 3, $(4, 5)], '*@'
+        }
+        if 0 {} elsif 1, (2, (3, $(4, 5))) -> **@a {
+            is-deeply @a, [(1, (2, (3, $(4, 5)))),], '**@ (1)'
+        }
+        if 0 {} elsif 42     -> **@a { is-deeply @a, [42],        '**@ (2)' }
+        if 0 {} elsif 42, 42 -> **@a { is-deeply @a, [(42, 42),], '**@ (3)' }
+
+        if 0 {} elsif 1, (2, (3, $(4, 5))) -> +@a {
+            is-deeply @a, [1, (2, (3, $(4, 5)))], '+@ (1)'
+        }
+        if 0 {} elsif (1, 2), (3, 4) -> +@a {
+            is-deeply @a, [(1, 2), (3, 4)], '+@ (2)'
+        }
+        if 0 {} elsif 1, 2   -> +@a { is-deeply @a, [1, 2],   '+@ (3)' }
+        if 0 {} elsif 42     -> +@a { is-deeply @a, [42],     '+@ (4)' }
+        if 0 {} elsif 42, 42 -> +@a { is-deeply @a, [42, 42], '+@ (5)' }
+    }
 }
 
 # vim: ft=perl6
