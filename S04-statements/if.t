@@ -222,12 +222,18 @@ throws-like 'if($x > 1) {}', X::Comp::Group, 'keyword needs at least one whitesp
 subtest 'slurpy parameters on block' => {
     plan 2;
     subtest 'if' => {
-        plan 10;
+        plan 12;
         if 1, (2, (3, $(4, 5))) {
             is-deeply @_, [1, 2, 3, $(4, 5)], '@_'
         }
         if 1, (2, (3, $(4, 5))) -> *@a {
             is-deeply @a, [1, 2, 3, $(4, 5)], '*@'
+        }
+        if 1, (2, (3, $(4, 5))) -> :$foo, *@a {
+            is-deeply @a, [1, 2, 3, $(4, 5)], '*@, with named arg before it'
+        }
+        if 1, (2, (3, $(4, 5))) -> *%, *@a {
+            is-deeply @a, [1, 2, 3, $(4, 5)], '*@, with named slurpy before it'
         }
         if 1, (2, (3, $(4, 5))) -> **@a {
             is-deeply @a, [(1, (2, (3, $(4, 5)))),], '**@ (1)'
@@ -246,12 +252,18 @@ subtest 'slurpy parameters on block' => {
         if 42, 42 -> +@a { is-deeply @a, [42, 42], '+@ (5)' }
     }
     subtest 'elsif' => {
-        plan 10;
+        plan 12;
         if 0 {} elsif 1, (2, (3, $(4, 5))) {
             is-deeply @_, [1, 2, 3, $(4, 5)], '@_'
         }
         if 0 {} elsif 1, (2, (3, $(4, 5))) -> *@a {
             is-deeply @a, [1, 2, 3, $(4, 5)], '*@'
+        }
+        if 0 {} elsif 1, (2, (3, $(4, 5))) -> :$foo, *@a {
+            is-deeply @a, [1, 2, 3, $(4, 5)], '*@, with named arg before it'
+        }
+        if 0 {} elsif 1, (2, (3, $(4, 5))) -> *%, *@a {
+            is-deeply @a, [1, 2, 3, $(4, 5)], '*@, with named slurpy before it'
         }
         if 0 {} elsif 1, (2, (3, $(4, 5))) -> **@a {
             is-deeply @a, [(1, (2, (3, $(4, 5)))),], '**@ (1)'
