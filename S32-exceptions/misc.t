@@ -5,7 +5,7 @@ use lib "t/spec/packages";
 use Test;
 use Test::Util;
 
-plan 446;
+plan 450;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -909,7 +909,7 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
         CATCH { default {
             my $bt = .backtrace;
             is-deeply $bt.flat, $bt.list, '.flat on Backtrace returns .list';
-            cmp-ok $bt.list.elems, '>', 3, 'we have at least 3 els in .list';
+            is $bt.list.elems, 4, 'we correctly have 2 elements in .list';
             is $bt.list[0].code.name, 'foo', '.list contains correct items';
         }}
     }
@@ -938,9 +938,12 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
     my sub bar { X::AdHoc.new.throw }();
     CATCH { default {
         my $bt = .backtrace;
-        is-deeply $bt.map(*.self), $bt.list.Seq, '.map operates correctly';
-        is-deeply $bt.map(*.^name).unique, <Backtrace::Frame>.Seq,
-            "all .map'ed items are Frames";
+        is $bt.list.elems, 4, 'expecting 4 frames in the backtrace';
+        is-deeply $bt.map({
+            isa-ok $^b, Backtrace::Frame,
+                 '.map arg (item #' ~ $++ ~ ') is a Backtrace::Frame';
+            $^b;
+        }), $bt.list, '.map operates correctly';
     }}
 }
 
