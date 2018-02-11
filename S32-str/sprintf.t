@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 172;
+plan 173;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -300,6 +300,36 @@ throws-like { sprintf "%d" }, X::Str::Sprintf::Directives::Count,
 {
     is sprintf('%064b', -100), '-' ~ ('0' x 56) ~ '1100100',
         '%064b format works with negatives';
+}
+
+# RT #132846
+subtest 'sprintf with Numeric/Str type objects' => {
+    plan 18*my @types := Num, Int, Rat, Complex, Str;
+    sub qs (|c) { quietly sprintf |c }
+
+    for @types -> \T {
+        my $p := "with {T.perl}";
+        is-deeply qs('%c',   T), "\0",           "%c   $p";
+        is-deeply qs('%02c', T), "0\0",          "%02c $p";
+        is-deeply qs('%u',   T), '0',            "%u   $p";
+        is-deeply qs('%02u', T), '00',           "%02u $p";
+        is-deeply qs('%x',   T), '0',            "%x   $p";
+        is-deeply qs('%02x', T), '00',           "%02x $p";
+
+        is-deeply qs('%d',   T), '0',            "%d   $p";
+        is-deeply qs('%02d', T), '00',           "%02d $p";
+        is-deeply qs('%b',   T), '0',            "%b   $p";
+        is-deeply qs('%02b', T), '00',           "%02b $p";
+        is-deeply qs('%o',   T), '0',            "%o   $p";
+        is-deeply qs('%02o', T), '00',           "%02o $p";
+
+        is-deeply qs('%f',   T), '0.000000',     "%f   $p";
+        is-deeply qs('%.2f', T), '0.00',         "%.2f $p";
+        is-deeply qs('%e',   T), '0.000000e+00', "%e   $p";
+        is-deeply qs('%.2e', T), '0.00e+00',     "%.2e $p";
+        is-deeply qs('%g',   T), '0',            "%g   $p";
+        is-deeply qs('%.2g', T), '0',            "%.2g $p";
+    }
 }
 
 # vim: ft=perl6
