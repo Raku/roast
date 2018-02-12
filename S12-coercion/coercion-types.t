@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 31;
+plan 30;
 
 # coercion types in parameter lists
 {
@@ -103,16 +103,6 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     my \a = -42;
     is Int(a), -42, "Sigilless variable does not confuse coercion type parsing";
 }
-
-# RT #130479
-is_run ｢
-    class Foo { method Bar {die} }
-    class Bar is Foo {}
-    -> Bar(Foo) $foo?, Bar(Foo) :$bar {
-        say $foo; say $bar;
-    }()
-｣, {:err(''), :out("(Bar)\n(Bar)\n"), :0status},
-    'coercers do not attempt to coerce optional params that were not given';
 
 subtest ':D DefiniteHow target (core types)' => {
     #####
