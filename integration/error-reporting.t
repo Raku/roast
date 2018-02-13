@@ -2,7 +2,7 @@ use v6;
 use lib 't/spec/packages';
 
 use Test;
-plan 33;
+plan 34;
 
 use Test::Util;
 
@@ -256,5 +256,18 @@ throws-like { await start die 'test' }, Exception,
 # RT#130979
 is_run "\n" x 1336 ~ 'use x $;', {err => /1337/},
     'bad `use` gives line number in error message';
+
+subtest 'Backtrace.gist' => { # https://github.com/rakudo/rakudo/issues/1521
+    plan 2;
+    sub foo { die };
+    try foo;
+    like $!.backtrace.gist, /^ 'Backtrace(' \d+ ' frames)' $/,
+        'backtrace with multiple frames uses plural "frames" in .gist';
+
+    my $b;
+    repeat { $b := Backtrace.new: $++ } until $b.list.elems == 1;
+    is $b.gist, 'Backtrace(1 frame)',
+        'backtrace with one frame uses singular "frame" in .gist';
+}
 
 # vim: ft=perl6
