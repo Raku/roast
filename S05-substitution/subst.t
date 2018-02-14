@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 189;
+plan 190;
 
 # L<S05/Substitution/>
 
@@ -698,6 +698,53 @@ subtest '.subst(Str:D, Str:D)' => {
     is-deeply 'a♥bc'.subst('♥',  'zo'), 'azobc',  'replace with longer (2)';
     is-deeply 'a♥bc'.subst('♥b',  'z'), 'azc',    'replace with shorter (2)';
     is-deeply 'a♥bc'.subst('a♥', '♦z'), '♦zbc',   'replace with samelength (2)';
+}
+
+subtest '.subst-mutate returns a List for things .match return a List for' => {
+    plan 17 × 2 × my @matchers := /b/, 'b';
+    for @matchers -> \mt {
+        for "a", 123 -> $s is copy {
+            isa-ok $s.subst-mutate(:g, mt, ''), List,
+                ":g with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:x(3), mt, ''), List,
+                ":x with {mt.^name} matcher on {$s.^name}";
+
+            isa-ok $s.subst-mutate(:nth(1, 2, 3), mt, ''), List,
+                ":nth(List) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:nth(1…3), mt, ''), List,
+                ":nth(Seq) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:nth(1..3), mt, ''), List,
+                ":nth(Range) with {mt.^name} matcher on {$s.^name}";
+
+            isa-ok $s.subst-mutate(:th(1, 2, 3), mt, ''), List,
+                ":th(List) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:th(1…3), mt, ''), List,
+                ":th(Seq) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:th(1..3), mt, ''), List,
+                ":th(Range) with {mt.^name} matcher on {$s.^name}";
+
+            isa-ok $s.subst-mutate(:st(1, 2, 3), mt, ''), List,
+                ":st(List) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:st(1…3), mt, ''), List,
+                ":st(Seq) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:st(1..3), mt, ''), List,
+                ":st(Range) with {mt.^name} matcher on {$s.^name}";
+
+            isa-ok $s.subst-mutate(:nd(1, 2, 3), mt, ''), List,
+                ":nd(List) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:nd(1…3), mt, ''), List,
+                ":nd(Seq) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:nd(1..3), mt, ''), List,
+                ":nd(Range) with {mt.^name} matcher on {$s.^name}";
+
+            isa-ok $s.subst-mutate(:rd(1, 2, 3), mt, ''), List,
+                ":rd(List) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:rd(1…3), mt, ''), List,
+                ":rd(Seq) with {mt.^name} matcher on {$s.^name}";
+            isa-ok $s.subst-mutate(:rd(1..3), mt, ''), List,
+                ":rd(Range) with {mt.^name} matcher on {$s.^name}";
+        }
+    }
 }
 
 # vim: ft=perl6
