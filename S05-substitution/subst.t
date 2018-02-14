@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 190;
+plan 191;
 
 # L<S05/Substitution/>
 
@@ -742,6 +742,54 @@ subtest '.subst-mutate returns a List for things .match return a List for' => {
             isa-ok $s.subst-mutate(:rd(1…3), mt, ''), List,
                 ":rd(Seq) with {mt.^name} matcher on {$s.^name}";
             isa-ok $s.subst-mutate(:rd(1..3), mt, ''), List,
+                ":rd(Range) with {mt.^name} matcher on {$s.^name}";
+        }
+    }
+}
+
+# https://github.com/rakudo/rakudo/issues/1523#issuecomment-365447388
+subtest 'no-matches .subst-mutate: with multi-match opts = empty List' => {
+    plan 17 × 2 × my @matchers := /b/, 'b';
+    for @matchers -> \mt {
+        for "a", 123 -> $s is copy {
+            is-deeply $s.subst-mutate(:g, mt, ''), (),
+                ":g with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:x(3), mt, ''), (),
+                ":x with {mt.^name} matcher on {$s.^name}";
+
+            is-deeply $s.subst-mutate(:nth(1, 2, 3), mt, ''), (),
+                ":nth(List) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:nth(1…3), mt, ''), (),
+                ":nth(Seq) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:nth(1..3), mt, ''), (),
+                ":nth(Range) with {mt.^name} matcher on {$s.^name}";
+
+            is-deeply $s.subst-mutate(:th(1, 2, 3), mt, ''), (),
+                ":th(List) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:th(1…3), mt, ''), (),
+                ":th(Seq) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:th(1..3), mt, ''), (),
+                ":th(Range) with {mt.^name} matcher on {$s.^name}";
+
+            is-deeply $s.subst-mutate(:st(1, 2, 3), mt, ''), (),
+                ":st(List) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:st(1…3), mt, ''), (),
+                ":st(Seq) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:st(1..3), mt, ''), (),
+                ":st(Range) with {mt.^name} matcher on {$s.^name}";
+
+            is-deeply $s.subst-mutate(:nd(1, 2, 3), mt, ''), (),
+                ":nd(List) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:nd(1…3), mt, ''), (),
+                ":nd(Seq) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:nd(1..3), mt, ''), (),
+                ":nd(Range) with {mt.^name} matcher on {$s.^name}";
+
+            is-deeply $s.subst-mutate(:rd(1, 2, 3), mt, ''), (),
+                ":rd(List) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:rd(1…3), mt, ''), (),
+                ":rd(Seq) with {mt.^name} matcher on {$s.^name}";
+            is-deeply $s.subst-mutate(:rd(1..3), mt, ''), (),
                 ":rd(Range) with {mt.^name} matcher on {$s.^name}";
         }
     }
