@@ -27,7 +27,7 @@ class Fixed2 does Real {
 my $zero = Fixed2.new(0);
 my $one = Fixed2.new(1);
 my $one-and-one-hundredth = Fixed2.new(1.01);
-my $one-and-ninety-nine-hundredths = Fixed2.new(1.99);  
+my $one-and-ninety-nine-hundredths = Fixed2.new(1.99);
 my $three = Fixed2.new(3);
 my $ten = Fixed2.new(10);
 my $neg-pi = Fixed2.new(-3.14);
@@ -50,7 +50,7 @@ is-approx $neg-pi.pred, -4.14, "(-3.14).pred works";
     my $i = $zero.Bool;
     isa-ok $i, Bool, "0.Bool is an Bool";
     is $i, Bool::False, "0.Bool is False";
-    
+
     $i = $one-and-ninety-nine-hundredths.Bool;
     isa-ok $i, Bool, "1.99.Bool is an Bool";
     is $i, Bool::True, "1.99.Bool is True";
@@ -60,7 +60,7 @@ is-approx $neg-pi.pred, -4.14, "(-3.14).pred works";
     my $i = $neg-pi.Int;
     isa-ok $i, Int, "-3.14.Int is an Int";
     is $i, -3, "-3.14.Int is -3";
-    
+
     $i = $one-and-ninety-nine-hundredths.Int;
     isa-ok $i, Int, "1.99.Int is an Int";
     is $i, 1, "1.99.Int is 1";
@@ -70,7 +70,7 @@ is-approx $neg-pi.pred, -4.14, "(-3.14).pred works";
     my $i = $neg-pi.Rat;
     isa-ok $i, Rat, "-3.14.Rat is an Rat";
     is-approx $i, -3.14, "-3.14.Rat is -3.14";
-    
+
     $i = $one-and-ninety-nine-hundredths.Rat;
     isa-ok $i, Rat, "1.99.Rat is an Rat";
     is-approx $i, 1.99, "1.99.Rat is 1.99";
@@ -80,7 +80,7 @@ is-approx $neg-pi.pred, -4.14, "(-3.14).pred works";
     my $i = $neg-pi.Num;
     isa-ok $i, Num, "-3.14.Num is an Num";
     is-approx $i, -3.14, "-3.14.Num is -3.14";
-    
+
     $i = $one-and-ninety-nine-hundredths.Num;
     isa-ok $i, Num, "1.99.Num is an Num";
     is-approx $i, 1.99, "1.99.Num is 1.99";
