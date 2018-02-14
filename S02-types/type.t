@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Types as Constraints"/"A variable's type is a constraint indicating what sorts">
 
-plan 74;
+plan 80;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -112,6 +112,13 @@ throws-like q[my Rat $n; $n = $*PID\i], X::TypeCheck::Assignment, 'Rat does not 
 # Num does not accept Complex
 throws-like q[my Num $n; $n = <42+0i>], X::Syntax::Number::LiteralType, 'Num does not accept Complex';
 throws-like q[my Num $n; $n = $*PID\i], X::TypeCheck::Assignment, 'Num does not accept Complex';
+
+throws-like q[my num $n; $n = 42], X::Syntax::Number::LiteralType, 'num does not accept Int';
+throws-like q[my int $n; $n = 42e0], X::Syntax::Number::LiteralType, 'int does not accept Num';
+throws-like q[my int $n; $n = 42.0], X::Syntax::Number::LiteralType, 'int does not accept Rat';
+throws-like q[my num $n; $n = 42.0], X::Syntax::Number::LiteralType, 'num does not accept Rat';
+throws-like q[my int $n; $n = <42+0i>], X::Syntax::Number::LiteralType, 'int does not accept Complex';
+throws-like q[my num $n; $n = <42+0i>], X::Syntax::Number::LiteralType, 'num does not accept Complex';
 
 # L<S02/Return types/a return type can be specified before or after the name>
 {
