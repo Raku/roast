@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 112;
+plan 115;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -377,4 +377,62 @@ subtest '.pred on allomorphs' => {
         is-deeply --$pre, $to, 'predecrement, return value';
         is-deeply   $pre, $to, 'predecrement, result';
     }
+}
+
+subtest '.Numeric on :U allomorphs and Numeric type objects' => {
+    my class CustomNumeric does Numeric { method new { 42 } }
+    my @types := Int, Num, Rat, FatRat, Complex;
+    my @allos := IntStr, NumStr, RatStr, ComplexStr;
+    plan 3*@types + @allos + 6;
+
+    for flat CustomNumeric, @types, @allos -> \T {
+        warns-like { T.Numeric }, *.contains('uninitialized'&'numeric'), T.perl;
+    }
+
+    quietly {
+        is-deeply CustomNumeric.Numeric, 42, 'Numeric:U.Numeric calls self.new';
+        for @types {
+            isa-ok .Numeric, $_,      "{.perl}.Numeric gives a {.perl} value";
+            cmp-ok .Numeric, '==', 0, "{.perl}.Numeric gives a zero";
+        }
+
+        is-deeply IntStr    .Numeric, 0,      'IntStr    .Numeric gives a 0';
+        is-deeply RatStr    .Numeric, 0.0,    'RatStr    .Numeric gives a 0.0';
+        is-deeply NumStr    .Numeric, 0e0,    'NumStr    .Numeric gives a 0e0';
+        is-deeply ComplexStr.Numeric, <0+0i>, 'ComplexStr.Numeric gives a <0+0i>';
+    }
+}
+
+subtest '.Real on :U allomorphs and Numeric type objects' => {
+    my @types := Int, Num, Rat, FatRat, Complex, my class CustomReal does Real {
+        method new { 42 }
+    };
+    my @allos := IntStr, NumStr, RatStr, ComplexStr;
+    plan @types + @allos + 9;
+
+    for flat @types, @allos -> \T {
+        warns-like { T.Real }, *.contains('uninitialized'&'numeric'), T.perl;
+    }
+
+    quietly {
+        is-deeply CustomReal.Real, 42, 'Real:U.Real calls self.new';
+        is-deeply Int       .Real, 0,   'Int       .Real gives a 0';
+        is-deeply Rat       .Real, 0.0, 'Rat       .Real gives a 0.0';
+        is-deeply Num       .Real, 0e0, 'Num       .Real gives a 0e0';
+        is-deeply IntStr    .Real, 0,   'IntStr    .Real gives a 0';
+        is-deeply RatStr    .Real, 0.0, 'RatStr    .Real gives a 0.0';
+        is-deeply NumStr    .Real, 0e0, 'NumStr    .Real gives a 0e0';
+        # Complex is not a Real, so it .Real here returns a Num
+        is-deeply Complex   .Real, 0e0, 'Complex   .Real gives a 0e0';
+        is-deeply ComplexStr.Real, 0e0, 'ComplexStr.Real gives a 0e0';
+    }
+}
+
+subtest '.Real on :D allomorphs' => {
+    plan 5;
+    is-deeply <42>   .Real, 42, 'IntStr';
+    is-deeply <42e0> .Real, 42e0, 'NumStr';
+    is-deeply <42.0> .Real, 42.0, 'RatStr';
+    is-deeply <42+0i>.Real, 42e0, 'ComplexStr'; # Complex isn't real; so here it returns Num
+    fails-like { <42+42i>.Real }, X::Numeric::Real, 'ComplexStr (with large imaginary part)';
 }
