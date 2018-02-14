@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 200;
+plan 201;
 
 =begin pod
 
@@ -296,5 +296,14 @@ ok 0 <= 4.rand < 4, "Int.rand returns a valid result";
 ok 0 <= (4/3).rand < 4/3, "Rat.rand returns a valid result";
 ok 0 <= $one-and-one-hundredth.rand < $one-and-one-hundredth, "Fixed2.rand returns a valid result";
 ok 0 <= 32.75.Num.rand < 32.75, "Num.rand returns a valid result";
+
+subtest 'coverage default .Bridge impls in core' => {
+    plan 1+my @types := 42, 42.0, 42e0, Instant.from-posix(32), # + 10 leap secs
+        Duration.new(42);
+
+    is-deeply .Bridge, 42e0, ".Bridge on {.^name}" for @types;
+    is-deeply (my class :: does Real { method Num { 42e0 } }.new.Bridge), 42e0,
+        'Real.Bridge delegates to Num';
+}
 
 # vim: ft=perl6
