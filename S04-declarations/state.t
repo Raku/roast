@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 47;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -248,7 +248,6 @@ sub bughunt1 { (state $svar) }    #OK not used
 eval-lives-ok 'state $x; $x', 'state outside control structure';
 
 # RT #102994
-#?rakudo todo 'initialization happens only on first call(?) RT #102994'
 {
     sub f($x) {
         return if $x;
@@ -257,7 +256,28 @@ eval-lives-ok 'state $x; $x', 'state outside control structure';
     }
     f(1);
     is f(0), 5, 'initialization not reached on first run of the functions';
+
+    my @a = do for ^3 { f(1); f(0) };
+    is-deeply @a, [5, 5, 5], 'initialization not reached on first run of the functions; multiple clones';
 }
+{
+    sub f($x) {
+        return if $x < 2;
+        state $a = 5;
+        return if $x < 3;
+        state $b = 10;
+        return if $x < 4;
+        state $c = 15;
+
+        ( $a, $b, $c )
+    }
+    f($_) for (1..3);
+    is-deeply f(4), (5, 10, 15), 'initialization not reached on first run of the functions; multiple statevars';
+
+    my @a = do for ^3 { f($_) for (1..3); f(4) };
+    is-deeply @a, [(5, 10, 15), (5, 10, 15), (5, 10, 15)], 'initialization not reached on first run of the functions; multiple statevars and clones';
+}
+
 
 {
     sub r {
