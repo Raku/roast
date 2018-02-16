@@ -56,8 +56,8 @@ subtest 'optimization coverage' => {
             is-deeply iter.bool-only,  False,    'bool  (5)';
 
             ok iter.pull-one =:= IterationEnd,   'char (6)';
-            is-deeply iter.count-only, 0,        'count (5)';
-            is-deeply iter.bool-only,  False,    'bool  (5)';
+            is-deeply iter.count-only, 0,        'count (6)';
+            is-deeply iter.bool-only,  False,    'bool  (6)';
         }
     }
 }
