@@ -82,6 +82,7 @@ with run(:out, $*EXECUTABLE, '-e', '') -> $proc {
 }
 
 # RT #129882
+#?rakudo.jvm skip 'hangs'
 {
     my $proc = run $*EXECUTABLE, '-e', 'print slurp', :in, :out, :bin;
     my $input = ('a' x 1_000_000).encode;
