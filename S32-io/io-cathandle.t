@@ -161,20 +161,18 @@ subtest 'eof method' => {
         }
     }
 
-    # Note: in these tests we're are supposed to get True eof all the time,
-    # since the files have no content in them:
     subtest 'with 3 handles to empty files' => { plan 2;
         with IO::CatHandle.new(make-files '', '', '') {
-            is-deeply .eof, True, 'before reads';
+            is-deeply .eof, False, 'before reads';
             .slurp;
-            is-deeply .eof, True, 'after reads';
+            is-deeply .eof, True,  'after reads';
         }
     }
     subtest 'with 3 handles to empty files (bin)' => { plan 2;
         with IO::CatHandle.new(:bin, make-files '', '', '') {
-            is-deeply .eof, True, 'before reads';
+            is-deeply .eof, False, 'before reads';
             .slurp;
-            is-deeply .eof, True, 'after reads';
+            is-deeply .eof, True,  'after reads';
         }
     }
 }
