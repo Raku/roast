@@ -3,7 +3,7 @@ use lib <t/spec/packages/>;
 use Test;
 use Test::Util;
 
-plan 4;
+plan 5;
 
 sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
 
@@ -82,6 +82,31 @@ subtest '.eof works right even when we seek past end and back' => {
 
     $fh.seek: 5, SeekFromEnd;
     is-deeply $fh.eof, True, "seek'ed past end again";
+}
+
+# https://github.com/rakudo/rakudo/issues/1533
+subtest '.eof on empty files' => {
+    plan 3;
+    with make-temp-file(:content('')).open {
+        is-deeply .eof, False, 'eof is False before any reads';
+        .read: 42;
+        is-deeply .eof, True,  'eof is True after a read';
+    }
+    with "/proc/$*PID/status".IO -> $p {
+        subtest "reading from '$p'" => {
+            plan 3;
+            when not $p.e { skip "don't have '$p' available", 3 }
+            with $p.open {
+                is-deeply .eof, False, 'eof is False before any reads';
+                cmp-ok .get, &[!~~], Nil, '.get reads something';
+                .slurp;
+                is-deeply .eof, True,  'eof is True after slurpage';
+            }
+            else -> $e {
+                skip "failed to .open '$p': {$e.exception.message}", 3;
+            }
+        }
+    }
 }
 
 # vim: ft=perl6
