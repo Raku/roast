@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 5;
+plan 6;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 2;
@@ -259,6 +259,21 @@ subtest 'thunking closure scoping' => {
         my $ver =.lines.uc with "totally-not-there".IO.open
             orelse "meow {$_ ~~ Failure}".take and return 42;
     }() }, 'meow True'.Seq, 'sub with `with` + orelse + block interpolation';
+}
+
+# https://github.com/rakudo/rakudo/issues/1538
+subtest 'block in string in parentheses in `for` statement mod' => {
+    plan 4;
+    sub foo($z) {
+        my $x = ‘HERE: ’;
+        $x ~= $_ for (« bar {$z} », 99);
+        $x;
+    }
+
+    is-deeply (foo 111), 'HERE: bar 11199', 'first run';
+    is-deeply (foo 222), 'HERE: bar 22299', 'second run';
+    is-deeply (foo 333), 'HERE: bar 33399', 'third run';
+    is-deeply (foo 444), 'HERE: bar 44499', 'fourth run';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
