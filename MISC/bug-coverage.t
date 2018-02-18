@@ -202,7 +202,6 @@ subtest 'no crashes with native types in conditionals' => {;
     }
 }
 
-use Test;
 subtest 'thunking closure scoping' => {
     plan 12;
 
