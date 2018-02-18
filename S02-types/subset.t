@@ -224,8 +224,10 @@ subtest 'Junction arguments to `where` parameters' => {
     my subset Foo of Mu where Int|Bool;
     subtest 'implicit Mu, block, literal where' => {
         plan 4;
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like ｢-> $ where Int|Bool { }(none True)｣,
             X::TypeCheck::Binding::Parameter, 'Junction, false';
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like ｢-> $ where Int|Bool { }(2e0)｣,
             X::TypeCheck::Binding::Parameter, 'other,    false';
 
@@ -234,8 +236,10 @@ subtest 'Junction arguments to `where` parameters' => {
     }
     subtest 'subset, block' => {
         plan 4;
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like {-> Foo $ { }(none True)},
             X::TypeCheck::Binding::Parameter, 'Junction, false';
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like {-> Foo $ { }(2e0)},
             X::TypeCheck::Binding::Parameter, 'other,    false';
 
@@ -244,8 +248,10 @@ subtest 'Junction arguments to `where` parameters' => {
     }
     subtest 'subset, block, literal where' => {
         plan 4;
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like {-> Foo $ where Int|Bool { }(all True, 42e0)},
             X::TypeCheck::Binding::Parameter, 'Junction, false';
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like {-> Foo $ where Int|Bool { }(2e0)},
             X::TypeCheck::Binding::Parameter, 'other,    false';
 
@@ -255,8 +261,10 @@ subtest 'Junction arguments to `where` parameters' => {
 
     subtest 'implicit Any, sub, literal where' => {
         plan 4;
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like ｢sub ($ where Int|Bool) { }(none 42e0)｣,
             X::TypeCheck::Binding::Parameter, 'Junction, false';
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like ｢sub ($ where Int|Bool) { }(2e0)｣,
             X::TypeCheck::Binding::Parameter, 'other,    false';
 
@@ -265,8 +273,10 @@ subtest 'Junction arguments to `where` parameters' => {
     }
     subtest 'subset, sub' => {
         plan 4;
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like {sub (Foo $) { }(none True)},
             X::TypeCheck::Binding::Parameter, 'Junction, false';
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like {sub (Foo $) { }(2e0)},
             X::TypeCheck::Binding::Parameter, 'other,    false';
 
@@ -275,8 +285,10 @@ subtest 'Junction arguments to `where` parameters' => {
     }
     subtest 'subset, sub, literal where' => {
         plan 4;
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like {sub (Foo $ where Int|Bool) { }(all True, 42e0)},
             X::TypeCheck::Binding::Parameter, 'Junction, false';
+        #?rakudo.jvm todo 'got X::AdHoc'
         throws-like {sub (Foo $ where Int|Bool) { }(2e0)},
             X::TypeCheck::Binding::Parameter, 'other,    false';
 

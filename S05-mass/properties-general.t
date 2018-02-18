@@ -814,6 +814,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
 
     is 'abc' ~~ /<:alpha>+/, 'abc', 'alpha chars';
 
+    #?rakudo.jvm todo 'get: Match.new(orig => "\t \t", pos => 2,  made => Any, from => 1, list => (), hash => Map.new(()))'
     #?rakudo.js 1 skip 'test seems wrong'
     is "\t \t" ~~ /<:space>+/, "\t \t", 'space chars';  # RT #130483
 
