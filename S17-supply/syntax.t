@@ -671,6 +671,8 @@ lives-ok {
     is @pre-emit, ['x','x','x','x','x'],
         'supply block loop did not run ahead of consumer';
 }
+
+#?rakudo.jvm skip 'done without supply or react'
 {
     my $pre-emits = 0;
     my $post-emits = 0;

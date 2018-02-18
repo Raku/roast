@@ -156,6 +156,7 @@ if Mu { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     if    testa() -> *@a { $got = @a }
     elsif testb() -> *@b { $got = @b }
     else          -> *@c { $got = @c }
+    #?rakudo.jvm todo 'got ""'
     is $got, ('truea',), 'if test() -> *@a { } binding';
 
     $a_val = 0;
@@ -163,6 +164,7 @@ if Mu { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     if    testa() -> *@a { $got = @a }
     elsif testb() -> *@b { $got = @b }
     else          -> *@c { $got = @c }
+    #?rakudo.jvm todo 'got ""'
     is $got, 2, 'elsif test() -> *@b { } binding';
 
     $a_val = '';
@@ -170,12 +172,14 @@ if Mu { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     if    testa() -> *@a { $got = @a }
     elsif testb() -> *@b { $got = @b }
     else          -> *@c { $got = (@c, "yes") }
+    #?rakudo.jvm todo 'got " yes"'
     is $got, (3, "yes"), 'else -> *@c { } binding previous elsif';
 
     $a_val = 4 but False;
     $b_val = 0;
     if    testa() -> *@a { $got = @a }
     else          -> *@c { $got = (@c, "yes") }
+    #?rakudo.jvm todo 'got " yes"'
     is $got, (4, "yes"), 'else -> *@c { } binding previous if';
 }
 
@@ -224,15 +228,19 @@ subtest 'slurpy parameters on block' => {
     subtest 'if' => {
         plan 12;
         if 1, (2, (3, $(4, 5))) {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @_, [1, 2, 3, $(4, 5)], '@_'
         }
         if 1, (2, (3, $(4, 5))) -> *@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [1, 2, 3, $(4, 5)], '*@'
         }
         if 1, (2, (3, $(4, 5))) -> :$foo, *@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [1, 2, 3, $(4, 5)], '*@, with named arg before it'
         }
         if 1, (2, (3, $(4, 5))) -> *%, *@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [1, 2, 3, $(4, 5)], '*@, with named slurpy before it'
         }
         if 1, (2, (3, $(4, 5))) -> **@a {
@@ -242,27 +250,42 @@ subtest 'slurpy parameters on block' => {
         if 42, 42 -> **@a { is-deeply @a, [(42, 42),], '**@ (3)' }
 
         if 1, (2, (3, $(4, 5))) -> +@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [1, (2, (3, $(4, 5)))], '+@ (1)'
         }
         if (1, 2), (3, 4) -> +@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [(1, 2), (3, 4)], '+@ (2)'
         }
-        if 1, 2   -> +@a { is-deeply @a, [1, 2],   '+@ (3)' }
-        if 42     -> +@a { is-deeply @a, [42],     '+@ (4)' }
-        if 42, 42 -> +@a { is-deeply @a, [42, 42], '+@ (5)' }
+        if 1, 2   -> +@a {
+            #?rakudo.jvm todo 'got $[]'
+            is-deeply @a, [1, 2],   '+@ (3)'
+        }
+        if 42     -> +@a {
+            #?rakudo.jvm todo 'got $[]'
+            is-deeply @a, [42],     '+@ (4)'
+        }
+        if 42, 42 -> +@a {
+            #?rakudo.jvm todo 'got $[]'
+            is-deeply @a, [42, 42], '+@ (5)'
+        }
     }
     subtest 'elsif' => {
         plan 12;
         if 0 {} elsif 1, (2, (3, $(4, 5))) {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @_, [1, 2, 3, $(4, 5)], '@_'
         }
         if 0 {} elsif 1, (2, (3, $(4, 5))) -> *@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [1, 2, 3, $(4, 5)], '*@'
         }
         if 0 {} elsif 1, (2, (3, $(4, 5))) -> :$foo, *@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [1, 2, 3, $(4, 5)], '*@, with named arg before it'
         }
         if 0 {} elsif 1, (2, (3, $(4, 5))) -> *%, *@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [1, 2, 3, $(4, 5)], '*@, with named slurpy before it'
         }
         if 0 {} elsif 1, (2, (3, $(4, 5))) -> **@a {
@@ -272,14 +295,25 @@ subtest 'slurpy parameters on block' => {
         if 0 {} elsif 42, 42 -> **@a { is-deeply @a, [(42, 42),], '**@ (3)' }
 
         if 0 {} elsif 1, (2, (3, $(4, 5))) -> +@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [1, (2, (3, $(4, 5)))], '+@ (1)'
         }
         if 0 {} elsif (1, 2), (3, 4) -> +@a {
+            #?rakudo.jvm todo 'got $[]'
             is-deeply @a, [(1, 2), (3, 4)], '+@ (2)'
         }
-        if 0 {} elsif 1, 2   -> +@a { is-deeply @a, [1, 2],   '+@ (3)' }
-        if 0 {} elsif 42     -> +@a { is-deeply @a, [42],     '+@ (4)' }
-        if 0 {} elsif 42, 42 -> +@a { is-deeply @a, [42, 42], '+@ (5)' }
+        if 0 {} elsif 1, 2   -> +@a {
+            #?rakudo.jvm todo 'got $[]'
+            is-deeply @a, [1, 2],   '+@ (3)'
+        }
+        if 0 {} elsif 42     -> +@a {
+            #?rakudo.jvm todo 'got $[]'
+            is-deeply @a, [42],     '+@ (4)'
+        }
+        if 0 {} elsif 42, 42 -> +@a {
+            #?rakudo.jvm todo 'got $[]'
+            is-deeply @a, [42, 42], '+@ (5)'
+        }
     }
 }
 

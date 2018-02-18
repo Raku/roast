@@ -178,9 +178,12 @@ is_run ｢Failure.new(Exception.new); Nil｣, {:out(""), :err(*), :1status},
     'Failure.new(Exception.new) does not segfault';
 
 # RT #131496
-without Failure.new {
-    is-deeply .perl.EVAL.handled, True,
-      'Failure:D.perl.EVAL roundtrips `handled` flag';
+#?rakudo.jvm skip 'block does not run'
+{
+    without Failure.new {
+        is-deeply .perl.EVAL.handled, True,
+          'Failure:D.perl.EVAL roundtrips `handled` flag';
+    }
 }
 
 # vim: ft=perl6
