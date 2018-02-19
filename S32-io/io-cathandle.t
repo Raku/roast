@@ -163,7 +163,6 @@ subtest 'eof method' => {
 
     subtest 'with 3 handles to empty files' => { plan 2;
         with IO::CatHandle.new(make-files '', '', '') {
-            #?rakudo.jvm todo 'https://github.com/rakudo/rakudo/issues/1541'
             is-deeply .eof, False, 'before reads';
             .slurp;
             is-deeply .eof, True,  'after reads';
@@ -171,7 +170,6 @@ subtest 'eof method' => {
     }
     subtest 'with 3 handles to empty files (bin)' => { plan 2;
         with IO::CatHandle.new(:bin, make-files '', '', '') {
-            #?rakudo.jvm todo 'https://github.com/rakudo/rakudo/issues/1541'
             is-deeply .eof, False, 'before reads';
             .slurp;
             is-deeply .eof, True,  'after reads';

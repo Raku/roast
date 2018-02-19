@@ -88,9 +88,9 @@ subtest '.eof works right even when we seek past end and back' => {
 subtest '.eof on empty files' => {
     plan 3;
     with make-temp-file(:content('')).open {
-        #?rakudo.jvm todo 'https://github.com/rakudo/rakudo/issues/1541'
         is-deeply .eof, False, 'eof is False before any reads';
         .read: 42;
+        #?rakudo.jvm todo 'some problem related to read(?) https://github.com/rakudo/rakudo/issues/1541'
         is-deeply .eof, True,  'eof is True after a read';
     }
     with "/proc/$*PID/status".IO -> $p {
@@ -98,7 +98,6 @@ subtest '.eof on empty files' => {
             plan 3;
             when not $p.e { skip "don't have '$p' available", 3 }
             with $p.open {
-                #?rakudo.jvm 2 todo 'https://github.com/rakudo/rakudo/issues/1541'
                 is-deeply .eof, False, 'eof is False before any reads';
                 cmp-ok .get, &[!~~], Nil, '.get reads something';
                 .slurp;
