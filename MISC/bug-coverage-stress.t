@@ -30,9 +30,12 @@ doesn't-hang ｢
 
 
 # RT #132016
-with Proc::Async.new: $*EXECUTABLE, '-e',
+#?rakudo.jvm skip "The spawned command './perl6-j' exited unsuccessfully (exit code: 1)"
+#?DOES 1
+{
+  with Proc::Async.new: $*EXECUTABLE, '-e',
     ｢react whenever signal(SIGTERM).merge(signal SIGINT) { print ‘pass’; exit 0 }｣
--> $proc {
+  -> $proc {
     my $out = ''; $proc.Supply.tap: { $out ~= $_ };
     my $p = $proc.start;
     await $proc.ready;
@@ -44,6 +47,7 @@ with Proc::Async.new: $*EXECUTABLE, '-e',
     await $p;
     #?rakudo.jvm todo 'Died with the exception: Cannot unbox a type object'
     is-deeply $out, 'pass', 'Supply.merge on signals does not crash';
+  }
 }
 
 # RT #129845
@@ -85,6 +89,7 @@ with make-temp-dir() -> $dir {
 
 # https://github.com/tokuhirom/p6-WebSocket/issues/15#issuecomment-339120879
 # RT #132343
+#?rakudo.jvm todo 'Unhandled exception in code scheduled on thread ...: Too few positionals passed; expected 6 arguments but got 2; RT #132343'
 is_run ｢
     # fire up a few socks first to fill up affinity workers to make
     # the bug more prevalent
@@ -132,6 +137,7 @@ given make-temp-dir() {
 }
 
 # https://github.com/rakudo/rakudo/issues/1413
+#?rakudo.jvm todo 'IllegalArgumentException: bad parameter count 850; https://github.com/rakudo/rakudo/issues/1413'
 is_run ｢use RAKUDO1413; print 'pass'｣,
     :compiler-args[<-Ipackages -It/spec/packages>],
     {:out<pass>, :err(''), :0status},

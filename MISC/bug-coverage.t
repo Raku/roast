@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 6;
+plan 7;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 2;
@@ -203,7 +203,7 @@ subtest 'no crashes with native types in conditionals' => {;
 }
 
 subtest 'thunking closure scoping' => {
-    plan 12;
+    plan 11;
 
     # some canary tests to cover regressions when fixing other bugs in subtest
     is-deeply (42 andthen $_), 42, 'basic andthen';
@@ -249,15 +249,27 @@ subtest 'thunking closure scoping' => {
         'given + whatever code closure execution';
 
     # RT #126984
+    #?rakudo.jvm skip 'UnwindException in thread "main", RT #126984'
     is-deeply gather {
         sub foo($x) { (* ~ $x)($_).take given $x }; foo(1); foo(2)
     }, ("11", "22").Seq, 'sub + given + whatevercode closure execution';
+
+}
+
+## test was moved from previous subtest 'thunking closure scoping' in order
+## to make it fudgeable
+#?rakudo.jvm skip 'UnwindException in thread "main", RT #132172'
+#?DOES 1
+{
+  subtest 'thunking closure scoping (2)' => {
+    plan 1;
 
     # RT #132172
     is-deeply gather { sub {
         my $ver =.lines.uc with "totally-not-there".IO.open
             orelse "meow {$_ ~~ Failure}".take and return 42;
     }() }, 'meow True'.Seq, 'sub with `with` + orelse + block interpolation';
+  }
 }
 
 # https://github.com/rakudo/rakudo/issues/1538
