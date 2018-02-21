@@ -233,6 +233,18 @@ multi doesn't-hang (
     # await returns and we follow the path that assumes the code we ran hung.
     my $promise = $prog.start;
     await $prog.write: $in.encode if $in.defined;
+
+    # waiting for the program to hang is broken on the js backend
+    if $*VM.name eq 'js' {
+        await $promise;
+        subtest $desc, {
+            plan 2;
+            cmp-ok $stdout, '~~', $out, 'STDOUT' if $out.defined;
+            cmp-ok $stderr, '~~', $err, 'STDERR' if $err.defined;
+        };
+        return;
+    }
+
     await Promise.anyof: Promise.in(
         $wait * $VM-time-scale-multiplier * (%*ENV<ROAST_TIMING_SCALE>//1)
     ), $promise;
