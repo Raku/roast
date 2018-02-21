@@ -332,10 +332,14 @@ subtest 'types whose .Capture behaves like Mu.Capture' => {
 
     DateTime.new(:2015year).Instant.&has-nameds: %(:tai(1420070435.0));
 
+#?rakudo.js skip 'sleep will not work on single threaded JavaScript'
+#?DOES 3
+{
     (start {sleep .5}).&has-nameds: %(:status(PromiseStatus::Planned));
     .&has-nameds: %(:path(.path), :CWD(.CWD)) with make-temp-file;
     .&has-nameds: %(:command(.command), :exitcode(.exitcode), :signal(.signal))
         with run «"$*EXECUTABLE" -e ' '»;
+}
 
     with %(:chomp, :encoding("utf8"), :nl-out("\n")) {
         make-temp-file.open(:w).&has-nameds: $_;
