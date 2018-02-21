@@ -122,21 +122,23 @@ throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
     # Test the `last` used with $mod aborts the `loop`
     # In the process, test that other CONTROL exceptions continue to work
     sub code-with ($mod) {
-        ｢start { sleep 2; say "Test:fail"; exit 1; }; say eager gather loop {｣
+        ｢say eager gather loop {｣
         ~ ｢ do { say "saying"; warn "warning"; take "taking"; last } ｣
         ~ $mod ~ ｢; say "Test:fail" }｣
     }
     for ｢without Any｣, ｢with 42｣ -> $mod {
         #?rakudo.jvm todo 'RT #130354'
-        is_run code-with($mod), {
-            :out{
-                not .contains('Test:fail')
-                and .contains('saying')
-                and .contains('taking')
-            },
-            :err(/«warning»/),
-            :0status,
-        }, "`last` aborts loop when using `$mod`";
+
+        doesn't-hang(
+            code-with($mod),
+            "`last` aborts loop when using `$mod`",
+              :out{
+                  not .contains('Test:fail')
+                  and .contains('saying')
+                  and .contains('taking')
+              },
+              :err(/«warning»/),
+        );
     }
 }
 
