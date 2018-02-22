@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 8;
+plan 9;
 
 # RT #132042
 doesn't-hang ｢
@@ -147,6 +147,13 @@ is_run ｢use RAKUDO1413; print 'pass'｣,
 {
     for ^5 { sub meow ($) {}; for ^300 {$^i %% $_ && meow "$_ " for ^$i} }
     pass 'no segfault in a `for` loop + some ops';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1550
+    my &f = *.self;
+    $_».self    given map 1/*.&f, ^550+1;
+    .eager.self for   map 1/*.&f, ^550+1;
+    pass 'no crashes with Whatever curries in topics of for/given statement modifiers';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
