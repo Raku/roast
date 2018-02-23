@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 115;
+plan 116;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -435,4 +435,16 @@ subtest '.Real on :D allomorphs' => {
     is-deeply <42.0> .Real, 42.0, 'RatStr';
     is-deeply <42+0i>.Real, 42e0, 'ComplexStr'; # Complex isn't real; so here it returns Num
     fails-like { <42+42i>.Real }, X::Numeric::Real, 'ComplexStr (with large imaginary part)';
+}
+
+# https://irclog.perlgeek.de/perl6-dev/2018-02-23#i_15851777
+subtest '.Bool on allomorphs' => {
+    my @true := <1>, <-1>, <1e0>, <-1e0>, <1.0>, <-1.0>, <1/0>, <-1/0>,
+        <1+0i >, <1+1i >, <1-1i >, <-1+0i >, <-1+1i >, <-1-1i >, <0+1i >, <0-1i >,
+        IntStr.new(1, ''), NumStr.new(1e0, ''), RatStr.new(1.0, ''), ComplexStr.new(<1+1i>, '');
+    my @false := <0>, <0e0>, <-0e0>, <0.0>, <0/0>,
+        <0+0i>, <0e0+0e0i>, <-0e0+0e0i>, <-0e0-0e0i>, <0e0-0e0i>;
+    plan @true + @false;
+    is-deeply .so, True,  .perl for @true;
+    is-deeply .so, False, .perl for @false;
 }
