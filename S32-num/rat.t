@@ -3,7 +3,7 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
-plan 849;
+plan 850;
 
 # Basic test functions specific to rational numbers.
 
@@ -579,6 +579,28 @@ subtest 'eqv with zero-denominator Rationals' => {
         e-no fr(0, 0), Rat.new(0, 0),      'FatRat.new,  Rat.new';
         e-so fr(0, 0), fr(0, 0),           'FatRat.new,  FatRat.new';
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/1552
+subtest 'Rational.Bool' => {
+    # If numerator is zero, the Rational is False, otherwise, it's True.
+    # This applies to <0/0> as well. It is False, despite Num's NaN being True.
+    # Allomorphs, use .Bool of their numeric portion.
+
+    my class MyCustomRational does Rational[Int, Int] {};
+    my @true  := ((-42, 42) X (-42, -1, 0, 1, 42)).map({
+        Rat.new(|$_), FatRat.new(|$_), MyCustomRational.new(|$_),
+        RatStr.new: Rat.new(|$_), ~$_
+    }).flat.List;
+    my @false := (((0,) X (-42, -1, 0, 1, 42)).map({
+        Rat.new(|$_), FatRat.new(|$_), MyCustomRational.new(|$_),
+        RatStr.new: Rat.new(|$_), ~$_
+    }), Rat,  RatStr, FatRat,  MyCustomRational).flat.List;
+
+    plan @true + @false;
+
+    is-deeply .so, True,  .perl for @true;
+    is-deeply .so, False, .perl for @false;
 }
 
 # vim: ft=perl6
