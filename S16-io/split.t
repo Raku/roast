@@ -3,7 +3,7 @@ use Test;
 
 plan 18;
 
-my $filename = 't/spec/S16-io/split.testing';
+my $filename = $?FILE.IO.parent.child('split.testing');
 
 sub test-split($text,@result,|c) {
     subtest {

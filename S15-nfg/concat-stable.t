@@ -4,11 +4,8 @@ use Test;
 # https://creativecommons.org/licenses/by-sa/3.0/
 # See Retreived.txt for dates and URL's they were retreived from
 sub MAIN (:$scripts = <Hangul Arabic Tibetan>, Int:D :$repeat = 1, Bool:D :$no-test-concat = False) {
-    my IO::Path $path = "t/spec/3rdparty/wikipedia".IO.d
-                ?? "t/spec/3rdparty/wikipedia".IO
-            !! "3rdparty/wikipedia".IO.d
-                ?? "3rdparty/wikipedia".IO
-                !! die("Could not find t/spec/3rdparty/wikipedia or 3rdparty/wikipedia");
+    my IO::Path $path = $?FILE.IO.parent(2).add("3rdparty/wikipedia");
+    die("Could not 3rdparty/wikipedia") unless $path.e && $path.d;
     plan 7 * $scripts.elems;
     for $scripts.words -> $script {
         my $text = $path.child("$script.txt").slurp;

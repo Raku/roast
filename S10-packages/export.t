@@ -1,32 +1,32 @@
 use v6;
 
 # L<S11/Exportation>
-use lib '.';
+use lib $?FILE.IO.parent.child("packages");
 
 use Test;
 
 plan 7;
 
 # (Automatic s:g/::/$PATH_SEPARATOR_OF_CUR_OS/)++
-use t::spec::packages::Export_PackB;
+use packages::Export_PackB;
 
-ok t::spec::packages::Export_PackB::does_export_work(),
+ok packages::Export_PackB::does_export_work(),
   "'is export' works correctly even when not exporting to Main (1)";
 
-# t::spec::packages::Export_PackA::exported_foo should not have been exported into
+# packages::Export_PackA::exported_foo should not have been exported into
 # our namespace.
-dies-ok { exported_foo() },
+dies-ok { ::('&exported_foo')() },
   "'is export' works correctly even when not exporting to Main (2)";
 
 {
-    use t::spec::packages::Export_PackC;
+    use packages::Export_PackC;
     lives-ok { foo_packc() }, "lexical export works";
 }
-dies-ok { foo_packc() }, "lexical export is indeed lexical";
+dies-ok { ::('&foo_packc')() }, "lexical export is indeed lexical";
 
 
 sub moose {
-    use t::spec::packages::Export_PackD;
+    use packages::Export_PackD;
     is(this_gets_exported_lexically(), 'moose!', "lexical import survives pad regeneration")
 }
 

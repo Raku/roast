@@ -2,7 +2,7 @@
 
 use v6;
 
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 use Test::Util;
@@ -41,7 +41,7 @@ plan 6;
         'eval error via diag';
 }
 
-my $test-file = 't/spec/S24-testing/test-data/todo-passed.txt';
+my $test-file = $?FILE.IO.parent.add('test-data/todo-passed.txt');
 my $cmd = "$*EXECUTABLE $test-file 2>&1";
 ok qqx[$cmd] ~~ /^"1..1" \n "ok 1 - test passes" \s* "# TODO testing output for passing todo test" \n $ /,
     "expected output with passing todo test";

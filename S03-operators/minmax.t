@@ -1,5 +1,5 @@
 use v6;
-use lib <t/spec/packages>;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
@@ -12,7 +12,7 @@ plan 39;
 
 =begin description
 
-This test min/max functions in their operator form. To see them tested in their other forms, see C<t/spec/S32-list/minmax.t>
+This test min/max functions in their operator form. To see them tested in their other forms, see C<S32-list/minmax.t>
 
 =end description
 

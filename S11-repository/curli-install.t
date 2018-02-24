@@ -1,5 +1,5 @@
 use v6;
-constant $path = 't/spec/packages/curi-install';
+constant $path = $?FILE.IO.parent(2).child('packages/curi-install').absolute;
 use lib "inst#$path";
 
 use Test;
@@ -17,10 +17,11 @@ $path.IO.mkdir;
     is $*REPO.loaded.elems, 0, 'no compilation units were loaded so far';
 }
 my $dist = Distribution.new(:name<Foo>);
+my $foo-path = $path.IO.parent.child('Foo.pm').relative;
 
-$*REPO.install($dist, { Foo => 't/spec/packages/Foo.pm' });
+$*REPO.install($dist, { Foo => $foo-path });
 
-throws-like { EVAL q[$*REPO.install($dist, { Foo => 't/spec/packages/Foo.pm' })] },
+throws-like { EVAL '$*REPO.install($dist, { Foo => "' ~ $foo-path ~ '" })' },
     X::AdHoc,
     message => "$dist already installed",
     "cannot reinstall the very same distribution";

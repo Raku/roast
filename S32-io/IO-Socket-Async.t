@@ -150,7 +150,7 @@ $echoTap.close;
 }
 
 {
-    my Buf $binary = slurp( 't/spec/S32-io/socket-test.bin', bin => True );
+    my Buf $binary = slurp( $?FILE.IO.parent.child('socket-test.bin'), bin => True );
     my $binaryTap = $server.tap(-> $c {
         $c.write($binary).then({ $c.close });
     });

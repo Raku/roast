@@ -76,7 +76,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT #76564, RT #7
 }
 
 {
-    my $contents = slurp 't/spec/integration/real-strings.t';
+    my $contents = slurp $?FILE.IO.parent.add('real-strings.t');
     lives-ok {$contents.trans(['t'] => ['T']) }, 
        'Still works with strings returned from slurp() (lives)';
 }

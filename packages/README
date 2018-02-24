@@ -1,8 +1,8 @@
-t/spec/packages/README
+packages/README
 
 This directory exists to hold files tested in S10-packages so that there isn't
 a hyphen in the filename of the .pm file. This way, we can just
-    use t::spec::packages::Whatever;
+    use packages::Whatever;
 instead of needing to quote the package name all the time, or add the proper
 directory to the Perl 6 equivalent of @INC.
 

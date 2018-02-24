@@ -1,19 +1,22 @@
-use lib <t/spec/packages/ packages/>;
+use v6;
+use lib $?FILE.IO.parent(3).add("packages");
 use Test;
 use Test::Util;
 
 plan 10;
 
 sub is-eqv-fails ($code, $desc) {
-    is_run ｢
-        use lib <t/spec/packages/ packages/>;
+    my $package-lib-prefix = $?FILE.IO.parent(3).add('packages').absolute;
+
+    is_run ~ "use lib $package-lib-prefix.perl();\n" ~ ｢
         use Test;
         use Test::Util;
       ｣ ~ $code,
       {
         :out{so .contains: all 'not ok', 'meows'},
         :err{.contains: 'Failed test'}
-      }, $desc;
+      },
+      $desc;
 }
 
 is-eqv Seq,           Seq,           'Seq:U, Seq:U';

@@ -1,7 +1,7 @@
 use v6;
 
 # L<S11/Runtime Importation>
-use lib <t/spec/packages>;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 

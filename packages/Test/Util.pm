@@ -126,7 +126,7 @@ our sub run( Str $code, Str $input = '', *%o) {
 }
 
 sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
-    my $fnbase = 'getout';
+    my $fnbase = $*TMPDIR.add('getout').absolute;
     $fnbase ~= '-' ~ $*PID if defined $*PID;
     $fnbase ~= '-' ~ 1_000_000.rand.Int;
 
@@ -152,7 +152,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
         $clobber( "$fnbase.in", $input );
         $clobber( "$fnbase.code", $code ) if defined $code;
 
-        my $cmd = $*EXECUTABLE ~ ' ';
+        my $cmd = $*EXECUTABLE.absolute ~ ' ';
         $cmd ~= @compiler-args.join(' ') ~ ' ' if @compiler-args;
         $cmd ~= $fnbase ~ '.code'  if $code.defined;
         $cmd ~= " @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err";
@@ -179,7 +179,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
 
 multi doesn't-hang (Str $args, $desc, :$in, :$wait = 5, :$out, :$err)
 is export {
-    doesn't-hang \($*EXECUTABLE, '-e', $args), $desc,
+    doesn't-hang \($*EXECUTABLE.absolute, '-e', $args), $desc,
         :$in, :$wait, :$out, :$err;
 }
 
@@ -313,9 +313,9 @@ sub run-with-tty (
     state $path = make-temp-file.absolute;
     # on MacOS, `script` doesn't take the command via `c` arg
     state $script = shell(:!out, :!err, 'script -t/dev/null -qc "" /dev/null')
-        ?? “script -t/dev/null -qc '"$*EXECUTABLE" "$path"' /dev/null”
-        !! shell(:!out, :!err, “script -q /dev/null "$*EXECUTABLE" -e ""”)
-            ?? “script -q /dev/null "$*EXECUTABLE" "$path"”
+        ?? “script -t/dev/null -qc '"$*EXECUTABLE.absolute()" "$path"' /dev/null”
+        !! shell(:!out, :!err, “script -q /dev/null "$*EXECUTABLE.absolute()" -e ""”)
+            ?? “script -q /dev/null "$*EXECUTABLE.absolute()" "$path"”
             !! do { skip "need `script` command to run test: $desc"; return }
 
     subtest $desc => {

@@ -1,7 +1,7 @@
 use v6;
 unit module ArrayInit;
 
-# used by t/spec/S10-packages/basic.t
+# used by S10-packages/basic.t
 
 sub array_init() is export {
     my @array;

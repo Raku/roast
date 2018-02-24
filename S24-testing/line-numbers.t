@@ -3,12 +3,12 @@ use Test;
 
 plan 13;
 
-my $dir    = 't/spec/S24-testing/test-data/';
+my $dir    = $?FILE.IO.parent.add('test-data');
 my $prefix = 'line-number-';
 my $suffix = '.txt';
 
 sub execute-test ( :$function, :$line ) {
-    my $full-path = $dir ~ $prefix ~ $function ~ $suffix;
+    my $full-path = $dir.add($prefix ~ $function ~ $suffix);
     my $proc = run($*EXECUTABLE, $full-path, :!out, :err);
     like $proc.err.slurp,
         /'Failed test ' (\N* \n \N*)? 'at ' $full-path ' line ' $line/,

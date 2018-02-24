@@ -4,7 +4,7 @@ plan 5;
 
 #L<S05/Modifiers/"The new :r or :ratchet modifier">
 # for other tests see
-# t/spec/S05-mass/rx.t
+# S05-mass/rx.t
 
 # backtracking
 regex aplus { a+ };

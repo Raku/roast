@@ -1,5 +1,5 @@
 use v6;
-use lib <lib t/spec/packages/>;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 

@@ -1,5 +1,5 @@
 use v6;
-use lib 't/spec/packages';
+use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 plan 34;
@@ -120,7 +120,7 @@ is_run 'die "foo"; END { say "end run" }',
 # RT #103034
 #?DOES 3
 {
-    use lib 't/spec/packages';
+    use lib $?FILE.IO.parent(2).add("packages");
     use Foo;
     try dies();
     ok $!, 'RT #103034 -- died';
