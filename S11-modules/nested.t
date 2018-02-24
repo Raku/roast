@@ -1,6 +1,6 @@
 use v6;
 use lib $?FILE.IO.parent(2).add("packages");
-use lib $?FILE.IO.parent(2).add("packages").add("S11-modules");
+use lib $?FILE.IO.parent(2).add("packages/S11-modules");
 
 use Test;
 plan 11;
