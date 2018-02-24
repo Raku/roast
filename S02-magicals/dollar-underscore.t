@@ -1,13 +1,72 @@
 use v6;
 
+use Test;
+
+plan 23;
+
+{
+    my $a;
+
+    $_ = 42;
+    { $_ := 43 };
+    is $_, 42, 'bare block aliases $_';
+
+    $_ = 42;
+    if 1 { $_ := 43 };
+    is $_, 42, 'conditional block (if) aliases $_';
+
+    $_ = 42;
+    if 0 { }
+    else { $_ := 43 };
+    is $_, 42, 'conditional block (else) aliases $_';
+
+    $_ = 42;
+    if 0 { }
+    elsif 1 { $_ := 43 };
+    is $_, 42, 'conditional block (elsif) aliases $_';
+
+    $_ = 42; $a = 1;
+    while $a-- { $_ := 43 };
+    is $_, 42, 'conditional loop block (while) aliases $_';
+
+    $_ = 42; $a = 0;
+    until $a++ { $_ := 43 };
+    is $_, 42, 'conditional loop block (while) aliases $_';
+
+    my $c = 43;
+    my $d = 42;
+
+    $_ := $d;
+    if $_ := $c { };
+    is $_, 43, 'condition of conditional block (if) does not alias $_';
+
+    $_ := $d;
+    if 0 { }
+    elsif $_ := $c { };
+    is $_, 43, 'condition of conditional block (elsif) does not alias $_';
+
+    $_ := $d; $a = 0;
+    while ($_ := $c) + $a++ < 44 { };
+    is $_, 43, 'condition of loop block (while) does not alias $_';
+
+    $_ := $d; $a = 0;
+    until ($_ := $c) + $a++ > 43 { };
+    is $_, 43, 'condition of loop block (until) does not alias $_';
+
+    $_ := $d; $a = 0;
+    while $_++ < 44 { my $b = 44; $_ := $b; $a++ };
+    is $a, 2, 'no interaction between $_s from conditional and body in loop (while)';
+
+    $d = 42;
+    $_ := $d; $a = 0;
+    until $_++ >= 44 { my $b = 44; $_ := $b; $a++ };
+    is $a, 2, 'no interaction between $_s from conditional and body in loop (until)';
+}
+
+
 # Tests for a bug uncovered when Jesse Vincent was testing
 # functionality for Patrick Michaud
 # TODO: add smartlinks, more tests
-
-use Test;
-
-plan 11;
-
 
 my @list = ('a');
 
