@@ -118,7 +118,7 @@ relative path to itself is `t/spec/S\d\d-$section/$filename`.
 To fudge and run `prove` on a specific file:
 
     ./fudgeandrun S05-metasyntax/angle-brackets.t
-    
+
 `fudgeandrun` does not assume any particular implementation but guesses by running
 `perl6` to look at special variables like `$*PERL`.  See `fudgeandrun` usage to
 specify a different implementation and other options.
