@@ -9,67 +9,22 @@ use Test::Util;
 plan 7;
 
 subtest '.count-only/.bool-only for iterated content' => {
-    plan 2;
+    plan 12;
 
-    sub iters {                                    # values / desc
-        <a b c>.iterator                        => [3, 'List.iterator'],
-        <a b c>.reverse.iterator                => [3, 'List.reverse.iterator'],
-        [<a b c>].iterator                      => [3, 'Array.iterator'],
-        Buf.new(1, 2, 3).iterator               => [3, 'Buf.iterator'],
-        %(:42foo, :70bar, :2meow).keys.iterator => [3, 'Hash.keys.iterator'],
-        %(:42foo, :70bar).kv.iterator           => [4, 'Hash.kv.iterator'],
-        combinations(4,1).iterator              => [4, '&combinations'],
-        permutations(2).iterator                => [2, '&permutations'],
-        4.combinations(1).iterator              => [4, '.combinations'],
-        ^2 .permutations.iterator               => [2, '.permutations'],
-        :42foo.iterator                         => [1, 'Pair.iterator'],
-        :42foo.kv.iterator                      => [2, 'Pair.kv.iterator'],
-    }
+    test-iter-opt  <a b c>.iterator,         3, 'List.iterator';
+    test-iter-opt  <a b c>.reverse.iterator, 3, 'List.reverse.iterator';
+    test-iter-opt [<a b c>].iterator,        3, 'Array.iterator';
+    test-iter-opt Buf.new(1, 2, 3).iterator, 3, 'Buf.iterator';
 
-    subtest '.count-only' => {
-        plan +my @iters = iters;
-        for @iters -> (:key($iter), :value(($count, $desc))) {
-            unless $iter.^can: 'count-only' {
-                skip '.count-only is not implemented';
-                next;
-            }
+    test-iter-opt     combinations(4,1).iterator, 4, '&combinations';
+    test-iter-opt     permutations(2)  .iterator, 2, '&permutations';
+    test-iter-opt   4.combinations(1)  .iterator, 4, '.combinations';
+    test-iter-opt ^2 .permutations.iterator,      2, '.permutations';
 
-            subtest $desc => {
-                plan 2 + $count;
-                cmp-ok $iter.count-only, '==', $count, 'before iterations';
-                for 1..$count -> $iteration {
-                    $iter.pull-one;
-                    cmp-ok $iter.count-only, '==', $count - $iteration,
-                        "iteration $iteration";
-                }
-                $iter.pull-one;
-                cmp-ok $iter.count-only, '==', 0,
-                    "one more pull, after all iterations";
-            }
-        }
-    }
-
-    subtest '.bool-only' => {
-        plan +my @iters = iters;
-        for @iters -> (:key($iter), :value(($count, $desc))) {
-            unless $iter.^can: 'bool-only' {
-                skip '.bool-only is not implemented';
-                next;
-            }
-
-            subtest $desc => {
-                plan 2 + $count;
-                ok $iter.bool-only, 'before iterations';
-                for 1..$count -> $iteration {
-                    $iter.pull-one;
-                    is-deeply $iter.bool-only, so($count - $iteration),
-                        "iteration $iteration";
-                }
-                $iter.pull-one;
-                nok $iter.count-only, "one more pull, after all iterations";
-            }
-        }
-    }
+    test-iter-opt :42foo.iterator,     1, 'Pair.iterator';
+    test-iter-opt :42foo.kv.iterator,  2, 'Pair.kv.iterator';
+    test-iter-opt %(:42foo, :70bar).kv.iterator, 4, 'Hash.kv.iterator';
+    test-iter-opt %(:42foo, :70bar, :2meow).keys.iterator, 3, 'Hash.keys.iterator';
 }
 
 # https://github.com/rakudo/rakudo/issues/1407
