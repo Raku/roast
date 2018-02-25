@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 29;
+plan 30;
 
 # Tests for IO::CatHandle class
 
@@ -240,6 +240,53 @@ subtest 'gist method' => {
     $cat.read: 4;
     #?rakudo.jvm todo 'fails since rakudo commit dc800d8933'
     is-deeply $cat.gist, 'IO::CatHandle(closed)', 'after exhausting handles';
+}
+
+subtest 'handles method' => {
+    plan 4;
+    my @files = make-files "a1\na2\na3\na4", "b1\nb2\nb3\nb4", "c1\nc2\nc3\nc4";
+
+    subtest 'called on fresh cat'  => {
+        plan 1;
+        my $cat := IO::CatHandle.new: @files;
+        is-deeply $cat.handles.map({eager .lines: 2}),
+            (<a1 a2>, <b1 b2>, <c1 c2>).Seq,
+        'received right data';
+    }
+
+    subtest 'called on partially-consumed cat'  => {
+        plan 1;
+        my $cat := IO::CatHandle.new: @files;
+        my @ = $cat.get xx 5;
+        is-deeply $cat.handles.map({eager .lines: 2}),
+            (<b2 b3>, <c1 c2>).Seq,
+        'received right data';
+    }
+
+    subtest 'called on fully-consumed cat'  => {
+        plan 1;
+        my $cat := IO::CatHandle.new: @files;
+        $cat.slurp;
+        is-deeply $cat.handles.map({eager .lines: 2}),
+            ().Seq, 'received right data';
+    }
+
+    # https://github.com/rakudo/rakudo/issues/1546
+    subtest 'using handles while also consuming using other methods'  => {
+        plan 5;
+        my $cat := IO::CatHandle.new: @files;
+        my @ = $cat.get xx 3;
+        my $orig-handles := $cat.handles;
+        is-deeply $cat.handles.head.lines, "a4".Seq, 'first use';
+        $cat.next-handle;
+        is-deeply $cat.handles.head.lines, <b1 b2 b3 b4>.Seq, 'second use';
+        $cat.get;
+        is-deeply $orig-handles.head.lines, <c2 c3 c4>.Seq,
+            'handles gives right handle even if it was switched by other means';
+        $cat.slurp;
+        is-deeply $cat.handles.head, Nil, 'no more handles (1)';
+        is-deeply $cat.handles.head, Nil, 'no more handles (2)';
+    }
 }
 
 subtest 'IO method' => {
