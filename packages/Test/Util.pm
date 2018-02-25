@@ -20,10 +20,15 @@ sub is-deeply-junction (
     is-deeply junction-guts($got), junction-guts($expected), $desc;
 }
 
-sub test-iter-opt (Iterator:D \iter, @data is raw, Str:D $desc)
-is export {
+multi test-iter-opt (Iterator:D \iter, @data is raw, Str:D $desc) is export {
+    TEST-ITER-OPT iter, @data, +@data, $desc;
+}
+multi test-iter-opt (Iterator:D \iter, UInt:D \items, Str:D $desc) is export {
+    TEST-ITER-OPT iter, Nil, items, $desc;
+}
+sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
     subtest $desc => {
-        plan 5 + 3*@data;
+        plan 5 + 2*n + ($_ with data);
         sub count (\v, $desc) {
             iter.can('count-only')
               ?? is-deeply iter.count-only, v, "count  ($desc)"
@@ -34,10 +39,11 @@ is export {
               ?? is-deeply iter.bool-only, v, "bool   ($desc)"
               !! skip "iterator does not support .bool-only ($desc)";
         }
-        for ^@data -> $i {
-            count  @data-$i,  "before pull $i";
-            bool ?(@data-$i), "before pull $i";
-            is-deeply iter.pull-one, @data[$i], "pulled (pull $i)";
+        for ^n -> $i {
+            count  n-$i,  "before pull $i";
+            bool ?(n-$i), "before pull $i";
+            data andthen is-deeply iter.pull-one, data[$i], "pulled (pull $i)"
+                 orelse  iter.pull-one;
         }
         count  0, 'after last pull';
         bool  ?0, 'after last pull';
@@ -595,12 +601,17 @@ does C<fail()> instead of C<throw()>, then the test will detect that and fail.
 
 =head2 C<test-iter-opt>
 
-    sub test-iter-opt (Iterator:D \iter, @data is raw, Str:D $desc)
+    multi test-iter-opt (Iterator:D \iter, @data is raw,  Str:D $desc)
+    multi test-iter-opt (Iterator:D \iter, UInt:D \items, Str:D $desc)
 
-Tests the data pulled from C<iter> matches corresponding values in C<@data>
-and, if they're implemented, tests the values of C<.count-only> and
+Tests the data pulled from C<iter> matches corresponding values in C<@data>,
+if provided, and, if they're implemented, tests the values of C<.count-only> and
 C<.bool-only> methods before iterating the L<Iterator>, after each pull,
 after last pull, and after C<IterationEnd> has been received.
+
+Instead of providing C<@data>, you can simply provide the number of values
+you're expecting. This lets you test iterators for which you cannot predict
+the order/content of pulled values.
 
 =end pod
 
