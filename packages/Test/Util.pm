@@ -20,6 +20,33 @@ sub is-deeply-junction (
     is-deeply junction-guts($got), junction-guts($expected), $desc;
 }
 
+sub test-iter-opt (Iterator:D \iter, @data is raw, Str:D $desc)
+is export {
+    subtest $desc => {
+        plan 5 + 3*@data;
+        sub count (\v, $desc) {
+            iter.can('count-only')
+              ?? is-deeply iter.count-only, v, "count  ($desc)"
+              !! skip "iterator does not support .count-only ($desc)";
+        }
+        sub bool (\v, $desc) {
+            iter.can('bool-only')
+              ?? is-deeply iter.bool-only, v, "bool   ($desc)"
+              !! skip "iterator does not support .bool-only ($desc)";
+        }
+        for ^@data -> $i {
+            count  @data-$i,  "before pull $i";
+            bool ?(@data-$i), "before pull $i";
+            is-deeply iter.pull-one, @data[$i], "pulled (pull $i)";
+        }
+        count  0, 'after last pull';
+        bool  ?0, 'after last pull';
+        ok iter.pull-one =:= IterationEnd, 'one more pull gives IterationEnd';
+        count  0, 'after IterationEnd';
+        bool  ?0, 'after IterationEnd';
+    }
+}
+
 multi sub is-eqv(Seq:D $got, Seq:D $expected, Str:D $desc) is export {
     $got.cache; $expected.cache;
     _is-eqv $got, $expected, $desc;
@@ -565,6 +592,15 @@ this test routine trying to ignore the generation of timing file.
 Same as Test.pm6's C<throws-like>, except wraps the given code into
 C<no fatal; my $ = do { … }; Nil>. The point of that is if the code merely
 does C<fail()> instead of C<throw()>, then the test will detect that and fail.
+
+=head2 C<test-iter-opt>
+
+    sub test-iter-opt (Iterator:D \iter, @data is raw, Str:D $desc)
+
+Tests the data pulled from C<iter> matches corresponding values in C<@data>
+and, if they're implemented, tests the values of C<.count-only> and
+C<.bool-only> methods before iterating the L<Iterator>, after each pull,
+after last pull, and after C<IterationEnd> has been received.
 
 =end pod
 
