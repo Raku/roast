@@ -7,6 +7,8 @@ as a conforming Perl 6 implementation.
 
 -  [Introduction](#introduction)
 
+-  [Test Utilities](#test-utilities)
+
 -  [Environment Variables](#environment-variables)
 
 -  [Contributing](CONTRIBUTING.md)
@@ -120,6 +122,22 @@ To fudge and run `prove` on a specific file:
 `fudgeandrun` does not assume any particular implementation but guesses by running
 `perl6` to look at special variables like `$*PERL`.  See `fudgeandrun` usage to
 specify a different implementation and other options.
+
+## Test Utilities
+
+This repository contains
+[`Test::Util` module](blob/master/packages/Test/Util.pm) with helper routines
+you can use when writing tests. See POD documentation included at the end of
+the [module's source code](blob/master/packages/Test/Util.pm). To include
+the module, in your test file, you need to add `use lib` line to your test file.
+
+    use lib $?FILE.IO.parent(2).add: 'packages';
+    use Test::Util;
+    use Test;
+
+Depending on the location of your test file, the number inside `.parent(2)`
+may need to be adjusted to go up the correct number of times from the test
+files's location to the root of the repository.
 
 ## Environmental Variables
 
