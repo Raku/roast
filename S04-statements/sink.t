@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 # RT #117235
 {
@@ -76,4 +76,20 @@ plan 7;
     }.new) .= foo;
 
     is $sunk, False, "we don't sink the result of thing() .= method-name";
+}
+
+# https://github.com/rakudo/rakudo/issues/1531
+subtest 'sub calls in last statement of sunk `for` get sunk' => {
+    plan 4;
+    my $a; $a Z+= 2 for ^3;
+    is-deeply $a, 6, 'postfix `for`, Z+= op';
+
+    my $b; for ^3 { $b Z+= 2 }
+    is-deeply $b, 6, 'block `for`, Z+= op';
+
+    throws-like { sub foo {fail}; foo for ^1; Nil }, Exception,
+        'postfix `for` with sub that returns Failure';
+
+    throws-like { sub foo {fail}; for ^1 { foo }; Nil }, Exception,
+        'block `for` with sub that returns Failure';
 }
