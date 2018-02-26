@@ -198,7 +198,9 @@ is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
 
 # RT #121327
 {
-    my @result = gather { for ^2 { my @b = 1 xx 4; take (@b.shift xx 2) xx 2 } }
+    my @result = gather {
+        for ^2 { my @b = 1 xx 4; take (@b.shift xx 2) xx 2; Nil }
+    }
     is-deeply @result.map(*.list).list, (((1, 1), (1, 1)), ((1, 1), (1, 1))),
         'Nested xx in for-loop';
 }
