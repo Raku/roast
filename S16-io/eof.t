@@ -70,14 +70,12 @@ subtest '.eof works right even when we seek past end and back' => {
     is-deeply $fh.eof, True, "seek'ed past end";
 
     $fh.seek: 1, SeekFromBeginning;
-    #?rakudo.jvm todo 'Rakudo GH #1322 not yet fixed for JVM'
     is-deeply $fh.eof, False, "seek'ed back into the actual contents";
 
     $fh.slurp;
     is-deeply $fh.eof, True, "slurped contents";
 
     $fh.seek: 3, SeekFromBeginning;
-    #?rakudo.jvm todo 'Rakudo GH #1322 not yet fixed for JVM'
     is-deeply $fh.eof, False, "seek'ed back";
 
     $fh.seek: 5, SeekFromEnd;
@@ -90,7 +88,6 @@ subtest '.eof on empty files' => {
     with make-temp-file(:content('')).open {
         is-deeply .eof, False, 'eof is False before any reads';
         .read: 42;
-        #?rakudo.jvm todo 'some problem related to read(?) https://github.com/rakudo/rakudo/issues/1541'
         is-deeply .eof, True,  'eof is True after a read';
     }
     with "/proc/$*PID/status".IO -> $p {
