@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 6;
 
 class FakeIO {
     has $.Str = '';
@@ -28,3 +28,7 @@ is cap({ note InterestingGist.new(x => 1), "foo"}), "[1]foo\n", "note() joins mu
 
 is cap({ "flurb".note }), "flurb\n", ".note as a method on Str (for example)";
 is cap({ note Int}), "(Int)\n", "note Class name is ok";
+
+my int $seen;
+note "" but role { method gist() { $seen = 1; "" } };
+is $seen, 1, 'did note() call .gist even when given a Str';
