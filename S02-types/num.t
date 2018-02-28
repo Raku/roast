@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 98;
+plan 99;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -781,5 +781,16 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
 
 # RT #130039
 is-approx 1.2e308, 2*.6e308, 'Literal Nums close to the upper limit are not Inf';
+
+subtest '.Bool' => {
+    plan 5;
+    is-deeply    42e0.Bool, True,  'positive';
+    is-deeply (-42e0).Bool, True,  'negative';
+    is-deeply     0e0.Bool, False, 'zero';
+    is-deeply  (-0e0).Bool, False, 'negative zero';
+
+    # https://irclog.perlgeek.de/perl6-dev/2018-02-21#i_15843708
+    is-deeply     NaN.Bool, True,  'NaN';
+}
 
 # vim: ft=perl6
