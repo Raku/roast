@@ -10,7 +10,7 @@ plan 10;
     my uint8 @buffer = ('A' .. 'Z').map({ .ord }).list;
     is(@buffer[0],  ord('A'), 'basic sanity test (1)');
     is(@buffer[25], ord('Z'), 'basic sanity test (2)');
-    #?rakudo 3 todo "substr issues on compact array - RT #124455"
+    #?rakudo 3 skip "substr issues on compact array - RT #124455"
     is(substr(@buffer,   0, 8), ord('A'), 'substr on compact array (1)');
     is(substr(@buffer, 200, 8), ord('Z'), 'substr on compact array (2)');
     is(
