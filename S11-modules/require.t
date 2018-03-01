@@ -1,5 +1,12 @@
 use v6;
 
+############################################################################
+# Note: do not add any additional `use` lib or use any additional modules.
+# The tests in this file require a specific environment in this area for
+# them to test the functionality correctly. Place your tests in another file,
+# if you need to load any other modules.
+#############################################################################
+
 use lib $?FILE.IO.parent(2), $?FILE.IO.parent.add("lib");
 use MONKEY-SEE-NO-EVAL;
 
