@@ -6,9 +6,6 @@ use Test::Util;
 plan 53;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
-my $precomp-ext    := $*VM.precomp-ext;
-my $precomp-target := $*VM.precomp-target;
-my @precomp-paths;
 
 BEGIN my $lib-path = $?FILE.IO.parent(2).IO;
 my $package-lib-prefix = $lib-path.add('packages').absolute;
@@ -127,47 +124,10 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 }
 
 {
-    my $module-name-a = 'InternArrayA';
-    my $output-path-a = $lib-path.child("packages/" ~ $module-name-a ~ '.pm.' ~ $precomp-ext);
-    unlink $output-path-a; # don't care if failed
-    is_run
-      'my constant VALUE = array[uint32].new;
-       sub a() is export { VALUE }',
-      { err    => '',
-        out    => '',
-        status => 0,
-      },
-      :compiler-args[
-        '--target', $precomp-target,
-        '--output', $output-path-a,
-      ],
-
-      "precomp of native array parameterization intern test (a)";
-    ok $output-path-a.IO.e, "did we create a $output-path-a";
-
-    my $module-name-b = 'InternArrayB';
-    my $output-path-b = $lib-path.child("packages/" ~ $module-name-b ~ '.pm.' ~ $precomp-ext);
-
-    unlink $output-path-b; # don't care if failed
-
-    is_run
-      'my constant VALUE = array[uint32].new;
-       sub b() is export { VALUE }',
-      { err    => '',
-        out    => '',
-        status => 0,
-      },
-      :compiler-args[
-        '--target', $precomp-target,
-        '--output', $output-path-b,
-      ],
-      "precomp of native array parameterization intern test (b)";
-    ok $output-path-b.IO.e, "did we create a $output-path-b";
-
     #?rakudo todo 'no 6model parametrics interning yet'
     is_run
-      "use $module-name-a;
-       use $module-name-b;
+      "use InternArrayA;
+       use InternArrayB;
        print a().WHAT =:= b().WHAT",
       { err    => '',
         out    => "True",
@@ -176,8 +136,6 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
       :compiler-args['-I', $package-lib-prefix],
 
       'precompile load of both and identity check passed';
-
-    unlink $_ for $output-path-a, $output-path-b; # don't care if failed
 }
 
 
