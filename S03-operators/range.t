@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 177;
+plan 178;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
 
@@ -274,6 +274,27 @@ for @opvariants {
     eval-lives-ok "\{ use fatal; (|4)$_ 5 }", "$_ doesn't warn on parenthesized flattening (endpoint)";
     eval-lives-ok "\{ use fatal; ~(4$_ 5) }", "$_ doesn't warn on parenthesized stringification (range)";
     eval-lives-ok "\{ use fatal; (~4)$_ 5 }", "$_ doesn't warn on parenthesized stringification (endpoint)";
+}
+
+# https://github.com/rakudo/rakudo/issues/1582
+subtest 'Range operators work with subclasses of Range' => {
+    plan 10;
+    # While `(42 but role Foo {}) + 42` produces a plain `Int`, Range ops will produce a subclass
+    # rather than plain `Range`, if one was used originally, since there's only one `Range` object
+    # involved, so we know exactly what we have to become.
+    my role Meows {}
+    my $r := (2..^5) but Meows;
+    is-deeply ($r + 5), ((7..^10) but Meows), 'Range + Real';
+    is-deeply (5 + $r), ((7..^10) but Meows), 'Real + Range';
+    is-deeply ($r - 5), ((-3..^0) but Meows), 'Range - Real'; # No `Real - Range` meaning
+    is-deeply ($r * 5), ((10..^25) but Meows), 'Range * Real';
+    is-deeply (5 * $r), ((10..^25) but Meows), 'Real Range';
+    is-deeply ($r / 5), (((2/5)..^1.0) but Meows), 'Range / Real'; # No `Real / Range` meaning
+
+    is-deeply ($r − 5), ((-3..^0) but Meows), "Range U+2212 minus Real";
+    is-deeply ($r × 5), ((10..^25) but Meows), 'Range U+00D7 Real';
+    is-deeply (5 × $r), ((10..^25) but Meows), 'Real U+00D7 Range';
+    is-deeply ($r ÷ 5), (((2/5)..^1.0) but Meows), 'Range U+00F7 Real';
 }
 
 # vim: ft=perl6
