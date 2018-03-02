@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 53;
+plan 49;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 
