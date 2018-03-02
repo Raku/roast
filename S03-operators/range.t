@@ -163,7 +163,7 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
     lives-ok { "$range" }, 'can stringify range';
     is ~$range, "100.B 101.B 102.B", 'range is correct';
 }
- 
+
 # RT #67882
 {
     my $range;
