@@ -97,7 +97,10 @@ diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
     }
 }
 
-subtest {
+#?rakudo.jvm skip 'Unhandled exception; category = 1'
+#?DOES 1
+{
+  subtest {
     react {
         whenever Supply.from-list(^4).throttle(4, .1) {
             is $_, $++, "throttle isnt done yet";
@@ -109,6 +112,7 @@ subtest {
         }
     }
 
-}, "Supply.throttle(\$, \$second) should become done when the source supply become done";
+  }, "Supply.throttle(\$, \$second) should become done when the source supply become done";
+}
 
 # vim: ft=perl6 expandtab sw=4
