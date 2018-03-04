@@ -176,8 +176,8 @@ subtest '.grep(Regex) on hyper/race Seq do not crash' => {
     my @has    := (^10_000).eager;
     my @wanted := @has.grep(*.contains: '2').List;
     my $w = '2';
-    is-deeply @has.race.grep( /$w/).List, @wanted, 'race, with shared var';
-    is-deeply @has.hyper.grep(/$w/).List, @wanted, 'hyper, with shared var';
+    is-deeply @has.race.grep( /$w/).sort.List, @wanted, 'race, with shared var';
+    is-deeply @has.hyper.grep(/$w/).List,      @wanted, 'hyper, w/  shared var';
 }
 
 # vim: ft=perl6
