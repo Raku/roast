@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 44;
+plan 45;
 
 my @list = (1 .. 10);
 
@@ -165,6 +165,19 @@ my @list = (1 .. 10);
         message => q{Unexpected adverb 'asdf' passed to grep on List},
         'grep on a type object with an unexpected adverb'
     );
+}
+
+# https://irclog.perlgeek.de/perl6/2018-03-04#i_15882545
+subtest '.grep(Regex) on hyper/race Seq do not crash' => {
+    plan 4;
+    is-deeply "a\nb\nc\nbo\n".lines.race.grep(/b/).List,  <b bo>, 'race basic';
+    is-deeply "a\nb\nc\nbo\n".lines.hyper.grep(/b/).List, <b bo>, 'hyper basic';
+
+    my @has    := (^10_000).eager;
+    my @wanted := @has.grep(*.contains: '2').List;
+    my $w = '2';
+    is-deeply @has.race.grep( /$w/).List, @wanted, 'race, with shared var';
+    is-deeply @has.hyper.grep(/$w/).List, @wanted, 'hyper, with shared var';
 }
 
 # vim: ft=perl6
