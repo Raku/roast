@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 22;
 
 # L<S32::Containers/Classes and Roles/"=item Buf">
 
@@ -196,5 +196,9 @@ is-deeply Buf.allocate(10, (1,2,3)).reallocate(0).reallocate(5),
 # https://github.com/rakudo/rakudo/commit/7ba50d8647
 is-deeply Buf.new(1 xx 2)».join, ("1", "1"),
     'no explosions when hypering .join over a Blob';
+
+# https://rt.perl.org/Ticket/Display.html?id=128655
+is-deeply Buf.new((my int $i = 0x03) +& 0x6), Buf.new(2),
+    'can use native int operations to create a Buf with';
 
 # vim: ft=perl6
