@@ -450,7 +450,7 @@ subtest 'Ensure <0> can be used to make an IO::Path' => {
 }
 
 subtest '.parent(Int)' => {
-    plan 7*my @paths :=
+    plan 8*my @paths :=
         (<foo/bar/ber.txt  /foo/bar/ber.txt  .  ../  C:/foo/bar/ber.txt>, ｢\foo\bar\ber｣).flat.map({
             IO::Path::Unix.new($_),
             IO::Path::Win32.new($_),
@@ -460,6 +460,7 @@ subtest '.parent(Int)' => {
 
     for @paths -> $p is raw {
         my $d := $p.perl;
+        throws-like { $p.parent(-1) }, X::Multi::NoMatch, 'no candidate to handle negative parents';
         is-deeply $p.parent(0), $p, "0 $d";
         is-deeply $p.parent(1), $p.parent, "1 $d";
         is-deeply $p.parent(2), $p.parent.parent, "2 $d";
