@@ -53,7 +53,6 @@ $output = Test::Util::run('.say for lines()', :args($tmp-file-name xx 3));
 # RT #126494
 is-deeply @lines, [|<one two three> xx 3], 'lines() using $*ARGFILES, works for more than one file';
 
-#?rakudo.jvm skip 'hangs, RT #131393'
 {
     $output = Test::Util::run('.say for lines()', "foo\nbar\nbaz\n");
     @lines  = lines($output);
@@ -106,7 +105,6 @@ subtest '.lines accepts all Numerics as limit' => {
 }
 
 # RT #130430
-#?rakudo.jvm todo 'appends newlines after expected output'
 is_run ｢.put for $*ARGFILES.lines: 1000｣, "a\nb\nc", {
     :out("a\nb\nc\n"),
     :err(''),
