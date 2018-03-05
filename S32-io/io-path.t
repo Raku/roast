@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 39;
+plan 40;
 
 # L<S32::IO/IO::Path>
 
@@ -446,5 +446,27 @@ subtest 'Ensure <0> can be used to make an IO::Path' => {
     for @nums -> $num {
         lives-ok { .new: $num }, "$num.perl() with {.perl}" for @Path-Types;
         lives-ok {    $num.IO }, "$num.perl() with .IO coercer";
+    }
+}
+
+subtest '.parent(Int)' => {
+    plan 7*my @paths :=
+        (<foo/bar/ber.txt  /foo/bar/ber.txt  .  ../  C:/foo/bar/ber.txt>, ｢\foo\bar\ber｣).flat.map({
+            IO::Path::Unix.new($_),
+            IO::Path::Win32.new($_),
+            IO::Path::Cygwin.new($_),
+            IO::Path::QNX.new($_),
+        }).flat.List;
+
+    for @paths -> $p is raw {
+        my $d := $p.perl;
+        is-deeply $p.parent(0), $p, "0 $d";
+        is-deeply $p.parent(1), $p.parent, "1 $d";
+        is-deeply $p.parent(2), $p.parent.parent, "2 $d";
+
+        is-deeply $p.parent(3), $p.parent.parent.parent, "3 $d";
+        is-deeply $p.parent(4), $p.parent.parent.parent.parent, "4 $d";
+        is-deeply $p.parent(5), $p.parent.parent.parent.parent.parent, "5 $d";
+        is-deeply $p.parent(6), $p.parent.parent.parent.parent.parent.parent, "6 $d";
     }
 }
