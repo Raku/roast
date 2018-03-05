@@ -168,7 +168,10 @@ my @list = (1 .. 10);
 }
 
 # https://irclog.perlgeek.de/perl6/2018-03-04#i_15882545
-subtest '.grep(Regex) on hyper/race Seq do not crash' => {
+#?rakudo.jvm skip 'hangs: Exception in thread "Thread-1" UnwindException'
+#?DOES 1
+{
+  subtest '.grep(Regex) on hyper/race Seq do not crash' => {
     plan 4;
     is-deeply "a\nb\nc\nbo\n".lines.race.grep(/b/).List,  <b bo>, 'race basic';
     is-deeply "a\nb\nc\nbo\n".lines.hyper.grep(/b/).List, <b bo>, 'hyper basic';
@@ -178,6 +181,7 @@ subtest '.grep(Regex) on hyper/race Seq do not crash' => {
     my $w = '2';
     is-deeply @has.race.grep( /$w/).sort.List, @wanted, 'race, with shared var';
     is-deeply @has.hyper.grep(/$w/).List,      @wanted, 'hyper, w/  shared var';
+  }
 }
 
 # vim: ft=perl6
