@@ -33,7 +33,6 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
     }
 }
 
-#?rakudo.jvm skip 'hangs, RT #131393'
 {
     my $sh = shell("$*EXECUTABLE -e \".say for reverse lines\"", :in, :out);
     $sh.in.say: "foo\nbar\nbaz";
@@ -68,7 +67,6 @@ with run(:out, $*EXECUTABLE, '-e', '') -> $proc {
     }
 }
 
-#?rakudo.jvm skip 'hangs'
 {
   lives-ok {
     my $p = run :bin, :out, :err, :in, $*EXECUTABLE, '-e',
@@ -82,7 +80,6 @@ with run(:out, $*EXECUTABLE, '-e', '') -> $proc {
 }
 
 # RT #129882
-#?rakudo.jvm skip 'hangs'
 {
     my $proc = run $*EXECUTABLE, '-e', 'print slurp', :in, :out, :bin;
     my $input = ('a' x 1_000_000).encode;
