@@ -20,6 +20,7 @@ my $map  = (effective => 42, factual => 666).Map;
 my $hash = (global => 77, 999 => "happiness").Hash;
 my $objh = Hash[Any,Any].new((ideas => 56, 13 => "jocular"));
 my $list = <the quick brown fox>;
+my $bigintrange = 0..10 ** 42;
 my @elem =
   "afraid",  $s,
   "afraid",  $sh,
@@ -32,6 +33,7 @@ my @elem =
   "ideas",   $objh,
   13,        $objh,
   "quick",   $list,
+  10 ** 42,  $bigintrange
 ;
 
 # Things we need to check for not being an element of.  Uses the string
@@ -68,6 +70,7 @@ my @notelem =
   do { my %o := :{ a => 42 }; %o<a>:delete; %o },
   $list,
   List.new,
+  $bigintrange => 10 ** 42 + 1
 ;
 
 plan 2 * (2 * @elem/2 + 2 * @notelem) + 1 * (2 * @elem/2 + 2 * @notelem);
