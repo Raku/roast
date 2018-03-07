@@ -268,9 +268,8 @@ do-test
         $^client.close();
     };
 
-if      $*DISTRO.is-win             or
-        $*DISTRO.name eq "ubuntu"   and         # Windows Subsystem for Linux
-        so try { "/proc/version".IO.lines.first: /:i <|w>Microsoft<|w>/ } {
+if $*DISTRO.is-win            or  # test for WSL below
+   $*KERNEL.name eq "linux"   and $*KERNEL.release ~~ /:i <|w>Microsoft<|w>/ {
     skip 'Winsock 1 second delay for connection failure RT #130892', 1
 }
 else { 
