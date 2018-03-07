@@ -268,9 +268,16 @@ do-test
         $^client.close();
     };
 
-# MoarVM #234
-eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :port($_), :host("127.0.0.1") ); CATCH {next}; next }',
-              'Surviving without SEGV due to incorrect socket connect/close handling';
+if      $*DISTRO.is-win             or
+        $*DISTRO.name eq "ubuntu"   and         # Windows Subsystem for Linux
+        so try { "/proc/version".IO.lines.first: /:i <|w>Microsoft<|w>/ } {
+    skip 'Winsock 1 second delay for connection failure RT #130892', 1
+}
+else { 
+    # MoarVM #234
+    eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :port($_), :host("127.0.0.1") ); CATCH {next}; next }',
+                  'Surviving without SEGV due to incorrect socket connect/close handling';
+}
 
 sub do-test(Block $b-server, Block $b-client) {
     my $sync   = Channel.new;
