@@ -74,7 +74,6 @@ plan 41;
 # RT #122803
 {
     for ^4 {
-        #?rakudo.jvm todo 'RT #122803'
         is_run q[ await ^9 .map: { start { say "start"; sleep 1; say "end" } };],
             { :0status, :err(''), :out("start\n" x 9 ~ "end\n" x 9) },
             "promises execute asynchronously [try $_]"

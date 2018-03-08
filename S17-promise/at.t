@@ -16,7 +16,6 @@ plan 4;
     sleep 1;
     @order.push(2);
     await $p1, $p2;
-    #?rakudo.jvm todo 'got: "3 1 2", RT #123520'
     is @order, (1, 2, 3), 'Scheduler did not cause things to run in wrong order';
 }
 

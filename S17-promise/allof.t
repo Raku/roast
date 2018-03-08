@@ -41,7 +41,6 @@ plan 13;
     isa-ok $all, Promise, 'allof gives a Promise';
     my $b = $all.result;  # block
     isa-ok $b, Bool, 'get a bool of the result';
-    #?rakudo.jvm todo 'wrong order'
     is ~$a, "0 1 2 3 4 5 6 7 8 9", 'got the right order';
 }
 
