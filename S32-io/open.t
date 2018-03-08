@@ -356,7 +356,6 @@ subtest '.open uses attributes by default' => {
     $fh .= open: :rw;
     is-deeply $fh.nl-in,    'foo',        '.nl-in remains same after open';
     is-deeply $fh.nl-out,   'meow',       '.nl-out remains same after open';
-    #?rakudo todo 'Un-todo after IO::Handle encoding refactor merge'
     is-deeply $fh.encoding, Nil,          '.encoding is Nil due to :bin';
     is-deeply $fh.chomp,    False,        '.chomp remains same after open';
 
@@ -378,7 +377,6 @@ subtest '.open uses attributes by default' => {
 
     $fh.chomp = True; # set chomp back on to test .nl-in;
     $fh .= open: :rw;
-    #?rakudo.jvm todo 'got: "1foo2\nfoo3hello worldmeow"'
     is-deeply $fh.lines.join, "12\n3hello worldmeow", '.nl-in is respected';
     $fh.close;
 }
