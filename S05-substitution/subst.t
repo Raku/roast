@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 191;
+plan 192;
 
 # L<S05/Substitution/>
 
@@ -792,6 +792,39 @@ subtest 'no-matches .subst-mutate: with multi-match opts = empty List' => {
             is-deeply $s.subst-mutate(:rd(1..3), mt, ''), (),
                 ":rd(Range) with {mt.^name} matcher on {$s.^name}";
         }
+    }
+}
+
+# RT #130688
+subtest '.subst[-mutate] with multi-match args set $/ to a List of matches' => {
+    plan 2*2*(2+5);
+    for 1234567, '1234567' -> $type {
+      for <subst subst-mutate> -> $meth {
+        subtest "$type.^name().$meth: :g" => {
+          ($ = $type)."$meth"(:g, /../, 'XX');
+          isa-ok $/, List, '$/ is a List…';
+          cmp-ok +$/, '==', 3, '…with 3 items…';
+          is-deeply $/.map({.WHAT}).unique, (Match,).Seq, '…all are Match…';
+          is-deeply $/.map(~*), <12 34 56>.map(*.Str), '…all have right values';
+        }
+        subtest ".$meth: :x" => {
+          ($ = $type)."$meth"(:2x, /../, 'XX');
+          isa-ok $/, List, '$/ is a List…';
+          cmp-ok +$/, '==', 2, '…with 2 items…';
+          is-deeply $/.map({.WHAT}).unique, (Match,).Seq, '…all are Match…';
+          is-deeply $/.map(~*), <12 34>.map(*.Str), '…all have right values';
+        }
+        for <nth st nd rd th> -> $suffix {
+          subtest ".$meth: :$suffix" => {
+              ($ = $type)."$meth"(|($suffix => 1..3), /../, 'XX');
+              isa-ok $/, List, '$/ is a List…';
+              cmp-ok +$/, '==', 3, '…with 3 items…';
+              is-deeply $/.map({.WHAT}).unique, (Match,).Seq, '…all are Match…';
+              is-deeply $/.map(~*), <12 34 56>.map(*.Str),
+                  '…all have right values';
+          }
+        }
+      }
     }
 }
 
