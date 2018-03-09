@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 19;
 
 =begin pod
 
@@ -76,5 +76,10 @@ class IntrospectAtBEGINTime {
     }
     is A.new().bar(), 'abc', 'Can .^add_method what .^lookup returns under another name and it works';
 }
+
+is Any.^lookup('supercalafajalistickexpialadojus').defined,
+    False, 'failed .^lookup returns undefined value';
+is Any.^find_method('supercalafajalistickexpialadojus').defined,
+    False, 'failed .^find_method returns Mu';
 
 # vim: ft=perl6
