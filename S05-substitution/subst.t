@@ -509,7 +509,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #114388 -- part two
-#?rakudo skip "RT #114388 -- No such method 'subst-mutate' for invocant of type 'Any'"
+#?rakudo todo "RT #114388 -- expected: '', got: (Any)"
 {
     $_ = Any;
     s[ea] = "rea";
