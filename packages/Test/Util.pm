@@ -344,7 +344,7 @@ sub run-with-tty (
     $code, $desc, :$in = '', :$status = 0, :$out = '', :$err = ''
 ) is export {
     if $*DISTRO.name eq 'ubuntu' and $*KERNEL.release ~~ /:i Microsoft/ {
-        skip "Current WSL does not support script command for test: roast issue #395";
+        skip 'WSL as of Mar 2018 did not support `script` command for test: roast issue #395';
         return;
     }
     state $path = make-temp-file.absolute;
