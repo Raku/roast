@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 79;
+plan 81;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -264,5 +264,13 @@ is-deeply ([lazy 1..3] X 4..5)[^2], ((1, 4), (1, 5)),
 lives-ok { @ = (1,2) X, (); @ = (1,2) X () },
     'cross with empty List on RHS does not crash';
 
+# RT #126563
+{
+    my @z = <1 2>;
+    lives-ok { @z X* (@z  X* @z) },
+        'X meta-op with RHS input from parenthesized output of another X does not crash';
+    is-deeply (@z X* (@z  X* @z)), (1, 2, 2, 4, 2, 4, 4, 8),
+        'X meta-op works with RHS input from parenthesized output of another X gives correct result';
+}
 
 # vim: ft=perl6 et
