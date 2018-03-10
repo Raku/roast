@@ -269,7 +269,7 @@ lives-ok { @ = (1,2) X, (); @ = (1,2) X () },
     my @z = <1 2>;
     lives-ok { @z X* (@z  X* @z) },
         'X meta-op with RHS input from parenthesized output of another X does not crash';
-    is (@z X* (@z  X* @z)), (1, 2, 2, 4, 2, 4, 4, 8),
+    is-deeply (@z X* (@z  X* @z)), (1, 2, 2, 4, 2, 4, 4, 8),
         'X meta-op works with RHS input from parenthesized output of another X gives correct result';
 }
 
