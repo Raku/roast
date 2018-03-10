@@ -343,6 +343,10 @@ sub fails-like (
 sub run-with-tty (
     $code, $desc, :$in = '', :$status = 0, :$out = '', :$err = ''
 ) is export {
+    if $*DISTRO.name eq 'ubuntu' and $*KERNEL.release ~~ /:i Microsoft/ {
+        skip "Current WSL does not support script command for test: roast issue #395";
+        return;
+    }
     state $path = make-temp-file.absolute;
     # on MacOS, `script` doesn't take the command via `c` arg
     state $script = shell(:!out, :!err, 'script -t/dev/null -qc "" /dev/null')
