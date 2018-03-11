@@ -3,6 +3,11 @@ use v6;
 # this tests that you can define mutators, that do more interesting
 # things than merely assigning the value!
 
+#
+# use of heavy attribute mutators is discouraged as poor OO design
+# see https://6guts.wordpress.com/2016/11/25/perl-6-is-biased-towards-mutators-being-really-simple-thats-a-good-thing/
+#
+
 use Test;
 
 plan 10;
@@ -19,8 +24,8 @@ class MagicVal {
             # note that FETCH and STORE cannot go through the accessors
             # of $.varies again, because that would lead to infinite
             # recursion. Use the actual attribute here instead
-            FETCH => method ()     { $!varies  },
-            STORE => method ($new) { $!varies = $new + 1 },
+            FETCH => sub ($ --> Int) { $!varies },
+            STORE => sub ($, Int $new --> Int) { $!varies = $new + 1 }
         );
     }
 }
