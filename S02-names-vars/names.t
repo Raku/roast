@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 150;
+plan 156;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -167,6 +167,24 @@ throws-like {
     constant $i = 42;
     my $foo:bar«$i» = 'meow';
     is-deeply $foo:bar«$i», 'meow', 'can use compile-time variables in names';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1606
+    role Foo[\T] { };
+    role Foo::Bar[\T] { };
+    role Foo::Bar::Baz[\T1, \T2] { }
+    is Int.new.^shortname, 'Int', 'properly short name Metamodel instances';
+    is Foo[Int].new.^shortname, 'Foo[Int]', 'properly short name Metamodel instances with braces';
+    is Foo::Bar[Int].new.^shortname, 'Bar[Int]', 'properly short name Metamodel instances with colons and braces';
+    is Foo::Bar::Baz[Int, Int].new.^shortname, 'Baz[Int,Int]', 'properly short name Metamodel instances with braces and commas';
+    is Foo::Bar::Baz[
+        Foo[Int],
+        Foo::Bar[Int]
+    ].new.^shortname, 'Baz[Foo[Int],Bar[Int]]', 'properly short name Metamodel instances with colons, braces, and commas';
+    is Foo::Bar::Baz[
+        Foo::Bar[Foo[Int]],
+        Foo::Bar::Baz[Foo[Int], Foo::Bar[Int]]
+    ].new.^shortname, 'Baz[Bar[Foo[Int]],Baz[Foo[Int],Bar[Int]]]', 'properly short name Metamodel instances with nested colons, braces, and commas';
 }
 
 # vim: ft=perl6
