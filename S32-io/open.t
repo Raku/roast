@@ -275,52 +275,6 @@ LEAVE unlink PATH;
     $fh.close;
 }
 
-# test :create mode
-#?rakudo.jvm skip "[io grant] NoSuchFileException: t-32-io-open.tmp'"
-{   unlink PATH;
-    my $fh;
-
-    $fh = open PATH, :create;
-    ok defined($fh), 'can open non-existent file in :create mode';
-    throws-like { $fh.say: 'foo' }, Exception,
-        'trying to write in :create mode throws';
-
-    is $fh.lines.join, '', 'file starts out empty when using :create';
-    $fh.close;
-
-    # fill file with data
-    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
-
-    $fh = open PATH, :create;
-    is $fh.lines.join, 'onions are tasty',
-        ':create mode does not truncate existing files';
-
-    $fh.close;
-}
-
-# test :truncate :create mode
-#?rakudo.jvm skip "[io grant] NoSuchFileException: t-32-io-open.tmp"
-{   unlink PATH;
-    my $mode = ':truncate, :create';
-    my $fh;
-
-    $fh = open PATH, :truncate, :create;
-    ok defined($fh), "can open non-existent file in $mode mode";
-    ok PATH.IO.e, "$mode mode creates non-existent files";
-    $fh.close;
-
-    # create and fill file with data
-    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
-
-    $fh = open PATH, :truncate, :create;
-    is $fh.lines.join, '', "$mode mode truncates existing files";
-
-    throws-like { $fh.say: 'foo' }, Exception,
-        "trying to write in $mode mode throws";
-
-    $fh.close;
-}
-
 # test :exclusive mode
 {   unlink PATH;
     fails-like { open PATH, :exclusive }, Exception,
