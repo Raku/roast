@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 66;
+plan 58;
 
 my \PATH = 't-S32-io-open.tmp';
 my \PATH-RX = rx/'t-S32-io-open.tmp'/;
