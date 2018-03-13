@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 107;
+plan 4 * 19 + 108;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -462,6 +462,15 @@ subtest 'Pair.perl with type objects' => {
 
   is-deeply .perl.EVAL, $_, .perl for Pair.new(Str, Str),
       Pair.new(Rat, Num), Pair.new(Bool, Bool), Pair.new(Numeric, Numeric)
+}
+
+# RT 131887
+{
+    my $value = 17;
+    my $pair = number => $value;
+    my $obj-at1 = $pair.WHICH;
+    $pair.freeze;
+    is-deeply $obj-at1, $pair.WHICH, "Pair.freeze doesn't change object identity";
 }
 
 # vim: ft=perl6
