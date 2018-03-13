@@ -4,7 +4,7 @@ use Test;
 use Test::Util;
 
 # L<S32::IO/IO/=item print>
-plan 15;
+plan 14;
 
 # Tests for print
 is_run 'print "ok\n"', { out => "ok\n" }, 'basic form of print';
@@ -31,41 +31,99 @@ is_run 'my $a = (\'o\', \'k\', \'k\'); $*OUT.print: $a', { out => "o k k" },
     '$*OUT.print: containerized Array';
 
 # RT #132549
-is_run ｢
-    note   (' note-1 ', ' note-2 ').all;
-    put    (' put-1 ', ' put-2 ').any;
-    print  (' print-1 ', ' print-2 ').none;
-    printf (' printf-1 ', ' printf-2 printf-3 ').one;
+subtest 'printing routines with Junctions' => {
+    plan 2;
+    subtest 'gist-using routines do not thread Junctions' => {
+        # https://irclog.perlgeek.de/perl6-dev/2018-02-27#i_15864766
+        plan 3;
+        my (@out-lines, @err-lines);
+        is_run ｢
+            my $ns := class { has atomicint $.n; method gist { 'note-sub-'   ~ $!n⚛++ } }.new;
+            my $nm := class { has atomicint $.n; method gist { 'note-meth-'  ~ $!n⚛++ } }.new;
+            my $ss := class { has atomicint $.n; method gist { 'say-sub-'    ~ $!n⚛++ } }.new;
+            my $sm := class { has atomicint $.n; method gist { 'say-meth-'   ~ $!n⚛++ } }.new;
+            my $sh := class { has atomicint $.n; method gist { 'say-handle-' ~ $!n⚛++ } }.new;
+            note ($ns, ($ns,).any).all;
+            ($nm, ($nm,).any).all.note;
+            say ($ss, ($ss,).any).all;
+            ($sm, ($sm,).any).all.say;
+            $*OUT.say: ($sh, ($sh,).any).all
+        ｣, {:out{@out-lines = .lines; True}, :err{@err-lines = .lines; True}, :0status},
+        'no crashes or exit code anomalies';
 
-    $*OUT.put:    (' me-put-1 ', ' me-put-2 ').any;
-    $*OUT.print:  (' me-print-1 ', ' me-print-2 ').none;
-    $*OUT.printf: (' me-printf-1 ', ' me-printf-2 ', ' me-printf-3 ').one;
-｣, {
-    :out{ .words.sort eq 'me-print-1 me-print-2 me-printf-1 me-printf-2'
-      ~ ' me-printf-3 me-put-1 me-put-2 print-1 print-2 printf-1 printf-2'
-      ~ ' printf-3 put-1 put-2'
-    },
-    :err{ .words.sort eq 'note-1 note-2' },
-    :0status,
-}, 'no hangs or crashes with Junctions in output routines';
+        subtest 'stdout' => {
+            plan 1+@out-lines;
+            is-deeply +@out-lines, 3, 'number of lines of output';
+            cmp-ok @out-lines[0], '~~', *.contains(all <all( say-sub-0    say-sub-1>   ), 'line 1';
+            cmp-ok @out-lines[1], '~~', *.contains(all <all( say-meth-0   say-meth-1>  ), 'line 2';
+            cmp-ok @out-lines[2], '~~', *.contains(all <all( say-handle-0 say-handle-1>), 'line 3';
+        }
+        subtest 'stderr' => {
+            plan 1+@err-lines;
+            is-deeply +@err-lines, 2, 'number of lines of output';
+            cmp-ok @err-lines[0], '~~', *.contains(all <all( note-sub-0   note-sub-1> ), 'line 1';
+            cmp-ok @err-lines[1], '~~', *.contains(all <all( note-meth-0  note-meth-1>), 'line 2';
+        }
+    }
 
-# RT #132549
-is_run ｢
-    note   (' note-1 ', (' note-2 ').any).all;
-    put    (' put-1 ', (' put-2 ').any).any;
-    print  (' print-1 ', (' print-2 ').any).none;
-    printf (' printf-1 ', (' printf-2 ', ' printf-3 ').any).one;
+    subtest 'Str-using routines do not thread Junctions' => {
+        # https://irclog.perlgeek.de/perl6-dev/2018-02-27#i_15864766
+        plan 3;
+        my (@out-lines, @err-lines);
+        is_run ｢
+            my $prs := class { has atomicint $.n; method Str { " print-sub-{$!n⚛++}\n" } }.new;
+            my $prm := class { has atomicint $.n; method Str { " print-meth-{$!n⚛++}\n" } }.new;
+            my $prh := class { has atomicint $.n; method Str { " print-handle-{$!n⚛++}\n" } }.new;
 
-    $*OUT.put:    (' me-put-1 ', (' me-put-2 ').any).any;
-    $*OUT.print:  (' me-print-1 ', (' me-print-2 ').any).none;
-    $*OUT.printf: (' me-printf-1 ', (' me-printf-2 ', ' me-printf-3 ').any).one;
-｣, {
-    :out{ .words.sort eq 'me-print-1 me-print-2 me-printf-1 me-printf-2'
-      ~ ' me-printf-3 me-put-1 me-put-2 print-1 print-2 printf-1 printf-2'
-      ~ ' printf-3 put-1 put-2'
-    },
-    :err{ .words.sort eq 'note-1 note-2' },
-    :0status,
-}, 'no hangs or crashes with Junctions in output routines (nested Junctions)';
+            my $pfs := class :: is Cool {
+              has atomicint $.n; method Str { " printf-sub-{$!n⚛++}\n" } }.new;
+            my $pfm := class :: is Cool {
+              has atomicint $.n; method Str { " printf-meth-{$!n⚛++}\n" } }.new;
+            my $pfh := class :: is Cool {
+              has atomicint $.n; method Str { " printf-handle-{$!n⚛++}\n" } }.new;
+
+            my $sfs := class :: is Cool {
+              has atomicint $.n; method Str { " sprintf-sub-{$!n⚛++}\n" } }.new;
+            my $sfm := class :: is Cool {
+              has atomicint $.n; method Str { " sprintf-meth-{$!n⚛++}\n" } }.new;
+
+            print ($prs, ($prs,).any).all;
+            ($prm, ($prm,).any).all.print;
+            $*OUT.print: ($prh, ($prh,).any).all;
+
+            printf ($pfs, ($pfs,).any).all;
+            ($pfm, ($pfm,).any).all.printf;
+            $*OUT.printf: ($pfh, ($pfh,).any).all;
+
+            print sprintf ($sfs, ($sfs,).any).all;
+            print ($sfm, ($sfm,).any).all.sprintf;
+        ｣, {:out{@out-lines = .lines; True}, :err{@err-lines = .lines; True}, :0status},
+        'no crashes or exit code anomalies';
+
+        subtest 'stdout' => {
+            plan 1+@out-lines;
+            is-deeply +@out-lines, 16, 'number of lines of output';
+            cmp-ok @out-lines[0 ], '~~', *.contains(any <print-sub-0     print-sub-1>      ), 'l1';
+            cmp-ok @out-lines[1 ], '~~', *.contains(any <print-sub-0     print-sub-1>      ), 'l2';
+            cmp-ok @out-lines[2 ], '~~', *.contains(any <print-meth-0    print-meth-1>     ), 'l3';
+            cmp-ok @out-lines[3 ], '~~', *.contains(any <print-meth-0    print-meth-1>     ), 'l4';
+            cmp-ok @out-lines[4 ], '~~', *.contains(any <print-handle-0  print-handle-1>   ), 'l5';
+            cmp-ok @out-lines[5 ], '~~', *.contains(any <print-handle-0  print-handle-1>   ), 'l6';
+
+            cmp-ok @out-lines[6 ], '~~', *.contains(any <printf-sub-0     printf-sub-1>    ), 'l7';
+            cmp-ok @out-lines[7 ], '~~', *.contains(any <printf-sub-0     printf-sub-1>    ), 'l8';
+            cmp-ok @out-lines[8 ], '~~', *.contains(any <printf-meth-0    printf-meth-1>   ), 'l9';
+            cmp-ok @out-lines[9 ], '~~', *.contains(any <printf-meth-0    printf-meth-1>   ), 'l10';
+            cmp-ok @out-lines[10], '~~', *.contains(any <printf-handle-0  printf-handle-1> ), 'l11';
+            cmp-ok @out-lines[11], '~~', *.contains(any <printf-handle-0  printf-handle-1> ), 'l12';
+
+            cmp-ok @out-lines[12], '~~', *.contains(any <sprintf-sub-0    sprintf-sub-1>   ), 'l13';
+            cmp-ok @out-lines[13], '~~', *.contains(any <sprintf-sub-0    sprintf-sub-1>   ), 'l14';
+            cmp-ok @out-lines[14], '~~', *.contains(any <sprintf-meth-0   sprintf-meth-1>  ), 'l15';
+            cmp-ok @out-lines[15], '~~', *.contains(any <sprintf-meth-0   sprintf-meth-1>  ), 'l16';
+        }
+        is-deeply +@err-lines, 0, 'nothing on stderr' or diag join "\n", @err-lines;
+    }
+}
 
 # vim: ft=perl6
