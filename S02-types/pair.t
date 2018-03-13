@@ -464,14 +464,13 @@ subtest 'Pair.perl with type objects' => {
       Pair.new(Rat, Num), Pair.new(Bool, Bool), Pair.new(Numeric, Numeric)
 }
 
-subtest 'Clone of Pair does not share .WHICH' => {
-    plan 2;
-    my $v = 100;
-    (my $p := foo => $v).WHICH;
-    my $clone := $p.clone;
-    cmp-ok $clone.WHICH, &[!===], $p.WHICH, 'clone, same value';
-    $v = 200;
-    cmp-ok $clone.WHICH, &[!===], $p.WHICH, 'clone, different value';
+# RT 131887
+{
+    my $value = 17;
+    my $pair = number => $value;
+    my $obj-at1 = $pair.WHICH;
+    $pair.freeze;
+    is-deeply $obj-at1, $pair.WHICH, "Pair.freeze doesn't change object identity";
 }
 
 # vim: ft=perl6
