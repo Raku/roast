@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 108;
+plan 4 * 19 + 109;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -471,6 +471,17 @@ subtest 'Pair.perl with type objects' => {
     my $obj-at1 = $pair.WHICH;
     $pair.freeze;
     is-deeply $obj-at1, $pair.WHICH, "Pair.freeze doesn't change object identity";
+}
+
+# https://github.com/rakudo/rakudo/commit/5031dab3ac
+subtest 'Clone of Pair does not share .WHICH' => {
+    plan 2;
+    my $v = 100;
+    (my $p := foo => $v).WHICH;
+    my $clone := $p.clone;
+    cmp-ok $clone.WHICH, &[!===], $p.WHICH, 'clone, same value';
+    $v = 200;
+    cmp-ok $clone.WHICH, &[!===], $p.WHICH, 'clone, different value';
 }
 
 # vim: ft=perl6
