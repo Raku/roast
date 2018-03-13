@@ -1,8 +1,9 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
-plan 146;
+plan 147;
 
 =begin pod
 
@@ -524,6 +525,19 @@ subtest "Junction.new does not use Mu.new's candidates" => {
     throws-like { Junction.new: 42      }, X::Multi::NoMatch, 'positional';
     throws-like { Junction.new: :42meow }, X::Multi::NoMatch, 'named';
     throws-like { Junction.new          }, X::Multi::NoMatch, 'no args';
+}
+
+subtest 'Junction .Str, .gist, and .perl' => {
+    plan 3+4*2;
+    isa-ok <a b c>.any.Str.WHAT,  Junction, 'Junction.Str juncts';
+    isa-ok <a b c>.any.gist.WHAT, Str,      'Junction.gist does not junct';
+    isa-ok <a b c>.any.perl.WHAT, Str,      'Junction.perl does not junct';
+
+    for <none one any all> -> $t {
+        is-deeply <foo bar ber>."$t"().gist.comb(/\w+/).sort, ($t, |<foo bar ber>).sort, "Junction.gist on $t junction looks about right";
+        my $j := <foo bar ber>."$t"();
+        is-deeply-junction $j.perl.EVAL, $j, "Junction.perl on $t junction roundtrips";
+    }
 }
 
 # vim: ft=perl6
