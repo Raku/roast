@@ -215,7 +215,6 @@ LEAVE unlink PATH;
 }
 
 # test :append mode
-#?rakudo.jvm skip '[io grant] IllegalArgumentException: READ + APPEND not allowed'
 {   unlink PATH;
     my $mode = ':append';
     my $fh;
@@ -234,7 +233,6 @@ LEAVE unlink PATH;
 }
 
 # test :append, :create mode
-#?rakudo.jvm skip '[io grant] IllegalArgumentException: READ + APPEND not allowed'
 {   unlink PATH;
     my $mode = ':append, :create';
     my $fh;
@@ -255,7 +253,6 @@ LEAVE unlink PATH;
 }
 
 # test :ra mode
-#?rakudo.jvm skip '[io grant] IllegalArgumentException: READ + APPEND not allowed'
 {   unlink PATH;
     my $fh;
 

@@ -141,7 +141,6 @@ unlink "empty_file";
     }
 }
 
-#?rakudo.jvm skip '[io grant] NoSuchFileException for open(:create)'
 #?DOES 4
 {
     my $f = make-temp-file;
