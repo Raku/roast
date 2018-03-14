@@ -31,7 +31,10 @@ is_run 'my $a = (\'o\', \'k\', \'k\'); $*OUT.print: $a', { out => "o k k" },
     '$*OUT.print: containerized Array';
 
 # RT #132549
-subtest 'printing routines with Junctions' => {
+#?rakudo.jvm skip 'atomicint NYI'
+#?DOES 1
+{
+  subtest 'printing routines with Junctions' => {
     plan 2;
     subtest 'gist-using routines do not thread Junctions' => {
         # https://irclog.perlgeek.de/perl6-dev/2018-02-27#i_15864766
@@ -124,6 +127,7 @@ subtest 'printing routines with Junctions' => {
         }
         is-deeply +@err-lines, 0, 'nothing on stderr' or diag join "\n", @err-lines;
     }
+  }
 }
 
 # vim: ft=perl6
