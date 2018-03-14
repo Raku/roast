@@ -141,12 +141,11 @@ unlink "empty_file";
     }
 }
 
-#?DOES 4
 {
     my $f = make-temp-file;
     fails-like { $f.z }, X::IO::DoesNotExist, '.z fails for non-existent files';
 
-    $f.open(:create).close; # `touch` the file
+    $f.open(:mode<wo>, :create).close; # `touch` the file
     is-deeply $f.z, True, '.z returns True for empty files';
 
     $f.spurt: 'test data';
