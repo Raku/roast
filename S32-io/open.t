@@ -13,13 +13,13 @@ LEAVE unlink PATH;
 # cannot open nonexistent files without :create
 {   unlink PATH;
 
-    throws-like 'open PATH, :mode<ro>', Exception,
+    throws-like { open PATH, :mode<ro> }, Exception,
         'cannot open nonexistent file in mode ro', message => PATH-RX;
 
-    throws-like 'open PATH, :mode<wo>', Exception,
+    throws-like { open PATH, :mode<wo> }, Exception,
         'cannot open nonexistent file in mode wo', message => PATH-RX;
 
-    throws-like 'open PATH, :mode<rw>', Exception,
+    throws-like { open PATH, :mode<rw> }, Exception,
         'cannot open nonexistent file in mode rw', message => PATH-RX;
 }
 
