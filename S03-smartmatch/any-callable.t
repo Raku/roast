@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 7;
 
 #L<S03/"Smart matching"/Any Callable:($) item sub truth>
 {
@@ -19,6 +19,12 @@ plan 6;
 
     ok((Mu ~~ &uhuh), "scalar sub truth");
     ok(!(Mu ~~ &nuhuh), "negated scalar sub false");
+}
+
+# https://github.com/rakudo/rakudo/issues/1566
+subtest 'no glitches with Routines not doing Callable role' => {
+    plan +my @routines := &min, &max, &minmax;
+    does-ok $_, Callable, .name for @routines;
 }
 
 # vim: ft=perl6
