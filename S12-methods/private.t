@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 # L<S12/Private methods/"Private methods are declared using">
 
@@ -101,5 +101,23 @@ throws-like q[class Foo {method bar () {try {self!wrong()}}};
               my $f = Foo.new;
               $f.bar;
             ], X::Method::NotFound, method => 'wrong', private => &so;
+
+{
+    my role R {
+        method !p() { ::?CLASS }
+        method m() {
+            my $x; for "a".."z" -> $var {
+                $x = self!p
+            }
+            $x
+        }
+    }
+    my class C1 does R { }
+    my class C2 does R { }
+    C1.m for ^5;
+    C2.m for ^5;
+    C1.m for ^10000;
+    is C2.m.gist, "(C2)", "No wrong private method caching in roles"
+}
 
 # vim: syn=perl6
