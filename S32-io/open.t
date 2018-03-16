@@ -3,292 +3,189 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 58;
+plan 19;
 
-my \PATH = 't-S32-io-open.tmp';
-my \PATH-RX = rx/'t-S32-io-open.tmp'/;
+###################################################################################################
+#
+#  Note: by 6.d design, only the combinations below are supported for specifying open mode.
+#        Any other combinations are left unspecced, on purpose, and behave in
+#        implementation/backend specified manner.
+#
+#  :r      same as specifying   :mode<ro>
+#
+#  :w      same as specifying   :mode<wo>, :create, :truncate
+#  :a      same as specifying   :mode<wo>, :create, :append
+#  :x      same as specifying   :mode<wo>, :create, :exclusive
+#
+#  :update same as specifying   :mode<rw>
+#  :rw     same as specifying   :mode<rw>, :create
+#  :ra     same as specifying   :mode<rw>, :create, :append
+#  :rx     same as specifying   :mode<rw>, :create, :exclusive
+#
+###################################################################################################
 
-LEAVE unlink PATH;
-
-# cannot open nonexistent files without :create
-{   unlink PATH;
-
-    throws-like { open PATH, :mode<ro> }, Exception,
-        'cannot open nonexistent file in mode ro', message => PATH-RX;
-
-    throws-like { open PATH, :mode<wo> }, Exception,
-        'cannot open nonexistent file in mode wo', message => PATH-RX;
-
-    throws-like { open PATH, :mode<rw> }, Exception,
-        'cannot open nonexistent file in mode rw', message => PATH-RX;
+sub with-all-open-forms-test (Pair $ (:key($desc), :value(&tests))) {
+    subtest $desc => {
+        plan +my @routines :=
+          &open                      => make-temp-path.absolute,
+          &open                      => make-temp-path(),
+          &open                      => IO::Handle.new(:path(make-temp-path)),
+          IO::Path.^lookup('open')   => make-temp-path(),
+          IO::Handle.^lookup('open') => IO::Handle.new(:path(make-temp-path));
+        for @routines -> (:key(&*OPEN), :value($*PATH)) {
+            subtest "&*OPEN.^name() form with $*PATH.^name()" => &tests;
+        }
+    }
 }
 
-# can create, write to and read from file
-{   unlink PATH;
-    my $fh;
-
-    $fh = open PATH, :mode<wo>, :create;
-    ok defined($fh), 'can create file in mode wo';
-
-    ok ?$fh.print('42'), 'can write to file in mode wo';
-
-    $fh.close;
-
-    $fh = open PATH, :mode<ro>;
-    ok defined($fh), 'can open existing file in mode ro';
-
-    is $fh.get, '42', 'can read from file in mode ro';
-
-    $fh.close;
-
-    $fh = open PATH, :mode<wo>;
-    ok defined($fh), 'can open existing file in mode wo';
-    throws-like '$fh.get', Exception, 'cannot read from file in mode wo';
-
-    throws-like { open PATH, :mode<meows> }, Exception, :message(/meows/),
-        'using an invalid mode throws';
-
-    $fh.close;
+sub spurt-slurp ($c, :$unlink, :$seek, |args) {
+    $*PATH.IO.unlink if $unlink;
+    my $fh := &*OPEN($*PATH, |args);
+    $fh.seek: 0, SeekFromEnd if $seek;
+    $fh.spurt: $c;
+    $*PATH.IO.slurp
 }
 
-# test :rw
-{   unlink PATH;
+with-all-open-forms-test '.open with ()/(:r)/(:mode<ro>)' => {
+    plan 6;
+    fails-like { &*OPEN($*PATH)            }, Exception, :message{.contains: ~$*PATH.IO},
+        'missing file (no args)';
+    fails-like { &*OPEN($*PATH, :r)        }, Exception, :message{.contains: ~$*PATH.IO},
+        'missing file (:r)';
+    fails-like { &*OPEN($*PATH, :mode<ro>) }, Exception, :message{.contains: ~$*PATH.IO},
+        'missing file (:mode<ro>)';
 
-    my $fh = open PATH, :rw;
-    ok defined($fh), 'can use :rw to create file';
-
-    $fh.print('cthulhu fhtagn');
-    $fh.seek(0, SeekFromBeginning);
-
-    is $fh.get, 'cthulhu fhtagn', 'can write to and read from :rw file';
-
-    $fh.close;
+    $*PATH.IO.spurt: my $c := 'some ♥ content';
+    is &*OPEN($*PATH           ).slurp, $c, 'can read (no args)';
+    is &*OPEN($*PATH, :r       ).slurp, $c, 'can read (:r)';
+    is &*OPEN($*PATH, :mode<ro>).slurp, $c, 'can read (:mode<ro>)';
 }
 
-# test :update
-{   unlink PATH;
-    my $fh;
-
-    throws-like 'open PATH, :update', Exception,
-        'cannot use :update on nonexistent file', message => PATH-RX;
-
-    $fh = open PATH, :w;
-    $fh.print('12x45');
-    $fh.close;
-
-    $fh = open PATH, :update;
-    ok defined($fh), 'can use :update on existing file';
-
-    $fh.seek(2, SeekFromBeginning);
-    is $fh.getc, 'x', 'can use :update to read from file';
-
-    $fh.seek(2, SeekFromBeginning);
-    ok ?$fh.write('3'.encode), 'can use :update to write to file';
-
-    $fh.seek(0, SeekFromBeginning);
-    is $fh.get, '12345', 'have used :update successfully';
-
-    $fh.close;
+with-all-open-forms-test '.open with :w / :mode<wo>, :create, :truncate' => {
+    plan 4;
+    my $c := 'some ♥ content';
+    is spurt-slurp(:unlink, $c, :w                           ), $c, 'creates   on write (:w)';
+    is spurt-slurp(:unlink, $c, :mode<wo>, :create, :truncate), $c, 'creates   on write (:mode)';
+    is spurt-slurp(         $c, :w                           ), $c, 'truncates on write (:w)';
+    is spurt-slurp(         $c, :mode<wo>, :create, :truncate), $c, 'truncates on write (:mode)';
 }
 
-# check that :rw does not truncate
-{   unlink PATH;
-    my $fh;
+with-all-open-forms-test '.open with :a / :mode<wo>, :create, :append' => {
+    plan 4;
+    my $c := 'some ♥ content';
+    is spurt-slurp(:unlink, $c, :a                         ), $c, 'creates on write (:a)';
+    is spurt-slurp(:unlink, $c, :mode<wo>, :create, :append), $c, 'creates on write (:mode)';
 
-    $fh = open PATH, :w;
-    $fh.print('camelia');
-    $fh.close;
-
-    $fh = open PATH, :rw;
-    is $fh.get, 'camelia', 'using :rw does not truncate';
-
-    $fh.close;
+    $*PATH.IO.unlink;
+    $*PATH.IO.spurt: my $s = 'starting ♥ content';
+    is spurt-slurp($c, :a                         ), "$s$c",   'appends on write (:a)';
+    is spurt-slurp($c, :mode<wo>, :create, :append), "$s$c$c", 'appends on write (:mode)';
 }
 
-# check that :w does truncate
-{   unlink PATH;
-    my $fh;
+with-all-open-forms-test '.open with :x / :mode<wo>, :create, :exclusive' => {
+    plan 4;
+    my $c := 'some ♥ content';
+    is spurt-slurp(:unlink, $c, :x                            ), $c, 'creates on write (:x)';
+    is spurt-slurp(:unlink, $c, :mode<wo>, :create, :exclusive), $c, 'creates on write (:mode)';
 
-    $fh = open PATH, :w;
-    $fh.print('camelia');
-    $fh.close;
-
-    $fh = open PATH, :w;
-    $fh.close;
-
-    $fh = open PATH, :r;
-    ok !defined($fh.getc), 'using :w does truncate';
-
-    $fh.close;
+    fails-like { &*OPEN($*PATH, :x) },
+        Exception, :message{.contains: ~$*PATH.IO}, 'fails if file exists (:x)';
+    fails-like { &*OPEN($*PATH, :mode<wo>, :create, :exclusive) },
+        Exception, :message{.contains: ~$*PATH.IO}, 'fails if file exists (:mode)';
 }
 
-# test :x
-{   unlink PATH;
+with-all-open-forms-test '.open with :update / :mode<rw>' => {
+    plan 8;
 
-    my $fh = open PATH, :x;
-    ok defined($fh), 'can use :x to create file';
+    fails-like { &*OPEN($*PATH, :update)   }, Exception, :message{.contains: ~$*PATH.IO},
+        'missing file (:update)';
+    fails-like { &*OPEN($*PATH, :mode<rw>) }, Exception, :message{.contains: ~$*PATH.IO},
+        'missing file (:mode)';
 
-    $fh.close;
+    $*PATH.IO.spurt: my $s := 'starting ♥ content';
+    is &*OPEN($*PATH, :update  ).slurp, $s, 'can read (:update)';
+    is &*OPEN($*PATH, :mode<rw>).slurp, $s, 'can read (:mode)';
 
-    throws-like 'open PATH, :x', Exception,
-        'cannot use :x to open existing file', message => PATH-RX;
+    my $c := 'some ♥ content';
+    (my $overwrite = $s).substr-rw(0, $c.chars) = $c;
+    is spurt-slurp($c, :update  ), $overwrite, 'updates on write (:x)';
+    $*PATH.IO.spurt: $s;
+    is spurt-slurp($c, :mode<rw>), $overwrite, 'updates on write (:mode)';
+    is spurt-slurp(:seek, $c, :update  ), "$overwrite$c",   'seek + update (:x)';
+    is spurt-slurp(:seek, $c, :mode<rw>), "$overwrite$c$c", 'seek + update (:mode)';
 }
 
-# test :rx
-{   unlink PATH;
+with-all-open-forms-test '.open with :rw / :mode<rw>, :create' => {
+    plan 8;
 
-    my $fh = open PATH, :rx;
-    ok defined($fh), 'can use :rx to create file';
+    my $c := 'some ♥ content';
+    is spurt-slurp(:unlink, $c, :rw               ), $c, 'creates on write (:rw)';
+    is spurt-slurp(:unlink, $c, :mode<rw>, :create), $c, 'creates on write (:mode)';
 
-    $fh.print('I <3 P6');
-    $fh.seek(0, SeekFromBeginning);
+    $*PATH.IO.spurt: my $s := 'starting ♥ content';
+    is &*OPEN($*PATH, :rw               ).slurp, $s, 'can read (:rw)';
+    is &*OPEN($*PATH, :mode<rw>, :create).slurp, $s, 'can read (:mode)';
 
-    is $fh.get, 'I <3 P6', 'can write to and read from :rx file';
-
-    $fh.close;
-
-    throws-like 'open PATH, :rx', Exception,
-        'cannot use :rx to open existing file', message => PATH-RX;
+    (my $overwrite = $s).substr-rw(0, $c.chars) = $c;
+    is spurt-slurp($c, :rw      ), $overwrite, 'updates on write (:rw)';
+    $*PATH.IO.spurt: $s;
+    is spurt-slurp($c, :mode<rw>), $overwrite, 'updates on write (:mode)';
+    is spurt-slurp(:seek, $c, :rw      ), "$overwrite$c",   'seek + update (:rw)';
+    is spurt-slurp(:seek, $c, :mode<rw>), "$overwrite$c$c", 'seek + update (:mode)';
 }
 
-# test default mode
-{   unlink PATH;
-    my $fh;
+with-all-open-forms-test '.open with :ra / :mode<rw>, :create, :append' => {
+    plan 6;
 
-    fails-like { open PATH }, Exception,
-        'opening nonexistent file in default mode fails';
+    my $c := 'some ♥ content';
+    is spurt-slurp(:unlink, $c, :ra                        ), $c, 'creates on write (:ra)';
+    is spurt-slurp(:unlink, $c, :mode<rw>, :create, :append), $c, 'creates on write (:mode)';
 
-    $fh = open PATH, :w;
-    $fh.print('onions are tasty');
-    $fh.close;
+    $*PATH.IO.spurt: my $s := 'starting ♥ content';
+    is &*OPEN($*PATH, :ra               ).slurp, $s, 'can read (:ra)';
+    is &*OPEN($*PATH, :mode<rw>, :create, :append).slurp, $s, 'can read (:mode)';
 
-    $fh = open PATH;
-    ok defined($fh), 'can open existing file in default mode';
-
-    ok $fh.get eq 'onions are tasty', 'can read from file in default mode';
-
-    throws-like '$fh.print("42")', Exception,
-        'cannot write to file in default mode';
-
-    $fh.close;
+    is spurt-slurp($c, :ra                        ), "$s$c",   'appends on write (:ra)';
+    is spurt-slurp($c, :mode<rw>, :create, :append), "$s$c$c", 'appends on write (:mode)';
 }
 
-# test :r  mode
-{   unlink PATH;
-    my $fh;
+with-all-open-forms-test '.open with :rx / :mode<rw>, :create, :exclusive' => {
+    plan 6;
 
-    fails-like { open PATH, :r }, Exception,
-        'opening non-existent file in :r mode fails';
+    my $c := 'some ♥ content';
+    is spurt-slurp(:unlink, $c, :rx                           ), $c, 'creates on write (:ra)';
+    is spurt-slurp(:unlink, $c, :mode<rw>, :create, :exclusive), $c, 'creates on write (:mode)';
 
-    # fill file with data
-    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
+    fails-like { &*OPEN($*PATH, :rx) },
+        Exception, :message{.contains: ~$*PATH.IO}, 'fails if file exists (:rx)';
+    fails-like { &*OPEN($*PATH, :mode<rw>, :create, :exclusive) },
+        Exception, :message{.contains: ~$*PATH.IO}, 'fails if file exists (:mode)';
 
-    $fh = open PATH, :r;
-    ok defined($fh), 'can open existing file in :r mode';
-    is $fh.lines.join, 'onions are tasty', 'can read from file in :r mode';
-    throws-like '$fh.print("42")', Exception, 'cannot write to file in :r mode';
-
-    $fh.close;
-}
-
-# test :a  mode
-{   unlink PATH;
-    my $fh;
-
-    $fh = open PATH, :a;
-    ok defined($fh), 'can open non-existent file in :a mode';
-    $fh.print('onions are tasty');
-    $fh.close;
-
-    $fh = open PATH, :a;
-    ok defined($fh), 'can open existing file in :a mode';
-    $fh.print('cats say meow');
-
-    throws-like { $fh.slurp }, Exception, 'trying to read in :a mode throws';
-    $fh.close;
-
-    $fh = open PATH, :r;
-    is $fh.lines.join, 'onions are tastycats say meow',
-        ':a mode appends to existing data';
-
-    $fh.close;
-}
-
-# test :append mode
-{   unlink PATH;
-    my $mode = ':append';
-    my $fh;
-
-    fails-like { open PATH, :append }, Exception,
-        "opening non-existent file in $mode mode fails";
-
-    # create and fill file with data
-    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
-
-    $fh = open PATH, :append;
-    is $fh.lines.join, 'onions are tasty', "$mode can read from existing files";
-    throws-like { $fh.say: 'foo' }, Exception,
-        "trying to write in $mode mode throws";
-    $fh.close;
-}
-
-# test :append, :create mode
-{   unlink PATH;
-    my $mode = ':append, :create';
-    my $fh;
-
-    $fh = open PATH, :append, :create;
-    ok defined($fh), "can open non-existent file in $mode mode";
-    ok PATH.IO.e, "$mode mode creates non-existent files";
-    $fh.close;
-
-    # create and fill file with data
-    $fh = open PATH, :w; $fh.print('onions are tasty'); $fh.close;
-
-    $fh = open PATH, :append, :create;
-    is $fh.lines.join, 'onions are tasty', "$mode can read from existing files";
-    throws-like { $fh.say: 'foo' }, Exception,
-        "trying to write in $mode mode throws";
-    $fh.close;
-}
-
-# test :ra mode
-{   unlink PATH;
-    my $fh;
-
-    $fh = open PATH, :ra;
-    ok defined($fh), 'can open non-existent file in :ra mode';
-    $fh.print('onions are tasty');
-    $fh.close;
-
-    $fh = open PATH, :ra;
-    ok defined($fh), 'can open existing file in :ra mode';
-    $fh.print('cats say meow');
-
-    $fh.seek(0, SeekFromBeginning);
-    is $fh.lines.join, 'onions are tastycats say meow',
-        'can read in :append mode and it appends to existing data';
-
-    $fh.close;
-}
-
-# test :exclusive mode
-{   unlink PATH;
-    fails-like { open PATH, :exclusive }, Exception,
-        "opening non-existent file in :exclusive mode fails";
+    {
+        $*PATH.IO.unlink;
+        (my $fh = &*OPEN($*PATH, :rx)).spurt: $c;
+        $fh.seek: 0, SeekFromBeginning;
+        is $fh.slurp, $c, 'can read after writing (:rx)';
+    }
+    {
+        $*PATH.IO.unlink;
+        (my $fh = &*OPEN($*PATH, :mode<rw>, :create, :exclusive)).spurt: $c;
+        $fh.seek: 0, SeekFromBeginning;
+        is $fh.slurp, $c, 'can read after writing (:rx)';
+    }
 }
 
 # test attribute setting
-{   unlink PATH;
-
-    with open PATH, :w, :!chomp, :nl-in[<a b>], :nl-out<meow> {
+{
+    my $path := make-temp-path;
+    given open $path, :w, :!chomp, :nl-in[<a b>], :nl-out<meow> {
         LEAVE .close;
         is-deeply .chomp,    False,   'can set $!chomp to False with open';
         is-deeply .nl-in,    [<a b>], 'can set $!nl-in to Array with open';
         is-deeply .nl-out,   'meow',  'can set $!nl-out with open';
     }
 
-    with IO::Handle.new(:path(PATH.IO), :!chomp)
+    given IO::Handle.new(:path($path.IO), :!chomp)
         .open: :w, :enc<iso-8859-1>, :chomp, :nl-in('a')
     {
         LEAVE .close;
