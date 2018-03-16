@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 26;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
 
@@ -155,5 +155,17 @@ class BarNextWithInt is Foo {
     }
     is @output, [|('>0', '<10', 'generic') xx 500], '...including in a repeated loop';
 }
+
+# https://github.com/rakudo/rakudo/issues/1573
+lives-ok
+    {
+        my class C {
+            multi method m(Int $x) { samewith $x.Str }
+            multi method m(Str) { }
+            multi method call() { self.m(42) }
+        }
+        C.call for ^10000
+    },
+    'No optimization-induced crash of samewith';
 
 # vim: ft=perl6
