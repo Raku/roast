@@ -398,11 +398,7 @@ subtest 'next-handle method' => {
     is-deeply $i, 9, '.next-handle causes .on-switch callable to be called';
 }
 
-## please note: I had to add an block around subtest in order to fudge for jvm
-#?rakudo.jvm skip "Method 'sink' not found for invocant of class 'BOOTIO'"
-#?DOES 1
-{
- subtest 'on-switch method' => {
+subtest 'on-switch method' => {
     plan 11;
 
     {
@@ -506,7 +502,6 @@ subtest 'next-handle method' => {
         is-deeply $args, (Nil, Nil),
             '.on-switch an iteration after handle exhaustion has Nil args'
     }
- }
 }
 
 subtest 'open method' => {
