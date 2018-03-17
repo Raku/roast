@@ -7,7 +7,7 @@ use Test::Util;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 63;
+plan 66;
 
 {
     my $test-str;
@@ -219,4 +219,13 @@ if $*DISTRO.is-win {
     ok ('L' ~ Buf.new(255).decode(<utf8-c8>)) ~~ /L/, "Regex still matches when utf8-c8 graphemes are adjacent";
     ok (Buf.new(255).decode(<utf8-c8>) ~ 'L' ~ Buf.new(255).decode(<utf8-c8>)) ~~ /L/, "Regex still matches when utf8-c8 graphemes are adjacent";
     ok (Buf.new(255).decode(<utf8-c8>) ~ 'L' ) ~~ /L/, "Regex still matches when utf8-c8 graphemes are adjacent";
+}
+# RT #128511
+{
+    is-deeply Blob[uint8].new(233).decode("utf8-c8").encode("utf8-c8"), Blob[uint8].new(233), 'utf8-c8 does not generate spurious NUL 1';
+    is-deeply Blob[uint8].new(233, 128).decode("utf8-c8").encode("utf8-c8"), Blob[uint8].new(233, 128), 'utf8-c8 does not generate spurious NUL 2';
+}
+# RT #128512
+{
+    is-deeply Blob[uint8].new(101, 204, 129).decode("utf8-c8").encode("utf8-c8"), Blob[uint8].new(101, 204, 129), 'Non normalized NFC is not mangled by utf-c8';
 }
