@@ -1,7 +1,9 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
-plan 157;
+plan 158;
 
 is 0xffffffff, '4294967295', '0xffffffff is turned into a big number on 32bit rakudos';
 
@@ -319,6 +321,37 @@ subtest 'sane errors on failures to parse rad numbers' => {
         'with fractional part, error in both parts, middle';
     throws-like ｢:3<11a.1a1>｣, X::Str::Numeric, :2pos,
         'with fractional part, error in both parts, end';
+}
+
+# https://github.com/rakudo/rakudo/issues/1624
+subtest 'no hangs in bad digits in rad numbers / in .substr' => {
+    # NOTE: we're using is_run instead of throws like like the tests above
+    # because apparently there are differences between EVAL and proper
+    # source file and the hangs in the bugs happened only in proper files
+
+    plan 10;
+    is_run ｢:3<a11.111>｣, {:out(''), :err(/base.+3»/), :status{.so} },
+        'bad digit in whole part (1)';
+    is_run ｢:3<1a1.111>｣, {:out(''), :err(/base.+3»/), :status{.so} },
+        'bad digit in whole part (2)';
+    is_run ｢:3<11a.111>｣, {:out(''), :err(/base.+3»/), :status{.so} },
+        'bad digit in whole part (3)';
+
+    is_run ｢:3<111.a11>｣, {:out(''), :err(/base.+3»/), :status{.so} },
+        'bad digit in fractional part (1)';
+    is_run ｢:3<111.1a1>｣, {:out(''), :err(/base.+3»/), :status{.so} },
+        'bad digit in fractional part (2)';
+    is_run ｢:3<111.11a>｣, {:out(''), :err(/base.+3»/), :status{.so} },
+        'bad digit in fractional part (3)';
+
+    is_run ｢:3<a11.a11>｣, {:out(''), :err(/base.+3»/), :status{.so} },
+        'bad digit in both parts (1)';
+    is_run ｢:3<1a1.1a1>｣, {:out(''), :err(/base.+3»/), :status{.so} },
+        'bad digit in both part (2)';
+    is_run ｢:3<11a.11a>｣, {:out(''), :err(/base.+3»/), :status{.so} },
+        'bad digit in both part (3)';
+
+    is 'abcd'.substr(2e0), 'cd', '.substr with Num arg does not hang';
 }
 
 # vim: ft=perl6
