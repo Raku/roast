@@ -3,7 +3,7 @@ constant $path = $?FILE.IO.parent(2).child('packages/curi-install').absolute;
 use lib "inst#$path";
 
 use Test;
-plan 18;
+plan 19;
 
 rm_rf $path.IO if $path.IO.e;
 $path.IO.mkdir;
@@ -16,10 +16,12 @@ $path.IO.mkdir;
     is $*REPO.short-id, 'inst', 'short-id exposes type of repository';
     is $*REPO.loaded.elems, 0, 'no compilation units were loaded so far';
 }
-my $dist = Distribution.new(:name<Foo>);
+my $dist              = Distribution.new(:name<Foo>, :api<1>, :ver(v1.2.3));
+my $non-matching-dist = Distribution.new(:name<Foo>, :api<2>, :ver(v2.3.4));
 my $foo-path = $path.IO.parent.child('Foo.pm').relative;
 
-$*REPO.install($dist, { Foo => $foo-path });
+$*REPO.install($dist,              { Foo => $foo-path });
+$*REPO.install($non-matching-dist, { Foo => $foo-path });
 
 throws-like { EVAL '$*REPO.install($dist, { Foo => "' ~ $foo-path ~ '" })' },
     X::AdHoc,
@@ -36,10 +38,11 @@ throws-like { EVAL '$*REPO.install($dist, { Foo => "' ~ $foo-path ~ '" })' },
 
 isa-ok ::('Foo'), Failure, 'symbol Foo is unknown';
 
-my $cu = $*REPO.need(CompUnit::DependencySpecification.new( :short-name<Foo> ));
+my $cu = $*REPO.need(CompUnit::DependencySpecification.new( :short-name<Foo>, :api-matcher<1> ));
 
 isa-ok $cu, CompUnit, '$*REPO.need returns a CompUnit';
 is $cu.short-name, 'Foo', '$*REPO.need returned correct CompUnit';
+is $cu.version, v1.2.3, 'Correct API version chosen';
 
 isa-ok ::('Foo'), Failure, 'symbol Foo is unknown after loading it';
 
