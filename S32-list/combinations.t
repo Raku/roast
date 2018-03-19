@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 33;
 
 # L<S32::Containers/List/=item combinations>
 
@@ -93,3 +93,17 @@ subtest {
     is-deeply combinations(3.5+0i, 2.5+0i), ((0, 1), (0, 2), (1, 2),),
         'Complex in $n and $k';
 }, 'Non-Int values in combinations';
+
+subtest '&combinations with Iterable first argument match calls with method form' => {
+    my @n := do with <a b c>.Seq { .cache; $_ }, <a b c>, [<a b c>],
+        2..10, 2^..10, 2^..^10, 2..^10,
+        %(:42foo, :70bar, :12ber), Map.new: (:42foo, :70bar, :12ber);
+    my @k := 1, 2, 3, 1..2, 1^..3, 1^..^3, 1..^3, 1.1..3.2e0, 1.1e0^..3.2e0, 1.1e0^..^3.2;
+    plan @n * @k;
+
+    for @n -> $n {
+        for @k -> $k {
+            is-deeply combinations($n, $k).sort, $n.combinations($k).sort, "$n.perl(), $k.perl()";
+        }
+    }
+}

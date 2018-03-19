@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 # L<S32::Containers/List/=item permutations>
 
@@ -20,3 +20,11 @@ is-deeply +permutations(0), 1, 'there is 1 &permutation with 0 values';
 
 # RT #127777
 is-deeply permutations(-1), ((),).Seq, '&permutations with negative argument';
+
+subtest '&permutations with Iterable first argument match calls with method form' => {
+    plan +my @i := do with <a b c>.Seq { .cache; $_ }, <a b c>, [<a b c>],
+        2..4, 2^..4, 2^..^4, 2..^4,
+        %(:42foo, :70bar, :12ber), Map.new: (:42foo, :70bar, :12ber);
+
+    is-deeply permutations($_).sort, .permutations.sort, .perl for @i;
+}
