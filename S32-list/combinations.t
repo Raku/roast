@@ -99,11 +99,15 @@ subtest '&combinations with Iterable first argument match calls with method form
         2..10, 2^..10, 2^..^10, 2..^10,
         %(:42foo, :70bar, :12ber), Map.new: (:42foo, :70bar, :12ber);
     my @k := 1, 2, 3, 1..2, 1^..3, 1^..^3, 1..^3, 1.1..3.2e0, 1.1e0^..3.2e0, 1.1e0^..^3.2;
-    plan @n * @k;
+    plan 4 + @n * @k;
 
     for @n -> $n {
         for @k -> $k {
             is-deeply combinations($n, $k).sort, $n.combinations($k).sort, "$n.perl(), $k.perl()";
         }
     }
+    is-deeply combinations(0),           ^0 .combinations, 'sub with (0)';
+    is-deeply combinations(5),           ^5 .combinations, 'sub with (5)';
+    is-deeply combinations(<a b c>), <a b c>.combinations, 'sub with (3..4)';
+    is-deeply combinations(()),           ().combinations, 'sub with (3..4)';
 }
