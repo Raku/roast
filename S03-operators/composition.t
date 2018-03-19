@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 sub double ($x) { $x * 2 };
 sub invert ($x) { 1 / $x };
@@ -67,4 +67,16 @@ is ({ [+] @_ } o *.map(* * 2))(1..10), 110, "can compose functions that pass mul
         is-deeply ([o] {$_ xx 2} xx 2)(3).List, ((3, 3), (3, 3)),
             'Can use infix:<o> as a meta';
     }
+}
+
+# https://github.com/rakudo/rakudo/commit/87e43c4aea
+subtest 'identify function does not explode/handle Failures' => {
+    plan 2;
+    my &z1 = infix:<o>;
+    my &z2 = infix:<∘>;
+    my $z1 := z1 Failure.new;
+    my $z2 := z2 Failure.new;
+    is $z1.handled, False, 'processed Failure remained unhandled and unexploded (ASCII)';
+    is $z2.handled, False,  'processed Failure remained unhandled and unexploded (Unicode)';
+    $z1.so; $z2.so;
 }
