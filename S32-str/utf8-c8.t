@@ -90,7 +90,7 @@ if $*DISTRO.is-win {
 }
 else {
     {
-        my $cmd = Q{env - ACME=$'L\xe9on' } ~ $*EXECUTABLE ~ Q{ -e 'say("lived")'};
+        my $cmd = Q{env ACME=$'L\xe9on' } ~ $*EXECUTABLE ~ Q{ -e 'say("lived")'};
         my $proc = shell $cmd, :out;
         is $proc.out.get, 'lived', 'Can run Perl 6 with non-UTF-8 environment';
     }
