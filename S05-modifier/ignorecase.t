@@ -127,6 +127,7 @@ my $fi_d = 'ﬁ';
 ok $fi   ~~ /:i $fi_d /, "ignorecase with ligature haystack in variable matches";
 ok 'fi'   ~~ /:i $fi_d /, "ignorecase with ligature haystack in variable matches";
 #?rakudo.moar 2 todo "ignorecase doesn't use foldcase semantics when the haystack is interpolated RT132233"
+#?rakudo.js 2 todo "ignorecase doesn't use foldcase semantics when the haystack is interpolated RT132233"
 ok $fi_d ~~ /:i $fi /, "ignorecase with ligature needle in variable matches";
 ok 'ﬁ' ~~ /:i $fi /, "ignorecase with ligature needle in variable matches";
 ok $fi_d ~~ /:i  fi /, "ignorecase with ligature needle in variable matches";
