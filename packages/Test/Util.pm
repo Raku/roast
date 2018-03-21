@@ -238,7 +238,7 @@ multi doesn't-hang (
     if $*VM.name eq 'js' {
         await $promise;
         subtest $desc, {
-            plan 2;
+            plan(+ ($out, $err).grep(*.defined));
             cmp-ok $stdout, '~~', $out, 'STDOUT' if $out.defined;
             cmp-ok $stderr, '~~', $err, 'STDERR' if $err.defined;
         };
