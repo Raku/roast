@@ -166,6 +166,7 @@ plan 95;
     is class :: { has uint32 $.x; }.new( x => 2**32-1 ).x, 2**32-1, 'uint32 attributes don\'t get sign-extended';
     #?rakudo.jvm todo 'the value gets sign-extended'
     #?rakudo.moar skip 'Cannot unbox 64 bit wide bigint'
+    #?rakudo.js skip 'Cannot unbox 64 bit wide bigint'
     is class :: { has uint64 $.x; }.new( x => 2**64-1 ).x, 2**64-1, 'uint64 attributes don\'t get sign-extended';
 }
 
