@@ -143,6 +143,7 @@ is-approx(27 ** ⅔, 9, "27 ** ⅔ ==  9");
 is-approx(27 ** -⅓, ⅓, "27 ** -⅓ == ⅓");
 is-approx(27 ** -⅔, ⅑, "27 ** -⅔ == ⅑");
 
+#?rakudo.js 2 skip 'this seems implementation specific'
 # RT #112788
 # if no throwage happens, as is wanted, the program will take forever to run
 # so we wait for 2 seconds, then print success message and exit; if the throw
