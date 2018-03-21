@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 use lib $?FILE.IO.parent(2).add("packages");
-plan 72;
+plan 73;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -382,6 +382,13 @@ throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     use ExportConstant;
     is &constant-sub(), 'win', 'Can call an exported constant sub';
     ok "foo" ~~ $constant-regex, 'Can match a exported constant regex';
+}
+
+# RT #127352
+{
+    constant $sepreg = rx/(<[\\/]>)/;
+    my $filenameW = "c:\\g\\b.mp4";
+    is $filenameW ~~ $sepreg, ｢\｣, 'Regex stored in constant with sigil works properly';
 }
 
 # vim: ft=perl6
