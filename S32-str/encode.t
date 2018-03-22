@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/Buf>
 
-plan 38;
+plan 36;
 
 ok 'ab'.encode('ASCII') ~~ blob8, '$str.encode returns a blob8';
 ok ('ab'.encode('ASCII') eqv blob8.new(97, 98)),  'encoding to ASCII';
