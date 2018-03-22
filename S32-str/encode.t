@@ -72,8 +72,6 @@ is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip wi
         'å', 'ascii', '?',
         '☃', 'latin-1', '?',
         '☃', 'windows-1252', '?',
-        "\x[FFFFFF]", 'utf-8', "\x[FFFD]",
-        "\x[FFFFFF]", 'utf-16', "\x[FFFD]",
     ) -> $string, $encoding, $default-replacement {
         subtest {
             throws-like { $string.encode($encoding) }, Exception, message => rx:s:i/Error encoding $encoding string/,
