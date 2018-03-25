@@ -120,12 +120,11 @@ for %tests.keys.sort -> $t {
 
 {
     my $num = 123.456789;
-    is $num.round(1),     123,       "round with argument";
-    is $num.round(5),     125,       "($num).round(5) == 125";
-    is $num.round(1/100), 123.46,    "($num).round(1/100) == 123.46";
-    #?niecza todo "rounding with Num makes more rounding errors"
-    #?rakudo.jvm todo "nigh"
-    is $num.round(1e-5),  123.45679, "($num).round(1e-5) == 123.45679";
+    cmp-ok $num.round(1),     '==', 123,       "round with argument";
+    cmp-ok $num.round(5),     '==', 125,       "($num).round(5) == 125";
+    cmp-ok $num.round(1/100), '==', 123.46,    "($num).round(1/100) == 123.46";
+    cmp-ok $num.round(1e-5),  '=~=', 123.45679e0,
+        "($num).round(1e-5) =~= 123.45679e0";
 }
 
 {  # RT 126825
