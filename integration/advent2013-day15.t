@@ -30,7 +30,7 @@ is (1/10 + 1/10 + 1/10 == 0.3).gist, 'True', '(\o/)';
 
 my $pi = 3.14e0;
 my $earth-mass = 5.97e24;  # kg
-is $earth-mass.WHAT.gist, '(Num)'; 
+is $earth-mass.WHAT.gist, '(Num)';
 
 is-approx (0, 1e-1 ... 2)[11], 1.1, 'missed the 1';
 #?rakudo.jvm todo "jvm rounding quirks"
