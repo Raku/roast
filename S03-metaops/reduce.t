@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 559;
+plan 560;
 
 =begin pod
 
@@ -690,6 +690,8 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
         method Numeric() { 42 };
     }
     is ([*] CustomNumify.new), 42, 'one-argument [*] numifies';
+
+    is-deeply (reduce &infix:<+>, "2"), 2, "functional form of reduce works with the plus operator";
 }
 
 # RT #131009
