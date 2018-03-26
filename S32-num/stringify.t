@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 61;
+plan 62;
 
 # L<S32::Numeric/Complex/"=item gist">
 
@@ -76,6 +76,17 @@ is Rat.gist, '(Rat)', 'Rat.gist';
 is Rat.perl, 'Rat', 'Rat.perl';
 lives-ok { ~Rat }, '~Rat does not die';
 lives-ok { Rat.Str }, 'Rat.Str does not die';
+
+# RT #127184
+subtest 'no precision loss in stringification of Nums' => {
+    plan 5;
+    is pi,           '3.141592653589793', 'pi';
+    is pi.perl.EVAL, '3.141592653589793', 'pi (.perl.EVAL roundtripped)';
+    is .1e0,         '0.1', '0.1e0 does not get long string of zeros';
+    is .3e0,         '0.3', '0.3e0 does not get long string of zeros';
+    is .1e0 + .2e0,  '0.30000000000000004', '0.1e0+0.2e0 gets 0.3000…';
+}
+
 
 # TODO: FatRat, Num (once better specced), Int (maybe, but hard to mess up)
 
