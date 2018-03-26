@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 46;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -35,6 +35,10 @@ throws-like { $pc.write(Buf.new(0)) }, X::Proc::Async::OpenForWriting, :method<w
 
 throws-like { $pc.stdout.tap(&say)  }, X::Proc::Async::TapBeforeSpawn, :handle<stdout>;
 throws-like { $pc.stderr.tap(&say)  }, X::Proc::Async::TapBeforeSpawn, :handle<stderr>;
+
+my $pid = $pc.pid;
+isa-ok $pid, Promise, 'pid method returns a Promise';
+ok await($pid) > 0, 'Can get the process ID';
 
 my $ps = await $pm;
 cmp-ok $pc.ready.status, '~~', Kept, "was ready kept after succesful execution";
