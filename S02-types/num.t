@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 100;
+plan 101;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -798,5 +798,9 @@ subtest '.Bool' => {
     my num $b = 6.0221409e+23;
     cmp-ok $a, '==', $b, 'no parsing glitches in the way Num is parsed';
 }
+
+# RT #132330
+cmp-ok 1.000000000000001e0, '!=', 1e0,
+    'Nums that are close to each other parsed correctly as different';
 
 # vim: ft=perl6
