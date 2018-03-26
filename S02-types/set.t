@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 225;
+plan 226;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -562,5 +562,8 @@ subtest 'set ops do not hang with Setty/Baggy/Mixy type objects' => {
     dies-ok { %h<a>:delete }, 'cannot :delete from Set';
     dies-ok { %h<a> = False }, 'cannot delete from Set by assignment';
 }
+
+is +set(.3e0, .1e0+.2e0, 1e0, 1e0+4e-15), 4,
+    'Nums that are close to each other remain distinct when put in sets';
 
 # vim: ft=perl6
