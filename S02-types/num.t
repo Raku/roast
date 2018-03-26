@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 99;
+plan 100;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -791,6 +791,12 @@ subtest '.Bool' => {
 
     # https://irclog.perlgeek.de/perl6-dev/2018-02-21#i_15843708
     is-deeply     NaN.Bool, True,  'NaN';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1626
+    my num $a = 602214090000000000000000e0;
+    my num $b = 6.0221409e+23;
+    cmp-ok $a, '==', $b, 'no parsing glitches in the way Num is parsed';
 }
 
 # vim: ft=perl6
