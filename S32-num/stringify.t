@@ -78,13 +78,16 @@ lives-ok { ~Rat }, '~Rat does not die';
 lives-ok { Rat.Str }, 'Rat.Str does not die';
 
 # RT #127184
+# RT #132330
 subtest 'no precision loss in stringification of Nums' => {
-    plan 5;
+    plan 6;
     is pi,           '3.141592653589793', 'pi';
     is pi.perl.EVAL, '3.141592653589793', 'pi (.perl.EVAL roundtripped)';
     is .1e0,         '0.1', '0.1e0 does not get long string of zeros';
     is .3e0,         '0.3', '0.3e0 does not get long string of zeros';
     is .1e0 + .2e0,  '0.30000000000000004', '0.1e0+0.2e0 gets 0.3000…';
+
+    is Int(2e25), Int(20e24), '2e25 and 20e24 stringify the same';
 }
 
 
