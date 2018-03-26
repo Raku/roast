@@ -793,10 +793,17 @@ subtest '.Bool' => {
     is-deeply     NaN.Bool, True,  'NaN';
 }
 
-{ # https://github.com/rakudo/rakudo/issues/1626
+# https://github.com/rakudo/rakudo/issues/1626
+# RT #132330
+subtest 'no parsing glitches in the way Num is parsed' => {
+    plan 3;
+
     my num $a = 602214090000000000000000e0;
     my num $b = 6.0221409e+23;
-    cmp-ok $a, '==', $b, 'no parsing glitches in the way Num is parsed';
+    cmp-ok $a, '==', $b, '(1)';
+
+    cmp-ok .1e0    +  .2e0,    '!=', .3e0,    '(2)';
+    cmp-ok  1.0e-1 +   2.0e-1, '!=',  3.0e-1, '(3)';
 }
 
 # RT #132330
