@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 173;
+plan 174;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -331,5 +331,8 @@ subtest 'sprintf with Numeric/Str type objects' => {
         is-deeply qs('%.2g', T), '0',            "%.2g $p";
     }
 }
+
+is sprintf("%.16e", sqrt 3.0e0), '1.7320508075688772e+00',
+    'sprintf maintains sane precision when stringifying nums'
 
 # vim: ft=perl6
