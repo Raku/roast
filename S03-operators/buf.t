@@ -301,17 +301,18 @@ subtest 'infix:<~> works with Blob' => {
 
 # RT #128655
 {
-    is Blob.new((my int $i = 10) +& 0xFF).perl,'Blob.new(10)',
+    my int $i;
+    is Blob.new(($i = 10) +& 0xFF).perl,'Blob.new(10)',
       'check infix +& int/Int';
-    is Blob.new((my int $i = 10) +| 0xFF).perl,'Blob.new(255)',
+    is Blob.new(($i = 10) +| 0xFF).perl,'Blob.new(255)',
       'check infix +| int/Int';
-    is Blob.new((my int $i = 10) +^ 0xFF).perl,'Blob.new(245)',
+    is Blob.new(($i = 10) +^ 0xFF).perl,'Blob.new(245)',
       'check infix +^ int/Int';
-    is Blob.new((my int $i = 10) +< 1).perl,'Blob.new(20)',
+    is Blob.new(($i = 10) +< 1).perl,'Blob.new(20)',
       'check infix +< int/Int';
-    is Blob.new((my int $i = 10) +> 1).perl,'Blob.new(5)',
+    is Blob.new(($i = 10) +> 1).perl,'Blob.new(5)',
       'check infix +> int/Int';
-    is Blob.new(+^(my int $i = 10)).perl,'Blob.new(245)',
+    is Blob.new(+^($i = 10)).perl,'Blob.new(245)',
       'check prefix +^ int';
 }
 
