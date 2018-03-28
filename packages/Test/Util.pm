@@ -333,25 +333,6 @@ multi no-fatal-throws-like (&test, |c) is export {
     throws-like { no fatal; my $ = do { test }; Nil }, |c;
 }
 
-sub fails-like (
-    \test where Callable:D|Str:D, $ex-type, $reason?, *%matcher
-) is export {
-    subtest $reason => sub {
-        plan 2;
-        CATCH { default {
-            with "expected code to fail but it threw {.^name} instead" {
-                .&flunk;
-                .&skip;
-                return False;
-            }
-        }}
-        my $res = test ~~ Callable ?? test.() !! test.EVAL;
-        isa-ok $res, Failure, 'code returned a Failure';
-        throws-like { $res.sink }, $ex-type,
-            'Failure threw when sunk', |%matcher,
-    }
-}
-
 sub run-with-tty (
     $code, $desc, :$in = '', :$status = 0, :$out = '', :$err = ''
 ) is export {
@@ -579,16 +560,6 @@ Creates a semi-randomly named directory in C<$*TMPDIR>, optionally setting
 C<$chmod>, and returns an C<IO::Path> pointing to it. Automatically
 C<rmdir>s it with C<END> phaser. It's your responsibility to ensure the
 directory is empty at that time.
-
-=head2 fails-like(&test, $ex-type, $reason?, *%matcher)
-
-    fails-like(&test, $ex-type, $reason?, *%matcher)
-
-Like C<throws-like> but checks the code C<fail>s (as opposed to C<throw>ing).
-
-Executes C<&test> and uses C<Test.pm>'s C<isa-ok> to check the return value is a
-C<Failure>, then uses C<Test.pm>'s <throws-like> to check that C<Failure>
-throws the correct exception when sunk.
 
 =head2 run-with-tty
 
