@@ -815,7 +815,7 @@ subtest 'Num literals yield closest available Num to their nominal value' => {
     my $a := (9.999e-5               * 2e0**66).Int * 5**8 - 9999 * 2**58;
     my $b := (9.99899999999999995e-5 * 2e0**66).Int * 5**8 - 9999 * 2**58;
     cmp-ok $a, '==', -103256, '9.999e-5';
-    cmp-ok $a, '==', -103256, '9.99899999999999995e-5';
+    cmp-ok $b, '==', -103256, '9.99899999999999995e-5';
 }
 
 # vim: ft=perl6
