@@ -20,6 +20,39 @@ sub is-deeply-junction (
     is-deeply junction-guts($got), junction-guts($expected), $desc;
 }
 
+multi test-iter-opt (Iterator:D \iter, @data is raw, Str:D $desc) is export {
+    TEST-ITER-OPT iter, @data, +@data, $desc;
+}
+multi test-iter-opt (Iterator:D \iter, UInt:D \items, Str:D $desc) is export {
+    TEST-ITER-OPT iter, Nil, items, $desc;
+}
+sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
+    subtest $desc => {
+        plan 5 + 2*n + ($_ with data);
+        sub count (\v, $desc) {
+            iter.can('count-only')
+              ?? is-deeply iter.count-only, v, "count  ($desc)"
+              !! skip "iterator does not support .count-only ($desc)";
+        }
+        sub bool (\v, $desc) {
+            iter.can('bool-only')
+              ?? is-deeply iter.bool-only, v, "bool   ($desc)"
+              !! skip "iterator does not support .bool-only ($desc)";
+        }
+        for ^n -> $i {
+            count  n-$i,  "before pull $i";
+            bool ?(n-$i), "before pull $i";
+            data andthen is-deeply iter.pull-one, data[$i], "pulled (pull $i)"
+                 orelse  iter.pull-one;
+        }
+        count  0, 'after last pull';
+        bool  ?0, 'after last pull';
+        ok iter.pull-one =:= IterationEnd, 'one more pull gives IterationEnd';
+        count  0, 'after IterationEnd';
+        bool  ?0, 'after IterationEnd';
+    }
+}
+
 multi sub is-eqv(Seq:D $got, Seq:D $expected, Str:D $desc) is export {
     $got.cache; $expected.cache;
     _is-eqv $got, $expected, $desc;
@@ -126,7 +159,7 @@ our sub run( Str $code, Str $input = '', *%o) {
 }
 
 sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
-    my $fnbase = 'getout';
+    my $fnbase = $*TMPDIR.add('getout').absolute;
     $fnbase ~= '-' ~ $*PID if defined $*PID;
     $fnbase ~= '-' ~ 1_000_000.rand.Int;
 
@@ -152,7 +185,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
         $clobber( "$fnbase.in", $input );
         $clobber( "$fnbase.code", $code ) if defined $code;
 
-        my $cmd = $*EXECUTABLE ~ ' ';
+        my $cmd = $*EXECUTABLE.absolute ~ ' ';
         $cmd ~= @compiler-args.join(' ') ~ ' ' if @compiler-args;
         $cmd ~= $fnbase ~ '.code'  if $code.defined;
         $cmd ~= " @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err";
@@ -177,43 +210,18 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-sub is_run_repl ($code, $desc, :$out, :$err) is export {
-    my $proc = &CORE::run( $*EXECUTABLE, :in, :out, :err );
-    $proc.in.print: $code;
-    $proc.in.close;
-    subtest {
-        plan +($out, $err).grep: *.defined;
-        with $out {
-            my $output    = $proc.out.slurp;
-            my $test-name = 'stdout is correct';
-            when Str      { is      $output, $_, $test-name; }
-            when Regex    { like    $output, $_, $test-name; }
-            when Callable { ok   $_($output),    $test-name; }
-
-            die "Don't know how to handle :out of type $_.^name()";
-        }
-
-        with $err {
-            my $output    = $proc.err.slurp;
-            my $test-name = 'stderr is correct';
-            when Str      { is      $output, $_, $test-name; }
-            when Regex    { like    $output, $_, $test-name; }
-            when Callable { ok   $_($output),    $test-name; }
-
-            die "Don't know how to handle :err of type $_.^name()";
-        }
-    }, $desc;
-}
-
-multi doesn't-hang (Str $args, $desc, :$in, :$wait = 1.5, :$out, :$err)
+multi doesn't-hang (Str $args, $desc, :$in, :$wait = 5, :$out, :$err)
 is export {
-    doesn't-hang \($*EXECUTABLE, '-e', $args), $desc,
+    doesn't-hang \($*EXECUTABLE.absolute, '-e', $args), $desc,
         :$in, :$wait, :$out, :$err;
 }
 
+# TODO XXX: for some reason shoving this variable inside the routine and
+# using `state` instead of `my` results in it having value 0
+my $VM-time-scale-multiplier = $*VM.name eq 'jvm' ?? 20/3 !! 1;
 multi doesn't-hang (
     Capture $args, $desc = 'code does not hang',
-    :$in, :$wait = 1.5, :$out, :$err,
+    :$in, :$wait = 5, :$out, :$err,
 ) is export {
     my $prog = Proc::Async.new: |$args;
     my ($stdout, $stderr) = '', '';
@@ -225,8 +233,21 @@ multi doesn't-hang (
     # await returns and we follow the path that assumes the code we ran hung.
     my $promise = $prog.start;
     await $prog.write: $in.encode if $in.defined;
-    await Promise.anyof: Promise.in($wait * (%*ENV<ROAST_TIMING_SCALE>//1)),
-                         $promise;
+
+    # waiting for the program to hang is broken on the js backend
+    if $*VM.name eq 'js' {
+        await $promise;
+        subtest $desc, {
+            plan(+ ($out, $err).grep(*.defined));
+            cmp-ok $stdout, '~~', $out, 'STDOUT' if $out.defined;
+            cmp-ok $stderr, '~~', $err, 'STDERR' if $err.defined;
+        };
+        return;
+    }
+
+    await Promise.anyof: Promise.in(
+        $wait * $VM-time-scale-multiplier * (%*ENV<ROAST_TIMING_SCALE>//1)
+    ), $promise;
 
     my $did-not-hang = False;
     given $promise.status {
@@ -236,7 +257,10 @@ multi doesn't-hang (
 
     subtest $desc, {
         plan 1 + ( $did-not-hang ?? ($out, $err).grep(*.defined) !! 0 );
-        ok $did-not-hang, 'program did not hang';
+        ok $did-not-hang, 'program did not hang'
+          or diag "\nHang in doesn't-hang() test detected by heuristic.\n"
+            ~ "You can set \%*ENV<ROAST_TIMING_SCALE> to a value higher than 1\n"
+            ~ "to make it wait longer.\n";
         if $did-not-hang {
             cmp-ok $stdout, '~~', $out, 'STDOUT' if $out.defined;
             cmp-ok $stderr, '~~', $err, 'STDERR' if $err.defined;
@@ -286,6 +310,7 @@ END {
     unlink @FILES-FOR-make-temp-file;
     rmdir  @DIRS-FOR-make-temp-dir;
 }
+sub make-temp-path(|c) is export { make-temp-file |c }
 sub make-temp-file
     (:$content where Any:U|Blob|Cool, Int :$chmod --> IO::Path:D) is export
 {
@@ -301,20 +326,38 @@ sub make-temp-dir (Int $chmod? --> IO::Path:D) is export {
     p
 }
 
-sub fails-like (&test, $ex-type, $reason?, *%matcher) is export {
-    subtest $reason => sub {
-        plan 2;
-        CATCH { default {
-            with "expected code to fail but it threw {.^name} instead" {
-                .&flunk;
-                .&skip;
-                return False;
-            }
-        }}
-        my $res = test;
-        isa-ok $res, Failure, 'code returned a Failure';
-        throws-like { $res.sink }, $ex-type,
-            'Failure threw when sunk', |%matcher,
+multi no-fatal-throws-like (Str:D $test, |c) is export {
+    throws-like "no fatal; my \$ = do \{ $test }; Nil", |c;
+}
+multi no-fatal-throws-like (&test, |c) is export {
+    throws-like { no fatal; my $ = do { test }; Nil }, |c;
+}
+
+sub run-with-tty (
+    $code, $desc, :$in = '', :$status = 0, :$out = '', :$err = ''
+) is export {
+    if $*DISTRO.name eq 'ubuntu' and $*KERNEL.release ~~ /:i Microsoft/ {
+        skip 'WSL as of Mar 2018 did not support `script` command for test: roast issue #395';
+        return;
+    }
+    state $path = make-temp-file.absolute;
+    # on MacOS, `script` doesn't take the command via `c` arg
+    state $script = shell(:!out, :!err, 'script -t/dev/null -qc "" /dev/null')
+        ?? “script -t/dev/null -qc '"$*EXECUTABLE.absolute()" "$path"' /dev/null”
+        !! shell(:!out, :!err, “script -q /dev/null "$*EXECUTABLE.absolute()" -e ""”)
+            ?? “script -q /dev/null "$*EXECUTABLE.absolute()" "$path"”
+            !! do { skip "need `script` command to run test: $desc"; return }
+
+    subtest $desc => {
+        $path.IO.spurt: $code;
+        given shell :in, :out, :err, $script {
+            plan 3;
+            # on MacOS, `script` really wants the ending newline...
+            .in.spurt: "$in\n", :close;
+            cmp-ok .out.slurp(:close), '~~', $out,    'STDOUT';
+            cmp-ok .err.slurp(:close), '~~', $err,    'STDERR';
+            cmp-ok .exitcode,  '~~', $status, 'exit code';
+        }
     }
 }
 
@@ -399,27 +442,6 @@ is_run() will skip() (but it will still execute the code not being tested).
 is_run() depends on get_out(), which might die.  In that case, it dies
 also (this error is not trapped).
 
-=head2 is_run_repl ($code, $desc, :$out, :$err)
-
-    is_run_repl "say 42\nexit\n", :err(''), :out(/"42\n"/),
-        'say 42 works fine';
-
-Fires up the REPL and enters the given C<$code>. Be sure to send correct
-newlines, as you would press ENTER key when using the REPL manually.
-
-The C<:$out> and C<:$err> named arguments are optional and corresponding
-tests are only run when the arguments are specified. They test REPL's STDOUT
-and STDERR respectively. Can take Str, Regex, or Callable, which respectively
-causes the test to use C<is>, C<like>, or execute the Callable with the output
-as the given argument and use C<ok> on its output.
-
-Will close STDIN (equivalent to sending CTRL+D in REPL) after sending the
-input, so you do not have to send explicit C<exit\n>
-
-B<NOTE:>
-STDOUT will generally contain all the messages displayed by the REPL at the
-start.
-
 =head2 doesn't-hang ( ... )
 
     doesn't-hang 'say "some code"' :out(/'some code'/),
@@ -454,7 +476,9 @@ C<'code does not hang'>
 =head3 C<:wait>
 
 B<Optional.> Specifies the amount of time in seconds to wait for the
-executed program to finish. B<Defaults to:> C<1.5>
+executed program to finish. B<Defaults to:> C<5>; on JVM backend, an
+additional multipler of C<20/3> is used as currently that backend takes
+longer to start procs.
 
 =head3 C<:in>
 
@@ -524,6 +548,10 @@ Creates a semi-random path in C<$*TMPDIR>, optionally setting C<$chmod> and
 spurting C<$content> into it. If C<$chmod> is set, but C<$content> isn't,
 spurts an empty string. Automatically deletes the file with C<END> phaser.
 
+=head2  make-temp-path(:$content, :$chmod)
+
+Alias for C<make-temp-file>
+
 =head2 make-temp-dir($chmod?)
 
     sub make-temp-dir (Int $chmod? --> IO::Path:D)
@@ -533,15 +561,44 @@ C<$chmod>, and returns an C<IO::Path> pointing to it. Automatically
 C<rmdir>s it with C<END> phaser. It's your responsibility to ensure the
 directory is empty at that time.
 
-=head2 fails-like(&test, $ex-type, $reason?, *%matcher)
+=head2 run-with-tty
 
-    fails-like(&test, $ex-type, $reason?, *%matcher)
+    sub run-with-tty (
+        $code, $desc, :$in = '', :$status = 0, :$out = '', :$err = ''
+    )
 
-Like C<throws-like> but checks the code C<fail>s (as opposed to C<throw>ing).
+Puts C<$code> into a file, and runs it with C<$*EXECUTABLE> using C<`script`>
+command line utility, if available, or skips the tests if not. Appends C<\n> to
+C<$in> (MacOS's C<`script`> seems to require it), and sends it to the program.
+Then performs three smartmatch tests against C<$status> (exitcode), C<$out>
+(slurped STDOUT content) and C<$err> (slurped STDERR content).
 
-Executes C<&test> and uses C<Test.pm>'s C<isa-ok> to check the return value is a
-C<Failure>, then uses C<Test.pm>'s <throws-like> to check that C<Failure>
-throws the correct exception when sunk.
+At the time of this writing, on MacOS's STDOUT seems to be prefixed with
+STDIN and C<^D\b\b> chars after it when running Rakudo compiler.
+
+Note that some variations of C<script> command might be passing C/dev/null>
+as first argument to your code. This is due to current implementation of
+this test routine trying to ignore the generation of timing file.
+
+=head2 no-fatal-throws-like
+
+Same as Test.pm6's C<throws-like>, except wraps the given code into
+C<no fatal; my $ = do { … }; Nil>. The point of that is if the code merely
+does C<fail()> instead of C<throw()>, then the test will detect that and fail.
+
+=head2 C<test-iter-opt>
+
+    multi test-iter-opt (Iterator:D \iter, @data is raw,  Str:D $desc)
+    multi test-iter-opt (Iterator:D \iter, UInt:D \items, Str:D $desc)
+
+Tests the data pulled from C<iter> matches corresponding values in C<@data>,
+if provided, and, if they're implemented, tests the values of C<.count-only> and
+C<.bool-only> methods before iterating the L<Iterator>, after each pull,
+after last pull, and after C<IterationEnd> has been received.
+
+Instead of providing C<@data>, you can simply provide the number of values
+you're expecting. This lets you test iterators for which you cannot predict
+the order/content of pulled values.
 
 =end pod
 
