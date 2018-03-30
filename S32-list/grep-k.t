@@ -7,6 +7,7 @@ plan 40;
 
 my @list = (1 .. 10);
 
+#?rakudo.jvm todo 'R#1671'
 is grep( { ($_ % 2) }, @list, :k ).grep(Int), (0,2,4,6,8).list.item, 'do we get Ints';
 is grep( { ($_ % 2) }, @list, :k ), (0,2,4,6,8).list.item,
   'simple direct test of sub';
