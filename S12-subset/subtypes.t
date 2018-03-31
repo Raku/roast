@@ -452,10 +452,7 @@ subtest '"any" Junction of types in where' => {
     }
 }
 
-#?rakudo.jvm skip 'ArrayIndexOutOfBoundsException: -1'
-#?DOES 1
-{
-  subtest 'postconstraints on variables in my (...)' => {
+subtest 'postconstraints on variables in my (...)' => {
     plan 6;
 
     my subset Foo where .is-prime;
@@ -487,7 +484,6 @@ subtest '"any" Junction of types in where' => {
             'sigilless where literal';
         throws-like ｢my (\b where "x", "foo") = "x", "bar"｣, XA, 'literal';
     }
-  }
 }
 
 # vim: ft=perl6
