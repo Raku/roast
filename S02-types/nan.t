@@ -43,8 +43,8 @@ ok (my num $ = NaN) === (my num $ = NaN), "NaN value identity (native num)";
 
 {
     #RT #126990
-    throws-like { my Int $x = NaN }, X::TypeCheck::Assignment,
-        :got(NaN), :expected(Int),
+    throws-like ｢my Int $x = NaN｣, X::Syntax::Number::LiteralType,
+        :value(NaN), :vartype(Int),
     'trying to assign NaN to Int gives a helpful error';
 
     my Num $x = NaN;
