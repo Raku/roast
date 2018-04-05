@@ -66,8 +66,8 @@ ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 
 {
     #RT #126990
-    throws-like { my Int $x = Inf }, X::TypeCheck::Assignment,
-        :got(Inf), :expected(Int),
+    throws-like ｢my Int $x = Inf｣, X::Syntax::Number::LiteralType,
+        :value(Inf), :vartype(Int),
     'trying to assign Inf to Int gives a helpful error';
 
     my Num $x = Inf;
