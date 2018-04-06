@@ -185,19 +185,24 @@ subtest 'Proc.encoding is set correctly' => {
     plan 2;
     my $p = run :out, $*EXECUTABLE, '-e', 'print 42';
     is $p.out.encoding, 'utf8', '.encoding set correctly to utf8';
-    is $p.out.split(0.chr, :skip-empty), (“42”,), '.out is read correctly'
+    is $p.out.split(0.chr, :skip-empty), (“42”,), '.out is read correctly';
 }
 
 # RT #126380
 subtest 'Proc.pid is set correctly' => {
-    plan 3;
-    my $p = run $*EXECUTABLE, '-e', 'say "wew"';
-    isa-ok $p.pid, Int, '.pid property exists for run()';
-    $p = shell "$*EXECUTABLE -e 'say \"wew\"'";
+    plan 4;
+    my $p = run $*EXECUTABLE, '-e', "print 42", :out;
     my $pid = $p.pid;
-    isa-ok $pid, Int, '.pid property exists for shell()';
-    $p.shell("$*EXECUTABLE -e 'say \"wew\"'");
-    isnt $pid, $p.pid, '.pid property gets reassigned when spawning new processes';
+    cmp-ok $p.pid, '~~', Int:D, '.pid property exists with run()';
+    $p.shell: qq/$*EXECUTABLE -e "print 42"/;
+    cmp-ok $p.pid, '~~', Int:D, '.pid property exists with shell()';
+
+    $pid = $p.pid;
+    $p.spawn: 'meooooooows', :err;
+    is $pid, $p.pid, '.pid property does not update on failed run()';
+    $pid = $p.pid;
+    $p.shell: 'meooooooows', :err;
+    isnt $pid, $p.pid, ".pid property updates with shell's PID on failed shell()";
 }
 
 # vim: ft=perl6
