@@ -8,7 +8,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there.
 
-plan 38;
+plan 39;
 
 my $res;
 
@@ -182,9 +182,22 @@ subtest 'all Proc pipes return Proc on .close' => {
 
 # RT #129296
 subtest 'Proc.encoding is set correctly' => {
+    plan 2;
     my $p = run :out, $*EXECUTABLE, '-e', 'print 42';
     is $p.out.encoding, 'utf8', '.encoding set correctly to utf8';
     is $p.out.split(0.chr, :skip-empty), (“42”,), '.out is read correctly'
+}
+
+# RT #126380
+subtest 'Proc.pid is set correctly' => {
+    plan 3;
+    my $p = run $*EXECUTABLE, '-e', 'say "wew"';
+    isa-ok $p.pid, Int, '.pid property exists for run()';
+    $p = shell "$*EXECUTABLE -e 'say \"wew\"'";
+    my $pid = $p.pid;
+    isa-ok $pid, Int, '.pid property exists for shell()';
+    $p.shell("$*EXECUTABLE -e 'say \"wew\"'");
+    isnt $pid, $p.pid, '.pid property gets reassigned when spawning new processes';
 }
 
 # vim: ft=perl6
