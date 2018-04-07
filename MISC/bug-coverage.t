@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 9;
+plan 10;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 12;
@@ -265,6 +265,24 @@ subtest 'block in string in parentheses in `for` statement mod' => {
     }
 
     is $failed, 0, '$match should not be true and false (RT#127869)';
+}
+
+# https://github.com/rakudo/rakudo/issues/1695
+subtest '$_ and with/andthen/for combinations are not buggy' => {
+    plan 4;
+
+    $_ = 42;
+    is-deeply $_, ('24',), 'with (for -> ... { $_ })'
+        with (for 1 -> $a { .flip });
+
+    (for 1 -> $a { .flip }) andthen is-deeply $_, ('24',),
+        'andthen (for -> ... { $_ })';
+
+    is-deeply $_, '24', 'with (with -> ... { $_ })'
+        with (with 1 -> $a { .flip });
+
+    (with 1 -> $a { .flip }) andthen is-deeply $_, '24',
+        'andthen (with -> ... { $_ })';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
