@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 61;
 
 # cmp on scalar values
 {
@@ -167,6 +167,23 @@ subtest 'no precision loss in infix:<cmp> with Rational and Ints' => {
 
     is-deeply fr4 cmp  r5, Less, 'FatRat cmp Rat';
     is-deeply  r5 cmp fr4, More, 'Rat    cmp FatRat';
+}
+
+subtest 'lazy array comparisons' => {
+    plan 11;
+    is-deeply [lazy 1, 2   ]  cmp [lazy 1, 2, 3], Less, 'shorter array';
+    is-deeply [lazy 1, 2, 3]  cmp [lazy 1, 2   ], More, 'longer array';
+    is-deeply [lazy 1, 2   ]  cmp [lazy 1, 2   ], Same, 'identical; same length';
+
+    is-deeply [lazy -1, 2   ] cmp [lazy 1, 2   ], Less, 'Less; differ at pos 0';
+    is-deeply [lazy  2, 2   ] cmp [lazy 1, 2   ], More, 'More; differ at pos 0';
+    is-deeply [lazy  1, 1   ] cmp [lazy 1, 2   ], Less, 'Less; differ at pos 1';
+    is-deeply [lazy  1, 3   ] cmp [lazy 1, 2   ], More, 'More; differ at pos 1';
+    is-deeply [lazy  1, 1, 3] cmp [lazy 1, 2   ], Less, 'Less; differ at pos 1; ignore lengths';
+    is-deeply [lazy  1, 3   ] cmp [lazy 1, 2, 3], More, 'More; differ at pos 1; ignore lengths';
+
+    is-deeply [lazy 1, 1, 3]  cmp [lazy 1, 2, 1], Less, 'Less; differ at pos 1; ignore later elems';
+    is-deeply [lazy 1, 3, 1]  cmp [lazy 1, 2, 3], More, 'More; differ at pos 1; ignore later elems';
 }
 
 # vim: ft=perl6
