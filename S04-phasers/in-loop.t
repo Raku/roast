@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 # TODO, based on synopsis 4:
 #
@@ -199,4 +199,30 @@ plan 19;
 
 }
 
+# https://github.com/rakudo/rakudo/issues/1623
+subtest 'FIRST+LAST loops as last statement in subs work and do not crash' => {
+    plan 2;
+    {
+        my ($a, $b, $c) = 0, 0, 0;
+        sub {
+            loop {
+                FIRST $a++;
+                LAST  $b++;
+                last if ++$c == 100;
+            }
+        }();
+        is-deeply ($a, $b, $c), (1, 1, 100), 'unwanted loop';
+    }
+    {
+        my ($a, $b, $c) = 0, 0, 0;
+        sub {
+            do loop {
+                FIRST $a++;
+                LAST  $b++;
+                last if ++$c == 100;
+            }
+        }();
+        is-deeply ($a, $b, $c), (1, 1, 100), 'wanted loop';
+    }
+}
 # vim: ft=perl6
