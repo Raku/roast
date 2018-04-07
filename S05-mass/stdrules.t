@@ -14,7 +14,7 @@ be valid perl6.
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include">
 
-plan 191;
+plan 193;
 
 
 ok("abc1_2" ~~ m/^ <ident> $/, '<ident>');
@@ -323,5 +323,11 @@ nok 'abc' ~~ /^<at(1)>/, '^<at(1)> fails';
 ok 'aac' ~~ /^a <?same>/, '<?same> succeeds between two of the same character';
 ok 'abc' ~~ /^a <!same>/, '<!same> succeeds between two different characters';
 ok 'abb' ~~ /<?same>/, '<?same> searches until it matches';
+
+# [Github Issue 1622](https://github.com/rakudo/rakudo/issues/1622)
+{
+    cmp-ok 'abc', '!~~', /a <-[]>/, '<-[]> (negative char class) fails like <!>';
+    cmp-ok '',    '!~~', /<-[]>/,   '<-[]> (negative char class) fails like <!> (empty str)';
+}
 
 # vim: ft=perl6
