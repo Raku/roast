@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 16;
 
 # L<S03/"is divisible by">
 {
@@ -43,3 +43,13 @@ plan 15;
         numerator => 9,
         'cannot divide by zero using infix:<%%>';
 } #2
+
+# https://github.com/rakudo/rakudo/issues/1640
+subtest 'no crashes with bigint args' => {
+    plan 2;
+    is-deeply 23067200747291880127814827277075079921671259751791
+      %% 100000000000000000000000000000000000000000000000577, False, '%% op';
+    is-deeply 23067200747291880127814827277075079921671259751791
+      % 100000000000000000000000000000000000000000000000577,
+      23067200747291880127814827277075079921671259751791, '% op';
+}
