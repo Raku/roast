@@ -385,7 +385,7 @@ is-deeply Mu ~~ (*), True, 'Mu:U smartmatches as True with Whatever';
 
 # https://github.com/rakudo/rakudo/issues/1465
 subtest 'compile time WhateverCode evaluation' => {
-    plan 4;
+    plan 5;
     is my class { has $.z is default(42) where * == 42 }.new.z, 42,
         '`where` clause + is default trait on attribute';
 
@@ -394,6 +394,9 @@ subtest 'compile time WhateverCode evaluation' => {
 
     is (BEGIN (* == 42)(42)), True,
         'non-block BEGIN with WhateverCode execution';
+
+    is (BEGIN (15, 16)[*-1]), 16,
+        'non-block BEGIN with WhateverCode in subscript';
 
     my subset Foo where * == 42;
     is (my Foo $b is default(42)), 42, 'subset + default on variable';
