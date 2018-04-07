@@ -1,7 +1,8 @@
 use v6;
 use Test;
+use Test::Util;
 
-plan 209;
+plan 211;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -468,6 +469,15 @@ subtest 'default `is default()` gets adjusted to type constraint' => {
         $o.a = Nil;
         is-deeply $o.a, Int, 'setting to Nil restores correct default';
     }
+}
+
+# RT#126318
+{
+    class DefaultTyped { has Int:D $.a is rw is default(42) }
+    is DefaultTyped.new.a, 42, 'uninitialized typed:D attribute should have its default';
+    is_run 'class DefaultTyped { has Int:D $.a is rw is default(Nil) }',
+           { :1status, :err{.contains: 'Type check failed'} }
+           ':D type check failing in is default(…)';
 }
 
 # vim: ft=perl6
