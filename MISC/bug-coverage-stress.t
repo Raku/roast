@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 9;
+plan 11;
 
 # RT #132042
 doesn't-hang ｢
@@ -155,6 +155,53 @@ is_run ｢use RAKUDO1413; print 'pass'｣,
     $_».self    given map 1/*.&f, ^550+1;
     .eager.self for   map 1/*.&f, ^550+1;
     pass 'no crashes with Whatever curries in topics of for/given statement modifiers';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1535
+    my class R1535Log::Async {
+        has $.supplier = Supplier.new;
+        has $.supply = $!supplier.Supply;
+
+        my $instance = R1535Log::Async.new;
+        method instance {
+            return $instance
+        }
+    }
+
+    sub foo() {
+        R1535Log::Async.instance.supplier.emit: ‘AAAAAAA!!!’
+    }
+
+    my atomicint $x;
+    R1535Log::Async.instance.supply.act: { $x ⚛+= .chars };
+    Promise.at(now).then(&foo).then(&foo).then(&foo).then: &foo for ^100;
+    sleep 1;
+    #?rakudo todo 'https://github.com/rakudo/rakudo/issues/1535'
+    is $x, 4000, 'collected right amount of characters (with &foo)';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1535
+    my class R1535Log::Async {
+        has $.supplier = Supplier.new;
+        has $.supply = $!supplier.Supply;
+
+        my $instance = R1535Log::Async.new;
+        method instance {
+            return $instance
+        }
+    }
+
+    sub foo() {
+        R1535Log::Async.instance.supplier.emit: ‘AAAAAAA!!!’
+    }
+
+    my atomicint $x;
+    R1535Log::Async.instance.supply.act: { $x ⚛+= .chars };
+    for ^100 {
+        Promise.at(now).then({ foo }).then({ foo }).then({ foo }).then({ foo })
+    }
+    sleep 1;
+    is $x, 4000, 'collected right amount of characters (with { foo })';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
