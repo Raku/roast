@@ -96,3 +96,13 @@ for \(:w), \(:rw), \(:a) -> $open-args {
         False;
     }}, 'prompt does not hang';
 }
+
+# RT#132030
+{
+    my $file = make-temp-file;
+    run $*EXECUTABLE, ‘-e’, ｢my $f = ‘｣~$file~｢’.IO; my $h = $f.open: :w; $h.put: ‘hello’; $h.put: ‘world’｣;
+    # the file is not closed explicitly, so we will not
+    # get “hello\nworld\n” if there's no mechanism for closing
+    # open handles automatically on exit
+    is $file.slurp, “hello\nworld\n”, ‘file handles are autoclosed on exit’;
+}
