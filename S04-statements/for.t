@@ -299,7 +299,7 @@ class TestClass{ has $.key is rw  };
 }
 
 {
-    # this was a rakudo bug with mixed 'for' and recursion, which seems to 
+    # this was a rakudo bug with mixed 'for' and recursion, which seems to
     # confuse some lexical pads or the like, see RT #58392
     my $gather = '';
     sub f($l) {
@@ -371,7 +371,7 @@ throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitesp
 {
   my @a = <1 2 3 4>;
   my $str = '';
-  for @a -> $x, $y { 
+  for @a -> $x, $y {
     $str ~= $x+$y;
   }
   is $str, "37", "for loop with two variables";
