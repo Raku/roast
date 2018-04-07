@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 24;
 
 # L<S04/"Phasers"/once "runs separately for each clone">
 {
@@ -112,5 +112,9 @@ for <first second> {
     ok $run, 'once block in statement modifier for will be run';
     is $i, 42, 'once block in statement modifier evaluates to correct result';
 }
+
+# https://github.com/rakudo/rakudo/issues/1610
+throws-like ｢my \z := once 42; z = 100｣, X::Assignment::RO,
+    '`once` does not containerize its values';
 
 # vim: ft=perl6
