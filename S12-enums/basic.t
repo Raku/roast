@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 53;
+plan 55;
 
 # Very basic enum tests
 
@@ -250,6 +250,13 @@ is-deeply do { my enum Foos (a => <42>); a.Str }, 'a',
     is-deeply [+foo, +A,  +bar, +B,  +ber, +C, +D],
               [-42,  -41, 100,  101, 12,   13, 14],
     'Pair elements in the list given to enum declaration work';
+}
+
+{ # RT #129142
+    enum FF <zero one two three>;
+    enum GG <fee fie foo fum>;
+    lives-ok { FF(GG(2)).perl }, 'Coercing an enum from a coercion of an enum from an int works';
+    is-deeply FF(GG(2)).perl, "FF", "Coercing an enum from a coercion of an enum returns expected result";
 }
 
 # vim: ft=perl6
