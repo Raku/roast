@@ -66,7 +66,7 @@ subtest 'comb method' => {
         \(2, 3), \(/../), \(/../, 2), \(/<:alpha>/, 3);
     plan +@tests;
 
-    is-deeply cat.comb(|$_), $str.comb(|$_), .perl for @tests;
+    cmp-ok cat.comb(|$_), 'eqv', $str.comb(|$_), .perl for @tests;
 }
 
 subtest 'DESTROY method' => {

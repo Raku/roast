@@ -1,7 +1,9 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
-plan 25;
+plan 26;
 
 my $filename = $?FILE.IO.parent.child('comb.testing');
 LEAVE unlink $filename; # cleanup
@@ -121,6 +123,18 @@ for 100000 -> $sep {
     test-comb($text,@clean,$sep);
 }
 
-unlink $filename; # cleanup
+# https://github.com/rakudo/rakudo/issues/1564
+subtest '.comb(Regex) returns Seq' => {
+    plan 4;
+    my $path := make-temp-file :content<abc>;
+    given $path.open {
+        cmp-ok .comb(/\w/), 'eqv', <a b c>.Seq, 'IO::Handle';
+        .seek: 0, SeekFromBeginning;
+        cmp-ok .comb(/\w/, 2, :close), 'eqv', <a b>.Seq,
+            'IO::Handle, with limit';
+    }
+    cmp-ok $path.comb(/\w/), 'eqv', <a b c>.Seq, 'IO::Path';
+    cmp-ok $path.comb(/\w/, 2), 'eqv', <a b>.Seq, 'IO::Path with limit';
+}
 
 # vim: ft=perl6

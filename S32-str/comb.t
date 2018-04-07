@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 82;
+plan 83;
 
 # L<S32::Str/Str/=item comb>
 
@@ -186,5 +186,23 @@ subtest 'edge-case combers' => {
 is (gather 'abc'.comb(/. { take $/.Str } <!> /)).join(','),
     'a,b,c',
     '$/ inside comb';
+
+# https://github.com/rakudo/rakudo/issues/1564
+subtest 'comb(Regex) returns Seq' => {
+    plan 8;
+    cmp-ok 'abc'.comb(/./),  'eqv', <a b c>.Seq, 'method (Str)';
+    cmp-ok comb(/./, 'abc'), 'eqv', <a b c>.Seq, 'sub (Str)';
+    cmp-ok 123.comb(/./),  'eqv', ('1', '2', '3').Seq, 'method (Cool)';
+    cmp-ok comb(/./, 123), 'eqv', ('1', '2', '3').Seq, 'sub (Cool)';
+
+    cmp-ok 'abc'.comb(/./, 2),  'eqv', <a b>.Seq,
+        'method (Str) with limit';
+    cmp-ok comb(/./, 'abc', 2), 'eqv', <a b>.Seq,
+        'sub (Str) with limit';
+    cmp-ok 123.comb(/./, 2),  'eqv', ('1', '2').Seq,
+        'method (Cool) with limit';
+    cmp-ok comb(/./, 123, 2), 'eqv', ('1', '2').Seq,
+        'sub (Cool) with limit';
+}
 
 # vim: ft=perl6
