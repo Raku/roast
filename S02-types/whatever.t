@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 127;
+plan 128;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -482,5 +482,18 @@ subtest 'various wild cases' => {
 # https://github.com/rakudo/rakudo/issues/1487
 is-deeply (*.match(/.+/).flip)(42), "24",
     'curry + regex + method call does not crash';
+
+subtest 'can curry chains with .& calls on them' => {
+    plan 6;
+    is (*.&{ $_ ~ 'one' })('foo'), 'fooone', '.&{}';
+    is (*.uc.&{ $_ ~ 'one' })('foo'), 'FOOone', 'method, .&{}';
+    is (*.uc.&{ $_ ~ 'one' }.flip)('foo'), 'enoOOF', 'method, .&{}, method';
+    is (*.uc.&{ $_ ~ 'one' }.flip.&(*.tc))('foo'), 'EnoOOF',
+        'method, .&, method, .& with whatever curry in it';
+    is (*.uc.&{ $^a ~ $^b }('one').flip.&(*.tc).&flip)('foo'),
+      'FOOonE', 'method, .&(1arg), method, .& with whatever curry in it, .&sub';
+    is (*.uc.&{ $^a ~ $^b ~ $^c }('one', 'two').flip.&(*.tc).&flip)('foo'),
+      'FOOonetwO', 'method, .&(2args), method, .& with whatever curry, .&sub';
+}
 
 # vim: ft=perl6
