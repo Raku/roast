@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 107;
+plan 111;
 
 =begin description
 
@@ -765,6 +765,19 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     is @values[^5], (0, 1, 2, 3, 4),
         'Lazy for loop produces correct values on demand';
     is $loops, 5, 'Lazy for loop does no more work than required';
+}
+
+# RT#126312
+{
+    my Int @a;
+    @a[5] = 42;
+    lives-ok { $_ = 6 for @a    }, ‘holes are mutable (for @a)’;
+    is @a, <6 6 6 6 6 6>, ‘holes were changed correctly (for @a)’;
+
+    my Int @b;
+    @b[5] = 24;
+    lives-ok { $_ = 9 for @b[*] }, ‘holes are mutable (for @a[*])’;
+    is @b, <9 9 9 9 9 9>, ‘holes were changed correctly (for @a[*])’;
 }
 
 # vim: ft=perl6
