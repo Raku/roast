@@ -24,7 +24,7 @@ plan 23;
 {
     my $var;
     my $sub = sub ($x) { once { $var += $x } };
- 
+
     nok $var.defined, 'once {...} has not run yet';
 
     $sub(2);
@@ -54,7 +54,7 @@ for <first second> {
         once { $str ~= 'i' };
         ":$str";
     };
-	
+
     is $sub(), ':oIi', "once block set \$str to 3     ($_ time)";
     is $sub(), ':o', "once wasn't invoked again (1-1) ($_ time)";
     is $sub(), ':o', "once wasn't invoked again (1-2) ($_ time)";
