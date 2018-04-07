@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 8;
+plan 9;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 12;
@@ -245,6 +245,26 @@ subtest 'block in string in parentheses in `for` statement mod' => {
 { # https://github.com/rakudo/rakudo/issues/1645
     sub f { 4 ?? 8 !! 15 }; f for ^10000;
     pass 'no segfaults in sub call with ternary';
+}
+
+{
+    # RT #127869
+    my $failed = 0;
+
+    sub match ($str, $flip) {
+        return False if $flip eq "no";
+        return $str ~~ rx/foo/;
+    }
+
+    for 0..104 {
+        for "no", "yes" -> $flip {
+            if my $match = match("something", $flip) {
+                $failed++ unless $match;
+            } 
+        }
+    } 
+
+    is $failed, 0, '$match should not be true and false (RT#127869)';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
