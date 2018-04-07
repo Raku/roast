@@ -260,9 +260,9 @@ subtest 'block in string in parentheses in `for` statement mod' => {
         for "no", "yes" -> $flip {
             if my $match = match("something", $flip) {
                 $failed++ unless $match;
-            } 
+            }
         }
-    } 
+    }
 
     is $failed, 0, '$match should not be true and false (RT#127869)';
 }
