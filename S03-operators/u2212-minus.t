@@ -10,7 +10,7 @@ plan 54;
 
 {
     is-deeply infix:<−>(  ),   0, 'infix:<−>() returns zero';
-    is-deeply infix:<−>(42), -42, 'infix:<−>(arg) negates arg';
+    is-deeply infix:<−>(42),  42, 'infix:<−>(arg) does not negate arg';
     is-deeply quietly { class {} − class {} },
         0, 'infix, Custom class, Custom class';
 }
