@@ -253,8 +253,8 @@ is-deeply do { my enum Foos (a => <42>); a.Str }, 'a',
 }
 
 { # RT #129142
-    enum FF <zero one two three>;
-    enum GG <fee fie foo fum>;
+    my enum FF <zero one two three>;
+    my enum GG <fee fie foo fum>;
     lives-ok { FF(GG(2)).perl }, 'Coercing an enum from a coercion of an enum from an int works';
     is-deeply FF(GG(2)).perl, "FF", "Coercing an enum from a coercion of an enum returns expected result";
 }
