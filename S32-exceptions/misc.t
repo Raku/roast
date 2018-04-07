@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 170;
+plan 173;
 
 # RT #77270
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
@@ -380,10 +380,21 @@ throws-like 'my Int $a is default(Nil)',
     is_run q[() while 0], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on () and suggests Nil";
     is_run q[my @x = gather 43], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '43' / }, "sink warns inside of gather";
 
-    #?rakudo todo 'temp fudge'
     is_run q[∞; NaN; Inf; -Inf], { status => 0, :err{
         .contains: «WARNINGS  "Useless use"  ∞  NaN  Inf  -Inf».all
     }}, "sink warns about special Nums";
+
+    is_run q[0xFF], { status => 0, :err{
+        .contains: «WARNINGS  "Useless use"  integer  0xFF».all
+    }}, "sink warning maintains used format of integers";
+    is_run q[0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF], { status => 0, :err{
+        .contains: «WARNINGS  "Useless use"  integer
+          0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF».all
+    }}, "sink warning maintains used format of big integers";
+    is_run q[1.22222222222222222222222222222222222222e0], { status => 0, :err{
+        .contains: «WARNINGS  "Useless use"  number
+          1.22222222222222222222222222222222222222e0».all
+    }}, "sink warning maintains used format of nums";
 }
 
 # RT #125769
