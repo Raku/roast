@@ -4,6 +4,7 @@ use Test;
 plan 25;
 
 my $filename = $?FILE.IO.parent.child('comb.testing');
+LEAVE unlink $filename; # cleanup
 
 #?DOES 1
 sub test-comb($text,@result,|c) {
