@@ -1,6 +1,5 @@
 use v6;
 use Test;
-use Test::Util;
 
 plan 211;
 
