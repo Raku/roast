@@ -475,9 +475,8 @@ subtest 'default `is default()` gets adjusted to type constraint' => {
 {
     class DefaultTyped { has Int:D $.a is rw is default(42) }
     is DefaultTyped.new.a, 42, 'uninitialized typed:D attribute should have its default';
-    is_run 'class DefaultTyped { has Int:D $.a is rw is default(Nil) }',
-           %( :1status, :err{.contains: 'Type check failed'} ),
-           ':D type check failing in is default(…)';
+    throws-like ｢class NilDefaultTyped { has Int:D $.a is rw is default(Nil) }｣,
+                X::TypeCheck::Assignment;
 }
 
 # vim: ft=perl6
