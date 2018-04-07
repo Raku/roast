@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 7;
+plan 8;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 12;
@@ -240,6 +240,11 @@ subtest 'block in string in parentheses in `for` statement mod' => {
     is-deeply (foo 222), 'HERE: bar 22299', 'second run';
     is-deeply (foo 333), 'HERE: bar 33399', 'third run';
     is-deeply (foo 444), 'HERE: bar 44499', 'fourth run';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1645
+    sub f { 4 ?? 8 !! 15 }; f for ^10000;
+    pass 'no segfaults in sub call with ternary';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
