@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 33;
 
 # basic lvalue assignment
 {
@@ -87,5 +87,16 @@ plan 31;
     is %hash<ref><val>,      42, "access to infinite HoHoHoH... (1)";
     is %hash<ref><ref><val>, 42, "access to infinite HoHoHoH... (2)";
 }
+
+# RT #132238
+throws-like "\n\nsay \$<\n\n", X::Comp::AdHoc,
+    'good error message for unclosed <> hash operator',
+    message =>
+        /:i[:s unable to parse<|w>] .* <|w>find\s+\'\>\' .* [:s at line 3] /;
+#?rakudo todo 'RT #132238'
+throws-like "say \$<", X::Comp::AdHoc,
+    'better and shorter error message for unclosed <> hash operator',
+    # somewhat tricky does not contain "expecting any of"
+    gist => /^ [. <!before [:s expecting any of:]>]* $ /;
 
 # vim: ft=perl6
