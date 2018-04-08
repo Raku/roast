@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 62;
+plan 64;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -211,6 +211,12 @@ is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
     my $z = $y xx 1;
     $y = '♥';
     is $z, 25, 'xx does not keep containers around';
+}
+
+# RT #130941
+{
+    lives-ok { 42 xx 9999999999 }, ‘xx is indeed lazy (32-bit range)’;
+    lives-ok { 42 xx (2 ** 62)  }, ‘xx is indeed lazy (64-bit range)’;
 }
 
 # vim: ft=perl6
