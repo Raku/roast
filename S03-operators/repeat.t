@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 64;
+plan 63;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -214,9 +214,31 @@ is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
 }
 
 # RT #126014
-{
-    lives-ok { 42 xx 9999999999 }, ‘xx is indeed lazy (32-bit range)’;
-    lives-ok { 42 xx (2 ** 62)  }, ‘xx is indeed lazy (64-bit range)’;
+# https://github.com/rakudo/rakudo/issues/1708
+subtest 'sunk, plain value `xx` sink cheaply' => {
+    plan +my @tests
+    := {seq => 42 xx 2⁹⁹⁹⁹⁹,     v => '2⁹⁹⁹⁹⁹',     count => 2⁹⁹⁹⁹⁹    },
+       {seq => 42 xx 9999999999, v => '9999999999', count => 9999999999},
+       {seq => 42 xx 2 ** 62,    v => '2 ** 62',    count => 2 ** 62   },
+       {seq => 42 xx ∞,          v => '∞',          count => ∞         },
+       {seq => 42 xx Inf,        v => 'Inf',        count => ∞         },
+       {seq => 42 xx *,          v => '*',          count => ∞         };
+
+    for @tests -> \t {
+        subtest t.<v> => {
+            plan 3;
+            with t.<seq>.iterator {
+                .can('bool-only')
+                    ?? is-deeply .bool-only, True, 'bool-only gives true'
+                    !! skip '.bool-only not implemented';
+                .can('count-only')
+                    ?? is-deeply .count-only, t.<count>, 'count-only is right'
+                    !! skip '.count-only not implemented';
+                .sink-all;
+                pass 'sinking did not "hang"';
+            }
+        }
+    }
 }
 
 # vim: ft=perl6
