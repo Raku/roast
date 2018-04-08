@@ -213,7 +213,7 @@ is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
     is $z, 25, 'xx does not keep containers around';
 }
 
-# RT #130941
+# RT #126014
 {
     lives-ok { 42 xx 9999999999 }, ‘xx is indeed lazy (32-bit range)’;
     lives-ok { 42 xx (2 ** 62)  }, ‘xx is indeed lazy (64-bit range)’;
