@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 28;
+plan 29;
 
 my $path = "io-handle-testfile";
 
@@ -281,3 +281,6 @@ subtest 'opened filehandles get closed on exit automatically' => {
 
     is-deeply $path.slurp, 'pass', 'file has all the content we wrote into it';
 }
+
+# RT #131858
+is class Z is IO::Handle { }.new.nl-in, (“\n”, “\r\n”), ‘.nl-in has \n and \r\n’
