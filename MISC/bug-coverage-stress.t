@@ -157,6 +157,7 @@ is_run ｢use RAKUDO1413; print 'pass'｣,
     pass 'no crashes with Whatever curries in topics of for/given statement modifiers';
 }
 
+#?rakudo.jvm skip 'atomicint NYI'
 { # https://github.com/rakudo/rakudo/issues/1535
     my class R1535Log::Async {
         has $.supplier = Supplier.new;
@@ -180,6 +181,7 @@ is_run ｢use RAKUDO1413; print 'pass'｣,
     is $x, 4000, 'collected right amount of characters (with &foo)';
 }
 
+#?rakudo.jvm skip 'atomicint NYI'
 { # https://github.com/rakudo/rakudo/issues/1535
     my class R1535Log::Async {
         has $.supplier = Supplier.new;
