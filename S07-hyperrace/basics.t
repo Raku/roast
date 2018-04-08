@@ -184,6 +184,6 @@ is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
 
 # RT #127974
 {
-    lives-ok { for (^100).race(batch=>1) { sprintf '%1$s %2$s', 5, 42 } },
+    is-deeply (^100).race(batch=>1).map({ sprintf '%1$s %2$s', 5, 42 }).List, ‘5 42’ xx 100, 
         'sprintf is threadsafe when format tokens use explicit indices';
 }
