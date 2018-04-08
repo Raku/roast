@@ -186,9 +186,7 @@ is_run ｢Failure.new(Exception.new); Nil｣, {:out(""), :err(*), :1status},
     }
 }
 
-# RT #126394
-#? Assigning Failure to typed variable swallows Failure information
-{
+{ # RT #126394
     throws-like {
 	sub s { fail 'important failure message' }
 	my Int $x = s();
