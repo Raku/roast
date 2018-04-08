@@ -148,8 +148,11 @@ file, either via a PR or a request to someone on IRC to add it.
 
 #### Error Messages
 
-In general, tests for the specific wording of error messages should go in Rakudo's
-test suite, e.g., https://github.com/rakudo/rakudo/blob/master/t/05-messages/03-errors.t.
+In general, tests for the specific wording of error messages should go into the
+implementation's test suite and not become part of the specification.
+
+- Rakudo implementation has specific directory in its suite for messages tests:
+    https://github.com/rakudo/rakudo/tree/master/t/05-messages
 
 #### Exception types
 
