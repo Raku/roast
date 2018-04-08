@@ -143,3 +143,16 @@ test file&mdash;that will be generated automatically by the test
 harness during the regular testing on the servers. As
 described earlier, the new test file will have to be added to the spectest.data
 file, either via a PR or a request to someone on IRC to add it.
+
+### Suggestions
+
+#### Error Messages
+
+In general, tests for the specific wording of error messages should go in Rakudo's
+test suite, e.g., https://github.com/rakudo/rakudo/blob/master/t/05-messages/03-errors.t.
+
+#### Exception types
+
+If the test expects a generic exception, generally you should use `Exception` and not
+`X::Comp::AdHoc`. Otherwise, if we ever make those typed exceptions, the tests would start
+to fail.
