@@ -772,12 +772,12 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     my Int @a;
     @a[5] = 42;
     lives-ok { $_ = 6 for @a    }, ‘holes are mutable (for @a)’;
-    is @a, <6 6 6 6 6 6>, ‘holes were changed correctly (for @a)’;
+    is-deeply @a, Array[Int].new(6, 6, 6, 6, 6, 6), ‘holes were changed correctly (for @a)’;
 
     my Int @b;
     @b[5] = 24;
     lives-ok { $_ = 9 for @b[*] }, ‘holes are mutable (for @a[*])’;
-    is @b, <9 9 9 9 9 9>, ‘holes were changed correctly (for @a[*])’;
+    is-deeply @b, Array[Int].new(9, 9, 9, 9, 9, 9), ‘holes were changed correctly (for @a[*])’;
 }
 
 # vim: ft=perl6
