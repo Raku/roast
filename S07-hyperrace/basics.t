@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 84;
+plan 85;
 
 for <hyper race> -> $meth {
         sub hr (\seq) { $meth eq 'race' ?? seq.sort !! seq }
@@ -180,4 +180,10 @@ is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
     }
     my @a = (1..100).hyper.map({foo});
     is-deeply @a, [‘++’ xx 100], ‘hyperized s/…/…/;’
+}
+
+# RT #127974
+{
+    is-deeply (^100).race(batch=>1).map({ sprintf '%1$s %2$s', 5, 42 }).List, ‘5 42’ xx 100, 
+        'sprintf is threadsafe when format tokens use explicit indices';
 }
