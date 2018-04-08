@@ -1,7 +1,9 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
-plan 8;
+plan 9;
 
 # RT #117235
 {
@@ -93,3 +95,7 @@ subtest 'sub calls in last statement of sunk `for` get sunk' => {
     throws-like { sub foo {fail}; for ^1 { foo }; Nil }, Exception,
         'block `for` with sub that returns Failure';
 }
+
+# https://github.com/rakudo/rakudo/issues/1693
+is_run ｢unit package A; our sub need() {}; for <s> { A::need }; print 'pass'｣,
+    { :out<pass>, :err(''), :0status}, 'no crash in for ... { Package::foo }';
