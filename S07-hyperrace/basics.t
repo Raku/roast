@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 83;
+plan 84;
 
 for <hyper race> -> $meth {
         sub hr (\seq) { $meth eq 'race' ?? seq.sort !! seq }
@@ -170,3 +170,14 @@ for <hyper race> -> $meth {
 
 # RT #127099
 is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
+
+# RT#126752
+{
+    sub foo() {
+        my $x = "*" x 2;
+        $x ~~ s/ "*" ** 1..* /{ "+" x $/.chars }/;
+        $x
+    }
+    my @a = (1..100).hyper.map({foo});
+    is-deeply @a, [‘++’ xx 100], ‘hyperized s/…/…/;’
+}
