@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 37;
+plan 38;
 
 # L<S04/Exceptions/The fail function>
 
@@ -186,4 +186,15 @@ is_run ｢Failure.new(Exception.new); Nil｣, {:out(""), :err(*), :1status},
     }
 }
 
+# RT #126394
+#? Assigning Failure to typed variable swallows Failure information
+{
+    throws-like {
+	sub s { fail 'important failure message' }
+	my Int $x = s();
+	say $x;
+    }, Exception, message => /important/;
+}
+
 # vim: ft=perl6
+
