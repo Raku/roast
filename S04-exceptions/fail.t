@@ -186,13 +186,11 @@ is_run ｢Failure.new(Exception.new); Nil｣, {:out(""), :err(*), :1status},
     }
 }
 
-{ # RT #126394
-    throws-like {
-	sub s { fail 'important failure message' }
-	my Int $x = s();
-	say $x;
-    }, Exception, message => /important/;
-}
+# RT #126394
+throws-like {
+    sub s { fail 'important failure message' }; my Int $x = s();
+}, Exception, message => /important/,
+    'assigning Failure to typed variable that cannot hold it explodes it';
 
 # vim: ft=perl6
 
