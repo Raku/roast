@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 10;
+plan 11;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 12;
@@ -284,5 +284,11 @@ subtest '$_ and with/andthen/for combinations are not buggy' => {
     (with 1 -> $a { .flip }) andthen is-deeply $_, '24',
         'andthen (with -> ... { $_ })';
 }
+
+# https://github.com/MoarVM/MoarVM/issues/838
+is_run ｢
+    my @x = do for ^20 { [do for ^5 { ("a".."z").roll(3).join }] }
+    print @x.elems
+｣, {:out<20>, :err(''), :0status}, 'no "Illegal Instruction" crashes';
 
 # vim: expandtab shiftwidth=4 ft=perl6
