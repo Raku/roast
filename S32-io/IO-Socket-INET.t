@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan 27;
 
 # test 2 does echo protocol - Internet RFC 862
 do-test
@@ -267,6 +267,26 @@ do-test
 
         $^client.close();
     };
+
+# https://github.com/rakudo/rakudo/issues/1721
+{
+  my $str := "foo\nbar\r\nmeows\n";
+  do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client := $^server.accept;
+        $client.print: $str;
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        is-deeply $^client.lines.head(100), $str.lines,
+            'can read correct lines from client without any hangs';
+        $^client.close();
+    }
+}
 
 if $*DISTRO.is-win            or  # test for WSL below
    $*KERNEL.name eq "linux"   and $*KERNEL.release ~~ /:i <|w>Microsoft<|w>/ {
