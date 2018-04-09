@@ -282,5 +282,7 @@ subtest 'opened filehandles get closed on exit automatically' => {
     is-deeply $path.slurp, 'pass', 'file has all the content we wrote into it';
 }
 
-# RT #131858
-is-deeply class Z is IO::Handle { }.new.nl-in, $[“\n”, “\r\n”], ‘.nl-in has \n and \r\n’;
+{ # RT #131858
+    is-deeply my class Z is IO::Handle { }.new.nl-in, $[“\n”, “\r\n”],
+        ‘.nl-in in subclasses has \n and \r\n’;
+}
