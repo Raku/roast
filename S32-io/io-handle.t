@@ -283,4 +283,4 @@ subtest 'opened filehandles get closed on exit automatically' => {
 }
 
 # RT #131858
-is-deeply class Z is IO::Handle { }.new.nl-in, $[“\n”, “\r\n”], ‘.nl-in has \n and \r\n’
+is-deeply class Z is IO::Handle { }.new.nl-in, $[“\n”, “\r\n”], ‘.nl-in has \n and \r\n’;
