@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 57;
+plan 58;
 
 # L<S32::Str/Str/=item substr>
 
@@ -123,5 +123,22 @@ subtest '.substr fails when start is beyond end of string' => {
 
 # RT #122789
 lives-ok { BEGIN "a".subst: /a/, "b" }, '.subst in BEGIN does not die';
+
+subtest 'substr coerces from/to to Ints' => {
+    plan 2;
+    for '1234567890', 'Str',  1234567890, 'Cool' -> \v, $type {
+        subtest $type => {
+            plan 2*6;
+            for v.^lookup('substr'), &substr -> &SUBSTR {
+                is SUBSTR(v, 6.1..8.8   ), '789', 'Range(Rat, Rat)';
+                is SUBSTR(v, 6.1        ), '7890', 'Rat';
+                is SUBSTR(v, 6.1,   3.8 ), '789', 'Rat, Rat';
+                is SUBSTR(v, {6.1}, 3.8 ), '789', 'Callable, Rat';
+                is SUBSTR(v, {6.1}      ), '7890', 'Callable';
+                is SUBSTR(v, 6.1,  {3.8}), '789', 'Callable';
+            }
+        }
+    }
+}
 
 # vim: ft=perl6
