@@ -97,8 +97,7 @@ plan 95;
     my int $x;
     ($x) = (5);
     is $x, 5, 'did we assign $x';
-    #?rakudo todo 'RT #102416 - though maybe wrong test? Not sure .WHAT is *that* magic'
-    is $x.WHAT, int, 'is it really a native';
+    is $x.WHAT, Int, 'does WHAT work correctly on a native variable';
 }
 
 # RT #121349
