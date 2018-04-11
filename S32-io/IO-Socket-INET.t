@@ -282,6 +282,7 @@ do-test
     },
     # client
     {
+        #?rakudo.jvm todo 'incorrect handling of \r\n'
         is-deeply $^client.lines.head(100), $str.lines,
             'can read correct lines from client without any hangs';
         $^client.close();
