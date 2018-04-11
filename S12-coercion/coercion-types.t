@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 30;
+plan 31;
 
 # coercion types in parameter lists
 {
@@ -278,6 +278,42 @@ subtest 'DefiniteHow target, errors, source is already target' => {
         is-deeply -> Target:U()         $x { $x }(Target), Target,
             'from implied Any';
     }
+}
+
+subtest 'mistyped typenames in coercers give good error' => {
+    plan 2;
+    ok 1; ok 1;
+    # sub test-it { throws-like $^code, X::Undeclared::Symbols, $code }
+    # subtest 'in signature' => {
+    #     plan +my @tests = «
+    #       ｢sub (Int(Coor))      {}｣
+    #       ｢sub (Innt(Cool))     {}｣
+    #       ｢sub (Innt(Coor))     {}｣
+    #
+    #       ｢sub (Int(Coor:D))    {}｣
+    #       ｢sub (Int:D(Coor))    {}｣
+    #       ｢sub (Int:D(Coor:D))  {}｣
+    #
+    #       ｢sub (Innt(Cool:D))   {}｣
+    #       ｢sub (Innt:D(Cool))   {}｣
+    #       ｢sub (Innt(Cool:D))   {}｣
+    #
+    #       ｢sub (Innt(Coor:D))   {}｣
+    #       ｢sub (Innt:D(Coor))   {}｣
+    #       ｢sub (Innt:D(Coor:D)) {}｣
+    #     »;
+    #     .&test-it for @tests;
+    # }
+    #
+    # subtest 'standalone' => {
+    #     plan +my @tests = «
+    #       ｢my $x = Int(Coor)｣    ｢my $x = Innt(Cool)｣   ｢my $x = Innt(Coor)｣
+    #       ｢my $x = Int(Coor:D)｣  ｢my $x = Int:D(Coor)｣  ｢my $x = Int:D(Coor:D)｣
+    #       ｢my $x = Innt(Cool:D)｣ ｢my $x = Innt:D(Cool)｣ ｢my $x = Innt(Cool:D)｣
+    #       ｢my $x = Innt(Coor:D)｣ ｢my $x = Innt:D(Coor)｣ ｢my $x = Innt:D(Coor:D)｣
+    #     »;
+    #     .&test-it for @tests;
+    # }
 }
 
 # vim: ft=perl6
