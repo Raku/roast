@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 103;
+plan 104;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -821,5 +821,9 @@ subtest 'Num literals yield closest available Num to their nominal value' => {
 # RT#128913
 cmp-ok "9.9989999999999991e0".EVAL, &[!<], "9.998999999999999e0".EVAL,
     'parsed nums choose closest available representation';
+
+# RT#132329
+cmp-ok Num(0.777777777777777777777), '==', Num(0.7777777777777777777771),
+    'Rat->Num conversion is monotonic';
 
 # vim: ft=perl6
