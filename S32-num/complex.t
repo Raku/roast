@@ -74,7 +74,7 @@ for @examples -> $z {
     is-approx(0.0.Num + $z, $z, "0.0.Num + $z = $z");
     is-approx($z + 0 / 1, $z, "$z + 0/1 = $z");
     is-approx(0 / 1 + $z, $z, "0/1 + $z = $z");
-    
+
     is-approx($z - 0, $z, "$z - 0 = $z");
     is-approx(0 - $z, -$z, "0 - $z = -$z");
     is-approx($z - 0.0.Num, $z, "$z - 0.0.Num = $z");
@@ -134,7 +134,7 @@ is-approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
     is "1" / 3i, 1 / 3i, '"1" / 3i';
     is 3i ** "1", 3i ** 1, '3i ** "1"';
     is "1" ** 3i, 1 ** 3i, '"1" ** 3i';
-    
+
 }
 
 # Conjugation
