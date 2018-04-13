@@ -170,6 +170,12 @@ nok 'd' ~~ *..'c',      "not 'd' ~~ *..'c'";
     ok ' ' ~~ ' '..'A', "' ' ~~ ' '..'A'";
 }
 
+# rakudo #1730: Range.ACCEPTS fails to accept one of two equivalent Ranges
+ok (^10) ~~ (0..9),       '(^10) ~~ (0..9)';
+ok (0..9) ~~ (^10),       '(0..9) ~~ (^10)';
+ok 'a'..^'z' ~~ 'a'..'y', "'a'..^'z' ~~ 'a'..'y'";
+ok 'a'..'y' ~~ 'a'..^'z', "'a'..'y' ~~ 'a'..^'z'";
+
 ok (1 .. *).is-lazy, "1 .. * is lazy";
 ok !(1 .. 2).is-lazy, "1 .. 2 is not lazy";
 
