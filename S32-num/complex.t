@@ -263,11 +263,14 @@ subtest 'exponentiation with zero (n = 0+0i)' => {
 
 # RT#128820
 subtest 'distinct Complex literals do not compare the same' => {
-    plan 2;
+    plan 3;
     my $l1 := <1180591620717411303424e0+1180591620717411303424e0i>;
     my $l2 := <1180591620717409992704e0+1180591620717409992704e0i>;
     cmp-ok $l1, &[!==], $l2, '==';
     cmp-ok $l1, &[!===], $l2, '===';
+
+    # RT#128819
+    cmp-ok $l1.WHICH, &[!===], $l2.WHICH, '=== of .WHICHes';
 }
 
 # vim: ft=perl6

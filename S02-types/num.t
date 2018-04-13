@@ -843,9 +843,14 @@ subtest 'parsed nums are the same as those produced from Str.Num' => {
 
 # RT#128820
 subtest 'distinct num literals do not compare the same' => {
-    plan 2;
-    cmp-ok 1180591620717411303424e0, &[!==],  1180591620717409992704e0, '==';
-    cmp-ok 1180591620717411303424e0, &[!===], 1180591620717409992704e0, '===';
+    plan 3;
+    my $l1 := 1180591620717411303424e0;
+    my $l2 := 1180591620717409992704e0;
+    cmp-ok $l1, &[!==],  $l2, '==';
+    cmp-ok $l1, &[!===], $l2, '===';
+
+    # RT#128819
+    cmp-ok $l1.WHICH, &[!===], $l2.WHICH, '=== of .WHICHes';
 }
 
 # vim: ft=perl6
