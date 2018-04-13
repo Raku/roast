@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 1;
+plan 2;
 
 # https://github.com/rakudo/rakudo/issues/1651
 subtest 'No drift when roundtripping Num -> Str -> Num -> Str' => {
@@ -25,6 +25,21 @@ subtest 'No drift when roundtripping Num -> Str -> Num -> Str' => {
             my \n2 := n.Str.Num.Str.Num.Str.Num.Str.Num; # second
             cmp-ok n1, '===', n2, "{n} roundtrippage is stable";
         }
+    }
+}
+
+# RT#128914
+subtest 'parsed literals match &val and Str.Num' =>  {
+    plan 2*my $rounds = 100;
+    sub gen-num {
+        ('.', ^9 .roll: 20).flat.List.rotate(-19.rand.Int).join
+        ~ 'e' ~ (-324..308).pick
+    }
+
+    for ^$rounds {
+        my $n := gen-num;
+        cmp-ok $n.EVAL, '==', $n.Num,  "parsed literal == Str.Num [$n]";
+        cmp-ok $n.EVAL, '==', val($n), "parsed literal == val()   [$n]";
     }
 }
 

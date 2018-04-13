@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 104;
+plan 105;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -825,5 +825,20 @@ cmp-ok "9.9989999999999991e0".EVAL, &[!<], "9.998999999999999e0".EVAL,
 # RT#132329
 cmp-ok Num(0.777777777777777777777), '==', Num(0.7777777777777777777771),
     'Rat->Num conversion is monotonic';
+
+subtest 'parsed nums are the same as those produced from Str.Num' => {
+    plan 6;
+    is '9.998999999999999e0'.EVAL, '9.998999999999999e0',
+        'parsed number stringification';
+    is '9.998999999999999e0'.Num, '9.998999999999999e0',
+        'Str.Num stringification';
+    is val('9.998999999999999e0').Numeric.Str, '9.998999999999999e0',
+        'val().Numeric.Str stringification';
+
+    cmp-ok '9.998999999999999e0'.EVAL, '==', '9.998999999999999e0'.Num,
+      'parsed matches Str.Num';
+    cmp-ok '9.998999999999999e0'.EVAL, '==', val('9.998999999999999e0'),
+      'parsed matches val()';
+}
 
 # vim: ft=perl6
