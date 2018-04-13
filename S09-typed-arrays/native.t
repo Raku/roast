@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 # Basic native array tests.
 {
@@ -92,5 +92,32 @@ subtest 'no rogue leftovers when resizing natives' => {
         @arr[4] = 3;
         is-deeply @arr, array[int].new(0, 0, 0, 0, 3),
             'contents + unshift + clear clears old elements';
+    }
+}
+
+subtest 'assigning other arrays into native arrays dies if the type of an element is wrong' => {
+    plan 14;
+    {
+        throws-like 'my int @a = 1, "a"',   Exception, 'assigning a str literal to an int array throws';
+        throws-like 'my int @a = 1, 1e0',   Exception, 'assigning a num literal to an int array throws';
+        throws-like 'my int @a = 1, 2**65', Exception, 'assigning a too big literal to an int array throws';
+
+        throws-like 'my str $a = "a"; my int @a = 1, $a', Exception, 'assigning a str variable to an int array throws';
+        throws-like 'my num $a = 1e0; my int @a = 1, $a', Exception, 'assigning a num variable to an int array throws';
+        throws-like 'my $a = 2**65;   my int @a = 1, $a', Exception, 'assigning a too big variable to an int array throws';
+    }
+    {
+        throws-like 'my str @a = "a", 1',   Exception, 'assigning an int literal to a str array throws';
+        throws-like 'my str @a = "a", 1e0', Exception, 'assigning a num literal to a str array throws';
+
+        throws-like 'my int $a = 1;   my str @a = "a", $a', Exception, 'assigning an int variable to a str array throws';
+        throws-like 'my num $a = 1e0; my str @a = "a", $a', Exception, 'assigning a num variable to a str array throws';
+    }
+    {
+        throws-like 'my num @a = 1e0, 1',   Exception, 'assigning an int literal to a num array throws';
+        throws-like 'my num @a = 1e0, "a"', Exception, 'assigning a str literal to a num array throws';
+
+        throws-like 'my int $a = 1;   my num @a = 1e0, $a', Exception, 'assigning an int variable to a num array throws';
+        throws-like 'my str $a = "a"; my num @a = 1e0, $a', Exception, 'assigning a str variable to a num array throws';
     }
 }
