@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 553;
+plan 554;
 
 # Basic tests functions specific to complex numbers.
 
@@ -259,6 +259,15 @@ subtest 'exponentiation with zero (n = 0+0i)' => {
     is-deeply n**0, 1+0i, 'n**0';
     is-deeply n**n, 1+0i, 'n**n';
     is-deeply 0**n, 1+0i, '0**n';
+}
+
+# RT#128820
+subtest 'distinct Complex literals do not compare the same' => {
+    plan 2;
+    my $l1 := <1180591620717411303424e0+1180591620717411303424e0i>;
+    my $l2 := <1180591620717409992704e0+1180591620717409992704e0i>;
+    cmp-ok $l1, &[!==], $l2, '==';
+    cmp-ok $l1, &[!===], $l2, '===';
 }
 
 # vim: ft=perl6
