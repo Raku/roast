@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 106;
+plan 107;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -851,6 +851,12 @@ subtest 'distinct num literals do not compare the same' => {
 
     # RT#128819
     cmp-ok $l1.WHICH, &[!===], $l2.WHICH, '=== of .WHICHes';
+}
+
+{ # RT#128817
+    my $n := 1180591620717411303424.0e0;
+    cmp-ok $n.Int, '==', $n.perl.EVAL.Int,
+        '.perl roundtrips the Num correctly';
 }
 
 # vim: ft=perl6

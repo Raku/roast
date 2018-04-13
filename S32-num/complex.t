@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 554;
+plan 555;
 
 # Basic tests functions specific to complex numbers.
 
@@ -271,6 +271,12 @@ subtest 'distinct Complex literals do not compare the same' => {
 
     # RT#128819
     cmp-ok $l1.WHICH, &[!===], $l2.WHICH, '=== of .WHICHes';
+}
+
+{ # RT#128817
+    my $n := <1180591620717411303424.0e0+1180591620717409992704e0i>;
+    cmp-ok $n, '==', $n.perl.EVAL,
+        '.perl roundtrips the Complex correctly';
 }
 
 # vim: ft=perl6

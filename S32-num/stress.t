@@ -3,8 +3,9 @@ use Test;
 
 plan 2;
 
+# RT#128817
 # https://github.com/rakudo/rakudo/issues/1651
-subtest 'No drift when roundtripping Num -> Str -> Num -> Str' => {
+subtest 'No drift when roundtripping Num -> perl -> Num -> perl' => {
     # In this test, it's fine if the original .Str gives the string that
     # doesn't match what the user has entered (since it may be a number that
     # doesn't have exact representation in a double). However, .Num.Str
@@ -17,12 +18,12 @@ subtest 'No drift when roundtripping Num -> Str -> Num -> Str' => {
         3e-324, 3e-320, 3e307
     );
 
-    plan @ranges * my \iters = 1000;
+    plan @ranges * my \iters = 500;
     for @ranges -> \r {
         for ^iters {
             my \n  := r.rand;
-            my \n1 := n.Str.Num; # get first correct num
-            my \n2 := n.Str.Num.Str.Num.Str.Num.Str.Num; # second
+            my \n1 := n.perl.Num; # get first correct num
+            my \n2 := n.perl.Num.perl.Num.perl.Num.perl.Num; # second
             cmp-ok n1, '===', n2, "{n} roundtrippage is stable";
         }
     }
