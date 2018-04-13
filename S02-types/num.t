@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 105;
+plan 106;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -839,6 +839,13 @@ subtest 'parsed nums are the same as those produced from Str.Num' => {
       'parsed matches Str.Num';
     cmp-ok '9.998999999999999e0'.EVAL, '==', val('9.998999999999999e0'),
       'parsed matches val()';
+}
+
+# RT#128820
+subtest 'distinct num literals do not compare the same' => {
+    plan 2;
+    cmp-ok 1180591620717411303424e0, &[!==],  1180591620717409992704e0, '==';
+    cmp-ok 1180591620717411303424e0, &[!===], 1180591620717409992704e0, '===';
 }
 
 # vim: ft=perl6
