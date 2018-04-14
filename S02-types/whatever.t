@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 129;
+plan 128;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -497,15 +497,6 @@ subtest 'can curry chains with .& calls on them' => {
       'FOOonE', 'method, .&(1arg), method, .& with whatever curry in it, .&sub';
     is (*.uc.&{ $^a ~ $^b ~ $^c }('one', 'two').flip.&(*.tc).&flip)('foo'),
       'FOOonetwO', 'method, .&(2args), method, .& with whatever curry, .&sub';
-}
-
-subtest 'can .assuming with WhateverCode' => {
-    plan 4;
-    is-deeply ((*.flip)).assuming(42)(), '24', '1-param, 1 assumed';
-    is-deeply ((* + *)).assuming(42)(3), 45, '2-param, 1 assumed';
-    is-deeply ((* + *)).assuming(42, 5)(), 47, '2-param, 2 assumed';
-    is-deeply ((* + * + *.flip + *.abs)).assuming(42, 5)(123, -50), 418,
-        '5-params with nested calls, 2 assumed';
 }
 
 # vim: ft=perl6
