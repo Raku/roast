@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 {
     my @seq = (^20000).grep(*.is-prime);
@@ -35,4 +35,11 @@ plan 10;
 
     my @hyper = (^1000).hyper.map({ slip('x' xx $_) }).map(*.item);
     is @hyper.elems, @seq.elems, 'Correct number of elements from hyper map with slip';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1740
+    my $t-plain = { (^∞).grep(*.is-prime)[1000];       now - ENTER now }();
+    my $t-hyper = { (^∞).hyper.grep(*.is-prime)[1000]; now - ENTER now }();
+    cmp-ok $t-hyper, '≤', $t-plain*2,
+        'hypered .grep .is-prime is not hugely slower than plain grep';
 }
