@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 30;
+plan 31;
 
 is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it being confused for closure";
 
@@ -126,5 +126,8 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
     }
     is identity-matrix(5).perl, [[1,0,0,0,0], [0,1,0,0,0], [0,0,1,0,0], [0,0,0,1,0], [0,0,0,0,1]].perl, "code endpoint protects item";
 }
+
+is-deeply (<a b c>, *.reverse ... *)[5], <c b a>.Seq,
+    '… op does not prematurely cause consumtion of Seqs';
 
 # vim: ft=perl6
