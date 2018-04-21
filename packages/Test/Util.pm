@@ -361,6 +361,45 @@ sub run-with-tty (
     }
 }
 
+sub throws-like-any($code, @ex_type, $reason?, *%matcher) is export {
+    subtest {
+        plan 2 + %matcher.keys.elems;
+        my $msg;
+        if $code ~~ Callable {
+            $msg = 'code dies';
+            $code()
+        } else {
+            $msg = "'$code' died";
+            EVAL $code, context => CALLER::CALLER::CALLER::CALLER::;
+        }
+        flunk $msg;
+        skip 'Code did not die, can not check exception', 1 + %matcher.elems;
+        CATCH {
+            default {
+                pass $msg;
+                my $type_ok = $_ ~~ @ex_type.any;
+                ok $type_ok , "right exception type (@ex_type.map(*.^name))";
+                if $type_ok {
+                    for %matcher.kv -> $k, $v {
+                        my $got is default(Nil) = $_."$k"();
+                        my $ok = $got ~~ $v,;
+                        ok $ok, ".$k matches $v.gist()";
+                        unless $ok {
+                            diag "Expected: " ~ ($v ~~ Str ?? $v !! $v.perl)
+                              ~ "\nGot:      $got";
+                        }
+                    }
+                } else {
+                    diag "Expected: @ex_type.map(*.^name)\n"
+                        ~ "Got:      $_.^name()\n"
+                        ~ "Exception message: $_.message()";
+                    skip 'wrong exception type', %matcher.elems;
+                }
+            }
+        }
+    }, $reason // "did we throws-like @ex_type.map(*.^name)?";
+}
+
 =begin pod
 
 =head1 NAME
@@ -599,6 +638,13 @@ after last pull, and after C<IterationEnd> has been received.
 Instead of providing C<@data>, you can simply provide the number of values
 you're expecting. This lets you test iterators for which you cannot predict
 the order/content of pulled values.
+
+=head2 C<throws-like-any>
+
+    sub throws-like-any($code, @ex_type, $reason?, *%matcher);
+
+Same C<throws-like> except takes a C<Positional> for exception types and
+the test passes if any of those exceptions are thrown.
 
 =end pod
 
