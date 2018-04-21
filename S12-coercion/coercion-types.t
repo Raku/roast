@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 31;
+plan 32;
 
 # coercion types in parameter lists
 {
@@ -314,6 +314,12 @@ subtest 'mistyped typenames in coercers give good error' => {
     #     »;
     #     .&test-it for @tests;
     # }
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1753
+    my subset ZInt of Cool where *.elems;
+    sub foo(ZInt(Cool) $Z) {};
+    pass 'coercer with subset target did not crash';
 }
 
 # vim: ft=perl6
