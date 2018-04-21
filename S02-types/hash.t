@@ -1,6 +1,7 @@
 use v6.c;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 95;
 
@@ -244,8 +245,8 @@ lives-ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     my $x;
     lives-ok { $x{'a'} }, 'can index a variable that defaults to Any';
     nok $x{'a'}.defined, '... and the result is not defined';
-    throws-like { Mu.{'a'} },
-      X::Multi::NoMatch,
+    throws-like-any { Mu.{'a'} },
+      [X::Multi::NoMatch, X::TypeCheck::Binding::Parameter],
       'no .{ } in Mu';
 }
 
