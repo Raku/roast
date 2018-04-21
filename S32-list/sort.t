@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 36;
+plan 37;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -247,5 +247,8 @@ subtest 'degenerate cases' => {
     # -1 => leave as is
     is-deeply (2, 1).sort(-> $, $ {-1}), (2, 1).Seq, '2-item, 2-arity (3)';
 }
+
+# https://github.com/rakudo/rakudo/issues/1739
+is-deeply <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
 
 # vim: ft=perl6
