@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 28;
 
 # test 2 does echo protocol - Internet RFC 862
 do-test
@@ -287,6 +287,23 @@ do-test
             'can read correct lines from client without any hangs';
         $^client.close();
     }
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1738
+    my $sync := Channel.new;
+    start {
+        my $server := IO::Socket::INET.new:
+          :localhost<localhost>, :0localport, :listen;
+        $sync.send: $server.localport;
+        my $client := $server.accept;
+        $client.print: "Test passed\n";
+        $client.close;
+        $server.close;
+    }
+    is IO::Socket::INET.new(
+        :!listen, # <-- testing on purpose with :!listen set
+        :host<localhost>, :port($sync.receive)
+    ).get, 'Test passed', 'can connect as client when :$listen is set to False';
 }
 
 if $*DISTRO.is-win            or  # test for WSL below

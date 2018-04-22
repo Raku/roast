@@ -1,6 +1,7 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 104;
 
@@ -280,8 +281,8 @@ my @array2 = ("test", 1, Mu);
     is 'abc'[0], 'abc', '.[0] is identity operation for scalars (Str)';
     nok 'abc'[1].defined, '.[1] on a scalar is not defined';
     isa-ok 1[1],  Failure, 'indexing a scalar with other than 0 returns a Failure';
-    throws-like { Mu.[0] },
-      X::Multi::NoMatch,
+    throws-like-any { Mu.[0] },
+      [X::Multi::NoMatch, X::TypeCheck::Binding::Parameter],
       'but Mu has no .[]';
 }
 

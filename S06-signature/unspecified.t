@@ -29,7 +29,7 @@ is &named.signature.perl, ':(*%_)',
    'signature is :(Mu *%_) when none is specified and %_ is used, RT #125486';
 is named( :bravo<charlie> ), 'charlie', 'can call sub with named param used';
 nok named().defined, 'named param sub is callable with no params';
-dies-ok { named( 'zulu' ) }, 'named param sub dies with positional param';
+eval-dies-ok ｢named( 'zulu' )｣, 'named param sub dies with positional param';
 
 sub both { @_[1] ~ %_<delta> }
 is &both.signature.perl, ':(*@_, *%_)',
