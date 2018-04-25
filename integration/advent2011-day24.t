@@ -31,9 +31,9 @@ multi sub Slurp($filename) {
 }
 --END--
 
-lives-ok { EVAL $unambiguous ~ 'Slurp("'~$?FILE~'")' },
+lives-ok { EVAL $unambiguous ~ 'Slurp('~$?FILE.perl~')' },
   'unambiguous multi - lives';
-throws-like { EVAL $ambiguous   ~ 'Slurp("'~$?FILE~'")' },
+throws-like { EVAL $ambiguous   ~ 'Slurp('~$?FILE.perl~')' },
   X::Multi::Ambiguous,
   'ambiguous multi - dies';
 
