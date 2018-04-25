@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 297;
+plan 298;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -843,11 +843,36 @@ throws-like { DateTime.new: :2016year, 42 }, Exception,
 
 {
     my $dt1 = DateTime.now;
-    my $dt2 = $dt1.later(:1hour); 
+    my $dt2 = $dt1.later(:1hour);
      ok $dt1 <  $dt2, 'DateTime <  DateTime';
      ok $dt1 <= $dt2, 'DateTime <= DateTime';
     nok $dt1 == $dt2, 'DateTime == DateTime';
      ok $dt1 != $dt2, 'DateTime != DateTime';
     nok $dt1 >  $dt2, 'DateTime >  DateTime';
     nok $dt1 >= $dt2, 'DateTime >= DateTime';
+}
+
+# https://github.com/rakudo/rakudo/issues/1762
+# https://github.com/rakudo/rakudo/issues/1760
+subtest 'subsecond .later/.earlier' => {
+    plan 6;
+    is-deeply
+        DateTime.new('1879-03-14T00:00:00.000Z').later(:second(.7)),
+        DateTime.new('1879-03-14T00:00:00.700Z'), '.7s later';
+    is-deeply
+        DateTime.new('1879-03-14T00:00:00.000Z').later(:second(.007)),
+        DateTime.new('1879-03-14T00:00:00.007Z'), '.007s later';
+    is-deeply
+        DateTime.new('1879-03-14T00:00:00.000Z').later(:second(2.707)),
+        DateTime.new('1879-03-14T00:00:02.707Z'), '2.707s later';
+
+    is-deeply
+        DateTime.new('1879-03-14T00:00:00.000Z').earlier(:second(.7)),
+        DateTime.new('1879-03-13T23:59:59.300Z'), '.7s earlier';
+    is-deeply
+        DateTime.new('1879-03-14T00:00:00.000Z').earlier(:second(.007)),
+        DateTime.new('1879-03-13T23:59:59.993Z'), '.007s earlier';
+    is-deeply
+        DateTime.new('1879-03-14T00:00:00.000Z').earlier(:second(2.707)),
+        DateTime.new('1879-03-13T23:59:57.293Z'), '2.707s earlier';
 }
