@@ -40,7 +40,7 @@ dies-ok {
 
 # RT #126951
 {
-    sub f(*%h) { %h.keys };
+    sub f(*%h) { %h.keys.sort };
     
     my %typedhash := :{ a => 1, b => 2 }; 
     
