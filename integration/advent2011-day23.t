@@ -112,12 +112,12 @@ is-deeply [@starts_with_number], [10, 20, 30, 20, '40'], '@starts_with_number = 
 
 # Magic diamond
 
-my $readme-lines = Test::Util::run( 'my $n; for $*ARGFILES.lines {$n++}; print $n', :args(['README.md']) );
+my $readme-lines = Test::Util::run( 'my $n; for $*ARGFILES.lines {$n++}; print $n', :args([$?FILE]) );
 
 ok $readme-lines >= 10, 'for $*ARGFILES.lines {...}'
    or diag "output: $readme-lines";
 
-my $readme-lines2 = Test::Util::run( 'my $n; for lines() {$n++}; print $n', :args(['README.md']) );
+my $readme-lines2 = Test::Util::run( 'my $n; for lines() {$n++}; print $n', :args([$?FILE]) );
 
 ok $readme-lines2 >= 10, 'for lines() {...}'
    or diag "output: $readme-lines2";
