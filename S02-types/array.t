@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 104;
+plan 105;
 
 #L<S02/Mutable types/Array>
 
@@ -402,6 +402,13 @@ subtest '.gist shows only first 100 els' => {
     is-deeply [1..101] .gist, make-gist([1..100], '...'), '101 els';
     is-deeply [1..102] .gist, make-gist([1..100], '...'), '102 els';
     is-deeply [1..1000].gist, make-gist([1..100], '...'), '1000 els';
+}
+
+# https://github.com/rakudo/rakudo/pull/1053
+subtest 'reification of zen and whatever slices' => {
+    plan 2;
+    lives-ok { my $s = (gather die)[]  }, 'zen slice does not reify';
+    dies-ok  { my $s = (gather die)[*] }, 'whatever slice does reify';
 }
 
 # vim: ft=perl6
