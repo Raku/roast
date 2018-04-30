@@ -96,7 +96,7 @@ subtest "Noncharacters" => {
     }
 }
 is-deeply 0x10FFFF.uniname, "<noncharacter-10FFFF>", "0x10FFFF is <noncharacter-10FFFF>";
-is-deeply 0x10FFFF.uniname, "<noncharacter-10FFFF>", "0x10FFFF is <noncharacter-10FFFF>";
 is-deeply 0x110000.uniname, "<unassigned>", "Codepoints higher than 0x10FFFF return <unassigned>";
 is-deeply 0x150000.uniname, "<unassigned>", "Codepoints higher than 0x10FFFF return <unassigned>";
+is-deeply 0x0378.uniname, "<reserved-0378>", "Unassigned codepoints below 0x10FFFF return <reserved-XXXX>";
 is-deeply (-0x20).uniname, "<illegal>", "Codepoints lower than 0x0 return <illegal>";
