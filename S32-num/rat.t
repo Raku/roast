@@ -604,8 +604,14 @@ subtest 'Rational.Bool' => {
 }
 
 subtest 'Rational.WHICH' => {
-    plan 2;
-    is (2/2).WHICH, (1/2+1/2).WHICH, 'WHICH is identical for practically identical Rats';
-    is-deeply (2/2, 1/2+1/2).unique, (1.0,), '.unique filters out practically identical Rats';
+    plan 4;
+    is (2       /2).WHICH, (1       /2+1/2).WHICH,
+        'WHICH is identical for practically identical Rats';
+    is (2.FatRat/2).WHICH, (1.FatRat/2+1/2).WHICH,
+        'WHICH is identical for practically identical FatRats';
+    is-deeply (2       /2, 1       /2+1/2).unique, (1.0,),
+        '.unique filters out practically identical Rats';
+    is-deeply (2.FatRat/2, 1.FatRat/2+1/2).unique, (1.0.FatRat,),
+        '.unique filters out practically identical FatRats';
 }
 # vim: ft=perl6
