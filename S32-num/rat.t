@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 850;
+plan 851;
 
 # Basic test functions specific to rational numbers.
 
@@ -603,4 +603,9 @@ subtest 'Rational.Bool' => {
     is-deeply .so, False, .perl for @false;
 }
 
+subtest 'Rational.WHICH' => {
+    plan 2;
+    is (2/2).WHICH, (1/2+1/2).WHICH, 'WHICH is identical for practically identical Rats';
+    is-deeply (2/2, 1/2+1/2).unique, (1.0,), '.unique filters out practically identical Rats';
+}
 # vim: ft=perl6
