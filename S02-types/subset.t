@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 50;
+plan 51;
 
 =begin description
 
@@ -295,6 +295,16 @@ subtest 'Junction arguments to `where` parameters' => {
         sub (Foo $ where Int|Bool) { pass 'Junction, true' }(any True, 42e0);
         sub (Foo $ where Int|Bool) { pass 'other,    true' }(42);
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/1799
+{
+    my subset CAT of Code where { .arity == 2 };
+    my sub xz(CAT $c) {
+        return $c(3, 5);
+    }
+
+    is xz(* <=> *), Order::Less, "subset with Code arity check in sub signature";
 }
 
 # vim: ft=perl6
