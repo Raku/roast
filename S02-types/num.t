@@ -837,6 +837,7 @@ subtest 'parsed nums choose closest available representation' => {
 
     # compare to what it stringifies too
     cmp-ok 2026887777243374/10**63,        '==', 2.026887777243374e-48; # 11
+    #?rakudo.jvm 2 todo 'stringifies to 2.026887777243374E-48'
     cmp-ok (2026887777243374/10**63).perl, 'eq', '2.026887777243374e-48';
     cmp-ok 2.026887777243374e-48.perl,     'eq', '2.026887777243374e-48';
 
