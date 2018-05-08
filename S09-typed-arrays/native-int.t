@@ -188,7 +188,7 @@ for flat @int,@uint -> $T {
 
     @arr = 1..5;
     is @arr.Str,  '1 2 3 4 5', ".Str space-separates on $t array";
-    is @arr.gist, '1 2 3 4 5', ".gist space-separates on $t array";
+    is @arr.gist, '[1 2 3 4 5]', ".gist space-separates on $t array";
     is @arr.perl, "array[$t].new(1, 2, 3, 4, 5)",
       ".perl includes type and int values on $t array";
 
