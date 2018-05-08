@@ -199,7 +199,7 @@ for @num -> $T {
 
     @arr = 1e0..5e0;
     is @arr.Str,  '1 2 3 4 5', ".Str space-separates on $t array";
-    is @arr.gist, '1 2 3 4 5', ".gist space-separates on $t array";
+    is @arr.gist, '[1 2 3 4 5]', ".gist space-separates on $t array";
     is @arr.perl, "array[$t].new(1e0, 2e0, 3e0, 4e0, 5e0)",
       ".perl includes type and num values on $t array";
 
