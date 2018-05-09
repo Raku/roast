@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 160 + @uint * 2 + 1;
+plan (@int + @uint) * 162 + @uint * 2 + 1;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -225,6 +225,9 @@ for flat @int,@uint -> $T {
     is @arr.gist, '[1 2 3 4 5]', ".gist space-separates on $t array";
     is @arr.perl, "array[$t].new(1, 2, 3, 4, 5)",
       ".perl includes type and int values on $t array";
+
+    is-deeply @arr[^2], array[$T].new(1,2), 'does slice return same type';
+    is-deeply @arr[my $ = ^2], 3, 'does slice handle containerized range';
 
     my &ftest := EVAL qq:!c/sub ftest($t \$a, $t \$b) { \$a + \$b }/;
     @arr = 39, 3;

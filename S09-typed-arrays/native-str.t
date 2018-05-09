@@ -1,7 +1,7 @@
 ﻿use v6;
 use Test;
 
-plan 160;
+plan 162;
 
 # Basic native str array tests.
 my $T := str;
@@ -220,6 +220,9 @@ is @arr.Str,  'a b c d e', ".Str space-separates on $t array";
 is @arr.gist, '[a b c d e]', ".gist space-separates on $t array";
 is @arr.perl, qq/array[$t].new("a", "b", "c", "d", "e")/,
   ".perl includes type and int values on $t array";
+
+is-deeply @arr[^2], array[$T].new("a","b"), 'does slice return same type';
+is-deeply @arr[my $ = ^2], "c", 'does slice handle containerized range';
 
 my &ftest := EVAL qq:!c/sub ftest($t \$a, $t \$b) { \$a ~ \$b }/;
 @arr = "a","h";
