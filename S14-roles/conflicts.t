@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 =begin pod
 
@@ -46,5 +46,14 @@ throws-like q[
     role R2 { method !foo() { 2 } }
     class A does R1 does R2 { }
     ], Exception, 'private roles can cause conflicts too';
+
+# RT #126724
+throws-like q[
+    role R { has $.grfuffle };
+    role S does R { has $.grfuffle };
+    S.new
+    ], Exception,
+    message => /:i <before .*attribute> && <before .*grfuffle> && <before .*conflict> /,
+    'attribute conflict with pun';
 
 # vim: ft=perl6
