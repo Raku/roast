@@ -370,7 +370,6 @@ subtest '"any" Junction of types in where' => {
         my &b3 := -> Cool:D $x where Int:U|Num:D|Rat:D { ($x//2)² };
         my &b4 := -> Numeric(Cool) $x where Int:U|Num:D|Rat:D { ($x//2)² };
 
-        #?rakudo.jvm 7 todo 'got X::AdHoc "Constraint type check failed for parameter $x"'
         throws-like ｢b1 "x"｣,  EXB, 'rejected by where, type';
         throws-like ｢b1 2.2｣,  EXB, 'rejected by where, type (2)';
         throws-like ｢b2 2.2｣,  EXB, 'rejected by where, type (3)';
@@ -381,7 +380,6 @@ subtest '"any" Junction of types in where' => {
         throws-like ｢b2 $*VM｣, EXB, 'rejected by type, type';
         throws-like ｢b3 Num｣,  EXC, 'rejected by type, definiteness';
         throws-like ｢b4 Any｣,  EXB, 'rejected by coercer, source type';
-        #?rakudo.jvm todo 'got X::AdHoc "Constraint type check failed for parameter $x"'
         throws-like ｢b4 "x"｣,  EXB, 'rejected by coercer, target type';
 
         is-deeply b1(4),     16,   'accepted (1)';
