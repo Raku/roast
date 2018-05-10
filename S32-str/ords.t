@@ -26,9 +26,12 @@ subtest 'optimization coverage' => {
 
     my @target-s = $s.ords;
     my @target-e = "".ords;
+    #?rakudo.jvm todo '"e\x[308]abc".ords returns (101 776 97 98 99).Seq'
     is-deeply @target-s, [@ords], '.push-all (has chars)';
     is-deeply @target-e, [],      '.push-all (no chars)';
 
+    #?rakudo.jvm skip 'fails due to above failure'
+    #?DOES 1
     test-iter-opt $s.ords.iterator, @ords, 'has chars';
     test-iter-opt "".ords.iterator, (),    'no  chars';
 }
