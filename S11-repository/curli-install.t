@@ -1,12 +1,14 @@
 use v6;
-constant $path = $?FILE.IO.parent(2).child('packages/curi-install').absolute;
-use lib "inst#$path";
+constant $repo-path = $?FILE.IO.parent(2).child('packages/curi-install').absolute;
+use lib "inst#$repo-path";
 
 use Test;
 plan 19;
 
-rm_rf $path.IO if $path.IO.e;
-$path.IO.mkdir;
+# TODO: rename this test to `curi-install.t`
+
+rm_rf $repo-path.IO if $repo-path.IO.e;
+$repo-path.IO.mkdir;
 
 # Tests on non-existing repository path
 {
@@ -16,16 +18,18 @@ $path.IO.mkdir;
     is $*REPO.short-id, 'inst', 'short-id exposes type of repository';
     is $*REPO.loaded.elems, 0, 'no compilation units were loaded so far';
 }
-my $dist              = Distribution.new(:name<Foo>, :api<1>, :ver(v1.2.3));
-my $non-matching-dist = Distribution.new(:name<Foo>, :api<2>, :ver(v2.3.4));
-my $foo-path = $path.IO.parent.child('Foo.pm').relative;
 
-$*REPO.install($dist,              { Foo => $foo-path });
-$*REPO.install($non-matching-dist, { Foo => $foo-path });
+my $prefix   = $repo-path.IO.parent;
+my %provides = Foo => $prefix.child('Foo.pm').relative($prefix);
+my $dist              = Distribution::Hash.new({ :name<Foo>, :api<1>, :ver(v1.2.3), :%provides }, :$prefix);
+my $non-matching-dist = Distribution::Hash.new({ :name<Foo>, :api<2>, :ver(v2.3.4), :%provides }, :$prefix);
 
-throws-like { EVAL '$*REPO.install($dist, { Foo => "' ~ $foo-path ~ '" })' },
+$*REPO.install($dist);
+$*REPO.install($non-matching-dist);
+
+throws-like { EVAL '$*REPO.install($dist)' },
     X::AdHoc,
-    message => "$dist already installed",
+    message => /'already installed'/,
     "cannot reinstall the very same distribution";
 
 {
@@ -53,7 +57,7 @@ ok ::('Foo') !~~ Failure, 'symbol Foo is known after merging global symbols';
 is $*REPO.loaded.elems, 1, 'one CompUnit got loaded';
 ok $*REPO.loaded[0].short-name =:= $cu.short-name, 'the loaded CompUnit is the one returned by $*REPO.need';
 
-rm_rf $path.IO;
+rm_rf $repo-path.IO;
 
 sub rm_rf(*@files) {
     for @files -> $path {
