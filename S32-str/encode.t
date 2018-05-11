@@ -65,8 +65,8 @@ lives-ok { "\x[effff]".encode('utf-8') },           'Can encode noncharacters to
 is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip with UTF-8';
 
 # RT #123673
-#?DOES 5
-#?rakudo.jvm skip 'Only moar handles this'
+#?DOES 3
+#?rakudo.jvm skip 'encoding with replacement NYI'
 {
     for (
         'å', 'ascii', '?',
