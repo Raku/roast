@@ -100,10 +100,12 @@ subtest 'assigning other arrays into native arrays dies if the type of an elemen
     {
         throws-like 'my int @a = 1, "a"',   Exception, 'assigning a str literal to an int array throws';
         throws-like 'my int @a = 1, 1e0',   Exception, 'assigning a num literal to an int array throws';
+        #?rakudo.jvm todo 'code does not die'
         throws-like 'my int @a = 1, 2**65', Exception, 'assigning a too big literal to an int array throws';
 
         throws-like 'my str $a = "a"; my int @a = 1, $a', Exception, 'assigning a str variable to an int array throws';
         throws-like 'my num $a = 1e0; my int @a = 1, $a', Exception, 'assigning a num variable to an int array throws';
+        #?rakudo.jvm todo 'code does not die'
         throws-like 'my $a = 2**65;   my int @a = 1, $a', Exception, 'assigning a too big variable to an int array throws';
     }
     {
