@@ -101,4 +101,46 @@ subtest 'typing/coercion' => {
     cmp-ok    mr-hi.MidRat, '===', mr-hi, 'MidRat.MidRat (large MidRat)';
 }
 
+subtest 'zero-denominator MidRats' => {
+    plan 8*3 + 3 + 6*3;
+    my \neg := MidRat.new: -42, 0;
+    my \zer := MidRat.new:  0, 0;
+    my \pos := MidRat.new:  42, 0;
+
+    my \ex := X::Numeric::DivideByZero;
+    for <Str  Int  gist  ceiling  floor  round  base-repeating  truncate>
+    -> $meth {
+        throws-like { neg."$meth"() }, ex, ".$meth throws (neg)";
+        throws-like { zer."$meth"() }, ex, ".$meth throws (zer)";
+        throws-like { pos."$meth"() }, ex, ".$meth throws (pos)";
+    }
+    throws-like { neg.base: 10 }, ex, '.base throws (neg)';
+    throws-like { zer.base: 10 }, ex, '.base throws (zer)';
+    throws-like { pos.base: 10 }, ex, '.base throws (pos)';
+
+    is-deeply neg.pred, neg, '.pred (neg)';
+    is-deeply zer.pred, zer, '.pred (zer)';
+    is-deeply pos.pred, pos, '.pred (pos)';
+
+    is-deeply neg.isNaN, False, '.isNaN (neg)';
+    is-deeply zer.isNaN, True,  '.isNaN (zer)';
+    is-deeply pos.isNaN, False, '.isNaN (pos)';
+
+    is-deeply neg.nude, (-1, 0), '.nude (neg)';
+    is-deeply zer.nude, ( 0, 0), '.nude (zer)';
+    is-deeply pos.nude, ( 1, 0), '.nude (pos)';
+
+    is-deeply neg.Num, -Inf, '.Num (neg)';
+    is-deeply zer.Num,  NaN, '.Num (zer)';
+    is-deeply pos.Num,  Inf, '.Num (pos)';
+
+    is-deeply neg.Rat, Rat.new(-1, 0), '.Rat (neg)';
+    is-deeply zer.Rat, Rat.new( 0, 0), '.Rat (zer)';
+    is-deeply pos.Rat, Rat.new( 1, 0), '.Rat (pos)';
+
+    is-deeply neg.FatRat, FatRat.new(-1, 0), '.FatRat (neg)';
+    is-deeply zer.FatRat, FatRat.new( 0, 0), '.FatRat (zer)';
+    is-deeply pos.FatRat, FatRat.new( 1, 0), '.FatRat (pos)';
+}
+
 # vim: ft=perl6
