@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 20;
 
 # L<S12/"Construction and Initialization">
 
@@ -99,6 +99,26 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
         has str $.attr;
     }
     lives-ok -> { NativeStr.new(:attr<foo>) }, ".new with a native str attribute";
+}
+
+{ # https://github.com/rakudo/rakudo/issues/1793
+    class {
+        has $.b;
+        submethod TWEAK {
+            my @a[$!b];
+            is-deeply @a, (my @b[42]),
+              'can use attributes in TWEAK to declare sized arrays'
+        }
+    }.new: :42b;
+
+    class {
+        has $.b;
+        submethod BUILD (:$!b) {
+            my @a[$!b];
+            is-deeply @a, (my @b[42]),
+              'can use attributes in BUILD to declare sized arrays'
+        }
+    }.new: :42b;
 }
 
 # vim: ft=perl6
