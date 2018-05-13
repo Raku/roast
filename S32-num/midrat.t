@@ -31,14 +31,13 @@ subtest 'creation; too-large Rat literals get promoted to MidRats' => {
 }
 
 subtest 'typing/coercion' => {
-    plan 41;
+    plan 40;
 
     # Coercion FROM MidRat
     my \mr-lo := MidRat.new: 1, 2;
     my \mr-hi := MidRat.new: 1, my \large-den := 99999999999999999999;
 
     isa-ok mr-lo, Rat,    'MidRat inherits from a Rat';
-    isa-ok mr-lo, FatRat, 'MidRat inherits from a FatRat';
     isa-ok mr-lo, MidRat;
 
     cmp-ok mr-lo.Numeric, '===', mr-lo, '.Numeric (small MidRat)';
