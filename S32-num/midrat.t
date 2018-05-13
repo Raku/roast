@@ -143,4 +143,41 @@ subtest 'zero-denominator MidRats' => {
     is-deeply pos.FatRat, FatRat.new( 1, 0), '.FatRat (pos)';
 }
 
+subtest 'degrading to a Rat' => {
+    plan 22;
+
+    my \mr-lo   := MidRat.new: 1, 2;
+    my \mr-hi   := MidRat.new: 1, my \large-den   := 22222222222222222222;
+    my \red-rat :=    Rat.new: 1, my \reduced-den := 11111111111111111111;
+    isa-ok red-rat.WHAT, Rat, 'test object is a Rat';
+
+    is-deeply  mr-lo + 2,     2.5,     'infix:<+>';
+    is-deeply  mr-hi + mr-hi, red-rat, 'infix:<+> (large MidRat)';
+
+    is-deeply  mr-lo - 2,    -1.5,     'infix:<+>';
+    is-deeply  mr-hi - mr-hi, 0.0,     'infix:<+> (large MidRat)';
+
+    is-deeply  mr-lo * 3,     1.5,     'infix:<*>';
+    is-deeply  mr-hi * 2,     red-rat, 'infix:<*> (large MidRat)';
+    is-deeply  mr-lo × 3,     1.5,     'infix:<×>';
+    is-deeply  mr-hi × 2,     red-rat, 'infix:<×> (large MidRat)';
+
+    is-deeply  mr-lo / ⅓,     1.5,     'infix:</>';
+    is-deeply  mr-hi / ½,     red-rat, 'infix:</> (large MidRat)';
+    is-deeply  mr-lo ÷ ⅓,     1.5,     'infix:<÷>';
+    is-deeply  mr-hi ÷ ½,     red-rat, 'infix:<÷> (large MidRat)';
+
+    is-deeply  mr-lo % 2,     mr-lo,   'infix:<%>';
+    is-deeply  mr-lo**2,      ¼,       'infix:<**>';
+    is-deeply  mr-lo²,        ¼,       'postfix:<ⁿ>';
+
+    is-deeply  +mr-lo,        ½,       'prefix:<+>';
+    is-deeply  -mr-lo,        -½,      'prefix:<->';
+    is-deeply  −mr-lo,        -½,      'prefix:<−>';
+
+    is-deeply  mr-lo.Numeric, ½,       '.Numeric';
+    is-deeply  mr-lo.Real,    ½,       '.Real';
+    is-deeply  mr-lo.Rat,     ½,       '.Rat';
+}
+
 # vim: ft=perl6
