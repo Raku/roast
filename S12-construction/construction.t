@@ -32,7 +32,7 @@ is OwnConstr.in_own, 2,        "own constructor was actually called";
 
 class Foo {
   has $.a;
-  
+
   method new ($self: Str $string) {
     $self.bless(a => $string);
   }
@@ -51,7 +51,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
   is $bar.attr, 42, "instantiating an object using .= worked (1)";
 }
 # Using ".=()" to create an object
-{ 
+{
   class Fooz { has $.x }
   my Fooz $f .= new(:x(1));
   is $f.x, 1, "instantiating an object using .=() worked";
@@ -62,7 +62,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
   my Baz $foo .= new(:x(1,2,3));
   lives-ok -> { $foo.x[0] = 3 }, "Array initialized in auto-constructor is not unwritable...";
   is $foo.x[0], 3, "... and keeps its value properly."
-}	
+}
 
 # RT #64116
 {
