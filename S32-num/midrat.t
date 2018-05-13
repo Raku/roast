@@ -147,8 +147,8 @@ subtest 'degrading to a Rat' => {
     plan 22;
 
     my \mr-lo   := MidRat.new: 1, 2;
-    my \mr-hi   := MidRat.new: 1, my \large-den   := 22222222222222222222;
-    my \red-rat :=    Rat.new: 1, my \reduced-den := 11111111111111111111;
+    my \mr-hi   := MidRat.new: 1, 22222222222222222222;
+    my \red-rat :=    Rat.new: 1, 11111111111111111111;
     isa-ok red-rat.WHAT, Rat, 'test object is a Rat';
 
     is-deeply  mr-lo + 2,     2.5,     'infix:<+>';
