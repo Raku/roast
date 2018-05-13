@@ -144,7 +144,7 @@ subtest 'zero-denominator MidRats' => {
 }
 
 subtest 'degrading to a Rat' => {
-    plan 22;
+    plan 29;
 
     my \mr-lo   := MidRat.new: 1, 2;
     my \mr-hi   := MidRat.new: 1, 22222222222222222222;
@@ -152,22 +152,29 @@ subtest 'degrading to a Rat' => {
     isa-ok red-rat.WHAT, Rat, 'test object is a Rat';
 
     is-deeply  mr-lo + 2,     2.5,     'infix:<+>';
+    is-deeply  mr-lo + mr-lo, 1.0,     'infix:<+> (two MidRats)';
     is-deeply  mr-hi + mr-hi, red-rat, 'infix:<+> (large MidRat)';
 
-    is-deeply  mr-lo - 2,    -1.5,     'infix:<+>';
-    is-deeply  mr-hi - mr-hi, 0.0,     'infix:<+> (large MidRat)';
+    is-deeply  mr-lo - 2,    -1.5,     'infix:<->';
+    is-deeply  mr-lo - mr-lo, 0.0,     'infix:<-> (two MidRats)';
+    is-deeply  mr-hi - mr-hi, 0.0,     'infix:<-> (large MidRat)';
 
     is-deeply  mr-lo * 3,     1.5,     'infix:<*>';
+    is-deeply  mr-lo * mr-lo, ¼,       'infix:<*> (two MidRats)';
     is-deeply  mr-hi * 2,     red-rat, 'infix:<*> (large MidRat)';
     is-deeply  mr-lo × 3,     1.5,     'infix:<×>';
+    is-deeply  mr-lo × mr-lo, ¼,       'infix:<×> (two MidRats)';
     is-deeply  mr-hi × 2,     red-rat, 'infix:<×> (large MidRat)';
 
     is-deeply  mr-lo / ⅓,     1.5,     'infix:</>';
+    is-deeply  mr-lo / mr-lo, 1.0,     'infix:</> (two MidRats)';
     is-deeply  mr-hi / ½,     red-rat, 'infix:</> (large MidRat)';
     is-deeply  mr-lo ÷ ⅓,     1.5,     'infix:<÷>';
+    is-deeply  mr-lo ÷ mr-lo, 1.0,     'infix:<÷> (two MidRats)';
     is-deeply  mr-hi ÷ ½,     red-rat, 'infix:<÷> (large MidRat)';
 
     is-deeply  mr-lo % 2,     mr-lo,   'infix:<%>';
+    is-deeply  mr-lo % mr-lo, 0.0,     'infix:<%> (two MidRats)';
     is-deeply  mr-lo**2,      ¼,       'infix:<**>';
     is-deeply  mr-lo²,        ¼,       'postfix:<ⁿ>';
 
