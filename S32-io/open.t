@@ -43,6 +43,8 @@ sub spurt-slurp ($c, :$unlink, :$seek, |args) {
     my $fh := &*OPEN($*PATH, |args);
     $fh.seek: 0, SeekFromEnd if $seek;
     $fh.spurt: $c;
+    # flush filehandle since implementation might buffer first write
+    $fh.flush;
     $*PATH.IO.slurp
 }
 
