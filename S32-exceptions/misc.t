@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 388;
+plan 383;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -186,8 +186,8 @@ throws-like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filen
 for <
   $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
   $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
-  $* $" $$ $& $` $' $| $? $]
-  $: $= $^ $~ @- @+ %- %+ %!
+  $" $$ $& $` $' $| $? $]
+  @- @+ %- %+ %!
 > {
     throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
