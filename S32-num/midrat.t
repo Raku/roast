@@ -3,7 +3,7 @@ use Test;
 
 # Tests for MidRat type
 
-plan 2;
+plan 5;
 
 subtest 'creation; too-large Rat literals get promoted to MidRats' => {
     plan 10;
@@ -184,6 +184,43 @@ subtest 'degrading to a Rat' => {
     is-deeply  mr-lo.Numeric, ½,       '.Numeric';
     is-deeply  mr-lo.Real,    ½,       '.Real';
     is-deeply  mr-lo.Rat,     ½,       '.Rat';
+}
+
+subtest 'degrading to a Num' => {
+    plan 2*14;
+    sub is-num ($g, $e, $d) {
+        is-approx $g,      $e,  "$d (right value)";
+        isa-ok    $g.WHAT, Num, "$d (right type)";
+    }
+
+    my \ra-lo   := ½;
+    my \mr-lo   := MidRat.new: 1, 2;
+    my \mr-hi   := MidRat.new: 48112959837082048697, 54673257461630679457;
+
+    # XXX TODO: all of these operations likely should be choosing closest
+    #           representable Num. Should we have that as part of the spec?
+    #           The numbers used below are likely aren't closest.
+    is-num mr-lo + mr-hi,  1.3800090221594605e0,  'infix:<+>';
+    is-num mr-lo - mr-hi, -0.38000902215946064e0, 'infix:<->';
+
+    is-num mr-lo * mr-hi,  0.4400045110797303e0,  'infix:<*>';
+    is-num mr-lo × mr-hi,  0.4400045110797303e0,  'infix:<×>';
+
+    is-num mr-lo / mr-hi,  0.5681759929836245e0,  'infix:</>';
+    is-num mr-lo ÷ mr-hi,  0.5681759929836245e0,  'infix:<÷>';
+
+    is-num mr-hi % mr-lo,  0.38000902215946064e0, 'infix:<%>';
+
+    is-num mr-hi**2,       0.7744158790820501e0,  'infix:<**>';
+    is-num mr-hi²,         0.7744158790820501e0,  'postfix:<ⁿ>';
+
+    is-num +mr-hi,         0.8800090221594606e0,  'prefix:<+>';
+    is-num -mr-hi,        -0.8800090221594606e0,  'prefix:<->';
+    is-num −mr-hi,        -0.8800090221594606e0,  'prefix:<−>';
+
+    is-num mr-lo.Numeric,  0.8800090221594606e0,  '.Numeric';
+    is-num mr-lo.Real,     0.8800090221594606e0,  '.Real';
+    is-num mr-lo.Rat,      0.8800090221594606e0,  '.Rat';
 }
 
 # vim: ft=perl6
