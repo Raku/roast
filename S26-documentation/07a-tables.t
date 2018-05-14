@@ -4,7 +4,7 @@ use Test;
 my ($r, $p, $hdrs, @rows);
 $p = -1; # starting index for pod number
 
-plan 61;
+plan 85;
 
 # includes tests for fixes for RT bugs:
 #   124403 - incorrect table parse:
@@ -232,3 +232,71 @@ is @rows[4], "^,symmetric set intersection / XOR";
     ^       |  symmetric set intersection / XOR
 
 =end table
+
+$r = $=pod[++$p];
+is $r.headers.elems, 2;
+$hdrs = $r.headers.join(',');
+is $hdrs, "Operator,Meaning";
+is $r.contents.elems, 5;
+@rows = $r.contents>>.join(',');
+is @rows[0], "+,set union";
+is @rows[1], "|,set union";
+is @rows[2], "&,set intersection";
+is @rows[3], "-,set difference (first minus second)";
+is @rows[4], "^,symmetric set intersection / XOR";
+
+# fix for GH #1821: unexpected table failure with mixed vis and non-vis
+# column separators
+
+=begin table
+    
+    Type    | Comments
+    ========+================================================
+    Complex |
+    Num     |
+    FatRat  |
+    MidRat  | Special infectiousness. See prose that follows.
+    Rat     |
+    Int     |
+
+=end table 
+
+$r = $=pod[++$p];
+is $r.headers.elems, 2;
+$hdrs = $r.headers.join(',');
+is $hdrs, "Type,Comments";
+is $r.contents.elems, 6;
+@rows = $r.contents>>.join(',');
+is @rows[0], "Complex,";
+is @rows[1], "Num,";
+is @rows[2], "FatRat,";
+is @rows[3], "MidRat,Special infectiousness. See prose that follows.";
+is @rows[4], "Rat,";
+is @rows[5], "Int,";
+
+# a variant table using the '+' visual column separator
+
+=begin table
+    
+    Type    | Comments
+    ========+================================================
+    Num     +
+    MidRat  | Special infectiousness. See prose that follows.
+    Rat     |
+    Int     +
+
+=end table 
+
+$r = $=pod[++$p];
+is $r.headers.elems, 2;
+$hdrs = $r.headers.join(',');
+is $hdrs, "Type,Comments";
+is $r.contents.elems, 4;
+@rows = $r.contents>>.join(',');
+is @rows[0], "Num,";
+is @rows[1], "MidRat,Special infectiousness. See prose that follows.";
+is @rows[2], "Rat,";
+is @rows[3], "Int,";
+
+
+
