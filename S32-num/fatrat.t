@@ -187,8 +187,6 @@ ok 1/2R !=== 1/3R, '=== with false outcome';
 }
 
 ok 16/5R eqv 16/5R, 'infix:<eqv> works with FatRats';
-
-#'unknown RT #124815'
 isa-ok .88888888888R.WHAT, FatRat, 'WHAT works on FatRat created from 11 digit decimal fraction';
 
 {
