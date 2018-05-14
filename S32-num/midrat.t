@@ -194,7 +194,7 @@ subtest 'degrading to a Num' => {
     }
 
     my \ra-lo   := ½;
-    my \mr-lo   := MidRat.new: 1, 2;
+    my \mr-lo   := MidRat.new: 1, 2; # ↓↓↓ two primes larger than 64-bit
     my \mr-hi   := MidRat.new: 48112959837082048697, 54673257461630679457;
 
     # XXX TODO: all of these operations likely should be choosing closest
