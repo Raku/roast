@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 265;
+plan 266;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -201,6 +201,7 @@ for <
     throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
+throws-like '$#foo', X::Syntax::Perl5Var;
 # RT #122645
 lives-ok { EVAL '$@' }, '$@ is no longer a problem';
 
