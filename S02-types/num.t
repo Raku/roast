@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 107;
+plan 108;
 
 isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -380,7 +380,6 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok $np ** $nu, '===', NaN, 'positive ** uninit';
         cmp-ok $nn ** $nu, '===', NaN, 'negative ** uninit';
 
-        #?rakudo.jvm todo 'gives NaN'
         is-deeply $n1 ** $nu, (my num $ = 1e0    ), '1 ** uninit';
         is-deeply $nu ** $nz, (my num $ = 1e0    ), 'uninit ** zero';
         is-deeply $nz ** $np, (my num $ = 0e0    ), 'zero ** positive';
@@ -818,9 +817,31 @@ subtest 'Num literals yield closest available Num to their nominal value' => {
     cmp-ok $b, '==', -103256, '9.99899999999999995e-5';
 }
 
-# RT#128913
-cmp-ok "9.9989999999999991e0".EVAL, &[!<], "9.998999999999999e0".EVAL,
-    'parsed nums choose closest available representation';
+subtest 'parsed nums choose closest available representation' => {
+    plan 13;
+    # RT#128913
+    cmp-ok '9.9989999999999991e0'.EVAL, &[!<], '9.998999999999999e0'.EVAL;
+
+    cmp-ok <241431045331557770.44e-161>,  '==', 241431045331557770.44e-161; # 2
+    cmp-ok <2.41431045331557783896e-144>, '==', 241431045331557770.44e-161;
+    cmp-ok  2.41431045331557783896e-144,  '==', 241431045331557770.44e-161;
+
+    cmp-ok <86004303003.045451885e-269>,  '==', 86004303003.045451885e-269; # 5
+    cmp-ok <8.60043030030454550566e-259>, '==', 86004303003.045451885e-269;
+    cmp-ok  8.60043030030454550566e-259,  '==', 86004303003.045451885e-269;
+
+    cmp-ok <331.11563566342757550e202>,   '==', 331.11563566342757550e202; # 8
+    cmp-ok <3.31115635663427602973e+204>, '==', 331.11563566342757550e202;
+    cmp-ok 3.31115635663427602973e+204,   '==', 331.11563566342757550e202;
+
+    # compare to what it stringifies too
+    cmp-ok 2026887777243374/10**63,        '==', 2.026887777243374e-48; # 11
+    #?rakudo.jvm 2 todo 'stringifies to 2.026887777243374E-48'
+    cmp-ok (2026887777243374/10**63).perl, 'eq', '2.026887777243374e-48';
+    cmp-ok 2.026887777243374e-48.perl,     'eq', '2.026887777243374e-48';
+
+
+}
 
 # RT#132329
 cmp-ok Num(0.777777777777777777777), '==', Num(0.7777777777777777777771),
@@ -857,6 +878,39 @@ subtest 'distinct num literals do not compare the same' => {
     my $n := 1180591620717411303424.0e0;
     cmp-ok $n.Int, '==', $n.perl.EVAL.Int,
         '.perl roundtrips the Num correctly';
+}
+
+subtest 'no hangs/crashes when parsing nums with huge exponents' => {
+    plan 2;
+    subtest 'huge-ish exponent' => { # this used to hang
+        plan 7;
+        is-deeply   1e100000000,          Inf,  'Num literal';
+        is-deeply  "1e100000000".EVAL,    Inf,  'Num literal in EVAL';
+        is-deeply +"1e100000000",         Inf,  '+Str';
+        is-deeply  "1e100000000".Numeric, Inf,  'Str.Numeric';
+        is-deeply  "1e100000000".Num,     Inf,  'Str.Num';
+        is-deeply  <1e100000000>,        NumStr.new(Inf, '1e100000000'), 'Num allomorph';
+        is-deeply "<1e100000000>".EVAL,  NumStr.new(Inf, '1e100000000'), 'Num allomorph in EVAL';
+    }
+    subtest 'huge-huge-huge exponent' => { # this used to crash
+        plan 7;
+        is-deeply 1e1000000000000000000000000000000000000000000000000000000, Inf, 'Num literal';
+        is-deeply "1e1000000000000000000000000000000000000000000000000000000".EVAL, Inf,
+            'Num literal in EVAL';
+
+        is-deeply +"1e1000000000000000000000000000000000000000000000000000000", Inf, '+Str';
+        is-deeply "1e1000000000000000000000000000000000000000000000000000000".Numeric, Inf,
+            'Str.Numeric';
+        is-deeply "1e1000000000000000000000000000000000000000000000000000000".Num, Inf,
+            'Str.Num';
+
+        is-deeply <1e1000000000000000000000000000000000000000000000000000000>,
+            NumStr.new(Inf, '1e1000000000000000000000000000000000000000000000000000000'),
+            'Num allomorph';
+        is-deeply "<1e1000000000000000000000000000000000000000000000000000000>".EVAL,
+            NumStr.new(Inf, '1e1000000000000000000000000000000000000000000000000000000'),
+            'Num allomorph in EVAL';
+    }
 }
 
 # vim: ft=perl6

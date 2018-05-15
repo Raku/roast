@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 32;
+plan 33;
 
 # coercion types in parameter lists
 {
@@ -320,6 +320,15 @@ subtest 'mistyped typenames in coercers give good error' => {
     my subset ZInt of Cool where *.elems;
     sub foo(ZInt(Cool) $Z) {};
     pass 'coercer with subset target did not crash';
+}
+
+# RT #131414
+subtest 'same exception with and without type smiley for failing coercion on var' => {
+    plan 3;
+    my \XSVB = X::Syntax::Variable::BadType;
+    throws-like ｢class { has Int() $.x = "42"}.new.x｣,           XSVB, 'no type smiley';
+    throws-like ｢class { has Int:D() $.x = "42"}.new.x｣,         XSVB, ':D (1)';
+    throws-like ｢class { has Int:D() $.x = "42"}.new(:x("43"))｣, XSVB, ':D (2)';
 }
 
 # vim: ft=perl6

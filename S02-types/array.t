@@ -407,6 +407,7 @@ subtest '.gist shows only first 100 els' => {
 # https://github.com/rakudo/rakudo/pull/1053
 subtest 'reification of zen and whatever slices' => {
     plan 2;
+    #?rakudo.jvm skip 'code works as expected (does not die) if run standalone; R#1571'
     lives-ok { my $s = (gather die)[]  }, 'zen slice does not reify';
     dies-ok  { my $s = (gather die)[*] }, 'whatever slice does reify';
 }

@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 850;
+plan 851;
 
 # Basic test functions specific to rational numbers.
 
@@ -436,7 +436,6 @@ subtest '.norm returns reduced Rat' => {
     }
 }
 
-#?rakudo.jvm skip 'Type check failed in binding to "nu"; expected Int but got Str ("42.0")'
 subtest '.Rat/.FatRat coercers' => {
     my @values =
         42, <42>, 42e0, <42e0>, 42.0, <42.0>, <42+0i>, < 42+0i>,
@@ -603,4 +602,15 @@ subtest 'Rational.Bool' => {
     is-deeply .so, False, .perl for @false;
 }
 
+subtest 'Rational.WHICH' => {
+    plan 4;
+    is (2       /2).WHICH, (1       /2+1/2).WHICH,
+        'WHICH is identical for practically identical Rats';
+    is (2.FatRat/2).WHICH, (1.FatRat/2+1/2).WHICH,
+        'WHICH is identical for practically identical FatRats';
+    is-deeply (2       /2, 1       /2+1/2).unique, (1.0,),
+        '.unique filters out practically identical Rats';
+    is-deeply (2.FatRat/2, 1.FatRat/2+1/2).unique, (1.0.FatRat,),
+        '.unique filters out practically identical FatRats';
+}
 # vim: ft=perl6

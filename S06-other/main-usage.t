@@ -3,7 +3,7 @@ use v6;
 use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
-plan 31;
+plan 43;
 
 use Test::Util;
 
@@ -54,6 +54,55 @@ is_run 'sub MAIN($a, :$var) { say "a: $a, optional: $var"; }',
 is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
     {out => "a: param, optional: True\n"}, :args['--var', 'param'],
     'Bool option followed by positional value';
+
+# RT #126532
+is_run 'sub MAIN(:$y) { $y.ords.print }',
+    {:err => '', :out => "" }, :args["-y="],
+    'Valid arg with zero length value';
+
+is_run 'sub MAIN(:$y) { $y.ords.print }',
+    {:err => '', :out => "32" }, :args["-y= "],
+    'Valid arg with single space value';
+
+is_run 'sub MAIN(:$y) { $y.ords.print }',
+    {:err => '', :out => "32 32" }, :args["-y=  "],
+    'Valid arg with two space value';
+
+is_run 'sub MAIN(:$y) { $y.ords.print }',
+    {:err => '', :out => "10" }, :args["-y=\n"],
+    'Valid arg with newline value';
+
+is_run 'sub MAIN(:$y) { $y.ords.print }',
+    {:err => '', :out => "9" }, :args["-y=\t"],
+    'Valid arg with tab value';
+
+is_run 'sub MAIN(:$y) { $y.ords.print }',
+    {:err => '', :out => "9 32" }, :args["-y=\t "],
+    'Valid arg with tab then space value';
+
+is_run 'sub MAIN() { }; sub USAGE() { "USG".say }',
+    {:err => '', :out => "" }, :args["-y="],
+    'Extra arg with zero length value';
+
+is_run 'sub MAIN() { }; sub USAGE() { "USG".say }',
+    {:err => /USG/, :out => "32" }, :args["-y= "],
+    'Extra arg with single space value';
+
+is_run 'sub MAIN() { }; sub USAGE() { "USG".say }',
+    {:err => /USG/, :out => "32 32" }, :args["-y=  "],
+    'Extra arg with two space value';
+
+is_run 'sub MAIN() { }; sub USAGE() { "USG".say }',
+    {:err => /USG/, :out => "10" }, :args["-y=\n"],
+    'Extra arg with newline value';
+
+is_run 'sub MAIN() { }; sub USAGE() { "USG".say }',
+    {:err => /USG/, :out => "9" }, :args["-y=\t"],
+    'Extra arg with tab value';
+
+is_run 'sub MAIN() { }; sub USAGE() { "USG".say }',
+    {:err => /USG/, :out => "9 32" }, :args["-y=\t "],
+    'Extra arg with tab then space value';
 
 # Spacey options may be removed from core spec; for now, moving to end of tests
 # (discussion starts at http://irclog.perlgeek.de/perl6/2011-10-17#i_4578353 )

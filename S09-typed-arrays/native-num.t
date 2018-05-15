@@ -6,7 +6,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 148;
+plan @num * 150;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -228,9 +228,12 @@ for @num -> $T {
 
     @arr = 1e0..5e0;
     is @arr.Str,  '1 2 3 4 5', ".Str space-separates on $t array";
-    is @arr.gist, '1 2 3 4 5', ".gist space-separates on $t array";
+    is @arr.gist, '[1 2 3 4 5]', ".gist space-separates on $t array";
     is @arr.perl, "array[$t].new(1e0, 2e0, 3e0, 4e0, 5e0)",
       ".perl includes type and num values on $t array";
+
+    is-deeply @arr[^2], array[$T].new(1e0,2e0), 'does slice return same type';
+    is-deeply @arr[my $ = ^2], 3e0, 'does slice handle containerized range';
 
     my &ftest := EVAL qq:!c/sub ftest($t \$a, $t \$b) { \$a + \$b }/;
     @arr = 3.9e0, 0.3e0;

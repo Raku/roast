@@ -93,7 +93,6 @@ subtest 'can use signature unpacking with anonymous parameters' => {
     plan 2;
     is -> &:(Str), 42 {100}(-> Str $v { $v.uc }, 42), 100,
         'can call with right signature';
-    #?rakudo.jvm todo 'dies with X::AdHoc "Constraint type check failed for parameter null"'
     throws-like '-> &:(Int) {}({;})', X::TypeCheck::Binding::Parameter,
         'typcheck correctly fails with wrong arg';
 }

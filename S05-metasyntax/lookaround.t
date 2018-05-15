@@ -25,8 +25,6 @@ ok("abcdef" ~~ m/abc <!before d <.ws> f> (.)/, 'Negative lookahead');
 is(~$0, 'd', 'Verify negative lookahead');
 
 # RT #131964
-
-#?rakudo 4 todo 'RT #131964'
 is ('abc' ~~ /<?after ^^>/).from, 0, '^^ in <?after ...>';
 is ('abc' ~~ /<?after ^>/).from,  0, '^ in <?after ...>';
 is ('abc' ~~ /<?after $$>/).from, 3, '$$ in <?after ...>';

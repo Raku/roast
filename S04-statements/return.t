@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 24;
+plan 26;
 
 # Is there a better reference for the spec for how return return works?
 # There is "return function" but that's a more advanced feature.
@@ -104,11 +104,20 @@ throws-like Q[sub {CHECK return;}],
     'CHECK return handled correctly';
 
 # https://github.com/rakudo/rakudo/issues/1216
-#?rakudo.jvm skip 'UnwindException'
+#?rakudo.jvm 3 skip 'UnwindException'
 throws-like ｢sub { eager sub { ^1 .map: { return } }() }()｣,
+    X::ControlFlow::Return, :out-of-dynamic-scope{.so},
+   'X::ControlFlow::Return tells when return is outside of dyn scope';
+# RT #114042
+throws-like ｢sub a1 { my &x = { return }; &x }; my &y = a1; &y()｣,
+    X::ControlFlow::Return, :out-of-dynamic-scope{.so},
+   'X::ControlFlow::Return tells when return is outside of dyn scope';
+throws-like ｢sub a2 { my &x = { return }; &x }; sub b1(&x) { &x() }; b1(a2)｣,
     X::ControlFlow::Return, :out-of-dynamic-scope{.so},
    'X::ControlFlow::Return tells when return is outside of dyn scope';
 throws-like ｢return｣, X::ControlFlow::Return, :out-of-dynamic-scope{.not},
    'bare return does not set $.out-of-dynamic-scope';
+
+
 
 # vim: ft=perl6
