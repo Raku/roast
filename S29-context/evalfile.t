@@ -44,6 +44,7 @@ subtest '&EVALFILE respects compiler encoding options' => {
     given run :out, :err, $*EXECUTABLE, '--encoding=iso-8859-1', '-e',
         'use MONKEY-SEE-NO-EVAL; EVALFILE \qq[$path.absolute.perl()]'
     {
+        #?rakudo.jvm todo 'problem with equivalence of Buf objects, RT #128041'
         is-deeply .out.slurp-rest(:bin), $result, 'STDOUT has right data';
         is-deeply .err.slurp, '',      'STDERR is empty';
         is-deeply .exitcode,  0,       'exitcode is correct';
