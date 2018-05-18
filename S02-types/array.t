@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 105;
+plan 106;
 
 #L<S02/Mutable types/Array>
 
@@ -410,6 +410,30 @@ subtest 'reification of zen and whatever slices' => {
     #?rakudo.jvm skip 'code works as expected (does not die) if run standalone; R#1571'
     lives-ok { my $s = (gather die)[]  }, 'zen slice does not reify';
     dies-ok  { my $s = (gather die)[*] }, 'whatever slice does reify';
+}
+
+# https://github.com/rakudo/rakudo/issues/1832
+subtest 'no funny business in assignment' => {
+    plan 8;
+    my package R1832 { our @bar = 42, |0 };
+    is @::R1832::('bar')[^1], 42, 'can reference values in an `our` var';
+
+    my $a1-marker = 0;
+    my @a1 = |(gather { $a1-marker++ }), 1, |(lazy gather { $a1-marker++ });
+    is $a1-marker, 1, 'we reified only non-lazy parts on assignment';
+    @a1.eager;
+    is $a1-marker, 2, 'eagerizing the array, we reified the rest of the parts';
+
+    my @a2; for ^5 { push @a2, my @o = Empty, $_ };
+    is-deeply @a2, [[0], [1], [2], [3], [4]], 'pushed values get updated';
+
+    my @a4 is default(42) = 1, |2, Nil, 3;
+    is-deeply @a4, [1, 2, 42, 3], 'is default work on Arrays';
+
+    is-deeply ( my @a3 = 1, |2), [1, 2], 'can use return value of assignment (1)';
+    is-deeply (+my @a3 = 1, |2), 2,      'can use return value of assignment (2)';
+    is-deeply (my @a3 is default(42) = 1, Nil, |2), [1, 42, 2],
+        'can use return value of assignment (3)';
 }
 
 # vim: ft=perl6
