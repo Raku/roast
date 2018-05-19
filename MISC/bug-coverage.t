@@ -204,7 +204,6 @@ subtest 'thunking closure scoping' => {
         'given + whatever code closure execution';
 
     # RT #126984
-    #?rakudo.jvm skip 'UnwindException in thread "main", RT #126984'
     is-deeply gather {
         sub foo($x) { (* ~ $x)($_).take given $x }; foo(1); foo(2)
     }, ("11", "22").Seq, 'sub + given + whatevercode closure execution';
