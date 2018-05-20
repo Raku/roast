@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 54) + 15;
+plan (@testing/2 * 54) + 16;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -325,6 +325,25 @@ subtest 'Array.splice callable args' => {
         splice(@b, { is $^a, $t[1], 'arg is correct for start'; $t[2] },
                    { is $^a, $t[1]-$t[2], 'arg is correct for offset' });
     }
+}
+
+subtest 'Array.splice can splice beyond end of Array' => {
+    plan 8;
+    my @a1 = <a b c d>;
+    is-deeply @a1.splice(1, 10), [<b c d>], 'return value (non-lazy)';
+    is-deeply @a1,               [<a>],     'result (non-lazy)';
+
+    my @a2 = <a>, |lazy <b c d>;
+    is-deeply @a2.splice(1, 10), [<b c d>], 'return value (lazy)';
+    is-deeply @a2,               [<a>],     'result (lazy)';
+
+    my @a3;
+    is-deeply @a3.splice(0, 10), [],        'return value (uninitialized)';
+    is-deeply @a3,               [],        'result (uninitialized)';
+
+    my @a4 = ();
+    is-deeply @a3.splice(0, 10), [],        'return value (empty)';
+    is-deeply @a3,               [],        'result (empty)';
 }
 
 # vim: ft=perl6
