@@ -414,7 +414,7 @@ subtest 'reification of zen and whatever slices' => {
 
 # https://github.com/rakudo/rakudo/issues/1832
 subtest 'no funny business in assignment' => {
-    plan 8;
+    plan 9;
     my package R1832 { our @bar = 42, |0 };
     is @::R1832::('bar')[^1], 42, 'can reference values in an `our` var';
 
@@ -434,6 +434,10 @@ subtest 'no funny business in assignment' => {
     is-deeply (+my @a3 = 1, |2), 2,      'can use return value of assignment (2)';
     is-deeply (my @a3 is default(42) = 1, Nil, |2), [1, 42, 2],
         'can use return value of assignment (3)';
+
+    # https://github.com/rakudo/rakudo/issues/1843
+    my @res;
+    sub init() { my @a = 1, (init() unless $++); @res.push: @a; 42 }; init(); is-deeply @res, [[1], [1, 42]], 'works fine when re-entrant';
 }
 
 # vim: ft=perl6
