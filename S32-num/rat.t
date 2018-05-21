@@ -392,25 +392,19 @@ subtest 'Rational.isNaN' => {
 }
 
 subtest '=== with 0-denominator Rats' => {
-    plan 15;
+    plan 9;
 
-    is-deeply  <0/0> ===  <0/0>,  True, ' 0/0 ===  0/0';
-    is-deeply  <2/0> ===  <2/0>,  True, ' 2/0 ===  2/0';
-    is-deeply <-2/0> === <-2/0>,  True, '-2/0 === -2/0';
+    is-deeply  <0/0> ===  <0/0>,  True,  ' 0/0 ===  0/0';
+    is-deeply  <0/0> ===  <2/0>,  False, ' 0/0 ===  2/0';
+    is-deeply  <0/0> ===  <-2/0>, False, ' 0/0 === -2/0';
 
-    is-deeply  <0/0> ===  <2/0>, False, ' 0/0 ===  2/0';
-    is-deeply  <2/0> ===  <0/0>, False, ' 2/0 ===  0/0';
-    is-deeply  <5/0> ===  <2/0>, False, ' 5/0 ===  2/0';
-    is-deeply  <2/0> ===  <5/0>, False, ' 2/0 ===  5/0';
-    is-deeply <-5/0> === <-2/0>, False, '-5/0 === -2/0';
-    is-deeply <-2/0> === <-5/0>, False, '-2/0 === -5/0';
+    is-deeply  <1/0> ===  <0/0>,  False, ' 1/0 ===  0/0';
+    is-deeply  <1/0> ===  <2/0>,  True,  ' 1/0 ===  2/0';
+    is-deeply  <1/0> ===  <-2/0>, False, ' 1/0 === -2/0';
 
-    is-deeply  <0/0> ===  <2/2>, False, ' 0/0 ===  2/2';
-    is-deeply  <2/2> ===  <0/0>, False, ' 2/2 ===  0/0';
-    is-deeply  <5/2> ===  <2/0>, False, ' 5/2 ===  2/0';
-    is-deeply  <2/0> ===  <5/2>, False, ' 2/0 ===  5/2';
-    is-deeply <-5/2> === <-2/0>, False, '-5/2 === -2/0';
-    is-deeply <-2/0> === <-5/2>, False, '-2/0 === -5/2';
+    is-deeply <-1/0> ===  <0/0>,  False, '-1/0 ===  0/0';
+    is-deeply <-1/0> ===  <2/0>,  False, '-1/0 ===  2/0';
+    is-deeply <-1/0> ===  <-2/0>, True,  '-1/0 === -2/0';
 }
 
 # RT #130606
