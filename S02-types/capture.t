@@ -2,7 +2,7 @@ use v6;
 use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
-plan 43;
+plan 46;
 
 {
     my $capture = \(1,2,3);
@@ -346,6 +346,20 @@ subtest 'types whose .Capture behaves like Mu.Capture' => {
         make-temp-file.open(:w).&has-nameds: $_;
         IO::CatHandle.new(make-temp-file :content<foo>).&has-nameds: $_;
     }
+}
+
+# Capture duplicate named elimination.
+{
+    # These may in future versions warn, but should still work
+    CONTROL { when CX::Warn { .resume } }
+    is \(:a(41), :a(42)), \(:a(42)), 'Duplicate named arguments are eliminated';
+    my $c = 2;
+    is \(:a($c--), :a($c*=5)), \(:a(5)), 'Eliminated named argument side-effect kept';
+    # This keeps implementations from getting lazy about where
+    # they flatten any Slips they may have used to keep side effects
+    $c = 2;
+    my sub f (*%c) { %c.kv };
+    is f(:a($c--), :a($c*=5)), ("a","5"), 'Eliminated named argument with named-only passing';
 }
 
 # vim: ft=perl6
