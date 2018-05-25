@@ -4,7 +4,7 @@ BEGIN %*ENV<RAKUDO_DEPRECATIONS_FATAL>:delete; # disable fatal setting for tests
 
 use Test;
 
-plan 21;
+plan 13;
 
 # L<S02/Deprecations>
 
@@ -70,39 +70,6 @@ Please use 'Fnorkle.new' instead.
 TEXT
 } #2
 
-# class with explicit new()
-{
-    my $B;
-    my $Bwith;
-    class B     is DEPRECATED                 { method new { $B++     } };
-    class Bwith is DEPRECATED("'Borkle.new'") { method new { $Bwith++ } };
-
-    $line = $?LINE; B.new;
-    is $B, 1, 'was "B.new" really called';
-    #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for B.new';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method new (from B) seen at:
-  $*PROGRAM, line $line
-Please use something else instead.
---------------------------------------------------------------------------------
-TEXT
-
-    $line = $?LINE; Bwith.new;
-    Bwith.new;
-    is $Bwith, 2, 'was "Bwith.new" really called';
-    #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for Bwith.new';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method new (from Bwith) seen at:
-  $*PROGRAM, lines $line,{$line + 1}
-Please use 'Borkle.new' instead.
---------------------------------------------------------------------------------
-TEXT
-} #4
-
 # method in class
 {
     my $C;
@@ -161,39 +128,6 @@ Please use 'bar' instead.
 --------------------------------------------------------------------------------
 TEXT
 } #2
-
-# class with private attribute and homemade accessor
-{
-    my $E;
-    my $Ewith;
-    class E     { has $!foo is DEPRECATED;          method foo { $E++     } };
-    class Ewith { has $!foo is DEPRECATED("'bar'"); method foo { $Ewith++ } };
-
-    $line = $?LINE; E.new.foo;
-    is $E, 1, 'was "E.new.foo" really called';
-    #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for E.new.foo';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method foo (from E) seen at:
-  $*PROGRAM, line $line
-Please use something else instead.
---------------------------------------------------------------------------------
-TEXT
-
-    $line = $?LINE; Ewith.new.foo;
-    Ewith.new.foo;
-    is $Ewith, 2, 'was "Ewith.new.foo" really called';
-    #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation Ewith.new.foo';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method foo (from Ewith) seen at:
-  $*PROGRAM, lines $line,{$line + 1}
-Please use 'bar' instead.
---------------------------------------------------------------------------------
-TEXT
-} #4
 
 # RT #120908
 {
