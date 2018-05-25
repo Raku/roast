@@ -4,7 +4,7 @@ BEGIN %*ENV<RAKUDO_DEPRECATIONS_FATAL>:delete; # disable fatal setting for tests
 
 use Test;
 
-plan 21;
+plan 9;
 
 # L<S02/Deprecations>
 
@@ -72,72 +72,6 @@ Please use 'Fnorkle.new' instead.
 TEXT
 } #2
 
-# class with explicit new()
-#?niecza skip 'is DEPRECATED NYI'
-{
-    my $B;
-    my $Bwith;
-    class B     is DEPRECATED                 { method new { $B++     } };
-    class Bwith is DEPRECATED("'Borkle.new'") { method new { $Bwith++ } };
-
-    $line = $?LINE; B.new;
-    is $B, 1, 'was "B.new" really called';
-    #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for B.new';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method new (from B) seen at:
-  $*PROGRAM, line $line
-Please use something else instead.
---------------------------------------------------------------------------------
-TEXT
-
-    $line = $?LINE; Bwith.new;
-    Bwith.new;
-    is $Bwith, 2, 'was "Bwith.new" really called';
-    #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for Bwith.new';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method new (from Bwith) seen at:
-  $*PROGRAM, lines $line,{$line + 1}
-Please use 'Borkle.new' instead.
---------------------------------------------------------------------------------
-TEXT
-} #4
-
-# method in class
-#?niecza skip 'is DEPRECATED NYI'
-{
-    my $C;
-    my $Cwith;
-    class C     { method foo is DEPRECATED          { $C++     } };
-    class Cwith { method foo is DEPRECATED("'bar'") { $Cwith++ } };
-
-    $line = $?LINE; C.new.foo;
-    is $C, 1, 'was "C.new.foo" really called';
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for C.new.foo';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method foo (from C) seen at:
-  $*PROGRAM, line $line
-Please use something else instead.
---------------------------------------------------------------------------------
-TEXT
-
-    $line = $?LINE; Cwith.new.foo;
-    Cwith.new.foo;
-    is $Cwith, 2, 'was "Cwith.new.foo" really called';
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation Cwith.new.foo';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method foo (from Cwith) seen at:
-  $*PROGRAM, lines $line,{$line + 1}
-Please use 'bar' instead.
---------------------------------------------------------------------------------
-TEXT
-} #4
-
 # class with auto-generated public attribute
 #?niecza skip 'is DEPRECATED NYI'
 {
@@ -167,40 +101,6 @@ Please use 'bar' instead.
 --------------------------------------------------------------------------------
 TEXT
 } #2
-
-# class with private attribute and homemade accessor
-#?niecza skip 'is DEPRECATED NYI'
-{
-    my $E;
-    my $Ewith;
-    class E     { has $!foo is DEPRECATED;          method foo { $E++     } };
-    class Ewith { has $!foo is DEPRECATED("'bar'"); method foo { $Ewith++ } };
-
-    $line = $?LINE; E.new.foo;
-    is $E, 1, 'was "E.new.foo" really called';
-    #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for E.new.foo';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method foo (from E) seen at:
-  $*PROGRAM, line $line
-Please use something else instead.
---------------------------------------------------------------------------------
-TEXT
-
-    $line = $?LINE; Ewith.new.foo;
-    Ewith.new.foo;
-    is $Ewith, 2, 'was "Ewith.new.foo" really called';
-    #?rakudo todo 'NYI'
-    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation Ewith.new.foo';
-Saw 1 occurrence of deprecated code.
-================================================================================
-Method foo (from Ewith) seen at:
-  $*PROGRAM, lines $line,{$line + 1}
-Please use 'bar' instead.
---------------------------------------------------------------------------------
-TEXT
-} #4
 
 # RT #120908
 {
