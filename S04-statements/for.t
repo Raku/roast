@@ -627,7 +627,6 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     is [$a, $b], [2, 2], 'is rw on slurpy parameters works (2)';
     incr3($a, $b);
     is [$a, $b], [3, 3], 'is rw on slurpy parameters works (3)';
-    #?rakudo.jvm todo 'X::AdHoc "Cannot assign to a readonly variable or a value" instead of X::Multi::NoMatch; RT #126531'
     throws-like { incr4($a, $b) }, X::Multi::NoMatch;
 }
 

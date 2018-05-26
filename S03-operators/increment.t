@@ -116,7 +116,6 @@ is($moo, 0, "var was not touched");
 }
 
 # RT #74912
-#?rakudo.jvm todo 'X::AdHoc "Cannot assign to a readonly variable or a value" instead of X::Multi::NoMatch; RT #126531'
 throws-like 'my $x = 0; ++++$x', X::Multi::NoMatch,
     'can not double-increment, because the return value is not a container';
 

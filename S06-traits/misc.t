@@ -18,7 +18,6 @@ my $foo=1;
 # test twice, once with assignment and once with increment, rakudo
 # used to catch the first but not the latter.
 #
-#?rakudo.jvm todo 'X::AdHoc "Cannot assign to a readonly variable or a value" instead of X::Multi::NoMatch; RT #126531'
 throws-like '
     my $tmp = 1;
     sub mods_param ($x) { $x++; }
@@ -36,7 +35,6 @@ throws-like '
     'can\'t modify parameter, constant by default';
 
 # is readonly
-#?rakudo.jvm todo 'X::AdHoc "Cannot assign to a readonly variable or a value" instead of X::Multi::NoMatch; RT #126531'
 throws-like 'sub mods_param_constant ($x is readonly) { $x++; };
              mods_param_constant($foo);',
              X::Multi::NoMatch,
@@ -48,7 +46,6 @@ sub mods_param_rw_enforces ($x is rw) { $x; }
 throws-like { mods_param_rw_enforces(1) },
     X::Parameter::RW,
     'is rw dies in signature binding if passed a literal Int';
-#?rakudo.jvm todo "RT #126531"
 throws-like { mods_param_rw_enforces($[1,2]) },
     X::Parameter::RW,
     'is rw dies in signature binding if passed an itemized array';
