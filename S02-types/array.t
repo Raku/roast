@@ -427,12 +427,12 @@ subtest 'no funny business in assignment' => {
     my @a2; for ^5 { push @a2, my @o = Empty, $_ };
     is-deeply @a2, [[0], [1], [2], [3], [4]], 'pushed values get updated';
 
-    my @a4 is default(42) = 1, |2, Nil, 3;
-    is-deeply @a4, [1, 2, 42, 3], 'is default work on Arrays';
+    my @a3 is default(42) = 1, |2, Nil, 3;
+    is-deeply @a3, [1, 2, 42, 3], 'is default work on Arrays';
 
-    is-deeply ( my @a3 = 1, |2), [1, 2], 'can use return value of assignment (1)';
-    is-deeply (+my @a3 = 1, |2), 2,      'can use return value of assignment (2)';
-    is-deeply (my @a3 is default(42) = 1, Nil, |2), [1, 42, 2],
+    is-deeply ( my @a4 = 1, |2), [1, 2], 'can use return value of assignment (1)';
+    is-deeply (+my @a5 = 1, |2), 2,      'can use return value of assignment (2)';
+    is-deeply (my @a6 is default(42) = 1, Nil, |2), [1, 42, 2],
         'can use return value of assignment (3)';
 
     # https://github.com/rakudo/rakudo/issues/1843

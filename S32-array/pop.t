@@ -117,7 +117,7 @@ subtest 'no gost elements after pop/shift' => {
     @a[3] = 42;
     is-deeply @a, ['b', 'c', Any, 42], '.shift';
 
-    my @a = <a b c>;
+    @a = <a b c>;
     pop @a;
     @a[3] = 42;
     is-deeply @a, ['a', 'b', Any, 42], '&pop';
