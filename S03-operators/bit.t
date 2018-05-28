@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 54;
+plan 60;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -63,6 +63,38 @@ plan 54;
   is( "ok \xFF\xFF\n" ~& "ok 19\n", "ok 19\n", 'stringwise ~&, arbitrary string' );
   is( "ok 20\n" ~| "ok \0\0\n", "ok 20\n",     'stringwise ~|, arbitrary string' );
 
+# MoarVM/MoarVM#867
+# TODO: Also test to ensure string is returned normalized. i.e. constructing
+# a bitwise operation whose naive result (doing the op on each codepoint individually)
+# would be different than those individual codepoints normalized.
+sub check_string_bitop (Str:D $a, Str:D $b) {
+  my @a = $a.ords;
+  my @b = $b.ords;
+  my @res-AND = ($a ~& $b).ords;
+  my @res-OR  = ($a ~| $b).ords;
+  my @res-XOR = ($a ~^ $b).ords;
+  my $len = @a < @b ?? @a !! @b;
+  my (@constructed-AND, @constructed-XOR, @constructed-OR);
+  loop (my $i = 0; $i < $len; $i++) {
+    @constructed-AND[$i] = @a[$i] +& @b[$i];
+    @constructed-OR[$i]  = @a[$i] +| @b[$i];
+    @constructed-XOR[$i] = @a[$i] +^ @b[$i];
+  }
+  my @longer-array =
+    @a < @b ?? @b !!
+    @b < @a ?? @a !!
+    Empty;
+  loop (; $i < @longer-array; $i++) {
+    @constructed-OR[$i]  = @longer-array[$i];
+    @constructed-XOR[$i] = @longer-array[$i];
+  }
+
+  is-deeply @res-AND, @constructed-AND, "'$a' ~& '$b' works properly with combining characters";
+  is-deeply @res-OR, @constructed-OR, "'$a' ~| '$b' works properly with combining characters";
+  is-deeply @res-XOR, @constructed-XOR, "'$a' ~^ '$b' works properly with combining characters";
+}
+  check_string_bitop("\c[united states]", "\c[canada, semicolon]");
+  check_string_bitop("P" ~ ("\c[BRAHMI VOWEL SIGN VOCALIC RR]" x 5), 'zzzzzzz');
   # bit shifting
   is( 32 +< 1,            64,     'shift one bit left' );
   is( 32 +> 1,            16,     'shift one bit right' );
