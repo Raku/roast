@@ -89,10 +89,13 @@ sub check_string_bitop (Str:D $a, Str:D $b) {
     @constructed-XOR[$i] = @longer-array[$i];
   }
 
+  #?rakudo.jvm 3 todo 'result is not quite right, Unicode related'
   is-deeply @res-AND, @constructed-AND, "'$a' ~& '$b' works properly with combining characters";
   is-deeply @res-OR, @constructed-OR, "'$a' ~| '$b' works properly with combining characters";
   is-deeply @res-XOR, @constructed-XOR, "'$a' ~^ '$b' works properly with combining characters";
 }
+  #?rakudo.jvm skip 'Unrecognized character name [united states], Unicode related'
+  #?DOES 3
   check_string_bitop("\c[united states]", "\c[canada, semicolon]");
   check_string_bitop("P" ~ ("\c[BRAHMI VOWEL SIGN VOCALIC RR]" x 5), 'zzzzzzz');
   # bit shifting
