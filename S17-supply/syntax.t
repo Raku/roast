@@ -391,7 +391,6 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
 }
 
 # multiple whenevers with channels
-#?rakudo.jvm skip 'hangs'
 {
     my $c1 = Channel.new;
     my $c2 = Channel.new;
@@ -538,7 +537,6 @@ lives-ok {
     }
 }, 'No react guts crash in case that once spat out two done messages either'; 
 
-#?rakudo.jvm skip 'hangs'
 lives-ok {
     my $s = supply { whenever Supply.interval(0.001) { done } }
     await do for ^4 {

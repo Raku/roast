@@ -870,9 +870,6 @@ subtest 'words method' => {
 if $*DISTRO.is-win {
     skip "Proc/Proc::Async with cmd.exe don't quite work on Windows: RT132258";
 }
-elsif $*VM.name eq 'jvm' {
-    skip "hangs; Rakudo GH #1313";
-}
 else {
     # https://github.com/rakudo/rakudo/issues/1313
     {

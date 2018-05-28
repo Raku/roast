@@ -89,7 +89,6 @@ with make-temp-dir() -> $dir {
 
 # https://github.com/tokuhirom/p6-WebSocket/issues/15#issuecomment-339120879
 # RT #132343
-#?rakudo.jvm todo 'Unhandled exception in code scheduled on thread ...: Too few positionals passed; expected 6 arguments but got 2; RT #132343'
 is_run ｢
     # fire up a few socks first to fill up affinity workers to make
     # the bug more prevalent

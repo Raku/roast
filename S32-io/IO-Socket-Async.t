@@ -99,7 +99,6 @@ my $echoResult = await client($message);
 is $echoResult, $message, 'Echo server';
 $echoTap.close;
 
-#?rakudo.jvm skip 'NullPointerException'
 {
     my $firstReceive;
     my $splitGraphemeTap = $server.tap(-> $c {
@@ -112,7 +111,7 @@ $echoTap.close;
     is $firstReceive, "u̇\n", 'Coped with grapheme split across packets';
 }
 
-#?rakudo.jvm skip 'NullPointerException'
+#?rakudo.jvm todo 'IllegalStateException: Current state = CODING_END, new state = CODING'
 {
     my $echo2Tap = $server.tap(-> $c {
         $c.Supply.tap(-> $chars {
@@ -155,7 +154,7 @@ $echoTap.close;
         $c.write($binary).then({ $c.close });
     });
 
-    #?rakudo.jvm skip 'hangs (sometimes) RT #127948'
+    #?rakudo.jvm todo 'unknown problem, did hang (sometimes) RT #127948'
     {
         my $received = await client(Buf.new);
         ok $binary eqv $received, 'bytes-supply';
@@ -232,7 +231,6 @@ for '127.0.0.1', '::1' -> $host {
     ok $failed, 'Address already in use results in a quit';
 }
 
-#?rakudo.jvm skip 'dies/hangs on JVM, sometimes'
 {
     my $t = IO::Socket::Async.listen("localhost", 5007).tap: -> $conn { };
     my $conn = await IO::Socket::Async.connect("localhost", 5007);
