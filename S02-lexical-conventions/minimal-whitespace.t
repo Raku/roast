@@ -38,7 +38,7 @@ throws-like { EVAL '42. i' },
   X::Comp,
   'whitespace is not allowed between . and i postfix';
 
-my $o = 42;
+$o = 42;
 throws-like { EVAL '$o ++' },
   X::Comp,
   'whitespace is not allowed before ++ postfix';

@@ -64,7 +64,6 @@ plan 46;
 
     append @a, @foo;
     is(@a.elems, 5, 'Array flattened by append');
-    my %foo;
     append @a, %foo;
     is(@a.elems, 5, 'Hash flattened by append');
 
