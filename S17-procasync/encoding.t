@@ -10,6 +10,7 @@ plan 13;
     $proc.stdout.tap(quit => { $quit = True });
     $proc.stderr.tap(quit => { $oops = True });
     await $proc.start;
+    #?rakudo.jvm todo 'unknown problem'
     ok $quit, 'stdout Supply quit on encoding error';
     nok $oops, 'No bogus quit on stderr Supply';
 }
@@ -21,6 +22,7 @@ plan 13;
     $proc.stdout.tap(quit => { $oops = True });
     $proc.stderr.tap(quit => { $quit = True });
     await $proc.start;
+    #?rakudo.jvm todo 'unknown problem'
     ok $quit, 'stderr Supply quit on encoding error';
     nok $oops, 'No bogus quit on stdout Supply';
 }

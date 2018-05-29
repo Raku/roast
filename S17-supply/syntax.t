@@ -336,7 +336,6 @@ plan 83;
     is $i, 3, 'blockless react/whenever works';
 }
 
-#?rakudo.jvm skip 'hangs'
 {
     my $trigger1 = Supplier.new;
     my $trigger2 = Supplier.new;

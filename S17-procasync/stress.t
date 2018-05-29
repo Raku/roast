@@ -54,6 +54,7 @@ for 1..10 {
 # to repro the bug this is covering (bug present in 2017 commit ce12e480316
 # RT #131763
 if run :!out, :!err, «echo test» {
+  #?rakudo.jvm todo 'hangs'
   doesn't-hang ｢
       for ^100 {
           my $proc = Proc::Async.new: «echo test»;
@@ -75,6 +76,7 @@ else {
 # produces output too slowly to trigger the bug (bug is present in 2016.10
 # rakudo release). So we use `perl` here for that.
 if run :!out, :!err, «perl -e 'print 42'» {
+    #?rakudo.jvm todo 'Unknown encoding utf8-c8'
     is_run ｢
         react {
             my $null = $*SPEC.devnull.&open: :w;
