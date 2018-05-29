@@ -128,6 +128,7 @@ is $is-tapped, False, "Process that doesn't output anything will not emit";
     my $result = '';
     $proc.stdout.tap({ $result ~= $_ });
     await $proc.start;
+    #?rakudo.jvm todo 'wrong handling of \r\n'
     is $result, "ABC\n", '\r\n is translated in character mode to \n';
 }
 
