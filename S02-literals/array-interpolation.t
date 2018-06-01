@@ -18,7 +18,7 @@ plan 12;
     "arrays whose elements don't contain whitespace stringify correctly (1)";
   is "@array[]", "a b c d", "arrays whose elements don't contain whitespace stringify correctly (2)";
   is "@array.[]", "a b c d", '@array.[] interpolates';
-  is "@array", "@array", '@array (without brackets) doesnt interpolate';
+  is "@array", '@array', '@array (without brackets) doesnt interpolate';
 }
 
 {
