@@ -54,25 +54,25 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
 # RT #129780
 {
     throws-like
-        { EVAL q|sub foo($a where {* < 5 or $a > 9}) { dd $a }| },
+        { EVAL q|sub foo($a where {* < 5 or $a > 9}) { say $a }| },
         X::Syntax::Malformed,
         'where clause with only one *, but two expressions',
         message => /Malformed \s double \s closure/;
 
     throws-like
-        { EVAL q|sub foo($a where {* < 5 or * > 9}) { dd $a }| },
+        { EVAL q|sub foo($a where {* < 5 or * > 9}) { say $a }| },
         X::Syntax::Malformed,
         'where clause with two *s and two expressions (with an or)',
         message => /Malformed \s double \s closure/;
 
     throws-like
-        { EVAL q|sub foo($a where {* < 5 and * > 9}) { dd $a }| },
+        { EVAL q|sub foo($a where {* < 5 and * > 9}) { say $a }| },
         X::Syntax::Malformed,
         'where clause with two *s and two expressions (with an and)',
         message => /Malformed \s double \s closure/;
 
     throws-like
-        { EVAL q|sub foo($a where {* < 5 and * > 9 and *.char == 2}) { dd $a }| },
+        { EVAL q|sub foo($a where {* < 5 and * > 9 and *.char == 2}) { say $a }| },
         X::Syntax::Malformed,
         'where clause with three *s and three expressions',
         message => /Malformed \s double \s closure/;
