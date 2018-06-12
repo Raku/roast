@@ -4,150 +4,172 @@ use MONKEY-SEE-NO-EVAL;
 use Test;
 
 my $f = './.tmp-test-file2';
+#unlink $f if $f.IO.e;
 
 my $code = gen-test($f);
 
+say "See file '$f'";
+
 EVAL $code;
+#END { unlink $f }
 
 ##### subroutines #####
 sub gen-test($f) {
     my $fh = open $f, :w;
+    #LEAVE try close $fh;
 
     $fh.print: q:to/HERE/;
     use v6;
 
-    use Test;
-
-    plan 19;
-    my $r;
-
-    # one-column table with various whitespace chars
-    =table
+    # two-column table with various whitespace chars
+    =begin table
     HERE
 
     # non-breaking ws chars
-    my @nbchars = <
-       0x00A0
-       0x202F
-    >;
+    my @nbchars = [
+        0x00A0, # NO-BREAK SPACE
+        0x202F, # NARROW NO-BREAK SPACE
+        0x2060, # WORD JOINER
+        0xFEFF, # ZERO WIDTH NO-BREAK SPACE
+    ];
     # breaking ws chars
-    my @bchars = <
-        0x0009
-        0x0020
-        0x1680
-        0x2000
-        0x2001
-        0x2002
-        0x2003
-        0x2004
-        0x2005
-        0x2006
-        0x2007
-        0x2008
-        0x2009
-        0x200A
-        0x205F
-        0x3000
-    >;
+    my @bchars = [
+        # don't use the vertical chars for this test which is single-line oriented
+        #0x000A, # LINE FEED (LF)              vertical
+        #0x000B, # LINE TABULATION             vertical
+        #0x000C, # FORM FEED (FF)              vertical
+        #0x000D, # CARRIAGE RETURN (CR)        vertical
+        #0x2028, # LINE SEPARATOR              vertical
+        #0x2029, # PARAGRAPH SEPARATOR         vertical
 
-    # first row
-    my $row1 = "Perl";
-    $row1 ~= @nbchars[0].chr;
-    $row1 ~= "6";
-    for @bchars -> $c {
-        $row1 ~= $c.chr;
-    }
-    $row1 ~= "is the best!";
-    $fh.say: $row1;
+        0x0009, # CHARACTER TABULATION
+        0x0020, # SPACE
+        0x1680, # OGHAM SPACE MARK
+        0x180E, # MONGOLIAN VOWEL SEPARATOR
+        0x2000, # EN QUAD <= normalized to 0x2002
+        0x2001, # EM QUAD <= normalized to 0x2003
+        0x2002, # EN SPACE
+        0x2003, # EM SPACE
+        0x2004, # THREE-PER-EM SPACE
+        0x2005, # FOUR-PER-EM SPACE
+        0x2006, # SIX-PER-EM SPACE
+        0x2007, # FIGURE SPACE                <= unicode considers this non-breaking, but we won't
+        0x2008, # PUNCTUATION SPACE
+        0x2009, # THIN SPACE
+        0x200A, # HAIR SPACE                  <= PROBLEM
+        0x205F, # MEDIUM MATHEMATICAL SPACE
+        0x3000, # IDEOGRAPHIC SPACE
+    ];
 
-    # last row
-    my $row2 = "Perl";
-    #my $row2 .~ @nbchars[1].chr;
-    $row2 ~= " ";
-    $row2 ~= "6";
-    for @bchars -> $c {
-        $row2 ~= $c.chr;
+    # make one testing row per non-breaking space char
+    for @nbchars -> $nbc {
+        # first column
+        my $row = "Perl";
+        $row ~= $nbc.chr;
+        $row ~= "6";
+        for @bchars -> $c {
+            $row ~= $c.chr;
+        }
+        $row ~= "is the best!";
+
+        # second column
+        $row ~= ' | ';
+        $row ~= "Perl ";
+        $row ~= $nbc.chr;
+        $row ~= " 6";
+        for @bchars -> $c {
+            $row ~= $c.chr;
+        }
+        $row ~= "is the best!";
+
+        $fh.say: $row;
     }
-    $row2 ~= "is the best!";
-    $fh.say: $row2;
+    $fh.say: "=end table";
+
     $fh.say;
 
-    $fh.say: "my \$res0  = \"Perl{@nbchars[0].chr}6 is the best!\";";
-    $fh.say: "my \$res1  = \"Perl{@nbchars[1].chr}6 is the best!\";";
-    $fh.say: "my \$nbsp0 = \"{@nbchars[0].chr}\";";
-    $fh.say: "my \$nbsp1 = \"{@nbchars[1].chr}\";";
-    $fh.say: "my \$nbsp0 = \"{@nbchars[0].chr}\";";
-    $fh.say: "my \$space = \"{@bchars[1].chr}\";";
+    my $n = +@nbchars;
+    # the planned num of tests is 1 + $n
+    $fh.say: "plan 1 + $n * 2;";
+    $fh.say: "my \$n = $n;";
+    $fh.say: "my \$SPACE = ' ';";
+
     $fh.print: q:to/HERE/;
-    $r = $=pod[0];
-    is $r.contents.elems, 2, "table has 2 elements (rows)";
-
-    is $r.contents[0], $res0, "row 1: '$res0'";
-    my @c0 = $r.contents[0].comb;
-
-    is @c0[4], $nbsp0, "char[4] is: {$nbsp0.ord.base(16)}";
-    is @c0[4].ord.base(16), $nbsp0.ord.base(16), "char[4] is: {$nbsp0.ord.base(16)}";
-
-    is @c0[6], $space, "char[6] is: {$space.ord.base(16)}";
-    is @c0[6].ord.base(16), $space.ord.base(16), "char[6] is: {$space.ord.base(16)}";
-    is @c0[9], $space, "char[9] is: {$space.ord.base(16)}";
-    is @c0[9].ord.base(16), $space.ord.base(16), "char[9] is: {$space.ord.base(16)}";
-    is @c0[13], $space, "char[13] is: {$space.ord.base(16)}";
-    is @c0[13].ord.base(16), $space.ord.base(16), "char[13] is: {$space.ord.base(16)}";
-
-    is $r.contents[1], $res1, "row 2: '$res1'";
-    my @c1 = $r.contents[1].comb;
-    is @c1[4], $nbsp1, "char[4] is: {$nbsp1.ord.base(16)}";
-    is @c1[4].ord.base(16), $nbsp1.ord.base(16), "char[4] is: {$nbsp1.ord.base(16)}";
-
-    is @c1[6], $space, "char[6] is: {$space.ord.base(16)}";
-    is @c1[6].ord.base(16), $space.ord.base(16), "char[6] is: {$space.ord.base(16)}";
-    is @c1[9], $space, "char[9] is: {$space.ord.base(16)}";
-    is @c1[9].ord.base(16), $space.ord.base(16), "char[9] is: {$space.ord.base(16)}";
-    is @c1[13], $space, "char[13] is: {$space.ord.base(16)}";
-    is @c1[13].ord.base(16), $space.ord.base(16), "char[13] is: {$space.ord.base(16)}";
-
+    my $r = $=pod[0];
+    is $r.contents.elems, $n, "table has $n elements (rows)";
     HERE
+
+    # create separate sub-tests for each non-breaking space char
+    for 0..^$n -> $i {
+        $fh.say;
+        $fh.say: '{';
+        $fh.say: "my \$i = $i;";
+        $fh.say: "my \$row = $i + 1;";
+        $fh.say: "my \$nbspc = \"{@nbchars[$i].chr}\";";
+
+        $fh.print: q:to/HERE/;
+        my $res0 = "Perl{$nbspc}6 is the best!";
+        my $res1 = "Perl {$nbspc} 6 is the best!";
+        # show cell chars separated by pipes
+        =begin comment
+        my $c0 = $r.contents[$i][0].comb.join('|');
+        my $r0 = $res0.comb.join('|');
+        my $c1 = $r.contents[$i][1].comb.join('|');
+        my $r1 = $res1.comb.join('|');
+        =end comment
+        my $c0 = show-space-chars($r.contents[$i][0]);
+        my $r0 = show-space-chars($res0);
+        my $c1 = show-space-chars($r.contents[$i][1]);
+        my $r1 = show-space-chars($res1);
+
+        is $r.contents[$i][0], $res0, "row $row, col 1: '$c0' vs '$r0'";
+        is $r.contents[$i][1], $res1, "row $row, col 2: '$c1' vs '$r1'";
+
+        HERE
+
+        $fh.say: '}';
+    }
+
+    $fh.print: q:to/HERE/;
+    ##### some subroutines for the EVALed file #####
+    sub int2hexstr($int, :$plain) {
+        # given an int, convert it to a hex string
+        if !$plain {
+            return sprintf("0x%04X", $int);
+        }
+        else {
+            return sprintf("%X", $int);
+        }
+    }
+
+    sub show-space-chars($str) {
+        # given a string with space chars, return a version with the
+        # hex code shown for them and place a pipe separating all
+        # chars in the original string
+        my @c = $str.comb;
+        my $new-str = '';
+        for @c -> $c {
+            $new-str ~= '|' if $new-str;
+            if $c ~~ /\s/ {
+                my $int = $c.ord;
+                my $hex-str = int2hexstr($int);
+                $new-str ~= $hex-str;
+            }
+            else {
+                =begin comment
+                $new-str ~= $c;
+                =end comment
+                my $int = $c.ord;
+                my $hex-str = int2hexstr($int, :plain);
+                $new-str ~= $hex-str;
+            }
+        }
+        return $new-str;
+    }
+    HERE
+
 
     $fh.close;
 
     return slurp $f;
 }
-
-=begin comment
-# expand tests to include all space chars, from the code:
-# unicode hex values and names for the 17 space characters (unicode property Zs)
-# (from ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt):
-#   U-0020 SPACE
-#   U-00A0 NO-BREAK SPACE              <= to be excluded from breaking space set
-#   U-1680 OGHAM SPACE MARK
-#   U-2000 EN QUAD
-#   U-2001 EM QUAD
-#   U-2002 EN SPACE
-#   U-2003 EM SPACE
-#   U-2004 THREE-PER-EM SPACE
-#   U-2005 FOUR-PER-EM SPACE
-#   U-2006 SIX-PER-EM SPACE
-#   U-2007 FIGURE SPACE
-#   U-2008 PUNCTUATION SPACE
-#   U-2009 THIN SPACE
-#   U-200A HAIR SPACE
-#   U-202F NARROW NO-BREAK SPACE       <= to be excluded from breaking space set
-#   U-205F MEDIUM MATHEMATICAL SPACE
-#   U-3000 IDEOGRAPHIC SPACE
-#
-# unicode hex values and names for other horizontal breaking space characters of interest
-#   U-0009 CHARACTER TABULATION
-#
-# the resulting regex (16 chars):
-#    my $breaking-spaces-regex := /<[
-#                                     \x[0009]
-#                                     \x[0020]
-#                                     \x[1680]
-#                                     \x[2000] .. \x[200A]
-#                                     \x[205F]
-#                                     \x[3000]
-#                                   ]>+/;
-=end comment
-
-END { unlink $f }
