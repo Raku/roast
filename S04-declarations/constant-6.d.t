@@ -1,10 +1,116 @@
 use v6;
 use Test;
-plan 2;
+plan 7;
 
 # Clarifications to specification of constants introduced in 6.d language.
 # Many of these were added as part of the CaR TPF Grant:
 # http://news.perlfoundation.org/2018/04/grant-proposal-perl-6-bugfixin.html
+
+diag ｢
+  Permutated parts:
+  [declarator]:       implied/my/our
+  [type]:             implied / plain / with `::` in name / Foo::Bar[Ber::Meow] format
+  [sigil]:            sigilless, backslashed sigilles, $, @, %, &
+
+  Additional tested parts in each test or separate subtest:
+  [initializer op]:   = / := / .=
+  [value]: simple / list (without parentheses) / statement / failing typecheck
+  [containerization]: must not occur / must be impossible to bind new value after definition
+｣;
+
+# dummy classes with `::` in their names we'll use in a bunch of tests below as well as a string
+# to define the same inside evaled strings:
+role Foo::Bar[::T] {}
+class Ber::Meow    {}
+my \ClassDefs := ｢my role Foo::Bar2[::T] {}; my class Ber::Meow2 {}; ｣;
+
+subtest 'implied | implied | sigilless' => {
+    plan 5;
+    constant  iis1 = 42;
+    is-deeply iis1, 42, 'def, simple value';
+    constant  iis2 = 1, 2, 3;
+    is-deeply iis2, (1, 2, 3), 'def, List';
+    for iis2 { is-deeply $_, iis2.head, 'does not containerize'; last }
+    { # add a scope to check scope declarator works right
+        constant iis3 = do { %(:foo, :bar) };
+        is-deeply iis3, %(:foo, :bar), 'def, statement';
+    }
+    ok ::('iis3'), 'implied scope declarator behaves like `our`';
+}
+
+subtest 'my | implied | sigilless' => {
+    plan 5;
+    my constant mis1 = 42;
+    is-deeply mis1, 42, 'def, simple value';
+    my constant mis2 = 1, 2, 3;
+    is-deeply mis2, (1, 2, 3), 'def, List';
+    for mis2 { is-deeply $_, mis2.head, 'does not containerize'; last }
+    { # add a scope to check scope declarator works right
+        my constant mis3 = do { %(:foo, :bar) };
+        is-deeply mis3, %(:foo, :bar), 'def, statement';
+    }
+    nok ::('mis3'), '`my` makes constants lexical';
+}
+
+subtest 'our | implied | sigilless' => {
+    plan 5;
+    our constant ois1 = 42;
+    is-deeply ois1, 42, 'def, simple value';
+    our constant ois2 = 1, 2, 3;
+    is-deeply ois2, (1, 2, 3), 'def, List';
+    for ois2 { is-deeply $_, ois2.head, 'does not containerize'; last }
+    { # add a scope to check scope declarator works right
+        our constant ois3 = do { %(:foo, :bar) };
+        is-deeply ois3, %(:foo, :bar), 'def, statement';
+    }
+    ok ::('ois3'), '`our` gives right scope';
+}
+
+subtest 'my | typed | sigilless' => {
+    plan 9;
+    my Int constant mts1 = 42;
+    is-deeply mts1, 42, 'def, simple value';
+    my List constant mts2 = 1, 2, 3;
+    is-deeply mts2, (1, 2, 3), 'def, List';
+    for mts2 { is-deeply $_, mts2.head, 'does not containerize'; last }
+    { # add a scope to check scope declarator works right
+        my Hash constant mts3 = do { %(:foo, :bar) };
+        is-deeply mts3, %(:foo, :bar), 'def, statement';
+    }
+    nok ::('mts3'), '`my` makes constants lexical';
+
+    my IO::Path constant mts4 = '.'.IO;
+    is-deeply mts4, '.'.IO, 'type with `::` in name';
+    throws-like ｢my IO::Path mts5 = 42｣, X::TypeCheck, 'type with `::` in name (failure mode)';
+
+    my Foo::Bar[Ber::Meow] constant mts6 = Foo::Bar[Ber::Meow].new;
+    is-deeply mts6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
+    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant mts7 = 42｣, X::TypeCheck,
+        'parametarized type with `::` in name (failure mode)';
+}
+
+subtest 'our | typed | sigilless' => {
+    plan 9;
+    our Int constant ots1 = 42;
+    is-deeply ots1, 42, 'def, simple value';
+    our List constant ots2 = 1, 2, 3;
+    is-deeply ots2, (1, 2, 3), 'def, List';
+    for ots2 { is-deeply $_, ots2.head, 'does not containerize'; last }
+    { # add a scope to check scope declarator works right
+        our Hash constant ots3 = do { %(:foo, :bar) };
+        is-deeply ots3, %(:foo, :bar), 'def, statement';
+    }
+    ok ::('ots3'), '`our` gives right scope';
+
+    our IO::Path constant ots4 = '.'.IO;
+    is-deeply ots4, '.'.IO, 'type with `::` in name';
+    throws-like ｢my IO::Path ots5 = 42｣, X::TypeCheck, 'type with `::` in name (failure mode)';
+
+    our Foo::Bar[Ber::Meow] constant ots6 = Foo::Bar[Ber::Meow].new;
+    is-deeply ots6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
+    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant ots7 = 42｣, X::TypeCheck,
+        'parametarized type with `::` in name (failure mode)';
+}
 
 subtest '@-sigilled constants' => {
       plan 8;
