@@ -6,7 +6,7 @@ plan 2;
 # Many of these were added as part of the CaR TPF Grant:
 # http://news.perlfoundation.org/2018/04/grant-proposal-perl-6-bugfixin.html
 
-subtest 'Positional constants' => {
+subtest '@-sigilled constants' => {
       plan 8;
 
       constant  @pos1 = 1, 2, 3;
@@ -39,7 +39,7 @@ subtest 'Positional constants' => {
       ｣;
 }
 
-subtest 'Associative constants' => {
+subtest '%-sigilled constants' => {
       plan 9;
 
       constant  %assoc1 = Map.new(1, 2, 3, 4);
