@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Assuming;
 
-plan 229;
+plan 232;
 
 is-primed-sig(sub () { }, :(), );
 is-primed-sig(sub ($a) { }, :(), 1);
@@ -256,5 +256,21 @@ is-primed-call(&atan2, \(1), $[atan2(1,2)],*,2);
 
 # RT#126332
 is-primed-call(&substr, \(0,2), $[substr("hello world", 0, 2)], "hello world");
-is-primed-call(sub (*@x) { @x.perl }, \("c","d","e"), $[sub (*@x) { @x.perl }("a","b","c","d","e")], "a", "b");
+is-primed-call(sub ( *@x) { @x.perl }, \("c","d","e"), $[sub ( *@x) { @x.perl }("a","b","c","d","e")], "a", "b");
+is-primed-call(sub (**@x) { @x.perl }, \("c","d","e"), $[sub (**@x) { @x.perl }("a","b","c","d","e")], "a", "b");
+is-primed-call(sub ( +@x) { @x.perl }, \("c","d","e"), $[sub ( +@x) { @x.perl }("a","b","c","d","e")], "a", "b");
 
+# Github Issue #1918
+subtest 'Sub with slurpy compiles and yields correct results with .assuming' => {
+    plan 3;
+
+    my $c     = \(:!b);
+    my &s     = (sub ( *@a, :$b) { @a, $b }).assuming(|$c);
+    my &s_lol = (sub (**@a, :$b) { @a, $b }).assuming(|$c);
+    my &s_one = (sub ( +@a, :$b) { @a, $b }).assuming(|$c);
+
+    my $a := (1, 2, (3, 4));
+    is-deeply &s\   ($a), ([ 1, 2,  3, 4   ], False), 'Slurpy (*@)';
+    is-deeply &s_lol($a), ([(1, 2, (3, 4)),], False), 'Slurpy_lol (**@)';
+    is-deeply &s_one($a), ([ 1, 2, (3, 4)  ], False), 'Slurpy_onearg (+@)';
+}
