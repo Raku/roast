@@ -300,8 +300,81 @@ subtest 'our | typed | $-sigilled' => {
         'parametarized type with `::` in name (failure mode)';
 }
 
+##
+## @-sigilled
+##
 
-subtest '@-sigilled constants' => {
+subtest 'implied | implied | @-sigilled' => {
+    plan 6;
+    constant  @iias1 = 42;
+    is-deeply @iias1, (42,), 'def, simple value';
+    constant  @iias2 = 1, 2, 3;
+    is-deeply @iias2, (1, 2, 3), 'def, List';
+    for @iias2 { is-deeply $_, @iias2.head, 'does not scalarize'; last }
+    { # add a scope to check scope declarator works right
+        constant  @iias3 = do { %(:foo, :bar) };
+        isa-ok    @iias3, List, 'def, statement (type)';
+        is-deeply @iias3.sort, (:foo, :bar).sort, 'def, statement (value)';
+    }
+    ok ::('@iias3'), 'implied scope declarator behaves like `our`';
+}
+
+subtest 'my | implied | @-sigilled' => {
+    plan 6;
+    my constant @mias1 = 42;
+    is-deeply @mias1, (42,), 'def, simple value';
+    my constant @mias2 = 1, 2, 3;
+    is-deeply @mias2, (1, 2, 3), 'def, List';
+    for @mias2 { is-deeply $_, @mias2.head, 'does not scalarize'; last }
+    { # add a scope to check scope declarator works right
+        my constant @mias3 = do { %(:foo, :bar) };
+        isa-ok    @mias3, List, 'def, statement (type)';
+        is-deeply @mias3.sort, (:foo, :bar).sort, 'def, statement (value)';
+    }
+    nok ::('@mias3'), '`my` makes constants lexical';
+}
+
+subtest 'our | implied | @-sigilled' => {
+    plan 6;
+    our constant @oias1 = 42;
+    is-deeply @oias1, (42,), 'def, simple value';
+    our constant @oias2 = 1, 2, 3;
+    is-deeply @oias2, (1, 2, 3), 'def, List';
+    for @oias2 { is-deeply $_, @oias2.head, 'does not scalarize'; last }
+    { # add a scope to check scope declarator works right
+        our constant @oias3 = do { %(:foo, :bar) };
+        isa-ok    @oias3, List, 'def, statement (type)';
+        is-deeply @oias3.sort, (:foo, :bar).sort, 'def, statement (value)';
+    }
+    ok ::('@oias3'), '`our` gives right scope';
+}
+
+subtest 'my | typed | @-sigilled' => {
+    plan 4;
+    throws-like ｢my Int constant @mtas1 = 42;｣,
+        X::ParametricConstant, 'statement';
+    throws-like ｢my List constant @mtas2 = 1, 2, 3;｣,
+        X::ParametricConstant, 'statement';
+    throws-like ｢my IO::Path @mtas5 = 42｣, X::ParametricConstant,
+        'type with `::` in name';
+    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant @mtas7 = 42｣,
+        X::ParametricConstant, 'parametarized type with `::` in name';
+}
+
+subtest 'our | typed | @-sigilled' => {
+    plan 4;
+    throws-like ｢our Int constant @mtas1 = 42;｣,
+        X::ParametricConstant, 'statement';
+    throws-like ｢our List constant @mtas2 = 1, 2, 3;｣,
+        X::ParametricConstant, 'statement';
+    throws-like ｢our IO::Path @mtas5 = 42｣, X::ParametricConstant,
+        'type with `::` in name';
+    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant @mtas7 = 42｣,
+        X::ParametricConstant, 'parametarized type with `::` in name';
+}
+
+
+subtest '@-sigilled constants coercsion' => {
       plan 8;
 
       constant  @pos1 = 1, 2, 3;
