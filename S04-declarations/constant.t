@@ -335,8 +335,8 @@ throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
 # RT #122895
 {
      # constants and non constants are consistently non flattening.
-     is (my @ = 'a', <b c>)[1], <b c>, "non constant doesn't flatten"; 
-     is (constant @ = 'a', <b c>)[1], <b c>, "constant doesn't flatten"; 
+     is (my @ = 'a', <b c>)[1], <b c>, "non constant doesn't flatten";
+     is (constant @ = 'a', <b c>)[1], <b c>, "constant doesn't flatten";
 }
 
 # test that constant @x caches Seq
