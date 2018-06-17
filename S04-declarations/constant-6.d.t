@@ -88,12 +88,13 @@ subtest 'my | typed | sigilless' => {
 
     my IO::Path constant mts4 = '.'.IO;
     is-deeply mts4, '.'.IO, 'type with `::` in name';
-    throws-like ｢my IO::Path mts5 = 42｣, X::TypeCheck, 'type with `::` in name (failure mode)';
+    throws-like ｢my IO::Path constant mts5 = 42｣, X::TypeCheck,
+        'type with `::` in name (failure mode)';
 
     my Foo::Bar[Ber::Meow] constant mts6 = Foo::Bar[Ber::Meow].new;
     is-deeply mts6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant mts7 = 42｣, X::TypeCheck,
-        'parametarized type with `::` in name (failure mode)';
+    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant mts7 = 42｣,
+        X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
 subtest 'our | typed | sigilless' => {
@@ -111,12 +112,14 @@ subtest 'our | typed | sigilless' => {
 
     our IO::Path constant ots4 = '.'.IO;
     is-deeply ots4, '.'.IO, 'type with `::` in name';
-    throws-like ｢my IO::Path ots5 = 42｣, X::TypeCheck, 'type with `::` in name (failure mode)';
+    throws-like ｢our IO::Path constant ots5 = 42｣, X::TypeCheck,
+        'type with `::` in name (failure mode)';
 
     our Foo::Bar[Ber::Meow] constant ots6 = Foo::Bar[Ber::Meow].new;
-    is-deeply ots6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant ots7 = 42｣, X::TypeCheck,
-        'parametarized type with `::` in name (failure mode)';
+    is-deeply ots6, Foo::Bar[Ber::Meow].new,
+        'parametarized type with `::` in name';
+    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant ots7 = 42｣,
+        X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
 ##
@@ -180,12 +183,14 @@ subtest 'my | typed | backslashed sigilless' => {
 
     my IO::Path constant \mtbs4 = '.'.IO;
     is-deeply mtbs4, '.'.IO, 'type with `::` in name';
-    throws-like ｢my IO::Path mtbs5 = 42｣, X::TypeCheck, 'type with `::` in name (failure mode)';
+    throws-like ｢my IO::Path constant mtbs5 = 42｣, X::TypeCheck,
+        'type with `::` in name (failure mode)';
 
     my Foo::Bar[Ber::Meow] constant \mtbs6 = Foo::Bar[Ber::Meow].new;
-    is-deeply mtbs6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant mtbs7 = 42｣, X::TypeCheck,
-        'parametarized type with `::` in name (failure mode)';
+    is-deeply mtbs6, Foo::Bar[Ber::Meow].new,
+        'parametarized type with `::` in name';
+    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant mtbs7 = 42｣,
+        X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
 subtest 'our | typed | backslashed sigilless' => {
@@ -203,7 +208,8 @@ subtest 'our | typed | backslashed sigilless' => {
 
     our IO::Path constant \otbs4 = '.'.IO;
     is-deeply otbs4, '.'.IO, 'type with `::` in name';
-    throws-like ｢my IO::Path otbs5 = 42｣, X::TypeCheck, 'type with `::` in name (failure mode)';
+    throws-like ｢my IO::Path constant otbs5 = 42｣, X::TypeCheck,
+        'type with `::` in name (failure mode)';
 
     our Foo::Bar[Ber::Meow] constant \otbs6 = Foo::Bar[Ber::Meow].new;
     is-deeply otbs6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
@@ -272,12 +278,14 @@ subtest 'my | typed | $-sigilled' => {
 
     my IO::Path constant $mtss4 = '.'.IO;
     is-deeply $mtss4, '.'.IO, 'type with `::` in name';
-    throws-like ｢my IO::Path $mtss5 = 42｣, X::TypeCheck, 'type with `::` in name (failure mode)';
+    throws-like ｢my IO::Path constant $mtss5 = 42｣, X::TypeCheck,
+        'type with `::` in name (failure mode)';
 
     my Foo::Bar[Ber::Meow] constant $mtss6 = Foo::Bar[Ber::Meow].new;
-    is-deeply $mtss6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant $mtss7 = 42｣, X::TypeCheck,
-        'parametarized type with `::` in name (failure mode)';
+    is-deeply $mtss6, Foo::Bar[Ber::Meow].new,
+        'parametarized type with `::` in name';
+    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant $mtss7 = 42｣,
+        X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
 subtest 'our | typed | $-sigilled' => {
@@ -295,12 +303,14 @@ subtest 'our | typed | $-sigilled' => {
 
     our IO::Path constant $otss4 = '.'.IO;
     is-deeply $otss4, '.'.IO, 'type with `::` in name';
-    throws-like ｢my IO::Path $otss5 = 42｣, X::TypeCheck, 'type with `::` in name (failure mode)';
+    throws-like ｢my IO::Path constant $otss5 = 42｣, X::TypeCheck,
+        'type with `::` in name (failure mode)';
 
     our Foo::Bar[Ber::Meow] constant $otss6 = Foo::Bar[Ber::Meow].new;
-    is-deeply $otss6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant $otss7 = 42｣, X::TypeCheck,
-        'parametarized type with `::` in name (failure mode)';
+    is-deeply $otss6, Foo::Bar[Ber::Meow].new,
+        'parametarized type with `::` in name';
+    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant $otss7 = 42｣,
+        X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
 ##
@@ -371,8 +381,8 @@ subtest 'my | implied | @-sigilled' => {
 
     { # add a scope to check scope declarator works right
         my constant @mias6 = do { %(:foo, :bar) };
-        isa-ok    @mias6, List, 'def, statement (type)';
-        is-deeply @mias6.sort, (:foo, :bar).sort, 'def, statement (value)';
+        isa-ok      @mias6, List, 'def, statement (type)';
+        is-deeply   @mias6.sort, (:foo, :bar).sort, 'def, statement (value)';
     }
     nok ::('@mias6'), '`my` makes constants lexical';
 
@@ -454,7 +464,7 @@ subtest 'my | typed | @-sigilled' => {
         X::ParametricConstant, 'simple value';
     throws-like ｢my List constant @mtas2 = 1, 2, 3;｣,
         X::ParametricConstant, 'list';
-    throws-like ｢my IO::Path @mtas5 = 42｣, X::ParametricConstant,
+    throws-like ｢my IO::Path constant @mtas5 = 42｣, X::ParametricConstant,
         'type with `::` in name';
     throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant @mtas7 = 42｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
@@ -466,7 +476,7 @@ subtest 'our | typed | @-sigilled' => {
         X::ParametricConstant, 'simple value';
     throws-like ｢our List constant @otas2 = 1, 2, 3;｣,
         X::ParametricConstant, 'list';
-    throws-like ｢our IO::Path @otas5 = 42｣, X::ParametricConstant,
+    throws-like ｢our IO::Path constant @otas5 = 42｣, X::ParametricConstant,
         'type with `::` in name';
     throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant @otas7 = 42｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
@@ -663,7 +673,7 @@ subtest 'my | typed | %-sigilled' => {
     plan 3;
     throws-like ｢my Int constant %mths1 = :foo;｣,
         X::ParametricConstant, 'simple value';
-    throws-like ｢my IO::Path %mths2 = 42｣, X::ParametricConstant,
+    throws-like ｢my IO::Path constant %mths2 = 42｣, X::ParametricConstant,
         'type with `::` in name';
     throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant %mths3 = 42｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
@@ -673,7 +683,7 @@ subtest 'our | typed | %-sigilled' => {
     plan 3;
     throws-like ｢our Int constant %oths1 = :foo;｣,
         X::ParametricConstant, 'statement';
-    throws-like ｢our IO::Path %oths2 = 42｣, X::ParametricConstant,
+    throws-like ｢our IO::Path constant %oths2 = 42｣, X::ParametricConstant,
         'type with `::` in name';
     throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant %oths3 = 42｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
