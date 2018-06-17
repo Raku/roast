@@ -315,7 +315,7 @@ subtest 'our | typed | $-sigilled' => {
 ##
 
 subtest 'implied | implied | @-sigilled' => {
-    plan 12;
+    plan 13;
     constant  @iias1 = 42;
     is-deeply @iias1, (42,), 'def, simple value';
     constant  @iias2 = 1, 2, 3;
@@ -352,19 +352,17 @@ subtest 'implied | implied | @-sigilled' => {
         constant @iias8 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .cache does not return Positional';
 
-    # TODO XXX
-    skip 'fails compilation';
-    # EVAL ｢
-    #     my class Bar does Positional {
-    #         method cache { flunk 'called .cache on an already-Positional' }
-    #     }
-    #     constant @iias9 = Bar.new;
-    #     isa-ok @iias9, Bar, 'no coercion of custom Positionals';
-    # ｣;
+    EVAL ｢
+        my class Bar does Positional {
+            method cache { flunk 'called .cache on an already-Positional' }
+        }
+        constant @iias9 = Bar.new;
+        isa-ok @iias9, Bar, 'no coercion of custom Positionals';
+    ｣;
 }
 
 subtest 'my | implied | @-sigilled' => {
-    plan 12;
+    plan 13;
     my constant @mias1 = 42;
     is-deeply   @mias1, (42,), 'def, simple value';
     my constant @mias2 = 1, 2, 3;
@@ -401,19 +399,17 @@ subtest 'my | implied | @-sigilled' => {
         my constant @mias8 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .cache does not return Positional';
 
-    # TODO XXX
-    skip 'fails compilation';
-    # EVAL ｢
-    #     my class Bar does Positional {
-    #         method cache { flunk 'called .cache on an already-Positional' }
-    #     }
-    #     my constant @mias9 = Bar.new;
-    #     isa-ok @mias9, Bar, 'no coercion of custom Positionals';
-    # ｣;
+    EVAL ｢
+        my class Bar does Positional {
+            method cache { flunk 'called .cache on an already-Positional' }
+        }
+        my constant @mias9 = Bar.new;
+        isa-ok @mias9, Bar, 'no coercion of custom Positionals';
+    ｣;
 }
 
 subtest 'our | implied | @-sigilled' => {
-    plan 12;
+    plan 13;
     our constant @oias1 = 42;
     is-deeply    @oias1, (42,), 'def, simple value';
     our constant @oias2 = 1, 2, 3;
@@ -450,15 +446,13 @@ subtest 'our | implied | @-sigilled' => {
         our constant @oias8 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .cache does not return Positional';
 
-    # TODO XXX
-    skip 'fails compilation';
-    # EVAL ｢
-    #     my class Bar does Positional {
-    #         method cache { flunk 'called .cache on an already-Positional' }
-    #     }
-    #     our constant @oias9 = Bar.new;
-    #     isa-ok @oias9, Bar, 'no coercion of custom Positionals';
-    # ｣;
+    EVAL ｢
+        my class Bar does Positional {
+            method cache { flunk 'called .cache on an already-Positional' }
+        }
+        our constant @oias9 = Bar.new;
+        isa-ok @oias9, Bar, 'no coercion of custom Positionals';
+    ｣;
 }
 
 subtest 'my | typed | @-sigilled' => {
@@ -490,19 +484,18 @@ subtest 'our | typed | @-sigilled' => {
 ##
 
 subtest 'implied | implied | %-sigilled' => {
-    plan 14;
+    plan 16;
     throws-like ｢constant %iihs0 = 42｣, X::Hash::Store::OddNumber,
         'def, simple value';
-    # XXX TODO
-    skip 'compilation fails ATM', 3;
-    # constant  %iihs1 = 1, 2, 3, 4;
-    # is-deeply %iihs1, Map.new((1 => 2, 3 => 4)), 'def, List of values';
-    # constant  %iihs2 = :42foo, :70bar;
-    # is-deeply %iihs2, Map.new((:42foo, :70bar)),
-        # 'def, List of Pairs (no parens)';
-    # constant  %iihs3 = (:42foo, :70bar);
-    # is-deeply %iihs3, Map.new((:42foo, :70bar)),
-        # 'def, List of Pairs (with parens)';
+
+    constant  %iihs1 = 1, 2, 3, 4;
+    is-deeply %iihs1, Map.new((1 => 2, 3 => 4)), 'def, List of values';
+    constant  %iihs2 = :42foo, :70bar;
+    is-deeply %iihs2, Map.new((:42foo, :70bar)),
+        'def, List of Pairs (no parens)';
+    constant  %iihs3 = (:42foo, :70bar);
+    is-deeply %iihs3, Map.new((:42foo, :70bar)),
+        'def, List of Pairs (with parens)';
     constant  %iihs4 = Map.new: (:42foo, :70bar);
     is-deeply %iihs4, Map.new((:42foo, :70bar)), 'def, Map';
     for %iihs4 { isa-ok $_, Pair, 'does not scalarize'; last }
@@ -522,50 +515,45 @@ subtest 'implied | implied | %-sigilled' => {
     }
     ok ::('%iihs9'), 'implied scope declarator behaves like `our`';
 
-    # XXX TODO
-    skip 'compilation fails ATM', 1;
-    # EVAL ｢
-    #     my class Foo {
-    #         method Map {
-    #             pass 'coercion calls .Map method';
-    #             Map.new: (:42foo, :70bar)
-    #         }
-    #     }
-    #     constant %iihs10 = Foo.new;
-    #     is-deeply %iihs10, Map.new((:42foo, :70bar)),
-    #         'right result after coersion';
-    # ｣;
+    EVAL ｢
+        my class Foo {
+            method Map {
+                pass 'coercion calls .Map method';
+                Map.new: (:42foo, :70bar)
+            }
+        }
+        constant %iihs10 = Foo.new;
+        is-deeply %iihs10, Map.new((:42foo, :70bar)),
+            'right result after coersion';
+    ｣;
 
     throws-like ｢
         my class Foo { method Map { 42 } }
         constant %iihs11 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .Map does not return Associative';
 
-    # TODO XXX
-    skip 'fails compilation';
-    # EVAL ｢
-    #     my class Bar does Associative {
-    #         method Map { flunk 'called .Map on an already-Associative' }
-    #     }
-    #     constant %iihs12 = Bar.new;
-    #     isa-ok %iihs12, Bar, 'no coercion of custom Associative';
-    # ｣;
+    EVAL ｢
+        my class Bar does Associative {
+            method Map { flunk 'called .Map on an already-Associative' }
+        }
+        constant %iihs12 = Bar.new;
+        isa-ok %iihs12, Bar, 'no coercion of custom Associative';
+    ｣;
 }
 
 subtest 'my | implied | %-sigilled' => {
-    plan 14;
+    plan 16;
     throws-like ｢my constant %mihs0 = 42｣, X::Hash::Store::OddNumber,
         'def, simple value';
-    # XXX TODO
-    skip 'compilation fails ATM', 3;
-    # my constant %mihs1 = 1, 2, 3, 4;
-    # is-deeply   %mihs1, Map.new((1 => 2, 3 => 4)), 'def, List of values';
-    # my constant %mihs2 = :42foo, :70bar;
-    # is-deeply   %mihs2, Map.new((:42foo, :70bar)),
-    #     'def, List of Pairs (no parens)';
-    # my constant %mihs3 = (:42foo, :70bar);
-    # is-deeply   %mihs3, Map.new((:42foo, :70bar)),
-    #     'def, List of Pairs (with parens)';
+
+    my constant %mihs1 = 1, 2, 3, 4;
+    is-deeply   %mihs1, Map.new((1 => 2, 3 => 4)), 'def, List of values';
+    my constant %mihs2 = :42foo, :70bar;
+    is-deeply   %mihs2, Map.new((:42foo, :70bar)),
+        'def, List of Pairs (no parens)';
+    my constant %mihs3 = (:42foo, :70bar);
+    is-deeply   %mihs3, Map.new((:42foo, :70bar)),
+        'def, List of Pairs (with parens)';
     my constant %mihs4 = Map.new: (:42foo, :70bar);
     is-deeply   %mihs4, Map.new((:42foo, :70bar)), 'def, Map';
     for %mihs4 { isa-ok $_, Pair, 'does not scalarize'; last }
@@ -583,52 +571,47 @@ subtest 'my | implied | %-sigilled' => {
         my constant %mihs9 = do { %(:foo, :bar) };
         is-deeply   %mihs9, %(:foo, :bar), 'def, statement';
     }
-    nok ::('%mihs6'), '`my` makes constants lexical';
+    nok ::('%mihs9'), '`my` makes constants lexical';
 
-    # XXX TODO
-    skip 'compilation fails ATM', 1;
-    # EVAL ｢
-    #     my class Foo {
-    #         method Map {
-    #             pass 'coercion calls .Map method';
-    #             Map.new: (:42foo, :70bar)
-    #         }
-    #     }
-    #     my constant %mihs10 = Foo.new;
-    #     is-deeply %mihs10, Map.new((:42foo, :70bar)),
-    #         'right result after coersion';
-    # ｣;
+    EVAL ｢
+        my class Foo {
+            method Map {
+                pass 'coercion calls .Map method';
+                Map.new: (:42foo, :70bar)
+            }
+        }
+        my constant %mihs10 = Foo.new;
+        is-deeply %mihs10, Map.new((:42foo, :70bar)),
+            'right result after coersion';
+    ｣;
 
     throws-like ｢
         my class Foo { method Map { 42 } }
         my constant %mihs11 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .Map does not return Associative';
 
-    # TODO XXX
-    skip 'fails compilation';
-    # EVAL ｢
-    #     my class Bar does Associative {
-    #         method Map { flunk 'called .Map on an already-Associative' }
-    #     }
-    #     my constant %mihs12 = Bar.new;
-    #     isa-ok %mihs12, Bar, 'no coercion of custom Associative';
-    # ｣;
+    EVAL ｢
+        my class Bar does Associative {
+            method Map { flunk 'called .Map on an already-Associative' }
+        }
+        my constant %mihs12 = Bar.new;
+        isa-ok %mihs12, Bar, 'no coercion of custom Associative';
+    ｣;
 }
 
 subtest 'our | implied | %-sigilled' => {
-    plan 14;
+    plan 16;
     throws-like ｢our constant %oihs0 = 42｣, X::Hash::Store::OddNumber,
         'def, simple value';
-    # XXX TODO
-    skip 'compilation fails ATM', 3;
-    # our constant %oihs1 = 1, 2, 3, 4;
-    # is-deeply    %oihs1, Map.new((1 => 2, 3 => 4)), 'def, List of values';
-    # our constant %oihs2 = :42foo, :70bar;
-    # is-deeply    %oihs2, Map.new((:42foo, :70bar)),
-    #     'def, List of Pairs (no parens)';
-    # our constant %oihs3 = (:42foo, :70bar);
-    # is-deeply    %oihs3, Map.new((:42foo, :70bar)),
-    #     'def, List of Pairs (with parens)';
+
+    our constant %oihs1 = 1, 2, 3, 4;
+    is-deeply    %oihs1, Map.new((1 => 2, 3 => 4)), 'def, List of values';
+    our constant %oihs2 = :42foo, :70bar;
+    is-deeply    %oihs2, Map.new((:42foo, :70bar)),
+        'def, List of Pairs (no parens)';
+    our constant %oihs3 = (:42foo, :70bar);
+    is-deeply    %oihs3, Map.new((:42foo, :70bar)),
+        'def, List of Pairs (with parens)';
     our constant %oihs4 = Map.new: (:42foo, :70bar);
     is-deeply    %oihs4, Map.new((:42foo, :70bar)), 'def, Map';
     for %oihs4 { isa-ok $_, Pair, 'does not scalarize'; last }
@@ -648,34 +631,30 @@ subtest 'our | implied | %-sigilled' => {
     }
     ok ::('%oihs9'), 'implied scope declarator behaves like `our`';
 
-    # XXX TODO
-    skip 'compilation fails ATM', 1;
-    # EVAL ｢
-    #     my class Foo {
-    #         method Map {
-    #             pass 'coercion calls .Map method';
-    #             Map.new: (:42foo, :70bar)
-    #         }
-    #     }
-    #     our constant %oihs10 = Foo.new;
-    #     is-deeply %oihs10, Map.new((:42foo, :70bar)),
-    #         'right result after coersion';
-    # ｣;
+    EVAL ｢
+        my class Foo {
+            method Map {
+                pass 'coercion calls .Map method';
+                Map.new: (:42foo, :70bar)
+            }
+        }
+        our constant %oihs10 = Foo.new;
+        is-deeply %oihs10, Map.new((:42foo, :70bar)),
+            'right result after coersion';
+    ｣;
 
     throws-like ｢
         my class Foo { method Map { 42 } }
         our constant %oihs11 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .Map does not return Associative';
 
-    # TODO XXX
-    skip 'fails compilation';
-    # EVAL ｢
-    #     my class Bar does Associative {
-    #         method Map { flunk 'called .Map on an already-Associative' }
-    #     }
-    #     our constant %oihs12 = Bar.new;
-    #     isa-ok %oihs12, Bar, 'no coercion of custom Associative';
-    # ｣;
+    EVAL ｢
+        my class Bar does Associative {
+            method Map { flunk 'called .Map on an already-Associative' }
+        }
+        our constant %oihs12 = Bar.new;
+        isa-ok %oihs12, Bar, 'no coercion of custom Associative';
+    ｣;
 }
 
 subtest 'my | typed | %-sigilled' => {
