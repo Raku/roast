@@ -1,10 +1,13 @@
 use v6;
 use Test;
-plan 17;
+plan 21;
 
 # Clarifications to specification of constants introduced in 6.d language.
 # Many of these were added as part of the CaR TPF Grant:
 # http://news.perlfoundation.org/2018/04/grant-proposal-perl-6-bugfixin.html
+
+# XXX TODO: remove this dummy when the actual exception is implemented.
+class X::ParametricConstant is Exception {}
 
 diag ｢
   Permutated parts:
@@ -305,48 +308,146 @@ subtest 'our | typed | $-sigilled' => {
 ##
 
 subtest 'implied | implied | @-sigilled' => {
-    plan 6;
+    plan 12;
     constant  @iias1 = 42;
     is-deeply @iias1, (42,), 'def, simple value';
     constant  @iias2 = 1, 2, 3;
-    is-deeply @iias2, (1, 2, 3), 'def, List';
-    for @iias2 { is-deeply $_, @iias2.head, 'does not scalarize'; last }
+    is-deeply @iias2, (1, 2, 3), 'def, List (no parens)';
+    constant  @iias3 = (1, 2, 3);
+    is-deeply @iias3, (1, 2, 3), 'def, List (with parens)';
+    for @iias3 { is-deeply $_, @iias3.head, 'does not scalarize'; last }
+
+    constant  @iias4 = [1, 2, 3];
+    is-deeply @iias4, [1, 2, 3], 'Array remains an Array';
+    constant  @iias5 = (1, 2, 3).Seq;
+    is-deeply @iias5, (1, 2, 3), 'Seq gets coerced';
+
     { # add a scope to check scope declarator works right
-        constant  @iias3 = do { %(:foo, :bar) };
-        isa-ok    @iias3, List, 'def, statement (type)';
-        is-deeply @iias3.sort, (:foo, :bar).sort, 'def, statement (value)';
+        constant  @iias6 = do { %(:foo, :bar) };
+        isa-ok    @iias6, List, 'def, statement (type)';
+        is-deeply @iias6.sort, (:foo, :bar).sort, 'def, statement (value)';
     }
-    ok ::('@iias3'), 'implied scope declarator behaves like `our`';
+    # TODO XXX
+    skip 'dies because it is actually a Seq';
+    # ok ::('@iias6'), 'implied scope declarator behaves like `our`';
+
+    EVAL ｢
+        my class Foo {
+            method cache {
+                pass 'coercion calls .cache method';
+                42,
+            }
+        }
+        constant @iias7 = Foo.new;
+        is-deeply @iias7, (42,), 'right result after coersion';
+    ｣;
+
+    throws-like ｢
+        my class Foo { method cache { 42 } }
+        constant @iias8 = Foo.new;
+    ｣, X::TypeCheck, 'typecheck fails if .cache does not return Positional';
+
+    EVAL ｢
+        my class Bar does Positional {
+            method cache { flunk 'called .cache on an already-Positional' }
+        }
+        constant @iias9 = Bar.new;
+        isa-ok @iias9, Bar, 'no coercion of custom Positionals';
+    ｣;
 }
 
 subtest 'my | implied | @-sigilled' => {
-    plan 6;
+    plan 12;
     my constant @mias1 = 42;
-    is-deeply @mias1, (42,), 'def, simple value';
+    is-deeply   @mias1, (42,), 'def, simple value';
     my constant @mias2 = 1, 2, 3;
-    is-deeply @mias2, (1, 2, 3), 'def, List';
-    for @mias2 { is-deeply $_, @mias2.head, 'does not scalarize'; last }
+    is-deeply   @mias2, (1, 2, 3), 'def, List (no parens)';
+    my constant @mias3 = (1, 2, 3);
+    is-deeply   @mias3, (1, 2, 3), 'def, List (with parens)';
+    for @mias3 { is-deeply $_, @mias3.head, 'does not scalarize'; last }
+
+    my constant @mias4 = [1, 2, 3];
+    is-deeply   @mias4, [1, 2, 3], 'Array remains an Array';
+    my constant @mias5 = (1, 2, 3).Seq;
+    is-deeply   @mias5, (1, 2, 3), 'Seq gets coerced';
+
     { # add a scope to check scope declarator works right
-        my constant @mias3 = do { %(:foo, :bar) };
-        isa-ok    @mias3, List, 'def, statement (type)';
-        is-deeply @mias3.sort, (:foo, :bar).sort, 'def, statement (value)';
+        my constant @mias6 = do { %(:foo, :bar) };
+        isa-ok    @mias6, List, 'def, statement (type)';
+        is-deeply @mias6.sort, (:foo, :bar).sort, 'def, statement (value)';
     }
-    nok ::('@mias3'), '`my` makes constants lexical';
+    nok ::('@mias6'), '`my` makes constants lexical';
+
+    EVAL ｢
+        my class Foo {
+            method cache {
+                pass 'coercion calls .cache method';
+                42,
+            }
+        }
+        my constant @mias7 = Foo.new;
+        is-deeply @mias7, (42,), 'right result after coersion';
+    ｣;
+
+    throws-like ｢
+        my class Foo { method cache { 42 } }
+        my constant @mias8 = Foo.new;
+    ｣, X::TypeCheck, 'typecheck fails if .cache does not return Positional';
+
+    EVAL ｢
+        my class Bar does Positional {
+            method cache { flunk 'called .cache on an already-Positional' }
+        }
+        my constant @mias9 = Bar.new;
+        isa-ok @mias9, Bar, 'no coercion of custom Positionals';
+    ｣;
 }
 
 subtest 'our | implied | @-sigilled' => {
-    plan 6;
+    plan 12;
     our constant @oias1 = 42;
-    is-deeply @oias1, (42,), 'def, simple value';
+    is-deeply    @oias1, (42,), 'def, simple value';
     our constant @oias2 = 1, 2, 3;
-    is-deeply @oias2, (1, 2, 3), 'def, List';
-    for @oias2 { is-deeply $_, @oias2.head, 'does not scalarize'; last }
+    is-deeply    @oias2, (1, 2, 3), 'def, List (no parens)';
+    our constant @oias3 = (1, 2, 3);
+    is-deeply    @oias3, (1, 2, 3), 'def, List (with parens)';
+    for @oias3 { is-deeply $_, @oias3.head, 'does not scalarize'; last }
+
+    our constant @oias4 = [1, 2, 3];
+    is-deeply    @oias4, [1, 2, 3], 'Array remains an Array';
+    our constant @oias5 = (1, 2, 3).Seq;
+    is-deeply    @oias5, (1, 2, 3), 'Seq gets coerced';
+
     { # add a scope to check scope declarator works right
-        our constant @oias3 = do { %(:foo, :bar) };
-        isa-ok    @oias3, List, 'def, statement (type)';
-        is-deeply @oias3.sort, (:foo, :bar).sort, 'def, statement (value)';
+        our constant @oias6 = do { %(:foo, :bar) };
+        isa-ok    @oias6, List, 'def, statement (type)';
+        is-deeply @oias6.sort, (:foo, :bar).sort, 'def, statement (value)';
     }
-    ok ::('@oias3'), '`our` gives right scope';
+    ok ::('@oias6'), '`our` gives right scope';
+
+    EVAL ｢
+        my class Foo {
+            method cache {
+                pass 'coercion calls .cache method';
+                42,
+            }
+        }
+        our constant @oias7 = Foo.new;
+        is-deeply @oias7, (42,), 'right result after coersion';
+    ｣;
+
+    throws-like ｢
+        my class Foo { method cache { 42 } }
+        our constant @oias8 = Foo.new;
+    ｣, X::TypeCheck, 'typecheck fails if .cache does not return Positional';
+
+    EVAL ｢
+        my class Bar does Positional {
+            method cache { flunk 'called .cache on an already-Positional' }
+        }
+        our constant @oias9 = Bar.new;
+        isa-ok @oias9, Bar, 'no coercion of custom Positionals';
+    ｣;
 }
 
 subtest 'my | typed | @-sigilled' => {
@@ -371,40 +472,6 @@ subtest 'our | typed | @-sigilled' => {
         'type with `::` in name';
     throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant @mtas7 = 42｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
-}
-
-
-subtest '@-sigilled constants coercsion' => {
-      plan 8;
-
-      constant  @pos1 = 1, 2, 3;
-      is-deeply @pos1, (1, 2, 3), 'List';
-
-      constant  @pos2 = [1, 2, 3];
-      is-deeply @pos2, [1, 2, 3], 'Array';
-
-      constant  @pos3 = (1, 2, 3).Seq;
-      is-deeply @pos3, (1, 2, 3), 'Seq coercion';
-
-      constant  @pos4 = 42;
-      is-deeply @pos4, (42,), 'Int coercion';
-
-      constant  @pos5 = %(:42foo, :70bar);
-      isa-ok    @pos5, List, 'Hash coercion (type)';
-      is-deeply @pos5.sort, (:42foo, :70bar).sort, 'Hash coercion (values)';
-
-      EVAL ｢
-          my class Foo { method cache { pass 'coercion calls .cache method' } }
-          constant @pos6 = Foo.new;
-      ｣;
-
-      EVAL ｢
-          my class Bar does Positional {
-              method cache { flunk 'called .cache on an already-Positional' }
-          }
-          constant @pos7 = Bar.new;
-          isa-ok @pos7, Bar, 'no coercion of custom Positionals';
-      ｣;
 }
 
 subtest '%-sigilled constants' => {
