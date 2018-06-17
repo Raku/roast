@@ -6,9 +6,6 @@ plan 25;
 # Many of these were added as part of the CaR TPF Grant:
 # http://news.perlfoundation.org/2018/04/grant-proposal-perl-6-bugfixin.html
 
-# XXX TODO: remove this dummy when the actual exception is implemented.
-class X::ParametricConstant is Exception {}
-
 diag ｢
   Permutated parts:
   [declarator]:       implied/my/our
