@@ -22,7 +22,7 @@ diag ｢
 # to define the same inside evaled strings:
 role Foo::Bar[::T] {}
 class Ber::Meow    {}
-my \ClassDefs := ｢my role Foo::Bar2[::T] {}; my class Ber::Meow2 {}; ｣;
+my \ClassDefs := ｢my role Foo2::Bar2[::T] {}; my class Ber2::Meow2 {}; ｣;
 
 ##
 ## Sigilless
@@ -90,7 +90,7 @@ subtest 'my | typed | sigilless' => {
 
     my Foo::Bar[Ber::Meow] constant mts6 = Foo::Bar[Ber::Meow].new;
     is-deeply mts6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant mts7 = 42｣,
+    throws-like ClassDefs ~ ｢my Foo2::Bar2[Ber2::Meow2] constant mts7 = 42｣,
         X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
@@ -115,7 +115,7 @@ subtest 'our | typed | sigilless' => {
     our Foo::Bar[Ber::Meow] constant ots6 = Foo::Bar[Ber::Meow].new;
     is-deeply ots6, Foo::Bar[Ber::Meow].new,
         'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant ots7 = 42｣,
+    throws-like ClassDefs ~ ｢our Foo2::Bar2[Ber2::Meow2] constant ots7 = 42｣,
         X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
@@ -186,7 +186,7 @@ subtest 'my | typed | backslashed sigilless' => {
     my Foo::Bar[Ber::Meow] constant \mtbs6 = Foo::Bar[Ber::Meow].new;
     is-deeply mtbs6, Foo::Bar[Ber::Meow].new,
         'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant mtbs7 = 42｣,
+    throws-like ClassDefs ~ ｢my Foo2::Bar2[Ber2::Meow2] constant mtbs7 = 42｣,
         X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
@@ -210,7 +210,7 @@ subtest 'our | typed | backslashed sigilless' => {
 
     our Foo::Bar[Ber::Meow] constant \otbs6 = Foo::Bar[Ber::Meow].new;
     is-deeply otbs6, Foo::Bar[Ber::Meow].new, 'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant otbs7 = 42｣, X::TypeCheck,
+    throws-like ClassDefs ~ ｢our Foo2::Bar2[Ber2::Meow2] constant otbs7 = 42｣, X::TypeCheck,
         'parametarized type with `::` in name (failure mode)';
 }
 
@@ -281,7 +281,7 @@ subtest 'my | typed | $-sigilled' => {
     my Foo::Bar[Ber::Meow] constant $mtss6 = Foo::Bar[Ber::Meow].new;
     is-deeply $mtss6, Foo::Bar[Ber::Meow].new,
         'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant $mtss7 = 42｣,
+    throws-like ClassDefs ~ ｢my Foo2::Bar2[Ber2::Meow2] constant $mtss7 = 42｣,
         X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
@@ -306,7 +306,7 @@ subtest 'our | typed | $-sigilled' => {
     our Foo::Bar[Ber::Meow] constant $otss6 = Foo::Bar[Ber::Meow].new;
     is-deeply $otss6, Foo::Bar[Ber::Meow].new,
         'parametarized type with `::` in name';
-    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant $otss7 = 42｣,
+    throws-like ClassDefs ~ ｢our Foo2::Bar2[Ber2::Meow2] constant $otss7 = 42｣,
         X::TypeCheck, 'parametarized type with `::` in name (failure mode)';
 }
 
@@ -469,7 +469,7 @@ subtest 'my | typed | @-sigilled' => {
         X::ParametricConstant, 'list';
     throws-like ｢my IO::Path constant @mtas5 = 42｣, X::ParametricConstant,
         'type with `::` in name';
-    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant @mtas7 = 42｣,
+    throws-like ClassDefs ~ ｢my Foo2::Bar2[Ber2::Meow2] constant @mtas7 = 42｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
 }
 
@@ -481,7 +481,7 @@ subtest 'our | typed | @-sigilled' => {
         X::ParametricConstant, 'list';
     throws-like ｢our IO::Path constant @otas5 = 42｣, X::ParametricConstant,
         'type with `::` in name';
-    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant @otas7 = 42｣,
+    throws-like ClassDefs ~ ｢our Foo2::Bar2[Ber2::Meow2] constant @otas7 = 42｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
 }
 
@@ -514,7 +514,7 @@ subtest 'implied | implied | %-sigilled' => {
     constant  %iihs7 = :42foo;
     is-deeply %iihs7, :42foo.Pair, 'Pair remains same';
     constant  %iihs8 = bag(<a a a b c>);
-    is-deeply %iihs8, set(<a a a b c>), 'Bag remains same';
+    is-deeply %iihs8, bag(<a a a b c>), 'Bag remains same';
 
     { # add a scope to check scope declarator works right
         constant  %iihs9 = do { %(:foo, :bar) };
@@ -577,7 +577,7 @@ subtest 'my | implied | %-sigilled' => {
     my constant %mihs7 = :42foo;
     is-deeply   %mihs7, :42foo.Pair, 'Pair remains same';
     my constant %mihs8 = bag(<a a a b c>);
-    is-deeply   %mihs8, set(<a a a b c>), 'Bag remains same';
+    is-deeply   %mihs8, bag(<a a a b c>), 'Bag remains same';
 
     { # add a scope to check scope declarator works right
         my constant %mihs9 = do { %(:foo, :bar) };
@@ -640,7 +640,7 @@ subtest 'our | implied | %-sigilled' => {
     our constant %oihs7 = :42foo;
     is-deeply    %oihs7, :42foo.Pair, 'Pair remains same';
     our constant %oihs8 = bag(<a a a b c>);
-    is-deeply    %oihs8, set(<a a a b c>), 'Bag remains same';
+    is-deeply    %oihs8, bag(<a a a b c>), 'Bag remains same';
 
     { # add a scope to check scope declarator works right
         our constant %oihs9 = do { %(:foo, :bar) };
@@ -684,7 +684,7 @@ subtest 'my | typed | %-sigilled' => {
         X::ParametricConstant, 'simple value';
     throws-like ｢my IO::Path constant %mths2 = 42｣, X::ParametricConstant,
         'type with `::` in name';
-    throws-like ClassDefs ~ ｢my Foo::Bar2[Ber::Meow2] constant %mths3 = 42｣,
+    throws-like ClassDefs ~ ｢my Foo2::Bar2[Ber2::Meow2] constant %mths3 = 42｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
 }
 
@@ -694,7 +694,7 @@ subtest 'our | typed | %-sigilled' => {
         X::ParametricConstant, 'statement';
     throws-like ｢our IO::Path constant %oths2 = 42｣, X::ParametricConstant,
         'type with `::` in name';
-    throws-like ClassDefs ~ ｢our Foo::Bar2[Ber::Meow2] constant %oths3 = 42｣,
+    throws-like ClassDefs ~ ｢our Foo2::Bar2[Ber2::Meow2] constant %oths3 = 42｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
 }
 
