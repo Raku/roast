@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 95;
+plan 99;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -343,6 +343,17 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 {
     my %hash = not => 42;
     is %hash<not>, 42, "can use bare 'not' as hash key";
+}
+
+# https://github.com/rakudo/rakudo/issues/1344
+{
+    my %h = :42foo;
+    cmp-ok %h.list,  'eqv', (:42foo,), 'Hash.list  returns a List';
+    cmp-ok %h.cache, 'eqv', (:42foo,), 'Hash.cache returns a List';
+
+    my %m := Map.new: (:42foo);
+    cmp-ok %m.list,  'eqv', (:42foo,), 'Map.list   returns a List';
+    cmp-ok %m.cache, 'eqv', (:42foo,), 'Map.cache  returns a List';
 }
 
 # vim: ft=perl6

@@ -141,8 +141,8 @@ plan 73;
 {
     my $ok;
 
-    my Num constant baz = 42;
-    $ok = baz == 42;
+    my Num constant baz = 42e0;
+    $ok = baz == 42e0;
 
     ok $ok, "declaring a sigilless constant with a type specification using 'constant' works";
 }
@@ -335,8 +335,8 @@ throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
 # RT #122895
 {
      # constants and non constants are consistently non flattening.
-     is (my @ = 'a', <b c>)[1], <b c>, "non constant doesn't flatten"; 
-     is (constant @ = 'a', <b c>)[1], <b c>, "constant doesn't flatten"; 
+     is (my @ = 'a', <b c>)[1], <b c>, "non constant doesn't flatten";
+     is (constant @ = 'a', <b c>)[1], <b c>, "constant doesn't flatten";
 }
 
 # test that constant @x caches Seq
