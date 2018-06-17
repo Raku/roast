@@ -1,4 +1,4 @@
-use v6;
+use v6.d.PREVIEW;
 use Test;
 plan 25;
 
@@ -485,8 +485,10 @@ subtest 'our | typed | @-sigilled' => {
 
 subtest 'implied | implied | %-sigilled' => {
     plan 16;
-    throws-like ｢constant %iihs0 = 42｣, X::Hash::Store::OddNumber,
-        'def, simple value';
+    throws-like ｢
+        use v6.d.PREVIEW;
+        constant %iihs0 = 42
+    ｣, X::Hash::Store::OddNumber, 'def, simple value';
 
     constant  %iihs1 = 1, 2, 3, 4;
     is-deeply %iihs1, Map.new((1 => 2, 3 => 4)), 'def, List of values';
@@ -516,6 +518,7 @@ subtest 'implied | implied | %-sigilled' => {
     ok ::('%iihs9'), 'implied scope declarator behaves like `our`';
 
     EVAL ｢
+        use v6.d.PREVIEW;
         my class Foo {
             method Map {
                 pass 'coercion calls .Map method';
@@ -528,11 +531,13 @@ subtest 'implied | implied | %-sigilled' => {
     ｣;
 
     throws-like ｢
+        use v6.d.PREVIEW;
         my class Foo { method Map { 42 } }
         constant %iihs11 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .Map does not return Associative';
 
     EVAL ｢
+        use v6.d.PREVIEW;
         my class Bar does Associative {
             method Map { flunk 'called .Map on an already-Associative' }
         }
@@ -543,8 +548,10 @@ subtest 'implied | implied | %-sigilled' => {
 
 subtest 'my | implied | %-sigilled' => {
     plan 16;
-    throws-like ｢my constant %mihs0 = 42｣, X::Hash::Store::OddNumber,
-        'def, simple value';
+    throws-like ｢
+        use v6.d.PREVIEW;
+        my constant %mihs0 = 42
+    ｣, X::Hash::Store::OddNumber, 'def, simple value';
 
     my constant %mihs1 = 1, 2, 3, 4;
     is-deeply   %mihs1, Map.new((1 => 2, 3 => 4)), 'def, List of values';
@@ -574,6 +581,7 @@ subtest 'my | implied | %-sigilled' => {
     nok ::('%mihs9'), '`my` makes constants lexical';
 
     EVAL ｢
+        use v6.d.PREVIEW;
         my class Foo {
             method Map {
                 pass 'coercion calls .Map method';
@@ -586,11 +594,13 @@ subtest 'my | implied | %-sigilled' => {
     ｣;
 
     throws-like ｢
+        use v6.d.PREVIEW;
         my class Foo { method Map { 42 } }
         my constant %mihs11 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .Map does not return Associative';
 
     EVAL ｢
+        use v6.d.PREVIEW;
         my class Bar does Associative {
             method Map { flunk 'called .Map on an already-Associative' }
         }
@@ -601,8 +611,10 @@ subtest 'my | implied | %-sigilled' => {
 
 subtest 'our | implied | %-sigilled' => {
     plan 16;
-    throws-like ｢our constant %oihs0 = 42｣, X::Hash::Store::OddNumber,
-        'def, simple value';
+    throws-like ｢
+        use v6.d.PREVIEW;
+        our constant %oihs0 = 42
+    ｣, X::Hash::Store::OddNumber, 'def, simple value';
 
     our constant %oihs1 = 1, 2, 3, 4;
     is-deeply    %oihs1, Map.new((1 => 2, 3 => 4)), 'def, List of values';
@@ -632,6 +644,7 @@ subtest 'our | implied | %-sigilled' => {
     ok ::('%oihs9'), 'implied scope declarator behaves like `our`';
 
     EVAL ｢
+        use v6.d.PREVIEW;
         my class Foo {
             method Map {
                 pass 'coercion calls .Map method';
@@ -644,11 +657,13 @@ subtest 'our | implied | %-sigilled' => {
     ｣;
 
     throws-like ｢
+        use v6.d.PREVIEW;
         my class Foo { method Map { 42 } }
         our constant %oihs11 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .Map does not return Associative';
 
     EVAL ｢
+        use v6.d.PREVIEW;
         my class Bar does Associative {
             method Map { flunk 'called .Map on an already-Associative' }
         }
