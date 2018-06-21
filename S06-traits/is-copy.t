@@ -4,7 +4,7 @@ use Test;
 # L<S06/"Parameter traits"/"=item is copy">
 # should be moved with other subroutine tests?
 
-plan 27;
+plan 28;
 
 {
   sub foo($a is copy) {
@@ -131,6 +131,11 @@ eval-lives-ok 'sub f ($x is copy) { my $x }';
         'dependent default parameter in sub with \'@list is copy\' updated (1)';
     is a(<a b c>), '3-3',
         'dependent default parameter in sub with \'@list is copy\' updated (2)';
+}
+
+with 'blah blah :v42 blah' ~~ /':v'(\d+)/ -> (Int() $version is copy) {
+    lives-ok { $version++ },
+        'An `is copy` in a sub-signature produces a writable variable';
 }
 
 # vim: ft=perl6
