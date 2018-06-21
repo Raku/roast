@@ -57,6 +57,7 @@ is ('foo' ~~ /(.+)/) eqv ('foo' ~~ /(.+)/), True, 'eqv of different but similar 
     ok $res.value ~~ Match:D, 'the pairs value is a defined match object';
 }
 
+# RT #124998
 my $c;
 ok 'abc' ~~ /.{ $c = $¢ }/,     'current match state';
 is $c.WHAT, Cursor.WHAT,        'got right type';
