@@ -58,6 +58,7 @@ my @triplets =
   <a b b c>.Bag,                <b c d>.Bag,       <a b>.Bag,
   <a b b>.BagHash,              <c d>.BagHash,     <a b b>.Bag,
   <a b b c>.BagHash,            <b c d>.BagHash,   <a b>.Bag,
+  <a a a b>.Bag,                <a a>,             <a b>.Bag,  # RT #133016
 
   # result should be a Mix
   mix(),                        mix(),         mix(),
