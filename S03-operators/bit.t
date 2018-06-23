@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 60;
+plan 63;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -63,10 +63,6 @@ plan 60;
   is( "ok \xFF\xFF\n" ~& "ok 19\n", "ok 19\n", 'stringwise ~&, arbitrary string' );
   is( "ok 20\n" ~| "ok \0\0\n", "ok 20\n",     'stringwise ~|, arbitrary string' );
 
-# MoarVM/MoarVM#867
-# TODO: Also test to ensure string is returned normalized. i.e. constructing
-# a bitwise operation whose naive result (doing the op on each codepoint individually)
-# would be different than those individual codepoints normalized.
 sub check_string_bitop (Str:D $a, Str:D $b) {
   my @a = $a.ords;
   my @b = $b.ords;
@@ -98,6 +94,28 @@ sub check_string_bitop (Str:D $a, Str:D $b) {
   #?DOES 3
   check_string_bitop("\c[united states]", "\c[canada, semicolon]");
   check_string_bitop("P" ~ ("\c[BRAHMI VOWEL SIGN VOCALIC RR]" x 5), 'zzzzzzz');
+  #?rakudo.jvm 3 todo "JVM does not support NFG strings and normalization"
+  # Test that normalization is retained
+  # MoarVM/MoarVM#867 (currently fixed)
+  # Test to ensure string is returned normalized. i.e. constructing
+  # a bitwise operation whose naive result (doing the op on each codepoint individually)
+  # would be different than those individual codepoints normalized.
+  {
+    my $a = 2940; # 2940 +& 2910 = 2908; But 2908 normalizes to (2849, 2876)
+    my $b = 2910;
+    is-deeply $a.chr ~& $b.chr, (2849, 2876).chrs, "Normalization is retained after string bitwise AND";
+  }
+  {
+    my $a = 2910; # 2910 +& 2 = 2908; But 2908 normalizes to (2849, 2876)
+    my $b =    2;
+    is-deeply $a.chr ~^ $b.chr, (2849, 2876).chrs, "Normalization is retained after string bitwise XOR";
+  }
+  {
+    my $a = 2904; # 2904 +& 4 = 2908; But 2908 normalizes to (2849, 2876)
+    my $b =    4;
+    is-deeply $a.chr ~| $b.chr, (2849, 2876).chrs, "Normalization is retained after string bitwise OR";
+  }
+
   # bit shifting
   is( 32 +< 1,            64,     'shift one bit left' );
   is( 32 +> 1,            16,     'shift one bit right' );
