@@ -32,7 +32,10 @@ doesn't-hang ｢
 # RT #132016
 #?rakudo.jvm skip "The spawned command './perl6-j' exited unsuccessfully (exit code: 1)"
 #?DOES 1
-{
+if $*DISTRO.is-win {
+  skip 'Test hangs on Windows: https://github.com/rakudo/rakudo/issues/1975';
+}
+else {
   with Proc::Async.new: $*EXECUTABLE, '-e',
     ｢react whenever signal(SIGTERM).merge(signal SIGINT) { print ‘pass’; exit 0 }｣
   -> $proc {
