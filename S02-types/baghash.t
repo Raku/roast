@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 302;
+plan 303;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -703,6 +703,13 @@ is-deeply ('foo' => 10000000000000000000).BagHash.grab(1), ('foo',),
     is %h.elems, 2, 'did we get right number of elements after :delete';
     lives-ok { %h<f> = 0 }, 'can delete from BagHash by assignment';
     is %h.elems, 1, 'did we get right number of elements assignment';
+}
+
+# GH #1983
+{
+    my %h is BagHash;
+    %h<foo> = 10000000000000000000;
+    is %h<foo>, 10000000000000000000, 'can successfully set >64-bit value';
 }
 
 # vim: ft=perl6
