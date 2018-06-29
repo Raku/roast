@@ -308,21 +308,25 @@ Note that non-ASCII tests are kept in quoting-unicode.t
   # <<:Pair>>
     my @q = <<:p(1)>>;
     #?niecza todo
-    is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - simple");
+    #?rakudo todo
+    is(@q[0].perl, :p(1).item.perl, "pair inside <<>>-quotes - simple");
 
     @q = <<:p(1) junk>>;
     #?niecza todo
-    is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - with some junk");
+    #?rakudo todo
+    is(@q[0].perl, :p(1).item.perl, "pair inside <<>>-quotes - with some junk");
     is(@q[1], 'junk', "pair inside <<>>-quotes - junk preserved");
 
     @q = <<:def>>;
     #?niecza todo
-    is(@q[0].perl, (:def).perl, ":pair in <<>>-quotes with no explicit value");
+    #?rakudo todo
+    is(@q[0].perl, (:def).item.perl, ":pair in <<>>-quotes with no explicit value");
 
     @q = "(EVAL failed)";
     try { EVAL '@q = <<:p<moose>>>;' };
     #?niecza todo
-    is(@q[0].perl, (p => "moose").perl, ":pair<anglequoted>");
+    #?rakudo todo
+    is(@q[0].perl, (p => "moose").item.perl, ":pair<anglequoted>");
 };
 
 { # weird char escape sequences

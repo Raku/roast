@@ -12,7 +12,7 @@ Pair list a la L<"http://www.nntp.perl.org/group/perl.perl6.language/19360">
 
 # L<S32::Containers/Array/=item pairs>
 
-my $list = (1 => (2 => (3 => 4)));
+my $list := (1 => (2 => (3 => 4)));
 isa-ok($list, Pair);
 
 is($list.key, 1, 'the key is 1');
@@ -26,7 +26,7 @@ is($list, 1 => 2 => 3 => 4, 'pair operator nests right-associatively');
 
 is($list.perl, '1 => 2 => 3 => 4', 'right-associative nested pairs .perl correctly');
 
-my $r-list = (((1 => 2) => 3) => 4);
+my $r-list := (((1 => 2) => 3) => 4);
 
 is($r-list.key, (1 => 2) => 3, 'the key is a nested pair');
 is($r-list.key.key, 1 => 2, 'the key of the key is a nested pair');
