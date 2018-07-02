@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 116;
+plan 117;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -448,3 +448,6 @@ subtest '.Bool on allomorphs' => {
     is-deeply .so, True,  .perl for @true;
     is-deeply .so, False, .perl for @false;
 }
+
+# GH#2010
+is <0000>.comb, "0 0 0 0", 'does Str.comb take the string logic for Bool';
