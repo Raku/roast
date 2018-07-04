@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 134;
+plan 142;
 
 # L<S32::Numeric/Real/"=item round">
 # L<S32::Numeric/Real/"=item floor">
@@ -73,6 +73,27 @@ for @testkeys -> $type {
 
         ok($res == $test[1], "$code == {$test[1]}");
     }
+}
+
+# Tests for 2-argument version of &round
+# (https://github.com/rakudo/rakudo/issues/1745).
+{
+  my @tests = (
+    [ 1.23456, 0.00001, 1.23456 ],
+    [ 1.23456, 0.0001,  1.2346  ],
+    [ 1.23456, 0.001,   1.235   ],
+    [ 1.23456, 0.01,    1.23    ],
+    [ 1.23456, 0.1,     1.2     ],
+
+    # Make sure first argument is coerced to Numeric.
+    [ "123.12", 0.01, 123.12 ],
+    [ [<foo bar baz>], 1, 3 ],
+    [ { :1foo, :2bar, :3baz }, 1, 3 ],
+  );
+
+  for @tests {
+    is(round(.[0], .[1]), .[2], "round({.[0].perl}, {.[1].perl}) == {.[2].perl}");
+  }
 }
 
 for @testkeys -> $type {
