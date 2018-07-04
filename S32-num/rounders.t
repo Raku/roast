@@ -92,7 +92,7 @@ for @testkeys -> $type {
   );
 
   for @tests {
-    is(round(.[0], .[1]), .[2], "round({.[0].perl}, {.[1].perl}) == {.[2].perl}");
+    ok(round(.[0], .[1]) == .[2], "round({.[0].perl}, {.[1].perl}) == {.[2].perl}");
   }
 }
 
