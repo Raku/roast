@@ -245,6 +245,8 @@ sub gen_hash {
     is +%h, 0,                       "* should be deleted now";
 
     %h = gen_hash;
+    @i  = map { ($_,True) },  %h.keys;
+    @ni = map { ($_,False) }, %h.keys;
     #?niecza 4 todo "cannot combine adverbial pairs"
     is %h{*}:!delete:exists:!kv, @i,  ":!d:exists:!kv whatever";
     is +%h, 26,                      "* should not be deleted";
