@@ -227,6 +227,8 @@ sub gen_hash {
     is +%h, 0,                       "* should be deleted now";
 
     %h = gen_hash;
+    @i  = map { ($_,True) },  %h.keys;
+    @ni = map { ($_,False) }, %h.keys;
     is %h{*}:!delete:exists:!kv, @i,  ":!d:exists:!kv whatever";
     is +%h, 26,                      "* should not be deleted";
     is %h{*}:delete:!exists:!kv, @ni, "d:!exists:!kv whatever";

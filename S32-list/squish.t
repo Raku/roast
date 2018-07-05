@@ -107,14 +107,14 @@ subtest 'with :with and :as' => {
     my $with = { @with.push: "$^a $^b"; $^a + 1 == $^b };
     is-deeply (1,2,3,2,1,0).squish(:$as,:$with), (1,2,1,0).Seq,
         'order of :with operands, and first one of each run (:as)';
-    is bag(@as),   bag(1,2,3,2,1,0), ':as callbacks called once per element';
-    is bag(@with), bag("1 2","2 3","3 2","2 1","1 0"),
+    is-deeply bag(@as),   bag(1,2,3,2,1,0), ':as callbacks called once per element';
+    is-deeply bag(@with), bag("1 2","2 3","3 2","2 1","1 0"),
         ':with callbacks called minimum-ish number of times (:as)';
 
     @with = ();
     is-deeply (1,2,3,2,1,0).squish(:$with), (1,2,1,0).Seq,
         'order of :with operands, and first one of each run';
-    is bag(@with), bag("1 2","2 3","3 2","2 1","1 0"),
+    is-deeply bag(@with), bag("1 2","2 3","3 2","2 1","1 0"),
         ':with callbacks called minimum-ish number of times.';
 
     subtest 'squish with single element list with :as and :with' => {
@@ -151,9 +151,9 @@ subtest 'with :with and :as' => {
         $i.push-all: my @c;
         is-deeply @c, [1, 0], '.push-all values';
 
-        is bag(@as), bag(1,2,3,2,1,0),
+        is-deeply bag(@as), bag(1,2,3,2,1,0),
             ':as callbacks called once per element (fragged)';
-        is bag(@with), bag("1 2","2 3","3 2","2 1","1 0"),
+        is-deeply bag(@with), bag("1 2","2 3","3 2","2 1","1 0"),
             ':with callbacks called minimumish number of times (:as, fragged)';
     }
 
@@ -169,7 +169,7 @@ subtest 'with :with and :as' => {
 
         $i.push-all: my @c;
         is-deeply @c, [1,0], '.push-all after a couple pull-ones';
-        is bag(@with), bag("1 2","2 3","3 2","2 1","1 0"),
+        is-deeply bag(@with), bag("1 2","2 3","3 2","2 1","1 0"),
             ':with callbacks called minimum-ish number of times (:as, fragged)';
     }
 }
