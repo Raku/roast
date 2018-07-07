@@ -300,8 +300,8 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
 }
 
 # RT #128201
-doesn't-hang '{ say @_.gist }(1..Inf)', :out(/'[...]'/),
-    '.gist on @_ containing lazy list correctly thinks it is lazy';
+doesn't-hang '{ say @_.gist; say "passed" }(1..Inf);', :out(/'passed'/),
+    '.gist on @_ containing lazy list does not hang';
 
 # RT #129175
 doesn't-hang ｢-> *@a { @a.is-lazy.say }(1…∞)｣, :out(/True/),
