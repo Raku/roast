@@ -67,6 +67,6 @@ subtest 'smartmatch on signatures with literals' => {
 eval-lives-ok ｢:($:)｣, 'invocant marker is allowed in bare signature';
 
 # RT #128795
-lives-ok { :(*%)~~ :() }, 'smartmatch with no slurpy on right side';
+is :(*%) ~~ :(), False, 'smartmatch with no slurpy on right side';
 
 # vim: ft=perl6
