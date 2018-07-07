@@ -23,14 +23,14 @@ is { my Int:_ $a = 42  }(),    42, 'can Int:_ take an Int:D';
 
 is { my Int:U $a       }(), Int:U, 'can Int:U be on its own';
 is { my Int:U $a = Int }(),   Int, 'can Int:U take an Int:U';
-throws-like { my Int:U $a = 42 }, 
+throws-like { my Int:U $a = 42 },
   X::TypeCheck::Assignment,
   symbol => '$a',                  'can Int:U take an Int:D';
 
-throws-like 'my Int:D $a', 
+throws-like 'my Int:D $a',
   X::Syntax::Variable::MissingInitializer,
   type => 'Int:D',                 'can Int:D be on its own';
-throws-like { my Int:D $a = Int }, 
+throws-like { my Int:D $a = Int },
   X::TypeCheck::Assignment,
   symbol => '$a',                  'can Int:D take an Int:U';
 is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
@@ -47,14 +47,14 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
 
     is { my Int:U $a       }(), Int:U, 'with :_, can Int:U be on its own';
     is { my Int:U $a = Int }(),   Int, 'with :_, can Int:U take an Int:U';
-    throws-like { my Int:U $a = 42 }, 
+    throws-like { my Int:U $a = 42 },
       X::TypeCheck::Assignment,
       symbol => '$a',                  'with :_, can Int:U take an Int:D';
 
-    throws-like 'my Int:D $a', 
+    throws-like 'my Int:D $a',
       X::Syntax::Variable::MissingInitializer,
       type => 'Int:D',               'with :_, can Int:D be on its own';
-    throws-like { my Int:D $a = Int }, 
+    throws-like { my Int:D $a = Int },
       X::TypeCheck::Assignment,
       symbol => '$a',                'with :_, can Int:D take an Int:U';
     is { my Int:D $a = 42  }(),  42, 'with :_, can Int:D take an Int:D';
@@ -64,7 +64,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
     use variables :U;
     is { my Int   $a       }(), Int:U, 'with :U, can Int   be on its own';
     is { my Int   $a = Int }(),   Int, 'with :U, can Int   take an Int:U';
-    throws-like { my Int   $a = 42 }, 
+    throws-like { my Int   $a = 42 },
       X::TypeCheck::Assignment,
       symbol => '$a',                'with :U, can Int   take an Int:D';
 
@@ -74,14 +74,14 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
 
     is { my Int:U $a       }(), Int:U, 'with :U, can Int:U be on its own';
     is { my Int:U $a = Int }(),   Int, 'with :U, can Int:U take an Int:U';
-    throws-like { my Int:U $a = 42 }, 
+    throws-like { my Int:U $a = 42 },
       X::TypeCheck::Assignment,
       symbol => '$a',                  'with :U, can Int:U take an Int:D';
 
     throws-like 'use variables :U; my Int:D $a', # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
       type => 'Int:D',                 'with :U, can Int:D be on its own';
-    throws-like { my Int:D $a = Int }, 
+    throws-like { my Int:D $a = Int },
       X::TypeCheck::Assignment,
       symbol => '$a',                  'with :U, can Int:D take an Int:U';
     is { my Int:D $a = 42  }(),    42, 'with :U, can Int:D take an Int:D';
@@ -93,7 +93,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
       X::Syntax::Variable::MissingInitializer,
       type => 'Int:D', implicit => ':D by pragma',
                                        'with :D, can Int   be on its own';
-    throws-like { my Int   $a = Int }, 
+    throws-like { my Int   $a = Int },
       X::TypeCheck::Assignment,
       symbol => '$a',                  'with :D, can Int   take an Int:U';
     is { my Int   $a =  42 }(),    42, 'with :D, can Int   take an Int:D';
@@ -104,41 +104,41 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
 
     is { my Int:U $a       }(), Int:U, 'with :D, can Int:U be on its own';
     is { my Int:U $a = Int }(),   Int, 'with :D, can Int:U take an Int:U';
-    throws-like { my Int:U $a = 42 }, 
+    throws-like { my Int:U $a = 42 },
       X::TypeCheck::Assignment,
       symbol => '$a',                  'with :D, can Int:U take an Int:D';
 
     throws-like 'use variables :D; my Int:D $a', # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
       type => 'Int:D',                 'with :D, can Int:D be on its own';
-    throws-like { my Int:D $a = Int }, 
+    throws-like { my Int:D $a = Int },
       X::TypeCheck::Assignment,
       symbol => '$a',                  'with :D, can Int:D take an Int:U';
     is { my Int:D $a = 42  }(),    42, 'with :D, can Int:D take an Int:D';
 }
 
-throws-like 'my Int:foo $a', 
+throws-like 'my Int:foo $a',
   X::InvalidTypeSmiley,          'does Int:foo fail';
 
-throws-like 'use variables', 
+throws-like 'use variables',
   X::Pragma::MustOneOf,
   name => "variables",
   'does use variables fail';
-throws-like 'no variables', 
+throws-like 'no variables',
   X::Pragma::CannotWhat,
   what => "no",
   name => "variables",
   'does no variables fail';
-throws-like 'use variables "bar"', 
+throws-like 'use variables "bar"',
   X::Pragma::UnknownArg,
   name => "variables",
   arg  => "bar",
   'does use variables "bar" fail';
-throws-like 'use variables :U, :D', 
+throws-like 'use variables :U, :D',
   X::Pragma::OnlyOne,
   name => 'variables',
   'does use variables :U, :D fail';
-throws-like 'use variables :foo', 
+throws-like 'use variables :foo',
   X::InvalidTypeSmiley,
   name => 'foo',
   'does use variables :foo fail';
