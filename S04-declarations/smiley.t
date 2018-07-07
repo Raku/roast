@@ -161,13 +161,13 @@ throws-like 'use variables :foo',
     # At the time of writing these thrown at runtime. Though they
     # could/should be thrown at compile time in the future so EVAL is used.
     # See ticket for discussion.
-    throws-like { EVAL q|my Int:D $x = Nil| },
+    throws-like ｢my Int:D $x = Nil｣,
     X::TypeCheck::Assignment,'Int:D $x = Nil; throws a typecheck';
 
-    throws-like { EVAL q|my Int:D @x = Nil| },
+    throws-like ｢my Int:D @x = Nil｣,
     X::TypeCheck::Assignment,'Int:D @x = Nil; throws a typecheck';
 
-    throws-like { EVAL q|my Int:D %x = foo => Nil| },
+    throws-like ｢my Int:D %x = foo => Nil｣,
     X::TypeCheck::Assignment,'Int:D %x = foo => Nil; throws a typecheck';
 }
 
