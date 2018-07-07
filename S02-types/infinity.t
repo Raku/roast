@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 plan 21;
 
 # L<S02/"Infinity and C<NaN>" /Perl 6 by default makes standard IEEE floating point concepts visible>
@@ -43,19 +45,19 @@ ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 
 # RT #124453
 {
-    throws-like {    Inf.Int }, X::Numeric::CannotConvert,
+    fails-like {    Inf.Int }, X::Numeric::CannotConvert,
         'attempting to convert Inf to Int throws';
 
-    throws-like { (-Inf).Int }, X::Numeric::CannotConvert,
+    fails-like { (-Inf).Int }, X::Numeric::CannotConvert,
         'attempting to convert Inf to Int throws';
 
-    throws-like {      ∞.Int }, X::Numeric::CannotConvert,
+    fails-like {      ∞.Int }, X::Numeric::CannotConvert,
         'attempting to convert ∞ to Int throws';
 
-    throws-like {   (-∞).Int }, X::Numeric::CannotConvert,
+    fails-like {   (-∞).Int }, X::Numeric::CannotConvert,
         'attempting to convert -∞ to Int throws';
 
-    throws-like {    NaN.Int }, X::Numeric::CannotConvert,
+    fails-like {    NaN.Int }, X::Numeric::CannotConvert,
         'attempting to convert NaN to Int throws';
 }
 
