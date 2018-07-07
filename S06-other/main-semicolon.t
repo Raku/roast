@@ -1,6 +1,7 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 10;
 
@@ -37,9 +38,11 @@ is &?ROUTINE.name, "MAIN", "...and we're actually in MAIN now";
         X::UnitScope::Invalid, what => "sub"
 }
 
-# RT #127785
-@*ARGS = '2';
-eval-lives-ok 'sub MAIN($x where { $x > 1 }); 1', 'Can have where in sub MAIN(...);';
-eval-lives-ok 'unit sub MAIN($x where { $x > 1 }); 1', 'Can have where in unit sub MAIN(...);';
+{ # RT #127785
+    is_run 'sub MAIN($x where { $x > 1 }); print "pass"', :args[2],
+      {:out<pass>, :err(''), :0status}, 'can have where in sub MAIN(...);';
+    is_run 'unit sub MAIN($x where { $x > 1 }); print "pass"', :args[2],
+      {:out<pass>, :err(''), :0status}, 'can have where in unit sub MAIN(...);';
+}
 
 # vim: ft=perl6
