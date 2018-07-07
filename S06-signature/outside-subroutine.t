@@ -64,7 +64,7 @@ subtest 'smartmatch on signatures with literals' => {
 }
 
 # RT #128783
-lives-ok { EVAL ’:($:)‘ }, ’signature marker is allowed in bare signature‘;
+lives-ok { EVAL ’:($:)‘ }, ’invocant marker is allowed in bare signature‘;
 
 # RT #128795
 lives-ok { :(*%)~~ :() }, 'smartmatch with no slurpy on right side';
