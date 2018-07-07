@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 11;
+plan 9;
 
 =pod calling a rule a grammar with arguments
 
@@ -61,16 +61,6 @@ is($content ~~ m/<title>/, '<title>Exactly</title>', 'match token');
 # match zero characters.
 #?rakudo skip 'Method "speaker" not found for invocant of class "Cursor" RT #124795'
 is($content ~~ m/<schedule>/, $content, 'match rule');
-
-# RT #127945
-{
-    #?rakudo 2 todo 'RT 127945'
-    my $result;
-    lives-ok {
-        $result = grammar { token TOP { <return> }; token return { .+ }; }.parse("all-good");
-    }, '<return> inside grammar must reference token `return`, not &return';
-    is ~$result, 'all-good', 'token `return` parses things correctly';
-}
 
 # RT #124219
 {
