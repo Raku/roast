@@ -223,6 +223,7 @@ plan 64;
         plan 3;
         '5x3' ~~ /(.)x(.)/;
 
+        # fudge reviewed; OK to go into 6.d spec
         #?rakudo 3 todo 'RT 127701'
         is "$/[0]--", '5--', 'postfix --';
         is "$/[0]++", '5++', 'postfix ++';
