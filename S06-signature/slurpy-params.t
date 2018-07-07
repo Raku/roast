@@ -86,7 +86,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     my sub foo1(:$n, *%h, *@a) { $n };   #OK not used
     my sub foo2(:$n, *%h, *@a) { %h<x> + %h<y> + %h<n> };   #OK not used
     my sub foo3(:$n, *%h, *@a) { [+] @a };   #OK not used
-    
+
     diag("Testing with named arguments (named param isn't required)");
     lives-ok { foo 1, x => 20, y => 300, 4000 },
       'Testing: `sub foo(:$n, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000`';
@@ -96,7 +96,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
       'Testing value for slurpy *%h';
     is (foo3 1, x => 20, y => 300, 4000), 4001,
       'Testing the value for slurpy *@a';
-    
+
     ### named parameter pair will always have a higher "priority" while passing
     ### so %h<n> will always be undefined
     lives-ok { foo1 1, n => 20, y => 300, 4000 },
