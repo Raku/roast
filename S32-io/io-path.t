@@ -90,9 +90,11 @@ subtest '.perl.EVAL rountrips' => {
     }
 }
 
-# RT #127989
-throws-like { IO::Path.new: 'foo', 'bar' }, X::Multi::NoMatch,
-    'IO::Path.new with wrong args must not claim it only takes named ones';
+{ # RT #127989
+    try IO::Path.new: 'foo', 'bar';
+    cmp-ok $!, &[!~~], X::Constructor::Positional,
+      'IO::Path.new with wrong args must not claim it only takes named ones';
+}
 
 # RT #128097
 {
