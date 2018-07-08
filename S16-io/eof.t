@@ -17,7 +17,7 @@ plan 5;
     my $fh = open $tmpfile or die qq/Failed to open "$tmpfile": $!/;
     $fh.lines;
 
-    ok $fh.eof, 'Regular file EOF was reached';
+    is-deeply $fh.eof, True, 'Regular file EOF was reached';
     close $fh or die qq/Failed to close "$tmpfile": $!/;
   }
 }
@@ -34,7 +34,7 @@ plan 5;
     my $fh = $files[0].open;
     $fh.slurp;
 
-    ok $fh.eof, '/proc file EOF was reached';
+    is-deeply $fh.eof, True, '/proc file EOF was reached';
     $fh.close;
   }
   else {
