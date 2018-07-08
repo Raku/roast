@@ -202,7 +202,7 @@ throws-like 'my $a; $a++ ++;', Exception, 'parse error for "$a++ ++"';
 
 # RT #113816 - autoincrement of bools
 {
-    my Bool $x; 
+    my Bool $x;
     my $y;
 
     #postincrement tests
