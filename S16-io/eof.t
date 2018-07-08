@@ -6,20 +6,11 @@ use Test::Util;
 plan 5;
 
 {
-  my $tmpfile := make-temp-path;
-  {
-    my $fh = open($tmpfile, :w) or die qq/Failed to open "$tmpfile": $!/;
-    $fh.print: "EOF_TESTING\n\n";
-    close $fh or die qq/Failed to close "$tmpfile": $!/;
-  }
-
-  {
-    my $fh = open $tmpfile or die qq/Failed to open "$tmpfile": $!/;
+    my $tmpfile := make-temp-file :content("EOF_TESTING\n\n");
+    my $fh = open $tmpfile;
     $fh.lines;
-
     is-deeply $fh.eof, True, 'Regular file EOF was reached';
-    close $fh or die qq/Failed to close "$tmpfile": $!/;
-  }
+    close $fh;
 }
 
 # RT #127370
