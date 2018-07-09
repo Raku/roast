@@ -23,7 +23,7 @@ my $was_inside = 0;
 
 sub lvalue_test1() is rw {
   $was_inside++;
-  return Proxy.new:
+  return-rw Proxy.new:
     FETCH => method () { 100 + $foo },
     STORE => method ($new) { $foo = $new - 100 };
 };
@@ -49,7 +49,7 @@ $was_inside = 0;
 
 sub lvalue_test2() is rw {
   $was_inside++;
-  return Proxy.new:
+  return-rw Proxy.new:
     FETCH => method ()     { 10 + $foo },
     STORE => method ($new) { $foo = $new - 100 };
 };

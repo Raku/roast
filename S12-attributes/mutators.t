@@ -23,7 +23,7 @@ class MagicVal {
     method varies-m is rw {
         $count-m++;
 
-        return Proxy.new(
+        return-rw Proxy.new(
             FETCH => method ()     { $!varies-m  },
             STORE => method ($new) { $!varies-m = $new + 1 },
         );
@@ -33,7 +33,7 @@ class MagicVal {
     method varies-s is rw {
         $count-s++;
 
-        return Proxy.new(
+        return-rw Proxy.new(
             # note that FETCH and STORE cannot go through the accessors
             # of $.varies again, because that would lead to infinite
             # recursion. Use the actual attribute here instead
