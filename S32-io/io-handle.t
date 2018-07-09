@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 29;
+plan 30;
 
 my $path = "io-handle-testfile";
 
@@ -285,4 +285,44 @@ subtest 'opened filehandles get closed on exit automatically' => {
 { # RT #131858
     is-deeply my class Z is IO::Handle { }.new.nl-in, $[“\n”, “\r\n”],
         ‘.nl-in in subclasses has \n and \r\n’;
+}
+
+subtest '.WRITE method' => {
+    my $fh := my class MyHandle is IO::Handle {
+        has Buf[uint8] $.data .= new;
+        submethod TWEAK { self.encoding: 'utf8' }
+        method WRITE (Blob:D \data --> True) { $!data.append: data }
+    }.new;
+
+    $fh.print:  'print ';
+    $fh.printf: 'pri%s', 'ntf ';
+    $fh.put:    'put';
+    $fh.say:    my class { method gist { 'say' } }.new;
+    $fh.spurt:  'spurt text ';
+    $fh.spurt:  'spurt bin '.encode;
+    $fh.write:  'write'.encode;
+    $fh.print-nl;
+
+    is $fh.data.decode, "print printf put\nsay\nspurt text spurt bin write\n",
+        'all writing methods work';
+}
+
+subtest '.EOF method' => {
+    my $fh := my class MyHandle is IO::Handle {
+        has Buf[uint8] $.data .= new;
+        submethod TWEAK { self.encoding: 'utf8' }
+        method WRITE (Blob:D \data --> True) { $!data.append: data }
+    }.new;
+
+    $fh.print:  'print ';
+    $fh.printf: 'pri%s', 'ntf ';
+    $fh.put:    'put';
+    $fh.say:    my class { method gist { 'say' } }.new;
+    $fh.spurt:  'spurt text ';
+    $fh.spurt:  'spurt bin '.encode;
+    $fh.write:  'write'.encode;
+    $fh.print-nl;
+
+    is $fh.data.decode, "print printf put\nsay\nspurt text spurt bin write\n",
+        'all writing methods work';
 }
