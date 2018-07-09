@@ -15,7 +15,7 @@ class MagicVal {
 
     method varies is rw {
         $count++;
-        return Proxy.new(
+        return-rw Proxy.new(
             # note that FETCH and STORE cannot go through the accessors
             # of $.varies again, because that would lead to infinite
             # recursion. Use the actual attribute here instead
