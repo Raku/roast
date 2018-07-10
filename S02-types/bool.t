@@ -54,16 +54,10 @@ is Bool::True.perl, 'Bool::True', 'True.perl';
 is Bool::False.perl, 'Bool::False', 'False.perl';
 
 # numification - interaction with +
-ok(+Bool::True ~~ Numeric);
-ok(+Bool::False ~~ Numeric);
-isa-ok(+Bool::True, Int, 'True numifies to an Int');
-isa-ok(+Bool::False, Int, 'False numifies to an Int');
-
-ok(Bool::True.Int == 1, 'True Intifies to 1');
-ok(Bool::False.Int == 0, 'False Intifies to 0');
-
-is(+Bool::True, '1', 'True numifies to 1');
-is(+Bool::False, '0', 'False numifies to 0');
+is-deeply +Bool::True,      1, 'True numifies to an Int';
+is-deeply +Bool::False,     0, 'False numifies to an Int';
+is-deeply  Bool::True.Int,  1, 'True Intifies to 1';
+is-deeply  Bool::False.Int, 0, 'False Intifies to 0';
 
 # Arithmetic operations
 my $bool = Bool::False;
@@ -104,11 +98,8 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 # RT #127019
 {
-    is Bool::True.Int, 1, 'Bool::True coerced to Int returns 1';
-    is Bool::False.Int, 0, 'Bool::False coerced to Int return 0';
-
     my Bool $b = True;
-    is $b.Int, 1, 'Bool typed scalar coerces to Int';
+    is-deeply $b.Int, 1, 'Bool typed scalar coerces to Int';
 }
 
 { # coverage; 2016-09-25
