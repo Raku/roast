@@ -1,5 +1,6 @@
+## WHEN UPDATING UNICODE VERSION ALSO UPDATE docs/unicode-generated-tests.asciidoc
 use v6;
-my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/9.0.0/ucd/auxiliary/GraphemeBreakTest.txt");
+my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/11.0.0/ucd/auxiliary/GraphemeBreakTest.txt");
 my IO::Path $rakudo-subdir = $?FILE.IO.parent(2);
 my IO::Path $rakudo-dir    = $rakudo-subdir.child($repo-dir);
 my Str:D    $location      = $rakudo-dir.e ?? $rakudo-dir.Str !! $repo-dir.Str;
@@ -45,22 +46,25 @@ values are either set to ALL or set to one or more of C,0,1,2,3,4..
 =end pod
 
 constant %fudged-tests = {
-    573 => ['ALL'],
-    733 => ['ALL'],
+    694 => ['ALL'],
+    695 => ['ALL'],
+    591 => ['ALL'],
 };
 constant @lines-with-normalization = (
-    442 => [ 0, ],
-    825 => [ 0, ],
-    829 => [ 0, ],
-    837 => [ 0, ],
+    441 => [0, ],
+    674 => [ 0, ],
+    678 => [ 0, ],
+    679 => [ 0, ],
+    686 => [ 0, ],
 );
 sub MAIN (Str:D :$file = $location, Str :$only, Bool:D :$debug = False) {
     $DEBUG = $debug;
+    note "WHEN UPDATING UNICODE VERSION ALSO UPDATE docs/unicode-generated-tests.asciidoc";
     my @only = $only ?? $only.split([',', ' ']) !! Empty;
     die "Can't find file at ", $file.IO.absolute unless $file.IO.f;
     note "Reading file ", $file.IO.absolute;
     my @fail;
-    plan (@only.elems or 2411);
+    plan (1943);
     for $file.IO.lines -> $line {
         process-line $line, @fail, :@only;
     }
@@ -145,7 +149,8 @@ sub process-line (Str:D $line, @fail, :@only!) {
                 }
             }
             if $expected.chrs.ords.Array !eqv $expected {
-                die "codepoints change under normalization. manually check and add an exception or fix the script\nline no $line-no: elem $elem: ", $expected.chrs.ords.Array, ' - ', $expected;
+                die "codepoints change under normalization. manually check and add an exception or fix the script\n" ~ "
+                line no $line-no: elem $elem. Got: ", $expected.chrs.ords.Array.join(', '), ' from: ', $expected.join(',');
             }
         }
         is-deeply $list<string>.substr($elem, 1).ords.flat.Array, $expected, "Line $line-no: grapheme [$elem] has correct codepoints" or @fail.push($line-no);

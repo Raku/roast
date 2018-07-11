@@ -29,14 +29,16 @@ NOTE: Tests generated were identical to the ones generated
 ```
 
 == S15-nfg/emoji-test-gen.p6
-* Emoji v6.0
-* Regenerated 30-09-2017
+* Emoji v11.0
+* Regenerated 10-07-2018
 * S15-nfg/emoji-test.t
 ```
 # emoji-test.txt
-# Date: 2017-06-27, 10:19:38 GMT
-…
-# Version: 6.0
+# Date: 2018-02-07, 09:44:06 GMT
+...
+# Version: 11.0
+```
+
 ```
 
 == S15-nfg/mass-equality-gen.p6

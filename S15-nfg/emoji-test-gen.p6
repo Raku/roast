@@ -1,4 +1,5 @@
 #!/usr/bin/env perl6
+## WHEN UPDATING UNICODE VERSION ALSO UPDATE docs/unicode-generated-tests.asciidoc
 # Generates tests from GraphemeBreakPropertyTest.txt from UNIDATA
 # At the moment this test only checks how many graphemes we think exist
 # in the string. The test itself defines points where we should break or
@@ -6,6 +7,7 @@
 # This is mostly good enough.
 use v6;
 sub MAIN ( Str $EmojiTest-file ) {
+    note "WHEN UPDATING UNICODE VERSION ALSO UPDATE docs/unicode-generated-tests.asciidoc";
     my @text = $EmojiTest-file.IO.slurp.lines;
     my $line-no = 0;
     my $emoji-version;
@@ -50,7 +52,7 @@ sub MAIN ( Str $EmojiTest-file ) {
     }
     my $file =
     qq:to/END/;
-    # Test generated from GraphemeBreakTest.txt Emoji version $emoji-version
+    # Test generated from emoji-test.txt Emoji version $emoji-version
     use v6;
     use Test;
     plan $test-count;
