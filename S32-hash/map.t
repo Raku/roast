@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 14;
 
 {
     my %hash = :foo, :42bar;
@@ -55,6 +55,12 @@ subtest 'Map.gist shows only first 100 els' => {
 
     throws-like { $m<foo> := 10 }, X::Bind, 'Cannot bind at key of immutable Map';
     throws-like { $m<bar> := 10 }, X::Bind, 'Cannot bind at key of immutable Map, Scalar value';
+}
+
+# R#2055
+{
+    my %h is Map = a => 42;
+    dies-ok { %h = b => 666 }, 'cannot initialize a Map for the second time';
 }
 
 # vim: ft=perl6
