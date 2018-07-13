@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan 15;
 
 {
     my %hash = :foo, :42bar;
@@ -61,6 +61,17 @@ subtest 'Map.gist shows only first 100 els' => {
 {
     my %h is Map = a => 42;
     dies-ok { %h = b => 666 }, 'cannot initialize a Map for the second time';
+}
+
+# R#2062
+{
+    my %h{Any} = ^6;
+    my %m is Map = %h, a => 42;
+    is-deeply
+      ["0" => 1, "2" => 3, "4" => 5, "a" => 42],
+      [%m.sort: *.key],
+      'did we get the pairs get handled ok'
+    ;
 }
 
 # vim: ft=perl6
