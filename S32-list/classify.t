@@ -119,15 +119,21 @@ is classify( { "foo" }, () ).elems, 0, 'classify an empty list';
 
 # RT #127803
 subtest 'classify works with Junctions' => {
-    plan 2;
-
-    my %expected{Any} = Bool::False => [<abc xyz xyz xyz xyz xyz xyz>],
-                        Bool::True => ['abc'];
-    is-deeply <abc xyz>.classify( *.contains: any 'a'..'f' ),
-        %expected, 'method form';
-
-    is-deeply classify( *.contains(any 'a'..'f'), <abc xyz> ),
-        %expected, 'sub form';
+    plan 4;
+    # Since we're returning a Junction from the mapper, it'll thread, sticking
+    # the values multiple times under the keys. Due to possible
+    # short-curcuiting of the Junctions, the number of inserted values may
+    # differ depending on the implementation, so we'll only test which values
+    # are present and absent under each key
+    my @l := <abc abcdef xyz>;
+    my $m := @l.classify: *.contains: any 'a'..'f';
+    my $s :=    classify  *.contains( any 'a'..'f'), @l;
+    for 'method', $m,  'sub', $s -> $form, $v {
+        cmp-ok $v.{True }, '~~', {$_ ∋ all 'abc', 'abcdef', none 'xyz'   },
+            "$form form (True  key)";
+        cmp-ok $v.{False}, '~~', {$_ ∋ all 'abc', 'xyz',    none 'abcdef'},
+            "$form form (False key)";
+    }
 }
 
 # vim: ft=perl6
