@@ -32,9 +32,9 @@ eval-lives-ok 'proto foo {1; }; sub foo {1; }; sub foo($x) {1; };',
 
 # RT #118607
 throws-like 'sub foo {1; }; sub foo($x) {1; };', X::Redeclaration,
-    'suggest multi-sub for sub redeclaration', message => /'did you mean to declare a multi-sub'/;
+    'suggest multi-sub for sub redeclaration', :message{.contains: 'multi'};
 
 throws-like 'role RR { }; class RR { };', X::Redeclaration,
-    "don't suggest multi-sub for non-sub redeclaration", message => /^ [<!before 'multi-sub'> . ] * $/;
+    "don't suggest multi-sub for non-sub redeclaration", message => /^ [<!before 'multi'> . ] * $/;
 
 # vim: ft=perl6
