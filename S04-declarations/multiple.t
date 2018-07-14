@@ -2,14 +2,14 @@ use v6;
 use Test;
 plan 8;
 
-# L<S04/The Relationship of Blocks and Declarations/"If you declare a lexical 
+# L<S04/The Relationship of Blocks and Declarations/"If you declare a lexical
 #  twice in the same scope">
 
 # RT #83430
-eval-lives-ok 'my $x; my $x', 
+eval-lives-ok 'my $x; my $x',
               'it is legal to declare my $x twice in the same scope.';
 
-eval-lives-ok 'state $x; state $x', 
+eval-lives-ok 'state $x; state $x',
               'it is legal to declare state $x twice in the same scope.';
 
 {
