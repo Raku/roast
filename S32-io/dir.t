@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 17;
+plan 16;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -38,11 +38,6 @@ is dir('t').[0].dirname, 't', 'dir("t") returns paths with .dirname of "t"';
     ok $res !~~ m/ "/" ** 2 /,
         'results for \'dir "/"\' do not begin with 2 slashes';
 }
-
-# RT #112662
-is_run 'dir | say', {
-    err => rx/'Argument' .* 'say' .* 'use .say'/,
-}, '`dir | say` has useful error message';
 
 {
     my $dir = make-temp-dir;

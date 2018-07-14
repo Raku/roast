@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 47;
 
 {
     my @array = 11 .. 15;
@@ -116,6 +116,12 @@ plan 46;
     is-deeply @b2, [[1, 2, 3],], 'method push does not flatten an array arg (2)';
     is-deeply @b3,  [1, 2, 3],   'method append does flatten an array arg (1)';
     is-deeply @b4,  [1, 2, 3],   'method append does flatten an array arg (2)';
+}
+
+{ # RT #112662
+    sub foo (\v) {
+        is-deeply v, True, 'slipping a Bool into arguments does not crash'
+    }( |True )
 }
 
 # vim: ft=perl6
