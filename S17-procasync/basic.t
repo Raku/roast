@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 45;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -94,9 +94,6 @@ is $stderr, '',       'got correct STDERR';
     is-deeply (await Proc::Async.new(@args).start).command, @args,
         'Proc returned from .start has correct .command';
 }
-
-throws-like { Proc::Async.new }, X::Multi::NoMatch,
-    'attempting to create Proc::Async with wrong arguments throws';
 
 # Check we don't have races if you tap the stdout supply after starting.
 {
