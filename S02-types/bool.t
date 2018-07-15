@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 62;
+plan 63;
 
 #L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
@@ -105,19 +105,22 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 { # coverage; 2016-09-25
     is-deeply     ?Bool, Bool::False, '?Bool:U returns False';
     is-deeply (so Bool), Bool::False, 'so Bool:U returns False';
-    is infix:<^^>(
+    is-deeply infix:<^^>(
         Any, sub { pass 'sub{} operand of ^^ op gets called'; 42 },
     ), 42, '^^ operator with sub {} right operand works correctly';
 
-    is infix:<//>(
+    is-deeply infix:<//>(
         Any, sub { pass 'sub{} operand of // op gets called'; 42 },
     ), 42, '// operator with sub {} right operand works correctly';
-    is infix:<xor>(
+    is-deeply infix:<xor>(
         Any, sub { pass 'sub{} operand of xor op gets called'; 42 },
     ), 42, 'xor operator with sub {} right operand works correctly';
 
-    is infix:<and>(42), 42,         'infix:<and> with 1 arg returns the arg';
-    is infix:<and>(  ), Bool::True, 'infix:<and> with no args returns True';
+    is-deeply infix:<and>(42), 42,
+        'infix:<and> with 1 arg returns the arg';
+    is-deeply infix:<and>(0 ), 0,
+        'infix:<and> with 1 arg returns the arg even if it is false';
+    is-deeply infix:<and>(  ), True, 'infix:<and> with no args returns True';
 }
 
 # RT #130867
