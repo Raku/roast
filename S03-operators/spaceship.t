@@ -27,7 +27,7 @@ is($result_3, Order::Less, 'When spaceship terms are non-trivial members it pars
 is(%ball{12} <=> %ball{11}, Order::Less, 'When spaceship terms are non-integral numbers it parses incorrectly');
 
 # RT #126536
-throws-like { say ’a‘ <=> ’b‘ }, X::Str::Numeric,
+throws-like ｢say ’a‘ <=> ’b‘｣, X::Str::Numeric,
     '<=> with non-numerics throws correct exception';
 
 # vim: ft=perl6
