@@ -155,15 +155,13 @@ my @list = (1 .. 10);
 # grep with an unexpected adverb
 {
     throws-like(
-        { @list.grep(Mu, :asdf) },
-        X::Adverb,
-        message => q{Unexpected adverb 'asdf' passed to grep on @list},
+        { @list.grep(Mu, :asdfblargs) },
+        X::Adverb, :unexpected{.contains: 'asdfblargs'},
         'grep on an instance with an unexpected adverb'
     );
     throws-like(
-        { List.grep(Mu, :asdf) },
-        X::Adverb,
-        message => q{Unexpected adverb 'asdf' passed to grep on List},
+        { List.grep(Mu, :asdfblargs) },
+        X::Adverb, :unexpected{.contains: 'asdfblargs'},
         'grep on a type object with an unexpected adverb'
     );
 }
