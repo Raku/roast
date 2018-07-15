@@ -20,18 +20,18 @@ subtest 'on empty Hash, basic' => {
     my constant @m  = Nil, 'cat1', 'cat2', 'cat2';
     my constant %ex = %(:cat2[2, 3], :cat1[1]);
 
-    is-deeply % .categorize-list(&m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .categorize-list(%m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .categorize-list(@m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .categorize-list(&m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .categorize-list(%m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .categorize-list(@m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .categorize-list(&m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .categorize-list(%m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .categorize-list(@m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .categorize-list(&m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .categorize-list(%m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .categorize-list(@m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .categorize-list(&m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .categorize-list(%m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .categorize-list(@m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .categorize-list(&m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .categorize-list(%m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .categorize-list(@m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .categorize-list(&m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .categorize-list(%m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .categorize-list(@m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .categorize-list(&m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .categorize-list(%m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .categorize-list(@m,   (1…3)  ), %ex, '@, Seq';
 }
 
 subtest 'on empty Hash, basic, with &as' => {
@@ -42,18 +42,18 @@ subtest 'on empty Hash, basic, with &as' => {
     my constant @m  = Nil, 'cat1', 'cat2', 'cat2';
     my constant %ex = %(:cat2['val 2', 'val 3'], :cat1['val 1']);
 
-    is-deeply % .categorize-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .categorize-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .categorize-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .categorize-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .categorize-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .categorize-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .categorize-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .categorize-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .categorize-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .categorize-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .categorize-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .categorize-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .categorize-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .categorize-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .categorize-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .categorize-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .categorize-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .categorize-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .categorize-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .categorize-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .categorize-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .categorize-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .categorize-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .categorize-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
 }
 
 subtest 'on empty Hash, multi-category' => {
@@ -63,18 +63,18 @@ subtest 'on empty Hash, multi-category' => {
     my constant %m  = %(1 => <cat1 cat3>, 2 => <cat2 cat4>, 3 => <cat2 cat4>);
     my constant %ex = %(:cat2[2, 3], :cat4[2, 3], :cat1[1], :cat3[1]);
 
-    is-deeply % .categorize-list(&m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .categorize-list(%m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .categorize-list(@m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .categorize-list(&m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .categorize-list(%m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .categorize-list(@m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .categorize-list(&m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .categorize-list(%m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .categorize-list(@m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .categorize-list(&m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .categorize-list(%m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .categorize-list(@m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .categorize-list(&m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .categorize-list(%m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .categorize-list(@m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .categorize-list(&m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .categorize-list(%m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .categorize-list(@m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .categorize-list(&m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .categorize-list(%m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .categorize-list(@m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .categorize-list(&m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .categorize-list(%m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .categorize-list(@m,   (1…3)  ), %ex, '@, Seq';
 }
 
 subtest 'on empty Hash, multi-category, with &as' => {
@@ -90,18 +90,18 @@ subtest 'on empty Hash, multi-category, with &as' => {
         :cat3['val 1'],
     );
 
-    is-deeply % .categorize-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .categorize-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .categorize-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .categorize-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .categorize-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .categorize-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .categorize-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .categorize-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .categorize-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .categorize-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .categorize-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .categorize-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .categorize-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .categorize-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .categorize-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .categorize-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .categorize-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .categorize-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .categorize-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .categorize-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .categorize-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .categorize-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .categorize-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .categorize-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
 }
 
 subtest 'on empty Hash, multi-level' => {
@@ -121,18 +121,18 @@ subtest 'on empty Hash, multi-level' => {
         :cat2(${:cat4($[2, 3])}),
     );
 
-    is-deeply % .categorize-list(&m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .categorize-list(%m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .categorize-list(@m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .categorize-list(&m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .categorize-list(%m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .categorize-list(@m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .categorize-list(&m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .categorize-list(%m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .categorize-list(@m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .categorize-list(&m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .categorize-list(%m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .categorize-list(@m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .categorize-list(&m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .categorize-list(%m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .categorize-list(@m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .categorize-list(&m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .categorize-list(%m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .categorize-list(@m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .categorize-list(&m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .categorize-list(%m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .categorize-list(@m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .categorize-list(&m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .categorize-list(%m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .categorize-list(@m,   (1…3)  ), %ex, '@, Seq';
 }
 
 subtest 'on empty Hash, multi-level, with &as' => {
@@ -153,18 +153,18 @@ subtest 'on empty Hash, multi-level, with &as' => {
         :cat2(${:cat4($['val 2', 'val 3'])}),
     );
 
-    is-deeply % .categorize-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .categorize-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .categorize-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .categorize-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .categorize-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .categorize-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .categorize-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .categorize-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .categorize-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .categorize-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .categorize-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .categorize-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .categorize-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .categorize-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .categorize-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .categorize-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .categorize-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .categorize-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .categorize-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .categorize-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .categorize-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .categorize-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .categorize-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .categorize-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
 }
 
 #------------------------------------------------------------------------------
@@ -337,12 +337,12 @@ subtest 'on Hashes, degenerate cases, no items to loop over' => {
     my constant %ex-empty = %();
     my constant %ex-poplt = %(:42a);
 
-    is-deeply %      .categorize-list(      &m), %ex-empty, 'empty, &';
-    is-deeply %      .categorize-list(      %m), %ex-empty, 'empty, %';
-    is-deeply %      .categorize-list(      @m), %ex-empty, 'empty, @';
-    is-deeply %      .categorize-list(:&as, &m), %ex-empty, 'empty, :&as, &';
-    is-deeply %      .categorize-list(:&as, %m), %ex-empty, 'empty, :&as, %';
-    is-deeply %      .categorize-list(:&as, @m), %ex-empty, 'empty, :&as, @';
+    is-deeply %()    .categorize-list(      &m), %ex-empty, 'empty, &';
+    is-deeply %()    .categorize-list(      %m), %ex-empty, 'empty, %';
+    is-deeply %()    .categorize-list(      @m), %ex-empty, 'empty, @';
+    is-deeply %()    .categorize-list(:&as, &m), %ex-empty, 'empty, :&as, &';
+    is-deeply %()    .categorize-list(:&as, %m), %ex-empty, 'empty, :&as, %';
+    is-deeply %()    .categorize-list(:&as, @m), %ex-empty, 'empty, :&as, @';
     is-deeply %(:42a).categorize-list(      &m), %ex-poplt, 'populated, &';
     is-deeply %(:42a).categorize-list(      %m), %ex-poplt, 'populated, %';
     is-deeply %(:42a).categorize-list(      @m), %ex-poplt, 'populated, @';
@@ -362,12 +362,12 @@ subtest 'on Hashes, degenerate cases, 0-item, multi-level iterables' => {
     my constant %ex-eas = %();
     my constant %ex-pas = %(:42a);
 
-    is-deeply %      .categorize-list(      &m, ^3), %ex-e,   'empty, &';
-    is-deeply %      .categorize-list(      %m, ^3), %ex-e,   'empty, %';
-    is-deeply %      .categorize-list(      @m, ^3), %ex-e,   'empty, @';
-    is-deeply %      .categorize-list(:&as, &m, ^3), %ex-eas, 'empty, :&as, &';
-    is-deeply %      .categorize-list(:&as, %m, ^3), %ex-eas, 'empty, :&as, %';
-    is-deeply %      .categorize-list(:&as, @m, ^3), %ex-eas, 'empty, :&as, @';
+    is-deeply %()    .categorize-list(      &m, ^3), %ex-e,   'empty, &';
+    is-deeply %()    .categorize-list(      %m, ^3), %ex-e,   'empty, %';
+    is-deeply %()    .categorize-list(      @m, ^3), %ex-e,   'empty, @';
+    is-deeply %()    .categorize-list(:&as, &m, ^3), %ex-eas, 'empty, :&as, &';
+    is-deeply %()    .categorize-list(:&as, %m, ^3), %ex-eas, 'empty, :&as, %';
+    is-deeply %()    .categorize-list(:&as, @m, ^3), %ex-eas, 'empty, :&as, @';
     is-deeply %(:42a).categorize-list(      &m, ^3), %ex-p,   'poptd, &';
     is-deeply %(:42a).categorize-list(      %m, ^3), %ex-p,   'poptd, %';
     is-deeply %(:42a).categorize-list(      @m, ^3), %ex-p,   'poptd, @';
@@ -387,12 +387,12 @@ subtest 'on Hashes, degenerate cases, mapper returns empty list' => {
     my constant %ex-eas = %(:cat2['val 1', 'val 2']);
     my constant %ex-pas = %(:42a, :cat2['val 1', 'val 2']);
 
-    is-deeply %      .categorize-list(      &m, ^3), %ex-e,   'empty, &';
-    is-deeply %      .categorize-list(      %m, ^3), %ex-e,   'empty, %';
-    is-deeply %      .categorize-list(      @m, ^3), %ex-e,   'empty, @';
-    is-deeply %      .categorize-list(:&as, &m, ^3), %ex-eas, 'empty, :&as, &';
-    is-deeply %      .categorize-list(:&as, %m, ^3), %ex-eas, 'empty, :&as, %';
-    is-deeply %      .categorize-list(:&as, @m, ^3), %ex-eas, 'empty, :&as, @';
+    is-deeply %()    .categorize-list(      &m, ^3), %ex-e,   'empty, &';
+    is-deeply %()    .categorize-list(      %m, ^3), %ex-e,   'empty, %';
+    is-deeply %()    .categorize-list(      @m, ^3), %ex-e,   'empty, @';
+    is-deeply %()    .categorize-list(:&as, &m, ^3), %ex-eas, 'empty, :&as, &';
+    is-deeply %()    .categorize-list(:&as, %m, ^3), %ex-eas, 'empty, :&as, %';
+    is-deeply %()    .categorize-list(:&as, @m, ^3), %ex-eas, 'empty, :&as, @';
     is-deeply %(:42a).categorize-list(      &m, ^3), %ex-p,   'poptd, &';
     is-deeply %(:42a).categorize-list(      %m, ^3), %ex-p,   'poptd, %';
     is-deeply %(:42a).categorize-list(      @m, ^3), %ex-p,   'poptd, @';
@@ -410,28 +410,28 @@ subtest ‘on Hashes, exceptions, can't classify lazy lists’ => {
     my constant $l  = (−∞…∞);
     my constant &as = { "val $^a" }
 
-    throws-like { % .categorize-list: {;}, $l }, X::Cannot::Lazy, 'empty hash, &';
-    throws-like { % .categorize-list:  %,  $l }, X::Cannot::Lazy, 'empty hash, %';
-    throws-like { % .categorize-list:  @,  $l }, X::Cannot::Lazy, 'empty hash, @';
-    throws-like { % .categorize-list: :&as, {;}, $l }, X::Cannot::Lazy,
+    throws-like { %().categorize-list: {;}, $l }, X::Cannot::Lazy, 'empty hash, &';
+    throws-like { %().categorize-list: %(),  $l }, X::Cannot::Lazy, 'empty hash, %';
+    throws-like { %().categorize-list: @(),  $l }, X::Cannot::Lazy, 'empty hash, @';
+    throws-like { %().categorize-list: :&as, {;}, $l }, X::Cannot::Lazy,
         'empty hash, :&as, &';
-    throws-like { % .categorize-list: :&as,  %, $l }, X::Cannot::Lazy,
+    throws-like { %().categorize-list: :&as, %(), $l }, X::Cannot::Lazy,
         'empty hash, :&as, %';
-    throws-like { % .categorize-list: :&as,  @, $l }, X::Cannot::Lazy,
+    throws-like { %().categorize-list: :&as, @(), $l }, X::Cannot::Lazy,
         'empty hash, :&as, @';
 
     throws-like { %(:42a).categorize-list: {;}, $l }, X::Cannot::Lazy,
         'populated hash, &';
-    throws-like { %(:42a).categorize-list:  %, $l }, X::Cannot::Lazy,
+    throws-like { %(:42a).categorize-list: %(), $l }, X::Cannot::Lazy,
         'populated hash, %';
-    throws-like { %(:42a).categorize-list:  @, $l }, X::Cannot::Lazy,
+    throws-like { %(:42a).categorize-list: @(), $l }, X::Cannot::Lazy,
         'populated hash, @';
 
     throws-like { %(:42a).categorize-list: :&as, {;}, $l }, X::Cannot::Lazy,
         'populated hash, :&as, &';
-    throws-like { %(:42a).categorize-list: :&as,  %, $l }, X::Cannot::Lazy,
+    throws-like { %(:42a).categorize-list: :&as, %(), $l }, X::Cannot::Lazy,
         'populated hash, :&as, %';
-    throws-like { %(:42a).categorize-list: :&as,  @, $l }, X::Cannot::Lazy,
+    throws-like { %(:42a).categorize-list: :&as, @(), $l }, X::Cannot::Lazy,
         'populated hash, :&as, @';
 }
 
@@ -446,30 +446,30 @@ subtest ‘on Hashes, exceptions, can't do mixed-level classification’ => {
     my constant @m2  = Nil, <cat1 cat3>, [['cat2',],], [['cat2',],];
     my constant &as  = { "val $^a" }
 
-    throws-like { % .categorize-list: &m1, [1, 2, 3] },
+    throws-like { %() .categorize-list: &m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '&, v1';
-    throws-like { % .categorize-list: %m1, [1, 2, 3] },
+    throws-like { %() .categorize-list: %m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '%, v1';
-    throws-like { % .categorize-list: @m1, [1, 2, 3] },
+    throws-like { %() .categorize-list: @m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '@, v1';
-    throws-like { % .categorize-list: &m2, [1, 2, 3] },
+    throws-like { %() .categorize-list: &m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '&, v2';
-    throws-like { % .categorize-list: %m2, [1, 2, 3] },
+    throws-like { %() .categorize-list: %m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '%, v2';
-    throws-like { % .categorize-list: @m2, [1, 2, 3] },
+    throws-like { %() .categorize-list: @m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '@, v2';
 
-    throws-like { % .categorize-list: :&as, &m1, [1, 2, 3] },
+    throws-like { %() .categorize-list: :&as, &m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, &, v1';
-    throws-like { % .categorize-list: :&as, %m1, [1, 2, 3] },
+    throws-like { %() .categorize-list: :&as, %m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, %, v1';
-    throws-like { % .categorize-list: :&as, @m1, [1, 2, 3] },
+    throws-like { %() .categorize-list: :&as, @m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, @, v1';
-    throws-like { % .categorize-list: :&as, &m2, [1, 2, 3] },
+    throws-like { %() .categorize-list: :&as, &m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, &, v2';
-    throws-like { % .categorize-list: :&as, %m2, [1, 2, 3] },
+    throws-like { %() .categorize-list: :&as, %m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, %, v2';
-    throws-like { % .categorize-list: :&as, @m2, [1, 2, 3] },
+    throws-like { %() .categorize-list: :&as, @m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, @, v2';
 }
 
@@ -684,28 +684,28 @@ subtest ‘on Baggy, exceptions, can't classify lazy lists’ => {
 
     throws-like { BagHash.new.categorize-list: {;}, $l }, X::Cannot::Lazy,
         'empty BagHash, &';
-    throws-like { BagHash.new.categorize-list:  %,  $l }, X::Cannot::Lazy,
+    throws-like { BagHash.new.categorize-list: %(),  $l }, X::Cannot::Lazy,
         'empty BagHash, %';
-    throws-like { BagHash.new.categorize-list:  @,  $l }, X::Cannot::Lazy,
+    throws-like { BagHash.new.categorize-list: @(),  $l }, X::Cannot::Lazy,
         'empty BagHash, @';
     throws-like { MixHash.new.categorize-list: {;}, $l }, X::Cannot::Lazy,
         'empty MixHash, &';
-    throws-like { MixHash.new.categorize-list:  %,  $l }, X::Cannot::Lazy,
+    throws-like { MixHash.new.categorize-list: %(),  $l }, X::Cannot::Lazy,
         'empty MixHash, %';
-    throws-like { MixHash.new.categorize-list:  @,  $l }, X::Cannot::Lazy,
+    throws-like { MixHash.new.categorize-list: @(),  $l }, X::Cannot::Lazy,
         'empty MixHash, @';
 
     throws-like { BagHash.new(<a b>).categorize-list: {;}, $l }, X::Cannot::Lazy,
         'populated BagHash, &';
-    throws-like { BagHash.new(<a b>).categorize-list:  %,  $l }, X::Cannot::Lazy,
+    throws-like { BagHash.new(<a b>).categorize-list: %(),  $l }, X::Cannot::Lazy,
         'populated BagHash, %';
-    throws-like { BagHash.new(<a b>).categorize-list:  @,  $l }, X::Cannot::Lazy,
+    throws-like { BagHash.new(<a b>).categorize-list: @(),  $l }, X::Cannot::Lazy,
         'populated BagHash, @';
     throws-like { MixHash.new(<a b>).categorize-list: {;}, $l }, X::Cannot::Lazy,
         'populated MixHash, &';
-    throws-like { MixHash.new(<a b>).categorize-list:  %,  $l }, X::Cannot::Lazy,
+    throws-like { MixHash.new(<a b>).categorize-list: %(),  $l }, X::Cannot::Lazy,
         'populated MixHash, %';
-    throws-like { MixHash.new(<a b>).categorize-list:  @,  $l }, X::Cannot::Lazy,
+    throws-like { MixHash.new(<a b>).categorize-list: @(),  $l }, X::Cannot::Lazy,
         'populated MixHash, @';
 }
 
@@ -735,14 +735,14 @@ subtest ‘on Baggy, exceptions, can't multi-level classify’ => {
         message => /'multi-level categorization'/, 'MixHash, @';
 }
 
-subtest ‘on Baggy, exceptions, can't classify on immutable Baggies’ => {
+subtest ‘on Baggy, exceptions, can't classify on immutable Bag/Mix’ => {
     plan 6;
     throws-like { Bag.new.categorize-list: {;}, ^2 }, X::Immutable, 'Bag, &';
-    throws-like { Bag.new.categorize-list:  %,  ^2 }, X::Immutable, 'Bag, %';
-    throws-like { Bag.new.categorize-list:  @,  ^2 }, X::Immutable, 'Bag, @';
+    throws-like { Bag.new.categorize-list: %(), ^2 }, X::Immutable, 'Bag, %';
+    throws-like { Bag.new.categorize-list: @(), ^2 }, X::Immutable, 'Bag, @';
     throws-like { Mix.new.categorize-list: {;}, ^2 }, X::Immutable, 'Mix, &';
-    throws-like { Mix.new.categorize-list:  %,  ^2 }, X::Immutable, 'Mix, %';
-    throws-like { Mix.new.categorize-list:  @,  ^2 }, X::Immutable, 'Mix, @';
+    throws-like { Mix.new.categorize-list: %(), ^2 }, X::Immutable, 'Mix, %';
+    throws-like { Mix.new.categorize-list: @(), ^2 }, X::Immutable, 'Mix, @';
 }
 
 # vim: ft=perl6
