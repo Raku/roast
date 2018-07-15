@@ -45,13 +45,10 @@ plan 69;
     ok ((1, 2, 3) ~~ @a), 'smartmatch List ~~ Array';
     ok ((1, 2, 3) ~~ @m), 'smartmatch List ~~ Array with dwim';
 
-    ## the next test is bogus, since ~~ has a tighter precendence than comma
-    ## with rakudo 2016.08.1-194-g0cf7128 there is no coercion to list
-    ## when using parentheses: 1 ~~ (**,1,**) returns False
-    ## cmp. http://irclog.perlgeek.de/perl6/2016-09-15#i_13217141
-    ## TODO modify test to whatever the answer to "is the LHS coerced" is
-    ok (1 ~~ **,1,**),     'smartmatch with Array RHS co-erces LHS to list';
-    ok (1..10 ~~ (**,5,**)), 'smartmatch with List RHS co-erces LHS to list';
+    is-deeply (1 ~~ (**,1,**)), False,
+      'smartmatch with list RHS does not treat non-Iterable LHS as a list';
+    is-deeply (1..10 ~~ (**,5,**)), True,
+      'smartmatch with list RHS treats Iterable LHS as equivalent to a list';
 
     # now test that each element does smartmatching
     ok(((<blah blah>) ~~ (/^bl/, /ah$/)), "smartmatch regex");
