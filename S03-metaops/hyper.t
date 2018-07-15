@@ -1047,14 +1047,10 @@ is post((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen with &";
 is &postfix:<»i>((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen without &";
 
 # RT #118223
-{
-    # shouldn't warn about unitialized values of type Any in Numeric context
-    is_run(
-        q{ my %l = foo => 1, bar => 2; my %r = bar => 3, baz => 4; say %l >>+<< %r },
-        { out => qq[\{bar => 5, baz => 4, foo => 1\}\n], err => '' },
-        "union hyperoperator on a hash shouldn't warn about missing keys"
-    );
-}
+is_run # shouldn't warn about unitialized values of type Any in Numeric context
+    ｢my %l = foo => 1, bar => 2; my %r = bar => 3, baz => 4; say %l >>+<< %r｣,
+    {:out{.contains: all <bar baz foo>}, :err(''), :0status},
+    "union hyperoperator on a hash shouldn't warn about missing keys";
 
 # RT #130721
 subtest 'method call variants respect nodality' => {
