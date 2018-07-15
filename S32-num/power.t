@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 97;
+plan 89;
 
 # Real **
 is(0 ** 0,    1, "0 ** 0 ==  1");
@@ -20,9 +20,6 @@ is-deeply      1  ** $large-even,   1, "  1 ** $large-even == 1";
 is-deeply    1e0  ** $large-even, 1e0, "1e0 ** $large-even == 1";
 is-deeply    (-1) ** $large-even,   1, " -1 ** $large-even == 1";
 is-deeply    (-1) ** $large-odd,   -1, " -1 ** $large-odd  == -1";
-throws-like "  2  ** $large-even", X::Numeric::Overflow, " 2 ** $large-even";
-throws-like "(-2) ** $large-even", X::Numeric::Overflow, "-2 ** $large-even";
-throws-like "(-2) ** $large-odd",  X::Numeric::Overflow, "-2 ** $large-odd";
 
 is(4 ** 0.5,  2, "4 ** .5 ==  2");
 is(4 ** (1/2), 2, "4 ** (1/2) == 2 ");
@@ -128,12 +125,6 @@ is-deeply    1⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵,   1, "   1⁴
 is-deeply  1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, 1e0, " 1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ ==  1";
 is-deeply (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴,   1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ ==  1";
 is-deeply (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵,  -1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == -1";
-throws-like '2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵',    X::Numeric::Overflow,
-    '2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws';
-throws-like '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴', X::Numeric::Overflow,
-    '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ throws';
-throws-like '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵', X::Numeric::Overflow,
-    '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws';
 
 #?rakudo.jvm 6 skip 'parsing issue on JVM: Missing required term after infix'
 is(4 ** ½,  2, "4 ** ½ ==  2");
@@ -142,18 +133,6 @@ is-approx(27 ** ⅓, 3, "27 ** ⅓ ==  3");
 is-approx(27 ** ⅔, 9, "27 ** ⅔ ==  9");
 is-approx(27 ** -⅓, ⅓, "27 ** -⅓ == ⅓");
 is-approx(27 ** -⅔, ⅑, "27 ** -⅔ == ⅑");
-
-#?rakudo.js 2 skip 'this seems implementation specific'
-# RT #112788
-# if no throwage happens, as is wanted, the program will take forever to run
-# so we wait for 2 seconds, then print success message and exit; if the throw
-# occurs, the Promise won't have a chance to print the success message.
-is_run ｢start { sleep 2; say ‘pass’; exit }; EVAL ‘say 1.0000001 ** (10 ** 8)’｣,
-    {:out("pass\n"), :err(''), :0status },
-'raising a Rat to largish power does not throw';
-
-throws-like 'say 1.0000001 ** (10 ** 90000)',
-    X::Numeric::Overflow, "raising a Rat to a very large number throws";
 
 # RT#126732
 #?rakudo.jvm skip 'unival NYI'
