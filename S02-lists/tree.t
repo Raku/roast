@@ -28,7 +28,7 @@ is (1, ((2, 3),  (4, 5))).tree(*.join('-'), *.join('+'), *.join('|')),
 { # coverage; 2016-09-18
     my $i = 42;
     my @i = 1, 2;
-    subtest '... returns self' => {
+    subtest 'idempotent .tree variants' => {
         plan 7;
         cmp-ok @i.tree(0),  '===', @i, '.tree(0) on Iterable';
         cmp-ok $i.tree,     '===', $i, '.tree    on non-Iterable';
