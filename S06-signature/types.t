@@ -56,11 +56,11 @@ is-deeply .perl.EVAL, $_, ".perl on an {.perl} roundtrips"
 subtest 'Code.of() returns return type' => {
     plan 4;
     my subset ofTest where True;
-    cmp-ok -> () --> Int    {}.of, '===', Int,    '--> type';
+    cmp-ok -> () --> Int    {}.of, '=:=', Int,    '--> type';
     #?rakudo.jvm todo "got: ''"
-    cmp-ok -> () --> Str:D  {}.of, '===', Str:D,  '--> smiley';
-    cmp-ok -> () --> ofTest {}.of, '===', ofTest, '--> subset';
-    is {;}.of.^name, 'Mu', 'no explicit return constraint';
+    cmp-ok -> () --> Str:D  {}.of, '=:=', Str:D,  '--> smiley';
+    cmp-ok -> () --> ofTest {}.of, '=:=', ofTest, '--> subset';
+    cmp-ok                 {;}.of, '=:=', Mu, 'no explicit return constraint';
 }
 
 # RT #129915
