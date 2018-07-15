@@ -3,12 +3,12 @@
 The `APPENDICES` directory of the Perl 6 specification contains *advisory*
 specifications. These tests describe behaviour some implementations chose
 to follow and other implementations may follow the same behaviour, to offer
-similar execution results from same Perl 6 programs.
+similar execution results from the same Perl 6 programs.
 
 However, it's possible some implementations or some environments may not
 be able to adhere to these specifications. For example, an implementation
 that can compute `2**-10000000000` sufficiently fast may choose to use
-higher limits for powers before throwing overlow exceptions.
+higher limits for powers before throwing overflow exceptions.
 
 In summation, the APPENDICES contain tests that fall somewhere between
 implementation-specific tests residing in test suites of particular
