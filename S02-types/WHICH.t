@@ -412,7 +412,11 @@ my @moar = <
   X::Proc::Async::TapBeforeSpawn
 >;
 
-plan 7 + 4 * ( @normal + @exception + @concurrent + @moar );
+my @definite = ( # instances of objects
+    Blob.new(<1 2 3>),
+);
+
+plan 7 + 4 * ( @normal + @exception + @concurrent + @moar ) + 2*@definite;
 
 my %seen-which;
 
@@ -443,6 +447,14 @@ for @concurrent -> $class {
     isa-ok ::($class).WHICH,      ObjAt, "$class returns an ObjAt";
     is ::($class).perl,          $class, "$class.perl returns self";
     is ::($class).gist,      "($short)", "$class.gist returns self";
+}
+
+for @definite -> $obj {
+    my $name  := $obj.^name;
+    my $short := $name.split('::').tail;
+    nok %seen-which{$obj.WHICH}++, "checking $name\'s instance's .WHICH";
+    isa-ok $obj.WHICH, ObjAt,
+        "$name\'s instance's .WHICH returns an ObjAt";
 }
 
 for @moar -> $class {
