@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 34;
+plan 18;
 
 # Degenerate and Transformative Any methods
 # -----
@@ -18,18 +18,6 @@ plan 34;
     is-deeply Any.antipairs, (), 'Any:U.antipairs returns empty list';
 
     my @exp = 1, 2, "foo";
-    my class AnyU {
-        method append  (*@got) { is-deeply @got, @exp, 'append called' ; 1; }
-        method prepend (*@got) { is-deeply @got, @exp, 'prepend called'; 1; }
-        method unshift (*@got) { is-deeply @got, @exp, 'unshift called'; 1; }
-        method push    (*@got) { is-deeply @got, @exp, 'push called'   ; 1; }
-    }
-    my class AnyUPos is AnyU does Positional {}
-
-    for <append  prepend  unshift  push> -> $m {
-        is AnyU."$m"(   @exp), 1, ".$m on custom Any:U";
-        is AnyUPos."$m"(@exp), 1, ".$m on custom Any:U does Positonal";
-    }
 
     is-deeply $ .unshift(@exp), [@exp,], '.unshift on Any:U';
     is-deeply $ .prepend(@exp),  @exp,   '.prepend on Any:U';
