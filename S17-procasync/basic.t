@@ -90,8 +90,8 @@ is $stdout, 'Perl 6', 'got correct STDOUT';
 is $stderr, '',       'got correct STDERR';
 
 { # RT #129362
-    is-deeply (await Proc::Async.new($*EXECUTABLE, "-e", "exit").start).command,
-        [$*EXECUTABLE, "-e", "exit"],
+    my @args := $*EXECUTABLE.absolute, "-e", "exit";
+    is-deeply (await Proc::Async.new(@args).start).command, @args,
         'Proc returned from .start has correct .command';
 }
 
