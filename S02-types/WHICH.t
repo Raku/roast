@@ -458,8 +458,15 @@ for @moar -> $class {
 subtest 'ObjAt.perl gives distinct results for different objects' => {
     my @obj = "rt", 128944, <128944>, rx/^/, NaN, ∞, τ+i, .5, class {}, 'a'|42,
                 sub {}, -> {}, method {}, *, *+5, start {}, supply {};
-    plan +@obj;
-    is .WHICH.perl, qq|{.WHICH.^name}.new("{.WHICH}")|, "object: {.perl}" for @obj;
+    plan 1+@obj;
+    my %seen is SetHash;
+    for @obj {
+        %seen{.WHICH.perl}++;
+        is-deeply .WHICH.perl.EVAL, .WHICH,
+            "can .perl.EVAL roundtrip .WHICH for {.perl}";
+    }
+    cmp-ok %seen, '==', @obj,
+        'number of unique .WHICH.perls matches number of objects we tested';
 }
 
 # RT #130271
