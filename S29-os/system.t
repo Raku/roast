@@ -163,10 +163,10 @@ subtest "run and shell's :env" => {
 subtest '.out/.err proc pipes on failed command' => {
     plan 4;
 
-    throws-like { run(:out, "meooooooows").out.close }, X::Proc::Unsuccessful,
-        '.out.close Proc explodes when sunk';
-    throws-like { run(:err, "meooooooows").err.close }, X::Proc::Unsuccessful,
-        '.err.close Proc explodes when sunk';
+    throws-like { run(:out, "meooooooows").out.close; Nil },
+        X::Proc::Unsuccessful, '.out.close Proc explodes when sunk';
+    throws-like { run(:err, "meooooooows").err.close; Nil },
+        X::Proc::Unsuccessful, '.err.close Proc explodes when sunk';
     is-deeply run(:out, "meooooooows").out.slurp(:close), '',
         '.out.slurp is empty';
     is-deeply run(:err, "meooooooows").err.slurp(:close), '',
