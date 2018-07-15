@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 9;
+plan 8;
 
 =pod calling a rule a grammar with arguments
 
@@ -61,15 +61,6 @@ is($content ~~ m/<title>/, '<title>Exactly</title>', 'match token');
 # match zero characters.
 #?rakudo skip 'Method "speaker" not found for invocant of class "Cursor" RT #124795'
 is($content ~~ m/<schedule>/, $content, 'match rule');
-
-# RT #124219
-{
-    my $code = ‘grammar Bug { token term { a }; token TOP { <term> % \n } }’
-        ~ ‘Bug.parse( 'a' );’;
-
-    is_run $code, { :out(''), :err(/'token TOP { <term>'/), :status },
-        '`quantifier with %` error includes the token it appears in';
-}
 
 # RT #81136
 {
