@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 34;
 
 # Degenerate and Transformative Any methods
 # -----
@@ -10,11 +10,6 @@ plan 38;
 # or returns a degenerate result
 
 { # coverage; 2016-09-18
-    throws-like { 42.classify      }, Exception, '.classify()    on Any throws';
-    throws-like { 42.classify:   * }, Exception, '.classify(*)   on Any throws';
-    throws-like { 42.categorize    }, Exception, '.categorize()  on Any throws';
-    throws-like { 42.categorize: * }, Exception, '.categorize(*) on Any throws';
-
     throws-like { 42.Map }, X::Hash::Store::OddNumber, '.Map [odd  num of els]';
     is-deeply (42, 'a').Map, Map.new(("42" => "a")),   '.Map [even num of els]';
 
