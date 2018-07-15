@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 # Generic tests of IO::Path::* classes. See also individual io-path-*.t files
 
@@ -17,5 +17,9 @@ plan 8;
             '.SPEC is set correctly, even if other value is given to .new';
     }
 }
+
+# RT#128840
+isnt IO::Path::QNX.new("-a").absolute, '',
+    '.absolute on paths starting with `-` does not produce empty string (QNX)';
 
 # vim: ft=perl6
