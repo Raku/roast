@@ -1,103 +1,73 @@
 use v6;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
+use Test::Util;
 
-plan 108;
+plan 61;
 
-{
-    my $r = (1..5).iterator;
-    does-ok $r, Iterator, '$r is an Iterator';
-    is $r.count-only, 5, '$r.count-only works';
-    is $r.pull-one, 1, '$r.pull-one == 1 and Range Iterator kept place';
-    is $r.pull-one, 2, '$r.pull-one == 2';
-    is $r.pull-one, 3, '$r.pull-one == 3';
-    is $r.pull-one, 4, '$r.pull-one == 4';
-    is $r.pull-one, 5, '$r.pull-one == 5';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
-}
-
-{
-    my $r = (-1.5.Num..^3).iterator;
-    does-ok $r, Iterator, '$r is an Iterator';
-    #?rakudo skip "Method 'count-only' not found for invocant of class"
-    is $r.count-only, 5, '$r.count-only works';
-    is $r.pull-one, -1.5, '$r.pull-one == -1.5 and Range Iterator kept place';
-    is $r.pull-one, -.5, '$r.pull-one == -0.5';
-    is $r.pull-one, .5, '$r.pull-one == .5';
-    is $r.pull-one, 1.5, '$r.pull-one == 1.5';
-    is $r.pull-one, 2.5, '$r.pull-one == 2.5';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
-}
-
-{
-    my $r = (-1.5..^3).iterator;
-    does-ok $r, Iterator, '$r is an Iterator';
-    #?rakudo skip "Method 'count-only' not found for invocant of class"
-    is $r.count-only, 5, '$r.count-only works';
-    is $r.pull-one, -1.5, '$r.pull-one == -1.5 and Range Iterator kept place';
-    is $r.pull-one, -.5, '$r.pull-one == -0.5';
-    is $r.pull-one, .5, '$r.pull-one == .5';
-    is $r.pull-one, 1.5, '$r.pull-one == 1.5';
-    is $r.pull-one, 2.5, '$r.pull-one == 2.5';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
-}
-
-{
-    my $r = (-1.5.Num^..3).iterator;
-    does-ok $r, Iterator, '$r is an Iterator';
-    #?rakudo skip "Method 'count-only' not found for invocant of class"
-    is $r.count-only, 4, '$r.count-only works';
-    is $r.pull-one, -.5, '$r.pull-one == -0.5 and Range Iterator kept place';
-    is $r.pull-one, .5, '$r.pull-one == .5';
-    is $r.pull-one, 1.5, '$r.pull-one == 1.5';
-    is $r.pull-one, 2.5, '$r.pull-one == 2.5';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
-}
+test-iter-opt (1..5).iterator,
+    (1, 2, 3, 4, 5), '1..5';
+test-iter-opt (-1.5.Num..^3).iterator, (
+    (-1.5).Num, (-1.5).Num.succ, (-1.5).Num.succ.succ,
+    (-1.5).Num.succ.succ.succ, (-1.5).Num.succ.succ.succ.succ), '-1.5.Num..^3';
+test-iter-opt (-1.5..^3).iterator,
+    (-1.5, -½, ½, 1.5, 2.5), '-1.5..^3';
+test-iter-opt (-1.5.Num^..3).iterator, (
+    (-1.5).Num.succ, (-1.5).Num.succ.succ, (-1.5).Num.succ.succ.succ,
+    (-1.5).Num.succ.succ.succ.succ), '-1.5.Num^..3';
+test-iter-opt ('d'..'g').iterator,
+    <d e f g>, ｢'d'..'g'｣;
+test-iter-opt (0..'50').iterator,
+    (0…50), ｢0..'50'｣;
 
 {
     my $r = (-1..*).iterator;
     does-ok $r, Iterator, '$r is an Iterator';
     ok $r.is-lazy, '$r.is-lazy works';
-    is $r.pull-one, -1, '$r.pull-one == -1 and Range Iterator kept place';
-    is $r.pull-one, 0, '$r.pull-one == 0';
-    is $r.pull-one, 1, '$r.pull-one == 1';
-    is $r.pull-one, 2, '$r.pull-one == 2';
-    is $r.pull-one, 3, '$r.pull-one == 3';
-    is $r.pull-one, 4, '$r.pull-one == 4';
-    is $r.pull-one, 5, '$r.pull-one == 5';
+    is-deeply $r.pull-one, -1,
+        '$r.pull-one == -1 and Range Iterator kept place';
+    is-deeply $r.pull-one, 0, '$r.pull-one == 0';
+    is-deeply $r.pull-one, 1, '$r.pull-one == 1';
+    is-deeply $r.pull-one, 2, '$r.pull-one == 2';
+    is-deeply $r.pull-one, 3, '$r.pull-one == 3';
+    is-deeply $r.pull-one, 4, '$r.pull-one == 4';
+    is-deeply $r.pull-one, 5, '$r.pull-one == 5';
     loop (my $i = 0; $i < 100; $i++) {
         $r.pull-one;  # 6 through 105
     }
-    is $r.pull-one, 106, '$r.pull-one == 106';
+    is-deeply $r.pull-one, 106, '$r.pull-one == 106';
 }
 
 {
     my $r = (-1.5.Num..*).iterator;
     does-ok $r, Iterator, '$r is an Iterator';
     ok $r.is-lazy, '$r.is-lazy works';
-    is $r.pull-one, -1.5, '$r.pull-one == -1.5 and Range Iterator kept place';
-    is $r.pull-one, -.5, '$r.pull-one == -0.5';
-    is $r.pull-one, .5, '$r.pull-one == .5';
-    is $r.pull-one, 1.5, '$r.pull-one == 1.5';
-    is $r.pull-one, 2.5, '$r.pull-one == 2.5';
-    is $r.pull-one, 3.5, '$r.pull-one == 3.5';
-    is $r.pull-one, 4.5, '$r.pull-one == 4.5';
+
+    is-deeply $r.pull-one, Num(-1.5),
+        '$r.pull-one == -1.5 and Range Iterator kept place';
+    is-deeply $r.pull-one, Num(-1.5).succ, '$r.pull-one == -0.5e0';
+    is-deeply $r.pull-one, Num(-1.5).succ.succ, '$r.pull-one == .5e0';
+    is-deeply $r.pull-one, Num(-1.5).succ.succ.succ, '$r.pull-one == 1.5e0';
+    is-deeply $r.pull-one, Num(-1.5).succ.succ.succ.succ,
+        '$r.pull-one == 2.5e0';
+    is-deeply $r.pull-one, Num(-1.5).succ.succ.succ.succ.succ,
+        '$r.pull-one == 3.5e0';
+    is-deeply $r.pull-one, Num(-1.5).succ.succ.succ.succ.succ.succ,
+        '$r.pull-one == 4.5e0';
 }
 
 {
     my $r = (-1.5..*).iterator;
     does-ok $r, Iterator, '$r is an Iterator';
     ok $r.is-lazy, '$r.is-lazy works';
-    is $r.pull-one, -1.5, '$r.pull-one == -1.5 and Range Iterator kept place';
-    is $r.pull-one, -.5, '$r.pull-one == -0.5';
-    is $r.pull-one, .5, '$r.pull-one == .5';
-    is $r.pull-one, 1.5, '$r.pull-one == 1.5';
-    is $r.pull-one, 2.5, '$r.pull-one == 2.5';
-    is $r.pull-one, 3.5, '$r.pull-one == 3.5';
-    is $r.pull-one, 4.5, '$r.pull-one == 4.5';
+    is-deeply $r.pull-one, -1.5,
+        '$r.pull-one == -1.5 and Range Iterator kept place';
+    is-deeply $r.pull-one, -.5, '$r.pull-one == -0.5';
+    is-deeply $r.pull-one, .5, '$r.pull-one == .5';
+    is-deeply $r.pull-one, 1.5, '$r.pull-one == 1.5';
+    is-deeply $r.pull-one, 2.5, '$r.pull-one == 2.5';
+    is-deeply $r.pull-one, 3.5, '$r.pull-one == 3.5';
+    is-deeply $r.pull-one, 4.5, '$r.pull-one == 4.5';
 }
 
 {
@@ -125,19 +95,6 @@ plan 108;
 }
 
 {
-    my $r = ('d'..'g').iterator;
-    does-ok $r, Iterator, '$r is an Iterator';
-    #?rakudo skip "Method 'count-only' not found for invocant of class"
-    is $r.count-only, 4, '$r.count-only works';
-    is $r.pull-one, 'd', '$r.pull-one == d and Range Iterator kept place';
-    is $r.pull-one, 'e', '$r.pull-one == e';
-    is $r.pull-one, 'f', '$r.pull-one == f';
-    is $r.pull-one, 'g', '$r.pull-one == g';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
-}
-
-{
     my $r = ('d'..*).iterator;
     does-ok $r, Iterator, '$r is an Iterator';
     ok $r.is-lazy, '$r.is-lazy works';
@@ -147,21 +104,6 @@ plan 108;
     is $r.pull-one, 'g', '$r.pull-one == g';
     is $r.pull-one, 'h', '$r.pull-one == h';
     is $r.pull-one, 'i', '$r.pull-one == i';
-}
-
-{
-    my $r = (0..'50').iterator;
-    does-ok $r, Iterator, '$r is an Iterator';
-    is $r.pull-one, 0, '$r.pull-one == 0';
-    is $r.pull-one, 1, '$r.pull-one == 1';
-    is $r.pull-one, 2, '$r.pull-one == 2';
-    is $r.pull-one, 3, '$r.pull-one == 3';
-    #?rakudo skip "Method 'count-only' not found for invocant of class"
-    is $r.count-only, 47, '$r.count-only works partially through';
-    is $r.pull-one, 4, '$r.pull-one == 4 and Range Iterator kept place';
-    is $r.pull-one, 5, '$r.pull-one == 5';
-    is $r.pull-one, 6, '$r.pull-one == 6';
-    is $r.pull-one, 7, '$r.pull-one == 7';
 }
 
 subtest 'Iterator.skip-one' => {
