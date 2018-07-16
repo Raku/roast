@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 30;
+plan 31;
 
 my $path = "io-handle-testfile";
 
@@ -290,6 +290,10 @@ subtest 'opened filehandles get closed on exit automatically' => {
 subtest '.WRITE method' => {
     my $fh := my class MyHandle is IO::Handle {
         has Buf[uint8] $.data .= new;
+        # NOTE: the requirement of manually setting .encoding should not
+        # be considered part of the specification. This wart is mostly due
+        # to possibility of having "unopened" handled. See R#2050
+        # https://github.com/rakudo/rakudo/issues/2050
         submethod TWEAK { self.encoding: 'utf8' }
         method WRITE (Blob:D \data --> True) { $!data.append: data }
     }.new;
@@ -307,22 +311,77 @@ subtest '.WRITE method' => {
         'all writing methods work';
 }
 
-subtest '.EOF method' => {
+subtest '.EOF/.WRITE methods' => {
+    plan 31;
+
     my $fh := my class MyHandle is IO::Handle {
-        has Buf[uint8] $.data .= new;
+        has Buf[uint8] $.data .= new: "I ♥ Perl 6\nprogramming".encode;
+        # NOTE: the requirement of manually setting .encoding should not
+        # be considered part of the specification. This wart is mostly due
+        # to possibility of having "unopened" handled. See R#2050
+        # https://github.com/rakudo/rakudo/issues/2050
         submethod TWEAK { self.encoding: 'utf8' }
-        method WRITE (Blob:D \data --> True) { $!data.append: data }
+        method READ(\bytes) { $!data.splice: 0, bytes }
+        method EOF { ! $!data }
     }.new;
 
-    $fh.print:  'print ';
-    $fh.printf: 'pri%s', 'ntf ';
-    $fh.put:    'put';
-    $fh.say:    my class { method gist { 'say' } }.new;
-    $fh.spurt:  'spurt text ';
-    $fh.spurt:  'spurt bin '.encode;
-    $fh.write:  'write'.encode;
-    $fh.print-nl;
+    is-deeply $fh.eof,   False, 'eof before .slurp';
+    is-deeply $fh.slurp, "I ♥ Perl 6\nprogramming", '.slurp';
+    is-deeply $fh.eof,   True,  'eof after .slurp';
 
-    is $fh.data.decode, "print printf put\nsay\nspurt text spurt bin write\n",
-        'all writing methods work';
+    $fh := MyHandle.new;
+    is-deeply $fh.lines, ('I ♥ Perl 6', 'programming').Seq, '.lines';
+    is-deeply $fh.eof,   True, 'eof after .lines';
+
+    $fh := MyHandle.new;
+    $fh.nl-in = [<er gra>];
+    is-deeply $fh.lines, ('I ♥ P', "l 6\npro", 'mming').Seq,
+        '.lines with custom nl-in';
+    is-deeply $fh.eof,   True, 'eof after .lines with custom nl-in';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.words, <I ♥ Perl 6 programming>».Str.Seq, '.words';
+    is-deeply $fh.eof,   True, 'eof after .words';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.split(/er/), ("I ♥ P", "l 6\nprogramming").Seq, '.split';
+    is-deeply $fh.eof,   True, 'eof after .split';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.comb(/:i <[A..Z]>/), <I P e r l p r o g r a m m i n g>.Seq,
+        '.comb';
+    is-deeply $fh.eof,   True, 'eof after .comb';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.get, 'I ♥ Perl 6',  'first .get';
+    is-deeply $fh.eof, False, 'eof after first .get';
+    is-deeply $fh.get, 'programming', 'second .get';
+    is-deeply $fh.eof, True, 'eof after second .get';
+    is-deeply $fh.get, Nil, 'third .get';
+    is-deeply $fh.eof, True, 'eof after third .get';
+
+    $fh := MyHandle.new;
+    is-deeply ($fh.getc xx 5), ('I', ' ', '♥', ' ', 'P').Seq,
+        'data from five .getc calls';
+    is-deeply $fh.eof, False, 'eof after five .getc calls';
+    is-deeply ($fh.getc xx 1000).grep(*.defined).join, "erl 6\nprogramming",
+        '"slurp" of rest of data with .getc calls';
+    is-deeply $fh.eof, True,
+        '.eof after "slurp" of rest of data with .getc calls';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.readchars(5), "I ♥ P", 'data from .readchars call';
+    is-deeply $fh.eof, False, 'eof after .readchars call';
+    is-deeply $fh.readchars(1000), "erl 6\nprogramming",
+        '"slurp" of rest of data with .readchars call';
+    is-deeply $fh.eof, True,
+        '.eof after "slurp" of rest of data with .readchars call';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.read(7).decode, "I ♥ P", 'data from .read call';
+    is-deeply $fh.eof, False, 'eof after .readchars call';
+    is-deeply $fh.read(1000).decode, "erl 6\nprogramming",
+        '"slurp" of rest of data with .read call';
+    is-deeply $fh.eof, True,
+        '.eof after "slurp" of rest of data with .read call';
 }
