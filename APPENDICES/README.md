@@ -26,3 +26,13 @@ Contains tests of potentially-desirable behaviour that's dependent on the
 limitations of typical environments. For example, raising a number to a
 huge power effectively "hangs" the program, so the tests check such cases
 throw an overflow error instead.
+
+### [`A02-some-day-maybe`](A02-some-day-maybe)
+
+This appendix contains things that may one day provide useful behaviours, but
+at the moment they don't, yet they have to exist in implementations for one
+reason or another (throwing an `X::NYI` exception). For example, one day
+we might come up with a very useful usecase for write methods of an
+`IO::CatHandle`, but until that day, these methods must throw an `X::NYI`,
+because otherwise the versions of the parent's (`IO::Handle`) would be used
+instead, providing confusing behaviour.
