@@ -25,7 +25,7 @@ subtest 'if this test fails, check the block in test file was not moved' => {
     my $block = -> { }
     #?rakudo.jvm 3 todo 'rakudo-j reports line -1 and file "unknown"'
     is $block.line, 25, 'correct .line';
-    ok $block.file.IO.basename.starts-with("pointy."),  'correct .file';
+    like $block.file.IO.basename, /^ 'pointy.'/,  'correct .file';
     is $block.file.IO.absolute(), $?FILE.IO.absolute(), '.file matches $?FILE';
 }
 

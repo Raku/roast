@@ -208,6 +208,8 @@ eval-lives-ok '[;0]', '[;0] does not explode the compiler';
 #?rakudo skip 'RT127208'
 #?DOES 1
 {
+    # Purpose of the test is to check that despite having a race
+    # condition we don't get a SEGV. Other failures are acceptable.
     subtest 'accessing Seq from multiple threads does not segfault' => {
         my $code = Q:to/CODE_END/;
             my @primes = grep { .is-prime }, 1 .. *;
@@ -228,6 +230,8 @@ throws-like ｢class A114672 {}; class B114672 is A114672 { has $!x = 5; ｣
 'no segfault';
 
 subtest 'using a null string to access a hash does not segfault' => {
+    # Purpose of the test is to check that despite having a race
+    # condition we don't get a SEGV. Other failures are acceptable.
     my $code = Q:to/CODE_END/;
         class HasNativeStr { has str $.attr }
         my %h;

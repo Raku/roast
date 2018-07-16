@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 94;
+plan 92;
 my ($r, $s);
 
 my $p = 0;
@@ -31,12 +31,9 @@ is $r.config<formatted>, 'I';
 $r = $=pod[$p++].contents[0];
 is $r.config<number>, 42;
 
-# RT#127085
-{
-  isa-ok $r.config<zebras>, Bool;
-  isa-ok $r.config<sheep>, Bool;
-  is $r.config<zebras>, True;
-  is $r.config<sheep>, False;
+{ # RT#127085
+  is-deeply $r.config<zebras>, True, 'bool config uses Bool type (True)';
+  is-deeply $r.config<sheep>, False, 'bool config uses Bool type (False)';
 }
 
 

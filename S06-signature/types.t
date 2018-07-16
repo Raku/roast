@@ -35,29 +35,12 @@ is-deeply .perl.EVAL, $_, ".perl on an {.perl} roundtrips"
 
 # RT #126124
 {
-    throws-like { sub f(Mu:D $a) {}; f(Int) }, X::Parameter::InvalidConcreteness,
-        expected           => 'Mu',
-        got                => 'Int',
-        param              => '$a',
-		routine            => 'f',
-        should-be-concrete => 'True',
-        param-is-invocant  => 'False',
+    throws-like { sub f(Mu:D $a) {}; f(Int) }, X::Parameter::InvalidConcreteness, :expected<Mu>, :got<Int>,
         'expected and got types in the exception are the correct ones';
-    throws-like { sub f(Mu:U $a) {}; f(123) }, X::Parameter::InvalidConcreteness,
-        expected           => 'Mu',
-        got                => 'Int',
-        param              => '$a',
-		routine            => 'f',
-        should-be-concrete => 'False',
-        param-is-invocant  => 'False',
+    throws-like { sub f(Mu:U $a) {}; f(123) }, X::Parameter::InvalidConcreteness, :expected<Mu>, :got<Int>,
         'expected and got types in the exception are the correct ones';
     throws-like { UInt.abs }, X::Parameter::InvalidConcreteness,
-        expected           => 'Int',
-        got                => 'UInt',
-        param              => '<anon>',
-		routine            => 'abs',
-        should-be-concrete => 'True',
-        param-is-invocant  => 'True',
+        :expected<Int>, :got<UInt>,
         'expected and got types in the exception are the correct ones';
 }
 
@@ -73,11 +56,11 @@ is-deeply .perl.EVAL, $_, ".perl on an {.perl} roundtrips"
 subtest 'Code.of() returns return type' => {
     plan 4;
     my subset ofTest where True;
-    cmp-ok -> () --> Int    {}.of, '===', Int,    '--> type';
+    cmp-ok -> () --> Int    {}.of, '=:=', Int,    '--> type';
     #?rakudo.jvm todo "got: ''"
-    cmp-ok -> () --> Str:D  {}.of, '===', Str:D,  '--> smiley';
-    cmp-ok -> () --> ofTest {}.of, '===', ofTest, '--> subset';
-    is {;}.of.^name, 'Mu', 'no explicit return constraint';
+    cmp-ok -> () --> Str:D  {}.of, '=:=', Str:D,  '--> smiley';
+    cmp-ok -> () --> ofTest {}.of, '=:=', ofTest, '--> subset';
+    cmp-ok                 {;}.of, '=:=', Mu, 'no explicit return constraint';
 }
 
 # RT #129915

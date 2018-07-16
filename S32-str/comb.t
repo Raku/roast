@@ -147,8 +147,8 @@ is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
 }
 
 # RT #127215
-eval-lives-ok ｢"hello".comb(/:m <[o]>/)｣,
-    '.comb(/:m <[o]>/) construct does not die';
+is-deeply "hello".comb(/:m <[o]>/), ('o',).Seq,
+    '.comb(/:m <[o]>/) construct does not crash';
 
 # https://github.com/rakudo/rakudo/commit/a08e953018
 is-deeply 1337.comb(2), ('13', '37'), 'Cool.comb(Int)';

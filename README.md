@@ -139,6 +139,12 @@ Depending on the location of your test file, the number inside `.parent(2)`
 may need to be adjusted to go up the correct number of times from the test
 files's location to the root of the repository.
 
+## Appendices
+
+The [`APPENDICES`](APPENDICES/) directory contains advisory tests implentations
+may optionally choose to follow. See the [`README`](APPENDICES/README.md)
+included in that directory for more information.
+
 ## Environmental Variables
 
 - **ROAST_TIMING_SCALE**

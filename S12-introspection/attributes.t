@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 39;
 
 =begin pod
 
@@ -73,9 +73,9 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
 }
 
 { # coverage; 2016-09-21
-    like Attribute.new(:name('test-name'), :type(Int), :package('Foo')).gist,
-        /'Int' .* 'test-name' | 'test-name' .* 'Int'/,
-    '.gist of an Attribute includes name and type';
+    my $g := Attribute.new(:name<test-name>, :type(Int), :package<Foo>).gist;
+    like $g, /Int/,         '.gist of an Attribute includes type';
+    like $g, /'test-name'/, '.gist of an Attribute includes name';
 }
 
 # RT #127059

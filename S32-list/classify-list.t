@@ -20,18 +20,18 @@ subtest 'on empty Hash, basic' => {
     my constant @m  = Nil, 'cat1', 'cat2', 'cat2';
     my constant %ex = %(:cat2[2, 3], :cat1[1]);
 
-    is-deeply % .classify-list(&m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .classify-list(%m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .classify-list(@m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .classify-list(&m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .classify-list(%m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .classify-list(@m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .classify-list(&m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .classify-list(%m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .classify-list(@m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .classify-list(&m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .classify-list(%m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .classify-list(@m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .classify-list(&m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .classify-list(%m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .classify-list(@m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .classify-list(&m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .classify-list(%m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .classify-list(@m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .classify-list(&m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .classify-list(%m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .classify-list(@m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .classify-list(&m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .classify-list(%m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .classify-list(@m,   (1…3)  ), %ex, '@, Seq';
 }
 
 subtest 'on empty Hash, basic, with &as' => {
@@ -42,18 +42,18 @@ subtest 'on empty Hash, basic, with &as' => {
     my constant @m  = Nil, 'cat1', 'cat2', 'cat2';
     my constant %ex = %(:cat2['val 2', 'val 3'], :cat1['val 1']);
 
-    is-deeply % .classify-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .classify-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .classify-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .classify-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .classify-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .classify-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .classify-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .classify-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .classify-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .classify-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .classify-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .classify-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .classify-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .classify-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .classify-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .classify-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .classify-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .classify-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .classify-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .classify-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .classify-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .classify-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .classify-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .classify-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
 }
 
 subtest 'on empty Hash, multi-level' => {
@@ -63,18 +63,18 @@ subtest 'on empty Hash, multi-level' => {
     my constant %m  = %(1 => <cat1 sub1>, 2 => <cat2 sub2>, 3 => <cat2 sub2>);
     my constant %ex = %(:cat2{:sub2[2, 3]}, :cat1{:sub1[1]});
 
-    is-deeply % .classify-list(&m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .classify-list(%m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .classify-list(@m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .classify-list(&m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .classify-list(%m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .classify-list(@m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .classify-list(&m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .classify-list(%m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .classify-list(@m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .classify-list(&m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .classify-list(%m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .classify-list(@m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .classify-list(&m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .classify-list(%m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .classify-list(@m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .classify-list(&m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .classify-list(%m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .classify-list(@m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .classify-list(&m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .classify-list(%m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .classify-list(@m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .classify-list(&m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .classify-list(%m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .classify-list(@m,   (1…3)  ), %ex, '@, Seq';
 }
 
 subtest 'on empty Hash, multi-level, with &as' => {
@@ -85,18 +85,18 @@ subtest 'on empty Hash, multi-level, with &as' => {
     my constant %m  = %(1 => <cat1 sub1>, 2 => <cat2 sub2>, 3 => <cat2 sub2>);
     my constant %ex = %(:cat2{:sub2['val 2', 'val 3']}, :cat1{:sub1['val 1']});
 
-    is-deeply % .classify-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
-    is-deeply % .classify-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
-    is-deeply % .classify-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
-    is-deeply % .classify-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
-    is-deeply % .classify-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
-    is-deeply % .classify-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
-    is-deeply % .classify-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
-    is-deeply % .classify-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
-    is-deeply % .classify-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
-    is-deeply % .classify-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
-    is-deeply % .classify-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
-    is-deeply % .classify-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
+    is-deeply %() .classify-list(:&as, &m, [1, 2, 3]), %ex, '&, Array';
+    is-deeply %() .classify-list(:&as, %m, [1, 2, 3]), %ex, '%, Array';
+    is-deeply %() .classify-list(:&as, @m, [1, 2, 3]), %ex, '@, Array';
+    is-deeply %() .classify-list(:&as, &m,  1, 2, 3 ), %ex, '&, comma list';
+    is-deeply %() .classify-list(:&as, %m,  1, 2, 3 ), %ex, '%, comma list';
+    is-deeply %() .classify-list(:&as, @m,  1, 2, 3 ), %ex, '@, comma list';
+    is-deeply %() .classify-list(:&as, &m,   ^3+1   ), %ex, '&, Range';
+    is-deeply %() .classify-list(:&as, %m,   ^3+1   ), %ex, '%, Range';
+    is-deeply %() .classify-list(:&as, @m,   ^3+1   ), %ex, '@, Range';
+    is-deeply %() .classify-list(:&as, &m,   (1…3)  ), %ex, '&, Seq';
+    is-deeply %() .classify-list(:&as, %m,   (1…3)  ), %ex, '%, Seq';
+    is-deeply %() .classify-list(:&as, @m,   (1…3)  ), %ex, '@, Seq';
 }
 
 #------------------------------------------------------------------------------
@@ -203,12 +203,12 @@ subtest 'on Hashes, degenerate cases' => {
     my constant %ex-empty = %();
     my constant %ex-poplt = %(:42a);
 
-    is-deeply %      .classify-list(      &m), %ex-empty, 'empty, &';
-    is-deeply %      .classify-list(      %m), %ex-empty, 'empty, %';
-    is-deeply %      .classify-list(      @m), %ex-empty, 'empty, @';
-    is-deeply %      .classify-list(:&as, &m), %ex-empty, 'empty, :&as, &';
-    is-deeply %      .classify-list(:&as, %m), %ex-empty, 'empty, :&as, %';
-    is-deeply %      .classify-list(:&as, @m), %ex-empty, 'empty, :&as, @';
+    is-deeply %()    .classify-list(      &m), %ex-empty, 'empty, &';
+    is-deeply %()    .classify-list(      %m), %ex-empty, 'empty, %';
+    is-deeply %()    .classify-list(      @m), %ex-empty, 'empty, @';
+    is-deeply %()    .classify-list(:&as, &m), %ex-empty, 'empty, :&as, &';
+    is-deeply %()    .classify-list(:&as, %m), %ex-empty, 'empty, :&as, %';
+    is-deeply %()    .classify-list(:&as, @m), %ex-empty, 'empty, :&as, @';
     is-deeply %(:42a).classify-list(      &m), %ex-poplt, 'populated, &';
     is-deeply %(:42a).classify-list(      %m), %ex-poplt, 'populated, %';
     is-deeply %(:42a).classify-list(      @m), %ex-poplt, 'populated, @';
@@ -226,14 +226,14 @@ subtest ‘on Hashes, exceptions, can't classify lazy lists’ => {
     my constant $l  = (−∞…∞);
     my constant &as = { "val $^a" }
 
-    throws-like { % .classify-list: {;}, $l }, X::Cannot::Lazy, 'empty hash, &';
-    throws-like { % .classify-list:  %,  $l }, X::Cannot::Lazy, 'empty hash, %';
-    throws-like { % .classify-list:  @,  $l }, X::Cannot::Lazy, 'empty hash, @';
-    throws-like { % .classify-list: :&as, {;}, $l }, X::Cannot::Lazy,
+    throws-like { %().classify-list: {;}, $l }, X::Cannot::Lazy, 'empty hash, &';
+    throws-like { %().classify-list:  %,  $l }, X::Cannot::Lazy, 'empty hash, %';
+    throws-like { %().classify-list:  @,  $l }, X::Cannot::Lazy, 'empty hash, @';
+    throws-like { %().classify-list: :&as, {;}, $l }, X::Cannot::Lazy,
         'empty hash, :&as, &';
-    throws-like { % .classify-list: :&as,  %, $l }, X::Cannot::Lazy,
+    throws-like { %().classify-list: :&as,  %, $l }, X::Cannot::Lazy,
         'empty hash, :&as, %';
-    throws-like { % .classify-list: :&as,  @, $l }, X::Cannot::Lazy,
+    throws-like { %().classify-list: :&as,  @, $l }, X::Cannot::Lazy,
         'empty hash, :&as, @';
 
     throws-like { %(:42a).classify-list: {;}, $l }, X::Cannot::Lazy,
@@ -261,30 +261,30 @@ subtest ‘on Hashes, exceptions, can't do mixed-level classification’ => {
     my constant @m2  = Nil, <cat1 cat3>, 'cat2', 'cat2';
     my constant &as = { "val $^a" }
 
-    throws-like { % .classify-list: &m1, [1, 2, 3] },
+    throws-like { %().classify-list: &m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '&, v1';
-    throws-like { % .classify-list: %m1, [1, 2, 3] },
+    throws-like { %().classify-list: %m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '%, v1';
-    throws-like { % .classify-list: @m1, [1, 2, 3] },
+    throws-like { %().classify-list: @m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '@, v1';
-    throws-like { % .classify-list: &m2, [1, 2, 3] },
+    throws-like { %().classify-list: &m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '&, v2';
-    throws-like { % .classify-list: %m2, [1, 2, 3] },
+    throws-like { %().classify-list: %m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '%, v2';
-    throws-like { % .classify-list: @m2, [1, 2, 3] },
+    throws-like { %().classify-list: @m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '@, v2';
 
-    throws-like { % .classify-list: :&as, &m1, [1, 2, 3] },
+    throws-like { %().classify-list: :&as, &m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, &, v1';
-    throws-like { % .classify-list: :&as, %m1, [1, 2, 3] },
+    throws-like { %().classify-list: :&as, %m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, %, v1';
-    throws-like { % .classify-list: :&as, @m1, [1, 2, 3] },
+    throws-like { %().classify-list: :&as, @m1, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, @, v1';
-    throws-like { % .classify-list: :&as, &m2, [1, 2, 3] },
+    throws-like { %().classify-list: :&as, &m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, &, v2';
-    throws-like { % .classify-list: :&as, %m2, [1, 2, 3] },
+    throws-like { %().classify-list: :&as, %m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, %, v2';
-    throws-like { % .classify-list: :&as, @m2, [1, 2, 3] },
+    throws-like { %().classify-list: :&as, @m2, [1, 2, 3] },
         X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, @, v2';
 }
 
@@ -404,28 +404,28 @@ subtest ‘on Baggy, exceptions, can't classify lazy lists’ => {
 
     throws-like { BagHash.new.classify-list: {;}, $l }, X::Cannot::Lazy,
         'empty BagHash, &';
-    throws-like { BagHash.new.classify-list:  %,  $l }, X::Cannot::Lazy,
+    throws-like { BagHash.new.classify-list: %(),  $l }, X::Cannot::Lazy,
         'empty BagHash, %';
-    throws-like { BagHash.new.classify-list:  @,  $l }, X::Cannot::Lazy,
+    throws-like { BagHash.new.classify-list: @(),  $l }, X::Cannot::Lazy,
         'empty BagHash, @';
     throws-like { MixHash.new.classify-list: {;}, $l }, X::Cannot::Lazy,
         'empty MixHash, &';
-    throws-like { MixHash.new.classify-list:  %,  $l }, X::Cannot::Lazy,
+    throws-like { MixHash.new.classify-list: %(),  $l }, X::Cannot::Lazy,
         'empty MixHash, %';
-    throws-like { MixHash.new.classify-list:  @,  $l }, X::Cannot::Lazy,
+    throws-like { MixHash.new.classify-list: @(),  $l }, X::Cannot::Lazy,
         'empty MixHash, @';
 
     throws-like { BagHash.new(<a b>).classify-list: {;}, $l }, X::Cannot::Lazy,
         'populated BagHash, &';
-    throws-like { BagHash.new(<a b>).classify-list:  %,  $l }, X::Cannot::Lazy,
+    throws-like { BagHash.new(<a b>).classify-list: %(),  $l }, X::Cannot::Lazy,
         'populated BagHash, %';
-    throws-like { BagHash.new(<a b>).classify-list:  @,  $l }, X::Cannot::Lazy,
+    throws-like { BagHash.new(<a b>).classify-list: @(),  $l }, X::Cannot::Lazy,
         'populated BagHash, @';
     throws-like { MixHash.new(<a b>).classify-list: {;}, $l }, X::Cannot::Lazy,
         'populated MixHash, &';
-    throws-like { MixHash.new(<a b>).classify-list:  %,  $l }, X::Cannot::Lazy,
+    throws-like { MixHash.new(<a b>).classify-list: %(),  $l }, X::Cannot::Lazy,
         'populated MixHash, %';
-    throws-like { MixHash.new(<a b>).classify-list:  @,  $l }, X::Cannot::Lazy,
+    throws-like { MixHash.new(<a b>).classify-list: @(),  $l }, X::Cannot::Lazy,
         'populated MixHash, @';
 }
 
@@ -455,14 +455,14 @@ subtest ‘on Baggy, exceptions, can't multi-level classify’ => {
         message => /'multi-level classification'/, 'MixHash, @';
 }
 
-subtest ‘on Baggy, exceptions, can't classify on immutable Baggies’ => {
+subtest ‘on Baggy, exceptions, can't classify on immutable Bag/Mix’ => {
     plan 6;
     throws-like { Bag.new.classify-list: {;}, ^2 }, X::Immutable, 'Bag, &';
-    throws-like { Bag.new.classify-list:  %,  ^2 }, X::Immutable, 'Bag, %';
-    throws-like { Bag.new.classify-list:  @,  ^2 }, X::Immutable, 'Bag, @';
+    throws-like { Bag.new.classify-list: %(), ^2 }, X::Immutable, 'Bag, %';
+    throws-like { Bag.new.classify-list: @(), ^2 }, X::Immutable, 'Bag, @';
     throws-like { Mix.new.classify-list: {;}, ^2 }, X::Immutable, 'Mix, &';
-    throws-like { Mix.new.classify-list:  %,  ^2 }, X::Immutable, 'Mix, %';
-    throws-like { Mix.new.classify-list:  @,  ^2 }, X::Immutable, 'Mix, @';
+    throws-like { Mix.new.classify-list: %(), ^2 }, X::Immutable, 'Mix, %';
+    throws-like { Mix.new.classify-list: @(), ^2 }, X::Immutable, 'Mix, @';
 }
 
 ###############################################################################
@@ -472,10 +472,10 @@ subtest ‘on Baggy, exceptions, can't classify on immutable Baggies’ => {
 subtest 'Callable mapper is executed only once per each item' => {
     plan 6;
     my $c;
-    $c = 0; %      .new.classify-list: {$c++}, ^10; is $c, 10, 'Hash,    ^10';
+    $c = 0; %()    .new.classify-list: {$c++}, ^10; is $c, 10, 'Hash,    ^10';
     $c = 0; BagHash.new.classify-list: {$c++}, ^10; is $c, 10, 'BagHash, ^10';
     $c = 0; MixHash.new.classify-list: {$c++}, ^10; is $c, 10, 'MixHash, ^10';
-    $c = 0; %      .new.classify-list: {$c++};  is $c, 0, 'Hash,    no items';
+    $c = 0; %()    .new.classify-list: {$c++};  is $c, 0, 'Hash,    no items';
     $c = 0; BagHash.new.classify-list: {$c++};  is $c, 0, 'BagHash, no items';
     $c = 0; MixHash.new.classify-list: {$c++};  is $c, 0, 'MixHash, no items';
 }

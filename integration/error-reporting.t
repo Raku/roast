@@ -2,7 +2,7 @@ use v6;
 use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
-plan 34;
+plan 33;
 
 use Test::Util;
 
@@ -180,13 +180,6 @@ is_run 'sub foo { ({a=>1,b=>2}, {c=>3,d=>4}).map({ if (.<a>) {return $_} else { 
             out     => '',
             err     => all(rx/Str/, rx/\^name|gist|perl|say/)
         }, 'Using type object in string context provides help';
-}
-
-# RT #128803
-{
-    is_run '*...‘WAT’', {
-        err => rx/^ [ <!after 'SORRY'> . ]+ $/,
-    }, 'runtime time errors do not contain ==SORRY==';
 }
 
 # RT #126264

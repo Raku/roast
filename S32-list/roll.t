@@ -153,8 +153,9 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
         plan 2;
         my ($n, $from, $to) = (1000, 0.1, 0.100001);
         my @res = ($from .. $to).rand xx $n;
-        is @res.grep($from <= * <= $to).elems, $n,
-            'all generated numbers are in range';
+        is (my $n-good := @res.grep($from <= * <= $to).elems), $n,
+            'all generated numbers are in range'
+        or diag "Got {$n - $n-good} out of range numbers in @res.perl()";
 
         # Look for a bit less than exact number, since there's a small chance
         # for some of them to be the same and we don't want the test to flap
