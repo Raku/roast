@@ -3,6 +3,7 @@ use Test;
 
 my @meths = <
     flush  out-buffer  print  printf  print-nl  put  say  write
+    WRITE  READ        EOF
 >;  # nl-out
 plan 2 + @meths;
 
