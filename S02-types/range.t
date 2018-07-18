@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 189;
+plan 193;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -275,6 +275,16 @@ is(+Range, 0, 'type numification');
 
     is ('b' .. 'y').roll("10").elems, 10, ".roll works Str arguments";
     is roll("10", 'b' .. 'y').elems, 10, "roll works Str arguments";
+}
+
+# Range.roll(*)/roll(N)/pick(N) with large number, from R#2090
+{
+  my $range = (1 +< 125) .. ( 1 +< 126 -1 );
+  lives-ok { $range.pick(42) }, 'Range.pick(N) lives for vast range';
+  lives-ok { $range.roll(42) }, 'Range.roll(N) lives for vast range';
+  lives-ok { $range.roll(*).head(10) }, 'Range.roll(*) lives for vast range';
+  lives-ok { ($range.roll xx *).head(10) }, '(Range.roll xx *) lives for vast range';
+  # lives-ok { $range.roll(*).head(10) }, 'Range.roll(*) lives on large number';
 }
 
 is join(':',grep 1..3, 0..5), '1:2:3', "ranges itemize or flatten lazily";
