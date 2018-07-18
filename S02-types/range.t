@@ -284,7 +284,6 @@ is(+Range, 0, 'type numification');
   lives-ok { $range.roll(42) }, 'Range.roll(N) lives for vast range';
   lives-ok { $range.roll(*).head(10) }, 'Range.roll(*) lives for vast range';
   lives-ok { ($range.roll xx *).head(10) }, '(Range.roll xx *) lives for vast range';
-  # lives-ok { $range.roll(*).head(10) }, 'Range.roll(*) lives on large number';
 }
 
 is join(':',grep 1..3, 0..5), '1:2:3', "ranges itemize or flatten lazily";
