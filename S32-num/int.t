@@ -133,13 +133,15 @@ is (-32768).msb, 15,  "(-32768).msb is 15";
 
 # Test issue fixed by https://github.com/rakudo/rakudo/commit/84b7ebdf42
 subtest 'smartmatching :U numeric against :D numeric does not throw' => {
-    plan 15;
-    for 42, τ, .5 -> $what {
+    plan 60;
+    for -42, 42, τ, .5, <1+3i>,
+        <-42>, <42>, <1e0>, <1/3>, <-1-3i > -> $what {
         is (Numeric ~~ $what), False, "Numeric:U ~~ $what ($what.^name())";
         is (Int     ~~ $what), False, "Int:U     ~~ $what ($what.^name())";
         is (UInt    ~~ $what), False, "UInt:U    ~~ $what ($what.^name())";
         is (Num     ~~ $what), False, "Num:U     ~~ $what ($what.^name())";
         is (Rat     ~~ $what), False, "Rat:U     ~~ $what ($what.^name())";
+        is (Complex ~~ $what), False, "Complex:U ~~ $what ($what.^name())";
     }
 }
 
