@@ -45,7 +45,7 @@ my @testing =
 #    $@Num, Array[Num],  # need way to handle named params in capture
 ;
 
-plan (@testing/2 * 54) + 16;
+plan (@testing/2 * 54) + 14;
 
 for @testing -> @a, $T {
     my $toNum = @a.of ~~ Num;
@@ -257,10 +257,6 @@ for @testing -> @a, $T {
 
 # RT #129773
 {
-    throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
-        '.splice(offset, array) throws';
-    throws-like { [].splice: 0e0, 0 }, X::Multi::NoMatch,
-        '.splice(wrong type offset...) throws';
     lives-ok { [].splice: *, {42;}       }, 'splice(Whatever, Callable) lives';
     lives-ok { [].splice: *, {42;}, [42] }, 'splice(Whatever, Callable, @a) lives';
 }
