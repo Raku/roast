@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 298;
+plan 299;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -801,6 +801,22 @@ subtest 'synthetics not allowed in date formats' => {
             'Same (leap seconds) (2)';
         is  DateTime.new('2016-12-31T23:59:60Z') <=> DateTime.new('2017-01-01T01:00:60+01:00'), Order::Same,
             'Same (leap seconds) (3)';
+    }
+}
+
+# This behaviour is per RFC7164, section 3:
+# https://tools.ietf.org/html/rfc7164#section-3
+# The leap second always happens in UTC and the 60th second
+# in other timezones occurs in whatever hour UTC's second happens
+subtest 'can parse leap second in non-UTC timezones' => {
+    my \h := 3600;
+    plan +my @tzs = flat (
+        10000, 100*h, 30*h, 24*h, 12*h, 3*h, 0, .5*h, 123, 432, 1
+    ).map: {-$_, $_}
+
+    my \utc := DateTime.new: '2016-12-31T23:59:60Z';
+    for @tzs {
+        cmp-ok $d, '==', utc, "parsed correct date for .in-timezone($_)";
     }
 }
 
