@@ -7,7 +7,7 @@ use Test;
 # Since there's yet no existing behaviour for some of such combinations,
 # X::Multi::NoMatch is thrown. This APPENDIX test file is for such tests.
 
-plan 2;
+plan 5;
 
 { # RT #129773
     throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
@@ -15,3 +15,12 @@ plan 2;
     throws-like { [].splice: 0e0, 0 }, X::Multi::NoMatch,
         '.splice(wrong type offset...) throws';
 }
+
+
+# https://github.com/rakudo/rakudo/issues/1644
+throws-like ｢Lock.protect: %()｣, X::Multi::NoMatch,
+    'Lock.protect with wrong args gives sane error';
+throws-like ｢Lock::Async.protect: %()｣, X::Multi::NoMatch,
+    'Lock::Async.protect with wrong args gives sane error';
+throws-like { Proc::Async.new }, X::Multi::NoMatch,
+    'attempting to create Proc::Async with wrong arguments throws';
