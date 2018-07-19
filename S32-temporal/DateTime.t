@@ -799,6 +799,7 @@ subtest 'synthetics not allowed in date formats' => {
             'Same (leap seconds) (1)';
         is  DateTime.new('2016-12-31T23:59:60Z') <=> DateTime.new('2016-12-31T22:59:60-01:00'), Order::Same,
             'Same (leap seconds) (2)';
+        #?rakudo skip 'Cannot parse leap on non-23:59'
         is  DateTime.new('2016-12-31T23:59:60Z') <=> DateTime.new('2017-01-01T01:00:60+01:00'), Order::Same,
             'Same (leap seconds) (3)';
     }
@@ -816,6 +817,7 @@ subtest 'can parse leap second in non-UTC timezones' => {
 
     my \utc := DateTime.new: '2016-12-31T23:59:60Z';
     for @tzs {
+        #?rakudo skip 'Cannot parse leap on non-23:59'
         cmp-ok $d, '==', utc, "parsed correct date for .in-timezone($_)";
     }
 }
