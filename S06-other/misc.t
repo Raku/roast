@@ -51,31 +51,23 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
     throws-like 'Sub(0)', Exception, 'no Segfault when trying to invoke the Sub type object';
 }
 
-# RT #129780
-{
-    throws-like
-        { EVAL q|sub foo($a where {* < 5 or $a > 9}) { say $a }| },
-        X::Syntax::Malformed,
-        'where clause with only one *, but two expressions',
-        message => /Malformed \s double \s closure/;
+{ # RT #129780
+    throws-like ｢sub foo($a where {* < 5 or $a > 9}) { say $a }｣,
+        X::Syntax::Malformed, :what{.contains: 'closure'},
+        'where clause with only one *, but two expressions';
+
+    throws-like ｢sub foo($a where {* < 5 or * > 9}) { say $a }｣,
+        X::Syntax::Malformed, :what{.contains: 'closure'},
+        'where clause with two *s and two expressions (with an or)';
+
+    throws-like ｢sub foo($a where {* < 5 and * > 9}) { say $a }｣,
+        X::Syntax::Malformed, :what{.contains: 'closure'},
+        'where clause with two *s and two expressions (with an and)';
 
     throws-like
-        { EVAL q|sub foo($a where {* < 5 or * > 9}) { say $a }| },
-        X::Syntax::Malformed,
-        'where clause with two *s and two expressions (with an or)',
-        message => /Malformed \s double \s closure/;
-
-    throws-like
-        { EVAL q|sub foo($a where {* < 5 and * > 9}) { say $a }| },
-        X::Syntax::Malformed,
-        'where clause with two *s and two expressions (with an and)',
-        message => /Malformed \s double \s closure/;
-
-    throws-like
-        { EVAL q|sub foo($a where {* < 5 and * > 9 and *.char == 2}) { say $a }| },
-        X::Syntax::Malformed,
-        'where clause with three *s and three expressions',
-        message => /Malformed \s double \s closure/;
+        ｢sub foo($a where {* < 5 and * > 9 and *.char == 2}) { say $a }｣,
+        X::Syntax::Malformed, :what{.contains: 'closure'},
+        'where clause with three *s and three expressions';
 }
 
 # vim: ft=perl6 expandtab sw=4
