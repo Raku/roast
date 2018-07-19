@@ -727,7 +727,7 @@ subtest 'synthetics not allowed in date formats' => {
     }
 
     subtest 'DateTime <=> DateTime' => {
-        plan 16;
+        plan 21;
 
         is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
             DateTime.new('1986-02-22T22:22:22+22:22'), Order::Same,
@@ -783,6 +783,25 @@ subtest 'synthetics not allowed in date formats' => {
         is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
             DateTime.new('1986-02-22T22:22:21+22:22'), Order::More,
             'More (different seconds)';
+
+        is  DateTime.new('2016-12-31T23:59:59Z') <=>
+            DateTime.new('2016-12-31T23:59:60Z'), Order::Less,
+            'Less (leap seconds)';
+        is  DateTime.new('2017-01-01T00:00:00Z') <=>
+            DateTime.new('2016-12-31T23:59:60Z'), Order::More,
+            'Moar (leap seconds)';
+
+        # This behaviour is per RFC7164, section 3:
+        # https://tools.ietf.org/html/rfc7164#section-3
+        # The leap second always happens in UTC and the 60th second
+        # in other timezones occurs in whatever hour UTC's second happens
+        is  DateTime.new('2017-01-01T00:00:00Z') <=> DateTime.new('2016-12-31T23:00:00-01:00'), Order::Same,
+            'Same (leap seconds) (1)';
+        is  DateTime.new('2016-12-31T23:59:60Z') <=> DateTime.new('2016-12-31T22:59:60-01:00'), Order::Same,
+            'Same (leap seconds) (2)';
+
+        is  DateTime.new('2016-12-31T23:59:60Z') <=> DateTime.new('2017-01-01T01:00:60+01:00'), Order::Same,
+            'Same (leap seconds) (3)';
     }
 }
 
