@@ -589,8 +589,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok cotan(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok cotan(my num $ =   ∞), '===', NaN, '+∞';
 
-        cmp-ok cotan(my num $ =  0e0), '==', my num $ =  ∞,         '0e0';
-        cmp-ok cotan(my num $ = -0e0), '==', my num $ = -∞,         '-0e0';
+        is-deeply cotan(my num $ =  0e0), '==', my num $ =  ∞,         '0e0';
+        is-deeply cotan(my num $ = -0e0), '==', my num $ = -∞,         '-0e0';
 
         is-approx cotan(my num $ =    π/12), my num $ = 2+√3,       'π/12';
         is-approx cotan(my num $ =    π/10), my num $ = √(5+2*√5),  'π/10';
@@ -698,7 +698,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok asinh(my num $ =  1e200), '==',  ∞,  '1e200';
         #?rakudo 2 todo 'RT 129919'
         cmp-ok asinh(my num $ = -1e200), '==', -∞, '-1e200';
-        is asinh(my num $ = -0e0).Str, '-0', '-0e0 actually gives a minus 0';
+        is-deeply asinh(my num $ = -0e0), -0e0,
+          '-0e0 actually gives a minus 0';
 
         for @test-values.map({|($_, -$_)}) -> $x {
             is-approx asinh(my num $ = $x), my num $ = log($x+√($x²+1)), ~$x;
