@@ -29,7 +29,6 @@ is-deeply .perl.EVAL, $_, ".perl on an {.perl} roundtrips"
 {
     sub rt123789 (int $x) { say $x };
     throws-like { rt123789(Int) }, Exception,
-        message => /'Cannot unbox a type object'/,
         'no segfault when calling a routine having a native parameter with a type object argument';
 }
 
