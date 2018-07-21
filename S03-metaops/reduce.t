@@ -678,10 +678,10 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
 
 # RT #128757
 {
-    throws-like {[+] 'hello'}, X::Str::Numeric, '[+] with single non-numeric argument errors';
-    throws-like {[-] 'hello'}, X::Str::Numeric, '[-] with single non-numeric argument errors';
-    throws-like {[*] 'hello'}, X::Str::Numeric, '[*] with single non-numeric argument errors';
-    throws-like {[/] 'hello'}, X::Str::Numeric, '[/] with single non-numeric argument errors';
+    throws-like ｢[+] 'hello'｣, X::Str::Numeric, '[+] with single non-numeric argument errors';
+    throws-like ｢[-] 'hello'｣, X::Str::Numeric, '[-] with single non-numeric argument errors';
+    throws-like ｢[*] 'hello'｣, X::Str::Numeric, '[*] with single non-numeric argument errors';
+    throws-like ｢[/] 'hello'｣, X::Str::Numeric, '[/] with single non-numeric argument errors';
 }
 
 # RT #128758
