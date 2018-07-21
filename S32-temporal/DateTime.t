@@ -430,7 +430,8 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     isa-ok DateTime.now.hour, Int, 'DateTime.now.hour isa Int';
 }
 
-is DateTime.now.Date, Date.today, 'coercion to Date';
+is DateTime.now.Date, Date.today,
+    'coercion to Date (this test can fail if run exactly at midnight)';
 
 {
     is ds('2013-12-23T12:34:36Z').later(second => 1),
