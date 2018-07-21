@@ -128,12 +128,12 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 #   my $hash = {a => {b => {c => {d => 42, e => 23}}}};
 #   is try { [.{}] $hash, <a b c d> }, 42, '[.{}] works';
 # }
-# 
+#
 # {
 #   my $hash = {a => {b => 42}};
 #   is ([.{}] $hash, <a b>), 42, '[.{}] works two levels deep';
 # }
-# 
+#
 # {
 #   my $arr = [[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]];
 #   is ([.[]] $arr, 1, 0, 2), 9, '[.[]] works';
@@ -185,14 +185,14 @@ lives-ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 # {
 #   my $arr = [ 42, [ 23 ] ];
 #   $arr[1][1] = $arr;
-# 
+#
 #   is try { [.[]] $arr, 1, 1, 1, 1, 1, 0 }, 23, '[.[]] works with infinite data structures';
 # }
-# 
+#
 # {
 #   my $hash = {a => {b => 42}};
 #   $hash<a><c> = $hash;
-# 
+#
 #   is try { [.{}] $hash, <a c a c a b> }, 42, '[.{}] works with infinite data structures';
 # }
 
@@ -212,7 +212,7 @@ is( ([<] 42), Bool::True, "[<] 42 returns true");
 is( ~([\<] 42), ~True, "[\<] 42 returns '1'");
 ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
-is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 
+is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800',
     'triangle reduce is lazy');
 
 ok ([\*] 1..*).is-lazy, "triangle reduce knows if it's lazy";
