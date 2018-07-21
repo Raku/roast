@@ -155,9 +155,9 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
 
     is-deeply ($u = 42), 42, 'Can store a positive Int in UInt';
     is-deeply ($u = 0),  0,  'Can store a zero in UInt';
-    throws-like { $u = -42 }, X::TypeCheck::Assignment,
+    throws-like ｢my UInt $z = -42｣, X::TypeCheck::Assignment,
         'UInt rejects negative numbers';
-    throws-like { $u = "foo" }, X::TypeCheck::Assignment,
+    throws-like ｢my UInt $y = "foo"｣, X::TypeCheck::Assignment,
         'UInt rejects other types';
 
     is-deeply ($u = Nil), UInt,  'Can assign Nil to UInt';
