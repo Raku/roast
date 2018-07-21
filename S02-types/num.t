@@ -636,7 +636,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok acotan(my num $      ), '===', NaN, 'uninitialized';
         cmp-ok acotan(my num $ = NaN), '===', NaN, 'NaN';
 
-        is acotan(my num $ = -∞).Str, '-0', '-∞ is -0';
+        is-deeply acotan(my num $ = -∞), -0e0, '-∞ is -0';
 
         is-approx acotan(my num $ =          ∞), my num $ =  0e0,    '∞';
         is-approx acotan(my num $ =         -∞), my num $ = -0e0,    '-∞';
