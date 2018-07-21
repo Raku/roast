@@ -505,10 +505,14 @@ throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
 subtest 'Junction.new' => { # coverage; 2016-10-11
     plan 4;
 
-    is-deeply Junction.new([^3], :type<all> ).perl, ^3  .all.perl, 'all';
-    is-deeply Junction.new([^3], :type<one> ).perl, ^3  .one.perl, 'one';
-    is-deeply Junction.new([^3], :type<any> ).perl, ^3  .any.perl, 'any';
-    is-deeply Junction.new([^3], :type<none>).perl, ^3 .none.perl, 'none';
+    is-deeply-junction Junction.new([^3], :type<all> ),
+        ^3 .all, 'all';
+    is-deeply-junction Junction.new([^3], :type<one> ),
+        ^3 .one, 'one';
+    is-deeply-junction Junction.new([^3], :type<any> ),
+        ^3 .any, 'any';
+    is-deeply-junction Junction.new([^3], :type<none>),
+        ^3 .none, 'none';
 }
 
 # https://github.com/rakudo/rakudo/commit/aa3684218b1f668b6a6e41da
