@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 11;
+plan 12;
 
 # RT #132042
 doesn't-hang ｢
@@ -207,5 +207,9 @@ is_run ｢use RAKUDO1413; print 'pass'｣,
     sleep 1;
     is $x, 4000, 'collected right amount of characters (with { foo })';
 }
+
+# https://github.com/rakudo/rakudo/issues/2120
+is-deeply ((1..10)[2.polymod($_ xx 1000).map($_ ** *) »%» *] with 1),
+    2 xx 1001, "no SEGV in curries + with";
 
 # vim: expandtab shiftwidth=4 ft=perl6
