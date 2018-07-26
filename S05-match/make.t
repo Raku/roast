@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 # should be: L<S05/Bracket rationalization/"An B<explicit> reduction using the C<make> function">
 # L<S05/Bracket rationalization/reduction using the>
@@ -36,6 +36,12 @@ is $/.ast, 'bar', '$/.ast';
     $/.make: FooBar;
     cmp-ok $/.made, '===', FooBar, 'can get made type objects from .made (2)';
     cmp-ok $/.ast,  '===', FooBar, 'can get made type objects from .ast  (2)';
+}
+
+# R#2057
+{
+    lives-ok { "" ~~ /{ (make 0 for 0) }/ && .say for ^100 },
+      'check that we did not regress';
 }
 
 # vim: ft=perl6
