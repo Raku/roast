@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/Item assignment precedence>
 
-plan 12;
+plan 16;
 
 # Tests for binding instance and class attributes
 # note that only attributes themselves ($!foo) can be bound,
@@ -74,5 +74,21 @@ plan 12;
     is $var,    19,      "binding private class attribute (3)";
 }
 
+# R#2130
+{
+    role Foo { method bar { 42 } }
+    class A {
+        has $.scalar does Foo;
+        has @.array  does Foo;
+        has %.hash   does Foo;
+        has &.code   does Foo;
+    }
+
+    my $a = A.new;
+    is $a.scalar.bar, 42, 'is the scalar attribute mixed in?';
+    is $a.array.bar,  42, 'is the array attribute mixed in?';
+    is $a.hash.bar,   42, 'is the hash attribute mixed in?';
+    is $a.code.bar,   42, 'is the code attribute mixed in?';
+}
 
 # vim: ft=perl6
