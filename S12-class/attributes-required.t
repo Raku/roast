@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 8;
 
 class fish {
     has $.x is required;
@@ -37,3 +37,18 @@ throws-like { fowl.new() },
   X::Attribute::Required,
   why => "foo",
   "required attributes unset dies with appropriate reason";
+
+# R#2083
+{
+    class ABC {
+        has $!thing is required;
+        method foo { $!thing }
+        submethod BUILD(:$!thing = 42) {}
+    }
+    is ABC.new.foo, 42, 'does the is required on private attributes work';
+
+    class DEF {
+        has $!thing is required;
+    }
+    dies-ok { DEF.new }, 'does the is required on private attributes work';
+}
