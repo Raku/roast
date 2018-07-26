@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 266;
+plan 267;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -469,6 +469,13 @@ if $emits_suggestions {
     throws-like 'sub greet($name) { say "hello, $nam" }', X::Undeclared, suggestions => '$name';
 
     throws-like 'class Greeter { has $.name; method greet { say "hi, $name" } }', X::Undeclared, suggestions => '$!name';
+}
+
+# R#2111
+{
+    lives-ok { EVAL(
+      'package Zoo { use experimental :pack; sub go() is export { "".encode.unpack("*") }; }; import Zoo; go()'
+    ) }, 'is "use experimental :pack" visible?';
 }
 
 # vim: ft=perl6

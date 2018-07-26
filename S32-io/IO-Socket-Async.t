@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan 38;
 
 my $hostname = 'localhost';
 my $port = 5000;
@@ -241,4 +241,54 @@ for '127.0.0.1', '::1' -> $host {
     is $conn.Supply.list, (),
         'Read Supply on a closed socket is immediately done';
     $t.close
+}
+
+{
+    my $lis = IO::Socket::Async.listen("localhost", 0);
+
+    my @first-got;
+    my @second-got;
+
+    my $first-done = Promise.new;
+    my $second-done = Promise.new;
+
+    my $first  = $lis.tap: -> $conn {
+        @first-got.append:  $conn.Supply.list;
+        $first-done.keep;
+        CATCH { $first-done.break($_) };
+    }
+    my $second = $lis.tap: -> $conn {
+        @second-got.append: $conn.Supply.list;
+        $second-done.keep;
+        CATCH { $second-done.break($_) };
+    }
+
+    isnt $first.socket-port.result, 0, "socket port isn't zero (first)";
+    isnt $second.socket-port.result, 0, "socket port isn't zero (second)";
+
+    isnt $first.socket-port.result, $second.socket-port.result, "socket ports of first and second connection aren't the same";
+
+    for $first, $second {
+        diag try .socket-host.result;
+        diag try .socket-port.result;
+    }
+
+    my $fconn;
+    my $sconn;
+    lives-ok { $fconn = await IO::Socket::Async.connect("localhost", $first.socket-port.result) }, "can connect to first port on localhost";
+    lives-ok { $sconn = await IO::Socket::Async.connect($second.socket-host.result, $second.socket-port.result) }, "can connect to second port on given host and port";
+
+    lives-ok { await $fconn.write("hello first".encode("ascii")) }, "send message to first connection";
+    lives-ok { await $sconn.write("hello second".encode("ascii")) }, "send message to second connection";
+
+    lives-ok { $fconn.close }, "close first connection";
+    lives-ok { $sconn.close }, "close second connection";
+
+    $first.close;
+    $second.close;
+
+    lives-ok { await $first-done, $second-done }, "both receivers finished without exception";
+
+    is @first-got.join(""), "hello first", "first server socket got the right message";
+    is @second-got.join(""), "hello second", "second server socket got the right message";
 }
