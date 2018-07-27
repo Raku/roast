@@ -21,7 +21,8 @@ plan 15;
         'Map:D.Hash gives right hash';
 
     is-deeply $map.Int, 3, 'Map.Int gives number of pairs';
-    is-deeply $map{42e0}, 'foo', 'Map{} with non-Str key gives right results';
+    is-deeply $map{42.0}, 'foo',
+        'Map{} with non-Str value in lookup stringifies it';
 
     is-deeply $map.clone, $map, 'Map.clone is identity';
 }

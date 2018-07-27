@@ -13,13 +13,14 @@ plan 8;
 
     subtest 'Mu:U.self is identity' => {
         plan 2;
-        is-deeply Mu.self.^name,   'Mu',        'got Mu';
+        cmp-ok    Mu.self, '=:=',  Mu,          'got self';
         is-deeply Mu.self.defined, Bool::False, 'not .defined';
     }
 
     subtest 'Mu:D.self is identity' => {
         plan 2;
-        is-deeply Mu.new.self.^name,   'Mu',       'got Mu';
+        my \v := Mu.new;
+        cmp-ok    v.self, '=:=',       v,          'got self';
         is-deeply Mu.new.self.defined, Bool::True, 'is .defined';
     }
 
@@ -27,7 +28,7 @@ plan 8;
         plan 3;
 
         sub rrw { my Mu $x; $x.return-rw }();
-        is-deeply rrw.^name,   'Mu',        'got Mu';
+        cmp-ok    rrw.WHAT, '=:=',  Mu,     'got Mu';
         is-deeply rrw.defined, Bool::False, 'not .defined';
         lives-ok { rrw() = 42; }, 'can assign to returned value';
     }

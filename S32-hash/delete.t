@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 9;
+plan 10;
 
 # L<S02/Names and Variables/:delete>
 
@@ -44,6 +44,8 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 
 { # coverage; 2016-10-04
     is-deeply Hash<z>:delete, Nil, ':delete on Hash:U returns Nil';
+    is-deeply Hash<a b>:delete, (Nil, Nil),
+        ':delete of slice on Hash:U returns a list of Nils';
 }
 
 # vim: ft=perl6
