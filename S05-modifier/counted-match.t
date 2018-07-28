@@ -46,7 +46,7 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 #     ok($data ~~ m:nth($N)/fo+/, "Match nth(\$N) for \$N == $N" );
 #     is($/, 'f'~'o' x $N, "Matched value for $N" );
 # }
-# 
+#
 
 # more interesting variations of :nth(...)
 {
