@@ -173,13 +173,12 @@ subtest 'Iterator.skip-one' => {
 }
 
 subtest 'Iterator.skip-at-least' => {
-    plan 4;
+    plan 3;
 
     my $r = (1..5).iterator;
     ok        $r.skip-at-least(3),   'skipping 3 values succeeds';
     is-deeply $r.pull-one, 4,        'next value after skip is correct';
     nok       $r.skip-at-least(10),  'skipping more values than we have is falsy';
-    ok $r.pull-one =:= IterationEnd, 'no more values to pull';
 }
 
 subtest 'Iterator.skip-at-least-pull-one' => {
