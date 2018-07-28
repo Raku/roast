@@ -1,8 +1,8 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use MONKEY-TYPING;
-
 use Test;
+use Test::Util;
 
 plan 111;
 
@@ -559,9 +559,11 @@ lives-ok {
 # RT #123506
 {
     my \rt123506a = ($_ for ^1);
-    is ~rt123506a, '0', 'assigning list comprehension to sigilless works (1)';
+    is-eqv rt123506a, (0,),
+        'assigning list comprehension to sigilless works (1)';
     my \rt123506b = ($_ for ^2);
-    is ~rt123506b, '0 1', 'assigning list comprehension to sigilless works (2)';
+    is-eqv rt123506b, (0, 1),
+        'assigning list comprehension to sigilless works (2)';
 }
 
 # RT #113026
