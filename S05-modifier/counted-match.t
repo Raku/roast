@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 29;
+plan 28;
 
 my $data = "f fo foo fooo foooo fooooo foooooo";
 
@@ -94,9 +94,17 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 }
 
 # RT #77408
-{
-    ok "aa" ~~ m:nth(1|2)/a/, ':nth accepts Junctions';
-    ok $/ ~~ Junction, 'and its result is a Junction';
+subtest ':nth accepts Junctions' => {
+    plan 7;
+    is-deeply "aa" ~~ m:nth(1|2)/a/, True,  'all nths exist (&any)';
+    is-deeply "aa" ~~ m:nth(1^2)/a/, False, 'all nths exist (&one)';
+    is-deeply "aa" ~~ m:nth(1&4)/a/, False, 'some nths exist (&all)';
+    is-deeply "aa" ~~ m:nth(1|4)/a/, True,  'some nths exist (&any)';
+
+    "abc" ~~ m:nth(1|3)/./;
+    ok $/ ~~ Junction, 'result is a Junction';
+    ok $/ eq 'a', 'Junction has one of the alternatives';
+    ok $/ eq 'c', 'Junction has second of the alternatives';
 }
 
 # vim: ft=perl6
