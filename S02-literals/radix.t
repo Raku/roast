@@ -291,7 +291,7 @@ for 2..36 {
 # RT #129279
 #?rakudo.jvm skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
 #?rakudo.js skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
-lives-ok { :۳<12> }, 'Unicode digit radix bases work';
+is-deeply :۳<12>, 5, 'Unicode digit radix bases work';
 
 # RT #128804
 subtest 'sane errors on failures to parse rad numbers' => {
