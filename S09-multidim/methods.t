@@ -134,7 +134,9 @@ plan 80;
 {
     my @a[5] = ^5;
     @a = @a.rotate;
-    is @a, "1 2 3 4 0", 'can we assign after a .rotate?';
+    is-deeply @a, Array.new(:shape(5,), [1, 2, 3, 4, 0]),
+        'can we assign after a .rotate?';
     @a = @a.reverse;
-    is @a, "0 4 3 2 1", 'can we assign after a .reverse?';
+    is-deeply @a, Array.new(:shape(5,), [0, 4, 3, 2, 1]),
+        'can we assign after a .reverse?';
 }
