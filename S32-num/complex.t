@@ -257,6 +257,7 @@ ok Num(exp i * π) == -1, 'Num(Complex) pays attention to $*TOLERANCE';
 subtest 'exponentiation with zero (n = 0+0i)' => {
     plan 3;
 
+    # Per discussion on https://rt.perl.org/Public/Bug/Display.html?id=128785
     constant n = 0+0i;
     is-deeply n**0, 1+0i, 'n**0';
     is-deeply n**n, 1+0i, 'n**n';
