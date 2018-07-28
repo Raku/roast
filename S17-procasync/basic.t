@@ -110,14 +110,14 @@ is $stderr, '',       'got correct STDERR';
         "Tapping stdout supply after start of process does not lose data";
 }
 
-$pc = Proc::Async.new($*EXECUTABLE, "-e ''"); # It taps a warning, but it is safe to catch.
-my $is-tapped = False;
-
-$pc.stderr.tap(-> $v { $is-tapped = $v eq ''; });
-$pc.stdout.tap(-> $v { $is-tapped = $v eq ''; });
-await $pc.start;
-
-is $is-tapped, False, "Process that doesn't output anything will not emit";
+{
+    $pc = Proc::Async.new: $*EXECUTABLE, '-e', '';
+    my $no-output = True;
+    $pc.stderr.tap: { $no-output = False }
+    $pc.stdout.tap: { $no-output = False }
+    await $pc.start;
+    ok $no-output, "Process that doesn't output anything does not emit";
+}
 
 # RT #130788
 {
