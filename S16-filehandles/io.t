@@ -336,7 +336,7 @@ unlink($filename);
 }
 
 subtest '.printf()' => {
-    plan 5;
+    plan 4;
 
     constant $args = ｢'%% %d %f %e %x %s', 42, 42.1, 12e100, 16, 'foo'｣;
     constant $result = '% 42 42.100000 1.200000e+101 10 foo';
@@ -346,8 +346,7 @@ subtest '.printf()' => {
     is_run ｢$*ERR.printf: ｣ ~ $args, { :out(''), :err($result), :0status },
         '$*ERR';
 
-    throws-like { $*OUT.printf }, Exception, 'call without args';
-    throws-like { $*OUT.printf: '%z', 42 },
+    throws-like { $*OUT.printf: '%♥', 42 },
         X::Str::Sprintf::Directives::Unsupported, 'wrong directive';
     throws-like { $*OUT.printf: '%d %d', 42 },
         X::Str::Sprintf::Directives::Count, 'args do not match format';

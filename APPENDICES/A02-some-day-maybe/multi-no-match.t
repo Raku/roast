@@ -7,7 +7,7 @@ use Test;
 # Since there's yet no existing behaviour for some of such combinations,
 # X::Multi::NoMatch is thrown. This APPENDIX test file is for such tests.
 
-plan 6;
+plan 7;
 
 { # RT #129773
     throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
@@ -27,3 +27,5 @@ throws-like { Proc::Async.new }, X::Multi::NoMatch,
 
 # https://irclog.perlgeek.de/perl6-dev/2016-11-26#i_13630780
 throws-like ｢"".subst｣, X::Multi::NoMatch, '.subst with no arguments throws';
+
+throws-like { $*OUT.printf }, Exception, '.printf call without args';
