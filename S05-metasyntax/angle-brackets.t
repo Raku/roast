@@ -23,7 +23,7 @@ character classes), and those are referenced at the correct spot.
     is('aaaaa' ~~ /<	a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (tab)');
 
     throws-like '"aaaa" ~~ /<a aa>/', X::Method::NotFound, '<...> without whitespace calls a method (not quote words)';
-    
+
     is('hello' ~~ /< hello >/, 'hello', 'degenerate case of quote list');
 }
 
