@@ -339,7 +339,11 @@ subtest '0.9999999999999999999999 to string conversions' => {
     plan 4;
 
     constant r = 0.9999999999999999999999;
-    is-deeply r.Str, '1', '.Str rounds off correctly';
+    # for this particular test, we simply check we don't have any weird
+    # stuff like '0.A', but at least here we don't spec whether this Rat
+    # would be output exactly or rounded off
+    cmp-ok r.Str, '~~', '1'|'0.9999999999999999999999' ,
+        'no weirdness in .Str';
     is-deeply r.perl, '<9999999999999999999999/10000000000000000000000>',
         '.perl gives accurate result';
     is-deeply r.perl.EVAL, r, '.perl.EVAL roundtrips';
