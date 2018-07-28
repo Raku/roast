@@ -147,7 +147,7 @@ s1();
 }
 
 # https://irclog.perlgeek.de/perl6/2016-12-08#i_13706422
-throws-like { sink Failure.new }, Exception,
+throws-like { no fatal; sink Failure.new; Nil }, Exception,
     'sink statement prefix explodes Failures';
 
 {
@@ -193,4 +193,3 @@ throws-like {
     'assigning Failure to typed variable that cannot hold it explodes it';
 
 # vim: ft=perl6
-
