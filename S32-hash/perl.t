@@ -42,8 +42,11 @@ plan 52;
     is $rh.keyof, Str, 'make sure roundtripped keys are Str';
 } #4
 
-is-deeply (my %h{Int}).perl.EVAL.perl, '(my Any %{Int})',
-    'can roundtrip .perl.EVAL for parametarized hash with no keys in it';
+{
+    my %h{Int};
+    is-deeply %h.perl.EVAL, %h,
+        'can roundtrip .perl.EVAL for parametarized hash with no keys in it';
+}
 
 {
     my %h;
