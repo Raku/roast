@@ -2,7 +2,7 @@ use v6;
 use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
-plan 34;
+plan 33;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -212,12 +212,6 @@ END
         "foo: bar\n\techo 'AGAIN';\nbar:\n\techo 'OHAI';\n"),
         "Heredoc tab explosion makefile use case is usesul.";
 }
-
-# RT #129838
-is_run "my \$x = q:to/END/;\ny\n END", {
-    :out(''),
-    :err{ not .contains('Actions.nqp') }
-}, 'heredoc trimming warnings do not reference guts';
 
 #?rakudo skip 'RT #131927'
 {
