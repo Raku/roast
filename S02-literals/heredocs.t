@@ -180,7 +180,7 @@ END
 
 }
 
-# RT #120895 
+# RT #120895
 {
     #  Should also try this with varying $?TABSTOP when that gets implemented
 
