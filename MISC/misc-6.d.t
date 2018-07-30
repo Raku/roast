@@ -7,7 +7,7 @@ use Test::Util;
 # They might be rearranged into other files in the future, but for now, keeping them in this
 # file avoids creating a ton of `-6.d.t` files for the sake of single tests.
 
-plan 2;
+plan 3;
 
 subtest ':sym<> colonpair on subroutine names is reserved' => {
     plan 6;
@@ -77,6 +77,19 @@ subtest '$*ARGFILES is set to $*IN inside sub MAIN' => {
     "blah\nbleh\nbloh", :@args, {
         :err(''), :0status, :out("THE\nFILES\nCONTENT\n"),
     }, 'no MAIN';
+}
+
+subtest 'native num defaults to 0e0' => {
+    plan 8;
+    my num $x;
+    is-deeply $x, 0e0, '`my` variable';
+    is-deeply my class { has num $.z }.new.z, 0e0, 'class attribute';
+    is-deeply my role  { has num $.z }.new.z, 0e0, 'role attribute';
+    is-deeply my class { submethod z(num $v?) { $v } }.new.z, 0e0, 'submethod param';
+    is-deeply my class { method    z(num $v?) { $v } }.new.z, 0e0, 'method param';
+    is-deeply sub (num $v?) { $v }(), 0e0, 'sub param';
+    is-deeply ->   num $v?  { $v }(), 0e0, 'block param';
+    my num @a; is-deeply @a[0], 0e0, 'native num array unset element';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
