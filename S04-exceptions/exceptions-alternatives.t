@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-# Tests for alternate exception handler Exceptions::JSON
+# Tests for alternate exception handlers
 plan 3;
 
 sub json-ex ($code) {
