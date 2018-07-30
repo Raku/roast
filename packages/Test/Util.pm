@@ -214,7 +214,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-multi doesn't-hang (Str $args, $desc, :$in, :$wait = 5, :$out, :$err)
+multi doesn't-hang (Str $args, $desc, :$in, :$wait = 15, :$out, :$err)
 is export {
     doesn't-hang \($*EXECUTABLE.absolute, '-e', $args), $desc,
         :$in, :$wait, :$out, :$err;
@@ -225,7 +225,7 @@ is export {
 my $VM-time-scale-multiplier = $*VM.name eq 'jvm' ?? 20/3 !! 1;
 multi doesn't-hang (
     Capture $args, $desc = 'code does not hang',
-    :$in, :$wait = 5, :$out, :$err,
+    :$in, :$wait = 15, :$out, :$err,
 ) is export {
     my $prog = Proc::Async.new: |$args;
     my ($stdout, $stderr) = '', '';
