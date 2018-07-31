@@ -6,7 +6,22 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 11;
+plan 12;
+
+#https://github.com/rakudo/rakudo/issues/2143
+subtest 'Distribution::Resources works with .gist/.perl/.^mro/.WHAT' => {
+	plan 4;
+	Distribution::Resource.gist; pass '.gist';
+	Distribution::Resource.perl; pass '.perl';
+	Distribution::Resource.^mro; pass '.^mro';
+	Distribution::Resource.new(:repo("repo"), 
+				:repo-name("repo-name"), 
+				:dist-id("dist"), 
+				:key("key")).WHAT; 
+	pass '.WHAT on instances of Distribution::Resource';
+
+
+}
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 12;
