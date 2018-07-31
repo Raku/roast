@@ -29,76 +29,101 @@ my @pairs =
 # left, right, result
 my @triplets =
 
-  # result should be a Set
+  # result should be a Bag(Hash)
   set(),                        set(),             bag(),
-  SetHash.new,                  SetHash.new,       bag(),
-  $esh,                         $esh,              bag(),
+  Set.new,                      SetHash.new,       bag(),
+  SetHash.new,                  Set.new,           ().BagHash,
+  SetHash.new,                  SetHash.new,       ().BagHash,
+  set(),                        $esh,              bag(),
+  $esh,                         set(),             ().BagHash,
+  $esh,                         $esh,              ().BagHash,
+
   <a b>.Set,                    set(),             <a b>.Bag,
-  <a b>.SetHash,                set(),             <a b>.Bag,
+  <a b>.SetHash,                set(),             <a b>.BagHash,
   <a b>.Set,                    <a b>.Set,         <a a b b>.Bag,
-  <a b>.SetHash,                <a b>.SetHash,     <a a b b>.Bag,
+  <a b>.SetHash,                <a b>.SetHash,     <a a b b>.BagHash,
   <a b>.Set,                    <c d>.Set,         <a b c d>.Bag,
   <a b c>.Set,                  <b c d>.Set,       <a b b c c d>.Bag,
-  <a b>.SetHash,                <c d>.SetHash,     <a b c d>.Bag,
-  <a b c>.SetHash,              <b c d>.SetHash,   <a b b c c d>.Bag,
+  <a b>.SetHash,                <c d>.SetHash,     <a b c d>.BagHash,
+  <a b c>.SetHash,              <b c d>.SetHash,   <a b b c c d>.BagHash,
 
-  # result should be a Bag
+  # result should be a Bag(Hash)
   bag(),                        bag(),             bag(),
-  BagHash.new,                  BagHash.new,       bag(),
-  $ebh,                         $ebh,              bag(),
+  Bag.new,                      BagHash.new,       bag(),
+  BagHash.new,                  Bag.new,           ().BagHash,
+  BagHash.new,                  BagHash.new,       ().BagHash,
+  bag(),                        $ebh,              bag(),
+  $ebh,                         bag(),             ().BagHash,
+  $ebh,                         $ebh,              ().BagHash,
+
   <a b b>.Bag,                  bag(),             <a b b>.Bag,
-  <a b b>.BagHash,              bag(),             <a b b>.Bag,
+  <a b b>.BagHash,              bag(),             <a b b>.BagHash,
   <a b b>.Bag,                  <a b>.Bag,         <a a b b b>.Bag,
-  <a b b>.BagHash,              <a b>.BagHash,     <a a b b b>.Bag,
+  <a b b>.BagHash,              <a b>.BagHash,     <a a b b b>.BagHash,
   <a b b>.Bag,                  <c d>.Bag,         <a b b c d>.Bag,
   <a b b c>.Bag,                <b c d>.Bag,       <a b b b c c d>.Bag,
-  <a b b>.BagHash,              <c d>.BagHash,     <a b b c d>.Bag,
-  <a b b c>.BagHash,            <b c d>.BagHash,   <a b b b c c d>.Bag,
+  <a b b>.BagHash,              <c d>.BagHash,     <a b b c d>.BagHash,
+  <a b b c>.BagHash,            <b c d>.BagHash,   <a b b b c c d>.BagHash,
 
-  # result should be a Mix
+  # result should be a Mix(Hash)
   mix(),                        mix(),         mix(),
-  MixHash.new,                  MixHash.new,   mix(),
-  $emh,                         $emh,          mix(),
+  Mix.new,                      MixHash.new,   mix(),
+  MixHash.new,                  Mix.new,       ().MixHash,
+  MixHash.new,                  MixHash.new,   ().MixHash,
+  mix(),                        $emh,          mix(),
+  $emh,                         mix(),         ().MixHash,
+  $emh,                         $emh,          ().MixHash,
+
   mix(),                        <a b>.Mix,     <a b>.Mix,
-  MixHash.new,                  <a b>.MixHash, <a b>.Mix,
+  MixHash.new,                  <a b>.MixHash, <a b>.MixHash,
   (a=>pi,b=>tau).Mix,           mix(),         (a=>pi,b=>tau).Mix,
-  (a=>pi,b=>tau).MixHash,       mix(),         (a=>pi,b=>tau).Mix,
+  (a=>pi,b=>tau).MixHash,       mix(),         (a=>pi,b=>tau).MixHash,
   (a=>pi,b=>tau).Mix,           <a b>.Mix,     (a=>(pi+1),b=>(tau+1)).Mix,
-  (a=>pi,b=>tau).MixHash,       <a b>.MixHash, (a=>(pi+1),b=>(tau+1)).Mix,
+  (a=>pi,b=>tau).MixHash,       <a b>.MixHash, (a=>(pi+1),b=>(tau+1)).MixHash,
   (a=>pi,b=>tau).Mix,           <c d>.Mix,     (a=>pi,b=>tau,c=>1,d=>1).Mix,
-  (a=>pi,b=>tau).MixHash,       <c d>.MixHash, (a=>pi,b=>tau,c=>1,d=>1).Mix,
+  (a=>pi,b=>tau).MixHash,       <c d>.MixHash, (a=>pi,b=>tau,c=>1,d=>1).MixHash,
   (a=>pi,b=>tau).Mix,           <b c>.Mix,     (a=>pi,b=>(tau+1),c=>1).Mix,
-  (a=>pi,b=>tau).MixHash,       <b c>.MixHash, (a=>pi,b=>(tau+1),c=>1).Mix,
+  (a=>pi,b=>tau).MixHash,       <b c>.MixHash, (a=>pi,b=>(tau+1),c=>1).MixHash,
 
   # coercions
   <a b>.Set,                    <a b b>.Bag,       <a a b b b>.Bag,
-  <a b>.SetHash,                <a b b>.BagHash,   <a a b b b>.Bag,
+  <a b>.Set,                    <a b b>.BagHash,   <a a b b b>.Bag,
+  <a b>.SetHash,                <a b b>.Bag,       <a a b b b>.BagHash,
+  <a b>.SetHash,                <a b b>.BagHash,   <a a b b b>.BagHash,
 
   <a b>.Set,                    <a b b>.Mix,       <a a b b b>.Mix,
-  <a b>.SetHash,                <a b b>.MixHash,   <a a b b b>.Mix,
+  <a b>.Set,                    <a b b>.MixHash,   <a a b b b>.Mix,
+  <a b>.SetHash,                <a b b>.Mix,       <a a b b b>.MixHash,
+  <a b>.SetHash,                <a b b>.MixHash,   <a a b b b>.MixHash,
 
   <a b>.Set,                    (b=>-1).Mix,       <a>.Mix,
-  <a b>.SetHash,                (b=>-1).MixHash,   <a>.Mix,
+  <a b>.Set,                    (b=>-1).MixHash,   <a>.Mix,
+  <a b>.SetHash,                (b=>-1).Mix,       <a>.MixHash,
+  <a b>.SetHash,                (b=>-1).MixHash,   <a>.MixHash,
 
   <a b>.Bag,                    <a b b>.Mix,       <a a b b b>.Mix,
-  <a b>.BagHash,                <a b b>.MixHash,   <a a b b b>.Mix,
+  <a b>.Bag,                    <a b b>.MixHash,   <a a b b b>.Mix,
+  <a b>.BagHash,                <a b b>.Mix,       <a a b b b>.MixHash,
+  <a b>.BagHash,                <a b b>.MixHash,   <a a b b b>.MixHash,
 
   <a b>.Bag,                    (b=>-1).Mix,       <a>.Mix,
-  <a b>.BagHash,                (b=>-1).MixHash,   <a>.Mix,
+  <a b>.Bag,                    (b=>-1).MixHash,   <a>.Mix,
+  <a b>.BagHash,                (b=>-1).Mix,       <a>.MixHash,
+  <a b>.BagHash,                (b=>-1).MixHash,   <a>.MixHash,
 
   <a b c>.Set,                  {:42a,:0b},        (:43a,:1b,:1c).Bag,
-  <a b c>.SetHash,              {:42a,:0b},        (:43a,:1b,:1c).Bag,
+  <a b c>.SetHash,              {:42a,:0b},        (:43a,:1b,:1c).BagHash,
   <a b b c>.Bag,                {:42a,:0b},        (:43a,:2b,:1c).Bag,
-  <a b b c>.BagHash,            {:42a,:0b},        (:43a,:2b,:1c).Bag,
+  <a b b c>.BagHash,            {:42a,:0b},        (:43a,:2b,:1c).BagHash,
   <a b b c>.Mix,                {:42a,:0b},        (:43a,:2b,:1c).Mix,
-  <a b b c>.MixHash,            {:42a,:0b},        (:43a,:2b,:1c).Mix,
+  <a b b c>.MixHash,            {:42a,:0b},        (:43a,:2b,:1c).MixHash,
 
   <a b c>.Set,                  <a b c d>,         <a a b b c c d>.Bag,
-  <a b c>.SetHash,              <a b c d>,         <a a b b c c d>.Bag,
+  <a b c>.SetHash,              <a b c d>,         <a a b b c c d>.BagHash,
   <a b b c>.Bag,                <a b c d>,         <a a b b b c c d>.Bag,
-  <a b b c>.BagHash,            <a b c d>,         <a a b b b c c d>.Bag,
+  <a b b c>.BagHash,            <a b c d>,         <a a b b b c c d>.BagHash,
   <a b b c>.Mix,                <a b c d>,         <a a b b b c c d>.Mix,
-  <a b b c>.MixHash,            <a b c d>,         <a a b b b c c d>.Mix,
+  <a b b c>.MixHash,            <a b c d>,         <a a b b b c c d>.MixHash,
 
   <a b c>,                      <c d e>,           <a b c c d e>.Bag,
   (:42a,:0b,:c),                (:4c,:42d,"e"),    (:42a,:5c,:42d,:1e).Bag,
@@ -151,7 +176,7 @@ my @quads =
   <a b c>,                                         <a b c>.Bag,
 ;
 
-plan 2 * (1 + 3 * @types + @pairs/2 + 2 * @triplets/3 + 6 * @quads/2);
+plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2);
 
 # addition
 for
@@ -164,8 +189,8 @@ for
     for @types -> \qh {
         is-deeply
           op(qh.new,qh.new,qh.new),
-          (qh.^name.starts-with("Set") ?? Bag !! ::(qh.^name.substr(0,3))).new,
-          "Sequence of empty {qh.^name} is the empty {qh.^name.substr(0,3)}";
+          (qh ~~ Set ?? Bag !! qh ~~ SetHash ?? BagHash !! qh).new,
+          "Sequence of empty {qh.^name} is the empty {qh.^name}";
         throws-like { op(qh.new,^Inf) }, X::Cannot::Lazy,
           "Cannot {qh.perl}.new $name lazy list";
         throws-like { op(qh.new(<a b c>),^Inf) }, X::Cannot::Lazy,
@@ -173,23 +198,20 @@ for
     }
 
     for @pairs -> $parameter, $result {
-#exit dd $parameter, $result unless
+exit dd $parameter, $result unless
         is-deeply op($parameter.item), $result,
           "infix:<$name>($parameter.gist())";
     }
 
     for @triplets -> $left, $right, $result {
-#exit dd $left, $right, $result unless
+exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
-#exit dd $right, $left, $result unless
-        is-deeply op($right,$left), $result,
-          "$right.gist() $name $left.gist()";
     }
 
     for @quads -> @params, $result {
         for @params.permutations -> @mixed {
-#exit dd @mixed, $result unless
+exit dd @mixed, $result unless
             is-deeply op(|@mixed), $result,
               "[$name] @mixed>>.gist()";
         }
