@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add("packages");
 use Test;
 use Test::Util;
 
-plan 11;
+plan 15;
 
 # RT #125938
 throws-like '2**10000000000', X::Numeric::Overflow,
@@ -44,5 +44,17 @@ is_run ｢start { sleep 2; say ‘pass’; exit }; EVAL ‘say 1.0000001 ** (10 
 
 throws-like 'say 1.0000001 ** (10 ** 90000)',
     X::Numeric::Overflow, "raising a Rat to a very large number throws";
+
+# https://github.com/rakudo/rakudo/commit/d1729da26a
+{
+    fails-like ｢<1/50000000000000> ** 5000000000000｣,  X::Numeric::Overflow,
+        'rat (small nu / large de) to large power';
+    fails-like ｢<1/50000000000000> ** -5000000000000｣, X::Numeric::Underflow,
+        'rat (small nu / large de) to large negative power';
+    fails-like ｢<50000000000000/1> ** 5000000000000｣,  X::Numeric::Overflow,
+        'rat (large nu / small de) to large power';
+    fails-like ｢<50000000000000/1> ** -5000000000000｣, X::Numeric::Underflow,
+        'rat (large nu / small de) to large negative power';
+}
 
 # vim: ft=perl6
