@@ -198,20 +198,20 @@ for
     }
 
     for @pairs -> $parameter, $result {
-exit dd $parameter, $result unless
+#exit dd $parameter, $result unless
         is-deeply op($parameter.item), $result,
           "infix:<$name>($parameter.gist())";
     }
 
     for @triplets -> $left, $right, $result {
-exit dd $left, $right, $result unless
+#exit dd $left, $right, $result unless
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
     }
 
     for @quads -> @params, $result {
         for @params.permutations -> @mixed {
-exit dd @mixed, $result unless
+#exit dd @mixed, $result unless
             is-deeply op(|@mixed), $result,
               "[$name] @mixed>>.gist()";
         }
