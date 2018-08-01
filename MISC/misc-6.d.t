@@ -7,7 +7,7 @@ use Test::Util;
 # They might be rearranged into other files in the future, but for now, keeping them in this
 # file avoids creating a ton of `-6.d.t` files for the sake of single tests.
 
-plan 3;
+plan 4;
 
 subtest ':sym<> colonpair on subroutine names is reserved' => {
     plan 6;
@@ -91,5 +91,17 @@ subtest 'native num defaults to 0e0' => {
     is-deeply ->   num $v?  { $v }(), 0e0, 'block param';
     my num @a; is-deeply @a[0], 0e0, 'native num array unset element';
 }
+
+is_run ｢
+    use v6.d.PREVIEW;
+    # override any possible deprecation silencers implementations may have
+    BEGIN %*ENV<RAKUDO_NO_DEPRECATIONS> = 0;
+    my $x = 42;     undefine $x;
+    my @y = 42;     undefine @y;
+    my %z = :42foo; undefine %z;
+    ($x || @y || %z) and die "failed";
+    print 'pass';
+｣, {:out<pass>, :err{.contains: 'deprecat'}, :0status},
+    'use of `undefine` issues deprecation warning in 6.d';
 
 # vim: expandtab shiftwidth=4 ft=perl6
