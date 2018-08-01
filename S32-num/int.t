@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 162;
+plan 163;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -287,4 +287,13 @@ subtest 'Int.new' => { # coverage; 2016-10-05
 }
 
 ok Int ~~ UInt, "accept undefined Int";
+
+# https://github.com/rakudo/rakudo/issues/2157
+subtest 'no funny business with Ints that are not representable in double' => {
+    plan 3;
+    is-deeply 9930972392403501+1, 9930972392403502;
+    is-deeply 9930972392403503+1, 9930972392403504;
+    is-deeply 9007199254740993+1, 9007199254740994;
+}
+
 # vim: ft=perl6
