@@ -8,12 +8,12 @@ constant HOST_PORT_IPV6 = '[::1]:5016';
 
 plan 2;
 
-split-host-port :uri(HOST_PORT_IPV4), :family(2);
+split-host-port :uri(HOST_PORT_IPV4), :family(PF_INET);
 
 #?rakudo skip 'Hangs on boxes without IPv6 support'
 #?DOES 1
 {
-    split-host-port :uri(HOST_PORT_IPV6), :family(3);
+    split-host-port :uri(HOST_PORT_IPV6), :family(PF_INET6);
 }
 
 done-testing;
@@ -53,8 +53,8 @@ sub split-host-port(:$uri, :$family) {
 
     $connection.print: "Don't hang up";
     is $connection.recv, "Don't hang up",
-        "{ $family == 2 ?? 'IPv4'
-            !! $family == 3 ?? 'IPv6'
+        "{ $family == PF_INET ?? 'IPv4'
+            !! $family == PF_INET6 ?? 'IPv6'
             !! die 'Invalid INET family value'} server responded";
     $connection.close;
 }
