@@ -3,13 +3,14 @@ use Test;
 
 # L<S32::Containers/Buf>
 
-plan 36;
+plan 37;
 
 ok 'ab'.encode('ASCII') ~~ blob8, '$str.encode returns a blob8';
 ok ('ab'.encode('ASCII') eqv blob8.new(97, 98)),  'encoding to ASCII';
 is 'ab'.encode('ASCII').elems, 2, 'right length of Buf';
 ok ('ö'.encode('UTF-8') eqv utf8.new(195, 182)), 'encoding to UTF-8';
 is 'ab'.encode('UTF-8').elems, 2, 'right length of Buf';
+is 'a\nb'.encode('utf8').elems, 4, 'right length of Buf';
 is 'ö'.encode('UTF-8')[0], 195, 'indexing a utf8 gives correct value (1)';
 is 'ö'.encode('UTF-8')[1], 182, 'indexing a utf8 gives correct value (1)';
 is '€‚ƒ„…†‡ˆ‰Š‹ŒŽ'.encode('windows-1252').values, (0x80,0x82..0x8c,0x8e), 'cp1252 encodes most C1 substitutes';
