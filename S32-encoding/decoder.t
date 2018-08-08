@@ -29,7 +29,6 @@ plan 2;
 
     my $temp-file := make-temp-file :$content;
     my $prog := $*DISTRO.is-win ?? 'type' !! 'cat';
-    #?rakudo skip 'SEGV R#2158'
     ok (run $prog, $temp-file, :enc<utf8-c8>, :out).out.slurp.chars,
         'no SEGV when using utf8-c8 in Proc';
 }
