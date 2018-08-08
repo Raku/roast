@@ -15,6 +15,10 @@ is "a\nb".encode('utf8').elems, 3, 'right length of Buf with \n';
 if $*DISTRO.is-win {
     is-deeply "a\nb".encode('utf8', :translate-nl), utf8.new(97,0x0d,0x0a,98), 'Translation of \n in Windows environment';
 } else {
+    # Note: this test assumes all OSes it will run on use U+000A as newlines.
+    # Should in the future an OS that uses different line endings be
+    # supported by the language, this test should be modified to look
+    # for that OS's native line endings in the string.
     is-deeply "a\nb".encode('utf8', :translate-nl), utf8.new(97,0x0a,98), 'Non-translation of \n outside Windows';
 }
 
