@@ -13,9 +13,9 @@ is 'ab'.encode('UTF-8').elems, 2, 'right length of Buf';
 is "a\nb".encode('utf8').elems, 3, 'right length of Buf with \n';
 
 if $*DISTRO.is-win {
-    ok "a\nb".encode('utf8', :translate-nl) eqv utf8.new(97,0x0d,0x0a,98), 'Translation of \n in Windows environment';
+    is-deeply "a\nb".encode('utf8', :translate-nl), utf8.new(97,0x0d,0x0a,98), 'Translation of \n in Windows environment';
 } else {
-    ok "a\nb".encode('utf8', :translate-nl) eqv utf8.new(97,0x0a,98), 'Non-translation of \n outside Windows';
+    is-deeply "a\nb".encode('utf8', :translate-nl), utf8.new(97,0x0a,98), 'Non-translation of \n outside Windows';
 }
 
 is 'ö'.encode('UTF-8')[0], 195, 'indexing a utf8 gives correct value (1)';
