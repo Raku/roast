@@ -5,7 +5,7 @@ use Test::Util;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 87;
+plan 88;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -306,5 +306,11 @@ doesn't-hang '{ say @_.gist; say "passed" }(1..Inf);', :out(/'passed'/),
 # RT #129175
 doesn't-hang ｢-> *@a { @a.is-lazy.say }(1…∞)｣, :out(/True/),
     'slurpy positional param does not hang when given infinite lists';
+
+# https://github.com/rakudo/rakudo/issues/2195
+-> *@ ($?), *%h {
+    # Note: bug is avoided if `%h` has anything in it, so leave it empty
+    -> *%z { is-deeply %z, {}, 'no crashes with slurpies' }(|%h)
+}();
 
 # vim: ft=perl6
