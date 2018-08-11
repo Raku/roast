@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either.
 
-plan 100;
+plan 101;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -403,5 +403,9 @@ is sub { 42.return }(), 42, "Sub doing 42.return works";
 # RT #122345
 is-deeply sub { sub foo($x = return 42) { 70 }; say foo }(), 42,
     'can return from parameter defaults';
+
+# https://github.com/rakudo/rakudo/issues/2201
+lives-ok { sub foo(--> Callable:D) is rw { my $x is default(Nil) = Nil; $x }; foo },
+    'Containerized Nil passes Callable:D constraint';
 
 # vim: ft=perl6
