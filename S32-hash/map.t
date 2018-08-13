@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 15;
+plan 16;
 
 {
     my %hash = :foo, :42bar;
@@ -69,6 +69,15 @@ subtest 'Map.gist shows only first 100 els' => {
       [%m.sort: *.key],
       'did we get the pairs get handled ok'
     ;
+}
+
+{
+    my class C {
+        has Int @.a;
+        has Int @.b;
+    }
+    lives-ok { C.new(|(a => (1, 2, 3), b => (4, 5, 6)).Map) },
+        'Map does not introduce bogus Scalar containers';
 }
 
 # vim: ft=perl6
