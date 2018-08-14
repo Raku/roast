@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 146;
+plan 166;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -280,6 +280,18 @@ nok Buf eqv Blob, 'Buf eqv Blob lives, works';
             is $c.elems, 4, "did we reallocate the $t to 4 elements";
             is-deeply $c.List, (1, 2, 3, 1), "was the $t changed correctly";
         }
+
+        my $d = $T.new(^10);
+        is-deeply $d.subbuf(3..7), $T.new(3,4,5,6,7), 'subbuf(3..7)';
+        is-deeply $d.subbuf(5), $T.new(5,6,7,8,9), 'subbuf(5)';
+        is-deeply $d.subbuf(*-5), $T.new(5,6,7,8,9), 'subbuf(5)';
+        is-deeply $d.subbuf(5,3), $T.new(5,6,7), 'subbuf(5,3)';
+        is-deeply $d.subbuf(5,*-3), $T.new(5,6,7), 'subbuf(5,*-3)';
+        is-deeply $d.subbuf(*-5,3), $T.new(5,6,7), 'subbuf(*-5,3)';
+        is-deeply $d.subbuf(*-5,*-3), $T.new(5,6,7), 'subbuf(*-5,*-3)';
+        is-deeply $d.subbuf(5,*), $T.new(5,6,7,8,9), 'subbuf(5,*)';
+        is-deeply $d.subbuf(5,Inf), $T.new(5,6,7,8,9), 'subbuf(5,Inf)';
+        is-deeply $d.subbuf(5,3.3), $T.new(5,6,7), 'subbuf(5,3.3)';
     }
 }
 
