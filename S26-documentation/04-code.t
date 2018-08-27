@@ -136,7 +136,7 @@ isa-ok $r.contents[0], Pod::Block::Code;
 is $r.contents[0].contents, 'this is code';
 
 isa-ok $r.contents[1], Pod::Block::Named;
-is $r.contents[1].name, 'POdcast';
+is $r.contents[1].name, 'Podcast';
 is $r.contents[1].contents[0].contents, 'this is not';
 
 isa-ok $r.contents[2], Pod::Block::Para;
@@ -147,7 +147,7 @@ is $r.contents[3].name, 'Itemization';
 is $r.contents[3].contents[0].contents, 'this is not';
 
 isa-ok $r.contents[4], Pod::Block::Named;
-is $r.contents[4].name, 'QUitem';
+is $r.contents[4].name, 'Quitem';
 is $r.contents[4].contents[0].contents, 'and this is not';
 
 isa-ok $r.contents[5].contents[0], Pod::Block::Code;
