@@ -56,7 +56,7 @@ One, delimited block
 =end One
 =for Two
 Two, paragraph block
-=for THree
+=for Three
 Three, still a parablock
 
 =begin Four
