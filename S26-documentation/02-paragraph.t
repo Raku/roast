@@ -5,22 +5,22 @@ use Test::Util;
 plan 28;
 my $r;
 
-=for foo
+=for Foo
 
 $r = $=pod[0];
 isa-ok $r, Pod::Block, 'returns a Pod6 Block';
 isa-ok $r, Pod::Block::Named, 'returns a named Block';
-is $r.name, 'foo', 'name is ok';
+is $r.name, 'Foo', 'name is ok';
 is $r.contents, [], 'no contents, all right';
 
-=for foo
+=for Foo
 some text
 
 $r = $=pod[1];
 isa-ok $r.contents[0], Pod::Block::Para;
 is $r.contents[0].contents, "some text", 'the contents are all right';
 
-=for foo
+=for Foo
 some
 spaced   text
 
@@ -29,21 +29,21 @@ is $r.contents[0].contents,
    "some spaced text", 'additional whitespace removed  from the contents';
 =begin pod
 
-=for got
-Inside got
+=for Got
+Inside Got
 
-    =for bidden
-    Inside bidden
+    =for Bidden
+    Inside Bidden
 
 Outside blocks
 =end pod
 
 $r = $=pod[3];
 isa-ok $r.contents[0], Pod::Block;
-is $r.contents[0].contents[0].contents, "Inside got",
+is $r.contents[0].contents[0].contents, "Inside Got",
    'paragraph block contents ok, 1/2';
 isa-ok $r.contents[1], Pod::Block;
-is $r.contents[1].contents[0].contents, "Inside bidden",
+is $r.contents[1].contents[0].contents, "Inside Bidden",
    'paragraph block contents ok, 1/2';
 isa-ok $r.contents[2], Pod::Block::Para;
 is $r.contents[2].contents, "Outside blocks",
