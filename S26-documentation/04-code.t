@@ -112,18 +112,18 @@ is $r.contents[2].contents,
 =begin pod
     this is code
 
-    =for podcast
+    =for Podcast
         this is not
 
     this is not code either
 
-    =begin itemization
+    =begin Itemization
         this is not
-    =end itemization
+    =end Itemization
 
-    =begin quitem
+    =begin Quitem
         and this is not
-    =end quitem
+    =end Quitem
 
     =begin item
         and this is!
