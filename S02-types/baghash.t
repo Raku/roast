@@ -585,7 +585,7 @@ subtest '.hash does not cause keys to be stringified' => {
 
 { # coverage; 2016-09-23
     my $bh = BagHash.new: <a a b>;
-    cmp-ok $bh.BagHash, '===', $bh, '.BagHash is identity';
+    is-deeply $bh.BagHash, $bh, '.BagHash returns equivalent BagHash';
     isa-ok $bh.Mix, Mix, '.Mix returns a Mix';
     is-deeply $bh.Mix, Mix.new(<a a b>), '.Mix values are correct';
 }

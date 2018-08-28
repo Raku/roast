@@ -50,8 +50,8 @@ plan 201;
 # Emoji, Emoji_Modifier, Emoji_All, Emoji_Presentation
 
 
-is uniprop(""), Nil, "uniprop an empty string yields Nil";
-is "".uniprop, Nil, "''.uniprop yields Nil";
+is-deeply uniprop(""), Nil, "uniprop an empty string yields Nil";
+is-deeply "".uniprop, Nil, "''.uniprop yields Nil";
 throws-like "uniprop Str", X::Multi::NoMatch, 'cannot call uniprop with a Str';
 throws-like "Str.uniprop", X::Multi::NoMatch, 'cannot call uniprop with a Str';
 throws-like "uniprop Int", X::Multi::NoMatch, 'cannot call uniprop with a Int';

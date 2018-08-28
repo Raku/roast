@@ -269,16 +269,13 @@ plan 84;
 # RT #126136
 {
     {
-        my @a of Int;
-        my @b;
-        is @b.WHAT.perl, 'Array',
+        my @a of Int; my @b;
+        cmp-ok @a.WHAT, &[!=:=], @b.WHAT,
             'using `of` does not affect arrays defined later';
     }
-
     {
-        my @a of Int;
-        my @b of Str;
-        is @b.WHAT.perl, 'Array[Str]',
+        my @a of Int; my @b of Str;
+        cmp-ok @a.WHAT, &[!=:=], @b.WHAT,
             'using `of` does not affect arrays with `of` defined later';
     }
 }

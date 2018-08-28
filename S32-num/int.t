@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 162;
+plan 163;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -133,36 +133,38 @@ is (-32768).msb, 15,  "(-32768).msb is 15";
 
 # Test issue fixed by https://github.com/rakudo/rakudo/commit/84b7ebdf42
 subtest 'smartmatching :U numeric against :D numeric does not throw' => {
-    plan 15;
-    for 42, τ, .5 -> $what {
+    plan 60;
+    for -42, 42, τ, .5, <1+3i>,
+        <-42>, <42>, <1e0>, <1/3>, <-1-3i > -> $what {
         is (Numeric ~~ $what), False, "Numeric:U ~~ $what ($what.^name())";
         is (Int     ~~ $what), False, "Int:U     ~~ $what ($what.^name())";
         is (UInt    ~~ $what), False, "UInt:U    ~~ $what ($what.^name())";
         is (Num     ~~ $what), False, "Num:U     ~~ $what ($what.^name())";
         is (Rat     ~~ $what), False, "Rat:U     ~~ $what ($what.^name())";
+        is (Complex ~~ $what), False, "Complex:U ~~ $what ($what.^name())";
     }
 }
 
 { # coverage; 2016-10-05
     my UInt $u;
-    is $u.defined, Bool::False, 'undefined UInt is undefined';
+    is-deeply $u.defined, Bool::False, 'undefined UInt is undefined';
     cmp-ok $u, '~~', UInt, 'UInt var smartmatches True against UInt';
     is $u.HOW.^name, 'Perl6::Metamodel::SubsetHOW', 'UInt is a subset';
     throws-like { UInt.new }, Exception,
         'attempting to instantiate UInt throws';
 
-    is ($u = 42), 42, 'Can store a positive Int in UInt';
-    is ($u = 0),  0,  'Can store a zero in UInt';
-    throws-like { $u = -42 }, X::TypeCheck::Assignment,
+    is-deeply ($u = 42), 42, 'Can store a positive Int in UInt';
+    is-deeply ($u = 0),  0,  'Can store a zero in UInt';
+    throws-like ｢my UInt $z = -42｣, X::TypeCheck::Assignment,
         'UInt rejects negative numbers';
-    throws-like { $u = "foo" }, X::TypeCheck::Assignment,
+    throws-like ｢my UInt $y = "foo"｣, X::TypeCheck::Assignment,
         'UInt rejects other types';
 
-    is ($u = Nil), UInt,  'Can assign Nil to UInt';
+    is-deeply ($u = Nil), UInt,  'Can assign Nil to UInt';
     my $u2 is default(72);
-    is $u2, 72, 'is default() trait works on brand new UInt';
-    is ($u2 = 1337), 1337, 'is default()ed UInt can take values';
-    is ($u2 = Nil),  72,
+    is-deeply $u2, 72, 'is default() trait works on brand new UInt';
+    is-deeply ($u2 = 1337), 1337, 'is default()ed UInt can take values';
+    is-deeply ($u2 = Nil),  72,
         'Nil assigned to is default()ed UInt gives default values';
 }
 
@@ -285,4 +287,19 @@ subtest 'Int.new' => { # coverage; 2016-10-05
 }
 
 ok Int ~~ UInt, "accept undefined Int";
+
+# https://github.com/rakudo/rakudo/issues/2157
+subtest 'no funny business with Ints that are not representable in double' => {
+    plan 3*4;
+    is-deeply $_+1, 9930972392403502
+        for 9930972392403501, 0x23482ab1b9322d, 0o432202526156231055,
+            0b100011010010000010101010110001101110010011001000101101;
+    is-deeply $_+1, 9930972392403504
+        for 9930972392403503, 0x23482ab1b9322f, 0o432202526156231057,
+            0b100011010010000010101010110001101110010011001000101111;
+    is-deeply $_+1, 9007199254740994
+        for 9007199254740993, 0x20000000000001, 0o400000000000000001,
+          0b100000000000000000000000000000000000000000000000000001;
+}
+
 # vim: ft=perl6

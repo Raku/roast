@@ -91,8 +91,11 @@ sub gen_hash {
 
     is %h.elems, 26, "should not have changed hash";
 
-    my %multi-dim := { 1 => { 2 => { 3 => 42 } } };
-    isa-ok %multi-dim{1;2;3}:exists, Bool, "Bool test for literal multi dim key;"
+    {
+        my %multi-dim := { 1 => { 2 => { 3 => 42 } } };
+        is-deeply %multi-dim{1;2;3}:exists, True,
+            'Bool test for literal multi dim key';
+    }
 } #46
 
 # RT #122497

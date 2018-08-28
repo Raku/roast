@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 147;
+plan 149;
 
 =begin pod
 
@@ -505,10 +505,14 @@ throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
 subtest 'Junction.new' => { # coverage; 2016-10-11
     plan 4;
 
-    is-deeply Junction.new([^3], :type<all> ).perl, ^3  .all.perl, 'all';
-    is-deeply Junction.new([^3], :type<one> ).perl, ^3  .one.perl, 'one';
-    is-deeply Junction.new([^3], :type<any> ).perl, ^3  .any.perl, 'any';
-    is-deeply Junction.new([^3], :type<none>).perl, ^3 .none.perl, 'none';
+    is-deeply-junction Junction.new([^3], :type<all> ),
+        ^3 .all, 'all';
+    is-deeply-junction Junction.new([^3], :type<one> ),
+        ^3 .one, 'one';
+    is-deeply-junction Junction.new([^3], :type<any> ),
+        ^3 .any, 'any';
+    is-deeply-junction Junction.new([^3], :type<none>),
+        ^3 .none, 'none';
 }
 
 # https://github.com/rakudo/rakudo/commit/aa3684218b1f668b6a6e41da
@@ -538,6 +542,16 @@ subtest 'Junction .Str, .gist, and .perl' => {
         my $j := <foo bar ber>."$t"();
         is-deeply-junction $j.perl.EVAL, $j, "Junction.perl on $t junction roundtrips";
     }
+}
+
+# GH #2042
+{
+    is (all("a","b","c") ~ any("d","e")).perl,
+      'all(any("ad", "ae"), any("bd", "be"), any("cd", "ce"))',
+      'did all() on left concate with any() on right ok';
+    is (any("a","b","c") ~ all("d","e")).perl,
+      'all(any("ad", "ae"), any("bd", "be"), any("cd", "ce"))',
+      'did any() on left concate with all() on right ok';
 }
 
 # vim: ft=perl6

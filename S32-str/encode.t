@@ -3,13 +3,25 @@ use Test;
 
 # L<S32::Containers/Buf>
 
-plan 36;
+plan 38;
 
 ok 'ab'.encode('ASCII') ~~ blob8, '$str.encode returns a blob8';
 ok ('ab'.encode('ASCII') eqv blob8.new(97, 98)),  'encoding to ASCII';
 is 'ab'.encode('ASCII').elems, 2, 'right length of Buf';
 ok ('ö'.encode('UTF-8') eqv utf8.new(195, 182)), 'encoding to UTF-8';
 is 'ab'.encode('UTF-8').elems, 2, 'right length of Buf';
+is "a\nb".encode('utf8').elems, 3, 'right length of Buf with \n';
+
+if $*DISTRO.is-win {
+    is-deeply "a\nb".encode('utf8', :translate-nl), utf8.new(97,0x0d,0x0a,98), 'Translation of \n in Windows environment';
+} else {
+    # Note: this test assumes all OSes it will run on use U+000A as newlines.
+    # Should in the future an OS that uses different line endings be
+    # supported by the language, this test should be modified to look
+    # for that OS's native line endings in the string.
+    is-deeply "a\nb".encode('utf8', :translate-nl), utf8.new(97,0x0a,98), 'Non-translation of \n outside Windows';
+}
+
 is 'ö'.encode('UTF-8')[0], 195, 'indexing a utf8 gives correct value (1)';
 is 'ö'.encode('UTF-8')[1], 182, 'indexing a utf8 gives correct value (1)';
 is '€‚ƒ„…†‡ˆ‰Š‹ŒŽ'.encode('windows-1252').values, (0x80,0x82..0x8c,0x8e), 'cp1252 encodes most C1 substitutes';

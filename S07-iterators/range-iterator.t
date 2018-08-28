@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 108;
+plan 103;
 
 {
     my $r = (1..5).iterator;
@@ -13,7 +13,6 @@ plan 108;
     is $r.pull-one, 4, '$r.pull-one == 4';
     is $r.pull-one, 5, '$r.pull-one == 5';
     is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
 }
 
 {
@@ -27,7 +26,6 @@ plan 108;
     is $r.pull-one, 1.5, '$r.pull-one == 1.5';
     is $r.pull-one, 2.5, '$r.pull-one == 2.5';
     is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
 }
 
 {
@@ -41,7 +39,6 @@ plan 108;
     is $r.pull-one, 1.5, '$r.pull-one == 1.5';
     is $r.pull-one, 2.5, '$r.pull-one == 2.5';
     is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
 }
 
 {
@@ -54,7 +51,6 @@ plan 108;
     is $r.pull-one, 1.5, '$r.pull-one == 1.5';
     is $r.pull-one, 2.5, '$r.pull-one == 2.5';
     is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
 }
 
 {
@@ -134,7 +130,6 @@ plan 108;
     is $r.pull-one, 'f', '$r.pull-one == f';
     is $r.pull-one, 'g', '$r.pull-one == g';
     is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is done';
-    is $r.pull-one.WHICH, IterationEnd.WHICH, '$r.pull-one is still done';
 }
 
 {
@@ -178,13 +173,12 @@ subtest 'Iterator.skip-one' => {
 }
 
 subtest 'Iterator.skip-at-least' => {
-    plan 4;
+    plan 3;
 
     my $r = (1..5).iterator;
     ok        $r.skip-at-least(3),   'skipping 3 values succeeds';
     is-deeply $r.pull-one, 4,        'next value after skip is correct';
     nok       $r.skip-at-least(10),  'skipping more values than we have is falsy';
-    ok $r.pull-one =:= IterationEnd, 'no more values to pull';
 }
 
 subtest 'Iterator.skip-at-least-pull-one' => {

@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 192;
+plan 191;
 
 # L<S05/Substitution/>
 
@@ -613,9 +613,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     throws-like { ($ = "").subst-mutate: /\w/, "", :x(my class SomeInvalidXParam {}.new) },
         X::Str::Match::x, 'giving .subst-mutate invalid args throws';
 }
-
-# https://irclog.perlgeek.de/perl6-dev/2016-11-26#i_13630780
-throws-like { "".subst }, X::Multi::NoMatch, '.subst with no arguments throws';
 
 # RT #130289
 is-deeply (S:g/FAIL// with 'foo'), 'foo',

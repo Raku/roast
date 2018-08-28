@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 851;
+plan 852;
 
 # Basic test functions specific to rational numbers.
 
@@ -339,7 +339,11 @@ subtest '0.9999999999999999999999 to string conversions' => {
     plan 4;
 
     constant r = 0.9999999999999999999999;
-    is-deeply r.Str, '1', '.Str rounds off correctly';
+    # for this particular test, we simply check we don't have any weird
+    # stuff like '0.A', but at least here we don't spec whether this Rat
+    # would be output exactly or rounded off
+    cmp-ok r.Str, '~~', '1'|'0.9999999999999999999999' ,
+        'no weirdness in .Str';
     is-deeply r.perl, '<9999999999999999999999/10000000000000000000000>',
         '.perl gives accurate result';
     is-deeply r.perl.EVAL, r, '.perl.EVAL roundtrips';
@@ -613,4 +617,24 @@ subtest 'Rational.WHICH' => {
     is-deeply (2.FatRat/2, 1.FatRat/2+1/2).unique, (1.0.FatRat,),
         '.unique filters out practically identical FatRats';
 }
+
+subtest 'Rational keeps nu/de in proper types' => {
+    plan 4;
+
+    my class Foo is Int {};
+    class Bar does Rational[Foo, Foo] {};
+    with Bar.new: Foo.new(10), Foo.new: 20 {
+        # nu/de should get normalized
+        is-deeply .numerator,   Foo.new(1), 'numerator';
+        is-deeply .denominator, Foo.new(2), 'denominator';
+    }
+
+    # 6.d TODO XXX:  are we normalizing ZDRs or not normalizing them?
+    with Bar.new: Foo.new(42), Foo.new: 0 {
+        # numerator is meant to be normalized, so it'll end up as 1
+        is-deeply .numerator,   Foo.new(42), 'numerator (zero-denom rational)';
+        is-deeply .denominator, Foo.new(0), 'denominator (zero-denom rational)';
+    }
+}
+
 # vim: ft=perl6

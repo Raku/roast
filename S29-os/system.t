@@ -12,12 +12,13 @@ plan 39;
 
 my $res;
 
-$res = run($*EXECUTABLE,'-e', '');
+$res = run($*EXECUTABLE.absolute,'-e', '');
 ok($res,"run() to an existing program does not die (and returns something true)");
 isa-ok($res, Proc, 'run() returns a Proc');
 is($res.exitcode, 0, 'run() exit code when successful is zero');
 is($res.signal, 0, 'run() signal after completion is zero');
-is-deeply($res.command, [$*EXECUTABLE, '-e', ''], 'Proc returned from .run has correct command');
+is-deeply($res.command, ($*EXECUTABLE.absolute, '-e', ''),
+    'Proc returned from .run has correct command');
 
 $res = shell("$*EXECUTABLE -e \"\"");
 ok($res, "shell() to an existing program does not die (and returns something true)");
@@ -162,10 +163,10 @@ subtest "run and shell's :env" => {
 subtest '.out/.err proc pipes on failed command' => {
     plan 4;
 
-    throws-like { run(:out, "meooooooows").out.close }, X::Proc::Unsuccessful,
-        '.out.close Proc explodes when sunk';
-    throws-like { run(:err, "meooooooows").err.close }, X::Proc::Unsuccessful,
-        '.err.close Proc explodes when sunk';
+    throws-like { run(:out, "meooooooows").out.close; Nil },
+        X::Proc::Unsuccessful, '.out.close Proc explodes when sunk';
+    throws-like { run(:err, "meooooooows").err.close; Nil },
+        X::Proc::Unsuccessful, '.err.close Proc explodes when sunk';
     is-deeply run(:out, "meooooooows").out.slurp(:close), '',
         '.out.slurp is empty';
     is-deeply run(:err, "meooooooows").err.slurp(:close), '',

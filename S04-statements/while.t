@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 31;
 
 {
     my $i = 0;
@@ -164,13 +164,6 @@ lives-ok { EVAL 'while 0 { my $_ }' }, 'Can declare $_ in a loop body';
     is-deeply { (loop (my Int $i = 0; $i < 10; $i++) { +$i }) }(),
         (0, 1, 2, 3, 4, 5, 6, 7, 8, 9).Seq,
         'can return Ints from loop at end of immediate block';
-}
-
-# RT #128830
-{
-    throws-like 'while (0){}', X::Syntax::Missing,
-        message => /'whitespace' .* 'before curlies' .* 'hash subscript'/,
-    'lack of whitespace in while (0){} suggests misparse as hash subscript';
 }
 
 # vim: ft=perl6

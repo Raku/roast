@@ -136,8 +136,8 @@ is $(;).elems, 0, '$(;) parses, and is empty';
 
 # RT#129044
 {
-    is (a => 2).first(/a/), (a => 2), "first with a Regexp object";
-    is (a => 2).grep(/a/), (a => 2), "grep with a Regexp object";
+    is-deeply (a => 2).first(/a/), (a => 2), "first with a Regexp object";
+    is-deeply (a => 2).grep(/a/), ((a => 2),), "grep with a Regexp object";
 }
 
 subtest '.sum can handle Junctions' => {

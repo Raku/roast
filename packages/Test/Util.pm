@@ -8,13 +8,17 @@ sub is-deeply-junction (
     Junction $got, Junction $expected, Str:D $desc
 ) is export {
     sub junction-guts (Junction $j) {
-        my $st = nqp::getattr(nqp::decont($j), Junction, '$!storage');
-        do for ^nqp::elems(nqp::decont($st)) {
-            given nqp::atpos(nqp::decont($st), $_) {
-                when Junction { junction-guts($_).Slip }
-                $_
-            }
+        $j.gist ~~ /^ $<type>=(\w+)/;
+        my $type := ~$<type>;
+        my @guts;
+        my $l = Lock.new;
+        $j.THREAD: { $l.protect: {
+              when Junction { @guts.push: junction-guts $_ }
+              @guts.push: $_
+          }
         }
+        @guts .= sort;
+        [$type, @guts]
     }
 
     is-deeply junction-guts($got), junction-guts($expected), $desc;
@@ -210,7 +214,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-multi doesn't-hang (Str $args, $desc, :$in, :$wait = 5, :$out, :$err)
+multi doesn't-hang (Str $args, $desc, :$in, :$wait = 15, :$out, :$err)
 is export {
     doesn't-hang \($*EXECUTABLE.absolute, '-e', $args), $desc,
         :$in, :$wait, :$out, :$err;
@@ -221,7 +225,7 @@ is export {
 my $VM-time-scale-multiplier = $*VM.name eq 'jvm' ?? 20/3 !! 1;
 multi doesn't-hang (
     Capture $args, $desc = 'code does not hang',
-    :$in, :$wait = 5, :$out, :$err,
+    :$in, :$wait = 15, :$out, :$err,
 ) is export {
     my $prog = Proc::Async.new: |$args;
     my ($stdout, $stderr) = '', '';
@@ -557,9 +561,10 @@ All other errors should be trapped and reported via the 'test_died' item.
 =head2 is-deeply-junction( Junction $got, Junction $expected, Str:D $desc)
 
 Guts two junctions and uses C<is-deeply> test on those guts. Use to
-compare two Junctions for equivalence. I<Note:> this test is rather strict
-and will fail even if the two Junctions are functionally equivalent, for
-example 1|2 and 2|1 are considered to be different Junctions.
+compare two Junctions for equivalence. The test relies on given Junction to
+be gistable, and their guts to be sortable and usable in C<is-deeply>, thus,
+for example, Junctions containing lazy lists cannot be used with this
+routine.
 
 =head2 warns-like($code-or-str-to-eval, $expected, $desc)
 

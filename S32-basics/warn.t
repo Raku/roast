@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 
-plan 8;
+plan 10;
 
 use Test::Util;
 
@@ -77,5 +77,15 @@ is_run ｢
 ｣, {:out(''), :0status, :err{
     .contains: <foo-1  foo-2  foo-3  foo-4  foo-5  foo-6>.all
 }}, 'no crashes or hangs with Junctions in warn()';
+
+# R#1833
+{
+    my int $warnings;
+    {
+        ok List ~~ List.new, 'did the smartmatch work out';
+        CONTROL { ++$warnings; .resume }
+    }
+    is $warnings, 0, 'should not have warned';
+}
 
 # vim: ft=perl6

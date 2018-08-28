@@ -190,6 +190,6 @@ is ($(1, 2) Z~ <a b c>), ('1 2a',),
 is (<a b c> Z~ $(1, 2)), ('a1 2',),
     'Z meta-op respects itemization of arguments (2)';
 
-is-deeply infix:<Z>(), ().Seq, 'artity-0 Z returns a Seq';
+cmp-ok infix:<Z>(), 'eqv', ().Seq, 'artity-0 Z returns a Seq';
 
 # vim: ft=perl6

@@ -83,12 +83,14 @@ plan 44;
 { # coverage; 2016-10-04
     my class Foo {};
     my $o = Foo.new;
-    my %h{Any} = :42a, :72b, Foo, $o;
-    is-deeply set(%h.antipairs), set(42 => "a", 72 => "b", Pair.new: $o, Foo),
-        '.antipairs on typed Hash';
+    my %h{Any} = :42a, :72b, :c{:200bers, :100bars}, Foo, $o;
+    is-deeply %h.antipairs.sort, (42 => "a", 72 => "b", (Foo.new) => Foo,
+        ({:bars(100), :bers(200)}) => "c").Seq.sort,
+    '.antipairs on typed Hash';
 
-    is-deeply set(%h.invert), set(42 => "a", 72 => "b", Pair.new: $o, Foo),
-        '.invert on typed Hash';
+    is-deeply %h.invert.sort, (42 => "a", 72 => "b",
+        (:bers(200)) => "c", (:bars(100)) => "c", (Foo.new) => Foo).Seq.sort,
+    '.invert on typed Hash';
 }
 
 # RT#130870

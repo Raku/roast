@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 25;
+plan 24;
 
 =begin description
 
@@ -103,12 +103,6 @@ lives-ok { boom(42) }, "can modify a copy";
     ok "$!" ~~ /trait/,    'error message mentions trait';
     ok "$!" ~~ /nonesuch/, 'error message mentions the name of the trait';
 }
-
-throws-like
-    { sub a($b) { $b = 1 }; a(2); CATCH {} },
-    X::AdHoc,
-    message => /'($b)'/,
-    'error message when assigning to a readonly variable includes the variable name';
 
 # RT #132710
 is_run ｢

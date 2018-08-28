@@ -49,4 +49,4 @@ dies-ok { dependent(4, Array.new(:shape(3))) }, 'can use earlier parameters in s
 dies-ok { dependent(4, Array.new()) }, 'can use earlier parameters in shape specification (4)';
 dies-ok { dependent(4, Array.new(:shape(4,3))) }, 'can use earlier parameters in shape specification (5)';
 
-is (my @a[Bool]).shape.perl, "(2,)", "can have an Enum as a shape definition";
+is-deeply (my @a[Bool]).shape, (2,), "can have an Enum as a shape definition";

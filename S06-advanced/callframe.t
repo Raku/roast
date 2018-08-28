@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 21;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -79,5 +79,24 @@ lives-ok
         }
     },
     "Exploring call frames until no code object does not crash";
+
+# R#1781
+{
+    my $seen;
+    multi sub a() { ++$seen if callframe(1).my.EXISTS-KEY(<$seen>) };
+
+    # call a 300 times
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    is $seen, 300, 'did we get the right callframe each time?';
+}
 
 # vim: ft=perl6

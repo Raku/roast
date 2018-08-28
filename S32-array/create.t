@@ -22,8 +22,8 @@ is(+$array_obj, 3, 'Finding the length functions properly.');
 }
 
 { # coverage; 2016-09-21
-    is-deeply circumfix:<[ ]>(), $[], 'circumfix:<[ ]>() creates Array';
-    is-deeply [],                $[], '[ ] creates Array';
+    is-deeply circumfix:<[ ]>(), [], 'circumfix:<[ ]>() creates Array';
+    is-deeply [],                [], '[ ] creates Array';
 }
 
 # RT #130583

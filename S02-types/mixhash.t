@@ -538,7 +538,7 @@ subtest 'MixHash autovivification of non-existent keys' => {
 { # https://irclog.perlgeek.de/perl6-dev/2016-11-07#i_13528982
     my $a = (:a(-10), :b(-30)                 ).MixHash;
     my $b = (         :b(-20), :c(-10), :d(10)).MixHash;
-    my $r = (:a(-10), :b(-20), :c(-10), :d(10)).Mix;
+    my $r = (:a(-10), :b(-20), :c(-10), :d(10)).MixHash;
     is-deeply $a  ∪  $b, $r, 'negative weights remain with  ∪  operator';
     is-deeply $a (|) $b, $r, 'negative weights remain with (|) operator';
 }

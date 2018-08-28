@@ -93,7 +93,7 @@ plan 57;
 {
   ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (-)";
   ok  ({a => 1} eqv {a => 1}), "eqv on anonymous hash references (+)";
-  ok ({a => 2, b => 1} eqv { b => 1, a => 2}), 'order really does not matter'; 
+  ok ({a => 2, b => 1} eqv { b => 1, a => 2}), 'order really does not matter';
   ok !({a => 1} eqv {a => 1, b => 2}), 'hashes: different number of pairs';
 }
 
@@ -158,17 +158,18 @@ subtest 'Setty eqv Setty' => {
     plan 8;
 
     my $a = ["arr"];
-    ok Set.new(1, "a", Cool, $a) eqv Set.new(1, "a", Cool, $a),
+    is-deeply Set.new(1, "a", Cool, $a) eqv Set.new(1, "a", Cool, $a), True,
         'identical Sets eqv each other';
-    ok SetHash.new(1, "a", Cool, $a) eqv SetHash.new(1, "a", Cool, $a),
-        'identical SetHashes eqv each other';
-    nok Set.new(42) eqv SetHash.new(42), 'Set does not eqv SetHash';
+    is-deeply SetHash.new(1, "a", Cool, $a) eqv SetHash.new(1, "a", Cool, $a),
+        True, 'identical SetHashes eqv each other';
+    is-deeply Set.new(42) eqv SetHash.new(42), False,
+      'Set does not eqv SetHash';
 
-    nok set(<42>) eqv set( 42 ), 'IntStr does not eqv Int';
-    nok set(<42>) eqv set('42'), 'IntStr does not eqv Str';
-    nok set( 42 ) eqv set(<42>), 'Int    does not eqv IntStr';
-    nok set('42') eqv set(<42>), 'Str    does not eqv IntStr';
-    ok  set(<42>) eqv set(<42>), 'IntStr does     eqv IntStr';
+    is-deeply set(<42>) eqv set( 42 ), False, 'IntStr does not eqv Int';
+    is-deeply set(<42>) eqv set('42'), False, 'IntStr does not eqv Str';
+    is-deeply set( 42 ) eqv set(<42>), False, 'Int    does not eqv IntStr';
+    is-deeply set('42') eqv set(<42>), False, 'Str    does not eqv IntStr';
+    is-deeply set(<42>) eqv set(<42>), True, 'IntStr does     eqv IntStr';
 }
 
 subtest 'Seq eqv List' => {

@@ -102,7 +102,6 @@ my @normal = <
   Pod::Item
   Pod::Raw
   PseudoStash
-  Rakudo::Internals
   Range
   Rat
   RatStr
@@ -413,7 +412,11 @@ my @moar = <
   X::Proc::Async::TapBeforeSpawn
 >;
 
-plan 7 + 4 * ( @normal + @exception + @concurrent + @moar );
+my @definite = ( # instances of objects
+    Blob.new(<1 2 3>),
+);
+
+plan 7 + 4 * ( @normal + @exception + @concurrent + @moar ) + 2*@definite;
 
 my %seen-which;
 
@@ -446,6 +449,14 @@ for @concurrent -> $class {
     is ::($class).gist,      "($short)", "$class.gist returns self";
 }
 
+for @definite -> $obj {
+    my $name  := $obj.^name;
+    my $short := $name.split('::').tail;
+    nok %seen-which{$obj.WHICH}++, "checking $name\'s instance's .WHICH";
+    isa-ok $obj.WHICH, ObjAt,
+        "$name\'s instance's .WHICH returns an ObjAt";
+}
+
 for @moar -> $class {
     my $short = $class.split('::')[* - 1];
     nok %seen-which{::($class).WHICH}++, "checking $class.WHICH";
@@ -459,8 +470,15 @@ for @moar -> $class {
 subtest 'ObjAt.perl gives distinct results for different objects' => {
     my @obj = "rt", 128944, <128944>, rx/^/, NaN, ∞, τ+i, .5, class {}, 'a'|42,
                 sub {}, -> {}, method {}, *, *+5, start {}, supply {};
-    plan +@obj;
-    is .WHICH.perl, qq|{.WHICH.^name}.new("{.WHICH}")|, "object: {.perl}" for @obj;
+    plan 1+@obj;
+    my %seen is SetHash;
+    for @obj {
+        %seen{.WHICH.perl}++;
+        is-deeply .WHICH.perl.EVAL, .WHICH,
+            "can .perl.EVAL roundtrip .WHICH for {.perl}";
+    }
+    cmp-ok %seen, '==', @obj,
+        'number of unique .WHICH.perls matches number of objects we tested';
 }
 
 # RT #130271

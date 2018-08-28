@@ -5,23 +5,12 @@ use Test::Util;
 
 plan 5;
 
-sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
-
-my $tmpfile = "eof-test-" ~ nonce();
-END unlink $tmpfile;
-
 {
-  my $fh = open($tmpfile, :w) or die qq/Failed to open "$tmpfile": $!/;
-  $fh.print: "EOF_TESTING\n\n";
-  close $fh or die qq/Failed to close "$tmpfile": $!/;
-}
-
-{
-  my $fh = open $tmpfile or die qq/Failed to open "$tmpfile": $!/;
-  $fh.lines;
-
-  ok $fh.eof, 'Regular file EOF was reached';
-  close $fh or die qq/Failed to close "$tmpfile": $!/;
+    my $tmpfile := make-temp-file :content("EOF_TESTING\n\n");
+    my $fh = open $tmpfile;
+    $fh.lines;
+    is-deeply $fh.eof, True, 'Regular file EOF was reached';
+    close $fh;
 }
 
 # RT #127370
@@ -36,7 +25,7 @@ END unlink $tmpfile;
     my $fh = $files[0].open;
     $fh.slurp;
 
-    ok $fh.eof, '/proc file EOF was reached';
+    is-deeply $fh.eof, True, '/proc file EOF was reached';
     $fh.close;
   }
   else {

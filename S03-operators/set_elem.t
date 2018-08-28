@@ -33,7 +33,11 @@ my @elem =
   "ideas",   $objh,
   13,        $objh,
   "quick",   $list,
-  10 ** 42,  $bigintrange
+  10 ** 42,  $bigintrange,
+  2, 1..2,
+  42.5, 41.5..50,
+  42.5e0, 41.5e0..50,
+  "b", "a".."c",
 ;
 
 # Things we need to check for not being an element of.  Uses the string
@@ -70,7 +74,13 @@ my @notelem =
   do { my %o := :{ a => 42 }; %o<a>:delete; %o },
   $list,
   List.new,
-  $bigintrange => 10 ** 42 + 1
+  $bigintrange => 10 ** 42 + 1,
+   .5 => ^2,
+  -.5 => -1..0,
+    2 => ^2,
+  40.5e0 => 41.5e0..50,
+  42e0 => 41.5e0..50,
+  "d" => "a".."c",
 ;
 
 plan 2 * (2 * @elem/2 + 2 * @notelem) + 1 * (2 * @elem/2 + 2 * @notelem);
@@ -127,5 +137,6 @@ for
         }
     }
 }
+
 
 # vim: ft=perl6

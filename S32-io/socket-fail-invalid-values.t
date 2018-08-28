@@ -4,8 +4,8 @@ use Test;
 
 constant HOST = 'localhost';
 
-constant FAMILY_VALUE_TOO_LOW  = 1;
-constant FAMILY_VALUE_TOO_HIGH = 4;
+constant FAMILY_VALUE_TOO_LOW  = -1;
+constant FAMILY_VALUE_TOO_HIGH = 9999999;
 
 constant PORT_VALUE_VALID       = 5018;
 constant PORT_VALUE_TOO_LOW     = -1;

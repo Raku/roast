@@ -141,21 +141,24 @@ subtest 'dynamically created lists can be used to define an enum' => {
 }
 
 { # coverage; 2016-10-03
-    my enum Cover20161003 <foo-cover bar-cover>;
+    my enum Cover20161003 (|<foo-cover bar-cover>, fo2-cover => 0);
     subtest 'Enumeration:D.kv' => {
-        plan 2;
+        plan 3;
         is-deeply foo-cover.kv, ('foo-cover', 0), 'first element';
         is-deeply bar-cover.kv, ('bar-cover', 1), 'second element';
+        is-deeply fo2-cover.kv, ('fo2-cover', 0), 'element with duped value';
     }
     subtest 'Enumeration:D.pair' => {
-        plan 2;
+        plan 3;
         is-deeply foo-cover.pair, (foo-cover => 0), 'first element';
         is-deeply bar-cover.pair, (bar-cover => 1), 'second element';
+        is-deeply fo2-cover.pair, (fo2-cover => 0), 'element with duped value';
     }
     subtest 'Enumeration:D.Int' => {
-        plan 2;
+        plan 3;
         is-deeply foo-cover.Int, 0, 'first element';
         is-deeply bar-cover.Int, 1, 'second element';
+        is-deeply fo2-cover.Int, 0, 'element with duped value';
     }
 }
 

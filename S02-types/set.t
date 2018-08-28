@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 226;
+plan 227;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -565,5 +565,11 @@ subtest 'set ops do not hang with Setty/Baggy/Mixy type objects' => {
 
 is +set(.3e0, .1e0+.2e0, 1e0, 1e0+4e-15), 4,
     'Nums that are close to each other remain distinct when put in sets';
+
+# GH#2068
+{
+    dies-ok { my Int %h := :42foo.Set.Hash },
+      'have typechecking on a Hashifeid Set iterator';
+}
 
 # vim: ft=perl6

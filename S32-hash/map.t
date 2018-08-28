@@ -1,18 +1,14 @@
 use v6;
 use Test;
-plan 13;
+plan 16;
 
 {
     my %hash = :foo, :42bar;
     is-deeply %hash.Map, Map.new( (:foo, :42bar) ),
         '.Map on defined Hash produces correct Map';
     is-deeply Hash.Map, Map, '.Map on undefined Hash produces Map type object';
-    throws-like(
-        { %hash.map(Hash) },
-        Exception,
-        message => /"Cannot map a {%hash.WHAT.perl} to a Hash."/,
-        '<object|type>.map(Hash) should die'
-    );
+    throws-like { %hash.map(Hash) }, Exception,
+        '<object|type>.map(Hash) should die';
 }
 
 { # coverage; 2016-10-11
@@ -25,7 +21,8 @@ plan 13;
         'Map:D.Hash gives right hash';
 
     is-deeply $map.Int, 3, 'Map.Int gives number of pairs';
-    is-deeply $map{42e0}, 'foo', 'Map{} with non-Str key gives right results';
+    is-deeply $map{42.0}, 'foo',
+        'Map{} with non-Str value in lookup stringifies it';
 
     is-deeply $map.clone, $map, 'Map.clone is identity';
 }
@@ -55,6 +52,32 @@ subtest 'Map.gist shows only first 100 els' => {
 
     throws-like { $m<foo> := 10 }, X::Bind, 'Cannot bind at key of immutable Map';
     throws-like { $m<bar> := 10 }, X::Bind, 'Cannot bind at key of immutable Map, Scalar value';
+}
+
+# R#2055
+{
+    my %h is Map = a => 42;
+    dies-ok { %h = b => 666 }, 'cannot initialize a Map for the second time';
+}
+
+# R#2062
+{
+    my %h{Any} = ^6;
+    my %m is Map = %h, a => 42;
+    is-deeply
+      ["0" => 1, "2" => 3, "4" => 5, "a" => 42],
+      [%m.sort: *.key],
+      'did we get the pairs get handled ok'
+    ;
+}
+
+{
+    my class C {
+        has Int @.a;
+        has Int @.b;
+    }
+    lives-ok { C.new(|(a => (1, 2, 3), b => (4, 5, 6)).Map) },
+        'Map does not introduce bogus Scalar containers';
 }
 
 # vim: ft=perl6

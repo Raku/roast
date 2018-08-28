@@ -374,7 +374,7 @@ subtest 'smartmatch against Bool:U' => {
     ok  all(False, False) ~~ Bool, 'all (true by False Bool)';
     ok  all(True,  False) ~~ Bool, 'all (true by Mixed Bools)';
     nok all(42,    "foo") ~~ Bool, 'all (false; no Bools)';
-    nok all(42,    False) ~~ Bool, 'all (false not are Bools)';
+    nok all(42,    False) ~~ Bool, 'all (false not all are Bools)';
 
     ok  one(42,    True ) ~~ Bool, 'one (true by True Bool)';
     ok  one(42,    False) ~~ Bool, 'one (true by False Bool)';

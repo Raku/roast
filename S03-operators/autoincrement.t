@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 80;
+plan 79;
 
 #L<S03/Autoincrement precedence>
 
@@ -202,7 +202,7 @@ throws-like 'my $a; $a++ ++;', Exception, 'parse error for "$a++ ++"';
 
 # RT #113816 - autoincrement of bools
 {
-    my Bool $x; 
+    my Bool $x;
     my $y;
 
     #postincrement tests
@@ -269,10 +269,5 @@ throws-like 'my $a; $a++ ++;', Exception, 'parse error for "$a++ ++"';
     is $y, False, "True predecrement returns False";
     is $x, False, "True postdecrement sets False";
 };
-
-# RT 126220
-throws-like '++.++', X::Multi::NoMatch,
-    '++.++ construct throws a multi no match exception';
-
 
 # vim: ft=perl6

@@ -2,12 +2,12 @@ use v6;
 use MONKEY-TYPING;
 
 use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+use Test::Util;
 
 # L<S11/Compile-time Importation>
 
-plan 11;
+plan 10;
 
 # test that 'use' imports class names defined in imported packages
 
@@ -54,14 +54,12 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 }
 
 # RT #126302
-{
-    my $package-lib-prefix = $?FILE.IO.parent(2).add("packages").absolute;
-
-    my $p = run :out, :err, $*EXECUTABLE, '-I', $package-lib-prefix, '-e',
-        'use RT126302; say "RT126302-OK"';
-
-    like   $p.out.slurp(:close), /'RT126302-OK'/, 'packages compile successfully';
-    unlike $p.err.slurp(:close), /'src/Perl6/World.nqp'/, 'no Perl6/World.nqp in warning';
-}
+is_run ｢use RT126302; say "RT126302-OK"｣,
+  :compiler-args['-I', $?FILE.IO.parent(2).add("packages").absolute], {
+    :out(/'RT126302-OK'/),
+    :err{not .contains: 'src/Perl6/World.nqp'}
+    # "Perl6/World" is guts from Rakudo implementation and we check
+    # the genned warnings doesn't reference any guts
+  }, 'packages with private `is rw` attrs compile successfully';
 
 # vim: ft=perl6
