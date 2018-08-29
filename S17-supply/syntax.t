@@ -1,7 +1,12 @@
 use v6;
 use Test;
 
-plan 83;
+plan 84;
+
+# Make sure we can emit Mu
+{
+    (supply { emit Mu }).tap: -> \val { ok val =:= Mu }
+}
 
 {
     my $s = supply {
