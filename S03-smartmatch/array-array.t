@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 69;
+plan 73;
 
 #L<S03/Smart matching/arrays are comparable>
 {
@@ -98,6 +98,15 @@ subtest '~~ with lazy iterables never throws' => {
 
     my $iter := [1...*];
     is-deeply $iter ~~ $iter, True, 'lazy ~~ lazy is True when same object';
+}
+
+# R#2233
+{
+    my @list = 1,2,3;
+    is-deeply @list.Seq ~~ @list.Seq, True, 'do Seqs smartmatch ok';
+    is-deeply @list.Seq.lazy ~~ @list.Seq, False, 'left Seq lazy';
+    is-deeply @list.Seq ~~ @list.Seq.lazy, False, 'right Seq lazy';
+    is-deeply @list.Seq.lazy ~~ @list.Seq.lazy, False, 'both Seqs lazy';
 }
 
 # vim: ft=perl6
