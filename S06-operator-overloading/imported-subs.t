@@ -7,7 +7,7 @@ use Test;
 plan 20;
 
 {
-    # defined in packages/Exportops.pm
+    # defined in packages/Exportops.pm6
     use Exportops;
 
     ok EVAL('5!'), 'postfix:<!> was exported...';
