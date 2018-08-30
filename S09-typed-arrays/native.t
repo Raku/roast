@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 # Basic native array tests.
 {
@@ -121,5 +121,26 @@ subtest 'assigning other arrays into native arrays dies if the type of an elemen
 
         throws-like 'my int $a = 1;   my num @a = 1e0, $a', Exception, 'assigning an int variable to a num array throws';
         throws-like 'my str $a = "a"; my num @a = 1e0, $a', Exception, 'assigning a str variable to a num array throws';
+    }
+}
+
+subtest 'STOREing/splicing lazy Seq values throws' => {
+    my @test-data = (
+        ('int', 'lazy 1..100',         'int lazy prefix'),
+        ('int', '2, 4, 8 ... *',       'int sequence operator'),
+        ('num', 'lazy 1e0..100e0',     'num lazy prefix'),
+        ('num', '2e0, 4e0, 8e0 ... *', 'num sequence operator'),
+        ('str', 'lazy "a".."z"',       'str lazy prefix'),
+        ('str', '"a" ... *',           'str sequence operator'),
+    );
+
+    plan 2 * @test-data.elems;
+
+    for @test-data -> ($type, $expr, $msg) {
+        my $store-stmt  = "my $type \@a = $expr; \@a[1]";
+        my $splice-stmt = "my $type \@a; \@a.splice(0, 0, ($expr))";
+
+        throws-like $store-stmt,  X::Cannot::Lazy, "STORE $msg";
+        throws-like $splice-stmt, X::Cannot::Lazy, "splice $msg";
     }
 }
