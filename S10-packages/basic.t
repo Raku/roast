@@ -6,7 +6,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 85;
+plan 83;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -198,13 +198,6 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 {
     eval-lives-ok 'use PM6', 'can load a module ending in .pm6';
     is EVAL('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
-}
-
-# the following was added during the roast name change from "*.pm" to
-# "*.pm6" to ensure the ".pm" suffix is still valid for old code
-{
-    eval-lives-ok 'use PM', 'can load a module ending in .pm';
-    is EVAL('use PM; pm_works()'), 42, 'can call subs exported from .pm module';
 }
 
 # package Foo; is perl 5 code;
