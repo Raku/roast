@@ -6,7 +6,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 85;
+plan 83;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
