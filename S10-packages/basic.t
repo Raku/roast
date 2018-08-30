@@ -6,7 +6,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 83;
+plan 85;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -51,6 +51,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 }
 
 # more sophisticated variants of test exist elsewhere - but seems basic ...
+
 #?rakudo skip 'RT #59484'
 {
     is  EVAL('package Simp2 {sub pkg { $?PACKAGE }}; Simp2::pkg'),
@@ -197,6 +198,26 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 {
     eval-lives-ok 'use PM6', 'can load a module ending in .pm6';
     is EVAL('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
+}
+
+# the following was added during the roast name change from "*.pm" to "*.pm6" to ensure
+# the ".pm" suffix is still valid for old code
+{
+    my $mtxt := q:to/EOF/;
+    module PM {
+        sub pm_works() is export { 42 }
+    }
+    EOF
+
+    my $PM := 'PM.pm';
+    spurt $PM, $mtxt;
+    eval-lives-ok 'use lib <.>; use PM', 'can load a module ending in .pm';
+    is EVAL('use lib <.>; use PM; pm_works()'), 42, 'can call subs exported from .pm module';
+
+    # always cleanup
+    END {
+        try unlink $PM;
+    }
 }
 
 # package Foo; is perl 5 code;

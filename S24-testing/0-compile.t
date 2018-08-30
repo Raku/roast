@@ -1,6 +1,6 @@
 use v6;
 
-# Checking that testing is sane: Test.pm
+# Checking that testing is sane: Test.pm6
 
 use Test;
 
