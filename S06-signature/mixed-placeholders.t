@@ -9,7 +9,7 @@ plan 18;
 sub t {
     is $^tene, 3, "Placeholder vars work";
     is $:DietCoke, 6, "Placeholder vars work";
-    is $^chromatic, 1, "Placeholder vars work";
+    is $^chlorophyl, 1, "Placeholder vars work";
     is $:moritz, 4, "Placeholder vars work";
     is $^mncharity, 2, "Placeholder vars work";
     is $:TimToady, 5, "Placeholder vars work";
