@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 201;
+plan 203;
 
 #use unicode :v(6.3);
 
@@ -71,6 +71,11 @@ isa-ok 'a'.uniprop('Script'), Str, '.uniprop returns a Str for string Unicode pr
 is 'a'.uniprop('Script'), 'Latin', ".uniprop('Script') returns correct result for 'a'";
 like 'a'.uniprop('Age'), /'1.1'/, "'a'.uniprop('Age') looks like /'1.1'/";
 is 'a'.uniprop('Block'), 'Basic Latin', "uniprop for Block works";
+
+# MoarVM/MoarVM#924
+is-deeply 0x378.uniprop('Block'), 'Greek and Coptic', "uniprop for Block works on reserved codepoints";
+is-deeply 0x10FFFF.uniprop('Block'), 'Supplementary Private Use Area-B', "uniprop for Block works on 0x10FFFF";
+
 #?rakudo.moar todo 'Unicode 1 names NYI in MoarVM'
 is '¶'.uniprop('Unicode_1_Name'), "PARAGRAPH SIGN", "¶.uniprop('Unicode_1_Name') returns Unicode 1 name";
 is uniprop(0xFB00, 'Name'), "LATIN SMALL LIGATURE FF", "uniprop: returns proper name for LATIN SMALL LIGATURE FF";
