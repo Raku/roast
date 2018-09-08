@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 852;
+plan 853;
 
 # Basic test functions specific to rational numbers.
 
@@ -418,7 +418,8 @@ subtest '=== with 0-denominator Rats' => {
 }
 
 # RT #130606
-eval-lives-ok ｢5 cmp <.5>｣, 'Real cmp RatStr does not crash';
+is-deeply 5   cmp <.5>, More, 'Real   cmp RatStr does not crash';
+is-deeply <.5> cmp  .5, Same, 'RatStr cmp Real   does not crash';
 
 { # https://irclog.perlgeek.de/perl6-dev/2017-01-20#i_13961843
     my class Foo does Rational[Int,Int] {};
