@@ -270,16 +270,18 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
 }
 
 { # coverage; 2016-10-16
-    subtest 'prefix:<->(num)' => {
+    subtest 'prefix:<->(num) and U+2212 prefix op' => {
         plan 8;
         cmp-ok -(my num $), '===', NaN, '- uninitialized';
-        cmp-ok −(my num $), '===', NaN, '− uninitialized';
+        cmp-ok −(my num $), '===', NaN, '− (U+2212) uninitialized';
         is-deeply -(my num $ = 0e0  ), (my num $ = -0e0 ), '- zero';
-        is-deeply −(my num $ = 0e0  ), (my num $ = -0e0 ), '− zero';
+        is-deeply −(my num $ = 0e0  ), (my num $ = -0e0 ), '− (U+2212) zero';
         is-deeply -(my num $ = 42e0 ), (my num $ = -42e0), '- positive';
-        is-deeply −(my num $ = 42e0 ), (my num $ = -42e0), '− positive';
+        is-deeply −(my num $ = 42e0 ), (my num $ = -42e0),
+            '− (U+2212) positive';
         is-deeply -(my num $ = -42e0), (my num $ = 42e0 ), '- negative';
-        is-deeply −(my num $ = -42e0), (my num $ = 42e0 ), '− negative';
+        is-deeply −(my num $ = -42e0), (my num $ = 42e0 ),
+            '− (U+2212) negative';
     }
 
     subtest 'abs(num)' => {
