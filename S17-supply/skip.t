@@ -4,9 +4,8 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Tap;
 
-plan 8;
+plan 7;
 
-dies-ok { Supply.skip }, 'can not be called as a class method';
 dies-ok { Supply.new.skip("foo") }, 'cannot have "foo" skip';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
