@@ -421,11 +421,14 @@ subtest '=== with 0-denominator Rats' => {
 is-deeply 5   cmp <.5>, More, 'Real   cmp RatStr does not crash';
 is-deeply <.5> cmp  .5, Same, 'RatStr cmp Real   does not crash';
 
-{ # https://irclog.perlgeek.de/perl6-dev/2017-01-20#i_13961843
+# https://irclog.perlgeek.de/perl6-dev/2017-01-20#i_13961843
+subtest 'subclass of class that does Rational can be instantiated' => {
+    plan 2;
     my class Foo does Rational[Int,Int] {};
     my class Bar is Foo {};
-    lives-ok { Bar.new: 42, 42 },
-        'subclass of class that does Rational can be instantiated';
+    my $o := Bar.new: 42, 31337;
+    cmp-ok $o, '~~', Bar & Foo & Rational, 'right type';
+    is-deeply $o.nude, (42, 31337), 'right numerator/denominator';
 }
 
 # https://github.com/rakudo/rakudo/commit/79553d0fc3
