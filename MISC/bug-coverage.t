@@ -9,7 +9,7 @@ use Test::Util;
 plan 11;
 
 subtest '.count-only/.bool-only for iterated content' => {
-    plan 12;
+    plan 18;
 
     test-iter-opt  <a b c>.iterator,         3, 'List.iterator';
     test-iter-opt  <a b c>.reverse.iterator, 3, 'List.reverse.iterator';
@@ -25,6 +25,13 @@ subtest '.count-only/.bool-only for iterated content' => {
     test-iter-opt :42foo.kv.iterator,  2, 'Pair.kv.iterator';
     test-iter-opt %(:42foo, :70bar).kv.iterator, 4, 'Hash.kv.iterator';
     test-iter-opt %(:42foo, :70bar, :2meow).keys.iterator, 3, 'Hash.keys.iterator';
+
+    test-iter-opt "a\nb\nc".lines.iterator, 3, 'Str.lines.iterator';
+    test-iter-opt (my @a[5]).iterator,      5, '1 dim shaped array';
+    test-iter-opt 'abc'.comb.iterator,      3, 'Str.comb';
+    test-iter-opt 'abc'.comb(/./).iterator, 3, 'Str.comb(Regex)';
+    test-iter-opt 'abc'.comb(2).iterator,   2, 'Str.comb(Int)';
+    test-iter-opt 'aba'.comb('a').iterator, 2, 'Str.comb(Str)';
 }
 
 # https://github.com/rakudo/rakudo/issues/1407
