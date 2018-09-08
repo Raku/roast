@@ -444,13 +444,13 @@ ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
 #### '?'			ab<?		y	literal match with question mark
 ok 'ab<?' ~~ /'?'/, 'literal match with question mark';
 
-#### '<'			ab<?		y	literal match with lt 
+#### '<'			ab<?		y	literal match with lt
 ok 'ab<?' ~~ /'<'/, 'literal match with lt ';
 
 #### '<?'			ab<?		y	literal match with lt and question mark
 ok 'ab<?' ~~ /'<?'/, 'literal match with lt and question mark';
 
-#### '<?'			ab<x?		n	non-matching literal match 
+#### '<?'			ab<x?		n	non-matching literal match
 ok 'ab<x?' !~~ /'<?'/, 'non-matching literal match ';
 
 #### <[A..Z0..9]>		abcdef		n	two enumerated ranges
