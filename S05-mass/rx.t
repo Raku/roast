@@ -218,7 +218,8 @@ ok ('abc def ghi' ~~ /<alpha> [ \- <alpha> ]?/) && matchcheck($/, q/mob<alpha> 0
 ok 'bookkeeper' ~~ /[ (.) $0 ]+/, 'backreference';
 
 #### [(.)$٠]+				bookkeeper	y			backreference
-ok 'bookkeeper' ~~ /[ (.) $٠ ]+/, 'Nd digit backreference';
+ok 'bookkeeper' ~~ /[ (.) $٠ ]+/,
+    'Nd digit backreference (٠ U+0660 ARABIC-INDIC DIGIT ZERO)';
 
 #### (\w+) <+ws> $0				hello hello	y			backreference at end of string
 ok 'hello hello' ~~ /(\w+) <+ws> $0/, 'backreference at end of string';
