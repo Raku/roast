@@ -116,9 +116,11 @@ subtest '.List on uninited shaped array' => {
     is-deeply @result, [Any xx 4],  'gives correct results';
 }
 
-# RT #130510
-eval-lives-ok ｢my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>)｣,
-    '@c[some shape] accepts a .new: :shape(same shape)...';
+{ # RT #130510
+    my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>);
+    is @c.perl, Array.new(:shape(2, 2), <a b>, <c d>).perl,
+      '@c[some shape] accepts a .new: :shape(same shape)...';
+}
 
 # RT #130440
 {
