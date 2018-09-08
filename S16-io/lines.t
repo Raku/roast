@@ -79,8 +79,7 @@ unlink $filename; # cleanup
 
 {
     # RT #130430
-    my $file = $?FILE.IO.parent.child('lines.testing');
-    $file.spurt: join "\n", <a b c>;
+    my $file := make-temp-file content => join "\n", <a b c>;
     is-deeply $file.lines(2000), ('a', 'b', 'c'),
         'we stop when data ends, even if limit has not been reached yet';
     unlink $file;
@@ -88,12 +87,10 @@ unlink $filename; # cleanup
 
 {
     # https://irclog.perlgeek.de/perl6-dev/2017-01-21#i_13962764
-    my $file = $?FILE.IO.parent.child('lines.testing');
-    $file.spurt: join "\n", <a b c>;
-    is_run 'lines; lines', :args[$file], {
+    my $file := make-temp-file content => join "\n", <a b c>;
+    is_run 'lines; lines', :args[$file.absolute], {
         :out(''), :err(''), :0status,
     }, 'calling lines() after exhausting previous input does not crash';
-    unlink $file;
 }
 
 # https://irclog.perlgeek.de/perl6-dev/2017-01-27#i_13996365
