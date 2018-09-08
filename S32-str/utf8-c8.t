@@ -64,13 +64,8 @@ plan 66;
 }
 
 {
-    my $test-file = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
-    LEAVE unlink $test-file;
-
-    given open($test-file, :w, :bin) {
-        .write: Buf.new(ord('A'), 0xFA, ord('B'), 0xFB, 0xFC, ord('C'), 0xFD);
-        .close;
-    }
+    my $test-file := make-temp-path content => Buf.new:
+        ord('A'), 0xFA, ord('B'), 0xFB, 0xFC, ord('C'), 0xFD;
 
     my $test-str;
     lives-ok { $test-str = slurp($test-file, enc => 'utf8-c8') },
@@ -126,9 +121,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
         Buf.new(61,180,192,142,191,171,181,101,4,238,122,232,11,194,77,144,221,
             109,108,228,192);
 
-    my $test-file = $*TMPDIR ~ '/tmp.' ~ $*PID ~ '-' ~ time;
-    END try unlink $test-file;
-
+    my $test-file := make-temp-path;
     for @bufs.kv -> $i, $buf {
         is-deeply Buf.new($buf.decode('utf8-c8').encode('utf8-c8').list), $buf,
             ".decode.encode roundtrips correctly for utf8-c8 [Buf #{$i+1}]";
