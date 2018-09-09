@@ -65,7 +65,7 @@ plan 63;
     is (1/128).base(10, *), "0.0078125", "longer number with Whatever digits";
     is (3/1024).base(16, *), "0.00C", "hex base with Whatever";
 
-    isa-ok 1.5.base(10, -1), Failure, "negative digits arg fails";
+    fails-like ｢1.5.base: 10, -1｣, X::OutOfRange, "negative digits arg fails";
 }
 
 # base-repeating
