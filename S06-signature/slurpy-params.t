@@ -300,11 +300,11 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
 }
 
 # RT #128201
-doesn't-hang '{ say @_.gist; say "passed" }(1..Inf);', :out(/'passed'/),
+is { @_.gist; 'passed' }(1..Inf), 'passed',
     '.gist on @_ containing lazy list does not hang';
 
 # RT #129175
-doesn't-hang ｢-> *@a { @a.is-lazy.say }(1…∞)｣, :out(/True/),
+is-deeply -> *@a { @a.is-lazy.say }(1…∞), True,
     'slurpy positional param does not hang when given infinite lists';
 
 # https://github.com/rakudo/rakudo/issues/2195
