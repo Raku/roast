@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 63;
 
@@ -84,7 +86,8 @@ plan 63;
     is 16e0.base(16,3), '10.000', 'explicit digits are produced even if 0';
     is 16.5e0.base(16,3), '10.800', 'explicit digits are produced even if some are 0';
 
-    isa-ok 1.5e0.base(10, -1), Failure, "negative digits arg fails";
+    fails-like ｢1.5e0.base: 10, -1｣, X::OutOfRange,
+        "negative digits arg fails";
 }
 
 subtest 'all Reals can accept Whatever for second .base argument' => {
