@@ -469,7 +469,7 @@ is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM pr
     ok Foo.parse('2603'), 'LTM with :i, <[0..9]>, and repetition works';
 }
 {
-    grammar Oops {
+    my grammar Oops {
         token TOP { <?> | 'a' ** 1..2 'b' }
     }
     ok Oops.parse('ab'),
