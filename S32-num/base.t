@@ -18,8 +18,8 @@ plan 63;
     is (-12).base(16), '-C',    '(-12).base(16)';
     is 121.base(11,3), '100.000', 'Integer digits are 0s';
     is 121.base(11,0), '100',   'Integer with 0 digits fraction leaves off radix point';
-    throws-like 1.base(10, -1), X::OutOfRange, "X::OutOfRange negative digits arg fails";
-    throws-like 1.base(-1),     X::OutOfRange, "X::OutOfRange negative base fails";
+    fails-like ｢1.base: 10, -1｣, X::OutOfRange, "X::OutOfRange negative digits arg fails";
+    fails-like ｢1.base: -1｣,     X::OutOfRange, "X::OutOfRange negative base fails";
 }
 # Int with Str argument
 {
@@ -34,8 +34,8 @@ plan 63;
     is (-12).base('16'), '-C',    '(-12).base(16)';
     is 121.base('11',3), '100.000', 'Integer digits are 0s';
     is 121.base('11',0), '100',   'Integer with 0 digits fraction leaves off radix point';
-    throws-like 1.base('10', -1), X::OutOfRange, "X::OutOfRange negative digits arg fails";
-    throws-like 1.base('-1'),     X::OutOfRange, "X::OutOfRange negative base fails";
+    fails-like ｢1.base: '10', -1｣, X::OutOfRange, "X::OutOfRange negative digits arg fails";
+    fails-like ｢1.base: '-1'｣,     X::OutOfRange, "X::OutOfRange negative base fails";
 }
 # Rat
 # RT #112900
@@ -100,7 +100,7 @@ subtest 'all Reals can accept Whatever for second .base argument' => {
 
 # RT#125819
 {
-    throws-like { 255.base: 16, -100 }, X::OutOfRange,
+    fails-like { 255.base: 16, -100 }, X::OutOfRange,
         'negative $digits arg throws';
     #?rakudo.jvm todo 'code does not die, RT#125819'
     throws-like {
@@ -110,7 +110,8 @@ subtest 'all Reals can accept Whatever for second .base argument' => {
 }
 
 # RT#130753
-throws-like { 1.1.base(1) }, X::OutOfRange, "Throws like X::OutOfRange for base 1";
+#?rakudo todo 'code throws instead of failing: https://github.com/rakudo/rakudo/issues/2266'
+fails-like { 1.1.base(1) }, X::OutOfRange, "Throws like X::OutOfRange for base 1";
 
 # RT #125818
 throws-like 'Inf.base: 16', X::Numeric::CannotConvert,
