@@ -619,7 +619,7 @@ is-deeply (S:g/FAIL// with 'foo'), 'foo',
     'S:g/// returns original string on failure to match';
 
 # RT #130355
-is-deeply (eager <a b c>.map: {S/a/x/}), <x b c>,
+is-deeply (eager <a b c aab ac>.map: {S/a/x/}), <x b c xab xc>,
     'S/// can be used in map (does not reuse a container)';
 
 # RT #127135
