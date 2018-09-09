@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 10 * 4;
 
@@ -23,15 +25,15 @@ for &parse-names, Str.^lookup('parse-names'),
     is-deeply &pn(' BELL  , BLACK HEART SUIT  '), "\c[BELL]♥",
         "two chars with whitespace around $t";
 
-    throws-like &pn('   BELL,   '           ), X::Str::InvalidCharName,
+    fails-like { &pn('   BELL,   '           ) }, X::Str::InvalidCharName,
         'trailing comma';
-    throws-like &pn('   ,BELL   '           ), X::Str::InvalidCharName,
+    fails-like { &pn('   ,BELL   '           ) }, X::Str::InvalidCharName,
         'prefixed comma';
-    throws-like &pn('MEOWS PERL6 IS AWESOME'), X::Str::InvalidCharName,
+    fails-like { &pn('MEOWS PERL6 IS AWESOME') }, X::Str::InvalidCharName,
         'unknown name';
-    throws-like &pn('MEOWS, BELL'           ), X::Str::InvalidCharName,
+    fails-like { &pn('MEOWS, BELL'           ) }, X::Str::InvalidCharName,
         'unknown name + known name';
-    throws-like &pn('BELL, MEOWS'           ), X::Str::InvalidCharName,
+    fails-like { &pn('BELL, MEOWS'           ) }, X::Str::InvalidCharName,
         'known name + unknown name';
 }
 
