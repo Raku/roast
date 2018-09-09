@@ -8,7 +8,7 @@ plan 9 * 6;
 
 # Test iterators coming from Lists
 
-for 
+for
     { ("a".."z").List.eager },           "list",
     { ("a".."z").List },                 "lazy list",
     { ("a"..."z").List },                "lazy sequence",
