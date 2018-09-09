@@ -209,15 +209,15 @@ plan 37;
 {
     my &code-method = *.sort;
     my &code-sub    =  &sort;
-    is code-method(<y z x>).^name, 'Seq', '.sort stored in a sub returns a List';
-    is code-sub(   <y z x>).^name, 'Seq', '&sort stored in a sub returns a List';
+    isa-ok code-method(<y z x>), Seq, '.sort stored in a sub returns a List';
+    isa-ok code-sub(   <y z x>), Seq, '&sort stored in a sub returns a List';
 }
 
 # RT #126921
-is (<2 1 3>   .sort).^name, 'Seq', 'detached .sort returns a List';
+isa-ok (<2 1 3>   .sort), Seq, 'detached .sort returns a List';
 
 # RT #126859
-is (*.sort)(<2 3 1>).^name, 'Seq', 'auto-primed *.sort returns a Seq';
+isa-ok (*.sort)(<2 3 1>), Seq, 'auto-primed *.sort returns a Seq';
 
 # RT #130866
 eval-lives-ok ｢.elems, .sort with @｣,
