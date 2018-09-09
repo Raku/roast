@@ -309,6 +309,8 @@ is-deeply (FatRat.new(1, 2) + <3/2>).ceiling, 2, '.ceiling with FatRat sums';
 
 # https://github.com/rakudo/rakudo/commit/aac9efcbda
 subtest '.norm returns reduced FatRat' => {
+    # This is test (of a now-deprecated method) was added back when
+    # some Rationals were allowed to be in unreduced form
     plan 2;
     given (FatRat.new(2,3) + 1/3).norm {
         is-deeply .denominator, 1, 'denominator got reduced';
