@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 plan 37;
 
 # L<S32::Containers/"List"/"=item sort">
@@ -249,6 +251,6 @@ subtest 'degenerate cases' => {
 }
 
 # https://github.com/rakudo/rakudo/issues/1739
-is-deeply <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
+is-eqv <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
 
 # vim: ft=perl6
