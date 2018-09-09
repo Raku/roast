@@ -14,4 +14,4 @@ for 1..12 -> $x {
 }
 
 # https://github.com/rakudo/rakudo/commit/dd4dfb14d3
-lives-ok { quietly IO::Special.Str }, 'IO::Special:U.Str does not crash';
+is-deeply (quietly IO::Special.Str), '', 'IO::Special:U.Str does not crash';
