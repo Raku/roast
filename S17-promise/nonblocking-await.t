@@ -69,7 +69,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     ok [==](flat Planned, @proms>>.status), 'await of multiple Promises suspends until all ready';
     $p.break('bust');
     #?rakudo.jvm skip 'hangs on JVM (sometimes)'
-    throws-like { await @proms }, X::AdHoc, message => 'bust',
+    throws-like { await @proms }, Exception, message => 'bust',
         'Multiple await also conveys errors correctly';
 }
 
