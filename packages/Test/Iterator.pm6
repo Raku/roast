@@ -11,7 +11,7 @@ use Test;
 # values from the iterator.
 sub iterator-ok(&iterator, $desc, *@expected) is export {
     subtest {
-        plan 24;
+        plan 17;
         {
             my @a;
             my $iterator = iterator();
@@ -25,16 +25,12 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
             my $iterator = iterator();
             Nil until $iterator.push-exactly(my @a,3) =:= IterationEnd;
             is-deeply @a, @expected, "$desc: push-exactly until exhausted";
-            is $iterator.pull-one, IterationEnd,
-              "$desc: is iterator exhausted after a loop with push-exactly";
         }
 
         {
             my $iterator = iterator();
             Nil until $iterator.push-at-least(my @a,3) =:= IterationEnd;
             is-deeply @a, @expected, "$desc: push-at-least until exhausted";
-            is $iterator.pull-one, IterationEnd,
-              "$desc: is iterator exhausted after a loop with push-at-least";
         }
 
         {
@@ -42,8 +38,6 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
             is $iterator.push-all(my @a), IterationEnd,
               "$desc: does push-all return IterationEnd";
             is-deeply @a, @expected, "$desc: push-all";
-            is $iterator.pull-one, IterationEnd,
-              "$desc: is iterator exhausted after a push-all";
         }
 
         {
@@ -51,16 +45,12 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
             is $iterator.push-until-lazy(my @a), IterationEnd,
               "$desc: does push-until-lazy return IterationEnd";
             is-deeply @a, @expected, "$desc: push-until-lazy";
-            is $iterator.pull-one, IterationEnd,
-              "$desc: is iterator exhausted after a push-until-lazy";
         }
 
         {
             my $iterator = iterator();
             is $iterator.sink-all, IterationEnd,
               "$desc: does sink-all return IterationEnd";
-            is $iterator.pull-one, IterationEnd,
-              "$desc: is iterator exhausted after a sink-all";
         }
 
         {
@@ -68,9 +58,6 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
             my $meen = 0;
             $meen++ while $iterator.skip-one;
             is $meen, +@expected, "$desc: skip-one until exhausted";
-            is $iterator.pull-one, IterationEnd, "$desc: did skip-one exhaust?";
-            is $iterator.pull-one, IterationEnd,
-              "$desc: is iterator exhausted after a loop with skip-one";
         }
 
         {
