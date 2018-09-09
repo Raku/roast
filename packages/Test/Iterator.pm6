@@ -55,9 +55,9 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
 
         {
             my $iterator = iterator();
-            my $meen = 0;
-            $meen++ while $iterator.skip-one;
-            is $meen, +@expected, "$desc: skip-one until exhausted";
+            my $seen = 0;
+            $seen++ while $iterator.skip-one;
+            is $seen, +@expected, "$desc: skip-one until exhausted";
         }
 
         {
