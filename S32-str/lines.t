@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 28;
+plan 27;
 
 is "a\nb\n\nc".lines.join('|'),
   'a|b||c', 'LF .lines without trailing';
@@ -79,9 +79,5 @@ is_run( 'print lines[0]',
 # RT #130430
 is-deeply "a\nb\nc".lines(2000), ('a', 'b', 'c'),
     'we stop when data ends, even if limit has not been reached yet';
-
-# https://github.com/rakudo/rakudo/commit/742573724c
-dies-ok { 42.lines: |<bunch of incorrect args> },
-    'no infinite loop when given wrong args to Cool.lines';
 
 # vim: ft=perl6
