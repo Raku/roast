@@ -18,13 +18,13 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
             until (my $pulled := $iterator.pull-one) =:= IterationEnd {
                 @a.push($pulled)
             }
-            is @a, @expected, "$desc: pull-one until exhausted";
+            is-deeply @a, @expected, "$desc: pull-one until exhausted";
         }
 
         {
             my $iterator = iterator();
             Nil until $iterator.push-exactly(my @a,3) =:= IterationEnd;
-            is @a, @expected, "$desc: push-exactly until exhausted";
+            is-deeply @a, @expected, "$desc: push-exactly until exhausted";
             is $iterator.pull-one, IterationEnd,
               "$desc: is iterator exhausted after a loop with push-exactly";
         }
@@ -32,7 +32,7 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
         {
             my $iterator = iterator();
             Nil until $iterator.push-at-least(my @a,3) =:= IterationEnd;
-            is @a, @expected, "$desc: push-at-least until exhausted";
+            is-deeply @a, @expected, "$desc: push-at-least until exhausted";
             is $iterator.pull-one, IterationEnd,
               "$desc: is iterator exhausted after a loop with push-at-least";
         }
@@ -41,7 +41,7 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
             my $iterator = iterator();
             is $iterator.push-all(my @a), IterationEnd,
               "$desc: does push-all return IterationEnd";
-            is @a, @expected, "$desc: push-all";
+            is-deeply @a, @expected, "$desc: push-all";
             is $iterator.pull-one, IterationEnd,
               "$desc: is iterator exhausted after a push-all";
         }
@@ -50,7 +50,7 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
             my $iterator = iterator();
             is $iterator.push-until-lazy(my @a), IterationEnd,
               "$desc: does push-until-lazy return IterationEnd";
-            is @a, @expected, "$desc: push-until-lazy";
+            is-deeply @a, @expected, "$desc: push-until-lazy";
             is $iterator.pull-one, IterationEnd,
               "$desc: is iterator exhausted after a push-until-lazy";
         }
@@ -100,7 +100,7 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
               ?? ok( $iterator.bool-only, "$desc: bool-only" )
               !! pass( "$desc: doesn't support bool-only" );
             $iterator.push-all(my @a);
-            is @a, @expected, "$desc: count/bool-only didn't pull";
+            is-deeply @a, @expected, "$desc: count/bool-only didn't pull";
         }
     }, "tests for $desc";
 }
