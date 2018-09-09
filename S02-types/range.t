@@ -413,6 +413,9 @@ subtest 'out of range AT-POS' => {
 subtest 'Complex smartmatch against Range' => {
     my @false = [i, 1..10], [i, -2e300.Int..2e300.Int], [i, -2e300.Int..2e300.Int],
         [<0+0i>, 1..10], [i, 'a'..Inf], [i, 'a'..'z'];
+
+    # these cases are true because the imaginary part is small enough that
+    # we can convert these Complex into Real
     my @true  = [<0+0i>, -1..10], [<42+0i>, 10..50],
         [<42+0.0000000000000001i>, 40..50], [<42+0i>, 10e0..50e0];
 
