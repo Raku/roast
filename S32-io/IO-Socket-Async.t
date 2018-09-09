@@ -238,7 +238,7 @@ for '127.0.0.1', '::1' -> $host {
         'Multiple close of an IO::Socket::Async silently coped with';
     dies-ok { await $conn.write("42".encode("ascii")) },
         'Write of a socket after close dies in catachable way when awaited';
-    is $conn.Supply.list, (),
+    is-deeply $conn.Supply.list, (),
         'Read Supply on a closed socket is immediately done';
     $t.close
 }
