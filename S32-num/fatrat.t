@@ -305,8 +305,7 @@ cmp-ok FatRat.Range, '===', -∞..∞,
     'FatRat.Range is from -inf to inf, including end points';
 
 # https://github.com/rakudo/rakudo/commit/79553d0fc3
-is-deeply (FatRat.new(1, 2) + <3/2>).ceiling, 2,
-    '.ceiling is right for unreduced whole FatRats, like <4/2>';
+is-deeply (FatRat.new(1, 2) + <3/2>).ceiling, 2, '.ceiling with FatRat sums';
 
 # https://github.com/rakudo/rakudo/commit/aac9efcbda
 subtest '.norm returns reduced FatRat' => {

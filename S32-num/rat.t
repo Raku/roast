@@ -432,8 +432,7 @@ subtest 'subclass of class that does Rational can be instantiated' => {
 }
 
 # https://github.com/rakudo/rakudo/commit/79553d0fc3
-is-deeply (<1/2> + <3/2>).ceiling, 2,
-    '.ceiling is right for unreduced whole Rats, like <4/2>';
+is-deeply (<1/2> + <3/2>).ceiling, 2, '.ceiling with Rat sums';
 
 # https://github.com/rakudo/rakudo/commit/aac9efcbda
 subtest '.norm returns reduced Rat' => {
