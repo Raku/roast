@@ -20,6 +20,12 @@ for
     { (my str @[26] = "a".."z") },       "shaped str array"
 
 -> $l, $case {
+    if $case eq "shaped str array" and $*PERL.compiler.name eq 'rakudo' {
+        # ?rakudo skip fake fudge command for greppability
+        skip "broken in rakudo https://github.com/rakudo/rakudo/issues/2262", 6;
+        next;
+    }
+
     my @pairs = $l().pairs;
     iterator-ok( { $l().iterator },
       "$case", @pairs.map: { .value } );
