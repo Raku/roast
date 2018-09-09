@@ -74,7 +74,7 @@ subtest 'tail makes use .count-only when it is implemented' => {
 
     my $pulled = 0;
     sub make-seq ($i = 0) {
-        Seq.new: class :: does Iterator {
+        Seq.new: class :: does PredictiveIterator {
             has $!i;
             has $!pulled;
             method !SET-SELF (\pulled, $!i) { $!pulled := pulled; self    }
