@@ -7,7 +7,7 @@ my $stdout = $prog.stdout;
 my $stderr = $prog.stderr;
 my $promise = $prog.start;
 dies-ok { await $prog.write(Buf.new(12, 42)) },
-    'Writing to an async process that does not exist breaks the retunred Promise';
+    'Writing to an async process that does not exist breaks the returned Promise';
 dies-ok { react { whenever $stdout { } } },
     'Trying to tap STDOUT of an async process that does not exist signals failure';
 dies-ok { react { whenever $stderr { } } },
