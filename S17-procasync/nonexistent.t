@@ -12,7 +12,7 @@ dies-ok { react { whenever $stdout { } } },
     'Trying to tap STDOUT of an async process that does not exist signals failure';
 dies-ok { react { whenever $stderr { } } },
     'Trying to tap STDERR of an async process that does not exist signals failure';
-lives-ok { $prog.close-stdin },
+is-deeply $prog.close-stdin, True,
     'Closing stdin of an async process that does not exist is harmless';
 dies-ok { await $prog.ready },
     'Ready promise for a process that does not exist is broken';
