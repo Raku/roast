@@ -32,7 +32,7 @@ multi test-iter-opt (Iterator:D \iter, UInt:D \items, Str:D $desc) is export {
 }
 sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
     subtest $desc => {
-        plan 5 + 2*n + ($_ with data);
+        plan 3 + 2*n + ($_ with data);
         sub count (\v, $desc) {
             iter.can('count-only')
               ?? is-deeply iter.count-only, v, "count  ($desc)"
@@ -52,8 +52,6 @@ sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
         count  0, 'after last pull';
         bool  ?0, 'after last pull';
         ok iter.pull-one =:= IterationEnd, 'one more pull gives IterationEnd';
-        count  0, 'after IterationEnd';
-        bool  ?0, 'after IterationEnd';
     }
 }
 
