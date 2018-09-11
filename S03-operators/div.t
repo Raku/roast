@@ -12,9 +12,9 @@ isa-ok 1e0 / (0/1), Failure, "1e0 / (0/1) softfails";
 
 # RT #112678
 {
-    is -8 div 3, -3, '$x div $y should give same result as floor($x/$y)';
+    is-deeply -8 div 3, -3, '$x div $y should give same result as floor($x/$y)';
     my int $rt112678 = -8;
-    is $rt112678 div 3, -3, 'div works with negative native';
+    is-deeply $rt112678 div 3, -3, 'div works with negative native';
 }
 
 if $?BITS >= 64 { # RT #130686
