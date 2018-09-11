@@ -9,7 +9,7 @@ use Test::Util;
 plan 11;
 
 subtest '.count-only/.bool-only for iterated content' => {
-    plan 18;
+    plan 25;
 
     test-iter-opt  <a b c>.iterator,         3, 'List.iterator';
     test-iter-opt  <a b c>.reverse.iterator, 3, 'List.reverse.iterator';
@@ -32,6 +32,18 @@ subtest '.count-only/.bool-only for iterated content' => {
     test-iter-opt 'abc'.comb(/./).iterator, 3, 'Str.comb(Regex)';
     test-iter-opt 'abc'.comb(2).iterator,   2, 'Str.comb(Int)';
     test-iter-opt 'aba'.comb('a').iterator, 2, 'Str.comb(Str)';
+    test-iter-opt ^3 .iterator,         (0, 1, 2), 'Range';
+    test-iter-opt ^3 .reverse.iterator, (2, 1, 0), 'Range.reverse';
+
+    (my @l := (1, 2, 3)).elems; # reify
+    test-iter-opt @l.iterator,         (1, 2, 3), 'reified list';
+    test-iter-opt @l.reverse.iterator, (3, 2, 1), 'reified list reverse';
+
+    (my int @l-n = 1, 2, 3);
+    test-iter-opt @l-n.iterator,         (1, 2, 3), 'reified list';
+    test-iter-opt @l-n.reverse.iterator, (3, 2, 1), 'reified list reverse';
+
+    test-iter-opt Bag.new(<a b c>).pick(2).iterator, 2, 'baggy .pick(n)';
 }
 
 # https://github.com/rakudo/rakudo/issues/1407
