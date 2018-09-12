@@ -49,10 +49,8 @@ sub test-indir-fails ($desc, $why, $in-path, |args) {
             } path fails because of $why" => {
                 plan 2;
                 temp $*CWD = my $out-path = make-temp-dir;
-                my $res = indir $in-path, |args, {;};
-                isa-ok $res, Failure, 'got Failure as return value';
-                $res.so; # handle Failure to avoid spammage about unhandled
-                         # Failures in DESTROY
+                fails-like { indir $in-path, |args, {;} }, X::IO::Chdir,
+                    'got Failure as return value';
                 is $*CWD, $out-path, '$*CWD is unchanged outside of &indir';
             }
         }
