@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 166;
+plan 174;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -345,5 +345,17 @@ subtest 'infix:<~> works with Blob' => {
         is (Buf.new(<1 2>)   ge Buf.new(<1 2 4>)), False;
         is (Buf.new(<1 2 4>) ge Buf.new(<1 2 5>)), False;
         is (Buf.new(<1 2 4>) ge Buf.new(<1 2 3>)), True;
+    }
+}
+
+# R#2218
+{
+    for buf8, buf16, buf32, buf64 -> \buf {
+        my $a := buf.new(255,127);
+        my $b := buf.new(255,127);
+        is $a ~~ $b, True, 'do same bufs smartmatch ok';
+
+        $b[2] = 42;
+        is $a ~~ $b, False, 'do different bufs smartmatch ok';
     }
 }
