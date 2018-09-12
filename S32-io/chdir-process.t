@@ -24,14 +24,12 @@ subtest '&*chdir into IO::Path respects its :CWD attribute' => {
 }
 
 subtest '&*chdir to non-existent directory' => {
-    plan 3;
+    plan 2;
 
     my $before = make-temp-dir;
     temp $*CWD = $before;
-    my $res = &*chdir( make-temp-dir() ~ 'non-existent' );
-    isa-ok $res, Failure, "call to chdir returned a Failure";
-    throws-like { $res.sink }, X::IO::Chdir,
-        'the Failure contains correct exception';
+    throws-like { &*chdir( make-temp-dir().absolute ~ 'non-existent' ) },
+        X::IO::Chdir, 'call to chdir returned a Failure';
     cmp-ok $*CWD, '~~', $before, '$*CWD remains unchanged on failure';
 }
 
