@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
@@ -115,9 +117,7 @@ subtest '$/ is set when matching in a loop' => {
     for "a" { if Foo.parse: $_ { is ~$/, 'a', 'Grammar.parse' }}
     for "a" { if Foo.subparse: $_ { is ~$/, 'a', 'Grammar.subparse' }}
 
-    with $*TMPDIR.child: ($*PROGRAM, rand, now).join.subst(:g, /\W/, '-') {
-        LEAVE .unlink;
-        .spurt: 'a';
+    with make-temp-file content => 'a' {
         for "a" -> $ { if grammar { token TOP { . } }.parsefile: $_ {
             is ~$/, 'a', 'Grammar.parse-file'
         }}
