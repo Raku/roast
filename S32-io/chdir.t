@@ -47,10 +47,8 @@ sub test-chdir-fails ($desc, $why, $after, |args) {
     my $before = make-temp-dir;
     subtest "chdir with {args.perl} fails because of $why" => {
         temp $*CWD = $before;
-        my $res = chdir($after, |args);
-        isa-ok $res, Failure, "call to chdir returned a Failure";
-        throws-like { $res.sink }, X::IO::Chdir,
-            'the Failure contains correct exception';
+        fails-like { chdir $after, |args }, X::IO::Chdir,
+            'call to chdir returned a Failure';
         cmp-ok $*CWD, '~~', $before, '$*CWD remains untouched';
     }
 }
