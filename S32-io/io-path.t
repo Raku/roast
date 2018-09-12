@@ -10,10 +10,6 @@ plan 40;
 constant @Path-Types
 = IO::Path, IO::Path::Cygwin, IO::Path::QNX, IO::Path::Unix, IO::Path::Win32;
 
-sub is-path ($got, $expected, $desc) {
-    cmp-ok $got.resolve, '~~', $expected.resolve, $desc
-}
-
 my $path = '/foo/bar.txt'.IO;
 isa-ok $path, IO::Path, "Str.IO returns an IO::Path";
 is IO::Path.new('/foo/bar.txt'), $path,
