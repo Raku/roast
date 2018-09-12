@@ -31,7 +31,8 @@ sub test-indir ($desc, $in-path, |args) {
                         42;
                     }
                 ), 42, 'return value is correct';
-                is $*CWD, $out-path, '$*CWD is unchanged outside of &indir';
+                cmp-ok $*CWD, '===', $out-path,
+                    '$*CWD is unchanged outside of &indir';
             }
         }
     }
@@ -51,7 +52,8 @@ sub test-indir-fails ($desc, $why, $in-path, |args) {
                 temp $*CWD = my $out-path = make-temp-dir;
                 fails-like { indir $in-path, |args, {;} }, X::IO::Chdir,
                     'got Failure as return value';
-                is $*CWD, $out-path, '$*CWD is unchanged outside of &indir';
+                cmp-ok $*CWD, '===', $out-path,
+                    '$*CWD is unchanged outside of &indir';
             }
         }
     }
