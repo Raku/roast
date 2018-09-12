@@ -25,7 +25,7 @@ sub test-indir ($desc, $in-path, |args) {
                 plan 3;
                 is-deeply (
                     indir $in-path, |args, {
-                        is $*CWD.resolve, $in-path.IO.resolve,
+                        is-path $*CWD, $in-path.IO,
                             'right $*CWD inside &indir';
                         $*CWD = make-temp-dir; # deliberately mess with $*CWD
                         42;
@@ -144,18 +144,18 @@ test-indir-fails :r:w:x, 'chmod 0o111', 'permissions', make-temp-dir 0o111;
 test-indir-fails :r:w:x, 'chmod 0o000', 'permissions', make-temp-dir 0o000;
 
 subtest '&indir does not affect $*CWD outside of its block' => {
-    plan 3;
+    plan 4;
     temp $*CWD = my $out-path = make-temp-dir;
     my $in-path = make-temp-dir;
     my $prom = start { indir $in-path, {
-        is $*CWD.resolve, $in-path.IO.resolve,
-            'right $*CWD inside &indir';
+        is-path $*CWD, $in-path, 'right $*CWD inside &indir';
         $*CWD = make-temp-dir; # deliberately mess with $*CWD
         sleep 1.5;
         42;
     }}
-    is $*CWD.resolve, $out-path.IO.resolve, 'right $*CWD outside &indir';
+    cmp-ok $*CWD, '===', $out-path, '$*CWD unchanged outside &indir';
     is-deeply (await $prom), 42, 'right return value from &indir';
+    cmp-ok $*CWD, '===', $out-path, '$*CWD remains unchanged outside &indir';
 }
 
 {

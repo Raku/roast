@@ -39,7 +39,7 @@ sub test-chdir ($desc, $after, |args) {
     subtest "chdir with {args.perl}" => {
         temp $*CWD = $before;
         ok chdir($after, |args), "call to chdir succeeds";
-        cmp-ok $*CWD, '~~', $after, 'new $*CWD is correct';
+        is-path $*CWD, $after, 'new $*CWD is correct';
     }
 }
 
@@ -49,7 +49,7 @@ sub test-chdir-fails ($desc, $why, $after, |args) {
         temp $*CWD = $before;
         fails-like { chdir $after, |args }, X::IO::Chdir,
             'call to chdir returned a Failure';
-        cmp-ok $*CWD, '~~', $before, '$*CWD remains untouched';
+        is-path $*CWD, $before, '$*CWD remains untouched';
     }
 }
 
