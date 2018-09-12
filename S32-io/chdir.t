@@ -54,7 +54,7 @@ sub test-chdir-fails ($desc, $why, $after, |args) {
 }
 
 test-chdir-fails 'non-existent path', 'path does not exist',
-    (make-temp-dir() ~ '-non-existent').IO;
+    (make-temp-dir().absolute ~ '-non-existent').IO;
 
 test-chdir :!d, 'chmod 0o777', make-temp-file :chmod<0o777>;
 test-chdir :!d, 'chmod 0o666', make-temp-file :chmod<0o666>;
