@@ -115,8 +115,8 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi m($x,$y where { $x==$y }) { 0 }
     multi m($x,$y) { 1 }   #OK not used
 
-    is m(2, 3), 1, 'subset types involving mulitple parameters (fallback)';
-    is m(1, 1), 0, 'subset types involving mulitple parameters (success)';
+    is m(2, 3), 1, 'subset types involving multiple parameters (fallback)';
+    is m(1, 1), 0, 'subset types involving multiple parameters (success)';
 }
 
 {

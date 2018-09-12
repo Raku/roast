@@ -145,7 +145,7 @@ subtest 'IO::Path.ACCEPTS' => { # coverage 2017-03-31 (IO grant)
     is-deeply '/'.IO.Str, '/', 'Str does not include CWD [absolute path]';
     is-deeply IO::Path.new(
         :volume<foo:>, :dirname<bar>, :basename<ber>, :SPEC(IO::Spec::Win32.new)
-    ).Str, 'foo:\bar\ber', 'Str does not include CWD [mulit-part .new()]'
+    ).Str, 'foo:\bar\ber', 'Str does not include CWD [multi-part .new()]'
 }
 
 subtest '.add' => {
