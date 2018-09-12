@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 38;
+plan 39;
 
 # L<S09/Fixed-size arrays>
 
@@ -114,6 +114,17 @@ subtest '.List on uninited shaped array' => {
     my @result;
     lives-ok { @result = @a.List }, 'does not die';
     is-deeply @result, [Any xx 4],  'gives correct results';
+}
+
+# R#2257
+subtest '.Array on uninited shaped array' => {
+    plan 3;
+
+    my @a[2;2];
+    my @result;
+    lives-ok { @result := @a.Array }, 'does not die';
+    is-deeply @result, [Any xx 4],  'gives correct results';
+    lives-ok { @result[0] = 42 }, 'and is mutable';
 }
 
 { # RT #130510
