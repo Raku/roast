@@ -1,7 +1,7 @@
 ﻿use v6;
 use Test;
 
-plan 162;
+plan 164;
 
 # Basic native str array tests.
 my $T := str;
@@ -238,6 +238,13 @@ is @arr.join(":"), "::::z", "does emptying a $t array really empty";
 my @holes := array[$T].new;
 @holes[4] = "z";
 is @holes.join(":"), "::::z", "does join handle holes in a $t array";
+
+my @ssa := array[$T].new("a".."e");
+my @ssb := array[$T].new("a".."e");
+is @ssa ~~ @ssb, True, "Smartmatching same $t arrays works";
+
+@ssb.push("z");
+is @ssa ~~ @ssb, False, "Smartmatching different $t arrays works";
 
 # Interaction of native int arrays and untyped arrays.
 {

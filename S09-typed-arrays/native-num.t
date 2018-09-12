@@ -6,7 +6,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 150;
+plan @num * 152;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -276,4 +276,11 @@ for @num -> $T {
     @untyped2.push('C-C-C-C-Combo Breaker!');
     throws-like { @native2 = @untyped2 }, Exception,
       "List-assigning incompatible untyped array to $t array dies";
+
+    my @ssa := array[$T].new(1e0..10e0);
+    my @ssb := array[$T].new(1e0..10e0);
+    is @ssa ~~ @ssb, True, "Smartmatching same $t arrays works";
+
+    @ssb.push(42e0);
+    is @ssa ~~ @ssb, False, "Smartmatching different $t arrays works";
 }
