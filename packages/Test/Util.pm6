@@ -4,6 +4,10 @@ unit module Test::Util;
 use Test;
 use MONKEY-GUTS;
 
+sub is-path (IO::Path:D $got, IO::Path:D $exp, Str:D $desc) is export {
+    cmp-ok $got.resolve, '~~', $exp.resolve, $desc;
+}
+
 sub is-deeply-junction (
     Junction $got, Junction $expected, Str:D $desc
 ) is export {
@@ -424,6 +428,10 @@ This module is for test code that would be useful
 across Perl 6 implementations.
 
 =head1 FUNCTIONS
+
+=head2 is-path (IO::Path:D $got, IO::Path:D $exp, Str:D $desc)
+
+Tests whether two C<IO::Path> objects reference the same resource.
 
 =head2 is-eqv (Mu $got, Mu $expected, Str:D $description)
 
