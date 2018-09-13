@@ -257,7 +257,7 @@ subtest '.print-nl method' => {
         .spurt: "fo♥o";
         my $fh = .open(:enc<ascii>);
         #?rakudo.jvm todo 'does not die'
-        dies-ok { $fh.slurp.encode }, 'ASCII decode/encode dies with a catchable exception';
+        dies-ok { $fh.slurp }, 'ASCII decode/encode dies with a catchable exception';
         $fh.close;
     }
 }
