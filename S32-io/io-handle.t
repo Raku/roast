@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 31;
+plan 32;
 
 my $path = "io-handle-testfile";
 
@@ -258,7 +258,8 @@ subtest '.print-nl method' => {
         my $fh = .open(:enc<ascii>);
         #?rakudo.jvm todo 'does not die'
         dies-ok { $fh.slurp }, 'ASCII decode/encode dies with a catchable exception';
-        $fh.close;
+        # R#2272
+        lives-ok { $fh.close }, 'closing after a decode error should work';
     }
 }
 
