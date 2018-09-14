@@ -5,7 +5,8 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 use Test::Idempotence;
-plan 133;
+
+plan 136;
 
 # L<S06/Signature Introspection>
 
@@ -255,5 +256,22 @@ is $rolesig, ':($a, $b, ::?CLASS $c)', ".perl of a sigature that has ::?CLASS";
 # https://github.com/rakudo/rakudo/commit/219f527d4a
 is-deeply sub ($,$,$,$){}.signature.gist, '($, $, $, $)',
     '.gist does not strip typeless anon sigils';
+
+# R#2275
+{
+    is :(:$*a).params[0].twigil, "*",
+      'does a dynamic Parameter have a * twigil';
+
+    class B {
+        has $!a;
+        has $.b;
+        method foo($!a) { }
+        method bar($.a) { }
+    }
+    is B.^find_method("foo").signature.params[1].twigil, "!",
+      'does a private attribute Parameter have a ! twigil';
+    is B.^find_method("bar").signature.params[1].twigil, ".",
+      'does a public attribute Parameter have a . twigil';
+}
 
 # vim: ft=perl6
