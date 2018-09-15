@@ -143,6 +143,10 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
 }
 
 # RT #131112
-lives-ok {require ::("S11-modules::SetConst") }, "require class with set constant";
+{
+    require ::('S11-modules::SetConst');
+    ok ::('S11-modules::SetConst::X') eqv set(<x y>),
+        'require class with `Set` constant';
+}
 
 # vim: ft=perl6
