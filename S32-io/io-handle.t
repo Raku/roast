@@ -129,34 +129,12 @@ subtest '.nl-in attribute' => {
 }
 
 subtest '.encoding attribute' => {
-    plan 3;
-    subtest 'unopened handle' => {
-        plan 4;
-        my $fh = IO::Handle.new;
-        is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
-        is-deeply  $fh.encoding,           'ascii', 'attribute got set';
-        is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
-        is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
-    }
-
-    subtest 'opened handle' => {
-        plan 4;
-        my $fh = make-temp-file(:content<foo>).open;
-        is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
-        is-deeply  $fh.encoding,           'ascii', 'attribute got set';
-        is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
-        is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
-    }
-
-    subtest 'opened, then closed handle' => {
-        plan 4;
-        my $fh = make-temp-file(:content<foo>).open;
-        $fh.close;
-        is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
-        is-deeply  $fh.encoding,           'ascii', 'attribute got set';
-        is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
-        is-deeply  $fh.encoding,           Nil,     'attribute got set (Nil)';
-    }
+    plan 4;
+    my $fh = make-temp-file(:content<foo>).open;
+    is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
+    is-deeply  $fh.encoding,           'ascii', 'attribute got set';
+    is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
+    is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
 }
 
 subtest '.perl.EVAL roundtrips' => {
