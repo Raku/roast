@@ -3,7 +3,7 @@ use Test;
 
 # Tests of IO::Special class
 
-plan 45;
+plan 16*3;
 
 for [$*OUT.path, 'STDOUT'], [$*ERR.path, 'STDERR'], [$*IN.path, 'STDIN']
     -> ($_, $name)
@@ -11,7 +11,8 @@ for [$*OUT.path, 'STDOUT'], [$*ERR.path, 'STDERR'], [$*IN.path, 'STDIN']
     sub desc { $^v ~ " for $name" }
 
     cmp-ok .IO, '===', $_, desc '.IO';
-    is-deeply .Str,       .what,   desc '.Str';
+    is-deeply .Str,  "<$name>",    desc '.Str';
+    is-deeply .what, "<$name>",    desc '.what';
     is-deeply .e,         True,    desc '.e';
     is-deeply .d,         False,   desc '.d';
     is-deeply .f,         False,   desc '.f';
