@@ -5,7 +5,8 @@ use Test::Util;
 
 plan 158;
 
-is 0xffffffff, '4294967295', '0xffffffff is turned into a big number on 32bit rakudos';
+is-deeply 0xffffffff, 4294967295,
+    '0xffffffff is parsed right (covers bug on 32bit compilers)';
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
