@@ -105,9 +105,11 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     my class RT131174 {
         has @.a[2];
     }
-    is RT131174.new(:a[1, 2]).a.shape.gist, '(2)', 'shape of stantiated attribute';
+    is-deeply RT131174.new(:a[1, 2]).a.shape, (2,),
+        'shape of stantiated attribute';
 #?rakudo todo 'RT #131174'
-    is RT131174.^attributes[0].container.shape.gist, '(2)', 'attribute container shape';
+    is-deeply RT131174.^attributes[0].container.shape, (2,),
+        'attribute container shape';
 }
 
 # vim: ft=perl6
