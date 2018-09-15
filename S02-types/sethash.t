@@ -522,7 +522,7 @@ subtest 'cloned SetHash gets its own elements storage' => {
     my $i = 1001;
     $set{$i} = True;
     $i++;
-    ok $set{1001}, "SetHash retains object, not container";
+    is-deeply $set.keys, (1001,).Seq, "SetHash retains object, not container";
 }
 
 {
