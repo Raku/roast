@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 40;
+plan 39;
 
 # L<S32::IO/IO::Path>
 
@@ -213,48 +213,6 @@ subtest '.link' => {
         fails-like { l($target, $link) }, X::IO::Link, :$target, :name($link),
             'fail when link already exists';
     }
-}
-
-#?rakudo todo 'wait until 6.d to swap .child to .child-secure'
-#?DOES 1
-{
-subtest 'secureness of .child' => {
-    plan 10;
-
-    my $parent = make-temp-dir;
-    my $non-resolving-parent = make-temp-file.child('bar');
-
-    fails-like { $non-resolving-parent.child('../foo') }, X::IO::Resolve,
-        'non-resolving parent fails (given path is non-child)';
-
-    fails-like { $non-resolving-parent.child('foo') }, X::IO::Resolve,
-        'non-resolving parent fails (given path is child)';
-
-    fails-like { $parent.child('foo/bar') }, X::IO::Resolve,
-        'resolving parent fails (given path is a child, but not resolving)';
-
-    fails-like { $parent.child('../foo') }, X::IO::NotAChild,
-        'resolved parent fails (given path is not a child)';
-
-    is-path $parent.child('foo'), $parent.child('foo'),
-        'resolved parent with resolving, non-existent child';
-
-    $parent.child('foo').mkdir;
-    is-path $parent.child('foo'), $parent.child('foo'),
-        'resolved parent with resolving, existent child';
-
-    is-path $parent.child('foo/bar'), $parent.child('foo/bar'),
-        'resolved parent with resolving, existent child in a subdir';
-
-    is-path $parent.child('foo/../bar'), $parent.child('bar'),
-        'resolved parent with resolving, non-existent child, with ../';
-
-    fails-like { $parent.child('foo/../../bar') }, X::IO::NotAChild,
-        'resolved parent fails (given path is not a child, via child + ../)';
-
-    fails-like { $parent.child("../\x[308]") }, X::IO::NotAChild,
-        'resolved parent fails (given path is not a child, via combiners)';
-}
 }
 
 subtest '.sibling' => {
