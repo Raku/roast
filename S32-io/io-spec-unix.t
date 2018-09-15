@@ -84,8 +84,6 @@ my $path = %*ENV<PATH>;
 my @want         = </usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/games .>;
 is-eqv $Unix.path, @want.Seq, 'path';
 %*ENV<PATH> = '';
-# https://github.com/rakudo/rakudo/issues/2281
-#?rakudo TODO '.path does not give a proper empty Seq'
 is-eqv $Unix.path, ().Seq, 'no path';
 %*ENV<PATH> = $path;
 
