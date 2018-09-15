@@ -329,7 +329,8 @@ subtest '.path' => {
 
     temp %*ENV;
     constant $path-in  = 'foo;bar;"C:/ber"""""""""""""""""""/";;;;;m♥eow';
-    constant $path-out = <. foo  bar  C:/ber/  m♥eow>.Seq;
+    constant $path-out = ('.', 'foo',  'bar',
+      any(｢C:/ber/｣|｢C:\ber/｣|｢C:\ber\｣|｢C:/ber\｣),  'm♥eow').Seq;
     constant $empt-out = ('.',).Seq;
     $path-out.cache;
 
