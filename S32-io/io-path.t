@@ -74,7 +74,7 @@ subtest '.perl.EVAL rountrips' => {
         if .DEFINITE {
             subtest "using {.perl}" => {
                 plan 4;
-                is-deeply .IO.perl.EVAL,      .IO,      'new eqv old';
+                is-path   .IO.perl.EVAL,      .IO,      'equivalent object';
                 is-deeply .IO.perl.EVAL.path, .IO.path, 'same .path';
                 is-deeply .IO.perl.EVAL.CWD,  .IO.CWD,  'same .CWD';
                 is-deeply .IO.perl.EVAL.SPEC, .IO.SPEC, 'same .SPEC';
