@@ -7,7 +7,7 @@ use Test;
 # Since there's yet no existing behaviour for some of such combinations,
 # X::Multi::NoMatch is thrown. This APPENDIX test file is for such tests.
 
-plan 9;
+plan 10;
 
 { # RT #129773
     throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
@@ -36,3 +36,6 @@ dies-ok { 42.words: |<bunch of incorrect args> },
 # https://github.com/rakudo/rakudo/commit/742573724c
 dies-ok { 42.lines: |<bunch of incorrect args> },
     'no infinite loop when given wrong args to Cool.lines';
+
+throws-like { "".match: Nil }, X::Multi::NoMatch,
+    '.match with Nil matcher does not hang';
