@@ -92,14 +92,16 @@ subtest 'iterator-producing read methods not affected by internal chunking' => {
 }
 
 subtest '.flush' => {
-    # XXX TODO: it doesn't appear we're buffering anything at the moment;
-    # when/if we start doing so, ensure these tests cover all the cases
     plan 2;
     my $file = make-temp-file;
     my $fh will leave {.close} = $file.open: :w;
+    # an implementation may choose to make the first write to a handle
+    # unbuffered, to ensure that the handle is writable in the first place,
+    # so we'll do two prints, to trigger buffering, if it's implemented
     $fh.print: 'foo';
+    $fh.print: 'bar';
     $fh.flush;
-    is-deeply $file.slurp, 'foo', 'content was flushed';
+    is-deeply $file.slurp, 'foobar', 'content was flushed';
     fails-like { IO::Handle.new.flush }, X::IO::Flush,
         'fails with correct exception';
 }
