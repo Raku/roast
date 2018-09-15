@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 255;
+plan 257;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -517,12 +517,13 @@ subtest 'cloned SetHash gets its own elements storage' => {
 }
 
 # RT 130240
-{
-    my SetHash $set = SetHash.new;
+for SetHash, BagHash, MixHash -> \T {
+    my $obj = T.new;
     my $i = 1001;
-    $set{$i} = True;
+    $obj{$i} = 42;
     $i++;
-    is-deeply $set.keys, (1001,).Seq, "SetHash retains object, not container";
+    is-deeply $obj.keys, (1001,).Seq,
+        "{T.^name} retains object, not container";
 }
 
 {
