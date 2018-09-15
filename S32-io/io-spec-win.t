@@ -303,7 +303,7 @@ else {
 
 subtest '.basename' => {
     my @tests = '' => '', '.' => '.', '/' => '', 'foo/' => '', '/.' => '.',
-        'foo/.' => '.', 'foo/..' => '..', 'foo/...' => '...',
+        'foo/.' => '.', 'foo/..' => '..', 'foo/...' => '...', ｢y/\z｣ => 'z',
         'bar/♥foo' => '♥foo', '♥foo' => '♥foo', '♥foo/..' => '..',
         '//server/share' => 'share', '//server/share/' => '';
 
