@@ -299,7 +299,7 @@ subtest '.parts attribute' => {
         :basename<foo>,:dirname</bar>,:volume<C:>;
 
     check-parts IO::Path::Win32.new('C:/').parts, "C:/",
-        :basename(｢\｣),:dirname</>,:volume<C:>;
+        :basename(｢\｣ | ｢/｣),:dirname(｢\｣ | ｢/｣),:volume<C:>;
 }
 
 subtest '.SPEC attribute' => {
