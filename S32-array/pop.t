@@ -31,7 +31,7 @@ plan 38;
     is($a, 1, '@pop.pop works');
 
     is(+@pop, 1, 'we have 1 element in the array');
-    
+
     {
         $a = pop(@pop);
         is($a, -1, '@pop.pop works');
