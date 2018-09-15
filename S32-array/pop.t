@@ -107,24 +107,18 @@ plan 38;
 
 # RT #131245
 subtest 'no gost elements after pop/shift' => {
-    my @a = <a b c>;
-    @a.pop;
-    @a[3] = 42;
+    plan 4;
+
+    my @a = <a b c>; @a.pop;   @a[3] = 42;
     is-deeply @a, ['a', 'b', Any, 42], '.pop';
 
-    @a = <a b c>;
-    @a.shift;
-    @a[3] = 42;
-    is-deeply @a, ['b', 'c', Any, 42], '.shift';
-
-    @a = <a b c>;
-    pop @a;
-    @a[3] = 42;
+    @a = <a b c>; pop @a;      @a[3] = 42;
     is-deeply @a, ['a', 'b', Any, 42], '&pop';
 
-    @a = <a b c>;
-    shift @a;
-    @a[3] = 42;
+    @a = <a b c>; @a.shift;    @a[3] = 42;
+    is-deeply @a, ['b', 'c', Any, 42], '.shift';
+
+    @a = <a b c>; shift @a;    @a[3] = 42;
     is-deeply @a, ['b', 'c', Any, 42], '&shift';
 }
 
