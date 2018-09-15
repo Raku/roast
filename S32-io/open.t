@@ -214,9 +214,6 @@ subtest '.open uses attributes by default' => {
         '.encoding is respected';
     $fh.close;
 
-    # XXX TODO 6.d: we have an inconsistency between, say, .encoding and .nl-in
-    # the former takes new value as an arg, but the latter returns a Proxy and
-    # can be assigned to
     $fh.encoding('utf8');
     $fh .= open: :rw;
     is-deeply $fh.lines.join, $content, '.chomp is respected';
