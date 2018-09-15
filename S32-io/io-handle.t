@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 32;
+plan 31;
 
 my $path = "io-handle-testfile";
 
@@ -90,9 +90,6 @@ subtest 'iterator-producing read methods not affected by internal chunking' => {
         is +.open.split(/.+/, :skip-empty), 0, '.split on IO::Handle';
     }
 }
-
-is-deeply IO::Handle.new.encoding, 'utf8',
-    'instantiated handle defaults to utf8 encoding';
 
 subtest '.flush' => {
     # XXX TODO: it doesn't appear we're buffering anything at the moment;
