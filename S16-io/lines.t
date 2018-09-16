@@ -127,6 +127,7 @@ group-of 5 => '$limit works right with any combination of args' => {
         }
         with $file.open {
             is-deeply .lines(2, :close)[^2], $exp, 'right lines (slice)';
+            #?rakudo todo 'handle is not closed https://github.com/rakudo/rakudo/issues/2283'
             is-deeply .opened, False, 'closed handle (slice)';
         }
     }
@@ -144,6 +145,7 @@ group-of 5 => '$limit works right with any combination of args' => {
         }
         with $file.open {
             is-deeply lines($_, 2, :close)[^2], $exp, 'right lines (slice)';
+            #?rakudo todo 'handle is not closed https://github.com/rakudo/rakudo/issues/2283'
             is-deeply .opened, False, 'closed handle (slice)';
         }
     }
