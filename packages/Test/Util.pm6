@@ -4,6 +4,19 @@ unit module Test::Util;
 use Test;
 use MONKEY-GUTS;
 
+sub group-of (
+    Pair (
+        Int:D :key($plan),
+        Pair  :value((
+            Str:D :key($desc),
+                  :value(&tests))))
+) is export {
+    subtest $desc => {
+        plan $plan;
+        tests
+    }
+}
+
 sub is-path (IO::Path:D $got, IO::Path:D $exp, Str:D $desc) is export {
     cmp-ok $got.resolve, '~~', $exp.resolve, $desc;
 }
@@ -428,6 +441,28 @@ This module is for test code that would be useful
 across Perl 6 implementations.
 
 =head1 FUNCTIONS
+
+=head2 group-of
+group-of (Pair (Int:D :key($plan), Pair :value((Str:D :key($desc), :value(&tests)))))
+
+A more concise way to write subtests. Code:
+
+    group-of 42 => 'some feature' => {
+        ok 1;
+        ok 2;
+        ...
+        ok 42;
+    }
+
+Is equivalent to:
+
+    subtest 'some feature' => {
+        plan 42;
+        ok 1;
+        ok 2;
+        ...
+        ok 42;
+    }
 
 =head2 is-path (IO::Path:D $got, IO::Path:D $exp, Str:D $desc)
 
