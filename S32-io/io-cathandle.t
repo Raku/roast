@@ -313,7 +313,7 @@ subtest 'lines method' => {
     is-deeply IO::CatHandle.new(files).lines(5),   $exp.head(5), '$limit 5';
 
     my @files = files;
-    is-deeply IO::CatHandle.new(@files).lines(0), $exp.head(0),
+    is-deeply IO::CatHandle.new(@files).lines(0), ().Seq,
         '$limit 0 (return value)';
     is-deeply @files.grep(IO::Handle).grep(*.opened.not).elems, 0,
         '$limit 0 (all opened handles remained open)';
@@ -337,7 +337,7 @@ subtest 'lines method' => {
         '$limit 5, :close arg (all opened handles got closed)';
 
     @files = files;
-    is-deeply IO::CatHandle.new(@files).lines(0, :close), $exp.head(0),
+    is-deeply IO::CatHandle.new(@files).lines(0, :close), ().Seq,
         '$limit 0, :close arg (return value)';
     is-deeply @files.grep(IO::Handle).grep(*.opened).elems, 0,
         '$limit 0, :close arg (all opened handles got closed)';
