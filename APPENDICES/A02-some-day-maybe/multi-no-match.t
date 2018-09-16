@@ -7,7 +7,7 @@ use Test;
 # Since there's yet no existing behaviour for some of such combinations,
 # X::Multi::NoMatch is thrown. This APPENDIX test file is for such tests.
 
-plan 10;
+plan 12;
 
 { # RT #129773
     throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
@@ -39,3 +39,10 @@ dies-ok { 42.lines: |<bunch of incorrect args> },
 
 throws-like { "".match: Nil }, X::Multi::NoMatch,
     '.match with Nil matcher does not hang';
+
+{ # RT#131339
+    throws-like { Pair.new: <foo bar ber meow>, <meows>, 42 }, X::Multi::NoMatch,
+        'Pair.new with wrong positional args does not go to Mu.new';
+    throws-like { Pair.new: :42a                            }, X::Multi::NoMatch,
+        'Pair.new with wrong named args does not go to Mu.new';
+}
