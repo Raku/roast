@@ -437,36 +437,36 @@ sub showkv($x) {
     my $e = ().MixHash;
     is $e.total, 0, '.total gives sum of values (empty)';
     is +$e, 0, '+$mix gives sum of values (empty)';
-    is $e.minpairs, (), '.minpairs works (empty)';
-    is $e.maxpairs, (), '.maxpairs works (empty)';
-    is $e.fmt('foo %s'), "", '.fmt(%s) works (empty)';
-    is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
-    is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
-    is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
+    is-deeply $e.minpairs, (), '.minpairs works (empty)';
+    is-deeply $e.maxpairs, (), '.maxpairs works (empty)';
+    is-deeply $e.fmt('foo %s'), "", '.fmt(%s) works (empty)';
+    is-deeply $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
+    is-deeply $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
+    is-deeply $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
 {
     my $m = <a>.MixHash;
     $m<a> = 42.1;
-    is $m<a>, 42.1, 'did we set a Real value';
+    is-deeply $m<a>, 42.1, 'did we set a Real value';
     throws-like { $m<a> = "foo" },
       X::Str::Numeric,
       'Make sure we cannot assign Str on a key';
 
     $_ = 666.1 for $m.values;
-    is $m<a>, 666.1, 'did we set a Real value from a .values alias';
+    is-deeply $m<a>, 666.1, 'did we set a Real value from a .values alias';
     throws-like { $_ = "foo" for $m.values },
       X::Str::Numeric,
       'Make sure we cannot assign Str on a .values alias';
 
     .value = 999.1 for $m.pairs;
-    is $m<a>, 999.1, 'did we set a Real value from a .pairs alias';
+    is-deeply $m<a>, 999.1, 'did we set a Real value from a .pairs alias';
     throws-like { .value = "foo" for $m.pairs },
       X::Str::Numeric,
       'Make sure we cannot assign Str on a .pairs alias';
 
     for $m.kv -> \k, \v { v = 22.1 };
-    is $m<a>, 22.1, 'did we set a Real value from a .kv alias';
+    is-deeply $m<a>, 22.1, 'did we set a Real value from a .kv alias';
     throws-like { for $m.kv -> \k, \v { v = "foo" } },
       X::Str::Numeric,
       'Make sure we cannot assign Str on a .kv alias';
@@ -546,39 +546,39 @@ subtest 'MixHash autovivification of non-existent keys' => {
 {
     my $mh = <a a a>.MixHash;
     for $mh.values { $_-- }
-    is $mh, "a(2)",
+    is-deeply $mh, <a a>.MixHash,
       'Can use $_ from .values to remove occurrences from MixHash';
     for $mh.values { $_ = 42 }
-    is $mh, "a(42)",
+    is-deeply $mh, ('a' xx 42).MixHash,
       'Can use $_ from .values to set number occurrences in MixHash';
     for $mh.values { $_ = 0 }
-    is $mh, "",
+    is-deeply $mh, ().MixHash,
       'Can use $_ from .values to remove items from MixHash';
 }
 
 {
     my $mh = <a a a>.MixHash;
     for $mh.kv -> \k, \v { v-- }
-    is $mh, "a(2)",
+    is-deeply $mh, <a a>.MixHash,
       'Can use value from .kv to remove occurrences from MixHash';
     for $mh.kv -> \k, \v { v = 42 }
-    is $mh, "a(42)",
+    is-deeply $mh, ('a' xx 42).MixHash,
       'Can use value from .kv to set number occurrences in MixHash';
     for $mh.kv -> \k, \v { v = 0 }
-    is $mh, "",
+    is-deeply $mh, ().MixHash,
       'Can use $_ from .kv to remove items from MixHash';
 }
 
 {
     my $mh = <a a a>.MixHash;
     for $mh.pairs { .value-- }
-    is $mh, "a(2)",
+    is-deeply $mh, <a a>.MixHash,
       'Can use value from .pairs to remove occurrences from MixHash';
     for $mh.pairs { .value = 42 }
-    is $mh, "a(42)",
+    is-deeply $mh, ('a' xx 42).MixHash,
       'Can use value from .pairs to set number occurrences in MixHash';
     for $mh.pairs { .value = 0 }
-    is $mh, "",
+    is-deeply $mh, ().MixHash,
       'Can use $_ from .pairs to remove items from MixHash';
 }
 
@@ -611,7 +611,7 @@ subtest 'elements with weight zero are removed' => {
     $b = <a b b c d e f>.MixHash; .value-- for $b.pairs;
     is-deeply $b, ("b"=>1).MixHash, 'Pair value decrement';
     $b = <a b b c d e f>.MixHash; $_= 0 for $b.values;
-    is $b, ().MixHash, 'weight set to zero';
+    is-deeply $b, ().MixHash, 'weight set to zero';
 }
 
 # RT #131241 (zero case covered by RT #130366)

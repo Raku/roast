@@ -529,12 +529,12 @@ for SetHash, BagHash, MixHash -> \T {
 {
     my $sh = <a>.SetHash;
     for $sh.values { $_-- }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use $_ from .values to remove items from SetHash (1)';
 
     $sh = <a>.SetHash;
     for $sh.values { $_ = 0 }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use $_ from .values to remove items from SetHash (2)';
 }
 
@@ -542,19 +542,19 @@ for SetHash, BagHash, MixHash -> \T {
 {
     my $sh = <a>.SetHash;
     for $sh.values { $_ = 0; $_ = 1 }
-    is $sh, "a",
+    is-deeply $sh, <a>.SetHash,
       'Can use $_ from .values to restore items in SetHash';
 }
 
 {
     my $sh = <a>.SetHash;
     for $sh.kv -> \k, \v { v-- }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use value from .kv to remove items from SetHash (1)';
 
     $sh = <a>.SetHash;
     for $sh.kv -> \k, \v { v = 0 }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use value from .kv to remove items from SetHash (2)';
 }
 
@@ -562,19 +562,19 @@ for SetHash, BagHash, MixHash -> \T {
 {
     my $sh = <a>.SetHash;
     for $sh.kv -> \k, \v { v = 0; v = 1 }
-    is $sh, "a",
+    is-deeply $sh, <a>.SetHash,
       'Can use value from .kv to restore items in SetHash';
 }
 
 {
     my $sh = <a>.SetHash;
     for $sh.pairs { .value-- }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use $_ from .pairs to remove items from SetHash (1)';
 
     $sh = <a>.SetHash;
     for $sh.pairs { .value = 0 }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use $_ from .pairs to remove items from SetHash (2)';
 }
 
@@ -582,7 +582,7 @@ for SetHash, BagHash, MixHash -> \T {
 {
     my $sh = <a>.SetHash;
     for $sh.pairs { .value = 0; .value = 1 }
-    is $sh, "a",
+    is-deeply $sh, <a>.SetHash,
       'Can use $_ from .pairs to restore items in SetHash';
 }
 
@@ -615,11 +615,11 @@ for SetHash, BagHash, MixHash -> \T {
 subtest 'elements with weight zero are removed' => {
     plan 3;
     my $b = <a b b c d e f>.SetHash; $_-- for $b.values;
-    is $b, SetHash.new, 'weight decrement';
+    is-deeply $b, SetHash.new, 'weight decrement';
     $b = <a b b c d e f>.SetHash; .value-- for $b.pairs;
-    is $b, SetHash.new, 'Pair value decrement';
+    is-deeply $b, SetHash.new, 'Pair value decrement';
     $b = <a b b c d e f>.SetHash; $_= 0 for $b.values;
-    is $b, ().SetHash, 'weight set to zero';
+    is-deeply $b, ().SetHash, 'weight set to zero';
 }
 
 # RT #131241 (zero case covered by RT #130366)
