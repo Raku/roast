@@ -63,7 +63,7 @@ with run(:out, $*EXECUTABLE, '-e', '') -> $proc {
     with $proc.out {
         is-deeply .IO,   IO::Path,  '.IO   returns an IO::Path type object';
         is-deeply .path, IO::Path,  '.path returns an IO::Path type object';
-        is-deeply .proc, $proc,     ".proc returns pipe's Proc object";
+        cmp-ok .proc, '===', $proc, ".proc returns pipe's Proc object";
         quietly is-deeply .Str, '', '.Str is empty string';
         .close;
     }
