@@ -7,7 +7,7 @@ use Test;
 # Since there's yet no existing behaviour for some of such combinations,
 # X::Multi::NoMatch is thrown. This APPENDIX test file is for such tests.
 
-plan 12;
+plan 13;
 
 { # RT #129773
     throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
@@ -45,4 +45,12 @@ throws-like { "".match: Nil }, X::Multi::NoMatch,
         'Pair.new with wrong positional args does not go to Mu.new';
     throws-like { Pair.new: :42a                            }, X::Multi::NoMatch,
         'Pair.new with wrong named args does not go to Mu.new';
+}
+
+# RT #131490
+subtest "Junction.new does not use Mu.new's candidates" => {
+    plan 3;
+    throws-like { Junction.new: 42      }, X::Multi::NoMatch, 'positional';
+    throws-like { Junction.new: :42meow }, X::Multi::NoMatch, 'named';
+    throws-like { Junction.new          }, X::Multi::NoMatch, 'no args';
 }

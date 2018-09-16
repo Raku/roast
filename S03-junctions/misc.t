@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 149;
+plan 148;
 
 =begin pod
 
@@ -521,14 +521,6 @@ subtest 'Junction.new does not crash with empty, but touched array' => {
 
     my @a; $ = +@a;
     lives-ok { Junction.new($_, @a).perl }, $_ for <all none any one>;
-}
-
-# RT #131490
-subtest "Junction.new does not use Mu.new's candidates" => {
-    plan 3;
-    throws-like { Junction.new: 42      }, X::Multi::NoMatch, 'positional';
-    throws-like { Junction.new: :42meow }, X::Multi::NoMatch, 'named';
-    throws-like { Junction.new          }, X::Multi::NoMatch, 'no args';
 }
 
 subtest 'Junction .Str, .gist, and .perl' => {
