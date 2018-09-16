@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 227;
 
@@ -262,7 +264,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
       -1,   '-1',
       -Inf, '-Inf'
     -> $p, $t {
-        is-deeply set().roll($p), ().Seq, "empty set.roll($t) -> ().Seq"
+        is-eqv set().roll($p), ().Seq, "empty set.roll($t) -> ().Seq"
     }
     dies-ok { set().roll(NaN) }, 'empty set.roll(NaN) should die';
 }
@@ -304,7 +306,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
       -1,   '-1',
       -Inf, '-Inf'
     -> $p, $t {
-        is-deeply set().pick($p), ().Seq, "empty set.pick($t) -> ().Seq"
+        is-eqv set().pick($p), ().Seq, "empty set.pick($t) -> ().Seq"
     }
     dies-ok { set().pick(NaN) }, 'empty set.pick(NaN) should die';
 }

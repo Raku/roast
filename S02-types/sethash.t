@@ -1,4 +1,6 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
+use Test::Util;
 use Test;
 
 plan 257;
@@ -263,7 +265,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
       -1,   '-1',
       -Inf, '-Inf'
     -> $p, $t {
-        is-deeply ().SetHash.roll($p), ().Seq, "().SetHash.roll($t) -> ().Seq"
+        is-eqv ().SetHash.roll($p), ().Seq, "().SetHash.roll($t) -> ().Seq"
     }
     dies-ok { ().SetHash.roll(NaN) }, '().SetHash.roll(NaN) should die';
 }
@@ -307,7 +309,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
       -1,   '-1',
       -Inf, '-Inf'
     -> $p, $t {
-        is-deeply ().SetHash.pick($p), ().Seq, "().SetHash.pick($t) -> ().Seq"
+        is-eqv ().SetHash.pick($p), ().Seq, "().SetHash.pick($t) -> ().Seq"
     }
     dies-ok { ().SetHash.pick(NaN) }, '().SetHash.pick(NaN) should die';
 }
