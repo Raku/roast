@@ -88,9 +88,8 @@ subtest '&slurp(IO::Handle)' => {
         'foo'.&f.absolute, 'bar'.&f.absolute, 'ber'.&f.absolute,
     ], 'slurp() uses $*ARGFILES';
 
-    is_run '$*ARGFILES.encoding: Nil; say slurp', {
-        :0status, :err(''),
-        :out('Buf[uint8]:0x<66 6f 6f 62 61 72 62 65 72>\qq[\n]')
+    is_run '$*ARGFILES.encoding: Nil; say slurp.decode', {
+        :0status, :err(''), :out("foobarber\n")
     }, :args[
         'foo'.&f.absolute, 'bar'.&f.absolute, 'ber'.&f.absolute,
     ], 'slurp() uses $*ARGFILES (binary mode)';
