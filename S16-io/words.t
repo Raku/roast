@@ -135,8 +135,8 @@ for IO::Handle.^lookup('words'), &words -> &WORDS {
         }
         group-of 2 => '.push-exactly' => {
             my $fh will leave {.close} = $file.open;
-            my @res = WORDS($fh, 2, :close)[1,2];
-            is-deeply @res.List, ($all-words[^2][1], Any), 'right words';
+            my @res = WORDS($fh, 2, :close)[^2];
+            is-deeply @res.List, $all-words[^2], 'right words';
             # we didn't exhaust the iterator, but did $limit items from it
             # already, so we'd expect the handle to be closed now
             is-deeply $fh.opened, False, 'closed handle';
