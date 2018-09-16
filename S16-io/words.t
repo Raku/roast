@@ -68,11 +68,12 @@ for IO::Handle.^lookup('words'), &words -> &WORDS {
             is-deeply @res.Seq, $all-words, 'right words';
             is-deeply $fh.opened, False, 'closed handle';
         }
-        subtest '.push-exactly' => { plan 1;
+        subtest '.push-exactly' => { plan 2;
             my $fh will leave {.close} = $file.open;
             my @res = WORDS($fh, :close)[1,2];
             is-deeply @res.List, $all-words[1,2], 'right words';
-            # we don't exhaust the iterator, so don't check if it closed
+            # we didn't exhaust the iterator, so handle should still be opened
+            is-deeply $fh.opened, True, 'still-open handle';
         }
         subtest '.count-only' => { plan 2;
             my $fh = $file.open;
@@ -132,11 +133,13 @@ for IO::Handle.^lookup('words'), &words -> &WORDS {
             is-deeply @res.List, $all-words[^2], 'right words';
             is-deeply $fh.opened, False, 'closed handle';
         }
-        subtest '.push-exactly' => { plan 1;
+        subtest '.push-exactly' => { plan 2;
             my $fh will leave {.close} = $file.open;
             my @res = WORDS($fh, 2, :close)[1,2];
             is-deeply @res.List, ($all-words[^2][1], Any), 'right words';
-            # we don't exhaust the iterator, so don't check if it closed
+            # we didn't exhaust the iterator, but did $limit items from it
+            # already, so we'd expect the handle to be closed now
+            is-deeply $fh.opened, False, 'closed handle';
         }
         subtest '.count-only' => { plan 2;
             my $fh = $file.open;
