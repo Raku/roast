@@ -109,35 +109,42 @@ lives-ok {
 }
 
 # https://github.com/rakudo/rakudo/commit/bf399380c1
-subtest '$limit works right with any combination of args' => {
-    plan 5;
+group-of 5 => '$limit works right with any combination of args' => {
     my $file = make-temp-file :content("foo\nbar\nber");
-    my $exp = ('foo', 'bar').Seq;
+    (my $exp = ('foo', 'bar').Seq).cache;
     is-deeply $file.lines(2), $exp, 'IO::Path.lines($limit)';
-    subtest 'IO::Handle.lines($limit)' => { plan 2;
+    group-of 2 => 'IO::Handle.lines($limit)' => {
         with $file.open {
-            is-deeply .lines(2), $exp, 'right lines';
-            is-deeply .opened, True, 'left handle opened';
+            is-eqv    .lines(2), $exp, 'right lines';
+            is-deeply .opened,   True, 'left handle opened';
             .close;
         }
     }
-    subtest 'IO::Handle.lines($limit, :close)' => { plan 2;
+    group-of 4 => 'IO::Handle.lines($limit, :close)' => {
         with $file.open {
-            is-deeply .lines(2, :close), $exp, 'right lines';
-            is-deeply .opened, False, 'closed handle';
+            is-eqv    .lines(2, :close), $exp, 'right lines (full read)';
+            is-deeply .opened, False, 'closed handle (full read)';
+        }
+        with $file.open {
+            is-deeply .lines(2, :close)[^2], $exp, 'right lines (slice)';
+            is-deeply .opened, False, 'closed handle (slice)';
         }
     }
-    subtest '&lines($fh, $limit)' => { plan 2;
+    group-of 2 => '&lines($fh, $limit)' => {
         with $file.open {
-            is-deeply lines($_, 2), $exp, 'right lines';
-            is-deeply .opened, True, 'left handle opened';
+            is-eqv    lines($_, 2), $exp, 'right lines';
+            is-deeply .opened,      True, 'left handle opened';
             .close;
         }
     }
-    subtest '&lines($fh, $limit, :close)' => { plan 2;
+    group-of 4 => '&lines($fh, $limit, :close)' => {
         with $file.open {
-            is-deeply lines($_, 2, :close), $exp, 'right lines';
-            is-deeply .opened, False, 'closed handle';
+            is-eqv    lines($_, 2, :close), $exp, 'right lines (full read)';
+            is-deeply .opened, False, 'closed handle (full read)';
+        }
+        with $file.open {
+            is-deeply lines($_, 2, :close)[^2], $exp, 'right lines (slice)';
+            is-deeply .opened, False, 'closed handle (slice)';
         }
     }
 }
