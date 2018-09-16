@@ -617,20 +617,20 @@ subtest 'BagHash autovivification of non-existent keys' => {
 {
     my $bh = <a a a>.BagHash;
     for $bh.values { $_-- }
-    is $bh, "a(2)",
+    is-deeply $bh, <a a>.BagHash,
       'Can use $_ from .values to remove occurrences from BagHash';
     for $bh.values { $_ = 42 }
-    is $bh, "a(42)",
+    is-deeply $bh, ('a' xx 42).BagHash,
       'Can use $_ from .values to set number occurrences in BagHash';
     for $bh.values { $_ = 0 }
-    is $bh, "",
+    is-deeply $bh, ().BagHash,
       'Can use $_ from .values to remove items from BagHash';
 }
 
 {
     my $bh = <a a a>.BagHash;
     for $bh.kv -> \k, \v { v-- }
-    is $bh, "a(2)",
+    is-deeply $bh, <a a>.BagHash,
       'Can use value from .kv to remove occurrences from BagHash';
     for $bh.kv -> \k, \v { v = 42 }
     is $bh, "a(42)",
@@ -643,13 +643,13 @@ subtest 'BagHash autovivification of non-existent keys' => {
 {
     my $bh = <a a a>.BagHash;
     for $bh.pairs { .value-- }
-    is $bh, "a(2)",
+    is-deeply $bh, <a a>.BagHash,
       'Can use value from .pairs to remove occurrences from BagHash';
     for $bh.pairs { .value = 42 }
-    is $bh, "a(42)",
+    is-deeply $bh, ('a' xx 42).BagHash,
       'Can use value from .pairs to set number occurrences in BagHash';
     for $bh.pairs { .value = 0 }
-    is $bh, "",
+    is-deeply $bh, ().BagHash,
       'Can use $_ from .pairs to remove items from BagHash';
 }
 
