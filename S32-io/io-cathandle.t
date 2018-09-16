@@ -542,13 +542,13 @@ subtest 'path method' => {
     my @files = make-files <foo bar ber>;
     my @paths = map *.IO, @files;
     my $cat = IO::CatHandle.new: @files;
-    is-deeply $cat.IO, @paths[0], '1';
+    is-deeply $cat.path, @paths[0], '1';
     $cat.read: 4;
-    is-deeply $cat.IO, @paths[1], '2';
+    is-deeply $cat.path, @paths[1], '2';
     $cat.read: 4;
-    is-deeply $cat.IO, @paths[2], '3';
+    is-deeply $cat.path, @paths[2], '3';
     $cat.read: 1000;
-    is-deeply $cat.IO, Nil, '4';
+    is-deeply $cat.path, Nil, '4';
 }
 
 subtest 'perl method' => {
