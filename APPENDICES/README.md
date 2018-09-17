@@ -36,3 +36,12 @@ we might come up with a very useful usecase for write methods of an
 `IO::CatHandle`, but until that day, these methods must throw an `X::NYI`,
 because otherwise the versions of the parent's (`IO::Handle`) would be used
 instead, providing confusing behaviour.
+
+### [`A03-older-specs`](A03-older-specs)
+
+Sometimes during the creation of the next version of the spec various bugs
+get fixed in features deprecated in fewer specs but are still available in older
+language versions. This appendix contains such tests. It's possible newer
+implementations may choose not to implement features that are already
+deemed deprecated in the oldest version of the specification those
+implementations decide to implement.
