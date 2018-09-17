@@ -266,7 +266,6 @@ is-deeply ([lazy 1..3] X 4..5)[^2], ((1, 4), (1, 5)),
 group-of 3 => 'cross with empty List on RHS does not crash' => {
     is-eqv ((1,2) X  ()), ().Seq, 'X';
     is-eqv ((1,2) X, ()), ().Seq, 'X,';
-    #?rakudo skip 'crashes https://github.com/rakudo/rakudo/issues/2286'
     is-eqv ((1,2) X+ ()), ().Seq, 'X+';
 }
 
