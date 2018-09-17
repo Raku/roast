@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 2;
+plan 3;
 
 # RT #131503
 #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
@@ -64,3 +64,7 @@ plan 2;
     }, ｢can use unopened handle with path '-'.IO｣;
   }
 }
+
+# RT #131503
+is_run ｢'-'.IO.slurp.print｣, 'meows', {:out<meows>, :err(''), :0status},
+    'can .slurp from "-".IO path';
