@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 use Test;
 
-plan 225;
+plan 226;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -531,5 +531,8 @@ subtest '.hash does not cause keys to be stringified' => {
     dies-ok { %h<a>:delete }, 'cannot :delete from Mix';
     dies-ok { %h<a> = False }, 'cannot delete from Mix by assignment';
 }
+
+# R#2289
+is-deeply (1,2,3).Mix.ACCEPTS(().Mix), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

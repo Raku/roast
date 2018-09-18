@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 use Test;
 
-plan 271;
+plan 272;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -637,5 +637,8 @@ subtest "elements with negative weights are allowed in MixHashes" => {
     lives-ok { %h<f> = 0 }, 'can delete from MixHash by assignment';
     is %h.elems, 1, 'did we get right number of elements assignment';
 }
+
+# R#2289
+is-deeply (1,2,3).MixHash.ACCEPTS(().MixHash), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

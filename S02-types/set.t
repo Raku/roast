@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 227;
+plan 228;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -573,5 +573,8 @@ is +set(.3e0, .1e0+.2e0, 1e0, 1e0+4e-15), 4,
     dies-ok { my Int %h := :42foo.Set.Hash },
       'have typechecking on a Hashifeid Set iterator';
 }
+
+# R#2289
+is-deeply (1,2,3).Set.ACCEPTS(().Set), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

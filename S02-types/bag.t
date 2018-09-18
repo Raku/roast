@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 234;
+plan 235;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -568,5 +568,8 @@ subtest '.hash does not cause keys to be stringified' => {
     dies-ok { %h<a>:delete }, 'cannot :delete from Bag';
     dies-ok { %h<a> = False }, 'cannot delete from Bag by assignment';
 }
+
+# R#2289
+is-deeply (1,2,3).Bag.ACCEPTS( ().Bag ), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

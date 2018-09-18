@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test::Util;
 use Test;
 
-plan 257;
+plan 258;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -647,5 +647,8 @@ subtest "elements with negative weights are allowed in SetHashes" => {
     lives-ok { %h<f> = False }, 'can delete from SetHash by assignment';
     is %h.elems, 1, 'did we get right number of elements assignment';
 }
+
+# R#2289
+is-deeply (1,2,3).SetHash.ACCEPTS(().SetHash), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 303;
+plan 304;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -711,5 +711,8 @@ is-deeply ('foo' => 10000000000000000000).BagHash.grab(1), ('foo',),
     %h<foo> = 10000000000000000000;
     is %h<foo>, 10000000000000000000, 'can successfully set >64-bit value';
 }
+
+# R#2289
+is-deeply (1,2,3).BagHash.ACCEPTS(().BagHash), False, 'can we smartmatch empty';
 
 # vim: ft=perl6
