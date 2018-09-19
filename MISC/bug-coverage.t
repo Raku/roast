@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 11;
+plan 12;
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 25;
@@ -308,5 +308,9 @@ is_run ｢
     my @x = do for ^20 { [do for ^5 { ("a".."z").roll(3).join }] }
     print @x.elems
 ｣, {:out<20>, :err(''), :0status}, 'no "Illegal Instruction" crashes';
+
+# https://github.com/rakudo/rakudo/issues/2222
+throws-like ｢my $ = 5 »*» (2..4)｣, X::HyperOp::NonDWIM,
+    'non DWIM hyper throws good error';
 
 # vim: expandtab shiftwidth=4 ft=perl6
