@@ -9,8 +9,7 @@ use Test::Util;
 
 plan 4;
 
-subtest ':sym<> colonpair on subroutine names is reserved' => {
-    plan 6;
+group-of 6 => ':sym<> colonpair on subroutine names is reserved' => {
     throws-like 'use v6.d.PREVIEW; sub meow:sym<bar> {}', X::Syntax::Reserved, ':sym<...>';
     throws-like 'use v6.d.PREVIEW; sub meow:sym«bar» {}', X::Syntax::Reserved, ':sym«...»';
     throws-like 'use v6.d.PREVIEW; sub meow:foo<bar>:sym<bar> {}', X::Syntax::Reserved,
@@ -23,8 +22,7 @@ subtest ':sym<> colonpair on subroutine names is reserved' => {
         ':sym«...»:foo<bar>';
 }
 
-subtest '$*ARGFILES is set to $*IN inside sub MAIN' => {
-    plan 5;
+group-of 5 => '$*ARGFILES is set to $*IN inside sub MAIN' => {
     my @args = <THE FILES CONTENT>.map: {make-temp-file :$^content}
 
     is_run ｢
@@ -79,8 +77,7 @@ subtest '$*ARGFILES is set to $*IN inside sub MAIN' => {
     }, 'no MAIN';
 }
 
-subtest 'native num defaults to 0e0' => {
-    plan 8;
+group-of 8 => 'native num defaults to 0e0' => {
     my num $x;
     is-deeply $x, 0e0, '`my` variable';
     is-deeply my class { has num $.z }.new.z, 0e0, 'class attribute';
