@@ -7,7 +7,7 @@ use Test::Util;
 # They might be rearranged into other files in the future, but for now, keeping them in this
 # file avoids creating a ton of `-6.d.t` files for the sake of single tests.
 
-plan 5;
+plan 6;
 
 group-of 6 => ':sym<> colonpair on subroutine names is reserved' => {
     throws-like 'use v6.d.PREVIEW; sub meow:sym<bar> {}', X::Syntax::Reserved, ':sym<...>';
@@ -114,6 +114,86 @@ group-of 6 => '$()/@()/%() have no magick' => {
 
     is-eqv %(), {}, '%() is a Hash';
     is-eqv (%(), %(), %()).flat, ().Seq, '@() is NOT a containerized Hash';
+}
+
+group-of 3 => 'smiley constraints default to type object without smiley' => {
+    group-of 14 => ':D' => {
+        # XXX TODO: spec enums. POV currently blocked by
+        # https://github.com/rakudo/rakudo/issues/2297
+        is-eqv (my Int:D constant \a .= new: 42), 42, 'sigilless-constant';
+        is-eqv (my Int:D constant $  .= new: 42), 42, '$-constant';
+
+        is-eqv (my Int:D \b .= new: 42), 42, 'sigilless-variable';
+        is-eqv (my Int:D $  .= new: 42), 42, '$-variable';
+        is-eqv (my Int:D @)[^3],    (Int, Int, Int), ｢@-variable's holes｣;
+        is-eqv (my Int:D %)<a b c>, (Int, Int, Int), ｢%-variable's missing keys｣;
+
+        is-eqv my class { has Int:D $.v .= new: 42 }.new.v, 42,              '$ attribute';
+        is-eqv my class { has Int:D @.v }.new.v[^3],        (Int, Int, Int), '@ attribute';
+        is-eqv my class { has Int:D %.v }.new.v<a b c>,     (Int, Int, Int), '% attribute';
+
+        is-eqv ->   Int:D @v  { @v[^3]    }(my Int:D @), (Int, Int, Int), '@ param in block';
+        is-eqv ->   Int:D %v  { %v<a b c> }(my Int:D %), (Int, Int, Int), '% param in block';
+        is-eqv sub (Int:D @v) { @v[^3]    }(my Int:D @), (Int, Int, Int), '@ param in sub';
+        is-eqv sub (Int:D %v) { %v<a b c> }(my Int:D %), (Int, Int, Int), '% param in sub';
+
+        my Int:D &foo = sub (--> Int:D) {};
+        is-eqv &foo.of, Int:D, 'parametarized Callables are parametarized with smiley';
+    }
+
+    group-of 14 => ':U' => {
+        # XXX TODO: spec enums. POV currently blocked by
+        # https://github.com/rakudo/rakudo/issues/2297
+        is-eqv (my Int:U constant \a .= self), Int, 'sigilless-constant';
+        is-eqv (my Int:U constant $  .= self), Int, '$-constant';
+
+        is-eqv (my Int:U \b .= self), Int, 'sigilless-variable';
+        is-eqv (my Int:U $  .= self), Int, '$-variable';
+        is-eqv (my Int:U @)[^3],    (Int, Int, Int), ｢@-variable's holes｣;
+        is-eqv (my Int:U %)<a b c>, (Int, Int, Int), ｢%-variable's missing keys｣;
+
+        is-eqv my class { has Int:U $.v .= self }.new.v, Int,             '$ attribute';
+        is-eqv my class { has Int:U @.v }.new.v[^3],     (Int, Int, Int), '@ attribute';
+        is-eqv my class { has Int:U %.v }.new.v<a b c>,  (Int, Int, Int), '% attribute';
+
+        #?rakudo 4 skip 'crashes https://github.com/rakudo/rakudo/issues/2298'
+        is-eqv ->   Int:U @v  { @v[^3]    }(my Int:U @), (Int, Int, Int), '@ param in block';
+        is-eqv ->   Int:U %v  { %v<a b c> }(my Int:U %), (Int, Int, Int), '% param in block';
+        is-eqv sub (Int:U @v) { @v[^3]    }(my Int:U @), (Int, Int, Int), '@ param in sub';
+        is-eqv sub (Int:U %v) { %v<a b c> }(my Int:U %), (Int, Int, Int), '% param in sub';
+
+        my Int:U &foo = sub (--> Int:U) {};
+        is-eqv &foo.of, Int:U, 'parametarized Callables are parametarized with smiley';
+    }
+
+    group-of 14 => ':_' => {
+        # N.B.: The `:_` is the default smiley and some implementations ignore it entirely
+        # after parsing. Thus, this group of tests largely exists for completeness and possible
+        # bug coverage rather than trying to spec for some behaviour that
+        # isn't present without smileys.
+
+        # XXX TODO: spec enums. POV currently blocked by
+        # https://github.com/rakudo/rakudo/issues/2297
+        is-eqv (my Int:_ constant \a .= new: 42), 42, 'sigilless-constant';
+        is-eqv (my Int:_ constant $  .= new: 42), 42, '$-constant';
+
+        is-eqv (my Int:_ \b .= new: 42), 42, 'sigilless-variable';
+        is-eqv (my Int:_ $  .= new: 42), 42, '$-variable';
+        is-eqv (my Int:_ @)[^3],    (Int, Int, Int), ｢@-variable's holes｣;
+        is-eqv (my Int:_ %)<a b c>, (Int, Int, Int), ｢%-variable's missing keys｣;
+
+        is-eqv my class { has Int:_ $.v .= new: 42 }.new.v, 42,              '$ attribute';
+        is-eqv my class { has Int:_ @.v }.new.v[^3],        (Int, Int, Int), '@ attribute';
+        is-eqv my class { has Int:_ %.v }.new.v<a b c>,     (Int, Int, Int), '% attribute';
+
+        is-eqv ->   Int:_ @v  { @v[^3]    }(my Int:_ @), (Int, Int, Int), '@ param in block';
+        is-eqv ->   Int:_ %v  { %v<a b c> }(my Int:_ %), (Int, Int, Int), '% param in block';
+        is-eqv sub (Int:_ @v) { @v[^3]    }(my Int:_ @), (Int, Int, Int), '@ param in sub';
+        is-eqv sub (Int:_ %v) { %v<a b c> }(my Int:_ %), (Int, Int, Int), '% param in sub';
+
+        my Int:_ &foo = sub (--> Int:_) {};
+        is-eqv &foo.of, Int:_, 'parametarized Callables are parametarized with smiley';
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
