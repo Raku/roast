@@ -52,7 +52,7 @@ plan 39;
 {
     my @a = 1, 2;
     my %b = 'x' => 42;
- 
+
     is-deeply [@a], [1, 2], '@array flattening';
     is-deeply [item @a], [$[1, 2]], 'item @array non-flattening';
     is-deeply [%b], ['x' => 42], '%hash flattening';
@@ -104,7 +104,7 @@ is((@).push(42,43), '42 43', 'Anonymous @ variable can be pushed');
 {
     my $h = <a b c d>;
     is ~%$h.keys.sort, 'a c', '%$var coercion';
-    
+
     my $c = 0;
     $c++ for @$h;
     is $c, 4, '@$var coercion';
