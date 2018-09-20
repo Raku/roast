@@ -7,7 +7,7 @@ use Test::Util;
 # They might be rearranged into other files in the future, but for now, keeping them in this
 # file avoids creating a ton of `-6.d.t` files for the sake of single tests.
 
-plan 4;
+plan 5;
 
 group-of 6 => ':sym<> colonpair on subroutine names is reserved' => {
     throws-like 'use v6.d.PREVIEW; sub meow:sym<bar> {}', X::Syntax::Reserved, ':sym<...>';
@@ -100,5 +100,20 @@ is_run ｢
     print 'pass';
 ｣, {:out<pass>, :err{.contains: 'deprecat'}, :0status},
     'use of `undefine` issues deprecation warning in 6.d';
+
+group-of 6 => '$()/@()/%() have no magick' => {
+    'ab' ~~ /(.) $<foo>=(.)/;
+
+    # NOTE: these tests are white-space sensitive. There should be NO whitespace
+    # within the $(), @(), and %() constructs.
+    is-eqv $(), (), '$() is a List';
+    is-eqv ($(), $(), $()).flat, ((), (), ()).Seq, '$() is a containerized List';
+
+    is-eqv @(), (), '@() is a List';
+    is-eqv (@(), @(), @()).flat, ().Seq, '@() is NOT a containerized List';
+
+    is-eqv %(), {}, '%() is a Hash';
+    is-eqv (%(), %(), %()).flat, ().Seq, '@() is NOT a containerized Hash';
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
