@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 10;
 
 # should be: L<S05/Bracket rationalization/"An B<explicit> reduction using the C<make> function">
 # L<S05/Bracket rationalization/reduction using the>
@@ -13,7 +13,6 @@ plan 11;
                       { make 'bar' }     # But pretend we matched 'bar'
                     /;
 ok($/, 'matched');
-is($(), 'bar');
 is $/.ast, 'bar', '$/.ast';
 
 # RT #76276

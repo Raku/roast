@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 38;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -26,8 +26,6 @@ plan 39;
 
     # Test the only difference between @() and list()
     is(list(), (), 'list() should return an empty list');
-    'foo' ~~ /(o)o/; # run a regex so we have $/ below
-    is(@(),  @($/), '@() should be the same as @($/)');
 }
 
 
