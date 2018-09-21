@@ -550,10 +550,12 @@ subtest '.hash does not cause keys to be stringified' => {
     throws-like { Bag.new(^Inf) }, X::Cannot::Lazy, :what<Bag>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
-      dies-ok { $pair.Bag },
-        "($pair.perl()).Bag died";
-      dies-ok { Bag.new-from-pairs($pair) },
-        "Bag.new-from-pairs( ($pair.perl()) ) died";
+      my \ex := $pair.value eq 'a'
+          ?? X::Str::Numeric !! X::Numeric::CannotConvert;
+      throws-like { $pair.Bag }, ex,
+        "($pair.perl()).Bag throws";
+      throws-like { Bag.new-from-pairs($pair) }, ex,
+        "Bag.new-from-pairs( ($pair.perl()) ) throws";
     }
 }
 

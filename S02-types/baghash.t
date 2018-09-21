@@ -659,10 +659,12 @@ subtest 'BagHash autovivification of non-existent keys' => {
     throws-like { BagHash.new(^Inf) }, X::Cannot::Lazy, :what<BagHash>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
-      dies-ok { $pair.BagHash },
-        "($pair.perl()).BagHash died";
-      dies-ok { BagHash.new-from-pairs($pair) },
-        "BagHash.new-from-pairs( ($pair.perl()) ) died";
+      my \ex := $pair.value eq 'a'
+          ?? X::Str::Numeric !! X::Numeric::CannotConvert;
+      throws-like { $pair.BagHash }, ex,
+        "($pair.perl()).BagHash throws";
+      throws-like { BagHash.new-from-pairs($pair) }, ex,
+        "BagHash.new-from-pairs( ($pair.perl()) ) throws";
     }
 }
 
