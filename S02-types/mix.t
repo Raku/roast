@@ -498,10 +498,13 @@ subtest '.hash does not cause keys to be stringified' => {
     throws-like { Mix.new(^Inf) }, X::Cannot::Lazy, :what<Mix>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
-      dies-ok { $pair.Mix },
-        "($pair.perl()).Mix died";
-      dies-ok { Mix.new-from-pairs($pair) },
-        "Mix.new-from-pairs( ($pair.perl()) ) died";
+      my \ex := $pair.value ~~ Complex
+          ?? X::Numeric::Real !! $pair.value eq 'a'
+          ?? X::Str::Numeric  !! X::OutOfRange;
+      throws-like { $pair.Mix }, ex,
+        "($pair.perl()).Mix throws";
+      throws-like { Mix.new-from-pairs($pair) }, ex,
+        "Mix.new-from-pairs( ($pair.perl()) ) throws";
     }
 }
 

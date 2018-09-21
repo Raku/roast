@@ -588,10 +588,13 @@ subtest 'MixHash autovivification of non-existent keys' => {
     throws-like { MixHash.new(^Inf) }, X::Cannot::Lazy, :what<MixHash>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
-      dies-ok { $pair.MixHash },
-        "($pair.perl()).MixHash died";
-      dies-ok { MixHash.new-from-pairs($pair) },
-        "MixHash.new-from-pairs( ($pair.perl()) ) died";
+      my \ex := $pair.value ~~ Complex
+          ?? X::Numeric::Real !! $pair.value eq 'a'
+          ?? X::Str::Numeric  !! X::OutOfRange;
+      throws-like { $pair.MixHash }, ex,
+        "($pair.perl()).MixHash throws";
+      throws-like { MixHash.new-from-pairs($pair) }, ex,
+        "MixHash.new-from-pairs( ($pair.perl()) ) throws";
     }
 }
 
