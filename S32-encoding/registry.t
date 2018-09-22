@@ -21,7 +21,7 @@ throws-like { Encoding::Registry.find('utf-29') },
         method decoder() { die "NYI" }
     }
 
-    lives-ok { Encoding::Registry.register(TestEncoding) },
+    is-deeply Encoding::Registry.register(TestEncoding), Nil,
         'Can register an encoding';
 
     isa-ok Encoding::Registry.find('utf-29'), TestEncoding,
@@ -60,6 +60,6 @@ throws-like { Encoding::Registry.find('utf-29') },
         method encoder() { die "NYI" }
         method decoder() { die "NYI" }
     }
-    lives-ok { Encoding::Registry.register(NoAlternativeNamesEncoding) },
+    is-deeply Encoding::Registry.register(NoAlternativeNamesEncoding), Nil,
         "Encodings with no alternative names method can be registered";
 }
