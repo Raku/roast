@@ -504,7 +504,7 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
 # RT #131492
 {
     throws-like q| my \foo = Callable but role :: { } |,
-        X::Method::NotFound,
+        X::Method::NotFound, :message{.so},
 	'X::Method::NotFound does not die with "X::Method::NotFound exception produced no message"';
 }
 
