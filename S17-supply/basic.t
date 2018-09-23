@@ -144,10 +144,10 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
             my @done;
             $supply.tap: done => { @done.push(1) }
-            $supply.tap: done => { @done.push(1) }
+            $supply.tap: done => { @done.push(2) }
             $supplier.done;
 
-            is +@done, 2, 'All done callbacks were called';
+            is-deeply @done.Bag, (1, 2).Bag, 'All done callbacks were called';
         }
 
         {
@@ -155,11 +155,11 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             my $supply   = $supplier.Supply;
 
             my @quit;
-            $supply.tap: quit => { @quit.push($_) }
-            $supply.tap: quit => { @quit.push($_) }
+            $supply.tap: quit => { @quit.push(1) }
+            $supply.tap: quit => { @quit.push(2) }
             $supplier.quit(1);
 
-            is +@quit, 2, 'All quit callbacks were called';
+            is-deeply @quit.Bag, (1, 2).Bag, 'All quit callbacks were called';
         }
     }
 }
