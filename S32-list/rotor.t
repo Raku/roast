@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 19;
 
@@ -42,22 +44,23 @@ subtest 'non-Int numerals as arguments to rotor get coersed to Int' => {
 }
 
 # RT #130283
-is-deeply ().rotor(1), ().Seq, '.rotor on empty list gives empty Seq';
-is-deeply ().rotor(1, :partial), ().Seq,
+is-eqv ().rotor(1), ().Seq, '.rotor on empty list gives empty Seq';
+is-eqv ().rotor(1, :partial), ().Seq,
     '.rotor(:partial) on empty list gives empty Seq';
 
 # RT #130725
-is-deeply (gather do for ^2 { "x".take }).rotor(3, :partial).eager, (<x x>,),
+is-eqv (gather do for ^2 { "x".take }).rotor(3, :partial), (<x x>,).Seq,
     ".rotor(:partial) works with gather/take";
 
 # RT #129175
-is-deeply <a b c d e f>.rotor(1...*),
+is-eqv <a b c d e f>.rotor(1...*),
     (("a",), ("b", "c"), ("d", "e", "f")).Seq,
     '.rotor does not hang when given infinite iterable as cycle';
 
 # RT #131018
-is-deeply <a b c d e f>.rotor(2 => -2, 1),
-    (("a", "b"), ("a",), ("b", "c"), ("b",), ("c", "d"), ("c",), ("d", "e"), ("d",), ("e", "f"), ("e",)),
+is-eqv <a b c d e f>.rotor(2 => -2, 1),
+    (("a", "b"), ("a",), ("b", "c"), ("b",), ("c", "d"), ("c",), ("d", "e"),
+      ("d",), ("e", "f"), ("e",)).Seq,
     ".rotor works as expected with negative gap";
 
 # [Github Issue 1397](https://github.com/rakudo/rakudo/issues/1397)
@@ -72,15 +75,15 @@ subtest '.rotor: 2 => -1, :partial obeys Iterator protocol' => {
             IterationEnd
         }
     }.new;
-    is-deeply $s.rotor(2 => -1, :partial), ((0, 1), (1, 2), (2,)).Seq,
+    is-eqv $s.rotor(2 => -1, :partial), ((0, 1), (1, 2), (2,)).Seq,
         'got right result';
     is $iterends, 1, 'stopped pulling after receiving IterationEnd';
 }
 
-is-deeply <a b c d e f g h>.rotor((1,2,3,*)),
-    (("a",), ("b", "c",), ("d", "e", "f",), ("g", "h",)),
+is-eqv <a b c d e f g h>.rotor((1,2,3,*)),
+    (("a",), ("b", "c",), ("d", "e", "f",), ("g", "h",)).Seq,
     '.rotor with Whatever consumes everything';
 
-is-deeply <a b c d e f g h>.rotor((1,2,3,Inf)),
-    (("a",), ("b", "c",), ("d", "e", "f",), ("g", "h",)),
+is-eqv <a b c d e f g h>.rotor((1,2,3,Inf)),
+    (("a",), ("b", "c",), ("d", "e", "f",), ("g", "h",)).Seq,
     '.rotor with Inf consumes everything';
