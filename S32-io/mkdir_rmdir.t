@@ -22,14 +22,14 @@ plan 7;
 {
     my $dir = make-temp-dir;
     $dir.rmdir;
-    throws-like { $dir.rmdir }, X::IO::Rmdir;
+    fails-like { $dir.rmdir }, X::IO::Rmdir;
 }
 
 # rmdir soft-fail when dir contains files.
 {
     my $dir = make-temp-dir;
     spurt "$dir/file", "hello world";
-    throws-like { $dir.rmdir }, X::IO::Rmdir;
+    fails-like { $dir.rmdir }, X::IO::Rmdir;
 }
 
 # mkdir in a dir that doesn't exist
@@ -39,7 +39,7 @@ plan 7;
     # so does this test make sense anymore?
     my $dir = make-temp-dir;
     $dir.rmdir;
-    throws-like { $dir.child('foo').mkdir }, X::IO::Mkdir;
+    fails-like { $dir.child('foo').mkdir }, X::IO::Mkdir;
 }
 
 # mkdir a dir that already exists
@@ -48,7 +48,7 @@ plan 7;
     # XXX: mkdir returns True (pre 2017.05) or the IO::Path itself
     # when dir already exists, so does this test make sense?
     my $dir = make-temp-dir;
-    throws-like { $dir.mkdir }, X::IO::Mkdir;
+    fails-like { $dir.mkdir }, X::IO::Mkdir;
 }
 
 # RT #126976
