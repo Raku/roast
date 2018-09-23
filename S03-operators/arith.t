@@ -337,16 +337,13 @@ All uses of a zero modulus or divisor should 'die', and the
         'Division by zero with infix:<div> dies and is catchable with VRef variables';
 
     throws-like { say 0 / 0 }, X::Numeric::DivideByZero,
-        numerator => 0,
         'Division by zero with infix:</> dies and is catchable (1)';
     throws-like { say 3 / 0 }, X::Numeric::DivideByZero,
-        numerator => 3,
         'Division by zero with infix:</> dies and is catchable (2)';
     throws-like { my $x = 0; say 3.5 / $x }, X::Numeric::DivideByZero,
 #        numerator => 3.5,   # numerator is always an Int, so we get 7
         'Division by zero with infix:</> dies and is catchable with VInt/VRat variables';
     throws-like { my $x = 0; say 4 / $x }, X::Numeric::DivideByZero,
-        numerator => 4,
         'Division by zero with infix:</> dies and is catchable with VRef variables';
 }
 

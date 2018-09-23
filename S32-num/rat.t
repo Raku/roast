@@ -331,8 +331,7 @@ is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish 
 }
 
 #RT #126391
-try {say 42/(.1+.2-.3)};
-isa-ok( $!.numerator, 42, "got the answer rather than 420");
+try {say 42/(.1+.2-.3)}; isnt $!.numerator, 420, "no bogus errors";
 
 # RT#126016
 subtest '0.9999999999999999999999 to string conversions' => {
