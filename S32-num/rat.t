@@ -39,9 +39,9 @@ is(Rat.new(39, 33).nude, (13, 11), "Reduce to simplest form in constructor");
 is(Rat.new(0, 33).nude, (0, 1), "Reduce to simplest form in constructor");
 is(Rat.new(1451234131, 60).nude, (1451234131, 60), "Reduce huge number to simplest form in constructor");
 #?niecza skip 'Unable to resolve method nude in class Num'
-is(Rat.new(1141234123, 0).nude, (1141234123, 0), "Huge over zero stays huge over zero");
+is(Rat.new(1141234123, 0).nude, (1, 0), "Huge over zero is normalized");
 #?niecza skip 'Unable to resolve method nude in class Num'
-is(Rat.new(-7, 0).nude, (-7, 0), "Negative seven over zero stays negative seven over zero");
+is(Rat.new(-7, 0).nude, (-1, 0), "Negative seven over zero is normalized");
 #?niecza todo
 is(Rat.new(0, 0).nude, (0,0), "Zero over zero stays zero over zero");
 
