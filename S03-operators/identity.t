@@ -137,8 +137,9 @@ class TestObj { has $!a }
 
 # RT #127951
 {
-  my $a = 42; 
-  is $a =:= $a || $a.WHAT =:= $a.WHAT, True, '$a =:= $a || $a.WHAT =:= $a.WHAT returns True not an Int';
+  my $a = 42;
+  is-deeply $a =:= $a || $a.WHAT =:= $a.WHAT, True,
+      '$a =:= $a || $a.WHAT =:= $a.WHAT returns True not an Int';
 }
 
 # vim: ft=perl6
