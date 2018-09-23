@@ -356,7 +356,7 @@ subtest 'multi with :D subset dispatches correctly' => {
 # RT #126642
 {
     multi f(UInt:D $) { "ok" };
-    lives-ok { f(42); }, "UInt:D parameter doesn't fail in a multi";
+    is f(42), 'ok', "UInt:D parameter doesn't fail in a multi";
 }
 
 # https://github.com/rakudo/rakudo/commit/43b9c82945
