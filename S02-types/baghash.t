@@ -677,16 +677,16 @@ subtest 'elements with weight zero are removed' => {
     $b = <a b b c d e f>.BagHash; .value-- for $b.pairs;
     is-deeply $b, ("b"=>1).BagHash, 'Pair value decrement';
     $b = <a b b c d e f>.BagHash; $_= 0 for $b.values;
-    is $b, ().BagHash, 'weight set to zero';
+    is-deeply $b, ().BagHash, 'weight set to zero';
 }
 
 # RT #131241 (zero case covered by RT #131241)
 subtest "elements with negative weights are removed" => {
     plan 2;
     my $b = <a b b c d e f>.BagHash; $_ = -1 for $b.values;
-    is $b, ().BagHash, 'weight < 0 removes element';
+    is-deeply $b, ().BagHash, 'weight < 0 removes element';
     $b = <a b b c d e f>.BagHash; .value = -1 for $b.pairs;
-    is $b, ().BagHash, 'Pair value < 0 removes element';
+    is-deeply $b, ().BagHash, 'Pair value < 0 removes element';
 }
 
 # RT #132279
