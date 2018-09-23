@@ -30,7 +30,7 @@ dies-ok { Supply.wait }, 'can not be called as a class method';
     $supply.tap: { @emitted.push($_) }
     start {
         $supplier.emit(1);
-        sleep 1;
+        sleep ¼;
         $supplier.emit(2);
         $supplier.done;
     }
