@@ -278,26 +278,23 @@ subtest 'Rational.isNaN' => {
 }
 
 subtest '=== with 0-denominator FatRats' => {
-    plan 15;
+    plan 11;
     sub postfix:<F> (Rat $_ --> FatRat) { FatRat.new: .numerator, .denominator }
 
+    # We normalize these Rationals, so only numerator's sign matters
     is-deeply  <0/0>F ===  <0/0>F,  True, ' 0/0 ===  0/0';
-    is-deeply  <2/0>F ===  <2/0>F,  True, ' 2/0 ===  2/0';
-    is-deeply <-2/0>F === <-2/0>F,  True, '-2/0 === -2/0';
-
+    is-deeply  <0/0>F === <-2/0>F, False, ' 0/0 === -2/0';
     is-deeply  <0/0>F ===  <2/0>F, False, ' 0/0 ===  2/0';
-    is-deeply  <2/0>F ===  <0/0>F, False, ' 2/0 ===  0/0';
-    is-deeply  <5/0>F ===  <2/0>F, False, ' 5/0 ===  2/0';
-    is-deeply  <2/0>F ===  <5/0>F, False, ' 2/0 ===  5/0';
-    is-deeply <-5/0>F === <-2/0>F, False, '-5/0 === -2/0';
-    is-deeply <-2/0>F === <-5/0>F, False, '-2/0 === -5/0';
 
-    is-deeply  <0/0>F ===  <2/2>F, False, ' 0/0 ===  2/2';
-    is-deeply  <2/2>F ===  <0/0>F, False, ' 2/2 ===  0/0';
-    is-deeply  <5/2>F ===  <2/0>F, False, ' 5/2 ===  2/0';
-    is-deeply  <2/0>F ===  <5/2>F, False, ' 2/0 ===  5/2';
-    is-deeply <-5/2>F === <-2/0>F, False, '-5/2 === -2/0';
-    is-deeply <-2/0>F === <-5/2>F, False, '-2/0 === -5/2';
+    is-deeply <-2/0>F === <-2/0>F,  True, '-2/0 === -2/0';
+    is-deeply <-2/0>F === <-4/0>F,  True, '-2/0 === -4/0';
+    is-deeply <-2/0>F ===  <2/0>F, False, '-2/0 === -2/0';
+    is-deeply <-2/0>F ===  <0/0>F, False, '-2/0 === 0/0';
+
+    is-deeply <2/0>F  === <-2/0>F, False, ' 2/0 === -2/0';
+    is-deeply <2/0>F  ===  <4/0>F,  True, ' 2/0 ===  4/0';
+    is-deeply <2/0>F  ===  <2/0>F,  True, ' 2/0 === 2/0';
+    is-deeply <2/0>F  ===  <0/0>F, False, ' 2/0 === 0/0';
 }
 
 # RT#130427

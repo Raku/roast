@@ -395,25 +395,21 @@ subtest 'Rational.isNaN' => {
 }
 
 subtest '=== with 0-denominator Rats' => {
-    plan 15;
+    plan 11;
 
     is-deeply  <0/0> ===  <0/0>,  True, ' 0/0 ===  0/0';
-    is-deeply  <2/0> ===  <2/0>,  True, ' 2/0 ===  2/0';
-    is-deeply <-2/0> === <-2/0>,  True, '-2/0 === -2/0';
-
+    is-deeply  <0/0> === <-2/0>, False, ' 0/0 === -2/0';
     is-deeply  <0/0> ===  <2/0>, False, ' 0/0 ===  2/0';
-    is-deeply  <2/0> ===  <0/0>, False, ' 2/0 ===  0/0';
-    is-deeply  <5/0> ===  <2/0>, False, ' 5/0 ===  2/0';
-    is-deeply  <2/0> ===  <5/0>, False, ' 2/0 ===  5/0';
-    is-deeply <-5/0> === <-2/0>, False, '-5/0 === -2/0';
-    is-deeply <-2/0> === <-5/0>, False, '-2/0 === -5/0';
 
-    is-deeply  <0/0> ===  <2/2>, False, ' 0/0 ===  2/2';
-    is-deeply  <2/2> ===  <0/0>, False, ' 2/2 ===  0/0';
-    is-deeply  <5/2> ===  <2/0>, False, ' 5/2 ===  2/0';
-    is-deeply  <2/0> ===  <5/2>, False, ' 2/0 ===  5/2';
-    is-deeply <-5/2> === <-2/0>, False, '-5/2 === -2/0';
-    is-deeply <-2/0> === <-5/2>, False, '-2/0 === -5/2';
+    is-deeply <-2/0> === <-2/0>,  True, '-2/0 === -2/0';
+    is-deeply <-2/0> === <-4/0>,  True, '-2/0 === -4/0';
+    is-deeply <-2/0> ===  <2/0>, False, '-2/0 === -2/0';
+    is-deeply <-2/0> ===  <0/0>, False, '-2/0 === 0/0';
+
+    is-deeply <2/0>  === <-2/0>, False, ' 2/0 === -2/0';
+    is-deeply <2/0>  ===  <4/0>,  True, ' 2/0 ===  4/0';
+    is-deeply <2/0>  ===  <2/0>,  True, ' 2/0 === 2/0';
+    is-deeply <2/0>  ===  <0/0>, False, ' 2/0 === 0/0';
 }
 
 # RT #130606
@@ -633,10 +629,9 @@ subtest 'Rational keeps nu/de in proper types' => {
         is-deeply .denominator, Foo.new(2), 'denominator';
     }
 
-    # 6.d TODO XXX:  are we normalizing ZDRs or not normalizing them?
     with Bar.new: Foo.new(42), Foo.new: 0 {
         # numerator is meant to be normalized, so it'll end up as 1
-        is-deeply .numerator,   Foo.new(42), 'numerator (zero-denom rational)';
+        is-deeply .numerator,   Foo.new(1), 'numerator (zero-denom rational)';
         is-deeply .denominator, Foo.new(0), 'denominator (zero-denom rational)';
     }
 }
