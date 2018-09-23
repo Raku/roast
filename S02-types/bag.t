@@ -316,9 +316,10 @@ sub showkv($x) {
     @a = $b.pick(-2.5);
     is +@a, 0, '.pick(<negative number>) does not return any items';
 
-	lives-ok { $b.pick(1).gist },
-		".pick() gives valid result with argument"; # https://github.com/rakudo/rakudo/issues/1438
-    lives-ok { @a = $b.pick(2.5) }, ".pick int-ifies arg"; # RT #131272
+    # https://github.com/rakudo/rakudo/issues/1438
+	  lives-ok { $b.pick(1).gist }, ".pick() gives valid result with argument";
+    # RT #131272
+    lives-ok { @a = $b.pick(2.5) }, ".pick int-ifies arg";
 }
 
 {

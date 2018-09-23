@@ -301,7 +301,8 @@ sub showkv($x) {
     @a = $b.pick(-2.5);
     is +@a, 0, '.pick(<negative number>) does not return any items';
 
-    lives-ok { @a = $b.pick(2.5) }, ".pick int-ifies arg"; # RT #131272
+    # RT #131272
+    lives-ok { @a = $b.pick(2.5) }, ".pick int-ifies arg";
 }
 
 {
