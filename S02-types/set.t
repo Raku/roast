@@ -500,12 +500,10 @@ subtest '.hash does not cause keys to be stringified' => {
 
 # RT #117997
 {
-    throws-like 'set;', Exception,
-        'set listop called without arguments dies (1)',
-        message => { m/'Function "set" may not be called without arguments'/ };
-    throws-like 'set<a b c>;', X::Syntax::Confused,
-        'set listop called without arguments dies (2)',
-        message => { m/'Use of non-subscript brackets after "set" where postfix is expected'/ };
+    throws-like 'set;', Exception, message => /set/,
+        'set listop called without arguments and parentheses dies (1)';
+    throws-like 'set<a b c>;', X::Syntax::Confused, message => /subscript/,
+        'set listop called without arguments dies (2)';
 }
 
 # RT #131300
