@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 853;
+plan 855;
 
 # Basic test functions specific to rational numbers.
 
@@ -40,8 +40,8 @@ is(Rat.new(2, 4).nude, (1, 2), "Reduce to simplest form in constructor");
 is(Rat.new(39, 33).nude, (13, 11), "Reduce to simplest form in constructor");
 is(Rat.new(0, 33).nude, (0, 1), "Reduce to simplest form in constructor");
 is(Rat.new(1451234131, 60).nude, (1451234131, 60), "Reduce huge number to simplest form in constructor");
-is(Rat.new(1141234123, 0).nude, (1141234123, 0), "Huge over zero stays huge over zero");
-is(Rat.new(-7, 0).nude, (-7, 0), "Negative seven over zero stays negative seven over zero");
+is(Rat.new(1141234123, 0).nude, (1, 0), "Huge over zero is normalized");
+is(Rat.new(-7, 0).nude, (-1, 0), "Negative seven over zero is normalized");
 is(Rat.new(0, 0).nude, (0,0), "Zero over zero stays zero over zero");
 
 # Test basic math
@@ -331,8 +331,7 @@ is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish 
 }
 
 #RT #126391
-try {say 42/(.1+.2-.3)};
-isa-ok( $!.numerator, 42, "got the answer rather than 420");
+try {say 42/(.1+.2-.3)}; isnt $!.numerator, 420, "no bogus errors";
 
 # RT#126016
 subtest '0.9999999999999999999999 to string conversions' => {
@@ -396,25 +395,21 @@ subtest 'Rational.isNaN' => {
 }
 
 subtest '=== with 0-denominator Rats' => {
-    plan 15;
+    plan 11;
 
     is-deeply  <0/0> ===  <0/0>,  True, ' 0/0 ===  0/0';
-    is-deeply  <2/0> ===  <2/0>,  True, ' 2/0 ===  2/0';
-    is-deeply <-2/0> === <-2/0>,  True, '-2/0 === -2/0';
-
+    is-deeply  <0/0> === <-2/0>, False, ' 0/0 === -2/0';
     is-deeply  <0/0> ===  <2/0>, False, ' 0/0 ===  2/0';
-    is-deeply  <2/0> ===  <0/0>, False, ' 2/0 ===  0/0';
-    is-deeply  <5/0> ===  <2/0>, False, ' 5/0 ===  2/0';
-    is-deeply  <2/0> ===  <5/0>, False, ' 2/0 ===  5/0';
-    is-deeply <-5/0> === <-2/0>, False, '-5/0 === -2/0';
-    is-deeply <-2/0> === <-5/0>, False, '-2/0 === -5/0';
 
-    is-deeply  <0/0> ===  <2/2>, False, ' 0/0 ===  2/2';
-    is-deeply  <2/2> ===  <0/0>, False, ' 2/2 ===  0/0';
-    is-deeply  <5/2> ===  <2/0>, False, ' 5/2 ===  2/0';
-    is-deeply  <2/0> ===  <5/2>, False, ' 2/0 ===  5/2';
-    is-deeply <-5/2> === <-2/0>, False, '-5/2 === -2/0';
-    is-deeply <-2/0> === <-5/2>, False, '-2/0 === -5/2';
+    is-deeply <-2/0> === <-2/0>,  True, '-2/0 === -2/0';
+    is-deeply <-2/0> === <-4/0>,  True, '-2/0 === -4/0';
+    is-deeply <-2/0> ===  <2/0>, False, '-2/0 === -2/0';
+    is-deeply <-2/0> ===  <0/0>, False, '-2/0 === 0/0';
+
+    is-deeply <2/0>  === <-2/0>, False, ' 2/0 === -2/0';
+    is-deeply <2/0>  ===  <4/0>,  True, ' 2/0 ===  4/0';
+    is-deeply <2/0>  ===  <2/0>,  True, ' 2/0 === 2/0';
+    is-deeply <2/0>  ===  <0/0>, False, ' 2/0 === 0/0';
 }
 
 # RT #130606
@@ -634,12 +629,16 @@ subtest 'Rational keeps nu/de in proper types' => {
         is-deeply .denominator, Foo.new(2), 'denominator';
     }
 
-    # 6.d TODO XXX:  are we normalizing ZDRs or not normalizing them?
     with Bar.new: Foo.new(42), Foo.new: 0 {
         # numerator is meant to be normalized, so it'll end up as 1
-        is-deeply .numerator,   Foo.new(42), 'numerator (zero-denom rational)';
+        is-deeply .numerator,   Foo.new(1), 'numerator (zero-denom rational)';
         is-deeply .denominator, Foo.new(0), 'denominator (zero-denom rational)';
     }
 }
+
+fails-like { <42/0>.floor   }, X::Numeric::DivideByZero,
+    'Rational.floor   fails for zero-denominator-rationals';
+fails-like { <42/0>.ceiling }, X::Numeric::DivideByZero,
+    'Rational.ceiling fails for zero-denominator-rationals';
 
 # vim: ft=perl6
