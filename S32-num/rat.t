@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 853;
+plan 855;
 
 # Basic test functions specific to rational numbers.
 
@@ -635,5 +635,10 @@ subtest 'Rational keeps nu/de in proper types' => {
         is-deeply .denominator, Foo.new(0), 'denominator (zero-denom rational)';
     }
 }
+
+fails-like { <42/0>.floor   }, X::Numeric::DivideByZero,
+    'Rational.floor   fails for zero-denominator-rationals';
+fails-like { <42/0>.ceiling }, X::Numeric::DivideByZero,
+    'Rational.ceiling fails for zero-denominator-rationals';
 
 # vim: ft=perl6
