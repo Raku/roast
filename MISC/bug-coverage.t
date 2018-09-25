@@ -6,7 +6,11 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 12;
+plan 13;
+
+# https://github.com/rakudo/rakudo/issues/2280
+is-deeply (11**5, */-2 … 0)[31], <-161051/2147483648>,
+    'thou shall not coredump';
 
 subtest '.count-only/.bool-only for iterated content' => {
     plan 25;
