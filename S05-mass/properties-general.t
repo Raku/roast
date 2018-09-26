@@ -828,6 +828,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
 is '  ' ~~ m/<:White_Space>+/, '  ', '<:White_Space> matches space in regex';
 #?rakudo.moar todo "<alpha> doesn't match alphabetics which are not Letters"
 # https://github.com/MoarVM/MoarVM/issues/521
+#?rakudo.js todo "we copy the rakudo.moar behavior for <alpha>"
 is 'Ⓐ' ~~ m/<alpha>/, 'Ⓐ', '<alpha> matches alphabetics which are not Letters';
 
 #?rakudo.jvm 4 skip 'Unicode property pairs NYI'
