@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 13;
+plan 14;
 
 # https://github.com/rakudo/rakudo/issues/2280
 is-deeply (11**5, */-2 … 0)[31], <-161051/2147483648>,
@@ -316,5 +316,30 @@ is_run ｢
 # https://github.com/rakudo/rakudo/issues/2222
 throws-like ｢my $ = 5 »*» (2..4)｣, X::HyperOp::NonDWIM,
     'non DWIM hyper throws good error';
+
+group-of 7 => 'can use Rat in sequence op in for' => {
+    my @a; for 0.1, 0.2 ... 1 -> $a { @a.push: $a };
+    is-deeply @a, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], 'Rat, Rat ... Int';
+
+    @a = (); for 0.1, 2 ... 3 -> $a { @a.push: $a };
+    is-deeply @a, [0.1, 2.0], 'Rat, Int ... Int';
+
+    @a = (); for 0.1, 0.2 ... 1.0 -> $a { @a.push: $a };
+    is-deeply @a, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], 'Rat, Rat ... Rat';
+
+    @a = (); for 1, 2 ... 3.0 -> $a { @a.push: $a };
+    is-deeply @a, [1, 2, 3], 'Int, Int ... Rat';
+
+    @a = (); for 1 ... 3.0 -> $a { @a.push: $a };
+    is-deeply @a, [1, 2, 3], 'Int ... Rat';
+
+    #?rakudo todo 'wrong result type'
+    @a = (); for 1.0 ... 3 -> $a { @a.push: $a };
+    is-deeply @a, [1.0, 2.0, 3.0], 'Rat ... Int';
+
+    #?rakudo todo 'wrong result type'
+    @a = (); for 1.0 ... 3.0 -> $a { @a.push: $a };
+    is-deeply @a, [1.0, 2.0, 3.0], 'Rat ... Rat';
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
