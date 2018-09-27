@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 854;
+plan 855;
 
 # Basic test functions specific to rational numbers.
 
@@ -609,5 +609,12 @@ fails-like { <42/0>.floor   }, X::Numeric::DivideByZero,
     'Rational.floor   fails for zero-denominator-rationals';
 fails-like { <42/0>.ceiling }, X::Numeric::DivideByZero,
     'Rational.ceiling fails for zero-denominator-rationals';
+
+group-of 4 => 'no funny business in stringification of huge Rationals' => {
+    is        Rat.new(10⁴⁰⁰, 9⁹⁹⁹).Str,  '0',   '   Rat.new(10⁴⁰⁰, 9⁹⁹⁹).Str';
+    is        Rat.new(10⁴⁰⁰, 9⁹⁹⁹).gist, '0',   '   Rat.new(10⁴⁰⁰, 9⁹⁹⁹).gist';
+    unlike FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).Str,  /Inf/, 'FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).Str';
+    unlike FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).gist, /Inf/, 'FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).gist';
+}
 
 # vim: ft=perl6
