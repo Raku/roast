@@ -34,12 +34,10 @@ is( $child.myself, $child, 'Qualified method calls should use the original self'
 my $consumer = Consumer.new;
 is( $consumer.myself, $consumer, 'Qualified method calls should use the original self' );
 
-is (-42).::Int::abs, 42, 'qualified method call with starting colons';
+is-deeply (-42).::Int::abs, 42, 'qualified method call with starting colons';
 throws-like { (42).::Str::abs }, X::Method::InvalidQualifier, 'InvalidQualifier thrown with starting colons';
 
 # RT #130181
-{
-    throws-like { EVAL '.::' }, X::Syntax::Malformed, 'empty name in qualified method call';
-}
+throws-like '.::', X::Syntax::Malformed, 'empty name in qualified method call';
 
 # vim: ft=perl6
