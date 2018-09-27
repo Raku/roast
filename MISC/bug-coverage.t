@@ -317,7 +317,7 @@ is_run ｢
 throws-like ｢my $ = 5 »*» (2..4)｣, X::HyperOp::NonDWIM,
     'non DWIM hyper throws good error';
 
-group-of 7 => 'can use Rat in sequence op in for' => {
+group-of 11 => 'cover potential bugs in possible optimization of `for ...`' => {
     my @a; for 0.1, 0.2 ... 1 -> $a { @a.push: $a };
     is-deeply @a, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], 'Rat, Rat ... Int';
 
@@ -333,13 +333,20 @@ group-of 7 => 'can use Rat in sequence op in for' => {
     @a = (); for 1 ... 3.0 -> $a { @a.push: $a };
     is-deeply @a, [1, 2, 3], 'Int ... Rat';
 
-    #?rakudo todo 'wrong result type'
     @a = (); for 1.0 ... 3 -> $a { @a.push: $a };
     is-deeply @a, [1.0, 2.0, 3.0], 'Rat ... Int';
 
-    #?rakudo todo 'wrong result type'
     @a = (); for 1.0 ... 3.0 -> $a { @a.push: $a };
     is-deeply @a, [1.0, 2.0, 3.0], 'Rat ... Rat';
+
+    for ^9223372036854775809 {last}
+    pass 'no crashes with endpoint > 64-bit int (^)';
+    for 0^..^9223372036854775809 {last}
+    pass 'no crashes with endpoint > 64-bit int (^)';
+    for 0^..9223372036854775809 {last}
+    pass 'no crashes with endpoint > 64-bit int (^..)';
+    for 0..^9223372036854775809 {last}
+    pass 'no crashes with endpoint > 64-bit int (..^)';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
