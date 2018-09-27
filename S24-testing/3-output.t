@@ -64,8 +64,9 @@ is_run ｢
         skip "meow # moo", 1;
         skip 1;
     ｣,
-    { :err(''), :0status,  :out("1..2\nok 1 - # SKIP meow  \\# moo"
-        ~ "\nok 2 - # SKIP 1\n") },
+    { :err(''), :0status,  :out(/
+        "1..2\nok 1 - # SKIP meow  \\#" " "? "moo"
+        "\nok 2 - # SKIP 1\n"/) },
 'skip() escapes `#` but not the `#` of SKIP marker itself';
 
 # vim: expandtab shiftwidth=4 ft=perl6
