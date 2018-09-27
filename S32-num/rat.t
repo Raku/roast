@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 855;
+plan 854;
 
 # Basic test functions specific to rational numbers.
 
@@ -484,40 +484,9 @@ is-deeply (4.99999999999999999999999999999999999999999999 ~~ 0..^5), True,
 
 # https://github.com/rakudo/rakudo/commit/0961abe8ff
 subtest '.^roles on Rationals does not hang' => {
-    plan 3;
+    plan 2;
     does-ok   42.2.^roles.grep(Rational).head, Rational, 'Rat:D';
     does-ok FatRat.^roles.grep(Rational).head, Rational, 'FatRat:U';
-
-    my class Irrational does Rational[UInt, Int] {};
-    does-ok Irrational.new.^roles.grep(Rational).head, Rational[UInt, Int],
-        'custom class :D';
-}
-
-subtest 'custom parametarization of Rational' => {
-    # Parametarization with no args defaults to `Int` for both args
-    # If only one arg is given, the type of the second arg is the same as the first
-    plan 12;
-
-    my class FakeRat   does Rational             {}
-    my class FakeRatU  does Rational[UInt      ] {}
-    my class FakeRatUU does Rational[UInt, UInt] {}
-    my class FakeRatIU does Rational[Int,  UInt] {}
-    my class FakeRatII does Rational[Int,   Int] {}
-
-    isa-ok FakeRat  .new(-1,  1), FakeRat,   'no parametarization; 2 Ints';
-    isa-ok FakeRatU .new( 1,  1), FakeRatU,  '[UInt];       2 UInts';
-    isa-ok FakeRatUU.new( 1,  1), FakeRatUU, '[UInt, UInt]; 2 UInts';
-    isa-ok FakeRatIU.new(-1,  1), FakeRatIU, '[Int,  UInt]; Int, UInt';
-    isa-ok FakeRatII.new(-1, -1), FakeRatII, '[Int,  Int]; 2 Ints';
-
-    constant E = X::TypeCheck;
-    throws-like { FakeRat  .new: 1e0,   1 }, E, 'no parametarization; Num, Int';
-    throws-like { FakeRat  .new: 1e0, 1e0 }, E, 'no parametarization; 2 Nums';
-    throws-like { FakeRat  .new:   1, 1e0 }, E, 'no parametarization; Int, Num';
-    throws-like { FakeRatU .new:  -1,   1 }, E, '[UInt]; Int, UInt';
-    throws-like { FakeRatUU.new:   1,  -1 }, E, '[UInt, UInt]; UInt, Int';
-    throws-like { FakeRatIU.new:   1,  -1 }, E, '[Int,  UInt]; UInt, Int';
-    throws-like { FakeRatII.new: 1e0, 1e0 }, E, '[Int,  Int]; 2 Nums';
 }
 
 # RT # 126103
