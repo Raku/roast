@@ -67,7 +67,7 @@ lives-ok { full-barrier() },
     is atomic-fetch-inc($test-cont), 10,
       'atomic-fetch-inc returns value before incrementing (1)';
     is atomic-fetch-inc($test-cont), 11,
-      'atomic-fetch-inc returns value before incrementing (1)';
+      'atomic-fetch-inc returns value before incrementing (2)';
     is atomic-fetch-dec($test-cont), 12,
       'atomic-fetch-dec returns value before decrementing (1)';
     is atomic-fetch-dec($test-cont), 11,
