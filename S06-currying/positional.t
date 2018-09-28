@@ -248,17 +248,17 @@ multi testsubproto (Str $x, $y) { "Str + $y" }
 multi testsubproto (Int $x, $y) { "Int + $y" }
 
 is-primed-call(&abc123, \(1,2,3), ['a','b','c',1,2,3], 'a','b','c');
-is-primed-call(-> Str $a { $a.WHAT }, \(), $[Str], Nil);
-is-primed-call(&testsubproto, \(43), $["Int + 43"], 42);
-is-primed-call(&testsubproto, \(44), $["Str + 44"], "a Str");
-is-primed-call(&atan2, \(2), $[atan2(1,2)],1);
-is-primed-call(&atan2, \(1), $[atan2(1,2)],*,2);
+is-primed-call(-> Str $a { $a.WHAT }, \(), [Str], Nil);
+is-primed-call(&testsubproto, \(43), ["Int + 43"], 42);
+is-primed-call(&testsubproto, \(44), ["Str + 44"], "a Str");
+is-primed-call(&atan2, \(2), [atan2(1,2)],1);
+is-primed-call(&atan2, \(1), [atan2(1,2)],*,2);
 
 # RT#126332
 is-primed-call(&substr, \(0,2), $[substr("hello world", 0, 2)], "hello world");
-is-primed-call(sub ( *@x) { @x.perl }, \("c","d","e"), $[sub ( *@x) { @x.perl }("a","b","c","d","e")], "a", "b");
-is-primed-call(sub (**@x) { @x.perl }, \("c","d","e"), $[sub (**@x) { @x.perl }("a","b","c","d","e")], "a", "b");
-is-primed-call(sub ( +@x) { @x.perl }, \("c","d","e"), $[sub ( +@x) { @x.perl }("a","b","c","d","e")], "a", "b");
+is-primed-call(sub ( *@x) { @x.perl }, \("c","d","e"), [sub ( *@x) { @x.perl }("a","b","c","d","e")], "a", "b");
+is-primed-call(sub (**@x) { @x.perl }, \("c","d","e"), [sub (**@x) { @x.perl }("a","b","c","d","e")], "a", "b");
+is-primed-call(sub ( +@x) { @x.perl }, \("c","d","e"), [sub ( +@x) { @x.perl }("a","b","c","d","e")], "a", "b");
 
 # Github Issue #1918
 subtest 'Sub with slurpy compiles and yields correct results with .assuming' => {
