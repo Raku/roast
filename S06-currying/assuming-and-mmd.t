@@ -28,12 +28,12 @@ is &testsub.assuming("a_str")(42), "Str", "basic MMD works with assuming (1)";
 is &testsub.assuming(23)\   .(42), "Int", "basic MMD works with assuming (2)";
 
 # RT #126332
-multi rt126332 ($x) { 'a' }
-multi rt126332 ($x, $y) { 'b' }
-multi rt126332 ($x, $y, $z) { 'c' }
-is-primed-call(&rt126332, \(1), $[&rt126332(1)]);
-is-primed-call(&rt126332, \(2), $[&rt126332(1,2)], 1);
-is-primed-call(&rt126332, \(2,3), $[&rt126332(1,2,3)], 1);
+multi rt126332 ($x) { $x ~ 'a' }
+multi rt126332 ($x, $y) { $x ~ $y ~ 'b' }
+multi rt126332 ($x, $y, $z) { $x ~ $y ~ $z ~ 'c' }
+is-primed-call(&rt126332, \(1), ['1a']);
+is-primed-call(&rt126332, \(2), ['12b'], 1);
+is-primed-call(&rt126332, \(2,3), ['123c'], 1);
 throws-like({EVAL '&rt126332.assuming(1)(2,3,4)'; CATCH { }}, X::Multi::NoMatch);
 
 # vim: ft=perl6
