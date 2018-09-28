@@ -205,13 +205,10 @@ subtest '.print-nl method' => {
 }
 
 # RT #131961
-{
-    my $file = make-temp-file;
-    given $file.IO {
-        .spurt: "a" x (2**20 - 1) ~ "«";
-        #?rakudo.jvm todo 'OutOfMemoryError: Java heap space'
-        lives-ok { for .lines { } }, 'No spurious malformed UTF-8 error';
-    }
+given make-temp-file() {
+    .spurt: "a" x (2**20 - 1) ~ "«";
+    #?rakudo.jvm todo 'OutOfMemoryError: Java heap space'
+    lives-ok { for .lines { } }, 'No spurious malformed UTF-8 error';
 }
 
 # RT #132030
