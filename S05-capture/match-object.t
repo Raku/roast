@@ -25,9 +25,9 @@ is $/.pairs.elems,    0,        '.pairs (empty)';
 is $/.kv.elems,       0,        '.kv (empty)';
 
 '1200' ~~ /\d+/;
-is $/.Int, 1200, '.Int with small value';
+is-deeply $/.Int, 1200, '.Int with small value';
 '12000000000000000000000000000000000000' ~~ /\d+/;
-is $/.Int, 12000000000000000000000000000000000000, '.Int with big value';
+is-deeply $/.Int, 12000000000000000000000000000000000000, '.Int with big value';
 
 
 # prematch and postmatch for zero-width matches,
