@@ -200,7 +200,7 @@ my @y = 3, 5, 7, 9;
 my @z;
 
 @z = flat map { $_ > 5 ?? ($_) xx 3 !! Nil }, @y;
-is-deeply [@z], [Nil, Nil, 7,7,7, 9,9,9], '@z = map { $_ > 5 ?? ($_) xx 3 !! Nil }, @y';
+is-deeply [@z], [Any, Any, 7,7,7, 9,9,9], '@z = map { $_ > 5 ?? ($_) xx 3 !! Nil }, @y';
 
 @z = flat @y.map: { $_ xx 3 if $_ > 5 };
 is-deeply @z, [7,7,7, 9,9,9], '@y.map: { $_ xx 3 if $_ > 5 };';
