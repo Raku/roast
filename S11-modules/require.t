@@ -7,7 +7,7 @@ use v6;
 # if you need to load any other modules.
 #############################################################################
 
-use lib $?FILE.IO.parent(2), $?FILE.IO.parent.add("lib");
+use lib $?FILE.IO.parent, $?FILE.IO.parent.add("lib");
 use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
@@ -17,7 +17,7 @@ plan 34;
 # RT #126100
 {
     is $required-Test.gist, '(Test)', "successful require PACKAGE returns PACKAGE";
-    is (require "S11-modules/InnerModule.pm6"), "S11-modules/InnerModule.pm6",
+    is (require "InnerModule.pm6"), "InnerModule.pm6",
         "successful require STRING returns STRING";
 }
 
@@ -28,13 +28,13 @@ is $staticname.gist, '(Test)', "require Test installs stub Test package at compi
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
 lives-ok {
-    require "S11-modules/InnerModule.pm6";
+    require "InnerModule.pm6";
     is ::('InnerModule').WHO<EXPORT>.WHO<DEFAULT>.WHO<&bar>(), 'Inner::bar', "can introspect EXPORT of require'd package";
     is ::('InnerModule').WHO<&oursub>(),"Inner::oursub","can call our-sub from required module";
 }, 'can load InnerModule from a path at run time';
 
 
-my $name = 'S11-modules/InnerModule.pm6';
+my $name = 'InnerModule.pm6';
 
 # RT #125084
 {
@@ -44,7 +44,7 @@ my $name = 'S11-modules/InnerModule.pm6';
 
 # RT #127233
 {
-    require S11-modules::NoModule <&bar>;
+    require NoModule <&bar>;
     my $result = bar();
     is $ = bar(),'NoModule::bar','can import symbol not inside module';
 }
@@ -112,7 +112,7 @@ eval-lives-ok q|BEGIN require Fancy::Utilities;|, 'require works at BEGIN';
 eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import at BEGIN';
 
 {
-        require "S11-modules/GlobalOuter.pm6";
+        require "GlobalOuter.pm6";
         nok ::('GlobalOuter') ~~ Failure, "got outer symbol";
         ok  ::('GlobalOuter').load, "call method that causes a require";
         ok ::('GlobalInner') ~~ Failure, "Did not find inner symbol";
@@ -144,8 +144,8 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
 
 # RT #131112
 {
-    require ::('S11-modules::SetConst');
-    ok ::('S11-modules::SetConst::X') eqv set(<x y>),
+    require ::('SetConst');
+    ok ::('SetConst::X') eqv set(<x y>),
         'require class with `Set` constant';
 }
 
