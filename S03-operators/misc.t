@@ -164,24 +164,27 @@ is (2 Z 3), @z, 'joining of single items';
         'unicode ops chain with ASCII ones (not always True)';
 
 
-    ok  Date.today  .later(:day) ≥ Date.today.earlier(:day), 'Date ≥ Date (true)';
-    nok Date.today.earlier(:day) ≥ Date.today  .later(:day), 'Date ≥ Date (false)';
-    ok  Date.today.earlier(:day) ≤ Date.today  .later(:day), 'Date ≤ Date (true)';
-    nok Date.today  .later(:day) ≤ Date.today.earlier(:day), 'Date ≤ Date (false)';
-    ok  Date.today.earlier(:day) ≠ Date.today  .later(:day), 'Date ≠ Date (true)';
-    nok Date.new('2015-12-25')   ≠ Date.new('2015-12-25'),   'Date ≠ Date (false)';
+    my $DateT := Date.today;
+    ok  $DateT.later(:day)   ≥ $DateT.earlier(:day), 'Date ≥ Date (true)';
+    nok $DateT.earlier(:day) ≥ $DateT  .later(:day), 'Date ≥ Date (false)';
+    ok  $DateT.earlier(:day) ≤ $DateT  .later(:day), 'Date ≤ Date (true)';
+    nok $DateT  .later(:day) ≤ $DateT.earlier(:day), 'Date ≤ Date (false)';
+    ok  $DateT.earlier(:day) ≠ $DateT  .later(:day), 'Date ≠ Date (true)';
+    nok Date.new('2015-12-25') ≠ Date.new('2015-12-25'),
+        'Date ≠ Date (false)';
 
-    ok  DateTime.now  .later(:day) ≥ DateTime.now.earlier(:day),
+    my $DateTimeN := DateTime.now;
+    ok  $DateTimeN  .later(:day) ≥ $DateTimeN.earlier(:day),
         'DateTime ≥ DateTime (true)';
-    nok DateTime.now.earlier(:day) ≥ DateTime.now  .later(:day),
+    nok $DateTimeN.earlier(:day) ≥ $DateTimeN  .later(:day),
         'DateTime ≥ DateTime (false)';
-    ok  DateTime.now.earlier(:day) ≤ DateTime.now  .later(:day),
+    ok  $DateTimeN.earlier(:day) ≤ $DateTimeN  .later(:day),
         'DateTime ≤ DateTime (true)';
-    nok DateTime.now  .later(:day) ≤ DateTime.now.earlier(:day),
+    nok $DateTimeN  .later(:day) ≤ $DateTimeN.earlier(:day),
         'DateTime ≤ DateTime (false)';
-    ok  DateTime.now.earlier(:day) ≠ DateTime.now  .later(:day),
+    ok  $DateTimeN.earlier(:day) ≠ $DateTimeN  .later(:day),
         'DateTime ≠ DateTime (true)';
-    nok DateTime.new(:2017year)    ≠ DateTime.new(:2017year),
+    nok DateTime.new(:2017year)  ≠ DateTime.new(:2017year),
         'DateTime ≠ DateTime (false)';
 
     ok  v42 ≥ v10, 'Version ≥ Version (true)';
