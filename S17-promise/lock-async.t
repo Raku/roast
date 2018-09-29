@@ -20,7 +20,7 @@ throws-like { Lock::Async.new.unlock },
 {
     my $lock = Lock::Async.new;
 
-    my $acquire1 = $lock.lock();
+    await my $acquire1 = $lock.lock();
     isa-ok $acquire1, Promise, 'lock() method returns a Promise';
     is $acquire1.status, Kept, 'The Promise on first call to lock is Kept';
 
@@ -33,7 +33,7 @@ throws-like { Lock::Async.new.unlock },
     is $acquire2.status, Kept, 'The Promise on the second lock() call was kept';
     lives-ok { $lock.unlock() }, 'Can unlock the second time';
 
-    my $acquire3 = $lock.lock();
+    await my $acquire3 = $lock.lock();
     is $acquire3.status, Kept, 'Locking the now-free lock again works';
     lives-ok { $lock.unlock() }, 'And can unlock it again';
 }
@@ -46,6 +46,7 @@ throws-like { Lock::Async.new.unlock },
     for ^5 -> $i {
         isa-ok @promises[$i], Promise, "Acquire {$i + 1} returns a Promise";
     }
+    await @promises[0];
     is @promises[0].status, Kept, 'First Promise is kept';
     for 1..4 -> $i {
         is @promises[$i].status, Planned, "Promise {$i + 1} is planned";
@@ -58,7 +59,7 @@ throws-like { Lock::Async.new.unlock },
     }
     lives-ok { $lock.unlock() }, 'Unlock 5 lived';
 
-    my $acquire-after = $lock.lock();
+    await my $acquire-after = $lock.lock();
     is $acquire-after.status, Kept, 'Locking the now-free lock again works';
     lives-ok { $lock.unlock() }, 'And can unlock it again';
 }
