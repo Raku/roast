@@ -130,7 +130,7 @@ plan 84;
     $trigger.emit('I ate fruit');
     $trigger.emit('The fruit was so tasty');
     $trigger.done();
-    
+
     is @collected.elems, 3, 'whenever loop produced three values';
     is @collected[0], 'I ate bacon', 'First value from loop iteration correct';
     is @collected[1], 'The bacon was so tasty', 'Second value from loop iteration correct';
@@ -539,7 +539,7 @@ lives-ok {
             }
         }
     }
-}, 'No react guts crash in case that once spat out two done messages either'; 
+}, 'No react guts crash in case that once spat out two done messages either';
 
 lives-ok {
     my $s = supply { whenever Supply.interval(0.001) { done } }
