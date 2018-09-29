@@ -7,7 +7,7 @@ use Test;
 # Since there's yet no existing behaviour for some of such combinations,
 # X::Multi::NoMatch is thrown. This APPENDIX test file is for such tests.
 
-plan 13;
+plan 14;
 
 { # RT #129773
     throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
@@ -54,3 +54,7 @@ subtest "Junction.new does not use Mu.new's candidates" => {
     throws-like { Junction.new: :42meow }, X::Multi::NoMatch, 'named';
     throws-like { Junction.new          }, X::Multi::NoMatch, 'no args';
 }
+
+throws-like { Int.new: <a b c>, 42, 'meow', 'wrong', 'args' },
+    X::Multi::NoMatch,
+'does not incorrectly say that .new can only take named args';

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 163;
+plan 162;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -196,10 +196,6 @@ subtest 'Int.new' => { # coverage; 2016-10-05
     }
 
     is-deeply Int.new, 0, 'no args default to 0';
-
-    throws-like { Int.new: <a b c>, 42, 'meow', 'wrong', 'args' },
-        X::Multi::NoMatch,
-    'does not incorrectly say that .new can only take named args';
 
     # RT#132128
     subtest '.new of subclass of Int' => {
