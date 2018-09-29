@@ -668,7 +668,7 @@ lives-ok {
     }
 
     is @received, [1,2,3,4,5],
-        'whenever tapping supply that syncrhonously emits sees values';
+        'whenever tapping supply that synchronously emits sees values';
     ok $ran-done, 'done block in source supply was run';
     is @pre-emit, ['x','x','x','x','x'],
         'supply block loop did not run ahead of consumer';
