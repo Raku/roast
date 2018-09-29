@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 13;
+plan 12;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -123,16 +123,54 @@ plan 13;
 }
 
 # RT #104980
-{
-    class rt104980 {
-        has str $.x;
-        has int8 $.y;
-        method BUILD(:$!x, :$!y) { }
+group-of 14 => 'BUILD with a native typed attribute' => {
+    my class rt104980 {
+        has str    $.a-str;
+
+        has int    $.a-int;
+        has int8   $.a-int8;
+        has int16  $.a-int16;
+        has int32  $.a-int32;
+        has int64  $.a-int64;
+
+        has uint   $.a-uint;
+        has uint8  $.a-uint8;
+        has uint16 $.a-uint16;
+        has uint32 $.a-uint32;
+        has uint64 $.a-uint64;
+
+        has num    $.a-num;
+        has num32  $.a-num32;
+        has num64  $.a-num64;
+
+        submethod BUILD(
+            :$!a-str,
+            :$!a-int,   :$!a-int8,  :$!a-int16,   :$!a-int32,   :$!a-int64,
+            :$!a-uint,  :$!a-uint8, :$!a-uint16,  :$!a-uint32,  :$!a-uint64,
+            :$!a-num,   :$!a-num32, :$!a-num64,
+        ) {}
     };
-    my str $s = 'foo';
-    my int8 $i = 42;
-    is-deeply rt104980.new(:x<foo>,:y(42)).x, $s, "BUILD with a native typed attribute (str)";
-    is-deeply rt104980.new(:x<foo>,:y(42)).y, $i, "BUILD with a native typed attribute (int8)";
+    given rt104980.new:
+        :a-str<foo>,
+        :2a-int,    :3a-int8,   :4a-int16,  :5a-int32,  :6a-int64,
+        :7a-uint,   :8a-uint8,  :9a-uint16, :10a-uint32,  :11a-uint64,
+        :a-num(2e0),  :a-num32(3e0),  :a-num64(4e0)
+    {
+        is-deeply .a-str,   'foo', 'str';
+        is-deeply .a-int,    2,    'int';
+        is-deeply .a-int8,   3,    'int8';
+        is-deeply .a-int16,  4,    'int16';
+        is-deeply .a-int32,  5,    'int32';
+        is-deeply .a-int64,  6,    'int64';
+        is-deeply .a-uint,   7,    'uint';
+        is-deeply .a-uint8,  8,    'uint8';
+        is-deeply .a-uint16, 9,    'uint16';
+        is-deeply .a-uint32, 10,   'uint32';
+        is-deeply .a-uint64, 11,   'uint64';
+        is-deeply .a-num,    2e0,  'num';
+        is-deeply .a-num32,  3e0,  'num32';
+        is-deeply .a-num64,  4e0,  'num64';
+    }
 }
 
 # vim: ft=perl6
