@@ -671,7 +671,7 @@ lives-ok {
         'whenever tapping supply that synchronously emits sees values';
     ok $ran-done, 'done block in source supply was run';
     is @pre-emit, ['x','x','x','x','x'],
-        'supply block loop did not run ahead of consumer';
+        'supply block loop did not run more than expected number of times';
 }
 
 #?rakudo.jvm skip 'done without supply or react'
