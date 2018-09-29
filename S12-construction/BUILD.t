@@ -123,9 +123,10 @@ plan 12;
 }
 
 # RT #104980
-group-of 14 => 'BUILD with a native typed attribute' => {
+group-of 15 => 'BUILD with a native typed attribute' => {
     my class rt104980 {
         has str    $.a-str;
+        has byte   $.a-byte;
 
         has int    $.a-int;
         has int8   $.a-int8;
@@ -144,19 +145,20 @@ group-of 14 => 'BUILD with a native typed attribute' => {
         has num64  $.a-num64;
 
         submethod BUILD(
-            :$!a-str,
+            :$!a-str,   :$!a-byte,
             :$!a-int,   :$!a-int8,  :$!a-int16,   :$!a-int32,   :$!a-int64,
             :$!a-uint,  :$!a-uint8, :$!a-uint16,  :$!a-uint32,  :$!a-uint64,
             :$!a-num,   :$!a-num32, :$!a-num64,
         ) {}
     };
     given rt104980.new:
-        :a-str<foo>,
-        :2a-int,    :3a-int8,   :4a-int16,  :5a-int32,  :6a-int64,
-        :7a-uint,   :8a-uint8,  :9a-uint16, :10a-uint32,  :11a-uint64,
+        :a-str<foo>,  :3a-byte,
+        :2a-int,      :3a-int8,   :4a-int16,  :5a-int32,  :6a-int64,
+        :7a-uint,     :8a-uint8,  :9a-uint16, :10a-uint32,  :11a-uint64,
         :a-num(2e0),  :a-num32(3e0),  :a-num64(4e0)
     {
         is-deeply .a-str,   'foo', 'str';
+        is-deeply .a-byte,   3,    'byte';
         is-deeply .a-int,    2,    'int';
         is-deeply .a-int8,   3,    'int8';
         is-deeply .a-int16,  4,    'int16';
