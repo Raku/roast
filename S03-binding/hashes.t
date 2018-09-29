@@ -165,7 +165,7 @@ plan 39;
 }
 
 # Binding %hash := $hashref.
-# See https://irclog.perlgeek.de/perl6/2005-11-06#i_-424364
+# See http://colabti.org/irclogger/irclogger_log/perl6?date=2005-11-06,Sun&sel=388#l564
 # and consider the magic behind parameter binding (which is really normal
 # binding).
 {
