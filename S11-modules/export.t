@@ -176,8 +176,8 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
 {
     use RT129215;
     ok str_d("foo"), 'Str:D istype across module seam';
-    ok str_u(Str), 'Str:D istype across module seam';
-    ok str_u(Str:U), 'Str:D istype across module seam';
+    ok str_u(Str),   'Str   istype across module seam';
+    ok str_u(Str:U), 'Str:U istype across module seam';
     #?rakudo.jvm 3 todo 'RT#129215'
     ok array_str(Array[Str].new("A","B")), 'Array[Str] istype across module seam';
     ok hash_str(Hash[Str].new({ak => "ak"})), 'Hash[Str] istype across module seam';
