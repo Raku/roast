@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 129;
+plan 130;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -345,7 +345,8 @@ throws-like '*(42)', X::Method::NotFound, typename => 'Whatever';
 
 # RT #126540
 {
-    nok (* !~~ Int)(1), 'Whatever-currying !~~';
+    is-deeply (* !~~ Int)(1),   False, 'Whatever-currying !~~ (1)';
+    is-deeply (* !~~ Int)("x"), True,  'Whatever-currying !~~ (2)';
 }
 
 #?rakudo todo 'useless use corner case RT #130773'
