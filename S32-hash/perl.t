@@ -68,14 +68,18 @@ plan 52;
         Hash[Any].new, Hash[Any].new(k => "v"),
         Hash[Int].new, Hash[Any].new(k => 1),
         Hash[Any,Any].new, Hash[Any,Any].new(k => "v"),
-	Hash[Int,Int].new, Hash[Int,Int].new(1 => 2),
-	:{ }, :{k => "v"} -> \h {
+	      Hash[Int,Int].new, Hash[Int,Int].new(1 => 2),
+	      :{ }, :{k => "v"}
+    -> \h {
         my $a = h;
         is-perl-idempotent $a, "{$a.perl}.perl is idempotent";
-	my $scalarperl = $a.perl;
-	$a := h;
-	nok $scalarperl eq $a.perl, "Hash in Scalar and deconted Hash perlify differently ({$a.keyof.perl},{$a.of.perl})";
-	is-perl-idempotent $a, "{$a.perl}.perl is idempotent";
+
+      	my $scalarperl = $a.perl;
+      	$a := h;
+      	isnt $scalarperl, $a.perl,
+          "Hash in Scalar and deconted Hash perlify differently ({$a.keyof.perl},{$a.of.perl})";
+
+        is-perl-idempotent $a, "{$a.perl}.perl is idempotent";
     }
 }
 
