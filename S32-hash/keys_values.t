@@ -44,13 +44,18 @@ is($pair.values.elems,  1,  'we have one value');
 
 # RT #131962
 {
-    is (4 => Mu).kv.list.perl, (4,Mu).perl, ".kv on pair with Mu in value";
-    is ((Mu) => 4).kv.list.perl, (Mu, 4).perl, ".kv on pair with Mu in key";
-    is ((Mu) => Mu).kv.list.perl, (Mu, Mu).perl, ".kv on pair with Mu in key and value";
-    is (4 => Mu).keys.list.perl, (4,).perl, ".keys on pair with Mu in value";
-    is ((Mu) => 4).keys.list.perl, (Mu,).perl, ".keys on pair with Mu in key";
-    is ((Mu) => Mu).keys.list.perl, (Mu,).perl, ".keys on pair with Mu in key and value";
-    is (4 => Mu).values.list.perl, (Mu,).perl, ".values on pair with Mu in value";
-    is ((Mu) => 4).values.list.perl, (4,).perl, ".values on pair with Mu in key";
-    is ((Mu) => Mu).values.list.perl, (Mu,).perl, ".values on pair with Mu in key and value";
+    is (4    => Mu).kv.perl, (4,  Mu).Seq.perl, ".kv on pair with Mu in value";
+    is ((Mu) => 4 ).kv.perl, (Mu,  4).Seq.perl, ".kv on pair with Mu in key";
+    is ((Mu) => Mu).kv.perl, (Mu, Mu).Seq.perl,
+        ".kv on pair with Mu in key and value";
+    is (  4  => Mu).keys.perl, (4, ).Seq.perl, ".keys on pair with Mu in value";
+    is ((Mu) => 4 ).keys.perl, (Mu,).Seq.perl, ".keys on pair with Mu in key";
+    is ((Mu) => Mu).keys.perl, (Mu,).Seq.perl,
+        ".keys on pair with Mu in key and value";
+    is (4 => Mu).values.perl, (Mu,).Seq.perl,
+        ".values on pair with Mu in value";
+    is ((Mu) => 4 ).values.perl, (4,).Seq.perl,
+        ".values on pair with Mu in key";
+    is ((Mu) => Mu).values.perl, (Mu,).Seq.perl,
+        ".values on pair with Mu in key and value";
 }
