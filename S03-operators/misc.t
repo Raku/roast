@@ -165,34 +165,39 @@ is (2 Z 3), @z, 'joining of single items';
 
 
     my $DateT := Date.today;
-    ok  $DateT.later(:day)   ≥ $DateT.earlier(:day), 'Date ≥ Date (true)';
-    nok $DateT.earlier(:day) ≥ $DateT  .later(:day), 'Date ≥ Date (false)';
-    ok  $DateT.earlier(:day) ≤ $DateT  .later(:day), 'Date ≤ Date (true)';
-    nok $DateT  .later(:day) ≤ $DateT.earlier(:day), 'Date ≤ Date (false)';
-    ok  $DateT.earlier(:day) ≠ $DateT  .later(:day), 'Date ≠ Date (true)';
-    nok Date.new('2015-12-25') ≠ Date.new('2015-12-25'),
+    is-deeply  $DateT.later(:day)   ≥ $DateT.earlier(:day), True,
+        'Date ≥ Date (true)';
+    is-deeply $DateT.earlier(:day) ≥ $DateT  .later(:day),  False,
+        'Date ≥ Date (false)';
+    is-deeply  $DateT.earlier(:day) ≤ $DateT  .later(:day), True,
+        'Date ≤ Date (true)';
+    is-deeply $DateT  .later(:day) ≤ $DateT.earlier(:day),  False,
+        'Date ≤ Date (false)';
+    is-deeply $DateT.earlier(:day) ≠ $DateT  .later(:day),  True,
+        'Date ≠ Date (true)';
+    is-deeply Date.new('2015-12-25') ≠ Date.new('2015-12-25'), False,
         'Date ≠ Date (false)';
 
     my $DateTimeN := DateTime.now;
-    ok  $DateTimeN  .later(:day) ≥ $DateTimeN.earlier(:day),
+    is-deeply $DateTimeN  .later(:day) ≥ $DateTimeN.earlier(:day), True,
         'DateTime ≥ DateTime (true)';
-    nok $DateTimeN.earlier(:day) ≥ $DateTimeN  .later(:day),
+    is-deeply $DateTimeN.earlier(:day) ≥ $DateTimeN  .later(:day), False,
         'DateTime ≥ DateTime (false)';
-    ok  $DateTimeN.earlier(:day) ≤ $DateTimeN  .later(:day),
+    is-deeply $DateTimeN.earlier(:day) ≤ $DateTimeN  .later(:day), True,
         'DateTime ≤ DateTime (true)';
-    nok $DateTimeN  .later(:day) ≤ $DateTimeN.earlier(:day),
+    is-deeply $DateTimeN  .later(:day) ≤ $DateTimeN.earlier(:day), False,
         'DateTime ≤ DateTime (false)';
-    ok  $DateTimeN.earlier(:day) ≠ $DateTimeN  .later(:day),
+    is-deeply $DateTimeN.earlier(:day) ≠ $DateTimeN  .later(:day), True,
         'DateTime ≠ DateTime (true)';
-    nok DateTime.new(:2017year)  ≠ DateTime.new(:2017year),
+    is-deeply DateTime.new(:2017year)  ≠ DateTime.new(:2017year),  False,
         'DateTime ≠ DateTime (false)';
 
-    ok  v42 ≥ v10, 'Version ≥ Version (true)';
-    nok v10 ≥ v42, 'Version ≥ Version (false)';
-    ok  v10 ≤ v42, 'Version ≤ Version (true)';
-    nok v42 ≤ v10, 'Version ≤ Version (false)';
-    ok  v42 ≠ v10, 'Version ≠ Version (true)';
-    nok v42 ≠ v42, 'Version ≠ Version (false)';
+    is-deeply v42 ≥ v10, True,  'Version ≥ Version (true)';
+    is-deeply v10 ≥ v42, False, 'Version ≥ Version (false)';
+    is-deeply v10 ≤ v42, True,  'Version ≤ Version (true)';
+    is-deeply v42 ≤ v10, False, 'Version ≤ Version (false)';
+    is-deeply v42 ≠ v10, True,  'Version ≠ Version (true)';
+    is-deeply v42 ≠ v42, False, 'Version ≠ Version (false)';
 }
 
 # RT #132346
