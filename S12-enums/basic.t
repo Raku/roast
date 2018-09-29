@@ -184,7 +184,7 @@ subtest '.pred/.succ' => {
 }
 
 # RT #132093
-subtest '=== on same different enums with same values' => {
+subtest '=== on different enums with same values' => {
     plan 6;
     my enum WHICHTester (A => 1, B => 2, C => 2);
 
