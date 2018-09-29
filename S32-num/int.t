@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 162;
+plan 163;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -169,7 +169,7 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
 }
 
 subtest 'Int.new' => { # coverage; 2016-10-05
-    plan 11;
+    plan 10;
 
     subtest 'returns a new object (not a cached constant)' => {
         plan 3;
