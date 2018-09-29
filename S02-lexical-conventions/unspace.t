@@ -333,8 +333,7 @@ is IO::Path\.^name, "IO::Path", "bare longname metamethod call with degenerate u
 
 # sigilless variables/constants
 # RT #128462
-# XXX alter this first test not to say in errata.
-eval-lives-ok 'my \term = 42; say term\   .Str; term == 42 or die;',
+eval-lives-ok 'my \term = 42; uc term\   .Str; term == 42 or die;',
     'unspace with method calls detached from sigiless terms works';
 eval-lives-ok 'my \term = [1,2]; my $v = term\   [1]; $v == 2 or die;',
     'unspace with array subscript detached from sigiless terms works';
