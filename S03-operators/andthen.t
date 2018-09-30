@@ -16,7 +16,7 @@ my $ = 'some arg' andthen -> $x { is $x, 'some arg', 'andthen passes on argument
 # RT #127822
 is (S/a/A/ andthen S/b/B/ given "ab"), "AB", 'andthen with two S///';
 
-subtest 'Empty in args to andthen does not disappear' => {
+subtest 'Empty in args to andthen/with does not disappear' => {
     plan 3;
     my $r := do 42 with Empty;
     is-deeply $r,                         Empty, 'postfix `with`';

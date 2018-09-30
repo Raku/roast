@@ -7,16 +7,16 @@ plan 9;
 # L<S32::Str/Str/=item starts-with>
 
 my $s = "foobar";
-ok $s.starts-with("foo"),      "'foobar' starting with 'foo'";
-ok $s.starts-with("foobar"),   "'foobar' starting with 'foobar'";
-nok $s.starts-with("goo"),     "'foobar' not starting with 'goo'";
-nok $s.starts-with("foobarx"), "'foobar' not starting with 'foobarx'";
+is-deeply $s.starts-with("foo"),     True, "'foobar' starts with 'foo'";
+is-deeply $s.starts-with("foobar"),  True, "'foobar' starts with 'foobar'";
+is-deeply $s.starts-with("goo"),     False, "'foobar' doesn't start with 'goo'";
+is-deeply $s.starts-with("foobarx"), False, "'foobar' doesn't start with 'foobarx'";
 
 my $i = 342;
-ok $i.starts-with(34),    "342 starting with 34";
-ok $i.starts-with(342),   "342 starting with 342";
-nok $i.starts-with(43),   "342 not starting with 43";
-nok $i.starts-with(3428), "342 not starting with 3428";
+is-deeply $i.starts-with(34),   True,  "342 starts with 34";
+is-deeply $i.starts-with(342),  True,  "342 starts with 342";
+is-deeply $i.starts-with(43),   False, "342 doesn't start with 43";
+is-deeply $i.starts-with(3428), False, "342 doesn't start with 3428";
 
 try { 42.starts-with: Str }; pass "Cool.starts-with with wrong args does not hang";
 

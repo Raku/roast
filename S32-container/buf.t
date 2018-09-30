@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 21;
 
 # L<S32::Containers/Classes and Roles/"=item Buf">
 
@@ -14,7 +14,6 @@ Tests of Buf/Blob roles
 
 { # coverage; 2016-09-26
 
-like ~Blob.new(<1 2 3>).WHICH, /^ 'Blob'/, ‘.WHICH indicates it's a Blob’;
 is-deeply Blob.new(array[int].new: 1, 2, 3), Blob.new(1,2,3),
     'can construct a Blob from native int array';
 
@@ -175,7 +174,7 @@ subtest 'arity-1 infix:<~> works on Blobs' => {
 subtest '.gist shows only first 100 els' => {
     plan 5;
     sub make-gist ($blob, $extras = []) {
-        'Blob:0x<' ~ (|$blob».fmt('%02x'), |$extras) ~ '>'
+        'Blob:0x<' ~ (|$blob».fmt('%02X'), |$extras) ~ '>'
     }
 
     is  Blob.new(<1 2 3>).gist, 'Blob:0x<01 02 03>', 'gist gives useful value';

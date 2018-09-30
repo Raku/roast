@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 234;
+plan 235;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -316,9 +316,10 @@ sub showkv($x) {
     @a = $b.pick(-2.5);
     is +@a, 0, '.pick(<negative number>) does not return any items';
 
-	lives-ok { $b.pick(1).gist },
-		".pick() gives valid result with argument"; # https://github.com/rakudo/rakudo/issues/1438
-    lives-ok { @a = $b.pick(2.5) }, ".pick int-ifies arg"; # RT #131272
+    # https://github.com/rakudo/rakudo/issues/1438
+	  lives-ok { $b.pick(1).gist }, ".pick() gives valid result with argument";
+    # RT #131272
+    is +$b.pick(2.5), 2, ".pick int-ifies arg";
 }
 
 {
@@ -550,10 +551,12 @@ subtest '.hash does not cause keys to be stringified' => {
     throws-like { Bag.new(^Inf) }, X::Cannot::Lazy, :what<Bag>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
-      dies-ok { $pair.Bag },
-        "($pair.perl()).Bag died";
-      dies-ok { Bag.new-from-pairs($pair) },
-        "Bag.new-from-pairs( ($pair.perl()) ) died";
+      my \ex := $pair.value eq 'a'
+          ?? X::Str::Numeric !! X::Numeric::CannotConvert;
+      throws-like { $pair.Bag }, ex,
+        "($pair.perl()).Bag throws";
+      throws-like { Bag.new-from-pairs($pair) }, ex,
+        "Bag.new-from-pairs( ($pair.perl()) ) throws";
     }
 }
 
@@ -568,5 +571,8 @@ subtest '.hash does not cause keys to be stringified' => {
     dies-ok { %h<a>:delete }, 'cannot :delete from Bag';
     dies-ok { %h<a> = False }, 'cannot delete from Bag by assignment';
 }
+
+# R#2289
+is-deeply (1,2,3).Bag.ACCEPTS( ().Bag ), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

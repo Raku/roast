@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 18;
+plan 17;
 
 # L<S32::Str/Str/=item words>
 
@@ -51,10 +51,6 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
     my @other-words = try words($str, *);
     is +@other-words, 3, 'words($str, *)';
 }
-
-# https://github.com/rakudo/rakudo/commit/742573724c
-dies-ok { 42.words: |<bunch of incorrect args> },
-    'no infinite loop when given wrong args to Cool.words';
 
 # https://irclog.perlgeek.de/perl6-dev/2017-05-16#i_14593021
 subtest '$limit does not pad result with Nils' => {

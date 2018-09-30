@@ -23,7 +23,7 @@ my $was_inside = 0;
 
 sub lvalue_test1() is rw {
   $was_inside++;
-  return Proxy.new:
+  return-rw Proxy.new:
     FETCH => method () { 100 + $foo },
     STORE => method ($new) { $foo = $new - 100 };
 };
@@ -49,7 +49,7 @@ $was_inside = 0;
 
 sub lvalue_test2() is rw {
   $was_inside++;
-  return Proxy.new:
+  return-rw Proxy.new:
     FETCH => method ()     { 10 + $foo },
     STORE => method ($new) { $foo = $new - 100 };
 };
@@ -90,9 +90,7 @@ sub lvalue_test3() {
     # No todo_is here to avoid unexpected succeeds
     is      $was_inside,              1, "lvalue_test3() was called (8)";
 
-    #?rakudo todo 'RT#124341 Proxy should not escape return from a non is-rw'
     dies-ok { EVAL '(lvalue_test3() = 42)' }, "Proxy returned from non is-rw is prefetched rvalue";
-    #?rakudo todo 'RT#124341 Proxy should not escape return from a non is-rw'
     is      $was_inside,              2, "lvalue_test3() was called (9)";
 
 }

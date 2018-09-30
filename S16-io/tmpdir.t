@@ -1,5 +1,8 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
+
 
 # L<S16/IO/$*TMPDIR>
 
@@ -16,8 +19,8 @@ isa-ok .tmpdir, IO::Path, "{.^name}.tmpdir returns IO::Path"
     my $before = $*TMPDIR;
     {
         temp $*TMPDIR = '/foo'.IO;
-        is-deeply $*TMPDIR, '/foo'.IO, 'was able to `temp` $*TMPDIR';
+        is-path $*TMPDIR, '/foo'.IO, 'was able to `temp` $*TMPDIR';
     }
-    is-deeply $*TMPDIR, $before,
+    is-path $*TMPDIR, $before,
         '`temp`ed $*TMPDIR got restored to previous value';
 }

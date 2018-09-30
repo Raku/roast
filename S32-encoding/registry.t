@@ -1,13 +1,20 @@
 use Test;
+use lib $?FILE.IO.parent(2).add: 'packages';
+use Test;
+use Test::Util;
 
 plan 15;
 
-ok Encoding::Registry.find('utf8') ~~ Encoding, 'Can find built-in utf8 encoding';
-ok Encoding::Registry.find('utf-8') ~~ Encoding, 'Can find built-in utf-8 encoding';
-ok Encoding::Registry.find('UTF-8') ~~ Encoding, 'Can find built-in UTF-8 encoding';
-ok Encoding::Registry.find('ascii') ~~ Encoding, 'Can find built-in ascii encoding';
-ok Encoding::Registry.find('iso-8859-1') ~~ Encoding, 'Can find built-in iso-8859-1 encoding';
-ok Encoding::Registry.find('latin-1') ~~ Encoding, 'Can find built-in latin-1 encoding';
+for <utf8  utf-8  UTF-8  ascii  iso-8859-1  latin-1> -> $name {
+    group-of 3 => "Can find built-in $name encoding" => {
+        given Encoding::Registry.find: $name {
+            isa-ok  $_, Encoding::Builtin, 'type of result';
+            does-ok $_, Encoding, 'does Encoding role';
+            is (.alternative-names, .name).flat».fc.any, $name.fc,
+                'found right encoding';
+        }
+    }
+}
 
 throws-like { Encoding::Registry.find('utf-29') },
     X::Encoding::Unknown, name => 'utf-29',
@@ -21,7 +28,7 @@ throws-like { Encoding::Registry.find('utf-29') },
         method decoder() { die "NYI" }
     }
 
-    lives-ok { Encoding::Registry.register(TestEncoding) },
+    is-deeply Encoding::Registry.register(TestEncoding), Nil,
         'Can register an encoding';
 
     isa-ok Encoding::Registry.find('utf-29'), TestEncoding,
@@ -60,6 +67,6 @@ throws-like { Encoding::Registry.find('utf-29') },
         method encoder() { die "NYI" }
         method decoder() { die "NYI" }
     }
-    lives-ok { Encoding::Registry.register(NoAlternativeNamesEncoding) },
+    is-deeply Encoding::Registry.register(NoAlternativeNamesEncoding), Nil,
         "Encodings with no alternative names method can be registered";
 }

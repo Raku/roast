@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 298;
+plan 299;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -430,7 +430,8 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     isa-ok DateTime.now.hour, Int, 'DateTime.now.hour isa Int';
 }
 
-is DateTime.now.Date, Date.today, 'coercion to Date';
+is DateTime.now.Date, Date.today,
+    'coercion to Date (this test can fail if run exactly at midnight)';
 
 {
     is ds('2013-12-23T12:34:36Z').later(second => 1),
@@ -727,7 +728,7 @@ subtest 'synthetics not allowed in date formats' => {
     }
 
     subtest 'DateTime <=> DateTime' => {
-        plan 16;
+        plan 21;
 
         is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
             DateTime.new('1986-02-22T22:22:22+22:22'), Order::Same,
@@ -783,6 +784,42 @@ subtest 'synthetics not allowed in date formats' => {
         is  DateTime.new('1986-02-22T22:22:22+22:22') <=>
             DateTime.new('1986-02-22T22:22:21+22:22'), Order::More,
             'More (different seconds)';
+
+        is  DateTime.new('2016-12-31T23:59:59Z') <=>
+            DateTime.new('2016-12-31T23:59:60Z'), Order::Less,
+            'Less (leap seconds)';
+        is  DateTime.new('2017-01-01T00:00:00Z') <=>
+            DateTime.new('2016-12-31T23:59:60Z'), Order::More,
+            'Moar (leap seconds)';
+
+        # This behaviour is per RFC7164, section 3:
+        # https://tools.ietf.org/html/rfc7164#section-3
+        # The leap second always happens in UTC and the 60th second
+        # in other timezones occurs in whatever hour UTC's second happens
+        is  DateTime.new('2017-01-01T00:00:00Z') <=> DateTime.new('2016-12-31T23:00:00-01:00'), Order::Same,
+            'Same (leap seconds) (1)';
+        is  DateTime.new('2016-12-31T23:59:60Z') <=> DateTime.new('2016-12-31T22:59:60-01:00'), Order::Same,
+            'Same (leap seconds) (2)';
+        #?rakudo skip 'Cannot parse leap on non-23:59'
+        is  DateTime.new('2016-12-31T23:59:60Z') <=> DateTime.new('2017-01-01T01:00:60+01:00'), Order::Same,
+            'Same (leap seconds) (3)';
+    }
+}
+
+# This behaviour is per RFC7164, section 3:
+# https://tools.ietf.org/html/rfc7164#section-3
+# The leap second always happens in UTC and the 60th second
+# in other timezones occurs in whatever hour UTC's second happens
+subtest 'can parse leap second in non-UTC timezones' => {
+    my \h := 3600;
+    plan +my @tzs = flat (
+        10000, 100*h, 30*h, 24*h, 12*h, 3*h, 0, .5*h, 123, 432, 1
+    ).map: {-$_, $_}
+
+    my \utc := DateTime.new: '2016-12-31T23:59:60Z';
+    for @tzs {
+        #?rakudo skip 'Cannot parse leap on non-23:59'
+        cmp-ok $d, '==', utc, "parsed correct date for .in-timezone($_)";
     }
 }
 

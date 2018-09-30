@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 20;
+plan 19;
 
 # older: L<S16/"Unfiled"/"=item IO.slurp">
 # old: L<S32::IO/IO::FileNode/slurp>
@@ -88,9 +88,8 @@ subtest '&slurp(IO::Handle)' => {
         'foo'.&f.absolute, 'bar'.&f.absolute, 'ber'.&f.absolute,
     ], 'slurp() uses $*ARGFILES';
 
-    is_run '$*ARGFILES.encoding: Nil; say slurp', {
-        :0status, :err(''),
-        :out('Buf[uint8]:0x<66 6f 6f 62 61 72 62 65 72>\qq[\n]')
+    is_run '$*ARGFILES.encoding: Nil; say slurp.decode', {
+        :0status, :err(''), :out("foobarber\n")
     }, :args[
         'foo'.&f.absolute, 'bar'.&f.absolute, 'ber'.&f.absolute,
     ], 'slurp() uses $*ARGFILES (binary mode)';
@@ -114,10 +113,6 @@ subtest '&slurp(IO::Handle)' => {
         is-deeply .opened, False, 'with :close, handle is closed';
     }
 }
-
-# RT #131503
-is_run ｢'-'.IO.slurp.print｣, 'meows', {:out<meows>, :err(''), :0status},
-    'can .slurp from "-".IO path';
 
 #?rakudo.jvm skip 'floods stderr, IO::Handle.slurp(:bin)'
 #?DOES 1

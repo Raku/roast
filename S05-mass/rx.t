@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 755;
+plan 756;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -218,7 +218,8 @@ ok ('abc def ghi' ~~ /<alpha> [ \- <alpha> ]?/) && matchcheck($/, q/mob<alpha> 0
 ok 'bookkeeper' ~~ /[ (.) $0 ]+/, 'backreference';
 
 #### [(.)$٠]+				bookkeeper	y			backreference
-ok 'bookkeeper' ~~ /[ (.) $٠ ]+/, 'Nd digit backreference';
+ok 'bookkeeper' ~~ /[ (.) $٠ ]+/,
+    'Nd digit backreference (٠ U+0660 ARABIC-INDIC DIGIT ZERO)';
 
 #### (\w+) <+ws> $0				hello hello	y			backreference at end of string
 ok 'hello hello' ~~ /(\w+) <+ws> $0/, 'backreference at end of string';
@@ -444,13 +445,13 @@ ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
 #### '?'			ab<?		y	literal match with question mark
 ok 'ab<?' ~~ /'?'/, 'literal match with question mark';
 
-#### '<'			ab<?		y	literal match with lt 
+#### '<'			ab<?		y	literal match with lt
 ok 'ab<?' ~~ /'<'/, 'literal match with lt ';
 
 #### '<?'			ab<?		y	literal match with lt and question mark
 ok 'ab<?' ~~ /'<?'/, 'literal match with lt and question mark';
 
-#### '<?'			ab<x?		n	non-matching literal match 
+#### '<?'			ab<x?		n	non-matching literal match
 ok 'ab<x?' !~~ /'<?'/, 'non-matching literal match ';
 
 #### <[A..Z0..9]>		abcdef		n	two enumerated ranges
@@ -2024,8 +2025,9 @@ ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
     #### a**:!2..4		baaabbb		y	three "a" characters (explicit greed)
     ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 
-    #?rakudo.jvm skip "'۳' is not a valid number"
-    ok 'aaa' ~~ /a**۳/, 'Unicode Nd digits work';
+    #?rakudo.jvm 2 skip "'۳' is not a valid number"
+    is  'aaaa' ~~ /a**۳/, 'aaa', 'Unicode Nd digits work (match case)';
+    nok 'aa'   ~~ /a**۳/,        'Unicode Nd digits work (no match case)';
 }
 
 # RT #112450

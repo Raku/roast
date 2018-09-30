@@ -4,17 +4,38 @@ unit module Test::Util;
 use Test;
 use MONKEY-GUTS;
 
+sub group-of (
+    Pair (
+        Int:D :key($plan),
+        Pair  :value((
+            Str:D :key($desc),
+                  :value(&tests))))
+) is export {
+    subtest $desc => {
+        plan $plan;
+        tests
+    }
+}
+
+sub is-path (IO::Path:D $got, IO::Path:D $exp, Str:D $desc) is export {
+    cmp-ok $got.resolve, '~~', $exp.resolve, $desc;
+}
+
 sub is-deeply-junction (
     Junction $got, Junction $expected, Str:D $desc
 ) is export {
     sub junction-guts (Junction $j) {
-        my $st = nqp::getattr(nqp::decont($j), Junction, '$!storage');
-        do for ^nqp::elems(nqp::decont($st)) {
-            given nqp::atpos(nqp::decont($st), $_) {
-                when Junction { junction-guts($_).Slip }
-                $_
-            }
+        $j.gist ~~ /^ $<type>=(\w+)/;
+        my $type := ~$<type>;
+        my @guts;
+        my $l = Lock.new;
+        $j.THREAD: { $l.protect: {
+              when Junction { @guts.push: junction-guts $_ }
+              @guts.push: $_
+          }
         }
+        @guts .= sort;
+        [$type, @guts]
     }
 
     is-deeply junction-guts($got), junction-guts($expected), $desc;
@@ -28,7 +49,7 @@ multi test-iter-opt (Iterator:D \iter, UInt:D \items, Str:D $desc) is export {
 }
 sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
     subtest $desc => {
-        plan 5 + 2*n + ($_ with data);
+        plan 3 + 2*n + ($_ with data);
         sub count (\v, $desc) {
             iter.can('count-only')
               ?? is-deeply iter.count-only, v, "count  ($desc)"
@@ -48,8 +69,6 @@ sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
         count  0, 'after last pull';
         bool  ?0, 'after last pull';
         ok iter.pull-one =:= IterationEnd, 'one more pull gives IterationEnd';
-        count  0, 'after IterationEnd';
-        bool  ?0, 'after IterationEnd';
     }
 }
 
@@ -210,7 +229,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-multi doesn't-hang (Str $args, $desc, :$in, :$wait = 5, :$out, :$err)
+multi doesn't-hang (Str $args, $desc, :$in, :$wait = 15, :$out, :$err)
 is export {
     doesn't-hang \($*EXECUTABLE.absolute, '-e', $args), $desc,
         :$in, :$wait, :$out, :$err;
@@ -221,7 +240,7 @@ is export {
 my $VM-time-scale-multiplier = $*VM.name eq 'jvm' ?? 20/3 !! 1;
 multi doesn't-hang (
     Capture $args, $desc = 'code does not hang',
-    :$in, :$wait = 5, :$out, :$err,
+    :$in, :$wait = 15, :$out, :$err,
 ) is export {
     my $prog = Proc::Async.new: |$args;
     my ($stdout, $stderr) = '', '';
@@ -423,6 +442,32 @@ across Perl 6 implementations.
 
 =head1 FUNCTIONS
 
+=head2 group-of
+group-of (Pair (Int:D :key($plan), Pair :value((Str:D :key($desc), :value(&tests)))))
+
+A more concise way to write subtests. Code:
+
+    group-of 42 => 'some feature' => {
+        ok 1;
+        ok 2;
+        ...
+        ok 42;
+    }
+
+Is equivalent to:
+
+    subtest 'some feature' => {
+        plan 42;
+        ok 1;
+        ok 2;
+        ...
+        ok 42;
+    }
+
+=head2 is-path (IO::Path:D $got, IO::Path:D $exp, Str:D $desc)
+
+Tests whether two C<IO::Path> objects reference the same resource.
+
 =head2 is-eqv (Mu $got, Mu $expected, Str:D $description)
 
 Compare two items using `eqv` semantics. Basically this is the same
@@ -557,9 +602,10 @@ All other errors should be trapped and reported via the 'test_died' item.
 =head2 is-deeply-junction( Junction $got, Junction $expected, Str:D $desc)
 
 Guts two junctions and uses C<is-deeply> test on those guts. Use to
-compare two Junctions for equivalence. I<Note:> this test is rather strict
-and will fail even if the two Junctions are functionally equivalent, for
-example 1|2 and 2|1 are considered to be different Junctions.
+compare two Junctions for equivalence. The test relies on given Junction to
+be gistable, and their guts to be sortable and usable in C<is-deeply>, thus,
+for example, Junctions containing lazy lists cannot be used with this
+routine.
 
 =head2 warns-like($code-or-str-to-eval, $expected, $desc)
 

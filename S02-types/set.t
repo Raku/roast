@@ -1,7 +1,9 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
-plan 226;
+plan 228;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -262,7 +264,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
       -1,   '-1',
       -Inf, '-Inf'
     -> $p, $t {
-        is-deeply set().roll($p), ().Seq, "empty set.roll($t) -> ().Seq"
+        is-eqv set().roll($p), ().Seq, "empty set.roll($t) -> ().Seq"
     }
     dies-ok { set().roll(NaN) }, 'empty set.roll(NaN) should die';
 }
@@ -304,7 +306,7 @@ dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
       -1,   '-1',
       -Inf, '-Inf'
     -> $p, $t {
-        is-deeply set().pick($p), ().Seq, "empty set.pick($t) -> ().Seq"
+        is-eqv set().pick($p), ().Seq, "empty set.pick($t) -> ().Seq"
     }
     dies-ok { set().pick(NaN) }, 'empty set.pick(NaN) should die';
 }
@@ -498,12 +500,10 @@ subtest '.hash does not cause keys to be stringified' => {
 
 # RT #117997
 {
-    throws-like 'set;', Exception,
-        'set listop called without arguments dies (1)',
-        message => { m/'Function "set" may not be called without arguments'/ };
-    throws-like 'set<a b c>;', X::Syntax::Confused,
-        'set listop called without arguments dies (2)',
-        message => { m/'Use of non-subscript brackets after "set" where postfix is expected'/ };
+    throws-like 'set;', Exception, message => /set/,
+        'set listop called without arguments and parentheses dies (1)';
+    throws-like 'set<a b c>;', X::Syntax::Confused, message => /subscript/,
+        'set listop called without arguments dies (2)';
 }
 
 # RT #131300
@@ -565,5 +565,14 @@ subtest 'set ops do not hang with Setty/Baggy/Mixy type objects' => {
 
 is +set(.3e0, .1e0+.2e0, 1e0, 1e0+4e-15), 4,
     'Nums that are close to each other remain distinct when put in sets';
+
+# GH#2068
+{
+    dies-ok { my Int %h := :42foo.Set.Hash },
+      'have typechecking on a Hashifeid Set iterator';
+}
+
+# R#2289
+is-deeply (1,2,3).Set.ACCEPTS(().Set), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

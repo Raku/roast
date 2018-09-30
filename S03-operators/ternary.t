@@ -132,8 +132,7 @@ subtest 'fiddly meta error indicates what operator is used' => {
 
     for @ops -> $op {
         throws-like "1 $op?? 2 !! 3", X::Syntax::CannotMeta,
-            message => /['args of'|'with'] \s+ '??'/,
-        "$op operator";
+            :operator{.contains: '??'}, "$op operator";
     }
 }
 

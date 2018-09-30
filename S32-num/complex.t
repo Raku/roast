@@ -218,9 +218,11 @@ ok Num(exp i * π) == -1, 'Num(Complex) pays attention to $*TOLERANCE';
     is ( 42.5-72.5i).truncate,  42-72i, '.truncate (+r-i), .5r, .5i';
     is (-42.5-72.5i).truncate, -42-72i, '.truncate (-r-i), .5r, .5i';
 
-    is-deeply abs(3+4i),      5e0,     'abs(3+4i)';
-    is-deeply abs(i),         1e0,     'abs(i)';
-    cmp-ok    abs(1+i), '==', sqrt(2), 'abs(1+i)';
+    # absolute of a complex is like applying the Pythagoras theorem to a
+    # triangle with a re./im. values being sides and the abs being hypotenuse
+    is-approx abs(3+4i), 5e0,     'abs(3+4i)';
+    is-approx abs(i),    1e0,     'abs(i)';
+    is-approx abs(1+i),  sqrt(2), 'abs(1+i)';
 
     subtest 'Real ≅ Complex' => {
         plan 6;
@@ -255,6 +257,12 @@ ok Num(exp i * π) == -1, 'Num(Complex) pays attention to $*TOLERANCE';
 subtest 'exponentiation with zero (n = 0+0i)' => {
     plan 3;
 
+    # Per discussion on https://rt.perl.org/Public/Bug/Display.html?id=128785
+    # + majority of languages doing the 1+0i and not a NaN
+    #    http://rosettacode.org/wiki/Zero_to_the_zero_power
+    # + IEEE Std 1076.2-1996 IEEE Standard VHDL Mathematical Packages
+    #    https://perso.telecom-paristech.fr/guilley/ENS/20171205/TP/tp_syn/doc/IEEE_VHDL_1076.2-1996.pdf
+    #    that defines EXP operation for complex and does use 1+0i for the zero case
     constant n = 0+0i;
     is-deeply n**0, 1+0i, 'n**0';
     is-deeply n**n, 1+0i, 'n**n';

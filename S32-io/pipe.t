@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 20;
 
@@ -61,22 +63,25 @@ with run(:out, $*EXECUTABLE, '-e', '') -> $proc {
     with $proc.out {
         is-deeply .IO,   IO::Path,  '.IO   returns an IO::Path type object';
         is-deeply .path, IO::Path,  '.path returns an IO::Path type object';
-        is-deeply .proc, $proc,     ".proc returns pipe's Proc object";
+        cmp-ok .proc, '===', $proc, ".proc returns pipe's Proc object";
         quietly is-deeply .Str, '', '.Str is empty string';
         .close;
     }
 }
 
-{
-  lives-ok {
-    my $p = run :bin, :out, :err, :in, $*EXECUTABLE, '-e',
-        'my $v = $*IN.get; note $v; say $v';
-    $p.in.write: "42\n".encode;
-    $p.in.flush;
-    $p.in.close;
-    $p.out.slurp(:close);
-    $p.err.slurp(:close);
-  }, 'bin pipes in Proc do not crash on open';
+group-of 3 => 'bin pipes in Proc do not crash on open' => {
+    my ($stdout, $stderr);
+    lives-ok {
+        my $p = run :bin, :out, :err, :in, $*EXECUTABLE, '-e',
+            'my $v = $*IN.get; note $v.flip; say $v';
+        $p.in.write: "42\n".encode;
+        $p.in.flush;
+        $p.in.close;
+        $stdout = $p.out.slurp(:close).decode;
+        $stderr = $p.err.slurp(:close).decode;
+    }, 'no crashes';
+    is $stdout, "42\n", 'STDOUT is right';
+    is $stderr, "24\n", 'STDERR is right';
 }
 
 # RT #129882

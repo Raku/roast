@@ -347,15 +347,16 @@ subtest 'multi with :D subset dispatches correctly' => {
 
 # RT #129430
 {
-    sub f(|c where { c.elems == 1 }) {}
-    lives-ok { f(42) }, 'where constraint on |c parameter works';
-    dies-ok { f() }, 'where constraint on |c parameter is enforced';
+    sub f(|c where { c.elems == 1 }) { 72 }
+    is-deeply f(42), 72, 'where constraint on |c parameter works';
+    throws-like { f() }, X::TypeCheck::Binding::Parameter,
+        'where constraint on |c parameter is enforced';
 }
 
 # RT #126642
 {
     multi f(UInt:D $) { "ok" };
-    lives-ok { f(42); }, "UInt:D parameter doesn't fail in a multi";
+    is f(42), 'ok', "UInt:D parameter doesn't fail in a multi";
 }
 
 # https://github.com/rakudo/rakudo/commit/43b9c82945

@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 851;
+plan 855;
 
 # Basic test functions specific to rational numbers.
 
@@ -40,8 +40,8 @@ is(Rat.new(2, 4).nude, (1, 2), "Reduce to simplest form in constructor");
 is(Rat.new(39, 33).nude, (13, 11), "Reduce to simplest form in constructor");
 is(Rat.new(0, 33).nude, (0, 1), "Reduce to simplest form in constructor");
 is(Rat.new(1451234131, 60).nude, (1451234131, 60), "Reduce huge number to simplest form in constructor");
-is(Rat.new(1141234123, 0).nude, (1141234123, 0), "Huge over zero stays huge over zero");
-is(Rat.new(-7, 0).nude, (-7, 0), "Negative seven over zero stays negative seven over zero");
+is(Rat.new(1141234123, 0).nude, (1, 0), "Huge over zero is normalized");
+is(Rat.new(-7, 0).nude, (-1, 0), "Negative seven over zero is normalized");
 is(Rat.new(0, 0).nude, (0,0), "Zero over zero stays zero over zero");
 
 # Test basic math
@@ -331,15 +331,18 @@ is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish 
 }
 
 #RT #126391
-try {say 42/(.1+.2-.3)};
-isa-ok( $!.numerator, 42, "got the answer rather than 420");
+try {say 42/(.1+.2-.3)}; isnt $!.numerator, 420, "no bogus errors";
 
 # RT#126016
 subtest '0.9999999999999999999999 to string conversions' => {
     plan 4;
 
     constant r = 0.9999999999999999999999;
-    is-deeply r.Str, '1', '.Str rounds off correctly';
+    # for this particular test, we simply check we don't have any weird
+    # stuff like '0.A', but at least here we don't spec whether this Rat
+    # would be output exactly or rounded off
+    cmp-ok r.Str, '~~', '1'|'0.9999999999999999999999' ,
+        'no weirdness in .Str';
     is-deeply r.perl, '<9999999999999999999999/10000000000000000000000>',
         '.perl gives accurate result';
     is-deeply r.perl.EVAL, r, '.perl.EVAL roundtrips';
@@ -392,43 +395,44 @@ subtest 'Rational.isNaN' => {
 }
 
 subtest '=== with 0-denominator Rats' => {
-    plan 15;
+    plan 11;
 
     is-deeply  <0/0> ===  <0/0>,  True, ' 0/0 ===  0/0';
-    is-deeply  <2/0> ===  <2/0>,  True, ' 2/0 ===  2/0';
-    is-deeply <-2/0> === <-2/0>,  True, '-2/0 === -2/0';
-
+    is-deeply  <0/0> === <-2/0>, False, ' 0/0 === -2/0';
     is-deeply  <0/0> ===  <2/0>, False, ' 0/0 ===  2/0';
-    is-deeply  <2/0> ===  <0/0>, False, ' 2/0 ===  0/0';
-    is-deeply  <5/0> ===  <2/0>, False, ' 5/0 ===  2/0';
-    is-deeply  <2/0> ===  <5/0>, False, ' 2/0 ===  5/0';
-    is-deeply <-5/0> === <-2/0>, False, '-5/0 === -2/0';
-    is-deeply <-2/0> === <-5/0>, False, '-2/0 === -5/0';
 
-    is-deeply  <0/0> ===  <2/2>, False, ' 0/0 ===  2/2';
-    is-deeply  <2/2> ===  <0/0>, False, ' 2/2 ===  0/0';
-    is-deeply  <5/2> ===  <2/0>, False, ' 5/2 ===  2/0';
-    is-deeply  <2/0> ===  <5/2>, False, ' 2/0 ===  5/2';
-    is-deeply <-5/2> === <-2/0>, False, '-5/2 === -2/0';
-    is-deeply <-2/0> === <-5/2>, False, '-2/0 === -5/2';
+    is-deeply <-2/0> === <-2/0>,  True, '-2/0 === -2/0';
+    is-deeply <-2/0> === <-4/0>,  True, '-2/0 === -4/0';
+    is-deeply <-2/0> ===  <2/0>, False, '-2/0 === -2/0';
+    is-deeply <-2/0> ===  <0/0>, False, '-2/0 === 0/0';
+
+    is-deeply <2/0>  === <-2/0>, False, ' 2/0 === -2/0';
+    is-deeply <2/0>  ===  <4/0>,  True, ' 2/0 ===  4/0';
+    is-deeply <2/0>  ===  <2/0>,  True, ' 2/0 === 2/0';
+    is-deeply <2/0>  ===  <0/0>, False, ' 2/0 === 0/0';
 }
 
 # RT #130606
-eval-lives-ok ｢5 cmp <.5>｣, 'Real cmp RatStr does not crash';
+is-deeply 5   cmp <.5>, More, 'Real   cmp RatStr does not crash';
+is-deeply <.5> cmp  .5, Same, 'RatStr cmp Real   does not crash';
 
-{ # https://irclog.perlgeek.de/perl6-dev/2017-01-20#i_13961843
+# https://irclog.perlgeek.de/perl6-dev/2017-01-20#i_13961843
+subtest 'subclass of class that does Rational can be instantiated' => {
+    plan 2;
     my class Foo does Rational[Int,Int] {};
     my class Bar is Foo {};
-    lives-ok { Bar.new: 42, 42 },
-        'subclass of class that does Rational can be instantiated';
+    my $o := Bar.new: 42, 31337;
+    cmp-ok $o, '~~', Bar & Foo & Rational, 'right type';
+    is-deeply $o.nude, (42, 31337), 'right numerator/denominator';
 }
 
 # https://github.com/rakudo/rakudo/commit/79553d0fc3
-is-deeply (<1/2> + <3/2>).ceiling, 2,
-    '.ceiling is right for unreduced whole Rats, like <4/2>';
+is-deeply (<1/2> + <3/2>).ceiling, 2, '.ceiling with Rat sums';
 
 # https://github.com/rakudo/rakudo/commit/aac9efcbda
 subtest '.norm returns reduced Rat' => {
+    # This is test (of a now-deprecated method) was added back when
+    # some Rationals were allowed to be in unreduced form
     plan 2;
     given (2/3 + 1/3).norm {
         is-deeply .denominator, 1, 'denominator got reduced';
@@ -480,40 +484,9 @@ is-deeply (4.99999999999999999999999999999999999999999999 ~~ 0..^5), True,
 
 # https://github.com/rakudo/rakudo/commit/0961abe8ff
 subtest '.^roles on Rationals does not hang' => {
-    plan 3;
+    plan 2;
     does-ok   42.2.^roles.grep(Rational).head, Rational, 'Rat:D';
     does-ok FatRat.^roles.grep(Rational).head, Rational, 'FatRat:U';
-
-    my class Irrational does Rational[UInt, Int] {};
-    does-ok Irrational.new.^roles.grep(Rational).head, Rational[UInt, Int],
-        'custom class :D';
-}
-
-subtest 'custom parametarization of Rational' => {
-    # Parametarization with no args defaults to `Int` for both args
-    # If only one arg is given, the type of the second arg is the same as the first
-    plan 12;
-
-    my class FakeRat   does Rational             {}
-    my class FakeRatU  does Rational[UInt      ] {}
-    my class FakeRatUU does Rational[UInt, UInt] {}
-    my class FakeRatIU does Rational[Int,  UInt] {}
-    my class FakeRatII does Rational[Int,   Int] {}
-
-    isa-ok FakeRat  .new(-1,  1), FakeRat,   'no parametarization; 2 Ints';
-    isa-ok FakeRatU .new( 1,  1), FakeRatU,  '[UInt];       2 UInts';
-    isa-ok FakeRatUU.new( 1,  1), FakeRatUU, '[UInt, UInt]; 2 UInts';
-    isa-ok FakeRatIU.new(-1,  1), FakeRatIU, '[Int,  UInt]; Int, UInt';
-    isa-ok FakeRatII.new(-1, -1), FakeRatII, '[Int,  Int]; 2 Ints';
-
-    constant E = X::TypeCheck;
-    throws-like { FakeRat  .new: 1e0,   1 }, E, 'no parametarization; Num, Int';
-    throws-like { FakeRat  .new: 1e0, 1e0 }, E, 'no parametarization; 2 Nums';
-    throws-like { FakeRat  .new:   1, 1e0 }, E, 'no parametarization; Int, Num';
-    throws-like { FakeRatU .new:  -1,   1 }, E, '[UInt]; Int, UInt';
-    throws-like { FakeRatUU.new:   1,  -1 }, E, '[UInt, UInt]; UInt, Int';
-    throws-like { FakeRatIU.new:   1,  -1 }, E, '[Int,  UInt]; UInt, Int';
-    throws-like { FakeRatII.new: 1e0, 1e0 }, E, '[Int,  Int]; 2 Nums';
 }
 
 # RT # 126103
@@ -613,4 +586,35 @@ subtest 'Rational.WHICH' => {
     is-deeply (2.FatRat/2, 1.FatRat/2+1/2).unique, (1.0.FatRat,),
         '.unique filters out practically identical FatRats';
 }
+
+subtest 'Rational keeps nu/de in proper types' => {
+    plan 4;
+
+    my class Foo is Int {};
+    class Bar does Rational[Foo, Foo] {};
+    with Bar.new: Foo.new(10), Foo.new: 20 {
+        # nu/de should get normalized
+        is-deeply .numerator,   Foo.new(1), 'numerator';
+        is-deeply .denominator, Foo.new(2), 'denominator';
+    }
+
+    with Bar.new: Foo.new(42), Foo.new: 0 {
+        # numerator is meant to be normalized, so it'll end up as 1
+        is-deeply .numerator,   Foo.new(1), 'numerator (zero-denom rational)';
+        is-deeply .denominator, Foo.new(0), 'denominator (zero-denom rational)';
+    }
+}
+
+fails-like { <42/0>.floor   }, X::Numeric::DivideByZero,
+    'Rational.floor   fails for zero-denominator-rationals';
+fails-like { <42/0>.ceiling }, X::Numeric::DivideByZero,
+    'Rational.ceiling fails for zero-denominator-rationals';
+
+group-of 4 => 'no funny business in stringification of huge Rationals' => {
+    is        Rat.new(10⁴⁰⁰, 9⁹⁹⁹).Str,  '0',   '   Rat.new(10⁴⁰⁰, 9⁹⁹⁹).Str';
+    is        Rat.new(10⁴⁰⁰, 9⁹⁹⁹).gist, '0',   '   Rat.new(10⁴⁰⁰, 9⁹⁹⁹).gist';
+    unlike FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).Str,  /Inf/, 'FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).Str';
+    unlike FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).gist, /Inf/, 'FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).gist';
+}
+
 # vim: ft=perl6

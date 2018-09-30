@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 # L<S32::IO/IO::Spec>
 
 plan 133;
@@ -80,9 +82,9 @@ nok $Unix.is-absolute( '..' ),  'is-absolute: nok ".."';
 my $path = %*ENV<PATH>;
 %*ENV<PATH> = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:';
 my @want         = </usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/games .>;
-is-deeply $Unix.path, @want.Seq, 'path';
+is-eqv $Unix.path, @want.Seq, 'path';
 %*ENV<PATH> = '';
-is-deeply $Unix.path, ().Seq, 'no path';
+is-eqv $Unix.path, ().Seq, 'no path';
 %*ENV<PATH> = $path;
 
 my %splitpath = (
@@ -197,7 +199,7 @@ else {
 
 subtest '.basename' => {
     my @tests = '' => '', '.' => '.', '/' => '', 'foo/' => '', '/.' => '.',
-        'foo/.' => '.', 'foo/..' => '..', 'foo/...' => '...',
+        'foo/.' => '.', 'foo/..' => '..', 'foo/...' => '...', ｢y/\z｣ => ｢\z｣,
         'bar/♥foo' => '♥foo', '♥foo' => '♥foo', '♥foo/..' => '..';
 
     plan +@tests;

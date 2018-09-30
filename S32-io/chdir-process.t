@@ -24,29 +24,23 @@ subtest '&*chdir into IO::Path respects its :CWD attribute' => {
 }
 
 subtest '&*chdir to non-existent directory' => {
-    plan 3;
+    plan 2;
 
     my $before = make-temp-dir;
     temp $*CWD = $before;
-    my $res = &*chdir( make-temp-dir() ~ 'non-existent' );
-    isa-ok $res, Failure, "call to chdir returned a Failure";
-    throws-like { $res.sink }, X::IO::Chdir,
-        'the Failure contains correct exception';
-    cmp-ok $*CWD, '~~', $before, '$*CWD remains unchanged on failure';
-}
-
-sub same-paths ($expected, $given, $desc) {
-    cmp-ok $expected.resolve, '~~', $given.resolve, $desc;
+    throws-like { &*chdir( make-temp-dir().absolute ~ 'non-existent' ) },
+        X::IO::Chdir, 'call to chdir returned a Failure';
+    cmp-ok $*CWD, '===', $before, '$*CWD remains unchanged on failure';
 }
 
 {
     temp $*CWD;
-    same-paths &*chdir($*TMPDIR), $*TMPDIR, '&*chdir returns new $*CWD';
-    same-paths $*CWD,             $*TMPDIR, '&*chdir updates $*CWD';
-    same-paths sys-cwd(),         $*TMPDIR, '&*chdir updates process dir';
-    same-paths &*chdir($*HOME),   $*HOME,   '&*chdir returns new $*CWD [2]';
-    same-paths $*CWD,             $*HOME,   '&*chdir updates $*CWD [2]';
-    same-paths sys-cwd(),         $*HOME,   '&*chdir updates process dir [2]';
+    is-path &*chdir($*TMPDIR), $*TMPDIR, '&*chdir returns new $*CWD';
+    is-path $*CWD,             $*TMPDIR, '&*chdir updates $*CWD';
+    is-path sys-cwd(),         $*TMPDIR, '&*chdir updates process dir';
+    is-path &*chdir($*HOME),   $*HOME,   '&*chdir returns new $*CWD [2]';
+    is-path $*CWD,             $*HOME,   '&*chdir updates $*CWD [2]';
+    is-path sys-cwd(),         $*HOME,   '&*chdir updates process dir [2]';
 }
 
 # vim: ft=perl6

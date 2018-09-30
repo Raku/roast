@@ -90,8 +90,8 @@ sub bar ($baz is readonly) { }
             plan 4;
             is-deeply %h<m-push><1>, [ <a b c>,], 'push';
             is-deeply %h<m-unsh><2>, [ <d e f>,], 'unshift';
-            is-deeply %h<m-appe><3>, [|<g h i> ], 'append';
-            is-deeply %h<m-prep><4>, [|<j k l> ], 'prepend';
+            is-deeply %h<m-appe><3>, [ <g h i> ], 'append';
+            is-deeply %h<m-prep><4>, [ <j k l> ], 'prepend';
         }
     }
 }

@@ -79,8 +79,7 @@ unlink $filename; # cleanup
 
 {
     # RT #130430
-    my $file = $?FILE.IO.parent.child('lines.testing');
-    $file.spurt: join "\n", <a b c>;
+    my $file := make-temp-file content => join "\n", <a b c>;
     is-deeply $file.lines(2000), ('a', 'b', 'c'),
         'we stop when data ends, even if limit has not been reached yet';
     unlink $file;
@@ -88,12 +87,10 @@ unlink $filename; # cleanup
 
 {
     # https://irclog.perlgeek.de/perl6-dev/2017-01-21#i_13962764
-    my $file = $?FILE.IO.parent.child('lines.testing');
-    $file.spurt: join "\n", <a b c>;
-    is_run 'lines; lines', :args[$file], {
+    my $file := make-temp-file content => join "\n", <a b c>;
+    is_run 'lines; lines', :args[$file.absolute], {
         :out(''), :err(''), :0status,
     }, 'calling lines() after exhausting previous input does not crash';
-    unlink $file;
 }
 
 # https://irclog.perlgeek.de/perl6-dev/2017-01-27#i_13996365
@@ -112,35 +109,44 @@ lives-ok {
 }
 
 # https://github.com/rakudo/rakudo/commit/bf399380c1
-subtest '$limit works right with any combination of args' => {
-    plan 5;
+group-of 5 => '$limit works right with any combination of args' => {
     my $file = make-temp-file :content("foo\nbar\nber");
-    my $exp = ('foo', 'bar').Seq;
+    (my $exp = ('foo', 'bar').Seq).cache;
     is-deeply $file.lines(2), $exp, 'IO::Path.lines($limit)';
-    subtest 'IO::Handle.lines($limit)' => { plan 2;
+    group-of 2 => 'IO::Handle.lines($limit)' => {
         with $file.open {
-            is-deeply .lines(2), $exp, 'right lines';
-            is-deeply .opened, True, 'left handle opened';
+            is-eqv    .lines(2), $exp, 'right lines';
+            is-deeply .opened,   True, 'left handle opened';
             .close;
         }
     }
-    subtest 'IO::Handle.lines($limit, :close)' => { plan 2;
+    group-of 4 => 'IO::Handle.lines($limit, :close)' => {
         with $file.open {
-            is-deeply .lines(2, :close), $exp, 'right lines';
-            is-deeply .opened, False, 'closed handle';
+            is-eqv    .lines(2, :close), $exp, 'right lines (full read)';
+            is-deeply .opened, False, 'closed handle (full read)';
+        }
+        with $file.open {
+            is-deeply .lines(2, :close)[^2], $exp, 'right lines (slice)';
+            #?rakudo todo 'handle is not closed https://github.com/rakudo/rakudo/issues/2283'
+            is-deeply .opened, False, 'closed handle (slice)';
         }
     }
-    subtest '&lines($fh, $limit)' => { plan 2;
+    group-of 2 => '&lines($fh, $limit)' => {
         with $file.open {
-            is-deeply lines($_, 2), $exp, 'right lines';
-            is-deeply .opened, True, 'left handle opened';
+            is-eqv    lines($_, 2), $exp, 'right lines';
+            is-deeply .opened,      True, 'left handle opened';
             .close;
         }
     }
-    subtest '&lines($fh, $limit, :close)' => { plan 2;
+    group-of 4 => '&lines($fh, $limit, :close)' => {
         with $file.open {
-            is-deeply lines($_, 2, :close), $exp, 'right lines';
-            is-deeply .opened, False, 'closed handle';
+            is-eqv    lines($_, 2, :close), $exp, 'right lines (full read)';
+            is-deeply .opened, False, 'closed handle (full read)';
+        }
+        with $file.open {
+            is-deeply lines($_, 2, :close)[^2], $exp, 'right lines (slice)';
+            #?rakudo todo 'handle is not closed https://github.com/rakudo/rakudo/issues/2283'
+            is-deeply .opened, False, 'closed handle (slice)';
         }
     }
 }

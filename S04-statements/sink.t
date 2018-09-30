@@ -57,6 +57,8 @@ plan 9;
       method sink() {
           $sunk = True;
       }
+    # NOTE: whitespace between elements on next line is significant as some
+    # implementations have different code path for `|.=foo` vs `| .=fo`
     }.new).=foo;
 
     is $sunk, False, "we don't sink the result of thing().=method-name";
@@ -75,6 +77,8 @@ plan 9;
       method sink() {
           $sunk = True;
       }
+    # NOTE: whitespace between elements on next line is significant as some
+    # implementations have different code path for `|.=foo` vs `| .=fo`
     }.new) .= foo;
 
     is $sunk, False, "we don't sink the result of thing() .= method-name";

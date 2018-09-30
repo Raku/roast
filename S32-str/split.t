@@ -1,6 +1,7 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 # L<S32-setting-library/Str"=item split">
 
@@ -521,21 +522,21 @@ subtest '.split works on Cool same as it works on Str' => {
         orig => "123", to => 2,    from => 1,
     );
 
-    is-deeply 123.split('2', :v),  ('1', '2',      '3'), ':v; Cool';
-    is-deeply 123.split(/2/, :v),  ('1', $m,       '3'), ':v; Regex';
-    is-deeply 123.split('2', :kv), ('1', 0, '2',   '3'), ':kv; Cool';
-    is-deeply 123.split(/2/, :kv), ('1', 0, $m,    '3'), ':kv; Regex';
-    is-deeply 123.split('2', :p),  ('1', 0 => '2', '3'), ':p; Cool';
-    is-deeply 123.split(/2/, :p),  ('1', 0 => $m,  '3'), ':p; Regex';
-    is-deeply 123.split('2', :k),  ('1', 0,        '3'), ':k; Cool';
-    is-deeply 123.split(/2/, :k),  ('1', 0,        '3'), ':k; Regex';
-    is-deeply 4.split('',      :skip-empty), ('4',),     ':skip-empty; Cool';
-    is-deeply 4.split(/<<|>>/, :skip-empty), ('4',),     ':skip-empty; Regex';
-    is-deeply 12345.split(('2', /4/)), ("1", "3", "5"),  '@needles form';
+    is-eqv 123.split('2', :v),  ('1', '2',      '3').Seq, ':v; Cool';
+    is-eqv 123.split(/2/, :v),  ('1', $m,       '3').Seq, ':v; Regex';
+    is-eqv 123.split('2', :kv), ('1', 0, '2',   '3').Seq, ':kv; Cool';
+    is-eqv 123.split(/2/, :kv), ('1', 0, $m,    '3').Seq, ':kv; Regex';
+    is-eqv 123.split('2', :p),  ('1', 0 => '2', '3').Seq, ':p; Cool';
+    is-eqv 123.split(/2/, :p),  ('1', 0 => $m,  '3').Seq, ':p; Regex';
+    is-eqv 123.split('2', :k),  ('1', 0,        '3').Seq, ':k; Cool';
+    is-eqv 123.split(/2/, :k),  ('1', 0,        '3').Seq, ':k; Regex';
+    is-eqv 4.split('',      :skip-empty), ('4',).Seq,     ':skip-empty; Cool';
+    is-eqv 4.split(/<<|>>/, :skip-empty), ('4',).Seq,     ':skip-empty; Regex';
+    is-eqv 12345.split(('2', /4/)), ("1", "3", "5").Seq,  '@needles form';
 }
 
 # RT #130904
-is-deeply "A-B C".split([" ", "-"]), ("A", "B", "C").Seq, "Split with alternates completes and doesn't give an exception";
+is-eqv "A-B C".split([" ", "-"]), ("A", "B", "C").Seq, "Split with alternates completes and doesn't give an exception";
 
 # RT #130955
 subtest 'split skip-empty skips all empty chunks' => {

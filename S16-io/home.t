@@ -7,7 +7,7 @@ use Test::Util;
 
 plan 8;
 
-BEGIN %*ENV<HOME> = $*TMPDIR.absolute;
+BEGIN %*ENV<HOME> = make-temp-dir.absolute;
 
 isa-ok $*HOME, IO::Path,  '$*HOME contains IO::Path object';
 lives-ok { $*HOME.perl }, '$*HOME.perl works';
@@ -49,8 +49,8 @@ is_run ｢
     my $before = $*HOME;
     {
         temp $*HOME = '/foo'.IO;
-        is-deeply $*HOME, '/foo'.IO, 'was able to `temp` $*HOME';
+        is-path $*HOME, '/foo'.IO, 'was able to `temp` $*HOME';
     }
-    is-deeply $*HOME, $before,
+    is-path $*HOME, $before,
         '`temp`ed $*HOME got restored to previous value';
 }

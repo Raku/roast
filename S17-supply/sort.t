@@ -3,10 +3,11 @@ use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
 use Test::Tap;
+use Test::Util;
 
 plan 7;
 
-is-deeply Supply.sort, (Supply,).Seq, 'can sort a Supply type object';
+is-eqv Supply.sort, (Supply,).Seq, 'can sort a Supply type object';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";

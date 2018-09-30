@@ -55,9 +55,12 @@ Usage: $0 [options] testfilename ...
 USAGE
 }
 
-# decide between local and PATH perl
+# decide between local and PATH perl6
 my ($p6) = grep -x, map catfile('.', $_), qw/perl6  perl6-m  perl6-j/;
-$p6 = 'perl6' unless $p6;
+unless ($p6) {
+    warn 'did not find local perl6 binary; switching to using system `perl6`';
+    $p6 = 'perl6';
+}
 
 # implementation and compiler
 my $impl;

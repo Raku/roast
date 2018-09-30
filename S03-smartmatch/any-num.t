@@ -30,11 +30,14 @@ plan 21;
 }
 
 subtest 'Str ~~ Num' => {
-    plan 4;
-    is-deeply 'NaN' ~~  NaN, True,  ｢'NaN' ~~  NaN｣;
-    is-deeply 'NaN' ~~ 42e0, False, ｢'NaN' ~~ 42e0｣;
-    is-deeply 'x'   ~~ 42e0, False, ｢'x'   ~~ 42e0｣;
-    is-deeply '42'  ~~ 42e0, True,  ｢'42'  ~~ 42e0｣;
+    plan 7;
+    is-deeply  'NaN' ~~  NaN, True,  ｢'NaN'  ~~  NaN｣;
+    is-deeply  'NaN' ~~ 42e0, False, ｢'NaN'  ~~ 42e0｣;
+    is-deeply  'x'   ~~ 42e0, False, ｢'x'    ~~ 42e0｣;
+    is-deeply  '42'  ~~ 42e0, True,  ｢'42'   ~~ 42e0｣;
+    is-deeply  '0e0' ~~ -0e0, True,  ｢'0e0'  ~~ -0e0｣;
+    is-deeply '-0e0' ~~  0e0, True,  ｢'-0e0' ~~  0e0｣;
+    is-deeply '−0e0' ~~  0e0, True,  ｢'−0e0' ~~  0e0 (U+2212 minus)｣;
 }
 
 # RT #126927

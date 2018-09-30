@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 211;
+plan 187;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -16,8 +16,6 @@ plan 211;
     is $a, 42, "untyped variable returned to its default with Nil";
     lives-ok { $a = 314 }, "should be able to update untyped variable";
     is $a, 314, "update of untyped variable to 314 was successful";
-    lives-ok { undefine $a }, "should be able to undefine untyped variable";
-    is $a, 42, "untyped variable returned to its default with undefine";
 
     my $b is default(42) = 768;
     is $b, 768, "untyped variable should be initialized";
@@ -56,8 +54,6 @@ plan 211;
     is $a.a, 42, "untyped attribute returned to its default with Nil";
     lives-ok { $a.a = 314 }, "should be able to update untyped attribute";
     is $a.a, 314, "update of untyped attribute to 314 was successful";
-    lives-ok { undefine $a.a }, "should be able to undefine untyped attribute";
-    is $a.a, 42, "untyped attribute returned to its default with undefine";
     is $a.b, 768, "untyped attribute should be initialized";
     is $a.b_var.default, 42, 'is the default set correctly for $!b';
     ok $a.c_var.default === Nil, 'is the default set correctly for $!c';
@@ -96,8 +92,6 @@ plan 211;
     is $a, 42, "typed variable returned to its default with Nil";
     lives-ok { $a = 314 }, "should be able to update typed variable";
     is $a, 314, "update of typed variable to 314 was successful";
-    lives-ok { undefine $a }, "should be able to undefine typed variable";
-    is $a, 42, "typed variable returned to its default with undefine";
 
     my Int $b is default(42) = 768;
     is $b, 768, "typed variable should be initialized";
@@ -121,8 +115,6 @@ plan 211;
     is $a.a, 42, "typed attribute returned to its default with Nil";
     lives-ok { $a.a = 314 }, "should be able to update typed attribute";
     is $a.a, 314, "update of typed attribute to 314 was successful";
-    lives-ok { undefine $a.a }, "should be able to undefine typed attribute";
-    is $a.a, 42, "typed attribute returned to its default with undefine";
     is $a.b, 768, "typed attribute should be initialized";
     is $a.b_var.default, 42, 'is the default set correctly for Int $!b';
 } #11
@@ -138,8 +130,6 @@ plan 211;
     is @a[0], 42, "untyped array element returned to its default with Nil";
     lives-ok { @a[0] = 314 }, "should be able to update untyped array element";
     is @a[0], 314, "update of untyped array element to 314 was successful";
-    lives-ok { undefine @a[0] }, "undefine untyped array element";
-    is @a[0], 42, "untyped array element returned to its default with undefine";
 
     my @b is default(42) = 768;
     is @b[0], 768, "untyped array element should be initialized";
@@ -178,8 +168,6 @@ plan 211;
     is $a.a[0], 42, "untyped attrib element returned to its default with Nil";
     lives-ok { $a.a[0] = 314 }, "should be able to update untyped attrib element";
     is $a.a[0], 314, "update of untyped attrib element to 314 was successful";
-    lives-ok { undefine $a.a[0] }, "undefine untyped attrib element";
-    is $a.a[0], 42, "untyped attrib element returned to its default with undefine";
     is $a.b[0], 768, "untyped attrib element should be initialized";
     is $a.b_var.default, 42, 'is the default set correctly for @!b';
     ok $a.c_var.default === Nil, 'is the default set correctly for @!c';
@@ -202,8 +190,6 @@ plan 211;
     is @a[0], 42, "typed array element returned to its default with Nil";
     lives-ok { @a[0] = 314 }, "should be able to update typed array element";
     is @a[0], 314, "update of typed array element to 314 was successful";
-    lives-ok { undefine @a[0] }, "undefine typed array element";
-    is @a[0], 42, "typed array element returned to its default with undefine";
 
     my Int @b is default(42) = 768;
     is @b[0], 768, "typed array element should be initialized";
@@ -227,8 +213,6 @@ plan 211;
     is $a.a[0], 42, "typed attrib element returned to its default with Nil";
     lives-ok { $a.a[0] = 314 }, "should be able to update typed attrib element";
     is $a.a[0], 314, "update of typed attrib element to 314 was successful";
-    lives-ok { undefine $a.a[0] }, "undefine typed attrib element";
-    is $a.a[0], 42, "typed attrib element returned to its default with undefine";
     is $a.b[0], 768, "typed attrib element should be initialized";
     is $a.b_var.default, 42, 'is the default set correctly for Int @!b';
 } #12
@@ -244,8 +228,6 @@ plan 211;
     is %a<o>, 42, "untyped hash element returned to its default with Nil";
     lives-ok { %a<o> = 314 }, "should be able to update untyped hash element";
     is %a<o>, 314, "update of untyped hash element to 314 was successful";
-    lives-ok { undefine %a<o> }, "undefine untyped hash element";
-    is %a<o>, 42, "untyped hash element returned to its default with undefine";
 
     my %b is default(42) = o => 768;
     is %b<o>, 768, "untyped hash element should be initialized";
@@ -285,8 +267,6 @@ plan 211;
     is $a.a<o>, 42, "untyped attrib hash element returned to its default with Nil";
     lives-ok { $a.a<o> = 314 }, "should be able to update untyped attrib hash element";
     is $a.a<o>, 314, "update of untyped attrib hash element to 314 was successful";
-    lives-ok { undefine $a.a<o> }, "undefine untyped attrib hash element";
-    is $a.a<o>, 42, "untyped attrib hash element returned to its default with undefine";
     is $a.b<o>, 768, "untyped attrib hash element should be initialized";
     is $a.b_var.default, 42, 'is the default set correctly for %!b';
     ok $a.c_var.default === Nil, 'is the default set correctly for %!c';
@@ -309,8 +289,6 @@ plan 211;
     is %a<o>, 42, "typed hash element returned to its default with Nil";
     lives-ok { %a<o> = 314 }, "should be able to update typed hash element";
     is %a<o>, 314, "update of typed hash element to 314 was successful";
-    lives-ok { undefine %a<o> }, "undefine typed hash element";
-    is %a<o>, 42, "typed hash element returned to its default with undefine";
 
     my Int %b is default(42) = o => 768;
     is %b<o>, 768, "typed hash element should be initialized";
@@ -334,8 +312,6 @@ plan 211;
     is $a.a<o>, 42, "type attrib hash element returned to its default with Nil";
     lives-ok { $a.a<o> = 314 }, "should be able to update type attrib hash element";
     is $a.a<o>, 314, "update of type attrib hash element to 314 was successful";
-    lives-ok { undefine $a.a<o> }, "undefine type attrib hash element";
-    is $a.a<o>, 42, "type attrib hash element returned to its default with undefine";
     is $a.b<o>, 768, "type attrib hash element should be initialized";
     is $a.b_var.default, 42, 'is the default set correctly for Int %!b';
 } #12

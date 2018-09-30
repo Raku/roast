@@ -1,10 +1,11 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 9;
 
-is-deeply Supply.list, (Supply,).Seq, 'can list a Supply type object';
+is-eqv Supply.list, (Supply,), 'can list a Supply type object';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";

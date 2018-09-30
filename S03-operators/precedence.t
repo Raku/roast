@@ -1,6 +1,7 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 # L<S03/Operator precedence>
 
@@ -103,8 +104,8 @@ ok(0 < 2 <=> 1 < 2, "0 < 2 <=> 1 < 2 means 0 < 1 < 2");
 
 # structural infix
 
-is (1 | 3 <=> 2).gist, 'any(Less, More)', '<=> binds looser than |';
-is (1 == 3 <=> 2).gist, 'True', '<=> binds tighter than ==';
+is-deeply-junction (1 | 3 <=> 2), any(Less, More), '<=> binds looser than |';
+is-deeply (1 == 3 <=> 2), True, '<=> binds tighter than ==';
 throws-like '1 .. 2 .. 3',
     X::Syntax::NonAssociative,
     'identical .. is not associative';

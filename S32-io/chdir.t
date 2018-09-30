@@ -39,7 +39,7 @@ sub test-chdir ($desc, $after, |args) {
     subtest "chdir with {args.perl}" => {
         temp $*CWD = $before;
         ok chdir($after, |args), "call to chdir succeeds";
-        cmp-ok $*CWD, '~~', $after, 'new $*CWD is correct';
+        is-path $*CWD, $after, 'new $*CWD is correct';
     }
 }
 
@@ -47,16 +47,14 @@ sub test-chdir-fails ($desc, $why, $after, |args) {
     my $before = make-temp-dir;
     subtest "chdir with {args.perl} fails because of $why" => {
         temp $*CWD = $before;
-        my $res = chdir($after, |args);
-        isa-ok $res, Failure, "call to chdir returned a Failure";
-        throws-like { $res.sink }, X::IO::Chdir,
-            'the Failure contains correct exception';
-        cmp-ok $*CWD, '~~', $before, '$*CWD remains untouched';
+        fails-like { chdir $after, |args }, X::IO::Chdir,
+            'call to chdir returned a Failure';
+        is-path $*CWD, $before, '$*CWD remains untouched';
     }
 }
 
 test-chdir-fails 'non-existent path', 'path does not exist',
-    (make-temp-dir() ~ '-non-existent').IO;
+    (make-temp-dir().absolute ~ '-non-existent').IO;
 
 test-chdir :!d, 'chmod 0o777', make-temp-file :chmod<0o777>;
 test-chdir :!d, 'chmod 0o666', make-temp-file :chmod<0o666>;

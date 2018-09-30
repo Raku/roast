@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 69;
+plan 73;
 
 #L<S03/Smart matching/arrays are comparable>
 {
@@ -45,13 +45,10 @@ plan 69;
     ok ((1, 2, 3) ~~ @a), 'smartmatch List ~~ Array';
     ok ((1, 2, 3) ~~ @m), 'smartmatch List ~~ Array with dwim';
 
-    ## the next test is bogus, since ~~ has a tighter precendence than comma
-    ## with rakudo 2016.08.1-194-g0cf7128 there is no coercion to list
-    ## when using parentheses: 1 ~~ (**,1,**) returns False
-    ## cmp. http://irclog.perlgeek.de/perl6/2016-09-15#i_13217141
-    ## TODO modify test to whatever the answer to "is the LHS coerced" is
-    ok (1 ~~ **,1,**),     'smartmatch with Array RHS co-erces LHS to list';
-    ok (1..10 ~~ (**,5,**)), 'smartmatch with List RHS co-erces LHS to list';
+    is-deeply (1 ~~ (**,1,**)), False,
+      'smartmatch with list RHS does not treat non-Iterable LHS as a list';
+    is-deeply (1..10 ~~ (**,5,**)), True,
+      'smartmatch with list RHS treats Iterable LHS as equivalent to a list';
 
     # now test that each element does smartmatching
     ok(((<blah blah>) ~~ (/^bl/, /ah$/)), "smartmatch regex");
@@ -101,6 +98,15 @@ subtest '~~ with lazy iterables never throws' => {
 
     my $iter := [1...*];
     is-deeply $iter ~~ $iter, True, 'lazy ~~ lazy is True when same object';
+}
+
+# R#2233
+{
+    my @list = 1,2,3;
+    is-deeply @list.Seq ~~ @list.Seq, True, 'do Seqs smartmatch ok';
+    is-deeply @list.Seq.lazy ~~ @list.Seq, False, 'left Seq lazy';
+    is-deeply @list.Seq ~~ @list.Seq.lazy, False, 'right Seq lazy';
+    is-deeply @list.Seq.lazy ~~ @list.Seq.lazy, False, 'both Seqs lazy';
 }
 
 # vim: ft=perl6

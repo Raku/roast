@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 178;
+plan 179;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
 
@@ -295,6 +295,47 @@ subtest 'Range operators work with subclasses of Range' => {
     is-deeply ($r × 5), ((10..^25) but Meows), 'Range U+00D7 Real';
     is-deeply (5 × $r), ((10..^25) but Meows), 'Real U+00D7 Range';
     is-deeply ($r ÷ 5), (((2/5)..^1.0) but Meows), 'Range U+00F7 Real';
+}
+
+# ranges can have an offset applied
+subtest 'Ranges can have an offset applied' => {
+    plan 11;
+
+    my @a = do $_ for ^4 + 2;
+    is-deeply [2, 3, 4, 5], @a, 'adding an integer literal offset to a ^ range';
+
+    @a = do $_ for ^4 - 2;
+    is-deeply [-2, -1, 0, 1], @a, 'subracting an integer literal offset from a ^ range';
+
+    @a = do $_ for ^4 + -2;
+    is-deeply [-2, -1, 0, 1], @a, 'adding an integer negative literal offset to a ^ range';
+
+    @a = do $_ for (2..4) + 2;
+    is-deeply [4, 5, 6], @a, 'adding an integer literal offset to a .. range';
+
+    my constant \b = 2;
+    @a = do $_ for (2..4) + b;
+    is-deeply [4, 5, 6], @a, 'adding an integer offset in a constant variable to a .. range';
+
+    my int $c = 2;
+    @a = do $_ for (2..4) + $c;
+    is-deeply [4, 5, 6], @a, 'adding an ineger offset in a native int variable to a .. range';
+
+    my Int $d = 2**65;
+    @a = do $_ for (2..4) + $d;
+    is-deeply [36893488147419103234, 36893488147419103235, 36893488147419103236], @a, 'adding an offset in a bigint variable to a .. range';
+
+    @a = do $_ for (2..4) + 5e-1;
+    is-deeply [25e-1, 35e-1, 45e-1], @a, 'adding a Num literal offset to a .. range';
+
+    @a = do $_ for (2..4) * 2;
+    is-deeply [4, 5, 6, 7, 8], @a, 'multiplying an integer literal offset by a .. range';
+
+    @a = do $_ for (^4) * 2;
+    is-deeply [0, 1, 2, 3, 4, 5, 6, 7], @a, 'multiplying a ^ range by an integer literal offset';
+
+    @a = do $_ for (^4) / 2;
+    is-deeply [0.0, 1.0], @a, 'dividing a ^ range by an integer literal offset';
 }
 
 # vim: ft=perl6

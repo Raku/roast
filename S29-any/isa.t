@@ -18,7 +18,7 @@ L<S29/Any/=item isa/>
 
 =end kwid 
 
-plan 10;
+plan 12;
 
 { # invocant notation  
     my @arr = <1 2 3 4>;
@@ -64,6 +64,13 @@ class Thing::something {};
 {
     my $thing = Thing::something.new();
     ok($thing.isa(Thing::something), '.isa named class with colons');
+}
+
+# R#2331
+{
+    role A { };
+    nok A.new.isa(A),   'A punned role is not an isa of itself by type';
+    nok A.new.isa('A'), 'A punned role is not an isa of itself by name';
 }
 
 # vim: ft=perl6

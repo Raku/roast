@@ -199,8 +199,9 @@ throws-like q[
 # RT #126975
 {
     my class Foo::Bar {};
-    lives-ok { my class { has Foo::Bar $a .= new } },
-	   '.= ables to initialize attributes with types that has `::` in name';
+    my $o := my class { has Foo::Bar $.a .= new }.new;
+    cmp-ok $o.a, '~~', Foo::Bar:D,
+	      '.= able to initialize attributes with types that has `::` in name';
 }
 
 # vim: ft=perl6 expandtab sw=4

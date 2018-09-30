@@ -14,7 +14,7 @@ plan 6;
         'chaned notandthen executes RHS thunks only when appropriate';
 }
 
-subtest 'Empty in args to notandthen does not disappear' => {
+subtest 'Empty in args to notandthen/without does not disappear' => {
     plan 4;
     my $r := do 42 without Empty;
     is-deeply $r,                              42, 'postfix `without`';

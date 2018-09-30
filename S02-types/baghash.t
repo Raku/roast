@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 303;
+plan 304;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -301,7 +301,8 @@ sub showkv($x) {
     @a = $b.pick(-2.5);
     is +@a, 0, '.pick(<negative number>) does not return any items';
 
-    lives-ok { @a = $b.pick(2.5) }, ".pick int-ifies arg"; # RT #131272
+    # RT #131272
+    is +$b.pick(2.5), 2, ".pick int-ifies arg";
 }
 
 {
@@ -585,7 +586,7 @@ subtest '.hash does not cause keys to be stringified' => {
 
 { # coverage; 2016-09-23
     my $bh = BagHash.new: <a a b>;
-    cmp-ok $bh.BagHash, '===', $bh, '.BagHash is identity';
+    is-deeply $bh.BagHash, $bh, '.BagHash returns equivalent BagHash';
     isa-ok $bh.Mix, Mix, '.Mix returns a Mix';
     is-deeply $bh.Mix, Mix.new(<a a b>), '.Mix values are correct';
 }
@@ -617,20 +618,20 @@ subtest 'BagHash autovivification of non-existent keys' => {
 {
     my $bh = <a a a>.BagHash;
     for $bh.values { $_-- }
-    is $bh, "a(2)",
+    is-deeply $bh, <a a>.BagHash,
       'Can use $_ from .values to remove occurrences from BagHash';
     for $bh.values { $_ = 42 }
-    is $bh, "a(42)",
+    is-deeply $bh, ('a' xx 42).BagHash,
       'Can use $_ from .values to set number occurrences in BagHash';
     for $bh.values { $_ = 0 }
-    is $bh, "",
+    is-deeply $bh, ().BagHash,
       'Can use $_ from .values to remove items from BagHash';
 }
 
 {
     my $bh = <a a a>.BagHash;
     for $bh.kv -> \k, \v { v-- }
-    is $bh, "a(2)",
+    is-deeply $bh, <a a>.BagHash,
       'Can use value from .kv to remove occurrences from BagHash';
     for $bh.kv -> \k, \v { v = 42 }
     is $bh, "a(42)",
@@ -643,13 +644,13 @@ subtest 'BagHash autovivification of non-existent keys' => {
 {
     my $bh = <a a a>.BagHash;
     for $bh.pairs { .value-- }
-    is $bh, "a(2)",
+    is-deeply $bh, <a a>.BagHash,
       'Can use value from .pairs to remove occurrences from BagHash';
     for $bh.pairs { .value = 42 }
-    is $bh, "a(42)",
+    is-deeply $bh, ('a' xx 42).BagHash,
       'Can use value from .pairs to set number occurrences in BagHash';
     for $bh.pairs { .value = 0 }
-    is $bh, "",
+    is-deeply $bh, ().BagHash,
       'Can use $_ from .pairs to remove items from BagHash';
 }
 
@@ -659,10 +660,12 @@ subtest 'BagHash autovivification of non-existent keys' => {
     throws-like { BagHash.new(^Inf) }, X::Cannot::Lazy, :what<BagHash>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
-      dies-ok { $pair.BagHash },
-        "($pair.perl()).BagHash died";
-      dies-ok { BagHash.new-from-pairs($pair) },
-        "BagHash.new-from-pairs( ($pair.perl()) ) died";
+      my \ex := $pair.value eq 'a'
+          ?? X::Str::Numeric !! X::Numeric::CannotConvert;
+      throws-like { $pair.BagHash }, ex,
+        "($pair.perl()).BagHash throws";
+      throws-like { BagHash.new-from-pairs($pair) }, ex,
+        "BagHash.new-from-pairs( ($pair.perl()) ) throws";
     }
 }
 
@@ -674,16 +677,16 @@ subtest 'elements with weight zero are removed' => {
     $b = <a b b c d e f>.BagHash; .value-- for $b.pairs;
     is-deeply $b, ("b"=>1).BagHash, 'Pair value decrement';
     $b = <a b b c d e f>.BagHash; $_= 0 for $b.values;
-    is $b, ().BagHash, 'weight set to zero';
+    is-deeply $b, ().BagHash, 'weight set to zero';
 }
 
 # RT #131241 (zero case covered by RT #131241)
 subtest "elements with negative weights are removed" => {
     plan 2;
     my $b = <a b b c d e f>.BagHash; $_ = -1 for $b.values;
-    is $b, ().BagHash, 'weight < 0 removes element';
+    is-deeply $b, ().BagHash, 'weight < 0 removes element';
     $b = <a b b c d e f>.BagHash; .value = -1 for $b.pairs;
-    is $b, ().BagHash, 'Pair value < 0 removes element';
+    is-deeply $b, ().BagHash, 'Pair value < 0 removes element';
 }
 
 # RT #132279
@@ -711,5 +714,8 @@ is-deeply ('foo' => 10000000000000000000).BagHash.grab(1), ('foo',),
     %h<foo> = 10000000000000000000;
     is %h<foo>, 10000000000000000000, 'can successfully set >64-bit value';
 }
+
+# R#2289
+is-deeply (1,2,3).BagHash.ACCEPTS(().BagHash), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

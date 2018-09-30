@@ -172,7 +172,8 @@ sub infix:<op> ($a,$b) { $a - $b }
 is &infix:<Rop>(2,3), 1, "Meta reverse Rop autogen with user-overridden op stays local to block";
 
 # RT #128703
-is (1 R, 2 R, 3 R, 4), (4, 3, 2, 1), 'List associative operators and R interact OK';
+is-deeply (1 R, 2 R, 3 R, 4), (4, 3, 2, 1),
+    'List associative operators and R interact OK';
 
 subtest '[R~]=' => {
     plan 4;

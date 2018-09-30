@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 95;
 
@@ -23,7 +25,7 @@ character classes), and those are referenced at the correct spot.
     is('aaaaa' ~~ /<	a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (tab)');
 
     throws-like '"aaaa" ~~ /<a aa>/', X::Method::NotFound, '<...> without whitespace calls a method (not quote words)';
-    
+
     is('hello' ~~ /< hello >/, 'hello', 'degenerate case of quote list');
 }
 
@@ -300,9 +302,12 @@ character classes), and those are referenced at the correct spot.
 
 # RT #129969
 {
-    is('abc xbc'.comb(/a<(bc)>/), 'bc', '.comb works well with <( )> (1)');
-    is('abc def abc'.comb(/a<(bc)>/), 'bc bc', '.comb works well with <( )> (2)');
-    is('abc'.match(/a<(bc)>/, :as(Str)), 'bc', '.match :as(Str) works with <( )>');
+    is-eqv 'abc xbc'.comb(/a<(bc)>/), 'bc'.Seq,
+        '.comb works well with <( )> (1)';
+    is-eqv 'abc def abc'.comb(/a<(bc)>/), <bc bc>.Seq,
+        '.comb works well with <( )> (2)';
+    is-deeply 'abc'.match(/a<(bc)>/, :as(Str)), 'bc',
+        '.match :as(Str) works with <( )>';
 }
 
 # A « or << token indicates a left word boundary.

@@ -1,7 +1,9 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
+use Test::Util;
 use Test;
 
-plan 255;
+plan 258;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -263,7 +265,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
       -1,   '-1',
       -Inf, '-Inf'
     -> $p, $t {
-        is-deeply ().SetHash.roll($p), ().Seq, "().SetHash.roll($t) -> ().Seq"
+        is-eqv ().SetHash.roll($p), ().Seq, "().SetHash.roll($t) -> ().Seq"
     }
     dies-ok { ().SetHash.roll(NaN) }, '().SetHash.roll(NaN) should die';
 }
@@ -307,7 +309,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
       -1,   '-1',
       -Inf, '-Inf'
     -> $p, $t {
-        is-deeply ().SetHash.pick($p), ().Seq, "().SetHash.pick($t) -> ().Seq"
+        is-eqv ().SetHash.pick($p), ().Seq, "().SetHash.pick($t) -> ().Seq"
     }
     dies-ok { ().SetHash.pick(NaN) }, '().SetHash.pick(NaN) should die';
 }
@@ -517,23 +519,24 @@ subtest 'cloned SetHash gets its own elements storage' => {
 }
 
 # RT 130240
-{
-    my SetHash $set = SetHash.new;
+for SetHash, BagHash, MixHash -> \T {
+    my $obj = T.new;
     my $i = 1001;
-    $set{$i} = True;
+    $obj{$i} = 42;
     $i++;
-    ok $set{1001}, "SetHash retains object, not container";
+    is-deeply $obj.keys, (1001,).Seq,
+        "{T.^name} retains object, not container";
 }
 
 {
     my $sh = <a>.SetHash;
     for $sh.values { $_-- }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use $_ from .values to remove items from SetHash (1)';
 
     $sh = <a>.SetHash;
     for $sh.values { $_ = 0 }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use $_ from .values to remove items from SetHash (2)';
 }
 
@@ -541,19 +544,19 @@ subtest 'cloned SetHash gets its own elements storage' => {
 {
     my $sh = <a>.SetHash;
     for $sh.values { $_ = 0; $_ = 1 }
-    is $sh, "a",
+    is-deeply $sh, <a>.SetHash,
       'Can use $_ from .values to restore items in SetHash';
 }
 
 {
     my $sh = <a>.SetHash;
     for $sh.kv -> \k, \v { v-- }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use value from .kv to remove items from SetHash (1)';
 
     $sh = <a>.SetHash;
     for $sh.kv -> \k, \v { v = 0 }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use value from .kv to remove items from SetHash (2)';
 }
 
@@ -561,19 +564,19 @@ subtest 'cloned SetHash gets its own elements storage' => {
 {
     my $sh = <a>.SetHash;
     for $sh.kv -> \k, \v { v = 0; v = 1 }
-    is $sh, "a",
+    is-deeply $sh, <a>.SetHash,
       'Can use value from .kv to restore items in SetHash';
 }
 
 {
     my $sh = <a>.SetHash;
     for $sh.pairs { .value-- }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use $_ from .pairs to remove items from SetHash (1)';
 
     $sh = <a>.SetHash;
     for $sh.pairs { .value = 0 }
-    is $sh, "",
+    is-deeply $sh, ().SetHash,
       'Can use $_ from .pairs to remove items from SetHash (2)';
 }
 
@@ -581,7 +584,7 @@ subtest 'cloned SetHash gets its own elements storage' => {
 {
     my $sh = <a>.SetHash;
     for $sh.pairs { .value = 0; .value = 1 }
-    is $sh, "a",
+    is-deeply $sh, <a>.SetHash,
       'Can use $_ from .pairs to restore items in SetHash';
 }
 
@@ -614,11 +617,11 @@ subtest 'cloned SetHash gets its own elements storage' => {
 subtest 'elements with weight zero are removed' => {
     plan 3;
     my $b = <a b b c d e f>.SetHash; $_-- for $b.values;
-    is $b, SetHash.new, 'weight decrement';
+    is-deeply $b, SetHash.new, 'weight decrement';
     $b = <a b b c d e f>.SetHash; .value-- for $b.pairs;
-    is $b, SetHash.new, 'Pair value decrement';
+    is-deeply $b, SetHash.new, 'Pair value decrement';
     $b = <a b b c d e f>.SetHash; $_= 0 for $b.values;
-    is $b, ().SetHash, 'weight set to zero';
+    is-deeply $b, ().SetHash, 'weight set to zero';
 }
 
 # RT #131241 (zero case covered by RT #130366)
@@ -644,5 +647,8 @@ subtest "elements with negative weights are allowed in SetHashes" => {
     lives-ok { %h<f> = False }, 'can delete from SetHash by assignment';
     is %h.elems, 1, 'did we get right number of elements assignment';
 }
+
+# R#2289
+is-deeply (1,2,3).SetHash.ACCEPTS(().SetHash), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

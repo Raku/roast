@@ -8,7 +8,7 @@ plan 9 * 6;
 
 # Test iterators coming from Lists
 
-for 
+for
     { ("a".."z").List.eager },           "list",
     { ("a".."z").List },                 "lazy list",
     { ("a"..."z").List },                "lazy sequence",
@@ -20,6 +20,7 @@ for
     { (my str @[26] = "a".."z") },       "shaped str array"
 
 -> $l, $case {
+
     my @pairs = $l().pairs;
     iterator-ok( { $l().iterator },
       "$case", @pairs.map: { .value } );

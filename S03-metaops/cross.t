@@ -1,6 +1,8 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
+
 plan 81;
 
 # L<S03/List infix precedence/the cross operator>
@@ -258,11 +260,14 @@ is (for ^2 { [+] (^5 X ^5) }), (50, 50), 'No bogus constant-folding of X';
 
 # RT #130566
 is-deeply ([lazy 1..3] X 4..5)[^2], ((1, 4), (1, 5)),
-    'X works with lazy RHS';
+    'X works with lazy LHS';
 
 # RT #131395
-lives-ok { @ = (1,2) X, (); @ = (1,2) X () },
-    'cross with empty List on RHS does not crash';
+group-of 3 => 'cross with empty List on RHS does not crash' => {
+    is-eqv ((1,2) X  ()), ().Seq, 'X';
+    is-eqv ((1,2) X, ()), ().Seq, 'X,';
+    is-eqv ((1,2) X+ ()), ().Seq, 'X+';
+}
 
 # RT #126563
 {

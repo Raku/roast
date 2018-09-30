@@ -1,7 +1,12 @@
 use v6;
 use Test;
 
-plan 83;
+plan 84;
+
+# Make sure we can emit Mu
+{
+    (supply { emit Mu }).tap: -> \val { ok val =:= Mu }
+}
 
 {
     my $s = supply {
@@ -125,7 +130,7 @@ plan 83;
     $trigger.emit('I ate fruit');
     $trigger.emit('The fruit was so tasty');
     $trigger.done();
-    
+
     is @collected.elems, 3, 'whenever loop produced three values';
     is @collected[0], 'I ate bacon', 'First value from loop iteration correct';
     is @collected[1], 'The bacon was so tasty', 'Second value from loop iteration correct';
@@ -534,7 +539,7 @@ lives-ok {
             }
         }
     }
-}, 'No react guts crash in case that once spat out two done messages either'; 
+}, 'No react guts crash in case that once spat out two done messages either';
 
 lives-ok {
     my $s = supply { whenever Supply.interval(0.001) { done } }
@@ -663,10 +668,10 @@ lives-ok {
     }
 
     is @received, [1,2,3,4,5],
-        'whenever tapping supply that syncrhonously emits sees values';
+        'whenever tapping supply that synchronously emits sees values';
     ok $ran-done, 'done block in source supply was run';
     is @pre-emit, ['x','x','x','x','x'],
-        'supply block loop did not run ahead of consumer';
+        'supply block loop did not run more than expected number of times';
 }
 
 #?rakudo.jvm skip 'done without supply or react'

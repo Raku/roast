@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 173;
+plan 172;
 
 # RT #77270
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
@@ -425,15 +425,13 @@ throws-like 'my Int $a is default(Nil)',
 throws-like 'enum Animal (Cat, Dog)', X::Undeclared::Symbols;
 throws-like 'constant foo = bar', X::Undeclared::Symbols;
 
-# RT #126888
+# RT #126888 # RT #128755
 throws-like '(1,2)[0] := 3', X::Bind;
-# RT #128755
-throws-like { (1,2,3)[1] := 4 }, X::Bind, "can't bind into a List item";
 #?rakudo 2 todo 'wrong exception'
-throws-like { (List)[0]  := 1 }, X::Bind, "can't bind into an undefined list";
-throws-like { (Int)[0]   := 1 }, X::Bind, "can't bind into an undefined Int";
-throws-like { 10[0]      := 1 }, X::Bind, "can't bind into a defined Int";
-throws-like { "Hi"[0]    := 1 }, X::Bind, "can't bind into a defined Str";
+throws-like '(List)[0]  := 1', X::Bind, "can't bind into an undefined list";
+throws-like '(Int)[0]   := 1', X::Bind, "can't bind into an undefined Int";
+throws-like '10[0]      := 1', X::Bind, "can't bind into a defined Int";
+throws-like '"Hi"[0]    := 1', X::Bind, "can't bind into a defined Str";
 
 # RT #128581
 throws-like Q/my Array[Numerix] $x;/, X::Undeclared::Symbols, gist => /Numerix/;
@@ -506,7 +504,7 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
 # RT #131492
 {
     throws-like q| my \foo = Callable but role :: { } |,
-        X::Method::NotFound,
+        X::Method::NotFound, :message{.so},
 	'X::Method::NotFound does not die with "X::Method::NotFound exception produced no message"';
 }
 

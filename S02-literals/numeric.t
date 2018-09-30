@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 67;
+plan 68;
 
 isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
@@ -121,4 +121,15 @@ ok 0e999999999999999 == 0, '0e999999999999 equals zero';
     is ∞, Inf, "yeah, we do that too...";
 }
 
+
+# https://github.com/rakudo/rakudo/issues/2094
+subtest '#2094 prefix as post fix works on number literals' => {
+   plan 6;
+   eval-lives-ok q{42.:<-> == -42}, 'use negation as postfix';
+   eval-lives-ok q{42.:<~> === "42"}, 'use ~ as postfix';
+   eval-lives-ok q{42.:«~» === "42"}, 'use « » to wrap the prefix';
+   eval-lives-ok q{42.:<<~>> === "42"}, 'use << >> to wrap the prefix';
+   eval-lives-ok q{42.:["~"] === "42"}, 'use [" "] to wrap the prefix';
+   eval-lives-ok q{42.:<<'~'>> === "42"}, "use <<' '>> to wrap the prefix";
+}
 # vim: ft=perl6 sw=4 ts=4 expandtab

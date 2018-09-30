@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 29;
+plan 30;
 
 my $path = "io-handle-testfile";
 
@@ -91,18 +91,17 @@ subtest 'iterator-producing read methods not affected by internal chunking' => {
     }
 }
 
-is-deeply IO::Handle.new.encoding, 'utf8',
-    'instantiated handle defaults to utf8 encoding';
-
 subtest '.flush' => {
-    # XXX TODO: it doesn't appear we're buffering anything at the moment;
-    # when/if we start doing so, ensure these tests cover all the cases
     plan 2;
     my $file = make-temp-file;
     my $fh will leave {.close} = $file.open: :w;
+    # an implementation may choose to make the first write to a handle
+    # unbuffered, to ensure that the handle is writable in the first place,
+    # so we'll do two prints, to trigger buffering, if it's implemented
     $fh.print: 'foo';
+    $fh.print: 'bar';
     $fh.flush;
-    is-deeply $file.slurp, 'foo', 'content was flushed';
+    is-deeply $file.slurp, 'foobar', 'content was flushed';
     fails-like { IO::Handle.new.flush }, X::IO::Flush,
         'fails with correct exception';
 }
@@ -121,79 +120,21 @@ subtest '.t returns True for TTY' => {
 }
 
 subtest '.nl-in attribute' => {
-    plan 3;
-    subtest 'unopened handle' => {
-        plan 4;
-        my $fh = IO::Handle.new;
-        is-deeply ($fh.nl-in = '42'),    '42',    'return value (Str)';
-        is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
-        is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
-        is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
-    }
-
-    subtest 'opened handle' => {
-        plan 4;
-        my $fh = make-temp-file(:content<foo>).open;
-        is-deeply ($fh.nl-in = '42'),    '42',    'return value (Str)';
-        is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
-        is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
-        is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
-    }
-
-    subtest 'opened, then closed handle' => {
-        plan 4;
-        my $fh = make-temp-file(:content<foo>).open;
-        $fh.close;
-        is-deeply ($fh.nl-in = '42'),    '42',    'return value (Str)';
-        is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
-        is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
-        is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
-    }
+    plan 4;
+    my $fh = make-temp-file(:content<foo>).open;
+    is-deeply ($fh.nl-in = '42'),    '42',    'return value (Str)';
+    is-deeply  $fh.nl-in,            '42',    'attribute got set (Str)';
+    is-deeply ($fh.nl-in = [<a b>]), [<a b>], 'return value (Array)';
+    is-deeply  $fh.nl-in,            [<a b>], 'attribute got set (Array)';
 }
 
 subtest '.encoding attribute' => {
-    plan 3;
-    subtest 'unopened handle' => {
-        plan 4;
-        my $fh = IO::Handle.new;
-        is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
-        is-deeply  $fh.encoding,           'ascii', 'attribute got set';
-        is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
-        is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
-    }
-
-    subtest 'opened handle' => {
-        plan 4;
-        my $fh = make-temp-file(:content<foo>).open;
-        is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
-        is-deeply  $fh.encoding,           'ascii', 'attribute got set';
-        is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
-        is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
-    }
-
-    subtest 'opened, then closed handle' => {
-        plan 4;
-        my $fh = make-temp-file(:content<foo>).open;
-        $fh.close;
-        is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
-        is-deeply  $fh.encoding,           'ascii', 'attribute got set';
-        is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
-        is-deeply  $fh.encoding,           Nil,     'attribute got set (Nil)';
-    }
-}
-
-subtest '.perl.EVAL roundtrips' => {
-    plan 7;
-
-    my $orig = IO::Handle.new: :path("foo".IO), :!chomp, :nl-in[<I ♥ Perl 6>],
-        :nl-out<foo>, :encoding<ascii>;
-
-    is-deeply IO::Handle.perl.EVAL, IO::Handle, 'type object';
-    given $orig.perl.EVAL -> $evaled {
-        is-deeply $evaled, $orig, 'instance';
-        is-deeply $evaled."$_"(), $orig."$_"(), $_
-            for <path  chomp  nl-in  nl-out  encoding>;
-    }
+    plan 4;
+    my $fh = make-temp-file(:content<foo>).open;
+    is-deeply ($fh.encoding('ascii')), 'ascii', 'return value';
+    is-deeply  $fh.encoding,           'ascii', 'attribute got set';
+    is-deeply ($fh.encoding('bin')),   Nil,     'return value (bin)';
+    is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
 }
 
 subtest '.say method' => {
@@ -257,19 +198,17 @@ subtest '.print-nl method' => {
         .spurt: "fo♥o";
         my $fh = .open(:enc<ascii>);
         #?rakudo.jvm todo 'does not die'
-        dies-ok { $fh.slurp.encode }, 'ASCII decode/encode dies with a catchable exception';
-        $fh.close;
+        dies-ok { $fh.slurp }, 'ASCII decode/encode dies with a catchable exception';
+        # R#2272
+        lives-ok { $fh.close }, 'closing after a decode error should work';
     }
 }
 
 # RT #131961
-{
-    my $file = make-temp-file;
-    given $file.IO {
-        .spurt: "a" x (2**20 - 1) ~ "«";
-        #?rakudo.jvm todo 'OutOfMemoryError: Java heap space'
-        lives-ok { for .lines { } }, 'No spurious malformed UTF-8 error';
-    }
+given make-temp-file() {
+    .spurt: "a" x (2**20 - 1) ~ "«";
+    #?rakudo.jvm todo 'OutOfMemoryError: Java heap space'
+    lives-ok { for .lines { } }, 'No spurious malformed UTF-8 error';
 }
 
 # RT #132030
@@ -285,4 +224,103 @@ subtest 'opened filehandles get closed on exit automatically' => {
 { # RT #131858
     is-deeply my class Z is IO::Handle { }.new.nl-in, $[“\n”, “\r\n”],
         ‘.nl-in in subclasses has \n and \r\n’;
+}
+
+subtest '.WRITE method' => {
+    my $fh := my class MyHandle is IO::Handle {
+        has Buf[uint8] $.data .= new;
+        # NOTE: the requirement of manually setting .encoding should not
+        # be considered part of the specification. This wart is mostly due
+        # to possibility of having "unopened" handled. See R#2050
+        # https://github.com/rakudo/rakudo/issues/2050
+        submethod TWEAK { self.encoding: 'utf8' }
+        method WRITE (Blob:D \data --> True) { $!data.append: data }
+    }.new;
+
+    $fh.print:  'print ';
+    $fh.printf: 'pri%s', 'ntf ';
+    $fh.put:    'put';
+    $fh.say:    my class { method gist { 'say' } }.new;
+    $fh.spurt:  'spurt text ';
+    $fh.spurt:  'spurt bin '.encode;
+    $fh.write:  'write'.encode;
+    $fh.print-nl;
+
+    is $fh.data.decode, "print printf put\nsay\nspurt text spurt bin write\n",
+        'all writing methods work';
+}
+
+subtest '.EOF/.WRITE methods' => {
+    plan 31;
+
+    my $fh := my class MyHandle is IO::Handle {
+        has Buf[uint8] $.data .= new: "I ♥ Perl 6\nprogramming".encode;
+        # NOTE: the requirement of manually setting .encoding should not
+        # be considered part of the specification. This wart is mostly due
+        # to possibility of having "unopened" handled. See R#2050
+        # https://github.com/rakudo/rakudo/issues/2050
+        submethod TWEAK { self.encoding: 'utf8' }
+        method READ(\bytes) { $!data.splice: 0, bytes }
+        method EOF { ! $!data }
+    }.new;
+
+    is-deeply $fh.eof,   False, 'eof before .slurp';
+    is-deeply $fh.slurp, "I ♥ Perl 6\nprogramming", '.slurp';
+    is-deeply $fh.eof,   True,  'eof after .slurp';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.lines, ('I ♥ Perl 6', 'programming').Seq, '.lines';
+    is-deeply $fh.eof,   True, 'eof after .lines';
+
+    $fh := MyHandle.new;
+    $fh.nl-in = [<er gra>];
+    is-deeply $fh.lines, ('I ♥ P', "l 6\npro", 'mming').Seq,
+        '.lines with custom nl-in';
+    is-deeply $fh.eof,   True, 'eof after .lines with custom nl-in';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.words, <I ♥ Perl 6 programming>».Str.Seq, '.words';
+    is-deeply $fh.eof,   True, 'eof after .words';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.split(/er/), ("I ♥ P", "l 6\nprogramming").Seq, '.split';
+    is-deeply $fh.eof,   True, 'eof after .split';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.comb(/:i <[A..Z]>/), <I P e r l p r o g r a m m i n g>.Seq,
+        '.comb';
+    is-deeply $fh.eof,   True, 'eof after .comb';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.get, 'I ♥ Perl 6',  'first .get';
+    is-deeply $fh.eof, False, 'eof after first .get';
+    is-deeply $fh.get, 'programming', 'second .get';
+    is-deeply $fh.eof, True, 'eof after second .get';
+    is-deeply $fh.get, Nil, 'third .get';
+    is-deeply $fh.eof, True, 'eof after third .get';
+
+    $fh := MyHandle.new;
+    is-deeply ($fh.getc xx 5), ('I', ' ', '♥', ' ', 'P').Seq,
+        'data from five .getc calls';
+    is-deeply $fh.eof, False, 'eof after five .getc calls';
+    is-deeply ($fh.getc xx 1000).grep(*.defined).join, "erl 6\nprogramming",
+        '"slurp" of rest of data with .getc calls';
+    is-deeply $fh.eof, True,
+        '.eof after "slurp" of rest of data with .getc calls';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.readchars(5), "I ♥ P", 'data from .readchars call';
+    is-deeply $fh.eof, False, 'eof after .readchars call';
+    is-deeply $fh.readchars(1000), "erl 6\nprogramming",
+        '"slurp" of rest of data with .readchars call';
+    is-deeply $fh.eof, True,
+        '.eof after "slurp" of rest of data with .readchars call';
+
+    $fh := MyHandle.new;
+    is-deeply $fh.read(7).decode, "I ♥ P", 'data from .read call';
+    is-deeply $fh.eof, False, 'eof after .readchars call';
+    is-deeply $fh.read(1000).decode, "erl 6\nprogramming",
+        '"slurp" of rest of data with .read call';
+    is-deeply $fh.eof, True,
+        '.eof after "slurp" of rest of data with .read call';
 }

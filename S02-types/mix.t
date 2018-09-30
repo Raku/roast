@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 use Test;
 
-plan 225;
+plan 226;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -498,10 +498,13 @@ subtest '.hash does not cause keys to be stringified' => {
     throws-like { Mix.new(^Inf) }, X::Cannot::Lazy, :what<Mix>;
 
     for a=>"a", a=>Inf, a=>-Inf, a=>NaN, a=>3i -> $pair {
-      dies-ok { $pair.Mix },
-        "($pair.perl()).Mix died";
-      dies-ok { Mix.new-from-pairs($pair) },
-        "Mix.new-from-pairs( ($pair.perl()) ) died";
+      my \ex := $pair.value ~~ Complex
+          ?? X::Numeric::Real !! $pair.value eq 'a'
+          ?? X::Str::Numeric  !! X::OutOfRange;
+      throws-like { $pair.Mix }, ex,
+        "($pair.perl()).Mix throws";
+      throws-like { Mix.new-from-pairs($pair) }, ex,
+        "Mix.new-from-pairs( ($pair.perl()) ) throws";
     }
 }
 
@@ -531,5 +534,8 @@ subtest '.hash does not cause keys to be stringified' => {
     dies-ok { %h<a>:delete }, 'cannot :delete from Mix';
     dies-ok { %h<a> = False }, 'cannot delete from Mix by assignment';
 }
+
+# R#2289
+is-deeply (1,2,3).Mix.ACCEPTS(().Mix), False, 'can we smartmatch empty';
 
 # vim: ft=perl6

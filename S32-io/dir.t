@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 17;
+plan 16;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -39,21 +39,14 @@ is dir('t').[0].dirname, 't', 'dir("t") returns paths with .dirname of "t"';
         'results for \'dir "/"\' do not begin with 2 slashes';
 }
 
-# RT #112662
-is_run 'dir | say', {
-    err => rx/'Argument' .* 'say' .* 'use .say'/,
-}, '`dir | say` has useful error message';
-
 {
     my $dir = make-temp-dir;
     $dir.add('foo.txt').open(:w).close;
-    my $dir-str = $dir.absolute;
 
     my $tested = False;
     @ = dir IO::Path.new($dir, :CWD($dir)), :test{
         when 'foo.txt' {
-            is-deeply $*CWD.absolute, $dir-str,
-                '$*CWD is set right inside dir(:test)';
+            is-path $*CWD, $dir, '$*CWD is set right inside dir(:test)';
             $tested = True;
         }
     };

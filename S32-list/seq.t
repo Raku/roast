@@ -221,7 +221,7 @@ is-deeply .perl.EVAL.flat, .flat,
 with (1, $((2, 3).Seq));
 
 Seq.new(
-    class :: does Iterator {
+    class :: does PredictiveIterator {
         my $mess = 'Seq.Numeric uses .count-only method, when available';
         method pull-one   { flunk $mess; IterationEnd }
         method count-only { pass  $mess }

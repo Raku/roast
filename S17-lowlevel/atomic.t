@@ -67,7 +67,7 @@ lives-ok { full-barrier() },
     is atomic-fetch-inc($test-cont), 10,
       'atomic-fetch-inc returns value before incrementing (1)';
     is atomic-fetch-inc($test-cont), 11,
-      'atomic-fetch-inc returns value before incrementing (1)';
+      'atomic-fetch-inc returns value before incrementing (2)';
     is atomic-fetch-dec($test-cont), 12,
       'atomic-fetch-dec returns value before decrementing (1)';
     is atomic-fetch-dec($test-cont), 11,
@@ -86,7 +86,7 @@ for 1..4 -> $attempt {
             atomic-inc-fetch($i);
         }
     } xx 4;
-    is atomic-fetch($i), 4 * 20000, "Atomic increment of lexical works ($attempt)"; 
+    is atomic-fetch($i), 4 * 20000, "Atomic increment of lexical works ($attempt)";
 }
 
 # Atomic integer decrement (lexical)
@@ -97,7 +97,7 @@ for 1..4 -> $attempt {
             atomic-dec-fetch($i);
         }
     } xx 4;
-    is atomic-fetch($i), 100000 - 4 * 20000, "Atomic decrement of lexical works ($attempt)"; 
+    is atomic-fetch($i), 100000 - 4 * 20000, "Atomic decrement of lexical works ($attempt)";
 }
 
 # Atomic integer add (lexical)
@@ -108,5 +108,5 @@ for 1..4 -> $attempt {
             atomic-add-fetch($i, 4);
         }
     } xx 4;
-    is atomic-fetch($i), 100000 + 4 * 4 * 20000, "Atomic add of lexical works ($attempt)"; 
+    is atomic-fetch($i), 100000 + 4 * 4 * 20000, "Atomic add of lexical works ($attempt)";
 }

@@ -2,7 +2,7 @@ use v6;
 use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
-plan 34;
+plan 33;
 
 use Test::Util;
 
@@ -125,7 +125,7 @@ is_run 'die "foo"; END { say "end run" }',
     try dies();
     ok $!, 'RT #103034 -- died';
     my $bt = $!.backtrace;
-    ok any($bt>>.file) ~~ /Foo\.pm/, 'found original file name in the backtrace';
+    ok any($bt>>.file) ~~ /Foo\.pm6/, 'found original file name in the backtrace';
     # note that fudging can change the file extension, so don't check
     # for .t here
     ok any($bt>>.file) ~~ /'error-reporting'\./, 'found script file name in the backtrace';
@@ -180,13 +180,6 @@ is_run 'sub foo { ({a=>1,b=>2}, {c=>3,d=>4}).map({ if (.<a>) {return $_} else { 
             out     => '',
             err     => all(rx/Str/, rx/\^name|gist|perl|say/)
         }, 'Using type object in string context provides help';
-}
-
-# RT #128803
-{
-    is_run '*...‘WAT’', {
-        err => rx/^ [ <!after 'SORRY'> . ]+ $/,
-    }, 'runtime time errors do not contain ==SORRY==';
 }
 
 # RT #126264

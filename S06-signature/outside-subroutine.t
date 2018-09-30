@@ -16,16 +16,57 @@ subtest 'signature binding outside of routine calls' => {
 };
 
 # RT #127444
-subtest 'smartmatch on signatures with literal strings' => {
-    plan 2;
-    is :("foo") ~~ :("bar"), False, 'two differing literal strings';
-    is :(Str)   ~~ :("foo"), False, 'type object and a literal string';
+subtest 'smartmatch on signatures with literals' => {
+    plan 5;
+    subtest 'strings' => {
+        plan 5;
+        is :("foo") ~~ :("bar"), False, ':D ~~ :D (false)';
+        is :("bar") ~~ :("bar"), True,  ':D ~~ :D (true)';
+        is :(Str)   ~~ :("foo"), False, ':U ~~ :D';
+        is :("foo", "bar") ~~ :("bar", "bar"), False, ':D x 2 ~~ :D x2 (false)';
+        is :("foo", "bar") ~~ :("foo", "bar"), True,  ':D x 2 ~~ :D x2 (true)';
+    }
+    subtest 'Complex' => {
+        plan 5;
+        is :(<1+1i>)  ~~ :(<1+2i>), False, ':D ~~ :D (false)';
+        is :(<1+2i>)  ~~ :(<1+2i>), True,  ':D ~~ :D (true)';
+        is :(Complex) ~~ :(<1+2i>), False, ':U ~~ :D';
+        is :(<1+1i>, <1+2i>) ~~ :(<1+2i>, <1+2i>), False,
+            ':D x 2 ~~ :D x2 (false)';
+        is :(<1+1i>, <1+2i>) ~~ :(<1+1i>, <1+2i>), True,
+          ':D x 2 ~~ :D x2 (true)';
+    }
+    subtest 'Rat' => {
+        plan 5;
+        #?rakudo 5 skip 'crashes'
+        is :(<1.2>)    ~~ :(½), False, ':D ~~ :D (false)';
+        is :(½)        ~~ :(½), True,  ':D ~~ :D (true)';
+        is :(Rat)      ~~ :(½), False, ':U ~~ :D';
+        is :(<1.2>, ½) ~~ :(½, ½),     False, ':D x 2 ~~ :D x2 (false)';
+        is :(<1.2>, ½) ~~ :(<1.2>, ½), True,  ':D x 2 ~~ :D x2 (true)';
+    }
+    subtest 'Num' => {
+        plan 5;
+        is :(1e2) ~~ :(1e0), False, ':D ~~ :D (false)';
+        is :(1e0) ~~ :(1e0), True,  ':D ~~ :D (true)';
+        is :(Num) ~~ :(1e0), False, ':U ~~ :D';
+        is :(1e2, 1e0) ~~ :(1e0, 1e0), False, ':D x 2 ~~ :D x2 (false)';
+        is :(1e2, 1e0) ~~ :(1e2, 1e0), True,  ':D x 2 ~~ :D x2 (true)';
+    }
+    subtest 'Int' => {
+        plan 5;
+        is :(1)    ~~ :(2),    False, ':D ~~ :D (false)';
+        is :(2)    ~~ :(2),    True,  ':D ~~ :D (true)';
+        is :(Int)  ~~ :(2),    False, ':U ~~ :D';
+        is :(1, 2) ~~ :(2, 2), False, ':D x 2 ~~ :D x2 (false)';
+        is :(1, 2) ~~ :(1, 2), True,  ':D x 2 ~~ :D x2 (true)';
+    }
 }
 
 # RT #128783
-lives-ok { EVAL ’:($:)‘ }, ’signature marker is allowed in bare signature‘;
+eval-lives-ok ｢:($:)｣, 'invocant marker is allowed in bare signature';
 
 # RT #128795
-lives-ok { :(*%)~~ :() }, 'smartmatch with no slurpy on right side';
+is :(*%) ~~ :(), False, 'smartmatch with no slurpy on right side';
 
 # vim: ft=perl6

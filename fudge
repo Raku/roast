@@ -150,6 +150,13 @@ my $IS = _register_functions(  # regex with test functions used in roast
       doesn't-warn
       warns-like
       fails-like
+      is-eqv
+      is-path
+      is-deeply-junction
+      test-iter-opt
+      throws-like-any
+      run-with-tty
+      no-fatal-throws-like
     ),
     # from Test::Tap
     qw(

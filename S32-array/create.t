@@ -22,17 +22,19 @@ is(+$array_obj, 3, 'Finding the length functions properly.');
 }
 
 { # coverage; 2016-09-21
-    is-deeply circumfix:<[ ]>(), $[], 'circumfix:<[ ]>() creates Array';
-    is-deeply [],                $[], '[ ] creates Array';
+    is-deeply circumfix:<[ ]>(), [], 'circumfix:<[ ]>() creates Array';
+    is-deeply [],                [], '[ ] creates Array';
 }
 
 # RT #130583
-eval-lives-ok ｢(1,2,3).Array[0]++｣,
-    'array elements get writable containers';
+eval-lives-ok ｢
+       (1,2,3).Array[0]++ == 1 or die;
+    ++((1,2,3).Array[1])  == 3 or die;
+｣, 'array elements get writable containers';
 
 { # RT #129762
     subtest 'Array.clone [partially-reified]' => {
-        plan 3;
+        plan 7;
 
         my @a = 1, {rand} … *;
         my @b = @a.clone;
@@ -42,10 +44,15 @@ eval-lives-ok ｢(1,2,3).Array[0]++｣,
         cmp-ok @a[5], '!=', 42, 'changing clone does not impact original';
         @a[3] = 72;
         cmp-ok @b[3], '!=', 72, 'changing original does not impact clone';
+
+        @a.unshift: 100;    is-deeply @b[0], 1,   'unshifting original';
+        @b.unshift: 200;    is-deeply @a[0], 100, 'unshifting clone';
+        @a.shift;           is-deeply @b[0], 200, 'shifting original';
+        @b.shift; @b.shift; is-deeply @a[0], 1,   'shifting clone';
     }
 
     subtest 'Array.clone [fully-reified]' => {
-        plan 5;
+        plan 9;
 
         my @a = 1, 2, 3, 4;
         my @b = @a.clone;
@@ -56,10 +63,12 @@ eval-lives-ok ｢(1,2,3).Array[0]++｣,
         @a[2] = 72;
         cmp-ok @b[2], '!=', 72, 'changing original does not impact clone';
 
-        @b.push: 42;
-        is-deeply +@b, 1+@a, 'adding items to clone does not affect original';
-        @a.append: 42, 72;
-        is-deeply +@a, 1+@b, 'adding items to original does not affect clone';
+        @b.push: 42;        is-deeply +@b, 1+@a, 'pushing to clone';
+        @a.append: 42, 72;  is-deeply +@a, 1+@b, 'pushing to original';
+        @a.unshift: 100;    is-deeply @b[0], 1,   'unshifting original';
+        @b.unshift: 200;    is-deeply @a[0], 100, 'unshifting clone';
+        @a.shift;           is-deeply @b[0], 200, 'shifting original';
+        @b.shift; @b.shift; is-deeply @a[0], 1,   'shifting clone';
     }
 
     is-deeply Array.clone, Array, 'Array:U clone gives an Array:U';

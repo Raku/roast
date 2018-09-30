@@ -167,9 +167,8 @@ if $path.IO.e {
             plan 1;
             my $form = "[{&SPURT.^name.lc} form]";
 
-            my $res = SPURT($file, $data, |args);
-            isa-ok $res, Failure, 'failed spurt returns a Failure';
-            $res.so; # handle Failure
+            fails-like { SPURT($file, $data, |args) }, Exception,
+                'failed spurt returns a Failure';
         }
     }
 

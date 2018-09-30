@@ -49,14 +49,14 @@ is( ~([1,2,3]\ .[2,1,0]), "3 2 1", 'unspace on postfix subscript');
     is( ~@array, "5 6 7", 'unspace with postfix pre- and/or post-dot hyperops');
 }
 
-#Test the "unspace" and unspace syntax
+# Test the "unspace" and unspace syntax
 
 
-#This makes 'foo.lc' and 'foo .lc' mean different things
+# This makes 'foo.lc' and 'foo .lc' mean different things
 multi foo() { 'a' }
 multi foo($x) { $x }
 
-#This should do the same, but currently doesn't
+# This should do the same, but currently doesn't
 sub bar($x? = 'a') { $x }
 
 $_ = 'b';
@@ -99,17 +99,17 @@ blah
 is(EVAL('foo\
 =comment blah blah blah
     .lc'), 'a', 'unspace with pod =comment');
-#This is pretty strange: according to Perl-6.0.0-STD.pm,
-#unspace is allowed after a pod = ... which means pod is
-#syntactically recursive, i.e. you can put pod comments
-#inside pod directives recursively!
+# This is pretty strange: according to Perl-6.0.0-STD.pm (Perl 5),
+# unspace is allowed after a pod = ... which means pod is
+# syntactically recursive, i.e., you can put pod comments
+# inside pod directives recursively!
 #?rakudo skip 'pod and unspace: RT #122343'
 is(EVAL('foo\
 =\ begin comment
 blah blah blah
 =\ end comment
     .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod unspace');
-#?rakudo skip '=for pod NYI (in STD.pm): RT #122343'
+#?rakudo skip '=for pod NYI (in STD.pm, from Perl 5): RT #122343'
 {
 is(EVAL('foo\
 =\ for comment
@@ -137,7 +137,7 @@ blah blah blah
 =end nested_pod
 end comment
     .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod-in-pod');
-#?rakudo skip '=for pod NYI (in STD.pm): RT #122343'
+#?rakudo skip '=for pod NYI (in STD.pm, from Perl 5): RT #122343'
 {
 is(EVAL('foo\
 =\
@@ -333,8 +333,7 @@ is IO::Path\.^name, "IO::Path", "bare longname metamethod call with degenerate u
 
 # sigilless variables/constants
 # RT #128462
-# XXX alter this first test not to say in errata.
-eval-lives-ok 'my \term = 42; say term\   .Str; term == 42 or die;',
+eval-lives-ok 'my \term = 42; uc term\   .Str; term == 42 or die;',
     'unspace with method calls detached from sigiless terms works';
 eval-lives-ok 'my \term = [1,2]; my $v = term\   [1]; $v == 2 or die;',
     'unspace with array subscript detached from sigiless terms works';

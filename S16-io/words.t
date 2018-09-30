@@ -22,128 +22,132 @@ my $file = make-temp-file content => qq:to/END/;
 
 for IO::Handle.^lookup('words'), &words -> &WORDS {
     my $d = &WORDS.WHAT === Sub ?? '(sub form)' !! '(IO::Handle method form)';
-    subtest "no extra args $d" => { plan 5;
-        subtest '.pull-one' => { plan 2;
+    group-of 5 => "no extra args $d" => {
+        group-of 2 => '.pull-one' => {
             my $fh will leave {.close} = $file.open;
             my @res;
             for WORDS $fh { @res.push: $_ }
             is-deeply @res.Seq, $all-words, 'right words';
             is-deeply $fh.opened, True, 'did not close handle';
         }
-        subtest '.push-all' => { plan 2;
+        group-of 2 => '.push-all' => {
             my $fh will leave {.close} = $file.open;
             my @res = WORDS $fh;
             is-deeply @res.Seq, $all-words, 'right words';
             is-deeply $fh.opened, True, 'did not close handle';
         }
-        subtest '.push-exactly' => { plan 2;
+        group-of 2 => '.push-exactly' => {
             my $fh will leave {.close} = $file.open;
             my @res = WORDS($fh)[1,2];
             is-deeply @res.Seq, $all-words[1,2], 'right words';
             is-deeply $fh.opened, True, 'did not close handle';
         }
-        subtest '.count-only' => { plan 2;
+        group-of 2 => '.count-only' => {
             my $fh will leave {.close} = $file.open;
             is-deeply WORDS($fh).elems, $all-words.elems, 'right count';
             is-deeply $fh.opened, True, 'did not close handle';
         }
-        subtest 'Seq' => { plan 2;
+        group-of 2 => 'Seq' => {
             my $fh will leave {.close} = $file.open;
             is-deeply WORDS($fh), $all-words, 'right words';
             is-deeply $fh.opened, True, 'did not close handle';
         }
     }
 
-    subtest ":close arg $d" => { plan 5;
-        subtest '.pull-one' => { plan 2;
+    group-of 5 => ":close arg $d" => {
+        group-of 2 => '.pull-one' => {
             my $fh = $file.open;
             my @res;
             for WORDS $fh, :close { @res.push: $_ }
             is-deeply @res.Seq, $all-words, 'right words';
             is-deeply $fh.opened, False, 'closed handle';
         }
-        subtest '.push-all' => { plan 2;
+        group-of 2 => '.push-all' => {
             my $fh = $file.open;
             my @res = WORDS $fh, :close;
             is-deeply @res.Seq, $all-words, 'right words';
             is-deeply $fh.opened, False, 'closed handle';
         }
-        subtest '.push-exactly' => { plan 1;
+        group-of 2 => '.push-exactly' => {
             my $fh will leave {.close} = $file.open;
             my @res = WORDS($fh, :close)[1,2];
             is-deeply @res.List, $all-words[1,2], 'right words';
-            # we don't exhaust the iterator, so don't check if it closed
+            # we didn't exhaust the iterator, so handle should still be opened
+            is-deeply $fh.opened, True, 'still-open handle';
         }
-        subtest '.count-only' => { plan 2;
+        group-of 2 => '.count-only' => {
             my $fh = $file.open;
             is-deeply WORDS($fh, :close).elems, $all-words.elems, 'right count';
             is-deeply $fh.opened, False, 'closed handle';
         }
-        subtest 'Seq' => { plan 2;
+        group-of 2 => 'Seq' => {
             my $fh = $file.open;
             is-deeply WORDS($fh, :close), $all-words, 'right words';
             is-deeply $fh.opened, False, 'closed handle';
         }
     }
 
-    subtest "\$limit arg $d" => { plan 5;
-        subtest '.pull-one' => { plan 2;
+    group-of 5 => "\$limit arg $d" => {
+        group-of 2 => '.pull-one' => {
             my $fh = $file.open;
             my @res;
             for WORDS $fh, 2 { @res.push: $_ }
             is-deeply @res.List, $all-words[^2], 'right words';
             is-deeply $fh.opened, True, 'did not close handle';
         }
-        subtest '.push-all' => { plan 2;
+        group-of 2 => '.push-all' => {
             my $fh = $file.open;
             my @res = WORDS $fh, 2;
             is-deeply @res.List, $all-words[^2], 'right words';
             is-deeply $fh.opened, True, 'did not close handle';
         }
-        subtest '.push-exactly' => { plan 2;
+        group-of 2 => '.push-exactly' => {
             my $fh will leave {.close} = $file.open;
             my @res = WORDS($fh, 2)[1,2];
             is-deeply @res.List, ($all-words[^2][1], Any), 'right words';
             is-deeply $fh.opened, True, 'did not close handle';
         }
-        subtest '.count-only' => { plan 2;
+        group-of 2 => '.count-only' => {
             my $fh will leave {.close} = $file.open;
             is-deeply WORDS($fh, 2).elems, 2, 'right count';
             is-deeply $fh.opened, True, 'did not close handle';
         }
-        subtest 'Seq' => { plan 2;
+        group-of 2 => 'Seq' => {
             my $fh will leave {.close} = $file.open;
             is-deeply WORDS($fh, 2), $all-words[^2].Seq, 'right words';
             is-deeply $fh.opened, True, 'did not close handle';
         }
     }
 
-    subtest "\$limit and :close args $d" => { plan 5;
-        subtest '.pull-one' => { plan 2;
+    group-of 5 => "\$limit and :close args $d" => {
+        group-of 2 => '.pull-one' => {
             my $fh = $file.open;
             my @res;
             for WORDS $fh, 2, :close { @res.push: $_ }
             is-deeply @res.Seq, $all-words[^2], 'right words';
             is-deeply $fh.opened, False, 'closed handle';
         }
-        subtest '.push-all' => { plan 2;
+        group-of 2 => '.push-all' => {
             my $fh = $file.open;
             my @res = WORDS $fh, 2, :close;
             is-deeply @res.List, $all-words[^2], 'right words';
             is-deeply $fh.opened, False, 'closed handle';
         }
-        subtest '.push-exactly' => { plan 1;
+        group-of 2 => '.push-exactly' => {
             my $fh will leave {.close} = $file.open;
-            my @res = WORDS($fh, 2, :close)[1,2];
-            is-deeply @res.List, ($all-words[^2][1], Any), 'right words';
-            # we don't exhaust the iterator, so don't check if it closed
+            my @res = WORDS($fh, 2, :close)[^2];
+            is-deeply @res.List, $all-words[^2], 'right words';
+            # we didn't exhaust the iterator, but did $limit items from it
+            # already, so we'd expect the handle to be closed now
+            #?rakudo todo 'handle is not closed https://github.com/rakudo/rakudo/issues/2283'
+            is-deeply $fh.opened, False, 'closed handle';
         }
-        subtest '.count-only' => { plan 2;
+        group-of 2 => '.count-only' => {
             my $fh = $file.open;
             is-deeply WORDS($fh, 2, :close).elems, 2, 'right count';
             is-deeply $fh.opened, False, 'closed handle';
         }
-        subtest 'Seq' => { plan 2;
+        group-of 2 => 'Seq' => {
             my $fh = $file.open;
             is-deeply WORDS($fh, 2, :close), $all-words[^2].Seq, 'right words';
             is-deeply $fh.opened, False, 'closed handle';
@@ -152,7 +156,7 @@ for IO::Handle.^lookup('words'), &words -> &WORDS {
 }
 
 
-subtest "no extra args (IO::Path method)" => { plan 5;
+group-of 5 => "no extra args (IO::Path method)" => {
     my @res;
 
     for $file.words { @res.push: $_ }
@@ -169,7 +173,7 @@ subtest "no extra args (IO::Path method)" => { plan 5;
     is-deeply $file.words, $all-words, 'right words (Seq)';
 }
 
-subtest "\$limit arg (IO::Path method)" => { plan 5;
+group-of 5 => "\$limit arg (IO::Path method)" => {
     my @res;
 
     for $file.words(3) { @res.push: $_ }
@@ -201,7 +205,7 @@ is_run ｢my $i = 0; my @words; with ｣ ~ $file.perl ~ ｢ {
     $*ARGFILES = IO::ArgFiles.new:
         make-temp-file(:content<foo bar>), make-temp-file(:content<meow moo>),
         make-temp-file(:content<I ♥ Perl 6>);
-    is-deeply words(), <foo bar meow moo I ♥ Perl 6>».Str.Seq,
+    is-eqv words(), <foo bar meow moo I ♥ Perl 6>».Str.Seq,
         'words() without args uses $*ARGFILES';
 }
 

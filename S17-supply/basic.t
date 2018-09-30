@@ -4,17 +4,24 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 78;
+plan 80;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
         my $s = Supplier.new;
+        $s.Supply.tap( -> \val { ok val =:= Mu } );
+        $s.emit(Mu);
+        $s.done;
+    }
+
+    {
+        my $s = Supplier.new;
 
         my @vals;
         my $saw_done;
-        my $tap = $s.Supply.tap( -> $val { @vals.push($val) },
+        $s.Supply.tap( -> $val { @vals.push($val) },
           done => { $saw_done = True });
 
         $s.emit(1);
@@ -137,10 +144,10 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
             my @done;
             $supply.tap: done => { @done.push(1) }
-            $supply.tap: done => { @done.push(1) }
+            $supply.tap: done => { @done.push(2) }
             $supplier.done;
 
-            is +@done, 2, 'All done callbacks were called';
+            is-deeply @done.Bag, (1, 2).Bag, 'All done callbacks were called';
         }
 
         {
@@ -148,11 +155,11 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
             my $supply   = $supplier.Supply;
 
             my @quit;
-            $supply.tap: quit => { @quit.push($_) }
-            $supply.tap: quit => { @quit.push($_) }
+            $supply.tap: quit => { @quit.push(1) }
+            $supply.tap: quit => { @quit.push(2) }
             $supplier.quit(1);
 
-            is +@quit, 2, 'All quit callbacks were called';
+            is-deeply @quit.Bag, (1, 2).Bag, 'All quit callbacks were called';
         }
     }
 }

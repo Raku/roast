@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 162 + @uint * 2 + 1;
+plan (@int + @uint) * 164 + @uint * 2 + 2;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -268,6 +268,13 @@ for flat @int,@uint -> $T {
     @untyped2.push('C-C-C-C-Combo Breaker!');
     throws-like { @native2 = @untyped2 }, Exception,
       "List-assigning incompatible untyped array to $t array dies";
+
+    my @ssa := array[$T].new(1..10);
+    my @ssb := array[$T].new(1..10);
+    is @ssa ~~ @ssb, True, "Smartmatching same $t arrays works";
+
+    @ssb.push(42);
+    is @ssa ~~ @ssb, False, "Smartmatching different $t arrays works";
 }
 
 # some unsigned native int tests
@@ -293,3 +300,16 @@ for @uint -> $T {
 
 # RT #130443
 dies-ok { my int @a = ^Inf; 42 }, 'Trying to assign ^Inf to an int array dies';
+
+{
+    my int @a = ^2_000_000;
+    my $then = now;
+    my $result1 = @a.sum;
+    my $took1 = now - $then;
+
+    $then = now;
+    my $result2 = @a.sum(:wrap);
+    my $took2 = now - $then;
+
+    is $result1, $result2, "is $result1 == $result2";
+}

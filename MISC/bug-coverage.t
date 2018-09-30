@@ -6,10 +6,14 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 11;
+plan 14;
+
+# https://github.com/rakudo/rakudo/issues/2280
+is-deeply (11**5, */-2 … 0)[31], <-161051/2147483648>,
+    'thou shall not coredump';
 
 subtest '.count-only/.bool-only for iterated content' => {
-    plan 12;
+    plan 25;
 
     test-iter-opt  <a b c>.iterator,         3, 'List.iterator';
     test-iter-opt  <a b c>.reverse.iterator, 3, 'List.reverse.iterator';
@@ -25,6 +29,25 @@ subtest '.count-only/.bool-only for iterated content' => {
     test-iter-opt :42foo.kv.iterator,  2, 'Pair.kv.iterator';
     test-iter-opt %(:42foo, :70bar).kv.iterator, 4, 'Hash.kv.iterator';
     test-iter-opt %(:42foo, :70bar, :2meow).keys.iterator, 3, 'Hash.keys.iterator';
+
+    test-iter-opt "a\nb\nc".lines.iterator, 3, 'Str.lines.iterator';
+    test-iter-opt (my @a[5]).iterator,      5, '1 dim shaped array';
+    test-iter-opt 'abc'.comb.iterator,      3, 'Str.comb';
+    test-iter-opt 'abc'.comb(/./).iterator, 3, 'Str.comb(Regex)';
+    test-iter-opt 'abc'.comb(2).iterator,   2, 'Str.comb(Int)';
+    test-iter-opt 'aba'.comb('a').iterator, 2, 'Str.comb(Str)';
+    test-iter-opt ^3 .iterator,         (0, 1, 2), 'Range';
+    test-iter-opt ^3 .reverse.iterator, (2, 1, 0), 'Range.reverse';
+
+    (my @l := (1, 2, 3)).elems; # reify
+    test-iter-opt @l.iterator,         (1, 2, 3), 'reified list';
+    test-iter-opt @l.reverse.iterator, (3, 2, 1), 'reified list reverse';
+
+    (my int @l-n = 1, 2, 3);
+    test-iter-opt @l-n.iterator,         (1, 2, 3), 'reified list';
+    test-iter-opt @l-n.reverse.iterator, (3, 2, 1), 'reified list reverse';
+
+    test-iter-opt Bag.new(<a b c>).pick(2).iterator, 2, 'baggy .pick(n)';
 }
 
 # https://github.com/rakudo/rakudo/issues/1407
@@ -289,5 +312,41 @@ is_run ｢
     my @x = do for ^20 { [do for ^5 { ("a".."z").roll(3).join }] }
     print @x.elems
 ｣, {:out<20>, :err(''), :0status}, 'no "Illegal Instruction" crashes';
+
+# https://github.com/rakudo/rakudo/issues/2222
+throws-like ｢my $ = 5 »*» (2..4)｣, X::HyperOp::NonDWIM,
+    'non DWIM hyper throws good error';
+
+group-of 11 => 'cover potential bugs in possible optimization of `for ...`' => {
+    my @a; for 0.1, 0.2 ... 1 -> $a { @a.push: $a };
+    is-deeply @a, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], 'Rat, Rat ... Int';
+
+    @a = (); for 0.1, 2 ... 3 -> $a { @a.push: $a };
+    is-deeply @a, [0.1, 2.0], 'Rat, Int ... Int';
+
+    @a = (); for 0.1, 0.2 ... 1.0 -> $a { @a.push: $a };
+    is-deeply @a, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], 'Rat, Rat ... Rat';
+
+    @a = (); for 1, 2 ... 3.0 -> $a { @a.push: $a };
+    is-deeply @a, [1, 2, 3], 'Int, Int ... Rat';
+
+    @a = (); for 1 ... 3.0 -> $a { @a.push: $a };
+    is-deeply @a, [1, 2, 3], 'Int ... Rat';
+
+    @a = (); for 1.0 ... 3 -> $a { @a.push: $a };
+    is-deeply @a, [1.0, 2.0, 3.0], 'Rat ... Int';
+
+    @a = (); for 1.0 ... 3.0 -> $a { @a.push: $a };
+    is-deeply @a, [1.0, 2.0, 3.0], 'Rat ... Rat';
+
+    for ^9223372036854775809 {last}
+    pass 'no crashes with endpoint > 64-bit int (^)';
+    for 0^..^9223372036854775809 {last}
+    pass 'no crashes with endpoint > 64-bit int (^)';
+    for 0^..9223372036854775809 {last}
+    pass 'no crashes with endpoint > 64-bit int (^..)';
+    for 0..^9223372036854775809 {last}
+    pass 'no crashes with endpoint > 64-bit int (..^)';
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6

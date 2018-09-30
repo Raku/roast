@@ -3,16 +3,12 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 40;
+plan 39;
 
 # L<S32::IO/IO::Path>
 
 constant @Path-Types
 = IO::Path, IO::Path::Cygwin, IO::Path::QNX, IO::Path::Unix, IO::Path::Win32;
-
-sub is-path ($got, $expected, $desc) {
-    cmp-ok $got.resolve, '~~', $expected.resolve, $desc
-}
 
 my $path = '/foo/bar.txt'.IO;
 isa-ok $path, IO::Path, "Str.IO returns an IO::Path";
@@ -78,7 +74,7 @@ subtest '.perl.EVAL rountrips' => {
         if .DEFINITE {
             subtest "using {.perl}" => {
                 plan 4;
-                is-deeply .IO.perl.EVAL,      .IO,      'new eqv old';
+                is-path   .IO.perl.EVAL,      .IO,      'equivalent object';
                 is-deeply .IO.perl.EVAL.path, .IO.path, 'same .path';
                 is-deeply .IO.perl.EVAL.CWD,  .IO.CWD,  'same .CWD';
                 is-deeply .IO.perl.EVAL.SPEC, .IO.SPEC, 'same .SPEC';
@@ -90,9 +86,11 @@ subtest '.perl.EVAL rountrips' => {
     }
 }
 
-# RT #127989
-throws-like { IO::Path.new: 'foo', 'bar' }, X::Multi::NoMatch,
-    'IO::Path.new with wrong args must not claim it only takes named ones';
+{ # RT #127989
+    try IO::Path.new: 'foo', 'bar';
+    cmp-ok $!, &[!~~], X::Constructor::Positional,
+      'IO::Path.new with wrong args must not claim it only takes named ones';
+}
 
 # RT #128097
 {
@@ -143,7 +141,7 @@ subtest 'IO::Path.ACCEPTS' => { # coverage 2017-03-31 (IO grant)
     is-deeply '/'.IO.Str, '/', 'Str does not include CWD [absolute path]';
     is-deeply IO::Path.new(
         :volume<foo:>, :dirname<bar>, :basename<ber>, :SPEC(IO::Spec::Win32.new)
-    ).Str, 'foo:\bar\ber', 'Str does not include CWD [mulit-part .new()]'
+    ).Str, 'foo:\bar\ber', 'Str does not include CWD [multi-part .new()]'
 }
 
 subtest '.add' => {
@@ -215,48 +213,6 @@ subtest '.link' => {
         fails-like { l($target, $link) }, X::IO::Link, :$target, :name($link),
             'fail when link already exists';
     }
-}
-
-#?rakudo todo 'wait until 6.d to swap .child to .child-secure'
-#?DOES 1
-{
-subtest 'secureness of .child' => {
-    plan 10;
-
-    my $parent = make-temp-dir;
-    my $non-resolving-parent = make-temp-file.child('bar');
-
-    fails-like { $non-resolving-parent.child('../foo') }, X::IO::Resolve,
-        'non-resolving parent fails (given path is non-child)';
-
-    fails-like { $non-resolving-parent.child('foo') }, X::IO::Resolve,
-        'non-resolving parent fails (given path is child)';
-
-    fails-like { $parent.child('foo/bar') }, X::IO::Resolve,
-        'resolving parent fails (given path is a child, but not resolving)';
-
-    fails-like { $parent.child('../foo') }, X::IO::NotAChild,
-        'resolved parent fails (given path is not a child)';
-
-    is-path $parent.child('foo'), $parent.child('foo'),
-        'resolved parent with resolving, non-existent child';
-
-    $parent.child('foo').mkdir;
-    is-path $parent.child('foo'), $parent.child('foo'),
-        'resolved parent with resolving, existent child';
-
-    is-path $parent.child('foo/bar'), $parent.child('foo/bar'),
-        'resolved parent with resolving, existent child in a subdir';
-
-    is-path $parent.child('foo/../bar'), $parent.child('bar'),
-        'resolved parent with resolving, non-existent child, with ../';
-
-    fails-like { $parent.child('foo/../../bar') }, X::IO::NotAChild,
-        'resolved parent fails (given path is not a child, via child + ../)';
-
-    fails-like { $parent.child("../\x[308]") }, X::IO::NotAChild,
-        'resolved parent fails (given path is not a child, via combiners)';
-}
 }
 
 subtest '.sibling' => {
@@ -343,7 +299,7 @@ subtest '.parts attribute' => {
         :basename<foo>,:dirname</bar>,:volume<C:>;
 
     check-parts IO::Path::Win32.new('C:/').parts, "C:/",
-        :basename(｢\｣),:dirname</>,:volume<C:>;
+        :basename(｢\｣ | ｢/｣),:dirname(｢\｣ | ｢/｣),:volume<C:>;
 }
 
 subtest '.SPEC attribute' => {

@@ -1,6 +1,9 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
-plan 142;
+use Test::Util;
+
+plan 143;
 
 # L<S32::Numeric/Real/"=item round">
 # L<S32::Numeric/Real/"=item floor">
@@ -176,5 +179,137 @@ for @testkeys -> $t {
     is $big-rat.round, $big-int + 1, "round handles FatRats properly";
     is $big-rat.truncate, $big-int, "truncate handles FatRats properly";
 }
+
+group-of 64 => "type of .round's return value" => {
+    is-deeply 42.round(42), 42,
+        "Int with Int rounder is Int";
+    is-deeply 42.round(IntStr.new(42, "42")), 42,
+        "Int with IntStr rounder is Int";
+    is-deeply 42.round(42e0), 42e0,
+        "Int with Num rounder is Num";
+    is-deeply 42.round(NumStr.new(42e0, "42e0")), 42e0,
+        "Int with NumStr rounder is Num";
+    is-deeply 42.round(42.0), 42.0,
+        "Int with Rat rounder is Rat";
+    is-deeply 42.round(RatStr.new(42.0, "42.0")), 42.0,
+        "Int with RatStr rounder is Rat";
+    is-deeply 42.round(<42+0i>), 42e0,
+        "Int with Complex rounder is Num";
+    is-deeply 42.round(ComplexStr.new(<42+0i>, "42+0i")), 42e0,
+        "Int with ComplexStr rounder is Num";
+    is-deeply IntStr.new(42, "42").round(42), 42,
+        "IntStr with Int rounder is Int";
+    is-deeply IntStr.new(42, "42").round(IntStr.new(42, "42")), 42,
+        "IntStr with IntStr rounder is Int";
+    is-deeply IntStr.new(42, "42").round(42e0), 42e0,
+        "IntStr with Num rounder is Num";
+    is-deeply IntStr.new(42, "42").round(NumStr.new(42e0, "42e0")), 42e0,
+        "IntStr with NumStr rounder is Num";
+    is-deeply IntStr.new(42, "42").round(42.0), 42.0,
+        "IntStr with Rat rounder is Rat";
+    is-deeply IntStr.new(42, "42").round(RatStr.new(42.0, "42.0")), 42.0,
+        "IntStr with RatStr rounder is Rat";
+    is-deeply IntStr.new(42, "42").round(<42+0i>), 42e0,
+        "IntStr with Complex rounder is Num";
+    is-deeply IntStr.new(42, "42").round(ComplexStr.new(<42+0i>, "42+0i")), 42e0,
+        "IntStr with ComplexStr rounder is Num";
+    is-deeply 42e0.round(42), 42,
+        "Num with Int rounder is Int";
+    is-deeply 42e0.round(IntStr.new(42, "42")), 42,
+        "Num with IntStr rounder is Int";
+    is-deeply 42e0.round(42e0), 42e0,
+        "Num with Num rounder is Num";
+    is-deeply 42e0.round(NumStr.new(42e0, "42e0")), 42e0,
+        "Num with NumStr rounder is Num";
+    is-deeply 42e0.round(42.0), 42.0,
+        "Num with Rat rounder is Rat";
+    is-deeply 42e0.round(RatStr.new(42.0, "42.0")), 42.0,
+        "Num with RatStr rounder is Rat";
+    is-deeply 42e0.round(<42+0i>), 42e0,
+        "Num with Complex rounder is Num";
+    is-deeply 42e0.round(ComplexStr.new(<42+0i>, "42+0i")), 42e0,
+        "Num with ComplexStr rounder is Num";
+    is-deeply NumStr.new(42e0, "42e0").round(42), 42,
+        "NumStr with Int rounder is Int";
+    is-deeply NumStr.new(42e0, "42e0").round(IntStr.new(42, "42")), 42,
+        "NumStr with IntStr rounder is Int";
+    is-deeply NumStr.new(42e0, "42e0").round(42e0), 42e0,
+        "NumStr with Num rounder is Num";
+    is-deeply NumStr.new(42e0, "42e0").round(NumStr.new(42e0, "42e0")), 42e0,
+        "NumStr with NumStr rounder is Num";
+    is-deeply NumStr.new(42e0, "42e0").round(42.0), 42.0,
+        "NumStr with Rat rounder is Rat";
+    is-deeply NumStr.new(42e0, "42e0").round(RatStr.new(42.0, "42.0")), 42.0,
+        "NumStr with RatStr rounder is Rat";
+    is-deeply NumStr.new(42e0, "42e0").round(<42+0i>), 42e0,
+        "NumStr with Complex rounder is Num";
+    is-deeply NumStr.new(42e0, "42e0").round(ComplexStr.new(<42+0i>, "42+0i")), 42e0,
+        "NumStr with ComplexStr rounder is Num";
+    is-deeply 42.0.round(42), 42,
+        "Rat with Int rounder is Int";
+    is-deeply 42.0.round(IntStr.new(42, "42")), 42,
+        "Rat with IntStr rounder is Int";
+    is-deeply 42.0.round(42e0), 42e0,
+        "Rat with Num rounder is Num";
+    is-deeply 42.0.round(NumStr.new(42e0, "42e0")), 42e0,
+        "Rat with NumStr rounder is Num";
+    is-deeply 42.0.round(42.0), 42.0,
+        "Rat with Rat rounder is Rat";
+    is-deeply 42.0.round(RatStr.new(42.0, "42.0")), 42.0,
+        "Rat with RatStr rounder is Rat";
+    is-deeply 42.0.round(<42+0i>), 42e0,
+        "Rat with Complex rounder is Num";
+    is-deeply 42.0.round(ComplexStr.new(<42+0i>, "42+0i")), 42e0,
+        "Rat with ComplexStr rounder is Num";
+    is-deeply RatStr.new(42.0, "42.0").round(42), 42,
+        "RatStr with Int rounder is Int";
+    is-deeply RatStr.new(42.0, "42.0").round(IntStr.new(42, "42")), 42,
+        "RatStr with IntStr rounder is Int";
+    is-deeply RatStr.new(42.0, "42.0").round(42e0), 42e0,
+        "RatStr with Num rounder is Num";
+    is-deeply RatStr.new(42.0, "42.0").round(NumStr.new(42e0, "42e0")), 42e0,
+        "RatStr with NumStr rounder is Num";
+    is-deeply RatStr.new(42.0, "42.0").round(42.0), 42.0,
+        "RatStr with Rat rounder is Rat";
+    is-deeply RatStr.new(42.0, "42.0").round(RatStr.new(42.0, "42.0")), 42.0,
+        "RatStr with RatStr rounder is Rat";
+    is-deeply RatStr.new(42.0, "42.0").round(<42+0i>), 42e0,
+        "RatStr with Complex rounder is Num";
+    is-deeply RatStr.new(42.0, "42.0").round(ComplexStr.new(<42+0i>, "42+0i")), 42e0,
+        "RatStr with ComplexStr rounder is Num";
+    is-deeply <42+0i>.round(42), <42+0i>,
+        "Complex with Int rounder is Complex";
+    is-deeply <42+0i>.round(IntStr.new(42, "42")), <42+0i>,
+        "Complex with IntStr rounder is Complex";
+    is-deeply <42+0i>.round(42e0), <42+0i>,
+        "Complex with Num rounder is Complex";
+    is-deeply <42+0i>.round(NumStr.new(42e0, "42e0")), <42+0i>,
+        "Complex with NumStr rounder is Complex";
+    is-deeply <42+0i>.round(42.0), <42+0i>,
+        "Complex with Rat rounder is Complex";
+    is-deeply <42+0i>.round(RatStr.new(42.0, "42.0")), <42+0i>,
+        "Complex with RatStr rounder is Complex";
+    is-deeply <42+0i>.round(<42+0i>), <42+0i>,
+        "Complex with Complex rounder is Complex";
+    is-deeply <42+0i>.round(ComplexStr.new(<42+0i>, "42+0i")), <42+0i>,
+        "Complex with ComplexStr rounder is Complex";
+    is-deeply ComplexStr.new(<42+0i>, "42+0i").round(42), <42+0i>,
+        "ComplexStr with Int rounder is Complex";
+    is-deeply ComplexStr.new(<42+0i>, "42+0i").round(IntStr.new(42, "42")), <42+0i>,
+        "ComplexStr with IntStr rounder is Complex";
+    is-deeply ComplexStr.new(<42+0i>, "42+0i").round(42e0), <42+0i>,
+        "ComplexStr with Num rounder is Complex";
+    is-deeply ComplexStr.new(<42+0i>, "42+0i").round(NumStr.new(42e0, "42e0")), <42+0i>,
+        "ComplexStr with NumStr rounder is Complex";
+    is-deeply ComplexStr.new(<42+0i>, "42+0i").round(42.0), <42+0i>,
+        "ComplexStr with Rat rounder is Complex";
+    is-deeply ComplexStr.new(<42+0i>, "42+0i").round(RatStr.new(42.0, "42.0")), <42+0i>,
+        "ComplexStr with RatStr rounder is Complex";
+    is-deeply ComplexStr.new(<42+0i>, "42+0i").round(<42+0i>), <42+0i>,
+        "ComplexStr with Complex rounder is Complex";
+    is-deeply ComplexStr.new(<42+0i>, "42+0i").round(ComplexStr.new(<42+0i>, "42+0i")), <42+0i>,
+        "ComplexStr with ComplexStr rounder is Complex";
+}
+
 
 # vim: ft=perl6

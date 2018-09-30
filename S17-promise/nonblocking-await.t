@@ -69,7 +69,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     ok [==](flat Planned, @proms>>.status), 'await of multiple Promises suspends until all ready';
     $p.break('bust');
     #?rakudo.jvm skip 'hangs on JVM (sometimes)'
-    throws-like { await @proms }, X::AdHoc, message => 'bust',
+    throws-like { await @proms }, Exception, message => 'bust',
         'Multiple await also conveys errors correctly';
 }
 
@@ -196,7 +196,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     my @ps = start { } xx 20;
     #?rakudo.jvm todo 'UnwindException'
     lives-ok { await $p1, $p2, @ps },
-        'No error due to trying to do non-blocking await when lock held';
+        'No error due to trying to do non-blocking await when lock held (protect)';
 }
 {
     # Same test as above except without .protect
@@ -213,7 +213,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     my @ps = start { } xx 20;
     #?rakudo.jvm todo 'NullPointerException'
     lives-ok { await $p1, $p2, @ps },
-        'No error due to trying to do non-blocking await when lock held';
+        'No error due to trying to do non-blocking await when lock held (lock/unlock)';
 }
 
 # RT #130692

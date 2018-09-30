@@ -1,3 +1,3 @@
-class S11-modules::SetConst {
+class SetConst {
     constant X = set < x y >;
 }

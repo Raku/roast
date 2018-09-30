@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 28;
 
 # not specifically typed
 {
@@ -66,5 +66,29 @@ plan 22;
     %a<a> = Nil;
     ok %a<a>.VAR.dynamic, 'dynamic set correctly for reset Int %a<a>';
 } #4
+
+# R#2276
+{
+    sub visible($type) {
+        is $*a, 42, "is \$*a$type visible";
+        $*a = 666 if $type;
+    }
+    sub a($*a) {
+        visible('')
+    }
+    sub b($*a is copy) {
+        visible(' is copy');
+        is $*a, 666, 'did the assignment work with is copy';
+    }
+    sub c($*a is rw) {
+        visible(' is rw');
+        is $*a, 666, 'did the assignment work with is rw';
+    }
+
+    a(42);
+    b(42);
+    c(my $c = 42);
+    is $c, 666, 'did the assignment work pass through with is rw';
+}
 
 # vim: ft=perl6

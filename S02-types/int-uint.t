@@ -1,4 +1,8 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
+use Test;
+use Test::Util;
+
 use Test;
 
 # L<S09/Sized types/Sized low-level types are named most generally by appending the number of bits to a generic low-level type name>
@@ -123,8 +127,6 @@ for @inttypes -> $type {
 }
 
 # RT #131529
-{
-    is byte.Range.int-bounds, (0, 255), "byte.Range works";
-}
+is-eqv byte.Range.int-bounds, (0, 255), "byte.Range works";
 
 # vim: ft=perl6 expandtab sw=4

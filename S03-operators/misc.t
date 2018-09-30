@@ -164,32 +164,40 @@ is (2 Z 3), @z, 'joining of single items';
         'unicode ops chain with ASCII ones (not always True)';
 
 
-    ok  Date.today  .later(:day) ≥ Date.today.earlier(:day), 'Date ≥ Date (true)';
-    nok Date.today.earlier(:day) ≥ Date.today  .later(:day), 'Date ≥ Date (false)';
-    ok  Date.today.earlier(:day) ≤ Date.today  .later(:day), 'Date ≤ Date (true)';
-    nok Date.today  .later(:day) ≤ Date.today.earlier(:day), 'Date ≤ Date (false)';
-    ok  Date.today.earlier(:day) ≠ Date.today  .later(:day), 'Date ≠ Date (true)';
-    nok Date.new('2015-12-25')   ≠ Date.new('2015-12-25'),   'Date ≠ Date (false)';
+    my $DateT := Date.today;
+    is-deeply  $DateT.later(:day)   ≥ $DateT.earlier(:day), True,
+        'Date ≥ Date (true)';
+    is-deeply $DateT.earlier(:day) ≥ $DateT  .later(:day),  False,
+        'Date ≥ Date (false)';
+    is-deeply  $DateT.earlier(:day) ≤ $DateT  .later(:day), True,
+        'Date ≤ Date (true)';
+    is-deeply $DateT  .later(:day) ≤ $DateT.earlier(:day),  False,
+        'Date ≤ Date (false)';
+    is-deeply $DateT.earlier(:day) ≠ $DateT  .later(:day),  True,
+        'Date ≠ Date (true)';
+    is-deeply Date.new('2015-12-25') ≠ Date.new('2015-12-25'), False,
+        'Date ≠ Date (false)';
 
-    ok  DateTime.now  .later(:day) ≥ DateTime.now.earlier(:day),
+    my $DateTimeN := DateTime.now;
+    is-deeply $DateTimeN  .later(:day) ≥ $DateTimeN.earlier(:day), True,
         'DateTime ≥ DateTime (true)';
-    nok DateTime.now.earlier(:day) ≥ DateTime.now  .later(:day),
+    is-deeply $DateTimeN.earlier(:day) ≥ $DateTimeN  .later(:day), False,
         'DateTime ≥ DateTime (false)';
-    ok  DateTime.now.earlier(:day) ≤ DateTime.now  .later(:day),
+    is-deeply $DateTimeN.earlier(:day) ≤ $DateTimeN  .later(:day), True,
         'DateTime ≤ DateTime (true)';
-    nok DateTime.now  .later(:day) ≤ DateTime.now.earlier(:day),
+    is-deeply $DateTimeN  .later(:day) ≤ $DateTimeN.earlier(:day), False,
         'DateTime ≤ DateTime (false)';
-    ok  DateTime.now.earlier(:day) ≠ DateTime.now  .later(:day),
+    is-deeply $DateTimeN.earlier(:day) ≠ $DateTimeN  .later(:day), True,
         'DateTime ≠ DateTime (true)';
-    nok DateTime.new(:2017year)    ≠ DateTime.new(:2017year),
+    is-deeply DateTime.new(:2017year)  ≠ DateTime.new(:2017year),  False,
         'DateTime ≠ DateTime (false)';
 
-    ok  v42 ≥ v10, 'Version ≥ Version (true)';
-    nok v10 ≥ v42, 'Version ≥ Version (false)';
-    ok  v10 ≤ v42, 'Version ≤ Version (true)';
-    nok v42 ≤ v10, 'Version ≤ Version (false)';
-    ok  v42 ≠ v10, 'Version ≠ Version (true)';
-    nok v42 ≠ v42, 'Version ≠ Version (false)';
+    is-deeply v42 ≥ v10, True,  'Version ≥ Version (true)';
+    is-deeply v10 ≥ v42, False, 'Version ≥ Version (false)';
+    is-deeply v10 ≤ v42, True,  'Version ≤ Version (true)';
+    is-deeply v42 ≤ v10, False, 'Version ≤ Version (false)';
+    is-deeply v42 ≠ v10, True,  'Version ≠ Version (true)';
+    is-deeply v42 ≠ v42, False, 'Version ≠ Version (false)';
 }
 
 # RT #132346

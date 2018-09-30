@@ -5,7 +5,7 @@ use Test::Util;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 87;
+plan 88;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -86,7 +86,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     my sub foo1(:$n, *%h, *@a) { $n };   #OK not used
     my sub foo2(:$n, *%h, *@a) { %h<x> + %h<y> + %h<n> };   #OK not used
     my sub foo3(:$n, *%h, *@a) { [+] @a };   #OK not used
-    
+
     diag("Testing with named arguments (named param isn't required)");
     lives-ok { foo 1, x => 20, y => 300, 4000 },
       'Testing: `sub foo(:$n, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000`';
@@ -96,7 +96,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
       'Testing value for slurpy *%h';
     is (foo3 1, x => 20, y => 300, 4000), 4001,
       'Testing the value for slurpy *@a';
-    
+
     ### named parameter pair will always have a higher "priority" while passing
     ### so %h<n> will always be undefined
     lives-ok { foo1 1, n => 20, y => 300, 4000 },
@@ -300,11 +300,17 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
 }
 
 # RT #128201
-doesn't-hang '{ say @_.gist }(1..Inf)', :out(/'[...]'/),
-    '.gist on @_ containing lazy list correctly thinks it is lazy';
+is { @_.gist; 'passed' }(1..Inf), 'passed',
+    '.gist on @_ containing lazy list does not hang';
 
 # RT #129175
-doesn't-hang ｢-> *@a { @a.is-lazy.say }(1…∞)｣, :out(/True/),
+is-deeply -> *@a { @a.is-lazy.say }(1…∞), True,
     'slurpy positional param does not hang when given infinite lists';
+
+# https://github.com/rakudo/rakudo/issues/2195
+-> *@ ($?), *%h {
+    # Note: bug is avoided if `%h` has anything in it, so leave it empty
+    -> *%z { is-deeply %z, {}, 'no crashes with slurpies' }(|%h)
+}();
 
 # vim: ft=perl6

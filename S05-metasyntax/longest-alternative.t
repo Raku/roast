@@ -77,7 +77,7 @@ my $str = 'a' x 7;
 #?rakudo skip ':: RT #124526'
 {
     # with LTM stoppers
-    my token foo1 { 
+    my token foo1 {
         a+
         :: # a LTM stopper
         .+
@@ -173,23 +173,23 @@ my $str = 'a' x 7;
                                                '::' [ <.h16> ':' ] ** 5 <.ls32> |
             [                        <.h16> ]? '::' [ <.h16> ':' ] ** 4 <.ls32> |
             [ [ <.sep_h16> ]?        <.h16> ]? '::' [ <.h16> ':' ] ** 3 <.ls32> |
-            [ [ <.sep_h16> ] ** 0..2 <.h16> ]? '::' [ <.h16> ':' ] ** 2 <.ls32> |        
+            [ [ <.sep_h16> ] ** 0..2 <.h16> ]? '::' [ <.h16> ':' ] ** 2 <.ls32> |
             [ [ <.sep_h16> ] ** 0..3 <.h16> ]? '::' <.h16> ':'          <.ls32> |
             [ [ <.sep_h16> ] ** 0..4 <.h16> ]? '::'                     <.ls32> |
             [ [ <.sep_h16> ] ** 0..5 <.h16> ]? '::'                     <.h16>  |
-            [ [ <.sep_h16> ] ** 0..6 <.h16> ]? '::'                                      
+            [ [ <.sep_h16> ] ** 0..6 <.h16> ]? '::'
         };
 
-        # token avoiding backtracking happiness    
+        # token avoiding backtracking happiness
         token sep_h16           { [ <.h16> ':' <!before ':'>] }
 
         token ls32              { [<.h16> ':' <.h16>] | <.IPv4address> };
         token h16               { <.xdigit> ** 1..4 };
-        
+
         token IPv4address       {
             <.dec_octet> '.' <.dec_octet> '.' <.dec_octet> '.' <.dec_octet>
         };
-        
+
         token dec_octet         {
             '25' <[0..5]>           |   # 250 - 255
             '2' <[0..4]> <.digit>   |   # 200 - 249
@@ -223,7 +223,7 @@ my $str = 'a' x 7;
         token relative_part_non_empty     {
             '//' <authority> <path_abempty>     |
             <path_absolute>                     |
-            <path_noscheme>                     
+            <path_noscheme>
         };
 
         token URI               {
@@ -238,7 +238,7 @@ my $str = 'a' x 7;
         };
 
         token scheme            { <.uri_alpha> <[\-+.] +uri_alpha +digit>* };
-        
+
         token authority         { [ <userinfo> '@' ]? <host> [ ':' <port> ]? };
         token userinfo          {
             [ ':' | <likely_userinfo_component> ]*
@@ -281,7 +281,7 @@ my $str = 'a' x 7;
         token gen_delims        { <[:/?\#\[\]@]> };
         token sub_delims        { <[;!$&'()*+,=]> };
 
-        token uri_alphanum      { <+uri_alpha +digit> };   
+        token uri_alphanum      { <+uri_alpha +digit> };
         token uri_alpha         { <[A..Za..z]> };
     }
 
@@ -432,7 +432,7 @@ my $str = 'a' x 7;
 
 # RT #113884
 {
-    constant $x = 'ab'; 
+    constant $x = 'ab';
     is ~('ab' ~~ / a | b | $x /), 'ab', 'got longest alternative with constant';
 
     my $y = 'ab';
@@ -469,7 +469,7 @@ is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM pr
     ok Foo.parse('2603'), 'LTM with :i, <[0..9]>, and repetition works';
 }
 {
-    grammar Oops {
+    my grammar Oops {
         token TOP { <?> | 'a' ** 1..2 'b' }
     }
     ok Oops.parse('ab'),

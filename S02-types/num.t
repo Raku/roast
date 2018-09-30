@@ -270,16 +270,18 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
 }
 
 { # coverage; 2016-10-16
-    subtest 'prefix:<->(num)' => {
+    subtest 'prefix:<->(num) and U+2212 prefix op' => {
         plan 8;
         cmp-ok -(my num $), '===', NaN, '- uninitialized';
-        cmp-ok −(my num $), '===', NaN, '− uninitialized';
+        cmp-ok −(my num $), '===', NaN, '− (U+2212) uninitialized';
         is-deeply -(my num $ = 0e0  ), (my num $ = -0e0 ), '- zero';
-        is-deeply −(my num $ = 0e0  ), (my num $ = -0e0 ), '− zero';
+        is-deeply −(my num $ = 0e0  ), (my num $ = -0e0 ), '− (U+2212) zero';
         is-deeply -(my num $ = 42e0 ), (my num $ = -42e0), '- positive';
-        is-deeply −(my num $ = 42e0 ), (my num $ = -42e0), '− positive';
+        is-deeply −(my num $ = 42e0 ), (my num $ = -42e0),
+            '− (U+2212) positive';
         is-deeply -(my num $ = -42e0), (my num $ = 42e0 ), '- negative';
-        is-deeply −(my num $ = -42e0), (my num $ = 42e0 ), '− negative';
+        is-deeply −(my num $ = -42e0), (my num $ = 42e0 ),
+            '− (U+2212) negative';
     }
 
     subtest 'abs(num)' => {
@@ -402,25 +404,27 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     }
 
     subtest 'log(num)' => sub {
-        plan 8;
+        plan 9;
         cmp-ok    log(my num $        ), '===', NaN, 'uninitialized';
         cmp-ok    log(my num $ = NaN  ), '===', NaN, 'NaN';
         cmp-ok    log(my num $ = -42e0), '===', NaN, 'negative';
         cmp-ok    log(my num $ =    -∞), '===', NaN, '-∞';
         is-deeply log(my num $ =     ∞), my num $ =      ∞, '+∞';
         is-deeply log(my num $ =   0e0), my num $ =     -∞, 'zero';
+        is-deeply log(my num $ =  -0e0), my num $ =     -∞, 'neg zero';
         is-deeply log(my num $ =   1e0), my num $ =    0e0, 'one';
         is-approx log(my num $ =  42e0), my num $ = 3.74e0, '42',
             :abs-tol(.01);
     }
 
     subtest 'ceiling(num)' => sub {
-        plan 9;
+        plan 10;
         cmp-ok    ceiling(my num $         ), '===', NaN, 'uninitialized';
         cmp-ok    ceiling(my num $ =    NaN), '===', NaN, 'NaN';
         is-deeply ceiling(my num $ =     -∞), my num $ =   -∞, '-∞';
         is-deeply ceiling(my num $ =      ∞), my num $ =    ∞, '+∞';
         is-deeply ceiling(my num $ =    0e0), my num $ =  0e0, 'zero';
+        is-deeply ceiling(my num $ =   -0e0), my num $ = -0e0, 'neg zero';
         is-deeply ceiling(my num $ =  4.7e0), my num $ =  5e0, 'positive (1)';
         is-deeply ceiling(my num $ =  4.2e0), my num $ =  5e0, 'positive (2)';
         is-deeply ceiling(my num $ = -4.7e0), my num $ = -4e0, 'negative (1)';
@@ -634,7 +638,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok acotan(my num $      ), '===', NaN, 'uninitialized';
         cmp-ok acotan(my num $ = NaN), '===', NaN, 'NaN';
 
-        is acotan(my num $ = -∞).Str, '-0', '-∞ is -0';
+        is-deeply acotan(my num $ = -∞), -0e0, '-∞ is -0';
 
         is-approx acotan(my num $ =          ∞), my num $ =  0e0,    '∞';
         is-approx acotan(my num $ =         -∞), my num $ = -0e0,    '-∞';

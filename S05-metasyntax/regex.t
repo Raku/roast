@@ -269,6 +269,9 @@ subtest '`**` quantifier' => {
     'block-less empty range throws (greedy)';
 }
 
+# NOTE: this test assumes an implementation that emits a warning in
+# Failure.DESTROY of unhandled Failure objects and one where the tested
+# code would cause garbage collection of those Failures
 is_run ｢(try "" ~~ /. ** {NaN}/) for ^1000; print 'pass'｣,
     {:out('pass'), :err(''), :0status},
 'wrong value for `**` quantifier does not leave behind unhandled Failures';

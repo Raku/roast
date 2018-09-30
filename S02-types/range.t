@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 189;
+plan 193;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -277,6 +277,15 @@ is(+Range, 0, 'type numification');
     is roll("10", 'b' .. 'y').elems, 10, "roll works Str arguments";
 }
 
+# Range.roll(*)/roll(N)/pick(N) with large number, from R#2090
+{
+  my $range = (1 +< 125) .. ( 1 +< 126 -1 );
+  lives-ok { $range.pick(42) }, 'Range.pick(N) lives for vast range';
+  lives-ok { $range.roll(42) }, 'Range.roll(N) lives for vast range';
+  lives-ok { $range.roll(*).head(10) }, 'Range.roll(*) lives for vast range';
+  lives-ok { ($range.roll xx *).head(10) }, '(Range.roll xx *) lives for vast range';
+}
+
 is join(':',grep 1..3, 0..5), '1:2:3', "ranges itemize or flatten lazily";
 
 lives-ok({'A'..'a'}, "A..a range completes");
@@ -404,6 +413,9 @@ subtest 'out of range AT-POS' => {
 subtest 'Complex smartmatch against Range' => {
     my @false = [i, 1..10], [i, -2e300.Int..2e300.Int], [i, -2e300.Int..2e300.Int],
         [<0+0i>, 1..10], [i, 'a'..Inf], [i, 'a'..'z'];
+
+    # these cases are true because the imaginary part is small enough that
+    # we can convert these Complex into Real
     my @true  = [<0+0i>, -1..10], [<42+0i>, 10..50],
         [<42+0.0000000000000001i>, 40..50], [<42+0i>, 10e0..50e0];
 

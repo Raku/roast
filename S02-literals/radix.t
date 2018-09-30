@@ -5,7 +5,8 @@ use Test::Util;
 
 plan 158;
 
-is 0xffffffff, '4294967295', '0xffffffff is turned into a big number on 32bit rakudos';
+is-deeply 0xffffffff, 4294967295,
+    '0xffffffff is parsed right (covers bug on 32bit compilers)';
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -291,7 +292,7 @@ for 2..36 {
 # RT #129279
 #?rakudo.jvm skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
 #?rakudo.js skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
-lives-ok { :۳<12> }, 'Unicode digit radix bases work';
+is-deeply :۳<12>, 5, 'Unicode digit radix bases work';
 
 # RT #128804
 subtest 'sane errors on failures to parse rad numbers' => {

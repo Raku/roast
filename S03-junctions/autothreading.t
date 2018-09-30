@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 106;
 
@@ -331,7 +333,9 @@ plan 106;
     # into:
     #     all( any( tp("dog", 1, 10), tp("dog", 2, 10),
     #          any( tp("dog", 1, 20), tp("dog", 2, 20)))
-    is $res.perl, q{all(any("dog 1 10", "dog 2 10"), any("dog 1 20", "dog 2 20"))}, "an & junction right of a | junction will be autothreaded first";
+    is-deeply-junction $res,
+        all(any("dog 1 10", "dog 2 10"), any("dog 1 20", "dog 2 20")),
+        "an & junction right of a | junction will be autothreaded first";
 
     $res = tp("foo"&"bar", 1|2, 0);
     # should turn into:
@@ -341,7 +345,9 @@ plan 106;
     # into:
     #     all( any( tp("foo", 1, 0), tp("foo", 2, 0)),
     #          any( tp("bar", 1, 0), tp("bar", 2, 0)))
-    is $res.perl, q{all(any("foo 1 0", "foo 2 0"), any("bar 1 0", "bar 2 0"))}, "an & junction left of a | junction will be autothreaded first";
+    is-deeply-junction $res,
+        all(any("foo 1 0", "foo 2 0"), any("bar 1 0", "bar 2 0")),
+        "an & junction left of a | junction will be autothreaded first";
 }
 
 ok all(1,2,3) ~~ Mu, 'all/Mu smartmatch True';
@@ -374,7 +380,7 @@ subtest 'smartmatch against Bool:U' => {
     ok  all(False, False) ~~ Bool, 'all (true by False Bool)';
     ok  all(True,  False) ~~ Bool, 'all (true by Mixed Bools)';
     nok all(42,    "foo") ~~ Bool, 'all (false; no Bools)';
-    nok all(42,    False) ~~ Bool, 'all (false not are Bools)';
+    nok all(42,    False) ~~ Bool, 'all (false not all are Bools)';
 
     ok  one(42,    True ) ~~ Bool, 'one (true by True Bool)';
     ok  one(42,    False) ~~ Bool, 'one (true by False Bool)';

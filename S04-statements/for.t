@@ -1,8 +1,8 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use MONKEY-TYPING;
-
 use Test;
+use Test::Util;
 
 plan 111;
 
@@ -559,9 +559,11 @@ lives-ok {
 # RT #123506
 {
     my \rt123506a = ($_ for ^1);
-    is ~rt123506a, '0', 'assigning list comprehension to sigilless works (1)';
+    is-eqv rt123506a, (0,),
+        'assigning list comprehension to sigilless works (1)';
     my \rt123506b = ($_ for ^2);
-    is ~rt123506b, '0 1', 'assigning list comprehension to sigilless works (2)';
+    is-eqv rt123506b, (0, 1),
+        'assigning list comprehension to sigilless works (2)';
 }
 
 # RT #113026
@@ -698,7 +700,8 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 # RT #123072
 {
     my class Sinker { method sink() { take "Blub" } }
-    is (gather for ^5 { Sinker.new(); }).gist, "(Blub Blub Blub Blub Blub)", "for loop properly sinks final statement method call";
+    is-deeply (gather for ^5 { Sinker.new(); }), <Blub Blub Blub Blub Blub>.Seq,
+        "for loop properly sinks final statement method call";
 }
 
 # RT #131567

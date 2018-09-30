@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 45;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -90,13 +90,10 @@ is $stdout, 'Perl 6', 'got correct STDOUT';
 is $stderr, '',       'got correct STDERR';
 
 { # RT #129362
-    is-deeply (await Proc::Async.new($*EXECUTABLE, "-e", "exit").start).command,
-        [$*EXECUTABLE, "-e", "exit"],
+    my @args := $*EXECUTABLE.absolute, "-e", "exit";
+    is-deeply (await Proc::Async.new(@args).start).command, @args,
         'Proc returned from .start has correct .command';
 }
-
-throws-like { Proc::Async.new }, X::Multi::NoMatch,
-    'attempting to create Proc::Async with wrong arguments throws';
 
 # Check we don't have races if you tap the stdout supply after starting.
 {
@@ -113,14 +110,14 @@ throws-like { Proc::Async.new }, X::Multi::NoMatch,
         "Tapping stdout supply after start of process does not lose data";
 }
 
-$pc = Proc::Async.new($*EXECUTABLE, "-e ''"); # It taps a warning, but it is safe to catch.
-my $is-tapped = False;
-
-$pc.stderr.tap(-> $v { $is-tapped = $v eq ''; });
-$pc.stdout.tap(-> $v { $is-tapped = $v eq ''; });
-await $pc.start;
-
-is $is-tapped, False, "Process that doesn't output anything will not emit";
+{
+    $pc = Proc::Async.new: $*EXECUTABLE, '-e', '';
+    my $no-output = True;
+    $pc.stderr.tap: { $no-output = False }
+    $pc.stdout.tap: { $no-output = False }
+    await $pc.start;
+    ok $no-output, "Process that doesn't output anything does not emit";
+}
 
 # RT #130788
 {

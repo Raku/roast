@@ -1,16 +1,17 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
+
 plan 17;
 
 {
-    my $stdin-file = 'bind-handles-in-' ~ $*PID;
-    my $stdout-file = 'bind-handles-out-' ~ $*PID;
-    my $stderr-file = 'bind-handles-err-' ~ $*PID;
-    END for $stdin-file, $stdout-file, $stderr-file { try unlink $_ }
+    my $stdin-file  := make-temp-file
+        content => "This is the first line\nThis is the second\n";
+    my $stdout-file := make-temp-file;
+    my $stderr-file := make-temp-file;
 
-    spurt $stdin-file, "This is the first line\nThis is the second\n";
-
-    my $fh-in = open $stdin-file, :r;
+    my $fh-in  = open $stdin-file,  :r;
     my $fh-out = open $stdout-file, :w;
     my $fh-err = open $stderr-file, :w;
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'note $*IN.get; say $*IN.get');

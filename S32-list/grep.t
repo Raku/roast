@@ -130,9 +130,10 @@ my @list = (1 .. 10);
 
 # Bool handling
 {
-    temp $_ = 42;
-    throws-like { grep $_ == 1, 1,2,3 }, X::Match::Bool;
-    throws-like { (1,2,3).grep: $_== 1 }, X::Match::Bool;
+    # `temp $_` business is merely to avoid warnings while we use the most
+    # likely variable a user might misuse in the erroneous version of `grep`
+    throws-like ｢temp $_ = 42; grep $_ == 1, 1,2,3｣,  X::Match::Bool;
+    throws-like ｢temp $_ = 42; (1,2,3).grep: $_== 1｣, X::Match::Bool;
     is grep( Bool,True,False,Int ), (True,False), 'can we match on Bool as type';
     is (True,False,Int).grep(Bool), (True,False), 'can we match on Bool as type';
 }
@@ -154,15 +155,13 @@ my @list = (1 .. 10);
 # grep with an unexpected adverb
 {
     throws-like(
-        { @list.grep(Mu, :asdf) },
-        X::Adverb,
-        message => q{Unexpected adverb 'asdf' passed to grep on @list},
+        { @list.grep(Mu, :asdfblargs) },
+        X::Adverb, :unexpected{.contains: 'asdfblargs'},
         'grep on an instance with an unexpected adverb'
     );
     throws-like(
-        { List.grep(Mu, :asdf) },
-        X::Adverb,
-        message => q{Unexpected adverb 'asdf' passed to grep on List},
+        { List.grep(Mu, :asdfblargs) },
+        X::Adverb, :unexpected{.contains: 'asdfblargs'},
         'grep on a type object with an unexpected adverb'
     );
 }
