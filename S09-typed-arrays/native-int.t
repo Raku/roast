@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 164 + @uint * 2 + 1 + 2;
+plan (@int + @uint) * 164 + @uint * 2 + 2;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -312,5 +312,4 @@ dies-ok { my int @a = ^Inf; 42 }, 'Trying to assign ^Inf to an int array dies';
     my $took2 = now - $then;
 
     is $result1, $result2, "is $result1 == $result2";
-    ok $took2 < $took1 / 30, "was native $took2 at least 30x as fast as $took1";
 }
