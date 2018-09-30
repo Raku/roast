@@ -174,7 +174,7 @@ subtest 'arity-1 infix:<~> works on Blobs' => {
 subtest '.gist shows only first 100 els' => {
     plan 5;
     sub make-gist ($blob, $extras = []) {
-        'Blob:0x<' ~ (|$blob».fmt('%02x'), |$extras) ~ '>'
+        'Blob:0x<' ~ (|$blob».fmt('%02X'), |$extras) ~ '>'
     }
 
     is  Blob.new(<1 2 3>).gist, 'Blob:0x<01 02 03>', 'gist gives useful value';
