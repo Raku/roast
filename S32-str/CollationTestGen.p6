@@ -11,13 +11,13 @@ my Int:D $line-no = 0;
 my @lines;
 use Test;
 my @failed;
-my %todo = (25560, 25873, 25904, 47677, 47715, 47760, 47774, 47794, 47838,
-51526, 52483, 52545, 52565, 52605, 54537, 55881, 57453, 57481, 57525, 57545,
-57575, 57589, 57603, 57643, 57689, 59168, 59723, 59743, 59769, 60775, 60819,
-60839, 60871, 63806, 63868, 64506, 64528, 64858, 64920, 65426, 65457, 65515,
-66177, 66199, 66840, 66858, 66920, 67401, 67464, 73347, 73353, 73362, 73371,
-73670, 73695, 73740, 73808, 99002, 99025, 99048, 99052, 99063, 99067, 99092,
-99103, 99107, 120267, 120321, 120741, 120752, 156894, 156899, 156904, 156909).antipairs;
+my %todo = (25947, 26260, 26291, 49263, 49301, 49346, 49360, 49380, 49424,
+53192, 54149, 54211, 54231, 54271, 56203, 57547, 59119, 59147, 59191, 59211,
+59241, 59255, 59269, 59309, 59355, 60839, 61394, 61414, 61440, 62446, 62490,
+62510, 62542, 65487, 65549, 66187, 66209, 66539, 66601, 67107, 67138, 67196,
+67858, 67880, 68521, 68539, 68601, 69082, 69145, 75273, 75279, 75288, 75297,
+75596, 75621, 75666, 75734, 101490, 101513, 101536, 101540, 101551, 101555,
+101580, 101591, 101595, 123395, 123449, 123869, 123880).antipairs;
 sub MAIN (Bool :$should-test = False, Bool :$should-generate = True, Bool :$test-only = False, Str:D :$folder = $default-folder) {
     my $file = "$folder/CollationTest_NON_IGNORABLE.txt".IO;
     my $last-chrs;
@@ -28,8 +28,7 @@ sub MAIN (Bool :$should-test = False, Bool :$should-generate = True, Bool :$test
         my ($code-str, $uninames, $collation) = $line.split([';', "\t", "#"], :skip-empty);
         my $codes = $code-str.split(' ').map(*.parse-base(16)).list;
         next if $codes.first({is-surrogate($_)});
-        $uninames .= trans( Q[\u] => 'U+', Q[\U] => 'U+');
-        #say $line-no;
+        $uninames .= trans( [Q[\u]] => ['U+'], [Q[\U]] => ['U+']);
         my $chrs = $codes.chrs;
         if $last-chrs && $last-chrs eq $chrs {
             next;
@@ -92,6 +91,7 @@ sub MAIN (Bool :$should-test = False, Bool :$should-generate = True, Bool :$test
             'my @a = ', "\n", @thing[$_].join("\n"), ";\n",
             "use Test;\n", "plan {@thing[$_].elems - 1};\n", $tail, "\n";
     }
+    note "\n>>> Make sure to update docs/unicode-generated-tests.asciidoc when you update the unicode version of these tests";
 }
 sub quote-it (Str:D $str = "") {
     "Q««" ~ $str ~ "»»";

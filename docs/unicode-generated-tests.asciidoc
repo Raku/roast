@@ -32,6 +32,7 @@ NOTE: Tests generated were identical to the ones generated
 * Emoji v11.0
 * Regenerated 10-07-2018
 * S15-nfg/emoji-test.t
+
 ```
 # emoji-test.txt
 # Date: 2018-02-07, 09:44:06 GMT
@@ -45,7 +46,7 @@ NOTE: Tests generated were identical to the ones generated
 * v9.0
 
 == S32-str/CollationTestGen.p6
-* v10.0
+* v11.0
 
 == S15-normalization/test-gen.p6
 * v9.0
