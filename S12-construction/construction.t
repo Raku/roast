@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 # L<S12/"Construction and Initialization">
 
@@ -119,6 +119,18 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
               'can use attributes in BUILD to declare sized arrays'
         }
     }.new: :42b;
+}
+
+# http://colabti.org/irclogger/irclogger_log/perl6?date=2018-10-01#l266
+# https://github.com/rakudo/rakudo/commit/64137bd21c
+{
+    class A {
+        method bless(*%attrinit) {
+            my $o = self.CREATE.BUILDALL(Empty, %attrinit);
+            $o
+        }
+    }
+    lives-ok { A.new }, 'can we create with a custom "bless" method';
 }
 
 # vim: ft=perl6
