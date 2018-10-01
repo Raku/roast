@@ -50,3 +50,6 @@ NOTE: Tests generated were identical to the ones generated
 
 == S15-normalization/test-gen.p6
 * v9.0
+
+== S15-nfg/GraphemeBreakTest.t
+* v11.0: 3rdparty/Unicode/11.0.0/ucd/auxiliary/GraphemeBreakTest.txt
