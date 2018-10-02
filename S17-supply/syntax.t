@@ -370,7 +370,7 @@ plan 84;
     $p2.keep(True);
     await $p3;
 
-    is @collected, ['a bear', 'the wolf'], 'Can only be in one whatever block at a time';
+    is @collected, ['a bear', 'the wolf'], 'Can only be in one whenever block at a time';
 }
 
 # RT #126089
