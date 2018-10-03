@@ -20,7 +20,7 @@ my $mysub = {
 
 };
 
-ok "anon sub def parses when pod block is within it"; # TODO: complete this test
+is $mysub(), 1, "anon sub def parses when pod block is within it";
 
 my $myhash = {
 
@@ -32,9 +32,9 @@ my $myhash = {
 
 };
 
-ok "anon hash def parses when pod block is within it"; # TODO: complete this test
+is $myhash<baz>, 3, "anon hash def parses when pod block is within it";
 
-my $myary = [
+my $myarray = [
 
     4,
 
@@ -44,6 +44,6 @@ my $myary = [
 
 ];
 
-ok "anon array def parses when pod block is within it"; # TODO: complete this test
+is $myarray[0], 4, "anon array def parses when pod block is within it";
 
 # vim: ft=perl6
