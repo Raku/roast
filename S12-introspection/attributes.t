@@ -42,7 +42,7 @@ is @attrs[1].build().(C, $_), 42,
 is @attrs[2].name,         '$!a',   'third attribute had correct name';
 is @attrs[2].type.gist,    '(Str)', 'third attribute had correct type';
 is @attrs[2].has_accessor, True,    'third attribute has an accessor';
-ok @attrs[2].build ~~ Str,          'third attribute has build valuek';
+ok @attrs[2].build ~~ Str,          'third attribute has build value';
 is @attrs[2].build,        "dnes je horuci a potrebujem pivo",
                                     'third attribute build block gives expected value';
 ok !@attrs[2].rw,                   'third attribute is not rw';
