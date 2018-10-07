@@ -510,10 +510,10 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
 
 # RT #123926
 {
-    throws-like q|enum E <Foo Bar>; sub x(Floo) {}|,
+    throws-like q|enum E <RT123926Foo Bar>; sub x(RT123926Floo) {}|,
         X::Parameter::InvalidType,
-        typename    => 'Floo',
-        suggestions => ['Foo'],
+        typename    => 'RT123926Floo',
+        suggestions => ['RT123926Foo'],
         'enum values are suggested for misspellings'
 }
 
