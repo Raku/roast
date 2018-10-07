@@ -27,7 +27,7 @@ plan 16;
     is-deeply $map.clone, $map, 'Map.clone is identity';
 }
 
-subtest 'Map.gist shows only first 100 els' => {
+subtest 'Map.gist shows only the first sorted 100 els' => {
     plan 4;
     sub make-gist ($map, $extras = []) {
         'Map.new((' ~ (
