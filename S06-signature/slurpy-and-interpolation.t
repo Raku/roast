@@ -20,18 +20,18 @@ is($val, 'a: 1 b: 2', '... slurpy args flattening and matching parameters');
 
 # try to flatten the args for the anon sub to match
 
-sub invoke2 ($f, *@args) { $f(|@args) }; 
-is(invoke2(sub ($a, $b) { return "a: $a b: $b"}, 1, 2), 'a: 1 b: 2', 
+sub invoke2 ($f, *@args) { $f(|@args) };
+is(invoke2(sub ($a, $b) { return "a: $a b: $b"}, 1, 2), 'a: 1 b: 2',
     '... slurpy args flattening and matching parameters');
 
 dies-ok {
     invoke2(sub ($a, $b) { return "a: $a b: $b"}, 1, 2, 3);
-}, '... slurpy args flattening and not matching because of too many parameters';  
+}, '... slurpy args flattening and not matching because of too many parameters';
 
 # used to be a Rakudo regression, RT #62730
 
 {
-    sub f1(*%h) { %h.perl }; 
+    sub f1(*%h) { %h.perl };
     sub f2(*%h) { f1(|%h) };
     lives-ok { f2( :a(1) ) },
             'Can interpolate hashes into slurpy named parameters';
