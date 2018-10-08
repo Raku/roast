@@ -7,13 +7,12 @@ Multi-Dimensional Arrays
 
 =end pod
 
-plan 58;
+plan 59;
 
 # multi-dimensional array
 # L<S09/Multidimensional arrays/Perl 6 arrays are not restricted to being one-dimensional>
 
 # real multi-dimensional arrays
-#?rakudo skip 'multi-dim sized arrays NYI RT #124482'
 {
     my @md[2;2];
     @md[0;0] = 0;
@@ -28,7 +27,7 @@ plan 58;
       Exception,  # XXX fix when we have multi-dimensional arrays
       'setting a multi-d array beyond boundaries fails';
 
-    is(@md.elems, 4, '.elems works on multidimensional array');
+    is(@md.elems, 2, '.elems works on multidimensional array');
 }
 
 #?rakudo skip 'multi-dim sized arrays NYI RT #124483'
@@ -156,5 +155,23 @@ is @multi3[0;*;1], (<cute-cats cute-dogs cute-squirrels>), 'overall assignment w
 is @multi3[0;0;1], (<cute-cats>),      'assigned the right thing to [0;0;1]';
 is @multi3[0;1;1], (<cute-dogs>),      'assigned the right thing to [0;1;1]';
 is @multi3[0;2;1], (<cute-squirrels>), 'assigned the right thing to [0;2;1]';
+
+
+subtest 'Insertion and reading of shaped array elements' => {
+    constant MAX_CHECKED_DIM = 3; # Can be increased after https://github.com/rakudo/rakudo/issues/2352
+    plan ([*] 1..$_ for (1..MAX_CHECKED_DIM)).sum + MAX_CHECKED_DIM;
+    for 1..MAX_CHECKED_DIM {
+        my @md[(1..$_).reverse];
+        for @md.keys -> $k {
+            @md.AT-POS(|$k) = $k.sum;
+        }
+        
+        for @md.keys -> $k {
+            is @md.AT-POS(|$k), $k.sum, "got the right value from array with dim $_ at $k";
+        }
+        
+        is @md.elems, $_, ".elems for a shaped array (dim $_) returns the first dimension";
+    }
+}
 
 # vim: ft=perl6
