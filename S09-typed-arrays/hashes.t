@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 44;
+plan 47;
 
 # L<S09/Typed arrays>
 
@@ -124,6 +124,14 @@ subtest 'self-referential top-level hash assignment' => {
         is-deeply (%h1 = %h2, %h1), %(:1a, :2b, :3c), 'result of assignment';
         is-deeply  %h1,             %(:1a, :2b, :3c), 'value in original hash';
     }
+}
+
+# R#2348
+{
+    dies-ok { Hash[Int,Any].new("a","b") }, 'typecheck on initialization';
+    my %h := Hash[Int,Any].new;
+    dies-ok { %h<a> = "b" }, 'typecheck on assignment';
+    dies-ok { %h<a> := "b" }, 'typecheck on binding';
 }
 
 # vim: ft=perl6

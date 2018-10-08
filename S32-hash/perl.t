@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Idempotence;
 
-plan 52;
+plan 55;
 
 # simple hash
 {
@@ -85,5 +85,13 @@ plan 52;
 
 is (($ = Map.new: (:42a, :70b, :20c)).perl.EVAL,).flat.elems, 1,
     "Map.perl preserves Map's scalar containeration";
+
+# R#2348
+{
+    dies-ok { Hash[Int].new("a","b") }, 'typecheck on initialization';
+    my %h := Hash[Int].new;
+    dies-ok { %h<a> = "b" }, 'typecheck on assignment';
+    dies-ok { %h<a> := "b" }, 'typecheck on binding';
+}
 
 #vim: ft=perl6
