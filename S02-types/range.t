@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 193;
+plan 192;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -439,12 +439,6 @@ subtest 'no .int-bounds for Infs and NaN as Range endpoints' => {
     # https://github.com/rakudo/rakudo/commit/16ef21c162
     is-deeply (0..5.5).int-bounds, (0, 5),
         'we can get int-bounds from non-int range with `0` end-point';
-}
-
-{
-    try Range.new: 'meow', 'meow', 'meow', :meow, 'meow';
-    cmp-ok $!, '!~~', X::Constructor::Positional,
-        'Range.new with wrong args does not claim it takes only named args';
 }
 
 # RT #125336

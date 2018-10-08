@@ -5,9 +5,10 @@ use Test;
 # instead of hanging or crashing by spilling compiler guts.
 #
 # Since there's yet no existing behaviour for some of such combinations,
-# X::Multi::NoMatch is thrown. This APPENDIX test file is for such tests.
+# X::Multi::NoMatch or similar exceptions are thrown.
+# This APPENDIX test file is for such tests.
 
-plan 14;
+plan 15;
 
 { # RT #129773
     throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
@@ -58,3 +59,9 @@ subtest "Junction.new does not use Mu.new's candidates" => {
 throws-like { Int.new: <a b c>, 42, 'meow', 'wrong', 'args' },
     X::Multi::NoMatch,
 'does not incorrectly say that .new can only take named args';
+
+{
+    try Range.new: 'meow', 'meow', 'meow', :meow, 'meow';
+    cmp-ok $!, '!~~', X::Constructor::Positional,
+        'Range.new with wrong args does not claim it takes only named args';
+}
