@@ -311,5 +311,6 @@ dies-ok { my int @a = ^Inf; 42 }, 'Trying to assign ^Inf to an int array dies';
     my $result2 = @a.sum(:wrap);
     my $took2 = now - $then;
 
+    #?rakudo.js todo 'this does not work on 32bit backends'
     is $result1, $result2, "is $result1 == $result2";
 }
