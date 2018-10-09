@@ -158,7 +158,7 @@ is @multi3[0;2;1], (<cute-squirrels>), 'assigned the right thing to [0;2;1]';
 
 
 subtest 'Insertion and reading of shaped array elements' => {
-    constant MAX_CHECKED_DIM = 3; # Can be increased after https://github.com/rakudo/rakudo/issues/2352
+    constant MAX_CHECKED_DIM = 5;
     plan ([*] 1..$_ for (1..MAX_CHECKED_DIM)).sum + MAX_CHECKED_DIM;
     for 1..MAX_CHECKED_DIM {
         my @md[(1..$_).reverse];
