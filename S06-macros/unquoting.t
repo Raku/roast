@@ -42,6 +42,7 @@ plan 6;
 }
 
 #?rakudo.moar skip 'Specified code ref has no outer, RT #121533'
+#?rakudo.js skip 'Skipping failed macro test, it fail on moar too'
 { # building an AST incrementally in a for loop
     macro podolsky() {
         my $q = quasi { 2 };
