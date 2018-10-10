@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 95;
+plan 94;
 
 {
     my int $x;
@@ -374,12 +374,6 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     #?rakudo.jvm todo 'does not die, gives 7766279631452241919'
     throws-like ｢sub (int $x) { say $x }(99999999999999999999)｣, Exception,
         'a too large argument for a native parameter should throw';
-}
-
-# RT #127973
-{
-    #?rakudo.jvm todo 'repeat count (4294967295) cannot be greater than max allowed number of graphemes 2147483647'
-    eval-lives-ok 'my str $a = "a" x 2**32-1', 'native strings can be as large as regular strings';
 }
 
 # RT #124083
