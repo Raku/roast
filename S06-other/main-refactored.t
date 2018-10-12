@@ -26,8 +26,8 @@ my @named-anywhere-ok = |@basic-ok,
   <bar foo --help>,      [<bar foo>],            { help => True },
 ;
 
-plan
-    ((2 + 4 + 5 + 5 + 2 + 2 + 2) * @basic-ok / 3)
+plan 1
+  + ((2 + 4 + 5 + 5 + 2 + 2 + 2) * @basic-ok / 3)
   + ((2 + 4 + 5 + 5 + 2 + 2 + 2) * @named-anywhere-ok / 3 )
 ;
 
@@ -268,6 +268,19 @@ for @named-anywhere-ok -> \args, @expected, %expected {
 
     nok $main-called, "MAIN NOT called for '@*ARGS[]'";
     ok $helper-called, "MAIN_HELPER called for '@*ARGS[]'";
+}
+
+# --- Other tests---------------------------------------------------------------
+{
+    multi MAIN("NEVER MATCHES") { }
+    multi MAIN("HIDDEN") is hidden-from-USAGE { }
+    @*ARGS = ();
+    RUN-MAIN(&MAIN,Nil);
+
+    sub USAGE() {
+        is $*USAGE, "Usage:\n  $*PROGRAM 'NEVER MATCHES'",
+        'was the second MAIN skipped in USAGE';
+    }
 }
 
 # vim: ft=perl6
