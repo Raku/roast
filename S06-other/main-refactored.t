@@ -27,8 +27,8 @@ my @named-anywhere-ok = |@basic-ok,
 ;
 
 plan
-    ((2 + 4 + 5 + 2 + 2 + 2) * @basic-ok / 3)
-  + ((2 + 4 + 5 + 2 + 2 + 2) * @named-anywhere-ok / 3 )
+    ((2 + 4 + 5 + 5 + 2 + 2 + 2) * @basic-ok / 3)
+  + ((2 + 4 + 5 + 5 + 2 + 2 + 2) * @named-anywhere-ok / 3 )
 ;
 
 # Need to run these tests outside of the main line, because otherwise normal
@@ -90,6 +90,46 @@ for @named-anywhere-ok -> \args, @expected, %expected {
 
     @*ARGS = |args;       # set up @*ARGS as if coming from CLI
     RUN-MAIN(&MAIN,Nil);  # run the MAIN unit as if it is a script
+}
+
+# --- Checking custom parsing, dispatch with MAIN_HELPER still there -----------
+for @basic-ok -> \args, @expected, %expected {
+
+    sub MAIN(*@_, *%_) {   # called by RUN-MAIN
+        is-deeply @_, @expected, "right positionals for basic '@*ARGS[]'";
+        is-deeply %_, %expected, "right named for basic '@*ARGS[]'";
+    }
+    sub ARGS-TO-CAPTURE(&main, @args) {   # called by RUN-MAIN
+        ok &main =:= &MAIN, "right main for '@*ARGS[]'";
+        is-deeply @args, args.Array, "right args for basic '@*ARGS[]'";
+        Capture.new( list => @expected, hash => %expected )
+    }
+    my $main-helper-called;
+    sub MAIN_HELPER() { $main-helper-called = True } # NOT called by RUN-MAIN
+
+    @*ARGS = |args;       # set up @*ARGS as if coming from CLI
+    RUN-MAIN(&MAIN,Nil);  # run the MAIN unit as if it is a script
+    nok $main-helper-called, "MAIN_HELPER NOT called for '@*ARGS[]'";
+}
+
+for @named-anywhere-ok -> \args, @expected, %expected {
+    my %*SUB-MAIN-OPTS = named-anywhere => 1;
+
+    sub MAIN(*@_, *%_) {   # called by RUN-MAIN
+        is-deeply @_, @expected, "right positionals for anywhere '@*ARGS[]'";
+        is-deeply %_, %expected, "right named for anywhere '@*ARGS[]'";
+    }
+    sub ARGS-TO-CAPTURE(&main, @args) {   # called by RUN-MAIN
+        ok &main =:= &MAIN, "right main for '@*ARGS[]'";
+        is-deeply @args, args.Array, "right args for anywhere '@*ARGS[]'";
+        Capture.new( list => @expected, hash => %expected )
+    }
+    my $main-helper-called;
+    sub MAIN_HELPER() { $main-helper-called = True } # NOT called by RUN-MAIN
+
+    @*ARGS = |args;       # set up @*ARGS as if coming from CLI
+    RUN-MAIN(&MAIN,Nil);  # run the MAIN unit as if it is a script
+    nok $main-helper-called, "MAIN_HELPER NOT called for '@*ARGS[]'";
 }
 
 # --- Checking correct parsing, failed dispatch and GENERATE-USAGE -------------
