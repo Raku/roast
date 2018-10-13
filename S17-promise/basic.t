@@ -56,7 +56,7 @@ plan 41;
     ok $p.Bool, "Broken Promise has a result";
     ok ?$p, "Broken Promise is true";
     isa-ok $p.cause, Exception, "cause returns an exception";
-    is $p.cause.message, "Died", "Default exception message is 'Died'";
+    is $p.cause.payload, "Died", "Default exception payload is 'Died'";
 }
 
 { # RT #124190
