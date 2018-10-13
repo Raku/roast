@@ -209,9 +209,13 @@ if $*DISTRO.is-win {
 }
 {
 # utf8-c8 codepoints combine with other codepoints
-    ok ('L' ~ Buf.new(255).decode(<utf8-c8>)) ~~ /L/, "Regex still matches when utf8-c8 graphemes are adjacent";
-    ok (Buf.new(255).decode(<utf8-c8>) ~ 'L' ~ Buf.new(255).decode(<utf8-c8>)) ~~ /L/, "Regex still matches when utf8-c8 graphemes are adjacent";
-    ok (Buf.new(255).decode(<utf8-c8>) ~ 'L' ) ~~ /L/, "Regex still matches when utf8-c8 graphemes are adjacent";
+    my $c8 := Buf.new(255).decode(<utf8-c8>);
+    is (      'L' ~ $c8) ~~ /L/, 'L',
+        "Regex still matches when utf8-c8 graphemes are adjacent (end)";
+    is ($c8 ~ 'L' ~ $c8) ~~ /L/, 'L',
+        "Regex still matches when utf8-c8 graphemes are adjacent (start/end)";
+    is ($c8 ~ 'L'      ) ~~ /L/, 'L',
+        "Regex still matches when utf8-c8 graphemes are adjacent (start)";
 }
 # RT #128511
 {
