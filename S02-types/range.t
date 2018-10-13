@@ -103,10 +103,6 @@ is(+Range, 0, 'type numification');
     throws-like { $r.excludes-max = True }, X::Assignment::RO,
         "range.excludes-max ro";
 
-
-    # There was a test about 'cannot assign to a element of an immutable List'
-    # Now it was merged into NO.74 test in S02-types/list.t
-
     my $s = 1..5;
     is $r, $s, 'range has not changed';
 }
