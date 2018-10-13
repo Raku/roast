@@ -204,7 +204,7 @@ cmp-ok Bool.enums.WHAT, '===', Map, 'Bool.enums returns a Map, not a Hash';
 {
   lives-ok {
     my enum RT116719 (<red green purple> Z=> 1,2,4);
-    is RT116719.enums, Map.new((green => 2, purple => 4, red => 1)),
+    is-deeply RT116719.enums, Map.new((green => 2, purple => 4, red => 1)),
       'build enum using Z=> operator properly';
   }, 'can build enum using Z=> operator';
 }
