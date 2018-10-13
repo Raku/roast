@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 40;
+plan 36;
 
 # L<S32::Numeric/Numeric/"=item is-prime">
 
@@ -77,12 +77,3 @@ subtest 'Complex.is-prime with Complex that cannot be Real throw' => {
         throws-like {  is-prime $_ }, X::Numeric::Real, "{.perl} (sub form)";
     }
 }
-
-# Some implementations have lazily-reduced Rational addition, which makes it
-# possible to cause bugs in `.is-prime` impls that test for .denominator == 1
-is-deeply (<3/2> + <3/2>).is-prime, True, 'lazily-reduced Rat (method)';
-is-deeply is-prime(<3/2> + <3/2>),  True, 'lazily-reduced Rat (sub)';
-is-deeply (FatRat.new(3,2) + FatRat.new(3,2)).is-prime, True,
-    'lazily-reduced FatRat (method)';
-is-deeply is-prime(FatRat.new(3,2) + FatRat.new(3,2)),  True,
-    'lazily-reduced FatRat (sub)';
