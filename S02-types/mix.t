@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 use Test;
 
-plan 226;
+plan 225;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -488,7 +488,6 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    nok Mix.new =:= mix(), 'Mix.new returns a new empty mix';
     ok ().Mix  =:= mix(), '().Mix returns the empty mix';
 }
 

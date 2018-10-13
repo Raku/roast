@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 235;
+plan 234;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -541,7 +541,6 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    nok Bag.new =:= bag(), 'Bag.new returns a new empty bag';
     ok ().Bag  =:= bag(), '().Bag returns the empty bag';
 }
 

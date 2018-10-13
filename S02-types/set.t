@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 228;
+plan 227;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -477,7 +477,6 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    nok Set.new =:= set(), 'Set.new returns a new empty set';
     ok ().Set  =:= set(), '().Set returns the empty set';
 }
 
