@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add("packages");
 use Test;
 use Test::Util;
 
-plan 15;
+plan 17;
 
 # RT #125938
 throws-like '2**10000000000', X::Numeric::Overflow,
@@ -55,6 +55,18 @@ throws-like 'say 1.0000001 ** (10 ** 90000)',
         'rat (large nu / small de) to large power';
     fails-like ｢<50000000000000/1> ** -5000000000000｣, X::Numeric::Underflow,
         'rat (large nu / small de) to large negative power';
+}
+
+if $?BITS >= 64 { # RT #121071
+    my int $low  = 10**15;
+    my int $high = 2**60 - 1;
+    is $low, 1_000_000_000_000_000,
+        'int does not get confused with goldilocks number (low)';
+    is $high, 1_152_921_504_606_846_975,
+        'int does not get confused with goldilocks number (high)';
+}
+else {
+    skip "this test doesn't make sense on 32bit platforms", 2;
 }
 
 # vim: ft=perl6
