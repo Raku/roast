@@ -178,7 +178,7 @@ if $?BITS >= 64 { # RT #121071
         'int does not get confused with goldilocks number (high)';
 }
 else {
-    skip "this test doesn't make sense on 32bit platforms";
+    skip "this test doesn't make sense on 32bit platforms", 2;
 }
 
 # RT #123789 (ensure we die, not SEGV)
