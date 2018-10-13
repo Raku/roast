@@ -2,7 +2,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 5;
+plan 4;
 
 sub test-out-buffer (
     Str:D $desc, &test, UInt:D :$buffer = 1000, UInt :$exp-bytes, Capture :$open-args = \(:w)
@@ -95,14 +95,4 @@ for \(:w), \(:rw), \(:a) -> $open-args {
         diag "Got STDOUT: {.perl}";
         False;
     }}, 'prompt does not hang';
-}
-
-# RT#132030
-{
-    my $file = make-temp-file;
-    run $*EXECUTABLE, ‘-e’, ｢my $f = ‘｣~$file~｢’.IO; my $h = $f.open: :w; $h.put: ‘hello’; $h.put: ‘world’｣;
-    # the file is not closed explicitly, so we will not
-    # get “hello\nworld\n” if there's no mechanism for closing
-    # open handles automatically on exit
-    is $file.slurp, “hello\nworld\n”, ‘file handles are autoclosed on exit’;
 }
