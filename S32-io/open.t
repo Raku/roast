@@ -238,7 +238,7 @@ subtest '.DESTROY does not close standard handles' => {
 }
 
 # RT #125813
-throws-like ｢('a' x 10000).IO.open｣, Exception,
+throws-like ｢('a' x 975).IO.open｣, Exception,
     :message{not /:i  'Malformed UTF-8'/},
 '.open error does not incorrectly complain about malformed UTF-8';
 
