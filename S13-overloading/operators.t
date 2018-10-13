@@ -55,6 +55,6 @@ plan 7;
 # RT #132262
 is_run ｢$ = ""; sub postfix:<♥> ($) { "pass" }; print "{ 5♥ }"｣,
     {:out<pass>, :err(''), :0status},
-'quote lang cache does not interfere with newly defined ops';
+'earlier quoted strings do not interfere with later interpolation of newly defined ops';
 
 # vim: ft=perl6
