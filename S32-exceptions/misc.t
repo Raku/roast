@@ -526,14 +526,17 @@ is_run ｢
 
 
 # RT #127100
-throws-like 'sub foo (--> Bool Int $x, Int $y) { True }', X::Syntax::Malformed, what => /^'return value'/;
-throws-like 'sub foo (--> Bool Int $x; Int $y) { True }', X::Syntax::Malformed, what => /^'return value'/;
-throws-like 'sub foo (--> Bool Int $x, Int $y)', X::Syntax::Malformed, what => /^'return value'/;
-throws-like 'sub foo (--> Bool Int $x; Int $y)', X::Syntax::Malformed, what => /^'return value'/;
-throws-like 'sub foo (--> Bool, Int $x, Int $y)', X::Syntax::Malformed, what => /^'return value'/;
-throws-like 'sub foo (--> Bool; Int $x; Int $y)', X::Syntax::Malformed, what => /^'return value'/;
-throws-like 'sub foo ($x, --> Bool, Int $y)', X::Syntax::Malformed, what => /^'return value'/;
-throws-like 'sub foo ($x; --> Bool; Int $y)', X::Syntax::Malformed, what => /^'return value'/;
+{
+    sub test { throws-like $^code, X::Syntax::Malformed, :what(/return/) }
+    test 'sub foo (--> Bool Int $x, Int $y) { True }';
+    test 'sub foo (--> Bool Int $x; Int $y) { True }';
+    test 'sub foo (--> Bool Int $x, Int $y)';
+    test 'sub foo (--> Bool Int $x; Int $y)';
+    test 'sub foo (--> Bool, Int $x, Int $y)';
+    test 'sub foo (--> Bool; Int $x; Int $y)';
+    test 'sub foo ($x, --> Bool, Int $y)';
+    test 'sub foo ($x; --> Bool; Int $y)';
+}
 
 # RT #125299
 throws-like ｢my $x = "#={";
