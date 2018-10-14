@@ -3,6 +3,7 @@
 unit sub MAIN (
     Bool :$no-repo-check,
     Str  :$start   = '6.c-errata',
+    Str  :$end     = 'HEAD',
     UInt :$n       = 10,
     UInt :$skip    = 0,
     Str  :$browser = 'google-chrome',
@@ -12,8 +13,8 @@ note ｢`git remote` suggests we are NOT inside roast repo. Aborting.｣ and exi
   unless $no-repo-check
     or qx/git remote -v/ ~~ m｢'https://github.com/'<-[^/]>+'/roast'｣;
 
-run $browser, qx｢
-  git log --pretty=format:'%h | %s' --reverse
+run $browser, qqx｢
+  git log --pretty=format:'\%h | \%s' --reverse $start...$end
 ｣.lines.skip($skip).grep({
     not /'6.' <[d..z]> ' REVIEW' | ^\S+ ' | Remove trailing whitespace' $/
 }).map({
