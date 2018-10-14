@@ -16,9 +16,9 @@ note ｢`git remote` suggests we are NOT inside roast repo. Aborting.｣ and exi
 
 run $browser, qqx｢
   git log --pretty=format:'\%h | \%s' --reverse $start...$end
-｣.lines.skip($skip || $n*$skip-batches).grep({
+｣.lines.grep(*.chars).grep({
     not /'6.' <[d..z]> ' REVIEW' | ^\S+ ' | Remove trailing whitespace' $/
-}).map({
+}).skip($skip || $n*$skip-batches).map({
     'https://github.com/perl6/roast/commit/' ~ .words.head
 }).head: $n;
 
