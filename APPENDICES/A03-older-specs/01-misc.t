@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 3;
+plan 4;
 
 # RT #131503
 #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
@@ -68,3 +68,194 @@ plan 3;
 # RT #131503
 is_run ｢'-'.IO.slurp.print｣, 'meows', {:out<meows>, :err(''), :0status},
     'can .slurp from "-".IO path';
+
+group-of 7 => 'now-deprecated subst-mutate' => {
+    #?rakudo.jvm skip 'at least one of the sub-tests leads to an UnwindException'
+    #?DOES 1
+    { # coverage; 2016-09-27
+        subtest 'Cool.subst-mutate works same as on .Str' => {
+            my @tests = # args | returned stringified Match objects | result
+            [ \('', ''), '', "aabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \('', '', :g),    ('' xx 20), "aabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \('', '', :global), ('' xx 20), "aabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \('a', ''), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \('a', '', :g), ('a', 'a'), "bbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \('a', '', :global), ('a', 'a'), "bbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \('b', ''), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \('b', '', :g), ('b', 'b'), "aab\x[308]b\x[308]cc \t  xz \t  y",  ],
+            [ \('b', '', :global), ('b', 'b'), "aab\x[308]b\x[308]cc \t  xz \t  y",  ],
+            [ \(/<[abc]>/, ''), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :g), ('a', 'a', 'b', 'b', 'c', 'c' ), "b\x[308]b\x[308] \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :global), ('a', 'a', 'b', 'b', 'c', 'c' ), "b\x[308]b\x[308] \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :1st), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :st{1;}), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :2nd), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :nd{2;}), 'a', "abbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :3rd), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :rd{3;}), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :4th), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :th{4;}), 'b', "aabb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :5nth), 'c', "aabbb\x[308]b\x[308]c \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :nth{5;}), 'c', "aabbb\x[308]b\x[308]c \t  xz \t  y", ],
+            [ \(/<[abc]>/, '', :5x), ('a', 'a', 'b', 'b', 'c'), "b\x[308]b\x[308]c \t  xz \t  y", ],      # RT # 129596
+            [ \(/<[abc]>/, '', :x(1..5)), ('a', 'a', 'b', 'b', 'c'), "b\x[308]b\x[308]c \t  xz \t  y", ], # RT # 129596
+            [ \(/<[cz]> \s+ <[xy]>/, 'Z P', :ss), "c \t  x", "aabbb\x[308]b\x[308]cZ \t  Pz \t  y", ],
+            [ \(/<[cz]> \s+ <[xy]>/, 'Z P', :ss, :global), ( "c \t  x", "z \t  y" ), "aabbb\x[308]b\x[308]cZ \t  PZ \t  P", ],
+            [ \('a', 'Z', :ii), 'a', "zabbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \('a', 'Z', :ii, :global), ( 'a', 'a' ), "zzbbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[b]+[b\x[308]]>/, 'Z', :mm), 'b', "aaZbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[b]+[b\x[308]]>/, 'Z', :mm, :global), ( 'b', 'b', "b\x[308]", "b\x[308]" ), "aaZZZ\x[308]Z\x[308]cc \t  xz \t  y", ],
+            [ \(/<[b]+[b\x[308]]>/, 'Z', :ii, :mm), 'b', "aazbb\x[308]b\x[308]cc \t  xz \t  y", ],
+            [ \(/<[b]+[b\x[308]]>/, 'Z', :ii, :mm, :global), ( 'b', 'b', "b\x[308]", "b\x[308]" ), "aazzz\x[308]z\x[308]cc \t  xz \t  y", ],
+            ;
+
+            plan 2*@tests;
+            for @tests -> $t {
+                # use IO::Path as our Cool object
+                my $obj = "aabbb\x[308]b\x[308]cc \t  xz \t  y".IO;
+                my $ret = $obj.subst-mutate(|$t[0]);
+                is-deeply ( $ret ~~ Iterable ?? $ret».Str !! $ret.Str ), $t[1],
+                    "correct return value when using $t[0].gist()";
+                is-deeply $obj, $t[2], "correct modification when using $t[0].gist()";
+            }
+        }
+    }
+
+    subtest '.subst-mutate returns a List for things .match return a List for' => {
+        plan 17 × 2 × my @matchers := /b/, 'b';
+        for @matchers -> \mt {
+            for "a", 123 -> $s is copy {
+                isa-ok $s.subst-mutate(:g, mt, ''), List,
+                    ":g with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:x(3), mt, ''), List,
+                    ":x with {mt.^name} matcher on {$s.^name}";
+
+                isa-ok $s.subst-mutate(:nth(1, 2, 3), mt, ''), List,
+                    ":nth(List) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:nth(1…3), mt, ''), List,
+                    ":nth(Seq) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:nth(1..3), mt, ''), List,
+                    ":nth(Range) with {mt.^name} matcher on {$s.^name}";
+
+                isa-ok $s.subst-mutate(:th(1, 2, 3), mt, ''), List,
+                    ":th(List) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:th(1…3), mt, ''), List,
+                    ":th(Seq) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:th(1..3), mt, ''), List,
+                    ":th(Range) with {mt.^name} matcher on {$s.^name}";
+
+                isa-ok $s.subst-mutate(:st(1, 2, 3), mt, ''), List,
+                    ":st(List) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:st(1…3), mt, ''), List,
+                    ":st(Seq) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:st(1..3), mt, ''), List,
+                    ":st(Range) with {mt.^name} matcher on {$s.^name}";
+
+                isa-ok $s.subst-mutate(:nd(1, 2, 3), mt, ''), List,
+                    ":nd(List) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:nd(1…3), mt, ''), List,
+                    ":nd(Seq) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:nd(1..3), mt, ''), List,
+                    ":nd(Range) with {mt.^name} matcher on {$s.^name}";
+
+                isa-ok $s.subst-mutate(:rd(1, 2, 3), mt, ''), List,
+                    ":rd(List) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:rd(1…3), mt, ''), List,
+                    ":rd(Seq) with {mt.^name} matcher on {$s.^name}";
+                isa-ok $s.subst-mutate(:rd(1..3), mt, ''), List,
+                    ":rd(Range) with {mt.^name} matcher on {$s.^name}";
+            }
+        }
+    }
+
+    # https://github.com/rakudo/rakudo/issues/1523#issuecomment-365447388
+    subtest 'no-matches .subst-mutate: with multi-match opts = empty List' => {
+        plan 17 × 2 × my @matchers := /b/, 'b';
+        for @matchers -> \mt {
+            for "a", 123 -> $s is copy {
+                is-deeply $s.subst-mutate(:g, mt, ''), (),
+                    ":g with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:x(3), mt, ''), (),
+                    ":x with {mt.^name} matcher on {$s.^name}";
+
+                is-deeply $s.subst-mutate(:nth(1, 2, 3), mt, ''), (),
+                    ":nth(List) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:nth(1…3), mt, ''), (),
+                    ":nth(Seq) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:nth(1..3), mt, ''), (),
+                    ":nth(Range) with {mt.^name} matcher on {$s.^name}";
+
+                is-deeply $s.subst-mutate(:th(1, 2, 3), mt, ''), (),
+                    ":th(List) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:th(1…3), mt, ''), (),
+                    ":th(Seq) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:th(1..3), mt, ''), (),
+                    ":th(Range) with {mt.^name} matcher on {$s.^name}";
+
+                is-deeply $s.subst-mutate(:st(1, 2, 3), mt, ''), (),
+                    ":st(List) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:st(1…3), mt, ''), (),
+                    ":st(Seq) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:st(1..3), mt, ''), (),
+                    ":st(Range) with {mt.^name} matcher on {$s.^name}";
+
+                is-deeply $s.subst-mutate(:nd(1, 2, 3), mt, ''), (),
+                    ":nd(List) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:nd(1…3), mt, ''), (),
+                    ":nd(Seq) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:nd(1..3), mt, ''), (),
+                    ":nd(Range) with {mt.^name} matcher on {$s.^name}";
+
+                is-deeply $s.subst-mutate(:rd(1, 2, 3), mt, ''), (),
+                    ":rd(List) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:rd(1…3), mt, ''), (),
+                    ":rd(Seq) with {mt.^name} matcher on {$s.^name}";
+                is-deeply $s.subst-mutate(:rd(1..3), mt, ''), (),
+                    ":rd(Range) with {mt.^name} matcher on {$s.^name}";
+            }
+        }
+    }
+
+    # RT #130688
+    subtest '.subst-mutate with multi-match args set $/ to a List of matches' => {
+        plan 2*(2+5);
+        for 1234567, '1234567' -> $type {
+            subtest "$type.^name().subst-mutate: :g" => {
+              ($ = $type).subst-mutate(:g, /../, 'XX');
+              isa-ok $/, List, '$/ is a List…';
+              cmp-ok +$/, '==', 3, '…with 3 items…';
+              is-deeply $/.map({.WHAT}).unique, (Match,).Seq, '…all are Match…';
+              is-deeply $/.map(~*), <12 34 56>.map(*.Str), '…all have right values';
+            }
+            subtest ".subst-mutate: :x" => {
+              ($ = $type).subst-mutate(:2x, /../, 'XX');
+              isa-ok $/, List, '$/ is a List…';
+              cmp-ok +$/, '==', 2, '…with 2 items…';
+              is-deeply $/.map({.WHAT}).unique, (Match,).Seq, '…all are Match…';
+              is-deeply $/.map(~*), <12 34>.map(*.Str), '…all have right values';
+            }
+            for <nth st nd rd th> -> $suffix {
+              subtest ".subst-mutate: :$suffix" => {
+                  ($ = $type).subst-mutate(|($suffix => 1..3), /../, 'XX');
+                  isa-ok $/, List, '$/ is a List…';
+                  cmp-ok +$/, '==', 3, '…with 3 items…';
+                  is-deeply $/.map({.WHAT}).unique, (Match,).Seq, '…all are Match…';
+                  is-deeply $/.map(~*), <12 34 56>.map(*.Str),
+                      '…all have right values';
+              }
+            }
+        }
+    }
+
+    throws-like { ($ = "").subst-mutate: /\w/, "",
+        :x(my class SomeInvalidXParam {}.new) },
+    X::Str::Match::x, 'giving .subst-mutate invalid args throws';
+
+    # RT #127135
+    try { ($ = 42).subst-mutate: Str, Str }; pass "Cool.subst-mutate with wrong args does not hang";
+
+    group-of 2 => '$/ is set when matching in a loop' => {
+        for $="a" { if .subst-mutate: /./, 'x' { is ~$/, 'a', 'Str.subst-mutate'  }}
+        for $=4   { if .subst-mutate: /./, 'x' { is ~$/, '4', 'Cool.subst-mutate' }}
+    }
+}

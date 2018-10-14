@@ -101,7 +101,7 @@ subtest 'can smartmatch against regexes stored in variables' => {
 
 # https://github.com/rakudo/rakudo/commit/a62b221a80
 subtest '$/ is set when matching in a loop' => {
-    plan 10;
+    plan 8;
 
     for "a" { my $rx = rx/./; if $_ ~~ $rx {
         is ~$/, 'a', '&infix:<~~>'
@@ -110,8 +110,6 @@ subtest '$/ is set when matching in a loop' => {
     for 4   { if .match: /./      { is ~$/, '4', 'Cool.match' }}
     for "a" { if .subst: /./, 'x' { is ~$/, 'a', 'Str.subst' }}
     for 4   { if .subst: /./, 'x' { is ~$/, '4', 'Cool.subst' }}
-    for $="a" { if .subst-mutate: /./, 'x' { is ~$/, 'a', 'Str.subst-mutate'  }}
-    for $=4   { if .subst-mutate: /./, 'x' { is ~$/, '4', 'Cool.subst-mutate' }}
 
     my grammar Foo { token TOP { . } }
     for "a" { if Foo.parse: $_ { is ~$/, 'a', 'Grammar.parse' }}
