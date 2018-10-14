@@ -8,7 +8,7 @@ use Test;
 # X::Multi::NoMatch or similar exceptions are thrown.
 # This APPENDIX test file is for such tests.
 
-plan 15;
+plan 16;
 
 { # RT #129773
     throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
@@ -65,3 +65,7 @@ throws-like { Int.new: <a b c>, 42, 'meow', 'wrong', 'args' },
     cmp-ok $!, '!~~', X::Constructor::Positional,
         'Range.new with wrong args does not claim it takes only named args';
 }
+
+# RT #127016
+dies-ok { Date.new(Int, 1, 1) },
+    'dies when its year is given as an Int type object';
