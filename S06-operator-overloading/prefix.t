@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 10;
 
 {
     sub prefix:<X> ($thing) { return "ROUGHLY$thing"; };
@@ -76,64 +76,4 @@ subtest 'coverage for crashes in certain operator setups' => {
     #
     #     (MYMINUS 1 MYPLUS 2 MYPLUS 3)
     # }, -6, '(2)';
-}
-
-# https://github.com/rakudo/rakudo/issues/1315
-# https://github.com/rakudo/rakudo/issues/1477
-# XXX 6.d REVIEW: the non-optimizing custom stuff might not be spec material:
-# https://irclog.perlgeek.de/perl6-dev/2018-02-07#i_15786958
-# and with extra comments on https://github.com/rakudo/rakudo/issues/1477#issuecomment-363644261
-subtest 'postfix-to-prefix-inc-dec opt does not rewrite custom ops' => {
-    plan 5;
-    subtest 'custom classes' => {
-        plan 2;
-        my class A {}
-        sub  prefix:<++>(A) { flunk 'postfix increment' }
-        sub postfix:<++>(A) { pass  'postfix increment' }
-        sub  prefix:<-->(A) { flunk 'postfix decrement' }
-        sub postfix:<-->(A) { pass  'postfix decrement' }
-        my $var = A.new;
-        $var++;
-        $var--;
-    }
-    subtest 'core types (Int)' => {
-        plan 2;
-        sub  prefix:<++>(Int) { flunk 'postfix increment' }
-        sub postfix:<++>(Int) { pass  'postfix increment' }
-        sub  prefix:<-->(Int) { flunk 'postfix decrement' }
-        sub postfix:<-->(Int) { pass  'postfix decrement' }
-        my $var = 42;
-        $var++;
-        $var--;
-    }
-    subtest 'core types (Num)' => {
-        plan 2;
-        sub  prefix:<++>(Num) { flunk 'postfix increment' }
-        sub postfix:<++>(Num) { pass  'postfix increment' }
-        sub  prefix:<-->(Num) { flunk 'postfix decrement' }
-        sub postfix:<-->(Num) { pass  'postfix decrement' }
-        my $var = 42e0;
-        $var++;
-        $var--;
-    }
-    subtest 'core types (native int)' => {
-        plan 2;
-        sub  prefix:<++>(int) { flunk 'postfix increment' }
-        sub postfix:<++>(int) { pass  'postfix increment' }
-        sub  prefix:<-->(int) { flunk 'postfix decrement' }
-        sub postfix:<-->(int) { pass  'postfix decrement' }
-        my int $var = 42;
-        $var++;
-        $var--;
-    }
-    subtest 'core types (native num)' => {
-        plan 2;
-        sub  prefix:<++>(num) { flunk 'postfix increment' }
-        sub postfix:<++>(num) { pass  'postfix increment' }
-        sub  prefix:<-->(num) { flunk 'postfix decrement' }
-        sub postfix:<-->(num) { pass  'postfix decrement' }
-        my num $var = 42e0;
-        $var++;
-        $var--;
-    }
 }
