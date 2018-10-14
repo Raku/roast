@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 172;
+plan 171;
 
 # RT #77270
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
@@ -546,9 +546,5 @@ say 42;｣, X::Comp::FailGoal, line => 2, message => /«'line 1'»/;
 throws-like ｢say ‘hello';
 say 42;
 say 50;｣, X::Comp::FailGoal, line => 3, message => /«'line 1'»/;
-
-# https://github.com/rakudo/rakudo/issues/1476
-throws-like ｢*+42:foo｣, X::Syntax::Adverb, :what{.so},
-    'error in Whatever closure with adverb mentions what cannot be adverbed';
 
 # vim: ft=perl6
