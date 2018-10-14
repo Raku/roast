@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 52;
+plan 51;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -282,16 +282,5 @@ is ~("ddd" ~~ / [ x | d ] **? 2..3 /), "dd", 'frugal match with alternation';
 # RT #126972
 is_run ｢/a/; print "pass"｣, {:out<pass>, :err(''), :0status},
     '/a/ in sink context in in uppermost scope does not explode';
-
-# https://github.com/rakudo/rakudo/issues/1481
-{
-    my @res;
-    multi sub foo($x where /{@res.push: $x}./) {}
-    multi sub foo($y where /{@res.push: $y}./) {}
-    foo 'a';
-    foo 'b';
-    is-deeply @res, [<a a b b>],
-        'regex blocks update their lexical variables right';
-}
 
 # vim: ft=perl6
