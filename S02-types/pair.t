@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 107;
+plan 4 * 19 + 104;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -356,12 +356,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     throws-like { $p.value = "bar" },
       X::TypeCheck::Assignment,
       'cannot assign a Str to an Int';
-
-    $p.freeze;
-    throws-like { $p.value = 666 },
-      X::Assignment::RO,
-      'cannot assign an Int to a frozen';
-    is $p.value, 42, 'did not change integer value';
 }
 
 # RT #126369
@@ -454,15 +448,6 @@ subtest 'Pair.perl with type objects' => {
 
   is-deeply .perl.EVAL, $_, .perl for Pair.new(Str, Str),
       Pair.new(Rat, Num), Pair.new(Bool, Bool), Pair.new(Numeric, Numeric)
-}
-
-# RT 131887
-{
-    my $value = 17;
-    my $pair = number => $value;
-    my $obj-at1 = $pair.WHICH;
-    $pair.freeze;
-    is-deeply $obj-at1, $pair.WHICH, "Pair.freeze doesn't change object identity";
 }
 
 # https://github.com/rakudo/rakudo/commit/5031dab3ac

@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 4;
+plan 5;
 
 # RT #131503
 #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
@@ -257,5 +257,33 @@ group-of 7 => 'now-deprecated subst-mutate' => {
     group-of 2 => '$/ is set when matching in a loop' => {
         for $="a" { if .subst-mutate: /./, 'x' { is ~$/, 'a', 'Str.subst-mutate'  }}
         for $=4   { if .subst-mutate: /./, 'x' { is ~$/, '4', 'Cool.subst-mutate' }}
+    }
+}
+
+group-of 7 => 'Pair.freeze' => {
+    {
+        my $p = Pair.new("foo",my Int $);
+        isa-ok $p.value, Int;
+        is ($p.value = 42), 42, 'can assign integer value and return that';
+        is $p.value, 42, 'the expected Int value was set';
+        throws-like { $p.value = "bar" },
+          X::TypeCheck::Assignment,
+          'cannot assign a Str to an Int';
+
+        $p.freeze;
+        throws-like { $p.value = 666 },
+          X::Assignment::RO,
+          'cannot assign an Int to a frozen';
+        is $p.value, 42, 'did not change integer value';
+    }
+
+    # RT 131887
+    {
+        my $value = 17;
+        my $pair = number => $value;
+        my $obj-at1 = $pair.WHICH;
+        $pair.freeze;
+        is-deeply $obj-at1, $pair.WHICH,
+            "Pair.freeze doesn't change object identity";
     }
 }
