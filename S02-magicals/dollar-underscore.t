@@ -66,7 +66,6 @@ plan 23;
 
 # Tests for a bug uncovered when Jesse Vincent was testing
 # functionality for Patrick Michaud
-# TODO: add smartlinks, more tests
 
 my @list = ('a');
 
