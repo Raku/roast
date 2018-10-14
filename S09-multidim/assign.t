@@ -115,7 +115,7 @@ lives-ok { my @x[2;2] = (0, 1), (2, 3); my int @nx[2;2] = @x },
 # RT #126703
 {
     lives-ok { my Str @a[3;3] = <a b c>, <d e f>, <g h i> },
-        'Can assign list of lists that matches shape of typed 2-dim array';
+        'Can assign list of lists that matches shape of typed 3-dim array';
     my Str @b[2;2] = <a b>, <c d>;
     is @b[0;0], 'a', 'Assignment to typed 2-dim array works (1)';
     is @b[0;1], 'b', 'Assignment to typed 2-dim array works (2)';
