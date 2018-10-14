@@ -881,12 +881,12 @@ throws-like { DateTime.new: :2016year, 42 }, Exception,
 {
     my $dt1 = DateTime.now;
     my $dt2 = $dt1.later(:1hour);
-     ok $dt1 <  $dt2, 'DateTime <  DateTime';
-     ok $dt1 <= $dt2, 'DateTime <= DateTime';
-    nok $dt1 == $dt2, 'DateTime == DateTime';
-     ok $dt1 != $dt2, 'DateTime != DateTime';
-    nok $dt1 >  $dt2, 'DateTime >  DateTime';
-    nok $dt1 >= $dt2, 'DateTime >= DateTime';
+    is-deeply $dt1 <  $dt2, True,  'DateTime <  DateTime';
+    is-deeply $dt1 <= $dt2, True,  'DateTime <= DateTime';
+    is-deeply $dt1 == $dt2, False, 'DateTime == DateTime';
+    is-deeply $dt1 != $dt2, True,  'DateTime != DateTime';
+    is-deeply $dt1 >  $dt2, False, 'DateTime >  DateTime';
+    is-deeply $dt1 >= $dt2, False, 'DateTime >= DateTime';
 }
 
 # https://github.com/rakudo/rakudo/issues/1762
