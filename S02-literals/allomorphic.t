@@ -450,4 +450,9 @@ subtest '.Bool on allomorphs' => {
 }
 
 # GH#2010
-is <0000>.comb, "0 0 0 0", 'does Str.comb take the string logic for Bool';
+group-of 4 => '.comb on allomorphs uses Str variant' => {
+    is-eqv <0000>     .comb, <0 0 0 0        >».Str.Seq, 'IntStr';
+    is-eqv <0000e0>   .comb, <0 0 0 0 e 0    >».Str.Seq, 'NumStr';
+    is-eqv <0001.0>   .comb, <0 0 0 1 . 0    >».Str.Seq, 'RatStr';
+    is-eqv <01.0+42i >.comb, <0 1 . 0 + 4 2 i>».Str.Seq, 'ComplexStr';
+}
