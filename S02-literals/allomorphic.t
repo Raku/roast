@@ -422,7 +422,7 @@ subtest '.Real on :U allomorphs and Numeric type objects' => {
         is-deeply IntStr    .Real, 0,   'IntStr    .Real gives a 0';
         is-deeply RatStr    .Real, 0.0, 'RatStr    .Real gives a 0.0';
         is-deeply NumStr    .Real, 0e0, 'NumStr    .Real gives a 0e0';
-        # Complex is not a Real, so it .Real here returns a Num
+        # Complex is not a Real, so its .Real here returns a Num
         is-deeply Complex   .Real, 0e0, 'Complex   .Real gives a 0e0';
         is-deeply ComplexStr.Real, 0e0, 'ComplexStr.Real gives a 0e0';
     }
