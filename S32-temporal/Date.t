@@ -3,15 +3,12 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 125;
+plan 124;
 
 # construction
 {
     lives-ok { Date.new('2010-01-01') }, 'Date.new("2010-01-01")';
     lives-ok { Date.new(2010, 1, 1) }, 'List constructor';
-
-    # RT #127016
-    dies-ok { Date.new(Int, 1, 1) }, 'dies when its year is given as an Int type object';
     lives-ok { Date.new(2010, 12/2, 3) }, 'Date.new(2010, 12/2, 3)';
     lives-ok { Date.new('2018', '1', '4') }, "Date.new('2018', '1', '4')";
 
