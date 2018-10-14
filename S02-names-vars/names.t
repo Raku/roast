@@ -163,10 +163,12 @@ throws-like {
     is &foo(), 'OH HAI', 'can get sub using & to disambiguate';
 }
 
-{ # RT #128712
+subtest 'can use compile-time variables in names' => { # RT #128712
+    plan 2;
     constant $i = 42;
     my $foo:bar«$i» = 'meow';
-    is-deeply $foo:bar«$i», 'meow', 'can use compile-time variables in names';
+    is-deeply $foo:bar«$i», 'meow', 'variable lookup';
+    is-deeply $foo:bar<42>, 'meow', 'literal lookup';
 }
 
 { # https://github.com/rakudo/rakudo/issues/1606
