@@ -14,13 +14,16 @@ note ｢`git remote` suggests we are NOT inside roast repo. Aborting.｣ and exi
   unless $no-repo-check
     or qx/git remote -v/ ~~ m｢'https://github.com/'<-[^/]>+'/roast'｣;
 
-run $browser, qqx｢
+my @lines = qqx｢
   git log --pretty=format:'\%h | \%s' --reverse $start...$end
 ｣.lines.grep(*.chars).grep({
     not /'6.' <[d..z]> ' REVIEW' | ^\S+ ' | Remove trailing whitespace' $/
 }).skip($skip || $n*$skip-batches).map({
     'https://github.com/perl6/roast/commit/' ~ .words.head
 }).head: $n;
+
+.say for @lines;
+run $browser, @lines;
 
 =begin pod
 
