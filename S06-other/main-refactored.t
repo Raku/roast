@@ -27,8 +27,8 @@ my @named-anywhere-ok = |@basic-ok,
 ;
 
 plan 1
-  + ((2 + 4 + 5 + 5 + 2 + 2 + 2) * @basic-ok / 3)
-  + ((2 + 4 + 5 + 5 + 2 + 2 + 2) * @named-anywhere-ok / 3 )
+  + ((2 + 5 + 6 + 6 + 2 + 2 + 2) * @basic-ok / 3)
+  + ((2 + 5 + 6 + 6 + 2 + 2 + 2) * @named-anywhere-ok / 3 )
 ;
 
 # Need to run these tests outside of the main line, because otherwise normal
@@ -68,6 +68,7 @@ for @basic-ok -> \args, @expected, %expected {
     sub ARGS-TO-CAPTURE(&main, @args) {   # called by RUN-MAIN
         ok &main =:= &MAIN, "right main for '@*ARGS[]'";
         is-deeply @args, args.Array, "right args for basic '@*ARGS[]'";
+        ok &*ARGS-TO-CAPTURE ~~ Sub, 'is &*ARGS-TO-CAPTURE a Sub';
         Capture.new( list => @expected, hash => %expected )
     }
 
@@ -85,6 +86,7 @@ for @named-anywhere-ok -> \args, @expected, %expected {
     sub ARGS-TO-CAPTURE(&main, @args) {   # called by RUN-MAIN
         ok &main =:= &MAIN, "right main for '@*ARGS[]'";
         is-deeply @args, args.Array, "right args for anywhere '@*ARGS[]'";
+        ok &*ARGS-TO-CAPTURE ~~ Sub, 'is &*ARGS-TO-CAPTURE a Sub';
         Capture.new( list => @expected, hash => %expected )
     }
 
@@ -102,6 +104,7 @@ for @basic-ok -> \args, @expected, %expected {
     sub ARGS-TO-CAPTURE(&main, @args) {   # called by RUN-MAIN
         ok &main =:= &MAIN, "right main for '@*ARGS[]'";
         is-deeply @args, args.Array, "right args for basic '@*ARGS[]'";
+        ok &*ARGS-TO-CAPTURE ~~ Sub, 'is &*ARGS-TO-CAPTURE a Sub';
         Capture.new( list => @expected, hash => %expected )
     }
     my $main-helper-called;
@@ -122,6 +125,7 @@ for @named-anywhere-ok -> \args, @expected, %expected {
     sub ARGS-TO-CAPTURE(&main, @args) {   # called by RUN-MAIN
         ok &main =:= &MAIN, "right main for '@*ARGS[]'";
         is-deeply @args, args.Array, "right args for anywhere '@*ARGS[]'";
+        ok &*ARGS-TO-CAPTURE ~~ Sub, 'is &*ARGS-TO-CAPTURE a Sub';
         Capture.new( list => @expected, hash => %expected )
     }
     my $main-helper-called;
@@ -150,6 +154,7 @@ for @basic-ok -> \args, @expected, %expected {
         ok &main =:= &MAIN, "right main for '@*ARGS[]'";
         is-deeply @_, @expected, "right positionals for basic '@*ARGS[]'";
         is-deeply %_, %expected, "right named for basic '@*ARGS[]'";
+        ok &*GENERATE-USAGE ~~ Sub, 'is &*GENERATE-USAGE a Sub';
         "# generated usage for '@*ARGS[]'"
     }
     my $expected-exit = %expected<help> ?? 0 !! 2;
@@ -174,6 +179,7 @@ for @named-anywhere-ok -> \args, @expected, %expected {
         ok &main =:= &MAIN, "right main for '@*ARGS[]'";
         is-deeply @_, @expected, "right positionals for anywhere '@*ARGS[]'";
         is-deeply %_, %expected, "right named for anywhere '@*ARGS[]'";
+        ok &*GENERATE-USAGE ~~ Sub, 'is &*GENERATE-USAGE a Sub';
         "# generated usage for '@*ARGS[]'"
     }
     my $expected-exit = %expected<help> ?? 0 !! 2;
