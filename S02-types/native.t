@@ -97,7 +97,7 @@ plan 92;
     my int $x;
     ($x) = (5);
     is $x, 5, 'did we assign $x';
-    is $x.WHAT, Int, 'does WHAT work correctly on a native variable';
+    is $x.WHAT, Int, 'WHAT boxes value in native variable';
 }
 
 # RT #121349
