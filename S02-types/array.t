@@ -437,7 +437,9 @@ subtest 'no funny business in assignment' => {
 
     # https://github.com/rakudo/rakudo/issues/1843
     my @res;
-    sub init() { my @a = 1, (init() unless $++); @res.push: @a; 42 }; init(); is-deeply @res, [[1], [1, 42]], 'works fine when re-entrant';
+    sub init() { my @a = 1, (init() unless $++); @res.push: @a; 42 };
+    init();
+    is-deeply @res, [[1], [1, 42]], 'works fine when re-entrant';
 }
 
 # vim: ft=perl6
