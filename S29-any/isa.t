@@ -70,8 +70,6 @@ class Thing::something {};
 {
     role A { };
     nok A.new.isa(A),   'A punned role is not an isa of itself by type';
-    #?rakudo todo 'R#2335'
-    nok A.new.isa('A'), 'A punned role is not an isa of itself by name';
 }
 
 # vim: ft=perl6
