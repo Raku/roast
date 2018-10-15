@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 13;
+plan 14;
 
 # https://github.com/rakudo/rakudo/issues/2280
 is-deeply (11**5, */-2 … 0)[31], <-161051/2147483648>,
@@ -341,6 +341,28 @@ group-of 11 => 'cover potential bugs in possible optimization of `for ...`' => {
     pass 'no crashes with endpoint > 64-bit int (^..)';
     for 0..^9223372036854775809 {last}
     pass 'no crashes with endpoint > 64-bit int (..^)';
+}
+
+group-of 2 => 'negative offset in JIT lables errors' => {
+    # https://github.com/rakudo/rakudo/issues/2347
+    is_run ｢my $a = ("a" x 200).comb; $a ~~ s:g/<ws>// for ^20; print 'pass'｣,
+        {:out<pass>, :err(''), :0status}, '.comb';
+
+    # https://github.com/rakudo/rakudo/issues/2346
+    is_run ｢
+        my token octet   { (\d+) }
+        my regex address { <octet> ** 4 % '.' }
+        my subset IPv4 of Str where / ^ <address> $ /;
+
+        sub dec-to-ip(\d) {
+            join('.', d +> 0x18 % 0x100, d +> 0x10 % 0x100, d +> 0x08 % 0x100, d % 0x100)
+        }
+
+        (0..32).roll(100).map: -> $bits {
+            my IPv4 $x = dec-to-ip((2 ** $bits - 1) +< (32 - $bits))
+        }
+        print 'pass';
+    ｣, {:out<pass>, :err(''), :0status}, 'tokens and subs';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
