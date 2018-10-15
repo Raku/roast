@@ -18,7 +18,7 @@ Tests for the EVAL() builtin
     sub make_eval_closure {
         my $a = 5;   #OK not used
         return sub ($s) {
-            EVAL $s 
+            EVAL $s
         };
     };
     is(make_eval_closure().('$a'), 5, 'EVAL runs code in the proper lexical scope');
@@ -52,9 +52,9 @@ dies-ok({EVAL {; 42} }, 'block EVAL is gone');
     class EvalTester2 {
         method e($s) { EVAL "$s + \$x" };
     }
-    is EvalTester2.e('1'),       6, 
+    is EvalTester2.e('1'),       6,
        'EVAL works inside class methods, with outer lexicals';
-    is EvalTester2.new.e('1'),   6, 
+    is EvalTester2.new.e('1'),   6,
        'EVAL works inside instance methods, with outer lexicals';
 }
 
@@ -113,27 +113,7 @@ is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
         "EVAL's package does not leak to the surrounding compilation unit";
 }
 
-subtest 'EVAL(Buf)' => {
-    plan 2;
-    is_run 'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode',
-        {:out('I ® U'), :err(''), :0status}, 'utf8 Buf';
-
-    subtest '--encoding=iso-8859-1 + iso-8859-1 buf' => {
-        plan 3;
-        # The $result Buf was obtained by running:
-        # perl6 -e '"foo".IO.spurt: q|print "I ® U"|, :enc<iso-8859-1>' |
-        #   perl6 -e 'run(:out, «perl6 --encoding=iso-8859-1 foo»).out.slurp-rest(:bin).perl.say'
-
-        my $result = Buf[uint8].new(73,32,194,174,32,85);
-        given run :out, :err, $*EXECUTABLE, '--encoding=iso-8859-1', '-e',
-            'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode: "iso-8859-1"'
-        {
-            #?rakudo.jvm todo 'problem with equivalence of Buf objects, RT #128041'
-            is-deeply .out.slurp-rest(:bin), $result, 'STDOUT has right data';
-            is-deeply .err.slurp, '',      'STDERR is empty';
-            is-deeply .exitcode,  0,       'exitcode is correct';
-        }
-    }
-}
+is_run 'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode',
+    {:out('I ® U'), :err(''), :0status}, 'EVAL(Buf)';
 
 # vim: ft=perl6
