@@ -1,6 +1,9 @@
 use v6;
 
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
+
 plan 10;
 
 # L<S02/Names and Variables/:delete>
@@ -43,8 +46,8 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 }
 
 { # coverage; 2016-10-04
-    is-deeply Hash<z>:delete, Nil, ':delete on Hash:U returns Nil';
-    is-deeply Hash<a b>:delete, (Nil, Nil),
+    is-eqv Hash<z>:delete, Nil, ':delete on Hash:U returns Nil';
+    is-eqv Hash<a b>:delete, (Nil, Nil),
         ':delete of slice on Hash:U returns a list of Nils';
 }
 
