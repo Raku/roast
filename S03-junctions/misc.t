@@ -538,11 +538,11 @@ subtest 'Junction .Str, .gist, and .perl' => {
 
 # GH #2042
 {
-    is (all("a","b","c") ~ any("d","e")).perl,
-      'all(any("ad", "ae"), any("bd", "be"), any("cd", "ce"))',
+    is-deeply-junction (all("a","b","c") ~ any("d","e")),
+      all(any("ad", "ae"), any("bd", "be"), any("cd", "ce")),
       'did all() on left concate with any() on right ok';
-    is (any("a","b","c") ~ all("d","e")).perl,
-      'all(any("ad", "ae"), any("bd", "be"), any("cd", "ce"))',
+    is-deeply-junction (any("a","b","c") ~ all("d","e")),
+      all(any("ad", "ae"), any("bd", "be"), any("cd", "ce")),
       'did any() on left concate with all() on right ok';
 }
 
