@@ -67,7 +67,7 @@ subtest 'Map.gist shows only the first sorted 100 els' => {
     is-deeply
       ["0" => 1, "2" => 3, "4" => 5, "a" => 42],
       [%m.sort: *.key],
-      'did we get the pairs get handled ok'
+      'did we get the pairs handled ok'
     ;
 }
 
