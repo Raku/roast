@@ -11,7 +11,7 @@ plan 16;
 
 {
     my $var = 42;
-    class Klass1 { has $.x; method bind { $!x := $var } }
+    my class Klass1 { has $.x; method bind { $!x := $var } }
 
     my $obj1 = Klass1.new;
     lives-ok { $obj1.bind() }, 'attribute binding lives';
@@ -23,7 +23,7 @@ plan 16;
 
 {
     my $var = 42;
-    class Klass2 {
+    my class Klass2 {
         has $x;
         method bind { $x := $var }
         method get_x { $x }
@@ -44,7 +44,7 @@ plan 16;
 #?rakudo skip 'class attributes RT #124631'
 {
     my $var = 42;
-    class Klass3 { our $.x; method bind { $!x := $var } }
+    my class Klass3 { our $.x; method bind { $!x := $var } }
 
     try { Klass3.bind() };
 
@@ -58,7 +58,7 @@ plan 16;
 # Private class attributes
 {
     my $var = 42;
-    class Klass4 {
+    my class Klass4 {
         our $x;
         method bind { $x := $var }
         method get_x { $x }
@@ -76,8 +76,8 @@ plan 16;
 
 # R#2130
 {
-    role Foo { method bar { 42 } }
-    class A {
+    my role Foo { method bar { 42 } }
+    my class A {
         has $.scalar does Foo;
         has @.array  does Foo;
         has %.hash   does Foo;
