@@ -39,7 +39,7 @@ is $/.ast, 'bar', '$/.ast';
 
 # R#2057
 {
-    lives-ok { "" ~~ /{ (make 0 for 0) }/ && .say for ^100 },
+    lives-ok { "" ~~ /{ (make 0 for 0) }/ for ^100 },
       'check that we did not regress';
 }
 
