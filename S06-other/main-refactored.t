@@ -279,13 +279,13 @@ for @named-anywhere-ok -> \args, @expected, %expected {
 # --- Other tests---------------------------------------------------------------
 {
     multi MAIN("NEVER MATCHES") { }
-    multi MAIN("HIDDEN") is hidden-from-USAGE { }
+    multi MAIN("THE-HIDDEN-MULTI") is hidden-from-USAGE { }
     @*ARGS = ();
     RUN-MAIN(&MAIN,Nil);
 
     sub USAGE() {
-        is $*USAGE, "Usage:\n  $*PROGRAM 'NEVER MATCHES'",
-        'was the second MAIN skipped in USAGE';
+        unlike $*USAGE, /'THE-HIDDEN-MULTI'/,
+            'was the second MAIN skipped in USAGE';
     }
 }
 
