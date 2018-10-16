@@ -97,6 +97,7 @@ my @normal = <
   Pod::Block::Para
   Pod::Block::Table
   Pod::Config
+  Pod::Defn
   Pod::FormattingCode
   Pod::Heading
   Pod::Item
