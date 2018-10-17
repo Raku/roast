@@ -812,13 +812,16 @@ subtest 'synthetics not allowed in date formats' => {
 subtest 'can parse leap second in non-UTC timezones' => {
     my \h := 3600;
     plan +my @tzs = flat (
-        10000, 100*h, 30*h, 24*h, 12*h, 3*h, 0, .5*h, 123, 432, 1
+        100*h, 30*h, 24*h, 12*h, 3*h, 0,
+
+        # https://github.com/rakudo/rakudo/issues/2381
+        .5*h, 9.25*h, 5.45*h, '7200',
     ).map: {-$_, $_}
 
     my \utc := DateTime.new: '2016-12-31T23:59:60Z';
     for @tzs {
-        #?rakudo skip 'Cannot parse leap on non-23:59'
-        cmp-ok $d, '==', utc, "parsed correct date for .in-timezone($_)";
+        cmp-ok utc.in-timezone($_), '==', utc,
+            "parsed correct date for .in-timezone($_)";
     }
 }
 
