@@ -9,7 +9,7 @@ as a conforming Perl 6 implementation.
 
 -  [Test Utilities](#test-utilities)
 
--  [Environment Variables](#environment-variables)
+-  [Environmental Variables](#environmental-variables)
 
 -  [Contributing](CONTRIBUTING.md)
 
