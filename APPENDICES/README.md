@@ -45,3 +45,9 @@ language versions. This appendix contains such tests. It's possible newer
 implementations may choose not to implement features that are already
 deemed deprecated in the oldest version of the specification those
 implementations decide to implement.
+
+### [`A04-experimental`](A04-experimental)
+
+Some behaviour is currently experimental and hasn't been fully agreed on. The tests in this
+appendix exercise that behaviour either directly or indirectly. There's a high chance these
+tests will change in the future.
