@@ -74,5 +74,5 @@ fudges for features that no implementation has implemented successfully must be 
 ### Promotion
 
 It's not a bad idea to whet users' appetite and get word of mouth going about upcoming release.
-File an Issue in [our Marketing repo](https://github.com/perl6/roast) to get some teaser materials
-made for new features in upcoming language release.
+File an Issue in [our Marketing repo](https://github.com/perl6/marketing) to get some teaser
+materials made for new features in upcoming language release.
