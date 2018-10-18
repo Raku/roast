@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 14;
+plan 15;
 
 # https://github.com/rakudo/rakudo/issues/2280
 is-deeply (11**5, */-2 … 0)[31], <-161051/2147483648>,
@@ -363,6 +363,13 @@ group-of 2 => 'negative offset in JIT lables errors' => {
         }
         print 'pass';
     ｣, {:out<pass>, :err(''), :0status}, 'tokens and subs';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/2345
+    (my $lib := make-temp-dir).add('Foo.pm6').spurt: ｢$ = IO::Path:D｣;
+    is_run ｢use Foo; -> --> IO::Path:D {".".IO}(); print 'pass'｣,
+        :compiler-args['-I', $lib.absolute], {:out<pass>, :err(''), :0status},
+    'no weird type check issues with modules';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
