@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 5;
+plan 6;
 
 # RT #131503
 #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
@@ -286,4 +286,9 @@ group-of 7 => 'Pair.freeze' => {
         is-deeply $obj-at1, $pair.WHICH,
             "Pair.freeze doesn't change object identity";
     }
+}
+
+group-of 2 => ':count arg on &lines/Str.lines' => {
+    is lines("a\nb\nc\n",:count), 3, 'lines(Str, :count)';
+    is "a\nb\nc\n".lines(:count), 3, 'Str.lines(:count)';
 }

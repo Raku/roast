@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 27;
+plan 25;
 
 is "a\nb\n\nc".lines.join('|'),
   'a|b||c', 'LF .lines without trailing';
@@ -54,10 +54,6 @@ is "a\nb\r\rc\r".lines(2).join('|'),
 
 is lines("a\nb\nc\n").join('|'), 'a|b|c', '&lines';
 is lines("a\nb\nc\n",2).join('|'), 'a|b', '&lines(2)';
-
-is lines("a\nb\nc\n",:count), 3, 'lines(Str, :count)';
-is "a\nb\nc\n".lines(:count), 3, 'Str.lines(:count)';
-
 
 # RT #115136
 is_run( 'print lines[0]',
