@@ -1,8 +1,9 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
-plan 48;
+plan 49;
 
 class C {
     has int $.int-ro = 1;
@@ -144,4 +145,37 @@ throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
     $c2.ff = 200;
 #?rakudo todo 'RT #131122'
     is-deeply $c2.ff, 200, 'large unsigned ints';
+}
+
+# https://github.com/rakudo/rakudo/issues/2392
+group-of 5 => 'ops on native attributes' => {
+    my class Foo {
+        has int $.x; has int $.y;
+        method z {
+            (--$!x ≤ ++$!y, $!x-- ≥ $!y++,
+              $!x <= $!y, $!x >=  $!y,
+              $!x <  $!y, $!x >   $!y,
+              $!x ≠  $!y, $!x !=  $!y,
+              $!x == $!y, $!x === $!y,
+              $!x, $!y,
+            )
+        }
+    }.new;
+    my $o := Foo.new: :14x, :10bar;
+    is-deeply $o.z,
+      (False, True, False, True, False, True, True, True, False, False, 12, 2),
+      'run 1';
+    is-deeply $o.z,
+      (False, True, False, True, False, True, True, True, False, False, 10, 4),
+      'run 2';
+    is-deeply $o.z,
+      (False, True, False, True, False, True, True, True, False, False, 8, 6),
+      'run 3';
+    is-deeply $o.z,
+      (True, True, True, False, True, False, True, True, False, False, 6, 8),
+      'run 4';
+    is-deeply $o.z,
+      (True, False, True, False, True, False, True, True, False, False, 4, 10),
+      'run 5';
+
 }
