@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 29;
 
 role WithStub { method a() { ... } };
 role ProvidesStub1 { method a() { 1 } };
@@ -28,6 +28,10 @@ lives-ok { EVAL 'class F does WithStub does ProvidesStub1 does ProvidesStub2 {
     dies-ok { EVAL 'class H does WithMultiStub { multi method a(Str) { } }' },
         "Interface contract enforced on stubbed multi";
 }
+
+lives-ok { EVAL 'class I does WithStub {
+    has WithStub $.with-stub handles <a>}' },
+        'composing stub implemented with attribute handles';
 
 class ProvidesA { method a() { 5 } };
 lives-ok { EVAL 'class ChildA is ProvidesA does WithStub { }' },
