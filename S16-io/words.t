@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 4*2 + 4;
+plan 4*2 + 3;
 
 my $file = make-temp-file content => qq:to/END/;
                     word0 word1 word2 word3
@@ -187,18 +187,6 @@ group-of 5 => "\$limit arg (IO::Path method)" => {
     is-deeply $file.words(2).elems, 2, 'right count (.count-only)';
     is-deeply $file.words(2), $all-words[^2].Seq, 'right words (Seq)';
 }
-
-# we spin up another perl6 and do 1500 x 2 .words calls; if the handle
-# isn't closed; we can expect some errors to show up in the output
-is_run ｢my $i = 0; my @words; with ｣ ~ $file.perl ~ ｢ {
-        loop {
-            last if ++$i > 1500;
-            @words.append: .words;
-            @words.append: .words(2);
-        }
-    }; print "all ok $i"｣,
-    {:err(''), :out('all ok 1501'), :0status},
-'heuristic for testing whether handle is closed';
 
 {
     $*ARGFILES = IO::ArgFiles.new:
