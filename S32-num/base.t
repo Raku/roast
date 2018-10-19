@@ -110,7 +110,7 @@ subtest 'all Reals can accept Whatever for second .base argument' => {
 }
 
 # RT#130753
-#?rakudo todo 'code throws instead of failing: https://github.com/rakudo/rakudo/issues/2266'
+# https://github.com/rakudo/rakudo/issues/2266
 fails-like { 1.1.base(1) }, X::OutOfRange, "Throws like X::OutOfRange for base 1";
 
 # RT #125818
