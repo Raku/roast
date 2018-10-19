@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 41;
+plan 42;
 
 # $?KERNEL.name is the kernel we were compiled in.
 #?rakudo skip 'unimpl $?KERNEL RT #124624'
@@ -42,6 +42,7 @@ ok $*KERNEL.release,   "Release info is '{$*KERNEL.release}'";
 ok $*KERNEL.hardware,  "Hardware info is '{$*KERNEL.hardware}'";
 ok $*KERNEL.arch,      "Architecture info is '{$*KERNEL.arch}'";
 ok $*KERNEL.bits,      "Number of bits is '{$*KERNEL.bits}'";
+ok $*KERNEL.hostname,  "Hostname is '{$*KERNEL.hostname}'";
 
 ok $*KERNEL.perl ~~ m/\w/, 'We can do a $*KERNEL.perl';
 ok $*KERNEL.gist ~~ m/\w/, 'We can do a $*KERNEL.gist';
