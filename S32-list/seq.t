@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 41;
+plan 42;
 
 my @result = 1,2,3;
 
