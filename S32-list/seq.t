@@ -227,3 +227,6 @@ Seq.new(
         method count-only { pass  $mess }
     }.new
 ).Numeric;
+
+# GH #2383
+lives-ok { Nil for my $s := "abc".comb[]; $s.head }, "ZEN-POS working for Seq";
