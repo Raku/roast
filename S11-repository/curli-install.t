@@ -28,7 +28,7 @@ $*REPO.install($dist);
 $*REPO.install($non-matching-dist);
 
 throws-like { EVAL '$*REPO.install($dist)' },
-    X::AdHoc,
+    Exception,
     message => /'already installed'/,
     "cannot reinstall the very same distribution";
 

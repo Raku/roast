@@ -4,7 +4,7 @@ use Test;
 plan 9;
 
 for <id need loaded>.combinations[0 .. *-2] {
-    throws-like "class :: does CompUnit::Repository \{ { $_.map({"method {$_}() \{\}"}).join(';') } \}", X::AdHoc;
+    throws-like "class :: does CompUnit::Repository \{ { $_.map({"method {$_}() \{\}"}).join(';') } \}", Exception;
 }
 
 eval-lives-ok '
@@ -19,4 +19,3 @@ eval-lives-ok '
 ok $*REPO ~~ CompUnit::Repository;
 
 # vim: ft=perl6
-
