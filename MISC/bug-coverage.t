@@ -6,7 +6,7 @@ use Test::Util;
 # This file is for random bugs that don't really fit well in other places.
 # Feel free to move the tests to more appropriate places.
 
-plan 16;
+plan 17;
 
 # https://github.com/rakudo/rakudo/issues/2280
 is-deeply (11**5, */-2 … 0)[31], <-161051/2147483648>,
@@ -384,6 +384,19 @@ group-of 2 => 'negative offset in JIT lables errors' => {
         print 'pass';
     ｣, :compiler-args['-I', $lib.absolute], {:out<pass>, :err(''), :0status},
     'use of :D in a module does not mess up parametarization of a Hash';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/2400
+    my $lib := make-temp-dir;
+    $lib.add('Bar.pm6').spurt: ｢my $ = Hash[Any:D,List:D]｣;
+    $lib.add('Foo.pm6').spurt: ｢
+        use Bar;
+        our sub foo(--> Hash[Any:D,List:D]) { my Any:D %tree{List:D} }
+    ｣;
+
+    is_run ｢use Foo; foo; print 'pass'｣, :compiler-args['-I', $lib.absolute],
+      {:out<pass>, :err(''), :0status},
+    'use of Hash[…:D, …:D] in a module does not explode';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
