@@ -139,7 +139,6 @@ for IO::Handle.^lookup('words'), &words -> &WORDS {
             is-deeply @res.List, $all-words[^2], 'right words';
             # we didn't exhaust the iterator, but did $limit items from it
             # already, so we'd expect the handle to be closed now
-            #?rakudo todo 'handle is not closed https://github.com/rakudo/rakudo/issues/2283'
             is-deeply $fh.opened, False, 'closed handle';
         }
         group-of 2 => '.count-only' => {
