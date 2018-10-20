@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 12;
+plan 13;
 
 # This appendix contains features that may already exist in some implementations but the exact
 # behaviour is currently not fully decided on.
@@ -226,4 +226,10 @@ subtest 'mistyped typenames in coercers give good error' => {
     #     »;
     #     .&test-it for @tests;
     # }
+}
+
+# RT#129160
+{
+    my enum RT<R T>;
+    ok R.ACCEPTS(RT), 'enum member ACCEPTS the enum type object';
 }

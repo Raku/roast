@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 17;
 
 {
     class EnumClass     { enum C <a b c> }
@@ -68,12 +68,6 @@ plan 18;
     enum Stuff (@stuff);
     is (A,B,C), (A,B,C), "can declare enums using constant lists";
     is (+A,+B,+C), (0,1,2), "and they get the right values";
-}
-
-# RT#129160
-{
-    enum RT<R T>;
-    ok R.ACCEPTS(RT), 'enum member ACCEPTS the enum type object';
 }
 
 # vim: ft=perl6
