@@ -1,10 +1,11 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add("packages");
 use Test;
+use Test::Util;
 
 # L<S32::Str/Str/"=item indent">
 
-plan 62;
+plan 63;
 
 # TODO: Rakudo doesn't have full support for constants, so we have to assume a
 # hardcoded 8 instead of $?TABSTOP for now.
@@ -140,3 +141,53 @@ is  "\ta\n b".indent(1).indent(16).indent(0).indent(*).perl,
 is  " \t a\n \t b\n".indent(1).perl,
     " \t  a\n \t  b\n".perl,
     'Indentation should not be appended after a trailing \n';
+
+# https://github.com/rakudo/rakudo/issues/2409
+group-of 6 => 'indent/dedent' => {
+    # NOTE: whitespacing is important in this test. Don't modify
+    is_run "my \$a = q:to/END/;\n    A\n  \n    B\n    END\nprint \$a",
+        {:out("A\n\nB\n"), :err(''), :0status},
+        'no warnings when blank lines have trailing whitespace';
+
+    # Cover optimizations
+    unless $?TABSTOP == 8 {
+        skip 'These tests are designed around $?TABSTOP of 8 spaces '
+          ~ "but it is $?TABSTOP", 5;
+    }
+    {
+        my @cases := "A\nB\nC", "  A\n  B\n  C\n", "    A\n  B\n  C\n",
+          "\tA\n\t  B\n\tC\n", "\t\tA\n\t        B\n\t\tC";
+
+        CONTROL { default { .resume } }
+        is-deeply @cases».indent(-4).List, (
+            "A\nB\nC", "A\nB\nC\n", "A\nB\nC\n",
+            "    A\n      B\n    C\n",
+            "\t    A\n            B\n\t    C"
+        ), '-4';
+
+        is-deeply @cases».indent(-8).List, (
+            "A\nB\nC", "A\nB\nC\n", "A\nB\nC\n", "A\n  B\nC\n",
+            "\tA\n        B\n\tC"
+        ), '-8';
+
+        is-deeply @cases».indent(0).List, (
+            "A\nB\nC", "  A\n  B\n  C\n", "    A\n  B\n  C\n",
+            "\tA\n\t  B\n\tC\n", "\t\tA\n\t        B\n\t\tC"
+        ), '0';
+
+        is-deeply @cases».indent(4).List, (
+            "    A\n    B\n    C", "      A\n      B\n      C\n",
+            "        A\n      B\n      C\n",
+            "\t    A\n\t      B\n\t    C\n",
+            "\t\t    A\n\t            B\n\t\t    C"
+        ), '4';
+
+        is-deeply @cases».indent(8).List, (
+            "        A\n        B\n        C",
+            "          A\n          B\n          C\n",
+            "            A\n          B\n          C\n",
+            "\t\tA\n\t          B\n\t\tC\n",
+            "\t\t\tA\n\t                B\n\t\t\tC"
+        ), '8';
+    }
+}
