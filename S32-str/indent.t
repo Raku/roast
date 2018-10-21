@@ -145,6 +145,7 @@ is  " \t a\n \t b\n".indent(1).perl,
 # https://github.com/rakudo/rakudo/issues/2409
 group-of 6 => 'indent/dedent' => {
     # NOTE: whitespacing is important in this test. Don't modify
+    #?rakudo todo 'https://github.com/rakudo/rakudo/issues/2409'
     is_run "my \$a = q:to/END/;\n    A\n  \n    B\n    END\nprint \$a",
         {:out("A\n\nB\n"), :err(''), :0status},
         'no warnings when blank lines have trailing whitespace';
