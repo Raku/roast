@@ -3,7 +3,7 @@ use Test;
 
 # Nil may be a type now.  Required?
 
-plan 65;
+plan 66;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -25,9 +25,11 @@ nok (my $x = Nil).defined, 'assigning Nil to scalar leaves it undefined'; #OK
 ok (my $y = ()).defined, 'assigning () to scalar results in a defined list'; #OK
 
 nok Nil.so,                  'Nil.so is False';
-#?rakudo todo 'returns False; is returning Nil really a good idea?'
+#?rakudo todo 'returns True/False'
 ok Nil.ACCEPTS(Any)  === Nil, 'Nil.ACCEPTS always returns Nil';
-ok Nil.JustAnyMethod === Nil, 'Any method on Nil should return Nil';
+ok Nil.JustAnyMethod === Nil, 'Any method on Nil should return Nil (no args)';
+ok Nil.JustAnyMethod('meows', 42, 'bars', :foos) === Nil,
+    'Any method on Nil should return Nil (with args)';
 
 # RT #63894
 {
