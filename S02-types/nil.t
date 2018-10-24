@@ -25,8 +25,9 @@ nok (my $x = Nil).defined, 'assigning Nil to scalar leaves it undefined'; #OK
 ok (my $y = ()).defined, 'assigning () to scalar results in a defined list'; #OK
 
 nok Nil.so,                  'Nil.so is False';
-ok Nil.ACCEPTS(Any)  == Nil, 'Nil.ACCEPTS always returns Nil';
-ok Nil.JustAnyMethod == Nil, 'Any method on Nil should return Nil';
+#?rakudo todo 'returns False; is returning Nil really a good idea?'
+ok Nil.ACCEPTS(Any)  === Nil, 'Nil.ACCEPTS always returns Nil';
+ok Nil.JustAnyMethod === Nil, 'Any method on Nil should return Nil';
 
 # RT #63894
 {
