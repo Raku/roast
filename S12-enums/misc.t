@@ -72,8 +72,8 @@ plan 18;
 
 # RT#129160
 {
-    enum RT<R T>;
-    ok R.ACCEPTS(RT), 'enum member ACCEPTS the enum type object';
+    my enum RT<R T>;
+    is-deeply R.ACCEPTS(RT), False, 'enum member does not ACCEPTS the enum type object';
 }
 
 # vim: ft=perl6
