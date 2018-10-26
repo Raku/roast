@@ -394,7 +394,6 @@ group-of 2 => 'negative offset in JIT lables errors' => {
         our sub foo(--> Hash[Any:D,List:D]) { my Any:D %tree{List:D} }
     ｣;
 
-    #?rakudo todo 'https://github.com/rakudo/rakudo/issues/2400'
     is_run ｢use Foo; foo; print 'pass'｣, :compiler-args['-I', $lib.absolute],
       {:out<pass>, :err(''), :0status},
     'use of Hash[…:D, …:D] in a module does not explode';
