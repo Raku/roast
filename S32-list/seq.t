@@ -1,7 +1,9 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
-plan 41;
+plan 42;
 
 my @result = 1,2,3;
 
@@ -227,3 +229,10 @@ Seq.new(
         method count-only { pass  $mess }
     }.new
 ).Numeric;
+
+group-of 2 => 'ZEN slices do not cache Seqs' => {
+    (my $z-hash := ().Seq)<>;
+    throws-like { $z-hash.iterator }, X::Seq::Consumed, '<> ZEN slice';
+    (my $z-list := ().Seq)[];
+    throws-like { $z-list.iterator }, X::Seq::Consumed, '[] ZEN slice';
+}
