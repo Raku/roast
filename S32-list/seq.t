@@ -231,8 +231,8 @@ Seq.new(
 ).Numeric;
 
 group-of 2 => 'ZEN slices do not cache Seqs' => {
-    (my $z-hash := ().Seq)<>;
+    (my $z-hash := ().Seq)<>.iterator;
     throws-like { $z-hash.iterator }, X::Seq::Consumed, '<> ZEN slice';
-    (my $z-list := ().Seq)[];
+    (my $z-list := ().Seq)[].iterator;
     throws-like { $z-list.iterator }, X::Seq::Consumed, '[] ZEN slice';
 }
