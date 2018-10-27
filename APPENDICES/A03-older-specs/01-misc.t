@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 6;
+plan 7;
 
 # RT #131503
 #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
@@ -291,4 +291,76 @@ group-of 7 => 'Pair.freeze' => {
 group-of 2 => ':count arg on &lines/Str.lines' => {
     is lines("a\nb\nc\n",:count), 3, 'lines(Str, :count)';
     is "a\nb\nc\n".lines(:count), 3, 'Str.lines(:count)';
+}
+
+# https://github.com/rakudo/rakudo/issues/2433
+group-of 5 => 'language switching' => {
+    group-of 4 => 'version as first thing' => {
+        sub versify ($ver?) {
+            ("use v6.$ver; " with $ver) ~ 'print $*PERL.version'
+        }
+
+        is_run versify(),            {:err(''), :0status, :out<6.d> },
+            'no version pragma';
+        is_run versify('c'),         {:err(''), :0status, :out<6.c> },
+            '6.c version pragma';
+        is_run versify('d'),         {:err(''), :0status, :out<6.d> },
+            '6.d version pragma';
+        is_run versify('d.PREVIEW'), {:err(''), :0status, :out<6.d> },
+            '6.d.PREVIEW version pragma';
+    }
+
+    group-of 4 => 'version after comments' => {
+        sub versify ($ver?) {
+            "# meow meow\n"
+              ~ ("use v6.$ver; " with $ver) ~ 'print $*PERL.version'
+        }
+
+        is_run versify(),            {:err(''), :0status, :out<6.d> },
+            'no version pragma';
+        is_run versify('c'),         {:err(''), :0status, :out<6.c> },
+            '6.c version pragma';
+        is_run versify('d'),         {:err(''), :0status, :out<6.d> },
+            '6.d version pragma';
+        is_run versify('d.PREVIEW'), {:err(''), :0status, :out<6.d> },
+            '6.d.PREVIEW version pragma';
+    }
+
+    group-of 4 => 'version after POD' => {
+        sub versify ($ver?) {
+            "=begin pod\n\nZE POD\n\n=end pod\n\n"
+              ~ ("use v6.$ver; " with $ver) ~ 'print $*PERL.version'
+        }
+
+        is_run versify(),            {:err(''), :0status, :out<6.d> },
+            'no version pragma';
+        is_run versify('c'),         {:err(''), :0status, :out<6.c> },
+            '6.c version pragma';
+        is_run versify('d'),         {:err(''), :0status, :out<6.d> },
+            '6.d version pragma';
+        is_run versify('d.PREVIEW'), {:err(''), :0status, :out<6.d> },
+            '6.d.PREVIEW version pragma';
+    }
+
+    group-of 3 => 'error out when trying to switch version too late' => {
+        my %args = :out(''), :1exitcode,
+            :err{ $^v.contains: 'Too late to switch language version' };
+        is_run "use Test; use v6.c;", %args, '6.c version pragma';
+        is_run "use Test; use v6.d;", %args, '6.d version pragma';
+        is_run "use Test; use v6.d.PREVIEW;", %args,
+            '6.d.PREVIEW version pragma';
+    }
+
+    group-of 4 => 'versions without dot' => {
+        sub versify ($ver?) { ("use v6$ver; " with $ver) ~ 'print $*PERL.version' }
+
+        is_run versify(),            {:err(''), :0status, :out<6.d> },
+            'no version pragma';
+        is_run versify('c'),         {:err(''), :0status, :out<6.c> },
+            '6.c version pragma';
+        is_run versify('d'),         {:err(''), :0status, :out<6.d> },
+            '6.d version pragma';
+        is_run versify('d.PREVIEW'), {:err(''), :0status, :out<6.d> },
+            '6.d.PREVIEW version pragma';
+    }
 }

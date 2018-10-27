@@ -1,5 +1,5 @@
-unit module Foo::Bar;
 use v6;
+unit module Foo::Bar;
 use Test;
 
 # L<S11/"Modules"/There are two basic declaration syntaxes>

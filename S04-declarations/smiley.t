@@ -21,7 +21,7 @@ is { my Int:_ $a       }(),   Int, 'can Int:_ be on its own';
 is { my Int:_ $a = Int }(),   Int, 'can Int:_ take an Int:U';
 is { my Int:_ $a = 42  }(),    42, 'can Int:_ take an Int:D';
 
-is { my Int:U $a       }(), Int:U, 'can Int:U be on its own';
+is { my Int:U $a       }(),   Int, 'can Int:U be on its own';
 is { my Int:U $a = Int }(),   Int, 'can Int:U take an Int:U';
 throws-like { my Int:U $a = 42 },
   X::TypeCheck::Assignment,
@@ -45,7 +45,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
     is { my Int:_ $a = Int }(),   Int, 'with :_, can Int:_ take an Int:U';
     is { my Int:_ $a = 42  }(),    42, 'with :_, can Int:_ take an Int:D';
 
-    is { my Int:U $a       }(), Int:U, 'with :_, can Int:U be on its own';
+    is { my Int:U $a       }(),   Int, 'with :_, can Int:U be on its own';
     is { my Int:U $a = Int }(),   Int, 'with :_, can Int:U take an Int:U';
     throws-like { my Int:U $a = 42 },
       X::TypeCheck::Assignment,
@@ -62,7 +62,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
 
 {
     use variables :U;
-    is { my Int   $a       }(), Int:U, 'with :U, can Int   be on its own';
+    is { my Int   $a       }(),   Int, 'with :U, can Int   be on its own';
     is { my Int   $a = Int }(),   Int, 'with :U, can Int   take an Int:U';
     throws-like { my Int   $a = 42 },
       X::TypeCheck::Assignment,
@@ -72,7 +72,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
     is { my Int:_ $a = Int }(),   Int, 'with :U, can Int:_ take an Int:U';
     is { my Int:_ $a = 42  }(),    42, 'with :U, can Int:_ take an Int:D';
 
-    is { my Int:U $a       }(), Int:U, 'with :U, can Int:U be on its own';
+    is { my Int:U $a       }(),   Int, 'with :U, can Int:U be on its own';
     is { my Int:U $a = Int }(),   Int, 'with :U, can Int:U take an Int:U';
     throws-like { my Int:U $a = 42 },
       X::TypeCheck::Assignment,
@@ -102,7 +102,7 @@ is { my Int:D $a = 42  }(),    42, 'can Int:D take an Int:D';
     is { my Int:_ $a = Int }(),   Int, 'with :D, can Int:_ take an Int:U';
     is { my Int:_ $a = 42  }(),    42, 'with :D, can Int:_ take an Int:D';
 
-    is { my Int:U $a       }(), Int:U, 'with :D, can Int:U be on its own';
+    is { my Int:U $a       }(),   Int, 'with :D, can Int:U be on its own';
     is { my Int:U $a = Int }(),   Int, 'with :D, can Int:U take an Int:U';
     throws-like { my Int:U $a = 42 },
       X::TypeCheck::Assignment,

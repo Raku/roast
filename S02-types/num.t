@@ -217,8 +217,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-deeply   $v3, (my num $=5e0), 'new value (native)';
 
         my num $v4;
-        cmp-ok ++$v4, '===', NaN, 'return value (uninit. native)';
-        cmp-ok   $v4, '===', NaN, 'new value (uninit. native)';
+        cmp-ok ++$v4, '===', 1e0, 'return value (uninit. native)';
+        cmp-ok   $v4, '===', 1e0, 'new value (uninit. native)';
     }
 
     subtest '--Num' => {
@@ -237,8 +237,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-deeply   $v3, (my num $ = 3e0), 'new value (native)';
 
         my num $v4;
-        cmp-ok --$v4, '===', NaN, 'return value (uninit. native)';
-        cmp-ok   $v4, '===', NaN, 'new value (uninit. native)';
+        cmp-ok --$v4, '===', -1e0, 'return value (uninit. native)';
+        cmp-ok   $v4, '===', -1e0, 'new value (uninit. native)';
     }
 
     subtest 'Num++' => {
@@ -248,8 +248,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-deeply $v1,   1e0, 'new value';
 
         my num $v2;
-        cmp-ok $v2++, '===', NaN, 'return value (uninit. native)';
-        cmp-ok $v2,   '===', NaN, 'new value (uninit. native)';
+        cmp-ok $v2++, '===', 0e0, 'return value (uninit. native)';
+        cmp-ok $v2,   '===', 1e0, 'new value (uninit. native)';
     }
 
     subtest 'Num--' => {
@@ -264,16 +264,16 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         is-deeply $v2,   (my num $ = 3e0), 'new value (native)';
 
         my num $v3;
-        cmp-ok $v3--, '===', NaN, 'return value (uninit. native)';
-        cmp-ok $v3,   '===', NaN, 'new value (uninit. native)';
+        cmp-ok $v3--, '===',  0e0, 'return value (uninit. native)';
+        cmp-ok $v3,   '===', -1e0, 'new value (uninit. native)';
     }
 }
 
 { # coverage; 2016-10-16
     subtest 'prefix:<->(num) and U+2212 prefix op' => {
         plan 8;
-        cmp-ok -(my num $), '===', NaN, '- uninitialized';
-        cmp-ok −(my num $), '===', NaN, '− (U+2212) uninitialized';
+        cmp-ok -(my num $), '===', -0e0, '- uninitialized';
+        cmp-ok −(my num $), '===', -0e0, '− (U+2212) uninitialized';
         is-deeply -(my num $ = 0e0  ), (my num $ = -0e0 ), '- zero';
         is-deeply −(my num $ = 0e0  ), (my num $ = -0e0 ), '− (U+2212) zero';
         is-deeply -(my num $ = 42e0 ), (my num $ = -42e0), '- positive';
@@ -286,7 +286,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
 
     subtest 'abs(num)' => {
         plan 4;
-        cmp-ok    abs(my num $), '===', NaN, 'uninitialized';
+        cmp-ok    abs(my num $), '===', 0e0, 'uninitialized';
         is-deeply abs(my num $ = 0e0),   (my num $ = 0e0),  'zero';
         is-deeply abs(my num $ = 42e0),  (my num $ = 42e0), 'positive';
         is-deeply abs(my num $ = -42e0), (my num $ = 42e0), 'negative';
@@ -299,13 +299,13 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my num $np = 42e0;
         my num $nn = -42e0;
 
-        cmp-ok $nu + $nz, '===', NaN, 'uninit + zero';
-        cmp-ok $nu + $np, '===', NaN, 'uninit + positive';
-        cmp-ok $nu + $nn, '===', NaN, 'uninit + negative';
-        cmp-ok $nu + $nu, '===', NaN, 'uninit + uninit';
-        cmp-ok $nz + $nu, '===', NaN, 'zero + uninit';
-        cmp-ok $np + $nu, '===', NaN, 'positive + uninit';
-        cmp-ok $nn + $nu, '===', NaN, 'negative + uninit';
+        cmp-ok $nu + $nz, '===', 0e0,   'uninit + zero';
+        cmp-ok $nu + $np, '===', 42e0,  'uninit + positive';
+        cmp-ok $nu + $nn, '===', -42e0, 'uninit + negative';
+        cmp-ok $nu + $nu, '===', 0e0,   'uninit + uninit';
+        cmp-ok $nz + $nu, '===', 0e0,   'zero + uninit';
+        cmp-ok $np + $nu, '===', 42e0,  'positive + uninit';
+        cmp-ok $nn + $nu, '===', -42e0, 'negative + uninit';
 
         is-deeply $nz + $np, (my num $ = 42e0 ), 'zero + positive';
         is-deeply $nz + $nn, (my num $ = -42e0), 'zero + negative';
@@ -325,13 +325,13 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my num $np = 4e0;
         my num $nn = -4e0;
 
-        cmp-ok $nu * $nz, '===', NaN, 'uninit * zero';
-        cmp-ok $nu * $np, '===', NaN, 'uninit * positive';
-        cmp-ok $nu * $nn, '===', NaN, 'uninit * negative';
-        cmp-ok $nu * $nu, '===', NaN, 'uninit * uninit';
-        cmp-ok $nz * $nu, '===', NaN, 'zero * uninit';
-        cmp-ok $np * $nu, '===', NaN, 'positive * uninit';
-        cmp-ok $nn * $nu, '===', NaN, 'negative * uninit';
+        cmp-ok $nu * $nz, '===',  0e0, 'uninit * zero';
+        cmp-ok $nu * $np, '===',  0e0, 'uninit * positive';
+        cmp-ok $nu * $nn, '===', -0e0, 'uninit * negative';
+        cmp-ok $nu * $nu, '===',  0e0, 'uninit * uninit';
+        cmp-ok $nz * $nu, '===',  0e0, 'zero * uninit';
+        cmp-ok $np * $nu, '===',  0e0, 'positive * uninit';
+        cmp-ok $nn * $nu, '===', -0e0, 'negative * uninit';
 
         is-deeply $nz * $np, (my num $ = 0e0  ), 'zero * positive';
         is-deeply $nz * $nn, (my num $ = -0e0 ), 'zero * negative';
@@ -354,9 +354,12 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my num $n5  = 5e0;
         my num $nn4 = -4e0;
 
-        cmp-ok $nu % $n5, '===', NaN, 'uninit % defined';
-        cmp-ok $n5 % $nu, '===', NaN, 'defined % uninit';
-        cmp-ok $nu % $nu, '===', NaN, 'uninit % uninit';
+        cmp-ok $nu % $n5, '===', 0e0, 'uninit % defined';
+        #?rakudo 2 todo 'we die https://github.com/rakudo/rakudo/issues/2434'
+        fails-like { $n5 % $nu }, X::Numeric::DivideByZero,
+            'defined % uninit';
+        fails-like { $nu % $nu }, X::Numeric::DivideByZero,
+            'uninit % uninit';
 
         is-deeply $nz  % $n4,  (my num $ =  0e0), '0 % 4';
         is-deeply $n4  % $n5,  (my num $ =  4e0), '4 % 5';
@@ -374,13 +377,13 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my num $np = 2e0;
         my num $nn = -2e0;
 
-        cmp-ok $nu ** $n1, '===', NaN, 'uninit ** 1st power';
-        cmp-ok $nu ** $np, '===', NaN, 'uninit ** positive';
-        cmp-ok $nu ** $nn, '===', NaN, 'uninit ** negative';
-        cmp-ok $nu ** $nu, '===', NaN, 'uninit ** uninit';
-        cmp-ok $nz ** $nu, '===', NaN, 'zero ** uninit';
-        cmp-ok $np ** $nu, '===', NaN, 'positive ** uninit';
-        cmp-ok $nn ** $nu, '===', NaN, 'negative ** uninit';
+        cmp-ok $nu ** $n1, '===', 0e0, 'uninit ** 1st power';
+        cmp-ok $nu ** $np, '===', 0e0, 'uninit ** positive';
+        cmp-ok $nu ** $nn, '===', Inf, 'uninit ** negative';
+        cmp-ok $nu ** $nu, '===', 1e0, 'uninit ** uninit';
+        cmp-ok $nz ** $nu, '===', 1e0, 'zero ** uninit';
+        cmp-ok $np ** $nu, '===', 1e0, 'positive ** uninit';
+        cmp-ok $nn ** $nu, '===', 1e0, 'negative ** uninit';
 
         is-deeply $n1 ** $nu, (my num $ = 1e0    ), '1 ** uninit';
         is-deeply $nu ** $nz, (my num $ = 1e0    ), 'uninit ** zero';
@@ -405,7 +408,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
 
     subtest 'log(num)' => sub {
         plan 9;
-        cmp-ok    log(my num $        ), '===', NaN, 'uninitialized';
+        cmp-ok    log(my num $        ), '===', -Inf, 'uninitialized';
         cmp-ok    log(my num $ = NaN  ), '===', NaN, 'NaN';
         cmp-ok    log(my num $ = -42e0), '===', NaN, 'negative';
         cmp-ok    log(my num $ =    -∞), '===', NaN, '-∞';
@@ -419,7 +422,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
 
     subtest 'ceiling(num)' => sub {
         plan 10;
-        cmp-ok    ceiling(my num $         ), '===', NaN, 'uninitialized';
+        cmp-ok    ceiling(my num $         ), '===', 0e0, 'uninitialized';
         cmp-ok    ceiling(my num $ =    NaN), '===', NaN, 'NaN';
         is-deeply ceiling(my num $ =     -∞), my num $ =   -∞, '-∞';
         is-deeply ceiling(my num $ =      ∞), my num $ =    ∞, '+∞';
@@ -441,7 +444,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'sin(num)' => {
         plan 13;
 
-        cmp-ok sin(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok sin(my num $      ), '===', 0e0, 'uninitialized';
         cmp-ok sin(my num $ = NaN), '===', NaN, 'NaN';
         cmp-ok sin(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok sin(my num $ =   ∞), '===', NaN, '+∞';
@@ -460,7 +463,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'asin(num)' => {
         plan 11;
 
-        cmp-ok asin(my num $         ), '===', NaN, 'uninitialized';
+        cmp-ok asin(my num $         ), '===', 0e0, 'uninitialized';
         cmp-ok asin(my num $ =    NaN), '===', NaN, 'NaN';
         cmp-ok asin(my num $ =     -∞), '===', NaN, '-∞';
         cmp-ok asin(my num $ =      ∞), '===', NaN, '+∞';
@@ -477,7 +480,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'cos(num)' => {
         plan 13;
 
-        cmp-ok cos(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok cos(my num $      ), '===', 1e0, 'uninitialized';
         cmp-ok cos(my num $ = NaN), '===', NaN, 'NaN';
         cmp-ok cos(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok cos(my num $ =   ∞), '===', NaN, '+∞';
@@ -496,13 +499,13 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'acos(num)' => {
         plan 11;
 
-        cmp-ok acos(my num $         ), '===', NaN, 'uninitialized';
         cmp-ok acos(my num $ =    NaN), '===', NaN, 'NaN';
         cmp-ok acos(my num $ =     -∞), '===', NaN, '-∞';
         cmp-ok acos(my num $ =      ∞), '===', NaN, '+∞';
         cmp-ok acos(my num $ = -1.1e0), '===', NaN, '-1.1e0';
         cmp-ok acos(my num $ =  1.1e0), '===', NaN, '+1.1e0';
 
+        is-approx acos(my num $         ), my num $ =  π/2,  '1e0';
         is-approx acos(my num $ =    1e0), my num $ =  0e0,  '1e0';
         is-approx acos(my num $ =   -1e0), my num $ =  π,    '-1e0';
         is-approx acos(my num $ =    0e0), my num $ =  π/2,  '0e0';
@@ -513,11 +516,11 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'tan(num)' => {
         plan 13;
 
-        cmp-ok tan(my num $      ), '===', NaN, 'uninitialized';
         cmp-ok tan(my num $ = NaN), '===', NaN, 'NaN';
         cmp-ok tan(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok tan(my num $ =   ∞), '===', NaN, '+∞';
 
+        is-approx tan(my num $       ), my num $ =  0e0, 'uninitialized';
         is-approx tan(my num $ =  0e0), my num $ =  0e0,        '0e0';
         is-approx tan(my num $ =    τ), my num $ =  0e0,        'τ';
         is-approx tan(my num $ =   -τ), my num $ =  0e0,        '-τ';
@@ -534,9 +537,9 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'atan(num)' => {
         plan 7;
 
-        cmp-ok atan(my num $      ), '===', NaN, 'uninitialized';
         cmp-ok atan(my num $ = NaN), '===', NaN, 'NaN';
 
+        is-approx atan(my num $       ), my num $ =  0e0, 'uninitialized';
         is-approx atan(my num $ =  0e0), my num $ =  0e0, '0e0';
         is-approx atan(my num $ =  1e0), my num $ =  π/4, '1e0';
         is-approx atan(my num $ = -1e0), my num $ = -π/4, '-1e0';
@@ -547,11 +550,11 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'sec(num)' => {
         plan 13;
 
-        cmp-ok sec(my num $      ), '===', NaN, 'uninitialized';
         cmp-ok sec(my num $ = NaN), '===', NaN, 'NaN';
         cmp-ok sec(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok sec(my num $ =   ∞), '===', NaN, '+∞';
 
+        is-approx sec(my num $       ), my num $ =  1e0, 'uninitialized';
         is-approx sec(my num $ =  0e0), my num $ =  1e0,  '0e0';
         is-approx sec(my num $ =    τ), my num $ =  1e0,  'τ';
         is-approx sec(my num $ =   -τ), my num $ =  1e0,  '-τ';
@@ -586,7 +589,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'cotan(num)' => {
         plan 38;
 
-        cmp-ok cotan(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok cotan(my num $      ), '===', my num $ = ∞, 'uninitialized';
         cmp-ok cotan(my num $ = NaN), '===', NaN, 'NaN';
         cmp-ok cotan(my num $ =  -∞), '===', NaN, '-∞';
         cmp-ok cotan(my num $ =   ∞), '===', NaN, '+∞';
@@ -635,9 +638,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     subtest 'acotan(num)' => {
         plan 29;
 
-        cmp-ok acotan(my num $      ), '===', NaN, 'uninitialized';
         cmp-ok acotan(my num $ = NaN), '===', NaN, 'NaN';
-
+        is-approx acotan(my num $), my num $ =  π/2, 'uninitialized';
         is-deeply acotan(my num $ = -∞), -0e0, '-∞ is -0';
 
         is-approx acotan(my num $ =          ∞), my num $ =  0e0,    '∞';
@@ -674,7 +676,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my @test-values = e, 0e0, 1e0, π, τ, 1e2;
         plan 2*@test-values + 6;
 
-        cmp-ok sinh(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok sinh(my num $      ), '===', 0e0, 'uninitialized';
         cmp-ok sinh(my num $ = NaN), '===', NaN, 'NaN';
 
         cmp-ok sinh(my num $ =     ∞), '==',  ∞,     '∞';
@@ -691,7 +693,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my @test-values = e, 0e0, 1e0, π, τ, 1e2;
         plan 2*@test-values + 7;
 
-        cmp-ok asinh(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok asinh(my num $      ), '===', 0e0, 'uninitialized';
         cmp-ok asinh(my num $ = NaN), '===', NaN, 'NaN';
 
         cmp-ok asinh(my num $ =      ∞), '==',  ∞,      '∞';
@@ -711,7 +713,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my @test-values = e, 0e0, 1e0, π, τ, 1e2;
         plan 2*@test-values + 6;
 
-        cmp-ok cosh(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok cosh(my num $      ), '===', 1e0, 'uninitialized';
         cmp-ok cosh(my num $ = NaN), '===', NaN, 'NaN';
 
         cmp-ok cosh(my num $ =     ∞), '==',  ∞,     '∞';
@@ -750,7 +752,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my @test-values = e, 0e0, 1e0, π, τ, 1e2;
         plan 2*@test-values + 6;
 
-        cmp-ok tanh(my num $      ), '===', NaN, 'uninitialized';
+        cmp-ok tanh(my num $      ), '===', 0e0, 'uninitialized';
         cmp-ok tanh(my num $ = NaN), '===', NaN, 'NaN';
 
         cmp-ok tanh(my num $ =     ∞), '==',  1e0,     '∞';

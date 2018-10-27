@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 use lib $?FILE.IO.parent(2).add("packages");
-plan 73;
+plan 72;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -33,10 +33,6 @@ plan 73;
 # RT #69740
 {
     throws-like 'constant ($a, $b) = (3, 4)', X::Syntax::Missing, 'constant no longer takes list';
-}
-
-{
-    throws-like 'constant %hash = "nothash"', X::TypeCheck, 'constant hash requires Associative';
 }
 
 {
