@@ -354,9 +354,12 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my num $n5  = 5e0;
         my num $nn4 = -4e0;
 
-        cmp-ok $nu % $n5, '===', NaN, 'uninit % defined';
-        cmp-ok $n5 % $nu, '===', NaN, 'defined % uninit';
-        cmp-ok $nu % $nu, '===', NaN, 'uninit % uninit';
+        cmp-ok $nu % $n5, '===', 0e0, 'uninit % defined';
+        #?rakudo 2 todo 'we die https://github.com/rakudo/rakudo/issues/2434'
+        fails-like { $n5 % $nu }, X::Numeric::DivideByZero,
+            'defined % uninit';
+        fails-like { $nu % $nu }, X::Numeric::DivideByZero,
+            'uninit % uninit';
 
         is-deeply $nz  % $n4,  (my num $ =  0e0), '0 % 4';
         is-deeply $n4  % $n5,  (my num $ =  4e0), '4 % 5';
