@@ -36,7 +36,7 @@ plan 70;
 }
 
 {
-    throws-like 'constant %hash = "nothash"', X::TypeCheck, 'constant hash requires Associative';
+    throws-like 'use v6.c; constant %hash = "nothash"', X::TypeCheck, 'constant hash requires Associative';
 }
 
 {
