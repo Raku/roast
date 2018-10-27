@@ -7,7 +7,7 @@ use Test::Util;
 # They might be rearranged into other files in the future, but for now, keeping them in this
 # file avoids creating a ton of `-6.d.t` files for the sake of single tests.
 
-plan 7;
+plan 6;
 
 group-of 6 => ':sym<> colonpair on subroutine names is reserved' => {
     throws-like 'use v6.d.PREVIEW; sub meow:sym<bar> {}', X::Syntax::Reserved, ':sym<...>';
@@ -196,45 +196,49 @@ group-of 3 => 'smiley constraints default to type object without smiley' => {
     }
 }
 
-group-of 6 => 'sunk `start`' => {
-    is_run ｢
-      use v6.d.PREVIEW;
-      start { die "PASS" }; sleep ⅓; print "fail"
-    ｣, {:out{not .contains: 'fail'}, :err{.contains: 'PASS'}, :1status }, 'block';
-
-    is_run ｢
-      use v6.d.PREVIEW;
-      start die "PASS"; sleep ⅓; print "pass"
-    ｣, {:out{not .contains: 'fail'}, :err{.contains: 'PASS'}, :1status }, 'thunk';
-
-    is_run ｢
-      use v6.d.PREVIEW;
-      start { CATCH { when X::Str::Numeric {} }; die "PASS" };
-      sleep ⅓; print "pass"
-    ｣, {:out{not .contains: 'fail'}, :err{.contains: 'PASS'}, :1status },
-      'with non-catching handler';
-
-    is_run ｢
-      use v6.d.PREVIEW;
-      start { CATCH { default { note "caught" } }; die "PASS" }
-      sleep ⅓; print "pass"
-    ｣, {:out<pass>, :err{.contains: 'caught'}, :0status },
-      'with catching handler';
-
-    is_run ｢
-      use v6.d.PREVIEW;
-      (start die "fail"; sleep ⅓).sink;
-      print "pass"
-    ｣, {:out{not .contains: 'fail'}, :err{not .contains: 'PASS'}, :0status },
-      'non-sunk context, even if we call .sink on it';
-
-    is_run ｢
-      use v6.d.PREVIEW;
-      class Exceptions::Meows { method process (| --> False) { note "MEOWS" } }
-      BEGIN %*ENV<PERL6_EXCEPTIONS_HANDLER> = 'Meows';
-      start die "PASS"; sleep ⅓; print "fail"
-    ｣, {:out{not .contains: 'fail'}, :err{.contains: 'MEOWS'}, :1status},
-        'custom exceptions handler respected';
-}
+# group-of 7 => 'sunk `start`' => {
+#     is_run ｢
+#       use v6.d.PREVIEW;
+#       start { die "PASS" }; sleep ⅓; print "fail"
+#     ｣, {:out{not .contains: 'fail'}, :err{.contains: 'PASS'}, :1status }, 'block';
+#
+#     is_run ｢
+#       use v6.d.PREVIEW;
+#       start die "PASS"; sleep ⅓; print "pass"
+#     ｣, {:out{not .contains: 'fail'}, :err{.contains: 'PASS'}, :1status }, 'thunk';
+#
+#     is_run ｢
+#       use v6.d.PREVIEW;
+#       start { CATCH { when X::Str::Numeric {} }; die "PASS" };
+#       sleep ⅓; print "pass"
+#     ｣, {:out{not .contains: 'fail'}, :err{.contains: 'PASS'}, :1status },
+#       'with non-catching handler';
+#
+#     is_run ｢
+#       use v6.d.PREVIEW;
+#       start { CATCH { default { note "caught" } }; die "PASS" }
+#       sleep ⅓; print "pass"
+#     ｣, {:out<pass>, :err{.contains: 'caught'}, :0status },
+#       'with catching handler';
+#
+#     is_run ｢
+#       use v6.d.PREVIEW;
+#       (start die "fail"; sleep ⅓).sink;
+#       print "pass"
+#     ｣, {:out{not .contains: 'fail'}, :err{not .contains: 'PASS'}, :0status },
+#       'non-sunk context, even if we call .sink on it';
+#
+#     is_run ｢
+#       use v6.d.PREVIEW;
+#       class Exceptions::Meows { method process (| --> False) { note "MEOWS" } }
+#       BEGIN %*ENV<PERL6_EXCEPTIONS_HANDLER> = 'Meows';
+#       start die "PASS"; sleep ⅓; print "fail"
+#     ｣, {:out{not .contains: 'fail'}, :err{.contains: 'MEOWS'}, :1status},
+#         'custom exceptions handler respected';
+#
+#     # https://github.com/rakudo/rakudo/issues/2436
+#     lives-ok { for ^1000 { my $z = 42; start { $z.abs } }; sleep .3 },
+#         'no crashes when accessing outer lexicals';
+# }
 
 # vim: expandtab shiftwidth=4 ft=perl6
