@@ -40,8 +40,7 @@ is @precompiled2.elems, 15;
 is $_, 'True' for @precompiled2;
 
 # RT #123272
-my @keys2 = Test::Util::run( "use lib $package-lib-prefix.perl();\n" ~ q:to"--END--").lines;
-    use v6;
+my @keys2 = Test::Util::run( "use v6;\nuse lib $package-lib-prefix.perl();\n" ~ q:to"--END--").lines;
     use Example2::T;
 
     use Example2::G;

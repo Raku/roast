@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 267;
+plan 266;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -138,7 +138,6 @@ throws-like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws-like '{ use MONKEY-TYPING; }; augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping,
     'MONKEY-TYPING applies lexically';
 throws-like 'use MONKEY-TYPING; augment role Positional { }', X::Syntax::Augment::Illegal;
-throws-like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
 # RT #73938
 throws-like 'sub twigil:<@>() { }', X::Syntax::Extension::Category, category => 'twigil';
 throws-like 'sub infix:sym< >() { }', X::Syntax::Extension::Null;

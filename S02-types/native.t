@@ -11,7 +11,7 @@ plan 92;
 
 {
     my num $num;
-    is $num, NaN, 'num default value';
+    is-deeply $num, 0e0, 'num default value';
     $num = 3e0;
     ok $num * 2e0 == 6e0, 'can do basic math with num';
 }
@@ -88,8 +88,8 @@ plan 92;
 {
     my int $x;
     my num $y;
-    is $x, 0, '#101450';
-    is $y, NaN, '#101450';
+    is-deeply $x, 0,   'RT#101450';
+    is-deeply $y, 0e0, 'RT#101450';
 }
 
 # RT #102416
@@ -177,11 +177,11 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
 # RT #124084
 {
     my num $a;
-    is NaN, $a, "num defaults to NaN";
+    is-deeply $a, 0e0, "num defaults to 0e0";
     my num32 $b;
-    is NaN, $b, "num32 defaults to NaN";
+    is-deeply $b, 0e0, "num32 defaults to 0e0";
     my num64 $c;
-    is NaN, $c, "num64 defaults to NaN";
+    is-deeply $c, 0e0, "num64 defaults to 0e0";
 }
 
 # RT ¤124084
@@ -375,12 +375,12 @@ subtest 'meta-assign op with native nums' => {
         $s
     }, 3.6, 'meta-assigning into inited num';
 
-    is-deeply do {
+    is-approx do {
         my num32 @arr = 1.1e0, 1.2e0, 1.3e0;
         my num32 $s;
         for @arr { $s += $_ }
         $s
-    }, NaN, 'meta-assigning into UN-inited num';
+    }, 3.6000001430511475e0, 'meta-assigning into UN-inited num';
 }
 
 # vim: ft=perl6

@@ -27,7 +27,7 @@ is 'hello'.subst('e', 3),     'h3llo', 'non-Str replacement works for string for
 $/ = ['nope'];
 is 'a'.subst(/(.)/,"$0"), 'nope',     '.. bare strings cannot see $/ because they are evaluated first';
 is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure to delay evaluation';
-is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
+is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 
 # RT #116224
 {
