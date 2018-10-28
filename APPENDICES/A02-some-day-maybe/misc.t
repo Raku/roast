@@ -7,7 +7,7 @@ use Test;
 # Since there's yet no existing behaviour for some of such combinations,
 # yet it might exist in the future, this APPENDIX test file is for such tests.
 
-plan 3;
+plan 4;
 
 # https://github.com/rakudo/rakudo/issues/1476
 throws-like ｢*+42:foo｣, X::Syntax::Adverb, :what{.so},
@@ -27,4 +27,9 @@ subtest 'attempting to use defaults with slurpy parameters throws' => {
     throws-like '-> \qq[$_] = 42 {}()', X::Parameter::Default,
         $_ ~ ' slurpy with default throws'
     for @slurpies;
+}
+
+{ # RT#126979
+    my @a[;];
+    pass 'shaped array declaration without numbers does not infini-loop';
 }
