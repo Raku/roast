@@ -177,18 +177,17 @@ subtest '.print-nl method' => {
     with $file.open: :w, :nl-out<♥> { .print-nl; .close }
     is-deeply $file.slurp, "♥", ':nl-out set to ♥';
 
-    with IO::Handle.new(:nl-out("foo\n\n\nbar"), :path($file)).open: :w {
+    with IO::Handle.new(:path($file)).open: :nl-out("foo\n\n\nbar"), :w {
         .print-nl; .close
     }
-    is-deeply $file.slurp, "foo\n\n\nbar", ':nl-out set to a string (via .new)';
+    is-deeply $file.slurp, "foo\n\n\nbar", ':nl-out set to a string';
 
-    with IO::Handle.new: :nl-out<foo>, :path($file) {
-        .open: :w;                  .print-nl; .close;
-        .open: :a, :nl-out<bar>;    .print-nl; .close;
+    with IO::Handle.new: :path($file) {
+        .open: :w, :nl-out<bar>;    .print-nl; .close;
         .open: :a; .nl-out = 'ber'; .print-nl; .close;
     }
-    is-deeply $file.slurp, "foobarber",
-        ':nl-out set via .new, then via .open, then via attribute assignment';
+    is-deeply $file.slurp, "barber",
+        ':nl-out set via .open, then via attribute assignment';
 }
 
 # RT #131384

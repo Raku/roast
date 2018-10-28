@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 7;
+plan 8;
 
 # RT #131503
 #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
@@ -362,5 +362,31 @@ group-of 5 => 'language switching' => {
             '6.d version pragma';
         is_run versify('d.PREVIEW'), {:err(''), :0status, :out<6.d> },
             '6.d.PREVIEW version pragma';
+    }
+}
+
+group-of 1 => 'IO::Handle.new can take a bunch of options' => {
+    # No final decision has been rendered yet, but it's likely we'll want
+    # to limit what IO::Handle.new can take, so keep those tests here
+    group-of 4 => '.print-nl method' => {
+        my $file = make-temp-file;
+        with $file.open: :w { .print-nl; .close }
+        is-deeply $file.slurp, "\n", 'defaults';
+
+        with $file.open: :w, :nl-out<♥> { .print-nl; .close }
+        is-deeply $file.slurp, "♥", ':nl-out set to ♥';
+
+        with IO::Handle.new(:nl-out("foo\n\n\nbar"), :path($file)).open: :w {
+            .print-nl; .close
+        }
+        is-deeply $file.slurp, "foo\n\n\nbar", ':nl-out set to a string (via .new)';
+
+        with IO::Handle.new: :nl-out<foo>, :path($file) {
+            .open: :w;                  .print-nl; .close;
+            .open: :a, :nl-out<bar>;    .print-nl; .close;
+            .open: :a; .nl-out = 'ber'; .print-nl; .close;
+        }
+        is-deeply $file.slurp, "foobarber",
+            ':nl-out set via .new, then via .open, then via attribute assignment';
     }
 }
