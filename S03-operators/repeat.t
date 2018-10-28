@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 63;
+plan 62;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -31,7 +31,6 @@ is('str' x Int, '', 'x with Int type object');
     throws-like ｢'a' x -Inf｣, X::Numeric::CannotConvert,
         'repeating with -Inf dies';
 
-    isa-ok('a' x Inf, Failure, 'repeating with Inf is a Failure');
     isa-ok('a' x *, WhateverCode, 'repeating with * is a WhateverCode');
 
     throws-like ｢'a' xx -NaN｣, X::Numeric::CannotConvert,
