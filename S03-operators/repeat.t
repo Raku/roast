@@ -24,39 +24,22 @@ is('a' x 2.2, 'aa', 'repeating with a fractional number coerces to Int');
 is('str' x Int, '', 'x with Int type object');
 # RT #125628
 {
-    throws-like(
-        { 'a' x -NaN },
-        X::Numeric::CannotConvert,
-        'repeating with -NaN fails'
-    );
-    throws-like(
-        { 'a' x NaN },
-        X::Numeric::CannotConvert,
-        'repeating with NaN fails'
-    );
-    throws-like(
-        { 'a' x -Inf },
-        X::Numeric::CannotConvert,
-        'repeating with -Inf fails'
-    );
+    throws-like ｢'a' x -NaN｣, X::Numeric::CannotConvert,
+        'repeating with -NaN dies';
+    throws-like ｢'a' x NaN｣, X::Numeric::CannotConvert,
+        'repeating with NaN dies';
+    throws-like ｢'a' x -Inf｣, X::Numeric::CannotConvert,
+        'repeating with -Inf dies';
+
     isa-ok('a' x Inf, Failure, 'repeating with Inf is a Failure');
     isa-ok('a' x *, WhateverCode, 'repeating with * is a WhateverCode');
 
-    throws-like(
-        { 'a' xx -NaN },
-        X::Numeric::CannotConvert,
-        'list repeating with -NaN fails'
-    );
-    throws-like(
-        { 'a' xx NaN },
-        X::Numeric::CannotConvert,
-        'list repeating with NaN fails'
-    );
-    throws-like(
-        { 'a' xx -Inf },
-        X::Numeric::CannotConvert,
-        'list repeating with -Inf fails'
-    );
+    throws-like ｢'a' xx -NaN｣, X::Numeric::CannotConvert,
+        'list repeating with -NaN fails';
+    throws-like ｢'a' xx NaN｣, X::Numeric::CannotConvert,
+        'list repeating with NaN fails';
+    throws-like ｢'a' xx -Inf｣, X::Numeric::CannotConvert,
+        'list repeating with -Inf fails';
 }
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
