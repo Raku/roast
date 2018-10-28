@@ -465,18 +465,18 @@ throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitesp
 {
     is (for ^2 { 41; 42 }), (42,42), "for loop value is list of iter values";
     is (for ^5 { 41; next if $_ == 2; $_; }).flat, (0,1,3,4),
-                "for loop with value-less next flattens out nexted iterations";
+                "for loop with label-less next flattens out nexted iterations";
 
 # see RT #124568
     my $l = (for ^5 { 41; next if $_ == 2; $_; });
-    is $l[2].perl, 3, "for loop iteration with value-less 'next' gives Empty";
+    is $l[2].perl, 3, "for loop iteration with label-less 'next' gives Empty";
 
     is (for ^5 { 41; last if $_ == 2; $_; }).flat, (0,1),
-                "for loop with value-less last flattens out last iteration";
+                "for loop with label-less last flattens out last iteration";
 
 #?rakudo todo 'Rakudo still uses Nil here RT #124569'
     $l = (for ^5 { 41; last if $_ == 2; $_; });
-    is $l[2].perl, "()", "for loop iteration with value-less 'last' gives ()";
+    is $l[2].perl, "()", "for loop iteration with label-less 'last' gives ()";
 }
 
 # RT #62478
