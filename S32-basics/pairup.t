@@ -1,11 +1,12 @@
 use v6;
-
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 5;
 
 {
-    is-deeply Any.pairup(), (), 'pairup on an undefined invocant returns an empty list';
+    is-eqv Any.pairup, (), 'pairup on a :U invocant returns an empty List';
     my @nums = 1..6;
     my %h = @nums.pairup;
     is(@nums.pairup.elems, 3, 'pairup returns correct list size');
