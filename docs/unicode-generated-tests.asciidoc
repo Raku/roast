@@ -1,58 +1,80 @@
 = Tests Generated from Unicode Files
 :toc:
 
-* Roast Test File
-* Version number
-* Date we last generated the file
-* First two lines of the source file if the version is in the first line
-   (`# NormalizationTest-10.0.0.txt`).
-** If not (`# emoji-test.txt`) then include the line with the version number as well.
+== Instructions
+The `UNIDATA` folder referred to below can be obtained by running `tools/UCD-download.p6`
+from MoarVM's repository.
 
-When regenerating, please add the first two lines of the source file,
-as well as update the version and generation date.
+.Please list these data points if possible:
+* Script path (should be the heading)
+* Steps: list of steps to run for each Unicode update. Sometimes there is just one,
+  other times there are multiple things to do. Please list the command and command's
+  arguments (including the data file)
+* Version: The Unicode version that was used for generating the tests
+* Date: The date the file was regenerated (YYYY.MM.DD)
+* Generated File(s): a list of files which this script generates
+
+== S15-nfg/emoji-test-gen.p6
+
+.Steps
+* Run `S15-nfg/emoji-test-gen.p6 UNIDATA/emoji-xx.x/emoji-test.txt`
+
+.Version
+* Emoji v11.0
+
+.Date
+* Regenerated 2018.07.10
+
+.Generated File(s)
+* Program generates S15-nfg/emoji-test.t
 
 == S15-nfg/mass-roundtrip-test-gen.p6
-```
-# NormalizationTest-11.0.0.txt
-# Date: 2018-02-19, 18:33:08 GMT
-```
+
+.Steps
+* Run `S15-nfg/mass-roundtrip-test-gen.p6 --test UNIDATA/NormalizationTest.txt`
+  to test normalization.
+* Run `S15-nfg/mass-roundtrip-test-gen.p6 --test UNIDATA/NormalizationTest.txt`
+  to generate the tests.
+
+.Version
+* Unicode v11.0
+
+.Date
 * Regenerated 2018.10.01
 
-.Test files:
+.Generated File(s)
 * S15-nfg/mass-roundtrip-nfc.t
 * S15-nfg/mass-roundtrip-nfd.t
 * S15-nfg/mass-roundtrip-nfkc.t
 * S15-nfg/mass-roundtrip-nfkd.t
 
-NOTE: Tests generated were identical to the ones generated
-     from 9.0/10.0/11.0
-```
-# NormalizationTest-10.0.0.txt
-# Date: 2017-03-08, 08:41:55 GMT
-```
-
-== S15-nfg/emoji-test-gen.p6
-* Emoji v11.0
-* Regenerated 10-07-2018
-* S15-nfg/emoji-test.t
-
-```
-# emoji-test.txt
-# Date: 2018-02-07, 09:44:06 GMT
-...
-# Version: 11.0
-```
-
-```
-
-== S15-nfg/mass-equality-gen.p6
-* v9.0
+.Notes
+* Tests generated were identical to the ones generated 9.0/10.0/11.0 so nothing
+  appears in the git log
 
 == S32-str/CollationTestGen.p6
 * v11.0
 
 == S15-normalization/test-gen.p6
-* v9.0
+
+.Steps
+* Run `S15-normalization/test-gen.p6 UNIDATA/NormalizationTest.txt`
+
+.Version
+* Unicode v11.0
+
+.Date
+* Regenerated 2018.10.27
+
+.Generated File(s)
+* S15-normalization/nfc-X.t
+* S15-normalization/nfc-sanity.t
+* S15-normalization/nfd-X.t
+* S15-normalization/nfd-sanity.t
+* S15-normalization/nfkc-X.t
+* S15-normalization/nfkc-sanity.t
+* S15-normalization/nfkd-X.t
+* S15-normalization/nfc-concat.t
 
 == S15-nfg/GraphemeBreakTest.t
 * v11.0: 3rdparty/Unicode/11.0.0/ucd/auxiliary/GraphemeBreakTest.txt

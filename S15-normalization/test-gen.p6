@@ -1,3 +1,4 @@
+#!/usr/bin/env perl6
 constant MAX_TESTS_PER_FILE    = 2000;
 constant NUM_SANITY_TESTS      = 500;
 constant SANITY_IDENTITY_RATIO = 3;
