@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add("packages");
 use Test;
 use Test::Util;
 
-plan 17;
+plan 18;
 
 # RT #125938
 throws-like '2**10000000000', X::Numeric::Overflow,
@@ -68,5 +68,10 @@ if $?BITS >= 64 { # RT #121071
 else {
     skip "this test doesn't make sense on 32bit platforms", 2;
 }
+
+# RT #125811
+#?rakudo.moar 1 skip 'overflow exception is not thrown on OSX RT #127500'
+throws-like { 2 ** 99999999999999999999999999999999999 }, X::Numeric::Overflow,
+    'extremely large exponents must throw numeric overflow';
 
 # vim: ft=perl6
