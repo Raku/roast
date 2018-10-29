@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 # Nil may be a type now.  Required?
 
@@ -147,7 +149,7 @@ ok !Nil.new.defined, 'Nil.new is not defined';
 
     {
         CONTROL { when CX::Warn { pass 'Nil.ords warns'; .resume; } }
-        is-deeply Nil.ords, ().Seq, 'Nil.ords gives an empty Seq';
+        is-eqv Nil.ords, ().Seq, 'Nil.ords gives an empty Seq';
     }
 
     {
