@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 12;
+plan 16;
 
 # This appendix contains features that may already exist in some implementations but the exact
 # behaviour is currently not fully decided on.
@@ -226,4 +226,14 @@ subtest 'mistyped typenames in coercers give good error' => {
     #     »;
     #     .&test-it for @tests;
     # }
+}
+
+# RT #129799
+{
+    is-deeply Date.new("2016-10-03").IO, "2016-10-03".IO, '.IO on Date';
+    is-deeply DateTime.new("2016-10-03T22:23:24Z").IO,
+        "2016-10-03T22:23:24Z".IO, '.IO on DateTime';
+
+    throws-like { Date    .IO }, Exception, ".IO on Date:U throws";
+    throws-like { DateTime.IO }, Exception, ".IO on DateTime:U throws";
 }
