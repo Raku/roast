@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 8;
+plan 9;
 
 # RT #131503
 #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
@@ -390,5 +390,79 @@ group-of 1 => 'IO::Handle.new can take a bunch of options' => {
         }
         is-deeply $file.slurp, "foobarber",
             ':nl-out set via .new, then via .open, then via attribute assignment';
+    }
+}
+
+group-of 12 => '$CALLER::_' => {
+    sub callerunderscore ($foo = $CALLER::_) {
+        return "-" ~ $foo ~ "-"
+    }
+
+    # These tests all work when using CALLER::CALLER but we should
+    # not need to do that.  Minus that fact, 123660 has actually been
+    # fixed since it was reported.
+
+    is(callerunderscore("foo"), "-foo-", 'CALLER:: string arg');
+    is(callerunderscore(1), "-1-", 'CALLER:: number arg');
+    $_ = "foo";
+    #?rakudo todo "NYI RT #124924"
+    is(callerunderscore(), "-foo-", 'CALLER:: $_ set once');
+    $_ = "bar";
+    #?rakudo todo "NYI RT #124924"
+    is(callerunderscore(), "-bar-", 'CALLER:: $_ set twice');
+    for ("quux") {
+        #?rakudo todo "NYI RT #123660"
+        is(callerunderscore(), '-quux-', 'CALLER:: $_ set by for');
+    }
+    given 'hirgel' {
+        #?rakudo todo "NYI RT #123660"
+        is callerunderscore, '-hirgel-', '$CALLER::_ set by given';
+    }
+    #?rakudo todo "NYI RT #124924"
+    is(callerunderscore(), '-bar-', 'CALLER:: $_ reset after for');
+
+
+    # L<S02/Names/The CALLER package refers to the lexical scope>
+    {
+      # $_ is always implicitly declared "is dynamic".
+      my sub foo () { $CALLER::_ }
+      my sub bar () {
+        $_ = 42;
+        foo();
+      }
+
+      $_ = 23;
+      is bar(), 42, '$_ is implicitly declared "is dynamic" (1)';
+    } #1
+
+    {
+      # $_ is always implicitly declared "is dynamic".
+      # (And, BTW, $_ is lexical.)
+      my sub foo () { $_ = 17; $CALLER::_ }
+      my sub bar () {
+        $_ = 42;
+        foo();
+      }
+
+      $_ = 23;
+      is bar(), 42, '$_ is implicitly declared "is dynamic" (2)';
+    } #1
+
+    {
+      my sub modify { $CALLER::_++ }
+      $_ = 42;
+      modify();
+      is $_, 43,             '$_ is implicitly rw (2)';
+    } #1
+
+    # R#2058
+    {
+        multi sub a($a) { $a + $a }
+        multi sub a() { a CALLERS::<$_> }
+
+        is a(42), 84, 'can we call the sub with a parameter';
+        given 42 {
+            is a(), 84, 'can we call the sub without a parameter';
+        }
     }
 }

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 157;
+plan 155;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -179,7 +179,7 @@ plan 157;
     $::($our)::A42::x = 43;
     #?rakudo todo 'interpolation and auto-viv NYI'
     is ::($our)::A42.WHO.<$x>, 43, '::("OUR") can autovivify packages (r)';
-    
+
     #?rakudo emit #
     $::($our)::A43::x := 44;
     #?rakudo todo 'binding and interpolation together NYI'
@@ -463,17 +463,6 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
     #?rakudo.jvm skip 'unknown problem'
     #?DOES 11
     eval-lives-ok '$' ~ $_ x 100 ~ 'True', $_ for @packs;
-}
-
-# R#2058
-{
-    multi sub a($a) { $a + $a }
-    multi sub a() { a CALLERS::<$_> }
-
-    is a(42), 84, 'can we call the sub with a parameter';
-    given 42 {
-        is a(), 84, 'can we call the sub without a parameter';
-    }
 }
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 12;
 
 {
   my $a is dynamic = 9;
@@ -48,32 +48,6 @@ plan 15;
   ok !(try { $result_of_sub2() }), '$CALLER::CALLER:: is recalculated on each access (2)';
 } #2
 
-# L<S02/Names/The CALLER package refers to the lexical scope>
-{
-  # $_ is always implicitly declared "is dynamic".
-  my sub foo () { $CALLER::_ }
-  my sub bar () {
-    $_ = 42;
-    foo();
-  }
-
-  $_ = 23;
-  is bar(), 42, '$_ is implicitly declared "is dynamic" (1)';
-} #1
-
-{
-  # $_ is always implicitly declared "is dynamic".
-  # (And, BTW, $_ is lexical.)
-  my sub foo () { $_ = 17; $CALLER::_ }
-  my sub bar () {
-    $_ = 42;
-    foo();
-  }
-
-  $_ = 23;
-  is bar(), 42, '$_ is implicitly declared "is dynamic" (2)';
-} #1
-
 {
   # ...but other vars are not
   my sub foo { my $abc = 17; $CALLER::abc }	#OK not used
@@ -107,13 +81,6 @@ plan 15;
   my sub modify { $CALLER::foo++; 'success' }
   my $foo is dynamic ::= 42;
   nok (try modify()) eq 'success', '"::=" vars are ro when accessed with $CALLER::';
-} #1
-
-{
-  my sub modify { $CALLER::_++ }
-  $_ = 42;
-  modify();
-  is $_, 43,             '$_ is implicitly rw (2)';
 } #1
 
 {
