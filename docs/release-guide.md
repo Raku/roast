@@ -76,3 +76,14 @@ fudges for features that no implementation has implemented successfully must be 
 It's not a bad idea to whet users' appetite and get word of mouth going about upcoming release.
 File an Issue in [our Marketing repo](https://github.com/perl6/marketing) to get some teaser
 materials made for new features in upcoming language release.
+
+### Information
+
+Ensure all documentation that goes out to users is checked for "TODO" notes
+that may be included on it.
+
+Users need to be given a useful upgrade guide: what to do to their code to
+ensure it works on new language version. Often, only a small part of the
+new language version is placed behind a version pragma, with the rest of the
+changes being simply clarifications to the past spec. The upgrade guide should
+focus on the version-pragma-protected changes.
