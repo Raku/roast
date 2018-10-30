@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 304;
 
@@ -591,7 +593,7 @@ subtest '.hash does not cause keys to be stringified' => {
     is-deeply $bh.Mix, Mix.new(<a a b>), '.Mix values are correct';
 }
 
-subtest 'BagHash autovivification of non-existent keys' => {
+group-of 10 => 'BagHash autovivification of non-existent keys' => {
     my BagHash  $bh1;
     is-deeply   $bh1<poinc>++,  0, 'correct return of postfix ++';
     is-deeply   $bh1<poinc>,    1, 'correct result of postfix ++';

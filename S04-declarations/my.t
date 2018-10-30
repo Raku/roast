@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 110;
 
@@ -382,7 +384,7 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 }
 
 # RT #126125
-subtest 'report Malformed my correctly' => {
+group-of 2 => 'report Malformed my correctly' => {
     throws-like q[my Any :D $a], X::Syntax::Malformed;
     throws-like q[my Any ^:D $a], X::Syntax::Malformed;
 }

@@ -220,14 +220,14 @@ group-of 7 => 'now-deprecated subst-mutate' => {
     subtest '.subst-mutate with multi-match args set $/ to a List of matches' => {
         plan 2*(2+5);
         for 1234567, '1234567' -> $type {
-            subtest "$type.^name().subst-mutate: :g" => {
+            group-of 4 => "$type.^name().subst-mutate: :g" => {
               ($ = $type).subst-mutate(:g, /../, 'XX');
               isa-ok $/, List, '$/ is a List…';
               cmp-ok +$/, '==', 3, '…with 3 items…';
               is-deeply $/.map({.WHAT}).unique, (Match,).Seq, '…all are Match…';
               is-deeply $/.map(~*), <12 34 56>.map(*.Str), '…all have right values';
             }
-            subtest ".subst-mutate: :x" => {
+            group-of 4 => ".subst-mutate: :x" => {
               ($ = $type).subst-mutate(:2x, /../, 'XX');
               isa-ok $/, List, '$/ is a List…';
               cmp-ok +$/, '==', 2, '…with 2 items…';
@@ -235,7 +235,7 @@ group-of 7 => 'now-deprecated subst-mutate' => {
               is-deeply $/.map(~*), <12 34>.map(*.Str), '…all have right values';
             }
             for <nth st nd rd th> -> $suffix {
-              subtest ".subst-mutate: :$suffix" => {
+              group-of 4 => ".subst-mutate: :$suffix" => {
                   ($ = $type).subst-mutate(|($suffix => 1..3), /../, 'XX');
                   isa-ok $/, List, '$/ is a List…';
                   cmp-ok +$/, '==', 3, '…with 3 items…';

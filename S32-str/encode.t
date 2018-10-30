@@ -86,6 +86,7 @@ is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip wi
         '☃', 'windows-1252', '?',
     ) -> $string, $encoding, $default-replacement {
         subtest {
+            plan 4;
             throws-like { $string.encode($encoding) }, Exception, message => rx:s:i/Error encoding $encoding string/,
                 'No replacement dies';
             is $string.encode($encoding, :replacement).decode($encoding), $default-replacement,

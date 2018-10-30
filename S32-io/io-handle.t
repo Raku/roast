@@ -229,6 +229,7 @@ subtest 'opened filehandles get closed on exit automatically' => {
 }
 
 subtest '.WRITE method' => {
+    plan 1;
     my $fh := my class MyHandle is IO::Handle {
         has Buf[uint8] $.data .= new;
         # NOTE: the requirement of manually setting .encoding should not

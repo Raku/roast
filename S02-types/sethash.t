@@ -477,7 +477,7 @@ subtest '.hash does not cause keys to be stringified' => {
     is-deeply $sh.SetHash, $sh, '.SetHash returns self';
 }
 
-subtest 'SetHash autovivification of non-existent keys' => {
+group-of 10 => 'SetHash autovivification of non-existent keys' => {
     # Sets' values are just True/False, so all of the following operations
     # simply control existence of a key
     my SetHash  $sh1;

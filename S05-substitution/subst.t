@@ -574,7 +574,7 @@ subtest 'List/Match result adverb handling' => {
     # can result in either a Match or a List of Matches in $/
     plan 3;
 
-    subtest ':2nd:g' => {
+    group-of 2 => ':2nd:g' => {
         subtest 'S///' => {
             plan 3;
             is-deeply (S:2nd:g/./Z/ with 'abc'), 'aZc', 'return value';
@@ -592,7 +592,7 @@ subtest 'List/Match result adverb handling' => {
         }
     }
 
-    subtest ':x(1..3)' => {
+    group-of 2 => ':x(1..3)' => {
         subtest 'S///' => {
             plan 3;
             is-deeply (S:x(1..3)/./Z/ with 'abcd'), 'ZZZd', 'return value';
@@ -610,7 +610,7 @@ subtest 'List/Match result adverb handling' => {
         }
     }
 
-    subtest ':th(1, 3)' => {
+    group-of 2 => ':th(1, 3)' => {
         subtest 'S///' => {
             plan 3;
             is-deeply (S:th(1, 3)/./Z/ with 'abcd'), 'ZbZd', 'return value';
@@ -644,14 +644,14 @@ subtest '.subst(Str:D, Str:D)' => {
 subtest '.subst with multi-match args set $/ to a List of matches' => {
     plan 2*(2+5);
     for 1234567, '1234567' -> $type {
-        subtest "$type.^name().subst: :g" => {
+        group-of 4 => "$type.^name().subst: :g" => {
           ($ = $type).subst(:g, /../, 'XX');
           isa-ok $/, List, '$/ is a List…';
           cmp-ok +$/, '==', 3, '…with 3 items…';
           is-deeply $/.map({.WHAT}).unique, (Match,).Seq, '…all are Match…';
           is-deeply $/.map(~*), <12 34 56>.map(*.Str), '…all have right values';
         }
-        subtest ".subst: :x" => {
+        group-of 4 => ".subst: :x" => {
           ($ = $type).subst(:2x, /../, 'XX');
           isa-ok $/, List, '$/ is a List…';
           cmp-ok +$/, '==', 2, '…with 2 items…';
@@ -659,7 +659,7 @@ subtest '.subst with multi-match args set $/ to a List of matches' => {
           is-deeply $/.map(~*), <12 34>.map(*.Str), '…all have right values';
         }
         for <nth st nd rd th> -> $suffix {
-          subtest ".subst: :$suffix" => {
+          group-of 4 => ".subst: :$suffix" => {
               ($ = $type).subst(|($suffix => 1..3), /../, 'XX');
               isa-ok $/, List, '$/ is a List…';
               cmp-ok +$/, '==', 3, '…with 3 items…';

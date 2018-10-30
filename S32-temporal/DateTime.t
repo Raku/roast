@@ -704,6 +704,7 @@ is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
 
 # RT #128545
 subtest 'synthetics not allowed in date formats' => {
+    plan 2;
     throws-like { DateTime.new: "20\x[308]16-07-05T00:00:00+01:00" },
         X::Temporal::InvalidFormat, 'DateTime.new (+01:00 format)';
 

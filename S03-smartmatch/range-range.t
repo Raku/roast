@@ -43,7 +43,7 @@ subtest 'smartmatch against numeric range' => {
                            2e0..3, 2e0..3e0, 2e0..3.0, 2e0..fr3,
                            2.0..3, 2.0..3e0, 2.0..3.0, 2.0..fr3,
                            fr2..3, fr2..fr3, fr2..fr3, fr2..fr3;
-    constant $plan = 2 + @variants * (@true + @false);
+    plan 2 + @variants * (@true + @false);
     is-deeply 3..4     ~~ -1/0..1/0, True,  '  3..4   ~~ -1/0..1/0';
     is-deeply 0/0..0/0 ~~ -1/0..1/0, False, '0/0..0/0 ~~ -1/0..1/0';
 
@@ -79,7 +79,7 @@ subtest 'smartmatch numeric range against string range [numeric strings]' => {
     constant @false = 0..30,   0..fr30,   0..30e0,   0..30.0,   0..30/1,
                     0e0..30, fr0..fr30, 0.0..30e0, 0e0..30.0, 0e0..30/1;
     constant @variants = '0'..3,   '0'..3.0, '0'..3e0, '0'..fr3;
-    constant $plan = @variants * (@true + @false);
+    plan @variants * (@true + @false);
 
     for @variants -> $r {
         is-deeply $_ ~~ $r, True,  "{.perl} ~~ {$r.perl}" for @true;

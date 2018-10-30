@@ -197,6 +197,7 @@ throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
 
 { # coverage; 2016-09-28
     subtest 'can create Date from Instant' => {
+        plan 2;
         constant $i = Instant.from-posix: 1234567890;
 
         is Date.new($i).Str, '2009-02-13', 'Instant only';

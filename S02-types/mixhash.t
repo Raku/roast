@@ -513,7 +513,7 @@ subtest '.hash does not cause keys to be stringified' => {
         'negative MixHash weights removed from Bag coercion without warnings';
 }
 
-subtest 'MixHash autovivification of non-existent keys' => {
+group-of 10 => 'MixHash autovivification of non-existent keys' => {
     my MixHash  $mh1;
     is-deeply   $mh1<poinc>++,  0, 'correct return of postfix ++';
     is-deeply   $mh1<poinc>,    1, 'correct result of postfix ++';

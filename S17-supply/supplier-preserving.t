@@ -1,9 +1,11 @@
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 1;
 
 #?rakudo.jvm todo 'only first iteration of for loop gives correct result'
-subtest "No races in Supplier::Preserving", {
+group-of 11 => "No races in Supplier::Preserving" => {
     my $closings = Channel.new;;
     sub make-supply() {
         my $s = Supplier::Preserving.new;

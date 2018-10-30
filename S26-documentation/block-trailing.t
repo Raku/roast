@@ -7,6 +7,7 @@ my $pod_index = 0;
 #?DOES 1
 sub test-trailing($thing, $value) {
     subtest $thing.^name, {
+        plan 7;
         is $thing.WHY.?contents, $value, $value  ~ ' - contents';
         is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
         is $thing.WHY.?trailing, $value, $value ~ ' - trailing';

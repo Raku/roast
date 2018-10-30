@@ -1,5 +1,8 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
+
 plan 54;
 
 # Very basic enum tests
@@ -210,7 +213,7 @@ cmp-ok Bool.enums.WHAT, '===', Map, 'Bool.enums returns a Map, not a Hash';
 }
 
 # RT #123457
-subtest 'can build enum with built-ins\' names' => {
+group-of 3 => 'can build enum with built-ins\' names' => {
   eval-lives-ok q[enum RT1234571 <Block>; subset B;], 'Block';
   eval-lives-ok q[enum RT1234572 <Code>], 'Code';
   eval-lives-ok q[enum RT1234573 <Code> #123457], 'Code';

@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
 
 plan 7;
 
@@ -9,7 +11,7 @@ sub check-fail (&test-to-run) {
     nok test-to-run(), $message;
 }
 
-subtest 'two-arg version + optional description', {
+group-of 10 => 'two-arg version + optional description' => {
     is-approx 0, 0,
     is-approx 5, 5 + 1e-6;
     is-approx 5, 5 - 1e-6;
@@ -22,7 +24,7 @@ subtest 'two-arg version + optional description', {
     check-fail { is-approx 5, 6, 'test desc three' };
 }
 
-subtest 'tree-arg version + optional description', {
+group-of 10 => 'tree-arg version + optional description' => {
     is-approx 0, 0, 1;
     is-approx 5, 6, 1;
     is-approx 5, 10, 10;
@@ -35,7 +37,7 @@ subtest 'tree-arg version + optional description', {
     check-fail { is-approx 5, 5 - 1e-6, 1e-10, 'test desc three' };
 }
 
-subtest 'rel-tol version + optional description', {
+group-of 14 => 'rel-tol version + optional description' => {
     is-approx   0,   0, :rel-tol<.9>;
     is-approx 1e1, 1e2, :rel-tol<.9>;
     is-approx 1e2, 1e3, :rel-tol<.9>;
@@ -52,7 +54,7 @@ subtest 'rel-tol version + optional description', {
     check-fail { is-approx 1e3, 1e6, :rel-tol<.9>, 'test desc five' };
 }
 
-subtest 'abs-tol version + optional description', {
+group-of 14 => 'abs-tol version + optional description' => {
     is-approx   0,   0, :abs-tol<9>;
     is-approx 1e0, 1e1, :abs-tol<9>;
     is-approx 1e2, 1e3, :abs-tol<900>;
@@ -69,7 +71,7 @@ subtest 'abs-tol version + optional description', {
     check-fail { is-approx   1, 1.5, :abs-tol<.4>, 'test desc five' };
 }
 
-subtest 'abs-tol + rel-tol version + optional description', {
+group-of 22 => 'abs-tol + rel-tol version + optional description' => {
     is-approx   0,   0, :abs-tol<9>,    :rel-tol<.9>;
     is-approx 1e0, 1e1, :abs-tol<9>,    :rel-tol<.9>;
     is-approx 1e2, 1e3, :abs-tol<900>,  :rel-tol<.9>;
@@ -96,7 +98,7 @@ subtest 'abs-tol + rel-tol version + optional description', {
     };
 }
 
-subtest 'abs tol is correctly calculated', {
+group-of 12 => 'abs tol is correctly calculated' => {
     is-approx 1, 2, :abs-tol<1>;
     check-fail { is-approx 1, 2 + 1e-10, :abs-tol<1> };
 
@@ -110,7 +112,7 @@ subtest 'abs tol is correctly calculated', {
     check-fail { is-approx -2 - 1e-10, -1, :abs-tol<1> };
 }
 
-subtest 'rel tol is correctly calculated', {
+group-of 12 => 'rel tol is correctly calculated' => {
     is-approx 1, 10, :rel-tol<.9>;
     check-fail { is-approx 1, 10 + 1e-10, :rel-tol<.9> };
 

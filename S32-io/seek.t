@@ -7,7 +7,7 @@ plan 4;
 
 my $fh = make-temp-file(:content<1234567890abcdefghijABCDEFGHIJ>).open: :bin;
 
-subtest 'SeekFromBeginning' => {
+group-of 5 => 'SeekFromBeginning' => {
     LEAVE $fh.seek: 0, SeekFromBeginning; $fh.seek: 0, SeekFromBeginning;
 
     $fh.seek: 0, SeekFromBeginning;
@@ -26,7 +26,7 @@ subtest 'SeekFromBeginning' => {
         'seeking past beginning throws';
 }
 
-subtest 'SeekFromCurrent' => {
+group-of 8 => 'SeekFromCurrent' => {
     LEAVE $fh.seek: 0, SeekFromBeginning; $fh.seek: 0, SeekFromBeginning;
 
     $fh.seek:  10, SeekFromCurrent;
@@ -56,7 +56,7 @@ subtest 'SeekFromCurrent' => {
         'seeking past beginning throws';
 }
 
-subtest 'SeekFromEnd' => {
+group-of 5 => 'SeekFromEnd' => {
     LEAVE $fh.seek: 0, SeekFromBeginning; $fh.seek: 0, SeekFromBeginning;
 
     $fh.seek:  -5, SeekFromEnd;
@@ -76,10 +76,8 @@ subtest 'SeekFromEnd' => {
 }
 
 # RT #131376
-subtest '.seek on non-binary handle' => {
-    plan 3;
-
-    subtest 'SeekFromCurrent' => { plan 4;
+group-of 3 => '.seek on non-binary handle' => {
+    group-of 4 => 'SeekFromCurrent' => {
         my $fh will leave {.close}
         = make-temp-file(content => [~] 'a'..'z').open;
         #?rakudo.jvm 4 todo 'problem with equivalence of Buf objects, RT #128041'
@@ -92,7 +90,7 @@ subtest '.seek on non-binary handle' => {
         is-deeply $fh.read(5), Buf[uint8].new(), '4';
     }
 
-    subtest 'SeekFromBeginning' => { plan 3;
+    group-of 3 => 'SeekFromBeginning' => {
         my $fh will leave {.close}
         = make-temp-file(content => [~] 'a'..'z').open;
         #?rakudo.jvm 3 todo 'problem with equivalence of Buf objects, RT #128041'
@@ -103,7 +101,7 @@ subtest '.seek on non-binary handle' => {
         is-deeply $fh.read(5), Buf[uint8].new(), '3';
     }
 
-    subtest 'SeekFromEnd' => { plan 3;
+    group-of 3 => 'SeekFromEnd' => {
         my $fh will leave {.close}
         = make-temp-file(content => [~] 'a'..'z').open;
         #?rakudo.jvm 3 todo 'problem with equivalence of Buf objects, RT #128041'

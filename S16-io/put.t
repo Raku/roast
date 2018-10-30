@@ -14,13 +14,13 @@ plan 1 + 2*@tests;
 {
     my $file = make-temp-file;
     for @tests -> (:key($in), :value($out)) {
-        subtest "$in.perl() (sub form)" => {
+        group-of 2 => "$in.perl() (sub form)" => {
             temp $*OUT = $file.open: :w;
             is-deeply put(|$in), True, 'return value';
             $*OUT.close;
             is-deeply $file.slurp, $out, 'put content';
         }
-        subtest "$in.perl() (sub form)" => {
+        group-of 2 => "$in.perl() (sub form)" => {
             my $fh = $file.open: :w;
             is-deeply $fh.put(|$in), True, 'return value';
             $fh.close;

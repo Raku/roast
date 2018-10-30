@@ -41,6 +41,7 @@ lives-ok { Complex.Str }, 'Complex.Str does not die';
 #?DOES 1
 sub Rat_str_test($value, $str_nucleus, $str, $perl = $str) {
     subtest "Rat Stringification ($value)" => {
+        plan 7;
         is ~$value, $str, "~<$str_nucleus>";
         is $value.Str, $str, "<$str_nucleus>.Str";
         is $value.gist, $str, "<$str_nucleus>.gist";

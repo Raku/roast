@@ -213,7 +213,7 @@ throws-like 'role R-RT130211 { method overload-this(){...} };
 
 
 # RT #129800
-subtest 'X::Multi::NoMatch correct shows named arguments' => {
+group-of 4 => 'X::Multi::NoMatch correct shows named arguments' => {
     my class RT129800 { multi method foo ($) {} }
     throws-like { RT129800.foo: :foo(42) }, X::Multi::NoMatch,
         message => /':foo(Int)'/, 'message mentions our positional';

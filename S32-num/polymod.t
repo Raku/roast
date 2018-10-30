@@ -12,6 +12,7 @@ is 1234567890.polymod(10 xx *), (0,9,8,7,6,5,4,3,2,1), '1234567890 10 xx *';
 
 #RT #128176
 subtest '.polymod with a lazy list does not lose divisors when list runs out', {
+    plan 3;
     is-deeply 42    .polymod(lazy 2, 3),
               42    .polymod(     2, 3), 'last mod is non-zero (Int)';
     is-deeply 42.Rat.polymod(lazy 2, 3),

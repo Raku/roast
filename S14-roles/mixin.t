@@ -1,5 +1,8 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
+
 plan 55;
 
 # L<S14/Run-time Mixins/>
@@ -240,20 +243,19 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
     is C.foo( :b(3) ), 13, 'multi-dispatch mixin sanity';
 }
 
-# RT #126099
-#   part 1
-subtest 'can mixin Block with True' => {
-  my $b = Block but True;
-  lives-ok { $b.WHICH };
-  ok $b ~~ Block;
-  is so $b, True;
-}
-#   part 2
-subtest 'can mixin Code with True' => {
-  my $b = Code but True;
-  lives-ok { $b.WHICH };
-  ok $b ~~ Code;
-  is so $b, True;
+{ # RT #126099
+    group-of 3 => 'can mixin Block with True' => {
+        my $b = Block but True;
+        lives-ok { $b.WHICH };
+        ok $b ~~ Block;
+        is so $b, True;
+    }
+    group-of 3 => 'can mixin Code with True' => {
+        my $b = Code but True;
+        lives-ok { $b.WHICH };
+        ok $b ~~ Code;
+        is so $b, True;
+    }
 }
 
 # vim: syn=perl6

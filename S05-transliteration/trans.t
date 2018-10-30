@@ -266,7 +266,7 @@ is ("!$_!" for (1, 2)>>.trans((1..26) => (14..26,1..13))), <!14! !15!>, "same wi
 }
 
 # RT #129258
-subtest 'Adverbs on Cool.trans work the same as on Str.trans' => {
+group-of 4 => 'Adverbs on Cool.trans work the same as on Str.trans' => {
     is-deeply 912381237    .trans(['7'..'9'] => '0',      :complement),
         '900080007',                                      ':complement';
     is-deeply 912381237    .trans(      '23' => '',       :delete),

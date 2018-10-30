@@ -331,7 +331,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 }
 
 # RT #127367
-subtest 'multi with :D subset dispatches correctly' => {
+group-of 2 => 'multi with :D subset dispatches correctly' => {
     my @results;
     lives-ok {
         subset T127367 of List where *[0] eqv 1;

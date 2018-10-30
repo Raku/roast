@@ -239,6 +239,7 @@ for @testing -> @a, $T {
 # RT #128736
 {
     subtest 'splice can extend an array' => {
+        plan 4;
         my @a;
         @a.splice: 0, 0, 42;
         is-deeply @a, [42     ], 'method on empty array';

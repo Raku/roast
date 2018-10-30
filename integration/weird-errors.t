@@ -210,7 +210,7 @@ eval-lives-ok '[;0]', '[;0] does not explode the compiler';
 {
     # Purpose of the test is to check that despite having a race
     # condition we don't get a SEGV. Other failures are acceptable.
-    subtest 'accessing Seq from multiple threads does not segfault' => {
+    group-of 20 => 'accessing Seq from multiple threads does not segfault' => {
         my $code = Q:to/CODE_END/;
             my @primes = grep { .is-prime }, 1 .. *;
             my @p = gather for 4000, 5, 100, 2000 -> $n {
@@ -229,7 +229,7 @@ throws-like ｢class A114672 {}; class B114672 is A114672 { has $!x = 5; ｣
     Exception,
 'no segfault';
 
-subtest 'using a null string to access a hash does not segfault' => {
+{
     # Purpose of the test is to check that despite having a race
     # condition we don't get a SEGV. Other failures are acceptable.
     my $code = Q:to/CODE_END/;
@@ -238,7 +238,8 @@ subtest 'using a null string to access a hash does not segfault' => {
         %h{HasNativeStr.new().attr} = 1;
         CODE_END
 
-    is_run($code, { :status(1|0) }, 'no segfault')
+    is_run $code, { :status(1|0) },
+        'using a null string to access a hash does not segfault';
 }
 
 # RT #128985

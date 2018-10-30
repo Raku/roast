@@ -63,21 +63,21 @@ subtest 'Code.of() returns return type' => {
 }
 
 # RT #129915
-subtest 'numeric literals as type constraints' => {
-    subtest 'integers' => {
+group-of 10 => 'numeric literals as type constraints' => {
+    group-of 4 => 'integers' => {
         eval-lives-ok ｢sub f( 42){}( 42)｣, 'bare';
         eval-lives-ok ｢sub f(+42){}(+42)｣, 'plus';
         eval-lives-ok ｢sub f(-42){}(-42)｣, 'minus';
         eval-lives-ok ｢sub f(−42){}(−42)｣, 'U+2212 minus';
     }
-    subtest 'unum' => {
+    group-of 4 => 'unum' => {
         #?rakudo.jvm 4 todo 'Missing block / Malformed parameter on JVM, RT #129915'
         eval-lives-ok ｢sub f( ½){}( .5)｣, 'bare';
         eval-lives-ok ｢sub f(+½){}( .5)｣, 'plus';
         eval-lives-ok ｢sub f(-½){}(-.5)｣, 'minus';
         eval-lives-ok ｢sub f(−½){}(-.5)｣, 'U+2212 minus';
     }
-    subtest 'rats' => {
+    group-of 6 => 'rats' => {
         eval-lives-ok ｢sub f( <1/2>){}( .5) ｣, 'bare </> literal';
         eval-lives-ok ｢sub f(<-1/2>){}(-.5) ｣, 'minus </> literal';
         eval-lives-ok ｢sub f(<−1/2>){}(-.5) ｣, 'U+2212 minus </> literal';
@@ -85,49 +85,53 @@ subtest 'numeric literals as type constraints' => {
         eval-lives-ok ｢sub f(  -1.5){}(-1.5)｣, 'minus \d.\d literal';
         eval-lives-ok ｢sub f(  −1.5){}(-1.5)｣, 'U+2212 minus \d.\d literal';
     }
-    subtest 'nums' => {
+    group-of 10 => 'nums' => {
         eval-lives-ok ｢sub f( 1e2 ){}( 1e2 )｣, 'bare';
         eval-lives-ok ｢sub f(-1e2 ){}(-1e2 )｣, 'minus (base)';
+
         eval-lives-ok ｢sub f(−1e2 ){}(-1e2 )｣, 'U+2212 minus (base)';
         eval-lives-ok ｢sub f( 1e+2){}( 1e2 )｣, 'bare (plus exp)';
         eval-lives-ok ｢sub f(-1e+2){}(-1e2 )｣, 'minus (base) (plus exp)';
         eval-lives-ok ｢sub f(−1e+2){}(-1e2 )｣, 'U+2212 minus (base) (plus exp)';
+
         eval-lives-ok ｢sub f( 1e-2){}( 1e-2)｣, 'minus (exp)';
         eval-lives-ok ｢sub f( 1e−2){}( 1e−2)｣, 'U+2212 minus (exp)';
         eval-lives-ok ｢sub f(-1e-2){}(-1e-2)｣, 'minus (base and exp)';
         eval-lives-ok ｢sub f(−1e−2){}(-1e-2)｣, 'U+2212 minus (base and exp)';
     }
-    subtest 'complex' => {
+    group-of 7 => 'complex' => {
         eval-lives-ok ｢sub f( <1+2i>){}( 1+2i)｣, 'bare';
         eval-lives-ok ｢sub f(<-1+2i>){}(-1+2i)｣, 'minus (real)';
         eval-lives-ok ｢sub f(<−1+2i>){}(-1+2i)｣, 'U+2212 minus (real)';
+
         eval-lives-ok ｢sub f( <1-2i>){}( 1-2i)｣, 'minus (imaginary)';
         eval-lives-ok ｢sub f( <1−2i>){}( 1−2i)｣, 'U+2212 minus (imaginary)';
         eval-lives-ok ｢sub f(<-1-2i>){}(-1-2i)｣, 'minus (real and imaginary)';
         eval-lives-ok ｢sub f(<−1−2i>){}(-1-2i)｣, 'U+2212 minus (real and imagin.)';
     }
-    subtest 'infinity' => {
+    group-of 8 => 'infinity' => {
         eval-lives-ok ｢sub f( Inf){}( Inf)｣, 'bare Inf';
         eval-lives-ok ｢sub f(+Inf){}( Inf)｣, 'plus Inf';
         eval-lives-ok ｢sub f(-Inf){}(-Inf)｣, 'minus Inf';
         eval-lives-ok ｢sub f(−Inf){}(-Inf)｣, 'U+2212 minus Inf';
+
         eval-lives-ok ｢sub f(   ∞){}( Inf)｣, 'bare ∞';
         eval-lives-ok ｢sub f(  +∞){}( Inf)｣, 'plus ∞';
         eval-lives-ok ｢sub f(  -∞){}(-Inf)｣, 'minus ∞';
         eval-lives-ok ｢sub f(  −∞){}(-Inf)｣, 'U+2212 minus ∞';
     }
-    subtest 'NaN' => {
+    group-of 1 => 'NaN' => {
         eval-lives-ok ｢sub f(NaN){}(NaN)｣, 'bare';
     }
-    subtest 'π' => {
+    group-of 2 => 'π' => {
         eval-lives-ok ｢sub f(  π){}( π)｣, 'bare, π';
         eval-lives-ok ｢sub f( pi){}( π)｣, 'bare, pi';
     }
-    subtest 'τ' => {
+    group-of 2 => 'τ' => {
         eval-lives-ok ｢sub f(   τ){}( τ)｣, 'bare, τ';
         eval-lives-ok ｢sub f( tau){}( τ)｣, 'bare, tau';
     }
-    subtest '𝑒' => {
+    group-of 2 => '𝑒' => {
         #?rakudo.jvm 2 todo '𝑒 does not work on JVM'
         eval-lives-ok ｢sub f( 𝑒){}( 𝑒)｣, 'bare, 𝑒';
         eval-lives-ok ｢sub f( e){}( 𝑒)｣, 'bare, e';

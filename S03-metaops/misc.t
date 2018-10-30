@@ -43,7 +43,9 @@ subtest 'cover metaop call simplification optimization' => {
         is-deeply $a, 1040, '(1)';
     }
     subtest 'array var with ((||=) += )' => {
-        my @a = 20; (@a ||= 42) += 10; dd @a
+        plan 1;
+        my @a = 20; (@a ||= 42) += 10;
+        is-deeply @a, [11], '(1)';
     }
 
     # https://github.com/rakudo/rakudo/issues/1989

@@ -1,5 +1,8 @@
 use v6;
+use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use Test::Util;
+
 plan 158;
 
 my $five = abs(-5);
@@ -392,7 +395,7 @@ isa-ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 
 # RT #132083 - Broken math
-subtest '-0x7FFFFFFF - 1 math weirdness' => {
+group-of 3 => '-0x7FFFFFFF - 1 math weirdness' => {
     is-deeply -0x7FFFFFFF - 1 == -2147483648, True, '== -2147483648';
     is-deeply -0x7FFFFFFF - 1 == -18446744071562067968, False,
         '== -18446744071562067968';
