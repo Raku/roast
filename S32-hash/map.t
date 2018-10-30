@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 18;
 
 {
     my %hash = :foo, :42bar;
@@ -78,6 +78,15 @@ subtest 'Map.gist shows only the first sorted 100 els' => {
     }
     lives-ok { C.new(|(a => (1, 2, 3), b => (4, 5, 6)).Map) },
         'Map does not introduce bogus Scalar containers';
+}
+
+# R#2447
+{
+    my %m is Map = a => { b => 42 };
+    my $WHICH = %m.WHICH;
+    %m<a><b> = 666;
+    is %m<a><b>, 666, 'did we change the hash inside the map';
+    is %m.WHICH, $WHICH, 'did the .WHICH stay unchanged';
 }
 
 # vim: ft=perl6
