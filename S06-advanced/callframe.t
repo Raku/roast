@@ -45,8 +45,8 @@ is $x,  23, '$x successfully modified';
 is $y, 353, '$y not modified';
 
 # RT #77752
-ok callframe.perl.starts-with("CallFrame.new("), 'CallFrame.perl works';
-ok callframe.gist.starts-with($*PROGRAM-NAME),   'CallFrame.gist works';
+ok callframe.perl.starts-with("CallFrame."),   'CallFrame.perl works';
+ok callframe.gist.starts-with($*PROGRAM-NAME), 'CallFrame.gist works';
 
 # RT #127479
 #?rakudo.jvm todo 'ContextRef representation does not implement elems RT #127479'
