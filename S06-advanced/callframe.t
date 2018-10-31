@@ -53,7 +53,7 @@ is $y, 353, '$y not modified';
 
 # RT #77752
 #?rakudo.jvm skip 'NullPointerException RT #77752'
-ok callframe.perl.starts-with("CallFrame.new("), 'CallFrame.perl works';
-ok callframe.gist.starts-with($*PROGRAM-NAME),   'CallFrame.gist works';
+ok callframe.perl.starts-with("CallFrame."),   'CallFrame.perl works';
+ok callframe.gist.starts-with($*PROGRAM-NAME), 'CallFrame.gist works';
 
 # vim: ft=perl6
