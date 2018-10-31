@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 # This test file tests the following set operators:
