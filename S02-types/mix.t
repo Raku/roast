@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 use Test;
 
-plan 225;
+plan 224;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -449,7 +449,6 @@ isnt
     my %h3;
     for $m.antipairs -> \p { %h3{p.value} = p.key }
     is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
-    throws-like { for $m.kxxv -> \k { say k } }, Exception, 'cannot call kxxv';
 }
 
 # RT #128806

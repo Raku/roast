@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 use Test;
 
-plan 272;
+plan 269;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -293,25 +293,6 @@ sub showkv($x) {
     is $m.elems, 3, '.roll should not change MixHash';
 }
 
-# L<S32::Containers/MixHash/pick>
-
-{
-    my $m = MixHash.new("a", "b", "b");
-    throws-like { $m.pick },
-      Exception,
-      '.pick does not work on MixHash';
-}
-
-# L<S32::Containers/MixHash/grab>
-
-{
-    my $m = <a b b c c c>.MixHash;
-    throws-like { $m.grab },
-      Exception,
-      'cannot call .grab on a MixHash';
-}
-
-
 # L<S32::Containers/MixHash/grabpairs>
 
 {
@@ -489,7 +470,6 @@ sub showkv($x) {
     my %h3;
     for $m.antipairs -> \p { %h3{p.value} = p.key }
     is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
-    throws-like { for $m.kxxv -> \k { say k } }, Exception, 'cannot call kxxv';
 }
 
 # RT #128806

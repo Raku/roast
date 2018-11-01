@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
+use Test::Util;
 
 # The tests in this file ensure certain constructs die with a decent error
 # instead of hanging or crashing by spilling compiler guts.
@@ -7,7 +9,7 @@ use Test;
 # Since there's yet no existing behaviour for some of such combinations,
 # yet it might exist in the future, this APPENDIX test file is for such tests.
 
-plan 5;
+plan 6;
 
 # https://github.com/rakudo/rakudo/issues/1476
 throws-like ｢*+42:foo｣, X::Syntax::Adverb, :what{.so},
@@ -35,3 +37,16 @@ subtest 'attempting to use defaults with slurpy parameters throws' => {
 }
 
 fails-like ｢'a' x Inf｣, X::NYI, 'repeating with Inf is NYI';
+
+group-of 4 => '.pick/.grab/.kxxv with undecided semantics' => {
+    my $m1 = MixHash.new("a", "b", "b");
+    throws-like { $m1.pick }, Exception, '.pick does not work on MixHash';
+
+    my $m2 = <a b b c c c>.MixHash;
+    throws-like { $m2.grab }, Exception, 'cannot call .grab on a MixHash';
+    throws-like { for $m2.kxxv -> \k { say k } }, Exception,
+        'cannot call kxxv on MixHash';
+    throws-like { for $m2.Mix.kxxv -> \k { say k } }, Exception,
+        'cannot call kxxv on Mix';
+
+}
