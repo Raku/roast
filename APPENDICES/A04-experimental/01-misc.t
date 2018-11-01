@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 18;
+plan 19;
 
 # This appendix contains features that may already exist in some implementations but the exact
 # behaviour is currently not fully decided on.
@@ -319,4 +319,43 @@ subtest 'mistyped typenames in coercers give good error' => {
     # in SAP due to https://github.com/rakudo/rakudo/issues/2442
     my $x = Array;
     cmp-ok $x.flat,  '===', $x, 'Array:U.flat is identity';
+}
+
+# in SAP due to https://github.com/rakudo/rakudo/issues/2367
+group-of 15 => 'tests that use unspecced $?BITS to make decisions' => {
+    # RT#125466 - bitwise shift consistency on int
+    if $?BITS >= 64 {
+      my int $int_min = -9223372036854775808; # int.Range.min for 64bit
+      my int $int_max = 9223372036854775807;  # int.Range.max for 64bit
+
+      is($int_min +> 16, -140737488355328);
+      is($int_min +> 32, -2147483648);
+      is($int_min +> 63, -1);
+      #?rakudo 11 skip "Clarification needed RT#125466"
+      is($int_min +> 64, -1);
+      is($int_min +> -32, -39614081257132168796771975168);
+      is($int_min +> -64, -170141183460469231731687303715884105728);
+
+      is($int_max +> 16, 140737488355327);
+      is($int_max +> 32, 2147483647);
+      is($int_max +> 63, 0);
+
+      is($int_max +> 64, 0);
+      is($int_max +> -2, 36893488147419103228);
+      is($int_max +> -32, 39614081257132168792477007872);
+
+      is($int_max +< 2, 36893488147419103228);
+      is($int_max +< -2, 2305843009213693951);
+    }
+    else {
+        skip("this test doesn't make sense 32bit platforms", 14);
+    }
+
+    if $?BITS >= 64 { # RT #130686
+        is-deeply (my int $ = 10000000000000000) div 4, 2500000000000000,
+            'large `int` values do not overflow prematurely';
+    }
+    else {
+        skip "this test doesn't make sense 32bit platforms";
+    }
 }
