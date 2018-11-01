@@ -5,7 +5,7 @@ use Test::Util;
 
 # Tests for tr/// transliteration operator
 
-plan 12;
+plan 13;
 
 throws-like { with 'meows' { tr/eox/EOX/ } }, X::Assignment::RO,
     'tr///, read-only $_complains';
@@ -91,6 +91,14 @@ subtest 'tr:d:c:s///' => { plan 2;
         StrDistance.new(:before<meeeeooowwweeees>, :after<eeeewwweeee>),
         'return value';
     is-deeply $_, 'eeeewwweeee', '$_ has updated value';
+}
+
+# Issue R#2456
+subtest 'tr/// with literal \\' => { plan 2;
+    temp $_ = 'a\\b';
+    is-deeply tr/\\_//, StrDistance.new(:before<a\\b>, :after<ab>),
+        'return value';
+    is-deeply $_, 'ab', '$_ has updated value';
 }
 
 # vim: ft=perl6
