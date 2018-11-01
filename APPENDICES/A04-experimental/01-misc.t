@@ -242,6 +242,7 @@ subtest 'mistyped typenames in coercers give good error' => {
 #?rakudo.jvm skip 'RT #128964 Type check failed for return value; expected Str(Any) but got Int (42)'
 #?DOES 1
 {
+    # in SAP due to https://github.com/rakudo/rakudo/issues/2452
     subtest 'type coercions work in returns' => {
         plan 8;
 
@@ -315,6 +316,7 @@ subtest 'mistyped typenames in coercers give good error' => {
 }
 
 { # coverage; 2016-09-21
+    # in SAP due to https://github.com/rakudo/rakudo/issues/2442
     my $x = Array;
     cmp-ok $x.flat,  '===', $x, 'Array:U.flat is identity';
 }
