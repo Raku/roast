@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 106;
+plan 105;
 
 #L<S02/Mutable types/Array>
 
@@ -374,11 +374,6 @@ my @array2 = ("test", 1, Mu);
 
     is-deeply %foo<bar>, [42],
         '[*-0] index references correct element when autovivifying';
-}
-
-{ # coverage; 2016-09-21
-    my $x = Array;
-    cmp-ok $x.flat,  '===', $x, 'Array:U.flat is identity';
 }
 
 # https://github.com/rakudo/rakudo/commit/51b0aba8e8

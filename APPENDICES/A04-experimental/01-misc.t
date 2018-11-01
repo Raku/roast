@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 17;
+plan 18;
 
 # This appendix contains features that may already exist in some implementations but the exact
 # behaviour is currently not fully decided on.
@@ -312,4 +312,9 @@ subtest 'mistyped typenames in coercers give good error' => {
         throws-like { sub (--> Str(Int)) { 42e0 }() }, X::TypeCheck::Return,
             'returning incorrect type throws';
     }
+}
+
+{ # coverage; 2016-09-21
+    my $x = Array;
+    cmp-ok $x.flat,  '===', $x, 'Array:U.flat is identity';
 }
