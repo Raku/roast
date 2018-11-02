@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 64;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -260,4 +260,42 @@ lives-ok {
     sub p { start { sleep .3; $x⚛++ } }
     await (((p(), (p(), (p(),))), (p(), p(), p())), (p(), p(), p()));
     is-deeply $x, 9, '&await awaits in sink context, with nested iterables';
+}
+
+{
+    my $error-relayed = Promise.new;
+    $*SCHEDULER.uncaught_handler = -> $ex { $error-relayed.keep($ex) };
+    start { die 'error in sunk start' }
+    await Promise.anyof($error-relayed, Promise.in(5));
+    ok $error-relayed, 'Uncaught exception in sunk `start` passed to uncaught handler';
+    if $error-relayed {
+        is $error-relayed.result.message, 'error in sunk start',
+            'Correct exception was relayed';
+    }
+    else {
+        skip 'Not testing exception as it was not received';
+    }
+    $*SCHEDULER.uncaught_handler = Nil;
+}
+
+{
+    my $error-relayed = Promise.new;
+    $*SCHEDULER.uncaught_handler = -> $ex { $error-relayed.keep($ex) };
+    sub foo() {
+        start { die 'error in sunk start' }
+    }
+    foo();
+    await Promise.anyof($error-relayed, Promise.in(5));
+    ok $error-relayed, 'Uncaught exception handling of `start` sunk at a distance works';
+    $*SCHEDULER.uncaught_handler = Nil;
+}
+
+{
+    my $done = Promise.new;
+    my $wrong = False;
+    $*SCHEDULER.uncaught_handler = -> $ex { $wrong = True };
+    start { $done.keep }
+    await $done;
+    nok $wrong, 'Sunk but successful `start` does not trigger uncaught exception handler';
+    $*SCHEDULER.uncaught_handler = Nil;
 }
