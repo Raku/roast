@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
 use Test::Util;
 
-plan 227;
+plan 226;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -232,8 +232,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     throws-like { [1, 2] »+« set(3, 4) }, Exception, 'Set »+« Array is illegal';
     throws-like { [1, 2] «+» set(3, 4) }, Exception, 'Set «+» Array is illegal';
 }
-
-dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # L<S32::Containers/Set/roll>
 
