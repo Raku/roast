@@ -1,7 +1,7 @@
 use v6.c;
 use Test;
 
-plan 175;
+plan 174;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -226,9 +226,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     throws-like { [1, 2] »+« set(3, 4) }, Exception, 'Set »+« Array is illegal';
     throws-like { [1, 2] «+» set(3, 4) }, Exception, 'Set «+» Array is illegal';
 }
-
-#?niecza skip "Hypers not yet Set compatible"
-dies-ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # L<S32::Containers/Set/roll>
 
