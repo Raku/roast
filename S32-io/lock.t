@@ -41,7 +41,7 @@ sub test-lock (
 
         if $blocks-write {
             is_run qq|
-                start \{
+                start try \{
                     my \$fh = '$file'.IO.open(:w);
                     say "LOCKING";
                     \$fh.lock($args2); say "FAILED";
@@ -86,7 +86,7 @@ sub test-lock (
 
         if $blocks-read {
             is_run qq|
-                start \{
+                start try \{
                     my \$fh = '$file'.IO.open(:r);
                     say "LOCKING";
                     \$fh.lock($args2); say "FAILED";
