@@ -2,9 +2,10 @@ use v6;
 use Test;
 
 use lib $?FILE.IO.parent(2).add("packages");
+use Test::Util;
 use Test::Iterator;
 
-plan 9 * 6;
+plan 1 + 9*6;
 
 # Test iterators coming from Lists
 
@@ -34,6 +35,18 @@ for
       "$case.pairs", @pairs );
     iterator-ok( { $l().antipairs.iterator },
       "$case.antipairs", @pairs.map: { .antipair });
+}
+
+group-of 6 => 'Mu.iterator' => {
+    my $i := Mu.iterator;
+    does-ok $i,                 Iterator,     'returns Iterator (:U)';
+    cmp-ok  $i.pull-one, '=:=', Mu,           'first   value    (:U)';
+    cmp-ok  $i.pull-one, '=:=', IterationEnd, 'no more values   (:U)';
+
+    $i := Mu.new.iterator;
+    does-ok $i,                 Iterator,     'returns Iterator (:D)';
+    cmp-ok  $i.pull-one, '=:=', Mu,           'first   value    (:D)';
+    cmp-ok  $i.pull-one, '=:=', IterationEnd, 'no more values   (:D)';
 }
 
 #vim: ft=perl6
