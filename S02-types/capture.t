@@ -2,7 +2,7 @@ use v6;
 use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
-plan 46;
+plan 44;
 
 {
     my $capture = \(1,2,3);
@@ -190,13 +190,8 @@ throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture 
 # RT #128977 and #130954
 {
     my $c1 = \(42);
-    is $c1.WHICH, "Capture|(Int|42)";
-
     my $a = 42;
     my $c2 = \($a);
-    #?rakudo.jvm todo 'Code fails due to preceding test; R#1816'
-    like $c2.WHICH, /'Capture|(Scalar|' \d+ ')'/;
-
     cmp-ok $c1, &[eqv], $c2;
     cmp-ok $c1, {$^a !=== $^b}, $c2;
 }
