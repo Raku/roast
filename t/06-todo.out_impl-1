@@ -3,7 +3,7 @@ use Test;
 
 plan 2;
 
-use lib <packages ../packages t/spec/packages>;
+use lib <t/spec/packages/Test-Helpers>;
 
 use Test::Util;
 

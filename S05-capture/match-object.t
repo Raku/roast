@@ -1,6 +1,6 @@
 use v6;
-use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
 # this file should become the test for systematically testing

@@ -1,11 +1,11 @@
 use v6;
+use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use Test::Util;
 
 # Tests for magic variables
-use lib $?FILE.IO.parent(2).add("packages");
-
-use Test;
-use Test::Util;
 # L<S28/Named variables>
+
 plan 18;
 
 =begin desc

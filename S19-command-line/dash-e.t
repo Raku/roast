@@ -1,11 +1,9 @@
 use v6;
-
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
-plan 4;
-
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
+
+plan 4;
 
 my Str $x;
 

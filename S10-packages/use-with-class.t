@@ -1,9 +1,12 @@
 use v6;
-use MONKEY-TYPING;
-
-use lib $?FILE.IO.parent(2).add("packages");
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
+
+use lib $?FILE.IO.parent(2).add("packages/UseTest/lib");
+use lib $?FILE.IO.parent(2).add("packages/FooBarBaz/lib");
+
+use MONKEY-TYPING;
 
 # L<S11/Compile-time Importation>
 
@@ -55,7 +58,7 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 
 # RT #126302
 is_run ｢use RT126302; say "RT126302-OK"｣,
-  :compiler-args['-I', $?FILE.IO.parent(2).add("packages").absolute], {
+  :compiler-args['-I', $?FILE.IO.parent(2).add("packages/RT126302/lib").absolute], {
     :out(/'RT126302-OK'/),
     :err{not .contains: 'src/Perl6/World.nqp'}
     # "Perl6/World" is guts from Rakudo implementation and we check

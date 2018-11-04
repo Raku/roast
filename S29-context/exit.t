@@ -1,14 +1,11 @@
 use v6;
-
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use Test::Util;
 
 plan 3;
 
 # L<S29/Context/"=item exit">
-
-use Test::Util;
 
 is_run 'say 3; exit; say 5',
     { out => "3\n", err => "", status => 0 },

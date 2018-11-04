@@ -6,3 +6,4 @@ module ContainsUnicode {
 }
 
 # vim: ft=perl6
+

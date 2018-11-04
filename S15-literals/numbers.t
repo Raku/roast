@@ -1,9 +1,9 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
-# S15-literals/numbers.t --- test Unicode (namely non-ASCII) numerals
-
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
+
+# S15-literals/numbers.t --- test Unicode (namely non-ASCII) numerals
 
 plan 49;
 

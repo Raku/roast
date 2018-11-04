@@ -1,11 +1,3 @@
-packages/README
-
-This directory exists to hold files tested in S10-packages so that there isn't
-a hyphen in the filename of the .pm file. This way, we can just
-    use packages::Whatever;
-instead of needing to quote the package name all the time, or add the proper
-directory to the Perl 6 equivalent of @INC.
-
 *****************************************************************************
 ** WARNING: This file can be used by some tests as an arbitrary file to read
 ** arbitrary data from and rely on it being located here, under this name.

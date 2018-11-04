@@ -1,6 +1,6 @@
 use Test;
 
-use lib $?FILE.IO.parent, $?FILE.IO.parent(2).add("packages");
+use lib $?FILE.IO.parent(2).add("packages/S12-meta/lib");
 
 plan 4;
 

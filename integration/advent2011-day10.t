@@ -1,10 +1,10 @@
 #! http://perl6advent.wordpress.com/2011/12/10/documenting-perl-6/
 
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
+
 plan 5;
 
 =begin pod

@@ -1,6 +1,6 @@
 use v6.c;
-use lib $?FILE.IO.parent(2).add("packages");
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 # This file is for random bugs that don't really fit well in other places
@@ -140,7 +140,7 @@ given make-temp-dir() {
 
 # https://github.com/rakudo/rakudo/issues/1413
 #?rakudo.jvm todo 'IllegalArgumentException: bad parameter count 850; https://github.com/rakudo/rakudo/issues/1413'
-my $package-lib-prefix = $?FILE.IO.parent(2).IO.add('packages').absolute;
+my $package-lib-prefix = $?FILE.IO.parent(2).IO.add('packages/RAKUDO1413/lib').absolute;
 is_run ｢use RAKUDO1413; print 'pass'｣,
     :compiler-args['-I', $package-lib-prefix],
     {:out<pass>, :err(''), :0status},

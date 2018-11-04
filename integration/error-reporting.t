@@ -1,10 +1,9 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
-plan 33;
-
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
+
+plan 33;
 
 is_run "use v6;\n'a' =~ /foo/", {
     status  => { $_ != 0 },
@@ -120,7 +119,7 @@ is_run 'die "foo"; END { say "end run" }',
 # RT #103034
 #?DOES 3
 {
-    use lib $?FILE.IO.parent(2).add("packages");
+    use lib $?FILE.IO.parent(2).add("packages/FooBarBaz/lib");
     use Foo;
     try dies();
     ok $!, 'RT #103034 -- died';

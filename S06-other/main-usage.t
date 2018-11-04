@@ -1,12 +1,9 @@
 use v6;
-
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
-plan 43;
-
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
+plan 43;
 
 # Basic functionality
 

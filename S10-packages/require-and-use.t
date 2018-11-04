@@ -1,11 +1,11 @@
 use v6;
-
-# L<S11/Runtime Importation>
-use lib $?FILE.IO.parent(2).add("packages");
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 plan 2;
+
+# L<S11/Runtime Importation>
 
 # RT #126688
 subtest 'circular dependencies are detected and reported' => {

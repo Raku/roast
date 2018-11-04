@@ -1,8 +1,8 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
+
 plan 40;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">

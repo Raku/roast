@@ -1,12 +1,11 @@
 # http://perl6advent.wordpress.com/2012/12/21/day-21-collatz-variations/
 # more about benchmarking than anything else. Definitely a stress test!
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
-plan 9;
-
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
+
+plan 9;
 
 our $basic = q:to"END";
 sub collatz-sequence(Int $start) {

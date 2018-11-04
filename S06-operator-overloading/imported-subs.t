@@ -1,13 +1,10 @@
 use v6;
-
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
 
 plan 20;
 
 {
-    # defined in packages/Exportops.pm6
+    use lib $?FILE.IO.parent(2).add("packages/Exportops/lib");
     use Exportops;
 
     ok EVAL('5!'), 'postfix:<!> was exported...';

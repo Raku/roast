@@ -1,6 +1,6 @@
 use v6;
-use lib $?FILE.IO.parent(3).add: 'packages';
 use Test;
+use lib $?FILE.IO.parent(3).add: 'packages/Test-Helpers';
 use Test::Util;
 
 # The tests in this file ensure certain constructs die with a decent error

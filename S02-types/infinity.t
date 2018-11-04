@@ -1,7 +1,8 @@
 use v6;
-use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
+
 plan 21;
 
 # L<S02/"Infinity and C<NaN>" /Perl 6 by default makes standard IEEE floating point concepts visible>

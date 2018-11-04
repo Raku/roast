@@ -1,6 +1,7 @@
 use Test;
-use lib $?FILE.IO.parent(2).add: 'packages';
+use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
+
 plan 39;
 # This is a test for the utf16, utf16be and utf16le encodings. We make sure
 # to test .encode, .decode, .slurp, .spurt. We also make sure .read reads the

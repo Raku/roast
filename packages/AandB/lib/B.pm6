@@ -6,3 +6,4 @@ class B {
     method foo { 'method foo' }
 }
 
+

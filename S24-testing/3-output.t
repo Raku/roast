@@ -1,10 +1,8 @@
 # check output (text output and return code) of tests
 
 use v6;
-
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 plan 6;

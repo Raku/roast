@@ -1,7 +1,8 @@
 use v6;
-
 use Test;
-use lib $?FILE.IO.parent(2).add("packages");
+
+use lib $?FILE.IO.parent(2).add("packages/ExportConstant/lib");
+
 plan 72;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">

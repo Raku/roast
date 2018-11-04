@@ -1,15 +1,13 @@
 use v6;
-
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+
+use lib $?FILE.IO.parent(2).add: 'packages/FooBarBaz/lib';
+use Foo;
 
 plan 2;
 
 # L<S12/Classes/"class or type name using">
-
 # Testing class literals
-use  Foo;
 my $test1;
 
 ok ($test1 = ::Foo) ~~ Foo, "::Foo is a valid class literal";

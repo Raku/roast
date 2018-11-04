@@ -4,6 +4,6 @@ use v6;
 # see thread "What do use and require evaluate to?" on p6l started by Ingo
 # Blechschmidt, L<"http://www.nntp.perl.org/group/perl.perl6.language/22258">.
 
-module package::RequireAndUse2 {
+module RequireAndUse2 {
   23;
 }

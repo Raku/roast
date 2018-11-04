@@ -1,8 +1,9 @@
 use v6;
-use lib $?FILE.IO.parent(2).add: 'packages';
-use MONKEY-TYPING;
 use Test;
+use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
+
+use MONKEY-TYPING;
 
 plan 111;
 

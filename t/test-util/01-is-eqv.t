@@ -1,12 +1,12 @@
 use v6;
-use lib $?FILE.IO.parent(3).add("packages");
+use lib $?FILE.IO.parent(3).add("packages/Test-Helpers");
 use Test;
 use Test::Util;
 
 plan 10;
 
 sub is-eqv-fails ($code, $desc) {
-    my $package-lib-prefix = $?FILE.IO.parent(3).add('packages').absolute;
+    my $package-lib-prefix = $?FILE.IO.parent(3).add('packages/Test-Helpers').absolute;
 
     is_run ~ "use lib $package-lib-prefix.perl();\n" ~ ｢
         use Test;

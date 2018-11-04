@@ -1,10 +1,10 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
+use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use Test::Util;
 
 use MONKEY-TYPING;
 
-use Test;
-use Test::Util;
 plan 64;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >

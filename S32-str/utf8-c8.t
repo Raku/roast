@@ -1,6 +1,6 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 # The UTF-8 Clean 8-bit encoding is used to ensure we can roundtrip any

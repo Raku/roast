@@ -1,7 +1,7 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use Test::Util;
 
 plan 6;
 
@@ -9,8 +9,6 @@ isa-ok @*ARGS, Array, '@*ARGS is an Array';
 is-deeply @*ARGS, [], 'by default @*ARGS is empty array';
 
 lives-ok { @*ARGS = 1, 2 }, '@*ARGS is writable';
-
-use Test::Util;
 
 is_run 'print @*ARGS.join(q[, ])', :args[1, 2, "foo"],
     {
