@@ -9,6 +9,11 @@ plan :skip-all<Cannot test without $*TMPDIR and $*HOME set to readable dirs>
     unless $*TMPDIR ~~ :d & :r and $*HOME ~~ :d & :r;
 
 plan 8;
+
+# XXX TODO: `&*chdir` changes process dir, however `qx` respects `$*CWD`,
+# so these tests do not currently manage to prove the process directory changes
+# along with the value of `$*CWD` as well:
+# https://github.com/perl6/roast/issues/471
 my &sys-cwd = $*DISTRO.is-win ?? {qx`echo %cd%`.chomp.IO} !! {qx`pwd`.chomp.IO};
 
 subtest '&*chdir into IO::Path respects its :CWD attribute' => {
