@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 46;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -91,8 +91,10 @@ is $stderr, '',       'got correct STDERR';
 
 { # RT #129362
     my @args := $*EXECUTABLE.absolute, "-e", "exit";
-    is-deeply (await Proc::Async.new(@args).start).command, @args,
+    is-deeply (await (my $p := Proc::Async.new: @args).start).command, @args,
         'Proc returned from .start has correct .command';
+    # https://github.com/rakudo/rakudo/issues/2444
+    is-deeply $p.command, @args, 'Proc::Async.command has correct args';
 }
 
 # Check we don't have races if you tap the stdout supply after starting.
