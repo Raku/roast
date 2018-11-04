@@ -1,5 +1,5 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test;
 use Test::Util;
 plan 20;

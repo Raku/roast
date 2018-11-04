@@ -1,5 +1,6 @@
+use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test;
-use lib $?FILE.IO.parent(2).add: 'packages'; use Test::Util;
+use Test::Util;
 plan 2;
 
 

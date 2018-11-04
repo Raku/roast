@@ -126,12 +126,12 @@ specify a different implementation and other options.
 ## Test Utilities
 
 This repository contains
-[`Test::Util` module](packages/Test/Util.pm) with helper routines
+[`Test::Util` module](packages/Test-Helpers/lib/Test/Util.pm) with helper routines
 you can use when writing tests. See POD documentation included at the end of
-the [module's source code](packages/Test/Util.pm). To include
+the [module's source code](packagesTest-Helpers/lib/Test/Util.pm). To include
 the module, in your test file, you need to add `use lib` line to your test file.
 
-    use lib $?FILE.IO.parent(2).add: 'packages';
+    use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
     use Test::Util;
     use Test;
 

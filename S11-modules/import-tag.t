@@ -1,15 +1,14 @@
 use v6;
-
-use lib $?FILE.IO.parent(2).child("packages");
-
 use Test;
+
+use lib $?FILE.IO.parent(2).child("packages/S11-modules/lib");
 
 plan 12;
 
 # L<S11/"Compile-time Importation"/>
 
 {
-    use S11-modules::Foo :others;
+    use Foo :others;
 
     dies-ok { EVAL 'foo()' }, 'foo() not imported - not tagged :others';
 

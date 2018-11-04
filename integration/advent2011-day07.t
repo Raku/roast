@@ -1,6 +1,6 @@
 #! http://perl6advent.wordpress.com/2011/12/07/grammarprofiler/
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
+use lib $?FILE.IO.parent(2).add("packages/Advent/lib");
 
 use Test;
 use Advent::GrammarProfiler;

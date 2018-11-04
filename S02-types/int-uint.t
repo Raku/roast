@@ -1,9 +1,7 @@
 use v6;
-use lib $?FILE.IO.parent(2).add: 'packages';
 use Test;
+use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
-
-use Test;
 
 # L<S09/Sized types/Sized low-level types are named most generally by appending the number of bits to a generic low-level type name>
 

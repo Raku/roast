@@ -1,10 +1,14 @@
 use v6;
+use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use Test::Util;
 
 # L<S10/Packages>
 
-use lib $?FILE.IO.parent(2).add("packages");
-use Test;
-use Test::Util;
+use lib $?FILE.IO.parent(2).add("packages/FooBarBaz/lib");
+use lib $?FILE.IO.parent(2).add("packages/OverrideTest/lib");
+use lib $?FILE.IO.parent(2).add("packages/LoadFromInside/lib");
+use lib $?FILE.IO.parent(2).add("packages/PM6/lib");
 
 plan 83;
 
@@ -148,7 +152,7 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
               'map works in a module (RT #64606)';
 
 {
-    use lib $?FILE.IO.parent(2).add("packages");
+    use lib $?FILE.IO.parent(2).add("packages/ArrayInit/lib");
     use ArrayInit;
     my $first_call = array_init();
     is array_init(), $first_call,
@@ -242,7 +246,6 @@ throws-like q[
 
 # RT #121253
 {
-    use lib $?FILE.IO.parent(2).add("packages");
     use Bar;
     use Baz;
     use Foo;
@@ -256,7 +259,7 @@ throws-like q[
 
 # RT #76606
 {
-    use lib $?FILE.IO.parent(2).add("packages");
+    use lib $?FILE.IO.parent(2).add("packages/RT76606/lib");
     lives-ok { use RT76606 },
         'autovivification works with nested "use" directives (import from two nested files)';
 }
@@ -326,7 +329,7 @@ throws-like q[
 # RT #131540
 subtest '`use lib` accepts IO::Path objects' => {
     plan 2;
-    constant $path = $?FILE.IO.parent(2).add('packages').absolute;
+    constant $path = $?FILE.IO.parent(2).add('packages/Test-Helpers').absolute;
     is_run "use lib '{$path}'.IO; use Test::Util",
         {:out(''), :err(''), :0status}, 'single object';
 

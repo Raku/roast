@@ -1,8 +1,9 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
-use lib $?FILE.IO.parent;
 use Test;
+use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
+
+use lib $?FILE.IO.parent(2).add: 'packages/S12-meta/lib';
 
 plan 12;
 

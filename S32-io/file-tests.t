@@ -1,7 +1,7 @@
 #! /usr/bin/env perl6
 
 use v6.c;
-use lib $?FILE.IO.parent(2).add("packages");
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 
 use Test;
 use Test::Util;

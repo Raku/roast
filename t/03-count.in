@@ -14,3 +14,4 @@ sub same-type ($x, $y) {
     same-type(42, 4);
 }
 is 3*4, 12;
+

@@ -1,7 +1,9 @@
 use v6.c;
-use lib $?FILE.IO.parent(2).add("packages");
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
+
+use lib $?FILE.IO.parent(2).add("packages/RAKUDO1413/lib");
 
 # This file is for random bugs that don't really fit well in other places
 # or ones that need to be only part of strestest and not spectest.

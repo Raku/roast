@@ -7,7 +7,11 @@ use v6;
 # if you need to load any other modules.
 #############################################################################
 
-use lib $?FILE.IO.parent, $?FILE.IO.parent.add("lib");
+use lib $?FILE.IO.parent(2).add("packages/Fancy/lib");
+use lib $?FILE.IO.parent(2).add("packages/FooBarBaz/lib");
+use lib $?FILE.IO.parent(2).add("packages/S11-modules/lib");
+use lib $?FILE.IO.parent(2).add("packages/Cool/lib");
+
 use MONKEY-SEE-NO-EVAL;
 
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
@@ -75,7 +79,11 @@ lives-ok {
 }, 'can load Fancy::Utilities at run time';
 
 # L<S11/"Runtime Importation"/"It is also possible to specify the module name indirectly by string">
-lives-ok { my $name = 'A'; require ::($name) }, 'can require with variable name';
+lives-ok {
+    use lib $?FILE.IO.parent(2).add("packages/AandB/lib");
+    my $name = 'A';
+    require ::($name)
+}, 'can require with variable name';
 
 {
     my $res = (require ::('Fancy::Utilities'));
@@ -95,7 +103,7 @@ is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 
 # tests the combination of chdir+require
 my $cwd = $*CWD;
-lives-ok { chdir $?FILE.IO.parent(2).child('packages'); require "Foo.pm6"; },
+lives-ok { chdir $?FILE.IO.parent(2).child('packages/FooBarBaz/lib'); require "Foo.pm6"; },
          'can change directory and require a module';
 chdir $cwd;
 

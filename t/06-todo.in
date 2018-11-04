@@ -21,3 +21,4 @@ is_run 'sub MAIN(:$x) { print $x }',
     },
     :args['-x=23'],
     'option with spacey value';
+

@@ -1,8 +1,10 @@
 use v6;
-
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+
+use lib $?FILE.IO.parent(2).add("packages/RT83354/lib");
+use lib $?FILE.IO.parent(2).add("packages/RT84280/lib");
+use lib $?FILE.IO.parent(2).add("packages/RT125715/lib");
+use lib $?FILE.IO.parent(2).add("packages/RT129215/lib");
 
 plan 56;
 

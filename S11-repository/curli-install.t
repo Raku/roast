@@ -1,8 +1,9 @@
 use v6;
-constant $repo-path = $?FILE.IO.parent(2).child('packages/curi-install').absolute;
+use Test;
+
+constant $repo-path = $?FILE.IO.parent(2).add('packages/curi-install').absolute;
 use lib "inst#$repo-path";
 
-use Test;
 plan 19;
 
 # TODO: rename this test to `curi-install.t`
@@ -19,7 +20,7 @@ $repo-path.IO.mkdir;
     is $*REPO.loaded.elems, 0, 'no compilation units were loaded so far';
 }
 
-my $prefix   = $repo-path.IO.parent;
+my $prefix   = $repo-path.IO.parent(2).add('packages/FooBarBaz/lib');
 my %provides = Foo => 'Foo.pm6';
 my $dist              = Distribution::Hash.new({ :name<Foo>, :api<1>, :ver(v1.2.3), :%provides }, :$prefix);
 my $non-matching-dist = Distribution::Hash.new({ :name<Foo>, :api<2>, :ver(v2.3.4), :%provides }, :$prefix);

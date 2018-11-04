@@ -1,8 +1,7 @@
 use v6;
-
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+
+use lib $?FILE.IO.parent(2).add("packages/ContainsUnicode/lib");
 use ContainsUnicode;
 
 plan 37;

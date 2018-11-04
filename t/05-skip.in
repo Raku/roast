@@ -14,3 +14,4 @@ is 2+3, $bar;
     my $bar = 6;
     is 2*3, $bar;
 }
+

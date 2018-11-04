@@ -1,8 +1,10 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages");
-use lib $?FILE.IO.parent(2).add("packages/S11-modules");
-
 use Test;
+
+use lib $?FILE.IO.parent(2).add("packages/AandB/lib");
+use lib $?FILE.IO.parent(2).add("packages/S11-modules/lib");
+use lib $?FILE.IO.parent(2).add("packages/RT117117/lib");
+
 plan 11;
 
 # test that classes and roles declared in modules get into the correct

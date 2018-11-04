@@ -1,15 +1,15 @@
 use v6;
-
-use lib $?FILE.IO.parent(2).add("packages");
-
 use Test;
+
+use lib $?FILE.IO.parent(2).add("packages/AandB/lib");
+use lib $?FILE.IO.parent(2).add("packages/S11-modules/lib");
 
 plan 17;
 
 # L<S11/"Compile-time Importation"/>
 
 {
-    use S11-modules::Foo;
+    use Foo;
 
     ok( &foo, 'Foo::foo is defined (explicitly :DEFAULT)' );
     is( foo(), 'Foo::foo', 'Foo::foo is the sub we expect' );
@@ -48,13 +48,13 @@ dies-ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
 
 {
     lives-ok {
-        use S11-modules::ExportsEnumDate;
+        use ExportsEnumDate;
     }
 }
 
 # RT #125846
-throws-like 'use S11-modules::Foo :NoSucTag;', X::Import::NoSuchTag,
-                :source-package<S11-modules::Foo>,
+throws-like 'use Foo :NoSucTag;', X::Import::NoSuchTag,
+                :source-package<Foo>,
                 :tag<NoSucTag>,
              'die while trying to import a non-existent export tag';
 

@@ -1,6 +1,7 @@
 use v6;
 
-use lib $?FILE.IO.parent(2).add("packages");
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $?FILE.IO.parent(2).add("packages/HasMain/lib");
 
 use Test;
 use Test::Util;
