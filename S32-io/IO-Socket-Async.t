@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 41;
 
 my $hostname = 'localhost';
 my $port = 5000;
@@ -291,4 +291,23 @@ for '127.0.0.1', '::1' -> $host {
 
     is @first-got.join(""), "hello first", "first server socket got the right message";
     is @second-got.join(""), "hello second", "second server socket got the right message";
+}
+
+#?rakudo.jvm skip 'nqp::filenofh not yet implemented on the JVM'
+{
+    my Promise $p .= new;
+    my $v = $p.vow;
+
+    my $s = IO::Socket::Async.listen('localhost', 0).tap(-> $c {
+        cmp-ok $c.native-descriptor, '>', -1, 'server peer file descriptor makes sense';
+        $v.keep: 1;
+    });
+    cmp-ok $s.native-descriptor, '>', -1, 'server file descriptor makes sense';
+
+    my $c = await IO::Socket::Async.connect: 'localhost', await $s.socket-port;
+    cmp-ok $c.native-descriptor, '>', -1, 'client file descriptor makes sense';
+
+    await $p;
+    $s.close;
+    $c.close;
 }
