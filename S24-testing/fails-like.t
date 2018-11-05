@@ -14,8 +14,8 @@ subtest 'Callable arg' => {
     fails-like { sub { fail }() }, Exception;
     fails-like { sub { fail }() }, Exception, 'plain fail';
     fails-like {
-        sub { fail X::Str::Subst::Adverb.new: :name<foo>, :got<bar> }()
-    }, X::Str::Subst::Adverb, :name<foo>, :got<bar>, 'typed fail';
+        sub { fail X::Syntax::Reserved.new: :instead<foo>, :pos<bar> }()
+    }, X::Syntax::Reserved, :instead<foo>, :pos<bar>, 'typed fail';
 
     check-test-fail {
         fails-like { sub { fail }().sink }, Exception, 'plain fail (thrown)'
@@ -26,8 +26,8 @@ subtest 'Callable arg' => {
     }
     check-test-fail {
         fails-like {
-            sub { fail X::Str::Subst::Adverb.new: :name<foo>, :got<bar> }().sink
-        }, X::Str::Subst::Adverb, :name<foo>, :got<bar>, 'typed fail (thrown)';
+            sub { fail X::Syntax::Reserved.new: :instead<foo>, :pos<bar> }().sink
+        }, X::Syntax::Reserved, :instead<foo>, :pos<bar>, 'typed fail (thrown)';
     }
     check-test-fail { fails-like { 42 }, 'non-Failure return' }
 }
@@ -37,8 +37,8 @@ subtest 'Str arg' => {
     fails-like ｢sub { fail }() ｣, Exception;
     fails-like ｢sub { fail }() ｣, Exception, 'plain fail';
     fails-like ｢
-        sub { fail X::Str::Subst::Adverb.new: :name<foo>, :got<bar> }()
-    ｣, X::Str::Subst::Adverb, :name<foo>, :got<bar>, 'typed fail';
+        sub { fail X::Syntax::Reserved.new: :instead<foo>, :pos<bar> }()
+    ｣, X::Syntax::Reserved, :instead<foo>, :pos<bar>, 'typed fail';
 
     check-test-fail {
         fails-like ｢ sub { fail }().sink ｣, Exception, 'plain fail (thrown)'
@@ -49,8 +49,8 @@ subtest 'Str arg' => {
     }
     check-test-fail {
         fails-like ｢
-            sub { fail X::Str::Subst::Adverb.new: :name<foo>, :got<bar> }().sink
-        ｣, X::Str::Subst::Adverb, :name<foo>, :got<bar>, 'typed fail (thrown)';
+            sub { fail X::Syntax::Reserved.new: :instead<foo>, :pos<bar> }().sink
+        ｣, X::Syntax::Reserved, :instead<foo>, :pos<bar>, 'typed fail (thrown)';
     }
     check-test-fail { fails-like ｢ 42 ｣, 'non-Failure return' }
 }
