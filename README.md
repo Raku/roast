@@ -145,6 +145,8 @@ The [`APPENDICES`](APPENDICES/) directory contains advisory tests implentations
 may optionally choose to follow. See the [`README`](APPENDICES/README.md)
 included in that directory for more information.
 
+APPENDICES are not included in released versions of the specification.
+
 ## Environmental Variables
 
 - **ROAST_TIMING_SCALE**
