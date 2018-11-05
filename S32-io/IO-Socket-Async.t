@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 40;
 
 my $hostname = 'localhost';
 my $port = 5000;
@@ -292,3 +292,15 @@ for '127.0.0.1', '::1' -> $host {
     is @first-got.join(""), "hello first", "first server socket got the right message";
     is @second-got.join(""), "hello second", "second server socket got the right message";
 }
+
+# Rakudo Issue #2411
+{
+    my $listen-socket = IO::Socket::Async.listen("127.0.0.1", 0);
+    react {
+        my $listen-tap = do whenever $listen-socket -> $socket { … }
+        lives-ok { await $listen-tap.socket-port }, "can await on socket-port";
+        ok $listen-tap.socket-port.result > 0, "port looks reasonable";
+        done;
+    }
+}
+
