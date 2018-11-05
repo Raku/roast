@@ -347,9 +347,9 @@ subtest '.printf()' => {
         '$*ERR';
 
     throws-like { $*OUT.printf: '%♥', 42 },
-        X::Str::Sprintf::Directives::Unsupported, 'wrong directive';
+        Exception, 'wrong directive';
     throws-like { $*OUT.printf: '%d %d', 42 },
-        X::Str::Sprintf::Directives::Count, 'args do not match format';
+        Exception, 'args do not match format';
 }
 
 is-deeply make-temp-file(:content<foo>).IO.open.read, buf8.new('foo'.encode),

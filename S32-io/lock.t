@@ -32,7 +32,7 @@ sub test-lock (
             $*DISTRO.is-win
                 ?? skip
                     'locking filehandle in wrong mode does not throw on Windows'
-                !! fails-like { $fh.lock: |$args1 }, X::IO::Lock,
+                !! fails-like { $fh.lock: |$args1 }, Exception,
                     'fails to lock';
             return;
         }
@@ -61,7 +61,7 @@ sub test-lock (
                 my \$fh = '$file'.IO.open(:w);
                 say "LOCKING";
                 my \$res = \$fh.lock($args2);
-                if \$res ~~ Failure and \$res.exception ~~ X::IO::Lock
+                if \$res ~~ Failure and \$res.exception ~~ Exception
                     \{ say "DONE"; exit }
                 say "FAILED";
             |, {
@@ -106,7 +106,7 @@ sub test-lock (
                 my \$fh = '$file'.IO.open(:r);
                 say "LOCKING";
                 my \$res = \$fh.lock($args2);
-                if \$res ~~ Failure and \$res.exception ~~ X::IO::Lock
+                if \$res ~~ Failure and \$res.exception ~~ Exception
                     \{ say "DONE"; exit }
                 say "FAILED";
             |, {

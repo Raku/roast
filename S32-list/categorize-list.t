@@ -447,30 +447,30 @@ subtest ‘on Hashes, exceptions, can't do mixed-level classification’ => {
     my constant &as  = { "val $^a" }
 
     throws-like { %() .categorize-list: &m1, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '&, v1';
+        Exception, message => /:i 'mixed-level'/, '&, v1';
     throws-like { %() .categorize-list: %m1, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '%, v1';
+        Exception, message => /:i 'mixed-level'/, '%, v1';
     throws-like { %() .categorize-list: @m1, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '@, v1';
+        Exception, message => /:i 'mixed-level'/, '@, v1';
     throws-like { %() .categorize-list: &m2, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '&, v2';
+        Exception, message => /:i 'mixed-level'/, '&, v2';
     throws-like { %() .categorize-list: %m2, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '%, v2';
+        Exception, message => /:i 'mixed-level'/, '%, v2';
     throws-like { %() .categorize-list: @m2, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, '@, v2';
+        Exception, message => /:i 'mixed-level'/, '@, v2';
 
     throws-like { %() .categorize-list: :&as, &m1, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, &, v1';
+        Exception, message => /:i 'mixed-level'/, ':&as, &, v1';
     throws-like { %() .categorize-list: :&as, %m1, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, %, v1';
+        Exception, message => /:i 'mixed-level'/, ':&as, %, v1';
     throws-like { %() .categorize-list: :&as, @m1, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, @, v1';
+        Exception, message => /:i 'mixed-level'/, ':&as, @, v1';
     throws-like { %() .categorize-list: :&as, &m2, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, &, v2';
+        Exception, message => /:i 'mixed-level'/, ':&as, &, v2';
     throws-like { %() .categorize-list: :&as, %m2, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, %, v2';
+        Exception, message => /:i 'mixed-level'/, ':&as, %, v2';
     throws-like { %() .categorize-list: :&as, @m2, [1, 2, 3] },
-        X::Invalid::ComputedValue, message => /:i 'mixed-level'/, ':&as, @, v2';
+        Exception, message => /:i 'mixed-level'/, ':&as, @, v2';
 }
 
 ###############################################################################
@@ -716,22 +716,22 @@ subtest ‘on Baggy, exceptions, can't multi-level classify’ => {
     my constant %m  = %(1 => [<a b>,], 2 => [<a b>,], 3 => [<a b>,]);
 
     throws-like { BagHash.new.categorize-list: &m, 1, 2, 3  },
-        X::Invalid::ComputedValue,
+        Exception,
         message => /'multi-level categorization'/, 'BagHash, &';
     throws-like { BagHash.new.categorize-list: %m, 1, 2, 3  },
-        X::Invalid::ComputedValue,
+        Exception,
         message => /'multi-level categorization'/, 'BagHash, %';
     throws-like { BagHash.new.categorize-list: @m, 1, 2, 3  },
-        X::Invalid::ComputedValue,
+        Exception,
         message => /'multi-level categorization'/, 'BagHash, @';
     throws-like { MixHash.new.categorize-list: &m, 1, 2, 3  },
-        X::Invalid::ComputedValue,
+        Exception,
         message => /'multi-level categorization'/, 'MixHash, &';
     throws-like { MixHash.new.categorize-list: %m, 1, 2, 3  },
-        X::Invalid::ComputedValue,
+        Exception,
         message => /'multi-level categorization'/, 'MixHash, %';
     throws-like { MixHash.new.categorize-list: @m, 1, 2, 3  },
-        X::Invalid::ComputedValue,
+        Exception,
         message => /'multi-level categorization'/, 'MixHash, @';
 }
 

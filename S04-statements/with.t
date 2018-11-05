@@ -291,11 +291,11 @@ for
 # RT #130279
 subtest '`else` and kin with `without` errors out' => {
     plan 3;
-    throws-like 'without 1 {} else     {}', X::Syntax::WithoutElse,
+    throws-like 'without 1 {} else     {}', Exception,
         keyword => 'else',   'using `else`';
-    throws-like 'without 1 {} elsif 1  {}', X::Syntax::WithoutElse,
+    throws-like 'without 1 {} elsif 1  {}', Exception,
         keyword => 'elsif',  'using `elsif`';
-    throws-like 'without 1 {} orwith 1 {}', X::Syntax::WithoutElse,
+    throws-like 'without 1 {} orwith 1 {}', Exception,
         keyword => 'orwith', 'using `orwith`';
 }
 

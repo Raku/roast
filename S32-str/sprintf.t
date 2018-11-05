@@ -238,11 +238,11 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 }
 
 # RT #106594, #62316, #74610
-throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count,
+throws-like { sprintf("%d-%s", 42) }, Exception,
     'no gut spillage in sprintf with wrong arguments';
 
 # RT #122907
-throws-like { sprintf "%d" }, X::Str::Sprintf::Directives::Count,
+throws-like { sprintf "%d" }, Exception,
     'sprintf %d directive with find a corresponding argument throws';
 
 # found by japhb
@@ -261,18 +261,18 @@ throws-like { sprintf "%d" }, X::Str::Sprintf::Directives::Count,
 }
 
 {
-    throws-like { sprintf "%d", 0^1 }, X::Str::Sprintf::Directives::BadType, :type('Junction'),
+    throws-like { sprintf "%d", 0^1 }, Exception, :type('Junction'),
         "sprintf complains about types that can't be displayed as the directive specifies";
 }
 
 {
-    throws-like { sprintf "%q", 0 }, X::Str::Sprintf::Directives::Unsupported,
+    throws-like { sprintf "%q", 0 }, Exception,
         'sprintf complains about unsupported directives';
 }
 
 # RT #129088  RT #130509
 {
-    throws-like { sprintf 'D6.2', 'foo' }, X::Str::Sprintf::Directives::Count,
+    throws-like { sprintf 'D6.2', 'foo' }, Exception,
     'Invalid formats do not spill internal details';
 }
 

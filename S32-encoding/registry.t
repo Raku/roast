@@ -21,7 +21,7 @@ for <utf8  utf-8  UTF-8 ascii  iso-8859-1  latin-1 utf16 utf-16 UTF-16 UTF16
 }
 
 throws-like { Encoding::Registry.find('utf-29') },
-    X::Encoding::Unknown, name => 'utf-29',
+    Exception, name => 'utf-29',
     'Unknown encoding throws correct type of exception';
 
 {
@@ -51,7 +51,7 @@ throws-like { Encoding::Registry.find('utf-29') },
         method decoder() { die "NYI" }
     }
     throws-like { Encoding::Registry.register(TestEncoding2) },
-        X::Encoding::AlreadyRegistered, name => 'utf-29',
+        Exception, name => 'utf-29',
         'Cannot register an encoding with an overlapping name';
 
     my class TestEncoding3 does Encoding {
@@ -61,7 +61,7 @@ throws-like { Encoding::Registry.find('utf-29') },
         method decoder() { die "NYI" }
     }
     throws-like { Encoding::Registry.register(TestEncoding3) },
-        X::Encoding::AlreadyRegistered, name => 'prime-enc',
+        Exception, name => 'prime-enc',
         'Cannot register an encoding with an overlapping alternative name';
 }
 

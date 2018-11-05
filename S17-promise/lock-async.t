@@ -3,7 +3,7 @@ use Test;
 plan 37;
 
 throws-like { Lock::Async.new.unlock },
-    X::Lock::Async::NotLocked,
+    Exception,
     'Cannot unlock an async lock that was never locked';
 
 {
@@ -13,7 +13,7 @@ throws-like { Lock::Async.new.unlock },
     lives-ok { await $lock.lock() }, 'Can successfully acquire the lock again';
     lives-ok { $lock.unlock() }, 'Can successfully release the lock again';
     throws-like { Lock::Async.new.unlock },
-        X::Lock::Async::NotLocked,
+        Exception,
         'Trying an extra unlock dies';
 }
 

@@ -12,13 +12,13 @@ plan 7*@nuls;
     temp $*CWD = make-temp-dir;
     for @nuls -> $nul {
         my $d = "with {$nul.perl}";
-        throws-like { spurt $nul, "foo"   }, X::IO::Null, "&spurt $d";
-        throws-like { slurp $nul          }, X::IO::Null, "&slurp $d";
-        throws-like { chdir $nul          }, X::IO::Null, "&chdir $d";
-        throws-like { open  $nul          }, X::IO::Null, "&open $d";
-        throws-like { $nul.IO             }, X::IO::Null, ".IO $d";
-        throws-like { IO::Path.new: $nul  }, X::IO::Null, "IO::Path.new $d";
-        throws-like { $*CWD.child: $nul   }, X::IO::Null, ".child $d";
+        throws-like { spurt $nul, "foo"   }, Exception, "&spurt $d";
+        throws-like { slurp $nul          }, Exception, "&slurp $d";
+        throws-like { chdir $nul          }, Exception, "&chdir $d";
+        throws-like { open  $nul          }, Exception, "&open $d";
+        throws-like { $nul.IO             }, Exception, ".IO $d";
+        throws-like { IO::Path.new: $nul  }, Exception, "IO::Path.new $d";
+        throws-like { $*CWD.child: $nul   }, Exception, ".child $d";
     }
 }
 

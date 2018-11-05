@@ -268,8 +268,8 @@ throws-like '1..2..3', X::Syntax::NonAssociative, '.. is not associative';
 # RT #127279
 my @opvariants = «.. ^.. ..^ ^..^ ' R..' ' R^..' ' R..^' ' R^..^'»;
 for @opvariants {
-    throws-like "\{ use fatal; |4$_ 5 }", X::Worry::Precedence::Range, "$_ warns on common flattening mistake";
-    throws-like "\{ use fatal; |4$_ 5 }", X::Worry::Precedence::Range, "$_ warns on common stringification mistake";
+    throws-like "\{ use fatal; |4$_ 5 }", Exception, "$_ warns on common flattening mistake";
+    throws-like "\{ use fatal; |4$_ 5 }", Exception, "$_ warns on common stringification mistake";
     eval-lives-ok "\{ use fatal; |(4$_ 5) }", "$_ doesn't warn on parenthesized flattening (range)";
     eval-lives-ok "\{ use fatal; (|4)$_ 5 }", "$_ doesn't warn on parenthesized flattening (endpoint)";
     eval-lives-ok "\{ use fatal; ~(4$_ 5) }", "$_ doesn't warn on parenthesized stringification (range)";

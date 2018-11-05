@@ -183,10 +183,10 @@ subtest '`**` quantifier' => {
     #?DOES 1
     sub does-match-throw ($quant, |c) {
         $*frugal ?? throws-like { "xxxxx".match(/x **? {$quant}/) },
-                    X::Syntax::Regex::QuantifierValue, |c,
+                    Exception, |c,
                     "$quant.perl() throws (frugal)"
                  !! throws-like { "xxxxx".match(/x **  {$quant}/) },
-                    X::Syntax::Regex::QuantifierValue, |c,
+                    Exception, |c,
                     "$quant.perl() throws (greedy)";
     }
 
@@ -261,11 +261,11 @@ subtest '`**` quantifier' => {
     }
 
     throws-like ｢"xxxxx" ~~ /x **? 2..1/｣,
-          X::Syntax::Regex::QuantifierValue, :empty-range,
+          Exception, :empty-range,
     'block-less empty range throws (frugal)';
 
     throws-like ｢"xxxxx" ~~ /x **  2..1/｣,
-          X::Syntax::Regex::QuantifierValue, :empty-range,
+          Exception, :empty-range,
     'block-less empty range throws (greedy)';
 }
 

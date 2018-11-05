@@ -50,8 +50,8 @@ plan 9;
     i-will-react();
     CATCH {
         default {
-            ok .does(X::React::Died),
-                'An exception from a react that dies does X::React::Died';
+            ok .does(Exception),
+                'An exception from a react that dies does Exception';
             like .gist, /'goodbye!'/,
                 'Exception report contains original message';
             like .gist, /'death'/,

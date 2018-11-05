@@ -170,7 +170,7 @@ subtest '.resolve' => {
         ".resolve() cleans up paths it can't resolve";
 
     fails-like { p('level1a/../not-there/foo').resolve(:completely) },
-        X::IO::Resolve, '.resolve(:completely) fails with X::IO::Resolve';
+        Exception, '.resolve(:completely) fails with Exception';
 
     is-deeply
         p('level1a/../level1b/level2a/../../level1c/level2b/'

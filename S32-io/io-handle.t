@@ -102,7 +102,7 @@ subtest '.flush' => {
     $fh.print: 'bar';
     $fh.flush;
     is-deeply $file.slurp, 'foobar', 'content was flushed';
-    fails-like { IO::Handle.new.flush }, X::IO::Flush,
+    fails-like { IO::Handle.new.flush }, Exception,
         'fails with correct exception';
 }
 

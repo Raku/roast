@@ -30,63 +30,63 @@ plan 17;
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1', :w);
     throws-like { $proc.bind-stdin($*IN) },
-        X::Proc::Async::BindOrUse, handle => 'stdin',
+        Exception, handle => 'stdin',
         'Cannot both open with :w and call bind-stdin';
 }
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
     throws-like { $ = $proc.stdout; $proc.bind-stdout($*OUT) },
-        X::Proc::Async::BindOrUse, handle => 'stdout',
+        Exception, handle => 'stdout',
         'Cannot get stdout stream and then bind stdout';
 }
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
     throws-like { $ = $proc.Supply; $proc.bind-stdout($*OUT) },
-        X::Proc::Async::BindOrUse, handle => 'stdout',
+        Exception, handle => 'stdout',
         'Cannot get merged stream and then bind stdout';
 }
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
     throws-like { $proc.bind-stdout($*OUT); $ = $proc.stdout },
-        X::Proc::Async::BindOrUse, handle => 'stdout',
+        Exception, handle => 'stdout',
         'Cannot bind-stdout then get stdout stream';
 }
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
     throws-like { $proc.bind-stdout($*OUT); $ = $proc.Supply },
-        X::Proc::Async::BindOrUse, handle => 'stdout',
+        Exception, handle => 'stdout',
         'Cannot bind-stdout then get merged stream';
 }
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
     throws-like { $ = $proc.stderr; $proc.bind-stderr($*OUT) },
-        X::Proc::Async::BindOrUse, handle => 'stderr',
+        Exception, handle => 'stderr',
         'Cannot get stderr stream and then bind stderr';
 }
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
     throws-like { $ = $proc.Supply; $proc.bind-stderr($*OUT) },
-        X::Proc::Async::BindOrUse, handle => 'stderr',
+        Exception, handle => 'stderr',
         'Cannot get merged stream and then bind stderr';
 }
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
     throws-like { $proc.bind-stderr($*OUT); $ = $proc.stderr },
-        X::Proc::Async::BindOrUse, handle => 'stderr',
+        Exception, handle => 'stderr',
         'Cannot bind-stderr then get stderr stream';
 }
 
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', 'say 1');
     throws-like { $proc.bind-stderr($*OUT); $ = $proc.Supply },
-        X::Proc::Async::BindOrUse, handle => 'stderr',
+        Exception, handle => 'stderr',
         'Cannot bind-stderr then get merged stream';
 }
 

@@ -217,30 +217,30 @@ is-deeply .Capture, $_, 'Match.Capture returns self',
 subtest 'types whose .Capture throws' => {
     # https://irclog.perlgeek.de/perl6/2017-03-07#i_14221839
     plan 14;
-    throws-like  { True  .Capture }, X::Cannot::Capture, 'Bool';
-    throws-like  { 'x'   .Capture }, X::Cannot::Capture, 'Str';
-    throws-like  { 42    .Capture }, X::Cannot::Capture, 'Int';
+    throws-like  { True  .Capture }, Exception, 'Bool';
+    throws-like  { 'x'   .Capture }, Exception, 'Str';
+    throws-like  { 42    .Capture }, Exception, 'Int';
 
-    throws-like  { 42e0  .Capture }, X::Cannot::Capture, 'Num';
-    throws-like  { <42>  .Capture }, X::Cannot::Capture, 'IntStr';
-    throws-like  { <42e0>.Capture }, X::Cannot::Capture, 'NumStr';
+    throws-like  { 42e0  .Capture }, Exception, 'Num';
+    throws-like  { <42>  .Capture }, Exception, 'IntStr';
+    throws-like  { <42e0>.Capture }, Exception, 'NumStr';
 
-    throws-like  { -> $a, :$b {}.Capture }, X::Cannot::Capture, 'Callable';
-    throws-like  { ((*)).Capture }, X::Cannot::Capture, 'Whatever';
-    throws-like  { ((**)).Capture }, X::Cannot::Capture, 'HyperWhatever';
+    throws-like  { -> $a, :$b {}.Capture }, Exception, 'Callable';
+    throws-like  { ((*)).Capture }, Exception, 'Whatever';
+    throws-like  { ((**)).Capture }, Exception, 'HyperWhatever';
 
-    throws-like  { ((*.so)).Capture }, X::Cannot::Capture, 'WhateverCode';
-    throws-like  { :(\SELF: $a, :$b).Capture }, X::Cannot::Capture, 'Signature';
-    throws-like  { (v42).Capture }, X::Cannot::Capture, 'Version';
-    throws-like  { rx/./.Capture }, X::Cannot::Capture, 'Regex';
+    throws-like  { ((*.so)).Capture }, Exception, 'WhateverCode';
+    throws-like  { :(\SELF: $a, :$b).Capture }, Exception, 'Signature';
+    throws-like  { (v42).Capture }, Exception, 'Version';
+    throws-like  { rx/./.Capture }, Exception, 'Regex';
 
     subtest 'Failure' => {
         plan 3;
 
-        throws-like { Failure.Capture }, X::Cannot::Capture, ':U';
+        throws-like { Failure.Capture }, Exception, ':U';
         throws-like {
             given Failure.new { .so; .Capture }
-        }, X::Cannot::Capture, 'handled';
+        }, Exception, 'handled';
 
         my class X::Meows is Exception {}
         throws-like { sub { X::Meows.new.fail }().Capture }, X::Meows,

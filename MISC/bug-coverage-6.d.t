@@ -11,6 +11,6 @@ plan 1;
 throws-like ｢
     use v6.d.PREVIEW;
     sub foo { whenever Promise.in(2) { say ‘hello’ } }; react foo
-｣, X::Comp::WheneverOutOfScope, 'whenever not in lexical scope of react throws';
+｣, Exception, 'whenever not in lexical scope of react throws';
 
 # vim: expandtab shiftwidth=4 ft=perl6
