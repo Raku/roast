@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 constant $repo-path = $?FILE.IO.parent(2).child('packages/curi-install').absolute;
 use lib "inst#$repo-path";
 

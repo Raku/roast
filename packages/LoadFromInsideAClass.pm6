@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 class LoadFromInsideAClass {
     use Foo;
 }

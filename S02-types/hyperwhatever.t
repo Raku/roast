@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 # Tests for the HyperWhatever type and its curries

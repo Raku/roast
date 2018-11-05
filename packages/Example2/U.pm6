@@ -1,2 +1,2 @@
-use v6;
+use v6.d;
 use Example2::C;

@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 module ContainsUnicode {
     sub uc-and-join(*@things, :$separator = ', ') is export {
         @things».uc.join($separator)

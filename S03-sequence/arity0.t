@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 # L<S03/List infix precedence/"can be 0-ary as well">

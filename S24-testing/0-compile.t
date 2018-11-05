@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 # Checking that testing is sane: Test.pm6
 

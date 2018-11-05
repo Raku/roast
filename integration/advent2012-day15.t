@@ -1,5 +1,5 @@
 # http://perl6advent.wordpress.com/2012/12/15/day-15-phasers-set-to-stun/
-use v6;
+use v6.d;
 use Test;
 
 our $in_prompt;

@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 unit module ArrayInit;
 
 # used by S10-packages/basic.t

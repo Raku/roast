@@ -1,5 +1,5 @@
 # Test generated from emoji-test.txt Emoji version 11.0
-use v6;
+use v6.d;
 use Test;
 plan 2358;
 ## 263A FE0F                                  ; fully-qualified     # ☺️ smiling face # emoji-test.txt line #44 Emoji version 11.0

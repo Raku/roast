@@ -1,5 +1,5 @@
 # http://perl6advent.wordpress.com/2010/12/19/day-19-false-truth/
-use v6;
+use v6.d;
 use Test;
 plan 6;
 

@@ -1,5 +1,5 @@
 # http://perl6advent.wordpress.com/2010/12/11/day-11-markov-sequence/
-use v6;
+use v6.d;
 use Test;
 plan 2;
 

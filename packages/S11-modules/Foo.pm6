@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 # L<S11/"Exportation"/>
 
 unit module packages::S11-modules::Foo;

@@ -1,5 +1,5 @@
 # http://perl6advent.wordpress.com/2011/12/20/paired-up-hashes/
-use v6;
+use v6.d;
 use Test;
 plan 16;
 

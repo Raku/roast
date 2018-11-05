@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 class RT83354_A {
     has $.a;
 

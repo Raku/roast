@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 # L<S02/"Literals"/"In item context, though, the implied parentheses are not removed">

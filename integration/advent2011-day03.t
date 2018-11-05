@@ -1,6 +1,6 @@
 #! http://perl6advent.wordpress.com/2011/12/03/buffers-and-binary-io/
 
-use v6;
+use v6.d;
 use Test;
 plan 2;
 

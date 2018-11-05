@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 my class MethodBoundaryAspect is export {
 }
 

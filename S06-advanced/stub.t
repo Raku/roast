@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 BEGIN plan 13;

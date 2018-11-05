@@ -1,5 +1,5 @@
 # http://perl6advent.wordpress.com/2011/12/22/day-22-operator-overloading-revisited/
-use v6;
+use v6.d;
 use Test;
 plan 2;
 

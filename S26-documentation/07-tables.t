@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 my $r;
 my $p = 0; # use as an index for the pod chunks

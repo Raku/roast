@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 # L<S11/Exportation>
 use lib $?FILE.IO.parent.child("packages");

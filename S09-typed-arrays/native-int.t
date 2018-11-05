@@ -1,4 +1,4 @@
-﻿use v6;
+﻿use v6.d;
 use Test;
 
 my @int  =  int, int8, int16, int32;

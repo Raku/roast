@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
 # Generated from Unicode version 11.0.0.

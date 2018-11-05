@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 # L<S11/Runtime Importation>
 use lib $?FILE.IO.parent(2).add("packages");

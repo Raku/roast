@@ -1,5 +1,5 @@
 # http://perl6advent.wordpress.com/2011/12/24/day-24-subs-are-always-better-in-multi-ples/
-use v6;
+use v6.d;
 use Test;
 plan 8;
 

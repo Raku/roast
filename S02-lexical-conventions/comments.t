@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 # Test various forms of comments
 
@@ -178,7 +178,7 @@ plan 50;
 # L<S02/Single-line Comments/"single-line comments">
 {
     # RT #70752
-    lives-ok { EVAL "#=======\n#=======\nuse v6;" }, 
+    lives-ok { EVAL "#=======\n#=======\nuse v6.d;" }, 
       "pragma use after single line comments";
 }
 

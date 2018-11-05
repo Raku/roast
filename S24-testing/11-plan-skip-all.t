@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 plan skip-all => "Testing skippage of `plan skip-all`";
 

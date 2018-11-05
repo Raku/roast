@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 # old: L<S16/"Unfiled"/"IO.getpeername">

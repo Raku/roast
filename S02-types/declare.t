@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 # see if you can declare the various built-in types

@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 use MONKEY-SEE-NO-EVAL;
 use Test;
@@ -19,7 +19,7 @@ sub gen-test($f) {
     #LEAVE try close $fh;
 
     $fh.print: q:to/HERE/;
-    use v6;
+    use v6.d;
 
     # two-column table with various whitespace chars
     =begin table

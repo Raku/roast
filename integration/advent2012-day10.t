@@ -1,6 +1,6 @@
 # http://perl6advent.wordpress.com/2012/12/10/day-10-dont-quote-me-on-it/
 
-use v6;
+use v6.d;
 use Test;
 plan 26;
 

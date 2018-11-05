@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
@@ -7,7 +7,7 @@ use Test::Util;
 plan 2;
 
 my $main = q:to"END-MAIN";
-    use v6;
+    use v6.d;
     use lib 'lib';
 
     # the main functionality of the script

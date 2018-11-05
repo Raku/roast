@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 no strict;
 use Test;
 plan 7;

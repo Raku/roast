@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use lib $?FILE.IO.parent(2).add("packages");
 # S15-literals/numbers.t --- test Unicode (namely non-ASCII) numerals
 

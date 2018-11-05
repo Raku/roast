@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 # WARNING:
 # This is a generated file and should not be edited directly.
 # look into generate-tests.pl instead

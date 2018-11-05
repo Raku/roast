@@ -1,5 +1,5 @@
 
-use v6;
+use v6.d;
 use Test;
 
 plan 189;

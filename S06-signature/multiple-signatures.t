@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 # this tests signatures, so the file lives in S06-signature/, although

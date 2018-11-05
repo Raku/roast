@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use lib $?FILE.IO.parent(2).add("packages");
 
 use Test;
@@ -6,7 +6,7 @@ plan 33;
 
 use Test::Util;
 
-is_run "use v6;\n'a' =~ /foo/", {
+is_run "use v6.d;\n'a' =~ /foo/", {
     status  => { $_ != 0 },
     out     => '',
     err     => rx/<<2>>/
@@ -18,7 +18,7 @@ is_run "my \$x = 2 * 3;\ndie \$x", {
     err     => all(rx/6/, rx/<<2>>/),
 }, 'Runtime error contains line number';
 
-is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
+is_run "use v6.d;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     {
         status  => { $_ != 0 },
         out     => /Hello\r?\n/,
@@ -26,7 +26,7 @@ is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     }, 'Method not found error mentions method name and line number';
 
 # RT #75446
-is_run 'use v6;
+is_run 'use v6.d;
 sub bar {
     pfff();
 }
@@ -60,7 +60,7 @@ is_run 'say 42; nosuchsub()',
 }
 
 # RT #76112
-is_run 'use v6;
+is_run 'use v6.d;
 class A { has $.x is rw };
 A.new.x(42);',
     {
@@ -108,7 +108,7 @@ is_run 'die "foo"; END { say "end run" }',
 
 # RT #113848
 {
-    try EVAL 'use v6;     # line 1
+    try EVAL 'use v6.d;     # line 1
              # another line so we three in total
              (1 + 2) = 3; # line 3
         ';

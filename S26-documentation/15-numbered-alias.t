@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 # Test implementation of S26 :numbered alias ('#') for abbreviated,

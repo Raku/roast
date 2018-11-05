@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 plan 19;
@@ -6,7 +6,7 @@ plan 19;
 # initializations
 my $cwd := $*CWD;
 my $nanoonanoo := '
-use v6;
+use v6.d;
 use Test;
 class NanooNanoo { }
 ';

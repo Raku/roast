@@ -1,6 +1,6 @@
 # check output (text output and return code) of tests
 
-use v6;
+use v6.d;
 
 use lib $?FILE.IO.parent(2).add("packages");
 

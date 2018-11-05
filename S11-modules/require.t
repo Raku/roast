@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 ############################################################################
 # Note: do not add any additional `use` lib or use any additional modules.

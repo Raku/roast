@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 # L<S16/IO/$*CWD>

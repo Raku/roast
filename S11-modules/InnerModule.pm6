@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 unit module InnerModule;
 
 sub foo is export(:DEFAULT) {'Inner::foo'}

@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 # L<S04/The C<while> and C<until> statements>
 

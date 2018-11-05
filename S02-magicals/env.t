@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 # Tests for magic variables
 use lib $?FILE.IO.parent(2).add("packages");

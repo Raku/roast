@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 # Test various forms of comments
 

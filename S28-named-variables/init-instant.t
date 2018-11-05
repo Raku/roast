@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 # L<S28/Perl 5 to Perl 6 special variable translation>
 

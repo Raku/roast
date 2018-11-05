@@ -63,7 +63,7 @@ sub write-roundtrip-test-file($target, @source, $expected, $limit = Inf, :$src-h
     }
     say "Found $count interesting cases for $expected NFG tests.";
     my $header = qq:to/HEADER/;
-    use v6;
+    use v6.d;
     # Normal Form Grapheme roundtrip tests, generated from NormalizationTests.txt in
     # the Unicode database by S15-nfg/test-gen.p6. Check we can take a Uni, turn it
     # into an NFG string, and then get codepoints back out of it in $expected.

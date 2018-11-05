@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 # L<S09/Lazy lists>
 

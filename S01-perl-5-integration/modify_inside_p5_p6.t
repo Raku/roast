@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 plan(2);
 
@@ -9,7 +9,7 @@ my $y = 'case';
   $x .= 'ing';
 
  {
-    use v6;
+    use v6.d;
     $y ~= 'book';
   };
 };

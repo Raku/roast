@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 unit module RT84280;
 
 sub foo(Str $a) is export {

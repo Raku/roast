@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 unit module Exportops;
 
 sub postfix:<!>(Int $x)      is export(:DEFAULT) { [*] 1..$x }

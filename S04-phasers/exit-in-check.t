@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 use Test;
 
@@ -29,7 +29,7 @@ CHECK {
 
 =begin finish
 
-use v6;
+use v6.d;
 
 use Test;
 

@@ -1,5 +1,5 @@
 ## WHEN UPDATING UNICODE VERSION ALSO UPDATE docs/unicode-generated-tests.asciidoc
-use v6;
+use v6.d;
 my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/11.0.0/ucd/auxiliary/GraphemeBreakTest.txt");
 my IO::Path $rakudo-subdir = $?FILE.IO.parent(2);
 my IO::Path $rakudo-dir    = $rakudo-subdir.child($repo-dir);

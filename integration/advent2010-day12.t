@@ -1,5 +1,5 @@
 # http://perl6advent.wordpress.com/2010/12/12/day-12-%E2%80%93-smart-matching/
-use v6;
+use v6.d;
 use Test;
 
 plan 13;

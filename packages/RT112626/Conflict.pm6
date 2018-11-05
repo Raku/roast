@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use RT112626::Class1;
 use RT112626::Class2;
 

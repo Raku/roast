@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 my @tests = 4, '5', 6e0, 7.0, DateTime.now, Duration.new(42), now,

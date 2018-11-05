@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 
 use lib $?FILE.IO.parent(2).add("packages").add("S11-modules");

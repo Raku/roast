@@ -1,6 +1,6 @@
 # http://perl6advent.wordpress.com/2009/12/15/day-15-pick-your-game/
 
-use v6;
+use v6.d;
 use Test;
 
 plan 4;

@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 
 use lib $?FILE.IO.parent(2).add("packages");
 
@@ -37,7 +37,7 @@ use Test::Util;
     ok $caught, 'Stringifying Any warns';
 }
 
-is_run 'use v6; warn; say "alive"',
+is_run 'use v6.d; warn; say "alive"',
     {
         status => 0,
         out => rx/alive/,
@@ -46,7 +46,7 @@ is_run 'use v6; warn; say "alive"',
     'warn() without arguments';
 
 # RT #124767
-is_run 'use v6; warn("OH NOEZ"); say "alive"',
+is_run 'use v6.d; warn("OH NOEZ"); say "alive"',
     {
         status => 0,
         out => rx/alive/,
@@ -54,7 +54,7 @@ is_run 'use v6; warn("OH NOEZ"); say "alive"',
     },
     'warn() with arguments; line number';
 
-is_run 'use v6; try {warn("OH NOEZ") }; say "alive"',
+is_run 'use v6.d; try {warn("OH NOEZ") }; say "alive"',
     {
         status => 0,
         out => rx/alive/,
@@ -62,7 +62,7 @@ is_run 'use v6; try {warn("OH NOEZ") }; say "alive"',
     },
     'try does not suppress warnings';
 
-is_run 'use v6; quietly {warn("OH NOEZ") }; say "alive"',
+is_run 'use v6.d; quietly {warn("OH NOEZ") }; say "alive"',
     {
         status => 0,
         out => rx/alive/,
