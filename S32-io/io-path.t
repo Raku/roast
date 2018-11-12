@@ -159,7 +159,7 @@ subtest '.add' => {
 }
 
 subtest '.resolve' => {
-    plan 6 + @Path-Types;
+    plan 5 + @Path-Types;
 
     my $root = make-temp-dir;
     sub p { $root.add: $^path }
@@ -188,10 +188,12 @@ subtest '.resolve' => {
               p('not-there').absolute,
         '.resolve(:completely) succeeds even when last part does not exist';
 
-    for IO::Path.new('foo', :SPEC(IO::Spec::Win32)),
-      |@Path-Types.map(*.new: 'foo')
-    {
-        is-deeply .resolve.CWD, .SPEC.dir-sep,
+    for @Path-Types.map(*.new: 'foo') {
+        # windows friendly path types include the volume
+        my $expected-cwd = $_.^name ~~ any(<IO::Path IO::Path::Win32 IO::Path::Cygwin>)
+            ?? .CWD.IO.volume ~ .SPEC.dir-sep
+            !! .SPEC.dir-sep;
+        is .resolve.CWD, $expected-cwd,
             ".resolve sets CWD to SPEC's dir-sep for {.perl}"
     }
 }
