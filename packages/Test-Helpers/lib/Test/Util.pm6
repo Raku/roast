@@ -195,7 +195,10 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
         if /<['"]>/ {
             die "Command line arguments may not contain single or double quotes";
         }
-        @actual_args.push: $sep ~ $_ ~ $sep;
+
+        @actual_args.push: $_.match(/\s | \v/)
+            ?? $sep ~ $_ ~ $sep
+            !! $_;
     }
 
     my %out;
