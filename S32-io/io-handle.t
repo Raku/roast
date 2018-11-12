@@ -249,7 +249,7 @@ subtest '.WRITE method' => {
     $fh.write:  'write'.encode;
     $fh.print-nl;
 
-    is $fh.data.decode, "print printf put\nsay\nspurt text spurt bin write\n",
+    is $fh.data.decode.lines, ('print printf put', 'say', 'spurt text spurt bin write'),
         'all writing methods work';
 }
 
