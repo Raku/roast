@@ -33,9 +33,8 @@ is_run('await start { say $*IN.get.uc for ^3 }',
     LEAVE unlink $temp-file;
 
     my $cat = $*DISTRO.is-win ?? 'type' !! 'cat';
-    my $quote = $*DISTRO.is-win ?? '"' !! "'";
     my $proc = shell(
-        Q:s"$cat $temp-file | $*EXECUTABLE -e $quote await start { say get().uc } $quote",
+        Q:s"$cat $temp-file | $*EXECUTABLE -e await(Promise.start({get().uc.say}))",
         :out);
     is $proc.out.get, "FOO", 'reading from $*IN from another thread works (pipe)';
     so $proc.out.close;
