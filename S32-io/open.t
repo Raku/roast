@@ -45,7 +45,9 @@ sub spurt-slurp ($c, :$unlink, :$seek, |args) {
     $fh.spurt: $c;
     # flush filehandle since implementation might buffer first write
     $fh.flush;
-    $*PATH.IO.slurp
+    my $content = $*PATH.IO.slurp;
+    $fh.close;
+    return $content;
 }
 
 with-all-open-forms-test '.open with ()/(:r)/(:mode<ro>)' => {
@@ -167,13 +169,13 @@ with-all-open-forms-test '.open with :rx / :mode<rw>, :create, :exclusive' => {
         $*PATH.IO.unlink;
         (my $fh = &*OPEN($*PATH, :rx)).spurt: $c;
         $fh.seek: 0, SeekFromBeginning;
-        is $fh.slurp, $c, 'can read after writing (:rx)';
+        is $fh.slurp(:close), $c, 'can read after writing (:rx)';
     }
     {
         $*PATH.IO.unlink;
         (my $fh = &*OPEN($*PATH, :mode<rw>, :create, :exclusive)).spurt: $c;
         $fh.seek: 0, SeekFromBeginning;
-        is $fh.slurp, $c, 'can read after writing (:rx)';
+        is $fh.slurp(:close), $c, 'can read after writing (:rx)';
     }
 }
 
