@@ -5,14 +5,14 @@ use Test::Util;
 
 plan 20;
 
-shell_captures_out_ok '',               '',    0, 'Child succeeds but does not print anything';
-shell_captures_out_ok 'say 42',         '42',  0, 'Child succeeds and prints something';
-shell_captures_out_ok 'exit 1',         '',    1, 'Child fails and prints nothing';
-shell_captures_out_ok 'exit 42',        '',   42, 'Child fails and prints nothing';
-shell_captures_out_ok 'say 42; exit 7', '42',  7, 'Child fails and prints something';
+shell_captures_out_ok '1',               '',    0, 'Child succeeds but does not print anything';
+shell_captures_out_ok 'say(42)',         '42',  0, 'Child succeeds and prints something';
+shell_captures_out_ok 'exit(1)',         '',    1, 'Child fails and prints nothing';
+shell_captures_out_ok 'exit(42)',        '',   42, 'Child fails and prints nothing';
+shell_captures_out_ok 'say(42);exit(7)', '42',  7, 'Child fails and prints something';
 
 sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
-    for shell("$*EXECUTABLE -e \"$code\"", :out),
+    for shell("$*EXECUTABLE -e $code", :out),
         run($*EXECUTABLE, '-e', $code, :out) -> $proc {
         subtest {
             ok $proc ~~ Proc, 'shell/run(:out).out is a Proc';
@@ -36,7 +36,7 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
 }
 
 {
-    my $sh = shell("$*EXECUTABLE -e \".say for reverse lines\"", :in, :out);
+    my $sh = shell("$*EXECUTABLE -e " ~ 'lines().reverse.map({say($_)})', :in, :out);
     $sh.in.say: "foo\nbar\nbaz";
     $sh.in.close;
     is $sh.out.slurp, "baz\nbar\nfoo\n", 'Can talk to subprocess bidirectional';
@@ -54,7 +54,7 @@ sub shell_captures_out_ok($code, $out, $exitcode, $desc) {
 
 # RT #125796
 {
-    my $p     = shell "$*EXECUTABLE -e \"say 42 for ^10\"", :out;
+    my $p     = shell "$*EXECUTABLE -e " ~ '(^10).map({say(42)})', :out;
     my @lines = $p.out.lines;
     ok all(@lines) eq '42', 'There is no empty line due to no EOF for pipes';
 }
