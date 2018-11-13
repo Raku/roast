@@ -212,12 +212,14 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
         # Alternates putting a '#' at the end of a file
         my $new-content = $trigger-file.IO.slurp.subst(/$/,"#").subst(/"##"$/,"");
         $trigger-file.spurt($new-content);
-        my $output = run :out, $*EXECUTABLE, '-I', $rt128156-lib-prefix, '-e','
-             need RT128156::Top1;
-             need RT128156::Top2;
-             .say for MY::.keys.grep(/Needed|Top/).sort;
-             ';
-        is $output.out.slurp,"Top1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
+        my $output = run :out, $*EXECUTABLE,
+            '-I', $rt128156-lib-prefix,
+            '-M', 'RT128156::Top1',
+            '-M', 'RT128156::Top2',
+            '-e',
+            'MY::.keys.grep({$_.contains("Needed") or $_.contains("Top")}).sort.map({say($_)}).sink'
+            ;
+        is $output.out.slurp(:close),"Top1\nTop2\n","$i. changing SHA of dependency doesn't break re-precompilation";
     }
 }
 
@@ -229,11 +231,13 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     for 1..2 -> $i {
         my $old-content = $trigger-file.slurp;
         $trigger-file.spurt('class Needed { method version() { ' ~ $i ~ ' } }');
-        my $output = run :out, $*EXECUTABLE, '-I', $rt128156-lib-prefix, '-e','
-             need RT128156::Top1;
-             print Top1.version-of-needed;
-             ';
-        is $output.out.slurp, $i, "$i. change in source file of dependency detected";
+        my $output = run :out, $*EXECUTABLE,
+            '-I', $rt128156-lib-prefix,
+            '-M', 'RT128156::Top1',
+            '-e',
+            'print(Top1.version-of-needed)'
+            ;
+        is $output.out.slurp(:close), $i, "$i. change in source file of dependency detected";
         $trigger-file.spurt($old-content);
     }
 }
