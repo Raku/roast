@@ -43,16 +43,15 @@ is_run(
 );
 
 # RT #107992
-is_run(
-    $str,          # input
-    {
-        status => 0,
-        out    => '',
-        err    => '',
-    },
-    '-n -e "" works like awk ""',
-    :compiler-args['-n -e ""'],
-);
+subtest '-n -e "" works like awk ""' => {
+    plan 3;
+    my $proc = run :out, :err, :in, $*EXECUTABLE, '-n', '-e', '';
+    $proc.in.print: $str;
+    $proc.in.close;
+    is $proc.out.slurp(:close), '';
+    is $proc.err.slurp(:close), '';
+    is $proc.exitcode, 0;
+}
 
 #?rakudo todo 'NYI RT #129093'
 is_run(
