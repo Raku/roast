@@ -52,54 +52,83 @@ is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
     {out => "a: param, optional: True\n"}, :args['--var', 'param'],
     'Bool option followed by positional value';
 
+# Arguments with vertical or horizontal space don't get quoted corrected using is_run
+# so many of the following tests use run directly to work around issues on windows.
+
 # RT #126532
-is_run 'sub MAIN(:$y) { $y.ords.print }',
-    {err => '', out => "" }, :args["-y="],
-    'Valid arg with zero length value';
+subtest 'Valid arg with zero length value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN(:$y) { $y.ords.print }', '-y=';
+    is $proc.out.slurp(:close), '';
+    is $proc.err.slurp(:close), '';
+}
 
-is_run 'sub MAIN(:$y) { $y.ords.print }',
-    {err => '', out => "32" }, :args["-y= "],
-    'Valid arg with single space value';
+subtest 'Valid arg with single space value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN(:$y) { $y.ords.print }', '-y= ';
+    is $proc.out.slurp(:close), '32';
+    is $proc.err.slurp(:close), '';
+}
 
-is_run 'sub MAIN(:$y) { $y.ords.join(" ").print }',
-    {err => '', out => "32 32" }, :args["-y=  "],
-    'Valid arg with two space value';
+subtest 'Valid arg with two space value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN(:$y) { $y.ords.join(" ").print }', '-y=  ';
+    is $proc.out.slurp(:close), '32 32';
+    is $proc.err.slurp(:close), '';
+}
 
-is_run 'sub MAIN(:$y) { $y.ords.print }',
-    {err => '', out => "10" }, :args["-y=\n"],
-    'Valid arg with newline value';
+subtest 'Valid arg with newline value' => {
+    # Fails on windows - \n is seemingly lost such that .out.slurp returns a blank string
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN(:$y) { $y.ords.print }', "-y=\n";
+    is $proc.out.slurp(:close), '10';
+    is $proc.err.slurp(:close), '';
+}
 
-is_run 'sub MAIN(:$y) { $y.ords.print }',
-    {err => '', out => "9" }, :args["-y=\t"],
-    'Valid arg with tab value';
+subtest 'Valid arg with tab value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN(:$y) { $y.ords.print }', "-y=\t";
+    is $proc.out.slurp(:close), '9';
+    is $proc.err.slurp(:close), '';
+}
 
-is_run 'sub MAIN(:$y) { $y.ords.join(" ").print }',
-    {err => '', out => "9 32" }, :args["-y=\t "],
-    'Valid arg with tab then space value';
 
-is_run 'sub MAIN() { }; sub USAGE() { "USG".note }',
-    {err => /USG/, out => "" }, :args["-y="],
-    'Extra arg with zero length value';
+subtest 'Valid arg with tab then space value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN(:$y) { $y.ords.join(" ").print }', "-y=\t ";
+    is $proc.out.slurp(:close), '9 32';
+    is $proc.err.slurp(:close), '';
+}
 
-is_run 'sub MAIN() { }; sub USAGE() { "USG".note }',
-    {err => /USG/, out => "" }, :args["-y= "],
-    'Extra arg with single space value';
+subtest 'Extra arg with zero length value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', '-y=';
+    ok $proc.err.slurp(:close).match(/USG/);
+    is $proc.out.slurp(:close), '';
+}
 
-is_run 'sub MAIN() { }; sub USAGE() { "USG".note }',
-    {err => /USG/, out => "" }, :args["-y=  "],
-    'Extra arg with two space value';
+subtest 'Extra arg with single space value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', '-y= ';
+    ok $proc.err.slurp(:close).match(/USG/);
+    is $proc.out.slurp(:close), '';
+}
 
-is_run 'sub MAIN() { }; sub USAGE() { "USG".note }',
-    {err => /USG/, :out => "" }, :args["-y=\n"],
-    'Extra arg with newline value';
+subtest 'Extra arg with two space value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', '-y=  ';
+    ok $proc.err.slurp(:close).match(/USG/);
+    is $proc.out.slurp(:close), '';
+}
 
-is_run 'sub MAIN() { }; sub USAGE() { "USG".note }',
-    {err => /USG/, out => "" }, :args["-y=\t"],
-    'Extra arg with tab value';
+subtest 'Extra arg with newline value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', "-y=\n";
+    ok $proc.err.slurp(:close).match(/USG/);
+    is $proc.out.slurp(:close), '';
+}
 
-is_run 'sub MAIN() { }; sub USAGE() { "USG".note }',
-    {err => /USG/, out => "" }, :args["-y=\t "],
-    'Extra arg with tab then space value';
+subtest 'Extra arg with tab value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', "-y=\t";
+    ok $proc.err.slurp(:close).match(/USG/);
+    is $proc.out.slurp(:close), '';
+}
+
+subtest 'Extra arg with newline value' => {
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', "-y=\t ";
+    ok $proc.err.slurp(:close).match(/USG/);
+    is $proc.out.slurp(:close), '';
+}
 
 # Spacey options may be removed from core spec; for now, moving to end of tests
 # (discussion starts at http://irclog.perlgeek.de/perl6/2011-10-17#i_4578353 )

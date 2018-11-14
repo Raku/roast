@@ -1,14 +1,12 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
-
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 plan 2;
 
 my $main = q:to"END-MAIN";
     use v6;
-    use lib 'lib';
 
     # the main functionality of the script
     sub deduplicate(Str $s) {
@@ -33,10 +31,10 @@ my $main = q:to"END-MAIN";
     }
     END-MAIN
 
-is_run $main, {out => "Duplicate hrmov\n", err => ''}, :args['Duplicate character removal'], :compiler-args['-Ilib'],
+is_run $main, {out => "Duplicate_hrmov\n", err => ''}, :args['Duplicate_character_removal'],
     'normal main call';
 
-is_run $main, {out => q:to"END-TEST-OUT".subst("\r\n", "\n", :g), err => ''}, :args['--test'], :compiler-args['-Ilib'], 'test main call';
+is_run $main, {out => q:to"END-TEST-OUT".subst("\r\n", "\n", :g), err => ''}, :args['--test'], 'test main call';
     1..2
     ok 1 - basic deduplication
     ok 2 - case insensitivity
