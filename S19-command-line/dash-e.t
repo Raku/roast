@@ -7,7 +7,7 @@ plan 4;
 
 my Str $x;
 
-is_run $x,  :args['-e', 'print q[Moin]'],
+is_run $x,  :args['-e', 'print(q[Moin])'],
     {
         out     => 'Moin',
         err     => '',
@@ -15,7 +15,7 @@ is_run $x,  :args['-e', 'print q[Moin]'],
     },
     '-e print $something works';
 
-is_run $x,  :args['-e', "print q[\c[LATIN SMALL LETTER A WITH DOT ABOVE]]"],
+is_run $x,  :args['-e', "print(q[\c[LATIN SMALL LETTER A WITH DOT ABOVE]])"],
     {
         out     => "\c[LATIN SMALL LETTER A WITH DOT ABOVE]",
         err     => '',
@@ -23,15 +23,15 @@ is_run $x,  :args['-e', "print q[\c[LATIN SMALL LETTER A WITH DOT ABOVE]]"],
     },
     '-e print $something works with non-ASCII string literals';
 
-is_run $x,  :args['-e', 'print <1 2> »+« <1 1>'],
+is_run $x,  :args['-e', '(2,3)».print'],
     {
-        out     => "2 3",
+        out     => "23",
         err     => '',
         status  => 0,
     },
         '-e works with non-ASCII program texts';
 
-is_run $x, :args['-e', 'say @*ARGS', '-e=foo'],
+is_run $x, :args['-e', 'say(@*ARGS)', '-e=foo'],
     {
         out     => "[-e=foo]\n",
         err     => '',
