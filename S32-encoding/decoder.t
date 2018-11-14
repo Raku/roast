@@ -30,7 +30,7 @@ plan 2;
 
     my $temp-file := make-temp-file :$content;
     my $prog := $*DISTRO.is-win ?? 'type' !! 'cat';
-    ok (run $prog, $temp-file, :enc<utf8-c8>, :out).out.slurp.chars,
+    ok (shell "$prog $temp-file", :enc<utf8-c8>, :out).out.slurp(:close).chars,
         'no SEGV when using utf8-c8 in Proc';
 }
 # vim: ft=perl6 expandtab sw=4
