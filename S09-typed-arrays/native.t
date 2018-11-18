@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 # Basic native array tests.
 {
@@ -92,6 +92,31 @@ subtest 'no rogue leftovers when resizing natives' => {
         @arr[4] = 3;
         is-deeply @arr, array[int].new(0, 0, 0, 0, 3),
             'contents + unshift + clear clears old elements';
+    }
+}
+
+subtest 'STOREing a Seq doesnt keep previous values around' => {
+    plan 3;
+    {
+        my int @a;
+        @a = Seq.new([1, 1, 1, 1, 1].iterator);
+        @a = Seq.new([2, 2, 2, 2].iterator);
+        is-deeply @a, array[int].new(2, 2, 2, 2),
+            'STOREing a Seq into a native int array';
+    }
+    {
+        my num @a;
+        @a = Seq.new([1e0, 1e0, 1e0, 1e0, 1e0].iterator);
+        @a = Seq.new([2e0, 2e0, 2e0, 2e0].iterator);
+        is-deeply @a, array[num].new(2e0, 2e0, 2e0, 2e0),
+            'STOREing a Seq into a native num array';
+    }
+    {
+        my str @a;
+        @a = Seq.new(["a", "a", "a", "a", "a"].iterator);
+        @a = Seq.new(["b", "b", "b", "b"].iterator);
+        is-deeply @a, array[str].new("b", "b", "b", "b"),
+            'STOREing a Seq into a native str array';
     }
 }
 
