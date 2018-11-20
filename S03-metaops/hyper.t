@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 405;
+plan 408;
 
 =begin pod
 
@@ -15,65 +15,33 @@ plan 405;
  # binary infix
 my @r;
 my @e;
-{
-    @r = (1, 2, 3) »+« (2, 4, 6);
-    @e = (3, 6, 9);
-    is(~@r, ~@e, "hyper-sum two arrays");
+{   # syntax checking, exhaustive tests in infix.t
+    my $a      := (1,2,3);
+    my $b      := (2,4,6);
+    my $result := (3,6,9);
 
-    @r = (1, 2, 3) »-« (2, 4, 6);
-    @e = (-1, -2, -3);
-    is(~@r, ~@e, "hyper-subtract two arrays");
+    is-deeply $a >>+<< $b, $result,   "ascii hyper >> <<";
+    is-deeply $a  »+«  $b, $result, "unicode hyper >> <<";
+    is-deeply $a >>+>> $b, $result,   "ascii hyper >> >>";
+    is-deeply $a  »+»  $b, $result, "unicode hyper >> >>";
+    is-deeply $a <<+>> $b, $result,   "ascii hyper << >>";
+    is-deeply $a  «+»  $b, $result, "unicode hyper << >>";
+    is-deeply $a <<+<< $b, $result,   "ascii hyper << <<";
+    is-deeply $a  «+«  $b, $result, "unicode hyper << <<";
 
-    @r = (1, 2, 3) »*« (2, 4, 6);
-    @e = (2, 8, 18);
-    is(~@r, ~@e, "hyper-multiply two arrays");
-
-    @r = (1, 2, 3) »x« (3, 2, 1);
-    @e = ('111', '22', '3');
-    is(~@r, ~@e, "hyper-x two arrays");
-
-    @r = (1, 2, 3) »xx« (3, 2, 1);
-    @e = ((1,1,1), (2,2), (3));
-    is(~@r, ~@e, "hyper-xx two arrays");
-
-    @r = (20, 40, 60) »div« (2, 5, 10);
-    @e = (10, 8, 6);
-    is(~@r, ~@e, "hyper-divide two arrays");
+    is-deeply $a >>[&infix:<+>]<< $b, $result,   "ascii hyper >>[ ]<<";
+    is-deeply $a  »[&infix:<+>]«  $b, $result, "unicode hyper >>[ ]<<";
+    is-deeply $a >>[&infix:<+>]>> $b, $result,   "ascii hyper >>[ ]>>";
+    is-deeply $a  »[&infix:<+>]»  $b, $result, "unicode hyper >>[ ]>>";
+    is-deeply $a <<[&infix:<+>]>> $b, $result,   "ascii hyper <<[ ]>>";
+    is-deeply $a  «[&infix:<+>]»  $b, $result, "unicode hyper <<[ ]>>";
+    is-deeply $a <<[&infix:<+>]<< $b, $result,   "ascii hyper <<[ ]<<";
+    is-deeply $a  «[&infix:<+>]«  $b, $result, "unicode hyper <<[ ]<<";
 
     @r = (1, 2, 3) »+« (10, 20, 30) »*« (2, 3, 4);
     @e = (21, 62, 123);
     is(~@r, ~@e, "precedence - »+« vs »*«");
 }
-
-{
-    @r = (1, 2, 3) >>+<< (2, 4, 6);
-    @e = (3, 6, 9);
-    is(~@r, ~@e, "hyper-sum two arrays ASCII notation");
-
-    @r = (1, 2, 3) >>-<< (2, 4, 6);
-    @e = (-1, -2, -3);
-    is(~@r, ~@e, "hyper-subtract two arrays ASCII notation");
-
-    @r = (1, 2, 3) >>*<< (2, 4, 6);
-    @e = (2, 8, 18);
-    is(~@r, ~@e, "hyper-multiply two arrays ASCII notation");
-
-    @r = (1, 2, 3) >>x<< (3, 2, 1);
-    @e = ('111', '22', '3');
-    is(~@r, ~@e, "hyper-x two arrays ASCII notation");
-
-    @r = (1, 2, 3) >>xx<< (3, 2, 1);
-    @e = ((1,1,1), (2,2), (3));
-    is(~@r, ~@e, "hyper-xx two arrays ASCII notation");
-
-    @r = (20, 40, 60) >>div<< (2, 5, 10);
-    @e = (10, 8, 6);
-    is(~@r, ~@e, "hyper-divide two arrays ASCII notation");
-
-    @r = (1, 2, 3) >>+<< (10, 20, 30) >>*<< (2, 3, 4);
-    @e = (21, 62, 123);
-    is(~@r, ~@e, "precedence - >>+<< vs >>*<< ASCII notation");
-};
 
 { # unary postfix
     my @r = (1, 2, 3);
