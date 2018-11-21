@@ -5,19 +5,29 @@ use Test;
 sub cst (\a,\b) { "foo"     }
 sub csta(\a,\b) { a = "foo" }
 
-# Just add infixes here, test count will adjust accordingly
-my @infixes =
+# Just add infixes, test count will adjust accordingly
+
+# infixes resulting in strings
+my @str-infixes =
 #  name      op    metaop
    "~",    &[~],    &[~=],
+   "x",    &[x],    &[x=],
+ "cst",    &cst,    &csta,
+  "~|",   &[~|],   &[~|=],
+  "~&",   &[~&],   &[~&=],
+  "~^",   &[~^],   &[~^=],
+;
+
+# infixes resulting in integers
+my @int-infixes =
+#  name      op    metaop
    "+",    &[+],    &[+=],
    "-",    &[-],    &[-=],
    "*",    &[*],    &[*=],
    "×",    &[×],    &[×=],
-   "/",    &[/],    &[/=],
    "÷",    &[÷],    &[÷=],
   "**",   &[**],   &[**=],
    "%",    &[%],    &[%=],
-   "x",    &[x],    &[x=],
  "div",  &[div],  &[div=],
  "max",  &[max],  &[max=],
  "min",  &[min],  &[min=],
@@ -27,15 +37,25 @@ my @infixes =
   "+|",   &[+|],   &[+|=],
   "+&",   &[+&],   &[+&=],
   "+^",   &[+^],   &[+^=],
-  "~|",   &[~|],   &[~|=],
-  "~&",   &[~&],   &[~&=],
-  "~^",   &[~^],   &[~^=],
- "cst",    &cst,    &csta,
-#  "xx",  &[xx],   &[xx=],  # ops creating Seq are flaky
 ;
-my $iterations = @infixes / 3;
 
-plan 162 * $iterations;
+# infixes resulting in reals
+my @real-infixes =
+#  name      op    metaop
+   "/",    &[/],    &[/=],
+;
+
+# infixes resulting in Seqs
+my @seq-infixes =
+#  name      op    metaop
+  "xx",  &[xx],   &[xx=],  # ops creating Seq are flaky
+;
+
+my @infixes = |@str-infixes, |@int-infixes, |@real-infixes;
+my $infixes     = @infixes / 3;
+my $int-infixes = @int-infixes / 3;
+
+plan 162 * $infixes + 78 * $int-infixes;
 
 =begin pod
 
@@ -168,7 +188,6 @@ for @infixes -> $name, &op, &metaop {
         %a, %b, %reset, %result, %resultop3, %result3op,
         %ac, %bc, %resetc, %resultc, %resultop3c, %result3opc,
         %ao, %bo, %reseto, %resulto, %resultop3o, %result3opo,
-    
     ) -> %a, %b, %reset, %result, %resultop3, %result3op {
 
         # %a >>op<< %b
@@ -218,6 +237,88 @@ for @infixes -> $name, &op, &metaop {
         dies-ok { 3 >>[&metaop]>> %a }, "3 >>$name=>> %a dies";
         dies-ok { 3 <<[&metaop]>> %a }, "3 <<$name=>> %a dies";
         dies-ok { 3 <<[&metaop]<< %a }, "3 <<$name=<< %a dies";
+    }
+}
+
+for @int-infixes -> $name, &op, &metaop {
+
+    # SetHash initialization
+    my %sa is SetHash = "a".."e" Z=> 1..5;
+    my %sreset = %sa.pairs;
+    my %sb is SetHash = "a".."e" Z=> 6..10;
+    my %sresult is SetHash = %sa.map: { .key => op(.value, %sb{.key}) }
+    my %sresultop3 is SetHash = %sa.map: { .key => op(.value, 3) }
+    my %sresult3op is SetHash = %sa.map: { .key => op(3, .value) }
+
+    # BagHash initialization
+    my %ba is BagHash = "a".."e" Z=> 1..5;
+    my %breset = %ba.pairs;
+    my %bb is BagHash = "a".."e" Z=> 6..10;
+    my %bresult is BagHash = %ba.map: { .key => op(.value, %bb{.key}) }
+    my %bresultop3 is BagHash = %ba.map: { .key => op(.value, 3) }
+    my %bresult3op is BagHash = %ba.map: { .key => op(3, .value) }
+
+    # MixHash initialization
+    my %ma is MixHash = "a".."e" Z=> 1..5;
+    my %mreset = %ma.pairs;
+    my %mb is MixHash = "a".."e" Z=> 6..10;
+    my %mresult is MixHash = %ma.map: { .key => op(.value, %mb{.key}) }
+    my %mresultop3 is MixHash = %ma.map: { .key => op(.value, 3) }
+    my %mresult3op is MixHash = %ma.map: { .key => op(3, .value) }
+
+    for (
+        %sa, %sb, %sreset, %sresult, %sresultop3, %sresult3op, "set",
+        %ba, %bb, %breset, %bresult, %bresultop3, %bresult3op, "bag",
+        %ma, %mb, %mreset, %mresult, %mresultop3, %mresult3op, "mix",
+    ) -> %a, %b, %reset, %result, %resultop3, %result3op, $type {
+
+        # %a >>op<< %b
+        is-deeply %a >>[&op]<< %b, %result, "$type %a >>$name\<< %b";
+        is-deeply %a <<[&op]<< %b, %result, "$type %a <<$name\<< %b";
+        is-deeply %a <<[&op]>> %b, %result, "$type %a <<$name>> %b";
+        is-deeply %a >>[&op]>> %b, %result, "$type %a >>$name>> %b";
+
+        # %a >>op=<< %b
+        is-deeply %a >>[&metaop]<< %b, %result, "$type %a >>$name=<< %b";
+        is-deeply %a, %result, "$type %a assigned from %a >>$name=<< %b";
+        %a = %reset.pairs;
+        is-deeply %a <<[&metaop]<< %b, %result, "$type %a <<$name=<< %b";
+        is-deeply %a, %result, "$type %a assigned from %a <<$name=<< %b";
+        %a = %reset.pairs;
+        is-deeply %a <<[&metaop]>> %b, %result, "$type %a <<$name=>> %b";
+        is-deeply %a, %result, "$type %a assigned from %a <<$name=>> %b";
+        %a = %reset.pairs;
+        is-deeply %a >>[&metaop]>> %b, %result, "$type %a >>$name=>> %b";
+        is-deeply %a, %result, "$type %a assigned from %a >>$name=>> %b";
+        %a = %reset.pairs;
+
+        # %a >>op<< 3 
+        dies-ok { %a >>[&op]<< 3 }, "$type %a >>$name\<< 3 dies";
+        dies-ok { %a <<[&op]<< 3 }, "$type %a <<$name\<< 3 dies";
+        is-deeply %a <<[&op]>> 3, %resultop3, "$type %a <<$name>> 3";
+        is-deeply %a >>[&op]>> 3, %resultop3, "$type %a >>$name>> 3";
+
+        # %a >>op=<< 3 
+        dies-ok { %a >>[&metaop]<< 3 }, "$type %a >>$name=<< 3 dies";
+        dies-ok { %a <<[&metaop]<< 3 }, "$type %a <<$name=<< 3 dies";
+#        is-deeply %a <<[&metaop]>> 3, %resultop3, "$type %a <<$name=>> 3";
+#        is-deeply %a, %resultop3, "$type %a assigned from %a <<$name=>> 3";
+        %a = %reset.pairs;
+#        is-deeply %a >>[&metaop]>> 3, %resultop3, "$type %a >>$name=>> 3";
+#        is-deeply %a, %resultop3, "$type %a assigned from %a >>$name=>> 3";
+        %a = %reset.pairs;
+
+        # 3 >>op<< %a
+        dies-ok { 3 >>[&op]<< %a }, "$type 3 >>$name\<< %a dies";
+        dies-ok { 3 >>[&op]>> %a }, "$type 3 >>$name>> %a dies";
+        is-deeply 3 <<[&op]>> %a, %result3op, "$type 3 <<$name>> %a";
+        is-deeply 3 <<[&op]<< %a, %result3op, "$type 3 <<$name\<< %a";
+
+        # 3 >>op<< %a
+        dies-ok { 3 >>[&metaop]<< %a }, "$type 3 >>$name=<< %a dies";
+        dies-ok { 3 >>[&metaop]>> %a }, "$type 3 >>$name=>> %a dies";
+        dies-ok { 3 <<[&metaop]>> %a }, "$type 3 <<$name=>> %a dies";
+        dies-ok { 3 <<[&metaop]<< %a }, "$type 3 <<$name=<< %a dies";
     }
 }
 
