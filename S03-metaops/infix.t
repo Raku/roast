@@ -35,7 +35,7 @@ my @infixes =
 ;
 my $iterations = @infixes / 3;
 
-plan 60 * $iterations;
+plan 162 * $iterations;
 
 =begin pod
 
@@ -44,115 +44,181 @@ plan 60 * $iterations;
 =end pod
 
 for @infixes -> $name, &op, &metaop {
+    my $a = 1;
+    my $reset = $a;
+    my $b = 6;
+    my $result = op($a, $b);
+
+    # $a >>op<< $b
+    is-deeply $a >>[&op]<< $b, $result, "\$a >>$name\<< \$b";
+    is-deeply $a <<[&op]<< $b, $result, "\$a <<$name\<< \$b";
+    is-deeply $a <<[&op]>> $b, $result, "\$a <<$name>> \$b";
+    is-deeply $a >>[&op]>> $b, $result, "\$a >>$name>> \$b";
+
+    # $a >>op=<< $b
+    is-deeply $a >>[&metaop]<< $b, $result, "\$a >>$name=<< \$b";
+    is-deeply $a, $result, "\$a assigned from \$a >>$name=<< \$b";
+    $a = $reset;
+    is-deeply $a <<[&metaop]<< $b, $result, "\$a <<$name=<< \$b";
+    is-deeply $a, $result, "\$a assigned from \$a <<$name=<< \$b";
+    $a = $reset;
+    is-deeply $a <<[&metaop]>> $b, $result, "\$a <<$name=>> \$b";
+    is-deeply $a, $result, "\$a assigned from \$a <<$name=>> \$b";
+    $a = $reset;
+    is-deeply $a >>[&metaop]>> $b, $result, "\$a >>$name=>> \$b";
+    is-deeply $a, $result, "\$a assigned from \$a >>$name=>> \$b";
+    $a = $reset;
+
+    # ordinary array initialization
     my @a = 1..5;
     my @reset = @a;
     my @b = 6..10;
-
-    # @a >>op<< @b
     my @result = (^@a).map: { op(@a[$_], @b[$_]) }
-    is-deeply @a >>[&op]<< @b, @result, "@a >>$name\<< @b";
-    is-deeply @a <<[&op]<< @b, @result, "@a <<$name\<< @b";
-    is-deeply @a <<[&op]>> @b, @result, "@a <<$name>> @b";
-    is-deeply @a >>[&op]>> @b, @result, "@a >>$name>> @b";
+    my @resultop3 = (^@a).map: { op(@a[$_], 3) }
+    my @result3op = (^@a).map: { op(3, @a[$_]) }
 
-    # @a >>op=<< @b
-    is-deeply @a >>[&metaop]<< @b, @result, "@a >>$name=<< @b";
-    is-deeply @a, @result, "@a assigned from @a >>$name=<< @b";
-    @a = @reset;
-    is-deeply @a <<[&metaop]<< @b, @result, "@a <<$name=<< @b";
-    is-deeply @a, @result, "@a assigned from @a <<$name=<< @b";
-    @a = @reset;
-    is-deeply @a <<[&metaop]>> @b, @result, "@a <<$name=>> @b";
-    is-deeply @a, @result, "@a assigned from @a <<$name=>> @b";
-    @a = @reset;
-    is-deeply @a >>[&metaop]>> @b, @result, "@a >>$name=>> @b";
-    is-deeply @a, @result, "@a assigned from @a >>$name=>> @b";
-    @a = @reset;
+    # typed array initialization
+    my Cool @ac = 1..5;
+    my Cool @resetc = @ac;
+    my Cool @bc = 6..10;
+    my Cool @resultc = (^@ac).map: { op(@ac[$_], @bc[$_]) }
+    my Cool @resultop3c = (^@ac).map: { op(@ac[$_], 3) }
+    my Cool @result3opc = (^@ac).map: { op(3, @ac[$_]) }
 
-    # @a >>op<< 3
-    @result = (^@a).map: { op(@a[$_], 3) }
-    dies-ok { @a >>[&op]<< 3 }, "@a >>$name\<< 3 dies";
-    dies-ok { @a <<[&op]<< 3 }, "@a <<$name\<< 3 dies";
-    is-deeply @a <<[&op]>> 3, @result, "@a <<$name>> 3";
-    is-deeply @a >>[&op]>> 3, @result, "@a >>$name>> 3";
+    for (
+        @a, @b, @reset, @result, @resultop3, @result3op,
+        @ac, @bc, @resetc, @resultc, @resultop3c, @result3opc,
+    
+    ) -> @a, @b, @reset, @result, @resultop3, @result3op {
 
-    # @a >>op=<< 3
-    dies-ok { @a >>[&metaop]<< 3 }, "@a >>$name=<< 3 dies";
-    dies-ok { @a <<[&metaop]<< 3 }, "@a <<$name=<< 3 dies";
-    is-deeply @a <<[&metaop]>> 3, @result, "@a <<$name=>> 3";
-    is-deeply @a, @result, "@a assigned from @a <<$name=>> 3";
-    @a = @reset;
-    is-deeply @a >>[&metaop]>> 3, @result, "@a >>$name=>> 3";
-    is-deeply @a, @result, "@a assigned from @a >>$name=>> 3";
-    @a = @reset;
+        # @a >>op<< @b
+        is-deeply @a >>[&op]<< @b, @result, "@a >>$name\<< @b";
+        is-deeply @a <<[&op]<< @b, @result, "@a <<$name\<< @b";
+        is-deeply @a <<[&op]>> @b, @result, "@a <<$name>> @b";
+        is-deeply @a >>[&op]>> @b, @result, "@a >>$name>> @b";
 
-    # 3 >>op<< @a
-    @result = (^@a).map: { op(3, @a[$_]) }
-    dies-ok { 3 >>[&op]<< @a }, "3 >>$name\<< @a dies";
-    dies-ok { 3 >>[&op]>> @a }, "3 >>$name>> @a dies";
-    is-deeply 3 <<[&op]>> @a, @result, "3 <<$name>> @a";
-    is-deeply 3 <<[&op]<< @a, @result, "3 <<$name\<< @a";
+        # @a >>op=<< @b
+        is-deeply @a >>[&metaop]<< @b, @result, "@a >>$name=<< @b";
+        is-deeply @a, @result, "@a assigned from @a >>$name=<< @b";
+        @a = @reset;
+        is-deeply @a <<[&metaop]<< @b, @result, "@a <<$name=<< @b";
+        is-deeply @a, @result, "@a assigned from @a <<$name=<< @b";
+        @a = @reset;
+        is-deeply @a <<[&metaop]>> @b, @result, "@a <<$name=>> @b";
+        is-deeply @a, @result, "@a assigned from @a <<$name=>> @b";
+        @a = @reset;
+        is-deeply @a >>[&metaop]>> @b, @result, "@a >>$name=>> @b";
+        is-deeply @a, @result, "@a assigned from @a >>$name=>> @b";
+        @a = @reset;
 
-    # 3 >>op=<< @a
-    dies-ok { 3 >>[&metaop]<< @a }, "3 >>$name=<< @a dies";
-    dies-ok { 3 >>[&metaop]>> @a }, "3 >>$name=>> @a dies";
-    dies-ok { 3 <<[&metaop]>> @a }, "3 <<$name=>> @a dies";
-    dies-ok { 3 <<[&metaop]<< @a }, "3 <<$name=<< @a dies";
+        # @a >>op<< 3
+        dies-ok { @a >>[&op]<< 3 }, "@a >>$name\<< 3 dies";
+        dies-ok { @a <<[&op]<< 3 }, "@a <<$name\<< 3 dies";
+        is-deeply @a <<[&op]>> 3, @resultop3, "@a <<$name>> 3";
+        is-deeply @a >>[&op]>> 3, @resultop3, "@a >>$name>> 3";
 
+        # @a >>op=<< 3
+        dies-ok { @a >>[&metaop]<< 3 }, "@a >>$name=<< 3 dies";
+        dies-ok { @a <<[&metaop]<< 3 }, "@a <<$name=<< 3 dies";
+        is-deeply @a <<[&metaop]>> 3, @resultop3, "@a <<$name=>> 3";
+        is-deeply @a, @resultop3, "@a assigned from @a <<$name=>> 3";
+        @a = @reset;
+        is-deeply @a >>[&metaop]>> 3, @resultop3, "@a >>$name=>> 3";
+        is-deeply @a, @resultop3, "@a assigned from @a >>$name=>> 3";
+        @a = @reset;
+
+        # 3 >>op<< @a
+        dies-ok { 3 >>[&op]<< @a }, "3 >>$name\<< @a dies";
+        dies-ok { 3 >>[&op]>> @a }, "3 >>$name>> @a dies";
+        is-deeply 3 <<[&op]>> @a, @result3op, "3 <<$name>> @a";
+        is-deeply 3 <<[&op]<< @a, @result3op, "3 <<$name\<< @a";
+
+        # 3 >>op=<< @a
+        dies-ok { 3 >>[&metaop]<< @a }, "3 >>$name=<< @a dies";
+        dies-ok { 3 >>[&metaop]>> @a }, "3 >>$name=>> @a dies";
+        dies-ok { 3 <<[&metaop]>> @a }, "3 <<$name=>> @a dies";
+        dies-ok { 3 <<[&metaop]<< @a }, "3 <<$name=<< @a dies";
+    }
+
+    # ordinary hashes initialization
     my %a = "a".."e" Z=> 1..5;
     my %reset = %a;
     my %b = "a".."e" Z=> 6..10;
-
-    # %a >>op<< %b
     my %result = %a.map: { .key => op(.value, %b{.key}) }
-    is-deeply %a >>[&op]<< %b, %result, "%a >>$name\<< %b";
-    is-deeply %a <<[&op]<< %b, %result, "%a <<$name\<< %b";
-    is-deeply %a <<[&op]>> %b, %result, "%a <<$name>> %b";
-    is-deeply %a >>[&op]>> %b, %result, "%a >>$name>> %b";
+    my %resultop3 = %a.map: { .key => op(.value, 3) }
+    my %result3op = %a.map: { .key => op(3, .value) }
 
-    # %a >>op=<< %b
-    is-deeply %a >>[&metaop]<< %b, %result, "%a >>$name=<< %b";
-    is-deeply %a, %result, "%a assigned from %a >>$name=<< %b";
-    %a = %reset;
-    is-deeply %a <<[&metaop]<< %b, %result, "%a <<$name=<< %b";
-    is-deeply %a, %result, "%a assigned from %a <<$name=<< %b";
-    %a = %reset;
-    is-deeply %a <<[&metaop]>> %b, %result, "%a <<$name=>> %b";
-    is-deeply %a, %result, "%a assigned from %a <<$name=>> %b";
-    %a = %reset;
-    is-deeply %a >>[&metaop]>> %b, %result, "%a >>$name=>> %b";
-    is-deeply %a, %result, "%a assigned from %a >>$name=>> %b";
-    %a = %reset;
+    # typed hashes initialization
+    my Cool %ac = %a;
+    my Cool %resetc = %ac;
+    my Cool %bc = %b;
+    my Cool %resultc = %result;
+    my Cool %resultop3c = %resultop3;
+    my Cool %result3opc = %result3op;
 
-    # %a >>op<< 3 
-    my %result = %a.map: { .key => op(.value, 3) }
-    dies-ok { %a >>[&op]<< 3 }, "%a >>$name\<< 3 dies";
-    dies-ok { %a <<[&op]<< 3 }, "%a <<$name\<< 3 dies";
-    is-deeply %a <<[&op]>> 3, %result, "%a <<$name>> 3";
-    is-deeply %a >>[&op]>> 3, %result, "%a >>$name>> 3";
+    # object hashes initialization
+    my %ao{Any} = %a;
+    my %reseto{Any} = %ao;
+    my %bo{Any} = %b;
+    my %resulto{Any} = %result;
+    my %resultop3o{Any} = %resultop3;
+    my %result3opo{Any} = %result3op;
 
-    # %a >>op=<< 3 
-    dies-ok { %a >>[&metaop]<< 3 }, "%a >>$name=<< 3 dies";
-    dies-ok { %a <<[&metaop]<< 3 }, "%a <<$name=<< 3 dies";
-    is-deeply %a <<[&metaop]>> 3, %result, "%a <<$name=>> 3";
-    is-deeply %a, %result, "%a assigned from %a <<$name=>> 3";
-    %a = %reset;
-    is-deeply %a >>[&metaop]>> 3, %result, "%a >>$name=>> 3";
-    is-deeply %a, %result, "%a assigned from %a >>$name=>> 3";
-    %a = %reset;
+    for (
+        %a, %b, %reset, %result, %resultop3, %result3op,
+        %ac, %bc, %resetc, %resultc, %resultop3c, %result3opc,
+        %ao, %bo, %reseto, %resulto, %resultop3o, %result3opo,
+    
+    ) -> %a, %b, %reset, %result, %resultop3, %result3op {
 
-    # 3 >>op<< %a
-    my %result = %a.map: { .key => op(3, .value) }
-    dies-ok { 3 >>[&op]<< %a }, "3 >>$name\<< %a dies";
-    dies-ok { 3 >>[&op]>> %a }, "3 >>$name>> %a dies";
-    is-deeply 3 <<[&op]>> %a, %result, "3 <<$name>> %a";
-    is-deeply 3 <<[&op]<< %a, %result, "3 <<$name\<< %a";
+        # %a >>op<< %b
+        is-deeply %a >>[&op]<< %b, %result, "%a >>$name\<< %b";
+        is-deeply %a <<[&op]<< %b, %result, "%a <<$name\<< %b";
+        is-deeply %a <<[&op]>> %b, %result, "%a <<$name>> %b";
+        is-deeply %a >>[&op]>> %b, %result, "%a >>$name>> %b";
 
-    # 3 >>op<< %a
-    dies-ok { 3 >>[&metaop]<< %a }, "3 >>$name=<< %a dies";
-    dies-ok { 3 >>[&metaop]>> %a }, "3 >>$name=>> %a dies";
-    dies-ok { 3 <<[&metaop]>> %a }, "3 <<$name=>> %a dies";
-    dies-ok { 3 <<[&metaop]<< %a }, "3 <<$name=<< %a dies";
+        # %a >>op=<< %b
+        is-deeply %a >>[&metaop]<< %b, %result, "%a >>$name=<< %b";
+        is-deeply %a, %result, "%a assigned from %a >>$name=<< %b";
+        %a = %reset;
+        is-deeply %a <<[&metaop]<< %b, %result, "%a <<$name=<< %b";
+        is-deeply %a, %result, "%a assigned from %a <<$name=<< %b";
+        %a = %reset;
+        is-deeply %a <<[&metaop]>> %b, %result, "%a <<$name=>> %b";
+        is-deeply %a, %result, "%a assigned from %a <<$name=>> %b";
+        %a = %reset;
+        is-deeply %a >>[&metaop]>> %b, %result, "%a >>$name=>> %b";
+        is-deeply %a, %result, "%a assigned from %a >>$name=>> %b";
+        %a = %reset;
+
+        # %a >>op<< 3 
+        dies-ok { %a >>[&op]<< 3 }, "%a >>$name\<< 3 dies";
+        dies-ok { %a <<[&op]<< 3 }, "%a <<$name\<< 3 dies";
+        is-deeply %a <<[&op]>> 3, %resultop3, "%a <<$name>> 3";
+        is-deeply %a >>[&op]>> 3, %resultop3, "%a >>$name>> 3";
+
+        # %a >>op=<< 3 
+        dies-ok { %a >>[&metaop]<< 3 }, "%a >>$name=<< 3 dies";
+        dies-ok { %a <<[&metaop]<< 3 }, "%a <<$name=<< 3 dies";
+        is-deeply %a <<[&metaop]>> 3, %resultop3, "%a <<$name=>> 3";
+        is-deeply %a, %resultop3, "%a assigned from %a <<$name=>> 3";
+        %a = %reset;
+        is-deeply %a >>[&metaop]>> 3, %resultop3, "%a >>$name=>> 3";
+        is-deeply %a, %resultop3, "%a assigned from %a >>$name=>> 3";
+        %a = %reset;
+
+        # 3 >>op<< %a
+        dies-ok { 3 >>[&op]<< %a }, "3 >>$name\<< %a dies";
+        dies-ok { 3 >>[&op]>> %a }, "3 >>$name>> %a dies";
+        is-deeply 3 <<[&op]>> %a, %result3op, "3 <<$name>> %a";
+        is-deeply 3 <<[&op]<< %a, %result3op, "3 <<$name\<< %a";
+
+        # 3 >>op<< %a
+        dies-ok { 3 >>[&metaop]<< %a }, "3 >>$name=<< %a dies";
+        dies-ok { 3 >>[&metaop]>> %a }, "3 >>$name=>> %a dies";
+        dies-ok { 3 <<[&metaop]>> %a }, "3 <<$name=>> %a dies";
+        dies-ok { 3 <<[&metaop]<< %a }, "3 <<$name=<< %a dies";
+    }
 }
 
 # vim: ft=perl6
