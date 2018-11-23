@@ -28,7 +28,6 @@ my @int-infixes =
    "÷",    &[÷],    &[÷=],
   "**",   &[**],   &[**=],
    "%",    &[%],    &[%=],
- "div",  &[div],  &[div=],
  "max",  &[max],  &[max=],
  "min",  &[min],  &[min=],
  "mod",  &[mod],  &[mod=],
@@ -43,6 +42,7 @@ my @int-infixes =
 my @real-infixes =
 #  name      op    metaop
    "/",    &[/],    &[/=],
+ "div",  &[div],  &[div=], # problematic for sets if 3
 ;
 
 # infixes resulting in Seqs
@@ -55,7 +55,7 @@ my @infixes = |@str-infixes, |@int-infixes, |@real-infixes;
 my $infixes     = @infixes / 3;
 my $int-infixes = @int-infixes / 3;
 
-plan 162 * $infixes + 78 * $int-infixes;
+plan 162 * $infixes + 90 * $int-infixes;
 
 =begin pod
 
@@ -301,11 +301,11 @@ for @int-infixes -> $name, &op, &metaop {
         # %a >>op=<< 3 
         dies-ok { %a >>[&metaop]<< 3 }, "$type %a >>$name=<< 3 dies";
         dies-ok { %a <<[&metaop]<< 3 }, "$type %a <<$name=<< 3 dies";
-#        is-deeply %a <<[&metaop]>> 3, %resultop3, "$type %a <<$name=>> 3";
-#        is-deeply %a, %resultop3, "$type %a assigned from %a <<$name=>> 3";
+        is-deeply %a <<[&metaop]>> 3, %resultop3, "$type %a <<$name=>> 3";
+        is-deeply %a, %resultop3, "$type %a assigned from %a <<$name=>> 3";
         %a = %reset.pairs;
-#        is-deeply %a >>[&metaop]>> 3, %resultop3, "$type %a >>$name=>> 3";
-#        is-deeply %a, %resultop3, "$type %a assigned from %a >>$name=>> 3";
+        is-deeply %a >>[&metaop]>> 3, %resultop3, "$type %a >>$name=>> 3";
+        is-deeply %a, %resultop3, "$type %a assigned from %a >>$name=>> 3";
         %a = %reset.pairs;
 
         # 3 >>op<< %a
