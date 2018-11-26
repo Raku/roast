@@ -35,7 +35,7 @@ sub macosx (:$io-path) {
         my $s = (
             $io-path ?? $base-path.IO.watch !! IO::Notification.watch-path: $base-path
         ).grep({.path.IO.basename eq $filename}).unique;
-        isa-ok $s ~~ Supply, 'Did we get a Supply?';
+        isa-ok $s, Supply, 'Did we get a Supply?';
 
         my @seen;
         my $check-event = -> \change { flunk 'not setup yet'; };
