@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 55;
 
 {
     class A { method Str() { 'foo' } };
@@ -134,6 +134,10 @@ plan 54;
     is-deeply %a{1,1;2,2;3,3}:exists, (True, True, True, True, True, True, True, True);
 
     is-deeply %a{1;1..3}:exists,      (False, True, False);
+}
+
+{
+    eval-lives-ok 'my %*a{Int}', "Accept dynamic object hash"
 }
 
 #vim: ft=perl6
