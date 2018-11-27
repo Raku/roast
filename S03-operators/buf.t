@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 174;
+plan 194;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -357,5 +357,21 @@ subtest 'infix:<~> works with Blob' => {
 
         $b[2] = 42;
         is $a ~~ $b, False, 'do different bufs smartmatch ok';
+    }
+}
+
+# R#2509
+{
+    for Blob,blob8,blob16,blob32,blob64, Buf,buf8,buf16,buf32,buf64 -> \buf {
+        is-deeply EVAL('my @a is buf = ^10'), buf.new(^10),
+          "did my @a is { buf.^name } = ^10 work";
+    }
+    for Blob, blob8, blob16, blob32, blob64 -> \blob {
+        dies-ok { EVAL('my @a is blob; @a = ^10') },
+          "did my @a is { blob.^name }; @a = ^10 fail";
+    }
+    for Buf, buf8, buf16, buf32, buf64 -> \buf {
+        is-deeply EVAL('my @a is buf; @a = ^10'), buf.new(^10),
+          "did my @a is { buf.^name }; @a = ^10 work";
     }
 }
