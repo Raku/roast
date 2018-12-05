@@ -35,6 +35,11 @@ my @pairs =
 my @triplets =
 
   # result should be a Set(Hash)
+  Set,                      Set,               set(Set),
+  Bag,                      Bag,               set(Bag),
+  Mix,                      Mix,               set(Mix),
+  Set,                      set(),             set(Set),
+  set(),                    Set,               set(Set),
   set(),                    set(),             set(),
   SetHash.new,              set(),             SetHash.new,
   set(),                    SetHash.new,       set(),
@@ -51,6 +56,8 @@ my @triplets =
   <a b>.SetHash,            <c d>.SetHash,     <a b c d>.SetHash,
 
   # result should be a Bag(Hash)
+  Bag,                      bag(),             bag(Bag),
+  bag(),                    Bag,               bag(Bag),
   bag(),                    bag(),             bag(),
   BagHash.new,              bag(),             BagHash.new,
   bag(),                    BagHash.new,       bag(),
@@ -67,6 +74,8 @@ my @triplets =
   <a b b>.BagHash,          <c d>.BagHash,     <a b b c d>.BagHash,
 
   # result should be a Mix(Hash)
+  Mix,                      mix(),             mix(Mix),
+  mix(),                    Mix,               mix(Mix),
   mix(),                    mix(),             mix(),
   MixHash.new,              mix(),             MixHash.new,
   mix(),                    MixHash.new,       mix(),
