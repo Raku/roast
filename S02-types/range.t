@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 192;
+plan 193;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -451,6 +451,12 @@ subtest 'no floating point drifts in degenerate Ranges' => {
         last;
     }
     is-deeply (Inf..0).elems, 0, 'Inf..0 Range has zero elems'
+}
+
+# R#2517
+{
+    my @a = "1"..9;
+    is-deeply @a, ["1","2","3","4","5","6","7","8","9"], 'did we get strings';
 }
 
 # vim:set ft=perl6
