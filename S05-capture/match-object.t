@@ -6,7 +6,7 @@ use Test::Util;
 # this file should become the test for systematically testing
 # Match objects. Exception: .caps and .chunks are tested in caps.t
 
-plan 46;
+plan 47;
 
 ok 'ab12de' ~~ /\d+/,           'match successful';
 is $/.WHAT, Match.WHAT,         'got right type';
@@ -97,6 +97,10 @@ subtest 'can smartmatch against regexes stored in variables' => {
     #?rakudo todo '$/.orig on NFD matches'
     isa-ok $/.orig, NFD, '.orig retains the type (NFD)';
 
+    # R#2176
+    $/ = Nil;
+    my $m = so "7\x[308]".NFD ~~ /^ \d+ $/;
+    isa-ok $/, Match, 'NFD: $/ is set in Regex.ACCEPTS';
 }
 
 # https://github.com/rakudo/rakudo/commit/a62b221a80
