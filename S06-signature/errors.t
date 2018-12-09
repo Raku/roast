@@ -77,7 +77,7 @@ throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
 {
     try { EVAL 'multi rt78670(Int) {}; my $str = "foo"; rt78670 $str' }
     my $error = ~$!;
-    ok $error ~~ /:i 'rt78670(Str)' /, "fails multi sigs reports call profile";
+    ok $error ~~ /:i 'rt78670(Str' /, "fails multi sigs reports call profile";
     ok $error ~~ /signature/, "mentions signature";
     ok $error ~~ /^^ \h* '(Int'/, "Error mentions Int";
     ok $error ~~ / :i call /, '... error message mentions "call"';
