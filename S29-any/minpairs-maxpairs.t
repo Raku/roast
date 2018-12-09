@@ -4,7 +4,7 @@ use Test;
 my @tests = 4, '5', 6e0, 7.0, DateTime.now, Duration.new(42), now,
     Date.today, '.'.IO, class Foo {}.new;
 
-plan 3 + 2*@tests;
+plan 3 + 2*@tests + 4;
 
 for @tests {
     is-deeply .minpairs, (0 => $_,).Seq, .^name ~ '.minpairs';
@@ -26,6 +26,26 @@ subtest 'Setty.maxpairs/.minpairs' => {
 
     is-deeply Foo.new.maxpairs, 42, 'Setty.maxpairs returns .pairs';
     is-deeply Foo.new.minpairs, 42, 'Setty.minpairs returns .pairs';
+}
+
+# https://stackoverflow.com/questions/53692604/perl-6-maxpairs-warns-about-stringification-of-undefined-values
+{
+    my @a;
+    @a[2,3,4,6] = <foo bar foo bar>;
+    {
+        my $failed;
+        CONTROL { $failed = True }
+        is-deeply @a.maxpairs, (2 => "foo", 4 => "foo").Seq,
+          'maxpairs on sparse';
+        nok $failed, 'maxpairs should not have warned';
+    }
+    {
+        my $failed;
+        CONTROL { $failed = True }
+        is-deeply @a.minpairs, (3 => "bar", 6 => "bar").Seq,
+          'minpairs on sparse';
+        nok $failed, 'minpairs should not have warned';
+    }
 }
 
 # vim: ft=perl6
