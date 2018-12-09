@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 92;
+plan 94;
 
 {
     my int $x;
@@ -383,6 +383,13 @@ subtest 'meta-assign op with native nums' => {
         for @arr { $s += $_ }
         $s
     }, 3.6000001430511475e0, 'meta-assigning into UN-inited num';
+}
+
+# R#2533
+{
+    my int @a = 1,2,3;
+    ok @a > 2,  'numification of int array works for > 2';
+    nok @a < 3, 'numification of int array works for < 3';
 }
 
 # vim: ft=perl6
