@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 45;
 
 =begin pod
 
@@ -110,6 +110,29 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
 #?rakudo todo 'RT #131174'
     is-deeply RT131174.^attributes[0].container.shape, (2,),
         'attribute container shape';
+}
+
+# R#2521
+{
+    class R2521 { has $!a }
+    R2521.^add_multi_method: "a", method () is rw {
+        self.^attributes.head.get_value: self
+    }
+    R2521.^compose;
+    my $fetched;
+    my $stored;
+    my $c = R2521.new;
+    my $value = 42;
+    $c.^attributes.head.set_value: $c, Proxy.new:
+      FETCH => -> $       { $fetched = True; $value },
+      STORE => -> $, \new { $stored  = True; $value = new }
+    ;
+    is $c.a, 42, 'did we get a default value';
+    ok $fetched, 'did we actually call FETCH';
+    nok $stored, 'did we actially *not* call STORE';
+    is ($c.a = 666), 666, 'can we store a value and do we get 666';
+    is $c.a, 666, 'did the value actually get stored';
+    ok $stored, 'did we actually call STORE now';
 }
 
 # vim: ft=perl6
