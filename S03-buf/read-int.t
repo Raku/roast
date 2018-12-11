@@ -73,9 +73,11 @@ multi sub make-int64(\buffer,int $i,big-endian) {
       ?? unsigned - 0x1_0000_0000_0000_0000 !! unsigned
 }
 
+# run read tests for all blob8/buf8's
 for @blobbufs -> \buffer, $name {
     my int $elems = buffer.elems;
 
+    # read8
     for ^$elems -> int $i {
         my $unsigned = buffer[$i];
         my $signed = $unsigned > 127 ?? $unsigned - 256 !! $unsigned;
@@ -92,6 +94,7 @@ for @blobbufs -> \buffer, $name {
         }
     }
 
+    # read16
     for ^($elems - 1) -> int $i {
         my $unative := make-uint16(buffer,$i,my-native-endian);
         is buffer.read-uint16($i), $unative,
@@ -113,6 +116,7 @@ for @blobbufs -> \buffer, $name {
         }
     }
 
+    # read32
     for ^($elems - 3) -> int $i {
         my $unative := make-uint32(buffer,$i,my-native-endian);
         is buffer.read-uint32($i), $unative,
@@ -134,6 +138,7 @@ for @blobbufs -> \buffer, $name {
         }
     }
 
+    # read64
     for ^($elems - 7) -> int $i {
         my $unative := make-uint64(buffer,$i,my-native-endian);
         is buffer.read-uint64($i), $unative,
