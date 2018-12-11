@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 84;
+plan 90;
 
 # Make sure we can emit Mu
 {
@@ -726,5 +726,74 @@ lives-ok {
         }
     }
 }, 'No crash in single-whenever react that does LAST done';
+
+{
+    my @outputs;
+    lives-ok {
+        react whenever Supply.from-list([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
+            last if $_ > 3;
+            @outputs.push: $_;
+            die "failed to 'last' at 4, got to $_" if $_ > 4;
+            LAST { @outputs.push: "last $_" }
+        }
+    }, "no exception for 'last' inside a single whenever in a react";
+    is-deeply @outputs, [1, 2, 3, "last 4"], "calling 'last' stopped whenever, and LAST block was called";
+}
+
+{
+    lives-ok {
+        react whenever Supply.from-list([1, 2, 3, 4, 5, 6]) {
+            last if $_ > 2;
+            die "failed to 'last' at 4, got to $_" if $_ > 3;
+        }
+    }, "no exception for 'last' inside a single whenever in a react without LAST block";
+}
+
+{
+    lives-ok {
+        react { 
+            whenever Supply.from-list([1, 2, 3, 4, 5, 6]) {
+                last if $_ > 2;
+                die "failed to 'last' at 4, got to $_" if $_ > 3;
+            }
+            whenever Supply.from-list([1, 2, 3, 4, 5, 6, 7]) {
+                last if $_ > 4;
+                die "failed to 'last' at 4, got to $_" if $_ > 5;
+            }
+        }
+    }, "no exception for 'last' inside two whenevers in a react without LAST block";
+}
+
+{
+    my @outputs;
+    my Supplier $inputs = Supplier::Preserving.new;
+    my Supply $input-supply = $inputs.Supply;
+    lives-ok {
+        react {
+            whenever $input-supply.grep(* > 0) {
+                last if $_ > 3;
+                @outputs.push: $_;
+                die "failed to 'last' at 4, got to $_" if $_ > 4;
+                LAST { @outputs.push: "last $_" }
+            }
+            whenever $input-supply.grep(* < 0) {
+                last if $_ < -5;
+                @outputs.push: $_;
+                die "failed to 'last' at -6, got to $_" if $_ < -6;
+                LAST { @outputs.push: "last $_" }
+            }
+            whenever start {
+                for ^10 {
+                    $inputs.emit($_);
+                    $inputs.emit(-$_);
+                }
+            } {
+                @outputs.push: "inputs finished";
+                done;
+            }
+        }
+    }, "no exception for 'last' inside a single whenever in a react";
+    is-deeply @outputs, [1, -1, 2, -2, 3, -3, "last 4", -4, -5, "last -6", "inputs finished"], "calling 'last' stopped two whenevers, and LAST blocks were called";
+}
 
 # vim: ft=perl6 expandtab sw=4
