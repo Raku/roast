@@ -5,7 +5,7 @@ my @bufs = (
   blob8.new(1..9),                 'blob8-1234',
   blob8.new(255 xx 9),             'blob8-255',
   blob8.new((^256).roll(9)),       'blob8-random',
-  Blob[uint8].new((^256).roll(9)), 'blob8-random',
+  Blob[uint8].new((^256).roll(9)), 'Blob[uint8]-random',
   buf8.new(1..9),                  'buf8-1234',
   buf8.new(255 xx 9),              'buf8-255',
   buf8.new((^256).roll(9)),        'buf8-random',
