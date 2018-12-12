@@ -1,22 +1,21 @@
 use v6;
 use Test;
 
-my @blobs = (
-  blob8.new(1..9),           'blob8-1234',
-  blob8.new(255 xx 9),       'blob8-255',
-  blob8.new((^256).roll(9)), 'blob8-random',
-);
 my @bufs = (
-  buf8.new(1..9),           'buf8-1234',
-  buf8.new(255 xx 9),       'buf8-255',
-  buf8.new((^256).roll(9)), 'buf8-random',
+  blob8.new(1..9),                 'blob8-1234',
+  blob8.new(255 xx 9),             'blob8-255',
+  blob8.new((^256).roll(9)),       'blob8-random',
+  Blob[uint8].new((^256).roll(9)), 'blob8-random',
+  buf8.new(1..9),                  'buf8-1234',
+  buf8.new(255 xx 9),              'buf8-255',
+  buf8.new((^256).roll(9)),        'buf8-random',
+  Buf[uint8].new((^256).roll(9)),  'Buf[uint8]-random',
 );
-my @blobbufs = |@blobs, |@bufs;
 
 my constant my-native-endian =
   blob8.new(1,0).read-int16(0) == 1 ?? little-endian !! big-endian;
 
-plan @blobbufs * 132;
+plan @bufs * 132;
 
 # create uint out of buffer from given indices, highest -> lowest
 sub make-uint(\buffer,*@index --> UInt) {
@@ -74,7 +73,7 @@ multi sub make-int64(\buffer,int $i,big-endian) {
 }
 
 # run read tests for all blob8/buf8's
-for @blobbufs -> \buffer, $name {
+for @bufs -> \buffer, $name {
     my int $elems = buffer.elems;
 
     # read8
