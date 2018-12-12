@@ -2,20 +2,23 @@ use v6;
 use Test;
 
 my @bufs = (
-  blob8.new(1..9),                 'blob8-1234',
-  blob8.new(255 xx 9),             'blob8-255',
-  blob8.new((^256).roll(9)),       'blob8-random',
-  Blob[uint8].new((^256).roll(9)), 'Blob[uint8]-random',
-  buf8.new(1..9),                  'buf8-1234',
-  buf8.new(255 xx 9),              'buf8-255',
-  buf8.new((^256).roll(9)),        'buf8-random',
-  Buf[uint8].new((^256).roll(9)),  'Buf[uint8]-random',
+  blob8.new(1..19),                 'blob8-1234',
+  blob8.new(255 xx 19),             'blob8-255',
+  blob8.new((^256).roll(19)),       'blob8-random',
+  Blob[uint8].new((^256).roll(19)), 'Blob[uint8]-random',
+  buf8.new(1..19),                  'buf8-1234',
+  buf8.new(255 xx 19),              'buf8-255',
+  buf8.new((^256).roll(19)),        'buf8-random',
+  Buf[uint8].new((^256).roll(19)),  'Buf[uint8]-random',
 );
 
 my constant my-native-endian =
   blob8.new(1,0).read-int16(0) == 1 ?? little-endian !! big-endian;
 
-plan @bufs * 132;
+plan @bufs * 120;
+
+# first and last two of a range
+sub outer2(Range:D \range) { (|range.head(2),|range.tail(2)) }
 
 # create uint out of buffer from given indices, highest -> lowest
 sub make-uint(\buffer,*@index --> UInt) {
@@ -43,33 +46,45 @@ multi sub make-uint64(\buffer,int $i,little-endian) {
 multi sub make-uint64(\buffer,int $i,big-endian) {
     make-uint(buffer, $i .. $i+7)
 }
+multi sub make-uint128(\buffer,int $i,little-endian) {
+    make-uint(buffer, [$i+15 ... $i] )   # not sure why the [] is needed
+}
+multi sub make-uint128(\buffer,int $i,big-endian) {
+    make-uint(buffer, $i .. $i+15)
+}
 
 # helper subs for creating ints out of a buffer
 multi sub make-int16(\buffer,int $i,little-endian) {
     my \unsigned := make-uint16(buffer,$i,little-endian);
-    unsigned > 0x7fff ?? unsigned - 0x10000 !! unsigned
+    unsigned >= 1 +< 15 ?? unsigned - 1 +< 16 !! unsigned
 }
 multi sub make-int16(\buffer,int $i,big-endian) {
     my \unsigned := make-uint16(buffer,$i,big-endian);
-    unsigned > 0x7fff ?? unsigned - 0x10000 !! unsigned
+    unsigned >= 1 +< 15 ?? unsigned - 1 +< 16 !! unsigned
 }
 multi sub make-int32(\buffer,int $i,little-endian) {
     my \unsigned := make-uint32(buffer,$i,little-endian);
-    unsigned > 0x7fff_ffff ?? unsigned - 0x1_0000_0000 !! unsigned
+    unsigned >= 1 +< 31 ?? unsigned - 1 +< 32 !! unsigned
 }
 multi sub make-int32(\buffer,int $i,big-endian) {
     my \unsigned := make-uint32(buffer,$i,big-endian);
-    unsigned > 0x7fff_ffff ?? unsigned - 0x1_0000_0000 !! unsigned
+    unsigned >= 1 +< 31 ?? unsigned - 1 +< 32 !! unsigned
 }
 multi sub make-int64(\buffer,int $i,little-endian) {
     my \unsigned := make-uint64(buffer,$i,little-endian);
-    unsigned > 0x7fff_ffff_ffff_ffff
-      ?? unsigned - 0x1_0000_0000_0000_0000 !! unsigned
+    unsigned >= 1 +< 63 ?? unsigned - 1 +< 64 !! unsigned
 }
 multi sub make-int64(\buffer,int $i,big-endian) {
     my \unsigned := make-uint64(buffer,$i,big-endian);
-    unsigned > 0x7fff_ffff_ffff_ffff
-      ?? unsigned - 0x1_0000_0000_0000_0000 !! unsigned
+    unsigned >= 1 +< 63 ?? unsigned - 1 +< 64 !! unsigned
+}
+multi sub make-int128(\buffer,int $i,little-endian) {
+    my \unsigned := make-uint128(buffer,$i,little-endian);
+    unsigned >= 1 +< 127 ?? unsigned - 1 +< 128 !! unsigned
+}
+multi sub make-int128(\buffer,int $i,big-endian) {
+    my \unsigned := make-uint128(buffer,$i,big-endian);
+    unsigned >= 1 +< 127 ?? unsigned - 1 +< 128 !! unsigned
 }
 
 # run read tests for all blob8/buf8's
@@ -77,7 +92,7 @@ for @bufs -> \buffer, $name {
     my int $elems = buffer.elems;
 
     # read8
-    for ^$elems -> int $i {
+    for outer2(^$elems) -> int $i {
         my $unsigned = buffer[$i];
         my $signed = $unsigned > 127 ?? $unsigned - 256 !! $unsigned;
 
@@ -108,7 +123,7 @@ for @bufs -> \buffer, $name {
     }
 
     # read16
-    for ^($elems - 1) -> int $i {
+    for outer2(^($elems - 1)) -> int $i {
         my $unative := make-uint16(buffer,$i,my-native-endian);
         is buffer.read-uint16($i), $unative,
           "is $name $i uint16 correct";
@@ -146,7 +161,7 @@ for @bufs -> \buffer, $name {
     }
 
     # read32
-    for ^($elems - 3) -> int $i {
+    for outer2(^($elems - 3)) -> int $i {
         my $unative := make-uint32(buffer,$i,my-native-endian);
         is buffer.read-uint32($i), $unative,
           "is $name $i uint32 correct";
@@ -184,7 +199,7 @@ for @bufs -> \buffer, $name {
     }
 
     # read64
-    for ^($elems - 7) -> int $i {
+    for outer2(^($elems - 7)) -> int $i {
         my $unative := make-uint64(buffer,$i,my-native-endian);
         is buffer.read-uint64($i), $unative,
           "is $name $i uint64 correct";
@@ -219,6 +234,44 @@ for @bufs -> \buffer, $name {
           "does $name uint64 {$elems - 7} $endian die";
         dies-ok { buffer.read-int64($elems - 7,$endian) },
           "does $name int64 {$elems - 7} $endian die";
+    }
+
+    # read128
+    for outer2(^($elems - 15)) -> int $i {
+        my $unative := make-uint128(buffer,$i,my-native-endian);
+        is buffer.read-uint128($i), $unative,
+          "is $name $i uint128 correct";
+        is buffer.read-uint128($i,native-endian), $unative,
+          "is $name $i uint128 native-endian correct";
+
+        my $native := make-int128(buffer,$i,my-native-endian);
+        is buffer.read-int128($i), $native,
+          "is $name $i int128 correct";
+        is buffer.read-int128($i,native-endian), $native,
+          "is $name $i int128 native-endian correct";
+
+        for little-endian, big-endian -> $endian {
+            is buffer.read-uint128($i,$endian), make-uint128(buffer,$i,$endian),
+              "is $name $i uint128 $endian correct";
+            is buffer.read-int128($i,$endian), make-int128(buffer,$i,$endian),
+              "is $name $i int128 $endian correct";
+        }
+    }
+    dies-ok { buffer.read-uint128(-1) }, "does $name uint128 -1 die";
+    dies-ok { buffer.read-int128(-1) },  "does $name int128 -1 die";
+    dies-ok { buffer.read-uint128($elems - 15) },
+      "does $name uint128 {$elems - 15} die";
+    dies-ok { buffer.read-int128($elems - 15) },
+      "does $name int128 {$elems - 15} die";
+    for native-endian, little-endian, big-endian -> $endian {
+        dies-ok { buffer.read-uint128(-1,$endian) },
+          "does $name uint128 -1 $endian die";
+        dies-ok { buffer.read-int128(-1,$endian) },
+          "does $name int128 -1 $endian die";
+        dies-ok { buffer.read-uint128($elems - 15,$endian) },
+          "does $name uint128 {$elems - 15} $endian die";
+        dies-ok { buffer.read-int128($elems - 15,$endian) },
+          "does $name int128 {$elems - 15} $endian die";
     }
 }
 
