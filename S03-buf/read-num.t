@@ -8,8 +8,8 @@ my @bufs = (
   Buf[uint8].new((^256).roll(9)),  'Buf[uint8]-random',
 );
 
-my constant my-native-endian =
-  blob8.new(1,0).read-int16(0) == 1 ?? little-endian !! big-endian;
+my constant my-NativeEndian =
+  blob8.new(1,0).read-int16(0) == 1 ?? LittleEndian !! BigEndian;
 
 plan @bufs * 24;
 
@@ -21,10 +21,10 @@ for @bufs -> \buffer, $name {
     # use "try" until MoarVM #1020 is fixed
     for ^($elems - 3) -> int $i {
         ok try buffer.read-num32($i), "is $name $i num32 not 0";
-        ok try buffer.read-num32($i,native-endian),
-          "is $name $i num32 native-endian not 0";
+        ok try buffer.read-num32($i,NativeEndian),
+          "is $name $i num32 NativeEndian not 0";
 
-        for little-endian, big-endian -> $endian {
+        for LittleEndian, BigEndian -> $endian {
             ok try buffer.read-num32($i,$endian),
               "is $name $i num32 $endian not 0";
         }
@@ -32,7 +32,7 @@ for @bufs -> \buffer, $name {
     dies-ok { buffer.read-num32(-1) },  "does $name num32 -1 die";
     dies-ok { buffer.read-num32($elems - 3) },
       "does $name num32 {$elems - 3} die";
-    for native-endian, little-endian, big-endian -> $endian {
+    for NativeEndian, LittleEndian, BigEndian -> $endian {
         dies-ok { buffer.read-num32(-1,$endian) },
           "does $name num32 -1 $endian die";
         dies-ok { buffer.read-num32(-1,$endian) },
@@ -42,10 +42,10 @@ for @bufs -> \buffer, $name {
     # read64
     for ^($elems - 7) -> int $i {
         ok buffer.read-num64($i), "is $name $i num64 not 0";
-        ok buffer.read-num64($i,native-endian),
-          "is $name $i num64 native-endian not 0";
+        ok buffer.read-num64($i,NativeEndian),
+          "is $name $i num64 NativeEndian not 0";
 
-        for little-endian, big-endian -> $endian {
+        for LittleEndian, BigEndian -> $endian {
             ok buffer.read-num64($i,$endian),
               "is $name $i num64 $endian not 0";
         }
@@ -53,7 +53,7 @@ for @bufs -> \buffer, $name {
     dies-ok { buffer.read-num64(-1) }, "does $name num64 -1 die";
     dies-ok { buffer.read-num64($elems - 7) },
       "does $name num64 {$elems - 7} die";
-    for native-endian, little-endian, big-endian -> $endian {
+    for NativeEndian, LittleEndian, BigEndian -> $endian {
         dies-ok { buffer.read-num64(-1,$endian) },
           "does $name num64 -1 $endian die";
         dies-ok { buffer.read-num64($elems - 7,$endian) },
