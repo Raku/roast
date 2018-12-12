@@ -4,7 +4,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 59;
+plan 60;
 
 =begin description
 
@@ -118,6 +118,16 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
     my enum Bar <A B C>;
     ok B.can("value"), '.can(...) on an enum';
     ok B.^can("value"), '.^can(...) on an enum';
+}
+
+# https://github.com/rakudo/rakudo/issues/2535
+{
+    my enum WithPriv <AA BB>;
+    AA does role {
+        method !privy { 44 }
+        method m() { self!privy }
+    }
+    is AA.m, 44, "Can mix a private method into an enum value"
 }
 
 # vim: ft=perl6
