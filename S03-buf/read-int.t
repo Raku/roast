@@ -16,7 +16,7 @@ my @blobbufs = |@blobs, |@bufs;
 my constant my-native-endian =
   blob8.new(1,0).read-int16(0) == 1 ?? little-endian !! big-endian;
 
-plan @blobbufs * 100;
+plan @blobbufs * 132;
 
 # create uint out of buffer from given indices, highest -> lowest
 sub make-uint(\buffer,*@index --> UInt) {
@@ -93,6 +93,20 @@ for @blobbufs -> \buffer, $name {
               "is $name int8 $i $endian correct";
         }
     }
+    dies-ok { buffer.read-uint8(-1) }, "does $name uint8 -1 die";
+    dies-ok { buffer.read-int8(-1) },  "does $name int8 -1 die";
+    dies-ok { buffer.read-uint8($elems) }, "does $name uint8 $elems die";
+    dies-ok { buffer.read-int8($elems) },  "does $name int8 $elems die";
+    for native-endian, little-endian, big-endian -> $endian {
+        dies-ok { buffer.read-uint8(-1,$endian) },
+          "does $name uint8 -1 $endian die";
+        dies-ok { buffer.read-int8(-1,$endian) },
+          "does $name int8 -1 $endian die";
+        dies-ok { buffer.read-uint8($elems,$endian) },
+          "does $name uint8 $elems $endian die";
+        dies-ok { buffer.read-int8($elems,$endian) },
+          "does $name int8 $elems $endian die";
+    }
 
     # read16
     for ^($elems - 1) -> int $i {
@@ -114,6 +128,22 @@ for @blobbufs -> \buffer, $name {
             is buffer.read-int16($i,$endian), make-int16(buffer,$i,$endian),
               "is $name $i int16 $endian correct";
         }
+    }
+    dies-ok { buffer.read-uint16(-1) }, "does $name uint16 -1 die";
+    dies-ok { buffer.read-int16(-1) },  "does $name int16 -1 die";
+    dies-ok { buffer.read-uint16($elems - 1) },
+      "does $name uint16 {$elems - 1} die";
+    dies-ok { buffer.read-int16($elems - 1) },
+      "does $name int16 {$elems - 1} die";
+    for native-endian, little-endian, big-endian -> $endian {
+        dies-ok { buffer.read-uint16(-1,$endian) },
+          "does $name uint16 -1 $endian die";
+        dies-ok { buffer.read-int16(-1,$endian) },
+          "does $name int16 -1 $endian die";
+        dies-ok { buffer.read-uint16($elems - 1,$endian) },
+          "does $name uint16 {$elems - 1} $endian die";
+        dies-ok { buffer.read-int16($elems - 1,$endian) },
+          "does $name int16 {$elems - 1} $endian die";
     }
 
     # read32
@@ -137,6 +167,22 @@ for @blobbufs -> \buffer, $name {
               "is $name $i int32 $endian correct";
         }
     }
+    dies-ok { buffer.read-uint32(-1) }, "does $name uint32 -1 die";
+    dies-ok { buffer.read-int32(-1) },  "does $name int32 -1 die";
+    dies-ok { buffer.read-uint32($elems - 3) },
+      "does $name uint32 {$elems - 3} die";
+    dies-ok { buffer.read-int32($elems - 3) },
+      "does $name int32 {$elems - 3} die";
+    for native-endian, little-endian, big-endian -> $endian {
+        dies-ok { buffer.read-uint32(-1,$endian) },
+          "does $name uint32 -1 $endian die";
+        dies-ok { buffer.read-int32(-1,$endian) },
+          "does $name int32 -1 $endian die";
+        dies-ok { buffer.read-uint32($elems - 3,$endian) },
+          "does $name uint32 {$elems - 3} $endian die";
+        dies-ok { buffer.read-int32($elems - 3,$endian) },
+          "does $name int32 {$elems - 3} $endian die";
+    }
 
     # read64
     for ^($elems - 7) -> int $i {
@@ -158,6 +204,22 @@ for @blobbufs -> \buffer, $name {
             is buffer.read-int64($i,$endian), make-int64(buffer,$i,$endian),
               "is $name $i int64 $endian correct";
         }
+    }
+    dies-ok { buffer.read-uint64(-1) }, "does $name uint64 -1 die";
+    dies-ok { buffer.read-int64(-1) },  "does $name int64 -1 die";
+    dies-ok { buffer.read-uint64($elems - 7) },
+      "does $name uint64 {$elems - 7} die";
+    dies-ok { buffer.read-int64($elems - 7) },
+      "does $name int64 {$elems - 7} die";
+    for native-endian, little-endian, big-endian -> $endian {
+        dies-ok { buffer.read-uint64(-1,$endian) },
+          "does $name uint64 -1 $endian die";
+        dies-ok { buffer.read-int64(-1,$endian) },
+          "does $name int64 -1 $endian die";
+        dies-ok { buffer.read-uint64($elems - 7,$endian) },
+          "does $name uint64 {$elems - 7} $endian die";
+        dies-ok { buffer.read-int64($elems - 7,$endian) },
+          "does $name int64 {$elems - 7} $endian die";
     }
 }
 
