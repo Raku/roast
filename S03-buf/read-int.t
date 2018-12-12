@@ -12,8 +12,7 @@ my @bufs = (
   Buf[uint8].new((^256).roll(19)),  'Buf[uint8]-random',
 );
 
-my constant my-NativeEndian =
-  blob8.new(1,0).read-int16(0) == 1 ?? LittleEndian !! BigEndian;
+my constant my-NativeEndian = Kernel.Endian;
 
 plan @bufs * 120;
 
