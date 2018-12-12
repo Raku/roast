@@ -8,7 +8,7 @@ my @bufs = (
   Buf[uint8].new((^256).roll(9)),  'Buf[uint8]-random',
 );
 
-my constant my-NativeEndian = Kernel.Endian;
+my constant my-NativeEndian = Kernel.endian;
 
 plan @bufs * 24;
 
