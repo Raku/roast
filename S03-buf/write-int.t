@@ -47,10 +47,11 @@ my @may-be-negative = (
   |@decreasing-per-byte,
 );
 
-plan @byte-widths * @positive * 192;
+plan @umethods / 4 + @byte-widths * @positive * 192;
 
 # run for all possible methods setting / returning unsigned values
 for @umethods -> $bytes, $mask, $write, $read {
+  dies-ok { buf8."$write"(0,42) }, "does buf8 $write 0 42 die";
 #  dies-ok { buf8.new."$write"(-1,42) },
 #    "does $write -1 42 die on uninited";
 #  dies-ok { buf8.new(255)."$write"(-1,42) },

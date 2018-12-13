@@ -10,7 +10,7 @@ my @bufs = (
 
 my constant my-NativeEndian = Kernel.endian;
 
-plan @bufs * 24;
+plan @bufs * 25;
 
 # run read tests for all blob8/buf8's
 for @bufs -> \buffer, $name {
@@ -28,7 +28,8 @@ for @bufs -> \buffer, $name {
               "is $name $i num32 $endian not 0";
         }
     }
-    dies-ok { buffer.read-num32(-1) },  "does $name num32 -1 die";
+    dies-ok { buffer.WHAT.read-num32(0) }, "does {buffer.^name} num32 0 die";
+    dies-ok { buffer.read-num32(-1) },      "does $name num32 -1 die";
     dies-ok { buffer.read-num32($elems - 3) },
       "does $name num32 {$elems - 3} die";
     for NativeEndian, LittleEndian, BigEndian -> $endian {
@@ -49,6 +50,7 @@ for @bufs -> \buffer, $name {
               "is $name $i num64 $endian not 0";
         }
     }
+    dies-ok { buffer.WHAT.read-num64(0) }, "does {buffer.^name} num64 0 die";
     dies-ok { buffer.read-num64(-1) }, "does $name num64 -1 die";
     dies-ok { buffer.read-num64($elems - 7) },
       "does $name num64 {$elems - 7} die";

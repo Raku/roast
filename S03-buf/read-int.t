@@ -14,7 +14,7 @@ my @bufs = (
 
 my constant my-NativeEndian = Kernel.endian;
 
-plan @bufs * 120;
+plan @bufs * 125.5;
 
 # first and last two of a range
 sub outer2(Range:D \range) { (|range.head(2),|range.tail(2)) }
@@ -106,6 +106,9 @@ for @bufs -> \buffer, $name {
               "is $name int8 $i $endian correct";
         }
     }
+    dies-ok { buffer.WHAT.read-int8(0) },  "does {buffer.WHAT} int8 -1 die";
+    dies-ok { buffer.WHAT.read-uint8(0) }, "does {buffer.WHAT} uint8 -1 die";
+    dies-ok { buffer.read-int8(-1) },  "does $name int8 -1 die";
     dies-ok { buffer.read-uint8(-1) }, "does $name uint8 -1 die";
     dies-ok { buffer.read-int8(-1) },  "does $name int8 -1 die";
     dies-ok { buffer.read-uint8($elems) }, "does $name uint8 $elems die";
@@ -142,6 +145,8 @@ for @bufs -> \buffer, $name {
               "is $name $i int16 $endian correct";
         }
     }
+    dies-ok { buffer.WHAT.read-int16(0) },  "does {buffer.^name} int16 -1 die";
+    dies-ok { buffer.WHAT.read-uint16(0) }, "does {buffer.^name} uint16 -1 die";
     dies-ok { buffer.read-uint16(-1) }, "does $name uint16 -1 die";
     dies-ok { buffer.read-int16(-1) },  "does $name int16 -1 die";
     dies-ok { buffer.read-uint16($elems - 1) },
@@ -180,6 +185,8 @@ for @bufs -> \buffer, $name {
               "is $name $i int32 $endian correct";
         }
     }
+    dies-ok { buffer.WHAT.read-int32(0) },  "does {buffer.^name} int32 -1 die";
+    dies-ok { buffer.WHAT.read-uint32(0) }, "does {buffer.^name} uint32 -1 die";
     dies-ok { buffer.read-uint32(-1) }, "does $name uint32 -1 die";
     dies-ok { buffer.read-int32(-1) },  "does $name int32 -1 die";
     dies-ok { buffer.read-uint32($elems - 3) },
@@ -218,6 +225,8 @@ for @bufs -> \buffer, $name {
               "is $name $i int64 $endian correct";
         }
     }
+    dies-ok { buffer.WHAT.read-int64(0) },  "does {buffer.^name} int64 -1 die";
+    dies-ok { buffer.WHAT.read-uint64(0) }, "does {buffer.^name} uint64 -1 die";
     dies-ok { buffer.read-uint64(-1) }, "does $name uint64 -1 die";
     dies-ok { buffer.read-int64(-1) },  "does $name int64 -1 die";
     dies-ok { buffer.read-uint64($elems - 7) },
@@ -256,6 +265,10 @@ for @bufs -> \buffer, $name {
               "is $name $i int128 $endian correct";
         }
     }
+    dies-ok { buffer.WHAT.read-int128(0) },
+      "does {buffer.^name} int128 -1 die";
+    dies-ok { buffer.WHAT.read-uint128(0) },
+      "does {buffer.^name} uint128 -1 die";
     dies-ok { buffer.read-uint128(-1) }, "does $name uint128 -1 die";
     dies-ok { buffer.read-int128(-1) },  "does $name int128 -1 die";
     dies-ok { buffer.read-uint128($elems - 15) },
