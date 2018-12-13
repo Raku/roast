@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 94;
+plan 95;
 
 {
     my int $x;
@@ -390,6 +390,13 @@ subtest 'meta-assign op with native nums' => {
     my int @a = 1,2,3;
     ok @a > 2,  'numification of int array works for > 2';
     nok @a < 3, 'numification of int array works for < 3';
+}
+
+# R#2525
+{
+    my int @a = 1,2,3;
+    my $i = 0;
+    throws-like { @a[$i-1] }, X::OutOfRange, 'do we check for negative indices';
 }
 
 # vim: ft=perl6
