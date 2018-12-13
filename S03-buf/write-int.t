@@ -3,7 +3,7 @@ use Test;
 
 # bit/byte widths tested
 my @endians = NativeEndian, LittleEndian, BigEndian;
-my @byte-widths = 1,2,4,8; #,16;
+my @byte-widths = 1,2,4,8,16;
 my @bit-widths  = @byte-widths.map: * * 8;
 
 # set up some patterns
@@ -22,9 +22,12 @@ my @umethods = @bit-widths.map: {
 }
 
 # set up method data: byte-width, mask, write-intX, read-intX
-my @methods  = @bit-widths.map: {
+my @imethods = @bit-widths.map: {
     |($_ / 8, 1 +< $_ - 1, "write-int$_","read-int$_")
 }
+
+# all method data
+my @methods = |@umethods, |@imethods;
 
 # values that should always yield a positive result with read-intX()
 my @positive = (
@@ -43,7 +46,6 @@ my @may-be-negative = (
   |@increasing-per-byte,
   |@decreasing-per-byte,
 );
-my @values = |@positive, |@may-be-negative;
 
 plan @byte-widths * @positive * 192;
 
@@ -62,10 +64,13 @@ for @umethods -> $bytes, $mask, $write, $read {
   }
 
   # run for a set or predetermined and random values
-  for @positive -> $value {
-    my \existing := buf8.new(0 xx (@byte-widths[*-1] + 8));
+  for @positive -> $value is copy {
+
+    # make sure we never exceed 64 int values for 8,16,32,64 bit read/write
+    $value +&= 1 +< 63 - 1 if $bytes != 16;
     
     # values to test against
+    my \existing := buf8.new(0 xx (@byte-widths[*-1] + 8));
     my $elems    := existing.elems;
     my $returned := $value +& $mask;
 
