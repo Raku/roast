@@ -106,8 +106,8 @@ for @bufs -> \buffer, $name {
               "is $name int8 $i $endian correct";
         }
     }
-    dies-ok { buffer.WHAT.read-int8(0) },  "does {buffer.WHAT} int8 -1 die";
-    dies-ok { buffer.WHAT.read-uint8(0) }, "does {buffer.WHAT} uint8 -1 die";
+    dies-ok { buffer.WHAT.read-int8(0) },  "does {buffer.WHAT} int8 0 die";
+    dies-ok { buffer.WHAT.read-uint8(0) }, "does {buffer.WHAT} uint8 0 die";
     dies-ok { buffer.read-int8(-1) },  "does $name int8 -1 die";
     dies-ok { buffer.read-uint8(-1) }, "does $name uint8 -1 die";
     dies-ok { buffer.read-int8(-1) },  "does $name int8 -1 die";
@@ -145,8 +145,8 @@ for @bufs -> \buffer, $name {
               "is $name $i int16 $endian correct";
         }
     }
-    dies-ok { buffer.WHAT.read-int16(0) },  "does {buffer.^name} int16 -1 die";
-    dies-ok { buffer.WHAT.read-uint16(0) }, "does {buffer.^name} uint16 -1 die";
+    dies-ok { buffer.WHAT.read-int16(0) },  "does {buffer.^name} int16 0 die";
+    dies-ok { buffer.WHAT.read-uint16(0) }, "does {buffer.^name} uint16 0 die";
     dies-ok { buffer.read-uint16(-1) }, "does $name uint16 -1 die";
     dies-ok { buffer.read-int16(-1) },  "does $name int16 -1 die";
     dies-ok { buffer.read-uint16($elems - 1) },
@@ -185,8 +185,8 @@ for @bufs -> \buffer, $name {
               "is $name $i int32 $endian correct";
         }
     }
-    dies-ok { buffer.WHAT.read-int32(0) },  "does {buffer.^name} int32 -1 die";
-    dies-ok { buffer.WHAT.read-uint32(0) }, "does {buffer.^name} uint32 -1 die";
+    dies-ok { buffer.WHAT.read-int32(0) },  "does {buffer.^name} int32 0 die";
+    dies-ok { buffer.WHAT.read-uint32(0) }, "does {buffer.^name} uint32 0 die";
     dies-ok { buffer.read-uint32(-1) }, "does $name uint32 -1 die";
     dies-ok { buffer.read-int32(-1) },  "does $name int32 -1 die";
     dies-ok { buffer.read-uint32($elems - 3) },
@@ -225,8 +225,8 @@ for @bufs -> \buffer, $name {
               "is $name $i int64 $endian correct";
         }
     }
-    dies-ok { buffer.WHAT.read-int64(0) },  "does {buffer.^name} int64 -1 die";
-    dies-ok { buffer.WHAT.read-uint64(0) }, "does {buffer.^name} uint64 -1 die";
+    dies-ok { buffer.WHAT.read-int64(0) },  "does {buffer.^name} int64 0 die";
+    dies-ok { buffer.WHAT.read-uint64(0) }, "does {buffer.^name} uint64 0 die";
     dies-ok { buffer.read-uint64(-1) }, "does $name uint64 -1 die";
     dies-ok { buffer.read-int64(-1) },  "does $name int64 -1 die";
     dies-ok { buffer.read-uint64($elems - 7) },
