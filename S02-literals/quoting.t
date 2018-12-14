@@ -383,6 +383,7 @@ Hello, World
     is Qs:b{\n},  "\n",   'Qs:b';
 }
 
+#?rakudo.js.browser skip "can't run shell commands in browser"
 # q:x
 {
     # due to automatic newline translation, no need to check for \r\n on win32
@@ -391,17 +392,20 @@ Hello, World
 }
 # utf8
 
+#?rakudo.js.browser skip "can't run shell commands in browser"
 {
     # 一 means "One" in Chinese.
     $*DISTRO.is-win and q:x/chcp 65001/; # set utf8 on cmd.exe
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
 
+#?rakudo.js.browser skip "can't run shell commands in browser"
 {
     my $world = 'world';
     ok qq:x/echo hello $world/ ~~ /^'hello world'\n$/, 'Testing qq:x operator';
 }
 
+#?rakudo.js.browser skip "can't run shell commands in browser"
 {
     my $output = $*DISTRO.is-win
         ?? q:x/echo hello& echo world/
@@ -410,6 +414,7 @@ Hello, World
     is @two_lines, ["hello", "world"], 'testing q:x assigned to array';
 }
 
+#?rakudo.js.browser skip "can't run shell commands in browser"
 {
     my $hello = 'howdy';
     my $sep = $*DISTRO.is-win ?? '&' !! ';';
@@ -514,6 +519,7 @@ Hello, World
       'g does not make sense on rx//';
 }
 
+#?rakudo.js.browser skip "can't run shell commands in browser"
 {
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';
@@ -524,6 +530,7 @@ Hello, World
     is qx/echo world/.trans('wd' => 'WD').chomp, "WorlD", "qx doesn't return a Parrot string";
 }
 
+#?rakudo.js.browser skip "can't run shell commands in browser"
 # RT #120529
 {
     %*ENV<ENV_P6_SPECTEST_120529>='foo';
@@ -651,11 +658,13 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
     'fancy quotes in qww work just like regular quotes';
 }
 
+#?rakudo.js.browser skip "can't run shell commands in browser"
 {
     is_run 'qx=' ~ $*EXECUTABLE ~  ' -e 42.note=',
         {:err("42\n"), :out(''), :0status}, 'qx passes STDERR through';
 }
 
+#?rakudo.js.browser skip "can't run shell commands in browser"
 # https://irclog.perlgeek.de/perl6-dev/2017-06-16#i_14744333
 {
     diag 'The following test might STDERR about unfound command';
