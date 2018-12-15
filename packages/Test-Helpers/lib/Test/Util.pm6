@@ -419,6 +419,29 @@ sub throws-like-any($code, @ex_type, $reason?, *%matcher) is export {
     }, $reason // "did we throws-like @ex_type.map(*.^name)?";
 }
 
+sub make-test-dist(%meta6 --> Distribution) is export {
+    my $dist-dir = make-temp-dir;
+    $dist-dir.IO.child('META6.json').spurt(%meta6.to-json);
+
+    for %meta6<provides>.grep(*.defined) {
+        my $to = $dist-dir.IO.child(.value) andthen {.parent.mkdir unless .parent.e}
+        $to.spurt: (qq|unit module {.key}; | ~ q|our sub source-file is export { $?FILE }; our sub resources is export { %?RESOURCES };|);
+    }
+
+    for %meta6<resources>.grep(*.defined) -> $path {
+        my $resources-dir = $dist-dir.child('resources');
+        my $to = $path ~~ m/^libraries\/(.*)/
+            ?? $resources-dir.add('libraries').add( $*VM.platform-library-name($0.Str.IO) )
+            !! $resources-dir.add($path);
+        $to.parent.mkdir unless $to.parent.e;
+        $to.spurt: (qq|resource|);
+    }
+
+    my $dist = Distribution::Path.new($dist-dir);
+
+    return $dist;
+}
+
 =begin pod
 
 =head1 NAME
@@ -691,6 +714,15 @@ the order/content of pulled values.
 
 Same C<throws-like> except takes a C<Positional> for exception types and
 the test passes if any of those exceptions are thrown.
+
+=head2 make-test-dist(%meta6)
+
+    sub make-test-dist (%meta6 --> Distribution)
+
+Creates a C<CompUnit::Repository::FileSystem> compatible C<Distribution::Path>
+and an on-disk representation. It uses the module names, module paths, and resources as
+declared in C<%meta6>. Each generated module will export a subroutine C<source-file> which
+will return its C<$?FILE>, and a subroutine C<resources> which will return its C<%?RESOURCES>.
 
 =end pod
 
