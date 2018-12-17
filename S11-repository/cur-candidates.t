@@ -189,6 +189,12 @@ subtest 'Basic recommendation manager queries' => {
                     ok $repo.install($dist);
                     is $repo.candidates($cu-depspec).elems, 1;
                     ok $repo.resolve($cu-depspec);
+
+                    is $repo.files('bin/my-script').elems, 1;
+
+                    my $proc = run :out, $*EXECUTABLE, '-I', $repo.path-spec, '-e', 'CompUnit::RepositoryRegistry.run-script("my-script")', 'config.txt';
+                    is $proc.exitcode, 0;
+                    ok $proc.out.slurp(:close).ends-with('.txt'); # filename will be SOMEHASH.txt so jut check for the extension
                 }
             }
         }
