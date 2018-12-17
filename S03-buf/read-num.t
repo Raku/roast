@@ -19,12 +19,12 @@ for @bufs -> \buffer, $name {
     # read32
     # use "try" until MoarVM #1020 is fixed
     for ^($elems - 3) -> int $i {
-        ok try buffer.read-num32($i), "is $name $i num32 not 0";
-        ok try buffer.read-num32($i,NativeEndian),
+        ok buffer.read-num32($i), "is $name $i num32 not 0";
+        ok buffer.read-num32($i,NativeEndian),
           "is $name $i num32 NativeEndian not 0";
 
         for LittleEndian, BigEndian -> $endian {
-            ok try buffer.read-num32($i,$endian),
+            ok buffer.read-num32($i,$endian),
               "is $name $i num32 $endian not 0";
         }
     }
