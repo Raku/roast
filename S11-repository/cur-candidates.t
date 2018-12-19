@@ -4,9 +4,6 @@ use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
 
-todo 'Requires https://github.com/rakudo/rakudo/pull/1812';
-
-
 my sub dependencyspecification(%_) {
     CompUnit::DependencySpecification.new(
         short-name      => %_<name>,
