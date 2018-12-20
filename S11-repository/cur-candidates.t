@@ -78,7 +78,6 @@ subtest 'Basic recommendation manager queries' => {
         is $cur2.candidates(dependencyspecification(%( :name<XXX>, :api<2> ))).elems, 1;
 
         isnt $cur1.candidates(dependencyspecification(%( :name<XXX>, :api<1> ))).head.meta<api>, $cur2.candidates(dependencyspecification(%( :name<XXX>, :api<2> ))).head.meta<api>;
-        nok $cur1.candidates(dependencyspecification(%( :name<XXX>, :api<1> ))).head eqv $cur2.candidates(dependencyspecification(%( :name<XXX>, :api<2> ))).head;
     }
 
     subtest 'CompUnit::Repository::Installation' => {
