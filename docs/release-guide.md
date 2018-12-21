@@ -66,6 +66,10 @@ have a fairly good idea of what changes to their code they would have to make we
 their compiler from one that supports previous language version to the one that supports the
 one we're releasing.
 
+### VERSION File
+
+Be sure to update the spec version in the [`VERSION` file](https://github.com/perl6/roast/blob/master/VERSION).
+
 ### Fudges
 
 Fudges that fudge only particular implementations/VMs are OK to go into the release, however
