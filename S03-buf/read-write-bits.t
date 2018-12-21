@@ -1,22 +1,33 @@
 use v6;
 
-BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = 1;
+#BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = 1;
 use Test;
 
 # initialize blobs
 my @pattern = 0x12,0x34,0x56,0x78,0x9a,0xbc,0xde,0xf0,0x12;
 my @testdata = (
-  blob8.new(@pattern),  buf8.new(@pattern),  "pattern",
-  blob8.new(  0 xx 17), buf8.new(  0 xx 17), "zeroes",
-  blob8.new(255 xx 17), buf8.new(255 xx 17), "ones",
+  blob8.new(@pattern), buf8.new(@pattern), "pattern",
+  blob8.new(  0 xx 9), buf8.new(  0 xx 9), "zeroes",
+  blob8.new(255 xx 9), buf8.new(255 xx 9), "ones",
 );
 my @positions = 0..7;
 my @bits      = 1..65;
 
-plan (@testdata / 3) * @positions * @bits;
+plan (@testdata / 3) * (2 * 4 + 2 * 1 + @positions * @bits);
 
 for @testdata -> \blob, \buf, $name {
     my $sbits = blob.list.fmt(q:c/%08b/,"");
+
+    for <read-ubits read-bits> -> $method {
+        dies-ok { blob."$method"(-1,24) }, "$method -1 on blob $name fails";
+        dies-ok { buf."$method"(-1,24)  }, "$method -1 on buf $name fails";
+        dies-ok { blob."$method"(72,1) },  "$method 72,1 on blob $name fails";
+        dies-ok { buf."$method"(72,1)  },  "$method 72,1 on buf $name fails";
+    }
+
+    for <write-ubits write-bits> -> $method {
+        dies-ok { buf."$method"(-1,1,1)  },  "$method -1 on buf $name fails";
+    }
 
     for 0..7 -> int $from {
         for 1..65 -> Int $bits {
