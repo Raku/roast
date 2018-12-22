@@ -338,10 +338,15 @@ subtest 'types whose .Capture behaves like Mu.Capture' => {
         with run «"$*EXECUTABLE" -e ' '»;
 }
 
+#?rakudo.js.browser skip 'opening temporary files does not work in the browser'
+#?DOES 2
+{
     with %(:chomp, :encoding("utf8"), :nl-out("\n")) {
         make-temp-file.open(:w).&has-nameds: $_;
         IO::CatHandle.new(make-temp-file :content<foo>).&has-nameds: $_;
     }
+}
+
 }
 
 # Capture duplicate named elimination.

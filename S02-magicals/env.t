@@ -19,6 +19,7 @@ child processes see the modified C<%*ENV>.
 
 =end desc
 
+#?rakudo.js.browser skip "in the browser we start with no env variables"
 # It must not be empty at startup.
 ok +%*ENV.keys, '%*ENV has keys';
 
