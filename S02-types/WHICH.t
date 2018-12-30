@@ -37,7 +37,6 @@ my @normal = <
   Exception
   Failure
   FatRat
-  ForeignCode
   Grammar
   Hash
   HyperConfiguration
