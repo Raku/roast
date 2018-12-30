@@ -1,0 +1,13 @@
+{
+    "perl"        : "6.c",
+    "name"        : "CurrentDistributionTwo",
+    "description" : "Like CurrentDistributionOne, but also depends on CurrentDistributionOne and its $?DISTRIBUTION",
+    "depends"     : [ "CurrentDistributionOne" ],
+    "provides"    : {
+        "CurrentDistributionTwo" : "lib/CurrentDistributionTwo.pm6"
+    },
+    "resources" : [
+        "foo.txt"
+    ]
+}
+
