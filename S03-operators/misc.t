@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 75;
+plan 78;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -215,6 +215,16 @@ subtest 'does works with non-roles' => {
     my $mod = my class Bars {}.new;
     $o does $mod;
     is-deeply $o.Bars, $mod, '`does` a custom class adds method from .^name';
+}
+
+# R#2568
+{
+    is-deeply 3 ~ ( 5 | "18" ), any("35","318"),
+      "does a junction survive ~ Junction";
+    is-deeply ( 5 | "18" ) ~ 3, any("53","183"),
+      "does a junction survive Junction ~";
+    is-deeply ( 5 | "18" ) ~ ( 3 | 6), any("53","56","183",186),
+      "does a junction survive Junction ~ Junction";
 }
 
 # vim: ft=perl6
