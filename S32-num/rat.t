@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 856;
+plan 859;
 
 # Basic test functions specific to rational numbers.
 
@@ -617,6 +617,13 @@ group-of 4 => 'no funny business in stringification of huge Rationals' => {
     is        Rat.new(10⁴⁰⁰, 9⁹⁹⁹).gist, '0',   '   Rat.new(10⁴⁰⁰, 9⁹⁹⁹).gist';
     unlike FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).Str,  /Inf/, 'FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).Str';
     unlike FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).gist, /Inf/, 'FatRat.new(10⁴⁰⁰, 9⁹⁹⁹).gist';
+}
+
+# R#2578
+{
+    is-deeply 1/0 == 1/3, False, 'Inf == 1/3 should be false';
+    is-deeply 1/3 == 1/0, False, '1/3 == Inf should be false';
+    is-deeply 0/9 == 0/0, False, '0/0 == 0/0 should be false';
 }
 
 # vim: ft=perl6
