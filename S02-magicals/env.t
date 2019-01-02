@@ -105,6 +105,7 @@ throws-like { EVAL "%ENV" },
 }
 
 # RT #125953
+#?rakudo.js.browser skip "spawning a new process in a browser doesn't work"
 {
     %*ENV<FOOBAR> = 1;
     lives-ok { run($*EXECUTABLE, '-v') },
