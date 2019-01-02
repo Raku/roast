@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 39;
 
 # L<S02/Names/"The following pseudo-package names are reserved">
 {
@@ -164,6 +164,21 @@ plan 38;
     s(9);/ },
     X::Redeclaration::Outer,
     "can't redeclare something with an implicit outer binding";
+}
+
+# https://github.com/rakudo/rakudo/issues/2570
+{
+  throws-like { EVAL q/
+    sub s($i is copy) {
+        my @array;
+        for 1..3 {
+            @array.push($i);
+            my ($i) = 1;
+        }
+    };
+    s(9);/ },
+    X::Redeclaration::Outer,
+    "can't redeclare something with an implicit outer binding with signature form";
 }
 
 {
