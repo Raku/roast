@@ -63,6 +63,7 @@ plan 66;
         'Encoding back to utf8-c8 round-trips';
 }
 
+#?rakudo.js.browser skip "slurp doesn't work in the browser"
 {
     my $test-file := make-temp-path content => Buf.new:
         ord('A'), 0xFA, ord('B'), 0xFB, 0xFC, ord('C'), 0xFD;
