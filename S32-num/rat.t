@@ -623,7 +623,7 @@ group-of 4 => 'no funny business in stringification of huge Rationals' => {
 {
     is-deeply 1/0 == 1/3, False, 'Inf == 1/3 should be false';
     is-deeply 1/3 == 1/0, False, '1/3 == Inf should be false';
-    is-deeply 0/9 == 0/0, False, '0/0 == 0/0 should be false';
+    is-deeply 0/0 == 0/0, False, '0/0 == 0/0 should be false';
 }
 
 # vim: ft=perl6
