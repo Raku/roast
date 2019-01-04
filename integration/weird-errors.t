@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 32;
+plan 33;
 
 # this used to segfault in rakudo
 is_run(
@@ -248,3 +248,7 @@ is (^1000 .grep: -> $n {([+] ^$n .grep: -> $m {$m and $n %% $m}) == $n }), (0, 6
 # https://irclog.perlgeek.de/perl6/2017-04-18#i_14443061
 is_run ｢class Foo {}; $ = new Foo:｣, {:out(''), :err(''), :0status },
     'new Foo: calling form does not produce unwanted output';
+
+# R#2486
+is_run ｢sub f1 { hash a=>1 }; f1 for ^100000｣, {:out(''), :err(''), :0status },
+    'no segfault when using `hash` in a function';
