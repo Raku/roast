@@ -30,9 +30,7 @@ throws-like { Instant.new(123) }, X::Cannot::New, 'Instant.new is illegal';
     my $d = $t1 - $t0;
 
     ok $t0 < $t1, 'later Instants are greater';
-    throws-like { $t0 + $t1 },
-      X::Multi::Ambiguous,
-      'Instant + Instant is illegal';
+    dies-ok { $t0 + $t1 }, 'Instant + Instant is illegal';
     isa-ok $d, Duration, 'Instant - Instant ~~ Duration';
     ok $d ~~ Real, 'Durations are Real';
     isa-ok $d + $t0, Instant, 'Instant + Duration ~~ Instant';
