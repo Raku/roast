@@ -254,17 +254,19 @@ is_run ｢sub f1 { hash a=>1 }; f1 for ^100000｣, {:out(''), :err(''), :0status
     'no segfault when using `hash` in a function';
 
 # https://github.com/rakudo/rakudo/issues/1886
-sub foo($x, $y) { True };
-sub bar($x, $y, $w) {
-    {
-        my int $x2 = 1;
-        my int $y2 = 2;
-        if foo($x, $y) == foo($x, $y2) == foo($x2, $y2) == foo($x2, $y) {
-            2;
-        } else {
-            1
+{
+    sub foo($x, $y) { True };
+    sub bar($x, $y, $w) {
+        {
+            my int $x2 = 1;
+            my int $y2 = 2;
+            if foo($x, $y) == foo($x, $y2) == foo($x2, $y2) == foo($x2, $y) {
+                2;
+            } else {
+                1
+            }
         }
     }
-}
 
-is bar(1, 2, 25), 2, 'no miscompilation issue with chain ops';
+    is bar(1, 2, 25), 2, 'no miscompilation issue with chain ops';
+}
