@@ -12,10 +12,10 @@ is unival(""), Nil, "unival an empty string yields Nil";
 is univals(""), (), "univals an empty string yields an empty list";
 is "".unival, Nil, "''.unival yields Nil";
 is "".univals, (), "''.univals yields an empty list";
-throws-like "unival Str", X::Multi::NoMatch, 'cannot call unival with a Str';
-throws-like "Str.unival", X::Multi::NoMatch, 'cannot call unival with a Str';
-throws-like "unival Int", X::Multi::NoMatch, 'cannot call unival with a Int';
-throws-like "Int.unival", X::Multi::NoMatch, 'cannot call unival with a Int';
+dies-ok { unival Str }, 'cannot call unival with a Str';
+dies-ok { Str.unival }, 'cannot call unival with a Str';
+dies-ok { unival Int }, 'cannot call unival with a Int';
+dies-ok { Int.unival }, 'cannot call unival with a Int';
 
 is unival(0x30).WHAT.gist, '(Int)', "0x30 is Int";
 is unival(0x30), 0, "0x30 has numeric value 0";
