@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 33;
+plan 34;
 
 # this used to segfault in rakudo
 is_run(
@@ -249,6 +249,22 @@ is (^1000 .grep: -> $n {([+] ^$n .grep: -> $m {$m and $n %% $m}) == $n }), (0, 6
 is_run ｢class Foo {}; $ = new Foo:｣, {:out(''), :err(''), :0status },
     'new Foo: calling form does not produce unwanted output';
 
-# R#2486
+# https://github.com/rakudo/rakudo/issues/2486
 is_run ｢sub f1 { hash a=>1 }; f1 for ^100000｣, {:out(''), :err(''), :0status },
     'no segfault when using `hash` in a function';
+
+# https://github.com/rakudo/rakudo/issues/1886
+sub foo($x, $y) { True };
+sub bar($x, $y, $w) {
+    {
+        my int $x2 = 1;
+        my int $y2 = 2;
+        if foo($x, $y) == foo($x, $y2) == foo($x2, $y2) == foo($x2, $y) {
+            2;
+        } else {
+            1
+        }
+    }
+}
+
+is bar(1, 2, 25), 2, 'no miscompilation issue with chain ops';
