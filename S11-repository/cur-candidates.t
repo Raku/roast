@@ -195,6 +195,12 @@ subtest 'Basic recommendation manager queries' => {
             }
         }
     }
+
+    subtest 'Distribution::Resource:U can be stringified', {
+        lives-ok { Distribution::Resource.gist }, 'Can get .gist';
+        lives-ok { Distribution::Resource.Str  }, 'Can get .Str';
+        lives-ok { Distribution::Resource.perl }, 'Can get .perl';
+    };
 }
 
 
