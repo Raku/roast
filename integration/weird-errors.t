@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 34;
+plan 35;
 
 # this used to segfault in rakudo
 is_run(
@@ -270,3 +270,7 @@ is_run ｢sub f1 { hash a=>1 }; f1 for ^100000｣, {:out(''), :err(''), :0status
 
     is bar(1, 2, 25), 2, 'no miscompilation issue with chain ops';
 }
+
+# https://github.com/rakudo/rakudo/issues/1374
+is_run ｢class Foo {}; -> Foo() $x { $x.say }("42")｣, {:out(''), :err(*), :1status },
+    'no segfault when using coercers';
