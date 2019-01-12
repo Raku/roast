@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 12;
+plan 15;
 
 =begin desc
 
@@ -82,3 +82,30 @@ is_run( 'sub mention-me() { take 1; }; mention-me',
           err    => rx/'mention-me'/,
         },
         'take without gather error mentions location' );
+
+# Custom control exceptions achievable by doing `X::Control`.
+{
+    my class CX::Whatever does X::Control {
+        method message { "<whatever control exception>" }
+    }
+
+    my @controls;
+    my @catches;
+    do {
+        CX::Whatever.new.throw;
+        CONTROL {
+            default {
+                push @controls, $_;
+            }
+        }
+        CATCH {
+            default {
+                push @catches, $_;
+            }
+        }
+    }
+
+    is @controls.elems, 1, 'Exception doing X::Control caught by CONTROL block';
+    is @catches.elems, 0, 'Exception doing X::Control not caught by CATCH block';
+    isa-ok @controls[0], CX::Whatever, 'Correct control exception type';
+}
