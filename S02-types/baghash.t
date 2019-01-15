@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 304;
+plan 308;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -413,6 +413,16 @@ sub showkv($x) {
     isnt @a.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) returns elements in a random order';
     is $b.total, 0, '.grabpairs *should* change BagHash';
     is $b.elems, 0, '.grabpairs *should* change BagHash';
+}
+
+{
+    my $b = BagHash[Str].new( <a b c> );
+    is-deeply $b.keys.sort.List, <a b c>, 'can we parameterize for strings?';
+    ok BagHash[Str].keyof =:= Str, 'does .keyof return the correct type';
+    throws-like { $b{42} = 1 }, X::TypeCheck::Binding,
+      'does attempt to add item of wrong type croak';
+    throws-like { BagHash[Int].new( <a b c> ) }, X::TypeCheck::Binding,
+      'do wrong values make initialization croak';
 }
 
 # RT #124490

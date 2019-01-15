@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test;
 
-plan 270;
+plan 274;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -577,6 +577,16 @@ group-of 10 => 'MixHash autovivification of non-existent keys' => {
       throws-like { MixHash.new-from-pairs($pair) }, ex,
         "MixHash.new-from-pairs( ($pair.perl()) ) throws";
     }
+}
+
+{
+    my $m = MixHash[Str].new( <a b c> );
+    is-deeply $m.keys.sort.List, <a b c>, 'can we parameterize for strings?';
+    ok MixHash[Str].keyof =:= Str, 'does .keyof return the correct type';
+    throws-like { $m{42} = 1 }, X::TypeCheck::Binding,
+      'does attempt to add item of wrong type croak';
+    throws-like { MixHash[Int].new( <a b c> ) }, X::TypeCheck::Binding,
+      'do wrong values make initialization croak';
 }
 
 # RT #131561

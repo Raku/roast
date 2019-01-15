@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 258;
+plan 262;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -440,6 +440,16 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
     is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
+}
+
+{
+    my $s = SetHash[Str].new( <a b c> );
+    is-deeply $s.keys.sort.List, <a b c>, 'can we parameterize for strings?';
+    ok SetHash[Str].keyof =:= Str, 'does .keyof return the correct type';
+    throws-like { $s{42} = 1 }, X::TypeCheck::Binding,
+      'does attempt to add item of wrong type croak';
+    throws-like { SetHash[Int].new( <a b c> ) }, X::TypeCheck::Binding,
+      'do wrong values make initialization croak';
 }
 
 # RT #125611
