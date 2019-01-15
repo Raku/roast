@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 224;
+plan 227;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -405,6 +405,14 @@ sub showkv($x) {
     is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
     is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
+}
+
+{
+    is-deeply Mix[Str].new( <a b c> ).keys.sort.List, <a b c>,
+      'can we parameterize for strings?';
+    ok Mix[Str].keyof =:= Str, 'does .keyof return the correct type';
+    throws-like { Mix[Int].new( <a b c> ) }, X::TypeCheck::Binding,
+      'do wrong values make initialization croak';
 }
 
 # RT #124454

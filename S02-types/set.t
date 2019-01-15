@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 226;
+plan 229;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -487,6 +487,14 @@ subtest '.hash does not cause keys to be stringified' => {
       'coercion of object Hash to Set 1';
     is-deeply :{ 42 => "a", 666 => "" }.Set,   42.Set,
       'coercion of object Hash to Set 2';
+}
+
+{
+    is-deeply Set[Str].new( <a b c> ).keys.sort.List, <a b c>,
+      'can we parameterize for strings?';
+    ok Set[Str].keyof =:= Str, 'does .keyof return the correct type';
+    throws-like { Set[Int].new( <a b c> ) }, X::TypeCheck::Binding,
+      'do wrong values make initialization croak';
 }
 
 {
