@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -87,6 +87,15 @@ plan 14;
 # RT #79174
 {
     is (1,2, if 3), "1 2", "if is a terminator even after comma";
+}
+
+# https://github.com/rakudo/rakudo/issues/2601
+{
+    my $res;
+    for 1..3 {
+        { $res = $_; last } if $_ == 2;
+    }
+    is $res, 2, 'Correct handling of $_ in block to left of statement modifer if';
 }
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 10;
 
 # test the unless statement modifier
 
@@ -52,6 +52,15 @@ plan 9;
 # RT #79174
 {
     is (1,2, unless 0), "1 2", "unless is a terminator even after comma";
+}
+
+# https://github.com/rakudo/rakudo/issues/2601
+{
+    my $res;
+    for 1..3 {
+        { $res = $_; last } unless $_ != 2;
+    }
+    is $res, 2, 'Correct handling of $_ in block to left of statement modifer unless';
 }
 
 # vim: ft=perl6
