@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 # L<S04/The do-once loop/"can't" put "statement modifier">
 # Note in accordance with STD, conditionals are OK, loops are not.
@@ -159,5 +159,11 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 }
 
 lives-ok { my $a = do given 5 {} }, 'empty do block lives (RT #61034)';
+
+# https://github.com/rakudo/rakudo/issues/2601
+{
+    $_ = 101;
+    is (do if 42 { $_ }), 101, 'Correct $_ value visible inside do if 42 { ... } construct';
+}
 
 # vim: ft=perl6
