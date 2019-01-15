@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test;
 
-plan 269;
+plan 270;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -322,17 +322,17 @@ sub showkv($x) {
     is $m.elems, 0, '.grabpairs *should* change MixHash';
 }
 
-#?rakudo skip "'is TypeObject' NYI RT #124490"
+# RT #124490
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
     nok %h<b>:exists, '"b", initialized to zero, does not exist';
     is +%h.keys, 2, 'Inititalization worked';
-    is %h.elems, 3, '.elems works';
+    is %h.elems, 2, '.elems works';
     isa-ok %h<nonexisting>, Int, '%h<nonexisting> is an Int';
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
-#?rakudo skip "'is TypeObject' NYI RT #124490"
+# RT #124490
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
 
@@ -345,7 +345,7 @@ sub showkv($x) {
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
-#?rakudo skip "'is TypeObject' NYI RT #124490"
+# RT #124490
 {
     my %h is MixHash = a => 1, c => 1;
 
@@ -358,9 +358,10 @@ sub showkv($x) {
     nok %h<a>:exists, 'item is gone according to exists too';
     is %h<a>, 0, 'removed item is zero';
 
-    lives-ok { %h<a>-- }, 'remove a missing item lives';
-    is %h.keys, ('c'), 'removing missing item does not change contents';
-    is %h<a>, 0, 'item removed again is still zero';
+    is %h<a>--, 0, 'going negative returns 0';
+    ok %h<a>:exists, 'item exists too';
+    is %h.keys.sort, <a c>, 'going negative adds the item';
+    is %h<a>, -1, 'item now at -1';
 }
 
 {

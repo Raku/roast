@@ -415,17 +415,17 @@ sub showkv($x) {
     is $b.elems, 0, '.grabpairs *should* change BagHash';
 }
 
-#?rakudo skip "'is TypeObject' NYI RT #124490"
+# RT #124490
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
     nok %h<b>:exists, '"b", initialized to zero, does not exist';
     is +%h.keys, 2, 'Inititalization worked';
-    is %h.elems, 3, '.elems works';
+    is %h.elems, 2, '.elems works';
     isa-ok %h<nonexisting>, Int, '%h<nonexisting> is an Int';
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
-#?rakudo skip "'is TypeObject' NYI RT #124490"
+# RT #124490
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
 
@@ -438,7 +438,7 @@ sub showkv($x) {
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
-#?rakudo skip "'is TypeObject' NYI RT #124490"
+# RT #124490
 {
     my %h is BagHash = a => 1, c => 1;
 

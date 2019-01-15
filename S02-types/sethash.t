@@ -378,7 +378,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.elems, 0, '.grabpairs *should* change the SetHash';
 }
 
-#?rakudo skip "'is TypeObject' NYI RT #124490"
+# RT #124490"
 {
     my %h is SetHash = a => True, b => False, c => True;
     is +%h.elems, 2, 'Inititalization worked';
@@ -397,7 +397,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     %h<b>--;
     is ~%h.keys, 'c', '... but only if they were there from the beginning';
 
-    lives-ok { %h = set <Q P R> }, 'Assigning a Set to a SetHash';
+    lives-ok { %h = <Q P R> }, 'Assigning a List to a SetHash';
     is %h.keys.sort.join, 'PQR', '... works as expected';
 }
 
@@ -540,7 +540,7 @@ for SetHash, BagHash, MixHash -> \T {
       'Can use $_ from .values to remove items from SetHash (2)';
 }
 
-#?rakudo.moar skip 'this behavior upsets uthash, https://github.com/MoarVM/MoarVM/issues/603'
+# M#603
 {
     my $sh = <a>.SetHash;
     for $sh.values { $_ = 0; $_ = 1 }
@@ -560,7 +560,7 @@ for SetHash, BagHash, MixHash -> \T {
       'Can use value from .kv to remove items from SetHash (2)';
 }
 
-#?rakudo.moar skip 'this behavior upsets uthash, https://github.com/MoarVM/MoarVM/issues/603'
+# M#603
 {
     my $sh = <a>.SetHash;
     for $sh.kv -> \k, \v { v = 0; v = 1 }
@@ -580,7 +580,7 @@ for SetHash, BagHash, MixHash -> \T {
       'Can use $_ from .pairs to remove items from SetHash (2)';
 }
 
-#?rakudo.moar skip 'this behavior upsets uthash, https://github.com/MoarVM/MoarVM/issues/603'
+# M#603'
 {
     my $sh = <a>.SetHash;
     for $sh.pairs { .value = 0; .value = 1 }
