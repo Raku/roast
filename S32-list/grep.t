@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 45;
+plan 46;
 
 my @list = (1 .. 10);
 
@@ -182,5 +182,9 @@ my @list = (1 .. 10);
     is-deeply @has.hyper.grep(/$w/).List,      @wanted, 'hyper, w/  shared var';
   }
 }
+
+# https://github.com/rakudo/rakudo/issues/2614
+is-deeply ("foo").grep({ /foo/ }), ("foo",),
+    'Block returning a regex to grep will Do The Right Thing, dubious as it is';
 
 # vim: ft=perl6
