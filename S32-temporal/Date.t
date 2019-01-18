@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 120;
+plan 124;
 
 # construction
 {
@@ -252,3 +252,17 @@ is Date.today.clone(:formatter{'test is good'}).Str, 'test is good',
     'Date.clone can take a formatter';
 is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
     'Date.clone without formatter uses default formatter';
+
+# R#2615
+{
+    class Dated is Date { }
+    my $date = Dated.new('2019-01-18');
+    # first time .succ is called, $!daycount is not initialized yet
+    is $date.succ, '2019-01-19', "does .succ work on on Date subclasses $_"
+      for ^2;
+
+    $date = Dated.new('2019-01-18');
+    # first time .pred is called, $!daycount is not initialized yet
+    is $date.pred, '2019-01-17', "does .pred work on on Date subclasses $_"
+      for ^2;
+}
