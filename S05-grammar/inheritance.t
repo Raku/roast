@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 35;
 
 # L<S05/Grammars/"Like classes, grammars can inherit">
 
@@ -72,5 +72,14 @@ nok Grammar::Baz.parse('boo', :rule<any>), 'No match for bad input (any)';
 }
 
 is(Grammar.WHAT.gist,"(Grammar)", "Grammar.WHAT.gist = Grammar()");
+
+# R#2611
+{
+    my class A is Array[Str] { }
+    my @a is A = <a b c>;
+    is @a, "a b c", "did the array initialize ok";
+    is-deeply @a.of, Str, "does it have the right type";
+    dies-ok { @a[0] = 42 }, 'does it type check ok';
+}
 
 # vim: ft=perl6
