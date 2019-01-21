@@ -22,7 +22,7 @@ subtest "CompUnit::Repository::FileSystem without META6.json" => {
             '-I', $lib-one,
             '-M', 'CurrentDistributionOne',
             '-e',
-            'exit(!CurrentDistributionOne::distribution.meta<provides><CurrentDistributionOne>.defined)';
+            'exit(!CurrentDistributionOne::distribution.meta{"provides"}{"CurrentDistributionOne"}.defined)';
         is $proc.exitcode, 0;
     }
 
@@ -31,7 +31,7 @@ subtest "CompUnit::Repository::FileSystem without META6.json" => {
             '-I', $lib-one, '-I', $lib-two,
             '-M', 'CurrentDistributionTwo',
             '-e',
-            'exit(!CurrentDistributionTwo::distribution.meta<provides><CurrentDistributionTwo>.defined)';
+            'exit(!CurrentDistributionTwo::distribution.meta{"provides"}{"CurrentDistributionTwo"}.defined)';
         is $proc.exitcode, 0;
     }
 }
@@ -54,7 +54,7 @@ subtest "CompUnit::Repository::FileSystem with META6.json" => {
             '-I', $lib-one,
             '-M', 'CurrentDistributionOne',
             '-e',
-            'exit(!CurrentDistributionOne::distribution.meta<provides><CurrentDistributionOne>.defined)';
+            'exit(!CurrentDistributionOne::distribution.meta{"provides"}{"CurrentDistributionOne"}.defined)';
         is $proc.exitcode, 0;
     }
 
@@ -63,7 +63,7 @@ subtest "CompUnit::Repository::FileSystem with META6.json" => {
             '-I', $lib-one, '-I', $lib-two,
             '-M', 'CurrentDistributionTwo',
             '-e',
-            'exit(!CurrentDistributionTwo::distribution.meta<provides><CurrentDistributionTwo>.defined)';
+            'exit(!CurrentDistributionTwo::distribution.meta{"provides"}{"CurrentDistributionTwo"}.defined)';
         is $proc.exitcode, 0;
     }
 }
@@ -91,7 +91,7 @@ subtest "CompUnit::Repository::Installation" => {
             '-I', $lib,
             '-M', 'CurrentDistributionOne',
             '-e',
-            'exit(!CurrentDistributionOne::distribution.meta<provides><CurrentDistributionOne>.defined)';
+            'exit(!CurrentDistributionOne::distribution.meta{"provides"}{"CurrentDistributionOne"}.defined)';
         is $proc.exitcode, 0;
     }
 
@@ -100,7 +100,7 @@ subtest "CompUnit::Repository::Installation" => {
             '-I', $lib,
             '-M', 'CurrentDistributionTwo',
             '-e',
-            'exit(!CurrentDistributionTwo::distribution.meta<provides><CurrentDistributionTwo>.defined)';
+            'exit(!CurrentDistributionTwo::distribution.meta{"provides"}{"CurrentDistributionTwo"}.defined)';
         is $proc.exitcode, 0;
     }
 }
