@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 299;
+plan 301;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -915,4 +915,14 @@ subtest 'subsecond .later/.earlier' => {
     is-deeply
         DateTime.new('1879-03-14T00:00:00.000Z').earlier(:second(2.707)),
         DateTime.new('1879-03-13T23:59:57.293Z'), '2.707s earlier';
+}
+
+# R#2615
+{
+    class DateTimed is DateTime { }
+    my $date = DateTimed.new('2019-01-24T11:10:32');
+    # first time .later is called, $!daycount is not initialized yet
+    is $date.later(:1day), '2019-01-25T11:10:32Z',
+      "does .later work on on DateTime subclasses $_"
+      for ^2;
 }
