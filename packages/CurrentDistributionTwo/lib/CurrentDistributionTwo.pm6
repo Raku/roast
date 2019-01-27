@@ -5,7 +5,7 @@ our sub distribution { $?DISTRIBUTION }
 our sub resources { %?RESOURCES }
 
 our sub dependency-distribution {
-    use CurrentDistributionOne;
+    use CurrentDistributionOne:auth<foo@bar.baz>;
     CurrentDistributionOne::distribution;
 }
 
