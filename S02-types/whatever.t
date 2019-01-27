@@ -102,7 +102,7 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     my $c = * * * + *;
     ok $c ~~ Code, '* * * + * generated a closure';
     is $c(2, 2, 2), 6,  '... that works';
-    is $c(-3, -3, -3), 6, '... that respects precdence';
+    is $c(-3, -3, -3), 6, '... that respects precedence';
     is $c(0, -10, 3), 3, 'that can work with three different arguments';
 }
 
@@ -110,7 +110,7 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     my $c = * + * * *;
     ok $c ~~ Code, '* + * * * generated a closure';
     is $c(2, 2, 2), 6,  '... that works';
-    is $c(-3, -3, -3), 6, '... that respects precdence';
+    is $c(-3, -3, -3), 6, '... that respects precedence';
     is $c(3, 0, -10), 3, 'that can work with three different arguments';
 }
 
