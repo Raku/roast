@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 26;
 
 my $c = { when 1 { 'one' }; when 2 { 'two!' }; default { 'many' } };
 is $c(1), 'one', 'when works in a circumfix:<{ }> (1)';
@@ -81,5 +81,16 @@ is $nest(3), 'huge', 'nested when in a sub works (3)';
 
 # RT#120498
 lives-ok { while $++ < 2 { when 'hi' { } } }, '`when` in a loop lives';
+
+# https://github.com/rakudo/rakudo/issues/2644
+{
+    my $i = 0;
+    loop {
+        last if ++$i == 5;
+        $_ = 42;
+        when Int { }
+    }
+    is $i, 5, 'Successful when does not terminate a loop prematurely';
+}
 
 # vim: ft=perl6
