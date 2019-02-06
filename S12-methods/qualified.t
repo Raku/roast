@@ -45,7 +45,7 @@ subtest "simple" => {
 }
 
 subtest "inheritance (github issue #2657)" => {
-    plan 5;
+    plan 6;
 
     my class Parent {
         method me {
@@ -94,6 +94,7 @@ subtest "inheritance (github issue #2657)" => {
     is( $inst.via_R1, "Bar::via_R1 » R1::foo", "Indirect qualification to a role of parent class");
     is( $inst.via_R0, "Bar::via_R0 » R0::on_R0", "Indirect qualification to a role on a role of parent class");
     is( $inst.myself, $inst, "Indirect qualification to a role's parent on a intermediate parent" );
+    is( $inst.R0::on_R0, "R0::on_R0", "Indirect qualification on the object");
 }
 
 subtest "puned role: github issue #2659" => {
