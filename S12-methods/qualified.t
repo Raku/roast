@@ -44,7 +44,8 @@ subtest "simple" => {
     throws-like '.::', X::Syntax::Malformed, 'empty name in qualified method call';
 }
 
-subtest "inheritance (github issue #2657)" => {
+subtest "inheritance" => {
+    # rakudo github issue #2657
     plan 6;
 
     my class Parent {
@@ -97,7 +98,8 @@ subtest "inheritance (github issue #2657)" => {
     is( $inst.R0::on_R0, "R0::on_R0", "Indirect qualification on the object");
 }
 
-subtest "puned role: github issue #2659" => {
+subtest "puned role" => {
+    # rakudo github issue #2659
     plan 2;
     my role R1 {
         method foo {
@@ -117,7 +119,8 @@ subtest "puned role: github issue #2659" => {
     is( $inst.foo, "Foo::foo » R1::foo", "callsame works for a punned role via a child class" );
 }
 
-subtest "run-time does: github issue #2282" => {
+subtest "run-time does" => {
+    # rakudo github issue #2282
     my role Foo1 { method foo { "Foo1::foo"; } }
     my role Foo2 { method foo { "Foo2::foo"; } }
     my role Foo3 { method foo { "Foo3::foo"; } }
