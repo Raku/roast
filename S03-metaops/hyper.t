@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 408;
+plan 409;
 
 =begin pod
 
@@ -1118,5 +1118,9 @@ subtest 'method call variants respect nodality' => {
     }
   }
 }
+
+# https://github.com/rakudo/rakudo/issues/2674
+is-deeply { a => (1,2,3) }.map({ .key <<=>>> .value }).list, ((:1a, :2a, :3a),),
+    'No crash when RHS to be expanded is an itemized list';
 
 # vim: ft=perl6
