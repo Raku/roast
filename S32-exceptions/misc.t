@@ -279,7 +279,7 @@ throws-like 'my class A { ... }; my class A is repr("Uninstantiable") { }', X::T
 throws-like 'gather { return  1}', X::ControlFlow::Return;
 
 # RT #123732
-throws-like 'for ^5 { .say; NEXT { return } }', X::ControlFlow::Return;
+throws-like 'for ^5 { NEXT { return } }', X::ControlFlow::Return;
 throws-like 'for ^5 { return; }', X::ControlFlow::Return;
 throws-like 'return;', X::ControlFlow::Return;
 
