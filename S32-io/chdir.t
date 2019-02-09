@@ -147,7 +147,6 @@ subtest 'chdir into IO::Path respects its :CWD attribute' => {
     temp $*CWD;
     chdir $where;
     {
-        plan 1;
         temp $*CWD;
         chdir $to;
         ok dir.grep('pass1').so, 'found expected file';
