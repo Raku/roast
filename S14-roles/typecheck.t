@@ -24,7 +24,7 @@ ok TestGH2613 ~~ GH2613::R1, "class smartmatches against full role name";
     ok R2714_1 ~~ C2714_1, "Role group matches a parent class of its non-parameterized member";
     nok R2714_1 ~~ C2714_2, "Role group doesn't a parent class of a parameterized member";
 
-    #?rakudo: 1 todo "Must work with a fix for GH #2698"
+    #?rakudo 1 todo "Must work with a fix for GH #2698"
     my \r = R2714_1[Int];
     ok r ~~ C2714_2, "Curryied role matches its parent class";
 }
