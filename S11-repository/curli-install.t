@@ -16,13 +16,15 @@ rm_rf $path.IO if $path.IO.e;
     is $*REPO.short-id, 'inst', 'short-id exposes type of repository';
     is $*REPO.loaded.elems, 0, 'no compilation units were loaded so far';
 }
-my $dist = Distribution.new(:name<Foo>);
+my $prefix   = $path.IO.parent;
+my %provides = Foo => 'Foo.pm';
+my $dist = Distribution::Hash.new({ :name<Foo>, :%provides }, :$prefix);
 
-$*REPO.install($dist, { Foo => 't/spec/packages/Foo.pm' });
+$*REPO.install($dist);
 
-throws-like { EVAL q[$*REPO.install($dist, { Foo => 't/spec/packages/Foo.pm' })] },
+throws-like { EVAL q[$*REPO.install($dist)] },
     X::AdHoc,
-    message => "$dist already installed",
+    message => /'already installed'/,
     "cannot reinstall the very same distribution";
 
 {
