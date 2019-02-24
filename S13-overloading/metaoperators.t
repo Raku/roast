@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 16;
 
 #L<S06/Operator overloading>
 
@@ -49,6 +49,13 @@ is ~(('OMG','BBQ') <<wtf>> ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '<<...>> hyper
 
 # RT #130610
 is ([\,] <a b>, <c d>, <e f>)».join('|').join('-'), "a b-a b|c d-a b|c d|e f",
-    "Triangular reduce with &infix:<,> and a list of lists doesn't flatten"
+    "Triangular reduce with &infix:<,> and a list of lists doesn't flatten";
+
+# R#2718
+{
+    my $a;
+    $a<a b c> »=» 42;
+    is( $a{$_}, 42, "is key $_ 42?" ) for <a b c>;
+}
 
 # vim: ft=perl6
