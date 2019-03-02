@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 51;
+plan 53;
 
 =begin description
 
@@ -293,6 +293,18 @@ subtest 'Junction arguments to `where` parameters' => {
     }
 
     is xz(* <=> *), Order::Less, "subset with Code arity check in sub signature";
+}
+
+# https://github.com/rakudo/rakudo/issues/2166
+{
+    my subset IntD of Int:D where { True };
+    throws-like { my IntD $a = 42; $a = Nil },
+                X::TypeCheck::Assignment, 'binding :D to Nil not possible';
+
+    my subset IntU of Int where { True };
+    my IntU $a = 42;
+    $a = Nil;
+    ok $a === IntU, "bind :U to Nil";
 }
 
 # vim: ft=perl6
