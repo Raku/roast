@@ -1,5 +1,5 @@
 unit module CurrentDistributionOne;
 
-our sub distribution { $?DISTRIBUTION }
+our sub distribution is export { $?DISTRIBUTION }
 
-our sub resources { %?RESOURCES }
+our sub resources is export { %?RESOURCES }

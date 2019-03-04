@@ -1,0 +1,12 @@
+{
+    "perl"     : "6.*",
+    "version"  : "0",
+    "name"     : "EmulatesCurrentDistributionOne",
+    "description" : "Tests that we can use emulates with CurrentDistributionOne",
+    "provides" : {
+        "EmulatesCurrentDistributionOne" : "lib/EmulatesCurrentDistributionOne.pm6"
+    },
+    "emulates" : {
+        "EmulatesCurrentDistributionOne" : "CurrentDistributionOne"
+    }
+}

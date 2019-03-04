@@ -2,6 +2,7 @@
     "perl"        : "6.c",
     "name"        : "CurrentDistributionOne",
     "auth"        : "foo@bar.baz",
+    "version"     : "0",
     "description" : "A distribution for basic testing of $?DISTRIBUTION and %?RESOURCES",
     "depends"     : [ ],
     "provides"    : {
