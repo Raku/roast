@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 14;
 
 # TODO: move to S02?
 # L<S02/Generic types/>
@@ -73,6 +73,18 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
     $t = 3.0;
     accum( $t, 2/3 );
     is-approx $t, 3.666667, 'coerce to Rat via type capture';
+}
+
+# GH #2169
+
+{
+    sub type_test (::T $type) {
+        my T $t;
+        $t.VAR.default;
+    }
+
+    isa-ok type_test( Int ), Int, "default is instantiated from a type object";
+    isa-ok type_test( "The Answer" ), Str, "default is instantiated from a concrete object type";
 }
 
 # vim: ft=perl6
