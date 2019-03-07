@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 40;
+plan 46;
 
 my $hostname = 'localhost';
 my $port = 5000;
@@ -304,3 +304,31 @@ for '127.0.0.1', '::1' -> $host {
     }
 }
 
+# Test getsockopt/setsockopt support
+{
+    my Promise $p1 .= new;
+    my Promise $p2 .= new;
+
+    my $server = IO::Socket::Async.listen('localhost', 0).tap(-> $connection {
+        await $p1;
+        lives-ok { $connection.set-option: SO_KEEPALIVE, 1 }, 'can set options on connections';
+        ok $connection.get-option(SO_KEEPALIVE), 'can get options on connections after setting them';
+        $connection.set-option: SO_KEEPALIVE, 0;
+        $connection.close;
+        $p2.keep;
+    });
+
+    lives-ok { $server.set-option: SO_RCVBUF, 64 }, 'can set options on servers';
+    ok $server.get-option(SO_RCVBUF), 'can get options on servers after setting them';
+    $server.set-option: SO_RCVBUF, 0;
+
+    my $client = await IO::Socket::Async.connect: 'localhost', await $server.socket-port;
+    lives-ok { $client.set-option: SO_SNDBUF, 64 }, 'can set options on clients';
+    ok $client.get-option(SO_SNDBUF), 'can get options on clients after setting them';
+    $client.set-option: SO_SNDBUF, 0;
+
+    $p1.keep;
+    await $p2;
+    $client.close;
+    $server.close;
+}

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 34;
 
 # test 2 does echo protocol - Internet RFC 862
 do-test
@@ -314,6 +314,23 @@ else {
     # MoarVM #234
     eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :port($_), :host("127.0.0.1") ); CATCH {next}; next }',
                   'Surviving without SEGV due to incorrect socket connect/close handling';
+}
+
+# test getsockopt/setsockopt support
+{
+    my IO::Socket::INET $server     .= new: :localhost<localhost>, :0localport, :listen;
+    my IO::Socket::INET $client     .= new: :host<localhost>, port => $server.localport;
+    my IO::Socket::INET $connection  = $server.accept;
+    for [
+        [SO_KEEPALIVE, $client, 'client'],
+        [TCP_NODELAY, $connection, 'connection'],
+        [SO_REUSEADDR, $server, 'server']
+    ] -> ($option, $socket, $name) {
+        lives-ok { $socket.set-option: $option, 1 }, "can set options on a $name";
+        ok $socket.get-option($option), "can get options after setting them on a $name";
+        $socket.set-option: $option, 0;
+        $socket.close;
+    }
 }
 
 sub do-test(Block $b-server, Block $b-client) {
