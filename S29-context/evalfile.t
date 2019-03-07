@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 2;
+plan 3;
 
 # L<S29/Context/"=item EVALFILE">
 
@@ -17,6 +17,17 @@ sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
         close $fh;
     }
     is EVALFILE($tmpfile), 42, "EVALFILE() works";
+    END { unlink $tmpfile }
+}
+
+{
+    my $tmpfile = "temp-evalfile" ~ nonce();
+    {
+        my $fh = open("$tmpfile", :w);
+        say $fh: "32 + 10";
+        close $fh;
+    }
+    is EVALFILE($tmpfile.IO), 42, "EVALFILE() works with IO::Path";
     END { unlink $tmpfile }
 }
 
