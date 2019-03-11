@@ -28,7 +28,7 @@ given $*DISTRO.name {
 
 #====  specific tests from here
 sub macosx (:$io-path) {
-    plan 64;
+    plan 55;
     # check watching directories
     {
         my $base-path = '.';
