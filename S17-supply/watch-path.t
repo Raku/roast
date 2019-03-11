@@ -4,7 +4,7 @@ use Test;
 
 plan 4;
 
-my $forawhile = 1;
+my $forawhile = 4;
 my $filename = "watch-path_checker";
 END { unlink $filename if $filename }  # make sure we cleanup
 
@@ -118,6 +118,11 @@ sub macosx (:$io-path) {
         # When watching a file, it must exist before we watch it
         my $handle = open( $filename, :w );
         isa-ok $handle, IO::Handle, 'did we get a handle?';
+
+        # We need to wait long enough for the notification caused by creating
+        # the file above to be lost.  Otherwise it will arrive after the
+        # Supply is created and confuse the count.
+        sleep $forawhile;
 
         my $s = (
             $io-path ?? $filename.IO.watch !! IO::Notification.watch-path: $filename
