@@ -158,7 +158,7 @@ sub macosx (:$io-path) {
         ok $handle.close, 'did the file close ok';
 
         sleep $forawhile;
-        is +@seen, 1, 'did we get an event for closing the file';
+        is +@seen, 2, 'did we get an event for closing the file';
 
         $handle = open( $filename, :a );
         isa-ok $handle, IO::Handle, 'did we get a handle again?';
@@ -180,7 +180,7 @@ sub macosx (:$io-path) {
         ok $handle.close, 'did closing the file again work';
 
         sleep $forawhile;
-        is +@seen, 3, 'did we get an event for closing the file again';
+        is +@seen, 4, 'did we get an event for closing the file again';
 
         $check-event = -> \change {
             # TODO XXX: Do we want/have to use "FileChanged" for this?
