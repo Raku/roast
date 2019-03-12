@@ -90,8 +90,10 @@ else {
         is $proc.out.get, 'lived', 'Can run Perl 6 with non-UTF-8 environment';
     }
     {
-        my $cmd = Q{echo 'say(42)' > $'L\xe9on' && } ~ $*EXECUTABLE ~ Q{ $'L\xe9on' && rm $'L\xe9on'};
-        my $proc = shell $cmd, :out;
+        my $filename = "L\xe9on";
+        spurt $filename, 'say(42)';
+        LEAVE { try unlink $filename }
+        my $proc = run $*EXECUTABLE, $filename, :out;
         is $proc.out.get, '42', 'Can run Perl 6 sourcefile with non-UTF-8 name';
     }
 }
