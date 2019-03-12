@@ -749,7 +749,7 @@ throws-like 'my class C does InNoWayExist { }', X::InvalidType, typename => 'InN
 throws-like 'sub foo() returns !!!wtf??? { }', X::Syntax::Malformed, what => 'trait';
 
 # RT #125675
-throws-like '(1, 2, 3).map(True)', X::Multi::NoMatch;
+dies-ok { (1, 2, 3).map(True) }, 'does mapping with True die';
 
 # RT #125504
 my $notahash = "a";
