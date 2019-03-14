@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 171;
+plan 175;
 
 # RT #77270
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
@@ -143,6 +143,7 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
     is $*foo, 0, 'should be a compile time error';
 }
 
+#?rakudo.js.browser skip "use at EVAL time not supported in the browser"
 # RT #113680
 throws-like ｢use ThisDoesNotExistAtAll｣, X::CompUnit::UnsatisfiedDependency;
 
@@ -325,7 +326,12 @@ throws-like 'my class C does InNoWayExist { }', X::InvalidType, typename => 'InN
 throws-like 'sub foo() returns !!!wtf??? { }', X::Syntax::Malformed, what => 'trait';
 
 # RT #125675
-throws-like '(1, 2, 3).map(True)', X::Multi::NoMatch;
+# R#2729
+throws-like '(1, 2, 3).map(True)',        X::Cannot::Map;
+throws-like '(1, 2, 3).map: 1,2,3',       X::Cannot::Map;
+throws-like '(1, 2, 3).map: (1,2,3)',     X::Cannot::Map;
+throws-like '(1, 2, 3).map: * xx 2',      X::Cannot::Map;
+throws-like '(1, 2, 3).map: { a => 42 }', X::Cannot::Map;
 
 # RT #125504
 my $notahash = "a";

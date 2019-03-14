@@ -4,7 +4,7 @@ use Test;
 
 plan 4;
 
-my $forawhile = 1;
+my $forawhile = 4;
 my $filename = "watch-path_checker";
 END { unlink $filename if $filename }  # make sure we cleanup
 
@@ -28,7 +28,7 @@ given $*DISTRO.name {
 
 #====  specific tests from here
 sub macosx (:$io-path) {
-    plan 64;
+    plan 55;
     # check watching directories
     {
         my $base-path = '.';
@@ -119,6 +119,11 @@ sub macosx (:$io-path) {
         my $handle = open( $filename, :w );
         isa-ok $handle, IO::Handle, 'did we get a handle?';
 
+        # We need to wait long enough for the notification caused by creating
+        # the file above to be lost.  Otherwise it will arrive after the
+        # Supply is created and confuse the count.
+        sleep $forawhile;
+
         my $s = (
             $io-path ?? $filename.IO.watch !! IO::Notification.watch-path: $filename
         ).grep({.path.IO.basename eq $filename}).unique;
@@ -153,7 +158,7 @@ sub macosx (:$io-path) {
         ok $handle.close, 'did the file close ok';
 
         sleep $forawhile;
-        is +@seen, 1, 'did we get an event for closing the file';
+        is +@seen, 2, 'did we get an event for closing the file';
 
         $handle = open( $filename, :a );
         isa-ok $handle, IO::Handle, 'did we get a handle again?';
@@ -175,7 +180,7 @@ sub macosx (:$io-path) {
         ok $handle.close, 'did closing the file again work';
 
         sleep $forawhile;
-        is +@seen, 3, 'did we get an event for closing the file again';
+        is +@seen, 4, 'did we get an event for closing the file again';
 
         $check-event = -> \change {
             # TODO XXX: Do we want/have to use "FileChanged" for this?

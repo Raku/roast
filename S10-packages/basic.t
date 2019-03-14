@@ -173,6 +173,8 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
         Exception, 'method redefined in class dies';
 }
 
+
+#?rakudo.js.browser skip "EVAL time use doesn't work in the browser"
 {
     eval-lives-ok 'unit class RT64688_c1;use Test', 'use after class line';
     eval-lives-ok 'class RT64688_d1 { use Test }', 'use in class block';
@@ -185,6 +187,7 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     eval-lives-ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
+#?rakudo.js.browser skip "EVAL time use doesn't work in the browser"
 {
     eval-lives-ok 'use LoadFromInsideAModule',
         'can "use" a class inside a module';
@@ -198,6 +201,7 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
         'overrides from one module do not affect a module that is loaded later on';
 }
 
+#?rakudo.js.browser skip "EVAL time use doesn't work in the browser"
 # also checks RT #73740
 {
     eval-lives-ok 'use PM6', 'can load a module ending in .pm6';
@@ -264,6 +268,7 @@ throws-like q[
         'autovivification works with nested "use" directives (import from two nested files)';
 }
 
+#?rakudo.js.browser skip "use lib doesn't work in the browser"
 # RT #120561
 {
     lives-ok { use lib "." },
@@ -327,6 +332,7 @@ throws-like q[
 }
 
 # RT #131540
+#?rakudo.js.browser 2 skip "use lib doesn't work in the browser"
 subtest '`use lib` accepts IO::Path objects' => {
     plan 2;
     constant $path = $?FILE.IO.parent(2).add('packages/Test-Helpers').absolute;
