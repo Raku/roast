@@ -65,15 +65,18 @@ for @methods -> $meth {
     }
 }
 is $num_onlys, 1, 'class A has one only method';
+#?rakudo.js.browser todo 'broken on all backends when precompiling'
 is $num_dispatchers, 1, 'class A has one dispatcher method';
 
 @methods = D.^methods().grep(*.name ne 'BUILDALL');
 ok +@methods == 5, 'got all methods in hierarchy but NOT those from Any/Mu';
+#?rakudo.js.browser todo 'broken on all backends when precompiling'
 ok @methods[0].name eq 'foo' && @methods[1].name eq 'bar' ||
    @methods[0].name eq 'bar' && @methods[1].name eq 'foo',
    'first two methods from class D itself';
 is @methods[2].name, 'foo', 'method from B has correct name';
 is @methods[2].of.gist, Num.gist, 'method from B has correct return type';
+#?rakudo.js.browser todo 'broken on all backends when precompiling'
 ok @methods[3].name eq 'foo' && @methods[4].name eq 'bar' ||
    @methods[3].name eq 'bar' && @methods[4].name eq 'foo',
    'two methods from class A itself';

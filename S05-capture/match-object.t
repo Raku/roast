@@ -119,9 +119,13 @@ subtest '$/ is set when matching in a loop' => {
     for "a" { if Foo.parse: $_ { is ~$/, 'a', 'Grammar.parse' }}
     for "a" { if Foo.subparse: $_ { is ~$/, 'a', 'Grammar.subparse' }}
 
+#?rakudo.js.browser skip "reading and writing files doesn't work in the browser"
+{
     with make-temp-file content => 'a' {
         for "a" -> $ { if grammar { token TOP { . } }.parsefile: $_ {
             is ~$/, 'a', 'Grammar.parse-file'
         }}
     }
+}
+
 }

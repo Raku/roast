@@ -127,6 +127,7 @@ throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
 }
 
 # RT #131122
+#?rakudo.js.browser skip 'CStruct not supported in the browser'
 {
     my class C1 {
         has uint8 $.ff;

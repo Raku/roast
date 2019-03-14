@@ -143,6 +143,7 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
     is $*foo, 0, 'should be a compile time error';
 }
 
+#?rakudo.js.browser skip "use at EVAL time not supported in the browser"
 # RT #113680
 throws-like ｢use ThisDoesNotExistAtAll｣, X::CompUnit::UnsatisfiedDependency;
 

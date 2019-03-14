@@ -9,6 +9,7 @@ throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
 #?DOES 1
 throws-like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
+#?rakudo.js.browser 3 skip "use at EVAL time not supported in the browser"
 throws-like 'use experimental :pack; pack("B",  1)',       X::Buf::Pack, directive => 'B';
 throws-like 'use experimental :pack; Buf.new.unpack("B")', X::Buf::Pack, directive => 'B';
 throws-like 'use experimental :pack; pack "A2", "mÄ"',     X::Buf::Pack::NonASCII, char => 'Ä';
@@ -468,6 +469,7 @@ if $emits_suggestions {
     throws-like 'class Greeter { has $.name; method greet { say "hi, $name" } }', X::Undeclared, suggestions => '$!name';
 }
 
+#?rakudo.js.browser skip "use at EVAL time not supported in the browser"
 # R#2111
 {
     lives-ok { EVAL(

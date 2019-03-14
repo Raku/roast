@@ -84,6 +84,9 @@ plan 66;
 if $*DISTRO.is-win {
     skip('Not clear how to recreate this situation on Windows', 2);
 }
+elsif $*DISTRO.name eq 'browser' {
+    skip('Calling the shell doesn\'t work ', 2);
+}
 else {
     {
         my $cmd = Q{env ACME=$'L\xe9on' } ~ $*EXECUTABLE ~ Q{ -e 'say("lived")'};
@@ -125,6 +128,8 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
             109,108,228,192);
 
     my $test-file := make-temp-path;
+}
+
     for @bufs.kv -> $i, $buf {
         is-deeply Buf.new($buf.decode('utf8-c8').encode('utf8-c8').list), $buf,
             ".decode.encode roundtrips correctly for utf8-c8 [Buf #{$i+1}]";
