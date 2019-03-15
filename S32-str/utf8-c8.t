@@ -128,7 +128,6 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
             109,108,228,192);
 
     my $test-file := make-temp-path;
-}
 
     for @bufs.kv -> $i, $buf {
         is-deeply Buf.new($buf.decode('utf8-c8').encode('utf8-c8').list), $buf,
