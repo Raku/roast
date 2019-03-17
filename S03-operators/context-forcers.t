@@ -143,8 +143,7 @@ subtest 'numeric context' => {
 }
 
 {
-    my $arrayref is dynamic = list(1,2,3);
-    my $boo is dynamic = 37;
+    my $*arrayref = list(1,2,3);
     ok eval_elsewhere('?(@$*arrayref)'), '?(@$arrayref) syntax works';
     ok eval_elsewhere('?(@($*arrayref))'), '?(@($arrayref)) syntax works';
 }
@@ -169,8 +168,7 @@ subtest 'numeric context' => {
 
 }
 {
-    my $arrayref is dynamic = list(1,2,3);
-
+    my $*arrayref = list(1,2,3);
     ok eval_elsewhere('!(!(@$*arrayref))'), '!(@$arrayref) syntax works';
     ok eval_elsewhere('!(!(@($*arrayref)))'), '!(@($arrayref)) syntax works';
 }
