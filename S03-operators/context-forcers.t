@@ -146,8 +146,7 @@ sub eval_elsewhere($code){ EVAL($code) }
 
 #?niecza skip 'Trait dynamic not available on variables'
 {
-    my $arrayref is dynamic = list(1,2,3);
-    my $boo is dynamic = 37;
+    my $*arrayref = list(1,2,3);
     ok eval_elsewhere('?(@$*arrayref)'), '?(@$arrayref) syntax works';
     ok eval_elsewhere('?(@($*arrayref))'), '?(@($arrayref)) syntax works';
 }
@@ -173,8 +172,7 @@ sub eval_elsewhere($code){ EVAL($code) }
 }
 #?niecza skip 'Trait context not available on variables'
 {
-    my $arrayref is dynamic = list(1,2,3);
-
+    my $*arrayref = list(1,2,3);
     ok eval_elsewhere('!(!(@$*arrayref))'), '!(@$arrayref) syntax works';
     ok eval_elsewhere('!(!(@($*arrayref)))'), '!(@($arrayref)) syntax works';
 }
