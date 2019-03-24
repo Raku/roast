@@ -127,9 +127,9 @@ is (2 Z 3), @z, 'joining of single items';
 
 # comparison complains if either of its arguments is undefined - RT #93978
 {
-    throws-like {Int < 0}, Exception;
-    #?rakudo todo "RT #93978"
-    throws-like {"cat" gt Str}, Exception;
+    CONTROL { when CX::Warn { die $_ } }
+    throws-like {Int < 0}, CX::Warn;
+    throws-like {"cat" gt Str}, CX::Warn;
 }
 
 # unicode operators are there
