@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 92;
+plan 98;
 my ($r, $s);
 
 my $p = 0;
@@ -278,3 +278,27 @@ isa-ok $r.config<k6>, Int;
 isa-ok $r.config<k7>, Int;
 is $r.config<k6>,  999_999_999_999_999_999_999_999_999_999, Q|+9 ** 30|;
 is $r.config<k7>, -999_999_999_999_999_999_999_999_999_999, Q|-9 ** 30|;
+
+#=====================================
+# GH issue #2793
+=for info :034foo
+:034foo
+
+$r = $=pod[$p++];
+isa-ok $r.config<foo>, Int, '034foo: foo => 34';
+is $r.config<foo>, 34, 'foo => 34';
+
+=for info :0foo
+:0foo
+
+$r = $=pod[$p++];
+isa-ok $r.config<foo>, Int, '0foo: foo => 0';
+is $r.config<foo>, 0, 'foo => 0';
+
+=for info :1foo
+:0foo
+
+$r = $=pod[$p++];
+isa-ok $r.config<foo>, Int, '1foo: foo => 1';
+is $r.config<foo>, 1, 'foo => 1';
+
