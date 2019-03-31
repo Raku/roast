@@ -127,6 +127,7 @@ subtest '.Array on uninited shaped array' => {
     lives-ok { @result[0] = 42 }, 'and is mutable';
 }
 
+#?rakudo.jvm skip "Method 'find_method' not found for invocant of class 'KnowHOW'"
 { # RT #130510
     my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>);
     is @c.perl, Array.new(:shape(2, 2), <a b>, <c d>).perl,

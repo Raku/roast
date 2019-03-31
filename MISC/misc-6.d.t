@@ -82,6 +82,7 @@ group-of 8 => 'native num defaults to 0e0' => {
     is-deeply $x, 0e0, '`my` variable';
     is-deeply my class { has num $.z }.new.z, 0e0, 'class attribute';
     is-deeply my role  { has num $.z }.new.z, 0e0, 'role attribute';
+    #?rakudo.jvm 4 skip 'Cannot unbox a type object'
     is-deeply my class { submethod z(num $v?) { $v } }.new.z, 0e0, 'submethod param';
     is-deeply my class { method    z(num $v?) { $v } }.new.z, 0e0, 'method param';
     is-deeply sub (num $v?) { $v }(), 0e0, 'sub param';
