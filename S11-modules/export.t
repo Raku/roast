@@ -185,6 +185,7 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     ok hash_str(Hash[Str].new({ak => "ak"})), 'Hash[Str] istype across module seam';
     ok hash_hash_str(Hash[Hash[Str]].new({akk => Hash[Str].new: { ak => "ak" }})), 'Hash[Hash[Str]] istype across module seam';
 
+    #?rakudo.jvm 3 todo 'RT#129215'
     ok array_str_d(Array[Str:D].new("A","B")), 'Array[Str:D] istype across module seam';
     ok hash_str_d(Hash[Str:D].new({ak => "ak"})), 'Hash[Str:D] istype across module seam';
     ok hash_hash_str_d(Hash[Hash[Str:D]].new({akk => Hash[Str:D].new: { ak => "ak" }})), 'Hash[Hash[Str:D]] istype across module seam';

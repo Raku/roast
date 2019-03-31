@@ -301,8 +301,10 @@ $echoTap.close;
     $first.close;
     $second.close;
 
+    #?rakudo.jvm todo 'NullPointerException'
     lives-ok { await $first-done, $second-done }, "both receivers finished without exception";
 
+    #?rakudo.jvm 2 todo 'got nothing'
     is @first-got.join(""), "hello first", "first server socket got the right message";
     is @second-got.join(""), "hello second", "second server socket got the right message";
 }

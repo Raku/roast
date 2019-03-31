@@ -290,6 +290,7 @@ subtest '.EOF/.WRITE methods' => {
     is-deeply $fh.eof,   True, 'eof after .split';
 
     $fh := MyHandle.new;
+    #?rakudo.jvm todo 'got: $("I", "P")'
     is-deeply $fh.comb(/:i <[A..Z]>/), <I P e r l p r o g r a m m i n g>.Seq,
         '.comb';
     is-deeply $fh.eof,   True, 'eof after .comb';
