@@ -105,6 +105,9 @@ else {
 # RT #126756
 is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works';
 
+#?rakudo.js.browser skip "writing to files doesn't work in the browser"
+# @bufs.elems * 2 + 2
+#?DOES 20
 # RT #128184
 {
     my @bufs =
@@ -167,6 +170,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
 }
 
 # MoarVM #482
+#?rakudo.js.browser skip "writing to files doesn't work in the browser"
 {
     is Buf.new('“'.encode('utf8')).decode('utf8-c8'), '“',
         'Valid and NFC UTF-8 comes out fine (string case)';
@@ -181,6 +185,8 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
 # RT#127671
 if $*DISTRO.is-win {
     skip('Not clear if there is an alternative to this issue on Windows', 4);
+} elsif $*DISTRO.name eq 'browser' {
+    skip('We don\'t have directories in the browser', 4);
 } else {
     my $test-dir = make-temp-dir;
     # ↑ normal directory in TMPDIR to hide our scary stuff
