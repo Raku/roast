@@ -84,6 +84,7 @@ subtest 'my | typed | sigilless' => {
     nok ::('mts3'), '`my` makes constants lexical';
 
     my IO::Path constant mts4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply mts4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant mts5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -108,6 +109,7 @@ subtest 'our | typed | sigilless' => {
     ok ::('ots3'), '`our` gives right scope';
 
     our IO::Path constant ots4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply ots4, '.'.IO, 'type with `::` in name';
     throws-like ｢our IO::Path constant ots5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -179,6 +181,7 @@ subtest 'my | typed | backslashed sigilless' => {
     nok ::('mtbs3'), '`my` makes constants lexical';
 
     my IO::Path constant \mtbs4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply mtbs4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant mtbs5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -204,6 +207,7 @@ subtest 'our | typed | backslashed sigilless' => {
     ok ::('otbs3'), '`our` gives right scope';
 
     our IO::Path constant \otbs4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply otbs4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant otbs5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -274,6 +278,7 @@ subtest 'my | typed | $-sigilled' => {
     nok ::('$mtss3'), '`my` makes constants lexical';
 
     my IO::Path constant $mtss4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply $mtss4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant $mtss5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -299,6 +304,7 @@ subtest 'our | typed | $-sigilled' => {
     ok ::('$otss3'), '`our` gives right scope';
 
     our IO::Path constant $otss4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply $otss4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant $otss5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
