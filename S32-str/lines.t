@@ -27,7 +27,6 @@ is "a\rb\r\rc\r".lines(*).join('|'),
 is "a\rb\r\rc\r".lines(2).join('|'),
   'a|b',    'CR .lines with limit';
 
-#?rakudo.jvm 5 todo '\r\n not yet handled as grapheme'
 is "a\r\nb\r\n\r\nc".lines.join('|'), 'a|b||c',
   'CRLF .lines without trailing';
 is "a\r\nb\r\n\r\nc\r\n".lines.join('|'), 'a|b||c',
