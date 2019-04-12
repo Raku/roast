@@ -125,7 +125,6 @@ $echoTap.close;
 }
 
 # RT #128862
-#?rakudo.jvm skip 'hangs on JVM'
 {
     my $failed = False;
     my $badInputTap = $server.tap(-> $c {

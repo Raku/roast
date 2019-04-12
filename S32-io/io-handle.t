@@ -196,7 +196,6 @@ subtest '.print-nl method' => {
     given $file.IO {
         .spurt: "fo♥o";
         my $fh = .open(:enc<ascii>);
-        #?rakudo.jvm todo 'does not die'
         dies-ok { $fh.slurp }, 'ASCII decode/encode dies with a catchable exception';
         # R#2272
         lives-ok { $fh.close }, 'closing after a decode error should work';
