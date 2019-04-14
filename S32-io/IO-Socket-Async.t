@@ -111,7 +111,7 @@ $echoTap.close;
     is $firstReceive, "u̇\n", 'Coped with grapheme split across packets';
 }
 
-#?rakudo.jvm todo 'IllegalStateException: Current state = CODING_END, new state = CODING'
+#?rakudo.jvm skip 'seems to crash the server (sometimes): IllegalStateException: Current state = CODING_END, new state = CODING'
 {
     my $echo2Tap = $server.tap(-> $c {
         $c.Supply.tap(-> $chars {
