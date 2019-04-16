@@ -1,6 +1,6 @@
 use v6;
 
-BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = True;
+#BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = True;
 use Test;
 
 # Test combinations of flags for "%d" and "%i".  The @info array is intialized
