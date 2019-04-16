@@ -20,7 +20,6 @@ plan 7;
 {
     my $dir = make-temp-dir;
     $dir.rmdir;
-    #?rakudo.jvm todo 'code does not fail for unkown reasons'
     fails-like { $dir.rmdir }, X::IO::Rmdir;
 }
 
