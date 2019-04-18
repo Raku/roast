@@ -10,8 +10,8 @@ use Test;
 # order of the flags is irrelevant.  Each flag permutation is combined with
 # the size/permutation value to create a proper format string.
 
-my ($v0, $v1, $v4, $vm) =
-                         0 ,         1 ,        64 ,       -64 ;
+
+#                        0 ,         1 ,        64 ,       -64 ;
 my @info = ( # |-----------|-----------|-----------|-----------|
              # no size or size explicitely 0
        '',   '',        "0",        "1",      "100",     "-100",
@@ -189,25 +189,22 @@ my @info = ( # |-----------|-----------|-----------|-----------|
 
 ).map: -> $flags, $size, $r0, $r1, $r4, $rm {
     my @flat;
-    @flat.append('%' ~ $_ ~ $size ~ 'o', $r0, $r1, $r4, $rm)
-      for $flags.comb.permutations>>.join;
+    @flat.append(
+      '%' ~ $_ ~ $size ~ 'o',
+      ($r0 => 0, $r1 => 1, $r4 => 64, $rm => -64)
+    ) for $flags.comb.permutations>>.join;
     |@flat
 }
 
-plan @info/5;
+plan @info/2;
 
-for @info -> $format, $r0, $r1, $r4, $rm {
+for @info -> $format, @tests {
     subtest {
-        plan 4;
+        plan +@tests;
 
-        is sprintf($format, $v0), $r0,
-          "sprintf('$format',$v0) eq '$r0'";
-        is sprintf($format, $v1), $r1,
-          "sprintf('$format',$v1) eq '$r1'";
-        is sprintf($format, $v4), $r4,
-          "sprintf('$format',$v4) eq '$r4'";
-        is sprintf($format, $vm), $rm,
-          "sprintf('$format',$vm) eq '$rm'";
+        is sprintf($format, .value), .key,
+          "sprintf('$format',{.value}0) eq '{.key}'"
+          for @tests;
     }, "Tested '$format'";
 }
 
