@@ -68,7 +68,7 @@ for @info -> $format, @tests {
     subtest {
         plan +@tests;
 
-        is sprintf($format, .value), .key,
+        is-deeply sprintf($format, .value), .key,
           "sprintf('$format',{.value}) eq '{.key}'"
           for @tests;
 
