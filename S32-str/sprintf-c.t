@@ -10,8 +10,7 @@ use Test;
 # order of the flags is irrelevant.  Each flag permutation is combined with
 # the size/permutation value to create a proper format string.
 
-my ($v0, $vA, $vB) =
-                         0 ,        65 ,    129419 ;
+#                        0 ,        65 ,    129419 ;
 my @info = ( # |-----------|-----------|-----------|
              # no size or size explicitely 0
        '',   '',       "\0",        "A",       "🦋",
@@ -30,22 +29,6 @@ my @info = ( # |-----------|-----------|-----------|
     '-+0',   '',       "\0",        "A",       "🦋",
     '-0 ',   '',       "\0",        "A",       "🦋",
    '-+0 ',   '',       "\0",        "A",       "🦋",
-      '#',   '',       "\0",        "A",       "🦋",
-     '# ',   '',       "\0",        "A",       "🦋",
-     '#0',   '',       "\0",        "A",       "🦋",
-    '#0 ',   '',       "\0",        "A",       "🦋",
-     '#+',   '',       "\0",        "A",       "🦋",
-    '#+ ',   '',       "\0",        "A",       "🦋",
-    '#+0',   '',       "\0",        "A",       "🦋",
-   '#+0 ',   '',       "\0",        "A",       "🦋",
-     '#-',   '',       "\0",        "A",       "🦋",
-    '#-+',   '',       "\0",        "A",       "🦋",
-    '#- ',   '',       "\0",        "A",       "🦋",
-   '#-+ ',   '',       "\0",        "A",       "🦋",
-    '#-0',   '',       "\0",        "A",       "🦋",
-   '#-+0',   '',       "\0",        "A",       "🦋",
-   '#-0 ',   '',       "\0",        "A",       "🦋",
-  '#-+0 ',   '',       "\0",        "A",       "🦋",
 
              # size that fits
        '',    3,     "  \0",      "  A",     "  🦋",
@@ -64,46 +47,32 @@ my @info = ( # |-----------|-----------|-----------|
     '-+0',    3,     "\0  ",      "A  ",     "🦋  ",
     '-0 ',    3,     "\0  ",      "A  ",     "🦋  ",
    '-+0 ',    3,     "\0  ",      "A  ",     "🦋  ",
-      '#',    3,     "  \0",      "  A",     "  🦋",
-     '# ',    3,     "  \0",      "  A",     "  🦋",
-     '#0',    3,     "00\0",      "00A",     "00🦋",
-    '#0 ',    3,     "00\0",      "00A",     "00🦋",
-     '#+',    3,     "  \0",      "  A",     "  🦋",
-    '#+ ',    3,     "  \0",      "  A",     "  🦋",
-    '#+0',    3,     "00\0",      "00A",     "00🦋",
-   '#+0 ',    3,     "00\0",      "00A",     "00🦋",
-     '#-',    3,     "\0  ",      "A  ",     "🦋  ",
-    '#-+',    3,     "\0  ",      "A  ",     "🦋  ",
-    '#- ',    3,     "\0  ",      "A  ",     "🦋  ",
-   '#-+ ',    3,     "\0  ",      "A  ",     "🦋  ",
-    '#-0',    3,     "\0  ",      "A  ",     "🦋  ",
-   '#-+0',    3,     "\0  ",      "A  ",     "🦋  ",
-   '#-0 ',    3,     "\0  ",      "A  ",     "🦋  ",
   '#-+0 ',    3,     "\0  ",      "A  ",     "🦋  ",
 
 ).map: -> $flags, $size, $r0, $rA, $rB {
     my @flat;
-    @flat.append('%' ~ $_ ~ $size ~ 'c', $r0, $rA, $rB)
-      for $flags.comb.permutations>>.join;
+    @flat.append(
+      '%' ~ $_ ~ $size ~ 'c',
+      ($r0 => 0, $rA => 65, $rB => 129419)
+    ) for $flags.comb.permutations>>.join;
+    @flat.append(
+      '%' ~ $_ ~ $size ~ 'c',
+      ($r0 => 0, $rA => 65, $rB => 129419)
+    ) for "#$flags".comb.permutations>>.join;
     |@flat
 }
 
-plan @info/4;
+plan @info/2;
 
-for @info -> $format, $r0, $rA, $rB {
+for @info -> $format, @tests {
     subtest {
-        plan 3;
+        plan +@tests;
 
-        is sprintf($format, $v0), $r0,
-          "sprintf('$format',$v0) eq '$r0'";
-        is sprintf($format, $vA), $rA,
-          "sprintf('$format',$vA) eq '$rA'";
-        is sprintf($format, $vB), $rB,
-          "sprintf('$format',$vB) eq '$rB'";
+        is sprintf($format, .value), .key,
+          "sprintf('$format',{.value}) eq '{.key}'"
+          for @tests;
 
     }, "Tested '$format'";
 }
 
 # vim: ft=perl6
-
-=finish
