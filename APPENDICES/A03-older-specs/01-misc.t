@@ -307,8 +307,8 @@ group-of 5 => 'language switching' => {
             '6.c version pragma';
         is_run versify('d'),         {:err(''), :0status, :out<6.d> },
             '6.d version pragma';
-        is_run versify('d.PREVIEW'), {:err(''), :0status, :out<6.d> },
-            '6.d.PREVIEW version pragma';
+        is_run versify('d'), {:err(''), :0status, :out<6.d> },
+            '6.d version pragma';
     }
 
     group-of 4 => 'version after comments' => {
@@ -323,8 +323,8 @@ group-of 5 => 'language switching' => {
             '6.c version pragma';
         is_run versify('d'),         {:err(''), :0status, :out<6.d> },
             '6.d version pragma';
-        is_run versify('d.PREVIEW'), {:err(''), :0status, :out<6.d> },
-            '6.d.PREVIEW version pragma';
+        is_run versify('d'), {:err(''), :0status, :out<6.d> },
+            '6.d version pragma';
     }
 
     group-of 4 => 'version after POD' => {
@@ -339,8 +339,8 @@ group-of 5 => 'language switching' => {
             '6.c version pragma';
         is_run versify('d'),         {:err(''), :0status, :out<6.d> },
             '6.d version pragma';
-        is_run versify('d.PREVIEW'), {:err(''), :0status, :out<6.d> },
-            '6.d.PREVIEW version pragma';
+        is_run versify('d'), {:err(''), :0status, :out<6.d> },
+            '6.d version pragma';
     }
 
     group-of 3 => 'error out when trying to switch version too late' => {
@@ -348,8 +348,8 @@ group-of 5 => 'language switching' => {
             :err{ $^v.contains: 'Too late to switch language version' };
         is_run "use Test; use v6.c;", %args, '6.c version pragma';
         is_run "use Test; use v6.d;", %args, '6.d version pragma';
-        is_run "use Test; use v6.d.PREVIEW;", %args,
-            '6.d.PREVIEW version pragma';
+        is_run "use Test; use v6.d;", %args,
+            '6.d version pragma';
     }
 
     group-of 4 => 'versions without dot' => {
@@ -361,8 +361,8 @@ group-of 5 => 'language switching' => {
             '6.c version pragma';
         is_run versify('d'),         {:err(''), :0status, :out<6.d> },
             '6.d version pragma';
-        is_run versify('d.PREVIEW'), {:err(''), :0status, :out<6.d> },
-            '6.d.PREVIEW version pragma';
+        is_run versify('d'), {:err(''), :0status, :out<6.d> },
+            '6.d version pragma';
     }
 }
 
