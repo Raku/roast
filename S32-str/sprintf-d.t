@@ -11,8 +11,7 @@ use Test;
 # combined with the size/permutation value to create a proper format string.
 # Each test will be done twice: once with a lowercase "d" and once with "i".
 
-my ($v0, $v1, $v4, $vm) =
-                         0 ,         1 ,       314 ,      -314 ;
+#                        0 ,         1 ,       314 ,      -314 ;
 my @info = ( # |-----------|-----------|-----------|-----------|
              # no size or size explicitely 0
        '',   '',        "0",        "1",      "314",     "-314",
@@ -107,30 +106,29 @@ my @info = ( # |-----------|-----------|-----------|-----------|
 ).map: -> $flags, $size, $r0, $r1, $r4, $rm {
     my @flat;
     for $flags.comb.permutations>>.join -> $permuted {
-        @flat.append('%' ~ $permuted ~ $size ~ $_, $r0, $r1, $r4, $rm)
-          for <d i>;
+        @flat.append(
+          '%' ~ $permuted ~ $size ~ $_,
+          ($r0 => 0, $r1 => 1, $r4 => 314, $rm => -314)
+        ) for <d i>;
     }
     for "#$flags".comb.permutations>>.join -> $permuted {
-        @flat.append('%' ~ $permuted ~ $size ~ $_, $r0, $r1, $r4, $rm)
-          for <d i>;
+        @flat.append(
+          '%' ~ $permuted ~ $size ~ $_,
+          ($r0 => 0, $r1 => 1, $r4 => 314, $rm => -314)
+        ) for <d i>;
     }
     |@flat
 }
 
-plan @info/5;
+plan @info/2;
 
-for @info -> $format, $r0, $r1, $r4, $rm {
+for @info -> $format, @tests {
     subtest {
-        plan 4;
+        plan +@tests;
 
-        is sprintf($format, $v0), $r0,
-          "sprintf('$format',$v0) eq '$r0'";
-        is sprintf($format, $v1), $r1,
-          "sprintf('$format',$v1) eq '$r1'";
-        is sprintf($format, $v4), $r4,
-          "sprintf('$format',$v4) eq '$r4'";
-        is sprintf($format, $vm), $rm,
-          "sprintf('$format',$vm) eq '$rm'";
+        is sprintf($format, .value), .key,
+          "sprintf('$format',{.value}) eq '{.key}'"
+          for @tests;
     }, "Tested '$format'";
 }
 
