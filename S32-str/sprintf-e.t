@@ -11,8 +11,7 @@ use Test;
 # combined with the size/permutation value to create a proper format string.
 # Each test will be done twice, once for "e" and once for "E".
 
-my ($v0, $v4, $vm) =
-                              0 ,           27.1 ,          -2.71 ;
+#                             0 ,           27.1 ,          -2.71 ;
 my @info = ( # |----------------|----------------|----------------|
              # no size or size explicitely 0
        '',   '',  "0.000000e+00",  "2.710000e+01", "-2.710000e+00",
@@ -106,32 +105,29 @@ my @info = ( # |----------------|----------------|----------------|
 
 ).map: -> $flags, $size, $r0, $r4, $rm {
     my @flat;
-    @flat.append('%' ~ $_ ~ $size ~ 'e', $r0, $r4, $rm)
-      for $flags.comb.permutations>>.join;
-    @flat.append('%' ~ $_ ~ $size ~ 'e', $r0, $r4, $rm)
-      for "#$flags".comb.permutations>>.join;
+    @flat.append(
+      '%' ~ $_ ~ $size ~ 'e',
+      ($r0 => 0, $r4 => 27.1, $rm => -2.71)
+    ) for $flags.comb.permutations>>.join;
+    @flat.append(
+      '%' ~ $_ ~ $size ~ 'e',
+      ($r0 => 0, $r4 => 27.1, $rm => -2.71)
+    ) for "#$flags".comb.permutations>>.join;
     |@flat
 }
 
-plan @info/4;
+plan @info/2;
 
-for @info -> $format, $r0, $r4, $rm {
+for @info -> $format, @tests {
     subtest {
-        plan 6;
+        plan 2 * @tests;
 
-        is sprintf($format, $v0), $r0,
-          "sprintf('$format',$v0) eq '$r0'";
-        is sprintf($format, $v4), $r4,
-          "sprintf('$format',$v4) eq '$r4'";
-        is sprintf($format, $vm), $rm,
-          "sprintf('$format',$vm) eq '$rm'";
-
-        is sprintf($format.uc, $v0), $r0.uc,
-          "sprintf('$format.uc()',$v0) eq '$r0.uc()'";
-        is sprintf($format.uc, $v4), $r4.uc,
-          "sprintf('$format.uc()',$v4) eq '$r4.uc()'";
-        is sprintf($format.uc, $vm), $rm.uc,
-          "sprintf('$format.uc()',$vm) eq '$rm.uc()'";
+        for @tests {
+            is sprintf($format, .value), .key,
+              "sprintf('$format',{.value}) eq '{.key}'";
+            is sprintf($format.uc, .value.uc), .key.uc,
+              "sprintf('$format.uc()',{.value.uc}) eq '{.key.uc}'";
+        }
     }, "Tested '$format'";
 }
 
