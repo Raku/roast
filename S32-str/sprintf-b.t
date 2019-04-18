@@ -11,8 +11,7 @@ use Test;
 # the size/permutation value to create a proper format string.  Each test will
 # be done twice: once with a lowercase "b" and once with an uppercase "B".
 
-my ($v0, $v1, $v4, $vm) =
-                         0 ,         1 ,         4 ,        -4 ;
+#                        0 ,         1 ,         4 ,        -4 ;
 my @info = ( # |-----------|-----------|-----------|-----------|
              # no size or size explicitely 0
        '',   '',        "0",        "1",      "100",     "-100",
@@ -134,6 +133,7 @@ my @info = ( # |-----------|-----------|-----------|-----------|
     '-0 ',    8, " 0      ", " 1      ", " 100    ", "-100    ",
    '-+0 ',    8, "+0      ", "+1      ", "+100    ", "-100    ",
       '#',    8, "       0", "     0b1", "   0b100", "  -0b100",
+     '# ',    8, "       0", "     0b1", "   0b100", "  -0b100",
      '#0',    8, "00000000", "0b000001", "0b000100", "-0b00100",
     '#0 ',    8, " 0000000", " 0b00001", " 0b00100", "-0b00100",
      '#+',    8, "      +0", "    +0b1", "  +0b100", "  -0b100",
@@ -167,6 +167,7 @@ my @info = ( # |-----------|-----------|-----------|-----------|
     '-0 ',  8.2, " 00     ", " 01     ", " 100    ", "-100    ",
    '-+0 ',  8.2, "+00     ", "+01     ", "+100    ", "-100    ",
       '#',  8.2, "      00", "    0b01", "   0b100", "  -0b100",
+     '# ',  8.2, "      00", "    0b01", "   0b100", "  -0b100",
      '#0',  8.2, "      00", "    0b01", "   0b100", "  -0b100",
     '#0 ',  8.2, "      00", "    0b01", "   0b100", "  -0b100",
      '#+',  8.2, "     +00", "   +0b01", "  +0b100", "  -0b100",
@@ -184,34 +185,25 @@ my @info = ( # |-----------|-----------|-----------|-----------|
 
 ).map: -> $flags, $size, $r0, $r1, $r4, $rm {
     my @flat;
-    @flat.append('%' ~ $_ ~ $size ~ 'b', $r0, $r1, $r4, $rm)
-      for $flags.comb.permutations>>.join;
+    @flat.append(
+      '%' ~ $_ ~ $size ~ 'b',
+      ($r0 => 0, $r1 => 1, $r4 => 4, $rm => -4)
+    ) for $flags.comb.permutations>>.join;
     |@flat
 }
 
-plan @info/5;
+plan @info/2;
 
-for @info -> $format, $r0, $r1, $r4, $rm {
+for @info -> $format, @tests {
     subtest {
-        plan 8;
+        plan 2 * @tests;
 
-        is sprintf($format, $v0), $r0,
-          "sprintf('$format',$v0) eq '$r0'";
-        is sprintf($format, $v1), $r1,
-          "sprintf('$format',$v1) eq '$r1'";
-        is sprintf($format, $v4), $r4,
-          "sprintf('$format',$v4) eq '$r4'";
-        is sprintf($format, $vm), $rm,
-          "sprintf('$format',$vm) eq '$rm'";
-
-        is sprintf($format.uc, $v0), $r0.uc,
-          "sprintf('$format.uc()',$v0) eq '$r0.uc()'";
-        is sprintf($format.uc, $v1), $r1.uc,
-          "sprintf('$format.uc()',$v1) eq '$r1.uc()'";
-        is sprintf($format.uc, $v4), $r4.uc,
-          "sprintf('$format.uc()',$v4) eq '$r4.uc()'";
-        is sprintf($format.uc, $vm), $rm.uc,
-          "sprintf('$format.uc()',$vm) eq '$rm.uc()'";
+        for @tests {
+            is sprintf($format, .value), .key,
+              "sprintf('$format',{.value}) eq '{.key}'";
+            is sprintf($format.uc, .value.uc), .key.uc,
+              "sprintf('{$format.uc}',{.value.uc}) eq '{.key.uc}'";
+        }
     }, "Tested '$format'";
 }
 
