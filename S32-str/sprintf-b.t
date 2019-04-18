@@ -201,8 +201,8 @@ for @info -> $format, @tests {
         for @tests {
             is sprintf($format, .value), .key,
               "sprintf('$format',{.value}) eq '{.key}'";
-            is sprintf($format.uc, .value.uc), .key.uc,
-              "sprintf('{$format.uc}',{.value.uc}) eq '{.key.uc}'";
+            is sprintf($format.uc, .value), .key.uc,
+              "sprintf('{$format.uc}',{.value}) eq '{.key.uc}'";
         }
     }, "Tested '$format'";
 }
