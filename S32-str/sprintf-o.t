@@ -205,7 +205,7 @@ for @info -> $format, @tests {
         plan +@tests;
 
         is-deeply sprintf($format, |.value), .key,
-          "sprintf('$format',{.value}0) eq '{.key}'"
+          qq/sprintf("$format",{.value.list.join(",")}) eq '{.key}'/
           for @tests;
     }, "Tested '$format'";
 }

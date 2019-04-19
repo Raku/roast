@@ -206,9 +206,9 @@ for @info -> $format, @tests {
 
         for @tests {
             is-deeply sprintf($format, |.value), .key,
-              "sprintf('$format',{.value}) eq '{.key}'";
+              qq/sprintf("$format",{.value.list.join(",")}) eq '{.key}'/;
             is-deeply sprintf($format.uc, |.value), .key.uc,
-              "sprintf('{$format.uc}',{.value}) eq '{.key.uc}'";
+              qq/sprintf("{$format.uc}",{.value.list.join(",")}) eq '{.key.uc}'/;
         }
     }, "Tested '$format'";
 }
