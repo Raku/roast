@@ -123,9 +123,9 @@ for @info -> $format, @tests {
         plan 2 * @tests;
 
         for @tests {
-            is-deeply sprintf($format, .value), .key,
+            is-deeply sprintf($format, |.value), .key,
               "sprintf('$format',{.value}) eq '{.key}'";
-            is-deeply sprintf($format.uc, .value), .key.uc,
+            is-deeply sprintf($format.uc, |.value), .key.uc,
               "sprintf('$format.uc()',{.value}) eq '{.key.uc}'";
         }
     }, "Tested '$format'";
