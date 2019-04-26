@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan 28;
 
 class Parent {
     has $.x;
@@ -138,6 +138,17 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     my class RT77200 { }
     lives-ok { my RT77200 $lex .= new },
         "Can call .=new on a variable of a lexical type";
+}
+
+# https://github.com/rakudo/rakudo/issues/2782
+{
+    my class A { has $.a; }
+    my class B { has $.b }
+    my class C is B is A { }
+    given C.new(:a(1), :b(2)) {
+        is .a, 1, "Initialization of attributes in multiple inheritance works (1)";
+        is .b, 2, "Initialization of attributes in multiple inheritance works (2)";
+    }
 }
 
 # vim: ft=perl6
