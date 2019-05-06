@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 20;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
@@ -38,6 +38,28 @@ my $name = $*SCHEDULER.^name;
     sleep 3;
     is $tracker, "1s2s2scatch", "Timer tasks on $name :at/:catch ran in right order";
     LEAVE @c>>.cancel;
+}
+
+{
+    my Int $count = 0;
+
+    lives-ok {
+        my Cancellation $c = $*SCHEDULER.cue({ cas $count, { .succ } }, at => Inf);
+    }, "Can pass :at as Inf without throwing";
+
+    sleep 3;
+    is $count, 0, "Passing :at as Inf never runs the given block";
+
+    lives-ok {
+        my Cancellation $c = $*SCHEDULER.cue({ cas $count, { .succ } }, at => -Inf);
+    }, "Can pass :at as -Inf without throwing";
+
+    sleep 3;
+    is $count, 1, "Passing :at as -Inf instantly runs the given block";
+
+    throws-like {
+        my Cancellation $c = $*SCHEDULER.cue(-> { }, at => NaN);
+    }, X::AdHoc, "Passing :at as NaN throws", message => "Cannot set NaN as a number of seconds";
 }
 
 # fake scheduling from here on out
