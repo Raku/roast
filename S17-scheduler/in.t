@@ -48,20 +48,17 @@ my $name = $*SCHEDULER.^name;
     lives-ok {
         my Cancellation $c = $*SCHEDULER.cue({ cas $count, { .succ } }, in => Inf);
     }, "Can pass :in as Inf to ThreadPoolScheduler.cue without throwing";
-
     sleep 3;
     is $count, 0, "Passing :in as Inf to ThreadPoolScheduler.cue never runs the given block";
 
     lives-ok {
         my Cancellation $c = $*SCHEDULER.cue({ cas $count, { .succ } }, in => -Inf);
     }, "Can pass :in as -Inf to ThreadPoolScheduler.cue without throwing";
-
     sleep 3;
     is $count, 1, "Passing :in as -Inf to ThreadPoolScheduler.cue instantly runs the given block";
-
     throws-like {
         my Cancellation $c = $*SCHEDULER.cue(-> { }, in => NaN);
-    }, X::AdHoc, "Passing :in as NaN to ThreadPoolScheduler.cue throws", message => "Cannot set NaN as a number of seconds";
+    }, X::Scheduler::CueInNaNSeconds, "Passing :in as NaN to ThreadPoolScheduler.cue throws";
 }
 
 # fake scheduling from here on out
@@ -143,5 +140,5 @@ $name = $*SCHEDULER.^name;
 
     throws-like {
         $*SCHEDULER.cue(-> { }, in => NaN);
-    }, X::AdHoc, "Passing :in as NaN to CurrentThreadScheduler.cue throws", message => "Cannot set NaN as a number of seconds";
+    }, X::Scheduler::CueInNaNSeconds, "Passing :in as NaN to CurrentThreadScheduler.cue throws";
 }
