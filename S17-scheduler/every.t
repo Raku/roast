@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 25;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
