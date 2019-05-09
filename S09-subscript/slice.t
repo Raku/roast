@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 33;
+plan 34;
 
 {   my @array = (3,7,9,11);
 
@@ -127,6 +127,17 @@ subtest 'no "drift" when re-using lazy iterable for indexing' => {
     my @idx3 := 0, 1, 2, |(lazy 3, 4), 5, 6;
     is-deeply <a b>[@idx3], <a b>,
         'lazy iterable with iterator starting non-lazy';
+}
+
+# https://github.com/rakudo/rakudo/issues/2872
+subtest 'infinite ranges and whatever stars' => {
+    plan 6;
+    is-deeply (^3)[0 ..  Inf],       (0, 1, 2), 'Inf range inclusive';
+    is-deeply (^3)[0 ..^ Inf],       (0, 1, 2), 'Inf range exclusive';
+    is-deeply (^3)[0 ..  *],         (0, 1, 2), 'Whatever range inclusive';
+    is-deeply (^3)[0 ..^ *],         (0, 1, 2), 'Whatever range exclusive';
+    is        (^3)[*-1],             2,         'Whatever callable';
+    is        (^3)[{ $^elems - 1 }], 2,         'Callable';
 }
 
 # vim: ft=perl6
