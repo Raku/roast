@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 16;
 
 {
   my %hash = (a => 1, b => 2, d => 4, c => 3);
@@ -40,6 +40,16 @@ plan 12;
 
     is "%hash{'b'}",  "2",  'can quote hash indexes in interpolations 1';
     is "%hash{"b"}",  "2",  'can quote hash indexes in interpolations 2';
+}
+
+# R#2825
+{
+    my %h = a => 42;
+    my $foo = "a";
+    is "foo %h<<a>> bar", "foo 42 bar", '%h<<a>> interpolates correctly';
+    is "foo %h<<$foo>> bar", "foo 42 bar", '%h<<$foo>> interpolates correctly';
+    is "foo %h«a» bar", "foo 42 bar", '%h«a» interpolates correctly';
+    is "foo %h«$foo» bar", "foo 42 bar", '%h«$foo» interpolates correctly';
 }
 
 # vim: ft=perl6
