@@ -300,7 +300,7 @@ $echoTap.close;
     $first.close;
     $second.close;
 
-    #?rakudo.jvm todo 'NullPointerException'
+    #?rakudo.jvm skip 'hangs (sometimes)'
     lives-ok { await $first-done, $second-done }, "both receivers finished without exception";
 
     #?rakudo.jvm 2 todo 'got nothing'

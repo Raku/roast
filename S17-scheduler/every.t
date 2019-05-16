@@ -116,6 +116,7 @@ my $name = $*SCHEDULER.^name;
         $c1 = $*SCHEDULER.cue({ cas $count, { .succ } }, every => Inf);
     }, "Can pass :every as Inf without throwing";
     sleep 3;
+    #?rakudo.jvm todo 'fails more often than it passes'
     is $count, 1, "Passing :every as Inf immediately runs the given block once";
 
     lives-ok {
