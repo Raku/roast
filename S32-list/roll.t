@@ -163,10 +163,7 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
 }
 
 # RT #132246
-#?rakudo.jvm skip 'Problem with ½: Missing required term after infix, Unicode related'
-#?DOES 1
-{
-  subtest '.pick on object Hashes' => {
+subtest '.pick on object Hashes' => {
     plan 2;
     my %obj{Any} = question => 42;
     is-deeply %obj.pick, %obj.pairs.pick, 'single-Pair Hash';
@@ -174,7 +171,6 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
     my %h := :{ :42foo, (True) => False, 42e0 => ½ };
     is-deeply gather { %h.pick.take xx 300 }.unique.sort,
         (:42foo, (True) => False, 42e0 => ½).sort, 'many Pairs';
-  }
 }
 
 # vim: ft=perl6

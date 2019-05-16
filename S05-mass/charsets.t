@@ -26,16 +26,9 @@ plan 17;
     #?rakudo.jvm todo 'Unicode 6.3 -- lower characters'
     is $latin-chars.comb(/<lower>/).join, "abcdefghijklmnopqrstuvwxyzµßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'lower chars';
 
-    #++ FLAPPERS on jvm
-    # unicode 6.1 reclassifies § and ¶ as punctuation characters, so actual results may vary depending
-    # on unicode version bundled with jdk, icu etc.
-
-    # failing on Java < 8 (requires unicode 6.1)
     is $latin-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, 'punct chars since unicode 6.1';
 
-    # failing on Java < 8 (requires unicode 6.1)
     is $latin-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, ':Punctuation chars since unicode 6.1';
-    #-- FLAPPERS
 
     is $latin-chars.comb(/<upper>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ", 'upper chars';
 
