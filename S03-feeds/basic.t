@@ -7,10 +7,10 @@ use Test;
 
 =begin pod
 
-Tests for the feed operators 
+Tests for the feed operators
 
-    ==> and <== 
-    
+    ==> and <==
+
 =end pod
 
 plan 23;
@@ -18,7 +18,7 @@ plan 23;
 {
     my @a = (1, 2);
     my (@b, @c);
-    
+
     @a ==> @b;
     @c <== @a;
 
@@ -66,7 +66,6 @@ plan 23;
 
     @data = <1 2 4 5 7 8>;
     @data <== grep {$_ % 2} <== eager @data;
-    #?rakudo 2 todo 'feeds + eager'
     is(~@data, ~@odds, '@arr <== grep <== eager @arr works');
 
     @data = <1 2 4 5 7 8>;
@@ -81,7 +80,6 @@ plan 23;
 
     @data <== map {$_ + 1} <== @tap <== grep {$_ % 2} <== eager @data;
     is(@tap, <1 3 5 7 9>, '@tap contained what was expected at the time');
-    #?rakudo todo 'feeds + eager'
     is(@data, <2 4 6 8 10>, 'final result was unaffected by the tap variable');
 }
 
@@ -114,14 +112,13 @@ plan 23;
 
 # feed and Inf
 {
-  dies-ok { my @a <== 0..Inf }
+  lives-ok { my @a <== (0..*) }, 'feed from lazy list';
 }
 
 {
   my $call-count = 0;
-  my @a <== gather for 1..10 -> $i { $call-count++; take $i };
+  my @a <== lazy gather for 1..10 -> $i { $call-count++; take $i };
   @a[0];
-  #?rakudo todo "isn't lazy"
   is $call-count, 1;
 }
 
