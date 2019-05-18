@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 51;
+plan 52;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -282,5 +282,8 @@ is ~("ddd" ~~ / [ x | d ] **? 2..3 /), "dd", 'frugal match with alternation';
 # RT #126972
 is_run ｢/a/; print "pass"｣, {:out<pass>, :err(''), :0status},
     '/a/ in sink context in in uppermost scope does not explode';
+
+# https://github.com/rakudo/rakudo/issues/2901
+is 'a' ~~ / a & a /, 'a', 'Unescaped & works as conjunction';
 
 # vim: ft=perl6
