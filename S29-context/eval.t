@@ -3,7 +3,7 @@ use nqp;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
-plan 27;
+plan 28;
 
 # L<S29/Context/"=item EVAL">
 
@@ -118,11 +118,13 @@ is_run 'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode',
 
 # :check parameter on EVAL
 {
-    my $compile-time = False;
-    my $run-time     = False;
-    EVAL q/BEGIN $compile-time = True; $run-time = True/, :check;
-    ok $compile-time, 'Did the EVAL run compile time actions';
-    nok $run-time, 'Did the EVAL NOT run the code';
+    my $begin = False;
+    my $check = False;
+    my $run   = False;
+    EVAL q/BEGIN $begin = True; CHECK $check = True; $run = True/, :check;
+    ok $begin, 'Did the EVAL run BEGIN';
+    ok $check, 'Did the EVAL run CHECK';
+    nok $run, 'Did the EVAL NOT run the code';
 }
 
 # vim: ft=perl6
