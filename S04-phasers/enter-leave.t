@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 31;
+plan 32;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -272,6 +272,25 @@ plan 31;
     my $res;
     -> { LEAVE $res := now - ENTER now }();
     isa-ok $res, Duration, 'using ENTER inside LEAVE does not crash';
+}
+
+# https://colabti.org/irclogger/irclogger_log/perl6?date=2019-04-26#l196
+# When a block has no local variables, the ENTER phaser would not success-
+# fully decont a variable out of a surrounding scope. Didn't have a ticket,
+# was fixed in Rakudo as a side-effect of 541a4f1628.
+{
+     my $set;
+     # Run at most 20 iterations
+     my @v = ^20;
+     my $i = 0;
+     loop {
+         $set ∪= @v[$i++];
+         last if $i == @v;
+         # Should be true in the 2nd iteration, but is always (Set) in
+         # a buggy rakudo version.
+         last if ENTER $set<>;
+     }
+     is $set.elems, 2, 'decont in ENTER works without locals';
 }
 
 # vim: ft=perl6

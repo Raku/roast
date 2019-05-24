@@ -70,7 +70,6 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
 }
 
 # RT #130761
-
 {
     sub f() {
         sub g() {
@@ -79,7 +78,8 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
             }
         }
     }
-    #?rakudo todo 'RT #130761'
+    #?rakudo.js todo 'RT #130761'
+    #?rakudo.moar todo 'RT #130761'
     is f()(), 'g', 'Inner blocks are transparent to &?ROUTINE (RT#130761)';
 }
 

@@ -372,6 +372,7 @@ group-of 2 => 'negative offset in JIT lables errors' => {
     'no weird type check issues with modules';
 }
 
+#?rakudo.jvm todo 'dies for unknown reason'
 { # https://github.com/rakudo/rakudo/issues/1207
     (my $lib := make-temp-dir).add('Foo.pm6').spurt:
         ｢our sub module-transform { my Int:D % = :1a }｣;

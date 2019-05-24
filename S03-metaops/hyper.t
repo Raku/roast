@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 409;
+plan 410;
 
 =begin pod
 
@@ -1122,5 +1122,12 @@ subtest 'method call variants respect nodality' => {
 # https://github.com/rakudo/rakudo/issues/2674
 is-deeply { a => (1,2,3) }.map({ .key <<=>>> .value }).list, ((:1a, :2a, :3a),),
     'No crash when RHS to be expanded is an itemized list';
+
+# https://github.com/rakudo/rakudo/issues/2480
+lives-ok {
+    my @GH2480 = [[1], [2, 3]];
+    my @GH2480-m = @GH2480 »*» 0;
+    @GH2480-m[0][0] = 42;
+}, 'An array built with a hyperoperator is mutable';
 
 # vim: ft=perl6

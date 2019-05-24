@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 124;
+plan 127;
 
 # construction
 {
@@ -265,4 +265,14 @@ is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
     # first time .pred is called, $!daycount is not initialized yet
     is $date.pred, '2019-01-17', "does .pred work on on Date subclasses $_"
       for ^2;
+}
+
+# R#2707
+{
+    is -100 + Date.new("2019-01-01"), Date.new("2018-09-23"),
+      'does adding Date to negative value work ok';
+    is Date.new("2019-01-01") + -100, Date.new("2018-09-23"),
+      'does adding negative values from Date work ok';
+    is Date.new("2019-01-01") - -100, Date.new("2019-04-11"),
+      'does subtracting negative values from Date work ok';
 }

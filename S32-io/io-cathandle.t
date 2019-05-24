@@ -697,7 +697,7 @@ subtest 'slurp method' => {
         ~ Blob[uint8].new(200, 200         ).decode('utf8-c8'),
         ':enc parameter works';
 
-    #?rakudo todo 'malformed 1-char slurp returns empty string RT#131379'
+    #?rakudo.moar todo 'malformed 1-char slurp returns empty string RT#131379'
     # RT #131379
     throws-like {
       IO::CatHandle.new(files, make-temp-file content => Buf.new: 200).slurp
@@ -736,10 +736,7 @@ subtest 'Str method' => {
     isa-ok $cat.Str, Str, '4';
 }
 
-#?rakudo.jvm skip 'UnwindException'
-#?DOES 1
-{
-  subtest 'Supply method' => {
+subtest 'Supply method' => {
     plan 5;
     my @pieces = 'fo♥', 'b♥r', '', 'meow';
     my $str = [~] @pieces;
@@ -794,7 +791,6 @@ subtest 'Str method' => {
         react whenever $cat.Supply { @res.push: $_ }
         is-deeply @res, [], 'supply on exhausted cat is empty (second call)';
     }
-  }
 }
 
 subtest 't method' => {

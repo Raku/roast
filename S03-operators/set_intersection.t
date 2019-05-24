@@ -192,6 +192,7 @@ for
 
     for @triplets -> $left, $right, $result {
 #exit dd $left, $right, $result unless
+#?rakudo.js.browser todo "broken on all backends when precompiling"
         is-deeply op($left,$right), $result,
           "$left.gist() $name $right.gist()";
     }

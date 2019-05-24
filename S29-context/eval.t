@@ -3,7 +3,7 @@ use nqp;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
-plan 25;
+plan 28;
 
 # L<S29/Context/"=item EVAL">
 
@@ -115,5 +115,16 @@ is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
 
 is_run 'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode',
     {:out('I ® U'), :err(''), :0status}, 'EVAL(Buf)';
+
+# :check parameter on EVAL
+{
+    my $begin = False;
+    my $check = False;
+    my $run   = False;
+    EVAL q/BEGIN $begin = True; CHECK $check = True; $run = True/, :check;
+    ok $begin, 'Did the EVAL run BEGIN';
+    ok $check, 'Did the EVAL run CHECK';
+    nok $run, 'Did the EVAL NOT run the code';
+}
 
 # vim: ft=perl6

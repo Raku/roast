@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 34;
+plan 35;
 
 # L<S02/Adverbial Pair forms>
 
@@ -76,3 +76,10 @@ plan 34;
               (dd => 99999999999999999999999),
               "Large numeric adverbs don't error out, and also give the correct value";
 } # 34
+
+# GH #2863
+{
+    is {:a<A> :b<B>, :c<C>},
+      {a => "A", b => "B", c => "C"},
+      "lack of comma does not cause LTA error"
+}

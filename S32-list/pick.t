@@ -177,10 +177,7 @@ nok ([==] (^2**64).roll(10).map(* +& 15)), 'Range.pick has enough entropy';
 }
 
 # RT #132246
-#?rakudo.jvm skip 'Problem with ½: Missing required term after infix, Unicode related'
-#?DOES 1
-{
-  subtest '.pick on object Hashes' => {
+subtest '.pick on object Hashes' => {
     plan 2;
     my %obj{Any} = question => 42;
     is-deeply %obj.pick, %obj.pairs.pick, 'single-Pair Hash';
@@ -188,7 +185,6 @@ nok ([==] (^2**64).roll(10).map(* +& 15)), 'Range.pick has enough entropy';
     my %h := :{ :42foo, (True) => False, 42e0 => ½ };
     is-deeply gather { %h.pick.take xx 300 }.unique.sort,
         (:42foo, (True) => False, 42e0 => ½).sort, 'many Pairs';
-  }
 }
 
 

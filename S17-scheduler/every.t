@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 25;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
@@ -104,4 +104,32 @@ my $name = $*SCHEDULER.^name;
     diag "seen $b deaths" if !
       ok 5 < $b < 15, "Cue with :every/:at/:catch schedules repeatedly (2)";
     LEAVE $c.cancel;
+}
+
+{
+    my Cancellation $c1;
+    my Cancellation $c2;
+    my Cancellation $c3;
+    my Int          $count = 0;
+
+    lives-ok {
+        $c1 = $*SCHEDULER.cue({ cas $count, { .succ } }, every => Inf);
+    }, "Can pass :every as Inf without throwing";
+    sleep 3;
+    #?rakudo.jvm todo 'fails more often than it passes'
+    is $count, 1, "Passing :every as Inf immediately runs the given block once";
+
+    lives-ok {
+        $c2 = $*SCHEDULER.cue({ cas $count, { .succ } }, every => -Inf);
+    }, "Can pass :every as -Inf without throwing";
+    sleep 3;
+    cmp-ok $count, '>', 0, "Passing :every as -Inf immediately runs the given block";
+
+    throws-like {
+        $c3 = $*SCHEDULER.cue(-> { }, every => NaN);
+    }, X::Scheduler::CueInNaNSeconds, "Passing :at as NaN throws";
+
+    $c1.cancel if $c1.defined;
+    $c2.cancel if $c2.defined;
+    $c3.cancel if $c3.defined;
 }

@@ -15,7 +15,7 @@ sub temp_name(Str $fnbase is copy) {
 # Directories
 
 my @rakudo-files = map {$_.relative}, dir;
-my @rakudo-expected = <Makefile VERSION CREDITS LICENSE>;
+my @rakudo-expected = <Makefile CREDITS LICENSE README.md>;
 ok @rakudo-expected (<=) @rakudo-files, "dir"
    or diag "missing: {@rakudo-expected (-) @rakudo-files}";
 

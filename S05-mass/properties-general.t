@@ -722,14 +722,12 @@ ok("\x[345B]\c[EXCLAMATION MARK]\c[PARAGRAPH SEPARATOR]" ~~ m/<:ParagraphSeparat
 # C           Other
 
 # RT124863
-#?rakudo.jvm 3 todo "Unions of properties of non-existent codepoints RT #124863"
 ok("\x[FFFE]" ~~ m/^<:C>$/, q{Match <C> (Other)} );
 ok(!( "\x[FFFE]" ~~ m/^<:!C>$/ ), q{Don't match negated <:C> (Other)} );
 ok(!( "\x[FFFE]" ~~ m/^<-:C>$/ ), q{Don't match inverted <:C> (Other)} );
 ok(!( "\x[6A3F]"  ~~ m/^<:C>$/ ), q{Don't match unrelated <:C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<:!C>$/, q{Match unrelated negated <:C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <:C> (Other)} );
-#?rakudo.jvm todo "Unions of properties of non-existent codepoints RT #124863"
 ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <:C> (Other)} );
 ok "\x[FFFE]" ~~ /<:Cn>/, "Match unanchored <:Cn> for noncharacters";
 ok "\x[1FFFE]" ~~ /<:Cn>/, "Match unanchored <:Cn> for noncharacters";
@@ -808,7 +806,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
 {
     my $ascii-chars = [~] chr(0)..chr(0x7F);
     my $latin-chars = [~] chr(0)..chr(0xFF);
-    #?rakudo.jvm skip 'PatternSyntaxException: Unknown character block name {ASCII}'
+    #?rakudo.jvm skip 'PatternSyntaxException: Unknown character property name {In/IsInASCII} near index 10'
     is $ascii-chars.comb(/<:InASCII>+/).join(""), $ascii-chars, 'ascii chars';
 
     is 'abc' ~~ /<:alpha>+/, 'abc', 'alpha chars';

@@ -8,9 +8,10 @@ plan 4;
 # RT #123520
 # This test comes first in the file so it's the first to start any threads;
 # this means we can test the actual bug in the ticket.
+#?rakudo.jvm skip 'NullPointerException'
 {
     my @order;
-    my $p1 = start { sleep 3; @order.push(3) },
+    my $p1 = start { sleep 3; @order.push(3) };
     my $p2 = Promise.at(now + 1).then({ @order.push(1) });
     await Promise.anyof($p1, $p2);
     sleep 1;

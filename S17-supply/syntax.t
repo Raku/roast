@@ -541,6 +541,7 @@ lives-ok {
     }
 }, 'No react guts crash in case that once spat out two done messages either';
 
+#?rakudo.jvm skip 'hangs with SaveStackException in Thread-xx'
 lives-ok {
     my $s = supply { whenever Supply.interval(0.001) { done } }
     await do for ^4 {
@@ -599,6 +600,7 @@ lives-ok {
 
 # Golf of a react block with a TCP server, which failed to close taps of
 # incoming data on the connection.
+#?rakudo.jvm skip 'hangs with SaveStackException in Thread-xx'
 {
     my $closed = 0;
     my $sod = Supply.on-demand:
@@ -749,6 +751,7 @@ lives-ok {
     }, "no exception for 'last' inside a single whenever in a react without LAST block";
 }
 
+#?rakudo.jvm skip 'UnwindException'
 {
     lives-ok {
         react { 
@@ -764,6 +767,7 @@ lives-ok {
     }, "no exception for 'last' inside two whenevers in a react without LAST block";
 }
 
+#?rakudo.jvm skip 'UnwindException'
 {
     my @outputs;
     my Supplier $inputs = Supplier::Preserving.new;

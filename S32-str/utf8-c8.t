@@ -63,6 +63,7 @@ plan 66;
         'Encoding back to utf8-c8 round-trips';
 }
 
+#?rakudo.js.browser skip "slurp doesn't work in the browser"
 {
     my $test-file := make-temp-path content => Buf.new:
         ord('A'), 0xFA, ord('B'), 0xFB, 0xFC, ord('C'), 0xFD;
@@ -83,6 +84,9 @@ plan 66;
 if $*DISTRO.is-win {
     skip('Not clear how to recreate this situation on Windows', 2);
 }
+elsif $*DISTRO.name eq 'browser' {
+    skip('Calling the shell doesn\'t work ', 2);
+}
 else {
     {
         my $cmd = Q{env ACME=$'L\xe9on' } ~ $*EXECUTABLE ~ Q{ -e 'say("lived")'};
@@ -90,8 +94,10 @@ else {
         is $proc.out.get, 'lived', 'Can run Perl 6 with non-UTF-8 environment';
     }
     {
-        my $cmd = Q{echo 'say(42)' > $'L\xe9on' && } ~ $*EXECUTABLE ~ Q{ $'L\xe9on' && rm $'L\xe9on'};
-        my $proc = shell $cmd, :out;
+        my $filename = "L\xe9on";
+        spurt $filename, 'say(42)';
+        LEAVE { try unlink $filename }
+        my $proc = run $*EXECUTABLE, $filename, :out;
         is $proc.out.get, '42', 'Can run Perl 6 sourcefile with non-UTF-8 name';
     }
 }
@@ -99,6 +105,9 @@ else {
 # RT #126756
 is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works';
 
+#?rakudo.js.browser skip "writing to files doesn't work in the browser"
+# @bufs.elems * 2 + 2
+#?DOES 20
 # RT #128184
 {
     my @bufs =
@@ -122,6 +131,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
             109,108,228,192);
 
     my $test-file := make-temp-path;
+
     for @bufs.kv -> $i, $buf {
         is-deeply Buf.new($buf.decode('utf8-c8').encode('utf8-c8').list), $buf,
             ".decode.encode roundtrips correctly for utf8-c8 [Buf #{$i+1}]";
@@ -160,6 +170,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
 }
 
 # MoarVM #482
+#?rakudo.js.browser skip "writing to files doesn't work in the browser"
 {
     is Buf.new('“'.encode('utf8')).decode('utf8-c8'), '“',
         'Valid and NFC UTF-8 comes out fine (string case)';
@@ -174,6 +185,8 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
 # RT#127671
 if $*DISTRO.is-win {
     skip('Not clear if there is an alternative to this issue on Windows', 4);
+} elsif $*DISTRO.name eq 'browser' {
+    skip('We don\'t have directories in the browser', 4);
 } else {
     my $test-dir = make-temp-dir;
     # ↑ normal directory in TMPDIR to hide our scary stuff

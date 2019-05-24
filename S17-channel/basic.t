@@ -57,6 +57,8 @@ plan 19;
 
 }
 
+#?rakudo.jvm skip 'NullPointerException'
+#?DOES 1
 {
     my $c = Channel.new;
     my $timer = Supply.interval(5).tap: {

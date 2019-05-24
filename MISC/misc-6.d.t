@@ -1,24 +1,24 @@
-use v6.d.PREVIEW;
+use v6.d;
 use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-# This file is for various 6.d-specific tests that require the use of `v6.d.PREVIEW` pragma.
+# This file is for various 6.d-specific tests that require the use of `v6.d` pragma.
 # They might be rearranged into other files in the future, but for now, keeping them in this
 # file avoids creating a ton of `-6.d.t` files for the sake of single tests.
 
 plan 7;
 
 group-of 6 => ':sym<> colonpair on subroutine names is reserved' => {
-    throws-like 'use v6.d.PREVIEW; sub meow:sym<bar> {}', X::Syntax::Reserved, ':sym<...>';
-    throws-like 'use v6.d.PREVIEW; sub meow:sym«bar» {}', X::Syntax::Reserved, ':sym«...»';
-    throws-like 'use v6.d.PREVIEW; sub meow:foo<bar>:sym<bar> {}', X::Syntax::Reserved,
+    throws-like 'use v6.d; sub meow:sym<bar> {}', X::Syntax::Reserved, ':sym<...>';
+    throws-like 'use v6.d; sub meow:sym«bar» {}', X::Syntax::Reserved, ':sym«...»';
+    throws-like 'use v6.d; sub meow:foo<bar>:sym<bar> {}', X::Syntax::Reserved,
         ':foo<bar>:sym<...>';
-    throws-like 'use v6.d.PREVIEW; sub meow:foo<bar>:sym«bar» {}', X::Syntax::Reserved,
+    throws-like 'use v6.d; sub meow:foo<bar>:sym«bar» {}', X::Syntax::Reserved,
         ':foo<bar>:sym«...»';
-    throws-like 'use v6.d.PREVIEW; sub meow:sym<bar>:foo<bar> {}', X::Syntax::Reserved,
+    throws-like 'use v6.d; sub meow:sym<bar>:foo<bar> {}', X::Syntax::Reserved,
         ':sym<...>:foo<bar>';
-    throws-like 'use v6.d.PREVIEW; sub meow:sym«bar»:foo<bar> {}', X::Syntax::Reserved,
+    throws-like 'use v6.d; sub meow:sym«bar»:foo<bar> {}', X::Syntax::Reserved,
         ':sym«...»:foo<bar>';
 }
 
@@ -46,7 +46,7 @@ group-of 5 => '$*ARGFILES is set to $*IN inside sub MAIN' => {
     }, 'inside MAIN in 6.c language (without @*ARGS content)';
 
     is_run ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         .say for lines;
         sub MAIN(*@args) {
             .say for lines;
@@ -57,7 +57,7 @@ group-of 5 => '$*ARGFILES is set to $*IN inside sub MAIN' => {
     }, 'MAIN is an only sub';
 
     is_run ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         .say for lines;
         multi MAIN($, $, $) {
             .say for lines;
@@ -69,7 +69,7 @@ group-of 5 => '$*ARGFILES is set to $*IN inside sub MAIN' => {
     }, 'MAIN is a multi sub';
 
     is_run ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         .say for lines;
     ｣,
     "blah\nbleh\nbloh", :@args, {
@@ -89,8 +89,9 @@ group-of 8 => 'native num defaults to 0e0' => {
     my num @a; is-deeply @a[0], 0e0, 'native num array unset element';
 }
 
+#?rakudo.jvm todo 'got err: ""'
 is_run ｢
-    use v6.d.PREVIEW;
+    use v6.d;
     # override any possible deprecation silencers implementations may have
     BEGIN %*ENV<RAKUDO_NO_DEPRECATIONS> = 0;
     my $x = 42;     undefine $x;
