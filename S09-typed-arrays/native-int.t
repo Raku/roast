@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 164 + @uint * 2 + 2;
+plan (@int + @uint) * 164 + @uint * 2 + 3;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -313,4 +313,12 @@ dies-ok { my int @a = ^Inf; 42 }, 'Trying to assign ^Inf to an int array dies';
 
     #?rakudo.js todo 'this does not work on 32bit backends'
     is $result1, $result2, "is $result1 == $result2";
+}
+
+# R#2912
+{
+    my @a;
+    @a[1] = 1;
+    my int @b = @a;
+    is-deeply @b, (my int @ = 0,1), 'did we survive the hole';
 }
