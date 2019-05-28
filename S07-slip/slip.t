@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 23;
+plan 25;
 
 is (1, |(2,3), 4).gist, '(1 2 3 4)', "simple | middle";
 is (|(2,3), 4).gist, '(2 3 4)', "simple | left";
@@ -46,4 +46,14 @@ is (1, slip flat (2,3)).gist, '(1 2 3)', "slip flat listops right";
     my $slip = slip <a b c>;
     is-deeply [$slip.perl.EVAL], [$slip],
         'can .perl.EVAL roundtrip an itemized slip';
+}
+
+# R#2930
+{
+    my @a = ^10;
+    my $s := @a.Slip;
+    # cannot use is-deeply because of issues with testing Slips
+    is $s, (^10).Slip, 'does an Array slip correctly';
+    @a.push(42);
+    is $s, (^10).Slip, 'does the Slip keep the original state';
 }
