@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 16;
 
 # TODO: move to S02?
 # L<S02/Generic types/>
@@ -75,16 +75,25 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
     is-approx $t, 3.666667, 'coerce to Rat via type capture';
 }
 
-# GH #2169
-
+# GH rakudo/rakudo#2169
 {
-    sub type_test (::T $type) {
+    sub f1_2169 (::T $type) {
         my T $t;
         $t.VAR.default;
     }
 
-    isa-ok type_test( Int ), Int, "default is instantiated from a type object";
-    isa-ok type_test( "The Answer" ), Str, "default is instantiated from a concrete object type";
+    isa-ok f1_2169( Int ), Int, "default is instantiated from a type object";
+    isa-ok f1_2169( "The Answer" ), Str, "default is instantiated from a concrete object type";
+
+    my sub f2_2169(::T \type) {
+        my T $t;
+        $t = Nil;
+        $t;
+    }
+    my $type;
+    lives-ok { $type = f2_2169(Rat) }, "it's ok to assign Nil to a variable of a captured type";
+    isa-ok $type, Rat, "reset to default sets varible to captured type";
+
 }
 
 # vim: ft=perl6
