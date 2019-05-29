@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 37;
+plan 38;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -253,5 +253,11 @@ subtest 'degenerate cases' => {
 
 # https://github.com/rakudo/rakudo/issues/1739
 is-eqv <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
+
+# R#2937
+{
+    is-deeply sort( {1}, ^2), (0,1),
+      'is sorting a 2 elem list with a mapper stable?';
+}
 
 # vim: ft=perl6
