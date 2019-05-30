@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 41;
 
 =begin pod
 
@@ -170,6 +170,27 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
 {
     role Foo[::T] { has T @.a = T }; class Bar {};
     is( Foo[Bar].new.a[0], Bar, 'generic role with defaulted and typed attr' );
+}
+
+# GH #2698
+{
+    my role PR00[::T] { }
+    my role PR01[::T] { }
+    my role PR02 { }
+
+    my role PR1 does PR00[Int] { }
+    my role PR1[::T] does PR00[T] { }
+    my role PR1[::T1, ::T2] does PR00[T1] does PR01[T2] does PR02 { }
+
+    my \r = PR1[Int, Str];
+
+    my @expect_roles = PR00[Int], PR01[Str], PR02;
+    for @expect_roles -> \expected {
+        ok r ~~ expected, "PR1 type match against consumed " ~ expected.^name ~ " role";
+    }
+
+    ok r ~~ PR01[Str], "Curryied role matches a consumed role explicitly";
+    nok r ~~ PR00[Str], "Curryied role only matches its own consumed roles";
 }
 
 # vim: ft=perl6

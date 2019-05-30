@@ -6,7 +6,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 152;
+plan @num * 152 + 1;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -283,4 +283,12 @@ for @num -> $T {
 
     @ssb.push(42e0);
     is @ssa ~~ @ssb, False, "Smartmatching different $t arrays works";
+}
+
+# R#2912
+{
+    my @a;
+    @a[1] = 1e0;
+    my num @b = @a;
+    is-deeply @b, (my num @ = 0e0,1e0), 'did we survive the hole';
 }
