@@ -1,7 +1,7 @@
 # WORKING DRAFT: Language Release Guide
 
-This document contains the process for releasing the major version of the language. It uses
-`6.d` version as example. Adjust that reference for the version you're actually releasing.
+_This document contains the process for releasing the major version of the language. It uses
+`6.d` version as example. Adjust that reference for the version you're actually releasing._
 
 Many of the tasks in this document are concurrent. Please read through the entire document.
 
@@ -12,20 +12,59 @@ please list the main repository for those in this section:
 
 * Rakudo https://github.com/rakudo/rakudo
 
+## Terminology
+
+The following terms are used in this document and in other related papers:
+
+- _language revision_ or _revision_
+
+  A set of specifications defining a Perl 6 language variant. Revisions are represented by symbolic names consisting of
+  a single letter of Latin alphabet and may have an alias. For example, revision `c` is `Christmas`; `d` is `Divali`.
+
+- _language version_ or _version_
+
+  Version is a string which represents full revision identification at implementation level. It consist of `6.` prefix
+  followed by revision letter. For example, `6.d`. In the language code and sometimes at other location the version
+  string might be prefixed with `v` letter to be unambiguously identified: `v6.d`
+
+- `review`
+
+   The process of preparing a new language release.
+
+- `PREVIEW`
+
+   A modifier to mark language revision which is currently is in _review_ status: `e.PREVIEW`, `6.e.PREVIEW`,
+   `v6.e.PREVIEW`.
+
+## Release Status
+
+_This section contains excerpts from [this discussion](https://github.com/perl6/problem-solving/issues/31)._
+
+Language release process is based on the fact that changes are only allowed to a revision in _review_ status. Once a
+revision is released it becomes _immutable_. From this moment on the only changes allowed are fixes. From the point of
+view of a versioning system like git would look like the following diagram:
+
+```
+             6.d tag
+              V
+---[master]---O-----------------> master now defines 6.e.PREVIEW
+               \
+                +---[6.d-errata]
+```
+
 ## Preparation
 
-Release preparation should commence well in advance of planned release date, as there's often
-a large amount of work to perform.
+Release preparation should commence well in advance of planned release date, as there's often a large amount of work to
+perform.
 
-### Prep Repo
+### Communication Channels
 
-To keep various communications for the particular release in one place, and separate from general
-spec communications, a [separate repository](https://github.com/perl6/6.d-prep) is created:
+All communications about language development and release process must be done via
+[the problem solving repo](https://github.com/perl6/problem-solving). Prior to release, ensure
+all the planned TODO items and Issues in that repository have been addressed.
 
-    https://github.com/perl6/6.d-prep
-
-Prior to release, ensure all the planned TODO items and Issues in that repository have
-been addressed.
+_Note:_ 6.d release used [Prep Repo](https://github.com/perl6/6.d-prep) to manage related
+information. It may still have useful bits worth considering.
 
 ### Spec Review
 
@@ -40,7 +79,7 @@ please coordinate with implementation authors, to avoid surprise breakage of cod
 experimental behaviours.
 
 During review, if you file any Issues regarding something that needs to be discussed/decided on
-before release, be sure to tag it with `6.d-review` tag, so that we know what still needs to be
+before release, be sure to tag it with `6.d review` tag, so that we know what still needs to be
 done before the release.
 
 ### TODO Issues
@@ -91,3 +130,23 @@ ensure it works on new language version. Often, only a small part of the
 new language version is placed behind a version pragma, with the rest of the
 changes being simply clarifications to the past spec. The upgrade guide should
 focus on the version-pragma-protected changes.
+
+## Release Steps
+
+Those steps are to be done when a new language revision is stabilized and time comes for a release (_remember that `.d`
+here serves as an example and to be replaced with the actual revision letter_):
+
+1. Edit `VERSION` file and remove `.PREVIEW` modifier: `6.d.PREVIEW` -> `6.d`
+1. Create revision announce in `docs/announce/6.d.md`
+1. Place version tag on the tip of `master` branch.
+
+   ```
+   $ git tag 6.d
+   ```
+1. Create revision `-errata` branch.
+
+   ```
+   $ git branch 6.d-errata
+   ```
+
+1. Commit your changes.
