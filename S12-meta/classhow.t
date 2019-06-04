@@ -2,7 +2,7 @@ use Test;
 
 use lib $?FILE.IO.parent(2).add("packages/S12-meta/lib");
 
-plan 4;
+plan 5;
 
 # RT #128516
 {
@@ -30,4 +30,12 @@ plan 4;
     ok $tc.can('one'),  $err ~ ' - 1';
     ok $tc.can('two'),  $err ~ ' - 2';
     ok $tc.can('three'),$err ~ ' - 3';
+}
+
+# GH #2602
+{
+    my $GH2602 = Metamodel::ClassHOW.new_type(name => "GH2602");
+    $GH2602.^compose;
+    ok $GH2602.new.WHAT ~~ $GH2602,
+        'Smartmatch returns True for a scalar with a run-time created class and an instance of the class';
 }

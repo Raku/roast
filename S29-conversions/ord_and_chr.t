@@ -161,7 +161,6 @@ dies-ok {chr(-1)}, "chr out of range (negative)";
 
 ok !defined(ord("")), 'ord("") returns an undefined value';
 
-#?rakudo.jvm skip 'high character name lookup RT #124838'
 is "\c[DROMEDARY CAMEL]".ord, 0x1F42A, "ord of named high character";
 is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
 

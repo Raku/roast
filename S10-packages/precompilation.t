@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 49;
+plan 51;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 
@@ -287,5 +287,25 @@ with make-temp-dir() -> $dir {
         is_run 'use lib \qq[$dir.absolute().perl()]; use Simple131924; print buggy-str() eq “: \n\r\n\r”',
              {:out<True>, :err(''), :0status},
 	     'no funny business with precompiled string strands (\qq[$_])';
+    }
+}
+
+# GH rakudo issue #1219
+with make-temp-dir() -> $dir {
+    $dir.add('Simple1219.pm6').spurt: ｢
+        class A {
+            method a() is DEPRECATED<b> {
+            }
+        }
+    ｣;
+
+    for ^2 { # do two runs: 1 x without pre-existing precomp + 1 x with
+        is_run 'use lib \qq[$dir.absolute().perl()]; use Simple1219; print A.a()',
+               {
+                   out    => '',
+                   err    => { $_ ~~ / 'deprecated code'/ },
+                   status => { $_ == 0 },
+               },
+	     'is DEPRECATED does work on Routines in precomped modules';
     }
 }

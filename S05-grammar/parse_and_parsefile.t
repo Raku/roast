@@ -15,20 +15,25 @@ nok(Foo.parse("123xyz"),  ".parse method requires match to end");
 is(~Foo.subparse("123xyz"), "123",  ".subparse method doesn't require match to end");
 dies-ok({ Bar.parse("abc123xyz") }, "dies if no TOP rule");
 
-my $fh = open("parse_and_parsefile_test", :w);
-$fh.say("abc\n123\nxyz");
-$fh.close();
-nok(Foo.parsefile("parse_and_parsefile_test"), ".parsefile method invokes TOP rule, no match");
-unlink("parse_and_parsefile_test");
 
-$fh = open("parse_and_parsefile_test", :w);
-$fh.say("123");
-$fh.close();
-is(~Baz.parsefile("parse_and_parsefile_test"), "123\n",  ".parsefile method invokes TOP rule, match");
-dies-ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
-dies-ok({ Foo.parsefile("non_existent_file") },        "dies if file not found");
+#?rakudo.js.browser skip 'writing to a file is not supported in the browser'
+{
+  my $fh = open("parse_and_parsefile_test", :w);
+  $fh.say("abc\n123\nxyz");
+  $fh.close();
+  nok(Foo.parsefile("parse_and_parsefile_test"), ".parsefile method invokes TOP rule, no match");
+  unlink("parse_and_parsefile_test");
 
-unlink("parse_and_parsefile_test");
+  $fh = open("parse_and_parsefile_test", :w);
+  $fh.say("123");
+  $fh.close();
+  is(~Baz.parsefile("parse_and_parsefile_test"), "123\n",  ".parsefile method invokes TOP rule, match");
+  dies-ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
+  dies-ok({ Foo.parsefile("non_existent_file") },        "dies if file not found");
+
+  unlink("parse_and_parsefile_test");
+}
+
 
 grammar A::B {
     token TOP { \d+ }

@@ -56,6 +56,7 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
     lives-ok { class Bar { } }, 'declaring a class after use-ing a module (RT #73910)'
 }
 
+#?rakudo.js.browser skip "runtime time use doesn't work in the browser"
 # RT #126302
 is_run ｢use RT126302; say "RT126302-OK"｣,
   :compiler-args['-I', $?FILE.IO.parent(2).add("packages/RT126302/lib").absolute], {

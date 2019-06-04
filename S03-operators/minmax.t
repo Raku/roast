@@ -107,11 +107,11 @@ This test min/max functions in their operator form. To see them tested in their 
     fails-like "max +'a'      ", X::Str::Numeric,
         'max with one Failure throws';
 
-    fails-like "Failure.new.min", Exception, '.min on Failure throws';
-    fails-like "Failure.new.max", Exception, '.max on Failure throws';
-    fails-like "Failure.new.min: &infix:<cmp>", Exception,
+    throws-like "Failure.new.min", Exception, '.min on Failure throws';
+    throws-like "Failure.new.max", Exception, '.max on Failure throws';
+    throws-like "Failure.new.min: &infix:<cmp>", Exception,
         '.min with :&by on Failure throws';
-    fails-like "Failure.new.max: &infix:<cmp>", Exception,
+    throws-like "Failure.new.max: &infix:<cmp>", Exception,
         '.max with :&by on Failure throws';
 }
 

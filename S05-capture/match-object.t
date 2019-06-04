@@ -92,11 +92,15 @@ subtest 'can smartmatch against regexes stored in variables' => {
 
     # non-str orig, NFD
     # RT #130458
-    #?rakudo.jvm 2 skip 'Undeclared name: NFD, RT #130458'
+    #?rakudo.jvm skip 'Undeclared name: NFD, RT #130458'
     ok "7\x[308]".NFD ~~ /^ \d+ $/, 'sanity';
+    #?rakudo.jvm skip 'Undeclared name: NFD, RT #130458'
     #?rakudo todo '$/.orig on NFD matches'
     isa-ok $/.orig, NFD, '.orig retains the type (NFD)';
+}
 
+#?rakudo.jvm skip 'NFD not yet implemented'
+{
     # R#2176
     $/ = Nil;
     my $m = so "7\x[308]".NFD ~~ /^ \d+ $/;
@@ -119,9 +123,13 @@ subtest '$/ is set when matching in a loop' => {
     for "a" { if Foo.parse: $_ { is ~$/, 'a', 'Grammar.parse' }}
     for "a" { if Foo.subparse: $_ { is ~$/, 'a', 'Grammar.subparse' }}
 
+#?rakudo.js.browser skip "reading and writing files doesn't work in the browser"
+{
     with make-temp-file content => 'a' {
         for "a" -> $ { if grammar { token TOP { . } }.parsefile: $_ {
             is ~$/, 'a', 'Grammar.parse-file'
         }}
     }
+}
+
 }

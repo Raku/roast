@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 20;
 
 {
     my $union-type-checks = 0;
@@ -89,4 +89,20 @@ plan 17;
     #?rakudo.jvm 2 todo 'RT #123426'
     is $union-type-checks, 0, 'Really did use type cache';
     is $union-find-method-calls, 0, 'Really did use method cache';
+}
+
+{
+    my class SomeHOW {
+        has $.name;
+        method find_method(|) { Mu.^find_method('CREATE') }
+    }
+    my $t-from = Metamodel::Primitives.create_type(SomeHOW.new(name => 'from'));
+    Metamodel::Primitives.compose_type($t-from, { attribute => [] });
+    my $t-to = Metamodel::Primitives.create_type(SomeHOW.new(name => 'to'), :mixin);
+    Metamodel::Primitives.compose_type($t-to, { attribute => [] });
+    my $obj = $t-from.CREATE;
+    is $obj.HOW.name, 'from', 'Sanity: object has expected type at creation';
+    lives-ok { Metamodel::Primitives.rebless($obj, $t-to) },
+        'Can rebless to a target mixin type';
+    is $obj.HOW.name, 'to', 'Object has expected type after rebless';
 }

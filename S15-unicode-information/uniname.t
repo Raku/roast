@@ -65,7 +65,6 @@ is uniname(0x210000), '<unassigned>', "uniname too high returns <unassigned> (2)
 is uninames("AB"), ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";
 is "AB".uninames, ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";
 
-#?rakudo.jvm skip "No Unicode 9 yet"
 is uniname("🦋"), "BUTTERFLY", "Can resolve Unicode 9 character name";
 
 #?rakudo.jvm todo "HANGUL SYLLABLES D4DB"

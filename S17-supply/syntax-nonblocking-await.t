@@ -1,8 +1,9 @@
-use v6.d.PREVIEW;
+use v6.d;
 use Test;
 
 plan 9;
 
+#?rakudo.jvm skip 'hangs'
 {
     # Start 100 workers that do a `react`. This will, if `react` blocks,
     # clog up the thread pool.
@@ -31,6 +32,7 @@ plan 9;
     is [+](($c.receive xx 100)), 200, 'start react { ... } is non-blocking';
 }
 
+#?rakudo.jvm skip 'Could not find symbol &Died'
 {
     sub death() {
         die "goodbye!"

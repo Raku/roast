@@ -21,6 +21,7 @@ plan 20;
     # { } has implicit signature ($_ is rw = $OUTER::_)
 
     $_ = 'Hello';
+    #?rakudo.jvm todo 'got (Rakudo::Internals::LoweredAwayLexical)'
     is(try { { $_ }.() }, 'Hello',              '$_ in bare block defaults to outer');
     is({ $_ }.('Goodbye'), 'Goodbye',   'but it is only a default');
     is({ 42 }.(), 42,                   'no implicit $_ usage checking');

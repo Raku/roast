@@ -40,27 +40,15 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
 
 # S04: "A return always exits from the lexically surrounding sub or method definition"
 {
-    ## throws-like, dies-ok and friends (even is_run from Test::Util) do
-    ## not catch this error (Attempt to return outside of any Routine) properly
-    is run($*EXECUTABLE, '-e', 'return 1; CATCH { default { print .^name } }', :out).out.lines[0],
-        'X::ControlFlow::Return',
-        'bare return fails (2)';
-    is run($*EXECUTABLE, '-e', 'for 1 {return 2}; CATCH { default { print .^name } }', :out).out.lines[0],
-        'X::ControlFlow::Return',
-        'cannot return out of a bare for block';
-    is run($*EXECUTABLE, '-e', 'my $i = 1; while $i-- {return 3}; CATCH { default { print .^name } }', :out).out.lines[0],
-        'X::ControlFlow::Return',
-        'cannot return out of a bare while';
-    is run($*EXECUTABLE, '-e', 'my $i = 0; until $i++ {return 4}; CATCH { default { print .^name } }', :out).out.lines[0],
-        'X::ControlFlow::Return',
-        'cannot return out of a bare until';
-    is run($*EXECUTABLE, '-e', 'loop (my $i = 0; $i < 1; $i++) {return 5}; CATCH { default { print .^name } }', :out).out.lines[0],
-        'X::ControlFlow::Return',
-        'cannot return out of a bare loop';
+    is_run('return 1; CATCH { default { print .^name } }', {:out('X::ControlFlow::Return')}, 'bare return fails (2)');
 
-    is run($*EXECUTABLE, '-e', 'do {return 5}; CATCH { default { print .^name } }', :out).out.lines[0],
-        'X::ControlFlow::Return',
-        'cannot return out of a do block';
+    is_run('for 1 {return 2}; CATCH { default { print .^name } }', {:out('X::ControlFlow::Return')}, 'cannot return out of a bare for block');
+
+    is_run('my $i = 1; while $i-- {return 3}; CATCH { default { print .^name } }', {:out('X::ControlFlow::Return')}, 'cannot return out of a bare while');
+    is_run('my $i = 0; until $i++ {return 4}; CATCH { default { print .^name } }', {:out('X::ControlFlow::Return')}, 'cannot return out of a bare until');
+    is_run('loop (my $i = 0; $i < 1; $i++) {return 5}; CATCH { default { print .^name } }', {:out('X::ControlFlow::Return')}, 'cannot return out of a bare loop');
+
+    is_run('do {return 5}; CATCH { default { print .^name } }', {:out('X::ControlFlow::Return')}, 'cannot return out of a do block');
 
     is (try EVAL 'my $double = -> $x { return 2 * $x }; sub foo($x) { $double($x) }; foo 42').defined, False, 'return is lexotic only; must not attempt dynamic return';
 }

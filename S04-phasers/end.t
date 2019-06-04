@@ -25,7 +25,10 @@ plan 8;
     {
         BEGIN {
             my $a = 43;
-            END { is $a, 43, 'lexical lookup from END block to surrounding BEGIN block works' };
+            END {
+#?rakudo.js.browser todo "broken in all backend when precompiling"
+                is $a, 43, 'lexical lookup from END block to surrounding BEGIN block works'
+            };
         }
     }
 }

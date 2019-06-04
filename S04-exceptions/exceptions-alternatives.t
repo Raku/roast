@@ -23,6 +23,7 @@ is_run json-ex('justsomerandomsyntaxerror'), {
     :1status,
 }, 'can handle X::Undeclared::Symbols exception';
 
+#?rakudo.js.browser skip "EVAL time use doesn't work in the browser"
 { # RT#129810
     is_run json-ex('use FakeModuleRT129810'), {
         :err(/'"X::CompUnit::UnsatisfiedDependency"' .+ 'FakeModuleRT129810'/),

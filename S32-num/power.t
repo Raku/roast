@@ -126,7 +126,7 @@ is-deeply  1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, 1e0, " 1e0⁴
 is-deeply (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴,   1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ ==  1";
 is-deeply (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵,  -1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == -1";
 
-#?rakudo.jvm 6 skip 'parsing issue on JVM: Missing required term after infix'
+#?rakudo.jvm 6 todo 'got: 1'
 is-approx(4 ** ½,  2, "4 ** ½ ==  2");
 is-approx(4 ** -½, ½, "4 ** -½ == ½");
 is-approx(27 ** ⅓, 3, "27 ** ⅓ ==  3");

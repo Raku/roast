@@ -298,6 +298,7 @@ subtest 'no funny business with Ints that are not representable in double' => {
           0b100000000000000000000000000000000000000000000000000001;
 }
 
+#?rakudo.jvm skip 'crashes JVM'
 {
     my $n = 2; $n *= $n for ^16;
     is-deeply $n.Str,

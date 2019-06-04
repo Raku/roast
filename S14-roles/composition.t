@@ -226,4 +226,18 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     is C9.m('x'), 'ice cream', 'another role can provided indirectly required multi implementation (2)';
 }
 
+{
+    my multi sub trait_mod:<is>(Method:D \meth, :$also!) {
+        meth.package.^add_method($also.Str, meth);
+    }
+
+    my role DoubleMethod {
+        method test () is also<test-me> {
+        }
+    }
+
+    my class RoleTarget does DoubleMethod {
+    }
+}
+
 # vim: syn=perl6

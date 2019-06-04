@@ -1,4 +1,4 @@
-use v6.d.PREVIEW;
+use v6.d;
 use Test;
 plan 25;
 
@@ -84,6 +84,7 @@ subtest 'my | typed | sigilless' => {
     nok ::('mts3'), '`my` makes constants lexical';
 
     my IO::Path constant mts4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply mts4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant mts5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -108,6 +109,7 @@ subtest 'our | typed | sigilless' => {
     ok ::('ots3'), '`our` gives right scope';
 
     our IO::Path constant ots4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply ots4, '.'.IO, 'type with `::` in name';
     throws-like ｢our IO::Path constant ots5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -179,6 +181,7 @@ subtest 'my | typed | backslashed sigilless' => {
     nok ::('mtbs3'), '`my` makes constants lexical';
 
     my IO::Path constant \mtbs4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply mtbs4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant mtbs5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -204,6 +207,7 @@ subtest 'our | typed | backslashed sigilless' => {
     ok ::('otbs3'), '`our` gives right scope';
 
     our IO::Path constant \otbs4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply otbs4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant otbs5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -274,6 +278,7 @@ subtest 'my | typed | $-sigilled' => {
     nok ::('$mtss3'), '`my` makes constants lexical';
 
     my IO::Path constant $mtss4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply $mtss4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant $mtss5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -299,6 +304,7 @@ subtest 'our | typed | $-sigilled' => {
     ok ::('$otss3'), '`our` gives right scope';
 
     our IO::Path constant $otss4 = '.'.IO;
+    #?rakudo.js.browser todo "the cwd doesn't make much sense in the browser"
     is-deeply $otss4, '.'.IO, 'type with `::` in name';
     throws-like ｢my IO::Path constant $otss5 = 42｣, X::TypeCheck,
         'type with `::` in name (failure mode)';
@@ -486,7 +492,7 @@ subtest 'our | typed | @-sigilled' => {
 subtest 'implied | implied | %-sigilled' => {
     plan 16;
     throws-like ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         constant %iihs0 = 42
     ｣, X::Hash::Store::OddNumber, 'def, simple value';
 
@@ -518,7 +524,7 @@ subtest 'implied | implied | %-sigilled' => {
     ok ::('%iihs9'), 'implied scope declarator behaves like `our`';
 
     EVAL ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my class Foo {
             method Map {
                 pass 'coercion calls .Map method';
@@ -531,13 +537,13 @@ subtest 'implied | implied | %-sigilled' => {
     ｣;
 
     throws-like ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my class Foo { method Map { 42 } }
         constant %iihs11 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .Map does not return Associative';
 
     EVAL ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my class Bar does Associative {
             method Map { flunk 'called .Map on an already-Associative' }
         }
@@ -549,7 +555,7 @@ subtest 'implied | implied | %-sigilled' => {
 subtest 'my | implied | %-sigilled' => {
     plan 16;
     throws-like ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my constant %mihs0 = 42
     ｣, X::Hash::Store::OddNumber, 'def, simple value';
 
@@ -581,7 +587,7 @@ subtest 'my | implied | %-sigilled' => {
     nok ::('%mihs9'), '`my` makes constants lexical';
 
     EVAL ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my class Foo {
             method Map {
                 pass 'coercion calls .Map method';
@@ -594,13 +600,13 @@ subtest 'my | implied | %-sigilled' => {
     ｣;
 
     throws-like ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my class Foo { method Map { 42 } }
         my constant %mihs11 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .Map does not return Associative';
 
     EVAL ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my class Bar does Associative {
             method Map { flunk 'called .Map on an already-Associative' }
         }
@@ -612,7 +618,7 @@ subtest 'my | implied | %-sigilled' => {
 subtest 'our | implied | %-sigilled' => {
     plan 16;
     throws-like ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         our constant %oihs0 = 42
     ｣, X::Hash::Store::OddNumber, 'def, simple value';
 
@@ -644,7 +650,7 @@ subtest 'our | implied | %-sigilled' => {
     ok ::('%oihs9'), 'implied scope declarator behaves like `our`';
 
     EVAL ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my class Foo {
             method Map {
                 pass 'coercion calls .Map method';
@@ -657,13 +663,13 @@ subtest 'our | implied | %-sigilled' => {
     ｣;
 
     throws-like ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my class Foo { method Map { 42 } }
         our constant %oihs11 = Foo.new;
     ｣, X::TypeCheck, 'typecheck fails if .Map does not return Associative';
 
     EVAL ｢
-        use v6.d.PREVIEW;
+        use v6.d;
         my class Bar does Associative {
             method Map { flunk 'called .Map on an already-Associative' }
         }

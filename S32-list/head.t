@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 27;
 
 =begin description
 
@@ -70,5 +70,11 @@ This test tests the C<head> builtin.
 # RT #130285
 is-deeply (4,5,6).head(-999999999999999999999999999), (),
     '.head works correctly with large negative Ints';
+
+{ # https://github.com/rakudo/rakudo/commit/74c8f0442b
+    lives-ok {
+        is <a b c>.head(1/2), '', 'head with Rat index coerces it to Int and retrieves correct result';
+    }, 'Rat is coerced to Int when used as index';
+}
 
 # vim: ft=perl6

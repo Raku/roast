@@ -111,7 +111,7 @@ $echoTap.close;
     is $firstReceive, "u̇\n", 'Coped with grapheme split across packets';
 }
 
-#?rakudo.jvm todo 'IllegalStateException: Current state = CODING_END, new state = CODING'
+#?rakudo.jvm skip 'seems to crash the server (sometimes): IllegalStateException: Current state = CODING_END, new state = CODING'
 {
     my $echo2Tap = $server.tap(-> $c {
         $c.Supply.tap(-> $chars {
@@ -125,7 +125,6 @@ $echoTap.close;
 }
 
 # RT #128862
-#?rakudo.jvm skip 'hangs on JVM'
 {
     my $failed = False;
     my $badInputTap = $server.tap(-> $c {
@@ -199,26 +198,40 @@ $echoTap.close;
 }
 
 # RT#132135
-for '127.0.0.1', '::1' -> $host {
-    my $port = 5001;
-    diag("host=$host");
+{
+    my Str @hosts = '127.0.0.1';
 
-    my $s = IO::Socket::Async.listen($host, $port);
+    if $*VM.name eq 'jvm' {
+        # OpenBSD's OpenJDK package includes custom patches that force it to use IPv4,
+        # making the IPv6 tests fail.
+        @hosts.push: '::1' unless $*VM.osname eq 'openbsd';
+    } else {
+        @hosts.push: '::1';
+    }
 
-    my $s_conn_promise = Promise.new;
-    my $s_tap = $s.tap({ $s_conn_promise.keep($_) });
-    my $c_conn = await IO::Socket::Async.connect($host, $port);
-    my $s_conn = await $s_conn_promise;
+    for @hosts -> $host {
+        my $port = 5001;
+        diag("host=$host");
 
-    is(($s_conn, $c_conn).map({ |(.peer-host, .socket-host) }).unique,
-      $host, '*-host accessors are right');
+        my $s = IO::Socket::Async.listen($host, $port);
 
-    is($c_conn.peer-port, $port, "client's peer-port is right");
-    is($s_conn.socket-port, $port, "server's socket-port is right");
-    cmp-ok($c_conn.socket-port, '>', 1024, "client's socket-port seems right");
-    cmp-ok($s_conn.peer-port, '>', 1024, "server's peer-port seems right");
+        my $s_conn_promise = Promise.new;
+        my $s_tap = $s.tap({ $s_conn_promise.keep($_) });
+        my $c_conn = await IO::Socket::Async.connect($host, $port);
+        my $s_conn = await $s_conn_promise;
 
-    $c_conn.close(); $s_tap.close();
+        is(($s_conn, $c_conn).map({ |(.peer-host, .socket-host) }).unique,
+          $host, '*-host accessors are right');
+
+        is($c_conn.peer-port, $port, "client's peer-port is right");
+        is($s_conn.socket-port, $port, "server's socket-port is right");
+        cmp-ok($c_conn.socket-port, '>', 1024, "client's socket-port seems right");
+        cmp-ok($s_conn.peer-port, '>', 1024, "server's peer-port seems right");
+
+        $c_conn.close(); $s_tap.close();
+    }
+
+    skip 'IPv6 for async sockets is not supported on the JVM on OpenBSD', 5 if $*VM.name eq 'jvm' && $*VM.osname eq 'openbsd';
 }
 
 {
@@ -287,8 +300,10 @@ for '127.0.0.1', '::1' -> $host {
     $first.close;
     $second.close;
 
+    #?rakudo.jvm skip 'hangs (sometimes)'
     lives-ok { await $first-done, $second-done }, "both receivers finished without exception";
 
+    #?rakudo.jvm 2 todo 'got nothing'
     is @first-got.join(""), "hello first", "first server socket got the right message";
     is @second-got.join(""), "hello second", "second server socket got the right message";
 }

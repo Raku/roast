@@ -15,7 +15,7 @@ use lib $?FILE.IO.parent(2).add("packages/Cool/lib");
 
 use MONKEY-SEE-NO-EVAL;
 
-plan 34;
+plan 38;
 
 # RT #126100
 {
@@ -63,6 +63,17 @@ nok ::('&bar'), ｢&bar didn't leak to outer scope｣;
 throws-like { require InnerModule:file($name) <quux> },
     X::Import::MissingSymbols,
 '&-less import of sub does not produce `Null PMC access` error';
+
+{
+    my $class-path = $?FILE.IO.parent(2).add('packages/S11-modules/lib/InnerClass.pm6').absolute;
+    require TestStub:file($class-path);
+    my @keys = TestStub::.keys;
+    is @keys.grep('InnerClass').elems, 1, 'can load InnerClass.pm6 class into specified stub';
+    ok TestStub::<InnerClass>.test1 eq 'test1', 'TestStub::<InnerClass>.test1 is callable';
+    
+    is @keys.grep('InnerClassTwo').elems, 1, 'can load multiple classes from InnerClass.pm6 class into specified stub';
+    ok TestStub::<InnerClassTwo>.test2 eq 'test2', 'TestStub::<InnerClass>.test1 is callable';
+}
 
 # no need to do that at compile time, since require() really is run time
 PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:next-repo($*REPO),
