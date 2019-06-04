@@ -69,7 +69,8 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     my MyInt $x = 5;
 
     lives-ok { $x = Nil }, 'can assign Nil to subsets';
-    ok $x === MyInt, 'assigns to subset type object';
+    # A subset is a nominal type, it's implicit default is subset's nominalization.
+    ok $x === Int, 'assigns to subset type object';
 }
 
 {

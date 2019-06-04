@@ -149,7 +149,7 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
     my UInt $u;
     is-deeply $u.defined, Bool::False, 'undefined UInt is undefined';
     cmp-ok $u, '~~', UInt, 'UInt var smartmatches True against UInt';
-    is $u.HOW.^name, 'Perl6::Metamodel::SubsetHOW', 'UInt is a subset';
+    is $u.VAR.of.HOW.^name, 'Perl6::Metamodel::SubsetHOW', 'UInt is a subset';
     throws-like { UInt.new }, Exception,
         'attempting to instantiate UInt throws';
 
@@ -160,7 +160,7 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
     throws-like ｢my UInt $y = "foo"｣, X::TypeCheck::Assignment,
         'UInt rejects other types';
 
-    is-deeply ($u = Nil), UInt,  'Can assign Nil to UInt';
+    is-deeply ($u = Nil), Int,  'Can assign Nil to UInt';
     my $u2 is default(72);
     is-deeply $u2, 72, 'is default() trait works on brand new UInt';
     is-deeply ($u2 = 1337), 1337, 'is default()ed UInt can take values';

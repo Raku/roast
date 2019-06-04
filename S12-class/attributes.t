@@ -163,13 +163,13 @@ throws-like q[
 
 # RT #75858
 {
-    lives-ok { EVAL 'my class RT75858 { has $.x where 1 }' },
+    lives-ok { EVAL 'my class RT75858 { has $.x where 1 = 1 }' },
         'can use where clause on an attribute';
 }
 
 # RT #122109
 {
-    my class RT122109 { has $.x where * > 0 };
+    my class RT122109 { has $.x where * > 0 = 1 };
     dies-ok { RT122109.new(:x(-42)) },
         'where clause on attributes is taken into account';
 }
