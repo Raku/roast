@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 25;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
@@ -42,6 +42,25 @@ my $name = $*SCHEDULER.^name;
     LEAVE @c>>.cancel;
 }
 
+{
+    my Int $count = 0;
+
+    lives-ok {
+        my Cancellation $c = $*SCHEDULER.cue({ cas $count, { .succ } }, in => Inf);
+    }, "Can pass :in as Inf to ThreadPoolScheduler.cue without throwing";
+    sleep 3;
+    is $count, 0, "Passing :in as Inf to ThreadPoolScheduler.cue never runs the given block";
+
+    lives-ok {
+        my Cancellation $c = $*SCHEDULER.cue({ cas $count, { .succ } }, in => -Inf);
+    }, "Can pass :in as -Inf to ThreadPoolScheduler.cue without throwing";
+    sleep 3;
+    is $count, 1, "Passing :in as -Inf to ThreadPoolScheduler.cue instantly runs the given block";
+    throws-like {
+        my Cancellation $c = $*SCHEDULER.cue(-> { }, in => NaN);
+    }, X::Scheduler::CueInNaNSeconds, "Passing :in as NaN to ThreadPoolScheduler.cue throws";
+}
+
 # fake scheduling from here on out
 $*SCHEDULER = CurrentThreadScheduler.new;
 $name = $*SCHEDULER.^name;
@@ -74,4 +93,52 @@ $name = $*SCHEDULER.^name;
     ok @c[*-1].can("cancel"), 'can we cancel (4)';
     is $tracker, '2s1s1scatch', "Cue on $name with :in/:catch *DOES* schedule immediately";
     LEAVE @c>>.cancel;
+}
+
+{
+    my Int     $count  = 0;
+    my Promise $p1    .= new;
+    my Promise $p2    .= new;
+    my Promise $p3    .= new;
+
+    await Promise.anyof(
+        Promise.start({
+            $*SCHEDULER.cue({ $count++ }, in => Inf);
+            $p1.keep;
+            pass "Passing :in as Inf to CurrentThreadScheduler.cue does not hang";
+        }),
+        Promise.in(3).then({
+            flunk "Passing :in as Inf to CurrentThreadScheduler.cue does not hang" unless $p1.status ~~ Kept;
+        })
+    );
+
+    is $count, 0, "Passing :in as Inf to CurrentThreadScheduler.cue never runs the given block";
+
+    await Promise.anyof(
+        Promise.start({
+            $*SCHEDULER.cue({ $count++ }, in => -Inf);
+            $p2.keep;
+            pass "Passing :in as -Inf to CurrentThreadScheduler.cue does not hang";
+        }),
+        Promise.in(3).then({
+            flunk "Passing :in as -Inf to CurrentThreadScheduler.cue does not hang" unless $p2.status ~~ Kept;
+        })
+    );
+
+    is $count, 1, "Passing :in as -Inf to CurrentThreadScheduler.cue instantly runs the given block";
+
+    await Promise.anyof(
+        Promise.start({
+            try $*SCHEDULER.cue(-> { }, in => NaN);
+            $p3.keep;
+            pass "Passing :in as NaN to CurrentThreadScheduler.cue does not hang";
+        }),
+        Promise.in(3).then({
+            flunk "Passing :in as NaN to CurrentThreadScheduler.cue does not hang" unless $p3.status ~~ Kept;
+        })
+    );
+
+    throws-like {
+        $*SCHEDULER.cue(-> { }, in => NaN);
+    }, X::Scheduler::CueInNaNSeconds, "Passing :in as NaN to CurrentThreadScheduler.cue throws";
 }

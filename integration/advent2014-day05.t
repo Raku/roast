@@ -43,6 +43,7 @@ plan 7;
       'did we get the right string';
 }
 
+#?rakudo.jvm skip 'hangs sometimes'
 {
     my $supplier = Supplier.new;
     my $supply = $supplier.Supply;

@@ -6,7 +6,7 @@ use lib $?FILE.IO.parent(2).add("packages/RT84280/lib");
 use lib $?FILE.IO.parent(2).add("packages/RT125715/lib");
 use lib $?FILE.IO.parent(2).add("packages/RT129215/lib");
 
-plan 56;
+plan 59;
 
 # L<S11/"Exportation"/>
 
@@ -172,8 +172,6 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
         'Using EXPORT-d type as attribute type works';
 }
 
-# vim: ft=perl6
-
 # RT #129215
 {
     use RT129215;
@@ -185,6 +183,7 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     ok hash_str(Hash[Str].new({ak => "ak"})), 'Hash[Str] istype across module seam';
     ok hash_hash_str(Hash[Hash[Str]].new({akk => Hash[Str].new: { ak => "ak" }})), 'Hash[Hash[Str]] istype across module seam';
 
+    #?rakudo.jvm 3 todo 'RT#129215'
     ok array_str_d(Array[Str:D].new("A","B")), 'Array[Str:D] istype across module seam';
     ok hash_str_d(Hash[Str:D].new({ak => "ak"})), 'Hash[Str:D] istype across module seam';
     ok hash_hash_str_d(Hash[Hash[Str:D]].new({akk => Hash[Str:D].new: { ak => "ak" }})), 'Hash[Hash[Str:D]] istype across module seam';
@@ -196,3 +195,23 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     ok hash_str_u(Hash[Str:U].new({ak => Str:U})), 'Hash[Str:U] istype across module seam';
     ok hash_hash_str_u(Hash[Hash[Str:U]].new({akk => Hash[Str:U].new: { ak => Str:U }})), 'Hash[Hash[Str:U]] istype across module seam';
 }
+
+# GH #2955
+{
+    my module Foo {
+        role Bar[$p] is export { method bar { $p } }
+        role Bar { method bar { "default" } }
+    }
+
+    import Foo;
+
+    isa-ok Bar.HOW, Metamodel::ParametricRoleGroupHOW, "role group is exported";
+
+    class C1 does Bar[42] { }
+    is C1.new.bar, 42, "signatured exported role applied";
+
+    class C2 does Bar { }
+    is C2.new.bar, "default", "unsignatured exported role applied";
+}
+
+# vim: ft=perl6

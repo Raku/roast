@@ -111,7 +111,7 @@ $echoTap.close;
     is $firstReceive, "u̇\n", 'Coped with grapheme split across packets';
 }
 
-#?rakudo.jvm todo 'IllegalStateException: Current state = CODING_END, new state = CODING'
+#?rakudo.jvm skip 'seems to crash the server (sometimes): IllegalStateException: Current state = CODING_END, new state = CODING'
 {
     my $echo2Tap = $server.tap(-> $c {
         $c.Supply.tap(-> $chars {
@@ -125,7 +125,6 @@ $echoTap.close;
 }
 
 # RT #128862
-#?rakudo.jvm skip 'hangs on JVM'
 {
     my $failed = False;
     my $badInputTap = $server.tap(-> $c {
@@ -301,8 +300,10 @@ $echoTap.close;
     $first.close;
     $second.close;
 
+    #?rakudo.jvm skip 'hangs (sometimes)'
     lives-ok { await $first-done, $second-done }, "both receivers finished without exception";
 
+    #?rakudo.jvm 2 todo 'got nothing'
     is @first-got.join(""), "hello first", "first server socket got the right message";
     is @second-got.join(""), "hello second", "second server socket got the right message";
 }

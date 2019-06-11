@@ -1,4 +1,4 @@
-use v6.d.PREVIEW;
+use v6.d;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
@@ -9,7 +9,7 @@ use Test::Util;
 plan 1;
 
 throws-like ｢
-    use v6.d.PREVIEW;
+    use v6.d;
     sub foo { whenever Promise.in(2) { say ‘hello’ } }; react foo
 ｣, X::Comp::WheneverOutOfScope, 'whenever not in lexical scope of react throws';
 

@@ -9,7 +9,7 @@ Push tests
 
 =end description
 
-plan 52;
+plan 56;
 
 # basic push tests
 {
@@ -184,6 +184,14 @@ plan 52;
     class RT112660 { has Method @.slots; };
     throws-like 'RT112660.new.slots.push: [1, 2, 3]', X::TypeCheck::Assignment,
         'pushing non-A objects to an attribute array typed with A dies'
+}
+
+# R#2943
+{
+    dies-ok { my @a; push    @a, a => 52 }, 'no named on push()';
+    dies-ok { my @a; append  @a, a => 52 }, 'no named on append()';
+    dies-ok { my @a; unshift @a, a => 52 }, 'no named on unshifth()';
+    dies-ok { my @a; prepend @a, a => 52 }, 'no named on prepend()';
 }
 
 # vim: syn=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 14;
 
 # "The context inside of hash and array scripts seems to be/is wrong"
 
@@ -54,6 +54,22 @@ plan 8;
 
   is @array[3],  16, 'context inside of array subscripts when used with &postfix:<++>';
   is %hash<c>,   24, 'context inside of hash subscripts when used with &postfix:<++>';
+}
+
+# R#2788
+{
+    my @a = 1..2 Z 'a'..'b';
+
+    given 0 {
+        is-deeply @a[$_][ 1]  // 42, "a", '@a[0][1]';
+        is-deeply @a[*-1][$_] // 42,   2, '@a[*-1][0]';
+        is-deeply @a[$_][*-1] // 42, "a", '@a[0][*-1]';
+    }
+    given -1 {
+        is-deeply @a[$_][ 1]  // 42, 42, '@a[-1][1]';
+        is-deeply @a[*-1][$_] // 42, 42, '@a[*-1][-1]';
+        is-deeply @a[$_][*-1] // 42, 42, '@a[-1][*-1]';
+    }
 }
 
 # vim: ft=perl6

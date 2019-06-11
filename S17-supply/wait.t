@@ -21,6 +21,7 @@ dies-ok { Supply.wait }, 'can not be called as a class method';
 }
 
 # RT #129247
+#?rakudo.jvm skip 'hangs (sometimes?)'
 {
     my $supplier = Supplier.new;
     my $supply   = $supplier.Supply;

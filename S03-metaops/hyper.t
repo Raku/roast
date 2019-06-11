@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 409;
+plan 410;
 
 =begin pod
 
@@ -400,7 +400,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».produce(&[+]).gist, "((2 5) (4 6))", ".produce is nodal";
     is [[2, 3], [4, [5, 6]]]».reduce(&[+]).gist, "(5 6)", ".reduce is nodal";
     is [[2, 3], [4, [5, 6]]]».repeated.gist, "(() ())", ".repeated is nodal";
-    is [[2, 3], [4, [5, 6]]]».reverse.gist, "((3 2) ([5 6] 4))", ".reverse is nodal";
+    is [[2, 3], [4, [5, 6]]]».reverse.gist, "([3 2] [[5 6] 4])", ".reverse is nodal";
     is [[2, 3], [4, [5, 6]]]».roll(*).gist, "((...) (...))", ".roll is nodal";
     is [[2, 3], [4, [5, 6]]]».rotate(1).gist, "([3 2] [[5 6] 4])", ".rotate is nodal";
     is [[2, 3], [4, [5, 6]]]».rotor(2).gist, "(((2 3)) ((4 [5 6])))", ".rotor is nodal";
@@ -411,7 +411,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».sort.gist, "((2 3) (4 [5 6]))", ".sort is nodal";
     is [[2, 3], [4, [5, 6]]]».squish.gist, "((2 3) (4 [5 6]))", ".squish is nodal";
     is [[2, 3], [4, [5, 6]]]».Supply.elems, 2, ".Supply is nodal";
-    is [[2, 3], [4, [5, 6]]]».tree(*.reverse,*.reverse).gist, "((3 2) ((6 5) 4))", ".tree is nodal";
+    is [[2, 3], [4, [5, 6]]]».tree(*.reverse,*.reverse).gist, "((3 2) ([6 5] 4))", ".tree is nodal";
     is ((2, 3), (2,3), (4, (5, (6, 7), (6, 7)), (5, (6, 7), (6, 7))))».unique(:with(&[eqv])).gist, "((2 3) (2 3) (4 (5 (6 7) (6 7))))", ".unique is nodal";
     is [[2, 3], [4, [5, 6]]]».values.gist, "((2 3) (4 [5 6]))", ".values is nodal";
 
@@ -1122,5 +1122,12 @@ subtest 'method call variants respect nodality' => {
 # https://github.com/rakudo/rakudo/issues/2674
 is-deeply { a => (1,2,3) }.map({ .key <<=>>> .value }).list, ((:1a, :2a, :3a),),
     'No crash when RHS to be expanded is an itemized list';
+
+# https://github.com/rakudo/rakudo/issues/2480
+lives-ok {
+    my @GH2480 = [[1], [2, 3]];
+    my @GH2480-m = @GH2480 »*» 0;
+    @GH2480-m[0][0] = 42;
+}, 'An array built with a hyperoperator is mutable';
 
 # vim: ft=perl6

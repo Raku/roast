@@ -1,7 +1,7 @@
 ﻿use v6;
 use Test;
 
-plan 164;
+plan 165;
 
 # Basic native str array tests.
 my $T := str;
@@ -273,4 +273,12 @@ is @ssa ~~ @ssb, False, "Smartmatching different $t arrays works";
     @untyped.push(42);
     throws-like { @native = @untyped }, Exception,
       "List-assigning incompatible untyped array to $t array dies";
+}
+
+# R#2912
+{
+    my @a;
+    @a[1] = "b";
+    my str @b = @a;
+    is-deeply @b, (my str @ = "","b"), 'did we survive the hole';
 }

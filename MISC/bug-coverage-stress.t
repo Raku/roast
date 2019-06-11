@@ -32,24 +32,26 @@ doesn't-hang ｢
 # RT #132016
 #?rakudo.jvm skip "The spawned command './perl6-j' exited unsuccessfully (exit code: 1)"
 #?DOES 1
-if $*DISTRO.is-win {
-  skip 'Test hangs on Windows: https://github.com/rakudo/rakudo/issues/1975';
-}
-else {
-  with Proc::Async.new: $*EXECUTABLE, '-e',
-    ｢react whenever signal(SIGTERM).merge(signal SIGINT) { print ‘pass’; exit 0 }｣
-  -> $proc {
-    my $out = ''; $proc.Supply.tap: { $out ~= $_ };
-    my $p = $proc.start;
-    await $proc.ready;
-    Promise.in(
-        # Currently JVM backend takes longer to start the proc, so
-        # let's wait longer before killing
-        ($*VM.name eq 'jvm' ?? 20/3 !! 1) * (%*ENV<ROAST_TIMING_SCALE>//1)
-    ).then: {$proc.kill: SIGINT}; # give it a chance to boot up, then kill it
-    await $p;
-    #?rakudo.jvm todo 'Died with the exception: Cannot unbox a type object'
-    is-deeply $out, 'pass', 'Supply.merge on signals does not crash';
+{
+  if $*DISTRO.is-win {
+    skip 'Test hangs on Windows: https://github.com/rakudo/rakudo/issues/1975';
+  }
+  else {
+    with Proc::Async.new: $*EXECUTABLE, '-e',
+      ｢react whenever signal(SIGTERM).merge(signal SIGINT) { print ‘pass’; exit 0 }｣
+    -> $proc {
+      my $out = ''; $proc.Supply.tap: { $out ~= $_ };
+      my $p = $proc.start;
+      await $proc.ready;
+      Promise.in(
+          # Currently JVM backend takes longer to start the proc, so
+          # let's wait longer before killing
+          ($*VM.name eq 'jvm' ?? 20/3 !! 1) * (%*ENV<ROAST_TIMING_SCALE>//1)
+      ).then: {$proc.kill: SIGINT}; # give it a chance to boot up, then kill it
+      await $p;
+      #?rakudo.jvm todo 'Died with the exception: Cannot unbox a type object'
+      is-deeply $out, 'pass', 'Supply.merge on signals does not crash';
+    }
   }
 }
 

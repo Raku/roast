@@ -54,7 +54,6 @@ for @data -> $string, $bytes, $codes, $chars {
 # test something with a codepoint above 0xFFFF to catch errors that an
 # UTF-16 based implementation might make
 
-#?rakudo.jvm todo '.codes weirdness on JVM, possibly NYI? RT #124742'
 is "\x[E0100]".codes,  1, '.codes on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
 
 # test graphemes without a precomposed character in Unicode 5

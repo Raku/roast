@@ -9,6 +9,7 @@ use Test;
 
 plan 29;
 
+#?rakudo.jvm 2 skip 'Rakudo::Internals.INITTHREAD NYI'
 ok   Thread.is-initial-thread, 'Are we running in initial thread? (1)';
 ok $*THREAD.is-initial-thread, 'Are we running in initial thread? (2)';
 
@@ -18,6 +19,8 @@ ok $*THREAD.is-initial-thread, 'Are we running in initial thread? (2)';
     $t.finish;
 }
 
+#?rakudo.jvm skip 'Rakudo::Internals.INITTHREAD NYI'
+#?DOES 4
 {
     my $t = Thread.start({
         nok   Thread.is-initial-thread, 'Are we running on another thread? (1)';
@@ -97,6 +100,7 @@ ok $*THREAD.is-initial-thread, 'Are we running in initial thread? (2)';
     is $t2id, $t2.id, 'Correct $*THREAD instance in thread 2 after finish';
 }
 
+#?rakudo.jvm skip 'Rakudo::Internals.INITTHREAD NYI'
 {
     isa-ok $*THREAD, Thread, '$*THREAD available in initial thread';
     isnt $*THREAD.id, 0, 'Initial thread has an ID';

@@ -1,207 +1,299 @@
 use v6;
+
+#BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = True;
 use Test;
 
-## test combinations of flags for "%b"
+# Test combinations of flags for "%b".  The @info array is intialized with the
+# flags (as a string), the size/precision specification (either a string or a
+# number), and the expected strings for the values 0, 1, 4 and -4.  The flags
+# values will be expanded to all possible permutations to ensure that the
+# order of the flags is irrelevant.  Each flag permutation is combined with
+# the size/permutation value to create a proper format string.  Each test will
+# be done twice: once with a lowercase "b" and once with an uppercase "B".
 
-plan 165;
+#                        0 ,         1 ,         4 ,        -4 ;
+my @info = ( # |-----------|-----------|-----------|-----------|
+             # no size or size explicitely 0
+       '',   '',        "0",        "1",      "100",     "-100",
+      ' ',   '',       " 0",       " 1",     " 100",     "-100",
+      '0',   '',        "0",        "1",      "100",     "-100",
+     '0 ',   '',       " 0",       " 1",     " 100",     "-100",
+      '+',   '',       "+0",       "+1",     "+100",     "-100",
+     '+ ',   '',       "+0",       "+1",     "+100",     "-100",
+     '+0',   '',       "+0",       "+1",     "+100",     "-100",
+    '+0 ',   '',       "+0",       "+1",     "+100",     "-100",
+      '-',   '',        "0",        "1",      "100",     "-100",
+     '-+',   '',       "+0",       "+1",     "+100",     "-100",
+     '- ',   '',       " 0",       " 1",     " 100",     "-100",
+    '-+ ',   '',       "+0",       "+1",     "+100",     "-100",
+     '-0',   '',        "0",        "1",      "100",     "-100",
+    '-+0',   '',       "+0",       "+1",     "+100",     "-100",
+    '-0 ',   '',       " 0",       " 1",     " 100",     "-100",
+   '-+0 ',   '',       "+0",       "+1",     "+100",     "-100",
+      '#',   '',        "0",      "0b1",    "0b100",   "-0b100",
+     '# ',   '',       " 0",     " 0b1",   " 0b100",   "-0b100",
+     '#0',   '',        "0",      "0b1",    "0b100",   "-0b100",
+    '#0 ',   '',       " 0",     " 0b1",   " 0b100",   "-0b100",
+     '#+',   '',       "+0",     "+0b1",   "+0b100",   "-0b100",
+    '#+ ',   '',       "+0",     "+0b1",   "+0b100",   "-0b100",
+    '#+0',   '',       "+0",     "+0b1",   "+0b100",   "-0b100",
+   '#+0 ',   '',       "+0",     "+0b1",   "+0b100",   "-0b100",
+     '#-',   '',        "0",      "0b1",    "0b100",   "-0b100",
+    '#-+',   '',       "+0",     "+0b1",   "+0b100",   "-0b100",
+    '#- ',   '',       " 0",     " 0b1",   " 0b100",   "-0b100",
+   '#-+ ',   '',       "+0",     "+0b1",   "+0b100",   "-0b100",
+    '#-0',   '',        "0",      "0b1",    "0b100",   "-0b100",
+   '#-+0',   '',       "+0",     "+0b1",   "+0b100",   "-0b100",
+   '#-0 ',   '',       " 0",     " 0b1",   " 0b100",   "-0b100",
+  '#-+0 ',   '',       "+0",     "+0b1",   "+0b100",   "-0b100",
 
-is sprintf('%b',      9),          "1001", '%b; positive int';
-is sprintf('%b',     -9),         "-1001", '%b; negative int';
-is sprintf('%10b',    9),    "      1001", '%b; size; positive int';
-is sprintf('%2b',     9),          "1001", '%b; size; size not needed; positive int';
-is sprintf('%10b',   -9),    "     -1001", '%b; size; negative int';
-is sprintf('%2b',    -9),         "-1001", '%b; size; size not needed; negative int';
-is sprintf('%010b',   9),    "0000001001", '%b; size; flag zero; positive int';
-is sprintf('%02b',    9),          "1001", '%b; size; flag zero; size not needed; positive int';
-# RT #123979
-is sprintf('%010b',  -9),    "-000001001", '%b; size; flag zero; negative int';
-is sprintf('%02b',   -9),         "-1001", '%b; size; flag zero; size not needed; negative int';
-is sprintf('%-10b',   9),    "1001      ", '%b; size; flag minus; positive int';
-is sprintf('%-2b',    9),          "1001", '%b; size; flag minus; size not needed; positive int';
-is sprintf('%-10b',  -9),    "-1001     ", '%b; size; flag minus; negative int';
-is sprintf('%-2b',   -9),         "-1001", '%b; size; flag minus; size not needed; negative int';
-is sprintf('%+10b',   9),    "     +1001", '%b; size; flag plus; positive int';
-is sprintf('%+2b',    9),         "+1001", '%b; size; flag plus; size not needed; positive int';
-is sprintf('%+10b',  -9),    "     -1001", '%b; size; flag plus; negative int';
-is sprintf('%+2b',   -9),         "-1001", '%b; size; flag plus; size not needed; negative int';
-is sprintf('% 10b',   9),    "      1001", '%b; size; flag space; positive int';
-is sprintf('% 2b',    9),         " 1001", '%b; size; flag space; size not needed; positive int';
-is sprintf('% 10b',  -9),    "     -1001", '%b; size; flag space; negative int';
-is sprintf('% 2b',   -9),         "-1001", '%b; size; flag space; size not needed; negative int';
-is sprintf('%#10b',   9),    "    0b1001", '%b; size; flag hash; positive int';
-is sprintf('%#2b',    9),        "0b1001", '%b; size; flag hash; size not needed; positive int';
-is sprintf('%#10b',  -9),    "   -0b1001", '%b; size; flag hash; negative int';
-is sprintf('%#2b',   -9),       "-0b1001", '%b; size; flag hash; size not needed; negative int';
-## flags zero and minus together are the same as only minus (left justify)
-is sprintf('%0-10b',  9),    "1001      ", '%b; size; flag zero+minus; positive int';
-is sprintf('%0-2b',   9),          "1001", '%b; size; flag zero+minus; size not needed; positive int';
-is sprintf('%0-10b', -9),    "-1001     ", '%b; size; flag zero+minus; negative int';
-is sprintf('%0-2b',  -9),         "-1001", '%b; size; flag zero+minus; size not needed; negative int';
-is sprintf('%-010b', -9),    "-1001     ", '%b; size; flag minus+zero; negative int';
-## flags zero and plus can be combined
-is sprintf('%0+10b',  9),    "+000001001", '%b; size; flag zero+plus; positive int';
-is sprintf('%0+2b',   9),         "+1001", '%b; size; flag zero+plus; size not needed; positive int';
-is sprintf('%0+10b', -9),    "-000001001", '%b; size; flag zero+plus; negative int';
-is sprintf('%0+2b',  -9),         "-1001", '%b; size; flag zero+plus; size not needed; negative int';
-is sprintf('%+010b',  9),    "+000001001", '%b; size; flag plus+zero; positive int';
-## flags zero and space can be combined
-is sprintf('%0 10b',  9),    " 000001001", '%b; size; flag zero+space; positive int';
-is sprintf('%0 2b',  9),          " 1001", '%b; size; flag zero+space; size not needed; positive int';
-is sprintf('%0 10b', -9),    "-000001001", '%b; size; flag zero+space; negative int';
-is sprintf('%0 2b', -9),          "-1001", '%b; size; flag zero+space; size not needed; negative int';
-is sprintf('% 010b', -9),    "-000001001", '%b; size; flag space+zero; negative int';
-## flags zero and hash can be combined
-is sprintf('%0#10b',  9),    "0b00001001", '%b; size; flag zero+hash; positive int';
-is sprintf('%0#2b',  9),         "0b1001", '%b; size; flag zero+hash; size not needed; positive int';
-is sprintf('%0#10b', -9),    "-0b0001001", '%b; size; flag zero+hash; negative int';
-is sprintf('%0#2b', -9),        "-0b1001", '%b; size; flag zero+hash; size not needed; negative int';
-is sprintf('%#010b', -9),    "-0b0001001", '%b; size; flag hash+zero; negative int';
-## flags minus and plus can be combined
-is sprintf('%-+10b',  9),    "+1001     ", '%b; size; flag minus+plus; positive int';
-is sprintf('%-+2b',  9),          "+1001", '%b; size; flag minus+plus; size not needed; positive int';
-is sprintf('%-+10b', -9),    "-1001     ", '%b; size; flag minus+plus; negative int';
-is sprintf('%-+2b', -9),          "-1001", '%b; size; flag minus+plus; size not needed; negative int';
-is sprintf('%+-10b', -9),    "-1001     ", '%b; size; flag plus+minus; negative int';
-## flags minus and space can be combined
-is sprintf('% -10b', 9),     " 1001     ", '%b; size; flag space+minus; positive int';
-is sprintf('% -2b',  9),          " 1001", '%b; size; flag space+minus; size not needed; positive int';
-is sprintf('% -10b', -9),    "-1001     ", '%b; size; flag space+minus; negative int';
-is sprintf('% -2b',  -9),         "-1001", '%b; size; flag space+minus; size not needed; negative int';
-is sprintf('%- 10b', 9),     " 1001     ", '%b; size; flag minus+space; positive int';
-## flags minus and hash can be combined
-is sprintf('%#-10b', 9),     "0b1001    ", '%b; size; flag hash+minus; positive int';
-is sprintf('%#-2b',  9),         "0b1001", '%b; size; flag hash+minus; size not needed; positive int';
-is sprintf('%#-10b', -9),    "-0b1001   ", '%b; size; flag hash+minus; negative int';
-is sprintf('%#-2b',  -9),       "-0b1001", '%b; size; flag hash+minus; size not needed; negative int';
-is sprintf('%-#10b', 9),     "0b1001    ", '%b; size; flag minus+hash; positive int';
-## flags plus and space together are the same as only plus (sign is always there)
-is sprintf('% +10b', 9),     "     +1001", '%b; size; flag space+plus; positive int';
-is sprintf('% +2b',  9),          "+1001", '%b; size; flag space+plus; size not needed; positive int';
-is sprintf('% +10b', -9),    "     -1001", '%b; size; flag space+plus; negative int';
-is sprintf('% +2b',  -9),         "-1001", '%b; size; flag space+plus; size not needed; negative int';
-is sprintf('%+ 10b', 9),     "     +1001", '%b; size; flag plus+space; positive int';
-## flags plus and hash can be combined
-is sprintf('%#+10b', 9),     "   +0b1001", '%b; size; flag hash+plus; positive int';
-is sprintf('%#+2b',  9),        "+0b1001", '%b; size; flag hash+plus; size not needed; positive int';
-is sprintf('%#+10b', -9),    "   -0b1001", '%b; size; flag hash+plus; negative int';
-is sprintf('%#+2b',  -9),       "-0b1001", '%b; size; flag hash+plus; size not needed; negative int';
-is sprintf('%+#10b', 9),     "   +0b1001", '%b; size; flag plus+hash; positive int';
-## flags space and hash can be combined
-is sprintf('%# 10b', 9),     "    0b1001", '%b; size; flag hash+space; positive int';
-is sprintf('%# 2b',  9),        " 0b1001", '%b; size; flag hash+space; size not needed; positive int';
-is sprintf('%# 10b', -9),    "   -0b1001", '%b; size; flag hash+space; negative int';
-is sprintf('%# 2b',  -9),       "-0b1001", '%b; size; flag hash+space; size not needed; negative int';
-is sprintf('% #10b', 9),     "    0b1001", '%b; size; flag space+hash; positive int';
-## flags zero, minus and plus are the same as only minus and plus
-is sprintf('%0-+10b',  9),   "+1001     ", '%b; size; flag zero+minus+plus; positive int';
-is sprintf('%+0-2b',  9),         "+1001", '%b; size; flag zero+plus+minus; size not needed; positive int';
-is sprintf('%-+010b', -9),   "-1001     ", '%b; size; flag zero+plus+minus; negative int';
-is sprintf('%0-+2b', -9),         "-1001", '%b; size; flag zero+minus+plus; size not needed; negative int';
-is sprintf('%-0+10b', -9),   "-1001     ", '%b; size; flag zero+plus+minus; negative int';
-## flags zero, minus and space are the same as only minus and space
-is sprintf('%0 -10b', 9),    " 1001     ", '%b; size; flag zero+space+minus; positive int';
-is sprintf('%0- 2b',  9),         " 1001", '%b; size; flag zero+space+minus; size not needed; positive int';
-is sprintf('% -010b', -9),   "-1001     ", '%b; size; flag space+minus+zero; negative int';
-is sprintf('%-0 2b',  -9),        "-1001", '%b; size; flag zero+space+minus; size not needed; negative int';
-is sprintf('%- 010b', -9),   "-1001     ", '%b; size; flag minus+space+zero; negative int';
-## flags zero, minus and hash are the same as only minus and hash
-is sprintf('%0#-10b', 9),    "0b1001    ", '%b; size; flag zero+hash+minus; positive int';
-is sprintf('%#0-2b',  9),        "0b1001", '%b; size; flag hash+zero+minus; size not needed; positive int';
-is sprintf('%#-010b', -9),   "-0b1001   ", '%b; size; flag hash+minus+zero; negative int';
-is sprintf('%0#-2b',  -9),      "-0b1001", '%b; size; flag zero+hash+minus; size not needed; negative int';
-is sprintf('%-0#10b', 9),    "0b1001    ", '%b; size; flag minus+zero+hash; positive int';
-## flags zero, plus and space are the same as only zero and plus
-is sprintf('%0+ 10b', 9),    "+000001001", '%b; size; flag zero+plus+space; positive int';
-is sprintf('%0 +2b',  9),         "+1001", '%b; size; flag zero+space+plus; size not needed; positive int';
-is sprintf('% 0+10b', -9),   "-000001001", '%b; size; flag space+zero+plus; negative int';
-is sprintf('%+0 2b',  -9),        "-1001", '%b; size; flag zero+plus+space; size not needed; negative int';
-is sprintf('%+ 010b', 9),    "+000001001", '%b; size; flag plus+space+zero; positive int';
-## flags zero, plus and hash can be combined
-is sprintf('%0#+10b', 9),    "+0b0001001", '%b; size; flag zero+hash+plus; positive int';
-is sprintf('%0+#2b',  9),       "+0b1001", '%b; size; flag zero+plus+hash; size not needed; positive int';
-is sprintf('%#0+10b', -9),   "-0b0001001", '%b; size; flag hash+zero+plus; negative int';
-is sprintf('%+#02b', -9),       "-0b1001", '%b; size; flag plus+hash+zero; size not needed; negative int';
-## flags zero, space and hash can be combined
-is sprintf('%0 #10b', 9),    " 0b0001001", '%b; size; flag hash+space; positive int';
-is sprintf('%0# 2b',  9),       " 0b1001", '%b; size; flag hash+space; size not needed; positive int';
-is sprintf('%#0 10b', -9),   "-0b0001001", '%b; size; flag hash+space; negative int';
-is sprintf('% #02b',  -9),      "-0b1001", '%b; size; flag hash+space; size not needed; negative int';
-## flags minus, plus and space are the same as only minus and plus
-is sprintf('%+- 10b', 9),    "+1001     ", '%b; size; flag plus+minus+space; positive int';
-is sprintf('%-+ 2b',  9),         "+1001", '%b; size; flag minus+plus+space; size not needed; positive int';
-is sprintf('% -+10b', -9),   "-1001     ", '%b; size; flag space+minus+plus; negative int';
-is sprintf('% +-2b',  -9),        "-1001", '%b; size; flag space+plus+minus; size not needed; negative int';
-is sprintf('%- +10b', -9),   "-1001     ", '%b; size; flag minus+space+plus; negative int';
-## flags minus, plus and hash can be combined
-is sprintf('%-#+10b', 9),    "+0b1001   ", '%b; size; flag minus+hash+plus; positive int';
-is sprintf('%#-+2b',  9),       "+0b1001", '%b; size; flag hash+minus+plus; size not needed; positive int';
-is sprintf('%#+-10b', -9),   "-0b1001   ", '%b; size; flag hash+plus+minus; negative int';
-is sprintf('%-+#2b',  -9),      "-0b1001", '%b; size; flag minus+plus+hash; size not needed; negative int';
-## flags minus, space and hash can be combined
-is sprintf('%# -10b', 9),    " 0b1001   ", '%b; size; flag hash+space+minus; positive int';
-is sprintf('%#- 2b',  9),       " 0b1001", '%b; size; flag hash+minus+space; size not needed; positive int';
-is sprintf('% #-10b', -9),   "-0b1001   ", '%b; size; flag space+hash+minus; negative int';
-is sprintf('% -#2b',  -9),      "-0b1001", '%b; size; flag space+minus+hash; size not needed; negative int';
-is sprintf('%- #10b', -9),   "-0b1001   ", '%b; size; flag minus+space+plus; negative int';
-## flags plus, space and hash are the same as only plus and hash
-is sprintf('% #+10b', 9),    "   +0b1001", '%b; size; flag space+hash+plus; positive int';
-is sprintf('%+# 2b',  9),       "+0b1001", '%b; size; flag plus+hash+space; size not needed; positive int';
-is sprintf('%# +10b', -9),   "   -0b1001", '%b; size; flag hash+space+plus; negative int';
-is sprintf('%#+ 2b', -9),       "-0b1001", '%b; size; flag hash+plus+space; size not needed; negative int';
-is sprintf('%+ #10b', -9),   "   -0b1001", '%b; size; flag plus+space+hash; negative int';
-## flags zero, minus, plus and space are the same as only minus and plus
-is sprintf('%0-+ 10b', 9),   "+1001     ", '%b; size; flag zero+minus+plus+space; positive int';
-is sprintf('%+- 02b',  9),        "+1001", '%b; size; flag plus+minus+space+zero; size not needed; positive int';
-is sprintf('%0 +-10b', -9),  "-1001     ", '%b; size; flag zero+space+plus+minus; negative int';
-is sprintf('% 0-+2b',  -9),       "-1001", '%b; size; flag space+zero+minus+plus; size not needed; negative int';
-## flags zero, minus, plus and hash are the same as only minus, plus and hash
-is sprintf('%0-+#10b', 9),   "+0b1001   ", '%b; size; flag zero+minus+plus+hash; positive int';
-is sprintf('%#0+-2b',  9),      "+0b1001", '%b; size; flag hash+zero+plus+minus; size not needed; positive int';
-is sprintf('%+#-010b', -9),  "-0b1001   ", '%b; size; flag plus+hash+minus+zero; negative int';
-is sprintf('%-+0#2b',  -9),     "-0b1001", '%b; size; flag minus+plus+zero+hash; size not needed; negative int';
-## flags zero, minus, space and hash are the same as only minus, space and hash
-is sprintf('%0# -10b', 9),   " 0b1001   ", '%b; size; flag zero+hash+space+minus; positive int';
-is sprintf('%#0- 2b',  9),      " 0b1001", '%b; size; flag hash+zero+minus+space; size not needed; positive int';
-is sprintf('% #0-10b', -9),  "-0b1001   ", '%b; size; flag space+hash+zero+minus; negative int';
-is sprintf('% -#02b',  -9),     "-0b1001", '%b; size; flag space+minus+hash+zero; size not needed; negative int';
-## flags zero, plus, space and hash are the same as only zero, plus and hash
-is sprintf('% 0#+10b', 9),   "+0b0001001", '%b; size; flag space+zero+hash+plus; positive int';
-is sprintf('%0 +#2b',  9),      "+0b1001", '%b; size; flag zero+space+plus+hash; size not needed; positive int';
-is sprintf('%#0 +10b', -9),  "-0b0001001", '%b; size; flag hash+zero++spaceplus; negative int';
-is sprintf('%+#0 2b', -9),      "-0b1001", '%b; size; flag plus+hash+zero+space; size not needed; negative int';
-## flags minus, plus, space and hash are the same as only minus, plus and hash
-is sprintf('% -#+10b', 9),   "+0b1001   ", '%b; size; flag space+minus+hash+plus; positive int';
-is sprintf('%# -+2b',  9),      "+0b1001", '%b; size; flag hash+space+minus+plus; size not needed; positive int';
-is sprintf('%#+ -10b', -9),  "-0b1001   ", '%b; size; flag hash+plus+space+minus; negative int';
-is sprintf('%-+# 2b',  -9),     "-0b1001", '%b; size; flag minus+plus+hash+space; size not needed; negative int';
-## flags zero, minus, plus, space and hash are the same as only minus, plus and hash
-is sprintf('%0 -#+10b', 9),  "+0b1001   ", '%b; size; flag zero+space+minus+hash+plus; positive int';
-is sprintf('%#0 -+2b',  9),     "+0b1001", '%b; size; flag hash+zero+space+minus+plus; size not needed; positive int';
-is sprintf('%#+0 -10b', -9), "-0b1001   ", '%b; size; flag hash+plus+zero+space+minus; negative int';
-is sprintf('%-+#0 2b',  -9),    "-0b1001", '%b; size; flag minus+plus+hash+zero+space; size not needed; negative int';
+             # no size, precision 0
+       '', '.0',         "",        "1",      "100",     "-100",
+      ' ', '.0',         "",       " 1",     " 100",     "-100",
+      '0', '.0',         "",        "1",      "100",     "-100",
+     '0 ', '.0',         "",       " 1",     " 100",     "-100",
+      '+', '.0',         "",       "+1",     "+100",     "-100",
+     '+ ', '.0',         "",       "+1",     "+100",     "-100",
+     '+0', '.0',         "",       "+1",     "+100",     "-100",
+    '+0 ', '.0',         "",       "+1",     "+100",     "-100",
+      '-', '.0',         "",        "1",      "100",     "-100",
+     '-+', '.0',         "",       "+1",     "+100",     "-100",
+     '- ', '.0',         "",       " 1",     " 100",     "-100",
+    '-+ ', '.0',         "",       "+1",     "+100",     "-100",
+     '-0', '.0',         "",        "1",      "100",     "-100",
+    '-+0', '.0',         "",       "+1",     "+100",     "-100",
+    '-0 ', '.0',         "",       " 1",     " 100",     "-100",
+   '-+0 ', '.0',         "",       "+1",     "+100",     "-100",
+      '#', '.0',         "",      "0b1",    "0b100",   "-0b100",
+     '# ', '.0',         "",     " 0b1",   " 0b100",   "-0b100",
+     '#0', '.0',         "",      "0b1",    "0b100",   "-0b100",
+    '#0 ', '.0',         "",     " 0b1",   " 0b100",   "-0b100",
+     '#+', '.0',         "",     "+0b1",   "+0b100",   "-0b100",
+    '#+ ', '.0',         "",     "+0b1",   "+0b100",   "-0b100",
+    '#+0', '.0',         "",     "+0b1",   "+0b100",   "-0b100",
+   '#+0 ', '.0',         "",     "+0b1",   "+0b100",   "-0b100",
+     '#-', '.0',         "",      "0b1",    "0b100",   "-0b100",
+    '#-+', '.0',         "",     "+0b1",   "+0b100",   "-0b100",
+    '#- ', '.0',         "",     " 0b1",   " 0b100",   "-0b100",
+   '#-+ ', '.0',         "",     "+0b1",   "+0b100",   "-0b100",
+    '#-0', '.0',         "",      "0b1",    "0b100",   "-0b100",
+   '#-+0', '.0',         "",     "+0b1",   "+0b100",   "-0b100",
+   '#-0 ', '.0',         "",     " 0b1",   " 0b100",   "-0b100",
+  '#-+0 ', '.0',         "",     "+0b1",   "+0b100",   "-0b100",
 
-## tests for low value of precision (less than characters needed)
-is sprintf('%.0b', 0),                 "", '%b; precision 0; value 0';
-is sprintf('%.0b', 9),             "1001", '%b; precision 0; value > 0';
-is sprintf('%.0b', -9),           "-1001", '%b; precision 0; value < 0';
-is sprintf('%10.0b', 0),     "          ", '%b; size; precision 0; value 0';
-is sprintf('%10.0b', 9),     "      1001", '%b; size; precision 0; value > 0';
-is sprintf('%10.0b', -9),    "     -1001", '%b; size; precision 0; value < 0';
-is sprintf('%.1b', 0),                "0", '%b; precision 1; value 0';
-is sprintf('%.1b', 9),             "1001", '%b; precision 1; value > 0';
-is sprintf('%.1b', -9),           "-1001", '%b; precision 1; value < 0';
-is sprintf('%10.1b', 0),     "         0", '%b; size; precision 1; value 0';
-is sprintf('%10.1b', 9),     "      1001", '%b; size; precision 1; value > 0';
-is sprintf('%10.1b', -9),    "     -1001", '%b; size; precision 1; value < 0';
-## tests for medium value of precision (more than digits needed, less than width/size)
-is sprintf('%10.8b', 9),     "  00001001", '%b; size 10; precision 8; value > 0';
-is sprintf('%10.8b', -9),    " -00001001", '%b; size 10; precision 8; value < 0';
-## tests for high value of precision (more than digits needed, more than width/size)
-is sprintf('%.8b', 9),         "00001001", '%b; no size; precision 8; value > 0';
-is sprintf('%.8b', -9),       "-00001001", '%b; no size; precision 8; value < 0';
-is sprintf('%2.8b', 9),        "00001001", '%b; size 2; precision 8; value > 0';
-is sprintf('%2.8b', -9),      "-00001001", '%b; size 2; precision 8; value < 0';
+             # 2 positions, usually doesn't fit
+       '',    2,       " 0",       " 1",      "100",     "-100",
+      ' ',    2,       " 0",       " 1",     " 100",     "-100",
+      '0',    2,       "00",       "01",      "100",     "-100",
+     '0 ',    2,       " 0",       " 1",     " 100",     "-100",
+      '+',    2,       "+0",       "+1",     "+100",     "-100",
+     '+ ',    2,       "+0",       "+1",     "+100",     "-100",
+     '+0',    2,       "+0",       "+1",     "+100",     "-100",
+    '+0 ',    2,       "+0",       "+1",     "+100",     "-100",
+      '-',    2,       "0 ",       "1 ",      "100",     "-100",
+     '-+',    2,       "+0",       "+1",     "+100",     "-100",
+     '- ',    2,       " 0",       " 1",     " 100",     "-100",
+    '-+ ',    2,       "+0",       "+1",     "+100",     "-100",
+     '-0',    2,       "0 ",       "1 ",      "100",     "-100",
+    '-+0',    2,       "+0",       "+1",     "+100",     "-100",
+    '-0 ',    2,       " 0",       " 1",     " 100",     "-100",
+   '-+0 ',    2,       "+0",       "+1",     "+100",     "-100",
+      '#',    2,       " 0",      "0b1",    "0b100",   "-0b100",
+     '# ',    2,       " 0",     " 0b1",   " 0b100",   "-0b100",
+     '#0',    2,       "00",      "0b1",    "0b100",   "-0b100",
+    '#0 ',    2,       " 0",     " 0b1",   " 0b100",   "-0b100",
+     '#+',    2,       "+0",     "+0b1",   "+0b100",   "-0b100",
+    '#+ ',    2,       "+0",     "+0b1",   "+0b100",   "-0b100",
+    '#+0',    2,       "+0",     "+0b1",   "+0b100",   "-0b100",
+   '#+0 ',    2,       "+0",     "+0b1",   "+0b100",   "-0b100",
+     '#-',    2,       "0 ",      "0b1",    "0b100",   "-0b100",
+    '#-+',    2,       "+0",     "+0b1",   "+0b100",   "-0b100",
+    '#- ',    2,       " 0",     " 0b1",   " 0b100",   "-0b100",
+   '#-+ ',    2,       "+0",     "+0b1",   "+0b100",   "-0b100",
+    '#-0',    2,       "0 ",      "0b1",    "0b100",   "-0b100",
+   '#-+0',    2,       "+0",     "+0b1",   "+0b100",   "-0b100",
+   '#-0 ',    2,       " 0",     " 0b1",   " 0b100",   "-0b100",
+  '#-+0 ',    2,       "+0",     "+0b1",   "+0b100",   "-0b100",
 
-# TODO combinations of $<precision> with flags
+             # 8 positions, should always fit
+       '',    8, "       0", "       1", "     100", "    -100",
+      ' ',    8, "       0", "       1", "     100", "    -100",
+      '0',    8, "00000000", "00000001", "00000100", "-0000100",
+     '0 ',    8, " 0000000", " 0000001", " 0000100", "-0000100",
+      '+',    8, "      +0", "      +1", "    +100", "    -100",
+     '+ ',    8, "      +0", "      +1", "    +100", "    -100",
+     '+0',    8, "+0000000", "+0000001", "+0000100", "-0000100",
+    '+0 ',    8, "+0000000", "+0000001", "+0000100", "-0000100",
+      '-',    8, "0       ", "1       ", "100     ", "-100    ",
+     '-+',    8, "+0      ", "+1      ", "+100    ", "-100    ",
+     '- ',    8, " 0      ", " 1      ", " 100    ", "-100    ",
+    '-+ ',    8, "+0      ", "+1      ", "+100    ", "-100    ",
+     '-0',    8, "0       ", "1       ", "100     ", "-100    ",
+    '-+0',    8, "+0      ", "+1      ", "+100    ", "-100    ",
+    '-0 ',    8, " 0      ", " 1      ", " 100    ", "-100    ",
+   '-+0 ',    8, "+0      ", "+1      ", "+100    ", "-100    ",
+      '#',    8, "       0", "     0b1", "   0b100", "  -0b100",
+     '# ',    8, "       0", "     0b1", "   0b100", "  -0b100",
+     '#0',    8, "00000000", "0b000001", "0b000100", "-0b00100",
+    '#0 ',    8, " 0000000", " 0b00001", " 0b00100", "-0b00100",
+     '#+',    8, "      +0", "    +0b1", "  +0b100", "  -0b100",
+    '#+ ',    8, "      +0", "    +0b1", "  +0b100", "  -0b100",
+    '#+0',    8, "+0000000", "+0b00001", "+0b00100", "-0b00100",
+   '#+0 ',    8, "+0000000", "+0b00001", "+0b00100", "-0b00100",
+     '#-',    8, "0       ", "0b1     ", "0b100   ", "-0b100  ",
+    '#-+',    8, "+0      ", "+0b1    ", "+0b100  ", "-0b100  ",
+    '#- ',    8, " 0      ", " 0b1    ", " 0b100  ", "-0b100  ",
+   '#-+ ',    8, "+0      ", "+0b1    ", "+0b100  ", "-0b100  ",
+    '#-0',    8, "0       ", "0b1     ", "0b100   ", "-0b100  ",
+   '#-+0',    8, "+0      ", "+0b1    ", "+0b100  ", "-0b100  ",
+   '#-0 ',    8, " 0      ", " 0b1    ", " 0b100  ", "-0b100  ",
+  '#-+0 ',    8, "+0      ", "+0b1    ", "+0b100  ", "-0b100  ",
+
+             # 8 positions with precision, precision fits sometimes
+       '',  8.2, "      00", "      01", "     100", "    -100",
+      ' ',  8.2, "      00", "      01", "     100", "    -100",
+      '0',  8.2, "      00", "      01", "     100", "    -100",
+     '0 ',  8.2, "      00", "      01", "     100", "    -100",
+      '+',  8.2, "     +00", "     +01", "    +100", "    -100",
+     '+ ',  8.2, "     +00", "     +01", "    +100", "    -100",
+     '+0',  8.2, "     +00", "     +01", "    +100", "    -100",
+    '+0 ',  8.2, "     +00", "     +01", "    +100", "    -100",
+      '-',  8.2, "00      ", "01      ", "100     ", "-100    ",
+     '-+',  8.2, "+00     ", "+01     ", "+100    ", "-100    ",
+     '- ',  8.2, " 00     ", " 01     ", " 100    ", "-100    ",
+    '-+ ',  8.2, "+00     ", "+01     ", "+100    ", "-100    ",
+     '-0',  8.2, "00      ", "01      ", "100     ", "-100    ",
+    '-+0',  8.2, "+00     ", "+01     ", "+100    ", "-100    ",
+    '-0 ',  8.2, " 00     ", " 01     ", " 100    ", "-100    ",
+   '-+0 ',  8.2, "+00     ", "+01     ", "+100    ", "-100    ",
+      '#',  8.2, "      00", "    0b01", "   0b100", "  -0b100",
+     '# ',  8.2, "      00", "    0b01", "   0b100", "  -0b100",
+     '#0',  8.2, "      00", "    0b01", "   0b100", "  -0b100",
+    '#0 ',  8.2, "      00", "    0b01", "   0b100", "  -0b100",
+     '#+',  8.2, "     +00", "   +0b01", "  +0b100", "  -0b100",
+    '#+ ',  8.2, "     +00", "   +0b01", "  +0b100", "  -0b100",
+    '#+0',  8.2, "     +00", "   +0b01", "  +0b100", "  -0b100",
+   '#+0 ',  8.2, "     +00", "   +0b01", "  +0b100", "  -0b100",
+     '#-',  8.2, "00      ", "0b01    ", "0b100   ", "-0b100  ",
+    '#-+',  8.2, "+00     ", "+0b01   ", "+0b100  ", "-0b100  ",
+    '#- ',  8.2, " 00     ", " 0b01   ", " 0b100  ", "-0b100  ",
+   '#-+ ',  8.2, "+00     ", "+0b01   ", "+0b100  ", "-0b100  ",
+    '#-0',  8.2, "00      ", "0b01    ", "0b100   ", "-0b100  ",
+   '#-+0',  8.2, "+00     ", "+0b01   ", "+0b100  ", "-0b100  ",
+   '#-0 ',  8.2, " 00     ", " 0b01   ", " 0b100  ", "-0b100  ",
+  '#-+0 ',  8.2, "+00     ", "+0b01   ", "+0b100  ", "-0b100  ",
+
+).map: -> $flags, $size, $r0, $r1, $r4, $rm {
+    my @flat;
+    @flat.append(
+      '%' ~ $_ ~ $size ~ 'b',
+      ($r0 => 0, $r1 => 1, $r4 => 4, $rm => -4)
+    ) for $flags.comb.permutations>>.join;
+    |@flat
+}
+
+# tests using variable precision 0
+@info.append( (
+             # no size, precision 0
+       '', '.*',         "",        "1",      "100",     "-100",
+      ' ', '.*',         "",       " 1",     " 100",     "-100",
+      '0', '.*',         "",        "1",      "100",     "-100",
+     '0 ', '.*',         "",       " 1",     " 100",     "-100",
+      '+', '.*',         "",       "+1",     "+100",     "-100",
+     '+ ', '.*',         "",       "+1",     "+100",     "-100",
+     '+0', '.*',         "",       "+1",     "+100",     "-100",
+    '+0 ', '.*',         "",       "+1",     "+100",     "-100",
+      '-', '.*',         "",        "1",      "100",     "-100",
+     '-+', '.*',         "",       "+1",     "+100",     "-100",
+     '- ', '.*',         "",       " 1",     " 100",     "-100",
+    '-+ ', '.*',         "",       "+1",     "+100",     "-100",
+     '-0', '.*',         "",        "1",      "100",     "-100",
+    '-+0', '.*',         "",       "+1",     "+100",     "-100",
+    '-0 ', '.*',         "",       " 1",     " 100",     "-100",
+   '-+0 ', '.*',         "",       "+1",     "+100",     "-100",
+      '#', '.*',         "",      "0b1",    "0b100",   "-0b100",
+     '# ', '.*',         "",     " 0b1",   " 0b100",   "-0b100",
+     '#0', '.*',         "",      "0b1",    "0b100",   "-0b100",
+    '#0 ', '.*',         "",     " 0b1",   " 0b100",   "-0b100",
+     '#+', '.*',         "",     "+0b1",   "+0b100",   "-0b100",
+    '#+ ', '.*',         "",     "+0b1",   "+0b100",   "-0b100",
+    '#+0', '.*',         "",     "+0b1",   "+0b100",   "-0b100",
+   '#+0 ', '.*',         "",     "+0b1",   "+0b100",   "-0b100",
+     '#-', '.*',         "",      "0b1",    "0b100",   "-0b100",
+    '#-+', '.*',         "",     "+0b1",   "+0b100",   "-0b100",
+    '#- ', '.*',         "",     " 0b1",   " 0b100",   "-0b100",
+   '#-+ ', '.*',         "",     "+0b1",   "+0b100",   "-0b100",
+    '#-0', '.*',         "",      "0b1",    "0b100",   "-0b100",
+   '#-+0', '.*',         "",     "+0b1",   "+0b100",   "-0b100",
+   '#-0 ', '.*',         "",     " 0b1",   " 0b100",   "-0b100",
+  '#-+0 ', '.*',         "",     "+0b1",   "+0b100",   "-0b100",
+
+).map: -> $flags, $size, $r0, $r1, $r4, $rm {
+    my @flat;
+    @flat.append(
+      '%' ~ $_ ~ $size ~ 'b',
+      ($r0 => (0,0), $r1 => (0,1), $r4 => (0,4), $rm => (0,-4))
+   ) for $flags.comb.permutations>>.join;
+   |@flat
+} );
+
+@info.append( (
+             # 8 positions with precision, precision fits sometimes
+       '', "8.*", "      00", "      01", "     100", "    -100",
+      ' ', "8.*", "      00", "      01", "     100", "    -100",
+      '0', "8.*", "      00", "      01", "     100", "    -100",
+     '0 ', "8.*", "      00", "      01", "     100", "    -100",
+      '+', "8.*", "     +00", "     +01", "    +100", "    -100",
+     '+ ', "8.*", "     +00", "     +01", "    +100", "    -100",
+     '+0', "8.*", "     +00", "     +01", "    +100", "    -100",
+    '+0 ', "8.*", "     +00", "     +01", "    +100", "    -100",
+      '-', "8.*", "00      ", "01      ", "100     ", "-100    ",
+     '-+', "8.*", "+00     ", "+01     ", "+100    ", "-100    ",
+     '- ', "8.*", " 00     ", " 01     ", " 100    ", "-100    ",
+    '-+ ', "8.*", "+00     ", "+01     ", "+100    ", "-100    ",
+     '-0', "8.*", "00      ", "01      ", "100     ", "-100    ",
+    '-+0', "8.*", "+00     ", "+01     ", "+100    ", "-100    ",
+    '-0 ', "8.*", " 00     ", " 01     ", " 100    ", "-100    ",
+   '-+0 ', "8.*", "+00     ", "+01     ", "+100    ", "-100    ",
+      '#', "8.*", "      00", "    0b01", "   0b100", "  -0b100",
+     '# ', "8.*", "      00", "    0b01", "   0b100", "  -0b100",
+     '#0', "8.*", "      00", "    0b01", "   0b100", "  -0b100",
+    '#0 ', "8.*", "      00", "    0b01", "   0b100", "  -0b100",
+     '#+', "8.*", "     +00", "   +0b01", "  +0b100", "  -0b100",
+    '#+ ', "8.*", "     +00", "   +0b01", "  +0b100", "  -0b100",
+    '#+0', "8.*", "     +00", "   +0b01", "  +0b100", "  -0b100",
+   '#+0 ', "8.*", "     +00", "   +0b01", "  +0b100", "  -0b100",
+     '#-', "8.*", "00      ", "0b01    ", "0b100   ", "-0b100  ",
+    '#-+', "8.*", "+00     ", "+0b01   ", "+0b100  ", "-0b100  ",
+    '#- ', "8.*", " 00     ", " 0b01   ", " 0b100  ", "-0b100  ",
+   '#-+ ', "8.*", "+00     ", "+0b01   ", "+0b100  ", "-0b100  ",
+    '#-0', "8.*", "00      ", "0b01    ", "0b100   ", "-0b100  ",
+   '#-+0', "8.*", "+00     ", "+0b01   ", "+0b100  ", "-0b100  ",
+   '#-0 ', "8.*", " 00     ", " 0b01   ", " 0b100  ", "-0b100  ",
+  '#-+0 ', "8.*", "+00     ", "+0b01   ", "+0b100  ", "-0b100  ",
+
+).map: -> $flags, $size, $r0, $r1, $r4, $rm {
+    my @flat;
+    @flat.append(
+      '%' ~ $_ ~ $size ~ 'b',
+      ($r0 => (2,0), $r1 => (2,1), $r4 => (2,4), $rm => (2,-4))
+   ) for $flags.comb.permutations>>.join;
+   |@flat
+} );
+
+plan @info/2;
+
+for @info -> $format, @tests {
+    subtest {
+        plan 2 * @tests;
+
+        for @tests {
+            is-deeply sprintf($format, |.value), .key,
+              qq/sprintf("$format",{.value.list.join(",")}) eq '{.key}'/;
+            is-deeply sprintf($format.uc, |.value), .key.uc,
+              qq/sprintf("{$format.uc}",{.value.list.join(",")}) eq '{.key.uc}'/;
+        }
+    }, "Tested '$format'";
+}
 
 # vim: ft=perl6

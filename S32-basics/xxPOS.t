@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 60;
+plan 63;
 
 my     @a  = 42, 666;
 my Int @ai = 42, 666;
@@ -77,4 +77,16 @@ for $@a, Any, $@ai, Int -> \a, \T {
     my $a;
     is $a.DELETE-POS(0), Nil, "\$a.DELETE-POS (undefined)";  # not sure ok
     ok !$a.EXISTS-POS(0),     "\$a.EXISTS-POS (after delete)";
+}
+
+# R#2929
+{
+    my @a;
+    my $neg = -1;
+    is-deeply @a.EXISTS-POS($neg,0), False,
+      '2 dimensional EXISTS-POS with Failure';
+    is-deeply @a.EXISTS-POS($neg,$neg,0), False,
+      '3 dimensional EXISTS-POS with Failure';
+    is-deeply @a.EXISTS-POS($neg,$neg,$neg,0), False,
+      '4 dimensional EXISTS-POS with Failure';
 }

@@ -3,4 +3,4 @@
 #
 # Some implementations use this file to select which test files to run, e.g.:
 # https://github.com/rakudo/rakudo/blob/master/docs/roast-spectest.data-versioning.md
-6.d-proposals
+6.e.PREVIEW

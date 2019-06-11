@@ -12,7 +12,7 @@ my $name = $*SCHEDULER.^name;
     isa-ok( $c, Cancellation );
     sleep 3;
     is $tracker, 10, "Cue on $name with :times(10)";
-    LEAVE $c.cancel;
+    LEAVE .cancel with $c;
 }
 
 # fake scheduling from here on out
@@ -24,5 +24,5 @@ $name = $*SCHEDULER.^name;
     my $c = $*SCHEDULER.cue({ $tracker++ }, :times(10));
     ok $c.can("cancel"), 'can we cancel';
     is $tracker, 10, "Cue on $name with :times(10)";
-    LEAVE $c.cancel;
+    LEAVE .cancel with $c;
 }

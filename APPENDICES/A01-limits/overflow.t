@@ -33,6 +33,7 @@ throws-like '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴', X::Numeri
 throws-like '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵', X::Numeric::Overflow,
     '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws';
 
+#?rakudo.jvm 2 skip 'implementation specific limit'
 #?rakudo.js 2 skip 'implementation specific limit'
 # RT #112788
 # if no throwage happens, as is wanted, the program will take forever to run

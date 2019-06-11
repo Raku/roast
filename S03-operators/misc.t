@@ -127,9 +127,9 @@ is (2 Z 3), @z, 'joining of single items';
 
 # comparison complains if either of its arguments is undefined - RT #93978
 {
-    throws-like {Int < 0}, Exception;
-    #?rakudo todo "RT #93978"
-    throws-like {"cat" gt Str}, Exception;
+    CONTROL { when CX::Warn { die $_ } }
+    throws-like {Int < 0}, CX::Warn;
+    throws-like {"cat" gt Str}, CX::Warn;
 }
 
 # unicode operators are there
@@ -143,7 +143,7 @@ is (2 Z 3), @z, 'joining of single items';
 
     is 2 × 3, 6, "we have infix MULTIPLICATION SIGN";
 
-    #?rakudo.jvm skip 'Bogus term'
+    #?rakudo.jvm todo 'expected: 0, got: 0.666667'
     is 2 ÷ 3, ⅔, "we have infix DIVISION SIGN";
 
     ok   4 ≤ 23, 'we have infix LESS-THAN OR EQUAL TO';

@@ -27,12 +27,10 @@ is 4᱂, 42, "Can mix scripts in one number";
 #?rakudo.jvm 2 skip 'Bogus term'
 is ↈ, 100000, "Numerals in category 'Nl' allowed as numeric literal";
 is 𒐀, 2, "Numerals in category 'Nl' allowed as numeric literal";
-#?rakudo.jvm todo 'X::Comp::Group, Argument to "say" seems to be malformed'
 throws-like "say 𒐀𒐀", X::Comp, "Numerals in category 'Nl' die when attempt is made to use as digit";
 #?rakudo.jvm 2 skip 'Bogus term'
 is ፼, 10000, "Numerals in category 'No' allowed as numeric literal";
 is ⓿, 0, "Numerals in category 'No' allowed as numeric literal";
-#?rakudo.jvm todo 'X::Comp::Group, Argument to "say" seems to be malformed'
 throws-like "say ⓿⓿", X::Comp, "Numerals in category 'No' die when attempt is made to use as digit";
 
 #?rakudo.jvm 3 skip 'Bogus term'

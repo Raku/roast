@@ -178,6 +178,10 @@ our sub run( Str $code, Str $input = '', *%o) {
 }
 
 sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
+    if $*DISTRO.name eq 'browser' {
+        return CORE::<&run>(:fake-run, $code, $input, :@args, :@compiler-args);
+    }
+
     my $fnbase = $*TMPDIR.add('getout').absolute;
     $fnbase ~= '-' ~ $*PID if defined $*PID;
     $fnbase ~= '-' ~ 1_000_000.rand.Int;
@@ -234,8 +238,12 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
 
 multi doesn't-hang (Str $args, $desc, :$in, :$wait = 15, :$out, :$err)
 is export {
-    doesn't-hang \($*EXECUTABLE.absolute, '-e', $args), $desc,
-        :$in, :$wait, :$out, :$err;
+    if $*DISTRO.name eq 'browser' {
+        is_run($args, { :$out, :$err }, $desc);
+    } else {
+        doesn't-hang \($*EXECUTABLE.absolute, '-e', $args), $desc,
+            :$in, :$wait, :$out, :$err;
+    }
 }
 
 # TODO XXX: for some reason shoving this variable inside the routine and
