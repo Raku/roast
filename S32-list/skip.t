@@ -117,7 +117,7 @@ subtest 'Seq.skip does not leave original Seq consumable' => {
 
     subtest 'uncached, .skip()' => {
         plan 2;
-        my $s := (1, 2, 3).Seq;
+        my $s := (1..3).Seq;
         my $skipped := $s.skip;
 
         throws-like { @$s }, X::Seq::Consumed, 'original got consumed';
@@ -126,7 +126,7 @@ subtest 'Seq.skip does not leave original Seq consumable' => {
 
     subtest 'uncached, .skip(n)' => {
         plan 2;
-        my $s := (1, 2, 3).Seq;
+        my $s := (1..3).Seq;
         my $skipped := $s.skip: 2;
 
         throws-like { @$s }, X::Seq::Consumed, 'original got consumed';
@@ -135,7 +135,7 @@ subtest 'Seq.skip does not leave original Seq consumable' => {
 
     subtest 'cached, .skip()' => {
         plan 2;
-        my $s := (1, 2, 3).Seq;
+        my $s := (1..3).Seq;
         $s.cache;
         my $skipped := $s.skip;
 
@@ -145,7 +145,7 @@ subtest 'Seq.skip does not leave original Seq consumable' => {
 
     subtest 'cached, .skip(n)' => {
         plan 2;
-        my $s := (1, 2, 3).Seq;
+        my $s := (1..3).Seq;
         $s.cache;
         my $skipped := $s.skip: 2;
 
