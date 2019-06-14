@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 21;
 
 {
     my Channel $c .= new;
@@ -82,4 +82,18 @@ plan 19;
 { # coverage; 2016-09-26
     throws-like { Channel.elems     }, Exception, 'Channel:U.elems fails';
     throws-like { Channel.new.elems }, Exception, 'Channel:D.elems fails';
+}
+
+{
+    my $channel = Channel.new;
+    my $closed = $channel.closed;
+    $channel.close;
+    is $closed.status, Kept, "close keeps a closed Promise";
+}
+
+{
+    my $channel = Channel.new;
+    my $closed = $channel.closed;
+    $channel.fail("Bad error happens!");
+    is $closed.status, Broken, "fail breaks a closed Promise";
 }
