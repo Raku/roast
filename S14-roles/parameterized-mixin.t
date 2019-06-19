@@ -93,15 +93,6 @@ ok $d.HOW.does($d, InitialAttribBoth),
   ".HOW.does gives correct information (4-1)";
 ok $d.^does(InitialAttribBoth),
   ".^does gives correct information (4-1)";
-# Are these really right? Trying to supply one parameter to a role that
-# needs two? Even if the second doesn't participate in the multi dispatch,
-# it still exists as a role parameter that needs supplying. Maybe we do
-# not create multiple role variants though...but these are almost certainly
-# not correct. -- jnthn
-# ok $d.HOW.does($d, InitialAttribBoth["type1"]),
-#   ".HOW.does gives correct information (4-2)";
-# ok $d.^does(InitialAttribBoth["type1"]),
-#   ".^does gives correct information (4-2)";
 #?rakudo 2 todo '.does with parametric roles RT #124746'
 ok !$d.HOW.does($d, InitialAttribBoth["type1", "name1"]),
   ".HOW.does gives correct information (4-3)";
