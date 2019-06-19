@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 27;
 
 {
     my Channel $c .= new;
@@ -14,29 +14,43 @@ plan 19;
 
 {
     my $c = Channel.new;
+    my $closed = $c.closed;
     $c.send(42);
     $c.close();
-    nok $c.closed, "Channel not closed before value received";
+    nok $closed, "Channel not closed before value consumed";
     is $c.receive, 42, "Received value";
-    ok $c.closed, "Channel closed after all values received";
+    ok $closed, "Channel closed after all values consumed";
+    is $closed.status, Kept, "closed status";
+    ok $c.poll === Nil, 'poll returns Nil when channel closed';
     throws-like { $c.receive }, X::Channel::ReceiveOnClosed;
     throws-like { $c.send(18) }, X::Channel::SendOnClosed;
 }
 
 {
     my $c = Channel.new;
+    my $closed = $c.closed;
     $c.send(1);
-    $c.fail("oh noes");
-    is $c.receive, 1, "received first value";
-    dies-ok { $c.receive }, "error thrown on receive";
+    my $error = "oh noes";
+    $c.fail($error);
+    nok $closed, "Channel not closed before value consumed";
+    is $c.poll, 1, "Polled value";
+    ok $closed, "Channel closed after all values consumed";
+    is $closed.status, Broken, "closed status";
+    is $closed.cause.message, $error, "failure reason conveyed";
+    ok $c.poll === Nil, 'poll returns Nil when channel failed';
+    throws-like { $c.receive }, X::AdHoc, payload => $error,
+     "error thrown on receive";
     throws-like { $c.send(18) }, X::Channel::SendOnClosed;
-    is $c.closed.cause.message, "oh noes", "failure reason conveyed";
 }
 
 {
     my class X::Roast::Channel is Exception { };
     my $c = Channel.new;
+    my $closed = $c.closed;
     $c.fail(X::Roast::Channel.new);
+    is $closed.status, Broken,
+     'Failing an empty channel immediately breaks its .closed promise';
+    isa-ok $closed.cause, X::Roast::Channel, "failure reason conveyed";
     throws-like { $c.receive }, X::Roast::Channel;
 }
 
@@ -52,9 +66,10 @@ plan 19;
 
 {
     my $c = Channel.new;
+    my $closed = $c.closed;
     $c.close;
-    is $c.closed.status, Kept, 'Closing a channel immediately keeps its .closed promise';
-
+    is $closed.status, Kept,
+     'Closing an empty channel immediately keeps its .closed promise';
 }
 
 #?rakudo.jvm skip 'NullPointerException'
