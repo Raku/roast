@@ -103,7 +103,7 @@ throws-like 'role ABCD[EFGH] { }', X::Parameter::InvalidType, 'role with undefin
 }
 
 # RT #84492
-{ 
+{
     my role R[::T] { multi method foo(T $t) { T.gist } };
     my class A does R[Str] does R[Int] { };
     is A.new.foo(5), 5.WHAT.gist, 'correct multi selected from multiple parametric roles';
