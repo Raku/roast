@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 301;
+plan 307;
 
 
 # tests various assignment styles
@@ -973,6 +973,23 @@ sub l () { 1, 2 };
     my $a; $a -= 2;
     is-deeply $a, -2, '-= with :U target gives right result';
     throws-like ｢my $b; $b %= 2｣, Exception, '%= with :U target throws';
+}
+
+# GH #1203
+{
+    my %s := SetHash.new;
+
+    %s = SetHash.new: <a aa ab abc b bb bcd>;
+
+    ok %s.WHAT ~~ SetHash, "SetHash type is preserved";
+    is %s.elems, 7, "number of elements is correct";
+    is-deeply %s.keys.sort, <a aa ab abc b bb bcd>, "values are correct";
+
+    %s (-)= %s.grep: *.key.chars > 2;
+
+    ok %s.WHAT ~~ SetHash, "it is still SetHash type";
+    is %s.elems, 5, "number of elements as expected";
+    is-deeply %s.keys.sort, <a aa ab b bb>, "all long elements are excluded";
 }
 
 # vim: ft=perl6
