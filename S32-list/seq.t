@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 42;
+plan 44;
 
 my @result = 1,2,3;
 
@@ -235,4 +235,12 @@ group-of 2 => 'ZEN slices do not cache Seqs' => {
     throws-like { $z-hash.iterator }, X::Seq::Consumed, '<> ZEN slice';
     (my $z-list := ().Seq)[].iterator;
     throws-like { $z-list.iterator }, X::Seq::Consumed, '[] ZEN slice';
+}
+
+
+# R#3014
+{
+    my $s = (1, 2, 3).Seq;
+    is $s.iterator.pull-one, 1, 'did we get 1 as the first value';
+    dies-ok { $s[0] }, 'did accessing first element die';
 }
