@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 308;
+plan 313;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -729,5 +729,14 @@ is-deeply ('foo' => 10000000000000000000).BagHash.grab(1), ('foo',),
 
 # R#2289
 is-deeply (1,2,3).BagHash.ACCEPTS(().BagHash), False, 'can we smartmatch empty';
+
+{
+    my $bag = <a b c>.BagHash;
+    is-deeply $bag.Set,     <a b c>.Set,     'coerce BagHash -> Set';
+    is-deeply $bag.SetHash, <a b c>.SetHash, 'coerce BagHash -> SetHash';
+    is-deeply $bag.Bag,     <a b c>.Bag,     'coerce BagHash -> Bag';
+    is-deeply $bag.Mix,     <a b c>.Mix,     'coerce BagHash -> Mix';
+    is-deeply $bag.MixHash, <a b c>.MixHash, 'coerce BagHash -> MixHash';
+}
 
 # vim: ft=perl6

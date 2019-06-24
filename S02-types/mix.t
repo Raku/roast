@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 227;
+plan 232;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -543,5 +543,14 @@ subtest '.hash does not cause keys to be stringified' => {
 
 # R#2289
 is-deeply (1,2,3).Mix.ACCEPTS(().Mix), False, 'can we smartmatch empty';
+
+{
+    my $mix = <a b c>.Mix;
+    is-deeply $mix.Set,     <a b c>.Set,     'coerce Mix -> Set';
+    is-deeply $mix.SetHash, <a b c>.SetHash, 'coerce Mix -> SetHash';
+    is-deeply $mix.Bag,     <a b c>.Bag,     'coerce Mix -> Bag';
+    is-deeply $mix.BagHash, <a b c>.BagHash, 'coerce Mix -> BagHash';
+    is-deeply $mix.MixHash, <a b c>.MixHash, 'coerce Mix -> MixHash';
+}
 
 # vim: ft=perl6
