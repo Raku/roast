@@ -33,7 +33,6 @@ plan 155;
 }
 
 # MY
-#?rakudo skip 'various issues, skipping all for now RT #124915'
 {
     my $x = 10; #OK
     my $y = 11; #OK
@@ -62,6 +61,8 @@ plan 155;
         MY::.{'$z'} := $y;
         ok $z =:= $y, 'Can bind through MY::.{}';
 
+#?rakudo skip "::= isn't implemented yet"
+{
         $MY::z ::= $y;
         is $z, $y, '::= binding through $MY::z works';
         throws-like { $z = 5 },
@@ -73,6 +74,7 @@ plan 155;
         throws-like { $z = 5 },
           Exception,
           '... and makes readonly';
+}
     }
 
     my class A1 {
@@ -119,9 +121,12 @@ plan 155;
     $MY::a18 := $x;
     ok $a18 =:= $x, '$MY:: binding works on our-aliases';
 
+#?rakudo skip "No ? twigil yet"
+{
     my constant $?q = 20;
     is $?MY::q, 20, '$?MY:: can be used on constants';  #OK
     is MY::.{'$?q'}, 20, 'MY::.{} can be used on constants';
+}
 
     ok MY::{'&say'} === &say, 'MY::.{} can find CORE names';
     ok &MY::say === &say, '&MY:: can find CORE names';
@@ -177,17 +182,17 @@ plan 155;
     is OUR::A41.WHO.<$x>, 42, '$OUR:: can autovivify packages (binding)';
     #?rakudo emit #
     $::($our)::A42::x = 43;
-    #?rakudo todo 'interpolation and auto-viv NYI'
+    #?rakudo skip 'interpolation and auto-viv NYI'
     is ::($our)::A42.WHO.<$x>, 43, '::("OUR") can autovivify packages (r)';
 
     #?rakudo emit #
     $::($our)::A43::x := 44;
-    #?rakudo todo 'binding and interpolation together NYI'
+    #?rakudo skip 'binding and interpolation together NYI'
     is ::($our)::A43.WHO.<$x>, 44, '::("OUR") can autovivify packages (b)';
 
     #?rakudo emit #
     ::($our)::A44 := class { our $x = 41; };
-    #?rakudo todo 'binding and interpolation together NYI'
+    #?rakudo skip 'binding and interpolation together NYI'
     is $::($our)::A44::x, 41, '::("OUR") can follow aliased packages';
 }
 
@@ -454,15 +459,15 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
         LEXICAL::  OUTERS::  CALLERS::  SETTING::  OUR::
     >;
 
-    eval-lives-ok '$CORE::CALLERS::CORE::True', 'CORE::CALLERS::CORE::...';
-    eval-lives-ok '$CORE::UNIT::True',          'CORE::UNIT::...';
+    eval-lives-ok 'CORE::CALLERS::CORE::True', 'CORE::CALLERS::CORE::...';
+    eval-lives-ok 'CORE::UNIT::True',          'CORE::UNIT::...';
 
     my $mixed := ([~] '$', |(@packs.pick xx 100), 'True');
     #?rakudo.jvm skip 'unknown problem'
     eval-lives-ok($mixed, 'mixed') or diag "Failing mixed combination: $mixed";
     #?rakudo.jvm skip 'unknown problem'
     #?DOES 11
-    eval-lives-ok '$' ~ $_ x 100 ~ 'True', $_ for @packs;
+    eval-lives-ok $_ x 100 ~ 'True', $_ for @packs;
 }
 
 # vim: ft=perl6
