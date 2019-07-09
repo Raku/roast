@@ -59,7 +59,7 @@ plan 19;
 }
 
 
-#?rakudo skip 'variables as return specifications dont parse yet RT #124927'
+#?rakudo skip 'variables as return specifications dont parse yet'
 {
     my sub return-seven(--> $result) {
         $result = 7;
@@ -70,7 +70,7 @@ plan 19;
 }
 
 
-#?rakudo skip 'variables as return specifications dont parse yet RT #124927'
+#?rakudo skip 'variables as return specifications dont parse yet'
 {
     my $result = 9;
 

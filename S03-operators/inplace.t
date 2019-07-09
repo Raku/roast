@@ -29,7 +29,7 @@ plan 38;
     is($a, 3, "inplace int");
 }
 
-#?rakudo skip "Method '' not found for invocant of class 'Str' RT #124528"
+#?rakudo skip "Method '' not found for invocant of class 'Str'"
 {
     my $b = "a_string"; $b .= WHAT;
     my $c =         42; $c .= WHAT;

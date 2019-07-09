@@ -64,7 +64,7 @@ ok("\x[3A18]\c[MIDDLE DOT]" ~~ m/<:Extender>/, q{Match unanchored <Extender>} );
 # GraphemeLink
 
 
-#?rakudo.jvm    7 skip "isGraphemeLink RT #124874"
+#?rakudo.jvm    7 skip "isGraphemeLink"
 ok("\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<:GraphemeLink>$/, q{Match <:GraphemeLink>} );
 ok(!( "\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<:!GraphemeLink>$/ ), q{Don't match negated <GraphemeLink>} );
 ok(!( "\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<-:GraphemeLink>$/ ), q{Don't match inverted <GraphemeLink>} );
@@ -303,7 +303,7 @@ ok("\x[0BD1]\x[949B]" ~~ m/<:ID_Continue>/, q{Match unanchored (ID_Start + Mn + 
 
 # Any             # Any character
 
-#?rakudo.jvm 4 skip 'isAny NYI RT #124879'
+#?rakudo.jvm 4 skip 'isAny NYI'
 ok("\x[C709]" ~~ m/^<:Any>$/, q{Match (Any character)} );
 ok(!( "\x[C709]" ~~ m/^<:!Any>$/ ), q{Don't match negated (Any character)} );
 ok(!( "\x[C709]" ~~ m/^<-:Any>$/ ), q{Don't match inverted (Any character)} );
@@ -323,7 +323,7 @@ ok("\x[D7A4]\x[C99D]" ~~ m/<:Assigned>/, q<Match unanchored (Any non-Cn characte
 # Unassigned      # Synonym for \p{Cn}
 
 
-#?rakudo.jvm todo 'isUnassigned NYI RT #124883'
+#?rakudo.jvm todo 'isUnassigned NYI'
 ok("\x[110E9]" ~~ m/^<:Unassigned>$/, q<Match (Synonym for \p{Cn})> );
 ok(!( "\x[110E9]" ~~ m/^<:!Unassigned>$/ ), q<Don't match negated (Synonym for \p{Cn})> );
 ok(!( "\x[110E9]" ~~ m/^<-:Unassigned>$/ ), q<Don't match inverted (Synonym for \p{Cn})> );
@@ -335,7 +335,7 @@ ok("\c[RIGHT OUTER JOIN]\x[110E9]" ~~ m/<:Unassigned>/, q<Match unanchored (Syno
 # Common          # Codepoint not explicitly assigned to a script
 
 
-#?rakudo.jvm 10 skip 'isCommon NYI RT #124884'
+#?rakudo.jvm 10 skip 'isCommon NYI'
 ok("\c[ELECTRIC LIGHT BULB]" ~~ m/^<:Common>$/, q{Match (Codepoint not explicitly assigned to a script)} );
 ok(!( "\c[ELECTRIC LIGHT BULB]" ~~ m/^<:!Common>$/ ), q{Don't match negated (Codepoint not explicitly assigned to a script)} );
 ok(!( "\c[ELECTRIC LIGHT BULB]" ~~ m/^<-:Common>$/ ), q{Don't match inverted (Codepoint not explicitly assigned to a script)} );

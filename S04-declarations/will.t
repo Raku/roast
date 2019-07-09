@@ -27,7 +27,7 @@ my $init;
 }
 
 my $same1;
-#?rakudo skip 'declared variable not visible in block yet RT #125061'
+#?rakudo skip 'declared variable not visible in block yet'
 {
     my $x  will begin { $same1 ~= "a" if $_ === $x }
     my $xx will check { $same1 ~= "b" if $_ === $xx }
@@ -46,11 +46,11 @@ my $block;
     my $eeee will undo { $block ~= "f" }; # should not fire
     1; # successful exit
 }
-#?rakudo todo "will post NYI RT #125062"
+#?rakudo todo "will post NYI"
 is $block, "abecd", 'all block blocks set variable';
 
 my $same2;
-#?rakudo skip 'declared variable not visible in block yet RT #125063'
+#?rakudo skip 'declared variable not visible in block yet'
 {
     my $d  will pre    { $same2 ~= "a" if $_ === $d; 1 };
     my $dd will enter  { $same2 ~= "b" if $_ === $dd };
@@ -61,7 +61,7 @@ my $same2;
     my $eeee will undo { $same2 ~= "f" if $_ === $eeee }; # should not fire
     1; # successful exit
 }
-#?rakudo todo 'declared variable not visible in block yet RT #125064'
+#?rakudo todo 'declared variable not visible in block yet'
 is $same2, "abecd", 'all block blocks get $_';
 
 my $for;
@@ -80,7 +80,7 @@ my $for;
 is $for, "aebebebc", 'all for blocks set variable';
 
 my $same3;
-#?rakudo skip 'declared variable not visible in block yet RT #125066'
+#?rakudo skip 'declared variable not visible in block yet'
 {
     my @is = <a aeb aebeb>;
     for ^3 {
@@ -93,7 +93,7 @@ my $same3;
         Nil; # failure exit
     }
 }
-#?rakudo todo 'declared variable not visible in block yet RT #125067'
+#?rakudo todo 'declared variable not visible in block yet'
 is $same3, "aebebebc", 'all for blocks get $_';
 
 {

@@ -23,7 +23,7 @@ is @list.grep( { ($_ % 2) }, :k ), (0,2,4,6,8).list.item,
     is(@result[4], 8, 'got the value we expected');
 }
 
-#?rakudo skip "adverbial block RT #124759"
+#?rakudo skip "adverbial block"
 {
     my @result = @list.grep():{ ($_ % 2) }, :k;
     is(+@result, 5, 'we got a list back');
@@ -34,7 +34,7 @@ is @list.grep( { ($_ % 2) }, :k ), (0,2,4,6,8).list.item,
     is(@result[4], 8, 'got the value we expected');
 }
 
-#?rakudo skip "adverbial block RT #124760"
+#?rakudo skip "adverbial block"
 {
     my @result = @list.grep :{ ($_ % 2) }, :k;
     is(+@result, 5, 'we got a list back');

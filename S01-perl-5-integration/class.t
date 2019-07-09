@@ -14,7 +14,7 @@ unless (try { EVAL("1", :lang<Perl5>) }) {
         EVAL q|
             use Digest::MD5:from<Perl5>;
             my $d = Digest::MD5.new;
-#?rakudo skip " RT #124648"
+#?rakudo skip ""
 {
             is $d.isa(Digest::MD5), 1, "Correct isa";
 }

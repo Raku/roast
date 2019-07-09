@@ -219,7 +219,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 # L<S03/Hyper operators/'unordered type'>
-#?rakudo skip "Hypers not yet Set compatible RT #124487"
+#?rakudo skip "Hypers not yet Set compatible"
 {
     is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';
     is showset("a" «~« set(<pple bbot rmadillo>)), 'abbot apple armadillo', 'Str «~« Set';

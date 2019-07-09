@@ -65,7 +65,7 @@ my $s = -> {
     redo if $n < 10;
 };
 dies-ok $s, 'pointy with block control exceptions';
-#?rakudo todo 'pointy blocks and last/redo RT #124973'
+#?rakudo todo 'pointy blocks and last/redo'
 is $n, 10, "pointy control exceptions ran";
 
 # L<S06/""Pointy blocks""/will return from the innermost enclosing sub or method>

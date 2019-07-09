@@ -37,7 +37,7 @@ is-deeply(0 ** NaN, NaN, "0**NaN=NaN");
 
 # Not at all sure the next two cases are correct!
 
-#?rakudo 2 todo 'wrong results for "NaN" used with "**" RT #124800'
+#?rakudo 2 todo 'wrong results for "NaN" used with "**"'
 is-deeply(NaN ** 1i, NaN, "NaN**1i=NaN");
 is-deeply(1i ** NaN, NaN, "1i**NaN=NaN");
 # RT #124450
@@ -64,7 +64,7 @@ is-approx(5i ** 3, -125i, "5i ** 3 = -125i");
 is-approx(3i ** 3, -27i, "3i ** 3 = -27i");
 is-approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 
-#?rakudo todo 'i RT #124810'
+#?rakudo todo 'i'
 is-approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 
 {

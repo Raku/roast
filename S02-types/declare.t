@@ -35,7 +35,7 @@ plan 70;
  isa-ok($lerpoi,Str);
 }
 
-#?rakudo skip 'Bit NYI RT #124458'
+#?rakudo skip 'Bit NYI'
 {
  my Bit $namcu =1;
  isa-ok($namcu,Bit);
@@ -101,7 +101,7 @@ plan 70;
  ok($fancu ~~ Callable);
 }
 
-#?rakudo skip 'Integral NYI RT #124460'
+#?rakudo skip 'Integral NYI'
 {
  my Integral $foo;
  ok($foo ~~ Integral);
@@ -129,13 +129,13 @@ plan 70;
 
 # Type mismatch in assignment; expected something matching type Complex but got something of type Num()
 
-#?rakudo skip 'complex NYI RT #124463'
+#?rakudo skip 'complex NYI'
 {
  my complex $namcu =1.3;
  isa-ok($namcu,complex);
 }
 
-#?rakudo skip 'rat NYI RT #124464'
+#?rakudo skip 'rat NYI'
 
 {
  my rat $namcu = 7 / 4;
@@ -148,7 +148,7 @@ plan 70;
  isa-ok($namcu,bit);
 }
 
-#?rakudo skip 'buf NYI RT #124466'
+#?rakudo skip 'buf NYI'
 {
  my buf $nacpoi;
  isa-ok($nacpoi, buf);
@@ -315,7 +315,7 @@ plan 70;
  isa-ok($karbi, Order);
 }
 
-#?rakudo skip 'Matcher isa NYI RT #124470'
+#?rakudo skip 'Matcher isa NYI'
 {
   my Matcher $mapti;
   isa-ok($mapti, Matcher);
@@ -339,13 +339,13 @@ plan 70;
   ok($kansa ~~ Associative,'Associative exists');
 }
 
-#?rakudo skip 'Ordering NYI RT #124477'
+#?rakudo skip 'Ordering NYI'
 {
   my Ordering $foo;
   isa-ok($foo,Ordering);
 }
 
-#?rakudo skip 'KeyExtractor NYI RT #124478'
+#?rakudo skip 'KeyExtractor NYI'
 {
   my KeyExtractor $ckiku;
   isa-ok($ckiku, KeyExtractor);
@@ -353,13 +353,13 @@ plan 70;
 
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
-#?rakudo skip 'Comparator NYI RT #124479'
+#?rakudo skip 'Comparator NYI'
 {
   my Comparator $bar;
   isa-ok($bar,Comparator);
 }
 
-#?rakudo skip 'OrderingPair NYI RT #124480'
+#?rakudo skip 'OrderingPair NYI'
 {
   my OrderingPair $foop;
   isa-ok($foop,OrderingPair);
@@ -397,7 +397,7 @@ plan 70;
 # complex16 complex32 complex64 complex128
 # buf8 buf16 buf32 buf64 
 
-#?rakudo skip 'num16  NYI RT #124481'
+#?rakudo skip 'num16  NYI'
 {
   my num16 $namcupaxa;
   isa-ok($namcupaxa,num16);

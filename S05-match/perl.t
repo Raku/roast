@@ -25,7 +25,7 @@ ok "foo" ~~ /<f=&f> <o=&o>+ /, 'Regex matches (2)';
 lives-ok { $/.perl }, 'lives on quantified named captures';
 
 # RT #64874
-#?rakudo skip '<foo::bar> RT #124745'
+#?rakudo skip '<foo::bar>'
 {
     my $code_str = 'say <OH HAI>';
     $code_str ~~ /<Perl6::Grammar::TOP>/;

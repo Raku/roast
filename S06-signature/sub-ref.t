@@ -84,7 +84,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
 # Confirmed by p6l, see thread "Anonymous macros?" by Ingo Blechschmidt
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/21825">
-#?rakudo skip 'macros, compile time binding RT #124919'
+#?rakudo skip 'macros, compile time binding'
 {
     # We do all this in a EVAL() not because the code doesn't parse,
     # but because it's safer to only call macro references at compile-time.

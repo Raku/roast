@@ -68,7 +68,7 @@ class NastyChild is Parent { };
 }
 
 # coercion types on variables
-#?rakudo skip 'NYI RT #124840'
+#?rakudo skip 'NYI'
 #?DOES 3
 {
     my Int(Any) $x;
@@ -79,7 +79,7 @@ class NastyChild is Parent { };
 }
 
 # methods exist, too
-#?rakudo skip 'NYI RT #124841'
+#?rakudo skip 'NYI'
 #?DOES 2
 {
     class Co {

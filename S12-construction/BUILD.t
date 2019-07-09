@@ -93,7 +93,7 @@ plan 12;
     is %counter<BUILD>, 1, 'BUILD called once';
 }
 
-#?rakudo todo 'method BUILD should warn RT #124642'
+#?rakudo todo 'method BUILD should warn'
 {
     is_run
         'class Foo { method BUILD() { ... } }',

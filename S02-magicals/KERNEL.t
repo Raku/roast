@@ -34,9 +34,9 @@ plan 42;
 ok $*KERNEL.name,      "We are running under '{$*KERNEL.name}'";
 ok $*KERNEL.auth,      "Authority is '{$*KERNEL.auth}'";
 ok $*KERNEL.version,   "Version is '{$*KERNEL.version}'";
-#?rakudo todo 'no Kernel.signature yet RT #124625'
+#?rakudo todo 'no Kernel.signature yet RT #124624'
 ok $*KERNEL.signature, "Signature is '{$*KERNEL.signature}'";
-#?rakudo todo 'no Kernel.desc yet RT #124626'
+#?rakudo todo 'no Kernel.desc yet RT #124624'
 ok $*KERNEL.desc,      "Description is '{$*KERNEL.desc}'";
 ok $*KERNEL.release,   "Release info is '{$*KERNEL.release}'";
 ok $*KERNEL.hardware,  "Hardware info is '{$*KERNEL.hardware}'";
@@ -53,7 +53,7 @@ diag "'{$*KERNEL.name}' is an unknown KERNEL, please report" if !
   "We know of the KERNEL we are running under";
 
 isa-ok $*KERNEL.version, Version;
-#?rakudo todo 'no Kernel.signature yet RT #124627'
+#?rakudo todo 'no Kernel.signature yet RT #124624'
 isa-ok $*KERNEL.signature, Blob;
 isa-ok $*KERNEL.bits, Int;
 

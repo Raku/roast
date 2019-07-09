@@ -13,7 +13,7 @@ class A {
 };
 
 # RT #69612
-#?rakudo todo 'nom regression RT #124988'
+#?rakudo todo 'nom regression'
 is A.new(:attrs({ foo => "bar" }))<foo>,
     'bar', 'custom postcircumfix{ } is tied to the right class';
 

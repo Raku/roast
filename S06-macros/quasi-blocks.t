@@ -86,7 +86,7 @@ plan 14;
     is $result, "I'm cupid!", "lexical lookup from quasi to macro works";
 }
 
-#?rakudo skip "Cannot resolve caller prefix:<++>(Mu) RT #124968"
+#?rakudo skip "Cannot resolve caller prefix:<++>(Mu)"
 {
     my $counter = 0;
 

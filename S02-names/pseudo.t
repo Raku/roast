@@ -10,7 +10,7 @@ plan 155;
 # L<S02/Names>
 
 # (root)
-#?rakudo skip 'the binding in here is NYI RT #124914'
+#?rakudo skip 'the binding in here is NYI'
 {
     my $x = 1; #OK
     my $y = 2; #OK
@@ -33,7 +33,7 @@ plan 155;
 }
 
 # MY
-#?rakudo skip 'various issues, skipping all for now RT #124915'
+#?rakudo skip 'various issues, skipping all for now'
 {
     my $x = 10; #OK
     my $y = 11; #OK
@@ -259,7 +259,7 @@ plan 155;
 # COMPILING - not testable without BEGIN
 
 # DYNAMIC
-#?rakudo skip 'various issues to resolve RT #124917'
+#?rakudo skip 'various issues to resolve'
 {
     my $dyn = "DYNAMIC";
 
