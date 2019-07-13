@@ -213,8 +213,8 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
     eval-lives-ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
 
     {
-        ok EVAL('not OUTER::<$x>.defined'), 'OUTER::<$x>';
-        ok EVAL('not SETTING::<$x>.defined'), 'SETTING::<$x>';
+        ok EVAL('not OUTER::<$x>:exists'), 'OUTER::<$x>';
+        ok EVAL('not SETTING::<$x>:exists'), 'SETTING::<$x>';
         my $x; #OK not used
     }
 
