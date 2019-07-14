@@ -87,7 +87,7 @@ plan 72;
     my $ok;
 
     constant $foo = 8224;
-    constant $bar = COMPILING::<$foo>;
+    constant $bar = try COMPILING::<$foo>;
     $ok = $bar == 8224;
 
     ok $ok, "declaring a constant in terms of COMPILING constant works";
@@ -108,7 +108,7 @@ plan 72;
     my $ok;
 
     constant %foo = { :b(8224) };
-    constant $bar = COMPILING::<%foo><b>;
+    constant $bar = try COMPILING::<%foo><b>;
     $ok = $bar == 8224;
 
     ok $ok, "declaring a constant in terms of COMPILING hash constant works";
@@ -129,7 +129,7 @@ plan 72;
     my $ok;
 
     constant @foo = [ 1, 2, 8224 ];
-    constant $bar = COMPILING::<@foo>[2];
+    constant $bar = try COMPILING::<@foo>[2];
     $ok = $bar == 8224;
 
     ok $ok, "declaring a constant in terms of COMPILING hash constant works";

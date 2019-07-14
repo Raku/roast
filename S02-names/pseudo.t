@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 155;
+plan 172;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -33,7 +33,6 @@ plan 155;
 }
 
 # MY
-#?rakudo skip 'various issues, skipping all for now RT #124915'
 {
     my $x = 10; #OK
     my $y = 11; #OK
@@ -46,33 +45,13 @@ plan 155;
     {
         my $y = 12; #OK
         is $MY::y, 12, '$MY::y finds shadow';
-        is $MY::x, 10, '$MY::x finds original';
         is MY::.{'$y'}, 12, 'Hash-like access finds shadow $y';
-        is MY::.{'$x'}, 10, 'Hash-like access finds original $x';
-    }
-
-    my $z;
-    {
-        $x = [1,2,3];
-        $MY::z := $x;
-        ok $z =:= $x, 'Can bind through $MY::z';
-        is +[$z], 1, '... it is a scalar binding';
-        lives-ok { $z = 15 }, '... it is mutable';
-
-        MY::.{'$z'} := $y;
-        ok $z =:= $y, 'Can bind through MY::.{}';
-
-        $MY::z ::= $y;
-        is $z, $y, '::= binding through $MY::z works';
-        throws-like { $z = 5 },
-          Exception,
-          '... and makes readonly';
-
-        MY::.{'$z'} ::= $x;
-        is $z, $x, '::= binding through MY::.{} works';
-        throws-like { $z = 5 },
-          Exception,
-          '... and makes readonly';
+        throws-like { $MY::x },
+            X::NoSuchSymbol,
+            '$MY::x is not visible in inner scope';
+        throws-like { MY::.{'$x'} },
+            X::NoSuchSymbol,
+            q<Hash-like access doesn't see the original $x>;
     }
 
     my class A1 {
@@ -84,32 +63,17 @@ plan 155;
     ok MY::.{'A1'}.^can('pies'), 'MY::.{classname} works';
 
     {
-        ok MY::A1.^can('pies'), 'MY::classname works from inner scope';
-        ok MY::.{'A1'}.^can('pies'), 'MY::.{classname} works from inner scope';
-
-        my class A2 {
-            method spies { 15 }
-        }
+        throws-like { MY::A1 },
+            X::NoSuchSymbol,
+            q<MY::classname isn't visible from inner scope>;
     }
 
     throws-like { EVAL 'MY::A2' },
-      Exception,
+      X::NoSuchSymbol,
       'Cannot use MY::A2 directly from outer scope';
     throws-like { MY::.{'A2'}.spies },
-      Exception,
+      X::NoSuchSymbol,
       'Cannot use MY::.{"A2"} from outer scope';
-
-    sub callee { MY::.{'$*k'} }
-    sub callee2($f is rw) { MY::.{'$*k'} := $f }
-    # slightly dubious, but a straightforward extrapolation from the behavior
-    # of CALLER::<$*k> and OUTER::<$*k>
-    {
-        my $*k = 16;
-        my $z  = 17;
-        is callee(), 16, 'MY::.{\'$*k\'} does a dynamic search';
-        callee2($z);
-        ok $*k =:= $z, 'MY::.{\'$*k\'} can be used to bind dynamic variables';
-    }
 
     # niecza does a case analysis on the variable's storage type to implement
     # this, so there is room for bugs to hide in all cases
@@ -119,12 +83,12 @@ plan 155;
     $MY::a18 := $x;
     ok $a18 =:= $x, '$MY:: binding works on our-aliases';
 
+#?rakudo skip "No ? twigil yet"
+{
     my constant $?q = 20;
     is $?MY::q, 20, '$?MY:: can be used on constants';  #OK
     is MY::.{'$?q'}, 20, 'MY::.{} can be used on constants';
-
-    ok MY::{'&say'} === &say, 'MY::.{} can find CORE names';
-    ok &MY::say === &say, '&MY:: can find CORE names';
+}
 
     for 1 .. 1 {
         state $r = 21;
@@ -136,6 +100,118 @@ plan 155;
     my $l = 22; #OK
     is ::($my)::('$l'), 22, 'Can access MY itself indirectly ::()';
     is ::.<MY>.WHO.<$l>, 22, 'Can access MY itself indirectly via ::';
+}
+
+# LEXICAL
+{
+    # Must be like LEXICAL but cover outer scopes and caller chain for dynamics.
+    my $x = 10; #OK
+    my $y = 11; #OK
+
+    is $LEXICAL::x, 10, '$LEXICAL::x works';
+    is LEXICAL::<$x>, 10, 'LEXICAL::<$x> works';
+    is LEXICAL::.{'$x'}, 10, 'LEXICAL::.{\'$x\'} works';
+    is LEXICAL.WHO.{'$x'}, 10, 'LEXICAL.WHO access works';
+
+    {
+        my $y = 12; #OK
+        is $LEXICAL::y, 12, '$LEXICAL::y finds shadow';
+        is $LEXICAL::x, 10, '$LEXICAL::x finds original';
+        is LEXICAL::.{'$y'}, 12, 'Hash-like access finds shadow $y';
+        is LEXICAL::.{'$x'}, 10, 'Hash-like access finds original $x';
+    }
+
+    my $z;
+    {
+        $x = [1,2,3];
+        $LEXICAL::z := $x;
+        ok $z =:= $x, 'Can bind through $LEXICAL::z';
+        is +[$z], 1, '... it is a scalar binding';
+        lives-ok { $z = 15 }, '... it is mutable';
+
+        LEXICAL::.{'$z'} := $y;
+        ok $z =:= $y, 'Can bind through LEXICAL::.{}';
+
+#?rakudo skip "::= isn't implemented yet"
+{
+        $LEXICAL::z ::= $y;
+        is $z, $y, '::= binding through $LEXICAL::z works';
+        throws-like { $z = 5 },
+          Exception,
+          '... and makes readonly';
+
+        LEXICAL::.{'$z'} ::= $x;
+        is $z, $x, '::= binding through LEXICAL::.{} works';
+        throws-like { $z = 5 },
+          Exception,
+          '... and makes readonly';
+}
+    }
+
+    my class A1 {
+        our $pies = 14;
+        method pies() { }
+    }
+    ok LEXICAL::A1.^can('pies'), 'LEXICAL::classname works';
+    is $LEXICAL::A1::pies, 14, 'Can access package hashes through LEXICAL::A1';
+    ok LEXICAL::.{'A1'}.^can('pies'), 'LEXICAL::.{classname} works';
+
+    {
+        ok LEXICAL::A1.^can('pies'), 'LEXICAL::classname works from inner scope';
+        ok LEXICAL::.{'A1'}.^can('pies'), 'LEXICAL::.{classname} works from inner scope';
+
+        my class A2 {
+            method spies { 15 }
+        }
+    }
+
+    throws-like { EVAL 'LEXICAL::A2' },
+      Exception,
+      'Cannot use LEXICAL::A2 directly from outer scope';
+    throws-like { LEXICAL::.{'A2'}.spies },
+      Exception,
+      'Cannot use LEXICAL::.{"A2"} from outer scope';
+
+    sub callee { LEXICAL::.{'$*k'} }
+    sub callee2($f is rw) { LEXICAL::.{'$*k'} := $f }
+    # slightly dubious, but a straightforward extrapolation from the behavior
+    # of CALLER::<$*k> and OUTER::<$*k>
+    {
+        my $*k = 16;
+        my $z  = 17;
+        is callee(), 16, 'LEXICAL::.{\'$*k\'} does a dynamic search';
+        callee2($z);
+        ok $*k =:= $z, 'LEXICAL::.{\'$*k\'} can be used to bind dynamic variables';
+    }
+
+    # niecza does a case analysis on the variable's storage type to implement
+    # this, so there is room for bugs to hide in all cases
+    our $a18 = 19;
+    is $LEXICAL::a18, 19, '$LEXICAL:: can be used on our-aliases';
+    is LEXICAL::.{'$a18'}, 19, 'LEXICAL::.{} can be used on our-aliases';
+    $LEXICAL::a18 := $x;
+    ok $a18 =:= $x, '$LEXICAL:: binding works on our-aliases';
+
+#?rakudo skip "No ? twigil yet"
+{
+    my constant $?q = 20;
+    is $?LEXICAL::q, 20, '$?LEXICAL:: can be used on constants';  #OK
+    is LEXICAL::.{'$?q'}, 20, 'LEXICAL::.{} can be used on constants';
+}
+
+    ok LEXICAL::{'&say'} === &say, 'LEXICAL::.{} can find CORE names';
+    ok &LEXICAL::say === &say, '&LEXICAL:: can find CORE names';
+
+    for 1 .. 1 {
+        state $r = 21;
+        is LEXICAL::.{'$r'}, 21, 'LEXICAL::.{} can access state names';
+        is $LEXICAL::r, 21, '$LEXICAL:: can access state names';
+    }
+
+    my $my = 'LEXICAL';
+    my $l = 22; #OK
+    is ::($my)::('$l'), 22, 'Can access LEXICAL itself indirectly ::()';
+    is ::.<LEXICAL>.WHO.<$l>, 22, 'Can access LEXICAL itself indirectly via ::';
 }
 
 # OUR
@@ -177,17 +253,17 @@ plan 155;
     is OUR::A41.WHO.<$x>, 42, '$OUR:: can autovivify packages (binding)';
     #?rakudo emit #
     $::($our)::A42::x = 43;
-    #?rakudo todo 'interpolation and auto-viv NYI'
+    #?rakudo skip 'interpolation and auto-viv NYI'
     is ::($our)::A42.WHO.<$x>, 43, '::("OUR") can autovivify packages (r)';
 
     #?rakudo emit #
     $::($our)::A43::x := 44;
-    #?rakudo todo 'binding and interpolation together NYI'
+    #?rakudo skip 'binding and interpolation together NYI'
     is ::($our)::A43.WHO.<$x>, 44, '::("OUR") can autovivify packages (b)';
 
     #?rakudo emit #
     ::($our)::A44 := class { our $x = 41; };
-    #?rakudo todo 'binding and interpolation together NYI'
+    #?rakudo skip 'binding and interpolation together NYI'
     is $::($our)::A44::x, 41, '::("OUR") can follow aliased packages';
 }
 
@@ -417,20 +493,6 @@ my $x110 = 110; #OK
     is $f({ $CALLER::($unit)::x110 }), 113, 'CALLER::UNIT works (indirect)';
 }
 
-# SETTING
-{
-    sub not($x) { $x } #OK
-    my $setting = 'SETTING';
-    ok &SETTING::not(False), 'SETTING:: works';
-    ok &::($setting)::not.(False), '::("SETTING") works';
-
-    ok EVAL('&SETTING::not(True)'), 'SETTING finds eval context';
-    ok EVAL('&::($setting)::not(True)'), '::("SETTING") finds eval context';
-    my $f = EVAL('-> $fn { $fn(); }');
-    ok $f({ &CALLER::SETTING::not(True) }), 'CALLER::SETTING works';
-    ok $f({ &CALLER::($setting)::not(True) }), 'CALLER::SETTING works (ind)';
-}
-
 # PARENT - NYI in any compiler
 
 # RT #123154
@@ -450,19 +512,19 @@ lives-ok { my @keys = CORE::.keys }, 'calling CORE::.keys lives';
 # RT #119521
 subtest 'no guts spillage when going too high up scope in pseudopackages' => {
     plan 3 + my @packs = <
-        DYNAMIC::  OUTER::   CALLER::   UNIT::     MY::   CORE::
+        DYNAMIC::  OUTER::   CALLER::   UNIT::     CORE::
         LEXICAL::  OUTERS::  CALLERS::  SETTING::  OUR::
     >;
 
-    eval-lives-ok '$CORE::CALLERS::CORE::True', 'CORE::CALLERS::CORE::...';
-    eval-lives-ok '$CORE::UNIT::True',          'CORE::UNIT::...';
+    eval-lives-ok 'CORE::CALLERS::CORE::True', 'CORE::CALLERS::CORE::...';
+    eval-lives-ok 'CORE::UNIT::True',          'CORE::UNIT::...';
 
     my $mixed := ([~] '$', |(@packs.pick xx 100), 'True');
     #?rakudo.jvm skip 'unknown problem'
     eval-lives-ok($mixed, 'mixed') or diag "Failing mixed combination: $mixed";
     #?rakudo.jvm skip 'unknown problem'
     #?DOES 11
-    eval-lives-ok '$' ~ $_ x 100 ~ 'True', $_ for @packs;
+    eval-lives-ok $_ x 100 ~ 'True', $_ for @packs;
 }
 
 # vim: ft=perl6
