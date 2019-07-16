@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 175;
+plan 171;
 
 # RT #77270
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
@@ -327,12 +327,7 @@ throws-like 'my class C does InNoWayExist { }', X::InvalidType, typename => 'InN
 throws-like 'sub foo() returns !!!wtf??? { }', X::Syntax::Malformed, what => 'trait';
 
 # RT #125675
-# R#2729
-throws-like '(1, 2, 3).map(True)',        X::Cannot::Map;
-throws-like '(1, 2, 3).map: 1,2,3',       X::Cannot::Map;
-throws-like '(1, 2, 3).map: (1,2,3)',     X::Cannot::Map;
-throws-like '(1, 2, 3).map: * xx 2',      X::Cannot::Map;
-throws-like '(1, 2, 3).map: { a => 42 }', X::Cannot::Map;
+throws-like '(1, 2, 3).map(True)', X::Multi::NoMatch;
 
 # RT #125504
 my $notahash = "a";
