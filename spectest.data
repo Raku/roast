@@ -112,7 +112,10 @@ S02-names/is_default.t
 S02-names/is_dynamic.t
 S02-names/name.t
 S02-names/our.t
-S02-names/pseudo.t
+S02-names/pseudo-6c.t
+S02-names/pseudo-6e.t
+S02-names/SETTING-6c.t
+S02-names/SETTING-6e.t
 S02-names/strict.t
 S02-names/symbolic-deref.t
 S02-names-vars/contextual.t
@@ -318,7 +321,8 @@ S04-declarations/constant.t
 S04-declarations/constant-6.d.t
 S04-declarations/implicit-parameter.t
 S04-declarations/multiple.t
-S04-declarations/my.t
+S04-declarations/my-6c.t
+S04-declarations/my-6e.t
 S04-declarations/our.t
 S04-declarations/smiley.t
 S04-declarations/state.t
@@ -329,6 +333,7 @@ S04-exception-handlers/top-level.t
 S04-exceptions/control_across_runloop.t
 S04-exceptions/exceptions-alternatives.t
 S04-exceptions/fail.t
+S04-exceptions/fail-6e.t
 S04-exceptions/pending.t
 S04-phasers/ascending-order.t
 S04-phasers/begin.t

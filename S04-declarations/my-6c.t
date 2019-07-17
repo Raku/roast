@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
@@ -213,8 +213,8 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
     eval-lives-ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
 
     {
-        ok EVAL('not OUTER::<$x>:exists'), 'OUTER::<$x>';
-        ok EVAL('not SETTING::<$x>:exists'), 'SETTING::<$x>';
+        ok EVAL('not OUTER::<$x>.defined'), 'OUTER::<$x>';
+        ok EVAL('not SETTING::<$x>.defined'), 'SETTING::<$x>';
         my $x; #OK not used
     }
 
