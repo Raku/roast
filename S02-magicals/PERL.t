@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 42;
 
 # $?PERL.name is the Perl we were compiled in.
 #?rakudo skip 'unimpl $?PERL RT #124581'
@@ -28,8 +28,6 @@ plan 46;
     ok $C.version,    "Version is '{$C.version}'";
     ok $C.signature,  "Signature is '{$C.signature}'";
     ok $C.desc,       "Description is '{$C.desc}'";
-    ok $C.release,    "Release is '{$C.release}'";
-    ok $C.codename,   "Codename is '{$C.codename}'";
 
     ok $C.perl, 'We can do a $?PERL.compiler.perl';
     ok $C.gist, 'We can do a $?PERL.compiler.gist';
@@ -64,10 +62,6 @@ ok $C.version,    "Version is '{$C.version}'";
 ok $C.signature,  "Signature is '{$C.signature}'";
 #?rakudo todo 'no Perl.compiler.desc yet RT #124594'
 ok $C.desc,       "Description is '{$C.desc}'";
-#?rakudo todo 'no Perl.compiler.release yet RT #124597'
-ok $C.release,    "Release is '{$C.release}'";
-#?rakudo todo 'no Perl.compiler.codename yet RT #124600'
-ok $C.codename,   "Codename is '{$C.codename}'";
 
 ok $C.perl, 'We can do a $?PERL.compiler.perl';
 ok $C.gist, 'We can do a $?PERL.compiler.gist';
