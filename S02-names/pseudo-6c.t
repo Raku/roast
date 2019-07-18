@@ -1,8 +1,10 @@
 use v6.c;
 
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use Test::Util;
 
-plan 155;
+plan 159;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -463,6 +465,22 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
     #?rakudo.jvm skip 'unknown problem'
     #?DOES 11
     eval-lives-ok '$' ~ $_ x 100 ~ 'True', $_ for @packs;
+}
+
+# GH #3058
+{
+    is_run q|use v6.c; our constant &my-not = CORE::<&not>; print "ALIAS: ", my-not(False)|,
+            { out => q<ALIAS: True> },
+            "CORE symbols are available at compile-time";
+    is_run q|use v6.c; EVAL q«our constant &evaled-not = CORE::<&not>; print "EVAL: ", evaled-not(False)»|,
+            { out => q<EVAL: True> },
+            "CORE symbols are available at compile-time inside EVAL";
+    is_run q|use v6.c; BEGIN our constant &begin-not = CORE::<&not>; print "BEGIN: ", begin-not(False)|,
+            { out => q<BEGIN: True> },
+            "CORE symbols are available at compile-time in BEGIN";
+    is_run q|use v6.c; BEGIN EVAL q«our constant &begin-evaled-not = CORE::<&not>; print "BEGIN EVAL: ", begin-evaled-not(False)»|,
+            { out => q<BEGIN EVAL: True> },
+            "CORE symbols are available at compile-time in BEGIN inside EVAL";
 }
 
 # vim: ft=perl6
