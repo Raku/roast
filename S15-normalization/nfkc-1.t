@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 11.0.0.
+# Generated from Unicode version 12.1.0.
 
 use Test;
 
@@ -111,6 +111,7 @@ ok Uni.new(0x32FB).NFKC.list ~~ (0x30EF,), '32FB -> 30EF';
 ok Uni.new(0x32FC).NFKC.list ~~ (0x30F0,), '32FC -> 30F0';
 ok Uni.new(0x32FD).NFKC.list ~~ (0x30F1,), '32FD -> 30F1';
 ok Uni.new(0x32FE).NFKC.list ~~ (0x30F2,), '32FE -> 30F2';
+ok Uni.new(0x32FF).NFKC.list ~~ (0x4EE4, 0x548C,), '32FF -> 4EE4 548C';
 ok Uni.new(0x3300).NFKC.list ~~ (0x30A2, 0x30D1, 0x30FC, 0x30C8,), '3300 -> 30A2 30D1 30FC 30C8';
 ok Uni.new(0x3301).NFKC.list ~~ (0x30A2, 0x30EB, 0x30D5, 0x30A1,), '3301 -> 30A2 30EB 30D5 30A1';
 ok Uni.new(0x3302).NFKC.list ~~ (0x30A2, 0x30F3, 0x30DA, 0x30A2,), '3302 -> 30A2 30F3 30DA 30A2';
@@ -2006,4 +2007,3 @@ ok Uni.new(0xB25A).NFKC.list ~~ (0xB25A,), 'B25A -> B25A';
 ok Uni.new(0xB25B).NFKC.list ~~ (0xB25B,), 'B25B -> B25B';
 ok Uni.new(0xB25C).NFKC.list ~~ (0xB25C,), 'B25C -> B25C';
 ok Uni.new(0xB25D).NFKC.list ~~ (0xB25D,), 'B25D -> B25D';
-ok Uni.new(0xB25E).NFKC.list ~~ (0xB25E,), 'B25E -> B25E';

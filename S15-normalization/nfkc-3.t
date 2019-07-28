@@ -1,12 +1,13 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 11.0.0.
+# Generated from Unicode version 12.1.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xBA2E).NFKC.list ~~ (0xBA2E,), 'BA2E -> BA2E';
 ok Uni.new(0xBA2F).NFKC.list ~~ (0xBA2F,), 'BA2F -> BA2F';
 ok Uni.new(0xBA30).NFKC.list ~~ (0xBA30,), 'BA30 -> BA30';
 ok Uni.new(0xBA31).NFKC.list ~~ (0xBA31,), 'BA31 -> BA31';
@@ -2006,4 +2007,3 @@ ok Uni.new(0xC1FA).NFKC.list ~~ (0xC1FA,), 'C1FA -> C1FA';
 ok Uni.new(0xC1FB).NFKC.list ~~ (0xC1FB,), 'C1FB -> C1FB';
 ok Uni.new(0xC1FC).NFKC.list ~~ (0xC1FC,), 'C1FC -> C1FC';
 ok Uni.new(0xC1FD).NFKC.list ~~ (0xC1FD,), 'C1FD -> C1FD';
-ok Uni.new(0xC1FE).NFKC.list ~~ (0xC1FE,), 'C1FE -> C1FE';

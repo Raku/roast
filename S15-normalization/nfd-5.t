@@ -1,12 +1,13 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 11.0.0.
+# Generated from Unicode version 12.1.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC9CE).NFD.list ~~ (0x110C, 0x1175, 0x11B5,), 'C9CE -> 110C 1175 11B5';
 ok Uni.new(0xC9CF).NFD.list ~~ (0x110C, 0x1175, 0x11B6,), 'C9CF -> 110C 1175 11B6';
 ok Uni.new(0xC9D0).NFD.list ~~ (0x110C, 0x1175, 0x11B7,), 'C9D0 -> 110C 1175 11B7';
 ok Uni.new(0xC9D1).NFD.list ~~ (0x110C, 0x1175, 0x11B8,), 'C9D1 -> 110C 1175 11B8';
@@ -2006,4 +2007,3 @@ ok Uni.new(0xD19A).NFD.list ~~ (0x1110, 0x1168, 0x11BD,), 'D19A -> 1110 1168 11B
 ok Uni.new(0xD19B).NFD.list ~~ (0x1110, 0x1168, 0x11BE,), 'D19B -> 1110 1168 11BE';
 ok Uni.new(0xD19C).NFD.list ~~ (0x1110, 0x1168, 0x11BF,), 'D19C -> 1110 1168 11BF';
 ok Uni.new(0xD19D).NFD.list ~~ (0x1110, 0x1168, 0x11C0,), 'D19D -> 1110 1168 11C0';
-ok Uni.new(0xD19E).NFD.list ~~ (0x1110, 0x1168, 0x11C1,), 'D19E -> 1110 1168 11C1';

@@ -14,16 +14,22 @@ from MoarVM's repository.
 * Date: The date the file was regenerated (YYYY.MM.DD)
 * Generated File(s): a list of files which this script generates
 
+== Todo
+
+Nice things to add: ensure all tests generate files which have a heading that
+shows which Unicode version was used to generate them. Some tests do this already,
+but many do not.
+
 == S15-nfg/emoji-test-gen.p6
 
 .Steps
 * Run `S15-nfg/emoji-test-gen.p6 UNIDATA/emoji-xx.x/emoji-test.txt`
 
 .Version
-* Emoji v11.0
+* Emoji v12.0
 
 .Date
-* Regenerated 2018.07.10
+* Regenerated 2019.07.28
 
 .Generated File(s)
 * Program generates S15-nfg/emoji-test.t
@@ -32,15 +38,17 @@ from MoarVM's repository.
 
 .Steps
 * Run `S15-nfg/mass-roundtrip-test-gen.p6 --test UNIDATA/NormalizationTest.txt`
-  to test normalization.
-* Run `S15-nfg/mass-roundtrip-test-gen.p6 --test UNIDATA/NormalizationTest.txt`
+  to test normalization if you don't get any failures, all is ok.
+* The --test option is needed to test all options, as not all tests will be put into
+  the roast .t file
+* Run `S15-nfg/mass-roundtrip-test-gen.p6 UNIDATA/NormalizationTest.txt`
   to generate the tests.
 
 .Version
-* Unicode v11.0
+* Unicode v12.1
 
 .Date
-* Regenerated 2018.10.01
+* Regenerated 2019.07.28
 
 .Generated File(s)
 * S15-nfg/mass-roundtrip-nfc.t
@@ -48,12 +56,28 @@ from MoarVM's repository.
 * S15-nfg/mass-roundtrip-nfkc.t
 * S15-nfg/mass-roundtrip-nfkd.t
 
-.Notes
-* Tests generated were identical to the ones generated 9.0/10.0/11.0 so nothing
-  appears in the git log
 
 == S32-str/CollationTestGen.p6
-* v11.0
+
+Note: you will have to be in S32-str before running this, so it puts files in the
+correct folder.
+
+S32-str/CollationTestGen.p6 --folder=$UNIDATA/UCA/CollationTest --test-only --should-test
+MAKE SURE TO RUN `perl6 CollationTestGen.p6 --folder=MoarVM/UNIDATA/UCA/CollationTest --test-only --should-test ` to ensure there are ~74 failures only!
+
+Then paste those failures (if they're ok into CollationTestGen.p6 in the %todo variable.
+
+.Version
+* Unicode v12.1
+
+.Date
+* Regenerated 2019.07.28
+
+.Generated File(s)
+* S32-str/CollationTest_NON_IGNORABLE-0.t
+* S32-str/CollationTest_NON_IGNORABLE-1.t
+* S32-str/CollationTest_NON_IGNORABLE-2.t
+* S32-str/CollationTest_NON_IGNORABLE-3.t
 
 == S15-normalization/test-gen.p6
 
@@ -61,10 +85,10 @@ from MoarVM's repository.
 * Run `S15-normalization/test-gen.p6 UNIDATA/NormalizationTest.txt`
 
 .Version
-* Unicode v11.0
+* Unicode v12.0
 
 .Date
-* Regenerated 2018.10.27
+* Regenerated 2019.07.28
 
 .Generated File(s)
 * S15-normalization/nfc-X.t
