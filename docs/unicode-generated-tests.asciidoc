@@ -101,4 +101,28 @@ Then paste those failures (if they're ok into CollationTestGen.p6 in the %todo v
 * S15-normalization/nfc-concat.t
 
 == S15-nfg/GraphemeBreakTest.t
-* v11.0: 3rdparty/Unicode/11.0.0/ucd/auxiliary/GraphemeBreakTest.txt
+
+.How
+* Copy file from UNIDATA to 3rdparty folder of roast:
+cp UNIDATA/auxilary/GraphemeBreakTest.txt 3rdparty/Unicode/$version/ucd/auxilary/GraphemeBreakTest.txt
+
+change the filename in the S15-nfg/GraphemeBreakTest.t
+
+```
+my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/11.0.0/ucd/auxiliary/GraphemeBreakTest.txt");
+```
+.Version
+
+.Date
+
+== External
+
+=== Also you will have to do stuff in rakudo
+
+Edit t/09-moar/UnipropCheck.pm6 folder to be set to the current version.
+
+You will have to now copy:
+
+mkdir -p t/3rdparty/Unicode/$version/extracted
+cp $UNIDATA/LineBreak.txt $UNIDATA/UnicodeData.txt t/3rdparty/Unicode/$version
+cp $UNIDATA/extracted/DerivedGeneralCategory.txt t/3rdparty/Unicode/extracted
