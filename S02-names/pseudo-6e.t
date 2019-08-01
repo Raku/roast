@@ -4,7 +4,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 176;
+plan 177;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -544,5 +544,9 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
             { out => q<BEGIN EVAL: True> },
             "CORE symbols are available at compile-time in BEGIN inside EVAL";
 }
+
+# RT #127536
+is_run q|BEGIN { UNIT; Nil }|, { :0status, :out(''), :err('') },
+    'no crash if UNIT:: is used at compile time';
 
 # vim: ft=perl6
