@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 11.0.0.
+# Generated from Unicode version 12.1.0.
 
 use Test;
 
@@ -111,6 +111,7 @@ ok Uni.new(0x32FB).NFC.list ~~ (0x32FB,), '32FB -> 32FB';
 ok Uni.new(0x32FC).NFC.list ~~ (0x32FC,), '32FC -> 32FC';
 ok Uni.new(0x32FD).NFC.list ~~ (0x32FD,), '32FD -> 32FD';
 ok Uni.new(0x32FE).NFC.list ~~ (0x32FE,), '32FE -> 32FE';
+ok Uni.new(0x32FF).NFC.list ~~ (0x32FF,), '32FF -> 32FF';
 ok Uni.new(0x3300).NFC.list ~~ (0x3300,), '3300 -> 3300';
 ok Uni.new(0x3301).NFC.list ~~ (0x3301,), '3301 -> 3301';
 ok Uni.new(0x3302).NFC.list ~~ (0x3302,), '3302 -> 3302';
@@ -2006,4 +2007,3 @@ ok Uni.new(0xB25A).NFC.list ~~ (0xB25A,), 'B25A -> B25A';
 ok Uni.new(0xB25B).NFC.list ~~ (0xB25B,), 'B25B -> B25B';
 ok Uni.new(0xB25C).NFC.list ~~ (0xB25C,), 'B25C -> B25C';
 ok Uni.new(0xB25D).NFC.list ~~ (0xB25D,), 'B25D -> B25D';
-ok Uni.new(0xB25E).NFC.list ~~ (0xB25E,), 'B25E -> B25E';

@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 40;
+plan 42;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
@@ -139,6 +139,18 @@ line 4
     throws-like '"$%hash $%hash{} $%whoopsies{}"', X::Undeclared, symbol => '%whoopsies';
     throws-like '"$&code $&code() $&whoopsies()"', X::Undeclared::Symbols;
 
+}
+
+# https://github.com/rakudo/rakudo/issues/3070
+{
+    sub nil-return(--> Nil) {
+        is "{1}", '1', 'block interpolation ignores Nil return value from enclosing sub';
+    }
+    sub int-return(--> 2) {
+        is "{1}", '1', 'block interpolation ignores integer return value from enclosing sub';
+    }
+    nil-return;
+    int-return;
 }
 
 # vim: ft=perl6

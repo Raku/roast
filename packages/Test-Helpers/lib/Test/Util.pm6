@@ -354,9 +354,11 @@ sub make-temp-dir (Int $chmod? --> IO::Path:D) is export {
 }
 
 multi no-fatal-throws-like (Str:D $test, |c) is export {
+    my $*THROWS-LIKE-CONTEXT = CALLER::;
     throws-like "no fatal; my \$ = do \{ $test }; Nil", |c;
 }
 multi no-fatal-throws-like (&test, |c) is export {
+    my $*THROWS-LIKE-CONTEXT = CALLER::;
     throws-like { no fatal; my $ = do { test }; Nil }, |c;
 }
 
