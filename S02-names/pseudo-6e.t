@@ -2,9 +2,10 @@ use v6.e.PREVIEW;
 
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $?FILE.IO.parent(2).add("packages/S02-names/lib");
 use Test::Util;
 
-plan 177;
+plan 191;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -543,6 +544,48 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
     is_run q|use v6.e.PREVIEW; BEGIN EVAL q«our constant &begin-evaled-not = CORE::<&not>; print "BEGIN EVAL: ", begin-evaled-not(False)»|,
             { out => q<BEGIN EVAL: True> },
             "CORE symbols are available at compile-time in BEGIN inside EVAL";
+}
+
+# GH #3104
+{
+    use GH3104_6d;
+
+    my module Foo {
+        our $client-rev;
+        our $client-pkg;
+        our sub report-client-rev {
+            $client-pkg = CLIENT::LEXICAL::<$?PACKAGE>;
+            $client-rev = CLIENT::CORE::<CORE-SETTING-REV>;
+        }
+    }
+
+    my $client-rev;
+    my $client-pkg;
+    sub report-client-rev {
+        $client-pkg := CLIENT::LEXICAL::<$?PACKAGE>;
+        $client-rev = CLIENT::CORE::<CORE-SETTING-REV>;
+    }
+
+    is client-revision, 'e', "code from 6.d reports valid 'e' CLIENT:: revision";
+    is client-package.^name, 'GLOBAL', "code from 6.d reports valid CLIENT:: package";
+
+    my @tests =
+        'simple callback' => &callback-simple,
+        'callback via .map' => &callback-in-map,
+        'callback via callback' => &callback-in-callback,
+        ;
+
+    for @tests -> (:key($variant), :value(&routine)) {
+        routine(&report-client-rev);
+        is $client-rev, 'd', "$variant: code from 6.e reports valid CLIENT:: revision when called from 6.d";
+        is $client-pkg.^name, 'GH3104_6d', "$variant: valid CLIENT:: module name is reported";
+    }
+
+    for @tests -> (:key($variant), :value(&routine)) {
+        routine(&Foo::report-client-rev);
+        is $Foo::client-rev, 'd', "$variant via module: code from 6.e reports valid CLIENT:: revision when called from 6.d";
+        is Foo::<$client-pkg>.^name, 'GH3104_6d', "$variant via module: valid CLIENT:: module name is reported";
+    }
 }
 
 # RT #127536
