@@ -4,7 +4,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/AandB/lib");
 use lib $?FILE.IO.parent(2).add("packages/S11-modules/lib");
 
-plan 17;
+plan 18;
 
 # L<S11/"Compile-time Importation"/>
 
@@ -58,5 +58,8 @@ throws-like 'use Foo :NoSucTag;', X::Import::NoSuchTag,
                 :source-package<Foo>,
                 :tag<NoSucTag>,
              'die while trying to import a non-existent export tag';
+
+# GH rakudo/rakudo#3116
+eval-lives-ok q<use NoPrecompilation;>, "`use` of module with `no precompilation` inside EVAL";
 
 # vim: ft=perl6
