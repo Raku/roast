@@ -35,6 +35,9 @@ The following terms are used in this document and in other related papers:
    A modifier to mark language revision which is currently is in _review_ status: `e.PREVIEW`, `6.e.PREVIEW`,
    `v6.e.PREVIEW`.
 
+**NOTE** that for naming and communication purposes `Raku v6.<rev>`, `Raku 6.<rev>` and `Raku <rev>` are
+interchangeable. I.e. `Raku E` is actually `Raku v6.E` and vice versa.
+
 ## Release Status
 
 _This section contains excerpts from [this discussion](https://github.com/perl6/problem-solving/issues/31)._
