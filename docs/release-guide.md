@@ -15,7 +15,7 @@ The following terms are used in this document and in other related papers:
 
 - _language revision_ or _revision_
 
-  A set of specifications defining a Perl 6 language variant. Revisions are represented by symbolic names consisting of
+  A set of specifications defining a Raku language variant. Revisions are represented by symbolic names consisting of
   a single letter of Latin alphabet.
 
   _Note_ in this document we use `<rev>` to represent a generic revision letter.
@@ -49,6 +49,17 @@ view of a versioning system like git would look like the following diagram:
 ---[master]---O-----------------> master now defines 6.<next-rev>.PREVIEW
                \
                 +---[6.<rev>-errata]
+```
+
+Changes (fixes) on a `-errata` branch must have a patch version: `6.c.1`, `6.c.2`, etc. Those are marked with
+corresponding tags on the branch:
+
+```
+---[master]---O----------------->
+               \
+                +---O-------O---[6.<rev>-errata]
+                    ^       ^
+                  6.c.1   6.c.2
 ```
 
 ## Preparation

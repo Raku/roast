@@ -8,7 +8,7 @@ during the trial period [should be reported](https://github.com/perl6/roast/issu
 
 ## PURPOSE
 
-The main purpose of this policy is to maintain Perl 6 a language that is:
+The main purpose of this policy is to maintain Raku a language that is:
 
 1. Consistent
 2. Provides only widely-desired features in-core
@@ -176,7 +176,7 @@ to be enabled by the user. The experimental status must last for at least 3 mont
 
 For a major version language release, features that have been experimental for 3 months must be
 either: (a) accepted and their experimental status removed; (b) rejected and the feature removed
-entirely; (c) sufficiently modified to warrant a new experimental period; (d) kept as is, but 
+entirely; (c) sufficiently modified to warrant a new experimental period; (d) kept as is, but
 a detailed explanation must be written explaining why the experiment must go on unchanged. The goal
 here is to avoid having experimental features being too "stable" (e.g. a few users use it and then
 leave their modules to rot, in several years a bunch of others rely on those modules, and now you
@@ -186,9 +186,10 @@ for cases where lack of volunteers' time prevents sufficient evaluation or modif
 ### 5) REVIEW BY CORE DEVELOPERS
 
 A "core developer" is a person who has a commit bit to a largely-compliant, "usable" implementation
-of the Perl 6 language that's in active development. If impact score requires more than one
+of the Raku language that's in active development. If impact score requires more than one
 reviewer, the reviewers must be core developers from different implementations (where possible; the
-goal here is to ensure all implementations are reasonably satisfied with the feature being available in the language, and to avoid too many features becoming "implementation dependent).
+goal here is to ensure all implementations are reasonably satisfied with the feature being available
+in the language, and to avoid too many features becoming "implementation dependent).
 
 The language pumpkin (currently `jnthn++`) and BDFL (Larry Wall) have veto rights over all
 feature additions. If you are a core developer yourself, you cannot function as your own reviewer.
