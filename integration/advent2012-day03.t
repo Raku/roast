@@ -5,9 +5,7 @@ plan 2;
 class Widget {
     has $.name;
     subset PosReal of Real where * >= 0;
-    subset Size where {
-               ! .defined
-               or .does(PosReal)
+    subset Size where {   .does(PosReal)
 		       or .does(Callable) and .signature ~~ :(PosReal --> PosReal)
 		       or .does(Whatever) or .does(WhateverCode) };
 

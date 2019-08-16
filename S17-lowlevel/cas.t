@@ -34,14 +34,14 @@ my class Node {
 
 # Subset types, which require late-bound type checks.
 {
-    my subset LittleNodey of Node where { !.defined || .value < 20 };
+    my subset LittleNodey of Node where .value < 20;
 
     my LittleNodey $head;
     throws-like { cas($head, $head, Node.new(value => 30)) },
         X::TypeCheck::Assignment,
         'Cannot CAS value that does not meet subset type';
 
-    ok cas($head, Node, Node.new(value => 11)) === Node,
+    ok cas($head, LittleNodey, Node.new(value => 11)) === LittleNodey,
         'Can CAS when subset type is met';
     ok $head ~~ Node:D, 'Head node is now a defined object';
     is $head.value, 11, 'Head node is object with correct value';

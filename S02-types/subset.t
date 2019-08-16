@@ -1,4 +1,4 @@
-use v6.d;
+use v6;
 use Test;
 plan 51;
 
@@ -86,7 +86,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
 
 {
     my subset Str_not2b of Str where /^[isnt|arent|amnot|aint]$/;
-    my Str_not2b $text = "isnt";
+    my Str_not2b $text;
     $text = 'amnot';
     is $text, 'amnot', 'assignment to my subset of Str where pattern worked';
     throws-like q[ $text = 'oops' ],
@@ -96,7 +96,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
 
 {
     subset Negation of Str where /^[isnt|arent|amnot|aint]$/;
-    my Negation $text = "isnt";
+    my Negation $text;
     $text = 'amnot';
     is $text, 'amnot', 'assignment to subset of Str where pattern worked';
     throws-like q[ $text = 'oops' ],
@@ -107,7 +107,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
 # RT #67256
 {
     subset RT67256 of Int where { $^i > 0 }
-    my RT67256 $rt67256 = 1;
+    my RT67256 $rt67256;
 
     try { $rt67256 = -42 }
 
@@ -197,7 +197,7 @@ my $a = 1;
 }
 
 # RT #126018
-lives-ok { EVAL 'my class A { has $.integer where * > 0 = 1; method meth { 1 / $!integer } }' },
+lives-ok { EVAL 'my class A { has $.integer where * > 0; method meth { 1 / $!integer } }' },
     'subset constraint in attribute does not blow up optimizer dispatch analysis';
 
 # RT #132073

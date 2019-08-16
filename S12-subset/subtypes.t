@@ -131,11 +131,10 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 
 # Block parameter to smart-match is readonly.
 {
-    eval-dies-ok(q{
-    subset SoWrong of Str where { $^epic = "fail" };
-    my SoWrong $x;
-}, "read-only param");
+    subset SoWrong of Str where { $^epic = "fail" }
     sub so_wrong_too($x where { $^epic = "fail" }) { }   #OK not used
+    my SoWrong $x;
+    dies-ok({ $x = 42 },          'parameter in subtype is read-only...');
     dies-ok({ so_wrong_too(42) }, '...even in anonymous ones.');
 }
 
@@ -155,7 +154,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     subset Positive of Int where { $_ > 0 };
     subset NotTooLarge of Positive where { $_ < 10 };
 
-    my NotTooLarge $x = 1;
+    my NotTooLarge $x;
 
     lives-ok { $x = 5 }, 'can satisfy both conditions on chained subset types';
     dies-ok { $x = -2 }, 'violating first condition barfs';
@@ -190,13 +189,13 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 {
     subset Small of Int where { $^n < 10 }
     class RT65700 {
-        has Small $.small = 1;
+        has Small $.small;
     }
     dies-ok { RT65700.new( small => 20 ) }, 'subset type is enforced as attribute in new() (1)';
     lives-ok { RT65700.new( small => 2 ) }, 'subset type enforced as attribute in new() (2)';
 
     my subset Teeny of Int where { $^n < 10 }
-    class T { has Teeny $.teeny = 1 }
+    class T { has Teeny $.teeny }
     dies-ok { T.new( teeny => 20 ) }, 'my subset type is enforced as attribute in new() (1)';
     lives-ok { T.new( teeny => 2 ) }, 'my subset type enforced as attribute in new() (2)';
 }
@@ -277,7 +276,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 # RT #71820
 {
     subset Interesting of Int where * > 10;
-    class AI { has Interesting $.x = 11 };
+    class AI { has Interesting $.x };
     try { EVAL 'AI.new(x => 2)' };
     ok $!.Str ~~ /Interesting/, 'error message mentions subset name';
 
@@ -301,19 +300,19 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 {
     throws-like q[
         subset Tiny of Any where ^3;
-        my Tiny $foo = 1;
+        my Tiny $foo;
         $foo = 42; say $foo;
     ],
     X::TypeCheck, 'code dies with right exception';
 
     is_run q[
         subset Tiny of Any where {say $_; $_ ~~ ^3};
-        my Tiny $foo = 1;
+        my Tiny $foo;
         $foo = 0; say $foo;
     ],
     {
         status => 0,
-        out    => rx/^ 1 \n 0 \n 0 \n $/,
+        out    => rx/^ 0 \n 0 \n $/,
         err    => '',
     },
     'code runs without error (and does not mention "Obsolete"!)';
@@ -400,9 +399,9 @@ subtest '"any" Junction of types in where' => {
     subtest 'variables' => {
         plan 14;
         my \EXA := X::TypeCheck::Assignment;
-        my        $x1 where Int|Num = Int;
-        my Cool   $x2 where Int|Num:D = Int;
-        my Cool:D $x3 where Int:U|Num:D|Rat:D = 1.0;
+        my        $x1 where Int|Num;
+        my Cool   $x2 where Int|Num:D;
+        my Cool:D $x3 where Int:U|Num:D|Rat:D;
 
         throws-like { $x1 = "x"  }, EXA, 'rejected by where, type';
         throws-like { $x1 = 2.2  }, EXA, 'rejected by where, type (2)';
