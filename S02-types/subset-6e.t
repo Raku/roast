@@ -1,6 +1,10 @@
-use v6;
+use v6.e.PREVIEW;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $?FILE.IO.parent(2).add("packages/S02-types/lib");
 use Test;
-plan 51;
+use Test::Util;
+
+plan 60;
 
 =begin description
 
@@ -11,6 +15,8 @@ Test for 'subset' with a closure
 # L<S02/Polymorphic types/"Fancier type constraints may be expressed through a subtype">
 
 subset Even of Int where { $_ % 2 == 0 };
+
+is Even.^ver, '6.e', "subset created by 6.e language version";
 
 {
     my Even $x = 2;
@@ -86,7 +92,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
 
 {
     my subset Str_not2b of Str where /^[isnt|arent|amnot|aint]$/;
-    my Str_not2b $text;
+    my Str_not2b $text = "isnt";
     $text = 'amnot';
     is $text, 'amnot', 'assignment to my subset of Str where pattern worked';
     throws-like q[ $text = 'oops' ],
@@ -96,7 +102,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
 
 {
     subset Negation of Str where /^[isnt|arent|amnot|aint]$/;
-    my Negation $text;
+    my Negation $text = "isnt";
     $text = 'amnot';
     is $text, 'amnot', 'assignment to subset of Str where pattern worked';
     throws-like q[ $text = 'oops' ],
@@ -107,7 +113,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
 # RT #67256
 {
     subset RT67256 of Int where { $^i > 0 }
-    my RT67256 $rt67256;
+    my RT67256 $rt67256 = 1;
 
     try { $rt67256 = -42 }
 
@@ -147,7 +153,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
     nok -1 ~~ aboveLexVarLimit, 'can use subset that depends on lexical variable (2)';
 }
 
-subset Bug::RT80930 of Int where { $_ %% 2 };
+subset Bug::RT80930 of Int where { !.defined || $_ %% 2 };
 lives-ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 # RT #95500
@@ -197,7 +203,7 @@ my $a = 1;
 }
 
 # RT #126018
-lives-ok { EVAL 'my class A { has $.integer where * > 0; method meth { 1 / $!integer } }' },
+lives-ok { EVAL 'my class A { has $.integer where * > 0 = 1; method meth { 1 / $!integer } }' },
     'subset constraint in attribute does not blow up optimizer dispatch analysis';
 
 # RT #132073
@@ -293,6 +299,79 @@ subtest 'Junction arguments to `where` parameters' => {
     }
 
     is xz(* <=> *), Order::Less, "subset with Code arity check in sub signature";
+}
+
+{
+    # Test is similar to one in nil.t but with 6.e specifics applied
+    subset MyInt of Int where { True };
+    my MyInt $x = 5;
+
+    lives-ok { $x = Nil }, 'can assign Nil to subsets';
+    # Subset is a nominal type, it's implicit default is subset's nominalization.
+    ok $x === Int, 'assigns to subset type object';
+}
+
+{
+
+
+    is_run q:to/CODE/,
+            use v6.e.PREVIEW;
+            subset SSDefinite of Int:D where { True };
+            my SSDefinite $s;
+            CODE
+        {
+            :out(''),
+            :err(rx:s/Variable definition of type SSDefinite .* requires an initializer/),
+            :status(1),
+        },
+        "subset of a definite type needs initialization";
+    is_run q:to/CODE/,
+            use v6.e.PREVIEW;
+            subset SSDefinedOnly of Str where { .defined };
+            my SSDefinedOnly $s;
+            CODE
+        {
+            :out(''),
+            :err(rx:s/Variable definition of type SSDefinedOnly .* requires an initializer/),
+            :status(1),
+        },
+        "subset requiring a defined value needs initialization";
+}
+
+{
+    # Try subsets from modules of different language versions
+    use Subset6c;
+    use Subset6e;
+
+    is SSDefined6c.^ver, '6.c', "subset from 6.c module bears correct language version";
+    is SSDefined6e.^ver, '6.e', "subset from 6.e module bears correct language version";
+
+    is_run q:to/CODE/,
+            use v6.e.PREVIEW;
+            use Subset6c;
+            my SSDefined6c $s;
+            print $s.^ver;
+            CODE
+        {
+            :out('6.c'),
+            :err(''),
+            :status(0),
+        },
+        :compiler-args['-I' ~ $?FILE.IO.parent(2).add("packages/S02-types/lib")],
+        "definite subset from 6.c allows init without a value even in 6.e code";
+    is_run q:to/CODE/,
+            use v6.d;
+            use Subset6e;
+            my SSDefined6e $s;
+            note $s.^ver;
+            CODE
+        {
+            :out(''),
+            :err(rx:s/Variable definition of type SSDefined6e .* requires an initializer/),
+            :status(1),
+        },
+        :compiler-args['-I' ~ $?FILE.IO.parent(2).add("packages/S02-types/lib")],
+        "definite subset from 6.e doesn't allow init without a value even in 6.d code";
 }
 
 # vim: ft=perl6
