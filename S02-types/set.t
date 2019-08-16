@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 229;
+plan 234;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -579,5 +579,14 @@ is +set(.3e0, .1e0+.2e0, 1e0, 1e0+4e-15), 4,
 
 # R#2289
 is-deeply (1,2,3).Set.ACCEPTS(().Set), False, 'can we smartmatch empty';
+
+{
+    my $set = <a b c>.Set;
+    is-deeply $set.SetHash, <a b c>.SetHash, 'coerce Set -> SetHash';
+    is-deeply $set.Bag,     <a b c>.Bag,     'coerce Set -> Bag';
+    is-deeply $set.BagHash, <a b c>.BagHash, 'coerce Set -> BagHash';
+    is-deeply $set.Mix,     <a b c>.Mix,     'coerce Set -> Mix';
+    is-deeply $set.MixHash, <a b c>.MixHash, 'coerce Set -> MixHash';
+}
 
 # vim: ft=perl6

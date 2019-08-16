@@ -479,7 +479,7 @@ sub get_test_names {
 
     # Build the list of test scripts to run in @tfiles
     my @tfiles;
-    my $testlist = $ARGV[1] || 't/spectest.data';
+    my $testlist = $ARGV[1] || 't/spec/spectest.data';
     my $fh;
     open($fh, '<', $testlist) || die "Can't read $testlist: $!";
     while (<$fh>) {
@@ -542,7 +542,7 @@ This test harness written in Perl 5, runs the Perl 6 specification test
 suite.  It uses the same Test Anything Protocol (TAP) as for example
 L<TAP::Harness>, but does not depend those modules.
 
-The names of the tests are listed in t/spectest.data, or another file
+The names of the tests are listed in t/spec/spectest.data, or another file
 whose name is passed on the command line.
 
 =head2 OUTPUT

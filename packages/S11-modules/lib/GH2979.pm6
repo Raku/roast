@@ -1,0 +1,17 @@
+use v6;
+use GH2979-Foo;
+
+our @b;
+our %b;
+our $b;
+sub b { }
+
+multi EXPORT {
+    %(
+        GH2979-Foo::EXPORT::ALL::,
+        '@bar' => @b,
+        '%bar' => %b,
+        '$bar' => $b,
+        '&bar' => &b,
+    )
+}

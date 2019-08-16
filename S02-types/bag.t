@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 237;
+plan 242;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -581,5 +581,14 @@ subtest '.hash does not cause keys to be stringified' => {
 
 # R#2289
 is-deeply (1,2,3).Bag.ACCEPTS( ().Bag ), False, 'can we smartmatch empty';
+
+{
+    my $bag = <a b c>.Bag;
+    is-deeply $bag.Set,     <a b c>.Set,     'coerce Bag -> Set';
+    is-deeply $bag.SetHash, <a b c>.SetHash, 'coerce Bag -> SetHash';
+    is-deeply $bag.BagHash, <a b c>.BagHash, 'coerce Bag -> BagHash';
+    is-deeply $bag.Mix,     <a b c>.Mix,     'coerce Bag -> Mix';
+    is-deeply $bag.MixHash, <a b c>.MixHash, 'coerce Bag -> MixHash';
+}
 
 # vim: ft=perl6

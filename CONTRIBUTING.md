@@ -33,11 +33,9 @@ When all is well, the commits are finalized, the branch is pushed
 to the user's fork on Github, and there the PR is initiated.
 
 If a new test file has been created, one additional step has to be
-taken: the new test file has to be added to
-`github.com/rakudo/rakudo/t/spectest.data` and a PR for project
-`github.com/rakudo/rakudo` can be submitted for that. However, it is
-easier just to ask for help adding the new test file on IRC channel
-`#perl6`.
+taken: the new test file has to be added to `spectest.data`.
+(This file used to live in the Rakudo repo at `github.com/rakudo/rakudo`
+but it is part of `roast` nowadays.)
 
 #### Fudged tests
 

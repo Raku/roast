@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 42;
+plan 48;
 
 my @result = 1,2,3;
 
@@ -235,4 +235,25 @@ group-of 2 => 'ZEN slices do not cache Seqs' => {
     throws-like { $z-hash.iterator }, X::Seq::Consumed, '<> ZEN slice';
     (my $z-list := ().Seq)[].iterator;
     throws-like { $z-list.iterator }, X::Seq::Consumed, '[] ZEN slice';
+}
+
+
+# R#3014
+{
+    my $s = (1, 2, 3).Seq;
+    is $s.iterator.pull-one, 1, 'did we get 1 as the first value';
+    dies-ok { $s[0] }, 'did accessing first element die';
+}
+
+# RT #130572
+{
+    my $sum1 = 0;
+    is (lazy for ^4 { $sum1 += $_; $_ }).WHAT, Seq,
+        'lazy for loop does not execute prematurely (1)';
+    ok $sum1 == 0, 'lazy for loop does not execute prematurely (2)';
+
+    my $sum2 = 0;
+    is (for ^4 { $sum2 += $_; $_ }).WHAT, List,
+        'parenthesis do not imply laziness (1)';
+    ok $sum2 == 6, 'parenthesis do not imply laziness (2)';
 }

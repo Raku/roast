@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test;
 
-plan 274;
+plan 279;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -634,5 +634,14 @@ subtest "elements with negative weights are allowed in MixHashes" => {
 
 # R#2289
 is-deeply (1,2,3).MixHash.ACCEPTS(().MixHash), False, 'can we smartmatch empty';
+
+{
+    my $mix = <a b c>.MixHash;
+    is-deeply $mix.Set,     <a b c>.Set,     'coerce MixHash -> Set';
+    is-deeply $mix.SetHash, <a b c>.SetHash, 'coerce MixHash -> SetHash';
+    is-deeply $mix.Bag,     <a b c>.Bag,     'coerce MixHash -> Bag';
+    is-deeply $mix.BagHash, <a b c>.BagHash, 'coerce MixHash -> BagHash';
+    is-deeply $mix.Mix,     <a b c>.Mix,     'coerce MixHash -> Mix';
+}
 
 # vim: ft=perl6

@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 46;
+plan 49;
 
 my @list = (1 .. 10);
 
@@ -186,5 +186,15 @@ my @list = (1 .. 10);
 # https://github.com/rakudo/rakudo/issues/2614
 is-deeply ("foo").grep({ /foo/ }), ("foo",),
     'Block returning a regex to grep will Do The Right Thing, dubious as it is';
+
+# R#2975
+{
+    is-deeply ((0, 0), (0, 1), (1, 1)).grep(*.any), ((0,1),(1,1)),
+      'is any junction handled correctly in grep';
+    is-deeply ((0, 0), (0, 1), (1, 1)).grep(*.one), ((0,1),),
+      'is one junction handled correctly in grep';
+    is-deeply ((0, 0), (0, 1), (1, 1)).grep(*.none), ((0,0),),
+      'is none junction handled correctly in grep';
+}
 
 # vim: ft=perl6
