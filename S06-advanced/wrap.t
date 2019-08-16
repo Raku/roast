@@ -12,7 +12,7 @@ use soft;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 86;
+plan 90;
 
 my @log;
 
@@ -93,7 +93,7 @@ dies-ok { &foo.unwrap($wrapped) }, "can't re-unwrap an already unwrapped sub";
 sub hi { "Hi" };
 is( hi, "Hi", "Basic sub." );
 my $handle;
-lives-ok( { $handle = &hi.wrap({ callsame() ~ " there" }) }, 
+lives-ok( { $handle = &hi.wrap({ callsame() ~ " there" }) },
         "Basic wrapping works ");
 
 ok( $handle, "Recieved handle for unwrapping." );
@@ -122,7 +122,7 @@ lives-ok { &levelwrap.callwith( 1 )},
 {
     for (1..10) -> $num {
         lives-ok {
-            &levelwrap.wrap({ 
+            &levelwrap.wrap({
                 callwith( $^t + 1 );
             }),
             " Wrapping #$num"
@@ -137,10 +137,10 @@ sub functionA {
 }
 is( functionA(), 'z', "Sanity." );
 my $middle;
-lives-ok { $middle = &functionA.wrap(sub { return 'y' ~ callsame })}, 
+lives-ok { $middle = &functionA.wrap(sub { return 'y' ~ callsame })},
         "First wrapping lived";
 is( functionA(), "yz", "Middle wrapper sanity." );
-lives-ok { &functionA.wrap(sub { return 'x' ~ callsame })}, 
+lives-ok { &functionA.wrap(sub { return 'x' ~ callsame })},
          'Second wraping lived';
 is( functionA(), "xyz", "three wrappers sanity." );
 lives-ok { &functionA.unwrap( $middle )}, 'unwrap the middle wrapper.';
@@ -379,6 +379,62 @@ try {
     is $bar.x, 32, "BUILD binding works with wrapped accessor, nextsame";
     try $bar.x = 64;
     is $bar.x, 64, "assignment works with wrapped accessor, nextsame";
+}
+
+# GH #2178
+{
+    my @order;
+    my class C1 {
+        method foo {
+            @order.push: 'C1';
+            nextsame;
+        }
+
+        proto method bar (|) {*}
+        multi method bar(Str $s) { @order.push: "C1::bar(Str)" };
+        multi method bar(Any $v) { @order.push: "C1::bar(Any:{$v.^name})" };
+    }
+
+    my class C2 is C1 {
+        method foo {
+            @order.push: 'C2';
+            nextsame;
+        }
+
+        multi method bar(Str:D $s) { @order.push: "C2::bar(Str:D)"; callsame }
+        multi method bar(Int $i) { @order.push: "C2::bar(Int)"; callsame }
+    }
+
+    my class C3 is C2 {
+        method foo {
+            @order.push: 'C3';
+            nextsame;
+        }
+
+        multi method bar (Code $c) { @order.push: "C3::bar(Code)"}
+    }
+
+    C2.^find_method('foo', :no_fallback).wrap( my method foo { @order.push: 'wrapper'; nextsame } );
+    C2.^find_method('bar', :no_fallback).candidates[0].wrap( my method bar (|) { @order.push: 'wrapper::bar'; callsame } );
+
+    my $inst = C3.new;
+
+    $inst.foo;
+    is-deeply @order, ['C3', 'wrapper', 'C2', 'C1'], "methods are in order";
+
+    @order = [];
+    $inst.bar(42);
+    is-deeply @order, ['C2::bar(Int)', 'C1::bar(Any:Int)'], "multi methods with no wraps are in order";
+
+    @order = [];
+    $inst.bar("The Answer");
+    is-deeply @order, ['C2::bar(Str:D)', 'wrapper::bar', 'C1::bar(Str)'], "multi methods with a wrapped one are in order";
+
+    $inst = C2.new;
+    @order = [];
+    $inst.foo;
+
+    is-deeply @order, ['wrapper', 'C2', 'C1'], "methods are in order with the first method wrapped";
 }
 
 # vim: ft=perl6
