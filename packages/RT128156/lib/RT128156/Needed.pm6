@@ -1,1 +1,1 @@
-class Needed {};
+class Needed { method version() { 2 } }

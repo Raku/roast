@@ -112,7 +112,11 @@ S02-names/is_default.t
 S02-names/is_dynamic.t
 S02-names/name.t
 S02-names/our.t
-S02-names/pseudo.t
+S02-names/pseudo-6c.t
+S02-names/pseudo-6d.t
+S02-names/pseudo-6e.t
+S02-names/SETTING-6c.t
+S02-names/SETTING-6e.t
 S02-names/strict.t
 S02-names/symbolic-deref.t
 S02-names-vars/contextual.t
@@ -180,7 +184,8 @@ S02-types/sethash.t
 S02-types/sigils-and-types.t
 S02-types/stash.t
 S02-types/subscripts_and_context.t
-S02-types/subset.t
+S02-types/subset-6c.t
+S02-types/subset-6e.t
 S02-types/type.t
 S02-types/undefined-types.t
 S02-types/unicode.t
@@ -318,7 +323,8 @@ S04-declarations/constant.t
 S04-declarations/constant-6.d.t
 S04-declarations/implicit-parameter.t
 S04-declarations/multiple.t
-S04-declarations/my.t
+S04-declarations/my-6c.t
+S04-declarations/my-6e.t
 S04-declarations/our.t
 S04-declarations/smiley.t
 S04-declarations/state.t
@@ -329,6 +335,7 @@ S04-exception-handlers/top-level.t
 S04-exceptions/control_across_runloop.t
 S04-exceptions/exceptions-alternatives.t
 S04-exceptions/fail.t
+S04-exceptions/fail-6e.t
 S04-exceptions/pending.t
 S04-phasers/ascending-order.t
 S04-phasers/begin.t
@@ -1167,6 +1174,7 @@ S32-str/encode.t
 S32-str/ends-with.t
 S32-str/fc.t            # moar
 S32-str/flip.t
+S32-str/gb2312-encode-decode.t
 S32-str/indent.t
 S32-str/index.t
 S32-str/indices.t

@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 262;
+plan 267;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -660,5 +660,14 @@ subtest "elements with negative weights are allowed in SetHashes" => {
 
 # R#2289
 is-deeply (1,2,3).SetHash.ACCEPTS(().SetHash), False, 'can we smartmatch empty';
+
+{
+    my $set = <a b c>.SetHash;
+    is-deeply $set.Set,     <a b c>.Set,     'coerce SetHash -> Set';
+    is-deeply $set.Bag,     <a b c>.Bag,     'coerce SetHash -> Bag';
+    is-deeply $set.BagHash, <a b c>.BagHash, 'coerce SetHash -> BagHash';
+    is-deeply $set.Mix,     <a b c>.Mix,     'coerce SetHash -> Mix';
+    is-deeply $set.MixHash, <a b c>.MixHash, 'coerce SetHash -> MixHash';
+}
 
 # vim: ft=perl6

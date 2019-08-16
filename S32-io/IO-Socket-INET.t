@@ -311,7 +311,7 @@ if $*DISTRO.is-win            or  # test for WSL below
 }
 else {
     # MoarVM #234
-    eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :port($_), :host("127.0.0.1") ); CATCH {next}; next }',
+    eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :0port, :host<127.0.0.1> ); CATCH {next}; next }',
                   'Surviving without SEGV due to incorrect socket connect/close handling';
 }
 

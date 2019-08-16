@@ -15,7 +15,7 @@ use lib $?FILE.IO.parent(2).add("packages/Cool/lib");
 
 use MONKEY-SEE-NO-EVAL;
 
-plan 38;
+plan 58;
 
 # RT #126100
 {
@@ -70,7 +70,7 @@ throws-like { require InnerModule:file($name) <quux> },
     my @keys = TestStub::.keys;
     is @keys.grep('InnerClass').elems, 1, 'can load InnerClass.pm6 class into specified stub';
     ok TestStub::<InnerClass>.test1 eq 'test1', 'TestStub::<InnerClass>.test1 is callable';
-    
+
     is @keys.grep('InnerClassTwo').elems, 1, 'can load multiple classes from InnerClass.pm6 class into specified stub';
     ok TestStub::<InnerClassTwo>.test2 eq 'test2', 'TestStub::<InnerClass>.test1 is callable';
 }
@@ -165,6 +165,42 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
     require ::('SetConst');
     ok ::('SetConst::X') eqv set(<x y>),
         'require class with `Set` constant';
+}
+
+# GH #2983
+{
+    require GH2983 <R-GH2983 C-GH2983 C2983 $question>;
+
+    ok ::('R-GH2983') ~~ R-GH2983, "role imported as itself";
+    ok R-GH2983.HOW ~~ Metamodel::ParametricRoleGroupHOW, "role's metaclass is ParametricRoleGroupHOW";
+    nok R-GH2983.VAR ~~ Scalar, "role is not containerized";
+
+    ok ::('C-GH2983') ~~ C-GH2983, "class imported as itself";
+    ok C-GH2983.HOW ~~ Metamodel::ClassHOW, "class' metaclass is ClassHOW";
+    nok C-GH2983.VAR ~~ Scalar, "class is not containerized";
+
+    is C2983, 42, "constant is imported";
+    ok C2983.VAR ~~ Int, "constant is not containerized";
+
+    is $question, "The Ultimate Question of Life, the Universe, and Everything", "a variable is imported ok";
+    ok $question.VAR ~~ Scalar, "the variable is containerized";
+}
+{
+    require ("GH2983.pm6") <R-GH2983 C-GH2983 C2983 $question>;
+
+    ok ::('R-GH2983') ~~ R-GH2983, "role imported as itself";
+    ok R-GH2983.HOW ~~ Metamodel::ParametricRoleGroupHOW, "role's metaclass is ParametricRoleGroupHOW";
+    nok R-GH2983.VAR ~~ Scalar, "role is not containerized";
+
+    ok ::('C-GH2983') ~~ C-GH2983, "class imported as itself";
+    ok C-GH2983.HOW ~~ Metamodel::ClassHOW, "class' metaclass is ClassHOW";
+    nok C-GH2983.VAR ~~ Scalar, "class is not containerized";
+
+    is C2983, 42, "constant is imported";
+    ok C2983.VAR ~~ Int, "constant is not containerized";
+
+    is $question, "The Ultimate Question of Life, the Universe, and Everything", "a variable is imported ok";
+    ok $question.VAR ~~ Scalar, "the variable is containerized";
 }
 
 # vim: ft=perl6
