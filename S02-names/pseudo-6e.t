@@ -514,7 +514,7 @@ lives-ok { my @keys = CORE::.keys }, 'calling CORE::.keys lives';
 
 # RT #119521
 subtest 'no guts spillage when going too high up scope in pseudopackages' => {
-    plan 4 + my @packs = <
+    plan 3 + my @packs = <
         DYNAMIC::  OUTER::   CALLER::   UNIT::     CORE::
         LEXICAL::  OUTERS::  CALLERS::  SETTING::  OUR::
     >;
