@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use lib $?FILE.IO.parent(2).add("packages/S02-names/lib");
 use Test::Util;
 
-plan 191;
+plan 199;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -514,7 +514,7 @@ lives-ok { my @keys = CORE::.keys }, 'calling CORE::.keys lives';
 
 # RT #119521
 subtest 'no guts spillage when going too high up scope in pseudopackages' => {
-    plan 3 + my @packs = <
+    plan 4 + my @packs = <
         DYNAMIC::  OUTER::   CALLER::   UNIT::     CORE::
         LEXICAL::  OUTERS::  CALLERS::  SETTING::  OUR::
     >;
@@ -591,5 +591,41 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
 # RT #127536
 is_run q|BEGIN { UNIT; Nil }|, { :0status, :out(''), :err('') },
     'no crash if UNIT:: is used at compile time';
+
+# GH perl6/problem-solving#80
+# Test for CORE::v6<rev> namespaces
+{
+    for <c d e> -> $rev {
+        my $ns = "CORE::v6{$rev}";
+        is EVAL("{$ns}::CORE-SETTING-REV"), $rev, "{$ns}::CORE-SETTING-REV reports back correct revision";
+    }
+
+    # Skip d here because it doesn't define PseudoStash
+    is CORE::v6c::PseudoStash.^ver, '6.c', "core class from CORE::v6c has version 6.c";
+    is CORE::v6e::PseudoStash.^ver, '6.e', "core class from CORE::v6e has version 6.e";
+
+    # Multi-dispatch must work depending on what core a class is defined in.
+    proto test-dispatch(|) {*}
+    multi test-dispatch(CORE::v6c::PseudoStash $p) {
+        $p.^ver eq '6.c' ?? "from c" !! "bad revision"
+    }
+    multi test-dispatch(CORE::v6e::PseudoStash $p) {
+        $p.^ver eq '6.e' ?? "from e" !! "bad revision"
+    }
+
+    {
+        use Pseudo6c;
+        is test-dispatch(pseudo-stash), "from c", "class from a 6.c module dispatches correctly";
+    }
+    {
+        use Pseudo6d;
+        # Will dispatch to CORE::v6c:: because d doesn't define PseudoStash
+        is test-dispatch(pseudo-stash), "from c", "class from a 6.d module dispatches correctly";
+    }
+    {
+        use Pseudo6e;
+        is test-dispatch(pseudo-stash), "from e", "class from a 6.e module dispatches correctly";
+    }
+}
 
 # vim: ft=perl6
