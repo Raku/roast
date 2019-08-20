@@ -5,7 +5,7 @@ use Test::Util;
 
 # Nil may be a type now.  Required?
 
-plan 66;
+plan 67;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -156,6 +156,22 @@ ok !Nil.new.defined, 'Nil.new is not defined';
         CONTROL { when CX::Warn { pass 'Nil.chrs warns'; .resume; } }
         is-deeply Nil.chrs, "\0", 'Nil.chrs gives a null byte';
     }
+}
+
+{
+    my class F {
+        has Exception $!e;
+        method set($a) {
+            $!e=$a
+        }
+        method check() {
+            so $!e
+        }
+    }
+    my $f = F.new();
+    $f.set(Nil);
+    $f.set(X::AdHoc.new());
+    ok $f.check(), 'Assignment to scalar after assigning Nil takes effect';
 }
 
 # vim: ft=perl6
