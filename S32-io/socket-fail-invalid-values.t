@@ -2,7 +2,7 @@ use Test;
 
 # RT #130473, #130475
 
-constant HOST = 'localhost';
+my $localhost = '0.0.0.0';
 
 constant FAMILY_VALUE_TOO_LOW  = -1;
 constant FAMILY_VALUE_TOO_HIGH = 9999999;
@@ -26,7 +26,7 @@ done-testing;
 sub port-too-low() {
     my $listen = IO::Socket::INET.new(
         :listen,
-        :localhost(HOST),
+        :$localhost,
         :localport(PORT_VALUE_TOO_LOW),
     );
 }
@@ -34,7 +34,7 @@ sub port-too-low() {
 sub port-too-high() {
     my $listen = IO::Socket::INET.new(
         :listen,
-        :localhost(HOST),
+        :$localhost,
         :localport(PORT_VALUE_TOO_HIGH),
     );
 }
@@ -42,7 +42,7 @@ sub port-too-high() {
 sub family-too-low() {
     my $listen = IO::Socket::INET.new(
         :listen,
-        :localhost(HOST),
+        :$localhost,
         :localport(PORT_VALUE_VALID),
         :family(FAMILY_VALUE_TOO_LOW),
     );
@@ -51,7 +51,7 @@ sub family-too-low() {
 sub family-too-high() {
     my $listen = IO::Socket::INET.new(
         :listen,
-        :localhost(HOST),
+        :$localhost,
         :localport(PORT_VALUE_VALID),
         :family(FAMILY_VALUE_TOO_HIGH),
     );

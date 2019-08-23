@@ -3,6 +3,9 @@ use Test;
 
 plan 28;
 
+my $localhost = '0.0.0.0';
+my $host      = '127.0.0.1';
+
 # test 2 does echo protocol - Internet RFC 862
 do-test
     # server
@@ -292,7 +295,7 @@ do-test
     my $sync := Channel.new;
     start {
         my $server := IO::Socket::INET.new:
-          :localhost<localhost>, :0localport, :listen;
+          :$localhost, :0localport, :listen;
         $sync.send: $server.localport;
         my $client := $server.accept;
         $client.print: "Test passed\n";
@@ -301,7 +304,7 @@ do-test
     }
     is IO::Socket::INET.new(
         :!listen, # <-- testing on purpose with :!listen set
-        :host<localhost>, :port($sync.receive)
+        :$host, :port($sync.receive)
     ).get, 'Test passed', 'can connect as client when :$listen is set to False';
 }
 
@@ -319,7 +322,7 @@ sub do-test(Block $b-server, Block $b-client) {
     my $sync   = Channel.new;
     my $thread = Thread.start(
         {
-            my $server = IO::Socket::INET.new(:localhost<localhost>, :localport(0), :listen);
+            my $server = IO::Socket::INET.new(:$localhost, :localport(0), :listen);
 
             $sync.send($server.localport);
 
@@ -327,7 +330,7 @@ sub do-test(Block $b-server, Block $b-client) {
         }
     );
 
-    my $client = IO::Socket::INET.new(:host<localhost>, :port($sync.receive));
+    my $client = IO::Socket::INET.new(:$host, :port($sync.receive));
     $b-client($client);
     $thread.finish;
 }

@@ -3,28 +3,31 @@ use Test;
 
 # RT #130474
 
-constant HOST_PORT_IPV4 = '127.0.0.1:5014';
-constant HOST_PORT_IPV6 = '[::1]:5016';
-
 plan 2;
 
-split-host-port :uri(HOST_PORT_IPV4), :family(PF_INET);
+{
+    my $localhost = '0.0.0.0:5014';
+    my $host      = '127.0.0.1:5014';
+    my $family    = PF_INET;
+    split-host-port :$localhost, :$host, :$family;
+}
 
 #?rakudo skip 'Hangs on boxes without IPv6 support'
 #?DOES 1
 {
-    split-host-port :uri(HOST_PORT_IPV6), :family(PF_INET6);
+    my $localhost = '[::]:5014';
+    my $host      = '[::1]:5014';
+    my $family    = PF_INET6;
+    split-host-port :$localhost, :$host, :$family;
 }
 
-done-testing;
-
-sub split-host-port(:$uri, :$family) {
+sub split-host-port(:$localhost, :$host, :$family) {
     my $c     = Channel.new;
     my $ready = Promise.new;
 
     start {
         my $listen = IO::Socket::INET.new(
-            :localhost($uri),
+            :$localhost,
             :listen,
             :$family,
         );
@@ -47,7 +50,7 @@ sub split-host-port(:$uri, :$family) {
     await $ready;
 
     my $connection = IO::Socket::INET.new(
-        :host($uri),
+        :$host,
         :$family,
     );
 
