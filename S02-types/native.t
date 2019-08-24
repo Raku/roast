@@ -187,15 +187,14 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     is-deeply $c, 0e0, "num64 defaults to 0e0";
 }
 
-# RT ¤124084
-#?rakudo skip 'cannot unbox to a native number'
+# RT #124084
 {
-    my num $d = 42.0;
-    is 42.0, $d, "assign 42.0 to num";
-    my num32 $e = 42.0;
-    is 42.0, $e, "assign 42.0 to num32";
-    my num64 $f = 42.0;
-    is 42.0, $f, "assign 42.0 to num64";
+    my num $d = 42e0;
+    is-deeply $d, 42e0, "assign 42e0 to num";
+    my num32 $e = 43e0;
+    is-deeply $e, 43e0, "assign 43e0 to num32";
+    my num64 $f = 44e0;
+    is-deeply $f, 44e0, "assign 44e0 to num64";
 }
 
 {
