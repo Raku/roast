@@ -89,7 +89,6 @@ group-of 8 => 'native num defaults to 0e0' => {
     my num @a; is-deeply @a[0], 0e0, 'native num array unset element';
 }
 
-#?rakudo.jvm todo 'got err: ""'
 is_run ｢
     use v6.d;
     # override any possible deprecation silencers implementations may have
