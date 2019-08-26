@@ -872,6 +872,7 @@ S17-promise/allof.t      # slow
 S17-promise/at.t
 S17-promise/anyof.t
 S17-promise/basic.t
+S17-promise/illegal-transition.t
 S17-promise/in.t         # slow
 S17-promise/lock-async.t
 S17-promise/lock-async-stress.t # moar stress slow
